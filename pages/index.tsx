@@ -2,10 +2,14 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
+import { Input } from "@supabase/ui";
+import { Typography } from '@supabase/ui'
 import { test } from '../test'
 import image from "../public/hacktoberfestimg.png"
 
 const Home: NextPage = () => {
+  const { Title } = Typography;
+
   const defaultTools = [
     {
       name: "default"
@@ -35,9 +39,12 @@ const Home: NextPage = () => {
               layout={'responsive'}
             />
           </div>
-          <div className='flex flex-col justify-center p-2 border'>
-            <h1 className='pb-1'>Hacktoberfest</h1>
-            <h4 className='pb-1'>Description with markdown support</h4> {/* Find out what this means */}
+          <div className='flex flex-col grow justify-center p-2 border'>
+            <Title level={2} className='pb-1'>Hacktoberfest</Title>
+            <Title level={4} className='pb-1'>Description with markdown support</Title> {/* Find out what this means */}
+            <Input
+              className='w-[100%]'
+            />
           </div>
         </header>
         <nav className='flex flex-row min-h-[50px] p-2 border'>
