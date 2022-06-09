@@ -25,21 +25,21 @@ const Home: NextPage = () => {
   const toolList = defaultTools.concat(test);
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center px-8 py-4">
+    <div className="page-container flex min-h-screen flex-col items-center justify-center px-8 py-4">
       <Head>
         <title>Hacktoberfest Portal</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       
-      <div className='min-w-full min-h-[100px] border'>
-        <header className='flex flex-row mb-2'>
-          <div className='mr-2 p-2 border min-w-[200px]'>
+      <div className='info-container min-w-full min-h-[100px] border'>
+        <header className='header flex flex-row mb-2'>
+          <div className='header-image mr-2 p-2 border min-w-[200px]'>
             <Image
               src={image}
               layout={'responsive'}
             />
           </div>
-          <div className='flex flex-col grow justify-center p-2 border'>
+          <div className='header-info flex flex-col grow justify-center p-2 border'>
             <Title level={2} className='pb-1'>Hacktoberfest</Title>
             <Title level={4} className='pb-1'>Description with markdown support</Title> {/* Find out what this means */}
             <Input
@@ -47,9 +47,9 @@ const Home: NextPage = () => {
             />
           </div>
         </header>
-        <nav className='flex flex-row min-h-[50px] p-2 border'>
+        <nav className='tool-list-nav flex flex-row min-h-[50px] p-2 border'>
           {toolList.map(tool => 
-            <Link href=''>
+            <Link className='nav-tool-item' href=''>
               <h5 className='pr-2'>
                 {tool.name}
               </h5>
