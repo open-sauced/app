@@ -1,8 +1,25 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
+import Link from 'next/link'
+import { test } from '../test'
+import image from "../public/hacktoberfestimg.png"
 
 const Home: NextPage = () => {
+  const defaultTools = [
+    {
+      name: "default"
+    },
+    {
+      name: "default"
+    },
+    {
+      name: "default"
+    }
+    
+  ]
+  const toolList = defaultTools.concat(test);
+
   return (
     <div className="flex min-h-screen flex-col items-center justify-center px-8 py-4">
       <Head>
@@ -12,15 +29,25 @@ const Home: NextPage = () => {
       
       <div className='min-w-full min-h-[100px] border'>
         <header className='flex flex-row mb-2'>
-          <div className='mr-2 p-2 border'>
-            boo!
+          <div className='mr-2 p-2 border min-w-[200px]'>
+            <Image
+              src={image}
+              layout={'responsive'}
+            />
           </div>
-          <div className='flex flex-column content-center p-2 border'>
-            boo!
+          <div className='flex flex-col justify-center p-2 border'>
+            <h1 className='pb-1'>Hacktoberfest</h1>
+            <h4 className='pb-1'>Description with markdown support</h4> {/* Find out what this means */}
           </div>
         </header>
         <nav className='flex flex-row min-h-[50px] p-2 border'>
-          boo!
+          {toolList.map(tool => 
+            <Link href=''>
+              <h5 className='pr-2'>
+                {tool.name}
+              </h5>
+            </Link>
+          )}
         </nav>
       </div>
 
