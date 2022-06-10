@@ -1,9 +1,5 @@
-import type { NextPage } from 'next'
 import PortalLayout from '../layouts/portal'
-
-type WithPageLayout = NextPage & {
-  PageLayout: React.ComponentType<any>;
-};
+import { WithPageLayout } from '../interfaces/with-page-layout';
 
 const Home: WithPageLayout = () => {
   return (

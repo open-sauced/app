@@ -1,4 +1,3 @@
-import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Input } from "@supabase/ui";
@@ -26,11 +25,6 @@ export const PortalLayout = ({children}: {children: React.ReactNode}) => {
 
   return (
     <div className="page-container flex min-h-screen flex-col items-center justify-center px-8 py-4">
-      <Head>
-        <title>Hacktoberfest Portal</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      
       <div className='info-container min-w-full min-h-[100px] border'>
         <header className='header flex flex-row mb-2'>
           <div className='header-image mr-2 p-2 border min-w-[200px]'>
