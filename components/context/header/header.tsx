@@ -1,7 +1,7 @@
 import React from 'react';
 import { Input, Typography } from "@supabase/ui"
 import Image from 'next/image'
-import image from "../public/hacktoberfestimg.png"
+import image from "../../../public/hacktoberfestimg.png"
 
 const Header: React.FC = () => {
   const { Title } = Typography;

@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { test } from '../test'
+import { test } from '../../../test'
 
 const Nav: React.FC = () => {
 
