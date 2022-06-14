@@ -8,7 +8,7 @@ export const PortalLayout = ({children}: {children: React.ReactNode}) => {
   return (
     <>
       <TopNav />
-      <div className="page-container flex min-h-[90vh] flex-col items-center justify-center px-8 py-4">
+      <div className="page-container flex min-h-[88vh] flex-col items-center justify-center px-8 py-4">
         <div className='info-container min-w-full min-h-[100px] border'>
           <Header />
           <Nav />

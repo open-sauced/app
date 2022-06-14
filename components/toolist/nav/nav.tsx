@@ -12,7 +12,7 @@ const Nav: React.FC = () => {
       name: "default"
     },
     {
-      name: "blah"
+      name: "nextjs"
     },
     {
       name: "blah"
@@ -28,7 +28,7 @@ const Nav: React.FC = () => {
       {toolList.map((tool, index) => 
         <Link
           className='nav-tool-item'
-          href={tool.name === "default" ?
+          href={tool.name === "nextjs" ?
             `${portalName}` :
             `${portalName}?tool=${tool.name}`
           }
