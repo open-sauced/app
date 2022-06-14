@@ -6,7 +6,7 @@ const Home: WithPageLayout = () => {
   const router = useRouter();
 
   useEffect(() => {
-    router.push('portal/hacktoberfest');
+    router.push('portal/hacktoberfest?tool=default');
   }, []);
 
   return (

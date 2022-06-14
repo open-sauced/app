@@ -5,7 +5,7 @@ const TopNav: React.FC = () => {
     const { Text } = Typography;
 
     return (
-        <div className="top-nav-container flex justify-between px-8 py-1 border">
+        <div className="top-nav-container flex justify-between px-8 py-1 border-b">
             <Text>Logo</Text>
             <Text>Username</Text>    
         </div>
