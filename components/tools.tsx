@@ -1,3 +1,4 @@
+import { Button } from "@supabase/ui";
 import { useRouter } from "next/router";
 import React from "react";
 import {
@@ -159,41 +160,57 @@ const Tool: React.FC = () => {
     ];
 
     return (
-        (tool === "default" ?
-            <>
-                <ScatterChart
-                    width={400}
-                    height={400}
-                    margin={{
-                        top: 20,
-                        right: 20,
-                        bottom: 20,
-                        left: 20
-                    }}
-                >
-                    <CartesianGrid />
-                    <XAxis type="number" dataKey="x" name="stature" unit="cm" />
-                    <YAxis type="number" dataKey="y" name="weight" unit="kg" />
-                    <Tooltip cursor={{ strokeDasharray: "3 3" }} />
-                    <Scatter name="A school" data={data} fill="#8884d8">
-                        <LabelList dataKey="x" />
-                    </Scatter>
-                </ScatterChart>
-                <Treemap
-                    width={400}
-                    height={200}
-                    data={data2}
-                    dataKey="size"
-                    ratio={4 / 3}
-                    stroke="#fff"
-                    fill="#8884d8"
-                />
-            </>
-            :
-            <div>
-                {tool ? `${tool}` : "Test"} Tool Page
-            </div>
-        )
+        <>
+            <nav className="pb-8">
+                <Button size="medium" type="outline">
+                    Daily
+                </Button>
+                <Button size="medium" type="outline">
+                    Weekly
+                </Button>
+                <Button size="medium" type="outline">
+                    Monthly
+                </Button>
+                <Button size="medium" type="outline">
+                    Year
+                </Button>
+            </nav>
+            {tool === "default" ?
+                <div>
+                    <ScatterChart
+                        width={400}
+                        height={400}
+                        margin={{
+                            top: 20,
+                            right: 20,
+                            bottom: 20,
+                            left: 20
+                        }}
+                        >
+                        <CartesianGrid />
+                        <XAxis type="number" dataKey="x" name="stature" unit="cm" />
+                        <YAxis type="number" dataKey="y" name="weight" unit="kg" />
+                        <Tooltip cursor={{ strokeDasharray: "3 3" }} />
+                        <Scatter name="A school" data={data} fill="#8884d8">
+                            <LabelList dataKey="x" />
+                        </Scatter>
+                    </ScatterChart>
+                    <Treemap
+                        width={400}
+                        height={200}
+                        data={data2}
+                        dataKey="size"
+                        ratio={4 / 3}
+                        stroke="#fff"
+                        fill="#8884d8"
+                        />
+                </div>
+                :
+                <div>
+                    {tool ? `${tool}` : "Test"} Tool Page
+                </div>
+            }
+        </>
     )
 };
 
