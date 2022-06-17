@@ -18,25 +18,24 @@ const Nav: React.FC = () => {
     {
       name: "blah"
     }  
-  ]
+  ];
 
   const { portalName, tool: navbarTool } = router.query;
 
   const toolList = defaultTools.concat(test);
 
   return (
-    <nav className='tool-list-nav flex flex-row min-h-[50px] py-4 border-b'>
+    <nav className='tool-list-nav flex flex-row min-h-[50px] pt-4 border-b'>
       {toolList.map((tool, index) => 
-        <div className='px-3'>
+        <div className={`nav-tool-item ${navbarTool === tool.name ? 'border-b-2 border-indigo-500' : ''}`}>
           <Link
-            className='nav-tool-item'
             href={tool.name === "nextjs" ?
               `${portalName}` :
               `${portalName}?tool=${tool.name}`
             }
             key={index}
           >
-            <Button size='large' type={navbarTool === tool.name ? 'primary' : 'outline'}>
+            <Button size='xlarge' type='text'>
               <h5>
                 {tool.name}
               </h5>
