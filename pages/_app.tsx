@@ -3,6 +3,7 @@
 import '../styles/globals.css'
 import Head from 'next/head'
 import type { AppProps } from 'next/app'
+import GlobalState from '../context/global-state';
 
 type ComponentWithPageLayout = AppProps & {
   Component: AppProps["Component"] & {
@@ -18,13 +19,15 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
     
-      {Component.PageLayout ? (
-        <Component.PageLayout>
+      <GlobalState>
+        {Component.PageLayout ? (
+          <Component.PageLayout>
+            <Component {...pageProps} />
+          </Component.PageLayout>
+        ) : (
           <Component {...pageProps} />
-        </Component.PageLayout>
-      ) : (
-        <Component {...pageProps} />
-      )}
+        )}
+      </GlobalState>
     </>
   )
   

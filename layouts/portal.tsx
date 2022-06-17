@@ -4,7 +4,7 @@ import Header from '../components/context/header/header';
 import Nav from '../components/toolist/nav/nav';
 import TopNav from '../components/top-nav';
 
-export const PortalLayout = ({children}: {children: React.ReactNode}) => {
+const PortalLayout = ({children}: {children: React.ReactNode}) => {
   return (
     <>
       <TopNav />
