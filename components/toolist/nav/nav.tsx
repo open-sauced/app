@@ -10,19 +10,37 @@ const Nav: React.FC = () => {
 
   const defaultTools = [
     {
-      name: "default"
+      name: "Dashboard"
     },
     {
-      name: "nextjs"
+      name: "Popularity"
     },
     {
-      name: "blah"
-    }  
+      name: "Activity"
+    },
+    {
+      name: "Dashboard"
+    },
+    {
+      name: "Repositories (20)"
+    },
+    {
+      name: "Commits (4,308)"
+    },
+    {
+      name: "Issues (45)"
+    },
+    {
+      name: "Pull Requests (13)"
+    },
+    {
+      name: "People (54)"
+    }
   ];
 
   const { portalName, tool: navbarTool } = router.query;
 
-  const toolList = defaultTools.concat(test);
+  const toolList = defaultTools;
 
   return (
     <nav className='tool-list-nav flex flex-row min-h-[50px] pt-4 border-b'>

@@ -24,11 +24,11 @@ const Tool: React.FC = () => {
                 </Button>
             </nav>
             <div className="flex flex-col">
-                {tool === "default" ?
+                {tool === "Dashboard" ?
                     <>
-                        <div className="flex w-[80vw] h-[500px] border">
-                            <div className="flex flex-col w-[60%]">
-                                <div className="w-full h-[50%] border">
+                        <div className="flex w-[80vw] h-[500px] mb-10 border">
+                            <div className="flex flex-col w-[60%] mr-10">
+                                <div className="w-full h-[50%] mb-10 border">
 
                                 </div>
                                 <div className="w-full h-[50%] border">
@@ -39,9 +39,9 @@ const Tool: React.FC = () => {
                                 
                             </div>
                         </div>
-                        <div className="flex w-[80vw] h-[500px] border">
-                            <div className="flex flex-col w-[60%]">
-                                <div className="w-full h-[20%] border">
+                        <div className="flex w-[80vw] h-[500px] mb-10 border">
+                            <div className="flex flex-col w-[60%] mr-10">
+                                <div className="w-full h-[20%] mb-10 border">
 
                                 </div>
                                 <div className="flex w-full h-[80%] border">
