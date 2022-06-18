@@ -27,13 +27,13 @@ const Nav: React.FC = () => {
   return (
     <nav className='tool-list-nav flex flex-row min-h-[50px] pt-4 border-b'>
       {toolList.map((tool, index) => 
-        <div className={`nav-tool-item ${navbarTool === tool.name ? 'border-b-2 border-indigo-500' : ''}`}>
+        <div 
+        key={index} className={`nav-tool-item ${navbarTool === tool.name ? 'border-b-2 border-indigo-500' : ''}`}>
           <Link
             href={tool.name === "nextjs" ?
               `${portalName}` :
               `${portalName}?tool=${tool.name}`
             }
-            key={index}
           >
             <Button size='xlarge' type='text'>
               <h5>

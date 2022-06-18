@@ -1,6 +1,6 @@
 import React from 'react';
 import Footer from '../components/footer/footer';
-import Header from '../components/context/header/header';
+import Header from '../components/header/header';
 import Nav from '../components/toolist/nav/nav';
 import TopNav from '../components/top-nav';
 
