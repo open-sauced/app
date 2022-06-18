@@ -19,9 +19,6 @@ const Nav: React.FC = () => {
       name: "Activity"
     },
     {
-      name: "Dashboard"
-    },
-    {
       name: "Repositories (20)"
     },
     {

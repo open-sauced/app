@@ -8,7 +8,7 @@ const Header: React.FC = () => {
 
     return (
         <header className='header flex flex-row mb-2'>
-          <div className='header-image mr-2 p-2 min-w-[230px] border'>
+          <div className='header-image mr-2 p-2 min-w-[230px]'>
             <Image
               src={image}
               layout={'responsive'}
