@@ -51,7 +51,7 @@ const Nav: React.FC = () => {
             }
           >
             <Button size='xlarge' type='text'>
-              <h5>
+              <h5 className={navbarTool === tool.name ? 'text-blue-600' : ''}>
                 {tool.name}
               </h5>
             </Button>
