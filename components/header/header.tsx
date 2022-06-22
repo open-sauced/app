@@ -1,7 +1,6 @@
 import React from 'react';
 import { Button, Typography } from "@supabase/ui"
 import Image from 'next/image'
-import hacktoberfest from "../../public/hacktoberfest-icon.png"
 
 const Header: React.FC = () => {
   const { Title, Text } = Typography;
@@ -10,7 +9,9 @@ const Header: React.FC = () => {
         <header className='header flex flex-row mb-2'>
           <div className='header-image mr-2 p-2 min-w-[130px]'>
             <Image
-              src={hacktoberfest}
+              src='/hacktoberfest-icon.png'
+              height={114}
+              width={114}
               layout={'responsive'}
             />
           </div>

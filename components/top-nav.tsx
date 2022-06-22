@@ -19,7 +19,7 @@ const TopNav: React.FC = () => {
             </div>
             <div className='flex'>
                 <div className='flex items-center'>
-                    <Image src={avatar}/>
+                    <Image src='/ellipse-1.png' height={32} width={32} />
                     <Image className='mx-2' src={downArrow}/>
                 </div>    
                 <Button 
