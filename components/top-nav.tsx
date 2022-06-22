@@ -18,17 +18,17 @@ const TopNav: React.FC = () => {
                 />
             </div>
             <div className='flex'>
+                <div className='flex items-center'>
+                    <Image src={avatar}/>
+                    <Image className='mx-2' src={downArrow}/>
+                </div>    
                 <Button 
-                    className='mr-5'
+                    className='ml-5'
                     size='small'
                     style={{ backgroundColor: '#0091FF' }}
                 >
                     Button    +
                 </Button>
-                <div className='flex items-center'>
-                    <Image src={avatar}/>
-                    <Image className='mx-2' src={downArrow}/>
-                </div>    
             </div>
         </div>
     )

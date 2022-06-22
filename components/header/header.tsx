@@ -17,9 +17,28 @@ const Header: React.FC = () => {
           <div className='header-info flex flex-col grow justify-center p-2'>
             <Title level={3} className='font-extrabold'>Hacktoberfest 2022</Title>
             <Text className='mb-5'>Open source projects and samples for Microsoft</Text> {/* Find out what this means */}
-            <Button style={{ backgroundColor: 'lightgrey' }} size='small'>
-              # hacktoberfest
-            </Button>
+            <div className='flex'>
+              <Button className='mr-3' style={{ backgroundColor: 'lightgrey' }} size='tiny'>
+                <Text>
+                  # hacktoberfest
+                </Text>
+              </Button>
+              <Button className='mr-3' style={{ backgroundColor: 'lightgrey' }} size='tiny'>
+                <Text>
+                  Microsoft
+                </Text>
+              </Button>
+              <Button className='mr-3' style={{ backgroundColor: 'lightgrey' }} size='tiny'>
+                <Text>
+                  person
+                </Text>
+              </Button>
+              <Button className='mr-3' style={{ backgroundColor: 'lightgrey' }} size='tiny'>
+                <Text>
+                  ohmyzsh, repo, repo, +2
+                </Text>
+              </Button>
+            </div>
           </div>
         </header>
     )

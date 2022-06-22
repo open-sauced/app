@@ -24,10 +24,10 @@ const Tool: React.FC = () => {
                     Year
                 </Button>
             </nav>
-            <div className="flex flex-col">
+            <div className="flex flex-col w-full">
                 {tool === "Dashboard" ?
                     <>
-                        <div className="flex w-[80vw] h-[500px] mb-10">
+                        <div className="flex max-w-full h-[500px] mb-10">
                             <div className="flex flex-col w-[60%] mr-10">
                                 <div className="w-full h-[50%] mb-10 p-5 border-4">
 
@@ -40,12 +40,12 @@ const Tool: React.FC = () => {
                                 <Table />
                             </div>
                         </div>
-                        <div className="flex w-[80vw] h-[500px] mb-10">
+                        <div className="flex w-full h-[500px] mb-10">
                             <div className="flex flex-col w-[60%] mr-10">
                                 <div className="w-full h-[20%] mb-10 p-5 border-4">
 
                                 </div>
-                                <div className="flex w-full h-[80%]">
+                                <div className="flex max-w-full h-[80%]">
                                     <div className="w-[50%] mr-10 h-full p-5 border-4">
                                         <Table />
                                     </div>
