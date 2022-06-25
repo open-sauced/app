@@ -9,7 +9,7 @@ const TopNav: React.FC = () => {
     const { Text } = Typography;
 
     return (
-        <div className="top-nav-container flex justify-between items-center h-[60px] px-8 py-1 bg-[#26292B] border-b">
+        <div className="top-nav-container flex justify-between items-center h-[60px] px-[64px] py-1 bg-[#26292B] border-b">
             <div className='flex items-center'>
                 <Image width={32} height={32} src={openSaucedImg} />
                 <Text className='font-semibold px-2 text-[16px]' strong style={{ color: 'white' }}>OpenSauced</Text>

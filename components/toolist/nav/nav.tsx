@@ -13,25 +13,30 @@ const Nav: React.FC = () => {
       name: "Dashboard"
     },
     {
-      name: "Popularity"
+      name: "Reports"
     },
     {
       name: "Activity"
     },
     {
-      name: "Repositories (20)"
+      name: "Repositories",
+      numOf: 20
     },
     {
-      name: "Commits (4,308)"
+      name: "Commits",
+      numOf: 4308
     },
     {
-      name: "Issues (45)"
+      name: "Issues",
+      numOf: 45
     },
     {
-      name: "Pull Requests (13)"
+      name: "Pull Requests",
+      numOf: 13
     },
     {
-      name: "People (54)"
+      name: "People",
+      numOf: 54
     }
   ];
 
@@ -43,7 +48,7 @@ const Nav: React.FC = () => {
     <nav className='tool-list-nav flex flex-row min-h-[50px] pt-4 border-b'>
       {toolList.map((tool, index) => 
         <div 
-        key={index} className={`nav-tool-item ${navbarTool === tool.name ? 'border-b-2 border-indigo-500' : ''}`}>
+        key={index} className={`nav-tool-item ${navbarTool === tool.name ? 'border-b-2 border-[#FFA01C]' : ''}`}>
           <Link
             href={tool.name === "nextjs" ?
               `${portalName}` :
@@ -51,9 +56,15 @@ const Nav: React.FC = () => {
             }
           >
             <Button size='xlarge' type='text'>
-              <h5 className={navbarTool === tool.name ? 'text-blue-600' : ''}>
-                {tool.name}
+              <h5 className={navbarTool === tool.name ? 'text-black' : ''}>
+              {tool.name}
               </h5>
+              {
+                tool.numOf && 
+                  <div className='ml-2 px-[3px] py-[2px] bg-[#F1F3F5] border rounded-lg'>
+                    {tool.numOf}
+                  </div>
+              }
             </Button>
           </Link>
         </div>
