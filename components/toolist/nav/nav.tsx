@@ -55,7 +55,7 @@ const Nav: React.FC = () => {
               `${portalName}?tool=${tool.name}`
             }
           >
-            <Button size='xlarge' type='text'>
+            <Button size='xlarge' type='text' disabled={navbarTool === tool.name}>
               <h5 className={navbarTool === tool.name ? 'text-black' : ''}>
               {tool.name}
               </h5>
