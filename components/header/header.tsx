@@ -1,9 +1,14 @@
 import React from 'react';
-import { Button, Typography } from "@supabase/ui"
+import { Typography } from "@supabase/ui"
+import { useRouter } from 'next/router';
 import Image from 'next/image'
+import hashtag from '../../public/Icon.svg';
 
 const Header: React.FC = () => {
   const { Title, Text } = Typography;
+  const router = useRouter();
+
+  const { filter } = router.query;
 
     return (
         <header className='header flex flex-row mb-2'>
@@ -19,26 +24,17 @@ const Header: React.FC = () => {
             <Title level={3} className='font-extrabold'>Hacktoberfest 2022</Title>
             <Text className='mb-5'>Open source projects and samples for Microsoft</Text> {/* Find out what this means */}
             <div className='flex'>
-              <Button className='mr-3' style={{ backgroundColor: 'lightgrey' }} size='tiny'>
-                <Text>
-                  # hacktoberfest
+              <div className='mr-3 py-[7px] px-2 bg-[#F1F3F5] border rounded-lg'>
+                <Text strong>
+                  <Image src={hashtag} /> hacktoberfest
                 </Text>
-              </Button>
-              <Button className='mr-3' style={{ backgroundColor: 'lightgrey' }} size='tiny'>
-                <Text>
-                  Microsoft
+              </div>
+              {filter && 
+              <div className='mr-3 py-[7px] px-2 bg-[#F1F3F5] border rounded-lg'>
+                <Text strong>
+                  {filter}
                 </Text>
-              </Button>
-              <Button className='mr-3' style={{ backgroundColor: 'lightgrey' }} size='tiny'>
-                <Text>
-                  person
-                </Text>
-              </Button>
-              <Button className='mr-3' style={{ backgroundColor: 'lightgrey' }} size='tiny'>
-                <Text>
-                  ohmyzsh, repo, repo, +2
-                </Text>
-              </Button>
+              </div>}
             </div>
           </div>
         </header>
