@@ -10,7 +10,7 @@ const TopNav: React.FC = () => {
 
     return (
         <div className="top-nav-container flex justify-between items-center h-[60px] px-[64px] py-1 bg-[#26292B] border-b">
-            <div className='flex items-center'>
+            <div className='flex items-center p-2'>
                 <Image width={32} height={32} src={openSaucedImg} />
                 <Text className='font-semibold px-2 text-[16px]' strong style={{ color: 'white' }}>OpenSauced</Text>
             </div>
