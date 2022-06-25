@@ -3,12 +3,14 @@ import { Typography } from "@supabase/ui"
 import { useRouter } from 'next/router';
 import Image from 'next/image'
 import hashtag from '../../public/Icon.svg';
+import orgIcon from '../../public/bookmark-alt.svg';
+import cancelIcon from '../../public/x-circle.svg';
 
 const Header: React.FC = () => {
   const { Title, Text } = Typography;
   const router = useRouter();
 
-  const { filter } = router.query;
+  const { filterorg } = router.query;
 
     return (
         <header className='header flex flex-row mb-2'>
@@ -29,10 +31,16 @@ const Header: React.FC = () => {
                   <Image src={hashtag} /> hacktoberfest
                 </Text>
               </div>
-              {filter && 
+              {filterorg && 
               <div className='mr-3 py-[7px] px-2 bg-[#F1F3F5] border rounded-lg'>
-                <Text strong>
-                  {filter}
+                <Text className='flex items-center pt-[3px]' strong>
+                <div className='flex items-end pr-1'>
+                  <Image src={orgIcon} />
+                </div>
+                {filterorg}
+                <div className='flex items-end pl-1'>
+                  <Image src={cancelIcon} />
+                </div>
                 </Text>
               </div>}
             </div>
