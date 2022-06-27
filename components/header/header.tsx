@@ -26,8 +26,8 @@ const Header: React.FC = () => {
             <Title level={3} className='font-extrabold'>Hacktoberfest 2022</Title>
             <Text className='mb-5'>Open source projects and samples for Microsoft</Text> {/* Find out what this means */}
             <div className='flex'>
-              <div className='mr-3 py-[7px] px-2 bg-[#F1F3F5] border rounded-lg'>
-                <Text strong>
+              <div className='mr-3 py-0.5 px-2 bg-[#F1F3F5] border rounded-lg'>
+                <Text className='font-semibold leading-none'>
                   <Image src={hashtag} /> hacktoberfest
                 </Text>
               </div>

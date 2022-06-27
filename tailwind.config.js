@@ -5,7 +5,11 @@ module.exports = {
     './layouts/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      text: {
+        'xs': '.75rem'
+      }
+    },
   },
   plugins: [],
 }

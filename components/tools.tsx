@@ -15,34 +15,31 @@ const Tool: React.FC = () => {
         <div className="flex flex-col w-full">
             {tool === "Dashboard" ?
                 <>
-                    <div className="flex max-w-full h-[500px] mb-10">
-                        <div className="flex flex-col w-[60%] mr-10">
-                            <div className="w-full h-[50%] mb-10 p-5 border-4">
+                    <div className="flex max-w-full h-[500px] mb-4">
+                        <div className="flex flex-col w-[60%] mr-4">
+                            <div className="w-full h-[50%] mb-4 p-3 border border-1 rounded-lg">
 
                             </div>
-                            <div className="w-full h-[50%] p-5 border-4">
+                            <div className="w-full h-[50%] p-3 border border-1 rounded-lg">
 
                             </div>
                         </div>
-                        <div className="w-[40%] p-5 border-4">
+                        <div className="w-[40%] p-3 border border-1 rounded-lg">
                             <Table />
                         </div>
                     </div>
-                    <div className="flex w-full h-[500px] mb-10">
-                        <div className="flex flex-col w-[70%] mr-10">
-                            <div className="w-full h-[20%] mb-10 p-5 border-4">
-                                <Input placeholder="Filter issues and pull requests by label"/>
-                            </div>
+                    <div className="flex w-full h-[500px] mb-4">
+                        <div className="flex flex-col w-[70%] mr-4">
                             <div className="flex max-w-full h-[80%]">
-                                <div className="w-[50%] mr-10 h-full p-5 border-4">
+                                <div className="w-[50%] mr-4 h-full p-3 border border-1 rounded-lg">
                                     <Table2 />
                                 </div>
-                                <div className="w-[50%] h-full p-5 border-4">
+                                <div className="w-[50%] h-full p-3 border border-1 rounded-lg">
                                     <Table3 />
                                 </div>
                             </div>
                         </div>
-                        <div className="w-[30%] p-5 border-4">
+                        <div className="w-[30%] p-3 border border-1 rounded-lg">
                             <Table4 />
                         </div>
                     </div>
