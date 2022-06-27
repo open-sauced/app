@@ -1,5 +1,5 @@
-import { Button } from "@supabase/ui";
 import { useRouter } from "next/router";
+import { Input } from "@supabase/ui";
 import React from "react";
 import Table from "./misc/table-test/table";
 import Table2 from "./misc/table-test/table-2";
@@ -31,7 +31,7 @@ const Tool: React.FC = () => {
                     <div className="flex w-full h-[500px] mb-10">
                         <div className="flex flex-col w-[70%] mr-10">
                             <div className="w-full h-[20%] mb-10 p-5 border-4">
-
+                                <Input placeholder="Filter issues and pull requests by label"/>
                             </div>
                             <div className="flex max-w-full h-[80%]">
                                 <div className="w-[50%] mr-10 h-full p-5 border-4">
