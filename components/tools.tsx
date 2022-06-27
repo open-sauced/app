@@ -29,7 +29,7 @@ const Tool: React.FC = () => {
                         </div>
                     </div>
                     <div className="flex w-full h-[500px] mb-10">
-                        <div className="flex flex-col w-[60%] mr-10">
+                        <div className="flex flex-col w-[70%] mr-10">
                             <div className="w-full h-[20%] mb-10 p-5 border-4">
 
                             </div>
@@ -42,7 +42,7 @@ const Tool: React.FC = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="w-[40%] p-5 border-4">
+                        <div className="w-[30%] p-5 border-4">
                             <Table4 />
                         </div>
                     </div>
