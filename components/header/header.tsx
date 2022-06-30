@@ -32,7 +32,7 @@ const Header: React.FC = () => {
                 </Text>
               </div>
               {filterorg && 
-              <div className='mr-3 py-[7px] px-2 border border-[#C5C5C5] rounded-lg'>
+              <div className='mr-3 py-[7px] px-2 border bg-white border-[#C5C5C5] rounded-lg'>
                 <Text className='flex items-center pt-[3px]' strong>
                 <div className='flex items-end pr-1'>
                   <Image src={orgIcon} />
