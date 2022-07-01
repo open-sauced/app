@@ -62,7 +62,7 @@ const Nav: React.FC = () => {
                 </h5>
                 {
                   tool.numOf && 
-                    <div className='ml-2 px-[3px] py-[2px] bg-[#F1F3F5] border rounded-lg'>
+                    <div className='ml-2 px-[3px] py-[2px] bg-[#DFE3E6] border rounded-lg'>
                       {tool.numOf}
                     </div>
                 }
