@@ -10,40 +10,67 @@ const Nav: React.FC = () => {
 
   const defaultTools = [
     {
-      name: "default"
+      name: "Dashboard"
     },
     {
-      name: "nextjs"
+      name: "Reports"
     },
     {
-      name: "blah"
-    }  
-  ]
+      name: "Activity"
+    },
+    {
+      name: "Repositories",
+      numOf: 20
+    },
+    {
+      name: "Commits",
+      numOf: 4308
+    },
+    {
+      name: "Issues",
+      numOf: 45
+    },
+    {
+      name: "Pull Requests",
+      numOf: 13
+    },
+    {
+      name: "People",
+      numOf: 54
+    }
+  ];
 
   const { portalName, tool: navbarTool } = router.query;
 
-  const toolList = defaultTools.concat(test);
+  const toolList = defaultTools;
 
   return (
-    <nav className='tool-list-nav flex flex-row min-h-[50px] py-4 border-b'>
-      {toolList.map((tool, index) => 
-        <div className='px-3'>
-          <Link
-            className='nav-tool-item'
-            href={tool.name === "nextjs" ?
-              `${portalName}` :
-              `${portalName}?tool=${tool.name}`
-            }
-            key={index}
-          >
-            <Button size='large' type={navbarTool === tool.name ? 'primary' : 'outline'}>
-              <h5>
+    <nav className='tool-list-nav min-h-[50px] bg-[#F1F3F5] border-b'>
+      <div className='px-[64px] flex flex-row'>
+        {toolList.map((tool, index) => 
+          <div 
+          key={index} className={`nav-tool-item ${navbarTool === tool.name ? 'border-b-2 border-[#FFA01C]' : ''}`}>
+            <Link
+              href={tool.name === "nextjs" ?
+                `${portalName}` :
+                `${portalName}?tool=${tool.name}`
+              }
+            >
+              <Button size='xlarge' type='text' disabled={navbarTool === tool.name}>
+                <h5 className={navbarTool === tool.name ? 'text-black' : ''}>
                 {tool.name}
-              </h5>
-            </Button>
-          </Link>
-        </div>
-      )}
+                </h5>
+                {
+                  tool.numOf && 
+                    <div className='ml-2 px-[3px] py-[2px] bg-[#DFE3E6] border rounded-lg'>
+                      {tool.numOf}
+                    </div>
+                }
+              </Button>
+            </Link>
+          </div>
+        )}
+      </div>
     </nav>
   )
 }
