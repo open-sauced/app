@@ -5,6 +5,7 @@ import Image from 'next/image'
 import hashtag from '../../public/Icon.svg';
 import orgIcon from '../../public/bookmark-alt.svg';
 import cancelIcon from '../../public/x-circle.svg';
+import FilterCard from '../filter-card';
 
 const Header: React.FC = () => {
   const { Title, Text } = Typography;
@@ -26,23 +27,8 @@ const Header: React.FC = () => {
             <Title level={3} className='font-extrabold'>Hacktoberfest 2022</Title>
             <Text className='mb-5'>Open source projects and samples for Microsoft</Text> {/* Find out what this means */}
             <div className='flex'>
-              <div className='mr-3 py-[7px] px-2 border border-[#C5C5C5] rounded-lg'>
-                <Text strong>
-                  <Image src={hashtag} /> hacktoberfest
-                </Text>
-              </div>
-              {filterorg && 
-              <div className='mr-3 py-[7px] px-2 border bg-white border-[#C5C5C5] rounded-lg'>
-                <Text className='flex items-center pt-[3px]' strong>
-                <div className='flex items-end pr-1'>
-                  <Image src={orgIcon} />
-                </div>
-                {filterorg}
-                <div className='flex items-end pl-1'>
-                  <Image src={cancelIcon} />
-                </div>
-                </Text>
-              </div>}
+              <FilterCard filterName='hacktoberfest' hashtagIcon />
+              {filterorg && <FilterCard filterName={filterorg as string} bgColor='white'/>}
             </div>
           </div>
         </header>

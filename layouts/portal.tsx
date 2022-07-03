@@ -9,12 +9,12 @@ const PortalLayout = ({children}: {children: React.ReactNode}) => {
     <>
       <TopNav />
       <div className="page-container flex min-h-[88vh] flex-col items-center justify-center">
-        <div className='info-container min-w-full min-h-[100px] pb-8'>
+        <div className='info-container min-w-full min-h-[100px]'>
           <Header />
           <Nav />
         </div>
 
-        <main className="flex w-full flex-1 flex-col items-center justify-center text-center px-[64px]">
+        <main className="flex w-full flex-1 flex-col items-center justify-center text-center px-[64px] pt-8 pb-6">
           {children}
         </main>
       </div>
