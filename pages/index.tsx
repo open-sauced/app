@@ -1,12 +1,12 @@
-import { WithPageLayout } from '../interfaces/with-page-layout';
-import { useEffect } from 'react';
-import { useRouter } from 'next/router';
+import { WithPageLayout } from "../interfaces/with-page-layout";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 
 const Home: WithPageLayout = () => {
   const router = useRouter();
 
   useEffect(() => {
-    router.push('portal/hacktoberfest?tool=Dashboard');
+    router.push("portal/hacktoberfest?tool=Dashboard");
   }, [router]);
 
   return (

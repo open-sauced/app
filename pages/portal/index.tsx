@@ -1,5 +1,5 @@
-import PortalLayout from '../../layouts/portal'
-import { WithPageLayout } from '../../interfaces/with-page-layout';
+import PortalLayout from "../../layouts/portal"
+import { WithPageLayout } from "../../interfaces/with-page-layout";
 
 const Portal: WithPageLayout = () => {
   return (
