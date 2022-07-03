@@ -7,12 +7,12 @@ const AuthSection: React.FC = () => {
     return (
         <div className='flex'>
             <div className='flex items-center'>
-                <Image src={notifications} />
+                <Image alt='Notification Icon' src={notifications} />
                 <div className='ml-3 mr-1'>
-                    <Image src='/ellipse-1.png' height={32} width={32} />
+                    <Image alt='User Avatar' src='/ellipse-1.png' height={32} width={32} />
                 </div>
                 <div>
-                    <Image src={downArrow}/>
+                    <Image alt='Down Arrow' src={downArrow}/>
                 </div>
             </div>
         </div>

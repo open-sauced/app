@@ -7,7 +7,7 @@ const Home: WithPageLayout = () => {
 
   useEffect(() => {
     router.push('portal/hacktoberfest?tool=Dashboard');
-  }, []);
+  }, [router]);
 
   return (
     <main className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center">
