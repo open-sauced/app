@@ -1,4 +1,4 @@
-import PortalLayout from "../../layouts/portal"
+import PortalLayout from "../../layouts/portal";
 import { WithPageLayout } from "../../interfaces/with-page-layout";
 import { useRouter } from "next/router";
 import Default from "../../components/organisms/Default/default";
@@ -13,12 +13,12 @@ const Portal: WithPageLayout = () => {
     (tool ?
       <Tool /> : <Default />
     )
-  )
-}
+  );
+};
 
 Portal.PageLayout = PortalLayout;
 
-export default Portal
+export default Portal;
 
 /* 
 

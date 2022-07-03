@@ -12,7 +12,7 @@ const HeaderLogo: React.FC = () => {
             <Image alt="Open Sauced Logo" width={32} height={32} src={openSaucedImg} />
             <Text className="font-semibold px-2 text-[16px]" strong style={{ color: "white" }}>OpenSauced</Text>
         </div>
-    )
+    );
 };
 
 export default HeaderLogo;

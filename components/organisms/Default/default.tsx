@@ -57,10 +57,10 @@ const Default = () => {
         </a>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default Default
+export default Default;
 
 /* 
 

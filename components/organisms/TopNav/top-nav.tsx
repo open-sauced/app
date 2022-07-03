@@ -8,7 +8,7 @@ const TopNav: React.FC = () => {
             <HeaderLogo />
             <AuthSection />
         </div>
-    )
+    );
 };
 
 export default TopNav;

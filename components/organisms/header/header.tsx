@@ -1,7 +1,7 @@
 import React from "react";
-import { Typography } from "@supabase/ui"
+import { Typography } from "@supabase/ui";
 import { useRouter } from "next/router";
-import Image from "next/image"
+import Image from "next/image";
 import FilterCard from "../../molecules/FilterCard/filter-card";
 
 const Header: React.FC = () => {
@@ -30,7 +30,7 @@ const Header: React.FC = () => {
             </div>
           </div>
         </header>
-    )
+    );
 };
 
 export default Header;

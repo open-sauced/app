@@ -71,7 +71,7 @@ const Nav: React.FC = () => {
         )}
       </div>
     </nav>
-  )
-}
+  );
+};
 
 export default Nav;

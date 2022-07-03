@@ -1,8 +1,8 @@
 //Idea came from this repo: https://github.com/brookslybrand/next-nested-layouts
 
-import "../styles/globals.css"
-import Head from "next/head"
-import type { AppProps } from "next/app"
+import "../styles/globals.css";
+import Head from "next/head";
+import type { AppProps } from "next/app";
 import GlobalState from "../context/global-state";
 import "./nav.css";
 import { useRouter } from "next/router";
@@ -43,8 +43,8 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
         )}
       </GlobalState>
     </>
-  )
+  );
   
 }
 
-export default MyApp
+export default MyApp;

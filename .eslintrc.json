@@ -5,6 +5,6 @@
     "quotes": "error",
     "camelcase": "error",
     "jsx-quotes": "error",
-    "no-magic-numbers": "error"
+    "semi": "error"
   }
 }

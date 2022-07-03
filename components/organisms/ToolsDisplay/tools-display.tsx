@@ -54,7 +54,7 @@ const Tool: React.FC = () => {
                 </>
             }
         </div>
-    )
+    );
 };
 
 export default Tool;

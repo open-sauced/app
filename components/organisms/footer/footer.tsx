@@ -1,4 +1,4 @@
-import React from "react"
+import React from "react";
 
 const Footer: React.FC = () => {
     return (
@@ -12,7 +12,7 @@ const Footer: React.FC = () => {
             Powered by<div className="font-bold">GitSense</div>
           </a>
         </footer>
-    )
-}
+    );
+};
 
 export default Footer;
