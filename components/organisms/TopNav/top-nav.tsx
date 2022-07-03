@@ -1,6 +1,6 @@
 import React from 'react';
-import AuthSection from './auth-section';
-import HeaderLogo from './header-logo';
+import AuthSection from '../../molecules/AuthSection/auth-section';
+import HeaderLogo from '../../molecules/HeaderLogo/header-logo';
 
 const TopNav: React.FC = () => {
     return (

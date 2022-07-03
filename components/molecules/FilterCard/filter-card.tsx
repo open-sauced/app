@@ -1,9 +1,9 @@
 import React from "react";
 import { Typography } from "@supabase/ui"
 import Image from 'next/image'
-import hashtag from '../public/Icon.svg';
-import orgIcon from '../public/bookmark-alt.svg';
-import cancelIcon from '../public/x-circle.svg';
+import hashtag from '../../../public/Icon.svg';
+import orgIcon from '../../../public/bookmark-alt.svg';
+import cancelIcon from '../../../public/x-circle.svg';
 
 interface FilterCardProps {
     filterName: string;

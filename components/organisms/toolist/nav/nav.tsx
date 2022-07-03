@@ -1,6 +1,5 @@
 import React from 'react';
 import Link from 'next/link';
-import { test } from '../../../test'
 import { useRouter } from 'next/router';
 import { Button } from '@supabase/ui';
 

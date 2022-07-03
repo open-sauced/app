@@ -1,11 +1,11 @@
 import { useRouter } from "next/router";
 import { Input } from "@supabase/ui";
 import React from "react";
-import Table from "./misc/table-test/table";
-import Table2 from "./misc/table-test/table-2";
-import Table3 from "./misc/table-test/table-3";
-import Table4 from "./misc/table-test/table-4";
-import Card from "./card";
+import Table from "../../misc/table-test/table";
+import Table2 from "../../misc/table-test/table-2";
+import Table3 from "../../misc/table-test/table-3";
+import Table4 from "../../misc/table-test/table-4";
+import Card from "../../atoms/Card/card";
 
 const Tool: React.FC = () => {
     const router = useRouter();

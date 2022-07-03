@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
-import notifications from '../public/notifications.svg';
-import downArrow from '../public/chevron-down.svg';
+import notifications from '../../../public/notifications.svg';
+import downArrow from '../../../public/chevron-down.svg';
 
 const AuthSection: React.FC = () => {
     return (

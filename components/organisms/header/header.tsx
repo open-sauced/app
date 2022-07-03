@@ -2,10 +2,7 @@ import React from 'react';
 import { Typography } from "@supabase/ui"
 import { useRouter } from 'next/router';
 import Image from 'next/image'
-import hashtag from '../../public/Icon.svg';
-import orgIcon from '../../public/bookmark-alt.svg';
-import cancelIcon from '../../public/x-circle.svg';
-import FilterCard from '../filter-card';
+import FilterCard from '../../molecules/FilterCard/filter-card';
 
 const Header: React.FC = () => {
   const { Title, Text } = Typography;

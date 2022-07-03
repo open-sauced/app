@@ -1,8 +1,8 @@
 import React from 'react';
-import Footer from '../components/footer/footer';
-import Header from '../components/header/header';
-import Nav from '../components/toolist/nav/nav';
-import TopNav from '../components/top-nav';
+import Footer from '../components/organisms/footer/footer';
+import Header from '../components/organisms/header/header';
+import Nav from '../components/organisms/toolist/nav/nav';
+import TopNav from '../components/organisms/TopNav/top-nav';
 
 const PortalLayout = ({children}: {children: React.ReactNode}) => {
   return (

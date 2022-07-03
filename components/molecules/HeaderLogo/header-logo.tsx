@@ -1,7 +1,7 @@
 import React from 'react';
 import { Typography } from '@supabase/ui';
 import Image from 'next/image';
-import openSaucedImg from '../public/oslogo.png';
+import openSaucedImg from '../../../public/oslogo.png';
 
 const HeaderLogo: React.FC = () => {
     
