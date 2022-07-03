@@ -1,11 +1,11 @@
 import React from "react";
-import { Typography } from "@supabase/ui";
 import { useRouter } from "next/router";
 import Image from "next/image";
+import Text from "../../atoms/Typography/text";
+import Title from "../../atoms/Typography/title";
 import FilterCard from "../../molecules/FilterCard/filter-card";
 
 const Header: React.FC = () => {
-  const { Title, Text } = Typography;
   const router = useRouter();
 
   const { filterorg } = router.query;

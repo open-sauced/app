@@ -1,6 +1,6 @@
 import React from "react";
-import { Typography } from "@supabase/ui"
-import Image from "next/image"
+import Image from "next/image";
+import StrongText from "../../atoms/Typography/strong-text";
 import hashtag from "../../../public/Icon.svg";
 import orgIcon from "../../../public/bookmark-alt.svg";
 import cancelIcon from "../../../public/x-circle.svg";
@@ -12,15 +12,14 @@ interface FilterCardProps {
 }
 
 const FilterCard: React.FC<FilterCardProps> = ({ filterName, bgColor, hashtagIcon }) => {
-    const { Text } = Typography;
     return (
         <div className={`mr-3 py-[7px] px-2 border border-[#C5C5C5] ${bgColor && `bg-${bgColor}`} rounded-lg`}>
             { hashtagIcon ?
-                <Text strong>
+                <StrongText>
                     <Image alt="Hashtag Icon" src={hashtag} /> {filterName}
-                </Text>
+                </StrongText>
                 :
-                <Text className="flex items-center pt-[3px]" strong>
+                <StrongText customTailWindProps="flex items-center pt-[3px]">
                     <div className="flex items-end pr-1">
                         <Image alt="Organization Icon" src={orgIcon} />
                     </div>
@@ -28,10 +27,10 @@ const FilterCard: React.FC<FilterCardProps> = ({ filterName, bgColor, hashtagIco
                     <div className="flex items-end pl-1">
                         <Image alt="Cancel Icon" src={cancelIcon} />
                     </div>
-                </Text>
+                </StrongText>
             }
         </div>
-    )
+    );
 };
 
 export default FilterCard;
