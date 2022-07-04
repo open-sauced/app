@@ -6,6 +6,7 @@
     "start": "next start",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
+    "node-reset": "rm -rf node_modules && npm ci",
     "lint": "next lint",
     "lint-fix": "next lint --fix"
   },
