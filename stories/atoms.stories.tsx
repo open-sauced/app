@@ -3,7 +3,7 @@ import Text from "../components/atoms/Typography/text";
 import StrongText from "../components/atoms/Typography/strong-text";
 
 const storyConfig = {
-    title: "Atoms"
+  title: "Atoms"
 };
 
 export default storyConfig;

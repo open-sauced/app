@@ -9,13 +9,13 @@ interface TextProps {
 }
 
 const Title: React.FC<TextProps> = ({ className, customTailWindProps, level, children }) => {
-    const { Title } = Typography;
+  const { Title } = Typography;
 
-    return (
-        <Title level={level} className={`${className && className} ${customTailWindProps && customTailWindProps}`}>
-            {children}
-        </Title>
-    );
+  return (
+    <Title level={level} className={`${className && className} ${customTailWindProps && customTailWindProps}`}>
+      {children}
+    </Title>
+  );
 };
 
 export default Title;

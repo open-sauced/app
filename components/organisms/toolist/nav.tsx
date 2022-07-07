@@ -12,7 +12,7 @@ const Nav: React.FC = () => {
       <div className="px-[64px] flex flex-row">
         {toolList.map((tool, index) => 
           <div 
-          key={index} className={`nav-tool-item ${navbarTool === tool.name ? "border-b-2 border-[#FFA01C]" : ""}`}>
+            key={index} className={`nav-tool-item ${navbarTool === tool.name ? "border-b-2 border-[#FFA01C]" : ""}`}>
             <Link
               href={tool.name === "nextjs" ?
                 `${portalName}` :
@@ -21,7 +21,7 @@ const Nav: React.FC = () => {
             >
               <Button size="xlarge" type="text" disabled={navbarTool === tool.name}>
                 <h5 className={navbarTool === tool.name ? "text-black" : ""}>
-                {tool.name}
+                  {tool.name}
                 </h5>
                 {
                   tool.numOf && 

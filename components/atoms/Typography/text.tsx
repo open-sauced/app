@@ -8,13 +8,13 @@ interface TextProps {
 }
 
 const Text: React.FC<TextProps> = ({ className, customTailWindProps, children }) => {
-    const { Text } = Typography;
+  const { Text } = Typography;
 
-    return (
-        <Text className={`${className && className} ${customTailWindProps && customTailWindProps}`}>
-            {children}
-        </Text>
-    );
+  return (
+    <Text className={`${className && className} ${customTailWindProps && customTailWindProps}`}>
+      {children}
+    </Text>
+  );
 };
 
 export default Text;

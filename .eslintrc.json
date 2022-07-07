@@ -5,6 +5,7 @@
     "quotes": "error",
     "camelcase": "error",
     "jsx-quotes": "error",
-    "semi": "error"
+    "semi": "error",
+    "indent": ["error", 2]
   }
 }
