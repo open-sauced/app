@@ -1,11 +1,11 @@
 //Idea came from this repo: https://github.com/brookslybrand/next-nested-layouts
 
-import '../styles/globals.css'
-import Head from 'next/head'
-import type { AppProps } from 'next/app'
-import GlobalState from '../context/global-state';
-import './nav.css';
-import { useRouter } from 'next/router';
+import "../styles/globals.css";
+import Head from "next/head";
+import type { AppProps } from "next/app";
+import GlobalState from "../context/global-state";
+import "./nav.css";
+import useGetPortalName from "../lib/hooks/useGetPortalName";
 
 type ComponentWithPageLayout = AppProps & {
   Component: AppProps["Component"] & {
@@ -14,17 +14,7 @@ type ComponentWithPageLayout = AppProps & {
 };
 
 function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
-
-  const router = useRouter();
-
-  const { asPath } = router;
-  
-  function getPortalName(string: string) {
-    const tempName = string.slice(8, string.search('\\?'));
-    return tempName.charAt(0).toUpperCase() + tempName.slice(1);
-  }
-
-  const portalName = getPortalName(asPath);
+  const portalName = useGetPortalName();
 
   return (
     <>
@@ -43,8 +33,8 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
         )}
       </GlobalState>
     </>
-  )
+  );
   
 }
 
-export default MyApp
+export default MyApp;

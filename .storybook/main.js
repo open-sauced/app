@@ -6,7 +6,10 @@ module.exports = {
   "addons": [
     "@storybook/addon-links",
     "@storybook/addon-essentials",
-    "@storybook/addon-interactions",{
+    "@storybook/addon-interactions",
+    "@storybook/addon-a11y",
+    "storybook-addon-next",
+    {
       // From stack-overflow answer: https://stackoverflow.com/a/68757745
       name: '@storybook/addon-postcss',
       options: {
