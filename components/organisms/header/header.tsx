@@ -22,9 +22,9 @@ const Header: React.FC = () => {
         />
       </div>
       <div className="header-info flex flex-col grow justify-center p-2">
-        <Title level={3} className="font-extrabold">Hacktoberfest 2022</Title>
-        <Text className="mb-5">Open source projects and samples for Microsoft</Text> {/* Find out what this means */}
-        <div className="flex">
+        <Title level={1} className="!text-3xl font-semibold tracking-tight text-slate-900">Hacktoberfest 2022</Title>
+        <Text className="mt-1 !text-base font-medium text-slate-500">Open source projects and samples for Microsoft.</Text> {/* Find out what this means */}
+        <div className="flex mt-4">
           <FilterCard filterName="hacktoberfest" hashtagIcon />
           {filterorg && <FilterCard filterName={filterorg as string} bgColor="white"/>}
         </div>
