@@ -11,7 +11,7 @@ const Header: React.FC = () => {
   const { filterorg } = router.query;
 
   return (
-    <header className="header flex flex-row pt-[24px] px-[64px] bg-[#F1F3F5]">
+    <header className="header flex flex-row pt-[24px] px-[64px] bg-slate-50">
       <div className="header-image mr-2 p-2 min-w-[130px]">
         <Image
           alt="Portal Logo"

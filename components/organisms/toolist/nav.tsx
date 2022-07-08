@@ -8,8 +8,8 @@ const Nav: React.FC = () => {
   const { toolList, navbarTool, portalName } = useNav();
 
   return (
-    <nav className="tool-list-nav min-h-[50px] bg-[#F1F3F5] border-b">
       <div className="px-[64px] flex flex-row">
+    <nav className="tool-list-nav min-h-[50px] bg-slate-50 border-b pt-3">
         {toolList.map((tool, index) => 
           <div 
             key={index} className={`nav-tool-item ${navbarTool === tool.name ? "border-b-2 border-[#FFA01C]" : ""}`}>
@@ -25,7 +25,7 @@ const Nav: React.FC = () => {
                 </h5>
                 {
                   tool.numOf && 
-                    <div className="ml-2 px-[3px] py-[2px] bg-[#DFE3E6] border rounded-lg">
+                    <div className="ml-2 py-0.5 px-1.5 bg-slate-200 text-slate-500 border rounded-full text-xs font-semibold">
                       {tool.numOf}
                     </div>
                 }
