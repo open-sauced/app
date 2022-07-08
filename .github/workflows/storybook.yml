@@ -8,6 +8,7 @@ on:
       - stories/**
       - src/components/**
   workflow_call:
+  workflow_dispatch:
 
 jobs:
   deploy:
