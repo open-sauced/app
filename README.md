@@ -1,27 +1,79 @@
-# Next.js + Tailwind CSS Example
-
-This example shows how to use [Tailwind CSS](https://tailwindcss.com/) [(v3.0)](https://tailwindcss.com/blog/tailwindcss-v3) with Next.js. It follows the steps outlined in the official [Tailwind docs](https://tailwindcss.com/docs/guides/nextjs).
-
-## Deploy your own
-
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example) or preview live with [StackBlitz](https://stackblitz.com/github/vercel/next.js/tree/canary/examples/with-tailwindcss)
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/vercel/next.js/tree/canary/examples/with-tailwindcss&project-name=with-tailwindcss&repository-name=with-tailwindcss)
-
-## How to use
-
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init), [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/), or [pnpm](https://pnpm.io) to bootstrap the example:
-
-```bash
-npx create-next-app --example with-tailwindcss with-tailwindcss-app
-# or
-yarn create next-app --example with-tailwindcss with-tailwindcss-app
-# or
-pnpm create next-app --example with-tailwindcss with-tailwindcss-app
-```
-
-Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
+<div align="center">
+  <br>
+  <img alt="Open Sauced" src="https://i.ibb.co/7jPXt0Z/logo1-92f1a87f.png" width="300px">
+  <h1>🍕 insights.opensauced.pizza 🍕</h1>
+  <strong>The site provides insights to Open Source projects.</strong>
+</div>
+<br>
 
 ## Project Figma
 
-[Link Here](https://www.figma.com/file/OpVX6WT7dmWqnwRuEvADMF/OpenSauced-%E2%80%94-Insights-(insights.opensauced.pizza))
+The figma for this project can be found [here](https://www.figma.com/file/OpVX6WT7dmWqnwRuEvADMF/OpenSauced-%E2%80%94-Insights-(insights.opensauced.pizza)).
+
+## Atomic Design
+
+This project uses Atomic Design for it's Components. Here are several resources for Atomic Design if you are unfamiliar:
+
+- [Atomic Design by Brad Frost](https://bradfrost.com/blog/post/atomic-web-design/)
+- [Atomic Design - How To Make Web and UI Design Easier](https://www.youtube.com/watch?v=W3A33dmp17E)
+
+## 🖥️ Local development
+
+To install the application:
+
+```shell
+npm ci
+```
+
+To start a local copy of the app on port `3000`:
+
+```shell
+npm start
+```
+
+### 🎨 Code linting
+
+To check the code and styles quality, use the following command:
+
+```shell
+npm run lint
+```
+
+This will also display during development, but not break on errors.
+
+To fix the linting errors, use the following command:
+
+```shell
+npm run format
+```
+
+### 🚀 Production deployment
+
+A production deployment is a complete build of the project, including the build of the static assets.
+
+```shell
+npm run build
+```
+
+## 🤝 Contributing
+
+We encourage you to contribute to Open Sauced! Please check out the [Contributing guide](https://docs.opensauced.pizza/contributing/introduction-to-contributing/) for guidelines about how to proceed.
+
+We have a commit utility called [@open-sauced/conventional-commit](https://github.com/open-sauced/conventional-commit) that helps you write your commits in a way that is easy to understand and process by others.
+
+It is generally integrated as an `npm` script but you can run it with `npx` as well:
+
+```shell
+npm run push
+```
+
+For any other npm based project or dotnpmrc defaulting to `--yes`:
+
+```shell
+npx -y @open-sauced/conventional-commit
+```
+
+## 🍕 Community
+
+Got Questions? Join the conversation in our [Discord](https://discord.gg/U2peSNf23P).  
+Find Open Sauced videos and release overviews on our [YouTube Channel](https://www.youtube.com/channel/UCklWxKrTti61ZCROE1e5-MQ).
