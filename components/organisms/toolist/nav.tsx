@@ -13,7 +13,7 @@ const Nav: React.FC = () => {
       aria-orientation="horizontal"
       aria-label="Browse the tools"
       tabIndex={0}
-      className="tool-list-nav flex flex-row gap-2 px-16 bg-slate-50 border-b pt-3">
+      className="tool-list-nav flex flex-row gap-2 px-16 bg-slate-50 border-b pt-3 overflow-hidden">
       
       {toolList.map((tool, index) => 
         <Link
@@ -23,8 +23,8 @@ const Nav: React.FC = () => {
           }
           key={index} className={`nav-tool-item ${navbarTool === tool.name ? "border-b-2 border-slate-400" : ""}`}
         >
-          <Button size="xlarge" type="text" className="!px-4 hover:!bg-slate-100">
-            <span className={"text-base " + (navbarTool === tool.name ? "text-slate-900" : "text-slate-500")}>
+          <Button size="xlarge" type="text" className="!px-4 hover:!bg-slate-100 child:flex child:items-center">
+            <span className={"text-base whitespace-nowrap " + (navbarTool === tool.name ? "text-slate-900" : "text-slate-500")}>
               {tool.name}
             </span>
             {
