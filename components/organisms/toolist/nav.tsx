@@ -21,8 +21,7 @@ const Nav: React.FC = () => {
           aria-selected={navbarTool === tool.name ? "true" : "false"}
           data-state={navbarTool === tool.name ? "active" : "inactive"}
           tabIndex={-1}
-          key={index} className={`tool-list-item ${navbarTool === tool.name ? "" : ""}`}
-          >
+          key={index} className={`tool-list-item ${navbarTool === tool.name ? "" : ""}`}>
           <Link
             href={tool.name === "nextjs" ?
               `${portalName}` :
