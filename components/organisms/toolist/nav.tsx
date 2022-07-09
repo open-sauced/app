@@ -19,7 +19,7 @@ const Nav: React.FC = () => {
                 `${portalName}?tool=${tool.name}`
               }
             >
-              <Button size="xlarge" type="text" className="!px-4 hover:!bg-slate-100">
+              <Button disabled={navbarTool === tool.name} size="xlarge" type="text" className="!px-4 hover:!bg-slate-100">
                 <span className={"text-base " + (navbarTool === tool.name ? "text-slate-900" : "text-slate-500")}>
                   {tool.name}
                 </span>
