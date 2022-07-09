@@ -1,5 +1,6 @@
 import React from "react";
 import Image, { StaticImageData } from "next/image";
+import AvatarImage from "../public/hacktoberfest.png";
 
 interface AvatarProps {
     className?: string;
@@ -17,7 +18,7 @@ const Avatar: React.FC<AvatarProps> = ({ className, customTailwindStyles, avatar
   return (
     <Image 
       className={`${className && className} ${customTailwindStyles && customTailwindStyles} rounded-full object-cover`}
-      alt={alt ? alt : "Avatar"} width={size} height={size} loader={avatarLoader} src={avatarURL ? avatarURL : avatarLoader} />
+      alt={alt ? alt : "Avatar"} width={size} height={size} loader={avatarLoader} src={avatarURL ? avatarURL : AvatarImage} />
   );
 };
 
