@@ -7,5 +7,12 @@ module.exports = {
   theme: {
     extend: {},
   },
-  plugins: [],
+  plugins: [
+    function ({ addVariant }) {
+      addVariant('child', '& > *');
+      addVariant('child-hover', '& > *:hover');
+      addVariant('child-active', '& > *:active');
+      addVariant('child-focus', '& > *:focus');
+    }
+  ],
 }
