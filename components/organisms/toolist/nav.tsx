@@ -23,7 +23,7 @@ const Nav: React.FC = () => {
           }
           key={index} className={`nav-tool-item ${navbarTool === tool.name ? "border-b-2 border-slate-400" : ""}`}
         >
-          <Button disabled={navbarTool === tool.name} size="xlarge" type="text" className="!px-4 hover:!bg-slate-100">
+          <Button size="xlarge" type="text" className="!px-4 hover:!bg-slate-100">
             <span className={"text-base " + (navbarTool === tool.name ? "text-slate-900" : "text-slate-500")}>
               {tool.name}
             </span>
