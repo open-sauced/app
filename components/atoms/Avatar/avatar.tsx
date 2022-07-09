@@ -1,6 +1,6 @@
 import React from "react";
 import Image, { StaticImageData } from "next/image";
-import AvatarImage from "../public/hacktoberfest.png";
+import AvatarImage from "../../../public/hacktoberfest-icon.png";
 
 interface AvatarProps {
     className?: string;
