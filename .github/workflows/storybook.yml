@@ -6,7 +6,7 @@ on:
       - main
     paths:
       - stories/**
-      - src/components/**
+      - components/**
   workflow_call:
   workflow_dispatch:
 
