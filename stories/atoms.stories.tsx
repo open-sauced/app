@@ -2,6 +2,7 @@ import Avatar from "../components/atoms/Avatar/avatar";
 import Card from "../components/atoms/Card/card";
 import Text from "../components/atoms/Typography/text";
 import StrongText from "../components/atoms/Typography/strong-text";
+import ContextThumbnail from "../components/atoms/ContextThumbnail/context-thumbnail";
 
 const storyConfig = {
   title: "Atoms"
@@ -13,3 +14,4 @@ export const AvatarAtom = () => <Avatar size={40} avatarURL="https://images.unsp
 export const CardAtom = () => <Card><div>Test</div></Card>;
 export const TextAtom = () => <Text><div>Test</div></Text>;
 export const StrongTextAtom = () => <StrongText><div>Test</div></StrongText>;
+export const ContextThumbnailAtom = () => <ContextThumbnail size={96}></ContextThumbnail>;
