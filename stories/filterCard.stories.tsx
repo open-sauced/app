@@ -4,7 +4,7 @@ import FilterCard from "../components/molecules/FilterCard/filter-card";
 
 
 const storyConfig = {
-  title: "FilterCard",
+  title: "Design System/Atoms/FilterCard",
   component: "FilterCard",
   argTypes: {
     isRemovable: {

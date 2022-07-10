@@ -5,7 +5,7 @@ import StrongText from "../components/atoms/Typography/strong-text";
 import ContextThumbnail from "../components/atoms/ContextThumbnail/context-thumbnail";
 
 const storyConfig = {
-  title: "Atoms"
+  title: "Design System/Atoms/Atoms"
 };
 
 export default storyConfig;

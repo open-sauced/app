@@ -6,7 +6,7 @@ import Tool from "../components/organisms/ToolsDisplay/tools-display";
 import TopNav from "../components/organisms/TopNav/top-nav";
 
 const storyConfig = {
-  title: "Organisms"
+  title: "Design System/Organisms/Organisms"
 };
 
 export default storyConfig;
