@@ -9,9 +9,10 @@ interface FilterCardProps {
     filterName: string;
     bgColor?: string;
     hashtagIcon?: boolean;
+    isRemovable?: boolean;
 }
 
-const FilterCard: React.FC<FilterCardProps> = ({ filterName, bgColor, hashtagIcon }) => {
+const FilterCard: React.FC<FilterCardProps> = ({ filterName, bgColor, hashtagIcon, isRemovable }) => {
   return (
     <div className={`mr-3 py-1 px-2 py-0.5 border border-slate-300 ${bgColor && `bg-${bgColor}`} rounded-lg`}>
       { hashtagIcon ?
