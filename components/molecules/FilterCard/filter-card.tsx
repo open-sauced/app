@@ -14,7 +14,9 @@ interface FilterCardProps {
 
 const FilterCard: React.FC<FilterCardProps> = ({ filterName, bgColor, hashtagIcon, isRemovable }) => {
   return (
-    <div className={`mr-3 py-1 px-2 py-0.5 border border-slate-300 ${bgColor && `bg-${bgColor}`} rounded-lg`}>
+    <div 
+      tabIndex={0}
+      className={`inline-block mr-3 py-1 px-2 py-0.5 border border-slate-300 outline-none hover:bg-slate-50 focus:ring-2 ${bgColor && `bg-${bgColor}`} ${isRemovable ? "focus:ring-orange-500" : "bg-slate-100 focus:ring-slate-300" } rounded-lg`}>
       { hashtagIcon ?
         <div className="flex items-center gap-1">
           <Image alt="Hashtag Icon" src={hashtag} />
@@ -28,7 +30,11 @@ const FilterCard: React.FC<FilterCardProps> = ({ filterName, bgColor, hashtagIco
           <Text className="text-base font-semibold tracking-tight">
             {filterName}
           </Text>
-          <Image alt="Cancel Icon" src={cancelIcon} />
+          { isRemovable ? 
+            <Image alt="Cancel Icon" src={cancelIcon} />
+            :
+            false
+          }
         </div>
       }
     </div>
