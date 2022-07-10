@@ -10,6 +10,10 @@ const storyConfig = {
     isRemovable: {
       options: [true, false],
       control: { type: "radio" }
+    },
+    icon: {
+      options: ["repo", "topic", "org", "contributor"],
+      control: { type: "select" }
     }
   }
 };
