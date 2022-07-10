@@ -38,29 +38,20 @@ const FilterCard: React.FC<FilterCardProps> = ({ filterName, bgColor, icon, isRe
     <div 
       tabIndex={0}
       className={`inline-block mr-3 py-1 px-2 py-0.5 border border-slate-300 outline-none hover:bg-slate-50 focus:ring-2 ${bgColor && `bg-${bgColor}`} ${isRemovable ? "focus:ring-orange-500" : "bg-slate-100 focus:ring-slate-300" } rounded-lg`}>
-      { icon ?
-        <div className="flex items-center gap-1">
-          <Image 
-            width={14} height={14}
-            alt={icon === "topic" ? icons.topic.alt : icon === "org" ? icons.org.alt : icon === "contributor" ? icons.contributor.alt : icon === "repo" ? icons.repo.alt : "Icon"} 
-            src={icon === "topic" ? icons.topic.src : icon === "org" ? icons.org.src : icon === "contributor" ? icons.contributor.src : icon === "repo" ? icons.repo.src : icons.topic.src} />
-          <Text className="!text-sm font-semibold tracking-tight !text-slate-900">
-            {filterName}
-          </Text>
-        </div>
-        :
-        <div className="flex items-center gap-1">
-          <Image alt="Organization Icon" src={orgIcon} />
-          <Text className="text-base font-semibold tracking-tight">
-            {filterName}
-          </Text>
-          { isRemovable ? 
-            <Image alt="Cancel Icon" src={cancelIcon} />
-            :
-            false
-          }
-        </div>
-      }
+      <div className="flex items-center gap-1">
+        <Image 
+          width={14} height={14}
+          alt={icon === "topic" ? icons.topic.alt : icon === "org" ? icons.org.alt : icon === "contributor" ? icons.contributor.alt : icon === "repo" ? icons.repo.alt : "Icon"} 
+          src={icon === "topic" ? icons.topic.src : icon === "org" ? icons.org.src : icon === "contributor" ? icons.contributor.src : icon === "repo" ? icons.repo.src : icons.topic.src} />
+        <Text className="!text-sm font-semibold tracking-tight !text-slate-900">
+          {filterName}
+        </Text>
+        { isRemovable ? 
+          <Image alt="Cancel Icon" src={cancelIcon} />
+          :
+          false
+        }
+      </div>
     </div>
   );
 };
