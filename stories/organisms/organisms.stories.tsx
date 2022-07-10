@@ -1,9 +1,9 @@
-import Default from "../components/organisms/Default/default";
-import Footer from "../components/organisms/footer/footer";
-import Header from "../components/organisms/header/header";
-import Nav from "../components/organisms/toolist/nav";
-import Tool from "../components/organisms/ToolsDisplay/tools-display";
-import TopNav from "../components/organisms/TopNav/top-nav";
+import Default from "../../components/organisms/Default/default";
+import Footer from "../../components/organisms/footer/footer";
+import Header from "../../components/organisms/header/header";
+import Nav from "../../components/organisms/toolist/nav";
+import Tool from "../../components/organisms/ToolsDisplay/tools-display";
+import TopNav from "../../components/organisms/TopNav/top-nav";
 
 const storyConfig = {
   title: "Design System/Organisms/Organisms"

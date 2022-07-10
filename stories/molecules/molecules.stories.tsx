@@ -1,6 +1,6 @@
-import AuthSection from "../components/molecules/AuthSection/auth-section";
-import FilterCard from "../components/molecules/FilterCard/filter-card";
-import HeaderLogo from "../components/molecules/HeaderLogo/header-logo";
+import AuthSection from "../../components/molecules/AuthSection/auth-section";
+import FilterCard from "../../components/molecules/FilterCard/filter-card";
+import HeaderLogo from "../../components/molecules/HeaderLogo/header-logo";
 
 const storyConfig = {title: "Design System/Molecules/Molecules"
 };

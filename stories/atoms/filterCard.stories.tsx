@@ -1,6 +1,6 @@
 import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-import FilterCard from "../components/molecules/FilterCard/filter-card";
+import FilterCard from "../../components/molecules/FilterCard/filter-card";
 
 
 const storyConfig = {
