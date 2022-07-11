@@ -1,6 +1,6 @@
 on:
   schedule:
-  - cron: 01 13 * * 0
+  - cron: 03 09 * * 1
 name: Top 5
 jobs:
   createAnIssue:
