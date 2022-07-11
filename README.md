@@ -21,6 +21,19 @@ This project uses Atomic Design for it's Components. Here are several resources 
 
 The Stoybook for this project can be found at [design-insights.opensauced.pizza](https://design-insight.opensauced.pizza/?path=/story/atoms--card-atom).
 
+### Run it locally
+
+```bash
+npm run storybook
+```
+
+### Deploy your branch
+
+Navigate to the [Storybook Action](https://github.com/open-sauced/insights/actions/workflows/storybook.yml). Choose your branch in the "Run Workflow" dropdown.
+
+<img width="1050" alt="storybook action tab" src="https://user-images.githubusercontent.com/5713670/178128835-d81205f3-a875-474f-8b4f-46a1ad814fe1.png">
+
+
 ## 🖥️ Local development
 
 To install the application:
