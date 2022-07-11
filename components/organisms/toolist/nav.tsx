@@ -1,11 +1,19 @@
 import React from "react";
 import Link from "next/link";
-import useNav from "./hooks/useNav";
 import { Button } from "@supabase/ui";
 
-const Nav: React.FC = () => {
+type toolListArray = {
+  name: string;
+  numOf?: number;
+}
 
-  const { toolList, navbarTool, portalName } = useNav();
+interface NavProps {
+  toolList: toolListArray[];
+  selectedTool: string | string[] | undefined;
+  portalName: string | string[] | undefined;
+}
+
+const Nav: React.FC<NavProps> = ({ toolList, selectedTool, portalName }) => {
 
   return (
     <nav 
@@ -18,18 +26,18 @@ const Nav: React.FC = () => {
       {toolList.map((tool, index) => 
         <div
           role="tab"
-          aria-selected={navbarTool === tool.name ? "true" : "false"}
-          data-state={navbarTool === tool.name ? "active" : "inactive"}
+          aria-selected={selectedTool === tool.name ? "true" : "false"}
+          data-state={selectedTool === tool.name ? "active" : "inactive"}
           tabIndex={-1}
-          key={index} className={`tool-list-item ${navbarTool === tool.name ? "" : ""}`}>
+          key={index} className={`tool-list-item ${selectedTool === tool.name ? "" : ""}`}>
           <Link
             href={tool.name === "nextjs" ?
               `${portalName}` :
               `${portalName}?tool=${tool.name}`
             }
           >
-            <Button size="xlarge" type="text" className={`!px-4 hover:!bg-slate-100 after:block after:absolute after:inset-x-0 after:-bottom-0.5 after:h-0.5 after:rounded-lg ${navbarTool === tool.name ? "after:bg-orange-500" : "focus:after:bg-slate-400"} focus:bg-slate-100 focus:ring-slate-300 child:flex child:items-center`}>
-              <span className={"text-base whitespace-nowrap " + (navbarTool === tool.name ? "text-slate-900" : "text-slate-500")}>
+            <Button size="xlarge" type="text" className={`!px-4 hover:!bg-slate-100 after:block after:absolute after:inset-x-0 after:-bottom-0.5 after:h-0.5 after:rounded-lg ${selectedTool === tool.name ? "after:bg-orange-500" : "focus:after:bg-slate-400"} focus:bg-slate-100 focus:ring-slate-300 child:flex child:items-center`}>
+              <span className={"text-base whitespace-nowrap " + (selectedTool === tool.name ? "text-slate-900" : "text-slate-500")}>
                 {tool.name}
               </span>
               {
