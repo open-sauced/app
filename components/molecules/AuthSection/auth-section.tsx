@@ -2,6 +2,8 @@ import React from "react";
 import Image from "next/image";
 import notifications from "../../../public/notifications.svg";
 import downArrow from "../../../public/chevron-down.svg";
+import userAvatar from "../../../public/ellipse-1.png";
+import Avatar from "components/atoms/Avatar/avatar";
 
 const AuthSection: React.FC = () => {
   return (
@@ -9,7 +11,7 @@ const AuthSection: React.FC = () => {
       <div className="flex items-center">
         <Image alt="Notification Icon" src={notifications} />
         <div className="ml-3 mr-1">
-          <Image alt="User Avatar" src="/ellipse-1.png" height={32} width={32} />
+          <Avatar alt="User Avatar" avatarURL={userAvatar} size={32} />
         </div>
         <div>
           <Image alt="Down Arrow" src={downArrow}/>
