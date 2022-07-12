@@ -8,22 +8,22 @@ type Props = {
 
 const GlobalState = ({children}: Props) => {
 
-    const initialState = {
-        user: {}
-    };
+  const initialState = {
+    user: {}
+  };
 
-    const [appState, setAppState] = useState(initialState);
+  const [appState, setAppState] = useState(initialState);
 
-    const providerValue = {
-        appState,
-        setAppState
-    };
+  const providerValue = {
+    appState,
+    setAppState
+  };
 
-    return (
-      <AppContext.Provider value={providerValue}>
-          {children}
-      </AppContext.Provider>
-    );
-}
+  return (
+    <AppContext.Provider value={providerValue}>
+      {children}
+    </AppContext.Provider>
+  );
+};
 
 export default GlobalState;

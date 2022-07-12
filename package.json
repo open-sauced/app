@@ -8,7 +8,7 @@
     "build-storybook": "build-storybook",
     "node-reset": "rm -rf node_modules && npm ci",
     "lint": "next lint",
-    "format": "next lint --fix",
+    "format": "next lint -- --fix --dir .",
     "push": "npx @open-sauced/conventional-commit"
   },
   "dependencies": {
