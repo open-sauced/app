@@ -6,8 +6,9 @@ interface AvatarProps {
     className?: string;
     customTailwindStyles?: string;
     avatarURL?: string | StaticImageData;
+    initials?: string;
     alt?: string;
-    size?: number;
+    size?: "sm" | "base" | "lg";
     hasBorder?: boolean;
 }
 
@@ -15,12 +16,21 @@ const avatarLoader = () => {
   return "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1064&q=80";
 };
 
-const Avatar: React.FC<AvatarProps> = ({ className, customTailwindStyles, avatarURL, alt, size, hasBorder }) => {
+const Avatar: React.FC<AvatarProps> = ({ className, customTailwindStyles, avatarURL, initials, alt, size, hasBorder }) => {
 
   return (
-    <Image 
-      className={`${className && className} ${customTailwindStyles && customTailwindStyles} rounded-full object-cover ${hasBorder ? "border border-white" : ""}`}
-      alt={alt ? alt : "Avatar"} width={!size ? 32 : size} height={!size ? 32 : size} loader={avatarLoader} src={avatarURL ? avatarURL : AvatarImage} />
+    <div
+      className={`inline-flex bg-orange-500 justify-center items-center rounded-full overflow-hidden ${hasBorder ? "ring-2 ring-slate-200" : ""} ${size === "sm" ? "w-6 h-6" : size === "base" ? "w-8 h-8" : size === "lg" ? "w-12 h-12" : "w-8 h-8"}`}>
+      { avatarURL ?
+        <Image 
+          className={`${className && className} ${customTailwindStyles && customTailwindStyles} object-cover`}
+          alt={alt ? alt : "Avatar"} width={size === "sm" ? 16 : size === "base" ? 32 : size === "lg" ? 48 : 32} height={size === "sm" ? 16 : size === "base" ? 32 : size === "lg" ? 48 : 32} loader={avatarLoader} src={avatarURL ? avatarURL : AvatarImage} />
+        :
+        <div className={`font-bold leading-none text-slate-50 mb-0.25 ${size === "sm" ? "text-xs" : size === "base" ? "text-sm" : size === "lg" ? "text-lg" : "text-sm"}`}>
+          { initials }
+        </div>
+      }
+    </div>
   );
 };
 
