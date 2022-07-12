@@ -10,8 +10,8 @@ const AuthSection: React.FC = () => {
     <div className="flex">
       <div className="flex items-center">
         <Image alt="Notification Icon" src={notifications} />
-        <div className="ml-3 mr-1">
-          <Avatar alt="User Avatar" avatarURL={userAvatar} size={32} />
+        <div className="flex ml-3 mr-1">
+          <Avatar alt="User Avatar" avatarURL={userAvatar} size={"base"} hasBorder={true} />
         </div>
         <div>
           <Image alt="Down Arrow" src={downArrow}/>
