@@ -17,9 +17,9 @@ This project uses Atomic Design for it's Components. Here are several resources 
 - [Atomic Design by Brad Frost](https://bradfrost.com/blog/post/atomic-web-design/)
 - [Atomic Design - How To Make Web and UI Design Easier](https://www.youtube.com/watch?v=W3A33dmp17E)
 
-## Storybook
+## 📙 Storybook
 
-The Stoybook for this project can be found at [design-insights.opensauced.pizza](https://design-insight.opensauced.pizza/?path=/story/atoms--card-atom).
+The Stoybook for this project can be found at [design-insights.opensauced.pizza](https://design-insights.opensauced.pizza).
 
 ### Run it locally
 
