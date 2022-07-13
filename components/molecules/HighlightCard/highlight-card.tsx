@@ -6,6 +6,7 @@ import orgIcon from "../../../public/icons/org.svg";
 import personIcon from "../../../public/icons/person.svg";
 import repoIcon from "../../../public/icons/repo.svg";
 import cancelIcon from "../../../public/x-circle.svg";
+import metricArrow from "../../../public/icons/metric-arrow.svg";
 
 interface HighlightCardProps {
     label?: string;
@@ -62,9 +63,9 @@ const HighlightCard: React.FC<HighlightCardProps> = ({ label, color, icon, metri
           {/* Last Updated: Icon */}
           <div>
             <Image 
-              width={12} height={12}
-              alt={icon === "topic" ? icons.topic.alt : icon === "org" ? icons.org.alt : icon === "contributor" ? icons.contributor.alt : icon === "repo" ? icons.repo.alt : "Icon"} 
-              src={icon === "topic" ? icons.topic.src : icon === "org" ? icons.org.src : icon === "contributor" ? icons.contributor.src : icon === "repo" ? icons.repo.src : icons.topic.src} />
+              width={14} height={14}
+              alt="" 
+              src={metricArrow.src} />
           </div>
         </div>
       </div>
