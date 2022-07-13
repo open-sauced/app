@@ -10,9 +10,7 @@ import metricArrow from "../../../public/icons/metric-arrow.svg";
 
 interface HighlightCardProps {
     label?: string;
-    color?: string;
     icon?: "topic" | "repo" | "org" | "contributor";
-    metric?: "decreases" | "increases";
     increased?: boolean;
     numChanged?: number;
     percentage?: number;
@@ -41,7 +39,7 @@ const icons = {
   }
 };
 
-const HighlightCard: React.FC<HighlightCardProps> = ({ label, color, icon, metric, increased, numChanged, percentage, percentageLabel }) => {
+const HighlightCard: React.FC<HighlightCardProps> = ({ label, icon, increased, numChanged, percentage, percentageLabel }) => {
   return (
     <div className="flex flex-col bg-white border border-slate-300 rounded-lg max-w-md h-auto p-2">
       {/* Top Information */}
