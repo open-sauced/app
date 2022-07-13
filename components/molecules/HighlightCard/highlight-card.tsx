@@ -92,7 +92,15 @@ const HighlightCard: React.FC<HighlightCardProps> = ({ label, color, icon, metri
         </div>
 
         {/* Progress Bar */}
-        <div className="flex w-full h-3 rounded-full bg-black mt-4"></div>
+        <div className="flex items-center w-full rounded-full mt-7 gap-1">
+          <div className="bg-blue-600 h-3 rounded-full" 
+            style={{width: (percentage ? percentage : 28) + "%"}}></div>
+            
+          <div className="bg-gray-200 w-auto flex-auto h-3 rounded-full"></div>
+        </div>
+
+        {/* Actual Progress Bar (can't be implemented until we figure out how to style it with TailwindCSS). */}
+        {/* <progress id={label + "-percentage"} value={percentage ? percentage : 40} max="100" className="appearance-none w-full h-3 rounded-full mt-4 overflow-hidden :bg-orange-500"></progress> */}
       </div>
     </div>
   );
