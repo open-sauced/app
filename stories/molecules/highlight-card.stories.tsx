@@ -6,4 +6,4 @@ const storyConfig = {
 
 export default storyConfig;
 
-export const HighlightCardMolecule = () => <HighlightCard filterName={""} />;
+export const HighlightCardMolecule = () => <HighlightCard />;
