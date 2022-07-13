@@ -35,7 +35,31 @@ const icons = {
 
 const HighlightCard: React.FC<HighlightCardProps> = ({ label, color, icon, metric }) => {
   return (
+    <div className="flex flex-col bg-white border border-slate-300 rounded-lg h-32">
+      {/* Top Information */}
+      <div className="flex justify-space-between">
+        {/* Label */}
         <div></div>
+
+        {/* Last Updated Information */}
+        <div></div>
+      </div>
+
+      {/* Main Information */}
+      <div>
+        {/* Main Number */}
+        <div>
+          {/* Percentage */}
+          <div></div>
+          
+          {/* Label */}
+          <div></div>
+        </div>
+
+        {/* Progress Bar */}
+        <div></div>
+      </div>
+    </div>
   );
 };
 
