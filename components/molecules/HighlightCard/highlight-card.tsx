@@ -38,13 +38,13 @@ const HighlightCard: React.FC<HighlightCardProps> = ({ label, color, icon, metri
   return (
     <div className="flex flex-col bg-white border border-slate-300 rounded-lg max-w-md h-auto p-2">
       {/* Top Information */}
-      <div className="flex justify-between w-full p-2">
+      <div className="flex justify-between w-full p-1">
         {/* Label */}
         <div className="flex items-center gap-2">
           {/* Label: Icon */}
-          <div className="w-6 h-6 flex justify-center items-center bg-orange-100 rounded-full">
+          <div className="w-8 h-8 flex justify-center items-center bg-orange-100 rounded-full">
             <Image 
-              width={12} height={12}
+              width={16} height={16}
               alt={icon === "topic" ? icons.topic.alt : icon === "org" ? icons.org.alt : icon === "contributor" ? icons.contributor.alt : icon === "repo" ? icons.repo.alt : "Icon"} 
               src={icon === "topic" ? icons.topic.src : icon === "org" ? icons.org.src : icon === "contributor" ? icons.contributor.src : icon === "repo" ? icons.repo.src : icons.topic.src} />
           </div>
