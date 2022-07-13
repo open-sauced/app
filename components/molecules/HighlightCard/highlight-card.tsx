@@ -46,7 +46,7 @@ const HighlightCard: React.FC<HighlightCardProps> = ({ label, icon, metricIncrea
         {/* Label */}
         <div className="flex items-center gap-2">
           {/* Label: Icon */}
-          <div className="w-8 h-8 flex justify-center items-center bg-orange-100 rounded-full">
+          <div className={`w-8 h-8 flex justify-center items-center ${icon === "participation" ? "bg-blue-100" : icon === "accepted-pr" ? "bg-green-100" : icon === "unlabeled-pr" ? "bg-cyan-100" : icon === "spam" ? "bg-orange-100" : "bg-slate-100"} rounded-full`}>
             <Image 
               width={16} height={16}
               alt={icon === "participation" ? icons.participation.label : icon === "accepted-pr" ? icons.acceptedPR.label : icon === "unlabeled-pr" ? icons.unlabeledPR.label : icon === "spam" ? icons.spam.label : "Icon"} 
