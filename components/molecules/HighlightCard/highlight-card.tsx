@@ -70,18 +70,18 @@ const HighlightCard: React.FC<HighlightCardProps> = ({ label, color, icon, metri
       </div>
 
       {/* Main Information */}
-      <div>
+      <div className="flex flex-col w-full px-6 pb-5">
         {/* Main Number */}
-        <div>
+        <div className="flex flex-col items-center">
           {/* Percentage */}
-          <div></div>
+          <div className="text-4xl font-normal">64%</div>
           
           {/* Label */}
-          <div></div>
+          <div className="text-sm font-medium text-slate-600">Label</div>
         </div>
 
         {/* Progress Bar */}
-        <div></div>
+        <div className="flex w-full h-3 rounded-full bg-black mt-4"></div>
       </div>
     </div>
   );
