@@ -8,7 +8,7 @@ import metricArrow from "../../../public/icons/metric-arrow.svg";
 
 interface HighlightCardProps {
     label?: string;
-    icon?: "topic" | "repo" | "org" | "contributor";
+    icon?: "participation" | "accepted-pr" | "unlabeled-pr" | "spam";
     metricIncreases: boolean;
     increased?: boolean;
     numChanged?: number;
@@ -49,8 +49,8 @@ const HighlightCard: React.FC<HighlightCardProps> = ({ label, icon, metricIncrea
           <div className="w-8 h-8 flex justify-center items-center bg-orange-100 rounded-full">
             <Image 
               width={16} height={16}
-              alt={icon === "topic" ? icons.topic.alt : icon === "org" ? icons.org.alt : icon === "contributor" ? icons.contributor.alt : icon === "repo" ? icons.repo.alt : "Icon"} 
-              src={icon === "topic" ? icons.topic.src : icon === "org" ? icons.org.src : icon === "contributor" ? icons.contributor.src : icon === "repo" ? icons.repo.src : icons.topic.src} />
+              alt={icon === "participation" ? icons.participation.label : icon === "accepted-pr" ? icons.acceptedPR.label : icon === "unlabeled-pr" ? icons.unlabeledPR.label : icon === "spam" ? icons.spam.label : "Icon"} 
+              src={icon === "participation" ? icons.participation.src : icon === "accepted-pr" ? icons.acceptedPR.src : icon === "unlabeled-pr" ? icons.unlabeledPR.src : icon === "spam" ? icons.spam.src : "Icon"} />
           </div>
           {/* Label: Text */}
           <div className="text-sm text-slate-600 font-medium leading-none">
