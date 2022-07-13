@@ -92,9 +92,9 @@ const HighlightCard: React.FC<HighlightCardProps> = ({ label, color, icon, metri
         </div>
 
         {/* Progress Bar */}
-        <div className="flex items-center w-full rounded-full mt-7 gap-1">
+        <div className={`flex items-center w-full rounded-full mt-7 ${(percentage && percentage > 0) ? "gap-2" : ""}`}>
           <div className="bg-blue-600 h-3 rounded-full" 
-            style={{width: (percentage ? percentage : 28) + "%"}}></div>
+            style={{width: (percentage ? percentage : 0) + "%"}}></div>
             
           <div className="bg-gray-200 w-auto flex-auto h-3 rounded-full"></div>
         </div>
