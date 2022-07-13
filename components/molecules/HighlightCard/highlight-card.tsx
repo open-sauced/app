@@ -1,11 +1,9 @@
 import React from "react";
 import Image from "next/image";
-import Text from "../../atoms/Typography/text";
-import hashIcon from "../../../public/icons/hash.svg";
-import orgIcon from "../../../public/icons/org.svg";
-import personIcon from "../../../public/icons/person.svg";
-import repoIcon from "../../../public/icons/repo.svg";
-import cancelIcon from "../../../public/x-circle.svg";
+import repoIcon from "../../../public/icons/icon-repo--blue.svg";
+import prIcon from "../../../public/icons/icon-pr--green.svg";
+import labelIcon from "../../../public/icons/icon-label--blue.svg";
+import thumbsIcon from "../../../public/icons/icon-thumbs-down--yellow.svg";
 import metricArrow from "../../../public/icons/metric-arrow.svg";
 
 interface HighlightCardProps {
@@ -22,21 +20,21 @@ interface HighlightCardProps {
 // Replace these icons, or make them dynamic.
 // Maybe create an Icon component.
 const icons = {
-  topic: {
-    src: hashIcon.src,
-    alt: "Topic"
-  },
-  org: {
-    src: orgIcon.src,
-    alt: "Organization"
-  },
-  contributor: {
-    src: personIcon.src,
-    alt: "Contributor"
-  },
-  repo: {
+  participation: {
     src: repoIcon.src,
-    alt: "Repository"
+    label: "Participation"
+  },
+  acceptedPR: {
+    src: prIcon.src,
+    label: "Accepted PRs"
+  },
+  unlabeledPR: {
+    src: labelIcon.src,
+    label: "Unlabeled PRs"
+  },
+  spam: {
+    src: thumbsIcon.src,
+    label: "Spam"
   }
 };
 
