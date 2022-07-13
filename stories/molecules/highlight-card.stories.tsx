@@ -26,6 +26,7 @@ export const Increases = HighlightCardTemplate.bind({});
 Increases.args = { 
   label: "Participation",
   icon: "repo",
+  metricIncreases: true,
   increased: true,
   numChanged: 38,
   percentage: 42,
@@ -37,7 +38,8 @@ export const Decreases = HighlightCardTemplate.bind({});
 Decreases.args = { 
   label: "Participation",
   icon: "repo",
-  increased: false,
+  metricIncreases: false,
+  increased: true,
   numChanged: 38,
   percentage: 42,
   percentageLabel: "of 49,999"
