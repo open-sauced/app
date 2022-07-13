@@ -15,6 +15,9 @@ interface HighlightCardProps {
     metric?: "decreases" | "increases";
 }
 
+// TO-DO:
+// Replace these icons, or make them dynamic.
+// Maybe create an Icon component.
 const icons = {
   topic: {
     src: hashIcon.src,
