@@ -10,7 +10,7 @@ const storyConfig = {
       control: { type: "text" }
     },
     icon: {
-      options: ["repo", "topic", "org", "contributor"],
+      options: ["participation", "accepted-pr", "unlabeled-pr", "spam"],
       control: { type: "select" }
     }
   }
@@ -25,7 +25,7 @@ const HighlightCardTemplate: ComponentStory<typeof HighlightCard> = (args) => <H
 export const Increases = HighlightCardTemplate.bind({});
 Increases.args = { 
   label: "Participation",
-  icon: "repo",
+  icon: "participation",
   metricIncreases: true,
   increased: true,
   numChanged: 38,
@@ -36,11 +36,11 @@ Increases.args = {
 // HighlightCard: Metric Decreases
 export const Decreases = HighlightCardTemplate.bind({});
 Decreases.args = { 
-  label: "Participation",
-  icon: "repo",
+  label: "Spam",
+  icon: "spam",
   metricIncreases: false,
   increased: true,
-  numChanged: 38,
-  percentage: 42,
+  numChanged: 98,
+  percentage: 80,
   percentageLabel: "of 49,999"
 };
