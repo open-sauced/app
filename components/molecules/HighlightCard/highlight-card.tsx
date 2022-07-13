@@ -57,7 +57,7 @@ const HighlightCard: React.FC<HighlightCardProps> = ({ label, color, icon, metri
           </div>
           {/* Label: Text */}
           <div className="text-sm text-slate-600 font-medium leading-none">
-            { label }
+            { label ? label : "Label" }
           </div>
         </div>
 
@@ -65,27 +65,30 @@ const HighlightCard: React.FC<HighlightCardProps> = ({ label, color, icon, metri
         <div className="flex items-center gap-1">
           {/* Last Updated: Number */}
           <div className="text-sm text-slate-600 font-medium leading-none">
-            98
+            { numChanged ? numChanged : 0 } 
           </div>
           {/* Last Updated: Icon */}
-          <div>
-            <Image 
-              width={14} height={14}
-              alt="" 
-              src={metricArrow.src} />
-          </div>
+          <Image 
+            width={14} height={14}
+            alt={(increased ? "Increased " : "Decreased ") + label + " by" + numChanged} 
+            src={metricArrow.src} 
+            className={`${increased ? "" : "rotate-180"}`} />
         </div>
       </div>
 
       {/* Main Information */}
-      <div className="flex flex-col w-full px-6 pb-5">
+      <div className="flex flex-col w-full px-6 pb-5 mt-2">
         {/* Main Number */}
         <div className="flex flex-col items-center">
           {/* Percentage */}
-          <div className="text-4xl font-normal">64%</div>
+          <div className="text-4xl font-normal">
+            { percentage ? percentage : 0 }%
+          </div>
           
           {/* Label */}
-          <div className="text-sm font-medium text-slate-600">Label</div>
+          <div className="text-base font-medium text-slate-600 mt-0.5">
+            { percentageLabel ? percentageLabel : "Label"}
+          </div>
         </div>
 
         {/* Progress Bar */}
