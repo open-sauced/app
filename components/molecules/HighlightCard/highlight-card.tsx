@@ -11,6 +11,7 @@ import metricArrow from "../../../public/icons/metric-arrow.svg";
 interface HighlightCardProps {
     label?: string;
     icon?: "topic" | "repo" | "org" | "contributor";
+    metricIncreases: boolean;
     increased?: boolean;
     numChanged?: number;
     percentage?: number;
@@ -39,7 +40,7 @@ const icons = {
   }
 };
 
-const HighlightCard: React.FC<HighlightCardProps> = ({ label, icon, increased, numChanged, percentage, percentageLabel }) => {
+const HighlightCard: React.FC<HighlightCardProps> = ({ label, icon, metricIncreases, increased, numChanged, percentage, percentageLabel }) => {
   return (
     <div className="flex flex-col bg-white border border-slate-300 rounded-lg max-w-md h-auto p-2">
       {/* Top Information */}
@@ -90,8 +91,8 @@ const HighlightCard: React.FC<HighlightCardProps> = ({ label, icon, increased, n
         </div>
 
         {/* Progress Bar */}
-        <div className={`flex items-center w-full rounded-full mt-7 ${(percentage && percentage > 0) ? "gap-2" : ""}`}>
-          <div className="bg-blue-600 h-3 rounded-full" 
+        <div className={`flex items-center w-full rounded-full mt-7 ${(percentage && (percentage > 0 || percentage < 99)) ? "gap-2" : ""}`}>
+          <div className={`${metricIncreases ? (percentage && percentage > 70 ? "bg-green-500" : percentage && percentage > 30 ? "bg-yellow-500" : "bg-red-500") : (percentage && percentage > 70 ? "bg-red-500" : percentage && percentage > 30 ? "bg-yellow-500" : "bg-green-500")} h-3 rounded-full`}
             style={{width: (percentage ? percentage : 0) + "%"}}></div>
             
           <div className="bg-gray-200 w-auto flex-auto h-3 rounded-full"></div>
