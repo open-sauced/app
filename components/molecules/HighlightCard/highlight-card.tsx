@@ -13,6 +13,10 @@ interface HighlightCardProps {
     color?: string;
     icon?: "topic" | "repo" | "org" | "contributor";
     metric?: "decreases" | "increases";
+    increased?: boolean;
+    numChanged?: number;
+    percentage?: number;
+    percentageLabel?: string;
 }
 
 // TO-DO:
@@ -37,7 +41,7 @@ const icons = {
   }
 };
 
-const HighlightCard: React.FC<HighlightCardProps> = ({ label, color, icon, metric }) => {
+const HighlightCard: React.FC<HighlightCardProps> = ({ label, color, icon, metric, increased, numChanged, percentage, percentageLabel }) => {
   return (
     <div className="flex flex-col bg-white border border-slate-300 rounded-lg max-w-md h-auto p-2">
       {/* Top Information */}
