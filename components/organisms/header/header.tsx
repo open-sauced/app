@@ -4,7 +4,7 @@ import Image from "next/image";
 import Text from "../../atoms/Typography/text";
 import Title from "../../atoms/Typography/title";
 import ContextThumbnail from "../../atoms/ContextThumbnail/context-thumbnail";
-import FilterCard from "../../molecules/FilterCard/filter-card";
+import FilterCard from "../../atoms/FilterCard/filter-card";
 import Thumbnail from "../../../public/hacktoberfest-icon.png";
 
 const Header: React.FC = () => {
