@@ -8,10 +8,18 @@ import StarIcon from "public/icons/star-icon.svg";
 import Person from "public/icons/person.svg";
 import Icon3 from "public/icons/icon3.svg";
 
+type ParticipantsRow = {
+  title: string;
+  forks: number;
+  stars: number;
+  persons: number;
+  unknown: number;
+}
+
 interface SelectableTableProps {
   title: string;
-  rows?: Object[];
-  ColumnIcons?: "participants";
+  tableType: "participants";
+  rows: ParticipantsRow[];
 }
 
 const iconSuite = {
@@ -23,7 +31,7 @@ const iconSuite = {
   }
 };
 
-const SelectableTable: React.FC<SelectableTableProps> = ({ title }) => {
+const SelectableTable: React.FC<SelectableTableProps> = ({ title, tableType, rows }) => {
   return (
     <Card>
       <>
@@ -41,94 +49,46 @@ const SelectableTable: React.FC<SelectableTableProps> = ({ title }) => {
           <table className="table-auto w-full">
             <thead className="border-b-[1px]">
               <tr>
-                <th className="p-2">
+                <th className="w-[50%] p-2">
                             
                 </th>
                 <th className="p-2">
-                  <Icon IconImage={iconSuite.participants.star} />
+                  <Icon IconImage={iconSuite[tableType].star} />
                 </th>
                 <th className="p-2">
-                  <Icon IconImage={iconSuite.participants.fork} />
+                  <Icon IconImage={iconSuite[tableType].fork} />
                 </th>
                 <th className="p-2">
-                  <Icon IconImage={iconSuite.participants.person} />
+                  <Icon IconImage={iconSuite[tableType].person} />
                 </th>
                 <th className="p-2">
-                  <Icon IconImage={iconSuite.participants.icon3} />
+                  <Icon IconImage={iconSuite[tableType].icon3} />
                 </th>
               </tr>
               <tr className="h-3"></tr>
             </thead>
             <tbody>
               <tr className="h-3"></tr>
-              <tr>
-                <td className="text-left p-2">
-                            freecodecamp
-                </td>
-                <td className="p-2">
-                            +100%
-                </td>
-                <td className="p-2">
-                            +20%
-                </td>
-                <td className="p-2">
-                            +40%
-                </td>
-                <td className="p-2">
-                            +5%
-                </td>
-              </tr>
-              <tr>
-                <td className="text-left p-2">
-                            free-programming-books
-                </td>
-                <td className="p-2">
-                            +60%
-                </td>
-                <td className="p-2">
-                            +40%
-                </td>
-                <td className="p-2">
-                            +40%
-                </td>
-                <td className="p-2">
-                            +20%
-                </td>
-              </tr>
-              <tr>
-                <td className="text-left p-2">
-                            material-ui
-                </td>
-                <td className="p-2">
-                            +30%
-                </td>
-                <td className="p-2">
-                            -10%
-                </td>
-                <td className="p-2">
-                            +5%
-                </td>
-                <td className="p-2">
-                            -10%
-                </td>
-              </tr>
-              <tr>
-                <td className="text-left p-2">
-                            java-design-patterns
-                </td>
-                <td className="p-2">
-                            +40%
-                </td>
-                <td className="p-2">
-                            -10%
-                </td>
-                <td className="p-2">
-                            +10%
-                </td>
-                <td className="p-2">
-                            -15%
-                </td>
-              </tr>
+              {rows?.map((row, index) => {
+                return (
+                  <tr key={index}>
+                    <td className="w-[50%] text-left p-2">
+                      {row.title}
+                    </td>
+                    <td className="p-2">
+                      {row.stars}%
+                    </td>
+                    <td className="p-2">
+                      {row.forks}%
+                    </td>
+                    <td className="p-2">
+                      {row.persons}%
+                    </td>
+                    <td className="p-2">
+                      {row.unknown}%
+                    </td>
+                  </tr>);
+              })}
             </tbody>
           </table>
         </div>

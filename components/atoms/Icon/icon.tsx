@@ -1,6 +1,5 @@
 import React from "react";
 import Image, { StaticImageData } from "next/image";
-import SettingsIcon from "../../../public/settings-icon.svg";
 
 interface IconProps {
     IconImage: StaticImageData;

@@ -9,10 +9,26 @@ const storyConfig = {
 
 export default storyConfig;
 
+const testRows = [
+  {
+    title: "freecodecamp",
+    stars: 100,
+    forks: 20,
+    persons: 40,
+    unknown: 5
+  },
+  {
+    title: "freecodecamp",
+    stars: 100,
+    forks: 20,
+    persons: 40,
+    unknown: 5
+  }
+];
 
 // SelectableTable Template
 const SelectableTableTemplate: ComponentStory<typeof SelectableTable> = (args) => <SelectableTable {...args} />;
 
 // SelectableTable Default
 export const Default = SelectableTableTemplate.bind({});
-Default.args = {title: "Test Title" };
+Default.args = {title: "Test Title", tableType: "participants", rows: testRows };
