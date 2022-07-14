@@ -19,7 +19,7 @@ This project uses Atomic Design for it's Components. Here are several resources 
 
 ## 📙 Storybook
 
-The Stoybook for this project can be found at [design-insights.opensauced.pizza](https://design-insights.opensauced.pizza).
+The Stoybook for this project can be found at [design-insights.opensauced.pizza](https://design-insights.opensauced.pizza). 
 
 ### Run it locally
 
@@ -27,7 +27,7 @@ The Stoybook for this project can be found at [design-insights.opensauced.pizza]
 npm run storybook
 ```
 
-### Deploy your branch
+### Deploy your branch ([video explaining this](https://www.loom.com/share/c3a3fa04a4a343da8228bdb9b9a66746))
 
 Navigate to the [Storybook Action](https://github.com/open-sauced/insights/actions/workflows/storybook.yml). Choose your branch in the "Run Workflow" dropdown.
 
