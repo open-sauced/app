@@ -31,6 +31,16 @@ object-assign
  * Released under the MIT License.
  */
 
+/*!
+* ZRender, a high performance 2d drawing library.
+*
+* Copyright (c) 2013, Baidu Inc.
+* All rights reserved.
+*
+* LICENSE
+* https://github.com/ecomfe/zrender/blob/master/LICENSE.txt
+*/
+
 /** @license React v0.20.2
  * scheduler.production.min.js
  *
