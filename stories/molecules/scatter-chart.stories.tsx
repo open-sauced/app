@@ -49,4 +49,4 @@ const ScatterChartTemplate: ComponentStory<typeof ScatterChart> = (args) => <Sca
 
 // ScatterChart Default
 export const Default = ScatterChartTemplate.bind({});
-Default.args = { option: testOptions };
+Default.args = { title: "Test Title", option: testOptions };
