@@ -1,8 +1,13 @@
 import React from "react";
+import EChartWrapper from "components/atoms/EChartWrapper/echart-wrapper";
 
-const ScatterChart: React.FC = () => {
+interface ScatterChartProps {
+    option: Object;
+}
+
+const ScatterChart: React.FC<ScatterChartProps> = ({ option }) => {
   return (
-    <></>
+    <EChartWrapper option={option} />
   );
 };
 
