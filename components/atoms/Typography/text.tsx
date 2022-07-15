@@ -1,20 +1,19 @@
 import React from "react";
 import { Typography } from "@supabase/ui";
 
-interface TextProps {
-    className?: string;
-    customTailWindProps?: string;
-    children: React.ReactNode;
+const { Text } = Typography;
+
+interface TextProps extends React.ComponentProps<typeof Text> {
+  test?: string;
 }
 
-const Text: React.FC<TextProps> = ({ className, customTailWindProps, children }) => {
-  const { Text } = Typography;
+const Test: React.FC<TextProps> = (props) => {
 
   return (
-    <Text className={`${className && className} ${customTailWindProps && customTailWindProps}`}>
-      {children}
+    <Text {...props}>
+      {props.children}
     </Text>
   );
 };
 
-export default Text;
+export default Test;
