@@ -1,19 +1,19 @@
 import React from "react";
 import { Typography } from "@supabase/ui";
 
-const { Text } = Typography;
+const { Text: SupabaseTextComponent } = Typography;
 
-interface TextProps extends React.ComponentProps<typeof Text> {
-  test?: string;
+interface TextProps extends React.ComponentProps<typeof SupabaseTextComponent> {
+  //Add additional prop definitions here
 }
 
-const Test: React.FC<TextProps> = (props) => {
+const Text: React.FC<TextProps> = (props) => {
 
   return (
-    <Text {...props}>
+    <SupabaseTextComponent {...props}>
       {props.children}
-    </Text>
+    </SupabaseTextComponent>
   );
 };
 
-export default Test;
+export default Text;
