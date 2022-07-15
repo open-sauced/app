@@ -10,7 +10,7 @@ interface TitleProps extends React.ComponentProps<typeof SupabaseTitleComponent>
 const Title: React.FC<TitleProps> = ( props ) => {
 
   return (
-    <SupabaseTitleComponent {...props}>
+    <SupabaseTitleComponent className={`${props.className && props.className}`} {...props}>
       {props.children}
     </SupabaseTitleComponent>
   );

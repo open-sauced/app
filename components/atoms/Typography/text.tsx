@@ -10,7 +10,7 @@ interface TextProps extends React.ComponentProps<typeof SupabaseTextComponent> {
 const Text: React.FC<TextProps> = ( props ) => {
 
   return (
-    <SupabaseTextComponent {...props}>
+    <SupabaseTextComponent className={`${props.className && props.className}`} {...props}>
       {props.children}
     </SupabaseTextComponent>
   );
