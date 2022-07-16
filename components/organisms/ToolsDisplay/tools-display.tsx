@@ -18,32 +18,32 @@ const Tool: React.FC = () => {
         <>
           <div className="flex max-w-full h-[500px] mb-10">
             <div className="flex flex-col w-[60%] mr-10">
-              <Card customTailwindStyles="w-full h-[50%] mb-10 p-5">
+              <Card className="w-full h-[50%] mb-10 p-5">
                 <></>
               </Card>
-              <Card customTailwindStyles="w-full h-[50%] p-5">
+              <Card className="w-full h-[50%] p-5">
                 <></>
               </Card>
             </div>
-            <Card customTailwindStyles="w-[40%] p-5">
+            <Card className="w-[40%] p-5">
               <Table />
             </Card>
           </div>
           <div className="flex w-full h-[500px] mb-10">
             <div className="flex flex-col w-[70%] mr-10">
-              <Card customTailwindStyles="w-full h-[20%] mb-10 p-5">
+              <Card className="w-full h-[20%] mb-10 p-5">
                 <Input placeholder="Filter issues and pull requests by label"/>
               </Card>
               <div className="flex max-w-full h-[80%]">
-                <Card customTailwindStyles="w-[50%] mr-10 h-full p-5">
+                <Card className="w-[50%] mr-10 h-full p-5">
                   <Table2 />
                 </Card>
-                <Card customTailwindStyles="w-[50%] h-full p-5">
+                <Card className="w-[50%] h-full p-5">
                   <Table3 />
                 </Card>
               </div>
             </div>
-            <Card customTailwindStyles="w-[30%] p-5">
+            <Card className="w-[30%] p-5">
               <Table4 />
             </Card>
           </div>

@@ -4,16 +4,15 @@ import ContextThumbnailImage from "../../../public/hacktoberfest-icon.png";
 
 interface ContextThumbnailProps {
     className?: string;
-    customTailwindStyles?: string;
     ContextThumbnailURL?: string | StaticImageData;
     alt?: string;
     size?: string | number;
 }
 
-const ContextThumbnail: React.FC<ContextThumbnailProps> = ({ className, customTailwindStyles, ContextThumbnailURL, alt, size }) => {
+const ContextThumbnail: React.FC<ContextThumbnailProps> = ({ className, ContextThumbnailURL, alt, size }) => {
   return (
     <Image 
-      className={`${className && className} ${customTailwindStyles && customTailwindStyles} rounded-lg border-1 border-slate-100 object-cover`}
+      className={`${className && className} rounded-lg border-1 border-slate-100 object-cover`}
       alt={alt ? alt : "ContextThumbnail"} width={size} height={size} src={ContextThumbnailURL ? ContextThumbnailURL : ContextThumbnailImage} />
   );
 };
