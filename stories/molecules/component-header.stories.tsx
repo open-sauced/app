@@ -9,9 +9,9 @@ const storyConfig = {
 
 export default storyConfig;
 
-// SelectableTable Template
+// ComponentHeader Template
 const ComponentHeaderTemplate: ComponentStory<typeof ComponentHeader> = (args) => <ComponentHeader {...args} />;
 
-// SelectableTable Default
+// ComponentHeader Default
 export const Default = ComponentHeaderTemplate.bind({});
 Default.args = {title: "Test Title" };
