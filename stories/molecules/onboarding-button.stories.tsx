@@ -5,7 +5,7 @@ import OnboardingButton from "../../components/molecules/OnboardingButton/onboar
 const storyConfig = {
   title: "Design System/Molecules/Onboarding Button",
   decorators: [
-    (Story<typeof any) => (
+    (Story<typeof any>) => (
       <div style={{ backgroundColor: "#222", padding: "1rem" }}>
         <Story />
       </div>
