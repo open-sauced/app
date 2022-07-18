@@ -1,18 +1,15 @@
-import React from 'react';
+import React from "react";
 import { ComponentMeta } from "@storybook/react";
 import OnboardingButton from "../../components/molecules/OnboardingButton/onboarding-button";
 
-const storyConfig = {
+export default {
   title: "Design System/Molecules/Onboarding Button",
+  component: OnboardingButton,
   decorators: [
-    (Story<typeof any>) => (
+    (Story) => (
       <div style={{ backgroundColor: "#222", padding: "1rem" }}>
         <Story />
       </div>
     )
   ]
-};
-
-export default storyConfig as ComponentMeta<typeof OnboardingButton>;
-
-export const OnboardingButtonMolecule = () => <OnboardingButton />;
+} as ComponentMeta<typeof OnboardingButton>;
