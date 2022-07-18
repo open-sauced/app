@@ -7,6 +7,7 @@ import ForkIcon from "public/icons/fork-icon.svg";
 import StarIcon from "public/icons/star-icon.svg";
 import Person from "public/icons/person.svg";
 import Icon3 from "public/icons/icon3.svg";
+import ComponentHeader from "../ComponentHeader/component-header";
 
 type ParticipantsRow = {
   title: string;
@@ -34,16 +35,7 @@ const iconSuite = {
 const SelectableTable: React.FC<SelectableTableProps> = ({ title, tableType, rows }) => {
   return (
     <>
-      <div className="w-full flex justify-between pb-5">
-        <div>
-          <Text className="!text-light-slate-12 font-medium">
-            {title}
-          </Text>
-        </div>
-        <div>
-          <IconButton />
-        </div>
-      </div>
+      <ComponentHeader title={title} />
       <div>
         <table className="table-auto w-full">
           <thead className="border-b-[1px]">
