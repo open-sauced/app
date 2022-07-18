@@ -8,12 +8,10 @@ import Avatar from "components/atoms/Avatar/avatar";
 const AuthSection: React.FC = () => {
   return (
     <div className="flex">
-      <div className="flex items-center">
+      <div className="flex items-center gap-3">
         <Image alt="Notification Icon" src={notifications} />
-        <div className="flex ml-3 mr-1">
+        <div className="flex gap-2">
           <Avatar alt="User Avatar" avatarURL={userAvatar} size={"base"} hasBorder={true} />
-        </div>
-        <div>
           <Image alt="Down Arrow" src={downArrow}/>
         </div>
       </div>
