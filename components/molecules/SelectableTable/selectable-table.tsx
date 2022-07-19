@@ -6,6 +6,7 @@ import StarIcon from "public/icons/star-icon.svg";
 import Person from "public/icons/person.svg";
 import Icon3 from "public/icons/icon3.svg";
 import ComponentHeader from "../ComponentHeader/component-header";
+import { truncateString } from "../../../lib/funcs/truncate-string";
 
 type ParticipantsRow = {
   title: string;
@@ -60,9 +61,9 @@ const SelectableTable: React.FC<SelectableTableProps> = ({ title, tableType, row
             <tr className="h-3"></tr>
             {rows?.map((row, index) => {
               return (
-                <tr key={index}>
+                <tr className={`hover:content-['${row.title}']`} key={index}>
                   <td className="flex flex-row text-left p-2">
-                    <Checkbox label=""/> {row.title}
+                    <Checkbox label=""/> {window.innerWidth < 425 ? truncateString(row.title, 3) : row.title}
                   </td>
                   <td className="text-right p-2">
                     {row.stars}%

@@ -6,6 +6,13 @@ module.exports = {
   ],
   theme: {
     extend: {
+      screens: {
+        "xs": "425px",
+        // => @media (min-width: 425px) { ... }
+  
+        "2xl": "1440px"
+        // => @media (min-width: 320px) { ... }
+      },
       colors: {
         light: {
           "slate": {

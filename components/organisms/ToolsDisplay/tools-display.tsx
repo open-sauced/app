@@ -15,17 +15,19 @@ const Tool: React.FC = () => {
     <div className="flex flex-col w-full">
       {tool === "Dashboard" ?
         <>
-          <div className="flex justify-between max-w-full mb-10">
-            <HighlightCard 
+          <div className="flex flex-wrap justify-center items-center lg:flex-row lg:flex-nowrap max-w-full mb-10">
+            <HighlightCard
+              className="mb-4 lg:mb-0 md:mr-3 lg:min-w-[24.3%]"
               label="Participation"
               icon="participation"
               metricIncreases={true}
               increased={true}
               numChanged={38}
-              percentage={42}
+              percentage={40}
               percentageLabel="of 49,999"
             />
-            <HighlightCard 
+            <HighlightCard
+              className="mb-4 lg:mb-0 md:mr-3 lg:min-w-[24.3%]"
               label="Spam"
               icon="spam"
               metricIncreases={false}
@@ -34,43 +36,45 @@ const Tool: React.FC = () => {
               percentage={80}
               percentageLabel="of 49,999"
             />
-            <HighlightCard 
+            <HighlightCard
+              className="mb-4 lg:mb-0 md:mr-3 lg:min-w-[24.3%]"
               label="Accepted PRs"
               icon="accepted-pr"
               metricIncreases={true}
               increased={false}
               numChanged={38}
-              percentage={42}
+              percentage={37}
               percentageLabel="of 49,999"
             />
-            <HighlightCard 
+            <HighlightCard
+              className="mb-4 lg:mb-0 lg:min-w-[24.3%]"
               label="Unlabeled PRs"
               icon="unlabeled-pr"
               metricIncreases={false}
               increased={false}
-              numChanged={98}
-              percentage={80}
+              numChanged={85}
+              percentage={77}
               percentageLabel="of 49,999"
             />
           </div>
-          <div className="flex max-w-full mb-10">
-            <div className="flex flex-col w-[60%] mr-10">
+          <div className="flex flex-col lg:flex-row max-w-full mb-10">
+            <div className="flex flex-col w-full lg:w-[50%] xl:!w-[60%] mr-10">
               <Card className="w-full mb-10 p-5">
                 <ScatterChart title="Test Title" option={testOptions} />
               </Card>
               <Card className="w-full mb-10 p-5">
                 <ScatterChart title="Test Title" option={testOptions} />
               </Card>
-              <div className="flex w-full h-[500px]">
-                <Card className="w-[50%] mr-10 h-full p-5">
+              <div className="flex flex-col 2xl:flex-row w-full h-auto">
+                <Card className="w-full mb-10 2xl:mb-0 2xl:w-[49%] xl:mr-4 h-full px-1 md:px-5 py-5">
                   <SelectableTable rows={testRows} title="Test Title" tableType="participants" />
                 </Card>
-                <Card className="w-[50%] h-full p-5">
+                <Card className="w-full mb-10 2xl:mb-0 2xl:w-[49%] h-full px-1 md:px-5 py-5">
                   <SelectableTable rows={testRows} title="Test Title" tableType="participants" />
                 </Card>
               </div>
             </div>
-            <Card className="w-[40%] p-5">
+            <Card className="w-full lg:w-[50%] xl:!w-[40%] px-1 md:px-5 py-5">
               <SelectableTable rows={extendedTestRows} title="Test Title" tableType="participants" />
             </Card>
           </div>
