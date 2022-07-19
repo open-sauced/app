@@ -13,7 +13,7 @@ module.exports = {
         "xxs": "320px",
         // => @media (min-width: 320px) { ... }
   
-        "2xl": "1536px"
+        "2xl": "1440px"
         // => @media (min-width: 320px) { ... }
       },
       colors: {

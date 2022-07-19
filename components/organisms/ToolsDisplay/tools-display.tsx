@@ -23,7 +23,7 @@ const Tool: React.FC = () => {
               metricIncreases={true}
               increased={true}
               numChanged={38}
-              percentage={42}
+              percentage={40}
               percentageLabel="of 49,999"
             />
             <HighlightCard
@@ -43,7 +43,7 @@ const Tool: React.FC = () => {
               metricIncreases={true}
               increased={false}
               numChanged={38}
-              percentage={42}
+              percentage={37}
               percentageLabel="of 49,999"
             />
             <HighlightCard
@@ -52,8 +52,8 @@ const Tool: React.FC = () => {
               icon="unlabeled-pr"
               metricIncreases={false}
               increased={false}
-              numChanged={98}
-              percentage={80}
+              numChanged={85}
+              percentage={77}
               percentageLabel="of 49,999"
             />
           </div>
