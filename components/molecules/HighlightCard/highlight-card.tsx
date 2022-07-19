@@ -7,6 +7,7 @@ import thumbsIcon from "../../../public/icons/icon-thumbs-down--yellow.svg";
 import metricArrow from "../../../public/icons/metric-arrow.svg";
 
 interface HighlightCardProps {
+    className?: string;
     label?: string;
     icon?: "participation" | "accepted-pr" | "unlabeled-pr" | "spam";
     metricIncreases: boolean;
@@ -38,9 +39,9 @@ const icons = {
   }
 };
 
-const HighlightCard: React.FC<HighlightCardProps> = ({ label, icon, metricIncreases, increased, numChanged, percentage, percentageLabel }) => {
+const HighlightCard: React.FC<HighlightCardProps> = ({ className, label, icon, metricIncreases, increased, numChanged, percentage, percentageLabel }) => {
   return (
-    <div className="flex flex-col bg-white border border-slate-300 rounded-lg min-w-[316px] max-w-md h-auto p-2">
+    <div className={`${className && className} flex flex-col bg-white border border-slate-300 rounded-lg min-w-[316px] max-w-md h-auto p-2`}>
       {/* Top Information */}
       <div className="flex justify-between w-full p-1">
         {/* Label */}

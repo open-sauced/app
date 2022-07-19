@@ -15,8 +15,9 @@ const Tool: React.FC = () => {
     <div className="flex flex-col w-full">
       {tool === "Dashboard" ?
         <>
-          <div className="flex justify-between max-w-full mb-10">
-            <HighlightCard 
+          <div className="flex max-w-full mb-10">
+            <HighlightCard
+              className="mr-3"
               label="Participation"
               icon="participation"
               metricIncreases={true}
@@ -25,7 +26,8 @@ const Tool: React.FC = () => {
               percentage={42}
               percentageLabel="of 49,999"
             />
-            <HighlightCard 
+            <HighlightCard
+              className="mr-3"
               label="Spam"
               icon="spam"
               metricIncreases={false}
@@ -34,7 +36,8 @@ const Tool: React.FC = () => {
               percentage={80}
               percentageLabel="of 49,999"
             />
-            <HighlightCard 
+            <HighlightCard
+              className="mr-3"
               label="Accepted PRs"
               icon="accepted-pr"
               metricIncreases={true}
@@ -43,7 +46,7 @@ const Tool: React.FC = () => {
               percentage={42}
               percentageLabel="of 49,999"
             />
-            <HighlightCard 
+            <HighlightCard
               label="Unlabeled PRs"
               icon="unlabeled-pr"
               metricIncreases={false}
