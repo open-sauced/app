@@ -15,9 +15,9 @@ const Tool: React.FC = () => {
     <div className="flex flex-col w-full">
       {tool === "Dashboard" ?
         <>
-          <div className="flex flex-col md:flex-row max-w-full mb-10">
+          <div className="flex flex-col items-center lg:flex-row max-w-full mb-10">
             <HighlightCard
-              className="mb-4 md:mb-0 md:mr-3 md:min-w-[24.3%]"
+              className="mb-4 lg:mb-0 lg:mr-3 lg:min-w-[24.3%]"
               label="Participation"
               icon="participation"
               metricIncreases={true}
@@ -27,7 +27,7 @@ const Tool: React.FC = () => {
               percentageLabel="of 49,999"
             />
             <HighlightCard
-              className="mb-4 md:mb-0 md:mr-3 md:min-w-[24.3%]"
+              className="mb-4 lg:mb-0 lg:mr-3 lg:min-w-[24.3%]"
               label="Spam"
               icon="spam"
               metricIncreases={false}
@@ -37,7 +37,7 @@ const Tool: React.FC = () => {
               percentageLabel="of 49,999"
             />
             <HighlightCard
-              className="mb-4 md:mb-0 md:mr-3 md:min-w-[24.3%]"
+              className="mb-4 lg:mb-0 lg:mr-3 lg:min-w-[24.3%]"
               label="Accepted PRs"
               icon="accepted-pr"
               metricIncreases={true}
@@ -47,7 +47,7 @@ const Tool: React.FC = () => {
               percentageLabel="of 49,999"
             />
             <HighlightCard
-              className="mb-4 md:mb-0 md:min-w-[24.3%]"
+              className="mb-4 lg:mb-0 lg:min-w-[24.3%]"
               label="Unlabeled PRs"
               icon="unlabeled-pr"
               metricIncreases={false}
@@ -57,24 +57,24 @@ const Tool: React.FC = () => {
               percentageLabel="of 49,999"
             />
           </div>
-          <div className="flex flex-col md:flex-row max-w-full mb-10">
-            <div className="flex flex-col w-full md:w-[60%] mr-10">
+          <div className="flex flex-col lg:flex-row max-w-full mb-10">
+            <div className="flex flex-col w-full lg:w-[50%] xl:!w-[60%] mr-10">
               <Card className="w-full mb-10 p-5">
                 <ScatterChart title="Test Title" option={testOptions} />
               </Card>
               <Card className="w-full mb-10 p-5">
                 <ScatterChart title="Test Title" option={testOptions} />
               </Card>
-              <div className="flex flex-col md:flex-row w-full h-auto">
-                <Card className="w-full mb-10 md:mb-0 md:w-[50%] xl:mr-2 2xl:mr-10 h-full p-5">
+              <div className="flex flex-col 2xl:flex-row w-full h-auto">
+                <Card className="w-full mb-10 2xl:mb-0 2xl:w-[49%] xl:mr-4 h-full p-5">
                   <SelectableTable rows={testRows} title="Test Title" tableType="participants" />
                 </Card>
-                <Card className="w-full mb-10 md:mb-0 md:w-[50%] h-full p-5">
+                <Card className="w-full mb-10 2xl:mb-0 2xl:w-[49%] h-full p-5">
                   <SelectableTable rows={testRows} title="Test Title" tableType="participants" />
                 </Card>
               </div>
             </div>
-            <Card className="w-full md:w-[40%] p-5">
+            <Card className="w-full lg:w-[50%] xl:!w-[40%] p-5">
               <SelectableTable rows={extendedTestRows} title="Test Title" tableType="participants" />
             </Card>
           </div>
