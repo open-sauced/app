@@ -1,7 +1,5 @@
 import React from "react";
-import Text from "components/atoms/Typography/text";
 import Icon from "components/atoms/Icon/icon";
-import IconButton from "components/atoms/IconButton/icon-button";
 import { Checkbox } from "@supabase/ui";
 import ForkIcon from "public/icons/fork-icon.svg";
 import StarIcon from "public/icons/star-icon.svg";
