@@ -21,7 +21,7 @@ const Nav: React.FC<NavProps> = ({ toolList, selectedTool, portalName }) => {
       aria-orientation="horizontal"
       aria-label="Browse the tools"
       tabIndex={0}
-      className="tool-list-nav flex flex-row gap-2 px-16 bg-slate-50 border-b pt-3">
+      className="tool-list-nav flex xxs:flex-col lg:flex-row gap-2 px-16 bg-slate-50 border-b pt-3">
       
       {toolList.map((tool, index) => 
         <div
