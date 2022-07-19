@@ -7,7 +7,7 @@ const HeaderLogo: React.FC = () => {
   return (
     <div className="flex items-center p-2">
       <Image className="rounded" alt="Open Sauced Logo" width={32} height={32} src={openSaucedImg} />
-      <Text className="font-semibold px-2 text-[16px] xxs:hidden xs:!block !text-white">OpenSauced</Text>
+      <Text className="font-semibold px-2 text-[16px] hidden xs:block !text-white">OpenSauced</Text>
     </div>
   );
 };

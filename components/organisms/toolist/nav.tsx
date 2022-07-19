@@ -21,7 +21,7 @@ const Nav: React.FC<NavProps> = ({ toolList, selectedTool, portalName }) => {
       aria-orientation="horizontal"
       aria-label="Browse the tools"
       tabIndex={0}
-      className="tool-list-nav flex xxs:flex-col lg:flex-row gap-2 px-16 bg-slate-50 border-b pt-3">
+      className="tool-list-nav flex gap-2 px-4 md:px-16 bg-slate-50 border-b pt-3">
       
       {toolList.map((tool, index) => 
         <div
@@ -36,7 +36,7 @@ const Nav: React.FC<NavProps> = ({ toolList, selectedTool, portalName }) => {
               `${portalName}?tool=${tool.name}`
             }
           >
-            <Button size="xlarge" type="text" className={`!px-4 hover:!bg-slate-100 after:block after:absolute after:inset-x-0 after:-bottom-0.5 after:h-0.5 after:rounded-lg ${selectedTool === tool.name ? "after:bg-orange-500" : "focus:after:bg-slate-400"} focus:bg-slate-100 focus:ring-slate-300 child:flex child:items-center`}>
+            <Button size="xlarge" type="text" className={`!px-2 md:!px-4  hover:!bg-slate-100 after:block after:absolute after:inset-x-0 after:-bottom-0.5 after:h-0.5 after:rounded-lg ${selectedTool === tool.name ? "after:bg-orange-500" : "focus:after:bg-slate-400"} focus:bg-slate-100 focus:ring-slate-300 child:flex child:items-center`}>
               <span className={"text-base whitespace-nowrap " + (selectedTool === tool.name ? "text-slate-900" : "text-slate-500")}>
                 {tool.name}
               </span>

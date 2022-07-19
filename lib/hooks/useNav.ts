@@ -11,6 +11,21 @@ const useNav = () => {
       name: "Reports"
     },
     {
+      name: "People",
+      numOf: 54
+    }
+  ];
+
+  /* 
+  
+  const defaultTools = [
+    {
+      name: "Dashboard"
+    },
+    {
+      name: "Reports"
+    },
+    {
       name: "Activity"
     },
     {
@@ -34,6 +49,8 @@ const useNav = () => {
       numOf: 54
     }
   ];
+  
+  */
 
   const { portalName, tool: selectedTool } = router.query;
 
