@@ -5,6 +5,13 @@ module.exports = {
     "./layouts/**/*.{js,ts,jsx,tsx}"
   ],
   theme: {
+    screens: {
+      "xs": "425px",
+      // => @media (min-width: 425px) { ... }
+
+      "xxs": "320px"
+      // => @media (min-width: 320px) { ... }
+    },
     extend: {
       colors: {
         light: {
