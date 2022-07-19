@@ -66,15 +66,15 @@ const Tool: React.FC = () => {
                 <ScatterChart title="Test Title" option={testOptions} />
               </Card>
               <div className="flex flex-col 2xl:flex-row w-full h-auto">
-                <Card className="w-full mb-10 2xl:mb-0 2xl:w-[49%] xl:mr-4 h-full p-5">
+                <Card className="w-full mb-10 2xl:mb-0 2xl:w-[49%] xl:mr-4 h-full px-1 md:px-5 py-5">
                   <SelectableTable rows={testRows} title="Test Title" tableType="participants" />
                 </Card>
-                <Card className="w-full mb-10 2xl:mb-0 2xl:w-[49%] h-full p-5">
+                <Card className="w-full mb-10 2xl:mb-0 2xl:w-[49%] h-full px-1 md:px-5 py-5">
                   <SelectableTable rows={testRows} title="Test Title" tableType="participants" />
                 </Card>
               </div>
             </div>
-            <Card className="w-full lg:w-[50%] xl:!w-[40%] p-5">
+            <Card className="w-full lg:w-[50%] xl:!w-[40%] px-1 md:px-5 py-5">
               <SelectableTable rows={extendedTestRows} title="Test Title" tableType="participants" />
             </Card>
           </div>
