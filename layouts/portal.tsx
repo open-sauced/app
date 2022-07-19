@@ -22,7 +22,7 @@ const PortalLayout = ({children}: {children: React.ReactNode}) => {
           />
         </div>
 
-        <main className="flex w-full flex-1 flex-col items-center justify-center text-center px-[64px] pt-8 pb-6">
+        <main className="flex w-full flex-1 flex-col items-center justify-center text-center px-16 pt-8 pb-6">
           {children}
         </main>
       </div>
