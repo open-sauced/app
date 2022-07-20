@@ -15,7 +15,7 @@ const Tool: React.FC = () => {
     <div className="flex flex-col w-full">
       {tool === "Dashboard" ?
         <>
-          <div className="flex flex-wrap justify-between items-center lg:flex-row lg:flex-nowrap max-w-full mb-6">
+          <div className="flex flex-wrap justify-between items-center lg:flex-row lg:flex-nowrap max-w-full mb-2 lg:mb-6">
             <HighlightCard
               className="mb-4 lg:mb-0 lg:min-w-[24.3%]"
               label="Participation"
