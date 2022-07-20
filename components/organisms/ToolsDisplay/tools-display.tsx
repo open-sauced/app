@@ -17,7 +17,7 @@ const Tool: React.FC = () => {
         <>
           <div className="flex flex-wrap justify-between items-center lg:flex-row lg:flex-nowrap max-w-full mb-2 lg:mb-6">
             <HighlightCard
-              className="mb-4 lg:mb-0 lg:min-w-[24.3%]"
+              className="mb-4 lg:mb-0 lg:min-w-[23%]"
               label="Participation"
               icon="participation"
               metricIncreases={true}
@@ -27,7 +27,7 @@ const Tool: React.FC = () => {
               percentageLabel="of 49,999"
             />
             <HighlightCard
-              className="mb-4 lg:mb-0 lg:min-w-[24.3%]"
+              className="mb-4 lg:mb-0 lg:min-w-[23%]"
               label="Spam"
               icon="spam"
               metricIncreases={false}
@@ -37,7 +37,7 @@ const Tool: React.FC = () => {
               percentageLabel="of 49,999"
             />
             <HighlightCard
-              className="mb-4 lg:mb-0 lg:min-w-[24.3%]"
+              className="mb-4 lg:mb-0 lg:min-w-[23%]"
               label="Accepted PRs"
               icon="accepted-pr"
               metricIncreases={true}
@@ -47,7 +47,7 @@ const Tool: React.FC = () => {
               percentageLabel="of 49,999"
             />
             <HighlightCard
-              className="mb-4 lg:mb-0 lg:min-w-[24.3%]"
+              className="mb-4 lg:mb-0 lg:min-w-[23%]"
               label="Unlabeled PRs"
               icon="unlabeled-pr"
               metricIncreases={false}
@@ -58,7 +58,7 @@ const Tool: React.FC = () => {
             />
           </div>
           <div className="flex flex-col lg:flex-row max-w-full mb-6">
-            <div className="flex flex-col w-full lg:w-[50%] xl:!w-[60%] mr-10">
+            <div className="flex flex-col w-full lg:w-[49%] xl:!w-[60%] mr-6">
               <Card className="w-full mb-6 p-5">
                 <ScatterChart title="Test Title" option={testOptions} />
               </Card>
@@ -74,7 +74,7 @@ const Tool: React.FC = () => {
                 </Card>
               </div>
             </div>
-            <Card className="w-full lg:w-[50%] xl:!w-[40%] px-1 xs:px-5 py-5">
+            <Card className="w-full lg:w-[49%] xl:!w-[40%] px-1 xs:px-5 py-5">
               <SelectableTable rows={extendedTestRows} title="Test Title" tableType="participants" />
             </Card>
           </div>
