@@ -65,7 +65,7 @@ const Tool: React.FC = () => {
               <Card className="w-full mb-10 p-5">
                 <ScatterChart title="Test Title" option={testOptions} />
               </Card>
-              <div className="flex flex-col 2xl:flex-row w-full h-auto">
+              <div className="flex flex-col justify-between 2xl:flex-row w-full h-full">
                 <Card className="w-full mb-10 2xl:mb-0 2xl:w-[49%] xl:mr-4 h-full px-1 md:px-5 py-5">
                   <SelectableTable rows={testRows} title="Test Title" tableType="participants" />
                 </Card>
