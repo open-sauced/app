@@ -14,7 +14,7 @@ const AuthSection: React.FC = () => {
         <OnboardingButton />
         <Divider type="vertical" className="!h-6 !bg-gray-600"></Divider>
         <Image alt="Notification Icon" src={notifications} />
-        <div className="flex gap-2 lg:gap-2">
+        <div className="flex justify-end min-w-[60px] gap-2 lg:gap-2">
           <Avatar alt="User Avatar" avatarURL={userAvatar} size={"base"} hasBorder={true} />
           <Image alt="Down Arrow" src={downArrow}/>
         </div>

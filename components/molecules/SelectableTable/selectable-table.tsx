@@ -3,7 +3,7 @@ import Icon from "components/atoms/Icon/icon";
 import { Checkbox } from "@supabase/ui";
 import ForkIcon from "public/icons/fork-icon.svg";
 import StarIcon from "public/icons/star-icon.svg";
-import Person from "public/icons/person.svg";
+import Person from "public/icons/person-icon.svg";
 import Icon3 from "public/icons/icon3.svg";
 import ComponentHeader from "../ComponentHeader/component-header";
 import { truncateString } from "../../../lib/funcs/truncate-string";
