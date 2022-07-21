@@ -12,10 +12,10 @@ const Tool: React.FC = () => {
   const { tool } = router.query;
     
   return (
-    <div className="flex flex-col w-full">
+    <div className="flex flex-col w-full gap-4">
       {tool === "Dashboard" ?
         <>
-          <div className="flex flex-wrap gap-4 items-center lg:flex-row lg:flex-nowrap max-w-full mb-2 lg:mb-6">
+          <div className="flex flex-wrap gap-4 items-center lg:flex-row lg:flex-nowrap max-w-full">
             <HighlightCard
               label="Participation"
               icon="participation"
@@ -53,24 +53,24 @@ const Tool: React.FC = () => {
               percentageLabel="of 49,999"
             />
           </div>
-          <div className="flex flex-col lg:flex-row max-w-full mb-6">
-            <div className="flex flex-col w-full lg:w-[49%] xl:!w-[60%] mr-6">
-              <Card className="w-full mb-6 p-5">
+          <div className="flex flex-col lg:flex-row max-w-full gap-4 mb-6">
+            <div className="flex flex-col w-full lg:w-[calc(50%-(1rem/2))] xl:!w-[calc(60%-(1rem/2))] gap-4">
+              <Card className="w-full p-5">
                 <ScatterChart title="Test Title" option={testOptions} />
               </Card>
-              <Card className="w-full mb-6 p-5">
+              <Card className="w-full p-5">
                 <ScatterChart title="Test Title" option={testOptions} />
               </Card>
-              <div className="flex flex-col justify-between 2xl:flex-row w-full h-full">
-                <Card className="w-full mb-6 2xl:mb-0 2xl:w-[49%] xl:mr-4 h-full px-1 xs:px-5 py-5">
+              <div className="flex flex-col 2xl:flex-row w-full h-full gap-4">
+                <Card className="w-full 2xl:w-[calc(50%-(1rem/2))] h-full px-1 xs:px-5 py-5">
                   <SelectableTable rows={testRows} title="Test Title" tableType="participants" />
                 </Card>
-                <Card className="w-full mb-6 lg:mb-0 2xl:w-[49%] h-full px-1 xs:px-5 py-5">
+                <Card className="w-full 2xl:w-[calc(50%-(1rem/2))] h-full px-1 xs:px-5 py-5">
                   <SelectableTable rows={testRows} title="Test Title" tableType="participants" />
                 </Card>
               </div>
             </div>
-            <Card className="w-full lg:w-[49%] xl:!w-[40%] px-1 xs:px-5 py-5">
+            <Card className="w-full lg:w-[calc(50%-(1rem/2))] xl:!w-[calc(40%-(1rem/2))] px-1 xs:px-5 py-5">
               <SelectableTable rows={extendedTestRows} title="Test Title" tableType="participants" />
             </Card>
           </div>
