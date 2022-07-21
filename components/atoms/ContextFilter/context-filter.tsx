@@ -7,9 +7,11 @@ interface ContextFilterButtonProps {
 
 const ContextFilterButton: React.FC<ContextFilterButtonProps> =(props) => {
   return (
-    <div>
+    <button className="flex py-1 px-2 bg-slate-50 border border-slate-200 text-sm text-slate-800 font-medium rounded-lg drop-shadow-sm">
       {props.children}
-    </div>
+    </button>
+  );
+};
   );
 };
 
