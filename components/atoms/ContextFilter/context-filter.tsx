@@ -12,6 +12,17 @@ const ContextFilterButton: React.FC<ContextFilterButtonProps> =(props) => {
     </button>
   );
 };
+
+interface ContextFilterOptionProps {
+  className?: string;
+  children?: any;
+}
+
+const ContextFilterOption: React.FC<ContextFilterOptionProps> =(props) => {
+  return (
+    <button className="flex py-0.5 px-2 bg-slate-50 border border-slate-200 text-sm text-slate-800 font-medium rounded-lg drop-shadow-sm">
+      {props.children}
+    </button>
   );
 };
 
@@ -32,9 +43,9 @@ const ContextFilter: React.FC<ContextFilterProps> = ({ className }) => {
       <div className="flex items-center py-1 px-2">
 
         {/* ContextFilterOption */}
-        <div>
-          Filter
-        </div>
+        <ContextFilterOption>
+          Top 1k Repos
+        </ContextFilterOption>
       </div>
     </div>
   );
