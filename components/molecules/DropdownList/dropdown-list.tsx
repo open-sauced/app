@@ -1,12 +1,16 @@
 import React from "react";
 import * as HoverCardPrimitive from "@radix-ui/react-hover-card";
-import Text from "components/atoms/Typography/text";
 
-const DropdownList: React.FC = () => (
+interface DropdownListProps {
+  children: React.ReactNode;
+  componentAsDropdown: JSX.Element;
+}
+
+const DropdownList: React.FC<DropdownListProps> = ({ children, componentAsDropdown }) => (
   <HoverCardPrimitive.Root>
     <HoverCardPrimitive.Trigger asChild>
-      <div className={"inline-flex h-12 w-12 items-center justify-center rounded-full bg-white dark:bg-white"}>
-        <Text>Hello</Text>
+      <div className={"inline-flex h-12 w-12 items-center justify-center rounded-full bg-white"}>
+        {children}
       </div>
     </HoverCardPrimitive.Trigger>
     <HoverCardPrimitive.Content
@@ -20,13 +24,13 @@ const DropdownList: React.FC = () => (
         "items-center md:drop-shadow-[0_15px_15px_rgba(0,0,0,0.45)] !opacity-100"
       }
     >
-      <HoverCardPrimitive.Arrow offset={12} className="fill-current text-white dark:text-gray-800" />
+      <HoverCardPrimitive.Arrow offset={12} className="fill-current text-white" />
 
       <div className="flex h-full w-full space-x-4">
         <div
-          className={"flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-900"}
+          className={"flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-gray-100"}
         >
-          <Text>Hello</Text>
+          {componentAsDropdown}
         </div>
       </div>
     </HoverCardPrimitive.Content>
