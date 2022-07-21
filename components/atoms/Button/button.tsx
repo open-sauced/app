@@ -17,7 +17,7 @@ const Button: React.FC<ButtonProps> = ( props ) => {
   return (
     <SupabaseButtonComponent 
       className={
-        `${props.className && props.className} !text-sm !font-semibold !tracking-tight !py-1 !px-3 !rounded-md !px- focus:!border-orange-500 focus:outline-none focus-visible:ring focus-visible:!ring-orange-200 ` +
+        `${props.className && props.className} !text-sm !font-semibold !tracking-tight !py-1 !px-3 !rounded-md !px- focus-visible:!border-orange-500 focus:outline-none focus-visible:ring focus-visible:!ring-orange-200 ` +
         `${props.type === "primary" ? style.primary : ""}` +
         `${props.type === "default" ? style.default : ""}` +
         `${props.type === "outline" ? style.outline : ""}` +
