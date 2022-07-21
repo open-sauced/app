@@ -41,7 +41,7 @@ const icons = {
 
 const HighlightCard: React.FC<HighlightCardProps> = ({ className, label, icon, metricIncreases, increased, numChanged, percentage, percentageLabel }) => {
   return (
-    <div className={`${className && className} flex flex-col bg-white border border-slate-300 rounded-lg min-w-full md:min-w-[305px] max-w-md h-auto p-2`}>
+    <div className={`${className && className} flex flex-col bg-white border border-slate-300 rounded-lg w-full sm:max-w-[calc(50%-(1rem/2))] h-auto p-2`}>
       {/* Top Information */}
       <div className="flex justify-between w-full p-1">
         {/* Label */}

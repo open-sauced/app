@@ -15,9 +15,8 @@ const Tool: React.FC = () => {
     <div className="flex flex-col w-full">
       {tool === "Dashboard" ?
         <>
-          <div className="flex flex-wrap justify-between items-center lg:flex-row lg:flex-nowrap max-w-full mb-2 lg:mb-6">
+          <div className="flex flex-wrap gap-4 items-center lg:flex-row lg:flex-nowrap max-w-full mb-2 lg:mb-6">
             <HighlightCard
-              className="mb-4 lg:mb-0 lg:min-w-[23%]"
               label="Participation"
               icon="participation"
               metricIncreases={true}
@@ -27,7 +26,6 @@ const Tool: React.FC = () => {
               percentageLabel="of 49,999"
             />
             <HighlightCard
-              className="mb-4 lg:mb-0 lg:min-w-[23%]"
               label="Spam"
               icon="spam"
               metricIncreases={false}
@@ -37,7 +35,6 @@ const Tool: React.FC = () => {
               percentageLabel="of 49,999"
             />
             <HighlightCard
-              className="mb-4 lg:mb-0 lg:min-w-[23%]"
               label="Accepted PRs"
               icon="accepted-pr"
               metricIncreases={true}
@@ -47,7 +44,6 @@ const Tool: React.FC = () => {
               percentageLabel="of 49,999"
             />
             <HighlightCard
-              className="mb-4 lg:mb-0 lg:min-w-[23%]"
               label="Unlabeled PRs"
               icon="unlabeled-pr"
               metricIncreases={false}
@@ -69,7 +65,7 @@ const Tool: React.FC = () => {
                 <Card className="w-full mb-6 2xl:mb-0 2xl:w-[49%] xl:mr-4 h-full px-1 xs:px-5 py-5">
                   <SelectableTable rows={testRows} title="Test Title" tableType="participants" />
                 </Card>
-                <Card className="w-full mb-6 2xl:mb-0 2xl:w-[49%] h-full px-1 xs:px-5 py-5">
+                <Card className="w-full mb-6 lg:mb-0 2xl:w-[49%] h-full px-1 xs:px-5 py-5">
                   <SelectableTable rows={testRows} title="Test Title" tableType="participants" />
                 </Card>
               </div>
