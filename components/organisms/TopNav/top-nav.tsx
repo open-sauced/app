@@ -6,7 +6,7 @@ const TopNav: React.FC = () => {
   return (
     <div className="top-nav-container flex justify-between items-center pr-1 md:px-16 py-0.5 bg-zinc-900 border-b">
       <HeaderLogo />
-      <AuthSection />
+      <AuthSection user={{ isAuthed: true }} />
     </div>
   );
 };
