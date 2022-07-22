@@ -8,7 +8,6 @@ const storyConfig = {
 export default storyConfig;
 
 const testUser = {
-  isAuthed: true,
   testAttr: false
 };
 

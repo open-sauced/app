@@ -9,12 +9,8 @@ import DropdownList from "../DropdownList/dropdown-list";
 import Text from "components/atoms/Typography/text";
 import { Divider } from "@supabase/ui";
 
-type userObject<T> = {
-  isAuthed: boolean;
-};
-
 interface AuthSectionProps {
-  user?: userObject<object>;
+  user?: object;
 }
 
 const AuthSection: React.FC<AuthSectionProps> = ({ user }) => {
@@ -35,7 +31,7 @@ const AuthSection: React.FC<AuthSectionProps> = ({ user }) => {
   return (
     <div className="flex">
       <div className="flex items-center gap-2 lg:gap-3">
-        {user && user.isAuthed && 
+        {user && 
           <>
             <OnboardingButton />
             <Divider type="vertical" className="!h-6 !bg-gray-600"></Divider>
@@ -43,7 +39,7 @@ const AuthSection: React.FC<AuthSectionProps> = ({ user }) => {
           </>
         }
         <div className="flex justify-end min-w-[60px] gap-2">
-          <DropdownList menuContent={user && user.isAuthed ? authMenu.authed : authMenu.unauthed}>
+          <DropdownList menuContent={user ? authMenu.authed : authMenu.unauthed}>
             <Avatar alt="User Avatar" avatarURL={userAvatar} size={"base"} hasBorder={true} />
           </DropdownList>
           <Image alt="Down Arrow" src={downArrow}/>
