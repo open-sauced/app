@@ -9,7 +9,7 @@ export default storyConfig;
 
 const testElement = 
   <span className="block px-4 py-2 rounded-md cursor-pointer">
-    <Text>Logout</Text>
+    <Text>Test</Text>
   </span>;
 
 export const DropdownListMolecule = () => <div className="flex justify-center"><DropdownList menuContent={testElement}>Hello</DropdownList></div>;
