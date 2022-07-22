@@ -12,7 +12,7 @@ const testUser = {
   testAttr: false
 };
 
-const AuthSectionTemplate: ComponentStory<typeof AuthSection> = (args) => <AuthSection {...args} />;
+const AuthSectionTemplate: ComponentStory<typeof AuthSection> = (args) => <div className="flex justify-center"><AuthSection {...args} /></div>;
 
 export const NoAuthedUser = AuthSectionTemplate.bind({});
 NoAuthedUser.args = {   };
