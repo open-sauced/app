@@ -46,6 +46,18 @@ const ContextFilter: React.FC<ContextFilterProps> = ({ className }) => {
         <ContextFilterOption>
           Top 1k Repos
         </ContextFilterOption>
+        <ContextFilterOption>
+          +5 Contributors
+        </ContextFilterOption>
+        <ContextFilterOption>
+          1k Stars
+        </ContextFilterOption>
+        <ContextFilterOption>
+          Most Active
+        </ContextFilterOption>
+        <ContextFilterOption>
+          Most Spammed
+        </ContextFilterOption>
       </div>
     </div>
   );
