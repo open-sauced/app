@@ -14,7 +14,7 @@ const DropdownList: React.FC<DropdownListProps> = ({ children, menuContent, clas
     <Menu.Button className={`${menuButtonClassName && menuButtonClassName}`}>
       {children}
     </Menu.Button>
-    <Menu.Items className={`${menuContentClassName && menuContentClassName} z-10 bg-white absolute right-0 w-56 origin-top-right rounded-md shadow-lg shadow-gray-700/80 border-gray-700 border-2 focus:outline-none px-1 py-1 bg-darkestGrey text-sm font-semibold`}>
+    <Menu.Items className={`${menuContentClassName && menuContentClassName} z-10 bg-white absolute right-0 w-56 origin-top-right rounded-md shadow-lg shadow-gray-400/10 border-gray-400 border-2 focus:outline-none focus-within:ring focus-within:ring-orange-200 px-1 py-1 bg-darkestGrey text-sm font-semibold`}>
       {menuContent.map((menuItemContent, index) => 
         <Menu.Item key={index}>
           {menuItemContent}
