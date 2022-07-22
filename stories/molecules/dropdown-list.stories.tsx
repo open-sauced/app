@@ -1,4 +1,3 @@
-import Text from "components/atoms/Typography/text";
 import DropdownList from "../../components/molecules/DropdownList/dropdown-list";
 
 const storyConfig = {
@@ -7,4 +6,4 @@ const storyConfig = {
 
 export default storyConfig;
 
-export const AuthSectionMolecule = () => <DropdownList componentAsDropdown={<Text>Text</Text>}>Hello</DropdownList>;
+export const AuthSectionMolecule = () => <DropdownList>Hello</DropdownList>;

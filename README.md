@@ -6,11 +6,11 @@
 </div>
 <br>
 
-## Project Figma
+## 🖼️ Project Figma
 
 The figma for this project can be found [here](https://www.figma.com/file/OpVX6WT7dmWqnwRuEvADMF/OpenSauced-%E2%80%94-Insights-(insights.opensauced.pizza)).
 
-## Atomic Design
+## 🔬 Atomic Design
 
 This project uses Atomic Design for it's Components. Here are several resources for Atomic Design if you are unfamiliar:
 

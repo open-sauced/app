@@ -1,40 +1,23 @@
 import React from "react";
-import * as HoverCardPrimitive from "@radix-ui/react-hover-card";
+import { Menu } from "@headlessui/react";
 
 interface DropdownListProps {
   children: React.ReactNode;
-  componentAsDropdown: JSX.Element;
 }
 
-const DropdownList: React.FC<DropdownListProps> = ({ children, componentAsDropdown }) => (
-  <HoverCardPrimitive.Root>
-    <HoverCardPrimitive.Trigger asChild>
-      <div className={"inline-flex h-12 w-12 items-center justify-center rounded-full bg-white"}>
-        {children}
-      </div>
-    </HoverCardPrimitive.Trigger>
-    <HoverCardPrimitive.Content
-      align="center"
-      sideOffset={4}
-      className={
-        " radix-side-top:animate-slide-up radix-side-bottom:animate-slide-down" +
-        "max-w-md rounded-lg p-4 md:w-full" +
-        "bg-white dark:bg-gray-800" +
-        "focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75" +
-        "items-center md:drop-shadow-[0_15px_15px_rgba(0,0,0,0.45)] !opacity-100"
-      }
-    >
-      <HoverCardPrimitive.Arrow offset={12} className="fill-current text-white" />
-
-      <div className="flex h-full w-full space-x-4">
-        <div
-          className={"flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-gray-100"}
-        >
-          {componentAsDropdown}
-        </div>
-      </div>
-    </HoverCardPrimitive.Content>
-  </HoverCardPrimitive.Root>
+const DropdownList: React.FC<DropdownListProps> = ({ children }) => (
+  <Menu as="div" className="relative inline-block text-left">
+    <Menu.Button>
+      {children}
+    </Menu.Button>
+    <Menu.Items className="absolute right-0 w-56 origin-top-right rounded-md shadow-lg shadow-gray-700/80 border-gray-700 border-2 focus:outline-none px-1 py-1 bg-darkestGrey text-sm font-semibold">
+      <Menu.Item>
+        <span className="block px-4 py-2 rounded-md text-gray-200 cursor-pointer">
+          Logout
+        </span>
+      </Menu.Item>
+    </Menu.Items>
+  </Menu>
 );
 
 export default DropdownList;

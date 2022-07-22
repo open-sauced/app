@@ -13,7 +13,7 @@
     "push": "npx @open-sauced/conventional-commit"
   },
   "dependencies": {
-    "@radix-ui/react-hover-card": "^1.0.0",
+    "@headlessui/react": "^1.6.6",
     "@supabase/ui": "^0.36.5",
     "@types/jest": "^28.1.6",
     "echarts": "^5.3.3",
