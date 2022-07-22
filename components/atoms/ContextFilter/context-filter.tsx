@@ -32,7 +32,7 @@ interface ContextFilterProps {
 
 const ContextFilter: React.FC<ContextFilterProps> = ({ className }) => {
   return (
-    <div className="flex items-center">
+    <div className="flex items-center max-w-full overflow-hidden hover:overflow-x-scroll gap-1 p-0.5 bg-gray-200 rounded-lg">
 
       {/* ContextFilterButton */}
       <ContextFilterButton>
@@ -40,7 +40,7 @@ const ContextFilter: React.FC<ContextFilterProps> = ({ className }) => {
       </ContextFilterButton>
 
       {/* ContextFilterOptions */}
-      <div className="flex items-center py-1 px-2">
+      <div className="flex items-center gap-1 px-1">
 
         {/* ContextFilterOption */}
         <ContextFilterOption>
