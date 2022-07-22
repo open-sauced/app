@@ -6,4 +6,4 @@ const storyConfig = {
 
 export default storyConfig;
 
-export const DropdownListMolecule = () => <AuthSection />;
+export const AuthSectionMolecule = () => <AuthSection />;
