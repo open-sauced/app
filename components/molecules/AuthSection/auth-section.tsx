@@ -11,10 +11,11 @@ import { Divider } from "@supabase/ui";
 
 const AuthSection: React.FC = () => {
 
-  const authMenu = 
-    <span className="block px-4 py-2 rounded-md cursor-pointer">
+  const authMenu = [
+    <span key={1} className="block px-4 py-2 rounded-md cursor-pointer">
       <Text>Logout</Text>
-    </span>;
+    </span>
+  ];
 
   return (
     <div className="flex">
