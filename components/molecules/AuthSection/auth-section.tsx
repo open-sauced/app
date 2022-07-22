@@ -25,8 +25,8 @@ const AuthSection: React.FC = () => {
         <div className="flex justify-end min-w-[60px] gap-2 lg:gap-2">
           <DropdownList className="mt-3" menuContent={authMenu}>
             <Avatar alt="User Avatar" avatarURL={userAvatar} size={"base"} hasBorder={true} />
+            <Image alt="Down Arrow" src={downArrow}/>
           </DropdownList>
-          <Image alt="Down Arrow" src={downArrow}/>
         </div>
       </div>
     </div>
