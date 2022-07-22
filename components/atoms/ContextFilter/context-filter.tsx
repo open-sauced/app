@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 
 interface ContextFilterButtonProps {
   className?: string;
   children?: any;
+  onClick?: any;
 }
 
 const ContextFilterButton: React.FC<ContextFilterButtonProps> =(props) => {
@@ -30,17 +31,21 @@ interface ContextFilterProps {
     className?: string;
 }
 
+
 const ContextFilter: React.FC<ContextFilterProps> = ({ className }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const show = isOpen ? "flex" : "hidden";
+
   return (
-    <div className="flex items-center max-w-full overflow-hidden hover:overflow-x-scroll gap-1 p-0.5 bg-gray-200 rounded-lg">
+    <div className="inline-flex items-center max-w-full overflow-hidden hover:overflow-x-scroll gap-1 p-0.5 bg-gray-200 rounded-lg">
 
       {/* ContextFilterButton */}
-      <ContextFilterButton>
+      <ContextFilterButton onClick={() => setIsOpen(!isOpen)}>
         Add Filter
       </ContextFilterButton>
 
       {/* ContextFilterOptions */}
-      <div className="flex items-center gap-1 px-1">
+      <div className={`${show} items-center gap-1 px-1`}>
 
         {/* ContextFilterOption */}
         <ContextFilterOption>
