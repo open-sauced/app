@@ -23,7 +23,7 @@ const AuthSection: React.FC = () => {
         <Divider type="vertical" className="!h-6 !bg-gray-600"></Divider>
         <Image alt="Notification Icon" src={notifications} />
         <div className="flex justify-end min-w-[60px] gap-2 lg:gap-2">
-          <DropdownList menuContent={authMenu}>
+          <DropdownList className="mt-3" menuContent={authMenu}>
             <Avatar alt="User Avatar" avatarURL={userAvatar} size={"base"} hasBorder={true} />
           </DropdownList>
           <Image alt="Down Arrow" src={downArrow}/>
