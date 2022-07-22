@@ -37,15 +37,17 @@ const ContextFilter: React.FC<ContextFilterProps> = ({ className }) => {
   const show = isOpen ? "flex" : "hidden";
 
   return (
-    <div className="inline-flex items-center max-w-full overflow-hidden hover:overflow-x-scroll gap-1 p-0.5 bg-gray-200 rounded-lg">
+    <div 
+      onClick={() => setIsOpen(!isOpen)}
+      className={`inline-flex items-center max-w-full overflow-hidden hover:overflow-x-scroll gap-1 p-0.5 ${isOpen ? "bg-gray-200" : "bg-transparent" } rounded-lg transition`}>
 
       {/* ContextFilterButton */}
-      <ContextFilterButton onClick={() => setIsOpen(!isOpen)}>
+      <ContextFilterButton>
         Add Filter
       </ContextFilterButton>
 
       {/* ContextFilterOptions */}
-      <div className={`${show} items-center gap-1 px-1`}>
+      <div className={`${show} items-center gap-1 px-1 transition`}>
 
         {/* ContextFilterOption */}
         <ContextFilterOption>
