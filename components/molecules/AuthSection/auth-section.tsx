@@ -21,12 +21,12 @@ const AuthSection: React.FC<AuthSectionProps> = ({ user }) => {
 
   const authMenu = {
     authed: [
-      <span key={1} className="block px-4 py-2 rounded-md cursor-pointer">
+      <span key="authorized" className="block px-4 py-2 rounded-md cursor-pointer">
         <Text>Logout</Text>
       </span>
     ],
     unauthed: [
-      <span key={1} className="block px-4 py-2 rounded-md cursor-pointer">
+      <span key="unauthorized" className="block px-4 py-2 rounded-md cursor-pointer">
         <Text>Login</Text>
       </span>
     ]
