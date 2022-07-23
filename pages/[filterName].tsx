@@ -1,10 +1,10 @@
-import PortalLayout from "../layouts/portal";
+import FilterLayout from "../layouts/filter";
 import { WithPageLayout } from "../interfaces/with-page-layout";
 import { useRouter } from "next/router";
 import Default from "../components/organisms/Default/default";
 import Tool from "../components/organisms/ToolsDisplay/tools-display";
 
-const Portal: WithPageLayout = () => {
+const Filter: WithPageLayout = () => {
   const router = useRouter();
 
   const { tool } = router.query;
@@ -16,9 +16,9 @@ const Portal: WithPageLayout = () => {
   );
 };
 
-Portal.PageLayout = PortalLayout;
+Filter.PageLayout = FilterLayout;
 
-export default Portal;
+export default Filter;
 
 /* 
 
