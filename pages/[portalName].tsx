@@ -1,8 +1,8 @@
-import PortalLayout from "../../layouts/portal";
-import { WithPageLayout } from "../../interfaces/with-page-layout";
+import PortalLayout from "../layouts/portal";
+import { WithPageLayout } from "../interfaces/with-page-layout";
 import { useRouter } from "next/router";
-import Default from "../../components/organisms/Default/default";
-import Tool from "../../components/organisms/ToolsDisplay/tools-display";
+import Default from "../components/organisms/Default/default";
+import Tool from "../components/organisms/ToolsDisplay/tools-display";
 
 const Portal: WithPageLayout = () => {
   const router = useRouter();
