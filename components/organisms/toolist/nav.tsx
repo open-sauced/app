@@ -10,10 +10,10 @@ type toolListArray = {
 interface NavProps {
   toolList: toolListArray[];
   selectedTool: string | string[] | undefined;
-  portalName: string | string[] | undefined;
+  filterName: string | string[] | undefined;
 }
 
-const Nav: React.FC<NavProps> = ({ toolList, selectedTool, portalName }) => {
+const Nav: React.FC<NavProps> = ({ toolList, selectedTool, filterName }) => {
 
   return (
     <nav 
@@ -32,8 +32,8 @@ const Nav: React.FC<NavProps> = ({ toolList, selectedTool, portalName }) => {
           key={index} className={`tool-list-item ${selectedTool === tool.name ? "" : ""}`}>
           <Link
             href={tool.name === "nextjs" ?
-              `${portalName}` :
-              `${portalName}?tool=${tool.name}`
+              `${filterName}` :
+              `${filterName}?tool=${tool.name}`
             }
           >
             <Button size="xlarge" type="text" className={`!px-2 md:!px-4  hover:!bg-slate-100 after:block after:absolute after:inset-x-0 after:-bottom-0.5 after:h-0.5 after:rounded-lg ${selectedTool === tool.name ? "after:bg-orange-500" : "focus:after:bg-slate-400"} focus:bg-slate-100 focus:ring-slate-300 child:flex child:items-center`}>

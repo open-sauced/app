@@ -7,7 +7,7 @@ import useNav from "lib/hooks/useNav";
 
 const PortalLayout = ({children}: {children: React.ReactNode}) => {
 
-  const { toolList, selectedTool, portalName } = useNav();
+  const { toolList, selectedTool, filterName } = useNav();
 
   return (
     <>
@@ -18,7 +18,7 @@ const PortalLayout = ({children}: {children: React.ReactNode}) => {
           <Nav
             toolList={toolList}
             selectedTool={selectedTool}
-            portalName={portalName}
+            filterName={filterName}
           />
         </div>
 
