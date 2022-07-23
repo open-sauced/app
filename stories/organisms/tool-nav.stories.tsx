@@ -24,4 +24,4 @@ const ToolNavTemplate: ComponentStory<typeof Nav> = (args) => <Nav {...args}/>;
 
 //Default ToolNav
 export const Default = ToolNavTemplate.bind({});
-Default.args = { portalName: "test", selectedTool: "test 1", toolList: testTools };
+Default.args = { filterName: "test", selectedTool: "test 1", toolList: testTools };
