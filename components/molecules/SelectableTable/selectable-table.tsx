@@ -6,7 +6,7 @@ import StarIcon from "public/icons/star-icon.svg";
 import Person from "public/icons/person-icon.svg";
 import Icon3 from "public/icons/icon3.svg";
 import ComponentHeader from "../ComponentHeader/component-header";
-import { truncateString } from "../../../lib/funcs/truncate-string";
+import { truncateString } from "../../../lib/utils/truncate-string";
 
 type ParticipantsRow = {
   title: string;
