@@ -37,6 +37,7 @@ interface ContextFilterProps {
 const ContextFilter: React.FC<ContextFilterProps> = ({ className }) => {
   const [isOpen, setIsOpen] = useState(false);
   const show = isOpen ? "flex" : "hidden";
+  const toggleFilter = () => setIsOpen(!isOpen);
 
   return (
     <div 
@@ -44,7 +45,7 @@ const ContextFilter: React.FC<ContextFilterProps> = ({ className }) => {
 
       {/* ContextFilterButton */}
       <ContextFilterButton
-        onClick={() => setIsOpen(!isOpen)}>
+        onClick={toggleFilter}>
         Add Filter
       </ContextFilterButton>
 
