@@ -8,12 +8,15 @@ import OnboardingButton from "../OnboardingButton/onboarding-button";
 import DropdownList from "../DropdownList/dropdown-list";
 import Text from "components/atoms/Typography/text";
 import { Divider } from "@supabase/ui";
+import useSupabaseAuth from "../../../lib/hooks/useSupabaseAuth";
 
 const AuthSection: React.FC = () => {
+  const { signIn, signOut, user } = useSupabaseAuth();
 
+  console.log(user)
   const authMenu = [
     <span key={1} className="block px-4 py-2 rounded-md cursor-pointer">
-      <Text>Logout</Text>
+      <Text onClick={() => signIn()}>Logout</Text>
     </span>
   ];
 
