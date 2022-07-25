@@ -14,6 +14,8 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.6.6",
+    "@supabase/gotrue-js": "^1.22.20",
+    "@supabase/supabase-js": "^1.35.4",
     "@supabase/ui": "^0.36.5",
     "@types/jest": "^28.1.6",
     "echarts": "^5.3.3",
