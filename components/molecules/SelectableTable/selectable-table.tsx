@@ -63,7 +63,7 @@ const SelectableTable: React.FC<SelectableTableProps> = ({ title, tableType, row
               return (
                 <tr className={`hover:content-['${row.title}']`} key={index}>
                   <td className="flex flex-row text-left p-2">
-                    <Checkbox label=""/> {window.innerWidth < 425 ? truncateString(row.title, 3) : row.title}
+                    <Checkbox label=""/> {/* window.innerWidth < 425 ? truncateString(row.title, 3) : */ row.title}
                   </td>
                   <td className="text-right p-2">
                     {row.stars}%
