@@ -8,7 +8,7 @@ const useGetFilterName = () => {
   const firstLetterInPath = 1;
   
   function getFilterName(string: string) {
-    const tempName = string.slice(firstLetterInPath, string.search("\\?"));
+    const tempName = string.slice(firstLetterInPath);
     return tempName.charAt(0).toUpperCase() + tempName.slice(1);
   }
 
