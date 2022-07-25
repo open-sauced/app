@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 
-interface ContextFilterButtonProps {
+interface PillSelectorButtonProps {
   className?: string;
   children?: any;
   onClick?: any;
 }
 
-const ContextFilterButton: React.FC<ContextFilterButtonProps> =(props) => {
+const PillSelectorButton: React.FC<PillSelectorButtonProps> =(props) => {
   return (
     <button 
       onClick={props.onClick} 
@@ -16,12 +16,12 @@ const ContextFilterButton: React.FC<ContextFilterButtonProps> =(props) => {
   );
 };
 
-interface ContextFilterOptionProps {
+interface PillSelectorOptionProps {
   className?: string;
   children?: any;
 }
 
-const ContextFilterOption: React.FC<ContextFilterOptionProps> =(props) => {
+const PillSelectorOption: React.FC<PillSelectorOptionProps> =(props) => {
   return (
     <button className="flex px-2 bg-slate-50 border border-slate-200 text-sm text-slate-600 font-medium whitespace-nowrap rounded-md drop-shadow-sm hover:border-orange-500 hover:text-slate-800 focus:outline-none focus-visible:border-orange-500 focus-visible:ring focus-visible:ring-orange-200 transition">
       {props.children}
@@ -29,12 +29,12 @@ const ContextFilterOption: React.FC<ContextFilterOptionProps> =(props) => {
   );
 };
 
-interface ContextFilterProps {
+interface PillSelectorProps {
     className?: string;
 }
 
 
-const ContextFilter: React.FC<ContextFilterProps> = ({ className }) => {
+const PillSelector: React.FC<PillSelectorProps> = ({ className }) => {
   const [isOpen, setIsOpen] = useState(false);
   const show = isOpen ? "flex" : "hidden";
   const toggleFilter = () => setIsOpen(!isOpen);
@@ -43,34 +43,34 @@ const ContextFilter: React.FC<ContextFilterProps> = ({ className }) => {
     <div 
       className={`inline-flex items-center max-w-full overflow-hidden hover:overflow-x-scroll gap-1 p-0.5 ${isOpen ? "bg-gray-200" : "bg-transparent" } rounded-lg transition`}>
 
-      {/* ContextFilterButton */}
-      <ContextFilterButton
+      {/* PillSelectorButton */}
+      <PillSelectorButton
         onClick={toggleFilter}>
         Add Filter
-      </ContextFilterButton>
+      </PillSelectorButton>
 
-      {/* ContextFilterOptions */}
+      {/* PillSelectorOptions */}
       <div className={`${show} items-center gap-1 px-1 transition`}>
 
-        {/* ContextFilterOption */}
-        <ContextFilterOption>
+        {/* PillSelectorOption */}
+        <PillSelectorOption>
           Top 1k Repos
-        </ContextFilterOption>
-        <ContextFilterOption>
+        </PillSelectorOption>
+        <PillSelectorOption>
           +5 Contributors
-        </ContextFilterOption>
-        <ContextFilterOption>
+        </PillSelectorOption>
+        <PillSelectorOption>
           1k Stars
-        </ContextFilterOption>
-        <ContextFilterOption>
+        </PillSelectorOption>
+        <PillSelectorOption>
           Most Active
-        </ContextFilterOption>
-        <ContextFilterOption>
+        </PillSelectorOption>
+        <PillSelectorOption>
           Most Spammed
-        </ContextFilterOption>
+        </PillSelectorOption>
       </div>
     </div>
   );
 };
 
-export default ContextFilter;
+export default PillSelector;
