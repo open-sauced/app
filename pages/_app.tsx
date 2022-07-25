@@ -22,7 +22,7 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
   return (
     <>
       <Head>
-        <title>Open Sauced Insights - {changeCapitalization(filterName as string, true)} {toolName && ` / ${changeCapitalization(toolName as string, true)}`}</title>
+        <title>Open Sauced Insights{filterName && ` - ${changeCapitalization(filterName as string, true)}`} {toolName && ` / ${changeCapitalization(toolName as string, true)}`}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
     
