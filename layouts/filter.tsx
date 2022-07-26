@@ -5,20 +5,20 @@ import Nav from "../components/organisms/toolist/nav";
 import TopNav from "../components/organisms/TopNav/top-nav";
 import useNav from "lib/hooks/useNav";
 
-const PortalLayout = ({children}: {children: React.ReactNode}) => {
+const FilterLayout = ({children}: {children: React.ReactNode}) => {
 
-  const { toolList, selectedTool, portalName } = useNav();
+  const { toolList, selectedTool, filterName } = useNav();
 
   return (
     <>
       <TopNav />
-      <div className="page-container flex min-h-[88vh] flex-col items-center justify-center">
+      <div className="page-container flex min-h-[88vh] flex-col items-center">
         <div className="info-container min-w-full min-h-[100px]">
           <Header />
           <Nav
             toolList={toolList}
-            selectedTool={selectedTool}
-            portalName={portalName}
+            selectedTool={selectedTool && selectedTool.toString()}
+            filterName={filterName}
           />
         </div>
 
@@ -31,4 +31,4 @@ const PortalLayout = ({children}: {children: React.ReactNode}) => {
   );
 };
 
-export default PortalLayout;
+export default FilterLayout;

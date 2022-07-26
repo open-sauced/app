@@ -5,7 +5,8 @@ import Head from "next/head";
 import type { AppProps } from "next/app";
 import GlobalState from "../context/global-state";
 import "./nav.css";
-import useGetPortalName from "../lib/hooks/useGetPortalName";
+import { useRouter } from "next/router";
+import changeCapitalization from "../lib/utils/changeCapitalization";
 
 type ComponentWithPageLayout = AppProps & {
   Component: AppProps["Component"] & {
@@ -14,12 +15,14 @@ type ComponentWithPageLayout = AppProps & {
 };
 
 function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
-  const portalName = useGetPortalName();
+  const router = useRouter();
+
+  const { filterName, toolName } = router.query;
 
   return (
     <>
       <Head>
-        <title>Open Sauced - {portalName} Portal</title>
+        <title>Open Sauced Insights{filterName && ` - ${changeCapitalization(filterName.toString(), true)}`} {toolName && ` / ${changeCapitalization(toolName.toString(), true)}`}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
     
