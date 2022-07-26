@@ -8,12 +8,15 @@ import OnboardingButton from "../OnboardingButton/onboarding-button";
 import DropdownList from "../DropdownList/dropdown-list";
 import Text from "components/atoms/Typography/text";
 import { Divider } from "@supabase/ui";
+// import useSupabaseAuth from "../../../lib/hooks/useSupabaseAuth";
 
 interface AuthSectionProps {
   user?: object;
 }
 
 const AuthSection: React.FC<AuthSectionProps> = ({ user }) => {
+  //TODO: For Chad
+  // const { signIn, signOut, user } = useSupabaseAuth();
 
   const authMenu = {
     authed: [

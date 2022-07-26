@@ -1,4 +1,3 @@
-import { useRouter } from "next/router";
 import React from "react";
 import Card from "../../atoms/Card/card";
 import SelectableTable from "components/molecules/SelectableTable/selectable-table";
@@ -6,14 +5,14 @@ import ScatterChart from "components/molecules/ScatterChart/scatter-chart";
 import HighlightCard from "components/molecules/HighlightCard/highlight-card";
 import { testRows, extendedTestRows, testOptions } from "./fake-data";
 
-const Tool: React.FC = () => {
-  const router = useRouter();
+interface ToolProps {
+  tool?: string;
+}
 
-  const { tool } = router.query;
-    
+const Tool: React.FC<ToolProps> = ({ tool }) => {    
   return (
     <div className="flex flex-col w-full gap-4">
-      {tool === "Dashboard" ?
+      {!tool ?
         <>
           <div className="flex flex-wrap gap-4 items-center lg:flex-row lg:flex-nowrap max-w-full">
             <HighlightCard
