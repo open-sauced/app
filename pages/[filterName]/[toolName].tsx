@@ -10,7 +10,7 @@ const Filter: WithPageLayout = () => {
   const { toolName } = router.query;
 
   return (
-    <Tool tool={changeCapitalization(toolName as string, true)} />
+    <Tool tool={toolName && changeCapitalization(toolName.toString(), true)} />
   );
 };
 
