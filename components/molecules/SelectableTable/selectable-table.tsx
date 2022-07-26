@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Icon from "components/atoms/Icon/icon";
 import { Checkbox } from "@supabase/ui";
 import ForkIcon from "public/icons/fork-icon.svg";
@@ -32,7 +32,13 @@ const iconSuite = {
 };
 
 const SelectableTable: React.FC<SelectableTableProps> = ({ title, tableType, rows }) => {
-  const ref = useRef(null);
+  const ref = useRef<HTMLDivElement>(null);
+
+  const [divSize, setDivSize] = useState(0);
+  
+  useEffect(() => {
+    if(ref.current) setDivSize(ref.current.offsetWidth);
+  }, []);
 
   return (
     <>
@@ -65,7 +71,7 @@ const SelectableTable: React.FC<SelectableTableProps> = ({ title, tableType, row
               return (
                 <tr className={`hover:content-['${row.title}']`} key={index}>
                   <td className="flex flex-row text-left p-2">
-                    <Checkbox label=""/> {ref.current && ref.current.offsetWidth < 350 ? truncateString(row.title, 3) : row.title}
+                    <Checkbox label=""/> {divSize > 0 && divSize < 350 ? truncateString(row.title, 3) : row.title}
                   </td>
                   <td className="text-right p-2">
                     {row.stars}%
