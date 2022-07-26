@@ -8,24 +8,20 @@ import OnboardingButton from "../OnboardingButton/onboarding-button";
 import DropdownList from "../DropdownList/dropdown-list";
 import Text from "components/atoms/Typography/text";
 import { Divider } from "@supabase/ui";
-// import useSupabaseAuth from "../../../lib/hooks/useSupabaseAuth";
+import useSupabaseAuth from "../../../lib/hooks/useSupabaseAuth";
 
-interface AuthSectionProps {
-  user?: object;
-}
+const AuthSection: React.FC = ({  }) => {
 
-const AuthSection: React.FC<AuthSectionProps> = ({ user }) => {
-  //TODO: For Chad
-  // const { signIn, signOut, user } = useSupabaseAuth();
+  const { signIn, signOut, user } = useSupabaseAuth();
 
   const authMenu = {
     authed: [
-      <span key="authorized" className="block px-4 py-2 rounded-md cursor-pointer">
+      <span onClick={async () => await signOut()} key="authorized" className="block px-4 py-2 rounded-md cursor-pointer">
         <Text>Logout</Text>
       </span>
     ],
     unauthed: [
-      <span key="unauthorized" className="block px-4 py-2 rounded-md cursor-pointer">
+      <span onClick={async () => await signIn({ provider: "github" })} key="unauthorized" className="block px-4 py-2 rounded-md cursor-pointer">
         <Text>Login</Text>
       </span>
     ]
