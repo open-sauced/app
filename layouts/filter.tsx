@@ -17,7 +17,7 @@ const FilterLayout = ({children}: {children: React.ReactNode}) => {
           <Header />
           <Nav
             toolList={toolList}
-            selectedTool={selectedTool}
+            selectedTool={selectedTool && selectedTool.toString()}
             filterName={filterName}
           />
         </div>
