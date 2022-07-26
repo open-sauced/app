@@ -23,7 +23,7 @@ const Avatar: React.FC<AvatarProps> = ({ className, avatarURL, initials, alt, si
       { avatarURL ?
         <Image 
           className={`${className && className} object-cover`}
-          alt={alt ? alt : "Avatar"} width={size === "sm" ? 16 : size === "base" ? 32 : size === "lg" ? 48 : 32} height={size === "sm" ? 16 : size === "base" ? 32 : size === "lg" ? 48 : 32} loader={avatarLoader} src={avatarURL ? avatarURL : AvatarImage} />
+          alt={alt ? alt : "Avatar"} width={size === "sm" ? 16 : size === "base" ? 32 : size === "lg" ? 48 : 32} height={size === "sm" ? 16 : size === "base" ? 32 : size === "lg" ? 48 : 32} /* loader={avatarLoader} */ src={avatarURL ? avatarURL : AvatarImage} />
         :
         <div className={`font-bold leading-none text-slate-50 mb-0.25 ${size === "sm" ? "text-xs" : size === "base" ? "text-sm" : size === "lg" ? "text-lg" : "text-sm"}`}>
           { initials }
