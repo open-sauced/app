@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import notifications from "../../../public/notifications.svg";
 import downArrow from "../../../public/chevron-down.svg";
@@ -10,10 +10,28 @@ import DropdownList from "../DropdownList/dropdown-list";
 import Text from "components/atoms/Typography/text";
 import { Divider } from "@supabase/ui";
 import useSupabaseAuth from "../../../lib/hooks/useSupabaseAuth";
+import { useGobalStateContext } from "context/global-state";
 
 const AuthSection: React.FC = ({  }) => {
 
   const { signIn, signOut, user } = useSupabaseAuth();
+
+  const { appState, setAppState } = useGobalStateContext();
+
+  useEffect(() => {
+    if(user) setAppState(prevState => {
+      return {
+        ...prevState,
+        user
+      };
+    });
+    if(!user) setAppState(prevState => {
+      return {
+        ...prevState,
+        user: {}
+      };
+    });
+  }, [user]);
 
   const authMenu = {
     authed: [
