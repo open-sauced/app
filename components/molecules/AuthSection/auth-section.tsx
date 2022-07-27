@@ -31,12 +31,12 @@ const AuthSection: React.FC = ({  }) => {
             <OnboardingButton />
             <Divider type="vertical" className="!h-6 !bg-gray-600"></Divider>
             <Image alt="Notification Icon" src={notifications} />
-            <div className="flex justify-end min-w-[60px] gap-2">
-              <DropdownList menuContent={authMenu.authed}>
+            <DropdownList menuContent={authMenu.authed}>
+              <div className="flex justify-end min-w-[60px] gap-2">
                 <Avatar alt="User Avatar" avatarURL={user ? user.user_metadata.avatar_url : userAvatar} size={"base"} hasBorder={true} />
-              </DropdownList>
-              <Image alt="Down Arrow" src={downArrow}/>
-            </div>
+                <Image alt="Down Arrow" src={downArrow}/>
+              </div>
+            </DropdownList>
           </>
           
           :
