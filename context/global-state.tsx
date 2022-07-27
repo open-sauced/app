@@ -1,6 +1,13 @@
+//Context setup article: https://contactmentor.com/react-context-with-hooks/
+
 import React, { useState } from "react";
 
-const AppContext = React.createContext({});
+interface AppState {
+  appState: object;
+  setAppState: React.Dispatch<React.SetStateAction<{}>>;
+}
+
+const AppContext = React.createContext<AppState | null>(null);
 
 type Props = {
     children: React.ReactNode;
@@ -8,9 +15,7 @@ type Props = {
 
 const GlobalState = ({children}: Props) => {
 
-  const initialState = {
-    user: {}
-  };
+  const initialState = {};
 
   const [appState, setAppState] = useState(initialState);
 
@@ -24,6 +29,10 @@ const GlobalState = ({children}: Props) => {
       {children}
     </AppContext.Provider>
   );
+};
+
+export const useGobalStateContext = () => {
+  return React.useContext(AppContext);
 };
 
 export default GlobalState;
