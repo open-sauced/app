@@ -1,4 +1,4 @@
-//Context setup article: https://contactmentor.com/react-context-with-hooks/
+//Context setup article: https://jamiehaywood.medium.com/typesafe-global-state-with-typescript-react-react-context-c2df743f3ce
 
 import React, { useState } from "react";
 import { GlobalStateInterface } from "interfaces/global-state-types";
