@@ -21,16 +21,10 @@ const AuthSection: React.FC = ({  }) => {
   /* const { appState, setAppState } = useGobalStateContext();
 
   useEffect(() => {
-    if(user) setAppState(prevState => {
+    setAppState(prevState => {
       return {
         ...prevState,
         user
-      };
-    });
-    if(!user) setAppState(prevState => {
-      return {
-        ...prevState,
-        user: {}
       };
     });
   }, [user]); */
