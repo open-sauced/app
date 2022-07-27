@@ -1,13 +1,12 @@
 //Context setup article: https://contactmentor.com/react-context-with-hooks/
 
 import React, { useState } from "react";
+import { GlobalStateInterface } from "interfaces/global-state-types";
 
-interface AppState {
-  appState: object;
-  setAppState: React.Dispatch<React.SetStateAction<{}>>;
-}
-
-const AppContext = React.createContext<AppState | null>(null);
+const AppContext = React.createContext({
+  appState: {} as Partial<GlobalStateInterface>,
+  setAppState: {} as React.Dispatch<React.SetStateAction<Partial<GlobalStateInterface>>> 
+});
 
 type Props = {
     children: React.ReactNode;
