@@ -10,13 +10,15 @@ import DropdownList from "../DropdownList/dropdown-list";
 import Text from "components/atoms/Typography/text";
 import { Divider } from "@supabase/ui";
 import useSupabaseAuth from "../../../lib/hooks/useSupabaseAuth";
-import { useGobalStateContext } from "context/global-state";
+
+/* TODO: Add user object to global state
+import { useGobalStateContext } from "context/global-state"; */
 
 const AuthSection: React.FC = ({  }) => {
 
   const { signIn, signOut, user } = useSupabaseAuth();
 
-  const { appState, setAppState } = useGobalStateContext();
+  /* const { appState, setAppState } = useGobalStateContext();
 
   useEffect(() => {
     if(user) setAppState(prevState => {
@@ -31,7 +33,7 @@ const AuthSection: React.FC = ({  }) => {
         user: {}
       };
     });
-  }, [user]);
+  }, [user]); */
 
   const authMenu = {
     authed: [
