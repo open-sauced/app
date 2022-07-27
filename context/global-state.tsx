@@ -30,7 +30,7 @@ const GlobalState = ({children}: Props) => {
   );
 };
 
-export const useGobalStateContext = () => {
+export const useGlobalStateContext = () => {
   return React.useContext(AppContext);
 };
 
