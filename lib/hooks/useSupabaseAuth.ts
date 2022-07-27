@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { supabase } from "../funcs/supabase";
-import {User} from "@supabase/supabase-js";
-import {UserCredentials} from "@supabase/gotrue-js/src/lib/types";
+import { supabase } from "../utils/supabase";
+import { User } from "@supabase/supabase-js";
+import { UserCredentials } from "@supabase/gotrue-js/src/lib/types";
 
 const useSupabaseAuth = () => {
   const [user, setUser] = useState<User | null>(null);

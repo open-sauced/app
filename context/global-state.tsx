@@ -1,6 +1,12 @@
-import React, { useState } from "react";
+//Context setup article: https://jamiehaywood.medium.com/typesafe-global-state-with-typescript-react-react-context-c2df743f3ce
 
-const AppContext = React.createContext({});
+import React, { useState } from "react";
+import { GlobalStateInterface } from "interfaces/global-state-types";
+
+const AppContext = React.createContext({
+  appState: {} as Partial<GlobalStateInterface>,
+  setAppState: {} as React.Dispatch<React.SetStateAction<Partial<GlobalStateInterface>>> 
+});
 
 type Props = {
     children: React.ReactNode;
@@ -8,9 +14,7 @@ type Props = {
 
 const GlobalState = ({children}: Props) => {
 
-  const initialState = {
-    user: {}
-  };
+  const initialState = {};
 
   const [appState, setAppState] = useState(initialState);
 
@@ -24,6 +28,10 @@ const GlobalState = ({children}: Props) => {
       {children}
     </AppContext.Provider>
   );
+};
+
+export const useGlobalStateContext = () => {
+  return React.useContext(AppContext);
 };
 
 export default GlobalState;

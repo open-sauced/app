@@ -1,3 +1,4 @@
+import { ComponentStory, ComponentMeta } from "@storybook/react";
 import AuthSection from "../../components/molecules/AuthSection/auth-section";
 
 const storyConfig = {
@@ -6,4 +7,14 @@ const storyConfig = {
 
 export default storyConfig;
 
-export const AuthSectionMolecule = () => <AuthSection />;
+const testUser = {
+  testAttr: false
+};
+
+const AuthSectionTemplate: ComponentStory<typeof AuthSection> = (args) => <div className="flex justify-center"><AuthSection {...args} /></div>;
+
+export const NoAuthedUser = AuthSectionTemplate.bind({});
+NoAuthedUser.args = {   };
+
+export const AuthedUser = AuthSectionTemplate.bind({});
+AuthedUser.args = { user: testUser };
