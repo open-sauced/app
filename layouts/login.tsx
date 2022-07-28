@@ -6,7 +6,7 @@ const LoginLayout = ({children}: {children: React.ReactNode}) => {
   return (
     <>
       <TopNav />
-      <main className="flex w-full h-[calc(100vh-(50px+95px))] flex-1 items-center justify-center text-center">
+      <main className="flex w-full min-h-[calc(100vh-(50px+95px))] flex-1 items-center justify-center text-center">
         {children}
       </main>
       <Footer />
