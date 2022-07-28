@@ -14,8 +14,30 @@ import PATIcon from "public/icons/pat-icon.svg";
 import PATActiveIcon from "public/icons/pat-active-icon.svg";
 import HighlightIcon from "public/icons/highlight-icon.svg";
 import GitHubIcon from "public/icons/github-icon.svg";
+import TestRepoAvatar from "public/icons/test-repo-avatar.svg";
+import AddIcon from "public/icons/add-icon.svg";
 import Button from "components/atoms/Button/button";
 import TextInput from "components/atoms/TextInput/text-input";
+import { LoginRepoObjectInterface } from "interfaces/login-repo-object-interface";
+
+const testList = [
+  {
+    repoOwner: "statelyai",
+    repoName: "xstate"
+  },
+  {
+    repoOwner: "statelyai",
+    repoName: "xstate"
+  },
+  {
+    repoOwner: "statelyai",
+    repoName: "xstate"
+  },
+  {
+    repoOwner: "statelyai",
+    repoName: "xstate"
+  }
+];
 
 const LoginStep1: React.FC = () => {
   return (
@@ -82,9 +104,42 @@ const LoginStep2: React.FC = () => {
   );
 };
 
-const LoginStep3: React.FC = () => {
+interface LoginStep3Props {
+  repoList: LoginRepoObjectInterface[];
+}
+
+const LoginStep3: React.FC<LoginStep3Props> = ({ repoList }) => {
   return (
     <>
+      <div className="flex flex-col h-full gap-5">
+        <div>
+          <div className="gap-2 mb-4">
+            <Title className="!text-sm !text-light-orange-9">Step Two</Title>
+          </div>
+          <div className="gap-2 mb-4">
+            <Title className="!text-2xl">Provide your token</Title>
+          </div>
+          <div className="mb-4 text-left ">
+            <Text className="!text-sm">In order to provide fresh, and insightful data, we’ll need a favor: a GitHub personal access token to fetch public GitHub data. Here’s how we’re going to use your token:</Text>
+          </div>
+          <div className="h-[140px] overflow-y-auto">
+            {
+              repoList.map((repo, index) => 
+                <div key={index} className="flex justify-between w-full border-[1px] rounded-lg border-light-slate-6 p-2 mb-2">
+                  <div className="flex items-center gap-2">
+                    <Icon IconImage={TestRepoAvatar} size={24} />
+                    <Text className="!text-[16px] !font-medium !text-light-slate-12">{`${repo.repoName}/${repo.repoOwner}`}</Text>
+                  </div>
+                  <Button type="default">Follow <Icon IconImage={AddIcon} size={8} className="ml-2"/></Button>
+                </div>
+              )
+            }
+          </div>
+        </div>
+        <div className="flex justify-center gap-2">
+          <Title className="!text-sm font-semibold !text-light-orange-9">Skip this step</Title>
+        </div>
+      </div>
     </>
   );
 };
@@ -119,7 +174,7 @@ const Login: WithPageLayout = () => {
           </div>
         </div>
         <div className="w-full h-full p-9 rounded-r-lg bg-white">
-          <LoginStep2 />
+          <LoginStep3 repoList={testList}/>
         </div>
       </>
     </Card>
