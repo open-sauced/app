@@ -37,8 +37,10 @@ const LoginStep3: React.FC = () => {
 const Login: WithPageLayout = () => {
   //const router = useRouter();
 
+  const highlighted = "!text-light-slate-12";
+
   return (
-    <Card className="flex w-[870px] h-[436px] !p-0 !bg-light-slate-2 shadow-login border-none">
+    <Card className="flex w-[870px] h-[436px] !p-0 !bg-light-slate-2 shadow-login border-orange-500">
       <>
         <div className="w-full h-full p-9">
           <div className="flex gap-2 mb-6">
@@ -48,13 +50,16 @@ const Login: WithPageLayout = () => {
             <Text className="!text-sm">Open Sauced is a platform to provide insights on open source contributions. Let&apos;s start by logging in with GItHub.</Text>
           </div>
           <div className="flex gap-2 items-center mb-8">
-            <Icon IconImage={GitHubAuthActive /* Completed */} size={48} /> <Text className="!text-[16px]">Authenicate with GitHub</Text>
+            <Icon IconImage={GitHubAuthActive /* Completed */} size={48} />
+            <Text className={`!text-[16px] !font-medium ${highlighted} !text-light-slate-12`}>Authenicate with GitHub</Text>
           </div>
           <div className="flex gap-2 items-center mb-8">
-            <Icon IconImage={PAT /* Completed */} size={48} /> <Text className="!text-[16px]">Provide a Personal Access Token</Text>
+            <Icon IconImage={PAT /* Completed */} size={48} />
+            <Text disabled className="!text-[16px] !font-medium">Provide a Personal Access Token</Text>
           </div>
           <div className="flex gap-2 items-center mb-8">
-            <Icon IconImage={ChooseRepo /* Completed */} size={48} /> <Text className="!text-[16px]">Choose some repositories</Text>
+            <Icon IconImage={ChooseRepo /* Completed */} size={48} />
+            <Text disabled className="!text-[16px] !font-medium">Choose some repositories</Text>
           </div>
         </div>
         <div className="w-full h-full p-9 rounded-r-lg bg-white">
