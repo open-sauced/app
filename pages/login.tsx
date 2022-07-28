@@ -15,6 +15,7 @@ import PATActiveIcon from "public/icons/pat-active-icon.svg";
 import HighlightIcon from "public/icons/highlight-icon.svg";
 import GitHubIcon from "public/icons/github-icon.svg";
 import Button from "components/atoms/Button/button";
+import TextInput from "components/atoms/TextInput/text-input";
 
 const LoginStep1: React.FC = () => {
   return (
@@ -50,7 +51,7 @@ const LoginStep1: React.FC = () => {
 const LoginStep2: React.FC = () => {
   return (
     <>
-      <div className="flex flex-col h-full gap-6">
+      <div className="flex flex-col h-full gap-5">
         <div>
           <div className="gap-2 mb-4">
             <Title className="!text-sm !text-light-orange-9">Step Two</Title>
@@ -73,7 +74,7 @@ const LoginStep2: React.FC = () => {
           </div>
         </div>
         <div className="flex flex-col gap-2">
-          <Button type="primary">Confirm Token</Button>
+          <TextInput placeholder="Insert Your Token Here"/>
           <Button type="primary">Confirm Token</Button>
         </div>
       </div>
