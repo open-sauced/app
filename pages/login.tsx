@@ -19,25 +19,7 @@ import AddIcon from "public/icons/add-icon.svg";
 import Button from "components/atoms/Button/button";
 import TextInput from "components/atoms/TextInput/text-input";
 import { LoginRepoObjectInterface } from "interfaces/login-repo-object-interface";
-
-const testList = [
-  {
-    repoOwner: "statelyai",
-    repoName: "xstate"
-  },
-  {
-    repoOwner: "statelyai",
-    repoName: "xstate"
-  },
-  {
-    repoOwner: "statelyai",
-    repoName: "xstate"
-  },
-  {
-    repoOwner: "statelyai",
-    repoName: "xstate"
-  }
-];
+import useLoginRepoList from "lib/hooks/useLoginRepoList";
 
 const LoginStep1: React.FC = () => {
   return (
@@ -147,6 +129,8 @@ const LoginStep3: React.FC<LoginStep3Props> = ({ repoList }) => {
 const Login: WithPageLayout = () => {
   //const router = useRouter();
 
+  const repoList = useLoginRepoList();
+
   const highlighted = "!text-light-slate-12";
 
   return (
@@ -174,7 +158,7 @@ const Login: WithPageLayout = () => {
           </div>
         </div>
         <div className="w-full h-full p-9 rounded-r-lg bg-white">
-          <LoginStep3 repoList={testList}/>
+          <LoginStep3 repoList={repoList}/>
         </div>
       </>
     </Card>
