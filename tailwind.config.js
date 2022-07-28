@@ -186,6 +186,9 @@ module.exports = {
             "12": "hsl(137, 72.0%, 94.0%)"
           }
         }
+      },
+      boxShadow: {
+        "login": "0px 64px 100px -80px #FF5F13, 0px 16px 56px rgba(181, 107, 72, 0.19)"
       }
     }
   },

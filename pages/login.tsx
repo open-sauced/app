@@ -7,7 +7,7 @@ const Login: WithPageLayout = () => {
 
   return (
     <main className="flex w-full h-[100vh] flex-1 items-center justify-center text-center">
-      <Card className="flex w-[870px] h-[436px] p-0 bg-light-slate-2">
+      <Card className="flex w-[870px] h-[436px] !p-0 bg-light-slate-3 shadow-login border-none">
         <>
           <div className="w-full h-full p-9">
             Test
