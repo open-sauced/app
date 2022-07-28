@@ -137,7 +137,10 @@ const LoginStep3: React.FC<LoginStep3Props> = ({ repoList, handleLoginStep }) =>
                 <div key={index} className="flex justify-between w-full border-[1px] rounded-lg border-light-slate-6 p-2 mb-2">
                   <div className="flex items-center gap-2">
                     <Icon IconImage={TestRepoAvatar} size={24} />
-                    <Text className="!text-[16px] !font-medium !text-light-slate-12">{`${repo.repoName}/${repo.repoOwner}`}</Text>
+                    <div>
+                      <Text className="!text-[16px] !font-medium">{`${repo.repoOwner}/`}</Text>
+                      <Text className="!text-[16px] !font-medium !text-light-slate-12">{`${repo.repoName}`}</Text>
+                    </div>
                   </div>
                   <Button type="default">Follow <Icon IconImage={AddIcon} size={8} className="ml-2"/></Button>
                 </div>
