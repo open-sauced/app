@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { WithPageLayout } from "../interfaces/with-page-layout";
 import LoginLayout from "layouts/login";
 import { useRouter } from "next/router";
@@ -21,7 +22,17 @@ import TextInput from "components/atoms/TextInput/text-input";
 import { LoginRepoObjectInterface } from "interfaces/login-repo-object-interface";
 import useLoginRepoList from "lib/hooks/useLoginRepoList";
 
-const LoginStep1: React.FC = () => {
+type handleLoginStep = () => void;
+
+interface LoginStep1Props {
+  handleLoginStep: handleLoginStep;
+}
+
+const LoginStep1: React.FC<LoginStep1Props> = ({ handleLoginStep }) => {
+  const handleGitHubAuth = () => {
+    handleLoginStep();
+  };
+
   return (
     <>
       <div className="flex flex-col h-full gap-16">
@@ -45,14 +56,22 @@ const LoginStep1: React.FC = () => {
           </div>
         </div>
         <div>
-          <Button type="primary">Authenicate <Icon IconImage={GitHubIcon} className="ml-2"/></Button>
+          <Button onClick={handleGitHubAuth} type="primary">Authenicate <Icon IconImage={GitHubIcon} className="ml-2"/></Button>
         </div>
       </div>
     </>
   );
 };
 
-const LoginStep2: React.FC = () => {
+interface LoginStep2Props {
+  handleLoginStep: handleLoginStep;
+}
+
+const LoginStep2: React.FC<LoginStep2Props> = ({ handleLoginStep }) => {
+  const handleAddPAT = () => {
+    handleLoginStep();
+  };
+
   return (
     <>
       <div className="flex flex-col h-full gap-5">
@@ -79,7 +98,7 @@ const LoginStep2: React.FC = () => {
         </div>
         <div className="flex flex-col gap-2">
           <TextInput placeholder="Insert Your Token Here"/>
-          <Button type="primary">Confirm Token</Button>
+          <Button onClick={handleAddPAT} type="primary">Confirm Token</Button>
         </div>
       </div>
     </>
@@ -87,10 +106,18 @@ const LoginStep2: React.FC = () => {
 };
 
 interface LoginStep3Props {
+  handleLoginStep: handleLoginStep;
   repoList: LoginRepoObjectInterface[];
 }
 
-const LoginStep3: React.FC<LoginStep3Props> = ({ repoList }) => {
+const LoginStep3: React.FC<LoginStep3Props> = ({ repoList, handleLoginStep }) => {
+  const router = useRouter();
+
+  const handleSkipAddRepo = () => {
+    handleLoginStep();
+    router.push("/hacktoberfest");
+  };
+
   return (
     <>
       <div className="flex flex-col h-full gap-5">
@@ -118,7 +145,7 @@ const LoginStep3: React.FC<LoginStep3Props> = ({ repoList }) => {
             }
           </div>
         </div>
-        <div className="flex justify-center gap-2">
+        <div onClick={handleSkipAddRepo} className="flex justify-center gap-2">
           <Title className="!text-sm font-semibold !text-light-orange-9">Skip this step</Title>
         </div>
       </div>
@@ -127,11 +154,17 @@ const LoginStep3: React.FC<LoginStep3Props> = ({ repoList }) => {
 };
 
 const Login: WithPageLayout = () => {
-  //const router = useRouter();
+  type LoginSteps = number;
 
   const repoList = useLoginRepoList();
 
   const highlighted = "!text-light-slate-12";
+
+  const [ currentLoginStep, setCurrentLoginStep ] = useState<LoginSteps>(1);
+
+  const handleLoginStep = () => {
+    setCurrentLoginStep(prevStep => prevStep + 1);
+  };
 
   return (
     <Card className="flex w-[870px] h-[436px] text-left !p-0 !bg-light-slate-2 shadow-login border-orange-500">
@@ -145,20 +178,22 @@ const Login: WithPageLayout = () => {
             <Text className="!text-sm">Open Sauced is a platform to provide insights on open source contributions. Let&apos;s start by logging in with GItHub.</Text>
           </div>
           <div className="flex gap-2 items-center mb-8">
-            <Icon IconImage={GitHubAuthActiveIcon /* Completed */} size={48} />
+            <Icon IconImage={currentLoginStep === 1 ? GitHubAuthActiveIcon : CompletedIcon} size={48} />
             <Text className={`!text-[16px] !font-medium ${highlighted} !text-light-slate-12`}>Authenicate with GitHub</Text>
           </div>
           <div className="flex gap-2 items-center mb-8">
-            <Icon IconImage={PATIcon /* Completed */} size={48} />
+            <Icon IconImage={currentLoginStep === 2 ? PATActiveIcon : currentLoginStep < 2 ? PATIcon : CompletedIcon} size={48} />
             <Text disabled className="!text-[16px] !font-medium">Provide a Personal Access Token</Text>
           </div>
           <div className="flex gap-2 items-center mb-8">
-            <Icon IconImage={ChooseRepoIcon /* Completed */} size={48} />
+            <Icon IconImage={currentLoginStep === 3 ? ChooseRepoActiveIcon : currentLoginStep < 3 ? ChooseRepoIcon : CompletedIcon} size={48} />
             <Text disabled className="!text-[16px] !font-medium">Choose some repositories</Text>
           </div>
         </div>
         <div className="w-full h-full p-9 rounded-r-lg bg-white">
-          <LoginStep3 repoList={repoList}/>
+          {currentLoginStep === 1 && <LoginStep1 handleLoginStep={handleLoginStep}/>}
+          {currentLoginStep === 2 && <LoginStep2 handleLoginStep={handleLoginStep}/>}
+          {currentLoginStep >= 3 && <LoginStep3 handleLoginStep={handleLoginStep} repoList={repoList}/>}
         </div>
       </>
     </Card>
