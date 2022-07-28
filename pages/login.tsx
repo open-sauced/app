@@ -2,11 +2,11 @@ import { WithPageLayout } from "../interfaces/with-page-layout";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 
-const Home: WithPageLayout = () => {
+const Login: WithPageLayout = () => {
   const router = useRouter();
 
   useEffect(() => {
-    router.push("login");
+    router.push("hacktoberfest");
   }, [router]);
 
   return (
@@ -16,4 +16,4 @@ const Home: WithPageLayout = () => {
   );
 };
 
-export default Home;
+export default Login;
