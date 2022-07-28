@@ -35,7 +35,7 @@ const LoginStep1: React.FC<LoginStep1Props> = ({ handleLoginStep }) => {
 
   return (
     <>
-      <div className="flex flex-col h-full gap-16">
+      <div className="flex flex-col h-full gap-24">
         <div>
           <div className="gap-2 mb-4">
             <Title className="!text-sm !text-light-orange-9">Step One</Title>
@@ -170,7 +170,7 @@ const Login: WithPageLayout = () => {
   };
 
   return (
-    <Card className="flex w-[870px] h-[436px] text-left !p-0 !bg-light-slate-2 shadow-login border-orange-500">
+    <Card className="flex w-[870px] h-[436px] text-left !p-0 !bg-light-slate-2 shadow-login !border-orange-500">
       <>
         <div className="w-full h-full p-9">
           <div className="flex gap-2 mb-6">
