@@ -33,6 +33,20 @@ const iconSuite = {
 
 const SelectableTable: React.FC<SelectableTableProps> = ({ title, tableType, rows }) => {
   const ref = useRef<HTMLDivElement>(null);
+  const allCheckboxRefs = useRef<HTMLElement[]>([]);
+
+  const addCheckboxToRef = (element: any) => {
+    if(element && !allCheckboxRefs.current.includes(element)) allCheckboxRefs.current.push(element);
+  };
+
+  const changeAllCheckboxes = (event: any) => {
+    const checked = event.target.checked;
+
+    allCheckboxRefs.current.forEach(element => {
+      const checkbox: HTMLInputElement | null = element.querySelector("input[type='checkbox']");
+      if(checkbox) checkbox.checked = checked;
+    });
+  };
 
   const [divSize, setDivSize] = useState(0);
   
@@ -48,7 +62,7 @@ const SelectableTable: React.FC<SelectableTableProps> = ({ title, tableType, row
           <thead className="border-b-[1px]">
             <tr>
               <th className="p-2">
-                <Checkbox label=""/>
+                <Checkbox onChange={event => changeAllCheckboxes(event)} label=""/>
               </th>
               <th className="text-right p-2">
                 <Icon IconImage={iconSuite[tableType].star} />
@@ -70,8 +84,8 @@ const SelectableTable: React.FC<SelectableTableProps> = ({ title, tableType, row
             {rows?.map((row, index) => {
               return (
                 <tr className={`hover:content-['${row.title}']`} key={index}>
-                  <td className="flex flex-row text-left p-2">
-                    <Checkbox label=""/> {divSize > 0 && divSize < 350 ? truncateString(row.title, 3) : row.title}
+                  <td className="flex flex-row text-left p-2" ref={element => addCheckboxToRef(element)}>
+                    <Checkbox label="" /> {divSize > 0 && divSize < 350 ? truncateString(row.title, 3) : row.title}
                   </td>
                   <td className="text-right p-2">
                     {row.stars}%
