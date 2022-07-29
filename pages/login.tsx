@@ -174,7 +174,7 @@ const Login: WithPageLayout = () => {
       <>
         <div className="w-full h-full p-9">
           <div className="flex gap-2 mb-6">
-            <ProgressPie percentage={66} />
+            <ProgressPie percentage={currentLoginStep == 3 ? 100 : 66} />
             <Title className="!text-2xl">Let&apos;s get started</Title>
           </div>
           <div className="mb-8">
