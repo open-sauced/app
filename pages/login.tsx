@@ -182,15 +182,15 @@ const Login: WithPageLayout = () => {
           </div>
           <div className="flex gap-2 items-center mb-8">
             <Icon IconImage={currentLoginStep === 1 ? GitHubAuthActiveIcon : CompletedIcon} size={48} />
-            <Text className={`!text-[16px] !font-medium ${highlighted} !text-light-slate-12`}>Authenicate with GitHub</Text>
+            <Text disabled={currentLoginStep !== 1} className={`!text-[16px] !font-medium ${currentLoginStep === 1 && highlighted}`}>Authenicate with GitHub</Text>
           </div>
           <div className="flex gap-2 items-center mb-8">
             <Icon IconImage={currentLoginStep === 2 ? PATActiveIcon : currentLoginStep < 2 ? PATIcon : CompletedIcon} size={48} />
-            <Text disabled className="!text-[16px] !font-medium">Provide a Personal Access Token</Text>
+            <Text disabled={currentLoginStep !== 2} className={`!text-[16px] !font-medium ${currentLoginStep === 2 && highlighted}`}>Provide a Personal Access Token</Text>
           </div>
           <div className="flex gap-2 items-center mb-8">
             <Icon IconImage={currentLoginStep === 3 ? ChooseRepoActiveIcon : currentLoginStep < 3 ? ChooseRepoIcon : CompletedIcon} size={48} />
-            <Text disabled className="!text-[16px] !font-medium">Choose some repositories</Text>
+            <Text disabled={currentLoginStep !== 3} className={`!text-[16px] !font-medium ${currentLoginStep === 3 && highlighted}`}>Choose some repositories</Text>
           </div>
         </div>
         <div className="w-full h-full p-9 rounded-r-lg bg-white">
