@@ -113,9 +113,21 @@ interface LoginStep3Props {
 const LoginStep3: React.FC<LoginStep3Props> = ({ repoList, handleLoginStep }) => {
   const router = useRouter();
 
+  const [isFollowing, setIsFollowing] = useState<boolean[]>(repoList.map(() => false));
+
   const handleSkipAddRepo = () => {
     handleLoginStep();
     router.push("/hacktoberfest");
+  };
+
+  const handleFollowRepo = (index: number) => {
+    if(!isFollowing[index]) {
+      setIsFollowing(prevState => {
+        const newState = [...prevState];
+        newState[index] = !newState[index];
+        return newState;
+      });
+    }
   };
 
   return (
@@ -133,18 +145,27 @@ const LoginStep3: React.FC<LoginStep3Props> = ({ repoList, handleLoginStep }) =>
           </div>
           <div className="h-[140px] overflow-y-auto">
             {
-              repoList.map((repo, index) => 
-                <div key={index} className="flex justify-between w-full border-[1px] rounded-lg border-light-slate-6 p-2 mb-2">
-                  <div className="flex items-center gap-2">
-                    <Icon IconImage={TestRepoAvatar} size={24} />
-                    <div>
-                      <Text className="!text-[16px] !font-medium">{`${repo.repoOwner}/`}</Text>
-                      <Text className="!text-[16px] !font-medium !text-light-slate-12">{`${repo.repoName}`}</Text>
+              repoList.map((repo, index) => {
+                return (
+                  <div key={index} className="flex justify-between w-full border-[1px] rounded-lg border-light-slate-6 p-2 mb-2">
+                    <div className="flex items-center gap-2">
+                      <Icon IconImage={TestRepoAvatar} size={24} />
+                      <div>
+                        <Text className="!text-[16px] !font-medium">{`${repo.repoOwner}/`}</Text>
+                        <Text className="!text-[16px] !font-medium !text-light-slate-12">{`${repo.repoName}`}</Text>
+                      </div>
                     </div>
+                    <Button onClick={() => handleFollowRepo(index)} type={isFollowing[index] ? "outline" : "default"}>
+                      {
+                        isFollowing[index] ? "Following" :
+                          <>
+                            Follow  <Icon IconImage={AddIcon} size={8} className="ml-2"/>
+                          </>
+                      }
+                    </Button>
                   </div>
-                  <Button type="default">Follow <Icon IconImage={AddIcon} size={8} className="ml-2"/></Button>
-                </div>
-              )
+                );
+              })
             }
           </div>
         </div>
