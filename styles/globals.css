@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-.sbui-btn-container {
+.login-step .sbui-btn-container {
   width: 100%;
 }
 

@@ -35,7 +35,7 @@ const LoginStep1: React.FC<LoginStep1Props> = ({ handleLoginStep }) => {
 
   return (
     <>
-      <div className="flex flex-col h-full gap-24">
+      <div className="login-step flex flex-col h-full gap-20">
         <div>
           <div className="gap-2 mb-4">
             <Title className="!text-sm !text-light-orange-9">Step One</Title>
@@ -56,7 +56,7 @@ const LoginStep1: React.FC<LoginStep1Props> = ({ handleLoginStep }) => {
           </div>
         </div>
         <div>
-          <Button onClick={handleGitHubAuth} type="primary" className="w-full">Authenicate <Icon IconImage={GitHubIcon} className="ml-2"/></Button>
+          <Button onClick={handleGitHubAuth} type="primary" className="w-full h-10">Authenicate <Icon IconImage={GitHubIcon} className="ml-2"/></Button>
         </div>
       </div>
     </>
@@ -74,7 +74,7 @@ const LoginStep2: React.FC<LoginStep2Props> = ({ handleLoginStep }) => {
 
   return (
     <>
-      <div className="flex flex-col h-full gap-5">
+      <div className="login-step flex flex-col h-full gap-1">
         <div>
           <div className="gap-2 mb-4">
             <Title className="!text-sm !text-light-orange-9">Step Two</Title>
@@ -98,7 +98,7 @@ const LoginStep2: React.FC<LoginStep2Props> = ({ handleLoginStep }) => {
         </div>
         <div className="flex flex-col gap-2">
           <TextInput placeholder="Insert Your Token Here"/>
-          <Button onClick={handleAddPAT} type="primary" className="w-full">Confirm Token</Button>
+          <Button onClick={handleAddPAT} type="primary" className="w-full h-10">Confirm Token</Button>
         </div>
       </div>
     </>
