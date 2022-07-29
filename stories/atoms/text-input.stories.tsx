@@ -15,5 +15,11 @@ const TextInputTemplate: ComponentStory<typeof TextInput> = (args) => <TextInput
 export const Default = TextInputTemplate.bind({});
 
 Default.args = {
-  placeholder: "Test"
+  placeholder: "Test",
+  disabled: false,
+  autoFocus: true,
+  type: "text",
+  borderless: false,
+  descriptionText: "Test",
+  label: "Test"
 };
