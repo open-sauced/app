@@ -4,7 +4,7 @@ const useLoginRepoList = () => {
     {
       repoOwner: "statelyai",
       repoName: "xstate",
-      repoIcon: ""
+      repoIcon: " "
     },
     {
       repoOwner: "statelyai",
