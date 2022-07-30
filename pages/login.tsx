@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { WithPageLayout } from "../interfaces/with-page-layout";
 import LoginLayout from "layouts/login";
 import { useRouter } from "next/router";
@@ -107,10 +107,14 @@ const LoginStep2: React.FC<LoginStep2Props> = ({ handleLoginStep }) => {
 
 interface LoginStep3Props {
   handleLoginStep: handleLoginStep;
+  checkFollowed: {
+    isClickedFollowed: boolean;
+    setIsClickedFollowed: React.Dispatch<React.SetStateAction<boolean>>;
+  }
   repoList: LoginRepoObjectInterface[];
 }
 
-const LoginStep3: React.FC<LoginStep3Props> = ({ repoList, handleLoginStep }) => {
+const LoginStep3: React.FC<LoginStep3Props> = ({ repoList, handleLoginStep, checkFollowed }) => {
   const router = useRouter();
 
   const [isFollowing, setIsFollowing] = useState<boolean[]>(repoList.map(() => false));
@@ -127,6 +131,7 @@ const LoginStep3: React.FC<LoginStep3Props> = ({ repoList, handleLoginStep }) =>
         newState[index] = !newState[index];
         return newState;
       });
+      checkFollowed.setIsClickedFollowed(true);
     }
   };
 
@@ -170,7 +175,7 @@ const LoginStep3: React.FC<LoginStep3Props> = ({ repoList, handleLoginStep }) =>
           </div>
         </div>
         <div onClick={handleSkipAddRepo} className="flex justify-center gap-2">
-          <Title className="!text-sm font-semibold !text-light-orange-9">Skip this step</Title>
+          <Title className="!text-sm font-semibold !text-light-orange-9 cursor-pointer">{checkFollowed.isClickedFollowed ? "Continue" : "Skip this step"}</Title>
         </div>
       </div>
     </>
@@ -185,6 +190,9 @@ const Login: WithPageLayout = () => {
   const highlighted = "!text-light-slate-12";
 
   const [ currentLoginStep, setCurrentLoginStep ] = useState<LoginSteps>(1);
+  const [ isClickedFollowed, setIsClickedFollowed ] = useState<boolean>(false);
+
+  const checkFollowed = { isClickedFollowed, setIsClickedFollowed };
 
   const handleLoginStep = () => {
     setCurrentLoginStep(prevStep => prevStep + 1);
@@ -195,7 +203,7 @@ const Login: WithPageLayout = () => {
       <>
         <div className="w-full h-full p-9">
           <div className="flex gap-2 mb-6">
-            <ProgressPie percentage={currentLoginStep == 3 ? 100 : 66} />
+            <ProgressPie percentage={currentLoginStep === 1 ? 0 :  currentLoginStep === 2 ? 33 : currentLoginStep === 3 && !isClickedFollowed ? 66 : 100} />
             <Title className="!text-2xl">Let&apos;s get started</Title>
           </div>
           <div className="mb-8">
@@ -210,14 +218,14 @@ const Login: WithPageLayout = () => {
             <Text disabled={currentLoginStep !== 2} className={`!text-[16px] !font-medium ${currentLoginStep === 2 && highlighted}`}>Provide a Personal Access Token</Text>
           </div>
           <div className="flex gap-2 items-center mb-8">
-            <Icon IconImage={currentLoginStep === 3 ? ChooseRepoActiveIcon : currentLoginStep < 3 ? ChooseRepoIcon : CompletedIcon} size={48} />
+            <Icon IconImage={currentLoginStep === 3 && !isClickedFollowed ? ChooseRepoActiveIcon : currentLoginStep < 3 ? ChooseRepoIcon : CompletedIcon} size={48} />
             <Text disabled={currentLoginStep !== 3} className={`!text-[16px] !font-medium ${currentLoginStep === 3 && highlighted}`}>Choose some repositories</Text>
           </div>
         </div>
         <div className="w-full h-full p-9 rounded-r-lg bg-white">
           {currentLoginStep === 1 && <LoginStep1 handleLoginStep={handleLoginStep}/>}
           {currentLoginStep === 2 && <LoginStep2 handleLoginStep={handleLoginStep}/>}
-          {currentLoginStep >= 3 && <LoginStep3 handleLoginStep={handleLoginStep} repoList={repoList}/>}
+          {currentLoginStep >= 3 && <LoginStep3 handleLoginStep={handleLoginStep} repoList={repoList} checkFollowed={checkFollowed}/>}
         </div>
       </>
     </Card>
