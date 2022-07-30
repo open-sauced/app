@@ -201,7 +201,7 @@ const Login: WithPageLayout = () => {
   return (
     <Card className="flex w-[870px] h-[436px] text-left !p-0 !bg-light-slate-2 shadow-login !border-orange-500">
       <>
-        <div className="w-full h-full p-9">
+        <section className="w-full h-full p-9">
           <div className="flex gap-2 mb-6">
             <ProgressPie percentage={currentLoginStep === 1 ? 0 :  currentLoginStep === 2 ? 33 : currentLoginStep === 3 && !isClickedFollowed ? 66 : 100} />
             <Title className="!text-2xl">Let&apos;s get started</Title>
@@ -221,12 +221,12 @@ const Login: WithPageLayout = () => {
             <Icon IconImage={currentLoginStep === 3 && !isClickedFollowed ? ChooseRepoActiveIcon : currentLoginStep < 3 ? ChooseRepoIcon : CompletedIcon} size={48} />
             <Text disabled={currentLoginStep !== 3} className={`!text-[16px] !font-medium ${currentLoginStep === 3 && highlighted}`}>Choose some repositories</Text>
           </div>
-        </div>
-        <div className="w-full h-full p-9 rounded-r-lg bg-white">
+        </section>
+        <section className="w-full h-full p-9 rounded-r-lg bg-white">
           {currentLoginStep === 1 && <LoginStep1 handleLoginStep={handleLoginStep}/>}
           {currentLoginStep === 2 && <LoginStep2 handleLoginStep={handleLoginStep}/>}
           {currentLoginStep >= 3 && <LoginStep3 handleLoginStep={handleLoginStep} repoList={repoList} checkFollowed={checkFollowed}/>}
-        </div>
+        </section>
       </>
     </Card>
   );

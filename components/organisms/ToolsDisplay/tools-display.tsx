@@ -14,7 +14,7 @@ const Tool: React.FC<ToolProps> = ({ tool }) => {
     <div className="flex flex-col w-full gap-4">
       {!tool ?
         <>
-          <div className="flex flex-wrap gap-4 items-center lg:flex-row lg:flex-nowrap max-w-full">
+          <section className="flex flex-wrap gap-4 items-center lg:flex-row lg:flex-nowrap max-w-full">
             <HighlightCard
               label="Participation"
               icon="participation"
@@ -51,8 +51,8 @@ const Tool: React.FC<ToolProps> = ({ tool }) => {
               percentage={77}
               percentageLabel="of 49,999"
             />
-          </div>
-          <div className="flex flex-col lg:flex-row max-w-full gap-4 mb-6">
+          </section>
+          <section className="flex flex-col lg:flex-row max-w-full gap-4 mb-6">
             <div className="flex flex-col w-full lg:w-[calc(50%-(1rem/2))] xl:!w-[calc(60%-(1rem/2))] gap-4">
               <Card className="w-full p-5">
                 <ScatterChart title="Test Title" option={testOptions} />
@@ -72,7 +72,7 @@ const Tool: React.FC<ToolProps> = ({ tool }) => {
             <Card className="w-full lg:w-[calc(50%-(1rem/2))] xl:!w-[calc(40%-(1rem/2))] px-1 xs:px-5 py-5">
               <SelectableTable rows={extendedTestRows} title="Test Title" tableType="participants" />
             </Card>
-          </div>
+          </section>
         </>
         :
         <>
