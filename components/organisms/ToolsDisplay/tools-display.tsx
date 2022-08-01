@@ -16,6 +16,7 @@ const Tool: React.FC<ToolProps> = ({ tool }) => {
         <>
           <div className="flex flex-wrap gap-4 items-center lg:flex-row lg:flex-nowrap max-w-full">
             <HighlightCard
+              url="/hacktoberfest/people"
               label="Participation"
               icon="participation"
               metricIncreases={true}
@@ -25,6 +26,7 @@ const Tool: React.FC<ToolProps> = ({ tool }) => {
               percentageLabel="of 49,999"
             />
             <HighlightCard
+              url="/hacktoberfest/pull%20requests"
               label="Spam"
               icon="spam"
               metricIncreases={false}
@@ -34,6 +36,7 @@ const Tool: React.FC<ToolProps> = ({ tool }) => {
               percentageLabel="of 49,999"
             />
             <HighlightCard
+              url="/hacktoberfest/pull%20requests"
               label="Accepted PRs"
               icon="accepted-pr"
               metricIncreases={true}
@@ -43,6 +46,7 @@ const Tool: React.FC<ToolProps> = ({ tool }) => {
               percentageLabel="of 49,999"
             />
             <HighlightCard
+              url="/hacktoberfest/pull%20requests"
               label="Unlabeled PRs"
               icon="unlabeled-pr"
               metricIncreases={false}
