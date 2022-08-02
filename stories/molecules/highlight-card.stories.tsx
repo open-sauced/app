@@ -12,6 +12,9 @@ const storyConfig = {
     icon: {
       options: ["participation", "accepted-pr", "unlabeled-pr", "spam"],
       control: { type: "select" }
+    },
+    url: {
+      control: { type: "text" }
     }
   }
 };
