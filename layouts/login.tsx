@@ -4,13 +4,12 @@ import LoginTopNav from "../components/organisms/LoginTopNav/login-top-nav";
 
 const LoginLayout = ({children}: {children: React.ReactNode}) => {
   return (
-    <>
+    <div className="bg-[#E6E6E6]">
       <LoginTopNav />
-      <main className="flex w-full min-h-[calc(100vh-(54px+95px))] flex-1 items-center justify-center text-center">
+      <main className="flex w-full min-h-[calc(100vh-54px)] flex-1 lg:items-center lg:justify-center">
         {children}
       </main>
-      <Footer />
-    </>
+    </div>
   );
 };
 

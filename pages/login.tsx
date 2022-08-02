@@ -35,7 +35,7 @@ const LoginStep1: React.FC<LoginStep1Props> = ({ handleLoginStep }) => {
 
   return (
     <>
-      <div className="login-step flex flex-col h-full gap-20">
+      <div className="login-step flex flex-col lg:h-full gap-20">
         <div>
           <div className="gap-2 mb-4">
             <Title className="!text-sm !text-light-orange-9">Step One</Title>
@@ -199,9 +199,9 @@ const Login: WithPageLayout = () => {
   };
 
   return (
-    <Card className="flex w-[870px] h-[436px] text-left !p-0 !bg-light-slate-2 shadow-login !border-orange-500">
+    <Card className="flex flex-col lg:flex-row w-[870px] h-[436px] !p-0 rounded-none lg:rounded-lg bg-inherit lg:!bg-light-slate-2 shadow-login border-0 lg:border-[1px] lg:!border-orange-500">
       <>
-        <section className="w-full h-full p-9">
+        <section className="w-full lg:h-full p-9">
           <div className="flex gap-2 mb-6">
             <ProgressPie percentage={currentLoginStep === 1 ? 0 :  currentLoginStep === 2 ? 33 : currentLoginStep === 3 && !isClickedFollowed ? 66 : 100} />
             <Title className="!text-2xl">Let&apos;s get started</Title>
@@ -209,20 +209,20 @@ const Login: WithPageLayout = () => {
           <div className="mb-8">
             <Text className="!text-sm">Open Sauced is a platform to provide insights on open source contributions. Let&apos;s start by logging in with GItHub.</Text>
           </div>
-          <div className="flex gap-2 items-center mb-8">
+          <div className="hidden lg:flex gap-2 items-center mb-8">
             <Icon IconImage={currentLoginStep === 1 ? GitHubAuthActiveIcon : CompletedIcon} size={48} />
             <Text disabled={currentLoginStep !== 1} className={`!text-[16px] !font-medium ${currentLoginStep === 1 && highlighted}`}>Authenicate with GitHub</Text>
           </div>
-          <div className="flex gap-2 items-center mb-8">
+          <div className="hidden lg:flex gap-2 items-center mb-8">
             <Icon IconImage={currentLoginStep === 2 ? PATActiveIcon : currentLoginStep < 2 ? PATIcon : CompletedIcon} size={48} />
             <Text disabled={currentLoginStep !== 2} className={`!text-[16px] !font-medium ${currentLoginStep === 2 && highlighted}`}>Provide a Personal Access Token</Text>
           </div>
-          <div className="flex gap-2 items-center mb-8">
+          <div className="hidden lg:flex gap-2 items-center mb-8">
             <Icon IconImage={currentLoginStep === 3 && !isClickedFollowed ? ChooseRepoActiveIcon : currentLoginStep < 3 ? ChooseRepoIcon : CompletedIcon} size={48} />
             <Text disabled={currentLoginStep !== 3} className={`!text-[16px] !font-medium ${currentLoginStep === 3 && highlighted}`}>Choose some repositories</Text>
           </div>
         </section>
-        <section className="w-full h-full p-9 rounded-r-lg bg-white">
+        <section className="w-full lg:h-full p-9 rounded-lg lg:rounded-r-lg bg-white">
           {currentLoginStep === 1 && <LoginStep1 handleLoginStep={handleLoginStep}/>}
           {currentLoginStep === 2 && <LoginStep2 handleLoginStep={handleLoginStep}/>}
           {currentLoginStep >= 3 && <LoginStep3 handleLoginStep={handleLoginStep} repoList={repoList} checkFollowed={checkFollowed}/>}
