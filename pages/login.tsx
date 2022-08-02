@@ -37,7 +37,8 @@ const LoginStep1: React.FC<LoginStep1Props> = ({ handleLoginStep }) => {
     <>
       <div className="login-step flex flex-col lg:h-full gap-20">
         <div>
-          <div className="gap-2 mb-4">
+          <div className="flex items-center gap-2 mb-4">
+            <Icon className="lg:hidden" IconImage={GitHubAuthActiveIcon} size={48} />
             <Title className="!text-sm !text-light-orange-9">Step One</Title>
           </div>
           <div className="gap-2 mb-4">
@@ -76,7 +77,8 @@ const LoginStep2: React.FC<LoginStep2Props> = ({ handleLoginStep }) => {
     <>
       <div className="login-step flex flex-col h-full gap-1">
         <div>
-          <div className="gap-2 mb-4">
+          <div className="flex items-center gap-2 mb-4">
+            <Icon className="lg:hidden" IconImage={PATActiveIcon} size={48} />
             <Title className="!text-sm !text-light-orange-9">Step Two</Title>
           </div>
           <div className="gap-2 mb-4">
@@ -139,7 +141,8 @@ const LoginStep3: React.FC<LoginStep3Props> = ({ repoList, handleLoginStep, chec
     <>
       <div className="flex flex-col h-full gap-5">
         <div>
-          <div className="gap-2 mb-4">
+          <div className="flex items-center gap-2 mb-4">
+            <Icon className="lg:hidden" IconImage={ChooseRepoActiveIcon} size={48} />
             <Title className="!text-sm !text-light-orange-9">Step Two</Title>
           </div>
           <div className="gap-2 mb-4">
@@ -148,7 +151,7 @@ const LoginStep3: React.FC<LoginStep3Props> = ({ repoList, handleLoginStep, chec
           <div className="mb-4 text-left ">
             <Text className="!text-sm">In order to provide fresh, and insightful data, we’ll need a favor: a GitHub personal access token to fetch public GitHub data. Here’s how we’re going to use your token:</Text>
           </div>
-          <div className="h-[140px] overflow-y-auto">
+          <div className="max-h-[250px] lg:h-[140px] overflow-y-auto">
             {
               repoList.map((repo, index) => {
                 return (
@@ -199,9 +202,9 @@ const Login: WithPageLayout = () => {
   };
 
   return (
-    <Card className="flex flex-col lg:flex-row w-[870px] h-[436px] !p-0 rounded-none lg:rounded-lg bg-inherit lg:!bg-light-slate-2 shadow-login border-0 lg:border-[1px] lg:!border-orange-500">
+    <Card className="flex flex-col lg:flex-row w-[870px] h-[436px] !p-0 rounded-none lg:rounded-lg !bg-inherit lg:!bg-light-slate-2 lg:shadow-login !border-0 lg:!border-[1px] lg:!border-orange-500">
       <>
-        <section className="w-full lg:h-full p-9">
+        <section className="w-full lg:h-full p-6 lg:p-9">
           <div className="flex gap-2 mb-6">
             <ProgressPie percentage={currentLoginStep === 1 ? 0 :  currentLoginStep === 2 ? 33 : currentLoginStep === 3 && !isClickedFollowed ? 66 : 100} />
             <Title className="!text-2xl">Let&apos;s get started</Title>
