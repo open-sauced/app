@@ -10,8 +10,8 @@ import { useGlobalStateContext } from "context/global-state";
 
 const Header: React.FC = () => {
   const router = useRouter();
+  
   const { appState, setAppState } = useGlobalStateContext();
-
   const { filter } = router.query;
   
   useEffect(() => {
@@ -24,7 +24,7 @@ const Header: React.FC = () => {
         filter: filterArray
       };
     });
-  }, [filter]);
+  }, [filter, setAppState]);
 
 
   return (

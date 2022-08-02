@@ -25,7 +25,7 @@ const AuthSection: React.FC = ({  }) => {
         user
       };
     });
-  }, [user]);
+  }, [user, setAppState]);
 
   const authMenu = {
     authed: [
