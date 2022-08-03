@@ -1,4 +1,4 @@
-import changeCapitalization from "lib/utils/changeCapitalization";
+import changeCapitalization from "lib/utils/change-capitalization";
 
 describe("[lib] changeCapitalization()", () => {
   it("should make the first letter of a string upper case", () => {

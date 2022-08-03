@@ -5,14 +5,15 @@ interface IconProps {
     IconImage: StaticImageData;
     className?: string;
     alt?: string;
+    size?: number;
 }
 
-const Icon: React.FC<IconProps> = ({ className, IconImage, alt }) => {
+const Icon: React.FC<IconProps> = ({ className, IconImage, alt, size = 16 }) => {
   return (
     <div className={`${className && className} inline-flex`}>
       <Image
-        className="items-center justify-center"
-        alt={alt ? alt : "Icon"} width={16} height={16} src={IconImage} />
+        className="items-center justify-center w-4"
+        alt={alt ? alt : "Icon"} width={size} height={size} src={IconImage} />
     </div>
   );
 };

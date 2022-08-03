@@ -4,9 +4,8 @@ import "../styles/globals.css";
 import Head from "next/head";
 import type { AppProps } from "next/app";
 import GlobalState from "../context/global-state";
-import "./nav.css";
 import { useRouter } from "next/router";
-import changeCapitalization from "../lib/utils/changeCapitalization";
+import changeCapitalization from "../lib/utils/change-capitalization";
 
 type ComponentWithPageLayout = AppProps & {
   Component: AppProps["Component"] & {

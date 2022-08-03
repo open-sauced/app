@@ -12,7 +12,7 @@ const Header: React.FC = () => {
   const { filterorg } = router.query;
 
   return (
-    <header className="header flex flex-col md:flex-row pt-6 px-4 md:px-16 bg-slate-50">
+    <section className="header flex flex-col md:flex-row pt-6 px-4 md:px-16 bg-slate-50">
       <div className="header-image mr-2 p-2 min-w-[130px]">
         <ContextThumbnail 
           size={120} ContextThumbnailURL={Thumbnail.src}></ContextThumbnail>
@@ -25,7 +25,7 @@ const Header: React.FC = () => {
           {filterorg && <FilterCard filterName={filterorg as string} bgColor="white"/>}
         </div>
       </div>
-    </header>
+    </section>
   );
 };
 
