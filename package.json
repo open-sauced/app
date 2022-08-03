@@ -18,6 +18,7 @@
     "@supabase/supabase-js": "^1.35.4",
     "@supabase/ui": "^0.36.5",
     "@types/jest": "^28.1.6",
+    "axios": "^0.27.2",
     "echarts": "^5.3.3",
     "echarts-for-react": "^3.0.2",
     "next": "^12.1.6",
