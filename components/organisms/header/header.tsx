@@ -9,7 +9,7 @@ import Thumbnail from "../../../public/hacktoberfest-icon.png";
 const Header: React.FC = () => {
   const router = useRouter();
 
-  const { filterorg } = router.query;
+  const { filter } = router.query;
 
   return (
     <section className="header flex flex-col md:flex-row pt-6 px-4 md:px-16 bg-slate-50">
@@ -22,7 +22,7 @@ const Header: React.FC = () => {
         <Text className="mt-1 !text-base font-medium text-slate-500">Open source projects and samples for Microsoft.</Text>
         <div className="flex mt-4">
           <FilterCard filterName="hacktoberfest" isRemovable={false} icon="topic" />
-          {filterorg && <FilterCard filterName={filterorg as string} bgColor="white"/>}
+          {filter && <FilterCard filterName={filter as string} bgColor="white"/>}
         </div>
       </div>
     </section>
