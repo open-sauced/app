@@ -3,7 +3,7 @@
   Idea for API Layer:
 
   YouTube: https://github.com/ThomasFindlay/react-advanced-london-managing-apis
-  GitHub: https://github.com/ThomasFindlay/react-advanced-london-managing-apis
+  GitHub: https://github.com/ThomasFindlay/react-advanced-london-managing-apis/blob/main/src/api/api.js
 
 */
 

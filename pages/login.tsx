@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { WithPageLayout } from "../interfaces/with-page-layout";
 import LoginLayout from "layouts/login";
 import { useRouter } from "next/router";
@@ -21,6 +21,7 @@ import Button from "components/atoms/Button/button";
 import TextInput from "components/atoms/TextInput/text-input";
 import { LoginRepoObjectInterface } from "interfaces/login-repo-object-interface";
 import useLoginRepoList from "lib/hooks/useLoginRepoList";
+import { getCatFacts } from "lib/utils/open-sauced-api-endpoints/test";
 
 type handleLoginStep = () => void;
 
@@ -192,6 +193,10 @@ const Login: WithPageLayout = () => {
 
   const highlighted = "!text-light-slate-12";
 
+  /* const testApi = async () => {
+    console.log(await getCatFacts());
+  }; */
+
   const [ currentLoginStep, setCurrentLoginStep ] = useState<LoginSteps>(1);
   const [ isClickedFollowed, setIsClickedFollowed ] = useState<boolean>(false);
 
@@ -200,6 +205,10 @@ const Login: WithPageLayout = () => {
   const handleLoginStep = () => {
     setCurrentLoginStep(prevStep => prevStep + 1);
   };
+
+  /* useEffect(() => {
+    testApi();
+  }, []); */
 
   return (
     <Card className="flex flex-col lg:flex-row w-[870px] h-[436px] !p-0 rounded-none lg:rounded-lg !bg-inherit lg:!bg-light-slate-2 lg:shadow-login !border-0 lg:!border-[1px] lg:!border-orange-500">
