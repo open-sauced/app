@@ -6,6 +6,7 @@ import ContextThumbnail from "../../atoms/ContextThumbnail/context-thumbnail";
 import FilterCard from "../../atoms/FilterCard/filter-card";
 import Thumbnail from "../../../public/hacktoberfest-icon.png";
 
+
 const Header: React.FC = () => {
   const router = useRouter();
 
