@@ -5,7 +5,7 @@ import Title from "../../atoms/Typography/title";
 import ContextThumbnail from "../../atoms/ContextThumbnail/context-thumbnail";
 import FilterCard from "../../atoms/FilterCard/filter-card";
 import Thumbnail from "../../../public/hacktoberfest-icon.png";
-
+import PillSelector from "components/atoms/PillSelector/pill-selector";
 
 const Header: React.FC = () => {
   const router = useRouter();
@@ -23,7 +23,7 @@ const Header: React.FC = () => {
         <Text className="mt-1 !text-base font-medium text-slate-500">Open source projects and samples for Microsoft.</Text>
         <div className="flex mt-4">
           <FilterCard filterName="hacktoberfest" isRemovable={false} icon="topic" />
-          {filter && <FilterCard filterName={filter as string} bgColor="white"/>}
+          <PillSelector />
         </div>
       </div>
     </section>

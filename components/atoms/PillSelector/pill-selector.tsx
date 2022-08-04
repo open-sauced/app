@@ -41,7 +41,7 @@ const PillSelector: React.FC<PillSelectorProps> = ({ className }) => {
 
   return (
     <div 
-      className={`inline-flex items-center max-w-full overflow-hidden hover:overflow-x-scroll gap-1 p-0.5 ${isOpen ? "bg-gray-200" : "bg-transparent" } rounded-lg transition`}>
+      className={`${className ? className : ""}inline-flex items-center max-w-full overflow-hidden hover:overflow-x-scroll gap-1 p-0.5 ${isOpen ? "bg-gray-200" : "bg-transparent" } rounded-lg transition`}>
 
       {/* PillSelectorButton */}
       <PillSelectorButton
