@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import useFilterOptions from "lib/hooks/useFilterOptions";
+import Link from "next/link";
 
 interface PillSelectorButtonProps {
   className?: string;
@@ -31,17 +33,19 @@ const PillSelectorOption: React.FC<PillSelectorOptionProps> =(props) => {
 
 interface PillSelectorProps {
     className?: string;
+    filterName: string;
 }
 
 
-const PillSelector: React.FC<PillSelectorProps> = ({ className }) => {
+const PillSelector: React.FC<PillSelectorProps> = ({ className, filterName }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const filterOptions = useFilterOptions();
   const show = isOpen ? "flex" : "hidden";
   const toggleFilter = () => setIsOpen(!isOpen);
 
   return (
     <div 
-      className={`${className ? className : ""}inline-flex items-center max-w-full overflow-hidden hover:overflow-x-scroll gap-1 p-0.5 ${isOpen ? "bg-gray-200" : "bg-transparent" } rounded-lg transition`}>
+      className={`${className ? className : ""} inline-flex items-center max-w-full overflow-hidden gap-1 p-0.5 ${isOpen ? "bg-gray-200" : "bg-transparent" } rounded-lg transition`}>
 
       {/* PillSelectorButton */}
       <PillSelectorButton
@@ -53,21 +57,12 @@ const PillSelector: React.FC<PillSelectorProps> = ({ className }) => {
       <div className={`${show} items-center gap-1 px-1 transition`}>
 
         {/* PillSelectorOption */}
-        <PillSelectorOption>
-          Top 1k Repos
-        </PillSelectorOption>
-        <PillSelectorOption>
-          +5 Contributors
-        </PillSelectorOption>
-        <PillSelectorOption>
-          1k Stars
-        </PillSelectorOption>
-        <PillSelectorOption>
-          Most Active
-        </PillSelectorOption>
-        <PillSelectorOption>
-          Most Spammed
-        </PillSelectorOption>
+        {filterOptions.map((filter, index) =>
+          <Link key={index} href={`/${filterName}/filter/${filter.replaceAll(" ", "-")}`}>
+            <PillSelectorButton>
+              {filter}
+            </PillSelectorButton>
+          </Link>)}
       </div>
     </div>
   );
