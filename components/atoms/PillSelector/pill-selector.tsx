@@ -1,8 +1,10 @@
 import React, { useState } from "react";
+import Icon from "../Icon/icon";
+import cancelIcon from "public/x-circle.svg";
 
 interface PillSelectorButtonProps {
   className?: string;
-  children?: any;
+  children?: React.ReactNode;
   onClick?: () => void;
 }
 
@@ -10,7 +12,7 @@ const PillSelectorButton: React.FC<PillSelectorButtonProps> =(props) => {
   return (
     <button 
       onClick={props.onClick} 
-      className="flex py-1 px-2 bg-slate-50 border border-slate-200 text-sm text-slate-800 font-medium whitespace-nowrap rounded-md drop-shadow-sm hover:bg-slate-100 focus:outline-none focus-visible:border-orange-500 focus-visible:ring focus-visible:ring-orange-200 transition">
+      className="flex items-center gap-1 py-1 px-2 bg-slate-50 border border-slate-200 text-sm text-slate-800 font-medium whitespace-nowrap rounded-md drop-shadow-sm hover:bg-slate-100 focus:outline-none focus-visible:border-orange-500 focus-visible:ring focus-visible:ring-orange-200 transition">
       {props.children}
     </button>
   );
@@ -32,12 +34,13 @@ const PillSelectorOption: React.FC<PillSelectorOptionProps> =(props) => {
 interface PillSelectorProps {
   pillOptions: string[];
   handlePillClick: (filter: string) => void;
+  handleCancelClick: () => void;
   className?: string;
   selected?: string;
 }
 
 
-const PillSelector: React.FC<PillSelectorProps> = ({ pillOptions, handlePillClick, className, selected }) => {
+const PillSelector: React.FC<PillSelectorProps> = ({ pillOptions, handlePillClick, handleCancelClick, className, selected }) => {
   const [isOpen, setIsOpen] = useState(false);
   const show = isOpen ? "flex" : "hidden";
   const toggleFilter = () => setIsOpen(!isOpen);
@@ -49,7 +52,15 @@ const PillSelector: React.FC<PillSelectorProps> = ({ pillOptions, handlePillClic
       {/* PillSelectorButton */}
       <PillSelectorButton
         onClick={toggleFilter}>
-        {selected ? pillOptions.find(option => option.toLowerCase().replaceAll(" ", "-") === selected) : "Add Filter"}
+        {selected ? 
+          <>
+            {pillOptions.find(option => option.toLowerCase().replaceAll(" ", "-") === selected)}
+            <Icon IconImage={cancelIcon} onClick={handleCancelClick} />
+          </>
+          
+          :
+          
+          "Add Filter"}
       </PillSelectorButton>
 
       {/* PillSelectorOptions */}

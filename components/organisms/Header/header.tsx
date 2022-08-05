@@ -18,6 +18,10 @@ const Header: React.FC = () => {
     router.push(`/${filterName}/${toolName}/filter/${filter.toLocaleLowerCase()}`);
   };
 
+  const cancelFilterRouting = () => {
+    router.push(`/${filterName}/${toolName}`);
+  };
+
   return (
     <section className="header flex flex-col md:flex-row pt-6 px-4 md:px-16 bg-slate-50">
       <div className="header-image mr-2 p-2 min-w-[130px]">
@@ -29,7 +33,12 @@ const Header: React.FC = () => {
         <Text className="mt-1 !text-base font-medium text-slate-500">Open source projects and samples for Microsoft.</Text>
         <div className="flex mt-4 items-center gap-2">
           <FilterCard filterName="hacktoberfest" isRemovable={false} icon="topic" />
-          <PillSelector pillOptions={filterOptions} handlePillClick={filterBtnRouting} selected={selectedFilter as string} />
+          <PillSelector
+            pillOptions={filterOptions}
+            handlePillClick={filterBtnRouting}
+            handleCancelClick={cancelFilterRouting}
+            selected={selectedFilter as string}
+          />
         </div>
       </div>
     </section>
