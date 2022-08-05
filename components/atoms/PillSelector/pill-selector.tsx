@@ -50,17 +50,20 @@ const PillSelector: React.FC<PillSelectorProps> = ({ pillOptions, handlePillClic
       className={`${className ? className : ""} inline-flex items-center max-w-full overflow-hidden gap-1 p-0.5 ${isOpen ? "bg-gray-200" : "bg-transparent" } rounded-lg transition`}>
 
       {/* PillSelectorButton */}
-      <PillSelectorButton
-        onClick={toggleFilter}>
+      <PillSelectorButton>
         {selected ? 
           <>
-            {pillOptions.find(option => option.toLowerCase().replaceAll(" ", "-") === selected)}
+            <div onClick={toggleFilter} >
+              {pillOptions.find(option => option.toLowerCase().replaceAll(" ", "-") === selected)}
+            </div>
             <Icon IconImage={cancelIcon} onClick={handleCancelClick} />
           </>
           
           :
           
-          "Add Filter"}
+          <div onClick={toggleFilter} >
+            Add Filter
+          </div>}
       </PillSelectorButton>
 
       {/* PillSelectorOptions */}
