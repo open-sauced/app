@@ -11,7 +11,7 @@ interface IconProps {
 
 const Icon: React.FC<IconProps> = ({ onClick, className, IconImage, alt, size = 16 }) => {
   return (
-    <div className={`${className && className} inline-flex`}>
+    <div className={`${className ? className : ""} inline-flex`}>
       <Image
         onClick={onClick}
         className="items-center justify-center w-4"

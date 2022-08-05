@@ -45,7 +45,7 @@ const HighlightCard: React.FC<HighlightCardProps> = ({ className, label, icon, m
   return (
     <Link href={url ? url : "#"}>
     
-      <div className={`${className && className} flex flex-col bg-white border border-slate-300 rounded-lg w-full sm:max-w-[calc(50%-(1rem/2))] h-auto p-2 ${url ? "cursor-pointer " : ""}`}>
+      <div className={`${className ? className : ""} flex flex-col bg-white border border-slate-300 rounded-lg w-full sm:max-w-[calc(50%-(1rem/2))] h-auto p-2 ${url ? "cursor-pointer " : ""}`}>
         {/* Top Information */}
         <div className="flex justify-between w-full p-1">
           {/* Label */}
