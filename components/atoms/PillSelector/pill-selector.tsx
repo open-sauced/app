@@ -33,11 +33,11 @@ const PillSelectorOption: React.FC<PillSelectorOptionProps> =(props) => {
 
 interface PillSelectorProps {
     className?: string;
-    filterName: string;
+    handleFilterClick: (filter: string) => void;
 }
 
 
-const PillSelector: React.FC<PillSelectorProps> = ({ className, filterName }) => {
+const PillSelector: React.FC<PillSelectorProps> = ({ className, handleFilterClick }) => {
   const [isOpen, setIsOpen] = useState(false);
   const filterOptions = useFilterOptions();
   const show = isOpen ? "flex" : "hidden";
@@ -58,11 +58,10 @@ const PillSelector: React.FC<PillSelectorProps> = ({ className, filterName }) =>
 
         {/* PillSelectorOption */}
         {filterOptions.map((filter, index) =>
-          <Link key={index} href={`/${filterName}/filter/${filter.replaceAll(" ", "-")}`}>
-            <PillSelectorButton>
-              {filter}
-            </PillSelectorButton>
-          </Link>)}
+          <PillSelectorButton onClick={() => handleFilterClick(filter.replaceAll(" ", "-"))} key={index}>
+            {filter}
+          </PillSelectorButton>
+        )}
       </div>
     </div>
   );
