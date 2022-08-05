@@ -7,7 +7,7 @@ import useNav from "lib/hooks/useNav";
 
 const FilterLayout = ({children}: {children: React.ReactNode}) => {
 
-  const { toolList, selectedTool, filterName } = useNav();
+  const { toolList, selectedTool, filterName, selectedFilter } = useNav();
 
   return (
     <>
@@ -19,6 +19,7 @@ const FilterLayout = ({children}: {children: React.ReactNode}) => {
             toolList={toolList}
             selectedTool={selectedTool && selectedTool.toString()}
             filterName={filterName}
+            selectedFilter={selectedFilter}
           />
         </div>
 
