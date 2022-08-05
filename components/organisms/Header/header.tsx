@@ -15,7 +15,7 @@ const Header: React.FC = () => {
   const { filterName, toolName, selectedFilter } = router.query;
 
   const filterBtnRouting = (filter: string) => {
-    router.push(`/${filterName}/${toolName}/filter/${filter}`);
+    router.push(`/${filterName}/${toolName}/filter/${filter.toLocaleLowerCase()}`);
   };
 
   return (
