@@ -1,11 +1,9 @@
 import React, { useState } from "react";
-import useFilterOptions from "lib/hooks/useFilterOptions";
-import Link from "next/link";
 
 interface PillSelectorButtonProps {
   className?: string;
   children?: any;
-  onClick?: any;
+  onClick?: () => void;
 }
 
 const PillSelectorButton: React.FC<PillSelectorButtonProps> =(props) => {
@@ -32,14 +30,14 @@ const PillSelectorOption: React.FC<PillSelectorOptionProps> =(props) => {
 };
 
 interface PillSelectorProps {
-    className?: string;
-    handleFilterClick: (filter: string) => void;
+  filterOptions: string[];
+  className?: string;
+  handlePillClick: (filter: string) => void;
 }
 
 
-const PillSelector: React.FC<PillSelectorProps> = ({ className, handleFilterClick }) => {
+const PillSelector: React.FC<PillSelectorProps> = ({ filterOptions, className, handlePillClick }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const filterOptions = useFilterOptions();
   const show = isOpen ? "flex" : "hidden";
   const toggleFilter = () => setIsOpen(!isOpen);
 
@@ -58,7 +56,7 @@ const PillSelector: React.FC<PillSelectorProps> = ({ className, handleFilterClic
 
         {/* PillSelectorOption */}
         {filterOptions.map((filter, index) =>
-          <PillSelectorButton onClick={() => handleFilterClick(filter.replaceAll(" ", "-"))} key={index}>
+          <PillSelectorButton onClick={() => handlePillClick(filter.replaceAll(" ", "-"))} key={index}>
             {filter}
           </PillSelectorButton>
         )}

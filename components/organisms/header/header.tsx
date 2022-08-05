@@ -6,9 +6,11 @@ import ContextThumbnail from "../../atoms/ContextThumbnail/context-thumbnail";
 import FilterCard from "../../atoms/FilterCard/filter-card";
 import Thumbnail from "../../../public/hacktoberfest-icon.png";
 import PillSelector from "components/atoms/PillSelector/pill-selector";
+import useFilterOptions from "lib/hooks/useFilterOptions";
 
 const Header: React.FC = () => {
   const router = useRouter();
+  const filterOptions = useFilterOptions();
 
   const { filterName, toolName } = router.query;
 
@@ -27,7 +29,7 @@ const Header: React.FC = () => {
         <Text className="mt-1 !text-base font-medium text-slate-500">Open source projects and samples for Microsoft.</Text>
         <div className="flex mt-4 items-center gap-2">
           <FilterCard filterName="hacktoberfest" isRemovable={false} icon="topic" />
-          <PillSelector handleFilterClick={filterBtnRouting} />
+          <PillSelector filterOptions={filterOptions} handlePillClick={filterBtnRouting} />
         </div>
       </div>
     </section>
