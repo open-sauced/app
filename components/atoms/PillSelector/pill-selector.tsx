@@ -30,13 +30,14 @@ const PillSelectorOption: React.FC<PillSelectorOptionProps> =(props) => {
 };
 
 interface PillSelectorProps {
-  filterOptions: string[];
-  className?: string;
+  pillOptions: string[];
   handlePillClick: (filter: string) => void;
+  className?: string;
+  selected?: string;
 }
 
 
-const PillSelector: React.FC<PillSelectorProps> = ({ filterOptions, className, handlePillClick }) => {
+const PillSelector: React.FC<PillSelectorProps> = ({ pillOptions, handlePillClick, className, selected }) => {
   const [isOpen, setIsOpen] = useState(false);
   const show = isOpen ? "flex" : "hidden";
   const toggleFilter = () => setIsOpen(!isOpen);
@@ -48,16 +49,19 @@ const PillSelector: React.FC<PillSelectorProps> = ({ filterOptions, className, h
       {/* PillSelectorButton */}
       <PillSelectorButton
         onClick={toggleFilter}>
-        Add Filter
+        {selected ? pillOptions.find(option => option.toLowerCase().replaceAll(" ", "-") === selected) : "Add Filter"}
       </PillSelectorButton>
 
       {/* PillSelectorOptions */}
       <div className={`${show} items-center gap-1 px-1 transition`}>
 
         {/* PillSelectorOption */}
-        {filterOptions.map((filter, index) =>
-          <PillSelectorButton onClick={() => handlePillClick(filter.replaceAll(" ", "-"))} key={index}>
-            {filter}
+        {pillOptions.map((pillOption, index) =>
+          <PillSelectorButton onClick={() => {
+            handlePillClick(pillOption.replaceAll(" ", "-"));
+            toggleFilter();
+          }} key={index}>
+            {pillOption}
           </PillSelectorButton>
         )}
       </div>

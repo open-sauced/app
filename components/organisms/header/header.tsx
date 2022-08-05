@@ -12,7 +12,7 @@ const Header: React.FC = () => {
   const router = useRouter();
   const filterOptions = useFilterOptions();
 
-  const { filterName, toolName } = router.query;
+  const { filterName, toolName, selectedFilter } = router.query;
 
   const filterBtnRouting = (filter: string) => {
     router.push(`/${filterName}/${toolName}/filter/${filter}`);
@@ -29,7 +29,7 @@ const Header: React.FC = () => {
         <Text className="mt-1 !text-base font-medium text-slate-500">Open source projects and samples for Microsoft.</Text>
         <div className="flex mt-4 items-center gap-2">
           <FilterCard filterName="hacktoberfest" isRemovable={false} icon="topic" />
-          <PillSelector filterOptions={filterOptions} handlePillClick={filterBtnRouting} />
+          <PillSelector pillOptions={filterOptions} handlePillClick={filterBtnRouting} selected={selectedFilter as string} />
         </div>
       </div>
     </section>
