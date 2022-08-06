@@ -35,13 +35,14 @@ const useNav = () => {
     }
   ];
 
-  const { filterName, toolName: selectedTool } = router.query;
+  const { filterName, toolName: selectedTool, selectedFilter } = router.query;
 
   const toolList = defaultTools;
 
   return {
     toolList,
     selectedTool,
+    selectedFilter,
     filterName
   };
 };

@@ -1,13 +1,13 @@
 import React from "react";
-import Footer from "../components/organisms/footer/footer";
-import Header from "../components/organisms/header/header";
-import Nav from "../components/organisms/toolist/nav";
+import Footer from "../components/organisms/Footer/footer";
+import Header from "../components/organisms/Header/header";
+import Nav from "../components/organisms/ToolList/nav";
 import TopNav from "../components/organisms/TopNav/top-nav";
 import useNav from "lib/hooks/useNav";
 
 const FilterLayout = ({children}: {children: React.ReactNode}) => {
 
-  const { toolList, selectedTool, filterName } = useNav();
+  const { toolList, selectedTool, filterName, selectedFilter } = useNav();
 
   return (
     <>
@@ -19,6 +19,7 @@ const FilterLayout = ({children}: {children: React.ReactNode}) => {
             toolList={toolList}
             selectedTool={selectedTool && selectedTool.toString()}
             filterName={filterName}
+            selectedFilter={selectedFilter}
           />
         </div>
 
