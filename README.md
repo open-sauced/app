@@ -48,6 +48,12 @@ To start a local copy of the app on port `3000`:
 npm start
 ```
 
+To reset your node_modules folder if you're experiencing issues:
+
+```shell
+npm run node-reset
+```
+
 ### 🎨 Code linting
 
 To check the code and styles quality, use the following command:

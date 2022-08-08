@@ -21,7 +21,7 @@ import Button from "components/atoms/Button/button";
 import TextInput from "components/atoms/TextInput/text-input";
 import { LoginRepoObjectInterface } from "interfaces/login-repo-object-interface";
 import useLoginRepoList from "lib/hooks/useLoginRepoList";
-import { getCatFacts } from "lib/utils/open-sauced-api-endpoints/test";
+import { insertPATsIntoDB } from "lib/utils/supabase";
 
 type handleLoginStep = () => void;
 
@@ -70,7 +70,10 @@ interface LoginStep2Props {
 }
 
 const LoginStep2: React.FC<LoginStep2Props> = ({ handleLoginStep }) => {
-  const handleAddPAT = () => {
+  const [pat, setPat] = useState("");
+
+  const handleAddPAT = async () => {
+    await insertPATsIntoDB(1111, pat !== "" ? pat : "test");
     handleLoginStep();
   };
 
@@ -100,7 +103,7 @@ const LoginStep2: React.FC<LoginStep2Props> = ({ handleLoginStep }) => {
           </div>
         </div>
         <div className="flex flex-col gap-2">
-          <TextInput placeholder="Insert Your Token Here"/>
+          <TextInput onChange={event => setPat(event.target.value)} placeholder="Insert Your Token Here"/>
           <Button onClick={handleAddPAT} type="primary" className="w-full h-10">Confirm Token</Button>
         </div>
       </div>
@@ -193,10 +196,6 @@ const Login: WithPageLayout = () => {
 
   const highlighted = "!text-light-slate-12";
 
-  /* const testApi = async () => {
-    console.log(await getCatFacts());
-  }; */
-
   const [ currentLoginStep, setCurrentLoginStep ] = useState<LoginSteps>(1);
   const [ isClickedFollowed, setIsClickedFollowed ] = useState<boolean>(false);
 
@@ -205,10 +204,6 @@ const Login: WithPageLayout = () => {
   const handleLoginStep = () => {
     setCurrentLoginStep(prevStep => prevStep + 1);
   };
-
-  /* useEffect(() => {
-    testApi();
-  }, []); */
 
   return (
     <Card className="flex flex-col lg:flex-row w-[870px] h-[436px] !p-0 rounded-none lg:rounded-lg !bg-inherit lg:!bg-light-slate-2 lg:shadow-login !border-0 lg:!border-[1px] lg:!border-orange-500">

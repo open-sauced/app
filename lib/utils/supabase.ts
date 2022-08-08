@@ -12,7 +12,8 @@ export const supabase = createClient(
 );
 
 export const insertPATsIntoDB = async (userId: number, pat: string) => {
-  const createdAt = Date.now();
+  const currentTimestamp = Date.now();
+  const createdAt = new Date(currentTimestamp).toISOString();
   const isDeleted = false;
 
   try{
@@ -29,6 +30,8 @@ export const insertPATsIntoDB = async (userId: number, pat: string) => {
       ]);
 
     if(dbError) throw dbError;
+
+    console.log("Insert row into database successful!");
   } catch (error) {
     console.log(error);
   }
