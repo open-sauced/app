@@ -23,6 +23,8 @@ import { LoginRepoObjectInterface } from "interfaces/login-repo-object-interface
 import useLoginRepoList from "lib/hooks/useLoginRepoList";
 import { insertPATsIntoDB } from "lib/utils/supabase";
 import validateIsStringGitHubPAT from "lib/utils/validate-is-string-github-pat";
+import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
+import { useGlobalStateContext } from "context/global-state";
 
 type handleLoginStep = () => void;
 
@@ -31,8 +33,23 @@ interface LoginStep1Props {
 }
 
 const LoginStep1: React.FC<LoginStep1Props> = ({ handleLoginStep }) => {
-  const handleGitHubAuth = () => {
-    handleLoginStep();
+  const { signIn, user } = useSupabaseAuth();
+  const { setAppState } = useGlobalStateContext();
+
+  useEffect(() => {
+    if (user) {
+      setAppState(prevState => {
+        return {
+          ...prevState,
+          user
+        };
+      });
+      handleLoginStep();
+    }
+  }, [user]);
+
+  const handleGitHubAuth = async () => {
+    await signIn({ provider: "github" });
   };
 
   return (
