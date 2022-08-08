@@ -21,11 +21,12 @@ export const insertPATsIntoDB = async (userId: number, pat: string) => {
       .from<PrivateAccessTokensDBInterface>("private_access_tokens")
       .insert([
         {
+          /* eslint-disable camelcase */
           user_id: userId,
           token: pat,
           created_at: createdAt,
           is_deleted: isDeleted
-  
+          /* eslint-enable */
         }
       ]);
 
