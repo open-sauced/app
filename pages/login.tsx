@@ -22,6 +22,7 @@ import TextInput from "components/atoms/TextInput/text-input";
 import { LoginRepoObjectInterface } from "interfaces/login-repo-object-interface";
 import useLoginRepoList from "lib/hooks/useLoginRepoList";
 import { insertPATsIntoDB } from "lib/utils/supabase";
+import validateIsStringGitHubPAT from "lib/utils/validate-is-string-github-pat";
 
 type handleLoginStep = () => void;
 
@@ -71,10 +72,21 @@ interface LoginStep2Props {
 
 const LoginStep2: React.FC<LoginStep2Props> = ({ handleLoginStep }) => {
   const [pat, setPat] = useState("");
+  const [error, setError] = useState("");
 
   const handleAddPAT = async () => {
-    await insertPATsIntoDB(1111, pat !== "" ? pat : "test");
-    handleLoginStep();
+    setError("");
+    if(pat === "") return setError("Please add your Personal Access Token");
+    
+    const isValidPat = validateIsStringGitHubPAT(pat);
+    if(!isValidPat) return setError("Please add a properly formed Personal Access Token");
+
+    try {
+      await insertPATsIntoDB(1111, pat);
+      handleLoginStep();
+    } catch (error) {
+      setError("Oops, something went wrong...");
+    }
   };
 
   return (
@@ -89,7 +101,7 @@ const LoginStep2: React.FC<LoginStep2Props> = ({ handleLoginStep }) => {
             <Title className="!text-2xl">Provide your token</Title>
           </div>
           <div className="mb-4 text-left ">
-            <Text className="!text-sm">In order to provide fresh, and insightful data, we’ll need a favor: a GitHub personal access token to fetch public GitHub data. Here’s how we’re going to use your token:</Text>
+            <Text className="!text-sm">In order to provide fresh, and insightful data, we’ll need a favor: a GitHub Personal Access Token to fetch public GitHub data. Here’s how we’re going to use your token:</Text>
           </div>
           <div className="flex gap-2 items-start mb-4">
             <Icon IconImage={HighlightIcon} />
@@ -103,7 +115,7 @@ const LoginStep2: React.FC<LoginStep2Props> = ({ handleLoginStep }) => {
           </div>
         </div>
         <div className="flex flex-col gap-2">
-          <TextInput onChange={event => setPat(event.target.value)} placeholder="Insert Your Token Here"/>
+          <TextInput error={error} onChange={event => setPat(event.target.value)} placeholder="Insert Your Personal Access Token Here"/>
           <Button onClick={handleAddPAT} type="primary" className="w-full h-10">Confirm Token</Button>
         </div>
       </div>
