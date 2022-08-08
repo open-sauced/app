@@ -1,6 +1,6 @@
 import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-import Nav from "../../components/organisms/toolist/nav";
+import Nav from "../../components/organisms/ToolList/nav";
 
 const storyConfig = {
   title: "Design System/Organisms/Tools Nav",

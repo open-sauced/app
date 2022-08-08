@@ -10,7 +10,7 @@ interface DropdownListProps {
 }
 
 const DropdownList: React.FC<DropdownListProps> = ({ children, menuContent, className, menuContentClassName, menuButtonClassName }) => (
-  <Menu as="div" className={`${className && className} relative inline-block text-left`}>
+  <Menu as="div" className={`${className ? className : ""} relative inline-block text-left`}>
     <Menu.Button className={`${menuButtonClassName && menuButtonClassName}`}>
       {children}
     </Menu.Button>

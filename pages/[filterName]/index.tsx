@@ -1,13 +1,16 @@
-import FilterLayout from "../../layouts/filter";
-import { WithPageLayout } from "../../interfaces/with-page-layout";
-import Tool from "../../components/organisms/ToolsDisplay/tools-display";
+import React, { useEffect } from "react";
+import { useRouter } from "next/router";
 
-const Filter: WithPageLayout = () => {
+const Filter: React.FC = () => {
+  const router = useRouter();
+
+  useEffect(() => {
+    router.push("hacktoberfest/dashboard");
+  }, [router]);
+
   return (
-    <Tool />
+    <></>
   );
 };
-
-Filter.PageLayout = FilterLayout;
 
 export default Filter;

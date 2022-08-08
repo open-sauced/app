@@ -12,7 +12,7 @@ interface ContextThumbnailProps {
 const ContextThumbnail: React.FC<ContextThumbnailProps> = ({ className, ContextThumbnailURL, alt, size }) => {
   return (
     <Image 
-      className={`${className && className} rounded-lg border-1 border-slate-100 object-cover`}
+      className={`${className ? className : ""} rounded-lg border-1 border-slate-100 object-cover`}
       alt={alt ? alt : "ContextThumbnail"} width={size} height={size} src={ContextThumbnailURL ? ContextThumbnailURL : ContextThumbnailImage} />
   );
 };

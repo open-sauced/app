@@ -35,9 +35,8 @@ const icons = {
 
 const FilterCard: React.FC<FilterCardProps> = ({ filterName, bgColor, icon, isRemovable }) => {
   return (
-    <div 
-      tabIndex={0}
-      className={`inline-block mr-3 py-1 px-2 py-0.5 border border-slate-300 outline-none hover:bg-slate-50 focus:ring-2 ${bgColor && `bg-${bgColor}`} ${isRemovable ? "focus:ring-orange-500" : "bg-slate-100 focus:ring-slate-300" } rounded-lg`}>
+    <div
+      className={`inline-block py-1 px-2 border border-slate-300 outline-none hover:bg-slate-50 focus:ring-2 ${bgColor && `bg-${bgColor}`} ${isRemovable ? "focus:ring-orange-500" : "bg-slate-100 focus:ring-slate-300" } rounded-lg`}>
       <div className="flex items-center gap-1">
         <Image 
           width={14} height={14}

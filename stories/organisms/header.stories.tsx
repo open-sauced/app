@@ -1,4 +1,4 @@
-import Header from "../../components/organisms/header/header";
+import Header from "../../components/organisms/Header/header";
 
 const storyConfig = {
   title: "Design System/Organisms/Header"
