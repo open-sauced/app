@@ -3,13 +3,18 @@ import Card from "../../atoms/Card/card";
 import SelectableTable from "components/molecules/SelectableTable/selectable-table";
 import ScatterChart from "components/molecules/ScatterChart/scatter-chart";
 import HighlightCard from "components/molecules/HighlightCard/highlight-card";
-import { extendedTestRows, testOptions } from "./fake-data";
+import useDashBoardData from "lib/hooks/useDashboardData";
+import useRepositoriesList from "lib/hooks/useRepositoriesList";
 
 interface ToolProps {
   tool?: string;
 }
 
 const Tool: React.FC<ToolProps> = ({ tool }) => {    
+
+  const { scatterOptions } = useDashBoardData();
+  const { repositoriesList } = useRepositoriesList();
+
   return (
     <div className="flex flex-col w-full gap-4">
       {!tool ?
@@ -59,7 +64,7 @@ const Tool: React.FC<ToolProps> = ({ tool }) => {
           <section className="flex flex-col lg:flex-row max-w-full gap-4 mb-6">
             <div className="flex flex-col w-full gap-4">
               <Card className="w-full p-5">
-                <ScatterChart title="Test Title" option={testOptions} />
+                <ScatterChart title="Test Title" option={scatterOptions} />
               </Card>
             </div>
           </section>
@@ -67,7 +72,7 @@ const Tool: React.FC<ToolProps> = ({ tool }) => {
         : tool === "Repositories" ?
           <>
             <Card className="w-full lg:w-[calc(50%-(1rem/2))] xl:!w-[calc(40%-(1rem/2))] px-1 xs:px-5 py-5">
-              <SelectableTable rows={extendedTestRows} title="Repositories" tableType="participants" />
+              <SelectableTable rows={repositoriesList} title="Repositories" tableType="participants" />
             </Card>
           </>
           :
