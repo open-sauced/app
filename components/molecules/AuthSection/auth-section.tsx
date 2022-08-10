@@ -10,22 +10,10 @@ import DropdownList from "../DropdownList/dropdown-list";
 import Text from "components/atoms/Typography/text";
 import { Divider } from "@supabase/ui";
 import useSupabaseAuth from "../../../lib/hooks/useSupabaseAuth";
-import { useGlobalStateContext } from "context/global-state";
 
 const AuthSection: React.FC = ({  }) => {
 
   const { signIn, signOut, user } = useSupabaseAuth();
-
-  const { setAppState } = useGlobalStateContext();
-
-  useEffect(() => {
-    setAppState(prevState => {
-      return {
-        ...prevState,
-        user
-      };
-    });
-  }, [user]);
 
   const authMenu = {
     authed: [

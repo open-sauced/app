@@ -8,6 +8,8 @@ const storyConfig = {
   component: "PillSelector"
 };
 
+const filterOptions = ["Top 1k Repos", "Minimum 5 Contributors", "1k Stars", "Most Active", "Most Spammed"];
+
 export default storyConfig;
 
 //PillSelector Template
@@ -15,4 +17,4 @@ const PillSelectorTemplate: ComponentStory<typeof PillSelector> = (args) => <Pil
 
 export const Default = PillSelectorTemplate.bind({});
 
-Default.args = {};
+Default.args = { pillOptions: filterOptions };
