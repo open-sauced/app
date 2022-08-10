@@ -1,4 +1,4 @@
-import Login from "pages/login";
+import Login from "pages/start";
 import LoginLayout from "layouts/login";
 
 const storyConfig = {
