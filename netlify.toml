@@ -1,0 +1,11 @@
+[build]
+publish = "build"
+command = "npm run build"
+
+[context.beta]
+environment = { CHANNEL = "beta" }
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

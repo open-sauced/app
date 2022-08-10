@@ -1,0 +1,93 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+      - alpha
+      - beta
+
+jobs:
+  setup:
+    name: Set environment variables
+    runs-on: ubuntu-latest
+    outputs:
+      DEPLOY_ENVIRONMENT: ${{ steps.env.outputs.DEPLOY_ENVIRONMENT }}
+    steps:
+      - name: "☁️ compute environment variables"
+        id: env
+        run: |
+          echo "::set-output name=DEPLOY_ENVIRONMENT::$([[ ${{ github.ref_name }} == 'main' ]] && echo 'production' || echo ${{ github.ref_name }})"
+
+
+  test:
+    name: Test and lint
+    uses: open-sauced/open-sauced/.github/workflows/development.yml@main
+
+  build:
+    name: Build application
+    runs-on: ubuntu-latest
+    steps:
+      - name: "☁️ checkout repository"
+        uses: actions/checkout@v2
+
+      - name: "🔧 setup node"
+        uses: actions/setup-node@v2.1.5
+        with:
+          node-version: 16
+
+      - name: "🔧 install npm@latest"
+        run: npm i -g npm@latest
+
+      - name: "📦 install dependencies"
+        uses: bahmutov/npm-install@v1
+
+      - name: "🚀 static app"
+        run: npm run build
+
+      - name: "📂 production artifacts"
+        uses: actions/upload-artifact@v2
+        with:
+          name: build
+          path: build
+
+  release:
+    environment:
+      name: ${{ needs.setup.outputs.DEPLOY_ENVIRONMENT }}
+      url: https://github.com/${{ github.repository }}/releases/tag/${{ steps.semantic-release.outputs.release-tag }}
+    name: Semantic release
+    needs:
+      - setup
+      - test
+      - docker
+      - build
+    runs-on: ubuntu-latest
+    steps:
+      - name: "☁️ checkout repository"
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: "📂 download build artifacts"
+        uses: actions/download-artifact@v2
+        with:
+          name: build
+          path: build
+
+      - name: "🚀 release"
+        id: semantic-release
+        uses: open-sauced/release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  cleanup:
+    name: Cleanup actions
+    needs:
+      - release
+    runs-on: ubuntu-latest
+    steps:
+      - name: "♻️ remove build artifacts"
+        uses: geekyeggo/delete-artifact@v1
+        with:
+          name: |
+            build
