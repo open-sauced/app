@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 
 
 const SignOut: WithPageLayout = () => {
-  const { signOut } = useSupabaseAuth();
+  /* const { signOut } = useSupabaseAuth();
   const router = useRouter();
 
   useEffect(() => {
@@ -13,7 +13,7 @@ const SignOut: WithPageLayout = () => {
       signOut();
       router.push("/");
     }
-  }, [signOut, router]);
+  }, [signOut, router]); */
 
   return (
     <main className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center">

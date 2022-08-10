@@ -4,11 +4,11 @@ import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 
 
 const SignIn: WithPageLayout = () => {
-  const { signIn, user } = useSupabaseAuth();
+  /*  const { signIn, user } = useSupabaseAuth();
 
   useEffect(() => {
     signIn({ provider: "github" });
-  }, [signIn]);
+  }, [signIn]); */
 
   return (
     <main className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center">
