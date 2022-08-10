@@ -1,0 +1,16 @@
+on:
+  schedule:
+  - cron: 03 09 * * 1
+name: Top 5
+jobs:
+  createAnIssue:
+    name: Create an issue
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Create an issue
+      uses: bdougie/create-an-issue@e43b083ea71e22e77a81ffb4a55dacb2addb71ed
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        args: .github/ISSUE_TEMPLATE/TOP5.md

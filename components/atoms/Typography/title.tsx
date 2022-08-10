@@ -1,20 +1,18 @@
 import React from "react";
 import { Typography } from "@supabase/ui";
 
-interface TextProps {
-    className?: string;
-    level?: 1 | 2 | 3 | 4 | 5;
-    customTailWindProps?: string;
-    children: React.ReactNode;
+const { Title: SupabaseTitleComponent } = Typography;
+
+interface TitleProps extends React.ComponentProps<typeof SupabaseTitleComponent> {
+  //Add additional prop definitions here
 }
 
-const Title: React.FC<TextProps> = ({ className, customTailWindProps, level, children }) => {
-  const { Title } = Typography;
+const Title: React.FC<TitleProps> = ( props ) => {
 
   return (
-    <Title level={level} className={`${className && className} ${customTailWindProps && customTailWindProps}`}>
-      {children}
-    </Title>
+    <SupabaseTitleComponent className={`${props.className && props.className}`} {...props}>
+      {props.children}
+    </SupabaseTitleComponent>
   );
 };
 

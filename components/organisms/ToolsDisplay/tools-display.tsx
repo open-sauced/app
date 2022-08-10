@@ -1,52 +1,82 @@
-import { useRouter } from "next/router";
-import { Input } from "@supabase/ui";
 import React from "react";
-import Table from "../../misc/table-test/table";
-import Table2 from "../../misc/table-test/table-2";
-import Table3 from "../../misc/table-test/table-3";
-import Table4 from "../../misc/table-test/table-4";
 import Card from "../../atoms/Card/card";
+import SelectableTable from "components/molecules/SelectableTable/selectable-table";
+import ScatterChart from "components/molecules/ScatterChart/scatter-chart";
+import HighlightCard from "components/molecules/HighlightCard/highlight-card";
+import { testRows, extendedTestRows, testOptions } from "./fake-data";
 
-const Tool: React.FC = () => {
-  const router = useRouter();
+interface ToolProps {
+  tool?: string;
+}
 
-  const { tool } = router.query;
-    
+const Tool: React.FC<ToolProps> = ({ tool }) => {    
   return (
-    <div className="flex flex-col w-full">
-      {tool === "Dashboard" ?
+    <div className="flex flex-col w-full gap-4">
+      {!tool ?
         <>
-          <div className="flex max-w-full h-[500px] mb-10">
-            <div className="flex flex-col w-[60%] mr-10">
-              <Card customTailwindStyles="w-full h-[50%] mb-10 p-5">
-                <></>
+          <section className="flex flex-wrap gap-4 items-center lg:flex-row lg:flex-nowrap max-w-full">
+            <HighlightCard
+              url="/hacktoberfest/people"
+              label="Participation"
+              icon="participation"
+              metricIncreases={true}
+              increased={true}
+              numChanged={38}
+              percentage={40}
+              percentageLabel="of 49,999"
+            />
+            <HighlightCard
+              url="/hacktoberfest/pull%20requests"
+              label="Spam"
+              icon="spam"
+              metricIncreases={false}
+              increased={true}
+              numChanged={98}
+              percentage={80}
+              percentageLabel="of 49,999"
+            />
+            <HighlightCard
+              url="/hacktoberfest/pull%20requests"
+              label="Accepted PRs"
+              icon="accepted-pr"
+              metricIncreases={true}
+              increased={false}
+              numChanged={38}
+              percentage={37}
+              percentageLabel="of 49,999"
+            />
+            <HighlightCard
+              url="/hacktoberfest/pull%20requests"
+              label="Unlabeled PRs"
+              icon="unlabeled-pr"
+              metricIncreases={false}
+              increased={false}
+              numChanged={85}
+              percentage={77}
+              percentageLabel="of 49,999"
+            />
+          </section>
+          <section className="flex flex-col lg:flex-row max-w-full gap-4 mb-6">
+            <div className="flex flex-col w-full lg:w-[calc(50%-(1rem/2))] xl:!w-[calc(60%-(1rem/2))] gap-4">
+              <Card className="w-full p-5">
+                <ScatterChart title="Test Title" option={testOptions} />
               </Card>
-              <Card customTailwindStyles="w-full h-[50%] p-5">
-                <></>
+              <Card className="w-full p-5">
+                <ScatterChart title="Test Title" option={testOptions} />
               </Card>
-            </div>
-            <Card customTailwindStyles="w-[40%] p-5">
-              <Table />
-            </Card>
-          </div>
-          <div className="flex w-full h-[500px] mb-10">
-            <div className="flex flex-col w-[70%] mr-10">
-              <Card customTailwindStyles="w-full h-[20%] mb-10 p-5">
-                <Input placeholder="Filter issues and pull requests by label"/>
-              </Card>
-              <div className="flex max-w-full h-[80%]">
-                <Card customTailwindStyles="w-[50%] mr-10 h-full p-5">
-                  <Table2 />
+              <div className="flex flex-col 2xl:flex-row w-full h-full gap-4">
+                <Card className="w-full 2xl:w-[calc(50%-(1rem/2))] h-full px-1 xs:px-5 py-5">
+                  <SelectableTable rows={testRows} title="Test Title" tableType="participants" />
                 </Card>
-                <Card customTailwindStyles="w-[50%] h-full p-5">
-                  <Table3 />
+                <Card className="w-full 2xl:w-[calc(50%-(1rem/2))] h-full px-1 xs:px-5 py-5">
+                  <SelectableTable rows={testRows} title="Test Title" tableType="participants" />
                 </Card>
               </div>
             </div>
-            <Card customTailwindStyles="w-[30%] p-5">
-              <Table4 />
+            <Card className="w-full lg:w-[calc(50%-(1rem/2))] xl:!w-[calc(40%-(1rem/2))] px-1 xs:px-5 py-5">
+              <SelectableTable rows={extendedTestRows} title="Test Title" tableType="participants" />
             </Card>
-          </div>
+          </section>
         </>
         :
         <>

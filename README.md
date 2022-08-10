@@ -6,16 +6,33 @@
 </div>
 <br>
 
-## Project Figma
+## 🖼️ Project Figma
 
 The figma for this project can be found [here](https://www.figma.com/file/OpVX6WT7dmWqnwRuEvADMF/OpenSauced-%E2%80%94-Insights-(insights.opensauced.pizza)).
 
-## Atomic Design
+## 🔬 Atomic Design
 
 This project uses Atomic Design for it's Components. Here are several resources for Atomic Design if you are unfamiliar:
 
 - [Atomic Design by Brad Frost](https://bradfrost.com/blog/post/atomic-web-design/)
 - [Atomic Design - How To Make Web and UI Design Easier](https://www.youtube.com/watch?v=W3A33dmp17E)
+
+## 📙 Storybook
+
+The Stoybook for this project can be found at [design-insights.opensauced.pizza](https://design-insights.opensauced.pizza). 
+
+### Run it locally
+
+```bash
+npm run storybook
+```
+
+### Deploy your branch ([video explaining this](https://www.loom.com/share/c3a3fa04a4a343da8228bdb9b9a66746))
+
+Navigate to the [Storybook Action](https://github.com/open-sauced/insights/actions/workflows/storybook.yml). Choose your branch in the "Run Workflow" dropdown.
+
+<img width="1050" alt="storybook action tab" src="https://user-images.githubusercontent.com/5713670/178128835-d81205f3-a875-474f-8b4f-46a1ad814fe1.png">
+
 
 ## 🖥️ Local development
 

@@ -2,15 +2,14 @@ import React from "react";
 
 interface CardProps {
     className?: string;
-    customTailwindStyles?: string;
     children: JSX.Element;
 }
 
-const Card: React.FC<CardProps> = ({ className, customTailwindStyles, children }) => {
+const Card: React.FC<CardProps> = ({ className, children }) => {
   return (
-    <div className={`${className && className} ${customTailwindStyles && customTailwindStyles} block p-6 bg-white rounded-lg border border-gray-200 shadow-md`}>
+    <article className={`${className ? className : ""} block p-6 bg-white rounded-lg border border-slate-300`}>
       {children}
-    </div>
+    </article>
   );
 };
 
