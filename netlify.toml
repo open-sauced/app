@@ -1,5 +1,5 @@
 [build]
-publish = "build"
+publish = ".next/static"
 command = "npm run build"
 
 [context.beta]
