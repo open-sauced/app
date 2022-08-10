@@ -17,7 +17,7 @@ const Tool: React.FC<ToolProps> = ({ tool }) => {
 
   return (
     <div className="flex flex-col w-full gap-4">
-      {!tool ?
+      {tool === "Dashboard" ?
         <>
           <section className="flex flex-wrap gap-4 items-center lg:flex-row lg:flex-nowrap max-w-full">
             <HighlightCard
