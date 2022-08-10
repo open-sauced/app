@@ -3,7 +3,7 @@ publish = ".next"
 command = "npm run build"
 
 [build.environment]
-NETLIFY_NEXT_PLUGIN_SKIP = "true"
+NETLIFY_NEXT_PLUGIN_SKIP = "false"
 NODE_VERSION = "16"
 
 [context.beta]
