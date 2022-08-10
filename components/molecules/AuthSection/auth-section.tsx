@@ -10,10 +10,22 @@ import DropdownList from "../DropdownList/dropdown-list";
 import Text from "components/atoms/Typography/text";
 import { Divider } from "@supabase/ui";
 import useSupabaseAuth from "../../../lib/hooks/useSupabaseAuth";
+import { useGlobalStateContext } from "context/global-state";
 
 const AuthSection: React.FC = ({  }) => {
 
   const { signIn, signOut, user } = useSupabaseAuth();
+
+  const { setAppState } = useGlobalStateContext();
+
+  useEffect(() => {
+    setAppState(prevState => {
+      return {
+        ...prevState,
+        user
+      };
+    });
+  }, [user]);
 
   const authMenu = {
     authed: [
@@ -26,7 +38,7 @@ const AuthSection: React.FC = ({  }) => {
   return (
     <div className="flex">
       <div className="flex items-center gap-2 lg:gap-3">
-        {user ? 
+        {user ?
           <>
             <OnboardingButton />
             <Divider type="vertical" className="!h-6 !bg-gray-600"></Divider>
@@ -38,7 +50,7 @@ const AuthSection: React.FC = ({  }) => {
               </div>
             </DropdownList>
           </>
-          
+
           :
 
           <Button type="primary" onClick={async () => await signIn({ provider: "github" })} >Login</Button>

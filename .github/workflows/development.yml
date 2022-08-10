@@ -1,0 +1,13 @@
+name: "Development"
+
+on:
+  pull_request:
+    types:
+      - opened
+      - edited
+      - synchronize
+      - reopened
+
+jobs:
+  test:
+    uses: open-sauced/open-sauced/.github/workflows/development.yml@main

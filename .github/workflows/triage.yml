@@ -1,0 +1,11 @@
+name: "Assign issues with .take"
+
+on:
+  issue_comment:
+    types:
+      - created
+      - edited
+
+jobs:
+  assign:
+    uses: open-sauced/open-sauced/.github/workflows/triage.yml@main

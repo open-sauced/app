@@ -1,0 +1,13 @@
+name: "CodeQL"
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  schedule:
+    - cron: '56 5 * * 1'
+
+jobs:
+  analyze:
+    uses: open-sauced/open-sauced/.github/workflows/codeql-analysis.yml@main
