@@ -9,10 +9,8 @@ NODE_VERSION = "16"
 [context.beta]
 environment = { CHANNEL = "beta" }
 
+[dev]
+framework = "#static"
+
 [[plugins]]
 package = "@netlify/plugin-nextjs"
-
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
