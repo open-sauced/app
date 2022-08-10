@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.0.1](https://github.com/open-sauced/insights/compare/v1.0.0...v1.0.1) (2022-08-10)
+
+
+### 🐛 Bug Fixes
+
+* correct storybook deps ([a930c0b](https://github.com/open-sauced/insights/commit/a930c0b99f593fbcf75b8a4e337ac797fb98d2be))
+
 ## 1.0.0 (2022-08-10)
 
 
