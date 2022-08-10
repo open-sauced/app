@@ -6,6 +6,3 @@ environment = { CHANNEL = "beta" }
 
 [dev]
 framework = "#static"
-
-[[plugins]]
-package = "@netlify/plugin-nextjs"
