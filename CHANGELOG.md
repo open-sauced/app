@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.0.3](https://github.com/open-sauced/insights/compare/v1.0.2...v1.0.3) (2022-08-10)
+
+
+### 🔁 Continuous Integration
+
+* correct netlify build ([#163](https://github.com/open-sauced/insights/issues/163)) ([d78a088](https://github.com/open-sauced/insights/commit/d78a0886d3d3f23214eb0861bde84adb6bbeea3a))
+
 ### [1.0.2](https://github.com/open-sauced/insights/compare/v1.0.1...v1.0.2) (2022-08-10)
 
 
