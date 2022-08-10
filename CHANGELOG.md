@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.0.2](https://github.com/open-sauced/insights/compare/v1.0.1...v1.0.2) (2022-08-10)
+
+
+### 🎨 Styles
+
+* Add transition to the `HighlightCard` progress bar ([#162](https://github.com/open-sauced/insights/issues/162)) ([0b2987a](https://github.com/open-sauced/insights/commit/0b2987abe60642fa094508e15d4055bcb664a12c))
+
 ### [1.0.1](https://github.com/open-sauced/insights/compare/v1.0.0...v1.0.1) (2022-08-10)
 
 
