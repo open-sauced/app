@@ -25,7 +25,7 @@ const AuthSection: React.FC = ({  }) => {
         user
       };
     });
-  }, [user]);
+  }, [setAppState, user]);
 
   const authMenu = {
     authed: [
@@ -38,7 +38,7 @@ const AuthSection: React.FC = ({  }) => {
   return (
     <div className="flex">
       <div className="flex items-center gap-2 lg:gap-3">
-        {user ? 
+        {user ?
           <>
             <OnboardingButton />
             <Divider type="vertical" className="!h-6 !bg-gray-600"></Divider>
@@ -50,7 +50,7 @@ const AuthSection: React.FC = ({  }) => {
               </div>
             </DropdownList>
           </>
-          
+
           :
 
           <Button type="primary" onClick={async () => await signIn({ provider: "github" })} >Login</Button>
