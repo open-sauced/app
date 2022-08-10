@@ -1,9 +1,16 @@
 [build]
-publish = ".next/static"
+publish = ".next"
 command = "npm run build"
+
+[build.environment]
+NETLIFY_NEXT_PLUGIN_SKIP = "true"
+NODE_VERSION = "16"
 
 [context.beta]
 environment = { CHANNEL = "beta" }
+
+[[plugins]]
+package = "@netlify/plugin-nextjs"
 
 [[redirects]]
   from = "/*"

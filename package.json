@@ -51,6 +51,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.18.10",
+    "@netlify/plugin-nextjs": "^4.14.1",
     "@open-sauced/check-engines": "^1.2.0",
     "@open-sauced/conventional-commit": "^1.0.1",
     "@storybook/addon-a11y": "^6.5.9",
