@@ -5,6 +5,18 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.0.4-beta.2](https://github.com/open-sauced/insights/compare/v1.0.4-beta.1...v1.0.4-beta.2) (2022-08-11)
+
+
+### 🔁 Continuous Integration
+
+* add better release target deployment urls ([#172](https://github.com/open-sauced/insights/issues/172)) ([f3a93f0](https://github.com/open-sauced/insights/commit/f3a93f019b53e1f0e52fddb7a8f90fe9336ca0d1))
+
+
+### 🐛 Bug Fixes
+
+* correct domain dot com bubble error ([#173](https://github.com/open-sauced/insights/issues/173)) ([3816edb](https://github.com/open-sauced/insights/commit/3816edbc1365566fbe0c709aa26ab2ef4613b854))
+
 ### [1.0.4-alpha.2](https://github.com/open-sauced/insights/compare/v1.0.4-alpha.1...v1.0.4-alpha.2) (2022-08-11)
 
 
