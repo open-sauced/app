@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.0.4](https://github.com/open-sauced/insights/compare/v1.0.3...v1.0.4) (2022-08-11)
+
+
+### 🐛 Bug Fixes
+
+* Make the description relevant ([#180](https://github.com/open-sauced/insights/issues/180)) ([f873039](https://github.com/open-sauced/insights/commit/f8730390798ce6de9e227dc6db7cc4da1b1637b7))
+
 ### [1.0.3](https://github.com/open-sauced/insights/compare/v1.0.2...v1.0.3) (2022-08-10)
 
 
