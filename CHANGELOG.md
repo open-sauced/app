@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.0.4-alpha.2](https://github.com/open-sauced/insights/compare/v1.0.4-alpha.1...v1.0.4-alpha.2) (2022-08-11)
+
+
+### 🐛 Bug Fixes
+
+* correct domain dot com bubble error ([#173](https://github.com/open-sauced/insights/issues/173)) ([3816edb](https://github.com/open-sauced/insights/commit/3816edbc1365566fbe0c709aa26ab2ef4613b854))
+
 ### [1.0.4-alpha.1](https://github.com/open-sauced/insights/compare/v1.0.3...v1.0.4-alpha.1) (2022-08-11)
 
 
