@@ -11,6 +11,8 @@ import Text from "components/atoms/Typography/text";
 import { Divider } from "@supabase/ui";
 import useSupabaseAuth from "../../../lib/hooks/useSupabaseAuth";
 import { useGlobalStateContext } from "context/global-state";
+import GitHubIcon from "public/icons/github-icon.svg";
+import Icon from "components/atoms/Icon/icon";
 
 const AuthSection: React.FC = ({  }) => {
 
@@ -53,7 +55,7 @@ const AuthSection: React.FC = ({  }) => {
 
           :
 
-          <Button type="primary" onClick={async () => await signIn({ provider: "github" })} >Login</Button>
+          <Button type="primary" onClick={async () => await signIn({ provider: "github" })} >Connect with GitHub <Icon IconImage={GitHubIcon} className="ml-2"/></Button>
         }
       </div>
     </div>
