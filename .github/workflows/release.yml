@@ -13,11 +13,13 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       DEPLOY_ENVIRONMENT: ${{ steps.env.outputs.DEPLOY_ENVIRONMENT }}
+      DEPLOY_SUBDOMAIN: ${{ steps.env.outputs.DEPLOY_SUBDOMAIN }}
     steps:
       - name: "☁️ compute environment variables"
         id: env
         run: |
           echo "::set-output name=DEPLOY_ENVIRONMENT::$([[ ${{ github.ref_name }} == 'main' ]] && echo 'production' || echo ${{ github.ref_name }})"
+          echo "::set-output name=DEPLOY_SUBDOMAIN::$([[ ${{ github.ref_name }} == 'main' ]] && echo '' || echo '${{ github.ref_name }}.')"
 
 
   test:
@@ -54,7 +56,7 @@ jobs:
   release:
     environment:
       name: ${{ needs.setup.outputs.DEPLOY_ENVIRONMENT }}
-      url: https://github.com/${{ github.repository }}/releases/tag/${{ steps.semantic-release.outputs.release-tag }}
+      url: https://${{ needs.setup.outputs.DEPLOY_SUBDOMAIN }}insights.opensauced.com
     name: Semantic release
     needs:
       - setup
