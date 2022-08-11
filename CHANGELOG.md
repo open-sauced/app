@@ -5,6 +5,33 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.1.0-beta.1](https://github.com/open-sauced/insights/compare/v1.0.4...v1.1.0-beta.1) (2022-08-11)
+
+
+### ✅ Tests
+
+* enable parallel netlify build for storybook ([#170](https://github.com/open-sauced/insights/issues/170)) ([d6c5a75](https://github.com/open-sauced/insights/commit/d6c5a751339282afbd349211a473ebd3a43e09ff)), closes [#49](https://github.com/open-sauced/insights/issues/49)
+
+
+### 🔁 Continuous Integration
+
+* add better release target deployment urls ([#172](https://github.com/open-sauced/insights/issues/172)) ([f3a93f0](https://github.com/open-sauced/insights/commit/f3a93f019b53e1f0e52fddb7a8f90fe9336ca0d1))
+
+
+### 🐛 Bug Fixes
+
+* correct domain dot com bubble error ([#173](https://github.com/open-sauced/insights/issues/173)) ([3816edb](https://github.com/open-sauced/insights/commit/3816edbc1365566fbe0c709aa26ab2ef4613b854))
+
+
+### 🧑‍💻 Code Refactoring
+
+* update login text to say connect with github. ([#178](https://github.com/open-sauced/insights/issues/178)) ([5b7e572](https://github.com/open-sauced/insights/commit/5b7e5720798c7a34aeac1fa663dfa1d614bb4b9c)), closes [#139](https://github.com/open-sauced/insights/issues/139)
+
+
+### 🍕 Features
+
+* Simplify the Dashboard ([#155](https://github.com/open-sauced/insights/issues/155)) ([80d445c](https://github.com/open-sauced/insights/commit/80d445c953cd4c896afa76d12755bd78794f7c50))
+
 ### [1.0.4-beta.3](https://github.com/open-sauced/insights/compare/v1.0.4-beta.2...v1.0.4-beta.3) (2022-08-11)
 
 
