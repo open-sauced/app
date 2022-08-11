@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.0.4-beta.3](https://github.com/open-sauced/insights/compare/v1.0.4-beta.2...v1.0.4-beta.3) (2022-08-11)
+
+
+### 🧑‍💻 Code Refactoring
+
+* update login text to say connect with github. ([#178](https://github.com/open-sauced/insights/issues/178)) ([5b7e572](https://github.com/open-sauced/insights/commit/5b7e5720798c7a34aeac1fa663dfa1d614bb4b9c)), closes [#139](https://github.com/open-sauced/insights/issues/139)
+
 ### [1.0.4-beta.2](https://github.com/open-sauced/insights/compare/v1.0.4-beta.1...v1.0.4-beta.2) (2022-08-11)
 
 
