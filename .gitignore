@@ -273,6 +273,7 @@ Temporary Items
 
 ### Project specific
 build
+storybook-static
 **/__snapshots__
 .env*
 !.env
