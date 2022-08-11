@@ -88,7 +88,7 @@ const SelectableTable: React.FC<SelectableTableProps> = ({ title, tableType, row
             <tr className="h-3"></tr>
             {rows?.map(({title, stars, forks, persons, unknown}, index) => {
               return (
-                <tr className={`hover:content-['${title}'] cursor-pointer`} key={index} onClick={() => entireRowClickChangesCheckbox(allCheckboxRefs.current[index])}>
+                <tr className={`hover:content-['${title}'] hover:bg-blue-100 cursor-pointer`} key={index} onClick={() => entireRowClickChangesCheckbox(allCheckboxRefs.current[index])}>
                   <td className="flex flex-row text-left p-2" ref={element => addCheckboxToRef(element)}>
                     <Checkbox label="" /> {divSize > 0 && divSize < 350 ? truncateString(title, 3) : title}
                   </td>
