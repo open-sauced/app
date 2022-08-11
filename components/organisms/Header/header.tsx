@@ -30,7 +30,7 @@ const Header: React.FC = () => {
       </div>
       <div className="header-info flex flex-col grow justify-center p-2">
         <Title level={1} className="!text-3xl font-semibold tracking-tight text-slate-900">Hacktoberfest 2022</Title>
-        <Text className="mt-1 !text-base font-medium text-slate-500">Open source projects and samples for Microsoft.</Text>
+        <Text className="mt-1 !text-base font-medium text-slate-500">Insights on GitHub projects that have opted into the largest open source hackathon.</Text>
         <div className="flex mt-4 items-center gap-2">
           <FilterCard filterName="hacktoberfest" isRemovable={false} icon="topic" />
           <PillSelector
