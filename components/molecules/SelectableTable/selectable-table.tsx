@@ -32,7 +32,7 @@ const iconSuite = {
 };
 
 const SelectableTable: React.FC<SelectableTableProps> = ({ title, tableType, rows }) => {
-  const ref = useRef<HTMLDivElement>(null);
+  const tableRef = useRef<HTMLDivElement>(null);
   const allCheckboxRefs = useRef<HTMLElement[]>([]);
 
   const addCheckboxToRef = (element: any) => {
@@ -48,16 +48,21 @@ const SelectableTable: React.FC<SelectableTableProps> = ({ title, tableType, row
     });
   };
 
+  const entireRowClickChangesCheckbox = (event: any) => {
+    const checkbox: HTMLInputElement | null = event.target.querySelector("input[type='checkbox']");
+    if(checkbox) checkbox.checked = !checkbox.checked;
+  };
+
   const [divSize, setDivSize] = useState(0);
   
   useEffect(() => {
-    if(ref.current) setDivSize(ref.current.offsetWidth);
+    if(tableRef.current) setDivSize(tableRef.current.offsetWidth);
   }, []);
 
   return (
     <>
       <ComponentHeader title={title} />
-      <div ref={ref}>
+      <div ref={tableRef}>
         <table className="table-auto w-full">
           <thead className="border-b-[1px]">
             <tr>
@@ -83,7 +88,7 @@ const SelectableTable: React.FC<SelectableTableProps> = ({ title, tableType, row
             <tr className="h-3"></tr>
             {rows?.map(({title, stars, forks, persons, unknown}, index) => {
               return (
-                <tr className={`hover:content-['${title}']`} key={index}>
+                <tr className={`hover:content-['${title}'] cursor-pointer`} key={index} onClick={event => entireRowClickChangesCheckbox(event)}>
                   <td className="flex flex-row text-left p-2" ref={element => addCheckboxToRef(element)}>
                     <Checkbox label="" /> {divSize > 0 && divSize < 350 ? truncateString(title, 3) : title}
                   </td>
