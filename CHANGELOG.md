@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.0.5](https://github.com/open-sauced/insights/compare/v1.0.4...v1.0.5) (2022-08-12)
+
+
+### 🐛 Bug Fixes
+
+* Delete codeql-analysis.yml ([#186](https://github.com/open-sauced/insights/issues/186)) ([d7262ce](https://github.com/open-sauced/insights/commit/d7262cee0b0335cd954bcd2ef07e7589af6d9984))
+
 ### [1.0.4](https://github.com/open-sauced/insights/compare/v1.0.3...v1.0.4) (2022-08-11)
 
 
