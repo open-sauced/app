@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.1.0-beta.3](https://github.com/open-sauced/insights/compare/v1.1.0-beta.2...v1.1.0-beta.3) (2022-08-12)
+
+
+### 🐛 Bug Fixes
+
+* Delete codeql-analysis.yml ([#186](https://github.com/open-sauced/insights/issues/186)) ([d7262ce](https://github.com/open-sauced/insights/commit/d7262cee0b0335cd954bcd2ef07e7589af6d9984))
+* Fixing 'Maximum Depth Reached' or Infinite Loop bug. ([#188](https://github.com/open-sauced/insights/issues/188)) ([d7a4954](https://github.com/open-sauced/insights/commit/d7a49548b43c6baef5ad3c95313178c918dc6df2))
+
 ## [1.1.0-beta.2](https://github.com/open-sauced/insights/compare/v1.1.0-beta.1...v1.1.0-beta.2) (2022-08-12)
 
 
