@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.1.0-beta.2](https://github.com/open-sauced/insights/compare/v1.1.0-beta.1...v1.1.0-beta.2) (2022-08-12)
+
+
+### 🍕 Features
+
+* add animation to the progress pie component ([#182](https://github.com/open-sauced/insights/issues/182)) ([90f4bbb](https://github.com/open-sauced/insights/commit/90f4bbb6f5350a3b557eb86dccf7c4fd1e6591fc)), closes [#126](https://github.com/open-sauced/insights/issues/126)
+* make entire row for selectable table clickable ([#177](https://github.com/open-sauced/insights/issues/177)) ([8fb914a](https://github.com/open-sauced/insights/commit/8fb914a74b2342eb144bb08c0c1fc1949ad77e7c)), closes [#84](https://github.com/open-sauced/insights/issues/84)
+
 ## [1.1.0-beta.1](https://github.com/open-sauced/insights/compare/v1.0.4...v1.1.0-beta.1) (2022-08-11)
 
 
