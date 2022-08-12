@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import Icon from "components/atoms/Icon/icon";
-import { Checkbox } from "@supabase/ui";
+import Checkbox from "components/atoms/Checkbox/checkbox";
 import ForkIcon from "public/icons/fork-icon.svg";
 import StarIcon from "public/icons/star-icon.svg";
 import Person from "public/icons/person-icon.svg";
