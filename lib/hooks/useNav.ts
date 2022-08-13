@@ -18,19 +18,7 @@ const useNav = () => {
       numOf: 20
     },
     {
-      name: "Commits",
-      numOf: 4308
-    },
-    {
-      name: "Issues",
-      numOf: 45
-    },
-    {
-      name: "Pull Requests",
-      numOf: 13
-    },
-    {
-      name: "People",
+      name: "Contributors",
       numOf: 54
     }
   ];

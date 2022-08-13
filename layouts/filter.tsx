@@ -12,7 +12,7 @@ const FilterLayout = ({children}: {children: React.ReactNode}) => {
   return (
     <>
       <TopNav />
-      <div className="page-container flex min-h-[88vh] flex-col items-center">
+      <div className="page-container flex min-h-[calc(100vh-(54px+95px))] flex-col items-center">
         <div className="info-container min-w-full min-h-[100px]">
           <Header />
           <Nav

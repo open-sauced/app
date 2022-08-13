@@ -1,13 +1,14 @@
 import { WithPageLayout } from "../interfaces/with-page-layout";
 import { useEffect } from "react";
-import { useRouter } from "next/router";
+import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 
-const Home: WithPageLayout = () => {
-  const router = useRouter();
+
+const SignIn: WithPageLayout = () => {
+  /*  const { signIn, user } = useSupabaseAuth();
 
   useEffect(() => {
-    router.push("hacktoberfest");
-  }, [router]);
+    signIn({ provider: "github" });
+  }, [signIn]); */
 
   return (
     <main className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center">
@@ -16,4 +17,4 @@ const Home: WithPageLayout = () => {
   );
 };
 
-export default Home;
+export default SignIn;

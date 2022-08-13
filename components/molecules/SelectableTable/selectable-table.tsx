@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import Icon from "components/atoms/Icon/icon";
-import { Checkbox } from "@supabase/ui";
+import Checkbox from "components/atoms/Checkbox/checkbox";
 import ForkIcon from "public/icons/fork-icon.svg";
 import StarIcon from "public/icons/star-icon.svg";
 import Person from "public/icons/person-icon.svg";
@@ -32,7 +32,7 @@ const iconSuite = {
 };
 
 const SelectableTable: React.FC<SelectableTableProps> = ({ title, tableType, rows }) => {
-  const ref = useRef<HTMLDivElement>(null);
+  const tableRef = useRef<HTMLDivElement>(null);
   const allCheckboxRefs = useRef<HTMLElement[]>([]);
 
   const addCheckboxToRef = (element: any) => {
@@ -48,16 +48,21 @@ const SelectableTable: React.FC<SelectableTableProps> = ({ title, tableType, row
     });
   };
 
+  const entireRowClickChangesCheckbox = (element: any) => {
+    const checkbox: HTMLInputElement | null = element.querySelector("input[type='checkbox']");
+    if(checkbox) checkbox.checked = !checkbox.checked;
+  };
+
   const [divSize, setDivSize] = useState(0);
   
   useEffect(() => {
-    if(ref.current) setDivSize(ref.current.offsetWidth);
+    if(tableRef.current) setDivSize(tableRef.current.offsetWidth);
   }, []);
 
   return (
     <>
       <ComponentHeader title={title} />
-      <div ref={ref}>
+      <div ref={tableRef}>
         <table className="table-auto w-full">
           <thead className="border-b-[1px]">
             <tr>
@@ -83,7 +88,10 @@ const SelectableTable: React.FC<SelectableTableProps> = ({ title, tableType, row
             <tr className="h-3"></tr>
             {rows?.map(({title, stars, forks, persons, unknown}, index) => {
               return (
-                <tr className={`hover:content-['${title}']`} key={index}>
+                <tr className={`hover:content-['${title}'] hover:bg-blue-100 cursor-pointer`} key={index} onClick={(event: any) => {
+                  const isNotCheckbox = event.target.getAttribute("type") !== "checkbox";
+                  if(isNotCheckbox) entireRowClickChangesCheckbox(allCheckboxRefs.current[index]);
+                }}>
                   <td className="flex flex-row text-left p-2" ref={element => addCheckboxToRef(element)}>
                     <Checkbox label="" /> {divSize > 0 && divSize < 350 ? truncateString(title, 3) : title}
                   </td>
