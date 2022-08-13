@@ -5,6 +5,36 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.1.0](https://github.com/open-sauced/insights/compare/v1.0.5...v1.1.0) (2022-08-13)
+
+
+### ✅ Tests
+
+* enable parallel netlify build for storybook ([#170](https://github.com/open-sauced/insights/issues/170)) ([d6c5a75](https://github.com/open-sauced/insights/commit/d6c5a751339282afbd349211a473ebd3a43e09ff)), closes [#49](https://github.com/open-sauced/insights/issues/49)
+
+
+### 🔁 Continuous Integration
+
+* add better release target deployment urls ([#172](https://github.com/open-sauced/insights/issues/172)) ([f3a93f0](https://github.com/open-sauced/insights/commit/f3a93f019b53e1f0e52fddb7a8f90fe9336ca0d1))
+
+
+### 🧑‍💻 Code Refactoring
+
+* update login text to say connect with github. ([#178](https://github.com/open-sauced/insights/issues/178)) ([5b7e572](https://github.com/open-sauced/insights/commit/5b7e5720798c7a34aeac1fa663dfa1d614bb4b9c)), closes [#139](https://github.com/open-sauced/insights/issues/139)
+
+
+### 🍕 Features
+
+* add animation to the progress pie component ([#182](https://github.com/open-sauced/insights/issues/182)) ([90f4bbb](https://github.com/open-sauced/insights/commit/90f4bbb6f5350a3b557eb86dccf7c4fd1e6591fc)), closes [#126](https://github.com/open-sauced/insights/issues/126)
+* make entire row for selectable table clickable ([#177](https://github.com/open-sauced/insights/issues/177)) ([8fb914a](https://github.com/open-sauced/insights/commit/8fb914a74b2342eb144bb08c0c1fc1949ad77e7c)), closes [#84](https://github.com/open-sauced/insights/issues/84)
+* Simplify the Dashboard ([#155](https://github.com/open-sauced/insights/issues/155)) ([80d445c](https://github.com/open-sauced/insights/commit/80d445c953cd4c896afa76d12755bd78794f7c50))
+
+
+### 🐛 Bug Fixes
+
+* correct domain dot com bubble error ([#173](https://github.com/open-sauced/insights/issues/173)) ([3816edb](https://github.com/open-sauced/insights/commit/3816edbc1365566fbe0c709aa26ab2ef4613b854))
+* Fixing 'Maximum Depth Reached' or Infinite Loop bug. ([#188](https://github.com/open-sauced/insights/issues/188)) ([d7a4954](https://github.com/open-sauced/insights/commit/d7a49548b43c6baef5ad3c95313178c918dc6df2))
+
 ## [1.1.0-beta.3](https://github.com/open-sauced/insights/compare/v1.1.0-beta.2...v1.1.0-beta.3) (2022-08-12)
 
 
