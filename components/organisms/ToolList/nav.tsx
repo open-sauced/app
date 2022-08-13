@@ -32,7 +32,7 @@ const Nav: React.FC<NavProps> = ({ toolList, selectedTool = "dashboard", selecte
           key={index} className={`tool-list-item ${selectedTool === tool.name.toLowerCase() ? "" : ""}`}>
           <Link href={`/${filterName}/${tool.name.toLowerCase()}${selectedFilter ? `/filter/${selectedFilter}` : ""}`} >
             {/* Button component was here and needed to be removed to resolve issue #187. Button component had styling that will eventually need to be replaced. */}
-            <div className={`flex pb-1t px-2 md:px-4 hover:!bg-slate-100 after:block after:relative after:inset-x-0 after:-bottom-0.5 after:h-0.5 after:rounded-lg ${selectedTool === tool.name.toLowerCase() ? "after:bg-orange-500" : "focus:after:bg-slate-400"} focus:bg-slate-100 focus:ring-slate-300 child:flex child:items-center`}>
+            <div className={`flex pb-1 px-2 md:px-4 hover:!bg-slate-100 after:block after:relative after:inset-x-0 after:-bottom-0.5 after:h-0.5 after:rounded-lg ${selectedTool === tool.name.toLowerCase() ? "after:bg-orange-500" : "focus:after:bg-slate-400"} focus:bg-slate-100 focus:ring-slate-300 child:flex child:items-center`}>
               <span className={"text-base whitespace-nowrap " + (selectedTool === tool.name.toLowerCase() ? "text-slate-900" : "text-slate-500")}>
                 {tool.name}
               </span>
