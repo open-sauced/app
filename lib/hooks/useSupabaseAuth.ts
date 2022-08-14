@@ -6,6 +6,7 @@ import { UserCredentials } from "@supabase/gotrue-js/src/lib/types";
 const useSupabaseAuth = () => {
   const [user, setUser] = useState<User | null>(null);
 
+  console.log(user)
   useEffect(() => {
     const currentUser = supabase.auth.session();
     setUser(currentUser?.user ?? null);
@@ -21,7 +22,7 @@ const useSupabaseAuth = () => {
 
   return {
     signIn: (data: UserCredentials) => supabase.auth.signIn(data, {
-      redirectTo: "/"
+      redirectTo: "/auth"
     }),
     signOut: () => supabase.auth.signOut(),
     user
