@@ -1,12 +1,11 @@
 import { WithPageLayout } from "../interfaces/with-page-layout";
 import { supabase } from "../lib/utils/supabase";
-import { User } from "@supabase/supabase-js";
+import { GetServerSideProps } from "next";
 
-const SignOut: WithPageLayout = ({ user } : User) => {
+const SignOut: WithPageLayout = () => {
   return (
     <main className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center">
-      {/* Temporary - meat for testing /signout */}
-      <div>{JSON.stringify(user)}</div>
+      ...Loading
     </main>
   );
 };
