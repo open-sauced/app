@@ -5,6 +5,7 @@ import { User } from "@supabase/supabase-js";
 const SignOut: WithPageLayout = ({ user } : User) => {
   return (
     <main className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center">
+      {/* Temporary - meat for testing /signout */}
       <div>{JSON.stringify(user)}</div>
     </main>
   );
