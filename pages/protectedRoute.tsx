@@ -1,7 +1,7 @@
 // pages/protectedRoute.tsx
 // This page serves as an example of how to use a protectedRoute component.
 import { GetServerSideProps } from "next";
-import { supabase } from "../../utils/supabase";
+import { supabase } from "../lib/utils/supabase";
 const Protected = ({ user }: IProps) => {
   return <div>JSON.stringify(user)</div>
 }
