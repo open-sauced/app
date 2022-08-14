@@ -16,10 +16,10 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const { user } = await supabase.auth.api.getUserByCookie(req);
   // Check if the user is logged
   if (user === null) {
-   // Redirect if no logged in
-   return { props: {}, redirect: { destination: "/auth" } };
+    // Redirect if no logged in
+    return { props: {}, redirect: { destination: "/auth" } };
   }
   // If logged return the user
   return { props: {}, redirect: { destination: "/" } };
- };
- export default SignIn;
+};
+export default SignIn;

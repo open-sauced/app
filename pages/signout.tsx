@@ -15,12 +15,12 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const { user } = await supabase.auth.api.getUserByCookie(req);
   // Check if the user is logged
   if (user === null) {
-   // Redirect if no logged in
-   return { props: {}, redirect: { destination: "/" } };
+    // Redirect if no logged in
+    return { props: {}, redirect: { destination: "/" } };
   }
   // log out if logged return the user
   // TODO: issue #189 add logic to remove auth cookie
   return { props: { user } };
- };
+};
 
 export default SignOut;

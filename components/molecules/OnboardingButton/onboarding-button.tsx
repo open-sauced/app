@@ -1,7 +1,7 @@
 import React from "react";
 import Text from "components/atoms/Typography/text";
 import ProgressPie from "components/atoms/ProgressPie/progress-pie";
-import Link from 'next/link'
+import Link from "next/link";
 
 
 const OnboardingButton: React.FC = () => {
