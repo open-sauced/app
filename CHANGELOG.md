@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.1.1](https://github.com/open-sauced/insights/compare/v1.1.0...v1.1.1) (2022-08-14)
+
+
+### 🐛 Bug Fixes
+
+* **ui:** broken tools nav ([#194](https://github.com/open-sauced/insights/issues/194)) ([b146875](https://github.com/open-sauced/insights/commit/b146875ac95ee2f62666238b0c30d477be7c8cd2)), closes [#187](https://github.com/open-sauced/insights/issues/187) [#193](https://github.com/open-sauced/insights/issues/193)
+
 ## [1.1.0](https://github.com/open-sauced/insights/compare/v1.0.5...v1.1.0) (2022-08-13)
 
 
