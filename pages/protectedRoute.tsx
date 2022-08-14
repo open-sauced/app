@@ -2,7 +2,7 @@
 // This page serves as an example of how to use a protectedRoute component.
 import { GetServerSideProps } from "next";
 import { supabase } from "../lib/utils/supabase";
-const Protected = ({ user }: IProps) => {
+const Protected = ({ user }: Props) => {
   return <div>JSON.stringify(user)</div>;
 };
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
