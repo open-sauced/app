@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.1.3-beta.3](https://github.com/open-sauced/insights/compare/v1.1.3-beta.2...v1.1.3-beta.3) (2022-08-15)
+
+
+### 🐛 Bug Fixes
+
+* Removed gap from navbar and tools display ([#206](https://github.com/open-sauced/insights/issues/206)) ([a3de620](https://github.com/open-sauced/insights/commit/a3de6201b8a260a271ae871e785c2671d4e6d5ba))
+
 ### [1.1.3-beta.2](https://github.com/open-sauced/insights/compare/v1.1.3-beta.1...v1.1.3-beta.2) (2022-08-15)
 
 
