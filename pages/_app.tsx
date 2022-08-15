@@ -40,7 +40,7 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
       <SWRConfig
         value={{
           revalidateOnFocus: false,
-          fetcher: apiFetcher,
+          fetcher: apiFetcher
         }}
       >
         <GlobalState>

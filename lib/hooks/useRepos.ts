@@ -7,7 +7,7 @@ const useRepo = (name: string) => {
     repo: data,
     isLoading: !error && !data,
     isError: !!error,
-    mutate,
+    mutate
   };
 };
 
@@ -18,7 +18,7 @@ const useRepoList = () => {
     repoList: data,
     isLoading: !error && !data,
     isError: !!error,
-    mutate,
+    mutate
   };
 };
 
