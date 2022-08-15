@@ -14,7 +14,7 @@ const SuperativeSelector: React.FC<SuperlativeSelectorProps> = ({
   filterOptions,
   handleFilterClick,
   handleCancelClick,
-  selected,
+  selected
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggleFilter = () => {
