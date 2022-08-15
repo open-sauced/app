@@ -9,7 +9,7 @@ import ComponentHeader from "../ComponentHeader/component-header";
 import { truncateString } from "../../../lib/utils/truncate-string";
 
 type ParticipantsRow = {
-  title: string;
+  name: string;
   forks: number;
   stars: number;
   persons: number;
@@ -54,7 +54,7 @@ const SelectableTable: React.FC<SelectableTableProps> = ({ title, tableType, row
   };
 
   const [divSize, setDivSize] = useState(0);
-  
+
   useEffect(() => {
     if(tableRef.current) setDivSize(tableRef.current.offsetWidth);
   }, []);
@@ -86,14 +86,14 @@ const SelectableTable: React.FC<SelectableTableProps> = ({ title, tableType, row
           </thead>
           <tbody>
             <tr className="h-3"></tr>
-            {rows?.map(({title, stars, forks, persons, unknown}, index) => {
+            {rows?.map(({name, stars, forks, persons, unknown}, index) => {
               return (
-                <tr className={`hover:content-['${title}'] hover:bg-blue-100 cursor-pointer`} key={index} onClick={(event: any) => {
+                <tr className={`hover:content-['${name}'] hover:bg-blue-100 cursor-pointer`} key={index} onClick={(event: any) => {
                   const isNotCheckbox = event.target.getAttribute("type") !== "checkbox";
                   if(isNotCheckbox) entireRowClickChangesCheckbox(allCheckboxRefs.current[index]);
                 }}>
                   <td className="flex flex-row text-left p-2" ref={element => addCheckboxToRef(element)}>
-                    <Checkbox label="" /> {divSize > 0 && divSize < 350 ? truncateString(title, 3) : title}
+                    <Checkbox label="" /> {divSize > 0 && divSize < 350 ? truncateString(name, 3) : name}
                   </td>
                   <td className="text-right p-2">
                     {stars}%

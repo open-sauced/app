@@ -4,17 +4,18 @@ import SelectableTable from "components/molecules/SelectableTable/selectable-tab
 import ScatterChart from "components/molecules/ScatterChart/scatter-chart";
 import HighlightCard from "components/molecules/HighlightCard/highlight-card";
 import useDashBoardData from "lib/hooks/useDashboardData";
-import useRepositoriesList from "lib/hooks/useRepositoriesList";
+import {useRepoList} from "lib/hooks/useRepos";
 
 interface ToolProps {
   tool?: string;
 }
 
-const Tool: React.FC<ToolProps> = ({ tool }) => {    
+const Tool: React.FC<ToolProps> = ({ tool }) => {
 
   const { scatterOptions } = useDashBoardData();
-  const { repositoriesList } = useRepositoriesList();
+  const { repoList } = useRepoList();
 
+  console.log(repoList);
   return (
     <div className="flex flex-col w-full gap-4">
       {tool === "Dashboard" ?
@@ -72,7 +73,7 @@ const Tool: React.FC<ToolProps> = ({ tool }) => {
         : tool === "Repositories" ?
           <>
             <Card className="w-full lg:w-[calc(50%-(1rem/2))] xl:!w-[calc(40%-(1rem/2))] px-1 xs:px-5 py-5">
-              <SelectableTable rows={repositoriesList} title="Repositories" tableType="participants" />
+              {repoList && <SelectableTable rows={repoList.data} title="Repositories" tableType="participants" />}
             </Card>
           </>
           :
