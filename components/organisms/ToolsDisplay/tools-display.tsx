@@ -15,7 +15,6 @@ const Tool: React.FC<ToolProps> = ({ tool }) => {
   const { scatterOptions } = useDashBoardData();
   const { repoList, isLoading } = useRepoList();
 
-  console.log(repoList);
   const data = repoList.data || {data: []};
 
   return (
