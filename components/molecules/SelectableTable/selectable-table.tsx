@@ -9,18 +9,10 @@ import ComponentHeader from "../ComponentHeader/component-header";
 import { truncateString } from "../../../lib/utils/truncate-string";
 import humanizeNumber from "../../../lib/utils/humanizeNumber";
 
-type ParticipantsRow = {
-  name: string;
-  forks: number;
-  stars: number;
-  persons: number;
-  size: number;
-}
-
 interface SelectableTableProps {
   title: string;
   tableType: "participants";
-  rows: ParticipantsRow[];
+  rows: { name: string; stars: number; forks: number; size: number; }[];
 }
 
 const iconSuite = {
@@ -87,7 +79,7 @@ const SelectableTable: React.FC<SelectableTableProps> = ({ title, tableType, row
           </thead>
           <tbody>
             <tr className="h-3"></tr>
-            {rows?.map(({name, stars, forks, persons, size}, index) => {
+            {rows?.map(({name, stars, size}, index) => {
               return (
                 <tr className={`hover:content-['${name}'] hover:bg-blue-100 cursor-pointer`} key={index} onClick={(event: any) => {
                   const isNotCheckbox = event.target.getAttribute("type") !== "checkbox";
@@ -100,13 +92,13 @@ const SelectableTable: React.FC<SelectableTableProps> = ({ title, tableType, row
                     {humanizeNumber(stars)}
                   </td>
                   <td className="text-right p-2">
-                    {humanizeNumber(forks || 12)}
+                    {humanizeNumber(12)}
                   </td>
                   <td className="text-right p-2">
-                    {humanizeNumber(persons || 123)}
+                    {humanizeNumber(1234)}
                   </td>
                   <td className="text-right p-2">
-                    {humanizeNumber(size)}
+                    {size}
                   </td>
                 </tr>);
             })}
