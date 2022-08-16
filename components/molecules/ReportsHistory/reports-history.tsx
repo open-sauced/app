@@ -12,15 +12,16 @@ const ReportsHistory = ({ reportList }: ReportsHistoryProps): JSX.Element => {
   const heading = <Title level={5} className="!text-light-slate-9 uppercase">
     <div className="flex justify-between w-full">
       <div className="w-[40%] border-1 p-2">
-        Report Date
+        report date
       </div>
       <div className="w-[20%] border-1 p-2">
         issue date
       </div>
       <div className="w-[20%] border-1 p-2">
-        Format
+        format
       </div>
       <div className="w-[20%] border-1 p-2">
+        {null}
       </div>
     </div>
   </Title>;
@@ -55,7 +56,7 @@ const ReportsHistory = ({ reportList }: ReportsHistoryProps): JSX.Element => {
           :
           
           <Text>
-            No Reports Found...
+            Currently there are no reports
           </Text>
         }
       </div>
