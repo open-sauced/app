@@ -6,4 +6,4 @@ const storyConfig = {
 
 export default storyConfig;
 
-export const SelectReportsFilterMolecule = () => <SelectReportsFilter />;
+export const SelectReportsFilterMolecule = () => <SelectReportsFilter callback={() => null}/>;
