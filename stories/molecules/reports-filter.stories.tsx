@@ -1,4 +1,4 @@
-import ReportsFilter from "../../components/molecules/ReportsFilter/reports-filter";
+import SelectReportsFilter from "../../components/molecules/SelectReportsFilter/select-reports-filter";
 
 const storyConfig = {
   title: "Design System/Molecules/Reports Filter"
@@ -6,4 +6,4 @@ const storyConfig = {
 
 export default storyConfig;
 
-export const ReportsFilterMolecule = () => <ReportsFilter />;
+export const SelectReportsFilterMolecule = () => <SelectReportsFilter />;
