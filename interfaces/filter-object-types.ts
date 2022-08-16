@@ -1,4 +1,4 @@
-export type FilterType = {
+export type FilterOptions = {
   filterName: string;
   filterValue: string;
-}
+};

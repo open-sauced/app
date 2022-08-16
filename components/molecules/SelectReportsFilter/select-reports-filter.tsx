@@ -3,11 +3,11 @@ import Text from "components/atoms/Typography/text";
 import Title from "components/atoms/Typography/title";
 import Select from "components/atoms/Select/select";
 import SelectOption from "components/atoms/Select/select-option";
-import { FilterType } from "interfaces/filter-object-types";
+import { FilterOptions } from "interfaces/filter-object-types";
 import { useState } from "react";
 
 interface SelectReportsFilterProps {
-  filterList?: FilterType[];
+  filterList?: FilterOptions[];
   callback: (selectedValue: string) => any;
 }
 
