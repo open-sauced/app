@@ -1,15 +1,15 @@
 import React from "react";
-import { Select as SupbaseSelectComponent } from "@supabase/ui";
+import { Select as SupabaseSelectComponent } from "@supabase/ui";
 
-interface SelectOptionProps extends React.ComponentProps<typeof SupbaseSelectComponent.Option> {
+interface SelectOptionProps extends React.ComponentProps<typeof SupabaseSelectComponent.Option> {
   //Add additional prop definitions here
 }
 
 const SelectOption: React.FC<SelectOptionProps> = ( props ) => {
   return (
-    <SupbaseSelectComponent.Option {...props}>
+    <SupabaseSelectComponent.Option {...props}>
       {props.children}
-    </SupbaseSelectComponent.Option>
+    </SupabaseSelectComponent.Option>
   );
 };
 
