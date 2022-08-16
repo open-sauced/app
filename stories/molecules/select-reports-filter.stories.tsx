@@ -1,7 +1,7 @@
 import SelectReportsFilter from "../../components/molecules/SelectReportsFilter/select-reports-filter";
 
 const storyConfig = {
-  title: "Design System/Molecules/Reports Filter"
+  title: "Design System/Molecules/Select Reports Filter"
 };
 
 export default storyConfig;
