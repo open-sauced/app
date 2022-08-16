@@ -15,7 +15,6 @@ const Tool: React.FC<ToolProps> = ({ tool }) => {
   const { scatterOptions } = useDashBoardData();
   const { repoList } = useRepoList();
 
-  console.log(repoList);
   return (
     <div className="flex flex-col w-full gap-4">
       {tool === "Dashboard" ?
