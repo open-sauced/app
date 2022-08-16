@@ -1,6 +1,6 @@
 import useSWR from "swr";
 
-interface GsDbRepo {
+export interface GsDbRepo {
   readonly id: number;
   readonly default_branch_head_time: string;
   readonly size?: string;
@@ -28,8 +28,8 @@ interface GsDbRepo {
   readonly host_parent_repo?: string;
 }
 
-const useRepo = (name: string) => {
-  const { data, error, mutate } = useSWR<GsDbRepo, Error>(`repos/${name}`);
+const useRepo = (id: string) => {
+  const { data, error, mutate } = useSWR<GsDbRepo, Error>(`repos/${id}`);
 
   return {
     repo: data,
@@ -40,10 +40,10 @@ const useRepo = (name: string) => {
 };
 
 const useRepoList = () => {
-  const { data, error, mutate } = useSWR<GsDbRepo, Error>("repos/list");
+  const { data, error, mutate } = useSWR("repos/list");
 
   return {
-    repoList: data,
+    repoList: data || {data: []},
     isLoading: !error && !data,
     isError: !!error,
     mutate
