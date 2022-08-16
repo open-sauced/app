@@ -11,6 +11,7 @@ const AvatarRoll: React.FC<AvatarRollProps> = ({ avatarCount = 9 }) => {
     <div className="flex space-x-3 items-center">
       {rollCount.map((roll, index) => (
         <div
+          key={index}
           className={
             `${index === 0 ? "scale-50" : ""} ` +
             `${index === 1 ? "scale-75" : ""}` +
