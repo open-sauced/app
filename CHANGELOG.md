@@ -5,6 +5,27 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.1.3-beta.3](https://github.com/open-sauced/insights/compare/v1.1.3-beta.2...v1.1.3-beta.3) (2022-08-15)
+
+
+### 🐛 Bug Fixes
+
+* Removed gap from navbar and tools display ([#206](https://github.com/open-sauced/insights/issues/206)) ([a3de620](https://github.com/open-sauced/insights/commit/a3de6201b8a260a271ae871e785c2671d4e6d5ba))
+
+### [1.1.3-beta.2](https://github.com/open-sauced/insights/compare/v1.1.3-beta.1...v1.1.3-beta.2) (2022-08-15)
+
+
+### 🐛 Bug Fixes
+
+* Fixed issue where dashboard would not appear when a filter was applied ([#202](https://github.com/open-sauced/insights/issues/202)) ([9fe3e81](https://github.com/open-sauced/insights/commit/9fe3e816e9334312402c043415294040b71dc15d))
+
+### [1.1.3-beta.1](https://github.com/open-sauced/insights/compare/v1.1.2...v1.1.3-beta.1) (2022-08-15)
+
+
+### 🧑‍💻 Code Refactoring
+
+* Reimplemented nav highlight ([#201](https://github.com/open-sauced/insights/issues/201)) ([a33becb](https://github.com/open-sauced/insights/commit/a33becb95e19b9baa54e6b22d86e5186933140e6))
+
 ### [1.1.2](https://github.com/open-sauced/insights/compare/v1.1.1...v1.1.2) (2022-08-14)
 
 
