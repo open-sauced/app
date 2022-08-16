@@ -2,7 +2,7 @@ import React from "react";
 
 interface CardProps {
     className?: string;
-    heading?: JSX.Element;
+    heading?: JSX.Element | string;
     children: JSX.Element;
 }
 
