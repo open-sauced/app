@@ -1,7 +1,8 @@
-import { Select } from "@supabase/ui";
 import Button from "components/atoms/Button/button";
 import Text from "components/atoms/Typography/text";
 import Title from "components/atoms/Typography/title";
+import Select from "components/atoms/Select/select";
+import SelectOption from "components/atoms/Select/select-option";
 import { FilterType } from "interfaces/filter-object-types";
 import { useState } from "react";
 
@@ -11,8 +12,6 @@ interface SelectReportsFilterProps {
 }
 
 const SelectReportsFilter = ({ filterList, callback }: SelectReportsFilterProps): JSX.Element => {
-  const {Option: SelectOption } = Select;
-
   const [ selectedValue, setSelectedValue ] = useState("");
 
   return (
