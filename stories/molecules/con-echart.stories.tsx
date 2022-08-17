@@ -1,9 +1,9 @@
 import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-import ContributorseChart from "components/molecules/ContributorsEChart/e-chart";
+import CardLineChart from "components/molecules/CardLineChart/card-line-chart";
 
 const storyConfig = {
-  title: "Design System/Molecules/Contributors eChart - to be renamed",
+  title: "Design System/Molecules/Card Line Chart",
   component: "ScatterChart"
 };
 
@@ -13,8 +13,7 @@ const testOptions  = {
   xAxis: {
     type: "category",
     boundaryGap: false,
-    data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-    show: false
+    data: ["Jan 2022", "Mar 2022", "Jun 2022"]
   },
   yAxis: {
     type: "value",
@@ -37,8 +36,8 @@ const testOptions  = {
 };
 
 // ScatterChart Template
-const ScatterChartTemplate: ComponentStory<typeof ContributorseChart> = (args) => <ContributorseChart {...args} />;
+const CardLineChartTemplate: ComponentStory<typeof CardLineChart> = (args) => <CardLineChart {...args} />;
 
 // ScatterChart Default
-export const Default = ScatterChartTemplate.bind({});
+export const Default = CardLineChartTemplate.bind({});
 Default.args = { option: testOptions };

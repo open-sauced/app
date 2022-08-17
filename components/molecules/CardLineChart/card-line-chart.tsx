@@ -1,11 +1,11 @@
 import React from "react";
 import EChartWrapper from "components/atoms/EChartWrapper/echart-wrapper";
 
-interface AreaChartProps {
+interface CardLineChartProps {
     option: Object;
 }
 
-const AreaChart: React.FC<AreaChartProps> = ({ option }) => {
+const CardLineChart: React.FC<CardLineChartProps> = ({ option }) => {
   return (
     <>
       <EChartWrapper option={option} />
@@ -13,4 +13,4 @@ const AreaChart: React.FC<AreaChartProps> = ({ option }) => {
   );
 };
 
-export default AreaChart;
+export default CardLineChart;

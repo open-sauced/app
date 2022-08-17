@@ -38,7 +38,7 @@ const useDashBoardData = () => {
     xAxis: {
       type: "category",
       boundaryGap: false,
-      show: false
+      data: ["Jan 2022", "Mar 2022", "Jun 2022"]
     },
     yAxis: {
       type: "value",
