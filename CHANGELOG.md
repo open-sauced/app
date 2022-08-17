@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.2.0-beta.1](https://github.com/open-sauced/insights/compare/v1.1.3-beta.3...v1.2.0-beta.1) (2022-08-17)
+
+
+### 🍕 Features
+
+* Create Reports Filter Component ([#207](https://github.com/open-sauced/insights/issues/207)) ([efced23](https://github.com/open-sauced/insights/commit/efced2319433532e9ff124291dc64467da99abd8)), closes [#166](https://github.com/open-sauced/insights/issues/166)
+
 ### [1.1.3-beta.3](https://github.com/open-sauced/insights/compare/v1.1.3-beta.2...v1.1.3-beta.3) (2022-08-15)
 
 
