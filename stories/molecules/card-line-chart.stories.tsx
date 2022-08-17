@@ -13,11 +13,24 @@ const testOptions  = {
   xAxis: {
     type: "category",
     boundaryGap: false,
+    axisLabel: {
+      fontSize: 14,
+      fontWeight: "bold",
+      color: "darkgray"
+    },
     data: ["Jan 2022", "Mar 2022", "Jun 2022"]
   },
   yAxis: {
     type: "value",
-    show: false
+    splitNumber: 1,
+    axisLabel: {
+      show: false
+    },
+    splitLine: {
+      lineStyle: {
+        type: "dashed"
+      }
+    }
   },
   series: [
     {
@@ -29,7 +42,8 @@ const testOptions  = {
         color: "#ff9800"
       },
       areaStyle: {
-        color: "#ff9800"
+        color: "#FFB74D",
+        opacity: 0.6
       }
     }
   ]
