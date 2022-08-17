@@ -8,10 +8,10 @@ interface RadioProps {
   onClick?: () => void;
   value?: string;
   withLabel: boolean;
-  css?:string
+  css?: string;
 }
 
-const Radio: React.FC<RadioProps> = ({css, withLabel, id, children, value, checked = false, onClick }: RadioProps) => {
+const Radio = ({ css, withLabel, id, children, value, checked = false, onClick }: RadioProps): JSX.Element => {
   return (
     <div
       onClick={onClick}
