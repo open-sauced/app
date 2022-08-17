@@ -4,7 +4,7 @@ import SelectableTable from "components/molecules/SelectableTable/selectable-tab
 import ScatterChart from "components/molecules/ScatterChart/scatter-chart";
 import HighlightCard from "components/molecules/HighlightCard/highlight-card";
 import useDashBoardData from "lib/hooks/useDashboardData";
-import {useRepoList} from "lib/hooks/useRepos";
+import {useRepoList} from "lib/hooks/useRepoList";
 
 interface ToolProps {
   tool?: string;
