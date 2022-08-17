@@ -9,7 +9,7 @@ import ComponentHeader from "../ComponentHeader/component-header";
 import { truncateString } from "../../../lib/utils/truncate-string";
 import humanizeNumber from "../../../lib/utils/humanizeNumber";
 
-interface SelectableTableProps {
+interface RepoSelectableTableProps {
   title: string;
   tableType: "participants";
   rows: { name: string; stars: number; forks: number; size: number; }[];
@@ -24,7 +24,7 @@ const iconSuite = {
   }
 };
 
-const SelectableTable: React.FC<SelectableTableProps> = ({ title, tableType, rows }) => {
+const RepoSelectableTable: React.FC<RepoSelectableTableProps> = ({ title, tableType, rows }) => {
   const tableRef = useRef<HTMLDivElement>(null);
   const allCheckboxRefs = useRef<HTMLElement[]>([]);
 
@@ -109,4 +109,4 @@ const SelectableTable: React.FC<SelectableTableProps> = ({ title, tableType, row
   );
 };
 
-export default SelectableTable;
+export default RepoSelectableTable;
