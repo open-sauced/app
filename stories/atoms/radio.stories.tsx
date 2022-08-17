@@ -10,11 +10,13 @@ const RadioTemplate: ComponentStory<typeof Radio> = (args) => <Radio {...args} /
 export const Default = RadioTemplate.bind({});
 export const Checked = RadioTemplate.bind({});
 Checked.args = {
-  label: "Test",
+  children: "Test",
   checked: true,
-  id: "select1",
+  withLabel: true,
+  css: "w-full",
 };
 Default.args = {
-  label: "Test",
+  children: "Test",
   id: "select",
+  css: "w-max",
 };

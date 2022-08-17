@@ -13,13 +13,13 @@ const ContextFilterOption: React.FC<ContextFilterOptionProps> = ({ children, isS
       onClick={onClick}
       className={`${
         isSelected && "bg-light-orange-3"
-      } flex w-full px-2 py-1.5  text-sm text-slate-600 font-medium whitespace-nowrap rounded-md      hover:bg-light-orange-3 hover:text-slate-800 focus:outline-none focus-visible:border-orange-500 focus-visible:ring focus-visible:ring-orange-200 transition`}
+      } flex w-full px-2 py-1.5  text-sm text-slate-600 font-medium whitespace-nowrap rounded-md  cursor-pointer     hover:bg-light-orange-3 hover:text-slate-800 focus:outline-none focus-visible:border-orange-500 focus-visible:ring focus-visible:ring-orange-200 transition`}
     >
       <div className="flex w-full items-center">
         {isSelected ? (
           <BsFillCheckCircleFill className="text-xl  text-light-orange-9" />
         ) : (
-          <MdOutlineRadioButtonUnchecked className="text-xl  text-light-slate-6" />
+          <MdOutlineRadioButtonUnchecked className="text-xl  stroke-light-orange-2 stroke-1 text-light-slate-6" />
         )}
         <span className="ml-2">{children}</span>
         <span className="px-1 ml-auto rounded-xl bg-light-orange-5 text-sm text-light-orange-10">
