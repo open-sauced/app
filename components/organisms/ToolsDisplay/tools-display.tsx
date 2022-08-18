@@ -6,7 +6,7 @@ interface ToolProps {
   tool?: string;
 }
 
-const Tool: React.FC<ToolProps> = ({ tool }) => {
+const Tool: React.FC<ToolProps> = ({ tool }) => {    
   switch (tool) {
   case "Dashboard":
     return <Dashboard />;
@@ -16,7 +16,7 @@ const Tool: React.FC<ToolProps> = ({ tool }) => {
 
   default:
     return <>{tool ? `${tool}` : "Test"} Tool Page</>;
-  }
+      }
 };
 
 export default Tool;
