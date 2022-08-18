@@ -2,7 +2,7 @@ import React from "react";
 import EChartWrapper from "components/atoms/EChartWrapper/echart-wrapper";
 
 interface CardLineChartProps {
-    option: Object;
+  option: Object;
 }
 
 const CardLineChart: React.FC<CardLineChartProps> = ({ option }) => {
