@@ -41,8 +41,25 @@ const testRepoList = [
 //CardRepoList Template
 const CardRepoListTemplate: ComponentStory<typeof CardRepoList> = (args) => <CardRepoList {...args} />;
 
-export const Default = CardRepoListTemplate.bind({});
+export const MoreThanFiveRepos = CardRepoListTemplate.bind({});
 
-Default.args = {
+MoreThanFiveRepos.args = {
   repoList: testRepoList
+};
+
+export const LessThanFiveRepos = CardRepoListTemplate.bind({});
+
+LessThanFiveRepos.args = {
+  repoList: [
+    {
+      repoName: "test",
+      repoIcon: TestRepoAvatar
+    }
+  ]
+};
+
+export const NoRepos = CardRepoListTemplate.bind({});
+
+NoRepos.args = {
+  repoList: []
 };
