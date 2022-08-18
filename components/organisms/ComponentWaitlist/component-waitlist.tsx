@@ -14,14 +14,14 @@ const ComponentWaitlist = () => {
           <HeaderLogo />
         </div>
         <div className="mt-24">
-          <div>
-            <Title level={5} className="text-2xl font-semibold text-center !text-dark-orange-9 tracking-tighter z-10">
+          <div className="text-center">
+            <Text className="!text-2xl !font-semibold !text-dark-orange-9 tracking-tight z-10">
               Thanks for signing up!
-            </Title>
+            </Text>
           </div>
           <div className="max-w-2xl mt-7 px-9 font-semibold">
-            <Title className="text-center tracking-tighter leading-10 !text-light-slate-1" level={1}>
-              You and 32 others on the Open Sauced waitlist.
+            <Title className="text-center tracking-tight leading-10 !text-light-slate-1" level={1}>
+              You and 32 others are on the Open Sauced waitlist.
             </Title>
           </div>
           <div className="flex mt-8 justify-center">
