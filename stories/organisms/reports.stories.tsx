@@ -1,7 +1,7 @@
 import Reports from "components/organisms/Reports/reports";
 
 const StoryConfig = {
-  title: "Design System/Organisms/Reports",
+  title: "Design System/Organisms/Reports"
 };
 export default StoryConfig;
 

@@ -77,9 +77,9 @@ const Tool: React.FC<ToolProps> = ({ tool }) => {
             </Card>
           </>
           : tool ==="Reports" ? <Reports/> :
-          <>
-            {tool ? `${tool}` : "Test"} Tool Page
-          </>
+            <>
+              {tool ? `${tool}` : "Test"} Tool Page
+            </>
       }
     </div>
   );

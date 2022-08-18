@@ -20,8 +20,8 @@ const Reports = (): JSX.Element => {
           Download History
         </Title>
         <hr className="border-light-slate-6 my-4" />
+        {/* Download History goes here */}
       </div>
-      {/* Download History goes here */}
     </section>
   );
 };
