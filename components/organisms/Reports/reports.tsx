@@ -8,7 +8,7 @@ const Reports = (): JSX.Element => {
         <Title className="!font-medium relative !text-left " level={3}>
           Contributions Insights
         </Title>
-        <hr className="border-light-slate-6 my-5" />
+        <hr className="border-light-slate-6 my-4" />
         <div className="!text-left">
           <SelectReportsFilter
             callback={function () {
@@ -16,6 +16,10 @@ const Reports = (): JSX.Element => {
             }}
           />
         </div>
+        <Title className="!font-medium relative mt-16 !text-left " level={3}>
+          Download History
+        </Title>
+        <hr className="border-light-slate-6 my-4" />
       </div>
       {/* Download History goes here */}
     </section>
