@@ -16,7 +16,7 @@ const Tool: React.FC<ToolProps> = ({ tool }) => {
 
   default:
     return <>{tool ? `${tool}` : "Test"} Tool Page</>;
-  }
+      }
 };
 
 export default Tool;
