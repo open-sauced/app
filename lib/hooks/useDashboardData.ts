@@ -34,8 +34,35 @@ const useDashBoardData = () => {
     ]
   };
 
+  const areaChartOptions  = {
+    xAxis: {
+      type: "category",
+      boundaryGap: false,
+      data: ["Jan 2022", "Mar 2022", "Jun 2022"]
+    },
+    yAxis: {
+      type: "value",
+      show: false
+    },
+    series: [
+      {
+        data: [820, 932, 901, 934, 1290, 1330, 1320],
+        type: "line",
+        smooth: true,
+        showSymbol: false,
+        lineStyle: {
+          color: "#ff9800"
+        },
+        areaStyle: {
+          color: "#ff9800"
+        }
+      }
+    ]
+  };
+
   return {
-    scatterOptions
+    scatterOptions,
+    areaChartOptions
   };
 };
 
