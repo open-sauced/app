@@ -17,5 +17,5 @@ export const Default = CardProfileTemplate.bind({});
 Default.args = {
   githubName: "ChadStewart",
   totalPRs: 4,
-  dateOfFirstPR: "3mon"
+  dateOfFirstPR: "3mo"
 };
