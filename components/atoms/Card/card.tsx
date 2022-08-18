@@ -15,7 +15,7 @@ const Card: React.FC<CardProps> = ({ className, children, heading }) => {
             <div className="px-6 py-3 rounded-t-lg bg-light-slate-3">
               {heading}
             </div>
-            <div className="p-6">
+            <div className="py-6">
               {children}
             </div>
           </>

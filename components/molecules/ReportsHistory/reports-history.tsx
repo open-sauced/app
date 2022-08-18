@@ -10,17 +10,17 @@ interface ReportsHistoryProps {
 
 const ReportsHistory = ({ reportList }: ReportsHistoryProps): JSX.Element => {
   const heading = <Title level={5} className="!text-light-slate-9 uppercase">
-    <div className="flex justify-between w-full">
-      <div className="w-2/5 border-1 p-2">
+    <div className="flex justify-between w-full gap-2">
+      <div className="w-2/5 font-xs font-semibold text-slate-400 tracking-wide uppercase">
         report date
       </div>
-      <div className="w-1/5 border-1 p-2">
+      <div className="w-1/5 font-xs font-semibold text-slate-400 tracking-wide uppercase">
         issue date
       </div>
-      <div className="w-1/5 border-1 p-2">
+      <div className="w-1/5 font-xs font-semibold text-slate-400 tracking-wide uppercase">
         format
       </div>
-      <div className="w-1/5 border-1 p-2">
+      <div className="w-1/5 font-xs font-semibold text-slate-400 tracking-wide uppercase">
         {null}
       </div>
     </div>
@@ -28,26 +28,26 @@ const ReportsHistory = ({ reportList }: ReportsHistoryProps): JSX.Element => {
   
   return (
     <Card heading={heading}>
-      <div className="flex flex-col justify-between w-full">
+      <div className="flex flex-col justify-between w-full gap-2">
         {reportList ?
           reportList.map(({reportDate, reportName, reportFormat, isGenerated}, index) => 
-            <div className="flex" key={index}>
-              <div className="w-2/5 border-1 p-2">
+            <div className={`flex py-3 ${index % 2 === 0 ? "bg-slate-50" : "bg-white"}`} key={index}>
+              <div className="w-2/5 px-6 font-sm font-medium text-slate-900 tracking-tight">
                 {reportName}
               </div>
-              <div className="w-1/5 border-1 p-2">
+              <div className="w-1/5 px-6 font-sm font-medium text-slate-900 tracking-tight">
                 {reportDate}
               </div>
-              <div className="w-1/5 border-1 p-2">
+              <div className="w-1/5 px-6 font-sm font-medium text-slate-900 tracking-tight">
                 {reportFormat}
               </div>
-              <div className="w-1/5 border-1 p-2">
+              <div className="w-1/5 px-6 font-sm font-medium text-slate-900 tracking-tight text-right">
                 {isGenerated ?
                   <Button type="link" >Download</Button>
                 
                   :
                 
-                  <Button type="link" className="!text-light-slate-10" disabled >Generating</Button>
+                  <Button type="link" className="!text-light-slate-10" disabled >Generating...</Button>
                 }
               </div>
             </div>
