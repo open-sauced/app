@@ -8,14 +8,14 @@ interface ToolProps {
 
 const Tool: React.FC<ToolProps> = ({ tool }) => {
   switch (tool) {
-    case "Dashboard":
-      return <Dashboard />;
+  case "Dashboard":
+    return <Dashboard />;
 
-    case "Repositories":
-      return <Repositories />;
+  case "Repositories":
+    return <Repositories />;
 
-    default:
-      return <>{tool ? `${tool}` : "Test"} Tool Page</>;
+  default:
+    return <>{tool ? `${tool}` : "Test"} Tool Page</>;
   }
 };
 
