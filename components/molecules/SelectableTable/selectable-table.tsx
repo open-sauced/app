@@ -7,19 +7,12 @@ import Person from "public/icons/person-icon.svg";
 import Icon3 from "public/icons/icon3.svg";
 import ComponentHeader from "../ComponentHeader/component-header";
 import { truncateString } from "../../../lib/utils/truncate-string";
+import humanizeNumber from "../../../lib/utils/humanizeNumber";
 
-type ParticipantsRow = {
-  title: string;
-  forks: number;
-  stars: number;
-  persons: number;
-  unknown: number;
-}
-
-interface SelectableTableProps {
+interface RepoSelectableTableProps {
   title: string;
   tableType: "participants";
-  rows: ParticipantsRow[];
+  rows: { name: string; stars: number; forks: number; size: number; }[];
 }
 
 const iconSuite = {
@@ -31,7 +24,7 @@ const iconSuite = {
   }
 };
 
-const SelectableTable: React.FC<SelectableTableProps> = ({ title, tableType, rows }) => {
+const RepoSelectableTable: React.FC<RepoSelectableTableProps> = ({ title, tableType, rows }) => {
   const tableRef = useRef<HTMLDivElement>(null);
   const allCheckboxRefs = useRef<HTMLElement[]>([]);
 
@@ -54,7 +47,7 @@ const SelectableTable: React.FC<SelectableTableProps> = ({ title, tableType, row
   };
 
   const [divSize, setDivSize] = useState(0);
-  
+
   useEffect(() => {
     if(tableRef.current) setDivSize(tableRef.current.offsetWidth);
   }, []);
@@ -86,26 +79,26 @@ const SelectableTable: React.FC<SelectableTableProps> = ({ title, tableType, row
           </thead>
           <tbody>
             <tr className="h-3"></tr>
-            {rows?.map(({title, stars, forks, persons, unknown}, index) => {
+            {rows?.map(({name, stars, size}, index) => {
               return (
-                <tr className={`hover:content-['${title}'] hover:bg-blue-100 cursor-pointer`} key={index} onClick={(event: any) => {
+                <tr className={`hover:content-['${name}'] hover:bg-blue-100 cursor-pointer`} key={index} onClick={(event: any) => {
                   const isNotCheckbox = event.target.getAttribute("type") !== "checkbox";
                   if(isNotCheckbox) entireRowClickChangesCheckbox(allCheckboxRefs.current[index]);
                 }}>
                   <td className="flex flex-row text-left p-2" ref={element => addCheckboxToRef(element)}>
-                    <Checkbox label="" /> {divSize > 0 && divSize < 350 ? truncateString(title, 3) : title}
+                    <Checkbox label="" /> {divSize > 0 && divSize < 350 ? truncateString(name, 3) : name}
                   </td>
                   <td className="text-right p-2">
-                    {stars}%
+                    {humanizeNumber(stars)}
                   </td>
                   <td className="text-right p-2">
-                    {forks}%
+                    {humanizeNumber(12)}
                   </td>
                   <td className="text-right p-2">
-                    {persons}%
+                    {humanizeNumber(1234)}
                   </td>
                   <td className="text-right p-2">
-                    {unknown}%
+                    {size}
                   </td>
                 </tr>);
             })}
@@ -116,4 +109,4 @@ const SelectableTable: React.FC<SelectableTableProps> = ({ title, tableType, row
   );
 };
 
-export default SelectableTable;
+export default RepoSelectableTable;

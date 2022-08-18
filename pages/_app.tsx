@@ -7,6 +7,8 @@ import GlobalState from "../context/global-state";
 import { useRouter } from "next/router";
 import changeCapitalization from "../lib/utils/change-capitalization";
 import { supabase } from "../lib/utils/supabase";
+import { SWRConfig } from "swr";
+import apiFetcher from "../lib/hooks/useSWR";
 
 type ComponentWithPageLayout = AppProps & {
   Component: AppProps["Component"] & {
@@ -35,15 +37,22 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <GlobalState>
-        {Component.PageLayout ? (
-          <Component.PageLayout>
+      <SWRConfig
+        value={{
+          revalidateOnFocus: false,
+          fetcher: apiFetcher
+        }}
+      >
+        <GlobalState>
+          {Component.PageLayout ? (
+            <Component.PageLayout>
+              <Component {...pageProps} />
+            </Component.PageLayout>
+          ) : (
             <Component {...pageProps} />
-          </Component.PageLayout>
-        ) : (
-          <Component {...pageProps} />
-        )}
-      </GlobalState>
+          )}
+        </GlobalState>
+      </SWRConfig>
     </>
   );
 
