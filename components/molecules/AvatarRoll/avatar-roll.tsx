@@ -4,15 +4,15 @@ interface AvatarRollProps {
   avatarCount?: number;
 }
 
-const AvatarRoll: React.FC<AvatarRollProps> = ({ avatarCount = 9 }) => {
+const AvatarRoll = ({ avatarCount = 9 }: AvatarRollProps):JSX.Element => {
   const rollCount = Array.apply(null, Array(avatarCount));
 
   return (
-    <div className="flex space-x-3 items-center">
+    <div className="flex gap-3 items-center">
       {rollCount.map((roll, index) => (
         <div
           key={index}
-          className={
+          className={ 
             `${index === 0 ? "scale-50" : ""} ` +
             `${index === 1 ? "scale-75" : ""}` +
             `${index === 2 ? "scale-100" : ""}` +
