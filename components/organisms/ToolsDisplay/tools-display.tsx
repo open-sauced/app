@@ -5,6 +5,7 @@ import ScatterChart from "components/molecules/ScatterChart/scatter-chart";
 import HighlightCard from "components/molecules/HighlightCard/highlight-card";
 import useDashBoardData from "lib/hooks/useDashboardData";
 import useRepositoriesList from "lib/hooks/useRepositoriesList";
+import Reports from "../Reports/reports";
 
 interface ToolProps {
   tool?: string;
@@ -75,7 +76,7 @@ const Tool: React.FC<ToolProps> = ({ tool }) => {
               <SelectableTable rows={repositoriesList} title="Repositories" tableType="participants" />
             </Card>
           </>
-          :
+          : tool ==="Reports" ? <Reports/> :
           <>
             {tool ? `${tool}` : "Test"} Tool Page
           </>
