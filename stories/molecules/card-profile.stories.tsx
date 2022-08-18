@@ -10,10 +10,12 @@ const storyConfig = {
 export default storyConfig;
 
 //CardProfile Template
-const CardProfileTemplate: ComponentStory<typeof CardProfile> = () => <CardProfile />;
+const CardProfileTemplate: ComponentStory<typeof CardProfile> = (args) => <CardProfile {...args} />;
 
 export const Default = CardProfileTemplate.bind({});
 
 Default.args = {
-  children: <>Test</>
+  githubName: "ChadStewart",
+  totalPRs: 4,
+  dateOfFirstPR: "3mon"
 };
