@@ -21,7 +21,7 @@ const CardProfile = ({ githubAvatar, githubName, totalPRs, dateOfFirstPR }: Card
         <div>
           <Text className="!text-base !text-black font-medium">{githubName}</Text>
         </div>
-        <div className="flex gap-2">
+        <div className="flex justify-between gap-2">
           <div className="gap-2 text-light-slate-11">
             <Icon alt="Total Pull-Requests" IconImage={ForkIcon} /> {totalPRs}
           </div>
