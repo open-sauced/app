@@ -4,7 +4,7 @@ import { ComponentStory } from "@storybook/react";
 
 const storyConfig = {
   title: "Design System/Molecules/SuperativeSelector",
-  component: "SuperativeSelector",
+  component: "SuperativeSelector"
 };
 export default storyConfig;
 
@@ -18,9 +18,9 @@ const SuperlativeSelectorTemplate: ComponentStory<typeof SuperativeSelector> = (
 export const Default = SuperlativeSelectorTemplate.bind({});
 export const Selected = SuperlativeSelectorTemplate.bind({});
 Default.args = {
-  filterOptions: testOptions,
+  filterOptions: testOptions
 };
 Selected.args = {
   filterOptions: testOptions,
-  selected: "testOption2",
+  selected: "testOption2"
 };

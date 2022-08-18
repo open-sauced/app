@@ -2,7 +2,7 @@ import ContextFilterButton from "components/atoms/ContextFilterButton/context-fi
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 
 const storyConfig = {
-  title: "Design System/Atoms/ContextFilterButton",
+  title: "Design System/Atoms/ContextFilterButton"
 };
 export default storyConfig;
 
@@ -12,5 +12,5 @@ const ContextFilterButtonTemplate: ComponentStory<typeof ContextFilterButton> = 
 export const Default = ContextFilterButtonTemplate.bind({});
 
 Default.args = {
-  children: <div>Text</div>,
+  children: <div>Text</div>
 };
