@@ -29,7 +29,7 @@ const CardHorizontalBarChart = ({ languagesUsed }: CardHorizontalBarChartProps):
           <div
             key={index}
             onMouseOver={() => handleChangeDescriptText(languageName)}
-            className={`w-[${percentageUsed ? percentageUsed : 10}%] ${languageToColor[languageName] ? languageToColor[languageName] : ""} h-3 rounded-full transition-all duration-500 ease-in-out`} />
+            className={`w-[${percentageUsed ? percentageUsed : 0}%] ${languageToColor[languageName] ? languageToColor[languageName] : ""} h-3 rounded-full transition-all duration-500 ease-in-out`} />
         )}
       </div>
       <div className="flex gap-2">
