@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { languageToColor } from "lib/utils/language-to-color";
 
 interface LanguageObject {
   languageName: string;
@@ -11,13 +12,6 @@ interface CardHorizontalBarChartProps {
 
 const CardHorizontalBarChart = ({ languagesUsed }: CardHorizontalBarChartProps): JSX.Element => {
   const [descriptText, setDescriptText] = useState(languagesUsed[0].languageName);
-
-  const languageToColor: any = {
-    javascript: "bg-yellow-500",
-    typescript: "bg-blue-500",
-    rust: "bg-red-500",
-    notSupported: "bg-gray-500"
-  };
 
   const handleChangeDescriptText = (descriptText: string) => {
     setDescriptText(descriptText);
