@@ -15,8 +15,12 @@ const testLanguageList = [
     percentageUsed: 50
   },
   {
+    languageName: "javascript",
+    percentageUsed: 20
+  },
+  {
     languageName: "rust",
-    percentageUsed: 80
+    percentageUsed: 30
   }
 ];
 
@@ -38,4 +42,14 @@ export const MultipleLanguages = CardHorizontalBarTemplate.bind({});
 
 MultipleLanguages.args = {
   languagesUsed: testLanguageList
+};
+export const notSupportedLanguage = CardHorizontalBarTemplate.bind({});
+
+notSupportedLanguage.args = {
+  languagesUsed: [
+    {
+      languageName: "qBasic",
+      percentageUsed: 100
+    }
+  ]
 };
