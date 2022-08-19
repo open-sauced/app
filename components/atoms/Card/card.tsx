@@ -8,14 +8,14 @@ interface CardProps {
 
 const Card: React.FC<CardProps> = ({ className, children, heading }) => {
   return (
-    <article className={`${className ? className : ""} block ${heading ? "" : "p-6"} bg-white rounded-lg border border-slate-300`}>
+    <article className={`${className ? className : ""} block ${heading ? "" : "p-6"} max-w-2xl bg-white rounded-lg drop-shadow-md`}>
       {
         heading ?
           <>
             <div className="px-6 py-3 rounded-t-lg bg-light-slate-3">
               {heading}
             </div>
-            <div className="py-6">
+            <div>
               {children}
             </div>
           </>
