@@ -10,13 +10,12 @@ module.exports = {
         // => @media (min-width: 1440px) { ... }
       },
       blur: {
-        "4xl": "11rem",
+        "4xl": "5rem",
       },
-      height: {
-        128: "122rem",
-      },
-      width: {
-        128: "122rem",
+      spacing:{
+        "98": "29rem",
+        "97":"28rem",
+        "99":"56rem"
       },
       colors: {
         gradient: {
