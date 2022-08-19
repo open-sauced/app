@@ -11,7 +11,9 @@ interface CardHorizontalBarChartProps {
 }
 
 const CardHorizontalBarChart = ({ languagesUsed }: CardHorizontalBarChartProps): JSX.Element => {
-  const [descriptText, setDescriptText] = useState(languagesUsed[0].languageName);
+  const sortedLangArray = languagesUsed.sort((a, b) => b.percentageUsed - a.percentageUsed);
+
+  const [descriptText, setDescriptText] = useState(sortedLangArray[0].languageName);
 
   const handleChangeDescriptText = (descriptText: string) => {
     setDescriptText(descriptText);
@@ -21,7 +23,7 @@ const CardHorizontalBarChart = ({ languagesUsed }: CardHorizontalBarChartProps):
     <div className="flex flex-col gap-2">
       {/* Progress Bar */}
       <div className="flex items-center w-full rounded-full gap-2 mt-7">
-        {languagesUsed.map(({ languageName, percentageUsed }, index) => 
+        {sortedLangArray.map(({ languageName, percentageUsed }, index) => 
           <div
             key={index}
             onMouseOver={() => handleChangeDescriptText(languageName)}
