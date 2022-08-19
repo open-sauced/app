@@ -10,7 +10,7 @@ interface CardHorizontalBarChartProps {
 }
 
 const CardHorizontalBarChart = ({ languagesUsed }: CardHorizontalBarChartProps): JSX.Element => {
-  const [descriptText, setDescriptText] = useState(languagesUsed[0].languageName);
+  const [descriptText, setDescriptText] = useState(languagesUsed[0].languageName.toLowerCase());
 
   const languageToColor: any = {
     javascript: "bg-yellow-500",
@@ -29,7 +29,7 @@ const CardHorizontalBarChart = ({ languagesUsed }: CardHorizontalBarChartProps):
           <div
             key={index}
             onMouseOver={() => handleChangeDescriptText(languageName)}
-            className={`w-[${percentageUsed}%] ${languageToColor[languageName] ? languageToColor[languageName] : ""} h-3 rounded-full transition-all duration-500 ease-in-out`} />
+            className={`w-[${percentageUsed ? percentageUsed : 10}%] ${languageToColor[languageName] ? languageToColor[languageName] : ""} h-3 rounded-full transition-all duration-500 ease-in-out`} />
         )}
       </div>
       <div className="flex gap-2">
