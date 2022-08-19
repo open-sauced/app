@@ -15,7 +15,7 @@ interface CardRepoListProps {
 const CardRepoList = ({ repoList }: CardRepoListProps): JSX.Element => {
   const jsxToRender: JSX.Element[] = [];
 
-  const renderFiveRepos = (repoList: RepoList[]) => {
+  const renderListOfRepos = (repoList: RepoList[]) => {
     for(let i = 0; i < REPOLISTLIMIT; i++) {
       if (!repoList[i]) break;
 
@@ -30,11 +30,11 @@ const CardRepoList = ({ repoList }: CardRepoListProps): JSX.Element => {
   };
 
   return (
-    <div className="flex gap-2 items-center font-medium text-light-slate-11">
+    <div className="flex gap-2 items-center font-medium text-xs text-light-slate-11">
       {
         repoList.length > 0 ?
           <>
-            {renderFiveRepos(repoList)}
+            {renderListOfRepos(repoList)}
             <div>
               {repoList.length > REPOLISTLIMIT - 1 ? `+${repoList.length - REPOLISTLIMIT}` : null}
             </div>
