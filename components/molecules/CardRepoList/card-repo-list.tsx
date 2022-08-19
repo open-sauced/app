@@ -19,7 +19,7 @@ const CardRepoList = ({ repoList }: CardRepoListProps): JSX.Element => {
     for(let i = 0; i < REPOLISTLIMIT; i++) {
       if (!repoList[i]) break;
 
-      const jsxElement = <div className="flex gap-2 p-1 border-[1px] border-light-slate-6 rounded-lg text-light-slate-12">
+      const jsxElement = <div className="flex gap-1 p-1 pr-2 border-[1px] border-light-slate-6 rounded-lg text-light-slate-12">
         <Icon IconImage={repoList[i].repoIcon} />
         {repoList[i].repoName}
       </div>;
