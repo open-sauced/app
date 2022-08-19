@@ -1,15 +1,18 @@
 import React from "react";
 
-interface ComponentGradientProps  {
+interface ComponentGradientProps {
   children: React.ReactNode;
   css?: string;
-};
+}
 
 const ComponentGradient = ({ children, css }: ComponentGradientProps) => {
   return (
-    <div className="relative overflow-hidden flex justify-center  h-screen bg-gradient-to-b from-gradient-dark-one   to-gradient-dark-two ">
-      <div className="absolute -bottom-56 blur-4xl w-96 h-96 self-end rounded-full   bg-gradient-radial  from-gradient-orange-one to-gradient-orange-two "></div>
-      <section className={`${css}`}>{children}</section>
+   
+    <div className="relative overflow-hidden flex justify-center bg-gradient-to-b h-screen from-gradient-dark-one to-gradient-dark-two">
+      {/* orange gradient overlay */}
+      <div className="text-white  absolute blur-4xl -bottom-97  w-99 h-98 bg-gradient-radial from-gradient-orange-two to-gradient-orange-one  rounded-full">
+      </div>
+      <section>{children}</section>
     </div>
   );
 };
