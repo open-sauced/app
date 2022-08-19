@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.2.0-beta.4](https://github.com/open-sauced/insights/compare/v1.2.0-beta.3...v1.2.0-beta.4) (2022-08-19)
+
+
+### 🍕 Features
+
+* Implement Card Repo List component ([#234](https://github.com/open-sauced/insights/issues/234)) ([4a58eea](https://github.com/open-sauced/insights/commit/4a58eea43cbab731b7813c3f674df40880fb85b8))
+
 ## [1.2.0-beta.3](https://github.com/open-sauced/insights/compare/v1.2.0-beta.2...v1.2.0-beta.3) (2022-08-19)
 
 
