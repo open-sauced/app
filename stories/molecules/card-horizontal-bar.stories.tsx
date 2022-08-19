@@ -1,6 +1,6 @@
 import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-import CardHorizontalBar from "components/molecules/CardHorizontalBar/card-horizontal-bar";
+import CardHorizontalBarChart from "components/molecules/CardHorizontalBarChart/card-horizontal-bar-chart";
 
 const storyConfig = {
   title: "Design System/Molecules/Card Horizontal Bar",
@@ -10,7 +10,7 @@ const storyConfig = {
 export default storyConfig;
 
 //Card Template
-const CardHorizontalBarTemplate: ComponentStory<typeof CardHorizontalBar> = (args) => <CardHorizontalBar />;
+const CardHorizontalBarTemplate: ComponentStory<typeof CardHorizontalBarChart> = (args) => <CardHorizontalBarChart />;
 
 export const Default = CardHorizontalBarTemplate.bind({});
 
