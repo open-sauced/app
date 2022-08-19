@@ -14,7 +14,8 @@ const CardHorizontalBarChart = ({ languagesUsed }: CardHorizontalBarChartProps):
 
   const languageToColor: any = {
     javascript: "bg-yellow-500",
-    typescript: "bg-blue-500"
+    typescript: "bg-blue-500",
+    notSupported: "bg-gray-500"
   };
 
   const handleChangeDescriptText = (descriptText: string) => {
@@ -29,13 +30,13 @@ const CardHorizontalBarChart = ({ languagesUsed }: CardHorizontalBarChartProps):
           <div
             key={index}
             onMouseOver={() => handleChangeDescriptText(languageName)}
-            className={`${languageToColor[languageName] ? languageToColor[languageName] : ""} h-3 rounded-full transition-all duration-500 ease-in-out`}
+            className={`${languageToColor[languageName] ? languageToColor[languageName] : languageToColor["notSupported"]} h-3 rounded-full transition-all duration-500 ease-in-out`}
             style={{ width: `${percentageUsed}%` }}
           />
         )}
       </div>
       <div className="flex gap-2">
-        <div className={`w-6 rounded-full ${languageToColor[descriptText] ? languageToColor[descriptText] : ""}`}/>{descriptText}
+        <div className={`w-6 rounded-full ${languageToColor[descriptText] ? languageToColor[descriptText] : languageToColor["notSupported"]}`}/>{descriptText}
       </div>
     </div>
   );

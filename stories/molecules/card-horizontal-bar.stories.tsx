@@ -15,7 +15,7 @@ const testLanguageList = [
     percentageUsed: 50
   },
   {
-    languageName: "javascript",
+    languageName: "rust",
     percentageUsed: 80
   }
 ];
