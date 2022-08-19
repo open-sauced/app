@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.2.0-beta.3](https://github.com/open-sauced/insights/compare/v1.2.0-beta.2...v1.2.0-beta.3) (2022-08-19)
+
+
+### 🍕 Features
+
+* Implement Card Profile Component ([#232](https://github.com/open-sauced/insights/issues/232)) ([efae3c5](https://github.com/open-sauced/insights/commit/efae3c53fbd9b67ddbb2abd506fa43803581c7c6))
+
 ## [1.2.0-beta.2](https://github.com/open-sauced/insights/compare/v1.2.0-beta.1...v1.2.0-beta.2) (2022-08-19)
 
 
