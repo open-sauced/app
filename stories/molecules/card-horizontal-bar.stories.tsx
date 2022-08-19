@@ -9,11 +9,18 @@ const storyConfig = {
 
 export default storyConfig;
 
-//Card Template
-const CardHorizontalBarTemplate: ComponentStory<typeof CardHorizontalBarChart> = (args) => <CardHorizontalBarChart />;
+const testLanguageList = [
+  {
+    languageName: "javascript",
+    percentageUsed: 100
+  }
+];
+
+//CardHorizontalBarChart Template
+const CardHorizontalBarTemplate: ComponentStory<typeof CardHorizontalBarChart> = (args) => <CardHorizontalBarChart {...args} />;
 
 export const Default = CardHorizontalBarTemplate.bind({});
 
 Default.args = {
-  children: <>Test</>
+  languagesUsed: testLanguageList
 };
