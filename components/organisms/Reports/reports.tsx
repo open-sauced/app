@@ -3,8 +3,8 @@ import SelectReportsFilter from "components/molecules/SelectReportsFilter/select
 
 const Reports = (): JSX.Element => {
   return (
-    <section className="w-full py-4 grid grid-cols-12">
-      <div className="col-start-4 col-end-9">
+    <section className="w-full py-4 px-8 flex justify-center">
+      <div className="max-w-4xl">
         <Title className="!font-medium relative !text-left " level={3}>
           Contributions Insights
         </Title>
