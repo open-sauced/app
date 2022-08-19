@@ -5,6 +5,18 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.2.0-beta.5](https://github.com/open-sauced/insights/compare/v1.2.0-beta.4...v1.2.0-beta.5) (2022-08-19)
+
+
+### 🧑‍💻 Code Refactoring
+
+* Add another version of the logo in the design system ([#236](https://github.com/open-sauced/insights/issues/236)) ([f25b3a5](https://github.com/open-sauced/insights/commit/f25b3a5909df94c7c005f3278390196218b535e5))
+
+
+### 🐛 Bug Fixes
+
+* **bug:** add require props ([#239](https://github.com/open-sauced/insights/issues/239)) ([b9f0942](https://github.com/open-sauced/insights/commit/b9f094258233944ee82a72067fb97a110a93efef))
+
 ## [1.2.0-beta.4](https://github.com/open-sauced/insights/compare/v1.2.0-beta.3...v1.2.0-beta.4) (2022-08-19)
 
 
