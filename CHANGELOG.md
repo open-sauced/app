@@ -5,6 +5,26 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.2.0-beta.2](https://github.com/open-sauced/insights/compare/v1.2.0-beta.1...v1.2.0-beta.2) (2022-08-19)
+
+
+### 🐛 Bug Fixes
+
+* added Radio and SuperlativeSelector component stories ([06d956c](https://github.com/open-sauced/insights/commit/06d956c9ab6c3ada912f25999ad81c78d0f69c5e))
+* eslint errors ([c191e26](https://github.com/open-sauced/insights/commit/c191e266bf12e552af7d84fe768aaf56fb9c8e0f))
+
+
+### 🧑‍💻 Code Refactoring
+
+* Move Dashboard and Repositories into their own component ([#228](https://github.com/open-sauced/insights/issues/228)) ([8b40fd8](https://github.com/open-sauced/insights/commit/8b40fd87e40a58b22ff01920f2cf363b065ddb10)), closes [#208](https://github.com/open-sauced/insights/issues/208) [#201](https://github.com/open-sauced/insights/issues/201) [#202](https://github.com/open-sauced/insights/issues/202)
+* replace context-filter-option with radio component ([41ed2b3](https://github.com/open-sauced/insights/commit/41ed2b3c51ac35e9aec7bd48c9c9393ccb811c8c))
+
+
+### 🍕 Features
+
+* **data:** adds live repo data and SWR ([#198](https://github.com/open-sauced/insights/issues/198)) ([b6d80c3](https://github.com/open-sauced/insights/commit/b6d80c3ac584fe1aa7a8d2b399194c7ec514c7f9)), closes [#191](https://github.com/open-sauced/insights/issues/191) [#191](https://github.com/open-sauced/insights/issues/191) [#206](https://github.com/open-sauced/insights/issues/206) [#206](https://github.com/open-sauced/insights/issues/206)
+* eChart for Contributors Component ([#216](https://github.com/open-sauced/insights/issues/216)) ([7d5837b](https://github.com/open-sauced/insights/commit/7d5837bef9cd1239793d77bb9562938bcdf608eb)), closes [#221](https://github.com/open-sauced/insights/issues/221) [#213](https://github.com/open-sauced/insights/issues/213) [#221](https://github.com/open-sauced/insights/issues/221)
+
 ## [1.2.0-beta.1](https://github.com/open-sauced/insights/compare/v1.1.3-beta.3...v1.2.0-beta.1) (2022-08-17)
 
 
