@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.3.0-beta.1](https://github.com/open-sauced/insights/compare/v1.2.0...v1.3.0-beta.1) (2022-08-20)
+
+
+### 🍕 Features
+
+* Implement Reports History Component ([#209](https://github.com/open-sauced/insights/issues/209)) ([bb531e4](https://github.com/open-sauced/insights/commit/bb531e4a74e09d686e5679bdf65b2890e015c91a))
+
 ## [1.2.0](https://github.com/open-sauced/insights/compare/v1.1.3...v1.2.0) (2022-08-20)
 
 
