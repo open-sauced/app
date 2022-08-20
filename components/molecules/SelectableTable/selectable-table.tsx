@@ -7,19 +7,12 @@ import Person from "public/icons/person-icon.svg";
 import Icon3 from "public/icons/icon3.svg";
 import ComponentHeader from "../ComponentHeader/component-header";
 import { truncateString } from "../../../lib/utils/truncate-string";
+import humanizeNumber from "../../../lib/utils/humanizeNumber";
 
-type ParticipantsRow = {
-  title: string;
-  forks: number;
-  stars: number;
-  persons: number;
-  unknown: number;
-}
-
-interface SelectableTableProps {
+interface RepoSelectableTableProps {
   title: string;
   tableType: "participants";
-  rows: ParticipantsRow[];
+  rows: { title: string; stars: number; forks: number; persons: number }[];
 }
 
 const iconSuite = {
@@ -31,32 +24,32 @@ const iconSuite = {
   }
 };
 
-const SelectableTable: React.FC<SelectableTableProps> = ({ title, tableType, rows }) => {
+const RepoSelectableTable: React.FC<RepoSelectableTableProps> = ({ title, tableType, rows }) => {
   const tableRef = useRef<HTMLDivElement>(null);
   const allCheckboxRefs = useRef<HTMLElement[]>([]);
 
   const addCheckboxToRef = (element: any) => {
-    if(element && !allCheckboxRefs.current.includes(element)) allCheckboxRefs.current.push(element);
+    if (element && !allCheckboxRefs.current.includes(element)) allCheckboxRefs.current.push(element);
   };
 
   const changeAllCheckboxes = (event: any) => {
     const checked = event.target.checked;
 
-    allCheckboxRefs.current.forEach(element => {
+    allCheckboxRefs.current.forEach((element) => {
       const checkbox: HTMLInputElement | null = element.querySelector("input[type='checkbox']");
-      if(checkbox) checkbox.checked = checked;
+      if (checkbox) checkbox.checked = checked;
     });
   };
 
   const entireRowClickChangesCheckbox = (element: any) => {
     const checkbox: HTMLInputElement | null = element.querySelector("input[type='checkbox']");
-    if(checkbox) checkbox.checked = !checkbox.checked;
+    if (checkbox) checkbox.checked = !checkbox.checked;
   };
 
   const [divSize, setDivSize] = useState(0);
-  
+
   useEffect(() => {
-    if(tableRef.current) setDivSize(tableRef.current.offsetWidth);
+    if (tableRef.current) setDivSize(tableRef.current.offsetWidth);
   }, []);
 
   return (
@@ -67,7 +60,7 @@ const SelectableTable: React.FC<SelectableTableProps> = ({ title, tableType, row
           <thead className="border-b-[1px]">
             <tr>
               <th className="p-2">
-                <Checkbox onChange={event => changeAllCheckboxes(event)} label=""/>
+                <Checkbox onChange={(event) => changeAllCheckboxes(event)} label="" />
               </th>
               <th className="text-right p-2">
                 <Icon IconImage={iconSuite[tableType].star} />
@@ -86,28 +79,25 @@ const SelectableTable: React.FC<SelectableTableProps> = ({ title, tableType, row
           </thead>
           <tbody>
             <tr className="h-3"></tr>
-            {rows?.map(({title, stars, forks, persons, unknown}, index) => {
+            {rows?.map(({ title, stars, persons }, index) => {
               return (
-                <tr className={`hover:content-['${title}'] hover:bg-blue-100 cursor-pointer`} key={index} onClick={(event: any) => {
-                  const isNotCheckbox = event.target.getAttribute("type") !== "checkbox";
-                  if(isNotCheckbox) entireRowClickChangesCheckbox(allCheckboxRefs.current[index]);
-                }}>
-                  <td className="flex flex-row text-left p-2" ref={element => addCheckboxToRef(element)}>
+                <tr
+                  className={`hover:content-['${title}'] hover:bg-blue-100 cursor-pointer`}
+                  key={index}
+                  onClick={(event: any) => {
+                    const isNotCheckbox = event.target.getAttribute("type") !== "checkbox";
+                    if (isNotCheckbox) entireRowClickChangesCheckbox(allCheckboxRefs.current[index]);
+                  }}
+                >
+                  <td className="flex flex-row text-left p-2" ref={(element) => addCheckboxToRef(element)}>
                     <Checkbox label="" /> {divSize > 0 && divSize < 350 ? truncateString(title, 3) : title}
                   </td>
-                  <td className="text-right p-2">
-                    {stars}%
-                  </td>
-                  <td className="text-right p-2">
-                    {forks}%
-                  </td>
-                  <td className="text-right p-2">
-                    {persons}%
-                  </td>
-                  <td className="text-right p-2">
-                    {unknown}%
-                  </td>
-                </tr>);
+                  <td className="text-right p-2">{humanizeNumber(stars)}</td>
+                  <td className="text-right p-2">{humanizeNumber(12)}</td>
+                  <td className="text-right p-2">{humanizeNumber(1234)}</td>
+                  <td className="text-right p-2">{persons}</td>
+                </tr>
+              );
             })}
           </tbody>
         </table>
@@ -116,4 +106,4 @@ const SelectableTable: React.FC<SelectableTableProps> = ({ title, tableType, row
   );
 };
 
-export default SelectableTable;
+export default RepoSelectableTable;
