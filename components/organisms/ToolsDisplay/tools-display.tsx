@@ -10,16 +10,16 @@ interface ToolProps {
 
 const Tool = ({ tool }: ToolProps): JSX.Element => {
   switch (tool) {
-    case "Dashboard":
-      return <Dashboard />;
+  case "Dashboard":
+    return <Dashboard />;
 
-    case "Repositories":
-      return <Repositories />;
+  case "Repositories":
+    return <Repositories />;
 
-    case "Reports":
-      return <Reports/>
-    default:
-      return <> {tool ? `${tool}` : "Test"} Tool Page</>;
+  case "Reports":
+    return <Reports/>;
+  default:
+    return <> {tool ? `${tool}` : "Test"} Tool Page</>;
   }
 };
 
