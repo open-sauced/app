@@ -1,6 +1,6 @@
 export const languageToColor: any = {
-  javascript: "bg-yellow-500",
-  typescript: "bg-blue-500",
-  rust: "bg-red-500",
-  notSupported: "bg-gray-500"
+  javascript: "#EAB308",
+  typescript: "#1E90FF",
+  rust: "#F44336",
+  notSupported: "#64748B"
 };

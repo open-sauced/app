@@ -23,19 +23,19 @@ const CardHorizontalBarChart = ({ languagesUsed }: CardHorizontalBarChartProps):
   return (
     <div className="flex flex-col gap-2">
       {/* Progress Bar */}
-      <div className="flex items-center w-full rounded-full gap-1 mt-7">
+      <div className="flex items-center w-full rounded-full gap-1 overflow-hidden mt-7">
         {sortedLangArray.map(({ languageName, percentageUsed }, index) => 
           <div
             key={index}
             onMouseOver={() => handleChangeDescriptText(languageName)}
-            className={`${languageToColor[languageName] ? languageToColor[languageName] : languageToColor["notSupported"]} h-2 ${index === 0 ? "rounded-l-lg" : index === languagesUsed.length - 1 ? "rounded-r-lg" : ""} transition-all duration-500 ease-in-out`}
-            style={{ width: `${percentageUsed}%` }}
+            className="h-2 transition-all duration-500 ease-in-out"
+            style={{ width: `${percentageUsed}%`, backgroundColor: languageToColor[languageName] ? languageToColor[languageName] : languageToColor["notSupported"] }}
           />
         )}
       </div>
       <div className="flex gap-2 items-center">
-        <div className={`w-4 h-4 rounded-full ${languageToColor[descriptText.toLowerCase()] ? languageToColor[descriptText.toLowerCase()] : languageToColor["notSupported"]}`}/>
-        <Text className="!font-semibold !text-light-slate-11">
+        <div className={"w-2 h-2 rounded-full"} style={{ backgroundColor: languageToColor[descriptText] ? languageToColor[descriptText] : languageToColor["notSupported"] }}/>
+        <Text className="!text-xs !font-semibold !text-light-slate-11">
           {descriptText}
         </Text>
       </div>
