@@ -31,8 +31,8 @@ const ReportsHistory = ({ reportList }: ReportsHistoryProps): JSX.Element => {
       <div className="flex flex-col justify-between w-full gap-2">
         {reportList ?
           reportList.map(({reportDate, reportName, reportFormat, isGenerated}, index) => 
-            <div className={`flex py-3 ${index % 2 === 0 ? "bg-slate-50" : "bg-white"} gap-2`} key={index}>
-              <div className="w-2/5 ml-6 text-sm font-medium text-slate-900 tracking-tight">
+            <div className={`flex items-center py-3 px-6 ${index % 2 === 0 ? "bg-slate-50" : "bg-white"} gap-2`} key={index}>
+              <div className="w-2/5 text-sm font-medium text-slate-900 tracking-tight">
                 {reportName}
               </div>
               <div className="w-1/5 text-sm font-medium text-slate-900 tracking-tight">
@@ -41,7 +41,7 @@ const ReportsHistory = ({ reportList }: ReportsHistoryProps): JSX.Element => {
               <div className="w-1/5 text-sm font-medium text-slate-900 tracking-tight">
                 {reportFormat}
               </div>
-              <div className="w-1/5 mr-6 text-sm font-medium text-slate-900 tracking-tight text-right">
+              <div className="w-1/5 text-sm font-medium text-slate-900 tracking-tight text-right">
                 {isGenerated ?
                   <Button type="link" >Download</Button>
                 
@@ -55,7 +55,7 @@ const ReportsHistory = ({ reportList }: ReportsHistoryProps): JSX.Element => {
           
           :
           
-          <Text>
+          <Text className="py-3 px-6">
             Currently there are no reports
           </Text>
         }
