@@ -1,6 +1,5 @@
 import { useRouter } from "next/router";
 import {useRepositoriesList} from "lib/hooks/useRepositoriesList";
-import humanizeNumber from "../utils/humanizeNumber";
 
 const useNav = () => {
   const router = useRouter();
