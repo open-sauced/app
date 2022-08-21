@@ -101,7 +101,7 @@ const CardTable = ({ prList }: CardTableProps) => {
 
       :
 
-      <div className="px-8 py-4">
+      <div className="px-2 py-1">
         There are currently no PRs...
       </div>
   );

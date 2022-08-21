@@ -1,9 +1,9 @@
 import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-import CardTable from "components/molecules/CardTable/card-table";
+import ContributorTable from "components/molecules/ContributorTable/contributor-table";
 
 const storyConfig = {
-  title: "Design System/Molecules/Card Table",
+  title: "Design System/Molecules/Contributor Table",
   component: "Card Table"
 };
 
@@ -45,10 +45,10 @@ const testPRs = [
 ];
 
 //CardTable Template
-const CardTableTemplate: ComponentStory<typeof CardTable> = (args) => <CardTable {...args} />;
+const ContributorTableTemplate: ComponentStory<typeof ContributorTable> = (args) => <ContributorTable {...args} />;
 
-export const AddedPullRequests = CardTableTemplate.bind({});
-export const NoPullRequests = CardTableTemplate.bind({});
+export const AddedPullRequests = ContributorTableTemplate.bind({});
+export const NoPullRequests = ContributorTableTemplate.bind({});
 
 AddedPullRequests.args = {
   prList: testPRs
