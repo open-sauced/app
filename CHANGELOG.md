@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.3.0-beta.2](https://github.com/open-sauced/insights/compare/v1.3.0-beta.1...v1.3.0-beta.2) (2022-08-21)
+
+
+### 🐛 Bug Fixes
+
+* Repo count ([#244](https://github.com/open-sauced/insights/issues/244)) ([d59eef8](https://github.com/open-sauced/insights/commit/d59eef837004f05fdf3df0ed52b755cce0bfc96d))
+
 ## [1.3.0-beta.1](https://github.com/open-sauced/insights/compare/v1.2.0...v1.3.0-beta.1) (2022-08-20)
 
 
