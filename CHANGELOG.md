@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.3.0-beta.3](https://github.com/open-sauced/insights/compare/v1.3.0-beta.2...v1.3.0-beta.3) (2022-08-21)
+
+
+### 🍕 Features
+
+* Implement the hacktoberfest reports page ([#229](https://github.com/open-sauced/insights/issues/229)) ([0cfa5e5](https://github.com/open-sauced/insights/commit/0cfa5e5f3d23b0eedc681a1fc93af96d65105cd8)), closes [#168](https://github.com/open-sauced/insights/issues/168)
+
 ## [1.3.0-beta.2](https://github.com/open-sauced/insights/compare/v1.3.0-beta.1...v1.3.0-beta.2) (2022-08-21)
 
 
