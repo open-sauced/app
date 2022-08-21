@@ -1,6 +1,6 @@
 import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-import SelectableTable from "../../components/molecules/SelectableTable/repo-table";
+import SelectableTable from "../../components/molecules/SelectableTable/repository-table";
 
 const storyConfig = {
   title: "Design System/Molecules/Selectable Table",

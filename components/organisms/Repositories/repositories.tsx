@@ -1,9 +1,9 @@
 import Card from "../../atoms/Card/card";
-import SelectableTable from "components/molecules/SelectableTable/repo-table";
-import {useRepoList} from "lib/hooks/useRepoList";
+import SelectableTable from "components/molecules/SelectableTable/repository-table";
+import {useRepositoriesList} from "lib/hooks/useRepositoriesList";
 
 const Reports = (): JSX.Element => {
-  const { repoList, isLoading } = useRepoList();
+  const { repoList, isLoading } = useRepositoriesList();
   const data = repoList.data || {data: []};
 
   return (

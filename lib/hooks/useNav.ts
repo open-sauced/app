@@ -1,10 +1,10 @@
 import { useRouter } from "next/router";
-import {useRepoList} from "lib/hooks/useRepoList";
+import {useRepositoriesList} from "lib/hooks/useRepositoriesList";
 import humanizeNumber from "../utils/humanizeNumber";
 
 const useNav = () => {
   const router = useRouter();
-  const { repoList, isLoading } = useRepoList();
+  const { repoList, isLoading } = useRepositoriesList();
   const meta = repoList.meta || {};
 
   const defaultTools = [
