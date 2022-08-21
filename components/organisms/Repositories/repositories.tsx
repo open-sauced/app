@@ -1,5 +1,5 @@
 import Card from "../../atoms/Card/card";
-import SelectableTable from "components/molecules/SelectableTable/selectable-table";
+import SelectableTable from "components/molecules/SelectableTable/repo-table";
 import {useRepoList} from "lib/hooks/useRepoList";
 
 const Reports = (): JSX.Element => {

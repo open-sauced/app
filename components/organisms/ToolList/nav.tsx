@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import humanizeNumber from "../../../lib/utils/humanizeNumber";
 
 type toolListArray = {
   name: string;
@@ -40,7 +41,7 @@ const Nav: React.FC<NavProps> = ({ toolList, selectedTool = "dashboard", selecte
               {
                 tool.numOf &&
                   <div className="ml-2 py-0.5 px-1.5 h-fit bg-slate-200 text-slate-500 border rounded-full text-xs font-semibold">
-                    {tool.numOf}
+                    {humanizeNumber(tool.numOf)}
                   </div>
               }
             </div>
