@@ -12,7 +12,7 @@ import humanizeNumber from "../../../lib/utils/humanizeNumber";
 interface RepoSelectableTableProps {
   title: string;
   tableType: "participants";
-  rows: { title: string; stars: number; forks: number; persons: number, size: string }[];
+  rows: { name: string; stars: number; forks: number; persons: number, size: string }[];
 }
 
 const iconSuite = {
