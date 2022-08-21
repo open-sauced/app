@@ -1,15 +1,14 @@
 import React from "react";
 
 import Dashboard from "../Dashboard/dashboard";
+import Reports from "../Reports/reports";
 import Repositories from "../Repositories/repositories";
-
 
 interface ToolProps {
   tool?: string;
 }
 
-
-const Tool: React.FC<ToolProps> = ({ tool }) => {    
+const Tool = ({ tool }: ToolProps): JSX.Element => {
   switch (tool) {
   case "Dashboard":
     return <Dashboard />;
@@ -17,8 +16,10 @@ const Tool: React.FC<ToolProps> = ({ tool }) => {
   case "Repositories":
     return <Repositories />;
 
+  case "Reports":
+    return <Reports/>;
   default:
-    return <>{tool ? `${tool}` : "Test"} Tool Page</>;
+    return <> {tool ? `${tool}` : "Test"} Tool Page</>;
   }
 };
 
