@@ -21,7 +21,7 @@ const CardTable = ({ prList }: CardTableProps) => {
   return (
     prList.length > 0 ?
       <>
-        <div className="flex gap-2 items-center bg-light-slate-3 rounded-md px-8 py-4">
+        <div className="flex gap-2 items-center bg-light-slate-3 rounded-md px-2 py-1">
           <div className="w-3/5">
             <Text>
               Latest PRs
@@ -49,7 +49,7 @@ const CardTable = ({ prList }: CardTableProps) => {
           </IconContext.Provider>
         </div>
         {prList.map(({prName, prStatus, item1, item2, item3, item4}, index) => 
-          <div key={index} className="flex gap-2 items-center px-8 py-4">
+          <div key={index} className="flex gap-2 items-center px-2 py-1">
             <div className="flex item-center gap-2 w-3/5">
               {prStatus === "open" ? 
                 <IconContext.Provider value={{ color: "green", style: { width: 14, height: 14, marginTop: 2 } }}>
