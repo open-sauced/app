@@ -47,8 +47,13 @@ const testPRs = [
 //CardTable Template
 const CardTableTemplate: ComponentStory<typeof CardTable> = (args) => <CardTable {...args} />;
 
-export const Default = CardTableTemplate.bind({});
+export const AddedPullRequests = CardTableTemplate.bind({});
+export const NoPullRequests = CardTableTemplate.bind({});
 
-Default.args = {
+AddedPullRequests.args = {
   prList: testPRs
+};
+
+NoPullRequests.args = {
+  prList: []
 };
