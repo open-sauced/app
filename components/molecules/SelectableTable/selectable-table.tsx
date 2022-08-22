@@ -20,8 +20,8 @@ const iconSuite = {
     star: StarIcon,
     fork: ForkIcon,
     person: Person,
-    icon3: Icon3
-  }
+    icon3: Icon3,
+  },
 };
 
 const RepoSelectableTable: React.FC<RepoSelectableTableProps> = ({ title, tableType, rows }) => {
@@ -56,51 +56,59 @@ const RepoSelectableTable: React.FC<RepoSelectableTableProps> = ({ title, tableT
     <>
       <ComponentHeader title={title} />
       <div ref={tableRef}>
-        <table className="table-auto w-full">
-          <thead className="border-b-[1px]">
-            <tr>
-              <th className="p-2">
+        <div className="w-full">
+          <div className="border-b-[1px]">
+            <div className="flex justify-between">
+              <span className="p-2 inline-block">
                 <Checkbox onChange={(event) => changeAllCheckboxes(event)} label="" />
-              </th>
-              <th className="text-right p-2">
-                <Icon IconImage={iconSuite[tableType].star} />
-              </th>
-              <th className="text-right p-2">
-                <Icon IconImage={iconSuite[tableType].fork} />
-              </th>
-              <th className="text-right p-2">
-                <Icon IconImage={iconSuite[tableType].person} />
-              </th>
-              <th className="text-right p-2">
-                <Icon IconImage={iconSuite[tableType].icon3} />
-              </th>
-            </tr>
+              </span>
+              <div className="flex gap-x-2.5">
+                <th className="text-right p-2">
+                  <Icon IconImage={iconSuite[tableType].star} />
+                </th>
+                <th className="text-right p-2">
+                  <Icon IconImage={iconSuite[tableType].fork} />
+                </th>
+                <th className="text-right p-2">
+                  <Icon IconImage={iconSuite[tableType].person} />
+                </th>
+                <th className="text-right p-2">
+                  <Icon IconImage={iconSuite[tableType].icon3} />
+                </th>
+              </div>
+            </div>
             <tr className="h-3"></tr>
-          </thead>
-          <tbody>
+          </div>
+          <div>
             <tr className="h-3"></tr>
             {rows?.map(({ title, stars, persons }, index) => {
               return (
-                <tr
-                  className={`hover:content-['${title}'] hover:bg-blue-100 cursor-pointer`}
+                <div
+                  className={`hover:content-['${title}'] flex align-middle rounded justify-between hover:border-dark-blue-10 hover:bg-blue-100 cursor-pointer`}
                   key={index}
                   onClick={(event: any) => {
                     const isNotCheckbox = event.target.getAttribute("type") !== "checkbox";
                     if (isNotCheckbox) entireRowClickChangesCheckbox(allCheckboxRefs.current[index]);
                   }}
                 >
-                  <td className="flex flex-row text-left p-2" ref={(element) => addCheckboxToRef(element)}>
-                    <Checkbox label="" /> {divSize > 0 && divSize < 350 ? truncateString(title, 3) : title}
-                  </td>
-                  <td className="text-right p-2">{humanizeNumber(stars)}</td>
-                  <td className="text-right p-2">{humanizeNumber(12)}</td>
-                  <td className="text-right p-2">{humanizeNumber(1234)}</td>
-                  <td className="text-right p-2">{persons}</td>
-                </tr>
+                  <span
+                    className="flex  flex-row align-middle text-left p-2"
+                    ref={(element) => addCheckboxToRef(element)}
+                  >
+                    <Checkbox className="mt-0.5" label="" />{" "}
+                    {divSize > 0 && divSize < 350 ? truncateString(title, 12) : title}
+                  </span>
+                  <div className="flex gap-x-1">
+                    <td className="text-right p-2">{humanizeNumber(stars)}</td>
+                    <td className="text-right p-2">{humanizeNumber(12)}</td>
+                    <td className="text-right p-2">{humanizeNumber(1234)}</td>
+                    <td className="text-right p-2">{persons}</td>
+                  </div>
+                </div>
               );
             })}
-          </tbody>
-        </table>
+          </div>
+        </div>
       </div>
     </>
   );
