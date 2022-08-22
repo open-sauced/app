@@ -13,34 +13,34 @@ const testPRs = [
   {
     prName: "Merging some work",
     prStatus: "merged",
-    item1: "2mo",
-    item2: "2mo",
-    item3: 13,
-    item4: 837
+    prIssuedTime: "2mo",
+    prClosedTime: "2mo",
+    noOfFilesChanged: 13,
+    noOfLinesChanged: 837
   },
   {
     prName: "Merging some work",
     prStatus: "closed",
-    item1: "2mo",
-    item2: "2mo",
-    item3: 13,
-    item4: 837
+    prIssuedTime: "2mo",
+    prClosedTime: "2mo",
+    noOfFilesChanged: 13,
+    noOfLinesChanged: 837
   },
   {
     prName: "Merging some work",
     prStatus: "open",
-    item1: "2mo",
-    item2: "2mo",
-    item3: 13,
-    item4: 837
+    prIssuedTime: "2mo",
+    prClosedTime: "2mo",
+    noOfFilesChanged: 13,
+    noOfLinesChanged: 837
   },
   {
     prName: "Merging some work",
     prStatus: "draft",
-    item1: "2mo",
-    item2: "2mo",
-    item3: 13,
-    item4: 837
+    prIssuedTime: "2mo",
+    prClosedTime: "2mo",
+    noOfFilesChanged: 13,
+    noOfLinesChanged: 837
   }
 ];
 
