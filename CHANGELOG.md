@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.3.0-beta.5](https://github.com/open-sauced/insights/compare/v1.3.0-beta.4...v1.3.0-beta.5) (2022-08-22)
+
+
+### 🐛 Bug Fixes
+
+* max width removed from card ([#250](https://github.com/open-sauced/insights/issues/250)) ([523969a](https://github.com/open-sauced/insights/commit/523969a32a1b09b28c7ad8f765b61c8e771a3fdd)), closes [#249](https://github.com/open-sauced/insights/issues/249)
+
 ## [1.3.0-beta.4](https://github.com/open-sauced/insights/compare/v1.3.0-beta.3...v1.3.0-beta.4) (2022-08-22)
 
 
