@@ -2,6 +2,8 @@ import { useState } from "react";
 import { languageToColor } from "lib/utils/language-to-color";
 import Text from "components/atoms/Typography/text";
 
+const NOTSUPPORTED = "#64748B";
+
 interface LanguageObject {
   languageName: string;
   percentageUsed: number;
@@ -29,12 +31,12 @@ const CardHorizontalBarChart = ({ languagesUsed }: CardHorizontalBarChartProps):
             key={index}
             onMouseOver={() => handleChangeDescriptText(languageName)}
             className="h-2 transition-all duration-500 ease-in-out"
-            style={{ width: `${percentageUsed}%`, backgroundColor: languageToColor[languageName] ? languageToColor[languageName] : languageToColor["notSupported"] }}
+            style={{ width: `${percentageUsed}%`, backgroundColor: languageToColor[languageName] ? languageToColor[languageName].color : NOTSUPPORTED }}
           />
         )}
       </div>
       <div className="flex gap-2 items-center">
-        <div className={"w-2 h-2 rounded-full"} style={{ backgroundColor: languageToColor[descriptText] ? languageToColor[descriptText] : languageToColor["notSupported"] }}/>
+        <div className={"w-2 h-2 rounded-full"} style={{ backgroundColor: languageToColor[descriptText] ? languageToColor[descriptText].color : NOTSUPPORTED }}/>
         <Text className="!text-xs !font-semibold !text-light-slate-11">
           {descriptText}
         </Text>

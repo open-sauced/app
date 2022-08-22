@@ -11,15 +11,15 @@ export default storyConfig;
 
 const testLanguageList = [
   {
-    languageName: "typescript",
+    languageName: "TypeScript",
     percentageUsed: 50
   },
   {
-    languageName: "javascript",
+    languageName: "JavaScript",
     percentageUsed: 20
   },
   {
-    languageName: "rust",
+    languageName: "Rust",
     percentageUsed: 30
   }
 ];
@@ -32,7 +32,7 @@ export const OneLanguage = CardHorizontalBarTemplate.bind({});
 OneLanguage.args = {
   languagesUsed: [
     {
-      languageName: "javascript",
+      languageName: "JavaScript",
       percentageUsed: 100
     }
   ]
