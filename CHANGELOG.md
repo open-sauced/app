@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.3.0-beta.6](https://github.com/open-sauced/insights/compare/v1.3.0-beta.5...v1.3.0-beta.6) (2022-08-22)
+
+
+### 🍕 Features
+
+* Implement Card Horizontal Bar component ([#237](https://github.com/open-sauced/insights/issues/237)) ([7bbbe40](https://github.com/open-sauced/insights/commit/7bbbe405fc4ceefd2396aeb536d485337bd2157d))
+
 ## [1.3.0-beta.5](https://github.com/open-sauced/insights/compare/v1.3.0-beta.4...v1.3.0-beta.5) (2022-08-22)
 
 
