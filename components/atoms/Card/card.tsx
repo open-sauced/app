@@ -8,7 +8,7 @@ interface CardProps {
 
 const Card: React.FC<CardProps> = ({ className, children, heading }) => {
   return (
-    <article className={`${className ? className : ""} block ${heading ? "" : "p-6"} max-w-2xl bg-white rounded-lg drop-shadow-md`}>
+    <article className={`${className ? className : ""} block ${heading ? "" : "p-6"} bg-white rounded-lg drop-shadow-md`}>
       {
         heading ?
           <>
@@ -19,9 +19,9 @@ const Card: React.FC<CardProps> = ({ className, children, heading }) => {
               {children}
             </div>
           </>
-          
+
           :
-          
+
           children
       }
     </article>
