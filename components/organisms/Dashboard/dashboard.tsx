@@ -4,7 +4,7 @@ import ScatterChart from "components/molecules/ScatterChart/scatter-chart";
 import HighlightCard from "components/molecules/HighlightCard/highlight-card";
 
 export const Dashboard = (): JSX.Element => {
-  const { scatterOptions } = useDashBoardData();
+  const { scatterOptions, repoListMetaData, isLoading } = useDashBoardData();
 
   return (
     <div className="flex flex-col w-full gap-4">
@@ -17,7 +17,7 @@ export const Dashboard = (): JSX.Element => {
           increased={true}
           numChanged={38}
           percentage={40}
-          percentageLabel="of 49,999"
+          percentageLabel={isLoading ? "Loading..." : `of ${repoListMetaData.itemCount}`}
         />
         <HighlightCard
           url="/hacktoberfest/pull%20requests"
@@ -27,7 +27,7 @@ export const Dashboard = (): JSX.Element => {
           increased={true}
           numChanged={98}
           percentage={80}
-          percentageLabel="of 49,999"
+          percentageLabel={isLoading ? "Loading..." : `of ${repoListMetaData.itemCount}`}
         />
         <HighlightCard
           url="/hacktoberfest/pull%20requests"
@@ -37,7 +37,7 @@ export const Dashboard = (): JSX.Element => {
           increased={false}
           numChanged={38}
           percentage={37}
-          percentageLabel="of 49,999"
+          percentageLabel={isLoading ? "Loading..." : `of ${repoListMetaData.itemCount}`}
         />
         <HighlightCard
           url="/hacktoberfest/pull%20requests"
