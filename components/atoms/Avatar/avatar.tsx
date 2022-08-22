@@ -23,14 +23,14 @@ const Avatar: React.FC<AvatarProps> = ({ className, avatarURL, initials, alt, si
         hasBorder ? "ring-2 ring-slate-200" : ""
       } ${
         size === "sm"
-          ? `w-6 h-6`
+          ? "w-6 h-6"
           : size === "base"
-          ? `w-8 h-8`
-          : size === "lg"
-          ? `w-12 h-12`
-          : typeof size === "number"
-          ? `w-${size} h-${size}`
-          : "w-8 h-8"
+            ? "w-8 h-8"
+            : size === "lg"
+              ? "w-12 h-12"
+              : typeof size === "number"
+                ? `w-${size} h-${size}`
+                : "w-8 h-8"
       }`}
     >
       {avatarURL ? (
