@@ -23,7 +23,7 @@ const Avatar = (props: AvatarProps): JSX.Element => {
     return <CustomAvatar {...props} />;
 
   default:
-    return <span>invalid avatar size props</span>;
+    return <span>invalid avatar size props!!!</span>;
   }
 };
 
