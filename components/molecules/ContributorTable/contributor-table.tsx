@@ -7,10 +7,10 @@ import { VscGitPullRequest,VscGitPullRequestClosed, VscGitMerge, VscGitPullReque
 interface PRs {
   prStatus: string;
   prName: string;
-  item1: string;
-  item2: string;
-  item3: number;
-  item4: number;
+  prIssuedTime: string;
+  prClosedTime: string;
+  noOfFilesChanged: number;
+  noOfLinesChanged: number;
 }
 
 interface CardTableProps {
@@ -48,7 +48,7 @@ const CardTable = ({ prList }: CardTableProps) => {
             </div>
           </IconContext.Provider>
         </div>
-        {prList.map(({prName, prStatus, item1, item2, item3, item4}, index) => 
+        {prList.map(({prName, prStatus, prIssuedTime, prClosedTime, noOfFilesChanged, noOfLinesChanged}, index) => 
           <div key={index} className="flex gap-2 items-center px-2 py-1">
             <div className="flex item-center gap-2 w-3/5">
               {prStatus === "open" ? 
@@ -77,23 +77,23 @@ const CardTable = ({ prList }: CardTableProps) => {
                     </IconContext.Provider>
               }
               <Text>
-                {item1}
+                {prIssuedTime}
               </Text>
               <Text className="!text-light-slate-12 !font-medium">
                 {prName}
               </Text>
             </div>
             <div className="flex justify-end w-[calc(10%-4px)]">
-              {item1}
+              {prIssuedTime}
             </div>
             <div className="flex justify-end w-[calc(10%-4px)]">
-              {item2}
+              {prClosedTime}
             </div>
             <div className="flex justify-end w-[calc(10%-4px)]">
-              {item3}
+              {noOfFilesChanged}
             </div>
             <div className="flex justify-end w-[calc(10%-4px)]">
-              {item4}
+              {noOfLinesChanged}
             </div>
           </div>
         )}
