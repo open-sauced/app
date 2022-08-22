@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.3.0-beta.4](https://github.com/open-sauced/insights/compare/v1.3.0-beta.3...v1.3.0-beta.4) (2022-08-22)
+
+
+### 🐛 Bug Fixes
+
+* removes unused function ([b37de35](https://github.com/open-sauced/insights/commit/b37de35af44d98d4346e0cc9c7437292c814ba3e))
+
 ## [1.3.0-beta.3](https://github.com/open-sauced/insights/compare/v1.3.0-beta.2...v1.3.0-beta.3) (2022-08-21)
 
 
