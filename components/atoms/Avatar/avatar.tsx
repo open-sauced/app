@@ -1,7 +1,6 @@
 import React from "react";
 import Image, { StaticImageData } from "next/image";
 import AvatarImage from "../../../public/hacktoberfest-icon.png";
-import { number } from "echarts";
 
 interface AvatarProps {
   className?: string;
@@ -16,30 +15,54 @@ const avatarLoader = () => {
   return "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1064&q=80";
 };
 
-const Avatar: React.FC<AvatarProps> = ({ className, avatarURL, initials, alt, size, hasBorder }) => {
+const Avatar = (props: AvatarProps): JSX.Element => {
+  switch (typeof props.size) {
+  case "string":
+    return <DefaultAvatar {...props} />;
+  case "number":
+    return <CustomAvatar {...props} />;
+
+  default:
+    return <span>invalid avatar size props</span>;
+  }
+};
+
+export default Avatar;
+
+const CustomAvatar = ({ className, avatarURL, initials, alt, size, hasBorder }: AvatarProps): JSX.Element => {
   return (
     <div
-      className={`inline-flex bg-orange-500 justify-center relative items-center rounded-full overflow-hidden ${
+      className={`inline-flex bg-orange-500 justify-center relative items-center rounded-full w-max h-max overflow-hidden ${
         hasBorder ? "ring-2 ring-slate-200" : ""
-      } ${
-        size === "sm"
-          ? "w-6 h-6"
-          : size === "base"
-            ? "w-8 h-8"
-            : size === "lg"
-              ? "w-12 h-12"
-              : typeof size === "number"
-                ? `w-${size} h-${size}`
-                : "w-8 h-8"
       }`}
     >
       {avatarURL ? (
         <Image
           className={`${className ? className : ""} object-cover`}
           alt={alt ? alt : "Avatar"}
+          width={size}
+          height={size}
+          /* loader={avatarLoader} */ src={avatarURL ? avatarURL : AvatarImage}
+        />
+      ) : (
+        <div className={`font-bold leading-none text-slate-50 mb-0.25 text-${size}`}>{initials}</div>
+      )}
+    </div>
+  );
+};
+
+const DefaultAvatar = ({ className, avatarURL, initials, alt, size, hasBorder }: AvatarProps): JSX.Element => {
+  return (
+    <div
+      className={`inline-flex bg-orange-500 justify-center relative items-center rounded-full overflow-hidden ${
+        hasBorder ? "ring-2 ring-slate-200" : ""
+      } ${size === "sm" ? "w-6 h-6" : size === "base" ? "w-8 h-8" : size === "lg" ? "w-12 h-12" : "w-8 h-8"}`}
+    >
+      {avatarURL ? (
+        <Image
+          className={`${className ? className : ""} object-cover`}
+          alt={alt ? alt : "Avatar"}
           layout="fill"
-          // width={size === "sm" ? 16 : size === "base" ? 32 : size === "lg" ? 48 : 32}
-          // height={size === "sm" ? 16 : size === "base" ? 32 : size === "lg" ? 48 : 32}
           /* loader={avatarLoader} */ src={avatarURL ? avatarURL : AvatarImage}
         />
       ) : (
@@ -54,5 +77,3 @@ const Avatar: React.FC<AvatarProps> = ({ className, avatarURL, initials, alt, si
     </div>
   );
 };
-
-export default Avatar;
