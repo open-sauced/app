@@ -20,8 +20,8 @@ const iconSuite = {
     star: StarIcon,
     fork: ForkIcon,
     person: Person,
-    icon3: Icon3,
-  },
+    icon3: Icon3
+  }
 };
 
 const RepoSelectableTable: React.FC<RepoSelectableTableProps> = ({ title, tableType, rows }) => {
