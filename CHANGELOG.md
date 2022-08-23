@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.3.0-beta.7](https://github.com/open-sauced/insights/compare/v1.3.0-beta.6...v1.3.0-beta.7) (2022-08-23)
+
+
+### 🍕 Features
+
+* Add Images to Scatter Chart ([#257](https://github.com/open-sauced/insights/issues/257)) ([20df419](https://github.com/open-sauced/insights/commit/20df419e8f32ccfa8c26982033a22fa8d6058cfc))
+* Add item count meta data to Highlight Card ([#254](https://github.com/open-sauced/insights/issues/254)) ([693479e](https://github.com/open-sauced/insights/commit/693479e253a1856405b57817fb2ae3d8574fdedf))
+
 ## [1.3.0-beta.6](https://github.com/open-sauced/insights/compare/v1.3.0-beta.5...v1.3.0-beta.6) (2022-08-22)
 
 
