@@ -1,7 +1,8 @@
 import Text from "components/atoms/Typography/text";
 import { IconContext } from "react-icons";
 import { FaRegDotCircle, FaRegCheckCircle } from "react-icons/fa";
-import { BsFileEarmarkDiff, BsFileDiff } from "react-icons/bs";
+import { BsFileDiff } from "react-icons/bs";
+import { GoDiff } from "react-icons/go";
 import { VscGitPullRequest,VscGitPullRequestClosed, VscGitMerge, VscGitPullRequestDraft } from "react-icons/vsc";
 
 interface PRs {
@@ -37,12 +38,12 @@ const CardTable = ({ prList }: CardTableProps) => {
               <FaRegCheckCircle title="When Pull Request was merged" />
             </div>
           </IconContext.Provider>
-          <IconContext.Provider value={{ color: "gray", style: { width: 14, height: 14 } }}>
+          <IconContext.Provider value={{ color: "gray", style: { width: 14, height: 14, strokeWidth: 0.3 } }}>
             <div className="flex justify-end w-[calc(10%-4px)]">
-              <BsFileEarmarkDiff title="Files changed in Pull Request" />
+              <GoDiff title="Files changed in Pull Request" />
             </div>
           </IconContext.Provider>
-          <IconContext.Provider value={{ color: "gray", style: { width: 14, height: 14 } }}>
+          <IconContext.Provider value={{ color: "gray", style: { width: 14, height: 14, strokeWidth: 0.5 } }}>
             <div className="flex justify-end w-[calc(10%-4px)]">
               <BsFileDiff title="Lines changed in Pull Request" />
             </div>
