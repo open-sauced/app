@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.3.0-beta.9](https://github.com/open-sauced/insights/compare/v1.3.0-beta.8...v1.3.0-beta.9) (2022-08-23)
+
+
+### 🧑‍💻 Code Refactoring
+
+* Make the avatar component accept custom sizes ([#255](https://github.com/open-sauced/insights/issues/255)) ([9076e91](https://github.com/open-sauced/insights/commit/9076e914cf60ffff351acd1968446cc85ab087a9)), closes [#235](https://github.com/open-sauced/insights/issues/235)
+
 ## [1.3.0-beta.8](https://github.com/open-sauced/insights/compare/v1.3.0-beta.7...v1.3.0-beta.8) (2022-08-23)
 
 
