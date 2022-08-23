@@ -23,7 +23,7 @@ const CardTable = ({ prList }: CardTableProps) => {
       <>
         <div className="flex gap-2 items-center bg-light-slate-3 rounded-md px-2 py-1">
           <div className="w-3/5">
-            <Text>
+            <Text className="font-medium">
               Latest PRs
             </Text>
           </div>
@@ -83,16 +83,16 @@ const CardTable = ({ prList }: CardTableProps) => {
                 {prName}
               </Text>
             </div>
-            <div className="flex justify-end w-[calc(10%-4px)]">
+            <div className="flex justify-end w-[calc(10%-4px)] text-sm text-light-slate-11">
               {prIssuedTime}
             </div>
-            <div className="flex justify-end w-[calc(10%-4px)]">
+            <div className="flex justify-end w-[calc(10%-4px)] text-sm text-light-slate-11">
               {prClosedTime}
             </div>
-            <div className="flex justify-end w-[calc(10%-4px)]">
+            <div className="flex justify-end w-[calc(10%-4px)] text-sm text-light-slate-11">
               {noOfFilesChanged}
             </div>
-            <div className="flex justify-end w-[calc(10%-4px)]">
+            <div className="flex justify-end w-[calc(10%-4px)] text-sm text-light-slate-11">
               {noOfLinesChanged}
             </div>
           </div>
