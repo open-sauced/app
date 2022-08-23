@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.3.0-beta.8](https://github.com/open-sauced/insights/compare/v1.3.0-beta.7...v1.3.0-beta.8) (2022-08-23)
+
+
+### 🍕 Features
+
+* Implement Card Table Component ([#243](https://github.com/open-sauced/insights/issues/243)) ([0cbc6ea](https://github.com/open-sauced/insights/commit/0cbc6ea13cbe2e66d8e57d62ef7e030fef17a54b))
+
 ## [1.3.0-beta.7](https://github.com/open-sauced/insights/compare/v1.3.0-beta.6...v1.3.0-beta.7) (2022-08-23)
 
 
