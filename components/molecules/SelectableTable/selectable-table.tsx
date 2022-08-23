@@ -63,24 +63,24 @@ const RepoSelectableTable: React.FC<RepoSelectableTableProps> = ({ title, tableT
                 <Checkbox onChange={(event) => changeAllCheckboxes(event)} label="" />
               </span>
               <div className="flex gap-x-2.5">
-                <th className="text-right p-2">
+                <span className="text-right p-2">
                   <Icon IconImage={iconSuite[tableType].star} />
-                </th>
-                <th className="text-right p-2">
+                </span>
+                <span className="text-right p-2">
                   <Icon IconImage={iconSuite[tableType].fork} />
-                </th>
-                <th className="text-right p-2">
+                </span>
+                <span className="text-right p-2">
                   <Icon IconImage={iconSuite[tableType].person} />
-                </th>
-                <th className="text-right p-2">
+                </span>
+                <span className="text-right p-2">
                   <Icon IconImage={iconSuite[tableType].icon3} />
-                </th>
+                </span>
               </div>
             </div>
             <tr className="h-3"></tr>
           </div>
           <div>
-            <tr className="h-3"></tr>
+            <span className="h-3"></span>
             {rows?.map(({ title, stars, persons }, index) => {
               return (
                 <div
@@ -99,10 +99,10 @@ const RepoSelectableTable: React.FC<RepoSelectableTableProps> = ({ title, tableT
                     {divSize > 0 && divSize < 350 ? truncateString(title, 12) : title}
                   </span>
                   <div className="flex gap-x-1">
-                    <td className="text-right p-2">{humanizeNumber(stars)}</td>
-                    <td className="text-right p-2">{humanizeNumber(12)}</td>
-                    <td className="text-right p-2">{humanizeNumber(1234)}</td>
-                    <td className="text-right p-2">{persons}</td>
+                    <span className="text-right p-2">{humanizeNumber(stars)}</span>
+                    <span className="text-right p-2">{humanizeNumber(12)}</span>
+                    <span className="text-right p-2">{humanizeNumber(1234)}</span>
+                    <span className="text-right p-2">{persons}</span>
                   </div>
                 </div>
               );
