@@ -29,22 +29,22 @@ const CardTable = ({ prList }: CardTableProps) => {
           </div>
           <IconContext.Provider value={{ color: "gray", style: { width: 14, height: 14 } }}>
             <div className="flex justify-end w-[calc(10%-4px)]">
-              <FaRegDotCircle />
+              <FaRegDotCircle title="When Pull Request was issued" />
             </div>
           </IconContext.Provider>
           <IconContext.Provider value={{ color: "gray", style: { width: 14, height: 14 } }}>
             <div className="flex justify-end w-[calc(10%-4px)]">
-              <FaRegCheckCircle />
+              <FaRegCheckCircle title="When Pull Request was merged" />
             </div>
           </IconContext.Provider>
           <IconContext.Provider value={{ color: "gray", style: { width: 14, height: 14 } }}>
             <div className="flex justify-end w-[calc(10%-4px)]">
-              <BsFileEarmarkDiff />
+              <BsFileEarmarkDiff title="Files changed in Pull Request" />
             </div>
           </IconContext.Provider>
           <IconContext.Provider value={{ color: "gray", style: { width: 14, height: 14 } }}>
             <div className="flex justify-end w-[calc(10%-4px)]">
-              <BsFileDiff />
+              <BsFileDiff title="Lines changed in Pull Request" />
             </div>
           </IconContext.Provider>
         </div>
@@ -53,27 +53,27 @@ const CardTable = ({ prList }: CardTableProps) => {
             <div className="flex item-center gap-2 w-3/5">
               {prStatus === "open" ? 
                 <IconContext.Provider value={{ color: "green", style: { width: 14, height: 14, marginTop: 2 } }}>
-                  <VscGitPullRequest/>
+                  <VscGitPullRequest title="Open Pull Request"/>
                 </IconContext.Provider>
 
                 :
 
                 prStatus === "closed" ? 
                   <IconContext.Provider value={{ color: "red", style: { width: 14, height: 14, marginTop: 2 } }}>
-                    <VscGitPullRequestClosed />
+                    <VscGitPullRequestClosed title="Closed Pull Request" />
                   </IconContext.Provider>
 
                   :
 
                   prStatus === "merged" ? 
                     <IconContext.Provider value={{ color: "purple", style: { width: 14, height: 14, marginTop: 2 } }}>
-                      <VscGitMerge />
+                      <VscGitMerge title="Merged Pull Request" />
                     </IconContext.Provider>
 
                     :
 
                     <IconContext.Provider value={{ color: "gray", style: { width: 14, height: 14, marginTop: 2 } }}>
-                      <VscGitPullRequestDraft />
+                      <VscGitPullRequestDraft title="Draft Pull Request" />
                     </IconContext.Provider>
               }
               <Text>
