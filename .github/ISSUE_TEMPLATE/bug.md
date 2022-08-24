@@ -2,7 +2,7 @@
 name: 🐛 Report a bug
 about: Use this template for reporting new bugs.
 title: "bug: "
-labels: 🐛 bug, needs triage
+labels: ["🐛 bug", "👀 needs triage"]
 ---
 
 ### Describe the bug
