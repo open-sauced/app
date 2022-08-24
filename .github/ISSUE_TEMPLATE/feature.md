@@ -3,7 +3,6 @@ name: 🚀 Feature request
 about: Use this template for adding a new feature request.
 title: "feature: "
 labels: 💡 feature, needs triage
-assignees: octocat
 ---
 
 ### Type of feature
