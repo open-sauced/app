@@ -1,6 +1,7 @@
 import Button from "components/atoms/Button/button";
 import Card from "components/atoms/Card/card";
 import Text from "components/atoms/Typography/text";
+import CardHorizontalBarChart from "components/molecules/CardHorizontalBarChart/card-horizontal-bar-chart";
 import CardLineChart from "components/molecules/CardLineChart/card-line-chart";
 import CardProfile from "components/molecules/CardProfile/card-profile";
 import CardRepoList from "components/molecules/CardRepoList/card-repo-list";
@@ -8,7 +9,7 @@ import useContributorCard from "lib/hooks/useContributorCard";
 import { useState } from "react";
 
 const ContributorCard = () => {
-  const { profile, repoList, lineChart } = useContributorCard();
+  const { profile, repoList, lineChart, languageList } = useContributorCard();
   const [showPRs, setShowPRs] = useState(false);
 
   return (
@@ -16,7 +17,9 @@ const ContributorCard = () => {
       <div className="flex flex-col gap-2">
         <div className="flex w-full justify-between gap-2">
           <CardProfile {...profile} />
-          <div>Replace with Card Line Chart</div>
+          <div className="w-32">
+            <CardHorizontalBarChart languagesUsed={languageList} />
+          </div>
         </div>
         <CardLineChart option={lineChart}/>
         <CardRepoList repoList={repoList}/>

@@ -75,10 +75,26 @@ const useContributorCard = () => {
     }
   ];
 
+  const languageList = [
+    {
+      languageName: "TypeScript",
+      percentageUsed: 50
+    },
+    {
+      languageName: "JavaScript",
+      percentageUsed: 20
+    },
+    {
+      languageName: "Rust",
+      percentageUsed: 30
+    }
+  ];
+
   return {
     lineChart,
     profile,
-    repoList
+    repoList,
+    languageList
   };
 };
 
