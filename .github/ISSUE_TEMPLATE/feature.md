@@ -8,7 +8,6 @@ labels: ["💡 feature", "👀 needs triage"]
 ### Type of feature
 
 Select the type of feature request, the lowercase should also be the PR prefix.
-Selection:
 
 - [ ] 🍕 Feature
 - [ ] 🐛 Bug Fix
@@ -21,10 +20,6 @@ Selection:
 - [ ] 🔁 CI
 - [ ] 📦 Chore (Release)
 - [ ] ⏩ Revert
-
-<!--
-Tell us what you were doing when you encountered the bug.
--->
 
 ### Current behavior
 
