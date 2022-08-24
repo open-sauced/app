@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.3.0-beta.10](https://github.com/open-sauced/insights/compare/v1.3.0-beta.9...v1.3.0-beta.10) (2022-08-24)
+
+
+### 🍕 Features
+
+* Implement Contributor Card Component ([#245](https://github.com/open-sauced/insights/issues/245)) ([3bd55ea](https://github.com/open-sauced/insights/commit/3bd55ea461a63b00c1f99b0408e328326c1cc3d7))
+
 ## [1.3.0-beta.9](https://github.com/open-sauced/insights/compare/v1.3.0-beta.8...v1.3.0-beta.9) (2022-08-23)
 
 
