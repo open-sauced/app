@@ -1,6 +1,6 @@
 import TestRepoAvatar from "public/icons/test-repo-avatar.svg";
 
-const useContributorCard = () => {
+const useContributorData = () => {
   const lineChart  = {
     xAxis: {
       type: "category",
@@ -134,4 +134,4 @@ const useContributorCard = () => {
   };
 };
 
-export default useContributorCard;
+export default useContributorData;

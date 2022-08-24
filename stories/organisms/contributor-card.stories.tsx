@@ -19,7 +19,7 @@ const lineChart  = {
       fontWeight: "bold",
       color: "darkgray"
     },
-    data: ["Jan 2022", "Mar 2022", "Jun 2022"]
+    data: ["Jan 1, 2022", "Jan 15, 2022", "Feb 1, 2022"]
   },
   yAxis: {
     type: "value",
