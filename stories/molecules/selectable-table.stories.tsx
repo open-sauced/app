@@ -1,6 +1,6 @@
 import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-import SelectableTable from "../../components/molecules/SelectableTable/selectable-table";
+import SelectableTable from "../../components/molecules/SelectableTable/repository-table";
 
 const storyConfig = {
   title: "Design System/Molecules/Selectable Table",
@@ -11,39 +11,39 @@ export default storyConfig;
 
 const testRows = [
   {
-    title: "freecodecamp",
+    name: "freecodecamp",
     stars: 100,
     forks: 20,
-    persons: 40,
-    unknown: 5
+    persons: 5,
+    size: "30984"
   },
   {
-    title: "free-programming-books",
+    name: "free-programming-books",
     stars: 60,
     forks: 10,
-    persons: 20,
-    unknown: 5
+    persons: 5,
+    size: "30984"
   },
   {
-    title: "material-ui",
+    name: "material-ui",
     stars: 20,
     forks: 30,
-    persons: 10,
-    unknown: 2
+    persons: 2,
+    size: "30984"
   },
   {
-    title: "react",
+    name: "react",
     stars: 100,
     forks: 20,
-    persons: 30,
-    unknown: 10
+    persons: 10,
+    size: "30984"
   },
   {
-    title: "java-design-patterns",
+    name: "java-design-patterns",
     stars: 20,
     forks: 14,
-    persons: 10,
-    unknown: 0
+    persons: 0,
+    size: "30984"
   }
 ];
 

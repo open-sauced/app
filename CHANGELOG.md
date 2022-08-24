@@ -5,6 +5,226 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.3.0-beta.9](https://github.com/open-sauced/insights/compare/v1.3.0-beta.8...v1.3.0-beta.9) (2022-08-23)
+
+
+### 🧑‍💻 Code Refactoring
+
+* Make the avatar component accept custom sizes ([#255](https://github.com/open-sauced/insights/issues/255)) ([9076e91](https://github.com/open-sauced/insights/commit/9076e914cf60ffff351acd1968446cc85ab087a9)), closes [#235](https://github.com/open-sauced/insights/issues/235)
+
+## [1.3.0-beta.8](https://github.com/open-sauced/insights/compare/v1.3.0-beta.7...v1.3.0-beta.8) (2022-08-23)
+
+
+### 🍕 Features
+
+* Implement Card Table Component ([#243](https://github.com/open-sauced/insights/issues/243)) ([0cbc6ea](https://github.com/open-sauced/insights/commit/0cbc6ea13cbe2e66d8e57d62ef7e030fef17a54b))
+
+## [1.3.0-beta.7](https://github.com/open-sauced/insights/compare/v1.3.0-beta.6...v1.3.0-beta.7) (2022-08-23)
+
+
+### 🍕 Features
+
+* Add Images to Scatter Chart ([#257](https://github.com/open-sauced/insights/issues/257)) ([20df419](https://github.com/open-sauced/insights/commit/20df419e8f32ccfa8c26982033a22fa8d6058cfc))
+* Add item count meta data to Highlight Card ([#254](https://github.com/open-sauced/insights/issues/254)) ([693479e](https://github.com/open-sauced/insights/commit/693479e253a1856405b57817fb2ae3d8574fdedf))
+
+## [1.3.0-beta.6](https://github.com/open-sauced/insights/compare/v1.3.0-beta.5...v1.3.0-beta.6) (2022-08-22)
+
+
+### 🍕 Features
+
+* Implement Card Horizontal Bar component ([#237](https://github.com/open-sauced/insights/issues/237)) ([7bbbe40](https://github.com/open-sauced/insights/commit/7bbbe405fc4ceefd2396aeb536d485337bd2157d))
+
+## [1.3.0-beta.5](https://github.com/open-sauced/insights/compare/v1.3.0-beta.4...v1.3.0-beta.5) (2022-08-22)
+
+
+### 🐛 Bug Fixes
+
+* max width removed from card ([#250](https://github.com/open-sauced/insights/issues/250)) ([523969a](https://github.com/open-sauced/insights/commit/523969a32a1b09b28c7ad8f765b61c8e771a3fdd)), closes [#249](https://github.com/open-sauced/insights/issues/249)
+
+## [1.3.0-beta.4](https://github.com/open-sauced/insights/compare/v1.3.0-beta.3...v1.3.0-beta.4) (2022-08-22)
+
+
+### 🐛 Bug Fixes
+
+* removes unused function ([b37de35](https://github.com/open-sauced/insights/commit/b37de35af44d98d4346e0cc9c7437292c814ba3e))
+
+## [1.3.0-beta.3](https://github.com/open-sauced/insights/compare/v1.3.0-beta.2...v1.3.0-beta.3) (2022-08-21)
+
+
+### 🍕 Features
+
+* Implement the hacktoberfest reports page ([#229](https://github.com/open-sauced/insights/issues/229)) ([0cfa5e5](https://github.com/open-sauced/insights/commit/0cfa5e5f3d23b0eedc681a1fc93af96d65105cd8)), closes [#168](https://github.com/open-sauced/insights/issues/168)
+
+## [1.3.0-beta.2](https://github.com/open-sauced/insights/compare/v1.3.0-beta.1...v1.3.0-beta.2) (2022-08-21)
+
+
+### 🐛 Bug Fixes
+
+* Repo count ([#244](https://github.com/open-sauced/insights/issues/244)) ([d59eef8](https://github.com/open-sauced/insights/commit/d59eef837004f05fdf3df0ed52b755cce0bfc96d))
+
+## [1.3.0-beta.1](https://github.com/open-sauced/insights/compare/v1.2.0...v1.3.0-beta.1) (2022-08-20)
+
+
+### 🍕 Features
+
+* Implement Reports History Component ([#209](https://github.com/open-sauced/insights/issues/209)) ([bb531e4](https://github.com/open-sauced/insights/commit/bb531e4a74e09d686e5679bdf65b2890e015c91a))
+
+## [1.2.0](https://github.com/open-sauced/insights/compare/v1.1.3...v1.2.0) (2022-08-20)
+
+
+### 🍕 Features
+
+* **data:** adds live repo data and SWR ([#198](https://github.com/open-sauced/insights/issues/198)) ([b6d80c3](https://github.com/open-sauced/insights/commit/b6d80c3ac584fe1aa7a8d2b399194c7ec514c7f9)), closes [#191](https://github.com/open-sauced/insights/issues/191) [#191](https://github.com/open-sauced/insights/issues/191) [#206](https://github.com/open-sauced/insights/issues/206) [#206](https://github.com/open-sauced/insights/issues/206)
+* Create Reports Filter Component ([#207](https://github.com/open-sauced/insights/issues/207)) ([efced23](https://github.com/open-sauced/insights/commit/efced2319433532e9ff124291dc64467da99abd8)), closes [#166](https://github.com/open-sauced/insights/issues/166)
+* eChart for Contributors Component ([#216](https://github.com/open-sauced/insights/issues/216)) ([7d5837b](https://github.com/open-sauced/insights/commit/7d5837bef9cd1239793d77bb9562938bcdf608eb)), closes [#221](https://github.com/open-sauced/insights/issues/221) [#213](https://github.com/open-sauced/insights/issues/213) [#221](https://github.com/open-sauced/insights/issues/221)
+* Implement Card Profile Component ([#232](https://github.com/open-sauced/insights/issues/232)) ([efae3c5](https://github.com/open-sauced/insights/commit/efae3c53fbd9b67ddbb2abd506fa43803581c7c6))
+* Implement Card Repo List component ([#234](https://github.com/open-sauced/insights/issues/234)) ([4a58eea](https://github.com/open-sauced/insights/commit/4a58eea43cbab731b7813c3f674df40880fb85b8))
+
+
+### 🧑‍💻 Code Refactoring
+
+* Add another version of the logo in the design system ([#236](https://github.com/open-sauced/insights/issues/236)) ([f25b3a5](https://github.com/open-sauced/insights/commit/f25b3a5909df94c7c005f3278390196218b535e5))
+* Move Dashboard and Repositories into their own component ([#228](https://github.com/open-sauced/insights/issues/228)) ([8b40fd8](https://github.com/open-sauced/insights/commit/8b40fd87e40a58b22ff01920f2cf363b065ddb10)), closes [#208](https://github.com/open-sauced/insights/issues/208) [#201](https://github.com/open-sauced/insights/issues/201) [#202](https://github.com/open-sauced/insights/issues/202)
+* replace context-filter-option with radio component ([41ed2b3](https://github.com/open-sauced/insights/commit/41ed2b3c51ac35e9aec7bd48c9c9393ccb811c8c))
+
+
+### 🐛 Bug Fixes
+
+* **bug:** add require props ([#239](https://github.com/open-sauced/insights/issues/239)) ([b9f0942](https://github.com/open-sauced/insights/commit/b9f094258233944ee82a72067fb97a110a93efef))
+* added Radio and SuperlativeSelector component stories ([06d956c](https://github.com/open-sauced/insights/commit/06d956c9ab6c3ada912f25999ad81c78d0f69c5e))
+* eslint errors ([c191e26](https://github.com/open-sauced/insights/commit/c191e266bf12e552af7d84fe768aaf56fb9c8e0f))
+* Removed gap from navbar and tools display ([#206](https://github.com/open-sauced/insights/issues/206)) ([a3de620](https://github.com/open-sauced/insights/commit/a3de6201b8a260a271ae871e785c2671d4e6d5ba))
+
+## [1.2.0-beta.5](https://github.com/open-sauced/insights/compare/v1.2.0-beta.4...v1.2.0-beta.5) (2022-08-19)
+
+
+### 🧑‍💻 Code Refactoring
+
+* Add another version of the logo in the design system ([#236](https://github.com/open-sauced/insights/issues/236)) ([f25b3a5](https://github.com/open-sauced/insights/commit/f25b3a5909df94c7c005f3278390196218b535e5))
+
+
+### 🐛 Bug Fixes
+
+* **bug:** add require props ([#239](https://github.com/open-sauced/insights/issues/239)) ([b9f0942](https://github.com/open-sauced/insights/commit/b9f094258233944ee82a72067fb97a110a93efef))
+
+## [1.2.0-beta.4](https://github.com/open-sauced/insights/compare/v1.2.0-beta.3...v1.2.0-beta.4) (2022-08-19)
+
+
+### 🍕 Features
+
+* Implement Card Repo List component ([#234](https://github.com/open-sauced/insights/issues/234)) ([4a58eea](https://github.com/open-sauced/insights/commit/4a58eea43cbab731b7813c3f674df40880fb85b8))
+
+## [1.2.0-beta.3](https://github.com/open-sauced/insights/compare/v1.2.0-beta.2...v1.2.0-beta.3) (2022-08-19)
+
+
+### 🍕 Features
+
+* Implement Card Profile Component ([#232](https://github.com/open-sauced/insights/issues/232)) ([efae3c5](https://github.com/open-sauced/insights/commit/efae3c53fbd9b67ddbb2abd506fa43803581c7c6))
+
+## [1.2.0-beta.2](https://github.com/open-sauced/insights/compare/v1.2.0-beta.1...v1.2.0-beta.2) (2022-08-19)
+
+
+### 🐛 Bug Fixes
+
+* added Radio and SuperlativeSelector component stories ([06d956c](https://github.com/open-sauced/insights/commit/06d956c9ab6c3ada912f25999ad81c78d0f69c5e))
+* eslint errors ([c191e26](https://github.com/open-sauced/insights/commit/c191e266bf12e552af7d84fe768aaf56fb9c8e0f))
+
+
+### 🧑‍💻 Code Refactoring
+
+* Move Dashboard and Repositories into their own component ([#228](https://github.com/open-sauced/insights/issues/228)) ([8b40fd8](https://github.com/open-sauced/insights/commit/8b40fd87e40a58b22ff01920f2cf363b065ddb10)), closes [#208](https://github.com/open-sauced/insights/issues/208) [#201](https://github.com/open-sauced/insights/issues/201) [#202](https://github.com/open-sauced/insights/issues/202)
+* replace context-filter-option with radio component ([41ed2b3](https://github.com/open-sauced/insights/commit/41ed2b3c51ac35e9aec7bd48c9c9393ccb811c8c))
+
+
+### 🍕 Features
+
+* **data:** adds live repo data and SWR ([#198](https://github.com/open-sauced/insights/issues/198)) ([b6d80c3](https://github.com/open-sauced/insights/commit/b6d80c3ac584fe1aa7a8d2b399194c7ec514c7f9)), closes [#191](https://github.com/open-sauced/insights/issues/191) [#191](https://github.com/open-sauced/insights/issues/191) [#206](https://github.com/open-sauced/insights/issues/206) [#206](https://github.com/open-sauced/insights/issues/206)
+* eChart for Contributors Component ([#216](https://github.com/open-sauced/insights/issues/216)) ([7d5837b](https://github.com/open-sauced/insights/commit/7d5837bef9cd1239793d77bb9562938bcdf608eb)), closes [#221](https://github.com/open-sauced/insights/issues/221) [#213](https://github.com/open-sauced/insights/issues/213) [#221](https://github.com/open-sauced/insights/issues/221)
+
+## [1.2.0-beta.1](https://github.com/open-sauced/insights/compare/v1.1.3-beta.3...v1.2.0-beta.1) (2022-08-17)
+
+
+### 🍕 Features
+
+* Create Reports Filter Component ([#207](https://github.com/open-sauced/insights/issues/207)) ([efced23](https://github.com/open-sauced/insights/commit/efced2319433532e9ff124291dc64467da99abd8)), closes [#166](https://github.com/open-sauced/insights/issues/166)
+
+### [1.1.3-beta.3](https://github.com/open-sauced/insights/compare/v1.1.3-beta.2...v1.1.3-beta.3) (2022-08-15)
+
+
+### 🐛 Bug Fixes
+
+* Removed gap from navbar and tools display ([#206](https://github.com/open-sauced/insights/issues/206)) ([a3de620](https://github.com/open-sauced/insights/commit/a3de6201b8a260a271ae871e785c2671d4e6d5ba))
+
+### [1.1.3](https://github.com/open-sauced/insights/compare/v1.1.2...v1.1.3) (2022-08-15)
+
+
+### 🧑‍💻 Code Refactoring
+
+* Reimplemented nav highlight ([#201](https://github.com/open-sauced/insights/issues/201)) ([a33becb](https://github.com/open-sauced/insights/commit/a33becb95e19b9baa54e6b22d86e5186933140e6))
+
+
+### 🐛 Bug Fixes
+
+* Fixed issue where dashboard would not appear when a filter was applied ([#202](https://github.com/open-sauced/insights/issues/202)) ([9fe3e81](https://github.com/open-sauced/insights/commit/9fe3e816e9334312402c043415294040b71dc15d))
+
+### [1.1.3-beta.2](https://github.com/open-sauced/insights/compare/v1.1.3-beta.1...v1.1.3-beta.2) (2022-08-15)
+
+
+### 🐛 Bug Fixes
+
+* Fixed issue where dashboard would not appear when a filter was applied ([#202](https://github.com/open-sauced/insights/issues/202)) ([9fe3e81](https://github.com/open-sauced/insights/commit/9fe3e816e9334312402c043415294040b71dc15d))
+
+### [1.1.3-beta.1](https://github.com/open-sauced/insights/compare/v1.1.2...v1.1.3-beta.1) (2022-08-15)
+
+
+### 🧑‍💻 Code Refactoring
+
+* Reimplemented nav highlight ([#201](https://github.com/open-sauced/insights/issues/201)) ([a33becb](https://github.com/open-sauced/insights/commit/a33becb95e19b9baa54e6b22d86e5186933140e6))
+
+### [1.1.2](https://github.com/open-sauced/insights/compare/v1.1.1...v1.1.2) (2022-08-14)
+
+
+### 🐛 Bug Fixes
+
+* **auth:** enable auth with SSR and API routes ([#196](https://github.com/open-sauced/insights/issues/196)) ([8228815](https://github.com/open-sauced/insights/commit/8228815cc3a5a47dbed0c021acbe0cb89d23c3ed)), closes [#176](https://github.com/open-sauced/insights/issues/176) [#189](https://github.com/open-sauced/insights/issues/189)
+
+### [1.1.1](https://github.com/open-sauced/insights/compare/v1.1.0...v1.1.1) (2022-08-14)
+
+
+### 🐛 Bug Fixes
+
+* **ui:** broken tools nav ([#194](https://github.com/open-sauced/insights/issues/194)) ([b146875](https://github.com/open-sauced/insights/commit/b146875ac95ee2f62666238b0c30d477be7c8cd2)), closes [#187](https://github.com/open-sauced/insights/issues/187) [#193](https://github.com/open-sauced/insights/issues/193)
+
+## [1.1.0](https://github.com/open-sauced/insights/compare/v1.0.5...v1.1.0) (2022-08-13)
+
+
+### ✅ Tests
+
+* enable parallel netlify build for storybook ([#170](https://github.com/open-sauced/insights/issues/170)) ([d6c5a75](https://github.com/open-sauced/insights/commit/d6c5a751339282afbd349211a473ebd3a43e09ff)), closes [#49](https://github.com/open-sauced/insights/issues/49)
+
+
+### 🔁 Continuous Integration
+
+* add better release target deployment urls ([#172](https://github.com/open-sauced/insights/issues/172)) ([f3a93f0](https://github.com/open-sauced/insights/commit/f3a93f019b53e1f0e52fddb7a8f90fe9336ca0d1))
+
+
+### 🧑‍💻 Code Refactoring
+
+* update login text to say connect with github. ([#178](https://github.com/open-sauced/insights/issues/178)) ([5b7e572](https://github.com/open-sauced/insights/commit/5b7e5720798c7a34aeac1fa663dfa1d614bb4b9c)), closes [#139](https://github.com/open-sauced/insights/issues/139)
+
+
+### 🍕 Features
+
+* add animation to the progress pie component ([#182](https://github.com/open-sauced/insights/issues/182)) ([90f4bbb](https://github.com/open-sauced/insights/commit/90f4bbb6f5350a3b557eb86dccf7c4fd1e6591fc)), closes [#126](https://github.com/open-sauced/insights/issues/126)
+* make entire row for selectable table clickable ([#177](https://github.com/open-sauced/insights/issues/177)) ([8fb914a](https://github.com/open-sauced/insights/commit/8fb914a74b2342eb144bb08c0c1fc1949ad77e7c)), closes [#84](https://github.com/open-sauced/insights/issues/84)
+* Simplify the Dashboard ([#155](https://github.com/open-sauced/insights/issues/155)) ([80d445c](https://github.com/open-sauced/insights/commit/80d445c953cd4c896afa76d12755bd78794f7c50))
+
+
+### 🐛 Bug Fixes
+
+* correct domain dot com bubble error ([#173](https://github.com/open-sauced/insights/issues/173)) ([3816edb](https://github.com/open-sauced/insights/commit/3816edbc1365566fbe0c709aa26ab2ef4613b854))
+* Fixing 'Maximum Depth Reached' or Infinite Loop bug. ([#188](https://github.com/open-sauced/insights/issues/188)) ([d7a4954](https://github.com/open-sauced/insights/commit/d7a49548b43c6baef5ad3c95313178c918dc6df2))
+
 ## [1.1.0-beta.3](https://github.com/open-sauced/insights/compare/v1.1.0-beta.2...v1.1.0-beta.3) (2022-08-12)
 
 

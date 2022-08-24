@@ -199,12 +199,13 @@ module.exports = {
         },
       },
       boxShadow: {
-        login: "0px 64px 100px -80px #FF5F13, 0px 16px 56px rgba(181, 107, 72, 0.19)",
-      },
-      backgroundImage: {
+        "login": "0px 64px 100px -80px #FF5F13, 0px 16px 56px rgba(181, 107, 72, 0.19)",
+        "superlative": "0px 22px 24px -8px rgba(0, 0, 0, 0.05), 0px 4px 8px rgba(0, 0, 0, 0.1)"
+      }
+       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
       },
-    },
+    }
   },
   plugins: [
     function ({ addVariant }) {

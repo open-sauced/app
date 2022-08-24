@@ -21,7 +21,7 @@ const useSupabaseAuth = () => {
 
   return {
     signIn: (data: UserCredentials) => supabase.auth.signIn(data, {
-      redirectTo: "/"
+      redirectTo: "/auth"
     }),
     signOut: () => supabase.auth.signOut(),
     user

@@ -13,7 +13,13 @@ export default storyConfig;
 const CardTemplate: ComponentStory<typeof Card> = (args) => <Card {...args} />;
 
 export const Default = CardTemplate.bind({});
+export const Heading = CardTemplate.bind({});
 
 Default.args = {
+  children: <>Test</>
+};
+
+Heading.args = {
+  heading: "Test",
   children: <>Test</>
 };
