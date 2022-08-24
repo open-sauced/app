@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.2.2](https://github.com/open-sauced/insights/compare/v1.2.1...v1.2.2) (2022-08-24)
+
+
+### 🐛 Bug Fixes
+
+* correct issue template labelling ([3ce5039](https://github.com/open-sauced/insights/commit/3ce5039fcee2dba8afb682195ad866369de983d2))
+
 ### [1.2.1](https://github.com/open-sauced/insights/compare/v1.2.0...v1.2.1) (2022-08-24)
 
 
