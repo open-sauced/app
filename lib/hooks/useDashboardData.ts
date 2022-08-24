@@ -1,3 +1,5 @@
+import { useRepositoriesList } from "lib/hooks/useRepositoriesList";
+
 const useDashBoardData = () => {
   const scatterOptions = {
     xAxis: {},
@@ -60,9 +62,14 @@ const useDashBoardData = () => {
     ]
   };
 
+  const { repoList, isLoading } = useRepositoriesList();
+  const repoListMetaData = repoList.meta;
+
   return {
     scatterOptions,
-    areaChartOptions
+    areaChartOptions,
+    repoListMetaData,
+    isLoading
   };
 };
 
