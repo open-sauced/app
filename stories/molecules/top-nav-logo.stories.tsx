@@ -6,4 +6,4 @@ const storyConfig = {
 
 export default storyConfig;
 
-export const TopNavLogoMolecule = () => <HeaderLogo loginScreen />;
+export const TopNavLogoMolecule = () => <HeaderLogo withBg={false} loginScreen />;
