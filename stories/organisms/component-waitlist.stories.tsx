@@ -1,4 +1,4 @@
-import ComponentWaitlist from "components/organisms/ComponentWaitlist/component-waitlist";
+import ComponentWaitlist from "components/organisms/Waitlist/waitlist";
 
 const StoryConfig = {
   title: "Design System/Organisms/ComponentWaitlist"
