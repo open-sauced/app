@@ -6,7 +6,7 @@ import Button from "components/atoms/Button/button";
 import {FiArrowLeft} from "react-icons/fi";
 import {FaGithub} from "react-icons/fa";
 import AvatarRoll from "components/molecules/AvatarRoll/avatar-roll";
-const ComponentWaitlist = () => {
+const WaitlistComponent = () => {
   return (
     <ComponentGradient>
       <div className="z-10">
@@ -44,4 +44,4 @@ const ComponentWaitlist = () => {
   );
 };
 
-export default ComponentWaitlist;
+export default WaitlistComponent;

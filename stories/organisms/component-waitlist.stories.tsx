@@ -1,9 +1,9 @@
-import ComponentWaitlist from "components/organisms/Waitlist/waitlist";
+import WaitlistComponent from "components/organisms/Waitlist/waitlist";
 
 const StoryConfig = {
-  title: "Design System/Organisms/ComponentWaitlist"
+  title: "Design System/Organisms/WaitlistComponent"
 };
 export default StoryConfig;
 
-const ComponentWaitlistTemplate: React.FC<typeof ComponentWaitlist> = (args) => <ComponentWaitlist {...args} />;
-export const WaitlistComponent = ComponentWaitlistTemplate.bind({});
+const WaitlistComponentTemplate: React.FC<typeof WaitlistComponent> = (args) => <WaitlistComponent {...args} />;
+export const Waitlist = WaitlistComponentTemplate.bind({});
