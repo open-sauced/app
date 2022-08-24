@@ -11,7 +11,7 @@ interface AllSimpleColors {
 
 const NOTSUPPORTED = "#64748B";
 
-interface LanguageObject {
+export interface LanguageObject {
   languageName: string;
   percentageUsed: number;
 }
