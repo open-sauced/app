@@ -3,15 +3,15 @@ import HeaderLogo from "components/molecules/HeaderLogo/header-logo";
 import Text from "components/atoms/Typography/text";
 import Title from "components/atoms/Typography/title";
 import Button from "components/atoms/Button/button";
-import Icon from "components/atoms/Icon/icon";
-import GitHubOrange from "/public/icons/github-orange-icon.svg";
+import {FiArrowLeft} from "react-icons/fi";
+import {FaGithub} from "react-icons/fa";
 import AvatarRoll from "components/molecules/AvatarRoll/avatar-roll";
 const ComponentWaitlist = () => {
   return (
     <ComponentGradient>
       <div className="z-10">
         <div className="py-3 flex justify-center">
-          <HeaderLogo />
+          <HeaderLogo withBg={false} />
         </div>
         <div className="mt-24">
           <div className="text-center">
@@ -27,12 +27,15 @@ const ComponentWaitlist = () => {
           <div className="flex mt-8 justify-center">
             <AvatarRoll avatarCount={9} />
           </div>
-          <div className="flex mt-12 flex-col items-center">
-            <Button className="!text-lg   !bg-dark-orange-2 !border-dark-orange-7 !font-semibold" type="outline">
-              <Icon size={18} className="mr-2" IconImage={GitHubOrange} /> Share on Twitter
+          <div className="flex mt-8 flex-col items-center">
+            <Button
+              className="!text-lg hover:!border-dark-orange-9 focus-visible:!ring-dark-orange-3 focus-visible:!ring-2 hover:!bg-dark-orange-3  !bg-dark-orange-2 !border-dark-orange-7 !font-semibold"
+              type="outline"
+            >
+              <FaGithub className="mr-2"/> Share on Twitter
             </Button>
-            <Button className="mt-3" type="link">
-              &#10229; Go back home
+            <Button className="hover:!bg-dark-orange-3  mt-3" type="link">
+              <FiArrowLeft className="mr-1 font-bold" /> Go back home
             </Button>
           </div>
         </div>
