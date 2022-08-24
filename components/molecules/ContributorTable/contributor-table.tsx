@@ -18,7 +18,7 @@ interface CardTableProps {
   prList: PRs[];
 }
 
-const CardTable = ({ prList }: CardTableProps) => {
+const ContributorTable = ({ prList }: CardTableProps) => {
   return (
     prList.length > 0 ?
       <>
@@ -108,4 +108,4 @@ const CardTable = ({ prList }: CardTableProps) => {
   );
 };
 
-export default CardTable;
+export default ContributorTable;

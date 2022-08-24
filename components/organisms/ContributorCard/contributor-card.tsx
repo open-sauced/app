@@ -5,11 +5,12 @@ import CardHorizontalBarChart from "components/molecules/CardHorizontalBarChart/
 import CardLineChart from "components/molecules/CardLineChart/card-line-chart";
 import CardProfile from "components/molecules/CardProfile/card-profile";
 import CardRepoList from "components/molecules/CardRepoList/card-repo-list";
+import ContributorTable from "components/molecules/ContributorTable/contributor-table";
 import useContributorCard from "lib/hooks/useContributorCard";
 import { useState } from "react";
 
 const ContributorCard = () => {
-  const { profile, repoList, lineChart, languageList } = useContributorCard();
+  const { profile, repoList, lineChart, languageList, listOfPRs } = useContributorCard();
   const [showPRs, setShowPRs] = useState(false);
 
   return (
@@ -24,7 +25,9 @@ const ContributorCard = () => {
         <CardLineChart option={lineChart}/>
         <CardRepoList repoList={repoList}/>
         {showPRs ? 
-          <div>Replace with Card PRs</div>
+          <div className="p-4">
+            <ContributorTable prList={listOfPRs} />
+          </div>
         
           :
         

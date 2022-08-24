@@ -90,11 +90,47 @@ const useContributorCard = () => {
     }
   ];
 
+  const listOfPRs = [
+    {
+      prName: "Merging some work",
+      prStatus: "merged",
+      prIssuedTime: "2mo",
+      prClosedTime: "2mo",
+      noOfFilesChanged: 13,
+      noOfLinesChanged: 837
+    },
+    {
+      prName: "Merging some work",
+      prStatus: "closed",
+      prIssuedTime: "2mo",
+      prClosedTime: "2mo",
+      noOfFilesChanged: 13,
+      noOfLinesChanged: 837
+    },
+    {
+      prName: "Merging some work",
+      prStatus: "open",
+      prIssuedTime: "2mo",
+      prClosedTime: "2mo",
+      noOfFilesChanged: 13,
+      noOfLinesChanged: 837
+    },
+    {
+      prName: "Merging some work",
+      prStatus: "draft",
+      prIssuedTime: "2mo",
+      prClosedTime: "2mo",
+      noOfFilesChanged: 13,
+      noOfLinesChanged: 837
+    }
+  ];
+
   return {
     lineChart,
     profile,
     repoList,
-    languageList
+    languageList,
+    listOfPRs
   };
 };
 
