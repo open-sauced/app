@@ -9,11 +9,31 @@ const storyConfig = {
 
 export default storyConfig;
 
-//Mission Start
-
 const testOptions = {
-  xAxis: {},
-  yAxis: {},
+  grid: {
+    show: true
+  },
+  xAxis: {
+    boundaryGap: false,
+    scale: true,
+    minInterval: 7,
+    maxInterval: 7,
+    min: 0,
+    max: 35,
+    axisLabel: {
+      formatter: "{value} days ago" 
+    }
+  },
+  yAxis: {
+    min: 0,
+    max: 100,
+    splitNumber: 2,
+    boundaryGap: false,
+    axisLabel: {
+      showMinLabel: false,
+      formatter: "{value}%" 
+    }
+  },
   series: [
     {
       symbolSize: 20,
