@@ -34,7 +34,7 @@ const CardHorizontalBarChart = ({ languageList }: CardHorizontalBarChartProps): 
   return (
     <div className="flex flex-col gap-1 min-w-[120px]">
       {/* Progress Bar */}
-      <div className="flex items-center w-full rounded-full gap-1 overflow-hidden mt-7">
+      <div className="flex items-center w-full rounded-full gap-0.5 overflow-hidden">
         {sortedLangArray.map(({ languageName, percentageUsed }, index) =>
           <div
             key={index}
