@@ -18,6 +18,13 @@ const useContributorData = () => {
         }
       }
     },
+    grid: {
+      height: 100,
+      top: 0,
+      bottom: 0,
+      right: 0,
+      left: 0
+    },
     series: [
       {
         data: [820, 932, 901, 934, 1290, 1330, 1320],
