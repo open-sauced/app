@@ -43,7 +43,7 @@ const ContributorCard = ({ className, contributor }: ContributorCardProps) => {
             <CardHorizontalBarChart languageList={languageList} />
           </div>
         </div>
-        <div className="h-[110px]">
+        <div className="h-[110px] overflow-hidden">
           <CardLineChart lineChartOption={lineChart} />
         </div>
         <CardRepoList repoList={repoList} />
