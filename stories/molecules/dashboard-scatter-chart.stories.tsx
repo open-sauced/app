@@ -1,9 +1,9 @@
 import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-import ScatterChart from "../../components/molecules/ScatterChart/scatter-chart";
+import DashboardScatterChart from "../../components/molecules/DashboardScatterChart/dashboard-scatter-chart";
 
 const storyConfig = {
-  title: "Design System/Molecules/Scatter Chart",
+  title: "Design System/Molecules/Dashboard Scatter Chart",
   component: "ScatterChart"
 };
 
@@ -151,7 +151,7 @@ const testOptionsWithImage = {
 };
 
 // ScatterChart Template
-const ScatterChartTemplate: ComponentStory<typeof ScatterChart> = (args) => <ScatterChart {...args} />;
+const ScatterChartTemplate: ComponentStory<typeof DashboardScatterChart> = (args) => <DashboardScatterChart {...args} />;
 
 // ScatterChart Default
 export const Default = ScatterChartTemplate.bind({});

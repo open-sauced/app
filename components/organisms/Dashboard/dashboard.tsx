@@ -1,6 +1,6 @@
 import useDashBoardData from "lib/hooks/useDashboardData";
 import Card from "../../atoms/Card/card";
-import ScatterChart from "components/molecules/ScatterChart/scatter-chart";
+import DashboardScatterChart from "components/molecules/DashboardScatterChart/dashboard-scatter-chart";
 import HighlightCard from "components/molecules/HighlightCard/highlight-card";
 import humanizeNumber from "lib/utils/humanizeNumber";
 
@@ -54,7 +54,7 @@ export const Dashboard = (): JSX.Element => {
       <section className="flex flex-col lg:flex-row max-w-full gap-4 mb-6">
         <div className="flex flex-col w-full gap-4">
           <Card className="w-full p-5">
-            <ScatterChart title="Test Title" option={scatterOptions} />
+            <DashboardScatterChart title="Test Title" option={scatterOptions} />
           </Card>
         </div>
       </section>

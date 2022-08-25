@@ -2,12 +2,12 @@ import React from "react";
 import EChartWrapper from "components/atoms/EChartWrapper/echart-wrapper";
 import ComponentHeader from "../ComponentHeader/component-header";
 
-interface ScatterChartProps {
+interface DashboardScatterChartProps {
     title: string;
     option: Object;
 }
 
-const ScatterChart: React.FC<ScatterChartProps> = ({ title, option }) => {
+const DashboardScatterChart: React.FC<DashboardScatterChartProps> = ({ title, option }) => {
   return (
     <>
       <ComponentHeader title={title} />
@@ -16,4 +16,4 @@ const ScatterChart: React.FC<ScatterChartProps> = ({ title, option }) => {
   );
 };
 
-export default ScatterChart;
+export default DashboardScatterChart;
