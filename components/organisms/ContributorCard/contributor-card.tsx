@@ -50,9 +50,13 @@ const ContributorCard = ({ className, contributor }: ContributorCardProps) => {
         {showPRs ? (
           <ContributorTable listOfPRs={listOfPRs} />
         ) : null}
-        <div className="flex w-full py-3 justify-center">
-          <Button onClick={() => setShowPRs((prevState) => !prevState)} type="link">
-            <Text className="!text-xs !text-light-slate-11 font-medium">
+        <div className="flex w-full justify-center">
+          <Button 
+            onClick={() => setShowPRs((prevState) => !prevState)} 
+            type="link"
+            className="!w-full"
+          >
+            <Text className="!text-sm !text-light-slate-11 font-medium">
               {showPRs ? "Hide" : "Show"} latest pull requests
             </Text>
           </Button>
