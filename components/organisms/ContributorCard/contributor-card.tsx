@@ -20,9 +20,9 @@ interface ContributorObject {
     dateOfFirstPR: string;
   };
   repoList: RepoList[];
-  lineChartOption: object;
-  languagesUsed: LanguageObject[];
-  prList: PRs[];
+  lineChart: object;
+  languageList: LanguageObject[];
+  listOfPRs: PRs[];
 }
 
 interface ContributorCardProps {
@@ -31,31 +31,27 @@ interface ContributorCardProps {
 }
 
 const ContributorCard = ({ className, contributor }: ContributorCardProps) => {
-  const { profile, repoList, lineChartOption, languagesUsed, prList } = contributor;
+  const { profile, repoList, lineChart, languageList, listOfPRs } = contributor;
   const [ showPRs, setShowPRs ] = useState(false);
 
   return (
-    <Card className={className} >
+    <Card className={className}>
       <div className="flex flex-col gap-2">
         <div className="flex w-full justify-between gap-2">
           <CardProfile {...profile} />
           <div className="w-32">
-            <CardHorizontalBarChart languagesUsed={languagesUsed} />
+            <CardHorizontalBarChart languageList={languageList} />
           </div>
         </div>
-        <CardLineChart lineChartOption={lineChartOption}/>
-        <CardRepoList repoList={repoList}/>
-        {showPRs ? 
+        <CardLineChart lineChartOption={lineChart} />
+        <CardRepoList repoList={repoList} />
+        {showPRs ? (
           <div className="p-4">
-            <ContributorTable prList={prList} />
+            <ContributorTable listOfPRs={listOfPRs} />
           </div>
-        
-          :
-        
-          null
-        }
+        ) : null}
         <div className="flex w-full py-3 justify-center">
-          <Button onClick={() => setShowPRs(prevState => !prevState)} type="link">
+          <Button onClick={() => setShowPRs((prevState) => !prevState)} type="link">
             <Text className="!text-xs !text-light-slate-11 font-medium">
               {showPRs ? "Hide" : "Show"} latest pull requests
             </Text>
