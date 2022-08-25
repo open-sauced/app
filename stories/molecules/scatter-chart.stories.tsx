@@ -10,6 +10,12 @@ const storyConfig = {
 export default storyConfig;
 
 const testOptions = {
+  grid: {
+    left: 40,
+    top: 10,
+    right: 40,
+    bottom: 20
+  },
   xAxis: {
     boundaryGap: false,
     scale: true,
@@ -74,8 +80,43 @@ const testOptions = {
 };
 
 const testOptionsWithImage = {
-  xAxis: {},
-  yAxis: {},
+  grid: {
+    left: 40,
+    top: 10,
+    right: 40,
+    bottom: 20
+  },
+  xAxis: {
+    boundaryGap: false,
+    scale: true,
+    minInterval: 7,
+    maxInterval: 7,
+    min: 0,
+    max: 35,
+    axisLabel: {
+      formatter: (value: number, index: number) => value === 0 ? "Today" : value === 35 ? "35+ days ago" : `${value} days ago` 
+    },
+    splitLine: {
+      lineStyle: {
+        type: "dashed"
+      }
+    }
+  },
+  yAxis: {
+    min: 0,
+    max: 100,
+    splitNumber: 2,
+    boundaryGap: false,
+    axisLabel: {
+      showMinLabel: false,
+      formatter: "{value}%" 
+    },
+    splitLine: {
+      lineStyle: {
+        type: "dashed"
+      }
+    }
+  },
   series: [
     {
       symbolSize: 30,

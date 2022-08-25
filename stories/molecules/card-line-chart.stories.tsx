@@ -10,6 +10,12 @@ const storyConfig = {
 export default storyConfig;
 
 const testOptions  = {
+  grid: {
+    left: 40,
+    top: 10,
+    right: 40,
+    bottom: 20
+  },
   xAxis: {
     type: "category",
     boundaryGap: false,
