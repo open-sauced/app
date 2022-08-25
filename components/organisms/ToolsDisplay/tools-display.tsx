@@ -19,8 +19,8 @@ const Tool = ({ tool }: ToolProps): JSX.Element => {
 
   case "Reports":
     return <Reports/>; 
-    case "Contributors":
-     return <Contributors/>
+  case "Contributors":
+    return <Contributors/>;
   default:
     return <> {tool ? `${tool}` : "Test"} Tool Page</>;
   }
