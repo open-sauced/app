@@ -36,8 +36,8 @@ const ContributorCard = ({ className, contributor }: ContributorCardProps) => {
 
   return (
     <Card className={className}>
-      <div className="flex flex-col gap-2">
-        <div className="flex w-full justify-between gap-2">
+      <div className="flex flex-col gap-3">
+        <div className="flex w-full justify-between items-center gap-2">
           <CardProfile {...profile} />
           <div>
             <CardHorizontalBarChart languageList={languageList} />
