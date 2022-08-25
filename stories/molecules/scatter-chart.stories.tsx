@@ -10,9 +10,6 @@ const storyConfig = {
 export default storyConfig;
 
 const testOptions = {
-  grid: {
-    show: true
-  },
   xAxis: {
     boundaryGap: false,
     scale: true,
@@ -21,7 +18,12 @@ const testOptions = {
     min: 0,
     max: 35,
     axisLabel: {
-      formatter: "{value} days ago" 
+      formatter: (value: number, index: number) => value === 0 ? "Today" : value === 35 ? "35+ days ago" : `${value} days ago` 
+    },
+    splitLine: {
+      lineStyle: {
+        type: "dashed"
+      }
     }
   },
   yAxis: {
@@ -32,6 +34,11 @@ const testOptions = {
     axisLabel: {
       showMinLabel: false,
       formatter: "{value}%" 
+    },
+    splitLine: {
+      lineStyle: {
+        type: "dashed"
+      }
     }
   },
   series: [
