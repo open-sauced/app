@@ -36,23 +36,27 @@ const ContributorCard = ({ className, contributor }: ContributorCardProps) => {
 
   return (
     <Card className={className}>
-      <div className="flex flex-col gap-2">
-        <div className="flex w-full justify-between gap-2">
+      <div className="flex flex-col gap-3">
+        <div className="flex w-full justify-between items-center gap-2">
           <CardProfile {...profile} />
-          <div className="w-32">
+          <div>
             <CardHorizontalBarChart languageList={languageList} />
           </div>
         </div>
-        <CardLineChart lineChartOption={lineChart} />
+        <div className="h-[110px] overflow-hidden">
+          <CardLineChart lineChartOption={lineChart} />
+        </div>
         <CardRepoList repoList={repoList} />
         {showPRs ? (
-          <div className="p-4">
-            <ContributorTable listOfPRs={listOfPRs} />
-          </div>
+          <ContributorTable listOfPRs={listOfPRs} />
         ) : null}
-        <div className="flex w-full py-3 justify-center">
-          <Button onClick={() => setShowPRs((prevState) => !prevState)} type="link">
-            <Text className="!text-xs !text-light-slate-11 font-medium">
+        <div className="flex w-full justify-center">
+          <Button 
+            onClick={() => setShowPRs((prevState) => !prevState)} 
+            type="link"
+            className="!w-full"
+          >
+            <Text className="!text-sm !text-light-slate-11 font-medium">
               {showPRs ? "Hide" : "Show"} latest pull requests
             </Text>
           </Button>
