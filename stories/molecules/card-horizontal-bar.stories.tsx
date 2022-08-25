@@ -30,26 +30,26 @@ const CardHorizontalBarTemplate: ComponentStory<typeof CardHorizontalBarChart> =
 export const OneLanguage = CardHorizontalBarTemplate.bind({});
 
 OneLanguage.args = {
-  languagesUsed: [
+  languageList: [
     {
       languageName: "JavaScript",
-      percentageUsed: 100
-    }
-  ]
+      percentageUsed: 100,
+    },
+  ],
 };
 
 export const MultipleLanguages = CardHorizontalBarTemplate.bind({});
 
 MultipleLanguages.args = {
-  languagesUsed: testLanguageList
+  languageList: testLanguageList,
 };
 export const notSupportedLanguage = CardHorizontalBarTemplate.bind({});
 
 notSupportedLanguage.args = {
-  languagesUsed: [
+  languageList: [
     {
       languageName: "qBasic",
-      percentageUsed: 100
-    }
-  ]
+      percentageUsed: 100,
+    },
+  ],
 };
