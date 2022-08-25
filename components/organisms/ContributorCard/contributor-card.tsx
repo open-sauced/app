@@ -43,12 +43,12 @@ const ContributorCard = ({ className, contributor }: ContributorCardProps) => {
             <CardHorizontalBarChart languageList={languageList} />
           </div>
         </div>
-        <CardLineChart lineChartOption={lineChart} />
+        <div className="h-[110px]">
+          <CardLineChart lineChartOption={lineChart} />
+        </div>
         <CardRepoList repoList={repoList} />
         {showPRs ? (
-          <div className="p-4">
-            <ContributorTable listOfPRs={listOfPRs} />
-          </div>
+          <ContributorTable listOfPRs={listOfPRs} />
         ) : null}
         <div className="flex w-full py-3 justify-center">
           <Button onClick={() => setShowPRs((prevState) => !prevState)} type="link">
