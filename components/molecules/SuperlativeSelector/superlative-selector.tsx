@@ -47,7 +47,7 @@ const SuperativeSelector: React.FC<SuperlativeSelectorProps> = ({
         )}
       </ContextFilterButton>
       {isOpen && (
-        <div className="absolute space-y-1 mt-1 shadow-superlative w-64 z-10 bg-white rounded-lg px-1.5 py-2">
+        <div className="absolute -left-3/4 md:left-0 space-y-1 mt-1 shadow-superlative w-64 z-10 bg-white rounded-lg px-1.5 py-2">
           {filterOptions.length > 0 &&
             filterOptions.map((option, index) => (
               <Radio
