@@ -141,10 +141,10 @@ export const Default = ContributorCardTemplate.bind({});
 
 Default.args = {
   contributor: {
-    lineChartOption: lineChart,
+    lineChart: lineChart,
     profile: profile,
-    prList: listOfPRs,
-    languagesUsed: languageList,
-    repoList: repoList
-  }
+    listOfPRs: listOfPRs,
+    languageList: languageList,
+    repoList: repoList,
+  },
 };

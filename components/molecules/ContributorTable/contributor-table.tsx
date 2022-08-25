@@ -15,12 +15,12 @@ export interface PRs {
 }
 
 interface CardTableProps {
-  prList: PRs[];
+  listOfPRs: PRs[];
 }
 
-const ContributorTable = ({ prList }: CardTableProps) => {
+const ContributorTable = ({ listOfPRs }: CardTableProps) => {
   return (
-    prList.length > 0 ?
+    listOfPRs.length > 0 ?
       <>
         <div className="flex gap-2 items-center bg-light-slate-3 rounded-md px-2 py-1">
           <div className="w-3/5">
@@ -49,7 +49,7 @@ const ContributorTable = ({ prList }: CardTableProps) => {
             </div>
           </IconContext.Provider>
         </div>
-        {prList.map(({prName, prStatus, prIssuedTime, prClosedTime, noOfFilesChanged, noOfLinesChanged}, index) => 
+        {listOfPRs.map(({prName, prStatus, prIssuedTime, prClosedTime, noOfFilesChanged, noOfLinesChanged}, index) => 
           <div key={index} className="flex gap-2 items-center px-2 py-1">
             <div className="flex item-center gap-2 w-3/5">
               {prStatus === "open" ? 

@@ -17,13 +17,13 @@ export interface LanguageObject {
 }
 
 interface CardHorizontalBarChartProps {
-  languagesUsed: LanguageObject[];
+  languageList: LanguageObject[];
 }
 
 const languageToColor: AllSimpleColors = colors as AllSimpleColors;
 
-const CardHorizontalBarChart = ({ languagesUsed }: CardHorizontalBarChartProps): JSX.Element => {
-  const sortedLangArray = languagesUsed.sort((a, b) => b.percentageUsed - a.percentageUsed);
+const CardHorizontalBarChart = ({ languageList }: CardHorizontalBarChartProps): JSX.Element => {
+  const sortedLangArray = languageList.sort((a, b) => b.percentageUsed - a.percentageUsed);
 
   const [descriptText, setDescriptText] = useState(sortedLangArray[0].languageName);
 
