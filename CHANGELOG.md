@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.3.0-beta.12](https://github.com/open-sauced/insights/compare/v1.3.0-beta.11...v1.3.0-beta.12) (2022-08-25)
+
+
+### 🧑‍💻 Code Refactoring
+
+* Improve the `<ComponentCard>` CSS ([#266](https://github.com/open-sauced/insights/issues/266)) ([9da4d62](https://github.com/open-sauced/insights/commit/9da4d62680cd010c03834193e6df026bf6046509))
+
 ## [1.3.0-beta.11](https://github.com/open-sauced/insights/compare/v1.3.0-beta.10...v1.3.0-beta.11) (2022-08-25)
 
 
