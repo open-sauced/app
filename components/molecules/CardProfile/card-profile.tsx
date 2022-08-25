@@ -16,7 +16,7 @@ const CardProfile = ({ githubAvatar, githubName, totalPRs, dateOfFirstPR }: Card
   return (
     <div className="flex gap-2">
       <Avatar
-        size="lg"
+        size={40}
         avatarURL={githubAvatar ? githubAvatar : undefined}
       />
       <div>
