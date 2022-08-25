@@ -3,7 +3,7 @@ import { StaticImageData } from "next/image";
 
 const REPOLISTLIMIT = 5;
 
-interface RepoList {
+export interface RepoList {
   repoName: string;
   repoIcon: StaticImageData;
 }

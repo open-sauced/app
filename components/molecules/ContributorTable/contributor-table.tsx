@@ -5,7 +5,7 @@ import { BsFileDiff } from "react-icons/bs";
 import { GoDiff } from "react-icons/go";
 import { VscGitPullRequest,VscGitPullRequestClosed, VscGitMerge, VscGitPullRequestDraft } from "react-icons/vsc";
 
-interface PRs {
+export interface PRs {
   prStatus: string;
   prName: string;
   prIssuedTime: string;
@@ -18,7 +18,7 @@ interface CardTableProps {
   prList: PRs[];
 }
 
-const CardTable = ({ prList }: CardTableProps) => {
+const ContributorTable = ({ prList }: CardTableProps) => {
   return (
     prList.length > 0 ?
       <>
@@ -108,4 +108,4 @@ const CardTable = ({ prList }: CardTableProps) => {
   );
 };
 
-export default CardTable;
+export default ContributorTable;

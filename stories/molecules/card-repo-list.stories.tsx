@@ -3,7 +3,6 @@ import { ComponentStory, ComponentMeta } from "@storybook/react";
 import CardRepoList from "components/molecules/CardRepoList/card-repo-list";
 import TestRepoAvatar from "public/icons/test-repo-avatar.svg";
 
-
 const storyConfig = {
   title: "Design System/Molecules/Card Repo List",
   component: "Card Repo List"
