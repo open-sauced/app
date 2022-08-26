@@ -12,7 +12,7 @@ const ReportsHistory = ({ reportList }: ReportsHistoryProps): JSX.Element => {
   const heading = <Title level={5} className="!text-light-slate-9 uppercase">
     <div className="flex justify-between w-full gap-2">
       <div className="w-2/5 text-xs font-semibold text-slate-400 tracking-wide uppercase">
-        report date
+        report name
       </div>
       <div className="w-1/5 text-xs font-semibold text-slate-400 tracking-wide uppercase">
         issue date
