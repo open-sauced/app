@@ -5,6 +5,27 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.2.3](https://github.com/open-sauced/insights/compare/v1.2.2...v1.2.3) (2022-08-24)
+
+
+### 🐛 Bug Fixes
+
+* correct feature request issue template for good ([6410fd2](https://github.com/open-sauced/insights/commit/6410fd236e9ee60f0237e2955634cacd345f2f52))
+
+### [1.2.2](https://github.com/open-sauced/insights/compare/v1.2.1...v1.2.2) (2022-08-24)
+
+
+### 🐛 Bug Fixes
+
+* correct issue template labelling ([3ce5039](https://github.com/open-sauced/insights/commit/3ce5039fcee2dba8afb682195ad866369de983d2))
+
+### [1.2.1](https://github.com/open-sauced/insights/compare/v1.2.0...v1.2.1) (2022-08-24)
+
+
+### 🔥 Performance Improvements
+
+* add backwards compatible issue templates ([#262](https://github.com/open-sauced/insights/issues/262)) ([af21ab5](https://github.com/open-sauced/insights/commit/af21ab587f008d96c935d8f331a0f2f7b2c423b7))
+
 ## [1.2.0](https://github.com/open-sauced/insights/compare/v1.1.3...v1.2.0) (2022-08-20)
 
 
