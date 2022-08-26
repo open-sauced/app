@@ -60,4 +60,4 @@ const CardLineChartTemplate: ComponentStory<typeof CardLineChart> = (args) => <C
 
 // ScatterChart Default
 export const Default = CardLineChartTemplate.bind({});
-Default.args = { option: testOptions };
+Default.args = { lineChartOption: testOptions };

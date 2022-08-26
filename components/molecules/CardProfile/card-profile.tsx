@@ -14,20 +14,20 @@ interface CardProfileProps {
 
 const CardProfile = ({ githubAvatar, githubName, totalPRs, dateOfFirstPR }: CardProfileProps): JSX.Element => {
   return (
-    <div className="flex gap-2">
+    <div className="flex items-center gap-2">
       <Avatar
-        size="lg"
+        size={40}
         avatarURL={githubAvatar ? githubAvatar : undefined}
       />
       <div>
         <div>
           <Text className="!text-base !text-black font-medium">{githubName}</Text>
         </div>
-        <div className="flex justify-between gap-2">
-          <div className="gap-2 text-light-slate-11">
+        <div className="flex gap-2 font-medium text-sm">
+          <div className="flex items-center gap-1 text-light-slate-11">
             <Icon alt="Total Pull-Requests" IconImage={ForkIcon} /> {totalPRs}
           </div>
-          <div className="gap-2 text-light-slate-11">
+          <div className="flex items-center gap-1 text-light-slate-11">
             <Icon alt="Time from First Pull Request" IconImage={FirstPRIcon} /> {dateOfFirstPR}
           </div>
         </div>

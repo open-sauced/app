@@ -5,6 +5,32 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.3.0-beta.12](https://github.com/open-sauced/insights/compare/v1.3.0-beta.11...v1.3.0-beta.12) (2022-08-25)
+
+
+### 🧑‍💻 Code Refactoring
+
+* Improve the `<ComponentCard>` CSS ([#266](https://github.com/open-sauced/insights/issues/266)) ([9da4d62](https://github.com/open-sauced/insights/commit/9da4d62680cd010c03834193e6df026bf6046509))
+
+## [1.3.0-beta.11](https://github.com/open-sauced/insights/compare/v1.3.0-beta.10...v1.3.0-beta.11) (2022-08-25)
+
+
+### 🐛 Bug Fixes
+
+* adjusted opinion filter on mobile screens ([#264](https://github.com/open-sauced/insights/issues/264)) ([2d9785c](https://github.com/open-sauced/insights/commit/2d9785ccbbbaabdd88fe59f97663a5a35569ec3b))
+
+
+### 🍕 Features
+
+* Implement contribution page ([#263](https://github.com/open-sauced/insights/issues/263)) ([f41d7f9](https://github.com/open-sauced/insights/commit/f41d7f9a7f6efa7b123448d1b61253f3efcaf803))
+
+## [1.3.0-beta.10](https://github.com/open-sauced/insights/compare/v1.3.0-beta.9...v1.3.0-beta.10) (2022-08-24)
+
+
+### 🍕 Features
+
+* Implement Contributor Card Component ([#245](https://github.com/open-sauced/insights/issues/245)) ([3bd55ea](https://github.com/open-sauced/insights/commit/3bd55ea461a63b00c1f99b0408e328326c1cc3d7))
+
 ## [1.3.0-beta.9](https://github.com/open-sauced/insights/compare/v1.3.0-beta.8...v1.3.0-beta.9) (2022-08-23)
 
 
