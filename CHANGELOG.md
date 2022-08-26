@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.3.0-beta.14](https://github.com/open-sauced/insights/compare/v1.3.0-beta.13...v1.3.0-beta.14) (2022-08-26)
+
+
+### 🐛 Bug Fixes
+
+* correct supabase-ui default style for hover ([#267](https://github.com/open-sauced/insights/issues/267)) ([a23fe4b](https://github.com/open-sauced/insights/commit/a23fe4b5887b5fecd9a2f4a3ec53758b8e0e9232)), closes [#226](https://github.com/open-sauced/insights/issues/226)
+* increase truncate string number of words ([#268](https://github.com/open-sauced/insights/issues/268)) ([ab47a96](https://github.com/open-sauced/insights/commit/ab47a96a1d5ca7dde333da814f07cc96b39f26c7)), closes [#247](https://github.com/open-sauced/insights/issues/247)
+
 ## [1.3.0-beta.13](https://github.com/open-sauced/insights/compare/v1.3.0-beta.12...v1.3.0-beta.13) (2022-08-26)
 
 
