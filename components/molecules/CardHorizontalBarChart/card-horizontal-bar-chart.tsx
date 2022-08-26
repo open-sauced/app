@@ -17,13 +17,13 @@ export interface LanguageObject {
 }
 
 interface CardHorizontalBarChartProps {
-  languagesUsed: LanguageObject[];
+  languageList: LanguageObject[];
 }
 
 const languageToColor: AllSimpleColors = colors as AllSimpleColors;
 
-const CardHorizontalBarChart = ({ languagesUsed }: CardHorizontalBarChartProps): JSX.Element => {
-  const sortedLangArray = languagesUsed.sort((a, b) => b.percentageUsed - a.percentageUsed);
+const CardHorizontalBarChart = ({ languageList }: CardHorizontalBarChartProps): JSX.Element => {
+  const sortedLangArray = languageList.sort((a, b) => b.percentageUsed - a.percentageUsed);
 
   const [descriptText, setDescriptText] = useState(sortedLangArray[0].languageName);
 
@@ -32,9 +32,9 @@ const CardHorizontalBarChart = ({ languagesUsed }: CardHorizontalBarChartProps):
   };
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-1 min-w-[120px]">
       {/* Progress Bar */}
-      <div className="flex items-center w-full rounded-full gap-1 overflow-hidden mt-7">
+      <div className="flex items-center w-full rounded-full gap-0.5 overflow-hidden">
         {sortedLangArray.map(({ languageName, percentageUsed }, index) =>
           <div
             key={index}

@@ -2,6 +2,9 @@ module.exports = {
   content: ["./pages/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}", "./layouts/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      gridTemplateColumns: {
+        autodesktop: "repeat(auto-fit, minmax(410px, 1fr))", automobile: "repeat(auto-fit, minmax(365px, 1fr))"
+      },
       screens: {
         xs: "425px",
         // => @media (min-width: 425px) { ... }

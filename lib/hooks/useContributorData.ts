@@ -5,24 +5,25 @@ const useContributorData = () => {
     xAxis: {
       type: "category",
       boundaryGap: false,
-      axisLabel: {
-        fontSize: 14,
-        fontWeight: "bold",
-        color: "darkgray"
-      },
+      axisLabel: false,
       data: ["Jan 2022", "Mar 2022", "Jun 2022"]
     },
     yAxis: {
       type: "value",
       splitNumber: 1,
-      axisLabel: {
-        show: false
-      },
+      axisLabel: false,
       splitLine: {
         lineStyle: {
           type: "dashed"
         }
       }
+    },
+    grid: {
+      height: 100,
+      top: 0,
+      bottom: 0,
+      right: 0,
+      left: 0
     },
     series: [
       {

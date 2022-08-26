@@ -20,9 +20,9 @@ interface ContributorObject {
     dateOfFirstPR: string;
   };
   repoList: RepoList[];
-  lineChartOption: object;
-  languagesUsed: LanguageObject[];
-  prList: PRs[];
+  lineChart: object;
+  languageList: LanguageObject[];
+  listOfPRs: PRs[];
 }
 
 interface ContributorCardProps {
@@ -31,32 +31,32 @@ interface ContributorCardProps {
 }
 
 const ContributorCard = ({ className, contributor }: ContributorCardProps) => {
-  const { profile, repoList, lineChartOption, languagesUsed, prList } = contributor;
+  const { profile, repoList, lineChart, languageList, listOfPRs } = contributor;
   const [ showPRs, setShowPRs ] = useState(false);
 
   return (
-    <Card className={className} >
-      <div className="flex flex-col gap-2">
-        <div className="flex w-full justify-between gap-2">
+    <Card className={className}>
+      <div className="flex flex-col gap-3">
+        <div className="flex w-full justify-between items-center gap-2">
           <CardProfile {...profile} />
-          <div className="w-32">
-            <CardHorizontalBarChart languagesUsed={languagesUsed} />
+          <div>
+            <CardHorizontalBarChart languageList={languageList} />
           </div>
         </div>
-        <CardLineChart lineChartOption={lineChartOption}/>
-        <CardRepoList repoList={repoList}/>
-        {showPRs ? 
-          <div className="p-4">
-            <ContributorTable prList={prList} />
-          </div>
-        
-          :
-        
-          null
-        }
-        <div className="flex w-full py-3 justify-center">
-          <Button onClick={() => setShowPRs(prevState => !prevState)} type="link">
-            <Text className="!text-xs !text-light-slate-11 font-medium">
+        <div className="h-[110px] overflow-hidden">
+          <CardLineChart lineChartOption={lineChart} />
+        </div>
+        <CardRepoList repoList={repoList} />
+        {showPRs ? (
+          <ContributorTable listOfPRs={listOfPRs} />
+        ) : null}
+        <div className="flex w-full justify-center">
+          <Button 
+            onClick={() => setShowPRs((prevState) => !prevState)} 
+            type="link"
+            className="!w-full"
+          >
+            <Text className="!text-sm !text-light-slate-11 font-medium">
               {showPRs ? "Hide" : "Show"} latest pull requests
             </Text>
           </Button>
