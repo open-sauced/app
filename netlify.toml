@@ -2,7 +2,7 @@
 NODE_VERSION = "16"
 
 [context.beta]
-environment = { CHANNEL = "beta", NEXT_PUBLIC_BASE_URL = "https://beta.insights.opensauced.pizza" }
+environment = { CHANNEL = "beta" }
 
 [dev]
 framework = "#static"

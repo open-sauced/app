@@ -3,6 +3,19 @@ import { supabase } from "../utils/supabase";
 import { User } from "@supabase/supabase-js";
 import { UserCredentials } from "@supabase/gotrue-js/src/lib/types";
 
+let base = "http://localhost:3000";
+
+if (process.env.CONTEXT === "deploy-preview") {
+  base = `${process.env.DEPLOY_PRIME_URL}/`;
+} else {
+  if (process.env.CHANNEL !== undefined && ["alpha", "beta"].includes(process.env.CHANNEL)) {
+    const {protocol, hostname} = new URL(process.env.URL ?? "/");
+    base = `${protocol}//${process.env.CHANNEL}.${hostname}/`;
+  }
+}
+
+console.log(base);
+
 const useSupabaseAuth = () => {
   const [user, setUser] = useState<User | null>(null);
 
@@ -21,7 +34,7 @@ const useSupabaseAuth = () => {
 
   return {
     signIn: (data: UserCredentials) => supabase.auth.signIn(data, {
-      redirectTo: process.env.NEXT_PUBLIC_BASE_URL
+      redirectTo: base
     }),
     signOut: () => supabase.auth.signOut(),
     user
