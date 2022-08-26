@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.3.0-beta.17](https://github.com/open-sauced/insights/compare/v1.3.0-beta.16...v1.3.0-beta.17) (2022-08-26)
+
+
+### 🐛 Bug Fixes
+
+* correct login redirect issues in supabase implemetation ([#274](https://github.com/open-sauced/insights/issues/274)) ([8fcd81e](https://github.com/open-sauced/insights/commit/8fcd81edf65ad7454ca1bba619b0880533ab6693))
+
 ## [1.3.0-beta.16](https://github.com/open-sauced/insights/compare/v1.3.0-beta.15...v1.3.0-beta.16) (2022-08-26)
 
 
