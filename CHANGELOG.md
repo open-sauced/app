@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.3.0-beta.15](https://github.com/open-sauced/insights/compare/v1.3.0-beta.14...v1.3.0-beta.15) (2022-08-26)
+
+
+### 🍕 Features
+
+* Implement waitlist page ([#210](https://github.com/open-sauced/insights/issues/210)) ([0826d07](https://github.com/open-sauced/insights/commit/0826d0790f3fda3815880f16877aab07458dc563)), closes [#152](https://github.com/open-sauced/insights/issues/152)
+
 ## [1.3.0-beta.14](https://github.com/open-sauced/insights/compare/v1.3.0-beta.13...v1.3.0-beta.14) (2022-08-26)
 
 
