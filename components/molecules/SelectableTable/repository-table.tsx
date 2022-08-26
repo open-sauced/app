@@ -90,7 +90,7 @@ const RepoSelectableTable: React.FC<RepoSelectableTableProps> = ({ title, tableT
                   }}
                 >
                   <td className="flex flex-row text-left p-2" ref={(element) => addCheckboxToRef(element)}>
-                    <Checkbox label="" /> {divSize > 0 && divSize < 350 ? truncateString(name, 3) : name}
+                    <Checkbox label="" /> {divSize > 0 && divSize < 350 ? truncateString(name, 9) : name}
                   </td>
                   <td className="text-right p-2">{humanizeNumber(stars)}</td>
                   <td className="text-right p-2">{humanizeNumber(12)}</td>

@@ -5,6 +5,49 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.3.0-beta.14](https://github.com/open-sauced/insights/compare/v1.3.0-beta.13...v1.3.0-beta.14) (2022-08-26)
+
+
+### 🐛 Bug Fixes
+
+* correct supabase-ui default style for hover ([#267](https://github.com/open-sauced/insights/issues/267)) ([a23fe4b](https://github.com/open-sauced/insights/commit/a23fe4b5887b5fecd9a2f4a3ec53758b8e0e9232)), closes [#226](https://github.com/open-sauced/insights/issues/226)
+* increase truncate string number of words ([#268](https://github.com/open-sauced/insights/issues/268)) ([ab47a96](https://github.com/open-sauced/insights/commit/ab47a96a1d5ca7dde333da814f07cc96b39f26c7)), closes [#247](https://github.com/open-sauced/insights/issues/247)
+
+## [1.3.0-beta.13](https://github.com/open-sauced/insights/compare/v1.3.0-beta.12...v1.3.0-beta.13) (2022-08-26)
+
+
+### 🔥 Performance Improvements
+
+* add backwards compatible issue templates ([#262](https://github.com/open-sauced/insights/issues/262)) ([af21ab5](https://github.com/open-sauced/insights/commit/af21ab587f008d96c935d8f331a0f2f7b2c423b7))
+
+
+### 🐛 Bug Fixes
+
+* correct feature request issue template for good ([6410fd2](https://github.com/open-sauced/insights/commit/6410fd236e9ee60f0237e2955634cacd345f2f52))
+* correct issue template labelling ([3ce5039](https://github.com/open-sauced/insights/commit/3ce5039fcee2dba8afb682195ad866369de983d2))
+* Update GitSense API route for repos ([#270](https://github.com/open-sauced/insights/issues/270)) ([8f7e1c5](https://github.com/open-sauced/insights/commit/8f7e1c5c03a92c8a7d38f394229a8b1c9f44c756))
+
+### [1.2.3](https://github.com/open-sauced/insights/compare/v1.2.2...v1.2.3) (2022-08-24)
+
+
+### 🐛 Bug Fixes
+
+* correct feature request issue template for good ([6410fd2](https://github.com/open-sauced/insights/commit/6410fd236e9ee60f0237e2955634cacd345f2f52))
+
+### [1.2.2](https://github.com/open-sauced/insights/compare/v1.2.1...v1.2.2) (2022-08-24)
+
+
+### 🐛 Bug Fixes
+
+* correct issue template labelling ([3ce5039](https://github.com/open-sauced/insights/commit/3ce5039fcee2dba8afb682195ad866369de983d2))
+
+### [1.2.1](https://github.com/open-sauced/insights/compare/v1.2.0...v1.2.1) (2022-08-24)
+
+
+### 🔥 Performance Improvements
+
+* add backwards compatible issue templates ([#262](https://github.com/open-sauced/insights/issues/262)) ([af21ab5](https://github.com/open-sauced/insights/commit/af21ab587f008d96c935d8f331a0f2f7b2c423b7))
+
 ## [1.3.0-beta.12](https://github.com/open-sauced/insights/compare/v1.3.0-beta.11...v1.3.0-beta.12) (2022-08-25)
 
 
