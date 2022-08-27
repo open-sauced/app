@@ -12,7 +12,21 @@ module.exports = {
         "2xl": "1440px"
         // => @media (min-width: 1440px) { ... }
       },
+      blur: {
+        "4xl": "5rem"
+      },
+      spacing:{
+        "98": "29rem",
+        "97":"28rem",
+        "99":"56rem"
+      },
       colors: {
+        gradient: {
+          "dark-two": "hsl(26, 54%, 15%)",
+          "dark-one": "hsl(23, 75%, 5%)",
+          "orange-one": "	hsl(33, 100%, 50%)",
+          "orange-two": "	hsl(19, 100%, 50%)"
+        },
         light: {
           slate: {
             1: "hsl(206, 30.0%, 98.8%)",
@@ -187,8 +201,11 @@ module.exports = {
         }
       },
       boxShadow: {
-        login: "0px 64px 100px -80px #FF5F13, 0px 16px 56px rgba(181, 107, 72, 0.19)",
-        superlative: "0px 22px 24px -8px rgba(0, 0, 0, 0.05), 0px 4px 8px rgba(0, 0, 0, 0.1)"
+        "login": "0px 64px 100px -80px #FF5F13, 0px 16px 56px rgba(181, 107, 72, 0.19)",
+        "superlative": "0px 22px 24px -8px rgba(0, 0, 0, 0.05), 0px 4px 8px rgba(0, 0, 0, 0.1)"
+      },
+      backgroundImage: {
+        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))"
       }
     }
   },
