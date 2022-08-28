@@ -1,17 +1,11 @@
 [build.environment]
 NODE_VERSION = "16"
 
-[context.production]
-command = "echo \"NEXT_PUBLIC_BASE_URL=$URL\" > .env.local && npm run build"
-
-[context.deploy-preview]
-command = "echo \"NEXT_PUBLIC_BASE_URL=$DEPLOY_PRIME_URL\" > .env.local && npm run build"
+[context.alpha]
+environment = { CHANNEL = "alpha" }
 
 [context.beta]
-command = "NEXT_PUBLIC_BASE_URL=https://beta.insights.opensauced.pizza && npm run build"
-
-[context.alpha]
-command = "NEXT_PUBLIC_BASE_URL=https://beta.insights.opensauced.pizza && npm run build"
+environment = { CHANNEL = "beta" }
 
 [dev]
 framework = "#static"
