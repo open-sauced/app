@@ -5,6 +5,41 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.3.0](https://github.com/open-sauced/insights/compare/v1.2.3...v1.3.0) (2022-08-29)
+
+
+### 🧑‍💻 Code Refactoring
+
+* Improve the `<ComponentCard>` CSS ([#266](https://github.com/open-sauced/insights/issues/266)) ([9da4d62](https://github.com/open-sauced/insights/commit/9da4d62680cd010c03834193e6df026bf6046509))
+* Make the avatar component accept custom sizes ([#255](https://github.com/open-sauced/insights/issues/255)) ([9076e91](https://github.com/open-sauced/insights/commit/9076e914cf60ffff351acd1968446cc85ab087a9)), closes [#235](https://github.com/open-sauced/insights/issues/235)
+
+
+### 🍕 Features
+
+* Add Images to Scatter Chart ([#257](https://github.com/open-sauced/insights/issues/257)) ([20df419](https://github.com/open-sauced/insights/commit/20df419e8f32ccfa8c26982033a22fa8d6058cfc))
+* Add item count meta data to Highlight Card ([#254](https://github.com/open-sauced/insights/issues/254)) ([693479e](https://github.com/open-sauced/insights/commit/693479e253a1856405b57817fb2ae3d8574fdedf))
+* Added Reports History component to Reports Page ([#272](https://github.com/open-sauced/insights/issues/272)) ([c6a56f6](https://github.com/open-sauced/insights/commit/c6a56f6b66df43fd731ce23d91674734a65f3003))
+* Implement Card Horizontal Bar component ([#237](https://github.com/open-sauced/insights/issues/237)) ([7bbbe40](https://github.com/open-sauced/insights/commit/7bbbe405fc4ceefd2396aeb536d485337bd2157d))
+* Implement Card Table Component ([#243](https://github.com/open-sauced/insights/issues/243)) ([0cbc6ea](https://github.com/open-sauced/insights/commit/0cbc6ea13cbe2e66d8e57d62ef7e030fef17a54b))
+* Implement contribution page ([#263](https://github.com/open-sauced/insights/issues/263)) ([f41d7f9](https://github.com/open-sauced/insights/commit/f41d7f9a7f6efa7b123448d1b61253f3efcaf803))
+* Implement Contributor Card Component ([#245](https://github.com/open-sauced/insights/issues/245)) ([3bd55ea](https://github.com/open-sauced/insights/commit/3bd55ea461a63b00c1f99b0408e328326c1cc3d7))
+* Implement Reports History Component ([#209](https://github.com/open-sauced/insights/issues/209)) ([bb531e4](https://github.com/open-sauced/insights/commit/bb531e4a74e09d686e5679bdf65b2890e015c91a))
+* Implement the hacktoberfest reports page ([#229](https://github.com/open-sauced/insights/issues/229)) ([0cfa5e5](https://github.com/open-sauced/insights/commit/0cfa5e5f3d23b0eedc681a1fc93af96d65105cd8)), closes [#168](https://github.com/open-sauced/insights/issues/168)
+* Implement waitlist page ([#210](https://github.com/open-sauced/insights/issues/210)) ([0826d07](https://github.com/open-sauced/insights/commit/0826d0790f3fda3815880f16877aab07458dc563)), closes [#152](https://github.com/open-sauced/insights/issues/152)
+
+
+### 🐛 Bug Fixes
+
+* adjusted opinion filter on mobile screens ([#264](https://github.com/open-sauced/insights/issues/264)) ([2d9785c](https://github.com/open-sauced/insights/commit/2d9785ccbbbaabdd88fe59f97663a5a35569ec3b))
+* correct login redirect issues in supabase implemetation ([#274](https://github.com/open-sauced/insights/issues/274)) ([8fcd81e](https://github.com/open-sauced/insights/commit/8fcd81edf65ad7454ca1bba619b0880533ab6693))
+* correct login redirect issues in supabase implemetation x2 ([#275](https://github.com/open-sauced/insights/issues/275)) ([0239abd](https://github.com/open-sauced/insights/commit/0239abdb8aac2248d690eaa6c6da30129281137d))
+* correct supabase-ui default style for hover ([#267](https://github.com/open-sauced/insights/issues/267)) ([a23fe4b](https://github.com/open-sauced/insights/commit/a23fe4b5887b5fecd9a2f4a3ec53758b8e0e9232)), closes [#226](https://github.com/open-sauced/insights/issues/226)
+* increase truncate string number of words ([#268](https://github.com/open-sauced/insights/issues/268)) ([ab47a96](https://github.com/open-sauced/insights/commit/ab47a96a1d5ca7dde333da814f07cc96b39f26c7)), closes [#247](https://github.com/open-sauced/insights/issues/247)
+* max width removed from card ([#250](https://github.com/open-sauced/insights/issues/250)) ([523969a](https://github.com/open-sauced/insights/commit/523969a32a1b09b28c7ad8f765b61c8e771a3fdd)), closes [#249](https://github.com/open-sauced/insights/issues/249)
+* removes unused function ([b37de35](https://github.com/open-sauced/insights/commit/b37de35af44d98d4346e0cc9c7437292c814ba3e))
+* Repo count ([#244](https://github.com/open-sauced/insights/issues/244)) ([d59eef8](https://github.com/open-sauced/insights/commit/d59eef837004f05fdf3df0ed52b755cce0bfc96d))
+* Update GitSense API route for repos ([#270](https://github.com/open-sauced/insights/issues/270)) ([8f7e1c5](https://github.com/open-sauced/insights/commit/8f7e1c5c03a92c8a7d38f394229a8b1c9f44c756))
+
 ## [1.3.0-beta.18](https://github.com/open-sauced/insights/compare/v1.3.0-beta.17...v1.3.0-beta.18) (2022-08-28)
 
 
