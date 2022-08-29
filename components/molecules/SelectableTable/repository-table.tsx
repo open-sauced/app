@@ -12,7 +12,7 @@ import humanizeNumber from "../../../lib/utils/humanizeNumber";
 interface RepoSelectableTableProps {
   title: string;
   tableType: "participants";
-  rows: { title: string; stars: number; forks: number; persons: number }[];
+  rows: { name: string; stars: number; forks: number; persons: number, size: string }[];
 }
 
 const iconSuite = {
@@ -79,7 +79,7 @@ const RepoSelectableTable: React.FC<RepoSelectableTableProps> = ({ title, tableT
           </thead>
           <tbody>
             <tr className="h-3"></tr>
-            {rows?.map(({ title, stars, persons }, index) => {
+            {rows?.map(({ name, stars, persons, size }, index) => {
               return (
                 <tr
                   className={`hover:content-['${title}'] hover:bg-blue-100 cursor-pointer`}
@@ -90,12 +90,12 @@ const RepoSelectableTable: React.FC<RepoSelectableTableProps> = ({ title, tableT
                   }}
                 >
                   <td className="flex flex-row text-left p-2" ref={(element) => addCheckboxToRef(element)}>
-                    <Checkbox label="" /> {divSize > 0 && divSize < 350 ? truncateString(title, 3) : title}
+                    <Checkbox label="" /> {divSize > 0 && divSize < 350 ? truncateString(name, 9) : name}
                   </td>
                   <td className="text-right p-2">{humanizeNumber(stars)}</td>
                   <td className="text-right p-2">{humanizeNumber(12)}</td>
                   <td className="text-right p-2">{humanizeNumber(1234)}</td>
-                  <td className="text-right p-2">{persons}</td>
+                  <td className="text-right p-2">{humanizeNumber(parseInt(size))}</td>
                 </tr>
               );
             })}

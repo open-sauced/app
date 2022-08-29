@@ -1,6 +1,9 @@
 [build.environment]
 NODE_VERSION = "16"
 
+[context.alpha]
+environment = { CHANNEL = "alpha" }
+
 [context.beta]
 environment = { CHANNEL = "beta" }
 
