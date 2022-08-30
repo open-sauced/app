@@ -4,7 +4,7 @@ import {useRepositoriesList} from "lib/hooks/useRepositoriesList";
 
 const Reports = (): JSX.Element => {
   const { repoList, isLoading } = useRepositoriesList();
-  const data = repoList.data || {data: []};
+  const data = repoList?.data;
 
   return (
     <div className="flex flex-col w-full gap-4">

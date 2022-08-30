@@ -18,7 +18,7 @@ export const Dashboard = (): JSX.Element => {
           increased={true}
           numChanged={38}
           percentage={40}
-          percentageLabel={isLoading ? "Loading..." : `of ${humanizeNumber(repoListMetaData.itemCount)}`}
+          percentageLabel={isLoading ? "Loading..." : `of ${humanizeNumber(repoListMetaData ? repoListMetaData.itemCount : "")}`}
         />
         <HighlightCard
           url="/hacktoberfest/pull%20requests"
@@ -28,7 +28,7 @@ export const Dashboard = (): JSX.Element => {
           increased={true}
           numChanged={98}
           percentage={80}
-          percentageLabel={isLoading ? "Loading..." : `of ${humanizeNumber(repoListMetaData.itemCount)}`}
+          percentageLabel={isLoading ? "Loading..." : `of ${humanizeNumber(repoListMetaData ? repoListMetaData.itemCount : "")}`}
         />
         <HighlightCard
           url="/hacktoberfest/pull%20requests"
@@ -38,7 +38,7 @@ export const Dashboard = (): JSX.Element => {
           increased={false}
           numChanged={38}
           percentage={37}
-          percentageLabel={isLoading ? "Loading..." : `of ${humanizeNumber(repoListMetaData.itemCount)}`}
+          percentageLabel={isLoading ? "Loading..." : `of ${humanizeNumber(repoListMetaData ? repoListMetaData.itemCount : "")}`}
         />
         <HighlightCard
           url="/hacktoberfest/pull%20requests"
@@ -48,7 +48,7 @@ export const Dashboard = (): JSX.Element => {
           increased={false}
           numChanged={85}
           percentage={77}
-          percentageLabel={isLoading ? "Loading..." : `of ${humanizeNumber(repoListMetaData.itemCount)}`}
+          percentageLabel={isLoading ? "Loading..." : `of ${humanizeNumber(repoListMetaData ? repoListMetaData.itemCount : "")}`}
         />
       </section>
       <section className="flex flex-col lg:flex-row max-w-full gap-4 mb-6">

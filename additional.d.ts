@@ -38,6 +38,6 @@ interface MetaData {
 }
 
 interface RepoListResponse {
-  readonly data: RepoData[];
+  readonly data?: RepoData[];
   readonly meta: MetaData;
 }

@@ -12,7 +12,7 @@ import humanizeNumber from "../../../lib/utils/humanizeNumber";
 interface RepoSelectableTableProps {
   title: string;
   tableType: "participants";
-  rows: { name: string; stars: number; forks: number; persons: number, size: string }[];
+  rows: RepoData[] | { name: string; stars: number; forks: number; persons: number, size: number }[] | undefined;
 }
 
 const iconSuite = {
@@ -79,7 +79,7 @@ const RepoSelectableTable: React.FC<RepoSelectableTableProps> = ({ title, tableT
           </thead>
           <tbody>
             <tr className="h-3"></tr>
-            {rows?.map(({ name, stars, persons, size }, index) => {
+            {rows?.map(({ name, stars, size }, index) => {
               return (
                 <tr
                   className={`hover:content-['${title}'] hover:bg-blue-100 cursor-pointer`}
@@ -95,7 +95,7 @@ const RepoSelectableTable: React.FC<RepoSelectableTableProps> = ({ title, tableT
                   <td className="text-right p-2">{humanizeNumber(stars)}</td>
                   <td className="text-right p-2">{humanizeNumber(12)}</td>
                   <td className="text-right p-2">{humanizeNumber(1234)}</td>
-                  <td className="text-right p-2">{humanizeNumber(parseInt(size))}</td>
+                  <td className="text-right p-2">{humanizeNumber(size)}</td>
                 </tr>
               );
             })}

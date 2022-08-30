@@ -63,7 +63,7 @@ const useDashBoardData = () => {
   };
 
   const { repoList, isLoading } = useRepositoriesList();
-  const repoListMetaData = repoList.meta;
+  const repoListMetaData = repoList?.meta;
 
   return {
     scatterOptions,
