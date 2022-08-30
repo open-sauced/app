@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.3.1-beta.1](https://github.com/open-sauced/insights/compare/v1.3.0...v1.3.1-beta.1) (2022-08-30)
+
+
+### 🐛 Bug Fixes
+
+* grammar for header description ([#279](https://github.com/open-sauced/insights/issues/279)) ([a019912](https://github.com/open-sauced/insights/commit/a0199125d1c8cff4af514f2fb80fd90c19cb10dc))
+
 ## [1.3.0](https://github.com/open-sauced/insights/compare/v1.2.3...v1.3.0) (2022-08-29)
 
 
