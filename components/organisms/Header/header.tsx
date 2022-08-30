@@ -32,7 +32,7 @@ const Header: React.FC = () => {
           Hacktoberfest 2022
         </Title>
         <Text className="mt-1 !text-base font-medium text-slate-500">
-          Insights on GitHub project opted into the largest open source hackathon.
+          Insights on GitHub repositories opted into the largest open source hackathon.
         </Text>
         <div className="flex mt-4 items-center relative  gap-2">
           <FilterCard filterName="hacktoberfest" isRemovable={false} icon="topic" />
