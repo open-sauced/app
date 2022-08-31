@@ -7,12 +7,7 @@ interface DBRepo {
 }
 
 interface Meta {
-  readonly page: number,
-  readonly limit: number,
   readonly itemCount: number,
-  readonly pageCount: number,
-  readonly hasPreviousPage: boolean,
-  readonly hasNextPage: boolean
 }
 
 interface useRepoList {

@@ -3,8 +3,7 @@ import RepositoryTable from "components/molecules/RepositoryTable/repository-tab
 import {useRepositoriesList} from "lib/hooks/useRepositoriesList";
 
 const Reports = (): JSX.Element => {
-  const { repoList, isLoading } = useRepositoriesList();
-  const data = repoList?.data;
+  const { data, isLoading } = useRepositoriesList();
 
   return (
     <div className="flex flex-col w-full gap-4">

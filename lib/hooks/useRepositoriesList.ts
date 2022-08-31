@@ -1,10 +1,16 @@
 import useSWR from "swr";
 
+interface PaginatedRepoResponse {
+  readonly data: DBRepo[];
+  readonly meta: Meta;
+}
+
 const useRepositoriesList = () => {
-  const { data, error, mutate } = useSWR<useRepoList, Error>("repo/list");
+  const { data, error, mutate } = useSWR<PaginatedRepoResponse, Error>("repo/list");
 
   return {
-    repoList: data,
+    data: data?.data ?? [],
+    meta: data?.meta ?? { itemCount: 0 },
     isLoading: !error && !data,
     isError: !!error,
     mutate

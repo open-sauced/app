@@ -3,8 +3,7 @@ import {useRepositoriesList} from "lib/hooks/useRepositoriesList";
 
 const useNav = () => {
   const router = useRouter();
-  const { repoList, isLoading } = useRepositoriesList();
-  const meta = repoList?.meta;
+  const { meta, isLoading } = useRepositoriesList();
 
   const defaultTools = [
     {
@@ -18,7 +17,7 @@ const useNav = () => {
     },
     {
       name: "Repositories",
-      numOf: meta?.itemCount
+      numOf: meta.itemCount
     },
     {
       name: "Contributors",
