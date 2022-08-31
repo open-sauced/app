@@ -3,9 +3,15 @@ import Card from "../../atoms/Card/card";
 import ScatterChart from "components/molecules/ScatterChart/scatter-chart";
 import HighlightCard from "components/molecules/HighlightCard/highlight-card";
 import humanizeNumber from "lib/utils/humanizeNumber";
+import { useEffect, useState } from "react";
 
 export const Dashboard = (): JSX.Element => {
   const { scatterOptions, repoListMetaData, isLoading } = useDashBoardData();
+  const [itemCount, setItemCount] = useState("");
+
+  useEffect(() => {
+    if(!isLoading && repoListMetaData) setItemCount(humanizeNumber(repoListMetaData.itemCount));
+  }, [isLoading, repoListMetaData]);
 
   return (
     <div className="flex flex-col w-full gap-4">
@@ -18,7 +24,7 @@ export const Dashboard = (): JSX.Element => {
           increased={true}
           numChanged={38}
           percentage={40}
-          percentageLabel={isLoading ? "Loading..." : `of ${humanizeNumber(repoListMetaData ? repoListMetaData.itemCount : "")}`}
+          percentageLabel={isLoading ? "Loading..." : `of ${itemCount}`}
         />
         <HighlightCard
           url="/hacktoberfest/pull%20requests"
@@ -28,7 +34,7 @@ export const Dashboard = (): JSX.Element => {
           increased={true}
           numChanged={98}
           percentage={80}
-          percentageLabel={isLoading ? "Loading..." : `of ${humanizeNumber(repoListMetaData ? repoListMetaData.itemCount : "")}`}
+          percentageLabel={isLoading ? "Loading..." : `of ${itemCount}`}
         />
         <HighlightCard
           url="/hacktoberfest/pull%20requests"
@@ -38,7 +44,7 @@ export const Dashboard = (): JSX.Element => {
           increased={false}
           numChanged={38}
           percentage={37}
-          percentageLabel={isLoading ? "Loading..." : `of ${humanizeNumber(repoListMetaData ? repoListMetaData.itemCount : "")}`}
+          percentageLabel={isLoading ? "Loading..." : `of ${itemCount}`}
         />
         <HighlightCard
           url="/hacktoberfest/pull%20requests"
@@ -48,7 +54,7 @@ export const Dashboard = (): JSX.Element => {
           increased={false}
           numChanged={85}
           percentage={77}
-          percentageLabel={isLoading ? "Loading..." : `of ${humanizeNumber(repoListMetaData ? repoListMetaData.itemCount : "")}`}
+          percentageLabel={isLoading ? "Loading..." : `of ${itemCount}`}
         />
       </section>
       <section className="flex flex-col lg:flex-row max-w-full gap-4 mb-6">

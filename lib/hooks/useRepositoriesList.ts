@@ -1,7 +1,7 @@
 import useSWR from "swr";
 
 const useRepositoriesList = () => {
-  const { data, error, mutate } = useSWR<RepoListResponse, Error>("repo/list");
+  const { data, error, mutate } = useSWR<useRepoList, Error>("repo/list");
 
   return {
     repoList: data,
