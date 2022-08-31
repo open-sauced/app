@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.3.1-beta.2](https://github.com/open-sauced/insights/compare/v1.3.1-beta.1...v1.3.1-beta.2) (2022-08-31)
+
+
+### 🐛 Bug Fixes
+
+* correct netlify build supabase redirect url ([#283](https://github.com/open-sauced/insights/issues/283)) ([0b2b80a](https://github.com/open-sauced/insights/commit/0b2b80a155bd1af6497a1ca84916e2513dd58581))
+
 ### [1.3.1-beta.1](https://github.com/open-sauced/insights/compare/v1.3.0...v1.3.1-beta.1) (2022-08-30)
 
 
