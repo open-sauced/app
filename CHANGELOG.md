@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.4.0-beta.1](https://github.com/open-sauced/insights/compare/v1.3.1-beta.2...v1.4.0-beta.1) (2022-08-31)
+
+
+### 🍕 Features
+
+* Update Scatter Chart Legend ([#260](https://github.com/open-sauced/insights/issues/260)) ([309ef62](https://github.com/open-sauced/insights/commit/309ef62a14b8d78866b6cc26af919c7d9d16d3f1))
+
 ### [1.3.1-beta.2](https://github.com/open-sauced/insights/compare/v1.3.1-beta.1...v1.3.1-beta.2) (2022-08-31)
 
 
