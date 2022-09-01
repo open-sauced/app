@@ -77,10 +77,10 @@ const RepoSelectableTable: React.FC<RepoSelectableTableProps> = ({ title, tableT
                 </span>
               </div>
             </div>
-            <tr className="h-3"></tr>
+            <div className="h-3"></div>
           </div>
           <div>
-            <span className="h-3"></span>
+            <div className="h-3"></div>
             {rows?.map(({ title, stars, persons }, index) => {
               return (
                 <div
