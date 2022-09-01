@@ -31,7 +31,7 @@ const SelectReportsFilter = ({ filterList, callback }: SelectReportsFilterProps)
           ))}
         </Select>
         <Button type="primary" onClick={() => callback(selectedValue)} className="w-52">
-          Download CSV
+          Generate CSV
         </Button>
       </div>
     </div>

@@ -2,8 +2,7 @@ import Title from "components/atoms/Typography/title";
 import ReportsHistory from "components/molecules/ReportsHistory/reports-history";
 import SelectReportsFilter from "components/molecules/SelectReportsFilter/select-reports-filter";
 import { Report } from "interfaces/report-type";
-
-// Mission Start!
+import useFilterOptions from "lib/hooks/useFilterOptions";
 
 const Reports = (): JSX.Element => {
 
@@ -22,6 +21,18 @@ const Reports = (): JSX.Element => {
     }
   ];
 
+  const filterOptions = useFilterOptions();
+  const filterList = filterOptions.map(filter => {
+    return {
+      filterName: filter,
+      filterValue: filter.toLowerCase().replaceAll(" ", "-")
+    };
+  });
+
+  const handleFilterClick = (selectedFilter: string) => {
+    console.log(selectedFilter);
+  };
+
   return (
     <section className="w-full py-4 px-8 flex justify-center">
       <div className="max-w-4xl">
@@ -31,9 +42,8 @@ const Reports = (): JSX.Element => {
         <hr className="border-light-slate-6 my-4" />
         <div className="!text-left">
           <SelectReportsFilter
-            callback={function () {
-              throw new Error("Function not implemented.");
-            }}
+            filterList={filterList}
+            callback={handleFilterClick}
           />
         </div>
         <Title className="!font-medium relative mt-16" level={3}>
