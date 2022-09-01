@@ -9,8 +9,3 @@ interface DBRepo {
 interface Meta {
   readonly itemCount: number,
 }
-
-interface useRepoList {
-  readonly data: DBRepo[];
-  readonly meta: Meta;
-}
