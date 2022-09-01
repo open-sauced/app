@@ -3,6 +3,8 @@ import ReportsHistory from "components/molecules/ReportsHistory/reports-history"
 import SelectReportsFilter from "components/molecules/SelectReportsFilter/select-reports-filter";
 import { Report } from "interfaces/report-type";
 
+// Mission Start!
+
 const Reports = (): JSX.Element => {
 
   const reportList: Report[] = [
