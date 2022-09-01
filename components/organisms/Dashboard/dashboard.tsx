@@ -6,7 +6,7 @@ import humanizeNumber from "lib/utils/humanizeNumber";
 import { useEffect, useState } from "react";
 
 export const Dashboard = (): JSX.Element => {
-  const { meta, isLoading } = useRepositoriesList();
+  const { meta, isError, isLoading } = useRepositoriesList();
   const [itemCount, setItemCount] = useState("");
   
   const scatterOptions = {
@@ -46,7 +46,8 @@ export const Dashboard = (): JSX.Element => {
 
   useEffect(() => {
     if(!isLoading && meta) setItemCount(humanizeNumber(meta.itemCount));
-  }, [isLoading, meta]);
+    if(isError) setItemCount("unknown...");
+  }, [isLoading, isError, meta]);
 
   return (
     <div className="flex flex-col w-full gap-4">
