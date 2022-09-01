@@ -6,8 +6,8 @@ import humanizeNumber from "lib/utils/humanizeNumber";
 import { useEffect, useState } from "react";
 
 export const Dashboard = (): JSX.Element => {
-  const { meta, isError, isLoading } = useRepositoriesList();
-  const [itemCount, setItemCount] = useState("");
+  const { meta, isError } = useRepositoriesList();
+  const [ itemCountText, setItemCountText ] = useState("Loading...");
   
   const scatterOptions = {
     xAxis: {},
@@ -45,9 +45,9 @@ export const Dashboard = (): JSX.Element => {
   };
 
   useEffect(() => {
-    if(!isLoading && meta) setItemCount(humanizeNumber(meta.itemCount));
-    if(isError) setItemCount("unknown...");
-  }, [isLoading, isError, meta]);
+    if(meta) setItemCountText(`of ${humanizeNumber(meta.itemCount)}`);
+    if(isError) setItemCountText("of unknown...");
+  }, [ isError, meta ]);
 
   return (
     <div className="flex flex-col w-full gap-4">
@@ -60,7 +60,7 @@ export const Dashboard = (): JSX.Element => {
           increased={true}
           numChanged={38}
           percentage={40}
-          percentageLabel={isLoading ? "Loading..." : `of ${itemCount}`}
+          percentageLabel={itemCountText}
         />
         <HighlightCard
           url="/hacktoberfest/pull%20requests"
@@ -70,7 +70,7 @@ export const Dashboard = (): JSX.Element => {
           increased={true}
           numChanged={98}
           percentage={80}
-          percentageLabel={isLoading ? "Loading..." : `of ${itemCount}`}
+          percentageLabel={itemCountText}
         />
         <HighlightCard
           url="/hacktoberfest/pull%20requests"
@@ -80,7 +80,7 @@ export const Dashboard = (): JSX.Element => {
           increased={false}
           numChanged={38}
           percentage={37}
-          percentageLabel={isLoading ? "Loading..." : `of ${itemCount}`}
+          percentageLabel={itemCountText}
         />
         <HighlightCard
           url="/hacktoberfest/pull%20requests"
@@ -90,7 +90,7 @@ export const Dashboard = (): JSX.Element => {
           increased={false}
           numChanged={85}
           percentage={77}
-          percentageLabel={isLoading ? "Loading..." : `of ${itemCount}`}
+          percentageLabel={itemCountText}
         />
       </section>
       <section className="flex flex-col lg:flex-row max-w-full gap-4 mb-6">
