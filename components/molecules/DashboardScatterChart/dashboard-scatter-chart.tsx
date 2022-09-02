@@ -1,6 +1,7 @@
 import React from "react";
 import EChartWrapper from "components/atoms/EChartWrapper/echart-wrapper";
 import ComponentHeader from "../ComponentHeader/component-header";
+import ScatterChart from "../ScatterChart/scatter-cart";
 
 interface DashboardScatterChartProps {
     title: string;
@@ -10,8 +11,7 @@ interface DashboardScatterChartProps {
 const DashboardScatterChart: React.FC<DashboardScatterChartProps> = ({ title, option }) => {
   return (
     <>
-      <ComponentHeader title={title} />
-      <EChartWrapper option={option} />
+      <ScatterChart title={title} option={option}/>
     </>
   );
 };
