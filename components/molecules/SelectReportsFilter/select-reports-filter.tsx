@@ -22,7 +22,7 @@ const SelectReportsFilter = ({ filterList, callback }: SelectReportsFilterProps)
   };
 
   return (
-    <div className="flex flex-col gap-2 h-20">
+    <div className="flex flex-col gap-2 min-h-20">
       <Title level={4}>Select a Filter</Title>
       <Text>
         Download the filtered contributions from the last 30 days as a CSV. Selecting a filter will remove all the added
