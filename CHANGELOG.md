@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.4.0-beta.2](https://github.com/open-sauced/insights/compare/v1.4.0-beta.1...v1.4.0-beta.2) (2022-09-02)
+
+
+### 🧑‍💻 Code Refactoring
+
+* Add types to useRepositoriesList hook ([#277](https://github.com/open-sauced/insights/issues/277)) ([4f1a771](https://github.com/open-sauced/insights/commit/4f1a7715b09f28f060ec5b93f0c1208cc1d0b40c))
+
 ## [1.4.0-beta.1](https://github.com/open-sauced/insights/compare/v1.3.1-beta.2...v1.4.0-beta.1) (2022-08-31)
 
 
