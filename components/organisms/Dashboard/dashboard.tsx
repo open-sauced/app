@@ -52,9 +52,9 @@ export const Dashboard = (): JSX.Element => {
         />
       </section>
       <section className="flex flex-col lg:flex-row max-w-full gap-4 mb-6">
-        <div className="flex flex-col w-full gap-4">
-          <Card className="w-full p-5">
-            <DashboardScatterChart title="Test Title" option={scatterOptions} />
+        <div className="flex flex-col w-full">
+          <Card className="w-full">
+            <DashboardScatterChart title="Contribution Trends" option={scatterOptions} />
           </Card>
         </div>
       </section>
