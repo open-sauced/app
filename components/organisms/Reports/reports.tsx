@@ -3,21 +3,27 @@ import ReportsHistory from "components/molecules/ReportsHistory/reports-history"
 import SelectReportsFilter from "components/molecules/SelectReportsFilter/select-reports-filter";
 import { Report } from "interfaces/report-type";
 import useFilterOptions from "lib/hooks/useFilterOptions";
+import { useRepositoriesList } from "lib/hooks/useRepositoriesList";
+import { useState } from "react";
 
 const Reports = (): JSX.Element => {
+  const { data, isLoading, isError } = useRepositoriesList();
+  const [ reports, setReports ] = useState<Report[]>([]);
 
   const reportList: Report[] = [
     {
       reportName: "Top Ten",
       reportDate: "Jun 3, 2022",
       reportFormat: "CSV",
-      isGenerated: true
+      isGenerated: true,
+      data: {}
     },
     {
       reportName: "Top Five",
       reportDate: "Jun 3, 2022",
       reportFormat: "CSV",
-      isGenerated: false
+      isGenerated: false,
+      data: {}
     }
   ];
 
@@ -30,7 +36,17 @@ const Reports = (): JSX.Element => {
   });
 
   const handleFilterClick = (selectedFilter: string) => {
-    console.log(selectedFilter);
+    const dataReady = !isLoading && !isError;
+
+    const constructedReport = {
+      reportName: selectedFilter,
+      reportDate: "Jun 3, 2022",
+      reportFormat: "CSV",
+      isGenerated: dataReady,
+      data : dataReady ? data : {}
+    };
+
+    setReports(prevState => [ ...prevState, constructedReport ]);
   };
 
   return (
@@ -51,7 +67,7 @@ const Reports = (): JSX.Element => {
         </Title>
         <hr className="border-light-slate-6 my-4" />
         <div>
-          <ReportsHistory reportList={reportList}/>
+          <ReportsHistory reportList={reports}/>
         </div>
       </div>
     </section>
