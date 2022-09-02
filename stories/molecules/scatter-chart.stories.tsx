@@ -2,7 +2,7 @@ import { ComponentStory } from "@storybook/react";
 import ScatterChart from "components/molecules/ScatterChart/scatter-cart";
 import humanizeNumber from "lib/utils/humanizeNumber";
 const StoryConfig = {
-  title: "Design System/Molecules/ScatterChart"
+  title: "Design System/Molecules/ScatterChart",
 };
 export default StoryConfig;
 
@@ -11,7 +11,7 @@ const testOptions = {
     left: 40,
     top: 10,
     right: 40,
-    bottom: 20
+    bottom: 20,
   },
   xAxis: {
     boundaryGap: false,
@@ -21,13 +21,14 @@ const testOptions = {
     min: 0,
     max: 35,
     axisLabel: {
-      formatter: (value: number, index: number) => value === 0 ? "Today" : value === 35 ? "35+ days ago" : `${value} days ago` 
+      formatter: (value: number, index: number) =>
+        value === 0 ? "Today" : value === 35 ? "35+ days ago" : `${value} days ago`,
     },
     splitLine: {
       lineStyle: {
-        type: "dashed"
-      }
-    }
+        type: "dashed",
+      },
+    },
   },
   yAxis: {
     min: 1,
@@ -36,13 +37,13 @@ const testOptions = {
     boundaryGap: false,
     axisLabel: {
       showMinLabel: true,
-      formatter: (value: number)=>  value >= 1000 ? humanizeNumber(value) : value
+      formatter: (value: number) => (value >= 1000 ? humanizeNumber(value) : value),
     },
     splitLine: {
       lineStyle: {
-        type: "dashed"
-      }
-    }
+        type: "dashed",
+      },
+    },
   },
   series: [
     {
@@ -69,13 +70,13 @@ const testOptions = {
         [12.0, 6.26],
         [12.0, 8.84],
         [7.08, 5.82],
-        [5.02, 5.68]
+        [5.02, 5.68],
       ],
-      type: "scatter"
-    }
-  ]
+      type: "scatter",
+    },
+  ],
 };
 const ScatterChartTemplate: ComponentStory<typeof ScatterChart> = (args) => <ScatterChart {...args} />;
 
 export const Default = ScatterChartTemplate.bind({});
-Default.args = {  option: testOptions};
+Default.args = { option: testOptions, title: "Contribution Trends" };

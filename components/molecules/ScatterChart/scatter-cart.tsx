@@ -14,15 +14,17 @@ const ScatterChart = ({ option, title }: ScatterChartProps): JSX.Element => {
   const [showBots, setShowBots] = useState(false);
   const handleShowMembers = () => {
     setShowMembers(!showMembers);
+    // Additional logic for showing members
   };
   const handleShowBots = () => {
     setShowBots(!showBots);
+    // Additional logic for showing bots
   };
   return (
     <div>
       <div className="flex justify-between">
         <Title level={4}>{title}</Title>
-        <div className="flex gap-2">
+        <div className="flex gap-2 pr-10">
           <ToggleOption handleToggle={handleShowBots} checked={showBots} optionText="Show Bots"></ToggleOption>
           <ToggleOption
             handleToggle={handleShowMembers}
@@ -32,9 +34,9 @@ const ScatterChart = ({ option, title }: ScatterChartProps): JSX.Element => {
           ></ToggleOption>
         </div>
       </div>
-      <div className="">
+      <div className="mt-3">
         <Text className="-rotate-90 -left-12 text-light-slate-10 top-[50%] absolute ">Lines of Code Changed</Text>
-        <div className="">
+        <div className="ml-5">
           <EChartWrapper option={option} />
         </div>
       </div>
