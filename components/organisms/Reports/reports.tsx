@@ -4,6 +4,7 @@ import SelectReportsFilter from "components/molecules/SelectReportsFilter/select
 import { Report } from "interfaces/report-type";
 import useFilterOptions from "lib/hooks/useFilterOptions";
 import { useRepositoriesList } from "lib/hooks/useRepositoriesList";
+import getCurrentDate from "lib/utils/get-current-date";
 import { useState } from "react";
 
 const Reports = (): JSX.Element => {
@@ -21,11 +22,9 @@ const Reports = (): JSX.Element => {
   const handleFilterClick = (selectedFilter: string) => {
     const dataReady = !isLoading && !isError;
 
-    console.log(data);
-
     const constructedReport = {
       reportName: selectedFilter,
-      reportDate: "Jun 3, 2022",
+      reportDate: getCurrentDate(),
       reportFormat: "CSV",
       isGenerated: dataReady,
       data : dataReady ? data : []
