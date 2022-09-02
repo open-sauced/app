@@ -7,9 +7,13 @@ import { useRepositoriesList } from "lib/hooks/useRepositoriesList";
 import getCurrentDate from "lib/utils/get-current-date";
 import { useState } from "react";
 
+const USERDEVICESTORAGENAME = "reportState";
+
 const Reports = (): JSX.Element => {
+  const userDeviceState = localStorage.getItem(USERDEVICESTORAGENAME);
+  const initialState = userDeviceState ? JSON.parse(userDeviceState as string) : [];
   const { data, isLoading, isError } = useRepositoriesList();
-  const [ reports, setReports ] = useState<Report[]>([]);
+  const [ reports, setReports ] = useState<Report[]>(initialState);
 
   const filterOptions = useFilterOptions();
   const filterList = filterOptions.map(filter => {
@@ -30,7 +34,12 @@ const Reports = (): JSX.Element => {
       data : dataReady ? data : []
     };
 
-    setReports(prevState => [ ...prevState, constructedReport ]);
+    setReports(prevState => {
+      const newState = [ ...prevState, constructedReport ];
+      localStorage.setItem(USERDEVICESTORAGENAME, JSON.stringify(newState));
+
+      return newState;
+    });
   };
 
   return (
