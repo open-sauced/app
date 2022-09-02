@@ -24,21 +24,25 @@ interface HighlightCardProps {
 // Replace these icons, or make them dynamic.
 // Maybe create an Icon component.
 const icons = {
-  participation: {
+  "participation": {
     src: repoIcon.src,
-    label: "Participation"
+    label: "Participation",
+    color: "bg-blue-100"
   },
-  acceptedPR: {
+  "accepted-pr": {
     src: prIcon.src,
-    label: "Accepted PRs"
+    label: "Accepted PRs",
+    color: "bg-green-100"
   },
-  unlabeledPR: {
+  "unlabeled-pr": {
     src: labelIcon.src,
-    label: "Unlabeled PRs"
+    label: "Unlabeled PRs",
+    color: "bg-cyan-100"
   },
-  spam: {
+  "spam": {
     src: thumbsIcon.src,
-    label: "Spam"
+    label: "Spam",
+    color: "bg-orange-100"
   }
 };
 
@@ -53,11 +57,11 @@ const HighlightCard: React.FC<HighlightCardProps> = ({ className, label, icon, m
             {/* Label */}
             <div className="flex items-center gap-2">
               {/* Label: Icon */}
-              <div className={`w-8 h-8 flex justify-center items-center ${icon === "participation" ? "bg-blue-100" : icon === "accepted-pr" ? "bg-green-100" : icon === "unlabeled-pr" ? "bg-cyan-100" : icon === "spam" ? "bg-orange-100" : "bg-slate-100"} rounded-full`}>
+              <div className={`w-8 h-8 flex justify-center items-center ${icon ? icons[icon].color : "bg-slate-100"} rounded-full`}>
                 <Image 
                   width={16} height={16}
-                  alt={icon === "participation" ? icons.participation.label : icon === "accepted-pr" ? icons.acceptedPR.label : icon === "unlabeled-pr" ? icons.unlabeledPR.label : icon === "spam" ? icons.spam.label : "Icon"} 
-                  src={icon === "participation" ? icons.participation.src : icon === "accepted-pr" ? icons.acceptedPR.src : icon === "unlabeled-pr" ? icons.unlabeledPR.src : icon === "spam" ? icons.spam.src : "Icon"} />
+                  alt={icon ? icons[icon].label : "Icon"} 
+                  src={icon ? icons[icon].src : "Icon"} />
               </div>
               {/* Label: Text */}
               <div className="text-sm text-slate-600 font-medium leading-none">
