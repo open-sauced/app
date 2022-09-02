@@ -3,5 +3,5 @@ export type Report = {
   reportDate: string;
   reportFormat: string;
   isGenerated: boolean;
-  data: object;
+  data: object[];
 }

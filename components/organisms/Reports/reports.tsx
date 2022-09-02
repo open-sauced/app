@@ -10,23 +10,6 @@ const Reports = (): JSX.Element => {
   const { data, isLoading, isError } = useRepositoriesList();
   const [ reports, setReports ] = useState<Report[]>([]);
 
-  const reportList: Report[] = [
-    {
-      reportName: "Top Ten",
-      reportDate: "Jun 3, 2022",
-      reportFormat: "CSV",
-      isGenerated: true,
-      data: {}
-    },
-    {
-      reportName: "Top Five",
-      reportDate: "Jun 3, 2022",
-      reportFormat: "CSV",
-      isGenerated: false,
-      data: {}
-    }
-  ];
-
   const filterOptions = useFilterOptions();
   const filterList = filterOptions.map(filter => {
     return {
@@ -38,12 +21,14 @@ const Reports = (): JSX.Element => {
   const handleFilterClick = (selectedFilter: string) => {
     const dataReady = !isLoading && !isError;
 
+    console.log(data);
+
     const constructedReport = {
       reportName: selectedFilter,
       reportDate: "Jun 3, 2022",
       reportFormat: "CSV",
       isGenerated: dataReady,
-      data : dataReady ? data : {}
+      data : dataReady ? data : []
     };
 
     setReports(prevState => [ ...prevState, constructedReport ]);

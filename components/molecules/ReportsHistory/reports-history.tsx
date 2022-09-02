@@ -3,6 +3,7 @@ import Card from "components/atoms/Card/card";
 import Title from "components/atoms/Typography/title";
 import Text from "components/atoms/Typography/text";
 import { Report } from "interfaces/report-type";
+import { CSVLink } from "react-csv";
 
 interface ReportsHistoryProps {
   reportList?: Report[];
@@ -29,8 +30,8 @@ const ReportsHistory = ({ reportList }: ReportsHistoryProps): JSX.Element => {
   return (
     <Card heading={heading}>
       <div className="flex flex-col justify-between w-full gap-2">
-        {reportList ?
-          reportList.map(({reportDate, reportName, reportFormat, isGenerated}, index) => 
+        {reportList &&
+          reportList.map(({reportDate, reportName, reportFormat, isGenerated, data}, index) => 
             <div className={`flex items-center py-3 px-6 ${index % 2 === 0 ? "bg-slate-50" : "bg-white"} gap-2`} key={index}>
               <div className="w-2/5 text-sm font-medium text-slate-900 tracking-tight">
                 {reportName}
@@ -43,7 +44,9 @@ const ReportsHistory = ({ reportList }: ReportsHistoryProps): JSX.Element => {
               </div>
               <div className="w-1/5 text-sm font-medium text-slate-900 tracking-tight text-right">
                 {isGenerated ?
-                  <Button type="link" >Download</Button>
+                  <CSVLink data={data}>
+                    <Button type="link" >Download</Button>
+                  </CSVLink>
                 
                   :
                 
@@ -52,9 +55,8 @@ const ReportsHistory = ({ reportList }: ReportsHistoryProps): JSX.Element => {
               </div>
             </div>
           )
-          
-          :
-          
+        }
+        {!reportList || reportList.length === 0 &&          
           <Text className="py-3 px-6">
             Currently there are no reports
           </Text>
