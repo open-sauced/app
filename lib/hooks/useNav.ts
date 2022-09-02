@@ -1,10 +1,9 @@
 import { useRouter } from "next/router";
-import {useRepositoriesList} from "lib/hooks/useRepositoriesList";
+import { useRepositoriesList } from "lib/hooks/useRepositoriesList";
 
 const useNav = () => {
   const router = useRouter();
-  const { repoList, isLoading } = useRepositoriesList();
-  const meta = repoList.meta || {};
+  const { meta, isError, isLoading } = useRepositoriesList();
 
   const defaultTools = [
     {
@@ -18,7 +17,7 @@ const useNav = () => {
     },
     {
       name: "Repositories",
-      numOf: meta.itemCount
+      numOf: isLoading || isError ? 0 : meta.itemCount
     },
     {
       name: "Contributors",
