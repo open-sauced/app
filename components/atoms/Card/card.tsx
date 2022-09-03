@@ -12,7 +12,7 @@ const Card: React.FC<CardProps> = ({ className, children, heading }) => {
       {
         heading ?
           <>
-            <div className="px-6 py-3 rounded-t-lg bg-light-slate-3">
+            <div className="px-3 md:px-6 py-3 rounded-t-lg bg-light-slate-3">
               {heading}
             </div>
             <div>

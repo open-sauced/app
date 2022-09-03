@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.4.0-beta.3](https://github.com/open-sauced/insights/compare/v1.4.0-beta.2...v1.4.0-beta.3) (2022-09-03)
+
+
+### 🍕 Features
+
+* Add download CSV funtionality to Reports page ([#286](https://github.com/open-sauced/insights/issues/286)) ([ada79d3](https://github.com/open-sauced/insights/commit/ada79d3ff5ff197e510f78fad959792c2bc522b4))
+
 ## [1.4.0-beta.2](https://github.com/open-sauced/insights/compare/v1.4.0-beta.1...v1.4.0-beta.2) (2022-09-02)
 
 
