@@ -9,7 +9,7 @@ const Footer: React.FC = () => {
         target="_blank"
         rel="noopener noreferrer"
       >
-            Powered by<div className="font-bold">GitSense</div>
+            Powered by<div className="font-bold">🍕 & ☕ ️</div>
       </a>
     </footer>
   );
