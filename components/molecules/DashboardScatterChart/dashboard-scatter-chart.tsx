@@ -30,7 +30,7 @@ const DashboardScatterChart: React.FC<DashboardScatterChartProps> = ({ title, op
           <ToggleOption
             handleToggle={handleShowMembers}
             withIcon={true}
-            optionText="Show Member Contributions"
+            optionText="Show Outside Contributors"
             checked={showMembers}
           ></ToggleOption>
         </div>
