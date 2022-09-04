@@ -3,7 +3,7 @@ import { StaticImageData } from "next/image";
 
 const REPOLISTLIMIT = 5;
 
-interface RepoList {
+export interface RepoList {
   repoName: string;
   repoIcon: StaticImageData;
 }
@@ -23,7 +23,7 @@ const CardRepoList = ({ repoList }: CardRepoListProps): JSX.Element => {
                 .filter((repo, arrCount) => arrCount < REPOLISTLIMIT)
                 .map(({repoName, repoIcon}, index) => 
                   <div key={index} className="flex gap-1 p-1 pr-2 border-[1px] border-light-slate-6 rounded-lg text-light-slate-12">
-                    <Icon IconImage={repoIcon} />
+                    <Icon IconImage={repoIcon} className="rounded-[4px] overflow-hidden" />
                     {repoName}
                   </div>
                 )

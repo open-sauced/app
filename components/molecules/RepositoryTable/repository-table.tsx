@@ -12,7 +12,7 @@ import humanizeNumber from "../../../lib/utils/humanizeNumber";
 interface RepoSelectableTableProps {
   title: string;
   tableType: "participants";
-  rows: { title: string; stars: number; forks: number; persons: number }[];
+  rows: DBRepo[];
 }
 
 const iconSuite = {
@@ -83,26 +83,26 @@ const RepoSelectableTable: React.FC<RepoSelectableTableProps> = ({ title, tableT
           </div>
           <div>
             <div className="h-3"></div>
-            {rows?.map(({ title, stars, persons }, index) => {
+            {rows?.map(({ name, stars, size }, index) => {
               return (
                 <div
-                  className={`hover:content-['${title}'] flex align-middle rounded justify-between hover:border-dark-blue-10 hover:bg-blue-100 cursor-pointer`}
+                  className={`hover:content-['${name}'] flex align-middle rounded justify-between hover:border-dark-blue-10 hover:bg-blue-100 cursor-pointer`}
                   key={index}
                   ref={(element) => addCheckboxToRef(element)}
                   onClick={(event: any) => {
                     const isNotCheckbox = event.target.getAttribute("type") !== "checkbox";
-                    if (isNotCheckbox) entireRowClickChangesCheckbox(allCheckboxRefs.current[index], title);
+                    if (isNotCheckbox) entireRowClickChangesCheckbox(allCheckboxRefs.current[index], name);
                   }}
                 >
                   <span className="flex  flex-row align-middle text-left p-2">
                     <Checkbox className="mt-0.5" label="" />{" "}
-                    {divSize > 0 && divSize < 350 ? truncateString(title, 12) : title}
+                    {divSize > 0 && divSize < 350 ? truncateString(name, 12) : name}
                   </span>
                   <div className="flex gap-x-1">
                     <span className="text-right p-2">{humanizeNumber(stars)}</span>
                     <span className="text-right p-2">{humanizeNumber(12)}</span>
                     <span className="text-right p-2">{humanizeNumber(1234)}</span>
-                    <span className="text-right p-2">{persons}</span>
+                    <span className="text-right p-2">{humanizeNumber(size)}</span>
                   </div>
                 </div>
               );
