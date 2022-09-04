@@ -41,9 +41,11 @@ const RepoSelectableTable: React.FC<RepoSelectableTableProps> = ({ title, tableT
     });
   };
 
-  const entireRowClickChangesCheckbox = (element: any) => {
+  const entireRowClickChangesCheckbox = (element: any, title: string) => {
     const checkbox: HTMLInputElement | null = element.querySelector("input[type='checkbox']");
     if (checkbox) checkbox.checked = !checkbox.checked;
+    if(checkbox?.checked) element.setAttribute("class", `hover:content-['${title}'] flex align-middle rounded justify-between border-dark-blue-10 bg-blue-100 cursor-pointer`);
+    if(checkbox?.checked === false) element.setAttribute("class", `hover:content-['${title}'] flex align-middle rounded justify-between hover:border-dark-blue-10 hover:bg-blue-100 cursor-pointer`);
   };
 
   const [divSize, setDivSize] = useState(0);
@@ -86,15 +88,13 @@ const RepoSelectableTable: React.FC<RepoSelectableTableProps> = ({ title, tableT
                 <div
                   className={`hover:content-['${title}'] flex align-middle rounded justify-between hover:border-dark-blue-10 hover:bg-blue-100 cursor-pointer`}
                   key={index}
+                  ref={(element) => addCheckboxToRef(element)}
                   onClick={(event: any) => {
                     const isNotCheckbox = event.target.getAttribute("type") !== "checkbox";
-                    if (isNotCheckbox) entireRowClickChangesCheckbox(allCheckboxRefs.current[index]);
+                    if (isNotCheckbox) entireRowClickChangesCheckbox(allCheckboxRefs.current[index], title);
                   }}
                 >
-                  <span
-                    className="flex  flex-row align-middle text-left p-2"
-                    ref={(element) => addCheckboxToRef(element)}
-                  >
+                  <span className="flex  flex-row align-middle text-left p-2">
                     <Checkbox className="mt-0.5" label="" />{" "}
                     {divSize > 0 && divSize < 350 ? truncateString(title, 12) : title}
                   </span>
