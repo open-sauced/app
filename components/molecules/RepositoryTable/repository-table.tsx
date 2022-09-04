@@ -6,7 +6,6 @@ import StarIcon from "public/icons/star-icon.svg";
 import Person from "public/icons/person-icon.svg";
 import Icon3 from "public/icons/icon3.svg";
 import ComponentHeader from "../ComponentHeader/component-header";
-import { truncateString } from "../../../lib/utils/truncate-string";
 import humanizeNumber from "../../../lib/utils/humanizeNumber";
 
 interface RepoSelectableTableProps {
@@ -71,16 +70,16 @@ const RepoSelectableTable: React.FC<RepoSelectableTableProps> = ({ title, tableT
                 <Checkbox onChange={(event) => changeAllCheckboxes(event)} label="" />
               </span>
               <div className="flex gap-x-2.5">
-                <span className="text-right py-2 w-20">
+                <span className="text-right overflow-hidden whitespace-nowrap text-ellipsis py-2 w-10 md:w-20">
                   <Icon IconImage={iconSuite[tableType].star} />
                 </span>
-                <span className="text-right py-2 w-20">
+                <span className="text-right overflow-hidden whitespace-nowrap text-ellipsis py-2 w-10 md:w-20">
                   <Icon IconImage={iconSuite[tableType].fork} />
                 </span>
-                <span className="text-right py-2 w-20">
+                <span className="text-right overflow-hidden whitespace-nowrap text-ellipsis py-2 w-10 md:w-20">
                   <Icon IconImage={iconSuite[tableType].person} />
                 </span>
-                <span className="text-right py-2 w-20">
+                <span className="text-right overflow-hidden whitespace-nowrap text-ellipsis py-2 w-10 md:w-20">
                   <Icon IconImage={iconSuite[tableType].icon3} />
                 </span>
               </div>
@@ -100,15 +99,15 @@ const RepoSelectableTable: React.FC<RepoSelectableTableProps> = ({ title, tableT
                     if (isNotCheckbox) entireRowClickChangesCheckbox(allCheckboxRefs.current[index], name);
                   }}
                 >
-                  <span className="flex  flex-row align-middle text-left p-2">
+                  <span className="flex max-w-20 overflow-hidden whitespace-nowrap text-ellipsis md:w-fit flex-row align-middle text-left p-2">
                     <Checkbox className="mt-0.5" label="" />{" "}
-                    {divSize > 0 && divSize < 350 ? truncateString(name, 12) : name}
+                    {name}
                   </span>
                   <div className="flex gap-x-2.5">
-                    <span className="text-right py-2 w-20">{humanizeNumber(stars)}</span>
-                    <span className="text-right py-2 w-20">{humanizeNumber(12)}</span>
-                    <span className="text-right py-2 w-20">{humanizeNumber(1234)}</span>
-                    <span className="text-right py-2 w-20">{humanizeNumber(size)}</span>
+                    <span className="text-right overflow-hidden whitespace-nowrap text-ellipsis py-2 w-10 md:w-20">{humanizeNumber(stars)}</span>
+                    <span className="text-right overflow-hidden whitespace-nowrap text-ellipsis py-2 w-10 md:w-20">{humanizeNumber(12)}</span>
+                    <span className="text-right overflow-hidden whitespace-nowrap text-ellipsis py-2 w-10 md:w-20">{humanizeNumber(1234)}</span>
+                    <span className="text-right overflow-hidden whitespace-nowrap text-ellipsis py-2 w-10 md:w-20">{humanizeNumber(size)}</span>
                   </div>
                 </div>
               );
