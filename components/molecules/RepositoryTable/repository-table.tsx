@@ -38,6 +38,12 @@ const RepoSelectableTable: React.FC<RepoSelectableTableProps> = ({ title, tableT
     allCheckboxRefs.current.forEach((element) => {
       const checkbox: HTMLInputElement | null = element.querySelector("input[type='checkbox']");
       if (checkbox) checkbox.checked = checked;
+
+      if(checked) {
+        element.setAttribute("class", `hover:content-['${title}'] flex align-middle rounded justify-between border-dark-blue-10 bg-blue-100 cursor-pointer`);
+      } else {
+        element.setAttribute("class", `hover:content-['${title}'] flex align-middle rounded justify-between hover:border-dark-blue-10 hover:bg-blue-100 cursor-pointer`);
+      }
     });
   };
 
