@@ -65,16 +65,16 @@ const RepoSelectableTable: React.FC<RepoSelectableTableProps> = ({ title, tableT
                 <Checkbox onChange={(event) => changeAllCheckboxes(event)} label="" />
               </span>
               <div className="flex gap-x-2.5">
-                <span className="text-right p-2">
+                <span className="text-right py-2 w-20">
                   <Icon IconImage={iconSuite[tableType].star} />
                 </span>
-                <span className="text-right p-2">
+                <span className="text-right py-2 w-20">
                   <Icon IconImage={iconSuite[tableType].fork} />
                 </span>
-                <span className="text-right p-2">
+                <span className="text-right py-2 w-20">
                   <Icon IconImage={iconSuite[tableType].person} />
                 </span>
-                <span className="text-right p-2">
+                <span className="text-right py-2 w-20">
                   <Icon IconImage={iconSuite[tableType].icon3} />
                 </span>
               </div>
@@ -98,11 +98,11 @@ const RepoSelectableTable: React.FC<RepoSelectableTableProps> = ({ title, tableT
                     <Checkbox className="mt-0.5" label="" />{" "}
                     {divSize > 0 && divSize < 350 ? truncateString(name, 12) : name}
                   </span>
-                  <div className="flex gap-x-1">
-                    <span className="text-right p-2">{humanizeNumber(stars)}</span>
-                    <span className="text-right p-2">{humanizeNumber(12)}</span>
-                    <span className="text-right p-2">{humanizeNumber(1234)}</span>
-                    <span className="text-right p-2">{humanizeNumber(size)}</span>
+                  <div className="flex gap-x-2.5">
+                    <span className="text-right py-2 w-20">{humanizeNumber(stars)}</span>
+                    <span className="text-right py-2 w-20">{humanizeNumber(12)}</span>
+                    <span className="text-right py-2 w-20">{humanizeNumber(1234)}</span>
+                    <span className="text-right py-2 w-20">{humanizeNumber(size)}</span>
                   </div>
                 </div>
               );
