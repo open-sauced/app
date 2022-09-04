@@ -99,7 +99,7 @@ const RepoSelectableTable: React.FC<RepoSelectableTableProps> = ({ title, tableT
                     if (isNotCheckbox) entireRowClickChangesCheckbox(allCheckboxRefs.current[index], name);
                   }}
                 >
-                  <span className="flex max-w-20 overflow-hidden whitespace-nowrap text-ellipsis md:w-fit flex-row align-middle text-left p-2">
+                  <span className="flex w-1/5 xs:w-2/5 overflow-hidden whitespace-nowrap text-ellipsis md:w-fit flex-row align-middle text-left p-2">
                     <Checkbox className="mt-0.5" label="" />{" "}
                     {name}
                   </span>
