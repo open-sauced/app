@@ -25,7 +25,7 @@ const DashboardScatterChart: React.FC<DashboardScatterChartProps> = ({ title, op
     <div>
       <div className="flex justify-between">
         <Title level={4}>{title}</Title>
-        <div className="flex gap-2 pr-10">
+        <div className="flex flex-col md:flex-row gap-2 pr-10">
           <ToggleOption handleToggle={handleShowBots} checked={showBots} optionText="Show Bots"></ToggleOption>
           <ToggleOption
             handleToggle={handleShowMembers}
@@ -36,7 +36,9 @@ const DashboardScatterChart: React.FC<DashboardScatterChartProps> = ({ title, op
         </div>
       </div>
       <div className="mt-3">
-        <Text className="-rotate-90 left-6 text-light-slate-10 top-[50%] absolute ">Lines Touched</Text>
+        <Text className="-rotate-90  opacity-0 md:opacity-100 left-6 text-light-slate-10 top-[50%] absolute ">
+          Lines Touched
+        </Text>
         <div className="ml-5">
           <EChartWrapper option={option} />
         </div>
