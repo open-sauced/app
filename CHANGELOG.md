@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.4.0-beta.5](https://github.com/open-sauced/insights/compare/v1.4.0-beta.4...v1.4.0-beta.5) (2022-09-05)
+
+
+### 🐛 Bug Fixes
+
+* Fixing issues with TopNav and Highlight Card ([#294](https://github.com/open-sauced/insights/issues/294)) ([218f30d](https://github.com/open-sauced/insights/commit/218f30d98c4b077db2c666ab145f8f2c269f14e0)), closes [#287](https://github.com/open-sauced/insights/issues/287) [#291](https://github.com/open-sauced/insights/issues/291)
+
 ## [1.4.0-beta.4](https://github.com/open-sauced/insights/compare/v1.4.0-beta.3...v1.4.0-beta.4) (2022-09-05)
 
 
