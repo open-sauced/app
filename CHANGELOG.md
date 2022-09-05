@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.4.0-beta.4](https://github.com/open-sauced/insights/compare/v1.4.0-beta.3...v1.4.0-beta.4) (2022-09-05)
+
+
+### 🍕 Features
+
+* **footer:** swap out footer text ([#296](https://github.com/open-sauced/insights/issues/296)) ([737df5b](https://github.com/open-sauced/insights/commit/737df5bb63cd09130fbf9815252f4ab3938999ad))
+
 ## [1.4.0-beta.3](https://github.com/open-sauced/insights/compare/v1.4.0-beta.2...v1.4.0-beta.3) (2022-09-03)
 
 
