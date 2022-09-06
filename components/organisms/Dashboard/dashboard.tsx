@@ -34,7 +34,7 @@ export const Dashboard = (): JSX.Element => {
       }
     },
     yAxis: {
-      min: 100,
+      min: 0,
       max: 10000,
       splitNumber: 6,
       boundaryGap: false,
