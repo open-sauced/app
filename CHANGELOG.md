@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.4.0-beta.6](https://github.com/open-sauced/insights/compare/v1.4.0-beta.5...v1.4.0-beta.6) (2022-09-06)
+
+
+### 🐛 Bug Fixes
+
+* Add background to selectable tr table ([#252](https://github.com/open-sauced/insights/issues/252)) ([7d6ae16](https://github.com/open-sauced/insights/commit/7d6ae164e2ddf9e4e0a21b486e61b1e4418bbc62)), closes [#183](https://github.com/open-sauced/insights/issues/183) [#289](https://github.com/open-sauced/insights/issues/289)
+* Contributor card overlap on smaller devices ([#298](https://github.com/open-sauced/insights/issues/298)) ([777f6ba](https://github.com/open-sauced/insights/commit/777f6ba4f3d9f0d29f8d47c2a73c7941edde4867)), closes [#290](https://github.com/open-sauced/insights/issues/290)
+
 ## [1.4.0-beta.5](https://github.com/open-sauced/insights/compare/v1.4.0-beta.4...v1.4.0-beta.5) (2022-09-05)
 
 
