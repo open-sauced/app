@@ -29,7 +29,6 @@ const SuperativeSelector: React.FC<SuperlativeSelectorProps> = ({
       // then close the menu
       if (isOpen && ref.current && !ref.current.contains(e.target)) {
         setIsOpen(false);
-        console.log(ref.current);
       }
 
     };
