@@ -13,9 +13,6 @@ const useNav = () => {
       name: "Reports"
     },
     {
-      name: "Activity"
-    },
-    {
       name: "Repositories",
       numOf: isLoading || isError ? 0 : meta.itemCount
     },
