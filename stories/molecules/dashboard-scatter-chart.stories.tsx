@@ -35,7 +35,7 @@ const testOptions = {
     }
   },
   yAxis: {
-    min: 100,
+    min: 0,
     max: 10000,
     splitNumber: 6,
     boundaryGap: false,
@@ -106,12 +106,12 @@ const testOptionsWithImage = {
   },
   yAxis: {
     min: 0,
-    max: 100,
+    max: 10000,
     splitNumber: 2,
     boundaryGap: false,
     axisLabel: {
-      showMinLabel: false,
-      formatter: "{value}%"
+      showMinLabel: true,
+      formatter: (value: number)=> value >= 1000 ? humanizeNumber(value) : value
     },
     splitLine: {
       lineStyle: {
