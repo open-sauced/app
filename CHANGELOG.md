@@ -5,6 +5,70 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.4.0-beta.7](https://github.com/open-sauced/insights/compare/v1.4.0-beta.6...v1.4.0-beta.7) (2022-09-06)
+
+
+### 🐛 Bug Fixes
+
+* Filter dropdown can only be closed by clicking on the filter button ([#299](https://github.com/open-sauced/insights/issues/299)) ([bce1f8e](https://github.com/open-sauced/insights/commit/bce1f8e2933fadb647c6f4f687b306bdbe24e9ae)), closes [#292](https://github.com/open-sauced/insights/issues/292)
+
+## [1.4.0-beta.6](https://github.com/open-sauced/insights/compare/v1.4.0-beta.5...v1.4.0-beta.6) (2022-09-06)
+
+
+### 🐛 Bug Fixes
+
+* Add background to selectable tr table ([#252](https://github.com/open-sauced/insights/issues/252)) ([7d6ae16](https://github.com/open-sauced/insights/commit/7d6ae164e2ddf9e4e0a21b486e61b1e4418bbc62)), closes [#183](https://github.com/open-sauced/insights/issues/183) [#289](https://github.com/open-sauced/insights/issues/289)
+* Contributor card overlap on smaller devices ([#298](https://github.com/open-sauced/insights/issues/298)) ([777f6ba](https://github.com/open-sauced/insights/commit/777f6ba4f3d9f0d29f8d47c2a73c7941edde4867)), closes [#290](https://github.com/open-sauced/insights/issues/290)
+
+## [1.4.0-beta.5](https://github.com/open-sauced/insights/compare/v1.4.0-beta.4...v1.4.0-beta.5) (2022-09-05)
+
+
+### 🐛 Bug Fixes
+
+* Fixing issues with TopNav and Highlight Card ([#294](https://github.com/open-sauced/insights/issues/294)) ([218f30d](https://github.com/open-sauced/insights/commit/218f30d98c4b077db2c666ab145f8f2c269f14e0)), closes [#287](https://github.com/open-sauced/insights/issues/287) [#291](https://github.com/open-sauced/insights/issues/291)
+
+## [1.4.0-beta.4](https://github.com/open-sauced/insights/compare/v1.4.0-beta.3...v1.4.0-beta.4) (2022-09-05)
+
+
+### 🍕 Features
+
+* **footer:** swap out footer text ([#296](https://github.com/open-sauced/insights/issues/296)) ([737df5b](https://github.com/open-sauced/insights/commit/737df5bb63cd09130fbf9815252f4ab3938999ad))
+
+## [1.4.0-beta.3](https://github.com/open-sauced/insights/compare/v1.4.0-beta.2...v1.4.0-beta.3) (2022-09-03)
+
+
+### 🍕 Features
+
+* Add download CSV funtionality to Reports page ([#286](https://github.com/open-sauced/insights/issues/286)) ([ada79d3](https://github.com/open-sauced/insights/commit/ada79d3ff5ff197e510f78fad959792c2bc522b4))
+
+## [1.4.0-beta.2](https://github.com/open-sauced/insights/compare/v1.4.0-beta.1...v1.4.0-beta.2) (2022-09-02)
+
+
+### 🧑‍💻 Code Refactoring
+
+* Add types to useRepositoriesList hook ([#277](https://github.com/open-sauced/insights/issues/277)) ([4f1a771](https://github.com/open-sauced/insights/commit/4f1a7715b09f28f060ec5b93f0c1208cc1d0b40c))
+
+## [1.4.0-beta.1](https://github.com/open-sauced/insights/compare/v1.3.1-beta.2...v1.4.0-beta.1) (2022-08-31)
+
+
+### 🍕 Features
+
+* Update Scatter Chart Legend ([#260](https://github.com/open-sauced/insights/issues/260)) ([309ef62](https://github.com/open-sauced/insights/commit/309ef62a14b8d78866b6cc26af919c7d9d16d3f1))
+
+### [1.3.1-beta.2](https://github.com/open-sauced/insights/compare/v1.3.1-beta.1...v1.3.1-beta.2) (2022-08-31)
+
+
+### 🐛 Bug Fixes
+
+* correct netlify build supabase redirect url ([#283](https://github.com/open-sauced/insights/issues/283)) ([0b2b80a](https://github.com/open-sauced/insights/commit/0b2b80a155bd1af6497a1ca84916e2513dd58581))
+
+### [1.3.1-beta.1](https://github.com/open-sauced/insights/compare/v1.3.0...v1.3.1-beta.1) (2022-08-30)
+
+
+### 🐛 Bug Fixes
+
+* grammar for header description ([#279](https://github.com/open-sauced/insights/issues/279)) ([a019912](https://github.com/open-sauced/insights/commit/a0199125d1c8cff4af514f2fb80fd90c19cb10dc))
+
 ## [1.3.0](https://github.com/open-sauced/insights/compare/v1.2.3...v1.3.0) (2022-08-29)
 
 

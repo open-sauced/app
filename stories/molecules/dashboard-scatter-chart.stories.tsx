@@ -1,17 +1,52 @@
 import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-import ScatterChart from "../../components/molecules/ScatterChart/scatter-chart";
+import DashboardScatterChart from "../../components/molecules/DashboardScatterChart/dashboard-scatter-chart";
 
 const storyConfig = {
-  title: "Design System/Molecules/Scatter Chart",
+  title: "Design System/Molecules/Dashboard Scatter Chart",
   component: "ScatterChart"
 };
 
 export default storyConfig;
 
 const testOptions = {
-  xAxis: {},
-  yAxis: {},
+  grid: {
+    left: 40,
+    top: 10,
+    right: 40,
+    bottom: 20
+  },
+  xAxis: {
+    boundaryGap: false,
+    scale: true,
+    minInterval: 7,
+    maxInterval: 7,
+    min: 0,
+    max: 35,
+    axisLabel: {
+      formatter: (value: number, index: number) => value === 0 ? "Today" : value === 35 ? "35+ days ago" : `${value} days ago` 
+    },
+    splitLine: {
+      lineStyle: {
+        type: "dashed"
+      }
+    }
+  },
+  yAxis: {
+    min: 0,
+    max: 100,
+    splitNumber: 2,
+    boundaryGap: false,
+    axisLabel: {
+      showMinLabel: false,
+      formatter: "{value}%" 
+    },
+    splitLine: {
+      lineStyle: {
+        type: "dashed"
+      }
+    }
+  },
   series: [
     {
       symbolSize: 20,
@@ -45,8 +80,43 @@ const testOptions = {
 };
 
 const testOptionsWithImage = {
-  xAxis: {},
-  yAxis: {},
+  grid: {
+    left: 40,
+    top: 10,
+    right: 40,
+    bottom: 20
+  },
+  xAxis: {
+    boundaryGap: false,
+    scale: true,
+    minInterval: 7,
+    maxInterval: 7,
+    min: 0,
+    max: 35,
+    axisLabel: {
+      formatter: (value: number, index: number) => value === 0 ? "Today" : value === 35 ? "35+ days ago" : `${value} days ago` 
+    },
+    splitLine: {
+      lineStyle: {
+        type: "dashed"
+      }
+    }
+  },
+  yAxis: {
+    min: 0,
+    max: 100,
+    splitNumber: 2,
+    boundaryGap: false,
+    axisLabel: {
+      showMinLabel: false,
+      formatter: "{value}%" 
+    },
+    splitLine: {
+      lineStyle: {
+        type: "dashed"
+      }
+    }
+  },
   series: [
     {
       symbolSize: 30,
@@ -81,7 +151,7 @@ const testOptionsWithImage = {
 };
 
 // ScatterChart Template
-const ScatterChartTemplate: ComponentStory<typeof ScatterChart> = (args) => <ScatterChart {...args} />;
+const ScatterChartTemplate: ComponentStory<typeof DashboardScatterChart> = (args) => <DashboardScatterChart {...args} />;
 
 // ScatterChart Default
 export const Default = ScatterChartTemplate.bind({});

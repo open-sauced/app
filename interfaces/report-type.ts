@@ -1,6 +1,7 @@
 export type Report = {
   reportName: string;
   reportDate: string;
-  reportFormat: "CSV";
+  reportFormat: string;
   isGenerated: boolean;
+  data: object[];
 }

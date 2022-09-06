@@ -12,7 +12,7 @@ interface HeaderLogoProps {
 const HeaderLogo: React.FC<HeaderLogoProps> = ({ loginScreen, withBg = false }) => {
   
   return (
-    <div className="flex items-center p-2">
+    <div className="flex items-center py-2 gap-2">
       <Image
         className="rounded"
         alt="Open Sauced Logo"
@@ -21,7 +21,7 @@ const HeaderLogo: React.FC<HeaderLogoProps> = ({ loginScreen, withBg = false }) 
         src={withBg ? openSaucedImgWithBg : openSaucedImg}
       />
       <Text
-        className={`font-semibold px-2 text-base hidden xs:block ${loginScreen ? "!text-black" : "!text-white"}`}
+        className={`font-semibold text-base hidden xs:block ${loginScreen ? "!text-black" : "!text-white"}`}
       >
           OpenSauced
       </Text>

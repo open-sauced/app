@@ -1,6 +1,6 @@
 import { Fetcher } from "swr";
 
-const baseUrl = "https://gs-api.opensauced.pizza/v1";
+const baseUrl = process.env.NEXT_PUBLIC_GS_API_URL;
 
 const apiFetcher: Fetcher = async (apiUrl: string) => {
   const res = await fetch(`${baseUrl}/${apiUrl}`, { headers: { accept: "application/json" } });
