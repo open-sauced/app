@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.4.0-beta.8](https://github.com/open-sauced/insights/compare/v1.4.0-beta.7...v1.4.0-beta.8) (2022-09-06)
+
+
+### 🐛 Bug Fixes
+
+* remove activity ([#304](https://github.com/open-sauced/insights/issues/304)) ([17fcb9a](https://github.com/open-sauced/insights/commit/17fcb9a7aef488336f0a9f05b1041ca51eb96fbc))
+
 ## [1.4.0-beta.7](https://github.com/open-sauced/insights/compare/v1.4.0-beta.6...v1.4.0-beta.7) (2022-09-06)
 
 
