@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.4.0-beta.7](https://github.com/open-sauced/insights/compare/v1.4.0-beta.6...v1.4.0-beta.7) (2022-09-06)
+
+
+### 🐛 Bug Fixes
+
+* Filter dropdown can only be closed by clicking on the filter button ([#299](https://github.com/open-sauced/insights/issues/299)) ([bce1f8e](https://github.com/open-sauced/insights/commit/bce1f8e2933fadb647c6f4f687b306bdbe24e9ae)), closes [#292](https://github.com/open-sauced/insights/issues/292)
+
 ## [1.4.0-beta.6](https://github.com/open-sauced/insights/compare/v1.4.0-beta.5...v1.4.0-beta.6) (2022-09-06)
 
 
