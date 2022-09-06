@@ -36,7 +36,7 @@ const DashboardScatterChart: React.FC<DashboardScatterChartProps> = ({ title, op
         </div>
       </div>
       <div className="mt-3">
-        <Text className="-rotate-90  opacity-0 md:opacity-100 left-6 text-light-slate-10 top-[50%] absolute ">
+        <Text className="-rotate-90  opacity-0 md:opacity-100 -left-6 text-light-slate-10 top-[50%] absolute ">
           Lines Touched
         </Text>
         <div className="ml-5">
