@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.4.0-beta.9](https://github.com/open-sauced/insights/compare/v1.4.0-beta.8...v1.4.0-beta.9) (2022-09-07)
+
+
+### 🐛 Bug Fixes
+
+* Changed 'repo/list' endpoint to 'repos/list' ([#307](https://github.com/open-sauced/insights/issues/307)) ([7876f9e](https://github.com/open-sauced/insights/commit/7876f9e5d15f3bc24a78f335ce7ee6e013f4210d))
+
 ## [1.4.0-beta.8](https://github.com/open-sauced/insights/compare/v1.4.0-beta.7...v1.4.0-beta.8) (2022-09-06)
 
 
