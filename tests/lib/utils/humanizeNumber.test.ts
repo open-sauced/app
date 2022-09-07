@@ -19,6 +19,6 @@ describe("Test: humanizeNumber()", () => {
     const num = 1234;
     const result = humanizeNumber(num);
 
-    expect(result).toBe("1.2k");
+    expect(result).toBe("1,234");
   });
 });
