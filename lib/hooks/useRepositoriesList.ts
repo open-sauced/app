@@ -6,7 +6,7 @@ interface PaginatedRepoResponse {
 }
 
 const useRepositoriesList = () => {
-  const { data, error, mutate } = useSWR<PaginatedRepoResponse, Error>("repo/list");
+  const { data, error, mutate } = useSWR<PaginatedRepoResponse, Error>("repos/list");
 
   return {
     data: data?.data ?? [],
