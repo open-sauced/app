@@ -146,6 +146,6 @@ Default.args = {
     profile: profile,
     listOfPRs: listOfPRs,
     languageList: languageList,
-    repoList: repoList,
-  },
+    repoList: repoList
+  }
 };
