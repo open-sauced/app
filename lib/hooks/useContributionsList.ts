@@ -1,14 +1,13 @@
 import useSWR from "swr";
 
-//Mission Start!
-
 interface PaginatedRepoResponse {
-  readonly data: DBRepo[];
+  readonly data: DBContributions[];
   readonly meta: Meta;
 }
 
-const useRepositoriesList = () => {
-  const { data, error, mutate } = useSWR<PaginatedRepoResponse, Error>("repos/list");
+const useContributionsList = () => {
+  //The endpoint for all Hacktoberfest contributions doesn't exist yet so will substitute this for now
+  const { data, error, mutate } = useSWR<PaginatedRepoResponse, Error>("repos/769/contributions");
 
   return {
     data: data?.data ?? [],
@@ -19,4 +18,4 @@ const useRepositoriesList = () => {
   };
 };
 
-export {useRepositoriesList};
+export {useContributionsList};

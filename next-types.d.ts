@@ -9,3 +9,13 @@ interface DBRepo {
 interface Meta {
   readonly itemCount: number,
 }
+
+interface DBContributions {
+  commits: number,
+  commit_days: number,
+  files_modified: number,
+  updated_at: number,
+  email: string,
+  name: string,
+  langs: string
+}
