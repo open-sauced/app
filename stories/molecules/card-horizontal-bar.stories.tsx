@@ -33,15 +33,15 @@ OneLanguage.args = {
   languageList: [
     {
       languageName: "JavaScript",
-      percentageUsed: 100,
-    },
-  ],
+      percentageUsed: 100
+    }
+  ]
 };
 
 export const MultipleLanguages = CardHorizontalBarTemplate.bind({});
 
 MultipleLanguages.args = {
-  languageList: testLanguageList,
+  languageList: testLanguageList
 };
 export const notSupportedLanguage = CardHorizontalBarTemplate.bind({});
 
@@ -49,7 +49,7 @@ notSupportedLanguage.args = {
   languageList: [
     {
       languageName: "qBasic",
-      percentageUsed: 100,
-    },
-  ],
+      percentageUsed: 100
+    }
+  ]
 };
