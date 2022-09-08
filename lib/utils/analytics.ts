@@ -1,9 +1,8 @@
 import posthog from "posthog-js";
 
-//Mission Start!
-
 function initiatePostHog () {
-  posthog.init(import.meta.env.VITE_POSTHOG_ID, { api_host: "https://app.posthog.com" });
+  //eslint-disable-next-line
+  posthog.init(process.env.NEXT_PUBLIC_POSTHOG_ID as string, { api_host: "https://app.posthog.com" });
 }
 
 function capturePostHogAnayltics (
