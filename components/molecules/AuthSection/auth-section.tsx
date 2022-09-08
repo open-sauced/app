@@ -9,6 +9,7 @@ import DropdownList from "../DropdownList/dropdown-list";
 import Text from "components/atoms/Typography/text";
 import { Divider } from "@supabase/ui";
 import useSupabaseAuth from "../../../lib/hooks/useSupabaseAuth";
+import {FiLogOut} from "react-icons/fi";
 import GitHubIcon from "public/icons/github-icon.svg";
 import Icon from "components/atoms/Icon/icon";
 
@@ -18,8 +19,9 @@ const AuthSection: React.FC = ({  }) => {
 
   const authMenu = {
     authed: [
-      <span onClick={async () => await signOut()} key="authorized" className="block px-4 py-2 rounded-md cursor-pointer">
-        <Text>Logout</Text>
+      <span onClick={async () => await signOut()} key="authorized" className="group flex gap-x-3 text-lg hover:bg-light-orange-3 items-center px-4 py-2 rounded-md cursor-pointer transition">
+        <FiLogOut className="group-hover:text-light-orange-10"/>
+        <Text className="group-hover:text-light-orange-10">Disconnect</Text>
       </span>
     ]
   };
