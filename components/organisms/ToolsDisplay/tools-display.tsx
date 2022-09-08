@@ -1,3 +1,4 @@
+import { capturePostHogAnayltics } from "lib/utils/analytics";
 import React from "react";
 import Contributors from "../Contributors/contributors";
 
@@ -10,6 +11,8 @@ interface ToolProps {
 }
 
 const Tool = ({ tool }: ToolProps): JSX.Element => {
+  capturePostHogAnayltics("Tools Display", "tools", `${tool} selected`);
+
   switch (tool) {
   case "Dashboard":
     return <Dashboard />;

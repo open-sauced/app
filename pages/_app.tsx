@@ -9,6 +9,7 @@ import changeCapitalization from "../lib/utils/change-capitalization";
 import { supabase } from "../lib/utils/supabase";
 import { SWRConfig } from "swr";
 import apiFetcher from "../lib/hooks/useSWR";
+import { initiatePostHog } from "lib/utils/analytics";
 
 type ComponentWithPageLayout = AppProps & {
   Component: AppProps["Component"] & {
@@ -17,6 +18,7 @@ type ComponentWithPageLayout = AppProps & {
 };
 
 function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
+  initiatePostHog();
   const router = useRouter();
 
   const { filterName, toolName } = router.query;

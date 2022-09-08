@@ -21,6 +21,7 @@ import Button from "components/atoms/Button/button";
 import TextInput from "components/atoms/TextInput/text-input";
 import { LoginRepoObjectInterface } from "interfaces/login-repo-object-interface";
 import useLoginRepoList from "lib/hooks/useLoginRepoList";
+import { capturePostHogAnayltics } from "lib/utils/analytics";
 
 type handleLoginStep = () => void;
 
@@ -29,6 +30,7 @@ interface LoginStep1Props {
 }
 
 const LoginStep1: React.FC<LoginStep1Props> = ({ handleLoginStep }) => {
+  capturePostHogAnayltics("User Onboarding", "onboardingStep1", "visited");
   const handleGitHubAuth = () => {
     handleLoginStep();
   };
@@ -69,6 +71,7 @@ interface LoginStep2Props {
 }
 
 const LoginStep2: React.FC<LoginStep2Props> = ({ handleLoginStep }) => {
+  capturePostHogAnayltics("User Onboarding", "onboardingStep2", "visited");
   const handleAddPAT = () => {
     handleLoginStep();
   };
@@ -117,6 +120,7 @@ interface LoginStep3Props {
 }
 
 const LoginStep3: React.FC<LoginStep3Props> = ({ repoList, handleLoginStep, checkFollowed }) => {
+  capturePostHogAnayltics("User Onboarding", "onboardingStep3", "visited");
   const router = useRouter();
 
   const [isFollowing, setIsFollowing] = useState<boolean[]>(repoList.map(() => false));
