@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 export const Dashboard = (): JSX.Element => {
   const { meta, isError } = useRepositoriesList();
   const [ itemCountText, setItemCountText ] = useState("Loading...");
-  
+
   const scatterOptions = {
     xAxis: {},
     yAxis: {},
@@ -45,7 +45,7 @@ export const Dashboard = (): JSX.Element => {
   };
 
   useEffect(() => {
-    if(meta) setItemCountText(`of ${humanizeNumber(meta.itemCount)}`);
+    if(meta) setItemCountText(`of ${humanizeNumber(meta.itemCount, null)}`);
     if(isError) setItemCountText("of unknown...");
   }, [ isError, meta ]);
 
