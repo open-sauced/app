@@ -14,6 +14,7 @@ interface DBContributions {
   readonly commits: string,
   readonly commit_days: string,
   readonly files_modified: string,
+  readonly first_commit_time: string,
   readonly last_commit_time: string,
   readonly email: string,
   readonly name: string,
