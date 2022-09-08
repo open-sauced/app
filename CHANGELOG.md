@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.4.0-beta.11](https://github.com/open-sauced/insights/compare/v1.4.0-beta.10...v1.4.0-beta.11) (2022-09-08)
+
+
+### 🍕 Features
+
+* Implemented new design for logout pop-up ([#310](https://github.com/open-sauced/insights/issues/310)) ([88a9279](https://github.com/open-sauced/insights/commit/88a9279db6ec4e9b9ac1544c6bb57da013089fd0))
+
 ## [1.4.0-beta.10](https://github.com/open-sauced/insights/compare/v1.4.0-beta.9...v1.4.0-beta.10) (2022-09-07)
 
 
