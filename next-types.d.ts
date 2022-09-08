@@ -11,11 +11,11 @@ interface Meta {
 }
 
 interface DBContributions {
-  commits: number,
-  commit_days: number,
-  files_modified: number,
-  updated_at: number,
-  email: string,
-  name: string,
-  langs: string
+  readonly commits: string,
+  readonly commit_days: string,
+  readonly files_modified: string,
+  readonly last_commit_time: string,
+  readonly email: string,
+  readonly name: string,
+  readonly langs: string
 }

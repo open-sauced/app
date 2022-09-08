@@ -5,9 +5,11 @@ interface PaginatedRepoResponse {
   readonly meta: Meta;
 }
 
-const useContributionsList = () => {
+const useContributionsList = (limit = "") => {
   //The endpoint for all Hacktoberfest contributions doesn't exist yet so will substitute this for now
-  const { data, error, mutate } = useSWR<PaginatedRepoResponse, Error>("repos/769/contributions");
+  const endpointString = `repos/769/contributions?orderBy=last_commit_time${limit === "" ? limit : `&limit=${limit}`}`;
+
+  const { data, error, mutate } = useSWR<PaginatedRepoResponse, Error>(endpointString);
 
   return {
     data: data?.data ?? [],
