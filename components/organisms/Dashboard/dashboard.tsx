@@ -5,7 +5,7 @@ import HighlightCard from "components/molecules/HighlightCard/highlight-card";
 import humanizeNumber from "lib/utils/humanizeNumber";
 import { useEffect, useState } from "react";
 import { useContributionsList } from "lib/hooks/useContributionsList";
-import calcDaysFromToday from "lib/utils/calcDaysFromToday";
+import { calcDaysFromToday } from "lib/utils/date-utils";
 
 export const Dashboard = (): JSX.Element => {
   const { meta: repoMetaData, isError: repoError } = useRepositoriesList();

@@ -1,6 +1,6 @@
 import { useContributionsList } from "lib/hooks/useContributionsList";
 import useContributorData from "lib/hooks/useContributorData";
-import calcMonthsFromToday from "lib/utils/calcMonthsFromToday";
+import { calcMonthsFromToday } from "lib/utils/date-utils";
 import ContributorCard from "../ContributorCard/contributor-card";
 
 const Contributors = (): JSX.Element =>{

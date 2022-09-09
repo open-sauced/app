@@ -1,6 +1,6 @@
 // User defined type definitions. Please add type definitions for global types here
 
-interface DBRepo {
+interface DbRepo {
   readonly size: number,
   readonly stars: number,
   readonly name: string
@@ -10,7 +10,7 @@ interface Meta {
   readonly itemCount: number,
 }
 
-interface DBContributions {
+interface DbContributions {
   readonly commits: string,
   readonly commit_days: string,
   readonly files_modified: string,
