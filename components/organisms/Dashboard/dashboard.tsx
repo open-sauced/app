@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 
 export const Dashboard = (): JSX.Element => {
   const { meta, isError } = useRepositoriesList();
+
   const [itemCountText, setItemCountText] = useState("Loading...");
 
   const scatterOptions = {
@@ -40,7 +41,7 @@ export const Dashboard = (): JSX.Element => {
       boundaryGap: false,
       axisLabel: {
         showMinLabel: true,
-        formatter: (value: number) => value >= 1000 ? humanizeNumber(value) : value
+        formatter: (value: number) => value >= 1000 ? humanizeNumber(value,null) : value
       },
       splitLine: {
         lineStyle: {
@@ -81,9 +82,10 @@ export const Dashboard = (): JSX.Element => {
   };
 
   useEffect(() => {
-    if (meta) setItemCountText(`of ${humanizeNumber(meta.itemCount)}`);
-    if (isError) setItemCountText("of unknown...");
-  }, [isError, meta]);
+
+    if(meta) setItemCountText(`of ${humanizeNumber(meta.itemCount, "comma")}`);
+    if(isError) setItemCountText("of unknown...");
+  }, [ isError, meta ]);
 
   return (
     <div className="flex flex-col w-full gap-4">
