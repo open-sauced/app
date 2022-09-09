@@ -47,6 +47,7 @@
     "echarts": "^5.3.3",
     "echarts-for-react": "^3.0.2",
     "next": "^12.2.4",
+    "next-use-posthog": "^1.16.0",
     "posthog-js": "^1.29.3",
     "react": "^17.0.2",
     "react-csv": "^2.2.2",

@@ -1,7 +1,6 @@
-import { capturePostHogAnayltics } from "lib/utils/analytics";
 import React from "react";
 import Contributors from "../Contributors/contributors";
-
+import { capturePostHogAnayltics } from "lib/utils/analytics";
 import Dashboard from "../Dashboard/dashboard";
 import Reports from "../Reports/reports";
 import Repositories from "../Repositories/repositories";
