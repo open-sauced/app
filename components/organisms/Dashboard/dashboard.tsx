@@ -83,7 +83,7 @@ export const Dashboard = (): JSX.Element => {
 
   useEffect(() => {
 
-    if(meta) setItemCountText(`of ${humanizeNumber(meta.itemCount, null)}`);
+    if(meta) setItemCountText(`of ${humanizeNumber(meta.itemCount, "comma")}`);
     if(isError) setItemCountText("of unknown...");
   }, [ isError, meta ]);
 
