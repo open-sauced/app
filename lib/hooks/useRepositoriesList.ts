@@ -1,7 +1,7 @@
 import useSWR from "swr";
 
 interface PaginatedRepoResponse {
-  readonly data: DBRepo[];
+  readonly data: DbRepo[];
   readonly meta: Meta;
 }
 

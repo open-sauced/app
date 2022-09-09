@@ -11,7 +11,7 @@ import humanizeNumber from "../../../lib/utils/humanizeNumber";
 interface RepoSelectableTableProps {
   title: string;
   tableType: "participants";
-  rows: DBRepo[];
+  rows: DbRepo[];
 }
 
 const iconSuite = {
