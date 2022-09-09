@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.4.0-beta.12](https://github.com/open-sauced/insights/compare/v1.4.0-beta.11...v1.4.0-beta.12) (2022-09-09)
+
+
+### 🍕 Features
+
+* add comma option to humanized number ([#306](https://github.com/open-sauced/insights/issues/306)) ([d093733](https://github.com/open-sauced/insights/commit/d093733430e4704bf3e6ac0fcc46f22867368eff)), closes [#258](https://github.com/open-sauced/insights/issues/258)
+* Implement page header component ([#336](https://github.com/open-sauced/insights/issues/336)) ([7894a2d](https://github.com/open-sauced/insights/commit/7894a2df78d0668fd08ad518944c0c6cb0ea80e6)), closes [#317](https://github.com/open-sauced/insights/issues/317)
+
 ## [1.4.0-beta.11](https://github.com/open-sauced/insights/compare/v1.4.0-beta.10...v1.4.0-beta.11) (2022-09-08)
 
 
