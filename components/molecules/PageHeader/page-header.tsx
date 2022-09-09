@@ -12,7 +12,6 @@ const PageHeader = ({ title, rightComponent, leftComponent }: PageHeaderProps): 
       <Title className="md:!text-2xl font-medium !tracking-tight !text-xl" level={1}>
         {title}
       </Title>
-
       <div className="flex md:flex-row flex-col w-full md:justify-between items-start md:items-center">
         <div>{leftComponent}</div>
         <div>{rightComponent}</div>
