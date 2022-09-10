@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.4.0-beta.14](https://github.com/open-sauced/insights/compare/v1.4.0-beta.13...v1.4.0-beta.14) (2022-09-10)
+
+
+### 🍕 Features
+
+* Implement `Search` component  ([#337](https://github.com/open-sauced/insights/issues/337)) ([c67b7a1](https://github.com/open-sauced/insights/commit/c67b7a1670d6c895b5c223ede5948d1752e75af0))
+
 ## [1.4.0-beta.13](https://github.com/open-sauced/insights/compare/v1.4.0-beta.12...v1.4.0-beta.13) (2022-09-10)
 
 
