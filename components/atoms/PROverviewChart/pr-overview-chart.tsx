@@ -32,15 +32,19 @@ const PROverviewChart: React.FC<PROverviewChartProps> = ({ className, open = 0, 
 
   return (
     <div
-      className="bg-light-slate-2">
+      className="w-full h-3 flex gap-1 bg-light-slate-2 rounded-full overflow-hidden">
+      
       {/* Open */}
-      <div></div>
+      <PROverviewChartBar percent={`${getPercentage(open)}%`} type="open" />
 
       {/* Merged */}
-      <div></div>
+      <PROverviewChartBar percent={`${getPercentage(merged)}%`} type="merged" />
 
       {/* Closed */}
-      <div></div>
+      <PROverviewChartBar percent={`${getPercentage(closed)}%`} type="closed" />
+      
+      {/* Draft */}
+      <PROverviewChartBar percent={`${getPercentage(draft)}%`} type="draft" />
     </div>
   );
 };
