@@ -23,10 +23,9 @@ interface PullRequestOverviewChartProps {
   draft?: number;
 }
 
-const PullRequestOverviewChart: React.FC<PullRequestOverviewChartProps> = ({ className, open = 0, merged = 20, closed = 1, draft = 3 }) => {  
-  const totalPRs = open + merged + closed + draft;
-  const getPercentage = (PRType: number) => {
-    return ((PRType * 100) / totalPRs);
+const PullRequestOverviewChart: React.FC<PullRequestOverviewChartProps> = ({ className, open, merged, closed, draft, totalPullRequests }) => {  
+  const getPercentage = (PullRequestType: number) => {
+    return (((!!PullRequestType ? PullRequestType : 0) * 100) / (!!totalPullRequests ? totalPullRequests : 0));
   };
 
   return (

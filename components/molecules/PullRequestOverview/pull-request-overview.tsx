@@ -12,6 +12,8 @@ interface PullRequestOverviewProps {
 }
 
 const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({ className, open, merged, closed, draft, churn, chrunDirection }) => {
+  const totalPullRequests = (!!open ? open : 0) + (!!merged ? merged : 0) + (!!closed ? closed : 0) + (!!draft ? draft : 0);
+
   return (
     <div>
 
