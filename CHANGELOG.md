@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.4.0-beta.15](https://github.com/open-sauced/insights/compare/v1.4.0-beta.14...v1.4.0-beta.15) (2022-09-10)
+
+
+### 🍕 Features
+
+* Implement `<TableTitle>` component ([#340](https://github.com/open-sauced/insights/issues/340)) ([44361a9](https://github.com/open-sauced/insights/commit/44361a9fdb2b79ebb17e26f07e9827129f49a151))
+
 ## [1.4.0-beta.14](https://github.com/open-sauced/insights/compare/v1.4.0-beta.13...v1.4.0-beta.14) (2022-09-10)
 
 
