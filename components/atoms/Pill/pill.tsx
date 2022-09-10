@@ -12,14 +12,15 @@ const Pill: React.FC<PillProps> = ({ className, text, color = "slate", size = "b
   return (
     <div 
       className={`
-        ${color === "green" ? "bg-light-grass-4" : color === "yellow" ? "bg-light-amber-4" : color === "red" ? "bg-light-red-4" : "bg-light-slate-4"}
-        inline-flex py-0.5 px-2 rounded-full`}>
+        ${color === "green" ? "bg-light-grass-4 " : color === "yellow" ? "bg-light-amber-4 " : color === "red" ? "bg-light-red-4 " : "bg-light-slate-4 "}
+        ${size === "small" ? "py-1 px-1 " : "py-1.5 px-2 "}
+        inline-flex rounded-full`}>
       {icon}
 
       <div 
         className={`
         ${color === "green" ? "text-light-grass-11" : color === "yellow" ? "text-light-amber-11" : color === "red" ? "text-light-red-11" : "text-light-slate-11"}
-          font-medium text-sm`}>
+          font-medium text-sm leading-none`}>
         {text}
       </div>
     </div>
