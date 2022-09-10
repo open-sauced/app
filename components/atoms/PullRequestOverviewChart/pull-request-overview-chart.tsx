@@ -31,7 +31,7 @@ const PullRequestOverviewChart: React.FC<PullRequestOverviewChartProps> = ({ cla
 
   return (
     <div
-      className="w-full h-3 flex gap-1 bg-light-slate-2 rounded-full overflow-hidden">
+      className="w-full h-1.5 flex gap-0.5 bg-light-slate-2 rounded-full overflow-hidden">
       
       {/* Open */}
       <PullRequestOverviewChartBar percent={`${getPercentage(open)}%`} type="open" />
