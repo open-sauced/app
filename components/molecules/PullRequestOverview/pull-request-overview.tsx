@@ -1,4 +1,5 @@
 import React from "react";
+import PullRequestOverviewChart from "../../atoms/PullRequestOverviewChart/pull-request-overview-chart";
 
 interface PROverviewProps {
   className?: string;
