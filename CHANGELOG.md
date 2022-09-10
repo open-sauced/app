@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.4.0-beta.13](https://github.com/open-sauced/insights/compare/v1.4.0-beta.12...v1.4.0-beta.13) (2022-09-10)
+
+
+### 🍕 Features
+
+* Implement `Pill` component ([#341](https://github.com/open-sauced/insights/issues/341)) ([2a4da14](https://github.com/open-sauced/insights/commit/2a4da14fef505dd08ece76ec62d391ca783cea7e))
+
 ## [1.4.0-beta.12](https://github.com/open-sauced/insights/compare/v1.4.0-beta.11...v1.4.0-beta.12) (2022-09-09)
 
 
