@@ -12,17 +12,24 @@ interface PaginationProps {
   gotoPage?: boolean;
 }
 
-const Pagination = ({ pages, totalPage, currentPage, divisor, gotoPage = false, pageSize = 5 }: PaginationProps): JSX.Element => {
+const Pagination = ({ pages, totalPage, currentPage, divisor = true, gotoPage = false, pageSize = 5 }: PaginationProps): JSX.Element => {
 
-  // This state was for testing purpose
-  const [selected, setSelected] = useState<number | null>(1);
+  // This logics are meant for testing purpose
+  const [selected, setSelected] = useState<number>(1);
   const handleSelected = (pageNumber: number) => {
     setSelected(pageNumber);
   };
+  const handleNext = () =>  {
+    setSelected(prev => prev + 1);
+  };
+  const handlePrev = () => {
+    setSelected((prev) => prev - 1);
+  };
+
   return (
     <div className=" w-max flex gap-x-4 items-center ">
       <div className="flex items-center gap-x-4">
-        <RiArrowLeftSLine className="text-lg cursor-pointer text-light-slate-9" />
+        <RiArrowLeftSLine onClick={() => handlePrev()} className="text-lg cursor-pointer text-light-slate-9" />
 
         {pages.map((page, index) => {
           return (
@@ -42,9 +49,9 @@ const Pagination = ({ pages, totalPage, currentPage, divisor, gotoPage = false, 
           );
         })}
 
-        <RiArrowRightSLine className="text-lg cursor-pointer text-light-slate-9" />
+        <RiArrowRightSLine onClick={()=> handleNext()} className="text-lg cursor-pointer text-light-slate-9" />
       </div>
-      <div className="text-light-slate-9 font-medium">Total {totalPage > 999 ? humanizeNumber(totalPage) : totalPage} pages</div>
+      <div className={`${divisor &&  "border-r-2 border-r-light-slate-6"}text-light-slate-9 font-medium  py-1 pr-4`}>Total {totalPage > 999 ? humanizeNumber(totalPage) : totalPage} pages</div>
       {gotoPage && <div>GotoPage component</div>}
     </div>
   );
