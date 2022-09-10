@@ -21,6 +21,7 @@ interface PullRequestOverviewChartProps {
   merged?: number;
   closed?: number;
   draft?: number;
+  totalPullRequests?: number;
 }
 
 const PullRequestOverviewChart: React.FC<PullRequestOverviewChartProps> = ({ className, open, merged, closed, draft, totalPullRequests }) => {  
