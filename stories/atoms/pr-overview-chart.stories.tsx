@@ -15,8 +15,8 @@ const PROverviewChartTemplate: ComponentStory<typeof PROverviewChart> = (args) =
 export const Default = PROverviewChartTemplate.bind({});
 
 Default.args = {
-  open: 32,
+  open: 2,
   merged: 28,
   closed: 0,
-  draft: 40
+  draft: 38
 };
