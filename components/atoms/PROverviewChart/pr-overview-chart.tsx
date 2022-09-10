@@ -2,10 +2,10 @@ import React from "react";
 
 interface PROverviewChartProps {
     className?: string;
-    open?: string | number;
-    merged?: string | number;
-    closed?: string | number;
-    draft?: string | number;
+    open?: number;
+    merged?: number;
+    closed?: number;
+    draft?: number;
 }
 
 const PROverviewChart: React.FC<PROverviewChartProps> = ({ className, open, merged, closed, draft }) => {
