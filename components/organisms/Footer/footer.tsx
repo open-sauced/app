@@ -68,9 +68,9 @@ const Footer = (): JSX.Element => {
           © 2022 <span className="hidden md:inline-block">Open sauced</span>
           </Text>
           <div className="flex items-center gap-x-4 text-light-slate-11 text-sm">
-            <a href="" target="_blank">{footerContext[0].terms?.text}</a>
-            <a href="" target="_blank">{footerContext[0].privacy?.text}</a>
-            <a href="" target="_blank">{footerContext[0].status?.text}</a>
+            <a href={footerContext[0].terms?.url} target="_blank" rel="noreferrer">{footerContext[0].terms?.text}</a>
+            <a href={footerContext[0].privacy?.url} target="_blank" rel="noreferrer">{footerContext[0].privacy?.text}</a>
+            <a href={footerContext[0].status?.url} target="_blank" rel="noreferrer">{footerContext[0].status?.text}</a>
           </div>
         </div>
       </div>
