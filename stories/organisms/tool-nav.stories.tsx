@@ -16,6 +16,10 @@ const testTools = [
   {
     name: "test 2",
     numOf: 3
+  },
+  {
+    name: "test 2",
+    numOf: 0
   }
 ];
 
