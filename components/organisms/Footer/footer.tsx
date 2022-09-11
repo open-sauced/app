@@ -18,8 +18,8 @@ const footerContext = [
     status: { url: "", text: "status" }
   },
   {
-    hot: { url: "", text: "hot.opensauced.pizza" },
-    openSauced: { url: "", text: "opensauced.pizza" }
+    hot: { url: "https://hot.opensauced.pizza", text: "hot.opensauced.pizza" },
+    openSauced: { url: "https://opensauced.pizza", text: "opensauced.pizza" }
   },
   {
     socials: [
