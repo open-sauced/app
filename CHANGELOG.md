@@ -5,6 +5,23 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.4.0-beta.16](https://github.com/open-sauced/insights/compare/v1.4.0-beta.15...v1.4.0-beta.16) (2022-09-11)
+
+
+### 🍕 Features
+
+* Implement `<PROverview>` component ([#344](https://github.com/open-sauced/insights/issues/344)) ([762cc54](https://github.com/open-sauced/insights/commit/762cc544840492aab91a93eefc3586003a47f16d))
+
+
+### 🐛 Bug Fixes
+
+* Fix the `numOf` style on `ToolsNav` ([#342](https://github.com/open-sauced/insights/issues/342)) ([80e8736](https://github.com/open-sauced/insights/commit/80e8736c07e7a610d184604b04609e0f08f17a9d))
+
+
+### 🧑‍💻 Code Refactoring
+
+* Fix type issue where prop was using a string when it should… ([#349](https://github.com/open-sauced/insights/issues/349)) ([7df6cde](https://github.com/open-sauced/insights/commit/7df6cdec95ccec068ad1006f743519b6df1c5ee6))
+
 ## [1.4.0-beta.15](https://github.com/open-sauced/insights/compare/v1.4.0-beta.14...v1.4.0-beta.15) (2022-09-10)
 
 
