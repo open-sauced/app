@@ -1,13 +1,13 @@
 import React from "react";
 
 interface PullRequestOverviewChartBarProps {
-  percent?: number;
+  percent?: string;
   type?: "open" | "merged" | "closed" | "draft";
 }
 
 const PullRequestOverviewChartBar: React.FC<PullRequestOverviewChartBarProps> = ({ percent, type }) => {
   return (
-    <div 
+    <div
       className={`
         ${ type === "open" ? "bg-light-grass-9" : type === "merged" ? "bg-purple-600" : type === "closed" ? "bg-light-red-9" : "bg-light-slate-9"}
         transition-all duration-500 ease-in-out rounded-full`}
@@ -24,15 +24,15 @@ interface PullRequestOverviewChartProps {
   totalPullRequests?: number;
 }
 
-const PullRequestOverviewChart: React.FC<PullRequestOverviewChartProps> = ({ className, open, merged, closed, draft, totalPullRequests }) => {  
-  const getPercentage = (PullRequestType: number) => {
+const PullRequestOverviewChart: React.FC<PullRequestOverviewChartProps> = ({ className, open, merged, closed, draft, totalPullRequests }) => {
+  const getPercentage = (PullRequestType?: number) => {
     return (((!!PullRequestType ? PullRequestType : 0) * 100) / (!!totalPullRequests ? totalPullRequests : 0));
   };
 
   return (
     <div
       className="w-full h-1.5 flex gap-0.5 bg-light-slate-2 rounded-full overflow-hidden">
-      
+
       {/* Open */}
       <PullRequestOverviewChartBar percent={`${getPercentage(open)}%`} type="open" />
 
@@ -41,7 +41,7 @@ const PullRequestOverviewChart: React.FC<PullRequestOverviewChartProps> = ({ cla
 
       {/* Closed */}
       <PullRequestOverviewChartBar percent={`${getPercentage(closed)}%`} type="closed" />
-      
+
       {/* Draft */}
       <PullRequestOverviewChartBar percent={`${getPercentage(draft)}%`} type="draft" />
     </div>
