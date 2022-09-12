@@ -13,7 +13,7 @@ const SparklineTemplate: ComponentStory<typeof Sparkline> = (args) => <Sparkline
 // FilterCard Default
 export const Default = SparklineTemplate.bind({});
 Default.args = { 
-  canvasID: "reponame",
+  canvasId: "reponame",
   canvasWidth: 240,
   canvasHeight: 120
 };
