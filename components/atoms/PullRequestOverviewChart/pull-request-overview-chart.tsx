@@ -11,7 +11,7 @@ const PullRequestOverviewChartBar: React.FC<PullRequestOverviewChartBarProps> = 
       className={`
         ${ type === "open" ? "bg-light-grass-9" : type === "merged" ? "bg-purple-600" : type === "closed" ? "bg-light-red-9" : "bg-light-slate-9"}
         transition-all duration-500 ease-in-out rounded-full`}
-      style={{width: `${percent}`}}></div>
+      style={{width: `${percent}%`}}></div>
   );
 };
 
@@ -24,8 +24,9 @@ interface PullRequestOverviewChartProps {
   totalPullRequests?: number;
 }
 
-const PullRequestOverviewChart: React.FC<PullRequestOverviewChartProps> = ({ className, open, merged, closed, draft, totalPullRequests }) => {
-  const getPercentage = (PullRequestType?: number) => {
+
+const PullRequestOverviewChart: React.FC<PullRequestOverviewChartProps> = ({ className, open, merged, closed, draft, totalPullRequests }) => {  
+  const getPercentage = (PullRequestType: number | undefined) => {
     return (((!!PullRequestType ? PullRequestType : 0) * 100) / (!!totalPullRequests ? totalPullRequests : 0));
   };
 
@@ -34,16 +35,17 @@ const PullRequestOverviewChart: React.FC<PullRequestOverviewChartProps> = ({ cla
       className="w-full h-1.5 flex gap-0.5 bg-light-slate-2 rounded-full overflow-hidden">
 
       {/* Open */}
-      <PullRequestOverviewChartBar percent={`${getPercentage(open)}%`} type="open" />
+      <PullRequestOverviewChartBar percent={getPercentage(open)} type="open" />
 
       {/* Merged */}
-      <PullRequestOverviewChartBar percent={`${getPercentage(merged)}%`} type="merged" />
+      <PullRequestOverviewChartBar percent={getPercentage(merged)} type="merged" />
 
       {/* Closed */}
-      <PullRequestOverviewChartBar percent={`${getPercentage(closed)}%`} type="closed" />
 
+      <PullRequestOverviewChartBar percent={getPercentage(closed)} type="closed" />
+      
       {/* Draft */}
-      <PullRequestOverviewChartBar percent={`${getPercentage(draft)}%`} type="draft" />
+      <PullRequestOverviewChartBar percent={getPercentage(draft)} type="draft" />
     </div>
   );
 };
