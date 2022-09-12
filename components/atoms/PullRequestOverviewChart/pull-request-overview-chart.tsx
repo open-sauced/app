@@ -1,7 +1,7 @@
 import React from "react";
 
 interface PullRequestOverviewChartBarProps {
-  percent?: string;
+  percent?: number;
   type?: "open" | "merged" | "closed" | "draft";
 }
 

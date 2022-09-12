@@ -43,7 +43,7 @@ const Footer = (): JSX.Element => {
           © 2022 <span className="hidden md:inline-block">OpenSauced</span>
           </Text>
         </div>
-        <div className="flex md:mr-auto text-light-slate-11 justify-center gap-x-4">
+        <div className="flex md:mr-auto md:text-sm text-light-slate-11 justify-center gap-x-4">
           <a className="px-2" target="_blank" href={footerContext[1].hot?.url} rel="noopener noreferrer">
             {footerContext[1].hot?.text}
           </a>
