@@ -9,7 +9,7 @@ import changeCapitalization from "../lib/utils/change-capitalization";
 import { supabase } from "../lib/utils/supabase";
 import { SWRConfig } from "swr";
 import apiFetcher from "../lib/hooks/useSWR";
-import { initiatePostHog } from "lib/utils/analytics";
+import { initiateAnalytics } from "lib/utils/analytics";
 import { useEffect } from "react";
 import posthog from "posthog-js";
 
@@ -24,7 +24,7 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
   
   // From documentation on using Posthog with Next.js: https://posthog.com/docs/integrate/third-party/next-js
   useEffect(() => {
-    initiatePostHog();
+    initiateAnalytics();
 
     const handleRouteChange = () => posthog.capture("$pageview");
     router.events.on("routeChangeComplete", handleRouteChange);
