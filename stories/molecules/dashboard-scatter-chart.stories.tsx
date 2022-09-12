@@ -1,6 +1,7 @@
 import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 import DashboardScatterChart from "../../components/molecules/DashboardScatterChart/dashboard-scatter-chart";
+import humanizeNumber from "lib/utils/humanizeNumber";
 
 const storyConfig = {
   title: "Design System/Molecules/Dashboard Scatter Chart",
@@ -24,7 +25,8 @@ const testOptions = {
     min: 0,
     max: 35,
     axisLabel: {
-      formatter: (value: number, index: number) => value === 0 ? "Today" : value === 35 ? "35+ days ago" : `${value} days ago` 
+      formatter: (value: number, index: number) =>
+        value === 0 ? "Today" : value === 35 ? "35+ days ago" : `${value} days ago`
     },
     splitLine: {
       lineStyle: {
@@ -34,12 +36,12 @@ const testOptions = {
   },
   yAxis: {
     min: 0,
-    max: 100,
-    splitNumber: 2,
+    max: 10000,
+    splitNumber: 6,
     boundaryGap: false,
     axisLabel: {
-      showMinLabel: false,
-      formatter: "{value}%" 
+      showMinLabel: true,
+      formatter: (value: number) => (value >= 1000 ? humanizeNumber(value, null) : value)
     },
     splitLine: {
       lineStyle: {
@@ -94,7 +96,7 @@ const testOptionsWithImage = {
     min: 0,
     max: 35,
     axisLabel: {
-      formatter: (value: number, index: number) => value === 0 ? "Today" : value === 35 ? "35+ days ago" : `${value} days ago` 
+      formatter: (value: number, index: number) => value === 0 ? "Today" : value === 35 ? "35+ days ago" : `${value} days ago`
     },
     splitLine: {
       lineStyle: {
@@ -104,12 +106,12 @@ const testOptionsWithImage = {
   },
   yAxis: {
     min: 0,
-    max: 100,
+    max: 10000,
     splitNumber: 2,
     boundaryGap: false,
     axisLabel: {
-      showMinLabel: false,
-      formatter: "{value}%" 
+      showMinLabel: true,
+      formatter: (value: number)=> value >= 1000 ? humanizeNumber(value, null) : value
     },
     splitLine: {
       lineStyle: {
