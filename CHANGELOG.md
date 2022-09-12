@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.4.0-beta.17](https://github.com/open-sauced/insights/compare/v1.4.0-beta.16...v1.4.0-beta.17) (2022-09-12)
+
+
+### 🍕 Features
+
+* Add posthog analytics to project ([#311](https://github.com/open-sauced/insights/issues/311)) ([50836ba](https://github.com/open-sauced/insights/commit/50836bab1c724bc99323907a572e7ee312248544)), closes [#309](https://github.com/open-sauced/insights/issues/309)
+
 ## [1.4.0-beta.16](https://github.com/open-sauced/insights/compare/v1.4.0-beta.15...v1.4.0-beta.16) (2022-09-11)
 
 
