@@ -5,6 +5,33 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.5.0](https://github.com/open-sauced/insights/compare/v1.4.0...v1.5.0) (2022-09-12)
+
+
+### 🐛 Bug Fixes
+
+* Changed 'repo/list' endpoint to 'repos/list' ([#307](https://github.com/open-sauced/insights/issues/307)) ([7876f9e](https://github.com/open-sauced/insights/commit/7876f9e5d15f3bc24a78f335ce7ee6e013f4210d))
+* Fix the `numOf` style on `ToolsNav` ([#342](https://github.com/open-sauced/insights/issues/342)) ([80e8736](https://github.com/open-sauced/insights/commit/80e8736c07e7a610d184604b04609e0f08f17a9d))
+* remove activity ([#304](https://github.com/open-sauced/insights/issues/304)) ([17fcb9a](https://github.com/open-sauced/insights/commit/17fcb9a7aef488336f0a9f05b1041ca51eb96fbc))
+
+
+### 🧑‍💻 Code Refactoring
+
+* Fix type issue where prop was using a string when it should… ([#349](https://github.com/open-sauced/insights/issues/349)) ([7df6cde](https://github.com/open-sauced/insights/commit/7df6cdec95ccec068ad1006f743519b6df1c5ee6))
+
+
+### 🍕 Features
+
+* add comma option to humanized number ([#306](https://github.com/open-sauced/insights/issues/306)) ([d093733](https://github.com/open-sauced/insights/commit/d093733430e4704bf3e6ac0fcc46f22867368eff)), closes [#258](https://github.com/open-sauced/insights/issues/258)
+* Add posthog analytics to project ([#311](https://github.com/open-sauced/insights/issues/311)) ([50836ba](https://github.com/open-sauced/insights/commit/50836bab1c724bc99323907a572e7ee312248544)), closes [#309](https://github.com/open-sauced/insights/issues/309)
+* Implement `<PROverview>` component ([#344](https://github.com/open-sauced/insights/issues/344)) ([762cc54](https://github.com/open-sauced/insights/commit/762cc544840492aab91a93eefc3586003a47f16d))
+* Implement `<TableTitle>` component ([#340](https://github.com/open-sauced/insights/issues/340)) ([44361a9](https://github.com/open-sauced/insights/commit/44361a9fdb2b79ebb17e26f07e9827129f49a151))
+* Implement `Pill` component ([#341](https://github.com/open-sauced/insights/issues/341)) ([2a4da14](https://github.com/open-sauced/insights/commit/2a4da14fef505dd08ece76ec62d391ca783cea7e))
+* Implement `Search` component  ([#337](https://github.com/open-sauced/insights/issues/337)) ([c67b7a1](https://github.com/open-sauced/insights/commit/c67b7a1670d6c895b5c223ede5948d1752e75af0))
+* Implement page header component ([#336](https://github.com/open-sauced/insights/issues/336)) ([7894a2d](https://github.com/open-sauced/insights/commit/7894a2df78d0668fd08ad518944c0c6cb0ea80e6)), closes [#317](https://github.com/open-sauced/insights/issues/317)
+* Implement Scatter Chart Component ([#285](https://github.com/open-sauced/insights/issues/285)) ([88a2872](https://github.com/open-sauced/insights/commit/88a28721fc7994f321556c3f472e38e2c389dbca)), closes [#160](https://github.com/open-sauced/insights/issues/160)
+* Implemented new design for logout pop-up ([#310](https://github.com/open-sauced/insights/issues/310)) ([88a9279](https://github.com/open-sauced/insights/commit/88a9279db6ec4e9b9ac1544c6bb57da013089fd0))
+
 ## [1.4.0](https://github.com/open-sauced/insights/compare/v1.3.0...v1.4.0) (2022-09-06)
 
 
