@@ -40,7 +40,7 @@ const Footer = (): JSX.Element => {
         <div className="text-center justify-center gap-1 flex items-center">
           <Image width={24} height={24} alt="brand logo" src={OpenSaucedLogo} /> <span className="md:hidden font-bold text-light-slate-12 ">OpenSauced</span>
           <Text className="hidden !text-light-slate-9 md:inline-block">
-          © 2022 <span className="hidden md:inline-block">Open sauced</span>
+          © 2022 <span className="hidden md:inline-block">OpenSauced</span>
           </Text>
         </div>
         <div className="flex md:mr-[300px] text-light-slate-11 justify-center gap-x-4">
