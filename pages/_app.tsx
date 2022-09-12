@@ -9,7 +9,9 @@ import changeCapitalization from "../lib/utils/change-capitalization";
 import { supabase } from "../lib/utils/supabase";
 import { SWRConfig } from "swr";
 import apiFetcher from "../lib/hooks/useSWR";
-import { initiatePostHog, initiatePostHogForNextJs } from "lib/utils/analytics";
+import { initiatePostHog } from "lib/utils/analytics";
+import { useEffect } from "react";
+import posthog from "posthog-js";
 
 type ComponentWithPageLayout = AppProps & {
   Component: AppProps["Component"] & {
@@ -18,8 +20,19 @@ type ComponentWithPageLayout = AppProps & {
 };
 
 function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
-  initiatePostHogForNextJs();
   const router = useRouter();
+  
+  // From documentation on using Posthog with Next.js: https://posthog.com/docs/integrate/third-party/next-js
+  useEffect(() => {
+    initiatePostHog();
+
+    const handleRouteChange = () => posthog.capture("$pageview");
+    router.events.on("routeChangeComplete", handleRouteChange);
+
+    return () => {
+      router.events.off("routeChangeComplete", handleRouteChange);
+    };
+  }, [router.events]);
 
   const { filterName, toolName } = router.query;
 
