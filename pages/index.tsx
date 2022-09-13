@@ -7,7 +7,12 @@ const Home: WithPageLayout = () => {
   const router = useRouter();
 
   useEffect(() => {
-    router.push("hacktoberfest");
+    const redirect = ()=>{
+      router.push("hacktoberfest");
+    };
+    const timer = setTimeout(()=> redirect(),2000);
+    return () => clearTimeout(timer);
+
   }, [router]);
 
   return (
