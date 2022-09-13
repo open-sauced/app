@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.6.0-beta.4](https://github.com/open-sauced/insights/compare/v1.6.0-beta.3...v1.6.0-beta.4) (2022-09-13)
+
+
+### 🍕 Features
+
+* Implement `<TableRepositoryName>` component ([#354](https://github.com/open-sauced/insights/issues/354)) ([ede7f61](https://github.com/open-sauced/insights/commit/ede7f61fb7cfe21519fefaf5bddc2c2cee776cec))
+
 ## [1.6.0-beta.3](https://github.com/open-sauced/insights/compare/v1.6.0-beta.2...v1.6.0-beta.3) (2022-09-13)
 
 
