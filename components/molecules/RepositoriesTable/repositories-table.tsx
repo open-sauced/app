@@ -4,6 +4,10 @@ import React from "react";
 interface RepositoriesTableProps {
 }
 
+const classNames = {
+  row: "odd:bg-orange-500"
+};
+
 const RepositoriesTable: React.FC<RepositoriesTableProps> = ({  }) => {
   return (
     <div className="">
@@ -21,6 +25,9 @@ const RepositoriesTable: React.FC<RepositoriesTableProps> = ({  }) => {
 
       {/* Table Rows */}
       <section className="flex flex-col">
+        <div className={`${classNames.row}`}>hello</div>
+        <div className={`${classNames.row}`}>hello</div>
+        <div className={`${classNames.row}`}>hello</div>
       </section>
 
       {/* Table Footer */}
