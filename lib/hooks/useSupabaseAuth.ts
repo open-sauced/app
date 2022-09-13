@@ -20,8 +20,9 @@ const useSupabaseAuth = () => {
   }, []);
 
   return {
-    signIn: (data: UserCredentials) => supabase.auth.signIn(data, {
-      redirectTo: process.env.NEXT_PUBLIC_BASE_URL ?? "/"
+    signIn: (data: UserCredentials, options: { redirectTo?: string } = {}) => supabase.auth.signIn(data, {
+      redirectTo: process.env.NEXT_PUBLIC_BASE_URL ?? "/",
+      ...options
     }),
     signOut: () => supabase.auth.signOut(),
     user

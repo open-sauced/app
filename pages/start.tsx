@@ -22,6 +22,7 @@ import TextInput from "components/atoms/TextInput/text-input";
 import { LoginRepoObjectInterface } from "interfaces/login-repo-object-interface";
 import useLoginRepoList from "lib/hooks/useLoginRepoList";
 import { captureAnayltics } from "lib/utils/analytics";
+import useSupabaseAuth from 'lib/hooks/useSupabaseAuth';
 
 type handleLoginStep = () => void;
 
@@ -31,7 +32,15 @@ interface LoginStep1Props {
 
 const LoginStep1: React.FC<LoginStep1Props> = ({ handleLoginStep }) => {
   captureAnayltics("User Onboarding", "onboardingStep1", "visited");
-  const handleGitHubAuth = () => {
+  
+  const auth = useSupabaseAuth();
+
+  const handleGitHubAuth = async() => {
+    // Redirect user to GitHub to authenticate
+    // await auth.signIn({ provider: 'github' }, {
+    //   redirectTo: process.env.NEXT_PUBLIC_ONBOARDING_CALLBACK_URL ?? '/'
+    // });
+
     handleLoginStep();
   };
 
@@ -73,6 +82,10 @@ interface LoginStep2Props {
 const LoginStep2: React.FC<LoginStep2Props> = ({ handleLoginStep }) => {
   captureAnayltics("User Onboarding", "onboardingStep2", "visited");
   const handleAddPAT = () => {
+    // Validate PAT
+      // If valid, go to next step
+      // If invalid, display error
+
     handleLoginStep();
   };
 
@@ -201,7 +214,19 @@ const Login: WithPageLayout = () => {
 
   const checkFollowed = { isClickedFollowed, setIsClickedFollowed };
 
-  const handleLoginStep = () => {
+  // check if user is authenticated
+
+  // if onboarding already complete, go to homepage
+
+  // Enter PAT
+    // Validate PAT
+    // Continue
+
+  // Optionally Select repos
+
+  // Go to homepage
+
+  const handleLoginStep = async () => {
     setCurrentLoginStep(prevStep => prevStep + 1);
   };
 
