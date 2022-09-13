@@ -1,5 +1,5 @@
+import { SparklineLib } from "lib/utils/SparklineLib";
 import React from "react";
-import sparkline from "../../../lib/utils/sparkline.js";
 
 interface SparklineProps {
   canvasId?: string;
