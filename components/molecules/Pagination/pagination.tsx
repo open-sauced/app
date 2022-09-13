@@ -51,7 +51,7 @@ const Pagination = ({ pages, totalPage, page, divisor = true, gotoPage = false, 
 
         <RiArrowRightSLine onClick={()=> handleNext()} className="text-lg cursor-pointer text-light-slate-9" />
       </div>
-      <div className={`${divisor &&  "border-r-2 border-r-light-slate-6"}text-light-slate-9 font-medium  py-1 pr-4`}>Total {totalPage > 999 ? humanizeNumber(totalPage) : totalPage} pages</div>
+      <div className={`${divisor &&  "border-r-2 border-r-light-slate-6"}text-light-slate-9 font-medium  py-1 pr-4`}>Total {totalPage > 999 ? humanizeNumber(totalPage, null) : totalPage} pages</div>
       {gotoPage && <div>GotoPage component</div>}
     </div>
   );
