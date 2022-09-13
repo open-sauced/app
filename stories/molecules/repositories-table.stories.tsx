@@ -14,4 +14,22 @@ const RepositoriesTableTemplate: ComponentStory<typeof RepositoriesTable> = (arg
 
 // SelectableTable Default
 export const Default = RepositoriesTableTemplate.bind({});
-Default.args = {};
+
+const previewRepositories = [
+  {
+    name: "Insights",
+    handle: "opensauced"
+  },
+  {
+    name: "cli",
+    handle: "npm"
+  },
+  {
+    name: "flowy",
+    handle: "alyssaxuu"
+  },
+];
+
+Default.args = {
+  listOfRepositories: previewRepositories
+};
