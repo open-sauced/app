@@ -45,11 +45,20 @@ const RepositoriesTable: React.FC<RepositoriesTableProps> = ({ listOfRepositorie
       <section className="flex flex-col">
 
         {listOfRepositories.map(({name, handle, activity, prOverview}, index) => 
+          
+          // Table Row
           <div className={`${classNames.row}`} key={index}>  
+            
+            {/* Column: Repository Name */}
             <TableRepositoryName avatarURL={""} name={name} handle={handle}></TableRepositoryName>
-            <Pill text={"High"}></Pill>
-            <PullRequestOverview></PullRequestOverview>
+
+            {/* Column: Activity */}
+            <Pill text={activity}></Pill>
+
+            {/* Column: PR Overview */}
+            <PullRequestOverview open={prOverview.open} merged={prOverview.merged} closed={prOverview.closed} draft={prOverview.draft} churn={prOverview.churn} churnDirection={prOverview.churnDirection}></PullRequestOverview>
           </div>
+
         )}
       </section>
 
