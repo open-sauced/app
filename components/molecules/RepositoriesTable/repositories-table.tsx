@@ -7,6 +7,15 @@ import TableRepositoryName from "../TableRepositoryName/table-repository-name";
 export interface Repositories {
   name?: string;
   handle?: string;
+  activity?: string;
+  prOverview: {
+    open?: number;
+    merged?: number;
+    closed?: number;
+    draft?: number;
+    churn?: number;
+    chrunDirection?: "up" | "down";
+  };
 }
 
 interface RepositoriesTableProps {
@@ -34,7 +43,8 @@ const RepositoriesTable: React.FC<RepositoriesTableProps> = ({ listOfRepositorie
 
       {/* Table Rows */}
       <section className="flex flex-col">
-        {listOfRepositories.map(({name, handle}, index) => 
+
+        {listOfRepositories.map(({name, handle, activity, prOverview}, index) => 
           <div className={`${classNames.row}`} key={index}>  
             <TableRepositoryName avatarURL={""} name={name} handle={handle}></TableRepositoryName>
             <Pill text={"High"}></Pill>
