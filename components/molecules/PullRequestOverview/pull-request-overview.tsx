@@ -8,10 +8,10 @@ interface PullRequestOverviewProps {
   closed?: number;
   draft?: number;
   churn?: number;
-  chrunDirection?: "up" | "down";
+  churnDirection?: "up" | "down";
 }
 
-const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({ className, open, merged, closed, draft, churn, chrunDirection }) => {
+const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({ className, open, merged, closed, draft, churn, churnDirection }) => {
   const totalPullRequests = (!!open ? open : 0) + (!!merged ? merged : 0) + (!!closed ? closed : 0) + (!!draft ? draft : 0);
 
   return (
@@ -25,9 +25,9 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({ className, op
 
         {/* Churn Number compared with previous date (default: last 30 days vs. previous 30 days range) */}
         <div className={`
-          ${chrunDirection === "up" ? "text-light-grass-10" : "text-light-red-10"}
+          ${churnDirection === "up" ? "text-light-grass-10" : "text-light-red-10"}
           font-medium text-base tracking-tight`}>
-          {chrunDirection === "up" ? "+" : "-"}{churn}%
+          {churnDirection === "up" ? "+" : "-"}{churn}%
         </div>
       </div>
 

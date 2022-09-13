@@ -14,7 +14,7 @@ export interface Repositories {
     closed?: number;
     draft?: number;
     churn?: number;
-    chrunDirection?: "up" | "down";
+    churnDirection?: "up" | "down";
   };
 }
 
