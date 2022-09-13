@@ -12,7 +12,7 @@ const Home: WithPageLayout = () => {
 
   return (
     <main className="flex absolute left-0 right-0 flex-1 flex-col items-center justify-center px-20 text-center">
-      <Loader theme={"light"}/>
+      <Loader theme={"dark"}/>
     </main>
   );
 };
