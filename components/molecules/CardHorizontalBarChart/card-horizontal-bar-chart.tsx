@@ -40,12 +40,12 @@ const CardHorizontalBarChart = ({ languageList }: CardHorizontalBarChartProps): 
             key={index}
             onMouseOver={() => handleChangeDescriptText(languageName)}
             className="h-2 transition-all duration-500 ease-in-out"
-            style={{ width: `${percentageUsed}%`, backgroundColor: languageToColor[languageName].color ?? NOTSUPPORTED }}
+            style={{ width: `${percentageUsed}%`, backgroundColor: languageToColor[languageName] ? languageToColor[languageName].color as string : NOTSUPPORTED }}
           />
         )}
       </div>
       <div className="flex gap-2 items-center">
-        <div className={"w-2 h-2 rounded-full"} style={{ backgroundColor: languageToColor[descriptText].color ?? NOTSUPPORTED }}/>
+        <div className={"w-2 h-2 rounded-full"} style={{ backgroundColor: languageToColor[descriptText] ? languageToColor[descriptText].color as string : NOTSUPPORTED }}/>
         <Text className="!text-xs !font-semibold !text-light-slate-11">
           {descriptText}
         </Text>

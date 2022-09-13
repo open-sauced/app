@@ -17,13 +17,13 @@ const Contributors = (): JSX.Element =>{
         ...contributorData.profile,
         githubName: contributor.name,
         dateOfFirstPR: `${timeSinceFirstCommit}${timeSinceFirstCommit !== 1 ? "mos" : "mo"}`
-      }/* ,
+      },
       languageList: contributorLanguageList.map(language => {
         return {
           languageName: language,
-          percentageUsed: 1 / contributorLanguageList.length
+          percentageUsed: Math.round( ( 1 / contributorLanguageList.length ) * 100)
         };
-      }) */
+      })
     };
   });
 
