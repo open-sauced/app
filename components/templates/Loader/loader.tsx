@@ -6,9 +6,14 @@ interface LoaderProps{
 const Loader = ({theme = "light"}: LoaderProps) : JSX.Element => {
   return (
     <div
-      className={`${theme === "dark" ? "bg-[#160E0E]" : "bg-white"} w-full flex justify-center item-center  h-screen`}
+      className={`${theme === "dark" ? "bg-[#160E0E]" : "bg-white"} w-full flex justify-center items-center  h-screen`}
     >
-      <Image className="animate-pulse" width={62} height={62} src={Pizza} alt="Pizza" />
+      <div className="absolute flex justify-center items-center">
+        <Image className="" width={62} height={62} src={Pizza} alt="Pizza" />
+      </div>
+      <div className="blur-2xl animate-ping">
+        <Image className="" width={62} height={62} src={Pizza} alt="Pizza" />
+      </div>
     </div>
   );
 };
