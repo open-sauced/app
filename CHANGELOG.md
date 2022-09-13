@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.6.0-beta.6](https://github.com/open-sauced/insights/compare/v1.6.0-beta.5...v1.6.0-beta.6) (2022-09-13)
+
+
+### 🍕 Features
+
+* **build:** Install Nivo charts and implement `<Sparkline>` component ([#361](https://github.com/open-sauced/insights/issues/361)) ([d37f0fb](https://github.com/open-sauced/insights/commit/d37f0fb3611687fad18c1319118f506b9c56ce49))
+
 ## [1.6.0-beta.5](https://github.com/open-sauced/insights/compare/v1.6.0-beta.4...v1.6.0-beta.5) (2022-09-13)
 
 
