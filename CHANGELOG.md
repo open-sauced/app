@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.6.0-beta.2](https://github.com/open-sauced/insights/compare/v1.6.0-beta.1...v1.6.0-beta.2) (2022-09-13)
+
+
+### 🍕 Features
+
+* Implement footer component ([#347](https://github.com/open-sauced/insights/issues/347)) ([349a6b8](https://github.com/open-sauced/insights/commit/349a6b8e165d6c36120077d8adaa3426f472d1ff)), closes [#316](https://github.com/open-sauced/insights/issues/316)
+
 ## [1.6.0-beta.1](https://github.com/open-sauced/insights/compare/v1.5.0...v1.6.0-beta.1) (2022-09-13)
 
 
