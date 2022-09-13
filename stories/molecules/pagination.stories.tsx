@@ -15,12 +15,12 @@ export const NoDivisor = PaginationTemplate.bind({});
 Default.args = {
   pages: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
   totalPage: 2003,
-  currentPage: 5
+  page: 5
 };
 NoDivisor.args = {
   pages: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
   totalPage: 2003,
-  currentPage: 5,
+  page: 5,
   divisor: false
 };
 
