@@ -35,17 +35,24 @@ const PullRequestOverviewChart: React.FC<PullRequestOverviewChartProps> = ({ cla
       className="w-full h-1.5 flex gap-0.5 bg-light-slate-2 rounded-full overflow-hidden">
 
       {/* Open */}
-      <PullRequestOverviewChartBar percent={getPercentage(open)} type="open" />
+      { open > 0 && 
+        <PullRequestOverviewChartBar percent={getPercentage(open)} type="open" />
+      }
 
       {/* Merged */}
-      <PullRequestOverviewChartBar percent={getPercentage(merged)} type="merged" />
+      { merged > 0 && 
+        <PullRequestOverviewChartBar percent={getPercentage(merged)} type="merged" />
+      }
 
       {/* Closed */}
+      { closed > 0 && 
+        <PullRequestOverviewChartBar percent={getPercentage(closed)} type="closed" />
+      }
 
-      <PullRequestOverviewChartBar percent={getPercentage(closed)} type="closed" />
-      
       {/* Draft */}
-      <PullRequestOverviewChartBar percent={getPercentage(draft)} type="draft" />
+      { draft > 0 && 
+        <PullRequestOverviewChartBar percent={getPercentage(draft)} type="draft" />
+      }
     </div>
   );
 };
