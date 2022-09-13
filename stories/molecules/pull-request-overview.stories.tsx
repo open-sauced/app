@@ -24,5 +24,5 @@ Default.args = {
   closed: 0,
   draft: 3,
   churn: 20,
-  chrunDirection: "up"
+  churnDirection: "up"
 };
