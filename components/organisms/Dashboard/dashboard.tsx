@@ -8,13 +8,21 @@ import { useContributionsList } from "lib/hooks/useContributionsList";
 import { calcDaysFromToday } from "lib/utils/date-utils";
 
 export const Dashboard = (): JSX.Element => {
-  const { meta: repoMetaData, isError: repoError } = useRepositoriesList();
+  // This is mock data for the dashboard. Not intended to be the final implementation.
   const { data: contributorData, isError: contributorError } = useContributionsList("25");
+
+  const { meta: repoMetaData, isError: repoError } = useRepositoriesList();
   const [itemCountText, setItemCountText] = useState("Loading...");
 
   const scatterChartData = contributorError ? [] :
     //eslint-disable-next-line
-    contributorData.map(({ last_commit_time, files_modified }) => [calcDaysFromToday(new Date(parseInt(last_commit_time))), files_modified !== null ? files_modified : 0]);
+    contributorData.map(({ last_commit_time, files_modified }) => 
+      [
+        calcDaysFromToday(new Date(parseInt(last_commit_time))),
+        //eslint-disable-next-line
+        files_modified !== null ? files_modified : 0
+      ]
+    );
 
   const scatterOptions = {
     grid: {
