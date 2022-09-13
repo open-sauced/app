@@ -5,14 +5,14 @@ import { RiArrowRightSLine } from "react-icons/ri";
 interface PaginationProps {
   pages: number[];
   totalPage: number; // represents the total number of pages available from the source
-  currentPage: number; // represents the current active page
+  page: number; // represents the current active page
   pageSize?: number; // represents the maximum number of pages button that  are visible in a single page
   onPageChange: (page: number) => void; //  callback function invoked with the updated page value when the page is changed
   divisor?: boolean;
   gotoPage?: boolean;
 }
 
-const Pagination = ({ pages, totalPage, currentPage, divisor = true, gotoPage = false, pageSize = 5 }: PaginationProps): JSX.Element => {
+const Pagination = ({ pages, totalPage, page, divisor = true, gotoPage = false, pageSize = 5 }: PaginationProps): JSX.Element => {
 
   // This logics are meant for testing purpose
   const [selected, setSelected] = useState<number>(1);
