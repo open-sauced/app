@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.6.0-beta.7](https://github.com/open-sauced/insights/compare/v1.6.0-beta.6...v1.6.0-beta.7) (2022-09-13)
+
+
+### 🍕 Features
+
+* Implement Loading Screen design ([#335](https://github.com/open-sauced/insights/issues/335)) ([a3526dd](https://github.com/open-sauced/insights/commit/a3526dd5b2207fdbaa1481e9d20ba8075f133bf5))
+
 ## [1.6.0-beta.6](https://github.com/open-sauced/insights/compare/v1.6.0-beta.5...v1.6.0-beta.6) (2022-09-13)
 
 
