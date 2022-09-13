@@ -1,14 +1,14 @@
-import { ResponsiveLine } from "@nivo/line";
+import { ResponsiveLine, Serie } from "@nivo/line";
 import React from "react";
 
 interface SparklineProps {
   width?: string | number;
   height?: string | number;
-  data?: Object;
+  data?: Serie[];
 }
 
 
-const Sparkline: React.FC<SparklineProps> = ({ width = 120, height = 40, data }) => {
+const Sparkline: React.FC<SparklineProps> = ({ width = 120, height = 40, data = [] }) => {
   return (
     <div style={{height: height, width: width}}>
       <ResponsiveLine
