@@ -1,16 +1,25 @@
+import Pill from "components/atoms/Pill/pill";
 import TableTitle from "components/atoms/TableTitle/table-title";
 import React from "react";
+import PullRequestOverview from "../PullRequestOverview/pull-request-overview";
+import TableRepositoryName from "../TableRepositoryName/table-repository-name";
+
+export interface Repositories {
+  name?: string;
+  handle?: string;
+}
 
 interface RepositoriesTableProps {
+  listOfRepositories?: Repositories[];
 }
 
 const classNames = {
-  row: "odd:bg-orange-500"
+  row: "flex gap-2 items-center py-3 px-6 odd:bg-white even:bg-light-slate-2"
 };
 
-const RepositoriesTable: React.FC<RepositoriesTableProps> = ({  }) => {
+const RepositoriesTable: React.FC<RepositoriesTableProps> = ({ listOfRepositories }) => {
   return (
-    <div className="">
+    <div className="flex flex-col rounded-lg overflow-hidden">
 
       {/* Table Header */}
       <header className="flex py-4 px-6 bg-light-slate-3 gap-2">
@@ -25,9 +34,13 @@ const RepositoriesTable: React.FC<RepositoriesTableProps> = ({  }) => {
 
       {/* Table Rows */}
       <section className="flex flex-col">
-        <div className={`${classNames.row}`}>hello</div>
-        <div className={`${classNames.row}`}>hello</div>
-        <div className={`${classNames.row}`}>hello</div>
+        {listOfRepositories.map(({name, handle}, index) => 
+          <div className={`${classNames.row}`} key={index}>  
+            <TableRepositoryName avatarURL={""} name={name} handle={handle}></TableRepositoryName>
+            <Pill text={"High"}></Pill>
+            <PullRequestOverview></PullRequestOverview>
+          </div>
+        )}
       </section>
 
       {/* Table Footer */}
