@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.6.0-beta.3](https://github.com/open-sauced/insights/compare/v1.6.0-beta.2...v1.6.0-beta.3) (2022-09-13)
+
+
+### 🍕 Features
+
+* create `PaginationGotoPage` component  ([#357](https://github.com/open-sauced/insights/issues/357)) ([f88fa98](https://github.com/open-sauced/insights/commit/f88fa98a9ea862ddb48aadea0fd95a934fd43928)), closes [#324](https://github.com/open-sauced/insights/issues/324)
+
 ## [1.6.0-beta.2](https://github.com/open-sauced/insights/compare/v1.6.0-beta.1...v1.6.0-beta.2) (2022-09-13)
 
 
