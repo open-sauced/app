@@ -34,6 +34,7 @@ const CustomAvatar = ({ className, avatarURL, initials, alt, size, hasBorder, is
   return (
     <div
       className={`inline-flex bg-orange-500 justify-center relative items-center w-max h-max overflow-hidden 
+        ${ className ? className + " " : ""}
         ${ isCircle ? "rounded-full " : "rounded-lg "}
         ${ hasBorder ? "ring-2 ring-slate-200 " : ""}
       `}
