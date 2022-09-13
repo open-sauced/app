@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.6.0-beta.5](https://github.com/open-sauced/insights/compare/v1.6.0-beta.4...v1.6.0-beta.5) (2022-09-13)
+
+
+### 🍕 Features
+
+* create `<PaginationResult/>` component  ([#360](https://github.com/open-sauced/insights/issues/360)) ([4bfb96d](https://github.com/open-sauced/insights/commit/4bfb96d1a06bc9f5715f18fcf653453b18c783c7)), closes [#325](https://github.com/open-sauced/insights/issues/325)
+* Implement the `Pagination` component  ([#343](https://github.com/open-sauced/insights/issues/343)) ([263f463](https://github.com/open-sauced/insights/commit/263f4636164af3a8864030913a5c6b27d67894ad)), closes [#323](https://github.com/open-sauced/insights/issues/323)
+
 ## [1.6.0-beta.4](https://github.com/open-sauced/insights/compare/v1.6.0-beta.3...v1.6.0-beta.4) (2022-09-13)
 
 
