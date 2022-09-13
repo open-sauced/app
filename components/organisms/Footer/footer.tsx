@@ -23,12 +23,12 @@ const footerContext = [
   },
   {
     socials: [
-      { url: "", icon: <AiOutlineTwitter className="text-2xl text-light-slate-9" /> },
-      { url: "", icon: <AiOutlineGithub className="text-2xl text-light-slate-9" /> },
-      { url: "", icon: <AiFillInstagram className="text-2xl text-light-slate-9" /> },
-      { url: "", icon: <AiFillYoutube className="text-2xl text-light-slate-9" /> },
-      { url: "", icon: <FaDiscord className="text-2xl text-light-slate-9" /> },
-      { url: "", icon: <FaDev className="text-2xl text-light-slate-9" /> }
+      { url: "https://twitter.com/saucedopen", icon: <AiOutlineTwitter className="text-2xl text-light-slate-9" /> },
+      { url: "https://github.com/open-sauced", icon: <AiOutlineGithub className="text-2xl text-light-slate-9" /> },
+      { url: "https://www.instagram.com/opensauced/", icon: <AiFillInstagram className="text-2xl text-light-slate-9" /> },
+      { url: "https://www.youtube.com/opensauced", icon: <AiFillYoutube className="text-2xl text-light-slate-9" /> },
+      { url: "https://discord.com/invite/U2peSNf23P", icon: <FaDiscord className="text-2xl text-light-slate-9" /> },
+      { url: "https://dev.to/opensauced/", icon: <FaDev className="text-2xl text-light-slate-9" /> }
     ]
   }
 ];
