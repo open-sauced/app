@@ -13,9 +13,9 @@ import { FaDev } from "react-icons/fa";
 
 const footerContext = [
   {
-    privacy: { url: "", text: "privacy" },
-    terms: { url: "", text: "terms" },
-    status: { url: "", text: "status" }
+    privacy: { url: "", text: "Privacy" },
+    terms: { url: "", text: "Terms" },
+    status: { url: "", text: "Status" }
   },
   {
     hot: { url: "https://hot.opensauced.pizza", text: "hot.opensauced.pizza" },
