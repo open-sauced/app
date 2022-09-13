@@ -7,6 +7,7 @@ import FilterCard from "../../atoms/FilterCard/filter-card";
 import Thumbnail from "../../../public/hacktoberfest-icon.png";
 import SuperativeSelector from "components/molecules/SuperlativeSelector/superlative-selector";
 import useFilterOptions from "lib/hooks/useFilterOptions";
+import { captureAnayltics } from "lib/utils/analytics";
 
 const Header: React.FC = () => {
   const router = useRouter();
@@ -15,6 +16,7 @@ const Header: React.FC = () => {
   const { filterName, toolName, selectedFilter } = router.query;
 
   const filterBtnRouting = (filter: string) => {
+    captureAnayltics("Filters", "toolsFilter", `${filter} applied`);
     router.push(`/${filterName}/${toolName}/filter/${filter.toLocaleLowerCase()}`);
   };
 

@@ -5,6 +5,136 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.6.0-beta.3](https://github.com/open-sauced/insights/compare/v1.6.0-beta.2...v1.6.0-beta.3) (2022-09-13)
+
+
+### 🍕 Features
+
+* create `PaginationGotoPage` component  ([#357](https://github.com/open-sauced/insights/issues/357)) ([f88fa98](https://github.com/open-sauced/insights/commit/f88fa98a9ea862ddb48aadea0fd95a934fd43928)), closes [#324](https://github.com/open-sauced/insights/issues/324)
+
+## [1.6.0-beta.2](https://github.com/open-sauced/insights/compare/v1.6.0-beta.1...v1.6.0-beta.2) (2022-09-13)
+
+
+### 🍕 Features
+
+* Implement footer component ([#347](https://github.com/open-sauced/insights/issues/347)) ([349a6b8](https://github.com/open-sauced/insights/commit/349a6b8e165d6c36120077d8adaa3426f472d1ff)), closes [#316](https://github.com/open-sauced/insights/issues/316)
+
+## [1.6.0-beta.1](https://github.com/open-sauced/insights/compare/v1.5.0...v1.6.0-beta.1) (2022-09-13)
+
+
+### 🍕 Features
+
+* Adding social media preview to project. ([#353](https://github.com/open-sauced/insights/issues/353)) ([e652ffc](https://github.com/open-sauced/insights/commit/e652ffca0f9cc7ca44206ffada48a6395861e55a))
+
+
+### 🧑‍💻 Code Refactoring
+
+* created a new select component ([#346](https://github.com/open-sauced/insights/issues/346)) ([37a836b](https://github.com/open-sauced/insights/commit/37a836b1943d69f20b1b5912e367b3b0d4ec00b9)), closes [#318](https://github.com/open-sauced/insights/issues/318)
+
+## [1.5.0](https://github.com/open-sauced/insights/compare/v1.4.0...v1.5.0) (2022-09-12)
+
+
+### 🐛 Bug Fixes
+
+* Changed 'repo/list' endpoint to 'repos/list' ([#307](https://github.com/open-sauced/insights/issues/307)) ([7876f9e](https://github.com/open-sauced/insights/commit/7876f9e5d15f3bc24a78f335ce7ee6e013f4210d))
+* Fix the `numOf` style on `ToolsNav` ([#342](https://github.com/open-sauced/insights/issues/342)) ([80e8736](https://github.com/open-sauced/insights/commit/80e8736c07e7a610d184604b04609e0f08f17a9d))
+* remove activity ([#304](https://github.com/open-sauced/insights/issues/304)) ([17fcb9a](https://github.com/open-sauced/insights/commit/17fcb9a7aef488336f0a9f05b1041ca51eb96fbc))
+
+
+### 🧑‍💻 Code Refactoring
+
+* Fix type issue where prop was using a string when it should… ([#349](https://github.com/open-sauced/insights/issues/349)) ([7df6cde](https://github.com/open-sauced/insights/commit/7df6cdec95ccec068ad1006f743519b6df1c5ee6))
+
+
+### 🍕 Features
+
+* add comma option to humanized number ([#306](https://github.com/open-sauced/insights/issues/306)) ([d093733](https://github.com/open-sauced/insights/commit/d093733430e4704bf3e6ac0fcc46f22867368eff)), closes [#258](https://github.com/open-sauced/insights/issues/258)
+* Add posthog analytics to project ([#311](https://github.com/open-sauced/insights/issues/311)) ([50836ba](https://github.com/open-sauced/insights/commit/50836bab1c724bc99323907a572e7ee312248544)), closes [#309](https://github.com/open-sauced/insights/issues/309)
+* Implement `<PROverview>` component ([#344](https://github.com/open-sauced/insights/issues/344)) ([762cc54](https://github.com/open-sauced/insights/commit/762cc544840492aab91a93eefc3586003a47f16d))
+* Implement `<TableTitle>` component ([#340](https://github.com/open-sauced/insights/issues/340)) ([44361a9](https://github.com/open-sauced/insights/commit/44361a9fdb2b79ebb17e26f07e9827129f49a151))
+* Implement `Pill` component ([#341](https://github.com/open-sauced/insights/issues/341)) ([2a4da14](https://github.com/open-sauced/insights/commit/2a4da14fef505dd08ece76ec62d391ca783cea7e))
+* Implement `Search` component  ([#337](https://github.com/open-sauced/insights/issues/337)) ([c67b7a1](https://github.com/open-sauced/insights/commit/c67b7a1670d6c895b5c223ede5948d1752e75af0))
+* Implement page header component ([#336](https://github.com/open-sauced/insights/issues/336)) ([7894a2d](https://github.com/open-sauced/insights/commit/7894a2df78d0668fd08ad518944c0c6cb0ea80e6)), closes [#317](https://github.com/open-sauced/insights/issues/317)
+* Implement Scatter Chart Component ([#285](https://github.com/open-sauced/insights/issues/285)) ([88a2872](https://github.com/open-sauced/insights/commit/88a28721fc7994f321556c3f472e38e2c389dbca)), closes [#160](https://github.com/open-sauced/insights/issues/160)
+* Implemented new design for logout pop-up ([#310](https://github.com/open-sauced/insights/issues/310)) ([88a9279](https://github.com/open-sauced/insights/commit/88a9279db6ec4e9b9ac1544c6bb57da013089fd0))
+
+## [1.4.0](https://github.com/open-sauced/insights/compare/v1.3.0...v1.4.0) (2022-09-06)
+
+
+### 🧑‍💻 Code Refactoring
+
+* Add types to useRepositoriesList hook ([#277](https://github.com/open-sauced/insights/issues/277)) ([4f1a771](https://github.com/open-sauced/insights/commit/4f1a7715b09f28f060ec5b93f0c1208cc1d0b40c))
+
+
+### 🍕 Features
+
+* Add download CSV funtionality to Reports page ([#286](https://github.com/open-sauced/insights/issues/286)) ([ada79d3](https://github.com/open-sauced/insights/commit/ada79d3ff5ff197e510f78fad959792c2bc522b4))
+* **footer:** swap out footer text ([#296](https://github.com/open-sauced/insights/issues/296)) ([737df5b](https://github.com/open-sauced/insights/commit/737df5bb63cd09130fbf9815252f4ab3938999ad))
+* Update Scatter Chart Legend ([#260](https://github.com/open-sauced/insights/issues/260)) ([309ef62](https://github.com/open-sauced/insights/commit/309ef62a14b8d78866b6cc26af919c7d9d16d3f1))
+
+
+### 🐛 Bug Fixes
+
+* Add background to selectable tr table ([#252](https://github.com/open-sauced/insights/issues/252)) ([7d6ae16](https://github.com/open-sauced/insights/commit/7d6ae164e2ddf9e4e0a21b486e61b1e4418bbc62)), closes [#183](https://github.com/open-sauced/insights/issues/183) [#289](https://github.com/open-sauced/insights/issues/289)
+* Contributor card overlap on smaller devices ([#298](https://github.com/open-sauced/insights/issues/298)) ([777f6ba](https://github.com/open-sauced/insights/commit/777f6ba4f3d9f0d29f8d47c2a73c7941edde4867)), closes [#290](https://github.com/open-sauced/insights/issues/290)
+* correct netlify build supabase redirect url ([#283](https://github.com/open-sauced/insights/issues/283)) ([0b2b80a](https://github.com/open-sauced/insights/commit/0b2b80a155bd1af6497a1ca84916e2513dd58581))
+* Filter dropdown can only be closed by clicking on the filter button ([#299](https://github.com/open-sauced/insights/issues/299)) ([bce1f8e](https://github.com/open-sauced/insights/commit/bce1f8e2933fadb647c6f4f687b306bdbe24e9ae)), closes [#292](https://github.com/open-sauced/insights/issues/292)
+* Fixing issues with TopNav and Highlight Card ([#294](https://github.com/open-sauced/insights/issues/294)) ([218f30d](https://github.com/open-sauced/insights/commit/218f30d98c4b077db2c666ab145f8f2c269f14e0)), closes [#287](https://github.com/open-sauced/insights/issues/287) [#291](https://github.com/open-sauced/insights/issues/291)
+* grammar for header description ([#279](https://github.com/open-sauced/insights/issues/279)) ([a019912](https://github.com/open-sauced/insights/commit/a0199125d1c8cff4af514f2fb80fd90c19cb10dc))
+
+## [1.4.0-beta.17](https://github.com/open-sauced/insights/compare/v1.4.0-beta.16...v1.4.0-beta.17) (2022-09-12)
+
+
+### 🍕 Features
+
+* Add posthog analytics to project ([#311](https://github.com/open-sauced/insights/issues/311)) ([50836ba](https://github.com/open-sauced/insights/commit/50836bab1c724bc99323907a572e7ee312248544)), closes [#309](https://github.com/open-sauced/insights/issues/309)
+
+## [1.4.0-beta.16](https://github.com/open-sauced/insights/compare/v1.4.0-beta.15...v1.4.0-beta.16) (2022-09-11)
+
+
+### 🍕 Features
+
+* Implement `<PROverview>` component ([#344](https://github.com/open-sauced/insights/issues/344)) ([762cc54](https://github.com/open-sauced/insights/commit/762cc544840492aab91a93eefc3586003a47f16d))
+
+
+### 🐛 Bug Fixes
+
+* Fix the `numOf` style on `ToolsNav` ([#342](https://github.com/open-sauced/insights/issues/342)) ([80e8736](https://github.com/open-sauced/insights/commit/80e8736c07e7a610d184604b04609e0f08f17a9d))
+
+
+### 🧑‍💻 Code Refactoring
+
+* Fix type issue where prop was using a string when it should… ([#349](https://github.com/open-sauced/insights/issues/349)) ([7df6cde](https://github.com/open-sauced/insights/commit/7df6cdec95ccec068ad1006f743519b6df1c5ee6))
+
+## [1.4.0-beta.15](https://github.com/open-sauced/insights/compare/v1.4.0-beta.14...v1.4.0-beta.15) (2022-09-10)
+
+
+### 🍕 Features
+
+* Implement `<TableTitle>` component ([#340](https://github.com/open-sauced/insights/issues/340)) ([44361a9](https://github.com/open-sauced/insights/commit/44361a9fdb2b79ebb17e26f07e9827129f49a151))
+
+## [1.4.0-beta.14](https://github.com/open-sauced/insights/compare/v1.4.0-beta.13...v1.4.0-beta.14) (2022-09-10)
+
+
+### 🍕 Features
+
+* Implement `Search` component  ([#337](https://github.com/open-sauced/insights/issues/337)) ([c67b7a1](https://github.com/open-sauced/insights/commit/c67b7a1670d6c895b5c223ede5948d1752e75af0))
+
+## [1.4.0-beta.13](https://github.com/open-sauced/insights/compare/v1.4.0-beta.12...v1.4.0-beta.13) (2022-09-10)
+
+
+### 🍕 Features
+
+* Implement `Pill` component ([#341](https://github.com/open-sauced/insights/issues/341)) ([2a4da14](https://github.com/open-sauced/insights/commit/2a4da14fef505dd08ece76ec62d391ca783cea7e))
+
+## [1.4.0-beta.12](https://github.com/open-sauced/insights/compare/v1.4.0-beta.11...v1.4.0-beta.12) (2022-09-09)
+
+
+### 🍕 Features
+
+* add comma option to humanized number ([#306](https://github.com/open-sauced/insights/issues/306)) ([d093733](https://github.com/open-sauced/insights/commit/d093733430e4704bf3e6ac0fcc46f22867368eff)), closes [#258](https://github.com/open-sauced/insights/issues/258)
+* Implement page header component ([#336](https://github.com/open-sauced/insights/issues/336)) ([7894a2d](https://github.com/open-sauced/insights/commit/7894a2df78d0668fd08ad518944c0c6cb0ea80e6)), closes [#317](https://github.com/open-sauced/insights/issues/317)
+
 ## [1.4.0-beta.11](https://github.com/open-sauced/insights/compare/v1.4.0-beta.10...v1.4.0-beta.11) (2022-09-08)
 
 

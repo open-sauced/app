@@ -9,6 +9,9 @@ import changeCapitalization from "../lib/utils/change-capitalization";
 import { supabase } from "../lib/utils/supabase";
 import { SWRConfig } from "swr";
 import apiFetcher from "../lib/hooks/useSWR";
+import { initiateAnalytics } from "lib/utils/analytics";
+import { useEffect } from "react";
+import posthog from "posthog-js";
 
 type ComponentWithPageLayout = AppProps & {
   Component: AppProps["Component"] & {
@@ -18,6 +21,18 @@ type ComponentWithPageLayout = AppProps & {
 
 function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
   const router = useRouter();
+  
+  // From documentation on using Posthog with Next.js: https://posthog.com/docs/integrate/third-party/next-js
+  useEffect(() => {
+    initiateAnalytics();
+
+    const handleRouteChange = () => posthog.capture("$pageview");
+    router.events.on("routeChangeComplete", handleRouteChange);
+
+    return () => {
+      router.events.off("routeChangeComplete", handleRouteChange);
+    };
+  }, [router.events]);
 
   const { filterName, toolName } = router.query;
 
@@ -35,6 +50,15 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
       <Head>
         <title>Open Sauced Insights{filterName && ` - ${changeCapitalization(filterName.toString(), true)}`} {toolName && ` / ${changeCapitalization(toolName.toString(), true)}`}</title>
         <link rel="icon" href="/favicon.ico" />
+        <meta property="og:url" content="https://insights.opensauced.pizza" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="OpenSauced Insights Platform" />
+        <meta name="twitter:card" content="summary" />
+        <meta
+          property="og:description"
+          content="OpenSauced Insights Platform - Giving you insights on open source projects you won't find anywhere else!"
+        />
+        <meta property="og:image" content="/social-card.png" />
       </Head>
 
       <SWRConfig
