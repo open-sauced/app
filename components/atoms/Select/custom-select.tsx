@@ -52,7 +52,7 @@ const Select = ({
         {isOpen ? <IoIosArrowUp className="justify-self-end" /> : <IoIosArrowDown className="justify-self-end" />}
       </div>
       {isOpen && (
-        <div className="w-full overflow-hidden rounded-lg border shadow-superlative absolute font-normal ">
+        <div className="w-full transition overflow-hidden rounded-lg border shadow-superlative absolute font-normal ">
           {options
             ? options.map((option, index) => (
               <div
