@@ -35,11 +35,11 @@ const Select = ({
       className={`${
         className
           ? className
-          : "relative group  focus:border-light-orange-9 focus:ring focus:ring-light-orange-5 items-center   rounded-lg font-medium text-base text-light-slate-10"
+          : "relative   focus:border-light-orange-9 focus:ring focus:ring-light-orange-5 items-center   rounded-lg font-medium text-base text-light-slate-10"
       }`}
     >
       <div className="flex px-4 py-2 border border-light-slate-6 rounded-lg focus-within:border-light-orange-9 focus-within:ring focus-within:ring-light-orange-5 items-center">
-        {label && <span className="text-base text-light-slate-9 mr-2">{label}:</span>}
+        {label && <span className="text-sm text-light-slate-9 mr-2">{label}:</span>}
         <input
           onChange={onChange}
           defaultValue={placeholder}
@@ -47,16 +47,16 @@ const Select = ({
           readOnly
           type="text"
           onClick={() => handleToggle()}
-          className="w-full text-light-slate-12 focus:outline-none bg-transparent"
+          className="w-full text-sm cursor-pointer text-light-slate-12 focus:outline-none bg-transparent"
         />
         {isOpen ? <IoIosArrowUp className="justify-self-end" /> : <IoIosArrowDown className="justify-self-end" />}
       </div>
       {isOpen && (
-        <div className="w-full border absolute font-normal ">
+        <div className="w-full overflow-hidden rounded-lg border shadow-superlative absolute font-normal ">
           {options
             ? options.map((option, index) => (
               <div
-                className="font-normal hover:bg-light-orange-3 py-1 px-4 transition"
+                className="font-medium cursor-pointer text-sm text-light-slate-12 hover:text-light-orange-11 hover:bg-light-orange-3 py-1 px-4 transition"
                 onClick={() => handleSelected(option)}
                 key={index}
               >
