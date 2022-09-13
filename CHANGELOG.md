@@ -5,6 +5,18 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.6.0-beta.1](https://github.com/open-sauced/insights/compare/v1.5.0...v1.6.0-beta.1) (2022-09-13)
+
+
+### 🍕 Features
+
+* Adding social media preview to project. ([#353](https://github.com/open-sauced/insights/issues/353)) ([e652ffc](https://github.com/open-sauced/insights/commit/e652ffca0f9cc7ca44206ffada48a6395861e55a))
+
+
+### 🧑‍💻 Code Refactoring
+
+* created a new select component ([#346](https://github.com/open-sauced/insights/issues/346)) ([37a836b](https://github.com/open-sauced/insights/commit/37a836b1943d69f20b1b5912e367b3b0d4ec00b9)), closes [#318](https://github.com/open-sauced/insights/issues/318)
+
 ## [1.5.0](https://github.com/open-sauced/insights/compare/v1.4.0...v1.5.0) (2022-09-12)
 
 
