@@ -1,10 +1,14 @@
-import { SparklineLib } from "lib/utils/SparklineLib";
+import { sparkline } from "lib/utils/SparklineLib";
 import React from "react";
 
 interface SparklineProps {
   canvasId?: string;
   canvasWidth?: number;
   canvasHeight?: number;
+  data?: number[];
+  styleCode?: string;
+  colorCode?: string;
+  endpoint?: boolean;
 }
 
 const Sparkline: React.FC<SparklineProps> = ({ canvasId, canvasWidth, canvasHeight }) => {
