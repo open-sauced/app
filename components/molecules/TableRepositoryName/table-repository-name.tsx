@@ -6,9 +6,10 @@ interface TableRepositoryNameProps {
   avatarURL?: string | StaticImageData;
   name?: string;
   handle?: string;
+  isLoading?: boolean;
 }
 
-const TableRepositoryName = ({ avatarURL, name, handle }: TableRepositoryNameProps): JSX.Element => {
+const TableRepositoryName = ({ avatarURL, name, handle, isLoading }: TableRepositoryNameProps): JSX.Element => {
   return (
     <div className="flex items-center gap-2.5">
       
