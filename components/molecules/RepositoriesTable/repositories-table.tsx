@@ -1,4 +1,5 @@
 import Pill from "components/atoms/Pill/pill";
+import Sparkline from "components/atoms/Sparkline/sparkline";
 import TableTitle from "components/atoms/TableTitle/table-title";
 import React from "react";
 import PullRequestOverview from "../PullRequestOverview/pull-request-overview";
@@ -16,6 +17,7 @@ export interface Repositories {
     churn?: number;
     churnDirection?: "up" | "down";
   };
+  last30days?: Object[];
 }
 
 interface RepositoriesTableProps {
@@ -44,7 +46,7 @@ const RepositoriesTable: React.FC<RepositoriesTableProps> = ({ listOfRepositorie
       {/* Table Rows */}
       <section className="flex flex-col">
 
-        {listOfRepositories.map(({name, handle, activity, prOverview}, index) => 
+        {listOfRepositories.map(({name, handle, activity, prOverview, last30days}, index) => 
           
           // Table Row
           <div className={`${classNames.row}`} key={index}>  
@@ -57,6 +59,15 @@ const RepositoriesTable: React.FC<RepositoriesTableProps> = ({ listOfRepositorie
 
             {/* Column: PR Overview */}
             <PullRequestOverview open={prOverview.open} merged={prOverview.merged} closed={prOverview.closed} draft={prOverview.draft} churn={prOverview.churn} churnDirection={prOverview.churnDirection}></PullRequestOverview>
+
+            {/* Column: PR Velocity */}
+
+            {/* Column: SPAM */}
+            
+            {/* Column: Contributors */}
+            
+            {/* Column: Last 30 Days */}
+            <Sparkline data={last30days} />
           </div>
 
         )}
