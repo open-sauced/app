@@ -15,7 +15,7 @@ interface Meta {
   readonly itemCount: number,
 }
 
-interface DbContributions {
+interface DbContribution {
   readonly commits: string,
   readonly commit_days: string,
   readonly files_modified: string,
