@@ -143,8 +143,7 @@ const RepositoriesTable: React.FC<RepositoriesTableProps> = ({ listOfRepositorie
         <div className="flex items-center gap-4">
           <Pagination pages={[]} totalPage={0} page={12} onPageChange={function (page: number): void {
             throw new Error("Function not implemented.");
-          } } />
-          <PaginationGotoPage currentPage={12} name={""} />
+          } } goToPage />
         </div>
       </footer>
     </div>
