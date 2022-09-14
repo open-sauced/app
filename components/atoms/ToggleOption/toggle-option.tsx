@@ -10,6 +10,7 @@ interface ToogleOptionProps {
 const ToggleOption = ({ optionText, withIcon , checked, handleToggle}: ToogleOptionProps): JSX.Element => {
   return (
     <div
+      onClick={handleToggle}
       className="inline-flex cursor-pointer items-center gap-2 rounded-md px-2 py-0.5 border border-light-slate-6 bg-light-slate-1"
     >
       <ToggleSwitch handleToggle={handleToggle} name={optionText} checked={checked} />
