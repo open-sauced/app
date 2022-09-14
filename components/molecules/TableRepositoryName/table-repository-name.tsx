@@ -14,7 +14,7 @@ const TableRepositoryName = ({ avatarURL, name, handle, isLoading }: TableReposi
     <div className="flex items-center gap-2.5">
       
       {/* Avatar */}
-      <Avatar size="lg" avatarURL={avatarURL} isCircle={false} />
+      <Avatar size={40} avatarURL={avatarURL} isCircle={false} />
 
       {/* Text */}
       <div className="flex flex-col justify-center">
