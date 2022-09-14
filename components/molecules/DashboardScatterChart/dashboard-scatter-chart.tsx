@@ -13,13 +13,25 @@ interface DashboardScatterChartProps {
 const DashboardScatterChart: React.FC<DashboardScatterChartProps> = ({ title, option }) => {
   const [showMembers, setShowMembers] = useState(false);
   const [showBots, setShowBots] = useState(false);
+
+  let functionTimeout: any;
+
   const handleShowMembers = () => {
-    setShowMembers(!showMembers);
-    // Additional logic for showing members
+    clearTimeout(functionTimeout);
+
+    functionTimeout = setTimeout(() => {
+      setShowMembers(!showMembers);
+      // Additional logic for showing members
+    } , 50);
   };
+  
   const handleShowBots = () => {
-    setShowBots(!showBots);
-    // Additional logic for showing bots
+    clearTimeout(functionTimeout);
+
+    functionTimeout = setTimeout(() => {
+      setShowBots(!showBots);
+      // Additional logic for showing bots
+    } , 50);
   };
   return (
     <div>
