@@ -1,6 +1,6 @@
 import useSWR from "swr";
 
-interface PaginatedRepoResponse {
+interface PaginatedContributorsResponse {
   readonly data: DbContributions[];
   readonly meta: Meta;
 }
@@ -9,7 +9,7 @@ const useContributionsList = (limit = "") => {
   //The endpoint for all Hacktoberfest contributions doesn't exist yet so will substitute this for now
   const endpointString = `repos/769/contributions?orderBy=last_commit_time${limit === "" ? limit : `&limit=${limit}`}`;
 
-  const { data, error, mutate } = useSWR<PaginatedRepoResponse, Error>(endpointString);
+  const { data, error, mutate } = useSWR<PaginatedContributorsResponse, Error>(endpointString);
 
   return {
     data: data?.data ?? [],
