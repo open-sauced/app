@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.6.0-beta.8](https://github.com/open-sauced/insights/compare/v1.6.0-beta.7...v1.6.0-beta.8) (2022-09-14)
+
+
+### 🐛 Bug Fixes
+
+* Resolve 'Show Bots', 'Show Outside Contributors' and repo table mobile responsiveness bug. ([#368](https://github.com/open-sauced/insights/issues/368)) ([0beda90](https://github.com/open-sauced/insights/commit/0beda902bf20830fb4176f80f7c4af250372f8b8))
+
 ## [1.6.0-beta.7](https://github.com/open-sauced/insights/compare/v1.6.0-beta.6...v1.6.0-beta.7) (2022-09-13)
 
 
