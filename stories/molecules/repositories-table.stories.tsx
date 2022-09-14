@@ -28,6 +28,33 @@ const previewRepositories = [
       churn: 40,
       churnDirection: "up"
     },
+    prVelocity: {
+      amount: "2 mo",
+      churn: "30%",
+      churnDirection: "up"
+    },
+    spam: {
+      amount: "3 PRs",
+      churn: "10%",
+      churnDirection: "up"
+    },
+    contributors: [
+      {
+        avatarURL: "",
+        initials: "ES",
+        alt: "E"
+      },
+      {
+        avatarURL: "",
+        initials: "ES",
+        alt: "E"
+      },
+      {
+        avatarURL: "",
+        initials: "ES",
+        alt: "E"
+      }
+    ],
     last30days: [
       {
         "id": "japan",
@@ -117,6 +144,33 @@ const previewRepositories = [
       churn: 100,
       churnDirection: "down"
     },
+    prVelocity: {
+      amount: "2 mo",
+      churn: "30%",
+      churnDirection: "up"
+    },
+    spam: {
+      amount: "3 PRs",
+      churn: "10%",
+      churnDirection: "up"
+    },
+    contributors: [
+      {
+        avatarURL: "",
+        initials: "ES",
+        alt: "E"
+      },
+      {
+        avatarURL: "",
+        initials: "ES",
+        alt: "E"
+      },
+      {
+        avatarURL: "",
+        initials: "ES",
+        alt: "E"
+      }
+    ],
     last30days: [
       {
         "id": "japan",
@@ -206,6 +260,33 @@ const previewRepositories = [
       churn: 20,
       churnDirection: "up"
     },
+    prVelocity: {
+      amount: "2 mo",
+      churn: "30%",
+      churnDirection: "up"
+    },
+    spam: {
+      amount: "3 PRs",
+      churn: "10%",
+      churnDirection: "up"
+    },
+    contributors: [
+      {
+        avatarURL: "",
+        initials: "ES",
+        alt: "E"
+      },
+      {
+        avatarURL: "",
+        initials: "ES",
+        alt: "E"
+      },
+      {
+        avatarURL: "",
+        initials: "ES",
+        alt: "E"
+      }
+    ],
     last30days: [
       {
         "id": "japan",

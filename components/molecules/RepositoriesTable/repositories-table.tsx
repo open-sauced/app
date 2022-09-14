@@ -1,7 +1,9 @@
+import { Serie } from "@nivo/line";
 import Avatar from "components/atoms/Avatar/avatar";
 import Pill from "components/atoms/Pill/pill";
 import Sparkline from "components/atoms/Sparkline/sparkline";
 import TableTitle from "components/atoms/TableTitle/table-title";
+import { StaticImageData } from "next/image";
 import React from "react";
 import Pagination from "../Pagination/pagination";
 import PaginationGotoPage from "../PaginationGotoPage/pagination-goto-page";
@@ -9,11 +11,17 @@ import PaginationResults from "../PaginationResults/pagination-result";
 import PullRequestOverview from "../PullRequestOverview/pull-request-overview";
 import TableRepositoryName from "../TableRepositoryName/table-repository-name";
 
-export interface Repositories {
+export interface ContributorsRows {
+  avatarURL?: string | StaticImageData;
+  initials?: string;
+  alt?: string;
+}
+
+export interface RepositoriesRows {
   name?: string;
   handle?: string;
   activity?: string;
-  prOverview: {
+  prOverview?: {
     open?: number;
     merged?: number;
     closed?: number;
@@ -21,11 +29,22 @@ export interface Repositories {
     churn?: number;
     churnDirection?: "up" | "down";
   };
-  last30days?: Object[];
+  prVelocity?: {
+    amount?: string;
+    churn?: string;
+    churnDirection?: "up" | "down";
+  };
+  spam?: {
+    amount?: string;
+    churn?: string;
+    churnDirection?: "up" | "down";
+  };
+  contributors?: ContributorsRows[];
+  last30days?: Serie[];
 }
 
 interface RepositoriesTableProps {
-  listOfRepositories?: Repositories[];
+  listOfRepositories?: RepositoriesRows[];
 }
 
 const classNames = {
@@ -59,7 +78,7 @@ const RepositoriesTable: React.FC<RepositoriesTableProps> = ({ listOfRepositorie
       {/* Table Rows */}
       <section className="flex flex-col">
 
-        {listOfRepositories.map(({name, handle, activity, prOverview, last30days}) => 
+        {listOfRepositories?.map(({name, handle, activity, prOverview, prVelocity, spam, contributors, last30days}) => 
           
           // Table Row
           <div className={`${classNames.row}`} key={`${handle}/${name}`}>  
@@ -72,40 +91,43 @@ const RepositoriesTable: React.FC<RepositoriesTableProps> = ({ listOfRepositorie
 
             {/* Column: Activity */}
             <div className={classNames.cols.activity}>
-              <Pill text={activity} />
+              { activity && 
+                <Pill text={activity} />
+              }
               
             </div>
 
             {/* Column: PR Overview */}
             <div className={classNames.cols.prOverview}>
-              <PullRequestOverview open={prOverview.open} merged={prOverview.merged} closed={prOverview.closed} draft={prOverview.draft} churn={prOverview.churn} churnDirection={prOverview.churnDirection}></PullRequestOverview>
+              <PullRequestOverview open={prOverview?.open} merged={prOverview?.merged} closed={prOverview?.closed} draft={prOverview?.draft} churn={prOverview?.churn} churnDirection={prOverview?.churnDirection}></PullRequestOverview>
               
             </div>
 
             {/* Column: PR Velocity */}
             <div className={`${classNames.cols.prVelocity}`}>
-              <div>2mo</div>
-              <Pill text={"+102%"} size="small" color="green" />
+              <div>{prVelocity?.amount}</div>
+              <Pill text={`${prVelocity?.churn}`} size="small" color="green" />
             </div>
 
             {/* Column: SPAM */}
             <div className={`${classNames.cols.prVelocity}`}>
-              <div>2mo</div>
-              <Pill text={"+102%"} size="small" color="green" />
+              <div>{spam?.amount}</div>
+              <Pill text={`${spam?.churn}`} size="small" color="green" />
             </div>
             
             {/* Column: Contributors */}
             <div className={`flex ${classNames.cols.contributors}`}>
-              <Avatar avatarURL={""} initials={"OS"} size="base" hasBorder isCircle />
-              <Avatar avatarURL={""} initials={"OS"} size="base" hasBorder isCircle />
-              <Avatar avatarURL={""} initials={"OS"} size="base" hasBorder isCircle />
-              <Avatar avatarURL={""} initials={"OS"} size="base" hasBorder isCircle />
-              <Avatar avatarURL={""} initials={"OS"} size="base" hasBorder isCircle />
+            
+              {contributors?.map(({ avatarURL, initials, alt}) => 
+                <Avatar key={`${initials}-${alt}`} avatarURL={avatarURL} initials={initials} size={32} hasBorder isCircle />
+              )}
             </div>
             
             {/* Column: Last 30 Days */}
             <div className={classNames.cols.last30days}>
-              <Sparkline data={last30days} />
+              { last30days && 
+                <Sparkline data={last30days} />
+              }
             </div>
           </div>
 
