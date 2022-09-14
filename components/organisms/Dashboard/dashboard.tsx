@@ -16,13 +16,52 @@ export const Dashboard = (): JSX.Element => {
 
   const conAvatarObject: { [key: string]: string } = {};
 
+  const fakeDataSet = [
+    33,
+    400,
+    12,
+    5049,
+    2,
+    840,
+    3603,
+    400,
+    220,
+    5,
+    1284,
+    7000,
+    1060,
+    64,
+    8099,
+    6400,
+    1234,
+    123,
+    802,
+    6000,
+    100,
+    1206,
+    2084,
+    786,
+    876,
+    954,
+    305,
+    1087,
+    2803,
+    55,
+    2,
+    103,
+    2,
+    902,
+    500,
+    702
+  ];
+
   const scatterChartData = contributorError ? [] :
     //eslint-disable-next-line
-    contributorData.map(({ last_commit_time, files_modified }) => {
+    contributorData.map(({ last_commit_time, files_modified }, index) => {
       const timeOverTouched = [
         calcDaysFromToday(new Date(parseInt(last_commit_time))),
         //eslint-disable-next-line
-        files_modified !== null ? files_modified : 0
+        files_modified !== null ? files_modified : fakeDataSet[index]
       ];
 
       // conAvatarObject[`${timeOverTouched[0]}${timeOverTouched[1]}`] = `https://avatars.githubusercontent.com/u/${add user name here}`;
