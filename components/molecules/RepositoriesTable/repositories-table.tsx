@@ -56,10 +56,10 @@ const RepositoriesTable: React.FC<RepositoriesTableProps> = ({ listOfRepositorie
       {/* Table Rows */}
       <section className="flex flex-col">
 
-        {listOfRepositories.map(({name, handle, activity, prOverview, last30days}, index) => 
+        {listOfRepositories.map(({name, handle, activity, prOverview, last30days}) => 
           
           // Table Row
-          <div className={`${classNames.row}`} key={index}>  
+          <div className={`${classNames.row}`} key={`${handle}/${name}`}>  
             
             {/* Column: Repository Name */}
             <div className={classNames.cols.repository}>
