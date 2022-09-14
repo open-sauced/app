@@ -8,7 +8,7 @@ interface PullRequestOverviewProps {
   closed?: number;
   draft?: number;
   churn?: number;
-  churnDirection?: "up" | "down";
+  churnDirection?: "up" | "down" | string;
 }
 
 const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({ className, open, merged, closed, draft, churn, churnDirection = "down" }) => {

@@ -27,17 +27,17 @@ export interface RepositoriesRows {
     closed?: number;
     draft?: number;
     churn?: number;
-    churnDirection?: "up" | "down";
+    churnDirection?: string;
   };
   prVelocity?: {
     amount?: string;
     churn?: string;
-    churnDirection?: "up" | "down";
+    churnDirection?: string;
   };
   spam?: {
     amount?: string;
     churn?: string;
-    churnDirection?: "up" | "down";
+    churnDirection?: string;
   };
   contributors?: ContributorsRows[];
   last30days?: Serie[];
@@ -99,7 +99,7 @@ const RepositoriesTable: React.FC<RepositoriesTableProps> = ({ listOfRepositorie
 
             {/* Column: PR Overview */}
             <div className={classNames.cols.prOverview}>
-              <PullRequestOverview open={prOverview?.open} merged={prOverview?.merged} closed={prOverview?.closed} draft={prOverview?.draft} churn={prOverview?.churn} churnDirection={prOverview?.churnDirection}></PullRequestOverview>
+              <PullRequestOverview open={prOverview?.open} merged={prOverview?.merged} closed={prOverview?.closed} draft={prOverview?.draft} churn={prOverview?.churn} churnDirection={`${prOverview?.churnDirection}`}></PullRequestOverview>
               
             </div>
 
