@@ -11,7 +11,6 @@ interface Meta {
 }
 
 interface DbContributions {
-  readonly id: string,
   readonly commits: string,
   readonly commit_days: string,
   readonly files_modified: string,

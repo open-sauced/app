@@ -2,6 +2,7 @@ import { useContributionsList } from "lib/hooks/useContributionsList";
 import useContributorData from "lib/hooks/useContributorData";
 import { calcMonthsFromToday } from "lib/utils/date-utils";
 import ContributorCard from "../ContributorCard/contributor-card";
+import color from "lib/utils/color.json";
 
 const Contributors = (): JSX.Element =>{
   const contributorData = useContributorData();
@@ -20,8 +21,10 @@ const Contributors = (): JSX.Element =>{
         dateOfFirstPR: `${timeSinceFirstCommit}${timeSinceFirstCommit !== 1 ? "mos" : "mo"}`
       },
       languageList: contributorLanguageList.map(language => {
+        const preparedLanguageKey = Object.keys(color).find(key => key.toLowerCase() === language.toLowerCase());
+
         return {
-          languageName: language,
+          languageName: preparedLanguageKey ? preparedLanguageKey : language,
           percentageUsed: Math.round( ( 1 / contributorLanguageList.length ) * 100)
         };
       })
