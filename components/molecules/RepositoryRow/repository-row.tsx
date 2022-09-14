@@ -1,27 +1,34 @@
 import Checkbox from "components/atoms/Checkbox/checkbox";
+import { useRepositoryCommits } from "lib/hooks/useRepositoryCommits";
+import { useRepositoryPRs } from "lib/hooks/useRepositoryPRs";
 import humanizeNumber from "../../../lib/utils/humanizeNumber";
 
 interface RespositoryRowProps {
-  tableRowClassesNoBG: string;
   key: number;
-  addCheckboxToRef: (element: any) => void;
-  entireRowClickChangesCheckbox: (element: any) => void;
+  id: string;
   stars: number;
   size: number;
   name: string;
+  tableRowClassesNoBG: string;
   allCheckboxRefs: React.MutableRefObject<HTMLElement[]>
+  addCheckboxToRef: (element: any) => void;
+  entireRowClickChangesCheckbox: (element: any) => void;
 }
 
 const RepositoryRow = ({
-  tableRowClassesNoBG,
   key,
-  addCheckboxToRef,
-  entireRowClickChangesCheckbox,
+  id,
   stars,
   size,
   name,
-  allCheckboxRefs
+  tableRowClassesNoBG,
+  allCheckboxRefs,
+  addCheckboxToRef,
+  entireRowClickChangesCheckbox
 }: RespositoryRowProps) => {
+  const { meta: repoPrMetaData, isError: repoPrIsError, isLoading: repoPRIsLoading } = useRepositoryPRs(id);
+  const { meta: repoCommitMetaData, isError: repoCommitIsError, isLoading: repoCommitIsLoading } = useRepositoryCommits(id);
+
   return (
     <div
       className={tableRowClassesNoBG}
@@ -41,8 +48,8 @@ const RepositoryRow = ({
       </span>
       <div className="flex gap-x-2.5">
         <span className="text-right overflow-hidden whitespace-nowrap text-ellipsis py-2 w-10 md:w-20">{humanizeNumber(stars, null)}</span>
-        <span className="text-right overflow-hidden whitespace-nowrap text-ellipsis py-2 w-10 md:w-20">{humanizeNumber(12, null)}</span>
-        <span className="text-right overflow-hidden whitespace-nowrap text-ellipsis py-2 w-10 md:w-20">{humanizeNumber(1234, null)}</span>
+        <span className="text-right overflow-hidden whitespace-nowrap text-ellipsis py-2 w-10 md:w-20">{repoPRIsLoading || repoPrIsError ? 0 : humanizeNumber(repoPrMetaData.itemCount, null)}</span>
+        <span className="text-right overflow-hidden whitespace-nowrap text-ellipsis py-2 w-10 md:w-20">{repoCommitIsLoading || repoCommitIsError ? 0 : humanizeNumber(repoCommitMetaData.itemCount, null)}</span>
         <span className="text-right overflow-hidden whitespace-nowrap text-ellipsis py-2 w-10 md:w-20">{humanizeNumber(size, null)}</span>
       </div>
     </div>

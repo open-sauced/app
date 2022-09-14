@@ -92,9 +92,19 @@ const RepoSelectableTable: React.FC<RepoSelectableTableProps> = ({ title, tableT
           </div>
           <div>
             <div className="h-3"></div>
-            {rows?.map(({ name, stars, size }, index) => {
+            {rows?.map(({ name, stars, size, id }, index) => {
               return (
-                <RepositoryRow key={index} tableRowClassesNoBG={tableRowClassesNoBG} addCheckboxToRef={addCheckboxToRef} entireRowClickChangesCheckbox={entireRowClickChangesCheckbox} stars={stars} size={size} name={name} allCheckboxRefs={allCheckboxRefs}/>
+                <RepositoryRow 
+                  key={index}
+                  id={id}
+                  stars={stars}
+                  size={size}
+                  name={name}
+                  allCheckboxRefs={allCheckboxRefs}
+                  tableRowClassesNoBG={tableRowClassesNoBG}
+                  addCheckboxToRef={addCheckboxToRef}
+                  entireRowClickChangesCheckbox={entireRowClickChangesCheckbox}
+                />
               );
             })}
           </div>

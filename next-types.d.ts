@@ -11,6 +11,10 @@ interface DbRepoPR {
   readonly title: string;
 }
 
+interface DbRepoCommit {
+  readonly title: string;
+}
+
 interface Meta {
   readonly itemCount: number,
 }
