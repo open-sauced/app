@@ -18,7 +18,7 @@ export const Dashboard = (): JSX.Element => {
 
   const scatterChartData = contributorError ? [] :
     //eslint-disable-next-line
-    contributorData.map(({ last_commit_time, files_modified, id }) => {
+    contributorData.map(({ last_commit_time, files_modified }) => {
       const timeOverTouched = [
         calcDaysFromToday(new Date(parseInt(last_commit_time))),
         //eslint-disable-next-line

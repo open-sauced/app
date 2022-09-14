@@ -1,9 +1,14 @@
 // User defined type definitions. Please add type definitions for global types here
 
 interface DbRepo {
+  readonly id: string,
   readonly size: number,
   readonly stars: number,
   readonly name: string
+}
+
+interface DbRepoPR {
+  readonly title: string;
 }
 
 interface Meta {
