@@ -11,7 +11,7 @@ interface PullRequestOverviewProps {
   churnDirection?: "up" | "down";
 }
 
-const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({ className, open, merged, closed, draft, churn, churnDirection }) => {
+const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({ className, open, merged, closed, draft, churn, churnDirection = "down" }) => {
   const totalPullRequests = (!!open ? open : 0) + (!!merged ? merged : 0) + (!!closed ? closed : 0) + (!!draft ? draft : 0);
 
   return (
