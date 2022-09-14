@@ -61,7 +61,7 @@ export const Dashboard = (): JSX.Element => {
       boundaryGap: false,
       axisLabel: {
         showMinLabel: true,
-        formatter: (value: number) => value >= 1000 ? humanizeNumber(value) : value
+        formatter: (value: number) => value >= 1000 ? humanizeNumber(value,null) : value
       },
       splitLine: {
         lineStyle: {
@@ -80,7 +80,7 @@ export const Dashboard = (): JSX.Element => {
   };
 
   useEffect(() => {
-    if (repoMetaData) setItemCountText(`of ${humanizeNumber(repoMetaData.itemCount)}`);
+    if (repoMetaData) setItemCountText(`of ${humanizeNumber(repoMetaData.itemCount, "comma")}`);
     if (repoError) setItemCountText("of unknown...");
   }, [repoError, repoMetaData]);
 

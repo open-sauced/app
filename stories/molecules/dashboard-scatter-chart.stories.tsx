@@ -41,7 +41,7 @@ const testOptions = {
     boundaryGap: false,
     axisLabel: {
       showMinLabel: true,
-      formatter: (value: number) => (value >= 1000 ? humanizeNumber(value) : value)
+      formatter: (value: number) => (value >= 1000 ? humanizeNumber(value, null) : value)
     },
     splitLine: {
       lineStyle: {
@@ -111,7 +111,7 @@ const testOptionsWithImage = {
     boundaryGap: false,
     axisLabel: {
       showMinLabel: true,
-      formatter: (value: number)=> value >= 1000 ? humanizeNumber(value) : value
+      formatter: (value: number)=> value >= 1000 ? humanizeNumber(value, null) : value
     },
     splitLine: {
       lineStyle: {

@@ -107,10 +107,10 @@ const RepoSelectableTable: React.FC<RepoSelectableTableProps> = ({ title, tableT
                     {name}
                   </span>
                   <div className="flex gap-x-2.5">
-                    <span className="text-right overflow-hidden whitespace-nowrap text-ellipsis py-2 w-10 md:w-20">{humanizeNumber(stars)}</span>
-                    <span className="text-right overflow-hidden whitespace-nowrap text-ellipsis py-2 w-10 md:w-20">{humanizeNumber(12)}</span>
-                    <span className="text-right overflow-hidden whitespace-nowrap text-ellipsis py-2 w-10 md:w-20">{humanizeNumber(1234)}</span>
-                    <span className="text-right overflow-hidden whitespace-nowrap text-ellipsis py-2 w-10 md:w-20">{humanizeNumber(size)}</span>
+                    <span className="text-right overflow-hidden whitespace-nowrap text-ellipsis py-2 w-10 md:w-20">{humanizeNumber(stars, null)}</span>
+                    <span className="text-right overflow-hidden whitespace-nowrap text-ellipsis py-2 w-10 md:w-20">{humanizeNumber(12, null)}</span>
+                    <span className="text-right overflow-hidden whitespace-nowrap text-ellipsis py-2 w-10 md:w-20">{humanizeNumber(1234, null)}</span>
+                    <span className="text-right overflow-hidden whitespace-nowrap text-ellipsis py-2 w-10 md:w-20">{humanizeNumber(size, null)}</span>
                   </div>
                 </div>
               );
