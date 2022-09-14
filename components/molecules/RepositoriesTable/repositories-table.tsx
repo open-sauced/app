@@ -34,8 +34,8 @@ const classNames = {
     repository: "flex-1",
     activity: "flex-1 shrink",
     prOverview: "flex-1",
-    prVelocity: "flex-1",
-    spam: "flex-1",
+    prVelocity: "flex items-center gap-3 flex-1",
+    spam: "flex items-center gap-3 flex-1",
     contributors: "flex-1",
     last30days: "flex-1"
   }
@@ -43,7 +43,7 @@ const classNames = {
 
 const RepositoriesTable: React.FC<RepositoriesTableProps> = ({ listOfRepositories }) => {
   return (
-    <div className="flex flex-col rounded-lg overflow-hidden">
+    <div className="flex flex-col rounded-lg overflow-hidden border">
 
       {/* Table Header */}
       <header className="flex py-4 px-6 bg-light-slate-3 gap-2">
@@ -83,13 +83,13 @@ const RepositoriesTable: React.FC<RepositoriesTableProps> = ({ listOfRepositorie
             </div>
 
             {/* Column: PR Velocity */}
-            <div className={`flex items-center gap-3 ${classNames.cols.prVelocity}`}>
+            <div className={`${classNames.cols.prVelocity}`}>
               <div>2mo</div>
               <Pill text={"+102%"} size="small" color="green" />
             </div>
 
             {/* Column: SPAM */}
-            <div className={`flex items-center gap-3 ${classNames.cols.prVelocity}`}>
+            <div className={`${classNames.cols.prVelocity}`}>
               <div>2mo</div>
               <Pill text={"+102%"} size="small" color="green" />
             </div>
