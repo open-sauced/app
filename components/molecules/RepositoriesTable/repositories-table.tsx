@@ -3,6 +3,9 @@ import Pill from "components/atoms/Pill/pill";
 import Sparkline from "components/atoms/Sparkline/sparkline";
 import TableTitle from "components/atoms/TableTitle/table-title";
 import React from "react";
+import Pagination from "../Pagination/pagination";
+import PaginationGotoPage from "../PaginationGotoPage/pagination-goto-page";
+import PaginationResults from "../PaginationResults/pagination-result";
 import PullRequestOverview from "../PullRequestOverview/pull-request-overview";
 import TableRepositoryName from "../TableRepositoryName/table-repository-name";
 
@@ -110,8 +113,17 @@ const RepositoriesTable: React.FC<RepositoriesTableProps> = ({ listOfRepositorie
       </section>
 
       {/* Table Footer */}
-      <footer>
+      <footer className="flex justify-between items-center py-3 px-6 border-t">
+        <div className="">
+          <PaginationResults from={1} to={10} total={93000} entity={"repositories"} />
+        </div>
 
+        <div className="flex items-center gap-4">
+          <Pagination pages={[]} totalPage={0} page={12} onPageChange={function (page: number): void {
+            throw new Error("Function not implemented.");
+          } } />
+          <PaginationGotoPage currentPage={12} name={""} />
+        </div>
       </footer>
     </div>
   );
