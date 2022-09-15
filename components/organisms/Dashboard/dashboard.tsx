@@ -14,7 +14,7 @@ export const Dashboard = (): JSX.Element => {
   const { meta: repoMetaData, isError: repoError } = useRepositoriesList();
   const [itemCountText, setItemCountText] = useState("Loading...");
 
-  const conAvatarObject: { [key: string]: string } = {};
+  const conAvatarObject: { [key: string]: string[] } = {};
 
   const fakeDataSet = [
     33,
@@ -58,14 +58,14 @@ export const Dashboard = (): JSX.Element => {
   const scatterChartData = contributorError ? [] :
     //eslint-disable-next-line
     contributorData.map(({ last_commit_time, files_modified, host_login }, index) => {
-      const timeOverTouched = [
+      const timeOverTouched: (string | number)[] = [
         calcDaysFromToday(new Date(parseInt(last_commit_time))),
         //eslint-disable-next-line
         files_modified !== null ? files_modified : fakeDataSet[index]
       ];
 
       //eslint-disable-next-line
-      conAvatarObject[`${timeOverTouched[0]}${timeOverTouched[1]}`] = `https://www.github.com/${host_login}.png?size=60`;
+      conAvatarObject[`${timeOverTouched[0]}${timeOverTouched[1]}`] = [host_login, `https://www.github.com/${host_login}.png?size=60`];
 
       return timeOverTouched;
     });
@@ -109,10 +109,14 @@ export const Dashboard = (): JSX.Element => {
         }
       }
     },
+    tooltip: {
+      trigger: "item",
+      formatter: (args: any) => `${conAvatarObject[`${args.value[0]}${args.value[1]}`][0]}`
+    },
     series: [
       {
         symbolSize: 40,
-        symbol: (value: number[]) => `image://${conAvatarObject[`${value[0]}${value[1]}`]}`,
+        symbol: (value: number[]) => `image://${conAvatarObject[`${value[0]}${value[1]}`][1]}`,
         data: scatterChartData,
         type: "scatter"
       }
