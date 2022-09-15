@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { WithPageLayout } from "../interfaces/with-page-layout";
 import LoginLayout from "layouts/login";
 import { useRouter } from "next/router";
@@ -23,24 +23,36 @@ import { LoginRepoObjectInterface } from "interfaces/login-repo-object-interface
 import useLoginRepoList from "lib/hooks/useLoginRepoList";
 import { captureAnayltics } from "lib/utils/analytics";
 import useSupabaseAuth from 'lib/hooks/useSupabaseAuth';
+import { User } from '@supabase/supabase-js';
+import { useGlobalStateContext } from 'context/global-state';
 
 type handleLoginStep = () => void;
 
 interface LoginStep1Props {
   handleLoginStep: handleLoginStep;
+  user: User | null;
 }
 
-const LoginStep1: React.FC<LoginStep1Props> = ({ handleLoginStep }) => {
+const LoginStep1: React.FC<LoginStep1Props> = ({ handleLoginStep, user }) => {
   captureAnayltics("User Onboarding", "onboardingStep1", "visited");
-  
-  const auth = useSupabaseAuth();
+
+  useEffect(() => {
+    if (user) {
+      handleLoginStep();
+    }
+  }, [user]);
 
   const handleGitHubAuth = async() => {
     // Redirect user to GitHub to authenticate
     // await auth.signIn({ provider: 'github' }, {
     //   redirectTo: process.env.NEXT_PUBLIC_ONBOARDING_CALLBACK_URL ?? '/'
     // });
-
+    
+    /**
+      * Starting on Step 2 because they've already authenticated
+      * via GitHub before starting onboarding. Will revisit
+      * after initial landing page is in place.
+    */    
     handleLoginStep();
   };
 
@@ -68,7 +80,7 @@ const LoginStep1: React.FC<LoginStep1Props> = ({ handleLoginStep }) => {
           </div>
         </div>
         <div>
-          <Button onClick={handleGitHubAuth} type="primary" className="w-full h-10">Authenicate <Icon IconImage={GitHubIcon} className="ml-2"/></Button>
+          <Button onClick={handleGitHubAuth} type="primary" className="w-full h-10">Authenticate <Icon IconImage={GitHubIcon} className="ml-2"/></Button>
         </div>
       </div>
     </>
@@ -81,12 +93,25 @@ interface LoginStep2Props {
 
 const LoginStep2: React.FC<LoginStep2Props> = ({ handleLoginStep }) => {
   captureAnayltics("User Onboarding", "onboardingStep2", "visited");
-  const handleAddPAT = () => {
-    // Validate PAT
-      // If valid, go to next step
-      // If invalid, display error
 
-    handleLoginStep();
+  // Validate PAT
+  const [token, setToken] = useState('');
+  const handleAddPAT = async() => {
+    try {
+      // Validate PAT and onboard user
+      const response = await fetch('/api/onboarding', {
+        method: 'POST',
+        body: JSON.stringify({
+          token
+        })
+      });
+      
+      // If valid, go to next step
+      handleLoginStep();
+    } catch (e) {
+      // If invalid, display error
+      console.error(e);
+    }
   };
 
   return (
@@ -115,7 +140,7 @@ const LoginStep2: React.FC<LoginStep2Props> = ({ handleLoginStep }) => {
           </div>
         </div>
         <div className="flex flex-col gap-2">
-          <TextInput placeholder="Insert Your Token Here"/>
+          <TextInput placeholder="Insert Your Token Here" onChange={(e) => setToken(e.target.value)}/>
           <Button onClick={handleAddPAT} type="primary" className="w-full h-10">Confirm Token</Button>
         </div>
       </div>
@@ -137,9 +162,11 @@ const LoginStep3: React.FC<LoginStep3Props> = ({ repoList, handleLoginStep, chec
   const router = useRouter();
 
   const [isFollowing, setIsFollowing] = useState<boolean[]>(repoList.map(() => false));
+  const { setAppState } = useGlobalStateContext();
 
   const handleSkipAddRepo = () => {
     handleLoginStep();
+    setAppState({ onboarded: true });
     router.push("/hacktoberfest");
   };
 
@@ -160,15 +187,15 @@ const LoginStep3: React.FC<LoginStep3Props> = ({ repoList, handleLoginStep, chec
         <div>
           <div className="flex items-center gap-2 mb-4">
             <Icon className="lg:hidden" IconImage={ChooseRepoActiveIcon} size={48} />
-            <Title className="!text-sm !text-light-orange-9">Step Two</Title>
+            <Title className="!text-sm !text-light-orange-9">Step Three</Title>
           </div>
           <div className="gap-2 mb-4">
-            <Title className="!text-2xl">Provide your token</Title>
+            <Title className="!text-2xl">Follow some Repositories</Title>
           </div>
           <div className="mb-4 text-left ">
-            <Text className="!text-sm">In order to provide fresh, and insightful data, we’ll need a favor: a GitHub personal access token to fetch public GitHub data. Here’s how we’re going to use your token:</Text>
+            <Text className="!text-sm">We’ll provide insights on the repos you choose to follow. You can follow up to 10 repos.</Text>
           </div>
-          <div className="max-h-[250px] lg:h-[140px] overflow-y-auto">
+          <div className="max-h-[250px] lg:h-[165px] overflow-y-auto">
             {
               repoList.map((repo, index) => {
                 return (
@@ -205,6 +232,7 @@ const LoginStep3: React.FC<LoginStep3Props> = ({ repoList, handleLoginStep, chec
 const Login: WithPageLayout = () => {
   type LoginSteps = number;
 
+  const { user } = useSupabaseAuth();
   const repoList = useLoginRepoList();
 
   const highlighted = "!text-light-slate-12";
@@ -225,7 +253,7 @@ const Login: WithPageLayout = () => {
   // Optionally Select repos
 
   // Go to homepage
-
+  
   const handleLoginStep = async () => {
     setCurrentLoginStep(prevStep => prevStep + 1);
   };
@@ -239,7 +267,7 @@ const Login: WithPageLayout = () => {
             <Title className="!text-2xl">Let&apos;s get started</Title>
           </div>
           <div className="mb-8">
-            <Text className="!text-sm">Open Sauced is a platform to provide insights on open source contributions. Let&apos;s start by logging in with GItHub.</Text>
+            <Text className="!text-sm">Open Sauced is a platform to provide insights on open source contributions. </Text>
           </div>
           <div className="hidden lg:flex gap-2 items-center mb-8">
             <Icon IconImage={currentLoginStep === 1 ? GitHubAuthActiveIcon : CompletedIcon} size={48} />
@@ -255,7 +283,7 @@ const Login: WithPageLayout = () => {
           </div>
         </section>
         <section className="w-full lg:h-full p-9 rounded-lg lg:rounded-r-lg bg-white">
-          {currentLoginStep === 1 && <LoginStep1 handleLoginStep={handleLoginStep}/>}
+          {currentLoginStep === 1 && <LoginStep1 handleLoginStep={handleLoginStep} user={user}/>}
           {currentLoginStep === 2 && <LoginStep2 handleLoginStep={handleLoginStep}/>}
           {currentLoginStep >= 3 && <LoginStep3 handleLoginStep={handleLoginStep} repoList={repoList} checkFollowed={checkFollowed}/>}
         </section>

@@ -7,18 +7,23 @@ const useLoginRepoList = () => {
       repoIcon: ""
     },
     {
-      repoOwner: "statelyai",
-      repoName: "xstate",
+      repoOwner: "vercel",
+      repoName: "next.js",
       repoIcon: ""
     },
     {
-      repoOwner: "statelyai",
-      repoName: "xstate",
+      repoOwner: "vitejs",
+      repoName: "vite",
       repoIcon: ""
     },
     {
-      repoOwner: "statelyai",
-      repoName: "xstate",
+      repoOwner: "solidjs",
+      repoName: "solid",
+      repoIcon: ""
+    },
+    {
+      repoOwner: "sveltejs",
+      repoName: "kit",
       repoIcon: ""
     }
   ];
