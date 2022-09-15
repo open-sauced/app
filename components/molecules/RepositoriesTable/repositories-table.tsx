@@ -44,7 +44,7 @@ export interface RepositoriesRows {
 }
 
 interface RepositoriesTableProps {
-  listOfRepositories?: RepositoriesRows[];
+  listOfRepositories: RepositoriesRows[];
 }
 
 const classNames = {
@@ -78,29 +78,29 @@ const RepositoriesTable: React.FC<RepositoriesTableProps> = ({ listOfRepositorie
       {/* Table Rows */}
       <section className="flex flex-col">
 
-        {listOfRepositories?.map(({name, handle, activity, prOverview, prVelocity, spam, contributors, last30days}) => 
-          
+        {listOfRepositories?.map(({name, handle, activity, prOverview, prVelocity, spam, contributors, last30days}) =>
+
           // Table Row
-          <div className={`${classNames.row}`} key={`${handle}/${name}`}>  
-            
+          <div className={`${classNames.row}`} key={`${handle}/${name}`}>
+
             {/* Column: Repository Name */}
             <div className={classNames.cols.repository}>
               <TableRepositoryName avatarURL={""} name={name} handle={handle}></TableRepositoryName>
-              
+
             </div>
 
             {/* Column: Activity */}
             <div className={classNames.cols.activity}>
-              { activity && 
+              { activity &&
                 <Pill text={activity} />
               }
-              
+
             </div>
 
             {/* Column: PR Overview */}
             <div className={classNames.cols.prOverview}>
               <PullRequestOverview open={prOverview?.open} merged={prOverview?.merged} closed={prOverview?.closed} draft={prOverview?.draft} churn={prOverview?.churn} churnDirection={`${prOverview?.churnDirection}`}></PullRequestOverview>
-              
+
             </div>
 
             {/* Column: PR Velocity */}
@@ -114,18 +114,18 @@ const RepositoriesTable: React.FC<RepositoriesTableProps> = ({ listOfRepositorie
               <div>{spam?.amount}</div>
               <Pill text={`${spam?.churn}`} size="small" color="green" />
             </div>
-            
+
             {/* Column: Contributors */}
             <div className={`flex ${classNames.cols.contributors}`}>
-            
-              {contributors?.map(({ avatarURL, initials, alt}) => 
+
+              {contributors?.map(({ avatarURL, initials, alt}) =>
                 <Avatar key={`${initials}-${alt}`} avatarURL={avatarURL} initials={initials} size={32} hasBorder isCircle />
               )}
             </div>
-            
+
             {/* Column: Last 30 Days */}
             <div className={classNames.cols.last30days}>
-              { last30days && 
+              { last30days &&
                 <Sparkline data={last30days} />
               }
             </div>
