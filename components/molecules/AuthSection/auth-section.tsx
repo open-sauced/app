@@ -12,7 +12,7 @@ import useSupabaseAuth from "../../../lib/hooks/useSupabaseAuth";
 import {FiLogOut} from "react-icons/fi";
 import GitHubIcon from "public/icons/github-icon.svg";
 import Icon from "components/atoms/Icon/icon";
-import { useGlobalStateContext } from 'context/global-state';
+import { useGlobalStateContext } from "context/global-state";
 
 const AuthSection: React.FC = ({  }) => {
 
@@ -33,7 +33,7 @@ const AuthSection: React.FC = ({  }) => {
       <div className="flex items-center gap-2 lg:gap-3">
         {user ?
           <>
-            { !appState.onboarded ? <OnboardingButton/> : ''}
+            { !appState.onboarded ? <OnboardingButton/> : "" }
             <Divider type="vertical" className="!h-6 !bg-gray-600"></Divider>
             <Image alt="Notification Icon" src={notifications} />
             <DropdownList menuContent={authMenu.authed}>

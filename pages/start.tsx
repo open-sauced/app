@@ -22,9 +22,9 @@ import TextInput from "components/atoms/TextInput/text-input";
 import { LoginRepoObjectInterface } from "interfaces/login-repo-object-interface";
 import useLoginRepoList from "lib/hooks/useLoginRepoList";
 import { captureAnayltics } from "lib/utils/analytics";
-import useSupabaseAuth from 'lib/hooks/useSupabaseAuth';
-import { User } from '@supabase/supabase-js';
-import { useGlobalStateContext } from 'context/global-state';
+import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
+import { User } from "@supabase/supabase-js";
+import { useGlobalStateContext } from "context/global-state";
 
 type handleLoginStep = () => void;
 
@@ -40,7 +40,7 @@ const LoginStep1: React.FC<LoginStep1Props> = ({ handleLoginStep, user }) => {
     if (user) {
       handleLoginStep();
     }
-  }, [user]);
+  }, [handleLoginStep, user]);
 
   const handleGitHubAuth = async() => {
     // Redirect user to GitHub to authenticate
@@ -95,12 +95,12 @@ const LoginStep2: React.FC<LoginStep2Props> = ({ handleLoginStep }) => {
   captureAnayltics("User Onboarding", "onboardingStep2", "visited");
 
   // Validate PAT
-  const [token, setToken] = useState('');
+  const [token, setToken] = useState("");
   const handleAddPAT = async() => {
     try {
       // Validate PAT and onboard user
-      const response = await fetch('/api/onboarding', {
-        method: 'POST',
+      const response = await fetch("/api/onboarding", {
+        method: "POST",
         body: JSON.stringify({
           token
         })
@@ -247,13 +247,13 @@ const Login: WithPageLayout = () => {
   // if onboarding already complete, go to homepage
 
   // Enter PAT
-    // Validate PAT
-    // Continue
+  // Validate PAT
+  // Continue
 
   // Optionally Select repos
 
   // Go to homepage
-  
+
   const handleLoginStep = async () => {
     setCurrentLoginStep(prevStep => prevStep + 1);
   };
