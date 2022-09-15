@@ -45,6 +45,7 @@ export interface RepositoriesRows {
 
 interface RepositoriesTableProps {
   listOfRepositories: RepositoriesRows[];
+  meta?: Meta
 }
 
 const classNames = {
