@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.6.0-beta.9](https://github.com/open-sauced/insights/compare/v1.6.0-beta.8...v1.6.0-beta.9) (2022-09-15)
+
+
+### 🍕 Features
+
+* Add contributors data from repo to validate designed components ([#314](https://github.com/open-sauced/insights/issues/314)) ([cbccd8e](https://github.com/open-sauced/insights/commit/cbccd8e057ce3b8c809693cc7071a4ba2ff4c5cb))
+
 ## [1.6.0-beta.8](https://github.com/open-sauced/insights/compare/v1.6.0-beta.7...v1.6.0-beta.8) (2022-09-14)
 
 
