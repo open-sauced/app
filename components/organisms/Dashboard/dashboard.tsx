@@ -4,18 +4,77 @@ import DashboardScatterChart from "components/molecules/DashboardScatterChart/da
 import HighlightCard from "components/molecules/HighlightCard/highlight-card";
 import humanizeNumber from "lib/utils/humanizeNumber";
 import { useEffect, useState } from "react";
+import { useContributionsList } from "lib/hooks/useContributionsList";
+import { calcDaysFromToday } from "lib/utils/date-utils";
 
 export const Dashboard = (): JSX.Element => {
-  const { meta, isError } = useRepositoriesList();
+  // This is mock data for the dashboard. Not intended to be the final implementation.
+  const { data: contributorData, isError: contributorError } = useContributionsList("35");
 
+  const { meta: repoMetaData, isError: repoError } = useRepositoriesList();
   const [itemCountText, setItemCountText] = useState("Loading...");
+
+  const conAvatarObject: { [key: string]: string } = {};
+
+  const fakeDataSet = [
+    33,
+    400,
+    12,
+    5049,
+    2,
+    840,
+    3603,
+    400,
+    220,
+    5,
+    1284,
+    7000,
+    1060,
+    64,
+    8099,
+    6400,
+    1234,
+    123,
+    802,
+    6000,
+    100,
+    1206,
+    2084,
+    786,
+    876,
+    954,
+    305,
+    1087,
+    2803,
+    55,
+    2,
+    103,
+    2,
+    902,
+    500,
+    702
+  ];
+
+  const scatterChartData = contributorError ? [] :
+    //eslint-disable-next-line
+    contributorData.map(({ last_commit_time, files_modified }, index) => {
+      const timeOverTouched = [
+        calcDaysFromToday(new Date(parseInt(last_commit_time))),
+        //eslint-disable-next-line
+        files_modified !== null ? files_modified : fakeDataSet[index]
+      ];
+
+      // conAvatarObject[`${timeOverTouched[0]}${timeOverTouched[1]}`] = `https://avatars.githubusercontent.com/u/${add user name here}`;
+
+      return timeOverTouched;
+    });
 
   const scatterOptions = {
     grid: {
       left: 40,
       top: 10,
       right: 40,
-      bottom: 20
+      bottom: 40
     },
     xAxis: {
       boundaryGap: false,
@@ -51,41 +110,18 @@ export const Dashboard = (): JSX.Element => {
     },
     series: [
       {
-        symbolSize: 20,
-        data: [
-          [10.0, 8.04],
-          [8.07, 6.95],
-          [13.0, 7.58],
-          [9.05, 8.81],
-          [11.0, 8.33],
-          [14.0, 7.66],
-          [13.4, 6.81],
-          [10.0, 6.33],
-          [14.0, 8.96],
-          [12.5, 6.82],
-          [9.15, 7.2],
-          [11.5, 7.2],
-          [3.03, 4.23],
-          [12.2, 7.83],
-          [2.02, 4.47],
-          [1.05, 3.33],
-          [4.05, 4.96],
-          [6.03, 7.24],
-          [12.0, 6.26],
-          [12.0, 8.84],
-          [7.08, 5.82],
-          [5.02, 5.68]
-        ],
+        symbolSize: 40,
+        symbol: (value: number[]) => "image://https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1064&q=80" /* `image://${conAvatarObject[`${value[0]}${value[1]}`]}` */,
+        data: scatterChartData,
         type: "scatter"
       }
     ]
   };
 
   useEffect(() => {
-
-    if(meta) setItemCountText(`of ${humanizeNumber(meta.itemCount, "comma")}`);
-    if(isError) setItemCountText("of unknown...");
-  }, [ isError, meta ]);
+    if (repoMetaData) setItemCountText(`of ${humanizeNumber(repoMetaData.itemCount, "comma")}`);
+    if (repoError) setItemCountText("of unknown...");
+  }, [repoError, repoMetaData]);
 
   return (
     <div className="flex flex-col w-full gap-4">
