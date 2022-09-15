@@ -65,7 +65,7 @@ const RepositoriesTable: React.FC<RepositoriesTableProps> = ({ listOfRepositorie
     <div className="flex flex-col rounded-lg overflow-hidden border">
 
       {/* Table Header */}
-      <header className="flex py-4 px-6 bg-light-slate-3 gap-2">
+      <div className="flex py-4 px-6 bg-light-slate-3 gap-2">
         <div className={classNames.cols.repository}><TableTitle text="Repository"></TableTitle></div>
         <div className={classNames.cols.activity}><TableTitle text="Activity"></TableTitle></div>
         <div className={classNames.cols.prOverview}><TableTitle text="PR Overview"></TableTitle></div>
@@ -73,7 +73,7 @@ const RepositoriesTable: React.FC<RepositoriesTableProps> = ({ listOfRepositorie
         <div className={classNames.cols.spam}><TableTitle text="SPAM"></TableTitle></div>
         <div className={classNames.cols.contributors}><TableTitle text="Contributors"></TableTitle></div>
         <div className={classNames.cols.last30days}><TableTitle text="Last 30 Days"></TableTitle></div>
-      </header>
+      </div>
 
       {/* Table Rows */}
       <section className="flex flex-col">
@@ -135,7 +135,7 @@ const RepositoriesTable: React.FC<RepositoriesTableProps> = ({ listOfRepositorie
       </section>
 
       {/* Table Footer */}
-      <footer className="flex justify-between items-center py-3 px-6 border-t">
+      <div className="flex justify-between items-center py-3 px-6 border-t">
         <div className="">
           <PaginationResults from={1} to={10} total={93000} entity={"repositories"} />
         </div>
@@ -145,7 +145,7 @@ const RepositoriesTable: React.FC<RepositoriesTableProps> = ({ listOfRepositorie
             throw new Error("Function not implemented.");
           } } goToPage />
         </div>
-      </footer>
+      </div>
     </div>
   );
 };
