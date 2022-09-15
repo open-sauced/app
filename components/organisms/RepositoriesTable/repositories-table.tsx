@@ -48,7 +48,7 @@ interface RepositoriesTableProps {
   meta?: Meta
 }
 
-const classNames = {
+export const classNames = {
   row: "flex gap-4 items-center py-3 px-6 odd:bg-white even:bg-light-slate-2",
   cols: {
     repository: "flex-1",
@@ -78,8 +78,8 @@ const RepositoriesTable: React.FC<RepositoriesTableProps> = ({ listOfRepositorie
 
       {/* Table Rows */}
       <section className="flex flex-col">
-
-        {listOfRepositories?.map(({name, handle, activity, prOverview, prVelocity, spam, contributors, last30days}) =>
+        {/* Just making sure its not trying to loop through null or undefined values*/}
+        {Array.isArray(listOfRepositories)  && listOfRepositories.length > 0 && listOfRepositories.map(({name, handle, activity, prOverview, prVelocity, spam, contributors, last30days}) =>
 
           // Table Row
           <div className={`${classNames.row}`} key={`${handle}/${name}`}>
