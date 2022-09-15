@@ -16,8 +16,8 @@ const Contributors = (): JSX.Element =>{
       ...contributorData,
       profile: {
         ...contributorData.profile,
-        //githubAvatar: `https://avatars.githubusercontent.com/u/${put user name here}`,
-        githubName: contributor.name,
+        githubAvatar: `https://www.github.com/${contributor.host_login}.png?size=60`,
+        githubName: contributor.host_login,
         dateOfFirstPR: `${timeSinceFirstCommit}${timeSinceFirstCommit !== 1 ? "mos" : "mo"}`
       },
       languageList: contributorLanguageList.map(language => {
