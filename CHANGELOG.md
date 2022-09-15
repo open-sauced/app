@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.6.0-beta.10](https://github.com/open-sauced/insights/compare/v1.6.0-beta.9...v1.6.0-beta.10) (2022-09-15)
+
+
+### 🍕 Features
+
+* Added the avatars to the dashboard and to the contributors page. ([#371](https://github.com/open-sauced/insights/issues/371)) ([108152d](https://github.com/open-sauced/insights/commit/108152d214c47ee9e1ab20ca9f2c1a4a9434255f))
+
 ## [1.6.0-beta.9](https://github.com/open-sauced/insights/compare/v1.6.0-beta.8...v1.6.0-beta.9) (2022-09-15)
 
 
