@@ -3,6 +3,7 @@ import Avatar from "components/atoms/Avatar/avatar";
 import Pill from "components/atoms/Pill/pill";
 import Sparkline from "components/atoms/Sparkline/sparkline";
 import TableTitle from "components/atoms/TableTitle/table-title";
+import RepoRow from "components/molecules/RepoRow/repo-row";
 import { StaticImageData } from "next/image";
 import React from "react";
 import Pagination from "../../molecules/Pagination/pagination";
@@ -79,58 +80,9 @@ const RepositoriesTable: React.FC<RepositoriesTableProps> = ({ listOfRepositorie
       {/* Table Rows */}
       <section className="flex flex-col">
         {/* Just making sure its not trying to loop through null or undefined values*/}
-        {Array.isArray(listOfRepositories)  && listOfRepositories.length > 0 && listOfRepositories.map(({name, handle, activity, prOverview, prVelocity, spam, contributors, last30days}) =>
+        {Array.isArray(listOfRepositories)  && listOfRepositories.length > 0 && listOfRepositories.map((item) =>
 
-          // Table Row
-          <div className={`${classNames.row}`} key={`${handle}/${name}`}>
-
-            {/* Column: Repository Name */}
-            <div className={classNames.cols.repository}>
-              <TableRepositoryName avatarURL={""} name={name} handle={handle}></TableRepositoryName>
-
-            </div>
-
-            {/* Column: Activity */}
-            <div className={classNames.cols.activity}>
-              { activity &&
-                <Pill text={activity} />
-              }
-
-            </div>
-
-            {/* Column: PR Overview */}
-            <div className={classNames.cols.prOverview}>
-              <PullRequestOverview open={prOverview?.open} merged={prOverview?.merged} closed={prOverview?.closed} draft={prOverview?.draft} churn={prOverview?.churn} churnDirection={`${prOverview?.churnDirection}`}></PullRequestOverview>
-
-            </div>
-
-            {/* Column: PR Velocity */}
-            <div className={`${classNames.cols.prVelocity}`}>
-              <div>{prVelocity?.amount}</div>
-              <Pill text={`${prVelocity?.churn}`} size="small" color="green" />
-            </div>
-
-            {/* Column: SPAM */}
-            <div className={`${classNames.cols.prVelocity}`}>
-              <div>{spam?.amount}</div>
-              <Pill text={`${spam?.churn}`} size="small" color="green" />
-            </div>
-
-            {/* Column: Contributors */}
-            <div className={`flex ${classNames.cols.contributors}`}>
-
-              {contributors?.map(({ avatarURL, initials, alt}) =>
-                <Avatar key={`${initials}-${alt}`} avatarURL={avatarURL} initials={initials} size={32} hasBorder isCircle />
-              )}
-            </div>
-
-            {/* Column: Last 30 Days */}
-            <div className={classNames.cols.last30days}>
-              { last30days &&
-                <Sparkline data={last30days} />
-              }
-            </div>
-          </div>
+          <RepoRow  key={`${item.handle}/${item.name}`} repo={item} />
 
         )}
       </section>

@@ -13,8 +13,8 @@ interface RepoRowProps {
 
 const RepoRow = ({repo}:RepoRowProps): JSX.Element =>{
   const {name, handle, activity, prOverview, prVelocity, spam, contributors, last30days} = repo;
-  
-  return   ( <div className={`${classNames.row}`} key={`${handle}/${name}`}>
+
+  return   ( <div className={`${classNames.row}`}>
 
     {/* Column: Repository Name */}
     <div className={classNames.cols.repository}>
@@ -65,3 +65,4 @@ const RepoRow = ({repo}:RepoRowProps): JSX.Element =>{
   </div>)
   ;
 };
+export default RepoRow;
