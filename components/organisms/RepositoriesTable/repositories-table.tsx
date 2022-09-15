@@ -5,11 +5,11 @@ import Sparkline from "components/atoms/Sparkline/sparkline";
 import TableTitle from "components/atoms/TableTitle/table-title";
 import { StaticImageData } from "next/image";
 import React from "react";
-import Pagination from "../Pagination/pagination";
-import PaginationGotoPage from "../PaginationGotoPage/pagination-goto-page";
-import PaginationResults from "../PaginationResults/pagination-result";
-import PullRequestOverview from "../PullRequestOverview/pull-request-overview";
-import TableRepositoryName from "../TableRepositoryName/table-repository-name";
+import Pagination from "../../molecules/Pagination/pagination";
+import PaginationGotoPage from "../../molecules/PaginationGotoPage/pagination-goto-page";
+import PaginationResults from "../../molecules/PaginationResults/pagination-result";
+import PullRequestOverview from "../../molecules/PullRequestOverview/pull-request-overview";
+import TableRepositoryName from "../../molecules/TableRepositoryName/table-repository-name";
 
 export interface ContributorsRows {
   avatarURL?: string | StaticImageData;
