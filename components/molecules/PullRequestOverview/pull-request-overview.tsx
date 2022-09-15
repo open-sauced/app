@@ -8,7 +8,7 @@ interface PullRequestOverviewProps {
   closed?: number;
   draft?: number;
   churn?: number;
-  churnDirection?: "up" | "down" | string;
+  churnDirection?: string;
 }
 
 const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({ className, open, merged, closed, draft, churn, churnDirection = "down" }) => {
@@ -17,7 +17,7 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({ className, op
   return (
     <div className="flex flex-col gap-1">
       <div className="w-full flex justify-between gap-1">
-        
+
         {/* Total Number of Pull Requests */}
         <div className="font-medium text-base text-light-slate-11 tracking-tight">
           {totalPullRequests} {`PR${totalPullRequests > 1 ? "s" : ""}`}
