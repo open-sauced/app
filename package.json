@@ -46,6 +46,7 @@
     "@supabase/gotrue-js": "^1.22.22",
     "@supabase/supabase-js": "^1.35.6",
     "@supabase/ui": "^0.36.5",
+    "date-fns": "^2.29.2",
     "echarts": "^5.3.3",
     "echarts-for-react": "^3.0.2",
     "next": "^12.2.4",
