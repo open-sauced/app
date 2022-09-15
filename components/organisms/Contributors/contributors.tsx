@@ -16,7 +16,7 @@ const Contributors = (): JSX.Element =>{
       ...contributorData,
       profile: {
         ...contributorData.profile,
-        //githubAvatar: `https://avatars.githubusercontent.com/u/${put user name here}`,
+        githubAvatar: `https://www.github.com/${contributor.host_login}.png?size=60`,
         githubName: contributor.name,
         dateOfFirstPR: `${timeSinceFirstCommit}${timeSinceFirstCommit !== 1 ? "mos" : "mo"}`
       },
