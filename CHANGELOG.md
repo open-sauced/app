@@ -5,6 +5,27 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.6.0-beta.9](https://github.com/open-sauced/insights/compare/v1.6.0-beta.8...v1.6.0-beta.9) (2022-09-15)
+
+
+### 🍕 Features
+
+* Add contributors data from repo to validate designed components ([#314](https://github.com/open-sauced/insights/issues/314)) ([cbccd8e](https://github.com/open-sauced/insights/commit/cbccd8e057ce3b8c809693cc7071a4ba2ff4c5cb))
+
+## [1.6.0-beta.8](https://github.com/open-sauced/insights/compare/v1.6.0-beta.7...v1.6.0-beta.8) (2022-09-14)
+
+
+### 🐛 Bug Fixes
+
+* Resolve 'Show Bots', 'Show Outside Contributors' and repo table mobile responsiveness bug. ([#368](https://github.com/open-sauced/insights/issues/368)) ([0beda90](https://github.com/open-sauced/insights/commit/0beda902bf20830fb4176f80f7c4af250372f8b8))
+
+## [1.6.0-beta.7](https://github.com/open-sauced/insights/compare/v1.6.0-beta.6...v1.6.0-beta.7) (2022-09-13)
+
+
+### 🍕 Features
+
+* Implement Loading Screen design ([#335](https://github.com/open-sauced/insights/issues/335)) ([a3526dd](https://github.com/open-sauced/insights/commit/a3526dd5b2207fdbaa1481e9d20ba8075f133bf5))
+
 ## [1.6.0-beta.6](https://github.com/open-sauced/insights/compare/v1.6.0-beta.5...v1.6.0-beta.6) (2022-09-13)
 
 

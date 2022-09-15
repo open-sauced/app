@@ -11,26 +11,31 @@ export default storyConfig;
 
 const testRows = [
   {
+    id: "test",
     name: "freecodecamp",
     stars: 100,
     size: 30984
   },
   {
+    id: "test",
     name: "free-programming-books",
     stars: 60,
     size: 30984
   },
   {
+    id: "test",
     name: "material-ui",
     stars: 20,
     size: 30984
   },
   {
+    id: "test",
     name: "react",
     stars: 100,
     size: 30984
   },
   {
+    id: "test",
     name: "java-design-patterns",
     stars: 20,
     size: 30984
