@@ -7,11 +7,12 @@ import Person from "public/icons/person-icon.svg";
 import Icon3 from "public/icons/icon3.svg";
 import ComponentHeader from "../ComponentHeader/component-header";
 import humanizeNumber from "../../../lib/utils/humanizeNumber";
+import RepositoryRow from "components/molecules/RepositoryRow/repository-row";
 
 interface RepoSelectableTableProps {
   title: string;
   tableType: "participants";
-  rows: DBRepo[];
+  rows: DbRepo[];
 }
 
 const iconSuite = {
@@ -49,7 +50,7 @@ const RepoSelectableTable: React.FC<RepoSelectableTableProps> = ({ title, tableT
     });
   };
 
-  const entireRowClickChangesCheckbox = (element: any, title: string) => {
+  const entireRowClickChangesCheckbox = (element: any) => {
     const checkbox: HTMLInputElement | null = element.querySelector("input[type='checkbox']");
     if (checkbox) checkbox.checked = !checkbox.checked;
     if(checkbox?.checked) element.setAttribute("class", tableRowClassesBG);
@@ -91,28 +92,19 @@ const RepoSelectableTable: React.FC<RepoSelectableTableProps> = ({ title, tableT
           </div>
           <div>
             <div className="h-3"></div>
-            {rows?.map(({ name, stars, size }, index) => {
+            {rows?.map(({ name, stars, size, id }, index) => {
               return (
-                <div
-                  className={tableRowClassesNoBG}
+                <RepositoryRow 
                   key={index}
-                  ref={(element) => addCheckboxToRef(element)}
-                  onClick={(event: any) => {
-                    const isNotCheckbox = event.target.getAttribute("type") !== "checkbox";
-                    if (isNotCheckbox) entireRowClickChangesCheckbox(allCheckboxRefs.current[index], name);
-                  }}
-                >
-                  <span className="flex w-1/5 xs:w-2/5 overflow-hidden whitespace-nowrap text-ellipsis md:w-fit flex-row align-middle text-left p-2">
-                    <Checkbox className="mt-0.5" label="" />{" "}
-                    {name}
-                  </span>
-                  <div className="flex gap-x-2.5">
-                    <span className="text-right overflow-hidden whitespace-nowrap text-ellipsis py-2 w-10 md:w-20">{humanizeNumber(stars, null)}</span>
-                    <span className="text-right overflow-hidden whitespace-nowrap text-ellipsis py-2 w-10 md:w-20">{humanizeNumber(12, null)}</span>
-                    <span className="text-right overflow-hidden whitespace-nowrap text-ellipsis py-2 w-10 md:w-20">{humanizeNumber(1234, null)}</span>
-                    <span className="text-right overflow-hidden whitespace-nowrap text-ellipsis py-2 w-10 md:w-20">{humanizeNumber(size, null)}</span>
-                  </div>
-                </div>
+                  id={id}
+                  stars={stars}
+                  size={size}
+                  name={name}
+                  allCheckboxRefs={allCheckboxRefs}
+                  tableRowClassesNoBG={tableRowClassesNoBG}
+                  addCheckboxToRef={addCheckboxToRef}
+                  entireRowClickChangesCheckbox={entireRowClickChangesCheckbox}
+                />
               );
             })}
           </div>

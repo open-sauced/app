@@ -5,13 +5,16 @@ import { UserCredentials } from "@supabase/gotrue-js/src/lib/types";
 
 const useSupabaseAuth = () => {
   const [user, setUser] = useState<User | null>(null);
+  const [sessionToken, setSessionToken] = useState<string | undefined>(undefined);
 
   useEffect(() => {
     const currentUser = supabase.auth.session();
     setUser(currentUser?.user ?? null);
+    setSessionToken(currentUser?.access_token);
 
     const { data: listener } = supabase.auth.onAuthStateChange((_, session) => {
       setUser(session?.user ?? null);
+      setSessionToken(session?.access_token ?? undefined);
     });
 
     return () => {
@@ -24,7 +27,8 @@ const useSupabaseAuth = () => {
       redirectTo: process.env.NEXT_PUBLIC_BASE_URL ?? "/"
     }),
     signOut: () => supabase.auth.signOut(),
-    user
+    user,
+    sessionToken
   };
 };
 

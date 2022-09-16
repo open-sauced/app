@@ -9,6 +9,7 @@ interface AvatarProps {
   alt?: string;
   size?: "sm" | "base" | "lg" | number;
   hasBorder?: boolean;
+  isCircle?: boolean;
 }
 
 const avatarLoader = () => {
@@ -29,12 +30,14 @@ const Avatar = (props: AvatarProps): JSX.Element => {
 
 export default Avatar;
 
-const CustomAvatar = ({ className, avatarURL, initials, alt, size, hasBorder }: AvatarProps): JSX.Element => {
+const CustomAvatar = ({ className, avatarURL, initials, alt, size, hasBorder, isCircle }: AvatarProps): JSX.Element => {
   return (
     <div
-      className={`inline-flex bg-orange-500 justify-center relative items-center rounded-full w-max h-max overflow-hidden ${
-        hasBorder ? "ring-2 ring-slate-200" : ""
-      }`}
+      className={`inline-flex bg-orange-500 justify-center relative items-center w-max h-max overflow-hidden 
+        ${ className ?? " " }
+        ${ isCircle ? "rounded-full " : "rounded-lg "}
+        ${ hasBorder ? "ring-2 ring-slate-200 " : ""}
+      `}
     >
       {avatarURL ? (
         <Image
@@ -45,18 +48,20 @@ const CustomAvatar = ({ className, avatarURL, initials, alt, size, hasBorder }: 
           /* loader={avatarLoader} */ src={avatarURL ? avatarURL : AvatarImage}
         />
       ) : (
-        <div className={`font-bold leading-none text-slate-50 mb-0.25 text-${size}`}>{initials}</div>
+        <div className={`flex items-center justify-center font-bold leading-none text-slate-50 mb-0.25 text-${size}`} style={{width: size, height: size}}>{initials}</div>
       )}
     </div>
   );
 };
 
-const DefaultAvatar = ({ className, avatarURL, initials, alt, size, hasBorder }: AvatarProps): JSX.Element => {
+const DefaultAvatar = ({ className, avatarURL, initials, alt, size, hasBorder, isCircle }: AvatarProps): JSX.Element => {
   return (
     <div
-      className={`inline-flex bg-orange-500 justify-center relative items-center rounded-full overflow-hidden ${
-        hasBorder ? "ring-2 ring-slate-200" : ""
-      } ${size === "sm" ? "w-6 h-6" : size === "base" ? "w-8 h-8" : size === "lg" ? "w-12 h-12" : "w-8 h-8"}`}
+      className={`inline-flex bg-orange-500 justify-center relative items-center overflow-hidden 
+        ${ isCircle ? "rounded-full " : "rounded-lg "}
+        ${ hasBorder ? "ring-2 ring-slate-200 " : ""} 
+        ${size === "sm" ? "w-6 h-6 " : size === "base" ? "w-8 h-8 " : size === "lg" ? "w-12 h-12 " : "w-8 h-8 "}
+      `}
     >
       {avatarURL ? (
         <Image
@@ -67,9 +72,10 @@ const DefaultAvatar = ({ className, avatarURL, initials, alt, size, hasBorder }:
         />
       ) : (
         <div
-          className={`font-bold leading-none text-slate-50 mb-0.25 ${
+          className={`flex items-center justify-center font-bold leading-none text-slate-50 mb-0.25 ${
             size === "sm" ? "text-xs" : size === "base" ? "text-sm" : size === "lg" ? "text-lg" : "text-sm"
           }`}
+          style={{width: size, height: size}}
         >
           {initials}
         </div>

@@ -5,7 +5,7 @@ const REPOLISTLIMIT = 5;
 
 export interface RepoList {
   repoName: string;
-  repoIcon: StaticImageData;
+  repoIcon: StaticImageData | string;
 }
 
 interface CardRepoListProps {

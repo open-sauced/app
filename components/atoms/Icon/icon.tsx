@@ -2,7 +2,7 @@ import React from "react";
 import Image, { StaticImageData } from "next/image";
 
 interface IconProps {
-    IconImage: StaticImageData;
+    IconImage: StaticImageData | string;
     className?: string;
     alt?: string;
     size?: number;

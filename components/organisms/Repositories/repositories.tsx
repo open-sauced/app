@@ -1,19 +1,17 @@
-import Card from "../../atoms/Card/card";
-import RepositoryTable from "components/molecules/RepositoryTable/repository-table";
 import {useRepositoriesList} from "lib/hooks/useRepositoriesList";
+import { useRepositoryPRs } from "lib/hooks/useRepositoryPRs";
+import RepositoriesTable from "../RepositoriesTable/repositories-table";
 
 const Reports = (): JSX.Element => {
-  const { data, isError, isLoading } = useRepositoriesList();
+  const { data: repoListData, meta: repoMeta, isError: repoListIsError, isLoading: repoListIsLoading } = useRepositoriesList();
+  const preparedIds = !repoListIsLoading && !repoListIsError ? repoListData.map(row => `${row.id}`) : [];
+  // How do I make multiple calls?
 
   return (
     <div className="flex flex-col w-full gap-4">
-      <Card className="w-full lg:w-[calc(50%-(1rem/2))] xl:!w-[calc(40%-(1rem/2))] px-1 xs:px-5 py-5">
-        <>
-          {isLoading && <>...Loading</>}
-          {isError && <>An error has occured...</>}
-          {data && <RepositoryTable rows={data} title="Repositories" tableType="participants" />}
-        </>
-      </Card>
+      {repoListIsLoading && <>...Loading</>}
+      {repoListIsError && <>An error has occured...</>}
+      {!repoListIsLoading && !repoListIsError && <RepositoriesTable meta={repoMeta} listOfRepositories={repoListData}/>}
     </div>
   );
 };
