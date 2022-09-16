@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import Image from "next/image";
 import notifications from "../../../public/notifications.svg";
 import downArrow from "../../../public/chevron-down.svg";
@@ -16,8 +17,34 @@ import { useGlobalStateContext } from "context/global-state";
 
 const AuthSection: React.FC = ({  }) => {
 
-  const { signIn, signOut, user } = useSupabaseAuth();
-  const { appState } = useGlobalStateContext();
+  const { signIn, signOut, user, sessionToken } = useSupabaseAuth();
+  const { appState, setAppState } = useGlobalStateContext();
+
+  async function loadData() {
+    try {
+      const resp = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/session`, {
+        method: "GET",
+        headers: {
+          "Authorization": `Bearer ${sessionToken}`
+        }
+      });
+
+      const data = await resp.json();
+
+      setAppState(state => ({
+        ...state,
+        onboarded: data.is_onboarded
+      }));
+    } catch (e) {
+      // show an alert
+    }
+  }
+
+  useEffect(() => {
+    if (sessionToken) {
+      loadData();
+    }
+  }, [sessionToken]);
 
   const authMenu = {
     authed: [
@@ -33,7 +60,7 @@ const AuthSection: React.FC = ({  }) => {
       <div className="flex items-center gap-2 lg:gap-3">
         {user ?
           <>
-            { !appState.onboarded ? <OnboardingButton/> : "" }
+            { appState.onboarded === false ? <OnboardingButton/> : "" }
             <Divider type="vertical" className="!h-6 !bg-gray-600"></Divider>
             <Image alt="Notification Icon" src={notifications} />
             <DropdownList menuContent={authMenu.authed}>

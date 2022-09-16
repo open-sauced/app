@@ -92,19 +92,41 @@ interface LoginStep2Props {
 }
 
 const LoginStep2: React.FC<LoginStep2Props> = ({ handleLoginStep }) => {
+  const { sessionToken } = useSupabaseAuth();
+  const { setAppState } = useGlobalStateContext();
+
   captureAnayltics("User Onboarding", "onboardingStep2", "visited");
+
+  // Mark the user as onboarded
+  const onboardUser = async() => {
+    try {
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/onboarding`, {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${sessionToken}`
+        }
+      });
+      setAppState({ onboarded: true });
+    } catch (e) {
+      // handle error
+    }
+  };
 
   // Validate PAT
   const [token, setToken] = useState("");
   const handleAddPAT = async() => {
     try {
+      await onboardUser();
+
       // Validate PAT and onboard user
-      const response = await fetch("/api/onboarding", {
-        method: "POST",
-        body: JSON.stringify({
-          token
-        })
-      });
+      if (token) {
+        // await fetch("/api/onboarding", {
+        //   method: "POST",
+        //   body: JSON.stringify({
+        //     token
+        //   })
+        // });
+      }
       
       // If valid, go to next step
       handleLoginStep();
@@ -162,11 +184,9 @@ const LoginStep3: React.FC<LoginStep3Props> = ({ repoList, handleLoginStep, chec
   const router = useRouter();
 
   const [isFollowing, setIsFollowing] = useState<boolean[]>(repoList.map(() => false));
-  const { setAppState } = useGlobalStateContext();
 
   const handleSkipAddRepo = () => {
     handleLoginStep();
-    setAppState({ onboarded: true });
     router.push("/hacktoberfest");
   };
 
