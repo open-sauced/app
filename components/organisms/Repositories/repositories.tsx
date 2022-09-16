@@ -6,9 +6,8 @@ import RepositoriesTable from "../RepositoriesTable/repositories-table";
 
 const Reports = (): JSX.Element => {
   const { data: repoListData, meta: repoMeta, isError: repoListIsError, isLoading: repoListIsLoading } = useRepositoriesList();
-  const { data: repositoryList, isLoading: repositoryListIsLoading  ,meta} = useRepositoryPRs("769");
   const preparedIds = !repoListIsLoading && !repoListIsError ? repoListData.map(row => `${row.id}`) : [];
-  console.log(repoListData);
+ 
   // How do I make multiple calls?
 
   return (
