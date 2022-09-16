@@ -8,7 +8,7 @@ const Contributors = (): JSX.Element =>{
   const contributorData = useContributorData();
   const { data, isError, isLoading } = useContributionsList();
 
-  const freeCodeCampLogo = "https://avatars.githubusercontent.com/u/9892522?v=4";
+  const freeCodeCamp = "freecodecamp";
   
   const contributorArray = isError ? [] : data?.map(contributor => {
     const timeSinceFirstCommit = calcMonthsFromToday(new Date(parseInt(contributor.first_commit_time)));
@@ -32,8 +32,8 @@ const Contributors = (): JSX.Element =>{
       }),
       repoList: [
         {
-          repoName: "freeCodeCamp",
-          repoIcon: freeCodeCampLogo
+          repoName: freeCodeCamp,
+          repoIcon: `https://www.github.com/${freeCodeCamp ?? "github"}.png?size=460`
         }
       ]
     };
