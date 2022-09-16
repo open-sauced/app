@@ -15,7 +15,6 @@ import PATIcon from "public/icons/pat-icon.svg";
 import PATActiveIcon from "public/icons/pat-active-icon.svg";
 import HighlightIcon from "public/icons/highlight-icon.svg";
 import GitHubIcon from "public/icons/github-icon.svg";
-import TestRepoAvatar from "public/icons/test-repo-avatar.svg";
 import AddIcon from "public/icons/add-icon.svg";
 import Button from "components/atoms/Button/button";
 import TextInput from "components/atoms/TextInput/text-input";
@@ -25,7 +24,7 @@ import { captureAnayltics } from "lib/utils/analytics";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { User } from "@supabase/supabase-js";
 import { useGlobalStateContext } from "context/global-state";
-import { getAvatarLink } from 'lib/utils/github';
+import { getAvatarLink } from "lib/utils/github";
 
 type handleLoginStep = () => void;
 
