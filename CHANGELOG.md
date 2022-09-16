@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.6.0-beta.14](https://github.com/open-sauced/insights/compare/v1.6.0-beta.13...v1.6.0-beta.14) (2022-09-16)
+
+
+### 🐛 Bug Fixes
+
+* adds brandon to top5 ([8bb56cb](https://github.com/open-sauced/insights/commit/8bb56cb72d2d904168f8443b3afe860faa98fc58))
+
 ## [1.6.0-beta.13](https://github.com/open-sauced/insights/compare/v1.6.0-beta.12...v1.6.0-beta.13) (2022-09-16)
 
 
