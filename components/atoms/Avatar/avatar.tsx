@@ -34,6 +34,7 @@ const CustomAvatar = ({ className, avatarURL, initials, alt, size, hasBorder, is
   return (
     <div
       className={`inline-flex bg-orange-500 justify-center relative items-center w-max h-max overflow-hidden 
+        ${ className ?? " " }
         ${ isCircle ? "rounded-full " : "rounded-lg "}
         ${ hasBorder ? "ring-2 ring-slate-200 " : ""}
       `}
@@ -47,7 +48,7 @@ const CustomAvatar = ({ className, avatarURL, initials, alt, size, hasBorder, is
           /* loader={avatarLoader} */ src={avatarURL ? avatarURL : AvatarImage}
         />
       ) : (
-        <div className={`font-bold leading-none text-slate-50 mb-0.25 text-${size}`}>{initials}</div>
+        <div className={`flex items-center justify-center font-bold leading-none text-slate-50 mb-0.25 text-${size}`} style={{width: size, height: size}}>{initials}</div>
       )}
     </div>
   );
@@ -71,9 +72,10 @@ const DefaultAvatar = ({ className, avatarURL, initials, alt, size, hasBorder, i
         />
       ) : (
         <div
-          className={`font-bold leading-none text-slate-50 mb-0.25 ${
+          className={`flex items-center justify-center font-bold leading-none text-slate-50 mb-0.25 ${
             size === "sm" ? "text-xs" : size === "base" ? "text-sm" : size === "lg" ? "text-lg" : "text-sm"
           }`}
+          style={{width: size, height: size}}
         >
           {initials}
         </div>

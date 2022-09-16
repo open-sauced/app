@@ -10,7 +10,7 @@ const useRepositoriesList = () => {
 
   return {
     data: data?.data ?? [],
-    meta: data?.meta ?? { itemCount: 0 },
+    meta: data?.meta ?? { itemCount: 0, limit: 0, page: 0,hasNextPage: false , hasPreviousPage: false, pageCount: 0},
     isLoading: !error && !data,
     isError: !!error,
     mutate

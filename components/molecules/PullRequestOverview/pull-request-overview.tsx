@@ -8,16 +8,16 @@ interface PullRequestOverviewProps {
   closed?: number;
   draft?: number;
   churn?: number;
-  chrunDirection?: "up" | "down";
+  churnDirection?: string;
 }
 
-const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({ className, open, merged, closed, draft, churn, chrunDirection }) => {
+const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({ className, open, merged, closed, draft, churn, churnDirection = "down" }) => {
   const totalPullRequests = (!!open ? open : 0) + (!!merged ? merged : 0) + (!!closed ? closed : 0) + (!!draft ? draft : 0);
 
   return (
     <div className="flex flex-col gap-1">
       <div className="w-full flex justify-between gap-1">
-        
+
         {/* Total Number of Pull Requests */}
         <div className="font-medium text-base text-light-slate-11 tracking-tight">
           {totalPullRequests} {`PR${totalPullRequests > 1 ? "s" : ""}`}
@@ -25,9 +25,9 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({ className, op
 
         {/* Churn Number compared with previous date (default: last 30 days vs. previous 30 days range) */}
         <div className={`
-          ${chrunDirection === "up" ? "text-light-grass-10" : "text-light-red-10"}
+          ${churnDirection === "up" ? "text-light-grass-10" : "text-light-red-10"}
           font-medium text-base tracking-tight`}>
-          {chrunDirection === "up" ? "+" : "-"}{churn}%
+          {churnDirection === "up" ? "+" : "-"}{churn}%
         </div>
       </div>
 

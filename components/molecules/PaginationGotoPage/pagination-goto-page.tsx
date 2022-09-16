@@ -20,15 +20,15 @@ const PaginationGotoPage = ({ currentPage, name }: PaginationGotoPageProps): JSX
         type="text"
         name={name}
         id={name}
-        defaultValue={pageNumber}
+        placeholder={`${pageNumber}`}
         onChange={(e)=> setPageNumber(e.target.value)}
-        className="min-w-4 w-10 text-center text-light-slate-10 focus:outline-none border rounded-lg py-1 px-2"
+        className="min-w-4 w-10 text-center text-sm text-light-slate-10 focus:outline-none border rounded-lg py-1 px-2"
       />
       <button
-        className="text-light-orange-10 px-4 py-1.5 rounded-lg hover:bg-orange-100 bg-light-orange-3"
+        className="text-light-orange-10 text-sm px-4 py-1.5 rounded-lg hover:bg-orange-100 bg-light-orange-3"
         type="submit"
       >
-        Goto page
+        Go to page
       </button>
     </form>
   );
