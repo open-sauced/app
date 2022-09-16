@@ -13,7 +13,7 @@ interface RepoRowProps {
 }
 
 const RepoRow = ({repo}:RepoRowProps): JSX.Element =>{
-  const {name, handle, owner_avatar: ownerAvatar, activity = "high", prOverview, prVelocity, spam, contributors, last30days} = repo;
+  const {name, handle, owner_avatar: ownerAvatar, activity = "high", openPrsCount, closedPrsCount, draftPrsCount,mergedPrsCount, spamPrsCount,churn,churnTotalCount, churnDirection, contributors, last30days} = repo;
 
   return   ( <div className={`${classNames.row}`}>
 
@@ -33,20 +33,20 @@ const RepoRow = ({repo}:RepoRowProps): JSX.Element =>{
 
     {/* Column: PR Overview */}
     <div className={classNames.cols.prOverview}>
-      <PullRequestOverview open={prOverview?.open} merged={prOverview?.merged} closed={prOverview?.closed} draft={prOverview?.draft} churn={prOverview?.churn} churnDirection={`${prOverview?.churnDirection}`}></PullRequestOverview>
+      <PullRequestOverview open={openPrsCount} merged={mergedPrsCount} closed={closedPrsCount} draft={draftPrsCount} churn={churnTotalCount} churnDirection={`${churnDirection}`}></PullRequestOverview>
 
     </div>
 
     {/* Column: PR Velocity */}
     <div className={`${classNames.cols.prVelocity}`}>
-      <div>{prVelocity?.amount}</div>
-      <Pill text={`${prVelocity?.churn}`} size="small" color="green" />
+      <div>{spamPrsCount}</div>
+      <Pill text={`${churn}`} size="small" color="green" />
     </div>
 
     {/* Column: SPAM */}
     <div className={`${classNames.cols.prVelocity}`}>
-      <div>{spam?.amount}</div>
-      <Pill text={`${spam?.churn}`} size="small" color="green" />
+      <div>{spamPrsCount + " PRs"}</div>
+      <Pill text={`${churn}`} size="small" color="green" />
     </div>
 
     {/* Column: Contributors */}
