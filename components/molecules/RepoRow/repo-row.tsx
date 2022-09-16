@@ -6,6 +6,7 @@ import Pill from "components/atoms/Pill/pill";
 import PullRequestOverview from "../PullRequestOverview/pull-request-overview";
 import Avatar from "components/atoms/Avatar/avatar";
 import Sparkline from "components/atoms/Sparkline/sparkline";
+import { truncateString } from "lib/utils/truncate-string";
 
 interface RepoRowProps {
   repo: RepositoriesRows;
@@ -18,7 +19,7 @@ const RepoRow = ({repo}:RepoRowProps): JSX.Element =>{
 
     {/* Column: Repository Name */}
     <div className={classNames.cols.repository}>
-      <TableRepositoryName avatarURL={""} name={name} handle={handle}></TableRepositoryName>
+      <TableRepositoryName avatarURL={""} name={name && name.length > 6 ? truncateString(name, 12): name} handle={handle}></TableRepositoryName>
 
     </div>
 
