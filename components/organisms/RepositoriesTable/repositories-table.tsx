@@ -16,21 +16,20 @@ export interface RepositoriesRows {
   handle?: string;
   activity?: string;
   owner_avatar?: string;
-
   openPrsCount?: number;
   mergedPrsCount?: number;
   closedPrsCount?: number;
   draftPrsCount?: number;
   churnTotalCount?: number;
   churnDirection?: string;
-
-
-    amount?: string;
-    churn?: string;
-
-
-
+  amount?: string;
+  churn?: string;
   spamPrsCount?: number;
+  prVelocity?:{
+    amount?: string
+    churn?: string
+    churnDirection?: string
+  }
   contributors?: ContributorsRows[];
   last30days?: Serie[];
 }
