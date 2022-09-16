@@ -17,6 +17,11 @@ interface DbRepoCommit {
 
 interface Meta {
   readonly itemCount: number,
+  readonly limit: number,
+  readonly page: number,
+  readonly pageCount: number,
+  readonly hasNextPage: boolean,
+  readonly hasPreviousPage: boolean
 }
 
 interface DbContribution {
