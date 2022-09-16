@@ -40,14 +40,14 @@ export interface RepositoriesRows {
 
 interface RepositoriesTableProps {
   listOfRepositories: RepositoriesRows[];
-  meta?: Meta
+  meta: Meta
 }
 
 export const classNames = {
   row: "flex gap-4 items-center py-3 px-6 odd:bg-white even:bg-light-slate-2",
   cols: {
     repository: "flex-1",
-    activity: "flex-1 shrink",
+    activity: "flex-1 flex justify-center shrink",
     prOverview: "flex-1",
     prVelocity: "flex items-center gap-3 flex-1",
     spam: "flex items-center gap-3 flex-1",
@@ -56,7 +56,7 @@ export const classNames = {
   }
 };
 
-const RepositoriesTable: React.FC<RepositoriesTableProps> = ({ listOfRepositories }) => {
+const RepositoriesTable: React.FC<RepositoriesTableProps> = ({ listOfRepositories, meta }) => {
   return (
     <div className="flex flex-col rounded-lg overflow-hidden border">
 
@@ -84,11 +84,11 @@ const RepositoriesTable: React.FC<RepositoriesTableProps> = ({ listOfRepositorie
       {/* Table Footer */}
       <div className="flex justify-between items-center py-3 px-6 border-t">
         <div className="">
-          <PaginationResults from={1} to={10} total={93000} entity={"repositories"} />
+          <PaginationResults from={meta.page} to={meta.page + meta.limit - 1} total={meta.pageCount} entity={"repositories"} />
         </div>
 
         <div className="flex items-center gap-4">
-          <Pagination pages={[]} totalPage={0} page={12} onPageChange={function (page: number): void {
+          <Pagination pages={[]} totalPage={meta.pageCount} page={meta.page} onPageChange={function (page: number): void {
             throw new Error("Function not implemented.");
           } } goToPage />
         </div>
