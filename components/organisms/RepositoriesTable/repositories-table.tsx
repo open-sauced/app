@@ -45,7 +45,7 @@ export const classNames = {
     repository: "flex-1",
     activity: "flex-1 flex justify-center shrink",
     prOverview: "flex-1",
-    prVelocity: "flex  items-center gap-3 flex-1",
+    prVelocity: "flex justify-center  items-center gap-3 flex-1",
     spam: "flex items-center gap-3 flex-1",
     contributors: "flex-1",
     last30days: "flex-1"
