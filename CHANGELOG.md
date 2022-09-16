@@ -5,6 +5,18 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.6.0-beta.11](https://github.com/open-sauced/insights/compare/v1.6.0-beta.10...v1.6.0-beta.11) (2022-09-16)
+
+
+### 🍕 Features
+
+* Create `<RepositoriesTable>` component ([#364](https://github.com/open-sauced/insights/issues/364)) ([ef93890](https://github.com/open-sauced/insights/commit/ef93890d4517a3bdb082e1387ee45689c385293f)), closes [#321](https://github.com/open-sauced/insights/issues/321) [#326](https://github.com/open-sauced/insights/issues/326) [#327](https://github.com/open-sauced/insights/issues/327)
+
+
+### 🐛 Bug Fixes
+
+* Making adjustments to dashboard echart to more closely fit design ([#378](https://github.com/open-sauced/insights/issues/378)) ([f9ebfaf](https://github.com/open-sauced/insights/commit/f9ebfaf0a9f52d61c6b92aaa4c85cf636e5e20ca))
+
 ## [1.6.0-beta.10](https://github.com/open-sauced/insights/compare/v1.6.0-beta.9...v1.6.0-beta.10) (2022-09-15)
 
 
