@@ -4,10 +4,10 @@ import {useRepositoriesList} from "lib/hooks/useRepositoriesList";
 import { useRepositoryPRs } from "lib/hooks/useRepositoryPRs";
 
 const Reports = (): JSX.Element => {
-  const { data: repoListData, isError: repoListIsError, isLoading: repoListIsLoading } = useRepositoriesList();
+  const { data: repoListData, meta: repoMeta, isError: repoListIsError, isLoading: repoListIsLoading } = useRepositoriesList();
 
   const preparedIds = !repoListIsLoading && !repoListIsError ? repoListData.map(row => `${row.id}`) : [];
-
+  console.log(repoMeta);
   // How do I make multiple calls?
 
   return (

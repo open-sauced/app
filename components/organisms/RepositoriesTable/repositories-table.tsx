@@ -1,16 +1,10 @@
 import { Serie } from "@nivo/line";
-import Avatar from "components/atoms/Avatar/avatar";
-import Pill from "components/atoms/Pill/pill";
-import Sparkline from "components/atoms/Sparkline/sparkline";
 import TableTitle from "components/atoms/TableTitle/table-title";
 import RepoRow from "components/molecules/RepoRow/repo-row";
 import { StaticImageData } from "next/image";
-import React from "react";
 import Pagination from "../../molecules/Pagination/pagination";
-import PaginationGotoPage from "../../molecules/PaginationGotoPage/pagination-goto-page";
 import PaginationResults from "../../molecules/PaginationResults/pagination-result";
-import PullRequestOverview from "../../molecules/PullRequestOverview/pull-request-overview";
-import TableRepositoryName from "../../molecules/TableRepositoryName/table-repository-name";
+
 
 export interface ContributorsRows {
   avatarURL?: string | StaticImageData;
