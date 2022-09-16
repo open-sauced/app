@@ -10,5 +10,5 @@ const getRepoIssuesLink = (repoName: string | null) =>
 export {
   getAvatarLink,
   getProfileLink,
-  getRepoIssuesLink,
+  getRepoIssuesLink
 };
