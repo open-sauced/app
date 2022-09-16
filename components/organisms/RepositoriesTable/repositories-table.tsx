@@ -16,6 +16,7 @@ export interface RepositoriesRows {
   name?: string;
   handle?: string;
   activity?: string;
+  owner_avatar?: string
   prOverview?: {
     open?: number;
     merged?: number;
@@ -49,7 +50,7 @@ export const classNames = {
     repository: "flex-1",
     activity: "flex-1 flex justify-center shrink",
     prOverview: "flex-1",
-    prVelocity: "flex items-center gap-3 flex-1",
+    prVelocity: "flex  items-center gap-3 flex-1",
     spam: "flex items-center gap-3 flex-1",
     contributors: "flex-1",
     last30days: "flex-1"
@@ -57,6 +58,8 @@ export const classNames = {
 };
 
 const RepositoriesTable: React.FC<RepositoriesTableProps> = ({ listOfRepositories, meta }) => {
+
+
   return (
     <div className="flex flex-col rounded-lg overflow-hidden border">
 

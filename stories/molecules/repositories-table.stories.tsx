@@ -15,6 +15,14 @@ const RepositoriesTableTemplate: ComponentStory<typeof RepositoriesTable> = (arg
 // SelectableTable Default
 export const Default = RepositoriesTableTemplate.bind({});
 
+const previewMeta = {
+  hasNextPage: true,
+  hasPreviousPage: false,
+  page: 3,
+  pageCount: 9000,
+  limit: 15,
+  itemCount: 2300022
+};
 const previewRepositories = [
   {
     name: "Insights",
@@ -367,5 +375,6 @@ const previewRepositories = [
 ];
 
 Default.args = {
-  listOfRepositories: previewRepositories
+  listOfRepositories: previewRepositories,
+  meta: previewMeta
 };
