@@ -13,13 +13,13 @@ interface RepoRowProps {
 }
 
 const RepoRow = ({repo}:RepoRowProps): JSX.Element =>{
-  const {name, handle, activity = "high", prOverview, prVelocity, spam, contributors, last30days} = repo;
+  const {name, handle, owner_avatar: ownerAvatar, activity = "high", prOverview, prVelocity, spam, contributors, last30days} = repo;
 
   return   ( <div className={`${classNames.row}`}>
 
     {/* Column: Repository Name */}
     <div className={classNames.cols.repository}>
-      <TableRepositoryName avatarURL={""} name={name} handle={handle}></TableRepositoryName>
+      <TableRepositoryName avatarURL={ownerAvatar} name={name} handle={handle}></TableRepositoryName>
 
     </div>
 
