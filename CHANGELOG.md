@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.6.0-beta.13](https://github.com/open-sauced/insights/compare/v1.6.0-beta.12...v1.6.0-beta.13) (2022-09-16)
+
+
+### 🍕 Features
+
+* implement onboarding flow ([#369](https://github.com/open-sauced/insights/issues/369)) ([ef3adee](https://github.com/open-sauced/insights/commit/ef3adeeca0a380e81a0f862f5c390315fa0cec2e)), closes [#116](https://github.com/open-sauced/insights/issues/116)
+
 ## [1.6.0-beta.12](https://github.com/open-sauced/insights/compare/v1.6.0-beta.11...v1.6.0-beta.12) (2022-09-16)
 
 
