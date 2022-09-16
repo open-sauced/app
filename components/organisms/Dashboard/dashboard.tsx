@@ -14,7 +14,7 @@ export const Dashboard = (): JSX.Element => {
   const { meta: repoMetaData, isError: repoError } = useRepositoriesList();
   const [itemCountText, setItemCountText] = useState("Loading...");
 
-  const conAvatarObject: { [key: string]: string } = {};
+  const conAvatarObject: { [key: string]: string[] } = {};
 
   const fakeDataSet = [
     33,
@@ -57,14 +57,15 @@ export const Dashboard = (): JSX.Element => {
 
   const scatterChartData = contributorError ? [] :
     //eslint-disable-next-line
-    contributorData.map(({ last_commit_time, files_modified }, index) => {
-      const timeOverTouched = [
+    contributorData.map(({ last_commit_time, files_modified, host_login }, index) => {
+      const timeOverTouched: (string | number)[] = [
         calcDaysFromToday(new Date(parseInt(last_commit_time))),
         //eslint-disable-next-line
         files_modified !== null ? files_modified : fakeDataSet[index]
       ];
 
-      // conAvatarObject[`${timeOverTouched[0]}${timeOverTouched[1]}`] = `https://avatars.githubusercontent.com/u/${add user name here}`;
+      //eslint-disable-next-line
+      conAvatarObject[`${timeOverTouched[0]}${timeOverTouched[1]}`] = [host_login, `https://www.github.com/${host_login}.png?size=60`];
 
       return timeOverTouched;
     });
@@ -108,10 +109,14 @@ export const Dashboard = (): JSX.Element => {
         }
       }
     },
+    tooltip: {
+      trigger: "item",
+      formatter: (args: any) => `${conAvatarObject[`${args.value[0]}${args.value[1]}`][0]}`
+    },
     series: [
       {
         symbolSize: 40,
-        symbol: (value: number[]) => "image://https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1064&q=80" /* `image://${conAvatarObject[`${value[0]}${value[1]}`]}` */,
+        symbol: (value: number[]) => `image://${conAvatarObject[`${value[0]}${value[1]}`][1]}`,
         data: scatterChartData,
         type: "scatter"
       }
