@@ -14,14 +14,14 @@ export const Dashboard = (): JSX.Element => {
   const { meta: repoMetaData, isError: repoError } = useRepositoriesList();
   const [itemCountText, setItemCountText] = useState("Loading...");
 
-  const conAvatarObject: { [key: string]: string[] } = {};
+  const conAvatarObject: { [key: string]: {[key: string]: string} } = {};
 
   const fakeDataSet = [
     33,
     400,
     12,
     5049,
-    2,
+    0,
     840,
     3603,
     400,
@@ -65,7 +65,7 @@ export const Dashboard = (): JSX.Element => {
       ];
 
       //eslint-disable-next-line
-      conAvatarObject[`${timeOverTouched[0]}${timeOverTouched[1]}`] = [host_login, `https://www.github.com/${host_login}.png?size=60`];
+      conAvatarObject[`${timeOverTouched[0]}${timeOverTouched[1]}`] = { login: host_login, image: `https://www.github.com/${host_login}.png?size=60` };
 
       return timeOverTouched;
     });
@@ -80,10 +80,17 @@ export const Dashboard = (): JSX.Element => {
     xAxis: {
       boundaryGap: false,
       scale: true,
+      inverse: true,
       minInterval: 7,
       maxInterval: 7,
       min: 0,
       max: 35,
+      axisLine: {
+        show: false
+      },
+      axisTick: {
+        show: false
+      },
       axisLabel: {
         formatter: (value: number, index: number) =>
           value === 0 ? "Today" : value === 35 ? "35+ days ago" : `${value} days ago`
@@ -99,6 +106,12 @@ export const Dashboard = (): JSX.Element => {
       max: 10000,
       splitNumber: 6,
       boundaryGap: false,
+      axisLine: {
+        show: false
+      },
+      axisTick: {
+        show: false
+      },
       axisLabel: {
         showMinLabel: true,
         formatter: (value: number) => value >= 1000 ? humanizeNumber(value,null) : value
@@ -111,14 +124,18 @@ export const Dashboard = (): JSX.Element => {
     },
     tooltip: {
       trigger: "item",
-      formatter: (args: any) => `${conAvatarObject[`${args.value[0]}${args.value[1]}`][0]}`
+      formatter: (args: any) => `${conAvatarObject[`${args.value[0]}${args.value[1]}`].login}`
     },
     series: [
       {
         symbolSize: 40,
-        symbol: (value: number[]) => `image://${conAvatarObject[`${value[0]}${value[1]}`][1]}`,
+        symbol: (value: number[]) => `image://${conAvatarObject[`${value[0]}${value[1]}`].image}`,
+        symbolOffset: [0, "-50%"],
         data: scatterChartData,
-        type: "scatter"
+        type: "scatter",
+        itemStyle: {
+          opacity: 1
+        }
       }
     ]
   };
