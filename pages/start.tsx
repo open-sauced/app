@@ -25,6 +25,7 @@ import { captureAnayltics } from "lib/utils/analytics";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { User } from "@supabase/supabase-js";
 import { useGlobalStateContext } from "context/global-state";
+import { getAvatarLink } from 'lib/utils/github';
 
 type handleLoginStep = () => void;
 
@@ -221,7 +222,11 @@ const LoginStep3: React.FC<LoginStep3Props> = ({ repoList, handleLoginStep, chec
                 return (
                   <div key={index} className="flex justify-between w-full border-[1px] rounded-lg border-light-slate-6 p-2 mb-2">
                     <div className="flex items-center gap-2">
-                      <Icon IconImage={TestRepoAvatar} size={24} />
+                      <img
+                        alt="Repo Icon"
+                        className="h-4 w-4 rounded-md overflow-hidden"
+                        src={getAvatarLink(repo.repoOwner)}
+                      />
                       <div>
                         <Text className="!text-[16px] !font-medium">{`${repo.repoOwner}/`}</Text>
                         <Text className="!text-[16px] !font-medium !text-light-slate-12">{`${repo.repoName}`}</Text>
