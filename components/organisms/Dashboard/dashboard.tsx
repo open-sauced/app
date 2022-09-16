@@ -6,6 +6,7 @@ import humanizeNumber from "lib/utils/humanizeNumber";
 import { useEffect, useState } from "react";
 import { useContributionsList } from "lib/hooks/useContributionsList";
 import { calcDaysFromToday } from "lib/utils/date-utils";
+import { useMediaQuery } from "lib/hooks/useMediaQuery";
 
 export const Dashboard = (): JSX.Element => {
   // This is mock data for the dashboard. Not intended to be the final implementation.
@@ -13,6 +14,7 @@ export const Dashboard = (): JSX.Element => {
 
   const { meta: repoMetaData, isError: repoError } = useRepositoriesList();
   const [itemCountText, setItemCountText] = useState("Loading...");
+  const isNotMobile = useMediaQuery("(min-width: 768px)");
 
   const conAvatarObject: { [key: string]: {[key: string]: string} } = {};
 
@@ -80,17 +82,10 @@ export const Dashboard = (): JSX.Element => {
     xAxis: {
       boundaryGap: false,
       scale: true,
-      inverse: true,
-      minInterval: 7,
+      minInterval: isNotMobile ? 7 : 2,
       maxInterval: 7,
       min: 0,
-      max: 35,
-      axisLine: {
-        show: false
-      },
-      axisTick: {
-        show: false
-      },
+      max: isNotMobile ? 35 : 7,
       axisLabel: {
         formatter: (value: number, index: number) =>
           value === 0 ? "Today" : value === 35 ? "35+ days ago" : `${value} days ago`
