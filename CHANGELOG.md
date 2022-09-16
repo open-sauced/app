@@ -5,6 +5,18 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.6.0-beta.12](https://github.com/open-sauced/insights/compare/v1.6.0-beta.11...v1.6.0-beta.12) (2022-09-16)
+
+
+### 🐛 Bug Fixes
+
+* Replaced stately's logo with freeCodeCamp and replaced name ([#380](https://github.com/open-sauced/insights/issues/380)) ([da45398](https://github.com/open-sauced/insights/commit/da45398af579310b18ca0bebea6155dec3b5c395)), closes [#376](https://github.com/open-sauced/insights/issues/376)
+
+
+### 🍕 Features
+
+* add One week data on scatter chart(mobile devices) ([#381](https://github.com/open-sauced/insights/issues/381)) ([04af186](https://github.com/open-sauced/insights/commit/04af186a3bdfb5add6bc2ec0830c30145d7b1061)), closes [#379](https://github.com/open-sauced/insights/issues/379)
+
 ## [1.6.0-beta.11](https://github.com/open-sauced/insights/compare/v1.6.0-beta.10...v1.6.0-beta.11) (2022-09-16)
 
 
