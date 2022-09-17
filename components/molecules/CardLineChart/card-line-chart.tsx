@@ -2,13 +2,13 @@ import React from "react";
 import EChartWrapper from "components/atoms/EChartWrapper/echart-wrapper";
 
 interface CardLineChartProps {
-  option: Object;
+  lineChartOption: Object;
 }
 
-const CardLineChart: React.FC<CardLineChartProps> = ({ option }) => {
+const CardLineChart: React.FC<CardLineChartProps> = ({ lineChartOption }) => {
   return (
     <>
-      <EChartWrapper option={option} />
+      <EChartWrapper option={lineChartOption} />
     </>
   );
 };

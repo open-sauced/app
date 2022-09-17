@@ -7,6 +7,7 @@ import FilterCard from "../../atoms/FilterCard/filter-card";
 import Thumbnail from "../../../public/hacktoberfest-icon.png";
 import SuperativeSelector from "components/molecules/SuperlativeSelector/superlative-selector";
 import useFilterOptions from "lib/hooks/useFilterOptions";
+import { captureAnayltics } from "lib/utils/analytics";
 
 const Header: React.FC = () => {
   const router = useRouter();
@@ -15,6 +16,7 @@ const Header: React.FC = () => {
   const { filterName, toolName, selectedFilter } = router.query;
 
   const filterBtnRouting = (filter: string) => {
+    captureAnayltics("Filters", "toolsFilter", `${filter} applied`);
     router.push(`/${filterName}/${toolName}/filter/${filter.toLocaleLowerCase()}`);
   };
 
@@ -32,7 +34,7 @@ const Header: React.FC = () => {
           Hacktoberfest 2022
         </Title>
         <Text className="mt-1 !text-base font-medium text-slate-500">
-          Insights on GitHub project opted into the largest open source hackathon.
+          Insights on GitHub repositories opted into the largest open source hackathon.
         </Text>
         <div className="flex mt-4 items-center relative  gap-2">
           <FilterCard filterName="hacktoberfest" isRemovable={false} icon="topic" />

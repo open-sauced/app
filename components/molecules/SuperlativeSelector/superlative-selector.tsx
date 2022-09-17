@@ -1,6 +1,6 @@
 import ContextFilterButton from "components/atoms/ContextFilterButton/context-filter-button";
 import ContextFilterOption from "components/atoms/ContextFilterOption/context-filter-option";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Icon from "../../atoms/Icon/icon";
 import cancelIcon from "public/x-circle.svg";
 import Radio from "components/atoms/Radio/radio";
@@ -17,13 +17,31 @@ const SuperativeSelector: React.FC<SuperlativeSelectorProps> = ({
   handleCancelClick,
   selected
 }) => {
+  const ref = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);
   const toggleFilter = () => {
     setIsOpen(!isOpen);
   };
 
+  useEffect(() => {
+    const checkIfClickedOutside = (e: any) => {
+      // If the menu is open and the clicked target is not within the menu,
+      // then close the menu
+      if (isOpen && ref.current && !ref.current.contains(e.target)) {
+        setIsOpen(false);
+      }
+
+    };
+    document.addEventListener("mousedown", checkIfClickedOutside);
+
+    return () => {
+      // Cleanup the event listener
+      document.removeEventListener("mousedown", checkIfClickedOutside);
+    };
+  }, [isOpen]);
+
   return (
-    <div className="max-w-max relative">
+    <div className="max-w-max relative" ref={ref}>
       <ContextFilterButton isSelected={selected ? true : false}>
         {selected ? (
           <div className="flex">
@@ -47,7 +65,7 @@ const SuperativeSelector: React.FC<SuperlativeSelectorProps> = ({
         )}
       </ContextFilterButton>
       {isOpen && (
-        <div className="absolute space-y-1 mt-1 shadow-superlative w-64 z-10 bg-white rounded-lg px-1.5 py-2">
+        <div className="absolute -left-full md:left-0 space-y-1 mt-1 shadow-superlative w-64 z-10 bg-white rounded-lg px-1.5 py-2">
           {filterOptions.length > 0 &&
             filterOptions.map((option, index) => (
               <Radio

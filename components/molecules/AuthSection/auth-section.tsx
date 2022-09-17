@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import Image from "next/image";
 import notifications from "../../../public/notifications.svg";
 import downArrow from "../../../public/chevron-down.svg";
@@ -9,17 +10,47 @@ import DropdownList from "../DropdownList/dropdown-list";
 import Text from "components/atoms/Typography/text";
 import { Divider } from "@supabase/ui";
 import useSupabaseAuth from "../../../lib/hooks/useSupabaseAuth";
+import {FiLogOut} from "react-icons/fi";
 import GitHubIcon from "public/icons/github-icon.svg";
 import Icon from "components/atoms/Icon/icon";
+import { useGlobalStateContext } from "context/global-state";
 
 const AuthSection: React.FC = ({  }) => {
 
-  const { signIn, signOut, user } = useSupabaseAuth();
+  const { signIn, signOut, user, sessionToken } = useSupabaseAuth();
+  const { appState, setAppState } = useGlobalStateContext();
+
+  async function loadData() {
+    try {
+      const resp = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/session`, {
+        method: "GET",
+        headers: {
+          "Authorization": `Bearer ${sessionToken}`
+        }
+      });
+
+      const data = await resp.json();
+
+      setAppState(state => ({
+        ...state,
+        onboarded: data.is_onboarded
+      }));
+    } catch (e) {
+      // show an alert
+    }
+  }
+
+  useEffect(() => {
+    if (sessionToken) {
+      loadData();
+    }
+  }, [sessionToken]);
 
   const authMenu = {
     authed: [
-      <span onClick={async () => await signOut()} key="authorized" className="block px-4 py-2 rounded-md cursor-pointer">
-        <Text>Logout</Text>
+      <span onClick={async () => await signOut()} key="authorized" className="group flex gap-x-3 text-lg hover:bg-light-orange-3 items-center px-4 py-2 rounded-md cursor-pointer transition">
+        <FiLogOut className="group-hover:text-light-orange-10"/>
+        <Text className="group-hover:text-light-orange-10">Disconnect</Text>
       </span>
     ]
   };
@@ -29,7 +60,7 @@ const AuthSection: React.FC = ({  }) => {
       <div className="flex items-center gap-2 lg:gap-3">
         {user ?
           <>
-            <OnboardingButton />
+            { appState.onboarded === false ? <OnboardingButton/> : "" }
             <Divider type="vertical" className="!h-6 !bg-gray-600"></Divider>
             <Image alt="Notification Icon" src={notifications} />
             <DropdownList menuContent={authMenu.authed}>
