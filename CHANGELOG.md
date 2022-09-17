@@ -5,6 +5,37 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.6.0](https://github.com/open-sauced/insights/compare/v1.5.0...v1.6.0) (2022-09-16)
+
+
+### 🧑‍💻 Code Refactoring
+
+* created a new select component ([#346](https://github.com/open-sauced/insights/issues/346)) ([37a836b](https://github.com/open-sauced/insights/commit/37a836b1943d69f20b1b5912e367b3b0d4ec00b9)), closes [#318](https://github.com/open-sauced/insights/issues/318)
+
+
+### 🐛 Bug Fixes
+
+* Making adjustments to dashboard echart to more closely fit design ([#378](https://github.com/open-sauced/insights/issues/378)) ([f9ebfaf](https://github.com/open-sauced/insights/commit/f9ebfaf0a9f52d61c6b92aaa4c85cf636e5e20ca))
+* Replaced stately's logo with freeCodeCamp and replaced name ([#380](https://github.com/open-sauced/insights/issues/380)) ([da45398](https://github.com/open-sauced/insights/commit/da45398af579310b18ca0bebea6155dec3b5c395)), closes [#376](https://github.com/open-sauced/insights/issues/376)
+* Resolve 'Show Bots', 'Show Outside Contributors' and repo table mobile responsiveness bug. ([#368](https://github.com/open-sauced/insights/issues/368)) ([0beda90](https://github.com/open-sauced/insights/commit/0beda902bf20830fb4176f80f7c4af250372f8b8))
+
+
+### 🍕 Features
+
+* Add contributors data from repo to validate designed components ([#314](https://github.com/open-sauced/insights/issues/314)) ([cbccd8e](https://github.com/open-sauced/insights/commit/cbccd8e057ce3b8c809693cc7071a4ba2ff4c5cb))
+* add One week data on scatter chart(mobile devices) ([#381](https://github.com/open-sauced/insights/issues/381)) ([04af186](https://github.com/open-sauced/insights/commit/04af186a3bdfb5add6bc2ec0830c30145d7b1061)), closes [#379](https://github.com/open-sauced/insights/issues/379)
+* Added the avatars to the dashboard and to the contributors page. ([#371](https://github.com/open-sauced/insights/issues/371)) ([108152d](https://github.com/open-sauced/insights/commit/108152d214c47ee9e1ab20ca9f2c1a4a9434255f))
+* Adding social media preview to project. ([#353](https://github.com/open-sauced/insights/issues/353)) ([e652ffc](https://github.com/open-sauced/insights/commit/e652ffca0f9cc7ca44206ffada48a6395861e55a))
+* create `<PaginationResult/>` component  ([#360](https://github.com/open-sauced/insights/issues/360)) ([4bfb96d](https://github.com/open-sauced/insights/commit/4bfb96d1a06bc9f5715f18fcf653453b18c783c7)), closes [#325](https://github.com/open-sauced/insights/issues/325)
+* Create `<RepositoriesTable>` component ([#364](https://github.com/open-sauced/insights/issues/364)) ([ef93890](https://github.com/open-sauced/insights/commit/ef93890d4517a3bdb082e1387ee45689c385293f)), closes [#321](https://github.com/open-sauced/insights/issues/321) [#326](https://github.com/open-sauced/insights/issues/326) [#327](https://github.com/open-sauced/insights/issues/327)
+* create `PaginationGotoPage` component  ([#357](https://github.com/open-sauced/insights/issues/357)) ([f88fa98](https://github.com/open-sauced/insights/commit/f88fa98a9ea862ddb48aadea0fd95a934fd43928)), closes [#324](https://github.com/open-sauced/insights/issues/324)
+* Implement `<TableRepositoryName>` component ([#354](https://github.com/open-sauced/insights/issues/354)) ([ede7f61](https://github.com/open-sauced/insights/commit/ede7f61fb7cfe21519fefaf5bddc2c2cee776cec))
+* Implement footer component ([#347](https://github.com/open-sauced/insights/issues/347)) ([349a6b8](https://github.com/open-sauced/insights/commit/349a6b8e165d6c36120077d8adaa3426f472d1ff)), closes [#316](https://github.com/open-sauced/insights/issues/316)
+* Implement Loading Screen design ([#335](https://github.com/open-sauced/insights/issues/335)) ([a3526dd](https://github.com/open-sauced/insights/commit/a3526dd5b2207fdbaa1481e9d20ba8075f133bf5))
+* implement onboarding flow ([#369](https://github.com/open-sauced/insights/issues/369)) ([ef3adee](https://github.com/open-sauced/insights/commit/ef3adeeca0a380e81a0f862f5c390315fa0cec2e)), closes [#116](https://github.com/open-sauced/insights/issues/116)
+* Implement the `Pagination` component  ([#343](https://github.com/open-sauced/insights/issues/343)) ([263f463](https://github.com/open-sauced/insights/commit/263f4636164af3a8864030913a5c6b27d67894ad)), closes [#323](https://github.com/open-sauced/insights/issues/323)
+* **build:** Install Nivo charts and implement `<Sparkline>` component ([#361](https://github.com/open-sauced/insights/issues/361)) ([d37f0fb](https://github.com/open-sauced/insights/commit/d37f0fb3611687fad18c1319118f506b9c56ce49))
+
 ## [1.6.0-beta.14](https://github.com/open-sauced/insights/compare/v1.6.0-beta.13...v1.6.0-beta.14) (2022-09-16)
 
 
