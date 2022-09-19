@@ -5,6 +5,15 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.6.1-beta.1](https://github.com/open-sauced/insights/compare/v1.6.0...v1.6.1-beta.1) (2022-09-19)
+
+
+### 🐛 Bug Fixes
+
+* adds brandon to top5 ([8bb56cb](https://github.com/open-sauced/insights/commit/8bb56cb72d2d904168f8443b3afe860faa98fc58))
+* correct beta branch checking beta gitsense api ([2c6f576](https://github.com/open-sauced/insights/commit/2c6f57641838f5b219ce274b576e496daff2192b))
+* redirect from onboarding if already complete with custom hook ([#388](https://github.com/open-sauced/insights/issues/388)) ([8600c76](https://github.com/open-sauced/insights/commit/8600c7648cc0092fa3b51de5e8a26d722e799819)), closes [#387](https://github.com/open-sauced/insights/issues/387)
+
 ## [1.6.0](https://github.com/open-sauced/insights/compare/v1.5.0...v1.6.0) (2022-09-16)
 
 
