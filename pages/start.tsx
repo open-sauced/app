@@ -38,7 +38,7 @@ const LoginStep1: React.FC<LoginStep1Props> = ({ handleLoginStep, user }) => {
   captureAnayltics("User Onboarding", "onboardingStep1", "visited");
 
   const router = useRouter();
-  const onboarded = useOnboarded();
+  const { onboarded } = useOnboarded();
 
   useEffect(() => {
     if (onboarded) {
