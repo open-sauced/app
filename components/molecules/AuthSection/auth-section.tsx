@@ -32,8 +32,18 @@ const AuthSection: React.FC = ({  }) => {
       <div className="flex items-center gap-2 lg:gap-3">
         {user ?
           <>
-            { onboarded === false ? <OnboardingButton/> : "" }
-            <Divider type="vertical" className="!h-6 !bg-gray-600"></Divider>
+            {
+              onboarded === false ? 
+                <>
+                  <OnboardingButton/> 
+                  <Divider type="vertical" className="!h-6 !bg-gray-600"></Divider>
+                </>
+
+                :
+
+                "" 
+            }
+            
             <Image alt="Notification Icon" src={notifications} />
             <DropdownList menuContent={authMenu.authed}>
               <div className="flex justify-end min-w-[60px] gap-2">
