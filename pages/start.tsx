@@ -25,6 +25,7 @@ import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { User } from "@supabase/supabase-js";
 import { useGlobalStateContext } from "context/global-state";
 import { getAvatarLink } from "lib/utils/github";
+import useOnboarded from "lib/hooks/useOnboarded";
 
 type handleLoginStep = () => void;
 
@@ -36,11 +37,16 @@ interface LoginStep1Props {
 const LoginStep1: React.FC<LoginStep1Props> = ({ handleLoginStep, user }) => {
   captureAnayltics("User Onboarding", "onboardingStep1", "visited");
 
+  const router = useRouter();
+  const onboarded = useOnboarded();
+
   useEffect(() => {
-    if (user) {
+    if (onboarded) {
+      router.push("/");
+    } else if (onboarded === false && user) {
       handleLoginStep();
     }
-  }, [handleLoginStep, user]);
+  }, [handleLoginStep, router, user, onboarded]);
 
   const handleGitHubAuth = async() => {
     // Redirect user to GitHub to authenticate
@@ -267,8 +273,6 @@ const Login: WithPageLayout = () => {
   const checkFollowed = { isClickedFollowed, setIsClickedFollowed };
 
   // check if user is authenticated
-
-  // if onboarding already complete, go to homepage
 
   // Enter PAT
   // Validate PAT
