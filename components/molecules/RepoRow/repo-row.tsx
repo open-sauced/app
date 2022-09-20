@@ -1,13 +1,14 @@
+import StackedAvatar from "components/molecules/StackedAvatar/stacked-avatar";
 import { RepositoriesRows } from "components/organisms/RepositoriesTable/repositories-table";
 
 import {classNames} from "components/organisms/RepositoriesTable/repositories-table";
 import TableRepositoryName from "../TableRepositoryName/table-repository-name";
 import Pill from "components/atoms/Pill/pill";
 import PullRequestOverview from "../PullRequestOverview/pull-request-overview";
-import Avatar from "components/atoms/Avatar/avatar";
+
 import Sparkline from "components/atoms/Sparkline/sparkline";
 import { truncateString } from "lib/utils/truncate-string";
-import { getAvatarLink } from "lib/utils/github";
+
 import { useContributionsList } from "lib/hooks/useContributionsList";
 
 interface RepoRowProps {
@@ -15,7 +16,7 @@ interface RepoRowProps {
 }
 
 const RepoRow = ({repo}:RepoRowProps): JSX.Element =>{
-  const {name, owner: handle, owner_avatar: ownerAvatar, activity = "high", openPrsCount, closedPrsCount, draftPrsCount,mergedPrsCount, spamPrsCount,churn,churnTotalCount, churnDirection} = repo;
+  const { name, owner: handle, owner_avatar: ownerAvatar, activity = "high", openPrsCount, closedPrsCount, draftPrsCount,mergedPrsCount, spamPrsCount, churn, churnTotalCount, churnDirection } = repo;
   const { data: contributorData, meta: contributorMeta } = useContributionsList(repo.id, "", "updated_at");
 
   const last30days = [
@@ -138,12 +139,9 @@ const RepoRow = ({repo}:RepoRowProps): JSX.Element =>{
 
     {/* Column: Contributors */}
     <div className={`flex ${classNames.cols.contributors}`}>
+      { contributorMeta.itemCount! > 0 ? <StackedAvatar contributors={contributorData}/> : "-" }
 
-      {contributorData.slice(0,5).map(({ host_login: hostLogin }) =>
-        <Avatar key={`${hostLogin}`} avatarURL={getAvatarLink(hostLogin)} initials={""} size={32} hasBorder isCircle />
-      )}
-
-      { contributorMeta.itemCount! > 4 ? <div>&nbsp;{`+${contributorMeta.itemCount}`}</div>: "" }
+      { contributorMeta.itemCount! >= 5 ? <div>&nbsp;{`+${contributorMeta.itemCount - 5}`}</div>: "" }
     </div>
 
     {/* Column: Last 30 Days */}
