@@ -12,107 +12,65 @@ import { truncateString } from "lib/utils/truncate-string";
 import { useContributionsList } from "lib/hooks/useContributionsList";
 import { useRepositoryCommits } from "lib/hooks/useRepositoryCommits";
 import { useRepositoryPRs } from "lib/hooks/useRepositoryPRs";
+import differenceInDays from "date-fns/differenceInDays";
 
 interface RepoRowProps {
   repo: RepositoriesRows;
 }
 
 const getActivity = (total?: number) => {
-  if (!total) {
+  if (total === undefined) {
     return "-";
   }
 
   if (total > 80) {
-    return <Pill text={"High"} color="green" />;
+    return <Pill text="High" color="green" />;
   }
 
   if (total > 20 && total < 80) {
-    return <Pill text={"Medium"} color="red" />;
+    return <Pill text="Medium" color="yellow" />;
   }
 
-  return <Pill text={"Low"} color="yellow" />;
+  return <Pill text="Low" color="red" />;
+};
+
+interface CommitGraphData {
+  x: number,
+  y: number;
+}
+const getCommitsLast30Days = (commits: DbRepoCommit[]): CommitGraphData[] => {
+  const commitDays = commits.reduce((days: { [name: string]: number }, curr: DbRepoCommit) => {
+    const day = differenceInDays(new Date(), new Date(Number(curr.commit_time)));
+
+    if (days[day]) {
+      days[day]++;
+    } else {
+      days[day] = 1;
+    }
+
+    return days;
+  }, {});
+
+  const days: any[] = [];
+  for(let d=30;d>=0;d--) {
+    days.push({ x: d, y: commitDays[d] || 0 });
+  }
+
+  return days;
 };
 
 const RepoRow = ({repo}:RepoRowProps): JSX.Element => {
   const { name, owner: handle, owner_avatar: ownerAvatar, openPrsCount, closedPrsCount, draftPrsCount,mergedPrsCount, spamPrsCount, churn, churnTotalCount, churnDirection } = repo;
   const { data: contributorData, meta: contributorMeta } = useContributionsList(repo.id, "", "updated_at");
-  const { meta: commitMeta } = useRepositoryCommits(repo.id);
+  const { data: commitsData, meta: commitMeta } = useRepositoryCommits(repo.id, true);
   const { meta: prMeta } = useRepositoryPRs(repo.id);
 
+  const days = getCommitsLast30Days(commitsData);
   const last30days = [
     {
-      "id": "japan",
+      "id": `last30-${repo.id}`,
       "color": "hsl(63, 70%, 50%)",
-      "data": [
-        {
-          "x": "plane",
-          "y": 287
-        },
-        {
-          "x": "helicopter",
-          "y": 183
-        },
-        {
-          "x": "boat",
-          "y": 112
-        },
-        {
-          "x": "train",
-          "y": 78
-        },
-        {
-          "x": "subway",
-          "y": 47
-        },
-        {
-          "x": "bus",
-          "y": 218
-        },
-        {
-          "x": "car",
-          "y": 106
-        },
-        {
-          "x": "moto",
-          "y": 190
-        },
-        {
-          "x": "bicycle",
-          "y": 88
-        },
-        {
-          "x": "horse",
-          "y": 8
-        },
-        {
-          "x": "skateboard",
-          "y": 248
-        },
-        {
-          "x": "others",
-          "y": 76
-        },
-        {
-          "x": "adwawd",
-          "y": 76
-        },
-        {
-          "x": "awdawdd",
-          "y": 38
-        },
-        {
-          "x": "awd",
-          "y": 42
-        },
-        {
-          "x": "adwadadw",
-          "y": 26
-        },
-        {
-          "x": "dadawda",
-          "y": 76
-        }
-      ]
+      data: days
     }
   ];
 
