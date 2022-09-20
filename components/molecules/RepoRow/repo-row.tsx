@@ -7,31 +7,32 @@ import PullRequestOverview from "../PullRequestOverview/pull-request-overview";
 import Avatar from "components/atoms/Avatar/avatar";
 import Sparkline from "components/atoms/Sparkline/sparkline";
 import { truncateString } from "lib/utils/truncate-string";
+import { getAvatarLink } from "lib/utils/github";
 
 interface RepoRowProps {
   repo: RepositoriesRows;
 }
 
 const RepoRow = ({repo}:RepoRowProps): JSX.Element =>{
-  const {name, handle, owner_avatar: ownerAvatar, activity = "high", openPrsCount, closedPrsCount, draftPrsCount,mergedPrsCount, spamPrsCount,churn,churnTotalCount, churnDirection} = repo;
+  const {name, owner: handle, owner_avatar: ownerAvatar, contributors = [], activity = "high", openPrsCount, closedPrsCount, draftPrsCount,mergedPrsCount, spamPrsCount,churn,churnTotalCount, churnDirection} = repo;
 
-  const contributors =  [
-    {
-      avatarURL: "",
-      initials: "ES",
-      alt: "E"
-    },
-    {
-      avatarURL: "",
-      initials: "ES",
-      alt: "E"
-    },
-    {
-      avatarURL: "",
-      initials: "ES",
-      alt: "E"
-    }
-  ];
+  // const contributors =  [
+  //   {
+  //     avatarURL: "",
+  //     initials: "ES",
+  //     alt: "E"
+  //   },
+  //   {
+  //     avatarURL: "",
+  //     initials: "ES",
+  //     alt: "E"
+  //   },
+  //   {
+  //     avatarURL: "",
+  //     initials: "ES",
+  //     alt: "E"
+  //   }
+  // ];
   const last30days = [
     {
       "id": "japan",
@@ -137,16 +138,23 @@ const RepoRow = ({repo}:RepoRowProps): JSX.Element =>{
     </div>
 
     {/* Column: SPAM */}
-    <div className={`${classNames.cols.prVelocity}`}>
-      <div>{spamPrsCount + " PRs"}</div>
-      <Pill text={`${churn}`} size="small" color="green" />
+    <div className={`${classNames.cols.spam}`}>
+      {
+        spamPrsCount && spamPrsCount > 0 ?  
+        <>
+          <div>{spamPrsCount || 0 + " PRs"}</div>
+          <Pill text={`${churn || 0}%`} size="small" color="green" />
+        </>
+        :
+        "-"
+      }
     </div>
 
     {/* Column: Contributors */}
     <div className={`flex ${classNames.cols.contributors}`}>
 
-      {contributors?.map(({ avatarURL, initials, alt}) =>
-        <Avatar key={`${initials}-${alt}`} avatarURL={avatarURL} initials={initials} size={32} hasBorder isCircle />
+      {contributors?.slice(0,3).map(({ name, initials, alt}) =>
+        <Avatar key={`${initials}-${alt}`} avatarURL={getAvatarLink(name)} initials={initials} size={32} hasBorder isCircle />
       )}
     </div>
 

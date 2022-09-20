@@ -1,18 +1,24 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 interface PaginationGotoPageProps {
-  currentPage: number;
+  page: number;
   name: string;
+  setPage: Function;
 }
 
-const PaginationGotoPage = ({ currentPage, name }: PaginationGotoPageProps): JSX.Element => {
-  const [pageNumber, setPageNumber] = useState<number | string>(currentPage);
+const PaginationGotoPage = ({ page, name, setPage }: PaginationGotoPageProps): JSX.Element => {
+  const [pageNumber, setPageNumber] = useState<number | string>(page);
   const handleGotoPage = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if(pageNumber === currentPage) return;
 
-    // logic to switch page goes here
+    if(pageNumber === page) return;
+
+    setPage(pageNumber);
   };
+
+  useEffect(() => {
+    setPageNumber(page);
+  }, [page])
 
   return (
     <form onSubmit={(e) => handleGotoPage(e)} className="flex font-medium gap-x-3">
