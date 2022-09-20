@@ -13,6 +13,7 @@ export interface ContributorsRows {
 }
 
 export interface RepositoriesRows {
+  id: string;
   name?: string;
   owner?: string;
   handle?: string;
@@ -51,7 +52,7 @@ export const classNames = {
     prOverview: "flex-1",
     prVelocity: "flex justify-center  items-center gap-3 flex-1",
     spam: "flex items-center gap-3 flex-1",
-    contributors: "flex-1",
+    contributors: "flex-1 items-center",
     last30days: "flex-1"
   }
 };

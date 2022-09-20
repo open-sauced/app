@@ -1,5 +1,5 @@
 import { RepositoriesRows } from "components/organisms/RepositoriesTable/repositories-table";
-import React from "react";
+
 import {classNames} from "components/organisms/RepositoriesTable/repositories-table";
 import TableRepositoryName from "../TableRepositoryName/table-repository-name";
 import Pill from "components/atoms/Pill/pill";
@@ -8,31 +8,16 @@ import Avatar from "components/atoms/Avatar/avatar";
 import Sparkline from "components/atoms/Sparkline/sparkline";
 import { truncateString } from "lib/utils/truncate-string";
 import { getAvatarLink } from "lib/utils/github";
+import { useContributionsList } from "lib/hooks/useContributionsList";
 
 interface RepoRowProps {
   repo: RepositoriesRows;
 }
 
 const RepoRow = ({repo}:RepoRowProps): JSX.Element =>{
-  const {name, owner: handle, owner_avatar: ownerAvatar, contributors = [], activity = "high", openPrsCount, closedPrsCount, draftPrsCount,mergedPrsCount, spamPrsCount,churn,churnTotalCount, churnDirection} = repo;
+  const {name, owner: handle, owner_avatar: ownerAvatar, activity = "high", openPrsCount, closedPrsCount, draftPrsCount,mergedPrsCount, spamPrsCount,churn,churnTotalCount, churnDirection} = repo;
+  const { data: contributorData, meta: contributorMeta } = useContributionsList(repo.id, "", "updated_at");
 
-  // const contributors =  [
-  //   {
-  //     avatarURL: "",
-  //     initials: "ES",
-  //     alt: "E"
-  //   },
-  //   {
-  //     avatarURL: "",
-  //     initials: "ES",
-  //     alt: "E"
-  //   },
-  //   {
-  //     avatarURL: "",
-  //     initials: "ES",
-  //     alt: "E"
-  //   }
-  // ];
   const last30days = [
     {
       "id": "japan",
@@ -109,6 +94,7 @@ const RepoRow = ({repo}:RepoRowProps): JSX.Element =>{
       ]
     }
   ];
+
   return   ( <div className={`${classNames.row}`}>
 
     {/* Column: Repository Name */}
@@ -153,9 +139,11 @@ const RepoRow = ({repo}:RepoRowProps): JSX.Element =>{
     {/* Column: Contributors */}
     <div className={`flex ${classNames.cols.contributors}`}>
 
-      {contributors?.slice(0,3).map(({ name, initials, alt}) =>
-        <Avatar key={`${initials}-${alt}`} avatarURL={getAvatarLink(name as string)} initials={initials} size={32} hasBorder isCircle />
+      {contributorData.slice(0,5).map(({ host_login: hostLogin }) =>
+        <Avatar key={`${hostLogin}`} avatarURL={getAvatarLink(hostLogin)} initials={""} size={32} hasBorder isCircle />
       )}
+
+      { contributorMeta.itemCount! > 4 ? <div>&nbsp;{`+${contributorMeta.itemCount}`}</div>: "" }
     </div>
 
     {/* Column: Last 30 Days */}
