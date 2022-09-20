@@ -10,14 +10,34 @@ import Sparkline from "components/atoms/Sparkline/sparkline";
 import { truncateString } from "lib/utils/truncate-string";
 
 import { useContributionsList } from "lib/hooks/useContributionsList";
+import { useRepositoryCommits } from "lib/hooks/useRepositoryCommits";
+import { useRepositoryPRs } from "lib/hooks/useRepositoryPRs";
 
 interface RepoRowProps {
   repo: RepositoriesRows;
 }
 
-const RepoRow = ({repo}:RepoRowProps): JSX.Element =>{
-  const { name, owner: handle, owner_avatar: ownerAvatar, activity = "high", openPrsCount, closedPrsCount, draftPrsCount,mergedPrsCount, spamPrsCount, churn, churnTotalCount, churnDirection } = repo;
+const getActivity = (total?: number) => {
+  if (!total) {
+    return "-";
+  }
+
+  if (total > 80) {
+    return <Pill text={"High"} color="green" />;
+  }
+
+  if (total > 20 && total < 80) {
+    return <Pill text={"Medium"} color="red" />;
+  }
+
+  return <Pill text={"Low"} color="yellow" />;
+};
+
+const RepoRow = ({repo}:RepoRowProps): JSX.Element => {
+  const { name, owner: handle, owner_avatar: ownerAvatar, openPrsCount, closedPrsCount, draftPrsCount,mergedPrsCount, spamPrsCount, churn, churnTotalCount, churnDirection } = repo;
   const { data: contributorData, meta: contributorMeta } = useContributionsList(repo.id, "", "updated_at");
+  const { meta: commitMeta } = useRepositoryCommits(repo.id);
+  const { meta: prMeta } = useRepositoryPRs(repo.id);
 
   const last30days = [
     {
@@ -101,26 +121,22 @@ const RepoRow = ({repo}:RepoRowProps): JSX.Element =>{
     {/* Column: Repository Name */}
     <div className={classNames.cols.repository}>
       <TableRepositoryName avatarURL={ownerAvatar} name={name} handle={handle}></TableRepositoryName>
-
     </div>
 
     {/* Column: Activity */}
     <div className={classNames.cols.activity}>
-      { activity &&
-        <Pill text={activity} />
-      }
+      { getActivity(commitMeta.itemCount) }
 
     </div>
 
     {/* Column: PR Overview */}
     <div className={classNames.cols.prOverview}>
       <PullRequestOverview open={openPrsCount} merged={mergedPrsCount} closed={closedPrsCount} draft={draftPrsCount} churn={churnTotalCount} churnDirection={`${churnDirection}`}></PullRequestOverview>
-
     </div>
 
     {/* Column: PR Velocity */}
     <div className={`${classNames.cols.prVelocity}`}>
-      <div>3 PRs</div>
+      <div>{ prMeta.itemCount } PR{ prMeta.itemCount === 1 ? "" : "s" }</div>
       <Pill text="10%" size="small" color="green" />
     </div>
 
