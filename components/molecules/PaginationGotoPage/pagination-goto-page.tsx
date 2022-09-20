@@ -18,7 +18,7 @@ const PaginationGotoPage = ({ page, name, setPage }: PaginationGotoPageProps): J
 
   useEffect(() => {
     setPageNumber(page);
-  }, [page])
+  }, [page]);
 
   return (
     <form onSubmit={(e) => handleGotoPage(e)} className="flex font-medium gap-x-3">

@@ -141,12 +141,12 @@ const RepoRow = ({repo}:RepoRowProps): JSX.Element =>{
     <div className={`${classNames.cols.spam}`}>
       {
         spamPrsCount && spamPrsCount > 0 ?  
-        <>
-          <div>{spamPrsCount || 0 + " PRs"}</div>
-          <Pill text={`${churn || 0}%`} size="small" color="green" />
-        </>
-        :
-        "-"
+          <>
+            <div>{spamPrsCount || 0 + " PRs"}</div>
+            <Pill text={`${churn || 0}%`} size="small" color="green" />
+          </>
+          :
+          "-"
       }
     </div>
 
@@ -154,7 +154,7 @@ const RepoRow = ({repo}:RepoRowProps): JSX.Element =>{
     <div className={`flex ${classNames.cols.contributors}`}>
 
       {contributors?.slice(0,3).map(({ name, initials, alt}) =>
-        <Avatar key={`${initials}-${alt}`} avatarURL={getAvatarLink(name)} initials={initials} size={32} hasBorder isCircle />
+        <Avatar key={`${initials}-${alt}`} avatarURL={getAvatarLink(name as string)} initials={initials} size={32} hasBorder isCircle />
       )}
     </div>
 

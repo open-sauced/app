@@ -6,7 +6,7 @@ import Pagination from "../../molecules/Pagination/pagination";
 import PaginationResults from "../../molecules/PaginationResults/pagination-result";
 
 export interface ContributorsRows {
-  name: string;
+  name?: string;
   avatarURL?: string | StaticImageData;
   initials?: string;
   alt?: string;
