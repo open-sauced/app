@@ -1,3 +1,4 @@
+import { ArrowTrendingDownIcon, ArrowTrendingUpIcon } from "@heroicons/react/24/solid";
 import StackedAvatar from "components/molecules/StackedAvatar/stacked-avatar";
 import { RepositoriesRows } from "components/organisms/RepositoriesTable/repositories-table";
 
@@ -27,14 +28,14 @@ const getActivity = (total?: number) => {
   }
 
   if (total > 80) {
-    return <Pill text="High" color="green" />;
+    return <Pill icon={<ArrowTrendingUpIcon color="green" className="h-4 w-4" />} text="High" color="green" />;
   }
 
   if (total > 20 && total < 80) {
     return <Pill text="Medium" color="yellow" />;
   }
 
-  return <Pill text="Low" color="red" />;
+  return <Pill  icon={<ArrowTrendingDownIcon color="red" className="h-4 w-4" />} text="Low" color="red" />;
 };
 
 const getCommitsLast30Days = (commits: DbRepoCommit[]): CommitGraphData[] => {
@@ -58,7 +59,7 @@ const getCommitsLast30Days = (commits: DbRepoCommit[]): CommitGraphData[] => {
   return days;
 };
 
-const getPrsMerged = (openPrsCount?: number, mergedPrsCount?: number, closedPrsCount?: number, draftPrsCount?: number): number => {
+const getTotalPrs = (openPrsCount?: number, mergedPrsCount?: number, closedPrsCount?: number, draftPrsCount?: number): number => {
   const open = openPrsCount || 0;
   const merged = mergedPrsCount || 0;
   const closed = closedPrsCount || 0;
@@ -69,8 +70,26 @@ const getPrsMerged = (openPrsCount?: number, mergedPrsCount?: number, closedPrsC
   if (total <= 0) {
     return 0;
   }
+  
+  return total;
+};
+
+const getPrsMerged = (total: number, merged: number): number => {
+  if (total <= 0) {
+    return 0;
+  }
 
   const result = Math.floor(merged/total * 100);
+
+  return result;
+};
+
+const getPrsSpam = (total: number, spam: number): number => {
+  if (total <= 0) {
+    return 0;
+  }
+
+  const result = Math.floor(spam/total * 100);
 
   return result;
 };
@@ -79,7 +98,9 @@ const RepoRow = ({repo}:RepoRowProps): JSX.Element => {
   const { name, owner: handle, owner_avatar: ownerAvatar, openPrsCount, closedPrsCount, draftPrsCount, mergedPrsCount, spamPrsCount, churn, churnTotalCount, churnDirection, prVelocityCount } = repo;
   const { data: contributorData, meta: contributorMeta } = useContributionsList(repo.id, "", "updated_at");
   const { data: commitsData, meta: commitMeta } = useRepositoryCommits(repo.id);
-  const prsMerged = getPrsMerged(openPrsCount, mergedPrsCount, closedPrsCount, draftPrsCount);
+  const totalPrs = getTotalPrs(openPrsCount, mergedPrsCount, closedPrsCount, draftPrsCount);
+  const prsMergedPercentage = getPrsMerged(totalPrs, mergedPrsCount || 0);
+  const spamPrsPercentage = getPrsSpam(totalPrs, spamPrsCount || 0);
 
   const days = getCommitsLast30Days(commitsData);
   const last30days = [
@@ -110,7 +131,7 @@ const RepoRow = ({repo}:RepoRowProps): JSX.Element => {
     {/* Column: PR Velocity */}
     <div className={`${classNames.cols.prVelocity}`}>
       <div>{ prVelocityCount ?? 0 } PR{ prVelocityCount === 1 ? "" : "s" }</div>
-      <Pill text={`${prsMerged}%`} size="small" color="green" />
+      <Pill text={`${prsMergedPercentage}%`} size="small" color="green" />
     </div>
 
     {/* Column: SPAM */}
@@ -119,7 +140,7 @@ const RepoRow = ({repo}:RepoRowProps): JSX.Element => {
         spamPrsCount && spamPrsCount > 0 ?  
           <>
             <div>{spamPrsCount || 0} PR{ spamPrsCount === 1 ? "" : "s" }</div>
-            <Pill text={`${churn || 0}%`} size="small" color="green" />
+            <Pill text={`${spamPrsPercentage || 0}%`} size="small" color={spamPrsPercentage > 10 ? "red" : "yellow"} />
           </>
           :
           "-"

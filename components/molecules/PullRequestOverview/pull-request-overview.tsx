@@ -1,3 +1,4 @@
+import { ArrowDownIcon, ArrowUpIcon } from "@primer/octicons-react";
 import React from "react";
 import PullRequestOverviewChart from "../../atoms/PullRequestOverviewChart/pull-request-overview-chart";
 
@@ -27,7 +28,7 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({ className, op
         <div className={`
           ${churnDirection === "up" ? "text-light-grass-10" : "text-light-red-10"}
           font-medium text-base tracking-tight`}>
-          {churnDirection === "up" ? "+" : "-"}{churn || 0}%
+          {churnDirection === "up" ? <ArrowUpIcon size={14} /> : <ArrowDownIcon size={14} />}{churn || 0}%
         </div>
       </div>
 
