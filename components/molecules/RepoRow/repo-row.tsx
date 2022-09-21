@@ -58,13 +58,15 @@ const getCommitsLast30Days = (commits: DbRepoCommit[]): CommitGraphData[] => {
   return days;
 };
 
-const getPrsMerged = (openPrsCount?: number, mergedPrsCount?: number): number => {
+const getPrsMerged = (openPrsCount?: number, mergedPrsCount?: number, closedPrsCount?: number, draftPrsCount?: number): number => {
   const open = openPrsCount || 0;
   const merged = mergedPrsCount || 0;
+  const closed = closedPrsCount || 0;
+  const drafts = draftPrsCount || 0;
 
-  const total = open + merged;
+  const total = open + closed + merged - drafts;
 
-  if (open + merged === 0) {
+  if (total <= 0) {
     return 0;
   }
 
@@ -77,7 +79,7 @@ const RepoRow = ({repo}:RepoRowProps): JSX.Element => {
   const { name, owner: handle, owner_avatar: ownerAvatar, openPrsCount, closedPrsCount, draftPrsCount, mergedPrsCount, spamPrsCount, churn, churnTotalCount, churnDirection, prVelocityCount } = repo;
   const { data: contributorData, meta: contributorMeta } = useContributionsList(repo.id, "", "updated_at");
   const { data: commitsData, meta: commitMeta } = useRepositoryCommits(repo.id);
-  const prsMerged = getPrsMerged(openPrsCount, mergedPrsCount);
+  const prsMerged = getPrsMerged(openPrsCount, mergedPrsCount, closedPrsCount, draftPrsCount);
 
   const days = getCommitsLast30Days(commitsData);
   const last30days = [
@@ -116,7 +118,7 @@ const RepoRow = ({repo}:RepoRowProps): JSX.Element => {
       {
         spamPrsCount && spamPrsCount > 0 ?  
           <>
-            <div>{spamPrsCount || 0 + " PRs"}</div>
+            <div>{spamPrsCount || 0} PR{ spamPrsCount === 1 ? "" : "s" }</div>
             <Pill text={`${churn || 0}%`} size="small" color="green" />
           </>
           :

@@ -5,11 +5,11 @@ export declare interface StackedAvatarProps {
   contributors: DbContribution[];
 }
 const StackedAvatar = ({ contributors }: StackedAvatarProps) => (
-  <div className="-space-x-3 flex transition-all duration-300">
-    {contributors && contributors.slice(0, 5).map(({ host_login: hostLogin, name }) => (
+  <div className="-space-x-3 flex">
+    {contributors && contributors.slice(0, 5).map(({ host_login: hostLogin, name }, index) => (
       <div
         key={`contributor-avatar-${hostLogin}`}
-        className="w-8 h-8 overflow-hidden rounded-full transition-all duration-300 border-2 border-white"
+        className={`w-8 h-8 overflow-hidden rounded-full border-2 border-solid border-white z-${50-(index+1)*10}`}
       >
         <Avatar key={`${hostLogin}`} avatarURL={getAvatarLink(hostLogin)} alt={name} size={32} hasBorder isCircle />
       </div>
