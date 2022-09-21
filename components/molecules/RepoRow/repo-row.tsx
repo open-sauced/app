@@ -7,15 +7,18 @@ import Pill from "components/atoms/Pill/pill";
 import PullRequestOverview from "../PullRequestOverview/pull-request-overview";
 
 import Sparkline from "components/atoms/Sparkline/sparkline";
-import { truncateString } from "lib/utils/truncate-string";
 
 import { useContributionsList } from "lib/hooks/useContributionsList";
 import { useRepositoryCommits } from "lib/hooks/useRepositoryCommits";
-import { useRepositoryPRs } from "lib/hooks/useRepositoryPRs";
 import differenceInDays from "date-fns/differenceInDays";
 
 interface RepoRowProps {
   repo: RepositoriesRows;
+}
+
+interface CommitGraphData {
+  x: number,
+  y: number;
 }
 
 const getActivity = (total?: number) => {
@@ -34,10 +37,6 @@ const getActivity = (total?: number) => {
   return <Pill text="Low" color="red" />;
 };
 
-interface CommitGraphData {
-  x: number,
-  y: number;
-}
 const getCommitsLast30Days = (commits: DbRepoCommit[]): CommitGraphData[] => {
   const commitDays = commits.reduce((days: { [name: string]: number }, curr: DbRepoCommit) => {
     const day = differenceInDays(new Date(), new Date(Number(curr.commit_time)));
@@ -59,10 +58,26 @@ const getCommitsLast30Days = (commits: DbRepoCommit[]): CommitGraphData[] => {
   return days;
 };
 
+const getPrsMerged = (openPrsCount?: number, mergedPrsCount?: number): number => {
+  const open = openPrsCount || 0;
+  const merged = mergedPrsCount || 0;
+
+  const total = open + merged;
+
+  if (open + merged === 0) {
+    return 0;
+  }
+
+  const result = Math.floor(merged/total * 100);
+
+  return result;
+};
+
 const RepoRow = ({repo}:RepoRowProps): JSX.Element => {
   const { name, owner: handle, owner_avatar: ownerAvatar, openPrsCount, closedPrsCount, draftPrsCount, mergedPrsCount, spamPrsCount, churn, churnTotalCount, churnDirection, prVelocityCount } = repo;
   const { data: contributorData, meta: contributorMeta } = useContributionsList(repo.id, "", "updated_at");
   const { data: commitsData, meta: commitMeta } = useRepositoryCommits(repo.id);
+  const prsMerged = getPrsMerged(openPrsCount, mergedPrsCount);
 
   const days = getCommitsLast30Days(commitsData);
   const last30days = [
@@ -73,7 +88,7 @@ const RepoRow = ({repo}:RepoRowProps): JSX.Element => {
     }
   ];
 
-  return   ( <div className={`${classNames.row}`}>
+  return (<div className={`${classNames.row}`}>
 
     {/* Column: Repository Name */}
     <div className={classNames.cols.repository}>
@@ -83,7 +98,6 @@ const RepoRow = ({repo}:RepoRowProps): JSX.Element => {
     {/* Column: Activity */}
     <div className={classNames.cols.activity}>
       { getActivity(commitMeta.itemCount) }
-
     </div>
 
     {/* Column: PR Overview */}
@@ -94,7 +108,7 @@ const RepoRow = ({repo}:RepoRowProps): JSX.Element => {
     {/* Column: PR Velocity */}
     <div className={`${classNames.cols.prVelocity}`}>
       <div>{ prVelocityCount ?? 0 } PR{ prVelocityCount === 1 ? "" : "s" }</div>
-      <Pill text="10%" size="small" color="green" />
+      <Pill text={`${prsMerged}%`} size="small" color="green" />
     </div>
 
     {/* Column: SPAM */}
