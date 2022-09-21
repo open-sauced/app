@@ -22,8 +22,8 @@ interface CommitGraphData {
   y: number;
 }
 
-const getActivity = (total?: number) => {
-  if (total === undefined) {
+const getActivity = (total?: number, loading: boolean) => {
+  if (total === undefined || loading) {
     return "-";
   }
 
@@ -31,7 +31,7 @@ const getActivity = (total?: number) => {
     return <Pill icon={<ArrowTrendingUpIcon color="green" className="h-4 w-4" />} text="High" color="green" />;
   }
 
-  if (total > 20 && total < 80) {
+  if (total >= 20 && total <= 80) {
     return <Pill text="Medium" color="yellow" />;
   }
 
@@ -97,7 +97,7 @@ const getPrsSpam = (total: number, spam: number): number => {
 const RepoRow = ({repo}:RepoRowProps): JSX.Element => {
   const { name, owner: handle, owner_avatar: ownerAvatar, openPrsCount, closedPrsCount, draftPrsCount, mergedPrsCount, spamPrsCount, churn, churnTotalCount, churnDirection, prVelocityCount } = repo;
   const { data: contributorData, meta: contributorMeta } = useContributionsList(repo.id, "", "updated_at");
-  const { data: commitsData, meta: commitMeta } = useRepositoryCommits(repo.id);
+  const { data: commitsData, meta: commitMeta, isLoading: commitLoading } = useRepositoryCommits(repo.id);
   const totalPrs = getTotalPrs(openPrsCount, mergedPrsCount, closedPrsCount, draftPrsCount);
   const prsMergedPercentage = getPrsMerged(totalPrs, mergedPrsCount || 0);
   const spamPrsPercentage = getPrsSpam(totalPrs, spamPrsCount || 0);
@@ -120,7 +120,7 @@ const RepoRow = ({repo}:RepoRowProps): JSX.Element => {
 
     {/* Column: Activity */}
     <div className={classNames.cols.activity}>
-      { getActivity(commitMeta.itemCount) }
+      { getActivity(commitMeta.itemCount, commitLoading) }
     </div>
 
     {/* Column: PR Overview */}
