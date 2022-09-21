@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.6.1-beta.2](https://github.com/open-sauced/insights/compare/v1.6.1-beta.1...v1.6.1-beta.2) (2022-09-21)
+
+
+### 🎨 Styles
+
+* change text font and icon size to xs(12px) ([#401](https://github.com/open-sauced/insights/issues/401)) ([741288e](https://github.com/open-sauced/insights/commit/741288e19a267e4ddcf5c1afb0fcc0e8308d75eb))
+
 ### [1.6.1-beta.1](https://github.com/open-sauced/insights/compare/v1.6.0...v1.6.1-beta.1) (2022-09-19)
 
 
