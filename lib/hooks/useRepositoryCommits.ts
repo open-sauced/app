@@ -5,8 +5,8 @@ interface PaginatedRepoCommitResponse {
   readonly meta: Meta;
 }
 
-const useRepositoryCommits = (id: string, recent = false) => {
-  const { data, error, mutate } = useSWR<PaginatedRepoCommitResponse, Error>(`repos/${id}/commits${recent ? "?recent=true": ""}`);
+const useRepositoryCommits = (id: string) => {
+  const { data, error, mutate } = useSWR<PaginatedRepoCommitResponse, Error>(`repos/${id}/commits`);
 
   return {
     data: data?.data ?? [],

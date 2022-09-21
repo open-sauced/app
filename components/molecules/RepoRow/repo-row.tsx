@@ -60,10 +60,9 @@ const getCommitsLast30Days = (commits: DbRepoCommit[]): CommitGraphData[] => {
 };
 
 const RepoRow = ({repo}:RepoRowProps): JSX.Element => {
-  const { name, owner: handle, owner_avatar: ownerAvatar, openPrsCount, closedPrsCount, draftPrsCount,mergedPrsCount, spamPrsCount, churn, churnTotalCount, churnDirection } = repo;
+  const { name, owner: handle, owner_avatar: ownerAvatar, openPrsCount, closedPrsCount, draftPrsCount, mergedPrsCount, spamPrsCount, churn, churnTotalCount, churnDirection, prVelocityCount } = repo;
   const { data: contributorData, meta: contributorMeta } = useContributionsList(repo.id, "", "updated_at");
-  const { data: commitsData, meta: commitMeta } = useRepositoryCommits(repo.id, true);
-  const { meta: prMeta } = useRepositoryPRs(repo.id);
+  const { data: commitsData, meta: commitMeta } = useRepositoryCommits(repo.id);
 
   const days = getCommitsLast30Days(commitsData);
   const last30days = [
@@ -94,7 +93,7 @@ const RepoRow = ({repo}:RepoRowProps): JSX.Element => {
 
     {/* Column: PR Velocity */}
     <div className={`${classNames.cols.prVelocity}`}>
-      <div>{ prMeta.itemCount } PR{ prMeta.itemCount === 1 ? "" : "s" }</div>
+      <div>{ prVelocityCount ?? 0 } PR{ prVelocityCount === 1 ? "" : "s" }</div>
       <Pill text="10%" size="small" color="green" />
     </div>
 
