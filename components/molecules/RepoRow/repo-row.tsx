@@ -6,7 +6,7 @@ import Pill from "components/atoms/Pill/pill";
 import PullRequestOverview from "../PullRequestOverview/pull-request-overview";
 import Avatar from "components/atoms/Avatar/avatar";
 import Sparkline from "components/atoms/Sparkline/sparkline";
-import { truncateString } from "lib/utils/truncate-string";
+
 
 interface RepoRowProps {
   repo: RepositoriesRows;
