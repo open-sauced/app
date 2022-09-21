@@ -22,7 +22,7 @@ interface CommitGraphData {
   y: number;
 }
 
-const getActivity = (total?: number, loading: boolean) => {
+const getActivity = (total?: number, loading?: boolean) => {
   if (total === undefined || loading) {
     return "-";
   }
