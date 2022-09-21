@@ -44,7 +44,7 @@ const RepoRowMobile = ({ repo }: RepoRowProps): JSX.Element => {
             />
           </div>
           <div>
-            <div onClick={(e) => setTableOpen(!tableOpen)} className="border rounded-md p-1 flex items-center justify-between ">
+            <div onClick={() => setTableOpen(!tableOpen)} className="border rounded-md p-1 flex items-center justify-between ">
               {tableOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}
             </div>
           </div>

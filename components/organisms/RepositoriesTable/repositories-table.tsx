@@ -57,7 +57,7 @@ export const classNames = {
     spam: "flex items-center gap-3 flex-1",
     contributors: "flex-1",
     last30days: "flex-1"
-  }
+  } 
 };
 
 const RepositoriesTable = (props: RepositoriesTableProps): JSX.Element => {
