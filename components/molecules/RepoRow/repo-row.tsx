@@ -1,4 +1,4 @@
-import { ArrowTrendingDownIcon, ArrowTrendingUpIcon } from "@heroicons/react/24/solid";
+import { ArrowTrendingDownIcon, ArrowTrendingUpIcon, MinusSmallIcon } from "@heroicons/react/24/solid";
 import StackedAvatar from "components/molecules/StackedAvatar/stacked-avatar";
 import { RepositoriesRows } from "components/organisms/RepositoriesTable/repositories-table";
 
@@ -32,10 +32,10 @@ const getActivity = (total?: number, loading?: boolean) => {
   }
 
   if (total >= 20 && total <= 80) {
-    return <Pill text="Medium" color="yellow" />;
+    return <Pill icon={<MinusSmallIcon color="black" className="h-4 w-4" />} text="Medium" color="yellow" />;
   }
 
-  return <Pill  icon={<ArrowTrendingDownIcon color="red" className="h-4 w-4" />} text="Low" color="red" />;
+  return <Pill icon={<ArrowTrendingDownIcon color="red" className="h-4 w-4" />} text="Low" color="red" />;
 };
 
 const getCommitsLast30Days = (commits: DbRepoCommit[]): CommitGraphData[] => {
