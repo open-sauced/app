@@ -55,8 +55,8 @@ export const classNames = {
     prVelocity: "flex justify-center  items-center gap-3 flex-1",
     spam: "flex items-center gap-3 flex-1",
     contributors: "flex-1",
-    last30days: "flex-1",
-  },
+    last30days: "flex-1"
+  }
 };
 
 const RepositoriesTable = (props: RepositoriesTableProps): JSX.Element => {
@@ -98,7 +98,7 @@ const MobileRepoTable = ({ listOfRepositories, meta }: RepositoriesTableProps): 
                 spamPrsCount,
                 churn,
                 churnTotalCount,
-                churnDirection,
+                churnDirection
               },
               index
             ) => (
