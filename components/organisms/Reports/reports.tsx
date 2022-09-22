@@ -43,7 +43,7 @@ const Reports = (): JSX.Element => {
   };
 
   return (
-    <section className="flex flex-col w-full py-4 px-2 md:px-4 justify-center">
+    <section className="flex flex-col w-full py-4 px-2 md:px-4 justify-center items-center">
       <div className="max-w-4xl">
         <Title className="!font-medium relative" level={3}>
           Contributions Insights
