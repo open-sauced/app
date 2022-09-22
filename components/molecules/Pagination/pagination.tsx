@@ -1,3 +1,4 @@
+import { useMediaQuery } from "lib/hooks/useMediaQuery";
 import humanizeNumber from "lib/utils/humanizeNumber";
 import React, { useState } from "react";
 import { RiArrowLeftSLine } from "react-icons/ri";
@@ -38,11 +39,13 @@ const Pagination = ({
     onPageChange(page - 1);
   };
 
+  const isNotMobile: boolean = useMediaQuery("(min-width: 768px)");
+
   return (
     <div className=" w-max flex gap-x-4 items-center ">
       <div className="flex items-center gap-x-4">
         <button className="text-light-slate-9 disabled:text-light-slate-7" disabled={!hasPreviousPage ? true : false} onClick={() => handlePrev()}>
-          <RiArrowLeftSLine onClick={() => handlePrev()} className="text-lg  " />
+          <RiArrowLeftSLine onClick={() => handlePrev()} className={`${!isNotMobile ? "text-2xl" : "text-lg"}`} />
         </button>
         {pages.map((page, index) => {
           return (
@@ -63,7 +66,7 @@ const Pagination = ({
         })}
 
         <button  className="text-light-slate-9 disabled:text-light-slate-7" disabled={!hasNextPage ? true : false} onClick={() => handleNext()}>
-          <RiArrowRightSLine className="text-lg" />
+          <RiArrowRightSLine className={`${!isNotMobile ? "text-2xl" : "text-lg"}`} />
         </button>
       </div>
       <div
