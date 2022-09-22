@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.6.1-beta.3](https://github.com/open-sauced/insights/compare/v1.6.1-beta.2...v1.6.1-beta.3) (2022-09-22)
+
+
+### 🎨 Styles
+
+* added hover state style to footer links ([#420](https://github.com/open-sauced/insights/issues/420)) ([3aa5f17](https://github.com/open-sauced/insights/commit/3aa5f1785df89fd7562f41478719835eb83377ee))
+* refactor show us button style to match design ([#419](https://github.com/open-sauced/insights/issues/419)) ([b6c21b1](https://github.com/open-sauced/insights/commit/b6c21b153c136ed7d1ae9a2ac243232b71fb7e66)), closes [#408](https://github.com/open-sauced/insights/issues/408)
+
 ### [1.6.1-beta.2](https://github.com/open-sauced/insights/compare/v1.6.1-beta.1...v1.6.1-beta.2) (2022-09-21)
 
 
