@@ -4,31 +4,23 @@ import Title from "components/atoms/Typography/title";
 import Text from "components/atoms/Typography/text";
 import { Report } from "interfaces/report-type";
 import { CSVLink } from "react-csv";
+import TableTitle from "components/atoms/TableTitle/table-title";
 
 interface ReportsHistoryProps {
   reportList?: Report[];
 }
 
 const ReportsHistory = ({ reportList }: ReportsHistoryProps): JSX.Element => {
-  const heading = <Title level={5} className="!text-light-slate-9 uppercase">
-    <div className="flex justify-between w-full gap-2">
-      <div className="w-2/5 md:w-2/5 text-xs font-semibold text-slate-400 tracking-wide uppercase">
-        report name
-      </div>
-      <div className="w-1/5 text-xs font-semibold text-slate-400 tracking-wide uppercase">
-        issue date
-      </div>
-      <div className="w-1/5 text-xs font-semibold text-slate-400 tracking-wide uppercase">
-        format
-      </div>
-      <div className="w-2/5 text-xs font-semibold text-slate-400 tracking-wide uppercase">
-        {null}
-      </div>
-    </div>
-  </Title>;
   
   return (
-    <Card heading={heading}>
+    <div className="flex flex-col bg-white border rounded-lg overflow-hidden">
+      <div className="flex justify-between gap-2 px-3 md:px-6 py-3 rounded-t-lg bg-light-slate-3">
+          <TableTitle text={"Report Name"} />
+          <TableTitle text={"Issue Date"} />
+          <TableTitle text={"Format"} />
+          <TableTitle text={"Actions"} />
+      </div>
+
       <div className="flex flex-col justify-between w-full gap-2">
         {reportList &&
           reportList.map(({reportDate, reportName, reportFormat, isGenerated, data}, index) => 
@@ -62,7 +54,8 @@ const ReportsHistory = ({ reportList }: ReportsHistoryProps): JSX.Element => {
           </Text>
         }
       </div>
-    </Card>
+    </div>
+
   );
 };
 
