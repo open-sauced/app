@@ -53,11 +53,16 @@ const Reports = (): JSX.Element => {
           filterList={filterList}
           callback={handleFilterClick}
         />
-        <Title className="!font-medium relative mt-16" level={3}>
-          Download History
-        </Title>
-        <hr className="border-light-slate-6 my-4" />
-        <ReportsHistory reportList={reports}/>
+
+        { reports.length > 0 &&
+          <>
+            <Title className="!font-medium relative mt-16" level={3}>
+              Download History
+            </Title>
+            <hr className="border-light-slate-6 my-4" />
+            <ReportsHistory reportList={reports}/>
+          </>
+        }
       </div>
     </section>
   );
