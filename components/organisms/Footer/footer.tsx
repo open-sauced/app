@@ -13,9 +13,9 @@ import { FaDev } from "react-icons/fa";
 
 const footerContext = [
   {
-    privacy: { url: "", text: "Privacy" },
-    terms: { url: "", text: "Terms" },
-    status: { url: "", text: "Status" }
+    privacy: { url: "https://app.termly.io/document/privacy-policy/5e303854-d262-468a-80ec-54b645d01c2e", text: "Privacy" },
+    terms: { url: "https://app.termly.io/document/terms-of-use-for-saas/03e4e1c1-53ad-4fc4-b415-5c3f0e8c25ef", text: "Terms" },
+    status: { url: "https://api.opensauced.pizza/docs#/Health%20check%20service/healthStatusWeb", text: "Status" }
   },
   {
     hot: { url: "https://hot.opensauced.pizza", text: "hot.opensauced.pizza" },
