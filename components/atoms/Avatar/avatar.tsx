@@ -33,7 +33,7 @@ export default Avatar;
 const CustomAvatar = ({ className, avatarURL, initials, alt, size, hasBorder, isCircle }: AvatarProps): JSX.Element => {
   return (
     <div
-      className={`inline-flex bg-orange-500 justify-center relative items-center w-max h-max overflow-hidden 
+      className={`inline-flex ${avatarURL ? "" : "bg-orange-500"} justify-center relative items-center w-max h-max overflow-hidden
         ${ className ?? " " }
         ${ isCircle ? "rounded-full " : "rounded-lg "}
         ${ hasBorder ? "ring-2 ring-slate-200 " : ""}
@@ -57,7 +57,7 @@ const CustomAvatar = ({ className, avatarURL, initials, alt, size, hasBorder, is
 const DefaultAvatar = ({ className, avatarURL, initials, alt, size, hasBorder, isCircle }: AvatarProps): JSX.Element => {
   return (
     <div
-      className={`inline-flex bg-orange-500 justify-center relative items-center overflow-hidden 
+      className={`inline-flex ${avatarURL ? "" : "bg-orange-500"} justify-center relative items-center overflow-hidden
         ${ isCircle ? "rounded-full " : "rounded-lg "}
         ${ hasBorder ? "ring-2 ring-slate-200 " : ""} 
         ${size === "sm" ? "w-6 h-6 " : size === "base" ? "w-8 h-8 " : size === "lg" ? "w-12 h-12 " : "w-8 h-8 "}
