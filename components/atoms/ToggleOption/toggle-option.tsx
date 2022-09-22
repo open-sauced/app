@@ -17,7 +17,7 @@ const ToggleOption = ({ optionText, withIcon, checked, handleToggle }: ToogleOpt
       <span className="text-light-slate-11">{optionText}</span>
       {withIcon && (
         <HiInformationCircle
-          title="An outside contributor is a person who is not a member of repositories/organization"
+          title="An outside contributor is not a member the organization"
           className="text-light-slate-9"
         />
       )}
