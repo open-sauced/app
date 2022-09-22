@@ -1,17 +1,10 @@
 import { Serie } from "@nivo/line";
 import TableTitle from "components/atoms/TableTitle/table-title";
-import PullRequestOverview from "components/molecules/PullRequestOverview/pull-request-overview";
 import RepoRow from "components/molecules/RepoRow/repo-row";
-import TableRepositoryName from "components/molecules/TableRepositoryName/table-repository-name";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
 import { StaticImageData } from "next/image";
-import { useRef, useState } from "react";
-import { ChevronUpIcon } from "@primer/octicons-react";
-import { ChevronDownIcon } from "@primer/octicons-react";
 import Pagination from "../../molecules/Pagination/pagination";
 import PaginationResults from "../../molecules/PaginationResults/pagination-result";
-import Pill from "components/atoms/Pill/pill";
-import RepoRowMobile from "components/molecules/RepoRow/repo-row-mobile";
 
 export interface ContributorsRows {
   name?: string;
@@ -37,11 +30,11 @@ export interface RepositoriesRows {
   churn?: string;
   spamPrsCount?: number;
   prVelocityCount?: number;
-  prVelocity?:{
-    amount?: string
-    churn?: string
-    churnDirection?: string
-  }
+  prVelocity?: {
+    amount?: string;
+    churn?: string;
+    churnDirection?: string;
+  };
   contributors?: ContributorsRows[];
   last30days?: Serie[];
 }
@@ -63,10 +56,11 @@ export const classNames = {
     spam: "flex items-center gap-3 flex-1",
     contributors: "flex-1 items-center",
     last30days: "flex-1"
-  } 
+  }
 };
 
-const RepositoriesTable: React.FC<RepositoriesTableProps> = ({ listOfRepositories, meta, page, setPage }) => {
+const RepositoriesTable = (props: RepositoriesTableProps): JSX.Element => {
+  const isNotMobile: boolean = useMediaQuery("(min-width: 768px)");
   return (
     <div className="flex flex-col rounded-lg overflow-hidden border">
       {isNotMobile ? <DesktopRepoTable {...props} /> : <MobileRepoTable {...props} />}
@@ -74,8 +68,7 @@ const RepositoriesTable: React.FC<RepositoriesTableProps> = ({ listOfRepositorie
   );
 };
 
-const MobileRepoTable = ({ listOfRepositories, meta }: RepositoriesTableProps): JSX.Element => {
-  
+const MobileRepoTable = ({ listOfRepositories, meta, page, setPage }: RepositoriesTableProps): JSX.Element => {
   return (
     <>
       <div className="flex justify-between py-4 px-6 bg-light-slate-3 gap-2">
@@ -89,15 +82,42 @@ const MobileRepoTable = ({ listOfRepositories, meta }: RepositoriesTableProps): 
       <section className="flex  flex-col">
         {Array.isArray(listOfRepositories) &&
           listOfRepositories.length > 0 &&
-          listOfRepositories.map((item, index) => (
-            <RepoRowMobile key={`${item.handle}/${item.name}/${index}`} repo={item} />
-          ))}
+          listOfRepositories.map((item, index) => <RepoRow key={`${item.handle}/${item.name}/${index}`} repo={item} />)}
       </section>
+
+      {/* Table Footer */}
+      <div className="py-4 px-6 flex justify-between items-center">
+        <div>
+          <div className="">
+            <PaginationResults
+              from={page === 1 ? page : page * meta.limit}
+              to={page === 1 ? meta.limit : page * meta.limit + meta.limit}
+              total={meta.itemCount}
+              entity={"repos"}
+            />
+          </div>
+        </div>
+        <div>
+          <div className="flex items-center gap-4">
+            <Pagination
+              pages={[]}
+              hasNextPage={meta.hasNextPage}
+              hasPreviousPage={meta.hasPreviousPage}
+              totalPage={meta.pageCount}
+              page={meta.page}
+              onPageChange={function (page: number): void {
+                setPage(page);
+              }}
+              divisor={false}
+            />
+          </div>
+        </div>
+      </div>
     </>
   );
 };
 
-const DesktopRepoTable = ({ listOfRepositories, meta }: RepositoriesTableProps): JSX.Element => {
+const DesktopRepoTable = ({ listOfRepositories, meta, page, setPage }: RepositoriesTableProps): JSX.Element => {
   return (
     <>
       {/* Table Header */}
@@ -138,7 +158,7 @@ const DesktopRepoTable = ({ listOfRepositories, meta }: RepositoriesTableProps):
         <div className="">
           <PaginationResults
             from={page === 1 ? page : page * meta.limit}
-            to={(page === 1 ? meta.limit : page * meta.limit + meta.limit)}
+            to={page === 1 ? meta.limit : page * meta.limit + meta.limit}
             total={meta.itemCount}
             entity={"repositories"}
           />
