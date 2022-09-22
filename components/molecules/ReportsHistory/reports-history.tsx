@@ -1,6 +1,4 @@
 import Button from "components/atoms/Button/button";
-import Card from "components/atoms/Card/card";
-import Title from "components/atoms/Typography/title";
 import Text from "components/atoms/Typography/text";
 import { Report } from "interfaces/report-type";
 import { CSVLink } from "react-csv";
