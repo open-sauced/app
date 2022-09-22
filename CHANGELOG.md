@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.7.0-beta.5](https://github.com/open-sauced/insights/compare/v1.7.0-beta.4...v1.7.0-beta.5) (2022-09-22)
+
+
+### 🐛 Bug Fixes
+
+* update PR overview calculation to use active PRs in last 30 days / total PRs ([#423](https://github.com/open-sauced/insights/issues/423)) ([05b48ff](https://github.com/open-sauced/insights/commit/05b48ffb4d50a0041060e07d78ab7e5f9eb79471)), closes [#418](https://github.com/open-sauced/insights/issues/418)
+
 ## [1.7.0-beta.4](https://github.com/open-sauced/insights/compare/v1.7.0-beta.3...v1.7.0-beta.4) (2022-09-22)
 
 
