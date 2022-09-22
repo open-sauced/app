@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.7.0-beta.1](https://github.com/open-sauced/insights/compare/v1.6.1-beta.3...v1.7.0-beta.1) (2022-09-22)
+
+
+### 🍕 Features
+
+* connect repositories page to API data and pagination ([#405](https://github.com/open-sauced/insights/issues/405)) ([634de8e](https://github.com/open-sauced/insights/commit/634de8ecf5f2eb5ce5967b5eac2b38262b5fc09c)), closes [#320](https://github.com/open-sauced/insights/issues/320) [#384](https://github.com/open-sauced/insights/issues/384)
+
 ### [1.6.1-beta.3](https://github.com/open-sauced/insights/compare/v1.6.1-beta.2...v1.6.1-beta.3) (2022-09-22)
 
 
