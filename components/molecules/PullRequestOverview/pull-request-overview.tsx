@@ -1,3 +1,4 @@
+import { ArrowDownIcon, ArrowUpIcon } from "@primer/octicons-react";
 import React from "react";
 import PullRequestOverviewChart from "../../atoms/PullRequestOverviewChart/pull-request-overview-chart";
 
@@ -20,14 +21,14 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({ className, op
 
         {/* Total Number of Pull Requests */}
         <div className="font-medium text-base text-light-slate-11 tracking-tight">
-          {totalPullRequests} {`PR${totalPullRequests > 1 ? "s" : ""}`}
+          {totalPullRequests} {`PR${totalPullRequests === 1 ? "" : "s"}`}
         </div>
 
         {/* Churn Number compared with previous date (default: last 30 days vs. previous 30 days range) */}
         <div className={`
           ${churnDirection === "up" ? "text-light-grass-10" : "text-light-red-10"}
           font-medium text-base tracking-tight`}>
-          {churnDirection === "up" ? "+" : "-"}{churn}%
+          {churnDirection === "up" ? <ArrowUpIcon size={14} /> : <ArrowDownIcon size={14} />}{churn || 0}%
         </div>
       </div>
 

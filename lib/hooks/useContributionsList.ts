@@ -5,9 +5,12 @@ interface PaginatedContributorsResponse {
   readonly meta: Meta;
 }
 
-const useContributionsList = (limit = "") => {
+const useContributionsList = (repoId: string, limit = "", orderBy = "") => {
   //The endpoint for all Hacktoberfest contributions doesn't exist yet so will substitute this for now
-  const endpointString = `repos/769/contributions?orderBy=last_commit_time${limit === "" ? limit : `&limit=${limit}`}`;
+  const baseEndpoint = `repos/${repoId}/contributions`;
+  const limitQuery = `orderBy=last_commit_time${limit === "" ? limit : `&limit=${limit}`}`;
+  const orderByQuery = orderBy ? `&updated_at=${orderBy}` : "";
+  const endpointString = `${baseEndpoint}?${limitQuery}${orderByQuery}`;
 
   const { data, error, mutate } = useSWR<PaginatedContributorsResponse, Error>(endpointString);
 

@@ -10,7 +10,7 @@ import { useMediaQuery } from "lib/hooks/useMediaQuery";
 
 export const Dashboard = (): JSX.Element => {
   // This is mock data for the dashboard. Not intended to be the final implementation.
-  const { data: contributorData, isError: contributorError } = useContributionsList("35");
+  const { data: contributorData, isError: contributorError } = useContributionsList("769", "35");
 
   const { meta: repoMetaData, isError: repoError } = useRepositoriesList();
   const [itemCountText, setItemCountText] = useState("Loading...");

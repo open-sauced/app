@@ -1,3 +1,4 @@
+import { useState } from "react";
 import useSWR from "swr";
 
 interface PaginatedRepoResponse {
@@ -6,15 +7,18 @@ interface PaginatedRepoResponse {
 }
 
 const useRepositoriesList = () => {
-  const { data, error, mutate } = useSWR<PaginatedRepoResponse, Error>("repos/list");
+  const [page, setPage] = useState(1);
+  const { data, error, mutate } = useSWR<PaginatedRepoResponse, Error>(`repos/list?page=${page}`);
 
   return {
     data: data?.data ?? [],
-    meta: data?.meta ?? { itemCount: 0, limit: 0, page: 0,hasNextPage: false , hasPreviousPage: false, pageCount: 0},
+    meta: data?.meta ?? { itemCount: 0, limit: 0, page: 0, hasNextPage: false, hasPreviousPage: false, pageCount: 0 },
     isLoading: !error && !data,
     isError: !!error,
-    mutate
+    mutate,
+    page,
+    setPage
   };
 };
 
-export {useRepositoriesList};
+export { useRepositoriesList };

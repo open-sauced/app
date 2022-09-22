@@ -25,6 +25,7 @@ const previewMeta = {
 };
 const previewRepositories = [
   {
+    id: "1",
     name: "Insights",
     handle: "opensauced",
     activity: "High",
@@ -141,6 +142,7 @@ const previewRepositories = [
     ]
   },
   {
+    id: "2",
     name: "cli",
     handle: "npm",
     activity: "High",
@@ -257,6 +259,7 @@ const previewRepositories = [
     ]
   },
   {
+    id: "3",
     name: "flowy",
     handle: "alyssaxuu",
     activity: "High",

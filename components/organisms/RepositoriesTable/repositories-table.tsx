@@ -6,13 +6,16 @@ import Pagination from "../../molecules/Pagination/pagination";
 import PaginationResults from "../../molecules/PaginationResults/pagination-result";
 
 export interface ContributorsRows {
+  name?: string;
   avatarURL?: string | StaticImageData;
   initials?: string;
   alt?: string;
 }
 
 export interface RepositoriesRows {
+  id: string;
   name?: string;
+  owner?: string;
   handle?: string;
   activity?: string;
   owner_avatar?: string;
@@ -25,6 +28,7 @@ export interface RepositoriesRows {
   amount?: string;
   churn?: string;
   spamPrsCount?: number;
+  prVelocityCount?: number;
   prVelocity?:{
     amount?: string
     churn?: string
@@ -37,6 +41,8 @@ export interface RepositoriesRows {
 interface RepositoriesTableProps {
   listOfRepositories: RepositoriesRows[];
   meta: Meta;
+  page: number;
+  setPage: Function;
 }
 
 export const classNames = {
@@ -47,12 +53,12 @@ export const classNames = {
     prOverview: "flex-1",
     prVelocity: "flex justify-center  items-center gap-3 flex-1",
     spam: "flex items-center gap-3 flex-1",
-    contributors: "flex-1",
+    contributors: "flex-1 items-center",
     last30days: "flex-1"
   }
 };
 
-const RepositoriesTable: React.FC<RepositoriesTableProps> = ({ listOfRepositories, meta }) => {
+const RepositoriesTable: React.FC<RepositoriesTableProps> = ({ listOfRepositories, meta, page, setPage }) => {
   return (
     <div className="flex flex-col rounded-lg overflow-hidden border">
       {/* Table Header */}
@@ -92,9 +98,9 @@ const RepositoriesTable: React.FC<RepositoriesTableProps> = ({ listOfRepositorie
       <div className="flex justify-between items-center py-3 px-6 border-t">
         <div className="">
           <PaginationResults
-            from={meta.page}
-            to={meta.page + meta.limit - 1}
-            total={meta.pageCount}
+            from={page === 1 ? page : page * meta.limit}
+            to={(page === 1 ? meta.limit : page * meta.limit + meta.limit)}
+            total={meta.itemCount}
             entity={"repositories"}
           />
         </div>
@@ -102,10 +108,12 @@ const RepositoriesTable: React.FC<RepositoriesTableProps> = ({ listOfRepositorie
         <div className="flex items-center gap-4">
           <Pagination
             pages={[]}
+            hasNextPage={meta.hasNextPage}
+            hasPreviousPage={meta.hasPreviousPage}
             totalPage={meta.pageCount}
             page={meta.page}
             onPageChange={function (page: number): void {
-              throw new Error("Function not implemented.");
+              setPage(page);
             }}
             goToPage
           />
