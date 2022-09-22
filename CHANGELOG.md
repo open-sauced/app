@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.7.0-beta.4](https://github.com/open-sauced/insights/compare/v1.7.0-beta.3...v1.7.0-beta.4) (2022-09-22)
+
+
+### 🐛 Bug Fixes
+
+* add tooltip message on information icon hover ([#421](https://github.com/open-sauced/insights/issues/421)) ([12ff851](https://github.com/open-sauced/insights/commit/12ff85193d0ab75f61e6e0eda09d3864b2d3ca8f)), closes [#366](https://github.com/open-sauced/insights/issues/366)
+
 ## [1.7.0-beta.3](https://github.com/open-sauced/insights/compare/v1.7.0-beta.2...v1.7.0-beta.3) (2022-09-22)
 
 
