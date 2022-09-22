@@ -24,7 +24,7 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({ className, op
 
         {/* Total Number of Pull Requests */}
         <div className="font-medium text-base text-light-slate-11 tracking-tight">
-          -{totalPullRequests} {`PR${totalPullRequests === 1 ? "" : "s"}`}
+          {totalPullRequests} {`PR${totalPullRequests === 1 ? "" : "s"}`}
         </div>
 
         {/* Churn Number compared with previous date (default: last 30 days vs. previous 30 days range) */}
