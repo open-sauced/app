@@ -46,7 +46,7 @@ const Reports = (): JSX.Element => {
     <section className="flex flex-col w-full py-4 px-2 md:px-4 justify-center items-center">
       <div className="max-w-4xl">
         <Title className="!font-medium relative" level={3}>
-          Contributions Insights
+          Contribution Insights
         </Title>
         <hr className="border-light-slate-6 my-4" />
         <SelectReportsFilter
