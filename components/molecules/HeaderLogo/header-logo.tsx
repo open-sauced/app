@@ -5,11 +5,11 @@ import openSaucedImg from "../../../public/openSauced-icon.png";
 import openSaucedImgWithBg from "../../../public/open-sourced-with-bg-icon.png";
 
 interface HeaderLogoProps {
-  loginScreen?: boolean;
+  textIsBlack?: boolean;
   withBg: boolean;
 }
 
-const HeaderLogo: React.FC<HeaderLogoProps> = ({ loginScreen, withBg = false }) => {
+const HeaderLogo: React.FC<HeaderLogoProps> = ({ textIsBlack, withBg = false }) => {
   
   return (
     <div className="flex items-center py-2 gap-2">
@@ -21,7 +21,7 @@ const HeaderLogo: React.FC<HeaderLogoProps> = ({ loginScreen, withBg = false }) 
         src={withBg ? openSaucedImgWithBg : openSaucedImg}
       />
       <Text
-        className={`font-semibold text-base hidden xs:block ${loginScreen ? "!text-black" : "!text-white"}`}
+        className={`font-semibold text-base hidden xs:block ${textIsBlack ? "!text-black" : "!text-white"}`}
       >
           OpenSauced
       </Text>
