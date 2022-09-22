@@ -10,10 +10,13 @@ interface PullRequestOverviewProps {
   draft?: number;
   churn?: number;
   churnDirection?: string;
+  prActiveCount?: number;
 }
 
-const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({ className, open, merged, closed, draft, churn, churnDirection = "down" }) => {
+const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({ className, open, merged, closed, draft, churn, churnDirection = "down", prActiveCount }) => {
   const totalPullRequests = (!!open ? open : 0) + (!!merged ? merged : 0) + (!!closed ? closed : 0) + (!!draft ? draft : 0);
+  const prCount = prActiveCount || 0;
+  const activePrPercentage = totalPullRequests > 0 ? Math.round((prCount/totalPullRequests) * 100) : 0;
 
   return (
     <div className="flex flex-col gap-1">
@@ -28,7 +31,7 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({ className, op
         <div className={`
           ${churnDirection === "up" ? "text-light-grass-10" : "text-light-red-10"}
           font-medium text-base tracking-tight`}>
-          {churnDirection === "up" ? <ArrowUpIcon size={14} /> : <ArrowDownIcon size={14} />}{churn || 0}%
+          {churnDirection === "up" ? <ArrowUpIcon size={14} /> : <ArrowDownIcon size={14} />}{activePrPercentage || 0}%
         </div>
       </div>
 

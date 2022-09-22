@@ -29,6 +29,7 @@ export interface RepositoriesRows {
   churn?: string;
   spamPrsCount?: number;
   prVelocityCount?: number;
+  prActiveCount?: number;
   prVelocity?:{
     amount?: string
     churn?: string
