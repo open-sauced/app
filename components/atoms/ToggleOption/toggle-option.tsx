@@ -4,10 +4,10 @@ import { HiInformationCircle } from "react-icons/hi";
 interface ToogleOptionProps {
   optionText: string;
   withIcon?: boolean;
-  checked: boolean
-  handleToggle: ()=> void;
+  checked: boolean;
+  handleToggle: () => void;
 }
-const ToggleOption = ({ optionText, withIcon , checked, handleToggle}: ToogleOptionProps): JSX.Element => {
+const ToggleOption = ({ optionText, withIcon, checked, handleToggle }: ToogleOptionProps): JSX.Element => {
   return (
     <div
       onClick={handleToggle}
@@ -15,7 +15,12 @@ const ToggleOption = ({ optionText, withIcon , checked, handleToggle}: ToogleOpt
     >
       <ToggleSwitch handleToggle={handleToggle} name={optionText} checked={checked} />
       <span className="text-light-slate-11">{optionText}</span>
-      {withIcon && <HiInformationCircle className="text-light-slate-9" />}
+      {withIcon && (
+        <HiInformationCircle
+          title="An outside contributor is a person who is not a member of repositories/organization"
+          className="text-light-slate-9"
+        />
+      )}
     </div>
   );
 };
