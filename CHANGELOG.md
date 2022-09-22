@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.7.0-beta.2](https://github.com/open-sauced/insights/compare/v1.7.0-beta.1...v1.7.0-beta.2) (2022-09-22)
+
+
+### 🍕 Features
+
+* add privacy and license terms ([#422](https://github.com/open-sauced/insights/issues/422)) ([0dcc161](https://github.com/open-sauced/insights/commit/0dcc16129c7063dfb0d02e648beefd821f2c7dbb)), closes [#377](https://github.com/open-sauced/insights/issues/377)
+
 ## [1.7.0-beta.1](https://github.com/open-sauced/insights/compare/v1.6.1-beta.3...v1.7.0-beta.1) (2022-09-22)
 
 
