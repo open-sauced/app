@@ -5,6 +5,27 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.7.0-beta.5](https://github.com/open-sauced/insights/compare/v1.7.0-beta.4...v1.7.0-beta.5) (2022-09-22)
+
+
+### 🐛 Bug Fixes
+
+* update PR overview calculation to use active PRs in last 30 days / total PRs ([#423](https://github.com/open-sauced/insights/issues/423)) ([05b48ff](https://github.com/open-sauced/insights/commit/05b48ffb4d50a0041060e07d78ab7e5f9eb79471)), closes [#418](https://github.com/open-sauced/insights/issues/418)
+
+## [1.7.0-beta.4](https://github.com/open-sauced/insights/compare/v1.7.0-beta.3...v1.7.0-beta.4) (2022-09-22)
+
+
+### 🐛 Bug Fixes
+
+* add tooltip message on information icon hover ([#421](https://github.com/open-sauced/insights/issues/421)) ([12ff851](https://github.com/open-sauced/insights/commit/12ff85193d0ab75f61e6e0eda09d3864b2d3ca8f)), closes [#366](https://github.com/open-sauced/insights/issues/366)
+
+## [1.7.0-beta.3](https://github.com/open-sauced/insights/compare/v1.7.0-beta.2...v1.7.0-beta.3) (2022-09-22)
+
+
+### 🧑‍💻 Code Refactoring
+
+* check avatarURL for orange avatar background and update pill colors ([#424](https://github.com/open-sauced/insights/issues/424)) ([c821cd5](https://github.com/open-sauced/insights/commit/c821cd53243f20255e2f5e7f22ad4fe8e0b55246)), closes [#414](https://github.com/open-sauced/insights/issues/414) [#416](https://github.com/open-sauced/insights/issues/416)
+
 ## [1.7.0-beta.2](https://github.com/open-sauced/insights/compare/v1.7.0-beta.1...v1.7.0-beta.2) (2022-09-22)
 
 

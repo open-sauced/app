@@ -88,8 +88,10 @@ const getPrsSpam = (total: number, spam: number): number => {
   return result;
 };
 
+
 const RepoRow = ({repo}:RepoProps): JSX.Element => {
   const { name, owner: handle, owner_avatar: ownerAvatar, openPrsCount, closedPrsCount, draftPrsCount, mergedPrsCount, spamPrsCount } = repo;
+
   const { data: contributorData, meta: contributorMeta } = useContributionsList(repo.id, "", "updated_at");
   const { data: commitsData, meta: commitMeta, isLoading: commitLoading } = useRepositoryCommits(repo.id);
   const totalPrs = getTotalPrs(openPrsCount, mergedPrsCount, closedPrsCount, draftPrsCount);
@@ -111,6 +113,7 @@ const RepoRow = ({repo}:RepoProps): JSX.Element => {
   return (<>
     {isNotMobile ? <RepoRowDesktop  {...repoRowProps} />: <RepoRowMobile  {...repoRowProps}/>}
   </>)
+
   ;
 };
 export default RepoRow;

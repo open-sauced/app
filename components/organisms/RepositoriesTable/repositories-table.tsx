@@ -35,6 +35,7 @@ export interface RepositoriesRows {
     churn?: string;
     churnDirection?: string;
   };
+
   contributors?: ContributorsRows[];
   last30days?: Serie[];
 }
