@@ -13,9 +13,9 @@ import { FaDev } from "react-icons/fa";
 
 const footerContext = [
   {
-    privacy: { url: "", text: "Privacy" },
-    terms: { url: "", text: "Terms" },
-    status: { url: "", text: "Status" }
+    privacy: { url: "https://app.termly.io/document/privacy-policy/5e303854-d262-468a-80ec-54b645d01c2e", text: "Privacy" },
+    terms: { url: "https://app.termly.io/document/terms-of-use-for-saas/03e4e1c1-53ad-4fc4-b415-5c3f0e8c25ef", text: "Terms" },
+    status: { url: "https://api.opensauced.pizza/docs#/Health%20check%20service/healthStatusWeb", text: "Status" }
   },
   {
     hot: { url: "https://hot.opensauced.pizza", text: "hot.opensauced.pizza" },
@@ -23,19 +23,19 @@ const footerContext = [
   },
   {
     socials: [
-      { url: "https://twitter.com/saucedopen", icon: <AiOutlineTwitter className="text-2xl text-light-slate-9" /> },
-      { url: "https://github.com/open-sauced", icon: <AiOutlineGithub className="text-2xl text-light-slate-9" /> },
-      { url: "https://www.instagram.com/opensauced/", icon: <AiFillInstagram className="text-2xl text-light-slate-9" /> },
-      { url: "https://www.youtube.com/opensauced", icon: <AiFillYoutube className="text-2xl text-light-slate-9" /> },
-      { url: "https://discord.com/invite/U2peSNf23P", icon: <FaDiscord className="text-2xl text-light-slate-9" /> },
-      { url: "https://dev.to/opensauced/", icon: <FaDev className="text-2xl text-light-slate-9" /> }
+      { url: "https://twitter.com/saucedopen", icon: <AiOutlineTwitter className="text-2xl hover:text-light-slate-10 text-light-slate-9" /> },
+      { url: "https://github.com/open-sauced", icon: <AiOutlineGithub className="text-2xl hover:text-light-slate-10  text-light-slate-9" /> },
+      { url: "https://www.instagram.com/opensauced/", icon: <AiFillInstagram className="text-2xl hover:text-light-slate-10  text-light-slate-9" /> },
+      { url: "https://www.youtube.com/opensauced", icon: <AiFillYoutube className="text-2xl hover:text-light-slate-10  text-light-slate-9" /> },
+      { url: "https://discord.com/invite/U2peSNf23P", icon: <FaDiscord className="text-2xl hover:text-light-slate-10  text-light-slate-9" /> },
+      { url: "https://dev.to/opensauced/", icon: <FaDev className="text-2xl hover:text-light-slate-10  text-light-slate-9" /> }
     ]
   }
 ];
 
 const Footer = (): JSX.Element => {
   return (
-    <footer className="px-6 md:px-16 h-24 w-full bg-white ">
+    <footer className="px-6 md:px-16 h-24 w-full bg-white transition">
       <div className=" font-medium lg:border-t lg:py-8 lg:items-center lg:justify-between lg:gap-x-4 flex flex-col gap-y-4 lg:flex-row py-2 w-full">
         <div className="text-center lg:text-left justify-center gap-1 flex items-center">
           <div className="w-6 h-6 relative !min-w-[24px] min-h-[24px]">
@@ -47,22 +47,22 @@ const Footer = (): JSX.Element => {
           </Text>
         </div>
         <div className="flex lg:mr-auto lg:text-sm text-light-slate-11 justify-center gap-x-4">
-          <a className="px-2" target="_blank" href={footerContext[1].hot?.url} rel="noopener noreferrer">
+          <a className="px-2 hover:text-light-slate-12 " target="_blank" href={footerContext[1].hot?.url} rel="noopener noreferrer">
             {footerContext[1].hot?.text}
           </a>
-          <a className="px-2" target="_blank" href={footerContext[1].openSauced?.url} rel="noopener noreferrer">
+          <a className="px-2 hover:text-light-slate-12" target="_blank" href={footerContext[1].openSauced?.url} rel="noopener noreferrer">
             {footerContext[1].openSauced?.text}
           </a>
         </div>
         <div className="flex justify-center gap-x-4 ">
           <div className=" hidden lg:flex items-center border-r pr-4   gap-x-4 text-light-slate-11 text-sm">
-            <a className="px-2" href="" target="_blank">
+            <a className="px-2 hover:text-light-slate-12" href="" target="_blank">
               {footerContext[0].terms?.text}
             </a>
-            <a className="px-2" href="" target="_blank">
+            <a className="px-2 hover:text-light-slate-12" href="" target="_blank">
               {footerContext[0].privacy?.text}
             </a>
-            <a className="px-2" href="" target="_blank">
+            <a className="px-2 hover:text-light-slate-12" href="" target="_blank">
               {footerContext[0].status?.text}
             </a>
           </div>

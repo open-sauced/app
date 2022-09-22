@@ -6,7 +6,7 @@ import color from "lib/utils/color.json";
 
 const Contributors = (): JSX.Element =>{
   const contributorData = useContributorData();
-  const { data, isError, isLoading } = useContributionsList();
+  const { data, isError, isLoading } = useContributionsList("769");
 
   const freeCodeCamp = "freecodecamp";
   

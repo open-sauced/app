@@ -1,18 +1,20 @@
 {
   "name": "@open-sauced/insights",
-  "version": "1.6.1-beta.1",
+  "version": "1.7.0-beta.2",
   "lockfileVersion": 3,
   "requires": true,
   "packages": {
     "": {
       "name": "@open-sauced/insights",
-      "version": "1.6.1-beta.1",
+      "version": "1.7.0-beta.2",
       "hasInstallScript": true,
       "license": "MIT",
       "dependencies": {
         "@headlessui/react": "^1.6.6",
+        "@heroicons/react": "^2.0.11",
         "@nivo/core": "^0.80.0",
         "@nivo/line": "^0.80.0",
+        "@primer/octicons-react": "^17.5.0",
         "@radix-ui/react-context-menu": "^1.0.0",
         "@radix-ui/react-dropdown-menu": "^1.0.0",
         "@supabase/gotrue-js": "^1.22.22",
@@ -2756,6 +2758,14 @@
         "react-dom": "^16 || ^17 || ^18"
       }
     },
+    "node_modules/@heroicons/react": {
+      "version": "2.0.11",
+      "resolved": "https://registry.npmjs.org/@heroicons/react/-/react-2.0.11.tgz",
+      "integrity": "sha512-bASjOgSSaYj8HqXWsOqaBiB6ZLalE/g90WYGgZ5lPm4KCCG7wPXntY4kzHf5NrLh6UBAcnPwvbiw1Ne9GYfJtw==",
+      "peerDependencies": {
+        "react": ">= 16"
+      }
+    },
     "node_modules/@humanwhocodes/config-array": {
       "version": "0.10.4",
       "resolved": "https://registry.npmjs.org/@humanwhocodes/config-array/-/config-array-0.10.4.tgz",
@@ -4543,6 +4553,17 @@
       "dev": true,
       "engines": {
         "node": ">= 8"
+      }
+    },
+    "node_modules/@primer/octicons-react": {
+      "version": "17.5.0",
+      "resolved": "https://registry.npmjs.org/@primer/octicons-react/-/octicons-react-17.5.0.tgz",
+      "integrity": "sha512-7z/uwKn/3w+DHEMFynEfHLYPHMjFzvsL88plimWhXou1hD4lriCUTvp65uDvdpyLqKyq5luEupnQmU+RiBODog==",
+      "engines": {
+        "node": ">=8"
+      },
+      "peerDependencies": {
+        "react": ">=15"
       }
     },
     "node_modules/@radix-ui/primitive": {

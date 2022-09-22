@@ -5,6 +5,35 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.7.0-beta.2](https://github.com/open-sauced/insights/compare/v1.7.0-beta.1...v1.7.0-beta.2) (2022-09-22)
+
+
+### 🍕 Features
+
+* add privacy and license terms ([#422](https://github.com/open-sauced/insights/issues/422)) ([0dcc161](https://github.com/open-sauced/insights/commit/0dcc16129c7063dfb0d02e648beefd821f2c7dbb)), closes [#377](https://github.com/open-sauced/insights/issues/377)
+
+## [1.7.0-beta.1](https://github.com/open-sauced/insights/compare/v1.6.1-beta.3...v1.7.0-beta.1) (2022-09-22)
+
+
+### 🍕 Features
+
+* connect repositories page to API data and pagination ([#405](https://github.com/open-sauced/insights/issues/405)) ([634de8e](https://github.com/open-sauced/insights/commit/634de8ecf5f2eb5ce5967b5eac2b38262b5fc09c)), closes [#320](https://github.com/open-sauced/insights/issues/320) [#384](https://github.com/open-sauced/insights/issues/384)
+
+### [1.6.1-beta.3](https://github.com/open-sauced/insights/compare/v1.6.1-beta.2...v1.6.1-beta.3) (2022-09-22)
+
+
+### 🎨 Styles
+
+* added hover state style to footer links ([#420](https://github.com/open-sauced/insights/issues/420)) ([3aa5f17](https://github.com/open-sauced/insights/commit/3aa5f1785df89fd7562f41478719835eb83377ee))
+* refactor show us button style to match design ([#419](https://github.com/open-sauced/insights/issues/419)) ([b6c21b1](https://github.com/open-sauced/insights/commit/b6c21b153c136ed7d1ae9a2ac243232b71fb7e66)), closes [#408](https://github.com/open-sauced/insights/issues/408)
+
+### [1.6.1-beta.2](https://github.com/open-sauced/insights/compare/v1.6.1-beta.1...v1.6.1-beta.2) (2022-09-21)
+
+
+### 🎨 Styles
+
+* change text font and icon size to xs(12px) ([#401](https://github.com/open-sauced/insights/issues/401)) ([741288e](https://github.com/open-sauced/insights/commit/741288e19a267e4ddcf5c1afb0fcc0e8308d75eb))
+
 ### [1.6.1-beta.1](https://github.com/open-sauced/insights/compare/v1.6.0...v1.6.1-beta.1) (2022-09-19)
 
 
