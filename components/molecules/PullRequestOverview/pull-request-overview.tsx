@@ -10,13 +10,13 @@ interface PullRequestOverviewProps {
   draft?: number;
   churn?: number;
   churnDirection?: string;
-  activePrCount?: number;
+  prActiveCount?: number;
 }
 
-const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({ className, open, merged, closed, draft, churn, churnDirection = "down", activePrCount }) => {
+const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({ className, open, merged, closed, draft, churn, churnDirection = "down", prActiveCount }) => {
   const totalPullRequests = (!!open ? open : 0) + (!!merged ? merged : 0) + (!!closed ? closed : 0) + (!!draft ? draft : 0);
-  const prCount = activePrCount || 0;
-  const activePrPercentage = totalPullRequests > 0 ? Math.floor((prCount/totalPullRequests) * 100) : 0;
+  const prCount = prActiveCount || 0;
+  const activePrPercentage = totalPullRequests > 0 ? Math.round((prCount/totalPullRequests) * 100) : 0;
 
   return (
     <div className="flex flex-col gap-1">

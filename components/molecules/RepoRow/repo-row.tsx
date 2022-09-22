@@ -95,7 +95,7 @@ const getPrsSpam = (total: number, spam: number): number => {
 };
 
 const RepoRow = ({repo}:RepoRowProps): JSX.Element => {
-  const { name, owner: handle, owner_avatar: ownerAvatar, openPrsCount, closedPrsCount, draftPrsCount, mergedPrsCount, spamPrsCount, churn, churnTotalCount, churnDirection, prVelocityCount, activePrCount } = repo;
+  const { name, owner: handle, owner_avatar: ownerAvatar, openPrsCount, closedPrsCount, draftPrsCount, mergedPrsCount, spamPrsCount, churn, churnTotalCount, churnDirection, prVelocityCount, prActiveCount } = repo;
   const { data: contributorData, meta: contributorMeta } = useContributionsList(repo.id, "", "updated_at");
   const { data: commitsData, meta: commitMeta, isLoading: commitLoading } = useRepositoryCommits(repo.id);
   const totalPrs = getTotalPrs(openPrsCount, mergedPrsCount, closedPrsCount, draftPrsCount);
@@ -125,7 +125,7 @@ const RepoRow = ({repo}:RepoRowProps): JSX.Element => {
 
     {/* Column: PR Overview */}
     <div className={classNames.cols.prOverview}>
-      <PullRequestOverview open={openPrsCount} merged={mergedPrsCount} closed={closedPrsCount} draft={draftPrsCount} churn={churnTotalCount} churnDirection={`${churnDirection}`} activePrCount={activePrCount}></PullRequestOverview>
+      <PullRequestOverview open={openPrsCount} merged={mergedPrsCount} closed={closedPrsCount} draft={draftPrsCount} churn={churnTotalCount} churnDirection={`${churnDirection}`} prActiveCount={prActiveCount}></PullRequestOverview>
     </div>
 
     {/* Column: PR Velocity */}
