@@ -27,7 +27,7 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({ className, op
         {/* Churn Number compared with previous date (default: last 30 days vs. previous 30 days range) */}
         <div className={`
           ${churnDirection === "up" ? "text-light-grass-10" : "text-light-red-10"}
-          font-medium text-base tracking-tight`}>
+          font-medium flex items-center gap-x-1 text-base tracking-tight`}>
           {churnDirection === "up" ? <ArrowUpIcon size={14} /> : <ArrowDownIcon size={14} />}{churn || 0}%
         </div>
       </div>
