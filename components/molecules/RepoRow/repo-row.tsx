@@ -141,12 +141,13 @@ const RepoRow = ({repo}:RepoProps): JSX.Element => {
             churnDirection={`${churnDirection}`}
           />
         </div>
-        <div>
+        <div className="">
           <div
             onClick={() => setTableOpen(!tableOpen)}
-            className="border rounded-md p-1 flex items-center justify-between "
+            className="border rounded-md p-1 w-6 h-6 items-center justify-between"
           >
-            {tableOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}
+            
+            {tableOpen ? <ChevronUpIcon className="" /> : <ChevronDownIcon />}
           </div>
         </div>
       </div>
