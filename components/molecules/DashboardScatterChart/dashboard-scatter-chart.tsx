@@ -35,9 +35,9 @@ const DashboardScatterChart: React.FC<DashboardScatterChartProps> = ({ title, op
   };
   return (
     <div>
-      <div className="flex justify-between">
-        <Title level={4}>{title}</Title>
-        <div className="flex flex-col md:flex-row gap-2 pr-10">
+      <div className="flex justify-between px-1">
+        <Title level={4} className="!text-sm !font-medium !text-light-slate-12">{title}</Title>
+        <div className="flex flex-col md:flex-row gap-2">
           <ToggleOption handleToggle={handleShowBots} checked={showBots} optionText="Show Bots"></ToggleOption>
           <ToggleOption
             handleToggle={handleShowMembers}
