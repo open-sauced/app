@@ -34,5 +34,6 @@ interface DbContribution {
   readonly email: string,
   readonly name: string,
   readonly host_login: string,
-  readonly langs: string
+  readonly langs: string,
+  readonly repo_list: string
 }

@@ -1,18 +1,18 @@
-import { useContributionsList } from "lib/hooks/useContributionsList";
 import useContributorData from "lib/hooks/useContributorData";
 import { calcMonthsFromToday } from "lib/utils/date-utils";
 import ContributorCard from "../ContributorCard/contributor-card";
 import color from "lib/utils/color.json";
+import { useTopicContributions } from "lib/hooks/useTopicContributions";
 
-const Contributors = (): JSX.Element =>{
+const colorKeys = Object.keys(color);
+
+const Contributors = (): JSX.Element => {
   const contributorData = useContributorData();
-  const { data, isError, isLoading } = useContributionsList("769");
+  const { data, isError, isLoading } = useTopicContributions();
 
-  const freeCodeCamp = "freecodecamp";
-  
   const contributorArray = isError ? [] : data?.map(contributor => {
     const timeSinceFirstCommit = calcMonthsFromToday(new Date(parseInt(contributor.first_commit_time)));
-    const contributorLanguageList = contributor.langs.split(",");
+    const contributorLanguageList = (contributor.langs || '').split(",");
 
     return {
       ...contributorData,
@@ -23,19 +23,21 @@ const Contributors = (): JSX.Element =>{
         dateOfFirstPR: `${timeSinceFirstCommit}${timeSinceFirstCommit !== 1 ? "mos" : "mo"}`
       },
       languageList: contributorLanguageList.map(language => {
-        const preparedLanguageKey = Object.keys(color).find(key => key.toLowerCase() === language.toLowerCase());
+        const preparedLanguageKey = colorKeys.find(key => key.toLowerCase() === language.toLowerCase());
 
         return {
           languageName: preparedLanguageKey ? preparedLanguageKey : language,
           percentageUsed: Math.round( ( 1 / contributorLanguageList.length ) * 100)
         };
       }),
-      repoList: [
-        {
-          repoName: freeCodeCamp,
-          repoIcon: `https://www.github.com/${freeCodeCamp ?? "github"}.png?size=460`
-        }
-      ]
+      repoList: (contributor.repo_list || '').split(',').map(repo => {
+        const [repoOwner, repoName] = repo.split('/');
+
+        return {
+          repoName,
+          repoIcon: `https://www.github.com/${repoOwner ?? "github"}.png?size=460`
+        };
+      })
     };
   });
 
