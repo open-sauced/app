@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.7.0-beta.6](https://github.com/open-sauced/insights/compare/v1.7.0-beta.5...v1.7.0-beta.6) (2022-09-22)
+
+
+### 🧑‍💻 Code Refactoring
+
+* Polish the Dashboard to match designs ([#427](https://github.com/open-sauced/insights/issues/427)) ([f919c27](https://github.com/open-sauced/insights/commit/f919c271d4a9e8dc8e826a49eb3b1946bb189bc9))
+* Polish the Reports Page to match the design ([#425](https://github.com/open-sauced/insights/issues/425)) ([87a2bdc](https://github.com/open-sauced/insights/commit/87a2bdcbb8b1f5df88f1dd4f380aa6133face049))
+
 ## [1.7.0-beta.5](https://github.com/open-sauced/insights/compare/v1.7.0-beta.4...v1.7.0-beta.5) (2022-09-22)
 
 

@@ -36,7 +36,7 @@ const AuthSection: React.FC = ({  }) => {
               onboarded === false ? 
                 <>
                   <OnboardingButton/> 
-                  <Divider type="vertical" className="!h-6 !bg-gray-600"></Divider>
+                  <Divider type="vertical" className="!h-6 !bg-light-slate-6"></Divider>
                 </>
 
                 :
