@@ -13,6 +13,7 @@ interface DbRepoPR {
 
 interface DbRepoCommit {
   readonly title: string;
+  readonly commit_time: string;
 }
 
 interface Meta {

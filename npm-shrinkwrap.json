@@ -1,23 +1,26 @@
 {
   "name": "@open-sauced/insights",
-  "version": "1.6.0",
+  "version": "1.7.0-beta.7",
   "lockfileVersion": 3,
   "requires": true,
   "packages": {
     "": {
       "name": "@open-sauced/insights",
-      "version": "1.6.0",
+      "version": "1.7.0-beta.7",
       "hasInstallScript": true,
       "license": "MIT",
       "dependencies": {
         "@headlessui/react": "^1.6.6",
+        "@heroicons/react": "^2.0.11",
         "@nivo/core": "^0.80.0",
         "@nivo/line": "^0.80.0",
+        "@primer/octicons-react": "^17.5.0",
         "@radix-ui/react-context-menu": "^1.0.0",
         "@radix-ui/react-dropdown-menu": "^1.0.0",
         "@supabase/gotrue-js": "^1.22.22",
         "@supabase/supabase-js": "^1.35.6",
         "@supabase/ui": "^0.36.5",
+        "clsx": "^1.2.1",
         "date-fns": "^2.29.2",
         "echarts": "^5.3.3",
         "echarts-for-react": "^3.0.2",
@@ -2540,6 +2543,15 @@
         "regenerator-runtime": "^0.13.2"
       }
     },
+    "node_modules/@devtools-ds/object-inspector/node_modules/clsx": {
+      "version": "1.1.0",
+      "resolved": "https://registry.npmjs.org/clsx/-/clsx-1.1.0.tgz",
+      "integrity": "sha512-3avwM37fSK5oP6M5rQ9CNe99lwxhXDOeSWVPAOYF6OazUTgZCMb0yWlJpmdD74REy1gkEaFiub2ULv4fq9GUhA==",
+      "dev": true,
+      "engines": {
+        "node": ">=6"
+      }
+    },
     "node_modules/@devtools-ds/object-parser": {
       "version": "1.2.0",
       "resolved": "https://registry.npmjs.org/@devtools-ds/object-parser/-/object-parser-1.2.0.tgz",
@@ -2610,6 +2622,15 @@
         "node": ">=6.9.0"
       }
     },
+    "node_modules/@devtools-ds/themes/node_modules/clsx": {
+      "version": "1.1.0",
+      "resolved": "https://registry.npmjs.org/clsx/-/clsx-1.1.0.tgz",
+      "integrity": "sha512-3avwM37fSK5oP6M5rQ9CNe99lwxhXDOeSWVPAOYF6OazUTgZCMb0yWlJpmdD74REy1gkEaFiub2ULv4fq9GUhA==",
+      "dev": true,
+      "engines": {
+        "node": ">=6"
+      }
+    },
     "node_modules/@devtools-ds/tree": {
       "version": "1.2.0",
       "resolved": "https://registry.npmjs.org/@devtools-ds/tree/-/tree-1.2.0.tgz",
@@ -2631,6 +2652,15 @@
       "dev": true,
       "dependencies": {
         "regenerator-runtime": "^0.13.2"
+      }
+    },
+    "node_modules/@devtools-ds/tree/node_modules/clsx": {
+      "version": "1.1.0",
+      "resolved": "https://registry.npmjs.org/clsx/-/clsx-1.1.0.tgz",
+      "integrity": "sha512-3avwM37fSK5oP6M5rQ9CNe99lwxhXDOeSWVPAOYF6OazUTgZCMb0yWlJpmdD74REy1gkEaFiub2ULv4fq9GUhA==",
+      "dev": true,
+      "engines": {
+        "node": ">=6"
       }
     },
     "node_modules/@discoveryjs/json-ext": {
@@ -2754,6 +2784,14 @@
       "peerDependencies": {
         "react": "^16 || ^17 || ^18",
         "react-dom": "^16 || ^17 || ^18"
+      }
+    },
+    "node_modules/@heroicons/react": {
+      "version": "2.0.11",
+      "resolved": "https://registry.npmjs.org/@heroicons/react/-/react-2.0.11.tgz",
+      "integrity": "sha512-bASjOgSSaYj8HqXWsOqaBiB6ZLalE/g90WYGgZ5lPm4KCCG7wPXntY4kzHf5NrLh6UBAcnPwvbiw1Ne9GYfJtw==",
+      "peerDependencies": {
+        "react": ">= 16"
       }
     },
     "node_modules/@humanwhocodes/config-array": {
@@ -4543,6 +4581,17 @@
       "dev": true,
       "engines": {
         "node": ">= 8"
+      }
+    },
+    "node_modules/@primer/octicons-react": {
+      "version": "17.5.0",
+      "resolved": "https://registry.npmjs.org/@primer/octicons-react/-/octicons-react-17.5.0.tgz",
+      "integrity": "sha512-7z/uwKn/3w+DHEMFynEfHLYPHMjFzvsL88plimWhXou1hD4lriCUTvp65uDvdpyLqKyq5luEupnQmU+RiBODog==",
+      "engines": {
+        "node": ">=8"
+      },
+      "peerDependencies": {
+        "react": ">=15"
       }
     },
     "node_modules/@radix-ui/primitive": {
@@ -15267,10 +15316,9 @@
       }
     },
     "node_modules/clsx": {
-      "version": "1.1.0",
-      "resolved": "https://registry.npmjs.org/clsx/-/clsx-1.1.0.tgz",
-      "integrity": "sha512-3avwM37fSK5oP6M5rQ9CNe99lwxhXDOeSWVPAOYF6OazUTgZCMb0yWlJpmdD74REy1gkEaFiub2ULv4fq9GUhA==",
-      "dev": true,
+      "version": "1.2.1",
+      "resolved": "https://registry.npmjs.org/clsx/-/clsx-1.2.1.tgz",
+      "integrity": "sha512-EcR6r5a8bj6pu3ycsa/E/cKVGuTgZJZdsyUYHOksG/UHIiKfjxzRxYJpyVBwYaQeOvghal9fcc4PidlgzugAQg==",
       "engines": {
         "node": ">=6"
       }

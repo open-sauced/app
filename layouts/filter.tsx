@@ -23,7 +23,7 @@ const FilterLayout = ({children}: {children: React.ReactNode}) => {
           />
         </div>
 
-        <main className="flex w-full flex-1 flex-col items-center px-3 md:px-16 py-8">
+        <main className="flex w-full flex-1 flex-col items-center px-3 md:px-16 py-8 bg-light-slate-2">
           {children}
         </main>
       </div>

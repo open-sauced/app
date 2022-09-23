@@ -5,7 +5,7 @@ import { useContributionsList } from "./useContributionsList";
 const useNav = () => {
   const router = useRouter();
   const { meta: repoMetaData, isError: repoIsError, isLoading: repoIsLoading } = useRepositoriesList();
-  const { meta: conMetaData, isError: conIsError, isLoading: conIsLoading } = useContributionsList();
+  const { meta: conMetaData, isError: conIsError, isLoading: conIsLoading } = useContributionsList("769");
 
   const defaultTools = [
     {

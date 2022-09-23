@@ -43,21 +43,26 @@ const Reports = (): JSX.Element => {
   };
 
   return (
-    <section className="flex flex-col w-full py-4 px-2 md:px-4 justify-center">
+    <section className="flex flex-col w-full py-4 px-2 md:px-4 justify-center items-center">
       <div className="max-w-4xl">
         <Title className="!font-medium relative" level={3}>
-          Contributions Insights
+          Contribution Insights
         </Title>
         <hr className="border-light-slate-6 my-4" />
         <SelectReportsFilter
           filterList={filterList}
           callback={handleFilterClick}
         />
-        <Title className="!font-medium relative mt-16" level={3}>
-          Download History
-        </Title>
-        <hr className="border-light-slate-6 my-4" />
-        <ReportsHistory reportList={reports}/>
+
+        { reports.length > 0 &&
+          <>
+            <Title className="!font-medium relative mt-16" level={3}>
+              Download History
+            </Title>
+            <hr className="border-light-slate-6 my-4" />
+            <ReportsHistory reportList={reports}/>
+          </>
+        }
       </div>
     </section>
   );
