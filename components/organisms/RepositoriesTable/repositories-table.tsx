@@ -4,7 +4,7 @@ import RepoRow from "components/molecules/RepoRow/repo-row";
 import { StaticImageData } from "next/image";
 import Pagination from "../../molecules/Pagination/pagination";
 import PaginationResults from "../../molecules/PaginationResults/pagination-result";
-
+import clsx from "clsx";
 export interface ContributorsRows {
   name?: string;
   avatarURL?: string | StaticImageData;
@@ -29,12 +29,12 @@ export interface RepositoriesRows {
   churn?: string;
   spamPrsCount?: number;
   prVelocityCount?: number;
-  prActiveCount?: number;
-  prVelocity?:{
-    amount?: string
-    churn?: string
-    churnDirection?: string
-  }
+  prVelocity?: {
+    amount?: string;
+    churn?: string;
+    churnDirection?: string;
+  };
+
   contributors?: ContributorsRows[];
   last30days?: Serie[];
 }
@@ -47,42 +47,115 @@ interface RepositoriesTableProps {
 }
 
 export const classNames = {
-  row: "flex gap-4 items-center py-3 px-6 odd:bg-white even:bg-light-slate-2",
+  row: "hidden md:flex gap-4    items-center py-3 px-6 odd:bg-white even:bg-light-slate-2",
   cols: {
-    repository: "flex-1",
-    activity: "flex-1 flex justify-center shrink",
-    prOverview: "flex-1",
-    prVelocity: "flex justify-center  items-center gap-3 flex-1",
-    spam: "flex items-center gap-3 flex-1",
-    contributors: "flex-1 items-center",
-    last30days: "flex-1"
+    repository: "w-[30%] lg:flex-1  lg:min-w-[200px] ",
+    activity: "flex-1 lg:min-w-[100px] flex ",
+    prOverview: "flex-1 lg:min-w-[170px] ",
+    prVelocity: "flex justify-center lg:min-w-[100px] items-center gap-3 flex-1",
+    spam: "flex items-center justify-center lg:min-w-[50px] lg:justify-start gap-3 flex-1 ",
+    contributors: "flex-1 lg:min-w-[200px] items-center",
+    last30days: "flex-1 lg:min-w-[150px]"
   }
 };
 
-const RepositoriesTable: React.FC<RepositoriesTableProps> = ({ listOfRepositories, meta, page, setPage }) => {
+const RepositoriesTable = ({ listOfRepositories, meta, page, setPage }: RepositoriesTableProps): JSX.Element => {
   return (
     <div className="flex flex-col rounded-lg overflow-hidden border">
-      {/* Table Header */}
-      <div className="flex py-4 px-6 bg-light-slate-3 gap-2">
-        <div className={classNames.cols.repository}>
+      <div className="flex md:hidden justify-between  py-4 px-6 bg-light-slate-3 gap-2">
+        <div className="flex-1 ">
           <TableTitle text="Repository"></TableTitle>
         </div>
-        <div className={classNames.cols.activity}>
+        <div className="flex-1">
+          <TableTitle text="Pr Overview"></TableTitle>
+        </div>
+      </div>
+      <div className="hidden md:flex py-4 px-6 bg-light-slate-3 gap-2">
+        <div className={clsx(classNames.cols.repository)}>
+          <TableTitle text="Repository"></TableTitle>
+        </div>
+        <div className={clsx(classNames.cols.activity)}>
           <TableTitle text="Activity"></TableTitle>
         </div>
-        <div className={classNames.cols.prOverview}>
+        <div className={clsx(classNames.cols.prOverview)}>
           <TableTitle text="PR Overview"></TableTitle>
         </div>
-        <div className={classNames.cols.prVelocity}>
+        <div className={clsx(classNames.cols.prVelocity)}>
           <TableTitle text="PR Velocity"></TableTitle>
         </div>
-        <div className={classNames.cols.spam}>
+        <div className={clsx(classNames.cols.spam)}>
           <TableTitle text="SPAM"></TableTitle>
         </div>
-        <div className={classNames.cols.contributors}>
+        <div className={clsx(classNames.cols.contributors, "hidden lg:flex")}>
           <TableTitle text="Contributors"></TableTitle>
         </div>
-        <div className={classNames.cols.last30days}>
+        <div className={clsx(classNames.cols.last30days, "hidden lg:flex" )}>
+          <TableTitle text="Last 30 Days"></TableTitle>
+        </div>
+      </div>
+      <section className="flex  flex-col">
+        {Array.isArray(listOfRepositories) &&
+          listOfRepositories.length > 0 &&
+          listOfRepositories.map((item, index) => <RepoRow key={`${item.handle}/${item.name}/${index}`} repo={item} />)}
+      </section>
+
+      {/* Table Footer */}
+      <div className="py-4 px-6 flex justify-between items-center">
+        <div>
+          <div className="">
+            <PaginationResults
+              from={page === 1 ? page : page * meta.limit}
+              to={page === 1 ? meta.limit : page * meta.limit + meta.limit}
+              total={meta.itemCount}
+              entity={"repos"}
+            />
+          </div>
+        </div>
+        <div>
+          <div className="flex items-center gap-4">
+            <Pagination
+              pages={[]}
+              hasNextPage={meta.hasNextPage}
+              hasPreviousPage={meta.hasPreviousPage}
+              totalPage={meta.pageCount}
+              page={meta.page}
+              onPageChange={function (page: number): void {
+                setPage(page);
+              }}
+              divisor={false}
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+
+const DesktopRepoTable = ({ listOfRepositories, meta, page, setPage }: RepositoriesTableProps): JSX.Element => {
+  return (
+    <>
+      {/* Table Header */}
+      <div className="flex py-4 px-6 bg-light-slate-3 gap-2">
+        <div className={clsx(classNames.cols.repository, "hidden md:block")}>
+          <TableTitle text="Repository"></TableTitle>
+        </div>
+        <div className={clsx(classNames.cols.activity, "hidden md:block")}>
+          <TableTitle text="Activity"></TableTitle>
+        </div>
+        <div className={clsx(classNames.cols.prOverview, "hidden md:block")}>
+          <TableTitle text="PR Overview"></TableTitle>
+        </div>
+        <div className={clsx(classNames.cols.prVelocity, "hidden md:block")}>
+          <TableTitle text="PR Velocity"></TableTitle>
+        </div>
+        <div className={clsx(classNames.cols.spam, "hidden md:block")}>
+          <TableTitle text="SPAM"></TableTitle>
+        </div>
+        <div className={clsx(classNames.cols.contributors, "hidden md:block")}>
+          <TableTitle text="Contributors"></TableTitle>
+        </div>
+        <div className={clsx(classNames.cols.last30days, "hidden md:block")}>
           <TableTitle text="Last 30 Days"></TableTitle>
         </div>
       </div>
@@ -100,7 +173,7 @@ const RepositoriesTable: React.FC<RepositoriesTableProps> = ({ listOfRepositorie
         <div className="">
           <PaginationResults
             from={page === 1 ? page : page * meta.limit}
-            to={(page === 1 ? meta.limit : page * meta.limit + meta.limit)}
+            to={page === 1 ? meta.limit : page * meta.limit + meta.limit}
             total={meta.itemCount}
             entity={"repositories"}
           />
@@ -120,7 +193,7 @@ const RepositoriesTable: React.FC<RepositoriesTableProps> = ({ listOfRepositorie
           />
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

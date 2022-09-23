@@ -1,19 +1,17 @@
-import { ArrowTrendingDownIcon, ArrowTrendingUpIcon, MinusSmallIcon } from "@heroicons/react/24/solid";
-import StackedAvatar from "components/molecules/StackedAvatar/stacked-avatar";
+import { ArrowTrendingDownIcon, ArrowTrendingUpIcon, ChevronDownIcon, ChevronUpIcon, MinusSmallIcon } from "@heroicons/react/24/solid";
 import { RepositoriesRows } from "components/organisms/RepositoriesTable/repositories-table";
-
-import {classNames} from "components/organisms/RepositoriesTable/repositories-table";
-import TableRepositoryName from "../TableRepositoryName/table-repository-name";
 import Pill from "components/atoms/Pill/pill";
-import PullRequestOverview from "../PullRequestOverview/pull-request-overview";
-
-import Sparkline from "components/atoms/Sparkline/sparkline";
-
 import { useContributionsList } from "lib/hooks/useContributionsList";
 import { useRepositoryCommits } from "lib/hooks/useRepositoryCommits";
 import differenceInDays from "date-fns/differenceInDays";
-
-interface RepoRowProps {
+import TableRepositoryName from "../TableRepositoryName/table-repository-name";
+import Sparkline from "components/atoms/Sparkline/sparkline";
+import PullRequestOverview from "../PullRequestOverview/pull-request-overview";
+import StackedAvatar from "../StackedAvatar/stacked-avatar";
+import { useState } from "react";
+import { classNames } from "components/organisms/RepositoriesTable/repositories-table";
+import clsx from "clsx";
+interface RepoProps {
   repo: RepositoriesRows;
 }
 
@@ -94,13 +92,27 @@ const getPrsSpam = (total: number, spam: number): number => {
   return result;
 };
 
-const RepoRow = ({repo}:RepoRowProps): JSX.Element => {
-  const { name, owner: handle, owner_avatar: ownerAvatar, openPrsCount, closedPrsCount, draftPrsCount, mergedPrsCount, spamPrsCount, churn, churnTotalCount, churnDirection, prVelocityCount, prActiveCount } = repo;
+
+const RepoRow = ({repo}:RepoProps): JSX.Element => {
+  const { name,
+    owner: handle,
+    owner_avatar: ownerAvatar,
+    openPrsCount,
+    closedPrsCount,
+    draftPrsCount,
+    mergedPrsCount,
+    spamPrsCount,
+    churn,
+    churnTotalCount,
+    churnDirection,
+    prVelocityCount } = repo;
+
   const { data: contributorData, meta: contributorMeta } = useContributionsList(repo.id, "", "updated_at");
   const { data: commitsData, meta: commitMeta, isLoading: commitLoading } = useRepositoryCommits(repo.id);
   const totalPrs = getTotalPrs(openPrsCount, mergedPrsCount, closedPrsCount, draftPrsCount);
   const prsMergedPercentage = getPrsMerged(totalPrs, mergedPrsCount || 0);
   const spamPrsPercentage = getPrsSpam(totalPrs, spamPrsCount || 0);
+ 
 
   const days = getCommitsLast30Days(commitsData);
   const last30days = [
@@ -111,56 +123,147 @@ const RepoRow = ({repo}:RepoRowProps): JSX.Element => {
     }
   ];
 
-  return (<div className={`${classNames.row}`}>
+  const [tableOpen, setTableOpen] = useState<boolean>(false);
+  return (<>
+    <div key={`${ownerAvatar}/${name}`} className="odd:bg-white md:hidden px-5 overflow-hidden py-2  even:bg-light-slate-2">
+      {/* Row: Repository Name and Pr overview */}
+      <div className="flex items-center gap-x-3">
+        <div className="w-[55%]">
+          <TableRepositoryName avatarURL={ownerAvatar} name={name} handle={handle} />
+        </div>
+        <div className="w-[45%]">
+          <PullRequestOverview
+            open={openPrsCount}
+            merged={mergedPrsCount}
+            closed={closedPrsCount}
+            draft={draftPrsCount}
+            churn={churnTotalCount}
+            churnDirection={`${churnDirection}`}
+          />
+        </div>
+        <div className="">
+          <div
+            onClick={() => setTableOpen(!tableOpen)}
+            className="border rounded-md p-1 w-6 h-6 items-center justify-between"
+          >
+            
+            {tableOpen ? <ChevronUpIcon className="" /> : <ChevronDownIcon />}
+          </div>
+        </div>
+      </div>
 
-    {/* Column: Repository Name */}
-    <div className={classNames.cols.repository}>
-      <TableRepositoryName avatarURL={ownerAvatar} name={name} handle={handle}></TableRepositoryName>
+      <div className={`${!tableOpen && "max-h-0"} font-medium text-light-slate-11 text-sm transition`}>
+        {/* Column: Last 30 Days */}
+        <div className="py-3">{last30days && <Sparkline data={last30days} width="100%" height={54} />}</div>
+        {/* Row: Activity */}
+        <div className="flex items-center py-3 border-b justify-between">
+          <div>Activity</div>
+          {getActivity(commitMeta.itemCount, commitLoading)}
+        </div>
+
+        {/* Row: Pr velocity */}
+        <div className="flex items-center py-3 border-b justify-between">
+          <div>Pr Velocity</div>
+          <div className="flex text-base gap-x-3">
+            <div>
+              {prVelocityCount ?? 0} PR{prVelocityCount === 1 ? "" : "s"}
+            </div>
+            <Pill text={`${prsMergedPercentage}%`} size="small" color="green" />
+          </div>
+        </div>
+
+        {/* Row: SPAM */}
+        <div className="flex items-center py-3 border-b justify-between">
+          <div>Spam</div>
+          <div className="flex text-base gap-x-3">
+            {spamPrsCount && spamPrsCount > 0 ? (
+              <>
+                <div>
+                  {spamPrsCount || 0} PR{spamPrsCount === 1 ? "" : "s"}
+                </div>
+                <Pill
+                  text={`${spamPrsPercentage || 0}%`}
+                  size="small"
+                  color={spamPrsPercentage > 10 ? "red" : "yellow"}
+                />
+              </>
+            ) : (
+              "-"
+            )}
+          </div>
+        </div>
+
+        {/* Row: Contributors */}
+
+        <div className="flex items-center py-3 justify-between">
+          <div>Contributors</div>
+          <div className="flex text-base items-center">
+            {contributorMeta.itemCount! > 0 ? <StackedAvatar contributors={contributorData} /> : "-"}
+
+            {contributorMeta.itemCount! >= 5 ? <div>&nbsp;{`+${contributorMeta.itemCount - 5}`}</div> : ""}
+          </div>
+        </div>
+
+        <div onClick={() => setTableOpen(!tableOpen)} className="text-center border rounded-lg py-1 mt-3">
+            Hide details
+        </div>
+      </div>  
     </div>
+    <div className={`${classNames.row} `}>
+      {/* Column: Repository Name */}
+      <div className={classNames.cols.repository}>
+        <TableRepositoryName avatarURL={ownerAvatar} name={name} handle={handle}></TableRepositoryName>
+      </div>
 
-    {/* Column: Activity */}
-    <div className={classNames.cols.activity}>
-      { getActivity(commitMeta.itemCount, commitLoading) }
-    </div>
+      {/* Column: Activity */}
+      <div className={classNames.cols.activity}>{getActivity(commitMeta.itemCount, commitLoading)}</div>
 
-    {/* Column: PR Overview */}
-    <div className={classNames.cols.prOverview}>
-      <PullRequestOverview open={openPrsCount} merged={mergedPrsCount} closed={closedPrsCount} draft={draftPrsCount} churn={churnTotalCount} churnDirection={`${churnDirection}`} prActiveCount={prActiveCount}></PullRequestOverview>
-    </div>
+      {/* Column: PR Overview */}
+      <div className={classNames.cols.prOverview}>
+        <PullRequestOverview
+          open={openPrsCount}
+          merged={mergedPrsCount}
+          closed={closedPrsCount}
+          draft={draftPrsCount}
+          churn={churnTotalCount}
+          churnDirection={`${churnDirection}`}
+        ></PullRequestOverview>
+      </div>
 
-    {/* Column: PR Velocity */}
-    <div className={`${classNames.cols.prVelocity}`}>
-      <div>{ prVelocityCount ?? 0 } PR{ prVelocityCount === 1 ? "" : "s" }</div>
-      <Pill text={`${prsMergedPercentage}%`} size="small" color="green" />
-    </div>
+      {/* Column: PR Velocity */}
+      <div className={`${classNames.cols.prVelocity}`}>
+        <div>
+          {prVelocityCount ?? 0} PR{prVelocityCount === 1 ? "" : "s"}
+        </div>
+        <Pill text={`${prsMergedPercentage}%`} size="small" color="green" />
+      </div>
 
-    {/* Column: SPAM */}
-    <div className={`${classNames.cols.spam}`}>
-      {
-        spamPrsCount && spamPrsCount > 0 ?  
+      {/* Column: SPAM */}
+      <div className={`${classNames.cols.spam}`}>
+        {spamPrsCount && spamPrsCount > 0 ? (
           <>
-            <div>{spamPrsCount || 0} PR{ spamPrsCount === 1 ? "" : "s" }</div>
+            <div>
+              {spamPrsCount || 0} PR{spamPrsCount === 1 ? "" : "s"}
+            </div>
             <Pill text={`${spamPrsPercentage || 0}%`} size="small" color={spamPrsPercentage > 10 ? "red" : "yellow"} />
           </>
-          :
+        ) : (
           "-"
-      }
-    </div>
+        )}
+      </div>
 
-    {/* Column: Contributors */}
-    <div className={`flex ${classNames.cols.contributors}`}>
-      { contributorMeta.itemCount! > 0 ? <StackedAvatar contributors={contributorData}/> : "-" }
+      {/* Column: Contributors */}
+      <div className={clsx(classNames.cols.contributors, "hidden lg:flex")}>
+        {contributorMeta.itemCount! > 0 ? <StackedAvatar contributors={contributorData} /> : "-"}
 
-      { contributorMeta.itemCount! >= 5 ? <div>&nbsp;{`+${contributorMeta.itemCount - 5}`}</div>: "" }
-    </div>
+        {contributorMeta.itemCount! >= 5 ? <div>&nbsp;{`+${contributorMeta.itemCount - 5}`}</div> : ""}
+      </div>
 
-    {/* Column: Last 30 Days */}
-    <div className={classNames.cols.last30days}>
-      { last30days &&
-        <Sparkline data={last30days} />
-      }
+      {/* Column: Last 30 Days */}
+      <div className={clsx(classNames.cols.last30days,"hidden lg:flex" )}>{last30days && <Sparkline data={last30days} />}</div>
     </div>
-  </div>)
+  </>)
+
   ;
 };
 export default RepoRow;
