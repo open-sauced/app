@@ -5,6 +5,18 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.7.0-beta.7](https://github.com/open-sauced/insights/compare/v1.7.0-beta.6...v1.7.0-beta.7) (2022-09-23)
+
+
+### 🍕 Features
+
+* create mobile version of repo table ([#409](https://github.com/open-sauced/insights/issues/409)) ([9355968](https://github.com/open-sauced/insights/commit/9355968b04a7b9da66a7962fe1dc1c32640d83ab))
+
+
+### 🧑‍💻 Code Refactoring
+
+* Update text styles on Scatter Chart card ([#429](https://github.com/open-sauced/insights/issues/429)) ([ab24703](https://github.com/open-sauced/insights/commit/ab24703ddd1d0c5b10448287fd450712e4b93114))
+
 ## [1.7.0-beta.6](https://github.com/open-sauced/insights/compare/v1.7.0-beta.5...v1.7.0-beta.6) (2022-09-22)
 
 
