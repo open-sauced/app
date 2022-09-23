@@ -81,6 +81,7 @@ export const Dashboard = (): JSX.Element => {
     },
     xAxis: {
       boundaryGap: false,
+      inverse: true,
       scale: true,
       minInterval: isNotMobile ? 7 : 2,
       maxInterval: 7,
