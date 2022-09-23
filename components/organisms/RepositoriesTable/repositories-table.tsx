@@ -49,13 +49,13 @@ interface RepositoriesTableProps {
 export const classNames = {
   row: "hidden md:flex gap-4    items-center py-3 px-6 odd:bg-white even:bg-light-slate-2",
   cols: {
-    repository: "w-[30%] lg:flex-1 ",
-    activity: "flex-1  flex justify-center shrink",
-    prOverview: "flex-1 ",
-    prVelocity: "flex justify-center items-center gap-3 flex-1",
-    spam: "flex items-center justify-center lg:justify-start gap-3 flex-1 ",
-    contributors: "flex-1 items-center",
-    last30days: "flex-1"
+    repository: "w-[30%] lg:flex-1  lg:min-w-[200px] ",
+    activity: "flex-1 lg:min-w-[100px] flex ",
+    prOverview: "flex-1 lg:min-w-[170px] ",
+    prVelocity: "flex justify-center lg:min-w-[100px] items-center gap-3 flex-1",
+    spam: "flex items-center justify-center lg:min-w-[50px] lg:justify-start gap-3 flex-1 ",
+    contributors: "flex-1 lg:min-w-[200px] items-center",
+    last30days: "flex-1 lg:min-w-[150px]"
   }
 };
 

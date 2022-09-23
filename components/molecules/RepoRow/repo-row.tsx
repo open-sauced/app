@@ -207,7 +207,7 @@ const RepoRow = ({repo}:RepoProps): JSX.Element => {
         <div onClick={() => setTableOpen(!tableOpen)} className="text-center border rounded-lg py-1 mt-3">
             Hide details
         </div>
-      </div>
+      </div>  
     </div>
     <div className={`${classNames.row} `}>
       {/* Column: Repository Name */}
