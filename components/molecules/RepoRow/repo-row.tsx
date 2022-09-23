@@ -4,7 +4,6 @@ import Pill from "components/atoms/Pill/pill";
 import { useContributionsList } from "lib/hooks/useContributionsList";
 import { useRepositoryCommits } from "lib/hooks/useRepositoryCommits";
 import differenceInDays from "date-fns/differenceInDays";
-import {useMediaQuery} from "lib/hooks/useMediaQuery";
 import TableRepositoryName from "../TableRepositoryName/table-repository-name";
 import Sparkline from "components/atoms/Sparkline/sparkline";
 import PullRequestOverview from "../PullRequestOverview/pull-request-overview";
@@ -113,7 +112,7 @@ const RepoRow = ({repo}:RepoProps): JSX.Element => {
   const totalPrs = getTotalPrs(openPrsCount, mergedPrsCount, closedPrsCount, draftPrsCount);
   const prsMergedPercentage = getPrsMerged(totalPrs, mergedPrsCount || 0);
   const spamPrsPercentage = getPrsSpam(totalPrs, spamPrsCount || 0);
-  const isNotMobile: boolean = useMediaQuery("(min-width: 768px)");
+ 
 
   const days = getCommitsLast30Days(commitsData);
   const last30days = [
