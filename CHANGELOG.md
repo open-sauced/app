@@ -5,6 +5,39 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.7.0](https://github.com/open-sauced/insights/compare/v1.6.0...v1.7.0) (2022-09-23)
+
+
+### 🎨 Styles
+
+* added hover state style to footer links ([#420](https://github.com/open-sauced/insights/issues/420)) ([3aa5f17](https://github.com/open-sauced/insights/commit/3aa5f1785df89fd7562f41478719835eb83377ee))
+* change text font and icon size to xs(12px) ([#401](https://github.com/open-sauced/insights/issues/401)) ([741288e](https://github.com/open-sauced/insights/commit/741288e19a267e4ddcf5c1afb0fcc0e8308d75eb))
+* refactor show us button style to match design ([#419](https://github.com/open-sauced/insights/issues/419)) ([b6c21b1](https://github.com/open-sauced/insights/commit/b6c21b153c136ed7d1ae9a2ac243232b71fb7e66)), closes [#408](https://github.com/open-sauced/insights/issues/408)
+
+
+### 🐛 Bug Fixes
+
+* add tooltip message on information icon hover ([#421](https://github.com/open-sauced/insights/issues/421)) ([12ff851](https://github.com/open-sauced/insights/commit/12ff85193d0ab75f61e6e0eda09d3864b2d3ca8f)), closes [#366](https://github.com/open-sauced/insights/issues/366)
+* adds brandon to top5 ([8bb56cb](https://github.com/open-sauced/insights/commit/8bb56cb72d2d904168f8443b3afe860faa98fc58))
+* correct beta branch checking beta gitsense api ([2c6f576](https://github.com/open-sauced/insights/commit/2c6f57641838f5b219ce274b576e496daff2192b))
+* redirect from onboarding if already complete with custom hook ([#388](https://github.com/open-sauced/insights/issues/388)) ([8600c76](https://github.com/open-sauced/insights/commit/8600c7648cc0092fa3b51de5e8a26d722e799819)), closes [#387](https://github.com/open-sauced/insights/issues/387)
+* update PR overview calculation to use active PRs in last 30 days / total PRs ([#423](https://github.com/open-sauced/insights/issues/423)) ([05b48ff](https://github.com/open-sauced/insights/commit/05b48ffb4d50a0041060e07d78ab7e5f9eb79471)), closes [#418](https://github.com/open-sauced/insights/issues/418)
+
+
+### 🍕 Features
+
+* add privacy and license terms ([#422](https://github.com/open-sauced/insights/issues/422)) ([0dcc161](https://github.com/open-sauced/insights/commit/0dcc16129c7063dfb0d02e648beefd821f2c7dbb)), closes [#377](https://github.com/open-sauced/insights/issues/377)
+* connect repositories page to API data and pagination ([#405](https://github.com/open-sauced/insights/issues/405)) ([634de8e](https://github.com/open-sauced/insights/commit/634de8ecf5f2eb5ce5967b5eac2b38262b5fc09c)), closes [#320](https://github.com/open-sauced/insights/issues/320) [#384](https://github.com/open-sauced/insights/issues/384)
+* create mobile version of repo table ([#409](https://github.com/open-sauced/insights/issues/409)) ([9355968](https://github.com/open-sauced/insights/commit/9355968b04a7b9da66a7962fe1dc1c32640d83ab))
+
+
+### 🧑‍💻 Code Refactoring
+
+* check avatarURL for orange avatar background and update pill colors ([#424](https://github.com/open-sauced/insights/issues/424)) ([c821cd5](https://github.com/open-sauced/insights/commit/c821cd53243f20255e2f5e7f22ad4fe8e0b55246)), closes [#414](https://github.com/open-sauced/insights/issues/414) [#416](https://github.com/open-sauced/insights/issues/416)
+* Polish the Dashboard to match designs ([#427](https://github.com/open-sauced/insights/issues/427)) ([f919c27](https://github.com/open-sauced/insights/commit/f919c271d4a9e8dc8e826a49eb3b1946bb189bc9))
+* Polish the Reports Page to match the design ([#425](https://github.com/open-sauced/insights/issues/425)) ([87a2bdc](https://github.com/open-sauced/insights/commit/87a2bdcbb8b1f5df88f1dd4f380aa6133face049))
+* Update text styles on Scatter Chart card ([#429](https://github.com/open-sauced/insights/issues/429)) ([ab24703](https://github.com/open-sauced/insights/commit/ab24703ddd1d0c5b10448287fd450712e4b93114))
+
 ## [1.7.0-beta.7](https://github.com/open-sauced/insights/compare/v1.7.0-beta.6...v1.7.0-beta.7) (2022-09-23)
 
 
