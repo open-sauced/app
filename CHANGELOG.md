@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.7.0-beta.8](https://github.com/open-sauced/insights/compare/v1.7.0-beta.7...v1.7.0-beta.8) (2022-09-23)
+
+
+### 🐛 Bug Fixes
+
+* adds links to footer ([#432](https://github.com/open-sauced/insights/issues/432)) ([7adfbe7](https://github.com/open-sauced/insights/commit/7adfbe72cc602748cad3e546d5e696ae60c101a6))
+* inverse the scatter chart ([#433](https://github.com/open-sauced/insights/issues/433)) ([18dd094](https://github.com/open-sauced/insights/commit/18dd09474582269433cf36f29b17277b14ffceb5)), closes [#399](https://github.com/open-sauced/insights/issues/399)
+
 ## [1.7.0-beta.7](https://github.com/open-sauced/insights/compare/v1.7.0-beta.6...v1.7.0-beta.7) (2022-09-23)
 
 
