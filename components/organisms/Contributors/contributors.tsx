@@ -12,7 +12,7 @@ const Contributors = (): JSX.Element => {
 
   const contributorArray = isError ? [] : data?.map(contributor => {
     const timeSinceFirstCommit = calcMonthsFromToday(new Date(parseInt(contributor.first_commit_time)));
-    const contributorLanguageList = (contributor.langs || '').split(",");
+    const contributorLanguageList = (contributor.langs || "").split(",");
 
     return {
       ...contributorData,
@@ -30,8 +30,8 @@ const Contributors = (): JSX.Element => {
           percentageUsed: Math.round( ( 1 / contributorLanguageList.length ) * 100)
         };
       }),
-      repoList: (contributor.repo_list || '').split(',').map(repo => {
-        const [repoOwner, repoName] = repo.split('/');
+      repoList: (contributor.repo_list || "").split(",").map(repo => {
+        const [repoOwner, repoName] = repo.split("/");
 
         return {
           repoName,

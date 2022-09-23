@@ -16,7 +16,7 @@ const useTopicContributions = (topic = "hacktoberfest") => {
     meta: data?.meta ?? { itemCount: 0 },
     isLoading: !error && !data,
     isError: !!error,
-    mutate,
+    mutate
   };
 };
 
