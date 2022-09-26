@@ -1,3 +1,4 @@
+import { useState } from "react";
 import useSWR from "swr";
 
 interface PaginatedContributorsResponse {
@@ -6,7 +7,8 @@ interface PaginatedContributorsResponse {
 }
 
 const useTopicContributions = (topic = "hacktoberfest") => {
-  const baseEndpoint = `${topic}/contributions`;
+  const [page, setPage] = useState(1);
+  const baseEndpoint = `${topic}/contributions?page=${page}`;
   const endpointString = `${baseEndpoint}`;
 
   const { data, error, mutate } = useSWR<PaginatedContributorsResponse, Error>(endpointString);
@@ -16,7 +18,9 @@ const useTopicContributions = (topic = "hacktoberfest") => {
     meta: data?.meta ?? { itemCount: 0 },
     isLoading: !error && !data,
     isError: !!error,
-    mutate
+    mutate,
+    page,
+    setPage
   };
 };
 
