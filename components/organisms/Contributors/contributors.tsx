@@ -15,7 +15,7 @@ const Contributors = (): JSX.Element => {
     : data?.map((contributor) => {
       const timeSinceFirstCommit = calcMonthsFromToday(new Date(parseInt(contributor.first_commit_time)));
       const contributorLanguageList = (contributor.langs || "").split(",");
-      const repoList = (contributor.repo_list || "").split(",").map((repo) => {
+      const repoList = (contributor.recent_repo_list || "").split(",").map((repo) => {
         const [repoOwner, repoName] = repo.split("/");
 
         return {
