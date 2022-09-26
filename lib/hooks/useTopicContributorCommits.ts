@@ -7,7 +7,7 @@ const lineChart = {
   xAxis: {
     type: "category",
     boundaryGap: false,
-    axisLabel: false,
+    axisLabel: false
     // data: []
   },
   yAxis: {
@@ -54,7 +54,7 @@ const useTopicContributorCommits = (contributor: string, topic = "hacktoberfest"
 
     try {
       const resp = await fetch(endpointString, {
-        method: "GET",
+        method: "GET"
       });
 
       const data: { data: DbRepoCommit[] } = await resp.json();
@@ -64,12 +64,12 @@ const useTopicContributorCommits = (contributor: string, topic = "hacktoberfest"
         ...prevChart,
         xAxis: {
           ...prevChart.xAxis,
-          data: graphData.map((commit) => `${commit.x}`),
+          data: graphData.map((commit) => `${commit.x}`)
         },
         series: prevChart.series.map((cs) => ({
           ...cs,
-          data: graphData.map((commit) => commit.y),
-        })),
+          data: graphData.map((commit) => commit.y)
+        }))
       }));
     } catch (e) {
       // show an alert
@@ -83,7 +83,7 @@ const useTopicContributorCommits = (contributor: string, topic = "hacktoberfest"
   }, [contributor]);
 
   return {
-    chart,
+    chart
   };
 };
 

@@ -1,5 +1,5 @@
 import useContributorData from "lib/hooks/useContributorData";
-import { calcMonthsFromToday } from "lib/utils/date-utils";
+import { calcDistanceFromToday } from "lib/utils/date-utils";
 import ContributorCard from "../ContributorCard/contributor-card";
 import color from "lib/utils/color.json";
 import { useTopicContributions } from "lib/hooks/useTopicContributions";
@@ -13,7 +13,7 @@ const Contributors = (): JSX.Element => {
   const contributorArray = isError
     ? []
     : data?.map((contributor) => {
-      const timeSinceFirstCommit = calcMonthsFromToday(new Date(parseInt(contributor.first_commit_time)));
+      const timeSinceFirstCommit = calcDistanceFromToday(new Date(parseInt(contributor.first_commit_time)));
       const contributorLanguageList = (contributor.langs || "").split(",");
       const repoList = (contributor.recent_repo_list || "").split(",").map((repo) => {
         const [repoOwner, repoName] = repo.split("/");
@@ -38,7 +38,7 @@ const Contributors = (): JSX.Element => {
           ...contributorData.profile,
           githubAvatar: `https://www.github.com/${contributor.host_login}.png?size=60`,
           githubName: contributor.host_login,
-          dateOfFirstPR: `${timeSinceFirstCommit}${timeSinceFirstCommit !== 1 ? "mos" : "mo"}`
+          dateOfFirstPR: timeSinceFirstCommit
         },
         languageList,
         repoList
