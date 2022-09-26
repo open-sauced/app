@@ -145,7 +145,7 @@ export const Dashboard = (): JSX.Element => {
     <div className="flex flex-col w-full gap-4">
       <section className="flex flex-wrap gap-4 items-center lg:flex-row lg:flex-nowrap max-w-full">
         <HighlightCard
-          url="/hacktoberfest/people"
+ 
           label="Participation"
           icon="participation"
           metricIncreases={true}
@@ -155,7 +155,7 @@ export const Dashboard = (): JSX.Element => {
           percentageLabel={itemCountText}
         />
         <HighlightCard
-          url="/hacktoberfest/pull%20requests"
+         
           label="Spam"
           icon="spam"
           metricIncreases={false}
@@ -165,7 +165,7 @@ export const Dashboard = (): JSX.Element => {
           percentageLabel={itemCountText}
         />
         <HighlightCard
-          url="/hacktoberfest/pull%20requests"
+         
           label="Accepted PRs"
           icon="accepted-pr"
           metricIncreases={true}
@@ -175,7 +175,7 @@ export const Dashboard = (): JSX.Element => {
           percentageLabel={itemCountText}
         />
         <HighlightCard
-          url="/hacktoberfest/pull%20requests"
+         
           label="Unlabeled PRs"
           icon="unlabeled-pr"
           metricIncreases={false}
