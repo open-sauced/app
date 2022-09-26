@@ -37,22 +37,22 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
   const { filterName, toolName } = router.query;
 
   function localStorageProvider() {
-    if (typeof window !== 'undefined') {
-      console.log('You are on the browser')
+    if (typeof window !== "undefined") {
+      console.log("You are on the browser");
 
       // When initializing, we restore the data from `localStorage` into a map.
-      const map = new Map(JSON.parse(localStorage.getItem('app-cache') || '[]'))
+      const map = new Map(JSON.parse(localStorage.getItem("app-cache") || "[]"));
 
       // Before unloading the app, we write back all the data into `localStorage`.
-      window.addEventListener('beforeunload', () => {
-        const appCache = JSON.stringify(Array.from(map.entries()))
-        localStorage.setItem('app-cache', appCache)
-      })
+      window.addEventListener("beforeunload", () => {
+        const appCache = JSON.stringify(Array.from(map.entries()));
+        localStorage.setItem("app-cache", appCache);
+      });
 
       // We still use the map for write & read for performance.
       return map;
     } else {
-      console.log('You are on the server')
+      console.log("You are on the server");
       // 👉️ can't use localStorage
 
       return new Map();
