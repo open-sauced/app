@@ -19,7 +19,5 @@ if (process.env.CI === "true") {
   }
 
   // write BASE_URL env variable to .env file
-  fs.writeFileSync(".env.local", `NEXT_PUBLIC_BASE_URL=${base}
-  NEXT_PUBLIC_GS_API_URL=https://beta.gs-api.opensauced.pizza/v1
-  NEXT_PUBLIC_API_URL=https://beta.api.opensauced.pizza/v1`);
+  fs.writeFileSync(".env.local", `NEXT_PUBLIC_BASE_URL=${base}`);
 }
