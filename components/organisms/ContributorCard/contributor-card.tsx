@@ -5,7 +5,8 @@ import CardHorizontalBarChart, { LanguageObject } from "components/molecules/Car
 import CardLineChart from "components/molecules/CardLineChart/card-line-chart";
 import CardProfile from "components/molecules/CardProfile/card-profile";
 import CardRepoList, { RepoList } from "components/molecules/CardRepoList/card-repo-list";
-import ContributorTable, { PRs } from "components/molecules/ContributorTable/contributor-table";
+import ContributorTable from "components/molecules/ContributorTable/contributor-table";
+import { useTopicContributorCommits } from "lib/hooks/useTopicContributorCommits";
 import { useState } from "react";
 
 /* 
@@ -20,9 +21,7 @@ interface ContributorObject {
     dateOfFirstPR: string;
   };
   repoList: RepoList[];
-  lineChart: object;
   languageList: LanguageObject[];
-  listOfPRs: PRs[];
 }
 
 interface ContributorCardProps {
@@ -31,8 +30,9 @@ interface ContributorCardProps {
 }
 
 const ContributorCard = ({ className, contributor }: ContributorCardProps) => {
-  const { profile, repoList, lineChart, languageList } = contributor;
+  const { profile, repoList, languageList } = contributor;
   const [ showPRs, setShowPRs ] = useState(false);
+  const { chart } = useTopicContributorCommits(profile.githubName);
 
   return (
     <Card className={className}>
@@ -44,7 +44,7 @@ const ContributorCard = ({ className, contributor }: ContributorCardProps) => {
           </div>
         </div>
         <div className="h-[110px] overflow-hidden">
-          <CardLineChart lineChartOption={lineChart} />
+          <CardLineChart lineChartOption={chart} />
         </div>
         <CardRepoList repoList={repoList} />
         {showPRs ? (
