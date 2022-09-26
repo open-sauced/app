@@ -31,7 +31,7 @@ interface ContributorCardProps {
 }
 
 const ContributorCard = ({ className, contributor }: ContributorCardProps) => {
-  const { profile, repoList, lineChart, languageList, listOfPRs } = contributor;
+  const { profile, repoList, lineChart, languageList } = contributor;
   const [ showPRs, setShowPRs ] = useState(false);
 
   return (
@@ -48,7 +48,7 @@ const ContributorCard = ({ className, contributor }: ContributorCardProps) => {
         </div>
         <CardRepoList repoList={repoList} />
         {showPRs ? (
-          <ContributorTable listOfPRs={listOfPRs} />
+          <ContributorTable contributor={profile.githubName} />
         ) : null}
         <div className="flex w-full justify-center">
           <button 

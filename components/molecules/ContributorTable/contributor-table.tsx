@@ -4,6 +4,8 @@ import { FaRegDotCircle, FaRegCheckCircle } from "react-icons/fa";
 import { BsFileDiff } from "react-icons/bs";
 import { GoDiff } from "react-icons/go";
 import { VscGitPullRequest,VscGitPullRequestClosed, VscGitMerge, VscGitPullRequestDraft } from "react-icons/vsc";
+import { useTopicContributorPRs } from "lib/hooks/useTopicContributorPRs";
+import { calcDistanceFromToday } from "lib/utils/date-utils";
 
 export interface PRs {
   prStatus: string;
@@ -15,12 +17,14 @@ export interface PRs {
 }
 
 interface CardTableProps {
-  listOfPRs: PRs[];
+  contributor: string;
 }
 
-const ContributorTable = ({ listOfPRs }: CardTableProps) => {
+const ContributorTable = ({ contributor }: CardTableProps) => {
+  const { data, isLoading } = useTopicContributorPRs(contributor);
+
   return (
-    listOfPRs.length > 0 ?
+    data.length > 0 ?
       <>
         <div className="flex flex-col">
           <div className="flex gap-2 items-center bg-light-slate-3 rounded-md px-2 py-1">
@@ -51,7 +55,7 @@ const ContributorTable = ({ listOfPRs }: CardTableProps) => {
             </IconContext.Provider>
           </div>
           <div className="flex flex-col gap-0.5">
-            {listOfPRs.map(({prName, prStatus, prIssuedTime, prClosedTime, noOfFilesChanged, noOfLinesChanged}, index) => 
+            {data.map(({ title: prName, state: prStatus, merged, merged_at: prMergedTime, created_at: prIssuedTime, filesCount: noOfFilesChanged, linesCount: noOfLinesChanged}, index) => 
               <div key={index} className="flex gap-2 items-center px-2 py-1">
                 <div className="flex item-center gap-2 w-3/5">
                   {prStatus === "open" ? 
@@ -68,7 +72,7 @@ const ContributorTable = ({ listOfPRs }: CardTableProps) => {
 
                       :
 
-                      prStatus === "merged" ? 
+                      merged ? 
                         <IconContext.Provider value={{ color: "purple", style: { width: 14, height: 14, marginTop: 2 } }}>
                           <VscGitMerge title="Merged Pull Request" />
                         </IconContext.Provider>
@@ -80,17 +84,17 @@ const ContributorTable = ({ listOfPRs }: CardTableProps) => {
                         </IconContext.Provider>
                   }
                   <Text>
-                    {prIssuedTime}
+                    {calcDistanceFromToday(new Date(parseInt(prIssuedTime, 10)))}
                   </Text>
                   <Text className="!text-light-slate-12 !font-medium">
                     {prName}
                   </Text>
                 </div>
                 <div className="flex justify-end w-[calc(10%-4px)] text-sm text-light-slate-11">
-                  {prIssuedTime}
+                  {calcDistanceFromToday(new Date(parseInt(prIssuedTime, 10)))}
                 </div>
                 <div className="flex justify-end w-[calc(10%-4px)] text-sm text-light-slate-11">
-                  {prClosedTime}
+                  { merged ? calcDistanceFromToday(new Date(parseInt(prMergedTime, 10))) : "-" }
                 </div>
                 <div className="flex justify-end w-[calc(10%-4px)] text-sm text-light-slate-11">
                   {noOfFilesChanged}
@@ -107,7 +111,7 @@ const ContributorTable = ({ listOfPRs }: CardTableProps) => {
       :
 
       <div className="px-2 py-1">
-        There are currently no PRs...
+        { isLoading ? "Loading..." : "There are currently no PRs..." }
       </div>
   );
 };
