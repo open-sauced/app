@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.7.0-beta.9](https://github.com/open-sauced/insights/compare/v1.7.0-beta.8...v1.7.0-beta.9) (2022-09-26)
+
+
+### 🐛 Bug Fixes
+
+* remove link from highlight card component ([#435](https://github.com/open-sauced/insights/issues/435)) ([25b6997](https://github.com/open-sauced/insights/commit/25b6997f8dbce1213ddbbaa367df9ebdd28b643e))
+
 ## [1.7.0-beta.8](https://github.com/open-sauced/insights/compare/v1.7.0-beta.7...v1.7.0-beta.8) (2022-09-23)
 
 
