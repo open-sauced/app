@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.7.0-beta.11](https://github.com/open-sauced/insights/compare/v1.7.0-beta.10...v1.7.0-beta.11) (2022-09-27)
+
+
+### 🐛 Bug Fixes
+
+* remove remaining mock data for contributors ([#443](https://github.com/open-sauced/insights/issues/443)) ([974c739](https://github.com/open-sauced/insights/commit/974c7395f62c7518c14aaa6e1ab089ec0a5df88f)), closes [#404](https://github.com/open-sauced/insights/issues/404) [#444](https://github.com/open-sauced/insights/issues/444)
+
 ## [1.7.0-beta.10](https://github.com/open-sauced/insights/compare/v1.7.0-beta.9...v1.7.0-beta.10) (2022-09-27)
 
 
