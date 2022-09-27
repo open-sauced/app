@@ -34,13 +34,13 @@ const CardHorizontalBarChart = ({ languageList }: CardHorizontalBarChartProps): 
   return (
     <div className="flex flex-col gap-1 min-w-[120px]">
       {/* Progress Bar */}
-      <div className="flex items-center w-full rounded-full gap-0.5 overflow-hidden">
+      <div className="flex items-center w-full justify-end rounded-full gap-0.5 overflow-hidden">
         {sortedLangArray.map(({ languageName, percentageUsed }, index) =>
-          <div
+          index < 5 &&  <div
             key={index}
             onMouseOver={() => handleChangeDescriptText(languageName)}
             className="h-2 transition-all duration-500 ease-in-out"
-            style={{ width: `${percentageUsed}%`, backgroundColor: languageToColor[languageName] ? languageToColor[languageName].color as string : NOTSUPPORTED }}
+            style={{ width: `${percentageUsed < 20 ? 20 - percentageUsed + percentageUsed : percentageUsed}%`, backgroundColor: languageToColor[languageName] ? languageToColor[languageName].color as string : NOTSUPPORTED }}
           />
         )}
       </div>
