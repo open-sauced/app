@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import { getCommitsLast30Days } from "lib/utils/get-recent-commits";
 
-import useContributorData from "./useContributorData";
-
 const lineChart = {
   xAxis: {
     type: "category",
@@ -45,7 +43,6 @@ const lineChart = {
 };
 
 const useTopicContributorCommits = (contributor: string, topic = "hacktoberfest") => {
-  const contributorData = useContributorData();
   const [chart, setChart] = useState(lineChart);
 
   async function loadData() {
