@@ -21,7 +21,7 @@ const Reports = (): JSX.Element => {
   const filterList = filterOptions.map((filter) => {
     return {
       filterName: filter,
-      filterValue: filter.toLowerCase().replaceAll(" ", "-"),
+      filterValue: filter.toLowerCase().replaceAll(" ", "-")
     };
   });
 
@@ -33,7 +33,7 @@ const Reports = (): JSX.Element => {
       reportDate: getCurrentDate(),
       reportFormat: "CSV",
       isGenerated: dataReady,
-      data: dataReady ? data : [],
+      data: dataReady ? data : []
     };
 
     setReports((prevState) => {
@@ -69,7 +69,7 @@ const Reports = (): JSX.Element => {
         ) : hasReports === undefined ? (
           <div>Loading...</div>
         ) : (
-          <div>You don't have access to generate custom reports</div>
+          <div>You don&apos;t have access to generate custom reports</div>
         )}
       </div>
     </section>
