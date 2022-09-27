@@ -4,6 +4,7 @@ import SelectReportsFilter from "components/molecules/SelectReportsFilter/select
 import { Report } from "interfaces/report-type";
 import useFilterOptions from "lib/hooks/useFilterOptions";
 import { useRepositoriesList } from "lib/hooks/useRepositoriesList";
+import useSession from "lib/hooks/useSession";
 import getCurrentDate from "lib/utils/get-current-date";
 import { useState } from "react";
 
@@ -13,13 +14,14 @@ const Reports = (): JSX.Element => {
   const userDeviceState = localStorage.getItem(USERDEVICESTORAGENAME);
   const initialState = userDeviceState ? JSON.parse(userDeviceState as string) : [];
   const { data, isLoading, isError } = useRepositoriesList();
-  const [ reports, setReports ] = useState<Report[]>(initialState);
+  const [reports, setReports] = useState<Report[]>(initialState);
+  const { hasReports } = useSession();
 
   const filterOptions = useFilterOptions();
-  const filterList = filterOptions.map(filter => {
+  const filterList = filterOptions.map((filter) => {
     return {
       filterName: filter,
-      filterValue: filter.toLowerCase().replaceAll(" ", "-")
+      filterValue: filter.toLowerCase().replaceAll(" ", "-"),
     };
   });
 
@@ -31,11 +33,11 @@ const Reports = (): JSX.Element => {
       reportDate: getCurrentDate(),
       reportFormat: "CSV",
       isGenerated: dataReady,
-      data : dataReady ? data : []
+      data: dataReady ? data : [],
     };
 
-    setReports(prevState => {
-      const newState = [ ...prevState, constructedReport ];
+    setReports((prevState) => {
+      const newState = [...prevState, constructedReport];
       localStorage.setItem(USERDEVICESTORAGENAME, JSON.stringify(newState));
 
       return newState;
@@ -49,20 +51,26 @@ const Reports = (): JSX.Element => {
           Contribution Insights
         </Title>
         <hr className="border-light-slate-6 my-4" />
-        <SelectReportsFilter
-          filterList={filterList}
-          callback={handleFilterClick}
-        />
 
-        { reports.length > 0 &&
+        {hasReports ? (
           <>
-            <Title className="!font-medium relative mt-16" level={3}>
-              Download History
-            </Title>
-            <hr className="border-light-slate-6 my-4" />
-            <ReportsHistory reportList={reports}/>
+            <SelectReportsFilter filterList={filterList} callback={handleFilterClick} />
+
+            {reports.length > 0 && (
+              <>
+                <Title className="!font-medium relative mt-16" level={3}>
+                  Download History
+                </Title>
+                <hr className="border-light-slate-6 my-4" />
+                <ReportsHistory reportList={reports} />
+              </>
+            )}
           </>
-        }
+        ) : hasReports === undefined ? (
+          <div>Loading...</div>
+        ) : (
+          <div>You don't have access to generate custom reports</div>
+        )}
       </div>
     </section>
   );

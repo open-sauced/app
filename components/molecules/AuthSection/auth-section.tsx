@@ -12,11 +12,11 @@ import useSupabaseAuth from "../../../lib/hooks/useSupabaseAuth";
 import {FiLogOut} from "react-icons/fi";
 import GitHubIcon from "public/icons/github-icon.svg";
 import Icon from "components/atoms/Icon/icon";
-import useOnboarded from "lib/hooks/useOnboarded";
+import useSession from "lib/hooks/useSession";
 
 const AuthSection: React.FC = ({  }) => {
   const { signIn, signOut, user } = useSupabaseAuth();
-  const { onboarded } = useOnboarded();
+  const { onboarded } = useSession();
 
   const authMenu = {
     authed: [
