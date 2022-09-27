@@ -1,4 +1,3 @@
-import useContributorData from "lib/hooks/useContributorData";
 import { calcDistanceFromToday } from "lib/utils/date-utils";
 import ContributorCard from "../ContributorCard/contributor-card";
 import color from "lib/utils/color.json";
@@ -7,7 +6,6 @@ import { useTopicContributions } from "lib/hooks/useTopicContributions";
 const colorKeys = Object.keys(color);
 
 const Contributors = (): JSX.Element => {
-  const contributorData = useContributorData();
   const { data, isError, isLoading } = useTopicContributions();
 
   const contributorArray = isError
@@ -33,11 +31,10 @@ const Contributors = (): JSX.Element => {
       });
 
       return {
-        ...contributorData,
         profile: {
-          ...contributorData.profile,
           githubAvatar: `https://www.github.com/${contributor.host_login}.png?size=60`,
           githubName: contributor.host_login,
+          totalPRs: contributor.recent_pr_total,
           dateOfFirstPR: timeSinceFirstCommit
         },
         languageList,
