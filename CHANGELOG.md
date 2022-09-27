@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.7.0-beta.10](https://github.com/open-sauced/insights/compare/v1.7.0-beta.9...v1.7.0-beta.10) (2022-09-27)
+
+
+### 🍕 Features
+
+* add data from API to contributors page for hacktoberfest ([#431](https://github.com/open-sauced/insights/issues/431)) ([56e12ea](https://github.com/open-sauced/insights/commit/56e12ea18ec8a7983146a4f7a0f6fe13c10f36ca)), closes [#404](https://github.com/open-sauced/insights/issues/404)
+
 ## [1.7.0-beta.9](https://github.com/open-sauced/insights/compare/v1.7.0-beta.8...v1.7.0-beta.9) (2022-09-26)
 
 
