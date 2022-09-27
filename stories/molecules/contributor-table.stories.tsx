@@ -51,9 +51,7 @@ export const AddedPullRequests = ContributorTableTemplate.bind({});
 export const NoPullRequests = ContributorTableTemplate.bind({});
 
 AddedPullRequests.args = {
-  listOfPRs: testPRs
 };
 
 NoPullRequests.args = {
-  listOfPRs: []
 };

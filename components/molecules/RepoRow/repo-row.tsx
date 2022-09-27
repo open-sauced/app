@@ -3,7 +3,7 @@ import { RepositoriesRows } from "components/organisms/RepositoriesTable/reposit
 import Pill from "components/atoms/Pill/pill";
 import { useContributionsList } from "lib/hooks/useContributionsList";
 import { useRepositoryCommits } from "lib/hooks/useRepositoryCommits";
-import differenceInDays from "date-fns/differenceInDays";
+import { getCommitsLast30Days } from "lib/utils/get-recent-commits";
 import TableRepositoryName from "../TableRepositoryName/table-repository-name";
 import Sparkline from "components/atoms/Sparkline/sparkline";
 import PullRequestOverview from "../PullRequestOverview/pull-request-overview";
@@ -11,13 +11,9 @@ import StackedAvatar from "../StackedAvatar/stacked-avatar";
 import { useState } from "react";
 import { classNames } from "components/organisms/RepositoriesTable/repositories-table";
 import clsx from "clsx";
+
 interface RepoProps {
   repo: RepositoriesRows;
-}
-
-interface CommitGraphData {
-  x: number,
-  y: number;
 }
 
 const getActivity = (total?: number, loading?: boolean) => {
@@ -34,27 +30,6 @@ const getActivity = (total?: number, loading?: boolean) => {
   }
 
   return <Pill icon={<ArrowTrendingDownIcon color="red" className="h-4 w-4" />} text="Low" color="red" />;
-};
-
-const getCommitsLast30Days = (commits: DbRepoCommit[]): CommitGraphData[] => {
-  const commitDays = commits.reduce((days: { [name: string]: number }, curr: DbRepoCommit) => {
-    const day = differenceInDays(new Date(), new Date(Number(curr.commit_time)));
-
-    if (days[day]) {
-      days[day]++;
-    } else {
-      days[day] = 1;
-    }
-
-    return days;
-  }, {});
-
-  const days: any[] = [];
-  for(let d=30;d>=0;d--) {
-    days.push({ x: d, y: commitDays[d] || 0 });
-  }
-
-  return days;
 };
 
 const getTotalPrs = (openPrsCount?: number, mergedPrsCount?: number, closedPrsCount?: number, draftPrsCount?: number): number => {

@@ -9,6 +9,13 @@ interface DbRepo {
 
 interface DbRepoPR {
   readonly title: string;
+  readonly state: string;
+  readonly created_at: string;
+  readonly closed_at: string;
+  readonly merged_at: string;
+  readonly filesCount: number;
+  readonly linesCount: number;
+  readonly merged: boolean;
 }
 
 interface DbRepoCommit {
@@ -34,5 +41,6 @@ interface DbContribution {
   readonly email: string,
   readonly name: string,
   readonly host_login: string,
-  readonly langs: string
+  readonly langs: string,
+  readonly recent_repo_list: string
 }
