@@ -33,6 +33,10 @@ export const calcYearsFromToday = (endDate: Date) => {
 export const calcDistanceFromToday = (endDate: Date) => {
   const daysFromNow = calcDaysFromToday(endDate);
 
+  if (daysFromNow === 0) {
+    return "-";
+  }
+
   if (daysFromNow >= 365) {
     return `${calcYearsFromToday(endDate)}y`;
   }

@@ -1,14 +1,17 @@
 import { useEffect, useState } from "react";
+import useSWR from "swr";
 import { getCommitsLast30Days } from "lib/utils/get-recent-commits";
 
-import useContributorData from "./useContributorData";
+interface PaginatedTopicCommitResponse {
+  readonly data: DbRepoCommit[];
+  readonly meta: Meta;
+}
 
 const lineChart = {
   xAxis: {
     type: "category",
     boundaryGap: false,
     axisLabel: false
-    // data: []
   },
   yAxis: {
     type: "value",
@@ -29,7 +32,6 @@ const lineChart = {
   },
   series: [
     {
-      // data: [],
       type: "line",
       smooth: true,
       showSymbol: false,
@@ -45,19 +47,15 @@ const lineChart = {
 };
 
 const useTopicContributorCommits = (contributor: string, topic = "hacktoberfest") => {
-  const contributorData = useContributorData();
   const [chart, setChart] = useState(lineChart);
 
-  async function loadData() {
-    const baseEndpoint = `${process.env.NEXT_PUBLIC_GS_API_URL}/${topic}/${contributor}/commits`;
-    const endpointString = `${baseEndpoint}`;
+  const baseEndpoint = `${topic}/${contributor}/commits`;
+  const endpointString = `${baseEndpoint}`;
 
-    try {
-      const resp = await fetch(endpointString, {
-        method: "GET"
-      });
+  const { data } = useSWR<PaginatedTopicCommitResponse, Error>(contributor ? endpointString : null);
 
-      const data: { data: DbRepoCommit[] } = await resp.json();
+  useEffect(() => {
+    if (data) {
       const graphData = getCommitsLast30Days(data.data);
 
       setChart((prevChart) => ({
@@ -71,16 +69,8 @@ const useTopicContributorCommits = (contributor: string, topic = "hacktoberfest"
           data: graphData.map((commit) => commit.y)
         }))
       }));
-    } catch (e) {
-      // show an alert
     }
-  }
-
-  useEffect(() => {
-    if (contributor) {
-      loadData();
-    }
-  }, [contributor]);
+  }, [data]);
 
   return {
     chart
