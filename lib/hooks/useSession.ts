@@ -20,7 +20,8 @@ const useSession = () => {
 
       setAppState((state) => ({
         ...state,
-        onboarded: data.is_onboarded
+        onboarded: data.is_onboarded,
+        waitlisted: data.is_waitlisted
       }));
 
       setHasReports(data.insights_role >= 50);
@@ -35,7 +36,7 @@ const useSession = () => {
     }
   }, [sessionToken]);
 
-  return { onboarded: appState?.onboarded, hasReports };
+  return { onboarded: appState?.onboarded, waitlisted: appState?.waitlisted, hasReports };
 };
 
 export default useSession;

@@ -1,10 +1,13 @@
 import Title from "components/atoms/Typography/title";
 import ReportsHistory from "components/molecules/ReportsHistory/reports-history";
 import SelectReportsFilter from "components/molecules/SelectReportsFilter/select-reports-filter";
+import WaitlistButton from "components/molecules/WaitlistButton/waitlist-button";
+import { useGlobalStateContext } from "context/global-state";
 import { Report } from "interfaces/report-type";
 import useFilterOptions from "lib/hooks/useFilterOptions";
 import { useRepositoriesList } from "lib/hooks/useRepositoriesList";
 import useSession from "lib/hooks/useSession";
+import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import getCurrentDate from "lib/utils/get-current-date";
 import { useState } from "react";
 
@@ -15,7 +18,10 @@ const Reports = (): JSX.Element => {
   const initialState = userDeviceState ? JSON.parse(userDeviceState as string) : [];
   const { data, isLoading, isError } = useRepositoriesList();
   const [reports, setReports] = useState<Report[]>(initialState);
-  const { hasReports } = useSession();
+  const { sessionToken } = useSupabaseAuth();
+  const { setAppState } = useGlobalStateContext();
+  const { hasReports, waitlisted } = useSession();
+  const [submitting, setSubmitting] = useState(false);
 
   const filterOptions = useFilterOptions();
   const filterList = filterOptions.map((filter) => {
@@ -44,6 +50,30 @@ const Reports = (): JSX.Element => {
     });
   };
 
+  const handleJoinClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+
+    setSubmitting(true);
+
+    try {
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/waitlist`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${sessionToken}`
+        }
+      });
+
+      setAppState((state) => ({
+        ...state,
+        waitlisted: true
+      }));
+    } catch (e) {
+      // handle error
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   return (
     <section className="flex flex-col w-full py-4 px-2 md:px-4 justify-center items-center">
       <div className="max-w-4xl">
@@ -69,7 +99,7 @@ const Reports = (): JSX.Element => {
         ) : hasReports === undefined ? (
           <div>Loading...</div>
         ) : (
-          <div>You don&apos;t have access to generate custom reports</div>
+          <WaitlistButton waitlisted={waitlisted} submitting={submitting} handleJoinClick={handleJoinClick} />
         )}
       </div>
     </section>
