@@ -62,7 +62,7 @@ const Contributors = (): JSX.Element => {
               from={page === 1 ? page : page * meta.limit}
               to={page === 1 ? meta.limit : page * meta.limit + meta.limit}
               total={meta.itemCount}
-              entity={"repos"}
+              entity={"contributors"}
             />
           </div>
         </div>
