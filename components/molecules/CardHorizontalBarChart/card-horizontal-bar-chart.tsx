@@ -35,8 +35,8 @@ const CardHorizontalBarChart = ({ languageList }: CardHorizontalBarChartProps): 
 
   useEffect(() =>{
     const totalSumOfFirstFivePercentage = sortedLangArray
-      .slice(4)
-      .map(lang => parseInt(lang.percentageUsed,  10))
+      .slice(0,4)
+      .map(lang => lang.percentageUsed)
       .reduce((prev: number, next: number) => prev + next); // need some help fixing this type error, used any to bypass 🙏
     setPercentage(totalSumOfFirstFivePercentage);
   },[percentage, sortedLangArray]);
