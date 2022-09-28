@@ -6,8 +6,7 @@ import { GoDiff } from "react-icons/go";
 import { VscGitPullRequest, VscGitPullRequestClosed, VscGitMerge, VscGitPullRequestDraft } from "react-icons/vsc";
 import { useTopicContributorPRs } from "lib/hooks/useTopicContributorPRs";
 import { calcDistanceFromToday } from "lib/utils/date-utils";
-import { truncateString } from "lib/utils/truncate-string";
-import { useMediaQuery } from "lib/hooks/useMediaQuery";
+
 export interface PRs {
   prStatus: string;
   prName: string;
@@ -23,7 +22,6 @@ interface CardTableProps {
 
 const ContributorTable = ({ contributor }: CardTableProps) => {
   const { data, isLoading } = useTopicContributorPRs(contributor);
-  const isNotMobile  = useMediaQuery("(min-width: 768px)");
   return data.length > 0 ? (
     <>
       <div className="flex flex-col">
@@ -86,7 +84,7 @@ const ContributorTable = ({ contributor }: CardTableProps) => {
                     </IconContext.Provider>
                   )}
                   <Text>{calcDistanceFromToday(new Date(parseInt(prIssuedTime, 10)))}</Text>
-                  <Text title={prName} className="!text-light-slate-12 !font-medium">{truncateString(prName, isNotMobile ? 38 : 15)}</Text>
+                  <Text title={prName} className="!text-light-slate-12 !truncate !font-medium">{prName}</Text>
                 </div>
                 <div className="flex justify-end w-[calc(10%-4px)] text-sm text-light-slate-11">
                   {calcDistanceFromToday(new Date(parseInt(prIssuedTime, 10)))}
