@@ -6,8 +6,8 @@ import { useTopicContributions } from "lib/hooks/useTopicContributions";
 const colorKeys = Object.keys(color);
 
 const Contributors = (): JSX.Element => {
-  const { data, isError, isLoading } = useTopicContributions();
-
+  const { data,meta,setPage, isError, isLoading } = useTopicContributions();
+  console.log(meta);
   const contributorArray = isError
     ? []
     : data?.map((contributor) => {
