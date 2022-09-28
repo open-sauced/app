@@ -56,13 +56,13 @@ const Footer = (): JSX.Element => {
         </div>
         <div className="flex justify-center gap-x-4 ">
           <div className=" hidden lg:flex items-center border-r pr-4   gap-x-4 text-light-slate-11 text-sm">
-            <a className="px-2 hover:text-light-slate-12" href="" target="_blank">
+            <a className="px-2 hover:text-light-slate-12" href={footerContext[0].terms?.url} target="_blank" rel="noreferrer">
               {footerContext[0].terms?.text}
             </a>
-            <a className="px-2 hover:text-light-slate-12" href="" target="_blank">
+            <a className="px-2 hover:text-light-slate-12" href={footerContext[0].privacy?.url} target="_blank" rel="noreferrer">
               {footerContext[0].privacy?.text}
             </a>
-            <a className="px-2 hover:text-light-slate-12" href="" target="_blank">
+            <a className="px-2 hover:text-light-slate-12" href={footerContext[0].status?.url} target="_blank" rel="noreferrer">
               {footerContext[0].status?.text}
             </a>
           </div>
