@@ -5,6 +5,27 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.7.0-beta.14](https://github.com/open-sauced/insights/compare/v1.7.0-beta.13...v1.7.0-beta.14) (2022-09-28)
+
+
+### 🐛 Bug Fixes
+
+* limit number of languages in contibutor's card ([#441](https://github.com/open-sauced/insights/issues/441)) ([4aba355](https://github.com/open-sauced/insights/commit/4aba355220a0b4f342dddf8f3ad6a0f4adadaa3c)), closes [#402](https://github.com/open-sauced/insights/issues/402)
+
+## [1.7.0-beta.13](https://github.com/open-sauced/insights/compare/v1.7.0-beta.12...v1.7.0-beta.13) (2022-09-28)
+
+
+### 🍕 Features
+
+* Add truncate string for long pr names ([#440](https://github.com/open-sauced/insights/issues/440)) ([35b8541](https://github.com/open-sauced/insights/commit/35b8541b71bcdd782af096f3332e64d75ea72d56)), closes [#438](https://github.com/open-sauced/insights/issues/438)
+
+## [1.7.0-beta.12](https://github.com/open-sauced/insights/compare/v1.7.0-beta.11...v1.7.0-beta.12) (2022-09-28)
+
+
+### 🍕 Features
+
+* adds initial support for restricting reports by user roles ([#451](https://github.com/open-sauced/insights/issues/451)) ([15a7643](https://github.com/open-sauced/insights/commit/15a764339c2b4cd87ecee8bc61d5c3c84cb9424a)), closes [#395](https://github.com/open-sauced/insights/issues/395)
+
 ## [1.7.0-beta.11](https://github.com/open-sauced/insights/compare/v1.7.0-beta.10...v1.7.0-beta.11) (2022-09-27)
 
 
