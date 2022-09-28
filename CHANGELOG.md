@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.7.0-beta.12](https://github.com/open-sauced/insights/compare/v1.7.0-beta.11...v1.7.0-beta.12) (2022-09-28)
+
+
+### 🍕 Features
+
+* adds initial support for restricting reports by user roles ([#451](https://github.com/open-sauced/insights/issues/451)) ([15a7643](https://github.com/open-sauced/insights/commit/15a764339c2b4cd87ecee8bc61d5c3c84cb9424a)), closes [#395](https://github.com/open-sauced/insights/issues/395)
+
 ## [1.7.0-beta.11](https://github.com/open-sauced/insights/compare/v1.7.0-beta.10...v1.7.0-beta.11) (2022-09-27)
 
 
