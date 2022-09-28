@@ -25,8 +25,8 @@ const languageToColor: AllSimpleColors = colors as AllSimpleColors;
 const CardHorizontalBarChart = ({ languageList }: CardHorizontalBarChartProps): JSX.Element => {
   const sortedLangArray = languageList.sort((a, b) => b.percentageUsed - a.percentageUsed);
   // used this state to calculate thte percentage of each language
-  const [percentage, setPercentage] = useState<any>();
-  
+  const [percentage, setPercentage] = useState<any>(0);
+
   const [descriptText, setDescriptText] = useState(sortedLangArray[0].languageName);
 
   const handleChangeDescriptText = (descriptText: string) => {
@@ -44,15 +44,15 @@ const CardHorizontalBarChart = ({ languageList }: CardHorizontalBarChartProps): 
       <div className="flex items-center w-full justify-end rounded-full gap-0.5 overflow-hidden">
         {sortedLangArray.map(({ languageName, percentageUsed }, index) =>
         {
-          
+
           return  index < 5 && ( <div
             key={index}
             onMouseOver={() => handleChangeDescriptText(languageName)}
             className="h-2 transition-all duration-500 ease-in-out"
             style={{ width: `${percentageUsed < 20 ? percentageUsed / percentage * 100 : percentageUsed}%`, backgroundColor: languageToColor[languageName] ? languageToColor[languageName].color as string : NOTSUPPORTED }}
           />);
-        } 
-         
+        }
+
         )}
       </div>
       <div className="flex gap-2 items-center">
