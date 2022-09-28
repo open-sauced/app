@@ -25,7 +25,7 @@ import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { User } from "@supabase/supabase-js";
 import { useGlobalStateContext } from "context/global-state";
 import { getAvatarLink } from "lib/utils/github";
-import useOnboarded from "lib/hooks/useOnboarded";
+import useSession from "lib/hooks/useSession";
 
 type handleLoginStep = () => void;
 
@@ -38,7 +38,7 @@ const LoginStep1: React.FC<LoginStep1Props> = ({ handleLoginStep, user }) => {
   captureAnayltics("User Onboarding", "onboardingStep1", "visited");
 
   const router = useRouter();
-  const { onboarded } = useOnboarded();
+  const { onboarded } = useSession();
 
   useEffect(() => {
     if (onboarded) {

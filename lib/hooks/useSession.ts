@@ -1,12 +1,13 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useGlobalStateContext } from "context/global-state";
 import useSupabaseAuth from "./useSupabaseAuth";
 
-const useOnboarded = () => {
+const useSession = () => {
   const { sessionToken } = useSupabaseAuth();
   const { appState, setAppState } = useGlobalStateContext();
+  const [ hasReports, setHasReports ] = useState<boolean | undefined>(undefined);
 
-  async function loadData() {
+  async function loadSession() {
     try {
       const resp = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/session`, {
         method: "GET",
@@ -19,8 +20,11 @@ const useOnboarded = () => {
 
       setAppState((state) => ({
         ...state,
-        onboarded: data.is_onboarded
+        onboarded: data.is_onboarded,
+        waitlisted: data.is_waitlisted
       }));
+
+      setHasReports(data.insights_role >= 50);
     } catch (e) {
       // show an alert
     }
@@ -28,11 +32,11 @@ const useOnboarded = () => {
 
   useEffect(() => {
     if (sessionToken) {
-      loadData();
+      loadSession();
     }
   }, [sessionToken]);
 
-  return { onboarded: appState?.onboarded };
+  return { onboarded: appState?.onboarded, waitlisted: appState?.waitlisted, hasReports };
 };
 
-export default useOnboarded;
+export default useSession;
