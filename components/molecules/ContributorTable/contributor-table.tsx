@@ -22,7 +22,6 @@ interface CardTableProps {
 
 const ContributorTable = ({ contributor }: CardTableProps) => {
   const { data, isLoading } = useTopicContributorPRs(contributor);
-
   return data.length > 0 ? (
     <>
       <div className="flex flex-col">
@@ -66,7 +65,7 @@ const ContributorTable = ({ contributor }: CardTableProps) => {
               index
             ) => (
               <div key={index} className="flex gap-2 items-center px-2 py-1">
-                <div className="flex item-center gap-2 w-3/5">
+                <div className="flex cursor-default item-center gap-2 w-3/5">
                   {prStatus === "open" ? (
                     <IconContext.Provider value={{ color: "green", style: { width: 14, height: 14, marginTop: 2 } }}>
                       <VscGitPullRequest title="Open Pull Request" />
@@ -85,7 +84,7 @@ const ContributorTable = ({ contributor }: CardTableProps) => {
                     </IconContext.Provider>
                   )}
                   <Text>{calcDistanceFromToday(new Date(parseInt(prIssuedTime, 10)))}</Text>
-                  <Text className="!text-light-slate-12 !font-medium">{prName}</Text>
+                  <Text title={prName} className="!text-light-slate-12 !w-32 md:!w-72  !truncate !font-medium">{prName}</Text>
                 </div>
                 <div className="flex justify-end w-[calc(10%-4px)] text-sm text-light-slate-11">
                   {calcDistanceFromToday(new Date(parseInt(prIssuedTime, 10)))}
