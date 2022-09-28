@@ -7,13 +7,11 @@
 
 ## [1.7.0-beta.14](https://github.com/open-sauced/insights/compare/v1.7.0-beta.13...v1.7.0-beta.14) (2022-09-28)
 
-
 ### 🐛 Bug Fixes
 
 * limit number of languages in contibutor's card ([#441](https://github.com/open-sauced/insights/issues/441)) ([4aba355](https://github.com/open-sauced/insights/commit/4aba355220a0b4f342dddf8f3ad6a0f4adadaa3c)), closes [#402](https://github.com/open-sauced/insights/issues/402)
 
 ## [1.7.0-beta.13](https://github.com/open-sauced/insights/compare/v1.7.0-beta.12...v1.7.0-beta.13) (2022-09-28)
-
 
 ### 🍕 Features
 
@@ -53,9 +51,7 @@
 ### 🐛 Bug Fixes
 
 * adds links to footer ([#432](https://github.com/open-sauced/insights/issues/432)) ([7adfbe7](https://github.com/open-sauced/insights/commit/7adfbe72cc602748cad3e546d5e696ae60c101a6))
-* inverse the scatter chart ([#433](https://github.com/open-sauced/insights/issues/433)) ([18dd094](https://github.com/open-sauced/insights/commit/18dd09474582269433cf36f29b17277b14ffceb5)), closes [#399](https://github.com/open-sauced/insights/issues/399)
-
-## [1.7.0-beta.7](https://github.com/open-sauced/insights/compare/v1.7.0-beta.6...v1.7.0-beta.7) (2022-09-23)
+* inverse the scatter chart ([#433](https://github.com/open-sauced/insights/issues/433)) ([18dd094](https://github.com/open-sauced/insights/commit/18dd09474582269433cf36f29b17277b14ffceb5)), closes [#399](https://github.com/open-sauced/insights/issues/399## [1.7.0-beta.7](https://github.com/open-sauced/insights/compare/v1.7.0-beta.6...v1.7.0-beta.7) (2022-09-23)
 
 
 ### 🍕 Features
