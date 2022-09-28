@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.8.0-beta.2](https://github.com/open-sauced/insights/compare/v1.8.0-beta.1...v1.8.0-beta.2) (2022-09-28)
+
+
+### 🍕 Features
+
+* add pagination to contributors page ([#454](https://github.com/open-sauced/insights/issues/454)) ([37f4da8](https://github.com/open-sauced/insights/commit/37f4da890e986a1e89a19a879d699d638e28e7a5)), closes [#403](https://github.com/open-sauced/insights/issues/403)
+
 ## [1.8.0-beta.1](https://github.com/open-sauced/insights/compare/v1.7.0...v1.8.0-beta.1) (2022-09-28)
 
 
