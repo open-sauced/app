@@ -1,4 +1,7 @@
+import Button from "components/atoms/Button/button";
+import Icon from "components/atoms/Icon/icon";
 import Title from "components/atoms/Typography/title";
+import GitHubIcon from "public/icons/github-icon.svg";
 import ReportsHistory from "components/molecules/ReportsHistory/reports-history";
 import SelectReportsFilter from "components/molecules/SelectReportsFilter/select-reports-filter";
 import WaitlistButton from "components/molecules/WaitlistButton/waitlist-button";
@@ -18,7 +21,7 @@ const Reports = (): JSX.Element => {
   const initialState = userDeviceState ? JSON.parse(userDeviceState as string) : [];
   const { data, isLoading, isError } = useRepositoriesList();
   const [reports, setReports] = useState<Report[]>(initialState);
-  const { sessionToken } = useSupabaseAuth();
+  const { sessionToken, user, signIn } = useSupabaseAuth();
   const { setAppState } = useGlobalStateContext();
   const { hasReports, waitlisted } = useSession();
   const [submitting, setSubmitting] = useState(false);
@@ -97,7 +100,17 @@ const Reports = (): JSX.Element => {
             )}
           </>
         ) : hasReports === undefined ? (
-          <div>Loading...</div>
+          <div>
+            {user ? (
+              <div>Loading...</div>
+            ) : (
+              <div className="flex justify-center py-4">
+                <Button type="primary" onClick={async () => await signIn({ provider: "github" })}>
+                  Connect with GitHub <Icon IconImage={GitHubIcon} className="ml-2" />
+                </Button>
+              </div>
+            )}
+          </div>
         ) : (
           <WaitlistButton waitlisted={waitlisted} submitting={submitting} handleJoinClick={handleJoinClick} />
         )}
