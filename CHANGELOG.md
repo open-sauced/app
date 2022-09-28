@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.7.0-beta.13](https://github.com/open-sauced/insights/compare/v1.7.0-beta.12...v1.7.0-beta.13) (2022-09-28)
+
+
+### 🍕 Features
+
+* Add truncate string for long pr names ([#440](https://github.com/open-sauced/insights/issues/440)) ([35b8541](https://github.com/open-sauced/insights/commit/35b8541b71bcdd782af096f3332e64d75ea72d56)), closes [#438](https://github.com/open-sauced/insights/issues/438)
+
 ## [1.7.0-beta.12](https://github.com/open-sauced/insights/compare/v1.7.0-beta.11...v1.7.0-beta.12) (2022-09-28)
 
 
