@@ -5,6 +5,27 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.7.0-beta.11](https://github.com/open-sauced/insights/compare/v1.7.0-beta.10...v1.7.0-beta.11) (2022-09-27)
+
+
+### 🐛 Bug Fixes
+
+* remove remaining mock data for contributors ([#443](https://github.com/open-sauced/insights/issues/443)) ([974c739](https://github.com/open-sauced/insights/commit/974c7395f62c7518c14aaa6e1ab089ec0a5df88f)), closes [#404](https://github.com/open-sauced/insights/issues/404) [#444](https://github.com/open-sauced/insights/issues/444)
+
+## [1.7.0-beta.10](https://github.com/open-sauced/insights/compare/v1.7.0-beta.9...v1.7.0-beta.10) (2022-09-27)
+
+
+### 🍕 Features
+
+* add data from API to contributors page for hacktoberfest ([#431](https://github.com/open-sauced/insights/issues/431)) ([56e12ea](https://github.com/open-sauced/insights/commit/56e12ea18ec8a7983146a4f7a0f6fe13c10f36ca)), closes [#404](https://github.com/open-sauced/insights/issues/404)
+
+## [1.7.0-beta.9](https://github.com/open-sauced/insights/compare/v1.7.0-beta.8...v1.7.0-beta.9) (2022-09-26)
+
+
+### 🐛 Bug Fixes
+
+* remove link from highlight card component ([#435](https://github.com/open-sauced/insights/issues/435)) ([25b6997](https://github.com/open-sauced/insights/commit/25b6997f8dbce1213ddbbaa367df9ebdd28b643e))
+
 ## [1.7.0-beta.8](https://github.com/open-sauced/insights/compare/v1.7.0-beta.7...v1.7.0-beta.8) (2022-09-23)
 
 
