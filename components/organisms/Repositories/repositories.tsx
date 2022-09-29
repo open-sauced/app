@@ -9,7 +9,8 @@ const Reports = (): JSX.Element => {
     isError: repoListIsError,
     isLoading: repoListIsLoading,
     page,
-    setPage
+    setPage,
+    setLimit
   } = useRepositoriesList();
   const preparedIds = !repoListIsLoading && !repoListIsError ? repoListData.map((row) => `${row.id}`) : [];
   // How do I make multiple calls?
@@ -19,7 +20,7 @@ const Reports = (): JSX.Element => {
       {repoListIsLoading && <>...Loading</>}
       {repoListIsError && <>An error has occured...</>}
       {!repoListIsLoading && !repoListIsError && (
-        <RepositoriesTable meta={repoMeta} page={page} setPage={setPage} listOfRepositories={repoListData} />
+        <RepositoriesTable meta={repoMeta} page={page} setLimit={setLimit} setPage={setPage} listOfRepositories={repoListData} />
       )}
     </div>
   );
