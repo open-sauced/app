@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { RiArrowDownSLine } from "react-icons/ri";
-import { RiArrowUpSLine } from "react-icons/ri";
+import { RiArrowDownSLine, RiArrowUpSLine } from "react-icons/ri";
 
 interface SelectProps {
   placeholder: string;
