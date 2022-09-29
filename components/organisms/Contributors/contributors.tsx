@@ -4,11 +4,12 @@ import color from "lib/utils/color.json";
 import { useTopicContributions } from "lib/hooks/useTopicContributions";
 import Pagination from "components/molecules/Pagination/pagination";
 import PaginationResults from "components/molecules/PaginationResults/pagination-result";
+import TableHeader from "components/molecules/TableHeader/table-header";
 
 const colorKeys = Object.keys(color);
 
 const Contributors = (): JSX.Element => {
-  const { data,meta,setPage ,page, isError, isLoading } = useTopicContributions();
+  const { data,setLimit, meta, setPage, page, isError, isLoading } = useTopicContributions();
   const contributorArray = isError
     ? []
     : data?.map((contributor) => {
@@ -45,7 +46,17 @@ const Contributors = (): JSX.Element => {
 
   return (
     <>
-    
+      {/* Table section */}
+      <TableHeader
+        updateLimit={setLimit}
+        showing={{
+          from: page === 1 ? page : page * meta.limit,
+          to: page === 1 ? meta.limit : page * meta.limit + meta.limit,
+          total:meta.itemCount,
+          entity: "Contributors"
+        }}
+        title="Contributors"
+      />
 
       <div className="w-full grid grid-cols-automobile  md:grid-cols-autodesktop gap-3">
         {isLoading ? "Loading..." : ""}
