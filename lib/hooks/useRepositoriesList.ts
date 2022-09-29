@@ -8,7 +8,8 @@ interface PaginatedRepoResponse {
 
 const useRepositoriesList = () => {
   const [page, setPage] = useState(1);
-  const { data, error, mutate } = useSWR<PaginatedRepoResponse, Error>(`repos/list?page=${page}`);
+  const [limit, setLimit] = useState(10);
+  const { data, error, mutate } = useSWR<PaginatedRepoResponse, Error>(`repos/list?page=${page}&limit=${limit}`);
 
   return {
     data: data?.data ?? [],
@@ -17,7 +18,8 @@ const useRepositoriesList = () => {
     isError: !!error,
     mutate,
     page,
-    setPage
+    setPage,
+    setLimit
   };
 };
 
