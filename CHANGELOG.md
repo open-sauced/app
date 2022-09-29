@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.8.0-beta.3](https://github.com/open-sauced/insights/compare/v1.8.0-beta.2...v1.8.0-beta.3) (2022-09-29)
+
+
+### 🐛 Bug Fixes
+
+* issue template 👋🏾 ([31b7a7e](https://github.com/open-sauced/insights/commit/31b7a7ed925fca0ef5c165e3bc3d95f6267052de))
+
 ## [1.8.0-beta.2](https://github.com/open-sauced/insights/compare/v1.8.0-beta.1...v1.8.0-beta.2) (2022-09-28)
 
 
