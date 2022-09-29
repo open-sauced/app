@@ -31,7 +31,7 @@ const TableHeader = ({ title, showing,updateLimit }: TableHeaderProps): JSX.Elem
             { name: "50 per page", value: 50 }
           ]}
           label="Showing"
-          onChange={function(limit: number):void{updateLimit(limit); console.log("i was changed");}}
+          onChange={function(limit: number):void{updateLimit(limit);}}
         ></Select>
         <Search placeholder=`Showing ${showing.entity}` name={showing.entity} />
       </div>
