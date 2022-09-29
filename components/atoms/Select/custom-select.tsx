@@ -1,16 +1,21 @@
 import React, { useState } from "react";
-import { IoIosArrowDown } from "react-icons/io";
-import { IoIosArrowUp } from "react-icons/io";
+import { RiArrowDownSLine } from "react-icons/ri";
+import { RiArrowUpSLine } from "react-icons/ri";
 
 interface SelectProps {
   placeholder: string;
   error?: string;
-  onChange: (e: any) => void;
+  onChange: Function;
   label?: string;
-  options: { name: string; value: string }[];
+  options: { name: string; value: any }[];
   className?: string;
+
 }
 
+type SelectedState = {
+  name: string,
+  value: any
+}
 const Select = ({
   placeholder = "Select an option",
   options,
@@ -20,39 +25,38 @@ const Select = ({
   onChange
 }: SelectProps): JSX.Element => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [selected, setSelected] = useState({ name: "", value: "" });
+  const [selected, setSelected] = useState<SelectedState>({ name: "", value: "" });
   const handleToggle = () => {
     setIsOpen(!isOpen);
   };
-  const handleSelected = (option: { name: string; value: string }) => {
+  const handleSelected = (option: { name: string; value: any }) => {
     const { name, value } = option;
     setSelected((prev) => ({ ...prev, name, value }));
+    onChange(value);
     setIsOpen(false);
   };
+
 
   return (
     <div
       className={`${
         className
           ? className
-          : "relative   focus:border-light-orange-9 focus:ring focus:ring-light-orange-5 items-center   rounded-lg font-medium text-base text-light-slate-10"
+          : "relative bg-white cursor-pointer  focus:border-light-orange-9 focus:ring focus:ring-light-orange-5 items-center   rounded-lg font-medium text-base text-light-slate-10"
       }`}
     >
-      <div className="flex px-4 py-2 border border-light-slate-6 rounded-lg focus-within:border-light-orange-9 focus-within:ring focus-within:ring-light-orange-5 items-center">
+      <div onClick={()=> handleToggle()} className="flex px-4 py-1.5 border border-light-slate-6 rounded-lg focus-within:border-light-orange-9 focus-within:ring focus-within:ring-light-orange-5 items-center">
         {label && <span className="text-sm text-light-slate-9 mr-2">{label}:</span>}
         <input
-          onChange={onChange}
-          defaultValue={placeholder}
-          value={selected.value === "" ? placeholder : selected.value}
+          value={selected.name === "" ? placeholder : selected.name}
           readOnly
           type="text"
-          onClick={() => handleToggle()}
           className="w-full text-sm cursor-pointer text-light-slate-12 focus:outline-none bg-transparent"
         />
-        {isOpen ? <IoIosArrowUp className="justify-self-end" /> : <IoIosArrowDown className="justify-self-end" />}
+        <div className=" w-6 h-4 relative overflow-hidden"> <RiArrowUpSLine className="absolute bottom-1" />  <RiArrowDownSLine className="absolute top-1 font-medium" /></div>
       </div>
       {isOpen && (
-        <div className="w-full transition overflow-hidden rounded-lg border shadow-superlative absolute font-normal ">
+        <div className="w-full transition bg-white overflow-hidden z-10 rounded-lg border shadow-superlative absolute font-normal ">
           {options
             ? options.map((option, index) => (
               <div
