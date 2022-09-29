@@ -8,7 +8,8 @@ interface PaginatedContributorsResponse {
 
 const useTopicContributions = (topic = "hacktoberfest") => {
   const [page, setPage] = useState(1);
-  const baseEndpoint = `${topic}/contributions?page=${page}`;
+  const [limit, setLimit] = useState(10);
+  const baseEndpoint = `${topic}/contributions?page=${page}&limit=${limit}`;
   const endpointString = `${baseEndpoint}`;
 
   const { data, error, mutate } = useSWR<PaginatedContributorsResponse, Error>(endpointString);
@@ -20,7 +21,8 @@ const useTopicContributions = (topic = "hacktoberfest") => {
     isError: !!error,
     mutate,
     page,
-    setPage
+    setPage,
+    setLimit
   };
 };
 
