@@ -15,8 +15,8 @@ const useRepositoriesList = () => {
 
   const [page, setPage] = useState(1);
   const baseEndpoint = `${topic}/repos`;
-  const pageQuery = page ? `page=${page}` : ``;
-  const filterQuery = filter ? `&filter=${filter}` : ``;
+  const pageQuery = page ? `page=${page}` : "";
+  const filterQuery = filter ? `&filter=${filter}` : "";
   const endpointString = `${baseEndpoint}?${pageQuery}${filterQuery}`;
   const { data, error, mutate } = useSWR<PaginatedRepoResponse, Error>(topic ? endpointString : null);
 

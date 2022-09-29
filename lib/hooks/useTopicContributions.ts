@@ -14,8 +14,8 @@ const useTopicContributions = () => {
   const filter = selectedFilter as string;    
   const [page, setPage] = useState(1);
   const baseEndpoint = `${topic}/contributions`;
-  const pageQuery = page ? `page=${page}` : ``;
-  const filterQuery = filter ? `&filter=${filter}` : ``;
+  const pageQuery = page ? `page=${page}` : "";
+  const filterQuery = filter ? `&filter=${filter}` : "";
   const endpointString = `${baseEndpoint}?${pageQuery}${filterQuery}`;
 
   const { data, error, mutate } = useSWR<PaginatedContributorsResponse, Error>(topic ? endpointString : null);
