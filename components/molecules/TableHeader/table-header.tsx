@@ -26,7 +26,9 @@ const TableHeader = ({ title, showing,updateLimit }: TableHeaderProps): JSX.Elem
           options={[
             { name: "10 per page", value: 10 },
             { name: "20 per page", value: 20 },
-            { name: "30 per page", value: 30 }
+            { name: "30 per page", value: 30 },
+            { name: "40 per page", value: 40 },
+            { name: "50 per page", value: 50 }
           ]}
           label="Showing"
           onChange={function(limit: number):void{updateLimit(limit); console.log("i was changed");}}
