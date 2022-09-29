@@ -5,6 +5,7 @@ import { StaticImageData } from "next/image";
 import Pagination from "../../molecules/Pagination/pagination";
 import PaginationResults from "../../molecules/PaginationResults/pagination-result";
 import clsx from "clsx";
+import TableHeader from "components/molecules/TableHeader/table-header";
 export interface ContributorsRows {
   name?: string;
   avatarURL?: string | StaticImageData;
@@ -44,6 +45,7 @@ interface RepositoriesTableProps {
   meta: Meta;
   page: number;
   setPage: Function;
+  setLimit: Function;
 }
 
 export const classNames = {
@@ -59,75 +61,87 @@ export const classNames = {
   }
 };
 
-const RepositoriesTable = ({ listOfRepositories, meta, page, setPage }: RepositoriesTableProps): JSX.Element => {
+const RepositoriesTable = ({ listOfRepositories,setLimit, meta, page, setPage }: RepositoriesTableProps): JSX.Element => {
   return (
-    <div className="flex flex-col rounded-lg overflow-hidden border">
-      <div className="flex md:hidden justify-between  py-4 px-6 bg-light-slate-3 gap-2">
-        <div className="flex-1 ">
-          <TableTitle text="Repository"></TableTitle>
+    <>
+      <TableHeader
+        updateLimit={setLimit}
+        showing={{
+          from: page === 1 ? page : page * meta.limit,
+          to: page === 1 ? meta.limit : page * meta.limit + meta.limit,
+          total:meta.itemCount,
+          entity: "Repositories"
+        }}
+        title="Repositories"
+      />
+      <div className="flex flex-col rounded-lg overflow-hidden border">
+        <div className="flex md:hidden justify-between  py-4 px-6 bg-light-slate-3 gap-2">
+          <div className="flex-1 ">
+            <TableTitle text="Repository"></TableTitle>
+          </div>
+          <div className="flex-1">
+            <TableTitle text="Pr Overview"></TableTitle>
+          </div>
         </div>
-        <div className="flex-1">
-          <TableTitle text="Pr Overview"></TableTitle>
+        <div className="hidden md:flex py-4 px-6 bg-light-slate-3 gap-2">
+          <div className={clsx(classNames.cols.repository)}>
+            <TableTitle text="Repository"></TableTitle>
+          </div>
+          <div className={clsx(classNames.cols.activity)}>
+            <TableTitle text="Activity"></TableTitle>
+          </div>
+          <div className={clsx(classNames.cols.prOverview)}>
+            <TableTitle text="PR Overview"></TableTitle>
+          </div>
+          <div className={clsx(classNames.cols.prVelocity)}>
+            <TableTitle text="PR Velocity"></TableTitle>
+          </div>
+          <div className={clsx(classNames.cols.spam)}>
+            <TableTitle text="SPAM"></TableTitle>
+          </div>
+          <div className={clsx(classNames.cols.contributors, "hidden lg:flex")}>
+            <TableTitle text="Contributors"></TableTitle>
+          </div>
+          <div className={clsx(classNames.cols.last30days, "hidden lg:flex" )}>
+            <TableTitle text="Last 30 Days"></TableTitle>
+          </div>
         </div>
-      </div>
-      <div className="hidden md:flex py-4 px-6 bg-light-slate-3 gap-2">
-        <div className={clsx(classNames.cols.repository)}>
-          <TableTitle text="Repository"></TableTitle>
-        </div>
-        <div className={clsx(classNames.cols.activity)}>
-          <TableTitle text="Activity"></TableTitle>
-        </div>
-        <div className={clsx(classNames.cols.prOverview)}>
-          <TableTitle text="PR Overview"></TableTitle>
-        </div>
-        <div className={clsx(classNames.cols.prVelocity)}>
-          <TableTitle text="PR Velocity"></TableTitle>
-        </div>
-        <div className={clsx(classNames.cols.spam)}>
-          <TableTitle text="SPAM"></TableTitle>
-        </div>
-        <div className={clsx(classNames.cols.contributors, "hidden lg:flex")}>
-          <TableTitle text="Contributors"></TableTitle>
-        </div>
-        <div className={clsx(classNames.cols.last30days, "hidden lg:flex" )}>
-          <TableTitle text="Last 30 Days"></TableTitle>
-        </div>
-      </div>
-      <section className="flex  flex-col">
-        {Array.isArray(listOfRepositories) &&
+        <section className="flex  flex-col">
+          {Array.isArray(listOfRepositories) &&
           listOfRepositories.length > 0 &&
           listOfRepositories.map((item, index) => <RepoRow key={`${item.handle}/${item.name}/${index}`} repo={item} />)}
-      </section>
+        </section>
 
-      {/* Table Footer */}
-      <div className="py-4 px-6 flex justify-between items-center">
-        <div>
-          <div className="">
-            <PaginationResults
-              from={page === 1 ? page : page * meta.limit}
-              to={page === 1 ? meta.limit : page * meta.limit + meta.limit}
-              total={meta.itemCount}
-              entity={"repos"}
-            />
+        {/* Table Footer */}
+        <div className="py-4 px-6 flex justify-between items-center">
+          <div>
+            <div className="">
+              <PaginationResults
+                from={page === 1 ? page : page * meta.limit}
+                to={page === 1 ? meta.limit : page * meta.limit + meta.limit}
+                total={meta.itemCount}
+                entity={"repos"}
+              />
+            </div>
           </div>
-        </div>
-        <div>
-          <div className="flex items-center gap-4">
-            <Pagination
-              pages={[]}
-              hasNextPage={meta.hasNextPage}
-              hasPreviousPage={meta.hasPreviousPage}
-              totalPage={meta.pageCount}
-              page={meta.page}
-              onPageChange={function (page: number): void {
-                setPage(page);
-              }}
-              divisor={false}
-            />
+          <div>
+            <div className="flex items-center gap-4">
+              <Pagination
+                pages={[]}
+                hasNextPage={meta.hasNextPage}
+                hasPreviousPage={meta.hasPreviousPage}
+                totalPage={meta.pageCount}
+                page={meta.page}
+                onPageChange={function (page: number): void {
+                  setPage(page);
+                }}
+                divisor={false}
+              />
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
