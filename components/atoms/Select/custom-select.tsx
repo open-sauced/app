@@ -5,7 +5,7 @@ import { RiArrowUpSLine } from "react-icons/ri";
 interface SelectProps {
   placeholder: string;
   error?: string;
-  onChange: Function;
+  onChange?: Function;
   label?: string;
   options: { name: string; value: any }[];
   className?: string;
@@ -32,7 +32,7 @@ const Select = ({
   const handleSelected = (option: { name: string; value: any }) => {
     const { name, value } = option;
     setSelected((prev) => ({ ...prev, name, value }));
-    onChange(value);
+    onChange?.(value);
     setIsOpen(false);
   };
 
@@ -56,7 +56,7 @@ const Select = ({
         <div className=" w-6 h-4 relative overflow-hidden"> <RiArrowUpSLine className="absolute bottom-1" />  <RiArrowDownSLine className="absolute top-1 font-medium" /></div>
       </div>
       {isOpen && (
-        <div className="w-full transition bg-white overflow-hidden z-10 rounded-lg border shadow-superlative absolute font-normal ">
+        <div className="w-full transition bg-white overflow-hidden z-50 rounded-lg border shadow-superlative absolute font-normal ">
           {options
             ? options.map((option, index) => (
               <div
