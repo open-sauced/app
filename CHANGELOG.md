@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.8.0-beta.4](https://github.com/open-sauced/insights/compare/v1.8.0-beta.3...v1.8.0-beta.4) (2022-09-30)
+
+
+### 🍕 Features
+
+* add filters to hooks for repos and contributions ([#458](https://github.com/open-sauced/insights/issues/458)) ([05e6bbe](https://github.com/open-sauced/insights/commit/05e6bbe535a62084df9f90de3a3b3de7d9170bd5)), closes [#457](https://github.com/open-sauced/insights/issues/457)
+
 ## [1.8.0-beta.3](https://github.com/open-sauced/insights/compare/v1.8.0-beta.2...v1.8.0-beta.3) (2022-09-29)
 
 
