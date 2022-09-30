@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { useState } from "react";
 import useSWR from "swr";
 
@@ -6,13 +7,22 @@ interface PaginatedContributorsResponse {
   readonly meta: Meta;
 }
 
-const useTopicContributions = (topic = "hacktoberfest") => {
+const useTopicContributions = () => {
+  const router = useRouter();
+  const { filterName, selectedFilter } = router.query;
+  const topic = filterName as string;
+  const filter = selectedFilter as string;    
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
-  const baseEndpoint = `${topic}/contributions?page=${page}&limit=${limit}`;
-  const endpointString = `${baseEndpoint}`;
 
-  const { data, error, mutate } = useSWR<PaginatedContributorsResponse, Error>(endpointString);
+  const baseEndpoint = `${topic}/contributions`;
+  const pageQuery = page ? `page=${page}` : "";
+  const filterQuery = filter ? `&filter=${filter}` : "";
+  const limitQuery = limit ? `&limit=${limit}` : "";
+  const endpointString = `${baseEndpoint}?${pageQuery}${limitQuery}${filterQuery}`;
+
+
+  const { data, error, mutate } = useSWR<PaginatedContributorsResponse, Error>(topic ? endpointString : null);
 
   return {
     data: data?.data ?? [],
