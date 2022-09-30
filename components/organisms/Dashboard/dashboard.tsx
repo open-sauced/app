@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { useRepositoriesList } from "lib/hooks/useRepositoriesList";
 import Card from "../../atoms/Card/card";
 import DashboardScatterChart from "components/molecules/DashboardScatterChart/dashboard-scatter-chart";
@@ -59,15 +60,12 @@ export const Dashboard = (): JSX.Element => {
   ];
 
   const scatterChartData = contributorError ? [] :
-    //eslint-disable-next-line
     contributorData.map(({ last_commit_time, files_modified, host_login }, index) => {
       const timeOverTouched: (string | number)[] = [
         calcDaysFromToday(new Date(parseInt(last_commit_time))),
-        //eslint-disable-next-line
         files_modified !== null ? files_modified : fakeDataSet[index]
       ];
 
-      //eslint-disable-next-line
       conAvatarObject[`${timeOverTouched[0]}${timeOverTouched[1]}`] = {
         login: host_login,
         image: roundedImage(`https://www.github.com/${host_login}.png?size=60`, "dgxgziswe")
