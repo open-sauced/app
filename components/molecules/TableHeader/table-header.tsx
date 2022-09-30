@@ -30,7 +30,7 @@ const TableHeader = ({ title, showing,updateLimit}: TableHeaderProps): JSX.Eleme
             { name: "40 per page", value: 40 },
             { name: "50 per page", value: 50 }
           ]}
-          className="hidden ml-auto md:inline-block md:!max-w-[220px]"
+          className="hidden font-medium ml-auto md:inline-block md:!max-w-[220px]"
           label="Showing"
           onChange={function(limit: number):void{updateLimit(limit);}}
         ></Select>
