@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { useContributionsList } from "lib/hooks/useContributionsList";
 import { calcDaysFromToday } from "lib/utils/date-utils";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
+import roundedImage from "lib/utils/roundedImages";
 
 export const Dashboard = (): JSX.Element => {
   // This is mock data for the dashboard. Not intended to be the final implementation.
@@ -67,7 +68,10 @@ export const Dashboard = (): JSX.Element => {
       ];
 
       //eslint-disable-next-line
-      conAvatarObject[`${timeOverTouched[0]}${timeOverTouched[1]}`] = { login: host_login, image: `https://res.cloudinary.com/dgxgziswe/image/fetch/c_fill,g_face,h_300,w_300/r_max/f_auto/https://www.github.com/${host_login}.png?size=60` };
+      conAvatarObject[`${timeOverTouched[0]}${timeOverTouched[1]}`] = {
+        login: host_login,
+        image: roundedImage(`https://www.github.com/${host_login}.png?size=60`, "dgxgziswe")
+      };
 
       return timeOverTouched;
     });
