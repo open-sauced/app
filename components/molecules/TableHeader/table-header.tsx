@@ -10,17 +10,17 @@ interface TableHeaderProps {
   
   updateLimit: Function
 }
-const TableHeader = ({ title, showing,updateLimit }: TableHeaderProps): JSX.Element => {
+const TableHeader = ({ title, showing,updateLimit}: TableHeaderProps): JSX.Element => {
 
   return (
-    <div className="flex justify-between items-center w-full pb-8">
+    <div className="flex gap-y-2 flex-col md:flex-row md:justify-between md:items-center w-full pb-4 md:pb-6">
       <div className="flex gap-x-4 items-end">
         <Title className="!text-2xl !font-medium" level={1}>
           {title}
         </Title>
-        <PaginationResult {...showing} />
+        <PaginationResult className="hidden md:inline-flex" {...showing} />
       </div>
-      <div className="w-2/5  flex gap-x-5 items-center">
+      <div className="w-full  md:w-2/5 flex gap-x-5 items-center">
         <Select
           placeholder="10 per page"
           options={[
@@ -30,10 +30,11 @@ const TableHeader = ({ title, showing,updateLimit }: TableHeaderProps): JSX.Elem
             { name: "40 per page", value: 40 },
             { name: "50 per page", value: 50 }
           ]}
+          className="hidden md:block md:w-74"
           label="Showing"
           onChange={function(limit: number):void{updateLimit(limit);}}
         ></Select>
-        <Search placeholder={`Showing ${showing.entity}`} name={showing.entity} />
+        <Search className="flex-1  py-2 md:py-1"  placeholder={`Showing ${showing.entity}`} name={showing.entity} />
       </div>
     </div>
   );
