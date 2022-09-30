@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.8.0-beta.5](https://github.com/open-sauced/insights/compare/v1.8.0-beta.4...v1.8.0-beta.5) (2022-09-30)
+
+
+### 🍕 Features
+
+* Add swr cache ([#437](https://github.com/open-sauced/insights/issues/437)) ([6b2b1cb](https://github.com/open-sauced/insights/commit/6b2b1cb604ffb46be30a8e63a298a48b9ad36410)), closes [#308](https://github.com/open-sauced/insights/issues/308)
+
 ## [1.8.0-beta.4](https://github.com/open-sauced/insights/compare/v1.8.0-beta.3...v1.8.0-beta.4) (2022-09-30)
 
 
