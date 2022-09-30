@@ -12,13 +12,16 @@ const useRepositoriesList = () => {
   const { filterName, selectedFilter } = router.query;
   const topic = filterName as string;
   const filter = selectedFilter as string;  
-
   const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(10);
+
   const baseEndpoint = `${topic}/repos`;
   const pageQuery = page ? `page=${page}` : "";
   const filterQuery = filter ? `&filter=${filter}` : "";
-  const endpointString = `${baseEndpoint}?${pageQuery}${filterQuery}`;
+  const limitQuery = limit ? `&limit=${limit}` : "";
+  const endpointString = `${baseEndpoint}?${pageQuery}${limitQuery}${filterQuery}`;
   const { data, error, mutate } = useSWR<PaginatedRepoResponse, Error>(topic ? endpointString : null);
+
 
   return {
     data: data?.data ?? [],
@@ -27,7 +30,8 @@ const useRepositoriesList = () => {
     isError: !!error,
     mutate,
     page,
-    setPage
+    setPage,
+    setLimit
   };
 };
 
