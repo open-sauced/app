@@ -68,7 +68,7 @@ export const Dashboard = (): JSX.Element => {
 
       conAvatarObject[`${timeOverTouched[0]}${timeOverTouched[1]}`] = {
         login: host_login,
-        image: roundedImage(`https://www.github.com/${host_login}.png?size=60`, "dgxgziswe")
+        image: roundedImage(`https://www.github.com/${host_login}.png?size=60`, process.env.NEXT_PUBLIC_CLOUD_NAME)
       };
 
       return timeOverTouched;
