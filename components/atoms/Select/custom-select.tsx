@@ -55,11 +55,11 @@ const Select = ({
         <div className=" w-6 h-4 relative overflow-hidden"> <RiArrowUpSLine className="absolute bottom-1" />  <RiArrowDownSLine className="absolute top-1 font-medium" /></div>
       </div>
       {isOpen && (
-        <div className="w-full transition bg-white overflow-hidden z-50 rounded-lg border shadow-superlative absolute font-normal ">
+        <div className="w-36 md:w-full transition bg-white overflow-hidden z-50 rounded-lg border shadow-superlative absolute font-normal ">
           {options
             ? options.map((option, index) => (
               <div
-                className="font-medium cursor-pointer text-sm text-light-slate-12 hover:text-light-orange-11 hover:bg-light-orange-3 py-1 px-4 transition"
+                className="font-medium cursor-pointer text-sm text-light-slate-12 hover:text-light-orange-11 hover:bg-light-orange-3 py-2 md:py-1 px-4 transition"
                 onClick={() => handleSelected(option)}
                 key={index}
               >
