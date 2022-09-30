@@ -67,7 +67,7 @@ export const Dashboard = (): JSX.Element => {
       ];
 
       //eslint-disable-next-line
-      conAvatarObject[`${timeOverTouched[0]}${timeOverTouched[1]}`] = { login: host_login, image: `https://www.github.com/${host_login}.png?size=60` };
+      conAvatarObject[`${timeOverTouched[0]}${timeOverTouched[1]}`] = { login: host_login, image: `https://res.cloudinary.com/dgxgziswe/image/fetch/c_fill,g_face,h_300,w_300/r_max/f_auto/https://www.github.com/${host_login}.png?size=60` };
 
       return timeOverTouched;
     });
@@ -145,7 +145,7 @@ export const Dashboard = (): JSX.Element => {
     <div className="flex flex-col w-full gap-4">
       <section className="flex flex-wrap gap-4 items-center lg:flex-row lg:flex-nowrap max-w-full">
         <HighlightCard
- 
+
           label="Participation"
           icon="participation"
           metricIncreases={true}
@@ -155,7 +155,7 @@ export const Dashboard = (): JSX.Element => {
           percentageLabel={itemCountText}
         />
         <HighlightCard
-         
+
           label="Spam"
           icon="spam"
           metricIncreases={false}
@@ -165,7 +165,7 @@ export const Dashboard = (): JSX.Element => {
           percentageLabel={itemCountText}
         />
         <HighlightCard
-         
+
           label="Accepted PRs"
           icon="accepted-pr"
           metricIncreases={true}
@@ -175,7 +175,7 @@ export const Dashboard = (): JSX.Element => {
           percentageLabel={itemCountText}
         />
         <HighlightCard
-         
+
           label="Unlabeled PRs"
           icon="unlabeled-pr"
           metricIncreases={false}
