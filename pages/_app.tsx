@@ -75,11 +75,11 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
         <link rel="icon" href="/favicon.ico" />
         <meta property="og:url" content="https://insights.opensauced.pizza" />
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="OpenSauced Insights Platform" />
+        <meta property="og:title" content="OpenSauced Insights" />
         <meta name="twitter:card" content="summary" />
         <meta
           property="og:description"
-          content="OpenSauced Insights Platform - Giving you insights on open source projects you won't find anywhere else!"
+          content="The open-source intelligence platform for developers and maintainers. Unlock the power of open source with project insights by the slice."
         />
         <meta property="og:image" content="/social-card.png" />
       </Head>
