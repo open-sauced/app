@@ -23,7 +23,7 @@ export const Dashboard = (): JSX.Element => {
       const timeOverTouched: (string | number)[] = [
         calcDaysFromToday(new Date(parseInt(last_commit_time))),
         //eslint-disable-next-line
-        files_modified !== null ? files_modified : 0
+        files_modified !== null ? parseInt(files_modified, 10) : 0
       ];
 
       //eslint-disable-next-line
@@ -31,6 +31,14 @@ export const Dashboard = (): JSX.Element => {
 
       return timeOverTouched;
     });
+
+  const maxFilesModified = scatterChartData.reduce((max, curr) => {
+    const [, files] = curr;
+    if (files > max) {
+      return files as number;
+    }
+    return max;
+  }, 0);
 
   const scatterOptions = {
     grid: {
@@ -59,7 +67,7 @@ export const Dashboard = (): JSX.Element => {
     },
     yAxis: {
       min: 0,
-      max: 5000,
+      max: Math.max(Math.round(maxFilesModified * 2), 10),
       splitNumber: 6,
       boundaryGap: false,
       axisLine: {
