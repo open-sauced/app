@@ -59,7 +59,7 @@ export const Dashboard = (): JSX.Element => {
     },
     yAxis: {
       min: 0,
-      max: 10000,
+      max: 5000,
       splitNumber: 6,
       boundaryGap: false,
       axisLine: {

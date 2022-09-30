@@ -7,13 +7,13 @@ interface PaginatedContributorsResponse {
   readonly meta: Meta;
 }
 
-const useTopicContributions = (customLimit = 10) => {
+const useTopicContributions = (initialLimit = 10) => {
   const router = useRouter();
   const { filterName, selectedFilter } = router.query;
   const topic = filterName as string;
   const filter = selectedFilter as string;    
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(customLimit);
+  const [limit, setLimit] = useState(initialLimit);
 
   const baseEndpoint = `${topic}/contributions`;
   const pageQuery = page ? `page=${page}` : "";
