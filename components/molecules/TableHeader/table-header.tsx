@@ -13,12 +13,12 @@ interface TableHeaderProps {
 const TableHeader = ({ title, showing,updateLimit}: TableHeaderProps): JSX.Element => {
 
   return (
-    <div className="flex gap-y-2 flex-col md:flex-row md:justify-between md:items-center w-full pb-4 md:pb-6">
+    <div className="flex flex-wrap gap-y-2 flex-col md:flex-row md:justify-between md:items-end w-full pb-4 md:pb-4">
       <div className="flex gap-x-4 items-end">
-        <Title className="!text-2xl !font-medium" level={1}>
+        <Title className="!text-2xl !leading-none !font-medium" level={1}>
           {title}
         </Title>
-        <PaginationResult className="hidden md:inline-flex" {...showing} />
+        <PaginationResult className="hidden !translate-y-[2px]  md:inline-flex" {...showing} />
       </div>
       <div className="w-full  md:w-2/5 flex gap-x-5 items-center">
         <Select
