@@ -57,7 +57,7 @@ const Contributors = (): JSX.Element => {
           entity: "Contributors"
         }}
         title="Contributors"
-        limit={meta.limit}
+        
       />
 
       <div className="w-full grid grid-cols-automobile  md:grid-cols-autodesktop gap-3">

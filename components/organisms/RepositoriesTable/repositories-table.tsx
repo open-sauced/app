@@ -79,7 +79,6 @@ const RepositoriesTable = ({
           total: meta.itemCount,
           entity: "Repositories"
         }}
-        limit={meta.limit}
         title="Repositories"
       />
       <div className="flex flex-col rounded-lg overflow-hidden border">
