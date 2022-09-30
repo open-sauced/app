@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.8.0-beta.7](https://github.com/open-sauced/insights/compare/v1.8.0-beta.6...v1.8.0-beta.7) (2022-09-30)
+
+
+### 🍕 Features
+
+* add page title and info to repo and contributors page ([#459](https://github.com/open-sauced/insights/issues/459)) ([c0000e4](https://github.com/open-sauced/insights/commit/c0000e4ca129a2f2b3e30f204fb00463ae646158)), closes [#446](https://github.com/open-sauced/insights/issues/446)
+
 ## [1.8.0-beta.6](https://github.com/open-sauced/insights/compare/v1.8.0-beta.5...v1.8.0-beta.6) (2022-09-30)
 
 
