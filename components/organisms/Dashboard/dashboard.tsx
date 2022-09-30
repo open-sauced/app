@@ -4,13 +4,12 @@ import DashboardScatterChart from "components/molecules/DashboardScatterChart/da
 import HighlightCard from "components/molecules/HighlightCard/highlight-card";
 import humanizeNumber from "lib/utils/humanizeNumber";
 import { useEffect, useState } from "react";
-import { useContributionsList } from "lib/hooks/useContributionsList";
 import { calcDaysFromToday } from "lib/utils/date-utils";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
+import { useTopicContributions } from "lib/hooks/useTopicContributions";
 
 export const Dashboard = (): JSX.Element => {
-  // This is mock data for the dashboard. Not intended to be the final implementation.
-  const { data: contributorData, isError: contributorError } = useContributionsList("769", "35");
+  const { data: contributorData, isError: contributorError } = useTopicContributions(35);
 
   const { meta: repoMetaData, isError: repoError } = useRepositoriesList();
   const [itemCountText, setItemCountText] = useState("Loading...");
@@ -18,52 +17,13 @@ export const Dashboard = (): JSX.Element => {
 
   const conAvatarObject: { [key: string]: {[key: string]: string} } = {};
 
-  const fakeDataSet = [
-    33,
-    400,
-    12,
-    5049,
-    0,
-    840,
-    3603,
-    400,
-    220,
-    5,
-    1284,
-    7000,
-    1060,
-    64,
-    8099,
-    6400,
-    1234,
-    123,
-    802,
-    6000,
-    100,
-    1206,
-    2084,
-    786,
-    876,
-    954,
-    305,
-    1087,
-    2803,
-    55,
-    2,
-    103,
-    2,
-    902,
-    500,
-    702
-  ];
-
   const scatterChartData = contributorError ? [] :
     //eslint-disable-next-line
-    contributorData.map(({ last_commit_time, files_modified, host_login }, index) => {
+    contributorData.map(({ last_commit_time, files_modified, host_login }) => {
       const timeOverTouched: (string | number)[] = [
         calcDaysFromToday(new Date(parseInt(last_commit_time))),
         //eslint-disable-next-line
-        files_modified !== null ? files_modified : fakeDataSet[index]
+        files_modified !== null ? files_modified : 0
       ];
 
       //eslint-disable-next-line

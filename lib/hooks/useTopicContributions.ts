@@ -7,20 +7,19 @@ interface PaginatedContributorsResponse {
   readonly meta: Meta;
 }
 
-const useTopicContributions = () => {
+const useTopicContributions = (customLimit = 10) => {
   const router = useRouter();
   const { filterName, selectedFilter } = router.query;
   const topic = filterName as string;
   const filter = selectedFilter as string;    
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(10);
+  const [limit, setLimit] = useState(customLimit);
 
   const baseEndpoint = `${topic}/contributions`;
   const pageQuery = page ? `page=${page}` : "";
   const filterQuery = filter ? `&filter=${filter}` : "";
   const limitQuery = limit ? `&limit=${limit}` : "";
-  const endpointString = `${baseEndpoint}?${pageQuery}${limitQuery}${filterQuery}`;
-
+  const endpointString = `${baseEndpoint}?${pageQuery}${filterQuery}${limitQuery}`;
 
   const { data, error, mutate } = useSWR<PaginatedContributorsResponse, Error>(topic ? endpointString : null);
 
