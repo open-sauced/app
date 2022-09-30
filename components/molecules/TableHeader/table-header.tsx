@@ -13,7 +13,7 @@ interface TableHeaderProps {
 const TableHeader = ({ title, showing,updateLimit}: TableHeaderProps): JSX.Element => {
 
   return (
-    <div className="flex flex-wrap gap-y-2 flex-col md:flex-row md:justify-between md:items-end w-full pb-4 md:pb-4">
+    <div className="flex flex-wrap gap-y-2 flex-col md:flex-row md:justify-between md:items-end w-full md:pb-4">
       <div className="flex gap-x-4 items-end">
         <Title className="!text-2xl !leading-none !font-medium" level={1}>
           {title}
@@ -30,11 +30,10 @@ const TableHeader = ({ title, showing,updateLimit}: TableHeaderProps): JSX.Eleme
             { name: "40 per page", value: 40 },
             { name: "50 per page", value: 50 }
           ]}
-          className="hidden md:inline-block md:!max-w-[220px]"
+          className="hidden ml-auto md:inline-block md:!max-w-[220px]"
           label="Showing"
           onChange={function(limit: number):void{updateLimit(limit);}}
         ></Select>
-        <Search className="flex-1  py-2 md:py-1"  placeholder={`Showing ${showing.entity}`} name={showing.entity} />
       </div>
     </div>
   );
