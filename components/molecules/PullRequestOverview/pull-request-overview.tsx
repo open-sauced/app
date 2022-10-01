@@ -31,8 +31,7 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({ className, op
         <div className={`
           ${churnDirection === "up" ? "text-light-grass-10" : "text-light-red-10"}
           font-medium flex items-center gap-x-1 text-base tracking-tight`}>
-          {churnDirection === "up" ? <ArrowUpIcon size={14} /> : <ArrowDownIcon size={14} />}{Math.round((closed/totalPullRequests)*100) || 0}%
-
+          {churnDirection === "up" ? <ArrowUpIcon size={14} /> : <ArrowDownIcon size={14} />}{closed ? Math.round((closed/totalPullRequests)*100) : 0}%
         </div>
       </div>
 
