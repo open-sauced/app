@@ -6,10 +6,10 @@ import humanizeNumber from "lib/utils/humanizeNumber";
 import { useEffect, useState } from "react";
 import { calcDaysFromToday } from "lib/utils/date-utils";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
-import { useTopicContributions } from "lib/hooks/useTopicContributions";
+import { useTopicPRs } from "lib/hooks/useTopicPRs";
 
 export const Dashboard = (): JSX.Element => {
-  const { data: contributorData, isError: contributorError } = useTopicContributions(35);
+  const { data: prData, isError: contributorError } = useTopicPRs();
 
   const { meta: repoMetaData, isError: repoError } = useRepositoriesList();
   const [itemCountText, setItemCountText] = useState("Loading...");
@@ -19,15 +19,15 @@ export const Dashboard = (): JSX.Element => {
 
   const scatterChartData = contributorError ? [] :
     //eslint-disable-next-line
-    contributorData.map(({ last_commit_time, files_modified, host_login }) => {
+    prData.map(({ updated_at, linesCount, author_login }) => {
       const timeOverTouched: (string | number)[] = [
-        calcDaysFromToday(new Date(parseInt(last_commit_time))),
+        calcDaysFromToday(new Date(parseInt(updated_at))),
         //eslint-disable-next-line
-        files_modified !== null ? parseInt(files_modified, 10) : 0
+        linesCount
       ];
 
       //eslint-disable-next-line
-      conAvatarObject[`${timeOverTouched[0]}${timeOverTouched[1]}`] = { login: host_login, image: `https://www.github.com/${host_login}.png?size=60` };
+      conAvatarObject[`${timeOverTouched[0]}${timeOverTouched[1]}`] = { login: author_login, image: `https://www.github.com/${author_login}.png?size=60` };
 
       return timeOverTouched;
     });
