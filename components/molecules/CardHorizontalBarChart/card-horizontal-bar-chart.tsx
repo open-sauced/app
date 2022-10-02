@@ -58,9 +58,9 @@ const CardHorizontalBarChart = ({ languageList }: CardHorizontalBarChartProps): 
 
         )}
       </div>
-      <div className="flex gap-2 items-center">
+      <div className="flex gap-2 max-w-[120px] items-center">
         <div className={"w-2 h-2 rounded-full"} style={{ backgroundColor: languageToColor[descriptText] ? languageToColor[descriptText].color as string : NOTSUPPORTED }}/>
-        <Text className="!text-xs !font-semibold !text-light-slate-11">
+        <Text title={descriptText} className="!text-xs !truncate !font-semibold !text-light-slate-11">
           {descriptText}
         </Text>
       </div>
