@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.8.0-beta.11](https://github.com/open-sauced/insights/compare/v1.8.0-beta.10...v1.8.0-beta.11) (2022-10-02)
+
+
+### 🍕 Features
+
+* hide show/hide buttons temporarily ([#474](https://github.com/open-sauced/insights/issues/474)) ([2ce5b3c](https://github.com/open-sauced/insights/commit/2ce5b3c2888c4eb021754f83c5eeabd23e9d5535)), closes [#439](https://github.com/open-sauced/insights/issues/439)
+
 ## [1.8.0-beta.10](https://github.com/open-sauced/insights/compare/v1.8.0-beta.9...v1.8.0-beta.10) (2022-10-02)
 
 
