@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.8.0-beta.8](https://github.com/open-sauced/insights/compare/v1.8.0-beta.7...v1.8.0-beta.8) (2022-10-02)
+
+
+### 🐛 Bug Fixes
+
+* replace churn with overview ([#470](https://github.com/open-sauced/insights/issues/470)) ([fc0fe3f](https://github.com/open-sauced/insights/commit/fc0fe3fbe905670b85beabb63b60e5268ff85fb6)), closes [#469](https://github.com/open-sauced/insights/issues/469)
+
 ## [1.8.0-beta.7](https://github.com/open-sauced/insights/compare/v1.8.0-beta.6...v1.8.0-beta.7) (2022-09-30)
 
 
