@@ -72,11 +72,7 @@ const ContributorTable = ({ contributor }: CardTableProps) => {
                     </IconContext.Provider>
                   ) : prStatus === "closed" ? (
                     <IconContext.Provider value={{ color: merged ? "purple" : "red", style: { width: 14, height: 14, marginTop: 2 } }}>
-                      <VscGitPullRequestClosed title={`${merged ? "Merged Pull Request" : "Closed Pull Request"}`} />
-                    </IconContext.Provider>
-                  ) : merged ? (
-                    <IconContext.Provider value={{ color: "purple", style: { width: 14, height: 14, marginTop: 2 } }}>
-                      <VscGitMerge title="Merged Pull Request" />
+                      {merged ? <VscGitMerge title="Merged Pull Request" /> :  <VscGitPullRequestClosed title="Closed Pull Request" />}
                     </IconContext.Provider>
                   ) : (
                     <IconContext.Provider value={{ color: "gray", style: { width: 14, height: 14, marginTop: 2 } }}>
