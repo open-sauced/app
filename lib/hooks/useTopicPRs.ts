@@ -11,7 +11,7 @@ const useTopicPRs = () => {
   const { filterName, selectedFilter } = router.query;
   const topic = filterName as string;
   const filter = selectedFilter as string;
-  const baseEndpoint = `${topic}/prs`;
+  const baseEndpoint = `${topic}/recent-prs`;
   const limitQuery = "limit=35";
   const filterQuery = filter ? `&filter=${filter}` : "";
   const endpointString = `${baseEndpoint}?${filterQuery}${limitQuery}`;
