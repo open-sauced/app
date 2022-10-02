@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.8.0-beta.10](https://github.com/open-sauced/insights/compare/v1.8.0-beta.9...v1.8.0-beta.10) (2022-10-02)
+
+
+### 🍕 Features
+
+* Leverage cloudinary for round images ([#467](https://github.com/open-sauced/insights/issues/467)) ([7dc64d8](https://github.com/open-sauced/insights/commit/7dc64d80c9bccdc16d49f81f9c22bfb0b8de901c)), closes [#373](https://github.com/open-sauced/insights/issues/373)
+
 ## [1.8.0-beta.9](https://github.com/open-sauced/insights/compare/v1.8.0-beta.8...v1.8.0-beta.9) (2022-10-02)
 
 
