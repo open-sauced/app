@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { useRepositoriesList } from "lib/hooks/useRepositoriesList";
 import Card from "../../atoms/Card/card";
 import DashboardScatterChart from "components/molecules/DashboardScatterChart/dashboard-scatter-chart";
@@ -7,6 +8,7 @@ import { useEffect, useState } from "react";
 import { useContributionsList } from "lib/hooks/useContributionsList";
 import { calcDaysFromToday } from "lib/utils/date-utils";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
+import roundedImage from "lib/utils/roundedImages";
 
 export const Dashboard = (): JSX.Element => {
   // This is mock data for the dashboard. Not intended to be the final implementation.
@@ -58,16 +60,16 @@ export const Dashboard = (): JSX.Element => {
   ];
 
   const scatterChartData = contributorError ? [] :
-    //eslint-disable-next-line
     contributorData.map(({ last_commit_time, files_modified, host_login }, index) => {
       const timeOverTouched: (string | number)[] = [
         calcDaysFromToday(new Date(parseInt(last_commit_time))),
-        //eslint-disable-next-line
         files_modified !== null ? files_modified : fakeDataSet[index]
       ];
 
-      //eslint-disable-next-line
-      conAvatarObject[`${timeOverTouched[0]}${timeOverTouched[1]}`] = { login: host_login, image: `https://www.github.com/${host_login}.png?size=60` };
+      conAvatarObject[`${timeOverTouched[0]}${timeOverTouched[1]}`] = {
+        login: host_login,
+        image: roundedImage(`https://www.github.com/${host_login}.png?size=60`, process.env.NEXT_PUBLIC_CLOUD_NAME)
+      };
 
       return timeOverTouched;
     });
@@ -145,7 +147,7 @@ export const Dashboard = (): JSX.Element => {
     <div className="flex flex-col w-full gap-4">
       <section className="flex flex-wrap gap-4 items-center lg:flex-row lg:flex-nowrap max-w-full">
         <HighlightCard
- 
+
           label="Participation"
           icon="participation"
           metricIncreases={true}
@@ -155,7 +157,7 @@ export const Dashboard = (): JSX.Element => {
           percentageLabel={itemCountText}
         />
         <HighlightCard
-         
+
           label="Spam"
           icon="spam"
           metricIncreases={false}
@@ -165,7 +167,7 @@ export const Dashboard = (): JSX.Element => {
           percentageLabel={itemCountText}
         />
         <HighlightCard
-         
+
           label="Accepted PRs"
           icon="accepted-pr"
           metricIncreases={true}
@@ -175,7 +177,7 @@ export const Dashboard = (): JSX.Element => {
           percentageLabel={itemCountText}
         />
         <HighlightCard
-         
+
           label="Unlabeled PRs"
           icon="unlabeled-pr"
           metricIncreases={false}
