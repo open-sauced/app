@@ -14,17 +14,17 @@ interface CardRepoListProps {
 
 const CardRepoList = ({ repoList }: CardRepoListProps): JSX.Element => {
   return (
-    <div className="flex gap-2 items-center font-medium text-xs text-light-slate-11">
+    <div className="flex gap-2 items-center font-medium flex-wrap text-xs text-light-slate-11">
       {
         repoList.length > 0 ?
           <>
             {
               repoList
                 .filter((repo, arrCount) => arrCount < REPOLISTLIMIT)
-                .map(({repoName, repoIcon}, index) => 
-                  <div key={index} className="flex gap-1 p-1 pr-2 border-[1px] border-light-slate-6 rounded-lg text-light-slate-12">
+                .map(({repoName, repoIcon}, index) =>
+                  <div key={index} className="flex gap-1  p-1 pr-2 border-[1px] border-light-slate-6 rounded-lg text-light-slate-12">
                     <Icon IconImage={repoIcon} className="rounded-[4px] overflow-hidden" />
-                    {repoName}
+                    <span className="max-w-[45px] md:max-w-[100px] truncate">{repoName}</span>
                   </div>
                 )
             }
