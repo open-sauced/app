@@ -5,6 +5,49 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.8.0-beta.12](https://github.com/open-sauced/insights/compare/v1.8.0-beta.11...v1.8.0-beta.12) (2022-10-02)
+
+
+### 🐛 Bug Fixes
+
+* add truncate to contributors repositories list tab ([#472](https://github.com/open-sauced/insights/issues/472)) ([b7ec96e](https://github.com/open-sauced/insights/commit/b7ec96e9b49aaf7fa54acce14c649f6aa442c3a8)), closes [#460](https://github.com/open-sauced/insights/issues/460)
+* fix merged PRs that looks like closed  ([#475](https://github.com/open-sauced/insights/issues/475)) ([1dd820a](https://github.com/open-sauced/insights/commit/1dd820a15cf99f5b3b125bacf18671d7cbdb7f14)), closes [#462](https://github.com/open-sauced/insights/issues/462)
+
+## [1.8.0-beta.11](https://github.com/open-sauced/insights/compare/v1.8.0-beta.10...v1.8.0-beta.11) (2022-10-02)
+
+
+### 🍕 Features
+
+* hide show/hide buttons temporarily ([#474](https://github.com/open-sauced/insights/issues/474)) ([2ce5b3c](https://github.com/open-sauced/insights/commit/2ce5b3c2888c4eb021754f83c5eeabd23e9d5535)), closes [#439](https://github.com/open-sauced/insights/issues/439)
+
+## [1.8.0-beta.10](https://github.com/open-sauced/insights/compare/v1.8.0-beta.9...v1.8.0-beta.10) (2022-10-02)
+
+
+### 🍕 Features
+
+* Leverage cloudinary for round images ([#467](https://github.com/open-sauced/insights/issues/467)) ([7dc64d8](https://github.com/open-sauced/insights/commit/7dc64d80c9bccdc16d49f81f9c22bfb0b8de901c)), closes [#373](https://github.com/open-sauced/insights/issues/373)
+
+## [1.8.0-beta.9](https://github.com/open-sauced/insights/compare/v1.8.0-beta.8...v1.8.0-beta.9) (2022-10-02)
+
+
+### 🍕 Features
+
+* update filters for repos and contributors ([#464](https://github.com/open-sauced/insights/issues/464)) ([e15bbf8](https://github.com/open-sauced/insights/commit/e15bbf8b76e8f3c1932137f5afee406fdd65ef70)), closes [#461](https://github.com/open-sauced/insights/issues/461)
+
+## [1.8.0-beta.8](https://github.com/open-sauced/insights/compare/v1.8.0-beta.7...v1.8.0-beta.8) (2022-10-02)
+
+
+### 🐛 Bug Fixes
+
+* replace churn with overview ([#470](https://github.com/open-sauced/insights/issues/470)) ([fc0fe3f](https://github.com/open-sauced/insights/commit/fc0fe3fbe905670b85beabb63b60e5268ff85fb6)), closes [#469](https://github.com/open-sauced/insights/issues/469)
+
+## [1.8.0-beta.7](https://github.com/open-sauced/insights/compare/v1.8.0-beta.6...v1.8.0-beta.7) (2022-09-30)
+
+
+### 🍕 Features
+
+* add page title and info to repo and contributors page ([#459](https://github.com/open-sauced/insights/issues/459)) ([c0000e4](https://github.com/open-sauced/insights/commit/c0000e4ca129a2f2b3e30f204fb00463ae646158)), closes [#446](https://github.com/open-sauced/insights/issues/446)
+
 ## [1.8.0-beta.6](https://github.com/open-sauced/insights/compare/v1.8.0-beta.5...v1.8.0-beta.6) (2022-09-30)
 
 
