@@ -1,5 +1,5 @@
 const useFilterOptions = () => {
-  const filterOptions = ["Top 1k Repos", "Minimum 5 Contributors", "1k Stars", "Most Active", "Most Spammed"];
+  const filterOptions = ["Top 100 Repos", "Minimum 5 Contributors", "Recent", "Most Active", "Most Spammed"];
   
   return filterOptions;
 };
