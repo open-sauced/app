@@ -12,8 +12,8 @@ const useTopicPRs = () => {
   const topic = filterName as string;
   const filter = selectedFilter as string;
   const baseEndpoint = `${topic}/recent-prs`;
-  const limitQuery = "limit=35";
-  const filterQuery = filter ? `&filter=${filter}` : "";
+  const filterQuery = filter ? `filter=${filter}` : "";
+  const limitQuery = `${filterQuery ? "&": ""}limit=35`;
   const endpointString = `${baseEndpoint}?${filterQuery}${limitQuery}`;
 
   const { data, error, mutate } = useSWR<PaginatedPRsResponse, Error>(endpointString);
