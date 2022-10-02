@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.8.0-beta.13](https://github.com/open-sauced/insights/compare/v1.8.0-beta.12...v1.8.0-beta.13) (2022-10-02)
+
+
+### 🐛 Bug Fixes
+
+* moved page head and footer to repo page to avoid reloading the entire screen ([#473](https://github.com/open-sauced/insights/issues/473)) ([bf790e8](https://github.com/open-sauced/insights/commit/bf790e89951c4a8740538c7e2e223209f4a6e1fd)), closes [#449](https://github.com/open-sauced/insights/issues/449)
+
 ## [1.8.0-beta.12](https://github.com/open-sauced/insights/compare/v1.8.0-beta.11...v1.8.0-beta.12) (2022-10-02)
 
 
