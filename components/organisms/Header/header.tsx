@@ -8,11 +8,13 @@ import Thumbnail from "../../../public/hacktoberfest-icon.png";
 import SuperativeSelector from "components/molecules/SuperlativeSelector/superlative-selector";
 import useFilterOptions from "lib/hooks/useFilterOptions";
 import { captureAnayltics } from "lib/utils/analytics";
+import useFilterPrefetch from "lib/hooks/useFilterPrefetch";
 
 const Header: React.FC = () => {
   const router = useRouter();
   const filterOptions = useFilterOptions();
 
+  const { filterValues } = useFilterPrefetch();
   const { filterName, toolName, selectedFilter } = router.query;
 
   const filterBtnRouting = (filter: string) => {
@@ -46,6 +48,7 @@ const Header: React.FC = () => {
           /> */}
           <SuperativeSelector
             filterOptions={filterOptions}
+            filterValues={filterValues}
             handleFilterClick={filterBtnRouting}
             handleCancelClick={cancelFilterRouting}
             selected={selectedFilter as string}
