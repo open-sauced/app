@@ -4,12 +4,14 @@ import { captureAnayltics } from "lib/utils/analytics";
 import Dashboard from "../Dashboard/dashboard";
 import Reports from "../Reports/reports";
 import Repositories from "../Repositories/repositories";
+import useSession from "lib/hooks/useSession";
 
 interface ToolProps {
   tool?: string;
 }
 
 const Tool = ({ tool }: ToolProps): JSX.Element => {
+  const { hasReports, waitlisted } = useSession();  
   captureAnayltics("Tools Display", "tools", `${tool} selected`);
 
   switch (tool) {
@@ -20,7 +22,7 @@ const Tool = ({ tool }: ToolProps): JSX.Element => {
     return <Repositories />;
 
   case "Reports":
-    return <Reports/>; 
+    return <Reports hasReports={hasReports} waitlisted={waitlisted}/>; 
   case "Contributors":
     return <Contributors/>;
   default:

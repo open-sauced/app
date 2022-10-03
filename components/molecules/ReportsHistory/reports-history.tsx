@@ -1,8 +1,8 @@
-import Button from "components/atoms/Button/button";
 import Text from "components/atoms/Typography/text";
 import { Report } from "interfaces/report-type";
-import { CSVLink } from "react-csv";
+
 import TableTitle from "components/atoms/TableTitle/table-title";
+import CSVDownload from "./csv-download";
 
 interface ReportsHistoryProps {
   reportList?: Report[];
@@ -37,8 +37,10 @@ const ReportsHistory = ({ reportList }: ReportsHistoryProps): JSX.Element => {
 
       <div className="flex flex-col justify-between w-full gap-2">
         {reportList &&
-          reportList.map(({reportDate, reportName, reportFormat, isGenerated, data}, index) => 
-            <div className="flex items-center py-3 px-3 md:px-6 odd:bg-white even:bg-slate-50 gap-2" key={index}>
+          reportList.map((report, index) => {
+            const {reportDate, reportName, reportFormat} = report;
+
+            return (<div className="flex items-center py-3 px-3 md:px-6 odd:bg-white even:bg-slate-50 gap-2" key={index}>
               <div className={`${tableStyles.col1} ${tableStyles.text}`}>
                 {reportName}
               </div>
@@ -49,18 +51,11 @@ const ReportsHistory = ({ reportList }: ReportsHistoryProps): JSX.Element => {
                 {reportFormat}
               </div>
               <div className={`${tableStyles.col4} ${tableStyles.text}`}>
-                {isGenerated ?
-                  <CSVLink data={data}>
-                    <Button type="link" >Download</Button>
-                  </CSVLink>
-                
-                  :
-                
-                  <Button type="link" className="!text-light-slate-10" disabled >Generating...</Button>
-                }
+                <CSVDownload report={report}></CSVDownload>
               </div>
             </div>
-          )
+            );
+          })
         }
         {!reportList || reportList.length === 0 &&          
           <Text className="py-3 px-6">
