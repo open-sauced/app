@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.8.0-beta.14](https://github.com/open-sauced/insights/compare/v1.8.0-beta.13...v1.8.0-beta.14) (2022-10-03)
+
+
+### 🍕 Features
+
+* connect scatter chart to contributors data ([#466](https://github.com/open-sauced/insights/issues/466)) ([be78024](https://github.com/open-sauced/insights/commit/be7802420d5a918ce7d7a80e65f5b742442c00dc)), closes [#465](https://github.com/open-sauced/insights/issues/465)
+
 ## [1.8.0-beta.13](https://github.com/open-sauced/insights/compare/v1.8.0-beta.12...v1.8.0-beta.13) (2022-10-02)
 
 
