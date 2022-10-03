@@ -25,5 +25,5 @@ Submitting.args = {
 };
 
 Waitlisted.args = {
-  waitlisted: true,
-}
+  waitlisted: true
+};
