@@ -5,6 +5,30 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.9.0](https://github.com/open-sauced/insights/compare/v1.8.0...v1.9.0) (2022-10-03)
+
+
+### 🐛 Bug Fixes
+
+* add truncate to contributors repositories list tab ([#472](https://github.com/open-sauced/insights/issues/472)) ([b7ec96e](https://github.com/open-sauced/insights/commit/b7ec96e9b49aaf7fa54acce14c649f6aa442c3a8)), closes [#460](https://github.com/open-sauced/insights/issues/460)
+* fix merged PRs that looks like closed  ([#475](https://github.com/open-sauced/insights/issues/475)) ([1dd820a](https://github.com/open-sauced/insights/commit/1dd820a15cf99f5b3b125bacf18671d7cbdb7f14)), closes [#462](https://github.com/open-sauced/insights/issues/462)
+* issue template 👋🏾 ([31b7a7e](https://github.com/open-sauced/insights/commit/31b7a7ed925fca0ef5c165e3bc3d95f6267052de))
+* moved page head and footer to repo page to avoid reloading the entire screen ([#473](https://github.com/open-sauced/insights/issues/473)) ([bf790e8](https://github.com/open-sauced/insights/commit/bf790e89951c4a8740538c7e2e223209f4a6e1fd)), closes [#449](https://github.com/open-sauced/insights/issues/449)
+* replace churn with overview ([#470](https://github.com/open-sauced/insights/issues/470)) ([fc0fe3f](https://github.com/open-sauced/insights/commit/fc0fe3fbe905670b85beabb63b60e5268ff85fb6)), closes [#469](https://github.com/open-sauced/insights/issues/469)
+* SEO descriptions ([980e01d](https://github.com/open-sauced/insights/commit/980e01d6eacb4e33dc40f946b219c4994b356085))
+
+
+### 🍕 Features
+
+* add filters to hooks for repos and contributions ([#458](https://github.com/open-sauced/insights/issues/458)) ([05e6bbe](https://github.com/open-sauced/insights/commit/05e6bbe535a62084df9f90de3a3b3de7d9170bd5)), closes [#457](https://github.com/open-sauced/insights/issues/457)
+* add page title and info to repo and contributors page ([#459](https://github.com/open-sauced/insights/issues/459)) ([c0000e4](https://github.com/open-sauced/insights/commit/c0000e4ca129a2f2b3e30f204fb00463ae646158)), closes [#446](https://github.com/open-sauced/insights/issues/446)
+* add pagination to contributors page ([#454](https://github.com/open-sauced/insights/issues/454)) ([37f4da8](https://github.com/open-sauced/insights/commit/37f4da890e986a1e89a19a879d699d638e28e7a5)), closes [#403](https://github.com/open-sauced/insights/issues/403)
+* Add swr cache ([#437](https://github.com/open-sauced/insights/issues/437)) ([6b2b1cb](https://github.com/open-sauced/insights/commit/6b2b1cb604ffb46be30a8e63a298a48b9ad36410)), closes [#308](https://github.com/open-sauced/insights/issues/308)
+* connect scatter chart to contributors data ([#466](https://github.com/open-sauced/insights/issues/466)) ([be78024](https://github.com/open-sauced/insights/commit/be7802420d5a918ce7d7a80e65f5b742442c00dc)), closes [#465](https://github.com/open-sauced/insights/issues/465)
+* hide show/hide buttons temporarily ([#474](https://github.com/open-sauced/insights/issues/474)) ([2ce5b3c](https://github.com/open-sauced/insights/commit/2ce5b3c2888c4eb021754f83c5eeabd23e9d5535)), closes [#439](https://github.com/open-sauced/insights/issues/439)
+* Leverage cloudinary for round images ([#467](https://github.com/open-sauced/insights/issues/467)) ([7dc64d8](https://github.com/open-sauced/insights/commit/7dc64d80c9bccdc16d49f81f9c22bfb0b8de901c)), closes [#373](https://github.com/open-sauced/insights/issues/373)
+* update filters for repos and contributors ([#464](https://github.com/open-sauced/insights/issues/464)) ([e15bbf8](https://github.com/open-sauced/insights/commit/e15bbf8b76e8f3c1932137f5afee406fdd65ef70)), closes [#461](https://github.com/open-sauced/insights/issues/461)
+
 ## [1.8.0](https://github.com/open-sauced/insights/compare/v1.7.0...v1.8.0) (2022-09-28)
 
 
