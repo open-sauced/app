@@ -40,7 +40,7 @@ const Radio = ({ css, withLabel, id, children, value, checked = false, onClick }
         )}
         <span className="ml-3 leading-none my-auto">{children}</span>
         {withLabel && (
-          <span className="px-1 ml-auto rounded-xl bg-light-orange-5 text-sm text-light-orange-10">
+          <span className={`${withLabel === "-" ? "animate-pulse opacity-0" : "opacity-100"} px-1 ml-auto rounded-xl bg-light-orange-5 text-sm text-light-orange-10`}>
             <small>{withLabel}</small>
           </span>
         )}

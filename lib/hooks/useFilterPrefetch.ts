@@ -5,7 +5,7 @@ import getFilterKey from "lib/utils/get-filter-key";
 import useFilterOptions from "./useFilterOptions";
 import apiFetcher from "./useSWR";
 
-type FilterValues = { [name: string]: number };
+type FilterValues = { [name: string]: number | undefined };
 
 const useFilterPrefetch = () => {
   const router = useRouter();
@@ -20,14 +20,23 @@ const useFilterPrefetch = () => {
         const filterKey = getFilterKey(filterName);
         const url = `${topic}/repos?filter=${filterKey}&page=1`;
 
-        const result: { meta: Meta } = await mutate(url, apiFetcher(url));
+        try {
+          const result: { meta: Meta } = await mutate(url, apiFetcher(url));
 
-        setFilterValues(values => {
-          return {
-            ...values,
-            [filterKey]: result.meta.itemCount
-          };
-        });
+          setFilterValues(values => {
+            return {
+              ...values,
+              [filterKey]: result.meta.itemCount
+            };
+          });
+        } catch (e) {
+          setFilterValues(values => {
+            return {
+              ...values,
+              [filterKey]: undefined
+            };
+          });
+        }
       });
     }
   }, [topic]);

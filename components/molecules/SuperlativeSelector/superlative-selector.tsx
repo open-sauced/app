@@ -9,7 +9,7 @@ import getFilterKey from "lib/utils/get-filter-key";
 
 interface SuperlativeSelectorProps {
   filterOptions: string[];
-  filterValues: { [name: string]: number };
+  filterValues: { [name: string]: number | undefined };
   handleFilterClick: (filter: string) => void;
   handleCancelClick: () => void;
   className?: string;
@@ -75,10 +75,11 @@ const SuperativeSelector: React.FC<SuperlativeSelectorProps> = ({
           {filterOptions.length > 0 &&
             filterOptions.map((option, index) => {
               const filterKey = getFilterKey(option);
+              const filterValue = filterValues[filterKey];
 
               return (
                 <Radio
-                  withLabel={humanizeNumber(filterValues[filterKey], "abbreviation")}
+                  withLabel={filterValue ? humanizeNumber(filterValue, "abbreviation") : "-"}
                   key={index}
                   onClick={() => {
                     handleFilterClick(filterKey);
