@@ -5,14 +5,13 @@ import DashboardScatterChart from "components/molecules/DashboardScatterChart/da
 import HighlightCard from "components/molecules/HighlightCard/highlight-card";
 import humanizeNumber from "lib/utils/humanizeNumber";
 import { useEffect, useState } from "react";
-import { useContributionsList } from "lib/hooks/useContributionsList";
 import { calcDaysFromToday } from "lib/utils/date-utils";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
+import { useTopicPRs } from "lib/hooks/useTopicPRs";
 import roundedImage from "lib/utils/roundedImages";
 
 export const Dashboard = (): JSX.Element => {
-  // This is mock data for the dashboard. Not intended to be the final implementation.
-  const { data: contributorData, isError: contributorError } = useContributionsList("769", "35");
+  const { data: prData, isError: contributorError } = useTopicPRs();
 
   const { meta: repoMetaData, isError: repoError } = useRepositoriesList();
   const [itemCountText, setItemCountText] = useState("Loading...");
@@ -20,59 +19,31 @@ export const Dashboard = (): JSX.Element => {
 
   const conAvatarObject: { [key: string]: {[key: string]: string} } = {};
 
-  const fakeDataSet = [
-    33,
-    400,
-    12,
-    5049,
-    0,
-    840,
-    3603,
-    400,
-    220,
-    5,
-    1284,
-    7000,
-    1060,
-    64,
-    8099,
-    6400,
-    1234,
-    123,
-    802,
-    6000,
-    100,
-    1206,
-    2084,
-    786,
-    876,
-    954,
-    305,
-    1087,
-    2803,
-    55,
-    2,
-    103,
-    2,
-    902,
-    500,
-    702
-  ];
-
   const scatterChartData = contributorError ? [] :
-    contributorData.map(({ last_commit_time, files_modified, host_login }, index) => {
+    //eslint-disable-next-line
+    prData.map(({ updated_at, linesCount, author_login }) => {
       const timeOverTouched: (string | number)[] = [
-        calcDaysFromToday(new Date(parseInt(last_commit_time))),
-        files_modified !== null ? files_modified : fakeDataSet[index]
+        calcDaysFromToday(new Date(parseInt(updated_at))),
+        //eslint-disable-next-line
+        linesCount
       ];
 
+      //eslint-disable-next-line
       conAvatarObject[`${timeOverTouched[0]}${timeOverTouched[1]}`] = {
-        login: host_login,
-        image: roundedImage(`https://www.github.com/${host_login}.png?size=60`, process.env.NEXT_PUBLIC_CLOUD_NAME)
+        login: author_login,
+        image: roundedImage(`https://www.github.com/${author_login}.png?size=60`, process.env.NEXT_PUBLIC_CLOUD_NAME)
       };
 
       return timeOverTouched;
     });
+
+  const maxFilesModified = scatterChartData.reduce((max, curr) => {
+    const [, files] = curr;
+    if (files > max) {
+      return files as number;
+    }
+    return max;
+  }, 0);
 
   const scatterOptions = {
     grid: {
@@ -101,7 +72,7 @@ export const Dashboard = (): JSX.Element => {
     },
     yAxis: {
       min: 0,
-      max: 10000,
+      max: Math.max(Math.round(maxFilesModified * 2), 10),
       splitNumber: 6,
       boundaryGap: false,
       axisLine: {

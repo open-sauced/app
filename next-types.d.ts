@@ -9,10 +9,12 @@ interface DbRepo {
 
 interface DbRepoPR {
   readonly title: string;
+  readonly author_login: string;
   readonly state: string;
   readonly created_at: string;
   readonly closed_at: string;
   readonly merged_at: string;
+  readonly updated_at: string;
   readonly filesCount: number;
   readonly linesCount: number;
   readonly merged: boolean;
