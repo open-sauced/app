@@ -13,6 +13,9 @@ interface CardRepoListProps {
 }
 
 const CardRepoList = ({ repoList }: CardRepoListProps): JSX.Element => {
+  
+  const sanitizedRepoList = [...new Map(repoList.map(item => [item["repoName"], item])).values()];
+  console.log(sanitizedRepoList);
   return (
     <div className="flex gap-2 items-center font-medium flex-wrap text-xs text-light-slate-11">
       {
