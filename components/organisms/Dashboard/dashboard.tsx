@@ -1,20 +1,20 @@
 /* eslint-disable camelcase */
-import { useRepositoriesList } from "lib/hooks/useRepositoriesList";
 import Card from "../../atoms/Card/card";
 import DashboardScatterChart from "components/molecules/DashboardScatterChart/dashboard-scatter-chart";
 import HighlightCard from "components/molecules/HighlightCard/highlight-card";
 import humanizeNumber from "lib/utils/humanizeNumber";
-import { useEffect, useState } from "react";
 import { calcDaysFromToday } from "lib/utils/date-utils";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
 import { useTopicPRs } from "lib/hooks/useTopicPRs";
 import roundedImage from "lib/utils/roundedImages";
+import { getInsights, useInsights } from "lib/hooks/useInsights";
+import { useRepositoriesList } from "lib/hooks/useRepositoriesList";
 
 export const Dashboard = (): JSX.Element => {
+  const { meta: allRepoMeta } = useRepositoriesList(true);
+  const { meta: filterRepoMeta } = useRepositoriesList();
   const { data: prData, isError: contributorError } = useTopicPRs();
-
-  const { meta: repoMetaData, isError: repoError } = useRepositoriesList();
-  const [itemCountText, setItemCountText] = useState("Loading...");
+  const { data: insightsData } = useInsights();
   const isNotMobile = useMediaQuery("(min-width: 768px)");
 
   const conAvatarObject: { [key: string]: {[key: string]: string} } = {};
@@ -109,10 +109,8 @@ export const Dashboard = (): JSX.Element => {
     ]
   };
 
-  useEffect(() => {
-    if (repoMetaData) setItemCountText(`of ${humanizeNumber(repoMetaData.itemCount, "comma")}`);
-    if (repoError) setItemCountText("of unknown...");
-  }, [repoError, repoMetaData]);
+  const today = getInsights(insightsData, 0);
+  const yesterday = getInsights(insightsData, 1);
 
   return (
     <div className="flex flex-col w-full gap-4">
@@ -121,41 +119,41 @@ export const Dashboard = (): JSX.Element => {
 
           label="Participation"
           icon="participation"
-          metricIncreases={true}
-          increased={true}
-          numChanged={38}
-          percentage={40}
-          percentageLabel={itemCountText}
+          metricIncreases={today.allReposTotal - yesterday.allReposTotal >= 0}
+          increased={today.allReposTotal - yesterday.allReposTotal >= 0}
+          numChanged={today.allReposTotal - yesterday.allReposTotal}
+          percentage={allRepoMeta.itemCount > 0 ? Math.round((filterRepoMeta.itemCount / allRepoMeta.itemCount) * 100) : 0}
+          percentageLabel={`of ${humanizeNumber(allRepoMeta.itemCount || 0, "comma")}`}
         />
         <HighlightCard
 
           label="Spam"
           icon="spam"
-          metricIncreases={false}
-          increased={true}
-          numChanged={98}
-          percentage={80}
-          percentageLabel={itemCountText}
+          metricIncreases={today.spamTotal - yesterday.spamTotal >= 0}
+          increased={today.spamTotal - yesterday.spamTotal >= 0}
+          numChanged={today.spamTotal - yesterday.spamTotal}
+          percentage={today.spamPercentage}
+          percentageLabel={`of ${humanizeNumber(today.allPrsTotal, "comma")}`}
         />
         <HighlightCard
 
           label="Accepted PRs"
           icon="accepted-pr"
-          metricIncreases={true}
-          increased={false}
-          numChanged={38}
-          percentage={37}
-          percentageLabel={itemCountText}
+          metricIncreases={today.acceptedTotal - yesterday.acceptedTotal >= 0}
+          increased={today.acceptedTotal - yesterday.acceptedTotal >= 0}
+          numChanged={today.acceptedTotal - yesterday.acceptedTotal}
+          percentage={today.acceptedPercentage}
+          percentageLabel={`of ${humanizeNumber(today.allPrsTotal, "comma")}`}
         />
         <HighlightCard
 
           label="Unlabeled PRs"
           icon="unlabeled-pr"
-          metricIncreases={false}
-          increased={false}
-          numChanged={85}
-          percentage={77}
-          percentageLabel={itemCountText}
+          metricIncreases={today.unlabeledPrsTotal - yesterday.unlabeledPrsTotal >= 0}
+          increased={today.unlabeledPrsTotal - yesterday.unlabeledPrsTotal >= 0}
+          numChanged={today.unlabeledPrsTotal - yesterday.unlabeledPrsTotal}
+          percentage={today.unlabeledPercentage}
+          percentageLabel={`of ${humanizeNumber(today.allPrsTotal, "comma")}`}
         />
       </section>
       <section className="flex flex-col lg:flex-row max-w-full gap-4 mb-6">

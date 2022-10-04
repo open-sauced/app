@@ -7,7 +7,7 @@ interface PaginatedRepoResponse {
   readonly meta: Meta;
 }
 
-const useRepositoriesList = () => {
+const useRepositoriesList = (skipFilters = false) => {
   const router = useRouter();
   const { filterName, selectedFilter } = router.query;
   const topic = filterName as string;
@@ -15,11 +15,11 @@ const useRepositoriesList = () => {
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
 
-  const baseEndpoint = `${topic}/repos`;
+  const baseEndpoint = !skipFilters ? `${topic}/repos` : "repos/list";
   const pageQuery = page ? `page=${page}` : "";
   const filterQuery = filter ? `&filter=${filter}` : "";
   const limitQuery = limit ? `&limit=${limit}` : "";
-  const endpointString = `${baseEndpoint}?${pageQuery}${limitQuery}${filterQuery}`;
+  const endpointString = `${baseEndpoint}?${pageQuery}${limitQuery}${!skipFilters ? filterQuery : ""}`;
   const { data, error, mutate } = useSWR<PaginatedRepoResponse, Error>(topic ? endpointString : null);
 
 
