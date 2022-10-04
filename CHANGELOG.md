@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.10.0-beta.2](https://github.com/open-sauced/insights/compare/v1.10.0-beta.1...v1.10.0-beta.2) (2022-10-04)
+
+
+### 🍕 Features
+
+* connect dashboard insights to the API ([#485](https://github.com/open-sauced/insights/issues/485)) ([f4e5b6e](https://github.com/open-sauced/insights/commit/f4e5b6e854cf1422a3b3d17272dd659ccbbcaf1c)), closes [#481](https://github.com/open-sauced/insights/issues/481)
+
 ## [1.10.0-beta.1](https://github.com/open-sauced/insights/compare/v1.9.0...v1.10.0-beta.1) (2022-10-04)
 
 
