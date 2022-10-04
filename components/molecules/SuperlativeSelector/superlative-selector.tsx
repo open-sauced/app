@@ -48,7 +48,7 @@ const SuperativeSelector: React.FC<SuperlativeSelectorProps> = ({
 
   return (
     <div className="max-w-max relative" ref={ref}>
-      <ContextFilterButton isSelected={selected ? true : false}>
+      <ContextFilterButton onClick={toggleFilter} isSelected={!!selected}>
         {selected ? (
           <div className="flex">
             <div className="flex" onClick={toggleFilter}>
@@ -62,12 +62,12 @@ const SuperativeSelector: React.FC<SuperlativeSelectorProps> = ({
               IconImage={cancelIcon}
               onClick={() => {
                 handleCancelClick();
-                toggleFilter();
+                setIsOpen(false);
               }}
             />
           </div>
         ) : (
-          <div onClick={toggleFilter}>Add Filter</div>
+          <div onClick={toggleFilter}>Add Filter </div>
         )}
       </ContextFilterButton>
       {isOpen && (
