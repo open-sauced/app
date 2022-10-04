@@ -21,7 +21,7 @@ const Contributors = (): JSX.Element => {
 
         return {
           repoName,
-          repoIcon: `https://www.github.com/${repoOwner ?? "github"}.png?size=460`
+          repoIcon: `https://res.cloudinary.com/dgxgziswe/image/fetch/https://www.github.com/${repoOwner ?? "github"}.png?size=460`
         };
       });
       const languageList = contributorLanguageList.map((language) => {
