@@ -55,7 +55,7 @@ const SuperativeSelector: React.FC<SuperlativeSelectorProps> = ({
               IconImage={cancelIcon}
               onClick={() => {
                 handleCancelClick();
-                toggleFilter();
+                setIsOpen(false);
               }}
             />
           </div>
