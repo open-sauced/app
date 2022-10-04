@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.10.0-beta.1](https://github.com/open-sauced/insights/compare/v1.9.0...v1.10.0-beta.1) (2022-10-04)
+
+
+### 🍕 Features
+
+* prefetch totals for filter options ([#479](https://github.com/open-sauced/insights/issues/479)) ([a97b09b](https://github.com/open-sauced/insights/commit/a97b09b7f650d79114b0e8fec841087fce73e278)), closes [#471](https://github.com/open-sauced/insights/issues/471)
+
 ## [1.9.0](https://github.com/open-sauced/insights/compare/v1.8.0...v1.9.0) (2022-10-03)
 
 
