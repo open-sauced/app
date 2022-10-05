@@ -51,7 +51,7 @@ const PullRequestOverviewChart: React.FC<PullRequestOverviewChartProps> = ({
   const getPercentage = (PullRequestType: number | undefined) => {
     return ((!!PullRequestType ? PullRequestType : 0) * 100) / (!!totalPullRequests ? totalPullRequests : 0);
   };
-  console.log(open);
+
   return (
     <div className="w-full h-1.5 flex gap-0.5 bg-light-slate-2 rounded-full overflow-hidden">
       {/* Open */}
