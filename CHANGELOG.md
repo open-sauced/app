@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.10.1-beta.2](https://github.com/open-sauced/insights/compare/v1.10.1-beta.1...v1.10.1-beta.2) (2022-10-05)
+
+
+### 🐛 Bug Fixes
+
+* update hacktoberfest logo image ([#491](https://github.com/open-sauced/insights/issues/491)) ([f797abc](https://github.com/open-sauced/insights/commit/f797abcde417d0ad6ba557b7220648d63049b79b)), closes [#487](https://github.com/open-sauced/insights/issues/487)
+
 ### [1.10.1-beta.1](https://github.com/open-sauced/insights/compare/v1.10.0...v1.10.1-beta.1) (2022-10-05)
 
 
