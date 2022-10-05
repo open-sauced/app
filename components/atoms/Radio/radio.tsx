@@ -1,13 +1,14 @@
 import React from "react";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import { MdOutlineRadioButtonUnchecked } from "react-icons/md";
+
 interface RadioProps {
   id?: string | undefined;
   children?: any;
   checked?: boolean;
   onClick?: () => void;
   value?: string;
-  withLabel: boolean;
+  withLabel: string;
   css?: string;
 }
 
@@ -39,8 +40,8 @@ const Radio = ({ css, withLabel, id, children, value, checked = false, onClick }
         )}
         <span className="ml-3 leading-none my-auto">{children}</span>
         {withLabel && (
-          <span className="px-1 ml-auto rounded-xl bg-light-orange-5 text-sm text-light-orange-10">
-            <small>32k</small>
+          <span className={`${withLabel === "-" ? "animate-pulse opacity-0" : "opacity-100"} px-1 ml-auto rounded-xl bg-light-orange-5 text-sm text-light-orange-10`}>
+            <small>{withLabel}</small>
           </span>
         )}
       </label>

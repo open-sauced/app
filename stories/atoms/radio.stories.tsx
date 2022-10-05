@@ -12,7 +12,7 @@ export const Checked = RadioTemplate.bind({});
 Checked.args = {
   children: "Test",
   checked: true,
-  withLabel: true,
+  withLabel: "32k",
   css: "w-full"
 };
 Default.args = {

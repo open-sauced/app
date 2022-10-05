@@ -47,3 +47,17 @@ interface DbContribution {
   readonly recent_repo_list: string;
   readonly recent_pr_total: number;
 }
+
+interface DbInsight {
+  readonly interval: number;
+  readonly day: string;
+  readonly all_prs: number;
+  readonly accepted_prs: number;
+  readonly spam_prs: number;
+  readonly all_authors: number;
+  readonly spam_authors: number;
+  readonly accepted_authors: number;
+  readonly all_repos: number;
+  readonly spam_repos: number;
+  readonly accepted_repos: number;
+}
