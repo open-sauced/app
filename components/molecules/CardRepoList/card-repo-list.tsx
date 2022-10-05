@@ -13,13 +13,15 @@ interface CardRepoListProps {
 }
 
 const CardRepoList = ({ repoList }: CardRepoListProps): JSX.Element => {
+  
+  const sanitizedRepoList = [...new Map(repoList.map(item => [item["repoName"], item])).values()];
   return (
     <div className="flex gap-2 items-center font-medium flex-wrap text-xs text-light-slate-11">
       {
         repoList.length > 0 ?
           <>
             {
-              repoList
+              sanitizedRepoList
                 .filter((repo, arrCount) => arrCount < REPOLISTLIMIT)
                 .map(({repoName, repoIcon}, index) =>
                   <div key={index} title={repoName} className="flex gap-1  p-1 pr-2 border-[1px] border-light-slate-6 rounded-lg text-light-slate-12">
