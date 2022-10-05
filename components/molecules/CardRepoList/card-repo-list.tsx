@@ -22,7 +22,7 @@ const CardRepoList = ({ repoList }: CardRepoListProps): JSX.Element => {
         repoList.length > 0 ?
           <>
             {
-              repoList
+              sanitizedRepoList
                 .filter((repo, arrCount) => arrCount < REPOLISTLIMIT)
                 .map(({repoName, repoIcon}, index) =>
                   <div key={index} title={repoName} className="flex gap-1  p-1 pr-2 border-[1px] border-light-slate-6 rounded-lg text-light-slate-12">
