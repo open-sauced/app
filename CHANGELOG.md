@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.10.1-beta.3](https://github.com/open-sauced/insights/compare/v1.10.1-beta.2...v1.10.1-beta.3) (2022-10-05)
+
+
+### 🐛 Bug Fixes
+
+* removed duplicate repoList name in contributors card  ([#496](https://github.com/open-sauced/insights/issues/496)) ([24b8174](https://github.com/open-sauced/insights/commit/24b817488c600feac86f6e7dbb8535bcaeaa5f5c)), closes [#463](https://github.com/open-sauced/insights/issues/463)
+
 ### [1.10.1-beta.2](https://github.com/open-sauced/insights/compare/v1.10.1-beta.1...v1.10.1-beta.2) (2022-10-05)
 
 
