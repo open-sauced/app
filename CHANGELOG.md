@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.10.1-beta.1](https://github.com/open-sauced/insights/compare/v1.10.0...v1.10.1-beta.1) (2022-10-05)
+
+
+### 🐛 Bug Fixes
+
+* grammar in PR table ([#494](https://github.com/open-sauced/insights/issues/494)) ([381b033](https://github.com/open-sauced/insights/commit/381b0334a60092dd58253c6ff0b555e4185f1b7b))
+
 ## [1.10.0](https://github.com/open-sauced/insights/compare/v1.9.0...v1.10.0) (2022-10-05)
 
 
