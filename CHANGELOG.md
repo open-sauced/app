@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.11.0-beta.1](https://github.com/open-sauced/insights/compare/v1.10.1-beta.3...v1.11.0-beta.1) (2022-10-05)
+
+
+### 🍕 Features
+
+*  pull request overview hover with details update ([#495](https://github.com/open-sauced/insights/issues/495)) ([956d109](https://github.com/open-sauced/insights/commit/956d109518362564075a029177265178e7f001fa)), closes [#469](https://github.com/open-sauced/insights/issues/469)
+* implement report generation on demand ([#489](https://github.com/open-sauced/insights/issues/489)) ([0879e08](https://github.com/open-sauced/insights/commit/0879e08e2dd3e55ae61e5756519460da95b2f01a)), closes [#486](https://github.com/open-sauced/insights/issues/486)
+
 ### [1.10.1-beta.3](https://github.com/open-sauced/insights/compare/v1.10.1-beta.2...v1.10.1-beta.3) (2022-10-05)
 
 
