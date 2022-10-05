@@ -18,7 +18,12 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({ className, op
   const prCount = prActiveCount || 0;
   const activePrPercentage = totalPullRequests > 0 ? Math.round((prCount/totalPullRequests) * 100) : 0;
   // used this state to manage actively hovered pull request overview chart
-  const [prOverviewDetails, setPrOverviewDetails] = useState<{type: string, percent: number | undefined}>({type: "closed", percent: closed});
+  interface OverviewDetails {
+    type: string;
+    percent: number | undefined;
+  }
+  
+  const [prOverviewDetails, setPrOverviewDetails] = useState<OverviewDetails>({type: "closed", percent: closed});
   return (
     <div className="flex flex-col gap-1">
       <div className="w-full flex justify-between gap-1">
