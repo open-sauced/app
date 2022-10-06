@@ -5,6 +5,42 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.11.0-beta.2](https://github.com/open-sauced/insights/compare/v1.11.0-beta.1...v1.11.0-beta.2) (2022-10-06)
+
+
+### 🐛 Bug Fixes
+
+* update logic for calculating unlabeled PRs ([#504](https://github.com/open-sauced/insights/issues/504)) ([416ade4](https://github.com/open-sauced/insights/commit/416ade48d45a002a7ba9acbade5ab49dae9e7d92))
+
+## [1.11.0-beta.1](https://github.com/open-sauced/insights/compare/v1.10.1-beta.3...v1.11.0-beta.1) (2022-10-05)
+
+
+### 🍕 Features
+
+*  pull request overview hover with details update ([#495](https://github.com/open-sauced/insights/issues/495)) ([956d109](https://github.com/open-sauced/insights/commit/956d109518362564075a029177265178e7f001fa)), closes [#469](https://github.com/open-sauced/insights/issues/469)
+* implement report generation on demand ([#489](https://github.com/open-sauced/insights/issues/489)) ([0879e08](https://github.com/open-sauced/insights/commit/0879e08e2dd3e55ae61e5756519460da95b2f01a)), closes [#486](https://github.com/open-sauced/insights/issues/486)
+
+### [1.10.1-beta.3](https://github.com/open-sauced/insights/compare/v1.10.1-beta.2...v1.10.1-beta.3) (2022-10-05)
+
+
+### 🐛 Bug Fixes
+
+* removed duplicate repoList name in contributors card  ([#496](https://github.com/open-sauced/insights/issues/496)) ([24b8174](https://github.com/open-sauced/insights/commit/24b817488c600feac86f6e7dbb8535bcaeaa5f5c)), closes [#463](https://github.com/open-sauced/insights/issues/463)
+
+### [1.10.1-beta.2](https://github.com/open-sauced/insights/compare/v1.10.1-beta.1...v1.10.1-beta.2) (2022-10-05)
+
+
+### 🐛 Bug Fixes
+
+* update hacktoberfest logo image ([#491](https://github.com/open-sauced/insights/issues/491)) ([f797abc](https://github.com/open-sauced/insights/commit/f797abcde417d0ad6ba557b7220648d63049b79b)), closes [#487](https://github.com/open-sauced/insights/issues/487)
+
+### [1.10.1-beta.1](https://github.com/open-sauced/insights/compare/v1.10.0...v1.10.1-beta.1) (2022-10-05)
+
+
+### 🐛 Bug Fixes
+
+* grammar in PR table ([#494](https://github.com/open-sauced/insights/issues/494)) ([381b033](https://github.com/open-sauced/insights/commit/381b0334a60092dd58253c6ff0b555e4185f1b7b))
+
 ## [1.10.0](https://github.com/open-sauced/insights/compare/v1.9.0...v1.10.0) (2022-10-05)
 
 

@@ -14,16 +14,12 @@ const testReportList: Report[] = [
   {
     reportName: "Top Ten",
     reportDate: "Jun 3, 2022",
-    reportFormat: "CSV",
-    isGenerated: true,
-    data: []
+    reportFormat: "CSV"
   },
   {
     reportName: "Top Five",
     reportDate: "Jun 3, 2022",
-    reportFormat: "CSV",
-    isGenerated: false,
-    data: []
+    reportFormat: "CSV"
   }
 ];
 

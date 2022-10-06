@@ -31,7 +31,7 @@ const ContributorTable = ({ contributor }: CardTableProps) => {
           </div>
           <IconContext.Provider value={{ color: "gray", style: { width: 14, height: 14 } }}>
             <div className="flex justify-end w-[calc(10%-4px)]">
-              <FaRegDotCircle title="When Pull Request was issued" />
+              <FaRegDotCircle title="When Pull Request was created" />
             </div>
           </IconContext.Provider>
           <IconContext.Provider value={{ color: "gray", style: { width: 14, height: 14 } }}>

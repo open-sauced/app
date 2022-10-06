@@ -1,12 +1,7 @@
 import { Serie } from "@nivo/line";
-import TableTitle from "components/atoms/TableTitle/table-title";
 import RepoRow from "components/molecules/RepoRow/repo-row";
 import { StaticImageData } from "next/image";
-import Pagination from "../../molecules/Pagination/pagination";
-import PaginationResults from "../../molecules/PaginationResults/pagination-result";
-import clsx from "clsx";
-import TableHeader from "components/molecules/TableHeader/table-header";
-import Select from "components/atoms/Select/custom-select";
+
 export interface ContributorsRows {
   name?: string;
   avatarURL?: string | StaticImageData;
