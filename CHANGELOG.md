@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.11.0-beta.2](https://github.com/open-sauced/insights/compare/v1.11.0-beta.1...v1.11.0-beta.2) (2022-10-06)
+
+
+### 🐛 Bug Fixes
+
+* update logic for calculating unlabeled PRs ([#504](https://github.com/open-sauced/insights/issues/504)) ([416ade4](https://github.com/open-sauced/insights/commit/416ade48d45a002a7ba9acbade5ab49dae9e7d92))
+
 ## [1.11.0-beta.1](https://github.com/open-sauced/insights/compare/v1.10.1-beta.3...v1.11.0-beta.1) (2022-10-05)
 
 
