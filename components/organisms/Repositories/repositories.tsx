@@ -25,8 +25,8 @@ const Reports = (): JSX.Element => {
       <TableHeader
         updateLimit={setLimit}
         showing={{
-          from: page === 1 ? page : page * repoMeta.limit,
-          to: page === 1 ? repoMeta.limit : page * repoMeta.limit + repoMeta.limit,
+          from: page === 1 ? page : ((page-1) * repoMeta.limit) + 1,
+          to: page === 1 ? repoMeta.limit : page * repoMeta.limit <= repoMeta.itemCount ? page * repoMeta.limit : repoMeta.itemCount,
           total: repoMeta.itemCount,
           entity: "Repositories"
         }}
@@ -87,8 +87,8 @@ const Reports = (): JSX.Element => {
             <div>
               <div className="">
                 <PaginationResults
-                  from={page === 1 ? page : page * repoMeta.limit}
-                  to={page === 1 ? repoMeta.limit : page * repoMeta.limit + repoMeta.limit}
+                  from={page === 1 ? page : ((page-1) * repoMeta.limit) + 1}
+                  to={page === 1 ? repoMeta.limit : page * repoMeta.limit <= repoMeta.itemCount ? page * repoMeta.limit : repoMeta.itemCount}
                   total={repoMeta.itemCount}
                   entity={"repos"}
                 />
