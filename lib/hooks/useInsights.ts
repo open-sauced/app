@@ -30,8 +30,8 @@ const getInsights = (insights: DbInsight[], intervalDay = 0): Insight => {
 
   const spam = (currentInsights.all_prs || 0) > 0 ? Math.round((currentInsights.spam_prs / currentInsights.all_prs) * 100) : 0;
   const accepted = (currentInsights.all_prs || 0) > 0 ? Math.round((currentInsights.accepted_prs / currentInsights.all_prs) * 100) : 0;
-  const unlabeledPrsTotal = Math.max(currentInsights.all_prs - (currentInsights.spam_prs + currentInsights.accepted_prs), 0);
-  const unlabeled = Math.max(0, (currentInsights.all_prs || 0) > 0 ? Math.round(Math.min(currentInsights.all_prs - (currentInsights.spam_prs + currentInsights.accepted_prs), 0) / currentInsights.all_prs * 100) : 0);
+  const unlabeledPrsTotal = currentInsights.all_prs - (currentInsights.spam_prs + currentInsights.accepted_prs);
+  const unlabeled = Math.max(0, (currentInsights.all_prs || 0) > 0 ? Math.round((unlabeledPrsTotal / currentInsights.all_prs) * 100) : 0);
 
   return {
     allReposTotal: currentInsights.all_repos,
