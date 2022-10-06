@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Text from "components/atoms/Typography/text";
 import colors from "../../../lib/utils/color.json";
+import Tooltip from "components/atoms/Tooltip/tooltip";
 
 interface AllSimpleColors {
   [key: string]: {
@@ -60,9 +61,11 @@ const CardHorizontalBarChart = ({ languageList }: CardHorizontalBarChartProps): 
       </div>
       <div className="flex gap-2 max-w-[120px] items-center">
         <div className={"w-2 h-2 rounded-full"} style={{ backgroundColor: languageToColor[descriptText] ? languageToColor[descriptText].color as string : NOTSUPPORTED }}/>
-        <Text title={descriptText} className="!text-xs !truncate !font-semibold !text-light-slate-11">
-          {descriptText}
-        </Text>
+        <Tooltip className="max-w-[100px]" content={descriptText}>
+          <Text className="!text-xs !truncate !font-semibold !text-light-slate-11">
+            {descriptText}
+          </Text>
+        </Tooltip>
       </div>
     </div>
   );

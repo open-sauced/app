@@ -35,7 +35,7 @@ const ContributorCard = ({ className, contributor }: ContributorCardProps) => {
   const { chart } = useTopicContributorCommits(profile.githubName);
 
   return (
-    <Card className={className}>
+    <Card className={className && className}>
       <div className="flex flex-col gap-3">
         <div className="flex w-full justify-between items-center gap-2">
           <CardProfile {...profile} />
