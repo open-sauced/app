@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import * as TooltipPrimitive from "@radix-ui/react-tooltip";
 
 interface TooltipProps {
   children: React.ReactNode;
@@ -8,25 +9,37 @@ interface TooltipProps {
   className?: string
   tipClassName?: string
 }
-const Tooltip = ({ children, content, direction, delay, className, tipClassName }: TooltipProps): JSX.Element => {
-  const [active, setActive] = useState(false);
-  let timeout: string | number | NodeJS.Timeout | undefined;
+const Tooltip = ({ children, content, className, direction }: TooltipProps): JSX.Element => {
 
-  const showTip = () => {
-    timeout = setTimeout(() => {
-      setActive(true);
-    }, delay || 400);
-  };
-  const hideTip = () => {
-    clearInterval(timeout);
-    setActive(false);
-  };
+  const {Portal, Root, Content, Trigger} = TooltipPrimitive;
+  // const [active, setActive] = useState(false);
+  // let timeout: string | number | NodeJS.Timeout | undefined;
+
+  // const showTip = () => {
+  //   timeout = setTimeout(() => {
+  //     setActive(true);
+  //   }, delay || 400);
+  // };
+  // const hideTip = () => {
+  //   clearInterval(timeout);
+  //   setActive(false);
+  // };
 
   return (
-    <div onMouseEnter={()=> showTip()} onMouseLeave={()=> hideTip()} className={`${className && className} relative inline-flex`}>
-      {children}
-      {active && <div className={`${tipClassName && tipClassName} ${direction === "top" ? "top-[-25px]" : direction === "left" ? "-left-14 -translate-y-1/2 translate-x-0  top-1/2": ""}  absolute z-50 p-1 left-1/2 top-[25px] -translate-x-1/2 bg-dark-slate-2 rounded-[4px] whitespace-nowrap text-dark-slate-12 font-medium text-[10px]`}>{content}</div>}
-    </div>
+    <Root>
+     
+      <Trigger asChild>
+        <div>{children}</div>
+      </Trigger>
+      <Portal>
+        <Content side={!!direction ? direction : "bottom"}>
+          <div className={`${className && className} text-[10px] p-1 rounded-[4px] bg-dark-slate-2 text-dark-slate-12 font-medium`}>{content}</div>
+        </Content>
+      </Portal>
+    </Root>
   );
 };
+
+export const TipProvider = TooltipPrimitive.Provider;
+
 export default Tooltip;
