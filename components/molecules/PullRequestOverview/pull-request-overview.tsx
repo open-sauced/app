@@ -1,5 +1,5 @@
 import { ArrowDownIcon, ArrowUpIcon } from "@primer/octicons-react";
-import React from "react";
+import React, { useState } from "react";
 import PullRequestOverviewChart from "../../atoms/PullRequestOverviewChart/pull-request-overview-chart";
 
 interface PullRequestOverviewProps {
@@ -17,7 +17,13 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({ className, op
   const totalPullRequests = (!!open ? open : 0) + (!!merged ? merged : 0) + (!!closed ? closed : 0) + (!!draft ? draft : 0);
   const prCount = prActiveCount || 0;
   const activePrPercentage = totalPullRequests > 0 ? Math.round((prCount/totalPullRequests) * 100) : 0;
-
+  // used this state to manage actively hovered pull request overview chart
+  interface OverviewDetails {
+    type: string;
+    percent: number | undefined;
+  }
+  
+  const [prOverviewDetails, setPrOverviewDetails] = useState<OverviewDetails>({type: "closed", percent: closed});
   return (
     <div className="flex flex-col gap-1">
       <div className="w-full flex justify-between gap-1">
@@ -29,13 +35,13 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({ className, op
 
         {/* Churn Number compared with previous date (default: last 30 days vs. previous 30 days range) */}
         <div className={`
-          ${churnDirection === "up" ? "text-light-grass-10" : "text-light-red-10"}
+          ${prOverviewDetails.type === "open" ? "text-light-grass-10" : prOverviewDetails.type === "closed" ? "text-light-red-10":prOverviewDetails.type === "merged" ? "text-purple-600" : "text-light-slate-9"}
           font-medium flex items-center gap-x-1 text-base tracking-tight`}>
-          {churnDirection === "up" ? <ArrowUpIcon size={14} /> : <ArrowDownIcon size={14} />}{closed ? Math.round((closed/totalPullRequests)*100) : 0}%
+          {prOverviewDetails.type === "open" ? <ArrowUpIcon size={14} /> : prOverviewDetails.type === "closed" ? <ArrowDownIcon size={14} />: ""}{prOverviewDetails.percent ? Math.round((prOverviewDetails.percent/totalPullRequests)*100) : 0}%
         </div>
       </div>
 
-      <PullRequestOverviewChart open={open} merged={merged} closed={closed} draft={draft} totalPullRequests={totalPullRequests} />
+      <PullRequestOverviewChart setOverviewDetails={setPrOverviewDetails} open={open} merged={merged} closed={closed} draft={draft} totalPullRequests={totalPullRequests} />
     </div>
   );
 };

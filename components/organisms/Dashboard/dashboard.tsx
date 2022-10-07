@@ -1,78 +1,49 @@
 /* eslint-disable camelcase */
-import { useRepositoriesList } from "lib/hooks/useRepositoriesList";
 import Card from "../../atoms/Card/card";
 import DashboardScatterChart from "components/molecules/DashboardScatterChart/dashboard-scatter-chart";
 import HighlightCard from "components/molecules/HighlightCard/highlight-card";
 import humanizeNumber from "lib/utils/humanizeNumber";
-import { useEffect, useState } from "react";
-import { useContributionsList } from "lib/hooks/useContributionsList";
 import { calcDaysFromToday } from "lib/utils/date-utils";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
+import { useTopicPRs } from "lib/hooks/useTopicPRs";
 import roundedImage from "lib/utils/roundedImages";
+import { getInsights, useInsights } from "lib/hooks/useInsights";
+import { useRepositoriesList } from "lib/hooks/useRepositoriesList";
 
 export const Dashboard = (): JSX.Element => {
-  // This is mock data for the dashboard. Not intended to be the final implementation.
-  const { data: contributorData, isError: contributorError } = useContributionsList("769", "35");
-
-  const { meta: repoMetaData, isError: repoError } = useRepositoriesList();
-  const [itemCountText, setItemCountText] = useState("Loading...");
+  const { meta: allRepoMeta } = useRepositoriesList(true);
+  const { meta: filterRepoMeta } = useRepositoriesList();
+  const { data: prData, isError: contributorError } = useTopicPRs();
+  const { data: insightsData } = useInsights();
   const isNotMobile = useMediaQuery("(min-width: 768px)");
 
   const conAvatarObject: { [key: string]: {[key: string]: string} } = {};
 
-  const fakeDataSet = [
-    33,
-    400,
-    12,
-    5049,
-    0,
-    840,
-    3603,
-    400,
-    220,
-    5,
-    1284,
-    7000,
-    1060,
-    64,
-    8099,
-    6400,
-    1234,
-    123,
-    802,
-    6000,
-    100,
-    1206,
-    2084,
-    786,
-    876,
-    954,
-    305,
-    1087,
-    2803,
-    55,
-    2,
-    103,
-    2,
-    902,
-    500,
-    702
-  ];
-
   const scatterChartData = contributorError ? [] :
-    contributorData.map(({ last_commit_time, files_modified, host_login }, index) => {
+    //eslint-disable-next-line
+    prData.map(({ updated_at, linesCount, author_login }) => {
       const timeOverTouched: (string | number)[] = [
-        calcDaysFromToday(new Date(parseInt(last_commit_time))),
-        files_modified !== null ? files_modified : fakeDataSet[index]
+        calcDaysFromToday(new Date(parseInt(updated_at))),
+        //eslint-disable-next-line
+        linesCount
       ];
 
+      //eslint-disable-next-line
       conAvatarObject[`${timeOverTouched[0]}${timeOverTouched[1]}`] = {
-        login: host_login,
-        image: roundedImage(`https://www.github.com/${host_login}.png?size=60`, process.env.NEXT_PUBLIC_CLOUD_NAME)
+        login: author_login,
+        image: roundedImage(`https://www.github.com/${author_login}.png?size=60`, process.env.NEXT_PUBLIC_CLOUD_NAME)
       };
 
       return timeOverTouched;
     });
+
+  const maxFilesModified = scatterChartData.reduce((max, curr) => {
+    const [, files] = curr;
+    if (files > max) {
+      return files as number;
+    }
+    return max;
+  }, 0);
 
   const scatterOptions = {
     grid: {
@@ -101,7 +72,7 @@ export const Dashboard = (): JSX.Element => {
     },
     yAxis: {
       min: 0,
-      max: 10000,
+      max: Math.max(Math.round(maxFilesModified * 2), 10),
       splitNumber: 6,
       boundaryGap: false,
       axisLine: {
@@ -138,10 +109,8 @@ export const Dashboard = (): JSX.Element => {
     ]
   };
 
-  useEffect(() => {
-    if (repoMetaData) setItemCountText(`of ${humanizeNumber(repoMetaData.itemCount, "comma")}`);
-    if (repoError) setItemCountText("of unknown...");
-  }, [repoError, repoMetaData]);
+  const today = getInsights(insightsData, 0);
+  const yesterday = getInsights(insightsData, 1);
 
   return (
     <div className="flex flex-col w-full gap-4">
@@ -150,41 +119,41 @@ export const Dashboard = (): JSX.Element => {
 
           label="Participation"
           icon="participation"
-          metricIncreases={true}
-          increased={true}
-          numChanged={38}
-          percentage={40}
-          percentageLabel={itemCountText}
+          metricIncreases={today.allReposTotal - yesterday.allReposTotal >= 0}
+          increased={today.allReposTotal - yesterday.allReposTotal >= 0}
+          numChanged={today.allReposTotal - yesterday.allReposTotal}
+          percentage={allRepoMeta.itemCount > 0 ? Math.round((filterRepoMeta.itemCount / allRepoMeta.itemCount) * 100) : 0}
+          percentageLabel={`of ${humanizeNumber(allRepoMeta.itemCount || 0, "comma")}`}
         />
         <HighlightCard
 
           label="Spam"
           icon="spam"
-          metricIncreases={false}
-          increased={true}
-          numChanged={98}
-          percentage={80}
-          percentageLabel={itemCountText}
+          metricIncreases={today.spamTotal - yesterday.spamTotal >= 0}
+          increased={today.spamTotal - yesterday.spamTotal >= 0}
+          numChanged={today.spamTotal - yesterday.spamTotal}
+          percentage={today.spamPercentage}
+          percentageLabel={`of ${humanizeNumber(today.allPrsTotal, "comma")}`}
         />
         <HighlightCard
 
           label="Accepted PRs"
           icon="accepted-pr"
-          metricIncreases={true}
-          increased={false}
-          numChanged={38}
-          percentage={37}
-          percentageLabel={itemCountText}
+          metricIncreases={today.acceptedTotal - yesterday.acceptedTotal >= 0}
+          increased={today.acceptedTotal - yesterday.acceptedTotal >= 0}
+          numChanged={today.acceptedTotal - yesterday.acceptedTotal}
+          percentage={today.acceptedPercentage}
+          percentageLabel={`of ${humanizeNumber(today.allPrsTotal, "comma")}`}
         />
         <HighlightCard
 
           label="Unlabeled PRs"
           icon="unlabeled-pr"
-          metricIncreases={false}
-          increased={false}
-          numChanged={85}
-          percentage={77}
-          percentageLabel={itemCountText}
+          metricIncreases={today.unlabeledPrsTotal - yesterday.unlabeledPrsTotal >= 0}
+          increased={today.unlabeledPrsTotal - yesterday.unlabeledPrsTotal >= 0}
+          numChanged={today.unlabeledPrsTotal - yesterday.unlabeledPrsTotal}
+          percentage={today.unlabeledPercentage}
+          percentageLabel={`of ${humanizeNumber(today.allPrsTotal, "comma")}`}
         />
       </section>
       <section className="flex flex-col lg:flex-row max-w-full gap-4 mb-6">

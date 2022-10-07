@@ -5,6 +5,163 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.11.1-beta.1](https://github.com/open-sauced/insights/compare/v1.11.0...v1.11.1-beta.1) (2022-10-07)
+
+
+### 🐛 Bug Fixes
+
+* update pagination counts for repositories and contributors ([#503](https://github.com/open-sauced/insights/issues/503)) ([1332fab](https://github.com/open-sauced/insights/commit/1332fab8742bf832a1978bac95117fa1c0b0fecc))
+
+## [1.11.0](https://github.com/open-sauced/insights/compare/v1.10.0...v1.11.0) (2022-10-06)
+
+
+### 🍕 Features
+
+*  pull request overview hover with details update ([#495](https://github.com/open-sauced/insights/issues/495)) ([956d109](https://github.com/open-sauced/insights/commit/956d109518362564075a029177265178e7f001fa)), closes [#469](https://github.com/open-sauced/insights/issues/469)
+* implement report generation on demand ([#489](https://github.com/open-sauced/insights/issues/489)) ([0879e08](https://github.com/open-sauced/insights/commit/0879e08e2dd3e55ae61e5756519460da95b2f01a)), closes [#486](https://github.com/open-sauced/insights/issues/486)
+
+
+### 🐛 Bug Fixes
+
+* grammar in PR table ([#494](https://github.com/open-sauced/insights/issues/494)) ([381b033](https://github.com/open-sauced/insights/commit/381b0334a60092dd58253c6ff0b555e4185f1b7b))
+* removed duplicate repoList name in contributors card  ([#496](https://github.com/open-sauced/insights/issues/496)) ([24b8174](https://github.com/open-sauced/insights/commit/24b817488c600feac86f6e7dbb8535bcaeaa5f5c)), closes [#463](https://github.com/open-sauced/insights/issues/463)
+* update hacktoberfest logo image ([#491](https://github.com/open-sauced/insights/issues/491)) ([f797abc](https://github.com/open-sauced/insights/commit/f797abcde417d0ad6ba557b7220648d63049b79b)), closes [#487](https://github.com/open-sauced/insights/issues/487)
+* update logic for calculating unlabeled PRs ([#504](https://github.com/open-sauced/insights/issues/504)) ([416ade4](https://github.com/open-sauced/insights/commit/416ade48d45a002a7ba9acbade5ab49dae9e7d92))
+
+## [1.11.0-beta.2](https://github.com/open-sauced/insights/compare/v1.11.0-beta.1...v1.11.0-beta.2) (2022-10-06)
+
+
+### 🐛 Bug Fixes
+
+* update logic for calculating unlabeled PRs ([#504](https://github.com/open-sauced/insights/issues/504)) ([416ade4](https://github.com/open-sauced/insights/commit/416ade48d45a002a7ba9acbade5ab49dae9e7d92))
+
+## [1.11.0-beta.1](https://github.com/open-sauced/insights/compare/v1.10.1-beta.3...v1.11.0-beta.1) (2022-10-05)
+
+
+### 🍕 Features
+
+*  pull request overview hover with details update ([#495](https://github.com/open-sauced/insights/issues/495)) ([956d109](https://github.com/open-sauced/insights/commit/956d109518362564075a029177265178e7f001fa)), closes [#469](https://github.com/open-sauced/insights/issues/469)
+* implement report generation on demand ([#489](https://github.com/open-sauced/insights/issues/489)) ([0879e08](https://github.com/open-sauced/insights/commit/0879e08e2dd3e55ae61e5756519460da95b2f01a)), closes [#486](https://github.com/open-sauced/insights/issues/486)
+
+### [1.10.1-beta.3](https://github.com/open-sauced/insights/compare/v1.10.1-beta.2...v1.10.1-beta.3) (2022-10-05)
+
+
+### 🐛 Bug Fixes
+
+* removed duplicate repoList name in contributors card  ([#496](https://github.com/open-sauced/insights/issues/496)) ([24b8174](https://github.com/open-sauced/insights/commit/24b817488c600feac86f6e7dbb8535bcaeaa5f5c)), closes [#463](https://github.com/open-sauced/insights/issues/463)
+
+### [1.10.1-beta.2](https://github.com/open-sauced/insights/compare/v1.10.1-beta.1...v1.10.1-beta.2) (2022-10-05)
+
+
+### 🐛 Bug Fixes
+
+* update hacktoberfest logo image ([#491](https://github.com/open-sauced/insights/issues/491)) ([f797abc](https://github.com/open-sauced/insights/commit/f797abcde417d0ad6ba557b7220648d63049b79b)), closes [#487](https://github.com/open-sauced/insights/issues/487)
+
+### [1.10.1-beta.1](https://github.com/open-sauced/insights/compare/v1.10.0...v1.10.1-beta.1) (2022-10-05)
+
+
+### 🐛 Bug Fixes
+
+* grammar in PR table ([#494](https://github.com/open-sauced/insights/issues/494)) ([381b033](https://github.com/open-sauced/insights/commit/381b0334a60092dd58253c6ff0b555e4185f1b7b))
+
+## [1.10.0](https://github.com/open-sauced/insights/compare/v1.9.0...v1.10.0) (2022-10-05)
+
+
+### 🍕 Features
+
+* connect dashboard insights to the API ([#485](https://github.com/open-sauced/insights/issues/485)) ([f4e5b6e](https://github.com/open-sauced/insights/commit/f4e5b6e854cf1422a3b3d17272dd659ccbbcaf1c)), closes [#481](https://github.com/open-sauced/insights/issues/481)
+* prefetch totals for filter options ([#479](https://github.com/open-sauced/insights/issues/479)) ([a97b09b](https://github.com/open-sauced/insights/commit/a97b09b7f650d79114b0e8fec841087fce73e278)), closes [#471](https://github.com/open-sauced/insights/issues/471)
+
+
+### 🐛 Bug Fixes
+
+* Click target on filter button icon added ([#483](https://github.com/open-sauced/insights/issues/483)) ([d4aba03](https://github.com/open-sauced/insights/commit/d4aba0379152f394deeb2f26e0bf99679efc7a8c))
+
+## [1.10.0-beta.3](https://github.com/open-sauced/insights/compare/v1.10.0-beta.2...v1.10.0-beta.3) (2022-10-04)
+
+
+### 🐛 Bug Fixes
+
+* Click target on filter button icon added ([#483](https://github.com/open-sauced/insights/issues/483)) ([d4aba03](https://github.com/open-sauced/insights/commit/d4aba0379152f394deeb2f26e0bf99679efc7a8c))
+
+## [1.10.0-beta.2](https://github.com/open-sauced/insights/compare/v1.10.0-beta.1...v1.10.0-beta.2) (2022-10-04)
+
+
+### 🍕 Features
+
+* connect dashboard insights to the API ([#485](https://github.com/open-sauced/insights/issues/485)) ([f4e5b6e](https://github.com/open-sauced/insights/commit/f4e5b6e854cf1422a3b3d17272dd659ccbbcaf1c)), closes [#481](https://github.com/open-sauced/insights/issues/481)
+
+## [1.10.0-beta.1](https://github.com/open-sauced/insights/compare/v1.9.0...v1.10.0-beta.1) (2022-10-04)
+
+
+### 🍕 Features
+
+* prefetch totals for filter options ([#479](https://github.com/open-sauced/insights/issues/479)) ([a97b09b](https://github.com/open-sauced/insights/commit/a97b09b7f650d79114b0e8fec841087fce73e278)), closes [#471](https://github.com/open-sauced/insights/issues/471)
+
+## [1.9.0](https://github.com/open-sauced/insights/compare/v1.8.0...v1.9.0) (2022-10-03)
+
+
+### 🐛 Bug Fixes
+
+* add truncate to contributors repositories list tab ([#472](https://github.com/open-sauced/insights/issues/472)) ([b7ec96e](https://github.com/open-sauced/insights/commit/b7ec96e9b49aaf7fa54acce14c649f6aa442c3a8)), closes [#460](https://github.com/open-sauced/insights/issues/460)
+* fix merged PRs that looks like closed  ([#475](https://github.com/open-sauced/insights/issues/475)) ([1dd820a](https://github.com/open-sauced/insights/commit/1dd820a15cf99f5b3b125bacf18671d7cbdb7f14)), closes [#462](https://github.com/open-sauced/insights/issues/462)
+* issue template 👋🏾 ([31b7a7e](https://github.com/open-sauced/insights/commit/31b7a7ed925fca0ef5c165e3bc3d95f6267052de))
+* moved page head and footer to repo page to avoid reloading the entire screen ([#473](https://github.com/open-sauced/insights/issues/473)) ([bf790e8](https://github.com/open-sauced/insights/commit/bf790e89951c4a8740538c7e2e223209f4a6e1fd)), closes [#449](https://github.com/open-sauced/insights/issues/449)
+* replace churn with overview ([#470](https://github.com/open-sauced/insights/issues/470)) ([fc0fe3f](https://github.com/open-sauced/insights/commit/fc0fe3fbe905670b85beabb63b60e5268ff85fb6)), closes [#469](https://github.com/open-sauced/insights/issues/469)
+* SEO descriptions ([980e01d](https://github.com/open-sauced/insights/commit/980e01d6eacb4e33dc40f946b219c4994b356085))
+
+
+### 🍕 Features
+
+* add filters to hooks for repos and contributions ([#458](https://github.com/open-sauced/insights/issues/458)) ([05e6bbe](https://github.com/open-sauced/insights/commit/05e6bbe535a62084df9f90de3a3b3de7d9170bd5)), closes [#457](https://github.com/open-sauced/insights/issues/457)
+* add page title and info to repo and contributors page ([#459](https://github.com/open-sauced/insights/issues/459)) ([c0000e4](https://github.com/open-sauced/insights/commit/c0000e4ca129a2f2b3e30f204fb00463ae646158)), closes [#446](https://github.com/open-sauced/insights/issues/446)
+* add pagination to contributors page ([#454](https://github.com/open-sauced/insights/issues/454)) ([37f4da8](https://github.com/open-sauced/insights/commit/37f4da890e986a1e89a19a879d699d638e28e7a5)), closes [#403](https://github.com/open-sauced/insights/issues/403)
+* Add swr cache ([#437](https://github.com/open-sauced/insights/issues/437)) ([6b2b1cb](https://github.com/open-sauced/insights/commit/6b2b1cb604ffb46be30a8e63a298a48b9ad36410)), closes [#308](https://github.com/open-sauced/insights/issues/308)
+* connect scatter chart to contributors data ([#466](https://github.com/open-sauced/insights/issues/466)) ([be78024](https://github.com/open-sauced/insights/commit/be7802420d5a918ce7d7a80e65f5b742442c00dc)), closes [#465](https://github.com/open-sauced/insights/issues/465)
+* hide show/hide buttons temporarily ([#474](https://github.com/open-sauced/insights/issues/474)) ([2ce5b3c](https://github.com/open-sauced/insights/commit/2ce5b3c2888c4eb021754f83c5eeabd23e9d5535)), closes [#439](https://github.com/open-sauced/insights/issues/439)
+* Leverage cloudinary for round images ([#467](https://github.com/open-sauced/insights/issues/467)) ([7dc64d8](https://github.com/open-sauced/insights/commit/7dc64d80c9bccdc16d49f81f9c22bfb0b8de901c)), closes [#373](https://github.com/open-sauced/insights/issues/373)
+* update filters for repos and contributors ([#464](https://github.com/open-sauced/insights/issues/464)) ([e15bbf8](https://github.com/open-sauced/insights/commit/e15bbf8b76e8f3c1932137f5afee406fdd65ef70)), closes [#461](https://github.com/open-sauced/insights/issues/461)
+
+## [1.8.0](https://github.com/open-sauced/insights/compare/v1.7.0...v1.8.0) (2022-09-28)
+
+
+### 🍕 Features
+
+* add data from API to contributors page for hacktoberfest ([#431](https://github.com/open-sauced/insights/issues/431)) ([56e12ea](https://github.com/open-sauced/insights/commit/56e12ea18ec8a7983146a4f7a0f6fe13c10f36ca)), closes [#404](https://github.com/open-sauced/insights/issues/404)
+* Add truncate string for long pr names ([#440](https://github.com/open-sauced/insights/issues/440)) ([35b8541](https://github.com/open-sauced/insights/commit/35b8541b71bcdd782af096f3332e64d75ea72d56)), closes [#438](https://github.com/open-sauced/insights/issues/438)
+* adds initial support for restricting reports by user roles ([#451](https://github.com/open-sauced/insights/issues/451)) ([15a7643](https://github.com/open-sauced/insights/commit/15a764339c2b4cd87ecee8bc61d5c3c84cb9424a)), closes [#395](https://github.com/open-sauced/insights/issues/395)
+
+
+### 🐛 Bug Fixes
+
+* adds links to footer ([#432](https://github.com/open-sauced/insights/issues/432)) ([7adfbe7](https://github.com/open-sauced/insights/commit/7adfbe72cc602748cad3e546d5e696ae60c101a6))
+* inverse the scatter chart ([#433](https://github.com/open-sauced/insights/issues/433)) ([18dd094](https://github.com/open-sauced/insights/commit/18dd09474582269433cf36f29b17277b14ffceb5)), closes [#399](https://github.com/open-sauced/insights/issues/399)
+* limit number of languages in contibutor's card ([#441](https://github.com/open-sauced/insights/issues/441)) ([4aba355](https://github.com/open-sauced/insights/commit/4aba355220a0b4f342dddf8f3ad6a0f4adadaa3c)), closes [#402](https://github.com/open-sauced/insights/issues/402)
+* remove link from highlight card component ([#435](https://github.com/open-sauced/insights/issues/435)) ([25b6997](https://github.com/open-sauced/insights/commit/25b6997f8dbce1213ddbbaa367df9ebdd28b643e))
+* remove remaining mock data for contributors ([#443](https://github.com/open-sauced/insights/issues/443)) ([974c739](https://github.com/open-sauced/insights/commit/974c7395f62c7518c14aaa6e1ab089ec0a5df88f)), closes [#404](https://github.com/open-sauced/insights/issues/404) [#444](https://github.com/open-sauced/insights/issues/444)
+
+## [1.8.0-beta.14](https://github.com/open-sauced/insights/compare/v1.8.0-beta.13...v1.8.0-beta.14) (2022-10-03)
+
+
+### 🍕 Features
+
+* connect scatter chart to contributors data ([#466](https://github.com/open-sauced/insights/issues/466)) ([be78024](https://github.com/open-sauced/insights/commit/be7802420d5a918ce7d7a80e65f5b742442c00dc)), closes [#465](https://github.com/open-sauced/insights/issues/465)
+
+## [1.8.0-beta.13](https://github.com/open-sauced/insights/compare/v1.8.0-beta.12...v1.8.0-beta.13) (2022-10-02)
+
+
+### 🐛 Bug Fixes
+
+* moved page head and footer to repo page to avoid reloading the entire screen ([#473](https://github.com/open-sauced/insights/issues/473)) ([bf790e8](https://github.com/open-sauced/insights/commit/bf790e89951c4a8740538c7e2e223209f4a6e1fd)), closes [#449](https://github.com/open-sauced/insights/issues/449)
+
+## [1.8.0-beta.12](https://github.com/open-sauced/insights/compare/v1.8.0-beta.11...v1.8.0-beta.12) (2022-10-02)
+
+
+### 🐛 Bug Fixes
+
+* add truncate to contributors repositories list tab ([#472](https://github.com/open-sauced/insights/issues/472)) ([b7ec96e](https://github.com/open-sauced/insights/commit/b7ec96e9b49aaf7fa54acce14c649f6aa442c3a8)), closes [#460](https://github.com/open-sauced/insights/issues/460)
+* fix merged PRs that looks like closed  ([#475](https://github.com/open-sauced/insights/issues/475)) ([1dd820a](https://github.com/open-sauced/insights/commit/1dd820a15cf99f5b3b125bacf18671d7cbdb7f14)), closes [#462](https://github.com/open-sauced/insights/issues/462)
+
 ## [1.8.0-beta.11](https://github.com/open-sauced/insights/compare/v1.8.0-beta.10...v1.8.0-beta.11) (2022-10-02)
 
 

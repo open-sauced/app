@@ -9,10 +9,12 @@ interface DbRepo {
 
 interface DbRepoPR {
   readonly title: string;
+  readonly author_login: string;
   readonly state: string;
   readonly created_at: string;
   readonly closed_at: string;
   readonly merged_at: string;
+  readonly updated_at: string;
   readonly filesCount: number;
   readonly linesCount: number;
   readonly merged: boolean;
@@ -44,4 +46,18 @@ interface DbContribution {
   readonly langs: string,
   readonly recent_repo_list: string;
   readonly recent_pr_total: number;
+}
+
+interface DbInsight {
+  readonly interval: number;
+  readonly day: string;
+  readonly all_prs: number;
+  readonly accepted_prs: number;
+  readonly spam_prs: number;
+  readonly all_authors: number;
+  readonly spam_authors: number;
+  readonly accepted_authors: number;
+  readonly all_repos: number;
+  readonly spam_repos: number;
+  readonly accepted_repos: number;
 }
