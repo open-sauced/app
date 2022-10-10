@@ -1,13 +1,13 @@
 import { ComponentStory } from "@storybook/react";
 import PieChart from "components/molecules/PieChart/pie-chart";
-
+import { PieData } from "components/molecules/PieChart/pie-chart";
 
 const StoryConfig = {
   title: "Design System/Molecules/PieChart"
 };
 export default StoryConfig;
 
-const PieChartData = [
+const PieChartData: PieData[]  = [
   {
     "id": "open",
     "label": "open",

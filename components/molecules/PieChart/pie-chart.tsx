@@ -1,7 +1,7 @@
 import React from "react";
 import { ResponsivePie } from "@nivo/pie";
 
-type PieData = {
+export type PieData = {
   id: string
   label: "open"| "closed" | "merged" | "draft"
   value: number
