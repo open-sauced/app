@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.12.0-beta.2](https://github.com/open-sauced/insights/compare/v1.12.0-beta.1...v1.12.0-beta.2) (2022-10-10)
+
+
+### 🍕 Features
+
+* add custom tooltip component to contributors bar chart ([#501](https://github.com/open-sauced/insights/issues/501)) ([855d66b](https://github.com/open-sauced/insights/commit/855d66b2848da85787bd03db6a77442834c64100))
+
 ## [1.12.0-beta.1](https://github.com/open-sauced/insights/compare/v1.11.1-beta.1...v1.12.0-beta.1) (2022-10-10)
 
 
