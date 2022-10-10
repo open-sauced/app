@@ -1,35 +1,17 @@
 import React from "react";
 import { ResponsivePie } from "@nivo/pie";
 
-interface PierChartProps{
+type PieData = {
+  id: string
+  label: "open"| "closed" | "merged" | "draft"
+  value: number
+  color: string
 }
-const PieChart = () => {
-  const data = [
-    {
-      "id": "open",
-      "label": "open",
-      "value": 8,
-      "color": "hsla(131, 41%, 46%, 1)"
-    },
-    {
-      "id": "merged",
-      "label": "merged",
-      "value": 16,
-      "color": "hsla(272, 51%, 54%, 1)"
-    },
-    {
-      "id": "closed",
-      "label": "closed",
-      "value": 8,
-      "color": "hsla(11, 89%, 54%, 1)"
-    },
-    {
-      "id": "draft",
-      "label": "draft",
-      "value": 1,
-      "color": "hsla(205, 11%, 78%, 1)"
-    }
-  ];
+interface PierChartProps{
+  data: PieData[]
+}
+const PieChart = ({data}:PierChartProps) => {
+
 
   return (
     <div className="w-[135px] h-[135px]">
