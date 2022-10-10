@@ -236,7 +236,7 @@ const RepoRow = ({repo, topic}:RepoProps): JSX.Element => {
       <div className={clsx(classNames.cols.contributors, "hidden lg:flex")}>
         {contributorMeta.itemCount! > 0 ? <StackedAvatar contributors={contributorData} /> : "-"}
 
-        {contributorMeta.itemCount! >= 5 ? <div>&nbsp;{`+${contributorMeta.itemCount - 5}`}</div> : ""}
+        {contributorMeta.itemCount! > 5 ? <div>&nbsp;{`+${contributorMeta.itemCount - 5}`}</div> : ""}
       </div>
 
       {/* Column: Last 30 Days */}
