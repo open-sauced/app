@@ -13,7 +13,7 @@ interface SuperlativeSelectorProps {
   handleFilterClick: (filter: string) => void;
   handleCancelClick: () => void;
   className?: string;
-  selected?: string;
+  selected?: string | string[];
 }
 
 const SuperativeSelector: React.FC<SuperlativeSelectorProps> = ({
@@ -46,6 +46,10 @@ const SuperativeSelector: React.FC<SuperlativeSelectorProps> = ({
     };
   }, [isOpen]);
 
+  const filter = Array.isArray(selected) ? selected.join("/") : selected;
+  const filterOption = filterOptions.find((option) => getFilterKey(option) === filter);
+  const filterDescription = filterOption ? filterOption : Array.isArray(filter) ? filter.join("/") : filter;
+  
   return (
     <div className="max-w-max relative" ref={ref}>
       <ContextFilterButton onClick={toggleFilter} isSelected={!!selected}>
@@ -54,17 +58,18 @@ const SuperativeSelector: React.FC<SuperlativeSelectorProps> = ({
             <div className="flex" onClick={toggleFilter}>
               <span className="text-dark-slate-10">Filtered by:</span>
               <div className="ml-1 text-light-slate-12">
-                {filterOptions.find((option) => getFilterKey(option) === selected)}
+                {filterDescription}
+
+                <Icon
+                  className="ml-2"
+                  IconImage={cancelIcon}
+                  onClick={() => {
+                    handleCancelClick();
+                    setIsOpen(false);
+                  }}
+                />
               </div>
             </div>
-            <Icon
-              className="ml-2"
-              IconImage={cancelIcon}
-              onClick={() => {
-                handleCancelClick();
-                setIsOpen(false);
-              }}
-            />
           </div>
         ) : (
           <div onClick={toggleFilter}>Add Filter </div>

@@ -1,6 +1,7 @@
 import Avatar from "components/atoms/Avatar/avatar";
 import { truncateString } from "lib/utils/truncate-string";
 import { StaticImageData } from "next/image";
+import Link from "next/link";
 import React from "react";
 
 interface TableRepositoryNameProps {
@@ -8,9 +9,10 @@ interface TableRepositoryNameProps {
   name?: string;
   handle?: string;
   isLoading?: boolean;
+  topic?: string;
 }
 
-const TableRepositoryName = ({ avatarURL, name, handle, isLoading }: TableRepositoryNameProps): JSX.Element => {
+const TableRepositoryName = ({ avatarURL, name, handle, topic }: TableRepositoryNameProps): JSX.Element => {
   return (
     <div className="flex items-center gap-2.5">
 
@@ -20,10 +22,10 @@ const TableRepositoryName = ({ avatarURL, name, handle, isLoading }: TableReposi
       {/* Text */}
       <div className="flex flex-col justify-center">
         <div title={name} className="font-medium text-base text-light-slate-12 tracking-tight">
-          {name && name.length > 10 ? truncateString(name, 12): name}
+          <Link href={`/${topic}/repositories/filter/${handle}/${name}`}>{name && name.length > 10 ? truncateString(name, 12): name}</Link>
         </div>
         <div className="font-medium text-sm text-light-slate-11">
-          @{handle || "handle1234"}
+          <Link href={`/${topic}/repositories/filter/${handle}/${name}`}>{handle ? `@${handle}`: "handle1234"}</Link>
         </div>
       </div>
 

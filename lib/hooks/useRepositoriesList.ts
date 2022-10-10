@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
 import useSWR from "swr";
+import getFilterQuery from "lib/utils/get-filter-query";
 
 interface PaginatedRepoResponse {
   readonly data: DbRepo[];
@@ -11,13 +12,12 @@ const useRepositoriesList = (skipFilters = false) => {
   const router = useRouter();
   const { filterName, selectedFilter } = router.query;
   const topic = filterName as string;
-  const filter = selectedFilter as string;  
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
 
   const baseEndpoint = !skipFilters ? `${topic}/repos` : "repos/list";
   const pageQuery = page ? `page=${page}` : "";
-  const filterQuery = filter ? `&filter=${filter}` : "";
+  const filterQuery = getFilterQuery(selectedFilter);
   const limitQuery = limit ? `&limit=${limit}` : "";
   const endpointString = `${baseEndpoint}?${pageQuery}${limitQuery}${!skipFilters ? filterQuery : ""}`;
   const { data, error, mutate } = useSWR<PaginatedRepoResponse, Error>(topic ? endpointString : null);

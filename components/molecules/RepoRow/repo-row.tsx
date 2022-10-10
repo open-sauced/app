@@ -18,6 +18,7 @@ import TableRepositoryName from "../TableRepositoryName/table-repository-name";
 
 interface RepoProps {
   repo: RepositoriesRows;
+  topic?: string;
 }
 
 const getActivity = (total?: number, loading?: boolean) => {
@@ -72,7 +73,7 @@ const getPrsSpam = (total: number, spam: number): number => {
 };
 
 
-const RepoRow = ({repo}:RepoProps): JSX.Element => {
+const RepoRow = ({repo, topic}:RepoProps): JSX.Element => {
   const { name,
     owner: handle,
     owner_avatar: ownerAvatar,
@@ -108,7 +109,7 @@ const RepoRow = ({repo}:RepoProps): JSX.Element => {
       {/* Row: Repository Name and Pr overview */}
       <div className="flex items-center gap-x-3">
         <div className="w-[55%]">
-          <TableRepositoryName avatarURL={ownerAvatar} name={name} handle={handle} />
+          <TableRepositoryName topic={topic} avatarURL={ownerAvatar} name={name} handle={handle} />
         </div>
         <div className="w-[45%]">
           <PullRequestOverview
@@ -191,7 +192,7 @@ const RepoRow = ({repo}:RepoProps): JSX.Element => {
     <div className={`${classNames.row} `}>
       {/* Column: Repository Name */}
       <div className={classNames.cols.repository}>
-        <TableRepositoryName avatarURL={ownerAvatar} name={name} handle={handle}></TableRepositoryName>
+        <TableRepositoryName topic={topic} avatarURL={ownerAvatar} name={name} handle={handle}></TableRepositoryName>
       </div>
 
       {/* Column: Activity */}

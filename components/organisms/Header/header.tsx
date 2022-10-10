@@ -45,14 +45,14 @@ const Header: React.FC = () => {
             pillOptions={filterOptions}
             handlePillClick={filterBtnRouting}
             handleCancelClick={cancelFilterRouting}
-            selected={selectedFilter as string}
+            selected={selectedFilter}
           /> */}
           <SuperativeSelector
             filterOptions={filterOptions}
             filterValues={filterValues}
             handleFilterClick={filterBtnRouting}
             handleCancelClick={cancelFilterRouting}
-            selected={selectedFilter as string}
+            selected={selectedFilter}
           />
         </div>
       </div>
