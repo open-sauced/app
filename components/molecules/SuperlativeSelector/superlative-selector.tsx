@@ -57,7 +57,7 @@ const SuperativeSelector: React.FC<SuperlativeSelectorProps> = ({
           <div className="flex">
             <div className="flex" onClick={toggleFilter}>
               <span className="text-dark-slate-10">Filtered by:</span>
-              <div className="ml-1 text-light-slate-12">
+              <div className="flex items-center ml-1 text-light-slate-12">
                 {filterDescription}
 
                 <Icon
