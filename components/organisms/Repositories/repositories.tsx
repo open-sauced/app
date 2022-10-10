@@ -33,7 +33,7 @@ const Repositories = (): JSX.Element => {
         updateLimit={setLimit}
         showing={{
           from: page === 1 ? page : ((page-1) * repoMeta.limit) + 1,
-          to: page === 1 ? repoMeta.limit : page * repoMeta.limit <= repoMeta.itemCount ? page * repoMeta.limit : repoMeta.itemCount,
+          to: page * repoMeta.limit <= repoMeta.itemCount ? page * repoMeta.limit : repoMeta.itemCount,
           total: repoMeta.itemCount,
           entity: "Repositories"
         }}
@@ -95,7 +95,7 @@ const Repositories = (): JSX.Element => {
               <div className="">
                 <PaginationResults
                   from={page === 1 ? page : ((page-1) * repoMeta.limit) + 1}
-                  to={page === 1 ? repoMeta.limit : page * repoMeta.limit <= repoMeta.itemCount ? page * repoMeta.limit : repoMeta.itemCount}
+                  to={page * repoMeta.limit <= repoMeta.itemCount ? page * repoMeta.limit : repoMeta.itemCount}
                   total={repoMeta.itemCount}
                   entity={"repos"}
                 />
