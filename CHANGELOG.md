@@ -5,6 +5,27 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.12.0-beta.2](https://github.com/open-sauced/insights/compare/v1.12.0-beta.1...v1.12.0-beta.2) (2022-10-10)
+
+
+### 🍕 Features
+
+* add custom tooltip component to contributors bar chart ([#501](https://github.com/open-sauced/insights/issues/501)) ([855d66b](https://github.com/open-sauced/insights/commit/855d66b2848da85787bd03db6a77442834c64100))
+
+## [1.12.0-beta.1](https://github.com/open-sauced/insights/compare/v1.11.1-beta.1...v1.12.0-beta.1) (2022-10-10)
+
+
+### 🍕 Features
+
+* add `PullRequestPieChart` component ([#514](https://github.com/open-sauced/insights/issues/514)) ([9132a93](https://github.com/open-sauced/insights/commit/9132a936ca04cda35b19a2b44df56a9b5495a5c2))
+
+### [1.11.1-beta.1](https://github.com/open-sauced/insights/compare/v1.11.0...v1.11.1-beta.1) (2022-10-07)
+
+
+### 🐛 Bug Fixes
+
+* update pagination counts for repositories and contributors ([#503](https://github.com/open-sauced/insights/issues/503)) ([1332fab](https://github.com/open-sauced/insights/commit/1332fab8742bf832a1978bac95117fa1c0b0fecc))
+
 ## [1.11.0](https://github.com/open-sauced/insights/compare/v1.10.0...v1.11.0) (2022-10-06)
 
 

@@ -12,6 +12,7 @@ import apiFetcher from "../lib/hooks/useSWR";
 import { initiateAnalytics } from "lib/utils/analytics";
 import { useEffect } from "react";
 import posthog from "posthog-js";
+import { TipProvider } from "./../components/atoms/Tooltip/tooltip";
 
 type ComponentWithPageLayout = AppProps & {
   Component: AppProps["Component"] & {
@@ -92,13 +93,15 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
         }}
       >
         <GlobalState>
-          {Component.PageLayout ? (
-            <Component.PageLayout>
+          <TipProvider>
+            {Component.PageLayout ? (
+              <Component.PageLayout>
+                <Component {...pageProps} />
+              </Component.PageLayout>
+            ) : (
               <Component {...pageProps} />
-            </Component.PageLayout>
-          ) : (
-            <Component {...pageProps} />
-          )}
+            )}
+          </TipProvider>
         </GlobalState>
       </SWRConfig>
     </>

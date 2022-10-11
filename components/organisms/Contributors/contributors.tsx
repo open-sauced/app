@@ -51,9 +51,9 @@ const Contributors = (): JSX.Element => {
       <TableHeader
         updateLimit={setLimit}
         showing={{
-          from: page === 1 ? page : page * meta.limit,
-          to: page === 1 ? meta.limit : page * meta.limit + meta.limit,
-          total:meta.itemCount,
+          from: page === 1 ? page : ((page-1) * meta.limit) + 1,
+          to: page === 1 ? meta.limit : page * meta.limit <= meta.itemCount ? page * meta.limit : meta.itemCount,
+          total: meta.itemCount,
           entity: "Contributors"
         }}
         title="Contributors"
@@ -87,8 +87,8 @@ const Contributors = (): JSX.Element => {
           <div>
             <div className="">
               <PaginationResults
-                from={page === 1 ? page : page * meta.limit}
-                to={page === 1 ? meta.limit : page * meta.limit + meta.limit}
+                from={page === 1 ? page : ((page-1) * meta.limit) + 1}
+                to={page === 1 ? meta.limit : page * meta.limit <= meta.itemCount ? page * meta.limit : meta.itemCount}
                 total={meta.itemCount}
                 entity={"contributors"}
               />
