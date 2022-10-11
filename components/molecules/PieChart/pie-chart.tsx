@@ -12,8 +12,11 @@ interface PierChartProps {
 }
 
 const PieChart = ({ data }: PierChartProps) => {
+
+
   // Link to Nivo docs for adding center metrics to pie chart
   // https://nivo.rocks/storybook/?path=/story/pie--adding-a-metric-in-the-center-using-a-custom-layer
+  
   const centerMetrics = ({ dataWithArc, centerX, centerY }: PieCustomLayerProps<PieData>) => {
     let total = 0;
     dataWithArc.forEach((datum: { value: number }) => {
