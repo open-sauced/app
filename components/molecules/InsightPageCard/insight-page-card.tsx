@@ -5,6 +5,8 @@ import PieChart, { PieData } from "../PieChart/pie-chart";
 import StackedAvatar from "../StackedAvatar/stacked-avatar";
 import { LinkIcon } from "@primer/octicons-react";
 import Link from "next/link";
+import Text from "components/atoms/Typography/text";
+import { BsFillArrowUpCircleFill } from "react-icons/bs";
 interface InsightPageCardProps {
   title: string;
   members: DbContribution[];
@@ -60,6 +62,7 @@ const InsightPageCard = ({
     }
   };
   const totalPrs = (openPrsCount || 0) + (closedPrsCount || 0) + (draftPrsCount || 0) + (mergedPrsCount || 0);
+  const averagePrOpened = Math.floor(((openPrsCount || 0) / totalPrs) * 100);
   return (
     <div className=" w-[428px] py-[15px] px-[14px] rounded-lg flex flex-col gap-y-3 bg-white border">
       {/* Card header */}
@@ -72,8 +75,34 @@ const InsightPageCard = ({
       </div>
 
       {/* Card body */}
-      <div>
-        <PieChart data={PieChartData} />
+      <div className="flex justify-between items-center">
+        <div className="flex-1 pl-6">
+          <PieChart data={PieChartData} />
+        </div>
+        <div className="flex gap-2 flex-1 flex-col">
+          <div className="flex flex-col">
+            <span className="text-xs text-light-slate-11">Avg PRs opened</span>
+            <div
+              className="flex text-light-grass-10 justify-between items-end pr-8 mt-1
+            "
+            >
+              <Text className="!text-xl !text-black !leading-none">{`${openPrsCount} PRs`}</Text>
+              <p className="flex items-end">
+                <span className="mb-0 leading-none">{`${averagePrOpened}%`}</span>{" "}
+                <BsFillArrowUpCircleFill className="ml-1" />
+              </p>
+            </div>
+          </div>
+          <div>
+            <span className="text-xs text-light-slate-11">Avg PRs velocity</span>
+            <div className="flex text-light-red-9 justify-between items-end pr-8 mt-1">
+              <Text className="!text-xl !text-black !leading-none">2 mo</Text>
+              <p className="flex items-end">
+                <span className="mb-0 leading-none">10%</span> <BsFillArrowUpCircleFill className="ml-1" />
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
       <div className="mt-4">
         <CardRepoList repoList={repoList} />

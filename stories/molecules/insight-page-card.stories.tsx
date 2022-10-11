@@ -2,7 +2,6 @@
 import { ComponentStory } from "@storybook/react";
 import { RepoList } from "components/molecules/CardRepoList/card-repo-list";
 import InsightPageCard from "components/molecules/InsightPageCard/insight-page-card";
-import { PieData } from "components/molecules/PieChart/pie-chart";
 import TestRepoAvatar from "public/icons/test-repo-avatar.svg";
 
 
@@ -100,7 +99,7 @@ const InsightPageCardTemplate: ComponentStory<typeof InsightPageCard> = (args) =
 
 export const InsightpageCardStory = InsightPageCardTemplate.bind({});
 InsightpageCardStory.args = {
-  title: "Strapi",
+  title: "Strapi Team",
   members: contributors,
   openPrsCount: 23,
   closedPrsCount: 12,
