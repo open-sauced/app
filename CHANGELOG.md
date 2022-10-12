@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.12.0-beta.4](https://github.com/open-sauced/insights/compare/v1.12.0-beta.3...v1.12.0-beta.4) (2022-10-12)
+
+
+### 🐛 Bug Fixes
+
+* remove duplicate contributors from the scatter chart ([#529](https://github.com/open-sauced/insights/issues/529)) ([9b4b2c8](https://github.com/open-sauced/insights/commit/9b4b2c8efd31a5b1221dbffc613f31b9dae5da8f)), closes [#372](https://github.com/open-sauced/insights/issues/372)
+
 ## [1.12.0-beta.3](https://github.com/open-sauced/insights/compare/v1.12.0-beta.2...v1.12.0-beta.3) (2022-10-12)
 
 
