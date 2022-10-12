@@ -4,10 +4,14 @@ import Loader from "components/templates/Loader/loader";
 
 const Filter: React.FC = () => {
   const router = useRouter();
+  
+  const { filterName: topic } = router.query;
 
   useEffect(() => {
-    router.push("hacktoberfest/dashboard");
-  }, [router]);
+    if (topic) {
+      router.push(`${topic}/dashboard`);
+    }
+  }, [router, topic]);
 
   return (
     <Loader theme={"dark"}/>
