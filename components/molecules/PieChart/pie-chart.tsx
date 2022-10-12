@@ -25,7 +25,7 @@ const PieChart = ({ data }: PierChartProps) => {
 
     return (
       <text x={centerX} y={centerY} textAnchor="middle" dominantBaseline="central">
-        {total} Prs
+        {total} PRs
       </text>
     );
   };
