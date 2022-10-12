@@ -70,7 +70,7 @@ const InsightPageCard = ({
         <div>{title}</div>
         <div className="items-center flex">
           {members.length > 0 ? <StackedAvatar visibleQuantity={2} contributors={members} /> : "-"}
-          {members.length >= 2 ? <div>&nbsp;{`+${members.length - 2} members`}</div> : ""}
+          {members.length > 2 ? <div>&nbsp;{`+${members.length - 2} members`}</div> : ""}
         </div>
       </div>
 
