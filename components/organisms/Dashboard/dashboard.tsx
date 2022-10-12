@@ -42,15 +42,17 @@ export const Dashboard = (): JSX.Element => {
     //eslint-disable-next-line
     scatterChartData = prs.map(({ updated_at, linesCount, author_login }) => {
       const timeOverTouched: (string | number)[] = [
-        calcDaysFromToday(new Date(parseInt(updated_at))),
+        calcDaysFromToday(new Date(parseInt(updated_at, 10))),
         //eslint-disable-next-line
         linesCount
       ];
 
+      const author_image = author_login.includes("[bot]") ? "octocat" : author_login;
+
       //eslint-disable-next-line
       conAvatarObject[`${timeOverTouched[0]}${timeOverTouched[1]}`] = {
-        login: author_login,
-        image: roundedImage(`https://www.github.com/${author_login}.png?size=60`, process.env.NEXT_PUBLIC_CLOUD_NAME)
+        login: `${author_login} - ${linesCount}`,
+        image: roundedImage(`https://www.github.com/${author_image}.png?size=60`, process.env.NEXT_PUBLIC_CLOUD_NAME)
       };
 
       return timeOverTouched;
