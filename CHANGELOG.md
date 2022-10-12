@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.12.0-beta.3](https://github.com/open-sauced/insights/compare/v1.12.0-beta.2...v1.12.0-beta.3) (2022-10-12)
+
+
+### 🍕 Features
+
+* implement InsightPageCard component ([#519](https://github.com/open-sauced/insights/issues/519)) ([0dd5057](https://github.com/open-sauced/insights/commit/0dd50576c57cfc6177f0cb71bef3be9c3dea589a)), closes [#509](https://github.com/open-sauced/insights/issues/509)
+
 ## [1.12.0-beta.2](https://github.com/open-sauced/insights/compare/v1.12.0-beta.1...v1.12.0-beta.2) (2022-10-10)
 
 
