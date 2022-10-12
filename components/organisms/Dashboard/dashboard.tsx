@@ -10,18 +10,37 @@ import roundedImage from "lib/utils/roundedImages";
 import { getInsights, useInsights } from "lib/hooks/useInsights";
 import { useRepositoriesList } from "lib/hooks/useRepositoriesList";
 
+type ContributorPrMap = { [contributor: string]: DbRepoPR };
+
 export const Dashboard = (): JSX.Element => {
   const { meta: allRepoMeta } = useRepositoriesList(true);
   const { meta: filterRepoMeta } = useRepositoriesList();
-  const { data: prData, isError: contributorError } = useTopicPRs();
+  const { data: prData, isError: prError } = useTopicPRs();
   const { data: insightsData } = useInsights();
   const isNotMobile = useMediaQuery("(min-width: 768px)");
 
   const conAvatarObject: { [key: string]: {[key: string]: string} } = {};
 
-  const scatterChartData = contributorError ? [] :
+  let scatterChartData: (string | number)[][] = [];
+
+  if (prError) {
+    scatterChartData = [];
+  } else {
+    const uniqueContributors: ContributorPrMap = prData.reduce((prs, curr) => {
+      if (prs[curr.author_login]) {
+        prs[curr.author_login].linesCount += curr.linesCount;
+      } else {
+        prs[curr.author_login] = curr;
+        prs[curr.author_login].linesCount = curr.linesCount;
+      }
+
+      return prs;
+    }, {} as ContributorPrMap);
+    
+    const prs = Object.keys(uniqueContributors).map(key => uniqueContributors[key]);
+
     //eslint-disable-next-line
-    prData.map(({ updated_at, linesCount, author_login }) => {
+    scatterChartData = prs.map(({ updated_at, linesCount, author_login }) => {
       const timeOverTouched: (string | number)[] = [
         calcDaysFromToday(new Date(parseInt(updated_at))),
         //eslint-disable-next-line
@@ -36,6 +55,7 @@ export const Dashboard = (): JSX.Element => {
 
       return timeOverTouched;
     });
+  }
 
   const maxFilesModified = scatterChartData.reduce((max, curr) => {
     const [, files] = curr;
