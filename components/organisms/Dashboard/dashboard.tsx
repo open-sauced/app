@@ -3,58 +3,69 @@ import Card from "../../atoms/Card/card";
 import DashboardScatterChart from "components/molecules/DashboardScatterChart/dashboard-scatter-chart";
 import HighlightCard from "components/molecules/HighlightCard/highlight-card";
 import humanizeNumber from "lib/utils/humanizeNumber";
-import { calcDaysFromToday } from "lib/utils/date-utils";
-import { useMediaQuery } from "lib/hooks/useMediaQuery";
-import { useTopicPRs } from "lib/hooks/useTopicPRs";
-import roundedImage from "lib/utils/roundedImages";
+
 import { getInsights, useInsights } from "lib/hooks/useInsights";
 import { useRepositoriesList } from "lib/hooks/useRepositoriesList";
+import { useTopicPRs } from "lib/hooks/useTopicPRs";
+import { useMediaQuery } from "lib/hooks/useMediaQuery";
+import { calcDaysFromToday } from "lib/utils/date-utils";
+import roundedImage from "lib/utils/roundedImages";
+import { useState } from "react";
 
 type ContributorPrMap = { [contributor: string]: DbRepoPR };
 
 export const Dashboard = (): JSX.Element => {
   const { meta: allRepoMeta } = useRepositoriesList(true);
   const { meta: filterRepoMeta } = useRepositoriesList();
-  const { data: prData, isError: prError } = useTopicPRs();
   const { data: insightsData } = useInsights();
+  const { data: prData, isError: prError } = useTopicPRs();
+  const [showBots, setShowBots] = useState(false);
   const isNotMobile = useMediaQuery("(min-width: 768px)");
 
   const conAvatarObject: { [key: string]: {[key: string]: string} } = {};
-
   let scatterChartData: (string | number)[][] = [];
+
+  // useEffect(() => {
+  const uniqueContributors: ContributorPrMap = prData.reduce((prs, curr) => {
+    if (prs[curr.author_login]) {
+      prs[curr.author_login].linesCount += curr.linesCount;
+    } else {
+      prs[curr.author_login] = {...curr};
+      prs[curr.author_login].linesCount = curr.linesCount;
+    }
+
+    return prs;
+  }, {} as ContributorPrMap);
+    
+  const prs = Object.keys(uniqueContributors)
+    .filter(key => {
+      if (showBots) {
+        return true;
+      }
+
+      return !key.includes("[bot]");
+    })
+    .map(key => uniqueContributors[key]);
 
   if (prError) {
     scatterChartData = [];
   } else {
-    const uniqueContributors: ContributorPrMap = prData.reduce((prs, curr) => {
-      if (prs[curr.author_login]) {
-        prs[curr.author_login].linesCount += curr.linesCount;
-      } else {
-        prs[curr.author_login] = curr;
-        prs[curr.author_login].linesCount = curr.linesCount;
-      }
-
-      return prs;
-    }, {} as ContributorPrMap);
-    
-    const prs = Object.keys(uniqueContributors).map(key => uniqueContributors[key]);
-
     //eslint-disable-next-line
-    scatterChartData = prs.map(({ updated_at, linesCount, author_login }) => {
+      scatterChartData = prs.map(({ updated_at, linesCount, author_login }) => {
       const timeOverTouched: (string | number)[] = [
         calcDaysFromToday(new Date(parseInt(updated_at, 10))),
         //eslint-disable-next-line
-        linesCount
+          linesCount
       ];
-
+  
       const author_image = author_login.includes("[bot]") ? "octocat" : author_login;
-
+  
       //eslint-disable-next-line
-      conAvatarObject[`${timeOverTouched[0]}${timeOverTouched[1]}`] = {
+        conAvatarObject[`${timeOverTouched[0]}${timeOverTouched[1]}`] = {
         login: `${author_login} - ${linesCount}`,
         image: roundedImage(`https://www.github.com/${author_image}.png?size=60`, process.env.NEXT_PUBLIC_CLOUD_NAME)
       };
-
+  
       return timeOverTouched;
     });
   }
@@ -65,9 +76,9 @@ export const Dashboard = (): JSX.Element => {
       return files as number;
     }
     return max;
-  }, 0);
+  }, 0);    
 
-  const scatterOptions = {
+  const scatterChartOptions = {
     grid: {
       left: 40,
       top: 10,
@@ -181,7 +192,7 @@ export const Dashboard = (): JSX.Element => {
       <section className="flex flex-col lg:flex-row max-w-full gap-4 mb-6">
         <div className="flex flex-col w-full">
           <Card className="w-full">
-            <DashboardScatterChart title="Contributor Distribution" option={scatterOptions} />
+            <DashboardScatterChart title="Contributor Distribution" option={scatterChartOptions} showBots={showBots} setShowBots={setShowBots} />
           </Card>
         </div>
       </section>
