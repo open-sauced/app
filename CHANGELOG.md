@@ -5,6 +5,19 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.13.0-beta.1](https://github.com/open-sauced/insights/compare/v1.12.0...v1.13.0-beta.1) (2022-10-13)
+
+
+### 🐛 Bug Fixes
+
+* remove duplicate contributors from the scatter chart ([#529](https://github.com/open-sauced/insights/issues/529)) ([9b4b2c8](https://github.com/open-sauced/insights/commit/9b4b2c8efd31a5b1221dbffc613f31b9dae5da8f)), closes [#372](https://github.com/open-sauced/insights/issues/372)
+
+
+### 🍕 Features
+
+* implement InsightPageCard component ([#519](https://github.com/open-sauced/insights/issues/519)) ([0dd5057](https://github.com/open-sauced/insights/commit/0dd50576c57cfc6177f0cb71bef3be9c3dea589a)), closes [#509](https://github.com/open-sauced/insights/issues/509)
+* re-enable toggling of bots on scatterchart ([#530](https://github.com/open-sauced/insights/issues/530)) ([bcd3428](https://github.com/open-sauced/insights/commit/bcd342806ae5f429bfac4797d4062ec67b4c1b33)), closes [#476](https://github.com/open-sauced/insights/issues/476)
+
 ## [1.12.0](https://github.com/open-sauced/insights/compare/v1.11.0...v1.12.0) (2022-10-11)
 
 
