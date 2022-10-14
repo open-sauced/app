@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.14.0-beta.2](https://github.com/open-sauced/insights/compare/v1.14.0-beta.1...v1.14.0-beta.2) (2022-10-14)
+
+
+### 🐛 Bug Fixes
+
+* humanize numbers and use absolute values in highlight cards ([#535](https://github.com/open-sauced/insights/issues/535)) ([f5c538c](https://github.com/open-sauced/insights/commit/f5c538c54036ffd0baace2f31bacac3bcd4f21b2)), closes [#506](https://github.com/open-sauced/insights/issues/506)
+
 ## [1.14.0-beta.1](https://github.com/open-sauced/insights/compare/v1.13.0...v1.14.0-beta.1) (2022-10-14)
 
 
