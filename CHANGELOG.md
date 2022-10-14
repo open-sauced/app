@@ -5,6 +5,18 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.14.0-beta.1](https://github.com/open-sauced/insights/compare/v1.13.0...v1.14.0-beta.1) (2022-10-14)
+
+
+### 🐛 Bug Fixes
+
+* show pr velocity in relative days ([#534](https://github.com/open-sauced/insights/issues/534)) ([27c178e](https://github.com/open-sauced/insights/commit/27c178e0f60de0262ddb1acba40e9080e6bf4f1e)), closes [#448](https://github.com/open-sauced/insights/issues/448)
+
+
+### 🍕 Features
+
+* allow for displaying insights based on custom topics ([#528](https://github.com/open-sauced/insights/issues/528)) ([93e1138](https://github.com/open-sauced/insights/commit/93e1138279b828882dace652394944a869daf632)), closes [#417](https://github.com/open-sauced/insights/issues/417)
+
 ## [1.13.0](https://github.com/open-sauced/insights/compare/v1.12.0...v1.13.0) (2022-10-14)
 
 
