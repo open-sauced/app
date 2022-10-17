@@ -30,20 +30,32 @@ export const calcYearsFromToday = (endDate: Date) => {
   return monthsFromNow;
 };
 
-export const calcDistanceFromToday = (endDate: Date) => {
-  const daysFromNow = calcDaysFromToday(endDate);
-
-  if (daysFromNow === 0) {
+export const getRelativeDays = (days: number) => {
+  if (days === 0) {
     return "-";
   }
 
+  if (days >= 365) {
+    return `${days}y`;
+  }
+
+  if (days > 30 && days < 365) {
+    return `${Math.floor(days / 12)}mo`;
+  }
+
+  return `${days}d`;
+};
+
+export const calcDistanceFromToday = (endDate: Date) => {
+  const daysFromNow = calcDaysFromToday(endDate);
+
   if (daysFromNow >= 365) {
-    return `${calcYearsFromToday(endDate)}y`;
+    return `${getRelativeDays(calcYearsFromToday(endDate))}`;
   }
 
   if (daysFromNow > 30 && daysFromNow < 365) {
-    return `${calcMonthsFromToday(endDate)}mo`;
+    return `${getRelativeDays(calcMonthsFromToday(endDate))}`;
   }
 
-  return `${daysFromNow}d`;
+  return `${getRelativeDays(daysFromNow)}`;
 };

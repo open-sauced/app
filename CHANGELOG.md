@@ -5,6 +5,33 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.14.0-beta.3](https://github.com/open-sauced/insights/compare/v1.14.0-beta.2...v1.14.0-beta.3) (2022-10-17)
+
+
+### 🐛 Bug Fixes
+
+* add root href to header logo component image ([#537](https://github.com/open-sauced/insights/issues/537)) ([e71e9cb](https://github.com/open-sauced/insights/commit/e71e9cbcb2384dda1a31be05e038f303d17fdf26)), closes [#523](https://github.com/open-sauced/insights/issues/523)
+* correct card horizontal tooltip error on storybook ([#536](https://github.com/open-sauced/insights/issues/536)) ([100d93e](https://github.com/open-sauced/insights/commit/100d93e784510a6482576a68a718d17de50c4907)), closes [#525](https://github.com/open-sauced/insights/issues/525)
+
+## [1.14.0-beta.2](https://github.com/open-sauced/insights/compare/v1.14.0-beta.1...v1.14.0-beta.2) (2022-10-14)
+
+
+### 🐛 Bug Fixes
+
+* humanize numbers and use absolute values in highlight cards ([#535](https://github.com/open-sauced/insights/issues/535)) ([f5c538c](https://github.com/open-sauced/insights/commit/f5c538c54036ffd0baace2f31bacac3bcd4f21b2)), closes [#506](https://github.com/open-sauced/insights/issues/506)
+
+## [1.14.0-beta.1](https://github.com/open-sauced/insights/compare/v1.13.0...v1.14.0-beta.1) (2022-10-14)
+
+
+### 🐛 Bug Fixes
+
+* show pr velocity in relative days ([#534](https://github.com/open-sauced/insights/issues/534)) ([27c178e](https://github.com/open-sauced/insights/commit/27c178e0f60de0262ddb1acba40e9080e6bf4f1e)), closes [#448](https://github.com/open-sauced/insights/issues/448)
+
+
+### 🍕 Features
+
+* allow for displaying insights based on custom topics ([#528](https://github.com/open-sauced/insights/issues/528)) ([93e1138](https://github.com/open-sauced/insights/commit/93e1138279b828882dace652394944a869daf632)), closes [#417](https://github.com/open-sauced/insights/issues/417)
+
 ## [1.13.0](https://github.com/open-sauced/insights/compare/v1.12.0...v1.13.0) (2022-10-14)
 
 

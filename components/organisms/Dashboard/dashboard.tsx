@@ -154,7 +154,7 @@ export const Dashboard = (): JSX.Element => {
           icon="participation"
           metricIncreases={today.allReposTotal - yesterday.allReposTotal >= 0}
           increased={today.allReposTotal - yesterday.allReposTotal >= 0}
-          numChanged={today.allReposTotal - yesterday.allReposTotal}
+          numChanged={humanizeNumber(Math.abs(today.allReposTotal - yesterday.allReposTotal), "abbreviation")}
           percentage={allRepoMeta.itemCount > 0 ? Math.round((filterRepoMeta.itemCount / allRepoMeta.itemCount) * 100) : 0}
           percentageLabel={`of ${humanizeNumber(allRepoMeta.itemCount || 0, "comma")}`}
         />
@@ -164,7 +164,7 @@ export const Dashboard = (): JSX.Element => {
           icon="spam"
           metricIncreases={today.spamTotal - yesterday.spamTotal >= 0}
           increased={today.spamTotal - yesterday.spamTotal >= 0}
-          numChanged={today.spamTotal - yesterday.spamTotal}
+          numChanged={humanizeNumber(Math.abs(today.spamTotal - yesterday.spamTotal), "abbreviation")}
           percentage={today.spamPercentage}
           percentageLabel={`of ${humanizeNumber(today.allPrsTotal, "comma")}`}
         />
@@ -174,7 +174,7 @@ export const Dashboard = (): JSX.Element => {
           icon="accepted-pr"
           metricIncreases={today.acceptedTotal - yesterday.acceptedTotal >= 0}
           increased={today.acceptedTotal - yesterday.acceptedTotal >= 0}
-          numChanged={today.acceptedTotal - yesterday.acceptedTotal}
+          numChanged={humanizeNumber(Math.abs(today.acceptedTotal - yesterday.acceptedTotal), "abbreviation")}
           percentage={today.acceptedPercentage}
           percentageLabel={`of ${humanizeNumber(today.allPrsTotal, "comma")}`}
         />
@@ -184,7 +184,7 @@ export const Dashboard = (): JSX.Element => {
           icon="unlabeled-pr"
           metricIncreases={today.unlabeledPrsTotal - yesterday.unlabeledPrsTotal >= 0}
           increased={today.unlabeledPrsTotal - yesterday.unlabeledPrsTotal >= 0}
-          numChanged={today.unlabeledPrsTotal - yesterday.unlabeledPrsTotal}
+          numChanged={humanizeNumber(Math.abs(today.unlabeledPrsTotal - yesterday.unlabeledPrsTotal), "abbreviation")}
           percentage={today.unlabeledPercentage}
           percentageLabel={`of ${humanizeNumber(today.allPrsTotal, "comma")}`}
         />

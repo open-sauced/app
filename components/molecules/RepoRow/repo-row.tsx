@@ -1,16 +1,20 @@
+import { useState } from "react";
 import { ArrowTrendingDownIcon, ArrowTrendingUpIcon, ChevronDownIcon, ChevronUpIcon, MinusSmallIcon } from "@heroicons/react/24/solid";
+import clsx from "clsx";
+
 import { RepositoriesRows } from "components/organisms/RepositoriesTable/repositories-table";
 import Pill from "components/atoms/Pill/pill";
+import Sparkline from "components/atoms/Sparkline/sparkline";
+import { classNames } from "components/organisms/RepositoriesTable/repositories-table";
+
 import { useContributionsList } from "lib/hooks/useContributionsList";
 import { useRepositoryCommits } from "lib/hooks/useRepositoryCommits";
 import { getCommitsLast30Days } from "lib/utils/get-recent-commits";
-import TableRepositoryName from "../TableRepositoryName/table-repository-name";
-import Sparkline from "components/atoms/Sparkline/sparkline";
-import PullRequestOverview from "../PullRequestOverview/pull-request-overview";
+import { getRelativeDays } from "lib/utils/date-utils";
+
 import StackedAvatar from "../StackedAvatar/stacked-avatar";
-import { useState } from "react";
-import { classNames } from "components/organisms/RepositoriesTable/repositories-table";
-import clsx from "clsx";
+import PullRequestOverview from "../PullRequestOverview/pull-request-overview";
+import TableRepositoryName from "../TableRepositoryName/table-repository-name";
 
 interface RepoProps {
   repo: RepositoriesRows;
@@ -87,7 +91,7 @@ const RepoRow = ({repo}:RepoProps): JSX.Element => {
   const totalPrs = getTotalPrs(openPrsCount, mergedPrsCount, closedPrsCount, draftPrsCount);
   const prsMergedPercentage = getPrsMerged(totalPrs, mergedPrsCount || 0);
   const spamPrsPercentage = getPrsSpam(totalPrs, spamPrsCount || 0);
- 
+  const prVelocityInDays = getRelativeDays(prVelocityCount || 0);
 
   const days = getCommitsLast30Days(commitsData);
   const last30days = [
@@ -141,7 +145,7 @@ const RepoRow = ({repo}:RepoProps): JSX.Element => {
           <div>Pr Velocity</div>
           <div className="flex text-base gap-x-3">
             <div>
-              {prVelocityCount ?? 0} PR{prVelocityCount === 1 ? "" : "s"}
+              {prVelocityInDays}
             </div>
             <Pill text={`${prsMergedPercentage}%`} size="small" color="green" />
           </div>
@@ -208,7 +212,7 @@ const RepoRow = ({repo}:RepoProps): JSX.Element => {
       {/* Column: PR Velocity */}
       <div className={`${classNames.cols.prVelocity}`}>
         <div>
-          {prVelocityCount ?? 0} PR{prVelocityCount === 1 ? "" : "s"}
+          {prVelocityInDays}
         </div>
         <Pill text={`${prsMergedPercentage}%`} size="small" color="green" />
       </div>

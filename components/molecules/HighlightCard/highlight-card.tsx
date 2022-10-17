@@ -14,7 +14,7 @@ interface HighlightCardProps {
   icon?: "participation" | "accepted-pr" | "unlabeled-pr" | "spam";
   metricIncreases: boolean;
   increased?: boolean;
-  numChanged?: number;
+  numChanged?: number | string;
   percentage?: number;
   percentageLabel?: string;
 
