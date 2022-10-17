@@ -1,3 +1,4 @@
+import { useMediaQuery } from "lib/hooks/useMediaQuery";
 import humanizeNumber from "lib/utils/humanizeNumber";
 import React, { useState } from "react";
 import { RiArrowLeftSLine } from "react-icons/ri";
@@ -21,27 +22,28 @@ const Pagination = ({
   page,
   divisor = true,
   goToPage = false,
-  pageSize = 5,
+  pageSize = 10,
   hasPreviousPage = false,
-  hasNextPage = true
+  hasNextPage = true,
+  onPageChange
 }: PaginationProps): JSX.Element => {
   // This logics are meant for testing purpose
-  const [selected, setSelected] = useState<number>(1);
+  const [selected, setSelected] = useState<number>(page);
   const handleSelected = (pageNumber: number) => {
-    setSelected(pageNumber);
+    onPageChange(pageNumber);
   };
   const handleNext = () => {
-    setSelected((prev) => prev + 1);
+    onPageChange(page + 1);
   };
   const handlePrev = () => {
-    setSelected((prev) => prev - 1);
+    onPageChange(page - 1);
   };
 
   return (
     <div className=" w-max flex gap-x-4 items-center ">
       <div className="flex items-center gap-x-4">
-        <button className="text-light-slate-9 disabled:text-light-slate-7" disabled={!hasPreviousPage ? true : false} onClick={() => handleNext()}>
-          <RiArrowLeftSLine onClick={() => handlePrev()} className="text-lg  " />
+        <button className="text-light-slate-9 disabled:text-light-slate-7" disabled={!hasPreviousPage ? true : false} onClick={() => handlePrev()}>
+          <RiArrowLeftSLine onClick={() => handlePrev()} className="text-2xl md:text-lg" />
         </button>
         {pages.map((page, index) => {
           return (
@@ -62,7 +64,7 @@ const Pagination = ({
         })}
 
         <button  className="text-light-slate-9 disabled:text-light-slate-7" disabled={!hasNextPage ? true : false} onClick={() => handleNext()}>
-          <RiArrowRightSLine className="text-lg" />
+          <RiArrowRightSLine className="text-2xl md:text-lg" />
         </button>
       </div>
       <div
@@ -72,7 +74,7 @@ const Pagination = ({
       >
         Total {totalPage > 999 ? humanizeNumber(totalPage, null) : totalPage} pages
       </div>
-      {goToPage && <PaginationGotoPage currentPage={page} name={""} />}
+      {goToPage && <PaginationGotoPage page={page} setPage={handleSelected} name={""} />}
     </div>
   );
 };

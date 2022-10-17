@@ -5,7 +5,8 @@ import CardHorizontalBarChart, { LanguageObject } from "components/molecules/Car
 import CardLineChart from "components/molecules/CardLineChart/card-line-chart";
 import CardProfile from "components/molecules/CardProfile/card-profile";
 import CardRepoList, { RepoList } from "components/molecules/CardRepoList/card-repo-list";
-import ContributorTable, { PRs } from "components/molecules/ContributorTable/contributor-table";
+import ContributorTable from "components/molecules/ContributorTable/contributor-table";
+import { useTopicContributorCommits } from "lib/hooks/useTopicContributorCommits";
 import { useState } from "react";
 
 /* 
@@ -20,9 +21,7 @@ interface ContributorObject {
     dateOfFirstPR: string;
   };
   repoList: RepoList[];
-  lineChart: object;
   languageList: LanguageObject[];
-  listOfPRs: PRs[];
 }
 
 interface ContributorCardProps {
@@ -31,11 +30,12 @@ interface ContributorCardProps {
 }
 
 const ContributorCard = ({ className, contributor }: ContributorCardProps) => {
-  const { profile, repoList, lineChart, languageList, listOfPRs } = contributor;
+  const { profile, repoList, languageList } = contributor;
   const [ showPRs, setShowPRs ] = useState(false);
+  const { chart } = useTopicContributorCommits(profile.githubName);
 
   return (
-    <Card className={className}>
+    <Card className={className && className}>
       <div className="flex flex-col gap-3">
         <div className="flex w-full justify-between items-center gap-2">
           <CardProfile {...profile} />
@@ -44,22 +44,21 @@ const ContributorCard = ({ className, contributor }: ContributorCardProps) => {
           </div>
         </div>
         <div className="h-[110px] overflow-hidden">
-          <CardLineChart lineChartOption={lineChart} />
+          <CardLineChart lineChartOption={chart} />
         </div>
         <CardRepoList repoList={repoList} />
         {showPRs ? (
-          <ContributorTable listOfPRs={listOfPRs} />
+          <ContributorTable contributor={profile.githubName} />
         ) : null}
         <div className="flex w-full justify-center">
-          <Button 
+          <button 
             onClick={() => setShowPRs((prevState) => !prevState)} 
-            type="link"
-            className="!w-full"
+            className="w-full bg-white py-1 border-light-slate-6 hover:bg-light-slate-1 rounded-lg border transition"
           >
             <Text className="!text-sm !text-light-slate-11 font-medium">
               {showPRs ? "Hide" : "Show"} latest pull requests
             </Text>
-          </Button>
+          </button>
         </div>
       </div>
     </Card>

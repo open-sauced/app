@@ -12,6 +12,7 @@ import apiFetcher from "../lib/hooks/useSWR";
 import { initiateAnalytics } from "lib/utils/analytics";
 import { useEffect } from "react";
 import posthog from "posthog-js";
+import { TipProvider } from "./../components/atoms/Tooltip/tooltip";
 
 type ComponentWithPageLayout = AppProps & {
   Component: AppProps["Component"] & {
@@ -21,7 +22,7 @@ type ComponentWithPageLayout = AppProps & {
 
 function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
   const router = useRouter();
-  
+
   // From documentation on using Posthog with Next.js: https://posthog.com/docs/integrate/third-party/next-js
   useEffect(() => {
     initiateAnalytics();
@@ -35,6 +36,29 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
   }, [router.events]);
 
   const { filterName, toolName } = router.query;
+
+  function localStorageProvider() {
+    if (typeof window !== "undefined") {
+      console.log("You are on the browser");
+
+      // When initializing, we restore the data from `localStorage` into a map.
+      const map = new Map(JSON.parse(localStorage.getItem("app-cache") || "[]"));
+
+      // Before unloading the app, we write back all the data into `localStorage`.
+      window.addEventListener("beforeunload", () => {
+        const appCache = JSON.stringify(Array.from(map.entries()));
+        localStorage.setItem("app-cache", appCache);
+      });
+
+      // We still use the map for write & read for performance.
+      return map;
+    } else {
+      console.log("You are on the server");
+      // 👉️ can't use localStorage
+
+      return new Map();
+    }
+  }
 
   supabase.auth.onAuthStateChange((event, session) => {
     fetch("/api/auth", {
@@ -52,11 +76,11 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
         <link rel="icon" href="/favicon.ico" />
         <meta property="og:url" content="https://insights.opensauced.pizza" />
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="OpenSauced Insights Platform" />
+        <meta property="og:title" content="OpenSauced Insights" />
         <meta name="twitter:card" content="summary" />
         <meta
           property="og:description"
-          content="OpenSauced Insights Platform - Giving you insights on open source projects you won't find anywhere else!"
+          content="The open-source intelligence platform for developers and maintainers. Unlock the power of open source with project insights by the slice."
         />
         <meta property="og:image" content="/social-card.png" />
       </Head>
@@ -64,17 +88,20 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
       <SWRConfig
         value={{
           revalidateOnFocus: false,
-          fetcher: apiFetcher
+          fetcher: apiFetcher,
+          provider: localStorageProvider
         }}
       >
         <GlobalState>
-          {Component.PageLayout ? (
-            <Component.PageLayout>
+          <TipProvider>
+            {Component.PageLayout ? (
+              <Component.PageLayout>
+                <Component {...pageProps} />
+              </Component.PageLayout>
+            ) : (
               <Component {...pageProps} />
-            </Component.PageLayout>
-          ) : (
-            <Component {...pageProps} />
-          )}
+            )}
+          </TipProvider>
         </GlobalState>
       </SWRConfig>
     </>

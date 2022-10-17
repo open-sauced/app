@@ -8,11 +8,12 @@ import Title from "components/atoms/Typography/title";
 interface DashboardScatterChartProps {
     title: string;
     option: Object;
+    showBots: boolean;
+    setShowBots: (toggle: boolean) => void;
 }
 
-const DashboardScatterChart: React.FC<DashboardScatterChartProps> = ({ title, option }) => {
+const DashboardScatterChart: React.FC<DashboardScatterChartProps> = ({ title, option, showBots, setShowBots }) => {
   const [showMembers, setShowMembers] = useState(false);
-  const [showBots, setShowBots] = useState(false);
 
   let functionTimeout: any;
 
@@ -35,16 +36,19 @@ const DashboardScatterChart: React.FC<DashboardScatterChartProps> = ({ title, op
   };
   return (
     <div>
-      <div className="flex justify-between">
-        <Title level={4}>{title}</Title>
-        <div className="flex flex-col md:flex-row gap-2 pr-10">
+      <div className="flex justify-between px-1">
+        <Title level={4} className="!text-sm !font-medium !text-light-slate-12">{title}</Title>
+        {/* replaced display flex to hidden on show/bots container */}
+        <div className="flex flex-col md:flex-row gap-2">
           <ToggleOption handleToggle={handleShowBots} checked={showBots} optionText="Show Bots"></ToggleOption>
-          <ToggleOption
-            handleToggle={handleShowMembers}
-            withIcon={true}
-            optionText="Show Outside Contributors"
-            checked={showMembers}
-          ></ToggleOption>
+          <div className="hidden">
+            <ToggleOption
+              handleToggle={handleShowMembers}
+              withIcon={true}
+              optionText="Show Outside Contributors"
+              checked={showMembers}
+            ></ToggleOption>
+          </div>
         </div>
       </div>
       <div className="mt-3">

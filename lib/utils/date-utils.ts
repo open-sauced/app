@@ -19,3 +19,43 @@ export const calcMonthsFromToday = (endDate: Date) => {
 
   return monthsFromNow;
 };
+
+export const calcYearsFromToday = (endDate: Date) => {
+  const timeFromNowArray = formatDistanceToNowStrict(endDate, {
+    unit: "year"
+  }).split(" ");
+
+  const monthsFromNow = parseInt(timeFromNowArray[0]);
+
+  return monthsFromNow;
+};
+
+export const getRelativeDays = (days: number) => {
+  if (days === 0) {
+    return "-";
+  }
+
+  if (days >= 365) {
+    return `${days}y`;
+  }
+
+  if (days > 30 && days < 365) {
+    return `${Math.floor(days / 12)}mo`;
+  }
+
+  return `${days}d`;
+};
+
+export const calcDistanceFromToday = (endDate: Date) => {
+  const daysFromNow = calcDaysFromToday(endDate);
+
+  if (daysFromNow >= 365) {
+    return `${getRelativeDays(calcYearsFromToday(endDate))}`;
+  }
+
+  if (daysFromNow > 30 && daysFromNow < 365) {
+    return `${getRelativeDays(calcMonthsFromToday(endDate))}`;
+  }
+
+  return `${getRelativeDays(daysFromNow)}`;
+};

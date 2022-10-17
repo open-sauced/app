@@ -1,6 +1,6 @@
 import React from "react";
 import Image, { StaticImageData } from "next/image";
-import ContextThumbnailImage from "../../../public/hacktoberfest-icon.png";
+import ContextThumbnailImage from "../../../public/open-sourced-with-bg-icon.png";
 
 interface ContextThumbnailProps {
     className?: string;

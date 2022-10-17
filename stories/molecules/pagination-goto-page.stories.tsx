@@ -11,5 +11,5 @@ const PaginationGotoTemplate: ComponentStory<typeof PaginationGotoPage> = (args)
 export const Default = PaginationGotoTemplate.bind({});
 
 Default.args = {
-  currentPage: 23
+  page: 23
 };

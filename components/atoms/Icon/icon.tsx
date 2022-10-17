@@ -14,7 +14,7 @@ const Icon: React.FC<IconProps> = ({ onClick, className, IconImage, alt, size = 
     <div className={`${className ? className : ""} inline-flex`}>
       <Image
         onClick={onClick}
-        className="items-center justify-center w-4"
+        className="items-center justify-center "
         alt={alt ? alt : "Icon"} width={size} height={size} src={IconImage} />
     </div>
   );
