@@ -5,6 +5,20 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.15.0](https://github.com/open-sauced/insights/compare/v1.14.0...v1.15.0) (2022-10-17)
+
+
+### 🍕 Features
+
+* make repositories clickable to apply filter for single repo ([#516](https://github.com/open-sauced/insights/issues/516)) ([80df544](https://github.com/open-sauced/insights/commit/80df544b6888404febc71c4b8f630e50e868e3fc)), closes [#497](https://github.com/open-sauced/insights/issues/497)
+
+## [1.15.0-beta.1](https://github.com/open-sauced/insights/compare/v1.14.0...v1.15.0-beta.1) (2022-10-17)
+
+
+### 🍕 Features
+
+* make repositories clickable to apply filter for single repo ([#516](https://github.com/open-sauced/insights/issues/516)) ([80df544](https://github.com/open-sauced/insights/commit/80df544b6888404febc71c4b8f630e50e868e3fc)), closes [#497](https://github.com/open-sauced/insights/issues/497)
+
 ## [1.14.0](https://github.com/open-sauced/insights/compare/v1.13.0...v1.14.0) (2022-10-17)
 
 

@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import useSWR from "swr";
+import getFilterQuery from "lib/utils/get-filter-query";
 
 interface PaginatedPRsResponse {
   readonly data: DbRepoPR[];
@@ -10,9 +11,8 @@ const useTopicPRs = (limit = 500) => {
   const router = useRouter();
   const { filterName, selectedFilter } = router.query;
   const topic = filterName as string;
-  const filter = selectedFilter as string;
   const baseEndpoint = `${topic}/recent-prs`;
-  const filterQuery = filter ? `filter=${filter}` : "";
+  const filterQuery = getFilterQuery(selectedFilter);
   const limitQuery = `${filterQuery ? "&": ""}limit=${limit}`;
   const endpointString = `${baseEndpoint}?${filterQuery}${limitQuery}`;
 
