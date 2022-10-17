@@ -6,47 +6,46 @@ interface PaginatedTopicCommitResponse {
   readonly data: DbRepoCommit[];
   readonly meta: Meta;
 }
-
-const lineChart = {
-  xAxis: {
-    type: "category",
-    boundaryGap: false,
-    axisLabel: false
-  },
-  yAxis: {
-    type: "value",
-    splitNumber: 1,
-    axisLabel: false,
-    splitLine: {
-      lineStyle: {
-        type: "dashed"
-      }
-    }
-  },
-  grid: {
-    height: 100,
-    top: 0,
-    bottom: 0,
-    right: 0,
-    left: 0
-  },
-  series: [
-    {
-      type: "line",
-      smooth: true,
-      showSymbol: false,
-      lineStyle: {
-        color: "#ff9800"
-      },
-      areaStyle: {
-        color: "#FFB74D",
-        opacity: 0.6
-      }
-    }
-  ]
-};
-
 const useTopicContributorCommits = (contributor: string, topic = "hacktoberfest") => {
+  const lineChart = {
+    xAxis: {
+      type: "category",
+      boundaryGap: false,
+      axisLabel: false
+    },
+    yAxis: {
+      type: "value",
+      splitNumber: 1,
+      axisLabel: false,
+      splitLine: {
+        lineStyle: {
+          type: "dashed"
+        }
+      }
+    },
+    grid: {
+      height: 100,
+      top: 0,
+      bottom: 0,
+      right: 0,
+      left: 0
+    },
+    series: [
+      {
+        type: "line",
+        smooth: true,
+        showSymbol: false,
+        lineStyle: {
+          color: "#ff9800"
+        },
+        areaStyle: {
+          color: "#FFB74D",
+          opacity: 0.6
+        }
+      }
+    ]
+  };
+
   const [chart, setChart] = useState(lineChart);
 
   const baseEndpoint = `${topic}/${contributor}/commits`;
