@@ -37,6 +37,7 @@ export interface RepositoriesRows {
 }
 
 interface RepositoriesTableProps {
+  topic?: string;
   listOfRepositories: RepositoriesRows[];
   loading: boolean
   error: boolean
@@ -58,7 +59,8 @@ export const classNames = {
 const RepositoriesTable = ({
   listOfRepositories,
   loading,
-  error
+  error,
+  topic
 }: RepositoriesTableProps): JSX.Element => {
   return (
 
@@ -68,8 +70,8 @@ const RepositoriesTable = ({
       {error && <>An error has occured...</>}
       {!loading && !error && Array.isArray(listOfRepositories) &&
             listOfRepositories.length > 0 &&
-            listOfRepositories.map((repo, index) => (
-              <RepoRow key={`${repo.handle}/${repo.name}/${index}`} repo={repo} />
+            listOfRepositories.map((item, index) => (
+              <RepoRow key={`${item.handle}/${item.name}/${index}`} topic={topic} repo={item} />
             ))}
     </section>
 
