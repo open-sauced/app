@@ -13,7 +13,7 @@ interface SuperlativeSelectorProps {
   handleFilterClick: (filter: string) => void;
   handleCancelClick: () => void;
   className?: string;
-  selected?: string | string[];
+  selected?: string;
 }
 
 const SuperativeSelector: React.FC<SuperlativeSelectorProps> = ({
@@ -46,9 +46,8 @@ const SuperativeSelector: React.FC<SuperlativeSelectorProps> = ({
     };
   }, [isOpen]);
 
-  const filter = Array.isArray(selected) ? selected.join("/") : selected;
-  const filterOption = filterOptions.find((option) => getFilterKey(option) === filter);
-  const filterDescription = filterOption ? filterOption : Array.isArray(filter) ? filter.join("/") : filter;
+  const filterOption = filterOptions.find((option) => getFilterKey(option) === selected);
+  const filterDescription = filterOption ? filterOption : selected;
   
   return (
     <div className="max-w-max relative" ref={ref}>

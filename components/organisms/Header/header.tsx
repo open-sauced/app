@@ -52,7 +52,7 @@ const Header: React.FC = () => {
             filterValues={filterValues}
             handleFilterClick={filterBtnRouting}
             handleCancelClick={cancelFilterRouting}
-            selected={selectedFilter}
+            selected={Array.isArray(selectedFilter) ? selectedFilter.join("/") : selectedFilter}
           />
         </div>
       </div>
