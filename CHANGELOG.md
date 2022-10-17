@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.14.0-beta.3](https://github.com/open-sauced/insights/compare/v1.14.0-beta.2...v1.14.0-beta.3) (2022-10-17)
+
+
+### 🐛 Bug Fixes
+
+* add root href to header logo component image ([#537](https://github.com/open-sauced/insights/issues/537)) ([e71e9cb](https://github.com/open-sauced/insights/commit/e71e9cbcb2384dda1a31be05e038f303d17fdf26)), closes [#523](https://github.com/open-sauced/insights/issues/523)
+* correct card horizontal tooltip error on storybook ([#536](https://github.com/open-sauced/insights/issues/536)) ([100d93e](https://github.com/open-sauced/insights/commit/100d93e784510a6482576a68a718d17de50c4907)), closes [#525](https://github.com/open-sauced/insights/issues/525)
+
 ## [1.14.0-beta.2](https://github.com/open-sauced/insights/compare/v1.14.0-beta.1...v1.14.0-beta.2) (2022-10-14)
 
 
