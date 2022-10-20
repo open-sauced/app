@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.16.0-beta.1](https://github.com/open-sauced/insights/compare/v1.15.0...v1.16.0-beta.1) (2022-10-20)
+
+
+### 🍕 Features
+
+* redirect to recent filter by default ([#548](https://github.com/open-sauced/insights/issues/548)) ([edf99e7](https://github.com/open-sauced/insights/commit/edf99e7e58a81d5382a41a7939323047ef83ba1f)), closes [#517](https://github.com/open-sauced/insights/issues/517)
+
 ## [1.15.0](https://github.com/open-sauced/insights/compare/v1.14.0...v1.15.0) (2022-10-17)
 
 
