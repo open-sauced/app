@@ -9,7 +9,7 @@ const Filter: React.FC = () => {
 
   useEffect(() => {
     if (topic) {
-      router.push(`${topic}/dashboard`);
+      router.push(`${topic}/dashboard/filter/recent`);
     }
   }, [router, topic]);
 
