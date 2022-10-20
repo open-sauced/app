@@ -83,7 +83,7 @@ const InsightPageTable = ({ repoList }: RepoRowProps) => {
             label="Sort by"
           ></Select>
           <div className="w-58">
-            <Search placeholder="Search repositories" className="max-w-full" name={"insight page search"} />
+            <Search placeholder="Search repositories" className="max-w-full" name={"query"} />
           </div>
         </div>
       </div>
