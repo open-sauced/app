@@ -24,7 +24,7 @@ const InsightTableRow = ({ pageName, repositories, members }: InsightRepoRowProp
       <div className={clsx(classNames.row, "!gap-10")}>
         {/* Page name col */}
         <div className={clsx(classNames.cols.repository, "truncate !max-w-[190px] ")}>
-          {pageName || ""} hello world
+          {pageName || ""} 
         </div>
         {/* Repositories col*/}
         <div className={clsx(classNames.cols.repository, " !max-w-[230px]")}>
