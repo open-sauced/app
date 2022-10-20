@@ -45,8 +45,7 @@ const Select = ({
       }`}
     >
       <div onClick={()=> handleToggle()} className="flex px-4 py-1.5 bg-white border border-light-slate-6 rounded-lg focus-within:border-light-orange-9 focus-within:ring focus-within:ring-light-orange-5 items-center">
-        {label && <span className="text-sm
-         inline-flex text-light-slate-9 mr-2">{label}:</span>}
+        {label && <span className="text-sm inline-flex text-light-slate-9 mr-2">{label}:</span>}
         <input
           value={selected.name === "" ? placeholder : selected.name}
           readOnly
