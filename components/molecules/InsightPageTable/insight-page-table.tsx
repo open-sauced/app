@@ -7,6 +7,7 @@ import Title from "components/atoms/Typography/title";
 import { classNames } from "components/organisms/RepositoriesTable/repositories-table";
 import { RepoList } from "../CardRepoList/card-repo-list";
 import InsightTableRow from "../InsightTableRow/insight-table-row";
+
 interface RepoRowProps {
   repoList: RepoList[]
   members: DbContribution[]
