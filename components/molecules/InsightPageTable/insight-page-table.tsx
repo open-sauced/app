@@ -52,7 +52,8 @@ const contributors = [
     initials: "ES",
     alt: "E"
   }
-];
+  // casting the array for now to avoid build errors, will be removed when live data are available
+] as unknown as DbContribution[];
 
 
 const InsightPageTable = ({ repoList }: RepoRowProps) => {
