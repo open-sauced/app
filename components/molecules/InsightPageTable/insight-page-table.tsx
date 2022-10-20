@@ -88,7 +88,7 @@ const InsightPageTable = ({ repoList }: RepoRowProps) => {
         </div>
       </div>
 
-      {/* Tabel section */}
+      {/* Table section */}
 
       <div className="flex flex-col mt-6 rounded-lg overflow-hidden border">
 
