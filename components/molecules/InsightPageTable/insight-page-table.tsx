@@ -56,11 +56,18 @@ const contributors = [
   // casting the array for now to avoid build errors, will be removed when live data are available
 ] as unknown as DbContribution[];
 
+const selectOptions = [
+  { name: "Last updated - ASC", value: "10" },
+  { name: "Last updated - DSC", value: "10" },
+  { name: "Name - ASC", value: "10" },
+  { name: "Name - DSC", value: "10" }
+];
+
 
 const InsightPageTable = ({ repoList }: RepoRowProps) => {
 
+  // to be replaced with real data
   const randonArray = Array.apply(null, Array(6));
-
   return (
     <div>
       {/* Table title */}
@@ -73,12 +80,7 @@ const InsightPageTable = ({ repoList }: RepoRowProps) => {
         <div className="w-full  md:w-3/5 flex gap-x-5 items-center justify-end">
           <Select
             placeholder="Last updated - ASC"
-            options={[
-              { name: "Last updated - ASC", value: "10" },
-              { name: "Last updated - DSC", value: "10" },
-              { name: "Name - ASC", value: "10" },
-              { name: "Name - DSC", value: "10" }
-            ]}
+            options={selectOptions}
             className="w-[275px]"
             label="Sort by"
           ></Select>
