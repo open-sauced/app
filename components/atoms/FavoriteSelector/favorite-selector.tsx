@@ -9,7 +9,7 @@ interface FavoriteSelectorProps {
 const FavoriteSelector = ({ isFavorite = true }: FavoriteSelectorProps): JSX.Element => {
   return (
     <div
-      className="inline-flex px-1 items-center gap-2 transition
+      className="inline-flex px-1 items-center gap-1 transition
     "
     >
       {isFavorite ? (
