@@ -23,12 +23,12 @@ const InsightTableRow = ({ pageName, repositories, members }: InsightRepoRowProp
     <div className="flex flex-col">
       <div className={clsx(classNames.row, "!gap-10")}>
         {/* Page name col */}
-        <div className={clsx(classNames.cols.repository, "truncate !max-w-[190px] ")}>
-          {pageName || ""} 
+        <div className={clsx("flex-1 max-w-[130px] truncate")}>
+          {pageName || ""}
         </div>
         {/* Repositories col*/}
-        <div className={clsx(classNames.cols.repository, " !max-w-[230px]")}>
-          {repositories && repositories.length > 0 && <CardRepoList limit={3} repoList={repositories} />}
+        <div className={clsx(classNames.cols.repository, "!min-w-[150px] !max-w-[160px] ")}>
+          {repositories && repositories.length > 0 && <CardRepoList limit={2} repoList={repositories} />}
         </div>
         {/* Average Prs opened col*/}
         <div className={clsx(classNames.cols.prOverview, "!min-w-[100px] !max-w-[130px] ")}>
@@ -44,7 +44,7 @@ const InsightTableRow = ({ pageName, repositories, members }: InsightRepoRowProp
         </div>
 
         {/* Members avatar col*/}
-        <div className={clsx(classNames.cols.contributors, "flex")}>
+        <div className={clsx(classNames.cols.contributors, "lg:flex md:hidden")}>
 
           {members?.length! > 0 ? <StackedAvatar contributors={members || []} /> : "-"}
 
@@ -52,8 +52,8 @@ const InsightTableRow = ({ pageName, repositories, members }: InsightRepoRowProp
         </div>
 
         {/* Favorite col */}
-        <div className="flex gap-6">
-          <FavoriteSelector isFavorite={false}/>
+        <div className="flex gap-4">
+          <FavoriteSelector isFavorite={false} />
           <Link href="#">
             <Button type="text" className="!border !border-light-slate-8">Go to Page</Button>
           </Link>

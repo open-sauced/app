@@ -21,37 +21,44 @@ const contributors = [
   {
     avatarURL: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1064&q=80",
     initials: "ES",
-    alt: "E"
+    alt: "E",
+    id: 1
   },
   {
     avatarURL: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1064&q=80",
     initials: "ES",
-    alt: "E"
+    alt: "E",
+    id: 2
   },
   {
     avatarURL: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1064&q=80",
     initials: "ES",
-    alt: "E"
+    alt: "E",
+    id: 3
   },
   {
     avatarURL: "",
     initials: "ES",
-    alt: "E"
+    alt: "E",
+    id: 4
   },
   {
     avatarURL: "",
     initials: "ES",
-    alt: "E"
+    alt: "E",
+    id: 5
   },
   {
     avatarURL: "",
     initials: "ES",
-    alt: "E"
+    alt: "E",
+    id: 6
   },
   {
     avatarURL: "",
     initials: "ES",
-    alt: "E"
+    alt: "E",
+    id: 7
   }
   // casting the array for now to avoid build errors, will be removed when live data are available
 ] as unknown as DbContribution[];
@@ -94,11 +101,11 @@ const InsightPageTable = ({ repoList }: RepoRowProps) => {
 
       <div className="flex flex-col mt-6 rounded-lg overflow-hidden border">
 
-        <div className="hidden md:flex py-4 px-6 bg-light-slate-3 gap-10">
-          <div className={clsx(classNames.cols.repository, "!max-w-[190px] ")}>
+        <div className="hidden md:flex py-4 px-6 bg-light-slate-3 gap-6 lg:gap-10">
+          <div className={clsx("flex-1 !max-w-[130px] ")}>
             <TableTitle text="Insight page"></TableTitle>
           </div>
-          <div className={clsx(classNames.cols.activity, "!max-w-[230px] ")}>
+          <div className={clsx(classNames.cols.activity, "!max-w-[160px] ")}>
             <TableTitle text="Repositories"></TableTitle>
           </div>
           <div className={clsx(classNames.cols.prOverview, "!min-w-[100px] !max-w-[130px] ")}>
@@ -111,7 +118,7 @@ const InsightPageTable = ({ repoList }: RepoRowProps) => {
             <TableTitle text="members"></TableTitle>
           </div>
         </div>
-        {randonArray.map((a,i) => (
+        {randonArray.map((a, i) => (
           <InsightTableRow key={`${a}/${Math.random() + i}`} pageName="Open Source Stripe" members={contributors} repositories={repoList} />
         ))}
       </div>
