@@ -21,13 +21,13 @@ const InsightTableRow = ({ pageName, repositories, members }: InsightRepoRowProp
 
   return (
     <div className="flex flex-col">
-      <div className={clsx(classNames.row, "!gap-10")}>
+      <div className={clsx(classNames.row, "!gap-6")}>
         {/* Page name col */}
-        <div className={clsx("flex-1 max-w-[130px] truncate")}>
+        <div className={clsx("flex-1 max-w-[130px] min-w-[130px] truncate ")}>
           {pageName || ""}
         </div>
         {/* Repositories col*/}
-        <div className={clsx(classNames.cols.repository, "!min-w-[150px] !max-w-[160px] ")}>
+        <div className={clsx(classNames.cols.repository, "!min-w-[160px] !max-w-[160px]")}>
           {repositories && repositories.length > 0 && <CardRepoList limit={2} repoList={repositories} />}
         </div>
         {/* Average Prs opened col*/}
@@ -36,7 +36,7 @@ const InsightTableRow = ({ pageName, repositories, members }: InsightRepoRowProp
         </div>
 
         {/* Average Pr velocity col*/}
-        <div className={clsx(classNames.cols.prVelocity, "!gap-10 !justify-start max-w-[150px]")}>
+        <div className={clsx(classNames.cols.prVelocity, "!max-w-[130px] min-w-[130px] !justify-start")}>
           <div>
             24 days
           </div>

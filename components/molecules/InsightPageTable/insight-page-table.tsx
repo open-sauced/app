@@ -101,17 +101,17 @@ const InsightPageTable = ({ repoList }: RepoRowProps) => {
 
       <div className="flex flex-col mt-6 rounded-lg overflow-hidden border">
 
-        <div className="hidden md:flex py-4 px-6 bg-light-slate-3 gap-6 lg:gap-10">
-          <div className={clsx("flex-1 !max-w-[130px] ")}>
+        <div className="hidden md:flex py-4 px-6 bg-light-slate-3 gap-6 lg:gap-6">
+          <div className={clsx("flex-1 min-w-[130px] !max-w-[130px] ")}>
             <TableTitle text="Insight page"></TableTitle>
           </div>
-          <div className={clsx(classNames.cols.activity, "!max-w-[160px] ")}>
+          <div className={clsx(classNames.cols.activity, "!max-w-[160px]  ")}>
             <TableTitle text="Repositories"></TableTitle>
           </div>
           <div className={clsx(classNames.cols.prOverview, "!min-w-[100px] !max-w-[130px] ")}>
             <TableTitle text="avg prs opened"></TableTitle>
           </div>
-          <div className={clsx(classNames.cols.prVelocity, "!max-w-[150px] !justify-start")}>
+          <div className={clsx(classNames.cols.prVelocity, "!max-w-[130px] !min-w-[130px] !justify-start")}>
             <TableTitle text="avg pr velocity"></TableTitle>
           </div>
           <div className={clsx(classNames.cols.spam, "!max-w-[180px]")}>
