@@ -4,16 +4,16 @@ import clsx from "clsx";
 interface TextInputProps {
   label?: string;
   placeholder?: string;
-  name: string;
+  name?: string;
   state?: "default" | "valid" | "invalid";
   id?: string;
   disabled?: boolean;
   autoFocus?: boolean;
   borderless?: boolean;
-  descriptionText: string;
+  descriptionText?: string;
   classNames?: string;
   errorMsg?: string;
-  value: string;
+  value?: string;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
