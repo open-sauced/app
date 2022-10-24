@@ -1,7 +1,6 @@
 import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 import TextInput from "components/atoms/TextInput/text-input";
-import { error } from "console";
 
 const storyConfig = {
   title: "Design System/Atoms/Text Input",
@@ -11,48 +10,16 @@ const storyConfig = {
 export default storyConfig;
 
 //TextInput Template
-const TextInputTemplate: ComponentStory<typeof TextInput> = (args) => (
-  <TextInput {...args} />
-);
+const TextInputTemplate: ComponentStory<typeof TextInput> = (args) => <TextInput {...args} />;
 
 export const Default = TextInputTemplate.bind({});
-export const WithLabel = TextInputTemplate.bind({});
-export const WithDescriptionText = TextInputTemplate.bind({});
-export const IsInvalid = TextInputTemplate.bind({});
-export const IsValid = TextInputTemplate.bind({});
+
 Default.args = {
   placeholder: "Test",
   disabled: false,
   autoFocus: true,
-  borderless: false
-};
-WithLabel.args = {
-  placeholder: "Test",
-  disabled: false,
-  autoFocus: true,
+  type: "text",
   borderless: false,
-  label: "Input label"
-};
-WithDescriptionText.args = {
-  placeholder: "Test",
-  disabled: false,
-  autoFocus: true,
-  borderless: false,
-  descriptionText: "insights.opensauced.pizza/statelyai/slug"
-};
-
-IsInvalid.args = {
-  placeholder: "Test",
-  disabled: false,
-  autoFocus: true,
-  borderless: false,
-  state: "invalid",
-  errorMsg: "An error occured !!!"
-};
-IsValid.args = {
-  placeholder: "Test",
-  disabled: false,
-  autoFocus: true,
-  borderless: false,
-  state: "valid"
+  descriptionText: "Test",
+  label: "Test"
 };
