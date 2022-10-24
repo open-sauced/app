@@ -30,7 +30,7 @@ const TextInput = ({
   borderless = false,
   value,
   onChange,
-  errorMsg
+  errorMsg = ""
 }: TextInputProps) => {
   const [inputValue, setInputValue] = useState(value);
   const handleResetInput = () => {
