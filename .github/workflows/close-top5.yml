@@ -5,6 +5,7 @@ name: Weekly Top5 Issue Closure
 jobs:
   cycle-weekly-close:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
     - uses: actions/checkout@master
     - name: weekly-issue-closure

@@ -1,0 +1,10 @@
+name: Maintenance
+
+on:
+  schedule:
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+
+jobs:
+  maintenance:
+    uses: open-sauced/open-sauced/.github/workflows/maintenance.yml@main
