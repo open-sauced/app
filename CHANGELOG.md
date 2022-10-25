@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.16.0-beta.4](https://github.com/open-sauced/insights/compare/v1.16.0-beta.3...v1.16.0-beta.4) (2022-10-25)
+
+
+### 🐛 Bug Fixes
+
+* diverge cron execution for rate limit purposes ([3607a80](https://github.com/open-sauced/insights/commit/3607a8030c6228b8fe7ecc5149d044889674ead5))
+
 ## [1.16.0-beta.3](https://github.com/open-sauced/insights/compare/v1.16.0-beta.2...v1.16.0-beta.3) (2022-10-25)
 
 
