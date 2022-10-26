@@ -57,7 +57,7 @@ const TextInput = ({
             placeholder={placeholder || ""}
             onChange={onChange}
             value={value}
-            className="flex-1 focus:outline-none "
+            className="flex-1 focus:outline-none font-medium"
             autoFocus={autoFocus}
             disabled={disabled}
           />
