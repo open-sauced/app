@@ -39,7 +39,7 @@ const TextInput = ({
   return (
     <>
       <label className="flex w-full flex-col">
-        {label && <p className="mb-2 text-light-slate-9 text-sm">{label}</p>}
+        {label && <p className="mb-2 font-medium text-light-slate-9 text-sm">{label}</p>}
         <div
           className={clsx(
             classNames,
