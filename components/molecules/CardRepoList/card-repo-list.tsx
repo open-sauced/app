@@ -30,7 +30,7 @@ const CardRepoList = ({ repoList, limit = 5 }: CardRepoListProps): JSX.Element =
                 )
             }
             <div>
-              {repoList.length > limit - 1 ? `+${repoList.length - limit}` : null}
+              {repoList.length > limit ? `+${repoList.length - limit}` : null}
             </div>
           </>
 

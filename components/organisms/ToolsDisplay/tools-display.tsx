@@ -6,6 +6,8 @@ import Reports from "../Reports/reports";
 import Repositories from "../Repositories/repositories";
 import useSession from "lib/hooks/useSession";
 
+import Insights from "../Insights/Insights";
+
 interface ToolProps {
   tool?: string;
 }
@@ -24,7 +26,9 @@ const Tool = ({ tool }: ToolProps): JSX.Element => {
   case "Reports":
     return <Reports hasReports={hasReports} waitlisted={waitlisted}/>; 
   case "Contributors":
-    return <Contributors/>;
+    return <Contributors />;
+  case "Insights":
+    return <Insights />;
   default:
     return <> {tool ? `${tool}` : "Test"} Tool Page</>;
   }

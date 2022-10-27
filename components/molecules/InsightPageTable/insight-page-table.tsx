@@ -9,8 +9,7 @@ import { RepoList } from "../CardRepoList/card-repo-list";
 import InsightTableRow from "../InsightTableRow/insight-table-row";
 
 interface RepoRowProps {
-  repoList: RepoList[];
-  members: DbContribution[];
+  insights: DbUserInsight[]
 }
 
 interface InsightPageTableProps {}
@@ -71,7 +70,8 @@ const selectOptions = [
   { name: "Name - DSC", value: "10" }
 ];
 
-const InsightPageTable = ({ repoList }: RepoRowProps) => {
+
+const InsightPageTable = ({ insights }: RepoRowProps) => {
   // to be replaced with real data
   const randonArray = Array.apply(null, Array(6));
   return (
@@ -116,13 +116,8 @@ const InsightPageTable = ({ repoList }: RepoRowProps) => {
             <TableTitle text="members"></TableTitle>
           </div>
         </div>
-        {randonArray.map((a, i) => (
-          <InsightTableRow
-            key={`${a}/${Math.random() + i}`}
-            pageName="Open Source Stripe"
-            members={contributors}
-            repositories={repoList}
-          />
+        {insights.map(insight => (
+          <InsightTableRow key={insight.id} insight={insight} />
         ))}
       </div>
     </div>
