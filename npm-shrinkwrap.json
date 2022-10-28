@@ -19,8 +19,10 @@
         "@radix-ui/react-context-menu": "^1.0.0",
         "@radix-ui/react-dropdown-menu": "^1.0.0",
         "@radix-ui/react-tooltip": "^1.0.0",
+        "@supabase/auth-helpers-nextjs": "^0.4.2",
+        "@supabase/auth-helpers-react": "^0.3.1",
         "@supabase/gotrue-js": "^1.22.22",
-        "@supabase/supabase-js": "^1.35.6",
+        "@supabase/supabase-js": "^2.0.4",
         "@supabase/ui": "^0.36.5",
         "clsx": "^1.2.1",
         "date-fns": "^2.29.2",
@@ -12056,10 +12058,37 @@
         "node": ">=8"
       }
     },
+    "node_modules/@supabase/auth-helpers-nextjs": {
+      "version": "0.4.2",
+      "resolved": "https://registry.npmjs.org/@supabase/auth-helpers-nextjs/-/auth-helpers-nextjs-0.4.2.tgz",
+      "integrity": "sha512-66CVKuUem4HwD/Te0a0569+j/jE7M52c0fW5bBSsPIqD9u1m+h/cnVuQxw+Ij7gphh36tKkRfOc8Ivn42+k6bQ==",
+      "dependencies": {
+        "@supabase/auth-helpers-shared": "0.2.1"
+      },
+      "peerDependencies": {
+        "@supabase/supabase-js": "^2.0.4"
+      }
+    },
+    "node_modules/@supabase/auth-helpers-react": {
+      "version": "0.3.1",
+      "resolved": "https://registry.npmjs.org/@supabase/auth-helpers-react/-/auth-helpers-react-0.3.1.tgz",
+      "integrity": "sha512-g3SFv08Dz9FapNif/ZY1b7qKGlMJDyTLSayHBz3kb3FuYxg7aLWgQtydDhm5AGbc0XtvpIBuhGTIOVevwpdosA==",
+      "peerDependencies": {
+        "@supabase/supabase-js": "^2.0.4"
+      }
+    },
+    "node_modules/@supabase/auth-helpers-shared": {
+      "version": "0.2.1",
+      "resolved": "https://registry.npmjs.org/@supabase/auth-helpers-shared/-/auth-helpers-shared-0.2.1.tgz",
+      "integrity": "sha512-L54gCCD8xCV6mHta0vE7CLxJ7pisSlsd9KIWB1ENyfZ0baeU9H39AqNVyYcAoHBPrUaZYx877J4WYYoqwuyi+w==",
+      "peerDependencies": {
+        "@supabase/supabase-js": "^2.0.4"
+      }
+    },
     "node_modules/@supabase/functions-js": {
-      "version": "1.3.4",
-      "resolved": "https://registry.npmjs.org/@supabase/functions-js/-/functions-js-1.3.4.tgz",
-      "integrity": "sha512-yYVgkECjv7IZEBKBI3EB5Q7R1p0FJ10g8Q9N7SWKIHUU6i6DnbEGHIMFLyQRm1hmiNWD8fL7bRVEYacmTRJhHw==",
+      "version": "2.0.0",
+      "resolved": "https://registry.npmjs.org/@supabase/functions-js/-/functions-js-2.0.0.tgz",
+      "integrity": "sha512-ozb7bds2yvf5k7NM2ZzUkxvsx4S4i2eRKFSJetdTADV91T65g4gCzEs9L3LUXSrghcGIkUaon03VPzOrFredqg==",
       "dependencies": {
         "cross-fetch": "^3.1.5"
       }
@@ -12073,40 +12102,49 @@
       }
     },
     "node_modules/@supabase/postgrest-js": {
-      "version": "0.37.4",
-      "resolved": "https://registry.npmjs.org/@supabase/postgrest-js/-/postgrest-js-0.37.4.tgz",
-      "integrity": "sha512-x+c2rk1fz9s6f1PrGxCJ0QTUgXPDI0G3ngIqD5sSiXhhCyfl8Q5V92mXl2EYtlDhkiUkjFNrOZFhXVbXOHgvDw==",
+      "version": "1.1.0",
+      "resolved": "https://registry.npmjs.org/@supabase/postgrest-js/-/postgrest-js-1.1.0.tgz",
+      "integrity": "sha512-qkY8TqIu5sJuae8gjeDPjEqPrefzcTraW9PNSVJQHq4TEv98ZmwaXGwBGz0bVL63bqrGA5hqREbQHkANUTXrvA==",
       "dependencies": {
         "cross-fetch": "^3.1.5"
       }
     },
     "node_modules/@supabase/realtime-js": {
-      "version": "1.7.4",
-      "resolved": "https://registry.npmjs.org/@supabase/realtime-js/-/realtime-js-1.7.4.tgz",
-      "integrity": "sha512-h/Jk3PCLkIVonsNavof/LvHbvF41UD+D+mWcA3m8yHzJ2TLbV3S4XDYId+A3AkvFOAork7Ns/9O8rK0uY4F4zw==",
+      "version": "2.1.0",
+      "resolved": "https://registry.npmjs.org/@supabase/realtime-js/-/realtime-js-2.1.0.tgz",
+      "integrity": "sha512-iplLCofTeYjnx9FIOsIwHLhMp0+7UVyiA4/sCeq40VdOgN9eTIhjEno9Tgh4dJARi4aaXoKfRX1DTxgZaOpPAw==",
       "dependencies": {
         "@types/phoenix": "^1.5.4",
         "websocket": "^1.0.34"
       }
     },
     "node_modules/@supabase/storage-js": {
-      "version": "1.7.2",
-      "resolved": "https://registry.npmjs.org/@supabase/storage-js/-/storage-js-1.7.2.tgz",
-      "integrity": "sha512-HX4HAfLUJznVgAwiKVgdTe5QD0bpUcqgc0hpk/s5Uy8qoe1tHZAc5qE9kI+tqk7rQKyymFpiA7+bAHlzyZXxxQ==",
+      "version": "2.0.0",
+      "resolved": "https://registry.npmjs.org/@supabase/storage-js/-/storage-js-2.0.0.tgz",
+      "integrity": "sha512-7kXThdRt/xqnOOvZZxBqNkeX1CFNUWc0hYBJtNN/Uvt8ok9hD14foYmroWrHn046wEYFqUrB9U35JYsfTrvltA==",
       "dependencies": {
-        "cross-fetch": "^3.1.0"
+        "cross-fetch": "^3.1.5"
       }
     },
     "node_modules/@supabase/supabase-js": {
-      "version": "1.35.6",
-      "resolved": "https://registry.npmjs.org/@supabase/supabase-js/-/supabase-js-1.35.6.tgz",
-      "integrity": "sha512-KDRXRr+kdGwruIUizZPALbe5YccMYFVyZJf1sFWKLncaLYSFiM6iKFnqCrNeQ4JFoZZiICkiTl1FUuai62jVpg==",
+      "version": "2.0.4",
+      "resolved": "https://registry.npmjs.org/@supabase/supabase-js/-/supabase-js-2.0.4.tgz",
+      "integrity": "sha512-Z5uLyJm9bz5LMFnt5d1I6ccxVTdvKbJa0RsYGgKlA+QiyGvBxRRvVh8pqlYP1571DlycGG7bWngNwdv7/pehrg==",
       "dependencies": {
-        "@supabase/functions-js": "^1.3.4",
-        "@supabase/gotrue-js": "^1.22.21",
-        "@supabase/postgrest-js": "^0.37.4",
-        "@supabase/realtime-js": "^1.7.4",
-        "@supabase/storage-js": "^1.7.2"
+        "@supabase/functions-js": "^2.0.0",
+        "@supabase/gotrue-js": "^2.2.0",
+        "@supabase/postgrest-js": "^1.1.0",
+        "@supabase/realtime-js": "^2.1.0",
+        "@supabase/storage-js": "^2.0.0",
+        "cross-fetch": "^3.1.5"
+      }
+    },
+    "node_modules/@supabase/supabase-js/node_modules/@supabase/gotrue-js": {
+      "version": "2.2.1",
+      "resolved": "https://registry.npmjs.org/@supabase/gotrue-js/-/gotrue-js-2.2.1.tgz",
+      "integrity": "sha512-CgQaYAJmGbOLPSqan4mjRgGikzsrlkKdPq0UNG7WZQv5HlHJlAYW8HeyNw/SKfIbxQBm8s2dBCeUyX+NdfB2Rw==",
+      "dependencies": {
+        "cross-fetch": "^3.1.5"
       }
     },
     "node_modules/@supabase/ui": {
@@ -18621,17 +18659,17 @@
       ]
     },
     "node_modules/ext": {
-      "version": "1.6.0",
-      "resolved": "https://registry.npmjs.org/ext/-/ext-1.6.0.tgz",
-      "integrity": "sha512-sdBImtzkq2HpkdRLtlLWDa6w4DX22ijZLKx8BMPUuKe1c5lbN6xwQDQCxSfxBQnHZ13ls/FH0MQZx/q/gr6FQg==",
+      "version": "1.7.0",
+      "resolved": "https://registry.npmjs.org/ext/-/ext-1.7.0.tgz",
+      "integrity": "sha512-6hxeJYaL110a9b5TEJSj0gojyHQAmA2ch5Os+ySCiA1QGdS697XWY1pzsrSjqA9LDEEgdB/KypIlR59RcLuHYw==",
       "dependencies": {
-        "type": "^2.5.0"
+        "type": "^2.7.2"
       }
     },
     "node_modules/ext/node_modules/type": {
-      "version": "2.7.0",
-      "resolved": "https://registry.npmjs.org/type/-/type-2.7.0.tgz",
-      "integrity": "sha512-NybX0NBIssNEj1efLf1mqKAtO4Q/Np5mqpa57be81ud7/tNHIXn48FDVXiyGMBF90FfXc5o7RPsuRQrPzgMOMA=="
+      "version": "2.7.2",
+      "resolved": "https://registry.npmjs.org/type/-/type-2.7.2.tgz",
+      "integrity": "sha512-dzlvlNlt6AXU7EBSfpAscydQ7gXB+pPGsPnfJnZpiNJBDj7IaJzQlBZYGdEi4R9HmPdBv2XmWJ6YUtoTa7lmCw=="
     },
     "node_modules/extend": {
       "version": "3.0.2",

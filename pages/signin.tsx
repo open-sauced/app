@@ -1,6 +1,7 @@
-import { WithPageLayout } from "../interfaces/with-page-layout";
 import { GetServerSideProps } from "next";
-import { supabase } from "../lib/utils/supabase";
+import { withPageAuth } from "@supabase/auth-helpers-nextjs";
+
+import { WithPageLayout } from "../interfaces/with-page-layout";
 
 const SignIn: WithPageLayout = () => {
   return (
@@ -11,15 +12,8 @@ const SignIn: WithPageLayout = () => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ req }) => {
-  // Get our logged user
-  const { user } = await supabase.auth.api.getUserByCookie(req);
-  // Check if the user is logged
-  if (user === null) {
-    // Redirect if no logged in
-    return { props: {}, redirect: { destination: "/auth" } };
-  }
-  // If logged return the user
-  return { props: {}, redirect: { destination: "/" } };
-};
+export const getServerSideProps: GetServerSideProps = withPageAuth({
+  redirectTo: "/"
+});
+
 export default SignIn;
