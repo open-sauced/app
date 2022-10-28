@@ -21,13 +21,13 @@ const SuggestedRepository = ({ avatar, orgName, repoName, prCount, issueCount }:
       <div className="flex gap-3 ">
         <div>
           <Avatar
-            size="lg"
+            size={40}
             avatarURL="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1064&q=80"
           />
         </div>
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col gap-1 h-10">
           <div className="text-base">
-            <p className="text-light-slate-11">
+            <p className="text-light-slate-11 -mt-1">
               statelyai / <span className="text-light-slate-12">xstate</span>
             </p>
           </div>
