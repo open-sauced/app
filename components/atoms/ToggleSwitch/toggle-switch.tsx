@@ -1,27 +1,27 @@
 import * as Switch from "@radix-ui/react-switch";
+import clsx from "clsx";
 
 interface ToggleSwitchProps {
   name: string;
   checked: boolean;
   handleToggle: () => void;
+  size?: "sm" | "lg" | "base";
 }
 
-const ToggleSwitch = ({ name, checked = false, handleToggle }: ToggleSwitchProps): JSX.Element => {
+const ToggleSwitch = ({ name, checked = false, handleToggle, size = "base" }: ToggleSwitchProps): JSX.Element => {
   return (
     <Switch.Root
       defaultChecked
       checked={checked}
       onClick={() => handleToggle()}
       id={name}
-      className={`${
-        checked && "!bg-light-orange-10"
-      } w-7 h-4 relative rounded-2xl overflow-hidden bg-light-slate-8 data-[state=checked]:!bg-light-orange-10`}
+      className={clsx(
+        checked && "!bg-light-orange-10 justify-end",
+        "flex rounded-2xl p-[2px] transition overflow-hidden bg-light-slate-8",
+        size === "sm" ? "w-7 h-4" : size === "lg" ? "w-14 h-[30px]" : "w-11 h-6"
+      )}
     >
-      <Switch.Thumb
-        className={`${
-          checked && "!translate-x-[14px]"
-        } bg-white w-3 h-3 block rounded-2xl translate-x-[2px] data-[state=checked]:!translate-x-6 `}
-      />
+      <Switch.Thumb className={clsx("bg-white block rounded-2xl  h-full w-1/2")} />
     </Switch.Root>
   );
 };
