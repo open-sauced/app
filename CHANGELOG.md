@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.16.0-beta.6](https://github.com/open-sauced/insights/compare/v1.16.0-beta.5...v1.16.0-beta.6) (2022-10-28)
+
+
+### 🍕 Features
+
+* update top nav to include `NavLinks` ([#549](https://github.com/open-sauced/insights/issues/549)) ([4e64fa5](https://github.com/open-sauced/insights/commit/4e64fa5f6dc77553dce100cb623bcdb3a1b2d4b3))
+
 ## [1.16.0-beta.5](https://github.com/open-sauced/insights/compare/v1.16.0-beta.4...v1.16.0-beta.5) (2022-10-28)
 
 
