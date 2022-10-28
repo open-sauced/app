@@ -6,9 +6,16 @@ interface ToggleSwitchProps {
   checked: boolean;
   handleToggle: () => void;
   size?: "sm" | "lg" | "base";
+  classNames?: string;
 }
 
-const ToggleSwitch = ({ name, checked = false, handleToggle, size = "base" }: ToggleSwitchProps): JSX.Element => {
+const ToggleSwitch = ({
+  name,
+  checked = false,
+  handleToggle,
+  size = "base",
+  classNames
+}: ToggleSwitchProps): JSX.Element => {
   return (
     <Switch.Root
       defaultChecked
@@ -18,7 +25,8 @@ const ToggleSwitch = ({ name, checked = false, handleToggle, size = "base" }: To
       className={clsx(
         checked && "!bg-light-orange-10 justify-end",
         "flex rounded-2xl p-[2px] transition overflow-hidden bg-light-slate-8",
-        size === "sm" ? "w-7 h-4" : size === "lg" ? "w-14 h-[30px]" : "w-11 h-6"
+        size === "sm" ? "w-7 h-4" : size === "lg" ? "w-14 h-[30px]" : "w-11 h-6",
+        classNames
       )}
     >
       <Switch.Thumb className={clsx("bg-white block rounded-2xl  h-full w-1/2")} />
