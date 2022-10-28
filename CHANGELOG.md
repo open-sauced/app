@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.16.0-beta.7](https://github.com/open-sauced/insights/compare/v1.16.0-beta.6...v1.16.0-beta.7) (2022-10-28)
+
+
+### 🍕 Features
+
+* implement Supabase auth helpers for managing authenticated user ([#565](https://github.com/open-sauced/insights/issues/565)) ([3b32f5f](https://github.com/open-sauced/insights/commit/3b32f5f1671ce4ea7a97404c8f38dc55ac316d43))
+
 ## [1.16.0-beta.6](https://github.com/open-sauced/insights/compare/v1.16.0-beta.5...v1.16.0-beta.6) (2022-10-28)
 
 
