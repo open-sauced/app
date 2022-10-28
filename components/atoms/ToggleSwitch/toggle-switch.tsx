@@ -11,7 +11,7 @@ const ToggleSwitch = ({ name, checked = false, handleToggle }: ToggleSwitchProps
     <Switch.Root
       defaultChecked
       checked={checked}
-      onCheckedChange={handleToggle}
+      onClick={() => handleToggle()}
       id={name}
       className={`${
         checked && "!bg-light-orange-10"
