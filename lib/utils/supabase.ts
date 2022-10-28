@@ -1,11 +1,3 @@
-import { createClient, User } from "@supabase/supabase-js";
+import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs";
 
-const supabaseCreds = {
-  url: process.env.NEXT_PUBLIC_SUPABASE_URL ? process.env.NEXT_PUBLIC_SUPABASE_URL : "",
-  apiKey: process.env.NEXT_PUBLIC_SUPABASE_API_KEY ? process.env.NEXT_PUBLIC_SUPABASE_API_KEY : ""
-};
-
-export const supabase = createClient(
-  supabaseCreds.url,
-  supabaseCreds.apiKey
-);
+export const supabase = createBrowserSupabaseClient();
