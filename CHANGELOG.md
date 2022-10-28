@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.16.0-beta.5](https://github.com/open-sauced/insights/compare/v1.16.0-beta.4...v1.16.0-beta.5) (2022-10-28)
+
+
+### 🧑‍💻 Code Refactoring
+
+* improve text input component ([#556](https://github.com/open-sauced/insights/issues/556)) ([707df9d](https://github.com/open-sauced/insights/commit/707df9d9c4d3383245f2a47289ce45d0287edf29)), closes [#552](https://github.com/open-sauced/insights/issues/552)
+
 ## [1.16.0-beta.4](https://github.com/open-sauced/insights/compare/v1.16.0-beta.3...v1.16.0-beta.4) (2022-10-25)
 
 
