@@ -12,6 +12,7 @@ const ToggleSwitchTemplate: ComponentStory<typeof ToggleSwitch> = (args) => <Tog
 export const Default = ToggleSwitchTemplate.bind({});
 export const Small = ToggleSwitchTemplate.bind({});
 export const Large = ToggleSwitchTemplate.bind({});
+export const Custom = ToggleSwitchTemplate.bind({});
 Default.args = {
   name: "test",
   checked: false,
@@ -26,4 +27,9 @@ Large.args = {
   name: "test",
   checked: false,
   size: "lg"
+};
+Custom.args = {
+  name: "test",
+  checked: false,
+  classNames: "!w-12 !h-5"
 };

@@ -24,9 +24,8 @@ const ToggleSwitch = ({
       id={name}
       className={clsx(
         checked && "!bg-light-orange-10 justify-end",
-        "flex rounded-2xl p-[2px] transition overflow-hidden bg-light-slate-8",
-        size === "sm" ? "w-7 h-4" : size === "lg" ? "w-14 h-[30px]" : "w-11 h-6",
-        classNames
+        "flex rounded-2xl p-[2px] transition overflow-hidden w-11 h-6 bg-light-slate-8",
+        classNames ? classNames : size === "sm" ? "!w-7 !h-4" : size === "lg" ? "!w-14 !h-[30px]" : ""
       )}
     >
       <Switch.Thumb className={clsx("bg-white block rounded-2xl  h-full w-1/2")} />
