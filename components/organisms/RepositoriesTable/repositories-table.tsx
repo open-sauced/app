@@ -38,8 +38,8 @@ export interface RepositoriesRows {
 
 interface RepositoriesTableProps {
   listOfRepositories: RepositoriesRows[];
-  loading: boolean
-  error: boolean
+  loading: boolean;
+  error: boolean;
 }
 
 export const classNames = {
@@ -55,24 +55,17 @@ export const classNames = {
   }
 };
 
-const RepositoriesTable = ({
-  listOfRepositories,
-  loading,
-  error
-}: RepositoriesTableProps): JSX.Element => {
+const RepositoriesTable = ({ listOfRepositories, loading, error }: RepositoriesTableProps): JSX.Element => {
   return (
-
-
     <section className="flex  flex-col">
       {loading && <>Loading...</>}
       {error && <>An error has occured...</>}
-      {!loading && !error && Array.isArray(listOfRepositories) &&
-            listOfRepositories.length > 0 &&
-            listOfRepositories.map((repo, index) => (
-              <RepoRow key={`${repo.handle}/${repo.name}/${index}`} repo={repo} />
-            ))}
+      {!loading &&
+        !error &&
+        Array.isArray(listOfRepositories) &&
+        listOfRepositories.length > 0 &&
+        listOfRepositories.map((repo, index) => <RepoRow key={`${repo.handle}/${repo.name}/${index}`} repo={repo} />)}
     </section>
-
   );
 };
 

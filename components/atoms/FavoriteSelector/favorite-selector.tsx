@@ -17,7 +17,11 @@ const FavoriteSelector = ({ isFavorite = true }: FavoriteSelectorProps): JSX.Ele
       ) : (
         <AiOutlineStar className="text-light-slate-9 text-lg" />
       )}
-      <span className={`${isFavorite ? "text-light-slate-12" : "text-light-slate-11"} text-sm font-semibold`}>
+      <span
+        className={`${
+          isFavorite ? "text-light-slate-12" : "text-light-slate-11"
+        } text-sm font-semibold hidden lg:block`}
+      >
         Favorite
       </span>
     </div>

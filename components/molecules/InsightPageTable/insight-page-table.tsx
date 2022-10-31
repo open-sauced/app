@@ -9,29 +9,30 @@ import { RepoList } from "../CardRepoList/card-repo-list";
 import InsightTableRow from "../InsightTableRow/insight-table-row";
 
 interface RepoRowProps {
-  repoList: RepoList[]
-  members: DbContribution[]
+  repoList: RepoList[];
+  members: DbContribution[];
 }
 
-interface InsightPageTableProps {
-
-}
+interface InsightPageTableProps {}
 
 const contributors = [
   {
-    avatarURL: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1064&q=80",
+    avatarURL:
+      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1064&q=80",
     initials: "ES",
     alt: "E",
     id: 1
   },
   {
-    avatarURL: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1064&q=80",
+    avatarURL:
+      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1064&q=80",
     initials: "ES",
     alt: "E",
     id: 2
   },
   {
-    avatarURL: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1064&q=80",
+    avatarURL:
+      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1064&q=80",
     initials: "ES",
     alt: "E",
     id: 3
@@ -70,9 +71,7 @@ const selectOptions = [
   { name: "Name - DSC", value: "10" }
 ];
 
-
 const InsightPageTable = ({ repoList }: RepoRowProps) => {
-
   // to be replaced with real data
   const randonArray = Array.apply(null, Array(6));
   return (
@@ -91,7 +90,7 @@ const InsightPageTable = ({ repoList }: RepoRowProps) => {
             className="w-[275px]"
             label="Sort by"
           ></Select>
-          <div className="w-58">
+          <div className="w-58 hidden lg:block">
             <Search placeholder="Search repositories" className="max-w-full" name={"query"} />
           </div>
         </div>
@@ -99,13 +98,12 @@ const InsightPageTable = ({ repoList }: RepoRowProps) => {
 
       {/* Table section */}
 
-      <div className="flex flex-col mt-6 rounded-lg overflow-hidden border">
-
-        <div className="hidden md:flex py-4 px-6 bg-light-slate-3 gap-6 lg:gap-6">
-          <div className={clsx("flex-1 min-w-[130px] !max-w-[130px] ")}>
+      <div className="flex flex-col mt-6 rounded-lg overflow-scroll border">
+        <div className="md:flex py-4 px-6 bg-light-slate-3 gap-10 lg:min-w-[1280px]">
+          <div className={clsx("flex-1 min-w-[140px] max-w-[150px] ")}>
             <TableTitle text="Insight page"></TableTitle>
           </div>
-          <div className={clsx(classNames.cols.activity, "!max-w-[160px]  ")}>
+          <div className={clsx(classNames.cols.activity, "!max-w-[160px]  hidden lg:block")}>
             <TableTitle text="Repositories"></TableTitle>
           </div>
           <div className={clsx(classNames.cols.prOverview, "!min-w-[100px] !max-w-[130px] ")}>
@@ -114,15 +112,19 @@ const InsightPageTable = ({ repoList }: RepoRowProps) => {
           <div className={clsx(classNames.cols.prVelocity, "!max-w-[130px] !min-w-[130px] !justify-start")}>
             <TableTitle text="avg pr velocity"></TableTitle>
           </div>
-          <div className={clsx(classNames.cols.spam, "!max-w-[180px]")}>
+          <div className={clsx(classNames.cols.spam, "!max-w-[180px] hidden lg:block")}>
             <TableTitle text="members"></TableTitle>
           </div>
         </div>
         {randonArray.map((a, i) => (
-          <InsightTableRow key={`${a}/${Math.random() + i}`} pageName="Open Source Stripe" members={contributors} repositories={repoList} />
+          <InsightTableRow
+            key={`${a}/${Math.random() + i}`}
+            pageName="Open Source Stripe"
+            members={contributors}
+            repositories={repoList}
+          />
         ))}
       </div>
-
     </div>
   );
 };
