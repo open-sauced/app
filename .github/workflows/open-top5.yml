@@ -6,6 +6,7 @@ jobs:
   createAnIssue:
     name: Create an issue
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
     - uses: actions/checkout@v2
     - name: Create an issue

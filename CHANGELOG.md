@@ -5,6 +5,97 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.16.0-beta.7](https://github.com/open-sauced/insights/compare/v1.16.0-beta.6...v1.16.0-beta.7) (2022-10-28)
+
+
+### 🍕 Features
+
+* implement Supabase auth helpers for managing authenticated user ([#565](https://github.com/open-sauced/insights/issues/565)) ([3b32f5f](https://github.com/open-sauced/insights/commit/3b32f5f1671ce4ea7a97404c8f38dc55ac316d43))
+
+## [1.16.0-beta.6](https://github.com/open-sauced/insights/compare/v1.16.0-beta.5...v1.16.0-beta.6) (2022-10-28)
+
+
+### 🍕 Features
+
+* update top nav to include `NavLinks` ([#549](https://github.com/open-sauced/insights/issues/549)) ([4e64fa5](https://github.com/open-sauced/insights/commit/4e64fa5f6dc77553dce100cb623bcdb3a1b2d4b3))
+
+## [1.16.0-beta.5](https://github.com/open-sauced/insights/compare/v1.16.0-beta.4...v1.16.0-beta.5) (2022-10-28)
+
+
+### 🧑‍💻 Code Refactoring
+
+* improve text input component ([#556](https://github.com/open-sauced/insights/issues/556)) ([707df9d](https://github.com/open-sauced/insights/commit/707df9d9c4d3383245f2a47289ce45d0287edf29)), closes [#552](https://github.com/open-sauced/insights/issues/552)
+
+## [1.16.0-beta.4](https://github.com/open-sauced/insights/compare/v1.16.0-beta.3...v1.16.0-beta.4) (2022-10-25)
+
+
+### 🐛 Bug Fixes
+
+* diverge cron execution for rate limit purposes ([3607a80](https://github.com/open-sauced/insights/commit/3607a8030c6228b8fe7ecc5149d044889674ead5))
+
+## [1.16.0-beta.3](https://github.com/open-sauced/insights/compare/v1.16.0-beta.2...v1.16.0-beta.3) (2022-10-25)
+
+
+### 🐛 Bug Fixes
+
+* correct retention and job timeouts for worflows ([43ae12b](https://github.com/open-sauced/insights/commit/43ae12be2caa78b1c067e96b291a3cbc11ab5bc8)), closes [#554](https://github.com/open-sauced/insights/issues/554)
+
+## [1.16.0-beta.2](https://github.com/open-sauced/insights/compare/v1.16.0-beta.1...v1.16.0-beta.2) (2022-10-24)
+
+
+### 🍕 Features
+
+* updated text input component with new states ([6b34a4e](https://github.com/open-sauced/insights/commit/6b34a4e6839856de39c2deb88ed465cdc6fe6c1d))
+
+
+### 📝 Documentation
+
+* update text input story ([f508499](https://github.com/open-sauced/insights/commit/f5084998f74a60f83e2062606c56b729f6cfb763))
+
+## [1.16.0-beta.1](https://github.com/open-sauced/insights/compare/v1.15.0...v1.16.0-beta.1) (2022-10-20)
+
+
+### 🍕 Features
+
+* redirect to recent filter by default ([#548](https://github.com/open-sauced/insights/issues/548)) ([edf99e7](https://github.com/open-sauced/insights/commit/edf99e7e58a81d5382a41a7939323047ef83ba1f)), closes [#517](https://github.com/open-sauced/insights/issues/517)
+
+## [1.15.0](https://github.com/open-sauced/insights/compare/v1.14.0...v1.15.0) (2022-10-17)
+
+
+### 🍕 Features
+
+* make repositories clickable to apply filter for single repo ([#516](https://github.com/open-sauced/insights/issues/516)) ([80df544](https://github.com/open-sauced/insights/commit/80df544b6888404febc71c4b8f630e50e868e3fc)), closes [#497](https://github.com/open-sauced/insights/issues/497)
+
+## [1.15.0-beta.1](https://github.com/open-sauced/insights/compare/v1.14.0...v1.15.0-beta.1) (2022-10-17)
+
+
+### 🍕 Features
+
+* make repositories clickable to apply filter for single repo ([#516](https://github.com/open-sauced/insights/issues/516)) ([80df544](https://github.com/open-sauced/insights/commit/80df544b6888404febc71c4b8f630e50e868e3fc)), closes [#497](https://github.com/open-sauced/insights/issues/497)
+
+## [1.14.0](https://github.com/open-sauced/insights/compare/v1.13.0...v1.14.0) (2022-10-17)
+
+
+### 🍕 Features
+
+* allow for displaying insights based on custom topics ([#528](https://github.com/open-sauced/insights/issues/528)) ([93e1138](https://github.com/open-sauced/insights/commit/93e1138279b828882dace652394944a869daf632)), closes [#417](https://github.com/open-sauced/insights/issues/417)
+
+
+### 🐛 Bug Fixes
+
+* add root href to header logo component image ([#537](https://github.com/open-sauced/insights/issues/537)) ([e71e9cb](https://github.com/open-sauced/insights/commit/e71e9cbcb2384dda1a31be05e038f303d17fdf26)), closes [#523](https://github.com/open-sauced/insights/issues/523)
+* correct card horizontal tooltip error on storybook ([#536](https://github.com/open-sauced/insights/issues/536)) ([100d93e](https://github.com/open-sauced/insights/commit/100d93e784510a6482576a68a718d17de50c4907)), closes [#525](https://github.com/open-sauced/insights/issues/525)
+* humanize numbers and use absolute values in highlight cards ([#535](https://github.com/open-sauced/insights/issues/535)) ([f5c538c](https://github.com/open-sauced/insights/commit/f5c538c54036ffd0baace2f31bacac3bcd4f21b2)), closes [#506](https://github.com/open-sauced/insights/issues/506)
+* show pr velocity in relative days ([#534](https://github.com/open-sauced/insights/issues/534)) ([27c178e](https://github.com/open-sauced/insights/commit/27c178e0f60de0262ddb1acba40e9080e6bf4f1e)), closes [#448](https://github.com/open-sauced/insights/issues/448)
+
+## [1.14.0-beta.3](https://github.com/open-sauced/insights/compare/v1.14.0-beta.2...v1.14.0-beta.3) (2022-10-17)
+
+
+### 🐛 Bug Fixes
+
+* add root href to header logo component image ([#537](https://github.com/open-sauced/insights/issues/537)) ([e71e9cb](https://github.com/open-sauced/insights/commit/e71e9cbcb2384dda1a31be05e038f303d17fdf26)), closes [#523](https://github.com/open-sauced/insights/issues/523)
+* correct card horizontal tooltip error on storybook ([#536](https://github.com/open-sauced/insights/issues/536)) ([100d93e](https://github.com/open-sauced/insights/commit/100d93e784510a6482576a68a718d17de50c4907)), closes [#525](https://github.com/open-sauced/insights/issues/525)
+
 ## [1.14.0-beta.2](https://github.com/open-sauced/insights/compare/v1.14.0-beta.1...v1.14.0-beta.2) (2022-10-14)
 
 

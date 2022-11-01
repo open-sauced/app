@@ -1,7 +1,7 @@
 import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 import CardHorizontalBarChart from "components/molecules/CardHorizontalBarChart/card-horizontal-bar-chart";
-
+import { TooltipProvider } from "@radix-ui/react-tooltip";
 const storyConfig = {
   title: "Design System/Molecules/Card Horizontal Bar",
   component: "CardHorizontalBar"
@@ -25,7 +25,11 @@ const testLanguageList = [
 ];
 
 //CardHorizontalBarChart Template
-const CardHorizontalBarTemplate: ComponentStory<typeof CardHorizontalBarChart> = (args) => <CardHorizontalBarChart {...args} />;
+const CardHorizontalBarTemplate: ComponentStory<typeof CardHorizontalBarChart> = (args) => (
+  <TooltipProvider>
+    <CardHorizontalBarChart {...args} />
+  </TooltipProvider>
+);
 
 export const OneLanguage = CardHorizontalBarTemplate.bind({});
 

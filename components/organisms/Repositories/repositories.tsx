@@ -5,9 +5,14 @@ import Pagination from "components/molecules/Pagination/pagination";
 import PaginationResults from "components/molecules/PaginationResults/pagination-result";
 import TableHeader from "components/molecules/TableHeader/table-header";
 import { useRepositoriesList } from "lib/hooks/useRepositoriesList";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 import RepositoriesTable, { classNames } from "../RepositoriesTable/repositories-table";
 
-const Reports = (): JSX.Element => {
+const Repositories = (): JSX.Element => {
+  const router = useRouter();
+  const { filterName, selectedFilter } = router.query;
+  const topic = filterName as string;
   const {
     data: repoListData,
     meta: repoMeta,
@@ -17,8 +22,10 @@ const Reports = (): JSX.Element => {
     setPage,
     setLimit
   } = useRepositoriesList();
-  const preparedIds = !repoListIsLoading && !repoListIsError ? repoListData.map((row) => `${row.id}`) : [];
-  // How do I make multiple calls?
+
+  useEffect(() => {
+    setPage(1);
+  }, [selectedFilter]);
 
   return (
     <div className="flex flex-col w-full gap-4">
@@ -26,7 +33,7 @@ const Reports = (): JSX.Element => {
         updateLimit={setLimit}
         showing={{
           from: page === 1 ? page : ((page-1) * repoMeta.limit) + 1,
-          to: page === 1 ? repoMeta.limit : page * repoMeta.limit <= repoMeta.itemCount ? page * repoMeta.limit : repoMeta.itemCount,
+          to: page * repoMeta.limit <= repoMeta.itemCount ? page * repoMeta.limit : repoMeta.itemCount,
           total: repoMeta.itemCount,
           entity: "Repositories"
         }}
@@ -65,7 +72,7 @@ const Reports = (): JSX.Element => {
           </div>
         </div>
 
-        <RepositoriesTable error={repoListIsError} loading={repoListIsLoading} listOfRepositories={repoListData} />
+        <RepositoriesTable topic={topic} error={repoListIsError} loading={repoListIsLoading} listOfRepositories={repoListData} />
 
         {/* Table Footer */}
         <div className="mt-5 w-full px-4 flex flex-col gap-y-3 md:flex-row">
@@ -88,7 +95,7 @@ const Reports = (): JSX.Element => {
               <div className="">
                 <PaginationResults
                   from={page === 1 ? page : ((page-1) * repoMeta.limit) + 1}
-                  to={page === 1 ? repoMeta.limit : page * repoMeta.limit <= repoMeta.itemCount ? page * repoMeta.limit : repoMeta.itemCount}
+                  to={page * repoMeta.limit <= repoMeta.itemCount ? page * repoMeta.limit : repoMeta.itemCount}
                   total={repoMeta.itemCount}
                   entity={"repos"}
                 />
@@ -116,4 +123,4 @@ const Reports = (): JSX.Element => {
   );
 };
 
-export default Reports;
+export default Repositories;
