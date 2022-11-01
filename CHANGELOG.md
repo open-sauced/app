@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.16.0-beta.9](https://github.com/open-sauced/insights/compare/v1.16.0-beta.8...v1.16.0-beta.9) (2022-11-01)
+
+
+### 🧑‍💻 Code Refactoring
+
+* replaced toggle switch component with radix ([#563](https://github.com/open-sauced/insights/issues/563)) ([3bdca61](https://github.com/open-sauced/insights/commit/3bdca61241f62bd8ecac6428f19a69997a3b10c0)), closes [#561](https://github.com/open-sauced/insights/issues/561)
+
 ## [1.16.0-beta.8](https://github.com/open-sauced/insights/compare/v1.16.0-beta.7...v1.16.0-beta.8) (2022-11-01)
 
 
