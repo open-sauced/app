@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.16.0-beta.8](https://github.com/open-sauced/insights/compare/v1.16.0-beta.7...v1.16.0-beta.8) (2022-11-01)
+
+
+### 🍕 Features
+
+* create `SuggestedRepository` component ([#564](https://github.com/open-sauced/insights/issues/564)) ([5fe3bbf](https://github.com/open-sauced/insights/commit/5fe3bbffffeb177d56e94e1b1e62ee1e1df33440))
+* implement insight page table ([#547](https://github.com/open-sauced/insights/issues/547)) ([a2b92b1](https://github.com/open-sauced/insights/commit/a2b92b1c393ba0043e6424849230eeceab828549))
+
 ## [1.16.0-beta.7](https://github.com/open-sauced/insights/compare/v1.16.0-beta.6...v1.16.0-beta.7) (2022-10-28)
 
 
