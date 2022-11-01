@@ -1,8 +1,6 @@
 import Icon from "components/atoms/Icon/icon";
 import { StaticImageData } from "next/image";
 
-const REPOLISTLIMIT = 5;
-
 export interface RepoList {
   repoName: string;
   repoIcon: StaticImageData | string;
@@ -10,10 +8,11 @@ export interface RepoList {
 
 interface CardRepoListProps {
   repoList: RepoList[];
+  limit?: number
 }
 
-const CardRepoList = ({ repoList }: CardRepoListProps): JSX.Element => {
-  
+const CardRepoList = ({ repoList, limit = 5 }: CardRepoListProps): JSX.Element => {
+
   const sanitizedRepoList = [...new Map(repoList.map(item => [item["repoName"], item])).values()];
   return (
     <div className="flex gap-2 items-center font-medium flex-wrap text-xs text-light-slate-11">
@@ -22,7 +21,7 @@ const CardRepoList = ({ repoList }: CardRepoListProps): JSX.Element => {
           <>
             {
               sanitizedRepoList
-                .filter((repo, arrCount) => arrCount < REPOLISTLIMIT)
+                .filter((repo, arrCount) => arrCount < limit)
                 .map(({repoName, repoIcon}, index) =>
                   <div key={index} title={repoName} className="flex gap-1  p-1 pr-2 border-[1px] border-light-slate-6 rounded-lg text-light-slate-12">
                     <Icon IconImage={repoIcon} className="rounded-[4px] overflow-hidden" />
@@ -31,7 +30,7 @@ const CardRepoList = ({ repoList }: CardRepoListProps): JSX.Element => {
                 )
             }
             <div>
-              {repoList.length > REPOLISTLIMIT - 1 ? `+${repoList.length - REPOLISTLIMIT}` : null}
+              {repoList.length > limit - 1 ? `+${repoList.length - limit}` : null}
             </div>
           </>
 
