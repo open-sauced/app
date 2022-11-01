@@ -3,7 +3,7 @@ import Link from "next/link";
 import clsx from "clsx";
 
 import Pill from "components/atoms/Pill/pill";
-import CardRepoList, { RepoList } from "../CardRepoList/card-repo-list";
+import CardRepoList from "../CardRepoList/card-repo-list";
 import PullRequestOverview from "../PullRequestOverview/pull-request-overview";
 import StackedAvatar from "../StackedAvatar/stacked-avatar";
 import FavoriteSelector from "components/atoms/FavoriteSelector/favorite-selector";
@@ -14,9 +14,6 @@ import { getRelativeDays } from "lib/utils/date-utils";
 
 interface InsightRepoRowProps {
   insight: DbUserInsight;
-  pageName?: string;
-  repositories?: RepoList[];
-  members?: DbContribution[];
 }
 
 const InsightTableRow = ({ insight }: InsightRepoRowProps) => {

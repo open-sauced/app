@@ -5,63 +5,11 @@ import Select from "components/atoms/Select/custom-select";
 import TableTitle from "components/atoms/TableTitle/table-title";
 import Title from "components/atoms/Typography/title";
 import { classNames } from "components/organisms/RepositoriesTable/repositories-table";
-import { RepoList } from "../CardRepoList/card-repo-list";
 import InsightTableRow from "../InsightTableRow/insight-table-row";
 
-interface RepoRowProps {
+interface InsightPageTableProps {
   insights: DbUserInsight[]
 }
-
-interface InsightPageTableProps {}
-
-const contributors = [
-  {
-    avatarURL:
-      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1064&q=80",
-    initials: "ES",
-    alt: "E",
-    id: 1
-  },
-  {
-    avatarURL:
-      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1064&q=80",
-    initials: "ES",
-    alt: "E",
-    id: 2
-  },
-  {
-    avatarURL:
-      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1064&q=80",
-    initials: "ES",
-    alt: "E",
-    id: 3
-  },
-  {
-    avatarURL: "",
-    initials: "ES",
-    alt: "E",
-    id: 4
-  },
-  {
-    avatarURL: "",
-    initials: "ES",
-    alt: "E",
-    id: 5
-  },
-  {
-    avatarURL: "",
-    initials: "ES",
-    alt: "E",
-    id: 6
-  },
-  {
-    avatarURL: "",
-    initials: "ES",
-    alt: "E",
-    id: 7
-  }
-  // casting the array for now to avoid build errors, will be removed when live data are available
-] as unknown as DbContribution[];
 
 const selectOptions = [
   { name: "Last updated - ASC", value: "10" },
@@ -70,10 +18,7 @@ const selectOptions = [
   { name: "Name - DSC", value: "10" }
 ];
 
-
-const InsightPageTable = ({ insights }: RepoRowProps) => {
-  // to be replaced with real data
-  const randonArray = Array.apply(null, Array(6));
+const InsightPageTable = ({ insights }: InsightPageTableProps) => {
   return (
     <div>
       {/* Table title */}
