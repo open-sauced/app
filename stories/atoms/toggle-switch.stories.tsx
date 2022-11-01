@@ -31,5 +31,5 @@ Large.args = {
 Custom.args = {
   name: "test",
   checked: false,
-  classNames: "w-14 h-8"
+  classNames: "w-8 h-4"
 };
