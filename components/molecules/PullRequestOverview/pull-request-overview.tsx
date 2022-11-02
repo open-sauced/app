@@ -46,14 +46,14 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
         <div
           className={`
           ${
-            prOverviewDetails.type === "open"
-              ? "text-light-grass-10"
-              : prOverviewDetails.type === "closed"
-              ? "text-light-red-10"
-              : prOverviewDetails.type === "merged"
-              ? "text-purple-600"
-              : "text-light-slate-9"
-          }
+    prOverviewDetails.type === "open"
+      ? "text-light-grass-10"
+      : prOverviewDetails.type === "closed"
+        ? "text-light-red-10"
+        : prOverviewDetails.type === "merged"
+          ? "text-purple-600"
+          : "text-light-slate-9"
+    }
             flex items-center gap-x-1 text-base tracking-tight`}
         >
           {prOverviewDetails.type === "open" ? (

@@ -117,13 +117,13 @@ const HighlightCard: React.FC<HighlightCardProps> = ({
                   ? percentage && percentage > 70
                     ? "bg-green-500"
                     : percentage && percentage > 30
-                    ? "bg-yellow-500"
-                    : "bg-red-500"
+                      ? "bg-yellow-500"
+                      : "bg-red-500"
                   : percentage && percentage > 70
-                  ? "bg-red-500"
-                  : percentage && percentage > 30
-                  ? "bg-yellow-500"
-                  : "bg-green-500"
+                    ? "bg-red-500"
+                    : percentage && percentage > 30
+                      ? "bg-yellow-500"
+                      : "bg-green-500"
               } h-3 rounded-full transition-all duration-500 ease-in-out`}
               style={{ width: (percentage ? percentage : 0) + "%" }}
             ></div>
