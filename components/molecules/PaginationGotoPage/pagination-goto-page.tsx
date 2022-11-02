@@ -11,7 +11,7 @@ const PaginationGotoPage = ({ page, name, setPage }: PaginationGotoPageProps): J
   const handleGotoPage = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if(pageNumber === page) return;
+    if (pageNumber === page) return;
 
     setPage(pageNumber);
   };
@@ -21,13 +21,13 @@ const PaginationGotoPage = ({ page, name, setPage }: PaginationGotoPageProps): J
   }, [page]);
 
   return (
-    <form onSubmit={(e) => handleGotoPage(e)} className="flex font-medium gap-x-3">
+    <form onSubmit={(e) => handleGotoPage(e)} className="flex   gap-x-3">
       <input
         type="text"
         name={name}
         id={name}
         placeholder={`${pageNumber}`}
-        onChange={(e)=> setPageNumber(e.target.value)}
+        onChange={(e) => setPageNumber(e.target.value)}
         className="min-w-4 w-10 text-center text-sm text-light-slate-10 focus:outline-none border rounded-lg py-1 px-2"
       />
       <button
