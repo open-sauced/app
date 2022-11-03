@@ -27,12 +27,13 @@ interface ContributorObject {
 interface ContributorCardProps {
   className?: string;
   contributor: ContributorObject;
+  topic: string;
 }
 
-const ContributorCard = ({ className, contributor }: ContributorCardProps) => {
+const ContributorCard = ({ className, contributor, topic }: ContributorCardProps) => {
   const { profile, repoList, languageList } = contributor;
   const [ showPRs, setShowPRs ] = useState(false);
-  const { chart } = useTopicContributorCommits(profile.githubName);
+  const { chart } = useTopicContributorCommits(profile.githubName, topic);
 
   return (
     <Card className={className && className}>
@@ -48,7 +49,7 @@ const ContributorCard = ({ className, contributor }: ContributorCardProps) => {
         </div>
         <CardRepoList repoList={repoList} />
         {showPRs ? (
-          <ContributorTable contributor={profile.githubName} />
+          <ContributorTable contributor={profile.githubName} topic={topic} />
         ) : null}
         <div className="flex w-full justify-center">
           <button 

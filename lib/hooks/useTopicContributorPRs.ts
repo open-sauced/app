@@ -5,7 +5,7 @@ interface PaginatedContributorPRsResponse {
   readonly meta: Meta;
 }
 
-const useTopicContributorPRs = (contributor: string, topic = "hacktoberfest") => {
+const useTopicContributorPRs = (contributor: string, topic: string) => {
   const baseEndpoint = `${topic}/${contributor}/prs`;
   const endpointString = `${baseEndpoint}`;
 
