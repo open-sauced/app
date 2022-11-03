@@ -8,7 +8,7 @@ const Home: WithPageLayout = () => {
 
   useEffect(() => {
     const redirect = ()=>{
-      router.push("hacktoberfest");
+      router.push("javascript");
     };
     const timer = setTimeout(()=> redirect(),2000);
     return () => clearTimeout(timer);
