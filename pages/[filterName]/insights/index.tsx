@@ -33,7 +33,7 @@ const InsightsHub: WithPageLayout = () => {
 
       <div className="flex py-8">
         {
-          favorites.map(insight => <InsightPageCard insight={insight} />)
+          favorites.map(insight => <InsightPageCard key={`insight_${insight.id}`} insight={insight} />)
         }
       </div>
 

@@ -57,6 +57,6 @@ const InsightPageTableTemplate: ComponentStory<typeof InsightPageTable> = (args)
 
 export const Default = InsightPageTableTemplate.bind({});
 Default.args = {
-  repoList: testRepoList
+  insights: []
 
 };

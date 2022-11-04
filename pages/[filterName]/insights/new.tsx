@@ -5,7 +5,7 @@ const NewInsightPage: WithPageLayout = () => {
   return (
     <div>Create New Insight</div>
   );
-}
+};
 
 NewInsightPage.PageLayout = HubLayout;
 

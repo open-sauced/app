@@ -29,14 +29,14 @@ const getRepoInsights = (repos: DbRepo[]) => {
 
   return {
     repoList,
-    open: repoTotals['opened'] || 0,
-    merged: repoTotals['merged'] || 0,
-    closed: repoTotals['closed'] || 0,
-    drafts: repoTotals['drafts'] || 0,
-    total: repoTotals['total'] || 0,
-    velocity: repoTotals['velocity'] || 0,
-    churn: repoTotals['churn'] || 0
-  }
-}
+    open: repoTotals["opened"] || 0,
+    merged: repoTotals["merged"] || 0,
+    closed: repoTotals["closed"] || 0,
+    drafts: repoTotals["drafts"] || 0,
+    total: repoTotals["total"] || 0,
+    velocity: repoTotals["velocity"] || 0,
+    churn: repoTotals["churn"] || 0
+  };
+};
 
 export default getRepoInsights;
