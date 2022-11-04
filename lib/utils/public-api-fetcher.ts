@@ -1,10 +1,12 @@
 import { Fetcher } from "swr";
+import { supabase } from "./supabase";
 
 const baseUrl = process.env.NEXT_PUBLIC_API_URL;
 
 const publicApiFetcher: Fetcher = async (apiUrl: string) => {
-  const data = localStorage ? JSON.parse(localStorage.getItem("supabase.auth.token") as string) : {};
-  const sessionToken = data?.currentSession?.access_token;
+  const sessionResponse = await supabase.auth.getSession();
+  const sessionToken = sessionResponse?.data.session?.access_token;
+
   const res = await fetch(`${baseUrl}/${apiUrl}`, {
     headers: {
       accept: "application/json",

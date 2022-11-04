@@ -1,53 +1,52 @@
-import React from "react";
-import CardRepoList, { RepoList } from "../CardRepoList/card-repo-list";
+import Link from "next/link";
+import { LinkIcon } from "@primer/octicons-react";
+import { BsFillArrowUpCircleFill } from "react-icons/bs";
+
 import Button from "components/atoms/Button/button";
+import Text from "components/atoms/Typography/text";
+
+import { useRepositoriesList } from "lib/hooks/useRepositoriesList";
+import { getRelativeDays } from "lib/utils/date-utils";
+import getRepoInsights from "lib/utils/get-repo-insights";
+
+import CardRepoList from "../CardRepoList/card-repo-list";
 import PieChart, { PieData } from "../PieChart/pie-chart";
 import StackedAvatar from "../StackedAvatar/stacked-avatar";
-import { LinkIcon } from "@primer/octicons-react";
-import Link from "next/link";
-import Text from "components/atoms/Typography/text";
-import { BsFillArrowUpCircleFill } from "react-icons/bs";
+
 interface InsightPageCardProps {
-  title: string;
-  members: DbContribution[];
-  repoList: RepoList[];
-  openPrsCount?: number;
-  closedPrsCount?: number;
-  draftPrsCount?: number;
-  mergedPrsCount?: number;
+  insight: DbUserInsight;
 }
 
 const InsightPageCard = ({
-  title,
-  members,
-  repoList,
-  openPrsCount,
-  closedPrsCount,
-  mergedPrsCount,
-  draftPrsCount
+  insight
 }: InsightPageCardProps): JSX.Element => {
+  const members: any[] = [];
+  const repoIds = insight.repos.map(repo => repo.repo_id);
+  const { data: repoData, isError, isLoading } = useRepositoriesList(false, repoIds);
+  const { open, closed, merged, drafts, velocity, total, repoList } = getRepoInsights(repoData);
+
   const PieChartData: PieData[] = [
     {
       label: "open",
-      value: openPrsCount || 0,
+      value: open,
       id: "open",
       color: "hsla(131, 41%, 46%, 1)"
     },
     {
       label: "merged",
-      value: mergedPrsCount || 0,
+      value: merged,
       id: "merged",
       color: "hsla(272, 51%, 54%, 1)"
     },
     {
       label: "closed",
-      value: closedPrsCount || 0,
+      value: closed,
       id: "closed",
       color: "hsla(11, 89%, 54%, 1)"
     },
     {
       label: "draft",
-      value: draftPrsCount || 0,
+      value: drafts,
       id: "draft",
       color: "hsla(205, 11%, 78%, 1)"
     }
@@ -61,15 +60,17 @@ const InsightPageCard = ({
       console.log(error);
     }
   };
-  const totalPrs = (openPrsCount || 0) + (closedPrsCount || 0) + (draftPrsCount || 0) + (mergedPrsCount || 0);
-  const averagePrOpened = Math.floor(((openPrsCount || 0) / totalPrs) * 100);
+
+  const averagePrOpened = total > 0 ? Math.floor(((open || 0) / total) * 100) : 0;
+
   return (
-    <div className=" w-[428px] py-[15px] px-[14px] rounded-lg flex flex-col gap-y-3 bg-white border">
+    <div className=" w-[428px] py-[15px] px-[14px] rounded-lg flex flex-col gap-y-3 mx-2 bg-white border">
       {/* Card header */}
       <div className="flex items-center justify-between">
-        <div>{title}</div>
+        <div>{insight.name}</div>
+
         <div className="items-center flex">
-          {members.length > 0 ? <StackedAvatar visibleQuantity={2} contributors={members} /> : "-"}
+          {members.length > 0 ? <StackedAvatar visibleQuantity={2} contributors={members} /> : ""}
           {members.length > 2 ? <div>&nbsp;{`+${members.length - 2} members`}</div> : ""}
         </div>
       </div>
@@ -86,7 +87,7 @@ const InsightPageCard = ({
               className="flex text-light-grass-10 justify-between items-end pr-8 mt-1
             "
             >
-              <Text className="!text-xl !text-black !leading-none">{`${openPrsCount} PRs`}</Text>
+              <Text className="!text-xl !text-black !leading-none">{`${open} PRs`}</Text>
               <p className="flex items-end">
                 <span className="mb-0 leading-none">{`${averagePrOpened}%`}</span>{" "}
                 <BsFillArrowUpCircleFill className="ml-1" />
@@ -96,9 +97,9 @@ const InsightPageCard = ({
           <div>
             <span className="text-xs text-light-slate-11">Avg PRs velocity</span>
             <div className="flex text-light-red-9 justify-between items-end pr-8 mt-1">
-              <Text className="!text-xl !text-black !leading-none">2 mo</Text>
+              <Text className="!text-xl !text-black !leading-none">{repoData.length > 0 ? getRelativeDays(Math.round(velocity / repoData.length)) : "-"}</Text>
               <p className="flex items-end">
-                <span className="mb-0 leading-none">10%</span> <BsFillArrowUpCircleFill className="ml-1" />
+                <span className="mb-0 leading-none">{total > 0 ? `${Math.round((merged/total) * 100)}%` : "-"}</span> <BsFillArrowUpCircleFill className="ml-1" />
               </p>
             </div>
           </div>

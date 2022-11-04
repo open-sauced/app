@@ -11,6 +11,7 @@ import { classNames } from "components/organisms/RepositoriesTable/repositories-
 import Button from "components/atoms/Button/button";
 import { useRepositoriesList } from "lib/hooks/useRepositoriesList";
 import { getRelativeDays } from "lib/utils/date-utils";
+import getRepoInsights from "lib/utils/get-repo-insights";
 
 interface InsightRepoRowProps {
   insight: DbUserInsight;
@@ -20,33 +21,7 @@ const InsightTableRow = ({ insight }: InsightRepoRowProps) => {
   const members: any[] = [];
   const repoIds = insight.repos.map(repo => repo.repo_id);
   const { data: repoData, isError, isLoading } = useRepositoriesList(false, repoIds);
-  const repoList = repoData.map(repo => {
-    return {
-      repoIcon: `https://github.com/${repo.owner}.png?size=60`,
-      repoName: repo.name,
-      repoOwner: repo.owner
-    };
-  });
-
-  const repoTotals = repoData.reduce((totals, curr) => {
-    const merged = (totals["merged"] || 0) + (curr.mergedPrsCount || 0);
-    const opened = (totals["opened"] || 0) + (curr.openPrsCount || 0);
-    const closed = (totals["closed"] || 0) + (curr.closedPrsCount || 0);
-    const drafts = (totals["drafts"] || 0) + (curr.draftPrsCount || 0);
-    const churn = (totals["churn"] || 0) + (curr.churnTotalCount || 0);
-    const velocity = (totals["velocity"] || 0) + (curr.prVelocityCount || 0);
-    const total = (totals["total"] || 0);
-
-    return {
-      merged,
-      opened,
-      closed,
-      drafts,
-      churn,
-      velocity,
-      total: total + merged + opened + closed + drafts
-    };
-  }, {} as Record<string, number>);
+  const { open, closed, merged, drafts, churn, velocity, total, repoList } = getRepoInsights(repoData);
 
   return (
     <div className="flex flex-col lg:min-w-[1280px]">
@@ -62,24 +37,24 @@ const InsightTableRow = ({ insight }: InsightRepoRowProps) => {
         {/* Average Prs opened col*/}
         <div className={clsx(classNames.cols.prOverview, "!min-w-[100px] !max-w-[130px] ")}>
           <PullRequestOverview
-            merged={repoTotals["merged"]}
-            open={repoTotals["opened"]}
-            closed={repoTotals["closed"]}
-            draft={repoTotals["draft"]}
-            churn={repoTotals["churn"]} />
+            merged={merged}
+            open={open}
+            closed={closed}
+            draft={drafts}
+            churn={churn} />
         </div>
 
         {/* Average Pr velocity col*/}
         <div className={clsx(classNames.cols.prVelocity, "!max-w-[130px] min-w-[130px] !justify-start")}>
           <div>
-            {repoData.length > 0 ? getRelativeDays(Math.round(repoTotals["velocity"] / repoData.length)) : "-"}
+            {repoData.length > 0 ? getRelativeDays(Math.round(velocity / repoData.length)) : "-"}
           </div>
-          <Pill text={repoTotals["total"] > 0 ? `${Math.round((repoTotals["merged"]/repoTotals["total"]) * 100)}%` : "-"} size="small" color="green" />
+          <Pill text={total > 0 ? `${Math.round((merged/total) * 100)}%` : "-"} size="small" color="green" />
         </div>
 
         {/* Members avatar col*/}
         <div className={clsx(classNames.cols.contributors, "lg:flex hidden")}>
-          {members?.length! > 0 ? <StackedAvatar contributors={members || []} /> : "-"}
+          {members?.length! > 0 ? <StackedAvatar contributors={members || []} /> : ""}
 
           {members?.length! > 5 ? <div>&nbsp;{`+${members?.length! - 5} members`}</div> : ""}
         </div>
