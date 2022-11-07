@@ -68,7 +68,7 @@ const InsightPageCard = ({
   const averagePrOpened = repoData.length > 0 ? Math.round(((open || 0)/total) * 100) : 0;
 
   return (
-    <div className=" w-[428px] py-[15px] px-[14px] rounded-lg flex flex-col gap-y-3 mx-2 bg-white border">
+    <div className=" w-[428px] py-[15px] px-[14px] rounded-lg flex flex-col gap-y-3 gap-x-2 bg-white border">
       {/* Card header */}
       <div className="flex items-center justify-between">
         <div>{insight.name}</div>
