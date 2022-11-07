@@ -1,6 +1,7 @@
-const useLoginRepoList = () => {
+import { useState } from "react";
 
-  const repoList = [
+const useLoginRepoList = () => {
+  const defaultRepoList = [
     {
       repoOwner: "statelyai",
       repoName: "xstate",
@@ -28,8 +29,12 @@ const useLoginRepoList = () => {
     }
   ];
 
-  return repoList;
+  const [repoList, setRepoList] = useState(defaultRepoList);
 
+  return {
+    repoList,
+    setRepoList
+  };
 };
 
 export default useLoginRepoList;

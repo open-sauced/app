@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { WithPageLayout } from "../interfaces/with-page-layout";
-import LoginLayout from "layouts/login";
+import { Octokit } from "octokit";
 import { useRouter } from "next/router";
-import Card from "components/atoms/Card/card";
-import ProgressPie from "components/atoms/ProgressPie/progress-pie";
-import Title from "components/atoms/Typography/title";
-import Text from "components/atoms/Typography/text";
-import Icon from "components/atoms/Icon/icon";
+import { User } from "@supabase/supabase-js";
+
 import CompletedIcon from "public/icons/completed-icon.svg";
 import GitHubAuthActiveIcon from "public/icons/github-auth-active-icon.svg";
 import ChooseRepoIcon from "public/icons/choose-repo-icon.svg";
@@ -16,16 +12,25 @@ import PATActiveIcon from "public/icons/pat-active-icon.svg";
 import HighlightIcon from "public/icons/highlight-icon.svg";
 import GitHubIcon from "public/icons/github-icon.svg";
 import AddIcon from "public/icons/add-icon.svg";
+
+import { useGlobalStateContext } from "context/global-state";
+import LoginLayout from "layouts/login";
+import { WithPageLayout } from "interfaces/with-page-layout";
+import { LoginRepoObjectInterface } from "interfaces/login-repo-object-interface";
+
+import Card from "components/atoms/Card/card";
+import ProgressPie from "components/atoms/ProgressPie/progress-pie";
+import Title from "components/atoms/Typography/title";
+import Text from "components/atoms/Typography/text";
+import Icon from "components/atoms/Icon/icon";
 import Button from "components/atoms/Button/button";
 import TextInput from "components/atoms/TextInput/text-input";
-import { LoginRepoObjectInterface } from "interfaces/login-repo-object-interface";
+
 import useLoginRepoList from "lib/hooks/useLoginRepoList";
-import { captureAnayltics } from "lib/utils/analytics";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
-import { User } from "@supabase/supabase-js";
-import { useGlobalStateContext } from "context/global-state";
-import { getAvatarLink } from "lib/utils/github";
 import useSession from "lib/hooks/useSession";
+import { captureAnayltics } from "lib/utils/analytics";
+import { getAvatarLink } from "lib/utils/github";
 
 type handleLoginStep = () => void;
 
@@ -39,27 +44,19 @@ const LoginStep1: React.FC<LoginStep1Props> = ({ handleLoginStep, user }) => {
 
   const router = useRouter();
   const { onboarded } = useSession();
+  const { providerToken, signIn } = useSupabaseAuth();
 
   useEffect(() => {
     if (onboarded) {
       router.push("/");
-    } else if (onboarded === false && user) {
+    } else if (onboarded === false && user && providerToken) {
       handleLoginStep();
     }
   }, [handleLoginStep, router, user, onboarded]);
 
   const handleGitHubAuth = async () => {
     // Redirect user to GitHub to authenticate
-    // await auth.signIn({ provider: 'github' }, {
-    //   redirectTo: process.env.NEXT_PUBLIC_ONBOARDING_CALLBACK_URL ?? '/'
-    // });
-
-    /**
-     * Starting on Step 2 because they've already authenticated
-     * via GitHub before starting onboarding. Will revisit
-     * after initial landing page is in place.
-     */
-    handleLoginStep();
+    await signIn({ provider: "github" });
   };
 
   return (
@@ -100,43 +97,52 @@ const LoginStep1: React.FC<LoginStep1Props> = ({ handleLoginStep, user }) => {
 
 interface LoginStep2Props {
   handleLoginStep: handleLoginStep;
+  setRepoList: Function;
 }
 
-const LoginStep2: React.FC<LoginStep2Props> = ({ handleLoginStep }) => {
-  const { sessionToken } = useSupabaseAuth();
-  const { setAppState } = useGlobalStateContext();
+const LoginStep2: React.FC<LoginStep2Props> = ({ handleLoginStep, setRepoList }) => {
+  const { providerToken } = useSupabaseAuth();
+  const [orgName, setOrgName] = useState("");
 
   captureAnayltics("User Onboarding", "onboardingStep2", "visited");
 
-  // Mark the user as onboarded
-  const onboardUser = async () => {
-    try {
-      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/onboarding`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${sessionToken}`
-        }
-      });
-      setAppState({ onboarded: true });
-    } catch (e) {
-      // handle error
-    }
-  };
-
-  // Validate PAT
-  const [token, setToken] = useState("");
   const handleAddPAT = async () => {
     try {
-      await onboardUser();
+      if (providerToken) {
+        const ocktokit = new Octokit({ auth: providerToken });
 
-      // Validate PAT and onboard user
-      if (token) {
-        // await fetch("/api/onboarding", {
-        //   method: "POST",
-        //   body: JSON.stringify({
-        //     token
-        //   })
-        // });
+        let repoList = [];
+        let response: { data: { id: number, full_name: string }[] };
+
+        if (orgName) {
+          response = await ocktokit.request("GET /orgs/{org}/repos", {
+            org: orgName,
+            sort: "updated",
+            direction: "desc",
+            // eslint-disable-next-line
+            per_page: 50
+          });
+        } else {
+          response = await ocktokit.request("GET /user/repos", {
+            visibility: "public",
+            sort: "updated",
+            direction: "desc",
+            // eslint-disable-next-line
+            per_page: 50
+          });
+        }
+
+        repoList = response.data.map(repo => {
+          const [repoOwner, repoName] = repo.full_name.split("/");
+
+          return {
+            repoId: repo.id,
+            repoName,
+            repoOwner
+          };
+        });
+
+        setRepoList(repoList);
       }
 
       // If valid, go to next step
@@ -156,13 +162,10 @@ const LoginStep2: React.FC<LoginStep2Props> = ({ handleLoginStep }) => {
             <Title className="!text-sm !text-light-orange-9">Step Two</Title>
           </div>
           <div className="gap-2 mb-4">
-            <Title className="!text-2xl">Provide your token</Title>
+            <Title className="!text-2xl">Provide your Organization</Title>
           </div>
           <div className="mb-4 text-left ">
-            <Text className="!text-sm">
-              In order to provide fresh, and insightful data, we’ll need a favor: a GitHub personal access token to
-              fetch public GitHub data. Here’s how we’re going to use your token:
-            </Text>
+            <Text className="!text-sm">In order to provide fresh, and insightful data, we’ll use your authenticated GitHub access token to fetch public GitHub data. Here’s how we’re going to use your token:</Text>
           </div>
           <div className="flex gap-2 items-start mb-4">
             <Icon IconImage={HighlightIcon} />
@@ -178,15 +181,8 @@ const LoginStep2: React.FC<LoginStep2Props> = ({ handleLoginStep }) => {
           </div>
         </div>
         <div className="flex flex-col gap-2">
-          <TextInput
-            placeholder="Insert Your Token Here"
-            onChange={(e) => setToken(e.target.value)}
-            name={""}
-            descriptionText={""}
-          />
-          <Button onClick={handleAddPAT} type="primary" className="w-full h-10">
-            Confirm Token
-          </Button>
+          <TextInput placeholder="Organization Name" onChange={(e) => setOrgName(e.target.value)}/>
+          <Button onClick={handleAddPAT} type="primary" className="w-full h-10">Continue</Button>
         </div>
       </div>
     </>
@@ -202,14 +198,33 @@ interface LoginStep3Props {
   repoList: LoginRepoObjectInterface[];
 }
 
-const LoginStep3: React.FC<LoginStep3Props> = ({ repoList, handleLoginStep, checkFollowed }) => {
+const LoginStep3: React.FC<LoginStep3Props> = ({ repoList, checkFollowed }) => {
   captureAnayltics("User Onboarding", "onboardingStep3", "visited");
+  const { setAppState } = useGlobalStateContext();
   const router = useRouter();
+  const { sessionToken } = useSupabaseAuth();
 
   const [isFollowing, setIsFollowing] = useState<boolean[]>(repoList.map(() => false));
+  const following = isFollowing.filter(follow => follow);
 
-  const handleSkipAddRepo = () => {
-    handleLoginStep();
+  const handleSkipAddRepo = async() => {
+    try {      
+      const selectedRepos = repoList.filter((_, index) => isFollowing[index]);
+      const repoIds = selectedRepos.map(repo => repo.repoId as number);
+      
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/onboarding`, {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${sessionToken}`
+        },
+        body: JSON.stringify({ ids: repoIds })
+      });
+
+      setAppState({ onboarded: true });
+    } catch (e) {
+      // handle error
+    }
+
     router.push("/hacktoberfest");
   };
 
@@ -221,6 +236,12 @@ const LoginStep3: React.FC<LoginStep3Props> = ({ repoList, handleLoginStep, chec
         return newState;
       });
       checkFollowed.setIsClickedFollowed(true);
+    } else {
+      setIsFollowing((prevState) => {
+        const newState = [...prevState];
+        newState[index] = !newState[index];
+        return newState;
+      });
     }
   };
 
@@ -237,7 +258,7 @@ const LoginStep3: React.FC<LoginStep3Props> = ({ repoList, handleLoginStep, chec
           </div>
           <div className="mb-4 text-left ">
             <Text className="!text-sm">
-              We’ll provide insights on the repos you choose to follow. You can follow up to 10 repos.
+              We`ll provide insights on the repos you choose to follow. You can follow up to 10 repos.
             </Text>
           </div>
           <div className="max-h-[250px] lg:h-[165px] overflow-y-auto">
@@ -258,7 +279,7 @@ const LoginStep3: React.FC<LoginStep3Props> = ({ repoList, handleLoginStep, chec
                       <Text className="!text-[16px]  !text-light-slate-12">{`${repo.repoName}`}</Text>
                     </div>
                   </div>
-                  <Button onClick={() => handleFollowRepo(index)} type={isFollowing[index] ? "outline" : "default"}>
+                  <Button disabled={following.length >= 10 && !isFollowing[index]} onClick={() => handleFollowRepo(index)} type={isFollowing[index] ? "outline" : "default"}>
                     {isFollowing[index] ? (
                       "Following"
                     ) : (
@@ -274,7 +295,7 @@ const LoginStep3: React.FC<LoginStep3Props> = ({ repoList, handleLoginStep, chec
         </div>
         <div onClick={handleSkipAddRepo} className="flex justify-center gap-2">
           <Title className="!text-sm font-semibold !text-light-orange-9 cursor-pointer">
-            {checkFollowed.isClickedFollowed ? "Continue" : "Skip this step"}
+            {following.length > 0 ? "Continue" : "Skip this step"}
           </Title>
         </div>
       </div>
@@ -286,7 +307,7 @@ const Login: WithPageLayout = () => {
   type LoginSteps = number;
 
   const { user } = useSupabaseAuth();
-  const repoList = useLoginRepoList();
+  const {repoList, setRepoList} = useLoginRepoList();
 
   const highlighted = "!text-light-slate-12";
 
@@ -294,16 +315,6 @@ const Login: WithPageLayout = () => {
   const [isClickedFollowed, setIsClickedFollowed] = useState<boolean>(false);
 
   const checkFollowed = { isClickedFollowed, setIsClickedFollowed };
-
-  // check if user is authenticated
-
-  // Enter PAT
-  // Validate PAT
-  // Continue
-
-  // Optionally Select repos
-
-  // Go to homepage
 
   const handleLoginStep = async () => {
     setCurrentLoginStep((prevStep) => prevStep + 1);
@@ -342,16 +353,10 @@ const Login: WithPageLayout = () => {
             </Text>
           </div>
           <div className="hidden lg:flex gap-2 items-center mb-8">
-            <Icon
-              IconImage={currentLoginStep === 2 ? PATActiveIcon : currentLoginStep < 2 ? PATIcon : CompletedIcon}
-              size={48}
-            />
-            <Text
-              disabled={currentLoginStep !== 2}
-              className={`!text-[16px]  ${currentLoginStep === 2 && highlighted}`}
-            >
-              Provide a Personal Access Token
-            </Text>
+
+            <Icon IconImage={currentLoginStep === 2 ? PATActiveIcon : currentLoginStep < 2 ? PATIcon : CompletedIcon} size={48} />
+            <Text disabled={currentLoginStep !== 2} className={`!text-[16px] !font-medium ${currentLoginStep === 2 && highlighted}`}>Provide your Organization</Text>
+
           </div>
           <div className="hidden lg:flex gap-2 items-center mb-8">
             <Icon
@@ -373,11 +378,9 @@ const Login: WithPageLayout = () => {
           </div>
         </section>
         <section className="w-full lg:h-full p-9 rounded-lg lg:rounded-r-lg bg-white">
-          {currentLoginStep === 1 && <LoginStep1 handleLoginStep={handleLoginStep} user={user} />}
-          {currentLoginStep === 2 && <LoginStep2 handleLoginStep={handleLoginStep} />}
-          {currentLoginStep >= 3 && (
-            <LoginStep3 handleLoginStep={handleLoginStep} repoList={repoList} checkFollowed={checkFollowed} />
-          )}
+          {currentLoginStep === 1 && <LoginStep1 handleLoginStep={handleLoginStep} user={user}/>}
+          {currentLoginStep === 2 && <LoginStep2 handleLoginStep={handleLoginStep} setRepoList={setRepoList}/>}
+          {currentLoginStep >= 3 && <LoginStep3 handleLoginStep={handleLoginStep} repoList={repoList} checkFollowed={checkFollowed}/>}
         </section>
       </>
     </Card>
