@@ -17,7 +17,7 @@ const InsightsHub: WithPageLayout = () => {
   const favorites = insightsData.filter(insight => insight.is_favorite).slice(0, 3);
 
   return (
-    <div className="py-2">
+    <div className="flex flex-col w-full gap-4 py-2">
       <div className="flex justify-between py-2">
         <Title className="!text-2xl !leading-none !font-medium" level={1}>
             Insights Dashboard
