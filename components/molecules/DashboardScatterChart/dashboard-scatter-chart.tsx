@@ -36,7 +36,7 @@ const DashboardScatterChart: React.FC<DashboardScatterChartProps> = ({ title, op
   return (
     <div>
       <div className="flex justify-between px-1">
-        <Title level={4} className="!text-sm !  !text-light-slate-12">
+        <Title level={4} className="!text-sm  !text-light-slate-12">
           {title}
         </Title>
         {/* replaced display flex to hidden on show/bots container */}

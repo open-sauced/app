@@ -86,7 +86,7 @@ const ContributorTable = ({ contributor }: CardTableProps) => {
                     </IconContext.Provider>
                   )}
                   <Text>{calcDistanceFromToday(new Date(parseInt(prIssuedTime, 10)))}</Text>
-                  <Text title={prName} className="!text-light-slate-12 !w-32 md:!w-72  !truncate ! ">
+                  <Text title={prName} className="!text-light-slate-12 !w-32 md:!w-72  !truncate ">
                     {prName}
                   </Text>
                 </div>

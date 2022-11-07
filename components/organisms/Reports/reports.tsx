@@ -77,7 +77,7 @@ const Reports = ({ waitlisted, hasReports }: ReportsProps): JSX.Element => {
   return (
     <section className="flex flex-col w-full py-4 px-2 md:px-4 justify-center items-center">
       <div className="max-w-4xl">
-        <Title className="!  relative" level={3}>
+        <Title className=" relative" level={3}>
           Contribution Insights
         </Title>
         <hr className="border-light-slate-6 my-4" />
@@ -88,7 +88,7 @@ const Reports = ({ waitlisted, hasReports }: ReportsProps): JSX.Element => {
 
             {reports.length > 0 && (
               <>
-                <Title className="!  relative mt-16" level={3}>
+                <Title className=" relative mt-16" level={3}>
                   Download History
                 </Title>
                 <hr className="border-light-slate-6 my-4" />

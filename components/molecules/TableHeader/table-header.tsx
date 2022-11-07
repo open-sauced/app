@@ -14,7 +14,7 @@ const TableHeader = ({ title, showing, updateLimit }: TableHeaderProps): JSX.Ele
   return (
     <div className="flex flex-wrap gap-y-2 flex-col md:flex-row md:justify-between md:items-end w-full md:pb-4">
       <div className="flex gap-x-4 items-end">
-        <Title className="!text-2xl !leading-none ! " level={1}>
+        <Title className="!text-2xl !leading-none " level={1}>
           {title}
         </Title>
         <PaginationResult className="hidden !translate-y-[2px]  md:inline-flex" {...showing} />
