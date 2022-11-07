@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { LinkIcon } from "@primer/octicons-react";
 import { BsFillArrowUpCircleFill } from "react-icons/bs";
+import { User } from "@supabase/supabase-js";
 
 import Button from "components/atoms/Button/button";
 import Text from "components/atoms/Typography/text";
@@ -14,11 +15,13 @@ import PieChart, { PieData } from "../PieChart/pie-chart";
 import StackedAvatar from "../StackedAvatar/stacked-avatar";
 
 interface InsightPageCardProps {
+  user: User | null;
   insight: DbUserInsight;
 }
 
 const InsightPageCard = ({
-  insight
+  insight,
+  user
 }: InsightPageCardProps): JSX.Element => {
   const members: any[] = [];
   const repoIds = insight.repos.map(repo => repo.repo_id);
@@ -54,8 +57,9 @@ const InsightPageCard = ({
 
   // Function to handle copy to clipboard
   const handleCopyToClipboard = async (content: any) => {
+    const url = new URL(content, window.location.origin).toString();
     try {
-      await navigator.clipboard.writeText(content);
+      await navigator.clipboard.writeText(url);
     } catch (error) {
       console.log(error);
     }
@@ -111,11 +115,11 @@ const InsightPageCard = ({
 
       {/* Card footer */}
       <div className="flex mt-4 justify-between">
-        <Button onClick={() => handleCopyToClipboard("text to be copied")} className="!w-48" type="outline">
+        <Button onClick={() => handleCopyToClipboard(`/pages/${user?.user_metadata.user_name}/${insight.id}/dashboard`)} className="!w-48" type="outline">
           {" "}
           <LinkIcon size={16} className="mr-2" /> Copy Link
         </Button>
-        <Link href={"#"}>
+        <Link href={`/pages/${user?.user_metadata.user_name}/${insight.id}/dashboard`}>
           <Button className="!w-48" type="primary">
             Go to Insight Page
           </Button>
