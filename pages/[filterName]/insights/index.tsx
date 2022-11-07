@@ -29,7 +29,7 @@ const InsightsHub: WithPageLayout = () => {
         </Link>
       </div>
 
-      <div className="flex py-8">
+      <div className="flex justify-center flex py-8 md:flex-wrap">
         <section className="flex flex-wrap gap-4 justify-center lg:flex-row lg:flex-nowrap max-w-full">
         {
           favorites.map(insight => <InsightPageCard key={`insight_${insight.id}`} insight={insight} />)
