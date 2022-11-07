@@ -319,10 +319,10 @@ const Login: WithPageLayout = () => {
                 currentLoginStep === 1
                   ? 0
                   : currentLoginStep === 2
-                  ? 33
-                  : currentLoginStep === 3 && !isClickedFollowed
-                  ? 66
-                  : 100
+                    ? 33
+                    : currentLoginStep === 3 && !isClickedFollowed
+                      ? 66
+                      : 100
               }
             />
             <Title className="!text-2xl">Let&apos;s get started</Title>
@@ -359,8 +359,8 @@ const Login: WithPageLayout = () => {
                 currentLoginStep === 3 && !isClickedFollowed
                   ? ChooseRepoActiveIcon
                   : currentLoginStep < 3
-                  ? ChooseRepoIcon
-                  : CompletedIcon
+                    ? ChooseRepoIcon
+                    : CompletedIcon
               }
               size={48}
             />
