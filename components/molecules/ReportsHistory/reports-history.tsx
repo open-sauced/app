@@ -1,14 +1,17 @@
 import Text from "components/atoms/Typography/text";
+import TableTitle from "components/atoms/TableTitle/table-title";
+
 import { Report } from "interfaces/report-type";
 
-import TableTitle from "components/atoms/TableTitle/table-title";
 import CSVDownload from "./csv-download";
 
 interface ReportsHistoryProps {
   reportList?: Report[];
+  repositories?: number[];
 }
 
-const ReportsHistory = ({ reportList }: ReportsHistoryProps): JSX.Element => {
+const ReportsHistory = ({ reportList, repositories }: ReportsHistoryProps): JSX.Element => {
+
   const tableStyles = {
     text: "text-sm   text-slate-900 tracking-tight",
     col1: "flex-[1.5]",
@@ -45,7 +48,7 @@ const ReportsHistory = ({ reportList }: ReportsHistoryProps): JSX.Element => {
                 <div className={`${tableStyles.col2} ${tableStyles.text}`}>{reportDate}</div>
                 <div className={`${tableStyles.col3} ${tableStyles.text}`}>{reportFormat}</div>
                 <div className={`${tableStyles.col4} ${tableStyles.text}`}>
-                  <CSVDownload report={report}></CSVDownload>
+                  <CSVDownload report={report} repositories={repositories}></CSVDownload>
                 </div>
               </div>
             );

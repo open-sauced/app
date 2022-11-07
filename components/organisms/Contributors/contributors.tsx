@@ -13,11 +13,15 @@ import ContributorCard from "../ContributorCard/contributor-card";
 
 const colorKeys = Object.keys(color);
 
-const Contributors = (): JSX.Element => {
+interface ContributorProps {
+  repositories?: number[];
+}
+
+const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
   const router = useRouter();
   const { filterName } = router.query;
   const topic = filterName as string;  
-  const { data,setLimit, meta, setPage, page, isError, isLoading } = useTopicContributions();
+  const { data,setLimit, meta, setPage, page, isError, isLoading } = useTopicContributions(10, repositories);
   const contributorArray = isError
     ? []
     : data?.map((contributor) => {
@@ -70,7 +74,13 @@ const Contributors = (): JSX.Element => {
       <div className="w-full grid grid-cols-automobile  md:grid-cols-autodesktop gap-3">
         {isLoading ? "Loading..." : ""}
         {contributorArray.map((contributor, index) => (
-          <ContributorCard key={index} className="" contributor={{ ...contributor }} topic={topic} />
+          <ContributorCard
+            key={index}
+            className=""
+            contributor={{ ...contributor }}
+            topic={topic}
+            repositories={repositories}
+          />
         ))}
       </div>
 

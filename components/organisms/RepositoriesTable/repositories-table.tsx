@@ -1,4 +1,5 @@
 import { Serie } from "@nivo/line";
+import { User } from "@supabase/supabase-js";
 import RepoRow from "components/molecules/RepoRow/repo-row";
 import { StaticImageData } from "next/image";
 
@@ -37,6 +38,7 @@ export interface RepositoriesRows {
 }
 
 interface RepositoriesTableProps {
+  user: User | null;
   topic?: string;
   listOfRepositories: RepositoriesRows[];
   loading: boolean;
@@ -61,7 +63,8 @@ const RepositoriesTable = ({
   listOfRepositories,
   loading,
   error,
-  topic
+  topic,
+  user
 }: RepositoriesTableProps): JSX.Element => {
   return (
     <section className="flex  flex-col">
@@ -71,7 +74,7 @@ const RepositoriesTable = ({
       {!loading && !error && Array.isArray(listOfRepositories) &&
             listOfRepositories.length > 0 &&
             listOfRepositories.map((item, index) => (
-              <RepoRow key={`${item.handle}/${item.name}/${index}`} topic={topic} repo={item} />
+              <RepoRow key={`${item.handle}/${item.name}/${index}`} topic={topic} repo={item} user={user} />
             ))}
     </section>
   );

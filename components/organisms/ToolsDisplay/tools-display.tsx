@@ -8,23 +8,24 @@ import useSession from "lib/hooks/useSession";
 
 interface ToolProps {
   tool?: string;
+  repoIds?: number[];
 }
 
-const Tool = ({ tool }: ToolProps): JSX.Element => {
+const Tool = ({ tool, repoIds }: ToolProps): JSX.Element => {
   const { hasReports, waitlisted } = useSession();  
   captureAnayltics("Tools Display", "tools", `${tool} selected`);
 
   switch (tool) {
   case "Dashboard":
-    return <Dashboard />;
+    return <Dashboard repositories={repoIds} />;
 
   case "Repositories":
-    return <Repositories />;
+    return <Repositories repositories={repoIds} />;
 
   case "Reports":
     return <Reports hasReports={hasReports} waitlisted={waitlisted}/>; 
   case "Contributors":
-    return <Contributors />;
+    return <Contributors repositories={repoIds} />;
   default:
     return <> {tool ? `${tool}` : "Test"} Tool Page</>;
   }

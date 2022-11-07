@@ -8,7 +8,7 @@ interface PaginatedContributorsResponse {
   readonly meta: Meta;
 }
 
-const useTopicContributions = (initialLimit = 10) => {
+const useTopicContributions = (initialLimit = 10, repoIds: number[] = []) => {
   const router = useRouter();
   const { filterName, selectedFilter } = router.query;
   const topic = filterName as string;
@@ -19,7 +19,8 @@ const useTopicContributions = (initialLimit = 10) => {
   const pageQuery = page ? `page=${page}` : "";
   const filterQuery = getFilterQuery(selectedFilter);
   const limitQuery = limit ? `&limit=${limit}` : "";
-  const endpointString = `${baseEndpoint}?${pageQuery}${filterQuery}${limitQuery}`;
+  const reposQuery = repoIds.length > 0 ? `&repoIds=${repoIds.join(",")}`: "";
+  const endpointString = `${baseEndpoint}?${pageQuery}${filterQuery}${limitQuery}${reposQuery}`;
 
   const { data, error, mutate } = useSWR<PaginatedContributorsResponse, Error>(topic ? endpointString : null);
 
