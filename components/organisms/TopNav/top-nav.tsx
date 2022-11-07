@@ -1,18 +1,14 @@
 import NavLinks from "components/molecules/NavLinks/nav-links";
+import Link from "next/link";
+import React from "react";
+
+import AuthSection from "components/molecules/AuthSection/auth-section";
+import HeaderLogo from "components/molecules/HeaderLogo/header-logo";
+
 import useSession from "lib/hooks/useSession";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import React from "react";
-import AuthSection from "../../molecules/AuthSection/auth-section";
-import HeaderLogo from "../../molecules/HeaderLogo/header-logo";
 
 const TopNav: React.FC = () => {
-  const router = useRouter();
-
-  const { filterName } = router.query;
-  const topic = filterName as string;
-
   const { user } = useSupabaseAuth();
   const { onboarded } = useSession();
 
@@ -21,7 +17,7 @@ const TopNav: React.FC = () => {
       <div className="flex gap-8 items-center">
         <HeaderLogo withBg={false} textIsBlack />
         {!!user && onboarded ? (
-          <Link className="text-sm text-light-slate-10" href={`/${topic}/insights`}>
+          <Link className="text-sm text-light-slate-10" href={`/${user.user_metadata.user_name}/insights`}>
             Insights Hub
           </Link>
         ) : (
