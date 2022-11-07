@@ -6,7 +6,7 @@ interface PaginatedTopicCommitResponse {
   readonly data: DbRepoCommit[];
   readonly meta: Meta;
 }
-const useTopicContributorCommits = (contributor: string, topic = "hacktoberfest") => {
+const useTopicContributorCommits = (contributor: string, topic: string) => {
   const lineChart = {
     xAxis: {
       type: "category",

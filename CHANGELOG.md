@@ -5,6 +5,18 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.16.0-beta.10](https://github.com/open-sauced/insights/compare/v1.16.0-beta.9...v1.16.0-beta.10) (2022-11-03)
+
+
+### 🍕 Features
+
+* change default topic to javascript ([#570](https://github.com/open-sauced/insights/issues/570)) ([bc810d8](https://github.com/open-sauced/insights/commit/bc810d87b74b01257ae115a6960c948d1922bf44))
+
+
+### 🐛 Bug Fixes
+
+* pass topic to contributor and commit hooks ([#571](https://github.com/open-sauced/insights/issues/571)) ([ebb061f](https://github.com/open-sauced/insights/commit/ebb061fcf310fa156f437ddcdb056a341a9e67c9))
+
 ## [1.16.0-beta.9](https://github.com/open-sauced/insights/compare/v1.16.0-beta.8...v1.16.0-beta.9) (2022-11-01)
 
 
