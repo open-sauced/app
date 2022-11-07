@@ -18,10 +18,11 @@ export interface PRs {
 
 interface CardTableProps {
   contributor: string;
+  topic: string;
 }
 
-const ContributorTable = ({ contributor }: CardTableProps) => {
-  const { data, isLoading } = useTopicContributorPRs(contributor);
+const ContributorTable = ({ contributor, topic }: CardTableProps) => {
+  const { data, isLoading } = useTopicContributorPRs(contributor, topic);
   return data.length > 0 ? (
     <>
       <div className="flex flex-col">
