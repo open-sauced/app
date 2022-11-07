@@ -37,7 +37,7 @@ const CardRepoList = ({ repoList, limit = 5 }: CardRepoListProps): JSX.Element =
           :
 
           <>
-            No contributions currently...
+            No repositories currently...
           </>
       }
     </div>

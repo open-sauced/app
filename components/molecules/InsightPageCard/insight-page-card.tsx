@@ -61,7 +61,7 @@ const InsightPageCard = ({
     }
   };
 
-  const averagePrOpened = total > 0 ? Math.floor(((open || 0) / total) * 100) : 0;
+  const averagePrOpened = repoData.length > 0 ? Math.round(((open || 0)/total) * 100) : 0;
 
   return (
     <div className=" w-[428px] py-[15px] px-[14px] rounded-lg flex flex-col gap-y-3 mx-2 bg-white border">
@@ -87,7 +87,7 @@ const InsightPageCard = ({
               className="flex text-light-grass-10 justify-between items-end pr-8 mt-1
             "
             >
-              <Text className="!text-xl !text-black !leading-none">{`${open} PRs`}</Text>
+              <Text className="!text-xl !text-black !leading-none">{`${open} PR${open > 1 ? "s" : ""}`}</Text>
               <p className="flex items-end">
                 <span className="mb-0 leading-none">{`${averagePrOpened}%`}</span>{" "}
                 <BsFillArrowUpCircleFill className="ml-1" />
@@ -96,10 +96,10 @@ const InsightPageCard = ({
           </div>
           <div>
             <span className="text-xs text-light-slate-11">Avg PRs velocity</span>
-            <div className="flex text-light-red-9 justify-between items-end pr-8 mt-1">
+            <div className="flex text-green-9 justify-between items-end pr-8 mt-1">
               <Text className="!text-xl !text-black !leading-none">{repoData.length > 0 ? getRelativeDays(Math.round(velocity / repoData.length)) : "-"}</Text>
               <p className="flex items-end">
-                <span className="mb-0 leading-none">{total > 0 ? `${Math.round((merged/total) * 100)}%` : "-"}</span> <BsFillArrowUpCircleFill className="ml-1" />
+                <span className="mb-0 leading-none">{total > 0 ? `${Math.round((merged/total) * 100)}%` : "-"}</span> <BsFillArrowUpCircleFill className="ml-1" fill="green" color="green" />
               </p>
             </div>
           </div>
