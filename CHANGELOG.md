@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.16.0-beta.12](https://github.com/open-sauced/insights/compare/v1.16.0-beta.11...v1.16.0-beta.12) (2022-11-08)
+
+
+### 🧑‍💻 Code Refactoring
+
+* set default font weight to `medium` and removed all instance in code base ([#569](https://github.com/open-sauced/insights/issues/569)) ([f9f55ab](https://github.com/open-sauced/insights/commit/f9f55abcd7f9c2518024456bf59be4b83cc6d82c))
+
 ## [1.16.0-beta.11](https://github.com/open-sauced/insights/compare/v1.16.0-beta.10...v1.16.0-beta.11) (2022-11-07)
 
 
