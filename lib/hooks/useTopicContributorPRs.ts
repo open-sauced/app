@@ -8,7 +8,7 @@ interface PaginatedContributorPRsResponse {
 const useTopicContributorPRs = (contributor: string, topic: string, repoIds: number[] = []) => {
   const baseEndpoint = `${topic}/${contributor}/prs`;
   const reposQuery = repoIds.length > 0 ? `repoIds=${repoIds.join(",")}`: "";
-  const endpointString = `${baseEndpoint}?${reposQuery}`;
+  const endpointString = `${baseEndpoint}?limit=8&${reposQuery}`;
 
   const { data, error, mutate } = useSWR<PaginatedContributorPRsResponse, Error>(endpointString);
 
