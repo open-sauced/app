@@ -5,8 +5,8 @@ import InsightPageCard from "components/molecules/InsightPageCard/insight-page-c
 import InsightPageTable from "components/molecules/InsightPageTable/insight-page-table";
 import Title from "components/atoms/Typography/title";
 
-import { WithPageLayout } from "interfaces/with-page-layout";
 import HubLayout from "layouts/hub";
+import { WithPageLayout } from "interfaces/with-page-layout";
 import { useUserInsights } from "lib/hooks/useUserInsights";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 

@@ -29,7 +29,7 @@ const InsightPageTable = ({ insights }: InsightPageTableProps) => {
           </Title>
         </div>
         <div className="w-full  md:w-3/5 flex gap-x-5 items-center justify-end">
-          <Select
+          {/* <Select
             placeholder="Last updated - ASC"
             options={selectOptions}
             className="w-[275px]"
@@ -37,7 +37,7 @@ const InsightPageTable = ({ insights }: InsightPageTableProps) => {
           ></Select>
           <div className="w-58 hidden lg:block">
             <Search placeholder="Search repositories" className="max-w-full" name={"query"} />
-          </div>
+          </div> */}
         </div>
       </div>
 
