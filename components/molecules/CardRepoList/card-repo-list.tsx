@@ -8,14 +8,13 @@ export interface RepoList {
 
 interface CardRepoListProps {
   repoList: RepoList[];
-  limit?: number
+  limit?: number;
 }
 
 const CardRepoList = ({ repoList, limit = 5 }: CardRepoListProps): JSX.Element => {
-
-  const sanitizedRepoList = [...new Map(repoList.map(item => [item["repoName"], item])).values()];
+  const sanitizedRepoList = [...new Map(repoList.map((item) => [item["repoName"], item])).values()];
   return (
-    <div className="flex gap-2 items-center font-medium flex-wrap text-xs text-light-slate-11">
+    <div className="flex gap-2 items-center flex-wrap text-xs text-light-slate-11">
       {
         repoList.length > 0 ?
           <>

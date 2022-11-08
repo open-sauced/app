@@ -26,7 +26,7 @@ const InsightPageTable = ({ user, insights }: InsightPageTableProps) => {
       {/* Table title */}
       <div className="flex justify-between h-11 items-center">
         <div className="flex gap-x-4 items-end">
-          <Title className="!text-2xl !leading-none !font-medium" level={1}>
+          <Title className="!text-2xl !leading-none " level={1}>
             All Insight Pages
           </Title>
         </div>

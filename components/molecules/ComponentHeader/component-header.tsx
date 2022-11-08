@@ -10,9 +10,7 @@ const ComponentHeader: React.FC<ComponentHeaderProps> = ({ title }) => {
   return (
     <div className="w-full flex justify-between pb-5">
       <div>
-        <Text className="!text-light-slate-12 font-medium">
-          {title}
-        </Text>
+        <Text className="!text-light-slate-12  ">{title}</Text>
       </div>
       <div>
         <IconButton />

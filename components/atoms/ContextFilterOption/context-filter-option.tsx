@@ -13,7 +13,7 @@ const ContextFilterOption: React.FC<ContextFilterOptionProps> = ({ children, isS
       onClick={onClick}
       className={`${
         isSelected && "bg-light-orange-3"
-      } flex w-full px-2 py-1.5  text-sm text-slate-600 font-medium whitespace-nowrap rounded-md  cursor-pointer     hover:bg-light-orange-3 hover:text-slate-800 focus:outline-none focus-visible:border-orange-500 focus-visible:ring focus-visible:ring-orange-200 transition`}
+      } flex w-full px-2 py-1.5  text-sm text-slate-600   whitespace-nowrap rounded-md  cursor-pointer     hover:bg-light-orange-3 hover:text-slate-800 focus:outline-none focus-visible:border-orange-500 focus-visible:ring focus-visible:ring-orange-200 transition`}
     >
       <div className="flex w-full items-center">
         {isSelected ? (
