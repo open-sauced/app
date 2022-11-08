@@ -40,7 +40,7 @@ const testRows = [
     stars: 20,
     size: 30984
   }
-];
+] as DbRepo[];
 
 // SelectableTable Template
 const RepositoryTableTemplate: ComponentStory<typeof RepositoryTable> = (args) => <RepositoryTable {...args} />;

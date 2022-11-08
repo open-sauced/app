@@ -24,7 +24,7 @@ const Tool = ({ tool }: ToolProps): JSX.Element => {
   case "Reports":
     return <Reports hasReports={hasReports} waitlisted={waitlisted}/>; 
   case "Contributors":
-    return <Contributors/>;
+    return <Contributors />;
   default:
     return <> {tool ? `${tool}` : "Test"} Tool Page</>;
   }
