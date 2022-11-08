@@ -17,7 +17,7 @@ const TopNav: React.FC = () => {
       <div className="flex gap-8 items-center">
         <HeaderLogo withBg={false} textIsBlack />
         {!!user && onboarded ? (
-          <Link className="text-sm text-light-slate-10" href={`/${user.user_metadata.user_name}/insights`}>
+          <Link className="text-sm text-light-slate-10" href={"/hub/insights"}>
             Insights Hub
           </Link>
         ) : (

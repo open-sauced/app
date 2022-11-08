@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import Button from "components/atoms/Button/button";
 import InsightPageCard from "components/molecules/InsightPageCard/insight-page-card";
+
 import InsightPageTable from "components/molecules/InsightPageTable/insight-page-table";
 import Title from "components/atoms/Typography/title";
 
@@ -22,7 +23,7 @@ const InsightsHub: WithPageLayout = () => {
         <Title className="!text-2xl !leading-none !font-medium" level={1}>
             Insights Dashboard
         </Title>
-        <Link href={`/${user?.user_metadata.user_name}/insights/new`}>
+        <Link href={"/hub/insights/new"}>
           <Button type="primary">
             Add Insight Page
           </Button>
