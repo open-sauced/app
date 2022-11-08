@@ -34,10 +34,11 @@ const Header: React.FC = () => {
       </div>
       <div className="header-info flex flex-col grow justify-center p-2">
         <Title level={1} className="!text-3xl font-semibold tracking-tight text-slate-900">
-          { isHacktoberfest ? "Hacktoberfest 2022" : uppercaseFirst(filterName as string) }
+          {isHacktoberfest ? "Hacktoberfest 2022" : uppercaseFirst(filterName as string)}
         </Title>
-        <Text className="mt-1 !text-base font-medium text-slate-500">
-          Insights on GitHub repositories { isHacktoberfest ? "opted into the largest open source hackathon." : `using the ${filterName} topic.` }
+        <Text className="mt-1 !text-base   text-slate-500">
+          Insights on GitHub repositories{" "}
+          {isHacktoberfest ? "opted into the largest open source hackathon." : `using the ${filterName} topic.`}
         </Text>
         <div className="flex mt-4 items-center relative  gap-2">
           <FilterCard filterName={filterName as string} isRemovable={false} icon="topic" />

@@ -39,7 +39,7 @@ const TextInput = ({
   return (
     <>
       <label className="flex w-full flex-col">
-        {label && <p className="mb-2 font-medium text-light-slate-9 text-sm">{label}</p>}
+        {label && <p className="mb-2   text-light-slate-9 text-sm">{label}</p>}
         <div
           className={clsx(
             classNames,
@@ -57,7 +57,7 @@ const TextInput = ({
             placeholder={placeholder || ""}
             onChange={onChange}
             value={value}
-            className="flex-1 focus:outline-none font-medium"
+            className="flex-1 focus:outline-none  "
             autoFocus={autoFocus}
             disabled={disabled}
           />
@@ -72,8 +72,8 @@ const TextInput = ({
           )}
         </div>
       </label>
-      {descriptionText ? <p className="mt-3 font-medium text-light-slate-9 text-sm">{descriptionText}</p> : ""}
-      {state === "invalid" && errorMsg ? <p className="mt-3 text-sm text-light-red-11 font-medium">{errorMsg}</p> : ""}
+      {descriptionText ? <p className="mt-3   text-light-slate-9 text-sm">{descriptionText}</p> : ""}
+      {state === "invalid" && errorMsg ? <p className="mt-3 text-sm text-light-red-11  ">{errorMsg}</p> : ""}
     </>
   );
 };
