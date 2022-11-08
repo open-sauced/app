@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { User } from "@supabase/supabase-js";
 
 import clsx from "clsx";
 
@@ -14,10 +15,11 @@ import { getRelativeDays } from "lib/utils/date-utils";
 import getRepoInsights from "lib/utils/get-repo-insights";
 
 interface InsightRepoRowProps {
+  user: User | null;
   insight: DbUserInsight;
 }
 
-const InsightTableRow = ({ insight }: InsightRepoRowProps) => {
+const InsightTableRow = ({ user, insight }: InsightRepoRowProps) => {
   const members: any[] = [];
   const repoIds = insight.repos.map(repo => repo.repo_id);
   const { data: repoData, isError, isLoading } = useRepositoriesList(false, repoIds);
@@ -62,7 +64,7 @@ const InsightTableRow = ({ insight }: InsightRepoRowProps) => {
         {/* Favorite col */}
         <div className="flex gap-4">
           <FavoriteSelector isFavorite={insight.is_favorite} />
-          <Link href="#">
+          <Link href={`/pages/${user?.user_metadata.user_name}/${insight.id}/dashboard`}>
             <Button type="text" className="!border !border-light-slate-8">
               Go to Page
             </Button>

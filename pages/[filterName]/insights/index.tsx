@@ -37,7 +37,7 @@ const InsightsHub: WithPageLayout = () => {
         </section>
       </div>
 
-      { isLoading ? "Loading..." : isError ? "Error...": <InsightPageTable insights={insightsData} /> }
+      { isLoading ? "Loading..." : isError ? "Error...": <InsightPageTable user={user} insights={insightsData} /> }
     </div>
   );
 };

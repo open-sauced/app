@@ -1,3 +1,4 @@
+import { User } from "@supabase/supabase-js";
 import clsx from "clsx";
 
 import Search from "components/atoms/Search/search";
@@ -8,6 +9,7 @@ import { classNames } from "components/organisms/RepositoriesTable/repositories-
 import InsightTableRow from "../InsightTableRow/insight-table-row";
 
 interface InsightPageTableProps {
+  user: User | null;
   insights: DbUserInsight[]
 }
 
@@ -18,7 +20,7 @@ const selectOptions = [
   { name: "Name - DSC", value: "10" }
 ];
 
-const InsightPageTable = ({ insights }: InsightPageTableProps) => {
+const InsightPageTable = ({ user, insights }: InsightPageTableProps) => {
   return (
     <div>
       {/* Table title */}
@@ -62,7 +64,7 @@ const InsightPageTable = ({ insights }: InsightPageTableProps) => {
           </div>
         </div>
         {insights.map(insight => (
-          <InsightTableRow key={insight.id} insight={insight} />
+          <InsightTableRow key={insight.id} insight={insight} user={user} />
         ))}
       </div>
     </div>
