@@ -30,7 +30,7 @@ const InsightHeader = ({ insight, repositories }: InsightHeaderProps): JSX.Eleme
         </div>
       </div>    
     </>
-  )
-}
+  );
+};
 
 export default InsightHeader;

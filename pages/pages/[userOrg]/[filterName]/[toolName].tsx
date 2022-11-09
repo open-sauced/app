@@ -17,14 +17,14 @@ const HubPage: WithPageLayout = () => {
 
   return (
     <>
-    { isLoading ? <div>Loading...</div>: "" }
-    { isError ? <div>Error...</div>: "" }
-    { !isLoading && data.length > 0
-      ?
-      <Tool
-        tool={toolName ? changeCapitalization(toolName.toString(), true) : undefined}
-        repositories={repositories}
-      /> : <></>}
+      { isLoading ? <div>Loading...</div>: "" }
+      { isError ? <div>Error...</div>: "" }
+      { !isLoading && data.length > 0
+        ?
+        <Tool
+          tool={toolName ? changeCapitalization(toolName.toString(), true) : undefined}
+          repositories={repositories}
+        /> : <></>}
     </>
   );
 };

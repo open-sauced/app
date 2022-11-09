@@ -32,7 +32,7 @@ const CSVDownload = ({ report, repositories }: CSVDownloadProps) => {
   }, [data]);
 
   const onDownload = async() => {
-    const key = `${topic}/contributions?filter=${selectedFilter}&limit=100${repositories && repositories.length > 0 ? `&repoIds=${repositories?.join(',')}` : ""}`;
+    const key = `${topic}/contributions?filter=${selectedFilter}&limit=100${repositories && repositories.length > 0 ? `&repoIds=${repositories?.join(",")}` : ""}`;
 
     try {
       setGenerating(true);

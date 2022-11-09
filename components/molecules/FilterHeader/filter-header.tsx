@@ -59,7 +59,7 @@ const HeaderFilter = () => {
         </div>
       </div>    
     </>
-  )
-}
+  );
+};
 
 export default HeaderFilter;
