@@ -47,6 +47,14 @@ const RepositoriesCart = ({ children, hasItems, hasHistory }: RepositoriesCartPr
           </div>
         </div>
       )}
+
+      {hasItems && (
+        <div className="w-full mt-1 ">
+          <button className="w-full text-sm text-white flex justify-center items-center py-3 px-5 bg-light-orange-9 rounded-lg">
+            Create Page
+          </button>
+        </div>
+      )}
     </div>
   );
 };
