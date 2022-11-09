@@ -9,21 +9,22 @@ import { useUserInsights } from "lib/hooks/useUserInsights";
 
 const HubPage: WithPageLayout = () => {
   const router = useRouter();
-  const { filterName } = router.query;
+  const { filterName, toolName } = router.query;
   const insightId = filterName as string;
-  const { data, isLoading } = useUserInsights();
+  const { data, isLoading, isError } = useUserInsights();
   const insight = data.find(insight => `${insight.id}` === insightId);
-  const repoIds = insight ? insight.repos.map(repo => repo.repo_id) : [];
-  const { toolName } = router.query;
+  const repositories = insight ? insight.repos.map(repo => repo.repo_id) : [];
 
   return (
     <>
-    { !isLoading && repoIds.length > 0
+    { isLoading ? <div>Loading...</div>: "" }
+    { isError ? <div>Error...</div>: "" }
+    { !isLoading && data.length > 0
       ?
       <Tool
         tool={toolName ? changeCapitalization(toolName.toString(), true) : undefined}
-        repoIds={repoIds}
-      /> : <>No Repositories Found</>}
+        repositories={repositories}
+      /> : <></>}
     </>
   );
 };
