@@ -1,3 +1,4 @@
+import { User } from "@supabase/supabase-js";
 import clsx from "clsx";
 
 import Search from "components/atoms/Search/search";
@@ -5,64 +6,12 @@ import Select from "components/atoms/Select/custom-select";
 import TableTitle from "components/atoms/TableTitle/table-title";
 import Title from "components/atoms/Typography/title";
 import { classNames } from "components/organisms/RepositoriesTable/repositories-table";
-import { RepoList } from "../CardRepoList/card-repo-list";
 import InsightTableRow from "../InsightTableRow/insight-table-row";
 
-interface RepoRowProps {
-  repoList: RepoList[];
-  members: DbContribution[];
+interface InsightPageTableProps {
+  user: User | null;
+  insights: DbUserInsight[]
 }
-
-interface InsightPageTableProps {}
-
-const contributors = [
-  {
-    avatarURL:
-      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1064&q=80",
-    initials: "ES",
-    alt: "E",
-    id: 1
-  },
-  {
-    avatarURL:
-      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1064&q=80",
-    initials: "ES",
-    alt: "E",
-    id: 2
-  },
-  {
-    avatarURL:
-      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1064&q=80",
-    initials: "ES",
-    alt: "E",
-    id: 3
-  },
-  {
-    avatarURL: "",
-    initials: "ES",
-    alt: "E",
-    id: 4
-  },
-  {
-    avatarURL: "",
-    initials: "ES",
-    alt: "E",
-    id: 5
-  },
-  {
-    avatarURL: "",
-    initials: "ES",
-    alt: "E",
-    id: 6
-  },
-  {
-    avatarURL: "",
-    initials: "ES",
-    alt: "E",
-    id: 7
-  }
-  // casting the array for now to avoid build errors, will be removed when live data are available
-] as unknown as DbContribution[];
 
 const selectOptions = [
   { name: "Last updated - ASC", value: "10" },
@@ -71,20 +20,18 @@ const selectOptions = [
   { name: "Name - DSC", value: "10" }
 ];
 
-const InsightPageTable = ({ repoList }: RepoRowProps) => {
-  // to be replaced with real data
-  const randonArray = Array.apply(null, Array(6));
+const InsightPageTable = ({ user, insights }: InsightPageTableProps) => {
   return (
     <div>
       {/* Table title */}
       <div className="flex justify-between h-11 items-center">
         <div className="flex gap-x-4 items-end">
-          <Title className="!text-2xl !leading-none !font-medium" level={1}>
+          <Title className="!text-2xl !leading-none " level={1}>
             All Insight Pages
           </Title>
         </div>
         <div className="w-full  md:w-3/5 flex gap-x-5 items-center justify-end">
-          <Select
+          {/* <Select
             placeholder="Last updated - ASC"
             options={selectOptions}
             className="w-[275px]"
@@ -92,13 +39,13 @@ const InsightPageTable = ({ repoList }: RepoRowProps) => {
           ></Select>
           <div className="w-58 hidden lg:block">
             <Search placeholder="Search repositories" className="max-w-full" name={"query"} />
-          </div>
+          </div> */}
         </div>
       </div>
 
       {/* Table section */}
 
-      <div className="flex flex-col mt-6 rounded-lg overflow-scroll border">
+      <div className="flex flex-col mt-6 rounded-lg border">
         <div className="md:flex py-4 px-6 bg-light-slate-3 gap-10 lg:min-w-[1280px]">
           <div className={clsx("flex-1 min-w-[140px] max-w-[150px] ")}>
             <TableTitle text="Insight page"></TableTitle>
@@ -116,13 +63,8 @@ const InsightPageTable = ({ repoList }: RepoRowProps) => {
             <TableTitle text="members"></TableTitle>
           </div>
         </div>
-        {randonArray.map((a, i) => (
-          <InsightTableRow
-            key={`${a}/${Math.random() + i}`}
-            pageName="Open Source Stripe"
-            members={contributors}
-            repositories={repoList}
-          />
+        {insights.map(insight => (
+          <InsightTableRow key={insight.id} insight={insight} user={user} />
         ))}
       </div>
     </div>

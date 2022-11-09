@@ -4,12 +4,11 @@ import ToggleOption from "components/atoms/ToggleOption/toggle-option";
 import Text from "components/atoms/Typography/text";
 import Title from "components/atoms/Typography/title";
 
-
 interface DashboardScatterChartProps {
-    title: string;
-    option: Object;
-    showBots: boolean;
-    setShowBots: (toggle: boolean) => void;
+  title: string;
+  option: Object;
+  showBots: boolean;
+  setShowBots: (toggle: boolean) => void;
 }
 
 const DashboardScatterChart: React.FC<DashboardScatterChartProps> = ({ title, option, showBots, setShowBots }) => {
@@ -23,21 +22,23 @@ const DashboardScatterChart: React.FC<DashboardScatterChartProps> = ({ title, op
     functionTimeout = setTimeout(() => {
       setShowMembers(!showMembers);
       // Additional logic for showing members
-    } , 50);
+    }, 50);
   };
-  
+
   const handleShowBots = () => {
     clearTimeout(functionTimeout);
 
     functionTimeout = setTimeout(() => {
       setShowBots(!showBots);
       // Additional logic for showing bots
-    } , 50);
+    }, 50);
   };
   return (
     <div>
       <div className="flex justify-between px-1">
-        <Title level={4} className="!text-sm !font-medium !text-light-slate-12">{title}</Title>
+        <Title level={4} className="!text-sm  !text-light-slate-12">
+          {title}
+        </Title>
         {/* replaced display flex to hidden on show/bots container */}
         <div className="flex flex-col md:flex-row gap-2">
           <ToggleOption handleToggle={handleShowBots} checked={showBots} optionText="Show Bots"></ToggleOption>

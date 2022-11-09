@@ -7,15 +7,14 @@ import PaginationResult from "../PaginationResults/pagination-result";
 interface TableHeaderProps {
   title?: string;
   showing: { from: number; to: number; total: number; entity: string };
-  
-  updateLimit: Function
-}
-const TableHeader = ({ title, showing,updateLimit}: TableHeaderProps): JSX.Element => {
 
+  updateLimit: Function;
+}
+const TableHeader = ({ title, showing, updateLimit }: TableHeaderProps): JSX.Element => {
   return (
     <div className="flex flex-wrap gap-y-2 flex-col md:flex-row md:justify-between md:items-end w-full md:pb-4">
       <div className="flex gap-x-4 items-end">
-        <Title className="!text-2xl !leading-none !font-medium" level={1}>
+        <Title className="!text-2xl !leading-none " level={1}>
           {title}
         </Title>
         <PaginationResult className="hidden !translate-y-[2px]  md:inline-flex" {...showing} />
@@ -30,9 +29,11 @@ const TableHeader = ({ title, showing,updateLimit}: TableHeaderProps): JSX.Eleme
             { name: "40 per page", value: 40 },
             { name: "50 per page", value: 50 }
           ]}
-          className="hidden font-medium ml-auto md:inline-block md:!max-w-[220px]"
+          className="hidden   ml-auto md:inline-block md:!max-w-[220px]"
           label="Showing"
-          onChange={function(limit: number):void{updateLimit(limit);}}
+          onChange={function (limit: number): void {
+            updateLimit(limit);
+          }}
         ></Select>
       </div>
     </div>

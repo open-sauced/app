@@ -5,6 +5,21 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.16.0-beta.13](https://github.com/open-sauced/insights/compare/v1.16.0-beta.12...v1.16.0-beta.13) (2022-11-08)
+
+
+### 🍕 Features
+
+* create search result component ([#572](https://github.com/open-sauced/insights/issues/572)) ([5aa4620](https://github.com/open-sauced/insights/commit/5aa462006dfe8e4d6d055a6a6abfb0ebdbbc356b)), closes [#553](https://github.com/open-sauced/insights/issues/553)
+* implement initial user insights hub page ([#574](https://github.com/open-sauced/insights/issues/574)) ([107bee7](https://github.com/open-sauced/insights/commit/107bee71cfdb30eaf81f2b990d00407ebf1b16c5)), closes [#511](https://github.com/open-sauced/insights/issues/511)
+
+## [1.16.0-beta.12](https://github.com/open-sauced/insights/compare/v1.16.0-beta.11...v1.16.0-beta.12) (2022-11-08)
+
+
+### 🧑‍💻 Code Refactoring
+
+* set default font weight to `medium` and removed all instance in code base ([#569](https://github.com/open-sauced/insights/issues/569)) ([f9f55ab](https://github.com/open-sauced/insights/commit/f9f55abcd7f9c2518024456bf59be4b83cc6d82c))
+
 ## [1.16.0-beta.11](https://github.com/open-sauced/insights/compare/v1.16.0-beta.10...v1.16.0-beta.11) (2022-11-07)
 
 

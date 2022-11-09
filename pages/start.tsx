@@ -78,13 +78,11 @@ const LoginStep1: React.FC<LoginStep1Props> = ({ handleLoginStep, user }) => {
           </div>
           <div className="flex gap-2 items-start mb-4">
             <Icon IconImage={HighlightIcon} />
-            <Text className="!text-[16px] !font-medium !text-light-slate-12">
-              We will not have access to your private repos.
-            </Text>
+            <Text className="!text-[16px]  !text-light-slate-12">We will not have access to your private repos.</Text>
           </div>
           <div className="flex gap-2 items-start mb-4">
             <Icon IconImage={HighlightIcon} />
-            <Text className="!text-[16px] !font-medium !text-light-slate-12">We will not spam you with emails.</Text>
+            <Text className="!text-[16px]  !text-light-slate-12">We will not spam you with emails.</Text>
           </div>
         </div>
         <div>
@@ -171,12 +169,12 @@ const LoginStep2: React.FC<LoginStep2Props> = ({ handleLoginStep, setRepoList })
           </div>
           <div className="flex gap-2 items-start mb-4">
             <Icon IconImage={HighlightIcon} />
-            <Text className="!text-[16px] !font-medium !text-light-slate-12">Index insights from git data</Text>
+            <Text className="!text-[16px]  !text-light-slate-12">Index insights from git data</Text>
           </div>
           <div className="flex gap-2 items-start mb-4">
             <Icon IconImage={HighlightIcon} />
             <div className="w-[calc(362px-24px)]">
-              <Text className="!text-[16px] !font-medium !text-light-slate-12">
+              <Text className="!text-[16px]  !text-light-slate-12">
                 Fetch basic GitHub information from Pull Requests and Issues
               </Text>
             </div>
@@ -277,8 +275,8 @@ const LoginStep3: React.FC<LoginStep3Props> = ({ repoList, checkFollowed }) => {
                       src={getAvatarLink(repo.repoOwner)}
                     />
                     <div>
-                      <Text className="!text-[16px] !font-medium">{`${repo.repoOwner}/`}</Text>
-                      <Text className="!text-[16px] !font-medium !text-light-slate-12">{`${repo.repoName}`}</Text>
+                      <Text className="!text-[16px] ">{`${repo.repoOwner}/`}</Text>
+                      <Text className="!text-[16px]  !text-light-slate-12">{`${repo.repoName}`}</Text>
                     </div>
                   </div>
                   <Button disabled={following.length >= 10 && !isFollowing[index]} onClick={() => handleFollowRepo(index)} type={isFollowing[index] ? "outline" : "default"}>
@@ -349,14 +347,16 @@ const Login: WithPageLayout = () => {
             <Icon IconImage={currentLoginStep === 1 ? GitHubAuthActiveIcon : CompletedIcon} size={48} />
             <Text
               disabled={currentLoginStep !== 1}
-              className={`!text-[16px] !font-medium ${currentLoginStep === 1 && highlighted}`}
+              className={`!text-[16px]  ${currentLoginStep === 1 && highlighted}`}
             >
               Authenicate with GitHub
             </Text>
           </div>
           <div className="hidden lg:flex gap-2 items-center mb-8">
+
             <Icon IconImage={currentLoginStep === 2 ? PATActiveIcon : currentLoginStep < 2 ? PATIcon : CompletedIcon} size={48} />
             <Text disabled={currentLoginStep !== 2} className={`!text-[16px] !font-medium ${currentLoginStep === 2 && highlighted}`}>Provide your Organization</Text>
+
           </div>
           <div className="hidden lg:flex gap-2 items-center mb-8">
             <Icon
@@ -371,7 +371,7 @@ const Login: WithPageLayout = () => {
             />
             <Text
               disabled={currentLoginStep !== 3}
-              className={`!text-[16px] !font-medium ${currentLoginStep === 3 && highlighted}`}
+              className={`!text-[16px]  ${currentLoginStep === 3 && highlighted}`}
             >
               Choose some repositories
             </Text>
