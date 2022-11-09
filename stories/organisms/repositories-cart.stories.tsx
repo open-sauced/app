@@ -10,9 +10,21 @@ export default storyConfig;
 
 const RepositoriesCartTemplate: ComponentStory<typeof RepositoriesCart> = (args) => (
   <RepositoriesCart {...args}>
-    <RepositoryCartItem avatar="" totalPrs={120} orgName="open sauced" repoName="hot" />
-    <RepositoryCartItem avatar="" totalPrs={120} orgName="open sauced" repoName="insights" />
-    <RepositoryCartItem avatar="" totalPrs={120} orgName="open sauced" repoName="workflow" />
+    <RepositoryCartItem handleRemoveItem={() => {}} avatar="" totalPrs={120} orgName="open sauced" repoName="hot" />
+    <RepositoryCartItem
+      handleRemoveItem={() => {}}
+      avatar=""
+      totalPrs={120}
+      orgName="open sauced"
+      repoName="insights"
+    />
+    <RepositoryCartItem
+      handleRemoveItem={() => {}}
+      avatar=""
+      totalPrs={120}
+      orgName="open sauced"
+      repoName="workflow"
+    />
   </RepositoriesCart>
 );
 
@@ -26,8 +38,8 @@ FilledState.args = {
 };
 WithHistory.args = {
   history: [
-    { orgName: "open sauced", repoName: "insights", totalPrs: 87 },
-    { orgName: "facebook", repoName: "react", totalPrs: 233 }
+    { orgName: "open sauced", repoName: "insights", totalPrs: 87, handleRemoveItem: () => {} },
+    { orgName: "facebook", repoName: "react", totalPrs: 233, handleRemoveItem: () => {} }
   ],
   hasItems: true
 };

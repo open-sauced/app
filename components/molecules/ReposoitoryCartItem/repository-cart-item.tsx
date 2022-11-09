@@ -9,8 +9,9 @@ export interface RepositoryCartItemProps {
   orgName?: string;
   repoName?: string;
   totalPrs?: number;
+  handleRemoveItem: () => void;
 }
-const RepositoryCartItem = ({ avatar, orgName, repoName, totalPrs }: RepositoryCartItemProps) => {
+const RepositoryCartItem = ({ avatar, orgName, repoName, totalPrs, handleRemoveItem }: RepositoryCartItemProps) => {
   return (
     <div className="flex items-center justify-between">
       <div className="flex gap-3 items-center ">
@@ -23,7 +24,10 @@ const RepositoryCartItem = ({ avatar, orgName, repoName, totalPrs }: RepositoryC
         <span className="flex items-center">
           <BiGitPullRequest className="text-[15px]" /> {totalPrs}
         </span>
-        <span className="w-[26px] cursor-pointer flex justify-center items-center h-6 border rounded">
+        <span
+          onClick={() => handleRemoveItem()}
+          className="w-[26px] cursor-pointer flex justify-center items-center h-6 border rounded"
+        >
           <AiOutlineClose className="text-sm" />
         </span>
       </div>
