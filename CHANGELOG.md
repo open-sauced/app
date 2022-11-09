@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.16.0-beta.14](https://github.com/open-sauced/insights/compare/v1.16.0-beta.13...v1.16.0-beta.14) (2022-11-09)
+
+
+### 🍕 Features
+
+* add repository cart components ([#577](https://github.com/open-sauced/insights/issues/577)) ([740a339](https://github.com/open-sauced/insights/commit/740a339405630b6ae631e2631ac51ba3377ce6e9)), closes [#560](https://github.com/open-sauced/insights/issues/560)
+
 ## [1.16.0-beta.13](https://github.com/open-sauced/insights/compare/v1.16.0-beta.12...v1.16.0-beta.13) (2022-11-08)
 
 
