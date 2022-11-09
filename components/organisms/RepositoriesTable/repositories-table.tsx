@@ -1,5 +1,4 @@
 import { Serie } from "@nivo/line";
-import { User } from "@supabase/supabase-js";
 import RepoRow from "components/molecules/RepoRow/repo-row";
 import { StaticImageData } from "next/image";
 
@@ -38,7 +37,7 @@ export interface RepositoriesRows {
 }
 
 interface RepositoriesTableProps {
-  user: User | null;
+  user: string | string[] | undefined;
   topic?: string;
   listOfRepositories: RepositoriesRows[];
   loading: boolean;

@@ -6,7 +6,6 @@ import {
   ChevronUpIcon,
   MinusSmallIcon
 } from "@heroicons/react/24/solid";
-import { User } from "@supabase/supabase-js";
 import clsx from "clsx";
 
 import { RepositoriesRows } from "components/organisms/RepositoriesTable/repositories-table";
@@ -26,7 +25,7 @@ import TableRepositoryName from "../TableRepositoryName/table-repository-name";
 interface RepoProps {
   repo: RepositoriesRows;
   topic?: string;
-  user: User | null;
+  user: string | string[] | undefined;
 }
 
 const getActivity = (total?: number, loading?: boolean) => {

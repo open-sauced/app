@@ -20,7 +20,8 @@ interface RepositoriesProps {
 const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
   const { user } = useSupabaseAuth();
   const router = useRouter();
-  const { filterName, selectedFilter } = router.query;
+  const { filterName, selectedFilter, userOrg } = router.query;
+  const username = userOrg ? user?.user_metadata.user_name : undefined;
   const topic = filterName as string;
   const {
     data: repoListData,
@@ -86,7 +87,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
           error={repoListIsError}
           loading={repoListIsLoading}
           listOfRepositories={repoListData}
-          user={user}
+          user={username}
         />
 
         {/* Table Footer */}
