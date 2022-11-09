@@ -43,12 +43,6 @@ const HeaderFilter = () => {
         </Text>
         <div className="flex mt-4 items-center relative  gap-2">
           <FilterCard filterName={filterName as string} isRemovable={false} icon="topic" />
-          {/* <PillSelector
-            pillOptions={filterOptions}
-            handlePillClick={filterBtnRouting}
-            handleCancelClick={cancelFilterRouting}
-            selected={selectedFilter}
-          /> */}
           <SuperativeSelector
             filterOptions={filterOptions}
             filterValues={filterValues}
