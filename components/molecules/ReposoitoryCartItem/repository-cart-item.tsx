@@ -4,7 +4,7 @@ import { StaticImageData } from "next/image";
 import { AiOutlineClose } from "react-icons/ai";
 import { BiGitPullRequest } from "react-icons/bi";
 
-interface RepositoryCartItemProps {
+export interface RepositoryCartItemProps {
   avatar?: StaticImageData | string;
   orgName?: string;
   repoName?: string;
