@@ -19,7 +19,7 @@ const InsightsHub: WithPageLayout = () => {
     <div className="flex  flex-col w-full gap-4 py-2">
       <div className="flex justify-between py-2">
         <Title className="!text-2xl !leading-none !font-medium" level={1}>
-          Insights Dashboard
+          Your Pages
         </Title>
         <div className="flex gap-3 items-center">
           {/* Search box temporarily hidden */}

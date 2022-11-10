@@ -12,7 +12,7 @@ import CardRepoList from "../CardRepoList/card-repo-list";
 import Text from "components/atoms/Typography/text";
 
 interface InsightRowProps {
-  user: User | null;
+  user: string;
   insight: DbUserInsight;
 }
 const InsightRow = ({ user, insight }: InsightRowProps) => {
@@ -22,7 +22,7 @@ const InsightRow = ({ user, insight }: InsightRowProps) => {
   return (
     <Link
       key={`insights_${insight.id}`}
-      href={`/pages/${user?.user_metadata.user_name}/${insight.id}/dashboard`}
+      href={`/pages/${user}/${insight.id}/dashboard`}
       passHref
     >
       <a className="flex flex-col md:flex-row w-full rounded-lg px-4 lg:px-8 py-5 gap-4 lg:gap-2 bg-white items-center">
