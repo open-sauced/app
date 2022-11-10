@@ -1,9 +1,8 @@
 import Link from "next/link";
 
 import Button from "components/atoms/Button/button";
-import InsightPageCard from "components/molecules/InsightPageCard/insight-page-card";
-
-import InsightPageTable from "components/molecules/InsightPageTable/insight-page-table";
+import InsightRow from "components/molecules/InsightRow/insight-row";
+import Search from "components/atoms/Search/search";
 import Title from "components/atoms/Typography/title";
 
 import HubLayout from "layouts/hub";
@@ -15,30 +14,36 @@ const InsightsHub: WithPageLayout = () => {
   const { user } = useSupabaseAuth();
 
   const { data: insightsData, isError, isLoading } = useUserInsights();
-  const favorites = insightsData.filter(insight => insight.is_favorite).slice(0, 3);
 
   return (
     <div className="flex flex-col w-full gap-4 py-2">
       <div className="flex justify-between py-2">
         <Title className="!text-2xl !leading-none !font-medium" level={1}>
-            Insights Dashboard
+          Insights Dashboard
         </Title>
-        <Link href={"/hub/insights/new"}>
-          <Button type="primary">
-            Add Insight Page
-          </Button>
-        </Link>
+        <div className="flex gap-3 items-center">
+          <div className="w-58 hidden lg:block">
+            <Search placeholder="Search repositories" className="max-w-full" name={"query"} />
+          </div>
+          <Link href={"/hub/insights/new"}>
+            <Button type="primary">Add Insight Page</Button>
+          </Link>
+        </div>
       </div>
 
-      <div className="flex justify-center py-8">
-        <section className="flex flex-wrap gap-4 justify-center max-w-full">
-          {
-            favorites.map(insight => <InsightPageCard key={`insight_${insight.id}`} insight={insight} user={user}/>)
-          }
-        </section>
-      </div>
+      {isLoading
+        ? "Loading..."
+        : isError
+          ? "Error..."
+          : insightsData.map((insight, index) => (
+            <InsightRow key={`insights_${insight.id}`} user={user} insight={insight} />
+          ))}
 
-      { isLoading ? "Loading..." : isError ? "Error...": <InsightPageTable user={user} insights={insightsData} /> }
+      <Link passHref href={"/hub/insights/new"}>
+        <a className="w-full bg-light-slate-4 text-lg text-light-slate-11 py-10 rounded-lg text-center border border-light-slate-7">
+          Create a new Insight Page
+        </a>
+      </Link>
     </div>
   );
 };
