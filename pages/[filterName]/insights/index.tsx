@@ -41,7 +41,7 @@ const InsightsHub: WithPageLayout = () => {
           ))}
 
       <Link passHref href={"/hub/insights/new"}>
-        <a className="w-full bg-light-slate-4 text-lg text-light-slate-11 py-10 rounded-lg text-center border border-light-slate-7">
+        <a className="w-full bg-light-slate-4 text-lg text-light-slate-11 py-5 md:py-8 lg:py-10 rounded-lg text-center border border-light-slate-7">
           Create a new Insight Page
         </a>
       </Link>
