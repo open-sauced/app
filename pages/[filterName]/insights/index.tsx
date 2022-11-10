@@ -12,7 +12,7 @@ import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 
 const InsightsHub: WithPageLayout = () => {
   const { data: insightsData, isError, isLoading } = useUserInsights();
-
+  const { user } = useSupabaseAuth();
   return (
     <div className="flex  flex-col w-full gap-4 py-2">
       <div className="flex justify-between py-2">
@@ -34,7 +34,9 @@ const InsightsHub: WithPageLayout = () => {
         ? "Loading..."
         : isError
           ? "Error..."
-          : insightsData.map((insight, index) => <InsightRow key={`insights_${insight.id}`} insight={insight} />)}
+          : insightsData.map((insight, index) => (
+            <InsightRow key={`insights_${insight.id}`} user={user} insight={insight} />
+          ))}
 
       <Link passHref href={"/hub/insights/new"}>
         <a className="w-full bg-light-slate-4 text-lg text-light-slate-11 py-5 md:py-8 lg:py-10 rounded-lg text-center border border-light-slate-7">
