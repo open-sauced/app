@@ -8,7 +8,7 @@ import Title from "components/atoms/Typography/title";
 
 import HubLayout from "layouts/hub";
 import { WithPageLayout } from "interfaces/with-page-layout";
-import { useUserInsights } from "lib/hooks/useUserInsights";
+import useUserInsights from "lib/hooks/useUserInsights";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 
 const InsightsHub: WithPageLayout = () => {

@@ -24,4 +24,4 @@ const useUserInsights = () => {
   };
 };
 
-export { useUserInsights };
+export default useUserInsights;

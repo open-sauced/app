@@ -8,15 +8,15 @@ import TopNav from "components/organisms/TopNav/top-nav";
 import InsightHeader from "components/molecules/InsightHeader/insight-header";
 
 import useNav from "lib/hooks/useNav";
-import { useUserInsights } from "lib/hooks/useUserInsights";
+import useInsight from "lib/hooks/useInsight";
 
 const HubPageLayout = ({children}: {children: React.ReactNode}) => {
   const router = useRouter();
   const { filterName } = router.query;
   const insightId = filterName as string;
-  const { data } = useUserInsights();
-  const insight = data.find(insight => `${insight.id}` === insightId);
+  const { data: insight } = useInsight(insightId);
   const repositories = insight?.repos.map(repo => repo.repo_id);
+
   const { toolList, selectedTool, selectedFilter, userOrg } = useNav(repositories);
 
   return (
