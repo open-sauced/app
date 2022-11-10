@@ -12,7 +12,7 @@ import CardRepoList from "../CardRepoList/card-repo-list";
 import Text from "components/atoms/Typography/text";
 
 interface InsightRowProps {
-  user: User | null;
+  user: string;
   insight: DbUserInsight;
 }
 const InsightRow = ({ user, insight }: InsightRowProps) => {
