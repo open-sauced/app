@@ -20,7 +20,11 @@ const InsightRow = ({ user, insight }: InsightRowProps) => {
   const { data: repoData, isError, isLoading } = useRepositoriesList(false, repoIds);
   const { open, merged, velocity, total, repoList } = getRepoInsights(repoData);
   return (
-    <Link key={`insights_${insight.id}`} href={`/pages/${user}/${insight.id}/dashboard`} passHref>
+    <Link
+      key={`insights_${insight.id}`}
+      href={`/pages/${user?.user_metadata.user_name}/${insight.id}/dashboard`}
+      passHref
+    >
       <a className="flex flex-col md:flex-row w-full rounded-lg px-4 lg:px-8 py-5 gap-4 lg:gap-2 bg-white items-center">
         <div className="flex w-full flex-1 flex-col gap-4 lg:gap-6">
           <div className="flex items-center lg:items-center gap-4 ">
