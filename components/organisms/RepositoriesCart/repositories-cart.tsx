@@ -11,17 +11,24 @@ interface RepositoriesCartProps {
   children?: React.ReactNode;
   hasItems?: boolean;
   history?: RepositoryCartItemProps[];
+  handleCreatePage?: Function;
+  handleAddToCart?: (fullRepoName: string) => void
 }
 
-const RepositoriesCart = ({ children, hasItems, history }: RepositoriesCartProps): JSX.Element => {
+const RepositoriesCart = ({ children, hasItems, history, handleCreatePage, handleAddToCart }: RepositoriesCartProps): JSX.Element => {
   const cartItems = Children.toArray(children);
 
-  const handleCreatePage = () => {
-    // Logic goes in here to create insight pages
+  const onHandleCreatePage = () => {
+    if (handleCreatePage) {
+      handleCreatePage();
+    }
   };
-  const handleAddToCart = () => {
-    // Logic goes in her to add page to cart
+  const onAddToCart = (fullRepoName: string) => {
+    if (handleAddToCart) {
+      handleAddToCart(fullRepoName);
+    }
   };
+
   return (
     <div className="w-[364px] border flex flex-col gap-2 rounded-lg p-6">
       {/* Empty state of Cart */}
@@ -41,7 +48,7 @@ const RepositoriesCart = ({ children, hasItems, history }: RepositoriesCartProps
       )}
       {!!history && (
         <div className="border-t mt-2 py-1">
-          <Text>Add again:</Text>
+          {history.length > 0 ? <Text>Add again:</Text> : ""}
           {history.length > 0 &&
             history.map(({ orgName, repoName, totalPrs, avatar }, index) => (
               <div key={`${index}/${Math.random()}/${orgName}`} className="flex items-center mt-2 justify-between">
@@ -53,7 +60,7 @@ const RepositoriesCart = ({ children, hasItems, history }: RepositoriesCartProps
                 </div>
                 <div className="flex items-center gap-2 text-sm text-light-slate-10">
                   <button
-                    onClick={() => handleAddToCart()}
+                    onClick={() => onAddToCart(`${orgName}/${repoName}`)}
                     className="border text-xs flex items-center px-[6px] p-[3px] rounded-md"
                   >
                     Add <BiPlus className="text-lg" />
@@ -67,7 +74,7 @@ const RepositoriesCart = ({ children, hasItems, history }: RepositoriesCartProps
       {hasItems && (
         <div className="w-full mt-1 ">
           <button
-            onClick={() => handleCreatePage()}
+            onClick={() => onHandleCreatePage()}
             className="w-full text-sm text-white flex justify-center items-center py-3 px-5 bg-light-orange-9 rounded-lg"
           >
             Create Page
