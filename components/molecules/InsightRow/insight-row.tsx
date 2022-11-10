@@ -10,15 +10,16 @@ import getRepoInsights from "lib/utils/get-repo-insights";
 
 import CardRepoList from "../CardRepoList/card-repo-list";
 import Text from "components/atoms/Typography/text";
+import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 
 interface InsightRowProps {
-  user: User | null;
   insight: DbUserInsight;
 }
-const InsightRow = ({ user, insight }: InsightRowProps) => {
+const InsightRow = ({ insight }: InsightRowProps) => {
   const repoIds = insight.repos.map((repo) => repo.repo_id);
   const { data: repoData, isError, isLoading } = useRepositoriesList(false, repoIds);
   const { open, merged, velocity, total, repoList } = getRepoInsights(repoData);
+  const { user } = useSupabaseAuth();
   return (
     <Link
       key={`insights_${insight.id}`}

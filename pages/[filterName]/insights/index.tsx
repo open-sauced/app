@@ -11,8 +11,6 @@ import { useUserInsights } from "lib/hooks/useUserInsights";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 
 const InsightsHub: WithPageLayout = () => {
-  const { user } = useSupabaseAuth();
-
   const { data: insightsData, isError, isLoading } = useUserInsights();
 
   return (
@@ -35,10 +33,8 @@ const InsightsHub: WithPageLayout = () => {
       {isLoading
         ? "Loading..."
         : isError
-          ? "Error..."
-          : insightsData.map((insight, index) => (
-            <InsightRow key={`insights_${insight.id}`} user={user} insight={insight} />
-          ))}
+        ? "Error..."
+        : insightsData.map((insight, index) => <InsightRow key={`insights_${insight.id}`} insight={insight} />)}
 
       <Link passHref href={"/hub/insights/new"}>
         <a className="w-full bg-light-slate-4 text-lg text-light-slate-11 py-5 md:py-8 lg:py-10 rounded-lg text-center border border-light-slate-7">
