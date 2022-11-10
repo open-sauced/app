@@ -22,7 +22,8 @@ const InsightsHub: WithPageLayout = () => {
           Insights Dashboard
         </Title>
         <div className="flex gap-3 items-center">
-          <div className="w-58 hidden lg:block">
+          {/* Search box temporarily hidden */}
+          <div className="w-58 hidden">
             <Search placeholder="Search repositories" className="max-w-full" name={"query"} />
           </div>
           <Link href={"/hub/insights/new"}>
