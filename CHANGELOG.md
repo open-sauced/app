@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.16.0-beta.17](https://github.com/open-sauced/insights/compare/v1.16.0-beta.16...v1.16.0-beta.17) (2022-11-11)
+
+
+### 🍕 Features
+
+* add individual repo search on repositories page ([#580](https://github.com/open-sauced/insights/issues/580)) ([cbc9e43](https://github.com/open-sauced/insights/commit/cbc9e4357245d65ed90659629b1d4e6cff03d154)), closes [#322](https://github.com/open-sauced/insights/issues/322)
+
 ## [1.16.0-beta.16](https://github.com/open-sauced/insights/compare/v1.16.0-beta.15...v1.16.0-beta.16) (2022-11-11)
 
 
