@@ -3,7 +3,7 @@ import HubLayout from "layouts/hub";
 
 const NewInsightPage: WithPageLayout = () => {
   return (
-    <div>Create New Insight</div>
+    <div>Coming soon. Reach out to <a href="mailto:hello@opensauced.pizza">bdougie</a> for a demo.</div>
   );
 };
 
