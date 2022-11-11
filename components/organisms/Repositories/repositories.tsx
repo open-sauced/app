@@ -1,17 +1,27 @@
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 import clsx from "clsx";
+
 import Select from "components/atoms/Select/custom-select";
 import TableTitle from "components/atoms/TableTitle/table-title";
 import Pagination from "components/molecules/Pagination/pagination";
 import PaginationResults from "components/molecules/PaginationResults/pagination-result";
 import TableHeader from "components/molecules/TableHeader/table-header";
+
 import { useRepositoriesList } from "lib/hooks/useRepositoriesList";
-import { useRouter } from "next/router";
-import { useEffect } from "react";
+import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
+
 import RepositoriesTable, { classNames } from "../RepositoriesTable/repositories-table";
 
-const Repositories = (): JSX.Element => {
+interface RepositoriesProps {
+  repositories?: number[];
+}
+
+const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
+  const { user } = useSupabaseAuth();
   const router = useRouter();
-  const { filterName, selectedFilter } = router.query;
+  const { filterName, selectedFilter, userOrg } = router.query;
+  const username = userOrg ? user?.user_metadata.user_name : undefined;
   const topic = filterName as string;
   const {
     data: repoListData,
@@ -21,7 +31,7 @@ const Repositories = (): JSX.Element => {
     page,
     setPage,
     setLimit
-  } = useRepositoriesList();
+  } = useRepositoriesList(false, repositories);
 
   useEffect(() => {
     setPage(1);
@@ -72,7 +82,13 @@ const Repositories = (): JSX.Element => {
           </div>
         </div>
 
-        <RepositoriesTable topic={topic} error={repoListIsError} loading={repoListIsLoading} listOfRepositories={repoListData} />
+        <RepositoriesTable
+          topic={topic}
+          error={repoListIsError}
+          loading={repoListIsLoading}
+          listOfRepositories={repoListData}
+          user={username}
+        />
 
         {/* Table Footer */}
         <div className="mt-5 w-full px-4 flex flex-col gap-y-3 md:flex-row">

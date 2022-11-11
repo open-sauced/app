@@ -5,9 +5,10 @@ interface PaginatedContributorPRsResponse {
   readonly meta: Meta;
 }
 
-const useTopicContributorPRs = (contributor: string, topic: string) => {
+const useTopicContributorPRs = (contributor: string, topic: string, repoIds: number[] = []) => {
   const baseEndpoint = `${topic}/${contributor}/prs`;
-  const endpointString = `${baseEndpoint}`;
+  const reposQuery = repoIds.length > 0 ? `repoIds=${repoIds.join(",")}`: "";
+  const endpointString = `${baseEndpoint}?limit=8&${reposQuery}`;
 
   const { data, error, mutate } = useSWR<PaginatedContributorPRsResponse, Error>(endpointString);
 

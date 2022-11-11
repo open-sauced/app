@@ -110,7 +110,7 @@ const InsightPageCard = ({
         </div>
       </div>
       <div className="mt-4">
-        <CardRepoList repoList={repoList} />
+        <CardRepoList repoList={repoList} limit={2} />
       </div>
 
       {/* Card footer */}

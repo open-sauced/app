@@ -1,25 +1,30 @@
+import { useState } from "react";
+
+import GitHubIcon from "public/icons/github-icon.svg";
+
 import Button from "components/atoms/Button/button";
 import Icon from "components/atoms/Icon/icon";
 import Title from "components/atoms/Typography/title";
-import GitHubIcon from "public/icons/github-icon.svg";
 import ReportsHistory from "components/molecules/ReportsHistory/reports-history";
 import SelectReportsFilter from "components/molecules/SelectReportsFilter/select-reports-filter";
 import WaitlistButton from "components/molecules/WaitlistButton/waitlist-button";
+
 import { useGlobalStateContext } from "context/global-state";
 import { Report } from "interfaces/report-type";
+
 import useFilterOptions from "lib/hooks/useFilterOptions";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import getCurrentDate from "lib/utils/get-current-date";
-import { useState } from "react";
 
 const USERDEVICESTORAGENAME = "reportState";
 
 interface ReportsProps {
   hasReports?: boolean;
   waitlisted?: boolean;
+  repositories?: number[];
 }
 
-const Reports = ({ waitlisted, hasReports }: ReportsProps): JSX.Element => {
+const Reports = ({ waitlisted, hasReports, repositories }: ReportsProps): JSX.Element => {
   const userDeviceState = localStorage.getItem(USERDEVICESTORAGENAME);
   const initialState = userDeviceState ? JSON.parse(userDeviceState as string) : [];
   const [reports, setReports] = useState<Report[]>(initialState);
@@ -92,7 +97,7 @@ const Reports = ({ waitlisted, hasReports }: ReportsProps): JSX.Element => {
                   Download History
                 </Title>
                 <hr className="border-light-slate-6 my-4" />
-                <ReportsHistory reportList={reports} />
+                <ReportsHistory reportList={reports} repositories={repositories} />
               </>
             )}
           </>

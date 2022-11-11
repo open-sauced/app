@@ -4,14 +4,16 @@ import { useSWRConfig } from "swr";
 import { useRouter } from "next/router";
 
 import Button from "components/atoms/Button/button";
+
 import { Report } from "interfaces/report-type";
 import apiFetcher from "lib/hooks/useSWR";
 
 interface CSVDownloadProps {
   report: Report;
+  repositories?: number[];
 }
 
-const CSVDownload = ({ report }: CSVDownloadProps) => {
+const CSVDownload = ({ report, repositories }: CSVDownloadProps) => {
   const csvRef = useRef<any>();
   const [data, setData] = useState<any[] | null>(null);
   const [generating, setGenerating] = useState(false);
@@ -30,7 +32,7 @@ const CSVDownload = ({ report }: CSVDownloadProps) => {
   }, [data]);
 
   const onDownload = async() => {
-    const key = `${topic}/contributions?filter=${selectedFilter}&limit=100`;
+    const key = `${topic}/contributions?filter=${selectedFilter}&limit=100${repositories && repositories.length > 0 ? `&repoIds=${repositories?.join(",")}` : ""}`;
 
     try {
       setGenerating(true);

@@ -37,6 +37,7 @@ export interface RepositoriesRows {
 }
 
 interface RepositoriesTableProps {
+  user: string | string[] | undefined;
   topic?: string;
   listOfRepositories: RepositoriesRows[];
   loading: boolean;
@@ -61,7 +62,8 @@ const RepositoriesTable = ({
   listOfRepositories,
   loading,
   error,
-  topic
+  topic,
+  user
 }: RepositoriesTableProps): JSX.Element => {
   return (
     <section className="flex  flex-col">
@@ -71,7 +73,7 @@ const RepositoriesTable = ({
       {!loading && !error && Array.isArray(listOfRepositories) &&
             listOfRepositories.length > 0 &&
             listOfRepositories.map((item, index) => (
-              <RepoRow key={`${item.handle}/${item.name}/${index}`} topic={topic} repo={item} />
+              <RepoRow key={`${item.handle}/${item.name}/${index}`} topic={topic} repo={item} user={user} />
             ))}
     </section>
   );

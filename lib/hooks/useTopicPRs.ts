@@ -7,14 +7,15 @@ interface PaginatedPRsResponse {
   readonly meta: Meta;
 }
 
-const useTopicPRs = (limit = 500) => {
+const useTopicPRs = (limit = 500, repoIds: number[] = []) => {
   const router = useRouter();
   const { filterName, selectedFilter } = router.query;
   const topic = filterName as string;
   const baseEndpoint = `${topic}/recent-prs`;
   const filterQuery = getFilterQuery(selectedFilter);
   const limitQuery = `${filterQuery ? "&": ""}limit=${limit}`;
-  const endpointString = `${baseEndpoint}?${filterQuery}${limitQuery}`;
+  const reposQuery = repoIds.length > 0 ? `&repoIds=${repoIds.join(",")}`: "";
+  const endpointString = `${baseEndpoint}?${filterQuery}${limitQuery}${reposQuery}`;
 
   const { data, error, mutate } = useSWR<PaginatedPRsResponse, Error>(endpointString);
 

@@ -1,16 +1,23 @@
 import React from "react";
+import { useRouter } from "next/router";
 
 import Footer from "components/organisms/Footer/footer";
 import Header from "components/organisms/Header/header";
 import Nav from "components/organisms/ToolList/nav";
 import TopNav from "components/organisms/TopNav/top-nav";
-import FilterHeader from "components/molecules/FilterHeader/filter-header";
+import InsightHeader from "components/molecules/InsightHeader/insight-header";
 
 import useNav from "lib/hooks/useNav";
+import useInsight from "lib/hooks/useInsight";
 
-const FilterLayout = ({children}: {children: React.ReactNode}) => {
+const HubPageLayout = ({children}: {children: React.ReactNode}) => {
+  const router = useRouter();
+  const { filterName } = router.query;
+  const insightId = filterName as string;
+  const { data: insight } = useInsight(insightId);
+  const repositories = insight?.repos.map(repo => repo.repo_id);
 
-  const { toolList, selectedTool, filterName, selectedFilter, userOrg } = useNav();
+  const { toolList, selectedTool, selectedFilter, userOrg } = useNav(repositories);
 
   return (
     <>
@@ -18,8 +25,9 @@ const FilterLayout = ({children}: {children: React.ReactNode}) => {
       <div className="page-container flex min-h-[calc(100vh-(54px+95px))] flex-col items-center">
         <div className="info-container min-w-full min-h-[100px]">
           <Header>
-            <FilterHeader />
+            <InsightHeader insight={insight} repositories={repositories} />
           </Header>
+
           <Nav
             toolList={toolList}
             selectedTool={selectedTool && selectedTool.toString()}
@@ -38,4 +46,4 @@ const FilterLayout = ({children}: {children: React.ReactNode}) => {
   );
 };
 
-export default FilterLayout;
+export default HubPageLayout;
