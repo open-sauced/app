@@ -18,16 +18,18 @@ export interface PRs {
 
 interface CardTableProps {
   contributor: string;
+  topic: string;
+  repositories?: number[];
 }
 
-const ContributorTable = ({ contributor }: CardTableProps) => {
-  const { data, isLoading } = useTopicContributorPRs(contributor);
+const ContributorTable = ({ contributor, topic, repositories }: CardTableProps) => {
+  const { data, isLoading } = useTopicContributorPRs(contributor, topic, repositories);
   return data.length > 0 ? (
     <>
       <div className="flex flex-col">
         <div className="flex gap-2 items-center bg-light-slate-3 rounded-md px-2 py-1">
           <div className="w-3/5">
-            <Text className="font-medium">Latest PRs</Text>
+            <Text className=" ">Latest PRs</Text>
           </div>
           <IconContext.Provider value={{ color: "gray", style: { width: 14, height: 14 } }}>
             <div className="flex justify-end w-[calc(10%-4px)]">
@@ -71,8 +73,14 @@ const ContributorTable = ({ contributor }: CardTableProps) => {
                       <VscGitPullRequest title="Open Pull Request" />
                     </IconContext.Provider>
                   ) : prStatus === "closed" ? (
-                    <IconContext.Provider value={{ color: merged ? "purple" : "red", style: { width: 14, height: 14, marginTop: 2 } }}>
-                      {merged ? <VscGitMerge title="Merged Pull Request" /> :  <VscGitPullRequestClosed title="Closed Pull Request" />}
+                    <IconContext.Provider
+                      value={{ color: merged ? "purple" : "red", style: { width: 14, height: 14, marginTop: 2 } }}
+                    >
+                      {merged ? (
+                        <VscGitMerge title="Merged Pull Request" />
+                      ) : (
+                        <VscGitPullRequestClosed title="Closed Pull Request" />
+                      )}
                     </IconContext.Provider>
                   ) : (
                     <IconContext.Provider value={{ color: "gray", style: { width: 14, height: 14, marginTop: 2 } }}>
@@ -80,7 +88,9 @@ const ContributorTable = ({ contributor }: CardTableProps) => {
                     </IconContext.Provider>
                   )}
                   <Text>{calcDistanceFromToday(new Date(parseInt(prIssuedTime, 10)))}</Text>
-                  <Text title={prName} className="!text-light-slate-12 !w-32 md:!w-72  !truncate !font-medium">{prName}</Text>
+                  <Text title={prName} className="!text-light-slate-12 !w-32 md:!w-72  !truncate ">
+                    {prName}
+                  </Text>
                 </div>
                 <div className="flex justify-end w-[calc(10%-4px)] text-sm text-light-slate-11">
                   {calcDistanceFromToday(new Date(parseInt(prIssuedTime, 10)))}

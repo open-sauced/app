@@ -4,7 +4,19 @@ interface DbRepo {
   readonly id: string,
   readonly size: number,
   readonly stars: number,
-  readonly name: string
+  readonly name: string;
+  readonly owner: string;
+  readonly prActiveCount: number;
+  readonly openPrsCount?: number;
+  readonly mergedPrsCount?: number;
+  readonly closedPrsCount?: number;
+  readonly draftPrsCount?: number;
+  readonly churnTotalCount?: number;
+  readonly churnDirection?: string;
+  readonly amount?: string;
+  readonly churn?: string;
+  readonly spamPrsCount?: number;
+  readonly prVelocityCount?: number;  
 }
 
 interface DbRepoPR {
@@ -60,4 +72,23 @@ interface DbInsight {
   readonly all_repos: number;
   readonly spam_repos: number;
   readonly accepted_repos: number;
+}
+
+interface DbUserInsight {
+  id:	number;
+  user_id: number;
+  name: string;
+  is_public: boolean;
+  is_favorite: boolean;
+  short_code:	string;
+  created_at:	string;
+  updated_at:	string;
+  repos: DbUserInsightRepo[]
+}
+
+interface DbUserInsightRepo {
+  id:	number;
+  insight_id: number;
+  repo_id: number;
+  created_at:	string;
 }

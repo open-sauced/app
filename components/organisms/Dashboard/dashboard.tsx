@@ -14,11 +14,15 @@ import { useState } from "react";
 
 type ContributorPrMap = { [contributor: string]: DbRepoPR };
 
-export const Dashboard = (): JSX.Element => {
-  const { meta: allRepoMeta } = useRepositoriesList(true);
-  const { meta: filterRepoMeta } = useRepositoriesList();
+interface DashboardProps {
+  repositories?: number[];
+}
+
+export const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
+  const { meta: allRepoMeta } = useRepositoriesList(true, repositories);
+  const { meta: filterRepoMeta } = useRepositoriesList(false, repositories);
   const { data: insightsData } = useInsights();
-  const { data: prData, isError: prError } = useTopicPRs();
+  const { data: prData, isError: prError } = useTopicPRs(undefined, repositories);
   const [showBots, setShowBots] = useState(false);
   const isNotMobile = useMediaQuery("(min-width: 768px)");
 

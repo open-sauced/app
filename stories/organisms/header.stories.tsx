@@ -6,4 +6,4 @@ const storyConfig = {
 
 export default storyConfig;
 
-export const HeaderOrganism = () => <Header />;
+export const HeaderOrganism = () => <Header><>Hello</></Header>;

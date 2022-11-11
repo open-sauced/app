@@ -11,6 +11,7 @@ jobs:
   setup:
     name: Set environment variables
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     outputs:
       DEPLOY_ENVIRONMENT: ${{ steps.env.outputs.DEPLOY_ENVIRONMENT }}
       DEPLOY_SUBDOMAIN: ${{ steps.env.outputs.DEPLOY_SUBDOMAIN }}
@@ -29,6 +30,7 @@ jobs:
   build:
     name: Build application
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - name: "☁️ checkout repository"
         uses: actions/checkout@v2
@@ -63,6 +65,7 @@ jobs:
       - test
       - build
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - name: "☁️ checkout repository"
         uses: actions/checkout@v2
@@ -86,6 +89,7 @@ jobs:
     needs:
       - release
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - name: "♻️ remove build artifacts"
         uses: geekyeggo/delete-artifact@v1

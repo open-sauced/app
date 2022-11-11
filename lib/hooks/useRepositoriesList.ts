@@ -8,7 +8,7 @@ interface PaginatedRepoResponse {
   readonly meta: Meta;
 }
 
-const useRepositoriesList = (skipFilters = false) => {
+const useRepositoriesList = (skipFilters = false, repoIds: number[] = []) => {
   const router = useRouter();
   const { filterName, selectedFilter } = router.query;
   const topic = filterName as string;
@@ -19,7 +19,8 @@ const useRepositoriesList = (skipFilters = false) => {
   const pageQuery = page ? `page=${page}` : "";
   const filterQuery = getFilterQuery(selectedFilter);
   const limitQuery = limit ? `&limit=${limit}` : "";
-  const endpointString = `${baseEndpoint}?${pageQuery}${limitQuery}${!skipFilters ? filterQuery : ""}`;
+  const reposQuery = repoIds.length > 0 ? `&repoIds=${repoIds.join(",")}`: "";
+  const endpointString = `${baseEndpoint}?${pageQuery}${limitQuery}${reposQuery}${!skipFilters ? filterQuery : ""}`;
   const { data, error, mutate } = useSWR<PaginatedRepoResponse, Error>(topic ? endpointString : null);
 
 

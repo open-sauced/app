@@ -6,7 +6,7 @@ interface PaginatedTopicCommitResponse {
   readonly data: DbRepoCommit[];
   readonly meta: Meta;
 }
-const useTopicContributorCommits = (contributor: string, topic = "hacktoberfest") => {
+const useTopicContributorCommits = (contributor: string, topic: string, repoIds: number[] = []) => {
   const lineChart = {
     xAxis: {
       type: "category",
@@ -49,7 +49,8 @@ const useTopicContributorCommits = (contributor: string, topic = "hacktoberfest"
   const [chart, setChart] = useState(lineChart);
 
   const baseEndpoint = `${topic}/${contributor}/commits`;
-  const endpointString = `${baseEndpoint}`;
+  const reposQuery = repoIds.length > 0 ? `repoIds=${repoIds.join(",")}`: "";
+  const endpointString = `${baseEndpoint}?${reposQuery}`;
 
   const { data } = useSWR<PaginatedTopicCommitResponse, Error>(contributor ? endpointString : null);
 

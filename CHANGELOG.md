@@ -5,6 +5,144 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.16.0-beta.18](https://github.com/open-sauced/insights/compare/v1.16.0-beta.17...v1.16.0-beta.18) (2022-11-11)
+
+
+### 🍕 Features
+
+* New insights soon ([#582](https://github.com/open-sauced/insights/issues/582)) ([1c36cc8](https://github.com/open-sauced/insights/commit/1c36cc873a02085298c13eb1d0cb2548828399c6))
+
+## [1.16.0-beta.17](https://github.com/open-sauced/insights/compare/v1.16.0-beta.16...v1.16.0-beta.17) (2022-11-11)
+
+
+### 🍕 Features
+
+* add individual repo search on repositories page ([#580](https://github.com/open-sauced/insights/issues/580)) ([cbc9e43](https://github.com/open-sauced/insights/commit/cbc9e4357245d65ed90659629b1d4e6cff03d154)), closes [#322](https://github.com/open-sauced/insights/issues/322)
+
+## [1.16.0-beta.16](https://github.com/open-sauced/insights/compare/v1.16.0-beta.15...v1.16.0-beta.16) (2022-11-11)
+
+
+### 🍕 Features
+
+* implement insight hub pages ([#578](https://github.com/open-sauced/insights/issues/578)) ([e8d53dd](https://github.com/open-sauced/insights/commit/e8d53dde2d8d370fa470440e12277f7858af05c8))
+
+## [1.16.0-beta.15](https://github.com/open-sauced/insights/compare/v1.16.0-beta.14...v1.16.0-beta.15) (2022-11-11)
+
+
+### 🍕 Features
+
+* updated design for insights hub page ([#579](https://github.com/open-sauced/insights/issues/579)) ([f2dab35](https://github.com/open-sauced/insights/commit/f2dab35820bfc91add679c5931bc72240ce27290))
+
+## [1.16.0-beta.14](https://github.com/open-sauced/insights/compare/v1.16.0-beta.13...v1.16.0-beta.14) (2022-11-09)
+
+
+### 🍕 Features
+
+* add repository cart components ([#577](https://github.com/open-sauced/insights/issues/577)) ([740a339](https://github.com/open-sauced/insights/commit/740a339405630b6ae631e2631ac51ba3377ce6e9)), closes [#560](https://github.com/open-sauced/insights/issues/560)
+
+## [1.16.0-beta.13](https://github.com/open-sauced/insights/compare/v1.16.0-beta.12...v1.16.0-beta.13) (2022-11-08)
+
+
+### 🍕 Features
+
+* create search result component ([#572](https://github.com/open-sauced/insights/issues/572)) ([5aa4620](https://github.com/open-sauced/insights/commit/5aa462006dfe8e4d6d055a6a6abfb0ebdbbc356b)), closes [#553](https://github.com/open-sauced/insights/issues/553)
+* implement initial user insights hub page ([#574](https://github.com/open-sauced/insights/issues/574)) ([107bee7](https://github.com/open-sauced/insights/commit/107bee71cfdb30eaf81f2b990d00407ebf1b16c5)), closes [#511](https://github.com/open-sauced/insights/issues/511)
+
+## [1.16.0-beta.12](https://github.com/open-sauced/insights/compare/v1.16.0-beta.11...v1.16.0-beta.12) (2022-11-08)
+
+
+### 🧑‍💻 Code Refactoring
+
+* set default font weight to `medium` and removed all instance in code base ([#569](https://github.com/open-sauced/insights/issues/569)) ([f9f55ab](https://github.com/open-sauced/insights/commit/f9f55abcd7f9c2518024456bf59be4b83cc6d82c))
+
+## [1.16.0-beta.11](https://github.com/open-sauced/insights/compare/v1.16.0-beta.10...v1.16.0-beta.11) (2022-11-07)
+
+
+### 🍕 Features
+
+* use GitHub API to fetch repo list for onboarding ([#573](https://github.com/open-sauced/insights/issues/573)) ([5fa3e3a](https://github.com/open-sauced/insights/commit/5fa3e3ae741cd5ee49a97cef8b710318bc8252ea)), closes [#544](https://github.com/open-sauced/insights/issues/544)
+
+## [1.16.0-beta.10](https://github.com/open-sauced/insights/compare/v1.16.0-beta.9...v1.16.0-beta.10) (2022-11-03)
+
+
+### 🍕 Features
+
+* change default topic to javascript ([#570](https://github.com/open-sauced/insights/issues/570)) ([bc810d8](https://github.com/open-sauced/insights/commit/bc810d87b74b01257ae115a6960c948d1922bf44))
+
+
+### 🐛 Bug Fixes
+
+* pass topic to contributor and commit hooks ([#571](https://github.com/open-sauced/insights/issues/571)) ([ebb061f](https://github.com/open-sauced/insights/commit/ebb061fcf310fa156f437ddcdb056a341a9e67c9))
+
+## [1.16.0-beta.9](https://github.com/open-sauced/insights/compare/v1.16.0-beta.8...v1.16.0-beta.9) (2022-11-01)
+
+
+### 🧑‍💻 Code Refactoring
+
+* replaced toggle switch component with radix ([#563](https://github.com/open-sauced/insights/issues/563)) ([3bdca61](https://github.com/open-sauced/insights/commit/3bdca61241f62bd8ecac6428f19a69997a3b10c0)), closes [#561](https://github.com/open-sauced/insights/issues/561)
+
+## [1.16.0-beta.8](https://github.com/open-sauced/insights/compare/v1.16.0-beta.7...v1.16.0-beta.8) (2022-11-01)
+
+
+### 🍕 Features
+
+* create `SuggestedRepository` component ([#564](https://github.com/open-sauced/insights/issues/564)) ([5fe3bbf](https://github.com/open-sauced/insights/commit/5fe3bbffffeb177d56e94e1b1e62ee1e1df33440))
+* implement insight page table ([#547](https://github.com/open-sauced/insights/issues/547)) ([a2b92b1](https://github.com/open-sauced/insights/commit/a2b92b1c393ba0043e6424849230eeceab828549))
+
+## [1.16.0-beta.7](https://github.com/open-sauced/insights/compare/v1.16.0-beta.6...v1.16.0-beta.7) (2022-10-28)
+
+
+### 🍕 Features
+
+* implement Supabase auth helpers for managing authenticated user ([#565](https://github.com/open-sauced/insights/issues/565)) ([3b32f5f](https://github.com/open-sauced/insights/commit/3b32f5f1671ce4ea7a97404c8f38dc55ac316d43))
+
+## [1.16.0-beta.6](https://github.com/open-sauced/insights/compare/v1.16.0-beta.5...v1.16.0-beta.6) (2022-10-28)
+
+
+### 🍕 Features
+
+* update top nav to include `NavLinks` ([#549](https://github.com/open-sauced/insights/issues/549)) ([4e64fa5](https://github.com/open-sauced/insights/commit/4e64fa5f6dc77553dce100cb623bcdb3a1b2d4b3))
+
+## [1.16.0-beta.5](https://github.com/open-sauced/insights/compare/v1.16.0-beta.4...v1.16.0-beta.5) (2022-10-28)
+
+
+### 🧑‍💻 Code Refactoring
+
+* improve text input component ([#556](https://github.com/open-sauced/insights/issues/556)) ([707df9d](https://github.com/open-sauced/insights/commit/707df9d9c4d3383245f2a47289ce45d0287edf29)), closes [#552](https://github.com/open-sauced/insights/issues/552)
+
+## [1.16.0-beta.4](https://github.com/open-sauced/insights/compare/v1.16.0-beta.3...v1.16.0-beta.4) (2022-10-25)
+
+
+### 🐛 Bug Fixes
+
+* diverge cron execution for rate limit purposes ([3607a80](https://github.com/open-sauced/insights/commit/3607a8030c6228b8fe7ecc5149d044889674ead5))
+
+## [1.16.0-beta.3](https://github.com/open-sauced/insights/compare/v1.16.0-beta.2...v1.16.0-beta.3) (2022-10-25)
+
+
+### 🐛 Bug Fixes
+
+* correct retention and job timeouts for worflows ([43ae12b](https://github.com/open-sauced/insights/commit/43ae12be2caa78b1c067e96b291a3cbc11ab5bc8)), closes [#554](https://github.com/open-sauced/insights/issues/554)
+
+## [1.16.0-beta.2](https://github.com/open-sauced/insights/compare/v1.16.0-beta.1...v1.16.0-beta.2) (2022-10-24)
+
+
+### 🍕 Features
+
+* updated text input component with new states ([6b34a4e](https://github.com/open-sauced/insights/commit/6b34a4e6839856de39c2deb88ed465cdc6fe6c1d))
+
+
+### 📝 Documentation
+
+* update text input story ([f508499](https://github.com/open-sauced/insights/commit/f5084998f74a60f83e2062606c56b729f6cfb763))
+
+## [1.16.0-beta.1](https://github.com/open-sauced/insights/compare/v1.15.0...v1.16.0-beta.1) (2022-10-20)
+
+
+### 🍕 Features
+
+* redirect to recent filter by default ([#548](https://github.com/open-sauced/insights/issues/548)) ([edf99e7](https://github.com/open-sauced/insights/commit/edf99e7e58a81d5382a41a7939323047ef83ba1f)), closes [#517](https://github.com/open-sauced/insights/issues/517)
+
 ## [1.15.0](https://github.com/open-sauced/insights/compare/v1.14.0...v1.15.0) (2022-10-17)
 
 

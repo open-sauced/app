@@ -1,30 +1,36 @@
-import React from "react";
+import * as Switch from "@radix-ui/react-switch";
+import clsx from "clsx";
 
 interface ToggleSwitchProps {
   name: string;
   checked: boolean;
-  className?: string;
-  handleToggle: ()=> void;
+  handleToggle: () => void;
+  size?: "sm" | "lg" | "base";
+  classNames?: string;
 }
 
-const ToggleSwitch = ({ name, checked = false , className , handleToggle}: ToggleSwitchProps): JSX.Element => {
+const ToggleSwitch = ({
+  name,
+  checked = false,
+  handleToggle,
+  size = "base",
+  classNames
+}: ToggleSwitchProps): JSX.Element => {
   return (
-    <div className={`${className ? className : ""} relative w-7 h-4 inline-block`}>
-      <input type="checkbox" className="hidden" defaultChecked={checked} name={name} id={name} />
-      <label className="h-full block cursor-pointer  overflow-hidden rounded-2xl" htmlFor={name}>
-        <span
-          className={`${
-            checked ? "bg-light-orange-10 " : "bg-light-slate-8 "
-          }  transition-all duration-300 block ease-in-out w-[200%] h-full `}
-        />
-        <span
-          onClick={() => handleToggle()}
-          className={`${
-            checked ? "right-0" : "left-0"
-          } w-3 h-3 absolute top-0 m-[2px] bg-white block rounded-full transition-all duration-300 ease-in-out`}
-        />
-      </label>
-    </div>
+    <Switch.Root
+      defaultChecked
+      checked={checked}
+      onClick={() => handleToggle()}
+      id={name}
+      className={clsx(
+        classNames ?? classNames,
+        checked && "!bg-light-orange-10 justify-end",
+        "flex rounded-2xl p-[2px] transition overflow-hidden bg-light-slate-8",
+        size === "lg" ? "w-14 h-[30px]" : size === "base" ? "w-11 h-6" : size === "sm" ? "w-7 h-4" : ""
+      )}
+    >
+      <Switch.Thumb className={clsx("bg-white block rounded-2xl  h-full w-1/2")} />
+    </Switch.Root>
   );
 };
 

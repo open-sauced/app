@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  font-weight: 500;
+}
 .login-step .sbui-btn-container {
   width: 100%;
 }
@@ -10,12 +13,12 @@
   display: flex;
   align-items: center;
 }
-.sbui-select:focus-visible{
-  border: 1px solid #F76808 !important  ;
-  box-shadow: 0px 0px 0px 2px #FFCCA7, 0px 1px 2px rgba(0, 0, 0, 0.1) !important;
+.sbui-select:focus-visible {
+  border: 1px solid #f76808 !important  ;
+  box-shadow: 0px 0px 0px 2px #ffcca7, 0px 1px 2px rgba(0, 0, 0, 0.1) !important;
 }
-input[type="search"]::-webkit-search-cancel-button{
- -webkit-appearance: none !important;
+input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: none !important;
 }
 
 .z-10 {

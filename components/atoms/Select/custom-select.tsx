@@ -8,13 +8,12 @@ interface SelectProps {
   label?: string;
   options: { name: string; value: any }[];
   className?: string;
-
 }
 
 type SelectedState = {
-  name: string,
-  value: any
-}
+  name: string;
+  value: any;
+};
 const Select = ({
   placeholder = "Select an option",
   options,
@@ -35,38 +34,45 @@ const Select = ({
     setIsOpen(false);
   };
 
-
   return (
     <div
       className={`${
         className
           ? className
-          : "relative bg-white cursor-pointer  focus:border-light-orange-9 focus:ring focus:ring-light-orange-5 items-center overflow-x-hidden  rounded-lg font-medium text-base text-light-slate-10"
+          : "relative bg-white cursor-pointer  focus:border-light-orange-9 focus:ring focus:ring-light-orange-5 items-center overflow-x-hidden  rounded-lg   text-base text-light-slate-10"
       }`}
     >
-      <div onClick={()=> handleToggle()} className="flex px-4 py-1.5 bg-white border border-light-slate-6 rounded-lg focus-within:border-light-orange-9 focus-within:ring focus-within:ring-light-orange-5 items-center">
-        {label && <span className="text-sm text-light-slate-9 mr-2">{label}:</span>}
+      <div
+        onClick={() => handleToggle()}
+        className="flex px-4 py-1.5 bg-white border border-light-slate-6 rounded-lg focus-within:border-light-orange-9 focus-within:ring focus-within:ring-light-orange-5 items-center"
+      >
+        {label && <span className="text-sm inline-flex text-light-slate-9 mr-2">{label}:</span>}
         <input
           value={selected.name === "" ? placeholder : selected.name}
           readOnly
           type="text"
-          className="w-full text-sm cursor-pointer text-light-slate-12 focus:outline-none bg-transparent"
+          className="overflow-scroll text-sm cursor-pointer text-light-slate-12 focus:outline-none bg-transparent"
         />
-        <div className=" w-6 h-4 relative overflow-hidden"> <RiArrowUpSLine className="absolute bottom-1" />  <RiArrowDownSLine className="absolute top-1 font-medium" /></div>
+        <div className="w-6 h-4 relative overflow-hidden">
+          {" "}
+          <RiArrowUpSLine className="absolute bottom-1" /> <RiArrowDownSLine className="absolute top-1  " />
+        </div>
       </div>
       {isOpen && (
-        <div className="w-36 md:w-[220px] transition bg-white overflow-hidden z-50 rounded-lg border shadow-superlative absolute font-normal ">
-          {options
-            ? options.map((option, index) => (
-              <div
-                className="font-medium cursor-pointer text-sm text-light-slate-12 hover:text-light-orange-11 hover:bg-light-orange-3 py-2 md:py-1 px-4 transition"
-                onClick={() => handleSelected(option)}
-                key={index}
-              >
-                {option.name}
-              </div>
-            ))
-            : "No options"}
+        <div className="relative w-full">
+          <div className="left-0 right-0 transition bg-white overflow-hidden z-50 rounded-lg border shadow-superlative absolute font-normal ">
+            {options
+              ? options.map((option, index) => (
+                <div
+                  className="  cursor-pointer text-sm text-light-slate-12 hover:text-light-orange-11 hover:bg-light-orange-3 py-2 md:py-1 px-4 transition"
+                  onClick={() => handleSelected(option)}
+                  key={index}
+                >
+                  {option.name}
+                </div>
+              ))
+              : "No options"}
+          </div>
         </div>
       )}
     </div>

@@ -12,7 +12,7 @@ const StackedAvatar = ({ contributors , visibleQuantity = 5}: StackedAvatarProps
         key={`contributor-avatar-${hostLogin}`}
         className={`w-8 h-8 overflow-hidden rounded-full border-2 border-solid border-white z-${50-(index+1)*10}`}
       >
-        <Avatar key={`${hostLogin}`} avatarURL={getAvatarLink(hostLogin)} alt={name} size={32} hasBorder isCircle />
+        <Avatar key={`${hostLogin + index}`} avatarURL={getAvatarLink(hostLogin)} alt={name} size={32} hasBorder isCircle />
       </div>
     ))}
   </div>

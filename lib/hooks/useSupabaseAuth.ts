@@ -1,20 +1,27 @@
 import { useState, useEffect } from "react";
+import { SignInWithOAuthCredentials, User } from "@supabase/supabase-js";
+
 import { supabase } from "../utils/supabase";
-import { User } from "@supabase/supabase-js";
-import { UserCredentials } from "@supabase/gotrue-js/src/lib/types";
 
 const useSupabaseAuth = () => {
   const [user, setUser] = useState<User | null>(null);
   const [sessionToken, setSessionToken] = useState<string | undefined>(undefined);
+  const [providerToken, setProviderToken] = useState<string | null | undefined>(undefined);
 
   useEffect(() => {
-    const currentUser = supabase.auth.session();
-    setUser(currentUser?.user ?? null);
-    setSessionToken(currentUser?.access_token);
+    async function getUserSession() {
+      const currentUser = await supabase.auth.getSession();
+      setUser(currentUser?.data.session?.user ?? null);
+      setSessionToken(currentUser?.data.session?.access_token);
+      setProviderToken(currentUser?.data.session?.provider_token);
+    }
 
-    const { data: listener } = supabase.auth.onAuthStateChange((_, session) => {
+    getUserSession();
+
+    const { data: { subscription: listener } } = supabase.auth.onAuthStateChange((_, session) => {
       setUser(session?.user ?? null);
       setSessionToken(session?.access_token ?? undefined);
+      setProviderToken(session?.provider_token ?? undefined);
     });
 
     return () => {
@@ -23,12 +30,11 @@ const useSupabaseAuth = () => {
   }, []);
 
   return {
-    signIn: (data: UserCredentials) => supabase.auth.signIn(data, {
-      redirectTo: process.env.NEXT_PUBLIC_BASE_URL ?? "/"
-    }),
+    signIn: (data: SignInWithOAuthCredentials) => supabase.auth.signInWithOAuth(data),
     signOut: () => supabase.auth.signOut(),
     user,
-    sessionToken
+    sessionToken,
+    providerToken
   };
 };
 
