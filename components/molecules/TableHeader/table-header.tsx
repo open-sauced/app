@@ -20,11 +20,11 @@ const TableHeader = ({ title, showing, updateLimit, onSearch }: TableHeaderProps
         <PaginationResult className="hidden !translate-y-[2px]  md:inline-flex" {...showing} />
       </div>
       <div className="flex items-end">
-        <Search
+        {onSearch ? <Search
           placeholder={`Search ${title}`}
           className="mr-4 max-w-full" name={"query"}
           onSearch={onSearch}
-        />
+        /> : ""}
         <Select
           placeholder="10 per page"
           options={[
