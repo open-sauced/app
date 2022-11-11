@@ -7,10 +7,10 @@ import PaginationResult from "../PaginationResults/pagination-result";
 interface TableHeaderProps {
   title?: string;
   showing: { from: number; to: number; total: number; entity: string };
-
+  onSearch?: (search?: string) => void;
   updateLimit: Function;
 }
-const TableHeader = ({ title, showing, updateLimit }: TableHeaderProps): JSX.Element => {
+const TableHeader = ({ title, showing, updateLimit, onSearch }: TableHeaderProps): JSX.Element => {
   return (
     <div className="flex flex-wrap gap-y-2 flex-col md:flex-row md:justify-between md:items-end w-full md:pb-4">
       <div className="flex gap-x-4 items-end">
@@ -19,7 +19,12 @@ const TableHeader = ({ title, showing, updateLimit }: TableHeaderProps): JSX.Ele
         </Title>
         <PaginationResult className="hidden !translate-y-[2px]  md:inline-flex" {...showing} />
       </div>
-      <div className="w-full  md:w-2/5 flex gap-x-5 items-center">
+      <div className="flex items-end">
+        <Search
+          placeholder={`Search ${title}`}
+          className="mr-4 max-w-full" name={"query"}
+          onSearch={onSearch}
+        />
         <Select
           placeholder="10 per page"
           options={[

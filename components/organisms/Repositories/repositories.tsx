@@ -20,7 +20,7 @@ interface RepositoriesProps {
 const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
   const { user } = useSupabaseAuth();
   const router = useRouter();
-  const { filterName, selectedFilter, userOrg } = router.query;
+  const { filterName, toolName, selectedFilter, userOrg } = router.query;
   const username = userOrg ? user?.user_metadata.user_name : undefined;
   const topic = filterName as string;
   const {
@@ -33,6 +33,14 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
     setLimit
   } = useRepositoriesList(false, repositories);
 
+  const handleOnSearch = (search?: string) => {
+    if (search && /^[a-zA-Z0-9\-\.]+\/[a-zA-Z0-9\-\.]+$/.test(search)) {
+      router.push(`/${topic}/${toolName}/filter/${search}`);
+    } else {
+      router.push(`/${topic}/${toolName}`);
+    }
+  };
+
   useEffect(() => {
     setPage(1);
   }, [selectedFilter]);
@@ -41,6 +49,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
     <div className="flex flex-col w-full gap-4">
       <TableHeader
         updateLimit={setLimit}
+        onSearch={(e) => handleOnSearch(e)}
         showing={{
           from: page === 1 ? page : ((page-1) * repoMeta.limit) + 1,
           to: page * repoMeta.limit <= repoMeta.itemCount ? page * repoMeta.limit : repoMeta.itemCount,
