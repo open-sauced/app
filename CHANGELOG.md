@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.16.0-beta.18](https://github.com/open-sauced/insights/compare/v1.16.0-beta.17...v1.16.0-beta.18) (2022-11-11)
+
+
+### 🍕 Features
+
+* New insights soon ([#582](https://github.com/open-sauced/insights/issues/582)) ([1c36cc8](https://github.com/open-sauced/insights/commit/1c36cc873a02085298c13eb1d0cb2548828399c6))
+
 ## [1.16.0-beta.17](https://github.com/open-sauced/insights/compare/v1.16.0-beta.16...v1.16.0-beta.17) (2022-11-11)
 
 
