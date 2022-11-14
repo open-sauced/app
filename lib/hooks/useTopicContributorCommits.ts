@@ -54,7 +54,7 @@ const useTopicContributorCommits = (contributor: string, topic: string, repoIds:
   const { selectedFilter } = router.query;
   const filterQuery = getFilterQuery(selectedFilter);
   const reposQuery = repoIds.length > 0 ? `repoIds=${repoIds.join(",")}`: "";
-  const endpointString = `${baseEndpoint}?${filterQuery.replace('&', '')}${reposQuery}`;
+  const endpointString = `${baseEndpoint}?${filterQuery.replace("&", "")}${reposQuery}`;
 
   const { data } = useSWR<PaginatedTopicCommitResponse, Error>(contributor ? endpointString : null);
 
