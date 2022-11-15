@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { UserGroupIcon } from "@heroicons/react/24/outline";
 
-import Radio from "components/atoms/Radio/radio";
 import TextInput from "components/atoms/TextInput/text-input";
 import ToggleSwitch from "components/atoms/ToggleSwitch/toggle-switch";
 import Text from "components/atoms/Typography/text";
@@ -12,17 +12,27 @@ import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import Button from "components/atoms/Button/button";
 import RepositoriesCart from "components/organisms/RepositoriesCart/repositories-cart";
 import RepositoryCartItem from "components/molecules/ReposoitoryCartItem/repository-cart-item";
-import { getProfileLink } from "lib/utils/github";
+import { getAvatarLink } from "lib/utils/github";
+import Link from "next/link";
+
+enum RepoLookupError {
+  Initial = 0,
+  NotIndexed = 1,
+  Invalid = 3,
+  Error = 4
+}
 
 const NewInsightPage: WithPageLayout = () => {
   const { user, sessionToken } = useSupabaseAuth();
   const router = useRouter();
   const username = user?.user_metadata.user_name;
   const [name, setName] = useState("");
+  const [nameError, setNameError] = useState("");
+  const [submitted, setSubmitted] = useState(false);
   const [repoToAdd, setRepoToAdd] = useState("");
   const [repos, setRepos] = useState<DbRepo[]>([]);
   const [repoHistory, setRepoHistory] = useState<DbRepo[]>([]);
-  const [addRepoError, setAddRepoError] = useState<string | null>(null);
+  const [addRepoError, setAddRepoError] = useState<RepoLookupError>(RepoLookupError.Initial);
   const [isPublic, setIsPublic] = useState(false);
 
   const reposRemoved = repoHistory.map(repo => {
@@ -32,7 +42,7 @@ const NewInsightPage: WithPageLayout = () => {
       orgName: repo.owner,
       repoName: repo.name,
       totalPrs,
-      avatar: `${getProfileLink(repo.owner)}.png?size=60`,
+      avatar: getAvatarLink(repo.owner, 60),
       handleRemoveItem: () => {}              
     };
   });
@@ -42,10 +52,18 @@ const NewInsightPage: WithPageLayout = () => {
   };
 
   const handleCreateInsightPage = async () => {
+    setSubmitted(true);
+
+    if (!name) {
+      setNameError("Insight name is a required field");
+      return;
+    }
+
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/insights`, {
         method: "POST",
         headers: {
+          "Content-type": "application/json",
           Authorization: `Bearer ${sessionToken}`
         },
         body: JSON.stringify({
@@ -67,7 +85,7 @@ const NewInsightPage: WithPageLayout = () => {
   };
 
   const loadAndAddRepo = async(repoToAdd: string) => {
-    setAddRepoError(null);
+    setAddRepoError(RepoLookupError.Initial);
 
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_GS_API_URL}/repos/${repoToAdd}`);
@@ -78,12 +96,18 @@ const NewInsightPage: WithPageLayout = () => {
         setRepos(repos => {
           return [...repos, addedRepo];
         });
-        setAddRepoError(null);
+        setAddRepoError(RepoLookupError.Initial);
       } else {
-        setAddRepoError("Repository is not indexed or invalid");
+        const publicRepoResponse = await fetch(`https://api.github.com/repos/${repoToAdd}`);
+
+        if (publicRepoResponse.ok) {
+          setAddRepoError(RepoLookupError.NotIndexed);
+        } else {
+          setAddRepoError(RepoLookupError.Invalid);
+        }
       }
     } catch {
-      setAddRepoError("Repository is not indexed or invalid");
+      setAddRepoError(RepoLookupError.Error);
     }
   };
 
@@ -113,8 +137,29 @@ const NewInsightPage: WithPageLayout = () => {
     });
   };
 
+  const getRepoLookupError = (code: RepoLookupError) => {
+    if (code === RepoLookupError.Error) {
+      return <Text>There was error retrieving this repository.</Text>;      
+    }
+
+    if (code === RepoLookupError.Invalid) {
+      return <Text>This repository entered is invalid.</Text>;      
+    }
+
+    if (code === RepoLookupError.NotIndexed) {
+      return <Text>
+        This repository is not currently being indexed by OpenSauced. <br/>
+        <Link className="!text-black" href="https://github.com/open-sauced/feedback/discussions/2" target="_blank">Visit our feedback discussion</Link>{" "}
+        to request this repository be added.
+      </Text>;
+    }
+
+    return <></>;
+  };
+
   return (
-    <section className="flex flex-col md:flex-row w-full py-4 px-2 md:px-4 justify-center items-center">
+    <section className="flex flex-col lg:flex-row w-full py-4 px-2 md:px-4 justify-center items-center">
+      <div className="xs:hidden w-1/3"></div>
       <div className="px-4">
         <Title className="!text-2xl !leading-none mb-4" level={1}>
           Create New Insight Page
@@ -130,7 +175,8 @@ const NewInsightPage: WithPageLayout = () => {
           Page Name
         </Title>
 
-        <TextInput placeholder="Page Name (ex: My Team)" onChange={handleOnNameChange}/>
+        <TextInput placeholder="Page Name (ex: My Team)" value={name} onChange={handleOnNameChange}/>
+        { submitted && nameError ? <Text>{nameError}</Text>: ""}
         {/* <Text>insights.opensauced.pizza/pages/{username}/{`{pageId}`}</Text> */}
 
         <hr className="m-4"/>
@@ -141,7 +187,7 @@ const NewInsightPage: WithPageLayout = () => {
 
         <TextInput
           classNames="my-2"
-          placeholder="Repository Full Name (ex: org/repo)"
+          placeholder="Repository Full Name (ex: open-sauced/open-sauced)"
           onChange={handleOnRepoChange}
         />
         
@@ -149,12 +195,26 @@ const NewInsightPage: WithPageLayout = () => {
           <Button onClick={handleAddRepository} type="primary">Add Repository</Button>
         </div>
 
-        {addRepoError ? <Text className="!text-red-500">
-          {addRepoError}
-        </Text>: ""}
+        {getRepoLookupError(addRepoError)}
+
+        <hr className="m-4"/>
+
+        <Title className="!text-1xl !leading-none mb-4 my-4" level={4}>
+          Page Visibility
+        </Title>
+
+        <div className="flex justify-between">
+          <div className="flex items-center">
+            <UserGroupIcon className="w-[24px] h-[24px] text-light-slate-9"/><Text className="pl-2">Make this page publicly visible</Text> 
+          </div>
+          
+          <div className="flex mx-4 !border-red-900 items-center">
+            <Text className="!text-orange-600 pr-2">Make Public</Text><ToggleSwitch name="isPublic" checked={isPublic} handleToggle={() => setIsPublic(isPublic => !isPublic)}/>
+          </div>
+        </div>
       </div>
 
-      <div className="">
+      <div className="py-4">
         <RepositoriesCart
           hasItems={repos.length > 0}
           handleCreatePage={handleCreateInsightPage}
@@ -164,7 +224,7 @@ const NewInsightPage: WithPageLayout = () => {
             const totalPrs = (repo.openPrsCount || 0) + (repo.closedPrsCount || 0) + (repo.mergedPrsCount || 0) + (repo.draftPrsCount || 0);
 
             return (<RepositoryCartItem key={`repo_${repo.id}`}
-              avatar={`${getProfileLink(repo.owner)}.png?size=60`}
+              avatar={getAvatarLink(repo.owner, 60)}
               handleRemoveItem={() => handleRemoveRepository(repo.id)}
               orgName={repo.owner}
               repoName={repo.name}
@@ -172,14 +232,6 @@ const NewInsightPage: WithPageLayout = () => {
             />);
           })}
         </RepositoriesCart>
-
-        {/* <Title className="!text-1xl !leading-none mb-4" level={4}>
-          Page Visibility
-        </Title>
-
-        [Icon] <Text>Make this page publicly visible</Text> 
-        
-        <ToggleSwitch name="isPublic" checked={false} handleToggle={handleVisibility}/> */}
       </div>
     </section>
   );
