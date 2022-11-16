@@ -71,6 +71,7 @@ const NewInsightPage: WithPageLayout = () => {
       body: JSON.stringify({
         name,
         ids: repos.map((repo) => repo.id),
+        // eslint-disable-next-line
         is_public: isPublic
       })
     });
