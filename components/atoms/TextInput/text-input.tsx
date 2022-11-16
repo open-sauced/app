@@ -72,7 +72,7 @@ const TextInput = ({
           )}
         </div>
       </label>
-      {descriptionText ? <p className="mt-3   text-light-slate-9 text-sm">{descriptionText}</p> : ""}
+      {descriptionText ? <p className="mt-2 text-light-slate-9 text-sm">{descriptionText}</p> : ""}
       {state === "invalid" && errorMsg ? <p className="mt-3 text-sm text-light-red-11  ">{errorMsg}</p> : ""}
     </>
   );
