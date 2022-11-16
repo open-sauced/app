@@ -15,7 +15,7 @@ const RepositoryCartItem = ({ avatar, orgName, repoName, totalPrs, handleRemoveI
   return (
     <div className="flex items-center justify-between">
       <div className="flex gap-3 items-center ">
-        <Avatar initials="" size="sm" className="" />
+        <Avatar avatarURL={avatar} initials="" size="sm" className="" />
         <Text className="!text-sm !text-light-slate-11">
           {orgName} / <span className="text-light-slate-12">{repoName}</span>
         </Text>
