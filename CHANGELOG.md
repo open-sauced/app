@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.16.1-beta.3](https://github.com/open-sauced/insights/compare/v1.16.1-beta.2...v1.16.1-beta.3) (2022-11-16)
+
+
+### 🐛 Bug Fixes
+
+* add additional filters to contributor hooks ([#589](https://github.com/open-sauced/insights/issues/589)) ([a107f97](https://github.com/open-sauced/insights/commit/a107f973e061e2d23c9fc84a64133107f3ee2e40))
+
 ### [1.16.1-beta.2](https://github.com/open-sauced/insights/compare/v1.16.1-beta.1...v1.16.1-beta.2) (2022-11-16)
 
 
