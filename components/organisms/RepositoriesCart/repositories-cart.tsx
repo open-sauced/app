@@ -5,17 +5,26 @@ import { BiPlus } from "react-icons/bi";
 import Avatar from "components/atoms/Avatar/avatar";
 import CartIllustration from "components/atoms/CartIllustration/cart-illustration";
 import Text from "components/atoms/Typography/text";
-import { RepositoryCartItemProps } from "../../molecules/ReposoitoryCartItem/repository-cart-item";
+
+import { RepositoryCartItemProps } from "components/molecules/ReposoitoryCartItem/repository-cart-item";
 
 interface RepositoriesCartProps {
   children?: React.ReactNode;
   hasItems?: boolean;
   history?: RepositoryCartItemProps[];
   handleCreatePage?: Function;
-  handleAddToCart?: (fullRepoName: string) => void
+  handleAddToCart?: (fullRepoName: string) => void;
+  createPageButtonDisabled?: boolean;
 }
 
-const RepositoriesCart = ({ children, hasItems, history, handleCreatePage, handleAddToCart }: RepositoriesCartProps): JSX.Element => {
+const RepositoriesCart = ({
+  children,
+  hasItems,
+  history,
+  handleCreatePage,
+  handleAddToCart,
+  createPageButtonDisabled
+}: RepositoriesCartProps): JSX.Element => {
   const cartItems = Children.toArray(children);
 
   const onHandleCreatePage = () => {
@@ -30,7 +39,7 @@ const RepositoriesCart = ({ children, hasItems, history, handleCreatePage, handl
   };
 
   return (
-    <div className="w-[364px] border flex flex-col gap-2 rounded-lg p-6">
+    <div className="w-full lg:w-[364px] border flex flex-col gap-2 rounded-lg p-6">
       {/* Empty state of Cart */}
       {cartItems.length > 0 && hasItems ? (
         cartItems.map((item, index) => (
@@ -51,7 +60,7 @@ const RepositoriesCart = ({ children, hasItems, history, handleCreatePage, handl
           {history.length > 0 ? <Text>Add again:</Text> : ""}
           {history.length > 0 &&
             history.map(({ orgName, repoName, totalPrs, avatar }, index) => (
-              <div key={`${index}/${Math.random()}/${orgName}`} className="flex items-center mt-2 justify-between">
+              <div key={`${index}/${orgName}/${repoName}`} className="flex items-center mt-2 justify-between">
                 <div className="flex gap-3 items-center ">
                   <Avatar avatarURL={avatar} initials="" size="sm" className="" />
                   <Text className="!text-sm !text-light-slate-11">
@@ -74,6 +83,7 @@ const RepositoriesCart = ({ children, hasItems, history, handleCreatePage, handl
       {hasItems && (
         <div className="w-full mt-1 ">
           <button
+            disabled={createPageButtonDisabled}
             onClick={() => onHandleCreatePage()}
             className="w-full text-sm text-white flex justify-center items-center py-3 px-5 bg-light-orange-9 rounded-lg"
           >
