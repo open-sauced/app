@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.16.1-beta.1](https://github.com/open-sauced/insights/compare/v1.16.0...v1.16.1-beta.1) (2022-11-16)
+
+
+### 🐛 Bug Fixes
+
+* Improve the Onboarding UI ([#602](https://github.com/open-sauced/insights/issues/602)) ([657e344](https://github.com/open-sauced/insights/commit/657e344b55054a63515f661333ed522bbbe68d56)), closes [#601](https://github.com/open-sauced/insights/issues/601)
+
 ## [1.16.0](https://github.com/open-sauced/insights/compare/v1.15.0...v1.16.0) (2022-11-11)
 
 
