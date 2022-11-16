@@ -1,19 +1,20 @@
-import { useRouter } from "next/router";
 import { useState } from "react";
+import { useRouter } from "next/router";
+import Link from "next/link";
 import { UserGroupIcon } from "@heroicons/react/24/outline";
 
+import Button from "components/atoms/Button/button";
 import TextInput from "components/atoms/TextInput/text-input";
 import ToggleSwitch from "components/atoms/ToggleSwitch/toggle-switch";
 import Text from "components/atoms/Typography/text";
 import Title from "components/atoms/Typography/title";
+import RepositoriesCart from "components/organisms/RepositoriesCart/repositories-cart";
+import RepositoryCartItem from "components/molecules/ReposoitoryCartItem/repository-cart-item";
+
 import { WithPageLayout } from "interfaces/with-page-layout";
 import HubLayout from "layouts/hub";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
-import Button from "components/atoms/Button/button";
-import RepositoriesCart from "components/organisms/RepositoriesCart/repositories-cart";
-import RepositoryCartItem from "components/molecules/ReposoitoryCartItem/repository-cart-item";
 import { getAvatarLink } from "lib/utils/github";
-import Link from "next/link";
 
 enum RepoLookupError {
   Initial = 0,
@@ -25,7 +26,7 @@ enum RepoLookupError {
 const NewInsightPage: WithPageLayout = () => {
   const { user, sessionToken } = useSupabaseAuth();
   const router = useRouter();
-  const username = user?.user_metadata.user_name;
+  const username: string = user?.user_metadata.user_name;
   const [name, setName] = useState("");
   const [nameError, setNameError] = useState("");
   const [submitted, setSubmitted] = useState(false);
@@ -57,26 +58,28 @@ const NewInsightPage: WithPageLayout = () => {
 
     if (!name) {
       setNameError("Insight name is a required field");
+      setSubmitted(false);
       return;
     }
 
-    try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/insights`, {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-          Authorization: `Bearer ${sessionToken}`
-        },
-        body: JSON.stringify({
-          name,
-          ids: repos.map((repo) => repo.id)
-        })
-      });
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/insights`, {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Bearer ${sessionToken}`
+      },
+      body: JSON.stringify({
+        name,
+        ids: repos.map((repo) => repo.id),
+        is_public: isPublic
+      })
+    });
 
-      if (response.ok) {
-        router.push("/hub/insights");
-      }
-    } catch (e) {}
+    if (response.ok) {
+      router.push("/hub/insights");
+    }
+
+    setSubmitted(false);
   };
 
   const handleOnRepoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -93,7 +96,9 @@ const NewInsightPage: WithPageLayout = () => {
         const addedRepo = (await response.json()) as DbRepo;
 
         setRepos((repos) => {
-          return [...repos, addedRepo];
+          const hasRepo = repos.find(repo => `${repo.owner}/${repo.name}` === repoToAdd);
+          
+          return !hasRepo ? [...repos, addedRepo] : repos;
         });
         setAddRepoError(RepoLookupError.Initial);
       } else {
@@ -112,6 +117,7 @@ const NewInsightPage: WithPageLayout = () => {
 
   const handleAddRepository = async () => {
     await loadAndAddRepo(repoToAdd);
+    setRepoToAdd("");
   };
 
   const handleReAddRepository = async (repoAdded: string) => {
@@ -178,8 +184,8 @@ const NewInsightPage: WithPageLayout = () => {
 
           <TextInput placeholder="Page Name (ex: My Team)" value={name} onChange={handleOnNameChange} />
           {submitted && nameError ? <Text>{nameError}</Text> : ""}
+          {/* <Text>insights.opensauced.pizza/pages/{username}/{`{pageId}`}/dashboard</Text> */}
         </div>
-        {/* <Text>insights.opensauced.pizza/pages/{username}/{`{pageId}`}</Text> */}
 
         <div className="py-6 border-b flex flex-col gap-4 border-light-slate-8">
           <Title className="!text-1xl !leading-none " level={4}>
@@ -187,13 +193,13 @@ const NewInsightPage: WithPageLayout = () => {
           </Title>
 
           <TextInput
-            classNames=""
+            value={repoToAdd}
             placeholder="Repository Full Name (ex: open-sauced/open-sauced)"
             onChange={handleOnRepoChange}
           />
 
           <div>
-            <Button onClick={handleAddRepository} type="primary">
+            <Button disabled={repos.length === 10} onClick={handleAddRepository} type="primary">
               Add Repository
             </Button>
           </div>
@@ -228,6 +234,7 @@ const NewInsightPage: WithPageLayout = () => {
           handleCreatePage={handleCreateInsightPage}
           handleAddToCart={handleReAddRepository}
           history={reposRemoved}
+          createPageButtonDisabled={submitted}
         >
           {repos.map((repo) => {
             const totalPrs =
