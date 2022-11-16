@@ -56,7 +56,7 @@ const RepositoriesCart = ({
         </div>
       )}
       {!!history && (
-        <div className="border-t mt-2 py-1">
+        <div className={`${history.length > 0 && "border-1"} mt-2 py-1`}>
           {history.length > 0 ? <Text>Add again:</Text> : ""}
           {history.length > 0 &&
             history.map(({ orgName, repoName, totalPrs, avatar }, index) => (
