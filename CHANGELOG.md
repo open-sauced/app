@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.17.0-beta.1](https://github.com/open-sauced/insights/compare/v1.16.1-beta.3...v1.17.0-beta.1) (2022-11-16)
+
+
+### 🍕 Features
+
+* implement add create insight page ([#591](https://github.com/open-sauced/insights/issues/591)) ([b1b3c7b](https://github.com/open-sauced/insights/commit/b1b3c7bf65ff717f9ed69e03f823c2633e9ffc7d)), closes [#562](https://github.com/open-sauced/insights/issues/562)
+
 ### [1.16.1-beta.3](https://github.com/open-sauced/insights/compare/v1.16.1-beta.2...v1.16.1-beta.3) (2022-11-16)
 
 
