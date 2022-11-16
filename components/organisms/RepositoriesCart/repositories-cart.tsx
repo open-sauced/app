@@ -39,7 +39,7 @@ const RepositoriesCart = ({
   };
 
   return (
-    <div className="w-[364px] border flex flex-col gap-2 rounded-lg p-6">
+    <div className="w-full lg:w-[364px] border flex flex-col gap-2 rounded-lg p-6">
       {/* Empty state of Cart */}
       {cartItems.length > 0 && hasItems ? (
         cartItems.map((item, index) => (
