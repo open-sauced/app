@@ -89,6 +89,12 @@ const NewInsightPage: WithPageLayout = () => {
 
   const loadAndAddRepo = async (repoToAdd: string) => {
     setAddRepoError(RepoLookupError.Initial);
+    
+    const hasRepo = repos.find(repo => `${repo.owner}/${repo.name}` === repoToAdd);
+
+    if (hasRepo) {
+      return;
+    }
 
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_GS_API_URL}/repos/${repoToAdd}`);
@@ -97,9 +103,7 @@ const NewInsightPage: WithPageLayout = () => {
         const addedRepo = (await response.json()) as DbRepo;
 
         setRepos((repos) => {
-          const hasRepo = repos.find(repo => `${repo.owner}/${repo.name}` === repoToAdd);
-          
-          return !hasRepo ? [...repos, addedRepo] : repos;
+          return [...repos, addedRepo];
         });
         setAddRepoError(RepoLookupError.Initial);
       } else {
