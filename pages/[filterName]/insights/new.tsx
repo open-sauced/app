@@ -35,15 +35,16 @@ const NewInsightPage: WithPageLayout = () => {
   const [addRepoError, setAddRepoError] = useState<RepoLookupError>(RepoLookupError.Initial);
   const [isPublic, setIsPublic] = useState(false);
 
-  const reposRemoved = repoHistory.map(repo => {
-    const totalPrs = (repo.openPrsCount || 0) + (repo.closedPrsCount || 0) + (repo.mergedPrsCount || 0) + (repo.draftPrsCount || 0);
+  const reposRemoved = repoHistory.map((repo) => {
+    const totalPrs =
+      (repo.openPrsCount || 0) + (repo.closedPrsCount || 0) + (repo.mergedPrsCount || 0) + (repo.draftPrsCount || 0);
 
     return {
       orgName: repo.owner,
       repoName: repo.name,
       totalPrs,
       avatar: getAvatarLink(repo.owner, 60),
-      handleRemoveItem: () => {}              
+      handleRemoveItem: () => {}
     };
   });
 
@@ -68,32 +69,30 @@ const NewInsightPage: WithPageLayout = () => {
         },
         body: JSON.stringify({
           name,
-          ids: repos.map(repo => repo.id)
+          ids: repos.map((repo) => repo.id)
         })
       });
 
       if (response.ok) {
         router.push("/hub/insights");
       }
-    } catch (e) {
-
-    }
+    } catch (e) {}
   };
 
   const handleOnRepoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setRepoToAdd(event.target.value);
   };
 
-  const loadAndAddRepo = async(repoToAdd: string) => {
+  const loadAndAddRepo = async (repoToAdd: string) => {
     setAddRepoError(RepoLookupError.Initial);
 
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_GS_API_URL}/repos/${repoToAdd}`);
 
       if (response.ok) {
-        const addedRepo = await response.json() as DbRepo;
-      
-        setRepos(repos => {
+        const addedRepo = (await response.json()) as DbRepo;
+
+        setRepos((repos) => {
           return [...repos, addedRepo];
         });
         setAddRepoError(RepoLookupError.Initial);
@@ -115,89 +114,92 @@ const NewInsightPage: WithPageLayout = () => {
     await loadAndAddRepo(repoToAdd);
   };
 
-  const handleReAddRepository = async(repoAdded: string) => {
+  const handleReAddRepository = async (repoAdded: string) => {
     try {
       await loadAndAddRepo(repoAdded);
 
-      setRepoHistory(historyRepos => {
-        return historyRepos.filter(repo => `${repo.owner}/${repo.name}` !== repoAdded);
+      setRepoHistory((historyRepos) => {
+        return historyRepos.filter((repo) => `${repo.owner}/${repo.name}` !== repoAdded);
       });
-    } catch (e) {
-
-    }    
+    } catch (e) {}
   };
 
   const handleRemoveRepository = (id: string) => {
-    setRepos(addedRepos => {
-      return addedRepos.filter(repo => repo.id !== id);
+    setRepos((addedRepos) => {
+      return addedRepos.filter((repo) => repo.id !== id);
     });
 
-    setRepoHistory(historyRepos => {
-      return [...historyRepos, repos.find(repo => repo.id === id) as DbRepo];
+    setRepoHistory((historyRepos) => {
+      return [...historyRepos, repos.find((repo) => repo.id === id) as DbRepo];
     });
   };
 
   const getRepoLookupError = (code: RepoLookupError) => {
     if (code === RepoLookupError.Error) {
-      return <Text>There was error retrieving this repository.</Text>;      
+      return <Text>There was error retrieving this repository.</Text>;
     }
 
     if (code === RepoLookupError.Invalid) {
-      return <Text>This repository entered is invalid.</Text>;      
+      return <Text>This repository entered is invalid.</Text>;
     }
 
     if (code === RepoLookupError.NotIndexed) {
-      return <Text>
-        This repository is not currently being indexed by OpenSauced. <br/>
-        <Link className="!text-black" href="https://github.com/open-sauced/feedback/discussions/2" target="_blank">Visit our feedback discussion</Link>{" "}
-        to request this repository be added.
-      </Text>;
+      return (
+        <Text>
+          This repository is not currently being indexed by OpenSauced. <br />
+          <Link className="!text-black" href="https://github.com/open-sauced/feedback/discussions/2" target="_blank">
+            Visit our feedback discussion
+          </Link>{" "}
+          to request this repository be added.
+        </Text>
+      );
     }
 
     return <></>;
   };
 
   return (
-    <section className="flex flex-col lg:flex-row w-full py-4 px-2 md:px-4 justify-center items-center">
-      <div className="xs:hidden w-1/3"></div>
-      <div className="px-4">
-        <Title className="!text-2xl !leading-none mb-4" level={1}>
-          Create New Insight Page
-        </Title>
+    <section className="flex  flex-col lg:flex-row w-full lg:gap-20 py-4 lg:pl-28 justify-center ">
+      <div className="flex flex-col gap-8">
+        <div className="pb-6 border-b border-light-slate-8">
+          <Title className="!text-2xl !leading-none mb-4" level={1}>
+            Create New Insight Page
+          </Title>
+          <Text className="my-8">
+            An insight page is a dashboard containing selected repositories that you and your team can get insights
+            from.
+          </Text>
+        </div>
 
-        <Text className="my-8">
-          An insight page is a dashboard containing selected repositories that you and your team can get insights from.
-        </Text>
+        <div className="pb-8 border-b border-light-slate-8">
+          <Title className="!text-1xl !leading-none mb-4" level={4}>
+            Page Name
+          </Title>
 
-        <hr className="m-4"/>
-
-        <Title className="!text-1xl !leading-none mb-4" level={4}>
-          Page Name
-        </Title>
-
-        <TextInput placeholder="Page Name (ex: My Team)" value={name} onChange={handleOnNameChange}/>
-        { submitted && nameError ? <Text>{nameError}</Text>: ""}
+          <TextInput placeholder="Page Name (ex: My Team)" value={name} onChange={handleOnNameChange} />
+          {submitted && nameError ? <Text>{nameError}</Text> : ""}
+        </div>
         {/* <Text>insights.opensauced.pizza/pages/{username}/{`{pageId}`}</Text> */}
 
-        <hr className="m-4"/>
+        <div className="py-6 border-b flex flex-col gap-4 border-light-slate-8">
+          <Title className="!text-1xl !leading-none " level={4}>
+            Add Repositories
+          </Title>
 
-        <Title className="!text-1xl !leading-none mb-4 my-4" level={4}>
-          Add Repositories
-        </Title>
+          <TextInput
+            classNames=""
+            placeholder="Repository Full Name (ex: open-sauced/open-sauced)"
+            onChange={handleOnRepoChange}
+          />
 
-        <TextInput
-          classNames="my-2"
-          placeholder="Repository Full Name (ex: open-sauced/open-sauced)"
-          onChange={handleOnRepoChange}
-        />
-        
-        <div>
-          <Button onClick={handleAddRepository} type="primary">Add Repository</Button>
+          <div>
+            <Button onClick={handleAddRepository} type="primary">
+              Add Repository
+            </Button>
+          </div>
         </div>
 
         {getRepoLookupError(addRepoError)}
-
-        <hr className="m-4"/>
 
         <Title className="!text-1xl !leading-none mb-4 my-4" level={4}>
           Page Visibility
@@ -205,31 +207,45 @@ const NewInsightPage: WithPageLayout = () => {
 
         <div className="flex justify-between">
           <div className="flex items-center">
-            <UserGroupIcon className="w-[24px] h-[24px] text-light-slate-9"/><Text className="pl-2">Make this page publicly visible</Text> 
+            <UserGroupIcon className="w-[24px] h-[24px] text-light-slate-9" />
+            <Text className="pl-2">Make this page publicly visible</Text>
           </div>
-          
+
           <div className="flex mx-4 !border-red-900 items-center">
-            <Text className="!text-orange-600 pr-2">Make Public</Text><ToggleSwitch name="isPublic" checked={isPublic} handleToggle={() => setIsPublic(isPublic => !isPublic)}/>
+            <Text className="!text-orange-600 pr-2">Make Public</Text>
+            <ToggleSwitch
+              name="isPublic"
+              checked={isPublic}
+              handleToggle={() => setIsPublic((isPublic) => !isPublic)}
+            />
           </div>
         </div>
       </div>
 
-      <div className="py-4">
+      <div className="sticky top-0">
         <RepositoriesCart
           hasItems={repos.length > 0}
           handleCreatePage={handleCreateInsightPage}
           handleAddToCart={handleReAddRepository}
-          history={reposRemoved}>
-          {repos.map(repo => {
-            const totalPrs = (repo.openPrsCount || 0) + (repo.closedPrsCount || 0) + (repo.mergedPrsCount || 0) + (repo.draftPrsCount || 0);
+          history={reposRemoved}
+        >
+          {repos.map((repo) => {
+            const totalPrs =
+              (repo.openPrsCount || 0) +
+              (repo.closedPrsCount || 0) +
+              (repo.mergedPrsCount || 0) +
+              (repo.draftPrsCount || 0);
 
-            return (<RepositoryCartItem key={`repo_${repo.id}`}
-              avatar={getAvatarLink(repo.owner, 60)}
-              handleRemoveItem={() => handleRemoveRepository(repo.id)}
-              orgName={repo.owner}
-              repoName={repo.name}
-              totalPrs={totalPrs}
-            />);
+            return (
+              <RepositoryCartItem
+                key={`repo_${repo.id}`}
+                avatar={getAvatarLink(repo.owner, 60)}
+                handleRemoveItem={() => handleRemoveRepository(repo.id)}
+                orgName={repo.owner}
+                repoName={repo.name}
+                totalPrs={totalPrs}
+              />
+            );
           })}
         </RepositoriesCart>
       </div>
