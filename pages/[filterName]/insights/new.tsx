@@ -233,7 +233,7 @@ const NewInsightPage: WithPageLayout = () => {
         </div>
       </div>
 
-      <div className="sticky top-0 py-4 lg:py-0">
+      <div className="lg:sticky mt-5 md:mt-0 top-0 py-4 lg:py-0">
         <RepositoriesCart
           hasItems={repos.length > 0}
           handleCreatePage={handleCreateInsightPage}
