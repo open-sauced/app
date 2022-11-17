@@ -19,7 +19,7 @@ const InsightRow = ({ insight, user }: InsightRowProps) => {
   const repoIds = insight.repos.map((repo) => repo.repo_id);
   const { data: repoData, isError, isLoading } = useRepositoriesList(false, repoIds);
   const { open, merged, velocity, total, repoList } = getRepoInsights(repoData);
-
+  const avgOpenPrs = repoData.length > 0 ? Math.round(open/repoData.length) : 0;
   return (
     <Link
       key={`insights_${insight.id}`}
@@ -48,8 +48,8 @@ const InsightRow = ({ insight, user }: InsightRowProps) => {
                 className="flex text-light-grass-10 items-center  gap-6
             "
               >
-                <Text className="md:!text-lg lg:!text-2xl !text-black !leading-none">{`${open} PR${
-                  open > 1 ? "s" : ""
+                <Text className="md:!text-lg lg:!text-2xl !text-black !leading-none">{`${avgOpenPrs} PR${
+                  avgOpenPrs > 1 ? "s" : ""
                 }`}</Text>
                 <p className="flex items-end">
                   <span className="leading-none">
