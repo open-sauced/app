@@ -30,7 +30,7 @@ const InsightsHub: WithPageLayout = () => {
         </div>
       </div>
 
-      <section>
+      <section className="flex flex-col gap-4">
         {isLoading
           ? "Loading..."
           : isError
