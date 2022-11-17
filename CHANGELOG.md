@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.17.0-beta.3](https://github.com/open-sauced/insights/compare/v1.17.0-beta.2...v1.17.0-beta.3) (2022-11-17)
+
+
+### 🐛 Bug Fixes
+
+* set min heigh/width on repository table repo name avatar ([#603](https://github.com/open-sauced/insights/issues/603)) ([aaec5dd](https://github.com/open-sauced/insights/commit/aaec5ddbe0110378029e95e1464f4e1b991a9856)), closes [#527](https://github.com/open-sauced/insights/issues/527)
+
 ## [1.17.0-beta.2](https://github.com/open-sauced/insights/compare/v1.17.0-beta.1...v1.17.0-beta.2) (2022-11-17)
 
 
