@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.17.0-beta.2](https://github.com/open-sauced/insights/compare/v1.17.0-beta.1...v1.17.0-beta.2) (2022-11-17)
+
+
+### 🐛 Bug Fixes
+
+* add gap to insight row section ([#606](https://github.com/open-sauced/insights/issues/606)) ([3553d14](https://github.com/open-sauced/insights/commit/3553d149582602053eb25c54d6960cd6edfcd735)), closes [#605](https://github.com/open-sauced/insights/issues/605)
+* fix calculation of average open PRs on insights hub ([#604](https://github.com/open-sauced/insights/issues/604)) ([0e2405b](https://github.com/open-sauced/insights/commit/0e2405be75b8293d1814895d00e597806c906a98))
+
 ## [1.17.0-beta.1](https://github.com/open-sauced/insights/compare/v1.16.1-beta.3...v1.17.0-beta.1) (2022-11-16)
 
 
