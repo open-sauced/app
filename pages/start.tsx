@@ -247,7 +247,7 @@ const LoginStep3: React.FC<LoginStep3Props> = ({ repoList, checkFollowed }) => {
       // handle error
     }
 
-    router.push("/hacktoberfest");
+    router.push("/");
   };
 
   const handleFollowRepo = (index: number) => {
