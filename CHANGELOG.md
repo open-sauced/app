@@ -5,6 +5,34 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.17.0-beta.1](https://github.com/open-sauced/insights/compare/v1.16.1-beta.3...v1.17.0-beta.1) (2022-11-16)
+
+
+### 🍕 Features
+
+* implement add create insight page ([#591](https://github.com/open-sauced/insights/issues/591)) ([b1b3c7b](https://github.com/open-sauced/insights/commit/b1b3c7bf65ff717f9ed69e03f823c2633e9ffc7d)), closes [#562](https://github.com/open-sauced/insights/issues/562)
+
+### [1.16.1-beta.3](https://github.com/open-sauced/insights/compare/v1.16.1-beta.2...v1.16.1-beta.3) (2022-11-16)
+
+
+### 🐛 Bug Fixes
+
+* add additional filters to contributor hooks ([#589](https://github.com/open-sauced/insights/issues/589)) ([a107f97](https://github.com/open-sauced/insights/commit/a107f973e061e2d23c9fc84a64133107f3ee2e40))
+
+### [1.16.1-beta.2](https://github.com/open-sauced/insights/compare/v1.16.1-beta.1...v1.16.1-beta.2) (2022-11-16)
+
+
+### 🐛 Bug Fixes
+
+* broken css in insights hub page ([#590](https://github.com/open-sauced/insights/issues/590)) ([97de259](https://github.com/open-sauced/insights/commit/97de259f31f45d71fab4d46b2e494af4e118163b)), closes [#588](https://github.com/open-sauced/insights/issues/588)
+
+### [1.16.1-beta.1](https://github.com/open-sauced/insights/compare/v1.16.0...v1.16.1-beta.1) (2022-11-16)
+
+
+### 🐛 Bug Fixes
+
+* Improve the Onboarding UI ([#602](https://github.com/open-sauced/insights/issues/602)) ([657e344](https://github.com/open-sauced/insights/commit/657e344b55054a63515f661333ed522bbbe68d56)), closes [#601](https://github.com/open-sauced/insights/issues/601)
+
 ## [1.16.0](https://github.com/open-sauced/insights/compare/v1.15.0...v1.16.0) (2022-11-11)
 
 

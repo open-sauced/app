@@ -77,6 +77,7 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
           content="The open-source intelligence platform for developers and maintainers. Unlock the power of open source with project insights by the slice."
         />
         <meta property="og:image" content="/social-card.png" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
       </Head>
 
       <SWRConfig
