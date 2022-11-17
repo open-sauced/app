@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.17.0-beta.4](https://github.com/open-sauced/insights/compare/v1.17.0-beta.3...v1.17.0-beta.4) (2022-11-17)
+
+
+### 🐛 Bug Fixes
+
+* navigate back to home after finishing onboarding ([#610](https://github.com/open-sauced/insights/issues/610)) ([9567b83](https://github.com/open-sauced/insights/commit/9567b8307190b8adc0f47867fabbfd8d6c9b1962))
+
 ## [1.17.0-beta.3](https://github.com/open-sauced/insights/compare/v1.17.0-beta.2...v1.17.0-beta.3) (2022-11-17)
 
 
