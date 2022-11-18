@@ -43,7 +43,7 @@ const TextInput = ({
         <div
           className={clsx(
             classNames,
-            "flex-1 px-3 text-light-slate-12 shadow-input border transition rounded-lg py-1 flex items-center",
+            "flex-1 px-3 text-light-slate-12 bg-white shadow-input border transition rounded-lg py-1 flex items-center",
             borderless && "!border-none",
             state === "invalid" ? " focus-within:border-light-red-10 " : "focus-within:border-light-orange-9 ",
             disabled && "bg-light-slate-3"
@@ -72,7 +72,7 @@ const TextInput = ({
           )}
         </div>
       </label>
-      {descriptionText ? <p className="mt-3   text-light-slate-9 text-sm">{descriptionText}</p> : ""}
+      {descriptionText ? <p className="mt-2 text-light-slate-9 text-sm">{descriptionText}</p> : ""}
       {state === "invalid" && errorMsg ? <p className="mt-3 text-sm text-light-red-11  ">{errorMsg}</p> : ""}
     </>
   );
