@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
-import Link from "next/link";
 import { UserGroupIcon } from "@heroicons/react/24/outline";
 
 import Button from "components/atoms/Button/button";
@@ -10,6 +9,7 @@ import Text from "components/atoms/Typography/text";
 import Title from "components/atoms/Typography/title";
 import RepositoriesCart from "components/organisms/RepositoriesCart/repositories-cart";
 import RepositoryCartItem from "components/molecules/ReposoitoryCartItem/repository-cart-item";
+import RepoNotIndexed from "components/organisms/Repositories/repository-not-indexed";
 
 import { WithPageLayout } from "interfaces/with-page-layout";
 import HubLayout from "layouts/hub";
@@ -106,6 +106,7 @@ const NewInsightPage: WithPageLayout = () => {
           return [...repos, addedRepo];
         });
         setAddRepoError(RepoLookupError.Initial);
+        setRepoToAdd("");
       } else {
         const publicRepoResponse = await fetch(`https://api.github.com/repos/${repoToAdd}`);
 
@@ -122,7 +123,6 @@ const NewInsightPage: WithPageLayout = () => {
 
   const handleAddRepository = async () => {
     await loadAndAddRepo(repoToAdd);
-    setRepoToAdd("");
   };
 
   const handleReAddRepository = async (repoAdded: string) => {
@@ -155,15 +155,7 @@ const NewInsightPage: WithPageLayout = () => {
     }
 
     if (code === RepoLookupError.NotIndexed) {
-      return (
-        <Text>
-          This repository is not currently being indexed by OpenSauced. <br />
-          <Link className="!text-black" href="https://github.com/open-sauced/feedback/discussions/2" target="_blank">
-            Visit our feedback discussion
-          </Link>{" "}
-          to request this repository be added.
-        </Text>
-      );
+      return <RepoNotIndexed />;
     }
 
     return <></>;
