@@ -44,7 +44,7 @@ const NivoScatterPlot = ({ data }: ScatterPlotprops) => {
 
 export default NivoScatterPlot;
 
-const textLayer = (props) => {
+const textLayer = (props: any) => {
   console.log(props);
   return (
     <animated.image
