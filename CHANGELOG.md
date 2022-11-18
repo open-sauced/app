@@ -5,6 +5,24 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.17.0](https://github.com/open-sauced/insights/compare/v1.16.0...v1.17.0) (2022-11-18)
+
+
+### 🍕 Features
+
+* implement add create insight page ([#591](https://github.com/open-sauced/insights/issues/591)) ([b1b3c7b](https://github.com/open-sauced/insights/commit/b1b3c7bf65ff717f9ed69e03f823c2633e9ffc7d)), closes [#562](https://github.com/open-sauced/insights/issues/562)
+
+
+### 🐛 Bug Fixes
+
+* add additional filters to contributor hooks ([#589](https://github.com/open-sauced/insights/issues/589)) ([a107f97](https://github.com/open-sauced/insights/commit/a107f973e061e2d23c9fc84a64133107f3ee2e40))
+* add gap to insight row section ([#606](https://github.com/open-sauced/insights/issues/606)) ([3553d14](https://github.com/open-sauced/insights/commit/3553d149582602053eb25c54d6960cd6edfcd735)), closes [#605](https://github.com/open-sauced/insights/issues/605)
+* broken css in insights hub page ([#590](https://github.com/open-sauced/insights/issues/590)) ([97de259](https://github.com/open-sauced/insights/commit/97de259f31f45d71fab4d46b2e494af4e118163b)), closes [#588](https://github.com/open-sauced/insights/issues/588)
+* fix calculation of average open PRs on insights hub ([#604](https://github.com/open-sauced/insights/issues/604)) ([0e2405b](https://github.com/open-sauced/insights/commit/0e2405be75b8293d1814895d00e597806c906a98))
+* Improve the Onboarding UI ([#602](https://github.com/open-sauced/insights/issues/602)) ([657e344](https://github.com/open-sauced/insights/commit/657e344b55054a63515f661333ed522bbbe68d56)), closes [#601](https://github.com/open-sauced/insights/issues/601)
+* navigate back to home after finishing onboarding ([#610](https://github.com/open-sauced/insights/issues/610)) ([9567b83](https://github.com/open-sauced/insights/commit/9567b8307190b8adc0f47867fabbfd8d6c9b1962))
+* set min heigh/width on repository table repo name avatar ([#603](https://github.com/open-sauced/insights/issues/603)) ([aaec5dd](https://github.com/open-sauced/insights/commit/aaec5ddbe0110378029e95e1464f4e1b991a9856)), closes [#527](https://github.com/open-sauced/insights/issues/527)
+
 ## [1.17.0-beta.4](https://github.com/open-sauced/insights/compare/v1.17.0-beta.3...v1.17.0-beta.4) (2022-11-17)
 
 
