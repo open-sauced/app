@@ -7,7 +7,7 @@ interface PaginatedPRsResponse {
   readonly meta: Meta;
 }
 
-const useTopicPRs = (limit = 500, repoIds: number[] = []) => {
+const useTopicPRs = (limit = 1000, repoIds: number[] = []) => {
   const router = useRouter();
   const { filterName, selectedFilter } = router.query;
   const topic = filterName as string;
