@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.17.1-beta.1](https://github.com/open-sauced/insights/compare/v1.17.0...v1.17.1-beta.1) (2022-11-21)
+
+
+### 🐛 Bug Fixes
+
+* add fallback message for a filtered repo not being indexed ([#611](https://github.com/open-sauced/insights/issues/611)) ([852a383](https://github.com/open-sauced/insights/commit/852a3837f2222fa9c20733560ea520f13836d1e9)), closes [#585](https://github.com/open-sauced/insights/issues/585)
+
 ## [1.17.0](https://github.com/open-sauced/insights/compare/v1.16.0...v1.17.0) (2022-11-18)
 
 
