@@ -129,14 +129,14 @@ const RepoRow = ({ repo, topic, user }: RepoProps): JSX.Element => {
             <TableRepositoryName topic={topic} avatarURL={ownerAvatar} name={name} handle={handle} user={user} />
           </div>
           <div className="w-[45%]">
-            <PullRequestOverview
+            {repo.id ? <PullRequestOverview
               open={openPrsCount}
               merged={mergedPrsCount}
               closed={closedPrsCount}
               draft={draftPrsCount}
               churn={churnTotalCount}
               churnDirection={`${churnDirection}`}
-            />
+            /> : "-"}
           </div>
           <div className="">
             <div
@@ -162,7 +162,7 @@ const RepoRow = ({ repo, topic, user }: RepoProps): JSX.Element => {
             <div>Pr Velocity</div>
             <div className="flex text-base gap-x-3">
               <div>{prVelocityInDays}</div>
-              <Pill text={`${prsMergedPercentage}%`} size="small" color="green" />
+              { repo.id ? <Pill text={`${prsMergedPercentage}%`} size="small" color="green" /> : "" }
             </div>
           </div>
 
@@ -214,20 +214,20 @@ const RepoRow = ({ repo, topic, user }: RepoProps): JSX.Element => {
 
         {/* Column: PR Overview */}
         <div className={classNames.cols.prOverview}>
-          <PullRequestOverview
+          { repo.id ? <PullRequestOverview
             open={openPrsCount}
             merged={mergedPrsCount}
             closed={closedPrsCount}
             draft={draftPrsCount}
             churn={churnTotalCount}
             churnDirection={`${churnDirection}`}
-          ></PullRequestOverview>
+          ></PullRequestOverview> : "-" }
         </div>
 
         {/* Column: PR Velocity */}
         <div className={`${classNames.cols.prVelocity}`}>
           <div>{prVelocityInDays}</div>
-          <Pill text={`${prsMergedPercentage}%`} size="small" color="green" />
+          { repo.id ? <Pill text={`${prsMergedPercentage}%`} size="small" color="green" /> : ""}
         </div>
 
         {/* Column: SPAM */}
@@ -257,7 +257,7 @@ const RepoRow = ({ repo, topic, user }: RepoProps): JSX.Element => {
 
         {/* Column: Last 30 Days */}
         <div className={clsx(classNames.cols.last30days, "hidden lg:flex")}>
-          {last30days && <Sparkline data={last30days} />}
+          {repo.id && last30days ? <Sparkline data={last30days}/> : "-"}
         </div>
       </div>
     </>
