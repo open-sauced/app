@@ -7,7 +7,6 @@ import humanizeNumber from "lib/utils/humanizeNumber";
 import { getInsights, useInsights } from "lib/hooks/useInsights";
 import { useRepositoriesList } from "lib/hooks/useRepositoriesList";
 import { useTopicPRs } from "lib/hooks/useTopicPRs";
-import { useMediaQuery } from "lib/hooks/useMediaQuery";
 import { calcDaysFromToday } from "lib/utils/date-utils";
 import roundedImage from "lib/utils/roundedImages";
 import { useState } from "react";
@@ -25,12 +24,9 @@ export const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
   const { data: insightsData } = useInsights();
   const { data: prData, isError: prError } = useTopicPRs(undefined, repositories);
   const [showBots, setShowBots] = useState(false);
-  const isNotMobile = useMediaQuery("(min-width: 768px)");
 
-  const conAvatarObject: { [key: string]: { [key: string]: string } } = {};
   let scatterChartData: { x: number; y: number; image: string }[] = [];
 
-  // useEffect(() => {
   const uniqueContributors: ContributorPrMap = prData.reduce((prs, curr) => {
     if (prs[curr.author_login]) {
       prs[curr.author_login].linesCount += curr.linesCount;
@@ -65,19 +61,6 @@ export const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
         image: roundedImage(`https://www.github.com/${author_image}.png?size=60`, process.env.NEXT_PUBLIC_CLOUD_NAME)
       };
       return data;
-      // const timeOverTouched: (string | number)[] = [
-      //   calcDaysFromToday(new Date(parseInt(updated_at, 10))),
-      //   //eslint-disable-next-line
-      //   linesCount
-      // ];
-
-      // //eslint-disable-next-line
-      // conAvatarObject[`${timeOverTouched[0]}${timeOverTouched[1]}`] = {
-      //   login: `${author_login} - ${linesCount}`,
-      //   image: roundedImage(`https://www.github.com/${author_image}.png?size=60`, process.env.NEXT_PUBLIC_CLOUD_NAME)
-      // };
-
-      // return timeOverTouched;
     });
   }
 
@@ -137,7 +120,7 @@ export const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
       <section className="flex flex-col lg:flex-row max-w-full gap-4 mb-6">
         <div className="flex flex-col w-full">
           <Card className="w-full">
-            <NivoScatterPlot data={[{ id: "scatter", data: scatterChartData }]} />
+            <NivoScatterPlot data={[{ id: "Contributors", data: scatterChartData }]} />
           </Card>
         </div>
       </section>
