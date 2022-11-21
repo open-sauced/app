@@ -9,19 +9,23 @@ import Text from "components/atoms/Typography/text";
 import { RepositoryCartItemProps } from "components/molecules/ReposoitoryCartItem/repository-cart-item";
 
 interface RepositoriesCartProps {
+  edit?: boolean;
   children?: React.ReactNode;
   hasItems?: boolean;
   history?: RepositoryCartItemProps[];
   handleCreatePage?: Function;
+  handleUpdatePage?: Function;
   handleAddToCart?: (fullRepoName: string) => void;
   createPageButtonDisabled?: boolean;
 }
 
 const RepositoriesCart = ({
+  edit,
   children,
   hasItems,
   history,
   handleCreatePage,
+  handleUpdatePage,
   handleAddToCart,
   createPageButtonDisabled
 }: RepositoriesCartProps): JSX.Element => {
@@ -32,6 +36,13 @@ const RepositoriesCart = ({
       handleCreatePage();
     }
   };
+
+  const onHandleUpdatePage = () => {
+    if (handleUpdatePage) {
+      handleUpdatePage();
+    }
+  };  
+
   const onAddToCart = (fullRepoName: string) => {
     if (handleAddToCart) {
       handleAddToCart(fullRepoName);
@@ -84,10 +95,10 @@ const RepositoriesCart = ({
         <div className="w-full mt-1 ">
           <button
             disabled={createPageButtonDisabled}
-            onClick={() => onHandleCreatePage()}
+            onClick={() => edit ? onHandleUpdatePage() : onHandleCreatePage()}
             className="w-full text-sm text-white flex justify-center items-center py-3 px-5 bg-light-orange-9 rounded-lg"
           >
-            Create Page
+            { edit ? "Update" : "Create" } Page
           </button>
         </div>
       )}
