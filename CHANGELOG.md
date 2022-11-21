@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.17.1-beta.2](https://github.com/open-sauced/insights/compare/v1.17.1-beta.1...v1.17.1-beta.2) (2022-11-21)
+
+
+### 🐛 Bug Fixes
+
+* increase default for number of recent prs displayed on scatterchart ([#614](https://github.com/open-sauced/insights/issues/614)) ([1996694](https://github.com/open-sauced/insights/commit/199669473e385ac2671172053e2a3e86d1130d68)), closes [#583](https://github.com/open-sauced/insights/issues/583)
+
 ### [1.17.1-beta.1](https://github.com/open-sauced/insights/compare/v1.17.0...v1.17.1-beta.1) (2022-11-21)
 
 
