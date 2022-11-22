@@ -37,9 +37,9 @@ const InsightsHub: WithPageLayout = () => {
             ? "Error..."
             : insightsData.map((insight, index) => {
               return (
-                <div>
+                <div key={`insights_${insight.id}`}>
                   <Link href={`/hub/insights/${insight.id}/edit`}>[Temp Edit Link]</Link>
-                  <InsightRow key={`insights_${insight.id}`} user={user} insight={insight} />
+                  <InsightRow user={user} insight={insight} />
                 </div>
               );
             })
