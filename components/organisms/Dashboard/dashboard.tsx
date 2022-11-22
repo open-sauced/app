@@ -25,7 +25,7 @@ export const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
   const { data: prData, isError: prError } = useTopicPRs(undefined, repositories);
   const [showBots, setShowBots] = useState(false);
 
-  let scatterChartData: { x: number; y: number; image: string }[] = [];
+  let scatterChartData: { x: number; y: number; image: string; contributor: string }[] = [];
 
   const uniqueContributors: ContributorPrMap = prData.reduce((prs, curr) => {
     if (prs[curr.author_login]) {
@@ -38,6 +38,7 @@ export const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
     return prs;
   }, {} as ContributorPrMap);
 
+  console.log(uniqueContributors);
   const prs = Object.keys(uniqueContributors)
     .filter((key) => {
       if (showBots) {
@@ -58,6 +59,7 @@ export const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
       const data = {
         x: calcDaysFromToday(new Date(parseInt(updated_at, 10))),
         y: linesCount,
+        contributor: author_login,
         image: roundedImage(`https://www.github.com/${author_image}.png?size=60`, process.env.NEXT_PUBLIC_CLOUD_NAME)
       };
       return data;
@@ -120,7 +122,10 @@ export const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
       <section className="flex flex-col lg:flex-row max-w-full gap-4 mb-6">
         <div className="flex flex-col w-full">
           <Card className="w-full">
-            <NivoScatterPlot data={[{ id: "Contributors", data: scatterChartData }]} />
+            <NivoScatterPlot
+              data={[{ id: "Contributors", data: scatterChartData }]}
+              maxFilesModified={maxFilesModified}
+            />
           </Card>
         </div>
       </section>
