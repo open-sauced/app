@@ -38,7 +38,6 @@ export const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
     return prs;
   }, {} as ContributorPrMap);
 
-  console.log(uniqueContributors);
   const prs = Object.keys(uniqueContributors)
     .filter((key) => {
       if (showBots) {
@@ -123,6 +122,9 @@ export const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
         <div className="flex flex-col w-full">
           <Card className="w-full">
             <NivoScatterPlot
+              title="Contributor Distribution"
+              showBots={showBots}
+              setShowBots={setShowBots}
               data={[{ id: "Contributors", data: scatterChartData }]}
               maxFilesModified={maxFilesModified}
             />
