@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.18.0-beta.1](https://github.com/open-sauced/insights/compare/v1.17.1-beta.2...v1.18.0-beta.1) (2022-11-23)
+
+
+### 🍕 Features
+
+* implement edit insight page ([#615](https://github.com/open-sauced/insights/issues/615)) ([06dcf4a](https://github.com/open-sauced/insights/commit/06dcf4a02ce3fbc815f5828ba35a611212ede096)), closes [#609](https://github.com/open-sauced/insights/issues/609)
+
 ### [1.17.1-beta.2](https://github.com/open-sauced/insights/compare/v1.17.1-beta.1...v1.17.1-beta.2) (2022-11-21)
 
 
