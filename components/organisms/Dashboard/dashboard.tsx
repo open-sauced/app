@@ -11,6 +11,7 @@ import { calcDaysFromToday } from "lib/utils/date-utils";
 import roundedImage from "lib/utils/roundedImages";
 import { useState } from "react";
 import NivoScatterPlot from "components/molecules/NivoScatterChart/nivo-scatter-chart";
+import { ScatterChartDataItems } from "../../molecules/NivoScatterChart/nivo-scatter-chart";
 
 type ContributorPrMap = { [contributor: string]: DbRepoPR };
 
@@ -25,7 +26,7 @@ export const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
   const { data: prData, isError: prError } = useTopicPRs(undefined, repositories);
   const [showBots, setShowBots] = useState(false);
 
-  let scatterChartData: { x: number; y: number; image: string; contributor: string }[] = [];
+  let scatterChartData: ScatterChartDataItems[] = [];
 
   const uniqueContributors: ContributorPrMap = prData.reduce((prs, curr) => {
     if (prs[curr.author_login]) {
@@ -51,7 +52,6 @@ export const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
   if (prError) {
     scatterChartData = [];
   } else {
-    //eslint-disable-next-line
     scatterChartData = prs.map(({ updated_at, linesCount, author_login }) => {
       const author_image = author_login.includes("[bot]") ? "octocat" : author_login;
 

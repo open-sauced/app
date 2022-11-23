@@ -8,6 +8,12 @@ import { useMediaQuery } from "lib/hooks/useMediaQuery";
 import ToggleOption from "components/atoms/ToggleOption/toggle-option";
 import Title from "components/atoms/Typography/title";
 
+export interface ScatterChartDataItems {
+  x: string | number;
+  y: string | number;
+  image: string;
+  contributor: string;
+}
 interface ScatterPlotProps {
   maxFilesModified: number;
   title?: string;
@@ -15,7 +21,7 @@ interface ScatterPlotProps {
   setShowBots: (toggle: boolean) => void;
   data: {
     id: string;
-    data: { x: string | number; y: string | number; image: string; contributor: string }[];
+    data: ScatterChartDataItems[];
   }[];
 }
 const NivoScatterPlot = ({ data, maxFilesModified, title, setShowBots, showBots }: ScatterPlotProps) => {
@@ -70,7 +76,7 @@ const NivoScatterPlot = ({ data, maxFilesModified, title, setShowBots, showBots 
           data={data}
           margin={{ top: 30, right: 60, bottom: 70, left: 90 }}
           xScale={{ type: "linear", min: 0, max: isMobile ? 7 : 35, reverse: true }}
-          yScale={{ type: "linear", min: 0, max: Math.max(Math.round(maxFilesModified * 2), 10) }}
+          yScale={{ type: "linear", min: 0, max: Math.max(Math.round(maxFilesModified * 3), 10) }}
           blendMode="normal"
           useMesh={false}
           annotations={[]}
@@ -110,8 +116,6 @@ const NivoScatterPlot = ({ data, maxFilesModified, title, setShowBots, showBots 
   );
 };
 
-export default NivoScatterPlot;
-
 const CustomNode = (props: any) => {
   const handleMouseEnter = useCallback(
     (event: React.MouseEvent) => props.onMouseEnter?.(props.node, event),
@@ -145,3 +149,5 @@ const CustomNode = (props: any) => {
     />
   );
 };
+
+export default NivoScatterPlot;
