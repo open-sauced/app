@@ -4,7 +4,6 @@ import { ResponsiveScatterPlot } from "@nivo/scatterplot";
 import { animated } from "@react-spring/web";
 
 import humanizeNumber from "lib/utils/humanizeNumber";
-import { useMediaQuery } from "lib/hooks/useMediaQuery";
 import ToggleOption from "components/atoms/ToggleOption/toggle-option";
 import Title from "components/atoms/Typography/title";
 
@@ -23,9 +22,9 @@ interface ScatterPlotProps {
     id: string;
     data: ScatterChartDataItems[];
   }[];
+  isMobile?: boolean;
 }
-const NivoScatterPlot = ({ data, maxFilesModified, title, setShowBots, showBots }: ScatterPlotProps) => {
-  const isMobile = useMediaQuery("(max-width:720px)");
+const NivoScatterPlot = ({ data, maxFilesModified, title, setShowBots, showBots, isMobile }: ScatterPlotProps) => {
   const [showMembers, setShowMembers] = useState(false);
 
   let functionTimeout: any;
@@ -47,6 +46,8 @@ const NivoScatterPlot = ({ data, maxFilesModified, title, setShowBots, showBots 
       // Additional logic for showing bots
     }, 50);
   };
+
+  const filteredData = [{ id: data[0].id, data: data[0].data.filter((data) => data.x <= 7) }];
 
   return (
     <>
@@ -73,9 +74,9 @@ const NivoScatterPlot = ({ data, maxFilesModified, title, setShowBots, showBots 
             <div className="bg-light-slate-4 rounded px-3 py-0.5">{`${node.data.contributor} - ${node.data.y}`}</div>
           )}
           nodeSize={isMobile ? 25 : 35}
-          data={data}
+          data={isMobile ? filteredData : data}
           margin={{ top: 30, right: 60, bottom: 70, left: 90 }}
-          xScale={{ type: "linear", min: 0, max: isMobile ? 7 : 35, reverse: true }}
+          xScale={{ type: "linear", min: 0, max: isMobile ? 7 : 32, reverse: true }}
           yScale={{ type: "linear", min: 0, max: Math.max(Math.round(maxFilesModified * 3), 10) }}
           blendMode="normal"
           useMesh={false}
@@ -85,7 +86,8 @@ const NivoScatterPlot = ({ data, maxFilesModified, title, setShowBots, showBots 
             tickSize: 8,
             tickPadding: 5,
             tickRotation: 0,
-            format: (value) => (value === 0 ? "Today" : value >= 35 ? "35+ days ago" : `${value} days ago`)
+            tickValues: isMobile ? 4 : 7,
+            format: (value) => (value === 0 ? "Today" : value > 32 ? "30+ days ago" : `${value} days ago`)
           }}
           enableGridX={true}
           theme={{
@@ -103,6 +105,7 @@ const NivoScatterPlot = ({ data, maxFilesModified, title, setShowBots, showBots 
             tickSize: 2,
             tickPadding: 5,
             tickRotation: 0,
+            tickValues: 7,
             legend: "Lines Touched",
             legendPosition: "middle",
             legendOffset: -60,

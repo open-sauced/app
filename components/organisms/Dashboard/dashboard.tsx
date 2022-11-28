@@ -3,6 +3,7 @@ import Card from "../../atoms/Card/card";
 import DashboardScatterChart from "components/molecules/DashboardScatterChart/dashboard-scatter-chart";
 import HighlightCard from "components/molecules/HighlightCard/highlight-card";
 import humanizeNumber from "lib/utils/humanizeNumber";
+import { useMediaQuery } from "lib/hooks/useMediaQuery";
 
 import { getInsights, useInsights } from "lib/hooks/useInsights";
 import { useRepositoriesList } from "lib/hooks/useRepositoriesList";
@@ -25,6 +26,7 @@ export const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
   const { data: insightsData } = useInsights();
   const { data: prData, isError: prError } = useTopicPRs(undefined, repositories);
   const [showBots, setShowBots] = useState(false);
+  const isMobile = useMediaQuery("(max-width:720px)");
 
   let scatterChartData: ScatterChartDataItems[] = [];
 
@@ -127,6 +129,7 @@ export const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
               setShowBots={setShowBots}
               data={[{ id: "Contributors", data: scatterChartData }]}
               maxFilesModified={maxFilesModified}
+              isMobile={isMobile}
             />
           </Card>
         </div>
