@@ -6,7 +6,7 @@ interface PaginatedRepoCommitResponse {
 }
 
 const useRepositoryCommits = (id: string) => {
-  const { data, error, mutate } = useSWR<PaginatedRepoCommitResponse, Error>(`repos/${id}/commits`);
+  const { data, error, mutate } = useSWR<PaginatedRepoCommitResponse, Error>(id ? `repos/${id}/commits` : null);
 
   return {
     data: data?.data ?? [],
