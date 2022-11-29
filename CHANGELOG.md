@@ -5,6 +5,19 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.18.0](https://github.com/open-sauced/insights/compare/v1.17.0...v1.18.0) (2022-11-29)
+
+
+### 🐛 Bug Fixes
+
+* add fallback message for a filtered repo not being indexed ([#611](https://github.com/open-sauced/insights/issues/611)) ([852a383](https://github.com/open-sauced/insights/commit/852a3837f2222fa9c20733560ea520f13836d1e9)), closes [#585](https://github.com/open-sauced/insights/issues/585)
+* increase default for number of recent prs displayed on scatterchart ([#614](https://github.com/open-sauced/insights/issues/614)) ([1996694](https://github.com/open-sauced/insights/commit/199669473e385ac2671172053e2a3e86d1130d68)), closes [#583](https://github.com/open-sauced/insights/issues/583)
+
+
+### 🍕 Features
+
+* implement edit insight page ([#615](https://github.com/open-sauced/insights/issues/615)) ([06dcf4a](https://github.com/open-sauced/insights/commit/06dcf4a02ce3fbc815f5828ba35a611212ede096)), closes [#609](https://github.com/open-sauced/insights/issues/609)
+
 ## [1.18.0-beta.1](https://github.com/open-sauced/insights/compare/v1.17.1-beta.2...v1.18.0-beta.1) (2022-11-23)
 
 
