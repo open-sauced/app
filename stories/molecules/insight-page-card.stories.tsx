@@ -98,12 +98,4 @@ const repoList: RepoList[] = [
 const InsightPageCardTemplate: ComponentStory<typeof InsightPageCard> = (args) => <InsightPageCard{...args}/>;
 
 export const InsightpageCardStory = InsightPageCardTemplate.bind({});
-InsightpageCardStory.args = {
-  title: "Strapi Team",
-  members: contributors,
-  openPrsCount: 23,
-  closedPrsCount: 12,
-  mergedPrsCount: 13,
-  draftPrsCount: 8,
-  repoList: repoList
-};
+InsightpageCardStory.args = {};

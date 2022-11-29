@@ -23,7 +23,7 @@ const HeaderLogo: React.FC<HeaderLogoProps> = ({ textIsBlack, withBg = false }) 
           src={withBg ? openSaucedImgWithBg : openSaucedImg}
         />
         <Text
-          className={`font-semibold text-base hidden xs:block ${textIsBlack ? "!text-black" : "!text-white"}`}
+          className={`!font-semibold !text-base hidden xs:block ${textIsBlack ? "!text-black" : "!text-white"}`}
         >
           OpenSauced
         </Text>

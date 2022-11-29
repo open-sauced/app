@@ -1,6 +1,7 @@
-import { WithPageLayout } from "../interfaces/with-page-layout";
-import { supabase } from "../lib/utils/supabase";
 import { GetServerSideProps } from "next";
+import { withPageAuth } from "@supabase/auth-helpers-nextjs";
+
+import { WithPageLayout } from "../interfaces/with-page-layout";
 
 const SignOut: WithPageLayout = () => {
   return (
@@ -10,17 +11,20 @@ const SignOut: WithPageLayout = () => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ req }) => {
-  // Get our logged user
-  const { user } = await supabase.auth.api.getUserByCookie(req);
-  // Check if the user is logged
-  if (user === null) {
-    // Redirect if no logged in
+export const getServerSideProps: GetServerSideProps = withPageAuth({
+  redirectTo: "/",
+  async getServerSideProps(_ctx, supabase)  {
+    // Get our logged user
+    const { data: { user } } = await supabase.auth.getUser();
+
+    // Check if the user is logged in
+    if (user !== null) {
+      await supabase.auth.signOut();
+    }
+      
+    // Redirect to hom
     return { props: {}, redirect: { destination: "/" } };
   }
-  // log out if logged return the user
-  // TODO: issue #189 add logic to remove auth cookie
-  return { props: { user } };
-};
+});
 
 export default SignOut;

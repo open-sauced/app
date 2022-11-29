@@ -1,17 +1,28 @@
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 import clsx from "clsx";
+
 import Select from "components/atoms/Select/custom-select";
 import TableTitle from "components/atoms/TableTitle/table-title";
 import Pagination from "components/molecules/Pagination/pagination";
 import PaginationResults from "components/molecules/PaginationResults/pagination-result";
 import TableHeader from "components/molecules/TableHeader/table-header";
-import { useRepositoriesList } from "lib/hooks/useRepositoriesList";
-import { useRouter } from "next/router";
-import { useEffect } from "react";
-import RepositoriesTable, { classNames } from "../RepositoriesTable/repositories-table";
 
-const Repositories = (): JSX.Element => {
+import { useRepositoriesList } from "lib/hooks/useRepositoriesList";
+import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
+
+import RepositoriesTable, { classNames } from "../RepositoriesTable/repositories-table";
+import RepoNotIndexed from "./repository-not-indexed";
+
+interface RepositoriesProps {
+  repositories?: number[];
+}
+
+const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
+  const { user } = useSupabaseAuth();
   const router = useRouter();
-  const { filterName, selectedFilter } = router.query;
+  const { filterName, toolName, selectedFilter, userOrg } = router.query;
+  const username = userOrg ? user?.user_metadata.user_name : undefined;
   const topic = filterName as string;
   const {
     data: repoListData,
@@ -21,7 +32,16 @@ const Repositories = (): JSX.Element => {
     page,
     setPage,
     setLimit
-  } = useRepositoriesList();
+  } = useRepositoriesList(false, repositories);
+  const filteredRepoNotIndexed = selectedFilter && !repoListIsLoading && !repoListIsError && repoListData.length === 0;
+
+  const handleOnSearch = (search?: string) => {
+    if (search && /^[a-zA-Z0-9\-\.]+\/[a-zA-Z0-9\-\.]+$/.test(search)) {
+      router.push(`/${topic}/${toolName}/filter/${search}`);
+    } else {
+      router.push(`/${topic}/${toolName}`);
+    }
+  };
 
   useEffect(() => {
     setPage(1);
@@ -31,8 +51,9 @@ const Repositories = (): JSX.Element => {
     <div className="flex flex-col w-full gap-4">
       <TableHeader
         updateLimit={setLimit}
+        onSearch={(e) => handleOnSearch(e)}
         showing={{
-          from: page === 1 ? page : ((page-1) * repoMeta.limit) + 1,
+          from: page === 1 ? repoMeta.itemCount > 0 ? page : 0 : ((page-1) * repoMeta.limit) + 1,
           to: page * repoMeta.limit <= repoMeta.itemCount ? page * repoMeta.limit : repoMeta.itemCount,
           total: repoMeta.itemCount,
           entity: "Repositories"
@@ -72,7 +93,14 @@ const Repositories = (): JSX.Element => {
           </div>
         </div>
 
-        <RepositoriesTable topic={topic} error={repoListIsError} loading={repoListIsLoading} listOfRepositories={repoListData} />
+        <RepositoriesTable
+          topic={topic}
+          error={repoListIsError}
+          loading={repoListIsLoading}
+          listOfRepositories={repoListData}
+          user={username}
+          repo={selectedFilter}
+        />
 
         {/* Table Footer */}
         <div className="mt-5 w-full px-4 flex flex-col gap-y-3 md:flex-row">
@@ -94,7 +122,7 @@ const Repositories = (): JSX.Element => {
             <div>
               <div className="">
                 <PaginationResults
-                  from={page === 1 ? page : ((page-1) * repoMeta.limit) + 1}
+                  from={page === 1 ? repoMeta.itemCount > 0 ? page : 0 : ((page-1) * repoMeta.limit) + 1}
                   to={page * repoMeta.limit <= repoMeta.itemCount ? page * repoMeta.limit : repoMeta.itemCount}
                   total={repoMeta.itemCount}
                   entity={"repos"}
@@ -119,6 +147,8 @@ const Repositories = (): JSX.Element => {
           </div>
         </div>
       </div>
+
+      { filteredRepoNotIndexed && <RepoNotIndexed /> }
     </div>
   );
 };

@@ -19,7 +19,7 @@ const Radio = ({ css, withLabel, id, children, value, checked = false, onClick }
       className={
         `${
           checked && "!bg-light-orange-3"
-        }  px-2 py-1.5 text-sm text-slate-600 font-medium group  rounded-md  hover:bg-light-orange-3 hover:text-slate-800 focus:outline-none focus-visible:border-orange-500 focus-visible:ring focus-visible:ring-orange-200 transition` +
+        }  px-2 py-1.5 text-sm text-slate-600   group  rounded-md  hover:bg-light-orange-3 hover:text-slate-800 focus:outline-none focus-visible:border-orange-500 focus-visible:ring focus-visible:ring-orange-200 transition` +
         `${css}`
       }
     >
@@ -32,7 +32,7 @@ const Radio = ({ css, withLabel, id, children, value, checked = false, onClick }
         onChange={onClick}
         id={id}
       />
-      <label className="flex -mt-5 cursor-pointer justify-between font-medium item-center" htmlFor={id}>
+      <label className="flex -mt-5 cursor-pointer justify-between   item-center" htmlFor={id}>
         {checked ? (
           <BsFillCheckCircleFill className="text-xl   text-light-orange-9" />
         ) : (
@@ -40,7 +40,11 @@ const Radio = ({ css, withLabel, id, children, value, checked = false, onClick }
         )}
         <span className="ml-3 leading-none my-auto">{children}</span>
         {withLabel && (
-          <span className={`${withLabel === "-" ? "animate-pulse opacity-0" : "opacity-100"} px-1 ml-auto rounded-xl bg-light-orange-5 text-sm text-light-orange-10`}>
+          <span
+            className={`${
+              withLabel === "-" ? "animate-pulse opacity-0" : "opacity-100"
+            } px-1 ml-auto rounded-xl bg-light-orange-5 text-sm text-light-orange-10`}
+          >
             <small>{withLabel}</small>
           </span>
         )}

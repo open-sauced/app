@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import useSWR from "swr";
 import { getCommitsLast30Days } from "lib/utils/get-recent-commits";
+import { useRouter } from "next/router";
+import getFilterQuery from "lib/utils/get-filter-query";
 
 interface PaginatedTopicCommitResponse {
   readonly data: DbRepoCommit[];
   readonly meta: Meta;
 }
-const useTopicContributorCommits = (contributor: string, topic = "hacktoberfest") => {
+const useTopicContributorCommits = (contributor: string, topic: string, repoIds: number[] = []) => {
   const lineChart = {
     xAxis: {
       type: "category",
@@ -47,9 +49,12 @@ const useTopicContributorCommits = (contributor: string, topic = "hacktoberfest"
   };
 
   const [chart, setChart] = useState(lineChart);
-
+  const router = useRouter();
   const baseEndpoint = `${topic}/${contributor}/commits`;
-  const endpointString = `${baseEndpoint}`;
+  const { selectedFilter } = router.query;
+  const filterQuery = getFilterQuery(selectedFilter);
+  const reposQuery = repoIds.length > 0 ? `repoIds=${repoIds.join(",")}`: "";
+  const endpointString = `${baseEndpoint}?${filterQuery.replace("&", "")}${reposQuery}`;
 
   const { data } = useSWR<PaginatedTopicCommitResponse, Error>(contributor ? endpointString : null);
 

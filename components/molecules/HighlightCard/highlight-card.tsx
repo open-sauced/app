@@ -17,7 +17,6 @@ interface HighlightCardProps {
   numChanged?: number | string;
   percentage?: number;
   percentageLabel?: string;
-
 }
 
 // TO-DO:
@@ -57,9 +56,7 @@ const HighlightCard: React.FC<HighlightCardProps> = ({
   percentageLabel
 }) => {
   return (
-    <Card
-      className={`${className ? className : ""} flex flex-col w-full sm:max-w-[calc(50%-(1rem/2))] h-auto `}
-    >
+    <Card className={`${className ? className : ""} flex flex-col w-full sm:max-w-[calc(50%-(1rem/2))] h-auto `}>
       <>
         {/* Top Information */}
         <div className="flex justify-between w-full p-1">
@@ -79,13 +76,13 @@ const HighlightCard: React.FC<HighlightCardProps> = ({
               />
             </div>
             {/* Label: Text */}
-            <div className="text-sm text-slate-600 font-medium leading-none">{label ? label : "Label"}</div>
+            <div className="text-sm text-slate-600   leading-none">{label ? label : "Label"}</div>
           </div>
 
           {/* Last Updated Information */}
           <div className="flex items-center gap-1">
             {/* Last Updated: Number */}
-            <div className="text-sm text-slate-600 font-medium leading-none">{numChanged ? numChanged : 0}</div>
+            <div className="text-sm text-slate-600   leading-none">{numChanged ? numChanged : 0}</div>
             {/* Last Updated: Icon */}
             <Image
               width={14}
@@ -102,12 +99,10 @@ const HighlightCard: React.FC<HighlightCardProps> = ({
           {/* Main Number */}
           <div className="flex flex-col items-center">
             {/* Percentage */}
-            <div className="text-4xl font-normal">{percentage ? percentage : 0}%</div>
+            <div className="text-4xl ">{percentage ? percentage : 0}%</div>
 
             {/* Label */}
-            <div className="text-base font-medium text-slate-600 mt-0.5">
-              {percentageLabel ? percentageLabel : "Label"}
-            </div>
+            <div className="text-base   text-slate-600 mt-0.5">{percentageLabel ? percentageLabel : "Label"}</div>
           </div>
 
           {/* Progress Bar */}

@@ -1,16 +1,27 @@
-import { calcDistanceFromToday } from "lib/utils/date-utils";
-import ContributorCard from "../ContributorCard/contributor-card";
-import color from "lib/utils/color.json";
-import { useTopicContributions } from "lib/hooks/useTopicContributions";
+import { useRouter } from "next/router";
+
 import Pagination from "components/molecules/Pagination/pagination";
 import PaginationResults from "components/molecules/PaginationResults/pagination-result";
 import TableHeader from "components/molecules/TableHeader/table-header";
 import Select from "components/atoms/Select/custom-select";
 
+import { calcDistanceFromToday } from "lib/utils/date-utils";
+import color from "lib/utils/color.json";
+import { useTopicContributions } from "lib/hooks/useTopicContributions";
+
+import ContributorCard from "../ContributorCard/contributor-card";
+
 const colorKeys = Object.keys(color);
 
-const Contributors = (): JSX.Element => {
-  const { data,setLimit, meta, setPage, page, isError, isLoading } = useTopicContributions();
+interface ContributorProps {
+  repositories?: number[];
+}
+
+const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
+  const router = useRouter();
+  const { filterName } = router.query;
+  const topic = filterName as string;  
+  const { data,setLimit, meta, setPage, page, isError, isLoading } = useTopicContributions(10, repositories);
   const contributorArray = isError
     ? []
     : data?.map((contributor) => {
@@ -63,7 +74,13 @@ const Contributors = (): JSX.Element => {
       <div className="w-full grid grid-cols-automobile  md:grid-cols-autodesktop gap-3">
         {isLoading ? "Loading..." : ""}
         {contributorArray.map((contributor, index) => (
-          <ContributorCard key={index} className="" contributor={{ ...contributor }} />
+          <ContributorCard
+            key={index}
+            className=""
+            contributor={{ ...contributor }}
+            topic={topic}
+            repositories={repositories}
+          />
         ))}
       </div>
 

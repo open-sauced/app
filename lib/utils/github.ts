@@ -1,5 +1,5 @@
-const getAvatarLink = (username: string | null) =>
-  `https://github.com/${username ?? "github"}.png?size=460`;
+const getAvatarLink = (username: string | null, size=460) =>
+  `https://github.com/${username ?? "github"}.png?size=${size}`;
 
 const getProfileLink = (username: string | null) =>
   `https://github.com/${username ?? ""}`;

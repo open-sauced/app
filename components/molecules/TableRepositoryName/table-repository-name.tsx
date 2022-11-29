@@ -10,25 +10,28 @@ interface TableRepositoryNameProps {
   handle?: string;
   isLoading?: boolean;
   topic?: string;
+  user: string | string[] | undefined;
 }
 
-const TableRepositoryName = ({ avatarURL, name, handle, topic }: TableRepositoryNameProps): JSX.Element => {
+const TableRepositoryName = ({ avatarURL, name, handle, topic, user }: TableRepositoryNameProps): JSX.Element => {
   return (
     <div className="flex items-center gap-2.5">
-
       {/* Avatar */}
-      <Avatar size={40} avatarURL={avatarURL} isCircle={false} />
+      <Avatar className="shrink-0 min-w-10 min-h-10" size={40} avatarURL={avatarURL} isCircle={false} />
 
       {/* Text */}
       <div className="flex flex-col justify-center">
-        <div title={name} className="font-medium text-base text-light-slate-12 tracking-tight">
-          <Link href={`/${topic}/repositories/filter/${handle}/${name}`}>{name && name.length > 10 ? truncateString(name, 12): name}</Link>
+        <div title={name} className="  text-base text-light-slate-12 tracking-tight">
+          <Link href={`/${user ? `pages/${user}/` : ""}${topic}/repositories/filter/${handle}/${name}`}>
+            {name && name.length > 10 ? truncateString(name, 12) : name}
+          </Link>
         </div>
-        <div className="font-medium text-sm text-light-slate-11">
-          <Link href={`/${topic}/repositories/filter/${handle}/${name}`}>{handle ? `@${handle}`: "handle1234"}</Link>
+        <div className="  text-sm text-light-slate-11 truncate max-w-[85px] md:max-w-[110px]">
+          <Link href={`/${user ? `pages/${user}/` : ""}${topic}/repositories/filter/${handle}/${name}`}>
+            {handle ? `@${handle}` : "handle1234"}
+          </Link>
         </div>
       </div>
-
     </div>
   );
 };

@@ -13,8 +13,8 @@ const ToggleOption = ({ optionText, withIcon, checked, handleToggle }: ToogleOpt
       onClick={handleToggle}
       className="inline-flex cursor-pointer items-center gap-2 rounded-md px-2 py-0.5 border border-light-slate-6 bg-light-slate-1"
     >
-      <ToggleSwitch handleToggle={handleToggle} name={optionText} checked={checked} />
-      <span className="font-medium text-sm text-light-slate-11">{optionText}</span>
+      <ToggleSwitch size="sm" handleToggle={handleToggle} name={optionText} checked={checked} />
+      <span className="  text-sm text-light-slate-11">{optionText}</span>
       {withIcon && (
         <HiInformationCircle
           title="An outside contributor is not a member the organization"

@@ -1,18 +1,21 @@
 //Idea came from this repo: https://github.com/brookslybrand/next-nested-layouts
 
 import "../styles/globals.css";
+import { useEffect } from "react";
 import Head from "next/head";
 import type { AppProps } from "next/app";
-import GlobalState from "../context/global-state";
 import { useRouter } from "next/router";
-import changeCapitalization from "../lib/utils/change-capitalization";
-import { supabase } from "../lib/utils/supabase";
+import { SessionContextProvider } from "@supabase/auth-helpers-react";
 import { SWRConfig } from "swr";
-import apiFetcher from "../lib/hooks/useSWR";
-import { initiateAnalytics } from "lib/utils/analytics";
-import { useEffect } from "react";
 import posthog from "posthog-js";
-import { TipProvider } from "./../components/atoms/Tooltip/tooltip";
+
+import { TipProvider } from "components/atoms/Tooltip/tooltip";
+
+import GlobalState from "context/global-state";
+import changeCapitalization from "lib/utils/change-capitalization";
+import apiFetcher from "lib/hooks/useSWR";
+import { initiateAnalytics } from "lib/utils/analytics";
+import { supabase } from "lib/utils/supabase";
 
 type ComponentWithPageLayout = AppProps & {
   Component: AppProps["Component"] & {
@@ -60,15 +63,6 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
     }
   }
 
-  supabase.auth.onAuthStateChange((event, session) => {
-    fetch("/api/auth", {
-      method: "POST",
-      headers: new Headers({ "Content-Type": "application/json" }),
-      credentials: "same-origin",
-      body: JSON.stringify({ event, session })
-    });
-  });
-
   return (
     <>
       <Head>
@@ -83,6 +77,7 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
           content="The open-source intelligence platform for developers and maintainers. Unlock the power of open source with project insights by the slice."
         />
         <meta property="og:image" content="/social-card.png" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
       </Head>
 
       <SWRConfig
@@ -92,17 +87,22 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
           provider: localStorageProvider
         }}
       >
-        <GlobalState>
-          <TipProvider>
-            {Component.PageLayout ? (
-              <Component.PageLayout>
+        <SessionContextProvider
+          supabaseClient={supabase}
+          initialSession={pageProps.initialSession}
+        >
+          <GlobalState>
+            <TipProvider>
+              {Component.PageLayout ? (
+                <Component.PageLayout>
+                  <Component {...pageProps} />
+                </Component.PageLayout>
+              ) : (
                 <Component {...pageProps} />
-              </Component.PageLayout>
-            ) : (
-              <Component {...pageProps} />
-            )}
-          </TipProvider>
-        </GlobalState>
+              )}
+            </TipProvider>
+          </GlobalState>
+        </SessionContextProvider>
       </SWRConfig>
     </>
   );

@@ -1,6 +1,9 @@
-import { Serie } from "@nivo/line";
-import RepoRow from "components/molecules/RepoRow/repo-row";
 import { StaticImageData } from "next/image";
+import { Serie } from "@nivo/line";
+
+import RepoRow from "components/molecules/RepoRow/repo-row";
+
+import { getAvatarLink } from "lib/utils/github";
 
 export interface ContributorsRows {
   name?: string;
@@ -37,10 +40,12 @@ export interface RepositoriesRows {
 }
 
 interface RepositoriesTableProps {
+  user: string | string[] | undefined;
   topic?: string;
   listOfRepositories: RepositoriesRows[];
-  loading: boolean
-  error: boolean
+  loading: boolean;
+  error: boolean;
+  repo?: string | string[] | undefined[];
 }
 
 export const classNames = {
@@ -56,25 +61,36 @@ export const classNames = {
   }
 };
 
+
 const RepositoriesTable = ({
   listOfRepositories,
   loading,
   error,
-  topic
+  topic,
+  user,
+  repo
 }: RepositoriesTableProps): JSX.Element => {
+  const isLoadedWithRepos = !loading && !error && Array.isArray(listOfRepositories) && listOfRepositories.length > 0;
+  const isFilteredRepoNotIndexed = Array.isArray(repo) && !loading && !error && Array.isArray(listOfRepositories) && listOfRepositories.length === 0;
+  const [repoOwner, repoName] = repo && Array.isArray(repo) ? repo : [];
+
   return (
-
-
     <section className="flex  flex-col">
       {loading && <>Loading...</>}
       {error && <>An error has occured...</>}
-      {!loading && !error && Array.isArray(listOfRepositories) &&
-            listOfRepositories.length > 0 &&
-            listOfRepositories.map((item, index) => (
-              <RepoRow key={`${item.handle}/${item.name}/${index}`} topic={topic} repo={item} />
-            ))}
-    </section>
 
+      {
+        isLoadedWithRepos && listOfRepositories.map((item, index) => (
+          <RepoRow key={`${item.handle}/${item.name}/${index}`} topic={topic} repo={item} user={user} />
+        ))}
+      {
+        isFilteredRepoNotIndexed && <RepoRow
+          topic={topic}
+          // eslint-disable-next-line
+          repo={{id: "", owner: repoOwner, handle: repoOwner, name: repoName, owner_avatar: getAvatarLink(repoOwner as string) }}
+          user={user} />
+      }
+    </section>
   );
 };
 
