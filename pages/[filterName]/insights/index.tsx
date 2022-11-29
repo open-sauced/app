@@ -35,9 +35,12 @@ const InsightsHub: WithPageLayout = () => {
           ? "Loading..."
           : isError
             ? "Error..."
-            : insightsData.map((insight, index) => (
-              <InsightRow key={`insights_${insight.id}`} user={user} insight={insight} />
-            ))}
+            : insightsData.map((insight, index) => {
+              return (
+                <InsightRow  key={`insights_${insight.id}`} user={user} insight={insight} />
+              );
+            })
+        }
       </section>
 
       <Link passHref href={"/hub/insights/new"}>
