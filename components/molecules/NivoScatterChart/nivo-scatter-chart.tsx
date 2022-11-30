@@ -89,7 +89,6 @@ const NivoScatterPlot = ({ data, maxFilesModified, title, setShowBots, showBots,
             tickValues: isMobile ? 4 : 7,
             format: (value) => (value === 0 ? "Today" : value > 32 ? "30+ days ago" : `${value} days ago`)
           }}
-          // enableGridX={true}
           theme={{
             axis: {},
             grid: {
