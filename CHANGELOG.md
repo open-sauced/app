@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.19.0-beta.1](https://github.com/open-sauced/insights/compare/v1.18.0...v1.19.0-beta.1) (2022-11-30)
+
+
+### 🍕 Features
+
+* Update Dashboard Echart to `NivoScatterPlot` ([#612](https://github.com/open-sauced/insights/issues/612)) ([fb73f3c](https://github.com/open-sauced/insights/commit/fb73f3c7e5dc6dcc7304655ac329e3dc02d7bb20)), closes [#282](https://github.com/open-sauced/insights/issues/282) [#411](https://github.com/open-sauced/insights/issues/411) [#586](https://github.com/open-sauced/insights/issues/586)
+
 ## [1.18.0](https://github.com/open-sauced/insights/compare/v1.17.0...v1.18.0) (2022-11-29)
 
 
