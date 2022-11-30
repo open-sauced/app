@@ -17,6 +17,8 @@ interface HighlightCardProps {
   numChanged?: number | string;
   percentage?: number;
   percentageLabel?: string;
+  value?: number | string;
+  valueLabel?: string;
 }
 
 // TO-DO:
@@ -53,7 +55,9 @@ const HighlightCard: React.FC<HighlightCardProps> = ({
   increased,
   numChanged,
   percentage,
-  percentageLabel
+  percentageLabel,
+  value,
+  valueLabel
 }) => {
   return (
     <Card className={`${className ? className : ""} flex flex-col w-full sm:max-w-[calc(50%-(1rem/2))] h-auto `}>
@@ -99,10 +103,14 @@ const HighlightCard: React.FC<HighlightCardProps> = ({
           {/* Main Number */}
           <div className="flex flex-col items-center">
             {/* Percentage */}
-            <div className="text-4xl ">{percentage ? percentage : 0}%</div>
+            <div className="text-4xl">
+              {percentage !== undefined ? `${percentage}%` : <span></span>}{value !== undefined ? value : ""}
+            </div>
 
             {/* Label */}
-            <div className="text-base   text-slate-600 mt-0.5">{percentageLabel ? percentageLabel : "Label"}</div>
+            <div className="text-base   text-slate-600 mt-0.5">
+              <span>{percentageLabel ? percentageLabel : ""}{valueLabel ? valueLabel : ""}&nbsp;</span>
+            </div>
           </div>
 
           {/* Progress Bar */}
@@ -128,7 +136,7 @@ const HighlightCard: React.FC<HighlightCardProps> = ({
               style={{ width: (percentage ? percentage : 0) + "%" }}
             ></div>
 
-            <div className="bg-gray-200 w-auto flex-auto h-3 rounded-full transition-all duration-500 ease-in-out"></div>
+            <div className={`${ percentage && "bg-gray-200"} w-auto flex-auto h-3 rounded-full transition-all duration-500 ease-in-out`}></div>
           </div>
         </div>
       </>
