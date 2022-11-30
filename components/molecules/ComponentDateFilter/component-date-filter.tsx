@@ -8,7 +8,7 @@ type FilterState = {
   value: number;
 };
 const ComponentDateFilter = () => {
-  const [activeFilter, setActiveFilter] = useState<FilterState>();
+  const [activeFilter, setActiveFilter] = useState<FilterState>({ name: "7d", value: 7 });
   const dates = [
     { name: "7d", value: 7 },
     { name: "30d", value: 30 },

@@ -1,7 +1,9 @@
+import React from "react";
+
 import Search from "components/atoms/Search/search";
 import Select from "components/atoms/Select/custom-select";
 import Title from "components/atoms/Typography/title";
-import React from "react";
+import ComponentDateFilter from "../ComponentDateFilter/component-date-filter";
 import PaginationResult from "../PaginationResults/pagination-result";
 
 interface TableHeaderProps {
@@ -19,12 +21,13 @@ const TableHeader = ({ title, showing, updateLimit, onSearch }: TableHeaderProps
         </Title>
         <PaginationResult className="hidden !translate-y-[2px]  md:inline-flex" {...showing} />
       </div>
-      <div className="flex items-end">
-        {onSearch ? <Search
-          placeholder={`Search ${title}`}
-          className="mr-4 max-w-full" name={"query"}
-          onSearch={onSearch}
-        /> : ""}
+      <div className="flex gap-3 items-end">
+        <ComponentDateFilter />
+        {onSearch ? (
+          <Search placeholder={`Search ${title}`} className=" max-w-full" name={"query"} onSearch={onSearch} />
+        ) : (
+          ""
+        )}
         <Select
           placeholder="10 per page"
           options={[
