@@ -21,7 +21,7 @@ const TableHeader = ({ title, showing, updateLimit, onSearch }: TableHeaderProps
         </Title>
         <PaginationResult className="hidden !translate-y-[2px]  md:inline-flex" {...showing} />
       </div>
-      <div className="flex gap-3 items-end">
+      <div className="flex flex-col-reverse md:flex-row items-start gap-3  md:items-end">
         <ComponentDateFilter />
         {onSearch ? (
           <Search placeholder={`Search ${title}`} className=" max-w-full" name={"query"} onSearch={onSearch} />

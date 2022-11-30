@@ -28,7 +28,7 @@ const ComponentDateFilter = () => {
         {dates.map(({ name, value }, index) => (
           <div
             onClick={() => handleFilterClick({ name, value })}
-            className={`px-2 py-1.5  rounded-lg cursor-pointer transition text-light-slate-9 ${
+            className={`px-2 py-1  rounded-lg cursor-pointer transition text-light-slate-9 ${
               activeFilter?.value === value && "border text-light-slate-12 border-light-orange-10"
             }`}
             key={index}
