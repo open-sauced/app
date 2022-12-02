@@ -8,6 +8,7 @@ import thumbsIcon from "../../../public/icons/icon-thumbs-down--yellow.svg";
 import metricArrow from "../../../public/icons/metric-arrow.svg";
 import Link from "next/link";
 import Card from "components/atoms/Card/card";
+import StackedAvatar from "../StackedAvatar/stacked-avatar";
 
 interface HighlightCardProps {
   className?: string;
@@ -20,6 +21,7 @@ interface HighlightCardProps {
   percentageLabel?: string;
   value?: number | string;
   valueLabel?: string;
+  contributors?: DbContribution[]
 }
 
 // TO-DO:
@@ -63,7 +65,8 @@ const HighlightCard: React.FC<HighlightCardProps> = ({
   percentage,
   percentageLabel,
   value,
-  valueLabel
+  valueLabel,
+  contributors = []
 }) => {
   return (
     <Card className={`${className ? className : ""} flex flex-col w-full sm:max-w-[calc(50%-(1rem/2))] h-auto `}>
@@ -118,6 +121,11 @@ const HighlightCard: React.FC<HighlightCardProps> = ({
               <span>{percentageLabel ? percentageLabel : ""}{valueLabel ? valueLabel : ""}&nbsp;</span>
             </div>
           </div>
+
+          {/* Contributor Cards */}
+          { contributors && <div className="flex items-center justify-center mt-7 h-1">
+              <StackedAvatar contributors={contributors} visibleQuantity={10} />
+          </div> }
 
           {/* Progress Bar */}
           <div
