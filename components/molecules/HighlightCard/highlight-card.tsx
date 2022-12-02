@@ -124,7 +124,7 @@ const HighlightCard: React.FC<HighlightCardProps> = ({
 
           {/* Contributor Cards */}
           { contributors && <div className="flex items-center justify-center mt-7 h-1">
-              <StackedAvatar contributors={contributors} visibleQuantity={10} />
+            <StackedAvatar contributors={contributors} visibleQuantity={10} />
           </div> }
 
           {/* Progress Bar */}
