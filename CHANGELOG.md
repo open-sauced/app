@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.19.0-beta.3](https://github.com/open-sauced/insights/compare/v1.19.0-beta.2...v1.19.0-beta.3) (2022-12-02)
+
+
+### 🐛 Bug Fixes
+
+* correct supabase oauth redirect mismatch ([#630](https://github.com/open-sauced/insights/issues/630)) ([ac37f4b](https://github.com/open-sauced/insights/commit/ac37f4bf028a7e50c36490ae596dbd3591a58834))
+
 ## [1.19.0-beta.2](https://github.com/open-sauced/insights/compare/v1.19.0-beta.1...v1.19.0-beta.2) (2022-11-30)
 
 
