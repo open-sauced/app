@@ -6,7 +6,7 @@ interface ComponentDateFilterProps {
 }
 
 const ComponentDateFilter = ({ setRangeFilter, defaultRange }: ComponentDateFilterProps) => {
-  const [activeFilter, setActiveFilter] = useState<number>(defaultRange || 7);
+  const [activeFilter, setActiveFilter] = useState<number>(defaultRange || 30);
   const dates = [7, 30, 90];
 
   const rangeFormatter = (value: number) => {

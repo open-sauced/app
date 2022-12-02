@@ -13,12 +13,14 @@ import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 
 import RepositoriesTable, { classNames } from "../RepositoriesTable/repositories-table";
 import RepoNotIndexed from "./repository-not-indexed";
+import { useGlobalStateContext } from "context/global-state";
 
 interface RepositoriesProps {
   repositories?: number[];
 }
 
 const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
+  const { appState, setAppState } = useGlobalStateContext();
   const { user } = useSupabaseAuth();
   const router = useRouter();
   const { filterName, toolName, selectedFilter, userOrg } = router.query;
@@ -47,7 +49,8 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
 
   useEffect(() => {
     setPage(1);
-  }, [selectedFilter, setPage]);
+    setAppState((prev) => ({ ...prev, repoMetaCount: repoMeta.itemCount }));
+  }, [selectedFilter, setPage, range]);
 
   return (
     <div className="flex flex-col w-full gap-4">
