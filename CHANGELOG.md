@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.19.0-beta.4](https://github.com/open-sauced/insights/compare/v1.19.0-beta.3...v1.19.0-beta.4) (2022-12-02)
+
+
+### 🐛 Bug Fixes
+
+* correct domain normalisation missing trailing slash for auth ([0bbb81f](https://github.com/open-sauced/insights/commit/0bbb81f25c488e873deb471e64ea44cd484e273e))
+
 ## [1.19.0-beta.3](https://github.com/open-sauced/insights/compare/v1.19.0-beta.2...v1.19.0-beta.3) (2022-12-02)
 
 
