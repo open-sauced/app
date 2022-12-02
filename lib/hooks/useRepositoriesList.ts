@@ -14,7 +14,7 @@ const useRepositoriesList = (skipFilters = false, repoIds: number[] = []) => {
   const topic = filterName as string;
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
-  const [range, setRange] = useState(7);
+  const [range, setRange] = useState(30);
 
   const baseEndpoint = !skipFilters ? `${topic}/repos` : "repos/list";
   const pageQuery = page ? `page=${page}` : "";
@@ -24,7 +24,6 @@ const useRepositoriesList = (skipFilters = false, repoIds: number[] = []) => {
   const reposQuery = repoIds.length > 0 ? `&repoIds=${repoIds.join(",")}`: "";
   const endpointString = `${baseEndpoint}?${pageQuery}${limitQuery}${rangeQuery}${reposQuery}${!skipFilters ? filterQuery : ""}`;
   const { data, error, mutate } = useSWR<PaginatedRepoResponse, Error>(topic ? endpointString : null);
-
 
   return {
     data: data?.data ?? [],
