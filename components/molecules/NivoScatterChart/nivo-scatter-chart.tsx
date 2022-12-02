@@ -75,7 +75,7 @@ const NivoScatterPlot = ({ data, maxFilesModified, title, setShowBots, showBots,
           )}
           nodeSize={isMobile ? 25 : 35}
           data={isMobile ? filteredData : data}
-          margin={{ top: 30, right: 60, bottom: 70, left: 90 }}
+          margin={{ top: 30, right: isMobile ? 30 : 60, bottom: 70, left: isMobile ? 75 : 90 }}
           xScale={{ type: "linear", min: 0, max: isMobile ? 7 : 32, reverse: true }}
           yScale={{ type: "linear", min: 0, max: Math.max(Math.round(maxFilesModified * 3), 10) }}
           blendMode="normal"
@@ -89,7 +89,6 @@ const NivoScatterPlot = ({ data, maxFilesModified, title, setShowBots, showBots,
             tickValues: isMobile ? 4 : 7,
             format: (value) => (value === 0 ? "Today" : value > 32 ? "30+ days ago" : `${value} days ago`)
           }}
-          enableGridX={true}
           theme={{
             axis: {},
             grid: {

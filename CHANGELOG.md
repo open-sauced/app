@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.19.0-beta.2](https://github.com/open-sauced/insights/compare/v1.19.0-beta.1...v1.19.0-beta.2) (2022-11-30)
+
+
+### 🐛 Bug Fixes
+
+* bottom axis issues on mobile ([#625](https://github.com/open-sauced/insights/issues/625)) ([3d1acfc](https://github.com/open-sauced/insights/commit/3d1acfc0a03744afd2e4356f28f635effaff3300))
+
 ## [1.19.0-beta.1](https://github.com/open-sauced/insights/compare/v1.18.0...v1.19.0-beta.1) (2022-11-30)
 
 
