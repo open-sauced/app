@@ -33,7 +33,7 @@ const useTopicContributions = (initialLimit = 10, repoIds: number[] = []) => {
     mutate,
     page,
     setPage,
-    setLimit,
+    setLimit
 
   };
 };
