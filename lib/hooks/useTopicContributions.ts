@@ -14,15 +14,14 @@ const useTopicContributions = (initialLimit = 10, repoIds: number[] = []) => {
   const topic = filterName as string;
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(initialLimit);
-  const [range, setRange] = useState(7);
+
 
   const baseEndpoint = `${topic}/contributions`;
   const pageQuery = page ? `page=${page}` : "";
   const filterQuery = getFilterQuery(selectedFilter);
   const limitQuery = limit ? `&limit=${limit}` : "";
-  const rangeQuery = range ? `&range=${range}` : "";
   const reposQuery = repoIds.length > 0 ? `&repoIds=${repoIds.join(",")}`: "";
-  const endpointString = `${baseEndpoint}?${pageQuery}${filterQuery}${limitQuery}${rangeQuery}${reposQuery}`;
+  const endpointString = `${baseEndpoint}?${pageQuery}${filterQuery}${limitQuery}${reposQuery}`;
 
   const { data, error, mutate } = useSWR<PaginatedContributorsResponse, Error>(topic ? endpointString : null);
 
@@ -35,8 +34,7 @@ const useTopicContributions = (initialLimit = 10, repoIds: number[] = []) => {
     page,
     setPage,
     setLimit,
-    range,
-    setRange
+
   };
 };
 
