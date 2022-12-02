@@ -1,18 +1,19 @@
+import { useState } from "react";
+
 /* eslint-disable camelcase */
-import Card from "../../atoms/Card/card";
-import DashboardScatterChart from "components/molecules/DashboardScatterChart/dashboard-scatter-chart";
+import Card from "components/atoms/Card/card";
+import NivoScatterPlot from "components/molecules/NivoScatterChart/nivo-scatter-chart";
 import HighlightCard from "components/molecules/HighlightCard/highlight-card";
+import { ScatterChartDataItems } from "components/molecules/NivoScatterChart/nivo-scatter-chart";
+
 import humanizeNumber from "lib/utils/humanizeNumber";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
-
 import { getInsights, useInsights } from "lib/hooks/useInsights";
-import { useRepositoriesList } from "lib/hooks/useRepositoriesList";
 import { useTopicPRs } from "lib/hooks/useTopicPRs";
 import { calcDaysFromToday } from "lib/utils/date-utils";
 import roundedImage from "lib/utils/roundedImages";
-import { useState } from "react";
-import NivoScatterPlot from "components/molecules/NivoScatterChart/nivo-scatter-chart";
-import { ScatterChartDataItems } from "../../molecules/NivoScatterChart/nivo-scatter-chart";
+import { useTopicContributions } from "lib/hooks/useTopicContributions";
+
 
 type ContributorPrMap = { [contributor: string]: DbRepoPR };
 
@@ -21,10 +22,9 @@ interface DashboardProps {
 }
 
 export const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
-  const { meta: allRepoMeta } = useRepositoriesList(true, repositories);
-  const { meta: filterRepoMeta } = useRepositoriesList(false, repositories);
-  const { data: insightsData } = useInsights();
+  const { data: insightsData } = useInsights(repositories);
   const { data: prData, isError: prError } = useTopicPRs(undefined, repositories);
+  const { data: contributorData } = useTopicContributions(10, repositories);
   const [showBots, setShowBots] = useState(false);
   const isMobile = useMediaQuery("(max-width:720px)");
 
@@ -75,49 +75,48 @@ export const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
     return max;
   }, 0);
 
-  const today = getInsights(insightsData, 0);
-  const yesterday = getInsights(insightsData, 1);
+  const compare1 = getInsights(insightsData, 30);
+  const compare2 = getInsights(insightsData, 60);
 
   return (
     <div className="flex flex-col w-full gap-4">
       <section className="flex flex-wrap gap-4 items-center lg:flex-row lg:flex-nowrap max-w-full">
         <HighlightCard
-          label="Participation"
-          icon="participation"
-          metricIncreases={today.allReposTotal - yesterday.allReposTotal >= 0}
-          increased={today.allReposTotal - yesterday.allReposTotal >= 0}
-          numChanged={humanizeNumber(Math.abs(today.allReposTotal - yesterday.allReposTotal), "abbreviation")}
-          percentage={
-            allRepoMeta.itemCount > 0 ? Math.round((filterRepoMeta.itemCount / allRepoMeta.itemCount) * 100) : 0
-          }
-          percentageLabel={`of ${humanizeNumber(allRepoMeta.itemCount || 0, "comma")}`}
+
+          label="Contributors"
+          icon="contributors"
+          metricIncreases={compare1.allContributors - compare2.allContributors >= 0}
+          increased={compare1.allContributors - compare2.allContributors >= 0}
+          numChanged={humanizeNumber(Math.abs(compare1.allContributors - compare2.allContributors), "abbreviation")}
+          value={humanizeNumber(compare1.allContributors, "comma")}
+          contributors={contributorData}
         />
         <HighlightCard
           label="Spam"
           icon="spam"
-          metricIncreases={today.spamTotal - yesterday.spamTotal >= 0}
-          increased={today.spamTotal - yesterday.spamTotal >= 0}
-          numChanged={humanizeNumber(Math.abs(today.spamTotal - yesterday.spamTotal), "abbreviation")}
-          percentage={today.spamPercentage}
-          percentageLabel={`of ${humanizeNumber(today.allPrsTotal, "comma")}`}
+          metricIncreases={compare1.spamTotal - compare2.spamTotal >= 0}
+          increased={compare1.spamTotal - compare2.spamTotal >= 0}
+          numChanged={humanizeNumber(Math.abs(compare1.spamTotal - compare2.spamTotal), "abbreviation")}
+          percentage={compare1.spamPercentage}
+          percentageLabel={`of ${humanizeNumber(compare1.allPrsTotal, "comma")}`}
         />
         <HighlightCard
           label="Accepted PRs"
           icon="accepted-pr"
-          metricIncreases={today.acceptedTotal - yesterday.acceptedTotal >= 0}
-          increased={today.acceptedTotal - yesterday.acceptedTotal >= 0}
-          numChanged={humanizeNumber(Math.abs(today.acceptedTotal - yesterday.acceptedTotal), "abbreviation")}
-          percentage={today.acceptedPercentage}
-          percentageLabel={`of ${humanizeNumber(today.allPrsTotal, "comma")}`}
+          metricIncreases={compare1.acceptedTotal - compare2.acceptedTotal >= 0}
+          increased={compare1.acceptedTotal - compare2.acceptedTotal >= 0}
+          numChanged={humanizeNumber(Math.abs(compare1.acceptedTotal - compare2.acceptedTotal), "abbreviation")}
+          percentage={compare1.acceptedPercentage}
+          percentageLabel={`of ${humanizeNumber(compare1.allPrsTotal, "comma")}`}
         />
         <HighlightCard
           label="Unlabeled PRs"
           icon="unlabeled-pr"
-          metricIncreases={today.unlabeledPrsTotal - yesterday.unlabeledPrsTotal >= 0}
-          increased={today.unlabeledPrsTotal - yesterday.unlabeledPrsTotal >= 0}
-          numChanged={humanizeNumber(Math.abs(today.unlabeledPrsTotal - yesterday.unlabeledPrsTotal), "abbreviation")}
-          percentage={today.unlabeledPercentage}
-          percentageLabel={`of ${humanizeNumber(today.allPrsTotal, "comma")}`}
+          metricIncreases={compare1.unlabeledPrsTotal - compare2.unlabeledPrsTotal >= 0}
+          increased={compare1.unlabeledPrsTotal - compare2.unlabeledPrsTotal >= 0}
+          numChanged={humanizeNumber(Math.abs(compare1.unlabeledPrsTotal - compare2.unlabeledPrsTotal), "abbreviation")}
+          percentage={compare1.unlabeledPercentage}
+          percentageLabel={`of ${humanizeNumber(compare1.allPrsTotal, "comma")}`}
         />
       </section>
       <section className="flex flex-col lg:flex-row max-w-full gap-4 mb-6">
