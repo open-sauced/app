@@ -1,39 +1,37 @@
 import React, { useState } from "react";
 
 interface ComponentDateFilterProps {
-  setDateFilter: (value: number) => void;
+  setRangeFilter?: (value: number) => void;
+  defaultRange?: number;
 }
-type FilterState = {
-  name: string;
-  value: number;
-};
-const ComponentDateFilter = () => {
-  const [activeFilter, setActiveFilter] = useState<FilterState>({ name: "7d", value: 7 });
-  const dates = [
-    { name: "7d", value: 7 },
-    { name: "30d", value: 30 },
-    { name: "3m", value: 90 }
-  ];
 
-  const handleFilterClick = (date: FilterState) => {
-    setActiveFilter(date);
+const ComponentDateFilter = ({ setRangeFilter, defaultRange }: ComponentDateFilterProps) => {
+  const [activeFilter, setActiveFilter] = useState<number>(defaultRange || 7);
+  const dates = [7, 30, 90];
+
+  const rangeFormatter = (value: number) => {
+    return value === 7 ? "7d" : value === 30 ? "30d" : "3m";
+  };
+  const handleFilterClick = (range: number) => {
+    setActiveFilter(range);
 
     // Logic to setDateFilter goes herein with the dates value
+    setRangeFilter?.(range);
   };
 
   return (
     <div className="flex text-sm gap-4 items-center">
       <span>Date filter:</span>
       <div className="flex items-center">
-        {dates.map(({ name, value }, index) => (
+        {dates.map((range, index) => (
           <div
-            onClick={() => handleFilterClick({ name, value })}
+            onClick={() => handleFilterClick(range)}
             className={`px-2 py-1  rounded-lg cursor-pointer transition text-light-slate-9 ${
-              activeFilter?.value === value && "border text-light-slate-12 border-light-orange-10"
+              activeFilter === range && "border text-light-slate-12 border-light-orange-10"
             }`}
             key={index}
           >
-            {name}
+            {rangeFormatter(range)}
           </div>
         ))}
       </div>

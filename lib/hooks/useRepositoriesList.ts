@@ -14,13 +14,15 @@ const useRepositoriesList = (skipFilters = false, repoIds: number[] = []) => {
   const topic = filterName as string;
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
+  const [range, setRange] = useState(7);
 
   const baseEndpoint = !skipFilters ? `${topic}/repos` : "repos/list";
   const pageQuery = page ? `page=${page}` : "";
   const filterQuery = getFilterQuery(selectedFilter);
   const limitQuery = limit ? `&limit=${limit}` : "";
+  const rangeQuery = range ? `&range=${range}` : "";
   const reposQuery = repoIds.length > 0 ? `&repoIds=${repoIds.join(",")}`: "";
-  const endpointString = `${baseEndpoint}?${pageQuery}${limitQuery}${reposQuery}${!skipFilters ? filterQuery : ""}`;
+  const endpointString = `${baseEndpoint}?${pageQuery}${limitQuery}${rangeQuery}${reposQuery}${!skipFilters ? filterQuery : ""}`;
   const { data, error, mutate } = useSWR<PaginatedRepoResponse, Error>(topic ? endpointString : null);
 
 
@@ -32,6 +34,8 @@ const useRepositoriesList = (skipFilters = false, repoIds: number[] = []) => {
     mutate,
     page,
     setPage,
+    range,
+    setRange,
     setLimit
   };
 };

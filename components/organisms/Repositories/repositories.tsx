@@ -31,7 +31,9 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
     isLoading: repoListIsLoading,
     page,
     setPage,
-    setLimit
+    setLimit,
+    setRange,
+    range
   } = useRepositoriesList(false, repositories);
   const filteredRepoNotIndexed = selectedFilter && !repoListIsLoading && !repoListIsError && repoListData.length === 0;
 
@@ -45,7 +47,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
 
   useEffect(() => {
     setPage(1);
-  }, [selectedFilter]);
+  }, [selectedFilter, setPage]);
 
   return (
     <div className="flex flex-col w-full gap-4">
@@ -53,11 +55,13 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
         updateLimit={setLimit}
         onSearch={(e) => handleOnSearch(e)}
         showing={{
-          from: page === 1 ? repoMeta.itemCount > 0 ? page : 0 : ((page-1) * repoMeta.limit) + 1,
+          from: page === 1 ? (repoMeta.itemCount > 0 ? page : 0) : (page - 1) * repoMeta.limit + 1,
           to: page * repoMeta.limit <= repoMeta.itemCount ? page * repoMeta.limit : repoMeta.itemCount,
           total: repoMeta.itemCount,
           entity: "Repositories"
         }}
+        range={range}
+        setRange={setRange}
         title="Repositories"
       />
       <div className="flex flex-col rounded-lg overflow-hidden border">
@@ -122,7 +126,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
             <div>
               <div className="">
                 <PaginationResults
-                  from={page === 1 ? repoMeta.itemCount > 0 ? page : 0 : ((page-1) * repoMeta.limit) + 1}
+                  from={page === 1 ? (repoMeta.itemCount > 0 ? page : 0) : (page - 1) * repoMeta.limit + 1}
                   to={page * repoMeta.limit <= repoMeta.itemCount ? page * repoMeta.limit : repoMeta.itemCount}
                   total={repoMeta.itemCount}
                   entity={"repos"}
@@ -148,7 +152,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
         </div>
       </div>
 
-      { filteredRepoNotIndexed && <RepoNotIndexed /> }
+      {filteredRepoNotIndexed && <RepoNotIndexed />}
     </div>
   );
 };

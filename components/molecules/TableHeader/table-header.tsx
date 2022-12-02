@@ -11,8 +11,10 @@ interface TableHeaderProps {
   showing: { from: number; to: number; total: number; entity: string };
   onSearch?: (search?: string) => void;
   updateLimit: Function;
+  range?: number;
+  setRange?: (range: number) => void;
 }
-const TableHeader = ({ title, showing, updateLimit, onSearch }: TableHeaderProps): JSX.Element => {
+const TableHeader = ({ title, showing, updateLimit, onSearch, range, setRange }: TableHeaderProps): JSX.Element => {
   return (
     <div className="flex flex-wrap gap-y-2 flex-col md:flex-row md:justify-between md:items-end w-full md:pb-4">
       <div className="flex gap-x-4 items-end">
@@ -22,7 +24,7 @@ const TableHeader = ({ title, showing, updateLimit, onSearch }: TableHeaderProps
         <PaginationResult className="hidden !translate-y-[2px]  md:inline-flex" {...showing} />
       </div>
       <div className="flex flex-col-reverse md:flex-row items-start gap-3  md:items-end">
-        <ComponentDateFilter />
+        {range ? <ComponentDateFilter setRangeFilter={setRange} defaultRange={range} /> : ""}
         {onSearch ? (
           <Search placeholder={`Search ${title}`} className=" max-w-full" name={"query"} onSearch={onSearch} />
         ) : (
