@@ -82,7 +82,7 @@ export const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
         <HighlightCard
 
           label="Contributors"
-          icon="participation"
+          icon="contributors"
           metricIncreases={compare1.allContributors - compare2.allContributors >= 0}
           increased={compare1.allContributors - compare2.allContributors >= 0}
           numChanged={humanizeNumber(Math.abs(compare1.allContributors - compare2.allContributors), "abbreviation")}

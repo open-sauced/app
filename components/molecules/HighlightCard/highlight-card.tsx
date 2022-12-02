@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import repoIcon from "../../../public/icons/icon-repo--blue.svg";
 import prIcon from "../../../public/icons/icon-pr--green.svg";
+import personIcon from "../../../public/icons/person-icon.svg";
 import labelIcon from "../../../public/icons/icon-label--blue.svg";
 import thumbsIcon from "../../../public/icons/icon-thumbs-down--yellow.svg";
 import metricArrow from "../../../public/icons/metric-arrow.svg";
@@ -11,7 +12,7 @@ import Card from "components/atoms/Card/card";
 interface HighlightCardProps {
   className?: string;
   label?: string;
-  icon?: "participation" | "accepted-pr" | "unlabeled-pr" | "spam";
+  icon?: "participation" | "accepted-pr" | "unlabeled-pr" | "spam" | "contributors";
   metricIncreases: boolean;
   increased?: boolean;
   numChanged?: number | string;
@@ -25,6 +26,11 @@ interface HighlightCardProps {
 // Replace these icons, or make them dynamic.
 // Maybe create an Icon component.
 const icons = {
+  contributors: {
+    src: personIcon.src,
+    label: "Contributors",
+    color: "bg-blue-100"
+  },  
   participation: {
     src: repoIcon.src,
     label: "Participation",
