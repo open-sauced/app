@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.19.0-beta.5](https://github.com/open-sauced/insights/compare/v1.19.0-beta.4...v1.19.0-beta.5) (2022-12-02)
+
+
+### 🍕 Features
+
+* update insight cards to use topic/selected/repo filters ([#626](https://github.com/open-sauced/insights/issues/626)) ([2ecfcf7](https://github.com/open-sauced/insights/commit/2ecfcf72d894d6d868828e5b7142183234380f80)), closes [#619](https://github.com/open-sauced/insights/issues/619)
+
 ## [1.19.0-beta.4](https://github.com/open-sauced/insights/compare/v1.19.0-beta.3...v1.19.0-beta.4) (2022-12-02)
 
 
