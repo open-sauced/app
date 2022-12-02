@@ -5,16 +5,18 @@ import { GlobalStateInterface } from "interfaces/global-state-types";
 
 const AppContext = React.createContext({
   appState: {} as Partial<GlobalStateInterface>,
-  setAppState: {} as React.Dispatch<React.SetStateAction<Partial<GlobalStateInterface>>> 
+  setAppState: {} as React.Dispatch<React.SetStateAction<Partial<GlobalStateInterface>>>
 });
 
 type Props = {
-    children: React.ReactNode;
+  children: React.ReactNode;
 };
 
-const GlobalState = ({children}: Props) => {
-
-  const initialState = {};
+const GlobalState = ({ children }: Props) => {
+  const initialState = {
+    repoMetaCount: 0,
+    contributorsMetaCount: 0
+  } as Partial<GlobalStateInterface>;
 
   const [appState, setAppState] = useState(initialState);
 
@@ -23,11 +25,7 @@ const GlobalState = ({children}: Props) => {
     setAppState
   };
 
-  return (
-    <AppContext.Provider value={providerValue}>
-      {children}
-    </AppContext.Provider>
-  );
+  return <AppContext.Provider value={providerValue}>{children}</AppContext.Provider>;
 };
 
 export const useGlobalStateContext = () => {

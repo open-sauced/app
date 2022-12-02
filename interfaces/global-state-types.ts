@@ -4,4 +4,6 @@ export interface GlobalStateInterface {
   user?: User | null;
   onboarded?: boolean;
   waitlisted?: boolean;
+  repoMetaCount: number
+  contributorsMetaCount: number;
 }
