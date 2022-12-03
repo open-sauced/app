@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.19.1-beta.1](https://github.com/open-sauced/insights/compare/v1.19.0...v1.19.1-beta.1) (2022-12-03)
+
+
+### 🐛 Bug Fixes
+
+* update top5 ([7a43afc](https://github.com/open-sauced/insights/commit/7a43afc95b8f9f03de33dc2bdf4cbbfec51f5b2a))
+
 ## [1.19.0](https://github.com/open-sauced/insights/compare/v1.18.0...v1.19.0) (2022-12-02)
 
 
