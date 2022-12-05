@@ -77,7 +77,7 @@ const RepositoriesTable = ({
 
   return (
     <section className="flex  flex-col">
-      {loading && <SkeletonWrapper height={50} count={12} radius={4} classNames="px-6 mt-2" />}
+      {loading && <SkeletonWrapper height={50} count={10} radius={4} classNames="px-6 mt-2" />}
       {error && <>An error has occured...</>}
 
       {isLoadedWithRepos &&
