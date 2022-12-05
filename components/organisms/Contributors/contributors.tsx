@@ -28,36 +28,36 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
   const contributorArray = isError
     ? []
     : data?.map((contributor) => {
-        const timeSinceFirstCommit = calcDistanceFromToday(new Date(parseInt(contributor.first_commit_time)));
-        const contributorLanguageList = (contributor.langs || "").split(",");
-        const repoList = (contributor.recent_repo_list || "").split(",").map((repo) => {
-          const [repoOwner, repoName] = repo.split("/");
-
-          return {
-            repoName,
-            repoIcon: `https://www.github.com/${repoOwner ?? "github"}.png?size=460`
-          };
-        });
-        const languageList = contributorLanguageList.map((language) => {
-          const preparedLanguageKey = colorKeys.find((key) => key.toLowerCase() === language.toLowerCase());
-
-          return {
-            languageName: preparedLanguageKey ? preparedLanguageKey : language,
-            percentageUsed: Math.round((1 / contributorLanguageList.length) * 100)
-          };
-        });
+      const timeSinceFirstCommit = calcDistanceFromToday(new Date(parseInt(contributor.first_commit_time)));
+      const contributorLanguageList = (contributor.langs || "").split(",");
+      const repoList = (contributor.recent_repo_list || "").split(",").map((repo) => {
+        const [repoOwner, repoName] = repo.split("/");
 
         return {
-          profile: {
-            githubAvatar: `https://www.github.com/${contributor.host_login}.png?size=60`,
-            githubName: contributor.host_login,
-            totalPRs: contributor.recent_pr_total,
-            dateOfFirstPR: timeSinceFirstCommit
-          },
-          languageList,
-          repoList
+          repoName,
+          repoIcon: `https://www.github.com/${repoOwner ?? "github"}.png?size=460`
         };
       });
+      const languageList = contributorLanguageList.map((language) => {
+        const preparedLanguageKey = colorKeys.find((key) => key.toLowerCase() === language.toLowerCase());
+
+        return {
+          languageName: preparedLanguageKey ? preparedLanguageKey : language,
+          percentageUsed: Math.round((1 / contributorLanguageList.length) * 100)
+        };
+      });
+
+      return {
+        profile: {
+          githubAvatar: `https://www.github.com/${contributor.host_login}.png?size=60`,
+          githubName: contributor.host_login,
+          totalPRs: contributor.recent_pr_total,
+          dateOfFirstPR: timeSinceFirstCommit
+        },
+        languageList,
+        repoList
+      };
+    });
 
   return (
     <>
