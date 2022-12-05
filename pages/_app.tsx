@@ -1,6 +1,8 @@
 //Idea came from this repo: https://github.com/brookslybrand/next-nested-layouts
 
 import "../styles/globals.css";
+import "react-loading-skeleton/dist/skeleton.css";
+
 import { useEffect } from "react";
 import Head from "next/head";
 import type { AppProps } from "next/app";
@@ -66,7 +68,10 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
   return (
     <>
       <Head>
-        <title>Open Sauced Insights{filterName && ` - ${changeCapitalization(filterName.toString(), true)}`} {toolName && ` / ${changeCapitalization(toolName.toString(), true)}`}</title>
+        <title>
+          Open Sauced Insights{filterName && ` - ${changeCapitalization(filterName.toString(), true)}`}{" "}
+          {toolName && ` / ${changeCapitalization(toolName.toString(), true)}`}
+        </title>
         <link rel="icon" href="/favicon.ico" />
         <meta property="og:url" content="https://insights.opensauced.pizza" />
         <meta property="og:type" content="website" />
@@ -87,10 +92,7 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
           provider: localStorageProvider
         }}
       >
-        <SessionContextProvider
-          supabaseClient={supabase}
-          initialSession={pageProps.initialSession}
-        >
+        <SessionContextProvider supabaseClient={supabase} initialSession={pageProps.initialSession}>
           <GlobalState>
             <TipProvider>
               {Component.PageLayout ? (
@@ -106,7 +108,6 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
       </SWRConfig>
     </>
   );
-
 }
 
 export default MyApp;
