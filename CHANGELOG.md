@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.20.0-beta.1](https://github.com/open-sauced/insights/compare/v1.19.1-beta.1...v1.20.0-beta.1) (2022-12-05)
+
+
+### 🍕 Features
+
+* add hover card tooltip component ([#607](https://github.com/open-sauced/insights/issues/607)) ([2385c43](https://github.com/open-sauced/insights/commit/2385c43692b36bf0f13d081bba49896e21030633)), closes [#526](https://github.com/open-sauced/insights/issues/526)
+
 ### [1.19.1-beta.1](https://github.com/open-sauced/insights/compare/v1.19.0...v1.19.1-beta.1) (2022-12-03)
 
 
