@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.20.0-beta.3](https://github.com/open-sauced/insights/compare/v1.20.0-beta.2...v1.20.0-beta.3) (2022-12-05)
+
+
+### 🍕 Features
+
+* Introduce loading skeleton to repository and contributors page ([#637](https://github.com/open-sauced/insights/issues/637)) ([3ca20f3](https://github.com/open-sauced/insights/commit/3ca20f3e32eee8ca1c2de6612e699183987c1405))
+
 ## [1.20.0-beta.2](https://github.com/open-sauced/insights/compare/v1.20.0-beta.1...v1.20.0-beta.2) (2022-12-05)
 
 
