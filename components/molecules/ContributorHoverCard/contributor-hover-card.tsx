@@ -1,11 +1,11 @@
-import Text from "components/atoms/Typography/text";
 import { VscGitMerge, VscGitPullRequest } from "react-icons/vsc";
+
+import Text from "components/atoms/Typography/text";
 import CardProfile from "../CardProfile/card-profile";
 import CardRepoList from "../CardRepoList/card-repo-list";
 import TestRepoAvatar from "public/icons/test-repo-avatar.svg";
-import Button from "components/atoms/Button/button";
 
-const ScatterChartTooltip = () => {
+const ContributorHoverCard = () => {
   const randomGithubHistory = Array.apply(null, Array(4));
   const testRepoList = [
     {
@@ -66,4 +66,4 @@ const ScatterChartTooltip = () => {
   );
 };
 
-export default ScatterChartTooltip;
+export default ContributorHoverCard;
