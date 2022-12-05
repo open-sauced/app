@@ -150,7 +150,7 @@ const HighlightCard: React.FC<HighlightCardProps> = ({
               style={{ width: (percentage ? percentage : 0) + "%" }}
             ></div>
 
-            <div className={`${ percentage && "bg-gray-200"} w-auto flex-auto h-3 rounded-full transition-all duration-500 ease-in-out`}></div>
+            <div className={`${ percentage !== undefined && "bg-gray-200"} w-auto flex-auto h-3 rounded-full transition-all duration-500 ease-in-out`}></div>
           </div>
         </div>
       </>
