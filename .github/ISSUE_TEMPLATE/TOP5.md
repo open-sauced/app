@@ -4,7 +4,7 @@ about: This is a template to kick start the weekly conversation on what the insi
   working on.
 title: TOP 5 Week {{ weekNumber }} {{ date | date('MMMM Do') }}
 labels: top5
-assignees: bdougie, pixelsbyeryc, SunGoldTech, 0-vortex, brandonroberts
+assignees: SunGoldTech, 0-vortex, brandonroberts
 
 ---
 

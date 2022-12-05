@@ -30,7 +30,12 @@ const useSupabaseAuth = () => {
   }, []);
 
   return {
-    signIn: (data: SignInWithOAuthCredentials) => supabase.auth.signInWithOAuth(data),
+    signIn: (data: SignInWithOAuthCredentials) => supabase.auth.signInWithOAuth({
+      ...data,
+      options: {
+        redirectTo: process.env.NEXT_PUBLIC_BASE_URL ?? "/"
+      }
+    }),
     signOut: () => supabase.auth.signOut(),
     user,
     sessionToken,

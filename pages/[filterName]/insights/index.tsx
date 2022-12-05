@@ -30,14 +30,17 @@ const InsightsHub: WithPageLayout = () => {
         </div>
       </div>
 
-      <section>
+      <section className="flex flex-col gap-4">
         {isLoading
           ? "Loading..."
           : isError
             ? "Error..."
-            : insightsData.map((insight, index) => (
-              <InsightRow key={`insights_${insight.id}`} user={user} insight={insight} />
-            ))}
+            : insightsData.map((insight, index) => {
+              return (
+                <InsightRow  key={`insights_${insight.id}`} user={user} insight={insight} />
+              );
+            })
+        }
       </section>
 
       <Link passHref href={"/hub/insights/new"}>

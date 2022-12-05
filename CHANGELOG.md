@@ -5,6 +5,137 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.19.1-beta.1](https://github.com/open-sauced/insights/compare/v1.19.0...v1.19.1-beta.1) (2022-12-03)
+
+
+### 🐛 Bug Fixes
+
+* update top5 ([7a43afc](https://github.com/open-sauced/insights/commit/7a43afc95b8f9f03de33dc2bdf4cbbfec51f5b2a))
+
+## [1.19.0](https://github.com/open-sauced/insights/compare/v1.18.0...v1.19.0) (2022-12-02)
+
+
+### 🐛 Bug Fixes
+
+* bottom axis issues on mobile ([#625](https://github.com/open-sauced/insights/issues/625)) ([3d1acfc](https://github.com/open-sauced/insights/commit/3d1acfc0a03744afd2e4356f28f635effaff3300))
+* correct domain normalisation missing trailing slash for auth ([0bbb81f](https://github.com/open-sauced/insights/commit/0bbb81f25c488e873deb471e64ea44cd484e273e))
+* correct supabase oauth redirect mismatch ([#630](https://github.com/open-sauced/insights/issues/630)) ([ac37f4b](https://github.com/open-sauced/insights/commit/ac37f4bf028a7e50c36490ae596dbd3591a58834))
+
+
+### 🍕 Features
+
+* Update Dashboard Echart to `NivoScatterPlot` ([#612](https://github.com/open-sauced/insights/issues/612)) ([fb73f3c](https://github.com/open-sauced/insights/commit/fb73f3c7e5dc6dcc7304655ac329e3dc02d7bb20)), closes [#282](https://github.com/open-sauced/insights/issues/282) [#411](https://github.com/open-sauced/insights/issues/411) [#586](https://github.com/open-sauced/insights/issues/586)
+* update insight cards to use topic/selected/repo filters ([#626](https://github.com/open-sauced/insights/issues/626)) ([2ecfcf7](https://github.com/open-sauced/insights/commit/2ecfcf72d894d6d868828e5b7142183234380f80)), closes [#619](https://github.com/open-sauced/insights/issues/619)
+
+## [1.19.0-beta.5](https://github.com/open-sauced/insights/compare/v1.19.0-beta.4...v1.19.0-beta.5) (2022-12-02)
+
+
+### 🍕 Features
+
+* update insight cards to use topic/selected/repo filters ([#626](https://github.com/open-sauced/insights/issues/626)) ([2ecfcf7](https://github.com/open-sauced/insights/commit/2ecfcf72d894d6d868828e5b7142183234380f80)), closes [#619](https://github.com/open-sauced/insights/issues/619)
+
+## [1.19.0-beta.4](https://github.com/open-sauced/insights/compare/v1.19.0-beta.3...v1.19.0-beta.4) (2022-12-02)
+
+
+### 🐛 Bug Fixes
+
+* correct domain normalisation missing trailing slash for auth ([0bbb81f](https://github.com/open-sauced/insights/commit/0bbb81f25c488e873deb471e64ea44cd484e273e))
+
+## [1.19.0-beta.3](https://github.com/open-sauced/insights/compare/v1.19.0-beta.2...v1.19.0-beta.3) (2022-12-02)
+
+
+### 🐛 Bug Fixes
+
+* correct supabase oauth redirect mismatch ([#630](https://github.com/open-sauced/insights/issues/630)) ([ac37f4b](https://github.com/open-sauced/insights/commit/ac37f4bf028a7e50c36490ae596dbd3591a58834))
+
+## [1.19.0-beta.2](https://github.com/open-sauced/insights/compare/v1.19.0-beta.1...v1.19.0-beta.2) (2022-11-30)
+
+
+### 🐛 Bug Fixes
+
+* bottom axis issues on mobile ([#625](https://github.com/open-sauced/insights/issues/625)) ([3d1acfc](https://github.com/open-sauced/insights/commit/3d1acfc0a03744afd2e4356f28f635effaff3300))
+
+## [1.19.0-beta.1](https://github.com/open-sauced/insights/compare/v1.18.0...v1.19.0-beta.1) (2022-11-30)
+
+
+### 🍕 Features
+
+* Update Dashboard Echart to `NivoScatterPlot` ([#612](https://github.com/open-sauced/insights/issues/612)) ([fb73f3c](https://github.com/open-sauced/insights/commit/fb73f3c7e5dc6dcc7304655ac329e3dc02d7bb20)), closes [#282](https://github.com/open-sauced/insights/issues/282) [#411](https://github.com/open-sauced/insights/issues/411) [#586](https://github.com/open-sauced/insights/issues/586)
+
+## [1.18.0](https://github.com/open-sauced/insights/compare/v1.17.0...v1.18.0) (2022-11-29)
+
+
+### 🐛 Bug Fixes
+
+* add fallback message for a filtered repo not being indexed ([#611](https://github.com/open-sauced/insights/issues/611)) ([852a383](https://github.com/open-sauced/insights/commit/852a3837f2222fa9c20733560ea520f13836d1e9)), closes [#585](https://github.com/open-sauced/insights/issues/585)
+* increase default for number of recent prs displayed on scatterchart ([#614](https://github.com/open-sauced/insights/issues/614)) ([1996694](https://github.com/open-sauced/insights/commit/199669473e385ac2671172053e2a3e86d1130d68)), closes [#583](https://github.com/open-sauced/insights/issues/583)
+
+
+### 🍕 Features
+
+* implement edit insight page ([#615](https://github.com/open-sauced/insights/issues/615)) ([06dcf4a](https://github.com/open-sauced/insights/commit/06dcf4a02ce3fbc815f5828ba35a611212ede096)), closes [#609](https://github.com/open-sauced/insights/issues/609)
+
+## [1.18.0-beta.1](https://github.com/open-sauced/insights/compare/v1.17.1-beta.2...v1.18.0-beta.1) (2022-11-23)
+
+
+### 🍕 Features
+
+* implement edit insight page ([#615](https://github.com/open-sauced/insights/issues/615)) ([06dcf4a](https://github.com/open-sauced/insights/commit/06dcf4a02ce3fbc815f5828ba35a611212ede096)), closes [#609](https://github.com/open-sauced/insights/issues/609)
+
+### [1.17.1-beta.2](https://github.com/open-sauced/insights/compare/v1.17.1-beta.1...v1.17.1-beta.2) (2022-11-21)
+
+
+### 🐛 Bug Fixes
+
+* increase default for number of recent prs displayed on scatterchart ([#614](https://github.com/open-sauced/insights/issues/614)) ([1996694](https://github.com/open-sauced/insights/commit/199669473e385ac2671172053e2a3e86d1130d68)), closes [#583](https://github.com/open-sauced/insights/issues/583)
+
+### [1.17.1-beta.1](https://github.com/open-sauced/insights/compare/v1.17.0...v1.17.1-beta.1) (2022-11-21)
+
+
+### 🐛 Bug Fixes
+
+* add fallback message for a filtered repo not being indexed ([#611](https://github.com/open-sauced/insights/issues/611)) ([852a383](https://github.com/open-sauced/insights/commit/852a3837f2222fa9c20733560ea520f13836d1e9)), closes [#585](https://github.com/open-sauced/insights/issues/585)
+
+## [1.17.0](https://github.com/open-sauced/insights/compare/v1.16.0...v1.17.0) (2022-11-18)
+
+
+### 🍕 Features
+
+* implement add create insight page ([#591](https://github.com/open-sauced/insights/issues/591)) ([b1b3c7b](https://github.com/open-sauced/insights/commit/b1b3c7bf65ff717f9ed69e03f823c2633e9ffc7d)), closes [#562](https://github.com/open-sauced/insights/issues/562)
+
+
+### 🐛 Bug Fixes
+
+* add additional filters to contributor hooks ([#589](https://github.com/open-sauced/insights/issues/589)) ([a107f97](https://github.com/open-sauced/insights/commit/a107f973e061e2d23c9fc84a64133107f3ee2e40))
+* add gap to insight row section ([#606](https://github.com/open-sauced/insights/issues/606)) ([3553d14](https://github.com/open-sauced/insights/commit/3553d149582602053eb25c54d6960cd6edfcd735)), closes [#605](https://github.com/open-sauced/insights/issues/605)
+* broken css in insights hub page ([#590](https://github.com/open-sauced/insights/issues/590)) ([97de259](https://github.com/open-sauced/insights/commit/97de259f31f45d71fab4d46b2e494af4e118163b)), closes [#588](https://github.com/open-sauced/insights/issues/588)
+* fix calculation of average open PRs on insights hub ([#604](https://github.com/open-sauced/insights/issues/604)) ([0e2405b](https://github.com/open-sauced/insights/commit/0e2405be75b8293d1814895d00e597806c906a98))
+* Improve the Onboarding UI ([#602](https://github.com/open-sauced/insights/issues/602)) ([657e344](https://github.com/open-sauced/insights/commit/657e344b55054a63515f661333ed522bbbe68d56)), closes [#601](https://github.com/open-sauced/insights/issues/601)
+* navigate back to home after finishing onboarding ([#610](https://github.com/open-sauced/insights/issues/610)) ([9567b83](https://github.com/open-sauced/insights/commit/9567b8307190b8adc0f47867fabbfd8d6c9b1962))
+* set min heigh/width on repository table repo name avatar ([#603](https://github.com/open-sauced/insights/issues/603)) ([aaec5dd](https://github.com/open-sauced/insights/commit/aaec5ddbe0110378029e95e1464f4e1b991a9856)), closes [#527](https://github.com/open-sauced/insights/issues/527)
+
+## [1.17.0-beta.4](https://github.com/open-sauced/insights/compare/v1.17.0-beta.3...v1.17.0-beta.4) (2022-11-17)
+
+
+### 🐛 Bug Fixes
+
+* navigate back to home after finishing onboarding ([#610](https://github.com/open-sauced/insights/issues/610)) ([9567b83](https://github.com/open-sauced/insights/commit/9567b8307190b8adc0f47867fabbfd8d6c9b1962))
+
+## [1.17.0-beta.3](https://github.com/open-sauced/insights/compare/v1.17.0-beta.2...v1.17.0-beta.3) (2022-11-17)
+
+
+### 🐛 Bug Fixes
+
+* set min heigh/width on repository table repo name avatar ([#603](https://github.com/open-sauced/insights/issues/603)) ([aaec5dd](https://github.com/open-sauced/insights/commit/aaec5ddbe0110378029e95e1464f4e1b991a9856)), closes [#527](https://github.com/open-sauced/insights/issues/527)
+
+## [1.17.0-beta.2](https://github.com/open-sauced/insights/compare/v1.17.0-beta.1...v1.17.0-beta.2) (2022-11-17)
+
+
+### 🐛 Bug Fixes
+
+* add gap to insight row section ([#606](https://github.com/open-sauced/insights/issues/606)) ([3553d14](https://github.com/open-sauced/insights/commit/3553d149582602053eb25c54d6960cd6edfcd735)), closes [#605](https://github.com/open-sauced/insights/issues/605)
+* fix calculation of average open PRs on insights hub ([#604](https://github.com/open-sauced/insights/issues/604)) ([0e2405b](https://github.com/open-sauced/insights/commit/0e2405be75b8293d1814895d00e597806c906a98))
+
 ## [1.17.0-beta.1](https://github.com/open-sauced/insights/compare/v1.16.1-beta.3...v1.17.0-beta.1) (2022-11-16)
 
 

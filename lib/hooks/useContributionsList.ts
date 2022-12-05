@@ -12,7 +12,7 @@ const useContributionsList = (repoId: string, limit = "", orderBy = "") => {
   const orderByQuery = orderBy ? `&updated_at=${orderBy}` : "";
   const endpointString = `${baseEndpoint}?${limitQuery}${orderByQuery}`;
 
-  const { data, error, mutate } = useSWR<PaginatedContributorsResponse, Error>(endpointString);
+  const { data, error, mutate } = useSWR<PaginatedContributorsResponse, Error>(repoId ? endpointString : null);
 
   return {
     data: data?.data ?? [],
