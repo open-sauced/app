@@ -13,7 +13,7 @@ import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 
 import RepositoriesTable, { classNames } from "../RepositoriesTable/repositories-table";
 import RepoNotIndexed from "./repository-not-indexed";
-import { useGlobalStateContext } from "context/global-state";
+
 
 interface RepositoriesProps {
   repositories?: number[];

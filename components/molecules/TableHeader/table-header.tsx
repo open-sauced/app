@@ -28,7 +28,14 @@ const TableHeader = ({ title, showing, updateLimit, onSearch, hasDateRange }: Ta
         <PaginationResult className="hidden !translate-y-[2px]  md:inline-flex" {...showing} />
       </div>
       <div className="flex flex-col-reverse md:flex-row items-start gap-3  md:items-end">
-        {hasDateRange ? <ComponentDateFilter setRangeFilter={setAppState} defaultRange={range} /> : ""}
+        {hasDateRange ? (
+          <ComponentDateFilter
+            setRangeFilter={(range: number) => setAppState((prev) => ({ ...prev, range }))}
+            defaultRange={range}
+          />
+        ) : (
+          ""
+        )}
         {onSearch ? (
           <Search placeholder={`Search ${title}`} className=" max-w-full" name={"query"} onSearch={onSearch} />
         ) : (

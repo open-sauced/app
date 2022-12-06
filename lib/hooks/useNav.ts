@@ -6,14 +6,10 @@ import { useEffect } from "react";
 
 const useNav = (repositories: number[] = []) => {
 
-  const {setAppState,appState}= useGlobalStateContext();
   const router = useRouter();
   const { meta: repoMetaData, isError: repoIsError, isLoading: repoIsLoading } = useRepositoriesList(false, repositories);
   const { meta: conMetaData, isError: conIsError, isLoading: conIsLoading } = useTopicContributions(10, repositories);
 
-  useEffect(()=>{
-    setAppState(prev =>( {...prev, repoMetaCount: repoMetaData.itemCount, contributorsMetaCount: conMetaData.itemCount}));
-  },[repoMetaData.itemCount, setAppState, conMetaData.itemCount]);
 
   const defaultTools = [
     {

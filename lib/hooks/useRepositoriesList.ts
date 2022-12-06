@@ -34,7 +34,6 @@ const useRepositoriesList = (skipFilters = false, repoIds: number[] = []) => {
     mutate,
     page,
     setPage,
-    range,
     setLimit
   };
 };
