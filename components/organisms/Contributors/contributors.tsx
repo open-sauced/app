@@ -10,6 +10,9 @@ import color from "lib/utils/color.json";
 import { useTopicContributions } from "lib/hooks/useTopicContributions";
 
 import ContributorCard from "../ContributorCard/contributor-card";
+import Skeleton from "react-loading-skeleton";
+import { Card } from "@supabase/ui";
+import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 
 const colorKeys = Object.keys(color);
 
@@ -69,10 +72,11 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
         }}
         title="Contributors"
         hasDateRange={false}
+
       />
 
       <div className="w-full grid grid-cols-automobile  md:grid-cols-autodesktop gap-3">
-        {isLoading ? "Loading..." : ""}
+        {isLoading ? <SkeletonWrapper height={210} radius={12} count={9} /> : ""}
         {contributorArray.map((contributor, index) => (
           <ContributorCard
             key={index}

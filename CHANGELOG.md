@@ -5,6 +5,77 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.20.0-beta.3](https://github.com/open-sauced/insights/compare/v1.20.0-beta.2...v1.20.0-beta.3) (2022-12-05)
+
+
+### 🍕 Features
+
+* Introduce loading skeleton to repository and contributors page ([#637](https://github.com/open-sauced/insights/issues/637)) ([3ca20f3](https://github.com/open-sauced/insights/commit/3ca20f3e32eee8ca1c2de6612e699183987c1405))
+
+## [1.20.0-beta.2](https://github.com/open-sauced/insights/compare/v1.20.0-beta.1...v1.20.0-beta.2) (2022-12-05)
+
+
+### 🐛 Bug Fixes
+
+* show percentage bar at zero percent ([#638](https://github.com/open-sauced/insights/issues/638)) ([b98cb4b](https://github.com/open-sauced/insights/commit/b98cb4bcec0a26f8a67cf06f8b4ab4a89e006f21)), closes [#632](https://github.com/open-sauced/insights/issues/632)
+
+## [1.20.0-beta.1](https://github.com/open-sauced/insights/compare/v1.19.1-beta.1...v1.20.0-beta.1) (2022-12-05)
+
+
+### 🍕 Features
+
+* add hover card tooltip component ([#607](https://github.com/open-sauced/insights/issues/607)) ([2385c43](https://github.com/open-sauced/insights/commit/2385c43692b36bf0f13d081bba49896e21030633)), closes [#526](https://github.com/open-sauced/insights/issues/526)
+
+### [1.19.1-beta.1](https://github.com/open-sauced/insights/compare/v1.19.0...v1.19.1-beta.1) (2022-12-03)
+
+
+### 🐛 Bug Fixes
+
+* update top5 ([7a43afc](https://github.com/open-sauced/insights/commit/7a43afc95b8f9f03de33dc2bdf4cbbfec51f5b2a))
+
+## [1.19.0](https://github.com/open-sauced/insights/compare/v1.18.0...v1.19.0) (2022-12-02)
+
+
+### 🐛 Bug Fixes
+
+* bottom axis issues on mobile ([#625](https://github.com/open-sauced/insights/issues/625)) ([3d1acfc](https://github.com/open-sauced/insights/commit/3d1acfc0a03744afd2e4356f28f635effaff3300))
+* correct domain normalisation missing trailing slash for auth ([0bbb81f](https://github.com/open-sauced/insights/commit/0bbb81f25c488e873deb471e64ea44cd484e273e))
+* correct supabase oauth redirect mismatch ([#630](https://github.com/open-sauced/insights/issues/630)) ([ac37f4b](https://github.com/open-sauced/insights/commit/ac37f4bf028a7e50c36490ae596dbd3591a58834))
+
+
+### 🍕 Features
+
+* Update Dashboard Echart to `NivoScatterPlot` ([#612](https://github.com/open-sauced/insights/issues/612)) ([fb73f3c](https://github.com/open-sauced/insights/commit/fb73f3c7e5dc6dcc7304655ac329e3dc02d7bb20)), closes [#282](https://github.com/open-sauced/insights/issues/282) [#411](https://github.com/open-sauced/insights/issues/411) [#586](https://github.com/open-sauced/insights/issues/586)
+* update insight cards to use topic/selected/repo filters ([#626](https://github.com/open-sauced/insights/issues/626)) ([2ecfcf7](https://github.com/open-sauced/insights/commit/2ecfcf72d894d6d868828e5b7142183234380f80)), closes [#619](https://github.com/open-sauced/insights/issues/619)
+
+## [1.19.0-beta.5](https://github.com/open-sauced/insights/compare/v1.19.0-beta.4...v1.19.0-beta.5) (2022-12-02)
+
+
+### 🍕 Features
+
+* update insight cards to use topic/selected/repo filters ([#626](https://github.com/open-sauced/insights/issues/626)) ([2ecfcf7](https://github.com/open-sauced/insights/commit/2ecfcf72d894d6d868828e5b7142183234380f80)), closes [#619](https://github.com/open-sauced/insights/issues/619)
+
+## [1.19.0-beta.4](https://github.com/open-sauced/insights/compare/v1.19.0-beta.3...v1.19.0-beta.4) (2022-12-02)
+
+
+### 🐛 Bug Fixes
+
+* correct domain normalisation missing trailing slash for auth ([0bbb81f](https://github.com/open-sauced/insights/commit/0bbb81f25c488e873deb471e64ea44cd484e273e))
+
+## [1.19.0-beta.3](https://github.com/open-sauced/insights/compare/v1.19.0-beta.2...v1.19.0-beta.3) (2022-12-02)
+
+
+### 🐛 Bug Fixes
+
+* correct supabase oauth redirect mismatch ([#630](https://github.com/open-sauced/insights/issues/630)) ([ac37f4b](https://github.com/open-sauced/insights/commit/ac37f4bf028a7e50c36490ae596dbd3591a58834))
+
+## [1.19.0-beta.2](https://github.com/open-sauced/insights/compare/v1.19.0-beta.1...v1.19.0-beta.2) (2022-11-30)
+
+
+### 🐛 Bug Fixes
+
+* bottom axis issues on mobile ([#625](https://github.com/open-sauced/insights/issues/625)) ([3d1acfc](https://github.com/open-sauced/insights/commit/3d1acfc0a03744afd2e4356f28f635effaff3300))
+
 ## [1.19.0-beta.1](https://github.com/open-sauced/insights/compare/v1.18.0...v1.19.0-beta.1) (2022-11-30)
 
 

@@ -1,12 +1,12 @@
 {
   "name": "@open-sauced/insights",
-  "version": "1.19.0-beta.1",
+  "version": "1.20.0-beta.3",
   "lockfileVersion": 3,
   "requires": true,
   "packages": {
     "": {
       "name": "@open-sauced/insights",
-      "version": "1.19.0-beta.1",
+      "version": "1.20.0-beta.3",
       "hasInstallScript": true,
       "license": "MIT",
       "dependencies": {
@@ -38,6 +38,7 @@
         "react-csv": "^2.2.2",
         "react-dom": "^17.0.2",
         "react-icons": "^4.4.0",
+        "react-loading-skeleton": "^3.1.0",
         "react-spring": "^9.5.5",
         "swr": "^1.3.0"
       },
@@ -31508,6 +31509,14 @@
       "version": "3.0.4",
       "resolved": "https://registry.npmjs.org/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz",
       "integrity": "sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA=="
+    },
+    "node_modules/react-loading-skeleton": {
+      "version": "3.1.0",
+      "resolved": "https://registry.npmjs.org/react-loading-skeleton/-/react-loading-skeleton-3.1.0.tgz",
+      "integrity": "sha512-j1U1CWWs68nBPOg7tkQqnlFcAMFF6oEK6MgqAo15f8A5p7mjH6xyKn2gHbkcimpwfO0VQXqxAswnSYVr8lWzjw==",
+      "peerDependencies": {
+        "react": ">=16.8.0"
+      }
     },
     "node_modules/react-merge-refs": {
       "version": "1.1.0",

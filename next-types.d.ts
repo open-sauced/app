@@ -72,6 +72,12 @@ interface DbInsight {
   readonly all_repos: number;
   readonly spam_repos: number;
   readonly accepted_repos: number;
+  readonly all_contributors: number;
+  readonly spam_contributors: number;
+  readonly accepted_contributors: number;    
+  readonly all_repo_total: number;
+  readonly spam_repo_total: number;
+  readonly accepted_repo_total: number;  
 }
 
 interface DbUserInsight {

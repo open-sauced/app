@@ -1,4 +1,7 @@
-import Button from "components/atoms/Button/button";
+import { useState } from "react";
+
+import { useTopicContributorCommits } from "lib/hooks/useTopicContributorCommits";
+
 import Card from "components/atoms/Card/card";
 import Text from "components/atoms/Typography/text";
 import CardHorizontalBarChart, {
@@ -8,8 +11,6 @@ import CardLineChart from "components/molecules/CardLineChart/card-line-chart";
 import CardProfile from "components/molecules/CardProfile/card-profile";
 import CardRepoList, { RepoList } from "components/molecules/CardRepoList/card-repo-list";
 import ContributorTable from "components/molecules/ContributorTable/contributor-table";
-import { useTopicContributorCommits } from "lib/hooks/useTopicContributorCommits";
-import { useState } from "react";
 
 /*
   Use this hook in the Contributor Page componenttbecause it has all the mock data:
@@ -36,7 +37,7 @@ interface ContributorCardProps {
 const ContributorCard = ({ className, contributor, topic, repositories }: ContributorCardProps) => {
   const { profile, repoList, languageList } = contributor;
 
-  const [ showPRs, setShowPRs ] = useState(false);
+  const [showPRs, setShowPRs] = useState(false);
   const { chart } = useTopicContributorCommits(profile.githubName, topic, repositories);
 
   return (

@@ -4,6 +4,7 @@ import { Serie } from "@nivo/line";
 import RepoRow from "components/molecules/RepoRow/repo-row";
 
 import { getAvatarLink } from "lib/utils/github";
+import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 
 export interface ContributorsRows {
   name?: string;
@@ -61,7 +62,6 @@ export const classNames = {
   }
 };
 
-
 const RepositoriesTable = ({
   listOfRepositories,
   loading,
@@ -71,25 +71,34 @@ const RepositoriesTable = ({
   repo
 }: RepositoriesTableProps): JSX.Element => {
   const isLoadedWithRepos = !loading && !error && Array.isArray(listOfRepositories) && listOfRepositories.length > 0;
-  const isFilteredRepoNotIndexed = Array.isArray(repo) && !loading && !error && Array.isArray(listOfRepositories) && listOfRepositories.length === 0;
+  const isFilteredRepoNotIndexed =
+    Array.isArray(repo) && !loading && !error && Array.isArray(listOfRepositories) && listOfRepositories.length === 0;
   const [repoOwner, repoName] = repo && Array.isArray(repo) ? repo : [];
 
   return (
     <section className="flex  flex-col">
-      {loading && <>Loading...</>}
+      {loading && <SkeletonWrapper height={50} count={10} radius={4} classNames="px-6 mt-2" />}
       {error && <>An error has occured...</>}
 
-      {
-        isLoadedWithRepos && listOfRepositories.map((item, index) => (
+      {isLoadedWithRepos &&
+        listOfRepositories.map((item, index) => (
           <RepoRow key={`${item.handle}/${item.name}/${index}`} topic={topic} repo={item} user={user} />
         ))}
-      {
-        isFilteredRepoNotIndexed && <RepoRow
+      {isFilteredRepoNotIndexed && (
+        <RepoRow
           topic={topic}
           // eslint-disable-next-line
-          repo={{id: "", owner: repoOwner, handle: repoOwner, name: repoName, owner_avatar: getAvatarLink(repoOwner as string) }}
-          user={user} />
-      }
+          repo={{
+            id: "",
+            owner: repoOwner,
+            handle: repoOwner,
+            name: repoName,
+            // eslint-disable-next-line camelcase
+            owner_avatar: getAvatarLink(repoOwner as string)
+          }}
+          user={user}
+        />
+      )}
     </section>
   );
 };

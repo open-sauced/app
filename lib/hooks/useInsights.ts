@@ -1,3 +1,4 @@
+import getFilterQuery from "lib/utils/get-filter-query";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 
@@ -10,6 +11,9 @@ interface Insight {
   spamPercentage: number;
   acceptedPercentage: number;
   unlabeledPercentage: number;
+  allContributors: number;
+  spamContributors: number;
+  acceptedContributors: number;
 }
 
 const getInsights = (insights: DbInsight[], intervalDay = 0): Insight => {
@@ -24,7 +28,10 @@ const getInsights = (insights: DbInsight[], intervalDay = 0): Insight => {
       spamPercentage: 0,
       acceptedPercentage: 0,
       unlabeledPrsTotal: 0,
-      unlabeledPercentage: 0
+      unlabeledPercentage: 0,
+      allContributors: 0,
+      spamContributors: 0,
+      acceptedContributors: 0
     };
   }
 
@@ -34,24 +41,29 @@ const getInsights = (insights: DbInsight[], intervalDay = 0): Insight => {
   const unlabeled = Math.max(0, (currentInsights.all_prs || 0) > 0 ? Math.round((unlabeledPrsTotal / currentInsights.all_prs) * 100) : 0);
 
   return {
-    allReposTotal: currentInsights.all_repos,
+    allReposTotal: currentInsights.all_repo_total,
     allPrsTotal: currentInsights.all_prs,
     spamTotal: currentInsights.spam_prs,
     acceptedTotal: currentInsights.accepted_prs,
     unlabeledPrsTotal,
     spamPercentage: spam,
     acceptedPercentage: accepted,
-    unlabeledPercentage: unlabeled
+    unlabeledPercentage: unlabeled,
+    allContributors: currentInsights.all_contributors,
+    spamContributors: currentInsights.spam_contributors,
+    acceptedContributors: currentInsights.accepted_contributors
   };
 };
 
-const useInsights = () => {
+const useInsights = (repoIds: number[] = []) => {
   const router = useRouter();
-  const { filterName } = router.query;
+  const { filterName, selectedFilter } = router.query;
   const topic = filterName as string;
 
   const baseEndpoint = `${topic}/insights`;
-  const endpointString = `${baseEndpoint}`;
+  const filterQuery = getFilterQuery(selectedFilter);
+  const reposQuery = repoIds.length > 0 ? `&repoIds=${repoIds.join(",")}`: "";
+  const endpointString = `${baseEndpoint}?topic=${topic}${filterQuery}${reposQuery}`;
   const { data, error, mutate } = useSWR<DbInsight[], Error>(topic ? endpointString : null);
 
   return {

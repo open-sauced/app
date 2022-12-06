@@ -2,27 +2,37 @@ import React from "react";
 import Image from "next/image";
 import repoIcon from "../../../public/icons/icon-repo--blue.svg";
 import prIcon from "../../../public/icons/icon-pr--green.svg";
+import personIcon from "../../../public/icons/person-icon.svg";
 import labelIcon from "../../../public/icons/icon-label--blue.svg";
 import thumbsIcon from "../../../public/icons/icon-thumbs-down--yellow.svg";
 import metricArrow from "../../../public/icons/metric-arrow.svg";
 import Link from "next/link";
 import Card from "components/atoms/Card/card";
+import StackedAvatar from "../StackedAvatar/stacked-avatar";
 
 interface HighlightCardProps {
   className?: string;
   label?: string;
-  icon?: "participation" | "accepted-pr" | "unlabeled-pr" | "spam";
+  icon?: "participation" | "accepted-pr" | "unlabeled-pr" | "spam" | "contributors";
   metricIncreases: boolean;
   increased?: boolean;
   numChanged?: number | string;
   percentage?: number;
   percentageLabel?: string;
+  value?: number | string;
+  valueLabel?: string;
+  contributors?: DbContribution[]
 }
 
 // TO-DO:
 // Replace these icons, or make them dynamic.
 // Maybe create an Icon component.
 const icons = {
+  contributors: {
+    src: personIcon.src,
+    label: "Contributors",
+    color: "bg-blue-100"
+  },  
   participation: {
     src: repoIcon.src,
     label: "Participation",
@@ -53,7 +63,10 @@ const HighlightCard: React.FC<HighlightCardProps> = ({
   increased,
   numChanged,
   percentage,
-  percentageLabel
+  percentageLabel,
+  value,
+  valueLabel,
+  contributors = []
 }) => {
   return (
     <Card className={`${className ? className : ""} flex flex-col w-full sm:max-w-[calc(50%-(1rem/2))] h-auto `}>
@@ -99,11 +112,20 @@ const HighlightCard: React.FC<HighlightCardProps> = ({
           {/* Main Number */}
           <div className="flex flex-col items-center">
             {/* Percentage */}
-            <div className="text-4xl ">{percentage ? percentage : 0}%</div>
+            <div className="text-4xl">
+              {percentage !== undefined ? `${percentage}%` : <span></span>}{value !== undefined ? value : ""}
+            </div>
 
             {/* Label */}
-            <div className="text-base   text-slate-600 mt-0.5">{percentageLabel ? percentageLabel : "Label"}</div>
+            <div className="text-base   text-slate-600 mt-0.5">
+              <span>{percentageLabel ? percentageLabel : ""}{valueLabel ? valueLabel : ""}&nbsp;</span>
+            </div>
           </div>
+
+          {/* Contributor Cards */}
+          { contributors && <div className="flex items-center justify-center mt-7 h-1">
+            <StackedAvatar contributors={contributors} visibleQuantity={10} />
+          </div> }
 
           {/* Progress Bar */}
           <div
@@ -128,7 +150,7 @@ const HighlightCard: React.FC<HighlightCardProps> = ({
               style={{ width: (percentage ? percentage : 0) + "%" }}
             ></div>
 
-            <div className="bg-gray-200 w-auto flex-auto h-3 rounded-full transition-all duration-500 ease-in-out"></div>
+            <div className={`${ percentage !== undefined && "bg-gray-200"} w-auto flex-auto h-3 rounded-full transition-all duration-500 ease-in-out`}></div>
           </div>
         </div>
       </>
