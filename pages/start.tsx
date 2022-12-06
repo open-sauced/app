@@ -48,7 +48,7 @@ const LoginStep1: React.FC<LoginStep1Props> = ({ handleLoginStep, user }) => {
 
   useEffect(() => {
     if (onboarded) {
-      router.push("/");
+      router.push("/hub/insights");
     } else if (onboarded === false && user && providerToken) {
       handleLoginStep();
     }
@@ -247,7 +247,7 @@ const LoginStep3: React.FC<LoginStep3Props> = ({ repoList, checkFollowed }) => {
       // handle error
     }
 
-    router.push("/");
+    router.push("/hub/insights");
   };
 
   const handleFollowRepo = (index: number) => {
