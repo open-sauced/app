@@ -13,6 +13,7 @@ import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 
 import RepositoriesTable, { classNames } from "../RepositoriesTable/repositories-table";
 import RepoNotIndexed from "./repository-not-indexed";
+import { useGlobalStateContext } from "context/global-state";
 
 interface RepositoriesProps {
   repositories?: number[];
@@ -24,6 +25,10 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
   const { filterName, toolName, selectedFilter, userOrg } = router.query;
   const username = userOrg ? user?.user_metadata.user_name : undefined;
   const topic = filterName as string;
+  const {
+    appState: { range },
+    setAppState
+  } = useGlobalStateContext();
   const {
     data: repoListData,
     meta: repoMeta,
@@ -45,7 +50,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
 
   useEffect(() => {
     setPage(1);
-  }, [selectedFilter]);
+  }, [selectedFilter, setPage]);
 
   return (
     <div className="flex flex-col w-full gap-4">
@@ -53,16 +58,18 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
         updateLimit={setLimit}
         onSearch={(e) => handleOnSearch(e)}
         showing={{
-          from: page === 1 ? repoMeta.itemCount > 0 ? page : 0 : ((page-1) * repoMeta.limit) + 1,
+          from: page === 1 ? (repoMeta.itemCount > 0 ? page : 0) : (page - 1) * repoMeta.limit + 1,
           to: page * repoMeta.limit <= repoMeta.itemCount ? page * repoMeta.limit : repoMeta.itemCount,
           total: repoMeta.itemCount,
           entity: "Repositories"
         }}
+        range={range}
+        setRangeFilter={(range: number) => setAppState((prev) => ({ ...prev, range }))}
         title="Repositories"
       />
       <div className="flex flex-col rounded-lg overflow-hidden border">
         <div className="flex md:hidden justify-between  py-4 px-6 bg-light-slate-3 gap-2">
-          <div className="flex-1 ">
+          <div className="flex-1">
             <TableTitle text="Repository"></TableTitle>
           </div>
           <div className="flex-1">
@@ -122,7 +129,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
             <div>
               <div className="">
                 <PaginationResults
-                  from={page === 1 ? repoMeta.itemCount > 0 ? page : 0 : ((page-1) * repoMeta.limit) + 1}
+                  from={page === 1 ? (repoMeta.itemCount > 0 ? page : 0) : (page - 1) * repoMeta.limit + 1}
                   to={page * repoMeta.limit <= repoMeta.itemCount ? page * repoMeta.limit : repoMeta.itemCount}
                   total={repoMeta.itemCount}
                   entity={"repos"}
@@ -148,7 +155,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
         </div>
       </div>
 
-      { filteredRepoNotIndexed && <RepoNotIndexed /> }
+      {filteredRepoNotIndexed && <RepoNotIndexed />}
     </div>
   );
 };

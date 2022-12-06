@@ -10,8 +10,6 @@ import color from "lib/utils/color.json";
 import { useTopicContributions } from "lib/hooks/useTopicContributions";
 
 import ContributorCard from "../ContributorCard/contributor-card";
-import Skeleton from "react-loading-skeleton";
-import { Card } from "@supabase/ui";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 
 const colorKeys = Object.keys(color);
@@ -25,6 +23,7 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
   const { filterName } = router.query;
   const topic = filterName as string;
   const { data, setLimit, meta, setPage, page, isError, isLoading } = useTopicContributions(10, repositories);
+
   const contributorArray = isError
     ? []
     : data?.map((contributor) => {

@@ -1,7 +1,9 @@
+import React from "react";
+
 import Search from "components/atoms/Search/search";
 import Select from "components/atoms/Select/custom-select";
 import Title from "components/atoms/Typography/title";
-import React from "react";
+import ComponentDateFilter from "../ComponentDateFilter/component-date-filter";
 import PaginationResult from "../PaginationResults/pagination-result";
 
 interface TableHeaderProps {
@@ -9,8 +11,17 @@ interface TableHeaderProps {
   showing: { from: number; to: number; total: number; entity: string };
   onSearch?: (search?: string) => void;
   updateLimit: Function;
+  range?: number;
+  setRangeFilter?: (range: number) => void;
 }
-const TableHeader = ({ title, showing, updateLimit, onSearch }: TableHeaderProps): JSX.Element => {
+const TableHeader = ({
+  title,
+  showing,
+  updateLimit,
+  onSearch,
+  range,
+  setRangeFilter
+}: TableHeaderProps): JSX.Element => {
   return (
     <div className="flex flex-wrap gap-y-2 flex-col md:flex-row md:justify-between md:items-end w-full md:pb-4">
       <div className="flex gap-x-4 items-end">
@@ -19,12 +30,17 @@ const TableHeader = ({ title, showing, updateLimit, onSearch }: TableHeaderProps
         </Title>
         <PaginationResult className="hidden !translate-y-[2px]  md:inline-flex" {...showing} />
       </div>
-      <div className="flex items-end">
-        {onSearch ? <Search
-          placeholder={`Search ${title}`}
-          className="mr-4 max-w-full" name={"query"}
-          onSearch={onSearch}
-        /> : ""}
+      <div className="flex flex-col-reverse md:flex-row items-start gap-3  md:items-end">
+        {range ? (
+          <ComponentDateFilter setRangeFilter={(range: number) => setRangeFilter?.(range)} defaultRange={range} />
+        ) : (
+          ""
+        )}
+        {onSearch ? (
+          <Search placeholder={`Search ${title}`} className=" max-w-full" name={"query"} onSearch={onSearch} />
+        ) : (
+          ""
+        )}
         <Select
           placeholder="10 per page"
           options={[
