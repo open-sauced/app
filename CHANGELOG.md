@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.20.0-beta.4](https://github.com/open-sauced/insights/compare/v1.20.0-beta.3...v1.20.0-beta.4) (2022-12-06)
+
+
+### 🍕 Features
+
+*  create date filter component ([#623](https://github.com/open-sauced/insights/issues/623)) ([4b11709](https://github.com/open-sauced/insights/commit/4b1170992b6202aa5290bd4d310400fddfaf9b76))
+* add auth check to insights hub and redirect after onboarding ([#639](https://github.com/open-sauced/insights/issues/639)) ([8510243](https://github.com/open-sauced/insights/commit/8510243e5346054f838873f0fa86da9aa89147b4)), closes [#628](https://github.com/open-sauced/insights/issues/628)
+
 ## [1.20.0-beta.3](https://github.com/open-sauced/insights/compare/v1.20.0-beta.2...v1.20.0-beta.3) (2022-12-05)
 
 
