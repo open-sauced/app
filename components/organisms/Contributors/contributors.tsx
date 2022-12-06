@@ -8,7 +8,6 @@ import Select from "components/atoms/Select/custom-select";
 import { calcDistanceFromToday } from "lib/utils/date-utils";
 import color from "lib/utils/color.json";
 import { useTopicContributions } from "lib/hooks/useTopicContributions";
-import { useGlobalStateContext } from "context/global-state";
 
 import ContributorCard from "../ContributorCard/contributor-card";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";

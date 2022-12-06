@@ -1,8 +1,7 @@
 import { useRouter } from "next/router";
 import { useRepositoriesList } from "lib/hooks/useRepositoriesList";
 import { useTopicContributions } from "./useTopicContributions";
-import { useGlobalStateContext } from "context/global-state";
-import { useEffect } from "react";
+
 
 const useNav = (repositories: number[] = []) => {
 
