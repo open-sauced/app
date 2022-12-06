@@ -14,8 +14,7 @@ type Props = {
 
 const GlobalState = ({ children }: Props) => {
   const initialState = {
-    repoMetaCount: 0,
-    contributorsMetaCount: 0
+    range: 30
   } as Partial<GlobalStateInterface>;
 
   const [appState, setAppState] = useState(initialState);

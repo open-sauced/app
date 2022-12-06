@@ -20,7 +20,6 @@ interface RepositoriesProps {
 }
 
 const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
-  const { appState, setAppState } = useGlobalStateContext();
   const { user } = useSupabaseAuth();
   const router = useRouter();
   const { filterName, toolName, selectedFilter, userOrg } = router.query;
@@ -33,9 +32,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
     isLoading: repoListIsLoading,
     page,
     setPage,
-    setLimit,
-    setRange,
-    range
+    setLimit
   } = useRepositoriesList(false, repositories);
   const filteredRepoNotIndexed = selectedFilter && !repoListIsLoading && !repoListIsError && repoListData.length === 0;
 
@@ -49,8 +46,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
 
   useEffect(() => {
     setPage(1);
-    setAppState((prev) => ({ ...prev, repoMetaCount: repoMeta.itemCount }));
-  }, [selectedFilter, setPage, range]);
+  }, [selectedFilter, setPage]);
 
   return (
     <div className="flex flex-col w-full gap-4">
@@ -63,8 +59,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
           total: repoMeta.itemCount,
           entity: "Repositories"
         }}
-        range={range}
-        setRange={setRange}
+        hasDateRange={true}
         title="Repositories"
       />
       <div className="flex flex-col rounded-lg overflow-hidden border">

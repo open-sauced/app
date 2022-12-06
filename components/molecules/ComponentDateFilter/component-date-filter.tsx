@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
+
+import { GlobalStateInterface } from "interfaces/global-state-types";
 
 interface ComponentDateFilterProps {
-  setRangeFilter?: (value: number) => void;
+  setRangeFilter: Dispatch<SetStateAction<Partial<GlobalStateInterface>>>;
   defaultRange?: number;
 }
 
@@ -16,7 +18,7 @@ const ComponentDateFilter = ({ setRangeFilter, defaultRange }: ComponentDateFilt
     setActiveFilter(range);
 
     // Logic to setDateFilter goes herein with the dates value
-    setRangeFilter?.(range);
+    setRangeFilter((prev) => ({ ...prev, range }));
   };
 
   return (

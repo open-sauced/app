@@ -20,8 +20,8 @@ interface ContributorProps {
 const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
   const router = useRouter();
   const { filterName } = router.query;
-  const topic = filterName as string;  
-  const { data,setLimit, meta, setPage, page, isError, isLoading } = useTopicContributions(10, repositories);
+  const topic = filterName as string;
+  const { data, setLimit, meta, setPage, page, isError, isLoading } = useTopicContributions(10, repositories);
   const contributorArray = isError
     ? []
     : data?.map((contributor) => {
@@ -62,13 +62,13 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
       <TableHeader
         updateLimit={setLimit}
         showing={{
-          from: page === 1 ? page : ((page-1) * meta.limit) + 1,
+          from: page === 1 ? page : (page - 1) * meta.limit + 1,
           to: page === 1 ? meta.limit : page * meta.limit <= meta.itemCount ? page * meta.limit : meta.itemCount,
           total: meta.itemCount,
           entity: "Contributors"
         }}
         title="Contributors"
-        
+        hasDateRange={false}
       />
 
       <div className="w-full grid grid-cols-automobile  md:grid-cols-autodesktop gap-3">
@@ -85,7 +85,7 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
       </div>
 
       {/* Table footer */}
-     
+
       <div className="mt-5 w-full px-2 flex flex-col gap-y-3 md:flex-row">
         <Select
           placeholder="10 per page"
@@ -97,14 +97,16 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
             { name: "50 per page", value: 50 }
           ]}
           className="!w-36 ml-auto md:hidden overflow-x-hidden "
-          onChange={function(limit: number):void{setLimit(limit);}}
+          onChange={function (limit: number): void {
+            setLimit(limit);
+          }}
         ></Select>
-        
+
         <div className="py-1 md:py-4 flex w-full md:mt-5 justify-between items-center">
           <div>
             <div className="">
               <PaginationResults
-                from={page === 1 ? page : ((page-1) * meta.limit) + 1}
+                from={page === 1 ? page : (page - 1) * meta.limit + 1}
                 to={page === 1 ? meta.limit : page * meta.limit <= meta.itemCount ? page * meta.limit : meta.itemCount}
                 total={meta.itemCount}
                 entity={"contributors"}
