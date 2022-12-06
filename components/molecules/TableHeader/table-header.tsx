@@ -12,13 +12,11 @@ interface TableHeaderProps {
   showing: { from: number; to: number; total: number; entity: string };
   onSearch?: (search?: string) => void;
   updateLimit: Function;
-  hasDateRange?: boolean;
+  range?: number;
+  setRangeFilter?: (range: number) => void;
 }
-const TableHeader = ({ title, showing, updateLimit, onSearch, hasDateRange }: TableHeaderProps): JSX.Element => {
-  const {
-    appState: { range },
-    setAppState
-  } = useGlobalStateContext();
+const TableHeader = ({ title, showing, updateLimit, onSearch, range }: TableHeaderProps): JSX.Element => {
+  const { setAppState } = useGlobalStateContext();
   return (
     <div className="flex flex-wrap gap-y-2 flex-col md:flex-row md:justify-between md:items-end w-full md:pb-4">
       <div className="flex gap-x-4 items-end">
@@ -28,7 +26,7 @@ const TableHeader = ({ title, showing, updateLimit, onSearch, hasDateRange }: Ta
         <PaginationResult className="hidden !translate-y-[2px]  md:inline-flex" {...showing} />
       </div>
       <div className="flex flex-col-reverse md:flex-row items-start gap-3  md:items-end">
-        {hasDateRange ? (
+        {range ? (
           <ComponentDateFilter
             setRangeFilter={(range: number) => setAppState((prev) => ({ ...prev, range }))}
             defaultRange={range}

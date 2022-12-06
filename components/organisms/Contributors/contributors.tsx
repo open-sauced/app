@@ -8,10 +8,9 @@ import Select from "components/atoms/Select/custom-select";
 import { calcDistanceFromToday } from "lib/utils/date-utils";
 import color from "lib/utils/color.json";
 import { useTopicContributions } from "lib/hooks/useTopicContributions";
+import { useGlobalStateContext } from "context/global-state";
 
 import ContributorCard from "../ContributorCard/contributor-card";
-import Skeleton from "react-loading-skeleton";
-import { Card } from "@supabase/ui";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 
 const colorKeys = Object.keys(color);
@@ -25,6 +24,7 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
   const { filterName } = router.query;
   const topic = filterName as string;
   const { data, setLimit, meta, setPage, page, isError, isLoading } = useTopicContributions(10, repositories);
+
   const contributorArray = isError
     ? []
     : data?.map((contributor) => {
@@ -71,8 +71,6 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
           entity: "Contributors"
         }}
         title="Contributors"
-        hasDateRange={false}
-
       />
 
       <div className="w-full grid grid-cols-automobile  md:grid-cols-autodesktop gap-3">
