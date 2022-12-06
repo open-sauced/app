@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import useSWR from "swr";
 import getFilterQuery from "lib/utils/get-filter-query";
+import { useGlobalStateContext } from "context/global-state";
 
 interface PaginatedContributorsResponse {
   readonly data: DbContribution[];
@@ -14,6 +15,7 @@ const useTopicContributions = (initialLimit = 10, repoIds: number[] = []) => {
   const topic = filterName as string;
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(initialLimit);
+
 
 
   const baseEndpoint = `${topic}/contributions`;

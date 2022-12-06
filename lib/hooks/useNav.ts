@@ -24,11 +24,11 @@ const useNav = (repositories: number[] = []) => {
     },
     {
       name: "Repositories",
-      numOf: repoIsLoading || repoIsError ? undefined : appState.repoMetaCount
+      numOf: repoIsLoading || repoIsError ? undefined : repoMetaData.itemCount
     },
     {
       name: "Contributors",
-      numOf: conIsLoading || conIsError ? undefined : appState.contributorsMetaCount
+      numOf: conIsLoading || conIsError ? undefined : conMetaData.itemCount
     }
   ];
 
