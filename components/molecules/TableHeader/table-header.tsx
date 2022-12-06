@@ -5,7 +5,6 @@ import Select from "components/atoms/Select/custom-select";
 import Title from "components/atoms/Typography/title";
 import ComponentDateFilter from "../ComponentDateFilter/component-date-filter";
 import PaginationResult from "../PaginationResults/pagination-result";
-import { useGlobalStateContext } from "context/global-state";
 
 interface TableHeaderProps {
   title?: string;
@@ -15,8 +14,14 @@ interface TableHeaderProps {
   range?: number;
   setRangeFilter?: (range: number) => void;
 }
-const TableHeader = ({ title, showing, updateLimit, onSearch, range }: TableHeaderProps): JSX.Element => {
-  const { setAppState } = useGlobalStateContext();
+const TableHeader = ({
+  title,
+  showing,
+  updateLimit,
+  onSearch,
+  range,
+  setRangeFilter
+}: TableHeaderProps): JSX.Element => {
   return (
     <div className="flex flex-wrap gap-y-2 flex-col md:flex-row md:justify-between md:items-end w-full md:pb-4">
       <div className="flex gap-x-4 items-end">
@@ -27,10 +32,7 @@ const TableHeader = ({ title, showing, updateLimit, onSearch, range }: TableHead
       </div>
       <div className="flex flex-col-reverse md:flex-row items-start gap-3  md:items-end">
         {range ? (
-          <ComponentDateFilter
-            setRangeFilter={(range: number) => setAppState((prev) => ({ ...prev, range }))}
-            defaultRange={range}
-          />
+          <ComponentDateFilter setRangeFilter={(range: number) => setRangeFilter?.(range)} defaultRange={range} />
         ) : (
           ""
         )}
