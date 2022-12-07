@@ -6,6 +6,7 @@ import { animated } from "@react-spring/web";
 import humanizeNumber from "lib/utils/humanizeNumber";
 import ToggleOption from "components/atoms/ToggleOption/toggle-option";
 import Title from "components/atoms/Typography/title";
+import HoverCardWrapper from "../HoverCardWrapper/hover-card-wrapper";
 
 export interface ScatterChartDataItems {
   x: string | number;
@@ -70,9 +71,7 @@ const NivoScatterPlot = ({ data, maxFilesModified, title, setShowBots, showBots,
       </div>
       <div className="h-[400px]">
         <ResponsiveScatterPlot
-          tooltip={({ node }) => (
-            <div className="bg-light-slate-4 rounded px-3 py-0.5">{`${node.data.contributor} - ${node.data.y}`}</div>
-          )}
+          tooltip={({ node }) => <HoverCardWrapper username={node.data.contributor} />}
           nodeSize={isMobile ? 25 : 35}
           data={isMobile ? filteredData : data}
           margin={{ top: 30, right: isMobile ? 30 : 60, bottom: 70, left: isMobile ? 75 : 90 }}
@@ -121,11 +120,11 @@ const NivoScatterPlot = ({ data, maxFilesModified, title, setShowBots, showBots,
 const CustomNode = (props: any) => {
   const handleMouseEnter = useCallback(
     (event: React.MouseEvent) => props.onMouseEnter?.(props.node, event),
-    [props.node, props.onMouseEnter]
+    [props.node.data.contributor, props.onMouseEnter]
   );
   const handleMouseMove = useCallback(
     (event: MouseEvent) => props.onMouseMove?.(props.node, event),
-    [props.node, props.onMouseMove]
+    [props.node.data.contributor, props.onMouseMove]
   );
   const handleMouseLeave = useCallback(
     (event: React.MouseEvent) => props.onMouseLeave?.(props.node, event),
