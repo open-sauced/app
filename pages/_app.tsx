@@ -13,7 +13,6 @@ import posthog from "posthog-js";
 
 import { TipProvider } from "components/atoms/Tooltip/tooltip";
 
-import GlobalState from "context/global-state";
 import changeCapitalization from "lib/utils/change-capitalization";
 import apiFetcher from "lib/hooks/useSWR";
 import { initiateAnalytics } from "lib/utils/analytics";
@@ -93,17 +92,15 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
         }}
       >
         <SessionContextProvider supabaseClient={supabase} initialSession={pageProps.initialSession}>
-          <GlobalState>
-            <TipProvider>
-              {Component.PageLayout ? (
-                <Component.PageLayout>
-                  <Component {...pageProps} />
-                </Component.PageLayout>
-              ) : (
+          <TipProvider>
+            {Component.PageLayout ? (
+              <Component.PageLayout>
                 <Component {...pageProps} />
-              )}
-            </TipProvider>
-          </GlobalState>
+              </Component.PageLayout>
+            ) : (
+              <Component {...pageProps} />
+            )}
+          </TipProvider>
         </SessionContextProvider>
       </SWRConfig>
     </>
