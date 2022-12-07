@@ -2,41 +2,30 @@ import { VscGitMerge, VscGitPullRequest } from "react-icons/vsc";
 
 import Text from "components/atoms/Typography/text";
 import CardProfile from "../CardProfile/card-profile";
-import CardRepoList from "../CardRepoList/card-repo-list";
-import TestRepoAvatar from "public/icons/test-repo-avatar.svg";
+import CardRepoList, { RepoList } from "../CardRepoList/card-repo-list";
+import { calcDistanceFromToday } from "lib/utils/date-utils";
 
-const ContributorHoverCard = () => {
+export interface ContributorsProfileType {
+  githubAvatar: string;
+  githubName: string;
+  totalPR: number;
+}
+interface ContributorHoverCardProps {
+  repoList: RepoList[];
+  githubAvatar: string;
+  githubName: string;
+  totalPR: number;
+  dateOfFirstPr: string;
+  topic?:string
+}
+const ContributorHoverCard = ({ repoList, githubName, totalPR, dateOfFirstPr }: ContributorHoverCardProps) => {
   const randomGithubHistory = Array.apply(null, Array(4));
-  const testRepoList = [
-    {
-      repoName: "test4",
-      repoIcon: TestRepoAvatar
-    },
-    {
-      repoName: "test5",
-      repoIcon: TestRepoAvatar
-    },
-    {
-      repoName: "test6",
-      repoIcon: TestRepoAvatar
-    },
-    {
-      repoName: "test6",
-      repoIcon: TestRepoAvatar
-    },
-    {
-      repoName: "test6",
-      repoIcon: TestRepoAvatar
-    },
-    {
-      repoName: "test6",
-      repoIcon: TestRepoAvatar
-    }
-  ];
+
+  const calculatedDateFromToday = calcDistanceFromToday(new Date(parseInt(dateOfFirstPr)));
   return (
     <div className="w-[314px] gap-4 p-3 rounded-lg shadow-superlative flex flex-col">
       <div>
-        <CardProfile dateOfFirstPR="" githubName="Sungoldtech" totalPRs={45} />
+        <CardProfile dateOfFirstPR={calculatedDateFromToday} githubName={githubName} totalPRs={totalPR} />
       </div>
       <div className="bg-light-slate-3 text-xs px-2 py-1 text-light-slate-11 rounded">
         <span>Latest PRs</span>
@@ -55,7 +44,7 @@ const ContributorHoverCard = () => {
         ))}
       </div>
       <div>
-        <CardRepoList repoList={testRepoList} limit={3} />
+        <CardRepoList repoList={repoList} limit={3} />
       </div>
       <div className="w-full ">
         <button className="w-full text-light-slate-11 text-xs bg-light-slate-1 rounded-lg border py-2">
