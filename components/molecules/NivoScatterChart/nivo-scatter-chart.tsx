@@ -77,7 +77,7 @@ const NivoScatterPlot = ({ data, maxFilesModified, title, setShowBots, showBots,
           data={isMobile ? filteredData : data}
           margin={{ top: 30, right: isMobile ? 30 : 60, bottom: 70, left: isMobile ? 75 : 90 }}
           xScale={{ type: "linear", min: 0, max: isMobile ? 7 : 32, reverse: true }}
-          yScale={{ type: "linear", min: 0, max: Math.max(Math.round(maxFilesModified * 3), 10) }}
+          yScale={{ type: "symlog", min: 0, max: Math.max(Math.round(maxFilesModified * 3), 10) }}
           blendMode="normal"
           useMesh={false}
           annotations={[]}
@@ -104,7 +104,7 @@ const NivoScatterPlot = ({ data, maxFilesModified, title, setShowBots, showBots,
             tickSize: 2,
             tickPadding: 5,
             tickRotation: 0,
-            tickValues: 7,
+            tickValues: 5,
             legend: "Lines Touched",
             legendPosition: "middle",
             legendOffset: -60,
