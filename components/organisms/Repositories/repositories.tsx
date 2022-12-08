@@ -13,7 +13,7 @@ import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 
 import RepositoriesTable, { classNames } from "../RepositoriesTable/repositories-table";
 import RepoNotIndexed from "./repository-not-indexed";
-import { useGlobalStateContext } from "context/global-state";
+import useStore from "lib/store";
 
 interface RepositoriesProps {
   repositories?: number[];
@@ -25,10 +25,8 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
   const { filterName, toolName, selectedFilter, userOrg } = router.query;
   const username = userOrg ? user?.user_metadata.user_name : undefined;
   const topic = filterName as string;
-  const {
-    appState: { range },
-    setAppState
-  } = useGlobalStateContext();
+  const store = useStore();
+  const range = useStore(state => state.range);
   const {
     data: repoListData,
     meta: repoMeta,
@@ -64,7 +62,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
           entity: "Repositories"
         }}
         range={range}
-        setRangeFilter={(range: number) => setAppState((prev) => ({ ...prev, range }))}
+        setRangeFilter={store.updateRange}
         title="Repositories"
       />
       <div className="flex flex-col rounded-lg overflow-hidden border">

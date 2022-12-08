@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import useSWR from "swr";
 import getFilterQuery from "lib/utils/get-filter-query";
-import { useGlobalStateContext } from "context/global-state";
+import useStore from "lib/store";
 
 interface PaginatedRepoResponse {
   readonly data: DbRepo[];
@@ -15,7 +15,7 @@ const useRepositoriesList = (skipFilters = false, repoIds: number[] = []) => {
   const topic = filterName as string;
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
-  const {appState: {range}}  = useGlobalStateContext();
+  const range = useStore(state => state.range);
 
   const baseEndpoint = !skipFilters ? `${topic}/repos` : "repos/list";
   const pageQuery = page ? `page=${page}` : "";

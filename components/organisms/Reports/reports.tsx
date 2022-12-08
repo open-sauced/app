@@ -9,12 +9,12 @@ import ReportsHistory from "components/molecules/ReportsHistory/reports-history"
 import SelectReportsFilter from "components/molecules/SelectReportsFilter/select-reports-filter";
 import WaitlistButton from "components/molecules/WaitlistButton/waitlist-button";
 
-import { useGlobalStateContext } from "context/global-state";
 import { Report } from "interfaces/report-type";
 
 import useFilterOptions from "lib/hooks/useFilterOptions";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import getCurrentDate from "lib/utils/get-current-date";
+import useStore from "lib/store";
 
 const USERDEVICESTORAGENAME = "reportState";
 
@@ -29,7 +29,7 @@ const Reports = ({ waitlisted, hasReports, repositories }: ReportsProps): JSX.El
   const initialState = userDeviceState ? JSON.parse(userDeviceState as string) : [];
   const [reports, setReports] = useState<Report[]>(initialState);
   const { sessionToken, user, signIn } = useSupabaseAuth();
-  const { setAppState } = useGlobalStateContext();
+  const store = useStore();
   const [submitting, setSubmitting] = useState(false);
 
   const filterOptions = useFilterOptions();
@@ -68,10 +68,7 @@ const Reports = ({ waitlisted, hasReports, repositories }: ReportsProps): JSX.El
         }
       });
 
-      setAppState((state) => ({
-        ...state,
-        waitlisted: true
-      }));
+      store.setWaitlisted();
     } catch (e) {
       // handle error
     } finally {
