@@ -1,9 +1,11 @@
 import React from "react";
+
 import { IconContext } from "react-icons";
+import { GoDiff } from "react-icons/go";
 import { BsFileDiff } from "react-icons/bs";
 import { FaRegCheckCircle, FaRegDotCircle } from "react-icons/fa";
+
 import Text from "components/atoms/Typography/text";
-import { GoDiff } from "react-icons/go";
 
 const LatestPrTableHeader = () => {
   return (

@@ -1,11 +1,5 @@
-import Text from "components/atoms/Typography/text";
-import { IconContext } from "react-icons";
-import { FaRegDotCircle, FaRegCheckCircle } from "react-icons/fa";
-import { BsFileDiff } from "react-icons/bs";
-import { GoDiff } from "react-icons/go";
-import { VscGitPullRequest, VscGitPullRequestClosed, VscGitMerge, VscGitPullRequestDraft } from "react-icons/vsc";
 import { useTopicContributorPRs } from "lib/hooks/useTopicContributorPRs";
-import { calcDistanceFromToday } from "lib/utils/date-utils";
+
 import LatestPrTableHeader from "../LatestPrTableHeader/latest-pr-table-header";
 import LatestPrTableRow from "../LatestPrTableRow/latest-pr-table-row";
 
@@ -26,6 +20,7 @@ interface CardTableProps {
 
 const ContributorTable = ({ contributor, topic, repositories }: CardTableProps): JSX.Element => {
   const { data, isLoading } = useTopicContributorPRs(contributor, topic, repositories);
+
   return data.length > 0 ? (
     <>
       <div className="flex flex-col">

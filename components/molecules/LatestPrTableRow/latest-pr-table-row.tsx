@@ -1,7 +1,10 @@
-import { calcDistanceFromToday } from "lib/utils/date-utils";
 import React from "react";
+
 import { IconContext } from "react-icons";
 import { VscGitMerge, VscGitPullRequest, VscGitPullRequestClosed, VscGitPullRequestDraft } from "react-icons/vsc";
+
+import { calcDistanceFromToday } from "lib/utils/date-utils";
+
 import Text from "components/atoms/Typography/text";
 
 interface LatestPrTableRowProps {

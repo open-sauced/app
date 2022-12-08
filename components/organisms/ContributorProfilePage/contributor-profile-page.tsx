@@ -1,20 +1,18 @@
+import { BsFillArrowUpCircleFill } from "react-icons/bs";
+
 import Title from "components/atoms/Typography/title";
 import Text from "components/atoms/Typography/text";
 import CardHorizontalBarChart, {
   LanguageObject
 } from "components/molecules/CardHorizontalBarChart/card-horizontal-bar-chart";
 import ContributorProfileHeader from "components/molecules/ContributorProfileHeader/contributor-profile-header";
-import React from "react";
 import { ContributorObject } from "../ContributorCard/contributor-card";
-import { BsFileDiff, BsFillArrowUpCircleFill } from "react-icons/bs";
 import CardLineChart from "components/molecules/CardLineChart/card-line-chart";
 import CardRepoList from "components/molecules/CardRepoList/card-repo-list";
-import TestRepoAvatar from "public/icons/test-repo-avatar.svg";
-import { IconContext } from "react-icons";
-import { FaRegCheckCircle, FaRegDotCircle } from "react-icons/fa";
-import { GoDiff } from "react-icons/go";
 import LatestPrTableRow from "components/molecules/LatestPrTableRow/latest-pr-table-row";
 import LatestPrTableHeader from "components/molecules/LatestPrTableHeader/latest-pr-table-header";
+
+import TestRepoAvatar from "public/icons/test-repo-avatar.svg";
 
 interface PrObjectType {
   prName: string;
