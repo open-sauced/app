@@ -22,7 +22,7 @@ interface CardTableProps {
   repositories?: number[];
 }
 
-const ContributorTable = ({ contributor, topic, repositories }: CardTableProps) => {
+const ContributorTable = ({ contributor, topic, repositories }: CardTableProps): JSX.Element => {
   const { data, isLoading } = useTopicContributorPRs(contributor, topic, repositories);
   return data.length > 0 ? (
     <>
