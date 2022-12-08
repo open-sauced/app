@@ -127,7 +127,7 @@ const ContributorProfilePage = ({ contributor, topic, repositories, listOfPRs }:
             </Title>
           </div>
           <div className="bg-white mt-4 rounded-2xl border p-2 md:p-6">
-            <div className="flex flex-col gap-2 md:gap-12 lg:gap-16 justify-between">
+            <div className="flex flex-col lg:flex-row gap-2 md:gap-12 lg:gap-16 justify-between">
               <div>
                 <span className="text-xs text-light-slate-11">PRs opened</span>
                 <div className="flex justify-between gap-2 items-end pr-8 mt-1">
