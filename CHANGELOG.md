@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.20.0-beta.5](https://github.com/open-sauced/insights/compare/v1.20.0-beta.4...v1.20.0-beta.5) (2022-12-08)
+
+
+### 🍕 Features
+
+* add Zustand for managing global state. Update global state usage ([#646](https://github.com/open-sauced/insights/issues/646)) ([7987144](https://github.com/open-sauced/insights/commit/798714473c05b51aae393b707ef68160dec63215)), closes [#642](https://github.com/open-sauced/insights/issues/642)
+
 ## [1.20.0-beta.4](https://github.com/open-sauced/insights/compare/v1.20.0-beta.3...v1.20.0-beta.4) (2022-12-06)
 
 
