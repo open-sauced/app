@@ -25,7 +25,8 @@ interface ScatterPlotProps {
   isMobile?: boolean;
 }
 const NivoScatterPlot = ({ data, maxFilesModified, title, setShowBots, showBots, isMobile }: ScatterPlotProps) => {
-  const [showMembers, setShowMembers] = useState(false);
+  const [showMembers, setShowMembers] = useState<boolean>(false);
+  const [isLogarithmic, setIsLogarithmic] = useState<boolean>(false);
 
   let functionTimeout: any;
 
@@ -36,6 +37,14 @@ const NivoScatterPlot = ({ data, maxFilesModified, title, setShowBots, showBots,
       setShowMembers(!showMembers);
       // Additional logic for showing members
     }, 50);
+  };
+
+  const handleSetLogarithmic = () => {
+    clearInterval(functionTimeout);
+
+    functionTimeout = setTimeout(() => {
+      setIsLogarithmic(!isLogarithmic);
+    });
   };
 
   const handleShowBots = () => {
@@ -51,19 +60,20 @@ const NivoScatterPlot = ({ data, maxFilesModified, title, setShowBots, showBots,
 
   return (
     <>
-      <div className="flex justify-between px-7 pt-5">
+      <div className="flex flex-col md:flex-row justify-between px-7 pt-5">
         <Title level={4} className="!text-sm  !text-light-slate-12">
           {title}
         </Title>
         {/* replaced display flex to hidden on show/bots container */}
-        <div className="flex flex-col md:flex-row gap-2">
-          <ToggleOption handleToggle={handleShowBots} checked={showBots} optionText="Show Bots"></ToggleOption>
-          <div className="hidden">
+        <div className="flex mt-3 md:mt-0 flex-col md:flex-row gap-2">
+          <div>
+            <ToggleOption handleToggle={handleShowBots} checked={showBots} optionText="Show Bots"></ToggleOption>
+          </div>
+          <div className="">
             <ToggleOption
-              handleToggle={handleShowMembers}
-              withIcon={true}
-              optionText="Show Outside Contributors"
-              checked={showMembers}
+              handleToggle={handleSetLogarithmic}
+              optionText="Switch to Logarithmic"
+              checked={isLogarithmic}
             ></ToggleOption>
           </div>
         </div>
@@ -77,7 +87,11 @@ const NivoScatterPlot = ({ data, maxFilesModified, title, setShowBots, showBots,
           data={isMobile ? filteredData : data}
           margin={{ top: 30, right: isMobile ? 30 : 60, bottom: 70, left: isMobile ? 75 : 90 }}
           xScale={{ type: "linear", min: 0, max: isMobile ? 7 : 32, reverse: true }}
-          yScale={{ type: "symlog", min: 0, max: Math.max(Math.round(maxFilesModified * 3), 10) }}
+          yScale={{
+            type: isLogarithmic ? "symlog" : "linear",
+            min: 0,
+            max: Math.max(Math.round(maxFilesModified * 3), 10)
+          }}
           blendMode="normal"
           useMesh={false}
           annotations={[]}
