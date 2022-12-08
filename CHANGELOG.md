@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.20.0-beta.7](https://github.com/open-sauced/insights/compare/v1.20.0-beta.6...v1.20.0-beta.7) (2022-12-08)
+
+
+### 🍕 Features
+
+* implement logarithmic scale view on chart ([#644](https://github.com/open-sauced/insights/issues/644)) ([ca3a38c](https://github.com/open-sauced/insights/commit/ca3a38c4a540667816b2a6ec6148d1cf842340d5))
+
 ## [1.20.0-beta.6](https://github.com/open-sauced/insights/compare/v1.20.0-beta.5...v1.20.0-beta.6) (2022-12-08)
 
 
