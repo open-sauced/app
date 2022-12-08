@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.20.0-beta.6](https://github.com/open-sauced/insights/compare/v1.20.0-beta.5...v1.20.0-beta.6) (2022-12-08)
+
+
+### 🍕 Features
+
+* add contributor profile page UI ([#648](https://github.com/open-sauced/insights/issues/648)) ([c1497af](https://github.com/open-sauced/insights/commit/c1497af9c84581ff6afa751372c3b8e22d70cba4))
+
 ## [1.20.0-beta.5](https://github.com/open-sauced/insights/compare/v1.20.0-beta.4...v1.20.0-beta.5) (2022-12-08)
 
 
