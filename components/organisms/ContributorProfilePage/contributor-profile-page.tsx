@@ -108,7 +108,7 @@ const ContributorProfilePage = ({ contributor, topic, repositories, listOfPRs }:
   return (
     <div>
       <ContributorProfileHeader avatarUrl="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1064&q=80" />
-      <div className="pt-24 px-14 flex justify-between">
+      <div className="pt-24 px-3 md:px-10 lg:px-16 flex flex-col lg:flex-row justify-between">
         <div className="flex flex-col w-64 gap-4">
           <div className="pb-6 border-b">
             <Title className="!text-2xl !text-light-slate-12" level={3}>
@@ -126,8 +126,8 @@ const ContributorProfilePage = ({ contributor, topic, repositories, listOfPRs }:
               Contribution Insights
             </Title>
           </div>
-          <div className="bg-white mt-4 rounded-2xl border p-6">
-            <div className="flex gap-16 justify-between">
+          <div className="bg-white mt-4 rounded-2xl border p-2 md:p-6">
+            <div className="flex flex-col gap-2 md:gap-12 lg:gap-16 justify-between">
               <div>
                 <span className="text-xs text-light-slate-11">PRs opened</span>
                 <div className="flex justify-between gap-2 items-end pr-8 mt-1">
