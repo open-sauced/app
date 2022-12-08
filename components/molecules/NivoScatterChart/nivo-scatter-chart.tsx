@@ -72,7 +72,7 @@ const NivoScatterPlot = ({ data, maxFilesModified, title, setShowBots, showBots,
           <div className="">
             <ToggleOption
               handleToggle={handleSetLogarithmic}
-              optionText="Switch to Logarithmic"
+              optionText="Logarithmic Scale"
               checked={isLogarithmic}
             ></ToggleOption>
           </div>
