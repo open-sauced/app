@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { useGlobalStateContext } from "context/global-state";
+import useStore from "lib/store";
+
 import useSupabaseAuth from "./useSupabaseAuth";
 
 const useSession = () => {
   const { sessionToken } = useSupabaseAuth();
-  const { appState, setAppState } = useGlobalStateContext();
-  const [ hasReports, setHasReports ] = useState<boolean | undefined>(undefined);
+  const store = useStore();
+  const [hasReports, setHasReports] = useState<boolean | undefined>(undefined);
 
   async function loadSession() {
     try {
@@ -18,11 +19,7 @@ const useSession = () => {
 
       const data = await resp.json();
 
-      setAppState((state) => ({
-        ...state,
-        onboarded: data.is_onboarded,
-        waitlisted: data.is_waitlisted
-      }));
+      store.setSession({ onboarded: data.is_onboarded, waitlisted: data.is_waitlisted });
 
       setHasReports(data.insights_role >= 50);
     } catch (e) {
@@ -36,7 +33,7 @@ const useSession = () => {
     }
   }, [sessionToken]);
 
-  return { onboarded: appState?.onboarded, waitlisted: appState?.waitlisted, hasReports };
+  return { onboarded: store?.onboarded, waitlisted: store?.waitlisted, hasReports };
 };
 
 export default useSession;

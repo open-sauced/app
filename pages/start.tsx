@@ -13,7 +13,6 @@ import HighlightIcon from "public/icons/highlight-icon.svg";
 import GitHubIcon from "public/icons/github-icon.svg";
 import AddIcon from "public/icons/add-icon.svg";
 
-import { useGlobalStateContext } from "context/global-state";
 import LoginLayout from "layouts/login";
 import { WithPageLayout } from "interfaces/with-page-layout";
 import { LoginRepoObjectInterface } from "interfaces/login-repo-object-interface";
@@ -31,6 +30,7 @@ import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import useSession from "lib/hooks/useSession";
 import { captureAnayltics } from "lib/utils/analytics";
 import { getAvatarLink } from "lib/utils/github";
+import useStore from "lib/store";
 
 type handleLoginStep = () => void;
 
@@ -48,7 +48,7 @@ const LoginStep1: React.FC<LoginStep1Props> = ({ handleLoginStep, user }) => {
 
   useEffect(() => {
     if (onboarded) {
-      router.push("/");
+      router.push("/hub/insights");
     } else if (onboarded === false && user && providerToken) {
       handleLoginStep();
     }
@@ -222,7 +222,7 @@ interface LoginStep3Props {
 
 const LoginStep3: React.FC<LoginStep3Props> = ({ repoList, checkFollowed }) => {
   captureAnayltics("User Onboarding", "onboardingStep3", "visited");
-  const { setAppState } = useGlobalStateContext();
+  const store = useStore();
   const router = useRouter();
   const { sessionToken } = useSupabaseAuth();
 
@@ -242,12 +242,12 @@ const LoginStep3: React.FC<LoginStep3Props> = ({ repoList, checkFollowed }) => {
         body: JSON.stringify({ ids: repoIds })
       });
 
-      setAppState({ onboarded: true });
+      store.onboardUser();
     } catch (e) {
       // handle error
     }
 
-    router.push("/");
+    router.push("/hub/insights");
   };
 
   const handleFollowRepo = (index: number) => {
