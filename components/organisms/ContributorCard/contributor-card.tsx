@@ -16,7 +16,7 @@ import ContributorTable from "components/molecules/ContributorTable/contributor-
   Use this hook in the Contributor Page componenttbecause it has all the mock data:
   import useContributorCard from "lib/hooks/useContributorCard";
 */
-interface ContributorObject {
+export interface ContributorObject {
   profile: {
     githubAvatar: string;
     githubName: string;

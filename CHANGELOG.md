@@ -5,6 +5,50 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.20.0-beta.9](https://github.com/open-sauced/insights/compare/v1.20.0-beta.8...v1.20.0-beta.9) (2022-12-12)
+
+
+### 🍕 Features
+
+* add support for custom fontsize on `CardRepoList` ([#652](https://github.com/open-sauced/insights/issues/652)) ([a61bf07](https://github.com/open-sauced/insights/commit/a61bf07b9cc81aa6c3767b188e39e55e9011b07e)), closes [#508](https://github.com/open-sauced/insights/issues/508)
+* update brand logo font weight ([#651](https://github.com/open-sauced/insights/issues/651)) ([3aa3519](https://github.com/open-sauced/insights/commit/3aa351958f09160f21fd086cff65f1dcbbefb2ae)), closes [#500](https://github.com/open-sauced/insights/issues/500)
+
+## [1.20.0-beta.8](https://github.com/open-sauced/insights/compare/v1.20.0-beta.7...v1.20.0-beta.8) (2022-12-12)
+
+
+### 🐛 Bug Fixes
+
+* pr overview empty space ([#653](https://github.com/open-sauced/insights/issues/653)) ([8e3f846](https://github.com/open-sauced/insights/commit/8e3f84637520cbf4031c061c6b42cb261af808a8)), closes [#447](https://github.com/open-sauced/insights/issues/447)
+
+## [1.20.0-beta.7](https://github.com/open-sauced/insights/compare/v1.20.0-beta.6...v1.20.0-beta.7) (2022-12-08)
+
+
+### 🍕 Features
+
+* implement logarithmic scale view on chart ([#644](https://github.com/open-sauced/insights/issues/644)) ([ca3a38c](https://github.com/open-sauced/insights/commit/ca3a38c4a540667816b2a6ec6148d1cf842340d5))
+
+## [1.20.0-beta.6](https://github.com/open-sauced/insights/compare/v1.20.0-beta.5...v1.20.0-beta.6) (2022-12-08)
+
+
+### 🍕 Features
+
+* add contributor profile page UI ([#648](https://github.com/open-sauced/insights/issues/648)) ([c1497af](https://github.com/open-sauced/insights/commit/c1497af9c84581ff6afa751372c3b8e22d70cba4))
+
+## [1.20.0-beta.5](https://github.com/open-sauced/insights/compare/v1.20.0-beta.4...v1.20.0-beta.5) (2022-12-08)
+
+
+### 🍕 Features
+
+* add Zustand for managing global state. Update global state usage ([#646](https://github.com/open-sauced/insights/issues/646)) ([7987144](https://github.com/open-sauced/insights/commit/798714473c05b51aae393b707ef68160dec63215)), closes [#642](https://github.com/open-sauced/insights/issues/642)
+
+## [1.20.0-beta.4](https://github.com/open-sauced/insights/compare/v1.20.0-beta.3...v1.20.0-beta.4) (2022-12-06)
+
+
+### 🍕 Features
+
+*  create date filter component ([#623](https://github.com/open-sauced/insights/issues/623)) ([4b11709](https://github.com/open-sauced/insights/commit/4b1170992b6202aa5290bd4d310400fddfaf9b76))
+* add auth check to insights hub and redirect after onboarding ([#639](https://github.com/open-sauced/insights/issues/639)) ([8510243](https://github.com/open-sauced/insights/commit/8510243e5346054f838873f0fa86da9aa89147b4)), closes [#628](https://github.com/open-sauced/insights/issues/628)
+
 ## [1.20.0-beta.3](https://github.com/open-sauced/insights/compare/v1.20.0-beta.2...v1.20.0-beta.3) (2022-12-05)
 
 
