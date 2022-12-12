@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.20.0-beta.8](https://github.com/open-sauced/insights/compare/v1.20.0-beta.7...v1.20.0-beta.8) (2022-12-12)
+
+
+### 🐛 Bug Fixes
+
+* pr overview empty space ([#653](https://github.com/open-sauced/insights/issues/653)) ([8e3f846](https://github.com/open-sauced/insights/commit/8e3f84637520cbf4031c061c6b42cb261af808a8)), closes [#447](https://github.com/open-sauced/insights/issues/447)
+
 ## [1.20.0-beta.7](https://github.com/open-sauced/insights/compare/v1.20.0-beta.6...v1.20.0-beta.7) (2022-12-08)
 
 
