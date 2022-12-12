@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.20.0-beta.9](https://github.com/open-sauced/insights/compare/v1.20.0-beta.8...v1.20.0-beta.9) (2022-12-12)
+
+
+### 🍕 Features
+
+* add support for custom fontsize on `CardRepoList` ([#652](https://github.com/open-sauced/insights/issues/652)) ([a61bf07](https://github.com/open-sauced/insights/commit/a61bf07b9cc81aa6c3767b188e39e55e9011b07e)), closes [#508](https://github.com/open-sauced/insights/issues/508)
+* update brand logo font weight ([#651](https://github.com/open-sauced/insights/issues/651)) ([3aa3519](https://github.com/open-sauced/insights/commit/3aa351958f09160f21fd086cff65f1dcbbefb2ae)), closes [#500](https://github.com/open-sauced/insights/issues/500)
+
 ## [1.20.0-beta.8](https://github.com/open-sauced/insights/compare/v1.20.0-beta.7...v1.20.0-beta.8) (2022-12-12)
 
 
