@@ -10,9 +10,10 @@ export interface RepoList {
 interface CardRepoListProps {
   repoList: RepoList[];
   limit?: number;
+  fontSizeClassName?: string;
 }
 
-const CardRepoList = ({ repoList, limit = 5 }: CardRepoListProps): JSX.Element => {
+const CardRepoList = ({ repoList, limit = 5, fontSizeClassName }: CardRepoListProps): JSX.Element => {
   const sanitizedRepoList = [...new Map(repoList.map((item) => [item["repoName"], item])).values()];
   return (
     <div className="flex gap-2 items-center max-w[175px] truncate flex-wrap text-xs text-light-slate-11">
@@ -24,7 +25,7 @@ const CardRepoList = ({ repoList, limit = 5 }: CardRepoListProps): JSX.Element =
               <Tooltip key={index} content={repoName}>
                 <div className="flex gap-1  p-1 pr-2 border-[1px] border-light-slate-6 rounded-lg text-light-slate-12">
                   <Icon IconImage={repoIcon} className="rounded-[4px] overflow-hidden" />
-                  <span className="max-w-[45px] md:max-w-[100px] truncate">{repoName}</span>
+                  <span className={`max-w-[45px] md:max-w-[100px] truncate ${fontSizeClassName}`}>{repoName}</span>
                 </div>
               </Tooltip>
             ))}
