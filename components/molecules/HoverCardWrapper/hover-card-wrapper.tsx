@@ -14,8 +14,8 @@ const HoverCardWrapper = ({ username }: HoverCardWrapperProps) => {
     data: contributor,
     isLoading: contributorLoading,
     isError: contributorError
-  } = useSingleContributor("brandonaut");
-  const { data, isLoading, isError } = useTopicContributions(10, []);
+  } = useSingleContributor(username);
+  // const { data, isLoading, isError } = useTopicContributions(10, []);
 
   console.log(username);
 
@@ -33,7 +33,7 @@ const HoverCardWrapper = ({ username }: HoverCardWrapperProps) => {
     githubName: contributor[0]?.host_login,
     totalPR: contributor[0]?.recent_pr_total
   };
-  console.log(data);
+
   return (
     <>
       {contributorLoading ? (
