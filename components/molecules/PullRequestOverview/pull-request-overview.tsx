@@ -23,8 +23,9 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
   churnDirection = "down",
   prActiveCount
 }) => {
-  const totalPullRequests =
-    (!!open ? open : 0) + (!!merged ? merged : 0) + (!!closed ? closed : 0) + (!!draft ? draft : 0);
+  const totalPullRequests = Math.round(
+    (!!open ? open : 0) + (!!merged ? merged : 0) + (!!closed ? closed : 0) + (!!draft ? draft : 0)
+  );
   const prCount = prActiveCount || 0;
   const activePrPercentage = totalPullRequests > 0 ? Math.round((prCount / totalPullRequests) * 100) : 0;
   // used this state to manage actively hovered pull request overview chart
