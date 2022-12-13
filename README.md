@@ -45,7 +45,7 @@ npm ci
 To start a local copy of the app on port `3000`:
 
 ```shell
-npm start
+npm run dev
 ```
 
 ### 🎨 Code linting
