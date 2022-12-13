@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.20.0-beta.10](https://github.com/open-sauced/insights/compare/v1.20.0-beta.9...v1.20.0-beta.10) (2022-12-13)
+
+
+### 🐛 Bug Fixes
+
+* onboarding layout break on mobile ([#655](https://github.com/open-sauced/insights/issues/655)) ([9ae6d6f](https://github.com/open-sauced/insights/commit/9ae6d6f3aa5c21cd496191418b1dde6be6a9da5c)), closes [#649](https://github.com/open-sauced/insights/issues/649)
+
 ## [1.20.0-beta.9](https://github.com/open-sauced/insights/compare/v1.20.0-beta.8...v1.20.0-beta.9) (2022-12-12)
 
 
