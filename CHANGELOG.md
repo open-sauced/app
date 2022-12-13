@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.20.0-beta.11](https://github.com/open-sauced/insights/compare/v1.20.0-beta.10...v1.20.0-beta.11) (2022-12-13)
+
+
+### 🐛 Bug Fixes
+
+* a typo ([5d9c2b5](https://github.com/open-sauced/insights/commit/5d9c2b5e7321d80bca34823f481f00b23513b3e2))
+
 ## [1.20.0-beta.10](https://github.com/open-sauced/insights/compare/v1.20.0-beta.9...v1.20.0-beta.10) (2022-12-13)
 
 
