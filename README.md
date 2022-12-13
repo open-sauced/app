@@ -19,7 +19,7 @@ This project uses Atomic Design for it's Components. Here are several resources 
 
 ## 📙 Storybook
 
-The Stoybook for this project can be found at [design-insights.opensauced.pizza](https://design-insights.opensauced.pizza). 
+The Storybook for this project can be found at [design-insights.opensauced.pizza](https://design-insights.opensauced.pizza). 
 
 ### Run it locally
 
