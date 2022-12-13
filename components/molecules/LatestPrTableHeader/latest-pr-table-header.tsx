@@ -9,7 +9,7 @@ import Text from "components/atoms/Typography/text";
 
 const LatestPrTableHeader = () => {
   return (
-    <div className="flex gap-2 mt-8 items-center bg-light-slate-3 rounded-md px-2 py-1 pr-4">
+    <div className="flex gap-2 items-center bg-light-slate-3 rounded-md px-2 py-1 ">
       <div className="w-3/5">
         <Text className=" ">Latest PRs</Text>
       </div>

@@ -30,14 +30,14 @@ const ContributorHoverCard = ({
   const { filterName } = router.query;
   const topic = filterName as string;
 
-  const calculatedDateFromToday = calcDistanceFromToday(new Date(parseInt(dateOfFirstPr)));
+  const calculatedDateFromToday = dateOfFirstPr ? calcDistanceFromToday(new Date(parseInt(dateOfFirstPr))) : "-";
   return (
-    <div className="w-[314px] bg-white gap-4 p-3 rounded-lg shadow-superlative flex flex-col">
+    <div className="w-[364px] bg-white gap-4 p-3 rounded-lg shadow-superlative flex flex-col">
       <div>
         <CardProfile dateOfFirstPR={calculatedDateFromToday} githubName={githubName} totalPRs={totalPR} />
       </div>
       <div className="">
-        <ContributorTable contributor={githubName} topic={topic} repositories={undefined} />
+        <ContributorTable limit={5} contributor={githubName} topic={topic} repositories={undefined} />
       </div>
 
       <div>

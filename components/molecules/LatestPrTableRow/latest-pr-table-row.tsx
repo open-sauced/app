@@ -6,6 +6,7 @@ import { VscGitMerge, VscGitPullRequest, VscGitPullRequestClosed, VscGitPullRequ
 import { calcDistanceFromToday } from "lib/utils/date-utils";
 
 import Text from "components/atoms/Typography/text";
+import humanizeNumber from "lib/utils/humanizeNumber";
 
 interface LatestPrTableRowProps {
   prName: string;
@@ -58,8 +59,12 @@ const LatestPrTableRow = ({
       <div className="flex justify-end w-[calc(10%-4px)] text-sm text-light-slate-11">
         {merged ? calcDistanceFromToday(new Date(parseInt(prMergedTime, 10))) : "-"}
       </div>
-      <div className="flex justify-end w-[calc(10%-4px)] text-sm text-light-slate-11">{noOfFilesChanged}</div>
-      <div className="flex justify-end w-[calc(10%-4px)] text-sm text-light-slate-11">{noOfLinesChanged}</div>
+      <div className="flex justify-end w-[calc(10%-4px)] text-sm text-light-slate-11">
+        {noOfFilesChanged >= 1000 ? humanizeNumber(noOfFilesChanged, "abbreviation") : noOfFilesChanged}
+      </div>
+      <div className="flex justify-end w-[calc(10%-4px)] text-sm text-light-slate-11">
+        {noOfLinesChanged >= 1000 ? humanizeNumber(noOfLinesChanged, "abbreviation") : noOfLinesChanged}
+      </div>
     </div>
   );
 };

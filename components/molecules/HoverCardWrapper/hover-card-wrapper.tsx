@@ -1,6 +1,8 @@
-import { useSingleContributor } from "lib/hooks/useSingleContributor";
-import { useTopicContributions } from "lib/hooks/useTopicContributions";
 import { useRouter } from "next/router";
+
+import { useSingleContributor } from "lib/hooks/useSingleContributor";
+
+import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 import ContributorHoverCard, { ContributorsProfileType } from "../ContributorHoverCard/contributor-hover-card";
 
 interface HoverCardWrapperProps {
@@ -15,9 +17,6 @@ const HoverCardWrapper = ({ username }: HoverCardWrapperProps) => {
     isLoading: contributorLoading,
     isError: contributorError
   } = useSingleContributor(username);
-  // const { data, isLoading, isError } = useTopicContributions(10, []);
-
-  console.log(username);
 
   const repoList = (contributor[0]?.recent_repo_list || "").split(",").map((repo) => {
     const [repoOwner, repoName] = repo.split("/");
@@ -29,18 +28,23 @@ const HoverCardWrapper = ({ username }: HoverCardWrapperProps) => {
   });
 
   const profile: ContributorsProfileType = {
-    githubAvatar: `https://www.github.com/${contributor[0]?.host_login}.png?size=60`,
-    githubName: contributor[0]?.host_login,
+    githubAvatar: `https://www.github.com/${username}.png?size=60`,
+    githubName: username,
     totalPR: contributor[0]?.recent_pr_total
   };
 
   return (
     <>
       {contributorLoading ? (
-        <>Loading....</>
+        <div className="p-3 flex flex-col gap-3 bg-white rounded-xl">
+          <SkeletonWrapper height={50} width={350} radius={6} />
+          <div>
+            <SkeletonWrapper height={150} width={350} radius={6} />
+          </div>
+        </div>
       ) : (
         <ContributorHoverCard
-          dateOfFirstPr={contributor[0].first_commit_time}
+          dateOfFirstPr={contributor[0]?.first_commit_time}
           totalPR={profile.totalPR}
           githubAvatar={profile.githubAvatar}
           githubName={profile.githubName}

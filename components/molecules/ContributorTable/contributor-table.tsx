@@ -16,10 +16,11 @@ interface CardTableProps {
   contributor: string;
   topic: string;
   repositories?: number[];
+  limit?: number;
 }
 
-const ContributorTable = ({ contributor, topic, repositories }: CardTableProps): JSX.Element => {
-  const { data, isLoading } = useTopicContributorPRs(contributor, topic, repositories);
+const ContributorTable = ({ contributor, topic, repositories, limit }: CardTableProps): JSX.Element => {
+  const { data, isLoading } = useTopicContributorPRs(contributor, topic, repositories, limit);
 
   return data.length > 0 ? (
     <>
