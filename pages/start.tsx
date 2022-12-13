@@ -210,7 +210,7 @@ const LoginStep2: React.FC<LoginStep2Props> = ({ handleLoginStep, setRepoList })
               classNames="!rounded-md !py-0.5 child:h-8 child:text-sm"
             />
           </div>
-          <Button onClick={handleAddPAT} type="primary" className="w-full h-10">
+          <Button onClick={handleAddPAT} type="primary" className="w-full mt-3 md:mt-0 h-10">
             Continue
           </Button>
         </div>
