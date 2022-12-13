@@ -16,6 +16,7 @@ interface LatestPrTableRowProps {
   prIssuedTime: string;
   noOfFilesChanged: number;
   noOfLinesChanged: number;
+  isHoverCard?: boolean;
 }
 const LatestPrTableRow = ({
   prName,
@@ -24,11 +25,12 @@ const LatestPrTableRow = ({
   prMergedTime,
   noOfFilesChanged,
   noOfLinesChanged,
-  merged
+  merged,
+  isHoverCard
 }: LatestPrTableRowProps) => {
   return (
     <div className="flex gap-2 items-center px-2 py-1">
-      <div className="flex cursor-default item-center gap-2 w-3/5">
+      <div className={`flex cursor-default item-center gap-2 w-3/5 ${isHoverCard && "w-5/6"}`}>
         {prStatus === "open" ? (
           <IconContext.Provider value={{ color: "green", style: { width: 14, height: 14, marginTop: 2 } }}>
             <VscGitPullRequest title="Open Pull Request" />
@@ -53,16 +55,16 @@ const LatestPrTableRow = ({
           {prName}
         </Text>
       </div>
-      <div className="flex justify-end w-[calc(10%-4px)] text-sm text-light-slate-11">
+      <div className={`${isHoverCard && "ml-auto"} justify-end w-[calc(10%-4px)] text-sm text-light-slate-11`}>
         {calcDistanceFromToday(new Date(parseInt(prIssuedTime, 10)))}
       </div>
-      <div className="flex justify-end w-[calc(10%-4px)] text-sm text-light-slate-11">
+      <div className={`${isHoverCard ? "hidden" : "flex"} justify-end w-[calc(10%-4px)] text-sm text-light-slate-11`}>
         {merged ? calcDistanceFromToday(new Date(parseInt(prMergedTime, 10))) : "-"}
       </div>
-      <div className="flex justify-end w-[calc(10%-4px)] text-sm text-light-slate-11">
+      <div className={`${isHoverCard ? "hidden" : "flex"} justify-end w-[calc(10%-4px)] text-sm text-light-slate-11`}>
         {noOfFilesChanged >= 1000 ? humanizeNumber(noOfFilesChanged, "abbreviation") : noOfFilesChanged}
       </div>
-      <div className="flex justify-end w-[calc(10%-4px)] text-sm text-light-slate-11">
+      <div className={`${isHoverCard ? "hidden" : "flex"} justify-end w-[calc(10%-4px)] text-sm text-light-slate-11`}>
         {noOfLinesChanged >= 1000 ? humanizeNumber(noOfLinesChanged, "abbreviation") : noOfLinesChanged}
       </div>
     </div>

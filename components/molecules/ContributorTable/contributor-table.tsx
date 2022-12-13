@@ -17,15 +17,16 @@ interface CardTableProps {
   topic: string;
   repositories?: number[];
   limit?: number;
+  isHoverCard?: boolean;
 }
 
-const ContributorTable = ({ contributor, topic, repositories, limit }: CardTableProps): JSX.Element => {
+const ContributorTable = ({ contributor, topic, repositories, limit, isHoverCard }: CardTableProps): JSX.Element => {
   const { data, isLoading } = useTopicContributorPRs(contributor, topic, repositories, limit);
 
   return data.length > 0 ? (
     <>
       <div className="flex flex-col">
-        <LatestPrTableHeader />
+        <LatestPrTableHeader isHoverCard={true} />
         <div className="flex flex-col gap-0.5">
           {data.map(
             (
@@ -50,7 +51,7 @@ const ContributorTable = ({ contributor, topic, repositories, limit }: CardTable
                 noOfLinesChanged
               };
 
-              return <LatestPrTableRow key={index} {...latestPrs} />;
+              return <LatestPrTableRow isHoverCard={true} key={index} {...latestPrs} />;
             }
           )}
         </div>
