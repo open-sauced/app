@@ -7,13 +7,13 @@ interface PaginatedRepoPRResponse {
   readonly meta: Meta;
 }
 
-const useSingleContributor = (contributor: string)=> {
+const useSingleContributor = (contributor: string) => {
   const router = useRouter();
-  const { filterName} = router.query;
+  const { filterName } = router.query;
   const topic = filterName as string;
 
   const baseEndPoint = `${topic}/contributions`;
-  const endPointString = `${baseEndPoint}?page=1&limit=1&range=30&contributors=${contributor}`;
+  const endPointString = `${baseEndPoint}?page=1&limit=1&range=30&contributor=${contributor}`;
   const { data, error } = useSWR<PaginatedRepoPRResponse>(endPointString);
 
   return {
@@ -24,4 +24,4 @@ const useSingleContributor = (contributor: string)=> {
   };
 };
 
-export {useSingleContributor};
+export { useSingleContributor };
