@@ -16,7 +16,7 @@ const Search = ({ placeholder, name, value, autoFocus, className, onSearch }: Se
     onSearch?.(search);
   };
 
-  const emptySearch = () => {
+  const handleEmpty = () => {
     setSearch("");
   };
 
@@ -42,7 +42,7 @@ const Search = ({ placeholder, name, value, autoFocus, className, onSearch }: Se
           }
         }}
       />
-      { search && <GrClose className="text-light-slate-9" fontSize={16} onClick={emptySearch}/> }
+      { search && <GrClose className="text-light-slate-9" fontSize={16} onClick={handleEmpty}/> }
 
     </div>
   );
