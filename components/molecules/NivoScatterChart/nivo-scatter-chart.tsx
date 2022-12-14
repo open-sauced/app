@@ -7,7 +7,7 @@ import humanizeNumber from "lib/utils/humanizeNumber";
 import ToggleOption from "components/atoms/ToggleOption/toggle-option";
 import Title from "components/atoms/Typography/title";
 import HoverCardWrapper from "../HoverCardWrapper/hover-card-wrapper";
-
+import { useRouter } from "next/router";
 export interface ScatterChartDataItems {
   x: string | number;
   y: string | number;
@@ -132,6 +132,7 @@ const NivoScatterPlot = ({ data, maxFilesModified, title, setShowBots, showBots,
 };
 
 const CustomNode = (props: any) => {
+  const router = useRouter();
   const handleMouseEnter = useCallback(
     (event: React.MouseEvent) => props.onMouseEnter?.(props.node, event),
     [props.node.data.contributor, props.onMouseEnter]
@@ -145,12 +146,13 @@ const CustomNode = (props: any) => {
     [props.node, props.onMouseLeave]
   );
   const handleClick = useCallback(
-    (event: React.MouseEvent) => props.onClick?.(props.node, event),
+    (event: React.MouseEvent) => router.push(`/user/${props.node.data.contributor}`),
     [props.node, props.onClick]
   );
 
   return (
     <animated.image
+      className="cursor-pointer"
       width={35}
       height={35}
       r={props.style.size.to((size: number) => size / 2)}

@@ -26,7 +26,7 @@ const ContributorTable = ({ contributor, topic, repositories, limit, isHoverCard
   return data.length > 0 ? (
     <>
       <div className="flex flex-col">
-        <LatestPrTableHeader isHoverCard={true} />
+        <LatestPrTableHeader isHoverCard={isHoverCard} />
         <div className="flex flex-col gap-0.5">
           {data.map(
             (
@@ -51,7 +51,7 @@ const ContributorTable = ({ contributor, topic, repositories, limit, isHoverCard
                 noOfLinesChanged
               };
 
-              return <LatestPrTableRow isHoverCard={true} key={index} {...latestPrs} />;
+              return <LatestPrTableRow isHoverCard={isHoverCard} key={index} {...latestPrs} />;
             }
           )}
         </div>

@@ -12,11 +12,7 @@ const HoverCardWrapper = ({ username }: HoverCardWrapperProps) => {
   const router = useRouter();
   const { filterName } = router.query;
   const topic = filterName as string;
-  const {
-    data: contributor,
-    isLoading: contributorLoading,
-    isError: contributorError
-  } = useSingleContributor(username);
+  const { data: contributor, isLoading: contributorLoading, isError } = useSingleContributor(username);
 
   const repoList = (contributor[0]?.recent_repo_list || "").split(",").map((repo) => {
     const [repoOwner, repoName] = repo.split("/");
