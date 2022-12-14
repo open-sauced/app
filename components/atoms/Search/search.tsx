@@ -18,6 +18,7 @@ const Search = ({ placeholder, name, value, autoFocus, className, onSearch }: Se
 
   const emptySearch = () => {
     setSearch("");
+    onSearch?.("");
   };
 
   return (
