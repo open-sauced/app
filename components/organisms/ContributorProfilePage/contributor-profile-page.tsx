@@ -61,13 +61,13 @@ const ContributorProfilePage = ({
   return (
     <div>
       <ContributorProfileHeader avatarUrl={githubAvatar} />
-      <div className="pt-24 md:px-10 lg:px-16 flex flex-col lg:flex-row justify-between">
+      <div className="pt-24 px-4 md:px-10 lg:px-16 flex flex-col lg:flex-row justify-between">
         <div className="flex flex-col w-64 gap-4">
           <div className="pb-6 border-b">
             <Title className="!text-2xl !text-light-slate-12" level={3}>
               {githubName}
             </Title>
-            <span className="text-light-slate-11 text-sm">@natemoo-re</span>
+            <span className="text-light-slate-11 text-sm">{`@${githubName}`}</span>
           </div>
           <div>
             <p className="mb-4 ">Language</p>
@@ -81,7 +81,7 @@ const ContributorProfilePage = ({
             </Title>
           </div>
           <div className="bg-white mt-4 rounded-2xl border p-2 md:p-6">
-            <div className="flex flex-col lg:flex-row gap-2 md:gap-12 lg:gap-16 justify-between">
+            <div className=" flex-col hidden lg:flex-row gap-2 md:gap-12 lg:gap-16 justify-between">
               <div>
                 <span className="text-xs text-light-slate-11">PRs opened</span>
                 <div className="flex justify-between gap-2 items-end pr-8 mt-1">
