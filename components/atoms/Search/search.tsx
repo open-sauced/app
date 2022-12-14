@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { GrClose } from "react-icons/gr";
 import { FaSearch } from "react-icons/fa";
 interface SearchProps {
   name: string;
@@ -15,6 +16,10 @@ const Search = ({ placeholder, name, value, autoFocus, className, onSearch }: Se
     onSearch?.(search);
   };
 
+  const emptySearch = () => {
+    setSearch("");
+  };
+
   return (
     <div
       className={`${
@@ -27,7 +32,7 @@ const Search = ({ placeholder, name, value, autoFocus, className, onSearch }: Se
         autoFocus={autoFocus}
         placeholder={placeholder}
         name={name}
-        value={value}
+        value={search}
         type="search"
         id={name}
         onChange={(e: any) => setSearch(e.target.value)}
@@ -37,6 +42,8 @@ const Search = ({ placeholder, name, value, autoFocus, className, onSearch }: Se
           }
         }}
       />
+      { search && <GrClose className="text-light-slate-9" fontSize={16} onClick={emptySearch}/> }
+
     </div>
   );
 };
