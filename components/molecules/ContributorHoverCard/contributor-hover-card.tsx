@@ -43,11 +43,6 @@ const ContributorHoverCard = ({
       <div>
         <CardRepoList repoList={repoList} limit={3} />
       </div>
-      <div className="w-full ">
-        <button className="w-full text-light-slate-11 text-xs bg-light-slate-1 rounded-lg border py-2">
-          Add a Filter
-        </button>
-      </div>
     </div>
   );
 };
