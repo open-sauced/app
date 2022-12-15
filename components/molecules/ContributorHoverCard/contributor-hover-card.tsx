@@ -37,7 +37,7 @@ const ContributorHoverCard = ({
         <CardProfile dateOfFirstPR={calculatedDateFromToday} githubName={githubName} totalPRs={totalPR} />
       </div>
       <div className="">
-        <ContributorTable limit={5} contributor={githubName} topic={topic} repositories={undefined} />
+        <ContributorTable limit={5} contributor={githubName} topic={topic} />
       </div>
 
       <div>
