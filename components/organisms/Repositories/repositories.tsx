@@ -34,8 +34,9 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
     isLoading: repoListIsLoading,
     page,
     setPage,
-    setLimit
-  } = useRepositoriesList(false, repositories);
+    setLimit,
+    setOrderBy
+  } = useRepositoriesList(true, repositories);
   const filteredRepoNotIndexed = selectedFilter && !repoListIsLoading && !repoListIsError && repoListData.length === 0;
 
   const handleOnSearch = (search?: string) => {
@@ -67,8 +68,8 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
       />
       <div className="flex flex-col rounded-lg overflow-hidden border">
         <div className="flex md:hidden justify-between  py-4 px-6 bg-light-slate-3 gap-2">
-          <div className="flex-1">
-            <TableTitle text="Repository"></TableTitle>
+          <div className="flex-1" >
+            <TableTitle text="Repository" handleClick={() => console.log("clicked!")}  />
           </div>
           <div className="flex-1">
             <TableTitle text="Pr Overview"></TableTitle>
