@@ -11,7 +11,7 @@ interface PaginatedContributorsResponse {
 
 const useTopicContributions = (initialLimit = 10, repoIds: number[] = []) => {
   const router = useRouter();
-  const range = useStore(state => state.contributorRange);
+  const range = useStore(state => state.range);
   const { filterName, selectedFilter } = router.query;
   const topic = filterName as string;
   const [page, setPage] = useState(1);

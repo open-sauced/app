@@ -7,7 +7,7 @@ interface PaginatedContributorsResponse {
 }
 
 const useContributionsList = (repoId: string, limit = "", orderBy = "") => {
-  const range = useStore(state => state.contributorRange);
+  const range = useStore(state => state.range);
 
   //The endpoint for all Hacktoberfest contributions doesn't exist yet so will substitute this for now
   const baseEndpoint = `repos/${repoId}/contributions`;
