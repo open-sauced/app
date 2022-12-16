@@ -2,7 +2,7 @@ import * as GroupToggle from '@radix-ui/react-toggle-group';
 import { useState } from 'react';
 import ToggleGroupItem from '../ToggleGroupItem/toggle-group-item';
 
-/* Draft
+/* Draft. Will be removed on completion of the PR
     This component is supposed to allow as many number of options as demanded
 
     * There was 2 ways to implement this:
@@ -33,6 +33,15 @@ interface ToggleGroupProps {
     handleChange?: (value: string) => void
 }
 
+/** A ToggleGroup component that allows the user to select one option from a list of options.
+ * 
+ * @example
+ * <ToggleGroup>
+ *      <>Option 1</> // React Fragment. Will use our styling
+ *      <>Option <span>2</span></> // Can be a nested component
+ *      <div>Option 3</div> // Any type of component can be used
+ * </ToggleGroup>
+ */
 const ToggleGroup = ({
     children,
     allowNone = false,
