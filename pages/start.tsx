@@ -61,7 +61,7 @@ const LoginStep1: React.FC<LoginStep1Props> = ({ handleLoginStep, user }) => {
 
   return (
     <>
-      <div className="login-step flex flex-col lg:h-full gap-20 justify-between">
+      <div className=" flex flex-col lg:h-full  lg:gap-20 justify-between">
         <div>
           <div className="flex items-center gap-2 mb-4">
             <Icon className="lg:hidden" IconImage={GitHubAuthActiveIcon} size={48} />
@@ -90,15 +90,13 @@ const LoginStep1: React.FC<LoginStep1Props> = ({ handleLoginStep, user }) => {
                 <Icon IconImage={HighlightIcon} />
               </div>
               <div className="mt-0">
-                <Text className="!text-base !text-light-slate-12">
-                  We will not spam you with emails.
-                </Text>
+                <Text className="!text-base !text-light-slate-12">We will not spam you with emails.</Text>
               </div>
             </div>
           </div>
         </div>
         <div>
-          <Button onClick={handleGitHubAuth} type="primary" className="w-full h-10">
+          <Button onClick={handleGitHubAuth} type="primary" className="w-full mt-3 md:mt-0 h-10">
             Authenticate <Icon IconImage={GitHubIcon} className="ml-2" />
           </Button>
         </div>
@@ -124,7 +122,7 @@ const LoginStep2: React.FC<LoginStep2Props> = ({ handleLoginStep, setRepoList })
         const ocktokit = new Octokit({ auth: providerToken });
 
         let repoList = [];
-        let response: { data: { id: number, full_name: string }[] };
+        let response: { data: { id: number; full_name: string }[] };
 
         if (orgName) {
           response = await ocktokit.request("GET /orgs/{org}/repos", {
@@ -144,7 +142,7 @@ const LoginStep2: React.FC<LoginStep2Props> = ({ handleLoginStep, setRepoList })
           });
         }
 
-        repoList = response.data.map(repo => {
+        repoList = response.data.map((repo) => {
           const [repoOwner, repoName] = repo.full_name.split("/");
 
           return {
@@ -177,7 +175,10 @@ const LoginStep2: React.FC<LoginStep2Props> = ({ handleLoginStep, setRepoList })
             <Title className="!text-2xl">Provide your Organization</Title>
           </div>
           <div className="mb-4 text-left ">
-            <Text className="!text-sm">In order to provide fresh, and insightful data, we‘ll use your authenticated GitHub access token to fetch public GitHub data. Here‘s how we‘re going to use your token:</Text>
+            <Text className="!text-sm">
+              In order to provide fresh, and insightful data, we‘ll use your authenticated GitHub access token to fetch
+              public GitHub data. Here‘s how we‘re going to use your token:
+            </Text>
           </div>
           <div className="flex flex-col gap-1">
             <div className="flex gap-2 items-start">
@@ -202,9 +203,16 @@ const LoginStep2: React.FC<LoginStep2Props> = ({ handleLoginStep, setRepoList })
         </div>
         <div className="flex flex-col gap-6">
           <div>
-            <TextInput placeholder="Organization Slug" descriptionText="Grab the slug from GitHub, eg: 'open-sauced'." onChange={(e) => setOrgName(e.target.value)} classNames="!rounded-md !py-0.5 child:h-8 child:text-sm" />
+            <TextInput
+              placeholder="Organization Slug"
+              descriptionText="Grab the slug from GitHub, eg: 'open-sauced'."
+              onChange={(e) => setOrgName(e.target.value)}
+              classNames="!rounded-md !py-0.5 child:h-8 child:text-sm"
+            />
           </div>
-          <Button onClick={handleAddPAT} type="primary" className="w-full h-10">Continue</Button>
+          <Button onClick={handleAddPAT} type="primary" className="w-full mt-3 md:mt-0 h-10">
+            Continue
+          </Button>
         </div>
       </div>
     </>
@@ -227,17 +235,17 @@ const LoginStep3: React.FC<LoginStep3Props> = ({ repoList, checkFollowed }) => {
   const { sessionToken } = useSupabaseAuth();
 
   const [isFollowing, setIsFollowing] = useState<boolean[]>(repoList.map(() => false));
-  const following = isFollowing.filter(follow => follow);
+  const following = isFollowing.filter((follow) => follow);
 
-  const handleSkipAddRepo = async() => {
-    try {      
+  const handleSkipAddRepo = async () => {
+    try {
       const selectedRepos = repoList.filter((_, index) => isFollowing[index]);
-      const repoIds = selectedRepos.map(repo => repo.repoId as number);
-      
+      const repoIds = selectedRepos.map((repo) => repo.repoId as number);
+
       await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/onboarding`, {
         method: "POST",
         headers: {
-          "Authorization": `Bearer ${sessionToken}`
+          Authorization: `Bearer ${sessionToken}`
         },
         body: JSON.stringify({ ids: repoIds })
       });
@@ -307,7 +315,11 @@ const LoginStep3: React.FC<LoginStep3Props> = ({ repoList, checkFollowed }) => {
                       </div>
                     </div>
                     <div className="shrink-0">
-                      <Button disabled={following.length >= 10 && !isFollowing[index]} onClick={() => handleFollowRepo(index)} type={isFollowing[index] ? "outline" : "default"}>
+                      <Button
+                        disabled={following.length >= 10 && !isFollowing[index]}
+                        onClick={() => handleFollowRepo(index)}
+                        type={isFollowing[index] ? "outline" : "default"}
+                      >
                         {isFollowing[index] ? (
                           "Following"
                         ) : (
@@ -337,7 +349,7 @@ const Login: WithPageLayout = () => {
   type LoginSteps = number;
 
   const { user } = useSupabaseAuth();
-  const {repoList, setRepoList} = useLoginRepoList();
+  const { repoList, setRepoList } = useLoginRepoList();
 
   const highlighted = "!text-light-slate-12";
 
@@ -353,7 +365,7 @@ const Login: WithPageLayout = () => {
   return (
     <Card className="flex flex-col lg:flex-row w-[870px] min-h-[480px] !p-0 rounded-none lg:rounded-lg !bg-inherit lg:!bg-light-slate-2 lg:shadow-login !border-0 lg:!border-[1px] lg:!border-orange-500">
       <>
-        <section className="w-full max-w-50% p-6 lg:p-9">
+        <section className="w-full max-w-50%  p-6 lg:p-9">
           <div className="flex items-center gap-2 mb-6">
             <ProgressPie
               percentage={
@@ -383,10 +395,16 @@ const Login: WithPageLayout = () => {
             </Text>
           </div>
           <div className="hidden lg:flex gap-2 items-center mb-8">
-
-            <Icon IconImage={currentLoginStep === 2 ? PATActiveIcon : currentLoginStep < 2 ? PATIcon : CompletedIcon} size={48} />
-            <Text disabled={currentLoginStep !== 2} className={`!text-[16px] !font-medium ${currentLoginStep === 2 && highlighted}`}>Provide your Organization</Text>
-
+            <Icon
+              IconImage={currentLoginStep === 2 ? PATActiveIcon : currentLoginStep < 2 ? PATIcon : CompletedIcon}
+              size={48}
+            />
+            <Text
+              disabled={currentLoginStep !== 2}
+              className={`!text-[16px] !font-medium ${currentLoginStep === 2 && highlighted}`}
+            >
+              Provide your Organization
+            </Text>
           </div>
           <div className="hidden lg:flex gap-2 items-center mb-8">
             <Icon
@@ -407,10 +425,12 @@ const Login: WithPageLayout = () => {
             </Text>
           </div>
         </section>
-        <section className="w-full max-w-[50%] p-9 rounded-lg lg:rounded-r-lg bg-white">
-          {currentLoginStep === 1 && <LoginStep1 handleLoginStep={handleLoginStep} user={user}/>}
-          {currentLoginStep === 2 && <LoginStep2 handleLoginStep={handleLoginStep} setRepoList={setRepoList}/>}
-          {currentLoginStep >= 3 && <LoginStep3 handleLoginStep={handleLoginStep} repoList={repoList} checkFollowed={checkFollowed}/>}
+        <section className="w-full lg:max-w-[50%] p-9 rounded-lg lg:rounded-r-lg bg-white">
+          {currentLoginStep === 1 && <LoginStep1 handleLoginStep={handleLoginStep} user={user} />}
+          {currentLoginStep === 2 && <LoginStep2 handleLoginStep={handleLoginStep} setRepoList={setRepoList} />}
+          {currentLoginStep >= 3 && (
+            <LoginStep3 handleLoginStep={handleLoginStep} repoList={repoList} checkFollowed={checkFollowed} />
+          )}
         </section>
       </>
     </Card>

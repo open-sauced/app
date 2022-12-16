@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import useStore from "lib/store";
 
 import Pagination from "components/molecules/Pagination/pagination";
 import PaginationResults from "components/molecules/PaginationResults/pagination-result";
@@ -23,7 +24,9 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
   const { filterName } = router.query;
   const topic = filterName as string;
   const { data, setLimit, meta, setPage, page, isError, isLoading } = useTopicContributions(10, repositories);
-
+  const range = useStore(state => state.range);
+  const store = useStore();
+  
   const contributorArray = isError
     ? []
     : data?.map((contributor) => {
@@ -69,6 +72,8 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
           total: meta.itemCount,
           entity: "Contributors"
         }}
+        range={range}
+        setRangeFilter={store.updateRange}
         title="Contributors"
       />
 
