@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.20.0-beta.16](https://github.com/open-sauced/insights/compare/v1.20.0-beta.15...v1.20.0-beta.16) (2022-12-16)
+
+
+### 🍕 Features
+
+* add date filter to the contributor calendar ([#668](https://github.com/open-sauced/insights/issues/668)) ([52e2b28](https://github.com/open-sauced/insights/commit/52e2b288cedebaa28388bcc94dc7bda0af784dcf)), closes [#663](https://github.com/open-sauced/insights/issues/663)
+
 ## [1.20.0-beta.15](https://github.com/open-sauced/insights/compare/v1.20.0-beta.14...v1.20.0-beta.15) (2022-12-16)
 
 
