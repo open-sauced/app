@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.22.0-beta.1](https://github.com/open-sauced/insights/compare/v1.21.0...v1.22.0-beta.1) (2022-12-16)
+
+
+### 🍕 Features
+
+* remove the top5 ([#674](https://github.com/open-sauced/insights/issues/674)) ([d0720ef](https://github.com/open-sauced/insights/commit/d0720efea7f1932fbc68f8a8af8af13e89b698ff))
+
 ## [1.21.0](https://github.com/open-sauced/insights/compare/v1.20.0...v1.21.0) (2022-12-16)
 
 
