@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.20.0-beta.15](https://github.com/open-sauced/insights/compare/v1.20.0-beta.14...v1.20.0-beta.15) (2022-12-16)
+
+
+### 🍕 Features
+
+* add Explore to nav ([#667](https://github.com/open-sauced/insights/issues/667)) ([aa1688d](https://github.com/open-sauced/insights/commit/aa1688d8443bbedda3c2fda868205a0a69b6bf00)), closes [#661](https://github.com/open-sauced/insights/issues/661)
+
 ## [1.20.0-beta.14](https://github.com/open-sauced/insights/compare/v1.20.0-beta.13...v1.20.0-beta.14) (2022-12-16)
 
 
