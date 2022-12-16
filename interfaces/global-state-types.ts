@@ -5,5 +5,4 @@ export interface GlobalStateInterface {
   onboarded?: boolean;
   waitlisted?: boolean;
   range?: number;
-  contributorRange?: number;
 }
