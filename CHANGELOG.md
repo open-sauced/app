@@ -5,9 +5,22 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.20.0](https://github.com/open-sauced/insights/compare/v1.19.0...v1.20.0) (2022-12-09)
+
+
+### 🐛 Bug Fixes
+
+* show percentage bar at zero percent ([#638](https://github.com/open-sauced/insights/issues/638)) ([b98cb4b](https://github.com/open-sauced/insights/commit/b98cb4bcec0a26f8a67cf06f8b4ab4a89e006f21)), closes [#632](https://github.com/open-sauced/insights/issues/632)
+* update top5 ([7a43afc](https://github.com/open-sauced/insights/commit/7a43afc95b8f9f03de33dc2bdf4cbbfec51f5b2a))
+*  create date filter component ([#623](https://github.com/open-sauced/insights/issues/623)) ([4b11709](https://github.com/open-sauced/insights/commit/4b1170992b6202aa5290bd4d310400fddfaf9b76))
+* add auth check to insights hub and redirect after onboarding ([#639](https://github.com/open-sauced/insights/issues/639)) ([8510243](https://github.com/open-sauced/insights/commit/8510243e5346054f838873f0fa86da9aa89147b4)), closes [#628](https://github.com/open-sauced/insights/issues/628)
+* add contributor profile page UI ([#648](https://github.com/open-sauced/insights/issues/648)) ([c1497af](https://github.com/open-sauced/insights/commit/c1497af9c84581ff6afa751372c3b8e22d70cba4))
+* add hover card tooltip component ([#607](https://github.com/open-sauced/insights/issues/607)) ([2385c43](https://github.com/open-sauced/insights/commit/2385c43692b36bf0f13d081bba49896e21030633)), closes [#526](https://github.com/open-sauced/insights/issues/526)
+* add Zustand for managing global state. Update global state usage ([#646](https://github.com/open-sauced/insights/issues/646)) ([7987144](https://github.com/open-sauced/insights/commit/798714473c05b51aae393b707ef68160dec63215)), closes [#642](https://github.com/open-sauced/insights/issues/642)
+* implement logarithmic scale view on chart ([#644](https://github.com/open-sauced/insights/issues/644)) ([ca3a38c](https://github.com/open-sauced/insights/commit/ca3a38c4a540667816b2a6ec6148d1cf842340d5))
+* Introduce loading skeleton to repository and contributors page ([#637](https://github.com/open-sauced/insights/issues/637)) ([3ca20f3](https://github.com/open-sauced/insights/commit/3ca20f3e32eee8ca1c2de6612e699183987c1405))
+
 ## [1.20.0-beta.16](https://github.com/open-sauced/insights/compare/v1.20.0-beta.15...v1.20.0-beta.16) (2022-12-16)
-
-
 ### 🍕 Features
 
 * add date filter to the contributor calendar ([#668](https://github.com/open-sauced/insights/issues/668)) ([52e2b28](https://github.com/open-sauced/insights/commit/52e2b288cedebaa28388bcc94dc7bda0af784dcf)), closes [#663](https://github.com/open-sauced/insights/issues/663)
