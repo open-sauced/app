@@ -60,8 +60,8 @@ const NivoScatterPlot = ({ data, maxFilesModified, title, setShowBots, showBots,
   const filteredData = [{ id: data[0].id, data: data[0].data.filter((data) => data.x <= 7) }];
 
   const testToggleGroup = (value: string) => {
-    console.log('toggled: ',value);
-  }
+    console.log("toggled: ",value);
+  };
 
   return (
     <>

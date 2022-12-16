@@ -1,6 +1,6 @@
-import * as GroupToggle from '@radix-ui/react-toggle-group';
-import { useState } from 'react';
-import ToggleGroupItem from '../ToggleGroupItem/toggle-group-item';
+import * as GroupToggle from "@radix-ui/react-toggle-group";
+import { useState } from "react";
+import ToggleGroupItem from "../ToggleGroupItem/toggle-group-item";
 
 /* Draft. Will be removed on completion of the PR
     This component is supposed to allow as many number of options as demanded
@@ -34,7 +34,7 @@ interface ToggleGroupProps {
 }
 
 /** A ToggleGroup component that allows the user to select one option from a list of options.
- * 
+ *
  * @example
  * <ToggleGroup>
  *      <>Option 1</> // React Fragment. Will use our styling
@@ -43,37 +43,37 @@ interface ToggleGroupProps {
  * </ToggleGroup>
  */
 const ToggleGroup = ({
-    children,
-    allowNone = false,
-    defaultSelection = '0',
-    handleChange
+  children,
+  allowNone = false,
+  defaultSelection = "0",
+  handleChange
 }: ToggleGroupProps) => {
-    const [value, setValue] = useState(defaultSelection+"")
+  const [value, setValue] = useState(defaultSelection+"");
 
-    const handleValueChange = (value: string) => {
-        if(value || allowNone) {
-            setValue(value)
-            handleChange && handleChange(value)
-        }
+  const handleValueChange = (value: string) => {
+    if(value || allowNone) {
+      setValue(value);
+      handleChange && handleChange(value);
     }
+  };
 
-    if(!children) return null;
+  if(!children) return null;
 
   return (
-    <GroupToggle.Root type='single' value={value} onValueChange={handleValueChange} className="bg-light-slate-6 rounded-lg p-0.25">
-        {
-            Array.isArray(children) ? children.map((child, index) => (
-                <ToggleGroupItem checked={value==`${index}`} value={`${index}`}>
-                    {child}
-                </ToggleGroupItem>
-            ))
-            : <ToggleGroupItem checked={value=='0'} value={'0'}>
-                {children}
-            </ToggleGroupItem>
-        }
+    <GroupToggle.Root type="single" value={value} onValueChange={handleValueChange} className="bg-light-slate-6 rounded-lg p-0.25">
+      {
+        Array.isArray(children) ? children.map((child, index) => (
+          <ToggleGroupItem checked={value==`${index}`} value={`${index}`} key={index}>
+            {child}
+          </ToggleGroupItem>
+        ))
+          : <ToggleGroupItem checked={value=="0"} value={"0"}>
+            {children}
+          </ToggleGroupItem>
+      }
     </GroupToggle.Root>
   );
 
-}
+};
 
 export default ToggleGroup;
