@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
 import useSWR from "swr";
+import useStore from "lib/store";
 import getFilterQuery from "lib/utils/get-filter-query";
 
 interface PaginatedContributorsResponse {
@@ -10,6 +11,7 @@ interface PaginatedContributorsResponse {
 
 const useTopicContributions = (initialLimit = 10, repoIds: number[] = []) => {
   const router = useRouter();
+  const range = useStore(state => state.contributorRange);
   const { filterName, selectedFilter } = router.query;
   const topic = filterName as string;
   const [page, setPage] = useState(1);
@@ -20,7 +22,8 @@ const useTopicContributions = (initialLimit = 10, repoIds: number[] = []) => {
   const filterQuery = getFilterQuery(selectedFilter);
   const limitQuery = limit ? `&limit=${limit}` : "";
   const reposQuery = repoIds.length > 0 ? `&repoIds=${repoIds.join(",")}`: "";
-  const endpointString = `${baseEndpoint}?${pageQuery}${filterQuery}${limitQuery}${reposQuery}`;
+  const rangeQuery = range ? `&range=${range}` : "";
+  const endpointString = `${baseEndpoint}?${pageQuery}${filterQuery}${limitQuery}${reposQuery}${rangeQuery}`;
 
   const { data, error, mutate } = useSWR<PaginatedContributorsResponse, Error>(topic ? endpointString : null);
 
