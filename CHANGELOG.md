@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.21.0-beta.2](https://github.com/open-sauced/insights/compare/v1.21.0-beta.1...v1.21.0-beta.2) (2022-12-16)
+
+
+### 🐛 Bug Fixes
+
+* correct lock file ([96696cc](https://github.com/open-sauced/insights/commit/96696ccb9b2c74ed4c7d90b53b13e3eaf1eb41c8))
+
 ## [1.21.0-beta.1](https://github.com/open-sauced/insights/compare/v1.20.0...v1.21.0-beta.1) (2022-12-16)
 
 
