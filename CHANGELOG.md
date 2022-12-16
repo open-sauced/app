@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.20.0-beta.13](https://github.com/open-sauced/insights/compare/v1.20.0-beta.12...v1.20.0-beta.13) (2022-12-15)
+
+
+### 🍕 Features
+
+* add X button to clear search bar ([#659](https://github.com/open-sauced/insights/issues/659)) ([9564ce1](https://github.com/open-sauced/insights/commit/9564ce17d00012445c08f4f8dcac4c7e2bea716e))
+
 ## [1.20.0-beta.12](https://github.com/open-sauced/insights/compare/v1.20.0-beta.11...v1.20.0-beta.12) (2022-12-13)
 
 
