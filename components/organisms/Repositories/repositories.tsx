@@ -1,6 +1,7 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import clsx from "clsx";
+import { FaArrowDown, FaArrowUp } from "react-icons/fa";
 
 import Select from "components/atoms/Select/custom-select";
 import TableTitle from "components/atoms/TableTitle/table-title";
@@ -20,6 +21,7 @@ interface RepositoriesProps {
 }
 
 const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
+  const [skipFilter, setSkipFilter] = useState(false);
   const { user } = useSupabaseAuth();
   const router = useRouter();
   const { filterName, toolName, selectedFilter, userOrg } = router.query;
@@ -33,11 +35,21 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
     isError: repoListIsError,
     isLoading: repoListIsLoading,
     page,
+    orderBy,
+    orderDirection,
     setPage,
     setLimit,
-    setOrderBy
-  } = useRepositoriesList(true, repositories);
+    setOrderBy,
+    setOrderDirection
+  } = useRepositoriesList(skipFilter, repositories);
   const filteredRepoNotIndexed = selectedFilter && !repoListIsLoading && !repoListIsError && repoListData.length === 0;
+
+  const toggleFilter = (filter: string) => {
+    setSkipFilter(true);
+    setOrderBy(filter);
+    setOrderDirection(orderDirection === "ASC" ? "DESC" : "ASC" );
+    router.push(`/${topic}/${toolName}/filter/${selectedFilter}?sort=${orderDirection === "ASC" ? "DESC" : "ASC"}`);
+  };
 
   const handleOnSearch = (search?: string) => {
     if (search && /^[a-zA-Z0-9\-\.]+\/[a-zA-Z0-9\-\.]+$/.test(search)) {
@@ -69,15 +81,18 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
       <div className="flex flex-col rounded-lg overflow-hidden border">
         <div className="flex md:hidden justify-between  py-4 px-6 bg-light-slate-3 gap-2">
           <div className="flex-1" >
-            <TableTitle text="Repository" handleClick={() => console.log("clicked!")}  />
+            <TableTitle text="Repository" />
           </div>
           <div className="flex-1">
             <TableTitle text="Pr Overview"></TableTitle>
           </div>
         </div>
         <div className="hidden md:flex py-4 px-6 bg-light-slate-3 gap-2">
-          <div className={clsx(classNames.cols.repository)}>
+          <div className={clsx(classNames.cols.repository, "flex items-center cursor-pointer")}  onClick={() => toggleFilter("name")}>
             <TableTitle text="Repository"></TableTitle>
+            {orderBy === "name" && orderDirection === "ASC" ? <FaArrowUp className="text-light-slate-11 ml-4" fontSize={16} /> :
+              <FaArrowDown className="text-light-slate-11 ml-4" fontSize={16} />
+            }
           </div>
           <div className={clsx(classNames.cols.activity)}>
             <TableTitle text="Activity"></TableTitle>

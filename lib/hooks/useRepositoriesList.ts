@@ -13,13 +13,11 @@ const useRepositoriesList = (skipFilters = false, repoIds: number[] = []) => {
   const router = useRouter();
   const { filterName, selectedFilter } = router.query;
   const topic = filterName as string;
-  console.log({topic, selectedFilter});
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
   const [orderBy, setOrderBy] = useState("stars");
   const [orderDirection, setOrderDirection] = useState("DESC");
   const range = useStore(state => state.range);
-
   const baseEndpoint = !skipFilters ? `${topic}/repos` : "repos/list";
   const pageQuery = page ? `page=${page}` : "";
   const filterQuery = getFilterQuery(selectedFilter);
@@ -29,7 +27,6 @@ const useRepositoriesList = (skipFilters = false, repoIds: number[] = []) => {
   const rangeQuery = range ? `&range=${range}` : "";
   const reposQuery = repoIds.length > 0 ? `&repoIds=${repoIds.join(",")}`: "";
   const endpointString = `${baseEndpoint}?${pageQuery}${limitQuery}${rangeQuery}${reposQuery}${!skipFilters ? filterQuery : ""}${orderByQuery}${orderDirectionQuery}`;
-  console.log({endpointString, reposQuery, orderBy, orderDirection, range, limit, page});
   const { data, error, mutate } = useSWR<PaginatedRepoResponse, Error>(topic ? endpointString : null);
 
   return {
@@ -39,6 +36,8 @@ const useRepositoriesList = (skipFilters = false, repoIds: number[] = []) => {
     isError: !!error,
     mutate,
     page,
+    orderBy,
+    orderDirection,
     setPage,
     setLimit,
     setOrderBy,
