@@ -15,6 +15,9 @@ interface LatestPrTableRowProps {
   prIssuedTime: string;
   noOfFilesChanged: number;
   noOfLinesChanged: number;
+  repoName: string;
+  repoOwner: string;
+  prNumber: number;
 }
 const LatestPrTableRow = ({
   prName,
@@ -23,7 +26,10 @@ const LatestPrTableRow = ({
   prMergedTime,
   noOfFilesChanged,
   noOfLinesChanged,
-  merged
+  merged,
+  repoName,
+  repoOwner,
+  prNumber
 }: LatestPrTableRowProps) => {
   return (
     <div className="flex gap-2 items-center px-2 py-1">
@@ -49,7 +55,9 @@ const LatestPrTableRow = ({
         )}
         <Text>{calcDistanceFromToday(new Date(parseInt(prIssuedTime, 10)))}</Text>
         <Text title={prName} className="!text-light-slate-12 !w-32 md:!w-72  !truncate ">
+        <a href={`https://github.com/${repoOwner}/${repoName}/pull/${prNumber}`} target="_blank">
           {prName}
+        </a>
         </Text>
       </div>
       <div className="flex justify-end w-[calc(10%-4px)] text-sm text-light-slate-11">
