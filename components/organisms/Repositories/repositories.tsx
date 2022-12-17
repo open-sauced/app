@@ -26,14 +26,14 @@ const renderArrow = (order: string) => {
     : <FaArrowDown className="text-light-slate-11 ml-2" fontSize={16} />;
 };
 
-type FilterOptions = keyof DbRepo;
+type FilterOptions = keyof DbRepo | "prsCount";
 
 const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
-  const [orderBy, setOrderBy] = useState<FilterOptions>("name");
+  const [orderBy, setOrderBy] = useState<FilterOptions | null>(null);
   const [orderDirection, setOrderDirection] = useState("");
   const { user } = useSupabaseAuth();
   const router = useRouter();
-  const { filterName, toolName, selectedFilter, userOrg } = router.query;
+  const { filterName, toolName, selectedFilter, userOrg, sortedBy } = router.query;
   const username = userOrg ? user?.user_metadata.user_name : undefined;
   const topic = filterName as string;
   const store = useStore();
@@ -54,7 +54,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
   const toggleFilter = (filter: FilterOptions) => {
     setOrderBy(filter);
     setOrderDirection(orderDirection === "ASC" ? "DESC" : "ASC" );
-    router.push(`/${topic}/${toolName}/filter/${selectedFilter}?sort=${orderDirection === "ASC" ? "DESC" : "ASC"}`);
+    router.push(`/${topic}/${toolName}/filter/${selectedFilter}?sortedBy=${filter}&sort=${orderDirection === "ASC" ? "DESC" : "ASC"}`);
   };
 
   const handleOnSearch = (search?: string) => {
@@ -64,6 +64,10 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
       router.push(`/${topic}/${toolName}`);
     }
   };
+
+  useEffect(() => {
+    if (!sortedBy) setOrderBy(null);
+  }, [sortedBy]);
 
   useEffect(() => {
     setPage(1);
@@ -101,9 +105,9 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
           <div className={clsx(classNames.cols.activity)}>
             <TableTitle text="Activity"></TableTitle>
           </div>
-          <div className={clsx(classNames.cols.prOverview, "flex items-center cursor-pointer")} onClick={() => toggleFilter("mergedPrsCount")}>
+          <div className={clsx(classNames.cols.prOverview, "flex items-center cursor-pointer")} onClick={() => toggleFilter("prsCount")}>
             <TableTitle text="PR Overview"></TableTitle>
-            {orderBy === "mergedPrsCount" ? renderArrow(orderDirection) : null}
+            {orderBy === "prsCount" ? renderArrow(orderDirection) : null}
           </div>
           <div className={clsx(classNames.cols.prVelocity, "flex items-center cursor-pointer")} onClick={() => toggleFilter("prVelocityCount")}>
             <TableTitle text="PR Velocity"></TableTitle>

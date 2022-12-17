@@ -1,21 +1,28 @@
 import { useEffect, useState } from "react";
 
-function useFilterRepos<T>(filterName: keyof T, orderDirection: string, repos: T[]) {
-  const [filteredRepos, setFilteredRepos] = useState<T[]>(repos ?? []);
+type FilterOptions = keyof DbRepo | "prsCount" | null
+
+const useFilterRepos = (filterName: FilterOptions, orderDirection: string, repos: DbRepo[]) => {
+  const [filteredRepos, setFilteredRepos] = useState<DbRepo[]>(repos ?? []);
 
   useEffect(() => {
-    if (repos.length > 0) {
+    if (repos.length > 0 && filterName) {
       const sortedRepos = repos.sort((a, b) => {
-        if (filterName === "mergedPrsCount") {
+        if (filterName === "prsCount") {
           if (isDbRepo(a) && isDbRepo(b)) {
             return getTotalPrs(a.openPrsCount, a.mergedPrsCount, a.closedPrsCount, a.draftPrsCount) - getTotalPrs(b.openPrsCount, b.mergedPrsCount, b.closedPrsCount, b.draftPrsCount);
           }
         }
-        if (typeof a[filterName] === "string") {
-          return (a[filterName] as string).localeCompare(b[filterName] as string);
-        } else {
-          return (a[filterName] as number) - (b[filterName] as number);
+
+        if(isKeyofDbRepo(filterName)) {
+          if (typeof a[filterName] === "string") {
+            return (a[filterName] as string).localeCompare(b[filterName] as string);
+          } else {
+            return (a[filterName] as number) - (b[filterName] as number);
+          }
         }
+
+        return 0;
       });
 
       if (orderDirection === "ASC") {
@@ -24,10 +31,10 @@ function useFilterRepos<T>(filterName: keyof T, orderDirection: string, repos: T
 
       setFilteredRepos(sortedRepos);
     }
-  }, [repos, filterName,orderDirection]);
+  }, [repos, filterName, orderDirection]);
 
   return { filteredRepos };
-}
+};
 
 export default useFilterRepos;
 
@@ -53,4 +60,8 @@ const getTotalPrs = (
 
 function isDbRepo(repo: any): repo is DbRepo {
   return (repo as DbRepo).owner !== undefined;
+}
+
+function isKeyofDbRepo(filter: any): filter is keyof DbRepo {
+  return (filter as DbRepo).owner !== undefined;
 }
