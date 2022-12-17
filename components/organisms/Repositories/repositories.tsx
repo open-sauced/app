@@ -15,40 +15,21 @@ import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import RepositoriesTable, { classNames } from "../RepositoriesTable/repositories-table";
 import RepoNotIndexed from "./repository-not-indexed";
 import useStore from "lib/store";
+import useFilterRepos from "lib/hooks/useFilterRepos";
 
 interface RepositoriesProps {
   repositories?: number[];
 }
 
-// ! this is a duplicate of the function
-// ! in components/molecules/RepoRow/repo-row.tsx
-const getTotalPrs = (
-  openPrsCount?: number,
-  mergedPrsCount?: number,
-  closedPrsCount?: number,
-  draftPrsCount?: number
-): number => {
-  const open = openPrsCount || 0;
-  const merged = mergedPrsCount || 0;
-  const closed = closedPrsCount || 0;
-  const drafts = draftPrsCount || 0;
-
-  const total = open + closed + merged - drafts;
-
-  if (total <= 0) {
-    return 0;
-  }
-
-  return total;
-};
-
 const renderArrow = (order: string) => {
-  return order === "ASC" ? <FaArrowUp className="text-light-slate-11 ml-4" fontSize={16} />
-    : <FaArrowDown className="text-light-slate-11 ml-4" fontSize={16} />;
+  return order === "ASC" ? <FaArrowUp className="text-light-slate-11 ml-2" fontSize={16} />
+    : <FaArrowDown className="text-light-slate-11 ml-2" fontSize={16} />;
 };
+
+type FilterOptions = keyof DbRepo;
 
 const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
-  const [orderBy, setOrderBy] = useState("");
+  const [orderBy, setOrderBy] = useState<FilterOptions>("name");
   const [orderDirection, setOrderDirection] = useState("");
   const { user } = useSupabaseAuth();
   const router = useRouter();
@@ -68,26 +49,10 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
   } = useRepositoriesList(false, repositories);
   const filteredRepoNotIndexed = selectedFilter && !repoListIsLoading && !repoListIsError && repoListData.length === 0;
 
-  type FilterOptions = keyof typeof repoListData[0]
+  const {filteredRepos } = useFilterRepos(orderBy, orderDirection, repoListData);
 
   const toggleFilter = (filter: FilterOptions) => {
     setOrderBy(filter);
-
-    repoListData?.sort((a, b) => {
-      if (filter === "mergedPrsCount") {
-        return getTotalPrs(a.openPrsCount, a.mergedPrsCount, a.closedPrsCount, a.draftPrsCount) - getTotalPrs(b.openPrsCount, b.mergedPrsCount, b.closedPrsCount, b.draftPrsCount);
-      }
-      if (typeof a[filter] === "string") {
-        return (a[filter] as string).localeCompare(b[filter] as string);
-      } else {
-        return (a[filter] as number) - (b[filter] as number);
-      }
-    });
-
-    if (orderDirection === "ASC") {
-      repoListData.reverse();
-    }
-
     setOrderDirection(orderDirection === "ASC" ? "DESC" : "ASC" );
     router.push(`/${topic}/${toolName}/filter/${selectedFilter}?sort=${orderDirection === "ASC" ? "DESC" : "ASC"}`);
   };
@@ -130,31 +95,23 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
         </div>
         <div className="hidden md:flex py-4 px-6 bg-light-slate-3 gap-2">
           <div className={clsx(classNames.cols.repository, "flex items-center cursor-pointer")}  onClick={() => toggleFilter("name")}>
-            <>
-              <TableTitle text="Repository"></TableTitle>
-              {orderBy === "name" ? renderArrow(orderDirection) : null }
-            </>
+            <TableTitle text="Repository"></TableTitle>
+            {orderBy === "name" ? renderArrow(orderDirection) : null }
           </div>
           <div className={clsx(classNames.cols.activity)}>
             <TableTitle text="Activity"></TableTitle>
           </div>
           <div className={clsx(classNames.cols.prOverview, "flex items-center cursor-pointer")} onClick={() => toggleFilter("mergedPrsCount")}>
-            <>
-              <TableTitle text="PR Overview"></TableTitle>
-              {orderBy === "mergedPrsCount" ? renderArrow(orderDirection) : null}
-            </>
+            <TableTitle text="PR Overview"></TableTitle>
+            {orderBy === "mergedPrsCount" ? renderArrow(orderDirection) : null}
           </div>
           <div className={clsx(classNames.cols.prVelocity, "flex items-center cursor-pointer")} onClick={() => toggleFilter("prVelocityCount")}>
-            <>
-              <TableTitle text="PR Velocity"></TableTitle>
-              {orderBy === "prVelocityCount" ? renderArrow(orderDirection) : null}
-            </>
+            <TableTitle text="PR Velocity"></TableTitle>
+            {orderBy === "prVelocityCount" ? renderArrow(orderDirection) : null}
           </div>
           <div className={clsx(classNames.cols.spam, "flex items-center cursor-pointer")} onClick={() => toggleFilter("spamPrsCount")}>
-            <>
-              <TableTitle text="SPAM"></TableTitle>
-              {orderBy === "spamPrsCount" ? renderArrow(orderDirection) : null}
-            </>
+            <TableTitle text="SPAM"></TableTitle>
+            {orderBy === "spamPrsCount" ? renderArrow(orderDirection) : null}
           </div>
           <div className={clsx(classNames.cols.contributors, "hidden lg:flex")}>
             <TableTitle text="Contributors"></TableTitle>
@@ -168,7 +125,8 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
           topic={topic}
           error={repoListIsError}
           loading={repoListIsLoading}
-          listOfRepositories={repoListData}
+          listOfRepositories={filteredRepos.length > 0 ? filteredRepos : repoListData}
+          // listOfRepositories={repoListData}
           user={username}
           repo={selectedFilter}
         />
