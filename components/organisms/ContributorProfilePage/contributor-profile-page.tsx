@@ -21,6 +21,9 @@ interface PrObjectType {
   prMergedTime: string;
   noOfFilesChanged: number;
   noOfLinesChanged: number;
+  repoName: string;
+  repoOwner: string;
+  prNumber: number;
 }
 
 interface ContributorProfilePageProps {
