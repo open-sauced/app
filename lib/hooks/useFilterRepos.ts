@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 function useFilterRepos<T>(filterName: keyof T, orderDirection: string, repos: T[]) {
-  const [filteredRepos, setFilteredRepos] = useState<T[]>([]);
+  const [filteredRepos, setFilteredRepos] = useState<T[]>(repos ?? []);
 
   useEffect(() => {
     if (repos.length > 0) {

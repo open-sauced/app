@@ -49,7 +49,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
   } = useRepositoriesList(false, repositories);
   const filteredRepoNotIndexed = selectedFilter && !repoListIsLoading && !repoListIsError && repoListData.length === 0;
 
-  const {filteredRepos } = useFilterRepos(orderBy, orderDirection, repoListData);
+  const { filteredRepos } = useFilterRepos(orderBy, orderDirection, repoListData);
 
   const toggleFilter = (filter: FilterOptions) => {
     setOrderBy(filter);
@@ -125,8 +125,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
           topic={topic}
           error={repoListIsError}
           loading={repoListIsLoading}
-          listOfRepositories={filteredRepos.length > 0 ? filteredRepos : repoListData}
-          // listOfRepositories={repoListData}
+          listOfRepositories={filteredRepos}
           user={username}
           repo={selectedFilter}
         />
