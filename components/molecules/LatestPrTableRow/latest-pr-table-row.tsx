@@ -55,9 +55,9 @@ const LatestPrTableRow = ({
         )}
         <Text>{calcDistanceFromToday(new Date(parseInt(prIssuedTime, 10)))}</Text>
         <Text title={prName} className="!text-light-slate-12 !w-32 md:!w-72  !truncate ">
-        <a href={`https://github.com/${repoOwner}/${repoName}/pull/${prNumber}`} target="_blank">
-          {prName}
-        </a>
+          <a href={`https://github.com/${repoOwner}/${repoName}/pull/${prNumber}`} target="_blank" rel="noreferrer">
+            {prName}
+          </a>
         </Text>
       </div>
       <div className="flex justify-end w-[calc(10%-4px)] text-sm text-light-slate-11">

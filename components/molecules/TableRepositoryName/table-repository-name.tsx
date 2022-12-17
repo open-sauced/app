@@ -17,7 +17,7 @@ const TableRepositoryName = ({ avatarURL, name, handle, topic, user }: TableRepo
   return (
     <div className="flex items-center gap-2.5">
       {/* Avatar */}
-      <a href={`https://www.github.com/${handle}/${name}`} target="_blank">
+      <a href={`https://www.github.com/${handle}/${name}`} target="_blank" rel="noreferrer">
         <Avatar className="shrink-0 min-w-10 min-h-10" size={40} avatarURL={avatarURL} isCircle={false} />
       </a>
 
