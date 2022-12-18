@@ -15,9 +15,9 @@ interface SortedBySelectorProps {
 
 const SortedOrders = {
   "name": "Repository",
-  "prsCount": "Pull requests count",
-  "prVelocityCount": "Pull requests velocity",
-  "spamPrsCount": "Spam pull requests count"
+  "prsCount": "PR Count",
+  "prVelocityCount": "PR Velocity",
+  "spamPrsCount": "Spam"
 };
 
 const SortedBySelector: React.FC<SortedBySelectorProps> = ({
