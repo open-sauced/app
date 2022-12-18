@@ -34,7 +34,12 @@ const ContributorHoverCard = ({
   return (
     <div className="w-[364px] bg-white gap-4 p-3 rounded-lg shadow-superlative flex flex-col">
       <div>
-        <CardProfile dateOfFirstPR={calculatedDateFromToday} githubName={githubName} totalPRs={totalPR} />
+        <CardProfile
+          dateOfFirstPR={calculatedDateFromToday}
+          githubAvatar={githubAvatar}
+          githubName={githubName}
+          totalPRs={totalPR}
+        />
       </div>
       <div className="">
         <ContributorTable limit={5} contributor={githubName} topic={topic} />
