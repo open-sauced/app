@@ -1,13 +1,14 @@
+import { useRouter } from "next/router";
 import { MouseEvent, useCallback, useState } from "react";
 
 import { ResponsiveScatterPlot } from "@nivo/scatterplot";
 import { animated } from "@react-spring/web";
 
 import humanizeNumber from "lib/utils/humanizeNumber";
+
 import ToggleOption from "components/atoms/ToggleOption/toggle-option";
 import Title from "components/atoms/Typography/title";
 import HoverCardWrapper from "../HoverCardWrapper/hover-card-wrapper";
-import { useRouter } from "next/router";
 export interface ScatterChartDataItems {
   x: string | number;
   y: string | number;
