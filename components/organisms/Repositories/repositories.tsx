@@ -33,7 +33,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
   const [orderDirection, setOrderDirection] = useState("");
   const { user } = useSupabaseAuth();
   const router = useRouter();
-  const { filterName, toolName, selectedFilter, userOrg, sortedBy } = router.query;
+  const { filterName, toolName, selectedFilter, userOrg, orderBy: orderByQuery } = router.query;
   const username = userOrg ? user?.user_metadata.user_name : undefined;
   const topic = filterName as string;
   const store = useStore();
@@ -66,8 +66,8 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
   };
 
   useEffect(() => {
-    if (!sortedBy) setOrderBy(null);
-  }, [sortedBy]);
+    if (!orderByQuery) setOrderBy(null);
+  }, [orderByQuery]);
 
   useEffect(() => {
     setPage(1);

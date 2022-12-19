@@ -30,7 +30,13 @@ const HeaderFilter = () => {
     router.push(`/${filterName}/${toolName}`);
   };
 
-  const cancelSorting = () => router.push(`/${filterName}/${toolName}/filter/${selectedFilter}`);
+  const cancelSorting = () => {
+    if (selectedFilter) {
+      router.push(`/${filterName}/${toolName}/filter/${selectedFilter}`);
+    }
+
+    router.push(`/${filterName}/${toolName}`);
+  };
 
   return (
     <>
