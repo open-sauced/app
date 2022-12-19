@@ -5,6 +5,27 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.22.0-beta.4](https://github.com/open-sauced/insights/compare/v1.22.0-beta.3...v1.22.0-beta.4) (2022-12-19)
+
+
+### 🍕 Features
+
+* implement hover card functionality on scatterchart ([#643](https://github.com/open-sauced/insights/issues/643)) ([8249eb8](https://github.com/open-sauced/insights/commit/8249eb8ae822592f64cc5bc07836583d16641606))
+
+## [1.22.0-beta.3](https://github.com/open-sauced/insights/compare/v1.22.0-beta.2...v1.22.0-beta.3) (2022-12-19)
+
+
+### 🍕 Features
+
+* link repos, prs, and contributors to GitHub ([#658](https://github.com/open-sauced/insights/issues/658)) ([79d16d0](https://github.com/open-sauced/insights/commit/79d16d0f7e76485b9ed9288e18753eac866516cc)), closes [#670](https://github.com/open-sauced/insights/issues/670) [#620](https://github.com/open-sauced/insights/issues/620) [#669](https://github.com/open-sauced/insights/issues/669)
+
+## [1.22.0-beta.2](https://github.com/open-sauced/insights/compare/v1.22.0-beta.1...v1.22.0-beta.2) (2022-12-19)
+
+
+### 🐛 Bug Fixes
+
+* handle caching issues with local storage ([#676](https://github.com/open-sauced/insights/issues/676)) ([e332d84](https://github.com/open-sauced/insights/commit/e332d84bafbe830bf269a62e14a4a9e93fb34eb2)), closes [#617](https://github.com/open-sauced/insights/issues/617)
+
 ## [1.22.0-beta.1](https://github.com/open-sauced/insights/compare/v1.21.0...v1.22.0-beta.1) (2022-12-16)
 
 
