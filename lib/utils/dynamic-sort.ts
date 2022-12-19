@@ -13,13 +13,15 @@ function dynamicSort<T>(arg: sortArg<T>) {
     sortOrder = -1;
     key = arg.substring(1) as keyof T;
   } else {
-    key = arg as keyof T;
+    key = arg as string as keyof T;
   }
 
   return function (a: T,b: T) {
-    const result = (a[key] < b[key]) ? -1 : (a[key] > b[key]) ? 1 : 0;
+    const result = (typeof a[key] === "string") ? (lowerFirst(a[key] as string)).localeCompare(lowerFirst(b[key] as string)) : (a[key] < b[key]) ? -1 : (a[key] > b[key]) ? 1 : 0;
     return result * sortOrder;
   };
 }
 
 export default dynamicSort;
+
+const lowerFirst = (str: string) => str.charAt(0).toLowerCase() + str.slice(1);
