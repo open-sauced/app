@@ -5,15 +5,19 @@ import Text from "components/atoms/Typography/text";
 import CardHorizontalBarChart, {
   LanguageObject
 } from "components/molecules/CardHorizontalBarChart/card-horizontal-bar-chart";
+import color from "lib/utils/color.json";
 import ContributorProfileHeader from "components/molecules/ContributorProfileHeader/contributor-profile-header";
 import { ContributorObject } from "../ContributorCard/contributor-card";
 import CardLineChart from "components/molecules/CardLineChart/card-line-chart";
-import CardRepoList from "components/molecules/CardRepoList/card-repo-list";
+import CardRepoList, { RepoList } from "components/molecules/CardRepoList/card-repo-list";
 import LatestPrTableRow from "components/molecules/LatestPrTableRow/latest-pr-table-row";
 import LatestPrTableHeader from "components/molecules/LatestPrTableHeader/latest-pr-table-header";
 
 import TestRepoAvatar from "public/icons/test-repo-avatar.svg";
+import ContributorTable from "components/molecules/ContributorTable/contributor-table";
+import { useTopicContributorCommits } from "lib/hooks/useTopicContributorCommits";
 
+const colorKeys = Object.keys(color);
 interface PrObjectType {
   prName: string;
   prStatus: string;
@@ -31,95 +35,45 @@ interface ContributorProfilePageProps {
   topic?: string;
   repositories?: number[];
   listOfPRs: PrObjectType[];
+  githubAvatar?: string;
+  githubName: string;
+  langList: string[];
+  repoList: RepoList[];
 }
-const ContributorProfilePage = ({ contributor, topic, repositories, listOfPRs }: ContributorProfilePageProps) => {
-  const languageList: LanguageObject[] = [
-    { languageName: "html", percentageUsed: 40 },
-    { languageName: "php", percentageUsed: 30 },
-    { languageName: "javascript", percentageUsed: 10 },
-    { languageName: "python", percentageUsed: 10 },
-    { languageName: "css", percentageUsed: 10 }
-  ];
-  const chart = {
-    xAxis: {
-      type: "category",
-      boundaryGap: false,
-      axisLabel: true,
-      data: ["Jan 1, 2022", "Jan 15, 2022", "Feb 1, 2022"]
-    },
-    yAxis: {
-      type: "value",
-      splitNumber: 1,
-      axisLabel: false,
-      splitLine: {
-        lineStyle: {
-          type: "dashed"
-        }
-      }
-    },
-    grid: {
-      height: 100,
-      top: 0,
-      bottom: 0,
-      right: 0,
-      left: 0
-    },
-    series: [
-      {
-        data: [820, 932, 901, 934, 1290, 1330, 1320],
-        type: "line",
-        smooth: true,
-        showSymbol: false,
-        lineStyle: {
-          color: "#ff9800"
-        },
-        areaStyle: {
-          color: "#FFB74D",
-          opacity: 0.6
-        }
-      }
-    ]
-  };
+const ContributorProfilePage = ({
+  contributor,
+  topic,
+  repositories,
+  listOfPRs,
+  githubAvatar,
+  githubName,
+  langList,
+  repoList
+}: ContributorProfilePageProps) => {
+  const languageList = langList?.map((language) => {
+    const preparedLanguageKey = colorKeys.find((key) => key.toLowerCase() === language.toLowerCase());
 
-  const repoList = [
-    {
-      repoName: "Nextjs",
-      repoIcon: TestRepoAvatar
-    },
-    {
-      repoName: "opensauced/hot",
-      repoIcon: TestRepoAvatar
-    },
-    {
-      repoName: "React/react-native",
-      repoIcon: TestRepoAvatar
-    },
-    {
-      repoName: "test4",
-      repoIcon: TestRepoAvatar
-    },
-    {
-      repoName: "test5",
-      repoIcon: TestRepoAvatar
-    },
-    {
-      repoName: "test6",
-      repoIcon: TestRepoAvatar
-    }
-  ];
+    return {
+      languageName: preparedLanguageKey ? preparedLanguageKey : language,
+      percentageUsed: Math.round((1 / langList.length) * 100)
+    };
+  });
+
+  const { chart } = useTopicContributorCommits(githubName, "javascript", repositories);
 
   return (
     <div>
-      <ContributorProfileHeader avatarUrl="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1064&q=80" />
-      <div className="pt-24 md:px-10 lg:px-16 flex flex-col lg:flex-row justify-between">
+      <ContributorProfileHeader avatarUrl={githubAvatar} />
+      <div className="pt-24 px-4 md:px-10 lg:px-16 flex flex-col lg:flex-row justify-between">
         <div className="flex flex-col w-64 gap-4">
           <div className="pb-6 border-b">
             <Title className="!text-2xl !text-light-slate-12" level={3}>
-              Nate Moore{" "}
+              {githubName}
             </Title>
-            <span className="text-light-slate-11 text-sm">@natemoo-re</span>
+            <span className="text-light-slate-11 text-sm">{`@${githubName}`}</span>
           </div>
           <div>
+            <p className="mb-4 ">Language</p>
             <CardHorizontalBarChart languageList={languageList} />
           </div>
         </div>
@@ -130,7 +84,7 @@ const ContributorProfilePage = ({ contributor, topic, repositories, listOfPRs }:
             </Title>
           </div>
           <div className="bg-white mt-4 rounded-2xl border p-2 md:p-6">
-            <div className="flex flex-col lg:flex-row gap-2 md:gap-12 lg:gap-16 justify-between">
+            <div className=" flex-col hidden lg:flex-row gap-2 md:gap-12 lg:gap-16 justify-between">
               <div>
                 <span className="text-xs text-light-slate-11">PRs opened</span>
                 <div className="flex justify-between gap-2 items-end pr-8 mt-1">
@@ -179,11 +133,8 @@ const ContributorProfilePage = ({ contributor, topic, repositories, listOfPRs }:
               <CardRepoList limit={7} repoList={repoList} />
             </div>
 
-            <LatestPrTableHeader />
-            <div>
-              {listOfPRs.map((prs, index) => (
-                <LatestPrTableRow key={`${(prs.noOfFilesChanged * index) / 55}`} {...prs} />
-              ))}
+            <div className="mt-6">
+              <ContributorTable limit={15} contributor={githubName} topic={"javascript"} repositories={undefined} />
             </div>
             <div className="mt-8 text-light-slate-9 text-sm">
               <p>The data for these contributions is from publicly available open source projects on GitHub.</p>
