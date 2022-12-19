@@ -13,7 +13,10 @@ const listOfPRs = [
     prIssuedTime: "2mo",
     prMergedTime: "2mo",
     noOfFilesChanged: 13,
-    noOfLinesChanged: 837
+    noOfLinesChanged: 837,
+    repoName: "open-sauced",
+    repoOwner: "open-sauced",
+    prNumber: 1
   },
   {
     prName: "Merging some work",
@@ -21,7 +24,10 @@ const listOfPRs = [
     prIssuedTime: "2mo",
     prMergedTime: "2mo",
     noOfFilesChanged: 13,
-    noOfLinesChanged: 837
+    noOfLinesChanged: 837,
+    repoName: "open-sauced",
+    repoOwner: "open-sauced",
+    prNumber: 2
   },
   {
     prName: "Merging some work",
@@ -29,7 +35,10 @@ const listOfPRs = [
     prIssuedTime: "2mo",
     prMergedTime: "2mo",
     noOfFilesChanged: 13,
-    noOfLinesChanged: 837
+    noOfLinesChanged: 837,
+    repoName: "open-sauced",
+    repoOwner: "open-sauced",
+    prNumber: 3
   },
   {
     prName: "Merging some work",
@@ -37,7 +46,10 @@ const listOfPRs = [
     prIssuedTime: "2mo",
     prMergedTime: "2mo",
     noOfFilesChanged: 13,
-    noOfLinesChanged: 837
+    noOfLinesChanged: 837,
+    repoName: "open-sauced",
+    repoOwner: "open-sauced",
+    prNumber: 4
   }
 ];
 

@@ -1,4 +1,5 @@
 import useSWR from "swr";
+import useStore from "lib/store";
 
 interface PaginatedContributorsResponse {
   readonly data: DbContribution[];
@@ -6,11 +7,15 @@ interface PaginatedContributorsResponse {
 }
 
 const useContributionsList = (repoId: string, limit = "", orderBy = "") => {
+  const range = useStore(state => state.range);
+
   //The endpoint for all Hacktoberfest contributions doesn't exist yet so will substitute this for now
   const baseEndpoint = `repos/${repoId}/contributions`;
   const limitQuery = `orderBy=last_commit_time${limit === "" ? limit : `&limit=${limit}`}`;
   const orderByQuery = orderBy ? `&updated_at=${orderBy}` : "";
-  const endpointString = `${baseEndpoint}?${limitQuery}${orderByQuery}`;
+  const rangeQuery = range ? `&range=${range}` : "";
+  const endpointString = `${baseEndpoint}?${limitQuery}${orderByQuery}${rangeQuery}`;
+
 
   const { data, error, mutate } = useSWR<PaginatedContributorsResponse, Error>(repoId ? endpointString : null);
 
