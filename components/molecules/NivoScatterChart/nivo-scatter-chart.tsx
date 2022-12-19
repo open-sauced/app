@@ -25,8 +25,17 @@ interface ScatterPlotProps {
     data: ScatterChartDataItems[];
   }[];
   isMobile?: boolean;
+  repositories?: number[];
 }
-const NivoScatterPlot = ({ data, maxFilesModified, title, setShowBots, showBots, isMobile }: ScatterPlotProps) => {
+const NivoScatterPlot = ({
+  data,
+  maxFilesModified,
+  title,
+  setShowBots,
+  showBots,
+  isMobile,
+  repositories
+}: ScatterPlotProps) => {
   const [showMembers, setShowMembers] = useState<boolean>(false);
   const [isLogarithmic, setIsLogarithmic] = useState<boolean>(false);
 
@@ -82,7 +91,7 @@ const NivoScatterPlot = ({ data, maxFilesModified, title, setShowBots, showBots,
       </div>
       <div className="h-[400px]">
         <ResponsiveScatterPlot
-          tooltip={({ node }) => <HoverCardWrapper username={node.data.contributor} />}
+          tooltip={({ node }) => <HoverCardWrapper repositories={repositories} username={node.data.contributor} />}
           nodeSize={isMobile ? 25 : 35}
           data={isMobile ? filteredData : data}
           margin={{ top: 30, right: isMobile ? 30 : 60, bottom: 70, left: isMobile ? 75 : 90 }}

@@ -7,8 +7,9 @@ import ContributorHoverCard, { ContributorsProfileType } from "../ContributorHov
 
 interface HoverCardWrapperProps {
   username: string;
+  repositories?: number[]
 }
-const HoverCardWrapper = ({ username }: HoverCardWrapperProps) => {
+const HoverCardWrapper = ({ username, repositories }: HoverCardWrapperProps) => {
   const router = useRouter();
   const { filterName } = router.query;
   const topic = filterName as string;
@@ -46,6 +47,7 @@ const HoverCardWrapper = ({ username }: HoverCardWrapperProps) => {
           githubName={profile.githubName}
           repoList={repoList}
           topic={topic}
+          repositories={repositories}
         />
       )}
     </>

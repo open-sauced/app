@@ -18,13 +18,15 @@ interface ContributorHoverCardProps {
   totalPR: number;
   dateOfFirstPr: string;
   topic?: string;
+  repositories?: number[];
 }
 const ContributorHoverCard = ({
   repoList,
   githubName,
   totalPR,
   dateOfFirstPr,
-  githubAvatar
+  githubAvatar,
+  repositories
 }: ContributorHoverCardProps) => {
   const router = useRouter();
   const { filterName } = router.query;
@@ -42,7 +44,7 @@ const ContributorHoverCard = ({
         />
       </div>
       <div className="">
-        <ContributorTable limit={5} contributor={githubName} topic={topic} />
+        <ContributorTable isHoverCard repositories={repositories} limit={5} contributor={githubName} topic={topic} />
       </div>
 
       <div>
