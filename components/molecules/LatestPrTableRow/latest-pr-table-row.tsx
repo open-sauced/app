@@ -17,6 +17,9 @@ interface LatestPrTableRowProps {
   noOfFilesChanged: number;
   noOfLinesChanged: number;
   isHoverCard?: boolean;
+  repoName: string;
+  repoOwner: string;
+  prNumber: number;
 }
 const LatestPrTableRow = ({
   prName,
@@ -26,7 +29,10 @@ const LatestPrTableRow = ({
   noOfFilesChanged,
   noOfLinesChanged,
   merged,
-  isHoverCard
+  isHoverCard,
+  repoName,
+  repoOwner,
+  prNumber
 }: LatestPrTableRowProps) => {
   return (
     <div className="flex gap-2 items-center px-2 py-1">
@@ -52,7 +58,9 @@ const LatestPrTableRow = ({
         )}
         <Text>{calcDistanceFromToday(new Date(parseInt(prIssuedTime, 10)))}</Text>
         <Text title={prName} className="!text-light-slate-12 !w-32 md:!w-72  !truncate ">
-          {prName}
+          <a href={`https://github.com/${repoOwner}/${repoName}/pull/${prNumber}`} target="_blank" rel="noreferrer">
+            {prName}
+          </a>
         </Text>
       </div>
       <div className={`${isHoverCard && "ml-auto"} justify-end w-[calc(10%-4px)] text-sm text-light-slate-11`}>

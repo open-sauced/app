@@ -5,6 +5,139 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.22.0-beta.3](https://github.com/open-sauced/insights/compare/v1.22.0-beta.2...v1.22.0-beta.3) (2022-12-19)
+
+
+### 🍕 Features
+
+* link repos, prs, and contributors to GitHub ([#658](https://github.com/open-sauced/insights/issues/658)) ([79d16d0](https://github.com/open-sauced/insights/commit/79d16d0f7e76485b9ed9288e18753eac866516cc)), closes [#670](https://github.com/open-sauced/insights/issues/670) [#620](https://github.com/open-sauced/insights/issues/620) [#669](https://github.com/open-sauced/insights/issues/669)
+
+## [1.22.0-beta.2](https://github.com/open-sauced/insights/compare/v1.22.0-beta.1...v1.22.0-beta.2) (2022-12-19)
+
+
+### 🐛 Bug Fixes
+
+* handle caching issues with local storage ([#676](https://github.com/open-sauced/insights/issues/676)) ([e332d84](https://github.com/open-sauced/insights/commit/e332d84bafbe830bf269a62e14a4a9e93fb34eb2)), closes [#617](https://github.com/open-sauced/insights/issues/617)
+
+## [1.22.0-beta.1](https://github.com/open-sauced/insights/compare/v1.21.0...v1.22.0-beta.1) (2022-12-16)
+
+
+### 🍕 Features
+
+* remove the top5 ([#674](https://github.com/open-sauced/insights/issues/674)) ([d0720ef](https://github.com/open-sauced/insights/commit/d0720efea7f1932fbc68f8a8af8af13e89b698ff))
+
+## [1.21.0](https://github.com/open-sauced/insights/compare/v1.20.0...v1.21.0) (2022-12-16)
+
+
+### 🍕 Features
+
+* add date filter to the contributor calendar ([#668](https://github.com/open-sauced/insights/issues/668)) ([52e2b28](https://github.com/open-sauced/insights/commit/52e2b288cedebaa28388bcc94dc7bda0af784dcf)), closes [#663](https://github.com/open-sauced/insights/issues/663)
+* add Explore to nav ([#667](https://github.com/open-sauced/insights/issues/667)) ([aa1688d](https://github.com/open-sauced/insights/commit/aa1688d8443bbedda3c2fda868205a0a69b6bf00)), closes [#661](https://github.com/open-sauced/insights/issues/661)
+* add support for custom fontsize on `CardRepoList` ([#652](https://github.com/open-sauced/insights/issues/652)) ([a61bf07](https://github.com/open-sauced/insights/commit/a61bf07b9cc81aa6c3767b188e39e55e9011b07e)), closes [#508](https://github.com/open-sauced/insights/issues/508)
+* add X button to clear search bar ([#659](https://github.com/open-sauced/insights/issues/659)) ([9564ce1](https://github.com/open-sauced/insights/commit/9564ce17d00012445c08f4f8dcac4c7e2bea716e))
+* update brand logo font weight ([#651](https://github.com/open-sauced/insights/issues/651)) ([3aa3519](https://github.com/open-sauced/insights/commit/3aa351958f09160f21fd086cff65f1dcbbefb2ae)), closes [#500](https://github.com/open-sauced/insights/issues/500)
+
+
+### 🐛 Bug Fixes
+
+* a typo ([5d9c2b5](https://github.com/open-sauced/insights/commit/5d9c2b5e7321d80bca34823f481f00b23513b3e2))
+* correct lock file ([96696cc](https://github.com/open-sauced/insights/commit/96696ccb9b2c74ed4c7d90b53b13e3eaf1eb41c8))
+* onboarding layout break on mobile ([#655](https://github.com/open-sauced/insights/issues/655)) ([9ae6d6f](https://github.com/open-sauced/insights/commit/9ae6d6f3aa5c21cd496191418b1dde6be6a9da5c)), closes [#649](https://github.com/open-sauced/insights/issues/649)
+* outside contribution suggestions ([#665](https://github.com/open-sauced/insights/issues/665)) ([577fdd6](https://github.com/open-sauced/insights/commit/577fdd669cc07e51457ec714a058ae10f24c6f66))
+* pr overview empty space ([#653](https://github.com/open-sauced/insights/issues/653)) ([8e3f846](https://github.com/open-sauced/insights/commit/8e3f84637520cbf4031c061c6b42cb261af808a8)), closes [#447](https://github.com/open-sauced/insights/issues/447)
+* replace package lock file ([849126f](https://github.com/open-sauced/insights/commit/849126f09d3166bdd815cfed2856ac48789407f6))
+* wrong command for dev ([af61a32](https://github.com/open-sauced/insights/commit/af61a32901518148bc68a0254f22d6af49df805f))
+
+## [1.21.0-beta.2](https://github.com/open-sauced/insights/compare/v1.21.0-beta.1...v1.21.0-beta.2) (2022-12-16)
+
+
+### 🐛 Bug Fixes
+
+* correct lock file ([96696cc](https://github.com/open-sauced/insights/commit/96696ccb9b2c74ed4c7d90b53b13e3eaf1eb41c8))
+
+## [1.21.0-beta.1](https://github.com/open-sauced/insights/compare/v1.20.0...v1.21.0-beta.1) (2022-12-16)
+
+
+### 🍕 Features
+
+* add date filter to the contributor calendar ([#668](https://github.com/open-sauced/insights/issues/668)) ([52e2b28](https://github.com/open-sauced/insights/commit/52e2b288cedebaa28388bcc94dc7bda0af784dcf)), closes [#663](https://github.com/open-sauced/insights/issues/663)
+* add Explore to nav ([#667](https://github.com/open-sauced/insights/issues/667)) ([aa1688d](https://github.com/open-sauced/insights/commit/aa1688d8443bbedda3c2fda868205a0a69b6bf00)), closes [#661](https://github.com/open-sauced/insights/issues/661)
+* add support for custom fontsize on `CardRepoList` ([#652](https://github.com/open-sauced/insights/issues/652)) ([a61bf07](https://github.com/open-sauced/insights/commit/a61bf07b9cc81aa6c3767b188e39e55e9011b07e)), closes [#508](https://github.com/open-sauced/insights/issues/508)
+* add X button to clear search bar ([#659](https://github.com/open-sauced/insights/issues/659)) ([9564ce1](https://github.com/open-sauced/insights/commit/9564ce17d00012445c08f4f8dcac4c7e2bea716e))
+* update brand logo font weight ([#651](https://github.com/open-sauced/insights/issues/651)) ([3aa3519](https://github.com/open-sauced/insights/commit/3aa351958f09160f21fd086cff65f1dcbbefb2ae)), closes [#500](https://github.com/open-sauced/insights/issues/500)
+
+
+### 🐛 Bug Fixes
+
+* a typo ([5d9c2b5](https://github.com/open-sauced/insights/commit/5d9c2b5e7321d80bca34823f481f00b23513b3e2))
+* onboarding layout break on mobile ([#655](https://github.com/open-sauced/insights/issues/655)) ([9ae6d6f](https://github.com/open-sauced/insights/commit/9ae6d6f3aa5c21cd496191418b1dde6be6a9da5c)), closes [#649](https://github.com/open-sauced/insights/issues/649)
+* outside contribution suggestions ([#665](https://github.com/open-sauced/insights/issues/665)) ([577fdd6](https://github.com/open-sauced/insights/commit/577fdd669cc07e51457ec714a058ae10f24c6f66))
+* pr overview empty space ([#653](https://github.com/open-sauced/insights/issues/653)) ([8e3f846](https://github.com/open-sauced/insights/commit/8e3f84637520cbf4031c061c6b42cb261af808a8)), closes [#447](https://github.com/open-sauced/insights/issues/447)
+* replace package lock file ([849126f](https://github.com/open-sauced/insights/commit/849126f09d3166bdd815cfed2856ac48789407f6))
+* wrong command for dev ([af61a32](https://github.com/open-sauced/insights/commit/af61a32901518148bc68a0254f22d6af49df805f))
+
+## [1.20.0](https://github.com/open-sauced/insights/compare/v1.19.0...v1.20.0) (2022-12-09)
+
+
+### 🐛 Bug Fixes
+
+* show percentage bar at zero percent ([#638](https://github.com/open-sauced/insights/issues/638)) ([b98cb4b](https://github.com/open-sauced/insights/commit/b98cb4bcec0a26f8a67cf06f8b4ab4a89e006f21)), closes [#632](https://github.com/open-sauced/insights/issues/632)
+* update top5 ([7a43afc](https://github.com/open-sauced/insights/commit/7a43afc95b8f9f03de33dc2bdf4cbbfec51f5b2a))
+*  create date filter component ([#623](https://github.com/open-sauced/insights/issues/623)) ([4b11709](https://github.com/open-sauced/insights/commit/4b1170992b6202aa5290bd4d310400fddfaf9b76))
+* add auth check to insights hub and redirect after onboarding ([#639](https://github.com/open-sauced/insights/issues/639)) ([8510243](https://github.com/open-sauced/insights/commit/8510243e5346054f838873f0fa86da9aa89147b4)), closes [#628](https://github.com/open-sauced/insights/issues/628)
+* add contributor profile page UI ([#648](https://github.com/open-sauced/insights/issues/648)) ([c1497af](https://github.com/open-sauced/insights/commit/c1497af9c84581ff6afa751372c3b8e22d70cba4))
+* add hover card tooltip component ([#607](https://github.com/open-sauced/insights/issues/607)) ([2385c43](https://github.com/open-sauced/insights/commit/2385c43692b36bf0f13d081bba49896e21030633)), closes [#526](https://github.com/open-sauced/insights/issues/526)
+* add Zustand for managing global state. Update global state usage ([#646](https://github.com/open-sauced/insights/issues/646)) ([7987144](https://github.com/open-sauced/insights/commit/798714473c05b51aae393b707ef68160dec63215)), closes [#642](https://github.com/open-sauced/insights/issues/642)
+* implement logarithmic scale view on chart ([#644](https://github.com/open-sauced/insights/issues/644)) ([ca3a38c](https://github.com/open-sauced/insights/commit/ca3a38c4a540667816b2a6ec6148d1cf842340d5))
+* Introduce loading skeleton to repository and contributors page ([#637](https://github.com/open-sauced/insights/issues/637)) ([3ca20f3](https://github.com/open-sauced/insights/commit/3ca20f3e32eee8ca1c2de6612e699183987c1405))
+
+## [1.20.0-beta.16](https://github.com/open-sauced/insights/compare/v1.20.0-beta.15...v1.20.0-beta.16) (2022-12-16)
+### 🍕 Features
+
+* add date filter to the contributor calendar ([#668](https://github.com/open-sauced/insights/issues/668)) ([52e2b28](https://github.com/open-sauced/insights/commit/52e2b288cedebaa28388bcc94dc7bda0af784dcf)), closes [#663](https://github.com/open-sauced/insights/issues/663)
+
+## [1.20.0-beta.15](https://github.com/open-sauced/insights/compare/v1.20.0-beta.14...v1.20.0-beta.15) (2022-12-16)
+
+
+### 🍕 Features
+
+* add Explore to nav ([#667](https://github.com/open-sauced/insights/issues/667)) ([aa1688d](https://github.com/open-sauced/insights/commit/aa1688d8443bbedda3c2fda868205a0a69b6bf00)), closes [#661](https://github.com/open-sauced/insights/issues/661)
+
+## [1.20.0-beta.14](https://github.com/open-sauced/insights/compare/v1.20.0-beta.13...v1.20.0-beta.14) (2022-12-16)
+
+
+### 🐛 Bug Fixes
+
+* outside contribution suggestions ([#665](https://github.com/open-sauced/insights/issues/665)) ([577fdd6](https://github.com/open-sauced/insights/commit/577fdd669cc07e51457ec714a058ae10f24c6f66))
+
+## [1.20.0-beta.13](https://github.com/open-sauced/insights/compare/v1.20.0-beta.12...v1.20.0-beta.13) (2022-12-15)
+
+
+### 🍕 Features
+
+* add X button to clear search bar ([#659](https://github.com/open-sauced/insights/issues/659)) ([9564ce1](https://github.com/open-sauced/insights/commit/9564ce17d00012445c08f4f8dcac4c7e2bea716e))
+
+## [1.20.0-beta.12](https://github.com/open-sauced/insights/compare/v1.20.0-beta.11...v1.20.0-beta.12) (2022-12-13)
+
+
+### 🐛 Bug Fixes
+
+* wrong command for dev ([af61a32](https://github.com/open-sauced/insights/commit/af61a32901518148bc68a0254f22d6af49df805f))
+
+## [1.20.0-beta.11](https://github.com/open-sauced/insights/compare/v1.20.0-beta.10...v1.20.0-beta.11) (2022-12-13)
+
+
+### 🐛 Bug Fixes
+
+* a typo ([5d9c2b5](https://github.com/open-sauced/insights/commit/5d9c2b5e7321d80bca34823f481f00b23513b3e2))
+
+## [1.20.0-beta.10](https://github.com/open-sauced/insights/compare/v1.20.0-beta.9...v1.20.0-beta.10) (2022-12-13)
+
+
+### 🐛 Bug Fixes
+
+* onboarding layout break on mobile ([#655](https://github.com/open-sauced/insights/issues/655)) ([9ae6d6f](https://github.com/open-sauced/insights/commit/9ae6d6f3aa5c21cd496191418b1dde6be6a9da5c)), closes [#649](https://github.com/open-sauced/insights/issues/649)
+
 ## [1.20.0-beta.9](https://github.com/open-sauced/insights/compare/v1.20.0-beta.8...v1.20.0-beta.9) (2022-12-12)
 
 
