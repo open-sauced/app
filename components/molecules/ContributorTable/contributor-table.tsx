@@ -1,5 +1,6 @@
 import { useTopicContributorPRs } from "lib/hooks/useTopicContributorPRs";
 
+import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 import LatestPrTableHeader from "../LatestPrTableHeader/latest-pr-table-header";
 import LatestPrTableRow from "../LatestPrTableRow/latest-pr-table-row";
 
@@ -58,7 +59,7 @@ const ContributorTable = ({ contributor, topic, repositories, limit, isHoverCard
       </div>
     </>
   ) : (
-    <div className="px-2 py-1">{isLoading ? "Loading..." : "There are currently no PRs..."}</div>
+    <div className="px-2 py-1">{isLoading ? <SkeletonWrapper height={20} /> : "There are currently no PRs..."}</div>
   );
 };
 

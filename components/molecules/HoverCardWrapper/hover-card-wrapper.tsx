@@ -7,7 +7,7 @@ import ContributorHoverCard, { ContributorsProfileType } from "../ContributorHov
 
 interface HoverCardWrapperProps {
   username: string;
-  repositories?: number[]
+  repositories?: number[];
 }
 const HoverCardWrapper = ({ username, repositories }: HoverCardWrapperProps) => {
   const router = useRouter();
@@ -32,24 +32,15 @@ const HoverCardWrapper = ({ username, repositories }: HoverCardWrapperProps) => 
 
   return (
     <>
-      {contributorLoading ? (
-        <div className="p-3 flex flex-col gap-3 bg-white rounded-xl">
-          <SkeletonWrapper height={50} width={350} radius={6} />
-          <div>
-            <SkeletonWrapper height={150} width={350} radius={6} />
-          </div>
-        </div>
-      ) : (
-        <ContributorHoverCard
-          dateOfFirstPr={contributor[0]?.first_commit_time}
-          totalPR={profile.totalPR}
-          githubAvatar={profile.githubAvatar}
-          githubName={profile.githubName}
-          repoList={repoList}
-          topic={topic}
-          repositories={repositories}
-        />
-      )}
+      <ContributorHoverCard
+        dateOfFirstPr={contributor[0]?.first_commit_time}
+        totalPR={profile.totalPR}
+        githubAvatar={profile.githubAvatar}
+        githubName={profile.githubName}
+        repoList={repoList}
+        topic={topic}
+        repositories={repositories}
+      />
     </>
   );
 };
