@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.22.0-beta.4](https://github.com/open-sauced/insights/compare/v1.22.0-beta.3...v1.22.0-beta.4) (2022-12-19)
+
+
+### 🍕 Features
+
+* implement hover card functionality on scatterchart ([#643](https://github.com/open-sauced/insights/issues/643)) ([8249eb8](https://github.com/open-sauced/insights/commit/8249eb8ae822592f64cc5bc07836583d16641606))
+
 ## [1.22.0-beta.3](https://github.com/open-sauced/insights/compare/v1.22.0-beta.2...v1.22.0-beta.3) (2022-12-19)
 
 
