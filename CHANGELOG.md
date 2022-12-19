@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.22.0-beta.2](https://github.com/open-sauced/insights/compare/v1.22.0-beta.1...v1.22.0-beta.2) (2022-12-19)
+
+
+### 🐛 Bug Fixes
+
+* handle caching issues with local storage ([#676](https://github.com/open-sauced/insights/issues/676)) ([e332d84](https://github.com/open-sauced/insights/commit/e332d84bafbe830bf269a62e14a4a9e93fb34eb2)), closes [#617](https://github.com/open-sauced/insights/issues/617)
+
 ## [1.22.0-beta.1](https://github.com/open-sauced/insights/compare/v1.21.0...v1.22.0-beta.1) (2022-12-16)
 
 
