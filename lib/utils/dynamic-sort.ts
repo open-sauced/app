@@ -17,11 +17,14 @@ function dynamicSort<T>(arg: sortArg<T>) {
   }
 
   return function (a: T,b: T) {
-    const result = (typeof a[key] === "string") ? (lowerFirst(a[key] as string)).localeCompare(lowerFirst(b[key] as string)) : (a[key] < b[key]) ? -1 : (a[key] > b[key]) ? 1 : 0;
+    const result = (typeof a[key] === "string") ? (lowerFirst(a[key]) as string).localeCompare(lowerFirst(b[key]) as string) : (a[key] < b[key]) ? -1 : (a[key] > b[key]) ? 1 : 0;
     return result * sortOrder;
   };
 }
 
 export default dynamicSort;
 
-const lowerFirst = (str: string) => str.charAt(0).toLowerCase() + str.slice(1);
+function lowerFirst<T>(str: T[keyof T]) {
+  if (typeof str !== "string") return str;
+  return str.charAt(0).toLowerCase() + str.slice(1);
+}

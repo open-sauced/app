@@ -11,22 +11,22 @@ import TableHeader from "components/molecules/TableHeader/table-header";
 
 import { useRepositoriesList } from "lib/hooks/useRepositoriesList";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
+import useStore from "lib/store";
+import useFilterRepos from "lib/hooks/useFilterRepos";
 
 import RepositoriesTable, { classNames } from "../RepositoriesTable/repositories-table";
 import RepoNotIndexed from "./repository-not-indexed";
-import useStore from "lib/store";
-import useFilterRepos from "lib/hooks/useFilterRepos";
 
 interface RepositoriesProps {
   repositories?: number[];
 }
 
+type FilterOptions = keyof DbRepo | "prsCount";
+
 const renderArrow = (order: string) => {
   return order === "ASC" ? <FaArrowUp className="text-light-slate-11 ml-2" fontSize={16} />
     : <FaArrowDown className="text-light-slate-11 ml-2" fontSize={16} />;
 };
-
-type FilterOptions = keyof DbRepo | "prsCount";
 
 const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
   const [orderBy, setOrderBy] = useState<FilterOptions | null>(null);
