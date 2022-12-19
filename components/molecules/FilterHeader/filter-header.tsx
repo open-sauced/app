@@ -19,7 +19,7 @@ const HeaderFilter = () => {
   const filterOptions = useFilterOptions();
 
   const { filterValues } = useFilterPrefetch();
-  const { filterName, toolName, selectedFilter, sortedBy } = router.query;
+  const { filterName, toolName, selectedFilter, orderBy } = router.query;
   const isHacktoberfest = filterName === "hacktoberfest";
   const filterBtnRouting = (filter: string) => {
     captureAnayltics("Filters", "toolsFilter", `${filter} applied`);
@@ -54,7 +54,7 @@ const HeaderFilter = () => {
             handleCancelClick={cancelFilterRouting}
             selected={Array.isArray(selectedFilter) ? selectedFilter.join("/") : selectedFilter}
           />
-          <SortedBySelector selected={sortedBy as string} handleCancelClick={cancelSorting} />
+          <SortedBySelector selected={orderBy as string} handleCancelClick={cancelSorting} />
         </div>
       </div>
     </>

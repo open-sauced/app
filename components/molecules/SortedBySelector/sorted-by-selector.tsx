@@ -1,11 +1,9 @@
-import ContextFilterButton from "components/atoms/ContextFilterButton/context-filter-button";
+import React from "react";
 
-import React, { useEffect, useRef, useState } from "react";
-import Icon from "../../atoms/Icon/icon";
+import ContextFilterButton from "components/atoms/ContextFilterButton/context-filter-button";
+import Icon from "components/atoms/Icon/icon";
+
 import cancelIcon from "public/x-circle.svg";
-import Radio from "components/atoms/Radio/radio";
-import humanizeNumber from "lib/utils/humanizeNumber";
-import getFilterKey from "lib/utils/get-filter-key";
 
 interface SortedBySelectorProps {
   handleCancelClick: () => void;
@@ -25,7 +23,7 @@ const SortedBySelector: React.FC<SortedBySelectorProps> = ({
   selected
 }) => {
 
-  if (!selected) return null;
+  if (!selected) return <></>;
 
   return (
     <div className="max-w-max relative">

@@ -54,7 +54,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
   const toggleFilter = (filter: FilterOptions) => {
     setOrderBy(filter);
     setOrderDirection(orderDirection === "ASC" ? "DESC" : "ASC" );
-    router.push(`/${topic}/${toolName}/filter/${selectedFilter}?sortedBy=${filter}&sort=${orderDirection === "ASC" ? "DESC" : "ASC"}`);
+    router.push(`/${topic}/${toolName}/filter/${selectedFilter}?orderBy=${filter}&sort=${orderDirection === "ASC" ? "DESC" : "ASC"}`);
   };
 
   const handleOnSearch = (search?: string) => {

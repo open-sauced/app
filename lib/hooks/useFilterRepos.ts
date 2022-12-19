@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
+
 import dynamicSort from "lib/utils/dynamic-sort";
+import getTotalPrs from "lib/utils/get-total-prs";
 
 type FilterOptions = keyof DbRepo | "prsCount" | null
 
@@ -30,26 +32,6 @@ const useFilterRepos = (filterName: FilterOptions, orderDirection: string, repos
 };
 
 export default useFilterRepos;
-
-const getTotalPrs = (
-  openPrsCount?: number,
-  mergedPrsCount?: number,
-  closedPrsCount?: number,
-  draftPrsCount?: number
-): number => {
-  const open = openPrsCount || 0;
-  const merged = mergedPrsCount || 0;
-  const closed = closedPrsCount || 0;
-  const drafts = draftPrsCount || 0;
-
-  const total = open + closed + merged - drafts;
-
-  if (total <= 0) {
-    return 0;
-  }
-
-  return total;
-};
 
 function isDbRepo(repo: any): repo is DbRepo {
   return (repo as DbRepo).owner !== undefined;
