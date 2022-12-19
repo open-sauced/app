@@ -35,7 +35,10 @@ const ContributorTable = ({ contributor, topic, repositories }: CardTableProps):
                 merged_at: prMergedTime,
                 created_at: prIssuedTime,
                 filesCount: noOfFilesChanged,
-                linesCount: noOfLinesChanged
+                linesCount: noOfLinesChanged,
+                number: prNumber,
+                repo_name: repoName,
+                repo_owner: repoOwner
               },
               index
             ) => {
@@ -46,7 +49,10 @@ const ContributorTable = ({ contributor, topic, repositories }: CardTableProps):
                 prStatus,
                 merged,
                 noOfFilesChanged,
-                noOfLinesChanged
+                noOfLinesChanged,
+                repoName,
+                repoOwner,
+                prNumber
               };
 
               return <LatestPrTableRow key={index} {...latestPrs} />;
