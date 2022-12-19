@@ -1,5 +1,5 @@
 const useRepoList = (repos: string) => {
-  const repoList = repos.split(",").map((repo) => {
+  return repos.split(",").map((repo) => {
     const [repoOwner, repoName] = repo.split("/");
 
     return {
@@ -7,8 +7,6 @@ const useRepoList = (repos: string) => {
       repoIcon: `https://www.github.com/${repoOwner ?? "github"}.png?size=460`
     };
   });
-
-  return repoList;
 };
 
 export default useRepoList;

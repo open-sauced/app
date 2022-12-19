@@ -11,7 +11,7 @@ const Contributor = () => {
 
   const { data: contributor, isLoading: contributorLoading, isError } = useSingleContributor(contributorLogin);
 
-  const repoList = useRepoList(contributor[0].recent_repo_list);
+  const repoList = useRepoList(contributor[0]?.recent_repo_list || "");
   const contributorLanguageList = (contributor[0]?.langs || "").split(",");
   const profile: ContributorsProfileType = {
     githubAvatar: `https://www.github.com/${contributorLogin}.png?size=300`,
