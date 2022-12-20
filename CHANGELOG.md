@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.22.0-beta.7](https://github.com/open-sauced/insights/compare/v1.22.0-beta.6...v1.22.0-beta.7) (2022-12-20)
+
+
+### 🍕 Features
+
+* filter recent contributions array by last updated time ([#690](https://github.com/open-sauced/insights/issues/690)) ([063b07c](https://github.com/open-sauced/insights/commit/063b07c239590b93bd1f202362296aa691f3a281)), closes [#682](https://github.com/open-sauced/insights/issues/682)
+
 ## [1.22.0-beta.6](https://github.com/open-sauced/insights/compare/v1.22.0-beta.5...v1.22.0-beta.6) (2022-12-20)
 
 
