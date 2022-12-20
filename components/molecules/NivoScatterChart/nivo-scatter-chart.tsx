@@ -59,10 +59,6 @@ const NivoScatterPlot = ({ data, maxFilesModified, title, setShowBots, showBots,
 
   const filteredData = [{ id: data[0].id, data: data[0].data.filter((data) => data.x <= 7) }];
 
-  const testToggleGroup = (value: string) => {
-    console.log("toggled: ",value);
-  };
-
   return (
     <>
       <div className="flex flex-col md:flex-row justify-between px-7 pt-5">
@@ -71,13 +67,6 @@ const NivoScatterPlot = ({ data, maxFilesModified, title, setShowBots, showBots,
         </Title>
         {/* replaced display flex to hidden on show/bots container */}
         <div className="flex mt-3 md:mt-0 flex-col md:flex-row gap-2">
-          <div>
-            <ToggleGroup handleChange={testToggleGroup}>
-              <>Option 1</>
-              <>Option 2</>
-              <>Option 3</>
-            </ToggleGroup>
-          </div>
           <div>
             <ToggleOption handleToggle={handleShowBots} checked={showBots} optionText="Show Bots"></ToggleOption>
           </div>
