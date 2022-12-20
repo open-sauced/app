@@ -1,6 +1,7 @@
 import React from "react";
 import Image, { StaticImageData } from "next/image";
 import AvatarImage from "../../../public/hacktoberfest-icon.png";
+import cachedImage from "lib/utils/cachedImages";
 
 interface AvatarProps {
   className?: string;
@@ -33,10 +34,12 @@ export default Avatar;
 const CustomAvatar = ({ className, avatarURL, initials, alt, size, hasBorder, isCircle }: AvatarProps): JSX.Element => {
   return (
     <div
-      className={`inline-flex ${avatarURL ? "" : "bg-orange-500"} justify-center relative items-center w-max h-max overflow-hidden
-        ${ className ?? " " }
-        ${ isCircle ? "rounded-full " : "rounded-lg "}
-        ${ hasBorder ? "ring-2 ring-slate-200 " : ""}
+      className={`inline-flex ${
+        avatarURL ? "" : "bg-orange-500"
+      } justify-center relative items-center w-max h-max overflow-hidden
+        ${className ?? " "}
+        ${isCircle ? "rounded-full " : "rounded-lg "}
+        ${hasBorder ? "ring-2 ring-slate-200 " : ""}
       `}
     >
       {avatarURL ? (
@@ -48,18 +51,31 @@ const CustomAvatar = ({ className, avatarURL, initials, alt, size, hasBorder, is
           /* loader={avatarLoader} */ src={avatarURL ? avatarURL : AvatarImage}
         />
       ) : (
-        <div className={`flex items-center justify-center font-bold leading-none text-slate-50 mb-0.25 text-${size}`} style={{width: size, height: size}}>{initials}</div>
+        <div
+          className={`flex items-center justify-center font-bold leading-none text-slate-50 mb-0.25 text-${size}`}
+          style={{ width: size, height: size }}
+        >
+          {initials}
+        </div>
       )}
     </div>
   );
 };
 
-const DefaultAvatar = ({ className, avatarURL, initials, alt, size, hasBorder, isCircle }: AvatarProps): JSX.Element => {
+const DefaultAvatar = ({
+  className,
+  avatarURL,
+  initials,
+  alt,
+  size,
+  hasBorder,
+  isCircle
+}: AvatarProps): JSX.Element => {
   return (
     <div
       className={`inline-flex ${avatarURL ? "" : "bg-orange-500"} justify-center relative items-center overflow-hidden
-        ${ isCircle ? "rounded-full " : "rounded-lg "}
-        ${ hasBorder ? "ring-2 ring-slate-200 " : ""} 
+        ${isCircle ? "rounded-full " : "rounded-lg "}
+        ${hasBorder ? "ring-2 ring-slate-200 " : ""}
         ${size === "sm" ? "w-6 h-6 " : size === "base" ? "w-8 h-8 " : size === "lg" ? "w-12 h-12 " : "w-8 h-8 "}
       `}
     >
@@ -68,14 +84,18 @@ const DefaultAvatar = ({ className, avatarURL, initials, alt, size, hasBorder, i
           className={`${className ? className : ""} object-cover`}
           alt={alt ? alt : "Avatar"}
           layout="fill"
-          /* loader={avatarLoader} */ src={avatarURL ? avatarURL : AvatarImage}
+          /* loader={avatarLoader} */ src={
+            avatarURL && typeof avatarURL === "string"
+              ? cachedImage(avatarURL, process.env.NEXT_PUBLIC_CLOUD_NAME)
+              : avatarURL || AvatarImage
+          }
         />
       ) : (
         <div
           className={`flex items-center justify-center font-bold leading-none text-slate-50 mb-0.25 ${
             size === "sm" ? "text-xs" : size === "base" ? "text-sm" : size === "lg" ? "text-lg" : "text-sm"
           }`}
-          style={{width: size, height: size}}
+          style={{ width: size, height: size }}
         >
           {initials}
         </div>
