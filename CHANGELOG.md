@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.22.0-beta.5](https://github.com/open-sauced/insights/compare/v1.22.0-beta.4...v1.22.0-beta.5) (2022-12-20)
+
+
+### ✅ Tests
+
+* implement automatic notifications for foss ([#679](https://github.com/open-sauced/insights/issues/679)) ([75f3aaf](https://github.com/open-sauced/insights/commit/75f3aaf3e97f79a88a1e032302e50d78b92f5e61))
+
 ## [1.22.0-beta.4](https://github.com/open-sauced/insights/compare/v1.22.0-beta.3...v1.22.0-beta.4) (2022-12-19)
 
 
