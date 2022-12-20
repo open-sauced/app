@@ -58,7 +58,7 @@ const LatestPrTableRow = ({
             <VscGitPullRequestDraft title="Draft Pull Request" />
           </IconContext.Provider>
         )}
-        <Text title="last commit date">{calcDistanceFromToday(new Date(parseInt(prUpdatedTime, 10)))}</Text>
+        <Text title="updated date">{calcDistanceFromToday(new Date(parseInt(prUpdatedTime, 10)))}</Text>
         <Text title={prName} className="!text-light-slate-12 !w-32 md:!w-72  !truncate ">
           <a href={`https://github.com/${repoOwner}/${repoName}/pull/${prNumber}`} target="_blank" rel="noreferrer">
             {prName}
