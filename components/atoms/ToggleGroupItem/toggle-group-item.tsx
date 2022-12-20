@@ -2,7 +2,7 @@ import * as GroupToggle from "@radix-ui/react-toggle-group";
 import clsx from "clsx";
 
 interface ToggleGroupItemProps {
-    checked: boolean,
+    checked: boolean;
     value: string,
     children: React.ReactNode
 }
