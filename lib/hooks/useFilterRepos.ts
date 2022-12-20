@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import dynamicSort from "lib/utils/dynamic-sort";
 import getTotalPrs from "lib/utils/get-total-prs";
 
-type FilterOptions = keyof DbRepo | "prsCount" | null
+type FilterOptions = keyof DbRepo | "prsCount" | "activity" | null
 
 const useFilterRepos = (filterName: FilterOptions, orderDirection: string, repos: DbRepo[]) => {
   const [filteredRepos, setFilteredRepos] = useState<DbRepo[]>(repos ?? []);
@@ -21,7 +21,9 @@ const useFilterRepos = (filterName: FilterOptions, orderDirection: string, repos
           return 0;
         });
       } else {
-        sortedRepos = repos.sort(dynamicSort(orderDirection === "ASC" ? filterName : `-${filterName}`));
+        if (isKeyofDbRepo(filterName)) {
+          sortedRepos = repos.sort(dynamicSort(orderDirection === "ASC" ? filterName : `-${filterName}`));
+        }
       }
 
       setFilteredRepos(sortedRepos);
@@ -35,4 +37,8 @@ export default useFilterRepos;
 
 function isDbRepo(repo: any): repo is DbRepo {
   return (repo as DbRepo).owner !== undefined;
+}
+
+function isKeyofDbRepo(repo: any): repo is keyof DbRepo {
+  return (repo as keyof DbRepo) !== undefined;
 }

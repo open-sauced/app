@@ -19,11 +19,17 @@ const HeaderFilter = () => {
   const filterOptions = useFilterOptions();
 
   const { filterValues } = useFilterPrefetch();
-  const { filterName, toolName, selectedFilter, orderBy } = router.query;
+  const { filterName, toolName, selectedFilter, orderBy, sort } = router.query;
   const isHacktoberfest = filterName === "hacktoberfest";
   const filterBtnRouting = (filter: string) => {
     captureAnayltics("Filters", "toolsFilter", `${filter} applied`);
-    router.push(`/${filterName}/${toolName}/filter/${filter.toLocaleLowerCase()}`);
+
+    if (!orderBy && !sort) {
+      router.push(`/${filterName}/${toolName}/filter/${filter.toLocaleLowerCase()}`);
+      return;
+    }
+
+    router.push(`/${filterName}/${toolName}/filter/${filter.toLocaleLowerCase()}?orderBy=${orderBy}&sort=${sort}`);
   };
 
   const cancelFilterRouting = () => {
@@ -31,11 +37,12 @@ const HeaderFilter = () => {
   };
 
   const cancelSorting = () => {
-    if (selectedFilter) {
-      router.push(`/${filterName}/${toolName}/filter/${selectedFilter}`);
+    if (!selectedFilter) {
+      router.push(`/${filterName}/${toolName}`);
+      return;
     }
 
-    router.push(`/${filterName}/${toolName}`);
+    router.push(`/${filterName}/${toolName}/filter/${selectedFilter}`);
   };
 
   return (

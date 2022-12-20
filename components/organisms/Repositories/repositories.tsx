@@ -21,7 +21,7 @@ interface RepositoriesProps {
   repositories?: number[];
 }
 
-type FilterOptions = keyof DbRepo | "prsCount";
+type FilterOptions = keyof DbRepo | "prsCount" |"activity"
 
 const renderArrow = (order: string) => {
   return order === "ASC" ? <FaArrowUp className="text-light-slate-11 ml-2" fontSize={16} />
@@ -52,9 +52,21 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
   const { filteredRepos } = useFilterRepos(orderBy, orderDirection, repoListData);
 
   const toggleFilter = (filter: FilterOptions) => {
+    const sortOrder = orderDirection === "ASC" ? "DESC" : "ASC";
+
+    if(filter === "activity") {
+      router.push(`/${filterName}/${toolName}/filter/most-active${orderBy ? `?orderBy=${orderBy}&sort=${orderDirection}` : ""}`);
+      return;
+    }
+
     setOrderBy(filter);
-    setOrderDirection(orderDirection === "ASC" ? "DESC" : "ASC" );
-    router.push(`/${topic}/${toolName}/filter/${selectedFilter}?orderBy=${filter}&sort=${orderDirection === "ASC" ? "DESC" : "ASC"}`);
+    setOrderDirection(sortOrder);
+
+    if (selectedFilter) {
+      router.push(`/${topic}/${toolName}/filter/${selectedFilter}?orderBy=${filter}&sort=${sortOrder}`);
+    } else {
+      router.push(`/${topic}/${toolName}?orderBy=${filter}&sort=${sortOrder}`);
+    }
   };
 
   const handleOnSearch = (search?: string) => {
@@ -102,7 +114,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
             <TableTitle text="Repository"></TableTitle>
             {orderBy === "name" ? renderArrow(orderDirection) : null }
           </div>
-          <div className={clsx(classNames.cols.activity)}>
+          <div className={clsx(classNames.cols.activity, "flex items-center cursor-pointer")} onClick={() => toggleFilter("activity")}>
             <TableTitle text="Activity"></TableTitle>
           </div>
           <div className={clsx(classNames.cols.prOverview, "flex items-center cursor-pointer")} onClick={() => toggleFilter("prsCount")}>
