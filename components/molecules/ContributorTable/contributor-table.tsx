@@ -24,14 +24,12 @@ interface CardTableProps {
 const ContributorTable = ({ contributor, topic, repositories, limit, isHoverCard }: CardTableProps): JSX.Element => {
   const { data, isLoading } = useTopicContributorPRs(contributor, topic, repositories, limit);
 
-  const sortedPr = data?.sort((a: any, b: any) => parseInt(b.updated_at) - parseInt(a.updated_at));
-
-  return sortedPr.length > 0 ? (
+  return data.length > 0 ? (
     <>
       <div className="flex flex-col">
         <LatestPrTableHeader isHoverCard={isHoverCard} />
         <div className="flex flex-col gap-0.5">
-          {sortedPr.map(
+          {data.map(
             (
               {
                 title: prName,
