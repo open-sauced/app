@@ -23,17 +23,20 @@ interface RepositoriesProps {
 
 type FilterOptions = keyof DbRepo | "prsCount" |"activity"
 
-const renderArrow = (order: string) => {
+const renderArrow = (order: string | undefined) => {
   return order === "ASC" ? <FaArrowUp className="text-light-slate-11 ml-2" fontSize={16} />
     : <FaArrowDown className="text-light-slate-11 ml-2" fontSize={16} />;
 };
 
 const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
-  const [orderBy, setOrderBy] = useState<FilterOptions | null>(null);
-  const [orderDirection, setOrderDirection] = useState("");
   const { user } = useSupabaseAuth();
   const router = useRouter();
-  const { filterName, toolName, selectedFilter, userOrg, orderBy: orderByQuery } = router.query;
+
+  const { filterName, toolName, selectedFilter, userOrg, orderBy: orderByQuery, sort } = router.query;
+
+  const [orderBy, setOrderBy] = useState<FilterOptions | undefined>(orderByQuery as FilterOptions);
+  const [orderDirection, setOrderDirection] = useState<string | undefined>(sort as string);
+
   const username = userOrg ? user?.user_metadata.user_name : undefined;
   const topic = filterName as string;
   const store = useStore();
@@ -78,7 +81,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
   };
 
   useEffect(() => {
-    if (!orderByQuery) setOrderBy(null);
+    if (!orderByQuery) setOrderBy(undefined);
   }, [orderByQuery]);
 
   useEffect(() => {

@@ -3,9 +3,9 @@ import { useEffect, useState } from "react";
 import dynamicSort from "lib/utils/dynamic-sort";
 import getTotalPrs from "lib/utils/get-total-prs";
 
-type FilterOptions = keyof DbRepo | "prsCount" | "activity" | null
+type FilterOptions = keyof DbRepo | "prsCount" | "activity" | undefined
 
-const useFilterRepos = (filterName: FilterOptions, orderDirection: string, repos: DbRepo[]) => {
+const useFilterRepos = (filterName: FilterOptions, orderDirection: string | undefined, repos: DbRepo[]) => {
   const [filteredRepos, setFilteredRepos] = useState<DbRepo[]>(repos ?? []);
 
   useEffect(() => {

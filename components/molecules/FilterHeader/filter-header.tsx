@@ -21,6 +21,7 @@ const HeaderFilter = () => {
   const { filterValues } = useFilterPrefetch();
   const { filterName, toolName, selectedFilter, orderBy, sort } = router.query;
   const isHacktoberfest = filterName === "hacktoberfest";
+
   const filterBtnRouting = (filter: string) => {
     captureAnayltics("Filters", "toolsFilter", `${filter} applied`);
 
@@ -33,7 +34,12 @@ const HeaderFilter = () => {
   };
 
   const cancelFilterRouting = () => {
-    router.push(`/${filterName}/${toolName}`);
+    if (!orderBy && !sort) {
+      router.push(`/${filterName}/${toolName}`);
+      return;
+    }
+
+    router.push(`/${filterName}/${toolName}?orderBy=${orderBy}&sort=${sort}`);
   };
 
   const cancelSorting = () => {
