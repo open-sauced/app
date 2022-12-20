@@ -14,6 +14,8 @@ import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import RepositoriesTable, { classNames } from "../RepositoriesTable/repositories-table";
 import RepoNotIndexed from "./repository-not-indexed";
 import useStore from "lib/store";
+import Checkbox from "components/atoms/Checkbox/checkbox";
+import Button from "components/atoms/Button/button";
 
 interface RepositoriesProps {
   repositories?: number[];
@@ -75,6 +77,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
           </div>
         </div>
         <div className="hidden md:flex py-4 px-6 bg-light-slate-3 gap-2">
+          <Checkbox label="" className="mr-2.5" />
           <div className={clsx(classNames.cols.repository)}>
             <TableTitle text="Repository"></TableTitle>
           </div>
@@ -96,6 +99,12 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
           <div className={clsx(classNames.cols.last30days, "hidden lg:flex")}>
             <TableTitle text="Last 30 Days"></TableTitle>
           </div>
+        </div>
+        <div className="p-3 px-6 border-b-2 text-light-slate-11 flex justify-between">
+          <div>
+            2 Repositories selected
+          </div>
+          <Button>Add to Insight Page</Button>
         </div>
 
         <RepositoriesTable

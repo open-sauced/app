@@ -21,6 +21,7 @@ import { getRelativeDays } from "lib/utils/date-utils";
 import StackedAvatar from "../StackedAvatar/stacked-avatar";
 import PullRequestOverview from "../PullRequestOverview/pull-request-overview";
 import TableRepositoryName from "../TableRepositoryName/table-repository-name";
+import Checkbox from "components/atoms/Checkbox/checkbox";
 
 interface RepoProps {
   repo: RepositoriesRows;
@@ -204,6 +205,7 @@ const RepoRow = ({ repo, topic, user }: RepoProps): JSX.Element => {
         </div>
       </div>
       <div className={`${classNames.row} `}>
+        <Checkbox label="" />
         {/* Column: Repository Name */}
         <div className={classNames.cols.repository}>
           <TableRepositoryName topic={topic} avatarURL={ownerAvatar} name={name} handle={handle} user={user}></TableRepositoryName>
