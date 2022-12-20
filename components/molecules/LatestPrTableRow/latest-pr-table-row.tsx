@@ -20,6 +20,7 @@ interface LatestPrTableRowProps {
   repoName: string;
   repoOwner: string;
   prNumber: number;
+  prUpdatedTime: string;
 }
 const LatestPrTableRow = ({
   prName,
@@ -32,7 +33,8 @@ const LatestPrTableRow = ({
   isHoverCard,
   repoName,
   repoOwner,
-  prNumber
+  prNumber,
+  prUpdatedTime
 }: LatestPrTableRowProps) => {
   return (
     <div className="flex gap-2 items-center px-2 py-1">
@@ -56,7 +58,7 @@ const LatestPrTableRow = ({
             <VscGitPullRequestDraft title="Draft Pull Request" />
           </IconContext.Provider>
         )}
-        <Text>{calcDistanceFromToday(new Date(parseInt(prIssuedTime, 10)))}</Text>
+        <Text title="updated date">{calcDistanceFromToday(new Date(parseInt(prUpdatedTime, 10)))}</Text>
         <Text title={prName} className="!text-light-slate-12 !w-32 md:!w-72  !truncate ">
           <a href={`https://github.com/${repoOwner}/${repoName}/pull/${prNumber}`} target="_blank" rel="noreferrer">
             {prName}
