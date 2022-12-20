@@ -1,8 +1,13 @@
 import { useRouter } from "next/router";
-import ContributorProfilePage from "components/organisms/ContributorProfilePage/contributor-profile-page";
-import { useSingleContributor } from "lib/hooks/useSingleContributor";
-import { ContributorsProfileType } from "components/molecules/ContributorHoverCard/contributor-hover-card";
 import useRepoList from "lib/hooks/useRepoList";
+import { useSingleContributor } from "lib/hooks/useSingleContributor";
+
+import ContributorProfilePage from "components/organisms/ContributorProfilePage/contributor-profile-page";
+import { ContributorsProfileType } from "components/molecules/ContributorHoverCard/contributor-hover-card";
+
+import HubPageLayout from "layouts/hub-page";
+import HubLayout from "layouts/hub";
+import ProfileLayout from "layouts/profile";
 
 const Contributor = () => {
   const router = useRouter();
@@ -20,7 +25,7 @@ const Contributor = () => {
   };
 
   return (
-    <div>
+    <div className="w-full">
       <ContributorProfilePage
         repoList={repoList}
         langList={contributorLanguageList}
@@ -32,4 +37,5 @@ const Contributor = () => {
   );
 };
 
+Contributor.PageLayout = ProfileLayout;
 export default Contributor;
