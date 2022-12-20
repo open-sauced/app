@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.22.0-beta.6](https://github.com/open-sauced/insights/compare/v1.22.0-beta.5...v1.22.0-beta.6) (2022-12-20)
+
+
+### 🍕 Features
+
+* implement image caching on avatar images ([#691](https://github.com/open-sauced/insights/issues/691)) ([b6fbeb4](https://github.com/open-sauced/insights/commit/b6fbeb407a5d933b91e5b885270ecd9da9a387c8))
+
 ## [1.22.0-beta.5](https://github.com/open-sauced/insights/compare/v1.22.0-beta.4...v1.22.0-beta.5) (2022-12-20)
 
 
