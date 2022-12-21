@@ -16,7 +16,6 @@ import useFilterRepos from "lib/hooks/useFilterRepos";
 
 import RepositoriesTable, { classNames, RepositoriesRows } from "../RepositoriesTable/repositories-table";
 import RepoNotIndexed from "./repository-not-indexed";
-import useStore from "lib/store";
 import Checkbox from "components/atoms/Checkbox/checkbox";
 import Button from "components/atoms/Button/button";
 
@@ -140,8 +139,9 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
           </div>
         </div>
         <div className="hidden md:flex py-4 px-6 bg-light-slate-3 gap-2">
-          <Checkbox label="" className="mr-2.5" onChange={handleOnSelectAllChecked} />
-          <div className={clsx(classNames.cols.repository)}>
+          <div className={clsx(classNames.cols.checkbox)} >
+            <Checkbox label="" onChange={handleOnSelectAllChecked} />
+          </div>
           <div className={clsx(classNames.cols.repository, "flex items-center cursor-pointer")}  onClick={() => toggleFilter("name")}>
             <TableTitle text="Repository"></TableTitle>
             {orderBy === "name" ? renderArrow(orderDirection) : null }
@@ -168,6 +168,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
             <TableTitle text="Last 30 Days"></TableTitle>
           </div>
         </div>
+
         {
           selectedRepos.length > 0 && (
             <div className="p-3 px-6 border-b-2 text-light-slate-11 flex justify-between">
