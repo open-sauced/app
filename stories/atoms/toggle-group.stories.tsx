@@ -33,9 +33,9 @@ AllowNone.args = {
 };
 CustomItems.args = {
   children: [
-    <div>Option 1 w\ <a href="#" target="_blank">link</a></div>,
-    <p>Option 2 w\ <strong>strong</strong></p>,
-    <div>Option 3 w\ <div>div</div></div>
+    <div key={1}>Option 1 w\ <a href="#" target="_blank">link</a></div>,
+    <p key={2}>Option 2 w\ <strong>strong</strong></p>,
+    <div key={3}>Option 3 w\ <div>div</div></div>
   ],
   defaultSelection: "0",
   className: "w-max"
