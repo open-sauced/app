@@ -73,7 +73,7 @@ const ContributorProfilePage = ({
             <span className="text-light-slate-11 text-sm">{`@${githubName}`}</span>
           </div>
           <div>
-            <p className="mb-4">Language</p>
+            <p className="mb-4">Languages</p>
             <CardHorizontalBarChart languageList={languageList} />
           </div>
         </div>
