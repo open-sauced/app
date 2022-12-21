@@ -71,7 +71,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
     const matchingRepo = repoListData.find(r => r.id === repo.id);
     if(!matchingRepo) return;
 
-    if (selectedRepos.includes(matchingRepo)) {
+    if (selectedRepos.find((r) => r.id === matchingRepo.id)) {
       setSelectedRepos(selectedRepos.filter(r => r.id !== repo.id));
     } else {
       setSelectedRepos([...selectedRepos, matchingRepo]);

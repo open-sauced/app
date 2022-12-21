@@ -87,7 +87,7 @@ const RepositoriesTable = ({
 
       {isLoadedWithRepos &&
         listOfRepositories.map((item, index) => (
-          <RepoRow key={`${item.handle}/${item.name}/${index}`} topic={topic} repo={item} user={user} selected={selectedRepos.includes(item)} handleOnSelectRepo={handleOnSelectRepo} />
+          <RepoRow key={`${item.handle}/${item.name}/${index}`} topic={topic} repo={item} user={user} selected={selectedRepos.find((r) => r.id == item.id) != undefined} handleOnSelectRepo={handleOnSelectRepo} />
         ))}
       {isFilteredRepoNotIndexed && (
         <RepoRow
