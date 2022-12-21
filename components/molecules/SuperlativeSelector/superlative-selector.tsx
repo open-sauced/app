@@ -48,7 +48,7 @@ const SuperativeSelector: React.FC<SuperlativeSelectorProps> = ({
 
   const filterOption = filterOptions.find((option) => getFilterKey(option) === selected);
   const filterDescription = filterOption ? filterOption : selected;
-  
+
   return (
     <div className="max-w-max relative" ref={ref}>
       <ContextFilterButton onClick={toggleFilter} isSelected={!!selected}>
