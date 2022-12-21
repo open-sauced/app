@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.22.0-beta.8](https://github.com/open-sauced/insights/compare/v1.22.0-beta.7...v1.22.0-beta.8) (2022-12-21)
+
+
+### 🐛 Bug Fixes
+
+* update generic profile page styles to match design ([#695](https://github.com/open-sauced/insights/issues/695)) ([3eabf0f](https://github.com/open-sauced/insights/commit/3eabf0f95fb57acb5b1510ee0e32946c9e9d01eb)), closes [#692](https://github.com/open-sauced/insights/issues/692)
+
 ## [1.22.0-beta.7](https://github.com/open-sauced/insights/compare/v1.22.0-beta.6...v1.22.0-beta.7) (2022-12-20)
 
 
