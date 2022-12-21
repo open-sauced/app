@@ -62,10 +62,10 @@ const ContributorProfilePage = ({
   const { chart } = useTopicContributorCommits(githubName, "javascript", repositories);
 
   return (
-    <div>
+    <div className=" w-full">
       <ContributorProfileHeader avatarUrl={githubAvatar} />
-      <div className="pt-24 px-4 md:px-10 lg:px-16 flex flex-col lg:flex-row justify-between">
-        <div className="flex flex-col w-64 gap-4">
+      <div className="pt-24 px-4 md:px-10 lg:px-16 flex flex-col lg:flex-row lg:gap-40 w-full overflow-hidden justify-between">
+        <div className="flex flex-col min-w-[270px] gap-4 ">
           <div className="pb-6 border-b">
             <Title className="!text-2xl !text-light-slate-12" level={3}>
               {githubName}
@@ -73,11 +73,11 @@ const ContributorProfilePage = ({
             <span className="text-light-slate-11 text-sm">{`@${githubName}`}</span>
           </div>
           <div>
-            <p className="mb-4 ">Language</p>
+            <p className="mb-4">Languages</p>
             <CardHorizontalBarChart languageList={languageList} />
           </div>
         </div>
-        <div>
+        <div className="flex-1">
           <div>
             <Title className="!text-light-slate-12 !text-xl" level={4}>
               Contribution Insights
