@@ -49,6 +49,10 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
     }
   };
 
+  const handleOnAddtoInsights = () => {
+    router.push({pathname: '/hub/insights/new', query: {selectedRepos: JSON.stringify(selectedRepos)}}, '/hub/insights/new' )
+  };
+
   const handleOnSelectRepo = (repo: RepositoriesRows) => {
     const matchingRepo = repoListData.find(r => r.id === repo.id);
     if(!matchingRepo) return;
@@ -126,7 +130,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
               <div>
                 {selectedRepos.length} Repositories selected
               </div>
-              <Button>Add to Insight Page</Button>
+              <Button onClick={handleOnAddtoInsights}>Add to Insight Page</Button>
             </div>
           )
         }

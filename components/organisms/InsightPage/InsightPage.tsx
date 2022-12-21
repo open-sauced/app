@@ -30,12 +30,16 @@ interface InsightPageProps {
 const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
   const { user, sessionToken } = useSupabaseAuth();
   const router = useRouter();
+  let receivedData = []
+  if(router.query.selectedRepos) {
+    receivedData = JSON.parse(router.query.selectedRepos as string)
+  }
   const username: string = user?.user_metadata.user_name;
   const [name, setName] = useState(insight?.name || "");
   const [nameError, setNameError] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [repoToAdd, setRepoToAdd] = useState("");
-  const [repos, setRepos] = useState<DbRepo[]>([]);
+  const [repos, setRepos] = useState<DbRepo[]>(receivedData);
   const [repoHistory, setRepoHistory] = useState<DbRepo[]>([]);
   const [addRepoError, setAddRepoError] = useState<RepoLookupError>(RepoLookupError.Initial);
   const [isPublic, setIsPublic] = useState(!!insight?.is_public);
@@ -125,7 +129,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
     }
 
     setSubmitted(false);
-  };  
+  };
 
   const handleOnRepoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setRepoToAdd(event.target.value);
