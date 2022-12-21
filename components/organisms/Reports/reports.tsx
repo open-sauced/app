@@ -14,7 +14,6 @@ import { Report } from "interfaces/report-type";
 import useFilterOptions from "lib/hooks/useFilterOptions";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import getCurrentDate from "lib/utils/get-current-date";
-import useStore from "lib/store";
 
 const USERDEVICESTORAGENAME = "reportState";
 
@@ -28,9 +27,7 @@ const Reports = ({ hasReports, repositories }: ReportsProps): JSX.Element => {
   const userDeviceState = localStorage.getItem(USERDEVICESTORAGENAME);
   const initialState = userDeviceState ? JSON.parse(userDeviceState as string) : [];
   const [reports, setReports] = useState<Report[]>(initialState);
-  const { sessionToken, user, signIn } = useSupabaseAuth();
-  const store = useStore();
-  const [submitting, setSubmitting] = useState(false);
+  const { user, signIn } = useSupabaseAuth();
 
   const filterOptions = useFilterOptions();
   const filterList = filterOptions.map((filter) => {
@@ -53,27 +50,6 @@ const Reports = ({ hasReports, repositories }: ReportsProps): JSX.Element => {
 
       return newState;
     });
-  };
-
-  const handleJoinClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-
-    setSubmitting(true);
-
-    try {
-      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/waitlist`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${sessionToken}`
-        }
-      });
-
-      store.setWaitlisted();
-    } catch (e) {
-      // handle error
-    } finally {
-      setSubmitting(false);
-    }
   };
 
   return (
