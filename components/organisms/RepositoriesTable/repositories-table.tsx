@@ -47,6 +47,8 @@ interface RepositoriesTableProps {
   loading: boolean;
   error: boolean;
   repo?: string | string[] | undefined[];
+  selectedRepos: RepositoriesRows[];
+  handleOnSelectRepo: (repo: RepositoriesRows) => void;
 }
 
 export const classNames = {
@@ -68,7 +70,9 @@ const RepositoriesTable = ({
   error,
   topic,
   user,
-  repo
+  repo,
+  selectedRepos,
+  handleOnSelectRepo
 }: RepositoriesTableProps): JSX.Element => {
   const isLoadedWithRepos = !loading && !error && Array.isArray(listOfRepositories) && listOfRepositories.length > 0;
   const isFilteredRepoNotIndexed =
@@ -82,7 +86,7 @@ const RepositoriesTable = ({
 
       {isLoadedWithRepos &&
         listOfRepositories.map((item, index) => (
-          <RepoRow key={`${item.handle}/${item.name}/${index}`} topic={topic} repo={item} user={user} />
+          <RepoRow key={`${item.handle}/${item.name}/${index}`} topic={topic} repo={item} user={user} selected={selectedRepos.includes(item)} handleOnSelectRepo={handleOnSelectRepo} />
         ))}
       {isFilteredRepoNotIndexed && (
         <RepoRow
@@ -97,6 +101,7 @@ const RepositoriesTable = ({
             owner_avatar: getAvatarLink(repoOwner as string)
           }}
           user={user}
+          handleOnSelectRepo={handleOnSelectRepo}
         />
       )}
     </section>

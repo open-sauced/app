@@ -27,6 +27,8 @@ interface RepoProps {
   repo: RepositoriesRows;
   topic?: string;
   user: string | string[] | undefined;
+  selected?: boolean;
+  handleOnSelectRepo: (repo: RepositoriesRows) => void;
 }
 
 const getActivity = (total?: number, loading?: boolean) => {
@@ -85,7 +87,7 @@ const getPrsSpam = (total: number, spam: number): number => {
   return result;
 };
 
-const RepoRow = ({ repo, topic, user }: RepoProps): JSX.Element => {
+const RepoRow = ({ repo, topic, user, selected, handleOnSelectRepo }: RepoProps): JSX.Element => {
   const {
     name,
     owner: handle,
@@ -118,6 +120,11 @@ const RepoRow = ({ repo, topic, user }: RepoProps): JSX.Element => {
   ];
 
   const [tableOpen, setTableOpen] = useState<boolean>(false);
+
+  const handleSelectCheckbox = () => {
+    handleOnSelectRepo(repo);
+  };
+
   return (
     <>
       <div
@@ -205,7 +212,7 @@ const RepoRow = ({ repo, topic, user }: RepoProps): JSX.Element => {
         </div>
       </div>
       <div className={`${classNames.row} `}>
-        <Checkbox label="" />
+        <Checkbox label="" checked={selected? true : false} onChange={handleSelectCheckbox}/>
         {/* Column: Repository Name */}
         <div className={classNames.cols.repository}>
           <TableRepositoryName topic={topic} avatarURL={ownerAvatar} name={name} handle={handle} user={user}></TableRepositoryName>

@@ -11,7 +11,7 @@ import TableHeader from "components/molecules/TableHeader/table-header";
 import { useRepositoriesList } from "lib/hooks/useRepositoriesList";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 
-import RepositoriesTable, { classNames } from "../RepositoriesTable/repositories-table";
+import RepositoriesTable, { classNames, RepositoriesRows } from "../RepositoriesTable/repositories-table";
 import RepoNotIndexed from "./repository-not-indexed";
 import useStore from "lib/store";
 import Checkbox from "components/atoms/Checkbox/checkbox";
@@ -49,11 +49,14 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
     }
   }
 
-  const handleOnSelectRepo = (repo: DbRepo) => {
-    if (selectedRepos.includes(repo)) {
+  const handleOnSelectRepo = (repo: RepositoriesRows) => {
+    const matchingRepo = repoListData.find(r => r.id === repo.id);
+    if(!matchingRepo) return;
+
+    if (selectedRepos.includes(matchingRepo)) {
       setSelectedRepos(selectedRepos.filter(r => r.id !== repo.id));
     } else {
-      setSelectedRepos([...selectedRepos, repo]);
+      setSelectedRepos([...selectedRepos, matchingRepo]);
     }
   }
 
@@ -135,6 +138,8 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
           listOfRepositories={repoListData}
           user={username}
           repo={selectedFilter}
+          selectedRepos={selectedRepos}
+          handleOnSelectRepo={handleOnSelectRepo}
         />
 
         {/* Table Footer */}
