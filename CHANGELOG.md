@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.22.0-beta.10](https://github.com/open-sauced/insights/compare/v1.22.0-beta.9...v1.22.0-beta.10) (2022-12-21)
+
+
+### 🍕 Features
+
+* add toggle group component ([#666](https://github.com/open-sauced/insights/issues/666)) ([3bc7d8c](https://github.com/open-sauced/insights/commit/3bc7d8cda7047df921b8fcda30380287988595e9))
+
 ## [1.22.0-beta.9](https://github.com/open-sauced/insights/compare/v1.22.0-beta.8...v1.22.0-beta.9) (2022-12-21)
 
 
