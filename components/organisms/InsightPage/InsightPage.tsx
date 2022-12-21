@@ -30,9 +30,9 @@ interface InsightPageProps {
 const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
   const { user, sessionToken } = useSupabaseAuth();
   const router = useRouter();
-  let receivedData = []
+  let receivedData = [];
   if(router.query.selectedRepos) {
-    receivedData = JSON.parse(router.query.selectedRepos as string)
+    receivedData = JSON.parse(router.query.selectedRepos as string);
   }
   const username: string = user?.user_metadata.user_name;
   const [name, setName] = useState(insight?.name || "");

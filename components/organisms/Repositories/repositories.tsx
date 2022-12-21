@@ -50,7 +50,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
   };
 
   const handleOnAddtoInsights = () => {
-    router.push({pathname: '/hub/insights/new', query: {selectedRepos: JSON.stringify(selectedRepos)}}, '/hub/insights/new' )
+    router.push({pathname: "/hub/insights/new", query: {selectedRepos: JSON.stringify(selectedRepos)}}, "/hub/insights/new" );
   };
 
   const handleOnSelectRepo = (repo: RepositoriesRows) => {
