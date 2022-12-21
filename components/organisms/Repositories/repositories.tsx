@@ -47,7 +47,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
     } else {
       setSelectedRepos([]);
     }
-  }
+  };
 
   const handleOnSelectRepo = (repo: RepositoriesRows) => {
     const matchingRepo = repoListData.find(r => r.id === repo.id);
@@ -58,7 +58,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
     } else {
       setSelectedRepos([...selectedRepos, matchingRepo]);
     }
-  }
+  };
 
   const handleOnSearch = (search?: string) => {
     if (search && /^[a-zA-Z0-9\-\.]+\/[a-zA-Z0-9\-\.]+$/.test(search)) {
