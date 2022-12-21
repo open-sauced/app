@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import clsx from "clsx";
 
@@ -39,6 +39,23 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
     setLimit
   } = useRepositoriesList(false, repositories);
   const filteredRepoNotIndexed = selectedFilter && !repoListIsLoading && !repoListIsError && repoListData.length === 0;
+  const [selectedRepos, setSelectedRepos] = useState<DbRepo[]>([]);
+
+  const handleOnSelectAllChecked = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.checked) {
+      setSelectedRepos(repoListData);
+    } else {
+      setSelectedRepos([]);
+    }
+  }
+
+  const handleOnSelectRepo = (repo: DbRepo) => {
+    if (selectedRepos.includes(repo)) {
+      setSelectedRepos(selectedRepos.filter(r => r.id !== repo.id));
+    } else {
+      setSelectedRepos([...selectedRepos, repo]);
+    }
+  }
 
   const handleOnSearch = (search?: string) => {
     if (search && /^[a-zA-Z0-9\-\.]+\/[a-zA-Z0-9\-\.]+$/.test(search)) {
@@ -77,7 +94,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
           </div>
         </div>
         <div className="hidden md:flex py-4 px-6 bg-light-slate-3 gap-2">
-          <Checkbox label="" className="mr-2.5" />
+          <Checkbox label="" className="mr-2.5" onChange={handleOnSelectAllChecked} />
           <div className={clsx(classNames.cols.repository)}>
             <TableTitle text="Repository"></TableTitle>
           </div>
@@ -100,12 +117,16 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
             <TableTitle text="Last 30 Days"></TableTitle>
           </div>
         </div>
-        <div className="p-3 px-6 border-b-2 text-light-slate-11 flex justify-between">
-          <div>
-            2 Repositories selected
-          </div>
-          <Button>Add to Insight Page</Button>
-        </div>
+        {
+          selectedRepos.length > 0 && (
+            <div className="p-3 px-6 border-b-2 text-light-slate-11 flex justify-between">
+              <div>
+                {selectedRepos.length} Repositories selected
+              </div>
+              <Button>Add to Insight Page</Button>
+            </div>
+          )
+        }
 
         <RepositoriesTable
           topic={topic}
