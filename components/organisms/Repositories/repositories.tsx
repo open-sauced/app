@@ -31,7 +31,7 @@ const renderArrow = (order: string | undefined) => {
 };
 
 const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
-  const { user } = useSupabaseAuth();
+  const { user, signIn } = useSupabaseAuth();
   const router = useRouter();
 
   const { filterName, toolName, selectedFilter, userOrg, orderBy: orderByQuery, sort } = router.query;
@@ -64,7 +64,11 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
   };
 
   const handleOnAddtoInsights = () => {
-    router.push({pathname: "/hub/insights/new", query: {selectedRepos: JSON.stringify(selectedRepos)}}, "/hub/insights/new" );
+    if(user) {
+      router.push({pathname: "/hub/insights/new", query: {selectedRepos: JSON.stringify(selectedRepos)}}, "/hub/insights/new" );
+    } else {
+      signIn({ provider: "github" });
+    }
   };
 
   const handleOnSelectRepo = (repo: RepositoriesRows) => {
