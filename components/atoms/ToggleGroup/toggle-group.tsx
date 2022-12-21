@@ -9,7 +9,8 @@ interface ToggleGroupProps {
     /** Decides which option will be selected by default. Provide the position of the element to be selected starting from 0. */
     defaultSelection?: string | number,
     /** Callback function that is called when the user selects an option, and the position of the selected element is passed into as string, starting with '0'. */
-    handleChange?: (value: string) => void
+    handleChange?: (value: string) => void,
+    className: string
 }
 
 /** A ToggleGroup component that allows the user to select one option from a list of options.
@@ -26,7 +27,8 @@ const ToggleGroup = ({
   children,
   allowNone = false,
   defaultSelection = "0",
-  handleChange
+  handleChange,
+  className
 }: ToggleGroupProps) => {
   const [value, setValue] = useState(defaultSelection+"");
 
@@ -40,7 +42,7 @@ const ToggleGroup = ({
   if(!children) return null;
 
   return (
-    <GroupToggle.Root type="single" value={value} onValueChange={handleValueChange} className="bg-light-slate-6 rounded-lg p-0.25">
+    <GroupToggle.Root type="single" value={value} onValueChange={handleValueChange} className={`bg-light-slate-6 rounded-lg p-0.25 ${className && className}`}>
       {
         Array.isArray(children) ? children.map((child, index) => (
           <ToggleGroupItem checked={value==`${index}`} value={`${index}`} key={index}>
