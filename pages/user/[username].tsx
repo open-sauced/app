@@ -15,7 +15,7 @@ const Contributor = () => {
   const contributorLogin = username as string;
 
   const { data: contributor, isLoading: contributorLoading, isError } = useSingleContributor(contributorLogin);
-
+  console.log(contributor);
   const repoList = useRepoList(contributor[0]?.recent_repo_list || "");
   const contributorLanguageList = (contributor[0]?.langs || "").split(",");
   const profile: ContributorsProfileType = {
@@ -31,7 +31,11 @@ const Contributor = () => {
         langList={contributorLanguageList}
         githubName={profile.githubName}
         githubAvatar={profile.githubAvatar}
-        listOfPRs={[]}
+        prTotal={contributor[0]?.recent_pr_total}
+        openPrs={contributor[0]?.recent_opened_prs}
+        recentContributionCount={contributor[0]?.recent_contribution_count}
+        prReviews={contributor[0]?.recent_pr_reviews}
+        prVelocity={contributor[0]?.recent_pr_velocity}
       />
     </div>
   );

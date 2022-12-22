@@ -16,6 +16,7 @@ import LatestPrTableHeader from "components/molecules/LatestPrTableHeader/latest
 import TestRepoAvatar from "public/icons/test-repo-avatar.svg";
 import ContributorTable from "components/molecules/ContributorTable/contributor-table";
 import { useTopicContributorCommits } from "lib/hooks/useTopicContributorCommits";
+import { getRelativeDays } from "lib/utils/date-utils";
 
 const colorKeys = Object.keys(color);
 interface PrObjectType {
@@ -34,21 +35,29 @@ interface ContributorProfilePageProps {
   contributor?: ContributorObject;
   topic?: string;
   repositories?: number[];
-  listOfPRs: PrObjectType[];
+  listOfPRs?: PrObjectType[];
   githubAvatar?: string;
   githubName: string;
   langList: string[];
   repoList: RepoList[];
+  recentContributionCount: number;
+  prTotal: number;
+  openPrs: number;
+  prReviews: number;
+  prVelocity: number;
 }
 const ContributorProfilePage = ({
   contributor,
-  topic,
   repositories,
-  listOfPRs,
+  recentContributionCount,
   githubAvatar,
   githubName,
   langList,
-  repoList
+  repoList,
+  prTotal,
+  openPrs,
+  prReviews,
+  prVelocity
 }: ContributorProfilePageProps) => {
   const languageList = langList?.map((language) => {
     const preparedLanguageKey = colorKeys.find((key) => key.toLowerCase() === language.toLowerCase());
@@ -84,46 +93,66 @@ const ContributorProfilePage = ({
             </Title>
           </div>
           <div className="bg-white mt-4 rounded-2xl border p-2 md:p-6">
-            <div className=" flex-col hidden lg:flex-row gap-2 md:gap-12 lg:gap-16 justify-between">
-              <div>
+            <div className=" flex flex-col lg:flex-row gap-2 md:gap-12 lg:gap-16 justify-between">
+              <div className="">
                 <span className="text-xs text-light-slate-11">PRs opened</span>
-                <div className="flex justify-between gap-2 items-end pr-8 mt-1">
-                  <Text className="!text-xl !text-black !leading-none">5 PRs</Text>
-                  <p className="flex text-red-700 items-end">
-                    <span className="mb-0 leading-none">16%</span>
-                    <BsFillArrowUpCircleFill className="ml-1" fill="red" color="red" />
-                  </p>
-                </div>
+                {openPrs ? (
+                  <div className="flex justify-between gap-2 items-end pr-8 mt-1">
+                    <Text className="!text-2xl !text-black !leading-none">{openPrs} PRs</Text>
+                    <p className="flex text-red-700 items-end">
+                      <span className="mb-0 leading-none">16%</span>
+                      <BsFillArrowUpCircleFill className="ml-1" fill="red" color="red" />
+                    </p>
+                  </div>
+                ) : (
+                  <div className="flex justify-center items-end mt-1"> - </div>
+                )}
               </div>
               <div>
                 <span className="text-xs text-light-slate-11">PRs Reviewed</span>
-                <div className="flex text-green-9 gap-2 justify-between items-end pr-8 mt-1">
-                  <Text className="!text-xl !text-black !leading-none">25 PRs</Text>
-                  <p className="flex text-green-700 items-end">
-                    <span className="mb-0 leading-none">35</span>
-                    <BsFillArrowUpCircleFill className="ml-1" fill="green" color="green" />
-                  </p>
-                </div>
+                {prReviews ? (
+                  <div className="flex text-green-9 gap-2 justify-between items-end pr-8 mt-1">
+                    <Text className="!text-2xl !text-black !leading-none">
+                      {`${prReviews} PR${prReviews > 1 ? "s" : ""}`}
+                    </Text>
+                    <p className="flex text-green-700 items-end">
+                      <span className="mb-0 leading-none">35</span>
+                      <BsFillArrowUpCircleFill className="ml-1" fill="green" color="green" />
+                    </p>
+                  </div>
+                ) : (
+                  <div className="flex justify-center items-end mt-1"> - </div>
+                )}
               </div>
               <div>
                 <span className="text-xs text-light-slate-11">Avg PRs velocity</span>
-                <div className="flex justify-between gap-2 items-end pr-8 mt-1">
-                  <Text className="!text-lg !text-black !leading-none">2 mo</Text>
-                  <p className="flex text-red-700 items-end">
-                    <span className="mb-0 text-sm leading-none">10%</span>
-                    <BsFillArrowUpCircleFill className="ml-1" fill="red" color="red" />
-                  </p>
-                </div>
+                {prVelocity ? (
+                  <div className="flex justify-between gap-2 items-end pr-8 mt-1">
+                    <Text className="!text-2xl !text-black !leading-none">{getRelativeDays(prVelocity)}</Text>
+                    <p className="flex text-red-700 items-end">
+                      <span className="mb-0 text-sm leading-none">10%</span>
+                      <BsFillArrowUpCircleFill className="ml-1" fill="red" color="red" />
+                    </p>
+                  </div>
+                ) : (
+                  <div className="flex justify-center items-end mt-1"> - </div>
+                )}
               </div>
               <div>
                 <span className="text-xs text-light-slate-11">Contributed to</span>
-                <div className="flex  justify-between gap-2 items-end pr-8 mt-1">
-                  <Text className="!text-xl !text-black !leading-none">10 Repos</Text>
-                  <p className="flex text-green-700 items-end">
-                    <span className="mb-0 leading-none">5%</span>
-                    <BsFillArrowUpCircleFill className="ml-1" fill="green" color="green" />
-                  </p>
-                </div>
+                {recentContributionCount ? (
+                  <div className="flex  justify-between gap-2 items-end pr-8 mt-1">
+                    <Text className="!text-2xl !text-black !leading-none">
+                      {`${recentContributionCount} Repo${recentContributionCount > 1 ? "s" : ""}`}
+                    </Text>
+                    <p className="flex text-green-700 items-end">
+                      <span className="mb-0 leading-none">5%</span>
+                      <BsFillArrowUpCircleFill className="ml-1" fill="green" color="green" />
+                    </p>
+                  </div>
+                ) : (
+                  <div className="flex justify-center items-end mt-1"> - </div>
+                )}
               </div>
             </div>
             <div className="mt-10 h-32">

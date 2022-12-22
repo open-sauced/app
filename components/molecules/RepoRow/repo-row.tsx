@@ -129,14 +129,18 @@ const RepoRow = ({ repo, topic, user }: RepoProps): JSX.Element => {
             <TableRepositoryName topic={topic} avatarURL={ownerAvatar} name={name} handle={handle} user={user} />
           </div>
           <div className="w-[45%]">
-            {repo.id ? <PullRequestOverview
-              open={openPrsCount}
-              merged={mergedPrsCount}
-              closed={closedPrsCount}
-              draft={draftPrsCount}
-              churn={churnTotalCount}
-              churnDirection={`${churnDirection}`}
-            /> : "-"}
+            {repo.id ? (
+              <PullRequestOverview
+                open={openPrsCount}
+                merged={mergedPrsCount}
+                closed={closedPrsCount}
+                draft={draftPrsCount}
+                churn={churnTotalCount}
+                churnDirection={`${churnDirection}`}
+              />
+            ) : (
+              "-"
+            )}
           </div>
           <div className="">
             <div
@@ -162,7 +166,7 @@ const RepoRow = ({ repo, topic, user }: RepoProps): JSX.Element => {
             <div>Pr Velocity</div>
             <div className="flex text-base gap-x-3">
               <div>{prVelocityInDays}</div>
-              { repo.id ? <Pill text={`${prsMergedPercentage}%`} size="small" color="green" /> : "" }
+              {repo.id ? <Pill text={`${prsMergedPercentage}%`} size="small" color="green" /> : ""}
             </div>
           </div>
 
@@ -206,7 +210,13 @@ const RepoRow = ({ repo, topic, user }: RepoProps): JSX.Element => {
       <div className={`${classNames.row} `}>
         {/* Column: Repository Name */}
         <div className={classNames.cols.repository}>
-          <TableRepositoryName topic={topic} avatarURL={ownerAvatar} name={name} handle={handle} user={user}></TableRepositoryName>
+          <TableRepositoryName
+            topic={topic}
+            avatarURL={ownerAvatar}
+            name={name}
+            handle={handle}
+            user={user}
+          ></TableRepositoryName>
         </div>
 
         {/* Column: Activity */}
@@ -214,20 +224,24 @@ const RepoRow = ({ repo, topic, user }: RepoProps): JSX.Element => {
 
         {/* Column: PR Overview */}
         <div className={classNames.cols.prOverview}>
-          { repo.id ? <PullRequestOverview
-            open={openPrsCount}
-            merged={mergedPrsCount}
-            closed={closedPrsCount}
-            draft={draftPrsCount}
-            churn={churnTotalCount}
-            churnDirection={`${churnDirection}`}
-          ></PullRequestOverview> : "-" }
+          {repo.id ? (
+            <PullRequestOverview
+              open={openPrsCount}
+              merged={mergedPrsCount}
+              closed={closedPrsCount}
+              draft={draftPrsCount}
+              churn={churnTotalCount}
+              churnDirection={`${churnDirection}`}
+            ></PullRequestOverview>
+          ) : (
+            "-"
+          )}
         </div>
 
         {/* Column: PR Velocity */}
         <div className={`${classNames.cols.prVelocity}`}>
           <div>{prVelocityInDays}</div>
-          { repo.id ? <Pill text={`${prsMergedPercentage}%`} size="small" color="green" /> : ""}
+          {repo.id ? <Pill text={`${prsMergedPercentage}%`} size="small" color="green" /> : ""}
         </div>
 
         {/* Column: SPAM */}
@@ -257,7 +271,7 @@ const RepoRow = ({ repo, topic, user }: RepoProps): JSX.Element => {
 
         {/* Column: Last 30 Days */}
         <div className={clsx(classNames.cols.last30days, "hidden lg:flex")}>
-          {repo.id && last30days ? <Sparkline data={last30days}/> : "-"}
+          {repo.id && last30days ? <Sparkline data={last30days} /> : "-"}
         </div>
       </div>
     </>
