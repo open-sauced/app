@@ -21,11 +21,14 @@ interface RepositoriesProps {
   repositories?: number[];
 }
 
-type FilterOptions = keyof DbRepo | "prsCount" |"activity"
+type FilterOptions = keyof DbRepo | "prsCount" | "activity";
 
 const renderArrow = (order: string | undefined) => {
-  return order === "ASC" ? <FaArrowUp className="text-light-slate-11 ml-2" fontSize={16} />
-    : <FaArrowDown className="text-light-slate-11 ml-2" fontSize={16} />;
+  return order === "ASC" ? (
+    <FaArrowUp className="text-light-slate-11 ml-2" fontSize={16} />
+  ) : (
+    <FaArrowDown className="text-light-slate-11 ml-2" fontSize={16} />
+  );
 };
 
 const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
@@ -40,7 +43,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
   const username = userOrg ? user?.user_metadata.user_name : undefined;
   const topic = filterName as string;
   const store = useStore();
-  const range = useStore(state => state.range);
+  const range = useStore((state) => state.range);
   const {
     data: repoListData,
     meta: repoMeta,
@@ -57,8 +60,10 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
   const toggleFilter = (filter: FilterOptions) => {
     const sortOrder = orderDirection === "ASC" ? "DESC" : "ASC";
 
-    if(filter === "activity") {
-      router.push(`/${filterName}/${toolName}/filter/most-active${orderBy ? `?orderBy=${orderBy}&sort=${orderDirection}` : ""}`);
+    if (filter === "activity") {
+      router.push(
+        `/${filterName}/${toolName}/filter/most-active${orderBy ? `?orderBy=${orderBy}&sort=${orderDirection}` : ""}`
+      );
       return;
     }
 
@@ -105,7 +110,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
       />
       <div className="flex flex-col rounded-lg overflow-hidden border">
         <div className="flex md:hidden justify-between  py-4 px-6 bg-light-slate-3 gap-2">
-          <div className="flex-1" >
+          <div className="flex-1">
             <TableTitle text="Repository" />
           </div>
           <div className="flex-1">
@@ -113,22 +118,37 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
           </div>
         </div>
         <div className="hidden md:flex py-4 px-6 bg-light-slate-3 gap-2">
-          <div className={clsx(classNames.cols.repository, "flex items-center cursor-pointer")}  onClick={() => toggleFilter("name")}>
+          <div
+            className={clsx(classNames.cols.repository, "flex items-center cursor-pointer")}
+            onClick={() => toggleFilter("name")}
+          >
             <TableTitle text="Repository"></TableTitle>
-            {orderBy === "name" ? renderArrow(orderDirection) : null }
+            {orderBy === "name" ? renderArrow(orderDirection) : null}
           </div>
-          <div className={clsx(classNames.cols.activity, "flex items-center cursor-pointer")} onClick={() => toggleFilter("activity")}>
+          <div
+            className={clsx(classNames.cols.activity, "flex items-center cursor-pointer")}
+            onClick={() => toggleFilter("activity")}
+          >
             <TableTitle text="Activity"></TableTitle>
           </div>
-          <div className={clsx(classNames.cols.prOverview, "flex items-center cursor-pointer")} onClick={() => toggleFilter("prsCount")}>
+          <div
+            className={clsx(classNames.cols.prOverview, "flex items-center cursor-pointer")}
+            onClick={() => toggleFilter("prsCount")}
+          >
             <TableTitle text="PR Overview"></TableTitle>
             {orderBy === "prsCount" ? renderArrow(orderDirection) : null}
           </div>
-          <div className={clsx(classNames.cols.prVelocity, "flex items-center cursor-pointer")} onClick={() => toggleFilter("prVelocityCount")}>
+          <div
+            className={clsx(classNames.cols.prVelocity, "flex items-center cursor-pointer")}
+            onClick={() => toggleFilter("prVelocityCount")}
+          >
             <TableTitle text="PR Velocity"></TableTitle>
             {orderBy === "prVelocityCount" ? renderArrow(orderDirection) : null}
           </div>
-          <div className={clsx(classNames.cols.spam, "flex items-center cursor-pointer")} onClick={() => toggleFilter("spamPrsCount")}>
+          <div
+            className={clsx(classNames.cols.spam, "flex items-center cursor-pointer")}
+            onClick={() => toggleFilter("spamPrsCount")}
+          >
             <TableTitle text="SPAM"></TableTitle>
             {orderBy === "spamPrsCount" ? renderArrow(orderDirection) : null}
           </div>
@@ -187,7 +207,8 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
                   onPageChange={function (page: number): void {
                     setPage(page);
                   }}
-                  divisor={false}
+                  divisor={true}
+                  goToPage
                 />
               </div>
             </div>
