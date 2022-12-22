@@ -40,3 +40,11 @@ input[type="search"]::-webkit-search-cancel-button {
 .z-50 {
   z-index: 50;
 }
+
+.custom-select__select-item[data-highlighted] {
+  @apply bg-light-orange-8 text-white
+}
+
+.custom-select__select-item[data-highlighted] svg {
+  @apply text-white
+}

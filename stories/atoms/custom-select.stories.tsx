@@ -10,18 +10,25 @@ export default StoryConfig;
 const SelectTemplate: ComponentStory<typeof Select> = (args) => <Select {...args} />;
 
 export const NoLabel = SelectTemplate.bind({});
-// NoLabel.args = {
-//   options: [
-//     { name: "select", value: "select" },
-//     { name: "food", value: "food" }
-//   ],
-//   placeholder: "Select an option"
-// };
+
+NoLabel.args = {
+  options: [
+    { name: "select", value: "select" },
+    { name: "food", value: "food" },
+    { name: "fruit", value: "fruit" }
+  ],
+  className: "w-48",
+  placeholder: "Select an option"
+};
+
 export const WithLabel = SelectTemplate.bind({});
-// WithLabel.args = {
-//   options: [
-//     { name: "select", value: "select" },
-//     { name: "food", value: "food" }
-//   ],
-//   label: "Showing"
-// };
+
+WithLabel.args = {
+  options: [
+    { name: "select", value: "select" },
+    { name: "food", value: "food" },
+    { name: "fruit", value: "fruit" }
+  ],
+  label: "Showing",
+  className: "w-48"
+};
