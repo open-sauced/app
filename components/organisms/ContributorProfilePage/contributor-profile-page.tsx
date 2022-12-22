@@ -88,13 +88,13 @@ const ContributorProfilePage = ({
               Contribution Insights
             </Title>
           </div>
-          <div className="bg-white mt-4 rounded-2xl border p-2 md:p-6">
+          <div className="bg-white mt-4 rounded-2xl border p-4 md:p-6">
             <div className=" flex flex-col lg:flex-row gap-2 md:gap-12 lg:gap-16 justify-between">
               <div className="">
                 <span className="text-xs text-light-slate-11">PRs opened</span>
                 {openPrs ? (
-                  <div className="flex justify-between gap-2 items-end pr-8 mt-1">
-                    <Text className="!text-2xl !text-black !leading-none">{openPrs} PRs</Text>
+                  <div className="flex justify-between gap-2 items-center md:pr-8 mt-1">
+                    <Text className="!text-lg md:!text-xl lg:!text-2xl !text-black !leading-none">{openPrs} PRs</Text>
                     <p className="flex text-red-700 items-end">
                       <span className="mb-0 leading-none">16%</span>
                       <BsFillArrowUpCircleFill className="ml-1" fill="red" color="red" />
@@ -107,8 +107,8 @@ const ContributorProfilePage = ({
               <div>
                 <span className="text-xs text-light-slate-11">PRs Reviewed</span>
                 {prReviews ? (
-                  <div className="flex text-green-9 gap-2 justify-between items-end pr-8 mt-1">
-                    <Text className="!text-2xl !text-black !leading-none">
+                  <div className="flex text-green-9 gap-2 justify-between items-center md:pr-8  mt-1">
+                    <Text className="!text-lg md:!text-xl lg:!text-2xl !text-black !leading-none">
                       {`${prReviews} PR${prReviews > 1 ? "s" : ""}`}
                     </Text>
                     <p className="flex text-green-700 items-end">
@@ -124,8 +124,10 @@ const ContributorProfilePage = ({
               <div>
                 <span className="text-xs text-light-slate-11">Avg PRs velocity</span>
                 {prVelocity ? (
-                  <div className="flex justify-between gap-2 items-end pr-8 mt-1">
-                    <Text className="!text-2xl !text-black !leading-none">{getRelativeDays(prVelocity)}</Text>
+                  <div className="flex justify-between gap-2 items-center md:pr-8  mt-1">
+                    <Text className="!text-lg md:!text-xl lg:!text-2xl !text-black !leading-none">
+                      {getRelativeDays(prVelocity)}
+                    </Text>
                     <p className="flex text-red-700 items-end">
                       <IconContext.Provider value={{ color: "purple", style: { width: 20, height: 20 } }}>
                         <VscGitMerge />
@@ -139,8 +141,8 @@ const ContributorProfilePage = ({
               <div>
                 <span className="text-xs text-light-slate-11">Contributed to</span>
                 {recentContributionCount ? (
-                  <div className="flex  justify-between gap-2 items-end pr-8 mt-1">
-                    <Text className="!text-2xl !text-black !leading-none">
+                  <div className="flex  justify-between gap-2 items-center md:pr-8  mt-1">
+                    <Text className="!text-lg md:!text-xl lg:!text-2xl !text-black !leading-none">
                       {`${recentContributionCount} Repo${recentContributionCount > 1 ? "s" : ""}`}
                     </Text>
                     <p className="flex text-light-slate-11 items-end">
