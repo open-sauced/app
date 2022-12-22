@@ -8,14 +8,13 @@ import FilterHeader from "components/molecules/FilterHeader/filter-header";
 
 import useNav from "lib/hooks/useNav";
 
-const FilterLayout = ({children}: {children: React.ReactNode}) => {
-
+const FilterLayout = ({ children }: { children: React.ReactNode }) => {
   const { toolList, selectedTool, filterName, selectedFilter, userOrg } = useNav();
 
   return (
     <>
       <TopNav />
-      <div className="page-container flex min-h-[calc(100vh-(54px+95px))] flex-col items-center">
+      <div className="page-container flex min-h-[calc(100vh-(54px+95px))] flex-col items-center overflow-x-hidden">
         <div className="info-container min-w-full min-h-[100px]">
           <Header>
             <FilterHeader />
@@ -29,9 +28,7 @@ const FilterLayout = ({children}: {children: React.ReactNode}) => {
           />
         </div>
 
-        <main className="flex w-full flex-1 flex-col items-center px-3 md:px-16 py-8 bg-light-slate-2">
-          {children}
-        </main>
+        <main className="flex w-full flex-1 flex-col items-center px-3 md:px-16 py-8 bg-light-slate-2">{children}</main>
       </div>
       <Footer />
     </>
