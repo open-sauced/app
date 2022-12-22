@@ -1,5 +1,6 @@
 import { useTopicContributorPRs } from "lib/hooks/useTopicContributorPRs";
 
+import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 import LatestPrTableHeader from "../LatestPrTableHeader/latest-pr-table-header";
 import LatestPrTableRow from "../LatestPrTableRow/latest-pr-table-row";
 
@@ -16,15 +17,17 @@ interface CardTableProps {
   contributor: string;
   topic: string;
   repositories?: number[];
+  limit?: number;
+  isHoverCard?: boolean;
 }
 
-const ContributorTable = ({ contributor, topic, repositories }: CardTableProps): JSX.Element => {
-  const { data, isLoading } = useTopicContributorPRs(contributor, topic, repositories);
+const ContributorTable = ({ contributor, topic, repositories, limit, isHoverCard }: CardTableProps): JSX.Element => {
+  const { data, isLoading } = useTopicContributorPRs(contributor, topic, repositories, limit);
 
   return data.length > 0 ? (
     <>
       <div className="flex flex-col">
-        <LatestPrTableHeader />
+        <LatestPrTableHeader isHoverCard={isHoverCard} />
         <div className="flex flex-col gap-0.5">
           {data.map(
             (
@@ -35,7 +38,11 @@ const ContributorTable = ({ contributor, topic, repositories }: CardTableProps):
                 merged_at: prMergedTime,
                 created_at: prIssuedTime,
                 filesCount: noOfFilesChanged,
-                linesCount: noOfLinesChanged
+                linesCount: noOfLinesChanged,
+                number: prNumber,
+                repo_name: repoName,
+                repo_owner: repoOwner,
+                updated_at: prUpdatedTime
               },
               index
             ) => {
@@ -46,17 +53,21 @@ const ContributorTable = ({ contributor, topic, repositories }: CardTableProps):
                 prStatus,
                 merged,
                 noOfFilesChanged,
-                noOfLinesChanged
+                noOfLinesChanged,
+                repoName,
+                repoOwner,
+                prNumber,
+                prUpdatedTime
               };
 
-              return <LatestPrTableRow key={index} {...latestPrs} />;
+              return <LatestPrTableRow isHoverCard={isHoverCard} key={index} {...latestPrs} />;
             }
           )}
         </div>
       </div>
     </>
   ) : (
-    <div className="px-2 py-1">{isLoading ? "Loading..." : "There are currently no PRs..."}</div>
+    <div className="px-2 py-1">{isLoading ? <SkeletonWrapper height={20} /> : "There are currently no PRs..."}</div>
   );
 };
 

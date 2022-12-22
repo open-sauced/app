@@ -14,7 +14,6 @@ import { calcDaysFromToday } from "lib/utils/date-utils";
 import roundedImage from "lib/utils/roundedImages";
 import { useTopicContributions } from "lib/hooks/useTopicContributions";
 
-
 type ContributorPrMap = { [contributor: string]: DbRepoPR };
 
 interface DashboardProps {
@@ -82,7 +81,6 @@ export const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
     <div className="flex flex-col w-full gap-4">
       <section className="flex flex-wrap gap-4 items-center lg:flex-row lg:flex-nowrap max-w-full">
         <HighlightCard
-
           label="Contributors"
           icon="contributors"
           metricIncreases={compare1.allContributors - compare2.allContributors >= 0}
@@ -129,6 +127,7 @@ export const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
               data={[{ id: "Contributors", data: scatterChartData }]}
               maxFilesModified={maxFilesModified}
               isMobile={isMobile}
+              repositories={repositories}
             />
           </Card>
         </div>

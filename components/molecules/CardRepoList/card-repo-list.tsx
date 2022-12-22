@@ -22,12 +22,18 @@ const CardRepoList = ({ repoList, limit = 5, fontSizeClassName }: CardRepoListPr
           {sanitizedRepoList
             .filter((repo, arrCount) => arrCount < limit)
             .map(({ repoName, repoIcon }, index) => (
-              <Tooltip key={index} content={repoName}>
-                <div className="flex gap-1  p-1 pr-2 border-[1px] border-light-slate-6 rounded-lg text-light-slate-12">
-                  <Icon IconImage={repoIcon} className="rounded-[4px] overflow-hidden" />
-                  <span className={`max-w-[45px] md:max-w-[100px] truncate ${fontSizeClassName}`}>{repoName}</span>
-                </div>
-              </Tooltip>
+              <>
+                {repoName && repoIcon ? (
+                  <Tooltip key={index} content={repoName}>
+                    <div className="flex gap-1  p-1 pr-2 border-[1px] border-light-slate-6 rounded-lg text-light-slate-12">
+                      <Icon IconImage={repoIcon} className="rounded-[4px] overflow-hidden" />
+                      <span className={`max-w-[45px] md:max-w-[100px] truncate ${fontSizeClassName}`}>{repoName}</span>
+                    </div>
+                  </Tooltip>
+                ) : (
+                  ""
+                )}
+              </>
             ))}
           <div>{repoList.length > limit ? `+${repoList.length - limit}` : null}</div>
         </>
