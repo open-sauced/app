@@ -9,6 +9,7 @@ import humanizeNumber from "lib/utils/humanizeNumber";
 import ToggleOption from "components/atoms/ToggleOption/toggle-option";
 import Title from "components/atoms/Typography/title";
 import HoverCardWrapper from "../HoverCardWrapper/hover-card-wrapper";
+
 export interface ScatterChartDataItems {
   x: string | number;
   y: string | number;
