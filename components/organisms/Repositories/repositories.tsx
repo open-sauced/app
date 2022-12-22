@@ -144,7 +144,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
         </div>
         <div className="hidden md:flex py-4 px-6 bg-light-slate-3 gap-2">
           <div className={clsx(classNames.cols.checkbox)} >
-            <Checkbox label="" onChange={handleOnSelectAllChecked} />
+            <Checkbox label="" onChange={handleOnSelectAllChecked} className='checked:[&>*]:!bg-orange-500 [&>*]:!border-orange-500 [&>*]:hover:!bg-orange-600'/>
           </div>
           <div className={clsx(classNames.cols.repository, "flex items-center cursor-pointer")}  onClick={() => toggleFilter("name")}>
             <TableTitle text="Repository"></TableTitle>
@@ -179,7 +179,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
               <div>
                 {selectedRepos.length} Repositories selected
               </div>
-              <Button onClick={handleOnAddtoInsights}>Add to Insight Page</Button>
+              <Button onClick={handleOnAddtoInsights} type="primary">Add to Insight Page</Button>
             </div>
           )
         }
