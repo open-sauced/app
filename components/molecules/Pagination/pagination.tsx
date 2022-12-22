@@ -39,7 +39,6 @@ const Pagination = ({
     onPageChange(page - 1);
   };
 
-  console.log(totalPage);
   return (
     <>
       <div className=" w-max flex gap-x-4 items-center ">
