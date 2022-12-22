@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.22.0-beta.11](https://github.com/open-sauced/insights/compare/v1.22.0-beta.10...v1.22.0-beta.11) (2022-12-22)
+
+
+### 🍕 Features
+
+* add support for goto page functionality ([#708](https://github.com/open-sauced/insights/issues/708)) ([1902a98](https://github.com/open-sauced/insights/commit/1902a983420bde31173771b6fcba97b708cf616e)), closes [#675](https://github.com/open-sauced/insights/issues/675)
+
 ## [1.22.0-beta.10](https://github.com/open-sauced/insights/compare/v1.22.0-beta.9...v1.22.0-beta.10) (2022-12-21)
 
 
