@@ -5,6 +5,39 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.22.0-beta.12](https://github.com/open-sauced/insights/compare/v1.22.0-beta.11...v1.22.0-beta.12) (2022-12-22)
+
+
+### 🍕 Features
+
+* add Stripe checkout integration ([#702](https://github.com/open-sauced/insights/issues/702)) ([f4da7af](https://github.com/open-sauced/insights/commit/f4da7afc4de577de869da292c35b3cbd43d801c6)), closes [#394](https://github.com/open-sauced/insights/issues/394)
+
+## [1.22.0-beta.11](https://github.com/open-sauced/insights/compare/v1.22.0-beta.10...v1.22.0-beta.11) (2022-12-22)
+
+
+### 🍕 Features
+
+* add support for goto page functionality ([#708](https://github.com/open-sauced/insights/issues/708)) ([1902a98](https://github.com/open-sauced/insights/commit/1902a983420bde31173771b6fcba97b708cf616e)), closes [#675](https://github.com/open-sauced/insights/issues/675)
+
+## [1.22.0-beta.10](https://github.com/open-sauced/insights/compare/v1.22.0-beta.9...v1.22.0-beta.10) (2022-12-21)
+
+
+### 🍕 Features
+
+* add toggle group component ([#666](https://github.com/open-sauced/insights/issues/666)) ([3bc7d8c](https://github.com/open-sauced/insights/commit/3bc7d8cda7047df921b8fcda30380287988595e9))
+
+## [1.22.0-beta.9](https://github.com/open-sauced/insights/compare/v1.22.0-beta.8...v1.22.0-beta.9) (2022-12-21)
+
+
+### 🐛 Bug Fixes
+
+* fixed status footer 404 error ([#699](https://github.com/open-sauced/insights/issues/699)) ([e14a976](https://github.com/open-sauced/insights/commit/e14a9769a8a9715aad7a0e9651ae166bed41d8ac)), closes [#656](https://github.com/open-sauced/insights/issues/656)
+
+
+### 🍕 Features
+
+* add sorting by column type on repositories screen ([#662](https://github.com/open-sauced/insights/issues/662)) ([d588032](https://github.com/open-sauced/insights/commit/d5880321ed82d5c505c74c6f797e70d5895803b6)), closes [#627](https://github.com/open-sauced/insights/issues/627)
+
 ## [1.22.0-beta.8](https://github.com/open-sauced/insights/compare/v1.22.0-beta.7...v1.22.0-beta.8) (2022-12-21)
 
 

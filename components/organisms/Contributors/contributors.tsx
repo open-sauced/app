@@ -24,7 +24,7 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
   const { filterName } = router.query;
   const topic = filterName as string;
   const { data, setLimit, meta, setPage, page, isError, isLoading } = useTopicContributions(10, repositories);
-  const range = useStore(state => state.range);
+  const range = useStore((state) => state.range);
   const store = useStore();
 
   const contributorArray = isError
@@ -130,7 +130,8 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
                 onPageChange={function (page: number): void {
                   setPage(page);
                 }}
-                divisor={false}
+                divisor={true}
+                goToPage
               />
             </div>
           </div>
