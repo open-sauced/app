@@ -1,6 +1,8 @@
 //Idea came from this repo: https://github.com/brookslybrand/next-nested-layouts
 
 import "../styles/globals.css";
+import "react-loading-skeleton/dist/skeleton.css";
+
 import { useEffect } from "react";
 import Head from "next/head";
 import type { AppProps } from "next/app";
@@ -11,7 +13,6 @@ import posthog from "posthog-js";
 
 import { TipProvider } from "components/atoms/Tooltip/tooltip";
 
-import GlobalState from "context/global-state";
 import changeCapitalization from "lib/utils/change-capitalization";
 import apiFetcher from "lib/hooks/useSWR";
 import { initiateAnalytics } from "lib/utils/analytics";
@@ -50,7 +51,14 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
       // Before unloading the app, we write back all the data into `localStorage`.
       window.addEventListener("beforeunload", () => {
         const appCache = JSON.stringify(Array.from(map.entries()));
-        localStorage.setItem("app-cache", appCache);
+        try {
+          localStorage.setItem("app-cache", appCache);
+        } catch (error) {
+          if (error instanceof Error && error.name === "QuotaExceededError")
+            return console.warn("⚠ local storage limit exceeded ⚠");
+
+          throw error;
+        }
       });
 
       // We still use the map for write & read for performance.
@@ -66,7 +74,10 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
   return (
     <>
       <Head>
-        <title>Open Sauced Insights{filterName && ` - ${changeCapitalization(filterName.toString(), true)}`} {toolName && ` / ${changeCapitalization(toolName.toString(), true)}`}</title>
+        <title>
+          Open Sauced Insights{filterName && ` - ${changeCapitalization(filterName.toString(), true)}`}{" "}
+          {toolName && ` / ${changeCapitalization(toolName.toString(), true)}`}
+        </title>
         <link rel="icon" href="/favicon.ico" />
         <meta property="og:url" content="https://insights.opensauced.pizza" />
         <meta property="og:type" content="website" />
@@ -87,26 +98,20 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
           provider: localStorageProvider
         }}
       >
-        <SessionContextProvider
-          supabaseClient={supabase}
-          initialSession={pageProps.initialSession}
-        >
-          <GlobalState>
-            <TipProvider>
-              {Component.PageLayout ? (
-                <Component.PageLayout>
-                  <Component {...pageProps} />
-                </Component.PageLayout>
-              ) : (
+        <SessionContextProvider supabaseClient={supabase} initialSession={pageProps.initialSession}>
+          <TipProvider>
+            {Component.PageLayout ? (
+              <Component.PageLayout>
                 <Component {...pageProps} />
-              )}
-            </TipProvider>
-          </GlobalState>
+              </Component.PageLayout>
+            ) : (
+              <Component {...pageProps} />
+            )}
+          </TipProvider>
         </SessionContextProvider>
       </SWRConfig>
     </>
   );
-
 }
 
 export default MyApp;

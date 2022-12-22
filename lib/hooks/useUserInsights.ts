@@ -19,7 +19,7 @@ const useUserInsights = () => {
     data: data?.data ?? [],
     meta: data?.meta ?? { itemCount: 0 },
     isLoading: !error && !data,
-    isError: !!error,
+    isError: !!error && Object.keys(error).length > 0,
     mutate
   };
 };

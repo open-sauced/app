@@ -7,13 +7,13 @@ interface PaginatedContributorPRsResponse {
   readonly meta: Meta;
 }
 
-const useTopicContributorPRs = (contributor: string, topic: string, repoIds: number[] = []) => {
+const useTopicContributorPRs = (contributor: string, topic: string, repoIds: number[] = [], limit = 8) => {
   const router = useRouter();
   const { selectedFilter } = router.query;
   const baseEndpoint = `${topic}/${contributor}/prs`;
   const filterQuery = getFilterQuery(selectedFilter);
-  const reposQuery = repoIds.length > 0 ? `&repoIds=${repoIds.join(",")}`: "";
-  const endpointString = `${baseEndpoint}?limit=8${filterQuery}${reposQuery}`;
+  const reposQuery = repoIds.length > 0 ? `&repoIds=${repoIds.join(",")}` : "";
+  const endpointString = `${baseEndpoint}?limit=${limit}${filterQuery}${reposQuery}`;
 
   const { data, error, mutate } = useSWR<PaginatedContributorPRsResponse, Error>(endpointString);
 

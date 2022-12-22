@@ -11,7 +11,6 @@ interface HeaderLogoProps {
 }
 
 const HeaderLogo: React.FC<HeaderLogoProps> = ({ textIsBlack, withBg = false }) => {
-
   return (
     <Link href="/">
       <div className="flex items-center py-2 gap-2 cursor-pointer">
@@ -22,17 +21,12 @@ const HeaderLogo: React.FC<HeaderLogoProps> = ({ textIsBlack, withBg = false }) 
           height={32}
           src={withBg ? openSaucedImgWithBg : openSaucedImg}
         />
-        <Text
-          className={`!font-semibold !text-base hidden xs:block ${textIsBlack ? "!text-black" : "!text-white"}`}
-        >
+        <p className={`font-bold !text-base hidden xs:block ${textIsBlack ? "!text-black" : "!text-white"}`}>
           OpenSauced
-        </Text>
+        </p>
       </div>
     </Link>
   );
-
-
-
 };
 
 export default HeaderLogo;

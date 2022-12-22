@@ -7,9 +7,8 @@ import Icon from "components/atoms/Icon/icon";
 import Title from "components/atoms/Typography/title";
 import ReportsHistory from "components/molecules/ReportsHistory/reports-history";
 import SelectReportsFilter from "components/molecules/SelectReportsFilter/select-reports-filter";
-import WaitlistButton from "components/molecules/WaitlistButton/waitlist-button";
+import StripeCheckoutButton from "../StripeCheckoutButton/stripe-checkout-button";
 
-import { useGlobalStateContext } from "context/global-state";
 import { Report } from "interfaces/report-type";
 
 import useFilterOptions from "lib/hooks/useFilterOptions";
@@ -24,13 +23,11 @@ interface ReportsProps {
   repositories?: number[];
 }
 
-const Reports = ({ waitlisted, hasReports, repositories }: ReportsProps): JSX.Element => {
+const Reports = ({ hasReports, repositories }: ReportsProps): JSX.Element => {
   const userDeviceState = localStorage.getItem(USERDEVICESTORAGENAME);
   const initialState = userDeviceState ? JSON.parse(userDeviceState as string) : [];
   const [reports, setReports] = useState<Report[]>(initialState);
-  const { sessionToken, user, signIn } = useSupabaseAuth();
-  const { setAppState } = useGlobalStateContext();
-  const [submitting, setSubmitting] = useState(false);
+  const { user, signIn } = useSupabaseAuth();
 
   const filterOptions = useFilterOptions();
   const filterList = filterOptions.map((filter) => {
@@ -53,30 +50,6 @@ const Reports = ({ waitlisted, hasReports, repositories }: ReportsProps): JSX.El
 
       return newState;
     });
-  };
-
-  const handleJoinClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-
-    setSubmitting(true);
-
-    try {
-      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/waitlist`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${sessionToken}`
-        }
-      });
-
-      setAppState((state) => ({
-        ...state,
-        waitlisted: true
-      }));
-    } catch (e) {
-      // handle error
-    } finally {
-      setSubmitting(false);
-    }
   };
 
   return (
@@ -114,7 +87,7 @@ const Reports = ({ waitlisted, hasReports, repositories }: ReportsProps): JSX.El
             )}
           </div>
         ) : (
-          <WaitlistButton waitlisted={waitlisted} submitting={submitting} handleJoinClick={handleJoinClick} />
+          <StripeCheckoutButton />
         )}
       </div>
     </section>

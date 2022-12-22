@@ -16,7 +16,7 @@ interface DbRepo {
   readonly amount?: string;
   readonly churn?: string;
   readonly spamPrsCount?: number;
-  readonly prVelocityCount?: number;  
+  readonly prVelocityCount?: number;
 }
 
 interface DbRepoPR {
@@ -30,6 +30,9 @@ interface DbRepoPR {
   readonly filesCount: number;
   protected linesCount: number;
   readonly merged: boolean;
+  readonly repo_owner: string;
+  readonly repo_name: string;
+  readonly number: number;
 }
 
 interface DbRepoCommit {
@@ -74,10 +77,10 @@ interface DbInsight {
   readonly accepted_repos: number;
   readonly all_contributors: number;
   readonly spam_contributors: number;
-  readonly accepted_contributors: number;    
+  readonly accepted_contributors: number;
   readonly all_repo_total: number;
   readonly spam_repo_total: number;
-  readonly accepted_repo_total: number;  
+  readonly accepted_repo_total: number;
 }
 
 interface DbUserInsight {
