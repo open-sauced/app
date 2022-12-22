@@ -1,20 +1,18 @@
+import { IconContext } from "react-icons";
 import { BsFillArrowUpCircleFill } from "react-icons/bs";
+import { FaCheckCircle } from "react-icons/fa";
+import { VscGitMerge, VscRepo } from "react-icons/vsc";
 
 import Title from "components/atoms/Typography/title";
 import Text from "components/atoms/Typography/text";
-import CardHorizontalBarChart, {
-  LanguageObject
-} from "components/molecules/CardHorizontalBarChart/card-horizontal-bar-chart";
-import color from "lib/utils/color.json";
+import CardHorizontalBarChart from "components/molecules/CardHorizontalBarChart/card-horizontal-bar-chart";
 import ContributorProfileHeader from "components/molecules/ContributorProfileHeader/contributor-profile-header";
 import { ContributorObject } from "../ContributorCard/contributor-card";
 import CardLineChart from "components/molecules/CardLineChart/card-line-chart";
 import CardRepoList, { RepoList } from "components/molecules/CardRepoList/card-repo-list";
-import LatestPrTableRow from "components/molecules/LatestPrTableRow/latest-pr-table-row";
-import LatestPrTableHeader from "components/molecules/LatestPrTableHeader/latest-pr-table-header";
-
-import TestRepoAvatar from "public/icons/test-repo-avatar.svg";
 import ContributorTable from "components/molecules/ContributorTable/contributor-table";
+
+import color from "lib/utils/color.json";
 import { useTopicContributorCommits } from "lib/hooks/useTopicContributorCommits";
 import { getRelativeDays } from "lib/utils/date-utils";
 
@@ -47,14 +45,12 @@ interface ContributorProfilePageProps {
   prVelocity: number;
 }
 const ContributorProfilePage = ({
-  contributor,
   repositories,
   recentContributionCount,
   githubAvatar,
   githubName,
   langList,
   repoList,
-  prTotal,
   openPrs,
   prReviews,
   prVelocity
@@ -116,8 +112,9 @@ const ContributorProfilePage = ({
                       {`${prReviews} PR${prReviews > 1 ? "s" : ""}`}
                     </Text>
                     <p className="flex text-green-700 items-end">
-                      <span className="mb-0 leading-none">35</span>
-                      <BsFillArrowUpCircleFill className="ml-1" fill="green" color="green" />
+                      <IconContext.Provider value={{ color: "green", style: { width: 20, height: 20 } }}>
+                        <FaCheckCircle title="Open Pull Request" />
+                      </IconContext.Provider>
                     </p>
                   </div>
                 ) : (
@@ -130,8 +127,9 @@ const ContributorProfilePage = ({
                   <div className="flex justify-between gap-2 items-end pr-8 mt-1">
                     <Text className="!text-2xl !text-black !leading-none">{getRelativeDays(prVelocity)}</Text>
                     <p className="flex text-red-700 items-end">
-                      <span className="mb-0 text-sm leading-none">10%</span>
-                      <BsFillArrowUpCircleFill className="ml-1" fill="red" color="red" />
+                      <IconContext.Provider value={{ color: "purple", style: { width: 20, height: 20 } }}>
+                        <VscGitMerge />
+                      </IconContext.Provider>
                     </p>
                   </div>
                 ) : (
@@ -145,9 +143,10 @@ const ContributorProfilePage = ({
                     <Text className="!text-2xl !text-black !leading-none">
                       {`${recentContributionCount} Repo${recentContributionCount > 1 ? "s" : ""}`}
                     </Text>
-                    <p className="flex text-green-700 items-end">
-                      <span className="mb-0 leading-none">5%</span>
-                      <BsFillArrowUpCircleFill className="ml-1" fill="green" color="green" />
+                    <p className="flex text-light-slate-11 items-end">
+                      <IconContext.Provider value={{ style: { width: 20, height: 20 } }}>
+                        <VscRepo />
+                      </IconContext.Provider>
                     </p>
                   </div>
                 ) : (
