@@ -33,12 +33,12 @@ const StripeCheckoutButton = () => {
 
   return (
     <div>
-      <Text className="">Purchase a subscription to gain access to generate custom reports!</Text>
+      <Text className="">Upgrade to a subscription to gain access to generate custom reports!</Text>
 
       <p className="flex justify-center py-4 px-2">
         <form onSubmit={handleFormSubmit}>
           <Button type="primary" className="w-52 h-[38px]">
-            Checkout with Stripe
+            Upgrade Access
           </Button>
         </form>
       </p>
