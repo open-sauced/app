@@ -1,9 +1,9 @@
 // User defined type definitions. Please add type definitions for global types here
 
 interface DbRepo {
-  readonly id: string,
-  readonly size: number,
-  readonly stars: number,
+  readonly id: string;
+  readonly size: number;
+  readonly stars: number;
   readonly name: string;
   readonly owner: string;
   readonly prActiveCount: number;
@@ -41,26 +41,30 @@ interface DbRepoCommit {
 }
 
 interface Meta {
-  readonly itemCount: number,
-  readonly limit: number,
-  readonly page: number,
-  readonly pageCount: number,
-  readonly hasNextPage: boolean,
-  readonly hasPreviousPage: boolean
+  readonly itemCount: number;
+  readonly limit: number;
+  readonly page: number;
+  readonly pageCount: number;
+  readonly hasNextPage: boolean;
+  readonly hasPreviousPage: boolean;
 }
 
 interface DbContribution {
-  readonly commits: string,
-  readonly commit_days: string,
-  readonly files_modified: string,
-  readonly first_commit_time: string,
-  readonly last_commit_time: string,
-  readonly email: string,
-  readonly name: string,
-  readonly host_login: string,
-  readonly langs: string,
+  readonly commits: string;
+  readonly commit_days: string;
+  readonly files_modified: string;
+  readonly first_commit_time: string;
+  readonly last_commit_time: string;
+  readonly email: string;
+  readonly name: string;
+  readonly host_login: string;
+  readonly langs: string;
   readonly recent_repo_list: string;
   readonly recent_pr_total: number;
+  readonly recent_contribution_count: number;
+  readonly recent_opened_prs: number;
+  readonly recent_pr_reviews: number;
+  readonly recent_pr_velocity: number;
 }
 
 interface DbInsight {
@@ -84,20 +88,20 @@ interface DbInsight {
 }
 
 interface DbUserInsight {
-  id:	number;
+  id: number;
   user_id: number;
   name: string;
   is_public: boolean;
   is_favorite: boolean;
-  short_code:	string;
-  created_at:	string;
-  updated_at:	string;
-  repos: DbUserInsightRepo[]
+  short_code: string;
+  created_at: string;
+  updated_at: string;
+  repos: DbUserInsightRepo[];
 }
 
 interface DbUserInsightRepo {
-  id:	number;
+  id: number;
   insight_id: number;
   repo_id: number;
-  created_at:	string;
+  created_at: string;
 }
