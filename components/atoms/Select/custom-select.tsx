@@ -24,7 +24,7 @@ const CustomSelect = ({
 
   return (
     <Select.Root>
-      <div className={clsx("relative bg-white cursor-pointer focus:border-light-orange-9 focus:ring focus:ring-light-orange-9 items-center overflow-x-hidden rounded-lg text-base text-light-slate-10 min-w-min", className ? className : "")}>
+      <div className={clsx("relative bg-white cursor-pointer focus:border-light-orange-9 focus:ring focus:ring-light-orange-9 items-center overflow-x-hidden rounded-lg text-base text-light-slate-10 min-w-min", className || "")}>
         <Select.Trigger
           aria-label="Select a limit for the number of repositories to display"
           className="inline-flex items-center text-sm text-light-slate-12 px-2 py-1.5 gap-2 w-full bg-white rounded-lg border border-light-slate-6 focus:outline-none focus-within:border-light-orange-8 focus-within:ring focus-within:ring-light-orange-8"
