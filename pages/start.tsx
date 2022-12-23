@@ -31,6 +31,7 @@ import useSession from "lib/hooks/useSession";
 import { captureAnayltics } from "lib/utils/analytics";
 import { getAvatarLink } from "lib/utils/github";
 import useStore from "lib/store";
+import { Http2ServerResponse } from "http2";
 
 type handleLoginStep = () => void;
 
@@ -110,9 +111,16 @@ interface LoginStep2Props {
   setRepoList: Function;
 }
 
+enum OrgLookupError {
+  Initial = 0,
+  Invalid = 3,
+  Error = 4
+}
+
 const LoginStep2: React.FC<LoginStep2Props> = ({ handleLoginStep, setRepoList }) => {
   const { providerToken } = useSupabaseAuth();
   const [orgName, setOrgName] = useState("");
+  const [addOrgError, setAddOrgError] = useState<OrgLookupError>(OrgLookupError.Initial);
 
   captureAnayltics("User Onboarding", "onboardingStep2", "visited");
 
@@ -153,14 +161,34 @@ const LoginStep2: React.FC<LoginStep2Props> = ({ handleLoginStep, setRepoList })
         });
 
         setRepoList(repoList);
+        setAddOrgError(OrgLookupError.Initial);
       }
 
       // If valid, go to next step
       handleLoginStep();
-    } catch (e) {
+    } catch (e: any) {
       // If invalid, display error
       console.error(e);
+      
+      if ( e.code  == 404) {
+        setAddOrgError(OrgLookupError.Invalid);
+      } 
+      else {
+        setAddOrgError(OrgLookupError.Error);
+      } 
     }
+  };
+
+  const getOrgLookupError = (code: OrgLookupError) => {
+    if (code === OrgLookupError.Error) {
+      return <Text>There was error retrieving this organization.</Text>;
+    }
+
+    if (code === OrgLookupError.Invalid) {
+      return <Text>The organization entered is invalid.</Text>;
+    }
+
+    return <></>;
   };
 
   return (
@@ -210,6 +238,9 @@ const LoginStep2: React.FC<LoginStep2Props> = ({ handleLoginStep, setRepoList })
               classNames="!rounded-md !py-0.5 child:h-8 child:text-sm"
             />
           </div>
+
+          {getOrgLookupError(addOrgError)}
+
           <Button onClick={handleAddPAT} type="primary" className="w-full mt-3 md:mt-0 h-10">
             Continue
           </Button>
@@ -426,8 +457,8 @@ const Login: WithPageLayout = () => {
           </div>
         </section>
         <section className="w-full lg:max-w-[50%] p-9 rounded-lg lg:rounded-r-lg bg-white">
-          {currentLoginStep === 1 && <LoginStep1 handleLoginStep={handleLoginStep} user={user} />}
-          {currentLoginStep === 2 && <LoginStep2 handleLoginStep={handleLoginStep} setRepoList={setRepoList} />}
+          {currentLoginStep === 1 || true && <LoginStep1 handleLoginStep={handleLoginStep} user={user} />}
+          {currentLoginStep === 2 || true &&  <LoginStep2 handleLoginStep={handleLoginStep} setRepoList={setRepoList} />}
           {currentLoginStep >= 3 && (
             <LoginStep3 handleLoginStep={handleLoginStep} repoList={repoList} checkFollowed={checkFollowed} />
           )}
