@@ -41,10 +41,18 @@ input[type="search"]::-webkit-search-cancel-button {
   z-index: 50;
 }
 
-.custom-select__select-item[data-highlighted] {
-  @apply bg-light-orange-8 text-white
+.-left-18 {
+  left: -4.8rem;
 }
 
-.custom-select__select-item[data-highlighted] svg {
-  @apply text-white
+.custom-select__select-item[data-highlighted] {
+  @apply bg-light-orange-3 text-light-orange-11
+}
+
+.custom-select__container:has([data-state="open"]) {
+  @apply ring ring-light-orange-5
+}
+
+.custom-select__trigger[data-state="open"] {
+  @apply border-light-orange-9
 }
