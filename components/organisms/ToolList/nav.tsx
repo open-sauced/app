@@ -22,7 +22,7 @@ const Nav: React.FC<NavProps> = ({ toolList, selectedTool = "dashboard", selecte
       aria-orientation="horizontal"
       aria-label="Browse the tools"
       tabIndex={0}
-      className="tool-list-nav flex w-[100vw] 2xl:w-full overflow-x-auto overflow-y-hidden gap-2 px-4 md:px-16 bg-light-slate-3 border-b pt-3"
+      className="tool-list-nav flex w-full overflow-x-auto overflow-y-hidden gap-2 px-4 md:px-16 bg-light-slate-3 border-b pt-3"
     >
       {toolList.map((tool, index) => (
         <div
