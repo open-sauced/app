@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.22.2](https://github.com/open-sauced/insights/compare/v1.22.1...v1.22.2) (2022-12-23)
+
+
+### ⏩ Reverts
+
+* Revert "feat: add sorting by column type on repositories screen (#662)" ([5436712](https://github.com/open-sauced/insights/commit/5436712ce203bdb43c5f6fec92751c0d2bf711e2)), closes [#662](https://github.com/open-sauced/insights/issues/662)
+
 ### [1.22.2-beta.1](https://github.com/open-sauced/insights/compare/v1.22.1...v1.22.2-beta.1) (2022-12-23)
 
 
