@@ -21,7 +21,6 @@ const Home: WithPageLayout = () => {
 
     async function getAccess() {
       const currentUser = await supabase.auth.getSession();
-      
       if (!currentUser?.data?.session) {
         redirect("/javascript");
       }
