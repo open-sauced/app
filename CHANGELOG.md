@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.22.1-beta.1](https://github.com/open-sauced/insights/compare/v1.22.0...v1.22.1-beta.1) (2022-12-23)
+
+
+### 🐛 Bug Fixes
+
+* add wrapper element for Link usage on table repo name ([#727](https://github.com/open-sauced/insights/issues/727)) ([beb767a](https://github.com/open-sauced/insights/commit/beb767a5030ae942074a4491677e09117bab6b70)), closes [#726](https://github.com/open-sauced/insights/issues/726)
+
 ## [1.22.0](https://github.com/open-sauced/insights/compare/v1.21.0...v1.22.0) (2022-12-22)
 
 
