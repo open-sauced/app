@@ -17,7 +17,6 @@ import { useContributionsList } from "lib/hooks/useContributionsList";
 import { useRepositoryCommits } from "lib/hooks/useRepositoryCommits";
 import { getCommitsLast30Days } from "lib/utils/get-recent-commits";
 import { getRelativeDays } from "lib/utils/date-utils";
-import getTotalPrs from "lib/utils/get-total-prs";
 
 import StackedAvatar from "../StackedAvatar/stacked-avatar";
 import PullRequestOverview from "../PullRequestOverview/pull-request-overview";
@@ -46,6 +45,26 @@ const getActivity = (total?: number, loading?: boolean) => {
   }
 
   return <Pill icon={<ArrowTrendingDownIcon color="red" className="h-4 w-4" />} text="Low" color="red" />;
+};
+
+const getTotalPrs = (
+  openPrsCount?: number,
+  mergedPrsCount?: number,
+  closedPrsCount?: number,
+  draftPrsCount?: number
+): number => {
+  const open = openPrsCount || 0;
+  const merged = mergedPrsCount || 0;
+  const closed = closedPrsCount || 0;
+  const drafts = draftPrsCount || 0;
+
+  const total = open + closed + merged - drafts;
+
+  if (total <= 0) {
+    return 0;
+  }
+
+  return total;
 };
 
 const getPrsMerged = (total: number, merged: number): number => {

@@ -33,12 +33,12 @@ const TableRepositoryName = ({ avatarURL, name, handle, topic, user }: TableRepo
       <div className="flex flex-col justify-center">
         <div title={name} className="  text-base text-light-slate-12 tracking-tight">
           <Link href={filterLink}>
-            {name && name.length > 10 ? truncateString(name, 12) : name}
+            <a>{name && name.length > 10 ? truncateString(name, 12) : name}</a>
           </Link>
         </div>
         <div className="  text-sm text-light-slate-11 truncate max-w-[85px] md:max-w-[110px]">
           <Link href={filterLink}>
-            {handle ? `@${handle}` : "handle1234"}
+            <a>{handle ? `@${handle}` : "handle1234"}</a>
           </Link>
         </div>
       </div>
