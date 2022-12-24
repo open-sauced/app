@@ -53,7 +53,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
     if(user) {
       router.push({pathname: "/hub/insights/new", query: {selectedRepos: JSON.stringify(selectedRepos)}}, "/hub/insights/new" );
     } else {
-      sessionStorage.setItem("redirectUrl", "/hub/insights/new")
+      sessionStorage.setItem("redirectUrl", "/hub/insights/new");
       sessionStorage.setItem("selectedRepos", JSON.stringify(selectedRepos));
       signIn({ provider: "github" });
     }
@@ -108,7 +108,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
         </div>
         <div className="hidden md:flex py-4 px-6 bg-light-slate-3 gap-2">
           <div className={clsx(classNames.cols.checkbox)} >
-            <Checkbox label="" onChange={handleOnSelectAllChecked} className='checked:[&>*]:!bg-orange-500 [&>*]:!border-orange-500 [&>*]:hover:!bg-orange-600'/>
+            <Checkbox label="" onChange={handleOnSelectAllChecked} className="checked:[&>*]:!bg-orange-500 [&>*]:!border-orange-500 [&>*]:hover:!bg-orange-600"/>
           </div>
           <div className={clsx(classNames.cols.repository)}>
             <TableTitle text="Repository"></TableTitle>

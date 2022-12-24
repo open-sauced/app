@@ -212,7 +212,7 @@ const RepoRow = ({ repo, topic, user, selected, handleOnSelectRepo }: RepoProps)
         </div>
       </div>
       <div className={`${classNames.row} `}>
-        <Checkbox label="" checked={selected? true : false} onChange={handleSelectCheckbox} className='checked:[&>*]:!bg-orange-500 [&>*]:!border-orange-500 [&>*]:hover:!bg-orange-600'/>
+        <Checkbox label="" checked={selected? true : false} onChange={handleSelectCheckbox} className="checked:[&>*]:!bg-orange-500 [&>*]:!border-orange-500 [&>*]:hover:!bg-orange-600"/>
         {/* Column: Repository Name */}
         <div className={classNames.cols.repository}>
           <TableRepositoryName topic={topic} avatarURL={ownerAvatar} name={name} handle={handle} user={user}></TableRepositoryName>

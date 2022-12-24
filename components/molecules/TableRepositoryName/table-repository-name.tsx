@@ -15,11 +15,11 @@ interface TableRepositoryNameProps {
 }
 
 const TableRepositoryName = ({ avatarURL, name, handle, topic, user }: TableRepositoryNameProps): JSX.Element => {
-  const router = useRouter()
+  const router = useRouter();
 
-  let filterLink = `/${user ? `pages/${user}/` : ""}${topic}/repositories/filter/${handle}/${name}`
+  let filterLink = `/${user ? `pages/${user}/` : ""}${topic}/repositories/filter/${handle}/${name}`;
   if(router.asPath === filterLink) {
-    filterLink = `/${user ? `pages/${user}/` : ""}${topic}/repositories/filter/recent`
+    filterLink = `/${user ? `pages/${user}/` : ""}${topic}/repositories/filter/recent`;
   }
 
   return (

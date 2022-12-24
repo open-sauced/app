@@ -37,7 +37,7 @@ const Home: WithPageLayout = () => {
           const selectedRepos = sessionStorage.getItem("selectedRepos");
           sessionStorage.removeItem("redirectUrl");
           sessionStorage.removeItem("selectedRepos");
-          router.push({pathname: redirectUrl, query: {selectedRepos: selectedRepos || ''}}, redirectUrl);
+          router.push({pathname: redirectUrl, query: {selectedRepos: selectedRepos || ""}}, redirectUrl);
         } else {
           redirect("/hub/insights");
         }
