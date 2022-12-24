@@ -457,7 +457,7 @@ const Login: WithPageLayout = () => {
         </section>
         <section className="w-full lg:max-w-[50%] p-9 rounded-lg lg:rounded-r-lg bg-white">
           {currentLoginStep === 1 && <LoginStep1 handleLoginStep={handleLoginStep} user={user} />}
-          {currentLoginStep === 2 &&  <LoginStep2 handleLoginStep={handleLoginStep} setRepoList={setRepoList} />}
+          {currentLoginStep === 2 && <LoginStep2 handleLoginStep={handleLoginStep} setRepoList={setRepoList} />}
           {currentLoginStep >= 3 && (
             <LoginStep3 handleLoginStep={handleLoginStep} repoList={repoList} checkFollowed={checkFollowed} />
           )}
