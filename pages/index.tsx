@@ -10,6 +10,7 @@ const Home: WithPageLayout = () => {
   const router = useRouter();
   const { onboarded } = useSession();
 
+
   useEffect(() => {
     function redirect(destination: string) {
       let redir = setTimeout(() => {
@@ -31,7 +32,15 @@ const Home: WithPageLayout = () => {
       }
 
       if (currentUser?.data?.session && onboarded === true) {
-        redirect("/hub/insights");
+        const redirectUrl = sessionStorage.getItem("redirectUrl");
+        if(redirectUrl) {
+          const selectedRepos = sessionStorage.getItem("selectedRepos");
+          sessionStorage.removeItem("redirectUrl");
+          sessionStorage.removeItem("selectedRepos");
+          router.push({pathname: redirectUrl, query: {selectedRepos: selectedRepos || ''}}, redirectUrl);
+        } else {
+          redirect("/hub/insights");
+        }
       } else {
         redirect("/javascript");
       }
