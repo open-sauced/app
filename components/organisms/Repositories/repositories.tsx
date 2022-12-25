@@ -26,7 +26,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
   const username = userOrg ? user?.user_metadata.user_name : undefined;
   const topic = filterName as string;
   const store = useStore();
-  const range = useStore(state => state.range);
+  const range = useStore((state) => state.range);
   const {
     data: repoListData,
     meta: repoMeta,
@@ -145,7 +145,8 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
                   onPageChange={function (page: number): void {
                     setPage(page);
                   }}
-                  divisor={false}
+                  divisor={true}
+                  goToPage
                 />
               </div>
             </div>

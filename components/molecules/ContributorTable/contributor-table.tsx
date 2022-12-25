@@ -41,7 +41,8 @@ const ContributorTable = ({ contributor, topic, repositories, limit, isHoverCard
                 linesCount: noOfLinesChanged,
                 number: prNumber,
                 repo_name: repoName,
-                repo_owner: repoOwner
+                repo_owner: repoOwner,
+                updated_at: prUpdatedTime
               },
               index
             ) => {
@@ -55,7 +56,8 @@ const ContributorTable = ({ contributor, topic, repositories, limit, isHoverCard
                 noOfLinesChanged,
                 repoName,
                 repoOwner,
-                prNumber
+                prNumber,
+                prUpdatedTime
               };
 
               return <LatestPrTableRow isHoverCard={isHoverCard} key={index} {...latestPrs} />;
