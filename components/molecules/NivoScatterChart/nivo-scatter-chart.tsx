@@ -101,7 +101,7 @@ const NivoScatterPlot = ({
 
   return (
     <>
-      <div className="flex flex-col md:flex-row justify-between px-7 pt-5">
+      <div className="flex flex-col md:flex-row justify-between px-7 pt-3 items-center">
         <Title level={4} className="!text-sm  !text-light-slate-12">
           {title}
         </Title>
