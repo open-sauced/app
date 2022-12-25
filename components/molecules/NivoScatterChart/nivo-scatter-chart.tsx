@@ -105,7 +105,7 @@ const NivoScatterPlot = ({
         <Title level={4} className="!text-sm  !text-light-slate-12">
           {title}
         </Title>
-        <ToggleGroup handleChange={handleTogglePrFilter}>
+        <ToggleGroup handleChange={handleTogglePrFilter} className='flex'>
           <>
             All PRs
             <span className="ml-2 py-0.5 px-1.5 h-fit bg-slate-200 text-slate-500 border rounded-full text-xs font-semibold">
