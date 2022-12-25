@@ -21,24 +21,26 @@ const InsightHeader = ({ insight, repositories, insightId }: InsightHeaderProps)
   const { repoList } = getRepoInsights(repoData);
 
   return (
-    <>
-      <div className="header-image mr-2 p-2 min-w-[130px]">
-        <ContextThumbnail size={120} ContextThumbnailURL={""}></ContextThumbnail>
-      </div>
-      <div className="header-info flex flex-col grow justify-center p-2">
-        <Title level={1} className="!text-3xl font-semibold tracking-tight text-slate-900">
-          {insight && insight.name || "Insights"}
-        </Title>
-        <div className="flex mt-4 items-center relative  gap-2">
-          {insight && insight.repos && insight.repos.length > 0 && <CardRepoList limit={2} repoList={repoList} />}
+    <div className="flex flex-row justify-between w-full content-center">
+      <div className="flex flex-col md:flex-row ">
+        <div className="header-image mr-2 p-2 min-w-[130px]">
+          <ContextThumbnail size={120} ContextThumbnailURL={""}></ContextThumbnail>
+        </div>
+        <div className="header-info flex flex-col grow justify-center p-2">
+          <Title level={1} className="!text-3xl font-semibold tracking-tight text-slate-900">
+            {insight && insight.name || "Insights"}
+          </Title>
+          <div className="flex mt-4 items-center relative  gap-2">
+            {insight && insight.repos && insight.repos.length > 0 && <CardRepoList limit={2} repoList={repoList} />}
+          </div>
         </div>
       </div>
-      <div>
+      <div className="py-2">
         <Link href={`/hub/insights/${insightId}/edit`}>
           <Button type="primary"><FaEdit className="mr-2"/> Edit Page</Button>
         </Link>
       </div>
-    </>
+    </div>
   );
 };
 
