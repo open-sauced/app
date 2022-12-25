@@ -36,6 +36,7 @@ interface ScatterPlotProps {
   isMobile?: boolean;
   repositories?: number[];
   metadata: ScatterChartMetadata;
+  handleSetPrFilter: (state: "open" | "closed" | "all") => void;
 }
 
 const NivoScatterPlot = ({
@@ -47,11 +48,28 @@ const NivoScatterPlot = ({
   isMobile,
   repositories,
   metadata,
+  handleSetPrFilter
 }: ScatterPlotProps) => {
   const [showMembers, setShowMembers] = useState<boolean>(false);
   const [isLogarithmic, setIsLogarithmic] = useState<boolean>(false);
 
   let functionTimeout: any;
+
+  const handleTogglePrFilter = (val: string) => {
+    switch (val) {
+      case '0':
+        handleSetPrFilter('all');
+        break;
+
+      case '1':
+        handleSetPrFilter('open');
+        break;
+
+      case '2':
+        handleSetPrFilter('closed');
+        break;
+    }
+  }
 
   const handleShowMembers = () => {
     clearTimeout(functionTimeout);
@@ -87,7 +105,7 @@ const NivoScatterPlot = ({
         <Title level={4} className="!text-sm  !text-light-slate-12">
           {title}
         </Title>
-        <ToggleGroup>
+        <ToggleGroup handleChange={handleTogglePrFilter}>
           <>
             All PRs
             <span className="ml-2 py-0.5 px-1.5 h-fit bg-slate-200 text-slate-500 border rounded-full text-xs font-semibold">

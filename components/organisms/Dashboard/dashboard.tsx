@@ -26,11 +26,22 @@ export const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
   const { data: contributorData } = useTopicContributions(10, repositories);
   const [showBots, setShowBots] = useState(false);
   const isMobile = useMediaQuery("(max-width:720px)");
+  const [prStateFilter, setPrStateFilter] = useState<"open" | "closed" | "all">("all");
+
+  const handleSetPrFilter = (state: "open" | "closed" | "all") => {
+    setPrStateFilter(state);
+  };
 
   let scatterChartData: ScatterChartDataItems[] = [];
-  let metadata: ScatterChartMetadata = { allPrs: 0, openPrs: 0, closedPrs: 0 };
+  let metadata: ScatterChartMetadata = {
+    allPrs: prData.length,
+    openPrs: prData.filter((pr) => pr.state === "open").length,
+    closedPrs: prData.filter((pr) => pr.state === "closed").length
+  };
 
   const uniqueContributors: ContributorPrMap = prData.reduce((prs, curr) => {
+    if(curr.state !== prStateFilter && prStateFilter !== "all") return prs;
+
     if (prs[curr.author_login]) {
       prs[curr.author_login].linesCount += curr.linesCount;
     } else {
@@ -65,11 +76,6 @@ export const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
       };
       return data;
     });
-    metadata = {
-      allPrs: prs.length,
-      openPrs: prs.filter((pr) => pr.state === "open").length,
-      closedPrs: prs.filter((pr) => pr.state === "closed").length
-    };
   }
 
   const maxFilesModified = scatterChartData.reduce((max, curr) => {
@@ -135,6 +141,7 @@ export const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
               isMobile={isMobile}
               repositories={repositories}
               metadata={metadata}
+              handleSetPrFilter={handleSetPrFilter}
             />
           </Card>
         </div>
