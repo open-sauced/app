@@ -6,13 +6,17 @@ import getRepoInsights from "lib/utils/get-repo-insights";
 import { useRepositoriesList } from "lib/hooks/useRepositoriesList";
 
 import CardRepoList from "../CardRepoList/card-repo-list";
+import Button from "components/atoms/Button/button";
+import { FaEdit } from "react-icons/fa";
+import Link from "next/link";
 
 interface InsightHeaderProps {
   insight?: DbUserInsight;
   repositories?: number[];
+  insightId: string;
 }
 
-const InsightHeader = ({ insight, repositories }: InsightHeaderProps): JSX.Element => {
+const InsightHeader = ({ insight, repositories, insightId }: InsightHeaderProps): JSX.Element => {
   const { data: repoData } = useRepositoriesList(false, repositories);
   const { repoList } = getRepoInsights(repoData);
 
@@ -28,7 +32,12 @@ const InsightHeader = ({ insight, repositories }: InsightHeaderProps): JSX.Eleme
         <div className="flex mt-4 items-center relative  gap-2">
           {insight && insight.repos && insight.repos.length > 0 && <CardRepoList limit={2} repoList={repoList} />}
         </div>
-      </div>    
+      </div>
+      <div>
+        <Link href={`/hub/insights/${insightId}/edit`}>
+          <Button type="primary"><FaEdit className="mr-2"/> Edit Page</Button>
+        </Link>
+      </div>
     </>
   );
 };
