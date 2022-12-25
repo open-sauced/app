@@ -2,7 +2,7 @@ import { useState } from "react";
 
 /* eslint-disable camelcase */
 import Card from "components/atoms/Card/card";
-import NivoScatterPlot from "components/molecules/NivoScatterChart/nivo-scatter-chart";
+import NivoScatterPlot, { ScatterChartMetadata } from "components/molecules/NivoScatterChart/nivo-scatter-chart";
 import HighlightCard from "components/molecules/HighlightCard/highlight-card";
 import { ScatterChartDataItems } from "components/molecules/NivoScatterChart/nivo-scatter-chart";
 
@@ -28,6 +28,7 @@ export const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
   const isMobile = useMediaQuery("(max-width:720px)");
 
   let scatterChartData: ScatterChartDataItems[] = [];
+  let metadata: ScatterChartMetadata = { allPrs: 0, openPrs: 0, closedPrs: 0 };
 
   const uniqueContributors: ContributorPrMap = prData.reduce((prs, curr) => {
     if (prs[curr.author_login]) {
@@ -64,6 +65,11 @@ export const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
       };
       return data;
     });
+    metadata = {
+      allPrs: prs.length,
+      openPrs: prs.filter((pr) => pr.state === "open").length,
+      closedPrs: prs.filter((pr) => pr.state === "closed").length
+    };
   }
 
   const maxFilesModified = scatterChartData.reduce((max, curr) => {
@@ -128,6 +134,7 @@ export const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
               maxFilesModified={maxFilesModified}
               isMobile={isMobile}
               repositories={repositories}
+              metadata={metadata}
             />
           </Card>
         </div>

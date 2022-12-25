@@ -9,6 +9,7 @@ import humanizeNumber from "lib/utils/humanizeNumber";
 import ToggleOption from "components/atoms/ToggleOption/toggle-option";
 import Title from "components/atoms/Typography/title";
 import HoverCardWrapper from "../HoverCardWrapper/hover-card-wrapper";
+import ToggleGroup from "components/atoms/ToggleGroup/toggle-group";
 
 export interface ScatterChartDataItems {
   x: string | number;
@@ -16,6 +17,13 @@ export interface ScatterChartDataItems {
   image: string;
   contributor: string;
 }
+
+export interface ScatterChartMetadata {
+  allPrs: number;
+  openPrs: number;
+  closedPrs: number;
+}
+
 interface ScatterPlotProps {
   maxFilesModified: number;
   title?: string;
@@ -27,7 +35,9 @@ interface ScatterPlotProps {
   }[];
   isMobile?: boolean;
   repositories?: number[];
+  metadata: ScatterChartMetadata;
 }
+
 const NivoScatterPlot = ({
   data,
   maxFilesModified,
@@ -35,7 +45,8 @@ const NivoScatterPlot = ({
   setShowBots,
   showBots,
   isMobile,
-  repositories
+  repositories,
+  metadata,
 }: ScatterPlotProps) => {
   const [showMembers, setShowMembers] = useState<boolean>(false);
   const [isLogarithmic, setIsLogarithmic] = useState<boolean>(false);
@@ -76,6 +87,26 @@ const NivoScatterPlot = ({
         <Title level={4} className="!text-sm  !text-light-slate-12">
           {title}
         </Title>
+        <ToggleGroup>
+          <>
+            All PRs
+            <span className="ml-2 py-0.5 px-1.5 h-fit bg-slate-200 text-slate-500 border rounded-full text-xs font-semibold">
+              {humanizeNumber(metadata.allPrs, null)}
+            </span>
+          </>
+          <>
+            Open PRs
+            <span className="ml-2 py-0.5 px-1.5 h-fit bg-slate-200 text-slate-500 border rounded-full text-xs font-semibold">
+              {humanizeNumber(metadata.openPrs, null)}
+            </span>
+          </>
+          <>
+            Closed PRs
+            <span className="ml-2 py-0.5 px-1.5 h-fit bg-slate-200 text-slate-500 border rounded-full text-xs font-semibold">
+              {humanizeNumber(metadata.closedPrs, null)}
+            </span>
+          </>
+        </ToggleGroup>
         {/* replaced display flex to hidden on show/bots container */}
         <div className="flex mt-3 md:mt-0 flex-col md:flex-row gap-2">
           <div>
