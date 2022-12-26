@@ -217,6 +217,7 @@ module.exports = {
       addVariant("child-hover", "& > *:hover");
       addVariant("child-active", "& > *:active");
       addVariant("child-focus", "& > *:focus");
-    }
+    },
+    require("tailwindcss-radix")()
   ]
 };
