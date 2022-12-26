@@ -20,17 +20,21 @@ const CustomSelect = ({
   className,
   onChange
 }: SelectProps): JSX.Element => {
+  const handleSelected = (value: string) => {
+    const selected = Number(value.substring(0, 2));
+    onChange?.(selected);
+  };
 
   return (
-    <div className={clsx("custom-select__container relative bg-white cursor-pointer focus:border-light-orange-9 focus:ring focus:ring-light-orange-5 items-center overflow-x-hidden rounded-lg text-base text-light-slate-10", className || "")}>
-      <Select.Root>
+    <div className={clsx("custom-select__container relative bg-white cursor-pointer items-center overflow-x-hidden rounded-lg text-base text-light-slate-10 min-w-max", className || "")}>
+      <Select.Root onValueChange={handleSelected}>
         <Select.Trigger
           aria-label="Select a limit for the number of repositories to display"
-          className="custom-select__trigger inline-flex items-center text-sm text-light-slate-12 px-2 py-1.5 gap-2 w-full bg-white rounded-lg font-semibold outline-none border border-light-slate-6 focus-within:border-light-orange-9 focus-within:ring focus-within:ring-light-orange-5"
+          className="custom-select__trigger inline-flex items-center text-sm text-light-slate-12 px-4 py-1.5 gap-1 w-full bg-white rounded-lg font-semibold outline-none border border-light-slate-6"
         >
           {label && <span className="inline-flex text-light-slate-9">{label}:</span>}
           <Select.Value placeholder={placeholder} />
-          <Select.Icon className="w-6 h-4 relative overflow-hidden">
+          <Select.Icon className="w-4 h-4 relative overflow-hidden">
             <RiArrowUpSLine className="absolute bottom-1" />
             <RiArrowDownSLine className="absolute top-1" />
           </Select.Icon>
@@ -44,9 +48,8 @@ const CustomSelect = ({
                 options.map((option) => (
                   <Select.Item
                     key={option.name}
-                    className="custom-select__select-item flex items-center text-sm text-light-slate-12 cursor-pointer relative px-2 py-2 md:py-1 rounded-md outline-none"
+                    className="custom-select__select-item flex items-center text-sm text-light-slate-12 cursor-pointer relative px-4 py-2 md:py-1 rounded-md outline-none"
                     value={option.name}
-                    onClick={() => onChange?.(option.value)}
                   >
                     <Select.ItemText>{option.name}</Select.ItemText>
                   </Select.Item>
