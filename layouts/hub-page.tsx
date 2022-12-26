@@ -9,9 +9,11 @@ import InsightHeader from "components/molecules/InsightHeader/insight-header";
 
 import useNav from "lib/hooks/useNav";
 import useInsight from "lib/hooks/useInsight";
+import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 
 const HubPageLayout = ({children}: {children: React.ReactNode}) => {
   const router = useRouter();
+  const { user } = useSupabaseAuth();
   const { filterName } = router.query;
   const insightId = filterName as string;
   const { data: insight } = useInsight(insightId);
@@ -25,7 +27,7 @@ const HubPageLayout = ({children}: {children: React.ReactNode}) => {
       <div className="page-container flex min-h-[calc(100vh-(54px+95px))] flex-col items-center">
         <div className="info-container min-w-full min-h-[100px]">
           <Header>
-            <InsightHeader insight={insight} repositories={repositories} insightId={insightId} />
+            <InsightHeader insight={insight} repositories={repositories} insightId={insightId} isOwner={user?.user_metadata.provider_id === insight?.user_id} />
           </Header>
 
           <Nav

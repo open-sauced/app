@@ -14,9 +14,10 @@ interface InsightHeaderProps {
   insight?: DbUserInsight;
   repositories?: number[];
   insightId: string;
+  isOwner: boolean;
 }
 
-const InsightHeader = ({ insight, repositories, insightId }: InsightHeaderProps): JSX.Element => {
+const InsightHeader = ({ insight, repositories, insightId, isOwner }: InsightHeaderProps): JSX.Element => {
   const { data: repoData } = useRepositoriesList(false, repositories);
   const { repoList } = getRepoInsights(repoData);
 
@@ -36,9 +37,11 @@ const InsightHeader = ({ insight, repositories, insightId }: InsightHeaderProps)
         </div>
       </div>
       <div className="py-2">
-        <Link href={`/hub/insights/${insightId}/edit`}>
-          <Button type="primary"><FaEdit className="mr-2"/> Edit Page</Button>
-        </Link>
+        {
+          isOwner && <Link href={`/hub/insights/${insightId}/edit`}>
+            <Button type="primary"><FaEdit className="mr-2"/> Edit Page</Button>
+          </Link>
+        }
       </div>
     </div>
   );
