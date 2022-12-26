@@ -5,6 +5,61 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.22.2](https://github.com/open-sauced/insights/compare/v1.22.1...v1.22.2) (2022-12-23)
+
+
+### ⏩ Reverts
+
+* Revert "feat: add sorting by column type on repositories screen (#662)" ([5436712](https://github.com/open-sauced/insights/commit/5436712ce203bdb43c5f6fec92751c0d2bf711e2)), closes [#662](https://github.com/open-sauced/insights/issues/662)
+
+### [1.22.2-beta.1](https://github.com/open-sauced/insights/compare/v1.22.1...v1.22.2-beta.1) (2022-12-23)
+
+
+### ⏩ Reverts
+
+* Revert "feat: add sorting by column type on repositories screen (#662)" ([5436712](https://github.com/open-sauced/insights/commit/5436712ce203bdb43c5f6fec92751c0d2bf711e2)), closes [#662](https://github.com/open-sauced/insights/issues/662)
+
+### [1.22.1](https://github.com/open-sauced/insights/compare/v1.22.0...v1.22.1) (2022-12-23)
+
+
+### 🐛 Bug Fixes
+
+* add wrapper element for Link usage on table repo name ([#727](https://github.com/open-sauced/insights/issues/727)) ([beb767a](https://github.com/open-sauced/insights/commit/beb767a5030ae942074a4491677e09117bab6b70)), closes [#726](https://github.com/open-sauced/insights/issues/726)
+
+### [1.22.1-beta.1](https://github.com/open-sauced/insights/compare/v1.22.0...v1.22.1-beta.1) (2022-12-23)
+
+
+### 🐛 Bug Fixes
+
+* add wrapper element for Link usage on table repo name ([#727](https://github.com/open-sauced/insights/issues/727)) ([beb767a](https://github.com/open-sauced/insights/commit/beb767a5030ae942074a4491677e09117bab6b70)), closes [#726](https://github.com/open-sauced/insights/issues/726)
+
+## [1.22.0](https://github.com/open-sauced/insights/compare/v1.21.0...v1.22.0) (2022-12-22)
+
+
+### ✅ Tests
+
+* implement automatic notifications for foss ([#679](https://github.com/open-sauced/insights/issues/679)) ([75f3aaf](https://github.com/open-sauced/insights/commit/75f3aaf3e97f79a88a1e032302e50d78b92f5e61))
+
+
+### 🐛 Bug Fixes
+
+* fixed status footer 404 error ([#699](https://github.com/open-sauced/insights/issues/699)) ([e14a976](https://github.com/open-sauced/insights/commit/e14a9769a8a9715aad7a0e9651ae166bed41d8ac)), closes [#656](https://github.com/open-sauced/insights/issues/656)
+* handle caching issues with local storage ([#676](https://github.com/open-sauced/insights/issues/676)) ([e332d84](https://github.com/open-sauced/insights/commit/e332d84bafbe830bf269a62e14a4a9e93fb34eb2)), closes [#617](https://github.com/open-sauced/insights/issues/617)
+* update generic profile page styles to match design ([#695](https://github.com/open-sauced/insights/issues/695)) ([3eabf0f](https://github.com/open-sauced/insights/commit/3eabf0f95fb57acb5b1510ee0e32946c9e9d01eb)), closes [#692](https://github.com/open-sauced/insights/issues/692)
+
+
+### 🍕 Features
+
+* add sorting by column type on repositories screen ([#662](https://github.com/open-sauced/insights/issues/662)) ([d588032](https://github.com/open-sauced/insights/commit/d5880321ed82d5c505c74c6f797e70d5895803b6)), closes [#627](https://github.com/open-sauced/insights/issues/627)
+* add Stripe checkout integration ([#702](https://github.com/open-sauced/insights/issues/702)) ([f4da7af](https://github.com/open-sauced/insights/commit/f4da7afc4de577de869da292c35b3cbd43d801c6)), closes [#394](https://github.com/open-sauced/insights/issues/394)
+* add support for goto page functionality ([#708](https://github.com/open-sauced/insights/issues/708)) ([1902a98](https://github.com/open-sauced/insights/commit/1902a983420bde31173771b6fcba97b708cf616e)), closes [#675](https://github.com/open-sauced/insights/issues/675)
+* add toggle group component ([#666](https://github.com/open-sauced/insights/issues/666)) ([3bc7d8c](https://github.com/open-sauced/insights/commit/3bc7d8cda7047df921b8fcda30380287988595e9))
+* filter recent contributions array by last updated time ([#690](https://github.com/open-sauced/insights/issues/690)) ([063b07c](https://github.com/open-sauced/insights/commit/063b07c239590b93bd1f202362296aa691f3a281)), closes [#682](https://github.com/open-sauced/insights/issues/682)
+* implement hover card functionality on scatterchart ([#643](https://github.com/open-sauced/insights/issues/643)) ([8249eb8](https://github.com/open-sauced/insights/commit/8249eb8ae822592f64cc5bc07836583d16641606))
+* implement image caching on avatar images ([#691](https://github.com/open-sauced/insights/issues/691)) ([b6fbeb4](https://github.com/open-sauced/insights/commit/b6fbeb407a5d933b91e5b885270ecd9da9a387c8))
+* link repos, prs, and contributors to GitHub ([#658](https://github.com/open-sauced/insights/issues/658)) ([79d16d0](https://github.com/open-sauced/insights/commit/79d16d0f7e76485b9ed9288e18753eac866516cc)), closes [#670](https://github.com/open-sauced/insights/issues/670) [#620](https://github.com/open-sauced/insights/issues/620) [#669](https://github.com/open-sauced/insights/issues/669)
+* remove the top5 ([#674](https://github.com/open-sauced/insights/issues/674)) ([d0720ef](https://github.com/open-sauced/insights/commit/d0720efea7f1932fbc68f8a8af8af13e89b698ff))
+
 ## [1.22.0-beta.12](https://github.com/open-sauced/insights/compare/v1.22.0-beta.11...v1.22.0-beta.12) (2022-12-22)
 
 

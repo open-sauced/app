@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/router";
 import clsx from "clsx";
-import { FaArrowDown, FaArrowUp } from "react-icons/fa";
 
 import Select from "components/atoms/Select/custom-select";
 import TableTitle from "components/atoms/TableTitle/table-title";
@@ -11,35 +10,19 @@ import TableHeader from "components/molecules/TableHeader/table-header";
 
 import { useRepositoriesList } from "lib/hooks/useRepositoriesList";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
-import useStore from "lib/store";
-import useFilterRepos from "lib/hooks/useFilterRepos";
 
 import RepositoriesTable, { classNames } from "../RepositoriesTable/repositories-table";
 import RepoNotIndexed from "./repository-not-indexed";
+import useStore from "lib/store";
 
 interface RepositoriesProps {
   repositories?: number[];
 }
 
-type FilterOptions = keyof DbRepo | "prsCount" | "activity";
-
-const renderArrow = (order: string | undefined) => {
-  return order === "ASC" ? (
-    <FaArrowUp className="text-light-slate-11 ml-2" fontSize={16} />
-  ) : (
-    <FaArrowDown className="text-light-slate-11 ml-2" fontSize={16} />
-  );
-};
-
 const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
   const { user } = useSupabaseAuth();
   const router = useRouter();
-
-  const { filterName, toolName, selectedFilter, userOrg, orderBy: orderByQuery, sort } = router.query;
-
-  const [orderBy, setOrderBy] = useState<FilterOptions | undefined>(orderByQuery as FilterOptions);
-  const [orderDirection, setOrderDirection] = useState<string | undefined>(sort as string);
-
+  const { filterName, toolName, selectedFilter, userOrg } = router.query;
   const username = userOrg ? user?.user_metadata.user_name : undefined;
   const topic = filterName as string;
   const store = useStore();
@@ -55,28 +38,6 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
   } = useRepositoriesList(false, repositories);
   const filteredRepoNotIndexed = selectedFilter && !repoListIsLoading && !repoListIsError && repoListData.length === 0;
 
-  const { filteredRepos } = useFilterRepos(orderBy, orderDirection, repoListData);
-
-  const toggleFilter = (filter: FilterOptions) => {
-    const sortOrder = orderDirection === "ASC" ? "DESC" : "ASC";
-
-    if (filter === "activity") {
-      router.push(
-        `/${filterName}/${toolName}/filter/most-active${orderBy ? `?orderBy=${orderBy}&sort=${orderDirection}` : ""}`
-      );
-      return;
-    }
-
-    setOrderBy(filter);
-    setOrderDirection(sortOrder);
-
-    if (selectedFilter) {
-      router.push(`/${topic}/${toolName}/filter/${selectedFilter}?orderBy=${filter}&sort=${sortOrder}`);
-    } else {
-      router.push(`/${topic}/${toolName}?orderBy=${filter}&sort=${sortOrder}`);
-    }
-  };
-
   const handleOnSearch = (search?: string) => {
     if (search && /^[a-zA-Z0-9\-\.]+\/[a-zA-Z0-9\-\.]+$/.test(search)) {
       router.push(`/${topic}/${toolName}/filter/${search}`);
@@ -84,10 +45,6 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
       router.push(`/${topic}/${toolName}`);
     }
   };
-
-  useEffect(() => {
-    if (!orderByQuery) setOrderBy(undefined);
-  }, [orderByQuery]);
 
   useEffect(() => {
     setPage(1);
@@ -111,46 +68,27 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
       <div className="flex flex-col rounded-lg overflow-hidden border">
         <div className="flex md:hidden justify-between  py-4 px-6 bg-light-slate-3 gap-2">
           <div className="flex-1">
-            <TableTitle text="Repository" />
+            <TableTitle text="Repository"></TableTitle>
           </div>
           <div className="flex-1">
             <TableTitle text="Pr Overview"></TableTitle>
           </div>
         </div>
         <div className="hidden md:flex py-4 px-6 bg-light-slate-3 gap-2">
-          <div
-            className={clsx(classNames.cols.repository, "flex items-center cursor-pointer")}
-            onClick={() => toggleFilter("name")}
-          >
+          <div className={clsx(classNames.cols.repository)}>
             <TableTitle text="Repository"></TableTitle>
-            {orderBy === "name" ? renderArrow(orderDirection) : null}
           </div>
-          <div
-            className={clsx(classNames.cols.activity, "flex items-center cursor-pointer")}
-            onClick={() => toggleFilter("activity")}
-          >
+          <div className={clsx(classNames.cols.activity)}>
             <TableTitle text="Activity"></TableTitle>
           </div>
-          <div
-            className={clsx(classNames.cols.prOverview, "flex items-center cursor-pointer")}
-            onClick={() => toggleFilter("prsCount")}
-          >
+          <div className={clsx(classNames.cols.prOverview)}>
             <TableTitle text="PR Overview"></TableTitle>
-            {orderBy === "prsCount" ? renderArrow(orderDirection) : null}
           </div>
-          <div
-            className={clsx(classNames.cols.prVelocity, "flex items-center cursor-pointer")}
-            onClick={() => toggleFilter("prVelocityCount")}
-          >
+          <div className={clsx(classNames.cols.prVelocity)}>
             <TableTitle text="PR Velocity"></TableTitle>
-            {orderBy === "prVelocityCount" ? renderArrow(orderDirection) : null}
           </div>
-          <div
-            className={clsx(classNames.cols.spam, "flex items-center cursor-pointer")}
-            onClick={() => toggleFilter("spamPrsCount")}
-          >
+          <div className={clsx(classNames.cols.spam)}>
             <TableTitle text="SPAM"></TableTitle>
-            {orderBy === "spamPrsCount" ? renderArrow(orderDirection) : null}
           </div>
           <div className={clsx(classNames.cols.contributors, "hidden lg:flex")}>
             <TableTitle text="Contributors"></TableTitle>
@@ -164,7 +102,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
           topic={topic}
           error={repoListIsError}
           loading={repoListIsLoading}
-          listOfRepositories={filteredRepos}
+          listOfRepositories={repoListData}
           user={username}
           repo={selectedFilter}
         />
