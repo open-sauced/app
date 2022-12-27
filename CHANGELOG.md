@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.23.0-beta.2](https://github.com/open-sauced/insights/compare/v1.23.0-beta.1...v1.23.0-beta.2) (2022-12-27)
+
+
+### 🍕 Features
+
+* change name to enhace from logarithmic ([#743](https://github.com/open-sauced/insights/issues/743)) ([4384324](https://github.com/open-sauced/insights/commit/43843246c9d7d6b4aed586754f4673f56070206e))
+
 ## [1.23.0-beta.1](https://github.com/open-sauced/insights/compare/v1.22.2...v1.23.0-beta.1) (2022-12-26)
 
 
