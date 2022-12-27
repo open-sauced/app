@@ -7,7 +7,11 @@ const StoryConfig = {
 
 export default StoryConfig;
 
-const SelectTemplate: ComponentStory<typeof Select> = (args) => <Select {...args} />;
+const SelectTemplate: ComponentStory<typeof Select> = (args) => (
+  <div className="w-full h-full flex items-center">
+    <Select {...args} />
+  </div>
+);
 
 export const NoLabel = SelectTemplate.bind({});
 
@@ -17,7 +21,6 @@ NoLabel.args = {
     { name: "food", value: "food" },
     { name: "fruit", value: "fruit" }
   ],
-  className: "w-48",
   placeholder: "Select an option"
 };
 
@@ -29,6 +32,5 @@ WithLabel.args = {
     { name: "food", value: "food" },
     { name: "fruit", value: "fruit" }
   ],
-  label: "Showing",
-  className: "w-48"
+  label: "Showing"
 };

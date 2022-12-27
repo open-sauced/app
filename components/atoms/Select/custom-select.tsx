@@ -41,7 +41,7 @@ const CustomSelect = ({
         </Select.Trigger>
         <Select.Portal>
           <Select.Content
-            className={clsx("absolute right-0 top-9 bg-white overflow-hidden rounded-lg border shadow-superlative", label ? "-left-18" : "left-0")}
+            className={clsx("absolute right-0 top-9 bg-white overflow-hidden rounded-lg border shadow-superlative", label ? "-left-17" : "left-0")}
           >
             <Select.Viewport>
               {options ?

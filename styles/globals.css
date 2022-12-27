@@ -41,8 +41,8 @@ input[type="search"]::-webkit-search-cancel-button {
   z-index: 50;
 }
 
-.-left-18 {
-  left: -4.8rem;
+.-left-17 {
+  left: -4.4rem;
 }
 
 .custom-select__select-item[data-highlighted] {
