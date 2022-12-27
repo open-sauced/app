@@ -1,7 +1,7 @@
+/* eslint-disable @next/next/no-img-element */
 import * as HoverCard from "@radix-ui/react-hover-card";
-import Image from "next/image";
 import clsx from "clsx";
-import differenceInDays from "date-fns/differenceInDays";
+import formatDistanceStrict from "date-fns/formatDistanceStrict";
 
 import { getAvatarLink, getProfileLink } from "lib/utils/github";
 
@@ -11,11 +11,12 @@ export declare interface AvatarProps {
 }
 
 const AvatarHoverCard = ({ contributor, lastPr }: AvatarProps): JSX.Element => {
-  console.log({ contributor, lastPr });
+  const lastPrDate  = formatDistanceStrict(new Date(), new Date(Number(lastPr)), { addSuffix: true });
+
   return (
     <HoverCard.Root>
       <HoverCard.Trigger asChild>
-        <Image
+        <img
           alt={contributor}
           className="w-full h-full"
           height={500}
@@ -23,73 +24,48 @@ const AvatarHoverCard = ({ contributor, lastPr }: AvatarProps): JSX.Element => {
           width={500}
         />
       </HoverCard.Trigger>
-      <HoverCard.Content
-        align="center"
-        sideOffset={4}
-        className={clsx(
-          "radix-side-top:animate-slide-up radix-side-bottom:animate-slide-down",
-          "max-w-md rounded-lg p-4 md:w-full",
-          "bg-white dark:bg-gray-800",
-          "focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75",
-          "items-center md:drop-shadow-[0_15px_15px_rgba(0,0,0,0.45)] !opacity-100"
-        )}
-      >
-        <HoverCard.Arrow
-          className="fill-current text-white dark:text-gray-800"
-          offset={12}
-        />
-
-        <div className="flex h-full w-full space-x-4">
-          <div
-            className={clsx(
-              "flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-900"
-            )}
-          >
-            <a
-              href={getProfileLink(contributor)}
-              rel="noreferrer"
-              target="_blank"
-              title={contributor}
+      <HoverCard.Portal>
+        <HoverCard.Content className="rounded-lg p-4 max-w-md md:w-full bg-white dark:bg-gray-800 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75 items-center md:drop-shadow-[0_15px_15px_rgba(0,0,0,0.45)] !opacity-100" sideOffset={5}>
+          <div className="flex h-full w-full space-x-4">
+            <div
+              className={clsx(
+                "flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-900"
+              )}
             >
-              <Image
-                alt={contributor}
-                className="object-cover rounded-full"
-                height={500}
-                src={getAvatarLink(contributor)}
-                width={500}
-              />
-            </a>
+              <a
+                href={getProfileLink(contributor)}
+                rel="noreferrer"
+                target="_blank"
+                title={contributor}
+              >
+                <img
+                  alt={contributor}
+                  className="object-cover rounded-full"
+                  height={500}
+                  src={getAvatarLink(contributor)}
+                  width={500}
+                />
+              </a>
+            </div>
+            <div>
+              <h3 className="text-sm font-medium text-gray-900 dark:text-gray-100">
+                {contributor}
+              </h3>
+
+              <p className="mt-1 text-sm font-normal text-gray-700 dark:text-gray-400">
+                {`First contribution was ${lastPrDate}.`}
+              </p>
+            </div>
           </div>
 
-          <div>
-            <h3 className="text-sm font-medium text-gray-900 dark:text-gray-100">
-              {contributor}
-            </h3>
-
-            <p className="mt-1 text-sm font-normal text-gray-700 dark:text-gray-400">
-              {`Last contribution was ${differenceInDays(new Date(), new Date(Number(lastPr)))}.`}
-            </p>
-          </div>
-        </div>
-      </HoverCard.Content>
+          <HoverCard.Arrow
+            className="fill-current text-white dark:text-gray-800"
+          />
+        </HoverCard.Content>
+      </HoverCard.Portal>
     </HoverCard.Root>
+
   );
 };
 
 export default AvatarHoverCard;
-
-
-// import * as HoverCard from "@radix-ui/react-hover-card";
-
-// const AvatarHoverCard = () => (
-//   <HoverCard.Root>
-//     <HoverCard.Trigger />
-//     <HoverCard.Portal>
-//       <HoverCard.Content>
-//         <HoverCard.Arrow />
-//       </HoverCard.Content>
-//     </HoverCard.Portal>
-//   </HoverCard.Root>
-// );
-
-// export default AvatarHoverCard;

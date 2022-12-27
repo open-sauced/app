@@ -32,7 +32,7 @@ const icons = {
     src: personIcon.src,
     label: "Contributors",
     color: "bg-blue-100"
-  },  
+  },
   participation: {
     src: repoIcon.src,
     label: "Participation",
