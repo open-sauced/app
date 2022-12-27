@@ -13,19 +13,19 @@ const FavoriteRepos = ({repos}: FavoriteReposProps) => {
 
   if(repos.length === 0) return null;
   if(repos.length > 3) {
-    repos = repos.slice(0, 3)
+    repos = repos.slice(0, 3);
   }
 
   return (
     <div>
-        <span className="text-xl text-light-slate-12">Favorite Repositories</span>
-        <div className="flex gap-4 mt-2">
-          {
-            repos.map((repo) => (
-              <FavoriteRepoCard key={repo.name} name={repo.name} handle={repo.handle} avatarURL={repo.avatarURL} topic={repo.topic} user={repo.user} />
-            ))
-          }
-        </div>
+      <span className="text-xl text-light-slate-12">Favorite Repositories</span>
+      <div className="flex gap-4 mt-2">
+        {
+          repos.map((repo) => (
+            <FavoriteRepoCard key={repo.name} name={repo.name} handle={repo.handle} avatarURL={repo.avatarURL} topic={repo.topic} user={repo.user} />
+          ))
+        }
+      </div>
     </div>
   );
 };

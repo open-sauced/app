@@ -17,19 +17,19 @@ export const Default = FavoriteReposTemplate.bind({});
 Default.args = {
   repos: [
     {
-      name: 'jsonhero-web',
-      handle: 'apihero-run',
-      avatarURL: 'https://avatars.githubusercontent.com/u/7252105?v=4',
+      name: "jsonhero-web",
+      handle: "apihero-run",
+      avatarURL: "https://avatars.githubusercontent.com/u/7252105?v=4"
     },
     {
-      name: 'insights',
-      handle: 'opensauced',
-      avatarURL: 'https://avatars.githubusercontent.com/u/52013393?s=64&v=4',
+      name: "insights",
+      handle: "opensauced",
+      avatarURL: "https://avatars.githubusercontent.com/u/52013393?s=64&v=4"
     },
     {
-      name: 'xstate',
-      handle: 'stately',
-      avatarURL: 'https://avatars.githubusercontent.com/u/69631?v=4',
+      name: "xstate",
+      handle: "stately",
+      avatarURL: "https://avatars.githubusercontent.com/u/69631?v=4"
     }
   ]
 };

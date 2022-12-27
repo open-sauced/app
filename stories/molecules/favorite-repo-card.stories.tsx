@@ -15,7 +15,7 @@ const FavoriteRepoCardTemplate: ComponentStory<typeof FavoriteRepoCard> = (args)
 export const Default = FavoriteRepoCardTemplate.bind({});
 
 Default.args = {
-  name: 'jsonhero-web',
-  handle: 'apihero-run',
-  avatarURL: 'https://avatars.githubusercontent.com/u/7252105?v=4'
+  name: "jsonhero-web",
+  handle: "apihero-run",
+  avatarURL: "https://avatars.githubusercontent.com/u/7252105?v=4"
 };
