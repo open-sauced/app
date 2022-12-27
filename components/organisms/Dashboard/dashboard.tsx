@@ -15,6 +15,7 @@ import roundedImage from "lib/utils/roundedImages";
 import { useTopicContributions } from "lib/hooks/useTopicContributions";
 
 type ContributorPrMap = { [contributor: string]: DbRepoPR };
+export type PrStatusFilter = "open" | "closed" | "all";
 
 interface DashboardProps {
   repositories?: number[];
@@ -26,9 +27,9 @@ export const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
   const { data: contributorData } = useTopicContributions(10, repositories);
   const [showBots, setShowBots] = useState(false);
   const isMobile = useMediaQuery("(max-width:720px)");
-  const [prStateFilter, setPrStateFilter] = useState<"open" | "closed" | "all">("all");
+  const [prStateFilter, setPrStateFilter] = useState<PrStatusFilter>("all");
 
-  const handleSetPrFilter = (state: "open" | "closed" | "all") => {
+  const handleSetPrFilter = (state: PrStatusFilter) => {
     setPrStateFilter(state);
   };
 

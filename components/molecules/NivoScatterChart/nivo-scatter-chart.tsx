@@ -10,6 +10,7 @@ import ToggleOption from "components/atoms/ToggleOption/toggle-option";
 import Title from "components/atoms/Typography/title";
 import HoverCardWrapper from "../HoverCardWrapper/hover-card-wrapper";
 import ToggleGroup from "components/atoms/ToggleGroup/toggle-group";
+import { PrStatusFilter } from "components/organisms/Dashboard/dashboard";
 
 export interface ScatterChartDataItems {
   x: string | number;
@@ -36,7 +37,7 @@ interface ScatterPlotProps {
   isMobile?: boolean;
   repositories?: number[];
   metadata: ScatterChartMetadata;
-  handleSetPrFilter: (state: "open" | "closed" | "all") => void;
+  handleSetPrFilter: (state: PrStatusFilter) => void;
 }
 
 const NivoScatterPlot = ({
