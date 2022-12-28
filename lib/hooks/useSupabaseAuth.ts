@@ -4,10 +4,10 @@ import { SignInWithOAuthCredentials, User } from "@supabase/supabase-js";
 import { supabase } from "../utils/supabase";
 
 const useSupabaseAuth = () => {
-  const [user, setUser] = useState<User | null>(null);
-  const [sessionToken, setSessionToken] = useState<string | undefined>(undefined);
-  const [providerToken, setProviderToken] = useState<string | null | undefined>(undefined);
-  const [userId, setUserId] = useState<string | null | undefined>(undefined);
+  const [user, setUser] = useState<User | null>();
+  const [sessionToken, setSessionToken] = useState<string>();
+  const [providerToken, setProviderToken] = useState<string | null>();
+  const [userId, setUserId] = useState<string>();
 
   useEffect(() => {
     async function getUserSession() {
@@ -22,9 +22,9 @@ const useSupabaseAuth = () => {
 
     const { data: { subscription: listener } } = supabase.auth.onAuthStateChange((_, session) => {
       setUser(session?.user ?? null);
-      setSessionToken(session?.access_token ?? undefined);
-      setProviderToken(session?.provider_token ?? undefined);
-      setUserId(session?.user.user_metadata.sub ?? undefined);
+      setSessionToken(session?.access_token);
+      setProviderToken(session?.provider_token);
+      setUserId(session?.user.user_metadata.sub);
     });
 
     return () => {
