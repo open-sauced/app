@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.23.0-beta.3](https://github.com/open-sauced/insights/compare/v1.23.0-beta.2...v1.23.0-beta.3) (2022-12-28)
+
+
+### 🐛 Bug Fixes
+
+* overflow x bug on dashboard ([#709](https://github.com/open-sauced/insights/issues/709)) ([b022dbc](https://github.com/open-sauced/insights/commit/b022dbc4a2d389bb3a364038797a1089f8351888)), closes [#677](https://github.com/open-sauced/insights/issues/677)
+
 ## [1.23.0-beta.2](https://github.com/open-sauced/insights/compare/v1.23.0-beta.1...v1.23.0-beta.2) (2022-12-27)
 
 
