@@ -11,11 +11,6 @@ interface FavoriteReposProps {
 
 const FavoriteRepos = ({repos}: FavoriteReposProps) => {
 
-  if(repos.length === 0) return null;
-  if(repos.length > 3) {
-    repos = repos.slice(0, 3);
-  }
-
   return (
     <div>
       <span className="text-xl text-light-slate-12">Favorite Repositories</span>
