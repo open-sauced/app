@@ -26,11 +26,20 @@ const CustomSelect = ({
   };
 
   return (
-    <div className={clsx("custom-select__container relative bg-white cursor-pointer items-center overflow-x-hidden rounded-lg text-base text-light-slate-10 min-w-max", className || "")}>
+    <div className={clsx(
+      "radix-state-open:ring radix-state-open:ring-light-orange-5",
+      "relative cursor-pointer text-base items-center overflow-x-hidden",
+      "bg-white text-light-slate-10 rounded-lg min-w-max",
+      className || ""
+    )}>
       <Select.Root onValueChange={handleSelected}>
         <Select.Trigger
           aria-label="Select a limit for the number of repositories to display"
-          className="custom-select__trigger inline-flex items-center text-sm text-light-slate-12 px-4 py-1.5 gap-1 w-full bg-white rounded-lg font-semibold outline-none border border-light-slate-6"
+          className={clsx(
+            "radix-state-open:border-light-orange-9",
+            "inline-flex items-center gap-1 px-4 py-1.5",
+            "w-full text-sm outline-none rounded-lg font-semibold",
+            "text-light-slate-12 bg-white border border-light-slate-6")}
         >
           {label && <span className="inline-flex text-light-slate-9">{label}:</span>}
           <Select.Value placeholder={placeholder} />
@@ -41,14 +50,18 @@ const CustomSelect = ({
         </Select.Trigger>
         <Select.Portal>
           <Select.Content
-            className={clsx("absolute right-0 top-9 bg-white overflow-hidden rounded-lg border shadow-superlative", label ? "-left-17" : "left-0")}
+            className={clsx("absolute right-0 top-9 bg-white overflow-hidden rounded-lg border shadow-superlative", label ? "-left-18" : "left-0")}
           >
             <Select.Viewport>
               {options ?
                 options.map((option) => (
                   <Select.Item
                     key={option.name}
-                    className="custom-select__select-item flex items-center text-sm text-light-slate-12 cursor-pointer relative px-4 py-2 md:py-1 rounded-md outline-none"
+                    className={clsx(
+                      "radix-highlighted:bg-light-orange-3 radix-highlighted:text-light-orange-11",
+                      "flex items-center text-sm px-4 py-2 md:py-1",
+                      "relative cursor-pointer rounded-md outline-none text-light-slate-12"
+                    )}
                     value={option.value}
                   >
                     <Select.ItemText>{option.name}</Select.ItemText>
