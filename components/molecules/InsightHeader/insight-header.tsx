@@ -1,14 +1,11 @@
-
-import Title from "components/atoms/Typography/title";
-import ContextThumbnail from "components/atoms/ContextThumbnail/context-thumbnail";
-
-import getRepoInsights from "lib/utils/get-repo-insights";
-import { useRepositoriesList } from "lib/hooks/useRepositoriesList";
-
-import CardRepoList from "../CardRepoList/card-repo-list";
-import Button from "components/atoms/Button/button";
 import { FaEdit } from "react-icons/fa";
 import Link from "next/link";
+import { useRepositoriesList } from "lib/hooks/useRepositoriesList";
+import getRepoInsights from "lib/utils/get-repo-insights";
+import Button from "components/atoms/Button/button";
+import Title from "components/atoms/Typography/title";
+import ContextThumbnail from "components/atoms/ContextThumbnail/context-thumbnail";
+import CardRepoList from "../CardRepoList/card-repo-list";
 
 interface InsightHeaderProps {
   insight?: DbUserInsight;
