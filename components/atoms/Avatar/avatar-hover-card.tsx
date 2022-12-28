@@ -1,8 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
 import * as HoverCard from "@radix-ui/react-hover-card";
+
 import HoverCardWrapper from "components/molecules/HoverCardWrapper/hover-card-wrapper";
 
 import { getAvatarLink } from "lib/utils/github";
+import Link from "next/link";
 
 export declare interface AvatarProps {
   contributor: string;
@@ -13,15 +15,19 @@ const AvatarHoverCard = ({ contributor, repositories }: AvatarProps): JSX.Elemen
 
   return (
     <HoverCard.Root>
-      <HoverCard.Trigger asChild>
-        <img
-          alt={contributor}
-          className="w-full h-full"
-          height={500}
-          src={getAvatarLink(contributor)}
-          width={500}
-        />
-      </HoverCard.Trigger>
+      <Link href={`/user/${contributor}`}>
+        <a>
+          <HoverCard.Trigger asChild>
+            <img
+              alt={contributor}
+              className="w-full h-full"
+              height={500}
+              src={getAvatarLink(contributor)}
+              width={500}
+            />
+          </HoverCard.Trigger>
+        </a>
+      </Link>
       <HoverCard.Portal>
         <HoverCard.Content sideOffset={5}>
           <HoverCardWrapper username={contributor} repositories={repositories} />
