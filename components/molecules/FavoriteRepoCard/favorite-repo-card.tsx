@@ -29,7 +29,7 @@ const FavoriteRepoCard = ({ avatarURL, name, handle, topic, user }: FavoriteRepo
               <a>{handle ? `${handle}` : "handle1234"}</a>
             </Link>
           </div>
-          <div title={name} className="text-lg text-light-slate-12 tracking-tight mt-[-3px]">
+          <div title={name} className="text-lg text-light-slate-12 tracking-tight -mt-0.5">
             <Link href={`/${user ? `pages/${user}/` : ""}${topic}/repositories/filter/${handle}/${name}`}>
               <a>{name && name.length > 10 ? truncateString(name, 12) : name}</a>
             </Link>
