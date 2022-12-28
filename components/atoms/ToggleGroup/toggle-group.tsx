@@ -10,7 +10,7 @@ interface ToggleGroupProps {
     defaultSelection?: string | number,
     /** Callback function that is called when the user selects an option, and the position of the selected element is passed into as string, starting with '0'. */
     handleChange?: (value: string) => void,
-    className: string
+    className?: string
 }
 
 /** A ToggleGroup component that allows the user to select one option from a list of options.
