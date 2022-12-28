@@ -21,7 +21,7 @@ const CustomSelect = ({
   onChange
 }: SelectProps): JSX.Element => {
   const handleSelected = (value: string) => {
-    const selected = Number(value.substring(0, 2));
+    const selected = Number(value);
     onChange?.(selected);
   };
 
@@ -49,7 +49,7 @@ const CustomSelect = ({
                   <Select.Item
                     key={option.name}
                     className="custom-select__select-item flex items-center text-sm text-light-slate-12 cursor-pointer relative px-4 py-2 md:py-1 rounded-md outline-none"
-                    value={option.name}
+                    value={option.value}
                   >
                     <Select.ItemText>{option.name}</Select.ItemText>
                   </Select.Item>
