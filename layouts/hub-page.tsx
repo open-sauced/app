@@ -27,7 +27,7 @@ const HubPageLayout = ({children}: {children: React.ReactNode}) => {
       <div className="page-container flex min-h-[calc(100vh-(54px+95px))] flex-col items-center">
         <div className="info-container min-w-full min-h-[100px]">
           <Header>
-            <InsightHeader insight={insight} repositories={repositories} insightId={insightId} isOwner={user?.user_metadata.provider_id === insight?.user_id} />
+            <InsightHeader insight={insight} repositories={repositories} insightId={insightId} isOwner={user?.user_metadata.sub === insight?.user_id} />
           </Header>
 
           <Nav
