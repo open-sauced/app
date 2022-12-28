@@ -60,7 +60,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
   };
 
   const handleOnSelectRepo = (repo: RepositoriesRows) => {
-    const matchingRepo = repoListData.find(r => r.id === repo.id);
+    const matchingRepo = repoListData.find(iteratedRepo => iteratedRepo.id === repo.id);
     if(!matchingRepo) return;
 
     if (selectedRepos.find((r) => r.id === matchingRepo.id)) {
