@@ -134,7 +134,7 @@ const NivoScatterPlot = ({
           <div className="">
             <ToggleOption
               handleToggle={handleSetLogarithmic}
-              optionText="Logarithmic Scale"
+              optionText="Enhance"
               checked={isLogarithmic}
             ></ToggleOption>
           </div>
