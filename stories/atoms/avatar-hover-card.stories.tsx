@@ -1,6 +1,7 @@
 import React from "react";
 import { ComponentStory } from "@storybook/react";
-import AvatarHoverCard from "../../components/atoms/Avatar/avatar-hover-card";
+
+import AvatarHoverCard from "components/atoms/Avatar/avatar-hover-card";
 
 const storyConfig = {
   title: "Design System/Atoms/AvatarHoverCard"
@@ -20,5 +21,5 @@ export const AvatarHoverCardStory = AvatarTemplate.bind({});
 
 AvatarHoverCardStory.args = {
   contributor: "bdougie",
-  lastPr: "1671580800000" // new Date('2022-12-21').getTime()
+  repositories: []
 };
