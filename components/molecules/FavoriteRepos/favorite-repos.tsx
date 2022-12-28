@@ -22,7 +22,7 @@ const FavoriteRepos = ({repos}: FavoriteReposProps) => {
       <div className="flex gap-4 mt-2">
         {
           repos.map((repo) => (
-            <FavoriteRepoCard key={repo.name} name={repo.name} handle={repo.handle} avatarURL={repo.avatarURL} topic={repo.topic} user={repo.user} />
+            <FavoriteRepoCard key={repo.name} name={repo.name} owner={repo.owner} avatarURL={repo.avatarURL} topic={repo.topic} userPage={repo.userPage} />
           ))
         }
       </div>

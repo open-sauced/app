@@ -16,6 +16,6 @@ export const Default = FavoriteRepoCardTemplate.bind({});
 
 Default.args = {
   name: "jsonhero-web",
-  handle: "apihero-run",
+  owner: "apihero-run",
   avatarURL: "https://avatars.githubusercontent.com/u/7252105?v=4"
 };
