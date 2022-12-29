@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import * as Select from "@radix-ui/react-select";
 import clsx from "clsx";
 
@@ -20,9 +20,12 @@ const CustomSelect = ({
   className,
   onChange
 }: SelectProps): JSX.Element => {
+  const [selected, setSelected] = useState<null | number>(null);
+
   const handleSelected = (value: string) => {
-    const selected = Number(value);
-    onChange?.(selected);
+    const limit = Number(value);
+    setSelected(limit);
+    onChange?.(limit);
   };
 
   return (
@@ -41,8 +44,10 @@ const CustomSelect = ({
             "w-full text-sm outline-none rounded-lg font-semibold",
             "text-light-slate-12 bg-white border border-light-slate-6")}
         >
-          {label && <span className="inline-flex text-light-slate-9">{label}:</span>}
-          <Select.Value placeholder={placeholder} />
+          <Select.Value>
+            {label && <span className="inline-flex text-light-slate-9 mr-1">{label}:</span>}
+            {selected ? options?.find((option) => option.value === selected)?.name : placeholder}
+          </Select.Value>
           <Select.Icon className="w-4 h-4 relative overflow-hidden">
             <RiArrowUpSLine className="absolute bottom-1" />
             <RiArrowDownSLine className="absolute top-1" />
@@ -50,7 +55,7 @@ const CustomSelect = ({
         </Select.Trigger>
         <Select.Portal>
           <Select.Content
-            className={clsx("absolute right-0 top-9 bg-white overflow-hidden rounded-lg border shadow-superlative", label ? "-left-18" : "left-0")}
+            className="bg-white overflow-hidden rounded-lg border shadow-superlative"
           >
             <Select.Viewport>
               {options ?
