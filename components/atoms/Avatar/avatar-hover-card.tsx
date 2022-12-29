@@ -1,6 +1,6 @@
+/* eslint-disable @next/next/no-img-element */
 import * as HoverCard from "@radix-ui/react-hover-card";
 import Link from "next/link";
-import Image from "next/image";
 
 import HoverCardWrapper from "components/molecules/HoverCardWrapper/hover-card-wrapper";
 
@@ -15,10 +15,10 @@ const AvatarHoverCard = ({ contributor, repositories }: AvatarProps): JSX.Elemen
 
   return (
     <HoverCard.Root>
-      <Link href={`/user/${contributor}`}>
+      <Link href={`/user/${contributor}`} as={`/user/${contributor}`}>
         <a>
           <HoverCard.Trigger asChild>
-            <Image
+            <img
               alt={contributor}
               className="w-full h-full"
               height={500}

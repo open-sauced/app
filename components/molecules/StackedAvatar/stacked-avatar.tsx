@@ -12,8 +12,13 @@ const StackedAvatar = ({ contributors , visibleQuantity = 5}: StackedAvatarProps
   const router = useRouter();
   const { filterName } = router.query;
   const insightId = filterName as string;
-  const { data: insight } = useInsight(insightId);
+  const { data: insight, isError } = useInsight(insightId);
   const repositories = insight ? insight.repos.map(repo => repo.repo_id) : [];
+
+  if (isError) {
+    console.log("Error fetching insight", isError);
+    return null;
+  }
 
   return (
     <div className="-space-x-3 hover:-space-x-1 flex absolute transition-all duration-300">
