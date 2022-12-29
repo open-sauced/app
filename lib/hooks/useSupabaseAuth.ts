@@ -4,7 +4,7 @@ import { SignInWithOAuthCredentials, User } from "@supabase/supabase-js";
 import { supabase } from "../utils/supabase";
 
 const useSupabaseAuth = () => {
-  const [user, setUser] = useState<User | null>();
+  const [user, setUser] = useState<User | null>(null);
   const [sessionToken, setSessionToken] = useState<string>();
   const [providerToken, setProviderToken] = useState<string | null>();
   const [userId, setUserId] = useState<string>();
