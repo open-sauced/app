@@ -5,10 +5,10 @@ import Link from "next/link";
 import React from "react";
 
 export interface FavoriteRepoCardProps {
-  avatarURL?: string | StaticImageData;
-  name?: string;
-  owner?: string;
-  topic?: string;
+  avatarURL: string | StaticImageData;
+  name: string;
+  owner: string;
+  topic: string;
   userPage?: string;
 }
 
@@ -25,12 +25,12 @@ const FavoriteRepoCard = ({ avatarURL, name, owner, topic, userPage }: FavoriteR
         <div className="flex flex-col justify-center">
           <div className="  text-sm text-light-slate-11 truncate max-w-[85px] md:max-w-[110px]">
             <Link href={`/${userPage ? `pages/${userPage}/` : ""}${topic}/repositories/filter/${owner}/${name}`}>
-              <a>{owner ? `${owner}` : "handle1234"}</a>
+              <a>{owner}</a>
             </Link>
           </div>
           <div title={name} className="text-lg text-light-slate-12 tracking-tight -mt-0.5">
             <Link href={`/${userPage ? `pages/${userPage}/` : ""}${topic}/repositories/filter/${owner}/${name}`}>
-              <a>{name && name.length > 10 ? truncateString(name, 12) : name}</a>
+              <a>{name.length > 10 ? truncateString(name, 12) : name}</a>
             </Link>
           </div>
         </div>
