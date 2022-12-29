@@ -53,8 +53,6 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
     if(user) {
       router.push({pathname: "/hub/insights/new", query: {selectedRepos: JSON.stringify(selectedRepos)}}, "/hub/insights/new" );
     } else {
-      sessionStorage.setItem("redirectUrl", "/hub/insights/new");
-      sessionStorage.setItem("selectedRepos", JSON.stringify(selectedRepos));
       signIn({ provider: "github" });
     }
   };
