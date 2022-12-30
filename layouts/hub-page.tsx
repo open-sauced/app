@@ -33,7 +33,7 @@ const HubPageLayout = ({children}: {children: React.ReactNode}) => {
               <InsightHeader insight={insight} repositories={repositories} insightId={insightId} isOwner={isOwner} />
               : isLoading?
                 <div>Loading...</div>
-              : <div>Error occurred</div>
+                : <div>Error occurred</div>
             }
           </Header>
 
