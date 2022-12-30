@@ -89,7 +89,7 @@ const RepositoriesTable = ({
         listOfRepositories.map((item, index) => {
           const isSelected = selectedRepos.find(iteratedRepo => iteratedRepo.id == item.id) != undefined;
           return (
-            <RepoRow key={`${item.handle}/${item.name}/${index}`} topic={topic} repo={item} user={user} selected={isSelected} handleOnSelectRepo={handleOnSelectRepo} />
+            <RepoRow key={`${item.handle}/${item.name}/${index}`} topic={topic} repo={item} userPage={user} selected={isSelected} handleOnSelectRepo={handleOnSelectRepo} />
             )
         })}
       {isFilteredRepoNotIndexed && (
@@ -104,7 +104,7 @@ const RepositoriesTable = ({
             // eslint-disable-next-line camelcase
             owner_avatar: getAvatarLink(repoOwner as string)
           }}
-          user={user}
+          userPage={user}
           handleOnSelectRepo={handleOnSelectRepo}
         />
       )}

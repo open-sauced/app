@@ -106,7 +106,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
         </div>
         <div className="hidden md:flex py-4 px-6 bg-light-slate-3 gap-2">
           <div className={clsx(classNames.cols.checkbox)} >
-            <Checkbox label="" onChange={handleOnSelectAllChecked} className="checked:[&>*]:!bg-orange-500 [&>*]:!border-orange-500 [&>*]:hover:!bg-orange-600"/>
+            <Checkbox label="" onChange={handleOnSelectAllChecked} disabled={!user} className={`checked:[&>*]:!bg-orange-500 ${ user? `[&>*]:!border-orange-500 [&>*]:hover:!bg-orange-600`: `[&>*]:!border-light-slate-8`}`}/>
           </div>
           <div className={clsx(classNames.cols.repository)}>
             <TableTitle text="Repository"></TableTitle>

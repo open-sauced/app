@@ -22,11 +22,12 @@ import StackedAvatar from "../StackedAvatar/stacked-avatar";
 import PullRequestOverview from "../PullRequestOverview/pull-request-overview";
 import TableRepositoryName from "../TableRepositoryName/table-repository-name";
 import Checkbox from "components/atoms/Checkbox/checkbox";
+import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 
 interface RepoProps {
   repo: RepositoriesRows;
   topic?: string;
-  user: string | string[] | undefined;
+  userPage: string | string[] | undefined;
   selected?: boolean;
   handleOnSelectRepo: (repo: RepositoriesRows) => void;
 }
@@ -87,7 +88,7 @@ const getPrsSpam = (total: number, spam: number): number => {
   return result;
 };
 
-const RepoRow = ({ repo, topic, user, selected, handleOnSelectRepo }: RepoProps): JSX.Element => {
+const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoProps): JSX.Element => {
   const {
     name,
     owner: handle,
@@ -103,6 +104,7 @@ const RepoRow = ({ repo, topic, user, selected, handleOnSelectRepo }: RepoProps)
     prVelocityCount
   } = repo;
 
+  const { user } = useSupabaseAuth();
   const { data: contributorData, meta: contributorMeta } = useContributionsList(repo.id, "", "updated_at");
   const { data: commitsData, meta: commitMeta, isLoading: commitLoading } = useRepositoryCommits(repo.id);
   const totalPrs = getTotalPrs(openPrsCount, mergedPrsCount, closedPrsCount, draftPrsCount);
@@ -134,7 +136,7 @@ const RepoRow = ({ repo, topic, user, selected, handleOnSelectRepo }: RepoProps)
         {/* Row: Repository Name and Pr overview */}
         <div className="flex items-center gap-x-3">
           <div className="w-[55%]">
-            <TableRepositoryName topic={topic} avatarURL={ownerAvatar} name={name} handle={handle} user={user} />
+            <TableRepositoryName topic={topic} avatarURL={ownerAvatar} name={name} handle={handle} user={userPage} />
           </div>
           <div className="w-[45%]">
             {repo.id ? <PullRequestOverview
@@ -212,10 +214,10 @@ const RepoRow = ({ repo, topic, user, selected, handleOnSelectRepo }: RepoProps)
         </div>
       </div>
       <div className={`${classNames.row} `}>
-        <Checkbox label="" checked={selected? true : false} onChange={handleSelectCheckbox} className="checked:[&>*]:!bg-orange-500 [&>*]:!border-orange-500 [&>*]:hover:!bg-orange-600"/>
+        <Checkbox label="" checked={selected? true : false} onChange={handleSelectCheckbox} disabled={!user} className={`checked:[&>*]:!bg-orange-500 ${ user? `[&>*]:!border-orange-500 [&>*]:hover:!bg-orange-600`: `[&>*]:!border-light-slate-8`}`}/>
         {/* Column: Repository Name */}
         <div className={classNames.cols.repository}>
-          <TableRepositoryName topic={topic} avatarURL={ownerAvatar} name={name} handle={handle} user={user}></TableRepositoryName>
+          <TableRepositoryName topic={topic} avatarURL={ownerAvatar} name={name} handle={handle} user={userPage}></TableRepositoryName>
         </div>
 
         {/* Column: Activity */}
