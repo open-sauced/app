@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.23.0-beta.5](https://github.com/open-sauced/insights/compare/v1.23.0-beta.4...v1.23.0-beta.5) (2022-12-30)
+
+
+### 🍕 Features
+
+* add favorite repos on the design system ([#744](https://github.com/open-sauced/insights/issues/744)) ([c8660b5](https://github.com/open-sauced/insights/commit/c8660b5fec5f872f04554524bd8329da1e8860c8)), closes [#717](https://github.com/open-sauced/insights/issues/717)
+
 ## [1.23.0-beta.4](https://github.com/open-sauced/insights/compare/v1.23.0-beta.3...v1.23.0-beta.4) (2022-12-28)
 
 
