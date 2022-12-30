@@ -28,7 +28,7 @@ interface DbRepoPR {
   readonly merged_at: string;
   readonly updated_at: string;
   readonly filesCount: number;
-  readonly linesCount: number;
+  linesCount: number;
   readonly merged: boolean;
   readonly repo_owner: string;
   readonly repo_name: string;
