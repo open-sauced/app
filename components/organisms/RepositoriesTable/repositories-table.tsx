@@ -90,7 +90,7 @@ const RepositoriesTable = ({
           const isSelected = selectedRepos.find(iteratedRepo => iteratedRepo.id == item.id) != undefined;
           return (
             <RepoRow key={`${item.handle}/${item.name}/${index}`} topic={topic} repo={item} userPage={user} selected={isSelected} handleOnSelectRepo={handleOnSelectRepo} />
-            )
+          );
         })}
       {isFilteredRepoNotIndexed && (
         <RepoRow
