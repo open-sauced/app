@@ -214,7 +214,7 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
         </div>
       </div>
       <div className={`${classNames.row} `}>
-        <Checkbox label="" checked={selected? true : false} onChange={handleSelectCheckbox} disabled={!user} className={`checked:[&>*]:!bg-orange-500 ${ user? "[&>*]:!border-orange-500 [&>*]:hover:!bg-orange-600": "[&>*]:!border-light-slate-8"}`}/>
+        <Checkbox label="" checked={selected? true : false} onChange={handleSelectCheckbox} disabled={!user} title={!user? "Connect to GitHub" : ""} className={`checked:[&>*]:!bg-orange-500 ${ user? "[&>*]:!border-orange-500 [&>*]:hover:!bg-orange-600": "[&>*]:!border-light-slate-8"}`}/>
         {/* Column: Repository Name */}
         <div className={classNames.cols.repository}>
           <TableRepositoryName topic={topic} avatarURL={ownerAvatar} name={name} handle={handle} user={userPage}></TableRepositoryName>
