@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.23.0-beta.9](https://github.com/open-sauced/insights/compare/v1.23.0-beta.8...v1.23.0-beta.9) (2023-01-03)
+
+
+### 🐛 Bug Fixes
+
+* user profile auth avatar processing errors ([#755](https://github.com/open-sauced/insights/issues/755)) ([3ba87a6](https://github.com/open-sauced/insights/commit/3ba87a6b448f6aae9b8b0c8415dab5b1a3baf13f)), closes [#733](https://github.com/open-sauced/insights/issues/733)
+
 ## [1.23.0-beta.8](https://github.com/open-sauced/insights/compare/v1.23.0-beta.7...v1.23.0-beta.8) (2023-01-03)
 
 
