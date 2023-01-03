@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.23.0-beta.10](https://github.com/open-sauced/insights/compare/v1.23.0-beta.9...v1.23.0-beta.10) (2023-01-03)
+
+
+### 🍕 Features
+
+* add hover card and expand on contributor stack ([#742](https://github.com/open-sauced/insights/issues/742)) ([9f45b3d](https://github.com/open-sauced/insights/commit/9f45b3dc85f9a1b9a7c398ceb0929a899d707666))
+
 ## [1.23.0-beta.9](https://github.com/open-sauced/insights/compare/v1.23.0-beta.8...v1.23.0-beta.9) (2023-01-03)
 
 
