@@ -47,11 +47,14 @@ interface RepositoriesTableProps {
   loading: boolean;
   error: boolean;
   repo?: string | string[] | undefined[];
+  selectedRepos: RepositoriesRows[];
+  handleOnSelectRepo: (repo: RepositoriesRows) => void;
 }
 
 export const classNames = {
   row: "hidden md:flex gap-4    items-center py-3 px-6 odd:bg-white even:bg-light-slate-2",
   cols: {
+    checkbox: "w-9 mr-0.5",
     repository: "w-[30%] lg:flex-1  lg:min-w-[200px] ",
     activity: "flex-1 lg:min-w-[100px] flex ",
     prOverview: "flex-1 lg:min-w-[170px] ",
@@ -68,7 +71,9 @@ const RepositoriesTable = ({
   error,
   topic,
   user,
-  repo
+  repo,
+  selectedRepos,
+  handleOnSelectRepo
 }: RepositoriesTableProps): JSX.Element => {
   const isLoadedWithRepos = !loading && !error && Array.isArray(listOfRepositories) && listOfRepositories.length > 0;
   const isFilteredRepoNotIndexed =
@@ -81,9 +86,12 @@ const RepositoriesTable = ({
       {error && <>An error has occured...</>}
 
       {isLoadedWithRepos &&
-        listOfRepositories.map((item, index) => (
-          <RepoRow key={`${item.handle}/${item.name}/${index}`} topic={topic} repo={item} user={user} />
-        ))}
+        listOfRepositories.map((item, index) => {
+          const isSelected = selectedRepos.find(iteratedRepo => iteratedRepo.id == item.id) != undefined;
+          return (
+            <RepoRow key={`${item.handle}/${item.name}/${index}`} topic={topic} repo={item} userPage={user} selected={isSelected} handleOnSelectRepo={handleOnSelectRepo} />
+          );
+        })}
       {isFilteredRepoNotIndexed && (
         <RepoRow
           topic={topic}
@@ -96,7 +104,8 @@ const RepositoriesTable = ({
             // eslint-disable-next-line camelcase
             owner_avatar: getAvatarLink(repoOwner as string)
           }}
-          user={user}
+          userPage={user}
+          handleOnSelectRepo={handleOnSelectRepo}
         />
       )}
     </section>

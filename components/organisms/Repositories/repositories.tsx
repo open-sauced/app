@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import clsx from "clsx";
 
@@ -11,8 +11,10 @@ import TableHeader from "components/molecules/TableHeader/table-header";
 import { useRepositoriesList } from "lib/hooks/useRepositoriesList";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 
-import RepositoriesTable, { classNames } from "../RepositoriesTable/repositories-table";
+import RepositoriesTable, { classNames, RepositoriesRows } from "../RepositoriesTable/repositories-table";
 import RepoNotIndexed from "./repository-not-indexed";
+import Checkbox from "components/atoms/Checkbox/checkbox";
+import Button from "components/atoms/Button/button";
 import useStore from "lib/store";
 
 interface RepositoriesProps {
@@ -20,7 +22,7 @@ interface RepositoriesProps {
 }
 
 const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
-  const { user } = useSupabaseAuth();
+  const { user, signIn } = useSupabaseAuth();
   const router = useRouter();
   const { filterName, toolName, selectedFilter, userOrg } = router.query;
   const username = userOrg ? user?.user_metadata.user_name : undefined;
@@ -37,6 +39,34 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
     setLimit
   } = useRepositoriesList(false, repositories);
   const filteredRepoNotIndexed = selectedFilter && !repoListIsLoading && !repoListIsError && repoListData.length === 0;
+  const [selectedRepos, setSelectedRepos] = useState<DbRepo[]>([]);
+
+  const handleOnSelectAllChecked = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.checked) {
+      setSelectedRepos(repoListData);
+    } else {
+      setSelectedRepos([]);
+    }
+  };
+
+  const handleOnAddtoInsights = () => {
+    if(user) {
+      router.push({pathname: "/hub/insights/new", query: {selectedRepos: JSON.stringify(selectedRepos)}}, "/hub/insights/new" );
+    } else {
+      signIn({ provider: "github" });
+    }
+  };
+
+  const handleOnSelectRepo = (repo: RepositoriesRows) => {
+    const matchingRepo = repoListData.find(iteratedRepo => iteratedRepo.id === repo.id);
+    if(!matchingRepo) return;
+
+    if (selectedRepos.find((r) => r.id === matchingRepo.id)) {
+      setSelectedRepos(selectedRepos.filter(r => r.id !== repo.id));
+    } else {
+      setSelectedRepos([...selectedRepos, matchingRepo]);
+    }
+  };
 
   const handleOnSearch = (search?: string) => {
     if (search && /^[a-zA-Z0-9\-\.]+\/[a-zA-Z0-9\-\.]+$/.test(search)) {
@@ -75,6 +105,9 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
           </div>
         </div>
         <div className="hidden md:flex py-4 px-6 bg-light-slate-3 gap-2">
+          <div className={clsx(classNames.cols.checkbox)} >
+            <Checkbox label="" onChange={handleOnSelectAllChecked} disabled={!user} title={!user? "Connect to GitHub" : ""} className={`checked:[&>*]:!bg-orange-500 ${ user? "[&>*]:!border-orange-500 [&>*]:hover:!bg-orange-600": "[&>*]:!border-light-slate-8"}`}/>
+          </div>
           <div className={clsx(classNames.cols.repository)}>
             <TableTitle text="Repository"></TableTitle>
           </div>
@@ -98,6 +131,17 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
           </div>
         </div>
 
+        {
+          selectedRepos.length > 0 && (
+            <div className="p-3 px-6 border-b-2 text-light-slate-11 flex justify-between">
+              <div>
+                {selectedRepos.length} Repositories selected
+              </div>
+              <Button onClick={handleOnAddtoInsights} type="primary">Add to Insight Page</Button>
+            </div>
+          )
+        }
+
         <RepositoriesTable
           topic={topic}
           error={repoListIsError}
@@ -105,6 +149,8 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
           listOfRepositories={repoListData}
           user={username}
           repo={selectedFilter}
+          selectedRepos={selectedRepos}
+          handleOnSelectRepo={handleOnSelectRepo}
         />
 
         {/* Table Footer */}
