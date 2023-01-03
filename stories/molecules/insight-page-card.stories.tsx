@@ -12,6 +12,7 @@ export default storyConfig;
 
 const contributors: DbContribution[] = [
   {
+    id: 1,
     commits: "2",
     commit_days: "ES",
     last_commit_time: "1661496920000",
@@ -25,6 +26,7 @@ const contributors: DbContribution[] = [
     recent_repo_list: ""
   },
   {
+    id: 2,
     commits: "2",
     commit_days: "ES",
     last_commit_time: "1661496920000",
@@ -38,6 +40,7 @@ const contributors: DbContribution[] = [
     recent_repo_list: ""
   },
   {
+    id: 3,
     commits: "2",
     commit_days: "ES",
     last_commit_time: "1661496920000",
@@ -51,6 +54,7 @@ const contributors: DbContribution[] = [
     recent_repo_list: ""
   },
   {
+    id: 4,
     commits: "2",
     commit_days: "ES",
     last_commit_time: "1661496920000",
