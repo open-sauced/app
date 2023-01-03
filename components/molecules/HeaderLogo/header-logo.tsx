@@ -12,7 +12,7 @@ interface HeaderLogoProps {
 
 const HeaderLogo: React.FC<HeaderLogoProps> = ({ textIsBlack, withBg = false }) => {
   return (
-    <Link href="/">
+    <Link href="/" legacyBehavior>
       <div className="flex items-center py-2 gap-2 cursor-pointer">
         <Image
           className="rounded"

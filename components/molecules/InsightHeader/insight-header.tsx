@@ -35,7 +35,7 @@ const InsightHeader = ({ insight, repositories, insightId, isOwner }: InsightHea
       </div>
       <div className="py-2">
         {
-          isOwner && <Link href={`/hub/insights/${insightId}/edit`}>
+          isOwner && <Link href={`/hub/insights/${insightId}/edit`} legacyBehavior>
             <Button type="primary"><FaEdit className="mr-2"/> Edit Page</Button>
           </Link>
         }

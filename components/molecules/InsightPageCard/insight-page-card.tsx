@@ -119,7 +119,9 @@ const InsightPageCard = ({
           {" "}
           <LinkIcon size={16} className="mr-2" /> Copy Link
         </Button>
-        <Link href={`/pages/${user?.user_metadata.user_name}/${insight.id}/dashboard`}>
+        <Link
+          href={`/pages/${user?.user_metadata.user_name}/${insight.id}/dashboard`}
+          legacyBehavior>
           <Button className="!w-48" type="primary">
             Go to Insight Page
           </Button>

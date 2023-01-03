@@ -25,12 +25,12 @@ const FavoriteRepoCard = ({ avatarURL, name, owner, topic, userPage }: FavoriteR
         <div className="flex flex-col justify-center">
           <div className="  text-sm text-light-slate-11 truncate max-w-[85px] md:max-w-[110px]">
             <Link href={`/${userPage ? `pages/${userPage}/` : ""}${topic}/repositories/filter/${owner}/${name}`}>
-              <a>{owner}</a>
+              {owner}
             </Link>
           </div>
           <div title={name} className="text-lg text-light-slate-12 tracking-tight -mt-0.5">
             <Link href={`/${userPage ? `pages/${userPage}/` : ""}${topic}/repositories/filter/${owner}/${name}`}>
-              <a>{name.length > 10 ? truncateString(name, 12) : name}</a>
+              {name.length > 10 ? truncateString(name, 12) : name}
             </Link>
           </div>
         </div>
