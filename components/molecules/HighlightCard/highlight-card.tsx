@@ -32,7 +32,7 @@ const icons = {
     src: personIcon.src,
     label: "Contributors",
     color: "bg-blue-100"
-  },  
+  },
   participation: {
     src: repoIcon.src,
     label: "Participation",
@@ -124,7 +124,7 @@ const HighlightCard: React.FC<HighlightCardProps> = ({
 
           {/* Contributor Cards */}
           { contributors && <div className="flex items-center justify-center mt-7 h-1">
-            <StackedAvatar contributors={contributors} visibleQuantity={10} />
+            <StackedAvatar contributors={contributors} visibleQuantity={5} />
           </div> }
 
           {/* Progress Bar */}
