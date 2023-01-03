@@ -17,7 +17,7 @@ const StackedAvatar = ({ contributors , visibleQuantity = 5}: StackedAvatarProps
 
   if (isError) {
     console.log("Error fetching insight", isError);
-    return null;
+    return <div>-</div>;
   }
 
   return (
