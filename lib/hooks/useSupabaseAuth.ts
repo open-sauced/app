@@ -5,8 +5,9 @@ import { supabase } from "../utils/supabase";
 
 const useSupabaseAuth = () => {
   const [user, setUser] = useState<User | null>(null);
-  const [sessionToken, setSessionToken] = useState<string | undefined>(undefined);
-  const [providerToken, setProviderToken] = useState<string | null | undefined>(undefined);
+  const [sessionToken, setSessionToken] = useState<string>();
+  const [providerToken, setProviderToken] = useState<string | null>();
+  const [userId, setUserId] = useState<string>();
 
   useEffect(() => {
     async function getUserSession() {
@@ -14,14 +15,16 @@ const useSupabaseAuth = () => {
       setUser(currentUser?.data.session?.user ?? null);
       setSessionToken(currentUser?.data.session?.access_token);
       setProviderToken(currentUser?.data.session?.provider_token);
+      setUserId(currentUser?.data.session?.user?.user_metadata.sub);
     }
 
     getUserSession();
 
     const { data: { subscription: listener } } = supabase.auth.onAuthStateChange((_, session) => {
       setUser(session?.user ?? null);
-      setSessionToken(session?.access_token ?? undefined);
-      setProviderToken(session?.provider_token ?? undefined);
+      setSessionToken(session?.access_token);
+      setProviderToken(session?.provider_token);
+      setUserId(session?.user.user_metadata.sub);
     });
 
     return () => {
@@ -39,7 +42,8 @@ const useSupabaseAuth = () => {
     signOut: () => supabase.auth.signOut(),
     user,
     sessionToken,
-    providerToken
+    providerToken,
+    userId
   };
 };
 
