@@ -102,7 +102,7 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
             { name: "40 per page", value: 40 },
             { name: "50 per page", value: 50 }
           ]}
-          className="!w-36 ml-auto md:hidden overflow-x-hidden "
+          className="!w-36 ml-auto md:hidden overflow-x-hidden"
           onChange={function (limit: number): void {
             setLimit(limit);
           }}
