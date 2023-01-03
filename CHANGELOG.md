@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.23.0-beta.8](https://github.com/open-sauced/insights/compare/v1.23.0-beta.7...v1.23.0-beta.8) (2023-01-03)
+
+
+### 🍕 Features
+
+* handle close modal when click outside and improve select usage ([#705](https://github.com/open-sauced/insights/issues/705)) ([105a47b](https://github.com/open-sauced/insights/commit/105a47b5e27d48ee60ef8d4b1ed06a08dbaba3e7)), closes [#689](https://github.com/open-sauced/insights/issues/689)
+
 ## [1.23.0-beta.7](https://github.com/open-sauced/insights/compare/v1.23.0-beta.6...v1.23.0-beta.7) (2023-01-03)
 
 
