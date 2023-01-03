@@ -42,7 +42,7 @@ const RepositoryRow = ({
       <></>
       <span className="flex w-1/5 xs:w-2/5 overflow-hidden whitespace-nowrap text-ellipsis md:w-fit flex-row align-middle text-left p-2">
         <>
-          <Checkbox className="mt-0.5" label="" />{" "}
+          <Checkbox className="mt-0.5" label="" title="" />{" "}
           {name}
         </>
       </span>
