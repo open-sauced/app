@@ -71,13 +71,14 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
     }
   }
 
+  const title = `Open Sauced Insights ${filterName ? ` - ${changeCapitalization(filterName!.toString(), true)}` : ""} ${
+    toolName ? ` / ${changeCapitalization(toolName.toString(), true)}` : ""
+  }`;
+
   return (
     <>
       <Head>
-        <title>
-          Open Sauced Insights{filterName && ` - ${changeCapitalization(filterName.toString(), true)}`}{" "}
-          {toolName && ` / ${changeCapitalization(toolName.toString(), true)}`}
-        </title>
+        <title>{title}</title>
         <link rel="icon" href="/favicon.ico" />
         <meta property="og:url" content="https://insights.opensauced.pizza" />
         <meta property="og:type" content="website" />
@@ -95,7 +96,7 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
         value={{
           revalidateOnFocus: false,
           fetcher: apiFetcher,
-          provider: localStorageProvider
+          provider: localStorageProvider,
         }}
       >
         <SessionContextProvider supabaseClient={supabase} initialSession={pageProps.initialSession}>
