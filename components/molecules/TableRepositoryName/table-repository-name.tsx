@@ -18,7 +18,7 @@ const TableRepositoryName = ({ avatarURL, name, handle, topic, user }: TableRepo
   const router = useRouter();
 
   let filterLink = `/${user ? `pages/${user}/` : ""}${topic}/repositories/filter/${handle}/${name}`;
-  if(router.asPath === filterLink) {
+  if (router.asPath === filterLink) {
     filterLink = `/${user ? `pages/${user}/` : ""}${topic}/repositories/filter/recent`;
   }
 
@@ -26,7 +26,13 @@ const TableRepositoryName = ({ avatarURL, name, handle, topic, user }: TableRepo
     <div className="flex items-center gap-2.5">
       {/* Avatar */}
       <a href={`https://www.github.com/${handle}/${name}`} target="_blank" rel="noreferrer">
-        <Avatar className="shrink-0 min-w-10 min-h-10" size={40} avatarURL={avatarURL} isCircle={false} />
+        <Avatar
+          isCached={true}
+          className="shrink-0 min-w-10 min-h-10"
+          size={40}
+          avatarURL={avatarURL}
+          isCircle={false}
+        />
       </a>
 
       {/* Text */}
