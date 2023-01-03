@@ -21,7 +21,7 @@ const StackedAvatar = ({ contributors , visibleQuantity = 5}: StackedAvatarProps
   }
 
   return (
-    <div className="-space-x-3 hover:-space-x-1 flex absolute transition-all duration-300">
+    <div className="-space-x-3 hover:-space-x-1 flex transition-all duration-300">
       {contributors && contributors.slice(0, visibleQuantity).map(({ host_login: hostLogin }) => (
         <div
           key={`contributor-avatar-${hostLogin}`}

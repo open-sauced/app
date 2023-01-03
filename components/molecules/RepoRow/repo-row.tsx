@@ -203,7 +203,6 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
             <div>Contributors</div>
             <div className="flex text-base items-center">
               {contributorMeta.itemCount! > 0 ? <StackedAvatar contributors={contributorData} /> : "-"}
-
               {contributorMeta.itemCount! >= 5 ? <div>&nbsp;{`+${contributorMeta.itemCount - 5}`}</div> : ""}
             </div>
           </div>
