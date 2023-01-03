@@ -1,5 +1,5 @@
 import Avatar from "components/atoms/Avatar/avatar";
-import { StaticImageData } from "next/image";
+import { StaticImageData } from "next/legacy/image";
 import React from "react";
 
 interface ContributorProfileHeaderProps {

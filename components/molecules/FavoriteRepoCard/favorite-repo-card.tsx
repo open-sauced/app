@@ -1,6 +1,6 @@
 import Avatar from "components/atoms/Avatar/avatar";
 import { truncateString } from "lib/utils/truncate-string";
-import { StaticImageData } from "next/image";
+import { StaticImageData } from "next/legacy/image";
 import Link from "next/link";
 import React from "react";
 

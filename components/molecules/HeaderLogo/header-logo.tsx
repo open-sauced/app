@@ -1,6 +1,6 @@
 import React from "react";
 import Text from "components/atoms/Typography/text";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import openSaucedImg from "../../../public/openSauced-icon.png";
 import openSaucedImgWithBg from "../../../public/open-sourced-with-bg-icon.png";
 import Link from "next/link";

@@ -1,5 +1,5 @@
 import React from "react";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import repoIcon from "../../../public/icons/icon-repo--blue.svg";
 import prIcon from "../../../public/icons/icon-pr--green.svg";
 import personIcon from "../../../public/icons/person-icon.svg";

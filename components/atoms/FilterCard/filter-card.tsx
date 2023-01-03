@@ -1,5 +1,5 @@
 import React from "react";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import Text from "../Typography/text";
 import hashIcon from "../../../public/icons/hash.svg";
 import orgIcon from "../../../public/icons/org.svg";

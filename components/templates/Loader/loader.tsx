@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from "next/legacy/image";
 import Pizza from "public/Sauce.svg";
 interface LoaderProps{
   theme: "dark" | "light"

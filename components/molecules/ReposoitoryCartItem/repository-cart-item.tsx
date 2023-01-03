@@ -1,6 +1,6 @@
 import Avatar from "components/atoms/Avatar/avatar";
 import Text from "components/atoms/Typography/text";
-import { StaticImageData } from "next/image";
+import { StaticImageData } from "next/legacy/image";
 import { AiOutlineClose } from "react-icons/ai";
 import { BiGitPullRequest } from "react-icons/bi";
 

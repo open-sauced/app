@@ -1,5 +1,5 @@
 import React from "react";
-import Image, { StaticImageData } from "next/image";
+import Image, { StaticImageData } from "next/legacy/image";
 import AvatarImage from "../../../public/hacktoberfest-icon.png";
 import cachedImage from "lib/utils/cachedImages";
 
