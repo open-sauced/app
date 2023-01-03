@@ -5,6 +5,19 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.23.0-beta.6](https://github.com/open-sauced/insights/compare/v1.23.0-beta.5...v1.23.0-beta.6) (2023-01-03)
+
+
+### 🍕 Features
+
+* add Edit Page button to insight pages ([#738](https://github.com/open-sauced/insights/issues/738)) ([bde1eb8](https://github.com/open-sauced/insights/commit/bde1eb88e5409bc65cf79b9d4fc806ec030ec86b)), closes [#685](https://github.com/open-sauced/insights/issues/685)
+* enable repository selection & add to new insights page ([#693](https://github.com/open-sauced/insights/issues/693)) ([ba6405d](https://github.com/open-sauced/insights/commit/ba6405d1f983709f7ea1a5da0d43a82ae18299ef)), closes [#593](https://github.com/open-sauced/insights/issues/593) [#592](https://github.com/open-sauced/insights/issues/592)
+
+
+### 🐛 Bug Fixes
+
+* add missing title props ([cdcc28d](https://github.com/open-sauced/insights/commit/cdcc28d615dbc04815327e10ff5e4a211a6b9503))
+
 ## [1.23.0-beta.5](https://github.com/open-sauced/insights/compare/v1.23.0-beta.4...v1.23.0-beta.5) (2022-12-30)
 
 
