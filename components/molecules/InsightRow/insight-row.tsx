@@ -24,7 +24,6 @@ const InsightRow = ({ insight, user }: InsightRowProps) => {
   const { open, merged, velocity, total, repoList } = getRepoInsights(repoData);
   const avgOpenPrs = repoData.length > 0 ? Math.round(open / repoData.length) : 0;
 
-  console.log(total);
   return (
     <div className="flex flex-col md:flex-row w-full rounded-lg px-4 lg:px-8 py-5 gap-4 lg:gap-2 bg-white items-center">
       <div className="flex w-full flex-1 flex-col gap-4 lg:gap-6">

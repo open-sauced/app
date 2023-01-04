@@ -1,3 +1,4 @@
+import { User } from "@supabase/supabase-js";
 import Avatar from "components/atoms/Avatar/avatar";
 import { truncateString } from "lib/utils/truncate-string";
 import { StaticImageData } from "next/image";
@@ -11,7 +12,7 @@ interface TableRepositoryNameProps {
   handle?: string;
   isLoading?: boolean;
   topic?: string;
-  user?: string | string[];
+  user?: User | null;
 }
 
 const TableRepositoryName = ({ avatarURL, name, handle, topic, user }: TableRepositoryNameProps): JSX.Element => {

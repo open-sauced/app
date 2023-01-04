@@ -8,25 +8,21 @@ import {
 } from "@heroicons/react/24/solid";
 import clsx from "clsx";
 
-import { RepositoriesRows } from "components/organisms/RepositoriesTable/repositories-table";
-import Pill from "components/atoms/Pill/pill";
-import Sparkline from "components/atoms/Sparkline/sparkline";
-import { classNames } from "components/organisms/RepositoriesTable/repositories-table";
-
 import { useContributionsList } from "lib/hooks/useContributionsList";
 import { useRepositoryCommits } from "lib/hooks/useRepositoryCommits";
 import { getCommitsLast30Days } from "lib/utils/get-recent-commits";
 import { getRelativeDays } from "lib/utils/date-utils";
+import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
+import getPrsPercent from "lib/utils/get-prs-percent";
 
+import { RepositoriesRows } from "components/organisms/RepositoriesTable/repositories-table";
+import Pill from "components/atoms/Pill/pill";
+import Sparkline from "components/atoms/Sparkline/sparkline";
+import { classNames } from "components/organisms/RepositoriesTable/repositories-table";
 import StackedAvatar from "../StackedAvatar/stacked-avatar";
 import PullRequestOverview from "../PullRequestOverview/pull-request-overview";
 import TableRepositoryName from "../TableRepositoryName/table-repository-name";
-
-import { GitMergeIcon } from "@primer/octicons-react";
-
 import Checkbox from "components/atoms/Checkbox/checkbox";
-import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
-
 
 interface RepoProps {
   repo: RepositoriesRows;
@@ -102,7 +98,6 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
     draftPrsCount,
     mergedPrsCount,
     spamPrsCount,
-    churn,
     churnTotalCount,
     churnDirection,
     prVelocityCount
@@ -140,7 +135,7 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
         {/* Row: Repository Name and Pr overview */}
         <div className="flex items-center gap-x-3">
           <div className="w-[55%]">
-            <TableRepositoryName topic={topic} avatarURL={ownerAvatar} name={name} handle={handle} user={userPage} />
+            <TableRepositoryName topic={topic} avatarURL={ownerAvatar} name={name} handle={handle} user={user} />
           </div>
           <div className="w-[45%]">
             {repo.id ? (
@@ -180,7 +175,7 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
             <div>Pr Velocity</div>
             <div className="flex text-base gap-x-3">
               <div>{prVelocityInDays}</div>
-              {repo.id ? <GitMergeIcon fill="purple" size={20} /> : ""}
+              {repo.id ? <Pill color="purple" text={`${getPrsPercent(totalPrs, prVelocityCount || 0)}%`} /> : ""}
             </div>
           </div>
 
@@ -221,10 +216,18 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
         </div>
       </div>
       <div className={`${classNames.row} `}>
-        <Checkbox label="" checked={selected? true : false} onChange={handleSelectCheckbox} disabled={!user} title={!user? "Connect to GitHub" : ""} className={`checked:[&>*]:!bg-orange-500 ${ user? "[&>*]:!border-orange-500 [&>*]:hover:!bg-orange-600": "[&>*]:!border-light-slate-8"}`}/>
+        <Checkbox
+          label=""
+          checked={selected ? true : false}
+          onChange={handleSelectCheckbox}
+          disabled={!user}
+          title={!user ? "Connect to GitHub" : ""}
+          className={`checked:[&>*]:!bg-orange-500 ${
+            user ? "[&>*]:!border-orange-500 [&>*]:hover:!bg-orange-600" : "[&>*]:!border-light-slate-8"
+          }`}
+        />
         {/* Column: Repository Name */}
         <div className={classNames.cols.repository}>
-
           <TableRepositoryName
             topic={topic}
             avatarURL={ownerAvatar}
@@ -232,7 +235,6 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
             handle={handle}
             user={user}
           ></TableRepositoryName>
-
         </div>
 
         {/* Column: Activity */}
@@ -257,7 +259,7 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
         {/* Column: PR Velocity */}
         <div className={`${classNames.cols.prVelocity}`}>
           <div>{prVelocityInDays}</div>
-          {repo.id ? <GitMergeIcon fill="purple" size={20} /> : ""}
+          {repo.id ? <Pill color="purple" text={`${getPrsPercent(totalPrs, prVelocityCount || 0)}%`} /> : ""}
         </div>
 
         {/* Column: SPAM */}
