@@ -20,25 +20,21 @@ const InsightRow = ({ insight, user }: InsightRowProps) => {
   const repoIds = insight.repos.map((repo) => repo.repo_id);
   const { data: repoData, isError, isLoading } = useRepositoriesList(false, repoIds);
   const { open, merged, velocity, total, repoList } = getRepoInsights(repoData);
-  const avgOpenPrs = repoData.length > 0 ? Math.round(open/repoData.length) : 0;
+  const avgOpenPrs = repoData.length > 0 ? Math.round(open / repoData.length) : 0;
   return (
     <div className="flex flex-col md:flex-row w-full rounded-lg px-4 lg:px-8 py-5 gap-4 lg:gap-2 bg-white items-center">
       <div className="flex w-full flex-1 flex-col gap-4 lg:gap-6">
         <div className="flex items-center lg:items-center gap-4 ">
           <div className="w-4 h-4 bg-light-orange-10 rounded-full"></div>
           <div className="text-xl text-light-slate-12 flex justify-between">
-            <Link
-              href={`/pages/${user?.user_metadata.user_name}/${insight.id}/dashboard`}
-              legacyBehavior>
-              {insight.name}
-            </Link>
+            <Link href={`/pages/${user?.user_metadata.user_name}/${insight.id}/dashboard`}>{insight.name}</Link>
           </div>
           <div className="rounded-2xl border px-2 text-light-slate-11">
             {!!insight.is_public ? "public" : "private"}
           </div>
           <div className="flex-1 md:hidden">
             <span className=" bg-light-slate-1 inline-block rounded-lg p-2.5 border mr-2">
-              <Link href={`/hub/insights/${insight.id}/edit`} legacyBehavior>
+              <Link href={`/hub/insights/${insight.id}/edit`}>
                 <BsPencilFill title="Edit Insight Page" className="text-light-slate-10 text-md cursor-pointer w-4" />
               </Link>
             </span>
@@ -84,17 +80,18 @@ const InsightRow = ({ insight, user }: InsightRowProps) => {
           </div>
           <div className="flex-1 hidden md:flex  justify-end">
             <span className=" bg-light-slate-1 inline-block rounded-lg p-2.5 border mr-2">
-              <Link href={`/hub/insights/${insight.id}/edit`} legacyBehavior>
+              <Link href={`/hub/insights/${insight.id}/edit`}>
                 <BsPencilFill title="Edit Insight Page" className="text-light-slate-10 text-lg cursor-pointer" />
               </Link>
             </span>
             <span className=" bg-light-slate-1 inline-block rounded-lg p-2.5 border">
-              <Link
-                href={`/pages/${user?.user_metadata.user_name}/${insight.id}/dashboard`}
-                legacyBehavior>
-                <MdOutlineArrowForwardIos title="Go To Insight Page" className="text-light-slate-10 text-lg cursor-pointer" />
+              <Link href={`/pages/${user?.user_metadata.user_name}/${insight.id}/dashboard`}>
+                <MdOutlineArrowForwardIos
+                  title="Go To Insight Page"
+                  className="text-light-slate-10 text-lg cursor-pointer"
+                />
               </Link>
-            </span>            
+            </span>
           </div>
         </div>
       </div>

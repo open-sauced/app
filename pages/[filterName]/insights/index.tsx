@@ -47,7 +47,7 @@ const InsightsHub: WithPageLayout = () => {
           <div className="w-58 hidden">
             <Search placeholder="Search repositories" className="max-w-full" name={"query"} />
           </div>
-          <Link href={"/hub/insights/new"} legacyBehavior>
+          <Link href={"/hub/insights/new"}>
             <Button type="primary">Add Insight Page</Button>
           </Link>
         </div>
