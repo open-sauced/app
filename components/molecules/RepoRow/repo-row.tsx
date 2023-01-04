@@ -259,7 +259,7 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
         {/* Column: PR Velocity */}
         <div className={`${classNames.cols.prVelocity}`}>
           <div>{prVelocityInDays}</div>
-          {repo.id ? <Pill color="purple" text={`${getPrsPercent(totalPrs, prsMergedPercentage || 0)}%`} /> : ""}
+          {repo.id ? <Pill color="purple" text={`${prsMergedPercentage}%`} /> : ""}
         </div>
 
         {/* Column: SPAM */}
