@@ -18,7 +18,7 @@ interface CardProfileProps {
 const CardProfile = ({ githubAvatar, githubName, totalPRs, dateOfFirstPR }: CardProfileProps): JSX.Element => {
   return (
     <Link href={`/user/${githubName}`} as={`/user/${githubName}`}>
-      <a className="flex items-center gap-2">
+      <div className="flex items-center gap-2">
         <Avatar size={40} avatarURL={githubAvatar ? githubAvatar : undefined} />
         <div>
           <div>
@@ -38,7 +38,7 @@ const CardProfile = ({ githubAvatar, githubName, totalPRs, dateOfFirstPR }: Card
             </div>
           </div>
         </div>
-      </a>
+      </div>
     </Link>
   );
 };
