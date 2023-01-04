@@ -41,7 +41,8 @@ const CSVDownload = ({ report, repositories }: CSVDownloadProps) => {
 
     try {
       setGenerating(true);
-      const result: PaginatedContributorsResponse = await mutate<any>(key, apiFetcher(key as any));
+      // @ts-ignore
+      const result: PaginatedContributorsResponse = await mutate(key, apiFetcher(key));
     
       setData(result.data);
     } catch(e) {

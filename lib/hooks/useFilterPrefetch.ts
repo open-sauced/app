@@ -21,7 +21,8 @@ const useFilterPrefetch = () => {
         const url = `${topic}/repos?filter=${filterKey}&page=1`;
 
         try {
-          const result: { meta: Meta } = await mutate<any>(url, apiFetcher(url as any));
+          // @ts-ignore
+          const result: { meta: Meta } = await mutate(url, apiFetcher(url));
 
           setFilterValues(values => {
             return {
