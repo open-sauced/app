@@ -13,7 +13,7 @@ import { useRepositoryCommits } from "lib/hooks/useRepositoryCommits";
 import { getCommitsLast30Days } from "lib/utils/get-recent-commits";
 import { getRelativeDays } from "lib/utils/date-utils";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
-import getPrsPercent from "lib/utils/get-prs-percent";
+import getPrsPercent from "lib/utils/get-percent";
 
 import { RepositoriesRows } from "components/organisms/RepositoriesTable/repositories-table";
 import Pill from "components/atoms/Pill/pill";
@@ -135,7 +135,7 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
         {/* Row: Repository Name and Pr overview */}
         <div className="flex items-center gap-x-3">
           <div className="w-[55%]">
-            <TableRepositoryName topic={topic} avatarURL={ownerAvatar} name={name} handle={handle} user={user} />
+            <TableRepositoryName topic={topic} avatarURL={ownerAvatar} name={name} handle={handle} user={userPage} />
           </div>
           <div className="w-[45%]">
             {repo.id ? (
@@ -233,7 +233,7 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
             avatarURL={ownerAvatar}
             name={name}
             handle={handle}
-            user={user}
+            user={userPage}
           ></TableRepositoryName>
         </div>
 

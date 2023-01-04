@@ -12,7 +12,7 @@ interface TableRepositoryNameProps {
   handle?: string;
   isLoading?: boolean;
   topic?: string;
-  user?: User | null;
+  user?: string | string[];
 }
 
 const TableRepositoryName = ({ avatarURL, name, handle, topic, user }: TableRepositoryNameProps): JSX.Element => {
