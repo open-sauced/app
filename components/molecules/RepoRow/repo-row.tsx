@@ -13,7 +13,7 @@ import { useRepositoryCommits } from "lib/hooks/useRepositoryCommits";
 import { getCommitsLast30Days } from "lib/utils/get-recent-commits";
 import { getRelativeDays } from "lib/utils/date-utils";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
-import getPrsPercent from "lib/utils/get-percent";
+import getPercent from "lib/utils/get-percent";
 
 import { RepositoriesRows } from "components/organisms/RepositoriesTable/repositories-table";
 import Pill from "components/atoms/Pill/pill";
@@ -68,16 +68,6 @@ const getTotalPrs = (
   return total;
 };
 
-const getPrsMerged = (total: number, merged: number): number => {
-  if (total <= 0) {
-    return 0;
-  }
-
-  const result = Math.floor((merged / total) * 100);
-
-  return result;
-};
-
 const getPrsSpam = (total: number, spam: number): number => {
   if (total <= 0) {
     return 0;
@@ -107,7 +97,7 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
   const { data: contributorData, meta: contributorMeta } = useContributionsList(repo.id, "", "updated_at");
   const { data: commitsData, meta: commitMeta, isLoading: commitLoading } = useRepositoryCommits(repo.id);
   const totalPrs = getTotalPrs(openPrsCount, mergedPrsCount, closedPrsCount, draftPrsCount);
-  const prsMergedPercentage = getPrsMerged(totalPrs, mergedPrsCount || 0);
+  const prsMergedPercentage = getPercent(totalPrs, mergedPrsCount || 0);
   const spamPrsPercentage = getPrsSpam(totalPrs, spamPrsCount || 0);
   const prVelocityInDays = getRelativeDays(prVelocityCount || 0);
 
