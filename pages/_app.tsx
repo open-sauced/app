@@ -96,7 +96,7 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
         value={{
           revalidateOnFocus: false,
           fetcher: apiFetcher,
-          provider: localStorageProvider,
+          provider: localStorageProvider
         }}
       >
         <SessionContextProvider supabaseClient={supabase} initialSession={pageProps.initialSession}>
