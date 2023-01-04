@@ -7,10 +7,11 @@ import { User } from "@supabase/supabase-js";
 import { getRelativeDays } from "lib/utils/date-utils";
 import { useRepositoriesList } from "lib/hooks/useRepositoriesList";
 import getRepoInsights from "lib/utils/get-repo-insights";
+import getPrsPercent from "../../../lib/utils/get-prs-percent";
 
 import CardRepoList from "../CardRepoList/card-repo-list";
 import Text from "components/atoms/Typography/text";
-import { GitMergeIcon } from "@primer/octicons-react";
+import Pill from "components/atoms/Pill/pill";
 
 interface InsightRowProps {
   insight: DbUserInsight;
@@ -22,6 +23,8 @@ const InsightRow = ({ insight, user }: InsightRowProps) => {
   const { data: repoData, isError, isLoading } = useRepositoriesList(false, repoIds);
   const { open, merged, velocity, total, repoList } = getRepoInsights(repoData);
   const avgOpenPrs = repoData.length > 0 ? Math.round(open / repoData.length) : 0;
+
+  console.log(total);
   return (
     <div className="flex flex-col md:flex-row w-full rounded-lg px-4 lg:px-8 py-5 gap-4 lg:gap-2 bg-white items-center">
       <div className="flex w-full flex-1 flex-col gap-4 lg:gap-6">
@@ -57,12 +60,7 @@ const InsightRow = ({ insight, user }: InsightRowProps) => {
               <Text className="md:!text-lg lg:!text-2xl !text-black !leading-none">{`${avgOpenPrs} PR${
                 avgOpenPrs > 1 ? "s" : ""
               }`}</Text>
-              <p className="flex items-end">
-                <span className="leading-none">
-                  {repoData.length > 0 ? getRelativeDays(Math.round(velocity / repoData.length)) : "-"}
-                </span>{" "}
-                <BsFillArrowUpCircleFill className="ml-1" />
-              </p>
+              <Pill color="green" text={`${getPrsPercent(total, open)}%`} />
             </div>
           </div>
 
@@ -73,9 +71,7 @@ const InsightRow = ({ insight, user }: InsightRowProps) => {
               <Text className="md:!text-lg lg:!text-2xl !tracking-widest !text-black !leading-none">
                 {repoData.length > 0 ? getRelativeDays(Math.round(velocity / repoData.length)) : "-"}
               </Text>
-              <p className="flex text-sm items-end">
-                <GitMergeIcon fill="purple" size={20} />
-              </p>
+              <Pill color="purple" text={`${getPrsPercent(total, merged)}%`} />
             </div>
           </div>
           <div className="flex-1 hidden md:flex  justify-end">
