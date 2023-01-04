@@ -7,7 +7,7 @@ import { User } from "@supabase/supabase-js";
 import { getRelativeDays } from "lib/utils/date-utils";
 import { useRepositoriesList } from "lib/hooks/useRepositoriesList";
 import getRepoInsights from "lib/utils/get-repo-insights";
-import getPrsPercent from "../../../lib/utils/get-prs-percent";
+import getPercent from "../../../lib/utils/get-percent";
 
 import CardRepoList from "../CardRepoList/card-repo-list";
 import Text from "components/atoms/Typography/text";
@@ -59,7 +59,7 @@ const InsightRow = ({ insight, user }: InsightRowProps) => {
               <Text className="md:!text-lg lg:!text-2xl !text-black !leading-none">{`${avgOpenPrs} PR${
                 avgOpenPrs > 1 ? "s" : ""
               }`}</Text>
-              <Pill color="green" text={`${getPrsPercent(total, open)}%`} />
+              <Pill color="green" text={`${getPercent(total, open)}%`} />
             </div>
           </div>
 
@@ -70,7 +70,7 @@ const InsightRow = ({ insight, user }: InsightRowProps) => {
               <Text className="md:!text-lg lg:!text-2xl !tracking-widest !text-black !leading-none">
                 {repoData.length > 0 ? getRelativeDays(Math.round(velocity / repoData.length)) : "-"}
               </Text>
-              <Pill color="purple" text={`${getPrsPercent(total, merged)}%`} />
+              <Pill color="purple" text={`${getPercent(total, merged)}%`} />
             </div>
           </div>
           <div className="flex-1 hidden md:flex  justify-end">
