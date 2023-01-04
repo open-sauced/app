@@ -5,6 +5,151 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.23.0-beta.10](https://github.com/open-sauced/insights/compare/v1.23.0-beta.9...v1.23.0-beta.10) (2023-01-03)
+
+
+### 🍕 Features
+
+* add hover card and expand on contributor stack ([#742](https://github.com/open-sauced/insights/issues/742)) ([9f45b3d](https://github.com/open-sauced/insights/commit/9f45b3dc85f9a1b9a7c398ceb0929a899d707666))
+
+## [1.23.0-beta.9](https://github.com/open-sauced/insights/compare/v1.23.0-beta.8...v1.23.0-beta.9) (2023-01-03)
+
+
+### 🐛 Bug Fixes
+
+* user profile auth avatar processing errors ([#755](https://github.com/open-sauced/insights/issues/755)) ([3ba87a6](https://github.com/open-sauced/insights/commit/3ba87a6b448f6aae9b8b0c8415dab5b1a3baf13f)), closes [#733](https://github.com/open-sauced/insights/issues/733)
+
+## [1.23.0-beta.8](https://github.com/open-sauced/insights/compare/v1.23.0-beta.7...v1.23.0-beta.8) (2023-01-03)
+
+
+### 🍕 Features
+
+* handle close modal when click outside and improve select usage ([#705](https://github.com/open-sauced/insights/issues/705)) ([105a47b](https://github.com/open-sauced/insights/commit/105a47b5e27d48ee60ef8d4b1ed06a08dbaba3e7)), closes [#689](https://github.com/open-sauced/insights/issues/689)
+
+## [1.23.0-beta.7](https://github.com/open-sauced/insights/compare/v1.23.0-beta.6...v1.23.0-beta.7) (2023-01-03)
+
+
+### 🐛 Bug Fixes
+
+* correct some tooling and dependency issues ([#749](https://github.com/open-sauced/insights/issues/749)) ([cb4ec9f](https://github.com/open-sauced/insights/commit/cb4ec9fa8c9d996fb6e6facf9b11fd35af177424))
+
+## [1.23.0-beta.6](https://github.com/open-sauced/insights/compare/v1.23.0-beta.5...v1.23.0-beta.6) (2023-01-03)
+
+
+### 🍕 Features
+
+* add Edit Page button to insight pages ([#738](https://github.com/open-sauced/insights/issues/738)) ([bde1eb8](https://github.com/open-sauced/insights/commit/bde1eb88e5409bc65cf79b9d4fc806ec030ec86b)), closes [#685](https://github.com/open-sauced/insights/issues/685)
+* enable repository selection & add to new insights page ([#693](https://github.com/open-sauced/insights/issues/693)) ([ba6405d](https://github.com/open-sauced/insights/commit/ba6405d1f983709f7ea1a5da0d43a82ae18299ef)), closes [#593](https://github.com/open-sauced/insights/issues/593) [#592](https://github.com/open-sauced/insights/issues/592)
+
+
+### 🐛 Bug Fixes
+
+* add missing title props ([cdcc28d](https://github.com/open-sauced/insights/commit/cdcc28d615dbc04815327e10ff5e4a211a6b9503))
+
+## [1.23.0-beta.5](https://github.com/open-sauced/insights/compare/v1.23.0-beta.4...v1.23.0-beta.5) (2022-12-30)
+
+
+### 🍕 Features
+
+* add favorite repos on the design system ([#744](https://github.com/open-sauced/insights/issues/744)) ([c8660b5](https://github.com/open-sauced/insights/commit/c8660b5fec5f872f04554524bd8329da1e8860c8)), closes [#717](https://github.com/open-sauced/insights/issues/717)
+
+## [1.23.0-beta.4](https://github.com/open-sauced/insights/compare/v1.23.0-beta.3...v1.23.0-beta.4) (2022-12-28)
+
+
+### 🍕 Features
+
+* Filter dashboard scatter plot by PR states ([#736](https://github.com/open-sauced/insights/issues/736)) ([f04093a](https://github.com/open-sauced/insights/commit/f04093ac500d48b22a14aebb2364a16fd81a2b37))
+
+## [1.23.0-beta.3](https://github.com/open-sauced/insights/compare/v1.23.0-beta.2...v1.23.0-beta.3) (2022-12-28)
+
+
+### 🐛 Bug Fixes
+
+* overflow x bug on dashboard ([#709](https://github.com/open-sauced/insights/issues/709)) ([b022dbc](https://github.com/open-sauced/insights/commit/b022dbc4a2d389bb3a364038797a1089f8351888)), closes [#677](https://github.com/open-sauced/insights/issues/677)
+
+## [1.23.0-beta.2](https://github.com/open-sauced/insights/compare/v1.23.0-beta.1...v1.23.0-beta.2) (2022-12-27)
+
+
+### 🍕 Features
+
+* change name to enhace from logarithmic ([#743](https://github.com/open-sauced/insights/issues/743)) ([4384324](https://github.com/open-sauced/insights/commit/43843246c9d7d6b4aed586754f4673f56070206e))
+
+## [1.23.0-beta.1](https://github.com/open-sauced/insights/compare/v1.22.2...v1.23.0-beta.1) (2022-12-26)
+
+
+### 🍕 Features
+
+* adjust search font-size ([c451450](https://github.com/open-sauced/insights/commit/c4514509a0580125495b391c5f905e513f5c70ea))
+
+### [1.22.2](https://github.com/open-sauced/insights/compare/v1.22.1...v1.22.2) (2022-12-23)
+
+
+### ⏩ Reverts
+
+* Revert "feat: add sorting by column type on repositories screen (#662)" ([5436712](https://github.com/open-sauced/insights/commit/5436712ce203bdb43c5f6fec92751c0d2bf711e2)), closes [#662](https://github.com/open-sauced/insights/issues/662)
+
+### [1.22.2-beta.1](https://github.com/open-sauced/insights/compare/v1.22.1...v1.22.2-beta.1) (2022-12-23)
+
+
+### ⏩ Reverts
+
+* Revert "feat: add sorting by column type on repositories screen (#662)" ([5436712](https://github.com/open-sauced/insights/commit/5436712ce203bdb43c5f6fec92751c0d2bf711e2)), closes [#662](https://github.com/open-sauced/insights/issues/662)
+
+### [1.22.1](https://github.com/open-sauced/insights/compare/v1.22.0...v1.22.1) (2022-12-23)
+
+
+### 🐛 Bug Fixes
+
+* add wrapper element for Link usage on table repo name ([#727](https://github.com/open-sauced/insights/issues/727)) ([beb767a](https://github.com/open-sauced/insights/commit/beb767a5030ae942074a4491677e09117bab6b70)), closes [#726](https://github.com/open-sauced/insights/issues/726)
+
+### [1.22.1-beta.1](https://github.com/open-sauced/insights/compare/v1.22.0...v1.22.1-beta.1) (2022-12-23)
+
+
+### 🐛 Bug Fixes
+
+* add wrapper element for Link usage on table repo name ([#727](https://github.com/open-sauced/insights/issues/727)) ([beb767a](https://github.com/open-sauced/insights/commit/beb767a5030ae942074a4491677e09117bab6b70)), closes [#726](https://github.com/open-sauced/insights/issues/726)
+
+## [1.22.0](https://github.com/open-sauced/insights/compare/v1.21.0...v1.22.0) (2022-12-22)
+
+
+### ✅ Tests
+
+* implement automatic notifications for foss ([#679](https://github.com/open-sauced/insights/issues/679)) ([75f3aaf](https://github.com/open-sauced/insights/commit/75f3aaf3e97f79a88a1e032302e50d78b92f5e61))
+
+
+### 🐛 Bug Fixes
+
+* fixed status footer 404 error ([#699](https://github.com/open-sauced/insights/issues/699)) ([e14a976](https://github.com/open-sauced/insights/commit/e14a9769a8a9715aad7a0e9651ae166bed41d8ac)), closes [#656](https://github.com/open-sauced/insights/issues/656)
+* handle caching issues with local storage ([#676](https://github.com/open-sauced/insights/issues/676)) ([e332d84](https://github.com/open-sauced/insights/commit/e332d84bafbe830bf269a62e14a4a9e93fb34eb2)), closes [#617](https://github.com/open-sauced/insights/issues/617)
+* update generic profile page styles to match design ([#695](https://github.com/open-sauced/insights/issues/695)) ([3eabf0f](https://github.com/open-sauced/insights/commit/3eabf0f95fb57acb5b1510ee0e32946c9e9d01eb)), closes [#692](https://github.com/open-sauced/insights/issues/692)
+
+
+### 🍕 Features
+
+* add sorting by column type on repositories screen ([#662](https://github.com/open-sauced/insights/issues/662)) ([d588032](https://github.com/open-sauced/insights/commit/d5880321ed82d5c505c74c6f797e70d5895803b6)), closes [#627](https://github.com/open-sauced/insights/issues/627)
+* add Stripe checkout integration ([#702](https://github.com/open-sauced/insights/issues/702)) ([f4da7af](https://github.com/open-sauced/insights/commit/f4da7afc4de577de869da292c35b3cbd43d801c6)), closes [#394](https://github.com/open-sauced/insights/issues/394)
+* add support for goto page functionality ([#708](https://github.com/open-sauced/insights/issues/708)) ([1902a98](https://github.com/open-sauced/insights/commit/1902a983420bde31173771b6fcba97b708cf616e)), closes [#675](https://github.com/open-sauced/insights/issues/675)
+* add toggle group component ([#666](https://github.com/open-sauced/insights/issues/666)) ([3bc7d8c](https://github.com/open-sauced/insights/commit/3bc7d8cda7047df921b8fcda30380287988595e9))
+* filter recent contributions array by last updated time ([#690](https://github.com/open-sauced/insights/issues/690)) ([063b07c](https://github.com/open-sauced/insights/commit/063b07c239590b93bd1f202362296aa691f3a281)), closes [#682](https://github.com/open-sauced/insights/issues/682)
+* implement hover card functionality on scatterchart ([#643](https://github.com/open-sauced/insights/issues/643)) ([8249eb8](https://github.com/open-sauced/insights/commit/8249eb8ae822592f64cc5bc07836583d16641606))
+* implement image caching on avatar images ([#691](https://github.com/open-sauced/insights/issues/691)) ([b6fbeb4](https://github.com/open-sauced/insights/commit/b6fbeb407a5d933b91e5b885270ecd9da9a387c8))
+* link repos, prs, and contributors to GitHub ([#658](https://github.com/open-sauced/insights/issues/658)) ([79d16d0](https://github.com/open-sauced/insights/commit/79d16d0f7e76485b9ed9288e18753eac866516cc)), closes [#670](https://github.com/open-sauced/insights/issues/670) [#620](https://github.com/open-sauced/insights/issues/620) [#669](https://github.com/open-sauced/insights/issues/669)
+* remove the top5 ([#674](https://github.com/open-sauced/insights/issues/674)) ([d0720ef](https://github.com/open-sauced/insights/commit/d0720efea7f1932fbc68f8a8af8af13e89b698ff))
+
+## [1.22.0-beta.12](https://github.com/open-sauced/insights/compare/v1.22.0-beta.11...v1.22.0-beta.12) (2022-12-22)
+
+
+### 🍕 Features
+
+* add Stripe checkout integration ([#702](https://github.com/open-sauced/insights/issues/702)) ([f4da7af](https://github.com/open-sauced/insights/commit/f4da7afc4de577de869da292c35b3cbd43d801c6)), closes [#394](https://github.com/open-sauced/insights/issues/394)
+
+## [1.22.0-beta.11](https://github.com/open-sauced/insights/compare/v1.22.0-beta.10...v1.22.0-beta.11) (2022-12-22)
+
+
+### 🍕 Features
+
+* add support for goto page functionality ([#708](https://github.com/open-sauced/insights/issues/708)) ([1902a98](https://github.com/open-sauced/insights/commit/1902a983420bde31173771b6fcba97b708cf616e)), closes [#675](https://github.com/open-sauced/insights/issues/675)
+
 ## [1.22.0-beta.10](https://github.com/open-sauced/insights/compare/v1.22.0-beta.9...v1.22.0-beta.10) (2022-12-21)
 
 

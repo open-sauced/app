@@ -2,7 +2,7 @@ import { useState } from "react";
 
 /* eslint-disable camelcase */
 import Card from "components/atoms/Card/card";
-import NivoScatterPlot from "components/molecules/NivoScatterChart/nivo-scatter-chart";
+import NivoScatterPlot, { ScatterChartMetadata } from "components/molecules/NivoScatterChart/nivo-scatter-chart";
 import HighlightCard from "components/molecules/HighlightCard/highlight-card";
 import { ScatterChartDataItems } from "components/molecules/NivoScatterChart/nivo-scatter-chart";
 
@@ -15,6 +15,7 @@ import roundedImage from "lib/utils/roundedImages";
 import { useTopicContributions } from "lib/hooks/useTopicContributions";
 
 type ContributorPrMap = { [contributor: string]: DbRepoPR };
+export type PrStatusFilter = "open" | "closed" | "all";
 
 interface DashboardProps {
   repositories?: number[];
@@ -26,10 +27,22 @@ export const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
   const { data: contributorData } = useTopicContributions(10, repositories);
   const [showBots, setShowBots] = useState(false);
   const isMobile = useMediaQuery("(max-width:720px)");
+  const [prStateFilter, setPrStateFilter] = useState<PrStatusFilter>("all");
+
+  const handleSetPrFilter = (state: PrStatusFilter) => {
+    setPrStateFilter(state);
+  };
 
   let scatterChartData: ScatterChartDataItems[] = [];
+  let metadata: ScatterChartMetadata = {
+    allPrs: prData.length,
+    openPrs: prData.filter((pr) => pr.state === "open").length,
+    closedPrs: prData.filter((pr) => pr.state === "closed").length
+  };
 
   const uniqueContributors: ContributorPrMap = prData.reduce((prs, curr) => {
+    if(curr.state !== prStateFilter && prStateFilter !== "all") return prs;
+
     if (prs[curr.author_login]) {
       prs[curr.author_login].linesCount += curr.linesCount;
     } else {
@@ -128,6 +141,8 @@ export const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
               maxFilesModified={maxFilesModified}
               isMobile={isMobile}
               repositories={repositories}
+              metadata={metadata}
+              handleSetPrFilter={handleSetPrFilter}
             />
           </Card>
         </div>

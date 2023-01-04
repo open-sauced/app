@@ -71,7 +71,7 @@ const RepoSelectableTable: React.FC<RepoSelectableTableProps> = ({ title, tableT
           <div className="border-b-[1px]">
             <div className="flex justify-between">
               <span className="p-2 inline-block">
-                <Checkbox onChange={(event) => changeAllCheckboxes(event)} label="" />
+                <Checkbox onChange={(event) => changeAllCheckboxes(event)} label="" title="" />
               </span>
               <div className="flex gap-x-2.5">
                 <span className="text-right overflow-hidden whitespace-nowrap text-ellipsis py-2 w-10 md:w-20">

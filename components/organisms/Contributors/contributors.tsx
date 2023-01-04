@@ -24,9 +24,9 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
   const { filterName } = router.query;
   const topic = filterName as string;
   const { data, setLimit, meta, setPage, page, isError, isLoading } = useTopicContributions(10, repositories);
-  const range = useStore(state => state.range);
+  const range = useStore((state) => state.range);
   const store = useStore();
-  
+
   const contributorArray = isError
     ? []
     : data?.map((contributor) => {
@@ -102,7 +102,7 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
             { name: "40 per page", value: 40 },
             { name: "50 per page", value: 50 }
           ]}
-          className="!w-36 ml-auto md:hidden overflow-x-hidden "
+          className="!w-36 ml-auto md:hidden overflow-x-hidden"
           onChange={function (limit: number): void {
             setLimit(limit);
           }}
@@ -130,7 +130,8 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
                 onPageChange={function (page: number): void {
                   setPage(page);
                 }}
-                divisor={false}
+                divisor={true}
+                goToPage
               />
             </div>
           </div>
