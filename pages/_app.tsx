@@ -8,7 +8,7 @@ import Head from "next/head";
 import type { AppProps } from "next/app";
 import { useRouter } from "next/router";
 import { SessionContextProvider } from "@supabase/auth-helpers-react";
-import { SWRConfig } from "swr";
+import { Cache, SWRConfig } from "swr";
 import posthog from "posthog-js";
 
 import { TipProvider } from "components/atoms/Tooltip/tooltip";
@@ -46,7 +46,7 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
       console.log("You are on the browser");
 
       // When initializing, we restore the data from `localStorage` into a map.
-      const map = new Map(JSON.parse(localStorage.getItem("app-cache") || "[]"));
+      const map: Map<string, string> = new Map(JSON.parse(localStorage.getItem("app-cache") || "[]"));
 
       // Before unloading the app, we write back all the data into `localStorage`.
       window.addEventListener("beforeunload", () => {
