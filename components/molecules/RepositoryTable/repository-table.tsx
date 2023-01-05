@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
 import Icon from "components/atoms/Icon/icon";
 import Checkbox from "components/atoms/Checkbox/checkbox";
-import ForkIcon from "public/icons/fork-icon.svg";
-import StarIcon from "public/icons/star-icon.svg";
-import Person from "public/icons/person-icon.svg";
-import Icon3 from "public/icons/icon3.svg";
+import ForkIcon from "img/icons/fork-icon.svg";
+import StarIcon from "img/icons/star-icon.svg";
+import Person from "img/icons/person-icon.svg";
+import Icon3 from "img/icons/icon3.svg";
 import ComponentHeader from "../ComponentHeader/component-header";
 import humanizeNumber from "../../../lib/utils/humanizeNumber";
 import RepositoryRow from "components/molecules/RepositoryRow/repository-row";
@@ -94,7 +94,7 @@ const RepoSelectableTable: React.FC<RepoSelectableTableProps> = ({ title, tableT
             <div className="h-3"></div>
             {rows?.map(({ name, stars, size, id }, index) => {
               return (
-                <RepositoryRow 
+                <RepositoryRow
                   key={index}
                   id={id}
                   stars={stars}

@@ -1,8 +1,8 @@
 import React from "react";
 import Text from "components/atoms/Typography/text";
 import Image from "next/image";
-import openSaucedImg from "../../../public/openSauced-icon.png";
-import openSaucedImgWithBg from "../../../public/open-sourced-with-bg-icon.png";
+import openSaucedImg from "../../../img/openSauced-icon.png";
+import openSaucedImgWithBg from "../../../img/open-sourced-with-bg-icon.png";
 import Link from "next/link";
 
 interface HeaderLogoProps {
