@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.23.0-beta.11](https://github.com/open-sauced/insights/compare/v1.23.0-beta.10...v1.23.0-beta.11) (2023-01-05)
+
+
+### 🧑‍💻 Code Refactoring
+
+* update pr velocity indicator ([#707](https://github.com/open-sauced/insights/issues/707)) ([7e96735](https://github.com/open-sauced/insights/commit/7e96735cb35f0436e0af5cf5bc13d8f51d441220)), closes [#684](https://github.com/open-sauced/insights/issues/684)
+
 ## [1.23.0-beta.10](https://github.com/open-sauced/insights/compare/v1.23.0-beta.9...v1.23.0-beta.10) (2023-01-03)
 
 
