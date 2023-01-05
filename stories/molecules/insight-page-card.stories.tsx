@@ -2,7 +2,7 @@
 import { ComponentStory } from "@storybook/react";
 import { RepoList } from "components/molecules/CardRepoList/card-repo-list";
 import InsightPageCard from "components/molecules/InsightPageCard/insight-page-card";
-import TestRepoAvatar from "public/icons/test-repo-avatar.svg";
+import TestRepoAvatar from "img/icons/test-repo-avatar.svg";
 
 const storyConfig = {
   title: "Design System/Molecules/InsightPageCard"

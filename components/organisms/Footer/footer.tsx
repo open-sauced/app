@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import OpenSaucedLogo from "public/openSauced-icon.png";
+import OpenSaucedLogo from "img/openSauced-icon.png";
 import Text from "components/atoms/Typography/text";
 
 // icons
