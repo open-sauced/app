@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.23.0-beta.12](https://github.com/open-sauced/insights/compare/v1.23.0-beta.11...v1.23.0-beta.12) (2023-01-05)
+
+
+### 🐛 Bug Fixes
+
+* only pull insights for stacked avatar on insight pages ([#761](https://github.com/open-sauced/insights/issues/761)) ([80ae119](https://github.com/open-sauced/insights/commit/80ae1192be9bc64f617aee39e3cd27683400a5c0))
+
 ## [1.23.0-beta.11](https://github.com/open-sauced/insights/compare/v1.23.0-beta.10...v1.23.0-beta.11) (2023-01-05)
 
 
