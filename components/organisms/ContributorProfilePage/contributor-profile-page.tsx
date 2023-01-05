@@ -103,10 +103,15 @@ const ContributorProfilePage = ({
               <div>
                 <span className="text-xs text-light-slate-11">Avg PRs velocity</span>
                 {prVelocity ? (
-                  <div className="flex lg:justify-center md:pr-8  mt-1">
+                  <div className="flex gap-2 lg:justify-center items-center">
                     <Text className="!text-lg md:!text-xl lg:!text-2xl !text-black !leading-none">
                       {getRelativeDays(prVelocity)}
                     </Text>
+                    <p className="flex text-red-700 items-end">
+                      <IconContext.Provider value={{ color: "purple", style: { width: 20, height: 20 } }}>
+                        <VscGitMerge />
+                      </IconContext.Provider>
+                    </p>
                   </div>
                 ) : (
                   <div className="flex justify-center items-end mt-1"> - </div>
