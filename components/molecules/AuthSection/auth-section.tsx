@@ -31,8 +31,6 @@ const AuthSection: React.FC = ({}) => {
     ]
   };
 
-  console.log(user?.user_metadata.avatar_url);
-
   return (
     <div className="flex">
       <div className="flex items-center gap-2 lg:gap-3">
