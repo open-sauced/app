@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import * as Select from "@radix-ui/react-select";
+import clsx from "clsx";
+
 import { RiArrowDownSLine, RiArrowUpSLine } from "react-icons/ri";
 
 interface SelectProps {
@@ -10,72 +13,73 @@ interface SelectProps {
   className?: string;
 }
 
-type SelectedState = {
-  name: string;
-  value: any;
-};
-const Select = ({
+const CustomSelect = ({
   placeholder = "Select an option",
   options,
-  error, // don't know if this is necessary
   label,
   className,
   onChange
 }: SelectProps): JSX.Element => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [selected, setSelected] = useState<SelectedState>({ name: "", value: "" });
-  const handleToggle = () => {
-    setIsOpen(!isOpen);
-  };
-  const handleSelected = (option: { name: string; value: any }) => {
-    const { name, value } = option;
-    setSelected((prev) => ({ ...prev, name, value }));
-    onChange?.(value);
-    setIsOpen(false);
+  const [selected, setSelected] = useState<null | number>(null);
+
+  const handleSelected = (value: string) => {
+    const limit = Number(value);
+    setSelected(limit);
+    onChange?.(limit);
   };
 
   return (
-    <div
-      className={`${
-        className
-          ? className
-          : "relative bg-white cursor-pointer  focus:border-light-orange-9 focus:ring focus:ring-light-orange-5 items-center overflow-x-hidden  rounded-lg   text-base text-light-slate-10"
-      }`}
-    >
-      <div
-        onClick={() => handleToggle()}
-        className="flex px-4 py-1.5 bg-white border border-light-slate-6 rounded-lg focus-within:border-light-orange-9 focus-within:ring focus-within:ring-light-orange-5 items-center"
-      >
-        {label && <span className="text-sm inline-flex text-light-slate-9 mr-2">{label}:</span>}
-        <input
-          value={selected.name === "" ? placeholder : selected.name}
-          readOnly
-          type="text"
-          className="overflow-scroll text-sm cursor-pointer text-light-slate-12 focus:outline-none bg-transparent"
-        />
-        <div className="w-6 h-4 relative overflow-hidden">
-          {" "}
-          <RiArrowUpSLine className="absolute bottom-1" /> <RiArrowDownSLine className="absolute top-1  " />
-        </div>
-      </div>
-      {isOpen && (
-        <div className="relative w-full">
-          <div className="left-0 right-0 transition bg-white overflow-hidden z-50 rounded-lg border shadow-superlative absolute font-normal ">
-            {options
-              ? options.map((option, index) => (
-                <div
-                  className="  cursor-pointer text-sm text-light-slate-12 hover:text-light-orange-11 hover:bg-light-orange-3 py-2 md:py-1 px-4 transition"
-                  onClick={() => handleSelected(option)}
-                  key={index}
-                >
-                  {option.name}
-                </div>
-              ))
-              : "No options"}
-          </div>
-        </div>
-      )}
+    <div className={clsx(
+      "radix-state-open:ring radix-state-open:ring-light-orange-5",
+      "relative cursor-pointer text-base items-center overflow-x-hidden",
+      "bg-white text-light-slate-10 rounded-lg min-w-max",
+      className || ""
+    )}>
+      <Select.Root onValueChange={handleSelected}>
+        <Select.Trigger
+          aria-label="Select a limit for the number of repositories to display"
+          className={clsx(
+            "radix-state-open:border-light-orange-9",
+            "inline-flex items-center gap-1 px-4 py-1.5",
+            "w-full text-sm outline-none rounded-lg font-semibold",
+            "text-light-slate-12 bg-white border border-light-slate-6")}
+        >
+          <Select.Value>
+            {label && <span className="inline-flex text-light-slate-9 mr-1">{label}:</span>}
+            {selected ? options?.find((option) => option.value === selected)?.name : placeholder}
+          </Select.Value>
+          <Select.Icon className="w-4 h-4 relative overflow-hidden">
+            <RiArrowUpSLine className="absolute bottom-1" />
+            <RiArrowDownSLine className="absolute top-1" />
+          </Select.Icon>
+        </Select.Trigger>
+        <Select.Portal>
+          <Select.Content
+            className="bg-white overflow-hidden rounded-lg border shadow-superlative"
+          >
+            <Select.Viewport>
+              {options ?
+                options.map((option) => (
+                  <Select.Item
+                    key={option.name}
+                    className={clsx(
+                      "radix-highlighted:bg-light-orange-3 radix-highlighted:text-light-orange-11",
+                      "flex items-center text-sm px-4 py-2 md:py-1",
+                      "relative cursor-pointer rounded-md outline-none text-light-slate-12"
+                    )}
+                    value={option.value}
+                  >
+                    <Select.ItemText>{option.name}</Select.ItemText>
+                  </Select.Item>
+                ))
+                : "No options"
+              }
+            </Select.Viewport>
+          </Select.Content>
+        </Select.Portal>
+      </Select.Root>
     </div>
   );
 };
-export default Select;
+
+export default CustomSelect;
