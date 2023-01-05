@@ -11,7 +11,7 @@ export declare interface StackedAvatarProps {
 const StackedAvatar = ({ contributors , visibleQuantity = 5}: StackedAvatarProps) => {
   const router = useRouter();
   const { filterName } = router.query;
-  const insightId = Number.isInteger(parseInt(filterName as string, 10)) ? filterName as string: "";
+  const insightId = Number.isInteger(parseInt(filterName as string, 10)) ? filterName as string : "";
   const { data: insight, isError } = useInsight(insightId);
   const repositories = insight ? insight.repos.map(repo => repo.repo_id) : [];
 
