@@ -50,6 +50,7 @@ interface Meta {
 }
 
 interface DbContribution {
+  readonly id: number;
   readonly commits: string;
   readonly commit_days: string;
   readonly files_modified: string;
