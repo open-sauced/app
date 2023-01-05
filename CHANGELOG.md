@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.23.0-beta.13](https://github.com/open-sauced/insights/compare/v1.23.0-beta.12...v1.23.0-beta.13) (2023-01-05)
+
+
+### 🍕 Features
+
+* update icon PR  details row ([#706](https://github.com/open-sauced/insights/issues/706)) ([dac42ba](https://github.com/open-sauced/insights/commit/dac42bab1065f184107482ed8e69c937bc4bf088)), closes [#696](https://github.com/open-sauced/insights/issues/696)
+
 ## [1.23.0-beta.12](https://github.com/open-sauced/insights/compare/v1.23.0-beta.11...v1.23.0-beta.12) (2023-01-05)
 
 
