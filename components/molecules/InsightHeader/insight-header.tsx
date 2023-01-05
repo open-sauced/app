@@ -24,7 +24,7 @@ const InsightHeader = ({ insight, repositories }: InsightHeaderProps): JSX.Eleme
       </div>
       <div className="header-info flex flex-col grow justify-center p-2">
         <div className="flex items-end gap-4">
-          <Title level={1} className="!text-3xl font-semibold tracking-tight text-slate-900">
+          <Title level={2} className="font-semibold tracking-tight text-slate-900">
             {insight && insight.name || "Insights"}
           </Title>
           {insight && <Badge isPublic={insight?.is_public} />}
