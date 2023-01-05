@@ -90,7 +90,7 @@ const ContributorProfilePage = ({
           </div>
           <div className="bg-white mt-4 rounded-2xl border p-4 md:p-6">
             <div className=" flex flex-col lg:flex-row gap-2 md:gap-12 lg:gap-16 justify-between">
-              <div className="">
+              <div>
                 <span className="text-xs text-light-slate-11">PRs opened</span>
                 {openPrs ? (
                   <div className="flex justify-between gap-2 items-center md:pr-8 mt-1">

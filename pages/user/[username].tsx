@@ -15,7 +15,7 @@ const Contributor = () => {
   const contributorLogin = username as string;
 
   const { data: contributor, isLoading: contributorLoading, isError } = useSingleContributor(contributorLogin);
-  console.log(contributor);
+
   const repoList = useRepoList(contributor[0]?.recent_repo_list || "");
   const contributorLanguageList = (contributor[0]?.langs || "").split(",");
   const profile: ContributorsProfileType = {
