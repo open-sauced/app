@@ -9,15 +9,19 @@ import InsightHeader from "components/molecules/InsightHeader/insight-header";
 
 import useNav from "lib/hooks/useNav";
 import useInsight from "lib/hooks/useInsight";
+import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 
 const HubPageLayout = ({children}: {children: React.ReactNode}) => {
   const router = useRouter();
+  const { userId } = useSupabaseAuth();
   const { filterName } = router.query;
   const insightId = filterName as string;
-  const { data: insight } = useInsight(insightId);
+  const { data: insight, isLoading, isError } = useInsight(insightId);
   const repositories = insight?.repos.map(repo => repo.repo_id);
 
   const { toolList, selectedTool, selectedFilter, userOrg } = useNav(repositories);
+
+  let isOwner = userId && insight && `${userId}` === `${insight.user_id}`? true : false;
 
   return (
     <>
@@ -25,7 +29,12 @@ const HubPageLayout = ({children}: {children: React.ReactNode}) => {
       <div className="page-container flex min-h-[calc(100vh-(54px+95px))] flex-col items-center">
         <div className="info-container min-w-full min-h-[100px]">
           <Header>
-            <InsightHeader insight={insight} repositories={repositories} />
+            { insight?
+              <InsightHeader insight={insight} repositories={repositories} insightId={insightId} isOwner={isOwner} />
+              : isLoading?
+                <div>Loading...</div>
+                : <div>Error occurred</div>
+            }
           </Header>
 
           <Nav

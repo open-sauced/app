@@ -9,6 +9,8 @@ import humanizeNumber from "lib/utils/humanizeNumber";
 import ToggleOption from "components/atoms/ToggleOption/toggle-option";
 import Title from "components/atoms/Typography/title";
 import HoverCardWrapper from "../HoverCardWrapper/hover-card-wrapper";
+import ToggleGroup from "components/atoms/ToggleGroup/toggle-group";
+import { PrStatusFilter } from "components/organisms/Dashboard/dashboard";
 
 export interface ScatterChartDataItems {
   x: string | number;
@@ -16,6 +18,13 @@ export interface ScatterChartDataItems {
   image: string;
   contributor: string;
 }
+
+export interface ScatterChartMetadata {
+  allPrs: number;
+  openPrs: number;
+  closedPrs: number;
+}
+
 interface ScatterPlotProps {
   maxFilesModified: number;
   title?: string;
@@ -27,7 +36,10 @@ interface ScatterPlotProps {
   }[];
   isMobile?: boolean;
   repositories?: number[];
+  metadata: ScatterChartMetadata;
+  handleSetPrFilter: (state: PrStatusFilter) => void;
 }
+
 const NivoScatterPlot = ({
   data,
   maxFilesModified,
@@ -35,12 +47,30 @@ const NivoScatterPlot = ({
   setShowBots,
   showBots,
   isMobile,
-  repositories
+  repositories,
+  metadata,
+  handleSetPrFilter
 }: ScatterPlotProps) => {
   const [showMembers, setShowMembers] = useState<boolean>(false);
   const [isLogarithmic, setIsLogarithmic] = useState<boolean>(false);
 
   let functionTimeout: any;
+
+  const handleTogglePrFilter = (val: string) => {
+    switch (val) {
+    case "0":
+      handleSetPrFilter("all");
+      break;
+
+    case "1":
+      handleSetPrFilter("open");
+      break;
+
+    case "2":
+      handleSetPrFilter("closed");
+      break;
+    }
+  };
 
   const handleShowMembers = () => {
     clearTimeout(functionTimeout);
@@ -72,10 +102,30 @@ const NivoScatterPlot = ({
 
   return (
     <>
-      <div className="flex flex-col md:flex-row justify-between px-7 pt-5">
+      <div className="flex flex-col md:flex-row justify-between px-7 pt-3 items-center">
         <Title level={4} className="!text-sm  !text-light-slate-12">
           {title}
         </Title>
+        <ToggleGroup handleChange={handleTogglePrFilter} className="hidden lg:flex">
+          <>
+            All PRs
+            <span className="ml-2 py-0.5 px-1.5 h-fit bg-slate-200 text-slate-500 border rounded-full text-xs font-semibold">
+              {humanizeNumber(metadata.allPrs, null)}
+            </span>
+          </>
+          <>
+            Open
+            <span className="ml-2 py-0.5 px-1.5 h-fit bg-slate-200 text-slate-500 border rounded-full text-xs font-semibold">
+              {humanizeNumber(metadata.openPrs, null)}
+            </span>
+          </>
+          <>
+            Closed
+            <span className="ml-2 py-0.5 px-1.5 h-fit bg-slate-200 text-slate-500 border rounded-full text-xs font-semibold">
+              {humanizeNumber(metadata.closedPrs, null)}
+            </span>
+          </>
+        </ToggleGroup>
         {/* replaced display flex to hidden on show/bots container */}
         <div className="flex mt-3 md:mt-0 flex-col md:flex-row gap-2">
           <div>
@@ -84,7 +134,7 @@ const NivoScatterPlot = ({
           <div className="">
             <ToggleOption
               handleToggle={handleSetLogarithmic}
-              optionText="Logarithmic Scale"
+              optionText="Enhance"
               checked={isLogarithmic}
             ></ToggleOption>
           </div>
