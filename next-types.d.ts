@@ -1,9 +1,9 @@
 // User defined type definitions. Please add type definitions for global types here
 
 interface DbRepo {
-  readonly id: string,
-  readonly size: number,
-  readonly stars: number,
+  readonly id: string;
+  readonly size: number;
+  readonly stars: number;
   readonly name: string;
   readonly owner: string;
   readonly prActiveCount: number;
@@ -28,7 +28,7 @@ interface DbRepoPR {
   readonly merged_at: string;
   readonly updated_at: string;
   readonly filesCount: number;
-  protected linesCount: number;
+  linesCount: number;
   readonly merged: boolean;
   readonly repo_owner: string;
   readonly repo_name: string;
@@ -41,29 +41,35 @@ interface DbRepoCommit {
 }
 
 interface Meta {
-  readonly itemCount: number,
-  readonly limit: number,
-  readonly page: number,
-  readonly pageCount: number,
-  readonly hasNextPage: boolean,
-  readonly hasPreviousPage: boolean
+  readonly itemCount: number;
+  readonly limit: number;
+  readonly page: number;
+  readonly pageCount: number;
+  readonly hasNextPage: boolean;
+  readonly hasPreviousPage: boolean;
 }
 
 interface DbContribution {
-  readonly commits: string,
-  readonly commit_days: string,
-  readonly files_modified: string,
-  readonly first_commit_time: string,
-  readonly last_commit_time: string,
-  readonly email: string,
-  readonly name: string,
-  readonly host_login: string,
-  readonly langs: string,
+  readonly id: number;
+  readonly commits: string;
+  readonly commit_days: string;
+  readonly files_modified: string;
+  readonly first_commit_time: string;
+  readonly last_commit_time: string;
+  readonly email: string;
+  readonly name: string;
+  readonly host_login: string;
+  readonly langs: string;
   readonly recent_repo_list: string;
   readonly recent_pr_total: number;
+  readonly recent_contribution_count: number;
+  readonly recent_opened_prs: number;
+  readonly recent_pr_reviews: number;
+  readonly recent_pr_velocity: number;
 }
 
 interface DbInsight {
+  readonly id: number;
   readonly interval: number;
   readonly day: string;
   readonly all_prs: number;
@@ -84,20 +90,20 @@ interface DbInsight {
 }
 
 interface DbUserInsight {
-  id:	number;
-  user_id: number;
-  name: string;
-  is_public: boolean;
-  is_favorite: boolean;
-  short_code:	string;
-  created_at:	string;
-  updated_at:	string;
-  repos: DbUserInsightRepo[]
+  readonly id: number;
+  readonly user_id: number;
+  readonly name: string;
+  readonly is_public: boolean;
+  readonly is_favorite: boolean;
+  readonly short_code: string;
+  readonly created_at: string;
+  readonly updated_at: string;
+  readonly repos: DbUserInsightRepo[]
 }
 
 interface DbUserInsightRepo {
-  id:	number;
-  insight_id: number;
-  repo_id: number;
-  created_at:	string;
+  readonly id: number;
+  readonly insight_id: number;
+  readonly repo_id: number;
+  readonly created_at: string;
 }
