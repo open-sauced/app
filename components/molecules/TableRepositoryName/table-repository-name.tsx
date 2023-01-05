@@ -1,3 +1,4 @@
+import { User } from "@supabase/supabase-js";
 import Avatar from "components/atoms/Avatar/avatar";
 import { truncateString } from "lib/utils/truncate-string";
 import { StaticImageData } from "next/image";

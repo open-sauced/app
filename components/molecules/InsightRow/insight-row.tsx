@@ -7,9 +7,11 @@ import { User } from "@supabase/supabase-js";
 import { getRelativeDays } from "lib/utils/date-utils";
 import { useRepositoriesList } from "lib/hooks/useRepositoriesList";
 import getRepoInsights from "lib/utils/get-repo-insights";
+import getPercent from "../../../lib/utils/get-percent";
 
 import CardRepoList from "../CardRepoList/card-repo-list";
 import Text from "components/atoms/Typography/text";
+import Pill from "components/atoms/Pill/pill";
 
 interface InsightRowProps {
   insight: DbUserInsight;
@@ -20,16 +22,15 @@ const InsightRow = ({ insight, user }: InsightRowProps) => {
   const repoIds = insight.repos.map((repo) => repo.repo_id);
   const { data: repoData, isError, isLoading } = useRepositoriesList(false, repoIds);
   const { open, merged, velocity, total, repoList } = getRepoInsights(repoData);
-  const avgOpenPrs = repoData.length > 0 ? Math.round(open/repoData.length) : 0;
+  const avgOpenPrs = repoData.length > 0 ? Math.round(open / repoData.length) : 0;
+
   return (
     <div className="flex flex-col md:flex-row w-full rounded-lg px-4 lg:px-8 py-5 gap-4 lg:gap-2 bg-white items-center">
       <div className="flex w-full flex-1 flex-col gap-4 lg:gap-6">
         <div className="flex items-center lg:items-center gap-4 ">
           <div className="w-4 h-4 bg-light-orange-10 rounded-full"></div>
           <div className="text-xl text-light-slate-12 flex justify-between">
-            <Link href={`/pages/${user?.user_metadata.user_name}/${insight.id}/dashboard`}>
-              {insight.name}
-            </Link>
+            <Link href={`/pages/${user?.user_metadata.user_name}/${insight.id}/dashboard`}>{insight.name}</Link>
           </div>
           <div className="rounded-2xl border px-2 text-light-slate-11">
             {!!insight.is_public ? "public" : "private"}
@@ -58,12 +59,7 @@ const InsightRow = ({ insight, user }: InsightRowProps) => {
               <Text className="md:!text-lg lg:!text-2xl !text-black !leading-none">{`${avgOpenPrs} PR${
                 avgOpenPrs > 1 ? "s" : ""
               }`}</Text>
-              <p className="flex items-end">
-                <span className="leading-none">
-                  {repoData.length > 0 ? getRelativeDays(Math.round(velocity / repoData.length)) : "-"}
-                </span>{" "}
-                <BsFillArrowUpCircleFill className="ml-1" />
-              </p>
+              <Pill color="green" text={`${getPercent(total, open)}%`} />
             </div>
           </div>
 
@@ -74,10 +70,7 @@ const InsightRow = ({ insight, user }: InsightRowProps) => {
               <Text className="md:!text-lg lg:!text-2xl !tracking-widest !text-black !leading-none">
                 {repoData.length > 0 ? getRelativeDays(Math.round(velocity / repoData.length)) : "-"}
               </Text>
-              <p className="flex text-sm items-end">
-                <span className="leading-none">{total > 0 ? `${Math.round((merged / total) * 100)}%` : "-"}</span>{" "}
-                <BsFillArrowUpCircleFill className="ml-1" fill="green" color="green" />
-              </p>
+              <Pill color="purple" text={`${getPercent(total, merged)}%`} />
             </div>
           </div>
           <div className="flex-1 hidden md:flex  justify-end">
@@ -88,9 +81,12 @@ const InsightRow = ({ insight, user }: InsightRowProps) => {
             </span>
             <span className=" bg-light-slate-1 inline-block rounded-lg p-2.5 border">
               <Link href={`/pages/${user?.user_metadata.user_name}/${insight.id}/dashboard`}>
-                <MdOutlineArrowForwardIos title="Go To Insight Page" className="text-light-slate-10 text-lg cursor-pointer" />
+                <MdOutlineArrowForwardIos
+                  title="Go To Insight Page"
+                  className="text-light-slate-10 text-lg cursor-pointer"
+                />
               </Link>
-            </span>            
+            </span>
           </div>
         </div>
       </div>
