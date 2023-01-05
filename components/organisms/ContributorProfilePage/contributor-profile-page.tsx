@@ -64,7 +64,7 @@ const ContributorProfilePage = ({
     };
   });
 
-  const { chart } = useTopicContributorCommits(githubName, "javascript", repositories);
+  const { chart } = useTopicContributorCommits(githubName, "*", repositories);
 
   return (
     <div className=" w-full">
@@ -93,29 +93,8 @@ const ContributorProfilePage = ({
               <div>
                 <span className="text-xs text-light-slate-11">PRs opened</span>
                 {openPrs ? (
-                  <div className="flex justify-between gap-2 items-center md:pr-8 mt-1">
+                  <div className="flex lg:justify-center md:pr-8 mt-1">
                     <Text className="!text-lg md:!text-xl lg:!text-2xl !text-black !leading-none">{openPrs} PRs</Text>
-                    <p className="flex text-red-700 items-end">
-                      <span className="mb-0 leading-none">16%</span>
-                      <BsFillArrowUpCircleFill className="ml-1" fill="red" color="red" />
-                    </p>
-                  </div>
-                ) : (
-                  <div className="flex justify-center items-end mt-1"> - </div>
-                )}
-              </div>
-              <div>
-                <span className="text-xs text-light-slate-11">PRs Reviewed</span>
-                {prReviews ? (
-                  <div className="flex text-green-9 gap-2 justify-between items-center md:pr-8  mt-1">
-                    <Text className="!text-lg md:!text-xl lg:!text-2xl !text-black !leading-none">
-                      {`${prReviews} PR${prReviews > 1 ? "s" : ""}`}
-                    </Text>
-                    <p className="flex text-green-700 items-end">
-                      <IconContext.Provider value={{ color: "green", style: { width: 20, height: 20 } }}>
-                        <FaCheckCircle title="Open Pull Request" />
-                      </IconContext.Provider>
-                    </p>
                   </div>
                 ) : (
                   <div className="flex justify-center items-end mt-1"> - </div>
@@ -124,32 +103,22 @@ const ContributorProfilePage = ({
               <div>
                 <span className="text-xs text-light-slate-11">Avg PRs velocity</span>
                 {prVelocity ? (
-                  <div className="flex justify-between gap-2 items-center md:pr-8  mt-1">
+                  <div className="flex lg:justify-center md:pr-8  mt-1">
                     <Text className="!text-lg md:!text-xl lg:!text-2xl !text-black !leading-none">
                       {getRelativeDays(prVelocity)}
                     </Text>
-                    <p className="flex text-red-700 items-end">
-                      <IconContext.Provider value={{ color: "purple", style: { width: 20, height: 20 } }}>
-                        <VscGitMerge />
-                      </IconContext.Provider>
-                    </p>
                   </div>
                 ) : (
                   <div className="flex justify-center items-end mt-1"> - </div>
                 )}
               </div>
               <div>
-                <span className="text-xs text-light-slate-11">Contributed to</span>
+                <span className="text-xs text-light-slate-11">Contributed Repos</span>
                 {recentContributionCount ? (
-                  <div className="flex  justify-between gap-2 items-center md:pr-8  mt-1">
+                  <div className="flex lg:justify-center mt-1">
                     <Text className="!text-lg md:!text-xl lg:!text-2xl !text-black !leading-none">
                       {`${recentContributionCount} Repo${recentContributionCount > 1 ? "s" : ""}`}
                     </Text>
-                    <p className="flex text-light-slate-11 items-end">
-                      <IconContext.Provider value={{ style: { width: 20, height: 20 } }}>
-                        <VscRepo />
-                      </IconContext.Provider>
-                    </p>
                   </div>
                 ) : (
                   <div className="flex justify-center items-end mt-1"> - </div>
@@ -164,7 +133,7 @@ const ContributorProfilePage = ({
             </div>
 
             <div className="mt-6">
-              <ContributorTable limit={15} contributor={githubName} topic={"javascript"} repositories={undefined} />
+              <ContributorTable limit={15} contributor={githubName} topic={"angular"} repositories={undefined} />
             </div>
             <div className="mt-8 text-light-slate-9 text-sm">
               <p>The data for these contributions is from publicly available open source projects on GitHub.</p>
