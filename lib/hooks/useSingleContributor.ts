@@ -10,11 +10,11 @@ interface PaginatedRepoPRResponse {
 const useSingleContributor = (contributor: string) => {
   const router = useRouter();
   const { filterName } = router.query;
-  const topic = filterName as string;
+  const topic = filterName as string || "*";
 
   const baseEndPoint = `${topic}/contributions`;
   const endPointString = `${baseEndPoint}?page=1&limit=1&range=30&contributor=${contributor}`;
-  const { data, error } = useSWR<PaginatedRepoPRResponse>(endPointString);
+  const { data, error } = useSWR<PaginatedRepoPRResponse>(contributor ? endPointString : null);
 
   return {
     data: data?.data ?? [],
