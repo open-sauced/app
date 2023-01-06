@@ -5,6 +5,28 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.23.2](https://github.com/open-sauced/insights/compare/v1.23.1...v1.23.2) (2023-01-06)
+
+
+### 🐛 Bug Fixes
+
+* fix data fetching for contributor page data ([#766](https://github.com/open-sauced/insights/issues/766)) ([d3c0625](https://github.com/open-sauced/insights/commit/d3c06254a8f8f23667001229f89cc6b723de3fc4))
+* redirect from hub page if not authorized to view ([#767](https://github.com/open-sauced/insights/issues/767)) ([a57899d](https://github.com/open-sauced/insights/commit/a57899d48c303d9ed84b1084a15db9f52b340cce)), closes [#763](https://github.com/open-sauced/insights/issues/763)
+
+### [1.23.2-beta.2](https://github.com/open-sauced/insights/compare/v1.23.2-beta.1...v1.23.2-beta.2) (2023-01-06)
+
+
+### 🐛 Bug Fixes
+
+* redirect from hub page if not authorized to view ([#767](https://github.com/open-sauced/insights/issues/767)) ([a57899d](https://github.com/open-sauced/insights/commit/a57899d48c303d9ed84b1084a15db9f52b340cce)), closes [#763](https://github.com/open-sauced/insights/issues/763)
+
+### [1.23.2-beta.1](https://github.com/open-sauced/insights/compare/v1.23.1...v1.23.2-beta.1) (2023-01-06)
+
+
+### 🐛 Bug Fixes
+
+* fix data fetching for contributor page data ([#766](https://github.com/open-sauced/insights/issues/766)) ([d3c0625](https://github.com/open-sauced/insights/commit/d3c06254a8f8f23667001229f89cc6b723de3fc4))
+
 ### [1.23.1](https://github.com/open-sauced/insights/compare/v1.23.0...v1.23.1) (2023-01-06)
 
 
