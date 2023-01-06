@@ -7,9 +7,11 @@ import { User } from "@supabase/supabase-js";
 import { getRelativeDays } from "lib/utils/date-utils";
 import { useRepositoriesList } from "lib/hooks/useRepositoriesList";
 import getRepoInsights from "lib/utils/get-repo-insights";
+import getPercent from "../../../lib/utils/get-percent";
 
 import CardRepoList from "../CardRepoList/card-repo-list";
 import Text from "components/atoms/Typography/text";
+import Pill from "components/atoms/Pill/pill";
 
 interface InsightRowProps {
   insight: DbUserInsight;
@@ -56,12 +58,7 @@ const InsightRow = ({ insight, user }: InsightRowProps) => {
               <Text className="md:!text-lg lg:!text-2xl !text-black !leading-none">{`${avgOpenPrs} PR${
                 avgOpenPrs > 1 ? "s" : ""
               }`}</Text>
-              <p className="flex items-end">
-                <span className="leading-none">
-                  {repoData.length > 0 ? getRelativeDays(Math.round(velocity / repoData.length)) : "-"}
-                </span>{" "}
-                <BsFillArrowUpCircleFill className="ml-1" />
-              </p>
+              <Pill color="green" text={`${getPercent(total, open)}%`} />
             </div>
           </div>
 
@@ -72,10 +69,7 @@ const InsightRow = ({ insight, user }: InsightRowProps) => {
               <Text className="md:!text-lg lg:!text-2xl !tracking-widest !text-black !leading-none">
                 {repoData.length > 0 ? getRelativeDays(Math.round(velocity / repoData.length)) : "-"}
               </Text>
-              <p className="flex text-sm items-end">
-                <span className="leading-none">{total > 0 ? `${Math.round((merged / total) * 100)}%` : "-"}</span>{" "}
-                <BsFillArrowUpCircleFill className="ml-1" fill="green" color="green" />
-              </p>
+              <Pill color="purple" text={`${getPercent(total, merged)}%`} />
             </div>
           </div>
           <div className="flex-1 hidden md:flex  justify-end">

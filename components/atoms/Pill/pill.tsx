@@ -3,7 +3,7 @@ import React from "react";
 interface PillProps {
   className?: string;
   text: string | number;
-  color?: "slate" | "green" | "yellow" | "red";
+  color?: "slate" | "green" | "yellow" | "red" | "purple";
   size?: "base" | "small";
   icon?: JSX.Element;
 }
@@ -19,10 +19,12 @@ const Pill: React.FC<PillProps> = ({ className, text, color = "slate", size = "b
         ? "bg-amber-200 "
         : color === "red"
           ? "bg-light-red-4 "
-          : "bg-light-slate-4 "
+          : color === "purple"
+            ? "bg-purple-200"
+            : "bg-light-slate-4 "
     }
-        ${size === "small" ? "py-1 px-1.5 gap-1 " : "py-1.5 px-2 gap-1 "}
-        inline-flex items-center rounded-full`}
+        ${size === "small" ? "py-1 px-1.5  " : "py-1.5 px-2 "}
+        inline-flex items-center rounded-full gap-1`}
     >
       {icon}
 
@@ -35,7 +37,9 @@ const Pill: React.FC<PillProps> = ({ className, text, color = "slate", size = "b
         ? "text-light-amber-10"
         : color === "red"
           ? "text-light-red-11"
-          : "text-light-slate-11"
+          : color === "purple"
+            ? "text-purple-600"
+            : "text-light-slate-11"
     }
             text-sm leading-none`}
       >

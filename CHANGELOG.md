@@ -5,6 +5,63 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.23.1-beta.1](https://github.com/open-sauced/insights/compare/v1.23.0...v1.23.1-beta.1) (2023-01-05)
+
+
+### 🐛 Bug Fixes
+
+* correct icon loading and double ci processing ([#764](https://github.com/open-sauced/insights/issues/764)) ([f1f766e](https://github.com/open-sauced/insights/commit/f1f766ef008ea9ce1b904907f3c16ec57d15d379)), closes [#211](https://github.com/open-sauced/insights/issues/211)
+
+## [1.23.0](https://github.com/open-sauced/insights/compare/v1.22.2...v1.23.0) (2023-01-05)
+
+
+### 🧑‍💻 Code Refactoring
+
+* update pr velocity indicator ([#707](https://github.com/open-sauced/insights/issues/707)) ([7e96735](https://github.com/open-sauced/insights/commit/7e96735cb35f0436e0af5cf5bc13d8f51d441220)), closes [#684](https://github.com/open-sauced/insights/issues/684)
+
+
+### 🐛 Bug Fixes
+
+* add missing title props ([cdcc28d](https://github.com/open-sauced/insights/commit/cdcc28d615dbc04815327e10ff5e4a211a6b9503))
+* correct some tooling and dependency issues ([#749](https://github.com/open-sauced/insights/issues/749)) ([cb4ec9f](https://github.com/open-sauced/insights/commit/cb4ec9fa8c9d996fb6e6facf9b11fd35af177424))
+* only pull insights for stacked avatar on insight pages ([#761](https://github.com/open-sauced/insights/issues/761)) ([80ae119](https://github.com/open-sauced/insights/commit/80ae1192be9bc64f617aee39e3cd27683400a5c0))
+* overflow x bug on dashboard ([#709](https://github.com/open-sauced/insights/issues/709)) ([b022dbc](https://github.com/open-sauced/insights/commit/b022dbc4a2d389bb3a364038797a1089f8351888)), closes [#677](https://github.com/open-sauced/insights/issues/677)
+* user profile auth avatar processing errors ([#755](https://github.com/open-sauced/insights/issues/755)) ([3ba87a6](https://github.com/open-sauced/insights/commit/3ba87a6b448f6aae9b8b0c8415dab5b1a3baf13f)), closes [#733](https://github.com/open-sauced/insights/issues/733)
+
+
+### 🍕 Features
+
+* add Edit Page button to insight pages ([#738](https://github.com/open-sauced/insights/issues/738)) ([bde1eb8](https://github.com/open-sauced/insights/commit/bde1eb88e5409bc65cf79b9d4fc806ec030ec86b)), closes [#685](https://github.com/open-sauced/insights/issues/685)
+* add favorite repos on the design system ([#744](https://github.com/open-sauced/insights/issues/744)) ([c8660b5](https://github.com/open-sauced/insights/commit/c8660b5fec5f872f04554524bd8329da1e8860c8)), closes [#717](https://github.com/open-sauced/insights/issues/717)
+* add hover card and expand on contributor stack ([#742](https://github.com/open-sauced/insights/issues/742)) ([9f45b3d](https://github.com/open-sauced/insights/commit/9f45b3dc85f9a1b9a7c398ceb0929a899d707666))
+* adjust search font-size ([c451450](https://github.com/open-sauced/insights/commit/c4514509a0580125495b391c5f905e513f5c70ea))
+* change name to enhace from logarithmic ([#743](https://github.com/open-sauced/insights/issues/743)) ([4384324](https://github.com/open-sauced/insights/commit/43843246c9d7d6b4aed586754f4673f56070206e))
+* enable repository selection & add to new insights page ([#693](https://github.com/open-sauced/insights/issues/693)) ([ba6405d](https://github.com/open-sauced/insights/commit/ba6405d1f983709f7ea1a5da0d43a82ae18299ef)), closes [#593](https://github.com/open-sauced/insights/issues/593) [#592](https://github.com/open-sauced/insights/issues/592)
+* Filter dashboard scatter plot by PR states ([#736](https://github.com/open-sauced/insights/issues/736)) ([f04093a](https://github.com/open-sauced/insights/commit/f04093ac500d48b22a14aebb2364a16fd81a2b37))
+* handle close modal when click outside and improve select usage ([#705](https://github.com/open-sauced/insights/issues/705)) ([105a47b](https://github.com/open-sauced/insights/commit/105a47b5e27d48ee60ef8d4b1ed06a08dbaba3e7)), closes [#689](https://github.com/open-sauced/insights/issues/689)
+* update icon PR  details row ([#706](https://github.com/open-sauced/insights/issues/706)) ([dac42ba](https://github.com/open-sauced/insights/commit/dac42bab1065f184107482ed8e69c937bc4bf088)), closes [#696](https://github.com/open-sauced/insights/issues/696)
+
+## [1.23.0-beta.13](https://github.com/open-sauced/insights/compare/v1.23.0-beta.12...v1.23.0-beta.13) (2023-01-05)
+
+
+### 🍕 Features
+
+* update icon PR  details row ([#706](https://github.com/open-sauced/insights/issues/706)) ([dac42ba](https://github.com/open-sauced/insights/commit/dac42bab1065f184107482ed8e69c937bc4bf088)), closes [#696](https://github.com/open-sauced/insights/issues/696)
+
+## [1.23.0-beta.12](https://github.com/open-sauced/insights/compare/v1.23.0-beta.11...v1.23.0-beta.12) (2023-01-05)
+
+
+### 🐛 Bug Fixes
+
+* only pull insights for stacked avatar on insight pages ([#761](https://github.com/open-sauced/insights/issues/761)) ([80ae119](https://github.com/open-sauced/insights/commit/80ae1192be9bc64f617aee39e3cd27683400a5c0))
+
+## [1.23.0-beta.11](https://github.com/open-sauced/insights/compare/v1.23.0-beta.10...v1.23.0-beta.11) (2023-01-05)
+
+
+### 🧑‍💻 Code Refactoring
+
+* update pr velocity indicator ([#707](https://github.com/open-sauced/insights/issues/707)) ([7e96735](https://github.com/open-sauced/insights/commit/7e96735cb35f0436e0af5cf5bc13d8f51d441220)), closes [#684](https://github.com/open-sauced/insights/issues/684)
+
 ## [1.23.0-beta.10](https://github.com/open-sauced/insights/compare/v1.23.0-beta.9...v1.23.0-beta.10) (2023-01-03)
 
 

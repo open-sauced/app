@@ -2,8 +2,7 @@
 import { ComponentStory } from "@storybook/react";
 import { RepoList } from "components/molecules/CardRepoList/card-repo-list";
 import InsightPageCard from "components/molecules/InsightPageCard/insight-page-card";
-import TestRepoAvatar from "public/icons/test-repo-avatar.svg";
-
+import TestRepoAvatar from "img/icons/test-repo-avatar.svg";
 
 const storyConfig = {
   title: "Design System/Molecules/InsightPageCard"
@@ -23,7 +22,11 @@ const contributors: DbContribution[] = [
     name: "10kartik",
     langs: "markdown,python",
     recent_pr_total: 30,
-    recent_repo_list: ""
+    recent_repo_list: "",
+    recent_contribution_count: 2,
+    recent_opened_prs: 5,
+    recent_pr_reviews: 12,
+    recent_pr_velocity: 10
   },
   {
     id: 2,
@@ -37,7 +40,11 @@ const contributors: DbContribution[] = [
     name: "10kartik",
     langs: "markdown,python",
     recent_pr_total: 30,
-    recent_repo_list: ""
+    recent_repo_list: "",
+    recent_contribution_count: 2,
+    recent_opened_prs: 5,
+    recent_pr_reviews: 12,
+    recent_pr_velocity: 10
   },
   {
     id: 3,
@@ -51,7 +58,11 @@ const contributors: DbContribution[] = [
     name: "10kartik",
     langs: "markdown,python",
     recent_pr_total: 30,
-    recent_repo_list: ""
+    recent_repo_list: "",
+    recent_contribution_count: 2,
+    recent_opened_prs: 5,
+    recent_pr_reviews: 12,
+    recent_pr_velocity: 10
   },
   {
     id: 4,
@@ -65,13 +76,15 @@ const contributors: DbContribution[] = [
     name: "10kartik",
     langs: "markdown,python",
     recent_pr_total: 30,
-    recent_repo_list: ""
+    recent_repo_list: "",
+    recent_contribution_count: 2,
+    recent_opened_prs: 5,
+    recent_pr_reviews: 12,
+    recent_pr_velocity: 10
   }
-
 ];
 
 const repoList: RepoList[] = [
-
   {
     repoName: "test",
     repoIcon: TestRepoAvatar
@@ -96,10 +109,9 @@ const repoList: RepoList[] = [
     repoName: "test6",
     repoIcon: TestRepoAvatar
   }
-
 ];
 
-const InsightPageCardTemplate: ComponentStory<typeof InsightPageCard> = (args) => <InsightPageCard{...args}/>;
+const InsightPageCardTemplate: ComponentStory<typeof InsightPageCard> = (args) => <InsightPageCard {...args} />;
 
 export const InsightpageCardStory = InsightPageCardTemplate.bind({});
 InsightpageCardStory.args = {};

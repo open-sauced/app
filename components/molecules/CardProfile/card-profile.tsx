@@ -1,12 +1,12 @@
-import { StaticImageData } from "next/image";
+import { StaticImageData } from "next/legacy/image";
 import Link from "next/link";
 
 import Avatar from "components/atoms/Avatar/avatar";
 import Icon from "components/atoms/Icon/icon";
 import Text from "components/atoms/Typography/text";
 
-import ForkIcon from "public/icons/fork-icon.svg";
-import FirstPRIcon from "public/icons/first-pr-icon.svg";
+import ForkIcon from "img/icons/fork-icon.svg";
+import FirstPRIcon from "img/icons/first-pr-icon.svg";
 
 interface CardProfileProps {
   githubAvatar?: string | StaticImageData;

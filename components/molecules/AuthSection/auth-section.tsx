@@ -1,16 +1,16 @@
 import Image from "next/legacy/image";
-import notifications from "../../../public/notifications.svg";
-import downArrow from "../../../public/chevron-down.svg";
+import notifications from "../../../img/notifications.svg";
+import downArrow from "../../../img/chevron-down.svg";
 import Avatar from "components/atoms/Avatar/avatar";
 import Button from "components/atoms/Button/button";
-import userAvatar from "../../../public/ellipse-1.png";
+import userAvatar from "../../../img/ellipse-1.png";
 import OnboardingButton from "../OnboardingButton/onboarding-button";
 import DropdownList from "../DropdownList/dropdown-list";
 import Text from "components/atoms/Typography/text";
 import { Divider } from "@supabase/ui";
 import useSupabaseAuth from "../../../lib/hooks/useSupabaseAuth";
 import { FiLogOut } from "react-icons/fi";
-import GitHubIcon from "public/icons/github-icon.svg";
+import GitHubIcon from "img/icons/github-icon.svg";
 import Icon from "components/atoms/Icon/icon";
 import useSession from "lib/hooks/useSession";
 
@@ -30,8 +30,6 @@ const AuthSection: React.FC = ({}) => {
       </span>
     ]
   };
-
-  console.log(user?.user_metadata.avatar_url);
 
   return (
     <div className="flex">

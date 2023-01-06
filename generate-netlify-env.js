@@ -19,5 +19,5 @@ if (process.env.CI === "true") {
   }
 
   // write BASE_URL env variable to .env file
-  fs.writeFileSync(".env.local", `NEXT_PUBLIC_BASE_URL=${base}`);
+  fs.writeFileSync(".env.local", `DISABLE_IPX=true\nNEXT_PUBLIC_BASE_URL=${base}`);
 }

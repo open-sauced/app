@@ -22,7 +22,7 @@ const CardRepoList = ({ repoList, limit = 5, fontSizeClassName }: CardRepoListPr
           {sanitizedRepoList
             .filter((repo, arrCount) => arrCount < limit)
             .map(({ repoName, repoIcon }, index) => (
-              <div key={index}>
+              <div key={`repo_${index}`}>
                 {repoName && repoIcon ? (
                   <Tooltip content={repoName}>
                     <div className="flex gap-1  p-1 pr-2 border-[1px] border-light-slate-6 rounded-lg text-light-slate-12">

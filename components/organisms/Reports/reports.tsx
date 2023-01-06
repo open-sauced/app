@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import GitHubIcon from "public/icons/github-icon.svg";
+import GitHubIcon from "img/icons/github-icon.svg";
 
 import Button from "components/atoms/Button/button";
 import Icon from "components/atoms/Icon/icon";
