@@ -1,11 +1,11 @@
 import React from "react";
 import Image from "next/image";
-import repoIcon from "../../../public/icons/icon-repo--blue.svg";
-import prIcon from "../../../public/icons/icon-pr--green.svg";
-import personIcon from "../../../public/icons/person-icon.svg";
-import labelIcon from "../../../public/icons/icon-label--blue.svg";
-import thumbsIcon from "../../../public/icons/icon-thumbs-down--yellow.svg";
-import metricArrow from "../../../public/icons/metric-arrow.svg";
+import repoIcon from "../../../img/icons/icon-repo--blue.svg";
+import prIcon from "../../../img/icons/icon-pr--green.svg";
+import personIcon from "../../../img/icons/person-icon.svg";
+import labelIcon from "../../../img/icons/icon-label--blue.svg";
+import thumbsIcon from "../../../img/icons/icon-thumbs-down--yellow.svg";
+import metricArrow from "../../../img/icons/metric-arrow.svg";
 import Link from "next/link";
 import Card from "components/atoms/Card/card";
 import StackedAvatar from "../StackedAvatar/stacked-avatar";
@@ -32,7 +32,7 @@ const icons = {
     src: personIcon.src,
     label: "Contributors",
     color: "bg-blue-100"
-  },  
+  },
   participation: {
     src: repoIcon.src,
     label: "Participation",
@@ -124,7 +124,7 @@ const HighlightCard: React.FC<HighlightCardProps> = ({
 
           {/* Contributor Cards */}
           { contributors && <div className="flex items-center justify-center mt-7 h-1">
-            <StackedAvatar contributors={contributors} visibleQuantity={10} />
+            <StackedAvatar contributors={contributors} visibleQuantity={5} />
           </div> }
 
           {/* Progress Bar */}

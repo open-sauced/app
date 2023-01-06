@@ -31,7 +31,11 @@ const Contributor = () => {
         langList={contributorLanguageList}
         githubName={profile.githubName}
         githubAvatar={profile.githubAvatar}
-        listOfPRs={[]}
+        prTotal={contributor[0]?.recent_pr_total}
+        openPrs={contributor[0]?.recent_opened_prs}
+        recentContributionCount={contributor[0]?.recent_contribution_count}
+        prReviews={contributor[0]?.recent_pr_reviews}
+        prVelocity={contributor[0]?.recent_pr_velocity}
       />
     </div>
   );

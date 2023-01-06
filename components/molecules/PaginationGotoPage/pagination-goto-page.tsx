@@ -4,16 +4,22 @@ interface PaginationGotoPageProps {
   page: number;
   name: string;
   setPage: Function;
+  totalPage: number;
 }
 
-const PaginationGotoPage = ({ page, name, setPage }: PaginationGotoPageProps): JSX.Element => {
+const PaginationGotoPage = ({ page, name, setPage, totalPage }: PaginationGotoPageProps): JSX.Element => {
   const [pageNumber, setPageNumber] = useState<number | string>(page);
+  const [value, setValue] = useState<number | string>("");
   const handleGotoPage = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (pageNumber === page) return;
+    if (pageNumber > totalPage) {
+      return;
+    }
 
     setPage(pageNumber);
+    setValue("");
   };
 
   useEffect(() => {
@@ -26,8 +32,12 @@ const PaginationGotoPage = ({ page, name, setPage }: PaginationGotoPageProps): J
         type="text"
         name={name}
         id={name}
+        value={value}
         placeholder={`${pageNumber}`}
-        onChange={(e) => setPageNumber(e.target.value)}
+        onChange={(e) => {
+          setPageNumber(e.target.value);
+          setValue(e.target.value);
+        }}
         className="min-w-4 w-10 text-center text-sm text-light-slate-10 focus:outline-none border rounded-lg py-1 px-2"
       />
       <button

@@ -1,6 +1,6 @@
 import React from "react";
 import Image, { StaticImageData } from "next/image";
-import AvatarImage from "../../../public/hacktoberfest-icon.png";
+import AvatarImage from "../../../img/hacktoberfest-icon.png";
 import cachedImage from "lib/utils/cachedImages";
 
 interface AvatarProps {
@@ -11,6 +11,7 @@ interface AvatarProps {
   size?: "sm" | "base" | "lg" | number;
   hasBorder?: boolean;
   isCircle?: boolean;
+  isCached?: boolean;
 }
 
 const avatarLoader = () => {
@@ -18,9 +19,14 @@ const avatarLoader = () => {
 };
 
 const Avatar = (props: AvatarProps): JSX.Element => {
+  const imageSource =
+    props.avatarURL && props.isCached
+      ? cachedImage(props.avatarURL as string, process.env.NEXT_PUBLIC_CLOUD_NAME)
+      : props.avatarURL;
+
   switch (typeof props.size) {
   case "string":
-    return <DefaultAvatar {...props} />;
+    return <DefaultAvatar {...props} avatarURL={imageSource} />;
   case "number":
     return <CustomAvatar {...props} />;
 
@@ -48,7 +54,7 @@ const CustomAvatar = ({ className, avatarURL, initials, alt, size, hasBorder, is
           alt={alt ? alt : "Avatar"}
           width={size}
           height={size}
-          /* loader={avatarLoader} */ src={avatarURL ? avatarURL : AvatarImage}
+          src={avatarURL ? avatarURL : AvatarImage}
         />
       ) : (
         <div
@@ -84,11 +90,7 @@ const DefaultAvatar = ({
           className={`${className ? className : ""} object-cover`}
           alt={alt ? alt : "Avatar"}
           layout="fill"
-          /* loader={avatarLoader} */ src={
-            avatarURL && typeof avatarURL === "string"
-              ? cachedImage(avatarURL, process.env.NEXT_PUBLIC_CLOUD_NAME)
-              : avatarURL || AvatarImage
-          }
+          src={avatarURL ? avatarURL : AvatarImage}
         />
       ) : (
         <div

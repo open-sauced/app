@@ -1,21 +1,20 @@
+import { IconContext } from "react-icons";
 import { BsFillArrowUpCircleFill } from "react-icons/bs";
+import { FaCheckCircle } from "react-icons/fa";
+import { VscGitMerge, VscRepo } from "react-icons/vsc";
 
 import Title from "components/atoms/Typography/title";
 import Text from "components/atoms/Typography/text";
-import CardHorizontalBarChart, {
-  LanguageObject
-} from "components/molecules/CardHorizontalBarChart/card-horizontal-bar-chart";
-import color from "lib/utils/color.json";
+import CardHorizontalBarChart from "components/molecules/CardHorizontalBarChart/card-horizontal-bar-chart";
 import ContributorProfileHeader from "components/molecules/ContributorProfileHeader/contributor-profile-header";
 import { ContributorObject } from "../ContributorCard/contributor-card";
 import CardLineChart from "components/molecules/CardLineChart/card-line-chart";
 import CardRepoList, { RepoList } from "components/molecules/CardRepoList/card-repo-list";
-import LatestPrTableRow from "components/molecules/LatestPrTableRow/latest-pr-table-row";
-import LatestPrTableHeader from "components/molecules/LatestPrTableHeader/latest-pr-table-header";
-
-import TestRepoAvatar from "public/icons/test-repo-avatar.svg";
 import ContributorTable from "components/molecules/ContributorTable/contributor-table";
+
+import color from "lib/utils/color.json";
 import { useTopicContributorCommits } from "lib/hooks/useTopicContributorCommits";
+import { getRelativeDays } from "lib/utils/date-utils";
 
 const colorKeys = Object.keys(color);
 interface PrObjectType {
@@ -34,21 +33,27 @@ interface ContributorProfilePageProps {
   contributor?: ContributorObject;
   topic?: string;
   repositories?: number[];
-  listOfPRs: PrObjectType[];
+  listOfPRs?: PrObjectType[];
   githubAvatar?: string;
   githubName: string;
   langList: string[];
   repoList: RepoList[];
+  recentContributionCount: number;
+  prTotal: number;
+  openPrs: number;
+  prReviews: number;
+  prVelocity: number;
 }
 const ContributorProfilePage = ({
-  contributor,
-  topic,
   repositories,
-  listOfPRs,
+  recentContributionCount,
   githubAvatar,
   githubName,
   langList,
-  repoList
+  repoList,
+  openPrs,
+  prReviews,
+  prVelocity
 }: ContributorProfilePageProps) => {
   const languageList = langList?.map((language) => {
     const preparedLanguageKey = colorKeys.find((key) => key.toLowerCase() === language.toLowerCase());
@@ -59,7 +64,7 @@ const ContributorProfilePage = ({
     };
   });
 
-  const { chart } = useTopicContributorCommits(githubName, "javascript", repositories);
+  const { chart } = useTopicContributorCommits(githubName, "*", repositories);
 
   return (
     <div className=" w-full">
@@ -83,47 +88,46 @@ const ContributorProfilePage = ({
               Contribution Insights
             </Title>
           </div>
-          <div className="bg-white mt-4 rounded-2xl border p-2 md:p-6">
-            <div className=" flex-col hidden lg:flex-row gap-2 md:gap-12 lg:gap-16 justify-between">
+          <div className="bg-white mt-4 rounded-2xl border p-4 md:p-6">
+            <div className=" flex flex-col lg:flex-row gap-2 md:gap-12 lg:gap-16 justify-between">
               <div>
                 <span className="text-xs text-light-slate-11">PRs opened</span>
-                <div className="flex justify-between gap-2 items-end pr-8 mt-1">
-                  <Text className="!text-xl !text-black !leading-none">5 PRs</Text>
-                  <p className="flex text-red-700 items-end">
-                    <span className="mb-0 leading-none">16%</span>
-                    <BsFillArrowUpCircleFill className="ml-1" fill="red" color="red" />
-                  </p>
-                </div>
-              </div>
-              <div>
-                <span className="text-xs text-light-slate-11">PRs Reviewed</span>
-                <div className="flex text-green-9 gap-2 justify-between items-end pr-8 mt-1">
-                  <Text className="!text-xl !text-black !leading-none">25 PRs</Text>
-                  <p className="flex text-green-700 items-end">
-                    <span className="mb-0 leading-none">35</span>
-                    <BsFillArrowUpCircleFill className="ml-1" fill="green" color="green" />
-                  </p>
-                </div>
+                {openPrs ? (
+                  <div className="flex lg:justify-center md:pr-8 mt-1">
+                    <Text className="!text-lg md:!text-xl lg:!text-2xl !text-black !leading-none">{openPrs} PRs</Text>
+                  </div>
+                ) : (
+                  <div className="flex justify-center items-end mt-1"> - </div>
+                )}
               </div>
               <div>
                 <span className="text-xs text-light-slate-11">Avg PRs velocity</span>
-                <div className="flex justify-between gap-2 items-end pr-8 mt-1">
-                  <Text className="!text-lg !text-black !leading-none">2 mo</Text>
-                  <p className="flex text-red-700 items-end">
-                    <span className="mb-0 text-sm leading-none">10%</span>
-                    <BsFillArrowUpCircleFill className="ml-1" fill="red" color="red" />
-                  </p>
-                </div>
+                {prVelocity ? (
+                  <div className="flex gap-2 lg:justify-center items-center">
+                    <Text className="!text-lg md:!text-xl lg:!text-2xl !text-black !leading-none">
+                      {getRelativeDays(prVelocity)}
+                    </Text>
+                    <p className="flex text-red-700 items-end">
+                      <IconContext.Provider value={{ color: "purple", style: { width: 20, height: 20 } }}>
+                        <VscGitMerge />
+                      </IconContext.Provider>
+                    </p>
+                  </div>
+                ) : (
+                  <div className="flex justify-center items-end mt-1"> - </div>
+                )}
               </div>
               <div>
-                <span className="text-xs text-light-slate-11">Contributed to</span>
-                <div className="flex  justify-between gap-2 items-end pr-8 mt-1">
-                  <Text className="!text-xl !text-black !leading-none">10 Repos</Text>
-                  <p className="flex text-green-700 items-end">
-                    <span className="mb-0 leading-none">5%</span>
-                    <BsFillArrowUpCircleFill className="ml-1" fill="green" color="green" />
-                  </p>
-                </div>
+                <span className="text-xs text-light-slate-11">Contributed Repos</span>
+                {recentContributionCount ? (
+                  <div className="flex lg:justify-center mt-1">
+                    <Text className="!text-lg md:!text-xl lg:!text-2xl !text-black !leading-none">
+                      {`${recentContributionCount} Repo${recentContributionCount > 1 ? "s" : ""}`}
+                    </Text>
+                  </div>
+                ) : (
+                  <div className="flex justify-center items-end mt-1"> - </div>
+                )}
               </div>
             </div>
             <div className="mt-10 h-32">
@@ -134,7 +138,7 @@ const ContributorProfilePage = ({
             </div>
 
             <div className="mt-6">
-              <ContributorTable limit={15} contributor={githubName} topic={"javascript"} repositories={undefined} />
+              <ContributorTable limit={15} contributor={githubName} topic={"*"} repositories={undefined} />
             </div>
             <div className="mt-8 text-light-slate-9 text-sm">
               <p>The data for these contributions is from publicly available open source projects on GitHub.</p>

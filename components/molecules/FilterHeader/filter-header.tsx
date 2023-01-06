@@ -1,13 +1,12 @@
 import { useRouter } from "next/router";
 
-import Thumbnail from "../../../public/hacktoberfest-icon.png";
+import Thumbnail from "../../../img/hacktoberfest-icon.png";
 
 import Text from "components/atoms/Typography/text";
 import Title from "components/atoms/Typography/title";
 import ContextThumbnail from "components/atoms/ContextThumbnail/context-thumbnail";
 import FilterCard from "components/atoms/FilterCard/filter-card";
 import SuperativeSelector from "components/molecules/SuperlativeSelector/superlative-selector";
-import SortedBySelector from "components/molecules/SortedBySelector/sorted-by-selector";
 
 import useFilterOptions from "lib/hooks/useFilterOptions";
 import { captureAnayltics } from "lib/utils/analytics";
@@ -19,38 +18,16 @@ const HeaderFilter = () => {
   const filterOptions = useFilterOptions();
 
   const { filterValues } = useFilterPrefetch();
-  const { filterName, toolName, selectedFilter, orderBy, sort } = router.query;
+  const { filterName, toolName, selectedFilter } = router.query;
   const isHacktoberfest = filterName === "hacktoberfest";
-
   const filterBtnRouting = (filter: string) => {
     captureAnayltics("Filters", "toolsFilter", `${filter} applied`);
-
-    if (!orderBy && !sort) {
-      router.push(`/${filterName}/${toolName}/filter/${filter.toLocaleLowerCase()}`);
-      return;
-    }
-
-    router.push(`/${filterName}/${toolName}/filter/${filter.toLocaleLowerCase()}?orderBy=${orderBy}&sort=${sort}`);
+    router.push(`/${filterName}/${toolName}/filter/${filter.toLocaleLowerCase()}`);
   };
 
   const cancelFilterRouting = () => {
-    if (!orderBy && !sort) {
-      router.push(`/${filterName}/${toolName}`);
-      return;
-    }
-
-    router.push(`/${filterName}/${toolName}?orderBy=${orderBy}&sort=${sort}`);
+    router.push(`/${filterName}/${toolName}`);
   };
-
-  const cancelSorting = () => {
-    if (!selectedFilter) {
-      router.push(`/${filterName}/${toolName}`);
-      return;
-    }
-
-    router.push(`/${filterName}/${toolName}/filter/${selectedFilter}`);
-  };
-
   return (
     <>
       <div className="header-image mr-2 p-2 min-w-[130px]">
@@ -73,7 +50,6 @@ const HeaderFilter = () => {
             handleCancelClick={cancelFilterRouting}
             selected={Array.isArray(selectedFilter) ? selectedFilter.join("/") : selectedFilter}
           />
-          <SortedBySelector selected={orderBy as string} handleCancelClick={cancelSorting} />
         </div>
       </div>
     </>

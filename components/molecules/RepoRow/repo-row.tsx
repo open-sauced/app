@@ -8,25 +8,28 @@ import {
 } from "@heroicons/react/24/solid";
 import clsx from "clsx";
 
-import { RepositoriesRows } from "components/organisms/RepositoriesTable/repositories-table";
-import Pill from "components/atoms/Pill/pill";
-import Sparkline from "components/atoms/Sparkline/sparkline";
-import { classNames } from "components/organisms/RepositoriesTable/repositories-table";
-
 import { useContributionsList } from "lib/hooks/useContributionsList";
 import { useRepositoryCommits } from "lib/hooks/useRepositoryCommits";
 import { getCommitsLast30Days } from "lib/utils/get-recent-commits";
 import { getRelativeDays } from "lib/utils/date-utils";
-import getTotalPrs from "lib/utils/get-total-prs";
+import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
+import getPercent from "lib/utils/get-percent";
 
+import { RepositoriesRows } from "components/organisms/RepositoriesTable/repositories-table";
+import Pill from "components/atoms/Pill/pill";
+import Sparkline from "components/atoms/Sparkline/sparkline";
+import { classNames } from "components/organisms/RepositoriesTable/repositories-table";
 import StackedAvatar from "../StackedAvatar/stacked-avatar";
 import PullRequestOverview from "../PullRequestOverview/pull-request-overview";
 import TableRepositoryName from "../TableRepositoryName/table-repository-name";
+import Checkbox from "components/atoms/Checkbox/checkbox";
 
 interface RepoProps {
   repo: RepositoriesRows;
   topic?: string;
-  user: string | string[] | undefined;
+  userPage: string | string[] | undefined;
+  selected?: boolean;
+  handleOnSelectRepo: (repo: RepositoriesRows) => void;
 }
 
 const getActivity = (total?: number, loading?: boolean) => {
@@ -45,14 +48,24 @@ const getActivity = (total?: number, loading?: boolean) => {
   return <Pill icon={<ArrowTrendingDownIcon color="red" className="h-4 w-4" />} text="Low" color="red" />;
 };
 
-const getPrsMerged = (total: number, merged: number): number => {
+const getTotalPrs = (
+  openPrsCount?: number,
+  mergedPrsCount?: number,
+  closedPrsCount?: number,
+  draftPrsCount?: number
+): number => {
+  const open = openPrsCount || 0;
+  const merged = mergedPrsCount || 0;
+  const closed = closedPrsCount || 0;
+  const drafts = draftPrsCount || 0;
+
+  const total = open + closed + merged - drafts;
+
   if (total <= 0) {
     return 0;
   }
 
-  const result = Math.floor((merged / total) * 100);
-
-  return result;
+  return total;
 };
 
 const getPrsSpam = (total: number, spam: number): number => {
@@ -65,7 +78,7 @@ const getPrsSpam = (total: number, spam: number): number => {
   return result;
 };
 
-const RepoRow = ({ repo, topic, user }: RepoProps): JSX.Element => {
+const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoProps): JSX.Element => {
   const {
     name,
     owner: handle,
@@ -75,16 +88,16 @@ const RepoRow = ({ repo, topic, user }: RepoProps): JSX.Element => {
     draftPrsCount,
     mergedPrsCount,
     spamPrsCount,
-    churn,
     churnTotalCount,
     churnDirection,
     prVelocityCount
   } = repo;
 
+  const { user } = useSupabaseAuth();
   const { data: contributorData, meta: contributorMeta } = useContributionsList(repo.id, "", "updated_at");
   const { data: commitsData, meta: commitMeta, isLoading: commitLoading } = useRepositoryCommits(repo.id);
   const totalPrs = getTotalPrs(openPrsCount, mergedPrsCount, closedPrsCount, draftPrsCount);
-  const prsMergedPercentage = getPrsMerged(totalPrs, mergedPrsCount || 0);
+  const prsMergedPercentage = getPercent(totalPrs, mergedPrsCount || 0);
   const spamPrsPercentage = getPrsSpam(totalPrs, spamPrsCount || 0);
   const prVelocityInDays = getRelativeDays(prVelocityCount || 0);
 
@@ -98,6 +111,11 @@ const RepoRow = ({ repo, topic, user }: RepoProps): JSX.Element => {
   ];
 
   const [tableOpen, setTableOpen] = useState<boolean>(false);
+
+  const handleSelectCheckbox = () => {
+    handleOnSelectRepo(repo);
+  };
+
   return (
     <>
       <div
@@ -107,17 +125,21 @@ const RepoRow = ({ repo, topic, user }: RepoProps): JSX.Element => {
         {/* Row: Repository Name and Pr overview */}
         <div className="flex items-center gap-x-3">
           <div className="w-[55%]">
-            <TableRepositoryName topic={topic} avatarURL={ownerAvatar} name={name} handle={handle} user={user} />
+            <TableRepositoryName topic={topic} avatarURL={ownerAvatar} name={name} handle={handle} user={userPage} />
           </div>
           <div className="w-[45%]">
-            {repo.id ? <PullRequestOverview
-              open={openPrsCount}
-              merged={mergedPrsCount}
-              closed={closedPrsCount}
-              draft={draftPrsCount}
-              churn={churnTotalCount}
-              churnDirection={`${churnDirection}`}
-            /> : "-"}
+            {repo.id ? (
+              <PullRequestOverview
+                open={openPrsCount}
+                merged={mergedPrsCount}
+                closed={closedPrsCount}
+                draft={draftPrsCount}
+                churn={churnTotalCount}
+                churnDirection={`${churnDirection}`}
+              />
+            ) : (
+              "-"
+            )}
           </div>
           <div className="">
             <div
@@ -143,7 +165,7 @@ const RepoRow = ({ repo, topic, user }: RepoProps): JSX.Element => {
             <div>Pr Velocity</div>
             <div className="flex text-base gap-x-3">
               <div>{prVelocityInDays}</div>
-              { repo.id ? <Pill text={`${prsMergedPercentage}%`} size="small" color="green" /> : "" }
+              {repo.id ? <Pill color="purple" text={`${prsMergedPercentage}%`} /> : ""}
             </div>
           </div>
 
@@ -174,7 +196,6 @@ const RepoRow = ({ repo, topic, user }: RepoProps): JSX.Element => {
             <div>Contributors</div>
             <div className="flex text-base items-center">
               {contributorMeta.itemCount! > 0 ? <StackedAvatar contributors={contributorData} /> : "-"}
-
               {contributorMeta.itemCount! >= 5 ? <div>&nbsp;{`+${contributorMeta.itemCount - 5}`}</div> : ""}
             </div>
           </div>
@@ -185,9 +206,25 @@ const RepoRow = ({ repo, topic, user }: RepoProps): JSX.Element => {
         </div>
       </div>
       <div className={`${classNames.row} `}>
+        <Checkbox
+          label=""
+          checked={selected ? true : false}
+          onChange={handleSelectCheckbox}
+          disabled={!user}
+          title={!user ? "Connect to GitHub" : ""}
+          className={`checked:[&>*]:!bg-orange-500 ${
+            user ? "[&>*]:!border-orange-500 [&>*]:hover:!bg-orange-600" : "[&>*]:!border-light-slate-8"
+          }`}
+        />
         {/* Column: Repository Name */}
         <div className={classNames.cols.repository}>
-          <TableRepositoryName topic={topic} avatarURL={ownerAvatar} name={name} handle={handle} user={user}></TableRepositoryName>
+          <TableRepositoryName
+            topic={topic}
+            avatarURL={ownerAvatar}
+            name={name}
+            handle={handle}
+            user={userPage}
+          ></TableRepositoryName>
         </div>
 
         {/* Column: Activity */}
@@ -195,20 +232,24 @@ const RepoRow = ({ repo, topic, user }: RepoProps): JSX.Element => {
 
         {/* Column: PR Overview */}
         <div className={classNames.cols.prOverview}>
-          { repo.id ? <PullRequestOverview
-            open={openPrsCount}
-            merged={mergedPrsCount}
-            closed={closedPrsCount}
-            draft={draftPrsCount}
-            churn={churnTotalCount}
-            churnDirection={`${churnDirection}`}
-          ></PullRequestOverview> : "-" }
+          {repo.id ? (
+            <PullRequestOverview
+              open={openPrsCount}
+              merged={mergedPrsCount}
+              closed={closedPrsCount}
+              draft={draftPrsCount}
+              churn={churnTotalCount}
+              churnDirection={`${churnDirection}`}
+            ></PullRequestOverview>
+          ) : (
+            "-"
+          )}
         </div>
 
         {/* Column: PR Velocity */}
         <div className={`${classNames.cols.prVelocity}`}>
           <div>{prVelocityInDays}</div>
-          { repo.id ? <Pill text={`${prsMergedPercentage}%`} size="small" color="green" /> : ""}
+          {repo.id ? <Pill color="purple" text={`${prsMergedPercentage}%`} /> : ""}
         </div>
 
         {/* Column: SPAM */}
@@ -238,7 +279,7 @@ const RepoRow = ({ repo, topic, user }: RepoProps): JSX.Element => {
 
         {/* Column: Last 30 Days */}
         <div className={clsx(classNames.cols.last30days, "hidden lg:flex")}>
-          {repo.id && last30days ? <Sparkline data={last30days}/> : "-"}
+          {repo.id && last30days ? <Sparkline data={last30days} /> : "-"}
         </div>
       </div>
     </>
