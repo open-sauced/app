@@ -138,7 +138,7 @@ const ContributorProfilePage = ({
             </div>
 
             <div className="mt-6">
-              <ContributorTable limit={15} contributor={githubName} topic={"javascript"} repositories={undefined} />
+              <ContributorTable limit={15} contributor={githubName} topic={"*"} repositories={undefined} />
             </div>
             <div className="mt-8 text-light-slate-9 text-sm">
               <p>The data for these contributions is from publicly available open source projects on GitHub.</p>
