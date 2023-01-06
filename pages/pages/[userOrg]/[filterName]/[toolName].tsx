@@ -34,13 +34,13 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const supabase = createServerSupabaseClient(ctx);
   
   const {
-    data: { session },
-  } = await supabase.auth.getSession()
-  const insightId = ctx.params!['filterName'] as string;
+    data: { session }
+  } = await supabase.auth.getSession();
+  const insightId = ctx.params!["filterName"] as string;
   const { data: insights }: { data: DbUserInsight[] | null } = await supabase
-    .from('insights')
-    .select('*')
-    .eq('id', insightId)
+    .from("insights")
+    .select("*")
+    .eq("id", insightId)
     .limit(1);
 
   if (!insights || insights.length !== 1) {
@@ -58,16 +58,16 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   if (insight && !insight.is_public && !isOwner) {
     return {
       redirect: {
-        destination: '/',
-        permanent: false,
-      },
-    }
+        destination: "/",
+        permanent: false
+      }
+    };
   }
 
   return {
     props: {}
   };
-}
+};
 
 HubPage.PageLayout = HubPageLayout;
 
