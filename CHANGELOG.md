@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.23.1](https://github.com/open-sauced/insights/compare/v1.23.0...v1.23.1) (2023-01-06)
+
+
+### 🐛 Bug Fixes
+
+* correct icon loading and double ci processing ([#764](https://github.com/open-sauced/insights/issues/764)) ([f1f766e](https://github.com/open-sauced/insights/commit/f1f766ef008ea9ce1b904907f3c16ec57d15d379)), closes [#211](https://github.com/open-sauced/insights/issues/211)
+
 ### [1.23.1-beta.1](https://github.com/open-sauced/insights/compare/v1.23.0...v1.23.1-beta.1) (2023-01-05)
 
 
