@@ -2,7 +2,7 @@ import ContextFilterButton from "components/atoms/ContextFilterButton/context-fi
 
 import React, { useEffect, useRef, useState } from "react";
 import Icon from "../../atoms/Icon/icon";
-import cancelIcon from "public/x-circle.svg";
+import cancelIcon from "img/x-circle.svg";
 import Radio from "components/atoms/Radio/radio";
 import humanizeNumber from "lib/utils/humanizeNumber";
 import getFilterKey from "lib/utils/get-filter-key";
@@ -48,7 +48,7 @@ const SuperativeSelector: React.FC<SuperlativeSelectorProps> = ({
 
   const filterOption = filterOptions.find((option) => getFilterKey(option) === selected);
   const filterDescription = filterOption ? filterOption : selected;
-  
+
   return (
     <div className="max-w-max relative" ref={ref}>
       <ContextFilterButton onClick={toggleFilter} isSelected={!!selected}>

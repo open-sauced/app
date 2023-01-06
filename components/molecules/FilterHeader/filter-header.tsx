@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 
-import Thumbnail from "../../../public/hacktoberfest-icon.png";
+import Thumbnail from "../../../img/hacktoberfest-icon.png";
 
 import Text from "components/atoms/Typography/text";
 import Title from "components/atoms/Typography/title";
@@ -27,7 +27,7 @@ const HeaderFilter = () => {
 
   const cancelFilterRouting = () => {
     router.push(`/${filterName}/${toolName}`);
-  };  
+  };
   return (
     <>
       <div className="header-image mr-2 p-2 min-w-[130px]">
@@ -51,7 +51,7 @@ const HeaderFilter = () => {
             selected={Array.isArray(selectedFilter) ? selectedFilter.join("/") : selectedFilter}
           />
         </div>
-      </div>    
+      </div>
     </>
   );
 };
