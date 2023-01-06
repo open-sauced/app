@@ -1,3 +1,5 @@
+import { createServerSupabaseClient } from "@supabase/auth-helpers-nextjs";
+import { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
 
 import Tool from "components/organisms/ToolsDisplay/tools-display";
@@ -26,6 +28,41 @@ const HubPage: WithPageLayout = () => {
         /> : <></>}
     </>
   );
+};
+
+export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
+  const supabase = createServerSupabaseClient(ctx);
+
+  const {
+    data: { session }
+  } = await supabase.auth.getSession();
+  const insightId = ctx.params!["filterName"] as string;
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/insights/${insightId}`);
+  const insight = response.ok ? await response.json() as DbUserInsight : null;
+
+  if (!insight) {
+    return {
+      redirect: {
+        destination: "/"
+      }
+    };
+  }
+
+  const userId = session?.user?.user_metadata.sub as string;
+  const isOwner = userId && insight && `${userId}` === `${insight.user_id}` ? true : false;
+
+  if (insight && !insight.is_public && !isOwner) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false
+      }
+    };
+  }
+
+  return {
+    props: {}
+  };
 };
 
 HubPage.PageLayout = HubPageLayout;
