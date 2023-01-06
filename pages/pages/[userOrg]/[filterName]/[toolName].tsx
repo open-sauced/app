@@ -32,18 +32,15 @@ const HubPage: WithPageLayout = () => {
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const supabase = createServerSupabaseClient(ctx);
-  
+
   const {
     data: { session }
   } = await supabase.auth.getSession();
   const insightId = ctx.params!["filterName"] as string;
-  const { data: insights }: { data: DbUserInsight[] | null } = await supabase
-    .from("insights")
-    .select("*")
-    .eq("id", insightId)
-    .limit(1);
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/insights/${insightId}`);
+  const insight = response.ok ? await response.json() as DbUserInsight : null;
 
-  if (!insights || insights.length !== 1) {
+  if (!insight) {
     return {
       redirect: {
         destination: "/"
@@ -52,7 +49,6 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   }
 
   const userId = session?.user?.user_metadata.sub as string;
-  const insight = insights[0];
   const isOwner = userId && insight && `${userId}` === `${insight.user_id}` ? true : false;
 
   if (insight && !insight.is_public && !isOwner) {
