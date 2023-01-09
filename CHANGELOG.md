@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.24.0-beta.2](https://github.com/open-sauced/insights/compare/v1.24.0-beta.1...v1.24.0-beta.2) (2023-01-09)
+
+
+### 🐛 Bug Fixes
+
+* fix placement of badge on insight page ([#770](https://github.com/open-sauced/insights/issues/770)) ([aace1c7](https://github.com/open-sauced/insights/commit/aace1c759edf49c66465dd949b64128d5c714c24))
+
 ## [1.24.0-beta.1](https://github.com/open-sauced/insights/compare/v1.23.2...v1.24.0-beta.1) (2023-01-09)
 
 
