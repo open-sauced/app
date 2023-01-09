@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.24.0-beta.1](https://github.com/open-sauced/insights/compare/v1.23.2...v1.24.0-beta.1) (2023-01-09)
+
+
+### 🍕 Features
+
+* add public/private insights badge ([#735](https://github.com/open-sauced/insights/issues/735)) ([3120657](https://github.com/open-sauced/insights/commit/3120657eed0b58d2795808eae9c1e2a55ebab5a3)), closes [#688](https://github.com/open-sauced/insights/issues/688)
+
 ### [1.23.2](https://github.com/open-sauced/insights/compare/v1.23.1...v1.23.2) (2023-01-06)
 
 
