@@ -110,16 +110,10 @@ interface LoginStep2Props {
   setRepoList: Function;
 }
 
-enum OrgLookupError {
-  Initial = 0,
-  Invalid = 3,
-  Error = 4
-}
-
 const LoginStep2: React.FC<LoginStep2Props> = ({ handleLoginStep, setRepoList }) => {
   const { providerToken } = useSupabaseAuth();
   const [orgName, setOrgName] = useState("");
-  const [addOrgError, setAddOrgError] = useState<OrgLookupError>(OrgLookupError.Initial);
+  const [addOrgErrorCode, setAddOrgErrorCode] = useState<number>(0);
 
   captureAnayltics("User Onboarding", "onboardingStep2", "visited");
 
@@ -160,34 +154,26 @@ const LoginStep2: React.FC<LoginStep2Props> = ({ handleLoginStep, setRepoList })
         });
 
         setRepoList(repoList);
-        setAddOrgError(OrgLookupError.Initial);
+        setAddOrgErrorCode(0);
       }
 
       // If valid, go to next step
       handleLoginStep();
     } catch (e: any) {
       // If invalid, display error
-      console.error(e);
-      
-      if ( e.code  == 404) {
-        setAddOrgError(OrgLookupError.Invalid);
-      } 
-      else {
-        setAddOrgError(OrgLookupError.Error);
-      } 
+      setAddOrgErrorCode(e.status);
     }
   };
 
-  const getOrgLookupError = (code: OrgLookupError) => {
-    if (code === OrgLookupError.Error) {
-      return <Text>There was error retrieving this organization.</Text>;
-    }
-
-    if (code === OrgLookupError.Invalid) {
-      return <Text>The organization entered is invalid.</Text>;
-    }
-
-    return <></>;
+  const getOrgLookupError = (errorCode: number) => {
+    switch (errorCode) {
+    case 0: 
+      return <></>;
+    case 404:
+      return <Text className="bg-light-red-4 p-1">The organization is invalid</Text>;
+    default:
+      return <Text className="bg-light-red-4 p-1">Something went wrong</Text>;
+    };
   };
 
   return (
@@ -238,7 +224,7 @@ const LoginStep2: React.FC<LoginStep2Props> = ({ handleLoginStep, setRepoList })
             />
           </div>
 
-          {getOrgLookupError(addOrgError)}
+          {getOrgLookupError(addOrgErrorCode)}
 
           <Button onClick={handleAddPAT} type="primary" className="w-full mt-3 md:mt-0 h-10">
             Continue
