@@ -1,11 +1,11 @@
 import useSWR from "swr";
 
-interface UserResponseProps{
+interface UserResponse{
   data: DbUser
 }
 const useValidateUser = (username:string)=>{
 
-  const {data, error} = useSWR<UserResponseProps, Error>(`user/${username}`);
+  const {data, error} = useSWR<UserResponse, Error>(`user/${username}`);
 
   return {
     isValid: data?.data.is_open_sauced_member || false,
