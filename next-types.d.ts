@@ -107,3 +107,17 @@ interface DbUserInsightRepo {
   readonly repo_id: number;
   readonly created_at: string;
 }
+
+interface DbUser{
+  readonly id: number;
+  readonly open_issues: number;
+  readonly is_private: boolean;
+  readonly is_open_sauced_member: boolean;
+  readonly created_at: string;
+  readonly updated_at: string;
+  readonly login: string;
+  readonly is_onboarded: boolean;
+  readonly is_waitlisted: boolean;
+  readonly role: number;
+
+}
