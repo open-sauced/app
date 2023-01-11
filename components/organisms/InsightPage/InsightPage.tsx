@@ -88,7 +88,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
       },
       body: JSON.stringify({
         name,
-        ids: repos.map((repo) => repo.id),
+        repos: repos.map((repo) => ({id: repo.id, fullName: `${repo.owner}/${repo.name}`})),
         // eslint-disable-next-line
         is_public: isPublic
       })
@@ -118,7 +118,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
       },
       body: JSON.stringify({
         name,
-        ids: repos.map((repo) => repo.id),
+        repos: repos.map((repo) => ({id: repo.id, fullName: `${repo.owner}/${repo.name}`})),
         // eslint-disable-next-line
         is_public: isPublic
       })

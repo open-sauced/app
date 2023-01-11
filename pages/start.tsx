@@ -240,14 +240,14 @@ const LoginStep3: React.FC<LoginStep3Props> = ({ repoList, checkFollowed }) => {
   const handleSkipAddRepo = async () => {
     try {
       const selectedRepos = repoList.filter((_, index) => isFollowing[index]);
-      const repoIds = selectedRepos.map((repo) => repo.repoId as number);
+      const repos = selectedRepos.map((repo) => ({ id: repo.repoId, fullName: `${repo.repoOwner}/${repo.repoName}`}));
 
       await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/onboarding`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${sessionToken}`
         },
-        body: JSON.stringify({ ids: repoIds })
+        body: JSON.stringify({ repos })
       });
 
       store.onboardUser();
