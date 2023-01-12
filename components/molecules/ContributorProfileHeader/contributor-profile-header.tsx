@@ -8,12 +8,16 @@ import Link from "next/link";
 interface ContributorProfileHeaderProps {
   avatarUrl?: string;
   githubName?: string;
-  user?: string;
+  isOpenSaucedUser?: boolean;
 }
-const ContributorProfileHeader = ({ avatarUrl, githubName }: ContributorProfileHeaderProps) => {
+const ContributorProfileHeader = ({
+  avatarUrl,
+  githubName,
+  isOpenSaucedUser = true
+}: ContributorProfileHeaderProps) => {
   return (
     <div className="w-full relative  bg-light-slate-6 h-[216px]">
-      <div className="relative w-full h-full">
+      <div className={`relative w-full h-full ${!isOpenSaucedUser && "hidden"}`}>
         <Image alt="user profile cover image" layout="fill" objectFit="cover" src={RainbowBg} />
       </div>
 
@@ -21,7 +25,7 @@ const ContributorProfileHeader = ({ avatarUrl, githubName }: ContributorProfileH
         <div className="translate-y-[75px]">
           <Avatar className="" hasBorder avatarURL={avatarUrl} size={184} isCircle />
         </div>
-        <div className="flex gap-3 flex-col md:flex-row items-center">
+        <div className={`flex gap-3 flex-col md:flex-row items-center ${!isOpenSaucedUser && "hidden"}`}>
           <Link href={`https://github.com/${githubName}`}>
             <Button className="!px-5 !py-2 !bg-white" type="text">
               View on GitHub
