@@ -96,7 +96,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
         title="Repositories"
       />
       <div className="flex flex-col rounded-lg overflow-x-auto border w-full">
-        <div className="min-w-[1150px]">
+        <div className="lg:min-w-[1150px]">
           <div className="flex md:hidden justify-between  py-4 px-6 bg-light-slate-3 gap-2">
             <div className="flex-1">
               <TableTitle text="Repository"></TableTitle>
