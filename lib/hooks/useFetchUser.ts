@@ -9,8 +9,7 @@ const useFetchUser = (username: string) => {
   );
 
   return {
-    data: data || {},
-    isVerified: data?.is_open_sauced_member,
+    data: data || undefined,
     isLoading: !error && !data,
     isError: !!error
   };

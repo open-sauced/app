@@ -28,18 +28,17 @@ const Contributor = () => {
   const contributorLanguageList = (contributor[0]?.langs || "").split(",");
   const profile: ContributorsProfileType = {
     githubAvatar: `https://www.github.com/${contributorLogin}.png?size=300`,
-    githubName: contributorLogin,
+    githubName: contributor[0]?.host_login,
     totalPR: contributor[0]?.recent_pr_total
   };
 
-  console.log(contributor[0]);
-  console.log(user);
   return (
     <div className="w-full">
       <ContributorProfilePage
         prMerged={contributor[0]?.recent_pr_merged}
         error={isError}
         loading={isLoading}
+        user={user}
         repoList={repoList}
         langList={contributorLanguageList}
         githubName={profile.githubName}

@@ -41,6 +41,7 @@ interface ContributorProfilePageProps {
   langList: string[];
   repoList: RepoList[];
   recentContributionCount: number;
+  user?: DbUser;
   prTotal: number;
   openPrs: number;
   prReviews: number;
@@ -52,6 +53,7 @@ interface ContributorProfilePageProps {
 const ContributorProfilePage = ({
   repositories,
   recentContributionCount,
+  user,
   githubAvatar,
   githubName,
   langList,
@@ -82,7 +84,7 @@ const ContributorProfilePage = ({
       {error && <>An error has occured...</>}
       {isLoaded && (
         <>
-          <ContributorProfileHeader avatarUrl={githubAvatar} />
+          <ContributorProfileHeader isOpenSaucedUser={!!user} githubName={githubName} avatarUrl={githubAvatar} />
           <div className="pt-24 px-4 md:px-10 lg:px-16 flex flex-col lg:flex-row lg:gap-40 w-full overflow-hidden justify-between">
             <div className="flex flex-col min-w-[270px] gap-4 ">
               <div className="pb-6 border-b">
