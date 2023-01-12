@@ -8,14 +8,22 @@ import { ContributorsProfileType } from "components/molecules/ContributorHoverCa
 import HubPageLayout from "layouts/hub-page";
 import HubLayout from "layouts/hub";
 import ProfileLayout from "layouts/profile";
+import { useFetchUser } from "lib/hooks/useFetchUser";
 
 const Contributor = () => {
   const router = useRouter();
   const { username } = router.query;
   const contributorLogin = username as string;
 
-  const { data: contributor, isLoading: contributorLoading, isError } = useSingleContributor(contributorLogin);
+  const {
+    data: contributor,
+    isLoading: contributorLoading,
+    isError: contributorError
+  } = useSingleContributor(contributorLogin);
+  const { data: user, isLoading: userLoading, isError: userError } = useFetchUser(contributorLogin);
 
+  const isLoading = contributorLoading || userLoading;
+  const isError = contributorError;
   const repoList = useRepoList(contributor[0]?.recent_repo_list || "");
   const contributorLanguageList = (contributor[0]?.langs || "").split(",");
   const profile: ContributorsProfileType = {
@@ -24,9 +32,14 @@ const Contributor = () => {
     totalPR: contributor[0]?.recent_pr_total
   };
 
+  console.log(contributor[0]);
+  console.log(user);
   return (
     <div className="w-full">
       <ContributorProfilePage
+        prMerged={contributor[0]?.recent_pr_merged}
+        error={isError}
+        loading={isLoading}
         repoList={repoList}
         langList={contributorLanguageList}
         githubName={profile.githubName}
