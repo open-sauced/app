@@ -15,11 +15,7 @@ const Contributor = () => {
   const { username } = router.query;
   const contributorLogin = username as string;
 
-  const {
-    data: contributor,
-    isLoading: contributorLoading,
-    isError: contributorError
-  } = useSingleContributor(contributorLogin);
+  const { data: contributor, isError: contributorError } = useSingleContributor(contributorLogin);
   const { data: user, isLoading: userLoading, isError: userError } = useFetchUser(contributorLogin);
 
   const isError = contributorError;
@@ -34,7 +30,7 @@ const Contributor = () => {
   return (
     <div className="w-full">
       <ContributorProfilePage
-        prMerged={contributor[0]?.recent_pr_merged}
+        prMerged={contributor[0]?.recent_merged_prs}
         error={isError}
         loading={userLoading}
         user={user}
