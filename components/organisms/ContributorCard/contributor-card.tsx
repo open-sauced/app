@@ -46,7 +46,7 @@ const ContributorCard = ({ className, contributor, topic, repositories }: Contri
         <div className="flex w-full justify-between items-center gap-2">
           <CardProfile {...profile} />
           <div>
-            <CardHorizontalBarChart languageList={languageList} />
+            <CardHorizontalBarChart withDescription={false} languageList={languageList} />
           </div>
         </div>
         <div className="h-[110px] overflow-hidden">
