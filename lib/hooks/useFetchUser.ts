@@ -4,7 +4,7 @@ import useSWR, { Fetcher } from "swr";
 interface UserResponse extends DbUser {}
 const useFetchUser = (username: string) => {
   const { data, error } = useSWR<UserResponse, Error>(
-    `users/${username}`,
+    username ? `users/${username}` : null,
     publicApiFetcher as Fetcher<UserResponse, Error>
   );
 

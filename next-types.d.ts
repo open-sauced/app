@@ -66,7 +66,7 @@ interface DbContribution {
   readonly recent_opened_prs: number;
   readonly recent_pr_reviews: number;
   readonly recent_pr_velocity: number;
-  readonly recent_pr_merged: number;
+  readonly recent_merged_prs: number;
 }
 
 interface DbInsight {

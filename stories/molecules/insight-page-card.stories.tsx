@@ -27,7 +27,7 @@ const contributors: DbContribution[] = [
     recent_opened_prs: 5,
     recent_pr_reviews: 12,
     recent_pr_velocity: 10,
-    recent_pr_merged: 20
+    recent_merged_prs: 20
   },
   {
     id: 2,
@@ -46,7 +46,7 @@ const contributors: DbContribution[] = [
     recent_opened_prs: 5,
     recent_pr_reviews: 12,
     recent_pr_velocity: 10,
-    recent_pr_merged: 20
+    recent_merged_prs: 20
   },
   {
     id: 3,
@@ -65,7 +65,7 @@ const contributors: DbContribution[] = [
     recent_opened_prs: 5,
     recent_pr_reviews: 12,
     recent_pr_velocity: 10,
-    recent_pr_merged: 20
+    recent_merged_prs: 20
   },
   {
     id: 4,
@@ -84,7 +84,7 @@ const contributors: DbContribution[] = [
     recent_opened_prs: 5,
     recent_pr_reviews: 12,
     recent_pr_velocity: 10,
-    recent_pr_merged: 20
+    recent_merged_prs: 20
   }
 ];
 
