@@ -5,6 +5,56 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.24.0-beta.4](https://github.com/open-sauced/insights/compare/v1.24.0-beta.3...v1.24.0-beta.4) (2023-01-13)
+
+
+### 🐛 Bug Fixes
+
+* check for contributor username and update field for recent merged prs ([#776](https://github.com/open-sauced/insights/issues/776)) ([c681a61](https://github.com/open-sauced/insights/commit/c681a6124df25f746ee55b5927f40908fdae0747))
+
+## [1.24.0-beta.3](https://github.com/open-sauced/insights/compare/v1.24.0-beta.2...v1.24.0-beta.3) (2023-01-13)
+
+
+### 🍕 Features
+
+* add custom profile banner for verified OpenSauced user  ([#771](https://github.com/open-sauced/insights/issues/771)) ([4f73c15](https://github.com/open-sauced/insights/commit/4f73c152a7fa625655c32d311d96d279007f74fe)), closes [#713](https://github.com/open-sauced/insights/issues/713)
+
+## [1.24.0-beta.2](https://github.com/open-sauced/insights/compare/v1.24.0-beta.1...v1.24.0-beta.2) (2023-01-09)
+
+
+### 🐛 Bug Fixes
+
+* fix placement of badge on insight page ([#770](https://github.com/open-sauced/insights/issues/770)) ([aace1c7](https://github.com/open-sauced/insights/commit/aace1c759edf49c66465dd949b64128d5c714c24))
+
+## [1.24.0-beta.1](https://github.com/open-sauced/insights/compare/v1.23.2...v1.24.0-beta.1) (2023-01-09)
+
+
+### 🍕 Features
+
+* add public/private insights badge ([#735](https://github.com/open-sauced/insights/issues/735)) ([3120657](https://github.com/open-sauced/insights/commit/3120657eed0b58d2795808eae9c1e2a55ebab5a3)), closes [#688](https://github.com/open-sauced/insights/issues/688)
+
+### [1.23.2](https://github.com/open-sauced/insights/compare/v1.23.1...v1.23.2) (2023-01-06)
+
+
+### 🐛 Bug Fixes
+
+* fix data fetching for contributor page data ([#766](https://github.com/open-sauced/insights/issues/766)) ([d3c0625](https://github.com/open-sauced/insights/commit/d3c06254a8f8f23667001229f89cc6b723de3fc4))
+* redirect from hub page if not authorized to view ([#767](https://github.com/open-sauced/insights/issues/767)) ([a57899d](https://github.com/open-sauced/insights/commit/a57899d48c303d9ed84b1084a15db9f52b340cce)), closes [#763](https://github.com/open-sauced/insights/issues/763)
+
+### [1.23.2-beta.2](https://github.com/open-sauced/insights/compare/v1.23.2-beta.1...v1.23.2-beta.2) (2023-01-06)
+
+
+### 🐛 Bug Fixes
+
+* redirect from hub page if not authorized to view ([#767](https://github.com/open-sauced/insights/issues/767)) ([a57899d](https://github.com/open-sauced/insights/commit/a57899d48c303d9ed84b1084a15db9f52b340cce)), closes [#763](https://github.com/open-sauced/insights/issues/763)
+
+### [1.23.2-beta.1](https://github.com/open-sauced/insights/compare/v1.23.1...v1.23.2-beta.1) (2023-01-06)
+
+
+### 🐛 Bug Fixes
+
+* fix data fetching for contributor page data ([#766](https://github.com/open-sauced/insights/issues/766)) ([d3c0625](https://github.com/open-sauced/insights/commit/d3c06254a8f8f23667001229f89cc6b723de3fc4))
+
 ### [1.23.1](https://github.com/open-sauced/insights/compare/v1.23.0...v1.23.1) (2023-01-06)
 
 
