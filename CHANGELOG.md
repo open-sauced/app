@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.25.0-beta.1](https://github.com/open-sauced/insights/compare/v1.24.0...v1.25.0-beta.1) (2023-01-13)
+
+
+### 🍕 Features
+
+* update to Next 13.1.x ([#758](https://github.com/open-sauced/insights/issues/758)) ([72c2b64](https://github.com/open-sauced/insights/commit/72c2b64a5a0d8dfc621029d003083ce0874179d8)), closes [#753](https://github.com/open-sauced/insights/issues/753)
+
 ## [1.24.0](https://github.com/open-sauced/insights/compare/v1.23.2...v1.24.0) (2023-01-13)
 
 
