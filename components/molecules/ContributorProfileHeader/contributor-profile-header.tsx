@@ -13,26 +13,30 @@ interface ContributorProfileHeaderProps {
 const ContributorProfileHeader = ({ avatarUrl, githubName, isOpenSaucedUser }: ContributorProfileHeaderProps) => {
   return (
     <div className="w-full relative  bg-light-slate-6 h-[216px]">
-      <div className={`relative w-full h-full ${!isOpenSaucedUser && "hidden"}`}>
-        <Image priority alt="user profile cover image" layout="fill" objectFit="cover" src={RainbowBg} />
-      </div>
+      {isOpenSaucedUser && (
+        <div className="relative w-full h-full">
+          <Image priority alt="user profile cover image" layout="fill" objectFit="cover" src={RainbowBg} />
+        </div>
+      )}
 
       <div className="w-full absolute -top-6 px-6 md:px-12 lg:px-16 flex flex-row items-end justify-between py-6">
         <div className="translate-y-[75px]">
           <Avatar className="" hasBorder avatarURL={avatarUrl} size={184} isCircle />
         </div>
-        <div className={`flex gap-3 flex-col md:flex-row items-center ${!isOpenSaucedUser && "hidden"}`}>
-          <a target="_blank" rel="noopener noreferrer" href={`https://github.com/${githubName}`}>
-            <Button className="!px-5 !py-2 !bg-white" type="text">
-              View on GitHub
-            </Button>
-          </a>
-          <Link href="#">
-            <Button className="!px-8 !py-2 !hidden" type="primary">
-              Collaborate
-            </Button>
-          </Link>
-        </div>
+        {isOpenSaucedUser && (
+          <div className="flex gap-3 flex-col md:flex-row items-center">
+            <a target="_blank" rel="noopener noreferrer" href={`https://github.com/${githubName}`}>
+              <Button className="!px-5 !py-2 !bg-white" type="text">
+                View on GitHub
+              </Button>
+            </a>
+            <Link href="#">
+              <Button className="!px-8 !py-2 !hidden" type="primary">
+                Collaborate
+              </Button>
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );
