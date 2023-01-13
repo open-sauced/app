@@ -5,6 +5,20 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.24.0](https://github.com/open-sauced/insights/compare/v1.23.2...v1.24.0) (2023-01-13)
+
+
+### 🍕 Features
+
+* add custom profile banner for verified OpenSauced user  ([#771](https://github.com/open-sauced/insights/issues/771)) ([4f73c15](https://github.com/open-sauced/insights/commit/4f73c152a7fa625655c32d311d96d279007f74fe)), closes [#713](https://github.com/open-sauced/insights/issues/713)
+* add public/private insights badge ([#735](https://github.com/open-sauced/insights/issues/735)) ([3120657](https://github.com/open-sauced/insights/commit/3120657eed0b58d2795808eae9c1e2a55ebab5a3)), closes [#688](https://github.com/open-sauced/insights/issues/688)
+
+
+### 🐛 Bug Fixes
+
+* check for contributor username and update field for recent merged prs ([#776](https://github.com/open-sauced/insights/issues/776)) ([c681a61](https://github.com/open-sauced/insights/commit/c681a6124df25f746ee55b5927f40908fdae0747))
+* fix placement of badge on insight page ([#770](https://github.com/open-sauced/insights/issues/770)) ([aace1c7](https://github.com/open-sauced/insights/commit/aace1c759edf49c66465dd949b64128d5c714c24))
+
 ## [1.24.0-beta.4](https://github.com/open-sauced/insights/compare/v1.24.0-beta.3...v1.24.0-beta.4) (2023-01-13)
 
 
