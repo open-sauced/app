@@ -1,5 +1,5 @@
 import React from "react";
-import Image, { StaticImageData } from "next/image";
+import Image, { StaticImageData } from "next/legacy/image";
 import ContextThumbnailImage from "../../../img/open-sourced-with-bg-icon.png";
 
 interface ContextThumbnailProps {
@@ -13,7 +13,7 @@ const ContextThumbnail: React.FC<ContextThumbnailProps> = ({ className, ContextT
   return (
     <Image
       className={`${className ? className : ""} rounded-lg border-1 border-slate-100 object-cover`}
-      alt={alt ? alt : "ContextThumbnail"} width={size} height={size} src={ContextThumbnailURL ? ContextThumbnailURL : ContextThumbnailImage} />
+      alt={alt ? alt : "ContextThumbnail"} width={size as number} height={size as number} src={ContextThumbnailURL ? ContextThumbnailURL : ContextThumbnailImage} />
   );
 };
 
