@@ -27,7 +27,7 @@ const Contributor = () => {
   const contributorLanguageList = (contributor[0]?.langs || "").split(",");
   const profile: ContributorsProfileType = {
     githubAvatar: `https://www.github.com/${contributorLogin}.png?size=300`,
-    githubName: contributorLogin
+    githubName: contributorLogin,
     totalPR: contributor[0]?.recent_pr_total
   };
 
