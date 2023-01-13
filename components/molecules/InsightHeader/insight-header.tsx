@@ -4,6 +4,7 @@ import { useRepositoriesList } from "lib/hooks/useRepositoriesList";
 import getRepoInsights from "lib/utils/get-repo-insights";
 import Button from "components/atoms/Button/button";
 import Title from "components/atoms/Typography/title";
+import Badge from "components/atoms/InsightBadge/insight-badge";
 import ContextThumbnail from "components/atoms/ContextThumbnail/context-thumbnail";
 import CardRepoList from "../CardRepoList/card-repo-list";
 
@@ -25,9 +26,12 @@ const InsightHeader = ({ insight, repositories, insightId, isOwner }: InsightHea
           <ContextThumbnail size={120} ContextThumbnailURL={""}></ContextThumbnail>
         </div>
         <div className="header-info flex flex-col grow justify-center p-2">
-          <Title level={1} className="!text-3xl font-semibold tracking-tight text-slate-900">
-            {insight && insight.name || "Insights"}
-          </Title>
+          <div className="flex gap-2">
+            <Title level={1} className="!text-3xl font-semibold tracking-tight text-slate-900">
+              {insight && insight.name || "Insights"}
+            </Title>
+            {insight && <Badge isPublic={insight?.is_public} />}
+          </div>
           <div className="flex mt-4 items-center relative  gap-2">
             {insight && insight.repos && insight.repos.length > 0 && <CardRepoList limit={2} repoList={repoList} />}
           </div>
