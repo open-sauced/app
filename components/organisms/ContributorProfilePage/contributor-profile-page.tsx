@@ -79,7 +79,7 @@ const ContributorProfilePage = ({
           </div>
           <div>
             <p className="mb-4">Languages</p>
-            <CardHorizontalBarChart languageList={languageList} />
+            <CardHorizontalBarChart withDescription={true} languageList={languageList} />
           </div>
         </div>
         <div className="flex-1">
