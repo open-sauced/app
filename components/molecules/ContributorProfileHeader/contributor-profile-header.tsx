@@ -8,12 +8,12 @@ import Link from "next/link";
 interface ContributorProfileHeaderProps {
   avatarUrl?: string;
   githubName?: string;
-  isOpenSaucedUser: boolean;
+  isConnected: boolean;
 }
-const ContributorProfileHeader = ({ avatarUrl, githubName, isOpenSaucedUser }: ContributorProfileHeaderProps) => {
+const ContributorProfileHeader = ({ avatarUrl, githubName, isConnected }: ContributorProfileHeaderProps) => {
   return (
     <div className="w-full relative  bg-light-slate-6 h-[216px]">
-      {isOpenSaucedUser && (
+      {isConnected && (
         <div className="relative w-full h-full">
           <Image priority alt="user profile cover image" layout="fill" objectFit="cover" src={RainbowBg} />
         </div>
@@ -23,7 +23,7 @@ const ContributorProfileHeader = ({ avatarUrl, githubName, isOpenSaucedUser }: C
         <div className="translate-y-[75px]">
           <Avatar className="" hasBorder avatarURL={avatarUrl} size={184} isCircle />
         </div>
-        {isOpenSaucedUser && (
+        {isConnected && (
           <div className="flex gap-3 flex-col md:flex-row items-center">
             <a target="_blank" rel="noopener noreferrer" href={`https://github.com/${githubName}`}>
               <Button className="!px-5 !py-2 !bg-white" type="text">

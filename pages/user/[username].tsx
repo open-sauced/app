@@ -22,7 +22,6 @@ const Contributor = () => {
   } = useSingleContributor(contributorLogin);
   const { data: user, isLoading: userLoading, isError: userError } = useFetchUser(contributorLogin);
 
-  const isLoading = contributorLoading || userLoading;
   const isError = contributorError;
   const repoList = useRepoList(contributor[0]?.recent_repo_list || "");
   const contributorLanguageList = (contributor[0]?.langs || "").split(",");
@@ -37,7 +36,7 @@ const Contributor = () => {
       <ContributorProfilePage
         prMerged={contributor[0]?.recent_pr_merged}
         error={isError}
-        loading={isLoading}
+        loading={userLoading}
         user={user}
         repoList={repoList}
         langList={contributorLanguageList}
