@@ -1,6 +1,5 @@
 import Avatar from "components/atoms/Avatar/avatar";
-import { StaticImageData } from "next/legacy/image";
-import React from "react";
+import Image from "next/legacy/image";
 import RainbowBg from "img/rainbow-cover.png";
 import Button from "components/atoms/Button/button";
 import Link from "next/link";
