@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.24.0-beta.4](https://github.com/open-sauced/insights/compare/v1.24.0-beta.3...v1.24.0-beta.4) (2023-01-13)
+
+
+### 🐛 Bug Fixes
+
+* check for contributor username and update field for recent merged prs ([#776](https://github.com/open-sauced/insights/issues/776)) ([c681a61](https://github.com/open-sauced/insights/commit/c681a6124df25f746ee55b5927f40908fdae0747))
+
 ## [1.24.0-beta.3](https://github.com/open-sauced/insights/compare/v1.24.0-beta.2...v1.24.0-beta.3) (2023-01-13)
 
 
