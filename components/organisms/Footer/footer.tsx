@@ -1,5 +1,5 @@
 import React from "react";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import OpenSaucedLogo from "img/openSauced-icon.png";
 import Text from "components/atoms/Typography/text";
 

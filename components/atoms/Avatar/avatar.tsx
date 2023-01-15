@@ -1,5 +1,5 @@
 import React from "react";
-import Image, { StaticImageData } from "next/image";
+import Image, { StaticImageData } from "next/legacy/image";
 import AvatarImage from "../../../img/hacktoberfest-icon.png";
 import cachedImage from "lib/utils/cachedImages";
 
@@ -52,8 +52,8 @@ const CustomAvatar = ({ className, avatarURL, initials, alt, size, hasBorder, is
         <Image
           className={`${className ? className : ""} object-cover`}
           alt={alt ? alt : "Avatar"}
-          width={size}
-          height={size}
+          width={size as number}
+          height={size as number}
           src={avatarURL ? avatarURL : AvatarImage}
         />
       ) : (

@@ -1,7 +1,7 @@
 import { User } from "@supabase/supabase-js";
 import Avatar from "components/atoms/Avatar/avatar";
 import { truncateString } from "lib/utils/truncate-string";
-import { StaticImageData } from "next/image";
+import { StaticImageData } from "next/legacy/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
@@ -40,12 +40,12 @@ const TableRepositoryName = ({ avatarURL, name, handle, topic, user }: TableRepo
       <div className="flex flex-col justify-center">
         <div title={name} className="  text-base text-light-slate-12 tracking-tight">
           <Link href={filterLink}>
-            <a>{name && name.length > 10 ? truncateString(name, 12) : name}</a>
+            {name && name.length > 10 ? truncateString(name, 12) : name}
           </Link>
         </div>
         <div className="  text-sm text-light-slate-11 truncate max-w-[85px] md:max-w-[110px]">
           <Link href={filterLink}>
-            <a>{handle ? `@${handle}` : "handle1234"}</a>
+            {handle ? `@${handle}` : "handle1234"}
           </Link>
         </div>
       </div>
