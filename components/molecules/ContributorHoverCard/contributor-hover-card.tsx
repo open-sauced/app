@@ -4,7 +4,7 @@ import Text from "components/atoms/Typography/text";
 import CardProfile from "../CardProfile/card-profile";
 import CardRepoList, { RepoList } from "../CardRepoList/card-repo-list";
 import { calcDistanceFromToday } from "lib/utils/date-utils";
-import ContributorTable from "../ContributorTable/contributor-table";
+import PullRequestTable from "../PullRequestTable/pull-request-table";
 
 export interface ContributorsProfileType {
   githubAvatar: string;
@@ -44,7 +44,7 @@ const ContributorHoverCard = ({
         />
       </div>
       <div className="">
-        <ContributorTable isHoverCard repositories={repositories} limit={5} contributor={githubName} topic={topic} />
+        <PullRequestTable isHoverCard repositories={repositories} limit={5} contributor={githubName} topic={topic} />
       </div>
 
       <div>
