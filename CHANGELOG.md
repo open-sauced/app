@@ -5,6 +5,18 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.25.0-beta.2](https://github.com/open-sauced/insights/compare/v1.25.0-beta.1...v1.25.0-beta.2) (2023-01-16)
+
+
+### 🐛 Bug Fixes
+
+* correct repositories empty list message ([#778](https://github.com/open-sauced/insights/issues/778)) ([18b7393](https://github.com/open-sauced/insights/commit/18b7393c73526c891f1bddf1a7629d9e9803d3f9)), closes [#777](https://github.com/open-sauced/insights/issues/777)
+
+
+### 🧑‍💻 Code Refactoring
+
+* Renamed the ContributorTable to PullRequestTable ([#779](https://github.com/open-sauced/insights/issues/779)) ([694d213](https://github.com/open-sauced/insights/commit/694d213128077735803054f11e40eaf483a04e22)), closes [#681](https://github.com/open-sauced/insights/issues/681)
+
 ## [1.25.0-beta.1](https://github.com/open-sauced/insights/compare/v1.24.0...v1.25.0-beta.1) (2023-01-13)
 
 
