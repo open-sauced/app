@@ -1,11 +1,12 @@
 import React from "react";
+import Image from "next/legacy/image";
+
 import JavascriptIcon from "img/icons/☕️.svg";
 import ReactIcon from "/img/icons/⚛️.svg";
 import PythonIcon from "/img/icons/🐍.svg";
 import AIIcon from "/img/icons/🤖.svg";
 import MLIcon from "/img/icons/🧠.svg";
 import RustIcon from "/img/icons/🦀.svg";
-import Image from "next/legacy/image";
 
 interface LanguagePillProps {
   topic: "react" | "javascript" | "python" | "ML" | "AI" | "rust" | string;

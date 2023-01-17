@@ -1,14 +1,25 @@
+import React, { useState } from "react";
+
 import Button from "components/atoms/Button/button";
 import Checkbox from "components/atoms/Checkbox/checkbox";
 import TextInput from "components/atoms/TextInput/text-input";
 import Title from "components/atoms/Typography/title";
-import React from "react";
 import Select from "components/atoms/Select/select";
 import SelectOption from "components/atoms/Select/select-option";
-import Pill from "components/atoms/Pill/pill";
-import { FaJava } from "react-icons/fa";
+import LanguagePill from "components/atoms/LanguagePill/LanguagePill";
 
 const UserSettingsPage = () => {
+  const [selectedInterest, setSelectedInterest] = useState<string[]>([]);
+  const interestArray = ["javascript", "python", "rust", "ML", "AI", "react"];
+
+  const handleSelectInterest = (interest: string) => {
+    if (selectedInterest.length > 0 && selectedInterest.includes(interest)) {
+      setSelectedInterest((prev) => prev.filter((item) => item !== interest));
+    } else {
+      setSelectedInterest((prev) => [...prev, interest]);
+    }
+  };
+
   return (
     <div>
       <div className="flex flex-col gap-4 text-sm text-light-slate-11">
@@ -81,18 +92,23 @@ const UserSettingsPage = () => {
             <Button type="primary">Update profile</Button>
           </form>
         </div>
-        <div>
-          <Title className="!text-2xl !text-light-slate-11" level={2}>
+        <div className="flex flex-col gap-6">
+          <Title className="!text-2xl !font-normal !text-light-slate-11" level={2}>
             Interests
           </Title>
-          <div className="mt-5 flex gap-3 w-72 flex-wrap">
-            <Pill className="px-4 py-2" text={"Javascript"} icon={<FaJava color="blue" />} />
-            <Pill className="px-4" text={"Rust"} icon={<FaJava color="blue" />} />
-            <Pill className="px-4" text={"Python"} icon={<FaJava color="blue" />} />
-            <Pill className="px-3" text={"Php"} icon={<FaJava color="blue" />} />
-            <Pill className="px-3" text={"Html"} icon={<FaJava color="blue" />} />
-            <Pill className="px-3" text={"Python"} icon={<FaJava color="blue" />} />
+          <div className="flex gap-3 w-72 flex-wrap">
+            {interestArray.map((topic, index) => (
+              <LanguagePill
+                onClick={() => handleSelectInterest(topic)}
+                classNames={`${selectedInterest.includes(topic) && "bg-light-orange-10 text-white"}`}
+                topic={topic}
+                key={index}
+              />
+            ))}
           </div>
+          <button className="px-4 w-max py-2  rounded-lg bg-light-slate-4 border border-light-slate-8">
+            Update Interest
+          </button>
         </div>
       </div>
     </div>
