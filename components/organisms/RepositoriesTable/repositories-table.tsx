@@ -92,7 +92,7 @@ const RepositoriesTable = ({
             <RepoRow key={`${item.handle}/${item.name}/${index}`} topic={topic} repo={item} userPage={user} selected={isSelected} handleOnSelectRepo={handleOnSelectRepo} />
           );
         })}
-      {isLoadedWithRepos && isFilteredRepoNotIndexed && (
+      {isFilteredRepoNotIndexed && (
         <RepoRow
           topic={topic}
           // eslint-disable-next-line
