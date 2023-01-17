@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.25.0-beta.4](https://github.com/open-sauced/insights/compare/v1.25.0-beta.3...v1.25.0-beta.4) (2023-01-17)
+
+
+### 🐛 Bug Fixes
+
+* add fix for Storybook usage with Next 13 ([#792](https://github.com/open-sauced/insights/issues/792)) ([bb10b2b](https://github.com/open-sauced/insights/commit/bb10b2b3b324f344a0279446c219db9d5ea77d31)), closes [/github.com/vercel/next.js/issues/36417#issuecomment-1117360509](https://github.com/open-sauced//github.com/vercel/next.js/issues/36417/issues/issuecomment-1117360509)
+
 ## [1.25.0-beta.3](https://github.com/open-sauced/insights/compare/v1.25.0-beta.2...v1.25.0-beta.3) (2023-01-17)
 
 

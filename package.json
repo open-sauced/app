@@ -2,7 +2,7 @@
   "name": "@open-sauced/insights",
   "description": "🍕The dashboard for open source discovery.",
   "keywords": [],
-  "version": "1.25.0-beta.3",
+  "version": "1.25.0-beta.4",
   "author": "TED Vortex <ted.vortex@gmail.com>",
   "private": true,
   "license": "MIT",
