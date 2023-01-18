@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.25.0-beta.5](https://github.com/open-sauced/insights/compare/v1.25.0-beta.4...v1.25.0-beta.5) (2023-01-18)
+
+
+### 🐛 Bug Fixes
+
+* remove usage of next/legacy/image ([#793](https://github.com/open-sauced/insights/issues/793)) ([9264ffb](https://github.com/open-sauced/insights/commit/9264ffb978dbf05204116363f93b57f834f3ceef))
+
 ## [1.25.0-beta.4](https://github.com/open-sauced/insights/compare/v1.25.0-beta.3...v1.25.0-beta.4) (2023-01-17)
 
 
