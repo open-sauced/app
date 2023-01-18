@@ -1,6 +1,4 @@
 import React from "react";
-import { StaticImageData } from "next/legacy/image";
-
 import { BiGitPullRequest } from "react-icons/bi";
 import { VscIssues } from "react-icons/vsc";
 

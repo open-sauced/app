@@ -1,5 +1,5 @@
 import React from "react";
-import Image, { StaticImageData } from "next/legacy/image";
+import Image, { StaticImageData } from "next/image";
 
 interface IconProps {
     IconImage: StaticImageData | string;
@@ -15,7 +15,14 @@ const Icon: React.FC<IconProps> = ({ onClick, className, IconImage, alt, size = 
       <Image
         onClick={onClick}
         className="items-center justify-center "
-        alt={alt ? alt : "Icon"} width={size} height={size} src={IconImage} />
+        alt={alt ? alt : "Icon"}
+        width={size}
+        height={size}
+        src={IconImage}
+        style={{
+          maxWidth: "100%",
+          height: "auto"
+        }} />
     </div>
   );
 };

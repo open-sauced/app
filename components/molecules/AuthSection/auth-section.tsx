@@ -1,4 +1,4 @@
-import Image from "next/legacy/image";
+import Image from "next/image";
 import notifications from "../../../img/notifications.svg";
 import downArrow from "../../../img/chevron-down.svg";
 import Avatar from "components/atoms/Avatar/avatar";
