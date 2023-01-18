@@ -1,5 +1,5 @@
 import React from "react";
-import Image from "next/legacy/image";
+import Image from "next/image";
 import OpenSaucedLogo from "img/openSauced-icon.png";
 import Text from "components/atoms/Typography/text";
 
@@ -63,7 +63,7 @@ const Footer = (): JSX.Element => {
       <div className="   lg:border-t lg:py-8 lg:items-center lg:justify-between lg:gap-x-4 flex flex-col gap-y-4 lg:flex-row py-2 w-full">
         <div className="text-center lg:text-left justify-center gap-1 flex items-center">
           <div className="w-6 h-6 relative !min-w-[24px] min-h-[24px]">
-            <Image layout="fill" alt="brand logo" src={OpenSaucedLogo} />
+            <Image fill={true} alt="brand logo" src={OpenSaucedLogo} />
           </div>
           <span className="lg:hidden font-bold text-light-slate-12 ">OpenSauced</span>
           <Text className="hidden !text-light-slate-9 lg:inline-block">

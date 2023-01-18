@@ -1,5 +1,5 @@
 import React from "react";
-import Image, { StaticImageData } from "next/legacy/image";
+import Image, { StaticImageData } from "next/image";
 import ContextThumbnailImage from "../../../img/open-sourced-with-bg-icon.png";
 
 interface ContextThumbnailProps {

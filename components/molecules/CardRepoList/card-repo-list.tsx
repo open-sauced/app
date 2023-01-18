@@ -1,6 +1,6 @@
 import Icon from "components/atoms/Icon/icon";
 import Tooltip from "components/atoms/Tooltip/tooltip";
-import { StaticImageData } from "next/legacy/image";
+import { StaticImageData } from "next/image";
 
 export interface RepoList {
   repoName: string;

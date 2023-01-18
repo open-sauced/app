@@ -1,4 +1,4 @@
-import { StaticImageData } from "next/legacy/image";
+import { StaticImageData } from "next/image";
 import Link from "next/link";
 
 import Avatar from "components/atoms/Avatar/avatar";
