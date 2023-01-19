@@ -41,7 +41,7 @@ const UserSettingsPage = () => {
             <div className="flex flex-col gap-3 ">
               <label className="text-light-slate-11  font-normal">Email Preferences</label>
               <Checkbox value={"true"} title="profile email" label="Display Email On Profile" />
-              <Checkbox value={"true"} title="profile email" label="Receive collaboration requests" />
+              <Checkbox value={"true"} title="collaboration requests" label="Receive collaboration requests" />
             </div>
 
             <button className="px-4 w-max py-2  rounded-lg bg-light-slate-4 border border-light-slate-8">

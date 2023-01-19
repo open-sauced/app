@@ -1,6 +1,5 @@
 import React from "react";
-import Image from "next/image";
-import { StaticImageData } from "next/image";
+import Image, { StaticImageData } from "next/image";
 
 import JavascriptIcon from "img/icons/☕️.svg";
 import ReactIcon from "/img/icons/⚛️.svg";
@@ -18,12 +17,13 @@ const LanguagePill = ({ topic, classNames, onClick }: LanguagePillProps) => {
   const renderTopicIcon = (name: string) => {
     const iconMap: { [name: string]: StaticImageData } = {
       react: ReactIcon,
-      python: PythonIcon,
       rust: RustIcon,
       javascript: JavascriptIcon,
       AI: AIIcon,
-      ML: MLIcon
+      ML: MLIcon,
+      python: PythonIcon
     };
+
     return iconMap[name] || "";
   };
   return (
