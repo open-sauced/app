@@ -22,7 +22,7 @@ const UserSettingsPage = () => {
 
   return (
     <div>
-      <div className="flex flex-col gap-4 text-sm text-light-slate-11">
+      <div className="flex flex-col md:flex-row md:justify-between gap-4 text-sm text-light-slate-11">
         <div>
           <Title className="!text-2xl !text-light-slate-11" level={2}>
             Public profile
