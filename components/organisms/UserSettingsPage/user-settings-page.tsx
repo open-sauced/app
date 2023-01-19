@@ -63,7 +63,7 @@ const UserSettingsPage = () => {
               label="URL"
             />
             <TextInput
-              classNames="bg-light-slate-4 text-light-slate-11 font-medium"
+              classNames="bg-light-slate-4 text-light-slate-11"
               placeholder="@aprilcodes"
               label="Twitter Username"
             />

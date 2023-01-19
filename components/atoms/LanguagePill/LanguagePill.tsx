@@ -1,5 +1,6 @@
 import React from "react";
-import Image from "next/legacy/image";
+import Image from "next/image";
+import { StaticImageData } from "next/image";
 
 import JavascriptIcon from "img/icons/☕️.svg";
 import ReactIcon from "/img/icons/⚛️.svg";
@@ -15,19 +16,15 @@ interface LanguagePillProps {
 }
 const LanguagePill = ({ topic, classNames, onClick }: LanguagePillProps) => {
   const renderTopicIcon = (name: string) => {
-    return name === "javascript"
-      ? JavascriptIcon
-      : name === "rust"
-        ? RustIcon
-        : name === "python"
-          ? PythonIcon
-          : name === "AI"
-            ? AIIcon
-            : name === "ML"
-              ? MLIcon
-              : name === "react"
-                ? ReactIcon
-                : "";
+    const iconMap: { [name: string]: StaticImageData } = {
+      react: ReactIcon,
+      python: PythonIcon,
+      rust: RustIcon,
+      javascript: JavascriptIcon,
+      AI: AIIcon,
+      ML: MLIcon
+    };
+    return iconMap[name] || "";
   };
   return (
     <div
