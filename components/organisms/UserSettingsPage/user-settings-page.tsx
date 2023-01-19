@@ -40,8 +40,8 @@ const UserSettingsPage = () => {
             />
             <div className="flex flex-col gap-3 ">
               <label className="text-light-slate-11  font-normal">Email Preferences</label>
-              <Checkbox value={"true"} title="" name="profile email" label="Display Email On Profile" />
-              <Checkbox value={"true"} title="" name="profile email" label="Receive collaboration requests" />
+              <Checkbox value={"true"} title="profile email" label="Display Email On Profile" />
+              <Checkbox value={"true"} title="profile email" label="Receive collaboration requests" />
             </div>
 
             <button className="px-4 w-max py-2  rounded-lg bg-light-slate-4 border border-light-slate-8">
@@ -78,7 +78,7 @@ const UserSettingsPage = () => {
               label="Location"
             />
             <div>
-              <Checkbox value={"true"} title="" name="profile email" label="Display current local time" />
+              <Checkbox value={"true"} title="profile email" label="Display current local time" />
               <span className="ml-7 text-light-slate-9 text-sm font-normal">
                 Other users will see the time difference from their local time.
               </span>
