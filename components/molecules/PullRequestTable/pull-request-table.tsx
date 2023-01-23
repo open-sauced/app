@@ -21,7 +21,7 @@ interface CardTableProps {
   isHoverCard?: boolean;
 }
 
-const ContributorTable = ({ contributor, topic, repositories, limit, isHoverCard }: CardTableProps): JSX.Element => {
+const PullRequestTable = ({ contributor, topic, repositories, limit, isHoverCard }: CardTableProps): JSX.Element => {
   const { data, isLoading } = useTopicContributorPRs(contributor, topic, repositories, limit);
 
   return data.length > 0 ? (
@@ -71,4 +71,4 @@ const ContributorTable = ({ contributor, topic, repositories, limit, isHoverCard
   );
 };
 
-export default ContributorTable;
+export default PullRequestTable;

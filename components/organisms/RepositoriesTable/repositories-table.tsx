@@ -1,4 +1,4 @@
-import { StaticImageData } from "next/image";
+import type { StaticImageData } from "next/image";
 import { Serie } from "@nivo/line";
 
 import RepoRow from "components/molecules/RepoRow/repo-row";
