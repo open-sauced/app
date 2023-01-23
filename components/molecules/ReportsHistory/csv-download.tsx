@@ -13,6 +13,11 @@ interface CSVDownloadProps {
   repositories?: number[];
 }
 
+interface PaginatedContributorsResponse {
+  readonly data: DbContribution[];
+  readonly meta: Meta;
+}
+
 const CSVDownload = ({ report, repositories }: CSVDownloadProps) => {
   const csvRef = useRef<any>();
   const [data, setData] = useState<any[] | null>(null);
@@ -36,7 +41,8 @@ const CSVDownload = ({ report, repositories }: CSVDownloadProps) => {
 
     try {
       setGenerating(true);
-      const result: { data: any[], meta: Meta } = await mutate(key, apiFetcher(key));
+      // @ts-ignore
+      const result: PaginatedContributorsResponse = await mutate(key, apiFetcher(key));
     
       setData(result.data);
     } catch(e) {

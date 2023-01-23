@@ -42,8 +42,7 @@ const Nav: React.FC<NavProps> = ({ toolList, selectedTool = "dashboard", selecte
               selectedFilter
                 ? `/filter/${Array.isArray(selectedFilter) ? selectedFilter.join("/") : selectedFilter}`
                 : ""
-            }`}
-          >
+            }`}>
             {/* Button component was here and needed to be removed to resolve issue #187. Button component had styling that will eventually need to be replaced. */}
             <div
               className={`flex h-11 px-2 md:px-4 items-center rounded-t-lg ${
