@@ -25,5 +25,7 @@ PullRequestSocialCardStory.args = {
 
   languageList: testLanguageList,
   prTicketId: "#223",
-  commentsCount: 5
+  commentsCount: 5,
+  linesAdded: 12,
+  linesRemoved: 4
 };

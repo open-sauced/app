@@ -16,6 +16,8 @@ interface PullRequestSocialCardProps {
   prTitle: string;
   commentsCount?: number;
   avatar?: string;
+  linesAdded?: number;
+  linesRemoved?: number;
 }
 const PullRequestSocialCard = ({
   orgName,
@@ -24,7 +26,9 @@ const PullRequestSocialCard = ({
   avatar,
   languageList,
   prTicketId,
-  commentsCount
+  commentsCount,
+  linesAdded,
+  linesRemoved
 }: PullRequestSocialCardProps) => {
   return (
     <div className="w-[26.375rem] cursor-pointer border rounded-xl px-5 py-4">
@@ -50,8 +54,16 @@ const PullRequestSocialCard = ({
 
       <div className="flex items-center gap-5 text-light-slate-10 mt-3">
         <div className="flex justify-between gap-2">
-          <span className="text-green-600">+24</span>
-          <span className="text-red-600">-2</span>
+          {linesAdded && (
+            <span title="lines added" className="text-green-600">
+              +{linesAdded}
+            </span>
+          )}
+          {linesRemoved && (
+            <span title="lines removed" className="text-red-600">
+              -{linesRemoved}
+            </span>
+          )}
         </div>
         <div className="flex gap-0.5">
           <div className="w-3 h-3 bg-green-600 rounded"></div>
