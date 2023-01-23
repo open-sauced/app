@@ -38,15 +38,6 @@ const UserSettingsPage = () => {
               placeholder="april@stockgen.com"
               label="Email*"
             />
-            <div className="flex flex-col gap-3 ">
-              <label className="text-light-slate-11  font-normal">Email Preferences</label>
-              <Checkbox value={"true"} title="profile email" label="Display Email On Profile" />
-              <Checkbox value={"true"} title="collaboration requests" label="Receive collaboration requests" />
-            </div>
-
-            <button className="px-4 w-max py-2  rounded-lg bg-light-slate-4 border border-light-slate-8">
-              Update Preferences
-            </button>
 
             {/* Bio section */}
             <div className="flex flex-col gap-2">
@@ -92,23 +83,35 @@ const UserSettingsPage = () => {
             <Button type="primary">Update profile</Button>
           </form>
         </div>
-        <div className="flex flex-col gap-6">
-          <Title className="!text-2xl !font-normal !text-light-slate-11" level={2}>
-            Interests
-          </Title>
-          <div className="flex gap-3 w-72 flex-wrap">
-            {interestArray.map((topic, index) => (
-              <LanguagePill
-                onClick={() => handleSelectInterest(topic)}
-                classNames={`${selectedInterest.includes(topic) && "bg-light-orange-10 text-white"}`}
-                topic={topic}
-                key={index}
-              />
-            ))}
+        <div className="flex flex-col-reverse md:flex-col gap-6">
+          <div className="flex flex-col gap-6">
+            <Title className="!text-2xl !font-normal !text-light-slate-11" level={2}>
+              Interests
+            </Title>
+            <div className="flex gap-3 w-72 flex-wrap">
+              {interestArray.map((topic, index) => (
+                <LanguagePill
+                  onClick={() => handleSelectInterest(topic)}
+                  classNames={`${selectedInterest.includes(topic) && "bg-light-orange-10 text-white"}`}
+                  topic={topic}
+                  key={index}
+                />
+              ))}
+            </div>
+            <button className="px-4 w-max py-2  rounded-lg bg-light-slate-4 border border-light-slate-8">
+              Update Interest
+            </button>
           </div>
-          <button className="px-4 w-max py-2  rounded-lg bg-light-slate-4 border border-light-slate-8">
-            Update Interest
-          </button>
+          <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-3 ">
+              <label className="text-light-slate-11 text-2xl  font-normal">Email Preferences</label>
+              <Checkbox value={"true"} title="profile email" label="Display Email On Profile" />
+              <Checkbox value={"true"} title="collaboration requests" label="Receive collaboration requests" />
+            </div>
+            <button className="px-4 w-max py-2  rounded-lg bg-light-slate-4 border border-light-slate-8">
+              Update Preferences
+            </button>
+          </div>
         </div>
       </div>
     </div>
