@@ -99,7 +99,7 @@ const UserSettingsPage = () => {
               ))}
             </div>
             <button className="px-4 w-max py-2  rounded-lg bg-light-slate-4 border border-light-slate-8">
-              Update Interest
+              Update Interests
             </button>
           </div>
           <div className="flex flex-col gap-6">
