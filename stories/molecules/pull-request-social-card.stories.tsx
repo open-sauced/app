@@ -17,11 +17,13 @@ const PullRequestSocialCardTemplate: ComponentStory<typeof PullRequestSocialCard
 export const PullRequestSocialCardStory = PullRequestSocialCardTemplate.bind({});
 
 PullRequestSocialCardStory.args = {
-  prTitle: "#223 Add support for Swift Package Manager",
+  prTitle: "Add support for Swift Package Manager",
   orgName: "open-sauced",
   repoName: "insights",
   avatar:
     "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1064&q=80",
 
-  languageList: testLanguageList
+  languageList: testLanguageList,
+  prTicketId: "#223",
+  commentsCount: 5
 };
