@@ -33,7 +33,7 @@ const PullRequestSocialCard = ({
   return (
     <div className="w-[26.375rem] cursor-pointer border rounded-xl px-5 py-4">
       <div className="flex gap-2 items-center ">
-        <Avatar alt="" avatarURL={avatar} initials="" size="sm" className="" />
+        <Avatar alt="" avatarURL={avatar} initials="" size="sm"  />
         <Text className="!text-sm !text-light-slate-11">
           {orgName}/<span className="text-light-slate-11">{repoName}</span>
         </Text>
