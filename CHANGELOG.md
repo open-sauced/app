@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.25.0-beta.7](https://github.com/open-sauced/insights/compare/v1.25.0-beta.6...v1.25.0-beta.7) (2023-01-24)
+
+
+### 🐛 Bug Fixes
+
+* make repositories table styles more responsive ([#773](https://github.com/open-sauced/insights/issues/773)) ([fe5c6f5](https://github.com/open-sauced/insights/commit/fe5c6f55c2e3e10e99432ebf1b772c7326f3642e)), closes [#724](https://github.com/open-sauced/insights/issues/724)
+
 ## [1.25.0-beta.6](https://github.com/open-sauced/insights/compare/v1.25.0-beta.5...v1.25.0-beta.6) (2023-01-24)
 
 
