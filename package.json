@@ -45,6 +45,7 @@
     "@nivo/pie": "^0.80.0",
     "@nivo/scatterplot": "^0.80.0",
     "@primer/octicons-react": "^17.5.0",
+    "@radix-ui/react-checkbox": "^1.0.1",
     "@radix-ui/react-context-menu": "^1.0.0",
     "@radix-ui/react-dropdown-menu": "^1.0.0",
     "@radix-ui/react-hover-card": "^1.0.2",
