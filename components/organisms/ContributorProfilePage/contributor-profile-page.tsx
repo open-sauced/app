@@ -1,8 +1,3 @@
-import { IconContext } from "react-icons";
-import { BsFillArrowUpCircleFill } from "react-icons/bs";
-import { FaCheckCircle } from "react-icons/fa";
-import { VscGitMerge, VscRepo } from "react-icons/vsc";
-
 import Title from "components/atoms/Typography/title";
 import Text from "components/atoms/Typography/text";
 import CardHorizontalBarChart from "components/molecules/CardHorizontalBarChart/card-horizontal-bar-chart";
@@ -95,7 +90,7 @@ const ContributorProfilePage = ({
               </div>
               <div>
                 <p className="mb-4">Languages</p>
-                <CardHorizontalBarChart languageList={languageList} />
+                <CardHorizontalBarChart withDescription={false} languageList={languageList} />
               </div>
             </div>
             <div className="flex-1">
