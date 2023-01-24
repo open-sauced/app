@@ -41,7 +41,7 @@ export const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
   };
 
   const uniqueContributors: ContributorPrMap = prData.reduce((prs, curr) => {
-    if(curr.state !== prStateFilter && prStateFilter !== "all") return prs;
+    if (curr.state !== prStateFilter && prStateFilter !== "all") return prs;
 
     if (prs[curr.author_login]) {
       prs[curr.author_login].linesCount += curr.linesCount;
@@ -81,7 +81,7 @@ export const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
 
   const maxFilesModified = scatterChartData.reduce((max, curr) => {
     const { y } = curr;
-    if (y > max) {
+    if (Number(y) > max) {
       return y as number;
     }
     return max;
