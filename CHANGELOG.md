@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.25.0-beta.8](https://github.com/open-sauced/insights/compare/v1.25.0-beta.7...v1.25.0-beta.8) (2023-01-24)
+
+
+### 🍕 Features
+
+* add `PullRequestSocialCard` component to design system ([#774](https://github.com/open-sauced/insights/issues/774)) ([04600c2](https://github.com/open-sauced/insights/commit/04600c24a5d3c437aacd36fa15d4b068d1c42e33)), closes [#716](https://github.com/open-sauced/insights/issues/716)
+
 ## [1.25.0-beta.7](https://github.com/open-sauced/insights/compare/v1.25.0-beta.6...v1.25.0-beta.7) (2023-01-24)
 
 
