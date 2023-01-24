@@ -5,6 +5,18 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.25.0-beta.6](https://github.com/open-sauced/insights/compare/v1.25.0-beta.5...v1.25.0-beta.6) (2023-01-24)
+
+
+### 🍕 Features
+
+* add `UserSettings` component to design system ([#788](https://github.com/open-sauced/insights/issues/788)) ([dd9cabd](https://github.com/open-sauced/insights/commit/dd9cabdbe473901e2f27031a41edf065ee7ac50f)), closes [#783](https://github.com/open-sauced/insights/issues/783)
+
+
+### 🐛 Bug Fixes
+
+* mobile insights header layout break ([#795](https://github.com/open-sauced/insights/issues/795)) ([0bc2f0b](https://github.com/open-sauced/insights/commit/0bc2f0b6e3d6d4b132aad11284d2529573b687cf)), closes [#769](https://github.com/open-sauced/insights/issues/769)
+
 ## [1.25.0-beta.5](https://github.com/open-sauced/insights/compare/v1.25.0-beta.4...v1.25.0-beta.5) (2023-01-18)
 
 
