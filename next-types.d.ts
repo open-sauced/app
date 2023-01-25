@@ -120,4 +120,10 @@ interface DbUser {
   readonly is_onboarded: boolean;
   readonly is_waitlisted: boolean;
   readonly role: number;
+  readonly bio: string;
+  readonly twitter_username: string;
+  readonly company: string;
+  readonly location: string;
+  readonly display_local_time: boolean;
+  readonly name: string;
 }

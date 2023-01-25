@@ -5,8 +5,6 @@ import { useSingleContributor } from "lib/hooks/useSingleContributor";
 import ContributorProfilePage from "components/organisms/ContributorProfilePage/contributor-profile-page";
 import { ContributorsProfileType } from "components/molecules/ContributorHoverCard/contributor-hover-card";
 
-import HubPageLayout from "layouts/hub-page";
-import HubLayout from "layouts/hub";
 import ProfileLayout from "layouts/profile";
 import { useFetchUser } from "lib/hooks/useFetchUser";
 
