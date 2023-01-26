@@ -140,7 +140,7 @@ const ContributorProfilePage = ({
                   </div>
                 </div>
                 <div className="mt-10 h-32">
-                  <CardLineChart lineChartOption={chart} />
+                  <CardLineChart lineChartOption={chart} className="!h-32" />
                 </div>
                 <div>
                   <CardRepoList limit={7} repoList={repoList} />
