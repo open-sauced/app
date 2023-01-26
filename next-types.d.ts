@@ -126,4 +126,5 @@ interface DbUser {
   readonly location: string;
   readonly display_local_time: boolean;
   readonly name: string;
+  readonly interests: string
 }
