@@ -52,8 +52,8 @@ const CustomAvatar = ({ className, avatarURL, initials, alt, size, hasBorder, is
         <Image
           className={`${className ? className : ""} object-cover`}
           alt={alt ? alt : "Avatar"}
-          width={size}
-          height={size}
+          width={size as number}
+          height={size as number}
           src={avatarURL ? avatarURL : AvatarImage}
         />
       ) : (
@@ -89,7 +89,7 @@ const DefaultAvatar = ({
         <Image
           className={`${className ? className : ""} object-cover`}
           alt={alt ? alt : "Avatar"}
-          layout="fill"
+          fill={true}
           src={avatarURL ? avatarURL : AvatarImage}
         />
       ) : (

@@ -66,6 +66,7 @@ interface DbContribution {
   readonly recent_opened_prs: number;
   readonly recent_pr_reviews: number;
   readonly recent_pr_velocity: number;
+  readonly recent_merged_prs: number;
 }
 
 interface DbInsight {
@@ -98,7 +99,7 @@ interface DbUserInsight {
   readonly short_code: string;
   readonly created_at: string;
   readonly updated_at: string;
-  readonly repos: DbUserInsightRepo[]
+  readonly repos: DbUserInsightRepo[];
 }
 
 interface DbUserInsightRepo {
@@ -106,4 +107,17 @@ interface DbUserInsightRepo {
   readonly insight_id: number;
   readonly repo_id: number;
   readonly created_at: string;
+}
+
+interface DbUser {
+  readonly id: number;
+  readonly open_issues: number;
+  readonly is_private: boolean;
+  readonly is_open_sauced_member: boolean;
+  readonly created_at: string;
+  readonly updated_at: string;
+  readonly login: string;
+  readonly is_onboarded: boolean;
+  readonly is_waitlisted: boolean;
+  readonly role: number;
 }

@@ -18,17 +18,15 @@ const AvatarHoverCard = ({ contributor, repositories }: AvatarProps): JSX.Elemen
   return (
     <HoverCard.Root>
       <Link href={`/user/${contributor}`} as={`/user/${contributor}`}>
-        <a>
-          <HoverCard.Trigger asChild>
-            <img
-              alt={contributor}
-              className="w-full h-full"
-              height={500}
-              src={avatar}
-              width={500}
-            />
-          </HoverCard.Trigger>
-        </a>
+        <HoverCard.Trigger asChild>
+          <img
+            alt={contributor}
+            className="w-full h-full"
+            height={500}
+            src={avatar}
+            width={500}
+          />
+        </HoverCard.Trigger>
       </Link>
       <HoverCard.Portal>
         <HoverCard.Content sideOffset={5}>

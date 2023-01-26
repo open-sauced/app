@@ -42,11 +42,11 @@ const TextInput = ({
         {label && <p className="mb-2   text-light-slate-9 text-sm">{label}</p>}
         <div
           className={clsx(
-            classNames,
             "flex-1 px-3 text-light-slate-12 bg-white shadow-input border transition rounded-lg py-1 flex items-center",
             borderless && "!border-none",
             state === "invalid" ? " focus-within:border-light-red-10 " : "focus-within:border-light-orange-9 ",
-            disabled && "bg-light-slate-3"
+            disabled && "bg-light-slate-3",
+            classNames
           )}
         >
           <input
@@ -57,7 +57,7 @@ const TextInput = ({
             placeholder={placeholder || ""}
             onChange={onChange}
             value={value}
-            className="flex-1 focus:outline-none  "
+            className={`flex-1 focus:outline-none  ${classNames}`}
             autoFocus={autoFocus}
             disabled={disabled}
           />

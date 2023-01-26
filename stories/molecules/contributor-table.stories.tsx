@@ -1,6 +1,6 @@
 import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-import ContributorTable from "components/molecules/ContributorTable/contributor-table";
+import PullRequestTable from "components/molecules/PullRequestTable/pull-request-table";
 
 const storyConfig = {
   title: "Design System/Molecules/Contributor Table",
@@ -45,10 +45,10 @@ const testPRs = [
 ];
 
 //CardTable Template
-const ContributorTableTemplate: ComponentStory<typeof ContributorTable> = (args) => <ContributorTable {...args} />;
+const PullRequestTableTemplate: ComponentStory<typeof PullRequestTable> = (args) => <PullRequestTable {...args} />;
 
-export const AddedPullRequests = ContributorTableTemplate.bind({});
-export const NoPullRequests = ContributorTableTemplate.bind({});
+export const AddedPullRequests = PullRequestTableTemplate.bind({});
+export const NoPullRequests = PullRequestTableTemplate.bind({});
 
 AddedPullRequests.args = {
 };

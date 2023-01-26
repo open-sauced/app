@@ -46,7 +46,7 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
       console.log("You are on the browser");
 
       // When initializing, we restore the data from `localStorage` into a map.
-      const map = new Map(JSON.parse(localStorage.getItem("app-cache") || "[]"));
+      const map: Map<string, string> = new Map(JSON.parse(localStorage.getItem("app-cache") || "[]"));
 
       // Before unloading the app, we write back all the data into `localStorage`.
       window.addEventListener("beforeunload", () => {
@@ -71,13 +71,14 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
     }
   }
 
+  const title = `Open Sauced Insights ${filterName ? ` - ${changeCapitalization(filterName!.toString(), true)}` : ""} ${
+    toolName ? ` / ${changeCapitalization(toolName.toString(), true)}` : ""
+  }`;
+
   return (
     <>
       <Head>
-        <title>
-          Open Sauced Insights{filterName && ` - ${changeCapitalization(filterName.toString(), true)}`}{" "}
-          {toolName && ` / ${changeCapitalization(toolName.toString(), true)}`}
-        </title>
+        <title>{title}</title>
         <link rel="icon" href="/favicon.ico" />
         <meta property="og:url" content="https://insights.opensauced.pizza" />
         <meta property="og:type" content="website" />
