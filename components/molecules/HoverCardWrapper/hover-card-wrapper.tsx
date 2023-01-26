@@ -5,6 +5,8 @@ import { useSingleContributor } from "lib/hooks/useSingleContributor";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 import ContributorHoverCard, { ContributorsProfileType } from "../ContributorHoverCard/contributor-hover-card";
 
+import roundedImage from "lib/utils/roundedImages";
+
 interface HoverCardWrapperProps {
   username: string;
   repositories?: number[];
@@ -25,7 +27,7 @@ const HoverCardWrapper = ({ username, repositories }: HoverCardWrapperProps) => 
   });
 
   const profile: ContributorsProfileType = {
-    githubAvatar: `https://www.github.com/${username}.png?size=60`,
+    githubAvatar: roundedImage(`https://www.github.com/${username}.png?size=60`, process.env.NEXT_PUBLIC_CLOUD_NAME),
     githubName: username,
     totalPR: contributor[0]?.recent_pr_total
   };
