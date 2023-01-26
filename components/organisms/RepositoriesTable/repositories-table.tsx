@@ -3,7 +3,7 @@ import { Serie } from "@nivo/line";
 
 import RepoRow from "components/molecules/RepoRow/repo-row";
 
-import { getAvatarLink } from "lib/utils/github";
+import { getAvatarByUsername } from "lib/utils/github";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 
 export interface ContributorsRows {
@@ -102,7 +102,7 @@ const RepositoriesTable = ({
             handle: repoOwner,
             name: repoName,
             // eslint-disable-next-line camelcase
-            owner_avatar: getAvatarLink(repoOwner as string)
+            owner_avatar: getAvatarByUsername(repoOwner as string)
           }}
           userPage={user}
           handleOnSelectRepo={handleOnSelectRepo}

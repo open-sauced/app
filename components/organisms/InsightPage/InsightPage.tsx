@@ -12,7 +12,7 @@ import RepositoryCartItem from "components/molecules/ReposoitoryCartItem/reposit
 import RepoNotIndexed from "components/organisms/Repositories/repository-not-indexed";
 
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
-import { getAvatarLink } from "lib/utils/github";
+import { getAvatarByUsername } from "lib/utils/github";
 
 enum RepoLookupError {
   Initial = 0,
@@ -62,7 +62,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
       orgName: repo.owner,
       repoName: repo.name,
       totalPrs,
-      avatar: getAvatarLink(repo.owner, 60),
+      avatar: getAvatarByUsername(repo.owner, 60),
       handleRemoveItem: () => {}
     };
   });
@@ -293,7 +293,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
             return (
               <RepositoryCartItem
                 key={`repo_${repo.id}`}
-                avatar={getAvatarLink(repo.owner, 60)}
+                avatar={getAvatarByUsername(repo.owner, 60)}
                 handleRemoveItem={() => handleRemoveRepository(repo.id)}
                 orgName={repo.owner}
                 repoName={repo.name}
