@@ -34,10 +34,16 @@ const ContributorProfileInfo = ({
           <span className="text-light-slate-11 text-sm">{`@${githubName}`}</span>
 
           {isConnected && (
-            <span className="flex text-light-slate-10 gap-2 items-center">
-              <AiOutlineGift className="text-light-slate-9" />
-              June 2022
-            </span>
+            <>
+              <span className="flex text-light-slate-10 gap-2 items-center">
+                <FiClock className="text-light-slate-9" />
+                UTC +1
+              </span>
+              <span className="flex text-light-slate-10 gap-2 items-center">
+                <AiOutlineGift className="text-light-slate-9" />
+                June 2022
+              </span>
+            </>
           )}
         </div>
       </div>
