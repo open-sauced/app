@@ -277,4 +277,3 @@ storybook-static
 **/__snapshots__
 .env*
 !.env
-.dccache
