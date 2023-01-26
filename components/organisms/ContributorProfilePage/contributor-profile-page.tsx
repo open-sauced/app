@@ -86,7 +86,13 @@ const ContributorProfilePage = ({
           <ContributorProfileHeader isConnected={!!user} githubName={githubName} avatarUrl={githubAvatar} />
           <div className="pt-24 px-4 md:px-10  lg:px-16 flex flex-col lg:flex-row lg:gap-40  w-full overflow-hidden  max-w-full justify-between">
             <div className="flex flex-col w-80 gap-4 ">
-              <ContributorProfileInfo githubName={githubName} />
+              <ContributorProfileInfo
+                interests={user?.interests}
+                twitterUsername={twitter_username}
+                bio={bio}
+                githubName={githubName}
+                isConnected={!!user}
+              />
 
               <div>
                 <p className="mb-4">Languages</p>
