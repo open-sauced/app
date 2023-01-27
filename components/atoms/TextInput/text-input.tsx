@@ -45,7 +45,7 @@ const TextInput = ({
             "flex-1 px-3 text-light-slate-12 bg-white shadow-input border transition rounded-lg py-1 flex items-center",
             borderless && "!border-none",
             state === "invalid" ? " focus-within:border-light-red-10 " : "focus-within:border-light-orange-9 ",
-            disabled && "bg-light-slate-3",
+            disabled && "bg-light-slate-3 text-light-slate-6",
             classNames
           )}
         >
@@ -57,18 +57,22 @@ const TextInput = ({
             placeholder={placeholder || ""}
             onChange={onChange}
             value={value}
-            className={`flex-1 focus:outline-none  ${classNames}`}
+            className={`flex-1 focus:outline-none  ${classNames} ${disabled && "bg-light-slate-3 text-light-slate-9"}`}
             autoFocus={autoFocus}
             disabled={disabled}
           />
-          {state === "valid" ? (
-            <CheckCircleFillIcon className="text-light-orange-9" size={14} />
-          ) : !!value ? (
-            <span className="flex items-center" onClick={() => handleResetInput()}>
-              <XCircleFillIcon className="text-light-red-11" size={14} />
-            </span>
-          ) : (
-            ""
+          {!disabled && (
+            <>
+              {state === "valid" ? (
+                <CheckCircleFillIcon className="text-light-orange-9" size={14} />
+              ) : !!value ? (
+                <span className="flex items-center" onClick={() => handleResetInput()}>
+                  <XCircleFillIcon className="text-light-red-11" size={14} />
+                </span>
+              ) : (
+                ""
+              )}
+            </>
           )}
         </div>
       </label>
