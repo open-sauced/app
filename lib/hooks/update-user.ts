@@ -7,16 +7,17 @@ interface useUpdateUserProps {
 const baseUrl = process.env.NEXT_PUBLIC_API_URL;
 const UpdateUser = async ({ token, data, params }: useUpdateUserProps) => {
   try {
-    const res = await fetch(`${baseUrl}/auth/profile/${params || undefined}`, {
+    const res = await fetch(`${baseUrl}/auth/profile${params && `/${params}`}`, {
       headers: { Accept: "application/json", "Content-Type": "application/json", Authorization: `Bearer ${token}` },
       method: "PATCH",
       body: JSON.stringify({ ...data })
     });
 
     if (res.status === 200) {
-      return res;
+      return res.ok;
     } else {
-      return res;
+      console.log(res);
+      return false;
     }
   } catch (e) {
     console.log(e);
