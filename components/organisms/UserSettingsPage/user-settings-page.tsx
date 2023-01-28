@@ -18,7 +18,7 @@ const UserSettingsPage = () => {
   const [email, setEmail] = useState<string | undefined>(user?.email);
   const [selectedInterest, setSelectedInterest] = useState<string[]>([]);
   const interestArray = ["javascript", "python", "rust", "ML", "AI", "react"];
-  console.log(sessionToken);
+
   const validateEmail = (email: string) => {
     return String(email)
       .toLowerCase()
@@ -56,7 +56,7 @@ const UserSettingsPage = () => {
 
     const data = await UpdateUser({
       token: sessionToken || "",
-      data: { email: email, interests: [""] }
+      data: { email: email, interests: [] }
     });
     if (data) {
       ToastTrigger({ message: "Updated successfully", type: "success" });
