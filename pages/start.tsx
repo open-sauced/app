@@ -29,7 +29,7 @@ import useLoginRepoList from "lib/hooks/useLoginRepoList";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import useSession from "lib/hooks/useSession";
 import { captureAnayltics } from "lib/utils/analytics";
-import { getAvatarLink } from "lib/utils/github";
+import { getAvatarByUsername } from "lib/utils/github";
 import useStore from "lib/store";
 
 type handleLoginStep = () => void;
@@ -306,7 +306,7 @@ const LoginStep3: React.FC<LoginStep3Props> = ({ repoList, checkFollowed }) => {
                         <img
                           alt="Repo Icon"
                           className="shrink-0 h-4 w-4 rounded overflow-hidden"
-                          src={getAvatarLink(repo.repoOwner)}
+                          src={getAvatarByUsername(repo.repoOwner)}
                         />
                         <Text className="!text-sm ">{`${repo.repoOwner}/`}</Text>
                       </div>

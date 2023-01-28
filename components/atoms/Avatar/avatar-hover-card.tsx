@@ -4,7 +4,8 @@ import Link from "next/link";
 
 import HoverCardWrapper from "components/molecules/HoverCardWrapper/hover-card-wrapper";
 
-import { getAvatarLink } from "lib/utils/github";
+import { getAvatarByUsername } from "lib/utils/github";
+import roundedImage from "lib/utils/roundedImages";
 
 export declare interface AvatarProps {
   contributor: string;
@@ -12,6 +13,7 @@ export declare interface AvatarProps {
 }
 
 const AvatarHoverCard = ({ contributor, repositories }: AvatarProps): JSX.Element => {
+  const avatar = roundedImage(getAvatarByUsername(contributor), process.env.NEXT_PUBLIC_CLOUD_NAME);
 
   return (
     <HoverCard.Root>
@@ -21,7 +23,7 @@ const AvatarHoverCard = ({ contributor, repositories }: AvatarProps): JSX.Elemen
             alt={contributor}
             className="w-full h-full"
             height={500}
-            src={getAvatarLink(contributor)}
+            src={avatar}
             width={500}
           />
         </HoverCard.Trigger>

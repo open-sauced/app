@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.25.0-beta.9](https://github.com/open-sauced/insights/compare/v1.25.0-beta.8...v1.25.0-beta.9) (2023-01-26)
+
+
+### 🐛 Bug Fixes
+
+* use correct avatar URL for caching  ([#800](https://github.com/open-sauced/insights/issues/800)) ([726f11b](https://github.com/open-sauced/insights/commit/726f11b263ea867e4efd7137f439309e8d9c554b)), closes [#757](https://github.com/open-sauced/insights/issues/757) [#746](https://github.com/open-sauced/insights/issues/746)
+
 ## [1.25.0-beta.8](https://github.com/open-sauced/insights/compare/v1.25.0-beta.7...v1.25.0-beta.8) (2023-01-24)
 
 
