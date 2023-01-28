@@ -1,4 +1,4 @@
-import React, { useState , useEffect} from "react";
+import React, { useState, useEffect } from "react";
 
 import Button from "components/atoms/Button/button";
 import Checkbox from "components/atoms/Checkbox/checkbox";
@@ -9,10 +9,12 @@ import SelectOption from "components/atoms/Select/select-option";
 import LanguagePill from "components/atoms/LanguagePill/LanguagePill";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { UpdateUser } from "lib/hooks/update-user";
+import { ToastTrigger } from "lib/utils/toast-trigger";
 
 const UserSettingsPage = () => {
   let error;
   const { user, sessionToken } = useSupabaseAuth();
+  const [isValidEmail, setIsValidEmail] = useState<boolean>(false);
   const [email, setEmail] = useState<string | undefined>(user?.email);
   const [selectedInterest, setSelectedInterest] = useState<string[]>([]);
   const interestArray = ["javascript", "python", "rust", "ML", "AI", "react"];
@@ -25,9 +27,9 @@ const UserSettingsPage = () => {
       );
   };
 
-  useEffect(()=>{
-    if(user) setEmail(user.email);
-  },[user]);
+  useEffect(() => {
+    if (user) setEmail(user.email);
+  }, [user]);
 
   const handleSelectInterest = (interest: string) => {
     if (selectedInterest.length > 0 && selectedInterest.includes(interest)) {
@@ -43,20 +45,26 @@ const UserSettingsPage = () => {
       data: { email: user?.user_metadata.email, interests: selectedInterest },
       params: "interests"
     });
-    console.log(data);
+    if (data) {
+      ToastTrigger({ message: "Updated successfully", type: "success" });
+    } else {
+      ToastTrigger({ message: "An error occured!!!", type: "error" });
+    }
+
   };
   const handleUpdateProfile = async () => {
-    if(validateEmail(email || "")){
-      const data = await UpdateUser({
-        token: sessionToken || "",
-        data: { email: user?.user_metadata.email, interests: selectedInterest }
-      });
-      console.log(data);
-    }else{
-      console.log("email is not valid");
-      error = "email is not valid";
-    };
-   
+
+    const data = await UpdateUser({
+      token: sessionToken || "",
+      data: { email: email, interests: [] }
+    });
+    if (data) {
+      ToastTrigger({ message: "Updated successfully", type: "success" });
+    } else {
+      ToastTrigger({ message: "An error occured!!!", type: "error" });
+    }
+
+
   };
 
   return (
@@ -66,7 +74,7 @@ const UserSettingsPage = () => {
           <Title className="!text-2xl !text-light-slate-11" level={2}>
             Public profile
           </Title>
-          <form onSubmit={(e)=> e.preventDefault()} className="flex flex-col gap-6 mt-6">
+          <form onSubmit={(e) => e.preventDefault()} className="flex flex-col gap-6 mt-6">
             <TextInput
               classNames="bg-light-slate-4 text-light-slate-11 font-medium"
               label="Name*"
@@ -77,10 +85,17 @@ const UserSettingsPage = () => {
             <TextInput
               classNames="bg-light-slate-4 text-light-slate-11 font-medium"
               placeholder="april@stockgen.com"
-              onChange={(e)=> setEmail(e.target.value)}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                if (validateEmail(e.target.value)) {
+                  setIsValidEmail(true);
+                } else {
+                  setIsValidEmail(false);
+                }
+              }}
               label="Email*"
               value={email}
-              
+
             />
 
             {/* Bio section */}
@@ -129,7 +144,7 @@ const UserSettingsPage = () => {
                 <SelectOption value="Wat+1">Select time zone</SelectOption>
               </Select>
             </div>
-            <Button onClick={handleUpdateProfile} type="primary">Update profile</Button>
+            <Button disabled={!isValidEmail} onClick={handleUpdateProfile} type="primary">Update profile</Button>
           </form>
         </div>
         <div className="flex flex-col-reverse md:flex-col gap-6">
@@ -147,9 +162,9 @@ const UserSettingsPage = () => {
                 />
               ))}
             </div>
-            <button className="px-4 w-max py-2  rounded-lg bg-light-slate-4 border border-light-slate-8">
+            <Button type="default" disabled={selectedInterest.length === 0} onClick={handleUpdateInterest} className="!px-4 !text-light-slate-11 !py-2  !bg-light-slate-4">
               Update Interests
-            </button>
+            </Button>
           </div>
           <div className="flex flex-col gap-6">
             <div className="flex flex-col gap-3 ">
@@ -157,12 +172,13 @@ const UserSettingsPage = () => {
               <Checkbox value={"true"} title="profile email" label="Display Email On Profile" />
               <Checkbox value={"true"} title="collaboration requests" label="Receive collaboration requests" />
             </div>
-            <button
-              onClick={handleUpdateInterest}
-              className="px-4 w-max py-2  rounded-lg bg-light-slate-4 border border-light-slate-8"
+            <Button
+              type="default"
+              disabled
+              className="!px-4 w-max !py-2  !bg-light-slate-4 "
             >
               Update Preferences
-            </button>
+            </Button>
           </div>
         </div>
       </div>
