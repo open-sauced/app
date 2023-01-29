@@ -37,7 +37,7 @@ const TableHeader = ({
           ""
         )}
         {onSearch ? (
-          <Search placeholder={`Search ${title}`} className="max-w-full text-sm py-1.5" name={"query"} onSearch={onSearch} />
+          <Search placeholder={`${title} "facebook/react"`} className="max-w-full text-sm py-1.5" name={"query"} onSearch={onSearch} />
         ) : (
           ""
         )}
