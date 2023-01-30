@@ -12,7 +12,6 @@ import { UpdateUser } from "lib/hooks/update-user";
 import { ToastTrigger } from "lib/utils/toast-trigger";
 
 const UserSettingsPage = () => {
-
   const { user, sessionToken } = useSupabaseAuth();
   const [isValidEmail, setIsValidEmail] = useState<boolean>(false);
   const [email, setEmail] = useState<string | undefined>(user?.email);
@@ -50,10 +49,8 @@ const UserSettingsPage = () => {
     } else {
       ToastTrigger({ message: "An error occured!!!", type: "error" });
     }
-
   };
   const handleUpdateProfile = async () => {
-
     const data = await UpdateUser({
       token: sessionToken || "",
       data: { email: email, interests: [] }
@@ -63,8 +60,6 @@ const UserSettingsPage = () => {
     } else {
       ToastTrigger({ message: "An error occured!!!", type: "error" });
     }
-
-
   };
 
   return (
@@ -95,7 +90,6 @@ const UserSettingsPage = () => {
               }}
               label="Email*"
               value={email}
-
             />
 
             {/* Bio section */}
@@ -133,7 +127,7 @@ const UserSettingsPage = () => {
               disabled
             />
             <div>
-              <Checkbox disabled value={"true"} title="profile email" label="Display current local time" />
+              <Checkbox disabled value={"false"} title="profile email" label="Display current local time" />
               <span className="ml-7 text-light-slate-9 text-sm font-normal">
                 Other users will see the time difference from their local time.
               </span>
@@ -144,7 +138,9 @@ const UserSettingsPage = () => {
                 <SelectOption value="Wat+1">Select time zone</SelectOption>
               </Select>
             </div>
-            <Button disabled={!isValidEmail} onClick={handleUpdateProfile} type="primary">Update profile</Button>
+            <Button disabled={!isValidEmail} onClick={handleUpdateProfile} type="primary">
+              Update profile
+            </Button>
           </form>
         </div>
         <div className="flex flex-col-reverse md:flex-col gap-6">
@@ -162,21 +158,27 @@ const UserSettingsPage = () => {
                 />
               ))}
             </div>
-            <Button type="default" disabled={selectedInterest.length === 0} onClick={handleUpdateInterest} className="!px-4 !text-light-slate-11 !py-2  !bg-light-slate-4">
+            <Button
+              type="default"
+              disabled={selectedInterest.length === 0}
+              onClick={handleUpdateInterest}
+              className="!px-4 !text-light-slate-11 !py-2  !bg-light-slate-4"
+            >
               Update Interests
             </Button>
           </div>
           <div className="flex flex-col gap-6">
             <div className="flex flex-col gap-3 ">
               <label className="text-light-slate-11 text-2xl  font-normal">Email Preferences</label>
-              <Checkbox value={"true"} title="profile email" label="Display Email On Profile" />
-              <Checkbox value={"true"} title="collaboration requests" label="Receive collaboration requests" />
+              <Checkbox disabled value={"false"} title="profile email" label="Display Email On Profile" />
+              <Checkbox
+                disabled
+                value={"false"}
+                title="collaboration requests"
+                label="Receive collaboration requests"
+              />
             </div>
-            <Button
-              type="default"
-              disabled
-              className="!px-4 w-max !py-2  !bg-light-slate-4 "
-            >
+            <Button type="default" disabled className="!px-4 w-max !py-2  !bg-light-slate-4 ">
               Update Preferences
             </Button>
           </div>
