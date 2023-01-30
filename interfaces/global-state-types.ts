@@ -5,4 +5,5 @@ export interface GlobalStateInterface {
   onboarded?: boolean;
   waitlisted?: boolean;
   range?: number;
+  insightRepoLimit?: number;
 }
