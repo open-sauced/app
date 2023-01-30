@@ -13,6 +13,7 @@ import RepoNotIndexed from "components/organisms/Repositories/repository-not-ind
 
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { getAvatarByUsername } from "lib/utils/github";
+import useStore from "lib/store";
 
 enum RepoLookupError {
   Initial = 0,
@@ -28,13 +29,13 @@ interface InsightPageProps {
 }
 
 const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
-  const { user, sessionToken } = useSupabaseAuth();
+  const { sessionToken } = useSupabaseAuth();
   const router = useRouter();
   let receivedData = [];
   if(router.query.selectedRepos) {
     receivedData = JSON.parse(router.query.selectedRepos as string);
   }
-  const username: string = user?.user_metadata.user_name;
+
   const [name, setName] = useState(insight?.name || "");
   const [nameError, setNameError] = useState("");
   const [submitted, setSubmitted] = useState(false);
@@ -43,6 +44,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
   const [repoHistory, setRepoHistory] = useState<DbRepo[]>([]);
   const [addRepoError, setAddRepoError] = useState<RepoLookupError>(RepoLookupError.Initial);
   const [isPublic, setIsPublic] = useState(!!insight?.is_public);
+  const insightRepoLimit = useStore(state => state.insightRepoLimit);
 
   useEffect(() => {
     if (pageRepos) {
@@ -244,7 +246,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
           />
 
           <div>
-            <Button disabled={repos.length === 10} onClick={handleAddRepository} type="primary">
+            <Button disabled={repos.length === insightRepoLimit} onClick={handleAddRepository} type="primary">
               Add Repository
             </Button>
           </div>
