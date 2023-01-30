@@ -9,7 +9,9 @@ interface CheckboxProps extends React.ComponentProps<typeof SupbaseCheckboxCompo
 const Checkbox: React.FC<CheckboxProps> = (props) => {
   return (
     <SupbaseCheckboxComponent
-      className={`checked:[&>*]:!bg-orange-500 !text-orange-500 ${props.className || ""}`}
+      className={`checked:[&>*]:!bg-orange-500 disabled:[&>*]:!cursor-not-allowed !text-orange-500 ${
+        props.className || ""
+      }`}
       {...props}
     />
   );
