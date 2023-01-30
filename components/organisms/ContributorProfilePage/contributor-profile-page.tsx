@@ -1,8 +1,3 @@
-import { IconContext } from "react-icons";
-import { BsFillArrowUpCircleFill } from "react-icons/bs";
-import { FaCheckCircle } from "react-icons/fa";
-import { VscGitMerge, VscRepo } from "react-icons/vsc";
-
 import Title from "components/atoms/Typography/title";
 import Text from "components/atoms/Typography/text";
 import CardHorizontalBarChart from "components/molecules/CardHorizontalBarChart/card-horizontal-bar-chart";
@@ -10,7 +5,7 @@ import ContributorProfileHeader from "components/molecules/ContributorProfileHea
 import { ContributorObject } from "../ContributorCard/contributor-card";
 import CardLineChart from "components/molecules/CardLineChart/card-line-chart";
 import CardRepoList, { RepoList } from "components/molecules/CardRepoList/card-repo-list";
-import ContributorTable from "components/molecules/ContributorTable/contributor-table";
+import PullRequestTable from "components/molecules/PullRequestTable/pull-request-table";
 
 import color from "lib/utils/color.json";
 import { useTopicContributorCommits } from "lib/hooks/useTopicContributorCommits";
@@ -95,7 +90,7 @@ const ContributorProfilePage = ({
               </div>
               <div>
                 <p className="mb-4">Languages</p>
-                <CardHorizontalBarChart languageList={languageList} />
+                <CardHorizontalBarChart withDescription={false} languageList={languageList} />
               </div>
             </div>
             <div className="flex-1">
@@ -152,7 +147,7 @@ const ContributorProfilePage = ({
                 </div>
 
                 <div className="mt-6">
-                  <ContributorTable limit={15} contributor={githubName} topic={"*"} repositories={undefined} />
+                  <PullRequestTable limit={15} contributor={githubName} topic={"*"} repositories={undefined} />
                 </div>
                 <div className="mt-8 text-light-slate-9 text-sm">
                   <p>The data for these contributions is from publicly available open source projects on GitHub.</p>

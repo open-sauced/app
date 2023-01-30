@@ -5,6 +5,86 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.25.0-beta.10](https://github.com/open-sauced/insights/compare/v1.25.0-beta.9...v1.25.0-beta.10) (2023-01-30)
+
+
+### 🍕 Features
+
+* set insight repo limit based on role ([#813](https://github.com/open-sauced/insights/issues/813)) ([9e998f1](https://github.com/open-sauced/insights/commit/9e998f1b792011918a38d377810e07ca355e47c0))
+
+## [1.25.0-beta.9](https://github.com/open-sauced/insights/compare/v1.25.0-beta.8...v1.25.0-beta.9) (2023-01-26)
+
+
+### 🐛 Bug Fixes
+
+* use correct avatar URL for caching  ([#800](https://github.com/open-sauced/insights/issues/800)) ([726f11b](https://github.com/open-sauced/insights/commit/726f11b263ea867e4efd7137f439309e8d9c554b)), closes [#757](https://github.com/open-sauced/insights/issues/757) [#746](https://github.com/open-sauced/insights/issues/746)
+
+## [1.25.0-beta.8](https://github.com/open-sauced/insights/compare/v1.25.0-beta.7...v1.25.0-beta.8) (2023-01-24)
+
+
+### 🍕 Features
+
+* add `PullRequestSocialCard` component to design system ([#774](https://github.com/open-sauced/insights/issues/774)) ([04600c2](https://github.com/open-sauced/insights/commit/04600c24a5d3c437aacd36fa15d4b068d1c42e33)), closes [#716](https://github.com/open-sauced/insights/issues/716)
+
+## [1.25.0-beta.7](https://github.com/open-sauced/insights/compare/v1.25.0-beta.6...v1.25.0-beta.7) (2023-01-24)
+
+
+### 🐛 Bug Fixes
+
+* make repositories table styles more responsive ([#773](https://github.com/open-sauced/insights/issues/773)) ([fe5c6f5](https://github.com/open-sauced/insights/commit/fe5c6f55c2e3e10e99432ebf1b772c7326f3642e)), closes [#724](https://github.com/open-sauced/insights/issues/724)
+
+## [1.25.0-beta.6](https://github.com/open-sauced/insights/compare/v1.25.0-beta.5...v1.25.0-beta.6) (2023-01-24)
+
+
+### 🍕 Features
+
+* add `UserSettings` component to design system ([#788](https://github.com/open-sauced/insights/issues/788)) ([dd9cabd](https://github.com/open-sauced/insights/commit/dd9cabdbe473901e2f27031a41edf065ee7ac50f)), closes [#783](https://github.com/open-sauced/insights/issues/783)
+
+
+### 🐛 Bug Fixes
+
+* mobile insights header layout break ([#795](https://github.com/open-sauced/insights/issues/795)) ([0bc2f0b](https://github.com/open-sauced/insights/commit/0bc2f0b6e3d6d4b132aad11284d2529573b687cf)), closes [#769](https://github.com/open-sauced/insights/issues/769)
+
+## [1.25.0-beta.5](https://github.com/open-sauced/insights/compare/v1.25.0-beta.4...v1.25.0-beta.5) (2023-01-18)
+
+
+### 🐛 Bug Fixes
+
+* remove usage of next/legacy/image ([#793](https://github.com/open-sauced/insights/issues/793)) ([9264ffb](https://github.com/open-sauced/insights/commit/9264ffb978dbf05204116363f93b57f834f3ceef))
+
+## [1.25.0-beta.4](https://github.com/open-sauced/insights/compare/v1.25.0-beta.3...v1.25.0-beta.4) (2023-01-17)
+
+
+### 🐛 Bug Fixes
+
+* add fix for Storybook usage with Next 13 ([#792](https://github.com/open-sauced/insights/issues/792)) ([bb10b2b](https://github.com/open-sauced/insights/commit/bb10b2b3b324f344a0279446c219db9d5ea77d31)), closes [/github.com/vercel/next.js/issues/36417#issuecomment-1117360509](https://github.com/open-sauced//github.com/vercel/next.js/issues/36417/issues/issuecomment-1117360509)
+
+## [1.25.0-beta.3](https://github.com/open-sauced/insights/compare/v1.25.0-beta.2...v1.25.0-beta.3) (2023-01-17)
+
+
+### 🐛 Bug Fixes
+
+* revert [#778](https://github.com/open-sauced/insights/issues/778) ([f6e30e1](https://github.com/open-sauced/insights/commit/f6e30e1b875b2423c5f002ee954a7da4d4a786c1))
+
+## [1.25.0-beta.2](https://github.com/open-sauced/insights/compare/v1.25.0-beta.1...v1.25.0-beta.2) (2023-01-16)
+
+
+### 🐛 Bug Fixes
+
+* correct repositories empty list message ([#778](https://github.com/open-sauced/insights/issues/778)) ([18b7393](https://github.com/open-sauced/insights/commit/18b7393c73526c891f1bddf1a7629d9e9803d3f9)), closes [#777](https://github.com/open-sauced/insights/issues/777)
+
+
+### 🧑‍💻 Code Refactoring
+
+* Renamed the ContributorTable to PullRequestTable ([#779](https://github.com/open-sauced/insights/issues/779)) ([694d213](https://github.com/open-sauced/insights/commit/694d213128077735803054f11e40eaf483a04e22)), closes [#681](https://github.com/open-sauced/insights/issues/681)
+
+## [1.25.0-beta.1](https://github.com/open-sauced/insights/compare/v1.24.0...v1.25.0-beta.1) (2023-01-13)
+
+
+### 🍕 Features
+
+* update to Next 13.1.x ([#758](https://github.com/open-sauced/insights/issues/758)) ([72c2b64](https://github.com/open-sauced/insights/commit/72c2b64a5a0d8dfc621029d003083ce0874179d8)), closes [#753](https://github.com/open-sauced/insights/issues/753)
+
 ## [1.24.0](https://github.com/open-sauced/insights/compare/v1.23.2...v1.24.0) (2023-01-13)
 
 
