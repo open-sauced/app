@@ -1306,21 +1306,21 @@ const UserSettingsPage = ({ user, sessionToken }: userSettingsPageProps) => {
               placeholder="@aprilcodes"
               label="Twitter Username"
               disabled
-              value={`@${(userInfo && userInfo.twitter_username) || ""}`}
+              value={`@${(userInfo && userInfo.twitter_username) || "open-sauced-user"}`}
             />
             <TextInput
               classNames="bg-light-slate-4 text-light-slate-11 font-medium"
               placeholder="StockGen"
               label="Company"
               disabled
-              value={userInfo?.company || ""}
+              value={userInfo?.company || "open sauced"}
             />
             <TextInput
               classNames="bg-light-slate-4 text-light-slate-11 font-medium"
               placeholder="USA"
               label="Location"
               disabled
-              value={userInfo?.location || ""}
+              value={userInfo?.location || "Romania"}
             />
             <div>
               <Checkbox disabled value={"false"} title="profile email" label="Display current local time on profile" />
