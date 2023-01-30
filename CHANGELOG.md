@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.25.0-beta.10](https://github.com/open-sauced/insights/compare/v1.25.0-beta.9...v1.25.0-beta.10) (2023-01-30)
+
+
+### 🍕 Features
+
+* set insight repo limit based on role ([#813](https://github.com/open-sauced/insights/issues/813)) ([9e998f1](https://github.com/open-sauced/insights/commit/9e998f1b792011918a38d377810e07ca355e47c0))
+
 ## [1.25.0-beta.9](https://github.com/open-sauced/insights/compare/v1.25.0-beta.8...v1.25.0-beta.9) (2023-01-26)
 
 
