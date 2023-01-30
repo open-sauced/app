@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 
+import { User } from "@supabase/supabase-js";
+
 import Button from "components/atoms/Button/button";
 import Checkbox from "components/atoms/Checkbox/checkbox";
 import TextInput from "components/atoms/TextInput/text-input";
@@ -7,9 +9,10 @@ import Title from "components/atoms/Typography/title";
 import Select from "components/atoms/Select/select";
 import SelectOption from "components/atoms/Select/select-option";
 import LanguagePill from "components/atoms/LanguagePill/LanguagePill";
-import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
+
 import { UpdateUser } from "lib/hooks/update-user";
 import { ToastTrigger } from "lib/utils/toast-trigger";
+import { useAuthSession } from "lib/hooks/useAuthSession";
 
 const timezones = [
   {
@@ -1190,13 +1193,19 @@ const timezones = [
     utc: ["Pacific/Apia"]
   }
 ];
+interface userSettingsPageProps {
+  user: User | null;
+  sessionToken: string;
+}
 
-const UserSettingsPage = () => {
-  const { user, sessionToken } = useSupabaseAuth();
+const UserSettingsPage = ({ user, sessionToken }: userSettingsPageProps) => {
   const [isValidEmail, setIsValidEmail] = useState<boolean>(false);
   const [email, setEmail] = useState<string | undefined>(user?.email);
   const [selectedInterest, setSelectedInterest] = useState<string[]>([]);
   const interestArray = ["javascript", "python", "rust", "ML", "AI", "react"];
+  const { data: userInfo } = useAuthSession();
+
+  console.log(userInfo);
 
   const validateEmail = (email: string) => {
     return String(email)
@@ -1278,8 +1287,12 @@ const UserSettingsPage = () => {
               <textarea
                 rows={4}
                 placeholder="Tell us about yourself."
-                className="bg-light-slate-4 rounded-lg px-3 py-2 "
+                className="bg-light-slate-4 rounded-lg px-3 py-2 disabled:cursor-not-allowed "
                 readOnly
+                value={
+                  userInfo?.bio ||
+                  "I am an open source developer with a passion for music and video games. I strive to improve the open source community and am always looking for new ways to contribute."
+                }
               ></textarea>
             </div>
             <TextInput
@@ -1293,18 +1306,21 @@ const UserSettingsPage = () => {
               placeholder="@aprilcodes"
               label="Twitter Username"
               disabled
+              value={`@${(userInfo && userInfo.twitter_username) || ""}`}
             />
             <TextInput
               classNames="bg-light-slate-4 text-light-slate-11 font-medium"
               placeholder="StockGen"
               label="Company"
               disabled
+              value={userInfo?.company || ""}
             />
             <TextInput
               classNames="bg-light-slate-4 text-light-slate-11 font-medium"
               placeholder="USA"
               label="Location"
               disabled
+              value={userInfo?.location || ""}
             />
             <div>
               <Checkbox disabled value={"false"} title="profile email" label="Display current local time on profile" />
