@@ -1,11 +1,21 @@
+import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
+
 import UserSettingsPage from "components/organisms/UserSettingsPage/user-settings-page";
 import ProfileLayout from "layouts/profile";
 
 const ProfileSettings = (): JSX.Element => {
+  const { sessionToken, user } = useSupabaseAuth();
+
   return (
-    <div className="w-full px-48 py-16">
-      <UserSettingsPage />
-    </div>
+    <>
+      {sessionToken ? (
+        <div className="w-full px-48 py-16">
+          <UserSettingsPage sessionToken={sessionToken} user={user} />
+        </div>
+      ) : (
+        ""
+      )}
+    </>
   );
 };
 
