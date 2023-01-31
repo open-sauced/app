@@ -1,13 +1,12 @@
 import { supabase } from "lib/utils/supabase";
 
 interface useUpdateUserProps {
-
   data: { email?: string; interests?: string[] };
   params?: string;
 }
 
 const baseUrl = process.env.NEXT_PUBLIC_API_URL;
-const updateUser = async ({  data, params }: useUpdateUserProps) => {
+const updateUser = async ({ data, params }: useUpdateUserProps) => {
   const sessionResponse = await supabase.auth.getSession();
   const sessionToken = sessionResponse?.data.session?.access_token;
   try {
@@ -22,12 +21,12 @@ const updateUser = async ({  data, params }: useUpdateUserProps) => {
     });
 
     if (res.status === 200) {
-      return res.ok;
+      return res.json();
     } else {
       return false;
     }
   } catch (e) {
-    console.log(e);
+    return false;
   }
 };
 

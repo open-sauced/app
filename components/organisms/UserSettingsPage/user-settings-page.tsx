@@ -12,7 +12,7 @@ import LanguagePill from "components/atoms/LanguagePill/LanguagePill";
 
 import { updateUser } from "lib/hooks/update-user";
 import { ToastTrigger } from "lib/utils/toast-trigger";
-import { useAuthSession } from "lib/hooks/useAuthSession";
+import { authSession } from "lib/hooks/authSession";
 import { validateEmail } from "lib/utils/validate-email";
 import { timezones } from "lib/utils/timezones";
 import { updateEmailPreferences } from "lib/hooks/updateEmailPreference";
@@ -20,19 +20,18 @@ import { useFetchUser } from "lib/hooks/useFetchUser";
 
 interface userSettingsPageProps {
   user: User | null;
-  sessionToken: string;
 }
 
 type EmailPreferenceType = {
   display_email?: boolean;
   receive_collaboration?: boolean;
 };
-const UserSettingsPage = ({ user, sessionToken }: userSettingsPageProps) => {
+const UserSettingsPage = ({ user }: userSettingsPageProps) => {
   const { data: insightsUser } = useFetchUser(user?.user_metadata.user_name);
-  const { data: userInfo } = useAuthSession();
 
-  const [isValidEmail, setIsValidEmail] = useState<boolean>(false);
-  const [email, setEmail] = useState<string | undefined>(user?.email);
+  const [isValidEmail, setIsValidEmail] = useState<boolean>(true);
+  const [userInfo, setUserInfo] = useState<DbUser>();
+  const [email, setEmail] = useState<string | undefined>(userInfo?.email || user?.email);
   const [emailPreference, setEmailPreference] = useState<EmailPreferenceType>({
     // eslint-disable-next-line camelcase
     display_email: false,
@@ -43,6 +42,11 @@ const UserSettingsPage = ({ user, sessionToken }: userSettingsPageProps) => {
   const interestArray = ["javascript", "python", "rust", "ML", "AI", "react"];
 
   useEffect(() => {
+    async function fetchAuthSession() {
+      const response = await authSession();
+      if (response !== false) setUserInfo(response);
+    }
+
     if (user) setEmail(user.email);
     if (insightsUser) {
       setEmailPreference({
@@ -53,6 +57,7 @@ const UserSettingsPage = ({ user, sessionToken }: userSettingsPageProps) => {
       });
       setSelectedInterest(insightsUser?.interests.split(","));
     }
+    fetchAuthSession();
   }, [user, insightsUser]);
 
   const handleSelectInterest = (interest: string) => {
@@ -121,7 +126,7 @@ const UserSettingsPage = ({ user, sessionToken }: userSettingsPageProps) => {
                 }
               }}
               label="Email*"
-              value={userInfo?.email || email}
+              value={email}
             />
 
             {/* Bio section */}
