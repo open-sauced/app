@@ -110,6 +110,7 @@ interface DbUserInsightRepo {
 }
 
 interface DbUser {
+  readonly email: string;
   readonly id: number;
   readonly open_issues: number;
   readonly is_private: boolean;
@@ -125,4 +126,7 @@ interface DbUser {
   readonly twitter_username: string;
   readonly company: string;
   readonly bio: string;
+  readonly interests: string;
+  readonly receive_collaboration: boolean;
+  readonly display_email: boolean;
 }
