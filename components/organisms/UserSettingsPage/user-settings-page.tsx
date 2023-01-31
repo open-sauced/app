@@ -74,7 +74,6 @@ const UserSettingsPage = ({ user, sessionToken }: userSettingsPageProps) => {
 
   const handleUpdateInterest = async () => {
     const data = await updateUser({
-      token: sessionToken || "",
       data: { interests: selectedInterest },
       params: "interests"
     });
@@ -86,7 +85,6 @@ const UserSettingsPage = ({ user, sessionToken }: userSettingsPageProps) => {
   };
   const handleUpdateProfile = async () => {
     const data = await updateUser({
-      token: sessionToken || "",
       data: { email }
     });
     if (data) {
@@ -168,7 +166,7 @@ const UserSettingsPage = ({ user, sessionToken }: userSettingsPageProps) => {
               value={userInfo?.location || "Canada"}
             />
             <div>
-              <Checkbox checked={true} title="profile email" label="Display current local time on profile" />
+              <Checkbox checked={false} title="profile email" label="Display current local time on profile" />
               <span className="ml-7 text-light-slate-9 text-sm font-normal">
                 Other users will see the time difference from their local time.
               </span>
