@@ -158,7 +158,7 @@ const UserSettingsPage = ({ user, sessionToken }: userSettingsPageProps) => {
               placeholder="StockGen"
               label="Company"
               disabled
-              value={userInfo?.company || "open sauced"}
+              value={userInfo?.company || "OpenSauced"}
             />
             <TextInput
               classNames="bg-light-slate-4 text-light-slate-11 font-medium"
