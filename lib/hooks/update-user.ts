@@ -5,7 +5,7 @@ interface useUpdateUserProps {
 }
 
 const baseUrl = process.env.NEXT_PUBLIC_API_URL;
-const UpdateUser = async ({ token, data, params }: useUpdateUserProps) => {
+const updateUser = async ({ token, data, params }: useUpdateUserProps) => {
   try {
     const res = await fetch(`${baseUrl}/auth/profile${params ? `/${params}` : ""}`, {
       headers: { Accept: "application/json", "Content-Type": "application/json", Authorization: `Bearer ${token}` },
@@ -23,4 +23,4 @@ const UpdateUser = async ({ token, data, params }: useUpdateUserProps) => {
   }
 };
 
-export { UpdateUser };
+export { updateUser };
