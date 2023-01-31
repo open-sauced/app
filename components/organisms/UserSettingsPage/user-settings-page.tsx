@@ -133,7 +133,7 @@ const UserSettingsPage = ({ user, sessionToken }: userSettingsPageProps) => {
               placeholder="USA"
               label="Location"
               disabled
-              value={userInfo?.location || "Romania"}
+              value={userInfo?.location || "Canada"}
             />
             <div>
               <Checkbox disabled value={"false"} title="profile email" label="Display current local time on profile" />
