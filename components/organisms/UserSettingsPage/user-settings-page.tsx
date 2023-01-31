@@ -15,22 +15,45 @@ import { ToastTrigger } from "lib/utils/toast-trigger";
 import { useAuthSession } from "lib/hooks/useAuthSession";
 import { validateEmail } from "lib/utils/validate-email";
 import { timezones } from "lib/utils/timezones";
+import { updateEmailPreferences } from "lib/hooks/updateEmailPreference";
+import { useFetchUser } from "lib/hooks/useFetchUser";
 
 interface userSettingsPageProps {
   user: User | null;
   sessionToken: string;
 }
 
+type EmailPreferenceType = {
+  display_email?: boolean;
+  receive_collaboration?: boolean;
+};
 const UserSettingsPage = ({ user, sessionToken }: userSettingsPageProps) => {
+  const { data: insightsUser } = useFetchUser(user?.user_metadata.user_name);
+  const { data: userInfo } = useAuthSession();
+
   const [isValidEmail, setIsValidEmail] = useState<boolean>(false);
   const [email, setEmail] = useState<string | undefined>(user?.email);
+  const [emailPreference, setEmailPreference] = useState<EmailPreferenceType>({
+    // eslint-disable-next-line camelcase
+    display_email: false,
+    // eslint-disable-next-line camelcase
+    receive_collaboration: false
+  });
   const [selectedInterest, setSelectedInterest] = useState<string[]>([]);
   const interestArray = ["javascript", "python", "rust", "ML", "AI", "react"];
-  const { data: userInfo } = useAuthSession();
 
   useEffect(() => {
     if (user) setEmail(user.email);
-  }, [user]);
+    if (insightsUser) {
+      setEmailPreference({
+        // eslint-disable-next-line camelcase
+        display_email: insightsUser?.display_email,
+        // eslint-disable-next-line camelcase
+        receive_collaboration: insightsUser?.receive_collaboration
+      });
+      setSelectedInterest(insightsUser?.interests.split(","));
+    }
+  }, [user, insightsUser]);
 
   const handleSelectInterest = (interest: string) => {
     if (selectedInterest.length > 0 && selectedInterest.includes(interest)) {
@@ -40,10 +63,19 @@ const UserSettingsPage = ({ user, sessionToken }: userSettingsPageProps) => {
     }
   };
 
+  const handleUpdateEmailPreference = async () => {
+    const data = await updateEmailPreferences({ ...emailPreference });
+    if (data) {
+      ToastTrigger({ message: "Updated successfully", type: "success" });
+    } else {
+      ToastTrigger({ message: "An error occured!!!", type: "error" });
+    }
+  };
+
   const handleUpdateInterest = async () => {
     const data = await updateUser({
       token: sessionToken || "",
-      data: { email: user?.user_metadata.email, interests: selectedInterest },
+      data: { interests: selectedInterest },
       params: "interests"
     });
     if (data) {
@@ -55,7 +87,7 @@ const UserSettingsPage = ({ user, sessionToken }: userSettingsPageProps) => {
   const handleUpdateProfile = async () => {
     const data = await updateUser({
       token: sessionToken || "",
-      data: { email: email, interests: [] }
+      data: { email }
     });
     if (data) {
       ToastTrigger({ message: "Updated successfully", type: "success" });
@@ -91,7 +123,7 @@ const UserSettingsPage = ({ user, sessionToken }: userSettingsPageProps) => {
                 }
               }}
               label="Email*"
-              value={email}
+              value={userInfo?.email || email}
             />
 
             {/* Bio section */}
@@ -119,7 +151,7 @@ const UserSettingsPage = ({ user, sessionToken }: userSettingsPageProps) => {
               placeholder="@aprilcodes"
               label="Twitter Username"
               disabled
-              value={`@${(userInfo && userInfo.twitter_username) || "open-sauced-user"}`}
+              value={`@${(userInfo && userInfo.twitter_username) || "saucedopen"}`}
             />
             <TextInput
               classNames="bg-light-slate-4 text-light-slate-11 font-medium"
@@ -133,10 +165,10 @@ const UserSettingsPage = ({ user, sessionToken }: userSettingsPageProps) => {
               placeholder="USA"
               label="Location"
               disabled
-              value={userInfo?.location || "Romania"}
+              value={userInfo?.location || "Canada"}
             />
             <div>
-              <Checkbox disabled value={"false"} title="profile email" label="Display current local time on profile" />
+              <Checkbox checked={true} title="profile email" label="Display current local time on profile" />
               <span className="ml-7 text-light-slate-9 text-sm font-normal">
                 Other users will see the time difference from their local time.
               </span>
@@ -184,15 +216,28 @@ const UserSettingsPage = ({ user, sessionToken }: userSettingsPageProps) => {
           <div className="flex flex-col gap-6">
             <div className="flex flex-col gap-3 ">
               <label className="text-light-slate-11 text-2xl  font-normal">Email Preferences</label>
-              <Checkbox disabled value={"false"} title="profile email" label="Display email on profile" />
               <Checkbox
-                disabled
-                value={"false"}
+                // eslint-disable-next-line camelcase
+                onChange={() => setEmailPreference((prev) => ({ ...prev, display_email: !prev.display_email }))}
+                checked={emailPreference.display_email}
+                title="profile email"
+                label="Display email on profile"
+              />
+              <Checkbox
+                onChange={() =>
+                  // eslint-disable-next-line camelcase
+                  setEmailPreference((prev) => ({ ...prev, receive_collaboration: !prev.receive_collaboration }))
+                }
+                checked={emailPreference.receive_collaboration}
                 title="collaboration requests"
                 label="Receive collaboration requests"
               />
             </div>
-            <Button type="default" disabled className="!px-4 w-max !py-2  !bg-light-slate-4 ">
+            <Button
+              onClick={handleUpdateEmailPreference}
+              type="default"
+              className="!px-4 w-max !py-2  !bg-light-slate-4 "
+            >
               Update Preferences
             </Button>
           </div>
