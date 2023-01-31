@@ -75,7 +75,7 @@ const ContributorProfilePage = ({
   const prsMergedPercentage = getPercent(prTotal, prMerged || 0);
   const isLoaded = !loading && !error;
 
-  const { bio, location, name, twitter_username } = user || {};
+  const { bio, location, interests, name, twitter_username } = user || {};
 
   return (
     <div className=" w-full">
@@ -87,7 +87,7 @@ const ContributorProfilePage = ({
           <div className="pt-24 px-4 md:px-10  lg:px-16 flex flex-col lg:flex-row lg:gap-40  w-full overflow-hidden  max-w-full justify-between">
             <div className="flex flex-col w-80 gap-4 ">
               <ContributorProfileInfo
-                interests={user?.interests}
+                interests={interests}
                 twitterUsername={twitter_username}
                 bio={bio}
                 githubName={githubName}

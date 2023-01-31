@@ -24,6 +24,8 @@ const ContributorProfileInfo = ({
   interests,
   isConnected
 }: ContributorProfileInfoProps) => {
+  const interestArray = interests?.split(",");
+
   return (
     <div className="flex flex-col gap-6">
       <div className="pb-6 border-b">
@@ -77,12 +79,16 @@ const ContributorProfileInfo = ({
               </span> */}
             </div>
           </div>
-          {interests && (
-            <div className="flex flex-col gap-4 border-b pb-6">
+          {interestArray && interestArray.length > 0 && (
+            <div className="flex  flex-col gap-4 border-b pb-6">
               <Title className="!text-base !text-light-slate-12" level={5}>
                 Current Interests
               </Title>
-              <LanguagePill topic="javascript" />
+              <div className="flex gap-2">
+                {interestArray.map((interest, index) => (
+                  <LanguagePill key={index} topic={interest} />
+                ))}
+              </div>
             </div>
           )}{" "}
         </>
