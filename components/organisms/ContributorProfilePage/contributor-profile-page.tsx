@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import Title from "components/atoms/Typography/title";
 import Text from "components/atoms/Typography/text";
 import CardHorizontalBarChart from "components/molecules/CardHorizontalBarChart/card-horizontal-bar-chart";
@@ -75,6 +74,7 @@ const ContributorProfilePage = ({
   const prsMergedPercentage = getPercent(prTotal, prMerged || 0);
   const isLoaded = !loading && !error;
 
+  // eslint-disable-next-line camelcase
   const { bio, location, interests, name, twitter_username } = user || {};
 
   return (
@@ -88,6 +88,7 @@ const ContributorProfilePage = ({
             <div className="flex flex-col w-80 gap-4 ">
               <ContributorProfileInfo
                 interests={interests}
+                // eslint-disable-next-line camelcase
                 twitterUsername={twitter_username}
                 bio={bio}
                 githubName={githubName}
