@@ -62,25 +62,19 @@ const ContributorProfileInfo = ({
                 <FiClock className="text-light-slate-9" /> Local time: 12:32 PM
               </span>
 
-              {twitterUsername && (
-                <span className="flex gap-2 items-center">
-                  <FiTwitter className="text-light-slate-9" />
-                  <a
-                    target="_blank"
-                    rel="noreferrer"
-                    href={`https://twitter.com/${twitterUsername}`}
-                    className="w-max hover:text-orange-500 "
-                  >
-                    {`@${twitterUsername}`}
-                  </a>
-                </span>
-              )}
               <span className="flex gap-2 items-center">
+                <FiTwitter className="text-light-slate-9" />
+                <Link href="#" className="w-max hover:text-orange-500 ">
+                  coming soon...
+                </Link>
+              </span>
+
+              {/* <span className="flex gap-2 items-center">
                 <HiOutlineMail className="text-light-slate-9" />
                 <Link className="w-max hover:text-orange-500 " href="#">
                   Send a collaboration request
                 </Link>
-              </span>
+              </span> */}
             </div>
           </div>
           {interests && (

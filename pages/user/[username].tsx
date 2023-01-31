@@ -8,7 +8,7 @@ import { ContributorsProfileType } from "components/molecules/ContributorHoverCa
 import ProfileLayout from "layouts/profile";
 import { useFetchUser } from "lib/hooks/useFetchUser";
 
-const Contributor = () => {
+const Contributor = (): JSX.Element => {
   const router = useRouter();
   const { username } = router.query;
   const contributorLogin = username as string;
