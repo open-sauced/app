@@ -21,10 +21,9 @@ const updateEmailPreferences = async (data: UpdateEmailProps) => {
     });
 
     if (res.status === 200) {
-      return res;
+      return res.json();
     }
   } catch (e) {
-    console.log(e);
     return false;
   }
 };
