@@ -119,7 +119,7 @@ const UserSettingsPage = ({ user, sessionToken }: userSettingsPageProps) => {
               placeholder="@aprilcodes"
               label="Twitter Username"
               disabled
-              value={`@${(userInfo && userInfo.twitter_username) || "open-sauced-user"}`}
+              value={`@${(userInfo && userInfo.twitter_username) || "saucedopen"}`}
             />
             <TextInput
               classNames="bg-light-slate-4 text-light-slate-11 font-medium"
