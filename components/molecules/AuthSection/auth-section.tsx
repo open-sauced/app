@@ -1,4 +1,13 @@
 import Image from "next/image";
+import Link from "next/link";
+
+import { FiLogOut, FiSettings } from "react-icons/fi";
+import { Divider } from "@supabase/ui";
+
+import useSession from "lib/hooks/useSession";
+import useSupabaseAuth from "../../../lib/hooks/useSupabaseAuth";
+
+import PersonIcon from "img/icons/person-icon.svg";
 import notifications from "../../../img/notifications.svg";
 import downArrow from "../../../img/chevron-down.svg";
 import Avatar from "components/atoms/Avatar/avatar";
@@ -7,13 +16,8 @@ import userAvatar from "../../../img/ellipse-1.png";
 import OnboardingButton from "../OnboardingButton/onboarding-button";
 import DropdownList from "../DropdownList/dropdown-list";
 import Text from "components/atoms/Typography/text";
-import { Divider } from "@supabase/ui";
-import useSupabaseAuth from "../../../lib/hooks/useSupabaseAuth";
-import { FiLogOut, FiSettings } from "react-icons/fi";
 import GitHubIcon from "img/icons/github-icon.svg";
 import Icon from "components/atoms/Icon/icon";
-import useSession from "lib/hooks/useSession";
-import Link from "next/link";
 
 const AuthSection: React.FC = ({}) => {
   const { signIn, signOut, user } = useSupabaseAuth();
@@ -26,14 +30,9 @@ const AuthSection: React.FC = ({}) => {
         key="settings"
         className="group flex gap-x-3 text-lg hover:bg-light-orange-3 items-center px-4 py-2 rounded-md cursor-pointer transition"
       >
-        <Avatar
-          alt="User Avatar"
-          avatarURL={user ? user.user_metadata.avatar_url : userAvatar}
-          size={18}
-          hasBorder={true}
-          isCached={false}
-          isCircle
-        />
+        <div className="w-5 h-5 flex justify-center items-center bg-blue-100 rounded-full">
+          <Image width={10} height={10} alt="Icon" src={PersonIcon} />
+        </div>
         <Text className="group-hover:text-light-orange-10">{user?.user_metadata.user_name}</Text>
       </Link>,
       <Link
