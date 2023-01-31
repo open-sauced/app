@@ -28,8 +28,6 @@ const UserSettingsPage = ({ user, sessionToken }: userSettingsPageProps) => {
   const interestArray = ["javascript", "python", "rust", "ML", "AI", "react"];
   const { data: userInfo } = useAuthSession();
 
-  console.log(userInfo);
-
   useEffect(() => {
     if (user) setEmail(user.email);
   }, [user]);
