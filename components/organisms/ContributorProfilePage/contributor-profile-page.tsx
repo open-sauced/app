@@ -75,7 +75,7 @@ const ContributorProfilePage = ({
   const isLoaded = !loading && !error;
 
   // eslint-disable-next-line camelcase
-  const { bio, location, interests, name, twitter_username } = user || {};
+  const { bio, location, interests, name, twitter_username, timezone, display_local_time: displayLocalTime } = user || {};
 
   return (
     <div className=" w-full">
@@ -93,6 +93,8 @@ const ContributorProfilePage = ({
                 bio={bio}
                 githubName={githubName}
                 isConnected={!!user}
+                timezone={timezone}
+                displayLocalTime={displayLocalTime}
               />
 
               <div>
