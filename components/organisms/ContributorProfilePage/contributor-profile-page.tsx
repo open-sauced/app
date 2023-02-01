@@ -12,6 +12,7 @@ import { useTopicContributorCommits } from "lib/hooks/useTopicContributorCommits
 import { getRelativeDays } from "lib/utils/date-utils";
 import Pill from "components/atoms/Pill/pill";
 import getPercent from "lib/utils/get-percent";
+import ContributorProfileInfo from "components/molecules/ContributorProfileInfo/contributor-profile-info";
 
 const colorKeys = Object.keys(color);
 interface PrObjectType {
@@ -73,6 +74,9 @@ const ContributorProfilePage = ({
   const prsMergedPercentage = getPercent(prTotal, prMerged || 0);
   const isLoaded = !loading && !error;
 
+  // eslint-disable-next-line camelcase
+  const { bio, location, interests, name, twitter_username } = user || {};
+
   return (
     <div className=" w-full">
       {loading && <>Loading...</>}
@@ -80,14 +84,17 @@ const ContributorProfilePage = ({
       {isLoaded && (
         <>
           <ContributorProfileHeader isConnected={!!user} githubName={githubName} avatarUrl={githubAvatar} />
-          <div className="pt-24 px-4 md:px-10 lg:px-16 flex flex-col lg:flex-row lg:gap-40 w-full overflow-hidden justify-between">
-            <div className="flex flex-col min-w-[270px] gap-4 ">
-              <div className="pb-6 border-b">
-                <Title className="!text-2xl !text-light-slate-12" level={3}>
-                  {githubName}
-                </Title>
-                <span className="text-light-slate-11 text-sm">{`@${githubName}`}</span>
-              </div>
+          <div className="pt-24 px-4 md:px-10  lg:px-16 flex flex-col lg:flex-row lg:gap-40  w-full overflow-hidden  max-w-full justify-between">
+            <div className="flex flex-col w-80 gap-4 ">
+              <ContributorProfileInfo
+                interests={interests}
+                // eslint-disable-next-line camelcase
+                twitterUsername={twitter_username}
+                bio={bio}
+                githubName={githubName}
+                isConnected={!!user}
+              />
+
               <div>
                 <p className="mb-4">Languages</p>
                 <CardHorizontalBarChart withDescription={true} languageList={languageList} />
