@@ -14,10 +14,10 @@ const updateUser = async ({ data, params }: useUpdateUserProps) => {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: `Bearer ${sessionToken}`,
+        Authorization: `Bearer ${sessionToken}`
       },
       method: "PATCH",
-      body: JSON.stringify({ ...data }),
+      body: JSON.stringify({ ...data })
     });
 
     if (res.status === 200) {

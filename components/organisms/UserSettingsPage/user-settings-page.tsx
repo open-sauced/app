@@ -31,7 +31,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
 
   const [isValidEmail, setIsValidEmail] = useState<boolean>(true);
   const [displayLocalTime, setDisplayLocalTime] = useState(false);
-  const [timezone, setTimezone] = useState('');
+  const [timezone, setTimezone] = useState("");
   const [userInfo, setUserInfo] = useState<DbUser>();
   const [email, setEmail] = useState<string | undefined>(userInfo?.email || user?.email);
   const [emailPreference, setEmailPreference] = useState<EmailPreferenceType>({
@@ -59,7 +59,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
       });
       setSelectedInterest(insightsUser?.interests?.split(","));
       setDisplayLocalTime(insightsUser?.display_local_time);
-      setTimezone(insightsUser?.timezone)
+      setTimezone(insightsUser?.timezone);
     }
     fetchAuthSession();
   }, [user, insightsUser]);
@@ -97,6 +97,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
     const data = await updateUser({
       data: {
         email,
+        // eslint-disable-next-line camelcase
         display_local_time: displayLocalTime,
         timezone
       }
