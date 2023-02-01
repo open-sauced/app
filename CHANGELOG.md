@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.25.0-beta.13](https://github.com/open-sauced/insights/compare/v1.25.0-beta.12...v1.25.0-beta.13) (2023-02-01)
+
+
+### 🍕 Features
+
+* add profile badge to connected user profile ([#824](https://github.com/open-sauced/insights/issues/824)) ([e3a1fcf](https://github.com/open-sauced/insights/commit/e3a1fcfb5ab4e9d84a243a1034dcce35b917ab45)), closes [#821](https://github.com/open-sauced/insights/issues/821) [#820](https://github.com/open-sauced/insights/issues/820)
+
 ## [1.25.0-beta.12](https://github.com/open-sauced/insights/compare/v1.25.0-beta.11...v1.25.0-beta.12) (2023-02-01)
 
 
