@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.25.0-beta.12](https://github.com/open-sauced/insights/compare/v1.25.0-beta.11...v1.25.0-beta.12) (2023-02-01)
+
+
+### 🍕 Features
+
+* add user location and bio details to profile page ([#797](https://github.com/open-sauced/insights/issues/797)) ([a301874](https://github.com/open-sauced/insights/commit/a301874f2cae3f8b474715ceb5e45197efc5a845))
+
 ## [1.25.0-beta.11](https://github.com/open-sauced/insights/compare/v1.25.0-beta.10...v1.25.0-beta.11) (2023-02-01)
 
 
