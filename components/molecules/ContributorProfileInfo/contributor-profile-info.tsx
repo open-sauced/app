@@ -75,7 +75,7 @@ const ContributorProfileInfo = ({
 
               {twitterUsername && <span className="flex gap-2 items-center">
                 <FiTwitter className="text-light-slate-9" />
-                <Link href="#" className="w-max hover:text-orange-500 ">
+                <Link href={`https://twitter.com/${twitterUsername}`} target="_blank" rel="noreferrer" className="w-max hover:text-orange-500 ">
                   {twitterUsername}
                 </Link>
               </span>}
