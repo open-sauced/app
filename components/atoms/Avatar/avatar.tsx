@@ -28,7 +28,7 @@ const Avatar = (props: AvatarProps): JSX.Element => {
   case "string":
     return <DefaultAvatar {...props} avatarURL={imageSource} />;
   case "number":
-    return <CustomAvatar {...props} />;
+    return <CustomAvatar {...props} avatarURL={imageSource} />;
 
   default:
     return <span>invalid avatar size props!!!</span>;

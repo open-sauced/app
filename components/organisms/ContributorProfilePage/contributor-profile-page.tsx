@@ -97,7 +97,7 @@ const ContributorProfilePage = ({
 
               <div>
                 <p className="mb-4">Languages</p>
-                <CardHorizontalBarChart withDescription={false} languageList={languageList} />
+                <CardHorizontalBarChart withDescription={true} languageList={languageList} />
               </div>
             </div>
             <div className="flex-1">

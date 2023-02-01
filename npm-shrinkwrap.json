@@ -1,12 +1,12 @@
 {
   "name": "@open-sauced/insights",
-  "version": "1.25.0-beta.8",
+  "version": "1.25.0-beta.11",
   "lockfileVersion": 3,
   "requires": true,
   "packages": {
     "": {
       "name": "@open-sauced/insights",
-      "version": "1.25.0-beta.8",
+      "version": "1.25.0-beta.11",
       "hasInstallScript": true,
       "license": "MIT",
       "dependencies": {
@@ -42,6 +42,7 @@
         "react": "^18.2.0",
         "react-csv": "^2.2.2",
         "react-dom": "^18.2.0",
+        "react-hot-toast": "^2.4.0",
         "react-icons": "^4.4.0",
         "react-loading-skeleton": "^3.1.0",
         "react-spring": "^9.5.5",
@@ -21889,6 +21890,14 @@
       "integrity": "sha512-uHJgbwAMwNFf5mLst7IWLNg14x1CkeqglJb/K3doi4dw6q2IvAAmM/Y81kevy83wP+Sst+nutFTYOGg3d1lsxg==",
       "dev": true
     },
+    "node_modules/goober": {
+      "version": "2.1.11",
+      "resolved": "https://registry.npmjs.org/goober/-/goober-2.1.11.tgz",
+      "integrity": "sha512-5SS2lmxbhqH0u9ABEWq7WPU69a4i2pYcHeCxqaNq6Cw3mnrF0ghWNM4tEGid4dKy8XNIAUbuThuozDHHKJVh3A==",
+      "peerDependencies": {
+        "csstype": "^3.0.10"
+      }
+    },
     "node_modules/gopd": {
       "version": "1.0.1",
       "resolved": "https://registry.npmjs.org/gopd/-/gopd-1.0.1.tgz",
@@ -29049,6 +29058,21 @@
       "resolved": "https://registry.npmjs.org/react-is/-/react-is-17.0.2.tgz",
       "integrity": "sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==",
       "dev": true
+    },
+    "node_modules/react-hot-toast": {
+      "version": "2.4.0",
+      "resolved": "https://registry.npmjs.org/react-hot-toast/-/react-hot-toast-2.4.0.tgz",
+      "integrity": "sha512-qnnVbXropKuwUpriVVosgo8QrB+IaPJCpL8oBI6Ov84uvHZ5QQcTp2qg6ku2wNfgJl6rlQXJIQU5q+5lmPOutA==",
+      "dependencies": {
+        "goober": "^2.1.10"
+      },
+      "engines": {
+        "node": ">=10"
+      },
+      "peerDependencies": {
+        "react": ">=16",
+        "react-dom": ">=16"
+      }
     },
     "node_modules/react-icons": {
       "version": "4.4.0",
