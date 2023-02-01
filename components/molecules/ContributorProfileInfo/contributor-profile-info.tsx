@@ -73,12 +73,12 @@ const ContributorProfileInfo = ({
                 <FiClock className="text-light-slate-9" /> Local time: 12:32 PM
               </span>}
 
-              <span className="flex gap-2 items-center">
+              {twitterUsername && <span className="flex gap-2 items-center">
                 <FiTwitter className="text-light-slate-9" />
                 <Link href="#" className="w-max hover:text-orange-500 ">
-                  {twitterUsername || "coming soon..."}
+                  {twitterUsername}
                 </Link>
-              </span>
+              </span>}
 
               {/* <span className="flex gap-2 items-center">
                 <HiOutlineMail className="text-light-slate-9" />
