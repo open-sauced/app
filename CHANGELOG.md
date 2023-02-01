@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.25.0-beta.14](https://github.com/open-sauced/insights/compare/v1.25.0-beta.13...v1.25.0-beta.14) (2023-02-01)
+
+
+### 🐛 Bug Fixes
+
+* connect more user profile settings to the API ([#826](https://github.com/open-sauced/insights/issues/826)) ([01b8bc0](https://github.com/open-sauced/insights/commit/01b8bc02ce98bb46ef3ef089f97d434f47207a39))
+
 ## [1.25.0-beta.13](https://github.com/open-sauced/insights/compare/v1.25.0-beta.12...v1.25.0-beta.13) (2023-02-01)
 
 
