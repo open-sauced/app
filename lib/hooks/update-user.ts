@@ -1,7 +1,7 @@
 import { supabase } from "lib/utils/supabase";
 
 interface useUpdateUserProps {
-  data: { email?: string; interests?: string[] };
+  data: { email?: string; interests?: string[]; display_local_time?: boolean; timezone?: string };
   params?: string;
 }
 

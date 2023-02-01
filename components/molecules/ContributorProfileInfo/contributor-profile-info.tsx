@@ -8,6 +8,7 @@ import { HiOutlineMail } from "react-icons/hi";
 import LanguagePill from "components/atoms/LanguagePill/LanguagePill";
 import Title from "components/atoms/Typography/title";
 import Badge from "components/atoms/Badge/badge";
+import { getTimezone } from "lib/utils/timezones";
 
 interface ContributorProfileInfoProps {
   githubName: string;
@@ -16,6 +17,8 @@ interface ContributorProfileInfoProps {
   twitterUsername?: string;
   interests?: string;
   isConnected?: boolean;
+  timezone?: string;
+  displayLocalTime?: boolean;
 }
 
 const ContributorProfileInfo = ({
@@ -23,7 +26,9 @@ const ContributorProfileInfo = ({
   twitterUsername,
   bio,
   interests,
-  isConnected
+  isConnected,
+  timezone,
+  displayLocalTime
 }: ContributorProfileInfoProps) => {
   const interestArray = interests?.split(",");
 
@@ -43,7 +48,7 @@ const ContributorProfileInfo = ({
             <>
               <span className="flex text-light-slate-10 gap-2 items-center">
                 <FiClock className="text-light-slate-9" />
-                UTC +1
+                {timezone ? `UTC${getTimezone(timezone)}` : "UTC+1"}
               </span>
               <span className="flex text-light-slate-10 gap-2 items-center">
                 <AiOutlineGift className="text-light-slate-9" />
@@ -64,16 +69,16 @@ const ContributorProfileInfo = ({
                 "I am an open source developer with a passion for music and video games. I strive to improve the open source community and am always looking for new ways to contribute."}
             </p>
             <div className="flex flex-col text-sm mt-2 text-light-slate-9 gap-2">
-              <span className="flex gap-2 items-center">
+              {displayLocalTime && <span className="flex gap-2 items-center">
                 <FiClock className="text-light-slate-9" /> Local time: 12:32 PM
-              </span>
+              </span>}
 
-              <span className="flex gap-2 items-center">
+              {twitterUsername && <span className="flex gap-2 items-center">
                 <FiTwitter className="text-light-slate-9" />
-                <Link href="#" className="w-max hover:text-orange-500 ">
-                  coming soon...
+                <Link href={`https://twitter.com/${twitterUsername}`} target="_blank" rel="noreferrer" className="w-max hover:text-orange-500 ">
+                  {twitterUsername}
                 </Link>
-              </span>
+              </span>}
 
               {/* <span className="flex gap-2 items-center">
                 <HiOutlineMail className="text-light-slate-9" />
