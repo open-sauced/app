@@ -197,7 +197,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
               <Select value={timezone} onChange={e => setTimezone(e.target.value)}>
                 <SelectOption value="select timezone">Select time zone</SelectOption>
                 {timezones.map((timezone, index) => (
-                  <SelectOption key={index} value={`UTC${timezone.offset}`}>
+                  <SelectOption key={index} value={timezone.value}>
                     {timezone.text}
                   </SelectOption>
                 ))}
