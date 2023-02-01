@@ -130,5 +130,5 @@ interface DbUser {
   readonly interests: string;
   readonly receive_collaboration: boolean;
   readonly display_email: boolean;
-
+  readonly timezone: string;
 }

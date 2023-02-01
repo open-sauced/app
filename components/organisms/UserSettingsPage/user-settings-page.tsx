@@ -30,6 +30,8 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
   const { data: insightsUser } = useFetchUser(user?.user_metadata.user_name);
 
   const [isValidEmail, setIsValidEmail] = useState<boolean>(true);
+  const [displayLocalTime, setDisplayLocalTime] = useState(false);
+  const [timezone, setTimezone] = useState('');
   const [userInfo, setUserInfo] = useState<DbUser>();
   const [email, setEmail] = useState<string | undefined>(userInfo?.email || user?.email);
   const [emailPreference, setEmailPreference] = useState<EmailPreferenceType>({
@@ -55,7 +57,9 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
         // eslint-disable-next-line camelcase
         receive_collaboration: insightsUser?.receive_collaboration
       });
-      setSelectedInterest(insightsUser?.interests.split(","));
+      setSelectedInterest(insightsUser?.interests?.split(","));
+      setDisplayLocalTime(insightsUser?.display_local_time);
+      setTimezone(insightsUser?.timezone)
     }
     fetchAuthSession();
   }, [user, insightsUser]);
@@ -88,10 +92,16 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
       ToastTrigger({ message: "An error occured!!!", type: "error" });
     }
   };
+
   const handleUpdateProfile = async () => {
     const data = await updateUser({
-      data: { email }
+      data: {
+        email,
+        display_local_time: displayLocalTime,
+        timezone
+      }
     });
+
     if (data) {
       ToastTrigger({ message: "Updated successfully", type: "success" });
     } else {
@@ -145,20 +155,20 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
             </div>
             <TextInput
               classNames="bg-light-slate-4 text-light-slate-11 font-medium"
-              placeholder="https://turtlepower.pizza"
+              placeholder="https://opensauced.pizza"
               label="URL"
               disabled
             />
             <TextInput
               classNames="bg-light-slate-4 text-light-slate-11"
-              placeholder="@aprilcodes"
+              placeholder="@saucedopen"
               label="Twitter Username"
               disabled
               value={`@${(userInfo && userInfo.twitter_username) || "saucedopen"}`}
             />
             <TextInput
               classNames="bg-light-slate-4 text-light-slate-11 font-medium"
-              placeholder="StockGen"
+              placeholder="OpenSauced"
               label="Company"
               disabled
               value={userInfo?.company || "OpenSauced"}
@@ -168,20 +178,25 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
               placeholder="USA"
               label="Location"
               disabled
-              value={userInfo?.location || "Canada"}
+              value={userInfo?.location || "California"}
             />
             <div>
-              <Checkbox checked={false} title="profile email" label="Display current local time on profile" />
+              <Checkbox
+                checked={displayLocalTime}
+                title="profile email"
+                label="Display current local time on profile"
+                onChange={e => setDisplayLocalTime(e.target.checked)}
+              />
               <span className="ml-7 text-light-slate-9 text-sm font-normal">
                 Other users will see the time difference from their local time.
               </span>
             </div>
             <div className="flex flex-col gap-2">
               <label>Time zone*</label>
-              <Select>
+              <Select value={timezone} onChange={e => setTimezone(e.target.value)}>
                 <SelectOption value="select timezone">Select time zone</SelectOption>
                 {timezones.map((timezone, index) => (
-                  <SelectOption key={index} value={timezone.value}>
+                  <SelectOption key={index} value={`UTC${timezone.offset}`}>
                     {timezone.text}
                   </SelectOption>
                 ))}
@@ -201,7 +216,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
               {interestArray.map((topic, index) => (
                 <LanguagePill
                   onClick={() => handleSelectInterest(topic)}
-                  classNames={`${selectedInterest.includes(topic) && "bg-light-orange-10 text-white"}`}
+                  classNames={`${(selectedInterest || []).includes(topic) && "bg-light-orange-10 text-white"}`}
                   topic={topic}
                   key={index}
                 />
