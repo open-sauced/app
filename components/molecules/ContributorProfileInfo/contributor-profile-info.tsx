@@ -7,6 +7,7 @@ import { HiOutlineMail } from "react-icons/hi";
 
 import LanguagePill from "components/atoms/LanguagePill/LanguagePill";
 import Title from "components/atoms/Typography/title";
+import Badge from "components/atoms/Badge/badge";
 
 interface ContributorProfileInfoProps {
   githubName: string;
@@ -29,9 +30,12 @@ const ContributorProfileInfo = ({
   return (
     <div className="flex flex-col gap-6">
       <div className="pb-6 border-b">
-        <Title className="!text-2xl !text-light-slate-12" level={3}>
-          {githubName}
-        </Title>
+        <div className="flex gap-2 items-center mb-2">
+          <Title className="!text-2xl !text-light-slate-12" level={3}>
+            {githubName}
+          </Title>
+          {isConnected && <Badge text="beta" />}
+        </div>
         <div className="flex items-center text-sm gap-3">
           <span className="text-light-slate-11 text-sm">{`@${githubName}`}</span>
 
