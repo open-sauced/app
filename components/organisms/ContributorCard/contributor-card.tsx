@@ -10,7 +10,7 @@ import CardHorizontalBarChart, {
 import CardLineChart from "components/molecules/CardLineChart/card-line-chart";
 import CardProfile from "components/molecules/CardProfile/card-profile";
 import CardRepoList, { RepoList } from "components/molecules/CardRepoList/card-repo-list";
-import ContributorTable from "components/molecules/ContributorTable/contributor-table";
+import PullRequestTable from "components/molecules/PullRequestTable/pull-request-table";
 
 /*
   Use this hook in the Contributor Page componenttbecause it has all the mock data:
@@ -46,7 +46,7 @@ const ContributorCard = ({ className, contributor, topic, repositories }: Contri
         <div className="flex w-full justify-between items-center gap-2">
           <CardProfile {...profile} />
           <div>
-            <CardHorizontalBarChart languageList={languageList} />
+            <CardHorizontalBarChart withDescription={false} languageList={languageList} />
           </div>
         </div>
         <div className="h-[110px] overflow-hidden">
@@ -55,7 +55,7 @@ const ContributorCard = ({ className, contributor, topic, repositories }: Contri
         <CardRepoList repoList={repoList} />
 
         {showPRs ? (
-          <ContributorTable contributor={profile.githubName} topic={topic} repositories={repositories} />
+          <PullRequestTable contributor={profile.githubName} topic={topic} repositories={repositories} />
         ) : null}
 
         <div className="flex w-full justify-center">

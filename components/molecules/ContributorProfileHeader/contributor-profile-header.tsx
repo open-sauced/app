@@ -1,6 +1,5 @@
 import Avatar from "components/atoms/Avatar/avatar";
 import Image from "next/image";
-import React from "react";
 import RainbowBg from "img/rainbow-cover.png";
 import Button from "components/atoms/Button/button";
 import Link from "next/link";
@@ -15,7 +14,7 @@ const ContributorProfileHeader = ({ avatarUrl, githubName, isConnected }: Contri
     <div className="w-full relative  bg-light-slate-6 h-[216px]">
       {isConnected && (
         <div className="relative w-full h-full">
-          <Image priority alt="user profile cover image" layout="fill" objectFit="cover" src={RainbowBg} />
+          <Image priority alt="user profile cover image" fill={true} className="object-cover" src={RainbowBg} />
         </div>
       )}
 
