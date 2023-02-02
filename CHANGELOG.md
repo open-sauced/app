@@ -5,6 +5,80 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.26.0-beta.1](https://github.com/open-sauced/insights/compare/v1.25.0...v1.26.0-beta.1) (2023-02-02)
+
+
+### 🍕 Features
+
+* add profile badge to connected user profile ([#824](https://github.com/open-sauced/insights/issues/824)) ([e3a1fcf](https://github.com/open-sauced/insights/commit/e3a1fcfb5ab4e9d84a243a1034dcce35b917ab45)), closes [#821](https://github.com/open-sauced/insights/issues/821) [#820](https://github.com/open-sauced/insights/issues/820)
+* add user location and bio details to profile page ([#797](https://github.com/open-sauced/insights/issues/797)) ([a301874](https://github.com/open-sauced/insights/commit/a301874f2cae3f8b474715ceb5e45197efc5a845))
+* implement profile settings feature ([#808](https://github.com/open-sauced/insights/issues/808)) ([4a8d706](https://github.com/open-sauced/insights/commit/4a8d706ed0ee409973f61b3b94d647fa7c5dfb4d))
+
+
+### 🐛 Bug Fixes
+
+* connect more user profile settings to the API ([#826](https://github.com/open-sauced/insights/issues/826)) ([01b8bc0](https://github.com/open-sauced/insights/commit/01b8bc02ce98bb46ef3ef089f97d434f47207a39))
+
+
+### 🤖 Build System
+
+* correct dep versioning ([42a1b0a](https://github.com/open-sauced/insights/commit/42a1b0af2626c17fafd07b34bfe17d6473c1d6ed))
+* update some dependencies ([f522f5e](https://github.com/open-sauced/insights/commit/f522f5e3ee99f6dcc97c3fea85a838197cbb7aec))
+
+## [1.25.0](https://github.com/open-sauced/insights/compare/v1.24.0...v1.25.0) (2023-01-30)
+
+
+### 🧑‍💻 Code Refactoring
+
+* Renamed the ContributorTable to PullRequestTable ([#779](https://github.com/open-sauced/insights/issues/779)) ([694d213](https://github.com/open-sauced/insights/commit/694d213128077735803054f11e40eaf483a04e22)), closes [#681](https://github.com/open-sauced/insights/issues/681)
+
+
+### 🐛 Bug Fixes
+
+* add fix for Storybook usage with Next 13 ([#792](https://github.com/open-sauced/insights/issues/792)) ([bb10b2b](https://github.com/open-sauced/insights/commit/bb10b2b3b324f344a0279446c219db9d5ea77d31)), closes [/github.com/vercel/next.js/issues/36417#issuecomment-1117360509](https://github.com/open-sauced//github.com/vercel/next.js/issues/36417/issues/issuecomment-1117360509)
+* correct repositories empty list message ([#778](https://github.com/open-sauced/insights/issues/778)) ([18b7393](https://github.com/open-sauced/insights/commit/18b7393c73526c891f1bddf1a7629d9e9803d3f9)), closes [#777](https://github.com/open-sauced/insights/issues/777)
+* make repositories table styles more responsive ([#773](https://github.com/open-sauced/insights/issues/773)) ([fe5c6f5](https://github.com/open-sauced/insights/commit/fe5c6f55c2e3e10e99432ebf1b772c7326f3642e)), closes [#724](https://github.com/open-sauced/insights/issues/724)
+* mobile insights header layout break ([#795](https://github.com/open-sauced/insights/issues/795)) ([0bc2f0b](https://github.com/open-sauced/insights/commit/0bc2f0b6e3d6d4b132aad11284d2529573b687cf)), closes [#769](https://github.com/open-sauced/insights/issues/769)
+* remove usage of next/legacy/image ([#793](https://github.com/open-sauced/insights/issues/793)) ([9264ffb](https://github.com/open-sauced/insights/commit/9264ffb978dbf05204116363f93b57f834f3ceef))
+* revert [#778](https://github.com/open-sauced/insights/issues/778) ([f6e30e1](https://github.com/open-sauced/insights/commit/f6e30e1b875b2423c5f002ee954a7da4d4a786c1))
+* use correct avatar URL for caching  ([#800](https://github.com/open-sauced/insights/issues/800)) ([726f11b](https://github.com/open-sauced/insights/commit/726f11b263ea867e4efd7137f439309e8d9c554b)), closes [#757](https://github.com/open-sauced/insights/issues/757) [#746](https://github.com/open-sauced/insights/issues/746)
+
+
+### 🍕 Features
+
+* add `PullRequestSocialCard` component to design system ([#774](https://github.com/open-sauced/insights/issues/774)) ([04600c2](https://github.com/open-sauced/insights/commit/04600c24a5d3c437aacd36fa15d4b068d1c42e33)), closes [#716](https://github.com/open-sauced/insights/issues/716)
+* add `UserSettings` component to design system ([#788](https://github.com/open-sauced/insights/issues/788)) ([dd9cabd](https://github.com/open-sauced/insights/commit/dd9cabdbe473901e2f27031a41edf065ee7ac50f)), closes [#783](https://github.com/open-sauced/insights/issues/783)
+* set insight repo limit based on role ([#813](https://github.com/open-sauced/insights/issues/813)) ([9e998f1](https://github.com/open-sauced/insights/commit/9e998f1b792011918a38d377810e07ca355e47c0))
+* update to Next 13.1.x ([#758](https://github.com/open-sauced/insights/issues/758)) ([72c2b64](https://github.com/open-sauced/insights/commit/72c2b64a5a0d8dfc621029d003083ce0874179d8)), closes [#753](https://github.com/open-sauced/insights/issues/753)
+
+## [1.25.0-beta.14](https://github.com/open-sauced/insights/compare/v1.25.0-beta.13...v1.25.0-beta.14) (2023-02-01)
+
+
+### 🐛 Bug Fixes
+
+* connect more user profile settings to the API ([#826](https://github.com/open-sauced/insights/issues/826)) ([01b8bc0](https://github.com/open-sauced/insights/commit/01b8bc02ce98bb46ef3ef089f97d434f47207a39))
+
+## [1.25.0-beta.13](https://github.com/open-sauced/insights/compare/v1.25.0-beta.12...v1.25.0-beta.13) (2023-02-01)
+
+
+### 🍕 Features
+
+* add profile badge to connected user profile ([#824](https://github.com/open-sauced/insights/issues/824)) ([e3a1fcf](https://github.com/open-sauced/insights/commit/e3a1fcfb5ab4e9d84a243a1034dcce35b917ab45)), closes [#821](https://github.com/open-sauced/insights/issues/821) [#820](https://github.com/open-sauced/insights/issues/820)
+
+## [1.25.0-beta.12](https://github.com/open-sauced/insights/compare/v1.25.0-beta.11...v1.25.0-beta.12) (2023-02-01)
+
+
+### 🍕 Features
+
+* add user location and bio details to profile page ([#797](https://github.com/open-sauced/insights/issues/797)) ([a301874](https://github.com/open-sauced/insights/commit/a301874f2cae3f8b474715ceb5e45197efc5a845))
+
+## [1.25.0-beta.11](https://github.com/open-sauced/insights/compare/v1.25.0-beta.10...v1.25.0-beta.11) (2023-02-01)
+
+
+### 🍕 Features
+
+* implement profile settings feature ([#808](https://github.com/open-sauced/insights/issues/808)) ([4a8d706](https://github.com/open-sauced/insights/commit/4a8d706ed0ee409973f61b3b94d647fa7c5dfb4d))
+
 ## [1.25.0](https://github.com/open-sauced/insights/compare/v1.24.0...v1.25.0) (2023-01-30)
 
 
