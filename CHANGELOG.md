@@ -5,6 +5,26 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.26.0-beta.1](https://github.com/open-sauced/insights/compare/v1.25.0...v1.26.0-beta.1) (2023-02-02)
+
+
+### 🍕 Features
+
+* add profile badge to connected user profile ([#824](https://github.com/open-sauced/insights/issues/824)) ([e3a1fcf](https://github.com/open-sauced/insights/commit/e3a1fcfb5ab4e9d84a243a1034dcce35b917ab45)), closes [#821](https://github.com/open-sauced/insights/issues/821) [#820](https://github.com/open-sauced/insights/issues/820)
+* add user location and bio details to profile page ([#797](https://github.com/open-sauced/insights/issues/797)) ([a301874](https://github.com/open-sauced/insights/commit/a301874f2cae3f8b474715ceb5e45197efc5a845))
+* implement profile settings feature ([#808](https://github.com/open-sauced/insights/issues/808)) ([4a8d706](https://github.com/open-sauced/insights/commit/4a8d706ed0ee409973f61b3b94d647fa7c5dfb4d))
+
+
+### 🐛 Bug Fixes
+
+* connect more user profile settings to the API ([#826](https://github.com/open-sauced/insights/issues/826)) ([01b8bc0](https://github.com/open-sauced/insights/commit/01b8bc02ce98bb46ef3ef089f97d434f47207a39))
+
+
+### 🤖 Build System
+
+* correct dep versioning ([42a1b0a](https://github.com/open-sauced/insights/commit/42a1b0af2626c17fafd07b34bfe17d6473c1d6ed))
+* update some dependencies ([f522f5e](https://github.com/open-sauced/insights/commit/f522f5e3ee99f6dcc97c3fea85a838197cbb7aec))
+
 ## [1.25.0](https://github.com/open-sauced/insights/compare/v1.24.0...v1.25.0) (2023-01-30)
 
 
