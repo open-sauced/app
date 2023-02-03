@@ -7,5 +7,6 @@ test('Homepage redirects to /javascript for unsigned users', async ({ page }) =>
 
 test('Insights Hub redirects to /javascript for unsigned users', async ({ page }) => {
   await page.goto('/hub/insights');
+  await expect(page).toHaveURL('/')
   await expect(page).toHaveURL(/.*\/javascript.*/)
 });
