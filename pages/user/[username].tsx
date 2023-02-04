@@ -36,6 +36,7 @@ const Contributor = () => {
         recentContributionCount={contributor[0]?.recent_contribution_count}
         prReviews={contributor[0]?.recent_pr_reviews}
         prVelocity={contributor[0]?.recent_pr_velocity}
+        isLoading={contributorLoading}
       />
     </div>
   );
