@@ -8,6 +8,7 @@ import { ContributorsProfileType } from "components/molecules/ContributorHoverCa
 import ProfileLayout from "layouts/profile";
 import { useFetchUser } from "lib/hooks/useFetchUser";
 import Head from "next/head";
+import SEO from "layouts/SEO/SEO";
 
 const Contributor = (): JSX.Element => {
   const router = useRouter();
@@ -28,21 +29,12 @@ const Contributor = (): JSX.Element => {
 
   return (
     <>
-      <Head>
-        <title key="title">{contributorLogin} | OpenSauced</title>
-        <meta name="description" content={`${user?.bio || "I am an open source developer with a passion for music and video games. I strive to improve the open source community and am always looking for new ways to contribute."}`} key="description" />
-        <meta name="keywords" content="open source, github, contributor, profile, portfolio, developer, software engineer, software developer, software engineer portfolio, software developer portfolio, open source portfolio, open source developer, developer portfolio" key="keywords" />
-
-        <meta property="og:description" content={`${user?.bio || "I am an open source developer with a passion for music and video games. I strive to improve the open source community and am always looking for new ways to contribute."}`} key="og:description" />
-        <meta property="og:image" content={profile.githubAvatar} key="og:image" />
-        <meta property="og:site_name" content="OpenSauced Insights" key="og:site_name" />
-        <meta property="og:type" content="website" key="og:type" />
-
-        <meta name="twitter:title" content={`${contributorLogin} | OpenSauced`} key="twitter:title" />
-        <meta name="twitter:description" content={`Profile Bio: ${user?.bio || "I am an open source developer with a passion for music and video games. I strive to improve the open source community and am always looking for new ways to contribute."}`} key="twitter:description" />
-        <meta name="twitter:image" content={profile.githubAvatar} key="twitter:image" />
-        <meta name="twitter:card" content="summary_large_image" key="twitter:card" />
-      </Head>
+      <SEO
+        title={`${contributorLogin} | OpenSauced`}
+        description={`${user?.bio || "I am an open source developer with a passion for music and video games. I strive to improve the open source community and am always looking for new ways to contribute."}`}
+        image={profile.githubAvatar}
+        twitterCard="summary_large_image"
+      />
 
       <div className="w-full">
         <ContributorProfilePage
