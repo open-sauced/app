@@ -1,12 +1,15 @@
 import Button from "components/atoms/Button/button";
-import { useEffect, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 
 const HighlightInputForm = (): JSX.Element => {
   const [isDivFocused, setIsDivFocused] = useState<boolean>(false);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const [bodyText, setBodyText] = useState<string>("");
+  const [row, setRow] = useState<number>(1);
   const [title, setTitle] = useState<string>("");
   const ref = useRef<HTMLFormElement>(null);
+  let rowLomit = 5;
+  let messageLastScrollHeight = textAreaRef.current ? textAreaRef.current?.scrollHeight : 50;
 
   useEffect(() => {
     const checkIfClickedOutside = (e: any) => {
@@ -22,7 +25,19 @@ const HighlightInputForm = (): JSX.Element => {
       // Cleanup the event listener
       document.removeEventListener("mousedown", checkIfClickedOutside);
     };
-  }, [isDivFocused]);
+  }, [isDivFocused, bodyText]);
+
+  const handleTextAreaInputChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    setBodyText(e.target.value);
+    if (row < rowLomit && textAreaRef.current && textAreaRef.current?.scrollHeight > messageLastScrollHeight) {
+      setRow((prev) => prev + 1);
+    } else if (row > 1 && textAreaRef.current && textAreaRef.current?.scrollHeight < messageLastScrollHeight) {
+      setRow((prev) => prev--);
+    }
+
+    if (!bodyText) setRow(1);
+    messageLastScrollHeight = textAreaRef.current?.scrollHeight || 65;
+  };
 
   // Handle submit highlights
   const handlePostHighlight = () => {
@@ -45,20 +60,23 @@ const HighlightInputForm = (): JSX.Element => {
         onClick={() => {
           setIsDivFocused(true);
         }}
-        className="bg-white p-2 flex border rounded-lg overflow-hidden flex-col gap-2 "
+        className="bg-white  flex border rounded-lg overflow-hidden flex-col gap-2 "
       >
         <input
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          className=" focus:outline-none"
+          className=" focus:outline-none p-2"
           type="text"
           placeholder={isDivFocused ? "Add title (optional)" : "Highlight your merged PRs and provide a link!"}
         />
         <textarea
+          rows={row}
           value={bodyText}
-          onChange={(e) => setBodyText(e.target.value)}
+          onChange={(e) => handleTextAreaInputChange(e)}
           ref={textAreaRef}
-          className={`resize-none focus:outline-none ${!isDivFocused ? "hidden" : ""}`}
+          className={`resize-none p-2 mx-1 mb-2 transition focus:outline-none focus:border border-light-slate-2 rounded-lg ${
+            !isDivFocused ? "hidden" : ""
+          }`}
         />
       </div>
 
