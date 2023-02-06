@@ -81,7 +81,7 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
       <Head>
         <title>{title}</title>
         <link rel="icon" href="/favicon.ico" />
-        <meta property="og:url" content="https://insights.opensauced.pizza" />
+        {/* <meta property="og:url" content="https://insights.opensauced.pizza" />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="OpenSauced Insights" />
         <meta name="twitter:card" content="summary" />
@@ -89,7 +89,7 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
           property="og:description"
           content="The open-source intelligence platform for developers and maintainers. Unlock the power of open source with project insights by the slice."
         />
-        <meta property="og:image" content="/social-card.png" />
+        <meta property="og:image" content="/social-card.png" /> */}
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
