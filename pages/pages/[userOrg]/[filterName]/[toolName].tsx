@@ -8,6 +8,7 @@ import HubPageLayout from "layouts/hub-page";
 import { WithPageLayout } from "interfaces/with-page-layout";
 import changeCapitalization from "lib/utils/change-capitalization";
 import useInsight from "lib/hooks/useInsight";
+import Head from "next/head";
 
 const HubPage: WithPageLayout = () => {
   const router = useRouter();
@@ -16,8 +17,27 @@ const HubPage: WithPageLayout = () => {
   const { data: insight, isLoading, isError } = useInsight(insightId);
   const repositories = insight ? insight.repos.map(repo => repo.repo_id) : [];
 
+  const title = `Open Sauced Insights ${filterName ? ` - ${changeCapitalization(filterName!.toString(), true)}` : ""} ${
+    toolName ? ` / ${changeCapitalization(toolName.toString(), true)}` : ""
+  }`;
+
   return (
     <>
+      <Head>
+        <title key="title">{title}</title>
+        <meta name="description" content={"lorem epsum placeholder pumpum"} key="description" />
+        <meta name="keywords" content={"lorem epsum placeholder pumpum"} key="keywords" />
+
+        <meta property="og:description" content={"lorem epsum placeholder pumpum"} key="og:description" />
+        <meta property="og:image" content={"/favicon.ico"} key="og:image" />
+        <meta property="og:site_name" content="OpenSauced Insights" key="og:site_name" />
+        <meta property="og:type" content="website" key="og:type" />
+
+        <meta name="twitter:title" content={title} key="twitter:title" />
+        <meta name="twitter:description" content={"lorem epsum placeholder pumpum"} key="twitter:description" />
+        <meta name="twitter:image" content={"/favicon.ico"} key="twitter:image" />
+        <meta name="twitter:card" content="summary_large_image" key="twitter:card" />
+      </Head>
       { isLoading ? <div>Loading...</div>: "" }
       { isError ? <div>Error...</div>: "" }
       { !isLoading && insight
