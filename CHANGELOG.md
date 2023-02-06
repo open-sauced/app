@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.26.1-alpha.1](https://github.com/open-sauced/insights/compare/v1.26.0...v1.26.1-alpha.1) (2023-02-06)
+
+
+### 🎨 Styles
+
+* log netlify env variables ([245b625](https://github.com/open-sauced/insights/commit/245b6255af96e1a76028812b4b88ebffcb9e5a15))
+
 ## [1.26.0](https://github.com/open-sauced/insights/compare/v1.25.0...v1.26.0) (2023-02-02)
 
 
