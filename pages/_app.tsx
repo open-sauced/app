@@ -3,7 +3,7 @@
 import "../styles/globals.css";
 import "react-loading-skeleton/dist/skeleton.css";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Head from "next/head";
 import type { AppProps } from "next/app";
 import { useRouter } from "next/router";
@@ -18,15 +18,25 @@ import apiFetcher from "lib/hooks/useSWR";
 import { initiateAnalytics } from "lib/utils/analytics";
 import { supabase } from "lib/utils/supabase";
 import { Toaster } from "react-hot-toast";
+import { SEOobject } from "interfaces/seo-type";
+import SEO from "layouts/SEO/SEO";
 
 type ComponentWithPageLayout = AppProps & {
   Component: AppProps["Component"] & {
     PageLayout?: React.ComponentType<any>;
+    SEO?: SEOobject;
+    updateSEO?: (SEO: SEOobject) => void;
   };
 };
 
 function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
   const router = useRouter();
+  const [seo, updateSEO] = useState<SEOobject>(Component.SEO || {});
+  Component.updateSEO = updateSEO;
+
+  useEffect(() => {
+    updateSEO(Component.SEO || {});
+  }, [Component]);
 
   // From documentation on using Posthog with Next.js: https://posthog.com/docs/integrate/third-party/next-js
   useEffect(() => {
@@ -79,10 +89,10 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
   return (
     <>
       <Head>
-        <title>{title}</title>
         <link rel="icon" href="/favicon.ico" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
+      <SEO {...seo} />
 
       <SWRConfig
         value={{
@@ -94,6 +104,7 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
         <Toaster position="top-center" />
         <SessionContextProvider supabaseClient={supabase} initialSession={pageProps.initialSession}>
           <TipProvider>
+
             {Component.PageLayout ? (
               <Component.PageLayout>
                 <Component {...pageProps} />

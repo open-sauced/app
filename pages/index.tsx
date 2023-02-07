@@ -42,21 +42,7 @@ const Home: WithPageLayout = () => {
   }, [router, onboarded]);
 
   return (
-    <>
-      <Head>
-        <title>OpenSauced Insights</title>
-        <meta property="og:url" content="https://insights.opensauced.pizza" />
-        <meta property="og:type" content="website" />
-        <meta property="og:title" content="OpenSauced Insights" />
-        <meta name="twitter:card" content="summary" />
-        <meta
-          property="og:description"
-          content="The open-source intelligence platform for developers and maintainers. Unlock the power of open source with project insights by the slice."
-        />
-        <meta property="og:image" content="/social-card.png" />
-      </Head>
-      <Loader theme={"dark"}/>
-    </>
+    <Loader theme={"dark"}/>
   );
 };
 

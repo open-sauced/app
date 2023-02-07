@@ -1,14 +1,7 @@
+import { SEOobject } from "interfaces/seo-type";
 import Head from "next/head";
 
-interface SEOProps {
-    title?: string;
-    description?: string;
-    image?: string;
-    twitterCard?: string;
-    noindex?: boolean;
-}
-
-export default function SEO({description, image, title, twitterCard, noindex}: SEOProps) {
+export default function SEO({description, image, title, twitterCard, noindex}: SEOobject) {
 
     return (
         <Head>
