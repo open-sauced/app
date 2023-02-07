@@ -1,8 +1,8 @@
 import Button from "components/atoms/Button/button";
-import { ChangeEvent, useEffect, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState, MouseEvent } from "react";
 
 const HighlightInputForm = (): JSX.Element => {
-  const [isDivFocused, setIsDivFocused] = useState<boolean>(false);
+  const [isDivFocused, setIsDivFocused] = useState(false);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const [bodyText, setBodyText] = useState<string>("");
   const [row, setRow] = useState<number>(1);
@@ -40,22 +40,16 @@ const HighlightInputForm = (): JSX.Element => {
   };
 
   // Handle submit highlights
-  const handlePostHighlight = () => {
+  const handlePostHighlight = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsDivFocused(false);
     // Trigger api call to post highlight
     setBodyText("");
     setTitle("");
   };
 
   return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        handlePostHighlight();
-        setIsDivFocused(false);
-      }}
-      ref={ref}
-      className="flex flex-col gap-4"
-    >
+    <form onSubmit={handlePostHighlight} ref={ref} className="flex flex-col gap-4">
       <div
         onClick={() => {
           setIsDivFocused(true);
@@ -74,7 +68,7 @@ const HighlightInputForm = (): JSX.Element => {
           value={bodyText}
           onChange={(e) => handleTextAreaInputChange(e)}
           ref={textAreaRef}
-          className={`resize-none p-2 mx-1 mb-2 transition focus:outline-none focus:border border-light-slate-2 rounded-lg ${
+          className={`resize-none text-light-slate-11 p-2 mx-1 mb-2 transition focus:outline-none focus:border border-light-slate-2 rounded-lg ${
             !isDivFocused ? "hidden" : ""
           }`}
         />
