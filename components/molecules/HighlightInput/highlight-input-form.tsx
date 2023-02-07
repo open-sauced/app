@@ -54,12 +54,12 @@ const HighlightInputForm = (): JSX.Element => {
         onClick={() => {
           setIsDivFocused(true);
         }}
-        className="bg-white  flex border rounded-lg overflow-hidden flex-col gap-2 "
+        className="bg-white p-2 flex border rounded-lg overflow-hidden flex-col gap-2 "
       >
         <input
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          className=" focus:outline-none p-2"
+          className=" focus:outline-none "
           type="text"
           placeholder={isDivFocused ? "Add title (optional)" : "Highlight your merged PRs and provide a link!"}
         />
@@ -68,7 +68,7 @@ const HighlightInputForm = (): JSX.Element => {
           value={bodyText}
           onChange={(e) => handleTextAreaInputChange(e)}
           ref={textAreaRef}
-          className={`resize-none text-light-slate-11 p-2 mx-1 mb-2 transition focus:outline-none focus:border border-light-slate-2 rounded-lg ${
+          className={`resize-none text-light-slate-11 mb-2 transition focus:outline-none rounded-lg ${
             !isDivFocused ? "hidden" : ""
           }`}
         />
