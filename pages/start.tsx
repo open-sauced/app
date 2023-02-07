@@ -3,15 +3,15 @@ import { Octokit } from "octokit";
 import { useRouter } from "next/router";
 import { User } from "@supabase/supabase-js";
 
-import CompletedIcon from "public/icons/completed-icon.svg";
-import GitHubAuthActiveIcon from "public/icons/github-auth-active-icon.svg";
-import ChooseRepoIcon from "public/icons/choose-repo-icon.svg";
-import ChooseRepoActiveIcon from "public/icons/choose-repo-active-icon.svg";
-import PATIcon from "public/icons/pat-icon.svg";
-import PATActiveIcon from "public/icons/pat-active-icon.svg";
-import HighlightIcon from "public/icons/highlight-icon.svg";
-import GitHubIcon from "public/icons/github-icon.svg";
-import AddIcon from "public/icons/add-icon.svg";
+import CompletedIcon from "img/icons/completed-icon.svg";
+import GitHubAuthActiveIcon from "img/icons/github-auth-active-icon.svg";
+import ChooseRepoIcon from "img/icons/choose-repo-icon.svg";
+import ChooseRepoActiveIcon from "img/icons/choose-repo-active-icon.svg";
+import PATIcon from "img/icons/pat-icon.svg";
+import PATActiveIcon from "img/icons/pat-active-icon.svg";
+import HighlightIcon from "img/icons/highlight-icon.svg";
+import GitHubIcon from "img/icons/github-icon.svg";
+import AddIcon from "img/icons/add-icon.svg";
 
 import LoginLayout from "layouts/login";
 import { WithPageLayout } from "interfaces/with-page-layout";
@@ -29,7 +29,7 @@ import useLoginRepoList from "lib/hooks/useLoginRepoList";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import useSession from "lib/hooks/useSession";
 import { captureAnayltics } from "lib/utils/analytics";
-import { getAvatarLink } from "lib/utils/github";
+import { getAvatarByUsername } from "lib/utils/github";
 import useStore from "lib/store";
 
 type handleLoginStep = () => void;
@@ -306,7 +306,7 @@ const LoginStep3: React.FC<LoginStep3Props> = ({ repoList, checkFollowed }) => {
                         <img
                           alt="Repo Icon"
                           className="shrink-0 h-4 w-4 rounded overflow-hidden"
-                          src={getAvatarLink(repo.repoOwner)}
+                          src={getAvatarByUsername(repo.repoOwner)}
                         />
                         <Text className="!text-sm ">{`${repo.repoOwner}/`}</Text>
                       </div>

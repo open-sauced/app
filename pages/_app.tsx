@@ -17,6 +17,7 @@ import changeCapitalization from "lib/utils/change-capitalization";
 import apiFetcher from "lib/hooks/useSWR";
 import { initiateAnalytics } from "lib/utils/analytics";
 import { supabase } from "lib/utils/supabase";
+import { Toaster } from "react-hot-toast";
 
 type ComponentWithPageLayout = AppProps & {
   Component: AppProps["Component"] & {
@@ -46,7 +47,7 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
       console.log("You are on the browser");
 
       // When initializing, we restore the data from `localStorage` into a map.
-      const map = new Map(JSON.parse(localStorage.getItem("app-cache") || "[]"));
+      const map: Map<string, string> = new Map(JSON.parse(localStorage.getItem("app-cache") || "[]"));
 
       // Before unloading the app, we write back all the data into `localStorage`.
       window.addEventListener("beforeunload", () => {
@@ -71,13 +72,14 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
     }
   }
 
+  const title = `Open Sauced Insights ${filterName ? ` - ${changeCapitalization(filterName!.toString(), true)}` : ""} ${
+    toolName ? ` / ${changeCapitalization(toolName.toString(), true)}` : ""
+  }`;
+
   return (
     <>
       <Head>
-        <title>
-          Open Sauced Insights{filterName && ` - ${changeCapitalization(filterName.toString(), true)}`}{" "}
-          {toolName && ` / ${changeCapitalization(toolName.toString(), true)}`}
-        </title>
+        <title>{title}</title>
         <link rel="icon" href="/favicon.ico" />
         <meta property="og:url" content="https://insights.opensauced.pizza" />
         <meta property="og:type" content="website" />
@@ -98,6 +100,7 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
           provider: localStorageProvider
         }}
       >
+        <Toaster position="top-center" />
         <SessionContextProvider supabaseClient={supabase} initialSession={pageProps.initialSession}>
           <TipProvider>
             {Component.PageLayout ? (

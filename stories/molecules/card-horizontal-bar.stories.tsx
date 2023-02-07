@@ -9,7 +9,7 @@ const storyConfig = {
 
 export default storyConfig;
 
-const testLanguageList = [
+export const testLanguageList = [
   {
     languageName: "TypeScript",
     percentageUsed: 50

@@ -98,7 +98,7 @@ const NivoScatterPlot = ({
     }, 50);
   };
 
-  const filteredData = [{ id: data[0].id, data: data[0].data.filter((data) => data.x <= 7) }];
+  const filteredData = [{ id: data[0].id, data: data[0].data.filter((data) => Number(data.x) <= 7) }];
 
   return (
     <>
@@ -142,7 +142,9 @@ const NivoScatterPlot = ({
       </div>
       <div className="h-[400px]">
         <ResponsiveScatterPlot
-          tooltip={({ node }) => <HoverCardWrapper repositories={repositories} username={node.data.contributor} />}
+          tooltip={({ node }) => (
+            <>{isMobile ? "" : <HoverCardWrapper repositories={repositories} username={node.data.contributor} />}</>
+          )}
           nodeSize={isMobile ? 25 : 35}
           data={isMobile ? filteredData : data}
           margin={{ top: 30, right: isMobile ? 30 : 60, bottom: 70, left: isMobile ? 75 : 90 }}

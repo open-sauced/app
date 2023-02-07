@@ -15,7 +15,7 @@ const useTopicContributorPRs = (contributor: string, topic: string, repoIds: num
   const reposQuery = repoIds.length > 0 ? `&repoIds=${repoIds.join(",")}` : "";
   const endpointString = `${baseEndpoint}?limit=${limit}${filterQuery}${reposQuery}`;
 
-  const { data, error, mutate } = useSWR<PaginatedContributorPRsResponse, Error>(endpointString);
+  const { data, error, mutate } = useSWR<PaginatedContributorPRsResponse, Error>(contributor ? endpointString : null);
 
   return {
     data: data?.data ?? [],

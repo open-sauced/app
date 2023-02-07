@@ -24,7 +24,7 @@ const Pill: React.FC<PillProps> = ({ className, text, color = "slate", size = "b
             : "bg-light-slate-4 "
     }
         ${size === "small" ? "py-1 px-1.5  " : "py-1.5 px-2 "}
-        inline-flex items-center rounded-full gap-1`}
+        inline-flex items-center rounded-full gap-1 ${className}`}
     >
       {icon}
 
