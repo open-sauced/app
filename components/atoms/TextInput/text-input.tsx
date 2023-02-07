@@ -14,6 +14,7 @@ interface TextInputProps {
   classNames?: string;
   errorMsg?: string;
   value?: string;
+  defaultValue?: string;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -29,6 +30,7 @@ const TextInput = ({
   autoFocus,
   borderless = false,
   value,
+  defaultValue,
   onChange,
   errorMsg = ""
 }: TextInputProps) => {
@@ -57,6 +59,7 @@ const TextInput = ({
             placeholder={placeholder || ""}
             onChange={onChange}
             value={value}
+            defaultValue={defaultValue}
             className={`flex-1 focus:outline-none  ${classNames} ${
               disabled && "bg-light-slate-3 cursor-not-allowed  text-light-slate-9"
             }`}

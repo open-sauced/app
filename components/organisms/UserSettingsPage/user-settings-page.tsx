@@ -59,7 +59,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
       });
       setSelectedInterest(insightsUser?.interests?.split(","));
       setDisplayLocalTime(insightsUser?.display_local_time);
-      setTimezone(insightsUser?.timezone);
+      setTimezone(insightsUser?.timezone || "");
     }
     fetchAuthSession();
   }, [user, insightsUser]);
@@ -147,8 +147,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
                 rows={4}
                 placeholder="Tell us about yourself."
                 className="bg-light-slate-4 rounded-lg px-3 py-2 disabled:cursor-not-allowed "
-                readOnly
-                value={
+                defaultValue={
                   userInfo?.bio ||
                   "I am an open source developer with a passion for music and video games. I strive to improve the open source community and am always looking for new ways to contribute."
                 }
@@ -158,28 +157,24 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
               classNames="bg-light-slate-4 text-light-slate-11 font-medium"
               placeholder="https://opensauced.pizza"
               label="URL"
-              disabled
             />
             <TextInput
               classNames="bg-light-slate-4 text-light-slate-11"
               placeholder="@saucedopen"
               label="Twitter Username"
-              disabled
-              value={`@${(userInfo && userInfo.twitter_username) || "saucedopen"}`}
+              defaultValue={`@${(userInfo && userInfo.twitter_username) || "saucedopen"}`}
             />
             <TextInput
               classNames="bg-light-slate-4 text-light-slate-11 font-medium"
               placeholder="OpenSauced"
               label="Company"
-              disabled
-              value={userInfo?.company || "OpenSauced"}
+              defaultValue={userInfo?.company || "OpenSauced"}
             />
             <TextInput
               classNames="bg-light-slate-4 text-light-slate-11 font-medium"
               placeholder="USA"
               label="Location"
-              disabled
-              value={userInfo?.location || "California"}
+              defaultValue={userInfo?.location || "California"}
             />
             <div>
               <Checkbox
