@@ -35,8 +35,8 @@ const Contributor: WithPageLayout = () => {
       description: `${user?.bio || "I am an open source developer with a passion for music and video games. I strive to improve the open source community and am always looking for new ways to contribute."}`,
       image: profile.githubAvatar,
       twitterCard: "summary_large_image"
-    })
-  }, [contributorLogin, user?.bio, profile.githubAvatar])
+    });
+  }, [contributorLogin, user?.bio, profile.githubAvatar]);
 
   return (
     <div className="w-full">

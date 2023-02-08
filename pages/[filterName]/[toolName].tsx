@@ -17,8 +17,8 @@ const Filter: WithPageLayout = () => {
   useEffect( () => {
     Filter.updateSEO!({
       title: title
-    })
-  }, [title])
+    });
+  }, [title]);
 
   return (
     <Tool tool={toolName ? changeCapitalization(toolName.toString(), true) : undefined} />
