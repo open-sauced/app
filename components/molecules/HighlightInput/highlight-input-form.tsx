@@ -1,21 +1,22 @@
 import Button from "components/atoms/Button/button";
-import { ChangeEvent, useEffect, useRef, useState, MouseEvent } from "react";
+
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 
 const HighlightInputForm = (): JSX.Element => {
   const [isDivFocused, setIsDivFocused] = useState(false);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
-  const [bodyText, setBodyText] = useState<string>("");
-  const [row, setRow] = useState<number>(1);
-  const [title, setTitle] = useState<string>("");
+  const [bodyText, setBodyText] = useState("");
+  const [row, setRow] = useState(1);
+  const [title, setTitle] = useState("");
   const ref = useRef<HTMLFormElement>(null);
   let rowLomit = 5;
   let messageLastScrollHeight = textAreaRef.current ? textAreaRef.current?.scrollHeight : 50;
 
   useEffect(() => {
-    const checkIfClickedOutside = (e: any) => {
+    const checkIfClickedOutside = (e: globalThis.MouseEvent) => {
       // If the menu is open and the clicked target is not within the menu,
       // then close the menu
-      if (isDivFocused && ref.current && !ref.current.contains(e.target)) {
+      if (isDivFocused && ref.current && !ref.current.contains(e.target as HTMLElement)) {
         setIsDivFocused(false);
       }
     };
@@ -54,7 +55,7 @@ const HighlightInputForm = (): JSX.Element => {
         onClick={() => {
           setIsDivFocused(true);
         }}
-        className="bg-white p-2 flex border rounded-lg overflow-hidden flex-col gap-2 "
+        className="bg-white p-2 flex border rounded-lg text-sm overflow-hidden flex-col gap-2 "
       >
         <input
           value={title}
@@ -68,7 +69,7 @@ const HighlightInputForm = (): JSX.Element => {
           value={bodyText}
           onChange={(e) => handleTextAreaInputChange(e)}
           ref={textAreaRef}
-          className={`resize-none text-light-slate-11 mb-2 transition focus:outline-none rounded-lg ${
+          className={`resize-none font-normal text-light-slate-11 mb-2 transition focus:outline-none rounded-lg ${
             !isDivFocused ? "hidden" : ""
           }`}
         />
