@@ -16,7 +16,6 @@ interface TableRepositoryNameProps {
 }
 
 const TableRepositoryName = ({ avatarURL, name, handle, topic, user }: TableRepositoryNameProps): JSX.Element => {
-  console.log({avatarURL});
   const router = useRouter();
 
   let filterLink = `/${user ? `pages/${user}/` : ""}${topic}/repositories/filter/${handle}/${name}`;
