@@ -6,7 +6,7 @@ interface PaginatedInsightsResponse {
   readonly meta: Meta;
 }
 
-const useUserInsights = (limit = 35) => {
+const useUserInsights = (limit = 100) => {
   const baseEndpoint = `user/insights?limit=${limit}`;
   const endpointString = `${baseEndpoint}`;
 
