@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.27.1-beta.1](https://github.com/open-sauced/insights/compare/v1.27.0...v1.27.1-beta.1) (2023-02-08)
+
+
+### 🐛 Bug Fixes
+
+* bump insight page limit higher ([#846](https://github.com/open-sauced/insights/issues/846)) ([893fa16](https://github.com/open-sauced/insights/commit/893fa163d3650fae618c32d83855b9d318bbe59e))
+
 ## [1.27.0](https://github.com/open-sauced/insights/compare/v1.26.0...v1.27.0) (2023-02-08)
 
 
