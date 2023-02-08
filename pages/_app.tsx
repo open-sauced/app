@@ -82,10 +82,6 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
     }
   }
 
-  const title = `Open Sauced Insights ${filterName ? ` - ${changeCapitalization(filterName!.toString(), true)}` : ""} ${
-    toolName ? ` / ${changeCapitalization(toolName.toString(), true)}` : ""
-  }`;
-
   return (
     <>
       <Head>
