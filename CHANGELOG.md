@@ -5,6 +5,43 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.27.1-beta.1](https://github.com/open-sauced/insights/compare/v1.27.0...v1.27.1-beta.1) (2023-02-08)
+
+
+### 🐛 Bug Fixes
+
+* bump insight page limit higher ([#846](https://github.com/open-sauced/insights/issues/846)) ([893fa16](https://github.com/open-sauced/insights/commit/893fa163d3650fae618c32d83855b9d318bbe59e))
+
+## [1.27.0](https://github.com/open-sauced/insights/compare/v1.26.0...v1.27.0) (2023-02-08)
+
+
+### 🍕 Features
+
+* add playwright e2e testing ([#831](https://github.com/open-sauced/insights/issues/831)) ([5ee800b](https://github.com/open-sauced/insights/commit/5ee800b27742c1c40d28b52d5c95379758d90d80)), closes [#539](https://github.com/open-sauced/insights/issues/539)
+* adds loading skeleton to page ([#834](https://github.com/open-sauced/insights/issues/834)) ([2c1c00e](https://github.com/open-sauced/insights/commit/2c1c00ea7fb38606517173e23e6e9fa46484485a))
+
+
+### 🐛 Bug Fixes
+
+* increase limit for listing insight pages ([#841](https://github.com/open-sauced/insights/issues/841)) ([335e2fe](https://github.com/open-sauced/insights/commit/335e2fe733eacff57845720083f465583851c2cf))
+* update check for user id when editing an insight page ([#842](https://github.com/open-sauced/insights/issues/842)) ([6533ba8](https://github.com/open-sauced/insights/commit/6533ba8cc9f8ace25356b742376c4a5d2d412ff9)), closes [#833](https://github.com/open-sauced/insights/issues/833)
+
+## [1.27.0-beta.2](https://github.com/open-sauced/insights/compare/v1.27.0-beta.1...v1.27.0-beta.2) (2023-02-08)
+
+
+### 🐛 Bug Fixes
+
+* increase limit for listing insight pages ([#841](https://github.com/open-sauced/insights/issues/841)) ([335e2fe](https://github.com/open-sauced/insights/commit/335e2fe733eacff57845720083f465583851c2cf))
+* update check for user id when editing an insight page ([#842](https://github.com/open-sauced/insights/issues/842)) ([6533ba8](https://github.com/open-sauced/insights/commit/6533ba8cc9f8ace25356b742376c4a5d2d412ff9)), closes [#833](https://github.com/open-sauced/insights/issues/833)
+
+## [1.27.0-beta.1](https://github.com/open-sauced/insights/compare/v1.26.0...v1.27.0-beta.1) (2023-02-08)
+
+
+### 🍕 Features
+
+* add playwright e2e testing ([#831](https://github.com/open-sauced/insights/issues/831)) ([5ee800b](https://github.com/open-sauced/insights/commit/5ee800b27742c1c40d28b52d5c95379758d90d80)), closes [#539](https://github.com/open-sauced/insights/issues/539)
+* adds loading skeleton to page ([#834](https://github.com/open-sauced/insights/issues/834)) ([2c1c00e](https://github.com/open-sauced/insights/commit/2c1c00ea7fb38606517173e23e6e9fa46484485a))
+
 ## [1.26.0](https://github.com/open-sauced/insights/compare/v1.25.0...v1.26.0) (2023-02-02)
 
 
