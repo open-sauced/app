@@ -16,6 +16,7 @@ interface TableRepositoryNameProps {
 }
 
 const TableRepositoryName = ({ avatarURL, name, handle, topic, user }: TableRepositoryNameProps): JSX.Element => {
+  console.log({avatarURL});
   const router = useRouter();
 
   let filterLink = `/${user ? `pages/${user}/` : ""}${topic}/repositories/filter/${handle}/${name}`;
@@ -28,7 +29,7 @@ const TableRepositoryName = ({ avatarURL, name, handle, topic, user }: TableRepo
       {/* Avatar */}
       <a href={`https://www.github.com/${handle}/${name}`} target="_blank" rel="noreferrer">
         <Avatar
-          isCached={true}
+          isCached={false}
           className="shrink-0 min-w-10 min-h-10"
           size={40}
           avatarURL={avatarURL}
