@@ -84,7 +84,7 @@ const ContributorProfilePage = ({
       <div className="pt-24 px-4 md:px-10 lg:px-16 flex flex-col lg:flex-row lg:gap-40 w-full overflow-hidden justify-between">
         <div className="flex flex-col min-w-[270px] gap-4 ">
           {
-            loading ? <SkeletonWrapper height={210} radius={12} classNames="pb-16 lg:pb-0" /> : <> 
+            loading ? <SkeletonWrapper height={210} radius={12} classNames="pb-16 lg:pb-0" /> : <>
               <ContributorProfileInfo
                 interests={interests}
                 // eslint-disable-next-line camelcase
@@ -151,7 +151,7 @@ const ContributorProfilePage = ({
                 </div>
               </div>
               <div className="mt-10 h-32">
-                <CardLineChart lineChartOption={chart} />
+                <CardLineChart lineChartOption={chart} className="!h-32" />
               </div>
               <div>
                 <CardRepoList limit={7} repoList={repoList} />
