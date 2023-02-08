@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.27.0-beta.1](https://github.com/open-sauced/insights/compare/v1.26.0...v1.27.0-beta.1) (2023-02-08)
+
+
+### 🍕 Features
+
+* add playwright e2e testing ([#831](https://github.com/open-sauced/insights/issues/831)) ([5ee800b](https://github.com/open-sauced/insights/commit/5ee800b27742c1c40d28b52d5c95379758d90d80)), closes [#539](https://github.com/open-sauced/insights/issues/539)
+* adds loading skeleton to page ([#834](https://github.com/open-sauced/insights/issues/834)) ([2c1c00e](https://github.com/open-sauced/insights/commit/2c1c00ea7fb38606517173e23e6e9fa46484485a))
+
 ## [1.26.0](https://github.com/open-sauced/insights/compare/v1.25.0...v1.26.0) (2023-02-02)
 
 
