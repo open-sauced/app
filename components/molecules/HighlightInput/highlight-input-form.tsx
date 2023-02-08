@@ -37,7 +37,7 @@ const HighlightInputForm = (): JSX.Element => {
     }
 
     if (!bodyText) setRow(1);
-    messageLastScrollHeight = textAreaRef.current?.scrollHeight || 65;
+    messageLastScrollHeight = textAreaRef.current?.scrollHeight || 60;
   };
 
   // Handle submit highlights
