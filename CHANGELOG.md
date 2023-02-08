@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.28.0-beta.1](https://github.com/open-sauced/insights/compare/v1.27.1-beta.1...v1.28.0-beta.1) (2023-02-08)
+
+
+### 🍕 Features
+
+* add highlights input form to design system ([#836](https://github.com/open-sauced/insights/issues/836)) ([62aa04a](https://github.com/open-sauced/insights/commit/62aa04aa2e5d21bb55461681dc581630a0ca23f9)), closes [#828](https://github.com/open-sauced/insights/issues/828)
+
 ### [1.27.1-beta.1](https://github.com/open-sauced/insights/compare/v1.27.0...v1.27.1-beta.1) (2023-02-08)
 
 
