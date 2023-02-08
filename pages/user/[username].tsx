@@ -39,26 +39,23 @@ const Contributor: WithPageLayout = () => {
   }, [contributorLogin, user?.bio, profile.githubAvatar])
 
   return (
-    <>
-
-      <div className="w-full">
-        <ContributorProfilePage
-          prMerged={contributor[0]?.recent_merged_prs}
-          error={isError}
-          loading={userLoading}
-          user={user}
-          repoList={repoList}
-          langList={contributorLanguageList}
-          githubName={profile.githubName}
-          githubAvatar={profile.githubAvatar}
-          prTotal={contributor[0]?.recent_pr_total}
-          openPrs={contributor[0]?.recent_opened_prs}
-          recentContributionCount={contributor[0]?.recent_contribution_count}
-          prReviews={contributor[0]?.recent_pr_reviews}
-          prVelocity={contributor[0]?.recent_pr_velocity}
-        />
-      </div>
-    </>
+    <div className="w-full">
+      <ContributorProfilePage
+        prMerged={contributor[0]?.recent_merged_prs}
+        error={isError}
+        loading={userLoading}
+        user={user}
+        repoList={repoList}
+        langList={contributorLanguageList}
+        githubName={profile.githubName}
+        githubAvatar={profile.githubAvatar}
+        prTotal={contributor[0]?.recent_pr_total}
+        openPrs={contributor[0]?.recent_opened_prs}
+        recentContributionCount={contributor[0]?.recent_contribution_count}
+        prReviews={contributor[0]?.recent_pr_reviews}
+        prVelocity={contributor[0]?.recent_pr_velocity}
+      />
+    </div>
   );
 };
 

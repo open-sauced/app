@@ -32,7 +32,7 @@ const InsightsHub: WithPageLayout = () => {
         router.push("/");
       }
     }
-    
+
     getUser();
   }, [router, onboarded]);
 
@@ -70,14 +70,17 @@ const InsightsHub: WithPageLayout = () => {
         passHref
         href={"/hub/insights/new"}
         className="w-full bg-light-slate-4 text-lg text-light-slate-11 py-5 md:py-8 lg:py-10 rounded-lg text-center border border-light-slate-7">
-        
+
           Create a new Insight Page
-        
+
       </Link>
     </div>
   ) : <></>;
 };
 
 InsightsHub.PageLayout = HubLayout;
+InsightsHub.SEO = {
+  title: "Insights Hub | Open Sauced Insights"
+}
 
 export default InsightsHub;
