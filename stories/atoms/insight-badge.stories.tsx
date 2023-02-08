@@ -1,17 +1,15 @@
 import { ComponentStory } from "@storybook/react";
-import Badge from "components/atoms/InsightBadge/insight-badge";
-
+import InsightsBadge from "components/atoms/InsightBadge/insight-badge";
 
 const storyConfig = {
-  title: "Design System/Atoms/Badge"
+  title: "Design System/Atoms/InsightsBadge"
 };
 
 export default storyConfig;
 
-const BadgeTemplate:ComponentStory<typeof Badge>  = (args) => <Badge {...args}/>;
+const BadgeTemplate: ComponentStory<typeof InsightsBadge> = (args) => <InsightsBadge {...args} />;
 
-export const isPublic =  BadgeTemplate.bind({});
-isPublic.args = {isPublic:true};
+export const isPublic = BadgeTemplate.bind({});
+isPublic.args = { isPublic: true };
 export const isPrivate = BadgeTemplate.bind({});
-isPublic.args = {isPublic:false};
-
+isPrivate.args = { isPublic: false };

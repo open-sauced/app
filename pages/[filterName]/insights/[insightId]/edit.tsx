@@ -25,7 +25,7 @@ const EditInsightPage: WithPageLayout = () => {
     return <>Error</>;
   }
 
-  if (insight && insight.user_id !== user?.user_metadata.sub) {
+  if (insight && insight.user_id !== Number(user?.user_metadata.sub)) {
     return <>Unauthorized</>;
   }
 

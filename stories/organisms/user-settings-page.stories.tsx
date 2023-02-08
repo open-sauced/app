@@ -6,6 +6,6 @@ const StoryConfig = {
 };
 export default StoryConfig;
 
-const UserSettingsPageTemplate: ComponentStory<typeof UserSettingsPage> = () => <UserSettingsPage />;
+const UserSettingsPageTemplate: ComponentStory<typeof UserSettingsPage> = () => <UserSettingsPage user={null} />;
 
 export const Default = UserSettingsPageTemplate.bind({});
