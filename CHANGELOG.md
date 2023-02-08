@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.29.0-beta.1](https://github.com/open-sauced/insights/compare/v1.28.0...v1.29.0-beta.1) (2023-02-08)
+
+
+### 🍕 Features
+
+* make pr list item clickable ([#807](https://github.com/open-sauced/insights/issues/807)) ([5398ad8](https://github.com/open-sauced/insights/commit/5398ad84cd310a04ea5f7bd96feb83dedc5689c5)), closes [#799](https://github.com/open-sauced/insights/issues/799)
+
 ## [1.28.0](https://github.com/open-sauced/insights/compare/v1.27.0...v1.28.0) (2023-02-08)
 
 
