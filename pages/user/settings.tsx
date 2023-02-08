@@ -25,5 +25,5 @@ ProfileSettings.PageLayout = ProfileLayout;
 ProfileSettings.SEO = {
   title: "Account Settings | OpenSauced Insights",
   noindex: true
-}
+};
 export default ProfileSettings;

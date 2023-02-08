@@ -18,13 +18,13 @@ const HubPage: WithPageLayout = () => {
   const { data: insight, isLoading, isError } = useInsight(insightId);
   const repositories = insight ? insight.repos.map(repo => repo.repo_id) : [];
 
-  const title = `${insight && insight.name} | Open Sauced Insights Hub`
+  const title = `${insight && insight.name} | Open Sauced Insights Hub`;
 
   useEffect( () => {
     HubPage.updateSEO!({
       title: title
-    })
-  }, [title])
+    });
+  }, [title]);
 
   return (
     <>

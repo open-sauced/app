@@ -18,8 +18,8 @@ const SelectedFilter: WithPageLayout = () => {
   useEffect( () => {
     SelectedFilter.updateSEO!({
       title: title
-    })
-  }, [title])
+    });
+  }, [title]);
 
   return <Tool tool={toolName ? changeCapitalization(toolName.toString(), true) : undefined} />;
 };
