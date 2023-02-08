@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.27.0-beta.2](https://github.com/open-sauced/insights/compare/v1.27.0-beta.1...v1.27.0-beta.2) (2023-02-08)
+
+
+### 🐛 Bug Fixes
+
+* increase limit for listing insight pages ([#841](https://github.com/open-sauced/insights/issues/841)) ([335e2fe](https://github.com/open-sauced/insights/commit/335e2fe733eacff57845720083f465583851c2cf))
+* update check for user id when editing an insight page ([#842](https://github.com/open-sauced/insights/issues/842)) ([6533ba8](https://github.com/open-sauced/insights/commit/6533ba8cc9f8ace25356b742376c4a5d2d412ff9)), closes [#833](https://github.com/open-sauced/insights/issues/833)
+
 ## [1.27.0-beta.1](https://github.com/open-sauced/insights/compare/v1.26.0...v1.27.0-beta.1) (2023-02-08)
 
 
