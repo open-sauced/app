@@ -26,6 +26,12 @@ const LanguagePill = ({ topic, classNames, onClick }: LanguagePillProps) => {
 
     return iconMap[name] || "";
   };
+
+  const checkCamelCase = (name: string) => {
+    if(name == 'javascript') return 'javaScript'
+    else return name
+  }
+
   return (
     <div
       onClick={onClick}
@@ -34,7 +40,7 @@ const LanguagePill = ({ topic, classNames, onClick }: LanguagePillProps) => {
       }`}
     >
       <Image src={renderTopicIcon(topic)} alt={topic} />
-      <span className="font-normal capitalize">{topic}</span>
+      <span className="font-normal capitalize">{checkCamelCase(topic)}</span>
     </div>
   );
 };
