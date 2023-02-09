@@ -93,7 +93,8 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
     }
   };
 
-  const handleUpdateProfile = async () => {
+  const handleUpdateProfile = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     const data = await updateUser({
       data: {
         email,
@@ -117,13 +118,13 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
           <Title className="!text-2xl !text-light-slate-11" level={2}>
             Public profile
           </Title>
-          <form onSubmit={(e) => e.preventDefault()} className="flex flex-col gap-6 mt-6">
+          <form onSubmit={handleUpdateProfile} className="flex flex-col gap-6 mt-6">
             <TextInput
               classNames="bg-light-slate-4 text-light-slate-11 font-medium"
               label="Name*"
               placeholder="April O'Neil"
-              value={user?.user_metadata.full_name}
-              disabled
+              defaultValue={user?.user_metadata.full_name}
+              required
             />
             <TextInput
               classNames="bg-light-slate-4 text-light-slate-11 font-medium"
@@ -138,6 +139,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
               }}
               label="Email*"
               value={email}
+              required
             />
 
             {/* Bio section */}
@@ -189,8 +191,8 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
             </div>
             <div className="flex flex-col gap-2">
               <label>Time zone*</label>
-              <Select value={timezone} onChange={e => setTimezone(e.target.value)}>
-                <SelectOption value="select timezone">Select time zone</SelectOption>
+              <Select value={timezone} onChange={e => setTimezone(e.target.value)} required>
+                <SelectOption value="">Select time zone</SelectOption>
                 {timezones.map((timezone, index) => (
                   <SelectOption key={index} value={timezone.value}>
                     {timezone.text}
@@ -198,7 +200,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
                 ))}
               </Select>
             </div>
-            <Button disabled={!isValidEmail} onClick={handleUpdateProfile} type="primary">
+            <Button disabled={!isValidEmail} type="primary">
               Update profile
             </Button>
           </form>

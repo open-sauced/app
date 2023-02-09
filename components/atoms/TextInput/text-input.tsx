@@ -15,6 +15,7 @@ interface TextInputProps {
   errorMsg?: string;
   value?: string;
   defaultValue?: string;
+  required?: boolean;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -32,6 +33,7 @@ const TextInput = ({
   value,
   defaultValue,
   onChange,
+  required,
   errorMsg = ""
 }: TextInputProps) => {
   const inputRef = useRef<any>();
@@ -65,6 +67,7 @@ const TextInput = ({
             }`}
             autoFocus={autoFocus}
             disabled={disabled}
+            required={required}
           />
           {!disabled && (
             <>
