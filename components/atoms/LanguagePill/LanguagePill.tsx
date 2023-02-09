@@ -7,6 +7,7 @@ import PythonIcon from "/img/icons/🐍.svg";
 import AIIcon from "/img/icons/🤖.svg";
 import MLIcon from "/img/icons/🧠.svg";
 import RustIcon from "/img/icons/🦀.svg";
+import checkCamelCaseNaming from "lib/utils/check-camelcase-naming";
 
 interface LanguagePillProps {
   topic: "react" | "javascript" | "python" | "ML" | "AI" | "rust" | string;
@@ -27,11 +28,6 @@ const LanguagePill = ({ topic, classNames, onClick }: LanguagePillProps) => {
     return iconMap[name] || "";
   };
 
-  const checkCamelCase = (name: string) => {
-    if(name == "javascript") return "javaScript";
-    else return name;
-  };
-
   return (
     <div
       onClick={onClick}
@@ -40,7 +36,7 @@ const LanguagePill = ({ topic, classNames, onClick }: LanguagePillProps) => {
       }`}
     >
       <Image src={renderTopicIcon(topic)} alt={topic} />
-      <span className="font-normal capitalize">{checkCamelCase(topic)}</span>
+      <span className="font-normal capitalize">{checkCamelCaseNaming(topic)}</span>
     </div>
   );
 };
