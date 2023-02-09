@@ -28,9 +28,9 @@ const LanguagePill = ({ topic, classNames, onClick }: LanguagePillProps) => {
   };
 
   const checkCamelCase = (name: string) => {
-    if(name == 'javascript') return 'javaScript'
-    else return name
-  }
+    if(name == "javascript") return "javaScript";
+    else return name;
+  };
 
   return (
     <div
