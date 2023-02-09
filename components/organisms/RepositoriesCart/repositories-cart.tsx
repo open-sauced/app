@@ -1,4 +1,5 @@
 import { Children } from "react";
+import clsx from "clsx";
 
 import { BiPlus } from "react-icons/bi";
 
@@ -41,7 +42,7 @@ const RepositoriesCart = ({
     if (handleUpdatePage) {
       handleUpdatePage();
     }
-  };  
+  };
 
   const onAddToCart = (fullRepoName: string) => {
     if (handleAddToCart) {
@@ -96,7 +97,11 @@ const RepositoriesCart = ({
           <button
             disabled={createPageButtonDisabled}
             onClick={() => edit ? onHandleUpdatePage() : onHandleCreatePage()}
-            className="w-full text-sm text-white flex justify-center items-center py-3 px-5 bg-light-orange-9 rounded-lg"
+            className={clsx(
+              "w-full text-sm flex justify-center items-center py-3 px-5 rounded-lg",
+              "text-white bg-light-orange-9",
+              createPageButtonDisabled && "bg-light-orange-6 cursor-not-allowed"
+            )}
           >
             { edit ? "Update" : "Create" } Page
           </button>

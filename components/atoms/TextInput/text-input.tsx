@@ -1,20 +1,13 @@
 import { CheckCircleFillIcon, XCircleFillIcon } from "@primer/octicons-react";
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import clsx from "clsx";
-interface TextInputProps {
+interface TextInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
-  placeholder?: string;
-  name?: string;
   state?: "default" | "valid" | "invalid";
-  id?: string;
-  disabled?: boolean;
-  autoFocus?: boolean;
   borderless?: boolean;
   descriptionText?: string;
   classNames?: string;
   errorMsg?: string;
-  value?: string;
-  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const TextInput = ({
@@ -26,20 +19,20 @@ const TextInput = ({
   descriptionText,
   classNames,
   disabled = false,
-  autoFocus,
   borderless = false,
   value,
-  onChange,
-  errorMsg = ""
+  errorMsg = "",
+  ...props
 }: TextInputProps) => {
   const inputRef = useRef<any>();
   const handleResetInput = () => {
     inputRef.current.value = "";
   };
+
   return (
     <>
       <label className="flex w-full flex-col">
-        {label && <p className="mb-2   text-light-slate-9 text-sm">{label}</p>}
+        {label && <p className="mb-2 text-light-slate-9 text-sm">{label}</p>}
         <div
           className={clsx(
             "flex-1 px-3 text-light-slate-12 bg-white shadow-input border transition rounded-lg py-1 flex items-center",
@@ -50,17 +43,16 @@ const TextInput = ({
           )}
         >
           <input
+            {...props}
             ref={inputRef}
             type="text"
             name={name}
             id={id || name || ""}
             placeholder={placeholder || ""}
-            onChange={onChange}
             value={value}
             className={`flex-1 focus:outline-none  ${classNames} ${
               disabled && "bg-light-slate-3 cursor-not-allowed  text-light-slate-9"
             }`}
-            autoFocus={autoFocus}
             disabled={disabled}
           />
           {!disabled && (
