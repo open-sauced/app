@@ -23,6 +23,7 @@
         "@radix-ui/react-hover-card": "^1.0.3",
         "@radix-ui/react-select": "^1.2.0",
         "@radix-ui/react-switch": "^1.0.1",
+        "@radix-ui/react-tabs": "^1.0.2",
         "@radix-ui/react-toggle-group": "^1.0.2",
         "@radix-ui/react-tooltip": "^1.0.3",
         "@react-spring/web": "^9.6.1",
@@ -32,6 +33,7 @@
         "@supabase/gotrue-js": "^1.22.22",
         "@supabase/supabase-js": "^2.7.0",
         "@supabase/ui": "^0.36.5",
+        "class-variance-authority": "^0.4.0",
         "clsx": "^1.2.1",
         "date-fns": "^2.29.3",
         "echarts": "^5.4.1",
@@ -48,6 +50,7 @@
         "react-spring": "^9.6.1",
         "stripe": "^11.8.0",
         "swr": "^2.0.3",
+        "tailwind-merge": "^1.9.1",
         "tailwindcss-radix": "^2.7.0",
         "zustand": "^4.3.2"
       },
@@ -6594,6 +6597,88 @@
       }
     },
     "node_modules/@radix-ui/react-switch/node_modules/@radix-ui/react-slot": {
+      "version": "1.0.1",
+      "resolved": "https://registry.npmjs.org/@radix-ui/react-slot/-/react-slot-1.0.1.tgz",
+      "integrity": "sha512-avutXAFL1ehGvAXtPquu0YK5oz6ctS474iM3vNGQIkswrVhdrS52e3uoMQBzZhNRAIE0jBnUyXWNmSjGHhCFcw==",
+      "dependencies": {
+        "@babel/runtime": "^7.13.10",
+        "@radix-ui/react-compose-refs": "1.0.0"
+      },
+      "peerDependencies": {
+        "react": "^16.8 || ^17.0 || ^18.0"
+      }
+    },
+    "node_modules/@radix-ui/react-tabs": {
+      "version": "1.0.2",
+      "resolved": "https://registry.npmjs.org/@radix-ui/react-tabs/-/react-tabs-1.0.2.tgz",
+      "integrity": "sha512-gOUwh+HbjCuL0UCo8kZ+kdUEG8QtpdO4sMQduJ34ZEz0r4922g9REOBM+vIsfwtGxSug4Yb1msJMJYN2Bk8TpQ==",
+      "dependencies": {
+        "@babel/runtime": "^7.13.10",
+        "@radix-ui/primitive": "1.0.0",
+        "@radix-ui/react-context": "1.0.0",
+        "@radix-ui/react-direction": "1.0.0",
+        "@radix-ui/react-id": "1.0.0",
+        "@radix-ui/react-presence": "1.0.0",
+        "@radix-ui/react-primitive": "1.0.1",
+        "@radix-ui/react-roving-focus": "1.0.2",
+        "@radix-ui/react-use-controllable-state": "1.0.0"
+      },
+      "peerDependencies": {
+        "react": "^16.8 || ^17.0 || ^18.0",
+        "react-dom": "^16.8 || ^17.0 || ^18.0"
+      }
+    },
+    "node_modules/@radix-ui/react-tabs/node_modules/@radix-ui/react-collection": {
+      "version": "1.0.1",
+      "resolved": "https://registry.npmjs.org/@radix-ui/react-collection/-/react-collection-1.0.1.tgz",
+      "integrity": "sha512-uuiFbs+YCKjn3X1DTSx9G7BHApu4GHbi3kgiwsnFUbOKCrwejAJv4eE4Vc8C0Oaxt9T0aV4ox0WCOdx+39Xo+g==",
+      "dependencies": {
+        "@babel/runtime": "^7.13.10",
+        "@radix-ui/react-compose-refs": "1.0.0",
+        "@radix-ui/react-context": "1.0.0",
+        "@radix-ui/react-primitive": "1.0.1",
+        "@radix-ui/react-slot": "1.0.1"
+      },
+      "peerDependencies": {
+        "react": "^16.8 || ^17.0 || ^18.0",
+        "react-dom": "^16.8 || ^17.0 || ^18.0"
+      }
+    },
+    "node_modules/@radix-ui/react-tabs/node_modules/@radix-ui/react-primitive": {
+      "version": "1.0.1",
+      "resolved": "https://registry.npmjs.org/@radix-ui/react-primitive/-/react-primitive-1.0.1.tgz",
+      "integrity": "sha512-fHbmislWVkZaIdeF6GZxF0A/NH/3BjrGIYj+Ae6eTmTCr7EB0RQAAVEiqsXK6p3/JcRqVSBQoceZroj30Jj3XA==",
+      "dependencies": {
+        "@babel/runtime": "^7.13.10",
+        "@radix-ui/react-slot": "1.0.1"
+      },
+      "peerDependencies": {
+        "react": "^16.8 || ^17.0 || ^18.0",
+        "react-dom": "^16.8 || ^17.0 || ^18.0"
+      }
+    },
+    "node_modules/@radix-ui/react-tabs/node_modules/@radix-ui/react-roving-focus": {
+      "version": "1.0.2",
+      "resolved": "https://registry.npmjs.org/@radix-ui/react-roving-focus/-/react-roving-focus-1.0.2.tgz",
+      "integrity": "sha512-HLK+CqD/8pN6GfJm3U+cqpqhSKYAWiOJDe+A+8MfxBnOue39QEeMa43csUn2CXCHQT0/mewh1LrrG4tfkM9DMA==",
+      "dependencies": {
+        "@babel/runtime": "^7.13.10",
+        "@radix-ui/primitive": "1.0.0",
+        "@radix-ui/react-collection": "1.0.1",
+        "@radix-ui/react-compose-refs": "1.0.0",
+        "@radix-ui/react-context": "1.0.0",
+        "@radix-ui/react-direction": "1.0.0",
+        "@radix-ui/react-id": "1.0.0",
+        "@radix-ui/react-primitive": "1.0.1",
+        "@radix-ui/react-use-callback-ref": "1.0.0",
+        "@radix-ui/react-use-controllable-state": "1.0.0"
+      },
+      "peerDependencies": {
+        "react": "^16.8 || ^17.0 || ^18.0",
+        "react-dom": "^16.8 || ^17.0 || ^18.0"
+      }
+    },
+    "node_modules/@radix-ui/react-tabs/node_modules/@radix-ui/react-slot": {
       "version": "1.0.1",
       "resolved": "https://registry.npmjs.org/@radix-ui/react-slot/-/react-slot-1.0.1.tgz",
       "integrity": "sha512-avutXAFL1ehGvAXtPquu0YK5oz6ctS474iM3vNGQIkswrVhdrS52e3uoMQBzZhNRAIE0jBnUyXWNmSjGHhCFcw==",
@@ -17415,6 +17500,22 @@
       "dev": true,
       "engines": {
         "node": ">=0.10.0"
+      }
+    },
+    "node_modules/class-variance-authority": {
+      "version": "0.4.0",
+      "resolved": "https://registry.npmjs.org/class-variance-authority/-/class-variance-authority-0.4.0.tgz",
+      "integrity": "sha512-74enNN8O9ZNieycac/y8FxqgyzZhZbxmCitAtAeUrLPlxjSd5zA7LfpprmxEcOmQBnaGs5hYhiSGnJ0mqrtBLQ==",
+      "funding": {
+        "url": "https://joebell.co.uk"
+      },
+      "peerDependencies": {
+        "typescript": ">= 4.5.5 < 5"
+      },
+      "peerDependenciesMeta": {
+        "typescript": {
+          "optional": true
+        }
       }
     },
     "node_modules/clean-css": {
@@ -32150,6 +32251,11 @@
       "resolved": "https://registry.npmjs.org/tslib/-/tslib-2.4.1.tgz",
       "integrity": "sha512-tGyy4dAjRIEwI7BzsB0lynWgOpfqjUdq91XXAlIWD2OwKBH7oCl/GZG/HT4BOHrTlPMOASlMQ7veyTqpmRcrNA==",
       "dev": true
+    },
+    "node_modules/tailwind-merge": {
+      "version": "1.9.1",
+      "resolved": "https://registry.npmjs.org/tailwind-merge/-/tailwind-merge-1.9.1.tgz",
+      "integrity": "sha512-ED9MkiUHlmfh58EC1xHRqXcH1IQyRtmDP0AmXlugYkP2tvfu7ejtjFEHJLJt93mQ7ZJkcqSIgm9M394bq5vOJg=="
     },
     "node_modules/tailwindcss": {
       "version": "3.2.4",
