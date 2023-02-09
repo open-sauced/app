@@ -50,7 +50,7 @@ const HighlightInputForm = (): JSX.Element => {
   };
 
   return (
-    <form onSubmit={handlePostHighlight} ref={ref} className="flex flex-col gap-4">
+    <form onSubmit={handlePostHighlight} ref={ref} className="flex flex-1 flex-col gap-4">
       <div
         onClick={() => {
           setIsDivFocused(true);
