@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.29.0-beta.2](https://github.com/open-sauced/insights/compare/v1.29.0-beta.1...v1.29.0-beta.2) (2023-02-09)
+
+
+### 🧑‍💻 Code Refactoring
+
+* use github avatar link instead of cached one ([#848](https://github.com/open-sauced/insights/issues/848)) ([a7678c3](https://github.com/open-sauced/insights/commit/a7678c32da95adf60dce1b129aa43e165620aff3)), closes [#832](https://github.com/open-sauced/insights/issues/832)
+
 ## [1.29.0-beta.1](https://github.com/open-sauced/insights/compare/v1.28.0...v1.29.0-beta.1) (2023-02-08)
 
 
