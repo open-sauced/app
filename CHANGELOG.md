@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.29.0-beta.3](https://github.com/open-sauced/insights/compare/v1.29.0-beta.2...v1.29.0-beta.3) (2023-02-09)
+
+
+### 🍕 Features
+
+* add highlights feed filter card to design system ([#843](https://github.com/open-sauced/insights/issues/843)) ([b4d0eba](https://github.com/open-sauced/insights/commit/b4d0eba0ca068b03a78290d920496c8737f6813d)), closes [#827](https://github.com/open-sauced/insights/issues/827)
+
 ## [1.29.0-beta.2](https://github.com/open-sauced/insights/compare/v1.29.0-beta.1...v1.29.0-beta.2) (2023-02-09)
 
 
