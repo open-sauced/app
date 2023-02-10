@@ -10,7 +10,7 @@ import Select from "components/atoms/Select/select";
 import SelectOption from "components/atoms/Select/select-option";
 import LanguagePill from "components/atoms/LanguagePill/LanguagePill";
 
-import { updateUser } from "lib/hooks/update-user";
+import { updateUser, updateUserPayload } from "lib/hooks/update-user";
 import { ToastTrigger } from "lib/utils/toast-trigger";
 import { authSession } from "lib/hooks/authSession";
 import { validateEmail } from "lib/utils/validate-email";
@@ -33,7 +33,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
   const [displayLocalTime, setDisplayLocalTime] = useState(false);
   const [timezone, setTimezone] = useState("");
   const [userInfo, setUserInfo] = useState<DbUser>();
-  const [email, setEmail] = useState<string | undefined>(userInfo?.email || user?.email);
+  const [email, setEmail] = useState<string | undefined>('');
   const [emailPreference, setEmailPreference] = useState<EmailPreferenceType>({
     // eslint-disable-next-line camelcase
     display_email: false,
@@ -41,16 +41,36 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
     receive_collaboration: false
   });
   const [selectedInterest, setSelectedInterest] = useState<string[]>([]);
+  const nameRef = React.useRef<HTMLInputElement>(null);
+  const bioRef = React.useRef<HTMLTextAreaElement>(null);
+  const urlRef = React.useRef<HTMLInputElement>(null);
+  const twitterRef = React.useRef<HTMLInputElement>(null);
+  const companyRef = React.useRef<HTMLInputElement>(null);
+  const locationRef = React.useRef<HTMLInputElement>(null);
   const interestArray = ["javascript", "python", "rust", "ML", "AI", "react"];
 
   useEffect(() => {
     async function fetchAuthSession() {
       const response = await authSession();
-      if (response !== false) setUserInfo(response);
+      if (response !== false) {
+        setUserInfo(response);
+        nameRef.current!.value = response.name;
+        setEmail(response.email); // getting email from response instead of user.email
+        bioRef.current!.value = response.bio;
+        urlRef.current!.value = response.url;
+        twitterRef.current!.value = response.twitter_username;
+        companyRef.current!.value = response.company;
+        locationRef.current!.value = response.location;
+      }
     }
+    // if (user) setEmail(user.email);
+    fetchAuthSession();
+  }, [user]);
 
-    if (user) setEmail(user.email);
-    if (insightsUser) {
+  // insightsUsers uses SWR which keeps triggering re-rendering and overwriting the user input. Disabling this for now
+  let firstInsightsLoad = false;
+  useEffect(() => {
+    if (insightsUser && !firstInsightsLoad) {
       setEmailPreference({
         // eslint-disable-next-line camelcase
         display_email: insightsUser?.display_email,
@@ -60,9 +80,9 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
       setSelectedInterest(insightsUser?.interests?.split(","));
       setDisplayLocalTime(insightsUser?.display_local_time);
       setTimezone(insightsUser?.timezone || "");
+      firstInsightsLoad = true;
     }
-    fetchAuthSession();
-  }, [user, insightsUser]);
+  }, [insightsUser]);
 
   const handleSelectInterest = (interest: string) => {
     if (selectedInterest.length > 0 && selectedInterest.includes(interest)) {
@@ -95,13 +115,23 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
 
   const handleUpdateProfile = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const payload: updateUserPayload = {
+      name: nameRef.current?.value,
+      email,
+      bio: bioRef.current?.value,
+      twitter_username: twitterRef.current?.value,
+      company: companyRef.current?.value,
+      location: locationRef.current?.value,
+      // eslint-disable-next-line camelcase
+      display_local_time: displayLocalTime,
+      timezone
+    }
+    if(urlRef.current?.value) {
+      payload.url = urlRef.current.value;
+    }
+
     const data = await updateUser({
-      data: {
-        email,
-        // eslint-disable-next-line camelcase
-        display_local_time: displayLocalTime,
-        timezone
-      }
+      data: payload
     });
 
     if (data) {
@@ -123,7 +153,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
               classNames="bg-light-slate-4 text-light-slate-11 font-medium"
               label="Name*"
               placeholder="April O'Neil"
-              defaultValue={user?.user_metadata.full_name}
+              innerRef={nameRef}
               required
             />
             <TextInput
@@ -149,34 +179,33 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
                 rows={4}
                 placeholder="Tell us about yourself."
                 className="bg-light-slate-4 rounded-lg px-3 py-2 disabled:cursor-not-allowed "
-                defaultValue={
-                  userInfo?.bio ||
-                  "I am an open source developer with a passion for music and video games. I strive to improve the open source community and am always looking for new ways to contribute."
-                }
+                ref={bioRef}
               ></textarea>
             </div>
             <TextInput
               classNames="bg-light-slate-4 text-light-slate-11 font-medium"
               placeholder="https://opensauced.pizza"
               label="URL"
+              innerRef={urlRef}
+              pattern="http[s]?://.*\..{2,}"
             />
             <TextInput
               classNames="bg-light-slate-4 text-light-slate-11"
               placeholder="@saucedopen"
               label="Twitter Username"
-              defaultValue={`@${(userInfo && userInfo.twitter_username) || "saucedopen"}`}
+              innerRef={twitterRef}
             />
             <TextInput
               classNames="bg-light-slate-4 text-light-slate-11 font-medium"
               placeholder="OpenSauced"
               label="Company"
-              defaultValue={userInfo?.company || "OpenSauced"}
+              innerRef={companyRef}
             />
             <TextInput
               classNames="bg-light-slate-4 text-light-slate-11 font-medium"
               placeholder="USA"
               label="Location"
-              defaultValue={userInfo?.location || "California"}
+              innerRef={locationRef}
             />
             <div>
               <Checkbox
