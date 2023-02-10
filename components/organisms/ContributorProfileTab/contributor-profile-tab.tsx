@@ -7,7 +7,6 @@ import Pill from "components/atoms/Pill/pill";
 import CardLineChart from "components/molecules/CardLineChart/card-line-chart";
 import CardRepoList, { RepoList } from "components/molecules/CardRepoList/card-repo-list";
 import PullRequestTable from "components/molecules/PullRequestTable/pull-request-table";
-import HightlightEmptyState from "components/molecules/ContributorHighlight/highlight-empty-state";
 import ContributorHighlightCard from "components/molecules/ContributorHighlight/contributor-highlight-card";
 import { useFetchUserHighlights } from "lib/hooks/useFetchUserHighlights";
 import { useState } from "react";
