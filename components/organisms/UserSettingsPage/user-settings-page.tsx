@@ -33,7 +33,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
   const [displayLocalTime, setDisplayLocalTime] = useState(false);
   const [timezone, setTimezone] = useState("");
   const [userInfo, setUserInfo] = useState<DbUser>();
-  const [email, setEmail] = useState<string | undefined>('');
+  const [email, setEmail] = useState<string | undefined>("");
   const [emailPreference, setEmailPreference] = useState<EmailPreferenceType>({
     // eslint-disable-next-line camelcase
     display_email: false,
@@ -125,7 +125,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
       // eslint-disable-next-line camelcase
       display_local_time: displayLocalTime,
       timezone
-    }
+    };
     if(urlRef.current?.value) {
       payload.url = urlRef.current.value;
     }

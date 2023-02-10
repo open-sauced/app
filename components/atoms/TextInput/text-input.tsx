@@ -43,8 +43,8 @@ const TextInput = ({
   const inputRef = useRef<any>();
   const handleResetInput = () => {
     innerRef ? innerRef.current.value = ""
-    :
-    inputRef.current.value = "";
+      :
+      inputRef.current.value = "";
   };
   return (
     <>
