@@ -41,12 +41,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
     receive_collaboration: false
   });
   const [selectedInterest, setSelectedInterest] = useState<string[]>([]);
-  const nameRef = React.useRef<HTMLInputElement>(null);
-  const bioRef = React.useRef<HTMLTextAreaElement>(null);
-  const urlRef = React.useRef<HTMLInputElement>(null);
-  const twitterRef = React.useRef<HTMLInputElement>(null);
-  const companyRef = React.useRef<HTMLInputElement>(null);
-  const locationRef = React.useRef<HTMLInputElement>(null);
+  const formRef = React.useRef<HTMLFormElement>(null);
   const interestArray = ["javascript", "python", "rust", "ML", "AI", "react"];
 
   useEffect(() => {
@@ -54,13 +49,13 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
       const response = await authSession();
       if (response !== false) {
         setUserInfo(response);
-        nameRef.current!.value = response.name;
+        formRef.current!.nameInput.value = response.name;
         setEmail(response.email); // getting email from response instead of user.email
-        bioRef.current!.value = response.bio;
-        urlRef.current!.value = response.url;
-        twitterRef.current!.value = response.twitter_username;
-        companyRef.current!.value = response.company;
-        locationRef.current!.value = response.location;
+        formRef.current!.bio.value = response.bio;
+        formRef.current!.url.value = response.url;
+        formRef.current!.twitter_username.value = response.twitter_username;
+        formRef.current!.company.value = response.company;
+        formRef.current!.location.value = response.location;
       }
     }
     // if (user) setEmail(user.email);
@@ -116,19 +111,19 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
   const handleUpdateProfile = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const payload: updateUserPayload = {
-      name: nameRef.current?.value,
+      name: formRef.current!.nameInput.value,
       email,
-      bio: bioRef.current?.value,
+      bio: formRef.current!.bio.value,
       // eslint-disable-next-line camelcase
-      twitter_username: twitterRef.current?.value,
-      company: companyRef.current?.value,
-      location: locationRef.current?.value,
+      twitter_username: formRef.current!.twitter_username.value,
+      company: formRef.current!.company.value,
+      location: formRef.current!.location.value,
       // eslint-disable-next-line camelcase
       display_local_time: displayLocalTime,
       timezone
     };
-    if(urlRef.current?.value) {
-      payload.url = urlRef.current.value;
+    if(formRef.current?.url.value) {
+      payload.url = formRef.current!.url.value;
     }
 
     const data = await updateUser({
@@ -149,13 +144,13 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
           <Title className="!text-2xl !text-light-slate-11" level={2}>
             Public profile
           </Title>
-          <form onSubmit={handleUpdateProfile} className="flex flex-col gap-6 mt-6">
+          <form onSubmit={handleUpdateProfile} className="flex flex-col gap-6 mt-6" ref={formRef}>
             <TextInput
               classNames="bg-light-slate-4 text-light-slate-11 font-medium"
               label="Name*"
               placeholder="April O'Neil"
-              innerRef={nameRef}
               required
+              name="nameInput"
             />
             <TextInput
               classNames="bg-light-slate-4 text-light-slate-11 font-medium"
@@ -180,33 +175,33 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
                 rows={4}
                 placeholder="Tell us about yourself."
                 className="bg-light-slate-4 rounded-lg px-3 py-2 disabled:cursor-not-allowed "
-                ref={bioRef}
+                name="bio"
               ></textarea>
             </div>
             <TextInput
               classNames="bg-light-slate-4 text-light-slate-11 font-medium"
               placeholder="https://opensauced.pizza"
               label="URL"
-              innerRef={urlRef}
               pattern="http[s]?://.*\..{2,}"
+              name="url"
             />
             <TextInput
               classNames="bg-light-slate-4 text-light-slate-11"
               placeholder="@saucedopen"
               label="Twitter Username"
-              innerRef={twitterRef}
+              name="twitter_username"
             />
             <TextInput
               classNames="bg-light-slate-4 text-light-slate-11 font-medium"
               placeholder="OpenSauced"
               label="Company"
-              innerRef={companyRef}
+              name="company"
             />
             <TextInput
               classNames="bg-light-slate-4 text-light-slate-11 font-medium"
               placeholder="USA"
               label="Location"
-              innerRef={locationRef}
+              name="location"
             />
             <div>
               <Checkbox
