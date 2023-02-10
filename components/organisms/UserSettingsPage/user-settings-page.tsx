@@ -72,6 +72,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
   useEffect(() => {
     if (insightsUser && !firstInsightsLoad) {
       setEmailPreference({
+        // eslint-disable-next-line camelcase
         display_email: insightsUser?.display_email,
         // eslint-disable-next-line camelcase
         receive_collaboration: insightsUser?.receive_collaboration
