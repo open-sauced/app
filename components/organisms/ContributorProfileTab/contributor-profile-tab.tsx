@@ -2,13 +2,16 @@ import Avatar from "components/atoms/Avatar/avatar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "components/atoms/Tabs/tabs";
 import HighlightInputForm from "components/molecules/HighlightInput/highlight-input-form";
 import Text from "components/atoms/Typography/text";
-import { getRelativeDays } from "lib/utils/date-utils";
+import { getFormattedDate, getRelativeDays } from "lib/utils/date-utils";
 import Pill from "components/atoms/Pill/pill";
 import CardLineChart from "components/molecules/CardLineChart/card-line-chart";
 import CardRepoList, { RepoList } from "components/molecules/CardRepoList/card-repo-list";
 import PullRequestTable from "components/molecules/PullRequestTable/pull-request-table";
-import { getAvatarByUsername } from "lib/utils/github";
-import Image, { StaticImageData } from "next/image";
+import HightlightEmptyState from "components/molecules/ContributorHighlight/highlight-empty-state";
+import ContributorHighlightCard from "components/molecules/ContributorHighlight/contributor-highlight-card";
+import { useFetchUserHighlights } from "lib/hooks/useFetchUserHighlights";
+import { useState } from "react";
+import Button from "components/atoms/Button/button";
 
 interface ContributorProfileTabProps {
   user?: DbUser;
@@ -35,6 +38,11 @@ const ContributorProfileTab = ({
   recentContributionCount,
   repoList
 }: ContributorProfileTabProps): JSX.Element => {
+  const { login } = user || {};
+
+  const { data: highlights, isError, isLoading } = useFetchUserHighlights(login || "");
+  const [inputVisible, setInputVisible] = useState(highlights.length > 0 ? true : false);
+
   return (
     <Tabs defaultValue="Highlights" className="">
       <TabsList className="w-full border-b  justify-start">
@@ -55,10 +63,45 @@ const ContributorProfileTab = ({
       {/* Highlights Tab details */}
 
       <TabsContent value="Highlights">
-        <div className="pl-20 gap-x-3 pt-4 flex">
-          <Avatar alt="user profile avatar" size="sm" avatarURL={`https://www.github.com/${githubName}.png?size=300`} />
+        {inputVisible && (
+          <div className="pl-20 gap-x-3 pt-4 flex ">
+            <Avatar
+              alt="user profile avatar"
+              size="sm"
+              avatarURL={`https://www.github.com/${githubName}.png?size=300`}
+            />
 
-          <HighlightInputForm />
+            <HighlightInputForm />
+          </div>
+        )}
+        <div className="mt-4 flex flex-col gap-8">
+          {/* <HightlightEmptyState /> */}
+
+          {isLoading && <>Loading...</>}
+          {isError && <>An error occured</>}
+          {highlights && highlights.length > 0 ? (
+            // eslint-disable-next-line camelcase
+            highlights.map(({ id, title, highlight, url, created_at }) => (
+              <div className="flex gap-7" key={id}>
+                <p className="text-light-slate-10 text-sm">{getFormattedDate(created_at)}</p>
+                <ContributorHighlightCard title={title} desc={highlight} prLink={url} />
+              </div>
+            ))
+          ) : (
+            <div className="flex justify-center rounded-xl border border-dashed border-light-slate-8 px-32 py-20 items-center">
+              <div className="text-center">
+                <p>
+                  You don&apos;t have any highlights yet! <br /> Highlights are a great way to show off your
+                  contributions. Merge any new pull requests recently?
+                </p>
+                {!inputVisible && (
+                  <Button onClick={() => setInputVisible(true)} className="mt-5" type="primary">
+                    Add a highlight
+                  </Button>
+                )}
+              </div>
+            </div>
+          )}
         </div>
       </TabsContent>
 
