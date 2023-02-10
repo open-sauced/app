@@ -21,7 +21,7 @@ const SuperativeSelector: React.FC<SuperlativeSelectorProps> = ({
   filterValues,
   handleFilterClick,
   handleCancelClick,
-  selected,
+  selected
 }) => {
   const ref = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -51,32 +51,32 @@ const SuperativeSelector: React.FC<SuperlativeSelectorProps> = ({
   return (
     <div className="!overflow-hidden !text-ellipsis !whitespace-nowrap  md:relative md:!whitespace-normal md:!overflow-visible md:!text-base max-w-max" ref={ref}>
       <div className="">
-      <ContextFilterButton onClick={toggleFilter} isSelected={!!selected}>
-        {selected ? (
-          <div className="">
-            <div className="flex" onClick={toggleFilter}>
-              <span className="inline-block text-dark-slate-10">Filtered by:</span>
-              <div className="block truncate pr-4 ml-1 text-light-slate-12">
-                {filterDescription}
+        <ContextFilterButton onClick={toggleFilter} isSelected={!!selected}>
+          {selected ? (
+            <div className="">
+              <div className="flex" onClick={toggleFilter}>
+                <span className="inline-block text-dark-slate-10">Filtered by:</span>
+                <div className="block truncate pr-4 ml-1 text-light-slate-12">
+                  {filterDescription}
 
-                <Icon
-                  className="absolute right-1 top-1/2 transform -translate-y-1/2"
-                  IconImage={cancelIcon}
-                  onClick={() => {
-                    handleCancelClick();
-                    setIsOpen(false);
-                  }}
-                />
+                  <Icon
+                    className="absolute right-1 top-1/2 transform -translate-y-1/2"
+                    IconImage={cancelIcon}
+                    onClick={() => {
+                      handleCancelClick();
+                      setIsOpen(false);
+                    }}
+                  />
+                </div>
               </div>
             </div>
-          </div>
-        ) : (
-          <div onClick={toggleFilter}>Add Filter </div>
-        )}
-      </ContextFilterButton>
-      {isOpen && (
-        <div className="absolute left-0  space-y-1 mt-1 shadow-superlative z-10 w-72  bg-white rounded-lg px-1.5 py-2">
-          {filterOptions.length > 0 &&
+          ) : (
+            <div onClick={toggleFilter}>Add Filter </div>
+          )}
+        </ContextFilterButton>
+        {isOpen && (
+          <div className="absolute left-0  space-y-1 mt-1 shadow-superlative z-10 w-72  bg-white rounded-lg px-1.5 py-2">
+            {filterOptions.length > 0 &&
             filterOptions.map((option, index) => {
               const filterKey = getFilterKey(option);
               const filterValue = filterValues[filterKey];
@@ -96,8 +96,8 @@ const SuperativeSelector: React.FC<SuperlativeSelectorProps> = ({
                 </Radio>
               );
             })}
-        </div>
-      )}
+          </div>
+        )}
       </div>
     </div>
   );
