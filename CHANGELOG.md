@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.27.0-alpha.1](https://github.com/open-sauced/insights/compare/v1.26.1-alpha.1...v1.27.0-alpha.1) (2023-02-10)
+
+
+### 🍕 Features
+
+* add support for repo full name for onboarding/insight repos ([#861](https://github.com/open-sauced/insights/issues/861)) ([d075f90](https://github.com/open-sauced/insights/commit/d075f90a6b287fd52e31ec96cd8a2256f147b74f))
+
 ### [1.26.1-alpha.1](https://github.com/open-sauced/insights/compare/v1.26.0...v1.26.1-alpha.1) (2023-02-06)
 
 
