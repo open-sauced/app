@@ -2,6 +2,7 @@
 
 interface DbRepo {
   readonly id: string;
+  readonly host_id: string;
   readonly size: number;
   readonly stars: number;
   readonly name: string;
