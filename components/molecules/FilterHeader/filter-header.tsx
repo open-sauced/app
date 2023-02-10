@@ -12,6 +12,7 @@ import useFilterOptions from "lib/hooks/useFilterOptions";
 import { captureAnayltics } from "lib/utils/analytics";
 import useFilterPrefetch from "lib/hooks/useFilterPrefetch";
 import uppercaseFirst from "lib/utils/uppercase-first";
+import checkCamelCaseNaming from "lib/utils/check-camelcase-naming";
 
 const HeaderFilter = () => {
   const router = useRouter();
@@ -35,7 +36,7 @@ const HeaderFilter = () => {
       </div>
       <div className="header-info flex flex-col grow justify-center p-2">
         <Title level={1} className="!text-3xl font-semibold tracking-tight text-slate-900">
-          {isHacktoberfest ? "Hacktoberfest 2022" : uppercaseFirst(filterName as string)}
+          {isHacktoberfest ? "Hacktoberfest 2022" : checkCamelCaseNaming(filterName as string)}
         </Title>
         <Text className="mt-1 !text-base   text-slate-500">
           Insights on GitHub repositories{" "}
