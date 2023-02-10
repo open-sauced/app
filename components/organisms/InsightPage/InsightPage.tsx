@@ -70,18 +70,16 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
   });
 
   const handleOnNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setName(event.target.value);
-  };
+    const { value } = event.target;
 
-  const handleOnNameBlur = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target?.value;
+    setName(value);
 
-    if (!value) return setIsNameValid(false);
+    if (!value || value.trim().length <= 3) setIsNameValid(false);
 
     if (value.trim().length > 3) {
       setIsNameValid(true);
     }
-  };
+  };;
 
   const handleCreateInsightPage = async () => {
     setSubmitted(true);
@@ -231,7 +229,6 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
             placeholder="Page Name (ex: My Team)"
             value={name}
             onChange={handleOnNameChange}
-            onBlur={handleOnNameBlur}
           />
           {/* <Text>insights.opensauced.pizza/pages/{username}/{`{pageId}`}/dashboard</Text> */}
         </div>
