@@ -132,3 +132,15 @@ interface DbUser {
   readonly display_email: boolean;
   readonly timezone: string;
 }
+
+interface DbHighlight {
+  readonly id: string;
+  readonly user_id: string;
+  readonly url: string;
+  readonly title: string;
+  readonly highlight: string;
+  readonly pinned: boolean;
+  readonly created_at: string;
+  readonly updated_at: string;
+  readonly deleted_at: string;
+}
