@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.29.0-beta.4](https://github.com/open-sauced/insights/compare/v1.29.0-beta.3...v1.29.0-beta.4) (2023-02-10)
+
+
+### 🍕 Features
+
+* add utility function to camelcase topic value ([#851](https://github.com/open-sauced/insights/issues/851)) ([b805659](https://github.com/open-sauced/insights/commit/b805659e3d5c42ef6bce3fa4f1eaf33f13e21617)), closes [#822](https://github.com/open-sauced/insights/issues/822)
+
 ## [1.29.0-beta.3](https://github.com/open-sauced/insights/compare/v1.29.0-beta.2...v1.29.0-beta.3) (2023-02-09)
 
 
