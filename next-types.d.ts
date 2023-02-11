@@ -5,7 +5,9 @@ interface DbRepo {
   readonly host_id: string;
   readonly size: number;
   readonly stars: number;
+  readonly issues: number;
   readonly name: string;
+  readonly full_name: string;
   readonly owner: string;
   readonly prActiveCount: number;
   readonly openPrsCount?: number;

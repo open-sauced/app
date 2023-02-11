@@ -16,7 +16,7 @@ import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { getAvatarByUsername } from "lib/utils/github";
 import useStore from "lib/store";
 
-type GitHubRepo = Partial<Endpoints["GET /repos/{owner}/{repo}"]["response"]>;
+export type GitHubRepo = Endpoints["GET /repos/{owner}/{repo}"]["response"]["data"];
 
 enum RepoLookupError {
   Initial = 0,
@@ -121,7 +121,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
       },
       body: JSON.stringify({
         name,
-        repos: repos.map((repo) => ({id: repo.repo_id, fullName: repo.full_name})),
+        repos: repos.map((repo) => ({id: repo.id, fullName: repo.full_name})),
         is_public: isPublic
       })
     });
@@ -183,11 +183,12 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
     } catch (e) {}
   };
 
-  const handleRemoveRepository = (id: string) => {
+  const handleRemoveRepository = (id: number) => {
     setRepos((addedRepos) => {
       return addedRepos.filter((repo) => repo.id !== id);
     });
 
+    // @ts-ignore
     setRepoHistory((historyRepos) => {
       return [...historyRepos, repos.find((repo) => repo.id === id)];
     });
@@ -285,7 +286,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
         >
           {repos.map((repo) => {
             const [owner, name] = repo.full_name.split("/");
-            const totalIssues = parseInt(repo.open_issues_count);
+            const totalIssues = repo.open_issues_count;
 
             return (
               <RepositoryCartItem

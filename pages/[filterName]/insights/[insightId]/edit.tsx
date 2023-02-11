@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 
-import InsightPage from "components/organisms/InsightPage/InsightPage";
+import InsightPage, {GitHubRepo} from "components/organisms/InsightPage/InsightPage";
 import HubLayout from "layouts/hub";
 
 import { WithPageLayout } from "interfaces/with-page-layout";
@@ -33,7 +33,10 @@ const EditInsightPage: WithPageLayout = () => {
     <InsightPage
       edit={true}
       insight={insight}
-      pageRepos={repos}
+      pageRepos={repos.map(repo => ({
+        full_name: repo.full_name,
+        open_issues_count: repo.issues
+      }) as GitHubRepo)}
     />
   );
 };
