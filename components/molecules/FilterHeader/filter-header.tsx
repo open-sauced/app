@@ -22,11 +22,11 @@ const HeaderFilter = () => {
   const isHacktoberfest = filterName === "hacktoberfest";
   const filterBtnRouting = (filter: string) => {
     captureAnayltics("Filters", "toolsFilter", `${filter} applied`);
-    router.push(`/${filterName}/${toolName}/filter/${filter.toLocaleLowerCase()}`);
+    return router.push(`/${filterName}/${toolName}/filter/${filter.toLocaleLowerCase()}`);
   };
 
   const cancelFilterRouting = () => {
-    router.push(`/${filterName}/${toolName}`);
+    return router.push(`/${filterName}/${toolName}`);
   };
   return (
     <>

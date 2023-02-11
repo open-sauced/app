@@ -98,7 +98,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
     });
 
     if (response.ok) {
-      router.push("/hub/insights");
+      await router.push("/hub/insights");
     }
 
     setSubmitted(false);
@@ -127,7 +127,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
     });
 
     if (response.ok) {
-      router.push("/hub/insights");
+      await router.push("/hub/insights");
     }
 
     setSubmitted(false);
@@ -152,11 +152,6 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
 
       if (response.ok) {
         const addedRepo = (await response.json());
-        // const repoToAdd = {
-        //   insightId: insight?.id,
-        //   repo_id: addedRepo.id,
-        //   full_name: addedRepo.full_name
-        // };
 
         setRepos((repos) => {
           return [...repos, addedRepo];
