@@ -49,7 +49,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   }
 
   const userId = session?.user?.user_metadata.sub as string;
-  const isOwner = userId && insight && `${userId}` === `${insight.user_id}` ? true : false;
+  const isOwner = !!(userId && insight && `${userId}` === `${insight.user_id}`);
 
   if (insight && !insight.is_public && !isOwner) {
     return {

@@ -107,7 +107,8 @@ interface DbUserInsightRepo {
   readonly id: number;
   readonly insight_id: number;
   readonly repo_id: number;
-  readonly created_at: string;
+  readonly full_name: string;
+  readonly created_at?: string;
 }
 
 interface DbUser {

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { UserGroupIcon } from "@heroicons/react/24/outline";
+import { Endpoints } from "@octokit/types";
 
 import Button from "components/atoms/Button/button";
 import TextInput from "components/atoms/TextInput/text-input";
@@ -15,6 +16,8 @@ import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { getAvatarByUsername } from "lib/utils/github";
 import useStore from "lib/store";
 
+type GitHubRepo = Partial<Endpoints["GET /repos/{owner}/{repo}"]["response"]>;
+
 enum RepoLookupError {
   Initial = 0,
   NotIndexed = 1,
@@ -25,7 +28,7 @@ enum RepoLookupError {
 interface InsightPageProps {
   edit?: boolean;
   insight?: DbUserInsight;
-  pageRepos?: DbRepo[];
+  pageRepos?: GitHubRepo[];
 }
 
 const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
@@ -40,8 +43,8 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
   const [nameError, setNameError] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [repoToAdd, setRepoToAdd] = useState("");
-  const [repos, setRepos] = useState<DbRepo[]>(receivedData);
-  const [repoHistory, setRepoHistory] = useState<DbRepo[]>([]);
+  const [repos, setRepos] = useState<GitHubRepo[]>(receivedData);
+  const [repoHistory, setRepoHistory] = useState<GitHubRepo[]>([]);
   const [addRepoError, setAddRepoError] = useState<RepoLookupError>(RepoLookupError.Initial);
   const [isPublic, setIsPublic] = useState(!!insight?.is_public);
   const insightRepoLimit = useStore(state => state.insightRepoLimit);
@@ -56,15 +59,14 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
     }
   }, [pageRepos, insight?.is_public]);
 
-  const reposRemoved = repoHistory.map((repo) => {
-    const totalPrs =
-      (repo.openPrsCount || 0) + (repo.closedPrsCount || 0) + (repo.mergedPrsCount || 0) + (repo.draftPrsCount || 0);
+  const reposRemoved = repoHistory.map(({full_name, open_issues_count}) => {
+    const [orgName, repoName] = full_name.split("/");
 
     return {
-      orgName: repo.owner,
-      repoName: repo.name,
-      totalPrs,
-      avatar: getAvatarByUsername(repo.owner, 60),
+      orgName,
+      repoName,
+      totalIssues: open_issues_count,
+      avatar: getAvatarByUsername(orgName, 60),
       handleRemoveItem: () => {}
     };
   });
@@ -90,8 +92,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
       },
       body: JSON.stringify({
         name,
-        repos: repos.map((repo) => ({id: repo.host_id, fullName: `${repo.owner}/${repo.name}`})),
-        // eslint-disable-next-line
+        repos: repos.map((repo) => ({id: repo.id, fullName: repo.full_name})),
         is_public: isPublic
       })
     });
@@ -120,8 +121,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
       },
       body: JSON.stringify({
         name,
-        repos: repos.map((repo) => ({id: repo.host_id, fullName: `${repo.owner}/${repo.name}`})),
-        // eslint-disable-next-line
+        repos: repos.map((repo) => ({id: repo.repo_id, fullName: repo.full_name})),
         is_public: isPublic
       })
     });
@@ -140,31 +140,29 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
   const loadAndAddRepo = async (repoToAdd: string) => {
     setAddRepoError(RepoLookupError.Initial);
 
-    const hasRepo = repos.find((repo) => `${repo.owner}/${repo.name}` === repoToAdd);
+    const hasRepo = repos.find((repo) => repo.full_name === repoToAdd);
 
     if (hasRepo) {
       return;
     }
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_GS_API_URL}/repos/${repoToAdd}`);
+      // const response = await fetch(`${process.env.NEXT_PUBLIC_GS_API_URL}/repos/${repoToAdd}`);
+      const response = await fetch(`https://api.github.com/repos/${repoToAdd}`);
 
       if (response.ok) {
-        const addedRepo = (await response.json()) as DbRepo;
+        const addedRepo = (await response.json());
+        // const repoToAdd = {
+        //   insightId: insight?.id,
+        //   repo_id: addedRepo.id,
+        //   full_name: addedRepo.full_name
+        // };
 
         setRepos((repos) => {
           return [...repos, addedRepo];
         });
         setAddRepoError(RepoLookupError.Initial);
         setRepoToAdd("");
-      } else {
-        const publicRepoResponse = await fetch(`https://api.github.com/repos/${repoToAdd}`);
-
-        if (publicRepoResponse.ok) {
-          setAddRepoError(RepoLookupError.NotIndexed);
-        } else {
-          setAddRepoError(RepoLookupError.Invalid);
-        }
       }
     } catch {
       setAddRepoError(RepoLookupError.Error);
@@ -180,7 +178,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
       await loadAndAddRepo(repoAdded);
 
       setRepoHistory((historyRepos) => {
-        return historyRepos.filter((repo) => `${repo.owner}/${repo.name}` !== repoAdded);
+        return historyRepos.filter((repo) => repo.full_name !== repoAdded);
       });
     } catch (e) {}
   };
@@ -191,7 +189,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
     });
 
     setRepoHistory((historyRepos) => {
-      return [...historyRepos, repos.find((repo) => repo.id === id) as DbRepo];
+      return [...historyRepos, repos.find((repo) => repo.id === id)];
     });
   };
 
@@ -286,20 +284,17 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
           createPageButtonDisabled={submitted}
         >
           {repos.map((repo) => {
-            const totalPrs =
-              (repo.openPrsCount || 0) +
-              (repo.closedPrsCount || 0) +
-              (repo.mergedPrsCount || 0) +
-              (repo.draftPrsCount || 0);
+            const [owner, name] = repo.full_name.split("/");
+            const totalIssues = parseInt(repo.open_issues_count);
 
             return (
               <RepositoryCartItem
                 key={`repo_${repo.id}`}
-                avatar={getAvatarByUsername(repo.owner, 60)}
+                avatar={getAvatarByUsername(owner, 60)}
                 handleRemoveItem={() => handleRemoveRepository(repo.id)}
-                orgName={repo.owner}
-                repoName={repo.name}
-                totalPrs={totalPrs}
+                orgName={owner}
+                repoName={name}
+                totalIssues={totalIssues}
               />
             );
           })}
