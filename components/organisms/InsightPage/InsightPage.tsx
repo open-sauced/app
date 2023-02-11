@@ -57,7 +57,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
     if (insight) {
       setIsPublic(insight.is_public);
     }
-  }, [pageRepos, insight?.is_public]);
+  }, [pageRepos, insight?.is_public, insight]);
 
   const reposRemoved = repoHistory.map(({full_name, open_issues_count}) => {
     const [orgName, repoName] = full_name.split("/");

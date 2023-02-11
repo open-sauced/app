@@ -31,6 +31,7 @@ import useSession from "lib/hooks/useSession";
 import { captureAnayltics } from "lib/utils/analytics";
 import { getAvatarByUsername } from "lib/utils/github";
 import useStore from "lib/store";
+import Avatar from "../components/atoms/Avatar/avatar";
 
 type handleLoginStep = () => void;
 
@@ -52,7 +53,7 @@ const LoginStep1: React.FC<LoginStep1Props> = ({ handleLoginStep, user }) => {
     } else if (onboarded === false && user && providerToken) {
       handleLoginStep();
     }
-  }, [handleLoginStep, router, user, onboarded]);
+  }, [handleLoginStep, router, user, onboarded, providerToken]);
 
   const handleGitHubAuth = async () => {
     // Redirect user to GitHub to authenticate
@@ -303,11 +304,14 @@ const LoginStep3: React.FC<LoginStep3Props> = ({ repoList, checkFollowed }) => {
                   >
                     <div className="flex flex-col items-start shrink-1">
                       <div className="flex items-center gap-1">
-                        <img
-                          alt="Repo Icon"
+                        <Avatar
+                          isCached={true}
                           className="shrink-0 h-4 w-4 rounded overflow-hidden"
-                          src={getAvatarByUsername(repo.repoOwner)}
+                          size={40}
+                          avatarURL={getAvatarByUsername(repo.repoOwner)}
+                          isCircle={false}
                         />
+
                         <Text className="!text-sm ">{`${repo.repoOwner}/`}</Text>
                       </div>
                       <div className="w-full">

@@ -40,7 +40,7 @@ const useFilterPrefetch = () => {
         }
       });
     }
-  }, [topic]);
+  }, [topic, filterOptions, mutate]);
 
   return { filterValues };
 };
