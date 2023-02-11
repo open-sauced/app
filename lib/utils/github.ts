@@ -15,7 +15,18 @@ const getRepoIssuesLink = (repoName: string | null) => `https://github.com/${(re
 
 const generateApiPrUrl = (url: string | null) => {
   const newUrl = url ? url.toLowerCase().trim() : "";
-  const apiUrl = newUrl?.substring(0, 8) + "api." + newUrl.substring(8, 19) + "repos" + newUrl.substring(18);
+  let pulls: string[];
+
+  if (newUrl.substring(0, 8) === "https://") {
+    pulls = newUrl.substring(19).split("/");
+  } else if (newUrl.substring(0, 7) === "http://") {
+    pulls = newUrl.substring(18).split("/");
+  } else {
+    pulls = newUrl.substring(11).split("/");
+  }
+  const [orgName, repoName, , IssueId] = pulls;
+
+  const apiUrl = `${orgName}/${repoName}/pulls/${IssueId}`;
   return apiUrl;
 };
 
