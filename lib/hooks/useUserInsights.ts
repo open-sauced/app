@@ -6,8 +6,8 @@ interface PaginatedInsightsResponse {
   readonly meta: Meta;
 }
 
-const useUserInsights = () => {
-  const baseEndpoint = "user/insights";
+const useUserInsights = (limit = 100) => {
+  const baseEndpoint = `user/insights?limit=${limit}`;
   const endpointString = `${baseEndpoint}`;
 
   const { data, error, mutate } = useSWR<PaginatedInsightsResponse, Error>(
