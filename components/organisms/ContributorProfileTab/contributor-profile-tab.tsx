@@ -9,7 +9,7 @@ import CardRepoList, { RepoList } from "components/molecules/CardRepoList/card-r
 import PullRequestTable from "components/molecules/PullRequestTable/pull-request-table";
 import ContributorHighlightCard from "components/molecules/ContributorHighlight/contributor-highlight-card";
 import { useFetchUserHighlights } from "lib/hooks/useFetchUserHighlights";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "components/atoms/Button/button";
 
 interface ContributorProfileTabProps {
@@ -40,7 +40,11 @@ const ContributorProfileTab = ({
   const { login } = user || {};
 
   const { data: highlights, isError, isLoading } = useFetchUserHighlights(login || "");
-  const [inputVisible, setInputVisible] = useState(highlights.length > 0 ? true : false);
+  const [inputVisible, setInputVisible] = useState(false);
+
+  useEffect(() => {
+    setInputVisible(highlights && highlights.length !== 0 ? true : false);
+  }, [highlights]);
 
   return (
     <Tabs defaultValue="Highlights" className="">
@@ -61,9 +65,9 @@ const ContributorProfileTab = ({
 
       {/* Highlights Tab details */}
 
-      <TabsContent value="Highlights">
+      <TabsContent className="" value="Highlights">
         {inputVisible && (
-          <div className="pl-20 gap-x-3 pt-4 flex ">
+          <div className="pl-20 gap-x-3 pt-4 flex max-w-[48rem]">
             <Avatar
               alt="user profile avatar"
               size="sm"
@@ -76,30 +80,35 @@ const ContributorProfileTab = ({
         <div className="mt-4 flex flex-col gap-8">
           {/* <HightlightEmptyState /> */}
 
-          {isLoading && <>Loading...</>}
           {isError && <>An error occured</>}
-          {highlights && highlights.length > 0 ? (
-            // eslint-disable-next-line camelcase
-            highlights.map(({ id, title, highlight, url, created_at }) => (
-              <div className="flex gap-7" key={id}>
-                <p className="text-light-slate-10 text-sm">{getFormattedDate(created_at)}</p>
-                <ContributorHighlightCard title={title} desc={highlight} prLink={url} />
-              </div>
-            ))
+          {isLoading ? (
+            <>Loading...</>
           ) : (
-            <div className="flex justify-center rounded-xl border border-dashed border-light-slate-8 px-32 py-20 items-center">
-              <div className="text-center">
-                <p>
-                  You don&apos;t have any highlights yet! <br /> Highlights are a great way to show off your
-                  contributions. Merge any new pull requests recently?
-                </p>
-                {!inputVisible && (
-                  <Button onClick={() => setInputVisible(true)} className="mt-5" type="primary">
-                    Add a highlight
-                  </Button>
-                )}
-              </div>
-            </div>
+            <>
+              {highlights && highlights.length > 0 ? (
+                // eslint-disable-next-line camelcase
+                highlights.map(({ id, title, highlight, url, created_at }) => (
+                  <div className="flex gap-7" key={id}>
+                    <p className="text-light-slate-10 text-sm">{getFormattedDate(created_at)}</p>
+                    <ContributorHighlightCard title={title} desc={highlight} prLink={url} />
+                  </div>
+                ))
+              ) : (
+                <div className="flex justify-center rounded-xl border border-dashed border-light-slate-8 px-32 py-20 items-center">
+                  <div className="text-center">
+                    <p>
+                      You don&apos;t have any highlights yet! <br /> Highlights are a great way to show off your
+                      contributions. Merge any new pull requests recently?
+                    </p>
+                    {!inputVisible && (
+                      <Button onClick={() => setInputVisible(true)} className="mt-5" type="primary">
+                        Add a highlight
+                      </Button>
+                    )}
+                  </div>
+                </div>
+              )}
+            </>
           )}
         </div>
       </TabsContent>

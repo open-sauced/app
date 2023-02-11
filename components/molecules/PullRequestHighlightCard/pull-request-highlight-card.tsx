@@ -3,6 +3,7 @@ import React from "react";
 import { AiOutlineGithub } from "react-icons/ai";
 import { TbMessages } from "react-icons/tb";
 import CardHorizontalBarChart from "../CardHorizontalBarChart/card-horizontal-bar-chart";
+import { getFormattedDate } from "lib/utils/date-utils";
 
 interface PullRequestHighlightCardProps {
   orgName: string;
@@ -14,30 +15,41 @@ interface PullRequestHighlightCardProps {
   createdAt: string;
   userName: string;
 }
-const PullRequestHighlightCard = () => {
+const PullRequestHighlightCard = ({
+  prTitle,
+  commentCount,
+  userAvatar,
+  createdAt,
+  userName,
+  ticketNumber,
+  repoName,
+  orgName
+}: PullRequestHighlightCardProps) => {
   return (
-    <div className="flex flex-col gap-16 bg-white pt-8 pb-4">
+    <div className="flex max-w-[45rem] flex-1 flex-col gap-16 bg-white pt-8 pb-4">
       <div className="px-8  flex justify-between">
         <div className="flex flex-col gap-2">
-          <span className="text-sm font-normal">open-sauced/insights</span>
-          <h3 className="text-3xl font-semibold">
-            <span className="text-light-slate-9 font-normal">#24</span> fix: Remote semicolons
+          <span className="text-sm font-normal">{`${orgName}/${repoName}`}</span>
+          <h3 className="text-3xl font-semibold flex items-center gap-1">
+            <span className="text-light-slate-9 font-normal">{`#${ticketNumber}`}</span> <p>{prTitle}</p>
           </h3>
           <div className="flex gap-2 text-light-slate-9 text-sm">
-            <TbMessages className="text-lg" />1 comment
+            <TbMessages className="text-lg" />
+            {commentCount} comment
           </div>
         </div>
         <div>
-          <Avatar isCircle size="lg" avatarURL="https://avatars.githubusercontent.com/u/57568598?v=4" />
+          <Avatar isCircle size="lg" avatarURL={userAvatar} />
         </div>
       </div>
 
       <div>
         <div className="px-8 flex justify-between items-center">
           <div className="flex text-sm items-center gap-2">
-            <Avatar isCircle size="sm" avatarURL="https://avatars.githubusercontent.com/u/57568598?v=4" />
+            <Avatar isCircle size="sm" avatarURL={userAvatar} />
             <p className="text-light-slate-9 font-normal">
-              <span className="text-light-slate-12 font-semibold">natemoo-re</span> opened on Dec 22, 2023
+              <span className="text-light-slate-12 font-semibold">{userName}</span> opened on{" "}
+              {getFormattedDate(createdAt)}
             </p>
           </div>
           <AiOutlineGithub />
@@ -50,7 +62,9 @@ const PullRequestHighlightCard = () => {
             />
           </div>
           <div className="px-8">
-            <p>fix: Remote semicolons · Issue #827 · open-sauced/insights</p>
+            <p className="font-semibold">
+              {prTitle}· Issue {`#${ticketNumber}`} · {`${orgName}/${repoName}`}
+            </p>
             <span>GITHUB.COM</span>
           </div>
         </div>

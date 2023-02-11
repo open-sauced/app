@@ -2,6 +2,7 @@ import Title from "components/atoms/Typography/title";
 import { generateApiPrUrl } from "lib/utils/github";
 import React from "react";
 import PullRequestHighlightCard from "../PullRequestHighlightCard/pull-request-highlight-card";
+import { useFetchGithubPRInfo } from "lib/hooks/useFetchGithubPRInfo";
 
 interface ContributorHighlightCardProps {
   title?: string;
@@ -9,9 +10,10 @@ interface ContributorHighlightCardProps {
   prLink: string;
 }
 const ContributorHighlightCard = ({ title, desc, prLink }: ContributorHighlightCardProps) => {
-  console.log(generateApiPrUrl(prLink));
+  const { data } = useFetchGithubPRInfo(generateApiPrUrl(prLink));
+
   return (
-    <article className="flex flex-col gap-6">
+    <article className="flex flex-col max-w-[40rem] flex-1 gap-6">
       <div>
         {title && (
           <Title className="!text-xl !text-light-slate-12" level={4}>
@@ -34,9 +36,20 @@ const ContributorHighlightCard = ({ title, desc, prLink }: ContributorHighlightC
       </div>
 
       {/* Generated OG card section */}
-      <div>
-        <PullRequestHighlightCard />
-      </div>
+      {data && (
+        <div>
+          <PullRequestHighlightCard
+            userAvatar={data.user.avatar_url}
+            userName={data.user.login}
+            repoName={data.head.repo.name}
+            ticketNumber={data.number}
+            createdAt={data.created_at}
+            commentCount={data.comments}
+            prTitle={data.title}
+            orgName={data.head.user.login}
+          />
+        </div>
+      )}
     </article>
   );
 };
