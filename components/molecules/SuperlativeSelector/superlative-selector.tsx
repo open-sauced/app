@@ -49,7 +49,8 @@ const SuperativeSelector: React.FC<SuperlativeSelectorProps> = ({
   const filterDescription = filterOption ? filterOption : selected;
 
   return (
-    <div className="!overflow-hidden !text-ellipsis !whitespace-nowrap  md:relative md:!whitespace-normal md:!overflow-visible md:!text-base max-w-max" ref={ref}>
+    // <div className="!overflow-hidden !text-ellipsis !whitespace-nowrap  md:relative md:!whitespace-normal md:!overflow-visible md:!text-base max-w-max" ref={ref}>
+    <div className="overflow-hidden text-ellipsis whitespace-nowrap  md:relative md:whitespace-normal md:overflow-visible md:text-base max-w-max" ref={ref}>
       <div className="">
         <ContextFilterButton onClick={toggleFilter} isSelected={!!selected}>
           {selected ? (
