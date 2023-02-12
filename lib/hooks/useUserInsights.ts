@@ -1,4 +1,5 @@
 import publicApiFetcher from "lib/utils/public-api-fetcher";
+import { useState } from "react";
 import useSWR, { Fetcher } from "swr";
 
 interface PaginatedInsightsResponse {
@@ -6,21 +7,32 @@ interface PaginatedInsightsResponse {
   readonly meta: Meta;
 }
 
-const useUserInsights = (limit = 100) => {
-  const baseEndpoint = `user/insights?limit=${limit}`;
-  const endpointString = `${baseEndpoint}`;
+const useUserInsights = () => {
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(10);
+
+  const pageQuery = page ? `page=${page}` : "";
+  const limitQuery = limit ? `&limit=${limit}` : "";
+
+  const baseEndpoint = "user/insights";
+  const endpointString = `${baseEndpoint}?${pageQuery}${limitQuery}`;
 
   const { data, error, mutate } = useSWR<PaginatedInsightsResponse, Error>(
     endpointString,
     publicApiFetcher as Fetcher<PaginatedInsightsResponse, Error>
   );
 
+  console.log({data});
+
   return {
     data: data?.data ?? [],
-    meta: data?.meta ?? { itemCount: 0 },
+    meta: data?.meta ?? { itemCount: 0, limit: 0, page: 0, hasNextPage: false, hasPreviousPage: false, pageCount: 0 },
     isLoading: !error && !data,
     isError: !!error && Object.keys(error).length > 0,
-    mutate
+    mutate,
+    page,
+    setPage,
+    setLimit
   };
 };
 

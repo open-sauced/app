@@ -13,9 +13,12 @@ import useUserInsights from "lib/hooks/useUserInsights";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { supabase } from "lib/utils/supabase";
 import useSession from "lib/hooks/useSession";
+import PaginationResults from "components/molecules/PaginationResults/pagination-result";
+import Pagination from "components/molecules/Pagination/pagination";
 
 const InsightsHub: WithPageLayout = () => {
-  const { data: insightsData, isError, isLoading } = useUserInsights();
+  const { data: insightsData, meta: insightsMeta, isError, isLoading, page, setPage } = useUserInsights();
+  console.log({insightsData});
   const { user } = useSupabaseAuth();
   const { onboarded } = useSession();
   const router = useRouter();
@@ -32,7 +35,7 @@ const InsightsHub: WithPageLayout = () => {
         router.push("/");
       }
     }
-    
+
     getUser();
   }, [router, onboarded]);
 
@@ -70,10 +73,39 @@ const InsightsHub: WithPageLayout = () => {
         passHref
         href={"/hub/insights/new"}
         className="w-full bg-light-slate-4 text-lg text-light-slate-11 py-5 md:py-8 lg:py-10 rounded-lg text-center border border-light-slate-7">
-        
+
           Create a new Insight Page
-        
+
       </Link>
+
+      <div className="py-1 md:py-4 flex w-full md:mt-5 justify-between items-center">
+        <div>
+          <div className="">
+            <PaginationResults
+              from={page === 1 ? (insightsMeta.itemCount > 0 ? page : 0) : (page - 1) * insightsMeta.limit + 1}
+              to={page * insightsMeta.limit <= insightsMeta.itemCount ? page * insightsMeta.limit : insightsMeta.itemCount}
+              total={insightsMeta.itemCount}
+              entity={"insights"}
+            />
+          </div>
+        </div>
+        <div>
+          <div className="flex items-center gap-4">
+            <Pagination
+              pages={[]}
+              hasNextPage={insightsMeta.hasNextPage}
+              hasPreviousPage={insightsMeta.hasPreviousPage}
+              totalPage={insightsMeta.pageCount}
+              page={insightsMeta.page}
+              onPageChange={function (page: number): void {
+                setPage(page);
+              }}
+              divisor={true}
+              goToPage
+            />
+          </div>
+        </div>
+      </div>
     </div>
   ) : <></>;
 };
