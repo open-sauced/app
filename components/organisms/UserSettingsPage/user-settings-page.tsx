@@ -136,6 +136,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
                   setIsValidEmail(false);
                 }
               }}
+              onReset={() => setEmail("")}
               label="Email*"
               value={email}
             />

@@ -206,8 +206,9 @@ const LoginStep2: React.FC<LoginStep2Props> = ({ handleLoginStep, setRepoList })
             <TextInput
               placeholder="Organization Slug"
               descriptionText="Grab the slug from GitHub, eg: 'open-sauced'."
-              onChange={(e) => setOrgName(e.target.value)}
               classNames="!rounded-md !py-0.5 child:h-8 child:text-sm"
+              onChange={(e) => setOrgName(e.target.value)}
+              onReset={() => setOrgName("")}
             />
           </div>
           <Button onClick={handleAddPAT} type="primary" className="w-full mt-3 md:mt-0 h-10">

@@ -1,6 +1,7 @@
 import { CheckCircleFillIcon, XCircleFillIcon } from "@primer/octicons-react";
-import React, { useRef, useState } from "react";
+import React from "react";
 import clsx from "clsx";
+
 interface TextInputProps {
   label?: string;
   placeholder?: string;
@@ -15,6 +16,7 @@ interface TextInputProps {
   errorMsg?: string;
   value?: string;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onReset?: () => void;
 }
 
 const TextInput = ({
@@ -30,12 +32,10 @@ const TextInput = ({
   borderless = false,
   value,
   onChange,
+  onReset,
   errorMsg = ""
 }: TextInputProps) => {
-  const inputRef = useRef<any>();
-  const handleResetInput = () => {
-    inputRef.current.value = "";
-  };
+
   return (
     <>
       <label className="flex w-full flex-col">
@@ -50,7 +50,6 @@ const TextInput = ({
           )}
         >
           <input
-            ref={inputRef}
             type="text"
             name={name}
             id={id || name || ""}
@@ -68,7 +67,7 @@ const TextInput = ({
               {state === "valid" ? (
                 <CheckCircleFillIcon className="text-light-orange-9" size={14} />
               ) : !!value ? (
-                <span className="flex items-center" onClick={() => handleResetInput()}>
+                <span className="flex items-center" onClick={onReset}>
                   <XCircleFillIcon className="text-light-red-11" size={14} />
                 </span>
               ) : (

@@ -229,7 +229,12 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
             Page Name
           </Title>
 
-          <TextInput placeholder="Page Name (ex: My Team)" value={name} onChange={handleOnNameChange} />
+          <TextInput
+            placeholder="Page Name (ex: My Team)"
+            value={name}
+            onChange={handleOnNameChange}
+            onReset={() => setName("")}
+          />
           {submitted && nameError ? <Text>{nameError}</Text> : ""}
           {/* <Text>insights.opensauced.pizza/pages/{username}/{`{pageId}`}/dashboard</Text> */}
         </div>
@@ -243,6 +248,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
             value={repoToAdd}
             placeholder="Repository Full Name (ex: open-sauced/open-sauced)"
             onChange={handleOnRepoChange}
+            onReset={() => setRepoToAdd("")}
           />
 
           <div>
