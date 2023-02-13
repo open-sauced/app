@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.29.0-alpha.2](https://github.com/open-sauced/insights/compare/v1.29.0-alpha.1...v1.29.0-alpha.2) (2023-02-13)
+
+
+### 🧑‍💻 Code Refactoring
+
+* correctly await router transitions ([8fa63c0](https://github.com/open-sauced/insights/commit/8fa63c040bd7980657024b3bd60c1ce5781ec815))
+
 ## [1.29.0-alpha.1](https://github.com/open-sauced/insights/compare/v1.28.0...v1.29.0-alpha.1) (2023-02-11)
 
 
