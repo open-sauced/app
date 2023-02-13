@@ -50,7 +50,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
       if (response !== false) {
         setUserInfo(response);
         formRef.current!.nameInput.value = response.name;
-        setEmail(response.email); // getting email from response instead of user.email
+        setEmail(response.email);
         formRef.current!.bio.value = response.bio;
         formRef.current!.url.value = response.url;
         formRef.current!.twitter_username.value = response.twitter_username;
@@ -58,14 +58,11 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
         formRef.current!.location.value = response.location;
       }
     }
-    // if (user) setEmail(user.email);
     fetchAuthSession();
   }, [user]);
 
-  // insightsUsers uses SWR which keeps triggering re-rendering and overwriting the user input. Disabling this for now
-  let firstInsightsLoad = false;
   useEffect(() => {
-    if (insightsUser && !firstInsightsLoad) {
+    if (insightsUser) {
       setEmailPreference({
         // eslint-disable-next-line camelcase
         display_email: insightsUser?.display_email,
@@ -75,7 +72,6 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
       setSelectedInterest(insightsUser?.interests?.split(","));
       setDisplayLocalTime(insightsUser?.display_local_time);
       setTimezone(insightsUser?.timezone || "");
-      firstInsightsLoad = true;
     }
   }, [insightsUser]);
 
