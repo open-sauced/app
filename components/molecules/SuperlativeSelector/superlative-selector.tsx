@@ -38,7 +38,6 @@ const SuperativeSelector: React.FC<SuperlativeSelectorProps> = ({
       }
     };
     document.addEventListener("mousedown", checkIfClickedOutside);
-    console.log("current ref", ref.current?.getBoundingClientRect());
 
     return () => {
       // Cleanup the event listener
