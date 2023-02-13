@@ -1,5 +1,8 @@
 import Button from "components/atoms/Button/button";
+import { Textarea } from "components/atoms/Textarea/text-area";
+import { createHighlights } from "lib/hooks/createHighlights";
 
+import { ToastTrigger } from "lib/utils/toast-trigger";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 
 const HighlightInputForm = (): JSX.Element => {
@@ -41,12 +44,33 @@ const HighlightInputForm = (): JSX.Element => {
   };
 
   // Handle submit highlights
-  const handlePostHighlight = (e: React.FormEvent<HTMLFormElement>) => {
+  const handlePostHighlight = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsDivFocused(false);
+
     // Trigger api call to post highlight
-    setBodyText("");
-    setTitle("");
+    const pullLink = bodyText.match(/\bhttps?:\/\/\S+/gi);
+    const [url] = pullLink || [];
+    const highlight = bodyText.replace(url as string, "");
+
+    if (url === null || undefined || "" || []) {
+      ToastTrigger({ message: "A valid Pull request Link is required", type: "error" });
+      return;
+    } else {
+      const res = await createHighlights({
+        highlight,
+        title,
+        url: url || ""
+      });
+      setBodyText("");
+      setTitle("");
+      setIsDivFocused(false);
+
+      if (res) {
+        ToastTrigger({ message: "Highlight uploade success", type: "success" });
+      } else {
+        ToastTrigger({ message: "An error occured!!!", type: "error" });
+      }
+    }
   };
 
   return (
@@ -64,14 +88,14 @@ const HighlightInputForm = (): JSX.Element => {
           type="text"
           placeholder={isDivFocused ? "Add title (optional)" : "Highlight your merged PRs and provide a link!"}
         />
-        <textarea
-          rows={row}
-          value={bodyText}
-          onChange={(e) => handleTextAreaInputChange(e)}
-          ref={textAreaRef}
+        <Textarea
           className={`resize-none font-normal text-light-slate-11 mb-2 transition focus:outline-none rounded-lg ${
             !isDivFocused ? "hidden" : ""
           }`}
+          ref={textAreaRef}
+          rows={row}
+          value={bodyText}
+          onChange={(e) => handleTextAreaInputChange(e)}
         />
       </div>
 

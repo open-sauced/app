@@ -10,7 +10,7 @@ interface ContributorHighlightCardProps {
   prLink: string;
 }
 const ContributorHighlightCard = ({ title, desc, prLink }: ContributorHighlightCardProps) => {
-  const { data } = useFetchGithubPRInfo(generateApiPrUrl(prLink));
+  const { data, isLoading, isError } = useFetchGithubPRInfo(generateApiPrUrl(prLink));
 
   return (
     <article className="flex flex-col max-w-[40rem] flex-1 gap-6">
@@ -36,6 +36,8 @@ const ContributorHighlightCard = ({ title, desc, prLink }: ContributorHighlightC
       </div>
 
       {/* Generated OG card section */}
+      {isLoading && <>Loading...</>}
+      {isError && <>An error occured...</>}
       {data && (
         <div>
           <PullRequestHighlightCard
