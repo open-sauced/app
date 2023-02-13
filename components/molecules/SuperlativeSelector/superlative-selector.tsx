@@ -38,6 +38,7 @@ const SuperativeSelector: React.FC<SuperlativeSelectorProps> = ({
       }
     };
     document.addEventListener("mousedown", checkIfClickedOutside);
+    console.log("current ref", ref.current?.getBoundingClientRect());
 
     return () => {
       // Cleanup the event listener
@@ -49,7 +50,7 @@ const SuperativeSelector: React.FC<SuperlativeSelectorProps> = ({
   const filterDescription = filterOption ? filterOption : selected;
 
   return (
-    <div className="overflow-hidden text-ellipsis whitespace-nowrap  md:relative md:whitespace-normal md:overflow-visible md:text-base max-w-max" ref={ref}>
+    <div className="truncate" ref={ref}>
       <ContextFilterButton onClick={toggleFilter} isSelected={!!selected}>
         {selected ? (
           <div className="flex" onClick={toggleFilter}>
@@ -72,7 +73,7 @@ const SuperativeSelector: React.FC<SuperlativeSelectorProps> = ({
         )}
       </ContextFilterButton>
       {isOpen && (
-        <div className="absolute left-0  space-y-1 mt-1 shadow-superlative z-10 w-72  bg-white rounded-lg px-1.5 py-2">
+        <div className="absolute transform -translate-x-1/3 md:translate-x-0 space-y-1 mt-1 shadow-superlative z-10 w-72 bg-white rounded-lg px-1.5 py-2">
           {filterOptions.length > 0 &&
             filterOptions.map((option, index) => {
               const filterKey = getFilterKey(option);
