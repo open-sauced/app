@@ -36,7 +36,7 @@ const LanguagePill = ({ topic, classNames, onClick }: LanguagePillProps) => {
       }`}
     >
       <Image src={renderTopicIcon(topic)} alt={topic} />
-      <span className="font-normal capitalize">{checkCamelCaseNaming(topic)}</span>
+      <span className="font-normal capitalize p-category">{checkCamelCaseNaming(topic)}</span>
     </div>
   );
 };

@@ -79,7 +79,7 @@ const ContributorProfilePage = ({
   const { bio, location, interests, name, twitter_username, timezone, display_local_time: displayLocalTime } = user || {};
 
   return (
-    <div className=" w-full">
+    <div className="w-full h-card">
       {loading ? <SkeletonWrapper height={200} /> : <ContributorProfileHeader  isConnected={!!user} githubName={githubName}avatarUrl={githubAvatar} />}
       <div className="pt-24 px-4 md:px-10 lg:px-16 flex flex-col lg:flex-row lg:gap-40 w-full overflow-hidden justify-between">
         <div className="flex flex-col w-80 gap-4 ">

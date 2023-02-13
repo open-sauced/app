@@ -53,14 +53,14 @@ const CardHorizontalBarChart = ({ languageList, withDescription }: CardHorizonta
               <div
                 key={index}
                 onMouseOver={() => handleChangeDescriptText(languageName)}
-                className="h-2 transition-all duration-500 ease-in-out"
+                className="h-2 transition-all duration-500 ease-in-out p-category"
                 style={{
                   width: `${percentageUsed < 20 ? (percentageUsed / percentage) * 100 : percentageUsed}%`,
                   backgroundColor: languageToColor[languageName]
                     ? (languageToColor[languageName].color as string)
                     : NOTSUPPORTED
                 }}
-              />
+              >{languageName}</div>
             )
           );
         })}

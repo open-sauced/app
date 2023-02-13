@@ -36,7 +36,7 @@ const ContributorProfileInfo = ({
     <div className="flex flex-col gap-6">
       <div className="pb-6 border-b">
         <div className="flex gap-2 items-center mb-2">
-          <Title className="!text-2xl !text-light-slate-12" level={3}>
+          <Title className="!text-2xl !text-light-slate-12 p-name" level={3}>
             {githubName}
           </Title>
           {isConnected && <Badge text="beta" />}
@@ -64,7 +64,7 @@ const ContributorProfileInfo = ({
             <Title className="!text-base !text-light-slate-12" level={5}>
               About
             </Title>
-            <p className="text-light-slate-11 text-sm">
+            <p className="text-light-slate-11 text-sm p-note">
               {bio ||
                 "I am an open source developer with a passion for music and video games. I strive to improve the open source community and am always looking for new ways to contribute."}
             </p>
@@ -75,7 +75,7 @@ const ContributorProfileInfo = ({
 
               {twitterUsername && <span className="flex gap-2 items-center">
                 <FiTwitter className="text-light-slate-9" />
-                <Link href={`https://twitter.com/${twitterUsername}`} target="_blank" rel="noreferrer" className="w-max hover:text-orange-500 ">
+                <Link href={`https://twitter.com/${twitterUsername}`} target="_blank" rel="noreferrer" className="w-max hover:text-orange-500 u-url">
                   {twitterUsername}
                 </Link>
               </span>}
