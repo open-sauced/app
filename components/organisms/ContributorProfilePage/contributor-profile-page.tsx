@@ -119,23 +119,88 @@ const ContributorProfilePage = ({
             </>
           )}
         </div>
-        <div className="flex-1">
+        <div className="flex-1 mt-10 lg:mt-0">
           {loading ? (
             <SkeletonWrapper height={500} radius={12} />
           ) : (
             <>
-              <ContributorProfileTab
-                repoList={repoList}
-                recentContributionCount={recentContributionCount}
-                prVelocity={prVelocity}
-                chart={chart}
-                openPrs={openPrs}
-                githubName={githubName}
-                prMerged={prMerged}
-                contributor={user}
-                prTotal={prTotal}
-                prsMergedPercentage={prsMergedPercentage}
-              />
+              {!!user ? (
+                <ContributorProfileTab
+                  repoList={repoList}
+                  recentContributionCount={recentContributionCount}
+                  prVelocity={prVelocity}
+                  chart={chart}
+                  openPrs={openPrs}
+                  githubName={githubName}
+                  prMerged={prMerged}
+                  contributor={user}
+                  prTotal={prTotal}
+                  prsMergedPercentage={prsMergedPercentage}
+                />
+              ) : (
+                <>
+                  <div>
+                    <Title className="!text-light-slate-12 !text-xl" level={4}>
+                      Contribution Insights
+                    </Title>
+                  </div>
+                  <div className="bg-white mt-4 rounded-2xl border p-4 md:p-6">
+                    <div className=" flex flex-col lg:flex-row gap-2 md:gap-12 lg:gap-16 justify-between">
+                      <div>
+                        <span className="text-xs text-light-slate-11">PRs opened</span>
+                        {openPrs ? (
+                          <div className="flex lg:justify-center md:pr-8 mt-1">
+                            <Text className="!text-lg md:!text-xl lg:!text-2xl !text-black !leading-none">
+                              {openPrs} PRs
+                            </Text>
+                          </div>
+                        ) : (
+                          <div className="flex justify-center items-end mt-1"> - </div>
+                        )}
+                      </div>
+                      <div>
+                        <span className="text-xs text-light-slate-11">Avg PRs velocity</span>
+                        {prVelocity ? (
+                          <div className="flex gap-2 lg:justify-center items-center">
+                            <Text className="!text-lg md:!text-xl lg:!text-2xl !text-black !leading-none">
+                              {getRelativeDays(prVelocity)}
+                            </Text>
+
+                            <Pill color="purple" text={`${prsMergedPercentage}%`} />
+                          </div>
+                        ) : (
+                          <div className="flex justify-center items-end mt-1"> - </div>
+                        )}
+                      </div>
+                      <div>
+                        <span className="text-xs text-light-slate-11">Contributed Repos</span>
+                        {recentContributionCount ? (
+                          <div className="flex lg:justify-center mt-1">
+                            <Text className="!text-lg md:!text-xl lg:!text-2xl !text-black !leading-none">
+                              {`${recentContributionCount} Repo${recentContributionCount > 1 ? "s" : ""}`}
+                            </Text>
+                          </div>
+                        ) : (
+                          <div className="flex justify-center items-end mt-1"> - </div>
+                        )}
+                      </div>
+                    </div>
+                    <div className="mt-10 h-32">
+                      <CardLineChart lineChartOption={chart} className="!h-32" />
+                    </div>
+                    <div>
+                      <CardRepoList limit={7} repoList={repoList} />
+                    </div>
+
+                    <div className="mt-6">
+                      <PullRequestTable limit={15} contributor={githubName} topic={"*"} repositories={undefined} />
+                    </div>
+                    <div className="mt-8 text-light-slate-9 text-sm">
+                      <p>The data for these contributions is from publicly available open source projects on GitHub.</p>
+                    </div>
+                  </div>
+                </>
+              )}
             </>
           )}
         </div>

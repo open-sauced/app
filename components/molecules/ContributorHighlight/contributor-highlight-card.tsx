@@ -25,14 +25,14 @@ const ContributorHighlightCard = ({ title, desc, prLink }: ContributorHighlightC
   const { data, isLoading, isError } = useFetchGithubPRInfo(generateApiPrUrl(prLink));
 
   return (
-    <article className="flex flex-col max-w-[40rem] flex-1 gap-6">
+    <article className="flex flex-col max-w-[40rem] flex-1 gap-3 lg:gap-6">
       <div className="flex justify-between items-center">
         {title && (
-          <Title className="!text-xl !text-light-slate-12" level={4}>
+          <Title className="!text-sm lg:!text-xl !text-light-slate-12" level={4}>
             {title}
           </Title>
         )}
-        <div className="flex gap-5 items-center">
+        <div className="flex ml-auto lg:gap-5 gap-3 items-center">
           <DropdownMenu>
             <DropdownMenuTrigger className="py-2 px-2 rounded-full data-[state=open]:bg-light-slate-7">
               <HiOutlineEmojiHappy size={20} />
@@ -83,7 +83,7 @@ const ContributorHighlightCard = ({ title, desc, prLink }: ContributorHighlightC
 
       {/* Highlight body section */}
       <div>
-        <p className="text-light-slate-11 font-normal">{desc}</p>
+        <p className="text-light-slate-11 text-sm lg:text-base font-normal">{desc}</p>
       </div>
       {/* Highlight Link section */}
 

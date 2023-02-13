@@ -26,11 +26,11 @@ const PullRequestHighlightCard = ({
   orgName
 }: PullRequestHighlightCardProps) => {
   return (
-    <div className="flex max-w-[45rem] flex-1 flex-col gap-16 bg-white pt-8 pb-4">
-      <div className="px-8  flex justify-between">
+    <div className="flex max-w-[45rem] flex-1 flex-col gap-8 lg:gap-16 bg-white pt-8 pb-4">
+      <div className="lg:px-8 px-3 flex justify-between">
         <div className="flex flex-col gap-2">
           <span className="text-sm font-normal">{`${orgName}/${repoName}`}</span>
-          <h3 className="text-3xl font-semibold flex items-center gap-1">
+          <h3 className="text-base lg:text-3xl font-semibold flex items-center gap-1">
             <span className="text-light-slate-9 font-normal">{`#${ticketNumber}`}</span> <p>{prTitle}</p>
           </h3>
           <div className="flex gap-2 text-light-slate-9 text-sm">
@@ -38,13 +38,16 @@ const PullRequestHighlightCard = ({
             {commentCount} comment
           </div>
         </div>
-        <div>
+        <div className="md:hidden">
+          <Avatar isCircle size="base" avatarURL={userAvatar} />
+        </div>
+        <div className="hidden md:inline-flex">
           <Avatar isCircle size="lg" avatarURL={userAvatar} />
         </div>
       </div>
 
       <div>
-        <div className="px-8 flex justify-between items-center">
+        <div className="lg:px-8 px-3 flex justify-between items-center">
           <div className="flex text-sm items-center gap-2">
             <Avatar isCircle size="sm" avatarURL={userAvatar} />
             <p className="text-light-slate-9 font-normal">
@@ -61,7 +64,7 @@ const PullRequestHighlightCard = ({
               withDescription={false}
             />
           </div>
-          <div className="px-8">
+          <div className="lg:px-8 px-3">
             <p className="font-semibold">
               {prTitle}· Issue {`#${ticketNumber}`} · {`${orgName}/${repoName}`}
             </p>

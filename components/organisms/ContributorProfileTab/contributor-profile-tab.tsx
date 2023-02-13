@@ -48,8 +48,6 @@ const ContributorProfileTab = ({
     setInputVisible(highlights && highlights.length !== 0 ? true : false);
   }, [highlights]);
 
-  console.log(user);
-
   return (
     <Tabs defaultValue="Highlights" className="">
       <TabsList className="w-full border-b  justify-start">
@@ -89,16 +87,16 @@ const ContributorProfileTab = ({
             <>Loading...</>
           ) : (
             <>
-              {highlights && highlights.length > 0 ? (
+              {!isError && highlights && highlights.length > 0 ? (
                 // eslint-disable-next-line camelcase
                 highlights.map(({ id, title, highlight, url, created_at }) => (
-                  <div className="flex gap-7" key={id}>
+                  <div className="flex gap-2 flex-col lg:flex-row lg:gap-7" key={id}>
                     <p className="text-light-slate-10 text-sm">{getFormattedDate(created_at)}</p>
                     <ContributorHighlightCard title={title} desc={highlight} prLink={url} />
                   </div>
                 ))
               ) : (
-                <div className="flex justify-center rounded-xl border border-dashed border-light-slate-8 px-32 py-20 items-center">
+                <div className="flex justify-center rounded-xl border border-dashed border-light-slate-8 px-6 lg:px-32 py-20 items-center">
                   <div className="text-center">
                     {user?.user_metadata.user_name === login ? (
                       <>
