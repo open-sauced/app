@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 import { User } from "@supabase/supabase-js";
 
@@ -41,7 +41,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
     receive_collaboration: false
   });
   const [selectedInterest, setSelectedInterest] = useState<string[]>([]);
-  const formRef = React.useRef<HTMLFormElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
   const interestArray = ["javascript", "python", "rust", "ML", "AI", "react"];
 
   useEffect(() => {

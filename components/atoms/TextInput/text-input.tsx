@@ -16,7 +16,7 @@ interface TextInputProps {
   value?: string;
   defaultValue?: string;
   required?: boolean;
-  innerRef?: any;
+  fieldRef?: React.RefObject<HTMLInputElement>;
   pattern?: string;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
@@ -36,15 +36,15 @@ const TextInput = ({
   defaultValue,
   onChange,
   required,
-  innerRef,
+  fieldRef,
   pattern,
   errorMsg = ""
 }: TextInputProps) => {
-  const inputRef = useRef<any>();
+  const inputRef = useRef<HTMLInputElement>(null);
   const handleResetInput = () => {
-    innerRef ? innerRef.current.value = ""
+    fieldRef ? fieldRef.current!.value = ""
       :
-      inputRef.current.value = "";
+      inputRef.current!.value = "";
   };
   return (
     <>
@@ -60,7 +60,7 @@ const TextInput = ({
           )}
         >
           <input
-            ref={innerRef || inputRef}
+            ref={fieldRef || inputRef}
             type="text"
             name={name}
             id={id || name || ""}
