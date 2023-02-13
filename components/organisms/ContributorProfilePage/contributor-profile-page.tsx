@@ -132,7 +132,7 @@ const ContributorProfilePage = ({
                 openPrs={openPrs}
                 githubName={githubName}
                 prMerged={prMerged}
-                user={user}
+                contributor={user}
                 prTotal={prTotal}
                 prsMergedPercentage={prsMergedPercentage}
               />

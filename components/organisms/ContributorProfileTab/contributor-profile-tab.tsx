@@ -11,9 +11,10 @@ import ContributorHighlightCard from "components/molecules/ContributorHighlight/
 import { useFetchUserHighlights } from "lib/hooks/useFetchUserHighlights";
 import { useEffect, useState } from "react";
 import Button from "components/atoms/Button/button";
+import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 
 interface ContributorProfileTabProps {
-  user?: DbUser;
+  contributor?: DbUser;
   prTotal: number;
   openPrs: number;
   prVelocity: number;
@@ -26,7 +27,7 @@ interface ContributorProfileTabProps {
 }
 
 const ContributorProfileTab = ({
-  user,
+  contributor,
   openPrs,
   prMerged,
   prTotal,
@@ -37,7 +38,8 @@ const ContributorProfileTab = ({
   recentContributionCount,
   repoList
 }: ContributorProfileTabProps): JSX.Element => {
-  const { login } = user || {};
+  const { login } = contributor || {};
+  const { user } = useSupabaseAuth();
 
   const { data: highlights, isError, isLoading } = useFetchUserHighlights(login || "");
   const [inputVisible, setInputVisible] = useState(false);
@@ -45,6 +47,8 @@ const ContributorProfileTab = ({
   useEffect(() => {
     setInputVisible(highlights && highlights.length !== 0 ? true : false);
   }, [highlights]);
+
+  console.log(user);
 
   return (
     <Tabs defaultValue="Highlights" className="">
@@ -66,7 +70,7 @@ const ContributorProfileTab = ({
       {/* Highlights Tab details */}
 
       <TabsContent className="" value="Highlights">
-        {inputVisible && (
+        {inputVisible && user?.user_metadata.user_name === login && (
           <div className="pl-20 gap-x-3 pt-4 flex max-w-[48rem]">
             <Avatar
               alt="user profile avatar"
@@ -96,14 +100,22 @@ const ContributorProfileTab = ({
               ) : (
                 <div className="flex justify-center rounded-xl border border-dashed border-light-slate-8 px-32 py-20 items-center">
                   <div className="text-center">
-                    <p>
-                      You don&apos;t have any highlights yet! <br /> Highlights are a great way to show off your
-                      contributions. Merge any new pull requests recently?
-                    </p>
-                    {!inputVisible && (
-                      <Button onClick={() => setInputVisible(true)} className="mt-5" type="primary">
-                        Add a highlight
-                      </Button>
+                    {user?.user_metadata.user_name === login ? (
+                      <>
+                        <p>
+                          You don&apos;t have any highlights yet! <br /> Highlights are a great way to show off your
+                          contributions. Merge any new pull requests recently?
+                        </p>
+                        {!inputVisible && (
+                          <Button onClick={() => setInputVisible(true)} className="mt-5" type="primary">
+                            Add a highlight
+                          </Button>
+                        )}
+                      </>
+                    ) : (
+                      <>
+                        <p>{` ${login} hasn't posted any highlights yet!`}</p>
+                      </>
                     )}
                   </div>
                 </div>

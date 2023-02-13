@@ -3,6 +3,18 @@ import { generateApiPrUrl } from "lib/utils/github";
 import React from "react";
 import PullRequestHighlightCard from "../PullRequestHighlightCard/pull-request-highlight-card";
 import { useFetchGithubPRInfo } from "lib/hooks/useFetchGithubPRInfo";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger
+} from "components/atoms/Dropdown/dropdown";
+import { HiOutlineEmojiHappy } from "react-icons/hi";
+import { TfiMoreAlt } from "react-icons/tfi";
+import { FiLinkedin, FiTwitter } from "react-icons/fi";
+import { BsLink45Deg } from "react-icons/bs";
+import { FaUserPlus } from "react-icons/fa";
+import { GrFlag } from "react-icons/gr";
 
 interface ContributorHighlightCardProps {
   title?: string;
@@ -14,13 +26,59 @@ const ContributorHighlightCard = ({ title, desc, prLink }: ContributorHighlightC
 
   return (
     <article className="flex flex-col max-w-[40rem] flex-1 gap-6">
-      <div>
+      <div className="flex justify-between items-center">
         {title && (
           <Title className="!text-xl !text-light-slate-12" level={4}>
             {title}
           </Title>
         )}
-        <div></div>
+        <div className="flex gap-5 items-center">
+          <DropdownMenu>
+            <DropdownMenuTrigger className="py-2 px-2 rounded-full data-[state=open]:bg-light-slate-7">
+              <HiOutlineEmojiHappy size={20} />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent side="left">
+              <DropdownMenuItem></DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <DropdownMenu>
+            <DropdownMenuTrigger className=" py-2 px-2 rounded-full data-[state=open]:bg-light-slate-7">
+              <TfiMoreAlt size={24} />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="rounded-lg flex flex-col py-2 gap-1">
+              <DropdownMenuItem>
+                <div className="flex gap-2.5 py-1 items-center pl-3 pr-7">
+                  <FiTwitter size={22} />
+                  <span>Share to Twitter</span>
+                </div>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <div className="flex gap-2.5 py-1 items-center pl-3 pr-7">
+                  <FiLinkedin size={22} />
+                  <span>Share to Linkedin</span>
+                </div>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <div className="flex gap-2.5 py-1 items-center pl-3 pr-7">
+                  <BsLink45Deg size={22} />
+                  <span>Copy link</span>
+                </div>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <div className="flex gap-2.5 py-1  items-center pl-3 pr-7">
+                  <FaUserPlus size={22} />
+                  <span>Follow user</span>
+                </div>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <div className="flex gap-2.5 py-1  items-center pl-3 pr-7">
+                  <GrFlag size={22} />
+                  <span>Report content</span>
+                </div>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       </div>
 
       {/* Highlight body section */}
