@@ -5,6 +5,27 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.29.0-beta.5](https://github.com/open-sauced/insights/compare/v1.29.0-beta.4...v1.29.0-beta.5) (2023-02-13)
+
+
+### 🍕 Features
+
+* add support for custom SEO per page ([#835](https://github.com/open-sauced/insights/issues/835)) ([03e760e](https://github.com/open-sauced/insights/commit/03e760e7df37c918a9de41a1be0bf652b04a4606)), closes [#814](https://github.com/open-sauced/insights/issues/814)
+
+## [1.29.0-beta.4](https://github.com/open-sauced/insights/compare/v1.29.0-beta.3...v1.29.0-beta.4) (2023-02-10)
+
+
+### 🍕 Features
+
+* add utility function to camelcase topic value ([#851](https://github.com/open-sauced/insights/issues/851)) ([b805659](https://github.com/open-sauced/insights/commit/b805659e3d5c42ef6bce3fa4f1eaf33f13e21617)), closes [#822](https://github.com/open-sauced/insights/issues/822)
+
+## [1.29.0-beta.3](https://github.com/open-sauced/insights/compare/v1.29.0-beta.2...v1.29.0-beta.3) (2023-02-09)
+
+
+### 🍕 Features
+
+* add highlights feed filter card to design system ([#843](https://github.com/open-sauced/insights/issues/843)) ([b4d0eba](https://github.com/open-sauced/insights/commit/b4d0eba0ca068b03a78290d920496c8737f6813d)), closes [#827](https://github.com/open-sauced/insights/issues/827)
+
 ## [1.29.0-beta.2](https://github.com/open-sauced/insights/compare/v1.29.0-beta.1...v1.29.0-beta.2) (2023-02-09)
 
 

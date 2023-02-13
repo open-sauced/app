@@ -14,6 +14,10 @@ interface TextInputProps {
   classNames?: string;
   errorMsg?: string;
   value?: string;
+  defaultValue?: string;
+  required?: boolean;
+  fieldRef?: React.RefObject<HTMLInputElement>;
+  pattern?: string;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -29,12 +33,18 @@ const TextInput = ({
   autoFocus,
   borderless = false,
   value,
+  defaultValue,
   onChange,
+  required,
+  fieldRef,
+  pattern,
   errorMsg = ""
 }: TextInputProps) => {
-  const inputRef = useRef<any>();
+  const inputRef = useRef<HTMLInputElement>(null);
   const handleResetInput = () => {
-    inputRef.current.value = "";
+    fieldRef ? fieldRef.current!.value = ""
+      :
+      inputRef.current!.value = "";
   };
   return (
     <>
@@ -50,18 +60,21 @@ const TextInput = ({
           )}
         >
           <input
-            ref={inputRef}
+            ref={fieldRef || inputRef}
             type="text"
             name={name}
             id={id || name || ""}
             placeholder={placeholder || ""}
             onChange={onChange}
             value={value}
+            defaultValue={defaultValue}
             className={`flex-1 focus:outline-none  ${classNames} ${
               disabled && "bg-light-slate-3 cursor-not-allowed  text-light-slate-9"
             }`}
             autoFocus={autoFocus}
             disabled={disabled}
+            required={required}
+            pattern={pattern}
           />
           {!disabled && (
             <>

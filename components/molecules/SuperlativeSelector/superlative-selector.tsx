@@ -36,7 +36,6 @@ const SuperativeSelector: React.FC<SuperlativeSelectorProps> = ({
       if (isOpen && ref.current && !ref.current.contains(e.target)) {
         setIsOpen(false);
       }
-
     };
     document.addEventListener("mousedown", checkIfClickedOutside);
 
@@ -50,24 +49,22 @@ const SuperativeSelector: React.FC<SuperlativeSelectorProps> = ({
   const filterDescription = filterOption ? filterOption : selected;
 
   return (
-    <div className="max-w-max relative" ref={ref}>
+    <div className="truncate" ref={ref}>
       <ContextFilterButton onClick={toggleFilter} isSelected={!!selected}>
         {selected ? (
-          <div className="flex">
-            <div className="flex" onClick={toggleFilter}>
-              <span className="text-dark-slate-10">Filtered by:</span>
-              <div className="flex items-center ml-1 text-light-slate-12">
-                {filterDescription}
+          <div className="flex" onClick={toggleFilter}>
+            <span className="inline-block text-dark-slate-10">Filtered by:</span>
+            <div className="block truncate pr-4 ml-1 text-light-slate-12">
+              {filterDescription}
 
-                <Icon
-                  className="ml-2"
-                  IconImage={cancelIcon}
-                  onClick={() => {
-                    handleCancelClick();
-                    setIsOpen(false);
-                  }}
-                />
-              </div>
+              <Icon
+                className="absolute right-1 top-1/2 transform -translate-y-1/2"
+                IconImage={cancelIcon}
+                onClick={() => {
+                  handleCancelClick();
+                  setIsOpen(false);
+                }}
+              />
             </div>
           </div>
         ) : (
@@ -75,7 +72,7 @@ const SuperativeSelector: React.FC<SuperlativeSelectorProps> = ({
         )}
       </ContextFilterButton>
       {isOpen && (
-        <div className="absolute -left-full md:left-0 space-y-1 mt-1 shadow-superlative w-72 z-10 bg-white rounded-lg px-1.5 py-2">
+        <div className="absolute transform -translate-x-1/3 md:translate-x-0 space-y-1 mt-1 shadow-superlative z-10 w-72 bg-white rounded-lg px-1.5 py-2">
           {filterOptions.length > 0 &&
             filterOptions.map((option, index) => {
               const filterKey = getFilterKey(option);
@@ -94,8 +91,8 @@ const SuperativeSelector: React.FC<SuperlativeSelectorProps> = ({
                 >
                   {option}
                 </Radio>
-              );}
-            )}
+              );
+            })}
         </div>
       )}
     </div>
