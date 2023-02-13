@@ -67,7 +67,6 @@
     "@supabase/gotrue-js": "^1.22.22",
     "@supabase/supabase-js": "^2.7.0",
     "@supabase/ui": "^0.36.5",
-    "class-variance-authority": "^0.4.0",
     "clsx": "^1.2.1",
     "date-fns": "^2.29.3",
     "echarts": "^5.4.1",
@@ -84,7 +83,6 @@
     "react-spring": "^9.6.1",
     "stripe": "^11.8.0",
     "swr": "^2.0.3",
-    "tailwind-merge": "^1.9.1",
     "tailwindcss-radix": "^2.7.0",
     "zustand": "^4.3.2"
   },
