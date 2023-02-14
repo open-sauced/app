@@ -38,7 +38,7 @@ const LatestPrTableRow = ({
 }: LatestPrTableRowProps) => {
   return (
     <div className="flex gap-2 items-center px-2 py-1">
-      <div className={`flex cursor-default item-center gap-2 w-3/5 ${isHoverCard && "w-5/6"}`}>
+      <div className={`flex item-center gap-2 w-3/5 ${isHoverCard && "w-5/6"}`}>
         {prStatus === "open" ? (
           <IconContext.Provider value={{ color: "green", style: { width: 14, height: 14, marginTop: 2 } }}>
             <VscGitPullRequest title="Open Pull Request" />
@@ -59,7 +59,7 @@ const LatestPrTableRow = ({
           </IconContext.Provider>
         )}
         <Text title="updated date">{calcDistanceFromToday(new Date(parseInt(prUpdatedTime, 10)))}</Text>
-        <Text title={prName} className="!text-light-slate-12 !w-32 md:!w-72  !truncate ">
+        <Text title={prName} className="!text-light-slate-12 !w-32 md:!w-72 !truncate">
           <a href={`https://github.com/${repoOwner}/${repoName}/pull/${prNumber}`} target="_blank" rel="noreferrer">
             {prName}
           </a>
