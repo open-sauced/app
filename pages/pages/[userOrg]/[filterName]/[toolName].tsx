@@ -8,6 +8,8 @@ import HubPageLayout from "layouts/hub-page";
 import { WithPageLayout } from "interfaces/with-page-layout";
 import changeCapitalization from "lib/utils/change-capitalization";
 import useInsight from "lib/hooks/useInsight";
+import Head from "next/head";
+import { useEffect } from "react";
 
 const HubPage: WithPageLayout = () => {
   const router = useRouter();
@@ -15,6 +17,14 @@ const HubPage: WithPageLayout = () => {
   const insightId = filterName as string;
   const { data: insight, isLoading, isError } = useInsight(insightId);
   const repositories = insight ? insight.repos.map(repo => repo.repo_id) : [];
+
+  const title = `${insight && insight.name} | Open Sauced Insights Hub`;
+
+  useEffect( () => {
+    HubPage.updateSEO!({
+      title: title
+    });
+  }, [title]);
 
   return (
     <>
