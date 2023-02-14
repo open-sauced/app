@@ -5,6 +5,30 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.30.0-alpha.1](https://github.com/open-sauced/insights/compare/v1.29.0...v1.30.0-alpha.1) (2023-02-14)
+
+
+### 🎨 Styles
+
+* log netlify env variables ([245b625](https://github.com/open-sauced/insights/commit/245b6255af96e1a76028812b4b88ebffcb9e5a15))
+
+
+### 🍕 Features
+
+* add support for repo full name for onboarding/insight repos ([#861](https://github.com/open-sauced/insights/issues/861)) ([d075f90](https://github.com/open-sauced/insights/commit/d075f90a6b287fd52e31ec96cd8a2256f147b74f))
+
+
+### 🐛 Bug Fixes
+
+* correct database repo types and import loops ([d70f067](https://github.com/open-sauced/insights/commit/d70f06720f4b22b3fc92ab2aaeaeb45240e8a8f7))
+
+
+### 🧑‍💻 Code Refactoring
+
+* correct some missing hook dependencies ([4868b5f](https://github.com/open-sauced/insights/commit/4868b5f49c222a0b17377f6cdea8c09711dbc618))
+* correct user insight repos search results ([9503d17](https://github.com/open-sauced/insights/commit/9503d17eff3d14f5b1af1f1fad120f393b47db08))
+* correctly await router transitions ([8fa63c0](https://github.com/open-sauced/insights/commit/8fa63c040bd7980657024b3bd60c1ce5781ec815))
+
 ## [1.29.0-alpha.2](https://github.com/open-sauced/insights/compare/v1.29.0-alpha.1...v1.29.0-alpha.2) (2023-02-13)
 
 
