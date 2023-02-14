@@ -27,7 +27,8 @@ const HighlightInputForm = (): JSX.Element => {
     };
     document.addEventListener("mousedown", checkIfClickedOutside);
     const pullLink = bodyText.match(/\bhttps?:\/\/\S+/gi);
-    if (pullLink && pullLink.length > 0) {
+    const link = pullLink && new URL(pullLink as unknown as string);
+    if (pullLink && pullLink.length > 0 && link?.hostname === "github.com" && link?.pathname.includes("pull")) {
       setPullRequestLink(pullLink[0]);
     } else {
       setPullRequestLink("");
@@ -46,11 +47,6 @@ const HighlightInputForm = (): JSX.Element => {
     } else if (row > 1 && textAreaRef.current && textAreaRef.current?.scrollHeight < messageLastScrollHeight) {
       setRow((prev) => prev--);
     }
-    // const pullLink = bodyText.match(/\bhttps?:\/\/\S+/gi);
-    // if (pullLink && pullLink.length > 0) {
-    //   setPullRequestLink(pullLink[0]);
-    // }
-
     if (!bodyText) setRow(1);
     messageLastScrollHeight = textAreaRef.current?.scrollHeight || 60;
   };
@@ -61,10 +57,18 @@ const HighlightInputForm = (): JSX.Element => {
 
     // Trigger api call to post highlight
     const pullLink = bodyText.match(/\bhttps?:\/\/\S+/gi);
+    const link = pullLink && new URL(pullLink as unknown as string);
     const [url] = pullLink || [];
     const highlight = bodyText.replace(url as string, "");
 
-    if (url === null || url === undefined || url === "" || url.length === 0) {
+    if (
+      url === null ||
+      url === undefined ||
+      url === "" ||
+      url.length === 0 ||
+      link?.hostname !== "github.com" ||
+      !link?.pathname.includes("pull")
+    ) {
       ToastTrigger({ message: "A valid Pull request Link is required", type: "error" });
       return;
     } else {
