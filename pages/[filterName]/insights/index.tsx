@@ -111,5 +111,8 @@ const InsightsHub: WithPageLayout = () => {
 };
 
 InsightsHub.PageLayout = HubLayout;
+InsightsHub.SEO = {
+  title: "Insights Hub | Open Sauced Insights"
+};
 
 export default InsightsHub;

@@ -7,8 +7,12 @@ import { ContributorsProfileType } from "components/molecules/ContributorHoverCa
 
 import ProfileLayout from "layouts/profile";
 import { useFetchUser } from "lib/hooks/useFetchUser";
+import Head from "next/head";
+import SEO from "layouts/SEO/SEO";
+import { WithPageLayout } from "interfaces/with-page-layout";
+import { useEffect } from "react";
 
-const Contributor = (): JSX.Element => {
+const Contributor: WithPageLayout = () => {
   const router = useRouter();
   const { username } = router.query;
   const contributorLogin = username as string;
@@ -24,6 +28,15 @@ const Contributor = (): JSX.Element => {
     githubName: contributorLogin,
     totalPR: contributor[0]?.recent_pr_total
   };
+
+  useEffect( () => {
+    Contributor.updateSEO!({
+      title: `${contributorLogin} | OpenSauced`,
+      description: `${user?.bio || "I am an open source developer with a passion for music and video games. I strive to improve the open source community and am always looking for new ways to contribute."}`,
+      image: profile.githubAvatar,
+      twitterCard: "summary_large_image"
+    });
+  }, [contributorLogin, user?.bio, profile.githubAvatar]);
 
   return (
     <div className="w-full">

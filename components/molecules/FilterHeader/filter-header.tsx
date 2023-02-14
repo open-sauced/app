@@ -34,7 +34,7 @@ const HeaderFilter = () => {
       <div className="header-image mr-2 p-2 min-w-[130px]">
         <ContextThumbnail size={120} ContextThumbnailURL={isHacktoberfest ? Thumbnail.src : ""}></ContextThumbnail>
       </div>
-      <div className="header-info flex flex-col grow justify-center p-2">
+      <div className="header-info md:truncate flex flex-col grow justify-center p-2">
         <Title level={1} className="!text-3xl font-semibold tracking-tight text-slate-900">
           {isHacktoberfest ? "Hacktoberfest 2022" : checkCamelCaseNaming(filterName as string)}
         </Title>
@@ -42,7 +42,7 @@ const HeaderFilter = () => {
           Insights on GitHub repositories{" "}
           {isHacktoberfest ? "opted into the largest open source hackathon." : `using the ${filterName} topic.`}
         </Text>
-        <div className="flex mt-4 items-center relative  gap-2">
+        <div className="flex mt-4 items-center gap-2">
           <FilterCard filterName={filterName as string} isRemovable={false} icon="topic" />
           <SuperativeSelector
             filterOptions={filterOptions}
