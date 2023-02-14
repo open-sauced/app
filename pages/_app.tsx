@@ -18,7 +18,6 @@ import apiFetcher from "lib/hooks/useSWR";
 import { initiateAnalytics } from "lib/utils/analytics";
 import { supabase } from "lib/utils/supabase";
 import { Toaster } from "react-hot-toast";
-import { SEOobject } from "interfaces/seo-type";
 import SEO from "layouts/SEO/SEO";
 
 type ComponentWithPageLayout = AppProps & {
