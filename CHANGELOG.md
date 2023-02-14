@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.29.0-beta.7](https://github.com/open-sauced/insights/compare/v1.29.0-beta.6...v1.29.0-beta.7) (2023-02-14)
+
+
+### 🐛 Bug Fixes
+
+* move SEOobject to next types ([4500b60](https://github.com/open-sauced/insights/commit/4500b6078f4aecfadc29a2ff0f096c265f1c9060))
+
 ## [1.29.0-beta.6](https://github.com/open-sauced/insights/compare/v1.29.0-beta.5...v1.29.0-beta.6) (2023-02-13)
 
 
