@@ -9,6 +9,7 @@ interface TextInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   descriptionText?: string;
   classNames?: string;
   errorMsg?: string;
+  fieldRef?: React.RefObject<HTMLInputElement>;
 }
 
 const TextInput = ({
@@ -17,17 +18,20 @@ const TextInput = ({
   placeholder,
   state = "default",
   id,
+  value,
   descriptionText,
   classNames,
+  fieldRef,
   disabled = false,
   borderless = false,
-  value,
   errorMsg = "",
   ...props
 }: TextInputProps) => {
-  const inputRef = useRef<any>();
+  const inputRef = useRef<HTMLInputElement>(null);
   const handleResetInput = () => {
-    inputRef.current.value = "";
+    fieldRef ? fieldRef.current!.value = ""
+      :
+      inputRef.current!.value = "";
   };
 
   return (
@@ -45,12 +49,11 @@ const TextInput = ({
         >
           <input
             {...props}
-            ref={inputRef}
+            ref={fieldRef || inputRef}
             type="text"
             name={name}
             id={id || name || ""}
             placeholder={placeholder || ""}
-            value={value}
             className={`flex-1 focus:outline-none  ${classNames} ${
               disabled && "bg-light-slate-3 cursor-not-allowed  text-light-slate-9"
             }`}
