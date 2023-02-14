@@ -39,8 +39,14 @@ const ContributorHighlightCard = ({ title, desc, prLink }: ContributorHighlightC
             <DropdownMenuTrigger className="py-2 px-2 rounded-full data-[state=open]:bg-light-slate-7">
               <HiOutlineEmojiHappy size={20} />
             </DropdownMenuTrigger>
-            <DropdownMenuContent side="left">
-              <DropdownMenuItem></DropdownMenuItem>
+            <DropdownMenuContent className="flex flex-row gap-2 rounded-3xl" side="left">
+              <DropdownMenuItem className="rounded-full">👍</DropdownMenuItem>
+              <DropdownMenuItem className="rounded-full">👎</DropdownMenuItem>
+              <DropdownMenuItem className="rounded-full">🍕</DropdownMenuItem>
+              <DropdownMenuItem className="rounded-full">😄</DropdownMenuItem>
+              <DropdownMenuItem className="rounded-full">❤️</DropdownMenuItem>
+              <DropdownMenuItem className="rounded-full">🚀</DropdownMenuItem>
+              <DropdownMenuItem className="rounded-full">👀</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
           <DropdownMenu>
@@ -48,31 +54,31 @@ const ContributorHighlightCard = ({ title, desc, prLink }: ContributorHighlightC
               <TfiMoreAlt size={24} />
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="rounded-lg flex flex-col py-2 gap-1">
-              <DropdownMenuItem>
+              <DropdownMenuItem className="rounded-md">
                 <div className="flex gap-2.5 py-1 items-center pl-3 pr-7">
                   <FiTwitter size={22} />
                   <span>Share to Twitter</span>
                 </div>
               </DropdownMenuItem>
-              <DropdownMenuItem>
+              <DropdownMenuItem className="rounded-md">
                 <div className="flex gap-2.5 py-1 items-center pl-3 pr-7">
                   <FiLinkedin size={22} />
                   <span>Share to Linkedin</span>
                 </div>
               </DropdownMenuItem>
-              <DropdownMenuItem>
+              <DropdownMenuItem className="rounded-md">
                 <div className="flex gap-2.5 py-1 items-center pl-3 pr-7">
                   <BsLink45Deg size={22} />
                   <span>Copy link</span>
                 </div>
               </DropdownMenuItem>
-              <DropdownMenuItem>
+              <DropdownMenuItem className="rounded-md">
                 <div className="flex gap-2.5 py-1  items-center pl-3 pr-7">
                   <FaUserPlus size={22} />
                   <span>Follow user</span>
                 </div>
               </DropdownMenuItem>
-              <DropdownMenuItem>
+              <DropdownMenuItem className="rounded-md">
                 <div className="flex gap-2.5 py-1  items-center pl-3 pr-7">
                   <GrFlag size={22} />
                   <span>Report content</span>
