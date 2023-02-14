@@ -5,6 +5,36 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.29.0](https://github.com/open-sauced/insights/compare/v1.28.0...v1.29.0) (2023-02-14)
+
+
+### 🧑‍💻 Code Refactoring
+
+* use github avatar link instead of cached one ([#848](https://github.com/open-sauced/insights/issues/848)) ([a7678c3](https://github.com/open-sauced/insights/commit/a7678c32da95adf60dce1b129aa43e165620aff3)), closes [#832](https://github.com/open-sauced/insights/issues/832)
+
+
+### 🍕 Features
+
+* add highlights feed filter card to design system ([#843](https://github.com/open-sauced/insights/issues/843)) ([b4d0eba](https://github.com/open-sauced/insights/commit/b4d0eba0ca068b03a78290d920496c8737f6813d)), closes [#827](https://github.com/open-sauced/insights/issues/827)
+* add support for custom SEO per page ([#835](https://github.com/open-sauced/insights/issues/835)) ([03e760e](https://github.com/open-sauced/insights/commit/03e760e7df37c918a9de41a1be0bf652b04a4606)), closes [#814](https://github.com/open-sauced/insights/issues/814)
+* add unit tests for lib files ([#862](https://github.com/open-sauced/insights/issues/862)) ([466c70f](https://github.com/open-sauced/insights/commit/466c70f67be96008a593e91d6b74810fbc5e56a3)), closes [#546](https://github.com/open-sauced/insights/issues/546)
+* add utility function to camelcase topic value ([#851](https://github.com/open-sauced/insights/issues/851)) ([b805659](https://github.com/open-sauced/insights/commit/b805659e3d5c42ef6bce3fa4f1eaf33f13e21617)), closes [#822](https://github.com/open-sauced/insights/issues/822)
+* make pr list item clickable ([#807](https://github.com/open-sauced/insights/issues/807)) ([5398ad8](https://github.com/open-sauced/insights/commit/5398ad84cd310a04ea5f7bd96feb83dedc5689c5)), closes [#799](https://github.com/open-sauced/insights/issues/799)
+
+
+### 🐛 Bug Fixes
+
+* enable update access for all user profile settings ([#838](https://github.com/open-sauced/insights/issues/838)) ([0ff49d0](https://github.com/open-sauced/insights/commit/0ff49d0bf2cff4d38a6ddb5c5b97a0500f6743dc)), closes [#837](https://github.com/open-sauced/insights/issues/837)
+* move SEOobject to next types ([4500b60](https://github.com/open-sauced/insights/commit/4500b6078f4aecfadc29a2ff0f096c265f1c9060))
+* truncate text on mobile and move dropdown for repositories ([#863](https://github.com/open-sauced/insights/issues/863)) ([9c7a6f5](https://github.com/open-sauced/insights/commit/9c7a6f5bc167f55b102decb6faeceed1312a2fc7)), closes [#805](https://github.com/open-sauced/insights/issues/805) [#806](https://github.com/open-sauced/insights/issues/806)
+
+## [1.29.0-beta.7](https://github.com/open-sauced/insights/compare/v1.29.0-beta.6...v1.29.0-beta.7) (2023-02-14)
+
+
+### 🐛 Bug Fixes
+
+* move SEOobject to next types ([4500b60](https://github.com/open-sauced/insights/commit/4500b6078f4aecfadc29a2ff0f096c265f1c9060))
+
 ## [1.29.0-beta.6](https://github.com/open-sauced/insights/compare/v1.29.0-beta.5...v1.29.0-beta.6) (2023-02-13)
 
 

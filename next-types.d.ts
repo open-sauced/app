@@ -132,3 +132,11 @@ interface DbUser {
   readonly display_email: boolean;
   readonly timezone: string;
 }
+
+interface SEOobject {
+  title?: string;
+  description?: string;
+  image?: string;
+  twitterCard?: string;
+  noindex?: boolean;
+}
