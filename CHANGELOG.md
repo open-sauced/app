@@ -5,6 +5,26 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.29.0-beta.6](https://github.com/open-sauced/insights/compare/v1.29.0-beta.5...v1.29.0-beta.6) (2023-02-13)
+
+
+### 🍕 Features
+
+* add unit tests for lib files ([#862](https://github.com/open-sauced/insights/issues/862)) ([466c70f](https://github.com/open-sauced/insights/commit/466c70f67be96008a593e91d6b74810fbc5e56a3)), closes [#546](https://github.com/open-sauced/insights/issues/546)
+
+
+### 🐛 Bug Fixes
+
+* enable update access for all user profile settings ([#838](https://github.com/open-sauced/insights/issues/838)) ([0ff49d0](https://github.com/open-sauced/insights/commit/0ff49d0bf2cff4d38a6ddb5c5b97a0500f6743dc)), closes [#837](https://github.com/open-sauced/insights/issues/837)
+* truncate text on mobile and move dropdown for repositories ([#863](https://github.com/open-sauced/insights/issues/863)) ([9c7a6f5](https://github.com/open-sauced/insights/commit/9c7a6f5bc167f55b102decb6faeceed1312a2fc7)), closes [#805](https://github.com/open-sauced/insights/issues/805) [#806](https://github.com/open-sauced/insights/issues/806)
+
+## [1.29.0-beta.5](https://github.com/open-sauced/insights/compare/v1.29.0-beta.4...v1.29.0-beta.5) (2023-02-13)
+
+
+### 🍕 Features
+
+* add support for custom SEO per page ([#835](https://github.com/open-sauced/insights/issues/835)) ([03e760e](https://github.com/open-sauced/insights/commit/03e760e7df37c918a9de41a1be0bf652b04a4606)), closes [#814](https://github.com/open-sauced/insights/issues/814)
+
 ## [1.29.0-beta.4](https://github.com/open-sauced/insights/compare/v1.29.0-beta.3...v1.29.0-beta.4) (2023-02-10)
 
 

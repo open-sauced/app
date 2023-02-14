@@ -1,5 +1,5 @@
 import { CheckCircleFillIcon, XCircleFillIcon } from "@primer/octicons-react";
-import React from "react";
+import React, { useRef } from "react";
 import clsx from "clsx";
 
 interface TextInputProps {
@@ -15,6 +15,10 @@ interface TextInputProps {
   classNames?: string;
   errorMsg?: string;
   value?: string;
+  defaultValue?: string;
+  required?: boolean;
+  fieldRef?: React.RefObject<HTMLInputElement>;
+  pattern?: string;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onReset?: () => void;
 }
@@ -31,10 +35,21 @@ const TextInput = ({
   autoFocus,
   borderless = false,
   value,
+  defaultValue,
   onChange,
   onReset,
+  required,
+  fieldRef,
+  pattern,
   errorMsg = ""
 }: TextInputProps) => {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const handleResetInput = () => {
+    console.log({fieldRef});
+    fieldRef ? fieldRef.current!.value = ""
+      :
+      onReset();
+  };
 
   return (
     <>
@@ -50,24 +65,28 @@ const TextInput = ({
           )}
         >
           <input
+            ref={fieldRef || inputRef}
             type="text"
             name={name}
             id={id || name || ""}
             placeholder={placeholder || ""}
             onChange={onChange}
             value={value}
+            defaultValue={defaultValue}
             className={`flex-1 focus:outline-none  ${classNames} ${
               disabled && "bg-light-slate-3 cursor-not-allowed  text-light-slate-9"
             }`}
             autoFocus={autoFocus}
             disabled={disabled}
+            required={required}
+            pattern={pattern}
           />
           {!disabled && (
             <>
               {state === "valid" ? (
                 <CheckCircleFillIcon className="text-light-orange-9" size={14} />
               ) : !!value ? (
-                <span className="flex items-center" onClick={onReset}>
+                <span className="flex items-center" onClick={handleResetInput}>
                   <XCircleFillIcon className="text-light-red-11" size={14} />
                 </span>
               ) : (
