@@ -64,7 +64,7 @@ const HighlightInputForm = (): JSX.Element => {
     const [url] = pullLink || [];
     const highlight = bodyText.replace(url as string, "");
 
-    if (url === null || undefined || "" || []) {
+    if (url === null || url === undefined || url === "" || url.length === 0) {
       ToastTrigger({ message: "A valid Pull request Link is required", type: "error" });
       return;
     } else {
