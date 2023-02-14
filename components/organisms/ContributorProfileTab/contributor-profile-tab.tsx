@@ -104,7 +104,7 @@ const ContributorProfileTab = ({
                       <>
                         <p>
                           You don&apos;t have any highlights yet! <br /> Highlights are a great way to show off your
-                          contributions. Merge any new pull requests recently?
+                          contributions. Merge any pull requests recently?
                         </p>
                         {!inputVisible && (
                           <Button onClick={() => setInputVisible(true)} className="mt-5" type="primary">
