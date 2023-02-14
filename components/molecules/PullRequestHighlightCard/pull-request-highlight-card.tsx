@@ -12,7 +12,8 @@ interface PullRequestHighlightCardProps {
   prLink: string;
 }
 const PullRequestHighlightCard = ({ prLink }: PullRequestHighlightCardProps) => {
-  const { data, isLoading, isError } = useFetchGithubPRInfo(generateApiPrUrl(prLink));
+  const { isValidUrl, apiUrl } = generateApiPrUrl(prLink);
+  const { data, isLoading, isError } = useFetchGithubPRInfo(isValidUrl ? apiUrl : "");
   return (
     <>
       {isLoading && <SkeletonWrapper height={250} />}

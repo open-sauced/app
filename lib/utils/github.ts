@@ -13,21 +13,28 @@ const getProfileLink = (username: string | null) => `https://github.com/${userna
 
 const getRepoIssuesLink = (repoName: string | null) => `https://github.com/${(repoName && `${repoName}/issues`) || ""}`;
 
-const generateApiPrUrl = (url: string | null) => {
-  const newUrl = url ? url.toLowerCase().trim() : "";
-  let pulls: string[];
+const generateApiPrUrl = (url: string): { isValidUrl: boolean; apiUrl: string } => {
+  try {
+    const trimmedUrl = url.trim();
+    const githubUrl = new URL(trimmedUrl);
+    const { pathname } = githubUrl;
 
-  if (newUrl.substring(0, 8) === "https://") {
-    pulls = newUrl.substring(19).split("/");
-  } else if (newUrl.substring(0, 7) === "http://") {
-    pulls = newUrl.substring(18).split("/");
-  } else {
-    pulls = newUrl.substring(11).split("/");
+    const [, orgName, repoName, , issueId] = pathname.split("/");
+
+    if (githubUrl.hostname !== "github.com") {
+      return {
+        isValidUrl: false,
+        apiUrl: "Invalid host URL"
+      };
+    }
+
+    return {
+      isValidUrl: true,
+      apiUrl: `${orgName}/${repoName}/pulls/${issueId}`
+    };
+  } catch (err) {
+    return { isValidUrl: false, apiUrl: "Failed to construct URL" };
   }
-  const [orgName, repoName, , IssueId] = pulls;
-
-  const apiUrl = `${orgName}/${repoName}/pulls/${IssueId}`;
-  return apiUrl;
 };
 
 export { getAvatarById, getAvatarByUsername, getProfileLink, getRepoIssuesLink, generateApiPrUrl };

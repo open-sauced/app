@@ -23,7 +23,8 @@ interface ContributorHighlightCardProps {
   prLink: string;
 }
 const ContributorHighlightCard = ({ title, desc, prLink }: ContributorHighlightCardProps) => {
-  const { data, isLoading, isError } = useFetchGithubPRInfo(generateApiPrUrl(prLink));
+  const { isValidUrl, apiUrl } = generateApiPrUrl(prLink);
+  const { data, isLoading, isError } = useFetchGithubPRInfo(isValidUrl ? apiUrl : "");
 
   return (
     <article className="flex flex-col max-w-[40rem] flex-1 gap-3 lg:gap-6">
