@@ -4,6 +4,7 @@ import { createHighlights } from "lib/hooks/createHighlights";
 
 import { ToastTrigger } from "lib/utils/toast-trigger";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
+import PullRequestHighlightCard from "../PullRequestHighlightCard/pull-request-highlight-card";
 
 const HighlightInputForm = (): JSX.Element => {
   const [isDivFocused, setIsDivFocused] = useState(false);
@@ -11,6 +12,7 @@ const HighlightInputForm = (): JSX.Element => {
   const [bodyText, setBodyText] = useState("");
   const [row, setRow] = useState(1);
   const [title, setTitle] = useState("");
+  const [pullrequestLink, setPullRequestLink] = useState("");
   const ref = useRef<HTMLFormElement>(null);
   let rowLomit = 5;
   let messageLastScrollHeight = textAreaRef.current ? textAreaRef.current?.scrollHeight : 50;
@@ -24,12 +26,18 @@ const HighlightInputForm = (): JSX.Element => {
       }
     };
     document.addEventListener("mousedown", checkIfClickedOutside);
+    const pullLink = bodyText.match(/\bhttps?:\/\/\S+/gi);
+    if (pullLink && pullLink.length > 0) {
+      setPullRequestLink(pullLink[0]);
+    } else {
+      setPullRequestLink("");
+    }
 
     return () => {
       // Cleanup the event listener
       document.removeEventListener("mousedown", checkIfClickedOutside);
     };
-  }, [isDivFocused, bodyText]);
+  }, [isDivFocused, bodyText, pullrequestLink]);
 
   const handleTextAreaInputChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setBodyText(e.target.value);
@@ -38,6 +46,10 @@ const HighlightInputForm = (): JSX.Element => {
     } else if (row > 1 && textAreaRef.current && textAreaRef.current?.scrollHeight < messageLastScrollHeight) {
       setRow((prev) => prev--);
     }
+    // const pullLink = bodyText.match(/\bhttps?:\/\/\S+/gi);
+    // if (pullLink && pullLink.length > 0) {
+    //   setPullRequestLink(pullLink[0]);
+    // }
 
     if (!bodyText) setRow(1);
     messageLastScrollHeight = textAreaRef.current?.scrollHeight || 60;
@@ -98,6 +110,8 @@ const HighlightInputForm = (): JSX.Element => {
           onChange={(e) => handleTextAreaInputChange(e)}
         />
       </div>
+
+      {pullrequestLink && isDivFocused && <PullRequestHighlightCard prLink={pullrequestLink} />}
 
       {isDivFocused && (
         <Button disabled={!bodyText} className="ml-auto" type="primary">

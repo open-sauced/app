@@ -15,6 +15,7 @@ import { FiLinkedin, FiTwitter } from "react-icons/fi";
 import { BsLink45Deg } from "react-icons/bs";
 import { FaUserPlus } from "react-icons/fa";
 import { GrFlag } from "react-icons/gr";
+import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 
 interface ContributorHighlightCardProps {
   title?: string;
@@ -32,7 +33,7 @@ const ContributorHighlightCard = ({ title, desc, prLink }: ContributorHighlightC
             {title}
           </Title>
         )}
-        <div className="flex ml-auto lg:gap-5 gap-3 items-center">
+        <div className="flex ml-auto lg:gap-3 gap-3 items-center">
           <DropdownMenu>
             <DropdownMenuTrigger className="py-2 px-2 rounded-full data-[state=open]:bg-light-slate-7">
               <HiOutlineEmojiHappy size={20} />
@@ -94,20 +95,11 @@ const ContributorHighlightCard = ({ title, desc, prLink }: ContributorHighlightC
       </div>
 
       {/* Generated OG card section */}
-      {isLoading && <>Loading...</>}
+      {isLoading && <SkeletonWrapper height={250} />}
       {isError && <>An error occured...</>}
       {data && (
         <div>
-          <PullRequestHighlightCard
-            userAvatar={data.user.avatar_url}
-            userName={data.user.login}
-            repoName={data.head.repo.name}
-            ticketNumber={data.number}
-            createdAt={data.created_at}
-            commentCount={data.comments}
-            prTitle={data.title}
-            orgName={data.head.user.login}
-          />
+          <PullRequestHighlightCard prLink={prLink} />
         </div>
       )}
     </article>

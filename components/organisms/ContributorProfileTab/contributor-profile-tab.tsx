@@ -67,19 +67,21 @@ const ContributorProfileTab = ({
 
       {/* Highlights Tab details */}
 
-      <TabsContent className="" value="Highlights">
+      <TabsContent value="Highlights">
         {inputVisible && user?.user_metadata.user_name === login && (
-          <div className="pl-20 gap-x-3 pt-4 flex max-w-[48rem]">
-            <Avatar
-              alt="user profile avatar"
-              size="sm"
-              avatarURL={`https://www.github.com/${githubName}.png?size=300`}
-            />
+          <div className="lg:pl-20 lg:gap-x-3 pt-4 flex max-w-[48rem]">
+            <div className="hidden lg:inline-flex">
+              <Avatar
+                alt="user profile avatar"
+                size="sm"
+                avatarURL={`https://www.github.com/${githubName}.png?size=300`}
+              />
+            </div>
 
             <HighlightInputForm />
           </div>
         )}
-        <div className="mt-4 flex flex-col gap-8">
+        <div className="mt-8 flex flex-col gap-8">
           {/* <HightlightEmptyState /> */}
 
           {isError && <>An error occured</>}
