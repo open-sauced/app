@@ -48,7 +48,7 @@ const TextInput = ({
     console.log({fieldRef});
     fieldRef ? fieldRef.current!.value = ""
       :
-      onReset();
+      onReset?.();
   };
 
   return (
