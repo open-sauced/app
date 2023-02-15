@@ -45,7 +45,6 @@ const TextInput = ({
 }: TextInputProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const handleResetInput = () => {
-    console.log({fieldRef});
     fieldRef ? fieldRef.current!.value = ""
       :
       onReset?.();
