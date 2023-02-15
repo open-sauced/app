@@ -36,7 +36,7 @@ const HeaderFilter = () => {
       </div>
       <div className="header-info md:truncate flex flex-col grow justify-center p-2">
         <Title level={1} className="!text-3xl font-semibold tracking-tight text-slate-900">
-          {isHacktoberfest ? "Hacktoberfest 2022" : checkCamelCaseNaming(filterName as string)}
+          {isHacktoberfest ? "Hacktoberfest 2022" : topicNameFormatting(filterName as string)}
         </Title>
         <Text className="mt-1 !text-base   text-slate-500">
           Insights on GitHub repositories{" "}
