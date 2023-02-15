@@ -16,8 +16,8 @@ const PullRequestHighlightCard = ({ prLink }: PullRequestHighlightCardProps) => 
   const { data, isLoading, isError } = useFetchGithubPRInfo(isValidUrl ? apiUrl : "");
   return (
     <>
-      {isLoading && <SkeletonWrapper height={250} />}
-      {isError && <>An error occured!</>}
+      {isValidUrl && isLoading && <SkeletonWrapper height={250} />}
+      {isValidUrl && isError && <>An error occured!</>}
       {data && (
         <div className="flex max-w-[45rem] flex-1 flex-col gap-8 lg:gap-16 bg-white pt-8 pb-4">
           <div className="lg:px-8 px-3 flex justify-between">

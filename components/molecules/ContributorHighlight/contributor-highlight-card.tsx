@@ -34,7 +34,7 @@ const ContributorHighlightCard = ({ title, desc, prLink }: ContributorHighlightC
             {title}
           </Title>
         )}
-        <div className="flex ml-auto lg:gap-3 gap-3 items-center">
+        <div className="hidden ml-auto lg:gap-3 gap-3 items-center">
           <DropdownMenu>
             <DropdownMenuTrigger className="py-2 px-2 rounded-full data-[state=open]:bg-light-slate-7">
               <HiOutlineEmojiHappy size={20} />
@@ -102,8 +102,8 @@ const ContributorHighlightCard = ({ title, desc, prLink }: ContributorHighlightC
       </div>
 
       {/* Generated OG card section */}
-      {isLoading && <SkeletonWrapper height={250} />}
-      {isError && <>An error occured...</>}
+      {isValidUrl && isLoading && <SkeletonWrapper height={250} />}
+      {isValidUrl && isError && <>An error occured...</>}
       {data && (
         <div>
           <PullRequestHighlightCard prLink={prLink} />
