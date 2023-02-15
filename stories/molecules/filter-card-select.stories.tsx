@@ -16,6 +16,6 @@ const SelectTemplate: ComponentStory<typeof FilterCardSelect> = (args) => <Filte
 export const Default = SelectTemplate.bind({});
 
 Default.args = {
-    options: ["option1", "option2", "option3"],
-    selected: "option1",
+  options: ["option1", "option2", "option3"],
+  selected: "option1"
 };

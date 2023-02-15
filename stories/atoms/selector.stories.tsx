@@ -16,5 +16,5 @@ export const Default = SelectTemplate.bind({});
 
 Default.args = {
   filterOptions: ["option1", "option2", "option3"],
-  selected: "option1",
+  selected: "option1"
 };

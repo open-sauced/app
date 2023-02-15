@@ -35,7 +35,7 @@ const HeaderFilter = () => {
 
   const topicRouting = (topic: string) => {
     router.push(`/${topic}/${toolName}${selectedFilter ? `/filter/${selectedFilter}` : ""}`);
-  }
+  };
 
   return (
     <>
