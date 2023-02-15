@@ -13,7 +13,7 @@ const Selector = ({
   selected,
 }: SelectorProps) => {
     return (
-        <div className="mt-2 absolute transform -translate-x-1/3 md:translate-x-0 space-y-1 mt-1 shadow-superlative z-10 w-72 bg-white rounded-lg px-1.5 py-2">
+        <div className="mt-2 absolute transform md:translate-x-0 space-y-1 mt-1 shadow-superlative z-10 w-72 bg-white rounded-lg px-1.5 py-2">
           {filterOptions.length > 0 &&
             filterOptions.map((option, index) => {
               return (
