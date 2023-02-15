@@ -1,4 +1,3 @@
-import { SEOobject } from "interfaces/seo-type";
 import Head from "next/head";
 
 export default function SEO({description, image, title, twitterCard, noindex}: SEOobject) {

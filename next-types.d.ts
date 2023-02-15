@@ -144,3 +144,11 @@ interface DbHighlight {
   readonly updated_at: string;
   readonly deleted_at: string;
 }
+
+interface SEOobject {
+  title?: string;
+  description?: string;
+  image?: string;
+  twitterCard?: string;
+  noindex?: boolean;
+}
