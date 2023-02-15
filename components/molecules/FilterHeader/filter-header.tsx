@@ -13,7 +13,7 @@ import { captureAnayltics } from "lib/utils/analytics";
 import useFilterPrefetch from "lib/hooks/useFilterPrefetch";
 import uppercaseFirst from "lib/utils/uppercase-first";
 import topicNameFormatting from "lib/utils/topic-name-formatting";
-import FilterCardSelect from "components/atoms/FilterCardSelect/filter-card-select";
+import FilterCardSelect from "components/molecules/FilterCardSelect/filter-card-select";
 import useTopicOptions from "lib/hooks/useTopicOptions";
 
 const HeaderFilter = () => {

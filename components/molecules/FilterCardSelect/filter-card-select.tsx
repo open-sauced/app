@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import Text from "../Typography/text";
+import Text from "../../atoms/Typography/text";
 import hashIcon from "../../../img/icons/hash.svg";
 import orgIcon from "../../../img/icons/org.svg";
 import personIcon from "../../../img/icons/person.svg";
 import repoIcon from "../../../img/icons/repo.svg";
-import Selector from "../Selector/selector";
+import Selector from "../../atoms/Selector/selector";
 
 interface FilterCardSelectProps {
     selected: string;
