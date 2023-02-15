@@ -16,15 +16,29 @@ import { BsLink45Deg } from "react-icons/bs";
 import { FaUserPlus } from "react-icons/fa";
 import { GrFlag } from "react-icons/gr";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
+import { ToastTrigger } from "lib/utils/toast-trigger";
 
 interface ContributorHighlightCardProps {
   title?: string;
   desc?: string;
   prLink: string;
+  user: string;
 }
-const ContributorHighlightCard = ({ title, desc, prLink }: ContributorHighlightCardProps) => {
+const ContributorHighlightCard = ({ title, desc, prLink, user }: ContributorHighlightCardProps) => {
   const { isValidUrl, apiUrl } = generateApiPrUrl(prLink);
   const { data, isLoading, isError } = useFetchGithubPRInfo(isValidUrl ? apiUrl : "");
+  const twitterTweet = `${title || "Open Source Highlight"} - OpenSauced from ${user}`;
+
+  const handleCopyToClipboard = async (content: string) => {
+    console.log(content);
+    const url = new URL(content).toString();
+    try {
+      await navigator.clipboard.writeText(url);
+      ToastTrigger({ message: "Copied to clipboard", type: "success" });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <article className="flex flex-col max-w-[40rem] flex-1 gap-3 lg:gap-6">
@@ -34,7 +48,7 @@ const ContributorHighlightCard = ({ title, desc, prLink }: ContributorHighlightC
             {title}
           </Title>
         )}
-        <div className="hidden ml-auto lg:gap-3 gap-3 items-center">
+        <div className="flex ml-auto lg:gap-3 gap-3 items-center">
           <DropdownMenu>
             <DropdownMenuTrigger className="py-2 px-2 rounded-full data-[state=open]:bg-light-slate-7">
               <HiOutlineEmojiHappy size={20} />
@@ -55,18 +69,31 @@ const ContributorHighlightCard = ({ title, desc, prLink }: ContributorHighlightC
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="rounded-lg flex flex-col py-2 gap-1">
               <DropdownMenuItem className="rounded-md">
-                <div className="flex gap-2.5 py-1 items-center pl-3 pr-7">
+                <a
+                  target="_blank"
+                  rel="noreferrer"
+                  href={`https://twitter.com/intent/tweet?text=${twitterTweet}&url=https://opensauced.dev/user/${user}`}
+                  className="flex gap-2.5 py-1 items-center pl-3 pr-7"
+                >
                   <FiTwitter size={22} />
                   <span>Share to Twitter</span>
-                </div>
+                </a>
               </DropdownMenuItem>
               <DropdownMenuItem className="rounded-md">
-                <div className="flex gap-2.5 py-1 items-center pl-3 pr-7">
+                <a
+                  target="_blank"
+                  rel="noreferrer"
+                  href={`https://www.linkedin.com/sharing/share-offsite/?url=https://opensauced.dev/user/${user}`}
+                  className="flex gap-2.5 py-1 items-center pl-3 pr-7"
+                >
                   <FiLinkedin size={22} />
                   <span>Share to Linkedin</span>
-                </div>
+                </a>
               </DropdownMenuItem>
-              <DropdownMenuItem className="rounded-md">
+              <DropdownMenuItem
+                onClick={() => handleCopyToClipboard(`https://opensauced.dev/user/${user}`)}
+                className="rounded-md"
+              >
                 <div className="flex gap-2.5 py-1 items-center pl-3 pr-7">
                   <BsLink45Deg size={22} />
                   <span>Copy link</span>

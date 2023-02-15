@@ -23,6 +23,7 @@ const createHighlights = async (data: CreateHighlightsProps) => {
 
     return res.json();
   } catch (e) {
+    console.log(e);
     return false;
   }
 };
