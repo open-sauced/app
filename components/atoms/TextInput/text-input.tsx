@@ -10,7 +10,7 @@ interface TextInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   classNames?: string;
   errorMsg?: string;
   fieldRef?: React.RefObject<HTMLInputElement>;
-  onReset?: () => void;
+  handleChange?: (value: string) => void;
 }
 
 const TextInput = ({
@@ -25,16 +25,21 @@ const TextInput = ({
   fieldRef,
   disabled = false,
   borderless = false,
-  onReset,
+  handleChange,
   errorMsg = "",
   ...props
 }: TextInputProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
+
   const handleResetInput = () => {
-    onReset?.();
+    handleChange?.("");
     if (fieldRef) {
       fieldRef.current!.value = "";
     }
+  };
+
+  const handleChangeState = (event: React.ChangeEvent<HTMLInputElement>) => {
+    handleChange?.(event.target.value);
   };
 
   return (
@@ -61,6 +66,7 @@ const TextInput = ({
             }`}
             disabled={disabled}
             value={value}
+            onChange={handleChangeState}
             {...props}
           />
           {!disabled && (

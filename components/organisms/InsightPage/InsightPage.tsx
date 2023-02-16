@@ -69,8 +69,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
     };
   });
 
-  const handleOnNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = event.target;
+  const handleOnNameChange = (value: string) => {
 
     setName(value);
 
@@ -79,7 +78,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
     if (value.trim().length > 3) {
       setIsNameValid(true);
     }
-  };;
+  };
 
   const handleCreateInsightPage = async () => {
     setSubmitted(true);
@@ -129,9 +128,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
     setSubmitted(false);
   };
 
-  const handleOnRepoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRepoToAdd(event.target.value);
-  };
+  const handleOnRepoChange = (value: string) => setRepoToAdd(value);
 
   const loadAndAddRepo = async (repoToAdd: string) => {
     setAddRepoError(RepoLookupError.Initial);
@@ -228,11 +225,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
           <TextInput
             placeholder="Page Name (ex: My Team)"
             value={name}
-            onChange={handleOnNameChange}
-            onReset={() => {
-              setName("");
-              setIsNameValid(false);
-            }}
+            handleChange={handleOnNameChange}
           />
           {/* <Text>insights.opensauced.pizza/pages/{username}/{`{pageId}`}/dashboard</Text> */}
         </div>
@@ -245,8 +238,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
           <TextInput
             value={repoToAdd}
             placeholder="Repository Full Name (ex: open-sauced/open-sauced)"
-            onChange={handleOnRepoChange}
-            onReset={() => setRepoToAdd("")}
+            handleChange={handleOnRepoChange}
           />
 
           <div>
