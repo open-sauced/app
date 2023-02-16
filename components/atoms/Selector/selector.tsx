@@ -18,7 +18,6 @@ const Selector = ({
             filterOptions.map((option, index) => {
               return (
                 <Radio
-                  withLabel={"-"}
                   key={index}
                   onClick={() => {
                     handleFilterClick(option);
