@@ -27,6 +27,7 @@ const Pagination = ({
   hasNextPage = true,
   onPageChange
 }: PaginationProps): JSX.Element => {
+  console.log({pages});
   // This logics are meant for testing purpose
   const [selected, setSelected] = useState<number>(page);
   const handleSelected = (pageNumber: number) => {

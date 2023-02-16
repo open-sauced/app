@@ -9,7 +9,7 @@ interface PaginatedInsightsResponse {
 
 const useUserInsights = () => {
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(100);
+  const [limit, setLimit] = useState(10);
 
   const pageQuery = page ? `page=${page}` : "";
   const limitQuery = limit ? `&limit=${limit}` : "";
