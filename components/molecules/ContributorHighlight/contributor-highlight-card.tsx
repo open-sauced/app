@@ -83,7 +83,7 @@ const ContributorHighlightCard = ({ title, desc, prLink, user }: ContributorHigh
                 <a
                   target="_blank"
                   rel="noreferrer"
-                  href={`https://www.linkedin.com/sharing/share-offsite/?url=https://opensauced.dev/user/${user}`}
+                  href={`https://www.linkedin.com/sharing/share-offsite/?url=https://insights.opensauced.pizza/user/${user}`}
                   className="flex gap-2.5 py-1 items-center pl-3 pr-7"
                 >
                   <FiLinkedin size={22} />
