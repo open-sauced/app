@@ -42,10 +42,10 @@ const FilterCardSelect: React.FC<FilterCardSelectProps> = ({ selected: filterNam
   };
 
   useEffect(() => {
-    const checkIfClickedOutside = (e: any) => {
+    const checkIfClickedOutside = (e: MouseEvent) => {
       // If the menu is open and the clicked target is not within the menu,
       // then close the menu
-      if (isOpen && ref.current && !ref.current.contains(e.target)) {
+      if (isOpen && ref.current && !ref.current.contains(e.target as Node)) {
         setIsOpen(false);
       }
     };
