@@ -75,6 +75,16 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
     }
   }, [insightsUser]);
 
+  const handleEmailChange = (value: string) => {
+    setEmail(value);
+
+    if (validateEmail(value)) {
+      setIsValidEmail(true);
+    } else {
+      setIsValidEmail(false);
+    }
+  };
+
   const handleSelectInterest = (interest: string) => {
     if (selectedInterest.length > 0 && selectedInterest.includes(interest)) {
       setSelectedInterest((prev) => prev.filter((item) => item !== interest));
@@ -151,15 +161,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
             <TextInput
               classNames="bg-light-slate-4 text-light-slate-11 font-medium"
               placeholder="april@stockgen.com"
-              onChange={(e) => {
-                setEmail(e.target.value);
-                if (validateEmail(e.target.value)) {
-                  setIsValidEmail(true);
-                } else {
-                  setIsValidEmail(false);
-                }
-              }}
-              onReset={() => setEmail("")}
+              handleChange={handleEmailChange}
               label="Email*"
               value={email}
               required
