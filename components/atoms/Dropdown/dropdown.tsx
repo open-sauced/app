@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu";
-import { classNames } from "lib/utils/class-names";
+import clsx from "clsx";
 
 const DropdownMenu = DropdownMenuPrimitive.Root;
 const DropdownMenuTrigger = DropdownMenuPrimitive.Trigger;
@@ -14,7 +14,7 @@ const DropdownMenuContent = React.forwardRef<
     <DropdownMenuPrimitive.Content
       ref={ref}
       sideOffset={sideOffset}
-      className={classNames(
+      className={clsx(
         "z-50 min-w-[8rem] overflow-hidden rounded-lg border border-slate-100 bg-white p-1 text-slate-700 shadow-md animate-in data-[side=right]:slide-in-from-left-2 data-[side=left]:slide-in-from-right-2 data-[side=bottom]:slide-in-from-top-2 data-[side=top]:slide-in-from-bottom-2 ",
         className
       )}
@@ -32,7 +32,7 @@ const DropdownMenuItem = React.forwardRef<
 >(({ className, inset, ...props }, ref) => (
   <DropdownMenuPrimitive.Item
     ref={ref}
-    className={classNames(
+    className={clsx(
       "relative flex cursor-default select-none items-center py-1.5 px-2 text-sm font-medium focus:text-sauced-orange outline-none focus:bg-orange-100 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 ",
       inset && "pl-8",
       className
