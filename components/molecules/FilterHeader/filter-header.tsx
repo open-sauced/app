@@ -14,7 +14,7 @@ import useFilterPrefetch from "lib/hooks/useFilterPrefetch";
 import uppercaseFirst from "lib/utils/uppercase-first";
 import topicNameFormatting from "lib/utils/topic-name-formatting";
 import FilterCardSelect from "components/molecules/FilterCardSelect/filter-card-select";
-import useTopicOptions from "lib/hooks/useTopicOptions";
+import useTopicOptions from "lib/utils/getTopicOptions";
 
 const HeaderFilter = () => {
   const router = useRouter();

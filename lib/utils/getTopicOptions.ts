@@ -1,7 +1,7 @@
-const useTopicOptions = () => {
+const getTopicOptions = () => {
   const topics = ["javascript", "rust", "python", "ml", "ai", "react"];
 
   return topics;
 };
 
-export default useTopicOptions;
+export default getTopicOptions;
