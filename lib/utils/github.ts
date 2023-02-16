@@ -16,7 +16,7 @@ const getRepoIssuesLink = (repoName: string | null) => `https://github.com/${(re
 const generateApiPrUrl = (url: string): { isValidUrl: boolean; apiUrl: string } => {
   try {
     const trimmedUrl = url.trim();
-    const githubUrl = new URL(trimmedUrl);
+    const githubUrl = new URL(trimmedUrl.includes("https://") ? trimmedUrl : `https://${trimmedUrl}`);
     const { pathname } = githubUrl;
 
     const [, orgName, repoName, , issueId] = pathname.split("/");

@@ -26,9 +26,13 @@ const HighlightInputForm = (): JSX.Element => {
       }
     };
     document.addEventListener("mousedown", checkIfClickedOutside);
-    const pullLink = bodyText.match(/\bhttps?:\/\/\S+/gi);
-    const link = pullLink && new URL(pullLink as unknown as string);
+    const pullLink = bodyText.match(/^(https?:\/\/)?(www\.)?github\.com\/.*$/);
+    const link =
+      pullLink && new URL(pullLink.includes("https://") ? (pullLink as unknown as string) : `https://${pullLink}`);
+
+    // console.log(link);
     if (pullLink && pullLink.length > 0 && link?.hostname === "github.com" && link?.pathname.includes("pull")) {
+      console.log(pullLink[0]);
       setPullRequestLink(pullLink[0]);
     } else {
       setPullRequestLink("");
@@ -56,7 +60,7 @@ const HighlightInputForm = (): JSX.Element => {
     e.preventDefault();
 
     // Trigger api call to post highlight
-    const pullLink = bodyText.match(/\bhttps?:\/\/\S+/gi);
+    const pullLink = bodyText.match(/^(https?:\/\/)?(www\.)?github\.com\/.*$/);
     const link = pullLink && new URL(pullLink as unknown as string);
     const [url] = pullLink || [];
     const highlight = bodyText.replace(url as string, "");
