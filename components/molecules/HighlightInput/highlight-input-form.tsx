@@ -26,7 +26,7 @@ const HighlightInputForm = (): JSX.Element => {
       }
     };
     document.addEventListener("mousedown", checkIfClickedOutside);
-    const pullLink = bodyText.match(/^(https?:\/\/)?(www\.)?github\.com\/.*$/);
+    const pullLink = bodyText.match(/((https?:\/\/)?(www\.)?github\.com\/[^\/]+\/[^\/]+\/pull\/[0-9]+)/);
     const link =
       pullLink && new URL(pullLink.includes("https://") ? (pullLink as unknown as string) : `https://${pullLink}`);
 
@@ -60,19 +60,13 @@ const HighlightInputForm = (): JSX.Element => {
     e.preventDefault();
 
     // Trigger api call to post highlight
-    const pullLink = bodyText.match(/^(https?:\/\/)?(www\.)?github\.com\/.*$/);
+    const pullLink = bodyText.match(/((https?:\/\/)?(www\.)?github\.com\/[^\/]+\/[^\/]+\/pull\/[0-9]+)/);
+
     const link = pullLink && new URL(pullLink as unknown as string);
     const [url] = pullLink || [];
     const highlight = bodyText.replace(url as string, "");
 
-    if (
-      url === null ||
-      url === undefined ||
-      url === "" ||
-      url.length === 0 ||
-      link?.hostname !== "github.com" ||
-      !link?.pathname.includes("pull")
-    ) {
+    if (url === null || url === undefined || url === "" || url.length === 0 || link?.hostname !== "github.com") {
       ToastTrigger({ message: "A valid Pull request Link is required", type: "error" });
       return;
     } else {
@@ -81,11 +75,12 @@ const HighlightInputForm = (): JSX.Element => {
         title,
         url: url || ""
       });
-      setBodyText("");
-      setTitle("");
-      setIsDivFocused(false);
+
 
       if (res) {
+        setBodyText("");
+        setTitle("");
+        setIsDivFocused(false);
         ToastTrigger({ message: "Highlight uploade success", type: "success" });
       } else {
         ToastTrigger({ message: "An error occured!!!", type: "error" });
