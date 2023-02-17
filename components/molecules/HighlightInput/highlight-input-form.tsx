@@ -34,9 +34,7 @@ const HighlightInputForm = (): JSX.Element => {
     const link =
       pullLink && new URL(pullLink.includes("https://") ? (pullLink as unknown as string) : `https://${pullLink}`);
 
-    // console.log(link);
     if (pullLink && pullLink.length > 0 && link?.hostname === "github.com" && link?.pathname.includes("pull")) {
-      console.log(pullLink[0]);
       setPullRequestLink(pullLink[0]);
     } else {
       setPullRequestLink("");

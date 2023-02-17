@@ -25,27 +25,9 @@ interface ContributorHighlightCardProps {
   user: string;
 }
 const ContributorHighlightCard = ({ title, desc, prLink, user }: ContributorHighlightCardProps) => {
-  const { isValidUrl, apiPaths } = generateApiPrUrl(prLink);
-  // const [PRInfo, setPRInfo] = useState<GhPRInfoResponse>();
-  // const [isLoading, setLoading] = useState(false);
-  // const [isError, setError] = useState(false);
-
-  // const fetchGhPullRequest = async (orgName: string | null, repoName: string | null, issueId: string | null) => {
-  //   setLoading(true);
-  //   const { data, isError } = await fetchGithubPRInfo(orgName, repoName, issueId);
-  //   setLoading(false);
-  //   if (data) {
-  //     setPRInfo(data);
-  //   }
-  //   if (isError) {
-  //     setError(true);
-  //   }
-  // };
-
   const twitterTweet = `${title || "Open Source Highlight"} - OpenSauced from ${user}`;
 
   const handleCopyToClipboard = async (content: string) => {
-    console.log(content);
     const url = new URL(content).toString();
     try {
       await navigator.clipboard.writeText(url);
