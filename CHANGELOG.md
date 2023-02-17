@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.30.0-beta.2](https://github.com/open-sauced/insights/compare/v1.30.0-beta.1...v1.30.0-beta.2) (2023-02-17)
+
+
+### 🐛 Bug Fixes
+
+* reset text input fields when clear button is clicked ([#869](https://github.com/open-sauced/insights/issues/869)) ([783098d](https://github.com/open-sauced/insights/commit/783098dfbd18a3e5f03e3d6d8001c6cfcea1dde1)), closes [#858](https://github.com/open-sauced/insights/issues/858)
+
 ## [1.30.0-beta.1](https://github.com/open-sauced/insights/compare/v1.29.0...v1.30.0-beta.1) (2023-02-15)
 
 
