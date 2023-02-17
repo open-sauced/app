@@ -16,7 +16,7 @@ const useFilterPrefetch = () => {
 
   useEffect(() => {
     if (topic) {
-      filterOptions.forEach(async(filterName) => {
+      [].forEach(async(filterName) => {
         const filterKey = getFilterKey(filterName);
         const url = `${topic}/repos?filter=${filterKey}&page=1`;
 
