@@ -10,6 +10,7 @@ interface TextInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   classNames?: string;
   errorMsg?: string;
   fieldRef?: React.RefObject<HTMLInputElement>;
+  handleChange?: (value: string) => void;
 }
 
 const TextInput = ({
@@ -24,14 +25,21 @@ const TextInput = ({
   fieldRef,
   disabled = false,
   borderless = false,
+  handleChange,
   errorMsg = "",
   ...props
 }: TextInputProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
+
   const handleResetInput = () => {
-    fieldRef ? fieldRef.current!.value = ""
-      :
-      inputRef.current!.value = "";
+    handleChange?.("");
+    if (fieldRef) {
+      fieldRef.current!.value = "";
+    }
+  };
+
+  const handleChangeState = (event: React.ChangeEvent<HTMLInputElement>) => {
+    handleChange?.(event.target.value);
   };
 
   return (
@@ -48,7 +56,6 @@ const TextInput = ({
           )}
         >
           <input
-            {...props}
             ref={fieldRef || inputRef}
             type="text"
             name={name}
@@ -58,13 +65,16 @@ const TextInput = ({
               disabled && "bg-light-slate-3 cursor-not-allowed  text-light-slate-9"
             }`}
             disabled={disabled}
+            value={value}
+            onChange={handleChangeState}
+            {...props}
           />
           {!disabled && (
             <>
               {state === "valid" ? (
                 <CheckCircleFillIcon className="text-light-orange-9" size={14} />
               ) : !!value ? (
-                <span className="flex items-center" onClick={() => handleResetInput()}>
+                <span className="flex items-center" onClick={handleResetInput}>
                   <XCircleFillIcon className="text-light-red-11" size={14} />
                 </span>
               ) : (
