@@ -5,8 +5,12 @@ import { createHighlights } from "lib/hooks/createHighlights";
 import { ToastTrigger } from "lib/utils/toast-trigger";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import PullRequestHighlightCard from "../PullRequestHighlightCard/pull-request-highlight-card";
+import { useSWRConfig } from "swr";
+import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 
 const HighlightInputForm = (): JSX.Element => {
+  const { user } = useSupabaseAuth();
+  const { mutate } = useSWRConfig();
   const [isDivFocused, setIsDivFocused] = useState(false);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const [bodyText, setBodyText] = useState("");
@@ -77,6 +81,7 @@ const HighlightInputForm = (): JSX.Element => {
       });
 
       if (res) {
+        mutate(`users/${user?.user_metadata.user_name}/highlights`);
         setBodyText("");
         setTitle("");
         setIsDivFocused(false);
