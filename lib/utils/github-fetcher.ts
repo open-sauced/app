@@ -3,8 +3,13 @@ import { supabase } from "./supabase";
 
 export const githubFetcher: Fetcher = async (githubUrl: string) => {
   const sessionResponse = await supabase.auth.getSession();
-  const sessionToken = sessionResponse?.data.session?.access_token;
+  const sessionToken = sessionResponse?.data.session?.provider_token;
   const res = await fetch(`https://api.github.com/repos/${githubUrl}`);
+
+  if (res.ok) {
+    const header = await res.json();
+    console.log(header);
+  }
 
   if (!res.ok) {
     const error = new Error("HttpError");

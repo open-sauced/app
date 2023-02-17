@@ -1,8 +1,8 @@
 import Title from "components/atoms/Typography/title";
 import { generateApiPrUrl } from "lib/utils/github";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PullRequestHighlightCard from "../PullRequestHighlightCard/pull-request-highlight-card";
-import { useFetchGithubPRInfo } from "lib/hooks/useFetchGithubPRInfo";
+import { fetchGithubPRInfo } from "lib/hooks/fetchGithubPRInfo";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,7 +15,7 @@ import { FiLinkedin, FiTwitter } from "react-icons/fi";
 import { BsLink45Deg } from "react-icons/bs";
 import { FaUserPlus } from "react-icons/fa";
 import { GrFlag } from "react-icons/gr";
-import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
+
 import { ToastTrigger } from "lib/utils/toast-trigger";
 
 interface ContributorHighlightCardProps {
@@ -25,8 +25,23 @@ interface ContributorHighlightCardProps {
   user: string;
 }
 const ContributorHighlightCard = ({ title, desc, prLink, user }: ContributorHighlightCardProps) => {
-  const { isValidUrl, apiUrl } = generateApiPrUrl(prLink);
-  const { data, isLoading, isError } = useFetchGithubPRInfo(isValidUrl ? apiUrl : "");
+  const { isValidUrl, apiPaths } = generateApiPrUrl(prLink);
+  // const [PRInfo, setPRInfo] = useState<GhPRInfoResponse>();
+  // const [isLoading, setLoading] = useState(false);
+  // const [isError, setError] = useState(false);
+
+  // const fetchGhPullRequest = async (orgName: string | null, repoName: string | null, issueId: string | null) => {
+  //   setLoading(true);
+  //   const { data, isError } = await fetchGithubPRInfo(orgName, repoName, issueId);
+  //   setLoading(false);
+  //   if (data) {
+  //     setPRInfo(data);
+  //   }
+  //   if (isError) {
+  //     setError(true);
+  //   }
+  // };
+
   const twitterTweet = `${title || "Open Source Highlight"} - OpenSauced from ${user}`;
 
   const handleCopyToClipboard = async (content: string) => {
@@ -129,13 +144,7 @@ const ContributorHighlightCard = ({ title, desc, prLink, user }: ContributorHigh
       </div>
 
       {/* Generated OG card section */}
-      {isValidUrl && isLoading && <SkeletonWrapper height={250} />}
-      {isValidUrl && isError && <>An error occured...</>}
-      {data && (
-        <div>
-          <PullRequestHighlightCard prLink={prLink} />
-        </div>
-      )}
+      <PullRequestHighlightCard prLink={prLink} />
     </article>
   );
 };

@@ -76,7 +76,6 @@ const HighlightInputForm = (): JSX.Element => {
         url: url || ""
       });
 
-
       if (res) {
         setBodyText("");
         setTitle("");
