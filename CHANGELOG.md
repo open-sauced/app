@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.30.0-beta.4](https://github.com/open-sauced/insights/compare/v1.30.0-beta.3...v1.30.0-beta.4) (2023-02-17)
+
+
+### 🍕 Features
+
+* add  highlights to user profile page ([#859](https://github.com/open-sauced/insights/issues/859)) ([4b01376](https://github.com/open-sauced/insights/commit/4b013767176a9f1e8bec47a5190dc0d0a18e6ac1)), closes [#830](https://github.com/open-sauced/insights/issues/830)
+
 ## [1.30.0-beta.3](https://github.com/open-sauced/insights/compare/v1.30.0-beta.2...v1.30.0-beta.3) (2023-02-17)
 
 
