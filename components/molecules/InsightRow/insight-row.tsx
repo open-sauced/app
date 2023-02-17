@@ -20,7 +20,7 @@ interface InsightRowProps {
 const InsightRow = ({ insight, user }: InsightRowProps) => {
   const repoData = insight.repos as unknown as DbRepo[];
   const repoList = insight.repos.map(repo => {
-    const [owner, name] = repo.full_name.split('/');
+    const [owner, name] = repo.full_name.split("/");
     return {
       repoIcon: `https://github.com/${owner}.png?size=60`,
       repoName: name,
