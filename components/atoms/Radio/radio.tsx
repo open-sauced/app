@@ -8,7 +8,7 @@ interface RadioProps {
   checked?: boolean;
   onClick?: () => void;
   value?: string;
-  withLabel: string;
+  withLabel?: string;
   css?: string;
 }
 
@@ -32,7 +32,7 @@ const Radio = ({ css, withLabel, id, children, value, checked = false, onClick }
         onChange={onClick}
         id={id}
       />
-      <label className="flex -mt-5 cursor-pointer justify-between   item-center" htmlFor={id}>
+      <label className="flex -mt-5 cursor-pointer item-center" htmlFor={id}>
         {checked ? (
           <BsFillCheckCircleFill className="text-xl   text-light-orange-9" />
         ) : (

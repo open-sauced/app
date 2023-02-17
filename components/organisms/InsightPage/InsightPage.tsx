@@ -40,7 +40,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
   }
 
   const [name, setName] = useState(insight?.name || "");
-  const [nameError, setNameError] = useState("");
+  const [isNameValid, setIsNameValid] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [repoToAdd, setRepoToAdd] = useState("");
   const [repos, setRepos] = useState<GitHubRepo[]>(receivedData);
@@ -71,18 +71,19 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
     };
   });
 
-  const handleOnNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setName(event.target.value);
+  const handleOnNameChange = (value: string) => {
+
+    setName(value);
+
+    if (!value || value.trim().length <= 3) setIsNameValid(false);
+
+    if (value.trim().length > 3) {
+      setIsNameValid(true);
+    }
   };
 
   const handleCreateInsightPage = async () => {
     setSubmitted(true);
-
-    if (!name) {
-      setNameError("Insight name is a required field");
-      setSubmitted(false);
-      return;
-    }
 
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/insights`, {
       method: "POST",
@@ -107,12 +108,6 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
   const handleUpdateInsightPage = async () => {
     setSubmitted(true);
 
-    if (!name) {
-      setNameError("Insight name is a required field");
-      setSubmitted(false);
-      return;
-    }
-
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/insights/${insight?.id}`, {
       method: "PATCH",
       headers: {
@@ -133,9 +128,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
     setSubmitted(false);
   };
 
-  const handleOnRepoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRepoToAdd(event.target.value);
-  };
+  const handleOnRepoChange = (value: string) => setRepoToAdd(value);
 
   const loadAndAddRepo = async (repoToAdd: string) => {
     setAddRepoError(RepoLookupError.Initial);
@@ -223,8 +216,11 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
             Page Name
           </Title>
 
-          <TextInput placeholder="Page Name (ex: My Team)" value={name} onChange={handleOnNameChange} />
-          {submitted && nameError ? <Text>{nameError}</Text> : ""}
+          <TextInput
+            placeholder="Page Name (ex: My Team)"
+            value={name}
+            handleChange={handleOnNameChange}
+          />
           {/* <Text>insights.opensauced.pizza/pages/{username}/{`{pageId}`}/dashboard</Text> */}
         </div>
 
@@ -236,7 +232,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
           <TextInput
             value={repoToAdd}
             placeholder="Repository Full Name (ex: open-sauced/open-sauced)"
-            onChange={handleOnRepoChange}
+            handleChange={handleOnRepoChange}
           />
 
           <div>
@@ -277,7 +273,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
           handleUpdatePage={handleUpdateInsightPage}
           handleAddToCart={handleReAddRepository}
           history={reposRemoved}
-          createPageButtonDisabled={submitted}
+          createPageButtonDisabled={submitted || !isNameValid}
         >
           {repos.map((repo) => {
             const [owner, name] = repo.full_name.split("/");

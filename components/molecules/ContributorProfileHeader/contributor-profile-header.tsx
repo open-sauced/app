@@ -19,11 +19,14 @@ const ContributorProfileHeader = ({ avatarUrl, githubName, isConnected }: Contri
       )}
 
       <div className="w-full absolute -top-6 px-6 md:px-12 lg:px-16 flex flex-row items-end justify-between py-6">
-        <div className="translate-y-[75px]">
+        <div className="translate-y-[75px] hidden md:inline-flex">
           <Avatar className="" hasBorder avatarURL={avatarUrl} size={184} isCircle />
         </div>
+        <div className="translate-y-[125px] md:hidden ">
+          <Avatar className="" hasBorder avatarURL={avatarUrl} size={120} isCircle />
+        </div>
         {isConnected && (
-          <div className="flex gap-3 flex-col md:flex-row items-center">
+          <div className="flex md:translate-y-0 translate-y-28 gap-3 flex-col md:flex-row items-center">
             <a target="_blank" rel="noopener noreferrer" href={`https://github.com/${githubName}`}>
               <Button className="!px-5 !py-2 !bg-white" type="text">
                 View on GitHub
