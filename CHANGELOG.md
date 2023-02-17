@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.30.0-beta.3](https://github.com/open-sauced/insights/compare/v1.30.0-beta.2...v1.30.0-beta.3) (2023-02-17)
+
+
+### 🍕 Features
+
+* add dropdown for topics in Explore ([#877](https://github.com/open-sauced/insights/issues/877)) ([9579902](https://github.com/open-sauced/insights/commit/95799029ea5e47fff7862146a24daeedf22288e4)), closes [#533](https://github.com/open-sauced/insights/issues/533)
+
 ## [1.30.0-beta.2](https://github.com/open-sauced/insights/compare/v1.30.0-beta.1...v1.30.0-beta.2) (2023-02-17)
 
 
