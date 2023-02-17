@@ -1,9 +1,10 @@
 const getRepoInsights = (repos: DbRepo[]) => {
   const repoList = repos.map(repo => {
+    const [owner, name] = repo.full_name.split('/');
     return {
-      repoIcon: `https://github.com/${repo.owner}.png?size=60`,
-      repoName: repo.name,
-      repoOwner: repo.owner
+      repoIcon: `https://github.com/${owner}.png?size=60`,
+      repoName: name,
+      repoOwner: owner
     };
   });
 
