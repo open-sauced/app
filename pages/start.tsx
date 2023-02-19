@@ -31,6 +31,10 @@ import useSession from "lib/hooks/useSession";
 import { captureAnayltics } from "lib/utils/analytics";
 import { getAvatarByUsername } from "lib/utils/github";
 import useStore from "lib/store";
+import getInterestOptions from "lib/utils/getInterestOptions";
+import LanguagePill from "components/atoms/LanguagePill/LanguagePill";
+import { updateUser } from "lib/hooks/update-user";
+import { ToastTrigger } from "lib/utils/toast-trigger";
 
 type handleLoginStep = () => void;
 
@@ -44,6 +48,7 @@ const LoginStep1: React.FC<LoginStep1Props> = ({ handleLoginStep, user }) => {
 
   const router = useRouter();
   const { onboarded } = useSession();
+  // const onboarded = false;
   const { providerToken, signIn } = useSupabaseAuth();
 
   useEffect(() => {
@@ -107,117 +112,65 @@ const LoginStep1: React.FC<LoginStep1Props> = ({ handleLoginStep, user }) => {
 
 interface LoginStep2Props {
   handleLoginStep: handleLoginStep;
-  setRepoList: Function;
 }
 
-const LoginStep2: React.FC<LoginStep2Props> = ({ handleLoginStep, setRepoList }) => {
+const LoginStep2: React.FC<LoginStep2Props> = ({ handleLoginStep }) => {
   const { providerToken } = useSupabaseAuth();
-  const [orgName, setOrgName] = useState("");
+  const [selectedInterest, setSelectedInterest] = useState<string[]>([]);
+  const interestArray = getInterestOptions();
 
   captureAnayltics("User Onboarding", "onboardingStep2", "visited");
 
-  const handleSlugChange = (value: string) => {
-    setOrgName(value);
+  const handleSelectInterest = (interest: string) => {
+    if (selectedInterest.length > 0 && selectedInterest.includes(interest)) {
+      setSelectedInterest((prev) => prev.filter((item) => item !== interest));
+    } else {
+      setSelectedInterest((prev) => [...prev, interest]);
+    }
   };
 
-  const handleAddPAT = async () => {
-    try {
-      if (providerToken) {
-        const ocktokit = new Octokit({ auth: providerToken });
-
-        let repoList = [];
-        let response: { data: { id: number; full_name: string }[] };
-
-        if (orgName) {
-          response = await ocktokit.request("GET /orgs/{org}/repos", {
-            org: orgName,
-            sort: "updated",
-            direction: "desc",
-            // eslint-disable-next-line
-            per_page: 50
-          });
-        } else {
-          response = await ocktokit.request("GET /user/repos", {
-            visibility: "public",
-            sort: "updated",
-            direction: "desc",
-            // eslint-disable-next-line
-            per_page: 50
-          });
-        }
-
-        repoList = response.data.map((repo) => {
-          const [repoOwner, repoName] = repo.full_name.split("/");
-
-          return {
-            repoId: repo.id,
-            repoName,
-            repoOwner
-          };
-        });
-
-        setRepoList(repoList);
-      }
-
-      // If valid, go to next step
+  const handleUpdateInterest = async () => {
+    const data = await updateUser({
+      data: { interests: selectedInterest },
+      params: "interests"
+    });
+    if (data) {
       handleLoginStep();
-    } catch (e) {
-      // If invalid, display error
-      console.error(e);
+    } else {
+      console.error("Error setting user interest");
     }
   };
 
   return (
     <>
-      <div className="login-step flex flex-col h-full gap-6">
+      <div className="login-step flex flex-col h-full gap-28">
         <div>
           <div className="flex items-center gap-2 mb-4">
             <Icon className="lg:hidden" IconImage={PATActiveIcon} size={48} />
             <Title className="!text-sm !text-light-orange-9">Step Two</Title>
           </div>
           <div className="gap-2 mb-4">
-            <Title className="!text-2xl">Provide your Organization</Title>
+            <Title className="!text-2xl">Choose your interest</Title>
           </div>
           <div className="mb-4 text-left ">
             <Text className="!text-sm">
-              In order to provide fresh, and insightful data, we‘ll use your authenticated GitHub access token to fetch
-              public GitHub data. Here‘s how we‘re going to use your token:
+            Take a moment to select your interests to help us provide personalized project recommendations. By doing so, you'll find projects that match your skills and aspirations.
             </Text>
           </div>
-          <div className="flex flex-col gap-1">
-            <div className="flex gap-2 items-start">
-              <div className="mt-0.5 shrink-0">
-                <Icon IconImage={HighlightIcon} />
-              </div>
-              <div className="mt-0">
-                <Text className="!text-base !text-light-slate-12">Index insights from git data</Text>
-              </div>
-            </div>
-            <div className="flex gap-2 items-start">
-              <div className="mt-0.5 shrink-0">
-                <Icon IconImage={HighlightIcon} />
-              </div>
-              <div className="mt-0">
-                <Text className="!text-base !text-light-slate-12">
-                  Fetch basic GitHub information from Pull Requests and Issues
-                </Text>
-              </div>
-            </div>
+          <div className="flex gap-3 flex-wrap">
+            {interestArray.map((topic, index) => (
+              <LanguagePill
+                onClick={() => handleSelectInterest(topic)}
+                classNames={`${(selectedInterest || []).includes(topic) && "bg-light-orange-10 text-white"}`}
+                topic={topic}
+                key={index}
+              />
+            ))}
           </div>
         </div>
-        <div className="flex flex-col gap-6">
-          <div>
-            <TextInput
-              placeholder="Organization Slug"
-              descriptionText="Grab the slug from GitHub, eg: 'open-sauced'."
-              classNames="!rounded-md !py-0.5 child:h-8 child:text-sm"
-              handleChange={handleSlugChange}
-            />
-          </div>
-          <Button onClick={handleAddPAT} type="primary" className="w-full mt-3 md:mt-0 h-10">
-            Continue
-          </Button>
-        </div>
+        <Button onClick={handleUpdateInterest} type="primary" className="w-full mt-3 md:mt-0 h-10">
+          Confirm Selections
+        </Button>
       </div>
     </>
   );
@@ -407,7 +360,7 @@ const Login: WithPageLayout = () => {
               disabled={currentLoginStep !== 2}
               className={`!text-[16px] !font-medium ${currentLoginStep === 2 && highlighted}`}
             >
-              Provide your Organization
+              Choose your interests
             </Text>
           </div>
           <div className="hidden lg:flex gap-2 items-center mb-8">
@@ -431,7 +384,7 @@ const Login: WithPageLayout = () => {
         </section>
         <section className="w-full lg:max-w-[50%] p-9 rounded-lg lg:rounded-r-lg bg-white">
           {currentLoginStep === 1 && <LoginStep1 handleLoginStep={handleLoginStep} user={user} />}
-          {currentLoginStep === 2 && <LoginStep2 handleLoginStep={handleLoginStep} setRepoList={setRepoList} />}
+          {currentLoginStep === 2 && <LoginStep2 handleLoginStep={handleLoginStep} />}
           {currentLoginStep >= 3 && (
             <LoginStep3 handleLoginStep={handleLoginStep} repoList={repoList} checkFollowed={checkFollowed} />
           )}
