@@ -35,6 +35,10 @@ import getInterestOptions from "lib/utils/getInterestOptions";
 import LanguagePill from "components/atoms/LanguagePill/LanguagePill";
 import { updateUser } from "lib/hooks/update-user";
 import { ToastTrigger } from "lib/utils/toast-trigger";
+import Select from "components/atoms/Select/select";
+import SelectOption from "components/atoms/Select/select-option";
+import { timezones } from "lib/utils/timezones";
+import { authSession } from "lib/hooks/authSession";
 
 type handleLoginStep = () => void;
 
@@ -115,7 +119,6 @@ interface LoginStep2Props {
 }
 
 const LoginStep2: React.FC<LoginStep2Props> = ({ handleLoginStep }) => {
-  const { providerToken } = useSupabaseAuth();
   const [selectedInterest, setSelectedInterest] = useState<string[]>([]);
   const interestArray = getInterestOptions();
 
@@ -143,7 +146,7 @@ const LoginStep2: React.FC<LoginStep2Props> = ({ handleLoginStep }) => {
 
   return (
     <>
-      <div className="login-step flex flex-col h-full gap-28">
+      <div className="login-step flex flex-col h-full lg:gap-28">
         <div>
           <div className="flex items-center gap-2 mb-4">
             <Icon className="lg:hidden" IconImage={PATActiveIcon} size={48} />
@@ -178,125 +181,77 @@ const LoginStep2: React.FC<LoginStep2Props> = ({ handleLoginStep }) => {
 
 interface LoginStep3Props {
   handleLoginStep: handleLoginStep;
-  checkFollowed: {
-    isClickedFollowed: boolean;
-    setIsClickedFollowed: React.Dispatch<React.SetStateAction<boolean>>;
-  };
-  repoList: LoginRepoObjectInterface[];
 }
 
-const LoginStep3: React.FC<LoginStep3Props> = ({ repoList, checkFollowed }) => {
+const LoginStep3: React.FC<LoginStep3Props> = () => {
   captureAnayltics("User Onboarding", "onboardingStep3", "visited");
   const store = useStore();
   const router = useRouter();
   const { sessionToken } = useSupabaseAuth();
+  const [timezone, setTimezone] = useState("");
 
-  const [isFollowing, setIsFollowing] = useState<boolean[]>(repoList.map(() => false));
-  const following = isFollowing.filter((follow) => follow);
 
-  const handleSkipAddRepo = async () => {
+  const handleUpdateTimezone = async () => {
     try {
-      const selectedRepos = repoList.filter((_, index) => isFollowing[index]);
-      const repoIds = selectedRepos.map((repo) => repo.repoId as number);
-
-      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/onboarding`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${sessionToken}`
-        },
-        body: JSON.stringify({ ids: repoIds })
+      const userData = await authSession();
+      const data = await updateUser({
+        data: {
+          name: userData.name,
+          email: userData.email,
+          timezone
+        }
       });
 
-      store.onboardUser();
+      if (data) {
+        await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/onboarding`, {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${sessionToken}`
+          },
+          body: JSON.stringify({ ids: [] })
+        });
+
+        store.onboardUser();
+        router.push("/hub/insights");
+      } else {
+        console.error("Error setting user timezone");
+      }
     } catch (e) {
-      // handle error
+      console.error(e);
     }
-
-    router.push("/hub/insights");
-  };
-
-  const handleFollowRepo = (index: number) => {
-    if (!isFollowing[index]) {
-      setIsFollowing((prevState) => {
-        const newState = [...prevState];
-        newState[index] = !newState[index];
-        return newState;
-      });
-      checkFollowed.setIsClickedFollowed(true);
-    } else {
-      setIsFollowing((prevState) => {
-        const newState = [...prevState];
-        newState[index] = !newState[index];
-        return newState;
-      });
-    }
-  };
+  }
 
   return (
     <>
-      <div className="flex flex-col h-full gap-5">
+      <div className="flex flex-col h-full lg:gap-36">
         <div>
           <div className="flex items-center gap-2 mb-4">
             <Icon className="lg:hidden" IconImage={ChooseRepoActiveIcon} size={48} />
             <Title className="!text-sm !text-light-orange-9">Step Three</Title>
           </div>
           <div className="gap-2 mb-4">
-            <Title className="!text-2xl">Follow some Repositories</Title>
+            <Title className="!text-2xl">What time is it?</Title>
           </div>
           <div className="mb-4 text-left ">
             <Text className="!text-sm">
-              We‘ll provide insights on the repos you choose to follow. You can follow up to 10 repos.
+              Provide your timezone to help companies discover you and collaborate on open source projects.
             </Text>
           </div>
-          <div className="relative">
-            <div className="absolute z-10 inset-x-0 top-[-1rem] h-[2rem] bg-white blur"></div>
-            <div className="absolute z-10 inset-x-0 bottom-[-1rem] h-[2rem] bg-white blur"></div>
-            <div className="max-h-72 overflow-y-auto py-4">
-              {repoList.map((repo, index) => {
-                return (
-                  <div
-                    key={index}
-                    className="flex justify-between w-full border-[1px] rounded-lg border-light-slate-6 p-2 mb-2 gap-2"
-                  >
-                    <div className="flex flex-col items-start shrink-1">
-                      <div className="flex items-center gap-1">
-                        <img
-                          alt="Repo Icon"
-                          className="shrink-0 h-4 w-4 rounded overflow-hidden"
-                          src={getAvatarByUsername(repo.repoOwner)}
-                        />
-                        <Text className="!text-sm ">{`${repo.repoOwner}/`}</Text>
-                      </div>
-                      <div className="w-full">
-                        <Text className="!text-base !text-light-slate-12 break-all">{`${repo.repoName}`}</Text>
-                      </div>
-                    </div>
-                    <div className="shrink-0">
-                      <Button
-                        disabled={following.length >= 10 && !isFollowing[index]}
-                        onClick={() => handleFollowRepo(index)}
-                        type={isFollowing[index] ? "outline" : "default"}
-                      >
-                        {isFollowing[index] ? (
-                          "Following"
-                        ) : (
-                          <>
-                            Follow <Icon IconImage={AddIcon} size={8} className="shrink-0 ml-2" />
-                          </>
-                        )}
-                      </Button>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
+          <div className="flex flex-col gap-2">
+            <label>Time zone*</label>
+            <Select value={timezone} onChange={e => setTimezone(e.target.value)} required>
+              <SelectOption value="">Select time zone</SelectOption>
+              {timezones.map((timezone, index) => (
+                <SelectOption key={index} value={timezone.value}>
+                  {timezone.text}
+                </SelectOption>
+              ))}
+            </Select>
           </div>
         </div>
-        <div onClick={handleSkipAddRepo} className="flex justify-center gap-2">
-          <Title className="!text-sm font-semibold !text-light-orange-9 cursor-pointer">
-            {following.length > 0 ? "Continue" : "Skip this step"}
-          </Title>
-        </div>
+        <Button type="primary" onClick={handleUpdateTimezone} className="w-full mt-3 md:mt-0 h-10" disabled={!timezone}>
+          Continue
+        </Button>
       </div>
     </>
   );
@@ -306,14 +261,10 @@ const Login: WithPageLayout = () => {
   type LoginSteps = number;
 
   const { user } = useSupabaseAuth();
-  const { repoList, setRepoList } = useLoginRepoList();
 
   const highlighted = "!text-light-slate-12";
 
   const [currentLoginStep, setCurrentLoginStep] = useState<LoginSteps>(1);
-  const [isClickedFollowed, setIsClickedFollowed] = useState<boolean>(false);
-
-  const checkFollowed = { isClickedFollowed, setIsClickedFollowed };
 
   const handleLoginStep = async () => {
     setCurrentLoginStep((prevStep) => prevStep + 1);
@@ -330,7 +281,7 @@ const Login: WithPageLayout = () => {
                   ? 0
                   : currentLoginStep === 2
                     ? 33
-                    : currentLoginStep === 3 && !isClickedFollowed
+                    : currentLoginStep === 3
                       ? 66
                       : 100
               }
@@ -366,7 +317,7 @@ const Login: WithPageLayout = () => {
           <div className="hidden lg:flex gap-2 items-center mb-8">
             <Icon
               IconImage={
-                currentLoginStep === 3 && !isClickedFollowed
+                currentLoginStep === 3
                   ? ChooseRepoActiveIcon
                   : currentLoginStep < 3
                     ? ChooseRepoIcon
@@ -378,7 +329,7 @@ const Login: WithPageLayout = () => {
               disabled={currentLoginStep !== 3}
               className={`!text-[16px]  ${currentLoginStep === 3 && highlighted}`}
             >
-              Choose some repositories
+              What time is it?
             </Text>
           </div>
         </section>
@@ -386,7 +337,7 @@ const Login: WithPageLayout = () => {
           {currentLoginStep === 1 && <LoginStep1 handleLoginStep={handleLoginStep} user={user} />}
           {currentLoginStep === 2 && <LoginStep2 handleLoginStep={handleLoginStep} />}
           {currentLoginStep >= 3 && (
-            <LoginStep3 handleLoginStep={handleLoginStep} repoList={repoList} checkFollowed={checkFollowed} />
+            <LoginStep3 handleLoginStep={handleLoginStep} />
           )}
         </section>
       </>
