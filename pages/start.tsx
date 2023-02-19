@@ -157,7 +157,7 @@ const LoginStep2: React.FC<LoginStep2Props> = ({ handleLoginStep }) => {
           </div>
           <div className="mb-4 text-left ">
             <Text className="!text-sm">
-            Take a moment to select your interests to help us provide personalized project recommendations. By doing so, you'll find projects that match your skills and aspirations.
+            Take a moment to select your interests to help us provide personalized project recommendations. By doing so, you&apos;ll find projects that match your skills and aspirations.
             </Text>
           </div>
           <div className="flex gap-3 flex-wrap">
