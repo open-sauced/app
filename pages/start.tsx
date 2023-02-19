@@ -219,7 +219,7 @@ const LoginStep3: React.FC<LoginStep3Props> = () => {
     } catch (e) {
       console.error(e);
     }
-  }
+  };
 
   return (
     <>
