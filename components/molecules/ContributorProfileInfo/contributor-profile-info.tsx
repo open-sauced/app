@@ -102,7 +102,7 @@ const ContributorProfileInfo = ({
               <Title className="!text-base !text-light-slate-12" level={5}>
                 Current Interests
               </Title>
-              <div className="flex gap-2 flex-wrap">
+              <div className="flex gap-1.5 flex-wrap">
                 {interestArray.map((interest, index) => (
                   <LanguagePill key={index} topic={interest} />
                 ))}
