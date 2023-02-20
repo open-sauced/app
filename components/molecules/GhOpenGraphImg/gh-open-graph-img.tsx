@@ -11,13 +11,8 @@ const GhOpenGraphImg = ({ githubLink }: GhOpenGraphImgProps): JSX.Element => {
   const { isValid, url } = generateGhOgImage(githubLink);
 
   return (
-    <>
-      {url && (
-        <div className="relative w-full h-[185px] md:h-[170px] lg:h-[320px]">
-          <Image src={isValid ? url : InvalidImage} fill alt={isValid ? "github og image" : "invalid url image"} />
-        </div>
-      )}
-    </>
+    // eslint-disable-next-line @next/next/no-img-element
+    <>{url && <img src={isValid ? url : InvalidImage} alt={isValid ? "github og image" : "invalid url image"} />}</>
   );
 };
 
