@@ -69,16 +69,25 @@ const ContributorProfileInfo = ({
                 "I am an open source developer with a passion for music and video games. I strive to improve the open source community and am always looking for new ways to contribute."}
             </p>
             <div className="flex flex-col text-sm mt-2 text-light-slate-9 gap-2">
-              {displayLocalTime && <span className="flex gap-2 items-center">
-                <FiClock className="text-light-slate-9" /> Local time: 12:32 PM
-              </span>}
+              {displayLocalTime && (
+                <span className="flex gap-2 items-center">
+                  <FiClock className="text-light-slate-9" /> Local time: 12:32 PM
+                </span>
+              )}
 
-              {twitterUsername && <span className="flex gap-2 items-center">
-                <FiTwitter className="text-light-slate-9" />
-                <Link href={`https://twitter.com/${twitterUsername}`} target="_blank" rel="noreferrer" className="w-max hover:text-orange-500 ">
-                  {twitterUsername}
-                </Link>
-              </span>}
+              {twitterUsername && (
+                <span className="flex gap-2 items-center">
+                  <FiTwitter className="text-light-slate-9" />
+                  <Link
+                    href={`https://twitter.com/${twitterUsername}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="w-max hover:text-orange-500 "
+                  >
+                    {twitterUsername}
+                  </Link>
+                </span>
+              )}
 
               {/* <span className="flex gap-2 items-center">
                 <HiOutlineMail className="text-light-slate-9" />
@@ -93,7 +102,7 @@ const ContributorProfileInfo = ({
               <Title className="!text-base !text-light-slate-12" level={5}>
                 Current Interests
               </Title>
-              <div className="flex gap-2">
+              <div className="flex gap-2 flex-wrap">
                 {interestArray.map((interest, index) => (
                   <LanguagePill key={index} topic={interest} />
                 ))}
