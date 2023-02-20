@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.30.0-beta.5](https://github.com/open-sauced/insights/compare/v1.30.0-beta.4...v1.30.0-beta.5) (2023-02-20)
+
+
+### 🐛 Bug Fixes
+
+* user profile interest pill UI fix ([#890](https://github.com/open-sauced/insights/issues/890)) ([4cbff36](https://github.com/open-sauced/insights/commit/4cbff36fc104be46143c31b5ccd3b732179206d7))
+
 ## [1.30.0-beta.4](https://github.com/open-sauced/insights/compare/v1.30.0-beta.3...v1.30.0-beta.4) (2023-02-17)
 
 
