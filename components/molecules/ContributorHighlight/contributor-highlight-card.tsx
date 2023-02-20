@@ -1,7 +1,6 @@
 import Title from "components/atoms/Typography/title";
 import { generateApiPrUrl } from "lib/utils/github";
 import React, { useEffect, useState } from "react";
-import PullRequestHighlightCard from "../PullRequestHighlightCard/pull-request-highlight-card";
 import { fetchGithubPRInfo } from "lib/hooks/fetchGithubPRInfo";
 import {
   DropdownMenu,
