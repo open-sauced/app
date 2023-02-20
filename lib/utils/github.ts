@@ -20,7 +20,7 @@ const generateApiPrUrl = (
     const trimmedUrl = url.trim();
     const githubUrl = new URL(trimmedUrl.includes("https://") ? trimmedUrl : `https://${trimmedUrl}`);
     const { pathname } = githubUrl;
-    console.log(pathname);
+
     const [, orgName, repoName, , issueId] = pathname.split("/");
 
     if (githubUrl.hostname !== "github.com") {
