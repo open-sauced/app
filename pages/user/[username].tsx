@@ -8,9 +8,10 @@ import { ContributorsProfileType } from "components/molecules/ContributorHoverCa
 import ProfileLayout from "layouts/profile";
 import { useFetchUser } from "lib/hooks/useFetchUser";
 import Head from "next/head";
-import SEO from "layouts/SEO/SEO";
 import { WithPageLayout } from "interfaces/with-page-layout";
 import { useEffect } from "react";
+import { Person } from "schema-dts";
+import { jsonLdScriptProps } from "react-schemaorg";
 
 const Contributor: WithPageLayout = () => {
   const router = useRouter();
@@ -39,23 +40,39 @@ const Contributor: WithPageLayout = () => {
   }, [contributorLogin, user?.bio, profile.githubAvatar]);
 
   return (
-    <div className="w-full">
-      <ContributorProfilePage
-        prMerged={contributor[0]?.recent_merged_prs}
-        error={isError}
-        loading={userLoading}
-        user={user}
-        repoList={repoList}
-        langList={contributorLanguageList}
-        githubName={profile.githubName}
-        githubAvatar={profile.githubAvatar}
-        prTotal={contributor[0]?.recent_pr_total}
-        openPrs={contributor[0]?.recent_opened_prs}
-        recentContributionCount={contributor[0]?.recent_contribution_count}
-        prReviews={contributor[0]?.recent_pr_reviews}
-        prVelocity={contributor[0]?.recent_pr_velocity}
-      />
-    </div>
+    <>
+      <Head>
+        {user && <script {...jsonLdScriptProps<Person>({
+          "@context": "https://schema.org",
+          "@type": "Person",
+          name: profile.githubName,
+          url: `https://www.github.com/${user.login}`,
+          image: profile.githubAvatar,
+          sameAs: user.twitter_username ? `https://twitter.com/${user.twitter_username}` : undefined,
+          description: user.bio,
+          email: user.display_email ? user.email : undefined,
+          knowsAbout: contributorLanguageList.concat(user.interests.split(",")),
+          worksFor: user.company
+        })} /> }
+      </Head>
+      <div className="w-full">
+        <ContributorProfilePage
+          prMerged={contributor[0]?.recent_merged_prs}
+          error={isError}
+          loading={userLoading}
+          user={user}
+          repoList={repoList}
+          langList={contributorLanguageList}
+          githubName={profile.githubName}
+          githubAvatar={profile.githubAvatar}
+          prTotal={contributor[0]?.recent_pr_total}
+          openPrs={contributor[0]?.recent_opened_prs}
+          recentContributionCount={contributor[0]?.recent_contribution_count}
+          prReviews={contributor[0]?.recent_pr_reviews}
+          prVelocity={contributor[0]?.recent_pr_velocity}
+        />
+      </div>
+    </>
   );
 };
 
