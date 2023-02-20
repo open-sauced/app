@@ -7,7 +7,8 @@ module.exports = {
       "images.unsplash.com",
       "www.github.com",
       "github.com",
-      "res.cloudinary.com"
+      "res.cloudinary.com",
+      "opengraph.githubassets.com"
     ]
   }
 };
