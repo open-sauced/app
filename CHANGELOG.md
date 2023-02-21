@@ -5,6 +5,69 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.30.0-beta.9](https://github.com/open-sauced/insights/compare/v1.30.0-beta.8...v1.30.0-beta.9) (2023-02-21)
+
+
+### 🐛 Bug Fixes
+
+* rename 404 image file ([4e5171f](https://github.com/open-sauced/insights/commit/4e5171fd86d1d905fc801eaf4c6d57769ed13d80))
+
+## [1.30.0-beta.8](https://github.com/open-sauced/insights/compare/v1.30.0-beta.7...v1.30.0-beta.8) (2023-02-21)
+
+
+### 🐛 Bug Fixes
+
+* replace `PRSocialCard` component with GitHub OpenGraph image ([#889](https://github.com/open-sauced/insights/issues/889)) ([3bfc5a4](https://github.com/open-sauced/insights/commit/3bfc5a4e56d58ab41aadd7bb22595988ebf4b6de)), closes [#883](https://github.com/open-sauced/insights/issues/883)
+
+## [1.30.0-beta.7](https://github.com/open-sauced/insights/compare/v1.30.0-beta.6...v1.30.0-beta.7) (2023-02-21)
+
+
+### 🐛 Bug Fixes
+
+* hide non-functional elements in highlights card ([#881](https://github.com/open-sauced/insights/issues/881)) ([ba1bd5e](https://github.com/open-sauced/insights/commit/ba1bd5e32c8645e3b99f019afd00c20ea9c0e15d))
+
+## [1.30.0-beta.6](https://github.com/open-sauced/insights/compare/v1.30.0-beta.5...v1.30.0-beta.6) (2023-02-21)
+
+
+### 🐛 Bug Fixes
+
+* disable create page button only if insight page name is empty ([#893](https://github.com/open-sauced/insights/issues/893)) ([ed52399](https://github.com/open-sauced/insights/commit/ed52399acc13f5cb05abb62beabaac016a951729)), closes [#892](https://github.com/open-sauced/insights/issues/892)
+
+## [1.30.0-beta.5](https://github.com/open-sauced/insights/compare/v1.30.0-beta.4...v1.30.0-beta.5) (2023-02-20)
+
+
+### 🐛 Bug Fixes
+
+* user profile interest pill UI fix ([#890](https://github.com/open-sauced/insights/issues/890)) ([4cbff36](https://github.com/open-sauced/insights/commit/4cbff36fc104be46143c31b5ccd3b732179206d7))
+
+## [1.30.0-beta.4](https://github.com/open-sauced/insights/compare/v1.30.0-beta.3...v1.30.0-beta.4) (2023-02-17)
+
+
+### 🍕 Features
+
+* add  highlights to user profile page ([#859](https://github.com/open-sauced/insights/issues/859)) ([4b01376](https://github.com/open-sauced/insights/commit/4b013767176a9f1e8bec47a5190dc0d0a18e6ac1)), closes [#830](https://github.com/open-sauced/insights/issues/830)
+
+## [1.30.0-beta.3](https://github.com/open-sauced/insights/compare/v1.30.0-beta.2...v1.30.0-beta.3) (2023-02-17)
+
+
+### 🍕 Features
+
+* add dropdown for topics in Explore ([#877](https://github.com/open-sauced/insights/issues/877)) ([9579902](https://github.com/open-sauced/insights/commit/95799029ea5e47fff7862146a24daeedf22288e4)), closes [#533](https://github.com/open-sauced/insights/issues/533)
+
+## [1.30.0-beta.2](https://github.com/open-sauced/insights/compare/v1.30.0-beta.1...v1.30.0-beta.2) (2023-02-17)
+
+
+### 🐛 Bug Fixes
+
+* reset text input fields when clear button is clicked ([#869](https://github.com/open-sauced/insights/issues/869)) ([783098d](https://github.com/open-sauced/insights/commit/783098dfbd18a3e5f03e3d6d8001c6cfcea1dde1)), closes [#858](https://github.com/open-sauced/insights/issues/858)
+
+## [1.30.0-beta.1](https://github.com/open-sauced/insights/compare/v1.29.0...v1.30.0-beta.1) (2023-02-15)
+
+
+### 🍕 Features
+
+* disable create insight page button if the page name is missing ([#857](https://github.com/open-sauced/insights/issues/857)) ([95da564](https://github.com/open-sauced/insights/commit/95da5649e64642d70e8b95b8f8e9d753f8c2bde2)), closes [#852](https://github.com/open-sauced/insights/issues/852)
+
 ## [1.29.0](https://github.com/open-sauced/insights/compare/v1.28.0...v1.29.0) (2023-02-14)
 
 
