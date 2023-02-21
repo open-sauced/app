@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.31.0-beta.1](https://github.com/open-sauced/insights/compare/v1.30.0...v1.31.0-beta.1) (2023-02-21)
+
+
+### 🍕 Features
+
+* implement report highlight  ([#897](https://github.com/open-sauced/insights/issues/897)) ([604f70e](https://github.com/open-sauced/insights/commit/604f70ee2af352eb1da3f3dc3cd70f17972b7d51)), closes [#884](https://github.com/open-sauced/insights/issues/884)
+
 ## [1.30.0](https://github.com/open-sauced/insights/compare/v1.29.0...v1.30.0) (2023-02-21)
 
 
