@@ -109,7 +109,7 @@ const ContributorProfileInfo = ({
                 ))}
               </div>
             </div>
-          )}{" "}
+          )}
         </>
       )}
     </div>
