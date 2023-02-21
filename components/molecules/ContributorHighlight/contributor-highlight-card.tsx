@@ -17,6 +17,7 @@ import { FaUserPlus } from "react-icons/fa";
 import { GrFlag } from "react-icons/gr";
 
 import { ToastTrigger } from "lib/utils/toast-trigger";
+import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 
 interface ContributorHighlightCardProps {
   title?: string;
@@ -27,6 +28,8 @@ interface ContributorHighlightCardProps {
 const ContributorHighlightCard = ({ title, desc, prLink, user }: ContributorHighlightCardProps) => {
   const twitterTweet = `${title || "Open Source Highlight"} - OpenSauced from ${user}`;
   const reportSubject = `Reported Highlight ${user}: ${title}`;
+
+  const { user: loggedInUser } = useSupabaseAuth();
 
   const handleCopyToClipboard = async (content: string) => {
     const url = new URL(content).toString();
@@ -103,7 +106,9 @@ const ContributorHighlightCard = ({ title, desc, prLink, user }: ContributorHigh
                   <span>Follow user</span>
                 </div>
               </DropdownMenuItem>
-              <DropdownMenuItem className="rounded-md">
+              <DropdownMenuItem
+                className={`rounded-md ${loggedInUser && loggedInUser.user_metadata.user_name === user && "hidden"}`}
+              >
                 <a
                   href={`mailto:hello@opensauced.pizza?subject=${reportSubject}`}
                   className="flex gap-2.5 py-1  items-center pl-3 pr-7"
