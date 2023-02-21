@@ -69,15 +69,23 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
     };
   });
 
+  const validateName = (name: string) => {
+    if (!name || name.trim().length <= 3) return false;
+
+    return true;
+  };
+
   const handleOnNameChange = (value: string) => {
-
     setName(value);
+    setIsNameValid(validateName(value));
+  };
 
-    if (!value || value.trim().length <= 3) setIsNameValid(false);
+  const disableCreateButton = () => {
+    if (insight?.name && validateName(name)) return false;
+    if (submitted) return true;
+    if (!isNameValid) return true;
 
-    if (value.trim().length > 3) {
-      setIsNameValid(true);
-    }
+    return false;
   };
 
   const handleCreateInsightPage = async () => {
@@ -279,7 +287,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
           handleUpdatePage={handleUpdateInsightPage}
           handleAddToCart={handleReAddRepository}
           history={reposRemoved}
-          createPageButtonDisabled={submitted || !isNameValid}
+          createPageButtonDisabled={disableCreateButton()}
         >
           {repos.map((repo) => {
             const totalPrs =
