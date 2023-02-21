@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.30.0-beta.6](https://github.com/open-sauced/insights/compare/v1.30.0-beta.5...v1.30.0-beta.6) (2023-02-21)
+
+
+### 🐛 Bug Fixes
+
+* disable create page button only if insight page name is empty ([#893](https://github.com/open-sauced/insights/issues/893)) ([ed52399](https://github.com/open-sauced/insights/commit/ed52399acc13f5cb05abb62beabaac016a951729)), closes [#892](https://github.com/open-sauced/insights/issues/892)
+
 ## [1.30.0-beta.5](https://github.com/open-sauced/insights/compare/v1.30.0-beta.4...v1.30.0-beta.5) (2023-02-20)
 
 
