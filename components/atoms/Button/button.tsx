@@ -16,6 +16,7 @@ const Button: React.FC<ButtonProps> = (props) => {
   return (
     <SupabaseButtonComponent
       {...props}
+      // TODO: Fix this - too many !!!!!
       className={
         `${
           props.className && props.className
