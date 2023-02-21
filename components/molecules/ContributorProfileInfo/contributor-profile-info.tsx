@@ -8,7 +8,7 @@ import { HiOutlineMail } from "react-icons/hi";
 import LanguagePill from "components/atoms/LanguagePill/LanguagePill";
 import Title from "components/atoms/Typography/title";
 import Badge from "components/atoms/Badge/badge";
-import { getTimezone } from "lib/utils/timezones";
+import { getTimeByTimezone, getTimezone } from "lib/utils/timezones";
 
 interface ContributorProfileInfoProps {
   githubName: string;
@@ -71,7 +71,8 @@ const ContributorProfileInfo = ({
             <div className="flex flex-col text-sm mt-2 text-light-slate-9 gap-2">
               {displayLocalTime && (
                 <span className="flex gap-2 items-center">
-                  <FiClock className="text-light-slate-9" /> Local time: 12:32 PM
+                  <FiClock className="text-light-slate-9" /> Local time:
+                  <span> {getTimeByTimezone(timezone ? getTimezone(timezone) : 1)}</span>
                 </span>
               )}
 
@@ -102,13 +103,13 @@ const ContributorProfileInfo = ({
               <Title className="!text-base !text-light-slate-12" level={5}>
                 Current Interests
               </Title>
-              <div className="flex gap-2 flex-wrap">
+              <div className="flex gap-1.5 flex-wrap">
                 {interestArray.map((interest, index) => (
                   <LanguagePill key={index} topic={interest} />
                 ))}
               </div>
             </div>
-          )}{" "}
+          )}
         </>
       )}
     </div>
