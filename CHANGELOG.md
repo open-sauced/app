@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.30.0-beta.8](https://github.com/open-sauced/insights/compare/v1.30.0-beta.7...v1.30.0-beta.8) (2023-02-21)
+
+
+### 🐛 Bug Fixes
+
+* replace `PRSocialCard` component with GitHub OpenGraph image ([#889](https://github.com/open-sauced/insights/issues/889)) ([3bfc5a4](https://github.com/open-sauced/insights/commit/3bfc5a4e56d58ab41aadd7bb22595988ebf4b6de)), closes [#883](https://github.com/open-sauced/insights/issues/883)
+
 ## [1.30.0-beta.7](https://github.com/open-sauced/insights/compare/v1.30.0-beta.6...v1.30.0-beta.7) (2023-02-21)
 
 
