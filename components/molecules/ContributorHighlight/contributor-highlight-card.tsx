@@ -47,7 +47,7 @@ const ContributorHighlightCard = ({ title, desc, prLink, user }: ContributorHigh
         )}
         <div className="flex ml-auto lg:gap-3 gap-3 items-center">
           <DropdownMenu>
-            <DropdownMenuTrigger className="py-2 px-2 rounded-full data-[state=open]:bg-light-slate-7">
+            <DropdownMenuTrigger className="py-2 px-2 hidden rounded-full data-[state=open]:bg-light-slate-7">
               <HiOutlineEmojiHappy size={20} />
             </DropdownMenuTrigger>
             <DropdownMenuContent className="flex flex-row gap-2 rounded-3xl" side="left">
@@ -96,13 +96,13 @@ const ContributorHighlightCard = ({ title, desc, prLink, user }: ContributorHigh
                   <span>Copy link</span>
                 </div>
               </DropdownMenuItem>
-              <DropdownMenuItem className="rounded-md">
+              <DropdownMenuItem className="rounded-md hidden">
                 <div className="flex gap-2.5 py-1  items-center pl-3 pr-7">
                   <FaUserPlus size={22} />
                   <span>Follow user</span>
                 </div>
               </DropdownMenuItem>
-              <DropdownMenuItem className="rounded-md">
+              <DropdownMenuItem className="rounded-md hidden">
                 <div className="flex gap-2.5 py-1  items-center pl-3 pr-7">
                   <GrFlag size={22} />
                   <span>Report content</span>
