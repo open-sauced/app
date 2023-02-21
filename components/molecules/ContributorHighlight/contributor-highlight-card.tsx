@@ -26,6 +26,7 @@ interface ContributorHighlightCardProps {
 }
 const ContributorHighlightCard = ({ title, desc, prLink, user }: ContributorHighlightCardProps) => {
   const twitterTweet = `${title || "Open Source Highlight"} - OpenSauced from ${user}`;
+  const reportSubject = `Reported Highlight ${user}: ${title}`;
 
   const handleCopyToClipboard = async (content: string) => {
     const url = new URL(content).toString();
@@ -102,11 +103,14 @@ const ContributorHighlightCard = ({ title, desc, prLink, user }: ContributorHigh
                   <span>Follow user</span>
                 </div>
               </DropdownMenuItem>
-              <DropdownMenuItem className="rounded-md hidden">
-                <div className="flex gap-2.5 py-1  items-center pl-3 pr-7">
+              <DropdownMenuItem className="rounded-md">
+                <a
+                  href={`mailto:hello@opensauced.pizza?subject=${reportSubject}`}
+                  className="flex gap-2.5 py-1  items-center pl-3 pr-7"
+                >
                   <GrFlag size={22} />
                   <span>Report content</span>
-                </div>
+                </a>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
