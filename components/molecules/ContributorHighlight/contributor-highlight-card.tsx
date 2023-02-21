@@ -1,7 +1,6 @@
 import Title from "components/atoms/Typography/title";
 import { generateApiPrUrl } from "lib/utils/github";
 import React, { useEffect, useState } from "react";
-import PullRequestHighlightCard from "../PullRequestHighlightCard/pull-request-highlight-card";
 import { fetchGithubPRInfo } from "lib/hooks/fetchGithubPRInfo";
 import {
   DropdownMenu,
@@ -17,6 +16,7 @@ import { FaUserPlus } from "react-icons/fa";
 import { GrFlag } from "react-icons/gr";
 
 import { ToastTrigger } from "lib/utils/toast-trigger";
+import GhOpenGraphImg from "../GhOpenGraphImg/gh-open-graph-img";
 
 interface ContributorHighlightCardProps {
   title?: string;
@@ -126,7 +126,7 @@ const ContributorHighlightCard = ({ title, desc, prLink, user }: ContributorHigh
       </div>
 
       {/* Generated OG card section */}
-      <PullRequestHighlightCard prLink={prLink} />
+      <GhOpenGraphImg githubLink={prLink} />
     </article>
   );
 };

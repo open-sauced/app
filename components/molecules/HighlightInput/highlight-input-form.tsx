@@ -4,9 +4,9 @@ import { createHighlights } from "lib/hooks/createHighlights";
 
 import { ToastTrigger } from "lib/utils/toast-trigger";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
-import PullRequestHighlightCard from "../PullRequestHighlightCard/pull-request-highlight-card";
 import { useSWRConfig } from "swr";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
+import GhOpenGraphImg from "../GhOpenGraphImg/gh-open-graph-img";
 
 const HighlightInputForm = (): JSX.Element => {
   const { user } = useSupabaseAuth();
@@ -116,7 +116,7 @@ const HighlightInputForm = (): JSX.Element => {
         />
       </div>
 
-      {pullrequestLink && isDivFocused && <PullRequestHighlightCard prLink={pullrequestLink} />}
+      {pullrequestLink && isDivFocused && <GhOpenGraphImg githubLink={pullrequestLink} />}
 
       {isDivFocused && (
         <Button disabled={!bodyText} className="ml-auto" type="primary">
