@@ -3,6 +3,7 @@ import Image from "next/image";
 import RainbowBg from "img/rainbow-cover.png";
 import Button from "components/atoms/Button/button";
 import Link from "next/link";
+import { MarkGithubIcon } from "@primer/octicons-react";
 
 interface ContributorProfileHeaderProps {
   avatarUrl?: string;
@@ -27,8 +28,11 @@ const ContributorProfileHeader = ({ avatarUrl, githubName, isConnected }: Contri
         </div>
         {isConnected && (
           <div className="flex md:translate-y-0 translate-y-28 gap-3 flex-col md:flex-row items-center">
+
             <a target="_blank" rel="noopener noreferrer" href={`https://github.com/${githubName}`}>
-              <Button className="!px-5 !py-2 !bg-white" type="text">
+              <MarkGithubIcon size={16} className="visible mr-2" />
+              <Button className="hidden w-48" type="outline">
+                {" "}
                 View on GitHub
               </Button>
             </a>
