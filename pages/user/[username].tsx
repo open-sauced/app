@@ -49,10 +49,10 @@ const Contributor: WithPageLayout = () => {
           url: `https://www.github.com/${user.login}`,
           image: profile.githubAvatar,
           sameAs: user.twitter_username ? `https://twitter.com/${user.twitter_username}` : undefined,
-          description: user.bio,
+          description: user.bio ?? undefined,
           email: user.display_email ? user.email : undefined,
           knowsAbout: contributorLanguageList.concat(user.interests.split(",")),
-          worksFor: user.company
+          worksFor: user.company ?? undefined
         })} /> }
       </Head>
       <div className="w-full">
