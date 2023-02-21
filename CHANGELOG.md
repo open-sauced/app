@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.30.0-beta.9](https://github.com/open-sauced/insights/compare/v1.30.0-beta.8...v1.30.0-beta.9) (2023-02-21)
+
+
+### 🐛 Bug Fixes
+
+* rename 404 image file ([4e5171f](https://github.com/open-sauced/insights/commit/4e5171fd86d1d905fc801eaf4c6d57769ed13d80))
+
 ## [1.30.0-beta.8](https://github.com/open-sauced/insights/compare/v1.30.0-beta.7...v1.30.0-beta.8) (2023-02-21)
 
 
