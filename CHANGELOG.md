@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.30.0-beta.7](https://github.com/open-sauced/insights/compare/v1.30.0-beta.6...v1.30.0-beta.7) (2023-02-21)
+
+
+### 🐛 Bug Fixes
+
+* hide non-functional elements in highlights card ([#881](https://github.com/open-sauced/insights/issues/881)) ([ba1bd5e](https://github.com/open-sauced/insights/commit/ba1bd5e32c8645e3b99f019afd00c20ea9c0e15d))
+
 ## [1.30.0-beta.6](https://github.com/open-sauced/insights/compare/v1.30.0-beta.5...v1.30.0-beta.6) (2023-02-21)
 
 
