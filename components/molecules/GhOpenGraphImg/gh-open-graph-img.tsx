@@ -1,6 +1,6 @@
 import { generateGhOgImage } from "lib/utils/github";
 import Image from "next/image";
-import InvalidImage from "img/404 Image.svg";
+import InvalidImage from "img/404-image.svg";
 import { useEffect, useState } from "react";
 
 interface GhOpenGraphImgProps {
