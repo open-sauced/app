@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.30.0-alpha.3](https://github.com/open-sauced/insights/compare/v1.30.0-alpha.2...v1.30.0-alpha.3) (2023-02-22)
+
+
+### 🍕 Features
+
+* implement linked data with JSON-LD ([#888](https://github.com/open-sauced/insights/issues/888)) ([e8bda0e](https://github.com/open-sauced/insights/commit/e8bda0ec892750ad2d91acccd51624ed669a9542)), closes [#814](https://github.com/open-sauced/insights/issues/814)
+
 ## [1.30.0-alpha.2](https://github.com/open-sauced/insights/compare/v1.30.0-alpha.1...v1.30.0-alpha.2) (2023-02-17)
 
 
