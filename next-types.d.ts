@@ -36,6 +36,9 @@ interface DbRepoPR {
   readonly repo_owner: string;
   readonly repo_name: string;
   readonly number: number;
+  readonly additions: number;
+  readonly deletions: number;
+  readonly changed_files: number;
 }
 
 interface DbRepoCommit {
