@@ -130,9 +130,9 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
       display_local_time: displayLocalTime,
       timezone,
       // eslint-disable-next-line camelcase
-      github_sponsors_url: formRef.current!.github_sponsors_url.value,
+      github_sponsors_url: formRef.current!.github_sponsors_url.value !== "" ? formRef.current!.github_sponsors_url.value : undefined,
       // eslint-disable-next-line camelcase
-      linkedin_url: formRef.current!.linkedin_url.value
+      linkedin_url: formRef.current!.linkedin_url.value !== "" ? formRef.current!.linkedin_url.value: undefined
     };
     if(formRef.current?.url.value) {
       payload.url = formRef.current!.url.value;
