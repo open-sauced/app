@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.31.0-beta.2](https://github.com/open-sauced/insights/compare/v1.31.0-beta.1...v1.31.0-beta.2) (2023-02-23)
+
+
+### 🍕 Features
+
+* add user profile fields for LinkedIn, GitHub sponsors ([#905](https://github.com/open-sauced/insights/issues/905)) ([df06687](https://github.com/open-sauced/insights/commit/df06687c67abd04004287b1d99c075ffe605ae9f)), closes [#876](https://github.com/open-sauced/insights/issues/876)
+
 ## [1.31.0-beta.1](https://github.com/open-sauced/insights/compare/v1.30.0...v1.31.0-beta.1) (2023-02-21)
 
 
