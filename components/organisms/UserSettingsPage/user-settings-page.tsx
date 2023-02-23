@@ -10,7 +10,7 @@ import Select from "components/atoms/Select/select";
 import SelectOption from "components/atoms/Select/select-option";
 import LanguagePill from "components/atoms/LanguagePill/LanguagePill";
 
-import { updateUser, updateUserPayload } from "lib/hooks/update-user";
+import { updateUser, UpdateUserPayload } from "lib/hooks/update-user";
 import { ToastTrigger } from "lib/utils/toast-trigger";
 import { authSession } from "lib/hooks/authSession";
 import { validateEmail } from "lib/utils/validate-email";
@@ -56,6 +56,8 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
         formRef.current!.twitter_username.value = response.twitter_username;
         formRef.current!.company.value = response.company;
         formRef.current!.location.value = response.location;
+        formRef.current!.github_sponsors_url.value = response.github_sponsors_url;
+        formRef.current!.linkedin_url.value = response.linkedin_url;
       }
     }
     fetchAuthSession();
@@ -116,7 +118,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
 
   const handleUpdateProfile = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const payload: updateUserPayload = {
+    const payload: UpdateUserPayload = {
       name: formRef.current!.nameInput.value,
       email,
       bio: formRef.current!.bio.value,
@@ -126,7 +128,11 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
       location: formRef.current!.location.value,
       // eslint-disable-next-line camelcase
       display_local_time: displayLocalTime,
-      timezone
+      timezone,
+      // eslint-disable-next-line camelcase
+      github_sponsors_url: formRef.current!.github_sponsors_url.value,
+      // eslint-disable-next-line camelcase
+      linkedin_url: formRef.current!.linkedin_url.value
     };
     if(formRef.current?.url.value) {
       payload.url = formRef.current!.url.value;
@@ -185,8 +191,22 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
               name="url"
             />
             <TextInput
+              classNames="bg-light-slate-4 text-light-slate-11 font-medium"
+              placeholder="https://github.com/sponsors/open-sauced"
+              label="GitHub Sponsors URL"
+              pattern="http[s]?://.*\..{2,}"
+              name="github_sponsors_url"
+            />
+            <TextInput
+              classNames="bg-light-slate-4 text-light-slate-11 font-medium"
+              placeholder="https://www.linkedin.com/in/brianldouglas"
+              label="LinkedIn URL"
+              pattern="http[s]?://.*\..{2,}"
+              name="linkedin_url"
+            />                        
+            <TextInput
               classNames="bg-light-slate-4 text-light-slate-11"
-              placeholder="@saucedopen"
+              placeholder="saucedopen"
               label="Twitter Username"
               name="twitter_username"
             />
