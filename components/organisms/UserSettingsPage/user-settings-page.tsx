@@ -129,7 +129,9 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
       // eslint-disable-next-line camelcase
       display_local_time: displayLocalTime,
       timezone,
+      // eslint-disable-next-line camelcase
       github_sponsors_url: formRef.current!.github_sponsors_url.value,
+      // eslint-disable-next-line camelcase
       linkedin_url: formRef.current!.linkedin_url.value
     };
     if(formRef.current?.url.value) {
@@ -197,14 +199,14 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
             />
             <TextInput
               classNames="bg-light-slate-4 text-light-slate-11 font-medium"
-              placeholder="https://www.linkedin.com/company/open-sauced/"
+              placeholder="https://www.linkedin.com/in/brianldouglas"
               label="LinkedIn URL"
               pattern="http[s]?://.*\..{2,}"
               name="linkedin_url"
             />                        
             <TextInput
               classNames="bg-light-slate-4 text-light-slate-11"
-              placeholder="@saucedopen"
+              placeholder="saucedopen"
               label="Twitter Username"
               name="twitter_username"
             />
