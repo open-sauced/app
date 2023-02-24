@@ -94,7 +94,7 @@ const ContributorProfileTab = ({
                 highlights.map(({ id, title, highlight, url, created_at }) => (
                   <div className="flex gap-2 flex-col lg:flex-row lg:gap-7" key={id}>
                     <p className="text-light-slate-10 text-sm">{getFormattedDate(created_at)}</p>
-                    <ContributorHighlightCard user={login || ""} title={title} desc={highlight} prLink={url} />
+                    <ContributorHighlightCard id={id} user={login || ""} title={title} desc={highlight} prLink={url} />
                   </div>
                 ))
               ) : (
