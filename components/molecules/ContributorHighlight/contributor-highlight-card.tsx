@@ -20,7 +20,15 @@ import { useSWRConfig } from "swr";
 import { ToastTrigger } from "lib/utils/toast-trigger";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import GhOpenGraphImg from "../GhOpenGraphImg/gh-open-graph-img";
-import { Dialog, DialogContent, DialogHeader, DialogTrigger, DialogTitle, DialogDescription } from "../Dialog/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTrigger,
+  DialogTitle,
+  DialogDescription,
+  DialogCloseButton
+} from "../Dialog/dialog";
 import { generateApiPrUrl } from "lib/utils/github";
 import { fetchGithubPRInfo } from "lib/hooks/fetchGithubPRInfo";
 import { updateHighlights } from "lib/hooks/updateHighlight";
@@ -42,8 +50,8 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
   const wordLimit = 500;
   const [errorMsg, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const { user: loggedInUser, sessionToken } = useSupabaseAuth();
-  console.log(id);
+  const { user: loggedInUser } = useSupabaseAuth();
+  const [open, setOpen]= useState(false);
 
   const handleCopyToClipboard = async (content: string) => {
     const url = new URL(content).toString();
@@ -81,9 +89,9 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
         );
         setLoading(false);
         if (res) {
-          console.log(res);
           ToastTrigger({ message: "Highlights Updated Successfully", type: "success" });
           mutate(`users/${user}/highlights`);
+          setOpen(false);
         } else {
           setLoading(false);
           setError("An error occurred while updating!!!");
@@ -97,6 +105,7 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
   return (
     <article className="flex flex-col max-w-[40rem] flex-1 gap-3 lg:gap-6">
       <Dialog
+        open={open}
         onOpenChange={(state) => {
           if (!state)
             setTimeout(() => {
@@ -174,7 +183,7 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
                     }`}
                   >
                     <DialogTrigger asChild className="w-full">
-                      <div className="flex gap-2.5 py-1  items-center pl-3 pr-7">
+                      <div onClick={()=> setOpen(true)} className="flex gap-2.5 py-1  items-center pl-3 pr-7">
                         <FiEdit size={22} />
                         <span>Edit</span>
                       </div>
@@ -276,6 +285,8 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
               Save
             </Button>
           </form>
+
+          <DialogCloseButton onClick={()=> setOpen(false)} />
         </DialogContent>
       </Dialog>
 
