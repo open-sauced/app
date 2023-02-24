@@ -39,6 +39,7 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
 
   const [highlight, setHighlight] = useState({ title, desc, prLink });
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const { user: loggedInUser } = useSupabaseAuth();
 
   const handleCopyToClipboard = async (content: string) => {
@@ -59,10 +60,11 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
     if (isValidGhUrl) {
       const { apiPaths } = generateApiPrUrl(highlight.prLink);
       const { repoName, orgName, issueId } = apiPaths;
-
+      setLoading(true);
       const res = await fetchGithubPRInfo(orgName, repoName, issueId);
 
       if (res.isError) {
+        setLoading(false);
         setError("Please provide a valid github pull url");
         return;
       } else {
@@ -70,6 +72,7 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
           { url: highlight.prLink, highlight: highlight.desc || "", title: highlight.title },
           id
         );
+        setLoading(false);
         if (res) {
           mutate(`users/${user}/highlights`);
         } else {
@@ -233,7 +236,7 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
                 />
               </fieldset>
             </div>
-            <Button className="ml-auto" variant="primary">
+            <Button loading={loading} className="ml-auto" variant="primary">
               Save
             </Button>
           </form>
