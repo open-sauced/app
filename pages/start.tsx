@@ -322,7 +322,7 @@ const LoginStep3: React.FC<LoginStep3Props> = ({ repoList, checkFollowed }) => {
                       <Button
                         disabled={following.length >= 10 && !isFollowing[index]}
                         onClick={() => handleFollowRepo(index)}
-                        type={isFollowing[index] ? "outline" : "default"}
+                        variant={isFollowing[index] ? "outline" : "default"}
                       >
                         {isFollowing[index] ? (
                           "Following"
