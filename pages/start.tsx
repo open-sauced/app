@@ -191,6 +191,7 @@ const LoginStep3: React.FC<LoginStep3Props> = ({ interests }) => {
       const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/onboarding`, {
         method: "POST",
         headers: {
+          'Content-Type': 'application/json',
           Authorization: `Bearer ${sessionToken}`
         },
         body: JSON.stringify({ interests, timezone })
