@@ -119,7 +119,7 @@ interface LoginStep2Props {
 }
 
 const LoginStep2: React.FC<LoginStep2Props> = ({ handleLoginStep, handleUpdateInterests: handleUpdateInterestsParent }) => {
-  const [selectedInterest, setSelectedInterest] = useState<string[]>([]);
+  const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
   const interestArray = getInterestOptions();
 
   captureAnayltics("User Onboarding", "onboardingStep2", "visited");
