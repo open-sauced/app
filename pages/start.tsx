@@ -56,7 +56,7 @@ const LoginStep1: React.FC<LoginStep1Props> = ({ handleLoginStep, user }) => {
 
   useEffect(() => {
     if (onboarded) {
-      router.push("/hub/insights");
+      router.push(`/user/${user?.user_metadata.user_name}`);
     } else if (onboarded === false && user && providerToken) {
       handleLoginStep();
     }
