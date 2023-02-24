@@ -135,7 +135,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
       // eslint-disable-next-line camelcase
       linkedin_url: formRef.current!.linkedin_url.value !== "" ? formRef.current!.linkedin_url.value: undefined
     };
-    if(formRef.current?.url.value) {
+    if (formRef.current?.url.value) {
       payload.url = formRef.current!.url.value;
     }
 
@@ -228,7 +228,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
                 checked={displayLocalTime}
                 title="profile email"
                 label="Display current local time on profile"
-                onChange={e => setDisplayLocalTime(e.target.checked)}
+                onChange={(e) => setDisplayLocalTime(e.target.checked)}
               />
               <span className="ml-7 text-light-slate-9 text-sm font-normal">
                 Other users will see the time difference from their local time.
@@ -236,7 +236,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
             </div>
             <div className="flex flex-col gap-2">
               <label>Time zone*</label>
-              <Select value={timezone} onChange={e => setTimezone(e.target.value)} required>
+              <Select value={timezone} onChange={(e) => setTimezone(e.target.value)} required>
                 <SelectOption value="">Select time zone</SelectOption>
                 {timezones.map((timezone, index) => (
                   <SelectOption key={index} value={timezone.value}>
@@ -245,7 +245,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
                 ))}
               </Select>
             </div>
-            <Button disabled={!isValidEmail} type="primary">
+            <Button disabled={!isValidEmail} variant="primary">
               Update profile
             </Button>
           </form>
@@ -266,10 +266,10 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
               ))}
             </div>
             <Button
-              type="default"
+              variant="default"
               disabled={selectedInterest.length === 0}
               onClick={handleUpdateInterest}
-              className="!px-4 !text-light-slate-11 !py-2  !bg-light-slate-4"
+              className="px-4 text-light-slate-11 py-2 bg-light-slate-4"
             >
               Update Interests
             </Button>
@@ -296,8 +296,8 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
             </div>
             <Button
               onClick={handleUpdateEmailPreference}
-              type="default"
-              className="!px-4 w-max !py-2  !bg-light-slate-4 "
+              variant="default"
+              className="px-4 w-max py-2  bg-light-slate-4 "
             >
               Update Preferences
             </Button>

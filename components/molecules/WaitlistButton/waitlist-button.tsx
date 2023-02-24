@@ -17,7 +17,7 @@ const WaitlistButton = ({ submitting, waitlisted, handleJoinClick }: WaitlistBut
           <Text className="">Join the waitlist to gain access to generate custom reports!</Text>
 
           <p className="flex justify-center py-4 px-2">
-            <Button type="primary" onClick={handleJoinClick} disabled={submitting} className="w-52 h-[38px]">
+            <Button variant="primary" onClick={handleJoinClick} disabled={submitting} className="w-52 h-[38px]">
               Join Waitlist
             </Button>
           </p>
