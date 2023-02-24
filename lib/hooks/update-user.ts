@@ -1,6 +1,6 @@
 import { supabase } from "lib/utils/supabase";
 
-export interface updateUserPayload {
+export interface UpdateUserPayload {
   name?: string;
   email?: string;
   bio?: string;
@@ -8,11 +8,15 @@ export interface updateUserPayload {
   twitter_username?: string;
   company?: string;
   location?: string;
-  interests?: string[]; display_local_time?: boolean; timezone?: string;
+  interests?: string[];
+  display_local_time?: boolean;
+  timezone?: string;
+  github_sponsors_url?: string;
+  linkedin_url?: string;
 }
 
 interface useUpdateUserProps {
-  data: updateUserPayload;
+  data: UpdateUserPayload;
   params?: string;
 }
 

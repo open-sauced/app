@@ -85,6 +85,8 @@ const ContributorProfilePage = ({
     // eslint-disable-next-line camelcase
     twitter_username,
     timezone,
+    github_sponsors_url: githubSponsorsUrl,
+    linkedin_url: linkedInUrl,
     display_local_time: displayLocalTime
   } = user || {};
 
@@ -110,6 +112,8 @@ const ContributorProfilePage = ({
                 isConnected={!!user}
                 timezone={timezone}
                 displayLocalTime={displayLocalTime}
+                githubSponsorsUrl={githubSponsorsUrl}
+                linkedInUrl={linkedInUrl}
               />
 
               <div>
