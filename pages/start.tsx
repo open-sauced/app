@@ -51,8 +51,8 @@ const LoginStep1: React.FC<LoginStep1Props> = ({ handleLoginStep, user }) => {
   captureAnayltics("User Onboarding", "onboardingStep1", "visited");
 
   const router = useRouter();
-  // const { onboarded } = useSession();
-  const onboarded = false;
+  const { onboarded } = useSession();
+  // const onboarded = false; // used for testing
   const { providerToken, signIn } = useSupabaseAuth();
 
   useEffect(() => {
