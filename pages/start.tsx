@@ -51,8 +51,8 @@ const LoginStep1: React.FC<LoginStep1Props> = ({ handleLoginStep, user }) => {
   captureAnayltics("User Onboarding", "onboardingStep1", "visited");
 
   const router = useRouter();
-  const { onboarded } = useSession();
-  // const onboarded = false;
+  // const { onboarded } = useSession();
+  const onboarded = false;
   const { providerToken, signIn } = useSupabaseAuth();
 
   useEffect(() => {
@@ -116,9 +116,10 @@ const LoginStep1: React.FC<LoginStep1Props> = ({ handleLoginStep, user }) => {
 
 interface LoginStep2Props {
   handleLoginStep: handleLoginStep;
+  handleUpdateInterests: (interests: string[]) => void;
 }
 
-const LoginStep2: React.FC<LoginStep2Props> = ({ handleLoginStep }) => {
+const LoginStep2: React.FC<LoginStep2Props> = ({ handleLoginStep, handleUpdateInterests: handleUpdateInterestsParent }) => {
   const [selectedInterest, setSelectedInterest] = useState<string[]>([]);
   const interestArray = getInterestOptions();
 
@@ -133,15 +134,8 @@ const LoginStep2: React.FC<LoginStep2Props> = ({ handleLoginStep }) => {
   };
 
   const handleUpdateInterest = async () => {
-    const data = await updateUser({
-      data: { interests: selectedInterest },
-      params: "interests"
-    });
-    if (data) {
-      handleLoginStep();
-    } else {
-      console.error("Error setting user interest");
-    }
+    handleUpdateInterestsParent(selectedInterest);
+    handleLoginStep();
   };
 
   return (
@@ -181,9 +175,10 @@ const LoginStep2: React.FC<LoginStep2Props> = ({ handleLoginStep }) => {
 
 interface LoginStep3Props {
   handleLoginStep: handleLoginStep;
+  interests: string[];
 }
 
-const LoginStep3: React.FC<LoginStep3Props> = () => {
+const LoginStep3: React.FC<LoginStep3Props> = ({ interests }) => {
   captureAnayltics("User Onboarding", "onboardingStep3", "visited");
   const store = useStore();
   const router = useRouter();
@@ -193,28 +188,19 @@ const LoginStep3: React.FC<LoginStep3Props> = () => {
 
   const handleUpdateTimezone = async () => {
     try {
-      const userData = await authSession();
-      const data = await updateUser({
-        data: {
-          name: userData.name,
-          email: userData.email,
-          timezone
-        }
+      const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/onboarding`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${sessionToken}`
+        },
+        body: JSON.stringify({ interests, timezone })
       });
 
-      if (data) {
-        await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/onboarding`, {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${sessionToken}`
-          },
-          body: JSON.stringify({ ids: [] })
-        });
-
+      if (data.ok) {
         store.onboardUser();
         router.push("/hub/insights");
       } else {
-        console.error("Error setting user timezone");
+        console.error("Error onboarding user");
       }
     } catch (e) {
       console.error(e);
@@ -265,6 +251,7 @@ const Login: WithPageLayout = () => {
   const highlighted = "!text-light-slate-12";
 
   const [currentLoginStep, setCurrentLoginStep] = useState<LoginSteps>(1);
+  const [interests, setInterests] = useState<string[]>([]);
 
   const handleLoginStep = async () => {
     setCurrentLoginStep((prevStep) => prevStep + 1);
@@ -335,9 +322,9 @@ const Login: WithPageLayout = () => {
         </section>
         <section className="w-full lg:max-w-[50%] p-9 rounded-lg lg:rounded-r-lg bg-white">
           {currentLoginStep === 1 && <LoginStep1 handleLoginStep={handleLoginStep} user={user} />}
-          {currentLoginStep === 2 && <LoginStep2 handleLoginStep={handleLoginStep} />}
+          {currentLoginStep === 2 && <LoginStep2 handleLoginStep={handleLoginStep} handleUpdateInterests={(interests) => setInterests(interests)} />}
           {currentLoginStep >= 3 && (
-            <LoginStep3 handleLoginStep={handleLoginStep} />
+            <LoginStep3 handleLoginStep={handleLoginStep} interests={interests} />
           )}
         </section>
       </>
