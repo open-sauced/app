@@ -32,15 +32,15 @@ const TableHeader = ({
 
   React.useEffect(() => {
     const updateSuggesitons = async () => {
-      setSuggestions([])
+      setSuggestions([]);
       if(!searchTerm) return;
-      console.log(providerToken)
+      console.log(providerToken);
       const req = await fetch(`https://api.github.com/search/repositories?q=${encodeURIComponent(`${searchTerm} topic:${filterName}`)}`, {
         ...providerToken? {
           headers: {
             "Authorization": `Bearer ${providerToken}`
           }} : {}
-      })
+      });
 
       const res = await req.json();
 
@@ -49,9 +49,9 @@ const TableHeader = ({
         if(suggestions.length > 5) suggestions.length = 5;
         setSuggestions(suggestions);
       }
-    }
+    };
 
-    updateSuggesitons()
+    updateSuggesitons();
   }, [searchTerm]);
 
   return (
