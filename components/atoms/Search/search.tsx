@@ -9,8 +9,9 @@ interface SearchProps {
   className?: string;
   onSearch?: (search?: string) => void;
   suggestions?: string[];
+  onChange?: (value: string) => void;
 }
-const Search = ({ placeholder, name, value, autoFocus, className, onSearch, suggestions }: SearchProps): JSX.Element => {
+const Search = ({ placeholder, name, value, autoFocus, className, onSearch, suggestions, onChange }: SearchProps): JSX.Element => {
   const [search, setSearch] = useState(value);
   const [showSuggestions, setShowSuggestions] = useState(false);
 
@@ -29,6 +30,11 @@ const Search = ({ placeholder, name, value, autoFocus, className, onSearch, sugg
     setShowSuggestions(false);
   };
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+    onChange?.(e.target.value);
+  };
+
   return (
     <div
       className={`${
@@ -44,7 +50,7 @@ const Search = ({ placeholder, name, value, autoFocus, className, onSearch, sugg
         value={search}
         type="search"
         id={name}
-        onChange={(e: any) => setSearch(e.target.value)}
+        onChange={handleChange}
         onKeyUp={e => {
           if (e.code === "Enter") {
             handleOnSearch();
@@ -53,7 +59,7 @@ const Search = ({ placeholder, name, value, autoFocus, className, onSearch, sugg
         onFocus={() => setShowSuggestions(true)}
         onBlur={() => setShowSuggestions(false)}
       />
-  
+
       { suggestions && suggestions.length > 0 && showSuggestions && (
         <div className="absolute bg-white w-full shadow-input border border-light-slate-6 rounded-lg cursor-pointer top-full left-0">
           {suggestions.map((suggestion, index) => (
