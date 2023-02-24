@@ -52,7 +52,6 @@ const LoginStep1: React.FC<LoginStep1Props> = ({ handleLoginStep, user }) => {
 
   const router = useRouter();
   const { onboarded } = useSession();
-  // const onboarded = false; // used for testing
   const { providerToken, signIn } = useSupabaseAuth();
 
   useEffect(() => {
