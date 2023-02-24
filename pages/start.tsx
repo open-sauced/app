@@ -158,7 +158,7 @@ const LoginStep2: React.FC<LoginStep2Props> = ({ handleLoginStep, handleUpdateIn
             {interestArray.map((topic, index) => (
               <LanguagePill
                 onClick={() => handleSelectInterest(topic)}
-                classNames={`${(selectedInterest || []).includes(topic) && "bg-light-orange-10 text-white"}`}
+                classNames={`${(selectedInterest || []).includes(topic) && "!bg-light-orange-10 !text-white"}`}
                 topic={topic}
                 key={index}
               />
