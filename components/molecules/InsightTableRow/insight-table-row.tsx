@@ -56,7 +56,7 @@ const InsightTableRow = ({ user, insight }: InsightRepoRowProps) => {
         <div className="flex gap-4">
           <FavoriteSelector isFavorite={insight.is_favorite} />
           <Link href={`/pages/${user?.user_metadata.user_name}/${insight.id}/dashboard`}>
-            <Button variant="text" className="!border !border-light-slate-8">
+            <Button variant="text" className="border border-light-slate-8">
               Go to Page
             </Button>
           </Link>

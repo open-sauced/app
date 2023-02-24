@@ -248,7 +248,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
               variant="default"
               disabled={selectedInterest.length === 0}
               onClick={handleUpdateInterest}
-              className="!px-4 !text-light-slate-11 !py-2  !bg-light-slate-4"
+              className="px-4 text-light-slate-11 py-2 bg-light-slate-4"
             >
               Update Interests
             </Button>
@@ -276,7 +276,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
             <Button
               onClick={handleUpdateEmailPreference}
               variant="default"
-              className="!px-4 w-max !py-2  !bg-light-slate-4 "
+              className="px-4 w-max py-2  bg-light-slate-4 "
             >
               Update Preferences
             </Button>

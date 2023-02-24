@@ -28,12 +28,12 @@ const ContributorProfileHeader = ({ avatarUrl, githubName, isConnected }: Contri
         {isConnected && (
           <div className="flex md:translate-y-0 translate-y-28 gap-3 flex-col md:flex-row items-center">
             <a target="_blank" rel="noopener noreferrer" href={`https://github.com/${githubName}`}>
-              <Button className="!px-5 !py-2 !bg-white" variant="text">
+              <Button className="px-5 py-2 bg-white" variant="text">
                 View on GitHub
               </Button>
             </a>
             <Link href="#">
-              <Button className="!px-8 !py-2 !hidden" variant="primary">
+              <Button className="px-8 py-2 hidden" variant="primary">
                 Collaborate
               </Button>
             </Link>

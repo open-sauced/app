@@ -117,14 +117,14 @@ const InsightPageCard = ({ insight, user }: InsightPageCardProps): JSX.Element =
       <div className="flex mt-4 justify-between">
         <Button
           onClick={() => handleCopyToClipboard(`/pages/${user?.user_metadata.user_name}/${insight.id}/dashboard`)}
-          className="!w-48"
+          className="w-48"
           variant="outline"
         >
           {" "}
           <LinkIcon size={16} className="mr-2" /> Copy Link
         </Button>
         <Link href={`/pages/${user?.user_metadata.user_name}/${insight.id}/dashboard`}>
-          <Button className="!w-48" variant="primary">
+          <Button className="w-48" variant="primary">
             Go to Insight Page
           </Button>
         </Link>

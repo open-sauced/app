@@ -14,7 +14,7 @@ const SuggestedRepository = ({ data }: SuggestedRopsitoryProps) => {
   return (
     <div className="flex justify-between items-center">
       <RepoCardProfile {...data} />
-      <Button variant="text" className="!border !border-light-slate-6 !shadow-input">
+      <Button variant="text" className="border border-light-slate-6 shadow-input">
         Add to Page
       </Button>
     </div>
