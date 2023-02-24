@@ -98,7 +98,7 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
         }
       }
     } else {
-      setError("Please provide a valid github pull url");
+      setError("Please provide a valid github pull request url");
     }
   };
 
