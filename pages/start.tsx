@@ -118,7 +118,10 @@ interface LoginStep2Props {
   handleUpdateInterests: (interests: string[]) => void;
 }
 
-const LoginStep2: React.FC<LoginStep2Props> = ({ handleLoginStep, handleUpdateInterests: handleUpdateInterestsParent }) => {
+const LoginStep2: React.FC<LoginStep2Props> = ({
+  handleLoginStep,
+  handleUpdateInterests: handleUpdateInterestsParent
+}) => {
   const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
   const interestArray = getInterestOptions();
 
@@ -150,7 +153,8 @@ const LoginStep2: React.FC<LoginStep2Props> = ({ handleLoginStep, handleUpdateIn
           </div>
           <div className="mb-4 text-left ">
             <Text className="!text-sm">
-            Take a moment to select your interests to help us provide personalized project recommendations. By doing so, you&apos;ll find projects that match your skills and aspirations.
+              Take a moment to select your interests to help us provide personalized project recommendations. By doing
+              so, you&apos;ll find projects that match your skills and aspirations.
             </Text>
           </div>
           <div className="flex gap-3 flex-wrap">
@@ -183,7 +187,6 @@ const LoginStep3: React.FC<LoginStep3Props> = ({ interests }) => {
   const router = useRouter();
   const { user, sessionToken } = useSupabaseAuth();
   const [timezone, setTimezone] = useState("");
-
 
   const handleUpdateTimezone = async () => {
     try {
@@ -226,7 +229,7 @@ const LoginStep3: React.FC<LoginStep3Props> = ({ interests }) => {
 
           <div className="flex flex-col gap-2">
             <label>Time zone*</label>
-            <Select value={timezone} onChange={e => setTimezone(e.target.value)} required>
+            <Select value={timezone} onChange={(e) => setTimezone(e.target.value)} required>
               <SelectOption value="">Select time zone</SelectOption>
               {timezones.map((timezone, index) => (
                 <SelectOption key={index} value={timezone.value}>
@@ -236,7 +239,12 @@ const LoginStep3: React.FC<LoginStep3Props> = ({ interests }) => {
             </Select>
           </div>
         </div>
-        <Button type="primary" onClick={handleUpdateTimezone} className="w-full mt-3 md:mt-0 h-10" disabled={!timezone}>
+        <Button
+          variant="primary"
+          onClick={handleUpdateTimezone}
+          className="w-full mt-3 md:mt-0 h-10"
+          disabled={!timezone}
+        >
           Continue
         </Button>
       </div>
@@ -264,15 +272,7 @@ const Login: WithPageLayout = () => {
         <section className="w-full max-w-50%  p-6 lg:p-9">
           <div className="flex items-center gap-2 mb-6">
             <ProgressPie
-              percentage={
-                currentLoginStep === 1
-                  ? 0
-                  : currentLoginStep === 2
-                    ? 33
-                    : currentLoginStep === 3
-                      ? 66
-                      : 100
-              }
+              percentage={currentLoginStep === 1 ? 0 : currentLoginStep === 2 ? 33 : currentLoginStep === 3 ? 66 : 100}
             />
             <Title className="!text-2xl !tracking-tight">Let‘s get started</Title>
           </div>
@@ -292,7 +292,13 @@ const Login: WithPageLayout = () => {
           </div>
           <div className="hidden lg:flex gap-2 items-center mb-8">
             <Icon
-              IconImage={currentLoginStep === 2 ? ChooseInterestsActiveIcon : currentLoginStep < 2 ? ChooseInterestsIcon : CompletedIcon}
+              IconImage={
+                currentLoginStep === 2
+                  ? ChooseInterestsActiveIcon
+                  : currentLoginStep < 2
+                    ? ChooseInterestsIcon
+                    : CompletedIcon
+              }
               size={48}
             />
             <Text
@@ -323,10 +329,13 @@ const Login: WithPageLayout = () => {
         </section>
         <section className="w-full lg:max-w-[50%] p-9 rounded-lg lg:rounded-r-lg bg-white">
           {currentLoginStep === 1 && <LoginStep1 handleLoginStep={handleLoginStep} user={user} />}
-          {currentLoginStep === 2 && <LoginStep2 handleLoginStep={handleLoginStep} handleUpdateInterests={(interests) => setInterests(interests)} />}
-          {currentLoginStep >= 3 && (
-            <LoginStep3 handleLoginStep={handleLoginStep} interests={interests} />
+          {currentLoginStep === 2 && (
+            <LoginStep2
+              handleLoginStep={handleLoginStep}
+              handleUpdateInterests={(interests) => setInterests(interests)}
+            />
           )}
+          {currentLoginStep >= 3 && <LoginStep3 handleLoginStep={handleLoginStep} interests={interests} />}
         </section>
       </>
     </Card>
