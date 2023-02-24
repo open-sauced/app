@@ -17,6 +17,7 @@ import { validateEmail } from "lib/utils/validate-email";
 import { timezones } from "lib/utils/timezones";
 import { updateEmailPreferences } from "lib/hooks/updateEmailPreference";
 import { useFetchUser } from "lib/hooks/useFetchUser";
+import getInterestOptions from "lib/utils/getInterestOptions";
 
 interface userSettingsPageProps {
   user: User | null;
@@ -42,7 +43,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
   });
   const [selectedInterest, setSelectedInterest] = useState<string[]>([]);
   const formRef = useRef<HTMLFormElement>(null);
-  const interestArray = ["javascript", "python", "rust", "ML", "AI", "react"];
+  const interestArray = getInterestOptions();
 
   useEffect(() => {
     async function fetchAuthSession() {
