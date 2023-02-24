@@ -24,6 +24,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTrigger, DialogTitle, Dialog
 import { generateApiPrUrl } from "lib/utils/github";
 import { fetchGithubPRInfo } from "lib/hooks/fetchGithubPRInfo";
 import { updateHighlights } from "lib/hooks/updateHighlight";
+import { MdError } from "react-icons/md";
 
 interface ContributorHighlightCardProps {
   title?: string;
@@ -38,7 +39,7 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
   const { mutate } = useSWRConfig();
 
   const [highlight, setHighlight] = useState({ title, desc, prLink });
-  const [error, setError] = useState("");
+  const [errorMsg, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const { user: loggedInUser } = useSupabaseAuth();
 
@@ -74,14 +75,15 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
         );
         setLoading(false);
         if (res) {
+          ToastTrigger({ message: "Highlights Updated Successfully", type: "success" });
           mutate(`users/${user}/highlights`);
         } else {
+          setLoading(false);
           setError("An error occurred while updating!!!");
         }
       }
     } else {
       setError("Please provide a valid github pull url");
-      console.log("Please provide a valid github pull url");
     }
   };
 
@@ -208,11 +210,19 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
           </DialogHeader>
           <form onSubmit={handleUpdateHighlight} className="flex flex-1 font-normal flex-col gap-4 ">
             <div className=" p-2 flex  rounded-lg text-sm overflow-hidden flex-col gap-2 ">
-              <p></p>
+              {/* Error container */}
+              {errorMsg && (
+                <p className="inline-flex w-max items-center px-2 border rounded-md gap-2  mb-4 border-red-500 text-red-500 py-1 bg-red-100">
+                  <MdError size={20} /> {errorMsg}
+                </p>
+              )}
               <fieldset className="flex flex-col w-full gap-1">
                 <label htmlFor="title">title (optional)</label>
                 <input
-                  onChange={(e) => setHighlight((prev) => ({ ...prev, title: e.target.value }))}
+                  onChange={(e) => {
+                    setHighlight((prev) => ({ ...prev, title: e.target.value }));
+                    setError("");
+                  }}
                   value={highlight.title}
                   name="title"
                   className="h-8 px-2 font-normal focus:border focus:outline-none rounded-lg "
@@ -222,14 +232,20 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
                 <label htmlFor="description">body</label>
                 <Textarea
                   value={highlight.desc}
-                  onChange={(e) => setHighlight((prev) => ({ ...prev, desc: e.target.value }))}
+                  onChange={(e) => {
+                    setHighlight((prev) => ({ ...prev, desc: e.target.value }));
+                    setError("");
+                  }}
                   className="resize-none bg-white px-2 focus:border font-normal text-light-slate-11 mb-2 transition focus:outline-none rounded-lg"
                 ></Textarea>
               </fieldset>
               <fieldset className="flex  flex-col w-full gap-1">
                 <label htmlFor="title">Pull request link</label>
                 <input
-                  onChange={(e) => setHighlight((prev) => ({ ...prev, prLink: e.target.value }))}
+                  onChange={(e) => {
+                    setHighlight((prev) => ({ ...prev, prLink: e.target.value }));
+                    setError("");
+                  }}
                   value={highlight.prLink}
                   name="title"
                   className="h-8 px-2 font-normal text-orange-600 focus:outline-none focus:border rounded-lg "
