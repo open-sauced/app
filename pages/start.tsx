@@ -181,7 +181,7 @@ const LoginStep3: React.FC<LoginStep3Props> = ({ interests }) => {
   captureAnayltics("User Onboarding", "onboardingStep3", "visited");
   const store = useStore();
   const router = useRouter();
-  const { sessionToken } = useSupabaseAuth();
+  const { user, sessionToken } = useSupabaseAuth();
   const [timezone, setTimezone] = useState("");
 
 
@@ -198,7 +198,7 @@ const LoginStep3: React.FC<LoginStep3Props> = ({ interests }) => {
 
       if (data.ok) {
         store.onboardUser();
-        router.push("/hub/insights");
+        router.push(`/user/${user?.user_metadata.user_name}`);
       } else {
         console.error("Error onboarding user");
       }
