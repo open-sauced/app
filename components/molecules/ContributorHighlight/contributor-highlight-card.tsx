@@ -37,8 +37,9 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
   const twitterTweet = `${title || "Open Source Highlight"} - OpenSauced from ${user}`;
   const reportSubject = `Reported Highlight ${user}: ${title}`;
   const { mutate } = useSWRConfig();
-
   const [highlight, setHighlight] = useState({ title, desc, prLink });
+  const [wordCount, setWordCount] = useState(highlight.desc?.length || 0);
+  const wordLimit = 500;
   const [errorMsg, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const { user: loggedInUser, sessionToken } = useSupabaseAuth();
@@ -58,6 +59,10 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
     e.preventDefault();
 
     const isValidGhUrl = highlight.prLink.match(/((https?:\/\/)?(www\.)?github\.com\/[^\/]+\/[^\/]+\/pull\/[0-9]+)/);
+    if (wordCount > wordLimit) {
+      setError("Character limit exceeded");
+      return;
+    }
 
     if (isValidGhUrl) {
       const { apiPaths } = generateApiPrUrl(highlight.prLink);
@@ -162,16 +167,20 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
                     <span>Follow user</span>
                   </div>
                 </DropdownMenuItem>
-                <DropdownMenuItem
-                  className={`rounded-md ${loggedInUser && loggedInUser.user_metadata.user_name !== user && "hidden"}`}
-                >
-                  <DialogTrigger asChild className="w-full">
-                    <div className="flex gap-2.5 py-1  items-center pl-3 pr-7">
-                      <FiEdit size={22} />
-                      <span>Edit</span>
-                    </div>
-                  </DialogTrigger>
-                </DropdownMenuItem>
+                {loggedInUser && (
+                  <DropdownMenuItem
+                    className={`rounded-md ${
+                      loggedInUser && loggedInUser.user_metadata.user_name !== user && "hidden"
+                    }`}
+                  >
+                    <DialogTrigger asChild className="w-full">
+                      <div className="flex gap-2.5 py-1  items-center pl-3 pr-7">
+                        <FiEdit size={22} />
+                        <span>Edit</span>
+                      </div>
+                    </DialogTrigger>
+                  </DropdownMenuItem>
+                )}
 
                 <DropdownMenuItem
                   className={`rounded-md ${loggedInUser && loggedInUser.user_metadata.user_name === user && "hidden"}`}
@@ -230,16 +239,25 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
                   className="h-8 px-2 font-normal focus:border focus:outline-none rounded-lg "
                 />
               </fieldset>
-              <fieldset className="flex flex-col w-full gap-1">
+              <fieldset className="flex flex-col w-full  gap-1">
                 <label htmlFor="description">body</label>
-                <Textarea
-                  value={highlight.desc}
-                  onChange={(e) => {
-                    setHighlight((prev) => ({ ...prev, desc: e.target.value }));
-                    setError("");
-                  }}
-                  className="resize-none bg-white px-2 focus:border font-normal text-light-slate-11 mb-2 transition focus:outline-none rounded-lg"
-                ></Textarea>
+                <div className="bg-white  focus-within:border rounded-lg">
+                  <Textarea
+                    value={highlight.desc}
+                    onChange={(e) => {
+                      setHighlight((prev) => ({ ...prev, desc: e.target.value }));
+                      setError("");
+                      setWordCount(e.target.value.length);
+                    }}
+                    className="resize-none  px-2  font-normal text-light-slate-11 mb-2 transition focus:outline-none rounded-lg"
+                  ></Textarea>
+                  <p className="text-xs p-2 text-light-slate-9 flex justify-end gap-1">
+                    <span className={`${wordCount > wordLimit && "text-red-600"}`}>
+                      {wordCount > wordLimit ? `-${wordCount - wordLimit}` : wordCount}
+                    </span>{" "}
+                    / <span>{wordLimit}</span>
+                  </p>
+                </div>
               </fieldset>
               <fieldset className="flex  flex-col w-full gap-1">
                 <label htmlFor="title">Pull request link</label>
