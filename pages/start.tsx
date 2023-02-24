@@ -96,7 +96,7 @@ const LoginStep1: React.FC<LoginStep1Props> = ({ handleLoginStep, user }) => {
           </div>
         </div>
         <div>
-          <Button onClick={handleGitHubAuth} type="primary" className="w-full mt-3 md:mt-0 h-10">
+          <Button onClick={handleGitHubAuth} variant="primary" className="w-full mt-3 md:mt-0 h-10">
             Authenticate <Icon IconImage={GitHubIcon} className="ml-2" />
           </Button>
         </div>
@@ -214,7 +214,7 @@ const LoginStep2: React.FC<LoginStep2Props> = ({ handleLoginStep, setRepoList })
               handleChange={handleSlugChange}
             />
           </div>
-          <Button onClick={handleAddPAT} type="primary" className="w-full mt-3 md:mt-0 h-10">
+          <Button onClick={handleAddPAT} variant="primary" className="w-full mt-3 md:mt-0 h-10">
             Continue
           </Button>
         </div>
@@ -376,10 +376,10 @@ const Login: WithPageLayout = () => {
                 currentLoginStep === 1
                   ? 0
                   : currentLoginStep === 2
-                    ? 33
-                    : currentLoginStep === 3 && !isClickedFollowed
-                      ? 66
-                      : 100
+                  ? 33
+                  : currentLoginStep === 3 && !isClickedFollowed
+                  ? 66
+                  : 100
               }
             />
             <Title className="!text-2xl !tracking-tight">Let‘s get started</Title>
@@ -416,8 +416,8 @@ const Login: WithPageLayout = () => {
                 currentLoginStep === 3 && !isClickedFollowed
                   ? ChooseRepoActiveIcon
                   : currentLoginStep < 3
-                    ? ChooseRepoIcon
-                    : CompletedIcon
+                  ? ChooseRepoIcon
+                  : CompletedIcon
               }
               size={48}
             />

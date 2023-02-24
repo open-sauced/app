@@ -13,7 +13,7 @@ const StripeCheckoutButton = () => {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/checkout/session`, {
         method: "POST",
         headers: {
-          "Authorization": `Bearer ${sessionToken}`
+          Authorization: `Bearer ${sessionToken}`
         }
       });
 
@@ -37,7 +37,7 @@ const StripeCheckoutButton = () => {
 
       <p className="flex justify-center py-4 px-2">
         <form onSubmit={handleFormSubmit}>
-          <Button type="primary" className="w-52 h-[38px]">
+          <Button variant="primary" className="w-52 h-[38px]">
             Upgrade Access
           </Button>
         </form>

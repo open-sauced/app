@@ -28,7 +28,7 @@ const InsightsHub: WithPageLayout = () => {
         if (!currentUser?.data?.session || onboarded === false) {
           router.push("/");
         }
-      } catch(e: unknown) {
+      } catch (e: unknown) {
         router.push("/");
       }
     }
@@ -48,7 +48,7 @@ const InsightsHub: WithPageLayout = () => {
             <Search placeholder="Search repositories" className="max-w-full" name={"query"} />
           </div>
           <Link href={"/hub/insights/new"}>
-            <Button type="primary">Add Insight Page</Button>
+            <Button variant="primary">Add Insight Page</Button>
           </Link>
         </div>
       </div>
@@ -57,25 +57,23 @@ const InsightsHub: WithPageLayout = () => {
         {isLoading
           ? "Loading..."
           : isError
-            ? "Error..."
-            : insightsData.map((insight, index) => {
-              return (
-                <InsightRow  key={`insights_${insight.id}`} user={user} insight={insight} />
-              );
-            })
-        }
+          ? "Error..."
+          : insightsData.map((insight, index) => {
+              return <InsightRow key={`insights_${insight.id}`} user={user} insight={insight} />;
+            })}
       </section>
 
       <Link
         passHref
         href={"/hub/insights/new"}
-        className="w-full bg-light-slate-4 text-lg text-light-slate-11 py-5 md:py-8 lg:py-10 rounded-lg text-center border border-light-slate-7">
-
-          Create a new Insight Page
-
+        className="w-full bg-light-slate-4 text-lg text-light-slate-11 py-5 md:py-8 lg:py-10 rounded-lg text-center border border-light-slate-7"
+      >
+        Create a new Insight Page
       </Link>
     </div>
-  ) : <></>;
+  ) : (
+    <></>
+  );
 };
 
 InsightsHub.PageLayout = HubLayout;
