@@ -1,8 +1,6 @@
 import Title from "components/atoms/Typography/title";
-import { generateApiPrUrl } from "lib/utils/github";
-import React, { useEffect, useState } from "react";
-import PullRequestHighlightCard from "../PullRequestHighlightCard/pull-request-highlight-card";
-import { fetchGithubPRInfo } from "lib/hooks/fetchGithubPRInfo";
+import React from "react";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,6 +15,8 @@ import { FaUserPlus } from "react-icons/fa";
 import { GrFlag } from "react-icons/gr";
 
 import { ToastTrigger } from "lib/utils/toast-trigger";
+import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
+import GhOpenGraphImg from "../GhOpenGraphImg/gh-open-graph-img";
 
 interface ContributorHighlightCardProps {
   title?: string;
@@ -26,6 +26,9 @@ interface ContributorHighlightCardProps {
 }
 const ContributorHighlightCard = ({ title, desc, prLink, user }: ContributorHighlightCardProps) => {
   const twitterTweet = `${title || "Open Source Highlight"} - OpenSauced from ${user}`;
+  const reportSubject = `Reported Highlight ${user}: ${title}`;
+
+  const { user: loggedInUser } = useSupabaseAuth();
 
   const handleCopyToClipboard = async (content: string) => {
     const url = new URL(content).toString();
@@ -47,7 +50,7 @@ const ContributorHighlightCard = ({ title, desc, prLink, user }: ContributorHigh
         )}
         <div className="flex ml-auto lg:gap-3 gap-3 items-center">
           <DropdownMenu>
-            <DropdownMenuTrigger className="py-2 px-2 rounded-full data-[state=open]:bg-light-slate-7">
+            <DropdownMenuTrigger className="py-2 px-2 hidden rounded-full data-[state=open]:bg-light-slate-7">
               <HiOutlineEmojiHappy size={20} />
             </DropdownMenuTrigger>
             <DropdownMenuContent className="flex flex-row gap-2 rounded-3xl" side="left">
@@ -96,17 +99,22 @@ const ContributorHighlightCard = ({ title, desc, prLink, user }: ContributorHigh
                   <span>Copy link</span>
                 </div>
               </DropdownMenuItem>
-              <DropdownMenuItem className="rounded-md">
+              <DropdownMenuItem className="rounded-md hidden">
                 <div className="flex gap-2.5 py-1  items-center pl-3 pr-7">
                   <FaUserPlus size={22} />
                   <span>Follow user</span>
                 </div>
               </DropdownMenuItem>
-              <DropdownMenuItem className="rounded-md">
-                <div className="flex gap-2.5 py-1  items-center pl-3 pr-7">
+              <DropdownMenuItem
+                className={`rounded-md ${loggedInUser && loggedInUser.user_metadata.user_name === user && "hidden"}`}
+              >
+                <a
+                  href={`mailto:hello@opensauced.pizza?subject=${reportSubject}`}
+                  className="flex gap-2.5 py-1  items-center pl-3 pr-7"
+                >
                   <GrFlag size={22} />
                   <span>Report content</span>
-                </div>
+                </a>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -126,7 +134,7 @@ const ContributorHighlightCard = ({ title, desc, prLink, user }: ContributorHigh
       </div>
 
       {/* Generated OG card section */}
-      <PullRequestHighlightCard prLink={prLink} />
+      <GhOpenGraphImg githubLink={prLink} />
     </article>
   );
 };

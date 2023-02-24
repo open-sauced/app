@@ -2,13 +2,13 @@
 import Link from "next/link";
 
 import { AiOutlineGift } from "react-icons/ai";
-import { FiClock, FiTwitter } from "react-icons/fi";
+import { FiClock, FiGithub, FiLinkedin, FiTwitter } from "react-icons/fi";
 import { HiOutlineMail } from "react-icons/hi";
 
 import LanguagePill from "components/atoms/LanguagePill/LanguagePill";
 import Title from "components/atoms/Typography/title";
 import Badge from "components/atoms/Badge/badge";
-import { getTimezone } from "lib/utils/timezones";
+import { getTimeByTimezone, getTimezone } from "lib/utils/timezones";
 
 interface ContributorProfileInfoProps {
   githubName: string;
@@ -19,6 +19,8 @@ interface ContributorProfileInfoProps {
   isConnected?: boolean;
   timezone?: string;
   displayLocalTime?: boolean;
+  githubSponsorsUrl?: string;
+  linkedInUrl?: string;
 }
 
 const ContributorProfileInfo = ({
@@ -28,7 +30,9 @@ const ContributorProfileInfo = ({
   interests,
   isConnected,
   timezone,
-  displayLocalTime
+  displayLocalTime,
+  githubSponsorsUrl,
+  linkedInUrl
 }: ContributorProfileInfoProps) => {
   const interestArray = interests?.split(",");
 
@@ -69,16 +73,54 @@ const ContributorProfileInfo = ({
                 "I am an open source developer with a passion for music and video games. I strive to improve the open source community and am always looking for new ways to contribute."}
             </p>
             <div className="flex flex-col text-sm mt-2 text-light-slate-9 gap-2">
-              {displayLocalTime && <span className="flex gap-2 items-center">
-                <FiClock className="text-light-slate-9" /> Local time: 12:32 PM
-              </span>}
+              {displayLocalTime && (
+                <span className="flex gap-2 items-center">
+                  <FiClock className="text-light-slate-9" /> Local time:
+                  <span> {getTimeByTimezone(timezone ? getTimezone(timezone) : 1)}</span>
+                </span>
+              )}
 
-              {twitterUsername && <span className="flex gap-2 items-center">
-                <FiTwitter className="text-light-slate-9" />
-                <Link href={`https://twitter.com/${twitterUsername}`} target="_blank" rel="noreferrer" className="w-max hover:text-orange-500 ">
-                  {twitterUsername}
-                </Link>
-              </span>}
+              {twitterUsername && (
+                <span className="flex gap-2 items-center">
+                  <FiTwitter className="text-light-slate-9" />
+                  <Link
+                    href={`https://twitter.com/${twitterUsername}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="w-max hover:text-orange-500 "
+                  >
+                    {twitterUsername}
+                  </Link>
+                </span>
+              )}
+
+              {linkedInUrl && (
+                <span className="flex gap-2 items-center">
+                  <FiLinkedin className="text-light-slate-9" />
+                  <Link
+                    href={linkedInUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="w-max hover:text-orange-500 "
+                  >
+                    {linkedInUrl?.replace(/^(http(s)?:\/\/)?([\w]+\.)?linkedin\.com\/(pub|in|profile|company)/, "in")}
+                  </Link>
+                </span>
+              )}
+
+              {githubSponsorsUrl && (
+                <span className="flex gap-2 items-center">
+                  <FiGithub className="text-light-slate-9" />
+                  <Link
+                    href={githubSponsorsUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="w-max hover:text-orange-500 "
+                  >
+                    {githubSponsorsUrl?.replace(/^(http(s)?:\/\/)?([\w]+\.)?github\.com\//, "")}
+                  </Link>
+                </span>
+              )}
 
               {/* <span className="flex gap-2 items-center">
                 <HiOutlineMail className="text-light-slate-9" />
@@ -93,13 +135,13 @@ const ContributorProfileInfo = ({
               <Title className="!text-base !text-light-slate-12" level={5}>
                 Current Interests
               </Title>
-              <div className="flex gap-2">
+              <div className="flex gap-1.5 flex-wrap">
                 {interestArray.map((interest, index) => (
                   <LanguagePill key={index} topic={interest} />
                 ))}
               </div>
             </div>
-          )}{" "}
+          )}
         </>
       )}
     </div>

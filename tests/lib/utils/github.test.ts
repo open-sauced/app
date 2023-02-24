@@ -1,7 +1,12 @@
-import { getAvatarById, getAvatarByUsername, getProfileLink, getRepoIssuesLink } from "lib/utils/github";
+import {
+  getAvatarById,
+  getAvatarByUsername,
+  getProfileLink,
+  getRepoIssuesLink,
+  generateGhOgImage
+} from "lib/utils/github";
 
 describe("[lib] github methods", () => {
-
   it("Should return a valid avatar link", () => {
     const result = getAvatarById("Deadreyo", 460);
     expect(result).toEqual("https://avatars.githubusercontent.com/u/Deadreyo?size=460&v=4");
@@ -21,5 +26,12 @@ describe("[lib] github methods", () => {
     const result = getRepoIssuesLink("Deadreyo/insights");
     expect(result).toEqual("https://github.com/Deadreyo/insights/issues");
   });
-
+  it("Should return a valid image src link", () => {
+    const result = generateGhOgImage("https://github.com/open-sauced/hot/pull/448");
+    expect(result).toEqual({ isValid: true, url: "https://opengraph.githubassets.com/1/open-sauced/hot/pull/448" });
+  });
+  it("Should return an object with isValid set to false", () => {
+    const result = generateGhOgImage("https://gitub.com/open-sauced/hot/pull/448");
+    expect(result).toEqual({ isValid: false, url: "" });
+  });
 });
