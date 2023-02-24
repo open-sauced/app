@@ -5,10 +5,10 @@ import { User } from "@supabase/supabase-js";
 
 import CompletedIcon from "img/icons/completed-icon.svg";
 import GitHubAuthActiveIcon from "img/icons/github-auth-active-icon.svg";
-import ChooseRepoIcon from "img/icons/choose-repo-icon.svg";
-import ChooseRepoActiveIcon from "img/icons/choose-repo-active-icon.svg";
-import PATIcon from "img/icons/pat-icon.svg";
-import PATActiveIcon from "img/icons/pat-active-icon.svg";
+import ChooseTimezoneIcon from "img/icons/choose-timezone.svg";
+import ChooseTimezoneActiveIcon from "img/icons/choose-timezone-active.svg";
+import ChooseInterestsIcon from "img/icons/choose-interests.svg";
+import ChooseInterestsActiveIcon from "img/icons/choose-interests-active.svg";
 import HighlightIcon from "img/icons/highlight-icon.svg";
 import GitHubIcon from "img/icons/github-icon.svg";
 import AddIcon from "img/icons/add-icon.svg";
@@ -143,11 +143,11 @@ const LoginStep2: React.FC<LoginStep2Props> = ({ handleLoginStep, handleUpdateIn
       <div className="login-step flex flex-col h-full lg:gap-28">
         <div>
           <div className="flex items-center gap-2 mb-4">
-            <Icon className="lg:hidden" IconImage={PATActiveIcon} size={48} />
+            <Icon className="lg:hidden" IconImage={ChooseInterestsActiveIcon} size={48} />
             <Title className="!text-sm !text-light-orange-9">Step Two</Title>
           </div>
           <div className="gap-2 mb-4">
-            <Title className="!text-2xl">Choose your interest</Title>
+            <Title className="!text-2xl">Choose your interests</Title>
           </div>
           <div className="mb-4 text-left ">
             <Text className="!text-sm">
@@ -212,7 +212,7 @@ const LoginStep3: React.FC<LoginStep3Props> = ({ interests }) => {
       <div className="flex flex-col h-full lg:gap-36">
         <div>
           <div className="flex items-center gap-2 mb-4">
-            <Icon className="lg:hidden" IconImage={ChooseRepoActiveIcon} size={48} />
+            <Icon className="lg:hidden" IconImage={ChooseTimezoneActiveIcon} size={48} />
             <Title className="!text-sm !text-light-orange-9">Step Three</Title>
           </div>
           <div className="gap-2 mb-4">
@@ -291,7 +291,7 @@ const Login: WithPageLayout = () => {
           </div>
           <div className="hidden lg:flex gap-2 items-center mb-8">
             <Icon
-              IconImage={currentLoginStep === 2 ? PATActiveIcon : currentLoginStep < 2 ? PATIcon : CompletedIcon}
+              IconImage={currentLoginStep === 2 ? ChooseInterestsActiveIcon : currentLoginStep < 2 ? ChooseInterestsIcon : CompletedIcon}
               size={48}
             />
             <Text
@@ -305,9 +305,9 @@ const Login: WithPageLayout = () => {
             <Icon
               IconImage={
                 currentLoginStep === 3
-                  ? ChooseRepoActiveIcon
+                  ? ChooseTimezoneActiveIcon
                   : currentLoginStep < 3
-                    ? ChooseRepoIcon
+                    ? ChooseTimezoneIcon
                     : CompletedIcon
               }
               size={48}
