@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.31.0-beta.4](https://github.com/open-sauced/insights/compare/v1.31.0-beta.3...v1.31.0-beta.4) (2023-02-24)
+
+
+### 🍕 Features
+
+* update user onboarding flow ([#880](https://github.com/open-sauced/insights/issues/880)) ([bd34c2a](https://github.com/open-sauced/insights/commit/bd34c2ae49186acbf9bd459cf974f907165de36b)), closes [#801](https://github.com/open-sauced/insights/issues/801)
+
 ## [1.31.0-beta.3](https://github.com/open-sauced/insights/compare/v1.31.0-beta.2...v1.31.0-beta.3) (2023-02-23)
 
 
