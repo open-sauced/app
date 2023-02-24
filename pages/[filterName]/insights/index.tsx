@@ -57,8 +57,8 @@ const InsightsHub: WithPageLayout = () => {
         {isLoading
           ? "Loading..."
           : isError
-          ? "Error..."
-          : insightsData.map((insight, index) => {
+            ? "Error..."
+            : insightsData.map((insight, index) => {
               return <InsightRow key={`insights_${insight.id}`} user={user} insight={insight} />;
             })}
       </section>
