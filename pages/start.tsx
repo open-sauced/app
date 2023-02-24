@@ -125,15 +125,15 @@ const LoginStep2: React.FC<LoginStep2Props> = ({ handleLoginStep, handleUpdateIn
   captureAnayltics("User Onboarding", "onboardingStep2", "visited");
 
   const handleSelectInterest = (interest: string) => {
-    if (selectedInterest.length > 0 && selectedInterest.includes(interest)) {
-      setSelectedInterest((prev) => prev.filter((item) => item !== interest));
+    if (selectedInterests.length > 0 && selectedInterests.includes(interest)) {
+      setSelectedInterests((prev) => prev.filter((item) => item !== interest));
     } else {
-      setSelectedInterest((prev) => [...prev, interest]);
+      setSelectedInterests((prev) => [...prev, interest]);
     }
   };
 
   const handleUpdateInterest = async () => {
-    handleUpdateInterestsParent(selectedInterest);
+    handleUpdateInterestsParent(selectedInterests);
     handleLoginStep();
   };
 
@@ -157,7 +157,7 @@ const LoginStep2: React.FC<LoginStep2Props> = ({ handleLoginStep, handleUpdateIn
             {interestArray.map((topic, index) => (
               <LanguagePill
                 onClick={() => handleSelectInterest(topic)}
-                classNames={`${(selectedInterest || []).includes(topic) && "!bg-light-orange-10 !text-white"}`}
+                classNames={`${(selectedInterests || []).includes(topic) && "!bg-light-orange-10 !text-white"}`}
                 topic={topic}
                 key={index}
               />
