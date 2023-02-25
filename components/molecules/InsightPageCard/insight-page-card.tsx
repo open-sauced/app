@@ -19,12 +19,9 @@ interface InsightPageCardProps {
   insight: DbUserInsight;
 }
 
-const InsightPageCard = ({
-  insight,
-  user
-}: InsightPageCardProps): JSX.Element => {
+const InsightPageCard = ({ insight, user }: InsightPageCardProps): JSX.Element => {
   const members: any[] = [];
-  const repoIds = insight.repos.map(repo => repo.repo_id);
+  const repoIds = insight.repos.map((repo) => repo.repo_id);
   const { data: repoData, isError, isLoading } = useRepositoriesList(false, repoIds);
   const { open, closed, merged, drafts, velocity, total, repoList } = getRepoInsights(repoData);
 
@@ -65,7 +62,7 @@ const InsightPageCard = ({
     }
   };
 
-  const averagePrOpened = repoData.length > 0 ? Math.round(((open || 0)/total) * 100) : 0;
+  const averagePrOpened = repoData.length > 0 ? Math.round(((open || 0) / total) * 100) : 0;
 
   return (
     <div className=" w-[428px] py-[15px] px-[14px] rounded-lg flex flex-col gap-y-3 gap-x-2 bg-white border">
@@ -101,9 +98,12 @@ const InsightPageCard = ({
           <div>
             <span className="text-xs text-light-slate-11">Avg PRs velocity</span>
             <div className="flex text-green-9 justify-between items-end pr-8 mt-1">
-              <Text className="!text-xl !text-black !leading-none">{repoData.length > 0 ? getRelativeDays(Math.round(velocity / repoData.length)) : "-"}</Text>
+              <Text className="!text-xl !text-black !leading-none">
+                {repoData.length > 0 ? getRelativeDays(Math.round(velocity / repoData.length)) : "-"}
+              </Text>
               <p className="flex items-end">
-                <span className="mb-0 leading-none">{total > 0 ? `${Math.round((merged/total) * 100)}%` : "-"}</span> <BsFillArrowUpCircleFill className="ml-1" fill="green" color="green" />
+                <span className="mb-0 leading-none">{total > 0 ? `${Math.round((merged / total) * 100)}%` : "-"}</span>{" "}
+                <BsFillArrowUpCircleFill className="ml-1" fill="green" color="green" />
               </p>
             </div>
           </div>
@@ -115,12 +115,16 @@ const InsightPageCard = ({
 
       {/* Card footer */}
       <div className="flex mt-4 justify-between">
-        <Button onClick={() => handleCopyToClipboard(`/pages/${user?.user_metadata.user_name}/${insight.id}/dashboard`)} className="!w-48" type="outline">
+        <Button
+          onClick={() => handleCopyToClipboard(`/pages/${user?.user_metadata.user_name}/${insight.id}/dashboard`)}
+          className="w-48"
+          variant="outline"
+        >
           {" "}
           <LinkIcon size={16} className="mr-2" /> Copy Link
         </Button>
         <Link href={`/pages/${user?.user_metadata.user_name}/${insight.id}/dashboard`}>
-          <Button className="!w-48" type="primary">
+          <Button className="w-48" variant="primary">
             Go to Insight Page
           </Button>
         </Link>

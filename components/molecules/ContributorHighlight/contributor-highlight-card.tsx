@@ -51,7 +51,7 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
   const [errorMsg, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const { user: loggedInUser } = useSupabaseAuth();
-  const [open, setOpen]= useState(false);
+  const [open, setOpen] = useState(false);
 
   const handleCopyToClipboard = async (content: string) => {
     const url = new URL(content).toString();
@@ -183,7 +183,7 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
                     }`}
                   >
                     <DialogTrigger asChild className="w-full">
-                      <div onClick={()=> setOpen(true)} className="flex gap-2.5 py-1  items-center pl-3 pr-7">
+                      <div onClick={() => setOpen(true)} className="flex gap-2.5 py-1  items-center pl-3 pr-7">
                         <FiEdit size={22} />
                         <span>Edit</span>
                       </div>
@@ -281,12 +281,12 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
                 />
               </fieldset>
             </div>
-            <Button loading={loading} className="ml-auto" type="primary">
+            <Button loading={loading} className="ml-auto" variant="primary">
               Save
             </Button>
           </form>
 
-          <DialogCloseButton onClick={()=> setOpen(false)} />
+          <DialogCloseButton onClick={() => setOpen(false)} />
         </DialogContent>
       </Dialog>
 

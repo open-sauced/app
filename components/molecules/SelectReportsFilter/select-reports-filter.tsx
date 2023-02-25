@@ -16,8 +16,8 @@ const SelectReportsFilter = ({ filterList, callback }: SelectReportsFilterProps)
   const [error, setError] = useState("");
 
   const handleButtonClick = () => {
-    if(selectedValue === "") return setError("Please select a filter.");
-    if(error) setError("");
+    if (selectedValue === "") return setError("Please select a filter.");
+    if (error) setError("");
     callback(selectedValue);
   };
 
@@ -37,7 +37,7 @@ const SelectReportsFilter = ({ filterList, callback }: SelectReportsFilterProps)
             </SelectOption>
           ))}
         </Select>
-        <Button type="primary" onClick={handleButtonClick} className="w-52 h-[38px]">
+        <Button variant="primary" onClick={handleButtonClick} className="w-52 h-[38px]">
           Generate CSV
         </Button>
       </div>

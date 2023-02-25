@@ -80,7 +80,7 @@ const Reports = ({ hasReports, repositories }: ReportsProps): JSX.Element => {
               <div>Loading...</div>
             ) : (
               <div className="flex justify-center py-4">
-                <Button type="primary" onClick={async () => await signIn({ provider: "github" })}>
+                <Button variant="primary" onClick={async () => await signIn({ provider: "github" })}>
                   Connect with GitHub <Icon IconImage={GitHubIcon} className="ml-2" />
                 </Button>
               </div>

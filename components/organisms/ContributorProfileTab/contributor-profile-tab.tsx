@@ -107,7 +107,7 @@ const ContributorProfileTab = ({
                           contributions. Merge any pull requests recently?
                         </p>
                         {!inputVisible && (
-                          <Button onClick={() => setInputVisible(true)} className="mt-5" type="primary">
+                          <Button onClick={() => setInputVisible(true)} className="mt-5" variant="primary">
                             Add a highlight
                           </Button>
                         )}
