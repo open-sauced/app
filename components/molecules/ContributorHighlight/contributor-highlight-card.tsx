@@ -23,8 +23,9 @@ interface ContributorHighlightCardProps {
   desc?: string;
   prLink: string;
   user: string;
+  id: string;
 }
-const ContributorHighlightCard = ({ title, desc, prLink, user }: ContributorHighlightCardProps) => {
+const ContributorHighlightCard = ({ title, desc, prLink, user, id }: ContributorHighlightCardProps) => {
   const twitterTweet = `${title || "Open Source Highlight"} - OpenSauced from ${user}`;
   const reportSubject = `Reported Highlight ${user}: ${title}`;
 
@@ -105,6 +106,7 @@ const ContributorHighlightCard = ({ title, desc, prLink, user }: ContributorHigh
                   <span>Follow user</span>
                 </div>
               </DropdownMenuItem>
+
               <DropdownMenuItem
                 className={`rounded-md ${loggedInUser && loggedInUser.user_metadata.user_name === user && "hidden"}`}
               >
@@ -132,6 +134,8 @@ const ContributorHighlightCard = ({ title, desc, prLink, user }: ContributorHigh
           {prLink}
         </a>
       </div>
+
+      {/* This was placed here to prevent the Dropdown Wrapper from hiding it */}
 
       {/* Generated OG card section */}
       <GhOpenGraphImg githubLink={prLink} />

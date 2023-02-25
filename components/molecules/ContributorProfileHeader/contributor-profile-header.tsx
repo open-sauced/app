@@ -31,13 +31,12 @@ const ContributorProfileHeader = ({ avatarUrl, githubName, isConnected }: Contri
 
             <a target="_blank" rel="noopener noreferrer" href={`https://github.com/${githubName}`}>
               <MarkGithubIcon size={16} className="visible mr-2" />
-              <Button className="hidden w-48" type="outline">
-                {" "}
+              <Button className="hidden px-5 py-2 bg-white" variant="text">
                 View on GitHub
               </Button>
             </a>
             <Link href="#">
-              <Button className="!px-8 !py-2 !hidden" type="primary">
+              <Button className="px-8 py-2 hidden" variant="primary">
                 Collaborate
               </Button>
             </Link>
