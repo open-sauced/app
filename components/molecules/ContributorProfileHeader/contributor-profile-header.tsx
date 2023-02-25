@@ -36,7 +36,7 @@ const ContributorProfileHeader = ({ avatarUrl, githubName, isConnected }: Contri
               </Button>
             </a>
             <Link href="#">
-              <Button className="px-8 py-2 invisible" variant="primary">
+              <Button className="px-8 py-2 hidden" variant="primary">
                 Collaborate
               </Button>
             </Link>
