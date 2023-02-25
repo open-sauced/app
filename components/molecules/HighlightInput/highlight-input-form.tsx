@@ -16,9 +16,11 @@ const HighlightInputForm = (): JSX.Element => {
   const [bodyText, setBodyText] = useState("");
   const [row, setRow] = useState(1);
   const [title, setTitle] = useState("");
+  const [wordCount, setWordCount] = useState(0);
   const [pullrequestLink, setPullRequestLink] = useState("");
   const ref = useRef<HTMLFormElement>(null);
   let rowLomit = 5;
+  const wordLimit = 500;
   let messageLastScrollHeight = textAreaRef.current ? textAreaRef.current?.scrollHeight : 50;
 
   useEffect(() => {
@@ -61,6 +63,10 @@ const HighlightInputForm = (): JSX.Element => {
   const handlePostHighlight = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    if (wordCount > wordLimit) {
+      ToastTrigger({ message: "Character limit exceeded", type: "error" });
+      return;
+    }
     // Trigger api call to post highlight
     const pullLink = bodyText.match(/((https?:\/\/)?(www\.)?github\.com\/[^\/]+\/[^\/]+\/pull\/[0-9]+)/);
 
@@ -112,8 +118,19 @@ const HighlightInputForm = (): JSX.Element => {
           ref={textAreaRef}
           rows={row}
           value={bodyText}
-          onChange={(e) => handleTextAreaInputChange(e)}
+          onChange={(e) => {
+            handleTextAreaInputChange(e);
+            setWordCount(e.target.value.length);
+          }}
         />
+        {isDivFocused && (
+          <p className="text-xs p-2 text-light-slate-9 flex justify-end gap-1">
+            <span className={`${wordCount > wordLimit && "text-red-600"}`}>
+              {wordCount > wordLimit ? `-${wordCount - wordLimit}` : wordCount}
+            </span>{" "}
+            / <span>{wordLimit}</span>
+          </p>
+        )}
       </div>
 
       {pullrequestLink && isDivFocused && <GhOpenGraphImg githubLink={pullrequestLink} />}
