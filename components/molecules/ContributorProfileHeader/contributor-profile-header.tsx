@@ -30,13 +30,13 @@ const ContributorProfileHeader = ({ avatarUrl, githubName, isConnected }: Contri
           <div className="flex md:translate-y-0 translate-y-28 gap-3 flex-col md:flex-row items-center">
 
             <a target="_blank" rel="noopener noreferrer" href={`https://github.com/${githubName}`}>
-              <MarkGithubIcon size={16} className="visible mr-2" />
-              <Button className="hidden px-5 py-2 bg-white" variant="text">
+              <MarkGithubIcon size={16} className="visible xs:invisible mr-2" />
+              <Button className="invisible xs:visible px-5 py-2 bg-white" variant="text">
                 View on GitHub
               </Button>
             </a>
             <Link href="#">
-              <Button className="px-8 py-2 hidden" variant="primary">
+              <Button className="px-8 py-2 invisible" variant="primary">
                 Collaborate
               </Button>
             </Link>
