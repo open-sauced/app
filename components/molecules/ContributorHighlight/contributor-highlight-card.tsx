@@ -80,7 +80,7 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
 
       if (res.isError) {
         setLoading(false);
-        setError("Please provide a valid github pull url");
+        setError("Please provide a valid github pull request url");
         return;
       } else {
         const res = await updateHighlights(
@@ -98,7 +98,7 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
         }
       }
     } else {
-      setError("Please provide a valid github pull url");
+      setError("Please provide a valid github pull request url");
     }
   };
 
