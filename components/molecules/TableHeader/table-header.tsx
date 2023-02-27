@@ -28,7 +28,7 @@ const TableHeader = ({
   const router = useRouter();
   const { filterName } = router.query;
   const [searchTerm, setSearchTerm] = React.useState<string>("");
-  const [suggestions, setSuggestions] = React.useState<string[]>(["openarch/north", "opencv/opencv", "openmusic5/featurecity"]);
+  const [suggestions, setSuggestions] = React.useState<string[]>([]);
   const { providerToken } = useSupabaseAuth();
 
   const updateSuggestionsDebounced = useDebounce( async () => {
