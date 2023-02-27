@@ -7,11 +7,14 @@ import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useSWRConfig } from "swr";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import GhOpenGraphImg from "../GhOpenGraphImg/gh-open-graph-img";
+import { generateApiPrUrl } from "lib/utils/github";
+import { fetchGithubPRInfo } from "lib/hooks/fetchGithubPRInfo";
 
 const HighlightInputForm = (): JSX.Element => {
   const { user } = useSupabaseAuth();
   const { mutate } = useSWRConfig();
   const [isDivFocused, setIsDivFocused] = useState(false);
+  const [loading, setLoading] = useState(false);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const [bodyText, setBodyText] = useState("");
   const [row, setRow] = useState(1);
@@ -63,35 +66,42 @@ const HighlightInputForm = (): JSX.Element => {
   const handlePostHighlight = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (wordCount > wordLimit) {
-      ToastTrigger({ message: "Character limit exceeded", type: "error" });
-      return;
-    }
     // Trigger api call to post highlight
     const pullLink = bodyText.match(/((https?:\/\/)?(www\.)?github\.com\/[^\/]+\/[^\/]+\/pull\/[0-9]+)/);
 
-    const link = pullLink && new URL(pullLink as unknown as string);
+
+    console.log(pullLink);
     const [url] = pullLink || [];
     const highlight = bodyText.replace(url as string, "");
 
-    if (url === null || url === undefined || url === "" || url.length === 0 || link?.hostname !== "github.com") {
-      ToastTrigger({ message: "A valid Pull request Link is required", type: "error" });
-      return;
-    } else {
-      const res = await createHighlights({
-        highlight,
-        title,
-        url: url || ""
-      });
+    if (pullLink && url) {
+      const { apiPaths } = generateApiPrUrl(url);
+      const { repoName, orgName, issueId } = apiPaths;
+      setLoading(true);
+      const res = await fetchGithubPRInfo(orgName, repoName, issueId);
 
-      if (res) {
-        mutate(`users/${user?.user_metadata.user_name}/highlights`);
-        setBodyText("");
-        setTitle("");
-        setIsDivFocused(false);
-        ToastTrigger({ message: "Highlight uploade success", type: "success" });
+      if (res.isError) {
+        setLoading(false);
+        ToastTrigger({ message: "A valid Pull request Link is required", type: "error" });
+        return;
       } else {
-        ToastTrigger({ message: "An error occured!!!", type: "error" });
+        setLoading(true);
+        const res = await createHighlights({
+          highlight,
+          title,
+          url: url
+        });
+
+        setLoading(false);
+        if (res) {
+          mutate(`users/${user?.user_metadata.user_name}/highlights`);
+          setBodyText("");
+          setTitle("");
+          setIsDivFocused(false);
+          ToastTrigger({ message: "Highlight uploade success", type: "success" });
+        } else {
+          ToastTrigger({ message: "An error occured!!!", type: "error" });
+        }
       }
     }
   };
@@ -138,7 +148,12 @@ const HighlightInputForm = (): JSX.Element => {
       {pullrequestLink && isDivFocused && <GhOpenGraphImg githubLink={pullrequestLink} />}
 
       {isDivFocused && (
-        <Button disabled={!bodyText} className="ml-auto" variant="primary">
+        <Button
+          loading={loading}
+          disabled={!bodyText || wordCount - pullrequestLink.length > wordLimit}
+          className="ml-auto"
+          variant="primary"
+        >
           Post
         </Button>
       )}
