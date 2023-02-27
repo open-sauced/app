@@ -20,8 +20,8 @@ const LanguagePill = ({ topic, classNames, onClick }: LanguagePillProps) => {
       react: ReactIcon,
       rust: RustIcon,
       javascript: JavascriptIcon,
-      AI: AIIcon,
-      ML: MLIcon,
+      ai: AIIcon,
+      ml: MLIcon,
       python: PythonIcon
     };
 

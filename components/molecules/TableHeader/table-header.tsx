@@ -51,7 +51,6 @@ const TableHeader = ({
   React.useEffect(() => {
     setSuggestions([]);
     if(!searchTerm) return;
-    console.log(providerToken);
     updateSuggestionsDebounced();
   }, [searchTerm]);
 
