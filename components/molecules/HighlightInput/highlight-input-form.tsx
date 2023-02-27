@@ -101,7 +101,7 @@ const HighlightInputForm = (): JSX.Element => {
           setBodyText("");
           setTitle("");
           setIsDivFocused(false);
-          ToastTrigger({ message: "Highlight uploade success", type: "success" });
+          ToastTrigger({ message: "Highlight Posted!", type: "success" });
         } else {
           ToastTrigger({ message: "An error occured!!!", type: "error" });
         }
