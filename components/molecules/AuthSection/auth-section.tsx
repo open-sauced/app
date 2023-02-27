@@ -83,7 +83,7 @@ const AuthSection: React.FC = ({}) => {
             </DropdownList>
           </>
         ) : (
-          <Button type="primary" onClick={async () => await signIn({ provider: "github" })}>
+          <Button variant="primary" onClick={async () => await signIn({ provider: "github" })}>
             Connect with GitHub <Icon IconImage={GitHubIcon} className="ml-2" />
           </Button>
         )}

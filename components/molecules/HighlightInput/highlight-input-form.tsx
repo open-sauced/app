@@ -119,7 +119,7 @@ const HighlightInputForm = (): JSX.Element => {
       {pullrequestLink && isDivFocused && <GhOpenGraphImg githubLink={pullrequestLink} />}
 
       {isDivFocused && (
-        <Button disabled={!bodyText} className="ml-auto" type="primary">
+        <Button disabled={!bodyText} className="ml-auto" variant="primary">
           Post
         </Button>
       )}
