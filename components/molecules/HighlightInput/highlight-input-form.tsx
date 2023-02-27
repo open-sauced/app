@@ -26,8 +26,8 @@ const HighlightInputForm = (): JSX.Element => {
   const charLimit = 500;
   let messageLastScrollHeight = textAreaRef.current ? textAreaRef.current?.scrollHeight : 50;
 
-  const validateCharlimit = () => {
-    return charCount - pullrequestLink.length > charLimit;
+  const validCharlimit = () => {
+    return charCount - pullrequestLink.length <= charLimit;
   };
 
   useEffect(() => {
@@ -70,10 +70,9 @@ const HighlightInputForm = (): JSX.Element => {
   const handlePostHighlight = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // Trigger api call to post highlight
+    // Regex check for github pull request link match
     const pullLink = bodyText.match(/((https?:\/\/)?(www\.)?github\.com\/[^\/]+\/[^\/]+\/pull\/[0-9]+)/);
 
-    console.log(pullLink);
     const [url] = pullLink || [];
     const highlight = bodyText.replace(url as string, "");
 
@@ -81,6 +80,7 @@ const HighlightInputForm = (): JSX.Element => {
       const { apiPaths } = generateApiPrUrl(url);
       const { repoName, orgName, issueId } = apiPaths;
       setLoading(true);
+      // Api validation to check validity of github pull request link match
       const res = await fetchGithubPRInfo(orgName, repoName, issueId);
 
       if (res.isError) {
@@ -138,8 +138,8 @@ const HighlightInputForm = (): JSX.Element => {
         />
         {isDivFocused && (
           <p className="text-xs pb-2 text-light-slate-9 flex justify-end gap-1">
-            <span className={`${validateCharlimit() && "text-red-600"}`}>
-              {validateCharlimit()
+            <span className={`${!validCharlimit() && "text-red-600"}`}>
+              {!validCharlimit()
                 ? `-${charCount - pullrequestLink.length - charLimit}`
                 : charCount - pullrequestLink.length}
             </span>{" "}
@@ -151,7 +151,7 @@ const HighlightInputForm = (): JSX.Element => {
       {pullrequestLink && isDivFocused && <GhOpenGraphImg githubLink={pullrequestLink} />}
 
       {isDivFocused && (
-        <Button loading={loading} disabled={!bodyText || validateCharlimit()} className="ml-auto" variant="primary">
+        <Button loading={loading} disabled={!bodyText || !validCharlimit()} className="ml-auto" variant="primary">
           Post
         </Button>
       )}
