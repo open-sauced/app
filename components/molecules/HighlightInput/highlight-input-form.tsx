@@ -19,12 +19,16 @@ const HighlightInputForm = (): JSX.Element => {
   const [bodyText, setBodyText] = useState("");
   const [row, setRow] = useState(1);
   const [title, setTitle] = useState("");
-  const [wordCount, setWordCount] = useState(0);
+  const [charCount, setCharCount] = useState(0);
   const [pullrequestLink, setPullRequestLink] = useState("");
   const ref = useRef<HTMLFormElement>(null);
   let rowLomit = 5;
-  const wordLimit = 500;
+  const charLimit = 500;
   let messageLastScrollHeight = textAreaRef.current ? textAreaRef.current?.scrollHeight : 50;
+
+  const validateCharlimit = () => {
+    return charCount - pullrequestLink.length > charLimit;
+  };
 
   useEffect(() => {
     const checkIfClickedOutside = (e: globalThis.MouseEvent) => {
@@ -68,7 +72,6 @@ const HighlightInputForm = (): JSX.Element => {
 
     // Trigger api call to post highlight
     const pullLink = bodyText.match(/((https?:\/\/)?(www\.)?github\.com\/[^\/]+\/[^\/]+\/pull\/[0-9]+)/);
-
 
     console.log(pullLink);
     const [url] = pullLink || [];
@@ -130,17 +133,17 @@ const HighlightInputForm = (): JSX.Element => {
           value={bodyText}
           onChange={(e) => {
             handleTextAreaInputChange(e);
-            setWordCount(e.target.value.length);
+            setCharCount(e.target.value.length);
           }}
         />
         {isDivFocused && (
-          <p className="text-xs p-2 text-light-slate-9 flex justify-end gap-1">
-            <span className={`${wordCount - pullrequestLink.length > wordLimit && "text-red-600"}`}>
-              {wordCount - pullrequestLink.length > wordLimit
-                ? `-${wordCount - pullrequestLink.length - wordLimit}`
-                : wordCount - pullrequestLink.length}
+          <p className="text-xs pb-2 text-light-slate-9 flex justify-end gap-1">
+            <span className={`${validateCharlimit() && "text-red-600"}`}>
+              {validateCharlimit()
+                ? `-${charCount - pullrequestLink.length - charLimit}`
+                : charCount - pullrequestLink.length}
             </span>{" "}
-            / <span>{wordLimit}</span>
+            / <span>{charLimit}</span>
           </p>
         )}
       </div>
@@ -148,12 +151,7 @@ const HighlightInputForm = (): JSX.Element => {
       {pullrequestLink && isDivFocused && <GhOpenGraphImg githubLink={pullrequestLink} />}
 
       {isDivFocused && (
-        <Button
-          loading={loading}
-          disabled={!bodyText || wordCount - pullrequestLink.length > wordLimit}
-          className="ml-auto"
-          variant="primary"
-        >
+        <Button loading={loading} disabled={!bodyText || validateCharlimit()} className="ml-auto" variant="primary">
           Post
         </Button>
       )}
