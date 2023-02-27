@@ -30,7 +30,7 @@ const HighlightsFilterCard = (): JSX.Element => {
     }
   ];
   return (
-    <div className="py-4 px-6 rounded-lg  border w-[18.625rem]">
+    <div className="py-4 px-6 rounded-lg  border w-[18.625rem] h-max">
       <Title className="!font-normal" level={3}>
         Repositories
       </Title>

@@ -14,22 +14,24 @@ const TopNav: React.FC = () => {
 
   return (
     <header className="top-nav-container flex justify-between items-center px-2 md:px-16 py-0.5 bg-light-slate-3 border-b">
-      <div className="flex gap-8 items-center">
-        <HeaderLogo withBg={false} textIsBlack />
-        {!!user && onboarded ? (
-          <>
-            <Link className="text-sm text-light-slate-10" href={"/hub/insights"}>
-            Insights Hub
-            </Link>
-            <Link className="text-sm text-light-slate-10" href={"/javascript/dashboard/filter/recent"}>
-            Explore
-            </Link>
-          </>
-        ) : (
-          ""
-        )}
+      <div className="flex justify-between items-center container">
+        <div className="flex gap-8 items-center ">
+          <HeaderLogo withBg={false} textIsBlack />
+          {!!user && onboarded ? (
+            <>
+              <Link className="text-sm text-light-slate-10" href={"/hub/insights"}>
+                Insights Hub
+              </Link>
+              <Link className="text-sm text-light-slate-10" href={"/javascript/dashboard/filter/recent"}>
+                Explore
+              </Link>
+            </>
+          ) : (
+            ""
+          )}
+        </div>
+        <AuthSection />
       </div>
-      <AuthSection />
     </header>
   );
 };
