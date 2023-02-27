@@ -65,7 +65,7 @@ const Search = ({ placeholder, name, value, autoFocus, className, onSearch, sugg
           }
         }}
         onFocus={() => setShowSuggestions(true)}
-        // onBlur={() => setTimeout(()=>setShowSuggestions(false), 100)}
+        onBlur={() => setTimeout(()=>setShowSuggestions(false), 100)}
       />
 
       { suggestions && suggestions.length > 0 && showSuggestions && (
