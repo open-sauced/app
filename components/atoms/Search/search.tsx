@@ -11,6 +11,13 @@ interface SearchProps {
   suggestions?: string[];
   onChange?: (value: string) => void;
 }
+
+const suggestionsStyle = {
+  "-webkit-line-clamp": "1",
+  "display": "-webkit-box",
+  "-webkit-box-orient": "vertical"
+};
+
 const Search = ({ placeholder, name, value, autoFocus, className, onSearch, suggestions, onChange }: SearchProps): JSX.Element => {
   const [search, setSearch] = useState(value);
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -58,13 +65,13 @@ const Search = ({ placeholder, name, value, autoFocus, className, onSearch, sugg
           }
         }}
         onFocus={() => setShowSuggestions(true)}
-        onBlur={() => setTimeout(()=>setShowSuggestions(false), 100)}
+        // onBlur={() => setTimeout(()=>setShowSuggestions(false), 100)}
       />
 
       { suggestions && suggestions.length > 0 && showSuggestions && (
-        <div className="absolute bg-white w-full shadow-input border border-light-slate-6 rounded-lg cursor-pointer top-full left-0">
+        <div className="absolute bg-white w-full shadow-input border border-light-slate-6 rounded-lg cursor-pointer top-full left-0 z-10">
           {suggestions.map((suggestion, index) => (
-            <div className="px-4 py-2" key={index} onClick={() => handleOnSelect(suggestion)}>
+            <div className="px-4 py-2 my-0.5 h-8 break-all overflow-hidden" style={suggestionsStyle} key={index} onClick={() => handleOnSelect(suggestion)}>
               <span className="text-light-slate-9 text-sm pl-5">{suggestion}</span>
             </div>
           ))}
