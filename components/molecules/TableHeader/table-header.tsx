@@ -7,6 +7,7 @@ import ComponentDateFilter from "../ComponentDateFilter/component-date-filter";
 import PaginationResult from "../PaginationResults/pagination-result";
 import { useRouter } from "next/router";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
+import { useDebounce } from "rooks";
 
 interface TableHeaderProps {
   title?: string;
@@ -30,28 +31,28 @@ const TableHeader = ({
   const [suggestions, setSuggestions] = React.useState<string[]>(["openarch/north", "opencv/opencv", "openmusic5/featurecity"]);
   const { providerToken } = useSupabaseAuth();
 
+  const updateSuggestionsDebounced = useDebounce( async () => {
+    const req = await fetch(`https://api.github.com/search/repositories?q=${encodeURIComponent(`${searchTerm} topic:${filterName} in:name`)}`, {
+      ...providerToken? {
+        headers: {
+          "Authorization": `Bearer ${providerToken}`
+        }} : {}
+    });
+
+    const res = await req.json();
+
+    if(req.ok) {
+      const suggestions = res.items.map((item: any) => item.full_name);
+      if(suggestions.length > 5) suggestions.length = 5;
+      setSuggestions(suggestions);
+    }
+  }, 4000);
+
   React.useEffect(() => {
-    const updateSuggesitons = async () => {
-      setSuggestions([]);
-      if(!searchTerm) return;
-      console.log(providerToken);
-      const req = await fetch(`https://api.github.com/search/repositories?q=${encodeURIComponent(`${searchTerm} topic:${filterName}`)}`, {
-        ...providerToken? {
-          headers: {
-            "Authorization": `Bearer ${providerToken}`
-          }} : {}
-      });
-
-      const res = await req.json();
-
-      if(req.ok) {
-        const suggestions = res.items.map((item: any) => item.full_name);
-        if(suggestions.length > 5) suggestions.length = 5;
-        setSuggestions(suggestions);
-      }
-    };
-
-    updateSuggesitons();
+    setSuggestions([]);
+    if(!searchTerm) return;
+    console.log(providerToken);
+    updateSuggestionsDebounced();
   }, [searchTerm]);
 
   return (

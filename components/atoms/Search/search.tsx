@@ -22,6 +22,7 @@ const Search = ({ placeholder, name, value, autoFocus, className, onSearch, sugg
   const handleEmpty = () => {
     setSearch("");
     onSearch?.("");
+    onChange?.("");
   };
 
   const handleOnSelect = (suggestion: string) => {
@@ -57,7 +58,7 @@ const Search = ({ placeholder, name, value, autoFocus, className, onSearch, sugg
           }
         }}
         onFocus={() => setShowSuggestions(true)}
-        onBlur={() => setShowSuggestions(false)}
+        onBlur={() => setTimeout(()=>setShowSuggestions(false), 100)}
       />
 
       { suggestions && suggestions.length > 0 && showSuggestions && (

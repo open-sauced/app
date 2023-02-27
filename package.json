@@ -81,6 +81,7 @@
     "react-icons": "^4.7.1",
     "react-loading-skeleton": "^3.1.0",
     "react-spring": "^9.6.1",
+    "rooks": "^7.4.4",
     "stripe": "^11.8.0",
     "swr": "^2.0.3",
     "tailwindcss-radix": "^2.7.0",
