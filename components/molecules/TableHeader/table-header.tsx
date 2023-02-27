@@ -46,7 +46,7 @@ const TableHeader = ({
       if(suggestions.length > 5) suggestions.length = 5;
       setSuggestions(suggestions);
     }
-  }, 4000);
+  }, 250);
 
   React.useEffect(() => {
     setSuggestions([]);
