@@ -126,7 +126,9 @@ const HighlightInputForm = (): JSX.Element => {
         {isDivFocused && (
           <p className="text-xs p-2 text-light-slate-9 flex justify-end gap-1">
             <span className={`${wordCount > wordLimit && "text-red-600"}`}>
-              {wordCount > wordLimit ? `-${wordCount - wordLimit}` : wordCount}
+              {wordCount - pullrequestLink.length > wordLimit
+                ? `-${wordCount - wordLimit}`
+                : wordCount - pullrequestLink.length}
             </span>{" "}
             / <span>{wordLimit}</span>
           </p>
