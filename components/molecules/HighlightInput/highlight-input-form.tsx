@@ -26,7 +26,7 @@ const HighlightInputForm = (): JSX.Element => {
   const charLimit = 500;
   let messageLastScrollHeight = textAreaRef.current ? textAreaRef.current?.scrollHeight : 50;
 
-  const validCharlimit = () => {
+  const validCharLimit = () => {
     return charCount - pullrequestLink.length <= charLimit;
   };
 
@@ -138,8 +138,8 @@ const HighlightInputForm = (): JSX.Element => {
         />
         {isDivFocused && (
           <p className="text-xs pb-2 text-light-slate-9 flex justify-end gap-1">
-            <span className={`${!validCharlimit() && "text-red-600"}`}>
-              {!validCharlimit()
+            <span className={`${!validCharLimit() && "text-red-600"}`}>
+              {!validCharLimit()
                 ? `-${charCount - pullrequestLink.length - charLimit}`
                 : charCount - pullrequestLink.length}
             </span>{" "}
@@ -151,7 +151,7 @@ const HighlightInputForm = (): JSX.Element => {
       {pullrequestLink && isDivFocused && <GhOpenGraphImg githubLink={pullrequestLink} />}
 
       {isDivFocused && (
-        <Button loading={loading} disabled={!bodyText || !validCharlimit()} className="ml-auto" variant="primary">
+        <Button loading={loading} disabled={!bodyText || !validCharLimit()} className="ml-auto" variant="primary">
           Post
         </Button>
       )}
