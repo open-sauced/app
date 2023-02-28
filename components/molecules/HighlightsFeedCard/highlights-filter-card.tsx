@@ -4,14 +4,14 @@ import { useState } from "react";
 
 interface HighlightsFilterCardProps {
   repos: { repoName: string; repoIcon: string; full_name: string }[];
-  setSelected: React.Dispatch<React.SetStateAction<string>>;
+  setSelected?: React.Dispatch<React.SetStateAction<string>>;
 }
 const HighlightsFilterCard = ({ repos, setSelected }: HighlightsFilterCardProps): JSX.Element => {
   const [selected, setSelectedRepo] = useState("");
 
   const handleClick = (name: string) => {
     setSelectedRepo(name);
-    setSelected(name);
+    setSelected?.(name);
   };
 
   return (
