@@ -7,25 +7,25 @@ interface CreateHighlightsProps {
 }
 
 const baseUrl = process.env.NEXT_PUBLIC_API_URL;
-const createHighlights = async (data: CreateHighlightsProps) => {
+const updateHighlights = async (data: CreateHighlightsProps, id: string) => {
   const sessionResponse = await supabase.auth.getSession();
   const sessionToken = sessionResponse?.data.session?.access_token;
   try {
-    const res = await fetch(`${baseUrl}/user/highlights`, {
+    const res = await fetch(`${baseUrl}/user/highlights/${id}`, {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
         Authorization: `Bearer ${sessionToken}`
       },
-      method: "POST",
+      method: "PATCH",
       body: JSON.stringify({ ...data })
     });
 
-    if (res.status === 200 || res.status === 201) return res.json();
+    return res.json();
   } catch (e) {
     console.log(e);
     return false;
   }
 };
 
-export { createHighlights };
+export { updateHighlights };

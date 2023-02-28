@@ -2,7 +2,7 @@
 import Link from "next/link";
 
 import { AiOutlineGift } from "react-icons/ai";
-import { FiClock, FiTwitter } from "react-icons/fi";
+import { FiClock, FiGithub, FiLinkedin, FiTwitter } from "react-icons/fi";
 import { HiOutlineMail } from "react-icons/hi";
 
 import LanguagePill from "components/atoms/LanguagePill/LanguagePill";
@@ -19,6 +19,8 @@ interface ContributorProfileInfoProps {
   isConnected?: boolean;
   timezone?: string;
   displayLocalTime?: boolean;
+  githubSponsorsUrl?: string;
+  linkedInUrl?: string;
 }
 
 const ContributorProfileInfo = ({
@@ -28,7 +30,9 @@ const ContributorProfileInfo = ({
   interests,
   isConnected,
   timezone,
-  displayLocalTime
+  displayLocalTime,
+  githubSponsorsUrl,
+  linkedInUrl
 }: ContributorProfileInfoProps) => {
   const interestArray = interests?.split(",");
 
@@ -90,6 +94,34 @@ const ContributorProfileInfo = ({
                 </span>
               )}
 
+              {linkedInUrl && (
+                <span className="flex gap-2 items-center">
+                  <FiLinkedin className="text-light-slate-9" />
+                  <Link
+                    href={linkedInUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="w-max hover:text-orange-500 "
+                  >
+                    {linkedInUrl?.replace(/^(http(s)?:\/\/)?([\w]+\.)?linkedin\.com\/(pub|in|profile|company)/, "in")}
+                  </Link>
+                </span>
+              )}
+
+              {githubSponsorsUrl && (
+                <span className="flex gap-2 items-center">
+                  <FiGithub className="text-light-slate-9" />
+                  <Link
+                    href={githubSponsorsUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="w-max hover:text-orange-500 "
+                  >
+                    {githubSponsorsUrl?.replace(/^(http(s)?:\/\/)?([\w]+\.)?github\.com\//, "")}
+                  </Link>
+                </span>
+              )}
+
               {/* <span className="flex gap-2 items-center">
                 <HiOutlineMail className="text-light-slate-9" />
                 <Link className="w-max hover:text-orange-500 " href="#">
@@ -109,7 +141,7 @@ const ContributorProfileInfo = ({
                 ))}
               </div>
             </div>
-          )}{" "}
+          )}
         </>
       )}
     </div>

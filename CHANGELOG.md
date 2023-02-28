@@ -5,6 +5,83 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.31.0-beta.11](https://github.com/open-sauced/insights/compare/v1.31.0-beta.10...v1.31.0-beta.11) (2023-02-28)
+
+
+### 🐛 Bug Fixes
+
+* update pointer after highlight is saved ([754e94f](https://github.com/open-sauced/insights/commit/754e94fe2051801ac372230e3be3224643ecd596))
+
+## [1.31.0-beta.10](https://github.com/open-sauced/insights/compare/v1.31.0-beta.9...v1.31.0-beta.10) (2023-02-28)
+
+
+### 🍕 Features
+
+* implement highlights character limit  ([#912](https://github.com/open-sauced/insights/issues/912)) ([5ee12bf](https://github.com/open-sauced/insights/commit/5ee12bff1910d47613a2644f6546059cc3a8d878)), closes [#899](https://github.com/open-sauced/insights/issues/899)
+
+## [1.31.0-beta.9](https://github.com/open-sauced/insights/compare/v1.31.0-beta.8...v1.31.0-beta.9) (2023-02-28)
+
+
+### 🍕 Features
+
+* add suggestions to repo search ([#908](https://github.com/open-sauced/insights/issues/908)) ([f908b18](https://github.com/open-sauced/insights/commit/f908b186e168a229ab59e59a623f5380094152c2)), closes [#789](https://github.com/open-sauced/insights/issues/789)
+
+## [1.31.0-beta.8](https://github.com/open-sauced/insights/compare/v1.31.0-beta.7...v1.31.0-beta.8) (2023-02-28)
+
+
+### 🐛 Bug Fixes
+
+* update highlight toast message ([#915](https://github.com/open-sauced/insights/issues/915)) ([a1a5568](https://github.com/open-sauced/insights/commit/a1a556888f256eab9d48e47e13ed10e2a8265493)), closes [#904](https://github.com/open-sauced/insights/issues/904)
+
+## [1.31.0-beta.7](https://github.com/open-sauced/insights/compare/v1.31.0-beta.6...v1.31.0-beta.7) (2023-02-27)
+
+
+### 🍕 Features
+
+* 867 mobile buttons header ([#898](https://github.com/open-sauced/insights/issues/898)) ([e2246f4](https://github.com/open-sauced/insights/commit/e2246f447f46c1e92849c8e2e73baff3051976bf))
+
+## [1.31.0-beta.6](https://github.com/open-sauced/insights/compare/v1.31.0-beta.5...v1.31.0-beta.6) (2023-02-27)
+
+
+### 🍕 Features
+
+* implement edit highlight ([#909](https://github.com/open-sauced/insights/issues/909)) ([79f9ddc](https://github.com/open-sauced/insights/commit/79f9ddc90498a5fc1456199ce1350668ece5ab22))
+
+## [1.31.0-beta.5](https://github.com/open-sauced/insights/compare/v1.31.0-beta.4...v1.31.0-beta.5) (2023-02-24)
+
+
+### 🧑‍💻 Code Refactoring
+
+* replace `Supabase` button with native button element  ([#907](https://github.com/open-sauced/insights/issues/907)) ([807a177](https://github.com/open-sauced/insights/commit/807a17727f9cc4b09d7cf6b42c2c536e934675cc)), closes [#901](https://github.com/open-sauced/insights/issues/901) [#854](https://github.com/open-sauced/insights/issues/854)
+
+## [1.31.0-beta.4](https://github.com/open-sauced/insights/compare/v1.31.0-beta.3...v1.31.0-beta.4) (2023-02-24)
+
+
+### 🍕 Features
+
+* update user onboarding flow ([#880](https://github.com/open-sauced/insights/issues/880)) ([bd34c2a](https://github.com/open-sauced/insights/commit/bd34c2ae49186acbf9bd459cf974f907165de36b)), closes [#801](https://github.com/open-sauced/insights/issues/801)
+
+## [1.31.0-beta.3](https://github.com/open-sauced/insights/compare/v1.31.0-beta.2...v1.31.0-beta.3) (2023-02-23)
+
+
+### 🐛 Bug Fixes
+
+* prevent user URL fields from providing an empty string ([7de74b3](https://github.com/open-sauced/insights/commit/7de74b370bd0ecdff7b661e8372788974b801c1d))
+
+## [1.31.0-beta.2](https://github.com/open-sauced/insights/compare/v1.31.0-beta.1...v1.31.0-beta.2) (2023-02-23)
+
+
+### 🍕 Features
+
+* add user profile fields for LinkedIn, GitHub sponsors ([#905](https://github.com/open-sauced/insights/issues/905)) ([df06687](https://github.com/open-sauced/insights/commit/df06687c67abd04004287b1d99c075ffe605ae9f)), closes [#876](https://github.com/open-sauced/insights/issues/876)
+
+## [1.31.0-beta.1](https://github.com/open-sauced/insights/compare/v1.30.0...v1.31.0-beta.1) (2023-02-21)
+
+
+### 🍕 Features
+
+* implement report highlight  ([#897](https://github.com/open-sauced/insights/issues/897)) ([604f70e](https://github.com/open-sauced/insights/commit/604f70ee2af352eb1da3f3dc3cd70f17972b7d51)), closes [#884](https://github.com/open-sauced/insights/issues/884)
+
 ## [1.30.0](https://github.com/open-sauced/insights/compare/v1.29.0...v1.30.0) (2023-02-21)
 
 
