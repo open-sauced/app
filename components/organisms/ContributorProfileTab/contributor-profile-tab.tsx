@@ -12,6 +12,7 @@ import { useFetchUserHighlights } from "lib/hooks/useFetchUserHighlights";
 import { useEffect, useState } from "react";
 import Button from "components/atoms/Button/button";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
+import { useRouter } from "next/router";
 
 interface ContributorProfileTabProps {
   contributor?: DbUser;
@@ -43,23 +44,32 @@ const ContributorProfileTab = ({
 
   const { data: highlights, isError, isLoading } = useFetchUserHighlights(login || "");
   const [inputVisible, setInputVisible] = useState(false);
+  const hasHighlights = highlights?.length > 0;
+  const router = useRouter();
+
+  const handleTabUrl = (tab: string) => {
+    router.push(`/user/${login}?tab=${tab.toLowerCase()}`);
+  };
 
   useEffect(() => {
     setInputVisible(highlights && highlights.length !== 0 ? true : false);
+    if (!hasHighlights) router.push(`/user/${login}?tab=contributions`);
   }, [highlights]);
 
   return (
-    <Tabs defaultValue="Highlights" className="">
+    <Tabs defaultValue={hasHighlights ? "Highlights" : "Contributions"} className="">
       <TabsList className="w-full border-b  justify-start">
         <TabsTrigger
           className="data-[state=active]:border-sauced-orange data-[state=active]:border-b-2 text-2xl"
           value="Highlights"
+          onClick={() => handleTabUrl("Highlights")}
         >
           Highlights
         </TabsTrigger>
         <TabsTrigger
           className="data-[state=active]:border-sauced-orange data-[state=active]:border-b-2 text-2xl"
           value="Contributions"
+          onClick={() => handleTabUrl("Contributions")}
         >
           Contributions
         </TabsTrigger>
