@@ -15,10 +15,12 @@ import { useEffect, useState } from "react";
 const Feeds = () => {
   const { user } = useSupabaseAuth();
   const router = useRouter();
+
+  const { data: repos } = useFetchHighlightRepos();
+
   const [selectedRepo, setSelectedRepo] = useState("");
 
   const { data, isLoading, isError } = useFetchAllHighlights(selectedRepo);
-  const { data: repos } = useFetchHighlightRepos();
 
   const repoList =
     repos && // eslint-disable-next-line camelcase
