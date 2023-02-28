@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.31.0-beta.11](https://github.com/open-sauced/insights/compare/v1.31.0-beta.10...v1.31.0-beta.11) (2023-02-28)
+
+
+### 🐛 Bug Fixes
+
+* update pointer after highlight is saved ([754e94f](https://github.com/open-sauced/insights/commit/754e94fe2051801ac372230e3be3224643ecd596))
+
 ## [1.31.0-beta.10](https://github.com/open-sauced/insights/compare/v1.31.0-beta.9...v1.31.0-beta.10) (2023-02-28)
 
 
