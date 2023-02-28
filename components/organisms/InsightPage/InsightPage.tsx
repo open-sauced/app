@@ -10,15 +10,11 @@ import Title from "components/atoms/Typography/title";
 import RepositoriesCart from "components/organisms/RepositoriesCart/repositories-cart";
 import RepositoryCartItem from "components/molecules/ReposoitoryCartItem/repository-cart-item";
 import RepoNotIndexed from "components/organisms/Repositories/repository-not-indexed";
+import DeleteInsightPageModal from "./DeleteInsightPageModal";
 
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { getAvatarByUsername } from "lib/utils/github";
 import useStore from "lib/store";
-import { 
-  Dialog,
-  DialogContent,
-  DialogTitle
-} from "components/molecules/Dialog/dialog";
 
 enum RepoLookupError {
   Initial = 0,
@@ -313,15 +309,15 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
         {edit && (
           <div className="py-6 border-b flex flex-col gap-4 border-t border-light-slate-8">
             <Title className="!text-1xl !leading-none py-6" level={4}>
-              Danger zone
+              Danger Zone
             </Title>
 
             <div className="rounded-2xl flex flex-col bg-light-slate-4 p-6">
               <Title className="!text-1xl !leading-none !border-light-slate-8 border-b pb-4" level={4}>
-                Delete page
+                Delete Page
               </Title>
               <Text className="my-4">
-                Once you delete a page, you&#39;ve past the point of no return.
+                Once you delete a page, you&#39;re past the point of no return.
               </Text>
 
               <div>
@@ -365,7 +361,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
         </RepositoriesCart>
       </div>
 
-      <Modal
+      <DeleteInsightPageModal
         open={isModalOpen}
         submitted={submitted}
         pageName={name}
@@ -373,66 +369,6 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
         onClose={handleOnModalClose}
       />
     </section>
-  );
-};
-
-interface ModalProps {
-  open: boolean;
-  submitted: boolean;
-  pageName: string;
-  onClose: () => void;
-  onConfirm: () => void;
-}
-
-const Modal:FC<ModalProps> = ({
-  open = false,
-  submitted = false,
-  pageName,
-  onConfirm,
-  onClose
-}) => {
-
-  const [input, setInput] = useState("");
-
-  const handleOnNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInput(e.target.value);
-  };
-
-  const handleOnConfirm = async () => {
-    if (input !== "DELETE") return;
-    await onConfirm();
-  };
-
-  const handleOnClose = async () => {
-    await onClose();
-  };
-
-  return (
-    <Dialog
-      open={open}
-    >
-      <DialogContent>
-        <DialogTitle>
-          <Title level={3}>Delete Page</Title>
-        </DialogTitle> 
-
-        <Text>Are you sure you want to delete  <span className="font-bold text-light-slate-12">{`${pageName}`}</span>?</Text>
-        <Text>If you have data on this page that your team is using it would be difficult for your team to get access to track your project.</Text>
-        <Text> <span className="font-bold text-light-slate-12">This action cannot be undone</span></Text>
-        <Text>Type DELETE in all caps to confirm</Text>
-
-        <TextInput onChange={handleOnNameChange} value={input} />
-
-        <div className="flex gap-3">
-          <Button disabled={submitted} onClick={handleOnConfirm} variant="default" className="bg-light-red-6 border border-light-red-8 hover:bg-light-red-7 text-light-red-10">
-            Delete
-          </Button>
-          <Button onClick={handleOnClose} variant="default" className="bg-light-slate-6 text-light-slate-10 hover:bg-light-slate-7">
-            Cancel
-          </Button>
-        </div>
-      </DialogContent>
-    </Dialog>
   );
 };
 
