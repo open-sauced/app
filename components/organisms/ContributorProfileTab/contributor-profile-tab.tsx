@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 
 import Avatar from "components/atoms/Avatar/avatar";
@@ -46,12 +46,15 @@ const ContributorProfileTab = ({
 
   const { data: highlights, isError, isLoading } = useFetchUserHighlights(login || "");
   const [inputVisible, setInputVisible] = useState(false);
+  const pathnameRef = useRef<string | null>();
 
   const router = useRouter();
+
   const hasHighlights = highlights?.length > 0;
-  const isCorrectPath = router.pathname.split("/").at(-1) !== "[username]";
-  const currentPathname = isCorrectPath
-    ? router.pathname.split("/").at(-1)
+  pathnameRef.current = router.pathname.split("/").at(-1);
+
+  const currentPathname = pathnameRef.current !== "[username]"
+    ? pathnameRef.current
     : hasHighlights ? "highlights" : "contributions";
 
   const handleTabUrl = (tab: string) => {
@@ -60,12 +63,13 @@ const ContributorProfileTab = ({
 
   useEffect(() => {
     setInputVisible(highlights && highlights.length !== 0 ? true : false);
-    const initialPath = hasHighlights && currentPathname === "highlights" ? "highlights" : "contributions";
-    router.push(`/user/${login}/${initialPath}`);
+    if (currentPathname) {
+      router.push(`/user/${login}/${currentPathname}`);
+    }
   }, [highlights]);
 
   return (
-    <Tabs defaultValue={uppercaseFirst(currentPathname ?? "contributions")} className="">
+    <Tabs defaultValue={uppercaseFirst(currentPathname as string)} className="">
       <TabsList className="w-full border-b  justify-start">
         <TabsTrigger
           className="data-[state=active]:border-sauced-orange data-[state=active]:border-b-2 text-2xl"
