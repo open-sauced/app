@@ -21,8 +21,7 @@ const Feeds = () => {
   const { data: repos } = useFetchHighlightRepos();
 
   const repoList =
-    repos &&
-    // eslint-disable-next-line camelcase
+    repos && // eslint-disable-next-line camelcase
     repos.map(({ full_name }) => {
       // eslint-disable-next-line camelcase
       const [orgName, repo] = full_name.split("/");
@@ -31,23 +30,21 @@ const Feeds = () => {
     });
 
   useEffect(() => {
-    if (selectedRepo) router.push(`/feeds?repo=${selectedRepo}`);
-  }, [selectedRepo, router]);
-  if (!user) {
-    return <></>;
-  }
+    if (selectedRepo) router.push(`/feed?repo=${selectedRepo}`);
+  }, [selectedRepo]);
+
   return (
-    <div className="container w-full mx-auto px-2 md:px-16 gap-12 justify-end pt-24 flex flex-col md:flex-row">
+    <div className="container w-full mx-auto px-2 md:px-16 gap-12 justify-end pt-12 flex flex-col md:flex-row">
       <Tabs defaultValue="Highlights" className="flex-1 lg:pl-[21.875rem]">
-        <TabsList className="w-full border-b  justify-start">
+        <TabsList className="w-full border-b hidden justify-start">
           <TabsTrigger
-            className="data-[state=active]:border-sauced-orange  data-[state=active]:border-b-2 text-2xl"
+            className="data-[state=active]:border-sauced-orange data-[state=active]:border-b-2 text-2xl"
             value="Highlights"
           >
             Home
           </TabsTrigger>
           <TabsTrigger
-            className="data-[state=active]:border-sauced-orange data-[state=active]:border-b-2 text-2xl"
+            className="data-[state=active]:border-sauced-orange  data-[state=active]:border-b-2 text-2xl"
             value="Following"
           >
             Following
@@ -55,8 +52,8 @@ const Feeds = () => {
         </TabsList>
         <TabsContent value="Highlights">
           {data && data.length > 0 && (
-            <>
-              {!!user && (
+            <div>
+              {user && (
                 <div className="lg:gap-x-3 px-3 pt-4 flex max-w-[48rem]">
                   <div className="hidden lg:inline-flex ">
                     <Avatar
@@ -100,12 +97,12 @@ const Feeds = () => {
                     </div>
                   ))}
               </div>
-            </>
+            </div>
           )}
         </TabsContent>
         <TabsContent value="Following"></TabsContent>
       </Tabs>
-      <div className="mt-10 hidden  md:block">
+      <div className="mt-10 hidden md:block">
         {repoList.length > 0 && <HighlightsFilterCard setSelected={setSelectedRepo} repos={repoList} />}
       </div>
     </div>
