@@ -6,23 +6,6 @@ module.exports = {
         autodesktop: "repeat(auto-fit, minmax(410px, 1fr))",
         automobile: "repeat(auto-fit, minmax(300px, 1fr))"
       },
-      container: {
-        center: true,
-        padding: {
-          DEFAULT: "15px",
-          sm: "0",
-          lg: "0",
-          xl: "0",
-          "2xl": "0"
-        },
-        screens: {
-          sm: "540px",
-          md: "720px",
-          lg: "960px",
-          xl: "1140px",
-          "2xl": "1400px"
-        }
-      },
       screens: {
         xs: "425px",
         // => @media (min-width: 425px) { ... }

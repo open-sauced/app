@@ -145,6 +145,8 @@ interface DbHighlight {
   readonly created_at: string;
   readonly updated_at: string;
   readonly deleted_at: string;
+  readonly name: string;
+  readonly login: string;
 }
 
 interface SEOobject {
