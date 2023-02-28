@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.31.0-beta.10](https://github.com/open-sauced/insights/compare/v1.31.0-beta.9...v1.31.0-beta.10) (2023-02-28)
+
+
+### 🍕 Features
+
+* implement highlights character limit  ([#912](https://github.com/open-sauced/insights/issues/912)) ([5ee12bf](https://github.com/open-sauced/insights/commit/5ee12bff1910d47613a2644f6546059cc3a8d878)), closes [#899](https://github.com/open-sauced/insights/issues/899)
+
 ## [1.31.0-beta.9](https://github.com/open-sauced/insights/compare/v1.31.0-beta.8...v1.31.0-beta.9) (2023-02-28)
 
 
