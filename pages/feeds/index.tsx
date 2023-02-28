@@ -1,20 +1,44 @@
+import { useRouter } from "next/router";
+
 import Avatar from "components/atoms/Avatar/avatar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "components/atoms/Tabs/tabs";
 import ContributorHighlightCard from "components/molecules/ContributorHighlight/contributor-highlight-card";
 import HighlightInputForm from "components/molecules/HighlightInput/highlight-input-form";
 import HighlightsFilterCard from "components/molecules/HighlightsFeedCard/highlights-filter-card";
 import ProfileLayout from "layouts/profile";
-import { useFetchUserHighlights } from "lib/hooks/useFetchUserHighlights";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { getFormattedDate } from "lib/utils/date-utils";
+import { useFetchAllHighlights } from "lib/hooks/useFetchAllHighlights";
+import { useFetchHighlightRepos } from "lib/hooks/useFetchHiglightRepos";
+import { useEffect, useState } from "react";
 
 const Feeds = () => {
   const { user } = useSupabaseAuth();
-  const { data, isLoading, isError } = useFetchUserHighlights(user?.user_metadata.user_name);
-  console.log(data);
+  const router = useRouter();
+  const [selectedRepo, setSelectedRepo] = useState("");
+
+  const { data, isLoading, isError } = useFetchAllHighlights(selectedRepo);
+  const { data: repos } = useFetchHighlightRepos();
+
+  const repoList =
+    repos &&
+    // eslint-disable-next-line camelcase
+    repos.map(({ full_name }) => {
+      // eslint-disable-next-line camelcase
+      const [orgName, repo] = full_name.split("/");
+      // eslint-disable-next-line camelcase
+      return { repoName: repo, repoIcon: `https://www.github.com/${orgName}.png?size=300`, full_name };
+    });
+
+  useEffect(() => {
+    if (selectedRepo) router.push(`/feeds?repo=${selectedRepo}`);
+  }, [selectedRepo, router]);
+  if (!user) {
+    return <></>;
+  }
   return (
-    <div className="container w-full gap-12 justify-end pt-24 flex">
-      <Tabs defaultValue="Highlights" className="flex-1 pl-44">
+    <div className="container w-full mx-auto px-2 md:px-16 gap-12 justify-end pt-24 flex flex-col md:flex-row">
+      <Tabs defaultValue="Highlights" className="flex-1 lg:pl-[21.875rem]">
         <TabsList className="w-full border-b  justify-start">
           <TabsTrigger
             className="data-[state=active]:border-sauced-orange  data-[state=active]:border-b-2 text-2xl"
@@ -30,46 +54,60 @@ const Feeds = () => {
           </TabsTrigger>
         </TabsList>
         <TabsContent value="Highlights">
-          <div className="lg:gap-x-3 pt-4 flex max-w-[48rem]">
-            <div className="hidden lg:inline-flex items-center">
-              <Avatar
-                alt="user profile avatar"
-                isCircle
-                size="sm"
-                avatarURL={`https://www.github.com/${user?.user_metadata.user_name}.png?size=300`}
-              />
-            </div>
-
-            <HighlightInputForm />
-          </div>
-
-          {/* Highlights List section */}
-          <section className="mt-10 flex gap-8 flex-col ">
-            {data &&
-              data.length > 0 &&
-              // eslint-disable-next-line camelcase
-              data.map(({ id, url, title, created_at, highlight }) => (
-                <div key={id} className="flex flex-col gap-6 ">
-                  <div className="flex gap-3 items-center  ">
+          {data && data.length > 0 && (
+            <>
+              {!!user && (
+                <div className="lg:gap-x-3 px-3 pt-4 flex max-w-[48rem]">
+                  <div className="hidden lg:inline-flex ">
                     <Avatar
                       alt="user profile avatar"
                       isCircle
                       size="sm"
                       avatarURL={`https://www.github.com/${user?.user_metadata.user_name}.png?size=300`}
                     />
-                    <strong>Bdougie</strong>
-                    <span className="text-xs text-light-slate-11 font-normal">{getFormattedDate(created_at)}</span>
                   </div>
-                  <div className=" bg-light-slate-1 border px-12 py-6 rounded-xl">
-                    <ContributorHighlightCard title={title} desc={highlight} prLink={url} user={"bdougie"} id={id} />
-                  </div>
+
+                  <HighlightInputForm />
                 </div>
-              ))}
-          </section>
+              )}
+
+              {/* Highlights List section */}
+              <div className="mt-10 flex gap-8 flex-col ">
+                {data &&
+                  data.length > 0 &&
+                  // eslint-disable-next-line camelcase
+                  data.map(({ id, url, title, created_at, highlight, name, login }) => (
+                    <div key={id} className="flex flex-col gap-6 px-3 ">
+                      <div className="flex gap-3 items-center  ">
+                        <Avatar
+                          alt="user profile avatar"
+                          isCircle
+                          size="sm"
+                          avatarURL={`https://www.github.com/${login}.png?size=300`}
+                        />
+                        <strong>{name || login}</strong>
+                        <span className="text-xs text-light-slate-11 font-normal">{getFormattedDate(created_at)}</span>
+                      </div>
+                      <div className=" bg-light-slate-1 border p-4 md:px-6 lg:px-12 py-6 rounded-xl">
+                        <ContributorHighlightCard
+                          title={title}
+                          desc={highlight}
+                          prLink={url}
+                          user={name || login}
+                          id={id}
+                        />
+                      </div>
+                    </div>
+                  ))}
+              </div>
+            </>
+          )}
         </TabsContent>
         <TabsContent value="Following"></TabsContent>
       </Tabs>
-      <HighlightsFilterCard />
+      <div className="mt-10 hidden  md:block">
+        {repoList.length > 0 && <HighlightsFilterCard setSelected={setSelectedRepo} repos={repoList} />}
+      </div>
     </div>
   );
 };
