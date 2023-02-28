@@ -54,7 +54,8 @@ const ContributorProfileTab = ({
 
   useEffect(() => {
     setInputVisible(highlights && highlights.length !== 0 ? true : false);
-    if (!hasHighlights) router.push(`/user/${login}/contributions`);
+    if (hasHighlights) router.push(`/user/${login}/highlights`);
+    else router.push(`/user/${login}/contributions`);
   }, [highlights]);
 
   return (
