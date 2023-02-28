@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { UserGroupIcon } from "@heroicons/react/24/outline";
 
@@ -14,6 +14,11 @@ import RepoNotIndexed from "components/organisms/Repositories/repository-not-ind
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { getAvatarByUsername } from "lib/utils/github";
 import useStore from "lib/store";
+import { 
+  Dialog,
+  DialogContent,
+  DialogTitle
+} from "components/molecules/Dialog/dialog";
 
 enum RepoLookupError {
   Initial = 0,
@@ -45,6 +50,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
   const [addRepoError, setAddRepoError] = useState<RepoLookupError>(RepoLookupError.Initial);
   const [isPublic, setIsPublic] = useState(!!insight?.is_public);
   const insightRepoLimit = useStore((state) => state.insightRepoLimit);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     if (pageRepos) {
@@ -212,6 +218,36 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
     return <></>;
   };
 
+  const handleDeleteInsightPage = async () => {
+    setSubmitted(true);
+
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/insights/${insight?.id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Bearer ${sessionToken}`
+      },
+      body: JSON.stringify({
+        name,
+        // eslint-disable-next-line
+        is_public: isPublic,
+        ids: repos.map((repo) => repo.id)
+      })
+    });
+
+    if (response.ok) {
+      setIsModalOpen(false);
+      router.push("/hub/insights");
+    }
+
+    setSubmitted(false);
+  };
+
+  const handleOnModalClose = () => {
+    setIsModalOpen(false);
+  };
+
+
   return (
     <section className="flex  flex-col lg:flex-row w-full lg:gap-20 py-4 lg:pl-28 justify-center ">
       <div className="flex flex-col gap-8">
@@ -273,6 +309,29 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
             />
           </div>
         </div>
+
+        {edit && (
+          <div className="py-6 border-b flex flex-col gap-4 border-t border-light-slate-8">
+            <Title className="!text-1xl !leading-none py-6" level={4}>
+              Danger zone
+            </Title>
+
+            <div className="rounded-2xl flex flex-col bg-light-slate-4 p-6">
+              <Title className="!text-1xl !leading-none !border-light-slate-8 border-b pb-4" level={4}>
+                Delete page
+              </Title>
+              <Text className="my-4">
+                Once you delete a page, you&#39;ve past the point of no return.
+              </Text>
+
+              <div>
+                <Button onClick={()=> setIsModalOpen(true)} variant="default" className="bg-light-red-6 border border-light-red-8 hover:bg-light-red-7 text-light-red-10">
+                  Delete page
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="lg:sticky mt-5 md:mt-0 top-0 py-4 lg:py-0">
@@ -305,7 +364,75 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
           })}
         </RepositoriesCart>
       </div>
+
+      <Modal
+        open={isModalOpen}
+        submitted={submitted}
+        pageName={name}
+        onConfirm={handleDeleteInsightPage}
+        onClose={handleOnModalClose}
+      />
     </section>
+  );
+};
+
+interface ModalProps {
+  open: boolean;
+  submitted: boolean;
+  pageName: string;
+  onClose: () => void;
+  onConfirm: () => void;
+}
+
+const Modal:FC<ModalProps> = ({
+  open = false,
+  submitted = false,
+  pageName,
+  onConfirm,
+  onClose
+}) => {
+
+  const [input, setInput] = useState("");
+
+  const handleOnNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInput(e.target.value);
+  };
+
+  const handleOnConfirm = async () => {
+    if (input !== "DELETE") return;
+    await onConfirm();
+  };
+
+  const handleOnClose = async () => {
+    await onClose();
+  };
+
+  return (
+    <Dialog
+      open={open}
+    >
+      <DialogContent>
+        <DialogTitle>
+          <Title level={3}>Delete Page</Title>
+        </DialogTitle> 
+
+        <Text>Are you sure you want to delete  <span className="font-bold text-light-slate-12">{`${pageName}`}</span>?</Text>
+        <Text>If you have data on this page that your team is using it would be difficult for your team to get access to track your project.</Text>
+        <Text> <span className="font-bold text-light-slate-12">This action cannot be undone</span></Text>
+        <Text>Type DELETE in all caps to confirm</Text>
+
+        <TextInput onChange={handleOnNameChange} value={input} />
+
+        <div className="flex gap-3">
+          <Button disabled={submitted} onClick={handleOnConfirm} variant="default" className="bg-light-red-6 border border-light-red-8 hover:bg-light-red-7 text-light-red-10">
+            Delete
+          </Button>
+          <Button onClick={handleOnClose} variant="default" className="bg-light-slate-6 text-light-slate-10 hover:bg-light-slate-7">
+            Cancel
+          </Button>
+        </div>
+      </DialogContent>
+    </Dialog>
   );
 };
 
