@@ -222,13 +222,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
       headers: {
         "Content-type": "application/json",
         Authorization: `Bearer ${sessionToken}`
-      },
-      body: JSON.stringify({
-        name,
-        // eslint-disable-next-line
-        is_public: isPublic,
-        ids: repos.map((repo) => repo.id)
-      })
+      }
     });
 
     if (response.ok) {
