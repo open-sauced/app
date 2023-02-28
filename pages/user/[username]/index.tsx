@@ -13,11 +13,7 @@ import { useEffect } from "react";
 const Contributor: WithPageLayout = () => {
   const router = useRouter();
   const { username } = router.query;
-  let contributorLogin = username as string;
-
-  if (Array.isArray(username)) {
-    contributorLogin = username[0];
-  }
+  const contributorLogin = username as string;
 
   const { data: contributor, isError: contributorError } = useSingleContributor(contributorLogin);
   const { data: user, isLoading: userLoading, isError: userError } = useFetchUser(contributorLogin);

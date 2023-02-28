@@ -1,3 +1,6 @@
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+
 import Avatar from "components/atoms/Avatar/avatar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "components/atoms/Tabs/tabs";
 import HighlightInputForm from "components/molecules/HighlightInput/highlight-input-form";
@@ -9,10 +12,9 @@ import CardRepoList, { RepoList } from "components/molecules/CardRepoList/card-r
 import PullRequestTable from "components/molecules/PullRequestTable/pull-request-table";
 import ContributorHighlightCard from "components/molecules/ContributorHighlight/contributor-highlight-card";
 import { useFetchUserHighlights } from "lib/hooks/useFetchUserHighlights";
-import { useEffect, useState } from "react";
 import Button from "components/atoms/Button/button";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
-import { useRouter } from "next/router";
+import uppercaseFirst from "lib/utils/uppercase-first";
 
 interface ContributorProfileTabProps {
   contributor?: DbUser;
@@ -45,8 +47,12 @@ const ContributorProfileTab = ({
   const { data: highlights, isError, isLoading } = useFetchUserHighlights(login || "");
   const [inputVisible, setInputVisible] = useState(false);
 
-  const hasHighlights = highlights?.length > 0;
   const router = useRouter();
+  const hasHighlights = highlights?.length > 0;
+  const isCorrectPath = router.pathname.split("/").at(-1) !== "[username]";
+  const currentPathname = isCorrectPath
+    ? router.pathname.split("/").at(-1)
+    : hasHighlights ? "highlights" : "contributions";
 
   const handleTabUrl = (tab: string) => {
     router.push(`/user/${login}/${tab.toLowerCase()}`);
@@ -54,12 +60,12 @@ const ContributorProfileTab = ({
 
   useEffect(() => {
     setInputVisible(highlights && highlights.length !== 0 ? true : false);
-    if (hasHighlights) router.push(`/user/${login}/highlights`);
-    else router.push(`/user/${login}/contributions`);
+    const initialPath = hasHighlights && currentPathname === "highlights" ? "highlights" : "contributions";
+    router.push(`/user/${login}/${initialPath}`);
   }, [highlights]);
 
   return (
-    <Tabs defaultValue={hasHighlights ? "Highlights" : "Contributions"} className="">
+    <Tabs defaultValue={uppercaseFirst(currentPathname ?? "contributions")} className="">
       <TabsList className="w-full border-b  justify-start">
         <TabsTrigger
           className="data-[state=active]:border-sauced-orange data-[state=active]:border-b-2 text-2xl"
