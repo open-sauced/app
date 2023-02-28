@@ -5,6 +5,34 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.31.0-beta.9](https://github.com/open-sauced/insights/compare/v1.31.0-beta.8...v1.31.0-beta.9) (2023-02-28)
+
+
+### 🍕 Features
+
+* add suggestions to repo search ([#908](https://github.com/open-sauced/insights/issues/908)) ([f908b18](https://github.com/open-sauced/insights/commit/f908b186e168a229ab59e59a623f5380094152c2)), closes [#789](https://github.com/open-sauced/insights/issues/789)
+
+## [1.31.0-beta.8](https://github.com/open-sauced/insights/compare/v1.31.0-beta.7...v1.31.0-beta.8) (2023-02-28)
+
+
+### 🐛 Bug Fixes
+
+* update highlight toast message ([#915](https://github.com/open-sauced/insights/issues/915)) ([a1a5568](https://github.com/open-sauced/insights/commit/a1a556888f256eab9d48e47e13ed10e2a8265493)), closes [#904](https://github.com/open-sauced/insights/issues/904)
+
+## [1.31.0-beta.7](https://github.com/open-sauced/insights/compare/v1.31.0-beta.6...v1.31.0-beta.7) (2023-02-27)
+
+
+### 🍕 Features
+
+* 867 mobile buttons header ([#898](https://github.com/open-sauced/insights/issues/898)) ([e2246f4](https://github.com/open-sauced/insights/commit/e2246f447f46c1e92849c8e2e73baff3051976bf))
+
+## [1.31.0-beta.6](https://github.com/open-sauced/insights/compare/v1.31.0-beta.5...v1.31.0-beta.6) (2023-02-27)
+
+
+### 🍕 Features
+
+* implement edit highlight ([#909](https://github.com/open-sauced/insights/issues/909)) ([79f9ddc](https://github.com/open-sauced/insights/commit/79f9ddc90498a5fc1456199ce1350668ece5ab22))
+
 ## [1.31.0-beta.5](https://github.com/open-sauced/insights/compare/v1.31.0-beta.4...v1.31.0-beta.5) (2023-02-24)
 
 

@@ -76,6 +76,7 @@ const HighlightInputForm = (): JSX.Element => {
     const [url] = pullLink || [];
     const highlight = bodyText.replace(url as string, "");
 
+
     if (pullLink && url) {
       const { apiPaths } = generateApiPrUrl(url);
       const { repoName, orgName, issueId } = apiPaths;
@@ -87,6 +88,7 @@ const HighlightInputForm = (): JSX.Element => {
         setLoading(false);
         ToastTrigger({ message: "A valid Pull request Link is required", type: "error" });
         return;
+
       } else {
         setLoading(true);
         const res = await createHighlights({
