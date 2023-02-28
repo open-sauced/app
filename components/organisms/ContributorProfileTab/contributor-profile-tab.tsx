@@ -44,16 +44,17 @@ const ContributorProfileTab = ({
 
   const { data: highlights, isError, isLoading } = useFetchUserHighlights(login || "");
   const [inputVisible, setInputVisible] = useState(false);
+
   const hasHighlights = highlights?.length > 0;
   const router = useRouter();
 
   const handleTabUrl = (tab: string) => {
-    router.push(`/user/${login}?tab=${tab.toLowerCase()}`);
+    router.push(`/user/${login}/${tab.toLowerCase()}`);
   };
 
   useEffect(() => {
     setInputVisible(highlights && highlights.length !== 0 ? true : false);
-    if (!hasHighlights) router.push(`/user/${login}?tab=contributions`);
+    if (!hasHighlights) router.push(`/user/${login}/contributions`);
   }, [highlights]);
 
   return (
