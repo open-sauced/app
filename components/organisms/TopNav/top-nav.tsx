@@ -25,7 +25,7 @@ const TopNav: React.FC = () => {
             <Link className="text-sm text-light-slate-10" href={"/hub/insights"}>
             Insights Hub
             </Link>
-            <Link className="text-sm text-light-slate-10" href={"/"+userInterest+"/dashboard/filter/recent"}>
+            <Link className="text-sm text-light-slate-10" href={`/${userInterest}/dashboard/filter/recent`}>
             Explore
             </Link>
           </>
