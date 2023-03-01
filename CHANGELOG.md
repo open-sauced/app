@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.31.0-beta.14](https://github.com/open-sauced/insights/compare/v1.31.0-beta.13...v1.31.0-beta.14) (2023-03-01)
+
+
+### 🍕 Features
+
+* navigate to user contributions tab if there are no user highlights ([#918](https://github.com/open-sauced/insights/issues/918)) ([3bb20ef](https://github.com/open-sauced/insights/commit/3bb20ef596cf32e2186678c8e1bcb5c4040e3393)), closes [#914](https://github.com/open-sauced/insights/issues/914) [#916](https://github.com/open-sauced/insights/issues/916)
+
 ## [1.31.0-beta.13](https://github.com/open-sauced/insights/compare/v1.31.0-beta.12...v1.31.0-beta.13) (2023-03-01)
 
 
