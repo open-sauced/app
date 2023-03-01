@@ -25,13 +25,13 @@ const TopNav: React.FC = () => {
               <Link className="text-sm text-light-slate-10" href={"/javascript/dashboard/filter/recent"}>
                 Explore
               </Link>
-              <Link className="text-sm text-light-slate-10" href={"/feed"}>
-                Highlights
-              </Link>
             </>
           ) : (
             ""
           )}
+          <Link className="text-sm text-light-slate-10" href={"/feed"}>
+            Highlights
+          </Link>
         </div>
         <AuthSection />
       </div>
