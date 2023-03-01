@@ -1,5 +1,5 @@
 const getInterestOptions = () => {
-  const interests = ["javascript", "rust", "python", "ml", "ai", "react", "Ruby", "JavaScript", "CPP (C++)", "PHP"];
+  const interests = ["javascript", "rust", "python", "ml", "ai", "react"];
 
   return interests;
 };
