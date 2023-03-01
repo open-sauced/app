@@ -7,10 +7,14 @@ import HeaderLogo from "components/molecules/HeaderLogo/header-logo";
 
 import useSession from "lib/hooks/useSession";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
+import { useFetchUser } from "lib/hooks/useFetchUser";
 
 const TopNav: React.FC = () => {
   const { user } = useSupabaseAuth();
   const { onboarded } = useSession();
+
+  const { data: gitHubUser } = useFetchUser(user?.user_metadata.user_name);
+  const userInterests = gitHubUser?.interests || "javascript";
 
   return (
     <header className="top-nav-container flex justify-between items-center px-2 md:px-16 py-0.5 bg-light-slate-3 border-b">
@@ -21,7 +25,7 @@ const TopNav: React.FC = () => {
             <Link className="text-sm text-light-slate-10" href={"/hub/insights"}>
             Insights Hub
             </Link>
-            <Link className="text-sm text-light-slate-10" href={"/javascript/dashboard/filter/recent"}>
+            <Link className="text-sm text-light-slate-10" href={"/"+userInterests+"/dashboard/filter/recent"}>
             Explore
             </Link>
           </>
