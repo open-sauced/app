@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.31.0-beta.12](https://github.com/open-sauced/insights/compare/v1.31.0-beta.11...v1.31.0-beta.12) (2023-03-01)
+
+
+### 🍕 Features
+
+* add ability to delete an insight page ([#920](https://github.com/open-sauced/insights/issues/920)) ([e1cd798](https://github.com/open-sauced/insights/commit/e1cd7988851eb4734b666e29541b7f8155f8ea1b)), closes [#853](https://github.com/open-sauced/insights/issues/853)
+* add loading state to highlight cards ([#921](https://github.com/open-sauced/insights/issues/921)) ([63c2cc1](https://github.com/open-sauced/insights/commit/63c2cc1772fed6161b70e25a883d16a0f756d1a2)), closes [#903](https://github.com/open-sauced/insights/issues/903)
+
 ## [1.31.0-beta.11](https://github.com/open-sauced/insights/compare/v1.31.0-beta.10...v1.31.0-beta.11) (2023-02-28)
 
 
