@@ -36,7 +36,7 @@ const Feeds = () => {
   }, [selectedRepo]);
 
   return (
-    <div className="container w-full mx-auto px-2 md:px-16 gap-12 justify-end pt-12 flex flex-col md:flex-row">
+    <div className="container  mx-auto px-2 md:px-16 gap-12 lg:justify-end pt-12 flex flex-col md:flex-row">
       <Tabs defaultValue="Highlights" className="flex-1 lg:pl-[21.875rem]">
         <TabsList className="w-full border-b hidden justify-start">
           <TabsTrigger
