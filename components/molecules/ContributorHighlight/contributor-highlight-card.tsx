@@ -89,9 +89,12 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
         );
         setLoading(false);
         if (res) {
-          ToastTrigger({ message: "Highlights Updated Successfully", type: "success" });
-          mutate(`users/${user}/highlights`);
+          ToastTrigger({ message: "Highlights Updated Successfully", type: "success" });          
+          mutate(`users/${user}/highlights`);          
           setOpen(false);
+          setTimeout(() => {
+            document.body.setAttribute("style", "pointer-events:auto !important");
+          }, 1);
         } else {
           setLoading(false);
           setError("An error occurred while updating!!!");
@@ -104,15 +107,7 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
 
   return (
     <article className="flex flex-col max-w-[40rem] flex-1 gap-3 lg:gap-6">
-      <Dialog
-        open={open}
-        onOpenChange={(state) => {
-          if (!state)
-            setTimeout(() => {
-              document.body.setAttribute("style", "pointer-events:auto !important");
-            });
-        }}
-      >
+      <Dialog open={open}>
         <div className="flex justify-between items-center">
           {title && (
             <Title className="!text-sm lg:!text-xl !text-light-slate-12" level={4}>

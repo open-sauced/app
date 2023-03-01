@@ -21,7 +21,7 @@ const createHighlights = async (data: CreateHighlightsProps) => {
       body: JSON.stringify({ ...data })
     });
 
-    return res.json();
+    if (res.status === 200 || res.status === 201) return res.json();
   } catch (e) {
     console.log(e);
     return false;
