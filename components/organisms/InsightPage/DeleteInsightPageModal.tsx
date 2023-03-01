@@ -4,6 +4,7 @@ import TextInput from "components/atoms/TextInput/text-input";
 import Text from "components/atoms/Typography/text";
 import Title from "components/atoms/Typography/title";
 import { Dialog, DialogContent, DialogTitle } from "components/molecules/Dialog/dialog";
+import clsx from "clsx";
 
 interface ModalProps {
   open: boolean;
@@ -36,6 +37,8 @@ const DeleteInsightPageModal:FC<ModalProps> = ({
     onClose();
   };
 
+  const disabled = input !== "DELETE" || submitted;
+
   return (
     <Dialog
       open={open}
@@ -53,7 +56,12 @@ const DeleteInsightPageModal:FC<ModalProps> = ({
         <TextInput onChange={handleOnNameChange} value={input} />
 
         <div className="flex gap-3">
-          <Button disabled={submitted} onClick={handleOnConfirm} variant="default" className="bg-light-red-6 border border-light-red-8 hover:bg-light-red-7 text-light-red-10">
+          <Button
+            disabled={disabled}
+            onClick={handleOnConfirm}
+            variant="default"
+            className={clsx("bg-light-red-6 border border-light-red-8 hover:bg-light-red-7 text-light-red-10",
+              disabled && "cursor-not-allowed !bg-light-red-4 hover:!none !border-light-red-5 !text-light-red-8")}>
             Delete
           </Button>
           <Button onClick={handleOnClose} variant="default" className="bg-light-slate-6 text-light-slate-10 hover:bg-light-slate-7">
