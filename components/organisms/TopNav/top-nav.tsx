@@ -14,7 +14,7 @@ const TopNav: React.FC = () => {
   const { onboarded } = useSession();
 
   const { data: gitHubUser } = useFetchUser(user?.user_metadata.user_name);
-  const userInterests = gitHubUser?.interests || "javascript";
+  const userInterests = gitHubUser?.interests.split(",")[0] || "javascript";
 
   return (
     <header className="top-nav-container flex justify-between items-center px-2 md:px-16 py-0.5 bg-light-slate-3 border-b">

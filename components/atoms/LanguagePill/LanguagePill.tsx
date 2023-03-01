@@ -8,6 +8,7 @@ import AIIcon from "/img/icons/🤖.svg";
 import MLIcon from "/img/icons/🧠.svg";
 import RustIcon from "/img/icons/🦀.svg";
 import topicNameFormatting from "lib/utils/topic-name-formatting";
+import { RubyIcon } from "@primer/octicons-react";
 
 interface LanguagePillProps {
   topic: "react" | "javascript" | "python" | "ML" | "AI" | "rust" | string;

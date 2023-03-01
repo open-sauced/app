@@ -1,5 +1,5 @@
 const getTopicOptions = () => {
-  const topics = ["javascript", "rust", "python", "ml", "ai", "react"];
+  const topics = ["javascript", "python", "java", "typescript", "c#", "c++", "php", "shell", "c", "ruby", "rust", "ml", "ai", "react"];
 
   return topics;
 };
