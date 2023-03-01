@@ -7,8 +7,6 @@ import { ContributorsProfileType } from "components/molecules/ContributorHoverCa
 
 import ProfileLayout from "layouts/profile";
 import { useFetchUser } from "lib/hooks/useFetchUser";
-import Head from "next/head";
-import SEO from "layouts/SEO/SEO";
 import { WithPageLayout } from "interfaces/with-page-layout";
 import { useEffect } from "react";
 
