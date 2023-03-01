@@ -32,7 +32,7 @@ const Contributor: WithPageLayout = () => {
   useEffect( () => {
     Contributor.updateSEO!({
       title: `${contributorLogin} | OpenSauced`,
-      description: `${user?.bio || (profile?.githubName+" has connected their GitHub but has not added a bio.")}`,
+      description: `${user?.bio || `${profile?.githubName} has connected their GitHub but has not added a bio.`}`,
       image: profile.githubAvatar,
       twitterCard: "summary_large_image"
     });
