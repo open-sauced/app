@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.31.0-beta.13](https://github.com/open-sauced/insights/compare/v1.31.0-beta.12...v1.31.0-beta.13) (2023-03-01)
+
+
+### 🍕 Features
+
+* update default user profile bio ([#926](https://github.com/open-sauced/insights/issues/926)) ([2a95817](https://github.com/open-sauced/insights/commit/2a9581709365c2bdcbe9a0f1fcbddf6272ff4b72)), closes [#922](https://github.com/open-sauced/insights/issues/922)
+
 ## [1.31.0-beta.12](https://github.com/open-sauced/insights/compare/v1.31.0-beta.11...v1.31.0-beta.12) (2023-03-01)
 
 
