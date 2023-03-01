@@ -33,7 +33,11 @@ const Feeds = () => {
     });
 
   useEffect(() => {
-    if (selectedRepo) router.push(`/feed?repo=${selectedRepo}`);
+    if (selectedRepo) {
+      router.push(`/feed?repo=${selectedRepo}`);
+    } else {
+      router.push("/feed");
+    }
   }, [selectedRepo]);
 
   return (

@@ -10,8 +10,8 @@ const HighlightsFilterCard = ({ repos, setSelected }: HighlightsFilterCardProps)
   const [selected, setSelectedRepo] = useState("");
 
   const handleClick = (name: string) => {
-    setSelectedRepo(name);
-    setSelected?.(name);
+    setSelectedRepo((prev) => (prev === name ? "" : name));
+    setSelected?.((prev) => (prev === name ? "" : name));
   };
 
   return (
