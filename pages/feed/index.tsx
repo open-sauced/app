@@ -11,6 +11,7 @@ import { getFormattedDate } from "lib/utils/date-utils";
 import { useFetchAllHighlights } from "lib/hooks/useFetchAllHighlights";
 import { useFetchHighlightRepos } from "lib/hooks/useFetchHiglightRepos";
 import { useEffect, useState } from "react";
+import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 
 const Feeds = () => {
   const { user } = useSupabaseAuth();
@@ -72,6 +73,15 @@ const Feeds = () => {
 
               {/* Highlights List section */}
               <div className="mt-10 flex gap-8 flex-col ">
+                {isLoading && (
+                  <div className="flex flex-col gap-3">
+                    <div className="flex gap-3">
+                      <SkeletonWrapper radius={100} width={40} height={40} />{" "}
+                      <SkeletonWrapper width={200} height={40} />
+                    </div>
+                    <SkeletonWrapper height={300} />
+                  </div>
+                )}
                 {data &&
                   data.length > 0 &&
                   // eslint-disable-next-line camelcase
