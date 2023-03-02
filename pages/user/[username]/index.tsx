@@ -7,8 +7,6 @@ import { ContributorsProfileType } from "components/molecules/ContributorHoverCa
 
 import ProfileLayout from "layouts/profile";
 import { useFetchUser } from "lib/hooks/useFetchUser";
-import Head from "next/head";
-import SEO from "layouts/SEO/SEO";
 import { WithPageLayout } from "interfaces/with-page-layout";
 import { useEffect } from "react";
 
@@ -32,7 +30,7 @@ const Contributor: WithPageLayout = () => {
   useEffect( () => {
     Contributor.updateSEO!({
       title: `${contributorLogin} | OpenSauced`,
-      description: `${user?.bio || "I am an open source developer with a passion for music and video games. I strive to improve the open source community and am always looking for new ways to contribute."}`,
+      description: `${user?.bio || `${profile?.githubName} has connected their GitHub but has not added a bio.`}`,
       image: profile.githubAvatar,
       twitterCard: "summary_large_image"
     });

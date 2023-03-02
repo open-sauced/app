@@ -1,3 +1,6 @@
+import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/router";
+
 import Avatar from "components/atoms/Avatar/avatar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "components/atoms/Tabs/tabs";
 import HighlightInputForm from "components/molecules/HighlightInput/highlight-input-form";
@@ -9,9 +12,9 @@ import CardRepoList, { RepoList } from "components/molecules/CardRepoList/card-r
 import PullRequestTable from "components/molecules/PullRequestTable/pull-request-table";
 import ContributorHighlightCard from "components/molecules/ContributorHighlight/contributor-highlight-card";
 import { useFetchUserHighlights } from "lib/hooks/useFetchUserHighlights";
-import { useEffect, useState } from "react";
 import Button from "components/atoms/Button/button";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
+import uppercaseFirst from "lib/utils/uppercase-first";
 
 interface ContributorProfileTabProps {
   contributor?: DbUser;
@@ -43,23 +46,42 @@ const ContributorProfileTab = ({
 
   const { data: highlights, isError, isLoading } = useFetchUserHighlights(login || "");
   const [inputVisible, setInputVisible] = useState(false);
+  const pathnameRef = useRef<string | null>();
+
+  const router = useRouter();
+
+  const hasHighlights = highlights?.length > 0;
+  pathnameRef.current = router.pathname.split("/").at(-1);
+
+  const currentPathname = pathnameRef.current !== "[username]"
+    ? pathnameRef.current
+    : hasHighlights ? "highlights" : "contributions";
+
+  const handleTabUrl = (tab: string) => {
+    router.push(`/user/${login}/${tab.toLowerCase()}`);
+  };
 
   useEffect(() => {
     setInputVisible(highlights && highlights.length !== 0 ? true : false);
+    if (currentPathname) {
+      router.push(`/user/${login}/${currentPathname}`);
+    }
   }, [highlights]);
 
   return (
-    <Tabs defaultValue="Highlights" className="">
+    <Tabs defaultValue={uppercaseFirst(currentPathname as string)} className="">
       <TabsList className="w-full border-b  justify-start">
         <TabsTrigger
           className="data-[state=active]:border-sauced-orange data-[state=active]:border-b-2 text-2xl"
           value="Highlights"
+          onClick={() => handleTabUrl("Highlights")}
         >
           Highlights
         </TabsTrigger>
         <TabsTrigger
           className="data-[state=active]:border-sauced-orange data-[state=active]:border-b-2 text-2xl"
           value="Contributions"
+          onClick={() => handleTabUrl("Contributions")}
         >
           Contributions
         </TabsTrigger>
