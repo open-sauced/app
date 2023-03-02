@@ -5,6 +5,63 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.31.0-beta.15](https://github.com/open-sauced/insights/compare/v1.31.0-beta.14...v1.31.0-beta.15) (2023-03-01)
+
+
+### 🍕 Features
+
+* default explore topic matches user interest ([#930](https://github.com/open-sauced/insights/issues/930)) ([e73c9dd](https://github.com/open-sauced/insights/commit/e73c9ddaffa2cd013ea43f2132b98cf28d2951ad)), closes [#929](https://github.com/open-sauced/insights/issues/929)
+
+## [1.31.0-beta.14](https://github.com/open-sauced/insights/compare/v1.31.0-beta.13...v1.31.0-beta.14) (2023-03-01)
+
+
+### 🍕 Features
+
+* navigate to user contributions tab if there are no user highlights ([#918](https://github.com/open-sauced/insights/issues/918)) ([3bb20ef](https://github.com/open-sauced/insights/commit/3bb20ef596cf32e2186678c8e1bcb5c4040e3393)), closes [#914](https://github.com/open-sauced/insights/issues/914) [#916](https://github.com/open-sauced/insights/issues/916)
+
+## [1.31.0-beta.13](https://github.com/open-sauced/insights/compare/v1.31.0-beta.12...v1.31.0-beta.13) (2023-03-01)
+
+
+### 🍕 Features
+
+* update default user profile bio ([#926](https://github.com/open-sauced/insights/issues/926)) ([2a95817](https://github.com/open-sauced/insights/commit/2a9581709365c2bdcbe9a0f1fcbddf6272ff4b72)), closes [#922](https://github.com/open-sauced/insights/issues/922)
+
+## [1.31.0-beta.12](https://github.com/open-sauced/insights/compare/v1.31.0-beta.11...v1.31.0-beta.12) (2023-03-01)
+
+
+### 🍕 Features
+
+* add ability to delete an insight page ([#920](https://github.com/open-sauced/insights/issues/920)) ([e1cd798](https://github.com/open-sauced/insights/commit/e1cd7988851eb4734b666e29541b7f8155f8ea1b)), closes [#853](https://github.com/open-sauced/insights/issues/853)
+* add loading state to highlight cards ([#921](https://github.com/open-sauced/insights/issues/921)) ([63c2cc1](https://github.com/open-sauced/insights/commit/63c2cc1772fed6161b70e25a883d16a0f756d1a2)), closes [#903](https://github.com/open-sauced/insights/issues/903)
+
+## [1.31.0-beta.11](https://github.com/open-sauced/insights/compare/v1.31.0-beta.10...v1.31.0-beta.11) (2023-02-28)
+
+
+### 🐛 Bug Fixes
+
+* update pointer after highlight is saved ([754e94f](https://github.com/open-sauced/insights/commit/754e94fe2051801ac372230e3be3224643ecd596))
+
+## [1.31.0-beta.10](https://github.com/open-sauced/insights/compare/v1.31.0-beta.9...v1.31.0-beta.10) (2023-02-28)
+
+
+### 🍕 Features
+
+* implement highlights character limit  ([#912](https://github.com/open-sauced/insights/issues/912)) ([5ee12bf](https://github.com/open-sauced/insights/commit/5ee12bff1910d47613a2644f6546059cc3a8d878)), closes [#899](https://github.com/open-sauced/insights/issues/899)
+
+## [1.31.0-beta.9](https://github.com/open-sauced/insights/compare/v1.31.0-beta.8...v1.31.0-beta.9) (2023-02-28)
+
+
+### 🍕 Features
+
+* add suggestions to repo search ([#908](https://github.com/open-sauced/insights/issues/908)) ([f908b18](https://github.com/open-sauced/insights/commit/f908b186e168a229ab59e59a623f5380094152c2)), closes [#789](https://github.com/open-sauced/insights/issues/789)
+
+## [1.31.0-beta.8](https://github.com/open-sauced/insights/compare/v1.31.0-beta.7...v1.31.0-beta.8) (2023-02-28)
+
+
+### 🐛 Bug Fixes
+
+* update highlight toast message ([#915](https://github.com/open-sauced/insights/issues/915)) ([a1a5568](https://github.com/open-sauced/insights/commit/a1a556888f256eab9d48e47e13ed10e2a8265493)), closes [#904](https://github.com/open-sauced/insights/issues/904)
+
 ## [1.31.0-beta.7](https://github.com/open-sauced/insights/compare/v1.31.0-beta.6...v1.31.0-beta.7) (2023-02-27)
 
 

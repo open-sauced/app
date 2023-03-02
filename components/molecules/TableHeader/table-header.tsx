@@ -1,4 +1,7 @@
 import React from "react";
+import { useRouter } from "next/router";
+import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
+import { useDebounce } from "rooks";
 
 import Search from "components/atoms/Search/search";
 import Select from "components/atoms/Select/custom-select";
@@ -22,6 +25,35 @@ const TableHeader = ({
   range,
   setRangeFilter
 }: TableHeaderProps): JSX.Element => {
+  const router = useRouter();
+  const { filterName } = router.query;
+  const [searchTerm, setSearchTerm] = React.useState<string>("");
+  const [suggestions, setSuggestions] = React.useState<string[]>([]);
+  const { providerToken } = useSupabaseAuth();
+
+  const updateSuggestionsDebounced = useDebounce( async () => {
+    const req = await fetch(`https://api.github.com/search/repositories?q=${encodeURIComponent(`${searchTerm} topic:${filterName} in:name`)}`, {
+      ...providerToken? {
+        headers: {
+          "Authorization": `Bearer ${providerToken}`
+        }} : {}
+    });
+
+
+    if(req.ok) {
+      const res = await req.json();
+      const suggestions = res.items.map((item: any) => item.full_name);
+      if(suggestions.length > 5) suggestions.length = 5;
+      setSuggestions(suggestions);
+    }
+  }, 250);
+
+  React.useEffect(() => {
+    setSuggestions([]);
+    if(!searchTerm) return;
+    updateSuggestionsDebounced();
+  }, [searchTerm]);
+
   return (
     <div className="flex flex-wrap gap-y-2 flex-col md:flex-row md:justify-between md:items-end w-full md:pb-4">
       <div className="flex gap-x-4 items-end">
@@ -37,7 +69,8 @@ const TableHeader = ({
           ""
         )}
         {onSearch ? (
-          <Search placeholder={`Search ${title}`} className="max-w-full text-sm py-1.5" name={"query"} onSearch={onSearch} />
+          <Search placeholder={`Search ${title}`} className="max-w-full text-sm py-1.5" name={"query"} onSearch={onSearch}
+            suggestions={suggestions} onChange={(value) => setSearchTerm(value)} />
         ) : (
           ""
         )}
