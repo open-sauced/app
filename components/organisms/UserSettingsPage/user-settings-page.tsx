@@ -131,9 +131,10 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
       display_local_time: displayLocalTime,
       timezone,
       // eslint-disable-next-line camelcase
-      github_sponsors_url: formRef.current!.github_sponsors_url.value !== "" ? formRef.current!.github_sponsors_url.value : undefined,
+      github_sponsors_url:
+        formRef.current!.github_sponsors_url.value !== "" ? formRef.current!.github_sponsors_url.value : undefined,
       // eslint-disable-next-line camelcase
-      linkedin_url: formRef.current!.linkedin_url.value !== "" ? formRef.current!.linkedin_url.value: undefined
+      linkedin_url: formRef.current!.linkedin_url.value !== "" ? formRef.current!.linkedin_url.value : undefined
     };
     if (formRef.current?.url.value) {
       payload.url = formRef.current!.url.value;
@@ -204,7 +205,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
               label="LinkedIn URL"
               pattern="http[s]?://.*\..{2,}"
               name="linkedin_url"
-            />                        
+            />
             <TextInput
               classNames="bg-light-slate-4 text-light-slate-11"
               placeholder="saucedopen"
@@ -245,7 +246,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
                 ))}
               </Select>
             </div>
-            <Button disabled={!isValidEmail} variant="primary">
+            <Button className="w-max" disabled={!isValidEmail} variant="primary">
               Update profile
             </Button>
           </form>
@@ -269,7 +270,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
               variant="default"
               disabled={selectedInterest.length === 0}
               onClick={handleUpdateInterest}
-              className="px-4 text-light-slate-11 py-2 bg-light-slate-4"
+              className="w-max"
             >
               Update Interests
             </Button>
