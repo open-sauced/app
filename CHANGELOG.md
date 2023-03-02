@@ -5,6 +5,8 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.31.0](https://github.com/open-sauced/insights/compare/v1.30.0...v1.31.0) (2023-02-28)
+
 ## [1.31.0-beta.16](https://github.com/open-sauced/insights/compare/v1.31.0-beta.15...v1.31.0-beta.16) (2023-03-02)
 
 
@@ -20,6 +22,11 @@
 * default explore topic matches user interest ([#930](https://github.com/open-sauced/insights/issues/930)) ([e73c9dd](https://github.com/open-sauced/insights/commit/e73c9ddaffa2cd013ea43f2132b98cf28d2951ad)), closes [#929](https://github.com/open-sauced/insights/issues/929)
 
 ## [1.31.0-beta.14](https://github.com/open-sauced/insights/compare/v1.31.0-beta.13...v1.31.0-beta.14) (2023-03-01)
+
+
+### 🧑‍💻 Code Refactoring
+
+* replace `Supabase` button with native button element  ([#907](https://github.com/open-sauced/insights/issues/907)) ([807a177](https://github.com/open-sauced/insights/commit/807a17727f9cc4b09d7cf6b42c2c536e934675cc)), closes [#901](https://github.com/open-sauced/insights/issues/901) [#854](https://github.com/open-sauced/insights/issues/854)
 
 
 ### 🍕 Features
