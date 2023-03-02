@@ -3,17 +3,18 @@ import { useState } from "react";
 import useSWR, { Fetcher } from "swr";
 
 interface useFetchUserHighlightsResponse {
-  data: DbHighlight[];
+  data: { full_name: string }[];
   meta: Meta;
 }
-const useFetchUserHighlights = (username: string) => {
+const useFetchHighlightRepos = () => {
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
 
   const pageQuery = page ? `page=${page}` : "";
   const limitQuery = limit ? `&limit=${limit}` : "";
+
   const { data, error } = useSWR<useFetchUserHighlightsResponse, Error>(
-    `users/${username}/highlights?${pageQuery}${limitQuery}`,
+    `highlights/repos/list?${pageQuery}${limitQuery}`,
     publicApiFetcher as Fetcher<useFetchUserHighlightsResponse, Error>
   );
 
@@ -26,4 +27,4 @@ const useFetchUserHighlights = (username: string) => {
   };
 };
 
-export { useFetchUserHighlights };
+export { useFetchHighlightRepos };

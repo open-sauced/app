@@ -6,14 +6,16 @@ interface useFetchUserHighlightsResponse {
   data: DbHighlight[];
   meta: Meta;
 }
-const useFetchUserHighlights = (username: string) => {
+const useFetchAllHighlights = (repo = "") => {
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
 
   const pageQuery = page ? `page=${page}` : "";
   const limitQuery = limit ? `&limit=${limit}` : "";
+  const repoQuery = repo ? `&repo=${repo}` : "";
+
   const { data, error } = useSWR<useFetchUserHighlightsResponse, Error>(
-    `users/${username}/highlights?${pageQuery}${limitQuery}`,
+    `highlights/list?${pageQuery}${limitQuery}${repoQuery}`,
     publicApiFetcher as Fetcher<useFetchUserHighlightsResponse, Error>
   );
 
@@ -26,4 +28,4 @@ const useFetchUserHighlights = (username: string) => {
   };
 };
 
-export { useFetchUserHighlights };
+export { useFetchAllHighlights };

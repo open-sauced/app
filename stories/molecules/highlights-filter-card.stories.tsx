@@ -9,7 +9,8 @@ export default StoryConfig;
 
 const HighlightsFilterCardTemplate: ComponentStory<typeof HighlightsFilterCard> = () => (
   <TooltipProvider>
-    <HighlightsFilterCard />
+    {/* eslint-disable-next-line camelcase */}
+    <HighlightsFilterCard repos={[{ repoIcon: "", repoName: "", full_name: "" }]} />
   </TooltipProvider>
 );
 
