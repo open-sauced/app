@@ -17,8 +17,9 @@ import changeCapitalization from "lib/utils/change-capitalization";
 import apiFetcher from "lib/hooks/useSWR";
 import { initiateAnalytics } from "lib/utils/analytics";
 import { supabase } from "lib/utils/supabase";
-import { Toaster } from "react-hot-toast";
+
 import SEO from "layouts/SEO/SEO";
+import { Toaster } from "components/molecules/Toaster/toaster";
 
 type ComponentWithPageLayout = AppProps & {
   Component: AppProps["Component"] & {
@@ -96,10 +97,10 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
           provider: localStorageProvider
         }}
       >
-        <Toaster position="top-center" />
+        {/* <Toaster position="top-center" /> */}
+        <Toaster />
         <SessionContextProvider supabaseClient={supabase} initialSession={pageProps.initialSession}>
           <TipProvider>
-
             {Component.PageLayout ? (
               <Component.PageLayout>
                 <Component {...pageProps} />
