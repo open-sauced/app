@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.31.0-beta.16](https://github.com/open-sauced/insights/compare/v1.31.0-beta.15...v1.31.0-beta.16) (2023-03-02)
+
+
+### 🍕 Features
+
+* implement highlights feed page ([#913](https://github.com/open-sauced/insights/issues/913)) ([6271c91](https://github.com/open-sauced/insights/commit/6271c919fc45bcd8d0ef7eb8f4282a5114a72882)), closes [#900](https://github.com/open-sauced/insights/issues/900) [#829](https://github.com/open-sauced/insights/issues/829)
+
 ## [1.31.0-beta.15](https://github.com/open-sauced/insights/compare/v1.31.0-beta.14...v1.31.0-beta.15) (2023-03-01)
 
 
