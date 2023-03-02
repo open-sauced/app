@@ -50,19 +50,22 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
   };
 
   const handleOnAddtoInsights = () => {
-    if(user) {
-      return router.push({pathname: "/hub/insights/new", query: {selectedRepos: JSON.stringify(selectedRepos)}}, "/hub/insights/new" );
+    if (user) {
+      router.push(
+        { pathname: "/hub/insights/new", query: { selectedRepos: JSON.stringify(selectedRepos) } },
+        "/hub/insights/new"
+      );
     } else {
       signIn({ provider: "github" });
     }
   };
 
   const handleOnSelectRepo = (repo: RepositoriesRows) => {
-    const matchingRepo = repoListData.find(iteratedRepo => iteratedRepo.id === repo.id);
-    if(!matchingRepo) return;
+    const matchingRepo = repoListData.find((iteratedRepo) => iteratedRepo.id === repo.id);
+    if (!matchingRepo) return;
 
     if (selectedRepos.find((r) => r.id === matchingRepo.id)) {
-      setSelectedRepos(selectedRepos.filter(r => r.id !== repo.id));
+      setSelectedRepos(selectedRepos.filter((r) => r.id !== repo.id));
     } else {
       setSelectedRepos([...selectedRepos, matchingRepo]);
     }
@@ -106,8 +109,16 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
             </div>
           </div>
           <div className="hidden md:flex py-4 px-6 bg-light-slate-3 gap-2">
-            <div className={clsx(classNames.cols.checkbox)} >
-              <Checkbox label="" onChange={handleOnSelectAllChecked} disabled={!user} title={!user? "Connect to GitHub" : ""} className={`checked:[&>*]:!bg-orange-500 ${ user? "[&>*]:!border-orange-500 [&>*]:hover:!bg-orange-600": "[&>*]:!border-light-slate-8"}`}/>
+            <div className={clsx(classNames.cols.checkbox)}>
+              <Checkbox
+                label=""
+                onChange={handleOnSelectAllChecked}
+                disabled={!user}
+                title={!user ? "Connect to GitHub" : ""}
+                className={`checked:[&>*]:!bg-orange-500 ${
+                  user ? "[&>*]:!border-orange-500 [&>*]:hover:!bg-orange-600" : "[&>*]:!border-light-slate-8"
+                }`}
+              />
             </div>
             <div className={clsx(classNames.cols.repository)}>
               <TableTitle text="Repository"></TableTitle>
@@ -132,16 +143,14 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
             </div>
           </div>
 
-          {
-            selectedRepos.length > 0 && (
-              <div className="p-3 px-6 border-b-2 text-light-slate-11 flex justify-between">
-                <div>
-                  {selectedRepos.length} Repositories selected
-                </div>
-                <Button onClick={handleOnAddtoInsights} type="primary">Add to Insight Page</Button>
-              </div>
-            )
-          }
+          {selectedRepos.length > 0 && (
+            <div className="p-3 px-6 border-b-2 text-light-slate-11 flex justify-between">
+              <div>{selectedRepos.length} Repositories selected</div>
+              <Button onClick={handleOnAddtoInsights} variant="primary">
+                Add to Insight Page
+              </Button>
+            </div>
+          )}
 
           <RepositoriesTable
             topic={topic}

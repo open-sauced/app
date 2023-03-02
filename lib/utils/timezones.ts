@@ -1179,5 +1179,20 @@ export const timezones = [
 ];
 
 export const getTimezone = (timezone: string): number => {
-  return timezones.find(tz => tz.value === timezone)?.offset || +1;
+  return timezones.find((tz) => tz.value === timezone)?.offset || +1;
+};
+
+export const getTimeByTimezone = (offset: number) => {
+  var d = new Date();
+
+  // convert to msec
+  // subtract local time zone offset
+  // get UTC time in msec
+  const utc = d.getTime() + d.getTimezoneOffset() * 60000;
+
+  // create new Date object for different city
+  // using supplied offset
+  const time = new Date(utc + 3600000 * offset);
+
+  return `${time.getHours()}:${time.getMinutes()}${time.getHours() > 11 ? "pm" : "am"}`;
 };

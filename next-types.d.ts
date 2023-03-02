@@ -135,6 +135,8 @@ interface DbUser {
   readonly receive_collaboration: boolean;
   readonly display_email: boolean;
   readonly timezone: string;
+  readonly github_sponsors_url: string;
+  readonly linkedin_url: string;
 }
 
 interface DbHighlight {

@@ -35,7 +35,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
   const { sessionToken } = useSupabaseAuth();
   const router = useRouter();
   let receivedData = [];
-  if(router.query.selectedRepos) {
+  if (router.query.selectedRepos) {
     receivedData = JSON.parse(router.query.selectedRepos as string);
   }
 
@@ -47,7 +47,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
   const [repoHistory, setRepoHistory] = useState<GitHubRepo[]>([]);
   const [addRepoError, setAddRepoError] = useState<RepoLookupError>(RepoLookupError.Initial);
   const [isPublic, setIsPublic] = useState(!!insight?.is_public);
-  const insightRepoLimit = useStore(state => state.insightRepoLimit);
+  const insightRepoLimit = useStore((state) => state.insightRepoLimit);
 
   useEffect(() => {
     if (pageRepos) {
@@ -71,15 +71,23 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
     };
   });
 
+  const validateName = (name: string) => {
+    if (!name || name.trim().length <= 3) return false;
+
+    return true;
+  };
+
   const handleOnNameChange = (value: string) => {
-
     setName(value);
+    setIsNameValid(validateName(value));
+  };
 
-    if (!value || value.trim().length <= 3) setIsNameValid(false);
+  const disableCreateButton = () => {
+    if (insight?.name && validateName(name)) return false;
+    if (submitted) return true;
+    if (!isNameValid) return true;
 
-    if (value.trim().length > 3) {
-      setIsNameValid(true);
-    }
+    return false;
   };
 
   const handleCreateInsightPage = async () => {
@@ -203,7 +211,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
       <div className="flex flex-col gap-8">
         <div className="pb-6 border-b border-light-slate-8">
           <Title className="!text-2xl !leading-none mb-4" level={1}>
-            { edit ? "Update" : "Create New" } Insight Page
+            {edit ? "Update" : "Create New"} Insight Page
           </Title>
           <Text className="my-8">
             An insight page is a dashboard containing selected repositories that you and your team can get insights
@@ -216,11 +224,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
             Page Name
           </Title>
 
-          <TextInput
-            placeholder="Page Name (ex: My Team)"
-            value={name}
-            handleChange={handleOnNameChange}
-          />
+          <TextInput placeholder="Page Name (ex: My Team)" value={name} handleChange={handleOnNameChange} />
           {/* <Text>insights.opensauced.pizza/pages/{username}/{`{pageId}`}/dashboard</Text> */}
         </div>
 
@@ -236,7 +240,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
           />
 
           <div>
-            <Button disabled={repos.length === insightRepoLimit} onClick={handleAddRepository} type="primary">
+            <Button disabled={repos.length === insightRepoLimit} onClick={handleAddRepository} variant="primary">
               Add Repository
             </Button>
           </div>
@@ -273,7 +277,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
           handleUpdatePage={handleUpdateInsightPage}
           handleAddToCart={handleReAddRepository}
           history={reposRemoved}
-          createPageButtonDisabled={submitted || !isNameValid}
+          createPageButtonDisabled={disableCreateButton()}
         >
           {repos.map((repo) => {
             const [owner, name] = repo.full_name.split("/");
