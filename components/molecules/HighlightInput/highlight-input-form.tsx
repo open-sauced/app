@@ -9,6 +9,7 @@ import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import GhOpenGraphImg from "../GhOpenGraphImg/gh-open-graph-img";
 import { generateApiPrUrl } from "lib/utils/github";
 import { fetchGithubPRInfo } from "lib/hooks/fetchGithubPRInfo";
+import { useToast } from "lib/hooks/useToast";
 
 const HighlightInputForm = (): JSX.Element => {
   const { user } = useSupabaseAuth();
@@ -25,6 +26,8 @@ const HighlightInputForm = (): JSX.Element => {
   let rowLomit = 5;
   const charLimit = 500;
   let messageLastScrollHeight = textAreaRef.current ? textAreaRef.current?.scrollHeight : 50;
+
+  const { toast } = useToast();
 
   const validCharLimit = () => {
     return charCount - pullrequestLink.length <= charLimit;
@@ -76,7 +79,6 @@ const HighlightInputForm = (): JSX.Element => {
     const [url] = pullLink || [];
     const highlight = bodyText.replace(url as string, "");
 
-
     if (pullLink && url) {
       const { apiPaths } = generateApiPrUrl(url);
       const { repoName, orgName, issueId } = apiPaths;
@@ -86,9 +88,9 @@ const HighlightInputForm = (): JSX.Element => {
 
       if (res.isError) {
         setLoading(false);
-        ToastTrigger({ message: "A valid Pull request Link is required", type: "error" });
+        // ToastTrigger({ message: "A valid Pull request Link is required", type: "error" });
+        toast({ description: "A valid Pull request Link is required", variant: "success" });
         return;
-
       } else {
         setLoading(true);
         const res = await createHighlights({
@@ -103,7 +105,8 @@ const HighlightInputForm = (): JSX.Element => {
           setBodyText("");
           setTitle("");
           setIsDivFocused(false);
-          ToastTrigger({ message: "Highlight Posted!", type: "success" });
+          // ToastTrigger({ message: "Highlight Posted!", type: "success" });
+          toast({ description: "Highlight Posted!" });
         } else {
           ToastTrigger({ message: "An error occured!!!", type: "error" });
         }
