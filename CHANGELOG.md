@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.33.0-beta.3](https://github.com/open-sauced/insights/compare/v1.33.0-beta.2...v1.33.0-beta.3) (2023-03-03)
+
+
+### 🐛 Bug Fixes
+
+* Highlights UX copy bandaid ([#944](https://github.com/open-sauced/insights/issues/944)) ([8a7d559](https://github.com/open-sauced/insights/commit/8a7d55980a29428e5de2b9b5b79b48758015c888))
+
 ## [1.33.0-beta.2](https://github.com/open-sauced/insights/compare/v1.33.0-beta.1...v1.33.0-beta.2) (2023-03-03)
 
 
