@@ -59,7 +59,7 @@ const useTopicContributorCommits = (contributor: string, topic: string, repoIds:
   const { data } = useSWR<PaginatedTopicCommitResponse, Error>(contributor ? endpointString : null);
 
   useEffect(() => {
-    if (data) {
+    if (data && Array.isArray(data.data)) {
       const graphData = getCommitsLast30Days(data.data);
 
       setChart((prevChart) => ({
