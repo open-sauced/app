@@ -1,16 +1,24 @@
 import React from "react";
 import Image, { StaticImageData } from "next/image";
 
-import JavascriptIcon from "img/icons/☕️.svg";
+import JavascriptIcon from "img/icons/👾.svg";
 import ReactIcon from "/img/icons/⚛️.svg";
 import PythonIcon from "/img/icons/🐍.svg";
 import AIIcon from "/img/icons/🤖.svg";
 import MLIcon from "/img/icons/🧠.svg";
 import RustIcon from "/img/icons/🦀.svg";
+import PhpIcon from "/img/icons/📄.svg";
+import CsharpIcon from "/img/icons/🎹.svg";
+import CIcon from "/img/icons/🥸.svg";
+import CppIcon from "/img/icons/🤓.svg";
+import TypeScriptIcon from "/img/icons/🔥.svg";
+import RubyIcon from "/img/icons/🌹.svg";
+import JavaIcon from "/img/icons/☕️.svg";
 import topicNameFormatting from "lib/utils/topic-name-formatting";
 
+
 interface LanguagePillProps {
-  topic: "react" | "javascript" | "python" | "ML" | "AI" | "rust" | string;
+  topic: "react" | "javascript" | "python" | "ML" | "AI" | "rust" | "ruby" | "c" | "cpp" | "csharp" | "php" | "java" | "typescript" | string;
   classNames?: string;
   onClick?: () => void;
 }
@@ -22,7 +30,14 @@ const LanguagePill = ({ topic, classNames, onClick }: LanguagePillProps) => {
       javascript: JavascriptIcon,
       ai: AIIcon,
       ml: MLIcon,
-      python: PythonIcon
+      python: PythonIcon,
+      typescript: TypeScriptIcon,
+      csharp: CsharpIcon,
+      cpp: CppIcon,
+      php: PhpIcon,
+      c: CIcon,
+      ruby: RubyIcon,
+      java: JavaIcon
     };
 
     return iconMap[name] || "";
