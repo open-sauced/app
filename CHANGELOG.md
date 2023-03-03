@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.33.0-beta.4](https://github.com/open-sauced/insights/compare/v1.33.0-beta.3...v1.33.0-beta.4) (2023-03-03)
+
+
+### 🐛 Bug Fixes
+
+* Add highlights placeholder ([#945](https://github.com/open-sauced/insights/issues/945)) ([034d550](https://github.com/open-sauced/insights/commit/034d550c473e14aee9215b5c6495315a3369636a))
+
 ## [1.33.0-beta.3](https://github.com/open-sauced/insights/compare/v1.33.0-beta.2...v1.33.0-beta.3) (2023-03-03)
 
 
