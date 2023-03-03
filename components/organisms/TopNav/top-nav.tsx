@@ -23,7 +23,7 @@ const TopNav: React.FC = () => {
         <div className="flex gap-3 md:gap-8 items-center flex-wrap ">
           <HeaderLogo withBg={false} textIsBlack />
           {!!user && onboarded ? (
-            <>``
+            <>
               <Link className="text-sm text-light-slate-10" href={"/hub/insights"}>
                 Insights Hub
               </Link>
