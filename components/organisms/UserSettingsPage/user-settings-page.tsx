@@ -224,17 +224,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
               label="Location"
               name="location"
             />
-            {/* <div>
-              <Checkbox
-                checked={displayLocalTime}
-                title="profile email"
-                label="Display current local time on profile"
-                onChange={(e) => setDisplayLocalTime(e.target.checked)}
-              />
-              <span className="ml-7 text-light-slate-9 text-sm font-normal">
-                Other users will see the time difference from their local time.
-              </span>
-            </div> */}
+
             <div className="flex flex-col gap-2">
               <label>Time zone*</label>
               <Select value={timezone} onChange={(e) => setTimezone(e.target.value)} required>
