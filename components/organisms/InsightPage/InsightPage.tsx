@@ -43,14 +43,12 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
   const [name, setName] = useState(insight?.name || "");
   const [isNameValid, setIsNameValid] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [repoToAdd, setRepoToAdd] = useState("");
   const [repos, setRepos] = useState<DbRepo[]>(receivedData);
   const [repoHistory, setRepoHistory] = useState<DbRepo[]>([]);
   const [addRepoError, setAddRepoError] = useState<RepoLookupError>(RepoLookupError.Initial);
   const [isPublic, setIsPublic] = useState(!!insight?.is_public);
   const insightRepoLimit = useStore((state) => state.insightRepoLimit);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   const [repoSearchTerm, setRepoSearchTerm] = useState<string>("");
   const [suggestions, setSuggestions] = useState<string[]>([]);
 
@@ -144,8 +142,6 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
     setSubmitted(false);
   };
 
-  const handleOnRepoChange = (value: string) => setRepoToAdd(value);
-
   const loadAndAddRepo = async (repoToAdd: string) => {
     setAddRepoError(RepoLookupError.Initial);
 
@@ -165,7 +161,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
           return [...repos, addedRepo];
         });
         setAddRepoError(RepoLookupError.Initial);
-        setRepoToAdd("");
+        setRepoSearchTerm("");
       } else {
         const publicRepoResponse = await fetch(`https://api.github.com/repos/${repoToAdd}`);
 
@@ -250,7 +246,6 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
           "Authorization": `Bearer ${providerToken}`
         }} : {}
     });
-
 
     if(req.ok) {
       const res = await req.json();
