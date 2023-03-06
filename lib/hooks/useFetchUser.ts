@@ -1,11 +1,12 @@
 import publicApiFetcher from "lib/utils/public-api-fetcher";
-import useSWR, { Fetcher } from "swr";
+import useSWR, { Fetcher, SWRConfiguration } from "swr";
 
 export interface UserResponse extends DbUser {}
-const useFetchUser = (username: string) => {
+const useFetchUser = (username: string, config?: SWRConfiguration) => {
   const { data, error } = useSWR<UserResponse, Error>(
     username ? `users/${username}` : null,
-    publicApiFetcher as Fetcher<UserResponse, Error>
+    publicApiFetcher as Fetcher<UserResponse, Error>,
+    config
   );
 
   return {
