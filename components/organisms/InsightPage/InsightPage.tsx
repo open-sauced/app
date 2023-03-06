@@ -15,6 +15,7 @@ import DeleteInsightPageModal from "./DeleteInsightPageModal";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { getAvatarByUsername } from "lib/utils/github";
 import useStore from "lib/store";
+import Error from "components/atoms/Error/Error";
 
 enum RepoLookupError {
   Initial = 0,
@@ -200,11 +201,11 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
 
   const getRepoLookupError = (code: RepoLookupError) => {
     if (code === RepoLookupError.Error) {
-      return <Text>There was error retrieving this repository.</Text>;
+      return <Error errorMessage="There was error retrieving this repository." />;
     }
 
     if (code === RepoLookupError.Invalid) {
-      return <Text>This repository entered is invalid.</Text>;
+      return <Error errorMessage="This repository entered is invalid." />;
     }
 
     if (code === RepoLookupError.NotIndexed) {
@@ -278,7 +279,9 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
           </div>
         </div>
 
-        {getRepoLookupError(addRepoError)}
+        <div>
+          {getRepoLookupError(addRepoError)}
+        </div>
 
         <Title className="!text-1xl !leading-none mb-4 my-4" level={4}>
           Page Visibility
