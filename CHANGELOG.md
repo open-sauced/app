@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.33.0-beta.5](https://github.com/open-sauced/insights/compare/v1.33.0-beta.4...v1.33.0-beta.5) (2023-03-06)
+
+
+### 🍕 Features
+
+* make user profile interest clickable ([#952](https://github.com/open-sauced/insights/issues/952)) ([370bc8a](https://github.com/open-sauced/insights/commit/370bc8a8206688b6d7a689f26b114032dafaf276)), closes [#942](https://github.com/open-sauced/insights/issues/942)
+
 ## [1.33.0-beta.4](https://github.com/open-sauced/insights/compare/v1.33.0-beta.3...v1.33.0-beta.4) (2023-03-03)
 
 
