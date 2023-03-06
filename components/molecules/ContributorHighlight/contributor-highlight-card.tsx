@@ -157,7 +157,7 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
                   </a>
                 </DropdownMenuItem>
                 <DropdownMenuItem
-                  onClick={() => handleCopyToClipboard(`https://insights.opensauced.pizza/user/${user}`)}
+                  onClick={() => handleCopyToClipboard(`https://insights.opensauced.pizza/feed/${id}`)}
                   className="rounded-md"
                 >
                   <div className="flex gap-2.5 py-1 items-center pl-3 pr-7">
