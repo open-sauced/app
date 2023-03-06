@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.33.0-beta.6](https://github.com/open-sauced/insights/compare/v1.33.0-beta.5...v1.33.0-beta.6) (2023-03-06)
+
+
+### 🍕 Features
+
+* add reuseable error component to the design system ([#954](https://github.com/open-sauced/insights/issues/954)) ([56e986b](https://github.com/open-sauced/insights/commit/56e986b5e3275737cf5de51a9ae62d7c6c101789)), closes [#781](https://github.com/open-sauced/insights/issues/781) [#700](https://github.com/open-sauced/insights/issues/700)
+* make highlights avatar and handle clickable on feeds page ([#953](https://github.com/open-sauced/insights/issues/953)) ([fd59918](https://github.com/open-sauced/insights/commit/fd59918f4e97007c2b1fb725aa492f257205aa44)), closes [#940](https://github.com/open-sauced/insights/issues/940) [#935](https://github.com/open-sauced/insights/issues/935)
+
 ## [1.33.0-beta.5](https://github.com/open-sauced/insights/compare/v1.33.0-beta.4...v1.33.0-beta.5) (2023-03-06)
 
 
