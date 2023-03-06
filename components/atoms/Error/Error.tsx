@@ -5,7 +5,7 @@ import Icon from "../Icon/icon";
 import ErrorIcon from "img/errorIcon.svg";
 
 interface ErrorProps {
-  errorMessage: string;
+  errorMessage?: string;
   fullWidth?: boolean;
 }
 
