@@ -37,7 +37,7 @@ const InsightsHub: WithPageLayout = () => {
   }, [router, onboarded]);
 
   return user && onboarded ? (
-    <div className="flex  flex-col w-full gap-4 py-2">
+    <div className="flex  flex-col w-full gap-4 py-2 container">
       <div className="flex justify-between py-2">
         <Title className="!text-2xl !leading-none !font-medium" level={1}>
           Your Pages

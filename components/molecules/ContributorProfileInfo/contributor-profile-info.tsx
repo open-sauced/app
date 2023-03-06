@@ -9,6 +9,7 @@ import LanguagePill from "components/atoms/LanguagePill/LanguagePill";
 import Title from "components/atoms/Typography/title";
 import Badge from "components/atoms/Badge/badge";
 import { getTimeByTimezone, getTimezone } from "lib/utils/timezones";
+import clsx from "clsx";
 
 interface ContributorProfileInfoProps {
   githubName: string;
@@ -68,9 +69,8 @@ const ContributorProfileInfo = ({
             <Title className="!text-base !text-light-slate-12" level={5}>
               About
             </Title>
-            <p className="text-light-slate-11 text-sm">
-              {bio ||
-                "I am an open source developer with a passion for music and video games. I strive to improve the open source community and am always looking for new ways to contribute."}
+            <p className={clsx("text-light-slate-11 text-sm", !bio && "!text-light-slate-8")}>
+              {bio || (githubName+" has connected their GitHub but has not added a bio.")}
             </p>
             <div className="flex flex-col text-sm mt-2 text-light-slate-9 gap-2">
               {displayLocalTime && (

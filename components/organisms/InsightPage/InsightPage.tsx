@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { UserGroupIcon } from "@heroicons/react/24/outline";
 import { Endpoints } from "@octokit/types";
@@ -11,6 +11,7 @@ import Title from "components/atoms/Typography/title";
 import RepositoriesCart from "components/organisms/RepositoriesCart/repositories-cart";
 import RepositoryCartItem from "components/molecules/ReposoitoryCartItem/repository-cart-item";
 import RepoNotIndexed from "components/organisms/Repositories/repository-not-indexed";
+import DeleteInsightPageModal from "./DeleteInsightPageModal";
 
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { getAvatarByUsername } from "lib/utils/github";
@@ -48,6 +49,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
   const [addRepoError, setAddRepoError] = useState<RepoLookupError>(RepoLookupError.Initial);
   const [isPublic, setIsPublic] = useState(!!insight?.is_public);
   const insightRepoLimit = useStore((state) => state.insightRepoLimit);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     if (pageRepos) {
@@ -206,6 +208,30 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
     return <></>;
   };
 
+  const handleDeleteInsightPage = async () => {
+    setSubmitted(true);
+
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/insights/${insight?.id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Bearer ${sessionToken}`
+      }
+    });
+
+    if (response.ok) {
+      setIsModalOpen(false);
+      router.push("/hub/insights");
+    }
+
+    setSubmitted(false);
+  };
+
+  const handleOnModalClose = () => {
+    setIsModalOpen(false);
+  };
+
+
   return (
     <section className="flex  flex-col lg:flex-row w-full lg:gap-20 py-4 lg:pl-28 justify-center ">
       <div className="flex flex-col gap-8">
@@ -267,6 +293,29 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
             />
           </div>
         </div>
+
+        {edit && (
+          <div className="py-6 border-b flex flex-col gap-4 border-t border-light-slate-8">
+            <Title className="!text-1xl !leading-none py-6" level={4}>
+              Danger Zone
+            </Title>
+
+            <div className="rounded-2xl flex flex-col bg-light-slate-4 p-6">
+              <Title className="!text-1xl !leading-none !border-light-slate-8 border-b pb-4" level={4}>
+                Delete Page
+              </Title>
+              <Text className="my-4">
+                Once you delete a page, you&#39;re past the point of no return.
+              </Text>
+
+              <div>
+                <Button onClick={()=> setIsModalOpen(true)} variant="default" className="bg-light-red-6 border border-light-red-8 hover:bg-light-red-7 text-light-red-10">
+                  Delete page
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="lg:sticky mt-5 md:mt-0 top-0 py-4 lg:py-0">
@@ -296,6 +345,14 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
           })}
         </RepositoriesCart>
       </div>
+
+      <DeleteInsightPageModal
+        open={isModalOpen}
+        submitted={submitted}
+        pageName={name}
+        onConfirm={handleDeleteInsightPage}
+        onClose={handleOnModalClose}
+      />
     </section>
   );
 };
