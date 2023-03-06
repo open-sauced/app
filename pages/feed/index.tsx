@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 import Avatar from "components/atoms/Avatar/avatar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "components/atoms/Tabs/tabs";
@@ -12,7 +13,6 @@ import { useFetchAllHighlights } from "lib/hooks/useFetchAllHighlights";
 import { useFetchHighlightRepos } from "lib/hooks/useFetchHiglightRepos";
 import { useEffect, useState } from "react";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
-import Link from "next/link";
 
 const Feeds = () => {
   const { user } = useSupabaseAuth();
@@ -93,13 +93,15 @@ const Feeds = () => {
                   data.map(({ id, url, title, created_at, highlight, name, login }) => (
                     <div key={id} className="flex flex-col gap-6 px-3 ">
                       <div className="flex gap-3 items-center  ">
-                        <Avatar
-                          alt="user profile avatar"
-                          isCircle
-                          size="sm"
-                          avatarURL={`https://www.github.com/${login}.png?size=300`}
-                        />
-                        <strong>{name || login}</strong>
+                        <Link href={`/user/${login}`} className="flex items-center gap-3">
+                          <Avatar
+                            alt="user profile avatar"
+                            isCircle
+                            size="sm"
+                            avatarURL={`https://www.github.com/${login}.png?size=300`}
+                          />
+                          <strong>{login}</strong>
+                        </Link>
                         <span className="text-xs text-light-slate-11 font-normal">{getFormattedDate(created_at)}</span>
                       </div>
                       <Link
