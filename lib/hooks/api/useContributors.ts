@@ -3,19 +3,17 @@ import useSWR, { Fetcher } from "swr";
 import publicApiFetcher from "lib/utils/public-api-fetcher";
 
 interface PaginatedResponse {
-  readonly data: DbRepoPR[];
+  readonly data: GhUser[];
   readonly meta: Meta;
 }
 
-const usePullRequests = () => {
+const useContributors = () => {
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(500);
-  const stars = 1000;
+  const [limit, setLimit] = useState(10);
   const pageQuery = page ? `page=${page}` : "";
   const limitQuery = limit ? `&limit=${limit}` : "";
-  const starsQuery = stars ? `&stars=${stars}` : "";
-  const baseEndpoint = "prs/list";
-  const endpointString = `${baseEndpoint}?${pageQuery}${limitQuery}${starsQuery}`;
+  const baseEndpoint = "users/list";
+  const endpointString = `${baseEndpoint}?${pageQuery}${limitQuery}`;
 
   const { data, error, mutate } = useSWR<PaginatedResponse, Error>(
     endpointString,
@@ -34,4 +32,4 @@ const usePullRequests = () => {
   };
 };
 
-export default usePullRequests;
+export default useContributors;
