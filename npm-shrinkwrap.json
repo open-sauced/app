@@ -1,12 +1,12 @@
 {
   "name": "@open-sauced/insights",
-  "version": "1.32.0-alpha.1",
+  "version": "1.33.0-alpha.1",
   "lockfileVersion": 3,
   "requires": true,
   "packages": {
     "": {
       "name": "@open-sauced/insights",
-      "version": "1.32.0-alpha.1",
+      "version": "1.33.0-alpha.1",
       "hasInstallScript": true,
       "license": "MIT",
       "dependencies": {
