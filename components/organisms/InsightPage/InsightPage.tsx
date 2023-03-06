@@ -16,6 +16,8 @@ import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { getAvatarByUsername } from "lib/utils/github";
 import useStore from "lib/store";
 import Error from "components/atoms/Error/Error";
+import Search from "components/atoms/Search/search";
+import { useDebounce } from "rooks";
 
 enum RepoLookupError {
   Initial = 0,
@@ -31,7 +33,7 @@ interface InsightPageProps {
 }
 
 const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
-  const { sessionToken } = useSupabaseAuth();
+  const { sessionToken, providerToken } = useSupabaseAuth();
   const router = useRouter();
   let receivedData = [];
   if (router.query.selectedRepos) {
@@ -48,6 +50,9 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
   const [isPublic, setIsPublic] = useState(!!insight?.is_public);
   const insightRepoLimit = useStore((state) => state.insightRepoLimit);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const [repoSearchTerm, setRepoSearchTerm] = useState<string>("");
+  const [suggestions, setSuggestions] = useState<string[]>([]);
 
   useEffect(() => {
     if (pageRepos) {
@@ -176,7 +181,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
   };
 
   const handleAddRepository = async () => {
-    await loadAndAddRepo(repoToAdd);
+    await loadAndAddRepo(repoSearchTerm);
   };
 
   const handleReAddRepository = async (repoAdded: string) => {
@@ -238,6 +243,29 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
     setIsModalOpen(false);
   };
 
+  const updateSuggestionsDebounced = useDebounce( async () => {
+    const req = await fetch(`https://api.github.com/search/repositories?q=${encodeURIComponent(`${repoSearchTerm} in:name in:repo:owner/name`)}`, {
+      ...providerToken? {
+        headers: {
+          "Authorization": `Bearer ${providerToken}`
+        }} : {}
+    });
+
+
+    if(req.ok) {
+      const res = await req.json();
+      const suggestions = res.items.map((item: any) => item.full_name);
+      if(suggestions.length > 5) suggestions.length = 5;
+      setSuggestions(suggestions);
+    }
+  }, 250);
+
+  useEffect(() => {
+    setSuggestions([]);
+    if(!repoSearchTerm) return;
+    updateSuggestionsDebounced();
+  }, [repoSearchTerm]);
+
 
   return (
     <section className="flex  flex-col lg:flex-row w-full lg:gap-20 py-4 lg:pl-28 justify-center ">
@@ -265,11 +293,11 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
           <Title className="!text-1xl !leading-none " level={4}>
             Add Repositories
           </Title>
-
-          <TextInput
-            value={repoToAdd}
-            placeholder="Repository Full Name (ex: open-sauced/open-sauced)"
-            handleChange={handleOnRepoChange}
+            
+          <Search placeholder="Repository Full Name (ex: open-sauced/open-sauced)"
+            className="!w-full text-md text-gra" name={"query"}
+            suggestions={suggestions} onChange={(value) => setRepoSearchTerm(value)}
+            onSearch={(search)=> setRepoSearchTerm(search as string)}
           />
 
           <div>
