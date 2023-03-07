@@ -73,19 +73,19 @@ const InsightRow = ({ insight, user }: InsightRowProps) => {
             </div>
           </div>
           <div className="flex-1 hidden md:flex  justify-end">
-            <span className=" bg-light-slate-1 inline-block rounded-lg p-2.5 border mr-2 cursor-pointer">
-              <Link href={`/hub/insights/${insight.id}/edit`}>
+            <Link href={`/hub/insights/${insight.id}/edit`}>
+              <span className=" bg-light-slate-1 inline-block rounded-lg p-2.5 border mr-2 cursor-pointer">
                 <BsPencilFill title="Edit Insight Page" className="text-light-slate-10 text-lg" />
-              </Link>
-            </span>
-            <span className=" bg-light-slate-1 inline-block rounded-lg p-2.5 border cursor-pointer">
-              <Link href={`/pages/${user?.user_metadata.user_name}/${insight.id}/dashboard`}>
+              </span>
+            </Link>
+            <Link href={`/pages/${user?.user_metadata.user_name}/${insight.id}/dashboard`}>
+              <span className=" bg-light-slate-1 inline-block rounded-lg p-2.5 border cursor-pointer">
                 <MdOutlineArrowForwardIos
                   title="Go To Insight Page"
                   className="text-light-slate-10 text-lg"
                 />
-              </Link>
-            </span>
+              </span>
+            </Link>
           </div>
         </div>
       </div>
