@@ -89,8 +89,8 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
         );
         setLoading(false);
         if (res) {
-          ToastTrigger({ message: "Highlights Updated Successfully", type: "success" });          
-          mutate(`users/${user}/highlights`);          
+          ToastTrigger({ message: "Highlights Updated Successfully", type: "success" });
+          mutate(`users/${user}/highlights`);
           setOpen(false);
           setTimeout(() => {
             document.body.setAttribute("style", "pointer-events:auto !important");
@@ -203,8 +203,8 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
         </div>
 
         {/* Highlight body section */}
-        <div>
-          <p className="text-light-slate-11 text-sm lg:text-base font-normal">{desc}</p>
+        <div className="w-full ">
+          <p className="text-light-slate-11 break-words text-sm lg:text-base font-normal">{desc}</p>
         </div>
         {/* Highlight Link section */}
 

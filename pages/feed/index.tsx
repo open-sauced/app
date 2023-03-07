@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 import Avatar from "components/atoms/Avatar/avatar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "components/atoms/Tabs/tabs";
@@ -92,23 +93,19 @@ const Feeds = () => {
                   data.map(({ id, url, title, created_at, highlight, name, login }) => (
                     <div key={id} className="flex flex-col gap-6 px-3 ">
                       <div className="flex gap-3 items-center  ">
-                        <Avatar
-                          alt="user profile avatar"
-                          isCircle
-                          size="sm"
-                          avatarURL={`https://www.github.com/${login}.png?size=300`}
-                        />
-                        <strong>{name || login}</strong>
+                        <Link href={`/user/${login}`} className="flex items-center gap-3">
+                          <Avatar
+                            alt="user profile avatar"
+                            isCircle
+                            size="sm"
+                            avatarURL={`https://www.github.com/${login}.png?size=300`}
+                          />
+                          <strong>{login}</strong>
+                        </Link>
                         <span className="text-xs text-light-slate-11 font-normal">{getFormattedDate(created_at)}</span>
                       </div>
                       <div className=" bg-light-slate-1 border p-4 md:px-6 lg:px-12 py-6 rounded-xl">
-                        <ContributorHighlightCard
-                          title={title}
-                          desc={highlight}
-                          prLink={url}
-                          user={name || login}
-                          id={id}
-                        />
+                        <ContributorHighlightCard title={title} desc={highlight} prLink={url} user={login} id={id} />
                       </div>
                     </div>
                   ))}

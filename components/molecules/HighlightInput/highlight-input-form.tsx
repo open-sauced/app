@@ -124,7 +124,7 @@ const HighlightInputForm = (): JSX.Element => {
           onChange={(e) => setTitle(e.target.value)}
           className=" focus:outline-none "
           type="text"
-          placeholder={isDivFocused ? "Add title (optional)" : "Highlight your merged PRs and provide a link!"}
+          placeholder={isDivFocused ? "Add title (optional)" : "Click here to highlight your merged PRs and provide a link!"}
         />
         <Textarea
           className={`resize-none font-normal text-light-slate-11 mb-2 transition focus:outline-none rounded-lg ${
@@ -153,7 +153,7 @@ const HighlightInputForm = (): JSX.Element => {
       {pullrequestLink && isDivFocused && <GhOpenGraphImg githubLink={pullrequestLink} />}
 
       {isDivFocused && (
-        <Button loading={loading} disabled={!bodyText || !validCharLimit()} className="ml-auto" variant="primary">
+        <Button loading={loading} disabled={!bodyText || !validCharLimit()} className="ml-auto " variant="primary">
           Post
         </Button>
       )}
