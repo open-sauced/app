@@ -43,7 +43,7 @@ const HeaderFilter = () => {
           {topicNameFormatting(filterName as string)}
         </Title>
         <Text className="mt-1 !text-base   text-slate-500">
-          {`Insights on GitHub repositories using the ${filterName} topic.`}
+          {`Insights on GitHub repositories using the ${topicNameFormatting(filterName as string)} topic.`}
         </Text>
         <div className="flex mt-4 items-center gap-2">
           <FilterCardSelect
