@@ -28,7 +28,9 @@ type EmailPreferenceType = {
   receive_collaboration?: boolean;
 };
 const UserSettingsPage = ({ user }: userSettingsPageProps) => {
-  const { data: insightsUser } = useFetchUser(user?.user_metadata.user_name);
+  const { data: insightsUser } = useFetchUser(user?.user_metadata.user_name, {
+    revalidateOnFocus: false
+  });
 
   const [isValidEmail, setIsValidEmail] = useState<boolean>(true);
   const [displayLocalTime, setDisplayLocalTime] = useState(false);
@@ -48,7 +50,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
   useEffect(() => {
     async function fetchAuthSession() {
       const response = await authSession();
-      if (response !== false) {
+      if (response !== false && !userInfo) {
         setUserInfo(response);
         formRef.current!.nameInput.value = response.name;
         setEmail(response.email);
