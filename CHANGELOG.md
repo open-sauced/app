@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.33.0-beta.8](https://github.com/open-sauced/insights/compare/v1.33.0-beta.7...v1.33.0-beta.8) (2023-03-07)
+
+
+### 🧑‍💻 Code Refactoring
+
+* update non-connected user avatar  ([#967](https://github.com/open-sauced/insights/issues/967)) ([51bf664](https://github.com/open-sauced/insights/commit/51bf664701ab8b4ed161960be5fc46865080521d)), closes [#964](https://github.com/open-sauced/insights/issues/964)
+
 ## [1.33.0-beta.7](https://github.com/open-sauced/insights/compare/v1.33.0-beta.6...v1.33.0-beta.7) (2023-03-07)
 
 
