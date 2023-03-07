@@ -133,6 +133,10 @@ const HighlightInputForm = (): JSX.Element => {
           ref={textAreaRef}
           rows={row}
           value={bodyText}
+          placeholder={`Share your thoughts about the PR and then add the link.
+
+https://github.com/open-sauced/insights/pull/913`
+          }
           onChange={(e) => {
             handleTextAreaInputChange(e);
             setCharCount(e.target.value.length);
