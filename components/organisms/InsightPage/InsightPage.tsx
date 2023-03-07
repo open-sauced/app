@@ -288,7 +288,6 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
           <Title className="!text-1xl !leading-none " level={4}>
             Add Repositories
           </Title>
-            
           <Search placeholder="Repository Full Name (ex: open-sauced/open-sauced)"
             className="!w-full text-md text-gra" name={"query"}
             suggestions={suggestions} onChange={(value) => setRepoSearchTerm(value)}
