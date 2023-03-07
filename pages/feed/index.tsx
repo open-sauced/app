@@ -31,7 +31,7 @@ const Feeds = () => {
   const [selectedRepo, setSelectedRepo] = useState("");
 
   const { data, isLoading } = useFetchAllHighlights(selectedRepo);
-  const [highlight, setHighlight] = useState<DbHighlight | undefined>(undefined);
+  const { data: singleHighlight } = useFetchSingleHighlight(id as unknown as number);
 
   const repoList =
     repos && // eslint-disable-next-line camelcase
@@ -43,28 +43,11 @@ const Feeds = () => {
     });
 
   useEffect(() => {
-    async function getSingleHighlight() {
-      const res = await fetch(`${baseUrl}/user/highlights/${highlightId}`);
-
-      if (!res.ok) {
-        console.log(`${res.status} ${res.statusText}`);
-        setHighlight(undefined);
-        router.push("/feed");
-        return;
-      }
-      const highlight = await res.json();
-
-      setHighlight(highlight);
-    }
-
     if (selectedRepo) {
       router.push(`/feed?repo=${selectedRepo}`);
     }
     if (highlightId) {
-      getSingleHighlight();
       router.push(`/feed/${id}`);
-    } else {
-      setHighlight(undefined);
     }
     if (!highlightId && !selectedRepo) {
       router.push("/feed");
@@ -73,7 +56,7 @@ const Feeds = () => {
 
   return (
     <div className="container  mx-auto px-2 md:px-16 gap-12 lg:justify-end pt-12 flex flex-col md:flex-row">
-      {highlight && (
+      {singleHighlight && (
         <Dialog open={true}>
           <DialogContent className="sm:max-w-[750px] sm:max-h-[500px] overflow-scroll">
             <div className="mt-10 flex gap-8 flex-col ">
@@ -83,21 +66,22 @@ const Feeds = () => {
                     alt="user profile avatar"
                     isCircle
                     size="sm"
-                    avatarURL={`https://www.github.com/${highlight.login}.png?size=300`}
+                    avatarURL={`https://www.github.com/${singleHighlight.login}.png?size=300`}
                   />
-                  <strong>{highlight.login}</strong>
+                  <strong>{singleHighlight.login}</strong>
                   <span className="text-xs text-light-slate-11 font-normal">
-                    {getFormattedDate(highlight.created_at)}
+                    {getFormattedDate(singleHighlight.created_at)}
                   </span>
                   <DialogCloseButton onClick={() => router.push("/feed")} />
                 </div>
+
                 <div className=" bg-light-slate-1 border p-4 md:px-6 lg:px-12 py-6 rounded-xl">
                   <ContributorHighlightCard
-                    title={highlight.title}
-                    desc={highlight.highlight}
-                    prLink={highlight.url}
-                    user={highlight.login}
-                    id={highlight.id}
+                    title={singleHighlight.title}
+                    desc={singleHighlight.highlight}
+                    prLink={singleHighlight.url}
+                    user={singleHighlight.login}
+                    id={singleHighlight.id}
                   />
                 </div>
               </div>
@@ -166,15 +150,17 @@ const Feeds = () => {
                         </Link>
                         <span className="text-xs text-light-slate-11 font-normal">{getFormattedDate(created_at)}</span>
                       </div>
-                      <div className=" bg-light-slate-1 border p-4 md:px-6 lg:px-12 py-6 rounded-xl">
-                        <ContributorHighlightCard
-                          title={title}
-                          desc={highlight}
-                          prLink={url}
-                          user={name || login}
-                          id={id}
-                        />
-                      </div>
+                      <Link href={`/feed/${id}`}>
+                        <div className=" bg-light-slate-1 border p-4 md:px-6 lg:px-12 py-6 rounded-xl">
+                          <ContributorHighlightCard
+                            title={title}
+                            desc={highlight}
+                            prLink={url}
+                            user={name || login}
+                            id={id}
+                          />
+                        </div>
+                      </Link>
                     </div>
                   ))}
               </div>

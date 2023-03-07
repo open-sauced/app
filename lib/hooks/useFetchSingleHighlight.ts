@@ -4,14 +4,14 @@ import useSWR, { Fetcher } from "swr";
 interface useFetchUserHighlightsResponse {
   data: DbHighlight;
 }
-const useFetchSingleHighlight = (id: string) => {
-  const { data, error } = useSWR<useFetchUserHighlightsResponse, Error>(
-    `user/highlights/${id}`,
-    publicApiFetcher as Fetcher<useFetchUserHighlightsResponse, Error>
+const useFetchSingleHighlight = (id: number | undefined) => {
+  const { data, error } = useSWR<DbHighlight, Error>(
+    id ? `user/highlights/${id}` : undefined,
+    publicApiFetcher as Fetcher<DbHighlight, Error>
   );
 
   return {
-    data: data?.data ?? undefined,
+    data: data ?? undefined,
     isLoading: !error && !data,
     isError: !!error
   };
