@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.33.0-beta.9](https://github.com/open-sauced/insights/compare/v1.33.0-beta.8...v1.33.0-beta.9) (2023-03-07)
+
+
+### 🍕 Features
+
+* make the entire insight page buttons clickable ([#960](https://github.com/open-sauced/insights/issues/960)) ([7a7708f](https://github.com/open-sauced/insights/commit/7a7708fdc707b35f506af21a4e899fdbda2613ad)), closes [#701](https://github.com/open-sauced/insights/issues/701)
+
 ## [1.33.0-beta.8](https://github.com/open-sauced/insights/compare/v1.33.0-beta.7...v1.33.0-beta.8) (2023-03-07)
 
 
