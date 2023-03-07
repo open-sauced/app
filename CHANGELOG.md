@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.33.0-beta.7](https://github.com/open-sauced/insights/compare/v1.33.0-beta.6...v1.33.0-beta.7) (2023-03-07)
+
+
+### 🐛 Bug Fixes
+
+* keep initial user settings data after being fetched ([#959](https://github.com/open-sauced/insights/issues/959)) ([b869863](https://github.com/open-sauced/insights/commit/b8698630c9e086f45f4f8e5aafce7b58e81ca662)), closes [#931](https://github.com/open-sauced/insights/issues/931)
+
 ## [1.33.0-beta.6](https://github.com/open-sauced/insights/compare/v1.33.0-beta.5...v1.33.0-beta.6) (2023-03-06)
 
 
