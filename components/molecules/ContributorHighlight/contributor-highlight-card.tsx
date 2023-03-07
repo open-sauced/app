@@ -276,9 +276,18 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
                 />
               </fieldset>
             </div>
-            <Button loading={loading} className="ml-auto" variant="primary">
-              Save
-            </Button>
+            <div className="flex gap-3">
+              <Button
+                loading={loading}
+                className=" bg-red-300 text-red-600 border border-red-400 ml-auto"
+                variant="primary"
+              >
+                Delete Page
+              </Button>
+              <Button loading={loading} className="" variant="primary">
+                Save
+              </Button>
+            </div>
           </form>
 
           <DialogCloseButton onClick={() => setOpen(false)} />
