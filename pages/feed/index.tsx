@@ -75,7 +75,7 @@ const Feeds = () => {
     <div className="container  mx-auto px-2 md:px-16 gap-12 lg:justify-end pt-12 flex flex-col md:flex-row">
       {highlight && (
         <Dialog open={true}>
-          <DialogContent className="sm:max-w-[680px] sm:max-h-[550px] overflow-scroll">
+          <DialogContent className=" sm:max-h-[500px] overflow-scroll">
             <div className="mt-10 flex gap-8 flex-col ">
               <div className="flex flex-col gap-6 px-3 ">
                 <div className="flex gap-3 items-center  ">
