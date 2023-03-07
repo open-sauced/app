@@ -133,7 +133,7 @@ const HighlightInputForm = (): JSX.Element => {
           ref={textAreaRef}
           rows={row}
           value={bodyText}
-          placeholder={`Share your thoughts about the PR and then add the link.
+          placeholder={`Share your thoughts and link to it.
 
 https://github.com/open-sauced/insights/pull/913`
           }
