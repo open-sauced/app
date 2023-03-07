@@ -240,7 +240,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
   };
 
   const updateSuggestionsDebounced = useDebounce( async () => {
-    const req = await fetch(`https://api.github.com/search/repositories?q=${encodeURIComponent(`${repoSearchTerm} in:name in:repo:owner/name`)}`, {
+    const req = await fetch(`https://api.github.com/search/repositories?q=${encodeURIComponent(`${repoSearchTerm} in:name in:repo:owner/name sort:updated`)}`, {
       ...providerToken? {
         headers: {
           "Authorization": `Bearer ${providerToken}`
