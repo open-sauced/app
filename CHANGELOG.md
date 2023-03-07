@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.33.0-beta.10](https://github.com/open-sauced/insights/compare/v1.33.0-beta.9...v1.33.0-beta.10) (2023-03-07)
+
+
+### 🍕 Features
+
+* add repository search to the create insights page ([#958](https://github.com/open-sauced/insights/issues/958)) ([d6f151c](https://github.com/open-sauced/insights/commit/d6f151c02e634e093fb7e7ea1076f39517d08e1d)), closes [#932](https://github.com/open-sauced/insights/issues/932)
+
 ## [1.33.0-beta.9](https://github.com/open-sauced/insights/compare/v1.33.0-beta.8...v1.33.0-beta.9) (2023-03-07)
 
 
