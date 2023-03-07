@@ -3,17 +3,15 @@ import { useRouter } from "next/router";
 import Text from "components/atoms/Typography/text";
 import Title from "components/atoms/Typography/title";
 import ContextThumbnail from "components/atoms/ContextThumbnail/context-thumbnail";
-import FilterCard from "components/atoms/FilterCard/filter-card";
 import SuperativeSelector from "components/molecules/SuperlativeSelector/superlative-selector";
 
 import useFilterOptions from "lib/hooks/useFilterOptions";
 import { captureAnayltics } from "lib/utils/analytics";
 import useFilterPrefetch from "lib/hooks/useFilterPrefetch";
-import uppercaseFirst from "lib/utils/uppercase-first";
 import topicNameFormatting from "lib/utils/topic-name-formatting";
 import FilterCardSelect from "components/molecules/FilterCardSelect/filter-card-select";
 import useTopicOptions from "lib/utils/getTopicOptions";
-import { getTopicThumbnail } from "lib/utils/getTopicThumbnail";
+import getTopicThumbnail from "lib/utils/getTopicThumbnail";
 
 const HeaderFilter = () => {
   const router = useRouter();

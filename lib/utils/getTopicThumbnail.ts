@@ -63,9 +63,11 @@ const topicThumbnails = [
   }
 ];
 
-export const getTopicThumbnail = (topic: string) => {
+const getTopicThumbnail = (topic: string) => {
   const topicThumbnail = topicThumbnails.find(
     (topicThumbnail) => topicThumbnail.topic === topic
   );
   return topicThumbnail?.thumbnail || contextThumbnailImage;
 };
+
+export default getTopicThumbnail;
