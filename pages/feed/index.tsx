@@ -166,10 +166,7 @@ const Feeds = () => {
                         </Link>
                         <span className="text-xs text-light-slate-11 font-normal">{getFormattedDate(created_at)}</span>
                       </div>
-                      <Link
-                        href={`/feed/${id}`}
-                        className=" bg-light-slate-1 border p-4 md:px-6 lg:px-12 py-6 rounded-xl"
-                      >
+                      <div className=" bg-light-slate-1 border p-4 md:px-6 lg:px-12 py-6 rounded-xl">
                         <ContributorHighlightCard
                           title={title}
                           desc={highlight}
@@ -177,7 +174,7 @@ const Feeds = () => {
                           user={name || login}
                           id={id}
                         />
-                      </Link>
+                      </div>
                     </div>
                   ))}
               </div>
