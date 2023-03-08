@@ -14,16 +14,16 @@ import useFilterPrefetch from "lib/hooks/useFilterPrefetch";
 import uppercaseFirst from "lib/utils/uppercase-first";
 import topicNameFormatting from "lib/utils/topic-name-formatting";
 import FilterCardSelect from "components/molecules/FilterCardSelect/filter-card-select";
-import useTopicOptions from "lib/utils/getTopicOptions";
 import SortedBySelector from "../SortedBySelector/sorted-by-selector";
 import useStore from "lib/store";
+import getInterestOptions from "lib/utils/getInterestOptions";
 
 const HeaderFilter = () => {
   const router = useRouter();
   const filterOptions = useFilterOptions();
-  const topicOptions = useTopicOptions();
   const store = useStore();
   const sortBy = useStore((state) => state.sortBy);
+  const topicOptions = getInterestOptions();
 
   const { filterValues } = useFilterPrefetch();
   const { filterName, toolName, selectedFilter } = router.query;
