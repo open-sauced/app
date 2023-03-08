@@ -1,8 +1,7 @@
-import { useTopicContributorPRs } from "lib/hooks/useTopicContributorPRs";
-
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 import LatestPrTableHeader from "../LatestPrTableHeader/latest-pr-table-header";
 import LatestPrTableRow from "../LatestPrTableRow/latest-pr-table-row";
+import useContributorPullRequests from "lib/hooks/api/useContributorPullRequests";
 
 export interface PRs {
   prStatus: string;
@@ -22,7 +21,7 @@ interface CardTableProps {
 }
 
 const PullRequestTable = ({ contributor, topic, repositories, limit, isHoverCard }: CardTableProps): JSX.Element => {
-  const { data, isLoading } = useTopicContributorPRs(contributor, topic, repositories, limit);
+  const { data, isLoading } = useContributorPullRequests(contributor, topic, repositories, limit);
 
   return data.length > 0 ? (
     <>
@@ -37,8 +36,9 @@ const PullRequestTable = ({ contributor, topic, repositories, limit, isHoverCard
                 merged,
                 merged_at: prMergedTime,
                 created_at: prIssuedTime,
-                filesCount: noOfFilesChanged,
-                linesCount: noOfLinesChanged,
+                changed_files: noOfFilesChanged,
+                additions,
+                deletions,
                 number: prNumber,
                 repo_name: repoName,
                 repo_owner: repoOwner,
@@ -53,7 +53,7 @@ const PullRequestTable = ({ contributor, topic, repositories, limit, isHoverCard
                 prStatus,
                 merged,
                 noOfFilesChanged,
-                noOfLinesChanged,
+                noOfLinesChanged: Math.abs(additions - deletions),
                 repoName,
                 repoOwner,
                 prNumber,
