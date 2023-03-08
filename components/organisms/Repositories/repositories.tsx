@@ -51,7 +51,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
   // handle on cancel sortBy: set direction to DESC
   useEffect( () => {
     if(!sortBy) setSortDirection("DESC");
-  }, [sortBy])
+  }, [sortBy]);
 
   const handleOnSelectAllChecked = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) {
@@ -106,7 +106,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
     }
     store.updateSortBy(column);
 
-  }
+  };
 
   useEffect(() => {
     setPage(1);
@@ -154,24 +154,24 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
                 }`}
               />
             </div>
-            <div className={clsx(classNames.cols.repository, "flex items-center cursor-pointer")} onClick={() => handleSortByColumn('name')}>
+            <div className={clsx(classNames.cols.repository, "flex items-center cursor-pointer")} onClick={() => handleSortByColumn("name")}>
               <TableTitle text="Repository"></TableTitle>
-              {sortBy == 'name' && renderArrow()}
+              {sortBy == "name" && renderArrow()}
             </div>
             <div className={clsx(classNames.cols.activity, "flex items-center")}>
               <TableTitle text="Activity"></TableTitle>
             </div>
-            <div className={clsx(classNames.cols.prOverview, "flex items-center cursor-pointer")} onClick={() => handleSortByColumn('prsCount')}>
+            <div className={clsx(classNames.cols.prOverview, "flex items-center cursor-pointer")} onClick={() => handleSortByColumn("prsCount")}>
               <TableTitle text="PR Overview"></TableTitle>
-              {sortBy == 'prsCount' && renderArrow()}
+              {sortBy == "prsCount" && renderArrow()}
             </div>
-            <div className={clsx(classNames.cols.prVelocity, "flex items-center cursor-pointer")} onClick={() => handleSortByColumn('prVelocityCount')}>
+            <div className={clsx(classNames.cols.prVelocity, "flex items-center cursor-pointer")} onClick={() => handleSortByColumn("prVelocityCount")}>
               <TableTitle text="PR Velocity"></TableTitle>
-              {sortBy == 'prVelocityCount' && renderArrow()}
+              {sortBy == "prVelocityCount" && renderArrow()}
             </div>
-            <div className={clsx(classNames.cols.spam, "flex items-center cursor-pointer")} onClick={() => handleSortByColumn('spamPrsCount')}>
+            <div className={clsx(classNames.cols.spam, "flex items-center cursor-pointer")} onClick={() => handleSortByColumn("spamPrsCount")}>
               <TableTitle text="SPAM"></TableTitle>
-              {sortBy == 'spamPrsCount' && renderArrow()}
+              {sortBy == "spamPrsCount" && renderArrow()}
             </div>
             <div className={clsx(classNames.cols.contributors, "hidden lg:flex", "flex items-center")}>
               <TableTitle text="Contributors"></TableTitle>

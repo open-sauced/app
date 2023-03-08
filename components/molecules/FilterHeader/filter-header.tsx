@@ -70,7 +70,7 @@ const HeaderFilter = () => {
           />
           <SortedBySelector
             selected={sortBy}
-            handleCancelClick={() => {store.updateSortBy("")}}
+            handleCancelClick={() => {store.updateSortBy("");}}
           />
         </div>
       </div>
