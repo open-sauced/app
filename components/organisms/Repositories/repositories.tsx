@@ -17,10 +17,13 @@ import Checkbox from "components/atoms/Checkbox/checkbox";
 import Button from "components/atoms/Button/button";
 import useStore from "lib/store";
 import { SortOptions } from "components/molecules/SortedBySelector/sorted-by-selector";
+import { FaArrowDown, FaArrowUp } from "react-icons/fa";
 
 interface RepositoriesProps {
   repositories?: number[];
 }
+
+type sortDirectionType = "ASC" | "DESC";
 
 const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
   const { user, signIn } = useSupabaseAuth();
@@ -32,7 +35,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
   const range = useStore((state) => state.range);
   const sortBy = useStore((state) => state.sortBy);
   // const [sortBy, setSortBy] = useState<SortOptions>("");
-  const [sortDirection, setSortDirection] = useState<"ASC" | "DESC">("DESC");
+  const [sortDirection, setSortDirection] = useState<sortDirectionType>("DESC");
   const {
     data: repoListData,
     meta: repoMeta,
@@ -109,6 +112,11 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
     setPage(1);
   }, [selectedFilter, setPage]);
 
+  const renderArrow = () => {
+    return sortDirection === "ASC" ? <FaArrowUp className="text-light-slate-11 ml-2" fontSize={16} />
+      : <FaArrowDown className="text-light-slate-11 ml-2" fontSize={16} />;
+  };
+
   return (
     <div className="flex flex-col w-full gap-4">
       <TableHeader
@@ -146,25 +154,29 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
                 }`}
               />
             </div>
-            <div className={clsx(classNames.cols.repository)} onClick={() => handleSortByColumn('name')}>
+            <div className={clsx(classNames.cols.repository, "flex items-center cursor-pointer")} onClick={() => handleSortByColumn('name')}>
               <TableTitle text="Repository"></TableTitle>
+              {sortBy == 'name' && renderArrow()}
             </div>
-            <div className={clsx(classNames.cols.activity)} onClick={() => handleSortByColumn('')}>
+            <div className={clsx(classNames.cols.activity, "flex items-center")}>
               <TableTitle text="Activity"></TableTitle>
             </div>
-            <div className={clsx(classNames.cols.prOverview)} onClick={() => handleSortByColumn('prsCount')}>
+            <div className={clsx(classNames.cols.prOverview, "flex items-center cursor-pointer")} onClick={() => handleSortByColumn('prsCount')}>
               <TableTitle text="PR Overview"></TableTitle>
+              {sortBy == 'prsCount' && renderArrow()}
             </div>
-            <div className={clsx(classNames.cols.prVelocity)} onClick={() => handleSortByColumn('prVelocityCount')}>
+            <div className={clsx(classNames.cols.prVelocity, "flex items-center cursor-pointer")} onClick={() => handleSortByColumn('prVelocityCount')}>
               <TableTitle text="PR Velocity"></TableTitle>
+              {sortBy == 'prVelocityCount' && renderArrow()}
             </div>
-            <div className={clsx(classNames.cols.spam)} onClick={() => handleSortByColumn('spamPrsCount')}>
+            <div className={clsx(classNames.cols.spam, "flex items-center cursor-pointer")} onClick={() => handleSortByColumn('spamPrsCount')}>
               <TableTitle text="SPAM"></TableTitle>
+              {sortBy == 'spamPrsCount' && renderArrow()}
             </div>
-            <div className={clsx(classNames.cols.contributors, "hidden lg:flex")}>
+            <div className={clsx(classNames.cols.contributors, "hidden lg:flex", "flex items-center")}>
               <TableTitle text="Contributors"></TableTitle>
             </div>
-            <div className={clsx(classNames.cols.last30days, "hidden lg:flex")}>
+            <div className={clsx(classNames.cols.last30days, "hidden lg:flex", "flex items-center")}>
               <TableTitle text="Last 30 Days"></TableTitle>
             </div>
           </div>
