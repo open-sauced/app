@@ -56,8 +56,8 @@ const Feeds = () => {
     <div className="container  mx-auto px-2 md:px-16 gap-12 lg:justify-end pt-12 flex flex-col md:flex-row">
       {singleHighlight && (
         <Dialog open={true}>
-          <DialogContent className="sm:max-w-[700px] sm:max-h-[500px] overflow-scroll">
-            <div className="mt-10 flex gap-8 flex-col ">
+          <DialogContent className=" sm:max-w-[50%] sm:max-h-[80vh] ">
+            <div className="mt-10 flex gap-8 flex-col w-4/4 md:w-3/4 mx-auto">
               <div className="flex flex-col gap-6 px-3 ">
                 <div className="flex gap-3 items-center  ">
                   <Avatar
