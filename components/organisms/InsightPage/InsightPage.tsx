@@ -10,10 +10,14 @@ import Title from "components/atoms/Typography/title";
 import RepositoriesCart from "components/organisms/RepositoriesCart/repositories-cart";
 import RepositoryCartItem from "components/molecules/ReposoitoryCartItem/repository-cart-item";
 import RepoNotIndexed from "components/organisms/Repositories/repository-not-indexed";
+import DeleteInsightPageModal from "./DeleteInsightPageModal";
 
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { getAvatarByUsername } from "lib/utils/github";
 import useStore from "lib/store";
+import Error from "components/atoms/Error/Error";
+import Search from "components/atoms/Search/search";
+import { useDebounce } from "rooks";
 
 enum RepoLookupError {
   Initial = 0,
@@ -29,22 +33,24 @@ interface InsightPageProps {
 }
 
 const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
-  const { sessionToken } = useSupabaseAuth();
+  const { sessionToken, providerToken } = useSupabaseAuth();
   const router = useRouter();
   let receivedData = [];
-  if(router.query.selectedRepos) {
+  if (router.query.selectedRepos) {
     receivedData = JSON.parse(router.query.selectedRepos as string);
   }
 
   const [name, setName] = useState(insight?.name || "");
-  const [nameError, setNameError] = useState("");
+  const [isNameValid, setIsNameValid] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [repoToAdd, setRepoToAdd] = useState("");
   const [repos, setRepos] = useState<DbRepo[]>(receivedData);
   const [repoHistory, setRepoHistory] = useState<DbRepo[]>([]);
   const [addRepoError, setAddRepoError] = useState<RepoLookupError>(RepoLookupError.Initial);
   const [isPublic, setIsPublic] = useState(!!insight?.is_public);
-  const insightRepoLimit = useStore(state => state.insightRepoLimit);
+  const insightRepoLimit = useStore((state) => state.insightRepoLimit);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [repoSearchTerm, setRepoSearchTerm] = useState<string>("");
+  const [suggestions, setSuggestions] = useState<string[]>([]);
 
   useEffect(() => {
     if (pageRepos) {
@@ -69,18 +75,27 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
     };
   });
 
-  const handleOnNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setName(event.target.value);
+  const validateName = (name: string) => {
+    if (!name || name.trim().length <= 3) return false;
+
+    return true;
+  };
+
+  const handleOnNameChange = (value: string) => {
+    setName(value);
+    setIsNameValid(validateName(value));
+  };
+
+  const disableCreateButton = () => {
+    if (insight?.name && validateName(name)) return false;
+    if (submitted) return true;
+    if (!isNameValid) return true;
+
+    return false;
   };
 
   const handleCreateInsightPage = async () => {
     setSubmitted(true);
-
-    if (!name) {
-      setNameError("Insight name is a required field");
-      setSubmitted(false);
-      return;
-    }
 
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/insights`, {
       method: "POST",
@@ -106,12 +121,6 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
   const handleUpdateInsightPage = async () => {
     setSubmitted(true);
 
-    if (!name) {
-      setNameError("Insight name is a required field");
-      setSubmitted(false);
-      return;
-    }
-
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/insights/${insight?.id}`, {
       method: "PATCH",
       headers: {
@@ -133,10 +142,6 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
     setSubmitted(false);
   };
 
-  const handleOnRepoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRepoToAdd(event.target.value);
-  };
-
   const loadAndAddRepo = async (repoToAdd: string) => {
     setAddRepoError(RepoLookupError.Initial);
 
@@ -156,7 +161,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
           return [...repos, addedRepo];
         });
         setAddRepoError(RepoLookupError.Initial);
-        setRepoToAdd("");
+        setRepoSearchTerm("");
       } else {
         const publicRepoResponse = await fetch(`https://api.github.com/repos/${repoToAdd}`);
 
@@ -172,7 +177,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
   };
 
   const handleAddRepository = async () => {
-    await loadAndAddRepo(repoToAdd);
+    await loadAndAddRepo(repoSearchTerm);
   };
 
   const handleReAddRepository = async (repoAdded: string) => {
@@ -197,11 +202,11 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
 
   const getRepoLookupError = (code: RepoLookupError) => {
     if (code === RepoLookupError.Error) {
-      return <Text>There was error retrieving this repository.</Text>;
+      return <Error errorMessage="There was error retrieving this repository." />;
     }
 
     if (code === RepoLookupError.Invalid) {
-      return <Text>This repository entered is invalid.</Text>;
+      return <Error errorMessage="This repository entered is invalid." />;
     }
 
     if (code === RepoLookupError.NotIndexed) {
@@ -211,12 +216,58 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
     return <></>;
   };
 
+  const handleDeleteInsightPage = async () => {
+    setSubmitted(true);
+
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/insights/${insight?.id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Bearer ${sessionToken}`
+      }
+    });
+
+    if (response.ok) {
+      setIsModalOpen(false);
+      router.push("/hub/insights");
+    }
+
+    setSubmitted(false);
+  };
+
+  const handleOnModalClose = () => {
+    setIsModalOpen(false);
+  };
+
+  const updateSuggestionsDebounced = useDebounce( async () => {
+    const req = await fetch(`https://api.github.com/search/repositories?q=${encodeURIComponent(`${repoSearchTerm} in:name in:repo:owner/name sort:updated`)}`, {
+      ...providerToken? {
+        headers: {
+          "Authorization": `Bearer ${providerToken}`
+        }} : {}
+    });
+
+    if(req.ok) {
+      const res = await req.json();
+      const suggestions = res.items.map((item: any) => item.full_name);
+      if(suggestions.length > 5) suggestions.length = 5;
+      setSuggestions(suggestions);
+    }
+  }, 250);
+
+  useEffect(() => {
+    setSuggestions([]);
+    if(!repoSearchTerm) return;
+    updateSuggestionsDebounced();
+  }, [repoSearchTerm]);
+
+
   return (
     <section className="flex  flex-col lg:flex-row w-full lg:gap-20 py-4 lg:pl-28 justify-center ">
       <div className="flex flex-col gap-8">
         <div className="pb-6 border-b border-light-slate-8">
           <Title className="!text-2xl !leading-none mb-4" level={1}>
-            { edit ? "Update" : "Create New" } Insight Page
+            {edit ? "Update" : "Create New"} Insight Page
           </Title>
           <Text className="my-8">
             An insight page is a dashboard containing selected repositories that you and your team can get insights
@@ -229,8 +280,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
             Page Name
           </Title>
 
-          <TextInput placeholder="Page Name (ex: My Team)" value={name} onChange={handleOnNameChange} />
-          {submitted && nameError ? <Text>{nameError}</Text> : ""}
+          <TextInput placeholder="Page Name (ex: My Team)" value={name} handleChange={handleOnNameChange} />
           {/* <Text>insights.opensauced.pizza/pages/{username}/{`{pageId}`}/dashboard</Text> */}
         </div>
 
@@ -238,21 +288,22 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
           <Title className="!text-1xl !leading-none " level={4}>
             Add Repositories
           </Title>
-
-          <TextInput
-            value={repoToAdd}
-            placeholder="Repository Full Name (ex: open-sauced/open-sauced)"
-            onChange={handleOnRepoChange}
+          <Search placeholder="Repository Full Name (ex: open-sauced/open-sauced)"
+            className="!w-full text-md text-gra" name={"query"}
+            suggestions={suggestions} onChange={(value) => setRepoSearchTerm(value)}
+            onSearch={(search)=> setRepoSearchTerm(search as string)}
           />
 
           <div>
-            <Button disabled={repos.length === insightRepoLimit} onClick={handleAddRepository} type="primary">
+            <Button disabled={repos.length === insightRepoLimit} onClick={handleAddRepository} variant="primary">
               Add Repository
             </Button>
           </div>
         </div>
 
-        {getRepoLookupError(addRepoError)}
+        <div>
+          {getRepoLookupError(addRepoError)}
+        </div>
 
         <Title className="!text-1xl !leading-none mb-4 my-4" level={4}>
           Page Visibility
@@ -273,6 +324,29 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
             />
           </div>
         </div>
+
+        {edit && (
+          <div className="py-6 border-b flex flex-col gap-4 border-t border-light-slate-8">
+            <Title className="!text-1xl !leading-none py-6" level={4}>
+              Danger Zone
+            </Title>
+
+            <div className="rounded-2xl flex flex-col bg-light-slate-4 p-6">
+              <Title className="!text-1xl !leading-none !border-light-slate-8 border-b pb-4" level={4}>
+                Delete Page
+              </Title>
+              <Text className="my-4">
+                Once you delete a page, you&#39;re past the point of no return.
+              </Text>
+
+              <div>
+                <Button onClick={()=> setIsModalOpen(true)} variant="default" className="bg-light-red-6 border border-light-red-8 hover:bg-light-red-7 text-light-red-10">
+                  Delete page
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="lg:sticky mt-5 md:mt-0 top-0 py-4 lg:py-0">
@@ -283,7 +357,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
           handleUpdatePage={handleUpdateInsightPage}
           handleAddToCart={handleReAddRepository}
           history={reposRemoved}
-          createPageButtonDisabled={submitted}
+          createPageButtonDisabled={disableCreateButton()}
         >
           {repos.map((repo) => {
             const totalPrs =
@@ -305,6 +379,14 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
           })}
         </RepositoriesCart>
       </div>
+
+      <DeleteInsightPageModal
+        open={isModalOpen}
+        submitted={submitted}
+        pageName={name}
+        onConfirm={handleDeleteInsightPage}
+        onClose={handleOnModalClose}
+      />
     </section>
   );
 };

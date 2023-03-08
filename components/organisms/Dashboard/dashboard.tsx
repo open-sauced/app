@@ -22,7 +22,7 @@ interface DashboardProps {
 }
 
 export const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
-  const { data: insightsData } = useInsights(repositories);
+  const { data: insightsData, isLoading } = useInsights(repositories);
   const { data: prData, isError: prError } = useTopicPRs(undefined, repositories);
   const { data: contributorData } = useTopicContributions(10, repositories);
   const [showBots, setShowBots] = useState(false);
@@ -101,6 +101,7 @@ export const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
           numChanged={humanizeNumber(Math.abs(compare1.allContributors - compare2.allContributors), "abbreviation")}
           value={humanizeNumber(compare1.allContributors, "comma")}
           contributors={contributorData}
+          isLoading={isLoading}
         />
         <HighlightCard
           label="Spam"
@@ -110,6 +111,7 @@ export const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
           numChanged={humanizeNumber(Math.abs(compare1.spamTotal - compare2.spamTotal), "abbreviation")}
           percentage={compare1.spamPercentage}
           percentageLabel={`of ${humanizeNumber(compare1.allPrsTotal, "comma")}`}
+          isLoading={isLoading}
         />
         <HighlightCard
           label="Accepted PRs"
@@ -119,6 +121,7 @@ export const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
           numChanged={humanizeNumber(Math.abs(compare1.acceptedTotal - compare2.acceptedTotal), "abbreviation")}
           percentage={compare1.acceptedPercentage}
           percentageLabel={`of ${humanizeNumber(compare1.allPrsTotal, "comma")}`}
+          isLoading={isLoading}
         />
         <HighlightCard
           label="Unlabeled PRs"
@@ -128,6 +131,7 @@ export const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
           numChanged={humanizeNumber(Math.abs(compare1.unlabeledPrsTotal - compare2.unlabeledPrsTotal), "abbreviation")}
           percentage={compare1.unlabeledPercentage}
           percentageLabel={`of ${humanizeNumber(compare1.allPrsTotal, "comma")}`}
+          isLoading={isLoading}
         />
       </section>
       <section className="flex flex-col lg:flex-row max-w-full gap-4 mb-6">

@@ -24,7 +24,7 @@ const CSVDownload = ({ report, repositories }: CSVDownloadProps) => {
   const [generating, setGenerating] = useState(false);
   const { mutate } = useSWRConfig();
   const router = useRouter();
-  const { filterName: topic } = router.query;  
+  const { filterName: topic } = router.query;
   const selectedFilter = report.reportName;
 
   useEffect(() => {
@@ -36,25 +36,31 @@ const CSVDownload = ({ report, repositories }: CSVDownloadProps) => {
     }
   }, [data]);
 
-  const onDownload = async() => {
-    const key = `${topic}/contributions?filter=${selectedFilter}&limit=100${repositories && repositories.length > 0 ? `&repoIds=${repositories?.join(",")}` : ""}`;
+  const onDownload = async () => {
+    const key = `${topic}/contributions?filter=${selectedFilter}&limit=100${
+      repositories && repositories.length > 0 ? `&repoIds=${repositories?.join(",")}` : ""
+    }`;
 
     try {
       setGenerating(true);
       // @ts-ignore
       const result: PaginatedContributorsResponse = await mutate(key, apiFetcher(key));
-    
+
       setData(result.data);
-    } catch(e) {
+    } catch (e) {
     } finally {
       setGenerating(false);
     }
   };
 
-  return <>
-    { data ? <CSVLink data={data} ref={csvRef}></CSVLink> : "" }
-    <Button type="link" onClick={onDownload} disabled={generating}>{generating ? "Loading" : "Download"}</Button>
-  </>;
+  return (
+    <>
+      {data ? <CSVLink data={data} ref={csvRef}></CSVLink> : ""}
+      <Button variant="link" onClick={onDownload} disabled={generating}>
+        {generating ? "Loading" : "Download"}
+      </Button>
+    </>
+  );
 };
 
 export default CSVDownload;

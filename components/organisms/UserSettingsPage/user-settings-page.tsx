@@ -10,13 +10,14 @@ import Select from "components/atoms/Select/select";
 import SelectOption from "components/atoms/Select/select-option";
 import LanguagePill from "components/atoms/LanguagePill/LanguagePill";
 
-import { updateUser, updateUserPayload } from "lib/hooks/update-user";
+import { updateUser, UpdateUserPayload } from "lib/hooks/update-user";
 import { ToastTrigger } from "lib/utils/toast-trigger";
 import { authSession } from "lib/hooks/authSession";
 import { validateEmail } from "lib/utils/validate-email";
 import { timezones } from "lib/utils/timezones";
 import { updateEmailPreferences } from "lib/hooks/updateEmailPreference";
 import { useFetchUser } from "lib/hooks/useFetchUser";
+import getInterestOptions from "lib/utils/getInterestOptions";
 
 interface userSettingsPageProps {
   user: User | null;
@@ -27,7 +28,9 @@ type EmailPreferenceType = {
   receive_collaboration?: boolean;
 };
 const UserSettingsPage = ({ user }: userSettingsPageProps) => {
-  const { data: insightsUser } = useFetchUser(user?.user_metadata.user_name);
+  const { data: insightsUser } = useFetchUser(user?.user_metadata.user_name, {
+    revalidateOnFocus: false
+  });
 
   const [isValidEmail, setIsValidEmail] = useState<boolean>(true);
   const [displayLocalTime, setDisplayLocalTime] = useState(false);
@@ -42,12 +45,12 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
   });
   const [selectedInterest, setSelectedInterest] = useState<string[]>([]);
   const formRef = useRef<HTMLFormElement>(null);
-  const interestArray = ["javascript", "python", "rust", "ML", "AI", "react"];
+  const interestArray = getInterestOptions();
 
   useEffect(() => {
     async function fetchAuthSession() {
       const response = await authSession();
-      if (response !== false) {
+      if (response !== false && !userInfo) {
         setUserInfo(response);
         formRef.current!.nameInput.value = response.name;
         setEmail(response.email);
@@ -56,6 +59,8 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
         formRef.current!.twitter_username.value = response.twitter_username;
         formRef.current!.company.value = response.company;
         formRef.current!.location.value = response.location;
+        formRef.current!.github_sponsors_url.value = response.github_sponsors_url;
+        formRef.current!.linkedin_url.value = response.linkedin_url;
       }
     }
     fetchAuthSession();
@@ -74,6 +79,16 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
       setTimezone(insightsUser?.timezone || "");
     }
   }, [insightsUser]);
+
+  const handleEmailChange = (value: string) => {
+    setEmail(value);
+
+    if (validateEmail(value)) {
+      setIsValidEmail(true);
+    } else {
+      setIsValidEmail(false);
+    }
+  };
 
   const handleSelectInterest = (interest: string) => {
     if (selectedInterest.length > 0 && selectedInterest.includes(interest)) {
@@ -106,7 +121,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
 
   const handleUpdateProfile = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const payload: updateUserPayload = {
+    const payload: UpdateUserPayload = {
       name: formRef.current!.nameInput.value,
       email,
       bio: formRef.current!.bio.value,
@@ -116,9 +131,14 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
       location: formRef.current!.location.value,
       // eslint-disable-next-line camelcase
       display_local_time: displayLocalTime,
-      timezone
+      timezone,
+      // eslint-disable-next-line camelcase
+      github_sponsors_url:
+        formRef.current!.github_sponsors_url.value !== "" ? formRef.current!.github_sponsors_url.value : undefined,
+      // eslint-disable-next-line camelcase
+      linkedin_url: formRef.current!.linkedin_url.value !== "" ? formRef.current!.linkedin_url.value : undefined
     };
-    if(formRef.current?.url.value) {
+    if (formRef.current?.url.value) {
       payload.url = formRef.current!.url.value;
     }
 
@@ -151,14 +171,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
             <TextInput
               classNames="bg-light-slate-4 text-light-slate-11 font-medium"
               placeholder="april@stockgen.com"
-              onChange={(e) => {
-                setEmail(e.target.value);
-                if (validateEmail(e.target.value)) {
-                  setIsValidEmail(true);
-                } else {
-                  setIsValidEmail(false);
-                }
-              }}
+              handleChange={handleEmailChange}
               label="Email*"
               value={email}
               required
@@ -182,8 +195,22 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
               name="url"
             />
             <TextInput
+              classNames="bg-light-slate-4 text-light-slate-11 font-medium"
+              placeholder="https://github.com/sponsors/open-sauced"
+              label="GitHub Sponsors URL"
+              pattern="http[s]?://.*\..{2,}"
+              name="github_sponsors_url"
+            />
+            <TextInput
+              classNames="bg-light-slate-4 text-light-slate-11 font-medium"
+              placeholder="https://www.linkedin.com/in/brianldouglas"
+              label="LinkedIn URL"
+              pattern="http[s]?://.*\..{2,}"
+              name="linkedin_url"
+            />
+            <TextInput
               classNames="bg-light-slate-4 text-light-slate-11"
-              placeholder="@saucedopen"
+              placeholder="saucedopen"
               label="Twitter Username"
               name="twitter_username"
             />
@@ -204,7 +231,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
                 checked={displayLocalTime}
                 title="profile email"
                 label="Display current local time on profile"
-                onChange={e => setDisplayLocalTime(e.target.checked)}
+                onChange={(e) => setDisplayLocalTime(e.target.checked)}
               />
               <span className="ml-7 text-light-slate-9 text-sm font-normal">
                 Other users will see the time difference from their local time.
@@ -212,7 +239,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
             </div>
             <div className="flex flex-col gap-2">
               <label>Time zone*</label>
-              <Select value={timezone} onChange={e => setTimezone(e.target.value)} required>
+              <Select value={timezone} onChange={(e) => setTimezone(e.target.value)} required>
                 <SelectOption value="">Select time zone</SelectOption>
                 {timezones.map((timezone, index) => (
                   <SelectOption key={index} value={timezone.value}>
@@ -221,7 +248,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
                 ))}
               </Select>
             </div>
-            <Button disabled={!isValidEmail} type="primary">
+            <Button className="w-max" disabled={!isValidEmail} variant="primary">
               Update profile
             </Button>
           </form>
@@ -242,10 +269,10 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
               ))}
             </div>
             <Button
-              type="default"
+              variant="default"
               disabled={selectedInterest.length === 0}
               onClick={handleUpdateInterest}
-              className="!px-4 !text-light-slate-11 !py-2  !bg-light-slate-4"
+              className="w-max"
             >
               Update Interests
             </Button>
@@ -272,8 +299,8 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
             </div>
             <Button
               onClick={handleUpdateEmailPreference}
-              type="default"
-              className="!px-4 w-max !py-2  !bg-light-slate-4 "
+              variant="default"
+              className="px-4 w-max py-2  bg-light-slate-4 "
             >
               Update Preferences
             </Button>

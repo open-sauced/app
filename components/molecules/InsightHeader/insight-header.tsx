@@ -41,7 +41,7 @@ const InsightHeader = ({ insight, repositories, insightId, isOwner }: InsightHea
       <div className="py-2 absolute right-0 md:static">
         {isOwner && (
           <Link href={`/hub/insights/${insightId}/edit`}>
-            <Button className="!text-xs" type="primary">
+            <Button className="text-xs" variant="primary">
               <FaEdit className="mr-2" /> Edit Page
             </Button>
           </Link>

@@ -1,16 +1,24 @@
 import React from "react";
 import Image, { StaticImageData } from "next/image";
 
-import JavascriptIcon from "img/icons/☕️.svg";
+import JavascriptIcon from "img/icons/👾.svg";
 import ReactIcon from "/img/icons/⚛️.svg";
 import PythonIcon from "/img/icons/🐍.svg";
 import AIIcon from "/img/icons/🤖.svg";
 import MLIcon from "/img/icons/🧠.svg";
 import RustIcon from "/img/icons/🦀.svg";
-import checkCamelCaseNaming from "lib/utils/check-camelcase-naming";
+import PhpIcon from "/img/icons/📄.svg";
+import CsharpIcon from "/img/icons/🎹.svg";
+import CIcon from "/img/icons/🥸.svg";
+import CppIcon from "/img/icons/🤓.svg";
+import TypeScriptIcon from "/img/icons/🔥.svg";
+import RubyIcon from "/img/icons/🌹.svg";
+import JavaIcon from "/img/icons/☕️.svg";
+import topicNameFormatting from "lib/utils/topic-name-formatting";
+
 
 interface LanguagePillProps {
-  topic: "react" | "javascript" | "python" | "ML" | "AI" | "rust" | string;
+  topic: "react" | "javascript" | "python" | "ML" | "AI" | "rust" | "ruby" | "c" | "cpp" | "csharp" | "php" | "java" | "typescript" | string;
   classNames?: string;
   onClick?: () => void;
 }
@@ -20,9 +28,16 @@ const LanguagePill = ({ topic, classNames, onClick }: LanguagePillProps) => {
       react: ReactIcon,
       rust: RustIcon,
       javascript: JavascriptIcon,
-      AI: AIIcon,
-      ML: MLIcon,
-      python: PythonIcon
+      ai: AIIcon,
+      ml: MLIcon,
+      python: PythonIcon,
+      typescript: TypeScriptIcon,
+      csharp: CsharpIcon,
+      cpp: CppIcon,
+      php: PhpIcon,
+      c: CIcon,
+      ruby: RubyIcon,
+      java: JavaIcon
     };
 
     return iconMap[name] || "";
@@ -36,7 +51,7 @@ const LanguagePill = ({ topic, classNames, onClick }: LanguagePillProps) => {
       }`}
     >
       <Image src={renderTopicIcon(topic)} alt={topic} />
-      <span className="font-normal capitalize">{checkCamelCaseNaming(topic)}</span>
+      <span className="font-normal capitalize">{topicNameFormatting(topic)}</span>
     </div>
   );
 };
