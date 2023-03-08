@@ -5,6 +5,15 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.33.0-alpha.2](https://github.com/open-sauced/insights/compare/v1.33.0-alpha.1...v1.33.0-alpha.2) (2023-03-08)
+
+
+### 🍕 Features
+
+* connect contributors to public API ([0eb73e9](https://github.com/open-sauced/insights/commit/0eb73e9b081477567be8762689ff3ff964b5869e))
+* connect pull requests to search API ([5904102](https://github.com/open-sauced/insights/commit/5904102337a875e17ff8aeef5cdfe793d0c7dc06))
+* get pull requests for dashboard from API ([ec31c42](https://github.com/open-sauced/insights/commit/ec31c4207f321dccb9b8281b6171cd41235e3b3c))
+
 ## [1.33.0-alpha.1](https://github.com/open-sauced/insights/compare/v1.32.0...v1.33.0-alpha.1) (2023-03-06)
 
 
