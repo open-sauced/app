@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 
-import { useSWRConfig } from "swr";
-
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { getFormattedDate } from "lib/utils/date-utils";
 import { useFetchAllHighlights } from "lib/hooks/useFetchAllHighlights";
@@ -30,7 +28,7 @@ const Feeds = () => {
 
   const [selectedRepo, setSelectedRepo] = useState("");
 
-  const { data, isLoading } = useFetchAllHighlights(selectedRepo);
+  const { data, isLoading, mutate } = useFetchAllHighlights(selectedRepo);
   const { data: singleHighlight } = useFetchSingleHighlight(id as unknown as number);
 
   const repoList =
@@ -118,7 +116,7 @@ const Feeds = () => {
                     />
                   </div>
 
-                  <HighlightInputForm />
+                  <HighlightInputForm refreshCallback={mutate} />
                 </div>
               )}
 
@@ -148,19 +146,15 @@ const Feeds = () => {
                           />
                           <strong>{login}</strong>
                         </Link>
-                        <span className="text-xs text-light-slate-11 font-normal">{getFormattedDate(created_at)}</span>
+                        <Link href={`/feed/${id}`}>
+                          <span className="text-xs text-light-slate-11 font-normal">
+                            {getFormattedDate(created_at)}
+                          </span>
+                        </Link>
                       </div>
-                      <Link href={`/feed/${id}`}>
-                        <div className=" bg-light-slate-1 border p-4 md:px-6 lg:px-12 py-6 rounded-xl">
-                          <ContributorHighlightCard
-                            title={title}
-                            desc={highlight}
-                            prLink={url}
-                            user={name || login}
-                            id={id}
-                          />
-                        </div>
-                      </Link>
+                      <div className=" bg-light-slate-1 border p-4 md:px-6 lg:px-12 py-6 rounded-xl">
+                        <ContributorHighlightCard title={title} desc={highlight} prLink={url} user={login} id={id} />
+                      </div>
                     </div>
                   ))}
               </div>

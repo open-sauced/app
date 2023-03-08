@@ -44,7 +44,7 @@ const ContributorProfileTab = ({
   const { login } = contributor || {};
   const { user } = useSupabaseAuth();
 
-  const { data: highlights, isError, isLoading } = useFetchUserHighlights(login || "");
+  const { data: highlights, isError, isLoading, mutate } = useFetchUserHighlights(login || "");
   const [inputVisible, setInputVisible] = useState(false);
   const pathnameRef = useRef<string | null>();
 
@@ -53,9 +53,8 @@ const ContributorProfileTab = ({
   const hasHighlights = highlights?.length > 0;
   pathnameRef.current = router.pathname.split("/").at(-1);
 
-  const currentPathname = pathnameRef.current !== "[username]"
-    ? pathnameRef.current
-    : hasHighlights ? "highlights" : "contributions";
+  const currentPathname =
+    pathnameRef.current !== "[username]" ? pathnameRef.current : hasHighlights ? "highlights" : "contributions";
 
   const handleTabUrl = (tab: string) => {
     router.push(`/user/${login}/${tab.toLowerCase()}`);
@@ -100,7 +99,7 @@ const ContributorProfileTab = ({
               />
             </div>
 
-            <HighlightInputForm />
+            <HighlightInputForm refreshCallback={mutate} />
           </div>
         )}
         <div className="mt-8 flex flex-col gap-8">
