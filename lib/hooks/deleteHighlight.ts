@@ -16,6 +16,13 @@ const deleteHighlight = async (id: string) => {
 
     if (res.ok) {
       return true;
+    } else {
+      const error = new Error("HttpError");
+
+      error.message = `${res.status} ${res.statusText}`;
+      error.stack = JSON.stringify(await res.json());
+
+      throw error;
     }
   } catch (e) {
     console.log(e);
