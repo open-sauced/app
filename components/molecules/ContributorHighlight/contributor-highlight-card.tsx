@@ -336,24 +336,28 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
             <AlertDialogHeader>
               <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
               <AlertDialogDescription>
-                This action cannot be undone. This will permanently delete your Highlight and remove your data from our
-                database.
+                This action cannot be undone. This will permanently delete your Highlight and remove related data from
+                our database.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel asChild onClick={() => setAlertOpen(false)}>
-                <Button variant="text">Cancel</Button>
-              </AlertDialogCancel>
-              <AlertDialogAction asChild>
-                <Button
-                  loading={deleteLoading}
-                  className=" bg-red-300 text-red-600 border border-red-400 hover:bg-red-400 hover:text-red-700 ml-auto"
-                  variant="text"
-                  onClick={() => handleDeleteHighlight()}
-                >
-                  Confirm
-                </Button>
-              </AlertDialogAction>
+              <div className="flex items-center justify-end gap-3">
+                <AlertDialogAction asChild onClick={() => setAlertOpen(false)}>
+                  <Button className="ml-auto" variant="text">
+                    Cancel
+                  </Button>
+                </AlertDialogAction>
+                <AlertDialogAction asChild>
+                  <Button
+                    loading={deleteLoading}
+                    className=" bg-red-300 text-red-600 border border-red-400 hover:bg-red-400 hover:text-red-700 "
+                    variant="text"
+                    onClick={() => handleDeleteHighlight()}
+                  >
+                    Confirm
+                  </Button>
+                </AlertDialogAction>
+              </div>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>

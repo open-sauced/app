@@ -85,7 +85,7 @@ const AlertDialogAction = React.forwardRef<
   <AlertDialogPrimitive.Action
     ref={ref}
     className={clsx(
-      "inline-flex h-10 items-center justify-center rounded-md bg-slate-900 py-2 px-4 text-sm font-semibold text-white transition-colors  disabled:cursor-not-allowed disabled:opacity-50 ",
+      "inline-flex h-10 items-center justify-center rounded-md  py-2 px-4 text-sm font-semibold  transition-colors  disabled:cursor-not-allowed disabled:opacity-50 ",
       className
     )}
     {...props}
