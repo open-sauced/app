@@ -14,12 +14,12 @@ import useFilterPrefetch from "lib/hooks/useFilterPrefetch";
 import uppercaseFirst from "lib/utils/uppercase-first";
 import topicNameFormatting from "lib/utils/topic-name-formatting";
 import FilterCardSelect from "components/molecules/FilterCardSelect/filter-card-select";
-import useTopicOptions from "lib/utils/getTopicOptions";
+import getInterestOptions from "lib/utils/getInterestOptions";
 
 const HeaderFilter = () => {
   const router = useRouter();
   const filterOptions = useFilterOptions();
-  const topicOptions = useTopicOptions();
+  const topicOptions = getInterestOptions();
 
   const { filterValues } = useFilterPrefetch();
   const { filterName, toolName, selectedFilter } = router.query;
