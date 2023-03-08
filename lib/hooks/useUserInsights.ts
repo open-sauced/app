@@ -22,8 +22,6 @@ const useUserInsights = () => {
     publicApiFetcher as Fetcher<PaginatedInsightsResponse, Error>
   );
 
-  console.log({data});
-
   return {
     data: data?.data ?? [],
     meta: data?.meta ?? { itemCount: 0, limit: 0, page: 0, hasNextPage: false, hasPreviousPage: false, pageCount: 0 },

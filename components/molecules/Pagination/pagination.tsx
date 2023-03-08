@@ -1,9 +1,9 @@
-import { useMediaQuery } from "lib/hooks/useMediaQuery";
-import humanizeNumber from "lib/utils/humanizeNumber";
 import React, { useState } from "react";
-import { RiArrowLeftSLine } from "react-icons/ri";
-import { RiArrowRightSLine } from "react-icons/ri";
-import PaginationGotoPage from "../PaginationGotoPage/pagination-goto-page";
+import { RiArrowLeftSLine, RiArrowRightSLine } from "react-icons/ri";
+
+import PaginationGotoPage from "components/molecules/PaginationGotoPage/pagination-goto-page";
+import humanizeNumber from "lib/utils/humanizeNumber";
+
 interface PaginationProps {
   pages: number[];
   totalPage: number; // represents the total number of pages available from the source
@@ -27,15 +27,17 @@ const Pagination = ({
   hasNextPage = true,
   onPageChange
 }: PaginationProps): JSX.Element => {
-  console.log({pages});
   // This logics are meant for testing purpose
-  const [selected, setSelected] = useState<number>(page);
+  const [selected, setSelected] = useState(page);
+
   const handleSelected = (pageNumber: number) => {
     onPageChange(pageNumber);
   };
+
   const handleNext = () => {
     onPageChange(page + 1);
   };
+
   const handlePrev = () => {
     onPageChange(page - 1);
   };

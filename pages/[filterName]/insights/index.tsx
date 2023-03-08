@@ -6,6 +6,8 @@ import Button from "components/atoms/Button/button";
 import InsightRow from "components/molecules/InsightRow/insight-row";
 import Search from "components/atoms/Search/search";
 import Title from "components/atoms/Typography/title";
+import Pagination from "components/molecules/Pagination/pagination";
+import PaginationResults from "components/molecules/PaginationResults/pagination-result";
 
 import HubLayout from "layouts/hub";
 import { WithPageLayout } from "interfaces/with-page-layout";
@@ -13,12 +15,9 @@ import useUserInsights from "lib/hooks/useUserInsights";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { supabase } from "lib/utils/supabase";
 import useSession from "lib/hooks/useSession";
-import PaginationResults from "components/molecules/PaginationResults/pagination-result";
-import Pagination from "components/molecules/Pagination/pagination";
 
 const InsightsHub: WithPageLayout = () => {
   const { data: insightsData, meta: insightsMeta, isError, isLoading, page, setPage } = useUserInsights();
-  console.log({insightsData});
   const { user } = useSupabaseAuth();
   const { onboarded } = useSession();
   const router = useRouter();
@@ -79,32 +78,24 @@ const InsightsHub: WithPageLayout = () => {
       </Link>
 
       <div className="py-1 md:py-4 flex w-full md:mt-5 justify-between items-center">
-        <div>
-          <div className="">
-            <PaginationResults
-              from={page === 1 ? (insightsMeta.itemCount > 0 ? page : 0) : (page - 1) * insightsMeta.limit + 1}
-              to={page * insightsMeta.limit <= insightsMeta.itemCount ? page * insightsMeta.limit : insightsMeta.itemCount}
-              total={insightsMeta.itemCount}
-              entity={"insights"}
-            />
-          </div>
-        </div>
-        <div>
-          <div className="flex items-center gap-4">
-            <Pagination
-              pages={[]}
-              hasNextPage={insightsMeta.hasNextPage}
-              hasPreviousPage={insightsMeta.hasPreviousPage}
-              totalPage={insightsMeta.pageCount}
-              page={insightsMeta.page}
-              onPageChange={function (page: number): void {
-                setPage(page);
-              }}
-              divisor={true}
-              goToPage
-            />
-          </div>
-        </div>
+        <PaginationResults
+          from={page === 1 ? (insightsMeta.itemCount > 0 ? page : 0) : (page - 1) * insightsMeta.limit + 1}
+          to={page * insightsMeta.limit <= insightsMeta.itemCount ? page * insightsMeta.limit : insightsMeta.itemCount}
+          total={insightsMeta.itemCount}
+          entity={"insights"}
+        />
+        <Pagination
+          pages={[]}
+          hasNextPage={insightsMeta.hasNextPage}
+          hasPreviousPage={insightsMeta.hasPreviousPage}
+          totalPage={insightsMeta.pageCount}
+          page={insightsMeta.page}
+          onPageChange={function (page: number): void {
+            setPage(page);
+          }}
+          divisor={true}
+          goToPage
+        />
       </div>
     </div>
   ) : <></>;
