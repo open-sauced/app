@@ -316,7 +316,7 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
                 <AlertDialogTrigger asChild>
                   <Button
                     onClick={() => setAlertOpen(true)}
-                    className=" bg-red-300 text-red-600 border border-red-400 ml-auto"
+                    className=" bg-light-red-7 text-red-600 border border-light-red-400 hover:bg-light-red-8 hover:text-red-700 "
                     variant="primary"
                   >
                     Delete Page
@@ -350,7 +350,7 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
                 <AlertDialogAction asChild>
                   <Button
                     loading={deleteLoading}
-                    className=" bg-red-300 text-red-600 border border-red-400 hover:bg-red-400 hover:text-red-700 "
+                    className=" bg-red-300 text-red-600 border border-red-400 hover:bg-light-red-8 hover:text-red-700 "
                     variant="text"
                     onClick={() => handleDeleteHighlight()}
                   >
