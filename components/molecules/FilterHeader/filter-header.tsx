@@ -16,11 +16,14 @@ import topicNameFormatting from "lib/utils/topic-name-formatting";
 import FilterCardSelect from "components/molecules/FilterCardSelect/filter-card-select";
 import useTopicOptions from "lib/utils/getTopicOptions";
 import SortedBySelector from "../SortedBySelector/sorted-by-selector";
+import useStore from "lib/store";
 
 const HeaderFilter = () => {
   const router = useRouter();
   const filterOptions = useFilterOptions();
   const topicOptions = useTopicOptions();
+  const store = useStore();
+  const sortBy = useStore((state) => state.sortBy);
 
   const { filterValues } = useFilterPrefetch();
   const { filterName, toolName, selectedFilter } = router.query;
@@ -66,8 +69,8 @@ const HeaderFilter = () => {
             selected={Array.isArray(selectedFilter) ? selectedFilter.join("/") : selectedFilter}
           />
           <SortedBySelector
-            selected="name"
-            handleCancelClick={() => {}}
+            selected={sortBy}
+            handleCancelClick={() => {store.updateSortBy("")}}
           />
         </div>
       </div>

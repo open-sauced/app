@@ -30,7 +30,8 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
   const topic = filterName as string;
   const store = useStore();
   const range = useStore((state) => state.range);
-  const [sortBy, setSortBy] = useState<SortOptions>("");
+  const sortBy = useStore((state) => state.sortBy);
+  // const [sortBy, setSortBy] = useState<SortOptions>("");
   const [sortDirection, setSortDirection] = useState<"ASC" | "DESC">("DESC");
   const {
     data: repoListData,
@@ -43,6 +44,11 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
   } = useRepositoriesList(false, repositories, sortBy, sortDirection);
   const filteredRepoNotIndexed = selectedFilter && !repoListIsLoading && !repoListIsError && repoListData.length === 0;
   const [selectedRepos, setSelectedRepos] = useState<DbRepo[]>([]);
+
+  // handle on cancel sortBy: set direction to DESC
+  useEffect( () => {
+    if(!sortBy) setSortDirection("DESC");
+  }, [sortBy])
 
   const handleOnSelectAllChecked = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) {
@@ -95,7 +101,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
     } else {
       setSortDirection("DESC");
     }
-    setSortBy(column);
+    store.updateSortBy(column);
 
   }
 
