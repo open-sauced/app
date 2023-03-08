@@ -3,13 +3,14 @@ import { useState } from "react";
 import useSWR from "swr";
 import getFilterQuery from "lib/utils/get-filter-query";
 import useStore from "lib/store";
+import { SortOptions } from "components/molecules/SortedBySelector/sorted-by-selector";
 
 interface PaginatedRepoResponse {
   readonly data: DbRepo[];
   readonly meta: Meta;
 }
 
-const useRepositoriesList = (skipFilters = false, repoIds: number[] = []) => {
+const useRepositoriesList = (skipFilters = false, repoIds: number[] = [], sortBy: SortOptions = "", sortDirection: "DESC" | "ASC" = "DESC") => {
   const router = useRouter();
   const { filterName, selectedFilter } = router.query;
   const topic = filterName as string;
@@ -23,7 +24,9 @@ const useRepositoriesList = (skipFilters = false, repoIds: number[] = []) => {
   const limitQuery = limit ? `&limit=${limit}` : "";
   const rangeQuery = range ? `&range=${range}` : "";
   const reposQuery = repoIds.length > 0 ? `&repoIds=${repoIds.join(",")}`: "";
-  const endpointString = `${baseEndpoint}?${pageQuery}${limitQuery}${rangeQuery}${reposQuery}${!skipFilters ? filterQuery : ""}`;
+  const sortQuery = sortBy ? `&orderBy=${sortBy}` : "";
+  const sortDirectionQuery = `&orderDirection=${sortDirection}`;
+  const endpointString = `${baseEndpoint}?${pageQuery}${limitQuery}${rangeQuery}${reposQuery}${!skipFilters ? filterQuery : ""}${sortQuery}${sortDirectionQuery}`;
   const { data, error, mutate } = useSWR<PaginatedRepoResponse, Error>(topic ? endpointString : null);
 
   return {

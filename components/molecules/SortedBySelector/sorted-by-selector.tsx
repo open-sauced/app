@@ -5,13 +5,16 @@ import Icon from "components/atoms/Icon/icon";
 
 import cancelIcon from "img/x-circle.svg";
 
+export type SortOptions = "name" | "prsCount" | "prVelocityCount" | "spamPrsCount" | "";
+
 interface SortedBySelectorProps {
   handleCancelClick: () => void;
   className?: string;
-  selected?: keyof typeof SortedOrders | '';
+  selected?: SortOptions;
 }
 
-const SortedOrders = {
+const SortedOrders: Record<SortOptions, string> = {
+  "": "",
   "name": "Repository",
   "prsCount": "PR Count",
   "prVelocityCount": "PR Velocity",

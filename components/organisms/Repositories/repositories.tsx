@@ -16,6 +16,7 @@ import RepoNotIndexed from "./repository-not-indexed";
 import Checkbox from "components/atoms/Checkbox/checkbox";
 import Button from "components/atoms/Button/button";
 import useStore from "lib/store";
+import { SortOptions } from "components/molecules/SortedBySelector/sorted-by-selector";
 
 interface RepositoriesProps {
   repositories?: number[];
@@ -29,6 +30,8 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
   const topic = filterName as string;
   const store = useStore();
   const range = useStore((state) => state.range);
+  const [sortBy, setSortBy] = useState<SortOptions>("");
+  const [sortDirection, setSortDirection] = useState<"ASC" | "DESC">("DESC");
   const {
     data: repoListData,
     meta: repoMeta,
@@ -37,7 +40,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
     page,
     setPage,
     setLimit
-  } = useRepositoriesList(false, repositories);
+  } = useRepositoriesList(false, repositories, sortBy, sortDirection);
   const filteredRepoNotIndexed = selectedFilter && !repoListIsLoading && !repoListIsError && repoListData.length === 0;
   const [selectedRepos, setSelectedRepos] = useState<DbRepo[]>([]);
 
@@ -78,6 +81,23 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
       router.push(`/${topic}/${toolName}`);
     }
   };
+
+  const handleSortByColumn = (column: SortOptions) => {
+    // debugger
+    // const url = router.asPath;
+    // const query = router.asPath.split("?")[1];
+    // const params = new URLSearchParams(query)
+    // params.delete("sortedBy")
+    // params.set("sortBy", column)
+    // router.push({ pathname: url, query: params.toString() }, undefined, { shallow: true});
+    if(sortBy === column) {
+      setSortDirection(sortDirection === "ASC" ? "DESC" : "ASC");
+    } else {
+      setSortDirection("DESC");
+    }
+    setSortBy(column);
+
+  }
 
   useEffect(() => {
     setPage(1);
@@ -120,19 +140,19 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
                 }`}
               />
             </div>
-            <div className={clsx(classNames.cols.repository)}>
+            <div className={clsx(classNames.cols.repository)} onClick={() => handleSortByColumn('name')}>
               <TableTitle text="Repository"></TableTitle>
             </div>
-            <div className={clsx(classNames.cols.activity)}>
+            <div className={clsx(classNames.cols.activity)} onClick={() => handleSortByColumn('')}>
               <TableTitle text="Activity"></TableTitle>
             </div>
-            <div className={clsx(classNames.cols.prOverview)}>
+            <div className={clsx(classNames.cols.prOverview)} onClick={() => handleSortByColumn('prsCount')}>
               <TableTitle text="PR Overview"></TableTitle>
             </div>
-            <div className={clsx(classNames.cols.prVelocity)}>
+            <div className={clsx(classNames.cols.prVelocity)} onClick={() => handleSortByColumn('prVelocityCount')}>
               <TableTitle text="PR Velocity"></TableTitle>
             </div>
-            <div className={clsx(classNames.cols.spam)}>
+            <div className={clsx(classNames.cols.spam)} onClick={() => handleSortByColumn('spamPrsCount')}>
               <TableTitle text="SPAM"></TableTitle>
             </div>
             <div className={clsx(classNames.cols.contributors, "hidden lg:flex")}>

@@ -15,6 +15,7 @@ import uppercaseFirst from "lib/utils/uppercase-first";
 import topicNameFormatting from "lib/utils/topic-name-formatting";
 import FilterCardSelect from "components/molecules/FilterCardSelect/filter-card-select";
 import useTopicOptions from "lib/utils/getTopicOptions";
+import SortedBySelector from "../SortedBySelector/sorted-by-selector";
 
 const HeaderFilter = () => {
   const router = useRouter();
@@ -63,6 +64,10 @@ const HeaderFilter = () => {
             handleFilterClick={filterBtnRouting}
             handleCancelClick={cancelFilterRouting}
             selected={Array.isArray(selectedFilter) ? selectedFilter.join("/") : selectedFilter}
+          />
+          <SortedBySelector
+            selected="name"
+            handleCancelClick={() => {}}
           />
         </div>
       </div>
