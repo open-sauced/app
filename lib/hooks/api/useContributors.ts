@@ -10,10 +10,18 @@ interface PaginatedResponse {
 const useContributors = () => {
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
-  const pageQuery = page ? `page=${page}` : "";
-  const limitQuery = limit ? `&limit=${limit}` : "";
+  const query = new URLSearchParams();
+
+  if (page) {
+    query.set("page", `${page}`);
+  }
+
+  if (limit) {
+    query.set("limit", `${limit}`);
+  }
+
   const baseEndpoint = "users/list";
-  const endpointString = `${baseEndpoint}?${pageQuery}${limitQuery}`;
+  const endpointString = `${baseEndpoint}?${query}`;
 
   const { data, error, mutate } = useSWR<PaginatedResponse, Error>(
     endpointString,

@@ -95,7 +95,7 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
           revalidateIfStale: false,
           revalidateOnReconnect: false,
           shouldRetryOnError: false,
-          fetcher: apiFetcher,
+          fetcher: apiFetcher
           // provider: localStorageProvider
         }}
       >

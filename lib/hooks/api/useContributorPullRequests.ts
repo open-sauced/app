@@ -1,4 +1,3 @@
-import { useState } from "react";
 import useSWR, { Fetcher } from "swr";
 import { useRouter } from "next/router";
 
@@ -10,20 +9,14 @@ interface PaginatedResponse {
   readonly meta: Meta;
 }
 
-const usePullRequests = (limit = 1000, repoIds: number[] = []) => {
+const useContributorPullRequests = (contributor: string, topic: string, repoIds: number[] = [], limit = 8) => {
   const router = useRouter();
-  const [page, setPage] = useState(1);
-  const { filterName, selectedFilter } = router.query;
-  const topic = filterName as string;
+  const { selectedFilter } = router.query;
   const filterQuery = getFilterQuery(selectedFilter);
   const query = new URLSearchParams(filterQuery);
 
-  if (Number.isNaN(Number(topic))) {
+  if (Number.isNaN(Number(topic)) && topic !== "*") {
     query.set("topic", topic);
-  }
-
-  if (page) {
-    query.set("page", `${page}`);
   }
 
   if (limit) {
@@ -34,11 +27,11 @@ const usePullRequests = (limit = 1000, repoIds: number[] = []) => {
     query.set("repoIds", repoIds.join(","));
   }
 
-  const baseEndpoint = "prs/search";
+  const baseEndpoint = `users/${contributor}/prs`;
   const endpointString = `${baseEndpoint}?${query.toString()}`;
 
   const { data, error, mutate } = useSWR<PaginatedResponse, Error>(
-    endpointString,
+    contributor ? endpointString : null,
     publicApiFetcher as Fetcher<PaginatedResponse, Error>
   );
 
@@ -47,10 +40,8 @@ const usePullRequests = (limit = 1000, repoIds: number[] = []) => {
     meta: data?.meta ?? { itemCount: 0, limit: 0, page: 0, hasNextPage: false, hasPreviousPage: false, pageCount: 0 },
     isLoading: !error && !data,
     isError: !!error,
-    mutate,
-    page,
-    setPage
+    mutate
   };
 };
 
-export default usePullRequests;
+export default useContributorPullRequests;

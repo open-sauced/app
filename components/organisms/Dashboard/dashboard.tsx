@@ -9,7 +9,6 @@ import { ScatterChartDataItems } from "components/molecules/NivoScatterChart/niv
 import humanizeNumber from "lib/utils/humanizeNumber";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
 import { getInsights, useInsights } from "lib/hooks/useInsights";
-import { useTopicPRs } from "lib/hooks/useTopicPRs";
 import { calcDaysFromToday } from "lib/utils/date-utils";
 import roundedImage from "lib/utils/roundedImages";
 import { useTopicContributions } from "lib/hooks/useTopicContributions";
@@ -24,7 +23,7 @@ interface DashboardProps {
 
 export const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
   const { data: insightsData, isLoading } = useInsights(repositories);
-  const { data: prData, isError: prError } = usePullRequests();
+  const { data: prData, isError: prError } = usePullRequests(undefined, repositories);
   const { data: contributorData } = useTopicContributions(10, repositories);
   const [showBots, setShowBots] = useState(false);
   const isMobile = useMediaQuery("(max-width:720px)");
