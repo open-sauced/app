@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.34.0-beta.1](https://github.com/open-sauced/insights/compare/v1.33.1-beta.1...v1.34.0-beta.1) (2023-03-08)
+
+
+### 🍕 Features
+
+* add custom tooltip to pr list icon ([#962](https://github.com/open-sauced/insights/issues/962)) ([44fa050](https://github.com/open-sauced/insights/commit/44fa05073614acd7cafc44a83d4a6a3fb82e6d2b)), closes [#955](https://github.com/open-sauced/insights/issues/955)
+
 ### [1.33.1-beta.1](https://github.com/open-sauced/insights/compare/v1.33.0...v1.33.1-beta.1) (2023-03-08)
 
 
