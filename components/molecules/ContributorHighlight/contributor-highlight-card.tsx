@@ -1,5 +1,5 @@
 import Title from "components/atoms/Typography/title";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { Textarea } from "components/atoms/Textarea/text-area";
 import Button from "components/atoms/Button/button";
@@ -53,6 +53,14 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
   const { user: loggedInUser } = useSupabaseAuth();
   const [open, setOpen] = useState(false);
 
+  useEffect( () => {
+    if(!open) {
+      setTimeout(() => {
+        document.body.setAttribute("style", "pointer-events:auto !important");
+      }, 1);
+    }
+  }, [open])
+
   const handleCopyToClipboard = async (content: string) => {
     const url = new URL(content).toString();
     try {
@@ -92,9 +100,6 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
           ToastTrigger({ message: "Highlights Updated Successfully", type: "success" });
           mutate(`users/${user}/highlights`);
           setOpen(false);
-          setTimeout(() => {
-            document.body.setAttribute("style", "pointer-events:auto !important");
-          }, 1);
         } else {
           setLoading(false);
           setError("An error occurred while updating!!!");
