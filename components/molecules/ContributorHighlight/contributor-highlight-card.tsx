@@ -1,5 +1,5 @@
 import Title from "components/atoms/Typography/title";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { Textarea } from "components/atoms/Textarea/text-area";
 import Button from "components/atoms/Button/button";
@@ -66,6 +66,7 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
   const [open, setOpen] = useState(false);
   const [alertOpen, setAlertOpen] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
+  const [host, setHost] = useState("");
 
   const handleCopyToClipboard = async (content: string) => {
     const url = new URL(content).toString();
@@ -137,6 +138,11 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
       ToastTrigger({ message: "An error occured!!!", type: "error" });
     }
   };
+  useEffect(() => {
+    if (window !== undefined) {
+      setHost(window.location.origin as string);
+    }
+  }, []);
 
   return (
     <article className="flex flex-col max-w-[40rem] flex-1 gap-3 lg:gap-6">

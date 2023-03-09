@@ -5,6 +5,88 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.34.0-beta.3](https://github.com/open-sauced/insights/compare/v1.34.0-beta.2...v1.34.0-beta.3) (2023-03-09)
+
+
+### 🍕 Features
+
+* implement highlight's permanent link ([#957](https://github.com/open-sauced/insights/issues/957)) ([78ad176](https://github.com/open-sauced/insights/commit/78ad176bfb8524332a4249485157f6e4a4a64de6)), closes [#895](https://github.com/open-sauced/insights/issues/895) [#950](https://github.com/open-sauced/insights/issues/950)
+
+## [1.34.0-beta.2](https://github.com/open-sauced/insights/compare/v1.34.0-beta.1...v1.34.0-beta.2) (2023-03-08)
+
+
+### 🐛 Bug Fixes
+
+* add Rust to interests options and combine utility function ([#977](https://github.com/open-sauced/insights/issues/977)) ([28a5270](https://github.com/open-sauced/insights/commit/28a5270fd9b8fe281ed9360c1e3e2a8903042c01)), closes [#976](https://github.com/open-sauced/insights/issues/976)
+
+## [1.34.0-beta.1](https://github.com/open-sauced/insights/compare/v1.33.1-beta.1...v1.34.0-beta.1) (2023-03-08)
+
+
+### 🍕 Features
+
+* add custom tooltip to pr list icon ([#962](https://github.com/open-sauced/insights/issues/962)) ([44fa050](https://github.com/open-sauced/insights/commit/44fa05073614acd7cafc44a83d4a6a3fb82e6d2b)), closes [#955](https://github.com/open-sauced/insights/issues/955)
+
+### [1.33.1-beta.1](https://github.com/open-sauced/insights/compare/v1.33.0...v1.33.1-beta.1) (2023-03-08)
+
+
+### 🐛 Bug Fixes
+
+* adds more placeholder ([#971](https://github.com/open-sauced/insights/issues/971)) ([bf5daa7](https://github.com/open-sauced/insights/commit/bf5daa7f4322d006c2026bdaba6d61d800211f9a))
+
+## [1.33.0](https://github.com/open-sauced/insights/compare/v1.32.0...v1.33.0) (2023-03-07)
+
+
+### 🐛 Bug Fixes
+
+*  broken css on button component ([#938](https://github.com/open-sauced/insights/issues/938)) ([6ba2365](https://github.com/open-sauced/insights/commit/6ba23655aa5b8e674d1be1579e1a1b868be8017a)), closes [#934](https://github.com/open-sauced/insights/issues/934) [#937](https://github.com/open-sauced/insights/issues/937)
+* Add highlights placeholder ([#945](https://github.com/open-sauced/insights/issues/945)) ([034d550](https://github.com/open-sauced/insights/commit/034d550c473e14aee9215b5c6495315a3369636a))
+* check for contributor commit data before updating graph ([#941](https://github.com/open-sauced/insights/issues/941)) ([58a74fe](https://github.com/open-sauced/insights/commit/58a74fe1f61d2e33001b19b314e0b6c65ce52816))
+* Highlights UX copy bandaid ([#944](https://github.com/open-sauced/insights/issues/944)) ([8a7d559](https://github.com/open-sauced/insights/commit/8a7d55980a29428e5de2b9b5b79b48758015c888))
+* keep initial user settings data after being fetched ([#959](https://github.com/open-sauced/insights/issues/959)) ([b869863](https://github.com/open-sauced/insights/commit/b8698630c9e086f45f4f8e5aafce7b58e81ca662)), closes [#931](https://github.com/open-sauced/insights/issues/931)
+
+
+### 🧑‍💻 Code Refactoring
+
+* update non-connected user avatar  ([#967](https://github.com/open-sauced/insights/issues/967)) ([51bf664](https://github.com/open-sauced/insights/commit/51bf664701ab8b4ed161960be5fc46865080521d)), closes [#964](https://github.com/open-sauced/insights/issues/964)
+
+
+### 🍕 Features
+
+* add repository search to the create insights page ([#958](https://github.com/open-sauced/insights/issues/958)) ([d6f151c](https://github.com/open-sauced/insights/commit/d6f151c02e634e093fb7e7ea1076f39517d08e1d)), closes [#932](https://github.com/open-sauced/insights/issues/932)
+* add reuseable error component to the design system ([#954](https://github.com/open-sauced/insights/issues/954)) ([56e986b](https://github.com/open-sauced/insights/commit/56e986b5e3275737cf5de51a9ae62d7c6c101789)), closes [#781](https://github.com/open-sauced/insights/issues/781) [#700](https://github.com/open-sauced/insights/issues/700)
+* expand list of topics and interests ([#939](https://github.com/open-sauced/insights/issues/939)) ([a607062](https://github.com/open-sauced/insights/commit/a607062ecacc627b2739def58c1872fb36e16bf3)), closes [#927](https://github.com/open-sauced/insights/issues/927) [#930](https://github.com/open-sauced/insights/issues/930)
+* make highlights avatar and handle clickable on feeds page ([#953](https://github.com/open-sauced/insights/issues/953)) ([fd59918](https://github.com/open-sauced/insights/commit/fd59918f4e97007c2b1fb725aa492f257205aa44)), closes [#940](https://github.com/open-sauced/insights/issues/940) [#935](https://github.com/open-sauced/insights/issues/935)
+* make the entire insight page buttons clickable ([#960](https://github.com/open-sauced/insights/issues/960)) ([7a7708f](https://github.com/open-sauced/insights/commit/7a7708fdc707b35f506af21a4e899fdbda2613ad)), closes [#701](https://github.com/open-sauced/insights/issues/701)
+* make user profile interest clickable ([#952](https://github.com/open-sauced/insights/issues/952)) ([370bc8a](https://github.com/open-sauced/insights/commit/370bc8a8206688b6d7a689f26b114032dafaf276)), closes [#942](https://github.com/open-sauced/insights/issues/942)
+
+## [1.33.0-beta.10](https://github.com/open-sauced/insights/compare/v1.33.0-beta.9...v1.33.0-beta.10) (2023-03-07)
+
+
+### 🍕 Features
+
+* add repository search to the create insights page ([#958](https://github.com/open-sauced/insights/issues/958)) ([d6f151c](https://github.com/open-sauced/insights/commit/d6f151c02e634e093fb7e7ea1076f39517d08e1d)), closes [#932](https://github.com/open-sauced/insights/issues/932)
+
+## [1.33.0-beta.9](https://github.com/open-sauced/insights/compare/v1.33.0-beta.8...v1.33.0-beta.9) (2023-03-07)
+
+
+### 🍕 Features
+
+* make the entire insight page buttons clickable ([#960](https://github.com/open-sauced/insights/issues/960)) ([7a7708f](https://github.com/open-sauced/insights/commit/7a7708fdc707b35f506af21a4e899fdbda2613ad)), closes [#701](https://github.com/open-sauced/insights/issues/701)
+
+## [1.33.0-beta.8](https://github.com/open-sauced/insights/compare/v1.33.0-beta.7...v1.33.0-beta.8) (2023-03-07)
+
+
+### 🧑‍💻 Code Refactoring
+
+* update non-connected user avatar  ([#967](https://github.com/open-sauced/insights/issues/967)) ([51bf664](https://github.com/open-sauced/insights/commit/51bf664701ab8b4ed161960be5fc46865080521d)), closes [#964](https://github.com/open-sauced/insights/issues/964)
+
+## [1.33.0-beta.7](https://github.com/open-sauced/insights/compare/v1.33.0-beta.6...v1.33.0-beta.7) (2023-03-07)
+
+
+### 🐛 Bug Fixes
+
+* keep initial user settings data after being fetched ([#959](https://github.com/open-sauced/insights/issues/959)) ([b869863](https://github.com/open-sauced/insights/commit/b8698630c9e086f45f4f8e5aafce7b58e81ca662)), closes [#931](https://github.com/open-sauced/insights/issues/931)
+
 ## [1.33.0-beta.6](https://github.com/open-sauced/insights/compare/v1.33.0-beta.5...v1.33.0-beta.6) (2023-03-06)
 
 
