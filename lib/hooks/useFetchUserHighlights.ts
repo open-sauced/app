@@ -13,7 +13,8 @@ const useFetchUserHighlights = (username: string) => {
   const pageQuery = page ? `page=${page}` : "";
   const limitQuery = limit ? `&limit=${limit}` : "";
   const { data, error } = useSWR<useFetchUserHighlightsResponse, Error>(
-    `users/${username}/highlights?${pageQuery}${limitQuery}`
+    `users/${username}/highlights?${pageQuery}${limitQuery}`,
+    publicApiFetcher as Fetcher<useFetchUserHighlightsResponse, Error>
   );
 
   return {
