@@ -52,6 +52,7 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
   const [loading, setLoading] = useState(false);
   const { user: loggedInUser } = useSupabaseAuth();
   const [open, setOpen] = useState(false);
+  const [host, setHost] = useState("");
 
   useEffect( () => {
     if(!open) {
@@ -110,6 +111,12 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
     }
   };
 
+  useEffect(() => {
+    if (window !== undefined) {
+      setHost(window.location.origin as string);
+    }
+  }, []);
+
   return (
     <article className="flex flex-col max-w-[40rem] flex-1 gap-3 lg:gap-6">
       <Dialog open={open}>
@@ -143,7 +150,7 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
                   <a
                     target="_blank"
                     rel="noreferrer"
-                    href={`https://twitter.com/intent/tweet?text=${twitterTweet}&url=https://insights.opensauced.pizza/user/${user}`}
+                    href={`https://twitter.com/intent/tweet?text=${twitterTweet}&url=${host}/feed/${id}`}
                     className="flex gap-2.5 py-1 items-center pl-3 pr-7"
                   >
                     <FiTwitter size={22} />
@@ -154,17 +161,14 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
                   <a
                     target="_blank"
                     rel="noreferrer"
-                    href={`https://www.linkedin.com/sharing/share-offsite/?url=https://insights.opensauced.pizza/user/${user}`}
+                    href={`https://www.linkedin.com/sharing/share-offsite/?url=${host}/feed/${id}`}
                     className="flex gap-2.5 py-1 items-center pl-3 pr-7"
                   >
                     <FiLinkedin size={22} />
                     <span>Share to Linkedin</span>
                   </a>
                 </DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={() => handleCopyToClipboard(`https://insights.opensauced.pizza/user/${user}`)}
-                  className="rounded-md"
-                >
+                <DropdownMenuItem onClick={() => handleCopyToClipboard(`${host}/feed/${id}`)} className="rounded-md">
                   <div className="flex gap-2.5 py-1 items-center pl-3 pr-7">
                     <BsLink45Deg size={22} />
                     <span>Copy link</span>
