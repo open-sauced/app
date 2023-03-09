@@ -17,7 +17,6 @@ import HighlightInputForm from "components/molecules/HighlightInput/highlight-in
 import HighlightsFilterCard from "components/molecules/HighlightsFeedCard/highlights-filter-card";
 import ProfileLayout from "layouts/profile";
 
-const baseUrl = process.env.NEXT_PUBLIC_API_URL;
 const Feeds = () => {
   const { user } = useSupabaseAuth();
   const router = useRouter();
