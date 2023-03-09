@@ -54,6 +54,14 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
   const [open, setOpen] = useState(false);
   const [host, setHost] = useState("");
 
+  useEffect( () => {
+    if(!open) {
+      setTimeout(() => {
+        document.body.setAttribute("style", "pointer-events:auto !important");
+      }, 1);
+    }
+  }, [open]);
+
   const handleCopyToClipboard = async (content: string) => {
     const url = new URL(content).toString();
     try {
@@ -93,9 +101,6 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
           ToastTrigger({ message: "Highlights Updated Successfully", type: "success" });
           mutate(`users/${user}/highlights`);
           setOpen(false);
-          setTimeout(() => {
-            document.body.setAttribute("style", "pointer-events:auto !important");
-          }, 1);
         } else {
           setLoading(false);
           setError("An error occurred while updating!!!");
