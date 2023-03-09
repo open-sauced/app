@@ -59,7 +59,7 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
         document.body.setAttribute("style", "pointer-events:auto !important");
       }, 1);
     }
-  }, [open])
+  }, [open]);
 
   const handleCopyToClipboard = async (content: string) => {
     const url = new URL(content).toString();
