@@ -56,7 +56,7 @@ const Feeds = () => {
     <div className="container  mx-auto px-2 md:px-16 gap-12 lg:justify-end pt-12 flex flex-col md:flex-row">
       {singleHighlight && (
         <Dialog open={true}>
-          <DialogContent className=" sm:max-w-[80%] md:w-max sm:max-h-[100vh] ">
+          <DialogContent className=" sm:max-w-[80%] w-full  sm:max-h-[100vh] ">
             <div className="mt-10 flex gap-8 flex-col  mx-auto">
               <div className="flex flex-col gap-6 px-3 ">
                 <div className="flex gap-3 items-center  ">

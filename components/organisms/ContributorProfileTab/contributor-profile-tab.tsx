@@ -15,6 +15,7 @@ import { useFetchUserHighlights } from "lib/hooks/useFetchUserHighlights";
 import Button from "components/atoms/Button/button";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import uppercaseFirst from "lib/utils/uppercase-first";
+import Link from "next/link";
 
 interface ContributorProfileTabProps {
   contributor?: DbUser;
@@ -114,7 +115,9 @@ const ContributorProfileTab = ({
                 // eslint-disable-next-line camelcase
                 highlights.map(({ id, title, highlight, url, created_at }) => (
                   <div className="flex gap-2 flex-col lg:flex-row lg:gap-7" key={id}>
-                    <p className="text-light-slate-10 text-sm">{getFormattedDate(created_at)}</p>
+                    <Link href={`/feed/${id}`}>
+                      <p className="text-light-slate-10 text-sm">{getFormattedDate(created_at)}</p>
+                    </Link>
                     <ContributorHighlightCard id={id} user={login || ""} title={title} desc={highlight} prLink={url} />
                   </div>
                 ))
