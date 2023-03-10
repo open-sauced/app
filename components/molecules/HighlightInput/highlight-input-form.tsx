@@ -111,7 +111,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
         }
       }
     } else {
-      ToastTrigger({ message: "Please provide a valid pull request link!!!", type: "error" });
+      ToastTrigger({ message: "Please provide a valid pull request link!", type: "error" });
     }
   };
 
