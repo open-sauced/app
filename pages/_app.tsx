@@ -87,6 +87,7 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
         <link rel="icon" href="/favicon.ico" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         {/* Start of opensauced Zendesk Widget script */}
+        {/* eslint-disable-next-line */}
         <script id="ze-snippet" src="https://static.zdassets.com/ekr/snippet.js?key=765edcc9-b888-4651-8b22-79e4365e06f1"> </script>
         {/* End of opensauced Zendesk Widget script */}
       </Head>
