@@ -52,12 +52,11 @@ const ContributorProfileInfo = ({
 
           {isConnected && (
             <>
-
               {displayLocalTime && (
                 <span className="flex text-light-slate-10 gap-2 items-center">
-                 <Tooltip content="Time zone">
-                  <FiClock className="text-light-slate-9" />
-                </Tooltip>
+                  <Tooltip content="Time zone">
+                    <FiClock className="text-light-slate-9" />
+                  </Tooltip>
                   {timezone ? `UTC${getTimezone(timezone)}` : "UTC+1"}
                 </span>
               )}
