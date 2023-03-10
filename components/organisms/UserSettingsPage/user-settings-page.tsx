@@ -54,6 +54,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
         setUserInfo(response);
         formRef.current!.nameInput.value = response.name;
         setEmail(response.email);
+        setDisplayLocalTime(response.displayLocalTime);
         formRef.current!.bio.value = response.bio;
         formRef.current!.url.value = response.url;
         formRef.current!.twitter_username.value = response.twitter_username;
@@ -154,7 +155,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
   };
 
   return (
-    <div>
+    <div className="container mx-auto  md:px-16">
       <div className="flex flex-col md:flex-row md:gap-48 gap-4 text-sm text-light-slate-11">
         <div>
           <Title className="!text-2xl !text-light-slate-11" level={2}>
@@ -237,6 +238,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
                 Other users will see the time difference from their local time.
               </span>
             </div>
+
             <div className="flex flex-col gap-2">
               <label>Time zone*</label>
               <Select value={timezone} onChange={(e) => setTimezone(e.target.value)} required>
