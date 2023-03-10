@@ -110,6 +110,8 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
           ToastTrigger({ message: "An error occured!!!", type: "error" });
         }
       }
+    } else {
+      ToastTrigger({ message: "Please provide a valid pull request link!!!", type: "error" });
     }
   };
 
@@ -139,8 +141,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
           value={bodyText}
           placeholder={`Share your thoughts and link to it.
 
-https://github.com/open-sauced/insights/pull/913`
-          }
+https://github.com/open-sauced/insights/pull/913`}
           onChange={(e) => {
             handleTextAreaInputChange(e);
             setCharCount(e.target.value.length);
