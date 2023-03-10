@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import clsx from "clsx";
 
 import Button from "components/atoms/Button/button";
 import InsightRow from "components/molecules/InsightRow/insight-row";
@@ -73,7 +74,9 @@ const InsightsHub: WithPageLayout = () => {
         Create a new Insight Page
       </Link>
 
-      <div className="py-1 md:py-4 flex w-full md:mt-5 justify-between items-center">
+      <div className={clsx("py-1 md:py-4 flex w-full md:mt-5 justify-between items-center", {
+        "hidden": insightsMeta.itemCount <= insightsMeta.limit
+      })}>
         <PaginationResults
           from={page === 1 ? (insightsMeta.itemCount > 0 ? page : 0) : (page - 1) * insightsMeta.limit + 1}
           to={page * insightsMeta.limit <= insightsMeta.itemCount ? page * insightsMeta.limit : insightsMeta.itemCount}
