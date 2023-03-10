@@ -6,6 +6,7 @@ import { BsFileDiff } from "react-icons/bs";
 import { FaRegCheckCircle, FaRegDotCircle } from "react-icons/fa";
 
 import Text from "components/atoms/Typography/text";
+import Tooltip from "components/atoms/Tooltip/tooltip";
 
 interface LatestPrTableHeaderProps {
   classNames?: string;
@@ -20,22 +21,30 @@ const LatestPrTableHeader = ({ classNames, isHoverCard }: LatestPrTableHeaderPro
       </div>
       <IconContext.Provider value={{ color: "gray", style: { width: 14, height: 14 } }}>
         <div className={`${isHoverCard && "ml-auto"} justify-end w-[calc(10%-4px)]`}>
-          <FaRegDotCircle title="When Pull Request was created" />
+          <Tooltip content="Last Commit Date">
+            <FaRegDotCircle />
+          </Tooltip>
         </div>
       </IconContext.Provider>
       <IconContext.Provider value={{ color: "gray", style: { width: 14, height: 14 } }}>
         <div className={`${isHoverCard ? "hidden" : "flex"} justify-end w-[calc(10%-4px)]`}>
-          <FaRegCheckCircle title="When Pull Request was merged" />
+          <Tooltip content="Date Approved">
+            <FaRegCheckCircle />
+          </Tooltip>
         </div>
       </IconContext.Provider>
       <IconContext.Provider value={{ color: "gray", style: { width: 14, height: 14, strokeWidth: 0.3 } }}>
         <div className={`${isHoverCard ? "hidden" : "flex"} justify-end w-[calc(10%-4px)]`}>
-          <GoDiff title="Files changed in Pull Request" />
+          <Tooltip content="Files Touched">
+            <GoDiff />
+          </Tooltip>
         </div>
       </IconContext.Provider>
       <IconContext.Provider value={{ color: "gray", style: { width: 14, height: 14, strokeWidth: 0.5 } }}>
         <div className={`${isHoverCard ? "hidden" : "flex"} justify-end w-[calc(10%-4px)]`}>
-          <BsFileDiff title="Lines changed in Pull Request" />
+          <Tooltip content="Lines Touched">
+            <BsFileDiff />
+          </Tooltip>
         </div>
       </IconContext.Provider>
     </div>
