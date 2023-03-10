@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.34.0-beta.6](https://github.com/open-sauced/insights/compare/v1.34.0-beta.5...v1.34.0-beta.6) (2023-03-10)
+
+
+### 🍕 Features
+
+* add delete highlight implementation ([#963](https://github.com/open-sauced/insights/issues/963)) ([10575f1](https://github.com/open-sauced/insights/commit/10575f14cf5dd14dde143e0b4ae08f09462ddc01)), closes [#906](https://github.com/open-sauced/insights/issues/906)
+
 ## [1.34.0-beta.5](https://github.com/open-sauced/insights/compare/v1.34.0-beta.4...v1.34.0-beta.5) (2023-03-10)
 
 
