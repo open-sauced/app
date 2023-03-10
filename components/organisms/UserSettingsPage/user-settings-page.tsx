@@ -52,6 +52,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
         setUserInfo(response);
         formRef.current!.nameInput.value = response.name;
         setEmail(response.email);
+        setDisplayLocalTime(response.displayLocalTime);
         formRef.current!.bio.value = response.bio;
         formRef.current!.url.value = response.url;
         formRef.current!.twitter_username.value = response.twitter_username;
@@ -224,6 +225,17 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
               label="Location"
               name="location"
             />
+            <div>
+              <Checkbox
+                checked={displayLocalTime}
+                title="profile email"
+                label="Display current local time on profile"
+                onChange={(e) => setDisplayLocalTime(e.target.checked)}
+              />
+              <span className="ml-7 text-light-slate-9 text-sm font-normal">
+                Other users will see the time difference from their local time.
+              </span>
+            </div>
 
             <div className="flex flex-col gap-2">
               <label>Time zone*</label>
