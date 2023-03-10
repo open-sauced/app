@@ -5,6 +5,31 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.34.0](https://github.com/open-sauced/insights/compare/v1.33.0...v1.34.0) (2023-03-10)
+
+
+### 🍕 Features
+
+* add custom tooltip to pr list icon ([#962](https://github.com/open-sauced/insights/issues/962)) ([44fa050](https://github.com/open-sauced/insights/commit/44fa05073614acd7cafc44a83d4a6a3fb82e6d2b)), closes [#955](https://github.com/open-sauced/insights/issues/955)
+* add delete highlight implementation ([#963](https://github.com/open-sauced/insights/issues/963)) ([10575f1](https://github.com/open-sauced/insights/commit/10575f14cf5dd14dde143e0b4ae08f09462ddc01)), closes [#906](https://github.com/open-sauced/insights/issues/906)
+* implement highlight's permanent link ([#957](https://github.com/open-sauced/insights/issues/957)) ([78ad176](https://github.com/open-sauced/insights/commit/78ad176bfb8524332a4249485157f6e4a4a64de6)), closes [#895](https://github.com/open-sauced/insights/issues/895) [#950](https://github.com/open-sauced/insights/issues/950)
+* remove the repo click to filter feature & link to github ([#989](https://github.com/open-sauced/insights/issues/989)) ([6f62b46](https://github.com/open-sauced/insights/commit/6f62b46af06271859a1b2012dd730af8ad176d4e)), closes [#983](https://github.com/open-sauced/insights/issues/983)
+
+
+### 🧑‍💻 Code Refactoring
+
+* add invalid pull url feedback ([#992](https://github.com/open-sauced/insights/issues/992)) ([28fe15c](https://github.com/open-sauced/insights/commit/28fe15c76980ffb1a1982cf45e074ac61ac83a4f)), closes [#961](https://github.com/open-sauced/insights/issues/961)
+
+
+### 🐛 Bug Fixes
+
+* add Rust to interests options and combine utility function ([#977](https://github.com/open-sauced/insights/issues/977)) ([28a5270](https://github.com/open-sauced/insights/commit/28a5270fd9b8fe281ed9360c1e3e2a8903042c01)), closes [#976](https://github.com/open-sauced/insights/issues/976)
+* add skeleton wrapper atom to storybook ([#990](https://github.com/open-sauced/insights/issues/990)) ([780d345](https://github.com/open-sauced/insights/commit/780d3453ed1e3100a8e74e3318bcd51fbd53d774))
+* adds more placeholder ([#971](https://github.com/open-sauced/insights/issues/971)) ([bf5daa7](https://github.com/open-sauced/insights/commit/bf5daa7f4322d006c2026bdaba6d61d800211f9a))
+* adjust input body overlap when editing a highlight ([#991](https://github.com/open-sauced/insights/issues/991)) ([1512f7d](https://github.com/open-sauced/insights/commit/1512f7d4b7ebcfb5cdaaef8a683e50e6d12b8fcd))
+* fix pointer-events when closing edit dialog ([#987](https://github.com/open-sauced/insights/issues/987)) ([df6eb2b](https://github.com/open-sauced/insights/commit/df6eb2b1a605be1048fb049a16786169e73de709))
+* update local time option from user settings ([#951](https://github.com/open-sauced/insights/issues/951)) ([c91a513](https://github.com/open-sauced/insights/commit/c91a51365bbde9bddfd889b952d9bd35d0a3cf43))
+
 ## [1.34.0-beta.9](https://github.com/open-sauced/insights/compare/v1.34.0-beta.8...v1.34.0-beta.9) (2023-03-10)
 
 
