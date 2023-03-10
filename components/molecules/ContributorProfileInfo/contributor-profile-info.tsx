@@ -52,12 +52,14 @@ const ContributorProfileInfo = ({
 
           {isConnected && (
             <>
-              <span className="flex text-light-slate-10 gap-2 items-center">
-                <Tooltip content="Time zone">
-                  <FiClock className="text-light-slate-9" />
-                </Tooltip>
-                {timezone ? `UTC${getTimezone(timezone)}` : "UTC+1"}
-              </span>
+              {displayLocalTime && (
+                <span className="flex text-light-slate-10 gap-2 items-center">
+                  <Tooltip content="Time zone">
+                    <FiClock className="text-light-slate-9" />
+                  </Tooltip>
+                  {timezone ? `UTC${getTimezone(timezone)}` : "UTC+1"}
+                </span>
+              )}
               <span className="flex text-light-slate-10 gap-2 items-center">
                 <Tooltip content="First commit date">
                   <AiOutlineGift className="text-light-slate-9" />
