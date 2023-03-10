@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.34.0-beta.9](https://github.com/open-sauced/insights/compare/v1.34.0-beta.8...v1.34.0-beta.9) (2023-03-10)
+
+
+### 🐛 Bug Fixes
+
+* update local time option from user settings ([#951](https://github.com/open-sauced/insights/issues/951)) ([c91a513](https://github.com/open-sauced/insights/commit/c91a51365bbde9bddfd889b952d9bd35d0a3cf43))
+
 ## [1.34.0-beta.8](https://github.com/open-sauced/insights/compare/v1.34.0-beta.7...v1.34.0-beta.8) (2023-03-10)
 
 
