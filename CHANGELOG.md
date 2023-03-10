@@ -5,6 +5,18 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.34.0-beta.5](https://github.com/open-sauced/insights/compare/v1.34.0-beta.4...v1.34.0-beta.5) (2023-03-10)
+
+
+### 🐛 Bug Fixes
+
+* add skeleton wrapper atom to storybook ([#990](https://github.com/open-sauced/insights/issues/990)) ([780d345](https://github.com/open-sauced/insights/commit/780d3453ed1e3100a8e74e3318bcd51fbd53d774))
+
+
+### 🍕 Features
+
+* remove the repo click to filter feature & link to github ([#989](https://github.com/open-sauced/insights/issues/989)) ([6f62b46](https://github.com/open-sauced/insights/commit/6f62b46af06271859a1b2012dd730af8ad176d4e)), closes [#983](https://github.com/open-sauced/insights/issues/983)
+
 ## [1.34.0-beta.4](https://github.com/open-sauced/insights/compare/v1.34.0-beta.3...v1.34.0-beta.4) (2023-03-09)
 
 
