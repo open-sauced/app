@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.34.0-beta.8](https://github.com/open-sauced/insights/compare/v1.34.0-beta.7...v1.34.0-beta.8) (2023-03-10)
+
+
+### 🐛 Bug Fixes
+
+* adjust input body overlap when editing a highlight ([#991](https://github.com/open-sauced/insights/issues/991)) ([1512f7d](https://github.com/open-sauced/insights/commit/1512f7d4b7ebcfb5cdaaef8a683e50e6d12b8fcd))
+
 ## [1.34.0-beta.7](https://github.com/open-sauced/insights/compare/v1.34.0-beta.6...v1.34.0-beta.7) (2023-03-10)
 
 
