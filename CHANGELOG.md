@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.34.0-beta.7](https://github.com/open-sauced/insights/compare/v1.34.0-beta.6...v1.34.0-beta.7) (2023-03-10)
+
+
+### 🧑‍💻 Code Refactoring
+
+* add invalid pull url feedback ([#992](https://github.com/open-sauced/insights/issues/992)) ([28fe15c](https://github.com/open-sauced/insights/commit/28fe15c76980ffb1a1982cf45e074ac61ac83a4f)), closes [#961](https://github.com/open-sauced/insights/issues/961)
+
 ## [1.34.0-beta.6](https://github.com/open-sauced/insights/compare/v1.34.0-beta.5...v1.34.0-beta.6) (2023-03-10)
 
 
