@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.34.0-beta.4](https://github.com/open-sauced/insights/compare/v1.34.0-beta.3...v1.34.0-beta.4) (2023-03-09)
+
+
+### 🐛 Bug Fixes
+
+* fix pointer-events when closing edit dialog ([#987](https://github.com/open-sauced/insights/issues/987)) ([df6eb2b](https://github.com/open-sauced/insights/commit/df6eb2b1a605be1048fb049a16786169e73de709))
+
 ## [1.34.0-beta.3](https://github.com/open-sauced/insights/compare/v1.34.0-beta.2...v1.34.0-beta.3) (2023-03-09)
 
 
