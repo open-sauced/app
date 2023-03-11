@@ -19,7 +19,7 @@ import { initiateAnalytics } from "lib/utils/analytics";
 import { supabase } from "lib/utils/supabase";
 import { Toaster } from "react-hot-toast";
 import SEO from "layouts/SEO/SEO";
-import Script from 'next/script';
+import Script from "next/script";
 
 type ComponentWithPageLayout = AppProps & {
   Component: AppProps["Component"] & {
