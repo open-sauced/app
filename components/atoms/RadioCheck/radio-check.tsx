@@ -15,7 +15,7 @@ const RadioCheck = ({ className, id, children, value, checked = false, onClick }
     <div
       onClick={onClick}
       className={
-        `px-2 py-1.5 text-sm text-slate-600   group  rounded-md  hover:bg-light-orange-3 hover:text-light-orange-9 hover:text-slate-800 focus:outline-none focus-visible:border-orange-500 focus-visible:ring focus-visible:ring-orange-200 transition` +
+        `px-2 py-1.5 text-sm text-black group  rounded-md  hover:bg-light-orange-3 hover:text-light-orange-9 hover:text-slate-800 focus:outline-none focus-visible:border-orange-500 focus-visible:ring focus-visible:ring-orange-200 transition` +
         `${className}`
       }
     >
