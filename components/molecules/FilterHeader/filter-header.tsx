@@ -12,6 +12,7 @@ import topicNameFormatting from "lib/utils/topic-name-formatting";
 import FilterCardSelect from "components/molecules/FilterCardSelect/filter-card-select";
 import useTopicOptions from "lib/utils/getTopicOptions";
 import getTopicThumbnail from "lib/utils/getTopicThumbnail";
+import { interestsType } from "lib/utils/getInterestOptions";
 
 const HeaderFilter = () => {
   const router = useRouter();
@@ -36,7 +37,7 @@ const HeaderFilter = () => {
   return (
     <>
       <div className="header-image mr-2 p-2 min-w-[130px] ">
-        <ContextThumbnail size={120} ContextThumbnailURL={getTopicThumbnail(filterName as string)}></ContextThumbnail>
+        <ContextThumbnail size={120} ContextThumbnailURL={getTopicThumbnail(filterName as interestsType)}></ContextThumbnail>
       </div>
       <div className="header-info md:truncate flex flex-col grow justify-center p-2">
         <Title level={1} className="!text-3xl font-semibold tracking-tight text-slate-900">
