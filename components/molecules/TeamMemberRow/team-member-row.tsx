@@ -1,6 +1,6 @@
-import clsx from "clsx";
 import Avatar from "components/atoms/Avatar/avatar";
 import { AiOutlineCaretDown } from "react-icons/ai";
+import pendingImg from "img/icons/fallback-image-disabled-square.svg";
 
 interface TeamMemberRowProps {
   className?: string;
@@ -11,6 +11,8 @@ interface TeamMemberRowProps {
 
 const TeamMemberRow  = ({ className, name, avatarUrl, role }: TeamMemberRowProps) => {
 
+  const pending = role == "pending";
+
   const mapRoleToText: Record<TeamMemberRowProps["role"], string> = {
     admin: "Admin",
     editor: "can edit",
@@ -19,14 +21,14 @@ const TeamMemberRow  = ({ className, name, avatarUrl, role }: TeamMemberRowProps
   };
 
   return(
-    <div className={`flex justify-between items-center ${className && className} ${role == "pending" && "text-light-slate-10"}`}>
+    <div className={`flex justify-between items-center ${className && className} ${pending && "text-light-slate-10"}`}>
       <div className="flex items-center">
-        <Avatar size={40} isCircle avatarURL={avatarUrl} />
+        <Avatar size={40} isCircle avatarURL={pending ? pendingImg : avatarUrl} />
         <p className="ml-3">{name}</p>
       </div>
       <div>
         <div className="flex items-center gap-3">
-          {mapRoleToText[role]} {role != "pending" && <AiOutlineCaretDown />}
+          {mapRoleToText[role]} {!pending && <AiOutlineCaretDown />}
         </div>
       </div>
     </div>
