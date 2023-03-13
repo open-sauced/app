@@ -164,12 +164,7 @@ const Feeds = () => {
           {meta.pageCount > 1 && (
             <div className="mt-10 max-w-[48rem] flex px-2 items-center justify-between">
               <div>
-                <PaginationResults
-                  from={meta.page === 1 ? (meta.itemCount > 0 ? meta.page : 0) : (meta.page - 1) * meta.limit + 1}
-                  to={meta.page * meta.limit <= meta.itemCount ? meta.page * meta.limit : meta.itemCount}
-                  total={meta.itemCount}
-                  entity={"repos"}
-                />
+                <PaginationResults metaInfo={meta} total={meta.itemCount} entity={"highlights"} />
               </div>
               <Pagination
                 pages={[]}

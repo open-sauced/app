@@ -88,12 +88,8 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
       <TableHeader
         updateLimit={setLimit}
         onSearch={(e) => handleOnSearch(e)}
-        showing={{
-          from: page === 1 ? (repoMeta.itemCount > 0 ? page : 0) : (page - 1) * repoMeta.limit + 1,
-          to: page * repoMeta.limit <= repoMeta.itemCount ? page * repoMeta.limit : repoMeta.itemCount,
-          total: repoMeta.itemCount,
-          entity: "Repositories"
-        }}
+        metaInfo={repoMeta}
+        entity="repos"
         range={range}
         setRangeFilter={store.updateRange}
         title="Repositories"
@@ -182,12 +178,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
             <div className="py-1 md:py-4 flex w-full md:mt-5 justify-between items-center">
               <div>
                 <div className="">
-                  <PaginationResults
-                    from={page === 1 ? (repoMeta.itemCount > 0 ? page : 0) : (page - 1) * repoMeta.limit + 1}
-                    to={page * repoMeta.limit <= repoMeta.itemCount ? page * repoMeta.limit : repoMeta.itemCount}
-                    total={repoMeta.itemCount}
-                    entity={"repos"}
-                  />
+                  <PaginationResults metaInfo={repoMeta} total={repoMeta.itemCount} entity={"repos"} />
                 </div>
               </div>
               <div>
