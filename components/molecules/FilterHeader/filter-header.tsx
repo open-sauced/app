@@ -49,7 +49,7 @@ const HeaderFilter = () => {
         <div className="flex mt-4 items-center gap-2">
           <FilterCardSelect
             selected={filterName as string}
-            options={topicOptions}
+            options={topicOptions as unknown as []}
             icon="topic"
             handleFilterClick={topicRouting}
           />
