@@ -4,4 +4,3 @@ export type interestsType = typeof interests[number];
 export const getInterestOptions = () => {
   return interests;
 };
-
