@@ -75,7 +75,7 @@ const ContributorProfilePage = ({
   const { chart } = useTopicContributorCommits(githubName, "*", repositories);
   const prsMergedPercentage = getPercent(prTotal, prMerged || 0);
   const isLoaded = !loading && !error;
-
+  console.log(languageList);
   // eslint-disable-next-line camelcase
   const {
     bio,
