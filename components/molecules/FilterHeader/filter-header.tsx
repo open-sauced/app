@@ -10,7 +10,6 @@ import { captureAnayltics } from "lib/utils/analytics";
 import useFilterPrefetch from "lib/hooks/useFilterPrefetch";
 import topicNameFormatting from "lib/utils/topic-name-formatting";
 import FilterCardSelect from "components/molecules/FilterCardSelect/filter-card-select";
-import useTopicOptions from "lib/utils/getTopicOptions";
 import getTopicThumbnail from "lib/utils/getTopicThumbnail";
 import { interestsType } from "lib/utils/getInterestOptions";
 import { getInterestOptions } from "lib/utils/getInterestOptions";
