@@ -68,8 +68,8 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [host, setHost] = useState("");
 
-  useEffect( () => {
-    if(!open) {
+  useEffect(() => {
+    if (!open) {
       setTimeout(() => {
         document.body.setAttribute("style", "pointer-events:auto !important");
       }, 1);

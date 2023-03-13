@@ -14,11 +14,26 @@ import CppIcon from "/img/icons/🤓.svg";
 import TypeScriptIcon from "/img/icons/🔥.svg";
 import RubyIcon from "/img/icons/🌹.svg";
 import JavaIcon from "/img/icons/☕️.svg";
+import GolangIcon from "/img/icons/⛳️.svg";
 import topicNameFormatting from "lib/utils/topic-name-formatting";
 
-
 interface LanguagePillProps {
-  topic: "react" | "javascript" | "python" | "ML" | "AI" | "rust" | "ruby" | "c" | "cpp" | "csharp" | "php" | "java" | "typescript" | string;
+  topic:
+    | "react"
+    | "javascript"
+    | "python"
+    | "ML"
+    | "AI"
+    | "rust"
+    | "ruby"
+    | "c"
+    | "cpp"
+    | "csharp"
+    | "php"
+    | "java"
+    | "typescript"
+    | "golang"
+    | string;
   classNames?: string;
   onClick?: () => void;
 }
@@ -37,7 +52,8 @@ const LanguagePill = ({ topic, classNames, onClick }: LanguagePillProps) => {
       php: PhpIcon,
       c: CIcon,
       ruby: RubyIcon,
-      java: JavaIcon
+      java: JavaIcon,
+      golang: GolangIcon
     };
 
     return iconMap[name] || "";
