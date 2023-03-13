@@ -12,25 +12,25 @@ import ml from "../../img/topicThumbnails/ml.svg";
 import react from "../../img/topicThumbnails/react.svg";
 import contextThumbnailImage from "../../img/open-sourced-with-bg-icon.png";
 
-const topicThumbnails = {
+import { interestsType } from "./getInterestOptions";
+
+const topicThumbnails: Record<interestsType, string> = {
   javascript: javaScript,
   python: python,
-  typescript: typeScript,
   java: java,
+  typescript: typeScript,
   csharp: cSharp,
   cpp: cpp,
   php: php,
   c: c,
   ruby: ruby,
   ai: ai,
-  ml: ml,
-  react: react
+  react: react,
+  ml: ml
 };
 
-type ObjectKey = keyof typeof topicThumbnails;
-
-const getTopicThumbnail = (topic: string) => {
-  return topicThumbnails[topic as ObjectKey] || contextThumbnailImage;
+const getTopicThumbnail = (topic: keyof typeof topicThumbnails) => {
+  return topicThumbnails[topic] || contextThumbnailImage;
 };
 
 export default getTopicThumbnail;
