@@ -16,12 +16,6 @@ interface TableRepositoryNameProps {
 }
 
 const TableRepositoryName = ({ avatarURL, name, handle, topic, user }: TableRepositoryNameProps): JSX.Element => {
-  const router = useRouter();
-
-  let filterLink = `/${user ? `pages/${user}/` : ""}${topic}/repositories/filter/${handle}/${name}`;
-  if (router.asPath === filterLink) {
-    filterLink = `/${user ? `pages/${user}/` : ""}${topic}/repositories/filter/recent`;
-  }
 
   return (
     <div className="flex items-center gap-2.5">
@@ -39,14 +33,14 @@ const TableRepositoryName = ({ avatarURL, name, handle, topic, user }: TableRepo
       {/* Text */}
       <div className="flex flex-col justify-center">
         <div title={name} className="  text-base text-light-slate-12 tracking-tight">
-          <Link href={filterLink}>
+          <a href={`https://www.github.com/${handle}/${name}`} target="_blank" rel="noreferrer">
             {name && name.length > 10 ? truncateString(name, 12) : name}
-          </Link>
+          </a>
         </div>
         <div className="  text-sm text-light-slate-11 truncate max-w-[85px] md:max-w-[110px]">
-          <Link href={filterLink}>
+          <a href={`https://www.github.com/${handle}`} target="_blank" rel="noreferrer">
             {handle ? `@${handle}` : "handle1234"}
-          </Link>
+          </a>
         </div>
       </div>
     </div>

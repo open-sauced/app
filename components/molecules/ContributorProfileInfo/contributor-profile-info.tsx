@@ -10,6 +10,7 @@ import Title from "components/atoms/Typography/title";
 import Badge from "components/atoms/Badge/badge";
 import { getTimeByTimezone, getTimezone } from "lib/utils/timezones";
 import clsx from "clsx";
+import Tooltip from "components/atoms/Tooltip/tooltip";
 
 interface ContributorProfileInfoProps {
   githubName: string;
@@ -51,12 +52,18 @@ const ContributorProfileInfo = ({
 
           {isConnected && (
             <>
+              {displayLocalTime && (
+                <span className="flex text-light-slate-10 gap-2 items-center">
+                  <Tooltip content="Time zone">
+                    <FiClock className="text-light-slate-9" />
+                  </Tooltip>
+                  {timezone ? `UTC${getTimezone(timezone)}` : "UTC+1"}
+                </span>
+              )}
               <span className="flex text-light-slate-10 gap-2 items-center">
-                <FiClock className="text-light-slate-9" />
-                {timezone ? `UTC${getTimezone(timezone)}` : "UTC+1"}
-              </span>
-              <span className="flex text-light-slate-10 gap-2 items-center">
-                <AiOutlineGift className="text-light-slate-9" />
+                <Tooltip content="First commit date">
+                  <AiOutlineGift className="text-light-slate-9" />
+                </Tooltip>
                 June 2022
               </span>
             </>

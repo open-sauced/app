@@ -13,7 +13,7 @@ const useFetchHighlightRepos = () => {
   const pageQuery = page ? `page=${page}` : "";
   const limitQuery = limit ? `&limit=${limit}` : "";
 
-  const { data, error } = useSWR<useFetchUserHighlightsResponse, Error>(
+  const { data, error, mutate } = useSWR<useFetchUserHighlightsResponse, Error>(
     `highlights/repos/list?${pageQuery}${limitQuery}`,
     publicApiFetcher as Fetcher<useFetchUserHighlightsResponse, Error>
   );
@@ -23,7 +23,8 @@ const useFetchHighlightRepos = () => {
     meta: data?.meta ?? { itemCount: 0, limit: 0, page: 0, hasNextPage: false, hasPreviousPage: false, pageCount: 0 },
     isLoading: !error && !data,
     isError: !!error,
-    setPage
+    setPage,
+    mutate
   };
 };
 

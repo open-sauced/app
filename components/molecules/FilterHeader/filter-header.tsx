@@ -13,11 +13,12 @@ import FilterCardSelect from "components/molecules/FilterCardSelect/filter-card-
 import useTopicOptions from "lib/utils/getTopicOptions";
 import getTopicThumbnail from "lib/utils/getTopicThumbnail";
 import { interestsType } from "lib/utils/getInterestOptions";
+import { getInterestOptions } from "lib/utils/getInterestOptions";
 
 const HeaderFilter = () => {
   const router = useRouter();
   const filterOptions = useFilterOptions();
-  const topicOptions = useTopicOptions();
+  const topicOptions = getInterestOptions();
 
   const { filterValues } = useFilterPrefetch();
   const { filterName, toolName, selectedFilter } = router.query;
