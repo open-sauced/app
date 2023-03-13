@@ -15,6 +15,7 @@ import { useFetchUserHighlights } from "lib/hooks/useFetchUserHighlights";
 import Button from "components/atoms/Button/button";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import uppercaseFirst from "lib/utils/uppercase-first";
+import Link from "next/link";
 
 interface ContributorProfileTabProps {
   contributor?: DbUser;
@@ -44,7 +45,7 @@ const ContributorProfileTab = ({
   const { login } = contributor || {};
   const { user } = useSupabaseAuth();
 
-  const { data: highlights, isError, isLoading } = useFetchUserHighlights(login || "");
+  const { data: highlights, isError, isLoading, mutate } = useFetchUserHighlights(login || "");
   const [inputVisible, setInputVisible] = useState(false);
   const pathnameRef = useRef<string | null>();
 
@@ -53,9 +54,8 @@ const ContributorProfileTab = ({
   const hasHighlights = highlights?.length > 0;
   pathnameRef.current = router.pathname.split("/").at(-1);
 
-  const currentPathname = pathnameRef.current !== "[username]"
-    ? pathnameRef.current
-    : hasHighlights ? "highlights" : "contributions";
+  const currentPathname =
+    pathnameRef.current !== "[username]" ? pathnameRef.current : hasHighlights ? "highlights" : "contributions";
 
   const handleTabUrl = (tab: string) => {
     router.push(`/user/${login}/${tab.toLowerCase()}`);
@@ -100,7 +100,7 @@ const ContributorProfileTab = ({
               />
             </div>
 
-            <HighlightInputForm />
+            <HighlightInputForm refreshCallback={mutate} />
           </div>
         )}
         <div className="mt-8 flex flex-col gap-8">
@@ -115,7 +115,9 @@ const ContributorProfileTab = ({
                 // eslint-disable-next-line camelcase
                 highlights.map(({ id, title, highlight, url, created_at }) => (
                   <div className="flex gap-2 flex-col lg:flex-row lg:gap-7" key={id}>
-                    <p className="text-light-slate-10 text-sm">{getFormattedDate(created_at)}</p>
+                    <Link href={`/feed/${id}`}>
+                      <p className="text-light-slate-10 text-sm">{getFormattedDate(created_at)}</p>
+                    </Link>
                     <ContributorHighlightCard id={id} user={login || ""} title={title} desc={highlight} prLink={url} />
                   </div>
                 ))

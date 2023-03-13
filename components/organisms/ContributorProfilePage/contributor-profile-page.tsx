@@ -97,7 +97,7 @@ const ContributorProfilePage = ({
       ) : (
         <ContributorProfileHeader isConnected={!!user} githubName={githubName} avatarUrl={githubAvatar} />
       )}
-      <div className="pt-24 px-4 md:px-10 lg:px-16 flex flex-col lg:flex-row lg:gap-40 w-full overflow-hidden justify-between">
+      <div className="pt-24 px-2 md:px-16 container mx-auto flex flex-col lg:flex-row lg:gap-40 w-full overflow-hidden justify-between">
         <div className="flex flex-col w-80 gap-4 ">
           {loading ? (
             <SkeletonWrapper height={210} radius={12} classNames="pb-16 lg:pb-0" />

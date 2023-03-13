@@ -11,7 +11,11 @@ import { generateApiPrUrl } from "lib/utils/github";
 import { fetchGithubPRInfo } from "lib/hooks/fetchGithubPRInfo";
 import { useToast } from "lib/hooks/useToast";
 
-const HighlightInputForm = (): JSX.Element => {
+interface HighlightInputFormProps {
+  refreshCallback?: Function;
+}
+
+const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.Element => {
   const { user } = useSupabaseAuth();
   const { mutate } = useSWRConfig();
   const [isDivFocused, setIsDivFocused] = useState(false);
@@ -101,7 +105,7 @@ const HighlightInputForm = (): JSX.Element => {
 
         setLoading(false);
         if (res) {
-          mutate(`users/${user?.user_metadata.user_name}/highlights`);
+          refreshCallback && refreshCallback();
           setBodyText("");
           setTitle("");
           setIsDivFocused(false);
@@ -111,6 +115,8 @@ const HighlightInputForm = (): JSX.Element => {
           ToastTrigger({ message: "An error occured!!!", type: "error" });
         }
       }
+    } else {
+      ToastTrigger({ message: "Please provide a valid pull request link!", type: "error" });
     }
   };
 
@@ -127,7 +133,9 @@ const HighlightInputForm = (): JSX.Element => {
           onChange={(e) => setTitle(e.target.value)}
           className=" focus:outline-none "
           type="text"
-          placeholder={isDivFocused ? "Add title (optional)" : "Highlight your merged PRs and provide a link!"}
+          placeholder={
+            isDivFocused ? "Add title (optional)" : "Click here to highlight your merged PRs and provide a link!"
+          }
         />
         <Textarea
           className={`resize-none font-normal text-light-slate-11 mb-2 transition focus:outline-none rounded-lg ${
@@ -136,6 +144,9 @@ const HighlightInputForm = (): JSX.Element => {
           ref={textAreaRef}
           rows={row}
           value={bodyText}
+          placeholder={`Share your thoughts and link to it.
+
+https://github.com/open-sauced/insights/pull/913`}
           onChange={(e) => {
             handleTextAreaInputChange(e);
             setCharCount(e.target.value.length);
@@ -156,7 +167,7 @@ const HighlightInputForm = (): JSX.Element => {
       {pullrequestLink && isDivFocused && <GhOpenGraphImg githubLink={pullrequestLink} />}
 
       {isDivFocused && (
-        <Button loading={loading} disabled={!bodyText || !validCharLimit()} className="ml-auto" variant="primary">
+        <Button loading={loading} disabled={!bodyText || !validCharLimit()} className="ml-auto " variant="primary">
           Post
         </Button>
       )}

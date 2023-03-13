@@ -14,12 +14,12 @@ import useFilterPrefetch from "lib/hooks/useFilterPrefetch";
 import uppercaseFirst from "lib/utils/uppercase-first";
 import topicNameFormatting from "lib/utils/topic-name-formatting";
 import FilterCardSelect from "components/molecules/FilterCardSelect/filter-card-select";
-import useTopicOptions from "lib/utils/getTopicOptions";
+import getInterestOptions from "lib/utils/getInterestOptions";
 
 const HeaderFilter = () => {
   const router = useRouter();
   const filterOptions = useFilterOptions();
-  const topicOptions = useTopicOptions();
+  const topicOptions = getInterestOptions();
 
   const { filterValues } = useFilterPrefetch();
   const { filterName, toolName, selectedFilter } = router.query;
@@ -39,7 +39,7 @@ const HeaderFilter = () => {
 
   return (
     <>
-      <div className="header-image mr-2 p-2 min-w-[130px]">
+      <div className="header-image mr-2 p-2 min-w-[130px] ">
         <ContextThumbnail size={120} ContextThumbnailURL={isHacktoberfest ? Thumbnail.src : ""}></ContextThumbnail>
       </div>
       <div className="header-info md:truncate flex flex-col grow justify-center p-2">
@@ -51,7 +51,12 @@ const HeaderFilter = () => {
           {isHacktoberfest ? "opted into the largest open source hackathon." : `using the ${filterName} topic.`}
         </Text>
         <div className="flex mt-4 items-center gap-2">
-          <FilterCardSelect selected={filterName as string} options={topicOptions} icon="topic" handleFilterClick={topicRouting} />
+          <FilterCardSelect
+            selected={filterName as string}
+            options={topicOptions}
+            icon="topic"
+            handleFilterClick={topicRouting}
+          />
           <SuperativeSelector
             filterOptions={filterOptions}
             filterValues={filterValues}
