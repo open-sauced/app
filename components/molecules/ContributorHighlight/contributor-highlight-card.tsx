@@ -182,7 +182,7 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
                   <a
                     target="_blank"
                     rel="noreferrer"
-                    href={`https://twitter.com/intent/tweet?text=${twitterTweet}&url=https://insights.opensauced.pizza/user/${user}`}
+                    href={`https://twitter.com/intent/tweet?text=${twitterTweet}&url=${host}/feed/${id}`}
                     className="flex gap-2.5 py-1 items-center pl-3 pr-7"
                   >
                     <FiTwitter size={22} />
@@ -193,7 +193,7 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
                   <a
                     target="_blank"
                     rel="noreferrer"
-                    href={`https://www.linkedin.com/sharing/share-offsite/?url=https://insights.opensauced.pizza/user/${user}`}
+                    href={`https://www.linkedin.com/sharing/share-offsite/?url=${host}/feed/${id}`}
                     className="flex gap-2.5 py-1 items-center pl-3 pr-7"
                   >
                     <FiLinkedin size={22} />
@@ -201,7 +201,7 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
                   </a>
                 </DropdownMenuItem>
                 <DropdownMenuItem
-                  onClick={() => handleCopyToClipboard(`https://insights.opensauced.pizza/user/${user}`)}
+                  onClick={() => handleCopyToClipboard(`${host}/feed/${id}`)}
                   className="rounded-md"
                 >
                   <div className="flex gap-2.5 py-1 items-center pl-3 pr-7">

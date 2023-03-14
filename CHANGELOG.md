@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.34.1-beta.1](https://github.com/open-sauced/insights/compare/v1.34.0...v1.34.1-beta.1) (2023-03-14)
+
+
+### 🐛 Bug Fixes
+
+* copy correct permalink ([#998](https://github.com/open-sauced/insights/issues/998)) ([7fb7e67](https://github.com/open-sauced/insights/commit/7fb7e67bc56b38c9620ed32a52b233c8793db181))
+
 ## [1.34.0](https://github.com/open-sauced/insights/compare/v1.33.0...v1.34.0) (2023-03-10)
 
 
