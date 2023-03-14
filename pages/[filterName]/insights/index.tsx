@@ -78,8 +78,7 @@ const InsightsHub: WithPageLayout = () => {
         "hidden": insightsMeta.itemCount <= insightsMeta.limit
       })}>
         <PaginationResults
-          from={page === 1 ? (insightsMeta.itemCount > 0 ? page : 0) : (page - 1) * insightsMeta.limit + 1}
-          to={page * insightsMeta.limit <= insightsMeta.itemCount ? page * insightsMeta.limit : insightsMeta.itemCount}
+          metaInfo={insightsMeta}
           total={insightsMeta.itemCount}
           entity={"insights"}
         />
