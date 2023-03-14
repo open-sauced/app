@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.35.0-beta.1](https://github.com/open-sauced/insights/compare/v1.34.1-beta.1...v1.35.0-beta.1) (2023-03-14)
+
+
+### 🍕 Features
+
+* add official logos for pre-defined topics. ([#966](https://github.com/open-sauced/insights/issues/966)) ([ce3f579](https://github.com/open-sauced/insights/commit/ce3f579388dbdb26e529fe1f00aadfc1f018851b))
+* adds zendesk to the app ([#979](https://github.com/open-sauced/insights/issues/979)) ([383df83](https://github.com/open-sauced/insights/commit/383df8355697dd15f811f546003ba79a6131485c))
+
 ### [1.34.1-beta.1](https://github.com/open-sauced/insights/compare/v1.34.0...v1.34.1-beta.1) (2023-03-14)
 
 
