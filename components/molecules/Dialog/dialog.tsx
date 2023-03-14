@@ -9,7 +9,7 @@ const DialogTrigger = DialogPrimitive.Trigger;
 
 const DialogPortal = ({ className, children, ...props }: DialogPrimitive.DialogPortalProps) => (
   <DialogPrimitive.Portal className={`${className}`} {...props}>
-    <div className="fixed inset-0 z-50 flex items-start justify-center sm:items-center">{children}</div>
+    <div className="fixed inset-0 z-50 flex  justify-center items-center">{children}</div>
   </DialogPrimitive.Portal>
 );
 DialogPortal.displayName = DialogPrimitive.Portal.displayName;
@@ -53,9 +53,8 @@ const DialogContent = React.forwardRef<
     <DialogPrimitive.Content
       ref={ref}
       className={clsx(
-        "fixed z-50 grid w-full gap-4 rounded-b-lg bg-light-slate-2 p-6 animate-in data-[state=open]:fade-in-90 data-[state=open]:slide-in-from-bottom-10 sm:max-w-lg sm:rounded-lg sm:zoom-in-90 data-[state=open]:sm:slide-in-from-bottom-0",
-
-        className
+        className,
+        "fixed z-50 grid w-full gap-4 rounded-b-lg bg-light-slate-2 p-6 animate-in data-[state=open]:fade-in-90 data-[state=open]:slide-in-from-bottom-10 sm:max-w-lg sm:rounded-lg sm:zoom-in-90 data-[state=open]:sm:slide-in-from-bottom-0"
       )}
       {...props}
     >

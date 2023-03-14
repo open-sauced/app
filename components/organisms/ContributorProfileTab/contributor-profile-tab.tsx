@@ -15,6 +15,9 @@ import { useFetchUserHighlights } from "lib/hooks/useFetchUserHighlights";
 import Button from "components/atoms/Button/button";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import uppercaseFirst from "lib/utils/uppercase-first";
+import Link from "next/link";
+import PaginationResults from "components/molecules/PaginationResults/pagination-result";
+import Pagination from "components/molecules/Pagination/pagination";
 
 interface ContributorProfileTabProps {
   contributor?: DbUser;
@@ -44,7 +47,7 @@ const ContributorProfileTab = ({
   const { login } = contributor || {};
   const { user } = useSupabaseAuth();
 
-  const { data: highlights, isError, isLoading } = useFetchUserHighlights(login || "");
+  const { data: highlights, isError, isLoading, mutate, meta, setPage } = useFetchUserHighlights(login || "");
   const [inputVisible, setInputVisible] = useState(false);
   const pathnameRef = useRef<string | null>();
 
@@ -53,9 +56,8 @@ const ContributorProfileTab = ({
   const hasHighlights = highlights?.length > 0;
   pathnameRef.current = router.pathname.split("/").at(-1);
 
-  const currentPathname = pathnameRef.current !== "[username]"
-    ? pathnameRef.current
-    : hasHighlights ? "highlights" : "contributions";
+  const currentPathname =
+    pathnameRef.current !== "[username]" ? pathnameRef.current : hasHighlights ? "highlights" : "contributions";
 
   const handleTabUrl = (tab: string) => {
     router.push(`/user/${login}/${tab.toLowerCase()}`);
@@ -100,7 +102,7 @@ const ContributorProfileTab = ({
               />
             </div>
 
-            <HighlightInputForm />
+            <HighlightInputForm refreshCallback={mutate} />
           </div>
         )}
         <div className="mt-8 flex flex-col gap-8">
@@ -112,13 +114,42 @@ const ContributorProfileTab = ({
           ) : (
             <>
               {!isError && highlights && highlights.length > 0 ? (
-                // eslint-disable-next-line camelcase
-                highlights.map(({ id, title, highlight, url, created_at }) => (
-                  <div className="flex gap-2 flex-col lg:flex-row lg:gap-7" key={id}>
-                    <p className="text-light-slate-10 text-sm">{getFormattedDate(created_at)}</p>
-                    <ContributorHighlightCard id={id} user={login || ""} title={title} desc={highlight} prLink={url} />
-                  </div>
-                ))
+                <div>
+                  {/* eslint-disable-next-line camelcase */}
+                  {highlights.map(({ id, title, highlight, url, created_at }) => (
+                    <div className="flex gap-2 flex-col lg:flex-row lg:gap-7" key={id}>
+                      <Link href={`/feed/${id}`}>
+                        <p className="text-light-slate-10 text-sm">{getFormattedDate(created_at)}</p>
+                      </Link>
+                      <ContributorHighlightCard
+                        id={id}
+                        user={login || ""}
+                        title={title}
+                        desc={highlight}
+                        prLink={url}
+                      />
+                    </div>
+                  ))}
+                  {meta.pageCount > 1 && (
+                    <div className="mt-10 max-w-[48rem] flex px-2 items-center justify-between">
+                      <div>
+                        <PaginationResults metaInfo={meta} total={meta.itemCount} entity={"highlights"} />
+                      </div>
+                      <Pagination
+                        pages={[]}
+                        totalPage={meta.pageCount}
+                        page={meta.page}
+                        pageSize={meta.itemCount}
+                        goToPage
+                        hasNextPage={meta.hasNextPage}
+                        hasPreviousPage={meta.hasPreviousPage}
+                        onPageChange={function (page: number): void {
+                          setPage(page);
+                        }}
+                      />
+                    </div>
+                  )}
+                </div>
               ) : (
                 <div className="flex justify-center rounded-xl border border-dashed border-light-slate-8 px-6 lg:px-32 py-20 items-center">
                   <div className="text-center">
