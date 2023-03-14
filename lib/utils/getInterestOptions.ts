@@ -2,5 +2,6 @@ const interests = ["javascript", "python", "java", "typescript", "csharp", "cpp"
 export type interestsType = typeof interests[number];
 
 export const getInterestOptions = () => {
-  return interests;
+  // returning mutable type array instead of `Read Only` type.
+  return [...interests];
 };
