@@ -12,6 +12,7 @@ interface AvatarProps {
   hasBorder?: boolean;
   isCircle?: boolean;
   isCached?: boolean;
+  initialsClassName?: string;
 }
 
 const avatarLoader = () => {
@@ -37,7 +38,16 @@ const Avatar = (props: AvatarProps): JSX.Element => {
 
 export default Avatar;
 
-const CustomAvatar = ({ className, avatarURL, initials, alt, size, hasBorder, isCircle }: AvatarProps): JSX.Element => {
+const CustomAvatar = ({
+  className,
+  avatarURL,
+  initials,
+  alt,
+  size,
+  hasBorder,
+  isCircle,
+  initialsClassName
+}: AvatarProps): JSX.Element => {
   return (
     <div
       className={`inline-flex ${
@@ -58,7 +68,7 @@ const CustomAvatar = ({ className, avatarURL, initials, alt, size, hasBorder, is
         />
       ) : (
         <div
-          className={`flex items-center justify-center font-bold leading-none text-slate-50 mb-0.25 text-${size}`}
+          className={`${initialsClassName} flex items-center justify-center font-bold leading-none text-slate-50 mb-0.25 `}
           style={{ width: size, height: size }}
         >
           {initials}

@@ -10,6 +10,7 @@ import Title from "components/atoms/Typography/title";
 import Badge from "components/atoms/Badge/badge";
 import { getTimeByTimezone, getTimezone } from "lib/utils/timezones";
 import clsx from "clsx";
+import Tooltip from "components/atoms/Tooltip/tooltip";
 
 interface ContributorProfileInfoProps {
   githubName: string;
@@ -51,12 +52,18 @@ const ContributorProfileInfo = ({
 
           {isConnected && (
             <>
+              {displayLocalTime && (
+                <span className="flex text-light-slate-10 gap-2 items-center">
+                  <Tooltip content="Time zone">
+                    <FiClock className="text-light-slate-9" />
+                  </Tooltip>
+                  {timezone ? `UTC${getTimezone(timezone)}` : "UTC+1"}
+                </span>
+              )}
               <span className="flex text-light-slate-10 gap-2 items-center">
-                <FiClock className="text-light-slate-9" />
-                {timezone ? `UTC${getTimezone(timezone)}` : "UTC+1"}
-              </span>
-              <span className="flex text-light-slate-10 gap-2 items-center">
-                <AiOutlineGift className="text-light-slate-9" />
+                <Tooltip content="First commit date">
+                  <AiOutlineGift className="text-light-slate-9" />
+                </Tooltip>
                 June 2022
               </span>
             </>
@@ -70,7 +77,7 @@ const ContributorProfileInfo = ({
               About
             </Title>
             <p className={clsx("text-light-slate-11 text-sm", !bio && "!text-light-slate-8")}>
-              {bio || (githubName+" has connected their GitHub but has not added a bio.")}
+              {bio || githubName + " has connected their GitHub but has not added a bio."}
             </p>
             <div className="flex flex-col text-sm mt-2 text-light-slate-9 gap-2">
               {displayLocalTime && (
@@ -97,12 +104,7 @@ const ContributorProfileInfo = ({
               {linkedInUrl && (
                 <span className="flex gap-2 items-center">
                   <FiLinkedin className="text-light-slate-9" />
-                  <Link
-                    href={linkedInUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="w-max hover:text-orange-500 "
-                  >
+                  <Link href={linkedInUrl} target="_blank" rel="noreferrer" className="w-max hover:text-orange-500 ">
                     {linkedInUrl?.replace(/^(http(s)?:\/\/)?([\w]+\.)?linkedin\.com\/(pub|in|profile|company)/, "in")}
                   </Link>
                 </span>
@@ -137,7 +139,9 @@ const ContributorProfileInfo = ({
               </Title>
               <div className="flex gap-1.5 flex-wrap">
                 {interestArray.map((interest, index) => (
-                  <LanguagePill key={index} topic={interest} />
+                  <Link href={`/${interest}/dashboard/filter/recent`} key={index}>
+                    <LanguagePill key={index} topic={interest} />
+                  </Link>
                 ))}
               </div>
             </div>

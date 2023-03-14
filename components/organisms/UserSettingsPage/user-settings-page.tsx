@@ -28,7 +28,9 @@ type EmailPreferenceType = {
   receive_collaboration?: boolean;
 };
 const UserSettingsPage = ({ user }: userSettingsPageProps) => {
-  const { data: insightsUser } = useFetchUser(user?.user_metadata.user_name);
+  const { data: insightsUser } = useFetchUser(user?.user_metadata.user_name, {
+    revalidateOnFocus: false
+  });
 
   const [isValidEmail, setIsValidEmail] = useState<boolean>(true);
   const [displayLocalTime, setDisplayLocalTime] = useState(false);
@@ -48,10 +50,11 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
   useEffect(() => {
     async function fetchAuthSession() {
       const response = await authSession();
-      if (response !== false) {
+      if (response !== false && !userInfo) {
         setUserInfo(response);
         formRef.current!.nameInput.value = response.name;
         setEmail(response.email);
+        setDisplayLocalTime(response.displayLocalTime);
         formRef.current!.bio.value = response.bio;
         formRef.current!.url.value = response.url;
         formRef.current!.twitter_username.value = response.twitter_username;
@@ -131,9 +134,10 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
       display_local_time: displayLocalTime,
       timezone,
       // eslint-disable-next-line camelcase
-      github_sponsors_url: formRef.current!.github_sponsors_url.value !== "" ? formRef.current!.github_sponsors_url.value : undefined,
+      github_sponsors_url:
+        formRef.current!.github_sponsors_url.value !== "" ? formRef.current!.github_sponsors_url.value : undefined,
       // eslint-disable-next-line camelcase
-      linkedin_url: formRef.current!.linkedin_url.value !== "" ? formRef.current!.linkedin_url.value: undefined
+      linkedin_url: formRef.current!.linkedin_url.value !== "" ? formRef.current!.linkedin_url.value : undefined
     };
     if (formRef.current?.url.value) {
       payload.url = formRef.current!.url.value;
@@ -151,7 +155,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
   };
 
   return (
-    <div>
+    <div className="container mx-auto  md:px-16">
       <div className="flex flex-col md:flex-row md:gap-48 gap-4 text-sm text-light-slate-11">
         <div>
           <Title className="!text-2xl !text-light-slate-11" level={2}>
@@ -204,7 +208,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
               label="LinkedIn URL"
               pattern="http[s]?://.*\..{2,}"
               name="linkedin_url"
-            />                        
+            />
             <TextInput
               classNames="bg-light-slate-4 text-light-slate-11"
               placeholder="saucedopen"
@@ -234,6 +238,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
                 Other users will see the time difference from their local time.
               </span>
             </div>
+
             <div className="flex flex-col gap-2">
               <label>Time zone*</label>
               <Select value={timezone} onChange={(e) => setTimezone(e.target.value)} required>
@@ -245,7 +250,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
                 ))}
               </Select>
             </div>
-            <Button disabled={!isValidEmail} variant="primary">
+            <Button className="w-max" disabled={!isValidEmail} variant="primary">
               Update profile
             </Button>
           </form>
@@ -269,7 +274,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
               variant="default"
               disabled={selectedInterest.length === 0}
               onClick={handleUpdateInterest}
-              className="px-4 text-light-slate-11 py-2 bg-light-slate-4"
+              className="w-max"
             >
               Update Interests
             </Button>
