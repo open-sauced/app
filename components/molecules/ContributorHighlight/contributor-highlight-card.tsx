@@ -73,7 +73,6 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
       setTimeout(() => {
         document.body.setAttribute("style", "pointer-events:auto !important");
       }, 1);
-      console.clear();
     }
   }, [openEdit]);
 
@@ -138,7 +137,7 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
       }, 1);
       mutate(`users/${user}/highlights`);
     } else {
-      console.log(res);
+      console.error(res);
       setAlertOpen(false);
       ToastTrigger({ message: "An error occured!!!", type: "error" });
     }

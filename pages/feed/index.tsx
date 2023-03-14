@@ -43,19 +43,15 @@ const Feeds: WithPageLayout = () => {
 
   useEffect(() => {
     if (selectedRepo) {
-      router.push(`/feed?repo=${selectedRepo}`);
+      router.push(`/feed?repo=${selectedRepo}`).catch(console.error);
     }
 
     if (highlightId) {
-      router.push(`/feed/${id}`);
       setOpenSingleHighlight(true);
-    } else {
-      router.push("/feed");
-      setOpenSingleHighlight(false);
     }
 
     if (!highlightId && !selectedRepo) {
-      router.push("/feed");
+      router.push("/feed").catch(console.error);
     }
   }, [selectedRepo, highlightId]);
 
@@ -64,7 +60,7 @@ const Feeds: WithPageLayout = () => {
       {singleHighlight && (
         <Dialog open={openSingleHighlight} onOpenChange={(open) => {
           if (!open) {
-            router.push("/feed");
+            router.push("/feed").catch(console.error);
           }
         }}>
           <DialogContent className=" sm:max-w-[80%] w-full  sm:max-h-[100vh] ">
