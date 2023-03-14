@@ -73,6 +73,7 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
       setTimeout(() => {
         document.body.setAttribute("style", "pointer-events:auto !important");
       }, 1);
+      console.clear();
     }
   }, [openEdit]);
 
@@ -328,7 +329,6 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
               <AlertDialog open={alertOpen} onOpenChange={setAlertOpen}>
                 <AlertDialogTrigger asChild className="ml-auto">
                   <Button
-                    onClick={() => setAlertOpen(true)}
                     className=" bg-light-red-7 text-red-600 border border-light-red-400 hover:bg-light-red-8 hover:text-red-700 "
                     variant="primary"
                   >

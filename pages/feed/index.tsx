@@ -16,8 +16,9 @@ import ContributorHighlightCard from "components/molecules/ContributorHighlight/
 import HighlightInputForm from "components/molecules/HighlightInput/highlight-input-form";
 import HighlightsFilterCard from "components/molecules/HighlightsFeedCard/highlights-filter-card";
 import ProfileLayout from "layouts/profile";
+import { WithPageLayout } from "interfaces/with-page-layout";
 
-const Feeds = () => {
+const Feeds: WithPageLayout = () => {
   const { user } = useSupabaseAuth();
   const router = useRouter();
   const { id } = router.query;
@@ -180,6 +181,5 @@ const Feeds = () => {
   );
 };
 
+Feeds.PageLayout = ProfileLayout;
 export default Feeds;
-
-
