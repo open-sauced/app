@@ -6,15 +6,12 @@ const StoryConfig = {
 };
 export default StoryConfig;
 
-const PaginationResultsTemplate: ComponentStory<typeof PaginationResults> = (args) => (
-  <PaginationResults {...args} />
-);
+const PaginationResultsTemplate: ComponentStory<typeof PaginationResults> = (args) => <PaginationResults {...args} />;
 
 export const PaginationResultStory = PaginationResultsTemplate.bind({});
 
-PaginationResultStory.args={
-  from: 1,
-  to: 10,
+PaginationResultStory.args = {
+  metaInfo: { page: 2, pageCount: 3, hasNextPage: true, hasPreviousPage: false, itemCount: 34, limit: 10 },
   total: 10000,
   entity: "contributors"
 };
