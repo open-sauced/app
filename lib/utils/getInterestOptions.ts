@@ -1,22 +1,20 @@
-const getInterestOptions = () => {
-  const interests = [
-    "javascript",
-    "python",
-    "java",
-    "typescript",
-    "rust",
-    "csharp",
-    "cpp",
-    "php",
-    "c",
-    "ruby",
-    "ai",
-    "ml",
-    "react",
-    "golang"
-  ];
+const interests = [
+  "javascript",
+  "python",
+  "java",
+  "typescript",
+  "csharp",
+  "cpp",
+  "php",
+  "c",
+  "ruby",
+  "ai",
+  "ml",
+  "react"
+] as const;
+export type interestsType = typeof interests[number];
 
-  return interests;
+export const getInterestOptions = () => {
+  // returning mutable type array instead of `Read Only` type.
+  return [...interests];
 };
-
-export default getInterestOptions;

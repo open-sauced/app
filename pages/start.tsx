@@ -31,7 +31,7 @@ import useSession from "lib/hooks/useSession";
 import { captureAnayltics } from "lib/utils/analytics";
 import { getAvatarByUsername } from "lib/utils/github";
 import useStore from "lib/store";
-import getInterestOptions from "lib/utils/getInterestOptions";
+import { getInterestOptions } from "lib/utils/getInterestOptions";
 import LanguagePill from "components/atoms/LanguagePill/LanguagePill";
 import { updateUser } from "lib/hooks/update-user";
 import { ToastTrigger } from "lib/utils/toast-trigger";

@@ -142,6 +142,7 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
       ToastTrigger({ message: "An error occured!!!", type: "error" });
     }
   };
+
   useEffect(() => {
     if (window !== undefined) {
       setHost(window.location.origin as string);
@@ -182,7 +183,7 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
                     <a
                       target="_blank"
                       rel="noreferrer"
-                      href={`https://twitter.com/intent/tweet?text=${twitterTweet}&url=https://insights.opensauced.pizza/user/${user}`}
+                      href={`https://twitter.com/intent/tweet?text=${twitterTweet}&url=${host}/feed/${id}`}
                       className="flex gap-2.5 py-1 items-center pl-3 pr-7"
                     >
                       <FiTwitter size={22} />
@@ -193,7 +194,7 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
                     <a
                       target="_blank"
                       rel="noreferrer"
-                      href={`https://www.linkedin.com/sharing/share-offsite/?url=https://insights.opensauced.pizza/user/${user}`}
+                      href={`https://www.linkedin.com/sharing/share-offsite/?url=${host}/feed/${id}`}
                       className="flex gap-2.5 py-1 items-center pl-3 pr-7"
                     >
                       <FiLinkedin size={22} />
@@ -201,7 +202,7 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
                     </a>
                   </DropdownMenuItem>
                   <DropdownMenuItem
-                    onClick={() => handleCopyToClipboard(`https://insights.opensauced.pizza/user/${user}`)}
+                    onClick={() => handleCopyToClipboard(`${host}/feed/${id}`)}
                     className="rounded-md"
                   >
                     <div className="flex gap-2.5 py-1 items-center pl-3 pr-7">
@@ -278,7 +279,7 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
                   </p>
                 )}
                 <fieldset className="flex flex-col w-full gap-1">
-                  <label htmlFor="title">title (optional)</label>
+                  <label htmlFor="title">Title (optional)</label>
                   <input
                     onChange={(e) => {
                       setHighlight((prev) => ({ ...prev, title: e.target.value }));
@@ -290,7 +291,7 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
                   />
                 </fieldset>
                 <fieldset className="flex flex-col w-full  gap-1">
-                  <label htmlFor="description">body</label>
+                  <label htmlFor="description">Body</label>
                   <div className="bg-white  focus-within:border rounded-lg">
                     <Textarea
                       value={highlight.desc}
@@ -299,12 +300,12 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
                         setError("");
                         setWordCount(e.target.value.length);
                       }}
-                      className="resize-none  px-2  font-normal text-light-slate-11 mb-2 transition focus:outline-none rounded-lg"
+                      className="resize-none h-28  px-2  font-normal text-light-slate-11 mb-2 transition focus:outline-none rounded-lg"
                     ></Textarea>
-                    <p className="text-xs p-2 text-light-slate-9 flex justify-end gap-1">
+                    <p className="text-xs px-2 text-light-slate-9 flex justify-end gap-1">
                       <span className={`${wordCount > wordLimit && "text-red-600"}`}>
                         {wordCount > wordLimit ? `-${wordCount - wordLimit}` : wordCount}
-                      </span>{" "}
+                      </span>
                       / <span>{wordLimit}</span>
                     </p>
                   </div>
@@ -323,7 +324,7 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
                 </fieldset>
               </div>
               <div className="flex gap-3">
-                <AlertDialogTrigger asChild>
+                <AlertDialogTrigger asChild className="ml-auto">
                   <Button
                     onClick={() => setAlertOpen(true)}
                     className=" bg-light-red-7 text-red-600 border border-light-red-400 hover:bg-light-red-8 hover:text-red-700 "
