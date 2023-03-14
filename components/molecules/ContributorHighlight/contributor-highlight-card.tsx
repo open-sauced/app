@@ -63,18 +63,18 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
   const [errorMsg, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const { user: loggedInUser } = useSupabaseAuth();
-  const [open, setOpen] = useState(false);
+  const [openEdit, setOpenEdit] = useState(false);
   const [alertOpen, setAlertOpen] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [host, setHost] = useState("");
 
   useEffect(() => {
-    if (!open) {
+    if (!openEdit) {
       setTimeout(() => {
         document.body.setAttribute("style", "pointer-events:auto !important");
       }, 1);
     }
-  }, [open]);
+  }, [openEdit]);
 
   const handleCopyToClipboard = async (content: string) => {
     const url = new URL(content).toString();
@@ -113,7 +113,7 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
         setLoading(false);
         if (res) {
           ToastTrigger({ message: "Highlights Updated Successfully", type: "success" });
-          setOpen(false);
+          setOpenEdit(false);
         } else {
           setLoading(false);
           setError("An error occurred while updating!!!");
@@ -131,7 +131,7 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
     if (res !== false) {
       ToastTrigger({ message: "Highlights Updated Successfully", type: "success" });
       setAlertOpen(false);
-      setOpen(false);
+      setOpenEdit(false);
       setTimeout(() => {
         document.body.setAttribute("style", "pointer-events:auto !important");
       }, 1);
@@ -221,7 +221,7 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
                       loggedInUser && loggedInUser.user_metadata.user_name !== user && "hidden"
                     }`}
                   >
-                    <button onClick={() => setOpen(true)} className="flex w-full cursor-default gap-2.5 py-1  items-center pl-3 pr-7">
+                    <button onClick={() => setOpenEdit(true)} className="flex w-full cursor-default gap-2.5 py-1  items-center pl-3 pr-7">
                       <FiEdit size={22} />
                       <span>Edit</span>
                     </button>
@@ -262,7 +262,7 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
       {/* Generated OG card section */}
       <GhOpenGraphImg githubLink={prLink} />
 
-      <Dialog open={open} onOpenChange={setOpen}>
+      <Dialog open={openEdit} onOpenChange={setOpenEdit}>
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Edit Your Highlight</DialogTitle>
@@ -369,7 +369,7 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
               </Button>
             </div>
           </form>
-          <DialogCloseButton onClick={() => setOpen(false)} />
+          <DialogCloseButton onClick={() => setOpenEdit(false)} />
         </DialogContent>
       </Dialog>
     </article>
