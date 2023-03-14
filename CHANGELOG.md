@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.35.0-beta.2](https://github.com/open-sauced/insights/compare/v1.35.0-beta.1...v1.35.0-beta.2) (2023-03-14)
+
+
+### 🍕 Features
+
+* add pagination component to feeds and profile ([#996](https://github.com/open-sauced/insights/issues/996)) ([02007d6](https://github.com/open-sauced/insights/commit/02007d6ae98cf1f0a7d23e73d6ce3af773f86ec4))
+
 ## [1.35.0-beta.1](https://github.com/open-sauced/insights/compare/v1.34.1-beta.1...v1.35.0-beta.1) (2023-03-14)
 
 
