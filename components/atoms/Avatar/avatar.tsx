@@ -8,7 +8,7 @@ interface AvatarProps {
   avatarURL?: string | StaticImageData;
   initials?: string;
   alt?: string;
-  size?: "sm" | "base" | "lg" | number;
+  size: "sm" | "base" | "lg" | number;
   hasBorder?: boolean;
   isCircle?: boolean;
   isCached?: boolean;
@@ -26,13 +26,10 @@ const Avatar = (props: AvatarProps): JSX.Element => {
       : props.avatarURL;
 
   switch (typeof props.size) {
-  case "string":
-    return <DefaultAvatar {...props} avatarURL={imageSource} />;
-  case "number":
-    return <CustomAvatar {...props} avatarURL={imageSource} />;
-
-  default:
-    return <span>invalid avatar size props!!!</span>;
+    case "string":
+      return <DefaultAvatar {...props} avatarURL={imageSource} />;
+    case "number":
+      return <CustomAvatar {...props} avatarURL={imageSource} />;
   }
 };
 
