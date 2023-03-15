@@ -6,8 +6,8 @@ import { VscIssues } from "react-icons/vsc";
 
 export interface RepoCardProfileProps {
   avatar?: string | StaticImageData;
-  orgName?: string;
-  repoName?: string;
+  orgName: string;
+  repoName: string;
   prCount?: number;
   issueCount?: number;
   className?: string;
