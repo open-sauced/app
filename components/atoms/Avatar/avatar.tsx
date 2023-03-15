@@ -20,10 +20,20 @@ const avatarLoader = () => {
 };
 
 const Avatar = (props: AvatarProps): JSX.Element => {
-  const imageSource =
+  if(typeof props.avatarURL === "string") new URL(props.avatarURL);
+
+  let imageSource =
     props.avatarURL && props.isCached
-      ? cachedImage(props.avatarURL as string, process.env.NEXT_PUBLIC_CLOUD_NAME)
-      : props.avatarURL;
+    ? cachedImage(props.avatarURL as string, process.env.NEXT_PUBLIC_CLOUD_NAME)
+    : props.avatarURL;
+
+  try {
+    // Checks if the avatarURL is a proper URL. If not, it will throw an error.
+    if (typeof imageSource === "string") new URL(imageSource);
+  } catch (error) {
+    console.error(error);
+    imageSource = undefined;
+  }
 
   switch (typeof props.size) {
     case "string":
