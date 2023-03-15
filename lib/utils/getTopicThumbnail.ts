@@ -10,8 +10,6 @@ import ruby from "img/topic-thumbnails/ruby.svg";
 import ai from "img/topic-thumbnails/ai.svg";
 import ml from "img/topic-thumbnails/ml.svg";
 import react from "img/topic-thumbnails/react.svg";
-import golang from "img/topic-thumbnails/golang.svg";
-import rust from "img/topic-thumbnails/rust.svg";
 import contextThumbnailImage from "../../img/open-sourced-with-bg-icon.png";
 
 import { interestsType } from "./getInterestOptions";
