@@ -92,9 +92,6 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
       <SWRConfig
         value={{
           revalidateOnFocus: false,
-          revalidateIfStale: false,
-          revalidateOnReconnect: false,
-          shouldRetryOnError: false,
           fetcher: apiFetcher,
           provider: localStorageProvider
         }}
