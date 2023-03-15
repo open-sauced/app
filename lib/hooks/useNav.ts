@@ -23,7 +23,7 @@ const useNav = (repositories: number[] = []) => {
     },
     {
       name: "Contributors",
-      numOf: conIsError ? undefined : conMetaData.itemCount
+      numOf: conIsLoading || conIsError ? undefined : conMetaData.itemCount
     }
   ];
 

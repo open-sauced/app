@@ -31,7 +31,6 @@ import useSession from "lib/hooks/useSession";
 import { captureAnayltics } from "lib/utils/analytics";
 import { getAvatarByUsername } from "lib/utils/github";
 import useStore from "lib/store";
-import Avatar from "../components/atoms/Avatar/avatar";
 import getInterestOptions from "lib/utils/getInterestOptions";
 import LanguagePill from "components/atoms/LanguagePill/LanguagePill";
 import { updateUser } from "lib/hooks/update-user";
@@ -61,7 +60,7 @@ const LoginStep1: React.FC<LoginStep1Props> = ({ handleLoginStep, user }) => {
     } else if (onboarded === false && user && providerToken) {
       handleLoginStep();
     }
-  }, [handleLoginStep, router, user, onboarded, providerToken]);
+  }, [handleLoginStep, router, user, onboarded]);
 
   const handleGitHubAuth = async () => {
     // Redirect user to GitHub to authenticate
