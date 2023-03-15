@@ -27,8 +27,8 @@ const topicThumbnails: Record<interestsType, string> = {
   ai: ai,
   react: react,
   ml: ml,
-  golang: golang,
-  rust: rust
+  golang: "",
+  rust: ""
 };
 
 const getTopicThumbnail = (topic: keyof typeof topicThumbnails) => {
