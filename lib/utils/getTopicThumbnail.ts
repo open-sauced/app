@@ -2,17 +2,16 @@ import javaScript from "img/topic-thumbnails/javascript.svg";
 import python from "img/topic-thumbnails/python.svg";
 import typeScript from "img/topic-thumbnails/typescript.svg";
 import java from "img/topic-thumbnails/java.svg";
-
 import cSharp from "img/topic-thumbnails/csharp.svg";
 import cpp from "img/topic-thumbnails/cpp.svg";
-
 import php from "img/topic-thumbnails/php.svg";
 import c from "img/topic-thumbnails/c.svg";
 import ruby from "img/topic-thumbnails/ruby.svg";
 import ai from "img/topic-thumbnails/ai.svg";
-
-import ml from "img/topic-thumbnails/ml.svg";
+import go from "img/topic-thumbnails/go.svg";
+import ml from "img/topic-thumbnails/machine-learning.svg";
 import react from "img/topic-thumbnails/react.svg";
+import rust from "img/topic-thumbnails/rust.svg";
 
 import contextThumbnailImage from "../../img/open-sourced-with-bg-icon.png";
 
@@ -31,10 +30,8 @@ const topicThumbnails: Record<interestsType, string> = {
   ai: ai,
   react: react,
   ml: ml,
-
-  golang: "",
-  rust: ""
-
+  golang: go,
+  rust: rust
 };
 
 const getTopicThumbnail = (topic: keyof typeof topicThumbnails) => {
