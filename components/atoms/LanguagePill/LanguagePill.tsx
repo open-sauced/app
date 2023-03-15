@@ -15,6 +15,7 @@ import TypeScriptIcon from "/img/icons/interests/typescript.svg";
 import RubyIcon from "/img/icons/interests/ruby.svg";
 import JavaIcon from "/img/icons/interests/java.svg";
 import GolangIcon from "img/icons/interests/golang.svg";
+
 import topicNameFormatting from "lib/utils/topic-name-formatting";
 
 interface LanguagePillProps {
