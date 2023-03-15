@@ -95,8 +95,8 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
           revalidateIfStale: false,
           revalidateOnReconnect: false,
           shouldRetryOnError: false,
-          fetcher: apiFetcher
-          // provider: localStorageProvider
+          fetcher: apiFetcher,
+          provider: localStorageProvider
         }}
       >
         <Toaster position="top-center" />

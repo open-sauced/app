@@ -14,8 +14,6 @@ if (process.env.CI === "true") {
       console.log(`Running in Netlify ${process.env.CHANNEL} environment`);
 
       const {protocol, hostname} = new URL(process.env.URL);
-      console.log(process.env.URL);
-      console.log(hostname);
       base = `${protocol}//${process.env.CHANNEL}.${hostname}/`;
     }
   }
