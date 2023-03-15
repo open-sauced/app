@@ -1,6 +1,7 @@
 import React from "react";
 import Image, { StaticImageData } from "next/image";
 
+
 import JavascriptIcon from "img/icons/interests/javascript.svg";
 import ReactIcon from "/img/icons/interests/react.svg";
 import PythonIcon from "/img/icons/interests/python.svg";
@@ -17,6 +18,7 @@ import JavaIcon from "/img/icons/interests/java.svg";
 import GolangIcon from "img/icons/interests/golang.svg";
 
 import topicNameFormatting from "lib/utils/topic-name-formatting";
+
 
 interface LanguagePillProps {
   topic:
