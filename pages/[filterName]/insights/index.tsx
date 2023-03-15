@@ -50,7 +50,7 @@ const InsightsHub: WithPageLayout = () => {
             Insights
           </Title>
           <Text className="my-8">
-            An insight page is a dashboard containing selected repositories that you and your team can get insights from.
+            Welcome to your Insights Hub! Here, you can set up pages to view all of your insights or other open source insights in one place.
           </Text>
         </div>
         <div className="flex gap-3 items-center">
