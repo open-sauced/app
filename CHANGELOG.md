@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.36.0-beta.2](https://github.com/open-sauced/insights/compare/v1.36.0-beta.1...v1.36.0-beta.2) (2023-03-15)
+
+
+### 🔥 Performance Improvements
+
+* load balance test, primarily for the backend ([2dcce75](https://github.com/open-sauced/insights/commit/2dcce75a6518dcaf49db1082c05c108c740d553f))
+
 ## [1.36.0-beta.1](https://github.com/open-sauced/insights/compare/v1.35.0...v1.36.0-beta.1) (2023-03-15)
 
 
