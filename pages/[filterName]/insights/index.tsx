@@ -16,6 +16,7 @@ import useUserInsights from "lib/hooks/useUserInsights";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { supabase } from "lib/utils/supabase";
 import useSession from "lib/hooks/useSession";
+import Text from "components/atoms/Typography/text";
 
 const InsightsHub: WithPageLayout = () => {
   const { data: insightsData, meta: insightsMeta, isError, isLoading, page, setPage } = useUserInsights();
@@ -36,15 +37,22 @@ const InsightsHub: WithPageLayout = () => {
       }
     }
 
-    getUser().catch(console.error).then(() => {});
+    getUser()
+      .catch(console.error)
+      .then(() => {});
   }, [router, onboarded]);
 
   return user && onboarded ? (
     <div className="flex  flex-col w-full gap-4 py-2 container">
       <div className="flex justify-between py-2">
-        <Title className="!text-2xl !leading-none !font-medium" level={1}>
-          Your Pages
-        </Title>
+        <div>
+          <Title className="!text-2xl !leading-none !font-medium  mb-4" level={1}>
+            Insights
+          </Title>
+          <Text className="my-8">
+            An insight page is a dashboard containing selected repositories that you and your team can get insights from.
+          </Text>
+        </div>
         <div className="flex gap-3 items-center">
           {/* Search box temporarily hidden */}
           <div className="w-58 hidden">
@@ -74,14 +82,12 @@ const InsightsHub: WithPageLayout = () => {
         Create a new Insight Page
       </Link>
 
-      <div className={clsx("py-1 md:py-4 flex w-full md:mt-5 justify-between items-center", {
-        "hidden": insightsMeta.itemCount <= insightsMeta.limit
-      })}>
-        <PaginationResults
-          metaInfo={insightsMeta}
-          total={insightsMeta.itemCount}
-          entity={"insights"}
-        />
+      <div
+        className={clsx("py-1 md:py-4 flex w-full md:mt-5 justify-between items-center", {
+          hidden: insightsMeta.itemCount <= insightsMeta.limit
+        })}
+      >
+        <PaginationResults metaInfo={insightsMeta} total={insightsMeta.itemCount} entity={"insights"} />
         <Pagination
           pages={[]}
           hasNextPage={insightsMeta.hasNextPage}
