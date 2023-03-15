@@ -16,7 +16,7 @@ const useFilterPrefetch = () => {
 
   useEffect(() => {
     if (topic) {
-      [].forEach(async(filterName) => {
+      filterOptions.forEach(async(filterName) => {
         const filterKey = getFilterKey(filterName);
         const url = `${topic}/repos?filter=${filterKey}&page=1`;
 
@@ -40,7 +40,7 @@ const useFilterPrefetch = () => {
         }
       });
     }
-  }, [topic, filterOptions, mutate]);
+  }, [topic]);
 
   return { filterValues };
 };

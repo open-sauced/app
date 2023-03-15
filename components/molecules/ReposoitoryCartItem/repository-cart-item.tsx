@@ -2,16 +2,16 @@ import Avatar from "components/atoms/Avatar/avatar";
 import Text from "components/atoms/Typography/text";
 import { StaticImageData } from "next/image";
 import { AiOutlineClose } from "react-icons/ai";
-import { IssueOpenedIcon } from "@primer/octicons-react";
+import { BiGitPullRequest } from "react-icons/bi";
 
 export interface RepositoryCartItemProps {
   avatar?: StaticImageData | string;
   orgName?: string;
   repoName?: string;
-  totalIssues?: number;
+  totalPrs?: number;
   handleRemoveItem: () => void;
 }
-const RepositoryCartItem = ({ avatar, orgName, repoName, totalIssues, handleRemoveItem }: RepositoryCartItemProps) => {
+const RepositoryCartItem = ({ avatar, orgName, repoName, totalPrs, handleRemoveItem }: RepositoryCartItemProps) => {
   return (
     <div className="flex items-center justify-between">
       <div className="flex gap-3 items-center ">
@@ -22,7 +22,7 @@ const RepositoryCartItem = ({ avatar, orgName, repoName, totalIssues, handleRemo
       </div>
       <div className="flex items-center gap-2 text-sm text-light-slate-10">
         <span className="flex items-center">
-          <IssueOpenedIcon size={15} className="mr-1" /> {totalIssues}
+          <BiGitPullRequest className="text-[15px]" /> {totalPrs}
         </span>
         <span
           onClick={() => handleRemoveItem()}

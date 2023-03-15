@@ -1,12 +1,13 @@
 import Link from "next/link";
 
-import { BsPencilFill } from "react-icons/bs";
+import { BsFillArrowUpCircleFill, BsPencilFill } from "react-icons/bs";
 import { MdOutlineArrowForwardIos } from "react-icons/md";
 import { User } from "@supabase/supabase-js";
 
 import { getRelativeDays } from "lib/utils/date-utils";
+import { useRepositoriesList } from "lib/hooks/useRepositoriesList";
 import getRepoInsights from "lib/utils/get-repo-insights";
-import getPercent from "lib/utils/get-percent";
+import getPercent from "../../../lib/utils/get-percent";
 
 import CardRepoList from "../CardRepoList/card-repo-list";
 import Text from "components/atoms/Typography/text";
@@ -18,18 +19,9 @@ interface InsightRowProps {
 }
 
 const InsightRow = ({ insight, user }: InsightRowProps) => {
-  const repoData = insight.repos as unknown as DbRepo[];
-  const repoList = insight.repos.map(repo => {
-    const [owner, name] = repo.full_name.split("/");
-    return {
-      repoIcon: `https://github.com/${owner}.png?size=60`,
-      repoName: name,
-      repoOwner: owner
-    };
-  });
-
-  // const { data: repoData, isError, isLoading } = useRepositoriesList(false, repoIds);
-  const { open, merged, velocity, total } = getRepoInsights(repoData);
+  const repoIds = insight.repos.map((repo) => repo.repo_id);
+  const { data: repoData, isError, isLoading } = useRepositoriesList(false, repoIds);
+  const { open, merged, velocity, total, repoList } = getRepoInsights(repoData);
   const avgOpenPrs = repoData.length > 0 ? Math.round(open / repoData.length) : 0;
   return (
     <div className="flex flex-col md:flex-row w-full rounded-lg px-4 lg:px-8 py-5 gap-4 lg:gap-2 bg-white items-center">

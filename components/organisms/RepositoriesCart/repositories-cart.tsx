@@ -71,7 +71,7 @@ const RepositoriesCart = ({
         <div className={`${history.length > 0 && "border-1"} mt-2 py-1`}>
           {history.length > 0 ? <Text>Add again:</Text> : ""}
           {history.length > 0 &&
-            history.map(({ orgName, repoName, totalIssues, avatar }, index) => (
+            history.map(({ orgName, repoName, totalPrs, avatar }, index) => (
               <div key={`${index}/${orgName}/${repoName}`} className="flex items-center mt-2 justify-between">
                 <div className="flex gap-3 items-center ">
                   <Avatar avatarURL={avatar} initials="" size="sm" className="" />

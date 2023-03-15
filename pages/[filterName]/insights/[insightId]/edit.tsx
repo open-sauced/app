@@ -1,9 +1,10 @@
 import { useRouter } from "next/router";
 
-import InsightPage, {GitHubRepo} from "components/organisms/InsightPage/InsightPage";
+import InsightPage from "components/organisms/InsightPage/InsightPage";
 import HubLayout from "layouts/hub";
 
 import { WithPageLayout } from "interfaces/with-page-layout";
+import { useRepositoriesList } from "lib/hooks/useRepositoriesList";
 import useInsight from "lib/hooks/useInsight";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 
@@ -13,6 +14,8 @@ const EditInsightPage: WithPageLayout = () => {
   const { insightId } = router.query;
   const id = insightId as string;
   const { data: insight, isLoading: insightLoading, isError: insightError } = useInsight(id);
+  const insightRepos = insight?.repos.map(repo => repo.repo_id);
+  const { data: repos } = useRepositoriesList(false, insightRepos);
 
   if (insightLoading) {
     return <>Loading</>;
@@ -30,12 +33,7 @@ const EditInsightPage: WithPageLayout = () => {
     <InsightPage
       edit={true}
       insight={insight}
-      pageRepos={insight?.repos.map(repo => ({
-        id: repo.repo_id,
-        full_name: repo.full_name,
-        // TODO: add live data or remove
-        open_issues_count: 0
-      }) as GitHubRepo)}
+      pageRepos={repos}
     />
   );
 };

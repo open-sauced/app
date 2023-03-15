@@ -6,8 +6,8 @@ import { useTopicContributions } from "./useTopicContributions";
 const useNav = (repositories: number[] = []) => {
 
   const router = useRouter();
-  // const { meta: repoMetaData, isError: repoIsError, isLoading: repoIsLoading } = useRepositoriesList(false, repositories);
-  // const { meta: conMetaData, isError: conIsError, isLoading: conIsLoading } = useTopicContributions(10, repositories);
+  const { meta: repoMetaData, isError: repoIsError, isLoading: repoIsLoading } = useRepositoriesList(false, repositories);
+  const { meta: conMetaData, isError: conIsError, isLoading: conIsLoading } = useTopicContributions(10, repositories);
 
 
   const defaultTools = [
@@ -19,11 +19,11 @@ const useNav = (repositories: number[] = []) => {
     },
     {
       name: "Repositories",
-      numOf: 0 // repoIsLoading || repoIsError ? undefined : repoMetaData.itemCount
+      numOf: repoIsLoading || repoIsError ? undefined : repoMetaData.itemCount
     },
     {
       name: "Contributors",
-      numOf: 0 // conIsError ? undefined : conMetaData.itemCount
+      numOf: conIsError ? undefined : conMetaData.itemCount
     }
   ];
 

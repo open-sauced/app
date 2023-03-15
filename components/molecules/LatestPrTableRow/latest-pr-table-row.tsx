@@ -58,7 +58,7 @@ const LatestPrTableRow = ({
             <VscGitPullRequestDraft title="Draft Pull Request" />
           </IconContext.Provider>
         )}
-        <Text title="updated date">{calcDistanceFromToday(new Date(prUpdatedTime))}</Text>
+        <Text title="updated date">{calcDistanceFromToday(new Date(parseInt(prUpdatedTime, 10)))}</Text>
         <Text title={prName} className="!text-light-slate-12 !w-32 md:!w-72 !truncate">
           <a href={`https://github.com/${repoOwner}/${repoName}/pull/${prNumber}`} target="_blank" rel="noreferrer">
             {prName}
@@ -66,10 +66,10 @@ const LatestPrTableRow = ({
         </Text>
       </div>
       <div className={`${isHoverCard && "ml-auto"} justify-end w-[calc(10%-4px)] text-sm text-light-slate-11`}>
-        {calcDistanceFromToday(new Date(prIssuedTime))}
+        {calcDistanceFromToday(new Date(parseInt(prIssuedTime, 10)))}
       </div>
       <div className={`${isHoverCard ? "hidden" : "flex"} justify-end w-[calc(10%-4px)] text-sm text-light-slate-11`}>
-        {merged ? calcDistanceFromToday(new Date(prMergedTime)) : "-"}
+        {merged ? calcDistanceFromToday(new Date(parseInt(prMergedTime, 10))) : "-"}
       </div>
       <div className={`${isHoverCard ? "hidden" : "flex"} justify-end w-[calc(10%-4px)] text-sm text-light-slate-11`}>
         {noOfFilesChanged >= 1000 ? humanizeNumber(noOfFilesChanged, "abbreviation") : noOfFilesChanged}

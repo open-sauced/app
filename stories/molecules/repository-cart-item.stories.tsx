@@ -15,5 +15,5 @@ export const Default = RepositoryCartItemTemplate.bind({});
 Default.args = {
   orgName: "open sauced",
   repoName: "hot",
-  totalIssues: 32
+  totalPrs: 32
 };

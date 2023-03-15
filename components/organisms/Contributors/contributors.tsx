@@ -12,7 +12,6 @@ import { useTopicContributions } from "lib/hooks/useTopicContributions";
 
 import ContributorCard from "../ContributorCard/contributor-card";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
-import useContributors from "lib/hooks/api/useContributors";
 
 const colorKeys = Object.keys(color);
 
@@ -24,17 +23,16 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
   const router = useRouter();
   const { filterName } = router.query;
   const topic = filterName as string;
-  // const { data, setLimit, meta, setPage, page, isError, isLoading } = useTopicContributions(10, repositories);
-  const { data, setLimit, meta, setPage, page, isError, isLoading } = useContributors();
+  const { data, setLimit, meta, setPage, page, isError, isLoading } = useTopicContributions(10, repositories);
   const range = useStore((state) => state.range);
   const store = useStore();
 
   const contributorArray = isError
     ? []
     : data?.map((contributor) => {
-      const timeSinceFirstCommit = calcDistanceFromToday(new Date());
-      const contributorLanguageList = ("").split(",");
-      const repoList = ("").split(",").map((repo) => {
+      const timeSinceFirstCommit = calcDistanceFromToday(new Date(parseInt(contributor.first_commit_time)));
+      const contributorLanguageList = (contributor.langs || "").split(",");
+      const repoList = (contributor.recent_repo_list || "").split(",").map((repo) => {
         const [repoOwner, repoName] = repo.split("/");
 
         return {
@@ -53,9 +51,9 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
 
       return {
         profile: {
-          githubAvatar: `https://www.github.com/${contributor.login}.png?size=60`,
-          githubName: contributor.login,
-          totalPRs: 0, // contributor.recent_pr_total,
+          githubAvatar: `https://www.github.com/${contributor.host_login}.png?size=60`,
+          githubName: contributor.host_login,
+          totalPRs: contributor.recent_pr_total,
           dateOfFirstPR: timeSinceFirstCommit
         },
         languageList,
