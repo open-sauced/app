@@ -64,7 +64,7 @@ const CustomAvatar = ({
           alt={alt ? alt : "Avatar"}
           width={size as number}
           height={size as number}
-          src={avatarURL ? avatarURL : AvatarImage}
+          src={avatarURL}
         />
       ) : (
         <div
@@ -100,7 +100,7 @@ const DefaultAvatar = ({
           className={`${className ? className : ""} object-cover`}
           alt={alt ? alt : "Avatar"}
           fill={true}
-          src={avatarURL ? avatarURL : AvatarImage}
+          src={avatarURL}
         />
       ) : (
         <div
