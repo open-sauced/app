@@ -9,10 +9,10 @@ import { ScatterChartDataItems } from "components/molecules/NivoScatterChart/niv
 import humanizeNumber from "lib/utils/humanizeNumber";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
 import { getInsights, useInsights } from "lib/hooks/useInsights";
-import { useTopicPRs } from "lib/hooks/useTopicPRs";
 import { calcDaysFromToday } from "lib/utils/date-utils";
 import roundedImage from "lib/utils/roundedImages";
 import { useTopicContributions } from "lib/hooks/useTopicContributions";
+import usePullRequests from "lib/hooks/api/usePullRequests";
 
 type ContributorPrMap = { [contributor: string]: DbRepoPR };
 export type PrStatusFilter = "open" | "closed" | "all";
@@ -23,7 +23,7 @@ interface DashboardProps {
 
 export const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
   const { data: insightsData, isLoading } = useInsights(repositories);
-  const { data: prData, isError: prError } = useTopicPRs(undefined, repositories);
+  const { data: prData, isError: prError } = usePullRequests(undefined, repositories);
   const { data: contributorData } = useTopicContributions(10, repositories);
   const [showBots, setShowBots] = useState(false);
   const isMobile = useMediaQuery("(max-width:720px)");
@@ -44,10 +44,10 @@ export const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
     if (curr.state !== prStateFilter && prStateFilter !== "all") return prs;
 
     if (prs[curr.author_login]) {
-      prs[curr.author_login].linesCount += curr.linesCount;
+      prs[curr.author_login].linesCount += Math.abs(curr.additions - curr.deletions);
     } else {
       prs[curr.author_login] = { ...curr };
-      prs[curr.author_login].linesCount = curr.linesCount;
+      prs[curr.author_login].linesCount = Math.abs(curr.additions - curr.deletions);
     }
 
     return prs;
@@ -70,7 +70,7 @@ export const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
       const author_image = author_login.includes("[bot]") ? "octocat" : author_login;
 
       const data = {
-        x: calcDaysFromToday(new Date(parseInt(updated_at, 10))),
+        x: calcDaysFromToday(new Date(updated_at)),
         y: linesCount,
         contributor: author_login,
         image: roundedImage(`https://www.github.com/${author_image}.png?size=60`, process.env.NEXT_PUBLIC_CLOUD_NAME)

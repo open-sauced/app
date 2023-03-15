@@ -29,14 +29,14 @@ const InsightsHub: WithPageLayout = () => {
         const currentUser = await supabase.auth.getSession();
 
         if (!currentUser?.data?.session || onboarded === false) {
-          router.push("/");
+          await router.push("/");
         }
       } catch (e: unknown) {
         router.push("/");
       }
     }
 
-    getUser();
+    getUser().catch(console.error).then(() => {});
   }, [router, onboarded]);
 
   return user && onboarded ? (

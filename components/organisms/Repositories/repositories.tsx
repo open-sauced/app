@@ -73,9 +73,9 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
 
   const handleOnSearch = (search?: string) => {
     if (search && /^[a-zA-Z0-9\-\.]+\/[a-zA-Z0-9\-\.]+$/.test(search)) {
-      router.push(`/${topic}/${toolName}/filter/${search}`);
+      return router.push(`/${topic}/${toolName}/filter/${search}`);
     } else {
-      router.push(`/${topic}/${toolName}`);
+      return router.push(`/${topic}/${toolName}`);
     }
   };
 
