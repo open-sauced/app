@@ -24,8 +24,8 @@ const Avatar = (props: AvatarProps): JSX.Element => {
 
   let imageSource =
     props.avatarURL && props.isCached
-    ? cachedImage(props.avatarURL as string, process.env.NEXT_PUBLIC_CLOUD_NAME)
-    : props.avatarURL;
+      ? cachedImage(props.avatarURL as string, process.env.NEXT_PUBLIC_CLOUD_NAME)
+      : props.avatarURL;
 
   try {
     // Checks if the avatarURL is a proper URL. If not, it will throw an error.
@@ -36,10 +36,10 @@ const Avatar = (props: AvatarProps): JSX.Element => {
   }
 
   switch (typeof props.size) {
-    case "string":
-      return <DefaultAvatar {...props} avatarURL={imageSource} />;
-    case "number":
-      return <CustomAvatar {...props} avatarURL={imageSource} />;
+  case "string":
+    return <DefaultAvatar {...props} avatarURL={imageSource} />;
+  case "number":
+    return <CustomAvatar {...props} avatarURL={imageSource} />;
   }
 };
 
