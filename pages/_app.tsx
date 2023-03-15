@@ -100,7 +100,6 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
         <Toaster position="top-center" />
         <SessionContextProvider supabaseClient={supabase} initialSession={pageProps.initialSession}>
           <TipProvider>
-
             {Component.PageLayout ? (
               <Component.PageLayout>
                 <Component {...pageProps} />

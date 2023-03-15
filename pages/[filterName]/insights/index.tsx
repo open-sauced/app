@@ -1,11 +1,14 @@
 import { useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import clsx from "clsx";
 
 import Button from "components/atoms/Button/button";
 import InsightRow from "components/molecules/InsightRow/insight-row";
 import Search from "components/atoms/Search/search";
 import Title from "components/atoms/Typography/title";
+import Pagination from "components/molecules/Pagination/pagination";
+import PaginationResults from "components/molecules/PaginationResults/pagination-result";
 
 import HubLayout from "layouts/hub";
 import { WithPageLayout } from "interfaces/with-page-layout";
@@ -15,7 +18,7 @@ import { supabase } from "lib/utils/supabase";
 import useSession from "lib/hooks/useSession";
 
 const InsightsHub: WithPageLayout = () => {
-  const { data: insightsData, isError, isLoading } = useUserInsights();
+  const { data: insightsData, meta: insightsMeta, isError, isLoading, page, setPage } = useUserInsights();
   const { user } = useSupabaseAuth();
   const { onboarded } = useSession();
   const router = useRouter();
@@ -70,6 +73,28 @@ const InsightsHub: WithPageLayout = () => {
       >
         Create a new Insight Page
       </Link>
+
+      <div className={clsx("py-1 md:py-4 flex w-full md:mt-5 justify-between items-center", {
+        "hidden": insightsMeta.itemCount <= insightsMeta.limit
+      })}>
+        <PaginationResults
+          metaInfo={insightsMeta}
+          total={insightsMeta.itemCount}
+          entity={"insights"}
+        />
+        <Pagination
+          pages={[]}
+          hasNextPage={insightsMeta.hasNextPage}
+          hasPreviousPage={insightsMeta.hasPreviousPage}
+          totalPage={insightsMeta.pageCount}
+          page={insightsMeta.page}
+          onPageChange={function (page: number): void {
+            setPage(page);
+          }}
+          divisor={true}
+          goToPage
+        />
+      </div>
     </div>
   ) : (
     <></>

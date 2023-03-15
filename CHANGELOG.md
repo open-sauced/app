@@ -5,6 +5,51 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.35.0](https://github.com/open-sauced/insights/compare/v1.34.0...v1.35.0) (2023-03-14)
+
+
+### 🐛 Bug Fixes
+
+* copy correct permalink ([#998](https://github.com/open-sauced/insights/issues/998)) ([7fb7e67](https://github.com/open-sauced/insights/commit/7fb7e67bc56b38c9620ed32a52b233c8793db181))
+* remove deprecated create usage from Zustand ([0d797ec](https://github.com/open-sauced/insights/commit/0d797ec3b340b9ec864b89ffd79f36bc47a4d64f))
+
+
+### 🍕 Features
+
+* add golang language topic to supported interests ([#995](https://github.com/open-sauced/insights/issues/995)) ([8753d9d](https://github.com/open-sauced/insights/commit/8753d9d3149aa0c5162cd37317d4a45419c3a689))
+* add official logos for pre-defined topics. ([#966](https://github.com/open-sauced/insights/issues/966)) ([ce3f579](https://github.com/open-sauced/insights/commit/ce3f579388dbdb26e529fe1f00aadfc1f018851b))
+* add pagination component to feeds and profile ([#996](https://github.com/open-sauced/insights/issues/996)) ([02007d6](https://github.com/open-sauced/insights/commit/02007d6ae98cf1f0a7d23e73d6ce3af773f86ec4))
+* add pagination to user insights page ([#870](https://github.com/open-sauced/insights/issues/870)) ([39a0700](https://github.com/open-sauced/insights/commit/39a0700dcacb762404ac81a8e9875ad01d98b90a))
+* adds zendesk to the app ([#979](https://github.com/open-sauced/insights/issues/979)) ([383df83](https://github.com/open-sauced/insights/commit/383df8355697dd15f811f546003ba79a6131485c))
+
+## [1.35.0-beta.5](https://github.com/open-sauced/insights/compare/v1.35.0-beta.4...v1.35.0-beta.5) (2023-03-14)
+
+
+### 🍕 Features
+
+* add pagination to user insights page ([#870](https://github.com/open-sauced/insights/issues/870)) ([39a0700](https://github.com/open-sauced/insights/commit/39a0700dcacb762404ac81a8e9875ad01d98b90a))
+
+## [1.35.0-beta.4](https://github.com/open-sauced/insights/compare/v1.35.0-beta.3...v1.35.0-beta.4) (2023-03-14)
+
+
+### 🍕 Features
+
+* add golang language topic to supported interests ([#995](https://github.com/open-sauced/insights/issues/995)) ([8753d9d](https://github.com/open-sauced/insights/commit/8753d9d3149aa0c5162cd37317d4a45419c3a689))
+
+## [1.35.0-beta.3](https://github.com/open-sauced/insights/compare/v1.35.0-beta.2...v1.35.0-beta.3) (2023-03-14)
+
+
+### 🐛 Bug Fixes
+
+* remove deprecated create usage from Zustand ([0d797ec](https://github.com/open-sauced/insights/commit/0d797ec3b340b9ec864b89ffd79f36bc47a4d64f))
+
+## [1.35.0-beta.2](https://github.com/open-sauced/insights/compare/v1.35.0-beta.1...v1.35.0-beta.2) (2023-03-14)
+
+
+### 🍕 Features
+
+* add pagination component to feeds and profile ([#996](https://github.com/open-sauced/insights/issues/996)) ([02007d6](https://github.com/open-sauced/insights/commit/02007d6ae98cf1f0a7d23e73d6ce3af773f86ec4))
+
 ## [1.35.0-beta.1](https://github.com/open-sauced/insights/compare/v1.34.1-beta.1...v1.35.0-beta.1) (2023-03-14)
 
 
