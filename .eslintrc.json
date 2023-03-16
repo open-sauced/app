@@ -3,7 +3,6 @@
   "rules": {
     "comma-dangle": "error",
     "quotes": "error",
-    "camelcase": "error",
     "jsx-quotes": "error",
     "semi": "error",
     "indent": ["error", 2]

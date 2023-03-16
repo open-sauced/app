@@ -17,7 +17,7 @@ import { validateEmail } from "lib/utils/validate-email";
 import { timezones } from "lib/utils/timezones";
 import { updateEmailPreferences } from "lib/hooks/updateEmailPreference";
 import { useFetchUser } from "lib/hooks/useFetchUser";
-import getInterestOptions from "lib/utils/getInterestOptions";
+import { getInterestOptions } from "lib/utils/getInterestOptions";
 
 interface userSettingsPageProps {
   user: User | null;

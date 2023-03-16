@@ -17,6 +17,8 @@ import HighlightInputForm from "components/molecules/HighlightInput/highlight-in
 import HighlightsFilterCard from "components/molecules/HighlightsFeedCard/highlights-filter-card";
 import ProfileLayout from "layouts/profile";
 import { WithPageLayout } from "interfaces/with-page-layout";
+import Pagination from "components/molecules/Pagination/pagination";
+import PaginationResults from "components/molecules/PaginationResults/pagination-result";
 
 const Feeds: WithPageLayout = () => {
   const { user } = useSupabaseAuth();
@@ -33,7 +35,7 @@ const Feeds: WithPageLayout = () => {
 
   const [selectedRepo, setSelectedRepo] = useState("");
 
-  const { data, isLoading, mutate } = useFetchAllHighlights(selectedRepo);
+  const { data, isLoading, mutate, meta, setPage } = useFetchAllHighlights(selectedRepo);
   const { data: singleHighlight } = useFetchSingleHighlight(id as unknown as number);
 
   console.log("THE COMPONENT IS RENDERING");
@@ -154,7 +156,7 @@ const Feeds: WithPageLayout = () => {
                   data.length > 0 &&
                   // eslint-disable-next-line camelcase
                   data.map(({ id, url, title, created_at, highlight, name, login }) => (
-                    <div key={id} className="flex flex-col gap-6 px-3 ">
+                    <div key={id} className="flex flex-col gap-6 px-1 ">
                       <div className="flex gap-3 items-center  ">
                         <Link href={`/user/${login}`} className="flex items-center gap-3">
                           <Avatar
@@ -177,6 +179,25 @@ const Feeds: WithPageLayout = () => {
                     </div>
                   ))}
               </div>
+            </div>
+          )}
+          {meta.pageCount > 1 && (
+            <div className="mt-10 max-w-[48rem] flex px-2 items-center justify-between">
+              <div>
+                <PaginationResults metaInfo={meta} total={meta.itemCount} entity={"highlights"} />
+              </div>
+              <Pagination
+                pages={[]}
+                totalPage={meta.pageCount}
+                page={meta.page}
+                pageSize={meta.itemCount}
+                goToPage
+                hasNextPage={meta.hasNextPage}
+                hasPreviousPage={meta.hasPreviousPage}
+                onPageChange={function (page: number): void {
+                  setPage(page);
+                }}
+              />
             </div>
           )}
         </TabsContent>
