@@ -5,9 +5,9 @@ import { useState } from "react";
 import Selector from "components/atoms/Selector/selector";
 import { TeamMemberData } from "../TeamMembersConfig/team-members-config";
 
-type TeamMemberRowProps = {
+interface TeamMemberRowProps extends TeamMemberData {
   className?: string;
-} & TeamMemberData;
+}
 
 const mapRoleToText: Record<TeamMemberRowProps["role"], string> = {
   admin: "Admin",
