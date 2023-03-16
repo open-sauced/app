@@ -26,20 +26,19 @@ const TopNav: React.FC = () => {
           {!!user && onboarded ? (
             <>
               <Link
-                className={
-                  "text-sm " + (router.asPath === "/hub/insights" ? "text-light-orange-10" : "text-light-slate-10")
-                }
+                className={`text-sm ${
+                  router.asPath === "/hub/insights" ? "text-light-orange-10" : "text-light-slate-10"
+                }`}
                 href={"/hub/insights"}
               >
                 Insights Hub
               </Link>
               <Link
-                className={
-                  "text-sm " +
-                  (router.asPath === `/${userInterest}/dashboard/filter/recent`
+                className={`text-sm ${
+                  router.asPath === `/${userInterest}/dashboard/filter/recent`
                     ? "text-light-orange-10"
-                    : "text-light-slate-10")
-                }
+                    : "text-light-slate-10"
+                }`}
                 href={`/${userInterest}/dashboard/filter/recent`}
               >
                 Explore
@@ -49,7 +48,7 @@ const TopNav: React.FC = () => {
             ""
           )}
           <Link
-            className={"text-sm " + (router.asPath === "/feed" ? "text-light-orange-10" : "text-light-slate-10")}
+            className={`text-sm ${router.asPath === "/feed" ? "text-light-orange-10" : "text-light-slate-10"}`}
             href={"/feed"}
           >
             Highlights
