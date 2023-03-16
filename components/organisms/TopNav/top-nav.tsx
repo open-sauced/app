@@ -25,7 +25,7 @@ const TopNav: React.FC = () => {
           {!!user && onboarded ? (
             <>
               <Link className="text-sm text-light-slate-10" href={"/hub/insights"}>
-                Insights Hub
+                Insights
               </Link>
               <Link className="text-sm text-light-slate-10" href={`/${userInterest}/dashboard/filter/recent`}>
                 Explore
