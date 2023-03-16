@@ -20,6 +20,7 @@ import { supabase } from "lib/utils/supabase";
 
 import SEO from "layouts/SEO/SEO";
 import { Toaster } from "components/molecules/Toaster/toaster";
+import Script from "next/script";
 
 type ComponentWithPageLayout = AppProps & {
   Component: AppProps["Component"] & {
@@ -109,6 +110,11 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
               <Component {...pageProps} />
             )}
           </TipProvider>
+          <Script
+            id="ze-snippet"
+            src="https://static.zdassets.com/ekr/snippet.js?key=765edcc9-b888-4651-8b22-79e4365e06f1"
+            strategy="afterInteractive"
+          />
         </SessionContextProvider>
       </SWRConfig>
     </>
