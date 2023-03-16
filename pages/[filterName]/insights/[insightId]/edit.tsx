@@ -4,9 +4,9 @@ import InsightPage from "components/organisms/InsightPage/InsightPage";
 import HubLayout from "layouts/hub";
 
 import { WithPageLayout } from "interfaces/with-page-layout";
-import { useRepositoriesList } from "lib/hooks/useRepositoriesList";
 import useInsight from "lib/hooks/useInsight";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
+import useRepositories from "lib/hooks/api/useRepositories";
 
 const EditInsightPage: WithPageLayout = () => {
   const { user } = useSupabaseAuth();
@@ -15,7 +15,7 @@ const EditInsightPage: WithPageLayout = () => {
   const id = insightId as string;
   const { data: insight, isLoading: insightLoading, isError: insightError } = useInsight(id);
   const insightRepos = insight?.repos.map(repo => repo.repo_id);
-  const { data: repos } = useRepositoriesList(false, insightRepos);
+  const { data: repos } = useRepositories(insightRepos);
 
   if (insightLoading) {
     return <>Loading</>;

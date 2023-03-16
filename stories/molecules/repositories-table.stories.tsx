@@ -17,8 +17,7 @@ export const Default = RepositoriesTableTemplate.bind({});
 const previewRepositories = [
   {
     id: "1",
-    name: "Insights",
-    handle: "opensauced",
+    full_name: "open-sauced/insights",
     activity: "High",
     prOverview: {
       open: 10,
@@ -134,8 +133,7 @@ const previewRepositories = [
   },
   {
     id: "2",
-    name: "cli",
-    handle: "npm",
+    full_name: "npm/cli",
     activity: "High",
     prOverview: {
       open: 2,
@@ -251,8 +249,7 @@ const previewRepositories = [
   },
   {
     id: "3",
-    name: "flowy",
-    handle: "alyssaxuu",
+    full_name: "flowy/alyssaxuu",
     activity: "High",
     prOverview: {
       open: 80,

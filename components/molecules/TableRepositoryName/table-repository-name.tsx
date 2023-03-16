@@ -4,15 +4,14 @@ import { StaticImageData } from "next/image";
 
 interface TableRepositoryNameProps {
   avatarURL?: string | StaticImageData;
-  name?: string;
-  handle?: string;
+  fullName: string;
   isLoading?: boolean;
   topic?: string;
   user?: string | string[];
 }
 
-const TableRepositoryName = ({ avatarURL, name, handle, topic, user }: TableRepositoryNameProps): JSX.Element => {
-
+const TableRepositoryName = ({ avatarURL, fullName }: TableRepositoryNameProps): JSX.Element => {
+  const [handle, name] = fullName?.split("/");
   return (
     <div className="flex items-center gap-2.5">
       {/* Avatar */}

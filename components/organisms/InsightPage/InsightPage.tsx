@@ -66,7 +66,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
 
   const reposRemoved = repoHistory.map((repo) => {
     const totalPrs =
-      (repo.openPrsCount || 0) + (repo.closedPrsCount || 0) + (repo.mergedPrsCount || 0) + (repo.draftPrsCount || 0);
+      (repo.open_prs_count || 0) + (repo.closed_prs_count || 0) + (repo.merged_prs_count || 0) + (repo.draft_prs_count || 0);
 
     return {
       orgName: repo.owner,
@@ -371,10 +371,10 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
         >
           {repos.map((repo) => {
             const totalPrs =
-              (repo.openPrsCount || 0) +
-              (repo.closedPrsCount || 0) +
-              (repo.mergedPrsCount || 0) +
-              (repo.draftPrsCount || 0);
+              (repo.open_prs_count || 0) +
+              (repo.closed_prs_count || 0) +
+              (repo.merged_prs_count || 0) +
+              (repo.draft_prs_count || 0);
 
             return (
               <RepositoryCartItem
