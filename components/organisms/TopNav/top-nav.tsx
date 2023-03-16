@@ -25,20 +25,11 @@ const TopNav: React.FC = () => {
           <HeaderLogo withBg={false} textIsBlack />
           {!!user && onboarded ? (
             <>
-              <Link
-                className={`text-sm ${
-                  router.asPath === "/hub/insights" ? "text-light-orange-10" : "text-light-slate-10"
-                }`}
-                href={"/hub/insights"}
-              >
+              <Link className={`text-sm ${getActiveStyle(router.asPath === "/hub/insights")}`} href={"/hub/insights"}>
                 Insights Hub
               </Link>
               <Link
-                className={`text-sm ${
-                  router.asPath === `/${userInterest}/dashboard/filter/recent`
-                    ? "text-light-orange-10"
-                    : "text-light-slate-10"
-                }`}
+                className={`text-sm ${getActiveStyle(router.asPath === `/${userInterest}/dashboard/filter/recent`)}`}
                 href={`/${userInterest}/dashboard/filter/recent`}
               >
                 Explore
@@ -47,10 +38,7 @@ const TopNav: React.FC = () => {
           ) : (
             ""
           )}
-          <Link
-            className={`text-sm ${router.asPath === "/feed" ? "text-light-orange-10" : "text-light-slate-10"}`}
-            href={"/feed"}
-          >
+          <Link className={`text-sm ${getActiveStyle(router.asPath === "/feed")}`} href={"/feed"}>
             Highlights
           </Link>
         </div>
@@ -59,5 +47,9 @@ const TopNav: React.FC = () => {
     </header>
   );
 };
+
+function getActiveStyle(isActive: boolean) {
+  return isActive ? "text-light-orange-10" : "text-light-slate-10";
+}
 
 export default TopNav;
