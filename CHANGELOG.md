@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.36.0-beta.4](https://github.com/open-sauced/insights/compare/v1.36.0-beta.3...v1.36.0-beta.4) (2023-03-16)
+
+
+### 🍕 Features
+
+* add context to the Insights list page ([#1017](https://github.com/open-sauced/insights/issues/1017)) ([bd293d1](https://github.com/open-sauced/insights/commit/bd293d1a7e3d5912b6ae30378158d8ed1d1131de))
+
 ## [1.36.0-beta.3](https://github.com/open-sauced/insights/compare/v1.36.0-beta.2...v1.36.0-beta.3) (2023-03-15)
 
 
