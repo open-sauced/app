@@ -44,7 +44,7 @@ const InsightsHub: WithPageLayout = () => {
 
   return user && onboarded ? (
     <div className="flex  flex-col w-full gap-4 py-2 container">
-      <div className="flex justify-between py-2">
+      <div className="block sm:flex justify-between py-2 ">
         <div>
           <Title className="!text-2xl !leading-none !font-medium  mb-4" level={1}>
             Insights
@@ -53,7 +53,7 @@ const InsightsHub: WithPageLayout = () => {
             Welcome to your Insights Hub! Here, you can set up pages to view all of your insights or other open source insights in one place.
           </Text>
         </div>
-        <div className="flex gap-3 items-center">
+        <div className="flex gap-3 items-center mt-4">
           {/* Search box temporarily hidden */}
           <div className="w-58 hidden">
             <Search placeholder="Search repositories" className="max-w-full" name={"query"} />
