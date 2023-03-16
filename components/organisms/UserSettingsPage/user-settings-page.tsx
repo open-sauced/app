@@ -107,7 +107,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
     if (data) {
       toast({ description: "Updated successfully", variant: "success" });
     } else {
-      toast({ description: "An error occured!!!", variant: "danger" });
+      toast({ description: "An error occured!", variant: "danger" });
     }
   };
 
@@ -119,7 +119,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
     if (data) {
       toast({ description: "Updated successfully", variant: "success" });
     } else {
-      toast({ description: "An error occured!!!", variant: "danger" });
+      toast({ description: "An error occured!", variant: "danger" });
     }
   };
 
@@ -153,7 +153,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
     if (data) {
       toast({ description: "Updated successfully", variant: "success" });
     } else {
-      toast({ description: "An error occured!!!", variant: "danger" });
+      toast({ description: "An error occured!", variant: "danger" });
     }
   };
 

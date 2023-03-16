@@ -107,7 +107,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
           setIsDivFocused(false);
           toast({ description: "Highlight Posted!", title: "Success", variant: "success" });
         } else {
-          toast({ description: "An error occured!!!", title: "Error", variant: "danger" });
+          toast({ description: "An error occured!", title: "Error", variant: "danger" });
         }
       }
     } else {

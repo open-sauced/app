@@ -117,7 +117,7 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
           setOpen(false);
         } else {
           setLoading(false);
-          setError("An error occurred while updating!!!");
+          setError("An error occurred while updating!");
         }
       }
     } else {
@@ -140,7 +140,7 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
     } else {
       console.log(res);
       setAlertOpen(false);
-      toast({ description: "An error occured!!!", variant: "danger" });
+      toast({ description: "An error occured!", variant: "danger" });
     }
   };
 
