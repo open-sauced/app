@@ -23,22 +23,18 @@ import PaginationResults from "components/molecules/PaginationResults/pagination
 const Feeds: WithPageLayout = () => {
   const { user } = useSupabaseAuth();
   const router = useRouter();
+  const [hydrated, setHydrated] = useState(false);
+  const [openSingleHighlight, setOpenSingleHighlight] = useState(false);
+  const [selectedRepo, setSelectedRepo] = useState("");
+
   const { id } = router.query;
   const highlightId = id as string;
 
-  const highlightIdRef = useRef<string | null>(highlightId ?? null);
-  highlightIdRef.current = highlightId;
-
-  const [openSingleHighlight, setOpenSingleHighlight] = useState(false);
   const { data: repos } = useFetchHighlightRepos();
-  console.log({openSingleHighlight, id, ref: highlightIdRef.current});
-
-  const [selectedRepo, setSelectedRepo] = useState("");
 
   const { data, isLoading, mutate, meta, setPage } = useFetchAllHighlights(selectedRepo);
   const { data: singleHighlight } = useFetchSingleHighlight(id as unknown as number);
 
-  console.log("THE COMPONENT IS RENDERING");
   const repoList =
     repos && // eslint-disable-next-line camelcase
     repos.map(({ full_name }) => {
@@ -50,24 +46,24 @@ const Feeds: WithPageLayout = () => {
 
 
   useEffect(() => {
-    console.log("USE EFFECT IS RUNNING");
+    if (selectedRepo) {
+      router.push(`/feed?repo=${selectedRepo}`);
+    }
 
-    (async () => {
-      if (selectedRepo) {
-        await router.push(`/feed?repo=${selectedRepo}`).catch(console.error);
-      }
+    if (highlightId) {
+      setOpenSingleHighlight(true);
+    }
 
-      if (highlightIdRef.current) {
-        await router.push(`/feed/${highlightId}`).catch(console.error);
-        setOpenSingleHighlight(true);
-      }
-
-      if (!highlightIdRef.current && !selectedRepo) {
-        console.log("EXECUTING INSIDE SELECTED REPO");
-        await router.push("/feed").catch(console.error);
-      }
-    })();
+    if (!highlightId && !selectedRepo) {
+      router.push("/feed");
+    }
   }, [selectedRepo, highlightId]);
+
+  useEffect(() => {
+    setHydrated(true);
+  }, []);
+
+  if (!hydrated) return <></>;
 
   return (
     <div className="container  mx-auto px-2 md:px-16 gap-12 lg:justify-end pt-12 flex flex-col md:flex-row">
@@ -125,7 +121,7 @@ const Feeds: WithPageLayout = () => {
         </TabsList>
         <TabsContent value="Highlights">
           {data && data.length > 0 && (
-            <div>
+            <>
               {user && (
                 <div className="lg:gap-x-3 px-3 pt-4 flex max-w-[48rem]">
                   <div className="hidden lg:inline-flex">
@@ -142,7 +138,7 @@ const Feeds: WithPageLayout = () => {
               )}
 
               {/* Highlights List section */}
-              <div className="mt-10 flex gap-8 flex-col ">
+              <div className="mt-10 flex gap-8 flex-col">
                 {isLoading && (
                   <div className="flex flex-col gap-3">
                     <div className="flex gap-3">
@@ -156,8 +152,8 @@ const Feeds: WithPageLayout = () => {
                   data.length > 0 &&
                   // eslint-disable-next-line camelcase
                   data.map(({ id, url, title, created_at, highlight, name, login }) => (
-                    <div key={id} className="flex flex-col gap-6 px-1 ">
-                      <div className="flex gap-3 items-center  ">
+                    <div key={id} className="flex flex-col gap-6 px-1">
+                      <div className="flex gap-3 items-center">
                         <Link href={`/user/${login}`} className="flex items-center gap-3">
                           <Avatar
                             alt="user profile avatar"
@@ -173,13 +169,13 @@ const Feeds: WithPageLayout = () => {
                           </span>
                         </Link>
                       </div>
-                      <div className=" bg-light-slate-1 border p-4 md:px-6 lg:px-12 py-6 rounded-xl">
+                      <div className="bg-light-slate-1 border p-4 md:px-6 lg:px-12 py-6 rounded-xl">
                         <ContributorHighlightCard title={title} desc={highlight} prLink={url} user={login} id={id} />
                       </div>
                     </div>
                   ))}
               </div>
-            </div>
+            </>
           )}
           {meta.pageCount > 1 && (
             <div className="mt-10 max-w-[48rem] flex px-2 items-center justify-between">

@@ -202,12 +202,10 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() => handleCopyToClipboard(`${host}/feed/${id}`)}
-                  className="rounded-md"
+                  className="rounded-md flex gap-2.5 py-1 items-center pl-3 pr-7"
                 >
-                  <div className="flex gap-2.5 py-1 items-center pl-3 pr-7">
-                    <BsLink45Deg size={22} />
-                    <span>Copy link</span>
-                  </div>
+                  <BsLink45Deg size={22} />
+                  <span>Copy link</span>
                 </DropdownMenuItem>
                 <DropdownMenuItem className="rounded-md hidden">
                   <div className="flex gap-2.5 py-1  items-center pl-3 pr-7">
