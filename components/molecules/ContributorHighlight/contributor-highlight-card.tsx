@@ -17,7 +17,6 @@ import { FaUserPlus } from "react-icons/fa";
 import { GrFlag } from "react-icons/gr";
 import { useSWRConfig } from "swr";
 
-import { ToastTrigger } from "lib/utils/toast-trigger";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import GhOpenGraphImg from "../GhOpenGraphImg/gh-open-graph-img";
 import {
@@ -45,6 +44,7 @@ import {
   AlertDialogTrigger
 } from "../AlertDialog/alert-dialog";
 import { deleteHighlight } from "lib/hooks/deleteHighlight";
+import { useToast } from "lib/hooks/useToast";
 
 interface ContributorHighlightCardProps {
   title?: string;
@@ -54,6 +54,7 @@ interface ContributorHighlightCardProps {
   id: string;
 }
 const ContributorHighlightCard = ({ title, desc, prLink, user, id }: ContributorHighlightCardProps) => {
+  const { toast } = useToast();
   const twitterTweet = `${title || "Open Source Highlight"} - OpenSauced from ${user}`;
   const reportSubject = `Reported Highlight ${user}: ${title}`;
   const { mutate } = useSWRConfig();
@@ -80,7 +81,7 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
     const url = new URL(content).toString();
     try {
       await navigator.clipboard.writeText(url);
-      ToastTrigger({ message: "Copied to clipboard", type: "success" });
+      toast({ description: "Copied to clipboard", variant: "success" });
     } catch (error) {
       console.log(error);
     }
@@ -112,7 +113,7 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
         );
         setLoading(false);
         if (res) {
-          ToastTrigger({ message: "Highlights Updated Successfully", type: "success" });
+          toast({ description: "Highlights Updated Successfully", variant: "success" });
           setOpen(false);
         } else {
           setLoading(false);
@@ -129,7 +130,7 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
     const res = await deleteHighlight(id);
     setDeleteLoading(false);
     if (res !== false) {
-      ToastTrigger({ message: "Highlights Updated Successfully", type: "success" });
+      toast({ description: "Highlights Updated Successfully", variant: "success" });
       setAlertOpen(false);
       setOpen(false);
       setTimeout(() => {
@@ -139,7 +140,7 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
     } else {
       console.log(res);
       setAlertOpen(false);
-      ToastTrigger({ message: "An error occured!!!", type: "error" });
+      toast({ description: "An error occured!!!", variant: "danger" });
     }
   };
 
@@ -201,10 +202,7 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
                       <span>Share to Linkedin</span>
                     </a>
                   </DropdownMenuItem>
-                  <DropdownMenuItem
-                    onClick={() => handleCopyToClipboard(`${host}/feed/${id}`)}
-                    className="rounded-md"
-                  >
+                  <DropdownMenuItem onClick={() => handleCopyToClipboard(`${host}/feed/${id}`)} className="rounded-md">
                     <div className="flex gap-2.5 py-1 items-center pl-3 pr-7">
                       <BsLink45Deg size={22} />
                       <span>Copy link</span>

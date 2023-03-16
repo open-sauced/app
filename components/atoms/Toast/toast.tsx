@@ -2,7 +2,7 @@ import React from "react";
 
 import * as ToastPrimitives from "@radix-ui/react-toast";
 import clsx from "clsx";
-import { AiOutlineClose } from "react-icons/ai";
+import { IoClose } from "react-icons/io5";
 
 const ToastProvider = ToastPrimitives.Provider;
 
@@ -25,16 +25,12 @@ const Toast = React.forwardRef<
   React.ElementRef<typeof ToastPrimitives.Root>,
   React.ComponentPropsWithoutRef<typeof ToastPrimitives.Root> &{variant? : "success" | "warning" | "danger"  }
 >(({ className, variant, ...props }, ref) => {
-  const styles = {
-    success: " bg-orange-500",
-    warning: "",
-    danger: ""
-  };
+
   return (
     <ToastPrimitives.Root
 
       ref={ref}
-      className={clsx(className, variant === "success" && styles.success, variant === "warning" && styles.warning, variant === "danger" && styles.danger, "bg-white border-slate-200  p-2 text-center")}
+      className={clsx(className,  "bg-light-slate-2 rounded-lg border-light-slate-6 p-2 text-center")}
       {...props}
     />
   );
@@ -63,13 +59,13 @@ const ToastClose = React.forwardRef<
   <ToastPrimitives.Close
     ref={ref}
     className={clsx(
-      "absolute top-2 right-2 rounded-md p-1 text-slate-500 opacity-0 transition-opacity hover:text-slate-900 focus:opacity-100 focus:outline-none focus:ring-2 group-hover:opacity-100 group-[.destructive]:text-red-300 group-[.destructive]:hover:text-red-50 group-[.destructive]:focus:ring-red-400 group-[.destructive]:focus:ring-offset-red-600 dark:hover:text-slate-50",
+      "rounded-full p-1 z-50 bg-slate-100 text-slate-500 transition-opacity hover:bg-slate-200  hover:text-slate-900 focus:opacity-100 focus:outline-none focus:ring-2  group-[.destructive]:text-red-300 group-[.destructive]:hover:text-red-50 group-[.destructive]:focus:ring-red-400 group-[.destructive]:focus:ring-offset-red-600 ",
       className
     )}
     toast-close=""
     {...props}
   >
-    <AiOutlineClose color="#fff" size={20} />
+    <IoClose color="black" size={20} />
   </ToastPrimitives.Close>
 ));
 ToastClose.displayName = ToastPrimitives.Close.displayName;
@@ -86,7 +82,7 @@ const ToastDescription = React.forwardRef<
   React.ElementRef<typeof ToastPrimitives.Description>,
   React.ComponentPropsWithoutRef<typeof ToastPrimitives.Description>
 >(({ className, ...props }, ref) => (
-  <ToastPrimitives.Description ref={ref} className={clsx("text-sm opacity-90", className)} {...props} />
+  <ToastPrimitives.Description ref={ref} className={clsx("text-sm opacity-60", className)} {...props} />
 ));
 ToastDescription.displayName = ToastPrimitives.Description.displayName;
 

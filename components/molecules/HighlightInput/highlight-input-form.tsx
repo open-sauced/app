@@ -2,7 +2,6 @@ import Button from "components/atoms/Button/button";
 import { Textarea } from "components/atoms/Textarea/text-area";
 import { createHighlights } from "lib/hooks/createHighlights";
 
-import { ToastTrigger } from "lib/utils/toast-trigger";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useSWRConfig } from "swr";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
@@ -92,8 +91,8 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
 
       if (res.isError) {
         setLoading(false);
-        // ToastTrigger({ message: "A valid Pull request Link is required", type: "error" });
-        toast({ description: "A valid Pull request Link is required", variant: "success" });
+
+        toast({ description: "A valid Pull request Link is required", variant: "danger" });
         return;
       } else {
         setLoading(true);
@@ -109,14 +108,13 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
           setBodyText("");
           setTitle("");
           setIsDivFocused(false);
-          // ToastTrigger({ message: "Highlight Posted!", type: "success" });
-          toast({ description: "Highlight Posted!" });
+          toast({ description: "Highlight Posted!", title: "Success", variant: "success" });
         } else {
-          ToastTrigger({ message: "An error occured!!!", type: "error" });
+          toast({ description: "An error occured!!!", title: "Error", variant: "danger" });
         }
       }
     } else {
-      ToastTrigger({ message: "Please provide a valid pull request link!", type: "error" });
+      toast({ description: "Please provide a valid pull request link!", title: "Error", variant: "danger" });
     }
   };
 
