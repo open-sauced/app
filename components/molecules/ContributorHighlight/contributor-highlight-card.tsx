@@ -130,7 +130,7 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
     const res = await deleteHighlight(id);
     setDeleteLoading(false);
     if (res !== false) {
-      toast({ description: "Highlights Updated Successfully", variant: "success" });
+      toast({ description: "Highlights deleted Successfully", variant: "success" });
       setAlertOpen(false);
       setOpen(false);
       setTimeout(() => {

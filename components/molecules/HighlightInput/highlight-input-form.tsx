@@ -3,8 +3,7 @@ import { Textarea } from "components/atoms/Textarea/text-area";
 import { createHighlights } from "lib/hooks/createHighlights";
 
 import { ChangeEvent, useEffect, useRef, useState } from "react";
-import { useSWRConfig } from "swr";
-import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
+
 import GhOpenGraphImg from "../GhOpenGraphImg/gh-open-graph-img";
 import { generateApiPrUrl } from "lib/utils/github";
 import { fetchGithubPRInfo } from "lib/hooks/fetchGithubPRInfo";
@@ -15,8 +14,6 @@ interface HighlightInputFormProps {
 }
 
 const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.Element => {
-  const { user } = useSupabaseAuth();
-  const { mutate } = useSWRConfig();
   const [isDivFocused, setIsDivFocused] = useState(false);
   const [loading, setLoading] = useState(false);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);

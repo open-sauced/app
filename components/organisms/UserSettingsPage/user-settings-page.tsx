@@ -11,13 +11,14 @@ import SelectOption from "components/atoms/Select/select-option";
 import LanguagePill from "components/atoms/LanguagePill/LanguagePill";
 
 import { updateUser, UpdateUserPayload } from "lib/hooks/update-user";
-import { ToastTrigger } from "lib/utils/toast-trigger";
+
 import { authSession } from "lib/hooks/authSession";
 import { validateEmail } from "lib/utils/validate-email";
 import { timezones } from "lib/utils/timezones";
 import { updateEmailPreferences } from "lib/hooks/updateEmailPreference";
 import { useFetchUser } from "lib/hooks/useFetchUser";
 import { getInterestOptions } from "lib/utils/getInterestOptions";
+import { useToast } from "lib/hooks/useToast";
 
 interface userSettingsPageProps {
   user: User | null;
@@ -31,6 +32,8 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
   const { data: insightsUser } = useFetchUser(user?.user_metadata.user_name, {
     revalidateOnFocus: false
   });
+
+  const { toast } = useToast();
 
   const [isValidEmail, setIsValidEmail] = useState<boolean>(true);
   const [displayLocalTime, setDisplayLocalTime] = useState(false);
@@ -102,9 +105,9 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
   const handleUpdateEmailPreference = async () => {
     const data = await updateEmailPreferences({ ...emailPreference });
     if (data) {
-      ToastTrigger({ message: "Updated successfully", type: "success" });
+      toast({ description: "Updated successfully", variant: "success" });
     } else {
-      ToastTrigger({ message: "An error occured!!!", type: "error" });
+      toast({ description: "An error occured!!!", variant: "danger" });
     }
   };
 
@@ -114,9 +117,9 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
       params: "interests"
     });
     if (data) {
-      ToastTrigger({ message: "Updated successfully", type: "success" });
+      toast({ description: "Updated successfully", variant: "success" });
     } else {
-      ToastTrigger({ message: "An error occured!!!", type: "error" });
+      toast({ description: "An error occured!!!", variant: "danger" });
     }
   };
 
@@ -148,9 +151,9 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
     });
 
     if (data) {
-      ToastTrigger({ message: "Updated successfully", type: "success" });
+      toast({ description: "Updated successfully", variant: "success" });
     } else {
-      ToastTrigger({ message: "An error occured!!!", type: "error" });
+      toast({ description: "An error occured!!!", variant: "danger" });
     }
   };
 
