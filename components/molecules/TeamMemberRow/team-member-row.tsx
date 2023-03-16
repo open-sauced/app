@@ -22,7 +22,7 @@ const TeamMemberRow  = ({ className, name, avatarUrl, role }: TeamMemberRowProps
 
   const pending = role == "pending";
 
-  const handleRoleChange = (role: string) => {}
+  const handleRoleChange = (role: string) => {};
 
   return(
     <div className={`flex justify-between items-center ${className && className} ${pending && "text-light-slate-10"}`}>
@@ -32,7 +32,7 @@ const TeamMemberRow  = ({ className, name, avatarUrl, role }: TeamMemberRowProps
       </div>
       <div>
         <div className="flex items-center gap-3">
-          {mapRoleToText[role]} {!pending && <AiOutlineCaretDown onClick={() => {setIsMenuOpen(!isMenuOpen)}} />}
+          {mapRoleToText[role]} {!pending && <AiOutlineCaretDown onClick={() => {setIsMenuOpen(!isMenuOpen);}} />}
         </div>
         { !pending && isMenuOpen && (
           <Selector filterOptions={["Admin", "can edit", "can view"]} selected={mapRoleToText[role]} variation="check" handleFilterClick={handleRoleChange} />
