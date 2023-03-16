@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 
@@ -24,14 +24,19 @@ const Feeds: WithPageLayout = () => {
   const { id } = router.query;
   const highlightId = id as string;
 
+  const highlightIdRef = useRef<string | null>(highlightId ?? null);
+  highlightIdRef.current = highlightId;
+
   const [openSingleHighlight, setOpenSingleHighlight] = useState(false);
   const { data: repos } = useFetchHighlightRepos();
+  console.log({openSingleHighlight, id, ref: highlightIdRef.current});
 
   const [selectedRepo, setSelectedRepo] = useState("");
 
   const { data, isLoading, mutate } = useFetchAllHighlights(selectedRepo);
   const { data: singleHighlight } = useFetchSingleHighlight(id as unknown as number);
 
+  console.log("THE COMPONENT IS RENDERING");
   const repoList =
     repos && // eslint-disable-next-line camelcase
     repos.map(({ full_name }) => {
@@ -41,18 +46,25 @@ const Feeds: WithPageLayout = () => {
       return { repoName: repo, repoIcon: `https://www.github.com/${orgName}.png?size=300`, full_name };
     });
 
+
   useEffect(() => {
-    if (selectedRepo) {
-      router.push(`/feed?repo=${selectedRepo}`).catch(console.error);
-    }
+    console.log("USE EFFECT IS RUNNING");
 
-    if (highlightId) {
-      setOpenSingleHighlight(true);
-    }
+    (async () => {
+      if (selectedRepo) {
+        await router.push(`/feed?repo=${selectedRepo}`).catch(console.error);
+      }
 
-    if (!highlightId && !selectedRepo) {
-      router.push("/feed").catch(console.error);
-    }
+      if (highlightIdRef.current) {
+        await router.push(`/feed/${highlightId}`).catch(console.error);
+        setOpenSingleHighlight(true);
+      }
+
+      if (!highlightIdRef.current && !selectedRepo) {
+        console.log("EXECUTING INSIDE SELECTED REPO");
+        await router.push("/feed").catch(console.error);
+      }
+    })();
   }, [selectedRepo, highlightId]);
 
   return (
@@ -60,7 +72,7 @@ const Feeds: WithPageLayout = () => {
       {singleHighlight && (
         <Dialog open={openSingleHighlight} onOpenChange={(open) => {
           if (!open) {
-            router.push("/feed").catch(console.error);
+            router.push("/feed");
           }
         }}>
           <DialogContent className=" sm:max-w-[80%] w-full  sm:max-h-[100vh] ">
@@ -114,7 +126,7 @@ const Feeds: WithPageLayout = () => {
             <div>
               {user && (
                 <div className="lg:gap-x-3 px-3 pt-4 flex max-w-[48rem]">
-                  <div className="hidden lg:inline-flex ">
+                  <div className="hidden lg:inline-flex">
                     <Avatar
                       alt="user profile avatar"
                       isCircle
