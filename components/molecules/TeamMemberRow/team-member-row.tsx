@@ -3,13 +3,18 @@ import { AiOutlineCaretDown } from "react-icons/ai";
 import pendingImg from "img/icons/fallback-image-disabled-square.svg";
 import { useState } from "react";
 import Selector from "components/atoms/Selector/selector";
+import { TeamMemberData } from "../TeamMembersConfig/team-members-config";
 
-interface TeamMemberRowProps {
+type TeamMemberRowProps = {
   className?: string;
-  name: string;
-  avatarUrl: string;
-  role: "admin" | "editor" | "viewer" | "pending";
-}
+} & TeamMemberData;
+
+const mapRoleToText: Record<TeamMemberRowProps["role"], string> = {
+  admin: "Admin",
+  editor: "can edit",
+  viewer: "can view",
+  pending: "Pending"
+};
 
 const TeamMemberRow  = ({ className, name, avatarUrl, role }: TeamMemberRowProps) => {
 
@@ -17,12 +22,7 @@ const TeamMemberRow  = ({ className, name, avatarUrl, role }: TeamMemberRowProps
 
   const pending = role == "pending";
 
-  const mapRoleToText: Record<TeamMemberRowProps["role"], string> = {
-    admin: "Admin",
-    editor: "can edit",
-    viewer: "can view",
-    pending: "Pending"
-  };
+  const handleRoleChange = (role: string) => {}
 
   return(
     <div className={`flex justify-between items-center ${className && className} ${pending && "text-light-slate-10"}`}>
@@ -35,11 +35,8 @@ const TeamMemberRow  = ({ className, name, avatarUrl, role }: TeamMemberRowProps
           {mapRoleToText[role]} {!pending && <AiOutlineCaretDown onClick={() => {setIsMenuOpen(!isMenuOpen)}} />}
         </div>
         { !pending && isMenuOpen && (
-          // <div className="absolute bg-white rounded-md shadow-md w-40">
-          // </div>
-          <Selector filterOptions={["Admin", "can edit", "can view"]} selected={mapRoleToText[role]} variation="check" />
+          <Selector filterOptions={["Admin", "can edit", "can view"]} selected={mapRoleToText[role]} variation="check" handleFilterClick={handleRoleChange} />
         )}
-
       </div>
     </div>
   );
