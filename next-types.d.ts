@@ -2,9 +2,12 @@
 
 interface DbRepo {
   readonly id: string;
+  readonly host_id: string;
   readonly size: number;
   readonly stars: number;
+  readonly issues: number;
   readonly name: string;
+  readonly full_name: string;
   readonly owner: string;
   readonly prActiveCount: number;
   readonly openPrsCount?: number;
@@ -30,9 +33,11 @@ interface DbRepoPR {
   readonly filesCount: number;
   linesCount: number;
   readonly merged: boolean;
-  readonly repo_owner: string;
-  readonly repo_name: string;
+  readonly full_name: string;
   readonly number: number;
+  readonly additions: number;
+  readonly deletions: number;
+  readonly changed_files: number;
 }
 
 interface DbRepoCommit {
@@ -106,7 +111,8 @@ interface DbUserInsightRepo {
   readonly id: number;
   readonly insight_id: number;
   readonly repo_id: number;
-  readonly created_at: string;
+  readonly full_name: string;
+  readonly created_at?: string;
 }
 
 interface DbUser {
