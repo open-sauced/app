@@ -161,17 +161,14 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
             <div className={clsx(classNames.cols.activity, "flex items-center")}>
               <TableTitle text="Activity"></TableTitle>
             </div>
-            <div className={clsx(classNames.cols.prOverview, "flex items-center cursor-pointer")} onClick={() => handleSortByColumn("prsCount")}>
+            <div className={clsx(classNames.cols.prOverview, "flex items-center")}>
               <TableTitle text="PR Overview"></TableTitle>
-              {sortBy == "prsCount" && renderArrow()}
             </div>
-            <div className={clsx(classNames.cols.prVelocity, "flex items-center cursor-pointer")} onClick={() => handleSortByColumn("prVelocityCount")}>
+            <div className={clsx(classNames.cols.prVelocity, "flex items-center")}>
               <TableTitle text="PR Velocity"></TableTitle>
-              {sortBy == "prVelocityCount" && renderArrow()}
             </div>
-            <div className={clsx(classNames.cols.spam, "flex items-center cursor-pointer")} onClick={() => handleSortByColumn("spamPrsCount")}>
+            <div className={clsx(classNames.cols.spam, "flex items-center")}>
               <TableTitle text="SPAM"></TableTitle>
-              {sortBy == "spamPrsCount" && renderArrow()}
             </div>
             <div className={clsx(classNames.cols.contributors, "hidden lg:flex", "flex items-center")}>
               <TableTitle text="Contributors"></TableTitle>

@@ -5,7 +5,7 @@ import Icon from "components/atoms/Icon/icon";
 
 import cancelIcon from "img/x-circle.svg";
 
-export type SortOptions = "name" | "prsCount" | "prVelocityCount" | "spamPrsCount" | "";
+export type SortOptions = "name" | "";
 
 interface SortedBySelectorProps {
   handleCancelClick: () => void;
@@ -15,10 +15,7 @@ interface SortedBySelectorProps {
 
 const SortedOrders: Record<SortOptions, string> = {
   "": "",
-  "name": "Repository",
-  "prsCount": "PR Count",
-  "prVelocityCount": "PR Velocity",
-  "spamPrsCount": "Spam"
+  "name": "Repository"
 } as const;
 
 const SortedBySelector: React.FC<SortedBySelectorProps> = ({
