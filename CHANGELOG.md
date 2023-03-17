@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.36.0-beta.6](https://github.com/open-sauced/insights/compare/v1.36.0-beta.5...v1.36.0-beta.6) (2023-03-17)
+
+
+### 🍕 Features
+
+* add teams UI for the design system ([#994](https://github.com/open-sauced/insights/issues/994)) ([499d08e](https://github.com/open-sauced/insights/commit/499d08e81aa890ac7a2cca0761fc7d670538c363))
+
 ## [1.36.0-beta.5](https://github.com/open-sauced/insights/compare/v1.36.0-beta.4...v1.36.0-beta.5) (2023-03-16)
 
 
