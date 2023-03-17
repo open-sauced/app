@@ -3,13 +3,14 @@ import Avatar from "components/atoms/Avatar/avatar";
 import Button from "components/atoms/Button/button";
 import React from "react";
 
-interface CollaborationCardProps {
-  requestor: User;
+export type CollaborationRequestObject = {
+  requestor: DbUser | undefined;
   outreachMessage: string;
-}
+};
+interface CollaborationCardProps extends CollaborationRequestObject {}
 const CollaborationCard = ({ requestor, outreachMessage }: CollaborationCardProps) => {
   return (
-    <div className="bg-white flex flex-col gap-4 rounded-lg p-4 border max-w-[41.625rem]">
+    <div className="bg-white flex flex-col gap-4 rounded-2xl p-4 border border-light-slate-6 max-w-[41.625rem]">
       <div className="flex justify-between text-sm items-center ">
         <div className="flex gap-2 text-sm items-center">
           <Avatar
