@@ -3,16 +3,16 @@ import { BsFillCheckCircleFill } from "react-icons/bs";
 import { MdOutlineRadioButtonUnchecked } from "react-icons/md";
 
 interface RadioProps {
-  id?: string | undefined;
-  children?: any;
+  id?: string;
+  children: React.ReactNode;
   checked?: boolean;
   onClick?: () => void;
   value?: string;
   withLabel?: string;
-  css?: string;
+  className?: string;
 }
 
-const Radio = ({ css, withLabel, id, children, value, checked = false, onClick }: RadioProps): JSX.Element => {
+const Radio = ({ className, withLabel, id, children, value, checked = false, onClick }: RadioProps): JSX.Element => {
   return (
     <div
       onClick={onClick}
@@ -20,7 +20,7 @@ const Radio = ({ css, withLabel, id, children, value, checked = false, onClick }
         `${
           checked && "!bg-light-orange-3"
         }  px-2 py-1.5 text-sm text-slate-600   group  rounded-md  hover:bg-light-orange-3 hover:text-slate-800 focus:outline-none focus-visible:border-orange-500 focus-visible:ring focus-visible:ring-orange-200 transition` +
-        `${css}`
+        `${className}`
       }
     >
       <input
