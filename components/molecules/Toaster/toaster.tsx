@@ -28,7 +28,7 @@ export function Toaster() {
               {variant === "danger" && <Image src={dangerIcon} alt="error status icon" />}
               <div className="text-left">
                 {title && <ToastTitle>{title}</ToastTitle>}
-                {description && <ToastDescription>{description}</ToastDescription>}
+                <ToastDescription>{description}</ToastDescription>
               </div>
               <ToastClose className="ml-auto" />
             </div>
