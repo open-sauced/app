@@ -1,4 +1,4 @@
-import create from "zustand";
+import { create } from "zustand";
 
 import { GlobalStateInterface } from "interfaces/global-state-types";
 import { SortOptions } from "components/molecules/SortedBySelector/sorted-by-selector";

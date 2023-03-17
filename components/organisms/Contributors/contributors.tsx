@@ -66,12 +66,8 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
       {/* Table section */}
       <TableHeader
         updateLimit={setLimit}
-        showing={{
-          from: page === 1 ? page : (page - 1) * meta.limit + 1,
-          to: page === 1 ? meta.limit : page * meta.limit <= meta.itemCount ? page * meta.limit : meta.itemCount,
-          total: meta.itemCount,
-          entity: "Contributors"
-        }}
+        metaInfo={meta}
+        entity="Contributors"
         range={range}
         setRangeFilter={store.updateRange}
         title="Contributors"
@@ -111,12 +107,7 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
         <div className="py-1 md:py-4 flex w-full md:mt-5 justify-between items-center">
           <div>
             <div className="">
-              <PaginationResults
-                from={page === 1 ? page : (page - 1) * meta.limit + 1}
-                to={page === 1 ? meta.limit : page * meta.limit <= meta.itemCount ? page * meta.limit : meta.itemCount}
-                total={meta.itemCount}
-                entity={"contributors"}
-              />
+              <PaginationResults metaInfo={meta} total={meta.itemCount} entity={"contributors"} />
             </div>
           </div>
           <div>

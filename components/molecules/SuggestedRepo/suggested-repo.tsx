@@ -7,14 +7,16 @@ import Avatar from "components/atoms/Avatar/avatar";
 import RepoCardProfile, { RepoCardProfileProps } from "../RepoCardProfile/repo-card-profile";
 
 interface SuggestedRopsitoryProps {
-  data?: RepoCardProfileProps;
+  data: RepoCardProfileProps;
+  onAddRepo?: (repo: string) => void;
 }
-const SuggestedRepository = ({ data }: SuggestedRopsitoryProps) => {
-  // Utilizing static data for testing purpose until real data is available
+const SuggestedRepository = ({ data, onAddRepo }: SuggestedRopsitoryProps) => {
   return (
     <div className="flex justify-between items-center">
       <RepoCardProfile {...data} />
-      <Button variant="text" className="border border-light-slate-6 shadow-input">
+      <Button variant="text" className="border border-light-slate-6 shadow-input"
+        onClick={() => onAddRepo && onAddRepo(`${data.orgName}/${data.repoName}`)}
+      >
         Add to Page
       </Button>
     </div>

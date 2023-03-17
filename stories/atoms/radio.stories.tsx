@@ -13,10 +13,10 @@ Checked.args = {
   children: "Test",
   checked: true,
   withLabel: "32k",
-  css: "w-full"
+  className: "w-full"
 };
 Default.args = {
   children: "Test",
   id: "select",
-  css: "w-max"
+  className: "w-max"
 };

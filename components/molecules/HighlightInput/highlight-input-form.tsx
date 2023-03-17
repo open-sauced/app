@@ -10,7 +10,11 @@ import GhOpenGraphImg from "../GhOpenGraphImg/gh-open-graph-img";
 import { generateApiPrUrl } from "lib/utils/github";
 import { fetchGithubPRInfo } from "lib/hooks/fetchGithubPRInfo";
 
-const HighlightInputForm = (): JSX.Element => {
+interface HighlightInputFormProps {
+  refreshCallback?: Function;
+}
+
+const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.Element => {
   const { user } = useSupabaseAuth();
   const { mutate } = useSWRConfig();
   const [isDivFocused, setIsDivFocused] = useState(false);
@@ -76,7 +80,6 @@ const HighlightInputForm = (): JSX.Element => {
     const [url] = pullLink || [];
     const highlight = bodyText.replace(url as string, "");
 
-
     if (pullLink && url) {
       const { apiPaths } = generateApiPrUrl(url);
       const { repoName, orgName, issueId } = apiPaths;
@@ -88,7 +91,6 @@ const HighlightInputForm = (): JSX.Element => {
         setLoading(false);
         ToastTrigger({ message: "A valid Pull request Link is required", type: "error" });
         return;
-
       } else {
         setLoading(true);
         const res = await createHighlights({
@@ -99,7 +101,7 @@ const HighlightInputForm = (): JSX.Element => {
 
         setLoading(false);
         if (res) {
-          mutate(`users/${user?.user_metadata.user_name}/highlights`);
+          refreshCallback && refreshCallback();
           setBodyText("");
           setTitle("");
           setIsDivFocused(false);
@@ -108,6 +110,8 @@ const HighlightInputForm = (): JSX.Element => {
           ToastTrigger({ message: "An error occured!!!", type: "error" });
         }
       }
+    } else {
+      ToastTrigger({ message: "Please provide a valid pull request link!", type: "error" });
     }
   };
 
@@ -124,7 +128,9 @@ const HighlightInputForm = (): JSX.Element => {
           onChange={(e) => setTitle(e.target.value)}
           className=" focus:outline-none "
           type="text"
-          placeholder={isDivFocused ? "Add title (optional)" : "Click here to highlight your merged PRs and provide a link!"}
+          placeholder={
+            isDivFocused ? "Add title (optional)" : "Click here to highlight your merged PRs and provide a link!"
+          }
         />
         <Textarea
           className={`resize-none font-normal text-light-slate-11 mb-2 transition focus:outline-none rounded-lg ${
@@ -135,8 +141,7 @@ const HighlightInputForm = (): JSX.Element => {
           value={bodyText}
           placeholder={`Share your thoughts and link to it.
 
-https://github.com/open-sauced/insights/pull/913`
-          }
+https://github.com/open-sauced/insights/pull/913`}
           onChange={(e) => {
             handleTextAreaInputChange(e);
             setCharCount(e.target.value.length);

@@ -11,7 +11,8 @@ import PaginationResult from "../PaginationResults/pagination-result";
 
 interface TableHeaderProps {
   title?: string;
-  showing: { from: number; to: number; total: number; entity: string };
+  metaInfo: Meta;
+  entity: string;
   onSearch?: (search?: string) => void;
   updateLimit: Function;
   range?: number;
@@ -19,7 +20,8 @@ interface TableHeaderProps {
 }
 const TableHeader = ({
   title,
-  showing,
+  metaInfo,
+  entity,
   updateLimit,
   onSearch,
   range,
@@ -31,26 +33,31 @@ const TableHeader = ({
   const [suggestions, setSuggestions] = React.useState<string[]>([]);
   const { providerToken } = useSupabaseAuth();
 
-  const updateSuggestionsDebounced = useDebounce( async () => {
-    const req = await fetch(`https://api.github.com/search/repositories?q=${encodeURIComponent(`${searchTerm} topic:${filterName} in:name`)}`, {
-      ...providerToken? {
-        headers: {
-          "Authorization": `Bearer ${providerToken}`
-        }} : {}
-    });
+  const updateSuggestionsDebounced = useDebounce(async () => {
+    const req = await fetch(
+      `https://api.github.com/search/repositories?q=${encodeURIComponent(`${searchTerm} topic:${filterName} in:name`)}`,
+      {
+        ...(providerToken
+          ? {
+            headers: {
+              Authorization: `Bearer ${providerToken}`
+            }
+          }
+          : {})
+      }
+    );
 
-
-    if(req.ok) {
+    if (req.ok) {
       const res = await req.json();
       const suggestions = res.items.map((item: any) => item.full_name);
-      if(suggestions.length > 5) suggestions.length = 5;
+      if (suggestions.length > 5) suggestions.length = 5;
       setSuggestions(suggestions);
     }
   }, 250);
 
   React.useEffect(() => {
     setSuggestions([]);
-    if(!searchTerm) return;
+    if (!searchTerm) return;
     updateSuggestionsDebounced();
   }, [searchTerm]);
 
@@ -60,7 +67,12 @@ const TableHeader = ({
         <Title className="!text-2xl !leading-none " level={1}>
           {title}
         </Title>
-        <PaginationResult className="hidden !translate-y-[2px]  md:inline-flex" {...showing} />
+        <PaginationResult
+          total={metaInfo.itemCount}
+          className="hidden !translate-y-[2px]  md:inline-flex"
+          metaInfo={metaInfo}
+          entity={entity}
+        />
       </div>
       <div className="flex flex-col-reverse md:flex-row items-start gap-3  md:items-end">
         {range ? (
@@ -69,8 +81,14 @@ const TableHeader = ({
           ""
         )}
         {onSearch ? (
-          <Search placeholder={`Search ${title}`} className="max-w-full text-sm py-1.5" name={"query"} onSearch={onSearch}
-            suggestions={suggestions} onChange={(value) => setSearchTerm(value)} />
+          <Search
+            placeholder={`Search ${title}`}
+            className="max-w-full text-sm py-1.5"
+            name={"query"}
+            onSearch={onSearch}
+            suggestions={suggestions}
+            onChange={(value) => setSearchTerm(value)}
+          />
         ) : (
           ""
         )}

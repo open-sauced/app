@@ -1,5 +1,5 @@
-import { User } from "@supabase/gotrue-js/src/lib/types";
 import { SortOptions } from "components/molecules/SortedBySelector/sorted-by-selector";
+import { User } from "@supabase/supabase-js";
 
 export interface GlobalStateInterface {
   user?: User | null;
