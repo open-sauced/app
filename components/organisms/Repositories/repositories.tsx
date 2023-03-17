@@ -33,7 +33,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
   const topic = filterName as string;
   const store = useStore();
   const range = useStore((state) => state.range);
-  const sortBy = useStore((state) => state.sortBy);
+  const sortBy = useStore((state) => state.repositoriesSortBy);
   // const [sortBy, setSortBy] = useState<SortOptions>("");
   const [sortDirection, setSortDirection] = useState<sortDirectionType>("DESC");
   const {
@@ -104,7 +104,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
     } else {
       setSortDirection("DESC");
     }
-    store.updateSortBy(column);
+    store.updateRepositoriesSortBy(column);
 
   };
 

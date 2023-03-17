@@ -21,7 +21,7 @@ export interface AppStore extends GlobalStateInterface {
     insightRepoLimit: number;
   }) => void;
   updateRange: (range: number) => void;
-  updateSortBy: (sortBy: SortOptions) => void;
+  updateRepositoriesSortBy: (repositoriesSortBy: SortOptions) => void;
 }
 
 const store = create<AppStore>()((set) => ({
@@ -31,7 +31,7 @@ const store = create<AppStore>()((set) => ({
   setSession: ({ onboarded, waitlisted, insightRepoLimit }: { onboarded: boolean; waitlisted: boolean, insightRepoLimit: number }) =>
     set((state) => ({ ...state, onboarded, waitlisted, insightRepoLimit })),
   updateRange: (range: number) => set((state) => ({ ...state, range })),
-  updateSortBy: (sortBy: SortOptions) => set((state) => ({ ...state, sortBy: sortBy }))
+  updateRepositoriesSortBy: (repositoriesSortBy: SortOptions) => set((state) => ({ ...state, repositoriesSortBy }))
 }));
 
 export default store;

@@ -22,7 +22,7 @@ const HeaderFilter = () => {
   const router = useRouter();
   const filterOptions = useFilterOptions();
   const store = useStore();
-  const sortBy = useStore((state) => state.sortBy);
+  const sortBy = useStore((state) => state.repositoriesSortBy);
   const topicOptions = getInterestOptions();
 
   const { filterValues } = useFilterPrefetch();
@@ -70,7 +70,7 @@ const HeaderFilter = () => {
           />
           <SortedBySelector
             selected={sortBy}
-            handleCancelClick={() => {store.updateSortBy("");}}
+            handleCancelClick={() => {store.updateRepositoriesSortBy("");}}
           />
         </div>
       </div>

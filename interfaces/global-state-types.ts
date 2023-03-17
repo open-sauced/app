@@ -7,5 +7,5 @@ export interface GlobalStateInterface {
   waitlisted?: boolean;
   range?: number;
   insightRepoLimit?: number;
-  sortBy?: SortOptions;
+  repositoriesSortBy?: SortOptions;
 }
