@@ -1,8 +1,6 @@
 import { User } from "@supabase/supabase-js";
 import clsx from "clsx";
 
-import Search from "components/atoms/Search/search";
-import Select from "components/atoms/Select/custom-select";
 import TableTitle from "components/atoms/TableTitle/table-title";
 import Title from "components/atoms/Typography/title";
 import { classNames } from "components/organisms/RepositoriesTable/repositories-table";

@@ -36,13 +36,12 @@ import { MdError } from "react-icons/md";
 import {
   AlertDialog,
   AlertDialogAction,
-  AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger
+  AlertDialogTrigger,
 } from "../AlertDialog/alert-dialog";
 import { deleteHighlight } from "lib/hooks/deleteHighlight";
 

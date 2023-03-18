@@ -6,7 +6,6 @@ import StarIcon from "img/icons/star-icon.svg";
 import Person from "img/icons/person-icon.svg";
 import Icon3 from "img/icons/icon3.svg";
 import ComponentHeader from "../ComponentHeader/component-header";
-import humanizeNumber from "../../../lib/utils/humanizeNumber";
 import RepositoryRow from "components/molecules/RepositoryRow/repository-row";
 
 interface RepoSelectableTableProps {
