@@ -1,4 +1,3 @@
-import React from "react";
 import SuperativeSelector from "components/molecules/SuperlativeSelector/superlative-selector";
 import { ComponentStory } from "@storybook/react";
 
