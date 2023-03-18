@@ -1,5 +1,5 @@
 import React from "react";
-import { BsCheck2, BsFillCheckCircleFill } from "react-icons/bs";
+import { BsCheck2 } from "react-icons/bs";
 
 interface RadioCheckProps {
   id?: string;

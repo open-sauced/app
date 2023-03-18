@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import * as Select from "@radix-ui/react-select";
 import clsx from "clsx";
 

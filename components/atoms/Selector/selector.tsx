@@ -1,5 +1,4 @@
 import Radio from "components/atoms/Radio/radio";
-import humanizeNumber from "lib/utils/humanizeNumber";
 import RadioCheck from "../RadioCheck/radio-check";
 
 interface SelectorProps {
