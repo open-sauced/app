@@ -1,7 +1,7 @@
 import { supabase } from "lib/utils/supabase";
 
 const baseUrl = process.env.NEXT_PUBLIC_API_URL;
-export interface UserResponse extends DbUser {}
+interface UserResponse extends DbUser {}
 const authSession = async () => {
   const sessionResponse = await supabase.auth.getSession();
   const sessionToken = sessionResponse?.data.session?.access_token;
