@@ -1,5 +1,5 @@
 import Radio from "components/atoms/Radio/radio";
-import { ComponentStory, ComponentMeta } from "@storybook/react";
+import { ComponentStory } from "@storybook/react";
 
 const storyConfig = {
   title: "Design System/Atoms/Radio"

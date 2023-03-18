@@ -1,5 +1,4 @@
-import React from "react";
-import { ComponentStory, ComponentMeta } from "@storybook/react";
+import { ComponentStory } from "@storybook/react";
 import Select from "components/atoms/Select/select";
 import SelectOption from "components/atoms/Select/select-option";
 
