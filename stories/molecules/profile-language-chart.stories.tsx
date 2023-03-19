@@ -27,13 +27,13 @@ export const testLanguageList = [
 ];
 
 //CardHorizontalBarChart Template
-const CardHorizontalBarTemplate: ComponentStory<typeof ProfileLanguageChart> = (args) => (
+const ProfileLanguageChartTemplate: ComponentStory<typeof ProfileLanguageChart> = (args) => (
   <TooltipProvider>
     <ProfileLanguageChart {...args} />
   </TooltipProvider>
 );
 
-export const OneLanguage = CardHorizontalBarTemplate.bind({});
+export const OneLanguage = ProfileLanguageChartTemplate.bind({});
 
 OneLanguage.args = {
   languageList: [
@@ -44,12 +44,12 @@ OneLanguage.args = {
   ]
 };
 
-export const MultipleLanguages = CardHorizontalBarTemplate.bind({});
+export const MultipleLanguages = ProfileLanguageChartTemplate.bind({});
 
 MultipleLanguages.args = {
   languageList: testLanguageList
 };
-export const notSupportedLanguage = CardHorizontalBarTemplate.bind({});
+export const notSupportedLanguage = ProfileLanguageChartTemplate.bind({});
 
 notSupportedLanguage.args = {
   languageList: [
