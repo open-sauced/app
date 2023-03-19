@@ -1,7 +1,5 @@
-import { User } from "@supabase/supabase-js";
-import Avatar from "components/atoms/Avatar/avatar";
-import Button from "components/atoms/Button/button";
 import React from "react";
+import Avatar from "components/atoms/Avatar/avatar";
 
 export type CollaborationRequestObject = {
   requestor: DbUser | undefined;
@@ -10,7 +8,7 @@ export type CollaborationRequestObject = {
 interface CollaborationCardProps extends CollaborationRequestObject {}
 const CollaborationCard = ({ requestor, outreachMessage }: CollaborationCardProps) => {
   return (
-    <div className="bg-white flex flex-col gap-4 rounded-2xl p-4 border border-light-slate-6 max-w-[41.625rem]">
+    <div className="bg-white flex flex-col gap-4 rounded-2xl p-4 border border-light-slate-6 max-w-2xl">
       <div className="flex justify-between text-sm items-center ">
         <div className="flex gap-2 text-sm items-center">
           <Avatar
