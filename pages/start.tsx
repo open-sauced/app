@@ -289,8 +289,8 @@ const Login: WithPageLayout = () => {
                 currentLoginStep === 2
                   ? ChooseInterestsActiveIcon
                   : currentLoginStep < 2
-                  ? ChooseInterestsIcon
-                  : CompletedIcon
+                    ? ChooseInterestsIcon
+                    : CompletedIcon
               }
               size={48}
             />
@@ -307,8 +307,8 @@ const Login: WithPageLayout = () => {
                 currentLoginStep === 3
                   ? ChooseTimezoneActiveIcon
                   : currentLoginStep < 3
-                  ? ChooseTimezoneIcon
-                  : CompletedIcon
+                    ? ChooseTimezoneIcon
+                    : CompletedIcon
               }
               size={48}
             />
