@@ -20,7 +20,7 @@ const CollaborationCard = ({ requestor, outreachMessage }: CollaborationCardProp
           <div>Microsoft</div>
         </div>
         <div className="flex gap-2">
-          <button className="px-2">ignore</button>
+          <button className="px-2">Ignore</button>
           <button className="bg-light-orange-9 px-2 py-1 outline-none rounded-lg text-white">Accept</button>
         </div>
       </div>
