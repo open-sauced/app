@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.36.0-beta.8](https://github.com/open-sauced/insights/compare/v1.36.0-beta.7...v1.36.0-beta.8) (2023-03-20)
+
+
+### 🐛 Bug Fixes
+
+* make delete standout ([#1026](https://github.com/open-sauced/insights/issues/1026)) ([9c68287](https://github.com/open-sauced/insights/commit/9c68287eabbe9b826efd27f0a70c3e0d48ba120e))
+
 ## [1.36.0-beta.7](https://github.com/open-sauced/insights/compare/v1.36.0-beta.6...v1.36.0-beta.7) (2023-03-20)
 
 
