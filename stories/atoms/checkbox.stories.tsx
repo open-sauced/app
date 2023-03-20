@@ -1,5 +1,5 @@
 import Checkbox from "components/atoms/Checkbox/checkbox";
-import { ComponentStory, ComponentMeta } from "@storybook/react";
+import { ComponentStory } from "@storybook/react";
 
 const storyConfig = {
   title: "Design System/Atoms/Checkbox"

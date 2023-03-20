@@ -1,4 +1,3 @@
-import React from "react";
 import { ComponentStory } from "@storybook/react";
 import FavoriteRepos from "components/molecules/FavoriteRepos/favorite-repos";
 

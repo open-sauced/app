@@ -5,6 +5,23 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.36.0-beta.7](https://github.com/open-sauced/insights/compare/v1.36.0-beta.6...v1.36.0-beta.7) (2023-03-20)
+
+
+### 🧑‍💻 Code Refactoring
+
+* Deleted unused hooks, removed unused exports and imports ([#1028](https://github.com/open-sauced/insights/issues/1028)) ([7b2bda2](https://github.com/open-sauced/insights/commit/7b2bda22957e389dde711832dad2e19a5b502ea1))
+
+
+### 🍕 Features
+
+* added active styles to navbar links ([#1016](https://github.com/open-sauced/insights/issues/1016)) ([c25c0a3](https://github.com/open-sauced/insights/commit/c25c0a33230bca37aca12a98b243eaa00cd0731c)), closes [#697](https://github.com/open-sauced/insights/issues/697)
+
+
+### 🐛 Bug Fixes
+
+* center text inside upgrade access button ([#1027](https://github.com/open-sauced/insights/issues/1027)) ([cf3f6cb](https://github.com/open-sauced/insights/commit/cf3f6cbd7c5a7bf4db76733c9b90255a5bc09d39)), closes [#1024](https://github.com/open-sauced/insights/issues/1024)
+
 ## [1.36.0-beta.6](https://github.com/open-sauced/insights/compare/v1.36.0-beta.5...v1.36.0-beta.6) (2023-03-17)
 
 
