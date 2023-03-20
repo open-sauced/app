@@ -1,10 +1,10 @@
 import React from "react";
 import Avatar from "components/atoms/Avatar/avatar";
 
-export type CollaborationRequestObject = {
+export interface CollaborationRequestObject {
   requestor: DbUser | undefined;
   outreachMessage: string;
-};
+}
 interface CollaborationCardProps extends CollaborationRequestObject {}
 const CollaborationCard = ({ requestor, outreachMessage }: CollaborationCardProps) => {
   return (
