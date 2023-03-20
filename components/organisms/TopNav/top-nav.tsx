@@ -26,7 +26,7 @@ const TopNav: React.FC = () => {
           {!!user && onboarded ? (
             <>
               <Link className={`text-sm ${getActiveStyle(router.asPath === "/hub/insights")}`} href={"/hub/insights"}>
-                Insights Hub
+                Insights
               </Link>
               <Link
                 className={`text-sm ${getActiveStyle(router.asPath === `/${userInterest}/dashboard/filter/recent`)}`}
