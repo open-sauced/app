@@ -1,4 +1,3 @@
-import React from "react";
 import Image, { StaticImageData } from "next/image";
 import AvatarImage from "../../../img/hacktoberfest-icon.png";
 import cachedImage from "lib/utils/cachedImages";

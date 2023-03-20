@@ -1,5 +1,4 @@
-import React from "react";
-import { ComponentStory, ComponentMeta } from "@storybook/react";
+import { ComponentStory } from "@storybook/react";
 import EChartWrapper from "../../components/atoms/EChartWrapper/echart-wrapper";
 
 const storyConfig = {

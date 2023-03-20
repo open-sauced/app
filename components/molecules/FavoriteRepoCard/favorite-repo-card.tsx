@@ -2,7 +2,6 @@ import Avatar from "components/atoms/Avatar/avatar";
 import { truncateString } from "lib/utils/truncate-string";
 import type { StaticImageData } from "next/image";
 import Link from "next/link";
-import React from "react";
 
 export interface FavoriteRepoCardProps {
   avatarURL: string | StaticImageData;

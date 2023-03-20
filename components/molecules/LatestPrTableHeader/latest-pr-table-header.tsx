@@ -1,5 +1,3 @@
-import React from "react";
-
 import { IconContext } from "react-icons";
 import { GoDiff } from "react-icons/go";
 import { BsFileDiff } from "react-icons/bs";

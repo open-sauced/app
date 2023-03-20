@@ -1,4 +1,3 @@
-import NavLinks from "components/molecules/NavLinks/nav-links";
 import Link from "next/link";
 import React from "react";
 

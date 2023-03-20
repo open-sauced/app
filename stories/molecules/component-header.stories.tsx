@@ -1,5 +1,4 @@
-import React from "react";
-import { ComponentStory, ComponentMeta } from "@storybook/react";
+import { ComponentStory } from "@storybook/react";
 import ComponentHeader from "../../components/molecules/ComponentHeader/component-header";
 
 const storyConfig = {

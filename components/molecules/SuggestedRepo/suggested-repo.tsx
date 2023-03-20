@@ -1,9 +1,4 @@
-import React from "react";
-import { BiGitPullRequest } from "react-icons/bi";
-import { VscIssues } from "react-icons/vsc";
-
 import Button from "components/atoms/Button/button";
-import Avatar from "components/atoms/Avatar/avatar";
 import RepoCardProfile, { RepoCardProfileProps } from "../RepoCardProfile/repo-card-profile";
 
 interface SuggestedRopsitoryProps {

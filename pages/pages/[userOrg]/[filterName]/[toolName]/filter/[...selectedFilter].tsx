@@ -8,7 +8,6 @@ import HubPageLayout from "layouts/hub-page";
 import { WithPageLayout } from "interfaces/with-page-layout";
 import changeCapitalization from "lib/utils/change-capitalization";
 import useInsight from "lib/hooks/useInsight";
-import Head from "next/head";
 import { useEffect } from "react";
 
 const HubPage: WithPageLayout = () => {

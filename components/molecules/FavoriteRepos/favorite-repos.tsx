@@ -1,8 +1,4 @@
-import Card from "components/atoms/Card/card";
-import Text from "components/atoms/Typography/text";
-import Title from "components/atoms/Typography/title";
 import FavoriteRepoCard, { FavoriteRepoCardProps } from "../FavoriteRepoCard/favorite-repo-card";
-import TableRepositoryName from "../TableRepositoryName/table-repository-name";
 
 interface FavoriteReposProps {
   /** Limited to maximum of 3 items to show. */

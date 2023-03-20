@@ -1,5 +1,4 @@
-import React from "react";
-import { ComponentStory, ComponentMeta } from "@storybook/react";
+import { ComponentStory } from "@storybook/react";
 import TeamMembersConfig from "components/molecules/TeamMembersConfig/team-members-config";
 
 const storyConfig = {

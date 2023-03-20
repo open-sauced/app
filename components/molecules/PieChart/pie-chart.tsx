@@ -1,5 +1,4 @@
-import React from "react";
-import { PieCustomLayer, PieCustomLayerProps, PieLayer, ResponsivePie } from "@nivo/pie";
+import { PieCustomLayerProps, ResponsivePie } from "@nivo/pie";
 
 export type PieData = {
   id: string;

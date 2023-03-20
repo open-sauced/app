@@ -1,6 +1,5 @@
 import React from "react";
-import { ComponentStory, ComponentMeta } from "@storybook/react";
-import ToggleSwitch from "components/atoms/ToggleSwitch/toggle-switch";
+import { ComponentStory } from "@storybook/react";
 import ToggleGroup from "components/atoms/ToggleGroup/toggle-group";
 
 const storyConfig = {

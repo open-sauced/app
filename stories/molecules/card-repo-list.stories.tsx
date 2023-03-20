@@ -1,5 +1,4 @@
-import React from "react";
-import { ComponentStory, ComponentMeta } from "@storybook/react";
+import { ComponentStory } from "@storybook/react";
 import CardRepoList from "components/molecules/CardRepoList/card-repo-list";
 import TestRepoAvatar from "img/icons/test-repo-avatar.svg";
 

@@ -1,7 +1,5 @@
-import Avatar from "components/atoms/Avatar/avatar";
 import Button from "components/atoms/Button/button";
 import Search from "components/atoms/Search/search";
-import { AiOutlineCaretDown } from "react-icons/ai";
 import TeamMemberRow from "../TeamMemberRow/team-member-row";
 
 interface TeamMembersConfigProps {

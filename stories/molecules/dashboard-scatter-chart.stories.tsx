@@ -1,5 +1,4 @@
-import React from "react";
-import { ComponentStory, ComponentMeta } from "@storybook/react";
+import { ComponentStory } from "@storybook/react";
 import DashboardScatterChart from "../../components/molecules/DashboardScatterChart/dashboard-scatter-chart";
 import humanizeNumber from "lib/utils/humanizeNumber";
 

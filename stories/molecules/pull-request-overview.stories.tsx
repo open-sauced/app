@@ -1,5 +1,4 @@
-import React from "react";
-import { ComponentStory, ComponentMeta } from "@storybook/react";
+import { ComponentStory } from "@storybook/react";
 import PullRequestOverview from "components/molecules/PullRequestOverview/pull-request-overview";
 
 const storyConfig = {
