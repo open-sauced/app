@@ -55,7 +55,7 @@ const AuthSection: React.FC = ({}) => {
   };
 
   return (
-    <div className="flex">
+    <div className="flex p-2 sm:py-0 m-1">
       <div className="flex items-center gap-2 lg:gap-3">
         {user ? (
           <>
