@@ -1,4 +1,4 @@
-import { ComponentStory, ComponentMeta } from "@storybook/react";
+import { ComponentStory } from "@storybook/react";
 import Tool from "components/organisms/ToolsDisplay/tools-display";
 import FilterLayout from "layouts/filter";
 

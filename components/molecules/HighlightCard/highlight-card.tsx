@@ -6,7 +6,6 @@ import personIcon from "../../../img/icons/person-icon.svg";
 import labelIcon from "../../../img/icons/icon-label--blue.svg";
 import thumbsIcon from "../../../img/icons/icon-thumbs-down--yellow.svg";
 import metricArrow from "../../../img/icons/metric-arrow.svg";
-import Link from "next/link";
 import Card from "components/atoms/Card/card";
 import StackedAvatar from "../StackedAvatar/stacked-avatar";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";

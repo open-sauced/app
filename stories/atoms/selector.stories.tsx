@@ -1,4 +1,3 @@
-import React from "react";
 import { ComponentStory } from "@storybook/react";
 import Selector from "components/atoms/Selector/selector";
 

@@ -21,7 +21,7 @@ interface DashboardProps {
   repositories?: number[];
 }
 
-export const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
+const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
   const { data: insightsData, isLoading } = useInsights(repositories);
   const { data: prData, isError: prError } = usePullRequests(undefined, repositories);
   const { data: contributorData } = useTopicContributions(10, repositories);
