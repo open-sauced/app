@@ -6,7 +6,7 @@ import RepoRow from "components/molecules/RepoRow/repo-row";
 import { getAvatarByUsername } from "lib/utils/github";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 
-export interface ContributorsRows {
+interface ContributorsRows {
   name?: string;
   avatarURL?: string | StaticImageData;
   initials?: string;

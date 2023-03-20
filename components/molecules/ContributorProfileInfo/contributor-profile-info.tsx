@@ -3,7 +3,6 @@ import Link from "next/link";
 
 import { AiOutlineGift } from "react-icons/ai";
 import { FiClock, FiGithub, FiLinkedin, FiTwitter } from "react-icons/fi";
-import { HiOutlineMail } from "react-icons/hi";
 
 import LanguagePill from "components/atoms/LanguagePill/LanguagePill";
 import Title from "components/atoms/Typography/title";

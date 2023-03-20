@@ -1,5 +1,4 @@
-import React from "react";
-import { ComponentStory, ComponentMeta } from "@storybook/react";
+import { ComponentStory } from "@storybook/react";
 import ContributorCard from "components/organisms/ContributorCard/contributor-card";
 import TestRepoAvatar from "img/icons/test-repo-avatar.svg";
 

@@ -1,5 +1,4 @@
-import React from "react";
-import { ComponentStory, ComponentMeta } from "@storybook/react";
+import { ComponentStory } from "@storybook/react";
 import ToggleSwitch from "components/atoms/ToggleSwitch/toggle-switch";
 
 const storyConfig = {

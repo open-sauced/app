@@ -1,6 +1,5 @@
 import { useRouter } from "next/router";
 
-import Text from "components/atoms/Typography/text";
 import CardProfile from "../CardProfile/card-profile";
 import CardRepoList, { RepoList } from "../CardRepoList/card-repo-list";
 import { calcDistanceFromToday } from "lib/utils/date-utils";

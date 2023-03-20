@@ -4,7 +4,7 @@ import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 import LatestPrTableHeader from "../LatestPrTableHeader/latest-pr-table-header";
 import LatestPrTableRow from "../LatestPrTableRow/latest-pr-table-row";
 
-export interface PRs {
+interface PRs {
   prStatus: string;
   prName: string;
   prIssuedTime: string;

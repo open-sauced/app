@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Octokit } from "octokit";
 import { useRouter } from "next/router";
 import { User } from "@supabase/supabase-js";
 
@@ -11,7 +10,6 @@ import ChooseInterestsIcon from "img/icons/choose-interests.svg";
 import ChooseInterestsActiveIcon from "img/icons/choose-interests-active.svg";
 import HighlightIcon from "img/icons/highlight-icon.svg";
 import GitHubIcon from "img/icons/github-icon.svg";
-import AddIcon from "img/icons/add-icon.svg";
 
 import LoginLayout from "layouts/login";
 import { WithPageLayout } from "interfaces/with-page-layout";
@@ -291,8 +289,8 @@ const Login: WithPageLayout = () => {
                 currentLoginStep === 2
                   ? ChooseInterestsActiveIcon
                   : currentLoginStep < 2
-                    ? ChooseInterestsIcon
-                    : CompletedIcon
+                  ? ChooseInterestsIcon
+                  : CompletedIcon
               }
               size={48}
             />
@@ -309,8 +307,8 @@ const Login: WithPageLayout = () => {
                 currentLoginStep === 3
                   ? ChooseTimezoneActiveIcon
                   : currentLoginStep < 3
-                    ? ChooseTimezoneIcon
-                    : CompletedIcon
+                  ? ChooseTimezoneIcon
+                  : CompletedIcon
               }
               size={48}
             />

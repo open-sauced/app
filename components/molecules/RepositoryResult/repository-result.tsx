@@ -1,5 +1,4 @@
 import Button from "components/atoms/Button/button";
-import React from "react";
 import RepoCardProfile from "../RepoCardProfile/repo-card-profile";
 
 const RepositoryResult = () => {

@@ -13,7 +13,6 @@ import posthog from "posthog-js";
 
 import { TipProvider } from "components/atoms/Tooltip/tooltip";
 
-import changeCapitalization from "lib/utils/change-capitalization";
 import apiFetcher from "lib/hooks/useSWR";
 import { initiateAnalytics } from "lib/utils/analytics";
 import { supabase } from "lib/utils/supabase";

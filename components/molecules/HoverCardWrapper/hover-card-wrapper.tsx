@@ -2,7 +2,6 @@ import { useRouter } from "next/router";
 
 import { useSingleContributor } from "lib/hooks/useSingleContributor";
 
-import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 import ContributorHoverCard, { ContributorsProfileType } from "../ContributorHoverCard/contributor-hover-card";
 
 import roundedImage from "lib/utils/roundedImages";

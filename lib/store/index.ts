@@ -2,12 +2,12 @@ import { create } from "zustand";
 
 import { GlobalStateInterface } from "interfaces/global-state-types";
 
-export const initialState: GlobalStateInterface = {
+const initialState: GlobalStateInterface = {
   range: 30,
   insightRepoLimit: 10
 };
 
-export interface AppStore extends GlobalStateInterface {
+interface AppStore extends GlobalStateInterface {
   setWaitlisted: () => void;
   onboardUser: () => void;
   setSession: ({
