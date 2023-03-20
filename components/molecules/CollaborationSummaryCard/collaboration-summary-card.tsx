@@ -12,7 +12,7 @@ interface CollaborationSummaryCardProps {
 }
 const CollaborationSummaryCard = ({ requests, connectionsCount, messagesCount }: CollaborationSummaryCardProps) => {
   return (
-    <div className="bg-white flex flex-col gap-4 rounded-2xl border-light-slate-6  p-4 border max-w-[41.625rem]">
+    <div className="bg-white flex flex-col gap-4 rounded-2xl border-light-slate-6  p-4 border max-w-2xl">
       <div className="flex justify-between text-sm items-center ">
         <div className="flex gap-2 text-sm items-center">
           <div className="flex items-center">
@@ -30,7 +30,7 @@ const CollaborationSummaryCard = ({ requests, connectionsCount, messagesCount }:
           </div>
         </div>
         <div className="flex gap-2">
-          <button className="px-2">ignore</button>
+          <button className="px-2">Ignore</button>
           <button className="bg-light-orange-9 px-2 py-1 outline-none rounded-lg text-white">Accept</button>
         </div>
       </div>

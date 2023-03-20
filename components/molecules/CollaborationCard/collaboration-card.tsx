@@ -5,8 +5,8 @@ export interface CollaborationRequestObject {
   requestor: DbUser | undefined;
   outreachMessage: string;
 }
-interface CollaborationCardProps extends CollaborationRequestObject {}
-const CollaborationCard = ({ requestor, outreachMessage }: CollaborationCardProps) => {
+
+const CollaborationCard = ({ requestor, outreachMessage }: CollaborationRequestObject) => {
   return (
     <div className="bg-white flex flex-col gap-4 rounded-2xl p-4 border border-light-slate-6 max-w-2xl">
       <div className="flex justify-between text-sm items-center ">
