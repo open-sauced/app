@@ -12,7 +12,7 @@ interface CollaborationSummaryCardProps {
 }
 const CollaborationSummaryCard = ({ requests, connectionsCount, messagesCount }: CollaborationSummaryCardProps) => {
   return (
-    <div className="bg-white flex flex-col gap-4 rounded-2xl border-light-slate-6  p-4 border max-w-[41.625rem]">
+    <div className="bg-white flex flex-col gap-4 rounded-2xl border-light-slate-6  p-4 border max-w-2xl">
       <div className="flex justify-between text-sm items-center ">
         <div className="flex gap-2 text-sm items-center">
           <div className="flex items-center">
