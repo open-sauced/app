@@ -37,7 +37,7 @@ const StripeCheckoutButton = () => {
 
       <p className="flex justify-center py-4 px-2">
         <form onSubmit={handleFormSubmit}>
-          <Button variant="primary" className="w-52 h-[38px]">
+          <Button variant="primary" className="w-52 h-[38px] flex justify-center">
             Upgrade Access
           </Button>
         </form>
