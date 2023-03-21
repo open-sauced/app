@@ -5,6 +5,18 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.36.0-beta.9](https://github.com/open-sauced/insights/compare/v1.36.0-beta.8...v1.36.0-beta.9) (2023-03-21)
+
+
+### 🐛 Bug Fixes
+
+* add a check for proper URL in avatarURL prop ([#1009](https://github.com/open-sauced/insights/issues/1009)) ([a425279](https://github.com/open-sauced/insights/commit/a4252797fa8093c8d3d472c26422e20a9ec44160))
+
+
+### 🍕 Features
+
+* update top nav menu to be more responsive on mobile ([#1029](https://github.com/open-sauced/insights/issues/1029)) ([90c1e4a](https://github.com/open-sauced/insights/commit/90c1e4a9f5ffeaa9839d0afae503ba42859170da)), closes [#866](https://github.com/open-sauced/insights/issues/866)
+
 ## [1.36.0-beta.8](https://github.com/open-sauced/insights/compare/v1.36.0-beta.7...v1.36.0-beta.8) (2023-03-20)
 
 
