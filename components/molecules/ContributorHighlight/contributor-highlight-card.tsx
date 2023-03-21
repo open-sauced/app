@@ -51,11 +51,18 @@ interface ContributorHighlightCardProps {
   prLink: string;
   user: string;
   id: string;
+  refreshCallBack?: () => void;
 }
-const ContributorHighlightCard = ({ title, desc, prLink, user, id }: ContributorHighlightCardProps) => {
+const ContributorHighlightCard = ({
+  title,
+  desc,
+  prLink,
+  user,
+  id,
+  refreshCallBack
+}: ContributorHighlightCardProps) => {
   const twitterTweet = `${title || "Open Source Highlight"} - OpenSauced from ${user}`;
   const reportSubject = `Reported Highlight ${user}: ${title}`;
-  const { mutate } = useSWRConfig();
   const [highlight, setHighlight] = useState({ title, desc, prLink });
   const [wordCount, setWordCount] = useState(highlight.desc?.length || 0);
   const wordLimit = 500;
@@ -111,6 +118,7 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
         );
         setLoading(false);
         if (res) {
+          refreshCallBack && refreshCallBack();
           ToastTrigger({ message: "Highlights Updated Successfully", type: "success" });
           setOpen(false);
         } else {
@@ -128,13 +136,13 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
     const res = await deleteHighlight(id);
     setDeleteLoading(false);
     if (res !== false) {
-      ToastTrigger({ message: "Highlights Updated Successfully", type: "success" });
+      refreshCallBack && refreshCallBack();
+      ToastTrigger({ message: "Highlights Deleted Successfully", type: "success" });
       setAlertOpen(false);
       setOpen(false);
       setTimeout(() => {
         document.body.setAttribute("style", "pointer-events:auto !important");
       }, 1);
-      mutate(`users/${user}/highlights`);
     } else {
       console.log(res);
       setAlertOpen(false);
@@ -146,7 +154,7 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
     if (window !== undefined) {
       setHost(window.location.origin as string);
     }
-  }, []);
+  }, [highlight]);
 
   return (
     <article className="flex flex-col max-w-[40rem] flex-1 gap-3 lg:gap-6">
@@ -200,10 +208,7 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
                       <span>Share to Linkedin</span>
                     </a>
                   </DropdownMenuItem>
-                  <DropdownMenuItem
-                    onClick={() => handleCopyToClipboard(`${host}/feed/${id}`)}
-                    className="rounded-md"
-                  >
+                  <DropdownMenuItem onClick={() => handleCopyToClipboard(`${host}/feed/${id}`)} className="rounded-md">
                     <div className="flex gap-2.5 py-1 items-center pl-3 pr-7">
                       <BsLink45Deg size={22} />
                       <span>Copy link</span>

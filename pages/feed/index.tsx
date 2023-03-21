@@ -51,7 +51,7 @@ const Feeds = () => {
     if (!highlightId && !selectedRepo) {
       router.push("/feed");
     }
-  }, [selectedRepo, highlightId]);
+  }, [selectedRepo, highlightId, data]);
 
   return (
     <div className="container  mx-auto px-2 md:px-16 gap-12 lg:justify-end pt-12 flex flex-col md:flex-row">
@@ -81,6 +81,7 @@ const Feeds = () => {
                     prLink={singleHighlight.url}
                     user={singleHighlight.login}
                     id={singleHighlight.id}
+                    refreshCallBack={mutate}
                   />
                 </div>
               </div>
@@ -154,7 +155,14 @@ const Feeds = () => {
                         </Link>
                       </div>
                       <div className=" bg-light-slate-1 border p-4 md:px-6 lg:px-12 py-6 rounded-xl">
-                        <ContributorHighlightCard title={title} desc={highlight} prLink={url} user={login} id={id} />
+                        <ContributorHighlightCard
+                          refreshCallBack={mutate}
+                          title={title}
+                          desc={highlight}
+                          prLink={url}
+                          user={login}
+                          id={id}
+                        />
                       </div>
                     </div>
                   ))}
