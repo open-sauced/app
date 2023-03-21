@@ -15,6 +15,7 @@ import Pill from "components/atoms/Pill/pill";
 import getPercent from "lib/utils/get-percent";
 import ContributorProfileInfo from "components/molecules/ContributorProfileInfo/contributor-profile-info";
 import ContributorProfileTab from "../ContributorProfileTab/contributor-profile-tab";
+import ProfileLanguageChart from "components/molecules/ProfileLanguageChart/profile-language-chart";
 
 const colorKeys = Object.keys(color);
 interface PrObjectType {
@@ -118,7 +119,7 @@ const ContributorProfilePage = ({
 
               <div>
                 <p className="mb-4">Languages</p>
-                <CardHorizontalBarChart withDescription={true} languageList={languageList} />
+                <ProfileLanguageChart languageList={languageList} />
               </div>
             </>
           )}
