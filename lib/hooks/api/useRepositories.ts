@@ -19,7 +19,7 @@ const useRepositories = (repoIds: number[] = []) => {
   const filterQuery = getFilterQuery(selectedFilter);
   const query = new URLSearchParams(filterQuery);
 
-  if (Number.isNaN(Number(topic)) && topic !== "*") {
+  if (Number.isNaN(Number(topic)) && !["*", "hub"].includes(topic)) {
     query.set("topic", topic);
   }
 
