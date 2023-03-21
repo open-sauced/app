@@ -7,7 +7,7 @@ interface AvatarProps {
   avatarURL?: string | StaticImageData;
   initials?: string;
   alt?: string;
-  size?: "sm" | "base" | "lg" | number;
+  size: "sm" | "base" | "lg" | number;
   hasBorder?: boolean;
   isCircle?: boolean;
   isCached?: boolean;
@@ -19,19 +19,24 @@ const avatarLoader = () => {
 };
 
 const Avatar = (props: AvatarProps): JSX.Element => {
-  const imageSource =
-    props.avatarURL && props.isCached
+  let imageSource: string | StaticImageData | undefined = undefined;
+
+  try {
+    // Checks if the avatarURL is a proper URL. If not, it will throw an error.
+    if(typeof props.avatarURL === "string") new URL(props.avatarURL);
+
+    imageSource = props.avatarURL && props.isCached
       ? cachedImage(props.avatarURL as string, process.env.NEXT_PUBLIC_CLOUD_NAME)
       : props.avatarURL;
+  } catch (error) {
+    console.error(error);
+  }
 
   switch (typeof props.size) {
   case "string":
     return <DefaultAvatar {...props} avatarURL={imageSource} />;
   case "number":
     return <CustomAvatar {...props} avatarURL={imageSource} />;
-
-  default:
-    return <span>invalid avatar size props!!!</span>;
   }
 };
 
@@ -63,7 +68,7 @@ const CustomAvatar = ({
           alt={alt ? alt : "Avatar"}
           width={size as number}
           height={size as number}
-          src={avatarURL ? avatarURL : AvatarImage}
+          src={avatarURL}
         />
       ) : (
         <div
@@ -99,7 +104,7 @@ const DefaultAvatar = ({
           className={`${className ? className : ""} object-cover`}
           alt={alt ? alt : "Avatar"}
           fill={true}
-          src={avatarURL ? avatarURL : AvatarImage}
+          src={avatarURL}
         />
       ) : (
         <div
