@@ -92,13 +92,6 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
   };
 
   const handleSortByColumn = (column: SortOptions) => {
-    // debugger
-    // const url = router.asPath;
-    // const query = router.asPath.split("?")[1];
-    // const params = new URLSearchParams(query)
-    // params.delete("sortedBy")
-    // params.set("sortBy", column)
-    // router.push({ pathname: url, query: params.toString() }, undefined, { shallow: true});
     if(sortBy === column) {
       setSortDirection(sortDirection === "ASC" ? "DESC" : "ASC");
     } else {
