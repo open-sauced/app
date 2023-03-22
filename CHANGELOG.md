@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.37.0-beta.3](https://github.com/open-sauced/insights/compare/v1.37.0-beta.2...v1.37.0-beta.3) (2023-03-22)
+
+
+### 🐛 Bug Fixes
+
+* close highlight dialog when clicking outside its container ([#999](https://github.com/open-sauced/insights/issues/999)) ([1bc90bb](https://github.com/open-sauced/insights/commit/1bc90bb5c61b353aeb847fef98d738998fb9c142))
+
 ## [1.37.0-beta.2](https://github.com/open-sauced/insights/compare/v1.37.0-beta.1...v1.37.0-beta.2) (2023-03-22)
 
 
