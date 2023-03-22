@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.37.0-beta.2](https://github.com/open-sauced/insights/compare/v1.37.0-beta.1...v1.37.0-beta.2) (2023-03-22)
+
+
+### 🐛 Bug Fixes
+
+* update avatar style to remain aligned with the input field ([#1037](https://github.com/open-sauced/insights/issues/1037)) ([2374f20](https://github.com/open-sauced/insights/commit/2374f204d75292ad2b947583e10ed485c1a2d4f0))
+
 ## [1.37.0-beta.1](https://github.com/open-sauced/insights/compare/v1.36.0...v1.37.0-beta.1) (2023-03-22)
 
 
