@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useSWRConfig } from "swr";
 import getFilterKey from "lib/utils/get-filter-key";
 import useFilterOptions from "./useFilterOptions";
-import apiFetcher from "./useSWR";
+import publicApiFetcher from "lib/utils/public-api-fetcher";
 
 type FilterValues = { [name: string]: number | undefined };
 
@@ -18,11 +18,11 @@ const useFilterPrefetch = () => {
     if (topic) {
       filterOptions.forEach(async(filterName) => {
         const filterKey = getFilterKey(filterName);
-        const url = `${topic}/repos?filter=${filterKey}&page=1`;
+        const url = `repos/search?topic=${topic}&filter=${filterKey}&page=1`;
 
         try {
           // @ts-ignore
-          const result: { meta: Meta } = await mutate(url, apiFetcher(url));
+          const result: { meta: Meta } = await mutate(url, publicApiFetcher(url));
 
           setFilterValues(values => {
             return {
