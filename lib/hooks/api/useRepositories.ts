@@ -19,7 +19,7 @@ const useRepositories = (repoIds: number[] = []) => {
   const filterQuery = getFilterQuery(selectedFilter);
   const query = new URLSearchParams(filterQuery);
 
-  if (Number.isNaN(Number(topic)) && !["*", "hub"].includes(topic)) {
+  if (topic && Number.isNaN(Number(topic))) {
     query.set("topic", topic);
   }
 
@@ -36,7 +36,7 @@ const useRepositories = (repoIds: number[] = []) => {
   }
 
   const baseEndpoint = "repos/search";
-  const endpointString = `${baseEndpoint}?${query.toString()}`;
+  const endpointString = `${baseEndpoint}?${query}`;
 
   const { data, error, mutate } = useSWR<PaginatedResponse, Error>(
     endpointString,
