@@ -54,6 +54,10 @@ const Feeds: WithPageLayout = () => {
       setOpenSingleHighlight(true);
       router.push(`/feed/${id}`);
     }
+
+    if (!selectedRepo && !highlightId) {
+      router.push("/feed");
+    }
   }, [selectedRepo, highlightId]);
 
   useEffect(() => {
