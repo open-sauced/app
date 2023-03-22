@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 
@@ -16,18 +16,21 @@ import ContributorHighlightCard from "components/molecules/ContributorHighlight/
 import HighlightInputForm from "components/molecules/HighlightInput/highlight-input-form";
 import HighlightsFilterCard from "components/molecules/HighlightsFeedCard/highlights-filter-card";
 import ProfileLayout from "layouts/profile";
+import { WithPageLayout } from "interfaces/with-page-layout";
 import Pagination from "components/molecules/Pagination/pagination";
 import PaginationResults from "components/molecules/PaginationResults/pagination-result";
 
-const Feeds = () => {
+const Feeds: WithPageLayout = () => {
   const { user } = useSupabaseAuth();
   const router = useRouter();
+  const [hydrated, setHydrated] = useState(false);
+  const [openSingleHighlight, setOpenSingleHighlight] = useState(false);
+  const [selectedRepo, setSelectedRepo] = useState("");
+
   const { id } = router.query;
   const highlightId = id as string;
 
   const { data: repos } = useFetchHighlightRepos();
-
-  const [selectedRepo, setSelectedRepo] = useState("");
 
   const { data, isLoading, mutate, meta, setPage } = useFetchAllHighlights(selectedRepo);
   const { data: singleHighlight } = useFetchSingleHighlight(id as unknown as number);
@@ -41,22 +44,36 @@ const Feeds = () => {
       return { repoName: repo, repoIcon: `https://www.github.com/${orgName}.png?size=300`, full_name };
     });
 
+
   useEffect(() => {
     if (selectedRepo) {
       router.push(`/feed?repo=${selectedRepo}`);
     }
+
     if (highlightId) {
+      setOpenSingleHighlight(true);
       router.push(`/feed/${id}`);
     }
-    if (!highlightId && !selectedRepo) {
+
+    if (!selectedRepo && !highlightId) {
       router.push("/feed");
     }
-  }, [selectedRepo, highlightId, data]);
+  }, [selectedRepo, highlightId]);
+
+  useEffect(() => {
+    setHydrated(true);
+  }, []);
+
+  if (!hydrated) return <></>;
 
   return (
     <div className="container  mx-auto px-2 md:px-16 gap-12 lg:justify-end pt-12 flex flex-col md:flex-row">
       {singleHighlight && (
-        <Dialog open={true}>
+        <Dialog open={openSingleHighlight} onOpenChange={(open) => {
+          if (!open) {
+            router.push("/feed");
+          }
+        }}>
           <DialogContent className=" sm:max-w-[80%] w-full  sm:max-h-[100vh] ">
             <div className="mt-10 flex gap-8 flex-col  mx-auto">
               <div className="flex flex-col gap-6 px-3 ">
@@ -106,7 +123,7 @@ const Feeds = () => {
         </TabsList>
         <TabsContent value="Highlights">
           {data && data.length > 0 && (
-            <div>
+            <>
               {user && (
                 <div className="lg:gap-x-3 px-3 pt-4 flex max-w-[48rem]">
                   <div className="hidden lg:inline-flex pt-[0.4rem]">
@@ -123,7 +140,7 @@ const Feeds = () => {
               )}
 
               {/* Highlights List section */}
-              <div className="mt-10 flex gap-8 flex-col ">
+              <div className="mt-10 flex gap-8 flex-col">
                 {isLoading && (
                   <div className="flex flex-col gap-3">
                     <div className="flex gap-3">
@@ -137,8 +154,8 @@ const Feeds = () => {
                   data.length > 0 &&
                   // eslint-disable-next-line camelcase
                   data.map(({ id, url, title, created_at, highlight, name, login }) => (
-                    <div key={id} className="flex flex-col gap-6 px-1 ">
-                      <div className="flex gap-3 items-center  ">
+                    <div key={id} className="flex flex-col gap-6 px-1">
+                      <div className="flex gap-3 items-center">
                         <Link href={`/user/${login}`} className="flex items-center gap-3">
                           <Avatar
                             alt="user profile avatar"
@@ -167,7 +184,7 @@ const Feeds = () => {
                     </div>
                   ))}
               </div>
-            </div>
+            </>
           )}
           {meta.pageCount > 1 && (
             <div className="mt-10 max-w-[48rem] flex px-2 items-center justify-between">
@@ -198,6 +215,5 @@ const Feeds = () => {
   );
 };
 
-export default Feeds;
-
 Feeds.PageLayout = ProfileLayout;
+export default Feeds;
