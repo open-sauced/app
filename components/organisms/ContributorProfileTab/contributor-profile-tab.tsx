@@ -127,6 +127,7 @@ const ContributorProfileTab = ({
                         title={title}
                         desc={highlight}
                         prLink={url}
+                        refreshCallBack={mutate}
                       />
                     </div>
                   ))}

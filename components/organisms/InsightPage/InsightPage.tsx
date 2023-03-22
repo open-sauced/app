@@ -18,6 +18,8 @@ import useStore from "lib/store";
 import Error from "components/atoms/Error/Error";
 import Search from "components/atoms/Search/search";
 import { useDebounce } from "rooks";
+import SuggestedRepositoriesList from "../SuggestedRepoList/suggested-repo-list";
+import { RepoCardProfileProps } from "components/molecules/RepoCardProfile/repo-card-profile";
 
 enum RepoLookupError {
   Initial = 0,
@@ -261,6 +263,11 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
     updateSuggestionsDebounced();
   }, [repoSearchTerm]);
 
+  const staticSuggestedRepos: RepoCardProfileProps[] = [
+    { avatar: "https://avatars.githubusercontent.com/u/57568598?s=200&v=4", prCount: 8, repoName: "insights", issueCount: 87, orgName: "open-sauced" },
+    { avatar: "https://avatars.githubusercontent.com/u/59704711?s=200&v=4", prCount: 26, repoName: "cli", issueCount: 398, orgName: "cli" },
+    { avatar: "https://avatars.githubusercontent.com/u/42048915?s=200&v=4", prCount: 100, repoName: "deno", issueCount: 1200, orgName: "denoland" }
+  ];
 
   return (
     <section className="flex  flex-col lg:flex-row w-full lg:gap-20 py-4 lg:pl-28 justify-center ">
@@ -299,6 +306,9 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
               Add Repository
             </Button>
           </div>
+
+          <SuggestedRepositoriesList reposData={staticSuggestedRepos}
+            onAddRepo={(repo) => {loadAndAddRepo(repo);}} />
         </div>
 
         <div>

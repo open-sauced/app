@@ -1,6 +1,6 @@
 import toast from "react-hot-toast";
 
-export declare interface ToastTriggerProps {
+declare interface ToastTriggerProps {
   message: string;
   type: "success" | "error" | "custom" | "";
 }

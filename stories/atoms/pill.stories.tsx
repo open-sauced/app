@@ -1,5 +1,5 @@
 import React from "react";
-import { ComponentStory, ComponentMeta } from "@storybook/react";
+import { ComponentStory } from "@storybook/react";
 import Pill from "components/atoms/Pill/pill";
 import { HiTrendingUp } from "react-icons/hi";
 

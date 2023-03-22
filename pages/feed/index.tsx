@@ -98,6 +98,7 @@ const Feeds: WithPageLayout = () => {
                     prLink={singleHighlight.url}
                     user={singleHighlight.login}
                     id={singleHighlight.id}
+                    refreshCallBack={mutate}
                   />
                 </div>
               </div>
@@ -170,8 +171,15 @@ const Feeds: WithPageLayout = () => {
                           </span>
                         </Link>
                       </div>
-                      <div className="bg-light-slate-1 border p-4 md:px-6 lg:px-12 py-6 rounded-xl">
-                        <ContributorHighlightCard title={title} desc={highlight} prLink={url} user={login} id={id} />
+                      <div className=" bg-light-slate-1 border p-4 md:px-6 lg:px-12 py-6 rounded-xl">
+                        <ContributorHighlightCard
+                          refreshCallBack={mutate}
+                          title={title}
+                          desc={highlight}
+                          prLink={url}
+                          user={login}
+                          id={id}
+                        />
                       </div>
                     </div>
                   ))}

@@ -1,4 +1,3 @@
-import React from "react";
 import { ComponentStory } from "@storybook/react";
 
 import AvatarHoverCard from "components/atoms/Avatar/avatar-hover-card";

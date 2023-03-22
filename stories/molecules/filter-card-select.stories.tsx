@@ -1,6 +1,4 @@
-import React from "react";
 import { ComponentStory } from "@storybook/react";
-import Selector from "components/atoms/Selector/selector";
 import FilterCardSelect from "components/molecules/FilterCardSelect/filter-card-select";
 
 const storyConfig = {

@@ -1,5 +1,4 @@
 import humanizeNumber from "lib/utils/humanizeNumber";
-import React from "react";
 
 interface PaginationResultsProps {
   metaInfo: Meta;

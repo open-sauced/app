@@ -1,5 +1,3 @@
-import React from "react";
-
 import { IconContext } from "react-icons";
 import { VscGitMerge, VscGitPullRequest, VscGitPullRequestClosed, VscGitPullRequestDraft } from "react-icons/vsc";
 
