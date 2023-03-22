@@ -67,7 +67,7 @@ const Footer = (): JSX.Element => {
           </div>
           <span className="lg:hidden font-bold text-light-slate-12 ">OpenSauced</span>
           <Text className="hidden !text-light-slate-9 lg:inline-block">
-            © 2022 <span className="hidden lg:inline-block">OpenSauced</span>
+            © {(new Date()).getFullYear()} <span className="hidden lg:inline-block">OpenSauced</span>
           </Text>
         </div>
         <div className="flex lg:mr-auto lg:text-sm text-light-slate-11 justify-center gap-x-4">
