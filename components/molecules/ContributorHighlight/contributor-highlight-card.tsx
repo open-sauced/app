@@ -51,12 +51,20 @@ interface ContributorHighlightCardProps {
   prLink: string;
   user: string;
   id: string;
+  refreshCallBack?: () => void;
 }
-const ContributorHighlightCard = ({ title, desc, prLink, user, id }: ContributorHighlightCardProps) => {
+
+const ContributorHighlightCard = ({
+  title,
+  desc,
+  prLink,
+  user,
+  id,
+  refreshCallBack
+}: ContributorHighlightCardProps) => {
   const { toast } = useToast();
   const twitterTweet = `${title || "Open Source Highlight"} - OpenSauced from ${user}`;
   const reportSubject = `Reported Highlight ${user}: ${title}`;
-  const { mutate } = useSWRConfig();
   const [highlight, setHighlight] = useState({ title, desc, prLink });
   const [wordCount, setWordCount] = useState(highlight.desc?.length || 0);
   const wordLimit = 500;
@@ -113,6 +121,7 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
         setLoading(false);
         if (res) {
           toast({ description: "Highlights Updated Successfully", variant: "success" });
+          refreshCallBack && refreshCallBack();
           setOpen(false);
         } else {
           setLoading(false);
@@ -130,12 +139,14 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
     setDeleteLoading(false);
     if (res !== false) {
       toast({ description: "Highlights deleted Successfully", variant: "success" });
+
+      refreshCallBack && refreshCallBack();
+
       setAlertOpen(false);
       setOpen(false);
       setTimeout(() => {
         document.body.setAttribute("style", "pointer-events:auto !important");
       }, 1);
-      mutate(`users/${user}/highlights`);
     } else {
       console.log(res);
       setAlertOpen(false);
@@ -147,7 +158,7 @@ const ContributorHighlightCard = ({ title, desc, prLink, user, id }: Contributor
     if (window !== undefined) {
       setHost(window.location.origin as string);
     }
-  }, []);
+  }, [highlight]);
 
   return (
     <article className="flex flex-col max-w-[40rem] flex-1 gap-3 lg:gap-6">

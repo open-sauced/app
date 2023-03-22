@@ -51,7 +51,7 @@ const DeleteInsightPageModal:FC<ModalProps> = ({
         <Text>Are you sure you want to delete  <span className="font-bold text-light-slate-12">{`${pageName}`}</span>?</Text>
         <Text>If you have data on this page that your team is using it would be difficult for your team to get access to track your project.</Text>
         <Text> <span className="font-bold text-light-slate-12">This action cannot be undone</span></Text>
-        <Text>Type DELETE in all caps to confirm</Text>
+        <Text>Type <span className="font-bold text-light-red-10">DELETE</span> in all caps to confirm</Text>
 
         <TextInput onChange={handleOnNameChange} value={input} />
 
