@@ -123,7 +123,7 @@ const Footer = (): JSX.Element => {
         </div>
         <div className="flex md:justify-center lg:hidden lg:border-none lg:order-2 border-t py-3 pb-4 mt-2 text-sm justify-between">
           <Text className="text-light-slate-9">
-            © 2022 <span className="hidden md:inline-block">Open sauced</span>
+            © {(new Date()).getFullYear()} <span className="hidden md:inline-block">Open sauced</span>
           </Text>
           <div className="flex items-center gap-x-3 text-light-slate-11 text-sm">
             <a className="px-2" href={footerContext[0].terms?.url} target="_blank" rel="noreferrer">
