@@ -108,7 +108,7 @@ const Feeds = () => {
             <div>
               {user && (
                 <div className="lg:gap-x-3 px-3 pt-4 flex max-w-[48rem]">
-                  <div className="hidden lg:inline-flex ">
+                  <div className="hidden lg:inline-flex flex-col place-content-center">
                     <Avatar
                       alt="user profile avatar"
                       isCircle
