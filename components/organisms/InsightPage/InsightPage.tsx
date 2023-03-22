@@ -174,7 +174,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
           // create a stub repo to send to API
           const addedRepo = {
             id: publicRepo.id,
-            full_name: publicRepo.full_name,
+            full_name: publicRepo.full_name
           } as DbRepo;
 
           setRepos((repos) => {
