@@ -4,7 +4,6 @@ import CardProfile from "../CardProfile/card-profile";
 import CardRepoList, { RepoList } from "../CardRepoList/card-repo-list";
 import { calcDistanceFromToday } from "lib/utils/date-utils";
 import PullRequestTable from "../PullRequestTable/pull-request-table";
-import { TooltipProvider } from "@radix-ui/react-tooltip";
 
 export interface ContributorsProfileType {
   githubAvatar: string;
@@ -35,23 +34,21 @@ const ContributorHoverCard = ({
   const calculatedDateFromToday = dateOfFirstPr ? calcDistanceFromToday(new Date(parseInt(dateOfFirstPr))) : "-";
   return (
     <div className="w-[364px] bg-white gap-4 p-3 rounded-lg shadow-superlative flex flex-col">
-      <TooltipProvider>
-        <div>
-          <CardProfile
-            dateOfFirstPR={calculatedDateFromToday}
-            githubAvatar={githubAvatar}
-            githubName={githubName}
-            totalPRs={totalPR}
-          />
-        </div>
-        <div className="">
-          <PullRequestTable isHoverCard repositories={repositories} limit={5} contributor={githubName} topic={topic} />
-        </div>
+      <div>
+        <CardProfile
+          dateOfFirstPR={calculatedDateFromToday}
+          githubAvatar={githubAvatar}
+          githubName={githubName}
+          totalPRs={totalPR}
+        />
+      </div>
+      <div className="">
+        <PullRequestTable isHoverCard repositories={repositories} limit={5} contributor={githubName} topic={topic} />
+      </div>
 
-        <div>
-          <CardRepoList repoList={repoList} limit={3} />
-        </div>
-        </TooltipProvider>
+      <div>
+        <CardRepoList repoList={repoList} limit={3} />
+      </div>
     </div>
   );
 };
