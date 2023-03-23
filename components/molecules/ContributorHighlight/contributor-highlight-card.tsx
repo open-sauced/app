@@ -17,7 +17,6 @@ import { FaUserPlus } from "react-icons/fa";
 import { GrFlag } from "react-icons/gr";
 import { useSWRConfig } from "swr";
 
-import { ToastTrigger } from "lib/utils/toast-trigger";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import GhOpenGraphImg from "../GhOpenGraphImg/gh-open-graph-img";
 import {
@@ -44,6 +43,7 @@ import {
   AlertDialogTrigger
 } from "../AlertDialog/alert-dialog";
 import { deleteHighlight } from "lib/hooks/deleteHighlight";
+import { useToast } from "lib/hooks/useToast";
 
 interface ContributorHighlightCardProps {
   title?: string;
@@ -53,6 +53,7 @@ interface ContributorHighlightCardProps {
   id: string;
   refreshCallBack?: () => void;
 }
+
 const ContributorHighlightCard = ({
   title,
   desc,
@@ -61,6 +62,7 @@ const ContributorHighlightCard = ({
   id,
   refreshCallBack
 }: ContributorHighlightCardProps) => {
+  const { toast } = useToast();
   const twitterTweet = `${title || "Open Source Highlight"} - OpenSauced from ${user}`;
   const reportSubject = `Reported Highlight ${user}: ${title}`;
   const [highlight, setHighlight] = useState({ title, desc, prLink });
@@ -86,7 +88,7 @@ const ContributorHighlightCard = ({
     const url = new URL(content).toString();
     try {
       await navigator.clipboard.writeText(url);
-      ToastTrigger({ message: "Copied to clipboard", type: "success" });
+      toast({ description: "Copied to clipboard", variant: "success" });
     } catch (error) {
       console.log(error);
     }
@@ -118,12 +120,12 @@ const ContributorHighlightCard = ({
         );
         setLoading(false);
         if (res) {
+          toast({ description: "Highlights Updated Successfully", variant: "success" });
           refreshCallBack && refreshCallBack();
-          ToastTrigger({ message: "Highlights Updated Successfully", type: "success" });
           setOpenEdit(false);
         } else {
           setLoading(false);
-          setError("An error occurred while updating!!!");
+          setError("An error occurred while updating!");
         }
       }
     } else {
@@ -136,8 +138,10 @@ const ContributorHighlightCard = ({
     const res = await deleteHighlight(id);
     setDeleteLoading(false);
     if (res !== false) {
+      toast({ description: "Highlights deleted Successfully", variant: "success" });
+
       refreshCallBack && refreshCallBack();
-      ToastTrigger({ message: "Highlights Deleted Successfully", type: "success" });
+
       setAlertOpen(false);
       setOpenEdit(false);
       setTimeout(() => {
@@ -146,7 +150,7 @@ const ContributorHighlightCard = ({
     } else {
       console.error(res);
       setAlertOpen(false);
-      ToastTrigger({ message: "An error occured!!!", type: "error" });
+      toast({ description: "An error occured!", variant: "danger" });
     }
   };
 
@@ -159,13 +163,13 @@ const ContributorHighlightCard = ({
   return (
     <article className="flex flex-col max-w-[40rem] flex-1 gap-3 lg:gap-6">
       <div>
-        <div className="flex justify-between items-center">
+        <div className="flex items-center justify-between">
           {title && (
             <Title className="!text-sm lg:!text-xl !text-light-slate-12" level={4}>
               {title}
             </Title>
           )}
-          <div className="flex ml-auto lg:gap-3 gap-3 items-center">
+          <div className="flex items-center gap-3 ml-auto lg:gap-3">
             <DropdownMenu>
               <DropdownMenuTrigger className="py-2 px-2 hidden rounded-full data-[state=open]:bg-light-slate-7">
                 <HiOutlineEmojiHappy size={20} />
@@ -184,7 +188,7 @@ const ContributorHighlightCard = ({
               <DropdownMenuTrigger className=" py-2 px-2 rounded-full data-[state=open]:bg-light-slate-7">
                 <TfiMoreAlt size={24} />
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="rounded-lg flex flex-col py-2 gap-1">
+              <DropdownMenuContent align="end" className="flex flex-col gap-1 py-2 rounded-lg">
                 <DropdownMenuItem className="rounded-md">
                   <a
                     target="_blank"
@@ -214,7 +218,7 @@ const ContributorHighlightCard = ({
                   <BsLink45Deg size={22} />
                   <span>Copy link</span>
                 </DropdownMenuItem>
-                <DropdownMenuItem className="rounded-md hidden">
+                <DropdownMenuItem className="hidden rounded-md">
                   <div className="flex gap-2.5 py-1  items-center pl-3 pr-7">
                     <FaUserPlus size={22} />
                     <span>Follow user</span>
@@ -226,7 +230,10 @@ const ContributorHighlightCard = ({
                       loggedInUser && loggedInUser.user_metadata.user_name !== user && "hidden"
                     }`}
                   >
-                    <button onClick={() => setOpenEdit(true)} className="flex w-full cursor-default gap-2.5 py-1  items-center pl-3 pr-7">
+                    <button
+                      onClick={() => setOpenEdit(true)}
+                      className="flex w-full cursor-default gap-2.5 py-1  items-center pl-3 pr-7"
+                    >
                       <FiEdit size={22} />
                       <span>Edit</span>
                     </button>
@@ -234,9 +241,7 @@ const ContributorHighlightCard = ({
                 )}
 
                 <DropdownMenuItem
-                  className={`rounded-md ${
-                    loggedInUser && loggedInUser.user_metadata.user_name === user && "hidden"
-                  }`}
+                  className={`rounded-md ${loggedInUser && loggedInUser.user_metadata.user_name === user && "hidden"}`}
                 >
                   <a
                     href={`mailto:hello@opensauced.pizza?subject=${reportSubject}`}
@@ -253,12 +258,12 @@ const ContributorHighlightCard = ({
 
         {/* Highlight body section */}
         <div className="w-full ">
-          <p className="text-light-slate-11 break-words text-sm lg:text-base font-normal">{desc}</p>
+          <p className="text-sm font-normal break-words text-light-slate-11 lg:text-base">{desc}</p>
         </div>
         {/* Highlight Link section */}
 
         <div>
-          <a href={prLink} className="underline text-sauced-orange cursor-pointer">
+          <a href={prLink} className="underline cursor-pointer text-sauced-orange">
             {prLink}
           </a>
         </div>
@@ -275,11 +280,11 @@ const ContributorHighlightCard = ({
               Make changes to your highlights here. Click save when you&apos;re done.
             </DialogDescription>
           </DialogHeader>
-          <form onSubmit={handleUpdateHighlight} className="flex flex-1 font-normal flex-col gap-4 ">
-            <div className=" p-2 flex  rounded-lg text-sm overflow-hidden flex-col gap-2 ">
+          <form onSubmit={handleUpdateHighlight} className="flex flex-col flex-1 gap-4 font-normal ">
+            <div className="flex flex-col gap-2 p-2 overflow-hidden text-sm rounded-lg ">
               {/* Error container */}
               {errorMsg && (
-                <p className="inline-flex w-max items-center px-2 border rounded-md gap-2  mb-4 border-red-500 text-red-500 py-1 bg-red-100">
+                <p className="inline-flex items-center gap-2 px-2 py-1 mb-4 text-red-500 bg-red-100 border border-red-500 rounded-md w-max">
                   <MdError size={20} /> {errorMsg}
                 </p>
               )}
@@ -292,12 +297,12 @@ const ContributorHighlightCard = ({
                   }}
                   value={highlight.title}
                   name="title"
-                  className="h-8 px-2 font-normal focus:border focus:outline-none rounded-lg "
+                  className="h-8 px-2 font-normal rounded-lg focus:border focus:outline-none "
                 />
               </fieldset>
-              <fieldset className="flex flex-col w-full  gap-1">
+              <fieldset className="flex flex-col w-full gap-1">
                 <label htmlFor="description">Body</label>
-                <div className="bg-white  focus-within:border rounded-lg">
+                <div className="bg-white rounded-lg focus-within:border">
                   <Textarea
                     value={highlight.desc}
                     onChange={(e) => {
@@ -305,17 +310,17 @@ const ContributorHighlightCard = ({
                       setError("");
                       setWordCount(e.target.value.length);
                     }}
-                    className="resize-none h-28  px-2  font-normal text-light-slate-11 mb-2 transition focus:outline-none rounded-lg"
+                    className="px-2 mb-2 font-normal transition rounded-lg resize-none h-28 text-light-slate-11 focus:outline-none"
                   ></Textarea>
-                  <p className="text-xs px-2 text-light-slate-9 flex justify-end gap-1">
+                  <p className="flex justify-end gap-1 px-2 text-xs text-light-slate-9">
                     <span className={`${wordCount > wordLimit && "text-red-600"}`}>
                       {wordCount > wordLimit ? `-${wordCount - wordLimit}` : wordCount}
                     </span>
-                        / <span>{wordLimit}</span>
+                    / <span>{wordLimit}</span>
                   </p>
                 </div>
               </fieldset>
-              <fieldset className="flex  flex-col w-full gap-1">
+              <fieldset className="flex flex-col w-full gap-1">
                 <label htmlFor="title">Pull request link</label>
                 <input
                   onChange={(e) => {
@@ -324,7 +329,7 @@ const ContributorHighlightCard = ({
                   }}
                   value={highlight.prLink}
                   name="title"
-                  className="h-8 px-2 font-normal text-orange-600 focus:outline-none focus:border rounded-lg "
+                  className="h-8 px-2 font-normal text-orange-600 rounded-lg focus:outline-none focus:border "
                 />
               </fieldset>
             </div>
@@ -333,7 +338,7 @@ const ContributorHighlightCard = ({
               <AlertDialog open={alertOpen} onOpenChange={setAlertOpen}>
                 <AlertDialogTrigger asChild className="ml-auto">
                   <Button
-                    className=" bg-light-red-7 text-red-600 border border-light-red-400 hover:bg-light-red-8 hover:text-red-700 "
+                    className="text-red-600 border  bg-light-red-7 border-light-red-400 hover:bg-light-red-8 hover:text-red-700"
                     variant="primary"
                   >
                     Delete Page
@@ -343,8 +348,8 @@ const ContributorHighlightCard = ({
                   <AlertDialogHeader>
                     <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
                     <AlertDialogDescription>
-                      This action cannot be undone. This will permanently delete your Highlight and remove related data from
-                      our database.
+                      This action cannot be undone. This will permanently delete your Highlight and remove related data
+                      from our database.
                     </AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter>
@@ -357,7 +362,7 @@ const ContributorHighlightCard = ({
                       <AlertDialogAction asChild>
                         <Button
                           loading={deleteLoading}
-                          className=" bg-red-300 text-red-600 border border-red-400 hover:bg-light-red-8 hover:text-red-700 "
+                          className="text-red-600 bg-red-300 border border-red-400  hover:bg-light-red-8 hover:text-red-700"
                           variant="text"
                           onClick={() => handleDeleteHighlight()}
                         >
