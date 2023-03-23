@@ -54,7 +54,7 @@ const DialogContent = React.forwardRef<
       ref={ref}
       className={clsx(
         className,
-        "fixed z-50 grid w-full gap-4 rounded-b-lg bg-light-slate-2 p-6 animate-in data-[state=open]:fade-in-90 data-[state=open]:slide-in-from-bottom-10 sm:max-w-lg sm:rounded-lg sm:zoom-in-90 data-[state=open]:sm:slide-in-from-bottom-0"
+        "fixed z-50 grid w-full gap-4 rounded-b-lg bg-light-slate-2 p-6 animate-in data-[state=open]:fade-in-90 data-[state=open]:slide-in-from-bottom-10 sm:w-max sm:rounded-lg sm:zoom-in-90 data-[state=open]:sm:slide-in-from-bottom-0"
       )}
       {...props}
     >
@@ -90,12 +90,4 @@ const DialogFooter = ({ className, ...props }: React.HTMLAttributes<HTMLDivEleme
 );
 DialogFooter.displayName = "DialogFooter";
 
-export {
-  Dialog,
-  DialogTrigger,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-  DialogCloseButton
-};
+export { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogCloseButton };
