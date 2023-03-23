@@ -19,7 +19,7 @@ const RecommendedRepoCard = ({ fullname, description, issues, pullRequests, star
   const [owner, name] = fullname.split("/");
 
   return (
-    <div className="p-4 border rounded-2xl bg-white w-full space-y-1 relative">
+    <div className="p-4 border rounded-2xl bg-white w-full min-w-fit space-y-1 relative">
       <div className="flex justify-between w-full">
         <div className="flex space-x-1 items-center">
           <img
@@ -49,7 +49,7 @@ const RecommendedRepoCard = ({ fullname, description, issues, pullRequests, star
         </p>
       </div>
 
-      <div className="flex items-center justify-between absolute bottom-3 inset-x-0 px-4">
+      <div className="flex items-center justify-between flex-wrap">
         <div className="flex space-x-3 text-xs">
           <div className="flex text-sm space-x-1 justify-center items-center">
             <VscIssues
