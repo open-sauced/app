@@ -17,7 +17,7 @@ const ProfileLanguageChart = ({ languageList }: ProfileLanguageChartProps) => {
     const totalSumOfFirstFivePercentage = sortedLangArray
       .slice(0, 5)
       .map((lang) => lang.percentageUsed)
-      .reduce((prev: number, next: number) => prev + next); // need some help fixing this type error, used any to bypass 🙏
+      .reduce((prev: number, next: number) => prev + next);
     setPercentage(totalSumOfFirstFivePercentage);
   }, [percentage, sortedLangArray]);
 
