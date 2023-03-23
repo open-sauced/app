@@ -392,6 +392,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
 
       <DeleteInsightPageModal
         open={isModalOpen}
+        setOpen={setIsModalOpen}
         submitted={submitted}
         pageName={name}
         onConfirm={handleDeleteInsightPage}

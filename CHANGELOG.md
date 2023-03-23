@@ -5,6 +5,34 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.37.0-beta.5](https://github.com/open-sauced/insights/compare/v1.37.0-beta.4...v1.37.0-beta.5) (2023-03-23)
+
+
+### 🍕 Features
+
+* create collaboration Ui components ([#1006](https://github.com/open-sauced/insights/issues/1006)) ([19ff5a7](https://github.com/open-sauced/insights/commit/19ff5a73d1ae669722c307bbf9f16e1dd5be3fb4))
+
+## [1.37.0-beta.4](https://github.com/open-sauced/insights/compare/v1.37.0-beta.3...v1.37.0-beta.4) (2023-03-22)
+
+
+### 🐛 Bug Fixes
+
+*  updated footer file to update the year dynamically ([#1040](https://github.com/open-sauced/insights/issues/1040)) ([c766d95](https://github.com/open-sauced/insights/commit/c766d9521faf9d6198a9049772a285b9b2d32d00))
+
+## [1.37.0-beta.3](https://github.com/open-sauced/insights/compare/v1.37.0-beta.2...v1.37.0-beta.3) (2023-03-22)
+
+
+### 🐛 Bug Fixes
+
+* close highlight dialog when clicking outside its container ([#999](https://github.com/open-sauced/insights/issues/999)) ([1bc90bb](https://github.com/open-sauced/insights/commit/1bc90bb5c61b353aeb847fef98d738998fb9c142))
+
+## [1.37.0-beta.2](https://github.com/open-sauced/insights/compare/v1.37.0-beta.1...v1.37.0-beta.2) (2023-03-22)
+
+
+### 🐛 Bug Fixes
+
+* update avatar style to remain aligned with the input field ([#1037](https://github.com/open-sauced/insights/issues/1037)) ([2374f20](https://github.com/open-sauced/insights/commit/2374f204d75292ad2b947583e10ed485c1a2d4f0))
+
 ## [1.37.0-beta.1](https://github.com/open-sauced/insights/compare/v1.36.0...v1.37.0-beta.1) (2023-03-22)
 
 
