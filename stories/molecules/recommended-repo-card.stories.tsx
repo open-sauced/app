@@ -18,5 +18,5 @@ Default.args = {
   description: "A dashboard for your GitHub insights",
   issues: 1200,
   pullRequests: 50,
-  stars: 3001,
+  stars: 3001
 };
