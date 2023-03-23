@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.37.0-beta.7](https://github.com/open-sauced/insights/compare/v1.37.0-beta.6...v1.37.0-beta.7) (2023-03-23)
+
+
+### 🐛 Bug Fixes
+
+* make insights hub layout inconsistent on larger screens ([#1046](https://github.com/open-sauced/insights/issues/1046)) ([daaf6d1](https://github.com/open-sauced/insights/commit/daaf6d12d042af52ab0f1c405eb85caf207e80b5))
+* remove dialog layout overlap on single highlight view ([#1047](https://github.com/open-sauced/insights/issues/1047)) ([ea836e8](https://github.com/open-sauced/insights/commit/ea836e8090f41ece5a8fae9ff4aa5835166c51fd))
+
 ## [1.37.0-beta.6](https://github.com/open-sauced/insights/compare/v1.37.0-beta.5...v1.37.0-beta.6) (2023-03-23)
 
 
