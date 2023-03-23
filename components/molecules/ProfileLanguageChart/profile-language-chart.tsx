@@ -10,7 +10,7 @@ interface ProfileLanguageChartProps {
   languageList: LanguageObject[];
 }
 const ProfileLanguageChart = ({ languageList }: ProfileLanguageChartProps) => {
-  const sortedLangArray = languageList.sort((a, b) => b.percentageUsed - a.percentageUsed);
+  const sortedLangArray = languageList.slice().sort((a, b) => b.percentageUsed - a.percentageUsed);
   const [percentage, setPercentage] = useState<any>(0);
 
   useEffect(() => {
