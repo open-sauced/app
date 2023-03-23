@@ -161,7 +161,7 @@ const ContributorHighlightCard = ({
   }, [highlight]);
 
   return (
-    <article className="flex flex-col max-w-[40rem] flex-1 gap-3 lg:gap-6">
+    <article className="inline-flex flex-col max-w-xs md:max-w-[40rem] flex-1 gap-3 lg:gap-6">
       <div>
         <div className="flex items-center justify-between">
           {title && (
@@ -338,7 +338,7 @@ const ContributorHighlightCard = ({
               <AlertDialog open={alertOpen} onOpenChange={setAlertOpen}>
                 <AlertDialogTrigger asChild className="ml-auto">
                   <Button
-                    className="text-red-600 border  bg-light-red-7 border-light-red-400 hover:bg-light-red-8 hover:text-red-700"
+                    className="text-red-600 border bg-light-red-7 border-light-red-400 hover:bg-light-red-8 hover:text-red-700"
                     variant="primary"
                   >
                     Delete Page
@@ -362,7 +362,7 @@ const ContributorHighlightCard = ({
                       <AlertDialogAction asChild>
                         <Button
                           loading={deleteLoading}
-                          className="text-red-600 bg-red-300 border border-red-400  hover:bg-light-red-8 hover:text-red-700"
+                          className="text-red-600 bg-red-300 border border-red-400 hover:bg-light-red-8 hover:text-red-700"
                           variant="text"
                           onClick={() => handleDeleteHighlight()}
                         >

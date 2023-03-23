@@ -44,7 +44,6 @@ const Feeds: WithPageLayout = () => {
       return { repoName: repo, repoIcon: `https://www.github.com/${orgName}.png?size=300`, full_name };
     });
 
-
   useEffect(() => {
     if (selectedRepo) {
       router.push(`/feed?repo=${selectedRepo}`);
@@ -67,17 +66,20 @@ const Feeds: WithPageLayout = () => {
   if (!hydrated) return <></>;
 
   return (
-    <div className="container  mx-auto px-2 md:px-16 gap-12 lg:justify-end pt-12 flex flex-col md:flex-row">
+    <div className="container flex flex-col gap-12 px-2 pt-12 mx-auto md:px-16 lg:justify-end md:flex-row">
       {singleHighlight && (
-        <Dialog open={openSingleHighlight} onOpenChange={(open) => {
-          if (!open) {
-            router.push("/feed");
-          }
-        }}>
-          <DialogContent className=" sm:max-w-[80%] w-full  sm:max-h-[100vh] ">
-            <div className="mt-10 flex gap-8 flex-col  mx-auto">
+        <Dialog
+          open={openSingleHighlight}
+          onOpenChange={(open) => {
+            if (!open) {
+              router.push("/feed");
+            }
+          }}
+        >
+          <DialogContent className=" sm:max-w-[80%] w-full  sm:max-h-screen ">
+            <div className="flex flex-col gap-8 mx-auto mt-10">
               <div className="flex flex-col gap-6 px-3 ">
-                <div className="flex gap-3 items-center  ">
+                <div className="flex items-center gap-3 ">
                   <Avatar
                     alt="user profile avatar"
                     isCircle
@@ -85,13 +87,13 @@ const Feeds: WithPageLayout = () => {
                     avatarURL={`https://www.github.com/${singleHighlight.login}.png?size=300`}
                   />
                   <strong>{singleHighlight.login}</strong>
-                  <span className="text-xs text-light-slate-11 font-normal">
+                  <span className="text-xs font-normal text-light-slate-11">
                     {getFormattedDate(singleHighlight.created_at)}
                   </span>
                   <DialogCloseButton onClick={() => router.push("/feed")} />
                 </div>
 
-                <div className=" bg-light-slate-1 border p-4 md:px-6 lg:px-12 py-6 rounded-xl">
+                <div className="w-full px-2 py-6 border bg-light-slate-1 md:px-6 lg:px-12 rounded-xl">
                   <ContributorHighlightCard
                     title={singleHighlight.title}
                     desc={singleHighlight.highlight}
@@ -107,7 +109,7 @@ const Feeds: WithPageLayout = () => {
         </Dialog>
       )}
       <Tabs defaultValue="Highlights" className="flex-1 lg:pl-[21.875rem]">
-        <TabsList className="w-full border-b hidden justify-start">
+        <TabsList className="justify-start hidden w-full border-b">
           <TabsTrigger
             className="data-[state=active]:border-sauced-orange data-[state=active]:border-b-2 text-2xl"
             value="Highlights"
@@ -140,7 +142,7 @@ const Feeds: WithPageLayout = () => {
               )}
 
               {/* Highlights List section */}
-              <div className="mt-10 flex gap-8 flex-col">
+              <div className="flex flex-col gap-8 mt-10">
                 {isLoading && (
                   <div className="flex flex-col gap-3">
                     <div className="flex gap-3">
@@ -155,7 +157,7 @@ const Feeds: WithPageLayout = () => {
                   // eslint-disable-next-line camelcase
                   data.map(({ id, url, title, created_at, highlight, name, login }) => (
                     <div key={id} className="flex flex-col gap-6 px-1">
-                      <div className="flex gap-3 items-center">
+                      <div className="flex items-center gap-3">
                         <Link href={`/user/${login}`} className="flex items-center gap-3">
                           <Avatar
                             alt="user profile avatar"
@@ -166,12 +168,12 @@ const Feeds: WithPageLayout = () => {
                           <strong>{login}</strong>
                         </Link>
                         <Link href={`/feed/${id}`}>
-                          <span className="text-xs text-light-slate-11 font-normal">
+                          <span className="text-xs font-normal text-light-slate-11">
                             {getFormattedDate(created_at)}
                           </span>
                         </Link>
                       </div>
-                      <div className=" bg-light-slate-1 border p-4 md:px-6 lg:px-12 py-6 rounded-xl">
+                      <div className="p-4 py-6 border bg-light-slate-1 md:px-6 lg:px-12 rounded-xl">
                         <ContributorHighlightCard
                           refreshCallBack={mutate}
                           title={title}
@@ -208,7 +210,7 @@ const Feeds: WithPageLayout = () => {
         </TabsContent>
         <TabsContent value="Following"></TabsContent>
       </Tabs>
-      <div className="mt-10 hidden md:block">
+      <div className="hidden mt-10 md:block">
         {repoList.length > 0 && <HighlightsFilterCard setSelected={setSelectedRepo} repos={repoList} />}
       </div>
     </div>
