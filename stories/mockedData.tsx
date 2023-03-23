@@ -1,5 +1,5 @@
 
-export const contributorsMockList: DbContribution[] = [
+export const mockDbContributions: DbContribution[] = [
   {
     id: 1,
     commits: "2",
