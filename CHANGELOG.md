@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.37.0-beta.6](https://github.com/open-sauced/insights/compare/v1.37.0-beta.5...v1.37.0-beta.6) (2023-03-23)
+
+
+### 🍕 Features
+
+* replace react toast to radix ([#933](https://github.com/open-sauced/insights/issues/933)) ([3e000be](https://github.com/open-sauced/insights/commit/3e000be0e85b29cfdf16d58d1a74256ebcf85f8b))
+
 ## [1.37.0-beta.5](https://github.com/open-sauced/insights/compare/v1.37.0-beta.4...v1.37.0-beta.5) (2023-03-23)
 
 
