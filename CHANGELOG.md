@@ -5,6 +5,35 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.37.0](https://github.com/open-sauced/insights/compare/v1.36.0...v1.37.0) (2023-03-24)
+
+
+### 🧑‍💻 Code Refactoring
+
+* Deleted unused hooks, removed unused exports and imports ([#1028](https://github.com/open-sauced/insights/issues/1028)) ([7b2bda2](https://github.com/open-sauced/insights/commit/7b2bda22957e389dde711832dad2e19a5b502ea1))
+
+
+### 🍕 Features
+
+* add teams UI for the design system ([#994](https://github.com/open-sauced/insights/issues/994)) ([499d08e](https://github.com/open-sauced/insights/commit/499d08e81aa890ac7a2cca0761fc7d670538c363))
+* added active styles to navbar links ([#1016](https://github.com/open-sauced/insights/issues/1016)) ([c25c0a3](https://github.com/open-sauced/insights/commit/c25c0a33230bca37aca12a98b243eaa00cd0731c)), closes [#697](https://github.com/open-sauced/insights/issues/697)
+* create collaboration Ui components ([#1006](https://github.com/open-sauced/insights/issues/1006)) ([19ff5a7](https://github.com/open-sauced/insights/commit/19ff5a73d1ae669722c307bbf9f16e1dd5be3fb4))
+* replace react toast to radix ([#933](https://github.com/open-sauced/insights/issues/933)) ([3e000be](https://github.com/open-sauced/insights/commit/3e000be0e85b29cfdf16d58d1a74256ebcf85f8b))
+* update top nav menu to be more responsive on mobile ([#1029](https://github.com/open-sauced/insights/issues/1029)) ([90c1e4a](https://github.com/open-sauced/insights/commit/90c1e4a9f5ffeaa9839d0afae503ba42859170da)), closes [#866](https://github.com/open-sauced/insights/issues/866)
+
+
+### 🐛 Bug Fixes
+
+*  updated footer file to update the year dynamically ([#1040](https://github.com/open-sauced/insights/issues/1040)) ([c766d95](https://github.com/open-sauced/insights/commit/c766d9521faf9d6198a9049772a285b9b2d32d00))
+* add a check for proper URL in avatarURL prop ([#1009](https://github.com/open-sauced/insights/issues/1009)) ([a425279](https://github.com/open-sauced/insights/commit/a4252797fa8093c8d3d472c26422e20a9ec44160))
+* center text inside upgrade access button ([#1027](https://github.com/open-sauced/insights/issues/1027)) ([cf3f6cb](https://github.com/open-sauced/insights/commit/cf3f6cbd7c5a7bf4db76733c9b90255a5bc09d39)), closes [#1024](https://github.com/open-sauced/insights/issues/1024)
+* close highlight dialog when clicking outside its container ([#999](https://github.com/open-sauced/insights/issues/999)) ([1bc90bb](https://github.com/open-sauced/insights/commit/1bc90bb5c61b353aeb847fef98d738998fb9c142))
+* make delete standout ([#1026](https://github.com/open-sauced/insights/issues/1026)) ([9c68287](https://github.com/open-sauced/insights/commit/9c68287eabbe9b826efd27f0a70c3e0d48ba120e))
+* make insights hub layout inconsistent on larger screens ([#1046](https://github.com/open-sauced/insights/issues/1046)) ([daaf6d1](https://github.com/open-sauced/insights/commit/daaf6d12d042af52ab0f1c405eb85caf207e80b5))
+* refresh highlights list on update and delete ([#1034](https://github.com/open-sauced/insights/issues/1034)) ([bf2d951](https://github.com/open-sauced/insights/commit/bf2d9518bdf7b38e8dbdc147e8f01284041b511e))
+* remove dialog layout overlap on single highlight view ([#1047](https://github.com/open-sauced/insights/issues/1047)) ([ea836e8](https://github.com/open-sauced/insights/commit/ea836e8090f41ece5a8fae9ff4aa5835166c51fd))
+* update avatar style to remain aligned with the input field ([#1037](https://github.com/open-sauced/insights/issues/1037)) ([2374f20](https://github.com/open-sauced/insights/commit/2374f204d75292ad2b947583e10ed485c1a2d4f0))
+
 ## [1.37.0-beta.7](https://github.com/open-sauced/insights/compare/v1.37.0-beta.6...v1.37.0-beta.7) (2023-03-23)
 
 
