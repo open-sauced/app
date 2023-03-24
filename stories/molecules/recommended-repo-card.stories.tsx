@@ -1,3 +1,4 @@
+import { TooltipProvider } from "@radix-ui/react-tooltip";
 import { ComponentStory } from "@storybook/react";
 import RecommendedRepoCard from "components/molecules/RecommendedRepoCard/recommended-repo-card";
 import { mockDbContributions } from "../mockedData";
@@ -8,7 +9,9 @@ const storyConfig = {
 export default storyConfig;
 
 const template: ComponentStory<typeof RecommendedRepoCard> = (args) => (
-  <RecommendedRepoCard {...args} />
+  <TooltipProvider>
+    <RecommendedRepoCard {...args} />
+  </TooltipProvider>
 );
 
 export const Default = template.bind({});
