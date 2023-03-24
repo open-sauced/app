@@ -21,7 +21,7 @@ const RecommendedRepoCard = ({ fullname, description, issues, pullRequests, star
   return (
     <div className="p-4 border rounded-2xl bg-white w-full min-w-fit space-y-1 relative">
       <div className="flex justify-between w-full">
-        <div className="flex space-x-1 items-center">
+        <div className="flex gap-1 items-center">
           <img
             alt="Hot Repo Icon"
             className="h-4 w-4 rounded-md overflow-hidden"
