@@ -1,6 +1,5 @@
 import { FaEdit } from "react-icons/fa";
 import Link from "next/link";
-import { useRepositoriesList } from "lib/hooks/useRepositoriesList";
 import getRepoInsights from "lib/utils/get-repo-insights";
 import Button from "components/atoms/Button/button";
 import Title from "components/atoms/Typography/title";
@@ -8,6 +7,7 @@ import Badge from "components/atoms/InsightBadge/insight-badge";
 import ContextThumbnail from "components/atoms/ContextThumbnail/context-thumbnail";
 import CardRepoList from "../CardRepoList/card-repo-list";
 import { truncateString } from "lib/utils/truncate-string";
+import useRepositories from "lib/hooks/api/useRepositories";
 
 interface InsightHeaderProps {
   insight?: DbUserInsight;
@@ -17,7 +17,7 @@ interface InsightHeaderProps {
 }
 
 const InsightHeader = ({ insight, repositories, insightId, isOwner }: InsightHeaderProps): JSX.Element => {
-  const { data: repoData } = useRepositoriesList(false, repositories);
+  const { data: repoData } = useRepositories(repositories);
   const { repoList } = getRepoInsights(repoData);
 
   return (

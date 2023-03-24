@@ -10,7 +10,8 @@ import StackedAvatar from "../StackedAvatar/stacked-avatar";
 import FavoriteSelector from "components/atoms/FavoriteSelector/favorite-selector";
 import { classNames } from "components/organisms/RepositoriesTable/repositories-table";
 import Button from "components/atoms/Button/button";
-import { useRepositoriesList } from "lib/hooks/useRepositoriesList";
+
+import useRepositories from "lib/hooks/api/useRepositories";
 import { getRelativeDays } from "lib/utils/date-utils";
 import getRepoInsights from "lib/utils/get-repo-insights";
 
@@ -22,7 +23,7 @@ interface InsightRepoRowProps {
 const InsightTableRow = ({ user, insight }: InsightRepoRowProps) => {
   const members: any[] = [];
   const repoIds = insight.repos.map((repo) => repo.repo_id);
-  const { data: repoData, isError, isLoading } = useRepositoriesList(false, repoIds);
+  const { data: repoData } = useRepositories(repoIds);
   const { open, closed, merged, drafts, churn, velocity, total, repoList } = getRepoInsights(repoData);
 
   return (
