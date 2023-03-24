@@ -2,20 +2,20 @@ import { interestsType } from "./getInterestOptions";
 
 
 const recommendation: Record<interestsType, string[]> = {
-  react: ["https://github.com/Skyscanner/backpack"],
-  javascript: ["https://github.com/EddieHubCommunity/LinkFree"],
-  python: ["https://github.com/randovania/randovania"],
-  ml: ["https://github.com/mindsdb/mindsdb"],
-  ai: ["https://github.com/LAION-AI/Open-Assistant"],
-  rust: ["https://github.com/swc-project/swc"],
-  ruby: ["https://github.com/rubocop/rubocop"],
-  c: ["https://github.com/systemd/systemd"],
-  cpp: ["https://github.com/redpanda-data/redpanda"],
-  csharp: ["https://github.com/ScottPlot/ScottPlot"],
-  php: ["https://github.com/laravel/framework"],
-  java: ["https://github.com/thingsboard/thingsboard"],
-  typescript: ["https://github.com/sequelize/sequelize"],
-  golang: ["https://github.com/cli/cli"]
+  react: ["Skyscanner/backpack"],
+  javascript: ["EddieHubCommunity/LinkFree"],
+  python: ["randovania/randovania"],
+  ml: ["mindsdb/mindsdb"],
+  ai: ["LAION-AI/Open-Assistant"],
+  rust: ["swc-project/swc"],
+  ruby: ["rubocop/rubocop"],
+  c: ["systemd/systemd"],
+  cpp: ["redpanda-data/redpanda"],
+  csharp: ["ScottPlot/ScottPlot"],
+  php: ["laravel/framework"],
+  java: ["thingsboard/thingsboard"],
+  typescript: ["sequelize/sequelize"],
+  golang: ["cli/cli"]
 };
 
 export default recommendation;
