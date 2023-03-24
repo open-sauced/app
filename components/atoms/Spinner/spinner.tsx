@@ -3,8 +3,8 @@ import clsx from "clsx";
 import React from "react";
 
 interface SpinnerProps extends React.HTMLAttributes<HTMLDivElement> {}
-const Spinner = React.forwardRef<HTMLDivElement, SpinnerProps>(({ className, ...props }) => (
-  <div className="flex justify-center w-full pt-36 ">
+const Spinner = React.forwardRef<HTMLDivElement, SpinnerProps>(({ className, ...props }, ref) => (
+  <div ref={ref} {...props} className="flex justify-center w-full pt-36 ">
     <div role="status">
       <svg
         aria-hidden="true"
