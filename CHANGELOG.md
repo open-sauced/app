@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.38.0-beta.2](https://github.com/open-sauced/insights/compare/v1.38.0-beta.1...v1.38.0-beta.2) (2023-03-24)
+
+
+### 🍕 Features
+
+* add repository recommendation links ([#1050](https://github.com/open-sauced/insights/issues/1050)) ([acfa306](https://github.com/open-sauced/insights/commit/acfa306514ffc019cf074908f0713fc8710e8d83))
+* add repository recommendations component to the design system ([#1045](https://github.com/open-sauced/insights/issues/1045)) ([37122bc](https://github.com/open-sauced/insights/commit/37122bc390bd68a960fdde4c08fc0cb11b595860))
+
 ## [1.38.0-beta.1](https://github.com/open-sauced/insights/compare/v1.37.0...v1.38.0-beta.1) (2023-03-24)
 
 
