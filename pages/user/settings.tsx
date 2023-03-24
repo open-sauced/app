@@ -2,7 +2,6 @@ import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 
 import UserSettingsPage from "components/organisms/UserSettingsPage/user-settings-page";
 import ProfileLayout from "layouts/profile";
-import Head from "next/head";
 import { WithPageLayout } from "interfaces/with-page-layout";
 
 

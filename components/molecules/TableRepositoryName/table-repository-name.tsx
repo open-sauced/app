@@ -1,10 +1,6 @@
-import { User } from "@supabase/supabase-js";
 import Avatar from "components/atoms/Avatar/avatar";
 import { truncateString } from "lib/utils/truncate-string";
 import { StaticImageData } from "next/image";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import React from "react";
 
 interface TableRepositoryNameProps {
   avatarURL?: string | StaticImageData;

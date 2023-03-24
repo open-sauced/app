@@ -7,7 +7,7 @@ import HoverCardWrapper from "components/molecules/HoverCardWrapper/hover-card-w
 import { getAvatarByUsername } from "lib/utils/github";
 import roundedImage from "lib/utils/roundedImages";
 
-export declare interface AvatarProps {
+declare interface AvatarProps {
   contributor: string;
   repositories: number[];
 }

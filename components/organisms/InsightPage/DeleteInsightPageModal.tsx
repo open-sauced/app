@@ -8,6 +8,7 @@ import clsx from "clsx";
 
 interface ModalProps {
   open: boolean;
+  setOpen: (open: boolean) => void;
   submitted: boolean;
   pageName: string;
   onClose: () => void;
@@ -16,6 +17,7 @@ interface ModalProps {
 
 const DeleteInsightPageModal:FC<ModalProps> = ({
   open = false,
+  setOpen,
   submitted = false,
   pageName,
   onConfirm,
@@ -40,18 +42,16 @@ const DeleteInsightPageModal:FC<ModalProps> = ({
   const disabled = input !== "DELETE" || submitted;
 
   return (
-    <Dialog
-      open={open}
-    >
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent>
         <DialogTitle>
           <Title level={3}>Delete Page</Title>
-        </DialogTitle> 
+        </DialogTitle>
 
         <Text>Are you sure you want to delete  <span className="font-bold text-light-slate-12">{`${pageName}`}</span>?</Text>
         <Text>If you have data on this page that your team is using it would be difficult for your team to get access to track your project.</Text>
         <Text> <span className="font-bold text-light-slate-12">This action cannot be undone</span></Text>
-        <Text>Type DELETE in all caps to confirm</Text>
+        <Text>Type <span className="font-bold text-light-red-10">DELETE</span> in all caps to confirm</Text>
 
         <TextInput onChange={handleOnNameChange} value={input} />
 

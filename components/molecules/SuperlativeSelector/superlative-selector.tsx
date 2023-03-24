@@ -86,7 +86,7 @@ const SuperativeSelector: React.FC<SuperlativeSelectorProps> = ({
                     handleFilterClick(filterKey);
                     toggleFilter();
                   }}
-                  css="!w-full"
+                  className="!w-full"
                   checked={selected === filterKey ? true : false}
                 >
                   {option}

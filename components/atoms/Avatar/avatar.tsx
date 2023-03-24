@@ -1,4 +1,3 @@
-import React from "react";
 import Image, { StaticImageData } from "next/image";
 import AvatarImage from "../../../img/hacktoberfest-icon.png";
 import cachedImage from "lib/utils/cachedImages";
@@ -8,7 +7,7 @@ interface AvatarProps {
   avatarURL?: string | StaticImageData;
   initials?: string;
   alt?: string;
-  size?: "sm" | "base" | "lg" | number;
+  size: "sm" | "base" | "lg" | number;
   hasBorder?: boolean;
   isCircle?: boolean;
   isCached?: boolean;
@@ -20,19 +19,24 @@ const avatarLoader = () => {
 };
 
 const Avatar = (props: AvatarProps): JSX.Element => {
-  const imageSource =
-    props.avatarURL && props.isCached
+  let imageSource: string | StaticImageData | undefined = undefined;
+
+  try {
+    // Checks if the avatarURL is a proper URL. If not, it will throw an error.
+    if(typeof props.avatarURL === "string") new URL(props.avatarURL);
+
+    imageSource = props.avatarURL && props.isCached
       ? cachedImage(props.avatarURL as string, process.env.NEXT_PUBLIC_CLOUD_NAME)
       : props.avatarURL;
+  } catch (error) {
+    console.error(error);
+  }
 
   switch (typeof props.size) {
   case "string":
     return <DefaultAvatar {...props} avatarURL={imageSource} />;
   case "number":
     return <CustomAvatar {...props} avatarURL={imageSource} />;
-
-  default:
-    return <span>invalid avatar size props!!!</span>;
   }
 };
 
@@ -53,9 +57,10 @@ const CustomAvatar = ({
       className={`inline-flex ${
         avatarURL ? "" : "bg-orange-500"
       } justify-center relative items-center w-max h-max overflow-hidden
-        ${className ?? " "}
+
         ${isCircle ? "rounded-full " : "rounded-lg "}
         ${hasBorder ? "ring-2 ring-slate-200 " : ""}
+        ${className ?? " "}
       `}
     >
       {avatarURL ? (
@@ -64,7 +69,7 @@ const CustomAvatar = ({
           alt={alt ? alt : "Avatar"}
           width={size as number}
           height={size as number}
-          src={avatarURL ? avatarURL : AvatarImage}
+          src={avatarURL}
         />
       ) : (
         <div
@@ -93,6 +98,7 @@ const DefaultAvatar = ({
         ${isCircle ? "rounded-full " : "rounded-lg "}
         ${hasBorder ? "ring-2 ring-slate-200 " : ""}
         ${size === "sm" ? "w-6 h-6 " : size === "base" ? "w-8 h-8 " : size === "lg" ? "w-12 h-12 " : "w-8 h-8 "}
+        ${className ?? " "}
       `}
     >
       {avatarURL ? (
@@ -100,7 +106,7 @@ const DefaultAvatar = ({
           className={`${className ? className : ""} object-cover`}
           alt={alt ? alt : "Avatar"}
           fill={true}
-          src={avatarURL ? avatarURL : AvatarImage}
+          src={avatarURL}
         />
       ) : (
         <div

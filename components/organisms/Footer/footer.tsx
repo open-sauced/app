@@ -67,7 +67,7 @@ const Footer = (): JSX.Element => {
           </div>
           <span className="lg:hidden font-bold text-light-slate-12 ">OpenSauced</span>
           <Text className="hidden !text-light-slate-9 lg:inline-block">
-            © 2022 <span className="hidden lg:inline-block">OpenSauced</span>
+            © {(new Date()).getFullYear()} <span className="hidden lg:inline-block">OpenSauced</span>
           </Text>
         </div>
         <div className="flex lg:mr-auto lg:text-sm text-light-slate-11 justify-center gap-x-4">
@@ -123,7 +123,7 @@ const Footer = (): JSX.Element => {
         </div>
         <div className="flex md:justify-center lg:hidden lg:border-none lg:order-2 border-t py-3 pb-4 mt-2 text-sm justify-between">
           <Text className="text-light-slate-9">
-            © 2022 <span className="hidden md:inline-block">Open sauced</span>
+            © {(new Date()).getFullYear()} <span className="hidden md:inline-block">Open sauced</span>
           </Text>
           <div className="flex items-center gap-x-3 text-light-slate-11 text-sm">
             <a className="px-2" href={footerContext[0].terms?.url} target="_blank" rel="noreferrer">

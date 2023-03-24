@@ -1,5 +1,4 @@
-import React from "react";
-import { ComponentStory, ComponentMeta } from "@storybook/react";
+import { ComponentStory } from "@storybook/react";
 import TableRepositoryName from "components/molecules/TableRepositoryName/table-repository-name";
 
 const storyConfig = {

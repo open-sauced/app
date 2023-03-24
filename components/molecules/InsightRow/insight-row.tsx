@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { BsFillArrowUpCircleFill, BsPencilFill } from "react-icons/bs";
+import { BsPencilFill } from "react-icons/bs";
 import { MdOutlineArrowForwardIos } from "react-icons/md";
 import { User } from "@supabase/supabase-js";
 

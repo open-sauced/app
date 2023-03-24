@@ -1,4 +1,3 @@
-import React from "react";
 import { ComponentStory } from "@storybook/react";
 import HighlightCard from "../../components/molecules/HighlightCard/highlight-card";
 
