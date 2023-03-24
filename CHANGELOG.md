@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.38.0-beta.1](https://github.com/open-sauced/insights/compare/v1.37.0...v1.38.0-beta.1) (2023-03-24)
+
+
+### 🍕 Features
+
+* connect repositories to API ([#1042](https://github.com/open-sauced/insights/issues/1042)) ([619ce84](https://github.com/open-sauced/insights/commit/619ce84255d7100f77a2618011497ba3cdb613e7))
+
 ## [1.37.0](https://github.com/open-sauced/insights/compare/v1.36.0...v1.37.0) (2023-03-24)
 
 
