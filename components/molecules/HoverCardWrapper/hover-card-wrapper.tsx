@@ -5,7 +5,6 @@ import { useSingleContributor } from "lib/hooks/useSingleContributor";
 import ContributorHoverCard, { ContributorsProfileType } from "../ContributorHoverCard/contributor-hover-card";
 
 import roundedImage from "lib/utils/roundedImages";
-import { TooltipProvider } from "@radix-ui/react-tooltip";
 
 interface HoverCardWrapperProps {
   username: string;
@@ -33,7 +32,7 @@ const HoverCardWrapper = ({ username, repositories }: HoverCardWrapperProps) => 
   };
 
   return (
-    <TooltipProvider>
+    <>
       <ContributorHoverCard
         dateOfFirstPr={contributor[0]?.first_commit_time}
         totalPR={profile.totalPR}
@@ -43,7 +42,7 @@ const HoverCardWrapper = ({ username, repositories }: HoverCardWrapperProps) => 
         topic={topic}
         repositories={repositories}
       />
-    </TooltipProvider>
+    </>
   );
 };
 
