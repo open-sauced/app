@@ -1,7 +1,7 @@
 import { interestsType } from "./getInterestOptions";
 
 
-const recommendation: Record<interestsType, string[]> = {
+const recommendations: Record<interestsType, string[]> = {
   react: ["Skyscanner/backpack"],
   javascript: ["EddieHubCommunity/LinkFree"],
   python: ["randovania/randovania"],
@@ -18,4 +18,4 @@ const recommendation: Record<interestsType, string[]> = {
   golang: ["cli/cli"]
 };
 
-export default recommendation;
+export default recommendations;
