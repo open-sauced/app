@@ -20,12 +20,15 @@ import Title from "components/atoms/Typography/title";
 import Text from "components/atoms/Typography/text";
 import Icon from "components/atoms/Icon/icon";
 import Button from "components/atoms/Button/button";
+
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import useSession from "lib/hooks/useSession";
 import { captureAnayltics } from "lib/utils/analytics";
+
 import useStore from "lib/store";
 import { getInterestOptions } from "lib/utils/getInterestOptions";
 import LanguagePill from "components/atoms/LanguagePill/LanguagePill";
+
 import Select from "components/atoms/Select/select";
 import SelectOption from "components/atoms/Select/select-option";
 import { timezones } from "lib/utils/timezones";

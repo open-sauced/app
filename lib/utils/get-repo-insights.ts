@@ -1,19 +1,21 @@
 const getRepoInsights = (repos: DbRepo[]) => {
   const repoList = repos.map(repo => {
+    const [repoOwner, repoName] = repo.full_name.split("/");
+
     return {
-      repoIcon: `https://github.com/${repo.owner}.png?size=60`,
-      repoName: repo.name,
-      repoOwner: repo.owner
+      repoIcon: `https://github.com/${repoOwner}.png?size=60`,
+      repoName,
+      repoOwner
     };
   });
 
   const repoTotals = repos.reduce((totals, curr) => {
-    const merged = (totals["merged"] || 0) + (curr.mergedPrsCount || 0);
-    const opened = (totals["opened"] || 0) + (curr.openPrsCount || 0);
-    const closed = (totals["closed"] || 0) + (curr.closedPrsCount || 0);
-    const drafts = (totals["drafts"] || 0) + (curr.draftPrsCount || 0);
+    const merged = (totals["merged"] || 0) + (curr.merged_prs_count || 0);
+    const opened = (totals["opened"] || 0) + (curr.open_prs_count || 0);
+    const closed = (totals["closed"] || 0) + (curr.closed_prs_count || 0);
+    const drafts = (totals["drafts"] || 0) + (curr.draft_prs_count || 0);
     const churn = (totals["churn"] || 0) + (curr.churnTotalCount || 0);
-    const velocity = (totals["velocity"] || 0) + (curr.prVelocityCount || 0);
+    const velocity = (totals["velocity"] || 0) + (curr.pr_velocity_count || 0);
     const total = (totals["total"] || 0);
 
     return {

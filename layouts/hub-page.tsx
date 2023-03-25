@@ -26,8 +26,8 @@ const HubPageLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       <TopNav />
-      <div className="page-container flex min-h-[calc(100vh-(54px+95px))] flex-col items-center">
-        <div className="info-container w-full min-h-[100px]">
+      <div className="page-container flex min-h-[calc(100vh-(54px+95px))] bg-light-slate-3 flex-col items-center">
+        <div className="info-container container w-full min-h-[100px]">
           <Header>
             {insight ? (
               <InsightHeader insight={insight} repositories={repositories} insightId={insightId} isOwner={isOwner} />
@@ -47,7 +47,9 @@ const HubPageLayout = ({ children }: { children: React.ReactNode }) => {
           />
         </div>
 
-        <main className="flex w-full flex-1 flex-col items-center px-3 md:px-16 py-8 bg-light-slate-2">{children}</main>
+        <main className="flex w-full flex-1 flex-col  items-center px-3 md:px-16 py-8 bg-light-slate-2">
+          <div className="container mx-auto px-2 md:px-16">{children}</div>
+        </main>
       </div>
       <Footer />
     </>

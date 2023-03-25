@@ -6,20 +6,15 @@ interface DbRepo {
   readonly size: number;
   readonly stars: number;
   readonly issues: number;
-  readonly name: string;
   readonly full_name: string;
-  readonly owner: string;
-  readonly prActiveCount: number;
-  readonly openPrsCount?: number;
-  readonly mergedPrsCount?: number;
-  readonly closedPrsCount?: number;
-  readonly draftPrsCount?: number;
+  readonly pr_active_count?: number;
+  readonly open_prs_count?: number;
+  readonly merged_prs_count?: number;
+  readonly closed_prs_count?: number;
+  readonly draft_prs_count?: number;
+  readonly spam_prs_count?: number;
+  readonly pr_velocity_count?: number;
   readonly churnTotalCount?: number;
-  readonly churnDirection?: string;
-  readonly amount?: string;
-  readonly churn?: string;
-  readonly spamPrsCount?: number;
-  readonly prVelocityCount?: number;
 }
 
 interface DbRepoPR {
