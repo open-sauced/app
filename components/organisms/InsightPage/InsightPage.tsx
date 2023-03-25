@@ -280,10 +280,10 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
       {
         ...(providerToken
           ? {
-              headers: {
-                Authorization: `Bearer ${providerToken}`
-              }
+            headers: {
+              Authorization: `Bearer ${providerToken}`
             }
+          }
           : {})
       }
     );
