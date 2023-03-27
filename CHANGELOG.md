@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.38.0-beta.3](https://github.com/open-sauced/insights/compare/v1.38.0-beta.2...v1.38.0-beta.3) (2023-03-27)
+
+
+### 🐛 Bug Fixes
+
+* correct github link length wrapping on new line in highlights feature ([#1053](https://github.com/open-sauced/insights/issues/1053)) ([693874c](https://github.com/open-sauced/insights/commit/693874cfb17da1d58982993dd461ecc83576ce8b)), closes [#1052](https://github.com/open-sauced/insights/issues/1052)
+
 ## [1.38.0-beta.2](https://github.com/open-sauced/insights/compare/v1.38.0-beta.1...v1.38.0-beta.2) (2023-03-24)
 
 
