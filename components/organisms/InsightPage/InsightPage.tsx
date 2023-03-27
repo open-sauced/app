@@ -280,10 +280,10 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
       {
         ...(providerToken
           ? {
-            headers: {
-              Authorization: `Bearer ${providerToken}`
+              headers: {
+                Authorization: `Bearer ${providerToken}`
+              }
             }
-          }
           : {})
       }
     );
@@ -363,7 +363,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
           />
 
           <div>
-            <Button disabled={repos.length === insightRepoLimit} onClick={handleAddRepository} variant="default">
+            <Button disabled={repos.length === insightRepoLimit} onClick={handleAddRepository} variant="outline">
               Add Repository
             </Button>
           </div>
