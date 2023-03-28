@@ -1,6 +1,5 @@
 import Title from "components/atoms/Typography/title";
 import Text from "components/atoms/Typography/text";
-import CardHorizontalBarChart from "components/molecules/CardHorizontalBarChart/card-horizontal-bar-chart";
 import ContributorProfileHeader from "components/molecules/ContributorProfileHeader/contributor-profile-header";
 import { ContributorObject } from "../ContributorCard/contributor-card";
 import CardLineChart from "components/molecules/CardLineChart/card-line-chart";
@@ -15,6 +14,7 @@ import Pill from "components/atoms/Pill/pill";
 import getPercent from "lib/utils/get-percent";
 import ContributorProfileInfo from "components/molecules/ContributorProfileInfo/contributor-profile-info";
 import ContributorProfileTab from "../ContributorProfileTab/contributor-profile-tab";
+import ProfileLanguageChart from "components/molecules/ProfileLanguageChart/profile-language-chart";
 
 const colorKeys = Object.keys(color);
 interface PrObjectType {
@@ -91,14 +91,14 @@ const ContributorProfilePage = ({
   } = user || {};
 
   return (
-    <div className=" w-full">
+    <div className="w-full ">
       {loading ? (
         <SkeletonWrapper height={200} />
       ) : (
         <ContributorProfileHeader isConnected={!!user} githubName={githubName} avatarUrl={githubAvatar} />
       )}
-      <div className="pt-24 px-2 md:px-16 container mx-auto flex flex-col lg:flex-row lg:gap-40 w-full overflow-hidden justify-between">
-        <div className="flex flex-col w-80 gap-4 ">
+      <div className="container flex flex-col justify-between w-full px-2 pt-24 mx-auto overflow-hidden md:px-16 lg:flex-row lg:gap-40">
+        <div className="flex flex-col gap-4 w-80 ">
           {loading ? (
             <SkeletonWrapper height={210} radius={12} classNames="pb-16 lg:pb-0" />
           ) : (
@@ -118,7 +118,7 @@ const ContributorProfilePage = ({
 
               <div>
                 <p className="mb-4">Languages</p>
-                <CardHorizontalBarChart withDescription={true} languageList={languageList} />
+                <ProfileLanguageChart languageList={languageList} />
               </div>
             </>
           )}
@@ -148,24 +148,24 @@ const ContributorProfilePage = ({
                       Contribution Insights
                     </Title>
                   </div>
-                  <div className="bg-white mt-4 rounded-2xl border p-4 md:p-6">
-                    <div className=" flex flex-col lg:flex-row gap-2 md:gap-12 lg:gap-16 justify-between">
+                  <div className="p-4 mt-4 bg-white border rounded-2xl md:p-6">
+                    <div className="flex flex-col justify-between gap-2  lg:flex-row md:gap-12 lg:gap-16">
                       <div>
                         <span className="text-xs text-light-slate-11">PRs opened</span>
                         {openPrs ? (
-                          <div className="flex lg:justify-center md:pr-8 mt-1">
+                          <div className="flex mt-1 lg:justify-center md:pr-8">
                             <Text className="!text-lg md:!text-xl lg:!text-2xl !text-black !leading-none">
                               {openPrs} PRs
                             </Text>
                           </div>
                         ) : (
-                          <div className="flex justify-center items-end mt-1"> - </div>
+                          <div className="flex items-end justify-center mt-1"> - </div>
                         )}
                       </div>
                       <div>
                         <span className="text-xs text-light-slate-11">Avg PRs velocity</span>
                         {prVelocity ? (
-                          <div className="flex gap-2 lg:justify-center items-center">
+                          <div className="flex items-center gap-2 lg:justify-center">
                             <Text className="!text-lg md:!text-xl lg:!text-2xl !text-black !leading-none">
                               {getRelativeDays(prVelocity)}
                             </Text>
@@ -173,23 +173,23 @@ const ContributorProfilePage = ({
                             <Pill color="purple" text={`${prsMergedPercentage}%`} />
                           </div>
                         ) : (
-                          <div className="flex justify-center items-end mt-1"> - </div>
+                          <div className="flex items-end justify-center mt-1"> - </div>
                         )}
                       </div>
                       <div>
                         <span className="text-xs text-light-slate-11">Contributed Repos</span>
                         {recentContributionCount ? (
-                          <div className="flex lg:justify-center mt-1">
+                          <div className="flex mt-1 lg:justify-center">
                             <Text className="!text-lg md:!text-xl lg:!text-2xl !text-black !leading-none">
                               {`${recentContributionCount} Repo${recentContributionCount > 1 ? "s" : ""}`}
                             </Text>
                           </div>
                         ) : (
-                          <div className="flex justify-center items-end mt-1"> - </div>
+                          <div className="flex items-end justify-center mt-1"> - </div>
                         )}
                       </div>
                     </div>
-                    <div className="mt-10 h-32">
+                    <div className="h-32 mt-10">
                       <CardLineChart lineChartOption={chart} className="!h-32" />
                     </div>
                     <div>
@@ -199,7 +199,7 @@ const ContributorProfilePage = ({
                     <div className="mt-6">
                       <PullRequestTable limit={15} contributor={githubName} topic={"*"} repositories={undefined} />
                     </div>
-                    <div className="mt-8 text-light-slate-9 text-sm">
+                    <div className="mt-8 text-sm text-light-slate-9">
                       <p>The data for these contributions is from publicly available open source projects on GitHub.</p>
                     </div>
                   </div>

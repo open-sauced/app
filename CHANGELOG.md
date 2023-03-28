@@ -5,6 +5,63 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.38.0-beta.8](https://github.com/open-sauced/insights/compare/v1.38.0-beta.7...v1.38.0-beta.8) (2023-03-28)
+
+
+### 🍕 Features
+
+* remove guard for nav links and handle contributors error ([#1060](https://github.com/open-sauced/insights/issues/1060)) ([3227ceb](https://github.com/open-sauced/insights/commit/3227ceb1b6cbf23206ee1a9b1cbe2673ecc51962))
+
+## [1.38.0-beta.7](https://github.com/open-sauced/insights/compare/v1.38.0-beta.6...v1.38.0-beta.7) (2023-03-28)
+
+
+### 🐛 Bug Fixes
+
+* reset page when adding/removing a repo highlight filter ([#1061](https://github.com/open-sauced/insights/issues/1061)) ([026f2bc](https://github.com/open-sauced/insights/commit/026f2bc77fc20bea30572ade0bbe0e35140b8dbe))
+
+## [1.38.0-beta.6](https://github.com/open-sauced/insights/compare/v1.38.0-beta.5...v1.38.0-beta.6) (2023-03-28)
+
+
+### 🐛 Bug Fixes
+
+* update `repo.host_id` to repo.id to match github repo schema ([#1059](https://github.com/open-sauced/insights/issues/1059)) ([d106544](https://github.com/open-sauced/insights/commit/d1065445a0a4cf5de8bf4547c6915b1e7bb6f520))
+
+## [1.38.0-beta.5](https://github.com/open-sauced/insights/compare/v1.38.0-beta.4...v1.38.0-beta.5) (2023-03-28)
+
+
+### 🍕 Features
+
+* add `ProfileLanguageChart` component to design system and user profile page ([#1030](https://github.com/open-sauced/insights/issues/1030)) ([e8e5362](https://github.com/open-sauced/insights/commit/e8e53625f254edc4bc00b73165f90d550e9ccb64))
+
+## [1.38.0-beta.4](https://github.com/open-sauced/insights/compare/v1.38.0-beta.3...v1.38.0-beta.4) (2023-03-27)
+
+
+### 🐛 Bug Fixes
+
+* add loading indicator to insights filter page ([#1049](https://github.com/open-sauced/insights/issues/1049)) ([42fbe2e](https://github.com/open-sauced/insights/commit/42fbe2e68c39e75c309464eab6c7549c9ded8291))
+
+## [1.38.0-beta.3](https://github.com/open-sauced/insights/compare/v1.38.0-beta.2...v1.38.0-beta.3) (2023-03-27)
+
+
+### 🐛 Bug Fixes
+
+* correct github link length wrapping on new line in highlights feature ([#1053](https://github.com/open-sauced/insights/issues/1053)) ([693874c](https://github.com/open-sauced/insights/commit/693874cfb17da1d58982993dd461ecc83576ce8b)), closes [#1052](https://github.com/open-sauced/insights/issues/1052)
+
+## [1.38.0-beta.2](https://github.com/open-sauced/insights/compare/v1.38.0-beta.1...v1.38.0-beta.2) (2023-03-24)
+
+
+### 🍕 Features
+
+* add repository recommendation links ([#1050](https://github.com/open-sauced/insights/issues/1050)) ([acfa306](https://github.com/open-sauced/insights/commit/acfa306514ffc019cf074908f0713fc8710e8d83))
+* add repository recommendations component to the design system ([#1045](https://github.com/open-sauced/insights/issues/1045)) ([37122bc](https://github.com/open-sauced/insights/commit/37122bc390bd68a960fdde4c08fc0cb11b595860))
+
+## [1.38.0-beta.1](https://github.com/open-sauced/insights/compare/v1.37.0...v1.38.0-beta.1) (2023-03-24)
+
+
+### 🍕 Features
+
+* connect repositories to API ([#1042](https://github.com/open-sauced/insights/issues/1042)) ([619ce84](https://github.com/open-sauced/insights/commit/619ce84255d7100f77a2618011497ba3cdb613e7))
+
 ## [1.37.0](https://github.com/open-sauced/insights/compare/v1.36.0...v1.37.0) (2023-03-24)
 
 

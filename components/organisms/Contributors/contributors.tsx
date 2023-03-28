@@ -73,8 +73,9 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
         title="Contributors"
       />
 
-      <div className="w-full grid grid-cols-automobile  md:grid-cols-autodesktop gap-3">
+      <div className="grid w-full gap-3 grid-cols-automobile md:grid-cols-autodesktop">
         {isLoading ? <SkeletonWrapper height={210} radius={12} count={9} /> : ""}
+        {isError ? <>An error occurred!..</> : ""}
         {contributorArray.map((contributor, index) => (
           <ContributorCard
             key={index}
@@ -88,7 +89,7 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
 
       {/* Table footer */}
 
-      <div className="mt-5 w-full px-2 flex flex-col gap-y-3 md:flex-row">
+      <div className="flex flex-col w-full px-2 mt-5 gap-y-3 md:flex-row">
         <Select
           placeholder="10 per page"
           options={[
@@ -104,7 +105,7 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
           }}
         ></Select>
 
-        <div className="py-1 md:py-4 flex w-full md:mt-5 justify-between items-center">
+        <div className="flex items-center justify-between w-full py-1 md:py-4 md:mt-5">
           <div>
             <div className="">
               <PaginationResults metaInfo={meta} total={meta.itemCount} entity={"contributors"} />

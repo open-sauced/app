@@ -23,6 +23,7 @@ import StackedAvatar from "../StackedAvatar/stacked-avatar";
 import PullRequestOverview from "../PullRequestOverview/pull-request-overview";
 import TableRepositoryName from "../TableRepositoryName/table-repository-name";
 import Checkbox from "components/atoms/Checkbox/checkbox";
+import { getAvatarByUsername } from "lib/utils/github";
 
 interface RepoProps {
   repo: RepositoriesRows;
@@ -80,22 +81,19 @@ const getPrsSpam = (total: number, spam: number): number => {
 
 const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoProps): JSX.Element => {
   const {
-    name,
-    owner: handle,
-    owner_avatar: ownerAvatar,
-    openPrsCount,
-    closedPrsCount,
-    draftPrsCount,
-    mergedPrsCount,
-    spamPrsCount,
-    churnTotalCount,
-    churnDirection,
-    prVelocityCount
+    full_name: fullName,
+    open_prs_count: openPrsCount,
+    closed_prs_count: closedPrsCount,
+    draft_prs_count: draftPrsCount,
+    merged_prs_count: mergedPrsCount,
+    spam_prs_count: spamPrsCount,
+    pr_velocity_count: prVelocityCount
   } = repo;
+  const ownerAvatar = getAvatarByUsername(fullName.split("/")[0]);
 
   const { user } = useSupabaseAuth();
-  const { data: contributorData, meta: contributorMeta } = useContributionsList(repo.id, "", "updated_at");
-  const { data: commitsData, meta: commitMeta, isLoading: commitLoading } = useRepositoryCommits(repo.id);
+  const { data: contributorData, meta: contributorMeta } = useContributionsList(repo.full_name, "", "updated_at");
+  const { data: commitsData, meta: commitMeta, isLoading: commitLoading } = useRepositoryCommits(repo.full_name);
   const totalPrs = getTotalPrs(openPrsCount, mergedPrsCount, closedPrsCount, draftPrsCount);
   const prsMergedPercentage = getPercent(totalPrs, mergedPrsCount || 0);
   const spamPrsPercentage = getPrsSpam(totalPrs, spamPrsCount || 0);
@@ -125,7 +123,7 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
         {/* Row: Repository Name and Pr overview */}
         <div className="flex items-center gap-x-3">
           <div className="w-[55%]">
-            <TableRepositoryName topic={topic} avatarURL={ownerAvatar} name={name} handle={handle} user={userPage} />
+            <TableRepositoryName topic={topic} avatarURL={ownerAvatar} fullName={fullName as string} user={userPage} />
           </div>
           <div className="w-[45%]">
             {repo.id ? (
@@ -134,8 +132,6 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
                 merged={mergedPrsCount}
                 closed={closedPrsCount}
                 draft={draftPrsCount}
-                churn={churnTotalCount}
-                churnDirection={`${churnDirection}`}
               />
             ) : (
               "-"
@@ -221,8 +217,7 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
           <TableRepositoryName
             topic={topic}
             avatarURL={ownerAvatar}
-            name={name}
-            handle={handle}
+            fullName={fullName as string}
             user={userPage}
           ></TableRepositoryName>
         </div>
@@ -238,8 +233,6 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
               merged={mergedPrsCount}
               closed={closedPrsCount}
               draft={draftPrsCount}
-              churn={churnTotalCount}
-              churnDirection={`${churnDirection}`}
             ></PullRequestOverview>
           ) : (
             "-"
