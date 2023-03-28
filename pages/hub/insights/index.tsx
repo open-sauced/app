@@ -30,10 +30,10 @@ const InsightsHub: WithPageLayout = () => {
         const currentUser = await supabase.auth.getSession();
 
         if (!currentUser?.data?.session || onboarded === false) {
-          await router.push("/javascript/dashboard/filter/recent");
+          await router.push("/");
         }
       } catch (e: unknown) {
-        router.push("/javascript/dashboard/filter/recent");
+        router.push("/");
       }
     }
 

@@ -26,7 +26,6 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
   const { data, setLimit, meta, setPage, page, isError, isLoading } = useTopicContributions(10, repositories);
   const range = useStore((state) => state.range);
   const store = useStore();
-  console.log(isLoading);
 
   const contributorArray = isError
     ? []
