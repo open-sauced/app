@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.38.0-beta.6](https://github.com/open-sauced/insights/compare/v1.38.0-beta.5...v1.38.0-beta.6) (2023-03-28)
+
+
+### 🐛 Bug Fixes
+
+* update `repo.host_id` to repo.id to match github repo schema ([#1059](https://github.com/open-sauced/insights/issues/1059)) ([d106544](https://github.com/open-sauced/insights/commit/d1065445a0a4cf5de8bf4547c6915b1e7bb6f520))
+
 ## [1.38.0-beta.5](https://github.com/open-sauced/insights/compare/v1.38.0-beta.4...v1.38.0-beta.5) (2023-03-28)
 
 
