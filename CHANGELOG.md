@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.38.0-beta.5](https://github.com/open-sauced/insights/compare/v1.38.0-beta.4...v1.38.0-beta.5) (2023-03-28)
+
+
+### 🍕 Features
+
+* add `ProfileLanguageChart` component to design system and user profile page ([#1030](https://github.com/open-sauced/insights/issues/1030)) ([e8e5362](https://github.com/open-sauced/insights/commit/e8e53625f254edc4bc00b73165f90d550e9ccb64))
+
 ## [1.38.0-beta.4](https://github.com/open-sauced/insights/compare/v1.38.0-beta.3...v1.38.0-beta.4) (2023-03-27)
 
 
