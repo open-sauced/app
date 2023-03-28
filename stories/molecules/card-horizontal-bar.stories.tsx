@@ -19,8 +19,9 @@ export const testLanguageList = [
   },
   {
     languageName: "Rust",
-    percentageUsed: 30
-  }
+    percentageUsed: 15
+  },
+  { languageName: "React", percentageUsed: 15 }
 ];
 
 //CardHorizontalBarChart Template
