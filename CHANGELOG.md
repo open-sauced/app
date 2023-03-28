@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.38.0-beta.7](https://github.com/open-sauced/insights/compare/v1.38.0-beta.6...v1.38.0-beta.7) (2023-03-28)
+
+
+### 🐛 Bug Fixes
+
+* reset page when adding/removing a repo highlight filter ([#1061](https://github.com/open-sauced/insights/issues/1061)) ([026f2bc](https://github.com/open-sauced/insights/commit/026f2bc77fc20bea30572ade0bbe0e35140b8dbe))
+
 ## [1.38.0-beta.6](https://github.com/open-sauced/insights/compare/v1.38.0-beta.5...v1.38.0-beta.6) (2023-03-28)
 
 
