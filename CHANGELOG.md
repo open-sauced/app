@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.38.0-beta.8](https://github.com/open-sauced/insights/compare/v1.38.0-beta.7...v1.38.0-beta.8) (2023-03-28)
+
+
+### 🍕 Features
+
+* remove guard for nav links and handle contributors error ([#1060](https://github.com/open-sauced/insights/issues/1060)) ([3227ceb](https://github.com/open-sauced/insights/commit/3227ceb1b6cbf23206ee1a9b1cbe2673ecc51962))
+
 ## [1.38.0-beta.7](https://github.com/open-sauced/insights/compare/v1.38.0-beta.6...v1.38.0-beta.7) (2023-03-28)
 
 
