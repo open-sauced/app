@@ -1,5 +1,5 @@
 import Radio from "components/atoms/Radio/radio";
-import { ComponentStory, ComponentMeta } from "@storybook/react";
+import { ComponentStory } from "@storybook/react";
 
 const storyConfig = {
   title: "Design System/Atoms/Radio"
@@ -13,10 +13,10 @@ Checked.args = {
   children: "Test",
   checked: true,
   withLabel: "32k",
-  css: "w-full"
+  className: "w-full"
 };
 Default.args = {
   children: "Test",
   id: "select",
-  css: "w-max"
+  className: "w-max"
 };

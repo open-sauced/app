@@ -1,22 +1,17 @@
-import { User } from "@supabase/supabase-js";
 import Avatar from "components/atoms/Avatar/avatar";
 import { truncateString } from "lib/utils/truncate-string";
 import { StaticImageData } from "next/image";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import React from "react";
 
 interface TableRepositoryNameProps {
   avatarURL?: string | StaticImageData;
-  name?: string;
-  handle?: string;
+  fullName: string;
   isLoading?: boolean;
   topic?: string;
   user?: string | string[];
 }
 
-const TableRepositoryName = ({ avatarURL, name, handle, topic, user }: TableRepositoryNameProps): JSX.Element => {
-
+const TableRepositoryName = ({ avatarURL, fullName }: TableRepositoryNameProps): JSX.Element => {
+  const [handle, name] = fullName?.split("/");
   return (
     <div className="flex items-center gap-2.5">
       {/* Avatar */}

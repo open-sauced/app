@@ -1,4 +1,4 @@
-import React, { HTMLAttributes } from "react";
+import React from "react";
 import { Checkbox as SupbaseCheckboxComponent } from "@supabase/ui";
 
 interface CheckboxProps extends React.ComponentProps<typeof SupbaseCheckboxComponent> {

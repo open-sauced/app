@@ -13,12 +13,12 @@ import posthog from "posthog-js";
 
 import { TipProvider } from "components/atoms/Tooltip/tooltip";
 
-import changeCapitalization from "lib/utils/change-capitalization";
 import apiFetcher from "lib/hooks/useSWR";
 import { initiateAnalytics } from "lib/utils/analytics";
 import { supabase } from "lib/utils/supabase";
-import { Toaster } from "react-hot-toast";
+
 import SEO from "layouts/SEO/SEO";
+import { Toaster } from "components/molecules/Toaster/toaster";
 import Script from "next/script";
 
 type ComponentWithPageLayout = AppProps & {
@@ -97,7 +97,8 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
           provider: localStorageProvider
         }}
       >
-        <Toaster position="top-center" />
+        {/* <Toaster position="top-center" /> */}
+        <Toaster />
         <SessionContextProvider supabaseClient={supabase} initialSession={pageProps.initialSession}>
           <TipProvider>
             {Component.PageLayout ? (
@@ -108,7 +109,8 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
               <Component {...pageProps} />
             )}
           </TipProvider>
-          <Script id="ze-snippet"
+          <Script
+            id="ze-snippet"
             src="https://static.zdassets.com/ekr/snippet.js?key=765edcc9-b888-4651-8b22-79e4365e06f1"
             strategy="afterInteractive"
           />

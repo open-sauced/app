@@ -6,13 +6,13 @@ import { User } from "@supabase/supabase-js";
 import Button from "components/atoms/Button/button";
 import Text from "components/atoms/Typography/text";
 
-import { useRepositoriesList } from "lib/hooks/useRepositoriesList";
 import { getRelativeDays } from "lib/utils/date-utils";
 import getRepoInsights from "lib/utils/get-repo-insights";
 
 import CardRepoList from "../CardRepoList/card-repo-list";
 import PieChart, { PieData } from "../PieChart/pie-chart";
 import StackedAvatar from "../StackedAvatar/stacked-avatar";
+import useRepositories from "lib/hooks/api/useRepositories";
 
 interface InsightPageCardProps {
   user: User | null;
@@ -22,7 +22,7 @@ interface InsightPageCardProps {
 const InsightPageCard = ({ insight, user }: InsightPageCardProps): JSX.Element => {
   const members: any[] = [];
   const repoIds = insight.repos.map((repo) => repo.repo_id);
-  const { data: repoData, isError, isLoading } = useRepositoriesList(false, repoIds);
+  const { data: repoData } = useRepositories(repoIds);
   const { open, closed, merged, drafts, velocity, total, repoList } = getRepoInsights(repoData);
 
   const PieChartData: PieData[] = [

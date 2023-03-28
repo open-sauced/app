@@ -1,11 +1,11 @@
 import Link from "next/link";
 
-import { BsFillArrowUpCircleFill, BsPencilFill } from "react-icons/bs";
+import { BsPencilFill } from "react-icons/bs";
 import { MdOutlineArrowForwardIos } from "react-icons/md";
 import { User } from "@supabase/supabase-js";
 
 import { getRelativeDays } from "lib/utils/date-utils";
-import { useRepositoriesList } from "lib/hooks/useRepositoriesList";
+import useRepositories from "lib/hooks/api/useRepositories";
 import getRepoInsights from "lib/utils/get-repo-insights";
 import getPercent from "../../../lib/utils/get-percent";
 
@@ -20,7 +20,7 @@ interface InsightRowProps {
 
 const InsightRow = ({ insight, user }: InsightRowProps) => {
   const repoIds = insight.repos.map((repo) => repo.repo_id);
-  const { data: repoData, isError, isLoading } = useRepositoriesList(false, repoIds);
+  const { data: repoData } = useRepositories(repoIds);
   const { open, merged, velocity, total, repoList } = getRepoInsights(repoData);
   const avgOpenPrs = repoData.length > 0 ? Math.round(open / repoData.length) : 0;
   return (

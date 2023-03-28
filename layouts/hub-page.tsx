@@ -10,6 +10,7 @@ import InsightHeader from "components/molecules/InsightHeader/insight-header";
 import useNav from "lib/hooks/useNav";
 import useInsight from "lib/hooks/useInsight";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
+import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 
 const HubPageLayout = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
@@ -26,13 +27,25 @@ const HubPageLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       <TopNav />
-      <div className="page-container flex min-h-[calc(100vh-(54px+95px))] flex-col items-center">
-        <div className="info-container w-full min-h-[100px]">
+      <div className="page-container flex min-h-[calc(100vh-(54px+95px))] bg-light-slate-3 flex-col items-center">
+        <div className="info-container container w-full min-h-[100px]">
           <Header>
             {insight ? (
               <InsightHeader insight={insight} repositories={repositories} insightId={insightId} isOwner={isOwner} />
             ) : isLoading ? (
-              <div>Loading...</div>
+              <div className="flex justify-between w-full h-46">
+                <div className="flex items-center gap-3">
+                  <SkeletonWrapper radius={10} width={140} height={140} />
+                  <div className="flex flex-col gap-3">
+                    <SkeletonWrapper width={110} height={25} />
+                    <SkeletonWrapper width={200} height={25} />
+                    <SkeletonWrapper classNames="mt-3" width={150} height={30} />
+                  </div>
+                </div>
+                <div>
+                  <SkeletonWrapper classNames="mt-6" width={150} height={40} />
+                </div>
+              </div>
             ) : (
               <div>Error occurred</div>
             )}
@@ -47,7 +60,9 @@ const HubPageLayout = ({ children }: { children: React.ReactNode }) => {
           />
         </div>
 
-        <main className="flex w-full flex-1 flex-col items-center px-3 md:px-16 py-8 bg-light-slate-2">{children}</main>
+        <main className="flex flex-col items-center flex-1 w-full px-3 py-8 md:px-16 bg-light-slate-2">
+          <div className="container px-2 mx-auto md:px-16">{children}</div>
+        </main>
       </div>
       <Footer />
     </>

@@ -8,7 +8,7 @@ import Pagination from "components/molecules/Pagination/pagination";
 import PaginationResults from "components/molecules/PaginationResults/pagination-result";
 import TableHeader from "components/molecules/TableHeader/table-header";
 
-import { useRepositoriesList } from "lib/hooks/useRepositoriesList";
+import useRepositories from "lib/hooks/api/useRepositories";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 
 import RepositoriesTable, { classNames, RepositoriesRows } from "../RepositoriesTable/repositories-table";
@@ -34,10 +34,9 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
     meta: repoMeta,
     isError: repoListIsError,
     isLoading: repoListIsLoading,
-    page,
     setPage,
     setLimit
-  } = useRepositoriesList(false, repositories);
+  } = useRepositories(repositories);
   const filteredRepoNotIndexed = selectedFilter && !repoListIsLoading && !repoListIsError && repoListData.length === 0;
   const [selectedRepos, setSelectedRepos] = useState<DbRepo[]>([]);
 

@@ -1,4 +1,3 @@
-import getFilterQuery from "lib/utils/get-filter-query";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 

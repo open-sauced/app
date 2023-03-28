@@ -1,5 +1,4 @@
 import React from "react";
-import Text from "components/atoms/Typography/text";
 import Image from "next/image";
 import openSaucedImg from "../../../img/openSauced-icon.png";
 import openSaucedImgWithBg from "../../../img/open-sourced-with-bg-icon.png";
@@ -21,7 +20,7 @@ const HeaderLogo: React.FC<HeaderLogoProps> = ({ textIsBlack, withBg = false }) 
           height={32}
           src={withBg ? openSaucedImgWithBg : openSaucedImg}
         />
-        <p className={`font-bold !text-base hidden xs:block ${textIsBlack ? "!text-black" : "!text-white"}`}>
+        <p className={`font-bold !text-base ${textIsBlack ? "!text-black" : "!text-white"}`}>
           OpenSauced
         </p>
       </div>

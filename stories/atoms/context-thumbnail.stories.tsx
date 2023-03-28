@@ -1,5 +1,4 @@
-import React from "react";
-import { ComponentStory, ComponentMeta } from "@storybook/react";
+import { ComponentStory } from "@storybook/react";
 import ContextThumbnail from "../../components/atoms/ContextThumbnail/context-thumbnail";
 import Thumbnail from "../../img/hacktoberfest-icon.png";
 

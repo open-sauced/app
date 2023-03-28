@@ -1,5 +1,4 @@
-import React from "react";
-import { ComponentStory, ComponentMeta } from "@storybook/react";
+import { ComponentStory } from "@storybook/react";
 import TableRepositoryName from "components/molecules/TableRepositoryName/table-repository-name";
 
 const storyConfig = {
@@ -15,6 +14,5 @@ const TableRepositoryNameTemplate: ComponentStory<typeof TableRepositoryName> = 
 export const Default = TableRepositoryNameTemplate.bind({});
 
 Default.args = {
-  name: "Insights",
-  handle: "OpenSauced"
+  fullName: "open-sauced/insights"
 };

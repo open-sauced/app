@@ -1,4 +1,4 @@
-import { ComponentStory, ComponentMeta } from "@storybook/react";
+import { ComponentStory } from "@storybook/react";
 import AuthSection from "../../components/molecules/AuthSection/auth-section";
 
 const storyConfig = {

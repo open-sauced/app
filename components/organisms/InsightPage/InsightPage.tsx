@@ -18,6 +18,8 @@ import useStore from "lib/store";
 import Error from "components/atoms/Error/Error";
 import Search from "components/atoms/Search/search";
 import { useDebounce } from "rooks";
+import SuggestedRepositoriesList from "../SuggestedRepoList/suggested-repo-list";
+import { RepoCardProfileProps } from "components/molecules/RepoCardProfile/repo-card-profile";
 
 enum RepoLookupError {
   Initial = 0,
@@ -63,14 +65,15 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
   }, [pageRepos, insight?.is_public]);
 
   const reposRemoved = repoHistory.map((repo) => {
+    const [repoOwner, repoName] = repo.full_name.split("/");
     const totalPrs =
-      (repo.openPrsCount || 0) + (repo.closedPrsCount || 0) + (repo.mergedPrsCount || 0) + (repo.draftPrsCount || 0);
+      (repo.open_prs_count || 0) + (repo.closed_prs_count || 0) + (repo.merged_prs_count || 0) + (repo.draft_prs_count || 0);
 
     return {
-      orgName: repo.owner,
-      repoName: repo.name,
+      orgName: repoOwner,
+      repoName: repoName,
       totalPrs,
-      avatar: getAvatarByUsername(repo.owner, 60),
+      avatar: getAvatarByUsername(repoOwner, 60),
       handleRemoveItem: () => {}
     };
   });
@@ -145,14 +148,14 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
   const loadAndAddRepo = async (repoToAdd: string) => {
     setAddRepoError(RepoLookupError.Initial);
 
-    const hasRepo = repos.find((repo) => `${repo.owner}/${repo.name}` === repoToAdd);
+    const hasRepo = repos.find((repo) => `${repo.full_name}` === repoToAdd);
 
     if (hasRepo) {
       return;
     }
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_GS_API_URL}/repos/${repoToAdd}`);
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/repos/${repoToAdd}`);
 
       if (response.ok) {
         const addedRepo = (await response.json()) as DbRepo;
@@ -166,7 +169,19 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
         const publicRepoResponse = await fetch(`https://api.github.com/repos/${repoToAdd}`);
 
         if (publicRepoResponse.ok) {
-          setAddRepoError(RepoLookupError.NotIndexed);
+          const publicRepo = await publicRepoResponse.json();
+
+          // create a stub repo to send to API
+          const addedRepo = {
+            id: publicRepo.id,
+            full_name: publicRepo.full_name
+          } as DbRepo;
+
+          setRepos((repos) => {
+            return [...repos, addedRepo];
+          });
+          setAddRepoError(RepoLookupError.Initial);
+          setRepoSearchTerm("");
         } else {
           setAddRepoError(RepoLookupError.Invalid);
         }
@@ -185,7 +200,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
       await loadAndAddRepo(repoAdded);
 
       setRepoHistory((historyRepos) => {
-        return historyRepos.filter((repo) => `${repo.owner}/${repo.name}` !== repoAdded);
+        return historyRepos.filter((repo) => `${repo.full_name}` !== repoAdded);
       });
     } catch (e) {}
   };
@@ -261,6 +276,11 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
     updateSuggestionsDebounced();
   }, [repoSearchTerm]);
 
+  const staticSuggestedRepos: RepoCardProfileProps[] = [
+    { avatar: "https://avatars.githubusercontent.com/u/57568598?s=200&v=4", prCount: 8, repoName: "insights", issueCount: 87, orgName: "open-sauced" },
+    { avatar: "https://avatars.githubusercontent.com/u/59704711?s=200&v=4", prCount: 26, repoName: "cli", issueCount: 398, orgName: "cli" },
+    { avatar: "https://avatars.githubusercontent.com/u/42048915?s=200&v=4", prCount: 100, repoName: "deno", issueCount: 1200, orgName: "denoland" }
+  ];
 
   return (
     <section className="flex  flex-col lg:flex-row w-full lg:gap-20 py-4 lg:pl-28 justify-center ">
@@ -299,6 +319,9 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
               Add Repository
             </Button>
           </div>
+
+          <SuggestedRepositoriesList reposData={staticSuggestedRepos}
+            onAddRepo={(repo) => {loadAndAddRepo(repo);}} />
         </div>
 
         <div>
@@ -360,19 +383,20 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
           createPageButtonDisabled={disableCreateButton()}
         >
           {repos.map((repo) => {
+            const [repoOwner, repoName] = repo.full_name.split("/");
             const totalPrs =
-              (repo.openPrsCount || 0) +
-              (repo.closedPrsCount || 0) +
-              (repo.mergedPrsCount || 0) +
-              (repo.draftPrsCount || 0);
+              (repo.open_prs_count || 0) +
+              (repo.closed_prs_count || 0) +
+              (repo.merged_prs_count || 0) +
+              (repo.draft_prs_count || 0);
 
             return (
               <RepositoryCartItem
                 key={`repo_${repo.id}`}
-                avatar={getAvatarByUsername(repo.owner, 60)}
+                avatar={getAvatarByUsername(repoOwner, 60)}
                 handleRemoveItem={() => handleRemoveRepository(repo.id)}
-                orgName={repo.owner}
-                repoName={repo.name}
+                orgName={repoOwner}
+                repoName={repoName}
                 totalPrs={totalPrs}
               />
             );
@@ -382,6 +406,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
 
       <DeleteInsightPageModal
         open={isModalOpen}
+        setOpen={setIsModalOpen}
         submitted={submitted}
         pageName={name}
         onConfirm={handleDeleteInsightPage}

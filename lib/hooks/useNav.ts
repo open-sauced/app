@@ -1,12 +1,12 @@
 import { useRouter } from "next/router";
-import { useRepositoriesList } from "lib/hooks/useRepositoriesList";
+import useRepositories from "./api/useRepositories";
 import { useTopicContributions } from "./useTopicContributions";
 
 
 const useNav = (repositories: number[] = []) => {
 
   const router = useRouter();
-  const { meta: repoMetaData, isError: repoIsError, isLoading: repoIsLoading } = useRepositoriesList(false, repositories);
+  const { meta: repoMetaData, isError: repoIsError, isLoading: repoIsLoading } = useRepositories(repositories);
   const { meta: conMetaData, isError: conIsError, isLoading: conIsLoading } = useTopicContributions(10, repositories);
 
 

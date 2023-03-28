@@ -1,4 +1,3 @@
-import React from "react";
 import { ComponentStory } from "@storybook/react";
 import WaitlistButton from "../../components/molecules/WaitlistButton/waitlist-button";
 

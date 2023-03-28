@@ -1,16 +1,27 @@
 import { useState } from "react";
 import useSWR, { Fetcher } from "swr";
+import { useRouter } from "next/router";
+
 import publicApiFetcher from "lib/utils/public-api-fetcher";
+import getFilterQuery from "lib/utils/get-filter-query";
 
 interface PaginatedResponse {
-  readonly data: GhUser[];
+  readonly data: DbRepo[];
   readonly meta: Meta;
 }
 
-const useContributors = () => {
+const useRepositories = (repoIds: number[] = []) => {
+  const router = useRouter();
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
-  const query = new URLSearchParams();
+  const { filterName, selectedFilter } = router.query;
+  const topic = filterName as string;
+  const filterQuery = getFilterQuery(selectedFilter);
+  const query = new URLSearchParams(filterQuery);
+
+  if (topic && Number.isNaN(Number(topic))) {
+    query.set("topic", topic);
+  }
 
   if (page) {
     query.set("page", `${page}`);
@@ -20,7 +31,11 @@ const useContributors = () => {
     query.set("limit", `${limit}`);
   }
 
-  const baseEndpoint = "users/list";
+  if (repoIds?.length > 0) {
+    query.set("repoIds", repoIds.join(","));
+  }
+
+  const baseEndpoint = "repos/search";
   const endpointString = `${baseEndpoint}?${query}`;
 
   const { data, error, mutate } = useSWR<PaginatedResponse, Error>(
@@ -40,4 +55,4 @@ const useContributors = () => {
   };
 };
 
-export default useContributors;
+export default useRepositories;

@@ -1,12 +1,12 @@
 {
   "name": "@open-sauced/insights",
-  "version": "1.36.0-beta.2",
+  "version": "1.38.0-beta.4",
   "lockfileVersion": 3,
   "requires": true,
   "packages": {
     "": {
       "name": "@open-sauced/insights",
-      "version": "1.36.0-beta.2",
+      "version": "1.38.0-beta.4",
       "hasInstallScript": true,
       "license": "MIT",
       "dependencies": {
@@ -26,6 +26,7 @@
         "@radix-ui/react-select": "^1.2.0",
         "@radix-ui/react-switch": "^1.0.1",
         "@radix-ui/react-tabs": "^1.0.2",
+        "@radix-ui/react-toast": "^1.1.2",
         "@radix-ui/react-toggle-group": "^1.0.2",
         "@radix-ui/react-tooltip": "^1.0.3",
         "@react-spring/web": "^9.6.1",
@@ -6868,6 +6869,113 @@
       "dependencies": {
         "@babel/runtime": "^7.13.10",
         "@radix-ui/react-compose-refs": "1.0.0"
+      },
+      "peerDependencies": {
+        "react": "^16.8 || ^17.0 || ^18.0"
+      }
+    },
+    "node_modules/@radix-ui/react-toast": {
+      "version": "1.1.2",
+      "resolved": "https://registry.npmjs.org/@radix-ui/react-toast/-/react-toast-1.1.2.tgz",
+      "integrity": "sha512-Kpr4BBYoP0O5A1UeDBmao87UnCMNdAKGNioQH5JzEm6OYTUVGhuDRbOwoZxPwOZ6vsjJHeIpdUrwbiHEB65CCw==",
+      "dependencies": {
+        "@babel/runtime": "^7.13.10",
+        "@radix-ui/primitive": "1.0.0",
+        "@radix-ui/react-collection": "1.0.1",
+        "@radix-ui/react-compose-refs": "1.0.0",
+        "@radix-ui/react-context": "1.0.0",
+        "@radix-ui/react-dismissable-layer": "1.0.2",
+        "@radix-ui/react-portal": "1.0.1",
+        "@radix-ui/react-presence": "1.0.0",
+        "@radix-ui/react-primitive": "1.0.1",
+        "@radix-ui/react-use-callback-ref": "1.0.0",
+        "@radix-ui/react-use-controllable-state": "1.0.0",
+        "@radix-ui/react-use-layout-effect": "1.0.0",
+        "@radix-ui/react-visually-hidden": "1.0.1"
+      },
+      "peerDependencies": {
+        "react": "^16.8 || ^17.0 || ^18.0",
+        "react-dom": "^16.8 || ^17.0 || ^18.0"
+      }
+    },
+    "node_modules/@radix-ui/react-toast/node_modules/@radix-ui/react-collection": {
+      "version": "1.0.1",
+      "resolved": "https://registry.npmjs.org/@radix-ui/react-collection/-/react-collection-1.0.1.tgz",
+      "integrity": "sha512-uuiFbs+YCKjn3X1DTSx9G7BHApu4GHbi3kgiwsnFUbOKCrwejAJv4eE4Vc8C0Oaxt9T0aV4ox0WCOdx+39Xo+g==",
+      "dependencies": {
+        "@babel/runtime": "^7.13.10",
+        "@radix-ui/react-compose-refs": "1.0.0",
+        "@radix-ui/react-context": "1.0.0",
+        "@radix-ui/react-primitive": "1.0.1",
+        "@radix-ui/react-slot": "1.0.1"
+      },
+      "peerDependencies": {
+        "react": "^16.8 || ^17.0 || ^18.0",
+        "react-dom": "^16.8 || ^17.0 || ^18.0"
+      }
+    },
+    "node_modules/@radix-ui/react-toast/node_modules/@radix-ui/react-dismissable-layer": {
+      "version": "1.0.2",
+      "resolved": "https://registry.npmjs.org/@radix-ui/react-dismissable-layer/-/react-dismissable-layer-1.0.2.tgz",
+      "integrity": "sha512-WjJzMrTWROozDqLB0uRWYvj4UuXsM/2L19EmQ3Au+IJWqwvwq9Bwd+P8ivo0Deg9JDPArR1I6MbWNi1CmXsskg==",
+      "dependencies": {
+        "@babel/runtime": "^7.13.10",
+        "@radix-ui/primitive": "1.0.0",
+        "@radix-ui/react-compose-refs": "1.0.0",
+        "@radix-ui/react-primitive": "1.0.1",
+        "@radix-ui/react-use-callback-ref": "1.0.0",
+        "@radix-ui/react-use-escape-keydown": "1.0.2"
+      },
+      "peerDependencies": {
+        "react": "^16.8 || ^17.0 || ^18.0",
+        "react-dom": "^16.8 || ^17.0 || ^18.0"
+      }
+    },
+    "node_modules/@radix-ui/react-toast/node_modules/@radix-ui/react-portal": {
+      "version": "1.0.1",
+      "resolved": "https://registry.npmjs.org/@radix-ui/react-portal/-/react-portal-1.0.1.tgz",
+      "integrity": "sha512-NY2vUWI5WENgAT1nfC6JS7RU5xRYBfjZVLq0HmgEN1Ezy3rk/UruMV4+Rd0F40PEaFC5SrLS1ixYvcYIQrb4Ig==",
+      "dependencies": {
+        "@babel/runtime": "^7.13.10",
+        "@radix-ui/react-primitive": "1.0.1"
+      },
+      "peerDependencies": {
+        "react": "^16.8 || ^17.0 || ^18.0",
+        "react-dom": "^16.8 || ^17.0 || ^18.0"
+      }
+    },
+    "node_modules/@radix-ui/react-toast/node_modules/@radix-ui/react-primitive": {
+      "version": "1.0.1",
+      "resolved": "https://registry.npmjs.org/@radix-ui/react-primitive/-/react-primitive-1.0.1.tgz",
+      "integrity": "sha512-fHbmislWVkZaIdeF6GZxF0A/NH/3BjrGIYj+Ae6eTmTCr7EB0RQAAVEiqsXK6p3/JcRqVSBQoceZroj30Jj3XA==",
+      "dependencies": {
+        "@babel/runtime": "^7.13.10",
+        "@radix-ui/react-slot": "1.0.1"
+      },
+      "peerDependencies": {
+        "react": "^16.8 || ^17.0 || ^18.0",
+        "react-dom": "^16.8 || ^17.0 || ^18.0"
+      }
+    },
+    "node_modules/@radix-ui/react-toast/node_modules/@radix-ui/react-slot": {
+      "version": "1.0.1",
+      "resolved": "https://registry.npmjs.org/@radix-ui/react-slot/-/react-slot-1.0.1.tgz",
+      "integrity": "sha512-avutXAFL1ehGvAXtPquu0YK5oz6ctS474iM3vNGQIkswrVhdrS52e3uoMQBzZhNRAIE0jBnUyXWNmSjGHhCFcw==",
+      "dependencies": {
+        "@babel/runtime": "^7.13.10",
+        "@radix-ui/react-compose-refs": "1.0.0"
+      },
+      "peerDependencies": {
+        "react": "^16.8 || ^17.0 || ^18.0"
+      }
+    },
+    "node_modules/@radix-ui/react-toast/node_modules/@radix-ui/react-use-escape-keydown": {
+      "version": "1.0.2",
+      "resolved": "https://registry.npmjs.org/@radix-ui/react-use-escape-keydown/-/react-use-escape-keydown-1.0.2.tgz",
+      "integrity": "sha512-DXGim3x74WgUv+iMNCF+cAo8xUHHeqvjx8zs7trKf+FkQKPQXLk2sX7Gx1ysH7Q76xCpZuxIJE7HLPxRE+Q+GA==",
+      "dependencies": {
+        "@babel/runtime": "^7.13.10",
+        "@radix-ui/react-use-callback-ref": "1.0.0"
       },
       "peerDependencies": {
         "react": "^16.8 || ^17.0 || ^18.0"

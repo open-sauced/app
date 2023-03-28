@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Octokit } from "octokit";
 import { useRouter } from "next/router";
 import { User } from "@supabase/supabase-js";
 
@@ -11,11 +10,9 @@ import ChooseInterestsIcon from "img/icons/choose-interests.svg";
 import ChooseInterestsActiveIcon from "img/icons/choose-interests-active.svg";
 import HighlightIcon from "img/icons/highlight-icon.svg";
 import GitHubIcon from "img/icons/github-icon.svg";
-import AddIcon from "img/icons/add-icon.svg";
 
 import LoginLayout from "layouts/login";
 import { WithPageLayout } from "interfaces/with-page-layout";
-import { LoginRepoObjectInterface } from "interfaces/login-repo-object-interface";
 
 import Card from "components/atoms/Card/card";
 import ProgressPie from "components/atoms/ProgressPie/progress-pie";
@@ -23,22 +20,18 @@ import Title from "components/atoms/Typography/title";
 import Text from "components/atoms/Typography/text";
 import Icon from "components/atoms/Icon/icon";
 import Button from "components/atoms/Button/button";
-import TextInput from "components/atoms/TextInput/text-input";
 
-import useLoginRepoList from "lib/hooks/useLoginRepoList";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import useSession from "lib/hooks/useSession";
 import { captureAnayltics } from "lib/utils/analytics";
-import { getAvatarByUsername } from "lib/utils/github";
+
 import useStore from "lib/store";
 import { getInterestOptions } from "lib/utils/getInterestOptions";
 import LanguagePill from "components/atoms/LanguagePill/LanguagePill";
-import { updateUser } from "lib/hooks/update-user";
-import { ToastTrigger } from "lib/utils/toast-trigger";
+
 import Select from "components/atoms/Select/select";
 import SelectOption from "components/atoms/Select/select-option";
 import { timezones } from "lib/utils/timezones";
-import { authSession } from "lib/hooks/authSession";
 
 type handleLoginStep = () => void;
 

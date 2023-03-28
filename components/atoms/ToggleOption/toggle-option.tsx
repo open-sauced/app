@@ -1,4 +1,3 @@
-import React from "react";
 import ToggleSwitch from "../ToggleSwitch/toggle-switch";
 import { HiInformationCircle } from "react-icons/hi";
 interface ToogleOptionProps {

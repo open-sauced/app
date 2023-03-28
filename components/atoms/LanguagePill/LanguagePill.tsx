@@ -1,21 +1,23 @@
-import React from "react";
 import Image, { StaticImageData } from "next/image";
 
-import JavascriptIcon from "img/topic-thumbnails/javascript.svg";
-import ReactIcon from "/img/topic-thumbnails/react.svg";
-import PythonIcon from "/img/topic-thumbnails/python.svg";
-import AIIcon from "/img/topic-thumbnails/ai.svg";
-import MLIcon from "/img/topic-thumbnails/machine-learning.svg";
-import RustIcon from "/img/topic-thumbnails/rust.svg";
-import PhpIcon from "/img/topic-thumbnails/php.svg";
-import CsharpIcon from "/img/topic-thumbnails/c-sharp.svg";
-import CIcon from "/img/topic-thumbnails/c.svg";
-import CppIcon from "/img/topic-thumbnails/c-plus.svg";
-import TypeScriptIcon from "/img/topic-thumbnails/typescript.svg";
-import RubyIcon from "/img/topic-thumbnails/ruby.svg";
-import JavaIcon from "/img/topic-thumbnails/java.svg";
-import GolangIcon from "/img/topic-thumbnails/golang.svg";
+
+import JavascriptIcon from "img/icons/interests/javascript.svg";
+import ReactIcon from "/img/icons/interests/react.svg";
+import PythonIcon from "/img/icons/interests/python.svg";
+import AIIcon from "/img/icons/interests/ai.svg";
+import MLIcon from "/img/icons//interests/machine-learning.svg";
+import RustIcon from "/img/icons/interests/rust.svg";
+import PhpIcon from "/img/icons/interests/php.svg";
+import CsharpIcon from "/img/icons/interests/c-sharp.svg";
+import CIcon from "/img/icons/interests/c.svg";
+import CppIcon from "/img/icons/interests/c-plus.svg";
+import TypeScriptIcon from "/img/icons/interests/typescript.svg";
+import RubyIcon from "/img/icons/interests/ruby.svg";
+import JavaIcon from "/img/icons/interests/java.svg";
+import GolangIcon from "img/icons/interests/golang.svg";
+
 import topicNameFormatting from "lib/utils/topic-name-formatting";
+
 
 interface LanguagePillProps {
   topic:

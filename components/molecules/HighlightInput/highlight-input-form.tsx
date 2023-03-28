@@ -2,21 +2,18 @@ import Button from "components/atoms/Button/button";
 import { Textarea } from "components/atoms/Textarea/text-area";
 import { createHighlights } from "lib/hooks/createHighlights";
 
-import { ToastTrigger } from "lib/utils/toast-trigger";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
-import { useSWRConfig } from "swr";
-import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
+
 import GhOpenGraphImg from "../GhOpenGraphImg/gh-open-graph-img";
 import { generateApiPrUrl } from "lib/utils/github";
 import { fetchGithubPRInfo } from "lib/hooks/fetchGithubPRInfo";
+import { useToast } from "lib/hooks/useToast";
 
 interface HighlightInputFormProps {
   refreshCallback?: Function;
 }
 
 const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.Element => {
-  const { user } = useSupabaseAuth();
-  const { mutate } = useSWRConfig();
   const [isDivFocused, setIsDivFocused] = useState(false);
   const [loading, setLoading] = useState(false);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
@@ -29,6 +26,8 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
   let rowLomit = 5;
   const charLimit = 500;
   let messageLastScrollHeight = textAreaRef.current ? textAreaRef.current?.scrollHeight : 50;
+
+  const { toast } = useToast();
 
   const validCharLimit = () => {
     return charCount - pullrequestLink.length <= charLimit;
@@ -89,7 +88,8 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
 
       if (res.isError) {
         setLoading(false);
-        ToastTrigger({ message: "A valid Pull request Link is required", type: "error" });
+
+        toast({ description: "A valid Pull request Link is required", variant: "danger" });
         return;
       } else {
         setLoading(true);
@@ -105,13 +105,13 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
           setBodyText("");
           setTitle("");
           setIsDivFocused(false);
-          ToastTrigger({ message: "Highlight Posted!", type: "success" });
+          toast({ description: "Highlight Posted!", title: "Success", variant: "success" });
         } else {
-          ToastTrigger({ message: "An error occured!!!", type: "error" });
+          toast({ description: "An error occured!", title: "Error", variant: "danger" });
         }
       }
     } else {
-      ToastTrigger({ message: "Please provide a valid pull request link!", type: "error" });
+      toast({ description: "Please provide a valid pull request link!", title: "Error", variant: "danger" });
     }
   };
 
