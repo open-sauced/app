@@ -30,10 +30,10 @@ const InsightsHub: WithPageLayout = () => {
         const currentUser = await supabase.auth.getSession();
 
         if (!currentUser?.data?.session || onboarded === false) {
-          await router.push("/");
+          await router.push("/javascript/dashboard/filter/recent");
         }
       } catch (e: unknown) {
-        router.push("/");
+        router.push("/javascript/dashboard/filter/recent");
       }
     }
 
@@ -43,19 +43,20 @@ const InsightsHub: WithPageLayout = () => {
   }, [router, onboarded]);
 
   return user && onboarded ? (
-    <div className="flex  flex-col w-full gap-4 py-2 container">
-      <div className="block sm:flex justify-between py-2 ">
+    <div className="container flex flex-col w-full gap-4 py-2">
+      <div className="justify-between block py-2 sm:flex ">
         <div>
           <Title className="!text-2xl !leading-none !font-medium  mb-4" level={1}>
             Insights
           </Title>
           <Text className="my-8">
-            Welcome to your Insights Hub! Here, you can set up pages to view all of your insights or other open source insights in one place.
+            Welcome to your Insights Hub! Here, you can set up pages to view all of your insights or other open source
+            insights in one place.
           </Text>
         </div>
-        <div className="flex gap-3 items-center mt-4">
+        <div className="flex items-center gap-3 mt-4">
           {/* Search box temporarily hidden */}
-          <div className="w-58 hidden">
+          <div className="hidden w-58">
             <Search placeholder="Search repositories" className="max-w-full" name={"query"} />
           </div>
           <Link href={"/hub/insights/new"}>
@@ -68,8 +69,8 @@ const InsightsHub: WithPageLayout = () => {
         {isLoading
           ? "Loading..."
           : isError
-            ? "Error..."
-            : insightsData.map((insight, index) => {
+          ? "Error..."
+          : insightsData.map((insight, index) => {
               return <InsightRow key={`insights_${insight.id}`} user={user} insight={insight} />;
             })}
       </section>
@@ -77,7 +78,7 @@ const InsightsHub: WithPageLayout = () => {
       <Link
         passHref
         href={"/hub/insights/new"}
-        className="w-full bg-light-slate-4 text-lg text-light-slate-11 py-5 md:py-8 lg:py-10 rounded-lg text-center border border-light-slate-7"
+        className="w-full py-5 text-lg text-center border rounded-lg bg-light-slate-4 text-light-slate-11 md:py-8 lg:py-10 border-light-slate-7"
       >
         Create a new Insight Page
       </Link>
