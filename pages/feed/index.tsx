@@ -47,6 +47,7 @@ const Feeds: WithPageLayout = () => {
   useEffect(() => {
     if (selectedRepo) {
       router.push(`/feed?repo=${selectedRepo}`);
+      setPage(1);
     }
 
     if (highlightId) {
@@ -56,6 +57,7 @@ const Feeds: WithPageLayout = () => {
 
     if (!selectedRepo && !highlightId) {
       router.push("/feed");
+      setPage(1);
     }
   }, [selectedRepo, highlightId]);
 
