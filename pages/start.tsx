@@ -280,7 +280,7 @@ const Login: WithPageLayout = () => {
               disabled={currentLoginStep !== 1}
               className={`!text-[16px]  ${currentLoginStep === 1 && highlighted}`}
             >
-              Authenicate with GitHub
+              Authenticate with GitHub
             </Text>
           </div>
           <div className="hidden lg:flex gap-2 items-center mb-8">
