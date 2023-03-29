@@ -8,7 +8,7 @@ import ChooseTimezoneIcon from "img/icons/choose-timezone.svg";
 import ChooseTimezoneActiveIcon from "img/icons/choose-timezone-active.svg";
 import ChooseInterestsIcon from "img/icons/choose-interests.svg";
 import ChooseInterestsActiveIcon from "img/icons/choose-interests-active.svg";
-import HighlightIcon from "img/icons/highlixfght-icon.svg";
+import HighlightIcon from "img/icons/highlight-icon.svg";
 import GitHubIcon from "img/icons/github-icon.svg";
 
 import LoginLayout from "layouts/login";
