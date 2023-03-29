@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.38.1-beta.1](https://github.com/open-sauced/insights/compare/v1.38.0...v1.38.1-beta.1) (2023-03-29)
+
+
+### 🐛 Bug Fixes
+
+* fix typo in GitHub button to authenticate ([#1064](https://github.com/open-sauced/insights/issues/1064)) ([35c8756](https://github.com/open-sauced/insights/commit/35c875629cd715f0f018ca8934634c077814088f))
+
 ## [1.38.0](https://github.com/open-sauced/insights/compare/v1.37.0...v1.38.0) (2023-03-28)
 
 
