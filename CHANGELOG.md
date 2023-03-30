@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.38.1-beta.2](https://github.com/open-sauced/insights/compare/v1.38.1-beta.1...v1.38.1-beta.2) (2023-03-30)
+
+
+### 🐛 Bug Fixes
+
+* correct connect with github button being too big on mobile ([#1063](https://github.com/open-sauced/insights/issues/1063)) ([bb0aef3](https://github.com/open-sauced/insights/commit/bb0aef3a0b81046642ac3229fb16821e2154be05))
+
 ### [1.38.1-beta.1](https://github.com/open-sauced/insights/compare/v1.38.0...v1.38.1-beta.1) (2023-03-29)
 
 
