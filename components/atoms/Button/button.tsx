@@ -28,8 +28,8 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonsProps>(
           props.variant === "default" && style.default,
           props.variant === "outline" && style.outline,
           props.variant === "link" && style.link,
-
-          "inline-flex text-sm font-semibold tracking-tight border py-2 px-4 rounded-md focus-visible:border-orange-500 focus:outline-none focus-visible:ring focus-visible:ring-orange-200"
+          disabled && "bg-light-orange-7 hover:bg-light-orange-7 border-none pointer-events-none",
+          "inline-flex text-sm font-semibold tracking-tight border py-2 px-4 rounded-md focus-visible:border-orange-500 focus:outline-none focus-visible:ring focus-visible:ring-orange-200 whitespace-nowrap"
         )}
         ref={ref}
         {...props}

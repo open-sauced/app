@@ -117,7 +117,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
       },
       body: JSON.stringify({
         name,
-        repos: repos.map((repo) => ({ id: repo.host_id, fullName: repo.full_name })),
+        repos: repos.map((repo) => ({ id: repo.id, fullName: repo.full_name })),
         // eslint-disable-next-line
         is_public: isPublic
       })
@@ -144,7 +144,8 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
       },
       body: JSON.stringify({
         name,
-        repos: repos.map((repo) => ({ id: repo.host_id, fullName: repo.full_name })),
+        repos: repos.map((repo) => ({ id: repo.id, fullName: repo.full_name })),
+        // eslint-disable-next-line
         is_public: isPublic
       })
     });
@@ -280,10 +281,10 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
       {
         ...(providerToken
           ? {
-            headers: {
-              Authorization: `Bearer ${providerToken}`
+              headers: {
+                Authorization: `Bearer ${providerToken}`
+              }
             }
-          }
           : {})
       }
     );
