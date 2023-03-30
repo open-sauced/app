@@ -93,7 +93,7 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
 
   const { user } = useSupabaseAuth();
   const { data: contributorData, meta: contributorMeta } = useContributionsList(repo.full_name, "", "updated_at");
-  const { data: commitsData, meta: commitMeta, isLoading: commitLoading } = useRepositoryCommits(repo.full_name);
+  const { data: commitsData } = useRepositoryCommits(repo.full_name);
   const totalPrs = getTotalPrs(openPrsCount, mergedPrsCount, closedPrsCount, draftPrsCount);
   const prsMergedPercentage = getPercent(totalPrs, mergedPrsCount || 0);
   const spamPrsPercentage = getPrsSpam(totalPrs, spamPrsCount || 0);
@@ -153,7 +153,7 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
           {/* Row: Activity */}
           <div className="flex items-center py-3 border-b justify-between">
             <div>Activity</div>
-            {getActivity(commitMeta.itemCount, commitLoading)}
+            {getActivity(totalPrs, false)}
           </div>
 
           {/* Row: Pr velocity */}
@@ -223,7 +223,7 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
         </div>
 
         {/* Column: Activity */}
-        <div className={classNames.cols.activity}>{getActivity(commitMeta.itemCount, commitLoading)}</div>
+        <div className={classNames.cols.activity}>{getActivity(totalPrs, false)}</div>
 
         {/* Column: PR Overview */}
         <div className={classNames.cols.prOverview}>
