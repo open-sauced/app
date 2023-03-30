@@ -15,6 +15,8 @@ import getPercent from "lib/utils/get-percent";
 import ContributorProfileInfo from "components/molecules/ContributorProfileInfo/contributor-profile-info";
 import ContributorProfileTab from "../ContributorProfileTab/contributor-profile-tab";
 import ProfileLanguageChart from "components/molecules/ProfileLanguageChart/profile-language-chart";
+import useValidateFollowUser from "lib/hooks/useValidateFollowUser";
+import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 
 const colorKeys = Object.keys(color);
 interface PrObjectType {
@@ -72,17 +74,49 @@ const ContributorProfilePage = ({
     };
   });
 
+  const { sessionToken, user: loggedInUser } = useSupabaseAuth();
+
   const { chart } = useTopicContributorCommits(githubName, "*", repositories);
   const prsMergedPercentage = getPercent(prTotal, prMerged || 0);
-  const isLoaded = !loading && !error;
+  const { data: Follower, isError: followError, mutate } = useValidateFollowUser(user ? user.login : "");
 
-  // eslint-disable-next-line camelcase
+  console.log(Follower);
+  console.log(followError);
+  const handleFollowUser = async () => {
+    const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${user && user.login}/follow`, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${sessionToken}`
+      }
+    }).catch((err) => console.log(err));
+
+    if (req && req.ok) {
+      const res = await req.json();
+      console.log(res);
+      mutate();
+    }
+  };
+
+  const handleUnFollowUser = async () => {
+    const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${user && user.login}/follow`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${sessionToken}`
+      }
+    }).catch((err) => console.log(err));
+
+    if (req && req.ok) {
+      const res = await req.json();
+      console.log(res);
+      mutate();
+    }
+  };
+
   const {
     bio,
     location,
     interests,
     name,
-    // eslint-disable-next-line camelcase
     twitter_username,
     timezone,
     github_sponsors_url: githubSponsorsUrl,
@@ -95,7 +129,16 @@ const ContributorProfilePage = ({
       {loading ? (
         <SkeletonWrapper height={200} />
       ) : (
-        <ContributorProfileHeader isConnected={!!user} githubName={githubName} avatarUrl={githubAvatar} />
+        <ContributorProfileHeader
+          username={user?.login}
+          user={loggedInUser}
+          isFollowing={followError ? false : true}
+          isConnected={!!user}
+          githubName={githubName}
+          avatarUrl={githubAvatar}
+          handleFollow={handleFollowUser}
+          handleUnfollow={handleUnFollowUser}
+        />
       )}
       <div className="container flex flex-col justify-between w-full px-2 pt-24 mx-auto overflow-hidden md:px-16 lg:flex-row lg:gap-40">
         <div className="flex flex-col gap-4 w-80 ">
@@ -149,7 +192,7 @@ const ContributorProfilePage = ({
                     </Title>
                   </div>
                   <div className="p-4 mt-4 bg-white border rounded-2xl md:p-6">
-                    <div className="flex flex-col justify-between gap-2  lg:flex-row md:gap-12 lg:gap-16">
+                    <div className="flex flex-col justify-between gap-2 lg:flex-row md:gap-12 lg:gap-16">
                       <div>
                         <span className="text-xs text-light-slate-11">PRs opened</span>
                         {openPrs ? (
