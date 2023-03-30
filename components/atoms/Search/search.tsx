@@ -45,7 +45,6 @@ const Search = ({
     setSearch(suggestion);
     onSearch?.(suggestion);
     setShowSuggestions(false);
-    alert("i was clicked");
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
