@@ -22,7 +22,7 @@ const TopNav: React.FC = () => {
       <div className="flex justify-between items-start sm:items-center mx-auto container px-2 md:px-16">
         <div className="flex gap-3 md:gap-8 items-center flex-wrap">
           <HeaderLogo withBg={false} textIsBlack />
-          <div className="flex flex-wrap gap-3 md:gap-8 mb-3 ml-2 sm:m-0 ">
+          <div className="flex flex-wrap gap-3 md:gap-8 mb-3 ml-2 sm:m-0 w-full sm:w-auto">
             {!!user && onboarded ? (
               <Link className={`text-sm ${getActiveStyle(router.asPath === "/hub/insights")}`} href={"/hub/insights"}>
                 Insights
