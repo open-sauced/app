@@ -80,8 +80,6 @@ const ContributorProfilePage = ({
   const prsMergedPercentage = getPercent(prTotal, prMerged || 0);
   const { data: Follower, isError: followError, mutate } = useValidateFollowUser(user ? user.login : "");
 
-  console.log(Follower);
-  console.log(followError);
   const handleFollowUser = async () => {
     const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${user && user.login}/follow`, {
       method: "PUT",
@@ -92,7 +90,7 @@ const ContributorProfilePage = ({
 
     if (req && req.ok) {
       const res = await req.json();
-      console.log(res);
+
       mutate();
     }
   };
@@ -107,7 +105,7 @@ const ContributorProfilePage = ({
 
     if (req && req.ok) {
       const res = await req.json();
-      console.log(res);
+
       mutate();
     }
   };

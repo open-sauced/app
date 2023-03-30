@@ -7,8 +7,6 @@ import { WithPageLayout } from "interfaces/with-page-layout";
 const ProfileSettings: WithPageLayout = () => {
   const { user, sessionToken } = useSupabaseAuth();
 
-  console.log(sessionToken);
-
   return (
     <>
       {user ? (
