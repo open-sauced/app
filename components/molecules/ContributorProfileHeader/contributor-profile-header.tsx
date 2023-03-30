@@ -68,7 +68,7 @@ const ContributorProfileHeader = ({
         {isConnected && (
           <div className="flex flex-col items-center gap-3 md:translate-y-0 translate-y-28 md:flex-row">
             {username !== user?.user_metadata.user_name && (
-              <Button onClick={handleClick} className="invisible px-10 py-2 mb-6 bg-white xs:visible" variant="text">
+              <Button onClick={handleClick} className="px-10 py-2 mb-10 bg-white md:mb-6 " variant="text">
                 {isFollowing ? "Unfollow" : "Follow"}
               </Button>
             )}

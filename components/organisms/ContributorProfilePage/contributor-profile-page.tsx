@@ -89,8 +89,6 @@ const ContributorProfilePage = ({
     }).catch((err) => console.log(err));
 
     if (req && req.ok) {
-      const res = await req.json();
-
       mutate();
     }
   };
@@ -104,8 +102,6 @@ const ContributorProfilePage = ({
     }).catch((err) => console.log(err));
 
     if (req && req.ok) {
-      const res = await req.json();
-
       mutate();
     }
   };
