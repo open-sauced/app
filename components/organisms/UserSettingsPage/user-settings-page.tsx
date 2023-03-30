@@ -216,6 +216,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
               classNames="bg-light-slate-4 text-light-slate-11"
               placeholder="saucedopen"
               label="Twitter Username"
+              pattern="^\w{1,15}$"
               name="twitter_username"
             />
             <TextInput
