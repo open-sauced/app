@@ -355,6 +355,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
             Add Repositories
           </Title>
           <Search
+            isLoading={createLoading}
             placeholder="Repository Full Name (ex: open-sauced/open-sauced)"
             className="!w-full text-md text-gra"
             name={"query"}

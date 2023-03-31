@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { GrClose } from "react-icons/gr";
 import { FaSearch } from "react-icons/fa";
+import { Spinner } from "../SpinLoader/spin-loader";
 interface SearchProps {
   name: string;
   value?: string;
@@ -10,6 +11,7 @@ interface SearchProps {
   onSearch?: (search?: string) => void;
   suggestions?: string[];
   onChange?: (value: string) => void;
+  isLoading?: boolean;
 }
 
 const suggestionsStyle = {
@@ -26,7 +28,8 @@ const Search = ({
   className,
   onSearch,
   suggestions,
-  onChange
+  onChange,
+  isLoading
 }: SearchProps): JSX.Element => {
   const [search, setSearch] = useState(value);
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -82,7 +85,7 @@ const Search = ({
           {suggestions.map((suggestion, index) => (
             <div
               className="px-4 py-2 my-0.5 h-8 break-all  overflow-hidden"
-              // style={suggestionsStyle}
+              style={suggestionsStyle}
               key={index}
               onClick={() => handleOnSelect(suggestion)}
             >
@@ -92,7 +95,15 @@ const Search = ({
         </div>
       )}
 
-      {search && <GrClose className="cursor-pointer text-light-slate-9" fontSize={16} onClick={handleEmpty} />}
+      {search && (
+        <>
+          {isLoading ? (
+            <Spinner className="w-5 h-5 " />
+          ) : (
+            <GrClose className="cursor-pointer text-light-slate-9" fontSize={16} onClick={handleEmpty} />
+          )}
+        </>
+      )}
     </div>
   );
 };
