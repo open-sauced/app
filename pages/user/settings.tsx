@@ -5,7 +5,7 @@ import ProfileLayout from "layouts/profile";
 import { WithPageLayout } from "interfaces/with-page-layout";
 
 const ProfileSettings: WithPageLayout = () => {
-  const { user, sessionToken } = useSupabaseAuth();
+  const { user } = useSupabaseAuth();
 
   return (
     <>
