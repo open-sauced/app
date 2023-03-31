@@ -11,8 +11,8 @@ import { useMediaQuery } from "lib/hooks/useMediaQuery";
 import { getInsights, useInsights } from "lib/hooks/useInsights";
 import { calcDaysFromToday } from "lib/utils/date-utils";
 import roundedImage from "lib/utils/roundedImages";
-import { useTopicContributions } from "lib/hooks/useTopicContributions";
 import usePullRequests from "lib/hooks/api/usePullRequests";
+import getPullRequestsContributors from "lib/utils/get-pr-contributors";
 
 type ContributorPrMap = { [contributor: string]: DbRepoPR };
 export type PrStatusFilter = "open" | "closed" | "all";
@@ -24,10 +24,10 @@ interface DashboardProps {
 const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
   const { data: insightsData, isLoading } = useInsights(repositories);
   const { data: prData, isError: prError } = usePullRequests(undefined, repositories);
-  const { data: contributorData } = useTopicContributions(10, repositories);
   const [showBots, setShowBots] = useState(false);
   const isMobile = useMediaQuery("(max-width:720px)");
   const [prStateFilter, setPrStateFilter] = useState<PrStatusFilter>("all");
+  const contributorData = getPullRequestsContributors(prData);
 
   const handleSetPrFilter = (state: PrStatusFilter) => {
     setPrStateFilter(state);
