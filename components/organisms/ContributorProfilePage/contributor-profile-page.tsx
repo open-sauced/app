@@ -15,7 +15,7 @@ import getPercent from "lib/utils/get-percent";
 import ContributorProfileInfo from "components/molecules/ContributorProfileInfo/contributor-profile-info";
 import ContributorProfileTab from "../ContributorProfileTab/contributor-profile-tab";
 import ProfileLanguageChart from "components/molecules/ProfileLanguageChart/profile-language-chart";
-import useValidateFollowUser from "lib/hooks/useValidateFollowUser";
+import useFollowUser from "lib/hooks/useFollowUser";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 
 const colorKeys = Object.keys(color);
@@ -78,33 +78,13 @@ const ContributorProfilePage = ({
 
   const { chart } = useTopicContributorCommits(githubName, "*", repositories);
   const prsMergedPercentage = getPercent(prTotal, prMerged || 0);
-  const { data: Follower, isError: followError, mutate } = useValidateFollowUser(user ? user.login : "");
-
-  const handleFollowUser = async () => {
-    const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${user && user.login}/follow`, {
-      method: "PUT",
-      headers: {
-        Authorization: `Bearer ${sessionToken}`
-      }
-    }).catch((err) => console.log(err));
-
-    if (req && req.ok) {
-      mutate();
-    }
-  };
-
-  const handleUnFollowUser = async () => {
-    const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${user && user.login}/follow`, {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${sessionToken}`
-      }
-    }).catch((err) => console.log(err));
-
-    if (req && req.ok) {
-      mutate();
-    }
-  };
+  const {
+    data: Follower,
+    isError: followError,
+    mutate,
+    follow,
+    unFollow
+  } = useFollowUser(user?.login || "", sessionToken || "");
 
   const {
     bio,
@@ -131,8 +111,8 @@ const ContributorProfilePage = ({
           isConnected={!!user}
           githubName={githubName}
           avatarUrl={githubAvatar}
-          handleFollow={handleFollowUser}
-          handleUnfollow={handleUnFollowUser}
+          handleFollow={follow}
+          handleUnfollow={unFollow}
         />
       )}
       <div className="container flex flex-col justify-between w-full px-2 pt-24 mx-auto overflow-hidden md:px-16 lg:flex-row lg:gap-40">
