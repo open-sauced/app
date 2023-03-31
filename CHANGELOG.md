@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.39.0-beta.2](https://github.com/open-sauced/insights/compare/v1.39.0-beta.1...v1.39.0-beta.2) (2023-03-31)
+
+
+### 🍕 Features
+
+* improve insights page interactions with feedback ([#1051](https://github.com/open-sauced/insights/issues/1051)) ([35a8e90](https://github.com/open-sauced/insights/commit/35a8e90aa1709555d64092cec27b6f0a799c06af))
+
 ## [1.39.0-beta.1](https://github.com/open-sauced/insights/compare/v1.38.1-beta.3...v1.39.0-beta.1) (2023-03-31)
 
 
