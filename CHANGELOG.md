@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.39.0-beta.4](https://github.com/open-sauced/insights/compare/v1.39.0-beta.3...v1.39.0-beta.4) (2023-03-31)
+
+
+### 🐛 Bug Fixes
+
+* fix nav server render to match initial client render ([ad7e996](https://github.com/open-sauced/insights/commit/ad7e99667671f55fc0ffdaebd4b228964c61e58e))
+
 ## [1.39.0-beta.3](https://github.com/open-sauced/insights/compare/v1.39.0-beta.2...v1.39.0-beta.3) (2023-03-31)
 
 
