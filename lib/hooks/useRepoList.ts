@@ -1,5 +1,5 @@
 const useRepoList = (repos: string) => {
-  return repos.split(",").map((repo) => {
+  return repos.split(",").filter(rpo => !!rpo).map((repo) => {
     const [repoOwner, repoName] = repo.split("/");
 
     return {

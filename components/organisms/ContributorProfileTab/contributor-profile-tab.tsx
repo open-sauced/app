@@ -200,7 +200,7 @@ const ContributorProfileTab = ({
                   <div className="flex items-end justify-center mt-1"> - </div>
                 )}
               </div>
-              <div>
+              <div className="hidden">
                 <span className="text-xs text-light-slate-11">Avg PRs velocity</span>
                 {prVelocity ? (
                   <div className="flex items-center gap-2 lg:justify-center">

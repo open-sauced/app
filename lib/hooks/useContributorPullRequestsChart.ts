@@ -1,14 +1,8 @@
 import { useEffect, useState } from "react";
-import useSWR from "swr";
-import { getCommitsLast30Days } from "lib/utils/get-recent-commits";
-import { useRouter } from "next/router";
-import getFilterQuery from "lib/utils/get-filter-query";
+import getPullRequestsToDays from "lib/utils/get-prs-to-days";
+import useContributorPullRequests from "./api/useContributorPullRequests";
 
-interface PaginatedTopicCommitResponse {
-  readonly data: DbRepoCommit[];
-  readonly meta: Meta;
-}
-const useTopicContributorCommits = (contributor: string, topic: string, repoIds: number[] = []) => {
+const useContributorPullRequestsChart = (contributor: string, topic: string, repoIds: number[] = []) => {
   const lineChart = {
     xAxis: {
       type: "category",
@@ -49,18 +43,11 @@ const useTopicContributorCommits = (contributor: string, topic: string, repoIds:
   };
 
   const [chart, setChart] = useState(lineChart);
-  const router = useRouter();
-  const baseEndpoint = `${topic}/${contributor}/commits`;
-  const { selectedFilter } = router.query;
-  const filterQuery = getFilterQuery(selectedFilter);
-  const reposQuery = repoIds.length > 0 ? `repoIds=${repoIds.join(",")}`: "";
-  const endpointString = `${baseEndpoint}?${filterQuery.replace("&", "")}${reposQuery}`;
-
-  const { data } = useSWR<PaginatedTopicCommitResponse, Error>(contributor ? endpointString : null);
+  const { data } = useContributorPullRequests(contributor, topic, repoIds, 100);
 
   useEffect(() => {
-    if (data && Array.isArray(data.data)) {
-      const graphData = getCommitsLast30Days(data.data);
+    if (data && Array.isArray(data)) {
+      const graphData = getPullRequestsToDays(data);
 
       setChart((prevChart) => ({
         ...prevChart,
@@ -77,8 +64,9 @@ const useTopicContributorCommits = (contributor: string, topic: string, repoIds:
   }, [data]);
 
   return {
-    chart
+    chart,
+    data
   };
 };
 
-export { useTopicContributorCommits };
+export { useContributorPullRequestsChart };

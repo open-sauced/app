@@ -9,7 +9,7 @@ interface PaginatedResponse {
   readonly meta: Meta;
 }
 
-const useContributorPullRequests = (contributor: string, topic: string, repoIds: number[] = [], limit = 8) => {
+const useContributorPullRequests = (contributor: string, topic: string, repoIds: number[] = [], limit = 8, range = 30) => {
   const router = useRouter();
   const { selectedFilter } = router.query;
   const filterQuery = getFilterQuery(selectedFilter);
@@ -26,6 +26,8 @@ const useContributorPullRequests = (contributor: string, topic: string, repoIds:
   if (repoIds?.length > 0) {
     query.set("repoIds", repoIds.join(","));
   }
+
+  query.set("range", `${range}`);
 
   const baseEndpoint = `users/${contributor}/prs`;
   const endpointString = `${baseEndpoint}?${query.toString()}`;
