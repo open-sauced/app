@@ -7,9 +7,11 @@ interface SuggestedRopsitoryProps {
 }
 const SuggestedRepository = ({ data, onAddRepo }: SuggestedRopsitoryProps) => {
   return (
-    <div className="flex justify-between items-center">
+    <div className="flex items-center justify-between">
       <RepoCardProfile {...data} />
-      <Button variant="text" className="border border-light-slate-6 shadow-input"
+      <Button
+        variant="text"
+        className="border border-light-slate-6 shadow-input"
         onClick={() => onAddRepo && onAddRepo(`${data.orgName}/${data.repoName}`)}
       >
         Add to Page
