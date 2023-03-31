@@ -1,5 +1,4 @@
 import publicApiFetcher from "lib/utils/public-api-fetcher";
-import { supabase } from "lib/utils/supabase";
 import useSWR, { Fetcher } from "swr";
 
 interface FollowUserResponse {

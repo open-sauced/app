@@ -61,7 +61,6 @@ const ContributorProfilePage = ({
   openPrs,
   prTotal,
   loading,
-  error,
   prMerged,
   prVelocity
 }: ContributorProfilePageProps) => {
@@ -81,7 +80,6 @@ const ContributorProfilePage = ({
   const {
     data: Follower,
     isError: followError,
-    mutate,
     follow,
     unFollow
   } = useFollowUser(user?.login || "", sessionToken || "");
