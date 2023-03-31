@@ -5,7 +5,7 @@ interface GraphData {
   y: number;
 }
 
-const getPullRequestsToDays = (pull_requests: DbRepoPR[]): GraphData[] => {
+const getPullRequestsToDays = (pull_requests: DbRepoPR[]) => {
   const graphDays = pull_requests.reduce((days: { [name: string]: number }, curr: DbRepoPR) => {
     const day = differenceInDays(new Date(), new Date(curr.updated_at));
 
@@ -18,7 +18,7 @@ const getPullRequestsToDays = (pull_requests: DbRepoPR[]): GraphData[] => {
     return days;
   }, {});
 
-  const days: any[] = [];
+  const days: GraphData[] = [];
   for(let d=30;d>=0;d--) {
     days.push({ x: d, y: graphDays[d] || 0 });
   }
