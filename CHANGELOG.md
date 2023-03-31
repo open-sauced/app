@@ -5,6 +5,20 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.39.0-beta.1](https://github.com/open-sauced/insights/compare/v1.38.1-beta.3...v1.39.0-beta.1) (2023-03-31)
+
+
+### 🍕 Features
+
+* connect repository contributors to the API ([#1072](https://github.com/open-sauced/insights/issues/1072)) ([669db3d](https://github.com/open-sauced/insights/commit/669db3dc3c09c03bd33c97eb66fa3189032dd767))
+
+### [1.38.1-beta.3](https://github.com/open-sauced/insights/compare/v1.38.1-beta.2...v1.38.1-beta.3) (2023-03-30)
+
+
+### 🐛 Bug Fixes
+
+* use pull request counts for determining repository activity levels ([#1070](https://github.com/open-sauced/insights/issues/1070)) ([f0d0571](https://github.com/open-sauced/insights/commit/f0d05713363056d0cebaa035e12d2e735715f1f0))
+
 ### [1.38.1-beta.2](https://github.com/open-sauced/insights/compare/v1.38.1-beta.1...v1.38.1-beta.2) (2023-03-30)
 
 
