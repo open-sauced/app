@@ -9,7 +9,7 @@ import { WithPageLayout } from "interfaces/with-page-layout";
 import changeCapitalization from "lib/utils/change-capitalization";
 import useInsight from "lib/hooks/useInsight";
 import { useEffect } from "react";
-import Spinner from "components/atoms/Spinner/spinner";
+import SpinLoader from "components/atoms/SpinLoader/spin-loader";
 
 const HubPage: WithPageLayout = () => {
   const router = useRouter();
@@ -28,7 +28,7 @@ const HubPage: WithPageLayout = () => {
 
   return (
     <>
-      {isLoading ? <Spinner /> : ""}
+      {isLoading ? <SpinLoader /> : ""}
       {isError ? <div>Error...</div> : ""}
       {!isLoading && insight ? (
         <Tool

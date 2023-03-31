@@ -20,6 +20,7 @@ import Search from "components/atoms/Search/search";
 import { useDebounce } from "rooks";
 import SuggestedRepositoriesList from "../SuggestedRepoList/suggested-repo-list";
 import { RepoCardProfileProps } from "components/molecules/RepoCardProfile/repo-card-profile";
+import { useToast } from "lib/hooks/useToast";
 
 enum RepoLookupError {
   Initial = 0,
@@ -36,11 +37,16 @@ interface InsightPageProps {
 
 const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
   const { sessionToken, providerToken } = useSupabaseAuth();
+  const { toast } = useToast();
   const router = useRouter();
   let receivedData = [];
   if (router.query.selectedRepos) {
     receivedData = JSON.parse(router.query.selectedRepos as string);
   }
+
+  // Loading States
+  const [deleteLoading, setDeleteLoading] = useState(false);
+  const [createLoading, setCreateLoading] = useState(false);
 
   const [name, setName] = useState(insight?.name || "");
   const [isNameValid, setIsNameValid] = useState(false);
@@ -93,7 +99,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
   };
 
   const disableCreateButton = () => {
-    if (insight?.name && validateName(name)) return false;
+    if ((insight?.name && validateName(name)) || (repos.length && validateName(name))) return false;
     if (submitted) return true;
     if (!isNameValid) return true;
 
@@ -102,7 +108,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
 
   const handleCreateInsightPage = async () => {
     setSubmitted(true);
-
+    setCreateLoading(true);
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/insights`, {
       method: "POST",
       headers: {
@@ -116,9 +122,12 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
         is_public: isPublic
       })
     });
-
+    setCreateLoading(false);
     if (response.ok) {
-      router.push("/hub/insights");
+      toast({ description: "Page created successfully", variant: "success" });
+      setTimeout(() => {
+        router.push("/hub/insights");
+      }, 1000);
     }
 
     setSubmitted(false);
@@ -126,7 +135,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
 
   const handleUpdateInsightPage = async () => {
     setSubmitted(true);
-
+    setCreateLoading(true);
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/insights/${insight?.id}`, {
       method: "PATCH",
       headers: {
@@ -140,9 +149,12 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
         is_public: isPublic
       })
     });
-
-    if (response.ok) {
+    setCreateLoading(false);
+    if (response && response.ok) {
+      toast({ description: "Page updated successfully", variant: "success" });
       router.push("/hub/insights");
+    } else {
+      toast({ description: "An error occurred!", variant: "danger" });
     }
 
     setSubmitted(false);
@@ -236,7 +248,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
 
   const handleDeleteInsightPage = async () => {
     setSubmitted(true);
-
+    setDeleteLoading(true);
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/insights/${insight?.id}`, {
       method: "DELETE",
       headers: {
@@ -245,7 +257,9 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
       }
     });
 
+    setDeleteLoading(false);
     if (response.ok) {
+      toast({ description: "Page deleted successfully!", variant: "success" });
       setIsModalOpen(false);
       router.push("/hub/insights");
     }
@@ -258,6 +272,8 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
   };
 
   const updateSuggestionsDebounced = useDebounce(async () => {
+    setCreateLoading(true);
+
     const req = await fetch(
       `https://api.github.com/search/repositories?q=${encodeURIComponent(
         `${repoSearchTerm} in:name in:repo:owner/name sort:updated`
@@ -273,6 +289,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
       }
     );
 
+    setCreateLoading(false);
     if (req.ok) {
       const res = await req.json();
       const suggestions = res.items.map((item: any) => item.full_name);
@@ -338,6 +355,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
             Add Repositories
           </Title>
           <Search
+            isLoading={createLoading}
             placeholder="Repository Full Name (ex: open-sauced/open-sauced)"
             className="!w-full text-md text-gra"
             name={"query"}
@@ -347,7 +365,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
           />
 
           <div>
-            <Button disabled={repos.length === insightRepoLimit} onClick={handleAddRepository} variant="primary">
+            <Button disabled={repos.length === insightRepoLimit} onClick={handleAddRepository} variant="outline">
               Add Repository
             </Button>
           </div>
@@ -410,6 +428,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
 
       <div className="top-0 py-4 mt-5 lg:sticky md:mt-0 lg:py-0">
         <RepositoriesCart
+          loading={createLoading}
           edit={edit}
           hasItems={repos.length > 0}
           handleCreatePage={handleCreateInsightPage}
@@ -441,6 +460,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
       </div>
 
       <DeleteInsightPageModal
+        isLoading={deleteLoading}
         open={isModalOpen}
         setOpen={setIsModalOpen}
         submitted={submitted}
