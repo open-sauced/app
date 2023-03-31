@@ -102,7 +102,7 @@ const ContributorProfilePage = ({
         <SkeletonWrapper height={200} />
       ) : (
         <ContributorProfileHeader
-          handleSignin={signIn}
+          handleSignIn={signIn}
           username={user?.login}
           user={loggedInUser}
           isFollowing={followError ? false : true}
@@ -111,6 +111,7 @@ const ContributorProfilePage = ({
           avatarUrl={githubAvatar}
           handleFollow={follow}
           handleUnfollow={unFollow}
+          isOwner={user?.login === loggedInUser?.user_metadata.user_name}
         />
       )}
       <div className="container flex flex-col justify-between w-full px-2 pt-24 mx-auto overflow-hidden md:px-16 lg:flex-row lg:gap-40">
