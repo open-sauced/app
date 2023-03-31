@@ -74,7 +74,7 @@ const ContributorProfilePage = ({
     };
   });
 
-  const { sessionToken, user: loggedInUser } = useSupabaseAuth();
+  const { sessionToken, user: loggedInUser, signIn } = useSupabaseAuth();
 
   const { chart } = useTopicContributorCommits(githubName, "*", repositories);
   const prsMergedPercentage = getPercent(prTotal, prMerged || 0);
@@ -124,6 +124,7 @@ const ContributorProfilePage = ({
         <SkeletonWrapper height={200} />
       ) : (
         <ContributorProfileHeader
+          handleSignin={signIn}
           username={user?.login}
           user={loggedInUser}
           isFollowing={followError ? false : true}

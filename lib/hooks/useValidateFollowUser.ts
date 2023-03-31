@@ -7,11 +7,7 @@ interface FollowUserResponse {
 const useValidateFollowUser = (username: string) => {
   const { data, error, mutate } = useSWR<FollowUserResponse, Error>(
     `users/${username}/follow`,
-    publicApiFetcher as Fetcher<FollowUserResponse, Error>,
-    {
-      revalidateOnMount: true,
-      revalidateOnFocus: true
-    }
+    publicApiFetcher as Fetcher<FollowUserResponse, Error>
   );
 
   return {

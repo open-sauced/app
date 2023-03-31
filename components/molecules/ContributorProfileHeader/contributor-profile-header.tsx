@@ -15,6 +15,7 @@ interface ContributorProfileHeaderProps {
   handleUnfollow: Function;
   user: User | null;
   username: string | undefined;
+  handleSignin: Function;
 }
 const ContributorProfileHeader = ({
   avatarUrl,
@@ -24,14 +25,14 @@ const ContributorProfileHeader = ({
   handleFollow,
   handleUnfollow,
   username,
-  user
+  user,
+  handleSignin
 }: ContributorProfileHeaderProps) => {
   const handleClick = () => {
     if (isFollowing) {
-      if (handleUnfollow) handleUnfollow();
-    }
-    if (!isFollowing) {
-      if (handleFollow) handleFollow();
+      handleUnfollow();
+    } else {
+      handleFollow();
     }
   };
   return (
@@ -67,9 +68,19 @@ const ContributorProfileHeader = ({
         </div>
         {isConnected && (
           <div className="flex flex-col items-center gap-3 md:translate-y-0 translate-y-28 md:flex-row">
-            {username !== user?.user_metadata.user_name && (
-              <Button onClick={handleClick} className="px-10 py-2 mb-10 bg-white md:mb-6 " variant="text">
-                {isFollowing ? "Unfollow" : "Follow"}
+            {user ? (
+              username !== user?.user_metadata.user_name && (
+                <Button onClick={handleClick} className="px-10 py-2 mb-10 bg-white md:mb-6 " variant="text">
+                  {isFollowing ? "Unfollow" : "Follow"}
+                </Button>
+              )
+            ) : (
+              <Button
+                onClick={async () => await handleSignin({ provider: "github" })}
+                className="px-10 py-2 mb-10 bg-white md:mb-6 "
+                variant="text"
+              >
+                Follow
               </Button>
             )}
 
