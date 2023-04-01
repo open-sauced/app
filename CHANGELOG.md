@@ -5,6 +5,34 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.39.0-beta.4](https://github.com/open-sauced/insights/compare/v1.39.0-beta.3...v1.39.0-beta.4) (2023-03-31)
+
+
+### 🐛 Bug Fixes
+
+* fix nav server render to match initial client render ([ad7e996](https://github.com/open-sauced/insights/commit/ad7e99667671f55fc0ffdaebd4b228964c61e58e))
+
+## [1.39.0-beta.3](https://github.com/open-sauced/insights/compare/v1.39.0-beta.2...v1.39.0-beta.3) (2023-03-31)
+
+
+### 🐛 Bug Fixes
+
+* show logo in the header for smaller screens ([#1071](https://github.com/open-sauced/insights/issues/1071)) ([6b4c199](https://github.com/open-sauced/insights/commit/6b4c1996ec3d1477e481193dc34f050a73b286bb))
+
+## [1.39.0-beta.2](https://github.com/open-sauced/insights/compare/v1.39.0-beta.1...v1.39.0-beta.2) (2023-03-31)
+
+
+### 🍕 Features
+
+* improve insights page interactions with feedback ([#1051](https://github.com/open-sauced/insights/issues/1051)) ([35a8e90](https://github.com/open-sauced/insights/commit/35a8e90aa1709555d64092cec27b6f0a799c06af))
+
+## [1.39.0-beta.1](https://github.com/open-sauced/insights/compare/v1.38.1-beta.3...v1.39.0-beta.1) (2023-03-31)
+
+
+### 🍕 Features
+
+* connect repository contributors to the API ([#1072](https://github.com/open-sauced/insights/issues/1072)) ([669db3d](https://github.com/open-sauced/insights/commit/669db3dc3c09c03bd33c97eb66fa3189032dd767))
+
 ### [1.38.1-beta.3](https://github.com/open-sauced/insights/compare/v1.38.1-beta.2...v1.38.1-beta.3) (2023-03-30)
 
 

@@ -8,6 +8,7 @@ import CartIllustration from "components/atoms/CartIllustration/cart-illustratio
 import Text from "components/atoms/Typography/text";
 
 import { RepositoryCartItemProps } from "components/molecules/ReposoitoryCartItem/repository-cart-item";
+import Button from "components/atoms/Button/button";
 
 interface RepositoriesCartProps {
   edit?: boolean;
@@ -18,6 +19,7 @@ interface RepositoriesCartProps {
   handleUpdatePage?: Function;
   handleAddToCart?: (fullRepoName: string) => void;
   createPageButtonDisabled?: boolean;
+  loading?: boolean;
 }
 
 const RepositoriesCart = ({
@@ -28,7 +30,8 @@ const RepositoriesCart = ({
   handleCreatePage,
   handleUpdatePage,
   handleAddToCart,
-  createPageButtonDisabled
+  createPageButtonDisabled,
+  loading
 }: RepositoriesCartProps): JSX.Element => {
   const cartItems = Children.toArray(children);
 
@@ -55,12 +58,12 @@ const RepositoriesCart = ({
       {/* Empty state of Cart */}
       {cartItems.length > 0 && hasItems ? (
         cartItems.map((item, index) => (
-          <div className="w-full flex flex-col" key={`${index}/${Math.random()}`}>
+          <div className="flex flex-col w-full" key={`${index}/${Math.random()}`}>
             {item}
           </div>
         ))
       ) : (
-        <div className="w-full py-4 gap-2 items-center flex-col flex">
+        <div className="flex flex-col items-center w-full gap-2 py-4">
           <CartIllustration classNames="-translate-x-2" />
           <CartIllustration classNames="-translate-x-10" />
           <CartIllustration classNames="translate-x-4" />
@@ -72,8 +75,8 @@ const RepositoriesCart = ({
           {history.length > 0 ? <Text>Add again:</Text> : ""}
           {history.length > 0 &&
             history.map(({ orgName, repoName, totalPrs, avatar }, index) => (
-              <div key={`${index}/${orgName}/${repoName}`} className="flex items-center mt-2 justify-between">
-                <div className="flex gap-3 items-center ">
+              <div key={`${index}/${orgName}/${repoName}`} className="flex items-center justify-between mt-2">
+                <div className="flex items-center gap-3 ">
                   <Avatar avatarURL={avatar} initials="" size="sm" className="" />
                   <Text className="!text-sm !text-light-slate-11">
                     {orgName} / <span className="text-light-slate-12">{repoName}</span>
@@ -94,17 +97,18 @@ const RepositoriesCart = ({
 
       {hasItems && (
         <div className="w-full mt-1 ">
-          <button
+          <Button
+            variant="primary"
             disabled={createPageButtonDisabled}
-            onClick={() => edit ? onHandleUpdatePage() : onHandleCreatePage()}
+            loading={loading}
+            onClick={() => (edit ? onHandleUpdatePage() : onHandleCreatePage())}
             className={clsx(
               "w-full text-sm flex justify-center items-center py-3 px-5 rounded-lg",
-              "text-white bg-light-orange-9",
-              createPageButtonDisabled && "bg-light-orange-6 cursor-not-allowed"
+              "text-white bg-light-orange-9"
             )}
           >
-            { edit ? "Update" : "Create" } Page
-          </button>
+            {edit ? "Update" : "Create"} Page
+          </Button>
         </div>
       )}
     </div>

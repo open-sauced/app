@@ -3,8 +3,11 @@ import { useRouter } from "next/router";
 import AvatarHoverCard from "components/atoms/Avatar/avatar-hover-card";
 
 import useInsight from "lib/hooks/useInsight";
+
+export type Contributor = { host_login: string };
+
 declare interface StackedAvatarProps {
-  contributors: DbContribution[];
+  contributors: Contributor[];
   visibleQuantity?: number;
 }
 

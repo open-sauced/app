@@ -1,11 +1,11 @@
 import { ComponentStory } from "@storybook/react";
-import Spinner from "components/atoms/Spinner/spinner";
+import SpinLoader from "components/atoms/SpinLoader/spin-loader";
 
 const storyConfig = {
-  title: "Design System/Atoms/Spinner"
+  title: "Design System/Atoms/SpinLoader"
 };
 export default storyConfig;
 
-const SpinnerTemplate: ComponentStory<typeof Spinner> = (args) => <Spinner {...args} />;
+const SpinLoaderTemplate: ComponentStory<typeof SpinLoader> = (args) => <SpinLoader {...args} />;
 
-export const SpinnerStory = SpinnerTemplate.bind({});
+export const SpinLoaderStory = SpinLoaderTemplate.bind({});

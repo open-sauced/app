@@ -9,10 +9,16 @@ export interface ButtonsProps extends React.ButtonHTMLAttributes<HTMLButtonEleme
 const Button = React.forwardRef<HTMLButtonElement, ButtonsProps>(
   ({ className, children, loading, disabled, ...props }, ref) => {
     const style = {
-      primary: "bg-light-orange-9 text-light-orange-2 border-light-orange-9 hover:bg-light-orange-10",
-      default: "bg-light-slate-4 border-light-slate-8 text-light-slate-11 hover:bg-light-slate-5",
-      outline: "bg-orange-50 border-orange-500 text-orange-600 hover:bg-orange-100",
-      link: "text-orange-600 hover:bg-orange-100"
+      primary: `bg-light-orange-9 text-light-orange-2 border-light-orange-9 hover:bg-light-orange-10 ${
+        disabled ? "bg-light-orange-7 hover:bg-light-orange-7 border-none  pointer-events-none" : ""
+      }`,
+      default: `bg-white border-light-slate-8 text-light-slate-11 hover:bg-light-slate-2 ${
+        disabled ? "bg-light-slate-4 text-light-slate-9 pointer-events-none" : ""
+      }`,
+      outline: `bg-orange-50 border-orange-500 text-orange-600 hover:bg-orange-100 ${
+        disabled ? "bg-light-orange-3 pointer-events-none text-light-orange-7 border-light-orange-5" : ""
+      }`,
+      link: `text-orange-600 hover:bg-orange-100 border-none ${disabled ? "text-orange-400 pointer-events-none" : ""}`
     };
     return (
       <button

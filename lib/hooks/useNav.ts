@@ -4,11 +4,9 @@ import { useTopicContributions } from "./useTopicContributions";
 
 
 const useNav = (repositories: number[] = []) => {
-
   const router = useRouter();
-  const { meta: repoMetaData, isError: repoIsError, isLoading: repoIsLoading } = useRepositories(repositories);
-  const { meta: conMetaData, isError: conIsError, isLoading: conIsLoading } = useTopicContributions(10, repositories);
-
+  const { meta: repoMetaData } = useRepositories(repositories);
+  const { meta: conMetaData } = useTopicContributions(10, repositories);
 
   const defaultTools = [
     {
@@ -19,11 +17,11 @@ const useNav = (repositories: number[] = []) => {
     },
     {
       name: "Repositories",
-      numOf: repoIsLoading || repoIsError ? undefined : repoMetaData.itemCount
+      numOf: repoMetaData.itemCount
     },
     {
       name: "Contributors",
-      numOf: conIsLoading || conIsError ? undefined : conMetaData.itemCount
+      numOf: conMetaData.itemCount
     }
   ];
 
