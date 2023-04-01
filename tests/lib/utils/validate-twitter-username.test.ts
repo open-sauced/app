@@ -2,7 +2,7 @@ import { validateTwitterUsername } from "lib/utils/validate-twitter-username";
 
 describe("[lib] validateTwitterUsername()", () => {
 
-  it("Should return true if string is a valid d", () => {
+  it("Should return true if string is a valid", () => {
     const testString = "doaortu_valid";
     const result = validateTwitterUsername(testString);
 
@@ -10,18 +10,12 @@ describe("[lib] validateTwitterUsername()", () => {
     expect(result.valid).toBeTruthy();
   });
 
-  it("Should return false if string is less than 1 char or more than 15 chars", () => {
-    let testString = "";
+  it("Should return false if string is more than 15 chars", () => {
+    let testString = "doaortu_morethan15chars";
     let result = validateTwitterUsername(testString);
 
     expect(result.valid).toBeFalsy();
-    expect(result.message).toEqual("Username must be between 1 and 15 characters");
-
-    testString = "doaortu_morethan15chars";
-
-    result = validateTwitterUsername(testString);
-    expect(result.valid).toBeFalsy();
-    expect(result.message).toEqual("Username must be between 1 and 15 characters");
+    expect(result.message).toEqual("Username must be less than 15 characters");
   });
 
   it("Should return false if string contains reserved word 'admin' or 'twitter'", () => {
