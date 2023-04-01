@@ -3,7 +3,7 @@ import { validateTwitterUsername } from "lib/utils/validate-twitter-username";
 describe("[lib] validateTwitterUsername()", () => {
 
   it("Should return true if string is a valid", () => {
-    const testString = "doaortu_valid";
+    const testString = "username_valid";
     const result = validateTwitterUsername(testString);
 
     expect(result.message).toEqual("");
@@ -11,7 +11,7 @@ describe("[lib] validateTwitterUsername()", () => {
   });
 
   it("Should return false if string is more than 15 chars", () => {
-    let testString = "doaortu_morethan15chars";
+    let testString = "username_morethan15chars";
     let result = validateTwitterUsername(testString);
 
     expect(result.valid).toBeFalsy();
@@ -33,10 +33,10 @@ describe("[lib] validateTwitterUsername()", () => {
   });
 
   it("Should return false if string contains non-alphanumeric characters", () => {
-    let testString = "doaortu@://";
+    let testString = "username@://";
     let result = validateTwitterUsername(testString);
 
     expect(result.valid).toBeFalsy();
     expect(result.message).toEqual("Username can only contain letters, numbers, and underscores");
-  })
+  });
 });

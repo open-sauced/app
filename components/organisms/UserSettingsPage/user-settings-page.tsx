@@ -98,7 +98,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
   const handleTwitterUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.target.setCustomValidity(validateTwitterUsername(event.target.value).message);
     event.target.reportValidity();
-  }
+  };
 
   const handleSelectInterest = (interest: string) => {
     if (selectedInterest.length > 0 && selectedInterest.includes(interest)) {
