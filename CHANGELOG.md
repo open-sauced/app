@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.40.0-beta.2](https://github.com/open-sauced/insights/compare/v1.40.0-beta.1...v1.40.0-beta.2) (2023-04-03)
+
+
+### 🐛 Bug Fixes
+
+* add regex pattern to validate twitter username input ([#1067](https://github.com/open-sauced/insights/issues/1067)) ([e7f4489](https://github.com/open-sauced/insights/commit/e7f448963f19e8885af4d2e5b09fb9f9d6260ac9))
+
 ## [1.40.0-beta.1](https://github.com/open-sauced/insights/compare/v1.39.0...v1.40.0-beta.1) (2023-04-03)
 
 
