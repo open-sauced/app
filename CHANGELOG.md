@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.40.0-beta.1](https://github.com/open-sauced/insights/compare/v1.39.0...v1.40.0-beta.1) (2023-04-03)
+
+
+### 🍕 Features
+
+* implement `follow` and `unfollow` feature ([#1069](https://github.com/open-sauced/insights/issues/1069)) ([dabe2ae](https://github.com/open-sauced/insights/commit/dabe2ae17dc3c06bf5968787811469619bf99a2a))
+
 ## [1.39.0](https://github.com/open-sauced/insights/compare/v1.38.0...v1.39.0) (2023-03-31)
 
 
