@@ -5,6 +5,23 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.39.0](https://github.com/open-sauced/insights/compare/v1.38.0...v1.39.0) (2023-03-31)
+
+
+### 🍕 Features
+
+* connect repository contributors to the API ([#1072](https://github.com/open-sauced/insights/issues/1072)) ([669db3d](https://github.com/open-sauced/insights/commit/669db3dc3c09c03bd33c97eb66fa3189032dd767))
+* improve insights page interactions with feedback ([#1051](https://github.com/open-sauced/insights/issues/1051)) ([35a8e90](https://github.com/open-sauced/insights/commit/35a8e90aa1709555d64092cec27b6f0a799c06af))
+
+
+### 🐛 Bug Fixes
+
+* correct connect with github button being too big on mobile ([#1063](https://github.com/open-sauced/insights/issues/1063)) ([bb0aef3](https://github.com/open-sauced/insights/commit/bb0aef3a0b81046642ac3229fb16821e2154be05))
+* fix nav server render to match initial client render ([ad7e996](https://github.com/open-sauced/insights/commit/ad7e99667671f55fc0ffdaebd4b228964c61e58e))
+* fix typo in GitHub button to authenticate ([#1064](https://github.com/open-sauced/insights/issues/1064)) ([35c8756](https://github.com/open-sauced/insights/commit/35c875629cd715f0f018ca8934634c077814088f))
+* show logo in the header for smaller screens ([#1071](https://github.com/open-sauced/insights/issues/1071)) ([6b4c199](https://github.com/open-sauced/insights/commit/6b4c1996ec3d1477e481193dc34f050a73b286bb))
+* use pull request counts for determining repository activity levels ([#1070](https://github.com/open-sauced/insights/issues/1070)) ([f0d0571](https://github.com/open-sauced/insights/commit/f0d05713363056d0cebaa035e12d2e735715f1f0))
+
 ## [1.39.0-beta.4](https://github.com/open-sauced/insights/compare/v1.39.0-beta.3...v1.39.0-beta.4) (2023-03-31)
 
 
