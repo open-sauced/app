@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.40.0-beta.3](https://github.com/open-sauced/insights/compare/v1.40.0-beta.2...v1.40.0-beta.3) (2023-04-04)
+
+
+### 🐛 Bug Fixes
+
+* use total repo count for displaying repo count on insight page ([#1077](https://github.com/open-sauced/insights/issues/1077)) ([3fe3e93](https://github.com/open-sauced/insights/commit/3fe3e9354e9587ad733fa32fa608e20fb907149e))
+
 ## [1.40.0-beta.2](https://github.com/open-sauced/insights/compare/v1.40.0-beta.1...v1.40.0-beta.2) (2023-04-03)
 
 
