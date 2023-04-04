@@ -11,10 +11,14 @@ interface CardRepoListProps {
   repoList: RepoList[];
   limit?: number;
   fontSizeClassName?: string;
+  total?: number;
 }
 
-const CardRepoList = ({ repoList, limit = 5, fontSizeClassName }: CardRepoListProps): JSX.Element => {
+const CardRepoList = ({ repoList, limit = 5, fontSizeClassName, total }: CardRepoListProps): JSX.Element => {
+  // The repoList is paginated, the total is the complete count
+  const repoTotal = total || repoList.length;
   const sanitizedRepoList = [...new Map(repoList.map((item) => [item["repoName"], item])).values()];
+
   return (
     <div className="flex gap-2 items-center max-w[175px] truncate flex-wrap text-xs text-light-slate-11">
       {repoList.length > 0 ? (
@@ -35,7 +39,7 @@ const CardRepoList = ({ repoList, limit = 5, fontSizeClassName }: CardRepoListPr
                 )}
               </div>
             ))}
-          <div>{repoList.length > limit ? `+${repoList.length - limit}` : null}</div>
+          <div>{repoTotal > limit ? `+${repoTotal - limit}` : null}</div>
         </>
       ) : (
         <>No repositories currently...</>
