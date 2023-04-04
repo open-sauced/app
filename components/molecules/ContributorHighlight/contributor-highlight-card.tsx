@@ -77,7 +77,7 @@ const ContributorHighlightCard = ({
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [host, setHost] = useState("");
 
-  const { follow, unFollow, isError } = useFollowUser(user, sessionToken || "");
+  const { follow, unFollow, isError } = useFollowUser(user);
 
   useEffect(() => {
     if (!openEdit) {
@@ -228,7 +228,7 @@ const ContributorHighlightCard = ({
                     <div onClick={isError ? follow : unFollow} className="flex gap-2.5 py-1  items-center pl-3 pr-7">
                       <FaUserPlus size={22} />
                       <span>
-                        {!isError ? "unfollow" : "follow"} {user}
+                        {!isError ? "Unfollow" : "Follow"} {user}
                       </span>
                     </div>
                   </DropdownMenuItem>

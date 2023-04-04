@@ -77,12 +77,7 @@ const ContributorProfilePage = ({
 
   const { chart } = useTopicContributorCommits(githubName, "*", repositories);
   const prsMergedPercentage = getPercent(prTotal, prMerged || 0);
-  const {
-    data: Follower,
-    isError: followError,
-    follow,
-    unFollow
-  } = useFollowUser(user?.login || "", sessionToken || "");
+  const { data: Follower, isError: followError, follow, unFollow } = useFollowUser(user?.login || "");
 
   const {
     bio,
