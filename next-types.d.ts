@@ -98,6 +98,13 @@ interface DbInsight {
   readonly accepted_repo_total: number;
 }
 
+interface DbInsightMember {
+  readonly id: string;
+  readonly insight_id: number;
+  readonly user_id: number;
+  readonly name: string;
+  readonly access: "view" | "edit" | "admin";
+}
 interface DbUserInsight {
   readonly id: number;
   readonly user_id: number;

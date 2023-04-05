@@ -21,6 +21,7 @@ import { useDebounce } from "rooks";
 import SuggestedRepositoriesList from "../SuggestedRepoList/suggested-repo-list";
 import { RepoCardProfileProps } from "components/molecules/RepoCardProfile/repo-card-profile";
 import { useToast } from "lib/hooks/useToast";
+import TeamMembersConfig from "components/molecules/TeamMembersConfig/team-members-config";
 
 enum RepoLookupError {
   Initial = 0,
@@ -43,6 +44,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
   if (router.query.selectedRepos) {
     receivedData = JSON.parse(router.query.selectedRepos as string);
   }
+  console.log(insight);
 
   // Loading States
   const [deleteLoading, setDeleteLoading] = useState(false);
@@ -350,7 +352,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
           {/* <Text>insights.opensauced.pizza/pages/{username}/{`{pageId}`}/dashboard</Text> */}
         </div>
 
-        <div className="flex flex-col gap-4 py-6 border-b border-light-slate-8">
+        <div className="flex flex-col gap-4 py-6 border-light-slate-8">
           <Title className="!text-1xl !leading-none " level={4}>
             Add Repositories
           </Title>
@@ -399,6 +401,12 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
             />
           </div>
         </div>
+
+        {edit && (
+          <div className="pt-12 mt-12 border-t border-light-slate-8">
+            <TeamMembersConfig members={[]} />
+          </div>
+        )}
 
         {edit && (
           <div className="flex flex-col gap-4 py-6 border-t border-b border-light-slate-8">

@@ -1,0 +1,3 @@
+interface PaginatedInsightMembers {}
+
+const useInsightMembers = () => {};

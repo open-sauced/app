@@ -14,16 +14,17 @@ export interface TeamMemberData {
 }
 
 const TeamMembersConfig = ({ className, members }: TeamMembersConfigProps) => {
-
   return (
-    <div className={`max-w-xl ${className && className}`}>
-      <h2 className="font-medium text-base">Add Team Members</h2>
-      <div className="flex justify-between items-center">
-        <Search name="search" className="w-4/5" />
-        <Button variant="primary" className="h-7 flex items-center">Send Invite</Button>
+    <div className={` ${className && className}`}>
+      <h2 className="text-lg font-medium tracking-wide">Add Team Members</h2>
+      <div className="flex items-center gap-5 mt-3">
+        <Search placeholder="Search Email" name="search" className="flex-1 text-base" />
+        <Button variant="primary" className="flex items-center h-7">
+          Send Invite
+        </Button>
       </div>
       <div className="mt-7">
-        {members.map(member => (
+        {members.map((member) => (
           <TeamMemberRow key={member.name + member.avatarUrl} className="mb-4" {...member} />
         ))}
       </div>
