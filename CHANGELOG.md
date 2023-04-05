@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.40.0-beta.4](https://github.com/open-sauced/insights/compare/v1.40.0-beta.3...v1.40.0-beta.4) (2023-04-05)
+
+
+### 🍕 Features
+
+* add follow and unfollow user implementation on highlights ([#1074](https://github.com/open-sauced/insights/issues/1074)) ([d524331](https://github.com/open-sauced/insights/commit/d524331edfac51b304db1e9ed7f4edfef251ff2f))
+
 ## [1.40.0-beta.3](https://github.com/open-sauced/insights/compare/v1.40.0-beta.2...v1.40.0-beta.3) (2023-04-04)
 
 
