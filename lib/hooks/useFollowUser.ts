@@ -1,10 +1,14 @@
 import publicApiFetcher from "lib/utils/public-api-fetcher";
+import { useEffect, useState } from "react";
 import useSWR, { Fetcher } from "swr";
+import useSupabaseAuth from "./useSupabaseAuth";
 
 interface FollowUserResponse {
   data: DbFollowUser;
 }
-const useFollowUser = (username: string, token: string) => {
+const useFollowUser = (username: string) => {
+  const { sessionToken } = useSupabaseAuth();
+
   const { data, error, mutate } = useSWR<FollowUserResponse, Error>(
     `users/${username}/follow`,
     publicApiFetcher as Fetcher<FollowUserResponse, Error>
@@ -14,7 +18,7 @@ const useFollowUser = (username: string, token: string) => {
     const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${username}/follow`, {
       method: "PUT",
       headers: {
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${sessionToken}`
       }
     }).catch((err) => console.log(err));
 
@@ -27,7 +31,7 @@ const useFollowUser = (username: string, token: string) => {
     const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${username}/follow`, {
       method: "DELETE",
       headers: {
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${sessionToken}`
       }
     }).catch((err) => console.log(err));
 

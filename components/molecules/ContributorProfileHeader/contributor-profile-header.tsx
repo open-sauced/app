@@ -74,7 +74,7 @@ const ContributorProfileHeader = ({
             {user ? (
               !isOwner && (
                 <Button onClick={handleClick} className="px-10 py-2 mb-10 bg-white md:mb-6 " variant="text">
-                  {isFollowing ? "Unfollow" : "Follow"}
+                  {isFollowing ? "Following" : "Follow"}
                 </Button>
               )
             ) : (
