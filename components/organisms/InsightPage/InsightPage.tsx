@@ -21,7 +21,9 @@ import { useDebounce } from "rooks";
 import SuggestedRepositoriesList from "../SuggestedRepoList/suggested-repo-list";
 import { RepoCardProfileProps } from "components/molecules/RepoCardProfile/repo-card-profile";
 import { useToast } from "lib/hooks/useToast";
-import TeamMembersConfig from "components/molecules/TeamMembersConfig/team-members-config";
+import TeamMembersConfig, { TeamMemberData } from "components/molecules/TeamMembersConfig/team-members-config";
+import useInsightMembers from "lib/hooks/useInsightMembers";
+import { useFetchUser } from "lib/hooks/useFetchUser";
 
 enum RepoLookupError {
   Initial = 0,
@@ -44,7 +46,15 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
   if (router.query.selectedRepos) {
     receivedData = JSON.parse(router.query.selectedRepos as string);
   }
-  console.log(insight);
+  // console.log(insight);
+
+  const { data } = useInsightMembers(insight?.id || 0);
+
+  const insightOwner: TeamMemberData = {
+    name: insight?.user.name || "",
+    avatarUrl: getAvatarByUsername(insight?.user.login || ""),
+    role: "admin"
+  };
 
   // Loading States
   const [deleteLoading, setDeleteLoading] = useState(false);
@@ -404,7 +414,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
 
         {edit && (
           <div className="pt-12 mt-12 border-t border-light-slate-8">
-            <TeamMembersConfig members={[]} />
+            <TeamMembersConfig members={[insightOwner]} />
           </div>
         )}
 
