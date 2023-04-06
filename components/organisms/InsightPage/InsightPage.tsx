@@ -23,7 +23,6 @@ import { RepoCardProfileProps } from "components/molecules/RepoCardProfile/repo-
 import { useToast } from "lib/hooks/useToast";
 import TeamMembersConfig, { TeamMemberData } from "components/molecules/TeamMembersConfig/team-members-config";
 import useInsightMembers from "lib/hooks/useInsightMembers";
-import { useFetchUser } from "lib/hooks/useFetchUser";
 
 enum RepoLookupError {
   Initial = 0,
@@ -293,10 +292,10 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
       {
         ...(providerToken
           ? {
-            headers: {
-              Authorization: `Bearer ${providerToken}`
+              headers: {
+                Authorization: `Bearer ${providerToken}`
+              }
             }
-          }
           : {})
       }
     );

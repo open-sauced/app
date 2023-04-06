@@ -42,7 +42,7 @@ const TeamMemberRow = ({ className, name, avatarUrl, role }: TeamMemberRowProps)
         </div>
         {!pending && isMenuOpen && (
           <Selector
-            filterOptions={["Owner", "can edit", "can view"]}
+            filterOptions={["Admin", "can edit", "can view"]}
             selected={mapRoleToText[role]}
             variation="check"
             handleFilterClick={handleRoleChange}
