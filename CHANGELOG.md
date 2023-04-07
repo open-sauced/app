@@ -5,6 +5,20 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.40.0](https://github.com/open-sauced/insights/compare/v1.39.0...v1.40.0) (2023-04-07)
+
+
+### 🐛 Bug Fixes
+
+* add regex pattern to validate twitter username input ([#1067](https://github.com/open-sauced/insights/issues/1067)) ([e7f4489](https://github.com/open-sauced/insights/commit/e7f448963f19e8885af4d2e5b09fb9f9d6260ac9))
+* use total repo count for displaying repo count on insight page ([#1077](https://github.com/open-sauced/insights/issues/1077)) ([3fe3e93](https://github.com/open-sauced/insights/commit/3fe3e9354e9587ad733fa32fa608e20fb907149e))
+
+
+### 🍕 Features
+
+* add follow and unfollow user implementation on highlights ([#1074](https://github.com/open-sauced/insights/issues/1074)) ([d524331](https://github.com/open-sauced/insights/commit/d524331edfac51b304db1e9ed7f4edfef251ff2f))
+* implement `follow` and `unfollow` feature ([#1069](https://github.com/open-sauced/insights/issues/1069)) ([dabe2ae](https://github.com/open-sauced/insights/commit/dabe2ae17dc3c06bf5968787811469619bf99a2a))
+
 ## [1.40.0-beta.4](https://github.com/open-sauced/insights/compare/v1.40.0-beta.3...v1.40.0-beta.4) (2023-04-05)
 
 
