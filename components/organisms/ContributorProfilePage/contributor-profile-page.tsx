@@ -15,6 +15,8 @@ import getPercent from "lib/utils/get-percent";
 import ContributorProfileInfo from "components/molecules/ContributorProfileInfo/contributor-profile-info";
 import ContributorProfileTab from "../ContributorProfileTab/contributor-profile-tab";
 import ProfileLanguageChart from "components/molecules/ProfileLanguageChart/profile-language-chart";
+import useFollowUser from "lib/hooks/useFollowUser";
+import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 
 const colorKeys = Object.keys(color);
 interface PrObjectType {
@@ -59,7 +61,6 @@ const ContributorProfilePage = ({
   openPrs,
   prTotal,
   loading,
-  error,
   prMerged,
   prVelocity
 }: ContributorProfilePageProps) => {
@@ -72,17 +73,17 @@ const ContributorProfilePage = ({
     };
   });
 
+  const { sessionToken, user: loggedInUser, signIn } = useSupabaseAuth();
+
   const { chart } = useTopicContributorCommits(githubName, "*", repositories);
   const prsMergedPercentage = getPercent(prTotal, prMerged || 0);
-  const isLoaded = !loading && !error;
+  const { data: Follower, isError: followError, follow, unFollow } = useFollowUser(user?.login || "");
 
-  // eslint-disable-next-line camelcase
   const {
     bio,
     location,
     interests,
     name,
-    // eslint-disable-next-line camelcase
     twitter_username,
     timezone,
     github_sponsors_url: githubSponsorsUrl,
@@ -95,7 +96,18 @@ const ContributorProfilePage = ({
       {loading ? (
         <SkeletonWrapper height={200} />
       ) : (
-        <ContributorProfileHeader isConnected={!!user} githubName={githubName} avatarUrl={githubAvatar} />
+        <ContributorProfileHeader
+          handleSignIn={signIn}
+          username={user?.login}
+          user={loggedInUser}
+          isFollowing={followError ? false : true}
+          isConnected={!!user}
+          githubName={githubName}
+          avatarUrl={githubAvatar}
+          handleFollow={follow}
+          handleUnfollow={unFollow}
+          isOwner={user?.login === loggedInUser?.user_metadata.user_name}
+        />
       )}
       <div className="container flex flex-col justify-between w-full px-2 pt-24 mx-auto overflow-hidden md:px-16 lg:flex-row lg:gap-40">
         <div className="flex flex-col gap-4 w-80 ">
@@ -149,7 +161,7 @@ const ContributorProfilePage = ({
                     </Title>
                   </div>
                   <div className="p-4 mt-4 bg-white border rounded-2xl md:p-6">
-                    <div className="flex flex-col justify-between gap-2  lg:flex-row md:gap-12 lg:gap-16">
+                    <div className="flex flex-col justify-between gap-2 lg:flex-row md:gap-12 lg:gap-16">
                       <div>
                         <span className="text-xs text-light-slate-11">PRs opened</span>
                         {openPrs ? (

@@ -35,6 +35,14 @@ interface DbRepoPR {
   readonly changed_files: number;
 }
 
+interface DbFollowUser {
+  readonly id: number;
+  readonly user_id: number;
+  readonly following_user_id: number;
+  readonly created_at: string;
+  readonly updated_at: string;
+}
+
 interface DbRepoCommit {
   readonly title: string;
   readonly commit_time: string;

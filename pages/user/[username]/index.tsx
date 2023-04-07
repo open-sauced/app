@@ -30,7 +30,7 @@ const Contributor: WithPageLayout = () => {
     totalPR: contributor[0]?.recent_pr_total
   };
 
-  useEffect( () => {
+  useEffect(() => {
     Contributor.updateSEO!({
       title: `${contributorLogin} | OpenSauced`,
       description: `${user?.bio || `${profile?.githubName} has connected their GitHub but has not added a bio.`}`,
@@ -42,18 +42,22 @@ const Contributor: WithPageLayout = () => {
   return (
     <>
       <Head>
-        {user && <script {...jsonLdScriptProps<Person>({
-          "@context": "https://schema.org",
-          "@type": "Person",
-          name: profile.githubName,
-          url: `https://www.github.com/${user.login}`,
-          image: profile.githubAvatar,
-          sameAs: user.twitter_username ? `https://twitter.com/${user.twitter_username}` : undefined,
-          description: user.bio ?? undefined,
-          email: user.display_email ? user.email : undefined,
-          knowsAbout: contributorLanguageList.concat(user.interests.split(",")),
-          worksFor: user.company ?? undefined
-        })} /> }
+        {user && (
+          <script
+            {...jsonLdScriptProps<Person>({
+              "@context": "https://schema.org",
+              "@type": "Person",
+              name: profile.githubName,
+              url: `https://www.github.com/${user.login}`,
+              image: profile.githubAvatar,
+              sameAs: user.twitter_username ? `https://twitter.com/${user.twitter_username}` : undefined,
+              description: user.bio ?? undefined,
+              email: user.display_email ? user.email : undefined,
+              knowsAbout: contributorLanguageList.concat(user.interests.split(",")),
+              worksFor: user.company ?? undefined
+            })}
+          />
+        )}
       </Head>
       <div className="w-full">
         <ContributorProfilePage

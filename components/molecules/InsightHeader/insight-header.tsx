@@ -17,7 +17,7 @@ interface InsightHeaderProps {
 }
 
 const InsightHeader = ({ insight, repositories, insightId, isOwner }: InsightHeaderProps): JSX.Element => {
-  const { data: repoData } = useRepositories(repositories);
+  const { data: repoData, meta: repoMeta } = useRepositories(repositories);
   const { repoList } = getRepoInsights(repoData);
 
   return (
@@ -34,7 +34,7 @@ const InsightHeader = ({ insight, repositories, insightId, isOwner }: InsightHea
             {insight && <Badge isPublic={insight?.is_public} />}
           </div>
           <div className="flex mt-4 items-center   gap-2">
-            {insight && insight.repos && insight.repos.length > 0 && <CardRepoList limit={2} repoList={repoList} />}
+            {insight && insight.repos && insight.repos.length > 0 && <CardRepoList limit={2} repoList={repoList} total={repoMeta.itemCount}/>}
           </div>
         </div>
       </div>

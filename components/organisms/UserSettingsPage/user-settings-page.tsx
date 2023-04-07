@@ -19,6 +19,7 @@ import { updateEmailPreferences } from "lib/hooks/updateEmailPreference";
 import { useFetchUser } from "lib/hooks/useFetchUser";
 import { getInterestOptions } from "lib/utils/getInterestOptions";
 import { useToast } from "lib/hooks/useToast";
+import { validateTwitterUsername } from "lib/utils/validate-twitter-username";
 
 interface userSettingsPageProps {
   user: User | null;
@@ -92,6 +93,11 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
     } else {
       setIsValidEmail(false);
     }
+  };
+
+  const handleTwitterUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    event.target.setCustomValidity(validateTwitterUsername(event.target.value).message);
+    event.target.reportValidity();
   };
 
   const handleSelectInterest = (interest: string) => {
@@ -216,6 +222,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
               classNames="bg-light-slate-4 text-light-slate-11"
               placeholder="saucedopen"
               label="Twitter Username"
+              onChange={handleTwitterUsernameChange}
               name="twitter_username"
             />
             <TextInput

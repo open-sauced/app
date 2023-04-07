@@ -44,6 +44,7 @@ import {
 } from "../AlertDialog/alert-dialog";
 import { deleteHighlight } from "lib/hooks/deleteHighlight";
 import { useToast } from "lib/hooks/useToast";
+import useFollowUser from "lib/hooks/useFollowUser";
 
 interface ContributorHighlightCardProps {
   title?: string;
@@ -70,11 +71,13 @@ const ContributorHighlightCard = ({
   const wordLimit = 500;
   const [errorMsg, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const { user: loggedInUser } = useSupabaseAuth();
+  const { user: loggedInUser, sessionToken, signIn } = useSupabaseAuth();
   const [openEdit, setOpenEdit] = useState(false);
   const [alertOpen, setAlertOpen] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [host, setHost] = useState("");
+
+  const { follow, unFollow, isError } = useFollowUser(user);
 
   useEffect(() => {
     if (!openEdit) {
@@ -218,12 +221,28 @@ const ContributorHighlightCard = ({
                   <BsLink45Deg size={22} />
                   <span>Copy link</span>
                 </DropdownMenuItem>
-                <DropdownMenuItem className="hidden rounded-md">
-                  <div className="flex gap-2.5 py-1  items-center pl-3 pr-7">
-                    <FaUserPlus size={22} />
-                    <span>Follow user</span>
-                  </div>
-                </DropdownMenuItem>
+                {loggedInUser ? (
+                  <DropdownMenuItem
+                    className={`rounded-md ${loggedInUser.user_metadata.user_name === user && "hidden"}`}
+                  >
+                    <div onClick={isError ? follow : unFollow} className="flex gap-2.5 py-1  items-center pl-3 pr-7">
+                      <FaUserPlus size={22} />
+                      <span>
+                        {!isError ? "Unfollow" : "Follow"} {user}
+                      </span>
+                    </div>
+                  </DropdownMenuItem>
+                ) : (
+                  <DropdownMenuItem className="rounded-md">
+                    <div
+                      onClick={async () => await signIn({ provider: "github" })}
+                      className="flex gap-2.5 py-1  items-center pl-3 pr-7"
+                    >
+                      <FaUserPlus size={22} />
+                      <span>Follow {user}</span>
+                    </div>
+                  </DropdownMenuItem>
+                )}
                 {loggedInUser && (
                   <DropdownMenuItem
                     className={`rounded-md ${

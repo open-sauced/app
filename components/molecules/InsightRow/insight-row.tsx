@@ -20,7 +20,7 @@ interface InsightRowProps {
 
 const InsightRow = ({ insight, user }: InsightRowProps) => {
   const repoIds = insight.repos.map((repo) => repo.repo_id);
-  const { data: repoData } = useRepositories(repoIds);
+  const { data: repoData, meta: repoMeta } = useRepositories(repoIds);
   const { open, merged, velocity, total, repoList } = getRepoInsights(repoData);
   const avgOpenPrs = repoData.length > 0 ? Math.round(open / repoData.length) : 0;
   return (
@@ -43,7 +43,7 @@ const InsightRow = ({ insight, user }: InsightRowProps) => {
           </div>
         </div>
         <div className="w-full truncate">
-          {insight.repos && insight.repos.length > 0 && <CardRepoList limit={3} repoList={repoList} />}
+          {insight.repos && insight.repos.length > 0 && <CardRepoList limit={3} repoList={repoList} total={repoMeta.itemCount} />}
         </div>
       </div>
       <div className="flex-1 w-full">
