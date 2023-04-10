@@ -31,7 +31,7 @@ const TeamMemberRow = ({ className, name, avatarUrl, role }: TeamMemberRowProps)
       </div>
       <div>
         <div className="flex items-center gap-3">
-          {mapRoleToText[role]}{" "}
+          {mapRoleToText[role]}
           {!pending && (
             <AiOutlineCaretDown
               onClick={() => {
