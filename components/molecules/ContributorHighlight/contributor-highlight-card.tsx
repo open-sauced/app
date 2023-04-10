@@ -45,6 +45,7 @@ import {
 import { deleteHighlight } from "lib/hooks/deleteHighlight";
 import { useToast } from "lib/hooks/useToast";
 import useFollowUser from "lib/hooks/useFollowUser";
+import useFetchAllEmojis from "lib/hooks/useFetchAllEmojis";
 
 interface ContributorHighlightCardProps {
   title?: string;
@@ -78,6 +79,10 @@ const ContributorHighlightCard = ({
   const [host, setHost] = useState("");
 
   const { follow, unFollow, isError } = useFollowUser(user);
+
+  const { data } = useFetchAllEmojis();
+
+  console.log(data);
 
   useEffect(() => {
     if (!openEdit) {
@@ -174,17 +179,19 @@ const ContributorHighlightCard = ({
           )}
           <div className="flex items-center gap-3 ml-auto lg:gap-3">
             <DropdownMenu>
-              <DropdownMenuTrigger className="py-2 px-2 hidden rounded-full data-[state=open]:bg-light-slate-7">
+              <DropdownMenuTrigger className="py-2 px-2  rounded-full data-[state=open]:bg-light-slate-7">
                 <HiOutlineEmojiHappy size={20} />
               </DropdownMenuTrigger>
               <DropdownMenuContent className="flex flex-row gap-2 rounded-3xl" side="left">
-                <DropdownMenuItem className="rounded-full">👍</DropdownMenuItem>
-                <DropdownMenuItem className="rounded-full">👎</DropdownMenuItem>
-                <DropdownMenuItem className="rounded-full">🍕</DropdownMenuItem>
-                <DropdownMenuItem className="rounded-full">😄</DropdownMenuItem>
-                <DropdownMenuItem className="rounded-full">❤️</DropdownMenuItem>
-                <DropdownMenuItem className="rounded-full">🚀</DropdownMenuItem>
-                <DropdownMenuItem className="rounded-full">👀</DropdownMenuItem>
+                {data &&
+                  data.length > 0 &&
+                  data.map((emoji, index) => (
+                    <DropdownMenuItem key={emoji.id} className="rounded-full !cursor-pointer">
+                      <picture>
+                        <img width={16} height={16} src={emoji.url} alt="" />
+                      </picture>
+                    </DropdownMenuItem>
+                  ))}
               </DropdownMenuContent>
             </DropdownMenu>
             <DropdownMenu>
