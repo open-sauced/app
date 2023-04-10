@@ -46,6 +46,8 @@ import { deleteHighlight } from "lib/hooks/deleteHighlight";
 import { useToast } from "lib/hooks/useToast";
 import useFollowUser from "lib/hooks/useFollowUser";
 import useFetchAllEmojis from "lib/hooks/useFetchAllEmojis";
+import useHighlightReactions from "lib/hooks/useHighlightReactions";
+import useUserHighlightReactions from "lib/hooks/useUserHighlightReactions";
 
 interface ContributorHighlightCardProps {
   title?: string;
@@ -80,9 +82,9 @@ const ContributorHighlightCard = ({
 
   const { follow, unFollow, isError } = useFollowUser(user);
 
-  const { data } = useFetchAllEmojis();
-
-  console.log(data);
+  const { data, getEmojiUrlById } = useFetchAllEmojis();
+  const { data: reactions, mutate } = useHighlightReactions(id);
+  const { data: userReaction, deleteReaction, addReaction } = useUserHighlightReactions(id);
 
   useEffect(() => {
     if (!openEdit) {
@@ -92,6 +94,20 @@ const ContributorHighlightCard = ({
     }
   }, [openEdit]);
 
+  const isUserReaction = (id: string) => {
+    const matches = userReaction.find((reaction) => reaction.emoji_id === id);
+    return matches ? true : false;
+  };
+
+  const handleUpdateReaction = (id: string) => {
+    if (isUserReaction(id)) {
+      deleteReaction(id);
+      mutate();
+    } else {
+      addReaction(id);
+      mutate();
+    }
+  };
   const handleCopyToClipboard = async (content: string) => {
     const url = new URL(content).toString();
     try {
@@ -173,22 +189,48 @@ const ContributorHighlightCard = ({
       <div>
         <div className="flex items-center justify-between">
           {title && (
-            <Title className="!text-sm lg:!text-xl !text-light-slate-12" level={4}>
+            <Title className="!text-sm w-2/4 lg:!text-xl !text-light-slate-12" level={4}>
               {title}
             </Title>
           )}
           <div className="flex items-center gap-3 ml-auto lg:gap-3">
             <DropdownMenu>
-              <DropdownMenuTrigger className="py-2 px-2  rounded-full data-[state=open]:bg-light-slate-7">
-                <HiOutlineEmojiHappy size={20} />
-              </DropdownMenuTrigger>
+              <div className="flex items-center justify-center gap-1">
+                {reactions &&
+                  reactions.length > 0 &&
+                  reactions.map((reaction) => (
+                    <picture
+                      onClick={() => handleUpdateReaction(reaction.emoji_id)}
+                      key={reaction.emoji_id}
+                      className={`border flex p-1.5 justify-center  gap-1 items-center rounded-full ${
+                        isUserReaction(reaction.emoji_id) && "bg-black/10"
+                      }`}
+                    >
+                      <img
+                        width={16}
+                        height={16}
+                        src={getEmojiUrlById(reaction.emoji_id)}
+                        className="shrink-0"
+                        alt={"emoji"}
+                      />
+                      <span className="text-xs text-light-slate-9">{reaction.reaction_count}</span>
+                    </picture>
+                  ))}
+                <DropdownMenuTrigger className="py-2 px-2  rounded-full data-[state=open]:bg-light-slate-7">
+                  <HiOutlineEmojiHappy size={20} />
+                </DropdownMenuTrigger>
+              </div>
               <DropdownMenuContent className="flex flex-row gap-2 rounded-3xl" side="left">
                 {data &&
                   data.length > 0 &&
-                  data.map((emoji, index) => (
-                    <DropdownMenuItem key={emoji.id} className="rounded-full !cursor-pointer">
+                  data.map((emoji) => (
+                    <DropdownMenuItem
+                      onClick={() => handleUpdateReaction(emoji.id)}
+                      key={emoji.id}
+                      className="rounded-full !px-1.5 !cursor-pointer"
+                    >
                       <picture>
-                        <img width={16} height={16} src={emoji.url} alt="" />
+                        <img width={16} height={16} src={emoji.url} alt={`${emoji.name} emoji`} />
                       </picture>
                     </DropdownMenuItem>
                   ))}
