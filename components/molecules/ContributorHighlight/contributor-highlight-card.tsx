@@ -83,7 +83,7 @@ const ContributorHighlightCard = ({
 
   const { follow, unFollow, isError } = useFollowUser(user);
 
-  const { data, getEmojiNameById } = useFetchAllEmojis();
+  const { data: emojis, getEmojiNameById } = useFetchAllEmojis();
   const { data: reactions, mutate } = useHighlightReactions(id);
   const { data: userReaction, deleteReaction, addReaction } = useUserHighlightReactions(id);
 
@@ -102,6 +102,7 @@ const ContributorHighlightCard = ({
 
   const handleUpdateReaction = async (id: string) => {
     if (isUserReaction(id)) {
+      // making sure the delete is triggered before the data is refetched
       await deleteReaction(id);
       mutate();
     } else {
@@ -221,15 +222,15 @@ const ContributorHighlightCard = ({
               </DropdownMenuTrigger>
 
               <DropdownMenuContent className="flex flex-row gap-1 rounded-3xl" side="left">
-                {data &&
-                  data.length > 0 &&
-                  data.map((emoji) => (
+                {emojis &&
+                  emojis.length > 0 &&
+                  emojis.map(({ id, name }) => (
                     <DropdownMenuItem
-                      onClick={() => handleUpdateReaction(emoji.id)}
-                      key={emoji.id}
+                      onClick={() => handleUpdateReaction(id)}
+                      key={id}
                       className="rounded-full !px-2 !cursor-pointer"
                     >
-                      <Emoji text={`:${emoji.name}:`} />
+                      <Emoji text={`:${name}:`} />
                     </DropdownMenuItem>
                   ))}
               </DropdownMenuContent>
