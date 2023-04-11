@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-
+import axios from "axios";
 import { User } from "@supabase/supabase-js";
 
 import Button from "components/atoms/Button/button";
@@ -49,6 +49,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
   });
   const [selectedInterest, setSelectedInterest] = useState<string[]>([]);
   const formRef = useRef<HTMLFormElement>(null);
+  const [socialCard, setSocialCard] = useState<string>("");
   const interestArray = getInterestOptions();
 
   useEffect(() => {
@@ -69,6 +70,16 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
       }
     }
     fetchAuthSession();
+
+    const socialCardUrl = `${String(process.env.NEXT_PUBLIC_OPENGRAPH_URL ?? "")}/v1/users/${user?.user_metadata.user_name}`;
+    axios.get(`${socialCardUrl}/metadata`, {
+      withCredentials: false,
+      validateStatus: (status) => [204, 304].includes(status)
+    })
+      .then(({ headers }) => {
+        setSocialCard(headers["x-amz-meta-location"]);
+      })
+      .catch(() => setSocialCard(socialCardUrl));
   }, [user]);
 
   useEffect(() => {
@@ -315,6 +326,30 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
               className="px-4 w-max py-2  bg-light-slate-4 "
             >
               Update Preferences
+            </Button>
+          </div>
+
+          <div className="flex flex-col gap-6">
+            <label className="text-light-slate-11 text-2xl font-normal">Social Card</label>
+
+            {socialCard && <img src={socialCard} alt="social card" className="max-w-xs" crossOrigin="anonymous"/>}
+
+            <Button
+              onClick={() => {console.log(socialCard); }}
+              variant="default"
+              className="px-4 w-max py-2  bg-light-slate-4 ">
+              Copy Social Card URL
+            </Button>
+
+            <code className="max-w-xs break-words relative rounded-sm bg-slate-100 p-[0.5rem] font-mono text-xs font-semibold text-slate-900 dark:bg-slate-800 dark:text-slate-400">
+              ![]({socialCard})
+            </code>
+
+            <Button
+              onClick={() => {console.log(socialCard); }}
+              variant="default"
+              className="px-4 w-max py-2  bg-light-slate-4 ">
+              Copy Markdown
             </Button>
           </div>
         </div>
