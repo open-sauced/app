@@ -204,7 +204,9 @@ const ContributorHighlightCard = ({
                     className={`px-1 py-0 md:py-0.5 md:px-1.5 shrink-0 border flex items-center justify-center rounded-full cursor-pointer ${
                       isUserReaction(emoji_id) && "bg-light-slate-6"
                     }`}
-                    onClick={() => handleUpdateReaction(emoji_id)}
+                    onClick={async () =>
+                      sessionToken ? handleUpdateReaction(emoji_id) : await signIn({ provider: "github" })
+                    }
                     key={emoji_id}
                   >
                     <Emoji
@@ -226,7 +228,9 @@ const ContributorHighlightCard = ({
                   emojis.length > 0 &&
                   emojis.map(({ id, name }) => (
                     <DropdownMenuItem
-                      onClick={() => handleUpdateReaction(id)}
+                      onClick={async () =>
+                        sessionToken ? handleUpdateReaction(id) : await signIn({ provider: "github" })
+                      }
                       key={id}
                       className="rounded-full !px-2 !cursor-pointer"
                     >

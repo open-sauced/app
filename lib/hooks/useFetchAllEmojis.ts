@@ -12,7 +12,7 @@ const useFetchAllEmojis = () => {
   );
 
   const getEmojiNameById = (id: string) => {
-    return data && data.data.filter((emoji) => emoji.id === id)[0].name;
+    return data ? data.data.filter((emoji) => emoji.id === id)[0].name : "";
   };
   return {
     data: data?.data ?? [],
