@@ -80,6 +80,7 @@
     "react": "^18.2.0",
     "react-csv": "^2.2.2",
     "react-dom": "^18.2.0",
+    "react-emoji-render": "^2.0.1",
     "react-hot-toast": "^2.4.0",
     "react-icons": "^4.7.1",
     "react-loading-skeleton": "^3.1.0",
