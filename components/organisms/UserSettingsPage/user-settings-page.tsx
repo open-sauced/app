@@ -71,7 +71,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
     }
     fetchAuthSession();
 
-    const socialCardUrl = `${String(process.env.NEXT_PUBLIC_OPENGRAPH_URL ?? "")}/v1/users/${user?.user_metadata.user_name}`;
+    const socialCardUrl = `${String(process.env.NEXT_PUBLIC_OPENGRAPH_URL ?? "")}/users/${user?.user_metadata.user_name}`;
     axios.get(`${socialCardUrl}/metadata`, {
       withCredentials: false,
       validateStatus: (status) => [204, 304].includes(status)
