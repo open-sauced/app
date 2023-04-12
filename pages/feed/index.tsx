@@ -19,6 +19,7 @@ import ProfileLayout from "layouts/profile";
 import { WithPageLayout } from "interfaces/with-page-layout";
 import Pagination from "components/molecules/Pagination/pagination";
 import PaginationResults from "components/molecules/PaginationResults/pagination-result";
+import useFetchAllEmojis from "lib/hooks/useFetchAllEmojis";
 
 const Feeds: WithPageLayout = () => {
   const { user } = useSupabaseAuth();
@@ -34,6 +35,7 @@ const Feeds: WithPageLayout = () => {
 
   const { data, isLoading, mutate, meta, setPage } = useFetchAllHighlights(selectedRepo);
   const { data: singleHighlight } = useFetchSingleHighlight(id as unknown as number);
+  const { data: emojis } = useFetchAllEmojis();
 
   const repoList =
     repos && // eslint-disable-next-line camelcase
@@ -97,6 +99,7 @@ const Feeds: WithPageLayout = () => {
 
                 <div className="w-full px-2 py-6 border bg-light-slate-1 md:px-6 lg:px-12 rounded-xl">
                   <ContributorHighlightCard
+                    emojis={emojis}
                     title={singleHighlight.title}
                     desc={singleHighlight.highlight}
                     prLink={singleHighlight.url}
@@ -177,6 +180,7 @@ const Feeds: WithPageLayout = () => {
                       </div>
                       <div className="p-4 py-6 border bg-light-slate-1 md:px-6 lg:px-12 rounded-xl">
                         <ContributorHighlightCard
+                          emojis={emojis}
                           refreshCallBack={mutate}
                           title={title}
                           desc={highlight}

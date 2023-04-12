@@ -23,7 +23,6 @@ import {
   Dialog,
   DialogContent,
   DialogHeader,
-  DialogTrigger,
   DialogTitle,
   DialogDescription,
   DialogCloseButton
@@ -57,6 +56,7 @@ interface ContributorHighlightCardProps {
   user: string;
   id: string;
   refreshCallBack?: () => void;
+  emojis: DbEmojis[];
 }
 
 const ContributorHighlightCard = ({
@@ -65,7 +65,8 @@ const ContributorHighlightCard = ({
   prLink,
   user,
   id,
-  refreshCallBack
+  refreshCallBack,
+  emojis
 }: ContributorHighlightCardProps) => {
   const { toast } = useToast();
   const twitterTweet = `${title || "Open Source Highlight"} - OpenSauced from ${user}`;
@@ -83,7 +84,6 @@ const ContributorHighlightCard = ({
 
   const { follow, unFollow, isError } = useFollowUser(user);
 
-  const { data: emojis, getEmojiNameById } = useFetchAllEmojis();
   const { data: reactions, mutate } = useHighlightReactions(id);
   const { data: userReaction, deleteReaction, addReaction } = useUserHighlightReactions(id);
 
@@ -98,6 +98,10 @@ const ContributorHighlightCard = ({
   const isUserReaction = (id: string) => {
     const matches = userReaction.find((reaction) => reaction.emoji_id === id);
     return !matches ? false : true;
+  };
+
+  const getEmojiNameById = (id: string) => {
+    return emojis && emojis.length > 0 ? emojis.filter((emoji) => emoji.id === id)[0].name : "";
   };
 
   const handleUpdateReaction = async (id: string) => {
@@ -201,7 +205,7 @@ const ContributorHighlightCard = ({
                 reactions.length > 0 &&
                 reactions.map(({ emoji_id, reaction_count }) => (
                   <div
-                    className={`px-1 py-0 md:py-0.5 md:px-1.5 shrink-0 border flex items-center justify-center rounded-full cursor-pointer ${
+                    className={`px-1 py-0 md:py-0.5 hover:bg-light-slate-6 transition  md:px-1.5 shrink-0 border flex items-center justify-center rounded-full cursor-pointer ${
                       isUserReaction(emoji_id) && "bg-light-slate-6"
                     }`}
                     onClick={async () =>
