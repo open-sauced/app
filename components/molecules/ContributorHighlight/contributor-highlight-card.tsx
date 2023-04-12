@@ -191,58 +191,17 @@ const ContributorHighlightCard = ({
   }, [highlight]);
 
   return (
-    <article className="flex flex-col max-w-xs md:max-w-[40rem] flex-1 gap-3 lg:gap-6">
+    <article className="flex flex-col  md:max-w-[40rem] flex-1 gap-3 lg:gap-6">
       <div>
         <div className="flex items-center justify-between w-full">
-          <div className="flex items-center justify-between w-full gap-1 pr-2">
+          <div className="flex items-center justify-between gap-1 pr-2">
             {title && (
-              <Title className="!text-sm w-4/5  md:w-2/4 break-words lg:!text-xl !text-light-slate-12" level={4}>
+              <Title className="!text-sm  break-words lg:!text-xl !text-light-slate-12" level={4}>
                 {title}
               </Title>
             )}
-            <div className="flex items-center justify-end gap-1">
-              {reactions &&
-                reactions.length > 0 &&
-                reactions.map(({ emoji_id, reaction_count }) => (
-                  <div
-                    className={`px-1 py-0 md:py-0.5 hover:bg-light-slate-6 transition  md:px-1.5 shrink-0 border flex items-center justify-center rounded-full cursor-pointer ${
-                      isUserReaction(emoji_id) && "bg-light-slate-6"
-                    }`}
-                    onClick={async () =>
-                      sessionToken ? handleUpdateReaction(emoji_id) : await signIn({ provider: "github" })
-                    }
-                    key={emoji_id}
-                  >
-                    <Emoji
-                      className="text-xs md:text-sm text-light-slate-10"
-                      text={`:${getEmojiNameById(emoji_id)}: ${reaction_count}`}
-                    />
-                  </div>
-                ))}
-            </div>
           </div>
           <div className="flex items-center gap-3 ml-auto lg:gap-3">
-            <DropdownMenu>
-              <DropdownMenuTrigger className="py-2 px-2  rounded-full data-[state=open]:bg-light-slate-7">
-                <HiOutlineEmojiHappy className="w-4 h-4" />
-              </DropdownMenuTrigger>
-
-              <DropdownMenuContent className="flex flex-row gap-1 rounded-3xl" side="left">
-                {emojis &&
-                  emojis.length > 0 &&
-                  emojis.map(({ id, name }) => (
-                    <DropdownMenuItem
-                      onClick={async () =>
-                        sessionToken ? handleUpdateReaction(id) : await signIn({ provider: "github" })
-                      }
-                      key={id}
-                      className="rounded-full !px-2 !cursor-pointer"
-                    >
-                      <Emoji text={`:${name}:`} />
-                    </DropdownMenuItem>
-                  ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
             <DropdownMenu>
               <DropdownMenuTrigger className=" py-2 px-2 rounded-full data-[state=open]:bg-light-slate-7">
                 <TfiMoreAlt size={24} />
@@ -346,6 +305,47 @@ const ContributorHighlightCard = ({
 
       {/* Generated OG card section */}
       <GhOpenGraphImg githubLink={prLink} />
+
+      <div className="flex items-center gap-1">
+        <DropdownMenu>
+          <DropdownMenuTrigger className="p-1   rounded-full data-[state=open]:bg-light-slate-7">
+            <HiOutlineEmojiHappy className="w-5 h-5" />
+          </DropdownMenuTrigger>
+
+          <DropdownMenuContent className="flex flex-row gap-1 rounded-3xl" side="right">
+            {emojis &&
+              emojis.length > 0 &&
+              emojis.map(({ id, name }) => (
+                <DropdownMenuItem
+                  onClick={async () => (sessionToken ? handleUpdateReaction(id) : await signIn({ provider: "github" }))}
+                  key={id}
+                  className="rounded-full !px-2 !cursor-pointer"
+                >
+                  <Emoji text={`:${name}:`} />
+                </DropdownMenuItem>
+              ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
+        {reactions &&
+          emojis &&
+          reactions.length > 0 &&
+          reactions.map(({ emoji_id, reaction_count }) => (
+            <div
+              className={`px-1 py-0 md:py-0.5 hover:bg-light-slate-6 transition  md:px-1.5 shrink-0 border flex items-center justify-center rounded-full cursor-pointer ${
+                isUserReaction(emoji_id) && "bg-light-slate-6"
+              }`}
+              onClick={async () =>
+                sessionToken ? handleUpdateReaction(emoji_id) : await signIn({ provider: "github" })
+              }
+              key={emoji_id}
+            >
+              <Emoji
+                className="text-xs md:text-sm text-light-slate-10"
+                text={`:${getEmojiNameById(emoji_id)}: ${reaction_count}`}
+              />
+            </div>
+          ))}
+      </div>
 
       <Dialog open={openEdit} onOpenChange={setOpenEdit}>
         <DialogContent>
