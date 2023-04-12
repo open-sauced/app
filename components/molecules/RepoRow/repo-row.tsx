@@ -98,7 +98,7 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
   const spamPrsPercentage = getPrsSpam(totalPrs, spamPrsCount || 0);
   const prVelocityInDays = getRelativeDays(prVelocityCount || 0);
   const contributorData = getPullRequestsContributors(repositoryPullRequests);
-  
+
   const days = getPullRequestsToDays(repositoryPullRequests);
   const last30days = [
     {
