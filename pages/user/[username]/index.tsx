@@ -1,6 +1,5 @@
 import useRepoList from "lib/hooks/useRepoList";
 import { useSingleContributor } from "lib/hooks/useSingleContributor";
-import ContributorProfilePage from "components/organisms/ContributorProfilePage/contributor-profile-page";
 import ProfileLayout from "layouts/profile";
 import Head from "next/head";
 import { WithPageLayout } from "interfaces/with-page-layout";
@@ -9,6 +8,14 @@ import { jsonLdScriptProps } from "react-schemaorg";
 import { GetServerSidePropsContext } from "next";
 import SEO from "layouts/SEO/SEO";
 import { supabase } from "lib/utils/supabase";
+import dynamic from "next/dynamic";
+
+// A quick fix to the hydration issue. Should be replaced with a real solution.
+// Slows down the page's initial client rendering as the component won't be loaded on the server.
+const ContributorProfilePageNoSSR = dynamic(
+  () => import('components/organisms/ContributorProfilePage/contributor-profile-page'),
+  { ssr: false }
+)
 
 export type ContributorSSRProps = {
   username: string;
@@ -17,7 +24,7 @@ export type ContributorSSRProps = {
 
 const Contributor: WithPageLayout<ContributorSSRProps> = ({ username, user }) => {
 
-  const { data: contributor, isError: contributorError } = useSingleContributor(username);
+  const { data: contributor, isLoading, isError: contributorError } = useSingleContributor(username);
   // const { data: user, isLoading: userLoading, isError: userError } = useFetchUser(username);
 
   const isError = contributorError;
@@ -62,10 +69,10 @@ const Contributor: WithPageLayout<ContributorSSRProps> = ({ username, user }) =>
         )}
       </Head>
       <div className="w-full">
-        <ContributorProfilePage
+        <ContributorProfilePageNoSSR
           prMerged={contributor[0]?.recent_merged_prs}
           error={isError}
-          // loading={userLoading}
+          // loading={isLoading}
           loading={false}
           user={user}
           repoList={repoList}
