@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.41.0-beta.2](https://github.com/open-sauced/insights/compare/v1.41.0-beta.1...v1.41.0-beta.2) (2023-04-13)
+
+
+### 🐛 Bug Fixes
+
+* not indexed repo causing runtime error ([#1093](https://github.com/open-sauced/insights/issues/1093)) ([b721771](https://github.com/open-sauced/insights/commit/b721771f508ebed46464150459abe277ef4f09e5))
+
 ## [1.41.0-beta.1](https://github.com/open-sauced/insights/compare/v1.40.0...v1.41.0-beta.1) (2023-04-13)
 
 
