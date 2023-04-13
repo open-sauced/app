@@ -306,7 +306,7 @@ const ContributorHighlightCard = ({
       {/* Generated OG card section */}
       <GhOpenGraphImg githubLink={prLink} />
 
-      <div className="flex items-center gap-1">
+      <div className="flex flex-wrap items-center gap-1">
         <DropdownMenu>
           <DropdownMenuTrigger className="p-1   rounded-full data-[state=open]:bg-light-slate-7">
             <HiOutlineEmojiHappy className="w-5 h-5" />
