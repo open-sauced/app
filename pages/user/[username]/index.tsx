@@ -13,9 +13,9 @@ import dynamic from "next/dynamic";
 // A quick fix to the hydration issue. Should be replaced with a real solution.
 // Slows down the page's initial client rendering as the component won't be loaded on the server.
 const ContributorProfilePageNoSSR = dynamic(
-  () => import('components/organisms/ContributorProfilePage/contributor-profile-page'),
+  () => import("components/organisms/ContributorProfilePage/contributor-profile-page"),
   { ssr: false }
-)
+);
 
 export type ContributorSSRProps = {
   username: string;
@@ -25,21 +25,11 @@ export type ContributorSSRProps = {
 const Contributor: WithPageLayout<ContributorSSRProps> = ({ username, user }) => {
 
   const { data: contributor, isLoading, isError: contributorError } = useSingleContributor(username);
-  // const { data: user, isLoading: userLoading, isError: userError } = useFetchUser(username);
 
   const isError = contributorError;
   const repoList = useRepoList(contributor[0]?.recent_repo_list || "");
   const contributorLanguageList = (contributor[0]?.langs || "").split(",");
   const githubAvatar = `https://www.github.com/${username}.png?size=300`;
-
-  // useEffect(() => {
-  //   Contributor.updateSEO!({
-  //     title: `${contributorLogin} | OpenSauced`,
-  //     description: `${user?.bio || `${profile?.githubName} has connected their GitHub but has not added a bio.`}`,
-  //     image: profile.githubAvatar,
-  //     twitterCard: "summary_large_image"
-  //   });
-  // }, [contributorLogin, user?.bio, profile.githubAvatar]);
 
   return (
     <>
