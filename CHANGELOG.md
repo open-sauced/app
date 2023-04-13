@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.41.0-beta.1](https://github.com/open-sauced/insights/compare/v1.40.0...v1.41.0-beta.1) (2023-04-13)
+
+
+### 🍕 Features
+
+* implement highlight reaction features ([#1085](https://github.com/open-sauced/insights/issues/1085)) ([3295b00](https://github.com/open-sauced/insights/commit/3295b00efef4ae0e565f8c9829ffb196f3baccc6))
+
 ## [1.40.0](https://github.com/open-sauced/insights/compare/v1.39.0...v1.40.0) (2023-04-07)
 
 
