@@ -1,5 +1,4 @@
 import publicApiFetcher from "lib/utils/public-api-fetcher";
-import { useEffect, useState } from "react";
 import useSWR, { Fetcher } from "swr";
 import useSupabaseAuth from "./useSupabaseAuth";
 

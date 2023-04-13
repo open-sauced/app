@@ -15,7 +15,7 @@ import { FiEdit, FiLinkedin, FiTwitter } from "react-icons/fi";
 import { BsLink45Deg } from "react-icons/bs";
 import { FaUserPlus } from "react-icons/fa";
 import { GrFlag } from "react-icons/gr";
-import { useSWRConfig } from "swr";
+import Emoji from "react-emoji-render";
 
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import GhOpenGraphImg from "../GhOpenGraphImg/gh-open-graph-img";
@@ -23,7 +23,6 @@ import {
   Dialog,
   DialogContent,
   DialogHeader,
-  DialogTrigger,
   DialogTitle,
   DialogDescription,
   DialogCloseButton
@@ -45,6 +44,10 @@ import {
 import { deleteHighlight } from "lib/hooks/deleteHighlight";
 import { useToast } from "lib/hooks/useToast";
 import useFollowUser from "lib/hooks/useFollowUser";
+import useFetchAllEmojis from "lib/hooks/useFetchAllEmojis";
+import useHighlightReactions from "lib/hooks/useHighlightReactions";
+import useUserHighlightReactions from "lib/hooks/useUserHighlightReactions";
+import { truncateString } from "lib/utils/truncate-string";
 
 interface ContributorHighlightCardProps {
   title?: string;
@@ -53,6 +56,7 @@ interface ContributorHighlightCardProps {
   user: string;
   id: string;
   refreshCallBack?: () => void;
+  emojis: DbEmojis[];
 }
 
 const ContributorHighlightCard = ({
@@ -61,7 +65,8 @@ const ContributorHighlightCard = ({
   prLink,
   user,
   id,
-  refreshCallBack
+  refreshCallBack,
+  emojis
 }: ContributorHighlightCardProps) => {
   const { toast } = useToast();
   const twitterTweet = `${title || "Open Source Highlight"} - OpenSauced from ${user}`;
@@ -79,6 +84,9 @@ const ContributorHighlightCard = ({
 
   const { follow, unFollow, isError } = useFollowUser(user);
 
+  const { data: reactions, mutate } = useHighlightReactions(id);
+  const { data: userReaction, deleteReaction, addReaction } = useUserHighlightReactions(id);
+
   useEffect(() => {
     if (!openEdit) {
       setTimeout(() => {
@@ -87,6 +95,25 @@ const ContributorHighlightCard = ({
     }
   }, [openEdit]);
 
+  const isUserReaction = (id: string) => {
+    const matches = userReaction.find((reaction) => reaction.emoji_id === id);
+    return !matches ? false : true;
+  };
+
+  const getEmojiNameById = (id: string) => {
+    return emojis && emojis.length > 0 ? emojis.filter((emoji) => emoji.id === id)[0].name : "";
+  };
+
+  const handleUpdateReaction = async (id: string) => {
+    if (isUserReaction(id)) {
+      // making sure the delete is triggered before the data is refetched
+      await deleteReaction(id);
+      mutate();
+    } else {
+      await addReaction(id);
+      mutate();
+    }
+  };
   const handleCopyToClipboard = async (content: string) => {
     const url = new URL(content).toString();
     try {
@@ -164,29 +191,17 @@ const ContributorHighlightCard = ({
   }, [highlight]);
 
   return (
-    <article className="inline-flex flex-col max-w-xs md:max-w-[40rem] flex-1 gap-3 lg:gap-6">
+    <article className="flex flex-col  md:max-w-[40rem] flex-1 gap-3 lg:gap-6">
       <div>
-        <div className="flex items-center justify-between">
-          {title && (
-            <Title className="!text-sm lg:!text-xl !text-light-slate-12" level={4}>
-              {title}
-            </Title>
-          )}
+        <div className="flex items-center justify-between w-full">
+          <div className="flex items-center justify-between gap-1 pr-2">
+            {title && (
+              <Title className="!text-sm  break-words lg:!text-xl !text-light-slate-12" level={4}>
+                {title}
+              </Title>
+            )}
+          </div>
           <div className="flex items-center gap-3 ml-auto lg:gap-3">
-            <DropdownMenu>
-              <DropdownMenuTrigger className="py-2 px-2 hidden rounded-full data-[state=open]:bg-light-slate-7">
-                <HiOutlineEmojiHappy size={20} />
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="flex flex-row gap-2 rounded-3xl" side="left">
-                <DropdownMenuItem className="rounded-full">👍</DropdownMenuItem>
-                <DropdownMenuItem className="rounded-full">👎</DropdownMenuItem>
-                <DropdownMenuItem className="rounded-full">🍕</DropdownMenuItem>
-                <DropdownMenuItem className="rounded-full">😄</DropdownMenuItem>
-                <DropdownMenuItem className="rounded-full">❤️</DropdownMenuItem>
-                <DropdownMenuItem className="rounded-full">🚀</DropdownMenuItem>
-                <DropdownMenuItem className="rounded-full">👀</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
             <DropdownMenu>
               <DropdownMenuTrigger className=" py-2 px-2 rounded-full data-[state=open]:bg-light-slate-7">
                 <TfiMoreAlt size={24} />
@@ -290,6 +305,47 @@ const ContributorHighlightCard = ({
 
       {/* Generated OG card section */}
       <GhOpenGraphImg githubLink={prLink} />
+
+      <div className="flex flex-wrap items-center gap-1">
+        <DropdownMenu>
+          <DropdownMenuTrigger className="p-1   rounded-full data-[state=open]:bg-light-slate-7">
+            <HiOutlineEmojiHappy className="w-5 h-5" />
+          </DropdownMenuTrigger>
+
+          <DropdownMenuContent className="flex flex-row gap-1 rounded-3xl" side="right">
+            {emojis &&
+              emojis.length > 0 &&
+              emojis.map(({ id, name }) => (
+                <DropdownMenuItem
+                  onClick={async () => (sessionToken ? handleUpdateReaction(id) : await signIn({ provider: "github" }))}
+                  key={id}
+                  className="rounded-full !px-2 !cursor-pointer"
+                >
+                  <Emoji text={`:${name}:`} />
+                </DropdownMenuItem>
+              ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
+        {reactions &&
+          emojis &&
+          reactions.length > 0 &&
+          reactions.map(({ emoji_id, reaction_count }) => (
+            <div
+              className={`px-1 py-0 md:py-0.5 hover:bg-light-slate-6 transition  md:px-1.5 shrink-0 border flex items-center justify-center rounded-full cursor-pointer ${
+                isUserReaction(emoji_id) && "bg-light-slate-6"
+              }`}
+              onClick={async () =>
+                sessionToken ? handleUpdateReaction(emoji_id) : await signIn({ provider: "github" })
+              }
+              key={emoji_id}
+            >
+              <Emoji
+                className="text-xs md:text-sm text-light-slate-10"
+                text={`:${getEmojiNameById(emoji_id)}: ${reaction_count}`}
+              />
+            </div>
+          ))}
+      </div>
 
       <Dialog open={openEdit} onOpenChange={setOpenEdit}>
         <DialogContent>
