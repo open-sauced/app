@@ -1,11 +1,9 @@
-import Contributor, { UserSSRPropsContext } from "../[username]";
+import Contributor, { handleUserSSR, UserSSRPropsContext } from "../[username]";
+
 export default Contributor;
 
-export async function getServerSideProps({ params }: UserSSRPropsContext) {
-  const { username } = params!;
-  console.log("username", username);
+export const getServerSideProps = async (context: UserSSRPropsContext) => {
+  return await handleUserSSR(context);
+};
 
-  return {
-    props: { username }
-  };
-}
+
