@@ -184,3 +184,12 @@ interface GhPRInfoResponse {
   readonly user: GhUser;
   readonly created_at: string;
 }
+
+interface DbEmojis {
+  readonly id: string;
+  readonly name: string;
+  readonly url: string;
+  readonly display_order: number;
+  readonly created_at: string;
+  readonly updated_at: string;
+}
