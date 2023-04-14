@@ -20,9 +20,10 @@ const ContributorProfilePageNoSSR = dynamic(
 export type ContributorSSRProps = {
   username: string;
   user?: DbUser;
+  ogImage: string;
 }
 
-const Contributor: WithPageLayout<ContributorSSRProps> = ({ username, user }) => {
+const Contributor: WithPageLayout<ContributorSSRProps> = ({ username, user, ogImage }) => {
 
   const { data: contributor, isLoading, isError: contributorError } = useSingleContributor(username);
 
@@ -36,7 +37,7 @@ const Contributor: WithPageLayout<ContributorSSRProps> = ({ username, user }) =>
       <SEO
         title={`${username} | OpenSauced`}
         description={`${user?.bio || `${username} has connected their GitHub but has not added a bio.`}`}
-        image={githubAvatar}
+        image={ogImage}
         twitterCard="summary_large_image"
       />
 
@@ -101,9 +102,16 @@ export async function handleUserSSR({ params }: GetServerSidePropsContext<{ user
     }
   });
 
+  const socialCardUrl = `${String(process.env.NEXT_PUBLIC_OPENGRAPH_URL ?? "")}/users/${username}`;
+  let ogImage = socialCardUrl;
+  const ogReq = await fetch(`${socialCardUrl}/metadata`) //statsu returned: 204 or 304 or 404
+  if(ogReq.status === 204 || ogReq.status === 304) {
+    ogImage = ogReq.headers.get("x-amz-meta-location") ?? socialCardUrl;
+  }
+
   const user = await req.json() as DbUser;
 
   return {
-    props: { username, user }
+    props: { username, user, ogImage }
   };
 }
