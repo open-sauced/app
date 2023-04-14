@@ -73,7 +73,7 @@ const ContributorProfilePage = ({
     };
   });
 
-  const { sessionToken, user: loggedInUser, signIn } = useSupabaseAuth();
+  const { user: loggedInUser, signIn } = useSupabaseAuth();
 
   const { chart } = useTopicContributorCommits(githubName, "*", repositories);
   const prsMergedPercentage = getPercent(prTotal, prMerged || 0);

@@ -204,3 +204,12 @@ interface DbInsightMember {
   readonly invitation_emailed_at: string;
   readonly invitation_email: string;
 }
+
+interface DbEmojis {
+  readonly id: string;
+  readonly name: string;
+  readonly url: string;
+  readonly display_order: number;
+  readonly created_at: string;
+  readonly updated_at: string;
+}

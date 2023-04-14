@@ -5,6 +5,39 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.41.1-beta.1](https://github.com/open-sauced/insights/compare/v1.41.0...v1.41.1-beta.1) (2023-04-14)
+
+
+### 🐛 Bug Fixes
+
+* correct beta->local development default env variables ([81c8b44](https://github.com/open-sauced/insights/commit/81c8b44c0df2e5c530f0797852e0e608957df996))
+
+## [1.41.0](https://github.com/open-sauced/insights/compare/v1.40.0...v1.41.0) (2023-04-13)
+
+
+### 🍕 Features
+
+* implement highlight reaction features ([#1085](https://github.com/open-sauced/insights/issues/1085)) ([3295b00](https://github.com/open-sauced/insights/commit/3295b00efef4ae0e565f8c9829ffb196f3baccc6))
+
+
+### 🐛 Bug Fixes
+
+* not indexed repo causing runtime error ([#1093](https://github.com/open-sauced/insights/issues/1093)) ([b721771](https://github.com/open-sauced/insights/commit/b721771f508ebed46464150459abe277ef4f09e5))
+
+## [1.41.0-beta.2](https://github.com/open-sauced/insights/compare/v1.41.0-beta.1...v1.41.0-beta.2) (2023-04-13)
+
+
+### 🐛 Bug Fixes
+
+* not indexed repo causing runtime error ([#1093](https://github.com/open-sauced/insights/issues/1093)) ([b721771](https://github.com/open-sauced/insights/commit/b721771f508ebed46464150459abe277ef4f09e5))
+
+## [1.41.0-beta.1](https://github.com/open-sauced/insights/compare/v1.40.0...v1.41.0-beta.1) (2023-04-13)
+
+
+### 🍕 Features
+
+* implement highlight reaction features ([#1085](https://github.com/open-sauced/insights/issues/1085)) ([3295b00](https://github.com/open-sauced/insights/commit/3295b00efef4ae0e565f8c9829ffb196f3baccc6))
+
 ## [1.40.0](https://github.com/open-sauced/insights/compare/v1.39.0...v1.40.0) (2023-04-07)
 
 

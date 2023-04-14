@@ -75,11 +75,10 @@ const RepositoriesTable = ({
 }: RepositoriesTableProps): JSX.Element => {
   const isLoadedWithRepos = !loading && !error && Array.isArray(listOfRepositories) && listOfRepositories.length > 0;
   const isFilteredRepoNotIndexed =
-    Array.isArray(repo) && !loading && !error && Array.isArray(listOfRepositories) && listOfRepositories.length === 0;
-  const [repoOwner, repoName] = repo && Array.isArray(repo) ? repo : [];
+  Array.isArray(repo) && !loading && !error && Array.isArray(listOfRepositories) && listOfRepositories.length === 0;
 
   return (
-    <section className="flex  flex-col">
+    <section className="flex flex-col">
       {loading && <SkeletonWrapper height={50} count={10} radius={4} classNames="px-6 mt-2" />}
       {error && <>An error has occured...</>}
 
@@ -96,9 +95,7 @@ const RepositoriesTable = ({
           // eslint-disable-next-line
           repo={{
             id: "",
-            full_name: repoName as string,
-            // eslint-disable-next-line camelcase
-            owner_avatar: getAvatarByUsername(repoOwner as string)
+            full_name: repo.join("/") as string
           }}
           userPage={user}
           handleOnSelectRepo={handleOnSelectRepo}
