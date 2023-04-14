@@ -9,17 +9,17 @@ interface TeamMemberRowProps extends TeamMemberData {
   className?: string;
 }
 
-const mapRoleToText: Record<TeamMemberRowProps["role"], string> = {
+const mapRoleToText: Record<TeamMemberRowProps["access"], string> = {
   admin: "Owner",
   editor: "can edit",
   viewer: "can view",
   pending: "Pending"
 };
 
-const TeamMemberRow = ({ className, name, avatarUrl, role }: TeamMemberRowProps) => {
+const TeamMemberRow = ({ className, name, avatarUrl, access }: TeamMemberRowProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const pending = role == "pending";
+  const pending = access == "pending";
 
   const handleRoleChange = (role: string) => {};
 
@@ -31,7 +31,7 @@ const TeamMemberRow = ({ className, name, avatarUrl, role }: TeamMemberRowProps)
       </div>
       <div>
         <div className="flex items-center gap-3">
-          {mapRoleToText[role]}
+          {mapRoleToText[access]}
           {!pending && (
             <AiOutlineCaretDown
               onClick={() => {
@@ -43,7 +43,7 @@ const TeamMemberRow = ({ className, name, avatarUrl, role }: TeamMemberRowProps)
         {!pending && isMenuOpen && (
           <Selector
             filterOptions={["Admin", "can edit", "can view"]}
-            selected={mapRoleToText[role]}
+            selected={mapRoleToText[access]}
             variation="check"
             handleFilterClick={handleRoleChange}
           />

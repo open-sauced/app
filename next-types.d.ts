@@ -191,3 +191,16 @@ interface GhPRInfoResponse {
   readonly user: GhUser;
   readonly created_at: string;
 }
+
+interface DbInsightMember {
+  readonly id: number;
+  readonly insight_id: number;
+  readonly user_id: number;
+  readonly name: string;
+  readonly access: "admin" | "editor" | "viewer" | "pending";
+  readonly created_at: string;
+  readonly updated_at: string;
+  readonly deleted_at: string;
+  readonly invitation_emailed_at: string;
+  readonly invitation_email: string;
+}
