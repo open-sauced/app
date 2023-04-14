@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.41.1](https://github.com/open-sauced/insights/compare/v1.41.0...v1.41.1) (2023-04-14)
+
+
+### 🐛 Bug Fixes
+
+* correct beta->local development default env variables ([81c8b44](https://github.com/open-sauced/insights/commit/81c8b44c0df2e5c530f0797852e0e608957df996))
+* update user id check for insight pages ([788ed63](https://github.com/open-sauced/insights/commit/788ed639438d1e4515d8e3f3c3596524b2e1f842))
+
 ### [1.41.1-beta.1](https://github.com/open-sauced/insights/compare/v1.41.0...v1.41.1-beta.1) (2023-04-14)
 
 
