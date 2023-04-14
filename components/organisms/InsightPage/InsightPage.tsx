@@ -47,12 +47,16 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
   }
   // console.log(insight);
 
-  const { data } = useInsightMembers(insight?.id || 0);
+  const { data, addMember } = useInsightMembers(insight?.id || 0);
+
+  console.log(data);
+  console.log(insight?.id);
+  console.log(sessionToken);
 
   const insightOwner: TeamMemberData = {
     name: insight?.user.name || "",
     avatarUrl: getAvatarByUsername(insight?.user.login || ""),
-    role: "admin"
+    access: "admin"
   };
 
   // Loading States
@@ -413,7 +417,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
 
         {edit && (
           <div className="pt-12 mt-12 border-t border-light-slate-8">
-            <TeamMembersConfig members={[insightOwner]} />
+            <TeamMembersConfig onAddmember={addMember} members={[insightOwner]} />
           </div>
         )}
 
