@@ -103,10 +103,10 @@ export async function handleUserSSR({ params }: GetServerSidePropsContext<{ user
   });
 
   const socialCardUrl = `${String(process.env.NEXT_PUBLIC_OPENGRAPH_URL ?? "")}/users/${username}`;
-  let ogImage = socialCardUrl;
-  const ogReq = await fetch(`${socialCardUrl}/metadata`); //statsu returned: 204 or 304 or 404
-  if(ogReq.status === 204 || ogReq.status === 304) {
-    ogImage = ogReq.headers.get("x-amz-meta-location") ?? socialCardUrl;
+  const ogReq = await fetch(`${socialCardUrl}/metadata`); //status returned: 204 or 304 or 404
+  let ogImage = ogReq.headers.get("x-amz-meta-location");
+  if(ogReq.status !== 204) {
+    await fetch(socialCardUrl); // trigger the generation of the social card
   }
 
   const user = await req.json() as DbUser;
