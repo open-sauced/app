@@ -9,10 +9,11 @@ import { GetServerSidePropsContext } from "next";
 import SEO from "layouts/SEO/SEO";
 import { supabase } from "lib/utils/supabase";
 import dynamic from "next/dynamic";
+import { getAvatarByUsername } from "lib/utils/github";
 
 // A quick fix to the hydration issue. Should be replaced with a real solution.
 // Slows down the page's initial client rendering as the component won't be loaded on the server.
-const ContributorProfilePageNoSSR = dynamic(
+const ClientOnlyContributorProfilePage = dynamic(
   () => import("components/organisms/ContributorProfilePage/contributor-profile-page"),
   { ssr: false }
 );
@@ -30,7 +31,7 @@ const Contributor: WithPageLayout<ContributorSSRProps> = ({ username, user, ogIm
   const isError = contributorError;
   const repoList = useRepoList(contributor[0]?.recent_repo_list || "");
   const contributorLanguageList = (contributor[0]?.langs || "").split(",");
-  const githubAvatar = `https://www.github.com/${username}.png?size=300`;
+  const githubAvatar = getAvatarByUsername(username, 300);
 
   return (
     <>
@@ -60,10 +61,9 @@ const Contributor: WithPageLayout<ContributorSSRProps> = ({ username, user, ogIm
         )}
       </Head>
       <div className="w-full">
-        <ContributorProfilePageNoSSR
+        <ClientOnlyContributorProfilePage
           prMerged={contributor[0]?.recent_merged_prs}
           error={isError}
-          // loading={isLoading}
           loading={false}
           user={user}
           repoList={repoList}
