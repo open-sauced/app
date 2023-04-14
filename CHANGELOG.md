@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.41.1-beta.1](https://github.com/open-sauced/insights/compare/v1.41.0...v1.41.1-beta.1) (2023-04-14)
+
+
+### 🐛 Bug Fixes
+
+* correct beta->local development default env variables ([81c8b44](https://github.com/open-sauced/insights/commit/81c8b44c0df2e5c530f0797852e0e608957df996))
+
 ## [1.41.0](https://github.com/open-sauced/insights/compare/v1.40.0...v1.41.0) (2023-04-13)
 
 

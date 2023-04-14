@@ -101,6 +101,7 @@ interface DbInsight {
 interface DbUserInsight {
   readonly id: number;
   readonly user_id: number;
+  readonly user: DbUser;
   readonly name: string;
   readonly is_public: boolean;
   readonly is_favorite: boolean;
