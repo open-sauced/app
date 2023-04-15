@@ -7,12 +7,14 @@ import { TeamMemberData } from "../TeamMembersConfig/team-members-config";
 
 interface TeamMemberRowProps extends TeamMemberData {
   className?: string;
+  onDelete: Function;
+  onUpdate: Function;
 }
 
 const mapRoleToText: Record<TeamMemberRowProps["access"], string> = {
   admin: "Owner",
-  editor: "can edit",
-  viewer: "can view",
+  edit: "can edit",
+  view: "can view",
   pending: "Pending"
 };
 
@@ -21,7 +23,11 @@ const TeamMemberRow = ({ className, name, avatarUrl, access }: TeamMemberRowProp
 
   const pending = access == "pending";
 
-  const handleRoleChange = (role: string) => {};
+  const handleRoleChange = async (role: string) => {
+    console.log(role);
+    if (role === "pending") {
+    }
+  };
 
   return (
     <div className={`flex justify-between items-center ${className && className} ${pending && "text-light-slate-10"}`}>
@@ -42,7 +48,7 @@ const TeamMemberRow = ({ className, name, avatarUrl, access }: TeamMemberRowProp
         </div>
         {!pending && isMenuOpen && (
           <Selector
-            filterOptions={["Admin", "can edit", "can view"]}
+            filterOptions={["Admin", "can edit", "can view", "remove"]}
             selected={mapRoleToText[access]}
             variation="check"
             handleFilterClick={handleRoleChange}

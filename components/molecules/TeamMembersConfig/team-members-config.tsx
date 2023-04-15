@@ -7,21 +7,28 @@ import { validateEmail } from "lib/utils/validate-email";
 interface TeamMembersConfigProps {
   className?: string;
   members: TeamMemberData[];
-  onAddmember: Function;
+  onAddMember: Function;
+  onDeleteMember: Function;
+  onUpdateMember: Function;
 }
 
-export interface TeamMemberData {
-  id: string;
-  name: string;
+export type MemberAccess = "admin" | "edit" | "view" | "pending";
+export interface TeamMemberData extends DbInsightMember {
   avatarUrl: string;
-  access: "admin" | "editor" | "viewer" | "pending";
+  email?: string;
 }
 
-const TeamMembersConfig = ({ className, members, onAddmember }: TeamMembersConfigProps) => {
+const TeamMembersConfig = ({
+  className,
+  members,
+  onAddMember,
+  onDeleteMember,
+  onUpdateMember
+}: TeamMembersConfigProps) => {
   const [validInput, setValidInput] = useState(false);
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
-  const [allMembers, setAllMembers] = useState(members);
+
   const handleChange = async (value: string) => {
     setEmail(value);
     if (validateEmail(value)) {
@@ -31,14 +38,13 @@ const TeamMembersConfig = ({ className, members, onAddmember }: TeamMembersConfi
 
   const handleAddMember = async () => {
     setLoading(true);
-    const res = await onAddmember(email);
+    const res = await onAddMember(email);
     setLoading(false);
-    if (res) {
-      setAllMembers((prev) => [...prev, res]);
-    }
 
     setEmail("");
   };
+
+  // console.log(members);
   return (
     <div className={` ${className && className}`}>
       <h2 className="text-lg font-medium tracking-wide">Add Team Members</h2>
@@ -56,8 +62,14 @@ const TeamMembersConfig = ({ className, members, onAddmember }: TeamMembersConfi
         </Button>
       </div>
       <div className="mt-7">
-        {allMembers.map((member) => (
-          <TeamMemberRow key={member.name + member.avatarUrl} className="mb-4" {...member} />
+        {members.map((member) => (
+          <TeamMemberRow
+            onUpdate={onUpdateMember}
+            onDelete={onDeleteMember}
+            key={member.id}
+            className="mb-4"
+            {...member}
+          />
         ))}
       </div>
     </div>

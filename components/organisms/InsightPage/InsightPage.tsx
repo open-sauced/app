@@ -13,7 +13,7 @@ import RepoNotIndexed from "components/organisms/Repositories/repository-not-ind
 import DeleteInsightPageModal from "./DeleteInsightPageModal";
 
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
-import { getAvatarByUsername } from "lib/utils/github";
+import { getAvatarById, getAvatarByUsername } from "lib/utils/github";
 import useStore from "lib/store";
 import Error from "components/atoms/Error/Error";
 import Search from "components/atoms/Search/search";
@@ -45,15 +45,22 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
   if (router.query.selectedRepos) {
     receivedData = JSON.parse(router.query.selectedRepos as string);
   }
-  // console.log(insight);
+  console.log(sessionToken);
 
   const { data, addMember } = useInsightMembers(insight?.id || 0);
 
-  console.log(data);
-  console.log(insight?.id);
-  console.log(sessionToken);
+  const Members =
+    data &&
+    data.map((member) => ({
+      ...member,
+      email: member.invitation_email,
+      avatarUrl: !!member.user_id ? getAvatarById(String(member.user_id)) : ""
+    }));
+  console.log(Members);
 
   const insightOwner: TeamMemberData = {
+    email: insight?.user.email || "",
+    id: String(insight?.user.id),
     name: insight?.user.name || "",
     avatarUrl: getAvatarByUsername(insight?.user.login || ""),
     access: "admin"
@@ -417,7 +424,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
 
         {edit && (
           <div className="pt-12 mt-12 border-t border-light-slate-8">
-            <TeamMembersConfig onAddmember={addMember} members={[insightOwner]} />
+            <TeamMembersConfig onAddmember={addMember} members={[insightOwner, ...Members]} />
           </div>
         )}
 
