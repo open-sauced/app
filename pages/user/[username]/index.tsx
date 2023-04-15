@@ -111,15 +111,10 @@ export async function handleUserSSR({ params }: GetServerSidePropsContext<{ user
   async function fetchSocialCardURL() {
     const socialCardUrl = `${String(process.env.NEXT_PUBLIC_OPENGRAPH_URL ?? "")}/users/${username}`;
     const ogReq = await fetch(`${socialCardUrl}/metadata`); //status returned: 204 or 304 or 404
-
-    if(ogReq.status === 404) { // image doesn't exist, wait for it to be generated
-      await fetch(socialCardUrl, {
-        method: "HEAD"
-      });
-    } else if(ogReq.status === 304) { // image exists but needs regenerating, no need to wait for the new version
+    if(ogReq.status !== 204) {
       fetch(socialCardUrl, {
         method: "HEAD"
-      });
+      }); // trigger the generation of the social card
     }
 
     ogImage = ogReq.headers.get("x-amz-meta-location");
