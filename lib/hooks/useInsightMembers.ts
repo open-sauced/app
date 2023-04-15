@@ -61,12 +61,13 @@ const useInsightMembers = (page_id: number) => {
   };
 
   return {
-    data: data ?? [],
+    data: data?.data ?? [],
     isLoading: !error && !data,
     isError: !!error,
     mutate,
     addMember,
-    updateMember
+    updateMember,
+    deleteMember
   };
 };
 
