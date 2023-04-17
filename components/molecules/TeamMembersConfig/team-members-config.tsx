@@ -51,12 +51,12 @@ const TeamMembersConfig = ({
     setLoading(true);
     const res = await onAddMember(email);
     setLoading(false);
+    setEmail("");
     if (res) {
       toast({ description: "Member added successfully", variant: "success" });
     } else {
       toast({ description: "An error occurred!", variant: "danger" });
     }
-    setEmail("");
   };
 
   return (

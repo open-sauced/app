@@ -34,9 +34,9 @@ const TeamMemberRow = ({ className, name, avatarUrl, access, email, onDelete, on
 
   return (
     <div className={`flex justify-between items-center ${className && className} ${pending && "text-light-slate-10"}`}>
-      <div className="flex items-center">
+      <div className="flex items-center gap-3">
         <Avatar size={40} isCircle avatarURL={pending ? pendingImg : avatarUrl} />
-        <p className="ml-3">{name || email}</p>
+        <p>{name || email}</p>
       </div>
       <div>
         <div className="flex items-center gap-3">
