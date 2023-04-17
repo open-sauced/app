@@ -13,8 +13,12 @@ interface TeamMembersConfigProps {
   onUpdateMember: Function;
 }
 
-export type MemberAccess = "admin" | "edit" | "view" | "pending";
-export interface TeamMemberData extends DbInsightMember {
+export interface TeamMemberData {
+  id: number;
+  insight_id: number;
+  user_id?: number;
+  name: string;
+  access: "pending" | "admin" | "edit" | "view";
   avatarUrl: string;
   email?: string;
 }

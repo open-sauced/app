@@ -43,6 +43,7 @@ const TeamMemberRow = ({ className, name, avatarUrl, access, email, onDelete, on
           {mapRoleToText[access]}
           {!pending && (
             <AiOutlineCaretDown
+              className="cursor-pointer"
               onClick={() => {
                 setIsMenuOpen(!isMenuOpen);
               }}

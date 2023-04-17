@@ -45,9 +45,8 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
   if (router.query.selectedRepos) {
     receivedData = JSON.parse(router.query.selectedRepos as string);
   }
-  console.log(sessionToken);
 
-  const { data, addMember } = useInsightMembers(insight?.id || 0);
+  const { data, addMember, deleteMember, updateMember } = useInsightMembers(insight?.id || 0);
 
   const Members =
     data &&
@@ -56,13 +55,13 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
       email: member.invitation_email,
       avatarUrl: !!member.user_id ? getAvatarById(String(member.user_id)) : ""
     }));
-  console.log(Members);
 
   const insightOwner: TeamMemberData = {
-    email: insight?.user.email || "",
-    id: String(insight?.user.id),
-    name: insight?.user.name || "",
-    avatarUrl: getAvatarByUsername(insight?.user.login || ""),
+    insight_id: Number(insight?.id),
+    email: String(insight?.user.email),
+    id: Number(insight?.user.id),
+    name: String(insight?.user.name),
+    avatarUrl: getAvatarByUsername(String(insight?.user.login)),
     access: "admin"
   };
 
@@ -424,7 +423,12 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
 
         {edit && (
           <div className="pt-12 mt-12 border-t border-light-slate-8">
-            <TeamMembersConfig onAddmember={addMember} members={[insightOwner, ...Members]} />
+            <TeamMembersConfig
+              onUpdateMember={updateMember}
+              onDeleteMember={deleteMember}
+              onAddMember={addMember}
+              members={[insightOwner, ...Members]}
+            />
           </div>
         )}
 
