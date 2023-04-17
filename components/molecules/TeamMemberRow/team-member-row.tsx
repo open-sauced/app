@@ -58,7 +58,7 @@ const TeamMemberRow = ({ className, name, avatarUrl, access, email, onDelete, on
               { name: "can view", value: "view" },
               { name: "remove", value: "remove" }
             ]}
-            selected={mapRoleToText[access]}
+            selected={access}
             variation="check"
             handleFilterClick={handleRoleChange}
           />
