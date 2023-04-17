@@ -48,7 +48,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
 
   const { data, addMember, deleteMember, updateMember } = useInsightMembers(insight?.id || 0);
 
-  const Members =
+  const members =
     data &&
     data.map((member) => ({
       ...member,
@@ -62,7 +62,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
     id: Number(insight?.user.id),
     name: String(insight?.user.name),
     avatarUrl: getAvatarByUsername(String(insight?.user.login)),
-    access: "admin"
+    access: "owner"
   };
 
   // Loading States
@@ -427,7 +427,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
               onUpdateMember={updateMember}
               onDeleteMember={deleteMember}
               onAddMember={addMember}
-              members={[insightOwner, ...Members]}
+              members={[insightOwner, ...members]}
             />
           </div>
         )}

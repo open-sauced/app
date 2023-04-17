@@ -6,16 +6,16 @@ interface PaginatedInsightMembers {
   meta: Meta;
 }
 
-const useInsightMembers = (page_id: number) => {
+const useInsightMembers = (insightId: number) => {
   const { sessionToken } = useSupabaseAuth();
 
   const { data, error, mutate } = useSWR<PaginatedInsightMembers, Error>(
-    `user/insights/${page_id}/members`,
+    `user/insights/${insightId}/members`,
     publicApiFetcher as Fetcher<PaginatedInsightMembers, Error>
   );
 
   const addMember = async (email: string) => {
-    const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/insights/${page_id}/members`, {
+    const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/insights/${insightId}/members`, {
       method: "POST",
       headers: {
         "Content-type": "application/json",
@@ -34,7 +34,7 @@ const useInsightMembers = (page_id: number) => {
   };
 
   const updateMember = async (memberId: string, access: "edit" | "view" | "admin") => {
-    const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/insights/${page_id}/members/${memberId}`, {
+    const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/insights/${insightId}/members/${memberId}`, {
       method: "PATCH",
       headers: {
         "Content-type": "application/json",
@@ -54,7 +54,7 @@ const useInsightMembers = (page_id: number) => {
   };
 
   const deleteMember = async (memberId: string) => {
-    const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/insights/${page_id}/members/${memberId}`, {
+    const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/insights/${insightId}/members/${memberId}`, {
       method: "DELETE",
       headers: {
         "Content-type": "application/json",

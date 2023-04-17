@@ -18,7 +18,7 @@ export interface TeamMemberData {
   insight_id: number;
   user_id?: number;
   name: string;
-  access: "pending" | "admin" | "edit" | "view";
+  access: "owner" | "pending" | "admin" | "edit" | "view";
   avatarUrl: string;
   email?: string;
 }
@@ -42,7 +42,7 @@ const TeamMembersConfig = ({
   };
 
   const handleAddMember = async () => {
-    const memberExists = members.find((member) => member.email === email);
+    const memberExists = members.find((member) => member.email?.toLowerCase() === email.toLowerCase());
 
     if (memberExists) {
       toast({ description: "Member already exists", variant: "danger" });

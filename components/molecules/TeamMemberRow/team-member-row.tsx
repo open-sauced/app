@@ -12,7 +12,8 @@ interface TeamMemberRowProps extends TeamMemberData {
 }
 
 const mapRoleToText: Record<TeamMemberRowProps["access"], string> = {
-  admin: "Owner",
+  owner: "Owner",
+  admin: "Admin",
   edit: "can edit",
   view: "can view",
   pending: "Pending"
@@ -22,6 +23,7 @@ const TeamMemberRow = ({ className, name, avatarUrl, access, email, onDelete, on
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const pending = access == "pending";
+  const isOwner = access == "owner";
 
   const handleRoleChange = async (role: string) => {
     setIsMenuOpen(false);
@@ -42,12 +44,18 @@ const TeamMemberRow = ({ className, name, avatarUrl, access, email, onDelete, on
         <div className="flex items-center gap-3">
           {mapRoleToText[access]}
           {!pending && (
-            <AiOutlineCaretDown
-              className="cursor-pointer"
-              onClick={() => {
-                setIsMenuOpen(!isMenuOpen);
-              }}
-            />
+            <>
+              {isOwner ? (
+                <AiOutlineCaretDown />
+              ) : (
+                <AiOutlineCaretDown
+                  className="cursor-pointer"
+                  onClick={() => {
+                    setIsMenuOpen(!isMenuOpen);
+                  }}
+                />
+              )}
+            </>
           )}
         </div>
         {!pending && isMenuOpen && (
