@@ -18,14 +18,17 @@ const mapRoleToText: Record<TeamMemberRowProps["access"], string> = {
   pending: "Pending"
 };
 
-const TeamMemberRow = ({ className, name, avatarUrl, access }: TeamMemberRowProps) => {
+const TeamMemberRow = ({ className, name, avatarUrl, access, email, onDelete, onUpdate, id }: TeamMemberRowProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const pending = access == "pending";
 
   const handleRoleChange = async (role: string) => {
-    console.log(role);
-    if (role === "pending") {
+    setIsMenuOpen(false);
+    if (role === "remove") {
+      onDelete(id);
+    } else {
+      onUpdate(id, role);
     }
   };
 
@@ -33,7 +36,7 @@ const TeamMemberRow = ({ className, name, avatarUrl, access }: TeamMemberRowProp
     <div className={`flex justify-between items-center ${className && className} ${pending && "text-light-slate-10"}`}>
       <div className="flex items-center">
         <Avatar size={40} isCircle avatarURL={pending ? pendingImg : avatarUrl} />
-        <p className="ml-3">{name}</p>
+        <p className="ml-3">{name || email}</p>
       </div>
       <div>
         <div className="flex items-center gap-3">
@@ -48,7 +51,12 @@ const TeamMemberRow = ({ className, name, avatarUrl, access }: TeamMemberRowProp
         </div>
         {!pending && isMenuOpen && (
           <Selector
-            filterOptions={["Admin", "can edit", "can view", "remove"]}
+            filterOptions={[
+              { name: "Admin", value: "admin" },
+              { name: "can edit", value: "edit" },
+              { name: "can view", value: "view" },
+              { name: "remove", value: "remove" }
+            ]}
             selected={mapRoleToText[access]}
             variation="check"
             handleFilterClick={handleRoleChange}

@@ -3,6 +3,7 @@ import Search from "components/atoms/Search/search";
 import TeamMemberRow from "../TeamMemberRow/team-member-row";
 import { useState } from "react";
 import { validateEmail } from "lib/utils/validate-email";
+import { useToast } from "lib/hooks/useToast";
 
 interface TeamMembersConfigProps {
   className?: string;
@@ -28,30 +29,39 @@ const TeamMembersConfig = ({
   const [validInput, setValidInput] = useState(false);
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
+  const { toast } = useToast();
 
   const handleChange = async (value: string) => {
     setEmail(value);
-    if (validateEmail(value)) {
-      setValidInput(true);
-    }
+
+    setValidInput(!!validateEmail(value));
   };
 
   const handleAddMember = async () => {
+    const memberExists = members.find((member) => member.email === email);
+
+    if (memberExists) {
+      toast({ description: "Member already exists", variant: "danger" });
+      return;
+    }
     setLoading(true);
     const res = await onAddMember(email);
     setLoading(false);
-
+    if (res) {
+      toast({ description: "Member added successfully", variant: "success" });
+    } else {
+      toast({ description: "An error occurred!", variant: "danger" });
+    }
     setEmail("");
   };
 
-  // console.log(members);
   return (
     <div className={` ${className && className}`}>
       <h2 className="text-lg font-medium tracking-wide">Add Team Members</h2>
       <div className="flex items-center gap-5 mt-3">
         <Search
           isLoading={loading}
-          // value={email}
+          value={email}
           onChange={(value) => handleChange(value)}
           placeholder="Enter email address"
           name="search"
