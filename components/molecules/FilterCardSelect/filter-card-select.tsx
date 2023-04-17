@@ -8,10 +8,10 @@ import repoIcon from "../../../img/icons/repo.svg";
 import Selector from "../../atoms/Selector/selector";
 
 interface FilterCardSelectProps {
-    selected: string;
-    icon?: "topic" | "repo" | "org" | "contributor";
-    options: string[];
-    handleFilterClick: (filter: string) => void;
+  selected: string;
+  icon?: "topic" | "repo" | "org" | "contributor";
+  options: string[];
+  handleFilterClick: (filter: string) => void;
 }
 
 const icons = {
@@ -33,8 +33,12 @@ const icons = {
   }
 };
 
-const FilterCardSelect: React.FC<FilterCardSelectProps> = ({ selected: filterName, icon = "topic", options, handleFilterClick }) => {
-
+const FilterCardSelect: React.FC<FilterCardSelectProps> = ({
+  selected: filterName,
+  icon = "topic",
+  options,
+  handleFilterClick
+}) => {
   const ref = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);
   const toggleFilter = () => {
@@ -62,22 +66,46 @@ const FilterCardSelect: React.FC<FilterCardSelectProps> = ({ selected: filterNam
       <div
         onClick={toggleFilter}
         ref={ref}
-        className={"inline-block py-1 border border-slate-300 outline-none hover:bg-slate-50 focus:ring-2 bg-slate-100 focus:ring-slate-300 rounded-lg cursor-pointer"}>
+        className={
+          "inline-block py-1 border border-slate-300 outline-none hover:bg-slate-50 focus:ring-2 bg-slate-100 focus:ring-slate-300 rounded-lg cursor-pointer"
+        }
+      >
         <button className="flex items-center gap-1 mx-2">
           <Image
-            width={14} height={14}
-            alt={icon === "topic" ? icons.topic.alt : icon === "org" ? icons.org.alt : icon === "contributor" ? icons.contributor.alt : icon === "repo" ? icons.repo.alt : "Icon"}
-            src={icon === "topic" ? icons.topic.src : icon === "org" ? icons.org.src : icon === "contributor" ? icons.contributor.src : icon === "repo" ? icons.repo.src : icons.topic.src} />
-          <Text className="!text-sm font-semibold tracking-tight !text-slate-900">
-            {filterName}
-          </Text>
+            width={14}
+            height={14}
+            alt={
+              icon === "topic"
+                ? icons.topic.alt
+                : icon === "org"
+                  ? icons.org.alt
+                  : icon === "contributor"
+                    ? icons.contributor.alt
+                    : icon === "repo"
+                      ? icons.repo.alt
+                      : "Icon"
+            }
+            src={
+              icon === "topic"
+                ? icons.topic.src
+                : icon === "org"
+                  ? icons.org.src
+                  : icon === "contributor"
+                    ? icons.contributor.src
+                    : icon === "repo"
+                      ? icons.repo.src
+                      : icons.topic.src
+            }
+          />
+          <Text className="!text-sm font-semibold tracking-tight !text-slate-900">{filterName}</Text>
         </button>
-        { isOpen && <Selector
-          filterOptions={options}
-          handleFilterClick={handleFilterClick}
-          selected={filterName}
-        />
-        }
+        {isOpen && (
+          <Selector
+            filterOptions={options.map((option) => ({ name: option, value: option }))}
+            handleFilterClick={handleFilterClick}
+            selected={filterName}
+          />
+        )}
       </div>
     </>
   );
