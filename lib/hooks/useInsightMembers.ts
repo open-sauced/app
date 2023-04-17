@@ -28,6 +28,7 @@ const useInsightMembers = (page_id: number) => {
       console.log(req.status, req.statusText);
       return undefined;
     } else {
+      mutate();
       return req.json();
     }
   };
@@ -44,8 +45,10 @@ const useInsightMembers = (page_id: number) => {
 
     if (!req.ok) {
       console.log(req.status, req.statusText);
+
       return undefined;
     } else {
+      mutate();
       return req.json();
     }
   };
@@ -58,6 +61,10 @@ const useInsightMembers = (page_id: number) => {
         Authorization: `Bearer ${sessionToken}`
       }
     });
+
+    if (req.ok) {
+      mutate();
+    }
   };
 
   return {
