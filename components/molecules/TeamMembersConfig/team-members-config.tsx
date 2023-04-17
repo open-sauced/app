@@ -53,7 +53,7 @@ const TeamMembersConfig = ({
     setLoading(false);
     setEmail("");
     if (res) {
-      toast({ description: "Member added successfully", variant: "success" });
+      toast({ description: "Member invite sent successfully", variant: "success" });
     } else {
       toast({ description: "An error occurred!", variant: "danger" });
     }
