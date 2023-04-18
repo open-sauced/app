@@ -97,7 +97,7 @@ const LoginStep1: React.FC<LoginStep1Props> = ({ handleLoginStep, user }) => {
           </div>
         </div>
         <div>
-          <Button onClick={handleGitHubAuth} variant="primary" className="w-full mt-3 md:mt-0 h-10">
+          <Button onClick={handleGitHubAuth} variant="primary" className="w-full mt-3 md:mt-0 h-10 justify-center">
             Authenticate <Icon IconImage={GitHubIcon} className="ml-2" />
           </Button>
         </div>
@@ -161,7 +161,7 @@ const LoginStep2: React.FC<LoginStep2Props> = ({
             ))}
           </div>
         </div>
-        <Button onClick={handleUpdateInterest} variant="primary" className="w-full mt-3 md:mt-0 h-10">
+        <Button onClick={handleUpdateInterest} variant="primary" className="w-full mt-3 md:mt-0 h-10 justify-center">
           Confirm Selections
         </Button>
       </div>
@@ -178,7 +178,7 @@ const LoginStep3: React.FC<LoginStep3Props> = ({ interests }) => {
   captureAnayltics("User Onboarding", "onboardingStep3", "visited");
   const store = useStore();
   const router = useRouter();
-  const { user, sessionToken } = useSupabaseAuth();
+  const { sessionToken } = useSupabaseAuth();
   const [timezone, setTimezone] = useState("");
 
   const handleUpdateTimezone = async () => {
@@ -194,7 +194,7 @@ const LoginStep3: React.FC<LoginStep3Props> = ({ interests }) => {
 
       if (data.ok) {
         store.onboardUser();
-        router.push(`/user/${user?.user_metadata.user_name}`);
+        router.push(`/${interests[0]}/repositories/filter/recent`);
       } else {
         console.error("Error onboarding user");
       }
@@ -235,7 +235,7 @@ const LoginStep3: React.FC<LoginStep3Props> = ({ interests }) => {
         <Button
           variant="primary"
           onClick={handleUpdateTimezone}
-          className="w-full mt-3 md:mt-0 h-10"
+          className="w-full mt-3 md:mt-0 h-10 justify-center"
           disabled={!timezone}
         >
           Continue
