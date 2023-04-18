@@ -74,28 +74,8 @@ const FilterCardSelect: React.FC<FilterCardSelectProps> = ({
           <Image
             width={14}
             height={14}
-            alt={
-              icon === "topic"
-                ? icons.topic.alt
-                : icon === "org"
-                  ? icons.org.alt
-                  : icon === "contributor"
-                    ? icons.contributor.alt
-                    : icon === "repo"
-                      ? icons.repo.alt
-                      : "Icon"
-            }
-            src={
-              icon === "topic"
-                ? icons.topic.src
-                : icon === "org"
-                  ? icons.org.src
-                  : icon === "contributor"
-                    ? icons.contributor.src
-                    : icon === "repo"
-                      ? icons.repo.src
-                      : icons.topic.src
-            }
+            alt={icons[icon] ? icons[icon].alt : "Icons"}
+            src={icons[icon] ? icons[icon].src : icons.topic.src}
           />
           <Text className="!text-sm font-semibold tracking-tight !text-slate-900">{filterName}</Text>
         </button>
