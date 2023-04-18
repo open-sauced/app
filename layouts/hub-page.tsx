@@ -22,7 +22,7 @@ const HubPageLayout = ({ children }: { children: React.ReactNode }) => {
 
   const { toolList, selectedTool, selectedFilter, userOrg } = useNav(repositories);
 
-  let isOwner = !!(userId && insight && `${userId}` === `${insight.user_id}`);
+  let isOwner = !!(userId && insight && `${userId}` === `${insight.user.id}`);
 
   return (
     <>

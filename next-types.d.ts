@@ -98,9 +98,22 @@ interface DbInsight {
   readonly accepted_repo_total: number;
 }
 
+interface DbInsightMember {
+  readonly id: string;
+  readonly insight_id: number;
+  readonly user_id: number;
+  readonly name: string;
+  readonly access: "pending" | "admin" | "edit" | "view";
+  readonly created_at: string;
+  readonly updated_at: string;
+  readonly deleted_at: string;
+  readonly invitation_emailed_at: string;
+  readonly invitation_email: string;
+}
 interface DbUserInsight {
   readonly id: number;
   readonly user_id: number;
+  readonly user: DbUser;
   readonly name: string;
   readonly is_public: boolean;
   readonly is_favorite: boolean;
@@ -183,4 +196,13 @@ interface GhPRInfoResponse {
   readonly comments: number;
   readonly user: GhUser;
   readonly created_at: string;
+}
+
+interface DbEmojis {
+  readonly id: string;
+  readonly name: string;
+  readonly url: string;
+  readonly display_order: number;
+  readonly created_at: string;
+  readonly updated_at: string;
 }

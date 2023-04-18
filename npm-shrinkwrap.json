@@ -1,12 +1,12 @@
 {
   "name": "@open-sauced/insights",
-  "version": "1.40.0",
+  "version": "1.43.0-beta.2",
   "lockfileVersion": 3,
   "requires": true,
   "packages": {
     "": {
       "name": "@open-sauced/insights",
-      "version": "1.40.0",
+      "version": "1.43.0-beta.2",
       "hasInstallScript": true,
       "license": "MIT",
       "dependencies": {
@@ -46,6 +46,7 @@
         "react": "^18.2.0",
         "react-csv": "^2.2.2",
         "react-dom": "^18.2.0",
+        "react-emoji-render": "^2.0.1",
         "react-hot-toast": "^2.4.0",
         "react-icons": "^4.7.1",
         "react-loading-skeleton": "^3.1.0",
@@ -17793,6 +17794,11 @@
         "node": ">=0.10.0"
       }
     },
+    "node_modules/classnames": {
+      "version": "2.3.2",
+      "resolved": "https://registry.npmjs.org/classnames/-/classnames-2.3.2.tgz",
+      "integrity": "sha512-CSbhY4cFEJRe6/GQzIk5qXZ4Jeg5pcsP7b5peFSDpffpe1cqjASH/n9UTjBwOp6XpMSTwQ8Za2K5V02ueA7Tmw=="
+    },
     "node_modules/clean-css": {
       "version": "5.3.1",
       "resolved": "https://registry.npmjs.org/clean-css/-/clean-css-5.3.1.tgz",
@@ -19852,8 +19858,7 @@
     "node_modules/emoji-regex": {
       "version": "8.0.0",
       "resolved": "https://registry.npmjs.org/emoji-regex/-/emoji-regex-8.0.0.tgz",
-      "integrity": "sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==",
-      "dev": true
+      "integrity": "sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A=="
     },
     "node_modules/emojis-list": {
       "version": "3.0.0",
@@ -26340,11 +26345,21 @@
       "integrity": "sha512-qjxPLHd3r5DnsdGacqOMU6pb/avJzdh9tFX2ymgoZE27BmjXrNy/y4LoaiTeAb+O3gL8AfpJGtqfX/ae2leYYQ==",
       "dev": true
     },
+    "node_modules/lodash.flatten": {
+      "version": "4.4.0",
+      "resolved": "https://registry.npmjs.org/lodash.flatten/-/lodash.flatten-4.4.0.tgz",
+      "integrity": "sha512-C5N2Z3DgnnKr0LOpv/hKCgKdb7ZZwafIrsesve6lmzvZIRZRGaZ/l6Q8+2W7NaT+ZwO3fFlSCzCzrDCFdJfZ4g=="
+    },
     "node_modules/lodash.isarguments": {
       "version": "3.1.0",
       "resolved": "https://registry.npmjs.org/lodash.isarguments/-/lodash.isarguments-3.1.0.tgz",
       "integrity": "sha512-chi4NHZlZqZD18a0imDHnZPrDeBbTtVN7GXMwuGdRH9qotxAjYs3aVLKc7zNOG9eddR5Ksd8rvFEBc9SsggPpg==",
       "dev": true
+    },
+    "node_modules/lodash.isstring": {
+      "version": "4.0.1",
+      "resolved": "https://registry.npmjs.org/lodash.isstring/-/lodash.isstring-4.0.1.tgz",
+      "integrity": "sha512-0wJxfxH1wgO3GrbuP+dTTk7op+6L41QCXbGINEmD+ny/G/eCqGzxyCsh7159S+mgDDcoarnBw6PC1PS5+wUGgw=="
     },
     "node_modules/lodash.map": {
       "version": "4.6.0",
@@ -29727,6 +29742,22 @@
       "integrity": "sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==",
       "dev": true
     },
+    "node_modules/react-emoji-render": {
+      "version": "2.0.1",
+      "resolved": "https://registry.npmjs.org/react-emoji-render/-/react-emoji-render-2.0.1.tgz",
+      "integrity": "sha512-SKtsdwgEf2BFNiE9y4UBFZBWjkRcyWmhMprVly52+J77/zxThcfaQ3sCA0+2LtGJIRMpm4DGWSvyLg72fd1rXQ==",
+      "dependencies": {
+        "classnames": "^2.2.5",
+        "emoji-regex": "^8.0.0",
+        "lodash.flatten": "^4.4.0",
+        "prop-types": "^15.5.8",
+        "string-replace-to-array": "^1.0.1"
+      },
+      "peerDependencies": {
+        "react": ">=0.14.0",
+        "react-dom": ">=0.14.0"
+      }
+    },
     "node_modules/react-hot-toast": {
       "version": "2.4.0",
       "resolved": "https://registry.npmjs.org/react-hot-toast/-/react-hot-toast-2.4.0.tgz",
@@ -32235,6 +32266,16 @@
       },
       "engines": {
         "node": ">=10"
+      }
+    },
+    "node_modules/string-replace-to-array": {
+      "version": "1.0.3",
+      "resolved": "https://registry.npmjs.org/string-replace-to-array/-/string-replace-to-array-1.0.3.tgz",
+      "integrity": "sha512-QIdKvmfXbdFvblXAAz6IIjR7A+C6SU6m2A+e7fE/0EYDC5yfeWNMJQ193fPsW7nG+9q52dv/UjnVrDaNVZXpmQ==",
+      "dependencies": {
+        "invariant": "^2.2.1",
+        "lodash.flatten": "^4.2.0",
+        "lodash.isstring": "^4.0.1"
       }
     },
     "node_modules/string-width": {

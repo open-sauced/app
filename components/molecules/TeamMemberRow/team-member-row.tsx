@@ -3,43 +3,76 @@ import { AiOutlineCaretDown } from "react-icons/ai";
 import pendingImg from "img/icons/fallback-image-disabled-square.svg";
 import { useState } from "react";
 import Selector from "components/atoms/Selector/selector";
-import { TeamMemberData } from "../TeamMembersConfig/team-members-config";
+import { MemberAccess, TeamMemberData } from "../TeamMembersConfig/team-members-config";
 
 interface TeamMemberRowProps extends TeamMemberData {
   className?: string;
+  onDelete: (memberId: string) => void;
+  onUpdate: (memberId: string, access: MemberAccess) => Promise<any> | undefined;
 }
 
-const mapRoleToText: Record<TeamMemberRowProps["role"], string> = {
+const mapRoleToText: Record<TeamMemberRowProps["access"], string> = {
+  owner: "Owner",
   admin: "Admin",
-  editor: "can edit",
-  viewer: "can view",
+  edit: "can edit",
+  view: "can view",
   pending: "Pending"
 };
 
-const TeamMemberRow  = ({ className, name, avatarUrl, role }: TeamMemberRowProps) => {
-
+const TeamMemberRow = ({ className, name, avatarUrl, access, email, onDelete, onUpdate, id }: TeamMemberRowProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const pending = role == "pending";
+  const pending = access == "pending";
+  const isOwner = access == "owner";
 
-  const handleRoleChange = (role: string) => {};
+  const handleRoleChange = async (role: string) => {
+    setIsMenuOpen(false);
+    if (role === "remove") {
+      onDelete(id);
+    } else {
+      onUpdate(id, role as MemberAccess);
+    }
+  };
 
-  return(
+  return (
     <div className={`flex justify-between items-center ${className && className} ${pending && "text-light-slate-10"}`}>
-      <div className="flex items-center">
+      <div className="flex items-center gap-3">
         <Avatar size={40} isCircle avatarURL={pending ? pendingImg : avatarUrl} />
-        <p className="ml-3">{name}</p>
+        <p>{name || email}</p>
       </div>
       <div>
         <div className="flex items-center gap-3">
-          {mapRoleToText[role]} {!pending && <AiOutlineCaretDown onClick={() => {setIsMenuOpen(!isMenuOpen);}} />}
+          {mapRoleToText[access]}
+          {!pending && (
+            <>
+              {isOwner ? (
+                <AiOutlineCaretDown />
+              ) : (
+                <AiOutlineCaretDown
+                  className="cursor-pointer"
+                  onClick={() => {
+                    setIsMenuOpen(!isMenuOpen);
+                  }}
+                />
+              )}
+            </>
+          )}
         </div>
-        { !pending && isMenuOpen && (
-          <Selector filterOptions={["Admin", "can edit", "can view"]} selected={mapRoleToText[role]} variation="check" handleFilterClick={handleRoleChange} />
+        {!pending && isMenuOpen && (
+          <Selector
+            filterOptions={[
+              { name: "Admin", value: "admin" },
+              { name: "can edit", value: "edit" },
+              { name: "can view", value: "view" },
+              { name: "remove", value: "remove" }
+            ]}
+            selected={access}
+            variation="check"
+            handleFilterClick={handleRoleChange}
+          />
         )}
       </div>
     </div>
   );
-
 };
 export default TeamMemberRow;

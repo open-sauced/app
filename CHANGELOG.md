@@ -5,6 +5,89 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.43.0-beta.2](https://github.com/open-sauced/insights/compare/v1.43.0-beta.1...v1.43.0-beta.2) (2023-04-18)
+
+
+### 🍕 Features
+
+* implement insights team feature ([#1080](https://github.com/open-sauced/insights/issues/1080)) ([5186a60](https://github.com/open-sauced/insights/commit/5186a6089c7dd5f306b7854f5a7706015e33e0f0))
+
+## [1.43.0-beta.1](https://github.com/open-sauced/insights/compare/v1.42.0...v1.43.0-beta.1) (2023-04-18)
+
+
+### 🍕 Features
+
+* add page to accept insight member invitation ([#1102](https://github.com/open-sauced/insights/issues/1102)) ([ffe35e2](https://github.com/open-sauced/insights/commit/ffe35e210e6d4115480a0c44478998c73fade875))
+
+## [1.42.0](https://github.com/open-sauced/insights/compare/v1.41.1...v1.42.0) (2023-04-18)
+
+
+### 🍕 Features
+
+* redirect user to the dashboard with repos after onboarding ([#1096](https://github.com/open-sauced/insights/issues/1096)) ([765de71](https://github.com/open-sauced/insights/commit/765de717dcede6528d8d4e751cd73fa171510231))
+* server render user pages and add open graph image ([#1095](https://github.com/open-sauced/insights/issues/1095)) ([d1a043b](https://github.com/open-sauced/insights/commit/d1a043b5e05471d770aa53cdf53f72fb46af7390))
+
+
+### 🐛 Bug Fixes
+
+* update user id check for editing an insight page ([166530d](https://github.com/open-sauced/insights/commit/166530dd28bcc91b1f748bc6408ffb5272a00fcd))
+
+## [1.42.0-beta.2](https://github.com/open-sauced/insights/compare/v1.42.0-beta.1...v1.42.0-beta.2) (2023-04-18)
+
+
+### 🐛 Bug Fixes
+
+* update user id check for editing an insight page ([166530d](https://github.com/open-sauced/insights/commit/166530dd28bcc91b1f748bc6408ffb5272a00fcd))
+
+## [1.42.0-beta.1](https://github.com/open-sauced/insights/compare/v1.41.1...v1.42.0-beta.1) (2023-04-17)
+
+
+### 🍕 Features
+
+* redirect user to the dashboard with repos after onboarding ([#1096](https://github.com/open-sauced/insights/issues/1096)) ([765de71](https://github.com/open-sauced/insights/commit/765de717dcede6528d8d4e751cd73fa171510231))
+* server render user pages and add open graph image ([#1095](https://github.com/open-sauced/insights/issues/1095)) ([d1a043b](https://github.com/open-sauced/insights/commit/d1a043b5e05471d770aa53cdf53f72fb46af7390))
+
+### [1.41.1](https://github.com/open-sauced/insights/compare/v1.41.0...v1.41.1) (2023-04-14)
+
+
+### 🐛 Bug Fixes
+
+* correct beta->local development default env variables ([81c8b44](https://github.com/open-sauced/insights/commit/81c8b44c0df2e5c530f0797852e0e608957df996))
+* update user id check for insight pages ([788ed63](https://github.com/open-sauced/insights/commit/788ed639438d1e4515d8e3f3c3596524b2e1f842))
+
+### [1.41.1-beta.1](https://github.com/open-sauced/insights/compare/v1.41.0...v1.41.1-beta.1) (2023-04-14)
+
+
+### 🐛 Bug Fixes
+
+* correct beta->local development default env variables ([81c8b44](https://github.com/open-sauced/insights/commit/81c8b44c0df2e5c530f0797852e0e608957df996))
+
+## [1.41.0](https://github.com/open-sauced/insights/compare/v1.40.0...v1.41.0) (2023-04-13)
+
+
+### 🍕 Features
+
+* implement highlight reaction features ([#1085](https://github.com/open-sauced/insights/issues/1085)) ([3295b00](https://github.com/open-sauced/insights/commit/3295b00efef4ae0e565f8c9829ffb196f3baccc6))
+
+
+### 🐛 Bug Fixes
+
+* not indexed repo causing runtime error ([#1093](https://github.com/open-sauced/insights/issues/1093)) ([b721771](https://github.com/open-sauced/insights/commit/b721771f508ebed46464150459abe277ef4f09e5))
+
+## [1.41.0-beta.2](https://github.com/open-sauced/insights/compare/v1.41.0-beta.1...v1.41.0-beta.2) (2023-04-13)
+
+
+### 🐛 Bug Fixes
+
+* not indexed repo causing runtime error ([#1093](https://github.com/open-sauced/insights/issues/1093)) ([b721771](https://github.com/open-sauced/insights/commit/b721771f508ebed46464150459abe277ef4f09e5))
+
+## [1.41.0-beta.1](https://github.com/open-sauced/insights/compare/v1.40.0...v1.41.0-beta.1) (2023-04-13)
+
+
+### 🍕 Features
+
+* implement highlight reaction features ([#1085](https://github.com/open-sauced/insights/issues/1085)) ([3295b00](https://github.com/open-sauced/insights/commit/3295b00efef4ae0e565f8c9829ffb196f3baccc6))
+
 ## [1.40.0](https://github.com/open-sauced/insights/compare/v1.39.0...v1.40.0) (2023-04-07)
 
 
