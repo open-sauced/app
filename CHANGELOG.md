@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.43.0-beta.1](https://github.com/open-sauced/insights/compare/v1.42.0...v1.43.0-beta.1) (2023-04-18)
+
+
+### 🍕 Features
+
+* add page to accept insight member invitation ([#1102](https://github.com/open-sauced/insights/issues/1102)) ([ffe35e2](https://github.com/open-sauced/insights/commit/ffe35e210e6d4115480a0c44478998c73fade875))
+
 ## [1.42.0](https://github.com/open-sauced/insights/compare/v1.41.1...v1.42.0) (2023-04-18)
 
 
