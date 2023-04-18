@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.43.0-beta.2](https://github.com/open-sauced/insights/compare/v1.43.0-beta.1...v1.43.0-beta.2) (2023-04-18)
+
+
+### 🍕 Features
+
+* implement insights team feature ([#1080](https://github.com/open-sauced/insights/issues/1080)) ([5186a60](https://github.com/open-sauced/insights/commit/5186a6089c7dd5f306b7854f5a7706015e33e0f0))
+
 ## [1.43.0-beta.1](https://github.com/open-sauced/insights/compare/v1.42.0...v1.43.0-beta.1) (2023-04-18)
 
 
