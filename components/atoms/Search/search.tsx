@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { GrClose } from "react-icons/gr";
 import { FaSearch } from "react-icons/fa";
 import { Spinner } from "../SpinLoader/spin-loader";
@@ -43,6 +43,10 @@ const Search = ({
     onSearch?.("");
     onChange?.("");
   };
+
+  useEffect(() => {
+    setSearch(value);
+  }, [value]);
 
   const handleOnSelect = (suggestion: string) => {
     setSearch(suggestion);

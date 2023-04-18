@@ -18,17 +18,23 @@ Default.args = {
     {
       name: "John Doe",
       avatarUrl: "https://avatars.githubusercontent.com/u/7252105?v=4",
-      role: "admin"
+      access: "admin",
+      id: "3",
+      insight_id: 3
     },
     {
       name: "John Cena",
       avatarUrl: "https://avatars.githubusercontent.com/u/7252105?v=4",
-      role: "editor"
+      access: "edit",
+      id: "4",
+      insight_id: 4
     },
     {
       name: "John Wick",
       avatarUrl: "https://avatars.githubusercontent.com/u/7252105?v=4",
-      role: "viewer"
+      access: "view",
+      id: "5",
+      insight_id: 5
     }
   ]
 };
