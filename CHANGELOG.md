@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.42.0-beta.2](https://github.com/open-sauced/insights/compare/v1.42.0-beta.1...v1.42.0-beta.2) (2023-04-18)
+
+
+### 🐛 Bug Fixes
+
+* update user id check for editing an insight page ([166530d](https://github.com/open-sauced/insights/commit/166530dd28bcc91b1f748bc6408ffb5272a00fcd))
+
 ## [1.42.0-beta.1](https://github.com/open-sauced/insights/compare/v1.41.1...v1.42.0-beta.1) (2023-04-17)
 
 
