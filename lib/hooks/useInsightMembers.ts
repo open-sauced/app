@@ -1,6 +1,7 @@
 import useSWR, { Fetcher } from "swr";
 import useSupabaseAuth from "./useSupabaseAuth";
 import publicApiFetcher from "lib/utils/public-api-fetcher";
+import { MemberAccess } from "components/molecules/TeamMembersConfig/team-members-config";
 interface PaginatedInsightMembers {
   data: DbInsightMember[];
   meta: Meta;
@@ -33,7 +34,7 @@ const useInsightMembers = (insightId: number) => {
     }
   };
 
-  const updateMember = async (memberId: string, access: "edit" | "view" | "admin") => {
+  const updateMember = async (memberId: string, access: MemberAccess) => {
     const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/insights/${insightId}/members/${memberId}`, {
       method: "PATCH",
       headers: {

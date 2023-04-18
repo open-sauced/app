@@ -8,17 +8,18 @@ import { useToast } from "lib/hooks/useToast";
 interface TeamMembersConfigProps {
   className?: string;
   members: TeamMemberData[];
-  onAddMember: Function;
-  onDeleteMember: Function;
-  onUpdateMember: Function;
+  onAddMember: (email: string) => Promise<any> | undefined;
+  onDeleteMember: (memberId: string) => void;
+  onUpdateMember: (memberId: string, access: MemberAccess) => Promise<any>;
 }
 
+export type MemberAccess = "owner" | "pending" | "admin" | "edit" | "view";
 export interface TeamMemberData {
-  id: number;
+  id: string;
   insight_id: number;
   user_id?: number;
   name: string;
-  access: "owner" | "pending" | "admin" | "edit" | "view";
+  access: MemberAccess;
   avatarUrl: string;
   email?: string;
 }

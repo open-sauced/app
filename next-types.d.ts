@@ -99,7 +99,7 @@ interface DbInsight {
 }
 
 interface DbInsightMember {
-  readonly id: number;
+  readonly id: string;
   readonly insight_id: number;
   readonly user_id: number;
   readonly name: string;

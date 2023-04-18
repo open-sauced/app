@@ -59,8 +59,8 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
   const insightOwner: TeamMemberData = {
     insight_id: Number(insight?.id),
     email: String(insight?.user.email),
-    id: Number(insight?.user.id),
-    name: String(insight?.user.name),
+    id: String(insight?.user.id),
+    name: String(insight?.user.name || insight?.user.login),
     avatarUrl: getAvatarByUsername(String(insight?.user.login)),
     access: "owner"
   };
@@ -424,7 +424,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
         {edit && (
           <div className="pt-12 mt-12 border-t border-light-slate-8">
             <TeamMembersConfig
-              onUpdateMember={updateMember}
+              onUpdateMember={(id, access) => updateMember(id, access)}
               onDeleteMember={deleteMember}
               onAddMember={addMember}
               members={[insightOwner, ...members]}

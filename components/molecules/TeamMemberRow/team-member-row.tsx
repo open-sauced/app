@@ -3,12 +3,12 @@ import { AiOutlineCaretDown } from "react-icons/ai";
 import pendingImg from "img/icons/fallback-image-disabled-square.svg";
 import { useState } from "react";
 import Selector from "components/atoms/Selector/selector";
-import { TeamMemberData } from "../TeamMembersConfig/team-members-config";
+import { MemberAccess, TeamMemberData } from "../TeamMembersConfig/team-members-config";
 
 interface TeamMemberRowProps extends TeamMemberData {
   className?: string;
-  onDelete: Function;
-  onUpdate: Function;
+  onDelete: (memberId: string) => void;
+  onUpdate: (memberId: string, access: MemberAccess) => Promise<any> | undefined;
 }
 
 const mapRoleToText: Record<TeamMemberRowProps["access"], string> = {
@@ -30,7 +30,7 @@ const TeamMemberRow = ({ className, name, avatarUrl, access, email, onDelete, on
     if (role === "remove") {
       onDelete(id);
     } else {
-      onUpdate(id, role);
+      onUpdate(id, role as MemberAccess);
     }
   };
 
