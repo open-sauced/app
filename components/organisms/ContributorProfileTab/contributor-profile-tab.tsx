@@ -117,7 +117,7 @@ const ContributorProfileTab = ({
                 <div>
                   {/* eslint-disable-next-line camelcase */}
                   {highlights.map(({ id, title, highlight, url, created_at }) => (
-                    <div className="flex gap-2 flex-col lg:flex-row lg:gap-7 mb-6 " key={id}>
+                    <div className="flex gap-2 flex-col lg:flex-row lg:gap-7 space-y-2 " key={id}>
                       <Link href={`/feed/${id}`}>
                         <p className="text-light-slate-10 text-sm">{getFormattedDate(created_at)}</p>
                       </Link>
