@@ -4,10 +4,10 @@ import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { useDebounce } from "rooks";
 
 import Search from "components/atoms/Search/search";
-import Select from "components/atoms/Select/custom-select";
 import Title from "components/atoms/Typography/title";
 import ComponentDateFilter from "../ComponentDateFilter/component-date-filter";
 import PaginationResult from "../PaginationResults/pagination-result";
+import LimitSelect from "components/atoms/Select/limit-select";
 
 interface TableHeaderProps {
   title?: string;
@@ -18,6 +18,14 @@ interface TableHeaderProps {
   range?: number;
   setRangeFilter?: (range: number) => void;
 }
+
+const options = [
+  { name: "10 per page", value: 10 },
+  { name: "20 per page", value: 20 },
+  { name: "30 per page", value: 30 },
+  { name: "40 per page", value: 40 },
+  { name: "50 per page", value: 50 }
+];
 const TableHeader = ({
   title,
   metaInfo,
@@ -31,7 +39,16 @@ const TableHeader = ({
   const { filterName } = router.query;
   const [searchTerm, setSearchTerm] = React.useState<string>("");
   const [suggestions, setSuggestions] = React.useState<string[]>([]);
+  const [selected, setSelected] = React.useState<null | number>(null);
   const { providerToken } = useSupabaseAuth();
+
+  const handleSelected = (value: string) => {
+    console.log(value);
+    console.log(selected);
+    const limit = Number(value);
+    setSelected(limit);
+    updateLimit(limit);
+  };
 
   const updateSuggestionsDebounced = useDebounce(async () => {
     const req = await fetch(
@@ -62,8 +79,8 @@ const TableHeader = ({
   }, [searchTerm]);
 
   return (
-    <div className="flex flex-wrap gap-y-2 flex-col md:flex-row md:justify-between md:items-end w-full md:pb-4">
-      <div className="flex gap-x-4 items-end">
+    <div className="flex flex-col flex-wrap w-full gap-y-2 md:flex-row md:justify-between md:items-end md:pb-4">
+      <div className="flex items-end gap-x-4">
         <Title className="!text-2xl !leading-none " level={1}>
           {title}
         </Title>
@@ -74,7 +91,7 @@ const TableHeader = ({
           entity={entity}
         />
       </div>
-      <div className="flex flex-col-reverse md:flex-row items-start gap-3  md:items-end">
+      <div className="flex flex-col-reverse items-start gap-3 md:flex-row md:items-end">
         {range ? (
           <ComponentDateFilter setRangeFilter={(range: number) => setRangeFilter?.(range)} defaultRange={range} />
         ) : (
@@ -92,7 +109,8 @@ const TableHeader = ({
         ) : (
           ""
         )}
-        <Select
+
+        <LimitSelect
           placeholder="10 per page"
           options={[
             { name: "10 per page", value: 10 },
@@ -101,12 +119,11 @@ const TableHeader = ({
             { name: "40 per page", value: 40 },
             { name: "50 per page", value: 50 }
           ]}
-          className="hidden ml-auto md:inline-block md:!max-w-[220px]"
-          label="Showing"
+          className="hidden ml-auto min-w-max md:inline-block"
           onChange={function (limit: number): void {
             updateLimit(limit);
           }}
-        ></Select>
+        />
       </div>
     </div>
   );

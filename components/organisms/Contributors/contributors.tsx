@@ -4,7 +4,6 @@ import useStore from "lib/store";
 import Pagination from "components/molecules/Pagination/pagination";
 import PaginationResults from "components/molecules/PaginationResults/pagination-result";
 import TableHeader from "components/molecules/TableHeader/table-header";
-import Select from "components/atoms/Select/custom-select";
 
 import { calcDistanceFromToday } from "lib/utils/date-utils";
 import color from "lib/utils/color.json";
@@ -12,6 +11,7 @@ import { useTopicContributions } from "lib/hooks/useTopicContributions";
 
 import ContributorCard from "../ContributorCard/contributor-card";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
+import LimitSelect from "components/atoms/Select/limit-select";
 
 const colorKeys = Object.keys(color);
 
@@ -90,7 +90,7 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
       {/* Table footer */}
 
       <div className="flex flex-col w-full px-2 mt-5 gap-y-3 md:flex-row">
-        <Select
+        <LimitSelect
           placeholder="10 per page"
           options={[
             { name: "10 per page", value: 10 },
@@ -103,7 +103,7 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
           onChange={function (limit: number): void {
             setLimit(limit);
           }}
-        ></Select>
+        ></LimitSelect>
 
         <div className="flex items-center justify-between w-full py-1 md:py-4 md:mt-5">
           <div>

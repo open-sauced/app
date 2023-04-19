@@ -1,36 +1,36 @@
-import { ComponentStory } from "@storybook/react";
-import Select from "components/atoms/Select/custom-select";
+// import { ComponentStory } from "@storybook/react";
+// import Select from "components/atoms/Select/custom-select";
 
-const StoryConfig = {
-  title: "Design System/Atoms/Custom Select"
-};
+// const StoryConfig = {
+//   title: "Design System/Atoms/Custom Select"
+// };
 
-export default StoryConfig;
+// export default StoryConfig;
 
-const SelectTemplate: ComponentStory<typeof Select> = (args) => (
-  <div className="w-full h-full flex items-center">
-    <Select {...args} />
-  </div>
-);
+// const SelectTemplate: ComponentStory<typeof Select> = (args) => (
+//   <div className="flex items-center w-full h-full">
+//     <Select {...args} />
+//   </div>
+// );
 
-export const NoLabel = SelectTemplate.bind({});
+// export const NoLabel = SelectTemplate.bind({});
 
-NoLabel.args = {
-  options: [
-    { name: "select", value: "select" },
-    { name: "food", value: "food" },
-    { name: "fruit", value: "fruit" }
-  ],
-  placeholder: "Select an option"
-};
+// NoLabel.args = {
+//   options: [
+//     { name: "select", value: "select" },
+//     { name: "food", value: "food" },
+//     { name: "fruit", value: "fruit" }
+//   ],
+//   placeholder: "Select an option"
+// };
 
-export const WithLabel = SelectTemplate.bind({});
+// export const WithLabel = SelectTemplate.bind({});
 
-WithLabel.args = {
-  options: [
-    { name: "select", value: "select" },
-    { name: "food", value: "food" },
-    { name: "fruit", value: "fruit" }
-  ],
-  label: "Showing"
-};
+// WithLabel.args = {
+//   options: [
+//     { name: "select", value: "select" },
+//     { name: "food", value: "food" },
+//     { name: "fruit", value: "fruit" }
+//   ],
+//   label: "Showing"
+// };
