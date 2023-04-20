@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { useTopicContributorCommits } from "lib/hooks/useTopicContributorCommits";
+import { useContributorPullRequestsChart } from "lib/hooks/useContributorPullRequestsChart";
 
 import Card from "components/atoms/Card/card";
 import Text from "components/atoms/Typography/text";
@@ -12,10 +12,6 @@ import CardProfile from "components/molecules/CardProfile/card-profile";
 import CardRepoList, { RepoList } from "components/molecules/CardRepoList/card-repo-list";
 import PullRequestTable from "components/molecules/PullRequestTable/pull-request-table";
 
-/*
-  Use this hook in the Contributor Page componenttbecause it has all the mock data:
-  import useContributorCard from "lib/hooks/useContributorCard";
-*/
 export interface ContributorObject {
   profile: {
     githubAvatar: string;
@@ -38,7 +34,7 @@ const ContributorCard = ({ className, contributor, topic, repositories }: Contri
   const { profile, repoList, languageList } = contributor;
 
   const [showPRs, setShowPRs] = useState(false);
-  const { chart } = useTopicContributorCommits(profile.githubName, topic, repositories);
+  const { chart } = useContributorPullRequestsChart(profile.githubName, topic, repositories);
 
   return (
     <Card className={className && className}>
