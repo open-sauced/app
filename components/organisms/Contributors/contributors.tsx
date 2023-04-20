@@ -7,13 +7,11 @@ import TableHeader from "components/molecules/TableHeader/table-header";
 import Select from "components/atoms/Select/custom-select";
 
 import { calcDistanceFromToday } from "lib/utils/date-utils";
-import color from "lib/utils/color.json";
-import { useTopicContributions } from "lib/hooks/useTopicContributions";
 
 import ContributorCard from "../ContributorCard/contributor-card";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
-
-const colorKeys = Object.keys(color);
+import useContributors from "lib/hooks/api/useContributors";
+import { getAvatarByUsername } from "lib/utils/github";
 
 interface ContributorProps {
   repositories?: number[];
@@ -23,41 +21,28 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
   const router = useRouter();
   const { filterName } = router.query;
   const topic = filterName as string;
-  const { data, setLimit, meta, setPage, page, isError, isLoading } = useTopicContributions(10, repositories);
-  const range = useStore((state) => state.range);
   const store = useStore();
+  const range = useStore((state) => state.range);
+  const { data, meta, setPage, setLimit, isError, isLoading } = useContributors(10, repositories, range);
+
+  const contributors = data.map(pr => {
+    return {
+      host_login: pr.author_login,
+      first_commit_time: pr.created_at
+    };
+  });
 
   const contributorArray = isError
     ? []
-    : data?.map((contributor) => {
-      const timeSinceFirstCommit = calcDistanceFromToday(new Date(parseInt(contributor.first_commit_time)));
-      const contributorLanguageList = (contributor.langs || "").split(",");
-      const repoList = (contributor.recent_repo_list || "").split(",").map((repo) => {
-        const [repoOwner, repoName] = repo.split("/");
-
-        return {
-          repoName,
-          repoIcon: `https://www.github.com/${repoOwner ?? "github"}.png?size=460`
-        };
-      });
-      const languageList = contributorLanguageList.map((language) => {
-        const preparedLanguageKey = colorKeys.find((key) => key.toLowerCase() === language.toLowerCase());
-
-        return {
-          languageName: preparedLanguageKey ? preparedLanguageKey : language,
-          percentageUsed: Math.round((1 / contributorLanguageList.length) * 100)
-        };
-      });
+    : contributors.map((contributor) => {
+      const timeSinceFirstCommit = calcDistanceFromToday(new Date(contributor.first_commit_time));
 
       return {
         profile: {
-          githubAvatar: `https://www.github.com/${contributor.host_login}.png?size=60`,
+          githubAvatar: getAvatarByUsername(contributor.host_login),
           githubName: contributor.host_login,
-          totalPRs: contributor.recent_pr_total,
           dateOfFirstPR: timeSinceFirstCommit
-        },
-        languageList,
-        repoList
+        }
       };
     });
 
@@ -83,6 +68,7 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
             contributor={{ ...contributor }}
             topic={topic}
             repositories={repositories}
+            range={range}
           />
         ))}
       </div>

@@ -10,12 +10,12 @@ import TableHeader from "components/molecules/TableHeader/table-header";
 
 import useRepositories from "lib/hooks/api/useRepositories";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
+import useStore from "lib/store";
 
 import RepositoriesTable, { classNames, RepositoriesRows } from "../RepositoriesTable/repositories-table";
 import RepoNotIndexed from "./repository-not-indexed";
 import Checkbox from "components/atoms/Checkbox/checkbox";
 import Button from "components/atoms/Button/button";
-import useStore from "lib/store";
 
 interface RepositoriesProps {
   repositories?: number[];
@@ -36,7 +36,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
     isLoading: repoListIsLoading,
     setPage,
     setLimit
-  } = useRepositories(repositories);
+  } = useRepositories(repositories, range);
   const filteredRepoNotIndexed = selectedFilter && !repoListIsLoading && !repoListIsError && repoListData.length === 0;
   const [selectedRepos, setSelectedRepos] = useState<DbRepo[]>([]);
 

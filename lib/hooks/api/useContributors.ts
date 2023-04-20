@@ -6,20 +6,29 @@ import publicApiFetcher from "lib/utils/public-api-fetcher";
 import getFilterQuery from "lib/utils/get-filter-query";
 
 interface PaginatedResponse {
-  readonly data: DbRepo[];
+  readonly data: DbRepoPR[];
   readonly meta: Meta;
 }
 
-const useRepositories = (repoIds: number[] = [], range = 30) => {
+/**
+ * Fetch contributors based on pull requests.
+ * Replace with contributors API endpoint when available.
+ * 
+ * @param intialLimit 
+ * @param repoIds 
+ * @param range 
+ * @returns 
+ */
+const useContributors = (intialLimit = 10, repoIds: number[] = [], range = 30) => {
   const router = useRouter();
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(10);
+  const [limit, setLimit] = useState(intialLimit);
   const { filterName, selectedFilter } = router.query;
   const topic = filterName as string;
   const filterQuery = getFilterQuery(selectedFilter);
   const query = new URLSearchParams(filterQuery);
 
-  if (topic && Number.isNaN(Number(topic))) {
+  if (Number.isNaN(Number(topic))) {
     query.set("topic", topic);
   }
 
@@ -31,16 +40,14 @@ const useRepositories = (repoIds: number[] = [], range = 30) => {
     query.set("limit", `${limit}`);
   }
 
-  if (range) {
-    query.set("range", `${range}`);
-  }  
-
   if (repoIds?.length > 0) {
     query.set("repoIds", repoIds.join(","));
   }
 
-  const baseEndpoint = "repos/search";
-  const endpointString = `${baseEndpoint}?${query}`;
+  query.set("range", `${range}`);
+
+  const baseEndpoint = "prs/search";
+  const endpointString = `${baseEndpoint}?${query.toString()}`;
 
   const { data, error, mutate } = useSWR<PaginatedResponse, Error>(
     endpointString,
@@ -59,4 +66,4 @@ const useRepositories = (repoIds: number[] = [], range = 30) => {
   };
 };
 
-export default useRepositories;
+export default useContributors;

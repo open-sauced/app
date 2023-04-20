@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import getPullRequestsToDays from "lib/utils/get-prs-to-days";
 import useContributorPullRequests from "./api/useContributorPullRequests";
 
-const useContributorPullRequestsChart = (contributor: string, topic: string, repoIds: number[] = []) => {
+const useContributorPullRequestsChart = (contributor: string, topic: string, repoIds: number[] = [], range = 30) => {
   const lineChart = {
     xAxis: {
       type: "category",
@@ -43,7 +43,7 @@ const useContributorPullRequestsChart = (contributor: string, topic: string, rep
   };
 
   const [chart, setChart] = useState(lineChart);
-  const { data } = useContributorPullRequests(contributor, topic, repoIds, 100);
+  const { data, meta } = useContributorPullRequests(contributor, topic, repoIds, 100, range);
 
   useEffect(() => {
     if (data && Array.isArray(data)) {
@@ -65,7 +65,8 @@ const useContributorPullRequestsChart = (contributor: string, topic: string, rep
 
   return {
     chart,
-    data
+    data,
+    meta
   };
 };
 
