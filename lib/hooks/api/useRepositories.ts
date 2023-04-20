@@ -10,7 +10,7 @@ interface PaginatedResponse {
   readonly meta: Meta;
 }
 
-const useRepositories = (repoIds: number[] = []) => {
+const useRepositories = (repoIds: number[] = [], range = 30) => {
   const router = useRouter();
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
@@ -30,6 +30,10 @@ const useRepositories = (repoIds: number[] = []) => {
   if (limit) {
     query.set("limit", `${limit}`);
   }
+
+  if (range) {
+    query.set("range", `${range}`);
+  }  
 
   if (repoIds?.length > 0) {
     query.set("repoIds", repoIds.join(","));

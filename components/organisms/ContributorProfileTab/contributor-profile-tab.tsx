@@ -69,7 +69,7 @@ const ContributorProfileTab = ({
 
   useEffect(() => {
     setInputVisible(highlights && highlights.length !== 0 ? true : false);
-    if (currentPathname) {
+    if (login && currentPathname) {
       router.push(`/user/${login}/${currentPathname}`);
     }
   }, [highlights]);
@@ -121,7 +121,7 @@ const ContributorProfileTab = ({
                 <div>
                   {/* eslint-disable-next-line camelcase */}
                   {highlights.map(({ id, title, highlight, url, created_at }) => (
-                    <div className="flex flex-col gap-2 lg:flex-row lg:gap-7" key={id}>
+                    <div className="flex flex-col gap-2 lg:flex-row lg:gap-7 mb-6" key={id}>
                       <Link href={`/feed/${id}`}>
                         <p className="text-sm text-light-slate-10">{getFormattedDate(created_at)}</p>
                       </Link>
@@ -200,7 +200,7 @@ const ContributorProfileTab = ({
                   <div className="flex items-end justify-center mt-1"> - </div>
                 )}
               </div>
-              <div>
+              <div className="hidden">
                 <span className="text-xs text-light-slate-11">Avg PRs velocity</span>
                 {prVelocity ? (
                   <div className="flex items-center gap-2 lg:justify-center">

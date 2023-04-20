@@ -15,6 +15,7 @@ interface DbRepo {
   readonly spam_prs_count?: number;
   readonly pr_velocity_count?: number;
   readonly churnTotalCount?: number;
+  readonly language: string;
 }
 
 interface DbRepoPR {
@@ -33,6 +34,7 @@ interface DbRepoPR {
   readonly additions: number;
   readonly deletions: number;
   readonly changed_files: number;
+  readonly repo_id: number;
 }
 
 interface DbFollowUser {
@@ -98,6 +100,18 @@ interface DbInsight {
   readonly accepted_repo_total: number;
 }
 
+interface DbInsightMember {
+  readonly id: string;
+  readonly insight_id: number;
+  readonly user_id: number;
+  readonly name: string;
+  readonly access: "pending" | "admin" | "edit" | "view";
+  readonly created_at: string;
+  readonly updated_at: string;
+  readonly deleted_at: string;
+  readonly invitation_emailed_at: string;
+  readonly invitation_email: string;
+}
 interface DbUserInsight {
   readonly id: number;
   readonly user_id: number;

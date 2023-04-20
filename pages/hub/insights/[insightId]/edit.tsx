@@ -14,7 +14,7 @@ const EditInsightPage: WithPageLayout = () => {
   const { insightId } = router.query;
   const id = insightId as string;
   const { data: insight, isLoading: insightLoading, isError: insightError } = useInsight(id);
-  const insightRepos = insight?.repos.map(repo => repo.repo_id);
+  const insightRepos = insight?.repos.map((repo) => repo.repo_id);
   const { data: repos } = useRepositories(insightRepos);
 
   if (insightLoading) {
@@ -29,13 +29,7 @@ const EditInsightPage: WithPageLayout = () => {
     return <>Unauthorized</>;
   }
 
-  return (
-    <InsightPage
-      edit={true}
-      insight={insight}
-      pageRepos={repos}
-    />
-  );
+  return <InsightPage edit={true} insight={insight} pageRepos={repos} />;
 };
 
 EditInsightPage.PageLayout = HubLayout;

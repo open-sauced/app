@@ -13,7 +13,7 @@ import RepoNotIndexed from "components/organisms/Repositories/repository-not-ind
 import DeleteInsightPageModal from "./DeleteInsightPageModal";
 
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
-import { getAvatarByUsername } from "lib/utils/github";
+import { getAvatarById, getAvatarByUsername } from "lib/utils/github";
 import useStore from "lib/store";
 import Error from "components/atoms/Error/Error";
 import Search from "components/atoms/Search/search";
@@ -21,6 +21,8 @@ import { useDebounce } from "rooks";
 import SuggestedRepositoriesList from "../SuggestedRepoList/suggested-repo-list";
 import { RepoCardProfileProps } from "components/molecules/RepoCardProfile/repo-card-profile";
 import { useToast } from "lib/hooks/useToast";
+import TeamMembersConfig, { TeamMemberData } from "components/molecules/TeamMembersConfig/team-members-config";
+import useInsightMembers from "lib/hooks/useInsightMembers";
 
 enum RepoLookupError {
   Initial = 0,
@@ -43,6 +45,25 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
   if (router.query.selectedRepos) {
     receivedData = JSON.parse(router.query.selectedRepos as string);
   }
+
+  const { data, addMember, deleteMember, updateMember } = useInsightMembers(insight?.id || 0);
+
+  const members =
+    data &&
+    data.map((member) => ({
+      ...member,
+      email: member.invitation_email,
+      avatarUrl: !!member.user_id ? getAvatarById(String(member.user_id)) : ""
+    }));
+
+  const insightOwner: TeamMemberData = {
+    insight_id: Number(insight?.id),
+    email: String(insight?.user.email),
+    id: String(insight?.user.id),
+    name: String(insight?.user.name || insight?.user.login),
+    avatarUrl: getAvatarByUsername(String(insight?.user.login)),
+    access: "owner"
+  };
 
   // Loading States
   const [deleteLoading, setDeleteLoading] = useState(false);
@@ -350,7 +371,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
           {/* <Text>insights.opensauced.pizza/pages/{username}/{`{pageId}`}/dashboard</Text> */}
         </div>
 
-        <div className="flex flex-col gap-4 py-6 border-b border-light-slate-8">
+        <div className="flex flex-col gap-4 py-6 border-light-slate-8">
           <Title className="!text-1xl !leading-none " level={4}>
             Add Repositories
           </Title>
@@ -399,6 +420,17 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
             />
           </div>
         </div>
+
+        {edit && (
+          <div className="pt-12 mt-12 border-t border-light-slate-8">
+            <TeamMembersConfig
+              onUpdateMember={(id, access) => updateMember(id, access)}
+              onDeleteMember={deleteMember}
+              onAddMember={addMember}
+              members={[insightOwner, ...members]}
+            />
+          </div>
+        )}
 
         {edit && (
           <div className="flex flex-col gap-4 py-6 border-t border-b border-light-slate-8">

@@ -8,7 +8,7 @@ import PullRequestTable from "components/molecules/PullRequestTable/pull-request
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 
 import color from "lib/utils/color.json";
-import { useTopicContributorCommits } from "lib/hooks/useTopicContributorCommits";
+import { useContributorPullRequestsChart } from "lib/hooks/useContributorPullRequestsChart";
 import { getRelativeDays } from "lib/utils/date-utils";
 import Pill from "components/atoms/Pill/pill";
 import getPercent from "lib/utils/get-percent";
@@ -17,6 +17,7 @@ import ContributorProfileTab from "../ContributorProfileTab/contributor-profile-
 import ProfileLanguageChart from "components/molecules/ProfileLanguageChart/profile-language-chart";
 import useFollowUser from "lib/hooks/useFollowUser";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
+import { getAvatarByUsername } from "lib/utils/github";
 
 const colorKeys = Object.keys(color);
 interface PrObjectType {
@@ -39,7 +40,6 @@ interface ContributorProfilePageProps {
   githubAvatar?: string;
   githubName: string;
   langList: string[];
-  repoList: RepoList[];
   recentContributionCount: number;
   user?: DbUser;
   prTotal: number;
@@ -57,7 +57,6 @@ const ContributorProfilePage = ({
   githubAvatar,
   githubName,
   langList,
-  repoList,
   openPrs,
   prTotal,
   loading,
@@ -74,8 +73,15 @@ const ContributorProfilePage = ({
   });
 
   const { user: loggedInUser, signIn } = useSupabaseAuth();
+  const { chart, data } = useContributorPullRequestsChart(githubName, "*", repositories);
+  const repoList: RepoList[] = Array.from(new Set(data.map(prData => prData.full_name))).map(repo => {
+    const [repoOwner, repoName] = repo.split("/");
 
-  const { chart } = useTopicContributorCommits(githubName, "*", repositories);
+    return {
+      repoName: repoName,
+      repoIcon: getAvatarByUsername(repoOwner)
+    };
+  });
   const prsMergedPercentage = getPercent(prTotal, prMerged || 0);
   const { data: Follower, isError: followError, follow, unFollow } = useFollowUser(user?.login || "");
 
@@ -164,7 +170,7 @@ const ContributorProfilePage = ({
                     <div className="flex flex-col justify-between gap-2 lg:flex-row md:gap-12 lg:gap-16">
                       <div>
                         <span className="text-xs text-light-slate-11">PRs opened</span>
-                        {openPrs ? (
+                        {openPrs >= 0 ? (
                           <div className="flex mt-1 lg:justify-center md:pr-8">
                             <Text className="!text-lg md:!text-xl lg:!text-2xl !text-black !leading-none">
                               {openPrs} PRs
@@ -190,7 +196,7 @@ const ContributorProfilePage = ({
                       </div>
                       <div>
                         <span className="text-xs text-light-slate-11">Contributed Repos</span>
-                        {recentContributionCount ? (
+                        {recentContributionCount >= 0 ? (
                           <div className="flex mt-1 lg:justify-center">
                             <Text className="!text-lg md:!text-xl lg:!text-2xl !text-black !leading-none">
                               {`${recentContributionCount} Repo${recentContributionCount > 1 ? "s" : ""}`}
@@ -205,7 +211,7 @@ const ContributorProfilePage = ({
                       <CardLineChart lineChartOption={chart} className="!h-32" />
                     </div>
                     <div>
-                      <CardRepoList limit={7} repoList={repoList} />
+                      <CardRepoList limit={7} repoList={repoList} total={repoList.length} />
                     </div>
 
                     <div className="mt-6">
