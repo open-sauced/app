@@ -5,6 +5,18 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.43.0-beta.3](https://github.com/open-sauced/insights/compare/v1.43.0-beta.2...v1.43.0-beta.3) (2023-04-20)
+
+
+### 🐛 Bug Fixes
+
+* adds spacing to contributor highlights container ([#1089](https://github.com/open-sauced/insights/issues/1089)) ([83d89bd](https://github.com/open-sauced/insights/commit/83d89bd95212fd6e739343c3b9774217b5433cab)), closes [#1057](https://github.com/open-sauced/insights/issues/1057)
+
+
+### 🍕 Features
+
+* connect contributor page and graphs to the API ([#1072](https://github.com/open-sauced/insights/issues/1072)) ([#1112](https://github.com/open-sauced/insights/issues/1112)) ([4fc471c](https://github.com/open-sauced/insights/commit/4fc471c3223a6cff4bf8cc3c1a4c8a074a56d576))
+
 ## [1.43.0-beta.2](https://github.com/open-sauced/insights/compare/v1.43.0-beta.1...v1.43.0-beta.2) (2023-04-18)
 
 
