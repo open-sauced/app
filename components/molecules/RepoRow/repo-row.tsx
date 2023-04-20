@@ -24,6 +24,7 @@ import { getAvatarByUsername } from "lib/utils/github";
 import useRepositoryPullRequests from "lib/hooks/api/useRepositoryPullRequests";
 import getPullRequestsToDays from "lib/utils/get-prs-to-days";
 import getPullRequestsContributors from "lib/utils/get-pr-contributors";
+import useStore from "lib/store";
 
 interface RepoProps {
   repo: RepositoriesRows;
@@ -92,7 +93,8 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
   const ownerAvatar = getAvatarByUsername(fullName.split("/")[0]);
 
   const { user } = useSupabaseAuth();
-  const { data: repositoryPullRequests } = useRepositoryPullRequests(repo.full_name, 100);
+  const range = useStore((state) => state.range);
+  const { data: repositoryPullRequests } = useRepositoryPullRequests(repo.full_name, 100, range);
   const totalPrs = getTotalPrs(openPrsCount, mergedPrsCount, closedPrsCount, draftPrsCount);
   const prsMergedPercentage = getPercent(totalPrs, mergedPrsCount || 0);
   const spamPrsPercentage = getPrsSpam(totalPrs, spamPrsCount || 0);

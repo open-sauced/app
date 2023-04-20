@@ -8,7 +8,7 @@ interface PaginatedResponse {
   readonly meta: Meta;
 }
 
-const useRepositoryPullRequests = (fullName: string, limit = 10) => {
+const useRepositoryPullRequests = (fullName: string, limit = 10, range = 30) => {
   const router = useRouter();
   const { filterName } = router.query;
   const topic = filterName as string;
@@ -21,6 +21,7 @@ const useRepositoryPullRequests = (fullName: string, limit = 10) => {
   query.set("repo", fullName);
   query.set("page", "1");
   query.set("limit", `${limit}`);
+  query.set("range", `${range}`);
 
   const baseEndpoint = "prs/search";
   const endpointString = `${baseEndpoint}?${query.toString()}`;

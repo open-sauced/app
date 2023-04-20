@@ -15,6 +15,7 @@ interface DbRepo {
   readonly spam_prs_count?: number;
   readonly pr_velocity_count?: number;
   readonly churnTotalCount?: number;
+  readonly language: string;
 }
 
 interface DbRepoPR {
@@ -33,6 +34,7 @@ interface DbRepoPR {
   readonly additions: number;
   readonly deletions: number;
   readonly changed_files: number;
+  readonly repo_id: number;
 }
 
 interface DbFollowUser {

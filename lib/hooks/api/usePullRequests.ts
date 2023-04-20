@@ -10,9 +10,10 @@ interface PaginatedResponse {
   readonly meta: Meta;
 }
 
-const usePullRequests = (limit = 1000, repoIds: number[] = []) => {
+const usePullRequests = (intialLimit = 1000, repoIds: number[] = [], range = 30) => {
   const router = useRouter();
   const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(intialLimit);
   const { filterName, selectedFilter } = router.query;
   const topic = filterName as string;
   const filterQuery = getFilterQuery(selectedFilter);
@@ -34,6 +35,8 @@ const usePullRequests = (limit = 1000, repoIds: number[] = []) => {
     query.set("repoIds", repoIds.join(","));
   }
 
+  query.set("range", `${range}`);
+
   const baseEndpoint = "prs/search";
   const endpointString = `${baseEndpoint}?${query.toString()}`;
 
@@ -49,7 +52,8 @@ const usePullRequests = (limit = 1000, repoIds: number[] = []) => {
     isError: !!error,
     mutate,
     page,
-    setPage
+    setPage,
+    setLimit
   };
 };
 
