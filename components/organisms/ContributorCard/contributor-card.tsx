@@ -74,7 +74,7 @@ const ContributorCard = ({ className, contributor, topic, repositories, range }:
         <CardRepoList repoList={repoList} total={repoList.length} />
 
         {showPRs ? (
-          <PullRequestTable contributor={profile.githubName} topic={topic} repositories={repositories} />
+          <PullRequestTable contributor={profile.githubName} topic={topic} repositories={repositories} range={range} />
         ) : null}
 
         <div className="flex w-full justify-center">
