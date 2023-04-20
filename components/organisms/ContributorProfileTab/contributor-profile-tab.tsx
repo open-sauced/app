@@ -69,7 +69,7 @@ const ContributorProfileTab = ({
 
   useEffect(() => {
     setInputVisible(highlights && highlights.length !== 0 ? true : false);
-    if (currentPathname) {
+    if (login && currentPathname) {
       router.push(`/user/${login}/${currentPathname}`);
     }
   }, [highlights]);
