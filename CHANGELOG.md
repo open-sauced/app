@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.43.0-beta.4](https://github.com/open-sauced/insights/compare/v1.43.0-beta.3...v1.43.0-beta.4) (2023-04-20)
+
+
+### 🍕 Features
+
+* connect contributors page to API ([#1113](https://github.com/open-sauced/insights/issues/1113)) ([e51c51e](https://github.com/open-sauced/insights/commit/e51c51e4b4f6bc21fa171495578993325c3427ba))
+
 ## [1.43.0-beta.3](https://github.com/open-sauced/insights/compare/v1.43.0-beta.2...v1.43.0-beta.3) (2023-04-20)
 
 
