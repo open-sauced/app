@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.43.0-beta.5](https://github.com/open-sauced/insights/compare/v1.43.0-beta.4...v1.43.0-beta.5) (2023-04-20)
+
+
+### 🐛 Bug Fixes
+
+* only redirect on contributor profile if login is defined ([#1114](https://github.com/open-sauced/insights/issues/1114)) ([483f38c](https://github.com/open-sauced/insights/commit/483f38c54c6c707873b9e63c78b751bc5a994494))
+
 ## [1.43.0-beta.4](https://github.com/open-sauced/insights/compare/v1.43.0-beta.3...v1.43.0-beta.4) (2023-04-20)
 
 
