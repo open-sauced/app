@@ -241,7 +241,7 @@ const LoginStep3: React.FC<LoginStep3Props> = ({ interests }) => {
           variant="primary"
           onClick={handleUpdateTimezone}
           className="w-full mt-3  h-10 justify-center"
-          disabled={loading}
+          disabled={loading || !timezone}
           loading={loading}
         >
           Continue
