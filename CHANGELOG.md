@@ -5,6 +5,22 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.43.0](https://github.com/open-sauced/insights/compare/v1.42.0...v1.43.0) (2023-04-20)
+
+
+### 🍕 Features
+
+* add page to accept insight member invitation ([#1102](https://github.com/open-sauced/insights/issues/1102)) ([ffe35e2](https://github.com/open-sauced/insights/commit/ffe35e210e6d4115480a0c44478998c73fade875))
+* connect contributor page and graphs to the API ([#1072](https://github.com/open-sauced/insights/issues/1072)) ([#1112](https://github.com/open-sauced/insights/issues/1112)) ([4fc471c](https://github.com/open-sauced/insights/commit/4fc471c3223a6cff4bf8cc3c1a4c8a074a56d576))
+* connect contributors page to API ([#1113](https://github.com/open-sauced/insights/issues/1113)) ([e51c51e](https://github.com/open-sauced/insights/commit/e51c51e4b4f6bc21fa171495578993325c3427ba))
+* implement insights team feature ([#1080](https://github.com/open-sauced/insights/issues/1080)) ([5186a60](https://github.com/open-sauced/insights/commit/5186a6089c7dd5f306b7854f5a7706015e33e0f0))
+
+
+### 🐛 Bug Fixes
+
+* adds spacing to contributor highlights container ([#1089](https://github.com/open-sauced/insights/issues/1089)) ([83d89bd](https://github.com/open-sauced/insights/commit/83d89bd95212fd6e739343c3b9774217b5433cab)), closes [#1057](https://github.com/open-sauced/insights/issues/1057)
+* only redirect on contributor profile if login is defined ([#1114](https://github.com/open-sauced/insights/issues/1114)) ([483f38c](https://github.com/open-sauced/insights/commit/483f38c54c6c707873b9e63c78b751bc5a994494))
+
 ## [1.43.0-beta.5](https://github.com/open-sauced/insights/compare/v1.43.0-beta.4...v1.43.0-beta.5) (2023-04-20)
 
 
