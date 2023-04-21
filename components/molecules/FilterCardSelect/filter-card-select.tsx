@@ -1,11 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import Text from "../../atoms/Typography/text";
+
+import { BsFillCheckCircleFill } from "react-icons/bs";
+
 import hashIcon from "../../../img/icons/hash.svg";
 import orgIcon from "../../../img/icons/org.svg";
 import personIcon from "../../../img/icons/person.svg";
 import repoIcon from "../../../img/icons/repo.svg";
-import Selector from "../../atoms/Selector/selector";
+// import Selector from "../../atoms/Selector/selector";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "components/atoms/Select/select";
 
 interface FilterCardSelectProps {
   selected: string;
@@ -63,14 +66,35 @@ const FilterCardSelect: React.FC<FilterCardSelectProps> = ({
 
   return (
     <>
-      <div
-        onClick={toggleFilter}
-        ref={ref}
-        className={
-          "inline-block py-1 border border-slate-300 outline-none hover:bg-slate-50 focus:ring-2 bg-slate-100 focus:ring-slate-300 rounded-lg cursor-pointer"
-        }
-      >
-        <button className="flex items-center gap-1 mx-2">
+      <Select onValueChange={(value) => handleFilterClick(value)} value={filterName}>
+        <SelectTrigger
+          selectIcon={
+            <Image
+              className="ml-3 "
+              width={13}
+              height={13}
+              alt={icons[icon] ? icons[icon].alt : "Icons"}
+              src={icons[icon] ? icons[icon].src : icons.topic.src}
+            />
+          }
+          className="text-base rounded-lg cursor-pointer h-[1.95rem] w-max border-slate-300 hover:bg-slate-50 focus:ring-1 bg-slate-100 focus:ring-slate-300"
+        >
+          <SelectValue placeholder="select topic" />
+        </SelectTrigger>
+        <SelectContent className="bg-white">
+          {options.map((option, index) => (
+            <SelectItem
+              className="w-48 text-base"
+              itemIndicatorIcon={<BsFillCheckCircleFill className="!text-base text-light-orange-10" />}
+              key={index}
+              value={option}
+            >
+              {option}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+      {/* <button className="flex items-center gap-1 mx-2">
           <Image
             width={14}
             height={14}
@@ -85,8 +109,7 @@ const FilterCardSelect: React.FC<FilterCardSelectProps> = ({
             handleFilterClick={handleFilterClick}
             selected={filterName}
           />
-        )}
-      </div>
+        )} */}
     </>
   );
 };
