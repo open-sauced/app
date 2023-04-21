@@ -2,7 +2,6 @@ import Button from "components/atoms/Button/button";
 import Text from "components/atoms/Typography/text";
 import Title from "components/atoms/Typography/title";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "components/atoms/Select/select";
-import SelectOption from "components/atoms/Select/select-option";
 import { FilterOptions } from "interfaces/filter-object-types";
 import { useState } from "react";
 

@@ -6,8 +6,7 @@ import Button from "components/atoms/Button/button";
 import Checkbox from "components/atoms/Checkbox/checkbox";
 import TextInput from "components/atoms/TextInput/text-input";
 import Title from "components/atoms/Typography/title";
-import Select from "components/atoms/Select/select";
-import SelectOption from "components/atoms/Select/select-option";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "components/atoms/Select/select";
 import LanguagePill from "components/atoms/LanguagePill/LanguagePill";
 
 import { updateUser, UpdateUserPayload } from "lib/hooks/update-user";
@@ -20,6 +19,7 @@ import { useFetchUser } from "lib/hooks/useFetchUser";
 import { getInterestOptions } from "lib/utils/getInterestOptions";
 import { useToast } from "lib/hooks/useToast";
 import { validateTwitterUsername } from "lib/utils/validate-twitter-username";
+import { RiArrowDownSLine, RiArrowUpSLine } from "react-icons/ri";
 
 interface userSettingsPageProps {
   user: User | null;
@@ -164,8 +164,8 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
   };
 
   return (
-    <div className="container mx-auto  md:px-16">
-      <div className="flex flex-col md:flex-row md:gap-48 gap-4 text-sm text-light-slate-11">
+    <div className="container mx-auto md:px-16">
+      <div className="flex flex-col gap-4 text-sm md:flex-row md:gap-48 text-light-slate-11">
         <div>
           <Title className="!text-2xl !text-light-slate-11" level={2}>
             Public profile
@@ -189,11 +189,11 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
 
             {/* Bio section */}
             <div className="flex flex-col gap-2">
-              <label className="text-light-slate-11 text-sm font-normal">Bio</label>
+              <label className="text-sm font-normal text-light-slate-11">Bio</label>
               <textarea
                 rows={4}
                 placeholder="Tell us about yourself."
-                className="bg-light-slate-4 rounded-lg px-3 py-2 disabled:cursor-not-allowed "
+                className="px-3 py-2 rounded-lg bg-light-slate-4 disabled:cursor-not-allowed "
                 name="bio"
               ></textarea>
             </div>
@@ -244,20 +244,32 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
                 label="Display current local time on profile"
                 onChange={(e) => setDisplayLocalTime(e.target.checked)}
               />
-              <span className="ml-7 text-light-slate-9 text-sm font-normal">
+              <span className="text-sm font-normal ml-7 text-light-slate-9">
                 Other users will see the time difference from their local time.
               </span>
             </div>
 
             <div className="flex flex-col gap-2">
               <label>Time zone*</label>
-              <Select value={timezone} onChange={(e) => setTimezone(e.target.value)} required>
-                <SelectOption value="">Select time zone</SelectOption>
-                {timezones.map((timezone, index) => (
-                  <SelectOption key={index} value={timezone.value}>
-                    {timezone.text}
-                  </SelectOption>
-                ))}
+              <Select onValueChange={(value) => setTimezone(value)} value={timezone} required>
+                <SelectTrigger
+                  selectIcon={
+                    <div className="relative pr-4">
+                      <RiArrowUpSLine size={16} className="absolute -top-3" />
+                      <RiArrowDownSLine size={16} className="absolute -bottom-3" />
+                    </div>
+                  }
+                >
+                  <SelectValue placeholder="Select time zone" />
+                </SelectTrigger>
+
+                <SelectContent position="item-aligned" className="bg-white">
+                  {timezones.map((timezone, index) => (
+                    <SelectItem key={index} value={timezone.value}>
+                      {timezone.text}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
               </Select>
             </div>
             <Button className="w-max" disabled={!isValidEmail} variant="primary">
@@ -265,12 +277,12 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
             </Button>
           </form>
         </div>
-        <div className="flex flex-col-reverse md:flex-col gap-6">
+        <div className="flex flex-col-reverse gap-6 md:flex-col">
           <div className="flex flex-col gap-6">
             <Title className="!text-2xl !font-normal !text-light-slate-11" level={2}>
               Interests
             </Title>
-            <div className="flex gap-3 w-72 flex-wrap">
+            <div className="flex flex-wrap gap-3 w-72">
               {interestArray.map((topic, index) => (
                 <LanguagePill
                   onClick={() => handleSelectInterest(topic)}
@@ -291,7 +303,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
           </div>
           <div className="flex flex-col gap-6">
             <div className="flex flex-col gap-3 ">
-              <label className="text-light-slate-11 text-2xl  font-normal">Email Preferences</label>
+              <label className="text-2xl font-normal text-light-slate-11">Email Preferences</label>
               <Checkbox
                 // eslint-disable-next-line camelcase
                 onChange={() => setEmailPreference((prev) => ({ ...prev, display_email: !prev.display_email }))}
@@ -312,7 +324,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
             <Button
               onClick={handleUpdateEmailPreference}
               variant="default"
-              className="px-4 w-max py-2  bg-light-slate-4 "
+              className="px-4 py-2 w-max bg-light-slate-4 "
             >
               Update Preferences
             </Button>

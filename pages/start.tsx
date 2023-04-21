@@ -29,9 +29,9 @@ import useStore from "lib/store";
 import { getInterestOptions } from "lib/utils/getInterestOptions";
 import LanguagePill from "components/atoms/LanguagePill/LanguagePill";
 
-import Select from "components/atoms/Select/select";
-import SelectOption from "components/atoms/Select/select-option";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "components/atoms/Select/select";
 import { timezones } from "lib/utils/timezones";
+import { RiArrowDownSLine, RiArrowUpSLine } from "react-icons/ri";
 
 type handleLoginStep = () => void;
 
@@ -62,7 +62,7 @@ const LoginStep1: React.FC<LoginStep1Props> = ({ handleLoginStep, user }) => {
 
   return (
     <>
-      <div className=" flex flex-col lg:h-full  lg:gap-20 justify-between">
+      <div className="flex flex-col justify-between lg:h-full lg:gap-20">
         <div>
           <div className="flex items-center gap-2 mb-4">
             <Icon className="lg:hidden" IconImage={GitHubAuthActiveIcon} size={48} />
@@ -78,7 +78,7 @@ const LoginStep1: React.FC<LoginStep1Props> = ({ handleLoginStep, user }) => {
             </Text>
           </div>
           <div className="flex flex-col gap-1">
-            <div className="flex gap-2 items-start">
+            <div className="flex items-start gap-2">
               <div className="mt-0.5 shrink-0">
                 <Icon IconImage={HighlightIcon} />
               </div>
@@ -86,7 +86,7 @@ const LoginStep1: React.FC<LoginStep1Props> = ({ handleLoginStep, user }) => {
                 <Text className="!text-base !text-light-slate-12">We will not have access to your private repos.</Text>
               </div>
             </div>
-            <div className="flex gap-2 items-start">
+            <div className="flex items-start gap-2">
               <div className="mt-0.5 shrink-0">
                 <Icon IconImage={HighlightIcon} />
               </div>
@@ -97,7 +97,7 @@ const LoginStep1: React.FC<LoginStep1Props> = ({ handleLoginStep, user }) => {
           </div>
         </div>
         <div>
-          <Button onClick={handleGitHubAuth} variant="primary" className="w-full mt-3 md:mt-0 h-10 justify-center">
+          <Button onClick={handleGitHubAuth} variant="primary" className="justify-center w-full h-10 mt-3 md:mt-0">
             Authenticate <Icon IconImage={GitHubIcon} className="ml-2" />
           </Button>
         </div>
@@ -135,7 +135,7 @@ const LoginStep2: React.FC<LoginStep2Props> = ({
 
   return (
     <>
-      <div className="login-step flex flex-col h-full lg:gap-28">
+      <div className="flex flex-col h-full login-step lg:gap-28">
         <div>
           <div className="flex items-center gap-2 mb-4">
             <Icon className="lg:hidden" IconImage={ChooseInterestsActiveIcon} size={48} />
@@ -150,7 +150,7 @@ const LoginStep2: React.FC<LoginStep2Props> = ({
               so, you&apos;ll find projects that match your skills and aspirations.
             </Text>
           </div>
-          <div className="flex gap-3 flex-wrap">
+          <div className="flex flex-wrap gap-3">
             {interestArray.map((topic, index) => (
               <LanguagePill
                 onClick={() => handleSelectInterest(topic)}
@@ -161,7 +161,7 @@ const LoginStep2: React.FC<LoginStep2Props> = ({
             ))}
           </div>
         </div>
-        <Button onClick={handleUpdateInterest} variant="primary" className="w-full mt-3 md:mt-0 h-10 justify-center">
+        <Button onClick={handleUpdateInterest} variant="primary" className="justify-center w-full h-10 mt-3 md:mt-0">
           Confirm Selections
         </Button>
       </div>
@@ -222,20 +222,32 @@ const LoginStep3: React.FC<LoginStep3Props> = ({ interests }) => {
 
           <div className="flex flex-col gap-2">
             <label>Time zone*</label>
-            <Select value={timezone} onChange={(e) => setTimezone(e.target.value)} required>
-              <SelectOption value="">Select time zone</SelectOption>
-              {timezones.map((timezone, index) => (
-                <SelectOption key={index} value={timezone.value}>
-                  {timezone.text}
-                </SelectOption>
-              ))}
+            <Select onValueChange={(value) => setTimezone(value)} value={timezone} required>
+              <SelectTrigger
+                selectIcon={
+                  <div className="relative pr-4">
+                    <RiArrowUpSLine size={16} className="absolute -top-3" />
+                    <RiArrowDownSLine size={16} className="absolute -bottom-3" />
+                  </div>
+                }
+              >
+                <SelectValue placeholder="Select time zone" />
+              </SelectTrigger>
+
+              <SelectContent position="item-aligned" className="bg-white">
+                {timezones.map((timezone, index) => (
+                  <SelectItem key={index} value={timezone.value}>
+                    {timezone.text}
+                  </SelectItem>
+                ))}
+              </SelectContent>
             </Select>
           </div>
         </div>
         <Button
           variant="primary"
           onClick={handleUpdateTimezone}
-          className="w-full mt-3 md:mt-0 h-10 justify-center"
+          className="justify-center w-full h-10 mt-3 md:mt-0"
           disabled={!timezone}
         >
           Continue
@@ -274,7 +286,7 @@ const Login: WithPageLayout = () => {
               Open Sauced is a platform to provide insights on open source contributions.{" "}
             </Text>
           </div>
-          <div className="hidden lg:flex gap-2 items-center mb-8">
+          <div className="items-center hidden gap-2 mb-8 lg:flex">
             <Icon IconImage={currentLoginStep === 1 ? GitHubAuthActiveIcon : CompletedIcon} size={48} />
             <Text
               disabled={currentLoginStep !== 1}
@@ -283,7 +295,7 @@ const Login: WithPageLayout = () => {
               Authenticate with GitHub
             </Text>
           </div>
-          <div className="hidden lg:flex gap-2 items-center mb-8">
+          <div className="items-center hidden gap-2 mb-8 lg:flex">
             <Icon
               IconImage={
                 currentLoginStep === 2
@@ -301,7 +313,7 @@ const Login: WithPageLayout = () => {
               Choose your interests
             </Text>
           </div>
-          <div className="hidden lg:flex gap-2 items-center mb-8">
+          <div className="items-center hidden gap-2 mb-8 lg:flex">
             <Icon
               IconImage={
                 currentLoginStep === 3
