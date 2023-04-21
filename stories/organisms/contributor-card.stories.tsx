@@ -141,8 +141,6 @@ export const Default = ContributorCardTemplate.bind({});
 
 Default.args = {
   contributor: {
-    profile: profile,
-    languageList: languageList,
-    repoList: repoList
+    profile: profile
   }
 };

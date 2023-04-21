@@ -1,3 +1,4 @@
+import { useState } from "react";
 import useSWR, { Fetcher } from "swr";
 import { useRouter } from "next/router";
 
@@ -9,14 +10,30 @@ interface PaginatedResponse {
   readonly meta: Meta;
 }
 
-const useContributorPullRequests = (contributor: string, topic: string, repoIds: number[] = [], limit = 8, range = 30) => {
+/**
+ * Fetch contributors based on pull requests.
+ * Replace with contributors API endpoint when available.
+ * 
+ * @param intialLimit 
+ * @param repoIds 
+ * @param range 
+ * @returns 
+ */
+const useContributors = (intialLimit = 10, repoIds: number[] = [], range = 30) => {
   const router = useRouter();
-  const { selectedFilter } = router.query;
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(intialLimit);
+  const { filterName, selectedFilter } = router.query;
+  const topic = filterName as string;
   const filterQuery = getFilterQuery(selectedFilter);
   const query = new URLSearchParams(filterQuery);
 
-  if (Number.isNaN(Number(topic)) && topic !== "*") {
+  if (Number.isNaN(Number(topic))) {
     query.set("topic", topic);
+  }
+
+  if (page) {
+    query.set("page", `${page}`);
   }
 
   if (limit) {
@@ -29,11 +46,11 @@ const useContributorPullRequests = (contributor: string, topic: string, repoIds:
 
   query.set("range", `${range}`);
 
-  const baseEndpoint = `users/${contributor}/prs`;
+  const baseEndpoint = "prs/search";
   const endpointString = `${baseEndpoint}?${query.toString()}`;
 
   const { data, error, mutate } = useSWR<PaginatedResponse, Error>(
-    contributor ? endpointString : null,
+    endpointString,
     publicApiFetcher as Fetcher<PaginatedResponse, Error>
   );
 
@@ -42,8 +59,11 @@ const useContributorPullRequests = (contributor: string, topic: string, repoIds:
     meta: data?.meta ?? { itemCount: 0, limit: 0, page: 0, hasNextPage: false, hasPreviousPage: false, pageCount: 0 },
     isLoading: !error && !data,
     isError: !!error,
-    mutate
+    mutate,
+    page,
+    setPage,
+    setLimit
   };
 };
 
-export default useContributorPullRequests;
+export default useContributors;

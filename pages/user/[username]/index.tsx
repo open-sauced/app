@@ -10,6 +10,7 @@ import SEO from "layouts/SEO/SEO";
 import { supabase } from "lib/utils/supabase";
 import dynamic from "next/dynamic";
 import { getAvatarByUsername } from "lib/utils/github";
+import useContributorPullRequests from "lib/hooks/api/useContributorPullRequests";
 
 // A quick fix to the hydration issue. Should be replaced with a real solution.
 // Slows down the page's initial client rendering as the component won't be loaded on the server.
@@ -28,8 +29,10 @@ const Contributor: WithPageLayout<ContributorSSRProps> = ({ username, user, ogIm
 
   const { data: contributor, isError: contributorError } = useSingleContributor(username);
 
+  const { data: contributorPRData, meta: contributorPRMeta } = useContributorPullRequests(username, "*", [], 100);
   const isError = contributorError;
-  const repoList = useRepoList(contributor[0]?.recent_repo_list || "");
+  const repoList = useRepoList(Array.from(new Set(contributorPRData.map(prData => prData.full_name))).join(","));
+  const mergedPrs = contributorPRData.filter(prData => prData.merged);
   const contributorLanguageList = (contributor[0]?.langs || "").split(",");
   const githubAvatar = getAvatarByUsername(username, 300);
 
@@ -62,17 +65,16 @@ const Contributor: WithPageLayout<ContributorSSRProps> = ({ username, user, ogIm
       </Head>
       <div className="w-full">
         <ClientOnlyContributorProfilePage
-          prMerged={contributor[0]?.recent_merged_prs}
+          prMerged={mergedPrs.length}
           error={isError}
           loading={false}
           user={user}
-          repoList={repoList}
           langList={contributorLanguageList}
           githubName={username}
           githubAvatar={githubAvatar}
-          prTotal={contributor[0]?.recent_pr_total}
-          openPrs={contributor[0]?.recent_opened_prs}
-          recentContributionCount={contributor[0]?.recent_contribution_count}
+          prTotal={contributorPRMeta.itemCount}
+          openPrs={contributorPRData.length}
+          recentContributionCount={repoList.length}
           prReviews={contributor[0]?.recent_pr_reviews}
           prVelocity={contributor[0]?.recent_pr_velocity}
         />

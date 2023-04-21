@@ -23,7 +23,7 @@ interface DashboardProps {
 
 const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
   const { data: insightsData, isLoading } = useInsights(repositories);
-  const { data: prData, isError: prError } = usePullRequests(undefined, repositories);
+  const { data: prData, meta: prMeta, isError: prError } = usePullRequests(undefined, repositories);
   const [showBots, setShowBots] = useState(false);
   const isMobile = useMediaQuery("(max-width:720px)");
   const [prStateFilter, setPrStateFilter] = useState<PrStatusFilter>("all");
@@ -99,7 +99,7 @@ const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
           metricIncreases={compare1.allContributors - compare2.allContributors >= 0}
           increased={compare1.allContributors - compare2.allContributors >= 0}
           numChanged={humanizeNumber(Math.abs(compare1.allContributors - compare2.allContributors), "abbreviation")}
-          value={humanizeNumber(compare1.allContributors, "comma")}
+          value={humanizeNumber(prMeta.itemCount, "comma")}
           contributors={contributorData}
           isLoading={isLoading}
         />
