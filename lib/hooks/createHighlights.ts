@@ -10,22 +10,18 @@ const baseUrl = process.env.NEXT_PUBLIC_API_URL;
 const createHighlights = async (data: CreateHighlightsProps) => {
   const sessionResponse = await supabase.auth.getSession();
   const sessionToken = sessionResponse?.data.session?.access_token;
-  try {
-    const res = await fetch(`${baseUrl}/user/highlights`, {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${sessionToken}`
-      },
-      method: "POST",
-      body: JSON.stringify({ ...data })
-    });
 
-    if (res.status === 200 || res.status === 201) return res.json();
-  } catch (e) {
-    console.log(e);
-    return false;
-  }
+  const response = await fetch(`${baseUrl}/user/highlights`, {
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${sessionToken}`
+    },
+    method: "POST",
+    body: JSON.stringify({ ...data })
+  }).then((res) => res.json());
+
+  return  response;
 };
 
 export { createHighlights };
