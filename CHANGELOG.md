@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.44.0-beta.2](https://github.com/open-sauced/insights/compare/v1.44.0-beta.1...v1.44.0-beta.2) (2023-04-24)
+
+
+### 🐛 Bug Fixes
+
+* show correct pull request status icon in table ([#1118](https://github.com/open-sauced/insights/issues/1118)) ([15a1671](https://github.com/open-sauced/insights/commit/15a16710b4f4bbd5a4dd686b739f89c3d02add7e))
+
 ## [1.44.0-beta.1](https://github.com/open-sauced/insights/compare/v1.43.0...v1.44.0-beta.1) (2023-04-24)
 
 
