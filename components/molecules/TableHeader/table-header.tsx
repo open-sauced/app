@@ -42,13 +42,11 @@ const TableHeader = ({
   const [selected, setSelected] = React.useState<null | number>(null);
   const { providerToken } = useSupabaseAuth();
 
-  const handleSelected = (value: string) => {
-    console.log(value);
-    console.log(selected);
-    const limit = Number(value);
-    setSelected(limit);
-    updateLimit(limit);
-  };
+  // const handleSelected = (value: string) => {
+  //   const limit = Number(value);
+  //   setSelected(limit);
+  //   updateLimit(limit);
+  // };
 
   const updateSuggestionsDebounced = useDebounce(async () => {
     const req = await fetch(
@@ -121,7 +119,7 @@ const TableHeader = ({
           ]}
           className="hidden ml-auto min-w-max md:inline-block"
           onChange={function (limit: number): void {
-            updateLimit(limit);
+            updateLimit(Number(limit));
           }}
         />
       </div>

@@ -10,7 +10,6 @@ const SelectOptions = ["test", "Main", "Beta"];
 
 export default storyConfig;
 
-//Select Template
 const SelectTemplate: ComponentStory<typeof Select> = (args) => (
   <Select {...args}>
     <SelectTrigger>
@@ -25,9 +24,6 @@ const SelectTemplate: ComponentStory<typeof Select> = (args) => (
     </SelectContent>
   </Select>
 );
-
-//Select Option Template (needed?)
-// const SelectOptionTemplate: ComponentStory<typeof SelectOption> = (args) => <SelectOption {...args} />;
 
 export const Default = SelectTemplate.bind({});
 

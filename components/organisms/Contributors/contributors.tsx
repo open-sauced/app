@@ -6,13 +6,11 @@ import PaginationResults from "components/molecules/PaginationResults/pagination
 import TableHeader from "components/molecules/TableHeader/table-header";
 
 import { calcDistanceFromToday } from "lib/utils/date-utils";
-import color from "lib/utils/color.json";
 
 import ContributorCard from "../ContributorCard/contributor-card";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 import LimitSelect from "components/atoms/Select/limit-select";
 
-const colorKeys = Object.keys(color);
 import useContributors from "lib/hooks/api/useContributors";
 import { getAvatarByUsername } from "lib/utils/github";
 

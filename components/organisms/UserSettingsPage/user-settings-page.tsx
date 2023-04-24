@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 
+import { RiArrowDownSLine, RiArrowUpSLine } from "react-icons/ri";
 import { User } from "@supabase/supabase-js";
 
 import Button from "components/atoms/Button/button";
@@ -19,7 +20,6 @@ import { useFetchUser } from "lib/hooks/useFetchUser";
 import { getInterestOptions } from "lib/utils/getInterestOptions";
 import { useToast } from "lib/hooks/useToast";
 import { validateTwitterUsername } from "lib/utils/validate-twitter-username";
-import { RiArrowDownSLine, RiArrowUpSLine } from "react-icons/ri";
 
 interface userSettingsPageProps {
   user: User | null;
