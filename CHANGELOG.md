@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.44.0-beta.3](https://github.com/open-sauced/insights/compare/v1.44.0-beta.2...v1.44.0-beta.3) (2023-04-24)
+
+
+### 🐛 Bug Fixes
+
+* update owner check for insight pages ([6c0e21f](https://github.com/open-sauced/insights/commit/6c0e21fcc5b103eafbae08c378fa403a3124d263))
+
 ## [1.44.0-beta.2](https://github.com/open-sauced/insights/compare/v1.44.0-beta.1...v1.44.0-beta.2) (2023-04-24)
 
 
