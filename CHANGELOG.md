@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.44.0-beta.1](https://github.com/open-sauced/insights/compare/v1.43.0...v1.44.0-beta.1) (2023-04-24)
+
+
+### 🍕 Features
+
+* add loading state to onboarding page + fix margins in the medium sized screens ([#1111](https://github.com/open-sauced/insights/issues/1111)) ([a6989a6](https://github.com/open-sauced/insights/commit/a6989a66f4be37e9d72d4653ae4be2cd1abce576))
+
 ## [1.43.0](https://github.com/open-sauced/insights/compare/v1.42.0...v1.43.0) (2023-04-20)
 
 
