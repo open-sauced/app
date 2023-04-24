@@ -10,6 +10,7 @@ interface LatestPrTableRowProps {
   prName: string;
   prStatus: string;
   merged?: boolean;
+  draft?: boolean;
   prMergedTime: string;
   prIssuedTime: string;
   noOfFilesChanged: number;
@@ -27,19 +28,21 @@ const LatestPrTableRow = ({
   noOfFilesChanged,
   noOfLinesChanged,
   merged,
+  draft,
   isHoverCard,
   repoFullName,
   prNumber,
   prUpdatedTime
 }: LatestPrTableRowProps) => {
+
   return (
     <div className="flex gap-2 items-center px-2 py-1">
       <div className={`flex item-center gap-2 w-3/5 ${isHoverCard && "w-5/6"}`}>
-        {prStatus === "open" ? (
+        {!draft && prStatus.toLowerCase() === "open" ? (
           <IconContext.Provider value={{ color: "green", style: { width: 14, height: 14, marginTop: 2 } }}>
             <VscGitPullRequest title="Open Pull Request" />
           </IconContext.Provider>
-        ) : prStatus === "closed" ? (
+        ) : (!draft && prStatus.toLowerCase() === "closed" || prStatus.toLowerCase() === "merged") ? (
           <IconContext.Provider
             value={{ color: merged ? "purple" : "red", style: { width: 14, height: 14, marginTop: 2 } }}
           >
