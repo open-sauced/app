@@ -29,6 +29,7 @@ interface DbRepoPR {
   readonly filesCount: number;
   linesCount: number;
   readonly merged: boolean;
+  readonly draft: boolean;
   readonly full_name: string;
   readonly number: number;
   readonly additions: number;
