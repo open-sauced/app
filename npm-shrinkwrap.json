@@ -19,6 +19,7 @@
         "@primer/octicons-react": "^17.11.1",
         "@radix-ui/react-alert-dialog": "^1.0.2",
         "@radix-ui/react-checkbox": "^1.0.1",
+        "@radix-ui/react-collapsible": "^1.0.2",
         "@radix-ui/react-context-menu": "^1.0.0",
         "@radix-ui/react-dialog": "^1.0.2",
         "@radix-ui/react-dropdown-menu": "^1.0.0",
@@ -6020,6 +6021,51 @@
       }
     },
     "node_modules/@radix-ui/react-checkbox/node_modules/@radix-ui/react-slot": {
+      "version": "1.0.1",
+      "resolved": "https://registry.npmjs.org/@radix-ui/react-slot/-/react-slot-1.0.1.tgz",
+      "integrity": "sha512-avutXAFL1ehGvAXtPquu0YK5oz6ctS474iM3vNGQIkswrVhdrS52e3uoMQBzZhNRAIE0jBnUyXWNmSjGHhCFcw==",
+      "dependencies": {
+        "@babel/runtime": "^7.13.10",
+        "@radix-ui/react-compose-refs": "1.0.0"
+      },
+      "peerDependencies": {
+        "react": "^16.8 || ^17.0 || ^18.0"
+      }
+    },
+    "node_modules/@radix-ui/react-collapsible": {
+      "version": "1.0.2",
+      "resolved": "https://registry.npmjs.org/@radix-ui/react-collapsible/-/react-collapsible-1.0.2.tgz",
+      "integrity": "sha512-QNiDT6Au8jUU0K1WV+HEd4loH7C5CKQjeXxskwqyiyAkyCmW7qlQM5vSSJCIoQC+OVPyhgafSmGudRP8Qm1/gA==",
+      "dependencies": {
+        "@babel/runtime": "^7.13.10",
+        "@radix-ui/primitive": "1.0.0",
+        "@radix-ui/react-compose-refs": "1.0.0",
+        "@radix-ui/react-context": "1.0.0",
+        "@radix-ui/react-id": "1.0.0",
+        "@radix-ui/react-presence": "1.0.0",
+        "@radix-ui/react-primitive": "1.0.2",
+        "@radix-ui/react-use-controllable-state": "1.0.0",
+        "@radix-ui/react-use-layout-effect": "1.0.0"
+      },
+      "peerDependencies": {
+        "react": "^16.8 || ^17.0 || ^18.0",
+        "react-dom": "^16.8 || ^17.0 || ^18.0"
+      }
+    },
+    "node_modules/@radix-ui/react-collapsible/node_modules/@radix-ui/react-primitive": {
+      "version": "1.0.2",
+      "resolved": "https://registry.npmjs.org/@radix-ui/react-primitive/-/react-primitive-1.0.2.tgz",
+      "integrity": "sha512-zY6G5Qq4R8diFPNwtyoLRZBxzu1Z+SXMlfYpChN7Dv8gvmx9X3qhDqiLWvKseKVJMuedFeU/Sa0Sy/Ia+t06Dw==",
+      "dependencies": {
+        "@babel/runtime": "^7.13.10",
+        "@radix-ui/react-slot": "1.0.1"
+      },
+      "peerDependencies": {
+        "react": "^16.8 || ^17.0 || ^18.0",
+        "react-dom": "^16.8 || ^17.0 || ^18.0"
+      }
+    },
+    "node_modules/@radix-ui/react-collapsible/node_modules/@radix-ui/react-slot": {
       "version": "1.0.1",
       "resolved": "https://registry.npmjs.org/@radix-ui/react-slot/-/react-slot-1.0.1.tgz",
       "integrity": "sha512-avutXAFL1ehGvAXtPquu0YK5oz6ctS474iM3vNGQIkswrVhdrS52e3uoMQBzZhNRAIE0jBnUyXWNmSjGHhCFcw==",
