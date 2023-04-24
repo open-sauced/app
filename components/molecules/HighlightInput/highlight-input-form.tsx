@@ -8,6 +8,9 @@ import GhOpenGraphImg from "../GhOpenGraphImg/gh-open-graph-img";
 import { generateApiPrUrl } from "lib/utils/github";
 import { fetchGithubPRInfo } from "lib/hooks/fetchGithubPRInfo";
 import { useToast } from "lib/hooks/useToast";
+import { Popover, PopoverContent, PopoverTrigger } from "../Popover/popover";
+import { BsCalendar2Event } from "react-icons/bs";
+import { Calendar } from "../Calendar/calendar";
 
 interface HighlightInputFormProps {
   refreshCallback?: Function;
@@ -26,6 +29,8 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
   let rowLomit = 5;
   const charLimit = 500;
   let messageLastScrollHeight = textAreaRef.current ? textAreaRef.current?.scrollHeight : 50;
+
+  const [date, setDate] = useState<Date | undefined>(new Date());
 
   const { toast } = useToast();
 
@@ -116,22 +121,36 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
   };
 
   return (
-    <form onSubmit={handlePostHighlight} ref={ref} className="flex flex-1 flex-col gap-4">
+    <form onSubmit={handlePostHighlight} ref={ref} className="flex flex-col flex-1 gap-4">
       <div
         onClick={() => {
           setIsDivFocused(true);
         }}
-        className="bg-white p-2 flex border rounded-lg text-sm overflow-hidden flex-col gap-2 "
+        className="flex flex-col gap-2 p-2 overflow-hidden text-sm bg-white border rounded-lg "
       >
-        <input
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          className=" focus:outline-none "
-          type="text"
-          placeholder={
-            isDivFocused ? "Add title (optional)" : "Click here to highlight your merged PRs and provide a link!"
-          }
-        />
+        <div className="flex pr-2">
+          <input
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            className="flex-1 focus:outline-none"
+            type="text"
+            placeholder={
+              isDivFocused ? "Add title (optional)" : "Click here to highlight your merged PRs and provide a link!"
+            }
+          />
+          <div>
+            <Popover>
+              <PopoverTrigger asChild>
+                <button className="flex items-center gap-2 text-lg text-light-slate-9">
+                  <BsCalendar2Event className="text-light-slate-9" />
+                </button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0 bg-white">
+                <Calendar mode="single" selected={date} onSelect={setDate} className="border rounded-md" />
+              </PopoverContent>
+            </Popover>
+          </div>
+        </div>
         <Textarea
           className={`resize-none font-normal text-light-slate-11 mb-2 transition focus:outline-none rounded-lg ${
             !isDivFocused ? "hidden" : ""
@@ -148,7 +167,7 @@ https://github.com/open-sauced/insights/pull/913`}
           }}
         />
         {isDivFocused && (
-          <p className="text-xs pb-2 text-light-slate-9 flex justify-end gap-1">
+          <p className="flex justify-end gap-1 pb-2 text-xs text-light-slate-9">
             <span className={`${!validCharLimit() && "text-red-600"}`}>
               {!validCharLimit()
                 ? `-${charCount - pullrequestLink.length - charLimit}`
