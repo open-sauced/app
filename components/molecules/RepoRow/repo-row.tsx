@@ -204,6 +204,7 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
         </div>
       </div>
       <div className={`${classNames.row} `}>
+        {/* TODO: TEST THIS CHECKBOX */}
         <Checkbox
           label=""
           checked={selected ? true : false}

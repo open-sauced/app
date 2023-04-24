@@ -7,6 +7,7 @@ const storyConfig = {
 
 export default storyConfig;
 
+{/* TODO: UPDATE THE STORY IF NECESSARY */}
 // FilterCard Template
 const CheckboxTemplate: ComponentStory<typeof Checkbox> = (args) => <Checkbox {...args} />;
 

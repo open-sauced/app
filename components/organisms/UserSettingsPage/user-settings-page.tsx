@@ -238,6 +238,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
               name="location"
             />
             <div>
+              {/* TODO: TEST THIS CHECKBOX */}
               <Checkbox
                 checked={displayLocalTime}
                 title="profile email"

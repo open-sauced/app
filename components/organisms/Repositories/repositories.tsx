@@ -105,6 +105,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
           </div>
           <div className="hidden md:flex py-4 px-6 bg-light-slate-3 gap-2">
             <div className={clsx(classNames.cols.checkbox)}>
+              {/* TODO: TEST THIS CHECKBOX */}
               <Checkbox
                 label=""
                 onChange={handleOnSelectAllChecked}
