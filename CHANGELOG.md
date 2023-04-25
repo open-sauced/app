@@ -5,6 +5,34 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.44.0-beta.4](https://github.com/open-sauced/insights/compare/v1.44.0-beta.3...v1.44.0-beta.4) (2023-04-25)
+
+
+### 🍕 Features
+
+* connect dashboard insights to API ([#1122](https://github.com/open-sauced/insights/issues/1122)) ([02b57bb](https://github.com/open-sauced/insights/commit/02b57bb3a5aade54cbce2b9895c09f505942c653))
+
+## [1.44.0-beta.3](https://github.com/open-sauced/insights/compare/v1.44.0-beta.2...v1.44.0-beta.3) (2023-04-24)
+
+
+### 🐛 Bug Fixes
+
+* update owner check for insight pages ([6c0e21f](https://github.com/open-sauced/insights/commit/6c0e21fcc5b103eafbae08c378fa403a3124d263))
+
+## [1.44.0-beta.2](https://github.com/open-sauced/insights/compare/v1.44.0-beta.1...v1.44.0-beta.2) (2023-04-24)
+
+
+### 🐛 Bug Fixes
+
+* show correct pull request status icon in table ([#1118](https://github.com/open-sauced/insights/issues/1118)) ([15a1671](https://github.com/open-sauced/insights/commit/15a16710b4f4bbd5a4dd686b739f89c3d02add7e))
+
+## [1.44.0-beta.1](https://github.com/open-sauced/insights/compare/v1.43.0...v1.44.0-beta.1) (2023-04-24)
+
+
+### 🍕 Features
+
+* add loading state to onboarding page + fix margins in the medium sized screens ([#1111](https://github.com/open-sauced/insights/issues/1111)) ([a6989a6](https://github.com/open-sauced/insights/commit/a6989a66f4be37e9d72d4653ae4be2cd1abce576))
+
 ## [1.43.0](https://github.com/open-sauced/insights/compare/v1.42.0...v1.43.0) (2023-04-20)
 
 
