@@ -36,7 +36,12 @@ const useRepositories = (repoIds: number[] = [], range = 30) => {
   }  
 
   if (repoIds?.length > 0) {
+    query.delete("topic");
     query.set("repoIds", repoIds.join(","));
+  }
+
+  if (query.get("repo")) {
+    query.delete("topic");
   }
 
   const baseEndpoint = "repos/search";
