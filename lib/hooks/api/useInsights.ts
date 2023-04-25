@@ -1,6 +1,7 @@
 import getFilterQuery from "lib/utils/get-filter-query";
+import publicApiFetcher from "lib/utils/public-api-fetcher";
 import { useRouter } from "next/router";
-import useSWR from "swr";
+import useSWR, { Fetcher } from "swr";
 
 interface Insight {
   allReposTotal: number;
@@ -17,8 +18,8 @@ interface Insight {
 }
 
 const getInsights = (insights: DbInsight[], intervalDay = 0): Insight => {
-  const currentInsights = insights.find(insight => insight.interval === intervalDay) as DbInsight;
-  
+  const currentInsights = insights.find((insight) => insight.interval === intervalDay) as DbInsight;
+
   if (!currentInsights) {
     return {
       allPrsTotal: 0,
@@ -35,10 +36,15 @@ const getInsights = (insights: DbInsight[], intervalDay = 0): Insight => {
     };
   }
 
-  const spam = (currentInsights.all_prs || 0) > 0 ? Math.round((currentInsights.spam_prs / currentInsights.all_prs) * 100) : 0;
-  const accepted = (currentInsights.all_prs || 0) > 0 ? Math.round((currentInsights.accepted_prs / currentInsights.all_prs) * 100) : 0;
+  const spam =
+    (currentInsights.all_prs || 0) > 0 ? Math.round((currentInsights.spam_prs / currentInsights.all_prs) * 100) : 0;
+  const accepted =
+    (currentInsights.all_prs || 0) > 0 ? Math.round((currentInsights.accepted_prs / currentInsights.all_prs) * 100) : 0;
   const unlabeledPrsTotal = currentInsights.all_prs - (currentInsights.spam_prs + currentInsights.accepted_prs);
-  const unlabeled = Math.max(0, (currentInsights.all_prs || 0) > 0 ? Math.round((unlabeledPrsTotal / currentInsights.all_prs) * 100) : 0);
+  const unlabeled = Math.max(
+    0,
+    (currentInsights.all_prs || 0) > 0 ? Math.round((unlabeledPrsTotal / currentInsights.all_prs) * 100) : 0
+  );
 
   return {
     allReposTotal: currentInsights.all_repo_total,
@@ -59,12 +65,29 @@ const useInsights = (repoIds: number[] = []) => {
   const router = useRouter();
   const { filterName, selectedFilter } = router.query;
   const topic = filterName as string;
-
-  const baseEndpoint = `${topic}/insights`;
   const filterQuery = getFilterQuery(selectedFilter);
-  const reposQuery = repoIds.length > 0 ? `&repoIds=${repoIds.join(",")}`: "";
-  const endpointString = `${baseEndpoint}?topic=${topic}${filterQuery}${reposQuery}`;
-  const { data, error, mutate } = useSWR<DbInsight[], Error>(topic ? endpointString : null);
+  const query = new URLSearchParams(filterQuery);
+
+  if (topic && Number.isNaN(Number(topic))) {
+    query.set("topic", topic);
+  }
+
+  if (repoIds?.length > 0) {
+    query.delete("topic");
+    query.set("repoIds", repoIds.join(","));
+  }
+
+  if (query.get("repo")) {
+    query.delete("topic");
+  }  
+
+  const baseEndpoint = "prs/insights";
+  const endpointString = `${baseEndpoint}?${query}`;
+
+  const { data, error, mutate } = useSWR<DbInsight[], Error>(
+    topic ? endpointString : null,
+    publicApiFetcher as Fetcher<DbInsight[], Error>
+  );
 
   return {
     data: data || [],
