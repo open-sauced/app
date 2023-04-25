@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.44.0-beta.4](https://github.com/open-sauced/insights/compare/v1.44.0-beta.3...v1.44.0-beta.4) (2023-04-25)
+
+
+### 🍕 Features
+
+* connect dashboard insights to API ([#1122](https://github.com/open-sauced/insights/issues/1122)) ([02b57bb](https://github.com/open-sauced/insights/commit/02b57bb3a5aade54cbce2b9895c09f505942c653))
+
 ## [1.44.0-beta.3](https://github.com/open-sauced/insights/compare/v1.44.0-beta.2...v1.44.0-beta.3) (2023-04-24)
 
 
