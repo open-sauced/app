@@ -6,7 +6,7 @@ import Button from "components/atoms/Button/button";
 import Link from "next/link";
 import { MarkGithubIcon } from "@primer/octicons-react";
 import { User } from "@supabase/supabase-js";
-import { FiCopy } from "react-icons/fi"
+import { FiCopy } from "react-icons/fi";
 import { useToast } from "lib/hooks/useToast";
 
 interface ContributorProfileHeaderProps {
