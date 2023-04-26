@@ -54,7 +54,7 @@ const ContributorProfileHeader = ({
   };
 
   useEffect(() => {
-    if (window !== undefined) {
+    if (typeof window !== "undefined") {
       setHost(window.location.origin as string);
     }
   }, [user]);
