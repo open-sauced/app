@@ -26,7 +26,3 @@ const SelectTemplate: ComponentStory<typeof Select> = (args) => (
 );
 
 export const Default = SelectTemplate.bind({});
-
-Default.args = {
-  value: "test"
-};
