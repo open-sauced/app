@@ -97,7 +97,7 @@ const LoginStep1: React.FC<LoginStep1Props> = ({ handleLoginStep, user }) => {
           </div>
         </div>
         <div>
-          <Button onClick={handleGitHubAuth} variant="primary" className="justify-center w-full h-10 mt-3 md:mt-0">
+          <Button onClick={handleGitHubAuth} variant="primary" className="justify-center w-full h-10 mt-3">
             Authenticate <Icon IconImage={GitHubIcon} className="ml-2" />
           </Button>
         </div>
@@ -161,7 +161,7 @@ const LoginStep2: React.FC<LoginStep2Props> = ({
             ))}
           </div>
         </div>
-        <Button onClick={handleUpdateInterest} variant="primary" className="justify-center w-full h-10 mt-3 md:mt-0">
+        <Button onClick={handleUpdateInterest} variant="primary" className="justify-center w-full h-10 mt-3">
           Confirm Selections
         </Button>
       </div>
@@ -180,8 +180,10 @@ const LoginStep3: React.FC<LoginStep3Props> = ({ interests }) => {
   const router = useRouter();
   const { sessionToken } = useSupabaseAuth();
   const [timezone, setTimezone] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleUpdateTimezone = async () => {
+    setLoading(true);
     try {
       const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/onboarding`, {
         method: "POST",
@@ -196,9 +198,11 @@ const LoginStep3: React.FC<LoginStep3Props> = ({ interests }) => {
         store.onboardUser();
         router.push(`/${interests[0]}/repositories/filter/recent`);
       } else {
+        setLoading(false);
         console.error("Error onboarding user");
       }
     } catch (e) {
+      setLoading(false);
       console.error(e);
     }
   };
@@ -248,7 +252,8 @@ const LoginStep3: React.FC<LoginStep3Props> = ({ interests }) => {
           variant="primary"
           onClick={handleUpdateTimezone}
           className="justify-center w-full h-10 mt-3 md:mt-0"
-          disabled={!timezone}
+          disabled={loading || !timezone}
+          loading={loading}
         >
           Continue
         </Button>
