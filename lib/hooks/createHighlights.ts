@@ -1,3 +1,4 @@
+import changeCapitalization from "lib/utils/change-capitalization";
 import { supabase } from "lib/utils/supabase";
 
 interface CreateHighlightsProps {
@@ -37,10 +38,10 @@ const createHighlights = async (data: CreateHighlightsProps) => {
   } catch (error) {
     return (error as Response).json().then((err: Error | ServerError) => {
       if (err instanceof Error) {
-        return err.message;
+        return changeCapitalization(err.message, true);
       }
 
-      return err.message[0];
+      return changeCapitalization(err.message[0], true);
     });
   }
 };
