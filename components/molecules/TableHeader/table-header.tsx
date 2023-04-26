@@ -111,14 +111,14 @@ const TableHeader = ({
         <LimitSelect
           placeholder="10 per page"
           options={[
-            { name: "10 per page", value: 10 },
-            { name: "20 per page", value: 20 },
-            { name: "30 per page", value: 30 },
-            { name: "40 per page", value: 40 },
-            { name: "50 per page", value: 50 }
+            { name: "10 per page", value: "10" },
+            { name: "20 per page", value: "20" },
+            { name: "30 per page", value: "30" },
+            { name: "40 per page", value: "40" },
+            { name: "50 per page", value: "50" }
           ]}
           className="hidden ml-auto min-w-max md:inline-block"
-          onChange={function (limit: number): void {
+          onChange={function (limit: string): void {
             updateLimit(Number(limit));
           }}
         />
