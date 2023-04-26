@@ -6,16 +6,15 @@ import { RiArrowUpSLine, RiArrowDownSLine } from "react-icons/ri";
 interface LimitSelectProps {
   placeholder: string;
   error?: string;
-  onChange?: Function;
-  options: { name: string; value: any }[];
+  onChange?: (value: string) => void;
+  options: { name: string; value: string }[];
   className?: string;
 }
 const LimitSelect = ({ onChange, options, className, placeholder }: LimitSelectProps) => {
-  const [selected, setSelected] = useState<null | number>(null);
+  const [selected, setSelected] = useState<null | string>(null);
   const handleSelected = (value: string) => {
-    const limit = Number(value);
-    setSelected(limit);
-    onChange?.(limit);
+    setSelected(value);
+    onChange?.(value);
   };
   return (
     <div
