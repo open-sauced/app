@@ -100,8 +100,8 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
         });
 
         setLoading(false);
-        if (res.statusCode === 400) {
-          return toast({ description: res?.message?.[0], title: "Error", variant: "danger" });
+        if (typeof res === "string") {
+          return toast({ description: res, title: "Error", variant: "danger" });
         }
 
         refreshCallback && refreshCallback();
