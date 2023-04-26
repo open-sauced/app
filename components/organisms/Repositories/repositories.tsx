@@ -163,17 +163,17 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
             <LimitSelect
               placeholder="10 per page"
               options={[
-                { name: "10 per page", value: 10 },
-                { name: "20 per page", value: 20 },
-                { name: "30 per page", value: 30 },
-                { name: "40 per page", value: 40 },
-                { name: "50 per page", value: 50 }
+                { name: "10 per page", value: "10" },
+                { name: "20 per page", value: "20" },
+                { name: "30 per page", value: "30" },
+                { name: "40 per page", value: "40" },
+                { name: "50 per page", value: "50" }
               ]}
               className="!w-36 ml-auto md:hidden overflow-x-hidden"
-              onChange={function (limit: number): void {
-                setLimit(limit);
+              onChange={function (limit: string): void {
+                setLimit(Number(limit));
               }}
-            ></LimitSelect>
+            />
             <div className="flex items-center justify-between w-full py-1 md:py-4 md:mt-5">
               <div>
                 <div className="">
