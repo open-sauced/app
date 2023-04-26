@@ -16,6 +16,7 @@ import RepositoriesTable, { classNames, RepositoriesRows } from "../Repositories
 import RepoNotIndexed from "./repository-not-indexed";
 import Checkbox from "components/atoms/Checkbox/checkbox";
 import Button from "components/atoms/Button/button";
+import OldCheckbox from "components/atoms/Checkbox/old-checkbox";
 
 interface RepositoriesProps {
   repositories?: number[];
@@ -107,6 +108,23 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
             <div className={clsx(classNames.cols.checkbox)}>
               {/* TODO: TEST THIS CHECKBOX */}
               <Checkbox
+                // checked
+                onCheckedChange={(state) => {
+                  console.log({state});
+                  if (state) {
+                    setSelectedRepos(repoListData);
+                  } else {
+                    setSelectedRepos([]);
+                  }
+                }}
+                // onChange={handleOnSelectAllChecked}
+                disabled={!user}
+                title={!user ? "Connect to GitHub" : ""}
+                // className={`checked:[&>*]:!bg-orange-500 ${
+                //   user ? "[&>*]:!border-orange-500 [&>*]:hover:!bg-orange-600" : "[&>*]:!border-light-slate-8"
+                // }`}
+              />
+              <OldCheckbox
                 label=""
                 onChange={handleOnSelectAllChecked}
                 disabled={!user}

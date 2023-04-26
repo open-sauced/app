@@ -20,6 +20,7 @@ import { useFetchUser } from "lib/hooks/useFetchUser";
 import { getInterestOptions } from "lib/utils/getInterestOptions";
 import { useToast } from "lib/hooks/useToast";
 import { validateTwitterUsername } from "lib/utils/validate-twitter-username";
+import OldCheckbox from "components/atoms/Checkbox/old-checkbox";
 
 interface userSettingsPageProps {
   user: User | null;
@@ -240,6 +241,12 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
             <div>
               {/* TODO: TEST THIS CHECKBOX */}
               <Checkbox
+                // checked={displayLocalTime}
+                title="profile email"
+                label="Display current local time on profile"
+                // onChange={(e) => setDisplayLocalTime(e.target.checked)}
+              />
+              <OldCheckbox
                 checked={displayLocalTime}
                 title="profile email"
                 label="Display current local time on profile"

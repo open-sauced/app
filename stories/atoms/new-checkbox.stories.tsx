@@ -1,8 +1,8 @@
-import Checkbox from "components/atoms/Checkbox/old-checkbox";
+import Checkbox from "components/atoms/Checkbox/checkbox";
 import { ComponentStory } from "@storybook/react";
 
 const storyConfig = {
-  title: "Design System/Atoms/Checkbox"
+  title: "Design System/Atoms/NewCheckbox"
 };
 
 export default storyConfig;
