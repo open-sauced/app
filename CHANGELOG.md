@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.45.0-beta.1](https://github.com/open-sauced/insights/compare/v1.44.0...v1.45.0-beta.1) (2023-04-26)
+
+
+### 🍕 Features
+
+* adds is_opensauced_member check ([#1125](https://github.com/open-sauced/insights/issues/1125)) ([2c0f099](https://github.com/open-sauced/insights/commit/2c0f09999d7902d83639ba93166cb08ad7baf6ac)), closes [#1124](https://github.com/open-sauced/insights/issues/1124)
+
 ## [1.44.0](https://github.com/open-sauced/insights/compare/v1.43.0...v1.44.0) (2023-04-25)
 
 
