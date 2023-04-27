@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.45.0-beta.2](https://github.com/open-sauced/insights/compare/v1.45.0-beta.1...v1.45.0-beta.2) (2023-04-27)
+
+
+### 🍕 Features
+
+* adds a share button to profile ([#1126](https://github.com/open-sauced/insights/issues/1126)) ([3c788f2](https://github.com/open-sauced/insights/commit/3c788f2fd050342d6a076bf48c829adf6720954c)), closes [#686](https://github.com/open-sauced/insights/issues/686)
+
 ## [1.45.0-beta.1](https://github.com/open-sauced/insights/compare/v1.44.0...v1.45.0-beta.1) (2023-04-26)
 
 
