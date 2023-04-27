@@ -105,6 +105,7 @@ const Feeds: WithPageLayout = () => {
                     prLink={singleHighlight.url}
                     user={singleHighlight.login}
                     id={singleHighlight.id}
+                    shipped_date={singleHighlight.shipped_at}
                     refreshCallBack={mutate}
                   />
                 </div>
@@ -160,7 +161,7 @@ const Feeds: WithPageLayout = () => {
                 {data &&
                   data.length > 0 &&
                   // eslint-disable-next-line camelcase
-                  data.map(({ id, url, title, created_at, highlight, name, login }) => (
+                  data.map(({ id, url, title, created_at, highlight, shipped_at, login }) => (
                     <div key={id} className="flex flex-col gap-6 px-1">
                       <div className="flex items-center gap-3">
                         <Link href={`/user/${login}`} className="flex items-center gap-3">
@@ -185,6 +186,7 @@ const Feeds: WithPageLayout = () => {
                           title={title}
                           desc={highlight}
                           prLink={url}
+                          shipped_date={shipped_at}
                           user={login}
                           id={id}
                         />
