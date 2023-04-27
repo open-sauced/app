@@ -100,15 +100,15 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
         });
 
         setLoading(false);
-        if (res) {
-          refreshCallback && refreshCallback();
-          setBodyText("");
-          setTitle("");
-          setIsDivFocused(false);
-          toast({ description: "Highlight Posted!", title: "Success", variant: "success" });
-        } else {
-          toast({ description: "An error occured!", title: "Error", variant: "danger" });
+        if (typeof res === "string") {
+          return toast({ description: res, title: "Error", variant: "danger" });
         }
+
+        refreshCallback && refreshCallback();
+        setBodyText("");
+        setTitle("");
+        setIsDivFocused(false);
+        toast({ description: "Highlight Posted!", title: "Success", variant: "success" });
       }
     } else {
       toast({ description: "Please provide a valid pull request link!", title: "Error", variant: "danger" });
