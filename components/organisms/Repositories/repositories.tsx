@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import clsx from "clsx";
 
-import Select from "components/atoms/Select/custom-select";
 import TableTitle from "components/atoms/TableTitle/table-title";
 import Pagination from "components/molecules/Pagination/pagination";
 import PaginationResults from "components/molecules/PaginationResults/pagination-result";
@@ -16,6 +15,7 @@ import RepositoriesTable, { classNames, RepositoriesRows } from "../Repositories
 import RepoNotIndexed from "./repository-not-indexed";
 import Checkbox from "components/atoms/Checkbox/checkbox";
 import Button from "components/atoms/Button/button";
+import LimitSelect from "components/atoms/Select/limit-select";
 
 interface RepositoriesProps {
   repositories?: number[];
@@ -93,9 +93,9 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
         setRangeFilter={store.updateRange}
         title="Repositories"
       />
-      <div className="flex flex-col rounded-lg overflow-x-auto border w-full">
+      <div className="flex flex-col w-full overflow-x-auto border rounded-lg">
         <div className="lg:min-w-[1150px]">
-          <div className="flex md:hidden justify-between  py-4 px-6 bg-light-slate-3 gap-2">
+          <div className="flex justify-between gap-2 px-6 py-4 md:hidden bg-light-slate-3">
             <div className="flex-1">
               <TableTitle text="Repository"></TableTitle>
             </div>
@@ -103,7 +103,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
               <TableTitle text="Pr Overview"></TableTitle>
             </div>
           </div>
-          <div className="hidden md:flex py-4 px-6 bg-light-slate-3 gap-2">
+          <div className="hidden gap-2 px-6 py-4 md:flex bg-light-slate-3">
             <div className={clsx(classNames.cols.checkbox)}>
               <Checkbox
                 label=""
@@ -139,7 +139,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
           </div>
 
           {selectedRepos.length > 0 && (
-            <div className="p-3 px-6 border-b-2 text-light-slate-11 flex justify-between">
+            <div className="flex justify-between p-3 px-6 border-b-2 text-light-slate-11">
               <div>{selectedRepos.length} Repositories selected</div>
               <Button onClick={handleOnAddtoInsights} variant="primary">
                 Add to Insight Page
@@ -159,22 +159,22 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
           />
 
           {/* Table Footer */}
-          <div className="mt-5 w-full px-4 flex flex-col gap-y-3 md:flex-row">
-            <Select
+          <div className="flex flex-col w-full px-4 mt-5 gap-y-3 md:flex-row">
+            <LimitSelect
               placeholder="10 per page"
               options={[
-                { name: "10 per page", value: 10 },
-                { name: "20 per page", value: 20 },
-                { name: "30 per page", value: 30 },
-                { name: "40 per page", value: 40 },
-                { name: "50 per page", value: 50 }
+                { name: "10 per page", value: "10" },
+                { name: "20 per page", value: "20" },
+                { name: "30 per page", value: "30" },
+                { name: "40 per page", value: "40" },
+                { name: "50 per page", value: "50" }
               ]}
               className="!w-36 ml-auto md:hidden overflow-x-hidden"
-              onChange={function (limit: number): void {
-                setLimit(limit);
+              onChange={function (limit: string): void {
+                setLimit(Number(limit));
               }}
-            ></Select>
-            <div className="py-1 md:py-4 flex w-full md:mt-5 justify-between items-center">
+            />
+            <div className="flex items-center justify-between w-full py-1 md:py-4 md:mt-5">
               <div>
                 <div className="">
                   <PaginationResults metaInfo={repoMeta} total={repoMeta.itemCount} entity={"repos"} />
