@@ -92,7 +92,8 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
         const res = await createHighlights({
           highlight,
           title,
-          url: url
+          url: url,
+          shipped_at: date
         });
 
         setLoading(false);
@@ -100,6 +101,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
           refreshCallback && refreshCallback();
           setBodyText("");
           setTitle("");
+          setDate(undefined);
           setIsDivFocused(false);
           toast({ description: "Highlight Posted!", title: "Success", variant: "success" });
         } else {
@@ -155,7 +157,14 @@ https://github.com/open-sauced/insights/pull/913`}
                     </button>
                   </PopoverTrigger>
                   <PopoverContent className="w-auto p-0 bg-white">
-                    <Calendar mode="single" selected={date} onSelect={setDate} className="border rounded-md" />
+                    <Calendar
+                      // block user's from selecting a future date
+                      toDate={new Date()}
+                      mode="single"
+                      selected={date}
+                      onSelect={setDate}
+                      className="border rounded-md"
+                    />
                   </PopoverContent>
                 </Popover>
               </Tooltip>

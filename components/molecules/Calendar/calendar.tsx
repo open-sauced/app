@@ -1,5 +1,3 @@
-"use client";
-
 import * as React from "react";
 import { DayPicker } from "react-day-picker";
 
@@ -28,10 +26,10 @@ function Calendar({ className, classNames, showOutsideDays = true, ...props }: C
         head_row: "flex",
         head_cell: " rounded-md w-9 font-normal text-[0.8rem]",
         row: "flex w-full mt-2",
-        cell: "text-center text-sm p-0 relative [&:has([aria-selected])]:bg-light-slate-3 first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20",
+        cell: "text-center hover:bg-orange-100 hover:text-orange-700 rounded-md text-sm p-0 relative [&:has([aria-selected])]:bg-light-slate-3 first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20",
         day: "h-9 w-9 p-0 font-normal aria-selected:opacity-100",
         day_selected:
-          "bg-orange-100 rounded-md text-orange-700 hover:bg-orange-100 hover:text-orange-700 focus:bg-orange-100 focus:text-orange-600",
+          "bg-orange-100 rounded-md text-orange-700 hover:bg-orange-100 hover:text-orange-700 focus:bg-orange-100 focus:text-orange-600 focus:rounded-md",
         day_today: "bg-light-slate-3 rounded-md",
         day_outside: "opacity-50",
         day_disabled: "opacity-50",

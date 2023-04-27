@@ -4,6 +4,7 @@ interface CreateHighlightsProps {
   url: string;
   title?: string;
   highlight: string;
+  shipped_at?: Date;
 }
 
 const baseUrl = process.env.NEXT_PUBLIC_API_URL;
