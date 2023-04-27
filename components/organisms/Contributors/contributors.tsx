@@ -4,12 +4,13 @@ import useStore from "lib/store";
 import Pagination from "components/molecules/Pagination/pagination";
 import PaginationResults from "components/molecules/PaginationResults/pagination-result";
 import TableHeader from "components/molecules/TableHeader/table-header";
-import Select from "components/atoms/Select/custom-select";
 
 import { calcDistanceFromToday } from "lib/utils/date-utils";
 
 import ContributorCard from "../ContributorCard/contributor-card";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
+import LimitSelect from "components/atoms/Select/limit-select";
+
 import useContributors from "lib/hooks/api/useContributors";
 import { getAvatarByUsername } from "lib/utils/github";
 
@@ -25,7 +26,7 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
   const range = useStore((state) => state.range);
   const { data, meta, setPage, setLimit, isError, isLoading } = useContributors(10, repositories, range);
 
-  const contributors = data.map(pr => {
+  const contributors = data.map((pr) => {
     return {
       host_login: pr.author_login,
       first_commit_time: pr.created_at
@@ -76,20 +77,20 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
       {/* Table footer */}
 
       <div className="flex flex-col w-full px-2 mt-5 gap-y-3 md:flex-row">
-        <Select
+        <LimitSelect
           placeholder="10 per page"
           options={[
-            { name: "10 per page", value: 10 },
-            { name: "20 per page", value: 20 },
-            { name: "30 per page", value: 30 },
-            { name: "40 per page", value: 40 },
-            { name: "50 per page", value: 50 }
+            { name: "10 per page", value: "10" },
+            { name: "20 per page", value: "20" },
+            { name: "30 per page", value: "30" },
+            { name: "40 per page", value: "40" },
+            { name: "50 per page", value: "50" }
           ]}
           className="!w-36 ml-auto md:hidden overflow-x-hidden"
-          onChange={function (limit: number): void {
-            setLimit(limit);
+          onChange={function (limit: string): void {
+            setLimit(Number(limit));
           }}
-        ></Select>
+        />
 
         <div className="flex items-center justify-between w-full py-1 md:py-4 md:mt-5">
           <div>

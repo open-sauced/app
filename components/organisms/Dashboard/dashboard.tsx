@@ -8,7 +8,7 @@ import { ScatterChartDataItems } from "components/molecules/NivoScatterChart/niv
 
 import humanizeNumber from "lib/utils/humanizeNumber";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
-import { getInsights, useInsights } from "lib/hooks/useInsights";
+import { getInsights, useInsights } from "lib/hooks/api/useInsights";
 import { calcDaysFromToday } from "lib/utils/date-utils";
 import roundedImage from "lib/utils/roundedImages";
 import usePullRequests from "lib/hooks/api/usePullRequests";
@@ -96,9 +96,9 @@ const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
         <HighlightCard
           label="Contributors"
           icon="contributors"
-          metricIncreases={compare1.allContributors - compare2.allContributors >= 0}
-          increased={compare1.allContributors - compare2.allContributors >= 0}
-          numChanged={humanizeNumber(Math.abs(compare1.allContributors - compare2.allContributors), "abbreviation")}
+          metricIncreases={compare1.allPrsTotal - compare2.allPrsTotal >= 0}
+          increased={compare1.allPrsTotal - compare2.allPrsTotal >= 0}
+          numChanged={humanizeNumber(Math.abs(compare1.allPrsTotal - compare2.allPrsTotal), "abbreviation")}
           value={humanizeNumber(prMeta.itemCount, "comma")}
           contributors={contributorData}
           isLoading={isLoading}
