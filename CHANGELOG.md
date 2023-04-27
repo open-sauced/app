@@ -5,6 +5,18 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.45.0-beta.4](https://github.com/open-sauced/insights/compare/v1.45.0-beta.3...v1.45.0-beta.4) (2023-04-27)
+
+
+### 🐛 Bug Fixes
+
+* connect reports to the API ([#1117](https://github.com/open-sauced/insights/issues/1117)) ([bfd19b4](https://github.com/open-sauced/insights/commit/bfd19b4f325aff5df5877638d8cf446fccb55581))
+
+
+### 🧑‍💻 Code Refactoring
+
+* improve select structure for accessibility and reusability  ([#1107](https://github.com/open-sauced/insights/issues/1107)) ([48c9d8b](https://github.com/open-sauced/insights/commit/48c9d8b890a35c8de9f1bf375dca4d7161e8db90))
+
 ## [1.45.0-beta.3](https://github.com/open-sauced/insights/compare/v1.45.0-beta.2...v1.45.0-beta.3) (2023-04-27)
 
 
