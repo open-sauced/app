@@ -25,8 +25,7 @@ const SelectReportsFilter = ({ filterList, callback }: SelectReportsFilterProps)
     <div className="flex flex-col gap-2 min-h-20">
       <Title level={4}>Select a Filter</Title>
       <Text>
-        Download the filtered contributions from the last 30 days as a CSV. Selecting a filter will remove all the added
-        repositories.
+        Download the filtered pull requests from the filtered repositories for the last 30 days as a CSV. 
       </Text>
       <div className="flex flex-col md:flex-row gap-2">
         <Select error={error} onChange={(event) => setSelectedValue(event.target.value)} className="w-full">
@@ -37,7 +36,7 @@ const SelectReportsFilter = ({ filterList, callback }: SelectReportsFilterProps)
             </SelectOption>
           ))}
         </Select>
-        <Button variant="primary" onClick={handleButtonClick} className="w-52 h-[38px]">
+        <Button variant="primary" onClick={handleButtonClick} className="flex justify-center w-52 h-[38px]">
           Generate CSV
         </Button>
       </div>
