@@ -123,7 +123,7 @@ const ContributorProfileTab = ({
                   {highlights.map(({ id, title, highlight, url, shipped_at, created_at }) => (
                     <div className="flex flex-col gap-2 mb-6 lg:flex-row lg:gap-7" key={id}>
                       <Link href={`/feed/${id}`}>
-                        <p className="text-sm text-light-slate-10">{getFormattedDate(created_at)}</p>
+                        <p className="text-sm text-light-slate-10">{getFormattedDate(shipped_at)}</p>
                       </Link>
                       <ContributorHighlightCard
                         emojis={emojis}

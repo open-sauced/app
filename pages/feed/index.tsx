@@ -92,7 +92,7 @@ const Feeds: WithPageLayout = () => {
                   />
                   <strong>{singleHighlight.login}</strong>
                   <span className="text-xs font-normal text-light-slate-11">
-                    {getFormattedDate(singleHighlight.created_at)}
+                    {getFormattedDate(singleHighlight.shipped_at)}
                   </span>
                   <DialogCloseButton onClick={() => router.push("/feed")} />
                 </div>
@@ -175,7 +175,7 @@ const Feeds: WithPageLayout = () => {
                         </Link>
                         <Link href={`/feed/${id}`}>
                           <span className="text-xs font-normal text-light-slate-11">
-                            {getFormattedDate(created_at)}
+                            {getFormattedDate(shipped_at)}
                           </span>
                         </Link>
                       </div>
