@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react";
 import Avatar from "components/atoms/Avatar/avatar";
 import Image from "next/image";
 import RainbowBg from "img/rainbow-cover.png";
@@ -5,6 +6,8 @@ import Button from "components/atoms/Button/button";
 import Link from "next/link";
 import { MarkGithubIcon } from "@primer/octicons-react";
 import { User } from "@supabase/supabase-js";
+import { FiCopy } from "react-icons/fi";
+import { useToast } from "lib/hooks/useToast";
 
 interface ContributorProfileHeaderProps {
   avatarUrl?: string;
@@ -30,13 +33,31 @@ const ContributorProfileHeader = ({
   handleSignIn,
   isOwner
 }: ContributorProfileHeaderProps) => {
-  const handleClick = () => {
+  const { toast } = useToast();
+  const [host, setHost] = useState("");
+  const handleFollowClick = () => {
     if (isFollowing) {
       handleUnfollow();
     } else {
       handleFollow();
     }
   };
+
+  const handleCopyToClipboard = async (content: string) => {
+    const url = new URL(content).toString();
+    try {
+      await navigator.clipboard.writeText(url);
+      toast({ description: "Copied to clipboard", variant: "success" });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setHost(window.location.origin as string);
+    }
+  }, [user]);
 
   return (
     <div className="w-full relative  bg-light-slate-6 h-[216px]">
@@ -71,9 +92,12 @@ const ContributorProfileHeader = ({
         </div>
         {isConnected && (
           <div className="flex flex-col items-center gap-3 md:translate-y-0 translate-y-28 md:flex-row">
+            <Button onClick={() => handleCopyToClipboard(`${host}/user/${user?.user_metadata.user_name}`)} className="px-10 py-2 mb-10 bg-white md:mb-6 " variant="text">
+              <FiCopy className="mr-1 mt-1" /> Share
+            </Button>
             {user ? (
               !isOwner && (
-                <Button onClick={handleClick} className="px-10 py-2 mb-10 bg-white md:mb-6 " variant="text">
+                <Button onClick={handleFollowClick} className="px-10 py-2 mb-10 bg-white md:mb-6 " variant="text">
                   {isFollowing ? "Following" : "Follow"}
                 </Button>
               )
