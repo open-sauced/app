@@ -175,7 +175,7 @@ const Feeds: WithPageLayout = () => {
                         </Link>
                         <Link href={`/feed/${id}`}>
                           <span className="text-xs font-normal text-light-slate-11">
-                            {getFormattedDate(shipped_at)}
+                            {getFormattedDate(created_at)}
                           </span>
                         </Link>
                       </div>
