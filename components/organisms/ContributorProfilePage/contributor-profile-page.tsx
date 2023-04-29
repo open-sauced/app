@@ -97,6 +97,8 @@ const ContributorProfilePage = ({
     display_local_time: displayLocalTime
   } = user || {};
 
+  const iscConnected = !!user?.is_open_sauced_member;
+
   return (
     <div className="w-full ">
       {loading ? (
@@ -107,7 +109,7 @@ const ContributorProfilePage = ({
           username={user?.login}
           user={loggedInUser}
           isFollowing={followError ? false : true}
-          isConnected={!!user}
+          isConnected={iscConnected}
           githubName={githubName}
           avatarUrl={githubAvatar}
           handleFollow={follow}
@@ -127,7 +129,7 @@ const ContributorProfilePage = ({
                 twitterUsername={twitter_username}
                 bio={bio}
                 githubName={githubName}
-                isConnected={!!user}
+                isConnected={iscConnected}
                 timezone={timezone}
                 displayLocalTime={displayLocalTime}
                 githubSponsorsUrl={githubSponsorsUrl}

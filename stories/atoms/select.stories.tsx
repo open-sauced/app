@@ -1,22 +1,28 @@
 import { ComponentStory } from "@storybook/react";
-import Select from "components/atoms/Select/select";
-import SelectOption from "components/atoms/Select/select-option";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "components/atoms/Select/select";
 
 const storyConfig = {
   title: "Design System/Atoms/Select",
   component: "Select"
 };
 
+const SelectOptions = ["test", "Main", "Beta"];
+
 export default storyConfig;
 
-//Select Template
-const SelectTemplate: ComponentStory<typeof Select> = (args) => <Select {...args} />;
-
-//Select Option Template (needed?)
-const SelectOptionTemplate: ComponentStory<typeof SelectOption> = (args) => <SelectOption {...args} />;
+const SelectTemplate: ComponentStory<typeof Select> = (args) => (
+  <Select {...args}>
+    <SelectTrigger>
+      <SelectValue placeholder="Select a Value" />
+    </SelectTrigger>
+    <SelectContent>
+      {SelectOptions.map((option, i) => (
+        <SelectItem value={option} key={i}>
+          {option}
+        </SelectItem>
+      ))}
+    </SelectContent>
+  </Select>
+);
 
 export const Default = SelectTemplate.bind({});
-
-Default.args = {
-  children: <SelectOption value="">Test</SelectOption>
-};

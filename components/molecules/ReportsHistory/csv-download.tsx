@@ -1,20 +1,19 @@
 import { useState, useEffect, useRef } from "react";
 import { CSVLink } from "react-csv";
 import { useSWRConfig } from "swr";
-import { useRouter } from "next/router";
 
 import Button from "components/atoms/Button/button";
 
 import { Report } from "interfaces/report-type";
-import apiFetcher from "lib/hooks/useSWR";
+import publicApiFetcher from "lib/utils/public-api-fetcher";
 
 interface CSVDownloadProps {
   report: Report;
   repositories?: number[];
 }
 
-interface PaginatedContributorsResponse {
-  readonly data: DbContribution[];
+interface PaginatedResponse {
+  readonly data: DbRepoPR[];
   readonly meta: Meta;
 }
 
@@ -23,8 +22,6 @@ const CSVDownload = ({ report, repositories }: CSVDownloadProps) => {
   const [data, setData] = useState<any[] | null>(null);
   const [generating, setGenerating] = useState(false);
   const { mutate } = useSWRConfig();
-  const router = useRouter();
-  const { filterName: topic } = router.query;
   const selectedFilter = report.reportName;
 
   useEffect(() => {
@@ -37,14 +34,21 @@ const CSVDownload = ({ report, repositories }: CSVDownloadProps) => {
   }, [data]);
 
   const onDownload = async () => {
-    const key = `${topic}/contributions?filter=${selectedFilter}&limit=100${
-      repositories && repositories.length > 0 ? `&repoIds=${repositories?.join(",")}` : ""
-    }`;
+    const query = new URLSearchParams();
+    query.set("filter", selectedFilter);
+    query.set("limit", "100");
+    query.set("range", "30");
+    
+    if (repositories && repositories.length > 0) {
+      query.set("repoIds", repositories.join(","));
+    }
+
+    const key = `prs/search?${query.toString()}`;
 
     try {
       setGenerating(true);
       // @ts-ignore
-      const result: PaginatedContributorsResponse = await mutate(key, apiFetcher(key));
+      const result: PaginatedResponse = await mutate(key, publicApiFetcher(key));
 
       setData(result.data);
     } catch (e) {
