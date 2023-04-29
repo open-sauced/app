@@ -16,7 +16,6 @@ import RepositoriesTable, { classNames, RepositoriesRows } from "../Repositories
 import RepoNotIndexed from "./repository-not-indexed";
 import Checkbox from "components/atoms/Checkbox/checkbox";
 import Button from "components/atoms/Button/button";
-import OldCheckbox from "components/atoms/Checkbox/old-checkbox";
 
 interface RepositoriesProps {
   repositories?: number[];
@@ -41,8 +40,8 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
   const filteredRepoNotIndexed = selectedFilter && !repoListIsLoading && !repoListIsError && repoListData.length === 0;
   const [selectedRepos, setSelectedRepos] = useState<DbRepo[]>([]);
 
-  const handleOnSelectAllChecked = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.checked) {
+  const handleOnSelectAllChecked = (state: boolean) => {
+    if (state) {
       setSelectedRepos(repoListData);
     } else {
       setSelectedRepos([]);
@@ -106,32 +105,11 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
           </div>
           <div className="hidden md:flex py-4 px-6 bg-light-slate-3 gap-2">
             <div className={clsx(classNames.cols.checkbox)}>
-              {/* TODO: TEST THIS CHECKBOX */}
               <Checkbox
-                // checked
-                onCheckedChange={(state) => {
-                  console.log({state});
-                  if (state) {
-                    setSelectedRepos(repoListData);
-                  } else {
-                    setSelectedRepos([]);
-                  }
-                }}
-                // onChange={handleOnSelectAllChecked}
+                onCheckedChange={handleOnSelectAllChecked}
                 disabled={!user}
                 title={!user ? "Connect to GitHub" : ""}
-                // className={`checked:[&>*]:!bg-orange-500 ${
-                //   user ? "[&>*]:!border-orange-500 [&>*]:hover:!bg-orange-600" : "[&>*]:!border-light-slate-8"
-                // }`}
-              />
-              <OldCheckbox
-                label=""
-                onChange={handleOnSelectAllChecked}
-                disabled={!user}
-                title={!user ? "Connect to GitHub" : ""}
-                className={`checked:[&>*]:!bg-orange-500 ${
-                  user ? "[&>*]:!border-orange-500 [&>*]:hover:!bg-orange-600" : "[&>*]:!border-light-slate-8"
-                }`}
+                className={`${user && "border-orange-500 hover:bg-orange-600"}`}
               />
             </div>
             <div className={clsx(classNames.cols.repository)}>

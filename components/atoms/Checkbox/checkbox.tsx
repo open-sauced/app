@@ -11,27 +11,27 @@ interface CheckboxProps extends React.ComponentPropsWithoutRef<typeof CheckboxPr
 const Checkbox = React.forwardRef<
   React.ElementRef<typeof CheckboxPrimitive.Root>,
   CheckboxProps
->(({ className, label, id, ...props }, ref) => (
+>(({ className, label, id = "checkbox", ...props }, ref) => (
   <div className="flex items-center">
     <CheckboxPrimitive.Root
       ref={ref}
       className={clsx(
-        "peer h-4 w-4 shrink-0 rounded-sm border border-input ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:border-primary",
+        "peer h-4 w-4 shrink-0 rounded-md cursor-pointer bg-white border border-light-slate-8 hover:border-orange-500 ring-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:border-orange-500 data-[state=checked]:ring-orange-500 data-[state=checked]:bg-orange-500",
         className
       )}
       {...props}
       id={id}
     >
       <CheckboxPrimitive.Indicator
-        className={clsx("flex items-center justify-center text-primary")}
+        className={clsx("flex items-center justify-center text-white")}
       >
-        <FiCheck className="h-4 w-4" />
+        <FiCheck className="h-full w-full" />
       </CheckboxPrimitive.Indicator>
     </CheckboxPrimitive.Root>
     {label && (
       <label
         htmlFor={id}
-        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+        className="text-sm ml-3 text-light-slate-12 font-medium leading-none cursor-pointer peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
       >
         {label}
       </label>

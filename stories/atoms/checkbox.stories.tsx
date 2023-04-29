@@ -1,4 +1,4 @@
-import Checkbox from "components/atoms/Checkbox/old-checkbox";
+import Checkbox from "components/atoms/Checkbox/checkbox";
 import { ComponentStory } from "@storybook/react";
 
 const storyConfig = {
@@ -7,7 +7,6 @@ const storyConfig = {
 
 export default storyConfig;
 
-{/* TODO: UPDATE THE STORY IF NECESSARY */}
 // FilterCard Template
 const CheckboxTemplate: ComponentStory<typeof Checkbox> = (args) => <Checkbox {...args} />;
 

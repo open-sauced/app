@@ -204,16 +204,12 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
         </div>
       </div>
       <div className={`${classNames.row} `}>
-        {/* TODO: TEST THIS CHECKBOX */}
         <Checkbox
-          label=""
           checked={selected ? true : false}
-          onChange={handleSelectCheckbox}
+          onCheckedChange={handleSelectCheckbox}
           disabled={!user}
           title={!user ? "Connect to GitHub" : ""}
-          className={`checked:[&>*]:!bg-orange-500 ${
-            user ? "[&>*]:!border-orange-500 [&>*]:hover:!bg-orange-600" : "[&>*]:!border-light-slate-8"
-          }`}
+          className={`${user && "border-orange-500 hover:bg-orange-600"}`}
         />
         {/* Column: Repository Name */}
         <div className={classNames.cols.repository}>
