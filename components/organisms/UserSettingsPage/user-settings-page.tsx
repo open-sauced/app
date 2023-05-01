@@ -165,7 +165,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
 
   return (
     <div className="container mx-auto md:px-16">
-      <div className="flex flex-col gap-4 text-sm md:flex-row md:gap-48 text-light-slate-11">
+      <div className="flex flex-col gap-4 text-sm md:flex-row md:gap-42 lg:gap-48 text-light-slate-11">
         <div>
           <Title className="!text-2xl !text-light-slate-11" level={2}>
             Public profile
