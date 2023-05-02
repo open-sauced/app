@@ -7,8 +7,8 @@ interface NotificationCard {
 }
 const NotificationCard = ({ type, message }: NotificationCard) => {
   const iconMap = {
-    reaction: <FaRegSmile className="text-3xl shrink-0 whitespace-nowrap" />,
-    follow: <FaRegSmile className="text-3xl shrink-0 whitespace-nowrap" />,
+    reaction: <FaRegSmile className="text-3xl shrink-0 " />,
+    follow: <FaUserCircle className="text-3xl shrink-0 " />,
     collaboration: <FaUserCircle className="text-3xl shrink-0" />
   };
 
