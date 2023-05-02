@@ -18,9 +18,6 @@ import DropdownList from "../DropdownList/dropdown-list";
 import Text from "components/atoms/Typography/text";
 import GitHubIcon from "img/icons/github-icon.svg";
 import Icon from "components/atoms/Icon/icon";
-import { IoNotifications, IoNotificationsOutline } from "react-icons/io5";
-import { Popover, PopoverContent, PopoverTrigger } from "../Popover/popover";
-import NotificationCard from "components/atoms/NotificationsCard/notification-card";
 
 const AuthSection: React.FC = ({}) => {
   const { signIn, signOut, user } = useSupabaseAuth();
@@ -71,23 +68,7 @@ const AuthSection: React.FC = ({}) => {
               ""
             )}
 
-            {/* <Image alt="Notification Icon" src={notifications} /> */}
-            <Popover>
-              <PopoverTrigger asChild>
-                <div className="relative cursor-pointer">
-                  <span className="absolute right-0 block w-2 h-2 bg-orange-300 rounded-full"></span>
-                  <IoNotifications className="text-xl text-light-slate-9" />
-                </div>
-              </PopoverTrigger>
-              <PopoverContent align="end" className="bg-white !rounded-xl p-1  ">
-                <div className="space-y-1">
-                  <NotificationCard message="New Collaboration request from Jimbo Baggons" type="reaction" />
-                  <NotificationCard message="New Collaboration request from Jimbo Baggons" type="collaboration" />
-                  <NotificationCard message="New Collaboration request from Jimbo Baggons" type="reaction" />
-                </div>
-              </PopoverContent>
-            </Popover>
-
+            <Image alt="Notification Icon" src={notifications} />
             <DropdownList menuContent={authMenu.authed}>
               <div className="flex justify-end min-w-[60px] gap-2">
                 <Avatar
