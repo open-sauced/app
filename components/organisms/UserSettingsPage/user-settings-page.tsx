@@ -242,7 +242,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
                 checked={displayLocalTime}
                 title="profile email"
                 label="Display current local time on profile"
-                onChange={(e) => setDisplayLocalTime(e.target.checked)}
+                onCheckedChange={(state) => setDisplayLocalTime(state as boolean)}
               />
               <span className="text-sm font-normal ml-7 text-light-slate-9">
                 Other users will see the time difference from their local time.
@@ -306,13 +306,13 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
               <label className="text-2xl font-normal text-light-slate-11">Email Preferences</label>
               <Checkbox
                 // eslint-disable-next-line camelcase
-                onChange={() => setEmailPreference((prev) => ({ ...prev, display_email: !prev.display_email }))}
+                onCheckedChange={() => setEmailPreference((prev) => ({ ...prev, display_email: !prev.display_email }))}
                 checked={emailPreference.display_email}
                 title="profile email"
                 label="Display email on profile"
               />
               <Checkbox
-                onChange={() =>
+                onCheckedChange={() =>
                   // eslint-disable-next-line camelcase
                   setEmailPreference((prev) => ({ ...prev, receive_collaboration: !prev.receive_collaboration }))
                 }

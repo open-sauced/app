@@ -40,8 +40,8 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
   const filteredRepoNotIndexed = selectedFilter && !repoListIsLoading && !repoListIsError && repoListData.length === 0;
   const [selectedRepos, setSelectedRepos] = useState<DbRepo[]>([]);
 
-  const handleOnSelectAllChecked = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.checked) {
+  const handleOnSelectAllChecked = (state: boolean) => {
+    if (state) {
       setSelectedRepos(repoListData);
     } else {
       setSelectedRepos([]);
@@ -106,13 +106,10 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
           <div className="hidden gap-2 px-6 py-4 md:flex bg-light-slate-3">
             <div className={clsx(classNames.cols.checkbox)}>
               <Checkbox
-                label=""
-                onChange={handleOnSelectAllChecked}
+                onCheckedChange={handleOnSelectAllChecked}
                 disabled={!user}
                 title={!user ? "Connect to GitHub" : ""}
-                className={`checked:[&>*]:!bg-orange-500 ${
-                  user ? "[&>*]:!border-orange-500 [&>*]:hover:!bg-orange-600" : "[&>*]:!border-light-slate-8"
-                }`}
+                className={`${user && "border-orange-500 hover:bg-orange-600"}`}
               />
             </div>
             <div className={clsx(classNames.cols.repository)}>
