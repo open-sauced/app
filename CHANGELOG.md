@@ -5,6 +5,24 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.45.0-beta.6](https://github.com/open-sauced/insights/compare/v1.45.0-beta.5...v1.45.0-beta.6) (2023-05-02)
+
+
+### 🐛 Bug Fixes
+
+* fix toast inaccessible menu ([#1098](https://github.com/open-sauced/insights/issues/1098)) ([#1127](https://github.com/open-sauced/insights/issues/1127)) ([edfd92b](https://github.com/open-sauced/insights/commit/edfd92beff11702d015d1fd3d8f9c29c8ebe62c6))
+
+
+### 🍕 Features
+
+* highlight date selection  ([#1116](https://github.com/open-sauced/insights/issues/1116)) ([992d35c](https://github.com/open-sauced/insights/commit/992d35caceb3dab5c2f3633f568421cc83ccfc8d))
+* replace supabase checkbox with radix ui ([#1121](https://github.com/open-sauced/insights/issues/1121)) ([ad65864](https://github.com/open-sauced/insights/commit/ad658649e50416ed22a2e73f9ac30537671463c8))
+
+
+### 🧑‍💻 Code Refactoring
+
+* update gh open graph fallback image ([#1134](https://github.com/open-sauced/insights/issues/1134)) ([571d208](https://github.com/open-sauced/insights/commit/571d208e83ed86273b2b8a741560c18d245c9ad8))
+
 ## [1.45.0-beta.5](https://github.com/open-sauced/insights/compare/v1.45.0-beta.4...v1.45.0-beta.5) (2023-05-01)
 
 
