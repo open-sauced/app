@@ -23,7 +23,8 @@ module.exports = {
       },
       colors: {
         sauced: {
-          orange: "hsla(19, 100%, 50%, 1)"
+          orange: "hsla(19, 100%, 50%, 1)",
+          light: "#FFEFE4"
         },
         gradient: {
           "dark-two": "hsl(26, 54%, 15%)",

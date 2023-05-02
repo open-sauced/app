@@ -18,6 +18,9 @@ import DropdownList from "../DropdownList/dropdown-list";
 import Text from "components/atoms/Typography/text";
 import GitHubIcon from "img/icons/github-icon.svg";
 import Icon from "components/atoms/Icon/icon";
+import { IoNotifications, IoNotificationsOutline } from "react-icons/io5";
+import { Popover, PopoverContent, PopoverTrigger } from "../Popover/popover";
+import NotificationCard from "components/atoms/NotificationsCard/notification-card";
 
 const AuthSection: React.FC = ({}) => {
   const { signIn, signOut, user } = useSupabaseAuth();
@@ -28,9 +31,9 @@ const AuthSection: React.FC = ({}) => {
       <Link
         href={`/user/${user?.user_metadata.user_name}`}
         key="settings"
-        className="group flex gap-x-3 text-lg hover:bg-light-orange-3 items-center px-4 py-2 rounded-md cursor-pointer transition"
+        className="flex items-center px-4 py-2 text-lg transition rounded-md cursor-pointer group gap-x-3 hover:bg-light-orange-3"
       >
-        <div className="w-5 h-5 flex justify-center items-center bg-blue-100 rounded-full">
+        <div className="flex items-center justify-center w-5 h-5 bg-blue-100 rounded-full">
           <Image width={10} height={10} alt="Icon" src={PersonIcon} />
         </div>
         <Text className="group-hover:text-light-orange-10">{user?.user_metadata.user_name}</Text>
@@ -38,7 +41,7 @@ const AuthSection: React.FC = ({}) => {
       <Link
         href="/user/settings"
         key="settings"
-        className="group flex gap-x-3 text-lg hover:bg-light-orange-3 items-center px-4 py-2 rounded-md cursor-pointer transition"
+        className="flex items-center px-4 py-2 text-lg transition rounded-md cursor-pointer group gap-x-3 hover:bg-light-orange-3"
       >
         <FiSettings className="group-hover:text-light-orange-10" />
         <Text className="group-hover:text-light-orange-10">Settings</Text>
@@ -46,7 +49,7 @@ const AuthSection: React.FC = ({}) => {
       <span
         onClick={async () => await signOut()}
         key="authorized"
-        className="group flex gap-x-3 text-lg hover:bg-light-orange-3 items-center px-4 py-2 rounded-md cursor-pointer transition"
+        className="flex items-center px-4 py-2 text-lg transition rounded-md cursor-pointer group gap-x-3 hover:bg-light-orange-3"
       >
         <FiLogOut className="group-hover:text-light-orange-10" />
         <Text className="group-hover:text-light-orange-10">Disconnect</Text>
@@ -55,7 +58,7 @@ const AuthSection: React.FC = ({}) => {
   };
 
   return (
-    <div className="flex p-2 sm:py-0 m-1">
+    <div className="flex p-2 m-1 sm:py-0">
       <div className="flex items-center gap-2 lg:gap-3">
         {user ? (
           <>
@@ -68,7 +71,23 @@ const AuthSection: React.FC = ({}) => {
               ""
             )}
 
-            <Image alt="Notification Icon" src={notifications} />
+            {/* <Image alt="Notification Icon" src={notifications} /> */}
+            <Popover>
+              <PopoverTrigger asChild>
+                <div className="relative cursor-pointer">
+                  <span className="absolute right-0 block w-2 h-2 bg-orange-300 rounded-full"></span>
+                  <IoNotifications className="text-xl text-light-slate-9" />
+                </div>
+              </PopoverTrigger>
+              <PopoverContent align="end" className="bg-white !rounded-xl p-1  ">
+                <div className="space-y-1">
+                  <NotificationCard message="New Collaboration request from Jimbo Baggons" type="reaction" />
+                  <NotificationCard message="New Collaboration request from Jimbo Baggons" type="collaboration" />
+                  <NotificationCard message="New Collaboration request from Jimbo Baggons" type="reaction" />
+                </div>
+              </PopoverContent>
+            </Popover>
+
             <DropdownList menuContent={authMenu.authed}>
               <div className="flex justify-end min-w-[60px] gap-2">
                 <Avatar
