@@ -5,6 +5,7 @@ interface CreateHighlightsProps {
   url: string;
   title?: string;
   highlight: string;
+  shipped_at?: Date;
 }
 
 interface ServerError {
