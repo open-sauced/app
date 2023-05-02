@@ -1182,6 +1182,10 @@ export const getTimezone = (timezone: string): number => {
   return timezones.find((tz) => tz.value === timezone)?.offset || +1;
 };
 
+export const getTimezoneTextByValue = (value: string): string => {
+  return timezones.find((tz) => tz.value === value)?.text || "";
+};
+
 export const getTimeByTimezone = (offset: number) => {
   var d = new Date();
 

@@ -172,6 +172,7 @@ interface DbHighlight {
   readonly deleted_at: string;
   readonly name: string;
   readonly login: string;
+  readonly shipped_at: string;
 }
 
 interface SEOobject {

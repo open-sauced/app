@@ -1,10 +1,17 @@
-import Button from "components/atoms/Button/button";
-import { Textarea } from "components/atoms/Textarea/text-area";
-import { createHighlights } from "lib/hooks/createHighlights";
-
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 
+import { BsCalendar2Event } from "react-icons/bs";
+import { format } from "date-fns";
+
+import Button from "components/atoms/Button/button";
+import { Textarea } from "components/atoms/Textarea/text-area";
 import GhOpenGraphImg from "../GhOpenGraphImg/gh-open-graph-img";
+import { Popover, PopoverContent, PopoverTrigger } from "../Popover/popover";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../Collapsible/collapsible";
+import Tooltip from "components/atoms/Tooltip/tooltip";
+import { Calendar } from "../Calendar/calendar";
+
+import { createHighlights } from "lib/hooks/createHighlights";
 import { generateApiPrUrl } from "lib/utils/github";
 import { fetchGithubPRInfo } from "lib/hooks/fetchGithubPRInfo";
 import { useToast } from "lib/hooks/useToast";
@@ -22,10 +29,12 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
   const [title, setTitle] = useState("");
   const [charCount, setCharCount] = useState(0);
   const [pullrequestLink, setPullRequestLink] = useState("");
-  const ref = useRef<HTMLFormElement>(null);
+
   let rowLomit = 5;
   const charLimit = 500;
   let messageLastScrollHeight = textAreaRef.current ? textAreaRef.current?.scrollHeight : 50;
+
+  const [date, setDate] = useState<Date | undefined>();
 
   const { toast } = useToast();
 
@@ -34,14 +43,6 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
   };
 
   useEffect(() => {
-    const checkIfClickedOutside = (e: globalThis.MouseEvent) => {
-      // If the menu is open and the clicked target is not within the menu,
-      // then close the menu
-      if (isDivFocused && ref.current && !ref.current.contains(e.target as HTMLElement)) {
-        setIsDivFocused(false);
-      }
-    };
-    document.addEventListener("mousedown", checkIfClickedOutside);
     const pullLink = bodyText.match(/((https?:\/\/)?(www\.)?github\.com\/[^\/]+\/[^\/]+\/pull\/[0-9]+)/);
     const link =
       pullLink && new URL(pullLink.includes("https://") ? (pullLink as unknown as string) : `https://${pullLink}`);
@@ -51,12 +52,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
     } else {
       setPullRequestLink("");
     }
-
-    return () => {
-      // Cleanup the event listener
-      document.removeEventListener("mousedown", checkIfClickedOutside);
-    };
-  }, [isDivFocused, bodyText, pullrequestLink]);
+  }, [bodyText, pullrequestLink]);
 
   const handleTextAreaInputChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setBodyText(e.target.value);
@@ -96,19 +92,22 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
         const res = await createHighlights({
           highlight,
           title,
-          url: url
+          url: url,
+          shipped_at: date
         });
 
         setLoading(false);
-        if (res) {
-          refreshCallback && refreshCallback();
-          setBodyText("");
-          setTitle("");
-          setIsDivFocused(false);
-          toast({ description: "Highlight Posted!", title: "Success", variant: "success" });
-        } else {
-          toast({ description: "An error occured!", title: "Error", variant: "danger" });
+
+        if (typeof res === "string") {
+          return toast({ description: res, title: "Error", variant: "danger" });
         }
+
+        refreshCallback && refreshCallback();
+        setBodyText("");
+        setTitle("");
+        setDate(undefined);
+        setIsDivFocused(false);
+        toast({ description: "Highlight Posted!", title: "Success", variant: "success" });
       }
     } else {
       toast({ description: "Please provide a valid pull request link!", title: "Error", variant: "danger" });
@@ -116,48 +115,73 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
   };
 
   return (
-    <form onSubmit={handlePostHighlight} ref={ref} className="flex flex-1 flex-col gap-4">
-      <div
-        onClick={() => {
-          setIsDivFocused(true);
-        }}
-        className="bg-white p-2 flex border rounded-lg text-sm overflow-hidden flex-col gap-2 "
-      >
-        <input
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          className=" focus:outline-none "
-          type="text"
-          placeholder={
-            isDivFocused ? "Add title (optional)" : "Click here to highlight your merged PRs and provide a link!"
-          }
-        />
-        <Textarea
-          className={`resize-none font-normal text-light-slate-11 mb-2 transition focus:outline-none rounded-lg ${
-            !isDivFocused ? "hidden" : ""
-          }`}
-          ref={textAreaRef}
-          rows={row}
-          value={bodyText}
-          placeholder={`Share your thoughts and link to it.
+    <form onSubmit={handlePostHighlight} className="flex flex-col flex-1 gap-4">
+      <Collapsible onOpenChange={setIsDivFocused} open={isDivFocused}>
+        <div className="flex flex-col gap-2 p-2 overflow-hidden text-sm bg-white border rounded-lg ">
+          <CollapsibleTrigger asChild>
+            <div className="flex pr-2">
+              <input
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                className="flex-1 focus:outline-none"
+                type="text"
+                placeholder={
+                  isDivFocused ? "Add title (optional)" : "Click here to highlight your merged PRs and provide a link!"
+                }
+              />
+            </div>
+          </CollapsibleTrigger>
+          <CollapsibleContent>
+            <Textarea
+              className={`resize-none font-normal text-light-slate-11 mb-2 transition focus:outline-none rounded-lg ${
+                !isDivFocused ? "hidden" : ""
+              }`}
+              ref={textAreaRef}
+              rows={row}
+              value={bodyText}
+              placeholder={`Share your thoughts and link to it.
 
 https://github.com/open-sauced/insights/pull/913`}
-          onChange={(e) => {
-            handleTextAreaInputChange(e);
-            setCharCount(e.target.value.length);
-          }}
-        />
-        {isDivFocused && (
-          <p className="text-xs pb-2 text-light-slate-9 flex justify-end gap-1">
-            <span className={`${!validCharLimit() && "text-red-600"}`}>
-              {!validCharLimit()
-                ? `-${charCount - pullrequestLink.length - charLimit}`
-                : charCount - pullrequestLink.length}
-            </span>{" "}
-            / <span>{charLimit}</span>
-          </p>
-        )}
-      </div>
+              onChange={(e) => {
+                handleTextAreaInputChange(e);
+                setCharCount(e.target.value.length);
+              }}
+            />
+
+            <div className="flex justify-between">
+              <Tooltip direction="top" content="Pick a date">
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <button className="flex items-center gap-2 text-base text-light-slate-9">
+                      <BsCalendar2Event className="text-light-slate-9" />
+                      {date && <span className="text-xs">{format(date, "PPP")}</span>}
+                    </button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0 bg-white">
+                    <Calendar
+                      // block user's from selecting a future date
+                      toDate={new Date()}
+                      mode="single"
+                      selected={date}
+                      onSelect={setDate}
+                      className="border rounded-md"
+                    />
+                  </PopoverContent>
+                </Popover>
+              </Tooltip>
+
+              <p className="flex justify-end gap-1 pb-2 text-xs text-light-slate-9">
+                <span className={`${!validCharLimit() && "text-red-600"}`}>
+                  {!validCharLimit()
+                    ? `-${charCount - pullrequestLink.length - charLimit}`
+                    : charCount - pullrequestLink.length}
+                </span>
+                / <span>{charLimit}</span>
+              </p>
+            </div>
+          </CollapsibleContent>
+        </div>
+      </Collapsible>
 
       {pullrequestLink && isDivFocused && <GhOpenGraphImg githubLink={pullrequestLink} />}
 

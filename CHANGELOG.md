@@ -5,6 +5,64 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.45.0-beta.6](https://github.com/open-sauced/insights/compare/v1.45.0-beta.5...v1.45.0-beta.6) (2023-05-02)
+
+
+### 🐛 Bug Fixes
+
+* fix toast inaccessible menu ([#1098](https://github.com/open-sauced/insights/issues/1098)) ([#1127](https://github.com/open-sauced/insights/issues/1127)) ([edfd92b](https://github.com/open-sauced/insights/commit/edfd92beff11702d015d1fd3d8f9c29c8ebe62c6))
+
+
+### 🍕 Features
+
+* highlight date selection  ([#1116](https://github.com/open-sauced/insights/issues/1116)) ([992d35c](https://github.com/open-sauced/insights/commit/992d35caceb3dab5c2f3633f568421cc83ccfc8d))
+* replace supabase checkbox with radix ui ([#1121](https://github.com/open-sauced/insights/issues/1121)) ([ad65864](https://github.com/open-sauced/insights/commit/ad658649e50416ed22a2e73f9ac30537671463c8))
+
+
+### 🧑‍💻 Code Refactoring
+
+* update gh open graph fallback image ([#1134](https://github.com/open-sauced/insights/issues/1134)) ([571d208](https://github.com/open-sauced/insights/commit/571d208e83ed86273b2b8a741560c18d245c9ad8))
+
+## [1.45.0-beta.5](https://github.com/open-sauced/insights/compare/v1.45.0-beta.4...v1.45.0-beta.5) (2023-05-01)
+
+
+### 🐛 Bug Fixes
+
+* support user-setting-page breaks in ipad-mini ([#1129](https://github.com/open-sauced/insights/issues/1129)) ([5695e09](https://github.com/open-sauced/insights/commit/5695e0960bfa538b6ffea48a87580b352d51bb88))
+
+## [1.45.0-beta.4](https://github.com/open-sauced/insights/compare/v1.45.0-beta.3...v1.45.0-beta.4) (2023-04-27)
+
+
+### 🐛 Bug Fixes
+
+* connect reports to the API ([#1117](https://github.com/open-sauced/insights/issues/1117)) ([bfd19b4](https://github.com/open-sauced/insights/commit/bfd19b4f325aff5df5877638d8cf446fccb55581))
+
+
+### 🧑‍💻 Code Refactoring
+
+* improve select structure for accessibility and reusability  ([#1107](https://github.com/open-sauced/insights/issues/1107)) ([48c9d8b](https://github.com/open-sauced/insights/commit/48c9d8b890a35c8de9f1bf375dca4d7161e8db90))
+
+## [1.45.0-beta.3](https://github.com/open-sauced/insights/compare/v1.45.0-beta.2...v1.45.0-beta.3) (2023-04-27)
+
+
+### 🐛 Bug Fixes
+
+* display highlight input error message ([#1120](https://github.com/open-sauced/insights/issues/1120)) ([ae41b26](https://github.com/open-sauced/insights/commit/ae41b269e5c1d62df23605ee6724dce568d00bf7))
+
+## [1.45.0-beta.2](https://github.com/open-sauced/insights/compare/v1.45.0-beta.1...v1.45.0-beta.2) (2023-04-27)
+
+
+### 🍕 Features
+
+* adds a share button to profile ([#1126](https://github.com/open-sauced/insights/issues/1126)) ([3c788f2](https://github.com/open-sauced/insights/commit/3c788f2fd050342d6a076bf48c829adf6720954c)), closes [#686](https://github.com/open-sauced/insights/issues/686)
+
+## [1.45.0-beta.1](https://github.com/open-sauced/insights/compare/v1.44.0...v1.45.0-beta.1) (2023-04-26)
+
+
+### 🍕 Features
+
+* adds is_opensauced_member check ([#1125](https://github.com/open-sauced/insights/issues/1125)) ([2c0f099](https://github.com/open-sauced/insights/commit/2c0f09999d7902d83639ba93166cb08ad7baf6ac)), closes [#1124](https://github.com/open-sauced/insights/issues/1124)
+
 ## [1.44.0](https://github.com/open-sauced/insights/compare/v1.43.0...v1.44.0) (2023-04-25)
 
 

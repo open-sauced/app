@@ -120,8 +120,8 @@ const ContributorProfileTab = ({
               {!isError && highlights && highlights.length > 0 ? (
                 <div>
                   {/* eslint-disable-next-line camelcase */}
-                  {highlights.map(({ id, title, highlight, url, created_at }) => (
-                    <div className="flex flex-col gap-2 lg:flex-row lg:gap-7 mb-6" key={id}>
+                  {highlights.map(({ id, title, highlight, url, shipped_at, created_at }) => (
+                    <div className="flex flex-col gap-2 mb-6 lg:flex-row lg:gap-7" key={id}>
                       <Link href={`/feed/${id}`}>
                         <p className="text-sm text-light-slate-10">{getFormattedDate(created_at)}</p>
                       </Link>
@@ -132,6 +132,7 @@ const ContributorProfileTab = ({
                         title={title}
                         desc={highlight}
                         prLink={url}
+                        shipped_date={shipped_at}
                         refreshCallBack={mutate}
                       />
                     </div>

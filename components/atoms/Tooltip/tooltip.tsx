@@ -18,7 +18,7 @@ const Tooltip = ({ children, content, className, direction }: TooltipProps): JSX
         <div>{children}</div>
       </Trigger>
       <Portal>
-        <Content collisionPadding={10} side={!!direction ? direction : "bottom"} avoidCollisions>
+        <Content sideOffset={4} collisionPadding={10} side={!!direction ? direction : "bottom"} avoidCollisions>
           <div
             className={`${
               className && className
