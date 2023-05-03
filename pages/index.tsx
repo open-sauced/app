@@ -30,6 +30,11 @@ const Home: WithPageLayout = () => {
         return;
       }
 
+      if (currentUser?.data?.session && onboarded === true) {
+        redirect(`/user/${currentUser?.user?.login}`);
+      } else {
+        redirect("/javascript");
+      }
     }
 
     getAccess();
