@@ -23,16 +23,13 @@ const Home: WithPageLayout = () => {
       const currentUser = await supabase.auth.getSession();
 
       if (!currentUser?.data?.session) {
-        redirect("/");
+        redirect("/javascript");
       }
 
       if (onboarded === undefined) {
         return;
       }
 
-      if (currentUser?.data?.session && onboarded === true) {
-        redirect("/");
-      }
     }
 
     getAccess();
