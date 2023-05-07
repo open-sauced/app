@@ -28,7 +28,7 @@ const NavItem:  React.FC<NavItemProps> = ({ username, filterName, tool, selected
       {/* Button component was here and needed to be removed to resolve issue #187. Button component had styling that will eventually need to be replaced. */}
       <div
         className={`flex h-11 px-2 md:px-4 items-center rounded-t-lg ${
-          selectedTool === tool.name.toLowerCase() ? "" : "cursor-pointer hover:!bg-light-slate-4"
+          selectedTool === tool.name.toLowerCase() ? "" : "cursor-pointer hover:!bg-light-slate-4 dark:hover:!bg-dark-slate-8"
         } after:block after:relative after:inset-x-0 after:-bottom-0.5 after:h-0.5 after:rounded-lg ${
           selectedTool === tool.name.toLowerCase() ? "after:bg-orange-500" : "focus:after:bg-slate-400"
         } focus:bg-slate-100 focus:ring-slate-300 child:flex child:items-center`}
@@ -36,7 +36,7 @@ const NavItem:  React.FC<NavItemProps> = ({ username, filterName, tool, selected
         <span
           className={
             "text-base whitespace-nowrap " +
-          (selectedTool === tool.name.toLowerCase() ? "text-slate-900" : "text-slate-500")
+          (selectedTool === tool.name.toLowerCase() ? "text-slate-900 dark:text-slate-100" : "text-slate-500 dark:text-slate-400")
           }
         >
           {tool.name}
@@ -45,7 +45,7 @@ const NavItem:  React.FC<NavItemProps> = ({ username, filterName, tool, selected
           { humanizeNumber(total, null) }
         </div>}
       </div>
-    </Link>    
+    </Link>
   );
 };
 

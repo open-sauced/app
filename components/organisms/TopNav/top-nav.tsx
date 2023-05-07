@@ -18,7 +18,7 @@ const TopNav: React.FC = () => {
   const router = useRouter();
 
   return (
-    <header className="top-nav-container flex justify-between items-center z-50 py-0.5 bg-light-slate-3 border-b">
+    <header className="top-nav-container flex justify-between items-center z-50 py-0.5 bg-light-slate-3 border-b dark:bg-dark-slate-3 dark:border-b-dark-slate-8">
       <div className="flex justify-between items-start sm:items-center mx-auto container px-2 md:px-16">
         <div className="flex gap-3 md:gap-8 items-center flex-wrap">
           <HeaderLogo withBg={false} textIsBlack />
@@ -50,7 +50,7 @@ const TopNav: React.FC = () => {
 };
 
 function getActiveStyle(isActive: boolean) {
-  return isActive ? "text-light-orange-10" : "text-light-slate-10";
+  return isActive ? "text-light-orange-10" : "text-light-slate-10 dark:text-slate-100";
 }
 
 export default TopNav;

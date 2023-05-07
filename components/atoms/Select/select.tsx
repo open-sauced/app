@@ -17,7 +17,7 @@ const SelectTrigger = React.forwardRef<
   <SelectPrimitive.Trigger
     ref={ref}
     className={clsx(
-      "flex h-[2.1rem] w-full items-center justify-between rounded-lg overflow-hidden   px-3 py-2 text-sm border  focus:outline-none  disabled:cursor-not-allowed disabled:opacity-50",
+      "flex h-[2.1rem] w-full items-center justify-between rounded-lg overflow-hidden px-3 py-2 text-sm border focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 dark:text-slate-100",
       className
     )}
     {...props}
@@ -36,7 +36,7 @@ const SelectContent = React.forwardRef<
     <SelectPrimitive.Content
       ref={ref}
       className={clsx(
-        "relative z-50 min-w-[8rem] overflow-hidden rounded-md border  shadow-md animate-in fade-in-80",
+        "relative z-50 min-w-[8rem] overflow-hidden rounded-md border shadow-md animate-in fade-in-80",
         position === "popper" && "translate-y-1",
         className
       )}
@@ -74,7 +74,7 @@ const SelectItem = React.forwardRef<
   <SelectPrimitive.Item
     ref={ref}
     className={clsx(
-      "relative flex w-full cursor-pointer select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none radix-highlighted:bg-light-orange-3  radix-highlighted:text-light-orange-11 focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+      "relative flex w-full cursor-pointer select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none radix-highlighted:bg-light-orange-3 radix-highlighted:text-light-orange-11 focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:!text-dark-slate-12 dark:radix-highlighted:!text-dark-slate-3",
       className
     )}
     {...props}

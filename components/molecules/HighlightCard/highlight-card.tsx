@@ -91,13 +91,13 @@ const HighlightCard: React.FC<HighlightCardProps> = ({
               />
             </div>
             {/* Label: Text */}
-            <div className="text-sm text-slate-600   leading-none">{label ? label : "Label"}</div>
+            <div className="text-sm text-slate-600 leading-none dark:text-slate-200">{label ? label : "Label"}</div>
           </div>
 
           {/* Last Updated Information */}
           <div className="flex items-center gap-1">
             {/* Last Updated: Number */}
-            <div className="text-sm text-slate-600   leading-none">{numChanged ? numChanged : 0}</div>
+            <div className="text-sm text-slate-600 leading-none dark:text-slate-200">{numChanged ? numChanged : 0}</div>
             {/* Last Updated: Icon */}
             <Image
               width={14}
@@ -117,12 +117,12 @@ const HighlightCard: React.FC<HighlightCardProps> = ({
             {/* Main Number */}
             <div className="flex flex-col items-center">
               {/* Percentage */}
-              <div className="text-4xl">
+              <div className="text-4xl dark:text-slate-100">
                 {percentage !== undefined ? `${percentage}%` : <span></span>}{value !== undefined ? value : ""}
               </div>
 
               {/* Label */}
-              <div className="text-base   text-slate-600 mt-0.5">
+              <div className="text-base text-slate-600 mt-0.5 dark:text-slate-100">
                 <span>{percentageLabel ? percentageLabel : ""}{valueLabel ? valueLabel : ""}&nbsp;</span>
               </div>
             </div>
