@@ -59,20 +59,20 @@ const footerContext = [
 
 const Footer = (): JSX.Element => {
   return (
-    <footer className=" h-24 w-full bg-light-slate-2 transition">
-      <div className=" container mx-auto px-2 md:px-16  lg:border-t lg:py-8 lg:items-center lg:justify-between lg:gap-x-4 flex flex-col gap-y-4 lg:flex-row py-2 w-full">
+    <footer className="h-24 w-full bg-light-slate-2 transition dark:bg-dark-slate-2">
+      <div className="container mx-auto px-2 md:px-16 lg:border-t lg:py-8 lg:items-center lg:justify-between lg:gap-x-4 flex flex-col gap-y-4 lg:flex-row py-2 w-full dark:lg:border-t-dark-slate-8 dark:bg-dark-slate-2">
         <div className="text-center lg:text-left justify-center gap-1 flex items-center">
           <div className="w-6 h-6 relative !min-w-[24px] min-h-[24px]">
             <Image fill={true} alt="brand logo" src={OpenSaucedLogo} />
           </div>
-          <span className="lg:hidden font-bold text-light-slate-12 ">OpenSauced</span>
-          <Text className="hidden !text-light-slate-9 lg:inline-block">
+          <span className="lg:hidden font-bold text-light-slate-12 dark:text-dark-slate-12">OpenSauced</span>
+          <Text className="hidden !text-light-slate-9 lg:inline-block dark:!text-dark-slate-12">
             © {(new Date()).getFullYear()} <span className="hidden lg:inline-block">OpenSauced</span>
           </Text>
         </div>
-        <div className="flex lg:mr-auto lg:text-sm text-light-slate-11 justify-center gap-x-4">
+        <div className="flex lg:mr-auto lg:text-sm text-light-slate-11 justify-center gap-x-4 dark:text-dark-slate-11">
           <a
-            className="px-2 hover:text-light-slate-12 "
+            className="px-2 hover:text-light-slate-12 dark:hover:text-dark-slate-12"
             target="_blank"
             href={footerContext[1].hot?.url}
             rel="noopener noreferrer"
@@ -80,7 +80,7 @@ const Footer = (): JSX.Element => {
             {footerContext[1].hot?.text}
           </a>
           <a
-            className="px-2 hover:text-light-slate-12"
+            className="px-2 hover:text-light-slate-12 dark:hover:text-dark-slate-12"
             target="_blank"
             href={footerContext[1].openSauced?.url}
             rel="noopener noreferrer"
@@ -88,10 +88,10 @@ const Footer = (): JSX.Element => {
             {footerContext[1].openSauced?.text}
           </a>
         </div>
-        <div className="flex justify-center gap-x-4 ">
-          <div className=" hidden lg:flex items-center border-r pr-4   gap-x-4 text-light-slate-11 text-sm">
+        <div className="flex justify-center gap-x-4">
+          <div className="hidden lg:flex items-center border-r pr-4 gap-x-4 text-light-slate-11 text-sm dark:text-dark-slate-11 dark:border-r-dark-slate-8">
             <a
-              className="px-2 hover:text-light-slate-12"
+              className="px-2 hover:text-light-slate-12 dark:hover:text-dark-slate-12"
               href={footerContext[0].terms?.url}
               target="_blank"
               rel="noreferrer"
@@ -99,7 +99,7 @@ const Footer = (): JSX.Element => {
               {footerContext[0].terms?.text}
             </a>
             <a
-              className="px-2 hover:text-light-slate-12"
+              className="px-2 hover:text-light-slate-12 dark:hover:text-dark-slate-12"
               href={footerContext[0].privacy?.url}
               target="_blank"
               rel="noreferrer"
@@ -107,7 +107,7 @@ const Footer = (): JSX.Element => {
               {footerContext[0].privacy?.text}
             </a>
             <a
-              className="px-2 hover:text-light-slate-12"
+              className="px-2 hover:text-light-slate-12 dark:hover:text-dark-slate-12"
               href={footerContext[0].status?.url}
               target="_blank"
               rel="noreferrer"
@@ -121,11 +121,11 @@ const Footer = (): JSX.Element => {
             </a>
           ))}
         </div>
-        <div className="flex md:justify-center lg:hidden lg:border-none lg:order-2 border-t py-3 pb-4 mt-2 text-sm justify-between">
-          <Text className="text-light-slate-9">
+        <div className="flex md:justify-center lg:hidden lg:border-none lg:order-2 border-t py-3 pb-4 mt-2 text-sm justify-between dark:border-t-dark-slate-8">
+          <Text className="text-light-slate-9 dark:!text-dark-slate-12">
             © {(new Date()).getFullYear()} <span className="hidden md:inline-block">Open sauced</span>
           </Text>
-          <div className="flex items-center gap-x-3 text-light-slate-11 text-sm">
+          <div className="flex items-center gap-x-3 text-light-slate-11 text-sm dark:text-dark-slate-11">
             <a className="px-2" href={footerContext[0].terms?.url} target="_blank" rel="noreferrer">
               {footerContext[0].terms?.text}
             </a>

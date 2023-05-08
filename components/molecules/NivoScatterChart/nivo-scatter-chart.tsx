@@ -103,7 +103,7 @@ const NivoScatterPlot = ({
   return (
     <>
       <div className="flex flex-col md:flex-row justify-between px-7 pt-3 items-center">
-        <Title level={4} className="!text-sm  !text-light-slate-12">
+        <Title level={4} className="!text-sm !text-light-slate-12 dark:!text-dark-slate-12">
           {title}
         </Title>
         <ToggleGroup handleChange={handleTogglePrFilter} className="hidden lg:flex">
@@ -166,7 +166,20 @@ const NivoScatterPlot = ({
             format: (value) => (value === 0 ? "Today" : value > 32 ? "30+ days ago" : `${value} days ago`)
           }}
           theme={{
-            axis: {},
+            axis: {
+              ticks: {
+                text: {
+                  // this color is equal to `dark-slate-10` in tailwind config
+                  fill: "hsl(206, 5.2%, 49.5%)"
+                }
+              },
+              legend: {
+                text: {
+                  // this color is equal to `dark-slate-11` in tailwind config
+                  fill: "hsl(206, 6.0%, 63.0%)"
+                }
+              }
+            },
             grid: {
               line: {
                 strokeDasharray: "4 4",

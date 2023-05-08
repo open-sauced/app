@@ -1,5 +1,7 @@
 import * as GroupToggle from "@radix-ui/react-toggle-group";
 import { useState } from "react";
+import clsx from "clsx";
+
 import ToggleGroupItem from "../ToggleGroupItem/toggle-group-item";
 
 interface ToggleGroupProps {
@@ -42,7 +44,15 @@ const ToggleGroup = ({
   if(!children) return null;
 
   return (
-    <GroupToggle.Root type="single" value={value} onValueChange={handleValueChange} className={`bg-light-slate-6 rounded-lg p-0.25 ${className && className}`}>
+    <GroupToggle.Root
+      type="single"
+      value={value}
+      onValueChange={handleValueChange}
+      className={clsx(
+        "rounded-lg p-0.25 bg-light-slate-6 dark:bg-dark-slate-6",
+        className ? className : ""
+      )}
+    >
       {
         Array.isArray(children) ? children.map((child, index) => (
           <ToggleGroupItem checked={value==`${index}`} value={`${index}`} key={index}>
