@@ -1,12 +1,15 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+
 import useStore from "lib/store";
 
 import useSupabaseAuth from "./useSupabaseAuth";
 
-const useSession = () => {
-  const { sessionToken } = useSupabaseAuth();
+const useSession = (getSession = false) => {
+  const { sessionToken } = useSupabaseAuth(getSession);
   const store = useStore();
-  const [hasReports, setHasReports] = useState<boolean | undefined>(undefined);
+  const hasReports = useStore(state => state.hasReports);
+  const onboarded = useStore(state => state.onboarded);
+  const waitlisted = useStore(state => state.waitlisted);
 
   async function loadSession() {
     const resp = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/session`, {
@@ -25,19 +28,19 @@ const useSession = () => {
         insightRepoLimit: data.insights_role >= 50 ? 50 : 10
       });
 
-      setHasReports(data.insights_role >= 50);
+      store.setHasReports(data.insights_role >= 50);
     } else {
     // show an alert
     }
   }
 
   useEffect(() => {
-    if (sessionToken) {
+    if (sessionToken && getSession) {
       loadSession();
     }
   }, [sessionToken]);
 
-  return { onboarded: store?.onboarded, waitlisted: store?.waitlisted, hasReports };
+  return { onboarded, waitlisted, hasReports };
 };
 
 export default useSession;

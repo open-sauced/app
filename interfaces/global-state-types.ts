@@ -6,4 +6,8 @@ export interface GlobalStateInterface {
   waitlisted?: boolean;
   range?: number;
   insightRepoLimit?: number;
+  sessionToken?: string | null;
+  providerToken?: string | null;
+  userId?: number | null;
+  hasReports?: boolean;
 }
