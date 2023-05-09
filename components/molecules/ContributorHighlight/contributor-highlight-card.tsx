@@ -90,7 +90,7 @@ const ContributorHighlightCard = ({
 
   const [date, setDate] = useState<Date | undefined>(shipped_date ? new Date(shipped_date) : undefined);
 
-  const { follow, unFollow, isError } = useFollowUser(user);
+  const { data: follower, follow, unFollow, isError } = useFollowUser(user);
 
   const { data: reactions, mutate } = useHighlightReactions(id);
   const { data: userReaction, deleteReaction, addReaction } = useUserHighlightReactions(id);
@@ -254,7 +254,7 @@ const ContributorHighlightCard = ({
                   <DropdownMenuItem
                     className={`rounded-md ${loggedInUser.user_metadata.user_name === user && "hidden"}`}
                   >
-                    <div onClick={isError ? follow : unFollow} className="flex gap-2.5 py-1  items-center pl-3 pr-7">
+                    <div onClick={follower.follows_user && !isError ? follow : unFollow} className="flex gap-2.5 py-1  items-center pl-3 pr-7">
                       <FaUserPlus size={22} />
                       <span>
                         {!isError ? "Unfollow" : "Follow"} {user}

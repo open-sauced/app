@@ -83,7 +83,7 @@ const ContributorProfilePage = ({
     };
   });
   const prsMergedPercentage = getPercent(prTotal, prMerged || 0);
-  const { data: Follower, isError: followError, follow, unFollow } = useFollowUser(user?.login || "");
+  const { data: follower, isError: followError, follow, unFollow } = useFollowUser(user?.login || "");
 
   const {
     bio,
@@ -108,7 +108,7 @@ const ContributorProfilePage = ({
           handleSignIn={signIn}
           username={user?.login}
           user={loggedInUser}
-          isFollowing={followError ? false : true}
+          isFollowing={follower.follows_user && !followError}
           isConnected={iscConnected}
           githubName={githubName}
           avatarUrl={githubAvatar}

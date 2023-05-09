@@ -3,7 +3,7 @@ import useSWR, { Fetcher } from "swr";
 import useSupabaseAuth from "./useSupabaseAuth";
 
 interface FollowUserResponse {
-  data: DbFollowUser;
+  follows_user: boolean;
 }
 const useFollowUser = (username: string) => {
   const { sessionToken } = useSupabaseAuth();
@@ -40,9 +40,9 @@ const useFollowUser = (username: string) => {
   };
 
   return {
-    data: data || undefined,
+    data: data ?? { follows_user: false },
     isLoading: !error && !data,
-    isError: !!error,
+    isError: !!error && Object.keys(error).length > 0,
     mutate,
     follow,
     unFollow
