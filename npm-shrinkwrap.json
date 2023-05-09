@@ -7216,21 +7216,6 @@
         "react": "^16.8 || ^17.0 || ^18.0"
       }
     },
-    "node_modules/@radix-ui/react-toggle": {
-      "version": "1.0.1",
-      "resolved": "https://registry.npmjs.org/@radix-ui/react-toggle/-/react-toggle-1.0.1.tgz",
-      "integrity": "sha512-hZIp9ZKnw4NwVqeB4evWBLa91ryaSJhAO0Ed82wkzRPgg/I29ypcY6SuBb3AMZW+GsuBZpIVujpCq+33TdEcyg==",
-      "dependencies": {
-        "@babel/runtime": "^7.13.10",
-        "@radix-ui/primitive": "1.0.0",
-        "@radix-ui/react-primitive": "1.0.1",
-        "@radix-ui/react-use-controllable-state": "1.0.0"
-      },
-      "peerDependencies": {
-        "react": "^16.8 || ^17.0 || ^18.0",
-        "react-dom": "^16.8 || ^17.0 || ^18.0"
-      }
-    },
     "node_modules/@radix-ui/react-toggle-group": {
       "version": "1.0.2",
       "resolved": "https://registry.npmjs.org/@radix-ui/react-toggle-group/-/react-toggle-group-1.0.2.tgz",
@@ -7312,29 +7297,19 @@
         "react": "^16.8 || ^17.0 || ^18.0"
       }
     },
-    "node_modules/@radix-ui/react-toggle/node_modules/@radix-ui/react-primitive": {
+    "node_modules/@radix-ui/react-toggle-group/node_modules/@radix-ui/react-toggle": {
       "version": "1.0.1",
-      "resolved": "https://registry.npmjs.org/@radix-ui/react-primitive/-/react-primitive-1.0.1.tgz",
-      "integrity": "sha512-fHbmislWVkZaIdeF6GZxF0A/NH/3BjrGIYj+Ae6eTmTCr7EB0RQAAVEiqsXK6p3/JcRqVSBQoceZroj30Jj3XA==",
+      "resolved": "https://registry.npmjs.org/@radix-ui/react-toggle/-/react-toggle-1.0.1.tgz",
+      "integrity": "sha512-hZIp9ZKnw4NwVqeB4evWBLa91ryaSJhAO0Ed82wkzRPgg/I29ypcY6SuBb3AMZW+GsuBZpIVujpCq+33TdEcyg==",
       "dependencies": {
         "@babel/runtime": "^7.13.10",
-        "@radix-ui/react-slot": "1.0.1"
+        "@radix-ui/primitive": "1.0.0",
+        "@radix-ui/react-primitive": "1.0.1",
+        "@radix-ui/react-use-controllable-state": "1.0.0"
       },
       "peerDependencies": {
         "react": "^16.8 || ^17.0 || ^18.0",
         "react-dom": "^16.8 || ^17.0 || ^18.0"
-      }
-    },
-    "node_modules/@radix-ui/react-toggle/node_modules/@radix-ui/react-slot": {
-      "version": "1.0.1",
-      "resolved": "https://registry.npmjs.org/@radix-ui/react-slot/-/react-slot-1.0.1.tgz",
-      "integrity": "sha512-avutXAFL1ehGvAXtPquu0YK5oz6ctS474iM3vNGQIkswrVhdrS52e3uoMQBzZhNRAIE0jBnUyXWNmSjGHhCFcw==",
-      "dependencies": {
-        "@babel/runtime": "^7.13.10",
-        "@radix-ui/react-compose-refs": "1.0.0"
-      },
-      "peerDependencies": {
-        "react": "^16.8 || ^17.0 || ^18.0"
       }
     },
     "node_modules/@radix-ui/react-tooltip": {
