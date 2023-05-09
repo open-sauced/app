@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.45.1-beta.2](https://github.com/open-sauced/insights/compare/v1.45.1-beta.1...v1.45.1-beta.2) (2023-05-09)
+
+
+### 🐛 Bug Fixes
+
+* disable retry on error in SWR config ([#1164](https://github.com/open-sauced/insights/issues/1164)) ([352fefe](https://github.com/open-sauced/insights/commit/352fefef4171430a0a950da6b5561ac8c3096f99))
+
 ### [1.45.1-beta.1](https://github.com/open-sauced/insights/compare/v1.45.0...v1.45.1-beta.1) (2023-05-09)
 
 
