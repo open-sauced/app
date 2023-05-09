@@ -10,7 +10,8 @@ const useFollowUser = (username: string) => {
 
   const { data, error, mutate } = useSWR<FollowUserResponse, Error>(
     `users/${username}/follow`,
-    publicApiFetcher as Fetcher<FollowUserResponse, Error>
+    publicApiFetcher as Fetcher<FollowUserResponse, Error>,
+    { shouldRetryOnError: false }
   );
 
   const follow = async () => {
