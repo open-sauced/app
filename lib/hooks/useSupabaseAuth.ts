@@ -1,30 +1,34 @@
-import { useState, useEffect } from "react";
-import { SignInWithOAuthCredentials, User } from "@supabase/supabase-js";
+import { useEffect } from "react";
+import { SignInWithOAuthCredentials } from "@supabase/supabase-js";
 
+import useStore from "../store";
 import { supabase } from "../utils/supabase";
 
-const useSupabaseAuth = () => {
-  const [user, setUser] = useState<User | null>(null);
-  const [sessionToken, setSessionToken] = useState<string>();
-  const [providerToken, setProviderToken] = useState<string | null>();
-  const [userId, setUserId] = useState<string>();
+const useSupabaseAuth = (loadSession = false) => {
+  const store = useStore();
+  const user = useStore(state => state.user);
+  const sessionToken = useStore(state => state.sessionToken);
+  const providerToken = useStore(state => state.providerToken);
+  const userId = useStore(state => state.userId);
 
   useEffect(() => {
     async function getUserSession() {
       const currentUser = await supabase.auth.getSession();
-      setUser(currentUser?.data.session?.user ?? null);
-      setSessionToken(currentUser?.data.session?.access_token);
-      setProviderToken(currentUser?.data.session?.provider_token);
-      setUserId(currentUser?.data.session?.user?.user_metadata.sub);
+      store.setUser(currentUser?.data.session?.user ?? null);
+      store.setSessionToken(currentUser?.data.session?.access_token);
+      store.setProviderToken(currentUser?.data.session?.provider_token);
+      store.setUserId(currentUser?.data.session?.user?.user_metadata.sub);
     }
 
-    getUserSession();
+    if (loadSession) {
+      getUserSession();
+    }
 
     const { data: { subscription: listener } } = supabase.auth.onAuthStateChange((_, session) => {
-      setUser(session?.user ?? null);
-      setSessionToken(session?.access_token);
-      setProviderToken(session?.provider_token);
-      setUserId(session?.user.user_metadata.sub);
+      store.setUser(session?.user ?? null);
+      store.setSessionToken(session?.access_token);
+      store.setProviderToken(session?.provider_token);
+      store.setUserId(session?.user.user_metadata.sub);
     });
 
     return () => {
