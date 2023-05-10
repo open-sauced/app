@@ -5,7 +5,7 @@ interface NotificationCard {
   type: "reaction" | "follow" | "collaboration";
   message: string;
 }
-const NotificationCard = ({ type, message }: NotificationCard) => {
+const NotificationCard = ({ type, message }: NotificationCardProps) => {
   const Icons = {
     reaction: FaRegSmile,
     follow: FaUserCircle,
