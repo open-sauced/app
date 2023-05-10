@@ -44,10 +44,10 @@ const Pagination = ({
 
   return (
     <>
-      <div className=" w-max flex gap-x-4 items-center ">
+      <div className="w-max flex gap-x-4 items-center">
         <div className="flex items-center gap-x-4">
           <button
-            className="text-light-slate-9 disabled:text-light-slate-7"
+            className="text-light-slate-9 disabled:text-light-slate-7 dark:text-slate-400 dark:disabled:text-slate-400"
             disabled={!hasPreviousPage ? true : false}
             onClick={() => handlePrev()}
           >
@@ -72,7 +72,7 @@ const Pagination = ({
           })}
 
           <button
-            className="text-light-slate-9 disabled:text-light-slate-7"
+            className="text-light-slate-9 disabled:text-light-slate-7 dark:text-slate-400 dark:disabled:text-slate-400"
             disabled={!hasNextPage ? true : false}
             onClick={() => handleNext()}
           >
@@ -80,7 +80,7 @@ const Pagination = ({
           </button>
         </div>
         <div
-          className={`${divisor && "md:border-r-2 border-r-light-slate-6"} text-sm text-light-slate-9    py-1 md:pr-4`}
+          className={`${divisor && "md:border-r-2 border-r-light-slate-6"} text-sm text-light-slate-9    py-1 md:pr-4 dark:text-slate-400 dark:border-r-dark-slate-6`}
         >
           Total {totalPage > 999 ? humanizeNumber(totalPage, null) : totalPage} pages
         </div>

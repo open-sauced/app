@@ -79,7 +79,7 @@ const TableHeader = ({
   return (
     <div className="flex flex-col flex-wrap w-full gap-y-2 md:flex-row md:justify-between md:items-end md:pb-4">
       <div className="flex items-end gap-x-4">
-        <Title className="!text-2xl !leading-none " level={1}>
+        <Title className="!text-2xl !leading-none dark:!text-dark-slate-12" level={1}>
           {title}
         </Title>
         <PaginationResult

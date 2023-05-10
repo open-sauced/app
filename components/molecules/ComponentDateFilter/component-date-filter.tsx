@@ -21,13 +21,13 @@ const ComponentDateFilter = ({ setRangeFilter, defaultRange }: ComponentDateFilt
 
   return (
     <div className="flex text-sm gap-4 items-center">
-      <span>Date filter:</span>
+      <span className="dark:text-dark-slate-12">Date filter:</span>
       <div className="flex items-center">
         {dates.map((range, index) => (
           <div
             onClick={() => handleFilterClick(range)}
-            className={`px-2 py-1  rounded-lg cursor-pointer transition text-light-slate-9 ${
-              activeFilter === range && "border text-light-slate-12 border-light-orange-10"
+            className={`px-2 py-1 rounded-lg cursor-pointer transition text-light-slate-9 dark:text-slate-400 ${
+              activeFilter === range && "border text-light-slate-12 border-light-orange-10 dark:!text-dark-slate-12"
             }`}
             key={index}
           >

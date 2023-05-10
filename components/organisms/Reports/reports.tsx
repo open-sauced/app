@@ -55,10 +55,10 @@ const Reports = ({ hasReports, repositories }: ReportsProps): JSX.Element => {
   return (
     <section className="flex flex-col w-full py-4 px-2 md:px-4 justify-center items-center">
       <div className="max-w-4xl">
-        <Title className=" relative" level={3}>
+        <Title className="relative dark:!text-dark-slate-12" level={3}>
           Contribution Insights
         </Title>
-        <hr className="border-light-slate-6 my-4" />
+        <hr className="border-light-slate-6 my-4 dark:border-dark-slate-8" />
 
         {hasReports ? (
           <>

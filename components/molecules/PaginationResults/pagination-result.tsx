@@ -19,9 +19,9 @@ const PaginationResults = ({ metaInfo, entity, total, className }: PaginationRes
       ? metaInfo.page * metaInfo.limit
       : metaInfo.itemCount;
   return (
-    <div className={`${className && className} flex items-center gap-x-1   text-sm text-light-slate-9 tracking-tight`}>
-      <span className="hidden md:block">Showing</span> <span className="text-light-slate-12">{from} -</span>
-      <span className="text-light-slate-12">{to}</span> of {total > 999 ? humanizeNumber(total, null) : total}
+    <div className={`${className && className} flex items-center gap-x-1 text-sm text-light-slate-9 tracking-tight dark:text-slate-400`}>
+      <span className="hidden md:block">Showing</span> <span className="text-light-slate-12 dark:text-dark-slate-12">{from} -</span>
+      <span className="text-light-slate-12 dark:text-dark-slate-12">{to}</span> of {total > 999 ? humanizeNumber(total, null) : total}
       <span>{entity}</span>
     </div>
   );

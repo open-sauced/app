@@ -93,9 +93,9 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
         setRangeFilter={store.updateRange}
         title="Repositories"
       />
-      <div className="flex flex-col w-full overflow-x-auto border rounded-lg">
+      <div className="flex flex-col w-full overflow-x-auto border rounded-lg dark:border-dark-slate-8">
         <div className="lg:min-w-[1150px]">
-          <div className="flex justify-between gap-2 px-6 py-4 md:hidden bg-light-slate-3">
+          <div className="flex justify-between gap-2 px-6 py-4 md:hidden bg-light-slate-3 dark:bg-dark-slate-3">
             <div className="flex-1">
               <TableTitle text="Repository"></TableTitle>
             </div>
@@ -103,7 +103,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
               <TableTitle text="Pr Overview"></TableTitle>
             </div>
           </div>
-          <div className="hidden gap-2 px-6 py-4 md:flex bg-light-slate-3">
+          <div className="hidden gap-2 px-6 py-4 md:flex bg-light-slate-3 dark:md:bg-dark-slate-3">
             <div className={clsx(classNames.cols.checkbox)}>
               <Checkbox
                 onCheckedChange={handleOnSelectAllChecked}
