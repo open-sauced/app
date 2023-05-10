@@ -1,7 +1,7 @@
 import React from "react";
 import { FaRegSmile, FaUserCircle } from "react-icons/fa";
 
-interface NotificationCard {
+interface NotificationCardProps {
   type: "reaction" | "follow" | "collaboration";
   message: string;
 }
