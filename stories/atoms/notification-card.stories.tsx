@@ -13,7 +13,7 @@ export const Follows = NotificationCardTemplate.bind({});
 export const Collaborations = NotificationCardTemplate.bind({});
 
 Reations.args = {
-  type: "reaction",
+  type: "highlight_reaction",
   message: "Sam Smith reacted to your highlight"
 };
 
