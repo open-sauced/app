@@ -5,6 +5,19 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.46.0-beta.1](https://github.com/open-sauced/insights/compare/v1.45.1-beta.3...v1.46.0-beta.1) (2023-05-11)
+
+
+### 🍕 Features
+
+* add notification card to design system ([#1136](https://github.com/open-sauced/insights/issues/1136)) ([b20fcce](https://github.com/open-sauced/insights/commit/b20fcce50fe31e87bfde8da2339eeebb9e46bf3d))
+
+
+### 🐛 Bug Fixes
+
+* auto row expansion on text area ([#1137](https://github.com/open-sauced/insights/issues/1137)) ([f1e54b0](https://github.com/open-sauced/insights/commit/f1e54b098f4758fd48e41a16a774a974bb4ef719))
+* normalize casing for PR status filters ([#1168](https://github.com/open-sauced/insights/issues/1168)) ([ec4e51c](https://github.com/open-sauced/insights/commit/ec4e51c6b41c1a61bee4da944cefda18b6b99a68))
+
 ### [1.45.1-beta.3](https://github.com/open-sauced/insights/compare/v1.45.1-beta.2...v1.45.1-beta.3) (2023-05-10)
 
 
