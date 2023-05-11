@@ -28,7 +28,7 @@ import { Spinner } from "components/atoms/SpinLoader/spin-loader";
 const AuthSection: React.FC = ({}) => {
   const { signIn, signOut, user, sessionToken } = useSupabaseAuth();
   const { onboarded } = useSession();
-  const [notifications, setNotifications] = useState<DbNotification[]>([]);
+  const [notifications, setNotifications] = useState<DbUserNotification[]>([]);
   const [loading, setLoading] = useState(false);
   const [userInfo, setUserInfo] = useState<DbUser | undefined>(undefined);
 
@@ -45,7 +45,7 @@ const AuthSection: React.FC = ({}) => {
       setLoading(false);
       if (req.ok) {
         const notifications = await req.json();
-        setNotifications(notifications.data as DbNotification[]);
+        setNotifications(notifications.data as DbUserNotification[]);
       }
     } else {
       return;
