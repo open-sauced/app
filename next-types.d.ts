@@ -212,7 +212,7 @@ interface DbEmojis {
   readonly updated_at: string;
 }
 
-interface DbNotification {
+interface DbUserNotification {
   readonly id: string;
   readonly message: string;
   readonly type: "highlight_reaction" | "follow";
