@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.46.0-beta.2](https://github.com/open-sauced/insights/compare/v1.46.0-beta.1...v1.46.0-beta.2) (2023-05-11)
+
+
+### 🍕 Features
+
+* implement highlight and follow user notifications ([#1167](https://github.com/open-sauced/insights/issues/1167)) ([8b60634](https://github.com/open-sauced/insights/commit/8b606349c054a0807e543025126c6f0fd4dcc688))
+
 ## [1.46.0-beta.1](https://github.com/open-sauced/insights/compare/v1.45.1-beta.3...v1.46.0-beta.1) (2023-05-11)
 
 
