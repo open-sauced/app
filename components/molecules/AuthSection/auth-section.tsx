@@ -1,6 +1,8 @@
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
+import { IoNotifications } from "react-icons/io5";
 import { FiLogOut, FiSettings } from "react-icons/fi";
 import { Divider } from "@supabase/ui";
 
@@ -8,7 +10,7 @@ import useSession from "lib/hooks/useSession";
 import useSupabaseAuth from "../../../lib/hooks/useSupabaseAuth";
 
 import PersonIcon from "img/icons/person-icon.svg";
-import notifications from "../../../img/notifications.svg";
+
 import downArrow from "../../../img/chevron-down.svg";
 import Avatar from "components/atoms/Avatar/avatar";
 import Button from "components/atoms/Button/button";
@@ -19,9 +21,7 @@ import Text from "components/atoms/Typography/text";
 import GitHubIcon from "img/icons/github-icon.svg";
 import Icon from "components/atoms/Icon/icon";
 import { Popover, PopoverContent, PopoverTrigger } from "../Popover/popover";
-import { IoNotifications } from "react-icons/io5";
 import NotificationCard from "components/atoms/NotificationsCard/notification-card";
-import { useEffect, useState } from "react";
 import { authSession } from "lib/hooks/authSession";
 import { Spinner } from "components/atoms/SpinLoader/spin-loader";
 
