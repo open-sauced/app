@@ -158,6 +158,7 @@ interface DbUser {
   readonly timezone: string;
   readonly github_sponsors_url: string;
   readonly linkedin_url: string;
+  readonly notification_count: number;
 }
 
 interface DbHighlight {
@@ -209,4 +210,13 @@ interface DbEmojis {
   readonly display_order: number;
   readonly created_at: string;
   readonly updated_at: string;
+}
+
+interface DbNotification {
+  readonly id: string;
+  readonly message: string;
+  readonly type: "highlight_reaction" | "follow";
+  readonly from_user_id: number;
+  readonly notified_at: string;
+  readonly user_id: number;
 }

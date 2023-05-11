@@ -2,12 +2,12 @@ import React from "react";
 import { FaRegSmile, FaUserCircle } from "react-icons/fa";
 
 interface NotificationCard {
-  type: "reaction" | "follow" | "collaboration";
+  type: "highlight_reaction" | "follow" | "collaboration";
   message: string;
 }
 const NotificationCard = ({ type, message }: NotificationCard) => {
   const Icons = {
-    reaction: FaRegSmile,
+    highlight_reaction: FaRegSmile,
     follow: FaUserCircle,
     collaboration: FaUserCircle
   };
