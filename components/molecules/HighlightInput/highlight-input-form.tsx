@@ -25,12 +25,12 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
   const [loading, setLoading] = useState(false);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const [bodyText, setBodyText] = useState("");
-  const [row, setRow] = useState(1);
+  const [row, setRow] = useState(4);
   const [title, setTitle] = useState("");
   const [charCount, setCharCount] = useState(0);
   const [pullrequestLink, setPullRequestLink] = useState("");
 
-  let rowLomit = 5;
+  let rowLomit = 10;
   const charLimit = 500;
   let messageLastScrollHeight = textAreaRef.current ? textAreaRef.current?.scrollHeight : 50;
 
@@ -62,7 +62,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
       setRow((prev) => prev--);
     }
     if (!bodyText) setRow(1);
-    messageLastScrollHeight = textAreaRef.current?.scrollHeight || 60;
+    messageLastScrollHeight = textAreaRef.current?.scrollHeight || 80;
   };
 
   // Handle submit highlights
