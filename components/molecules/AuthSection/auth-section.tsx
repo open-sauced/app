@@ -136,7 +136,7 @@ const AuthSection: React.FC = ({}) => {
                       </div>
                     ) : (
                       <div className="px-3 py-2 text-sm text-center text-light-slate-9">
-                        You do not have any unread notifications{" "}
+                        You do not have any unread notification
                       </div>
                     )}
                   </>
