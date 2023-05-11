@@ -32,6 +32,7 @@ const AuthSection: React.FC = ({}) => {
   const [loading, setLoading] = useState(false);
   const [userInfo, setUserInfo] = useState<DbUser | undefined>(undefined);
 
+  // Fetch user notifications
   const fetchNotifications = async () => {
     if (userInfo && userInfo.notification_count > 0) {
       setLoading(true);
@@ -108,6 +109,7 @@ const AuthSection: React.FC = ({}) => {
             )}
             <Popover
               onOpenChange={(state) => {
+                // reset the notification state to empty when the popover is closed
                 if (!loading && !state) setUserInfo(undefined);
               }}
             >
