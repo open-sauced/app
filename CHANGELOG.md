@@ -5,6 +5,27 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.45.1-beta.3](https://github.com/open-sauced/insights/compare/v1.45.1-beta.2...v1.45.1-beta.3) (2023-05-10)
+
+
+### 🔁 Continuous Integration
+
+* update default env and trigger re-deploy ([4df4451](https://github.com/open-sauced/insights/commit/4df44513973f23e9344095c86c51722b5658b9ee))
+
+### [1.45.1-beta.2](https://github.com/open-sauced/insights/compare/v1.45.1-beta.1...v1.45.1-beta.2) (2023-05-09)
+
+
+### 🐛 Bug Fixes
+
+* disable retry on error in SWR config ([#1164](https://github.com/open-sauced/insights/issues/1164)) ([352fefe](https://github.com/open-sauced/insights/commit/352fefef4171430a0a950da6b5561ac8c3096f99))
+
+### [1.45.1-beta.1](https://github.com/open-sauced/insights/compare/v1.45.0...v1.45.1-beta.1) (2023-05-09)
+
+
+### 🐛 Bug Fixes
+
+* make auth session calls earlier and less often ([#1148](https://github.com/open-sauced/insights/issues/1148)) ([8f899e8](https://github.com/open-sauced/insights/commit/8f899e85a065a12d8a9eb5133d5d0be0d6e0c000))
+
 ## [1.45.0](https://github.com/open-sauced/insights/compare/v1.44.0...v1.45.0) (2023-05-02)
 
 

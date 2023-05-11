@@ -20,6 +20,7 @@ import { supabase } from "lib/utils/supabase";
 import SEO from "layouts/SEO/SEO";
 import { Toaster } from "components/molecules/Toaster/toaster";
 import Script from "next/script";
+import useSession from "lib/hooks/useSession";
 
 type ComponentWithPageLayout = AppProps & {
   Component: AppProps["Component"] & {
@@ -30,6 +31,7 @@ type ComponentWithPageLayout = AppProps & {
 };
 
 function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
+  useSession(true);
   const router = useRouter();
   const [seo, updateSEO] = useState<SEOobject>(Component.SEO || {});
   Component.updateSEO = updateSEO;
@@ -93,6 +95,7 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
       <SWRConfig
         value={{
           revalidateOnFocus: false,
+          shouldRetryOnError: false,
           fetcher: apiFetcher,
           provider: localStorageProvider
         }}
