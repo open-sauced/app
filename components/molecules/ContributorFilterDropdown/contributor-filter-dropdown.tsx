@@ -5,7 +5,7 @@ import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 
 import Checkbox from "components/atoms/Checkbox/checkbox";
 
-// This list might have to come in as props in future imlementations
+// This list might have to come in as props in future implementations
 const filterOptions: { name: string; value: string }[] = [
   { name: "Language", value: "language" },
   { name: "Timezone", value: "timezone" },
