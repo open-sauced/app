@@ -31,7 +31,7 @@ const Home: WithPageLayout = () => {
       }
 
       if (currentUser?.data?.session && onboarded === true) {
-        redirect("/hub/insights");
+        redirect(`/user/${currentUser?.data.session.user?.user_metadata.user_name}`);
       } else {
         redirect("/javascript");
       }
@@ -40,9 +40,7 @@ const Home: WithPageLayout = () => {
     getAccess();
   }, [router, onboarded]);
 
-  return (
-    <Loader theme={"dark"}/>
-  );
+  return <Loader theme={"dark"} />;
 };
 
 export default Home;
