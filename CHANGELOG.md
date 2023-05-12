@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.46.0-beta.4](https://github.com/open-sauced/insights/compare/v1.46.0-beta.3...v1.46.0-beta.4) (2023-05-12)
+
+
+### 🍕 Features
+
+* redirect user to profile after onboarding  ([#1173](https://github.com/open-sauced/insights/issues/1173)) ([8ed3e7b](https://github.com/open-sauced/insights/commit/8ed3e7b1e856232e1f3675fc068f4aa5d71f821f))
+
 ## [1.46.0-beta.3](https://github.com/open-sauced/insights/compare/v1.46.0-beta.2...v1.46.0-beta.3) (2023-05-12)
 
 
