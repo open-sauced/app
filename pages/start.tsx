@@ -113,7 +113,7 @@ interface LoginStep2Props {
 
 const LoginStep2: React.FC<LoginStep2Props> = ({
   handleLoginStep,
-  handleUpdateInterests: handleUpdateInterestsParent,
+  handleUpdateInterests: handleUpdateInterestsParent
 }) => {
   const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
   const interestArray = getInterestOptions();
@@ -190,9 +190,9 @@ const LoginStep3: React.FC<LoginStep3Props> = ({ interests, user }) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${sessionToken}`,
+          Authorization: `Bearer ${sessionToken}`
         },
-        body: JSON.stringify({ interests, timezone }),
+        body: JSON.stringify({ interests, timezone })
       });
 
       if (data.ok) {
@@ -307,8 +307,8 @@ const Login: WithPageLayout = () => {
                 currentLoginStep === 2
                   ? ChooseInterestsActiveIcon
                   : currentLoginStep < 2
-                  ? ChooseInterestsIcon
-                  : CompletedIcon
+                    ? ChooseInterestsIcon
+                    : CompletedIcon
               }
               size={48}
             />
@@ -325,8 +325,8 @@ const Login: WithPageLayout = () => {
                 currentLoginStep === 3
                   ? ChooseTimezoneActiveIcon
                   : currentLoginStep < 3
-                  ? ChooseTimezoneIcon
-                  : CompletedIcon
+                    ? ChooseTimezoneIcon
+                    : CompletedIcon
               }
               size={48}
             />
