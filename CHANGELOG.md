@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.46.0-beta.3](https://github.com/open-sauced/insights/compare/v1.46.0-beta.2...v1.46.0-beta.3) (2023-05-12)
+
+
+### 🍕 Features
+
+* add contributors filter/dropdown and insights list dropdown component to design system ([#1165](https://github.com/open-sauced/insights/issues/1165)) ([4a09cf8](https://github.com/open-sauced/insights/commit/4a09cf8e2a250686a210e9dcd0ca5c26a95ffdf3))
+
 ## [1.46.0-beta.2](https://github.com/open-sauced/insights/compare/v1.46.0-beta.1...v1.46.0-beta.2) (2023-05-11)
 
 
