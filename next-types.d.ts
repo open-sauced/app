@@ -16,6 +16,8 @@ interface DbRepo {
   readonly pr_velocity_count?: number;
   readonly churnTotalCount?: number;
   readonly language: string;
+  readonly stars: number;
+  readonly description: string;
 }
 
 interface DbRepoPR {
@@ -192,6 +194,24 @@ interface GhUser {
   readonly gravatar_id: string;
   readonly url: string;
   readonly repos_url: string;
+}
+
+interface GhContributor {
+  readonly avatar_url: string;
+  readonly gravatar_id: string;
+  readonly repos_url: string;
+  readonly url: string;
+  readonly contributions: string;
+  readonly gists_url: string;
+  readonly contributors_url: string;
+  readonly html_url: string;
+  readonly site_admin: boolean;
+  readonly starred_url: string;
+  readonly subscriptions_url: string;
+  readonly organization_url: string;
+  readonly node_id: string;
+  readonly id: number;
+  readonly login: string;
 }
 
 interface GhPRInfoResponse {
