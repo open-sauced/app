@@ -11,6 +11,7 @@ const useFetchRecommendedRepoByRepoName = (owner: string, repo: string) => {
     data: data ?? undefined,
     isLoading: !data && !error,
     isError: !!error,
+    mutate,
   };
 };
 

@@ -18,7 +18,8 @@ import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import uppercaseFirst from "lib/utils/uppercase-first";
 import useFetchAllEmojis from "lib/hooks/useFetchAllEmojis";
 import { getInterestOptions, interestsType } from "lib/utils/getInterestOptions";
-import { updateUser, UpdateUserPayload } from "lib/hooks/update-user";
+import { updateUser } from "lib/hooks/update-user";
+import { useToast } from "lib/hooks/useToast";
 
 import PaginationResults from "components/molecules/PaginationResults/pagination-result";
 import Pagination from "components/molecules/Pagination/pagination";
@@ -26,7 +27,6 @@ import DashContainer from "components/atoms/DashedContainer/DashContainer";
 import LanguagePill from "components/atoms/LanguagePill/LanguagePill";
 import RecommendedRepoCard from "components/molecules/RecommendedRepoCard/recommended-repo-card";
 import recommendations from "lib/utils/recommendations";
-import fetchRecommendationByRepo from "lib/hooks/fetchRecommendationByRepo";
 import Title from "components/atoms/Typography/title";
 
 interface ContributorProfileTabProps {
@@ -41,6 +41,8 @@ interface ContributorProfileTabProps {
   githubName: string;
   repoList: RepoList[];
 }
+
+const tabLinks: string[] = ["Highlights", "Contributions", "Recommendations"];
 
 const ContributorProfileTab = ({
   contributor,
@@ -60,6 +62,8 @@ const ContributorProfileTab = ({
   const [showInterests, setShowInterests] = useState(false);
   const [loading, setLoading] = useState(false);
   const [recommendedrepos, setRecommendedRepos] = useState<string[]>([]);
+
+  const { toast } = useToast();
 
   const interests = userInterests ? userInterests.split(",") : [];
   const { data: highlights, isError, isLoading, mutate, meta, setPage } = useFetchUserHighlights(login || "");
@@ -86,9 +90,9 @@ const ContributorProfileTab = ({
     });
     setLoading(false);
     if (data) {
-      // toast({ description: "Updated successfully", variant: "success" });
+      toast({ description: "Updated successfully", variant: "success" });
     } else {
-      // toast({ description: "An error occured!", variant: "danger" });
+      toast({ description: "An error occured!", variant: "danger" });
     }
   };
 
@@ -126,26 +130,15 @@ const ContributorProfileTab = ({
   return (
     <Tabs defaultValue={uppercaseFirst(currentPathname as string)} className="">
       <TabsList className="justify-start w-full border-b">
-        <TabsTrigger
-          className="data-[state=active]:border-sauced-orange data-[state=active]:border-b-2 text-2xl"
-          value="Highlights"
-          onClick={() => handleTabUrl("Highlights")}
-        >
-          Highlights
-        </TabsTrigger>
-        <TabsTrigger
-          className="data-[state=active]:border-sauced-orange data-[state=active]:border-b-2 text-2xl"
-          value="Contributions"
-          onClick={() => handleTabUrl("Contributions")}
-        >
-          Contributions
-        </TabsTrigger>
-        <TabsTrigger
-          className="data-[state=active]:border-sauced-orange data-[state=active]:border-b-2 text-2xl"
-          value="recommendations"
-        >
-          Recommendations
-        </TabsTrigger>
+        {tabLinks.map((tab) => (
+          <TabsTrigger
+            key={tab}
+            className="data-[state=active]:border-sauced-orange data-[state=active]:border-b-2 text-2xl data-[state=active]:font-bold data-[state=active]:text-transparent data-[state=active]:bg-clip-text data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#EA4600] data-[state=active]:to-[#EB9B00]"
+            value={tab}
+          >
+            {tab}
+          </TabsTrigger>
+        ))}
       </TabsList>
 
       {/* Highlights Tab details */}
@@ -168,74 +161,71 @@ const ContributorProfileTab = ({
           {/* <HightlightEmptyState /> */}
 
           {isError && <>An error occured</>}
-          {isLoading ? (
-            <>Loading...</>
-          ) : (
-            <>
-              {!isError && highlights && highlights.length > 0 ? (
-                <div>
-                  {highlights.map(({ id, title, highlight, url, shipped_at, created_at }) => (
-                    <div className="flex flex-col gap-2 mb-6 lg:flex-row lg:gap-7" key={id}>
-                      <Link href={`/feed/${id}`}>
-                        <p className="text-sm text-light-slate-10">{getFormattedDate(created_at)}</p>
-                      </Link>
-                      <ContributorHighlightCard
-                        emojis={emojis}
-                        id={id}
-                        user={login || ""}
-                        title={title}
-                        desc={highlight}
-                        prLink={url}
-                        shipped_date={shipped_at}
-                        refreshCallBack={mutate}
-                      />
+          {isLoading && <>Loading...</>}
+          <>
+            {!isError && highlights && highlights.length > 0 ? (
+              <div>
+                {highlights.map(({ id, title, highlight, url, shipped_at, created_at }) => (
+                  <div className="flex flex-col gap-2 mb-6 lg:flex-row lg:gap-7" key={id}>
+                    <Link href={`/feed/${id}`}>
+                      <p className="text-sm text-light-slate-10">{getFormattedDate(created_at)}</p>
+                    </Link>
+                    <ContributorHighlightCard
+                      emojis={emojis}
+                      id={id}
+                      user={login || ""}
+                      title={title}
+                      desc={highlight}
+                      prLink={url}
+                      shipped_date={shipped_at}
+                      refreshCallBack={mutate}
+                    />
+                  </div>
+                ))}
+                {meta.pageCount > 1 && (
+                  <div className="mt-10 max-w-[48rem] flex px-2 items-center justify-between">
+                    <div>
+                      <PaginationResults metaInfo={meta} total={meta.itemCount} entity={"highlights"} />
                     </div>
-                  ))}
-                  {meta.pageCount > 1 && (
-                    <div className="mt-10 max-w-[48rem] flex px-2 items-center justify-between">
-                      <div>
-                        <PaginationResults metaInfo={meta} total={meta.itemCount} entity={"highlights"} />
-                      </div>
-                      <Pagination
-                        pages={[]}
-                        totalPage={meta.pageCount}
-                        page={meta.page}
-                        pageSize={meta.itemCount}
-                        goToPage
-                        hasNextPage={meta.hasNextPage}
-                        hasPreviousPage={meta.hasPreviousPage}
-                        onPageChange={function (page: number): void {
-                          setPage(page);
-                        }}
-                      />
-                    </div>
+                    <Pagination
+                      pages={[]}
+                      totalPage={meta.pageCount}
+                      page={meta.page}
+                      pageSize={meta.itemCount}
+                      goToPage
+                      hasNextPage={meta.hasNextPage}
+                      hasPreviousPage={meta.hasPreviousPage}
+                      onPageChange={function (page: number): void {
+                        setPage(page);
+                      }}
+                    />
+                  </div>
+                )}
+              </div>
+            ) : (
+              <DashContainer>
+                <div className="text-center">
+                  {user?.user_metadata.user_name === login ? (
+                    <>
+                      <p>
+                        You don&apos;t have any highlights yet! <br /> Highlights are a great way to show off your
+                        contributions. Merge any pull requests recently?
+                      </p>
+                      {!inputVisible && (
+                        <Button onClick={() => setInputVisible(true)} className="mt-5" variant="primary">
+                          Add a highlight
+                        </Button>
+                      )}
+                    </>
+                  ) : (
+                    <>
+                      <p>{` ${login} hasn't posted any highlights yet!`}</p>
+                    </>
                   )}
                 </div>
-              ) : (
-                <DashContainer>
-                  <div className="text-center">
-                    {user?.user_metadata.user_name === login ? (
-                      <>
-                        <p>
-                          You don&apos;t have any highlights yet! <br /> Highlights are a great way to show off your
-                          contributions. Merge any pull requests recently?
-                        </p>
-                        {!inputVisible && (
-                          <Button onClick={() => setInputVisible(true)} className="mt-5" variant="primary">
-                            Add a highlight
-                          </Button>
-                        )}
-                      </>
-                    ) : (
-                      <>
-                        <p>{` ${login} hasn't posted any highlights yet!`}</p>
-                      </>
-                    )}
-                  </div>
-                </DashContainer>
-              )}
-            </>
-          )}
+              </DashContainer>
+            )}
+          </>
         </div>
       </TabsContent>
 
@@ -301,17 +291,20 @@ const ContributorProfileTab = ({
 
       {/* Recommendation tab details */}
 
-      <TabsContent value="recommendations">
+      <TabsContent value="Recommendations">
         {userInterests && userInterests.length > 0 ? (
-          <div className="space-y-3 ">
-            <Title className="!font-normal" level={5}>
+          <div className="space-y-2 ">
+            <Title className="!font-normal my-6" level={5}>
               Here are some repositories we think would be great for you. Click on one that you like and start
               contributing!
             </Title>
             <div className="flex flex-wrap gap-4">
               {recommendedrepos.map((repo, i) => (
-                <RecommendedRepoCard className="flex-1 " key={i.toString()} fullname={repo} />
+                <RecommendedRepoCard className="md:w-[45%]" key={i.toString()} fullname={repo} />
               ))}
+              {recommendedrepos.length === 1 && (
+                <RecommendedRepoCard className="md:w-[45%]" fullname="open-sauced/insights" />
+              )}
             </div>
           </div>
         ) : (
