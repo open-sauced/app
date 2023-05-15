@@ -28,6 +28,7 @@ import LanguagePill from "components/atoms/LanguagePill/LanguagePill";
 import RecommendedRepoCard from "components/molecules/RecommendedRepoCard/recommended-repo-card";
 import recommendations from "lib/utils/recommendations";
 import Title from "components/atoms/Typography/title";
+import clsx from "clsx";
 
 interface ContributorProfileTabProps {
   contributor?: DbUser;
@@ -133,7 +134,11 @@ const ContributorProfileTab = ({
         {tabLinks.map((tab) => (
           <TabsTrigger
             key={tab}
-            className="data-[state=active]:border-sauced-orange data-[state=active]:border-b-2 text-2xl data-[state=active]:font-bold data-[state=active]:text-transparent data-[state=active]:bg-clip-text data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#EA4600] data-[state=active]:to-[#EB9B00]"
+            className={clsx(
+              "data-[state=active]:border-sauced-orange data-[state=active]:border-b-2 text-2xl",
+              tab === "Recommendations" &&
+                " data-[state=active]:font-bold data-[state=active]:text-transparent data-[state=active]:bg-clip-text data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#EA4600] data-[state=active]:to-[#EB9B00]"
+            )}
             value={tab}
           >
             {tab}
