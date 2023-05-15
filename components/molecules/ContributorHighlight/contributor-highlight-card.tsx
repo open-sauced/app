@@ -245,16 +245,18 @@ const ContributorHighlightCard = ({
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() => handleCopyToClipboard(`${host}/feed/${id}`)}
-                  className="rounded-md flex gap-2.5 py-1 items-center pl-3 pr-7"
+                  className="rounded-md"
                 >
-                  <BsLink45Deg size={22} />
-                  <span>Copy link</span>
+                  <div className = "flex gap-2.5 py-1 items-center pl-3 pr-7 cursor-pointer">
+                    <BsLink45Deg size={22} />
+                    <span>Copy link</span>
+                  </div>
                 </DropdownMenuItem>
                 {loggedInUser ? (
                   <DropdownMenuItem
                     className={`rounded-md ${loggedInUser.user_metadata.user_name === user && "hidden"}`}
                   >
-                    <div onClick={isError ? follow : unFollow} className="flex gap-2.5 py-1  items-center pl-3 pr-7">
+                    <div onClick={isError ? follow : unFollow} className="flex gap-2.5 py-1 items-center pl-3 pr-7 cursor-pointer">
                       <FaUserPlus size={22} />
                       <span>
                         {!isError ? "Unfollow" : "Follow"} {user}
