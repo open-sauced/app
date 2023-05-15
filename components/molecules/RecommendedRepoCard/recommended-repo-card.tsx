@@ -32,7 +32,12 @@ const RecommendedRepoCard = ({ fullname, className }: RecommendedRepoCardProps):
       {data && (
         <>
           <div className="flex justify-between w-full">
-            <div className="flex items-center gap-1.5">
+            <a
+              target="_blank"
+              href={`https://github.com/${fullname}`}
+              className="flex items-center gap-1.5"
+              rel="noreferrer"
+            >
               <picture>
                 <img
                   alt="Hot Repo Icon"
@@ -41,7 +46,7 @@ const RecommendedRepoCard = ({ fullname, className }: RecommendedRepoCardProps):
                 />
               </picture>
               <span className="text-sm font-medium text-light-slate-11">{owner}</span>
-            </div>
+            </a>
           </div>
 
           <div className="flex flex-col gap-2 pb-3">
