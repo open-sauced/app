@@ -136,7 +136,7 @@ const ContributorProfileTab = ({
             className={clsx(
               "data-[state=active]:border-sauced-orange data-[state=active]:border-b-2 text-2xl",
               tab === "Recommendations" &&
-                " data-[state=active]:font-bold data-[state=active]:text-transparent data-[state=active]:bg-clip-text data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#EA4600] data-[state=active]:to-[#EB9B00]",
+                "font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#EA4600] to-[#EB9B00]",
               user && user.user_metadata.user_name !== login && tab === "Recommendations" && "hidden"
             )}
             value={tab}
