@@ -59,8 +59,8 @@ const RecommendedRepoCard = ({ fullname, className }: RecommendedRepoCardProps):
               {name}
             </a>
 
-            <p title={data?.description} className="w-5/6 text-sm font-medium text-gray-500">
-              {truncateString(data?.description, 100)}
+            <p title={data.description} className="w-5/6 text-sm font-medium text-gray-500">
+              {truncateString(data.description, 100)}
             </p>
           </div>
 
@@ -69,13 +69,13 @@ const RecommendedRepoCard = ({ fullname, className }: RecommendedRepoCardProps):
               <div className="flex items-center justify-center space-x-1 text-sm">
                 <VscIssues className="fill-light-slate-10" size={16} />
 
-                <span className="text-lightSlate11">{humanizeNumber(Number(data?.issues), "abbreviation")}</span>
+                <span className="text-lightSlate11">{humanizeNumber(Number(data.issues), "abbreviation")}</span>
               </div>
 
               <div className="flex items-center justify-center space-x-1 text-sm">
                 <AiOutlineStar className="fill-lightSlate10" size={16} />
 
-                <span className="text-lightSlate11">{humanizeNumber(Number(data?.stars), "abbreviation")}</span>
+                <span className="text-lightSlate11">{humanizeNumber(Number(data.stars), "abbreviation")}</span>
               </div>
 
               <div className="flex items-center justify-center space-x-1 text-sm">
