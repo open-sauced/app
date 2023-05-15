@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
+import clsx from "clsx";
 
 import Avatar from "components/atoms/Avatar/avatar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "components/atoms/Tabs/tabs";
@@ -28,7 +29,6 @@ import LanguagePill from "components/atoms/LanguagePill/LanguagePill";
 import RecommendedRepoCard from "components/molecules/RecommendedRepoCard/recommended-repo-card";
 import recommendations from "lib/utils/recommendations";
 import Title from "components/atoms/Typography/title";
-import clsx from "clsx";
 
 interface ContributorProfileTabProps {
   contributor?: DbUser;
@@ -99,10 +99,9 @@ const ContributorProfileTab = ({
 
   const getRepoFullNameByInterests = () => {
     const repoFullNames = interests.map((interest) => {
-      return recommendations[interest as interestsType].toString();
+      return recommendations[interest as interestsType];
     });
-    setRecommendedRepos(repoFullNames);
-    console.log(recommendedrepos);
+    setRecommendedRepos(repoFullNames[0]);
   };
 
   const hasHighlights = highlights?.length > 0;
@@ -137,7 +136,8 @@ const ContributorProfileTab = ({
             className={clsx(
               "data-[state=active]:border-sauced-orange data-[state=active]:border-b-2 text-2xl",
               tab === "Recommendations" &&
-                " data-[state=active]:font-bold data-[state=active]:text-transparent data-[state=active]:bg-clip-text data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#EA4600] data-[state=active]:to-[#EB9B00]"
+                " data-[state=active]:font-bold data-[state=active]:text-transparent data-[state=active]:bg-clip-text data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#EA4600] data-[state=active]:to-[#EB9B00]",
+              user && user.user_metadata.user_name !== login && tab === "Recommendations" && "hidden"
             )}
             value={tab}
           >
@@ -296,57 +296,59 @@ const ContributorProfileTab = ({
 
       {/* Recommendation tab details */}
 
-      <TabsContent value="Recommendations">
-        {userInterests && userInterests.length > 0 ? (
-          <div className="space-y-2 ">
-            <Title className="!font-normal my-6" level={5}>
-              Here are some repositories we think would be great for you. Click on one that you like and start
-              contributing!
-            </Title>
-            <div className="flex flex-wrap gap-4">
-              {recommendedrepos.map((repo, i) => (
-                <RecommendedRepoCard className="md:w-[45%]" key={i.toString()} fullname={repo} />
-              ))}
-              {recommendedrepos.length === 1 && (
-                <RecommendedRepoCard className="md:w-[45%]" fullname="open-sauced/insights" />
-              )}
+      {user && user.user_metadata.user_name === login && (
+        <TabsContent value="Recommendations">
+          {userInterests && userInterests.length > 0 ? (
+            <div className="space-y-2 ">
+              <Title className="!font-normal my-6" level={5}>
+                Here are some repositories we think would be great for you. Click on one that you like and start
+                contributing!
+              </Title>
+              <div className="flex flex-wrap gap-4">
+                {recommendedrepos.map((repo, i) => (
+                  <RecommendedRepoCard className="md:w-[45%]" key={i.toString()} fullname={repo} />
+                ))}
+                {recommendedrepos.length === 1 && (
+                  <RecommendedRepoCard className="md:w-[45%]" fullname="open-sauced/insights" />
+                )}
+              </div>
             </div>
-          </div>
-        ) : (
-          <DashContainer>
-            {/* Empty Interest state */}
-            <div className="flex flex-col items-center gap-4">
-              <p className="font-normal text-center">
-                If you’re just getting started, recommendations are a great to find projects and start making
-                contributions on repositories.
-                <br /> <br /> Select some interests and we give you some recommendations!
-              </p>
+          ) : (
+            <DashContainer>
+              {/* Empty Interest state */}
+              <div className="flex flex-col items-center gap-4">
+                <p className="font-normal text-center">
+                  If you’re just getting started, recommendations are a great to find projects and start making
+                  contributions on repositories.
+                  <br /> <br /> Select some interests and we give you some recommendations!
+                </p>
 
-              {showInterests && (
-                <div className="flex flex-wrap justify-center w-full gap-2 mt-6 md:max-w-sm">
-                  {interestArray.map((topic, index) => (
-                    <LanguagePill
-                      onClick={() => handleSelectInterest(topic)}
-                      classNames={`${(selectedInterest || []).includes(topic) && "bg-light-orange-10 text-white"}`}
-                      topic={topic}
-                      key={index}
-                    />
-                  ))}
-                </div>
-              )}
-              {showInterests ? (
-                <Button loading={loading} className="mt-4" onClick={handleUpdateInterest} variant="primary">
-                  Save Interests
-                </Button>
-              ) : (
-                <Button onClick={() => setShowInterests(true)} variant="primary">
-                  Select Interests
-                </Button>
-              )}
-            </div>
-          </DashContainer>
-        )}
-      </TabsContent>
+                {showInterests && (
+                  <div className="flex flex-wrap justify-center w-full gap-2 mt-6 md:max-w-sm">
+                    {interestArray.map((topic, index) => (
+                      <LanguagePill
+                        onClick={() => handleSelectInterest(topic)}
+                        classNames={`${(selectedInterest || []).includes(topic) && "bg-light-orange-10 text-white"}`}
+                        topic={topic}
+                        key={index}
+                      />
+                    ))}
+                  </div>
+                )}
+                {showInterests ? (
+                  <Button loading={loading} className="mt-4" onClick={handleUpdateInterest} variant="primary">
+                    Save Interests
+                  </Button>
+                ) : (
+                  <Button onClick={() => setShowInterests(true)} variant="primary">
+                    Select Interests
+                  </Button>
+                )}
+              </div>
+            </DashContainer>
+          )}
+        </TabsContent>
+      )}
     </Tabs>
   );
 };

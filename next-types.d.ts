@@ -196,24 +196,6 @@ interface GhUser {
   readonly repos_url: string;
 }
 
-interface GhContributor {
-  readonly avatar_url: string;
-  readonly gravatar_id: string;
-  readonly repos_url: string;
-  readonly url: string;
-  readonly contributions: string;
-  readonly gists_url: string;
-  readonly contributors_url: string;
-  readonly html_url: string;
-  readonly site_admin: boolean;
-  readonly starred_url: string;
-  readonly subscriptions_url: string;
-  readonly organization_url: string;
-  readonly node_id: string;
-  readonly id: number;
-  readonly login: string;
-}
-
 interface GhPRInfoResponse {
   readonly head: { repo: { name: string; full_name: string }; user: { login: string; full_name: string } };
   readonly title: string;
