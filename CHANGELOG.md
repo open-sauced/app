@@ -5,6 +5,18 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.46.0-beta.5](https://github.com/open-sauced/insights/compare/v1.46.0-beta.4...v1.46.0-beta.5) (2023-05-15)
+
+
+### 🐛 Bug Fixes
+
+* update highlight copy link button alignment ([#1177](https://github.com/open-sauced/insights/issues/1177)) ([250267e](https://github.com/open-sauced/insights/commit/250267e23398819d52113dcf67fff1345942a0c8))
+
+
+### 🍕 Features
+
+*  add context clue card to design system ([#1170](https://github.com/open-sauced/insights/issues/1170)) ([7ce1fa7](https://github.com/open-sauced/insights/commit/7ce1fa7f0abed77a1e9ea70ebf7918a2ba999405))
+
 ## [1.46.0-beta.4](https://github.com/open-sauced/insights/compare/v1.46.0-beta.3...v1.46.0-beta.4) (2023-05-12)
 
 
