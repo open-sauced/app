@@ -13,11 +13,6 @@ import { Spinner } from "components/atoms/SpinLoader/spin-loader";
 
 export declare interface RecommendedRepoCardProps extends React.ComponentProps<"div"> {
   fullname: string;
-  description?: string;
-  issues?: number;
-  stars?: number;
-  pullRequests?: number;
-  contributions?: Contributor[];
 }
 
 const RecommendedRepoCard = ({ fullname, className }: RecommendedRepoCardProps): JSX.Element => {
