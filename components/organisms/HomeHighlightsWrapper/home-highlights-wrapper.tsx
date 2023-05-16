@@ -6,6 +6,7 @@ import { getFormattedDate } from "lib/utils/date-utils";
 import Avatar from "components/atoms/Avatar/avatar";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 import ContributorHighlightCard from "components/molecules/ContributorHighlight/contributor-highlight-card";
+import DashContainer from "components/atoms/DashedContainer/DashContainer";
 
 interface HomeHighlightWrapperProps {
   mutate: () => void;
@@ -27,8 +28,7 @@ const HomeHighlightsWrapper = ({ emojis, highlights, loading, mutate }: HomeHigh
           </div>
         )}
 
-        {highlights &&
-          highlights.length > 0 &&
+        {highlights && highlights.length > 0 ? (
           highlights.map(({ id, url, title, created_at, highlight, shipped_at, login }) => (
             <div key={id} className="flex flex-col gap-6 px-1">
               <div className="flex items-center gap-3">
@@ -58,7 +58,12 @@ const HomeHighlightsWrapper = ({ emojis, highlights, loading, mutate }: HomeHigh
                 />
               </div>
             </div>
-          ))}
+          ))
+        ) : (
+          <DashContainer>
+            <p>You have not followed any user yet!</p>
+          </DashContainer>
+        )}
       </div>
     </div>
   );

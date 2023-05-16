@@ -10,6 +10,7 @@ import ContributorHighlightCard from "components/molecules/ContributorHighlight/
 import Pagination from "components/molecules/Pagination/pagination";
 import PaginationResults from "components/molecules/PaginationResults/pagination-result";
 import { useRouter } from "next/router";
+import DashContainer from "components/atoms/DashedContainer/DashContainer";
 
 export interface HighlightWrapperProps {
   emojis: DbEmojis[];
@@ -37,8 +38,7 @@ const FollowingHighlightWrapper = ({ emojis, selectedFilter }: HighlightWrapperP
           </div>
         )}
 
-        {data &&
-          data.length > 0 &&
+        {data && data.length > 0 ? (
           data.map(({ id, url, title, created_at, highlight, shipped_at, login }) => (
             <div key={id} className="flex flex-col gap-6 px-1">
               <div className="flex items-center gap-3">
@@ -68,7 +68,12 @@ const FollowingHighlightWrapper = ({ emojis, selectedFilter }: HighlightWrapperP
                 />
               </div>
             </div>
-          ))}
+          ))
+        ) : (
+          <DashContainer>
+            <p>You have not followed any user yet!</p>
+          </DashContainer>
+        )}
       </div>
 
       {meta.pageCount > 1 && (
