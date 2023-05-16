@@ -1,7 +1,6 @@
 import Link from "next/link";
-import React, { useEffect } from "react";
+import React from "react";
 
-import { useFetchAllHighlights } from "lib/hooks/useFetchAllHighlights";
 import { getFormattedDate } from "lib/utils/date-utils";
 
 import Avatar from "components/atoms/Avatar/avatar";
@@ -9,25 +8,19 @@ import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 import ContributorHighlightCard from "components/molecules/ContributorHighlight/contributor-highlight-card";
 import Pagination from "components/molecules/Pagination/pagination";
 import PaginationResults from "components/molecules/PaginationResults/pagination-result";
-import { HighlightWrapperProps } from "../FollowersHighlightWrapper/followers-highlight-wrapper";
 import { User } from "@supabase/supabase-js";
 import HighlightInputForm from "components/molecules/HighlightInput/highlight-input-form";
-import { useRouter } from "next/router";
 
-interface HomeHighlightWrapperProps extends HighlightWrapperProps {
+interface HomeHighlightWrapperProps {
   user: User | null;
+  mutate: () => void;
+  highlights: DbHighlight[];
+  emojis: DbEmojis[];
+  loading: boolean;
+  isError: boolean;
 }
 
-const HomeHighlightsWrapper = ({ emojis, selectedFilter, user }: HomeHighlightWrapperProps) => {
-  const router = useRouter();
-  const { data, isLoading, mutate, meta, setPage, isError } = useFetchAllHighlights(selectedFilter);
-
-  useEffect(() => {
-    if (selectedFilter) {
-      router.push(`/feed?repo=${selectedFilter}`);
-      setPage(1);
-    }
-  }, [selectedFilter]);
+const HomeHighlightsWrapper = ({ emojis, highlights, user, loading, mutate, isError }: HomeHighlightWrapperProps) => {
   return (
     <div>
       {user && (
@@ -45,7 +38,7 @@ const HomeHighlightsWrapper = ({ emojis, selectedFilter, user }: HomeHighlightWr
         </div>
       )}
       <div className="flex flex-col gap-8 mt-10">
-        {isLoading && (
+        {loading && (
           <div className="flex flex-col gap-3">
             <div className="flex gap-3">
               <SkeletonWrapper radius={100} width={40} height={40} /> <SkeletonWrapper width={200} height={40} />
@@ -54,9 +47,9 @@ const HomeHighlightsWrapper = ({ emojis, selectedFilter, user }: HomeHighlightWr
           </div>
         )}
         {isError && <>An error occurred...</>}
-        {data &&
-          data.length > 0 &&
-          data.map(({ id, url, title, created_at, highlight, shipped_at, login }) => (
+        {highlights &&
+          highlights.length > 0 &&
+          highlights.map(({ id, url, title, created_at, highlight, shipped_at, login }) => (
             <div key={id} className="flex flex-col gap-6 px-1">
               <div className="flex items-center gap-3">
                 <Link href={`/user/${login}`} className="flex items-center gap-3">
@@ -87,26 +80,6 @@ const HomeHighlightsWrapper = ({ emojis, selectedFilter, user }: HomeHighlightWr
             </div>
           ))}
       </div>
-
-      {meta.pageCount > 1 && (
-        <div className="mt-10 max-w-[48rem] flex px-2 items-center justify-between">
-          <div>
-            <PaginationResults metaInfo={meta} total={meta.itemCount} entity={"highlights"} />
-          </div>
-          <Pagination
-            pages={[]}
-            totalPage={meta.pageCount}
-            page={meta.page}
-            pageSize={meta.itemCount}
-            goToPage
-            hasNextPage={meta.hasNextPage}
-            hasPreviousPage={meta.hasPreviousPage}
-            onPageChange={function (page: number): void {
-              setPage(page);
-            }}
-          />
-        </div>
-      )}
     </div>
   );
 };

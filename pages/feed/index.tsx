@@ -42,7 +42,7 @@ const Feeds: WithPageLayout = () => {
   const { data: repos } = useFetchHighlightRepos();
   const { data: followersRepo } = useFetchFollowersHighlightRepos();
 
-  const { data, isLoading, mutate, meta, setPage } = useFetchAllHighlights(selectedRepo);
+  const { data, mutate, setPage, isError, isLoading, meta } = useFetchAllHighlights(selectedRepo);
   const { data: singleHighlight } = useFetchSingleHighlight(id as unknown as number);
   const { data: emojis } = useFetchAllEmojis();
 
@@ -63,7 +63,12 @@ const Feeds: WithPageLayout = () => {
       setRepoList(repoTofilterList(followersRepo));
     }
   }, [activeTab]);
+
   useEffect(() => {
+    if (selectedRepo) {
+      router.push(`/feed?repo=${selectedRepo}`);
+      setPage(1);
+    }
     if (highlightId) {
       setOpenSingleHighlight(true);
       router.push(`/feed/${id}`);
@@ -149,7 +154,33 @@ const Feeds: WithPageLayout = () => {
         </TabsList>
 
         <TabsContent value="home">
-          <HomeHighlightsWrapper emojis={emojis} selectedFilter={selectedRepo} user={user} />
+          <HomeHighlightsWrapper
+            isError={isError}
+            emojis={emojis}
+            mutate={mutate}
+            highlights={data}
+            loading={isLoading}
+            user={user}
+          />
+          {meta.pageCount > 1 && (
+            <div className="mt-10 max-w-[48rem] flex px-2 items-center justify-between">
+              <div>
+                <PaginationResults metaInfo={meta} total={meta.itemCount} entity={"highlights"} />
+              </div>
+              <Pagination
+                pages={[]}
+                totalPage={meta.pageCount}
+                page={meta.page}
+                pageSize={meta.itemCount}
+                goToPage
+                hasNextPage={meta.hasNextPage}
+                hasPreviousPage={meta.hasPreviousPage}
+                onPageChange={function (page: number): void {
+                  setPage(page);
+                }}
+              />
+            </div>
+          )}
         </TabsContent>
         <TabsContent value="following">
           <FollowersHighlightWrapper selectedFilter={selectedRepo} emojis={emojis} />
