@@ -15,7 +15,7 @@ export declare interface RecommendedRepoCardProps extends React.ComponentProps<"
   fullname: string;
 }
 
-const RecommendedRepoCard = ({ fullname, className }: RecommendedRepoCardProps): JSX.Element => {
+const RecommendedRepoCard = ({ fullName, className }: RecommendedRepoCardProps): JSX.Element => {
   const [owner, name] = fullname.split("/");
   const { data, isLoading, isError } = useFetchRecommendedRepoByRepoName(owner, name);
   const { data: repositoryPullRequests, isError: pullError, meta } = useRepositoryPullRequests(fullname);
