@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.47.0-beta.1](https://github.com/open-sauced/insights/compare/v1.46.0...v1.47.0-beta.1) (2023-05-16)
+
+
+### 🍕 Features
+
+* add links to user notifications based on type ([#1185](https://github.com/open-sauced/insights/issues/1185)) ([e6aeb74](https://github.com/open-sauced/insights/commit/e6aeb74debde34e2ce7efb6886a0030042323fc2))
+
 ## [1.46.0](https://github.com/open-sauced/insights/compare/v1.45.0...v1.46.0) (2023-05-16)
 
 
