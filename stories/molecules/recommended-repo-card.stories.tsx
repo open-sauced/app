@@ -15,5 +15,5 @@ const template: ComponentStory<typeof RecommendedRepoCard> = (args) => (
 
 export const Default = template.bind({});
 Default.args = {
-  fullname: "open-sauced/insights",
+  fullName: "open-sauced/insights",
 };
