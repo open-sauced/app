@@ -12,13 +12,13 @@ import getPullRequestsContributors from "lib/utils/get-pr-contributors";
 import { Spinner } from "components/atoms/SpinLoader/spin-loader";
 
 export declare interface RecommendedRepoCardProps extends React.ComponentProps<"div"> {
-  fullname: string;
+  fullName: string;
 }
 
 const RecommendedRepoCard = ({ fullName, className }: RecommendedRepoCardProps): JSX.Element => {
-  const [owner, name] = fullname.split("/");
+  const [owner, name] = fullName.split("/");
   const { data, isLoading, isError } = useFetchRecommendedRepoByRepoName(owner, name);
-  const { data: repositoryPullRequests, isError: pullError, meta } = useRepositoryPullRequests(fullname);
+  const { data: repositoryPullRequests, isError: pullError, meta } = useRepositoryPullRequests(fullName);
   const contributorData = getPullRequestsContributors(repositoryPullRequests);
 
   return (
@@ -34,7 +34,7 @@ const RecommendedRepoCard = ({ fullName, className }: RecommendedRepoCardProps):
           <div className="flex justify-between w-full">
             <a
               target="_blank"
-              href={`https://github.com/${fullname}`}
+              href={`https://github.com/${fullName}`}
               className="flex items-center gap-1.5"
               rel="noreferrer"
             >
@@ -52,7 +52,7 @@ const RecommendedRepoCard = ({ fullName, className }: RecommendedRepoCardProps):
           <div className="flex flex-col gap-2 pb-3">
             <a
               className="text-xl font-semibold"
-              href={`https://insights.opensauced.pizza/hot/repositories/filter/${fullname}`}
+              href={`https://insights.opensauced.pizza/hot/repositories/filter/${fullName}`}
               rel="noopener noreferrer"
               target="_blank"
             >

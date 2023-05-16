@@ -137,7 +137,8 @@ const ContributorProfileTab = ({
               "data-[state=active]:border-sauced-orange data-[state=active]:border-b-2 text-2xl",
               tab === "Recommendations" &&
                 "font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#EA4600] to-[#EB9B00]",
-              user && user.user_metadata.user_name !== login && tab === "Recommendations" && "hidden"
+              user && user.user_metadata.user_name !== login && tab === "Recommendations" && "hidden",
+              !user && tab === "Recommendations" && "hidden"
             )}
             value={tab}
           >
@@ -306,10 +307,10 @@ const ContributorProfileTab = ({
               </Title>
               <div className="flex flex-wrap gap-4">
                 {recommendedrepos.map((repo, i) => (
-                  <RecommendedRepoCard className="md:w-[45%]" key={i.toString()} fullname={repo} />
+                  <RecommendedRepoCard className="md:w-[45%]" key={i.toString()} fullName={repo} />
                 ))}
                 {recommendedrepos.length === 1 && (
-                  <RecommendedRepoCard className="md:w-[45%]" fullname="open-sauced/insights" />
+                  <RecommendedRepoCard className="md:w-[45%]" fullName="open-sauced/insights" />
                 )}
               </div>
             </div>
