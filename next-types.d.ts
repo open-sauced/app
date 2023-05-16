@@ -16,6 +16,8 @@ interface DbRepo {
   readonly pr_velocity_count?: number;
   readonly churnTotalCount?: number;
   readonly language: string;
+  readonly stars: number;
+  readonly description: string;
 }
 
 interface DbRepoPR {
