@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import formatDistanceToNowStrict from "date-fns/formatDistanceToNowStrict";
 
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { getFormattedDate } from "lib/utils/date-utils";
@@ -175,7 +176,9 @@ const Feeds: WithPageLayout = () => {
                         </Link>
                         <Link href={`/feed/${id}`}>
                           <span className="text-xs font-normal text-light-slate-11">
-                            {getFormattedDate(created_at)}
+                            {formatDistanceToNowStrict(new Date(created_at), {
+                              addSuffix: true,
+                            })}
                           </span>
                         </Link>
                       </div>
