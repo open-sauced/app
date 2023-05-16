@@ -14,7 +14,7 @@ const useRepositoryPullRequests = (fullName: string, limit = 10, range = 30) => 
   const topic = filterName as string;
   const query = new URLSearchParams();
 
-  if (Number.isNaN(Number(topic))) {
+  if (topic && Number.isNaN(Number(topic))) {
     query.set("topic", topic);
   }
 
@@ -35,7 +35,7 @@ const useRepositoryPullRequests = (fullName: string, limit = 10, range = 30) => 
     data: data?.data ?? [],
     meta: data?.meta ?? { itemCount: 0, limit: 0, page: 0, hasNextPage: false, hasPreviousPage: false, pageCount: 0 },
     isLoading: !error && !data,
-    isError: !!error
+    isError: !!error,
   };
 };
 

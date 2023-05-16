@@ -16,6 +16,8 @@ interface DbRepo {
   readonly pr_velocity_count?: number;
   readonly churnTotalCount?: number;
   readonly language: string;
+  readonly stars: number;
+  readonly description: string;
 }
 
 interface DbRepoPR {
@@ -219,4 +221,5 @@ interface DbUserNotification {
   readonly from_user_id: number;
   readonly notified_at: string;
   readonly user_id: number;
+  readonly meta_id: string;
 }
