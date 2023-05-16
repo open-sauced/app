@@ -153,6 +153,20 @@ const Feeds: WithPageLayout = () => {
           </TabsTrigger>
         </TabsList>
 
+        {user && (
+          <div className="lg:gap-x-3 px-3 pt-4 flex max-w-[48rem]">
+            <div className="hidden lg:inline-flex pt-[0.4rem]">
+              <Avatar
+                alt="user profile avatar"
+                isCircle
+                size="sm"
+                avatarURL={`https://www.github.com/${user?.user_metadata.user_name}.png?size=300`}
+              />
+            </div>
+
+            <HighlightInputForm refreshCallback={mutate} />
+          </div>
+        )}
         <TabsContent value="home">
           <HomeHighlightsWrapper
             isError={isError}
@@ -160,7 +174,6 @@ const Feeds: WithPageLayout = () => {
             mutate={mutate}
             highlights={data}
             loading={isLoading}
-            user={user}
           />
           {meta.pageCount > 1 && (
             <div className="mt-10 max-w-[48rem] flex px-2 items-center justify-between">

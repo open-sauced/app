@@ -6,13 +6,8 @@ import { getFormattedDate } from "lib/utils/date-utils";
 import Avatar from "components/atoms/Avatar/avatar";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 import ContributorHighlightCard from "components/molecules/ContributorHighlight/contributor-highlight-card";
-import Pagination from "components/molecules/Pagination/pagination";
-import PaginationResults from "components/molecules/PaginationResults/pagination-result";
-import { User } from "@supabase/supabase-js";
-import HighlightInputForm from "components/molecules/HighlightInput/highlight-input-form";
 
 interface HomeHighlightWrapperProps {
-  user: User | null;
   mutate: () => void;
   highlights: DbHighlight[];
   emojis: DbEmojis[];
@@ -20,23 +15,9 @@ interface HomeHighlightWrapperProps {
   isError: boolean;
 }
 
-const HomeHighlightsWrapper = ({ emojis, highlights, user, loading, mutate, isError }: HomeHighlightWrapperProps) => {
+const HomeHighlightsWrapper = ({ emojis, highlights, loading, mutate, isError }: HomeHighlightWrapperProps) => {
   return (
     <div>
-      {user && (
-        <div className="lg:gap-x-3 px-3 pt-4 flex max-w-[48rem]">
-          <div className="hidden lg:inline-flex pt-[0.4rem]">
-            <Avatar
-              alt="user profile avatar"
-              isCircle
-              size="sm"
-              avatarURL={`https://www.github.com/${user?.user_metadata.user_name}.png?size=300`}
-            />
-          </div>
-
-          <HighlightInputForm refreshCallback={mutate} />
-        </div>
-      )}
       <div className="flex flex-col gap-8 mt-10">
         {loading && (
           <div className="flex flex-col gap-3">
