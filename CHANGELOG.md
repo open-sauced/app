@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.47.0-beta.2](https://github.com/open-sauced/insights/compare/v1.47.0-beta.1...v1.47.0-beta.2) (2023-05-16)
+
+
+### 🍕 Features
+
+* add repo recommendations to user profile ([#1174](https://github.com/open-sauced/insights/issues/1174)) ([1777aca](https://github.com/open-sauced/insights/commit/1777aca91bb1721c51608e5e2b6a0d9cfa9e41d7))
+
 ## [1.47.0-beta.1](https://github.com/open-sauced/insights/compare/v1.46.0...v1.47.0-beta.1) (2023-05-16)
 
 
