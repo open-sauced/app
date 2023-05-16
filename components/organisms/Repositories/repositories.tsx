@@ -107,7 +107,6 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
             <div className={clsx(classNames.cols.checkbox)}>
               <Checkbox
                 onCheckedChange={handleOnSelectAllChecked}
-                disabled={!user}
                 title={!user ? "Connect to GitHub" : ""}
                 className={`${user && "border-orange-500 hover:bg-orange-600"}`}
               />
@@ -139,7 +138,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
             <div className="flex justify-between p-3 px-6 border-b-2 text-light-slate-11">
               <div>{selectedRepos.length} Repositories selected</div>
               <Button onClick={handleOnAddtoInsights} variant="primary">
-                Add to Insight Page
+                 Add to Insight Page
               </Button>
             </div>
           )}
