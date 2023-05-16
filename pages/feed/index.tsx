@@ -92,7 +92,7 @@ const Feeds: WithPageLayout = () => {
                   />
                   <strong>{singleHighlight.login}</strong>
                   <span className="text-xs font-normal text-light-slate-11">
-                    {formatDistanceToNowStrict(new Date(singleHighlight.shipped_at), {
+                    {formatDistanceToNowStrict(new Date(singleHighlight.created_at), {
                       addSuffix: true,
                     })}
                   </span>
