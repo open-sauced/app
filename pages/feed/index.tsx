@@ -4,7 +4,6 @@ import Link from "next/link";
 import formatDistanceToNowStrict from "date-fns/formatDistanceToNowStrict";
 
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
-import { getFormattedDate } from "lib/utils/date-utils";
 import { useFetchAllHighlights } from "lib/hooks/useFetchAllHighlights";
 import { useFetchHighlightRepos } from "lib/hooks/useFetchHiglightRepos";
 import { useFetchSingleHighlight } from "lib/hooks/useFetchSingleHighlight";
@@ -93,7 +92,9 @@ const Feeds: WithPageLayout = () => {
                   />
                   <strong>{singleHighlight.login}</strong>
                   <span className="text-xs font-normal text-light-slate-11">
-                    {getFormattedDate(singleHighlight.shipped_at)}
+                    {formatDistanceToNowStrict(new Date(singleHighlight.shipped_at), {
+                      addSuffix: true,
+                    })}
                   </span>
                   <DialogCloseButton onClick={() => router.push("/feed")} />
                 </div>
