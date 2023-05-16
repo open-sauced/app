@@ -12,10 +12,9 @@ interface HomeHighlightWrapperProps {
   highlights: DbHighlight[];
   emojis: DbEmojis[];
   loading: boolean;
-  isError: boolean;
 }
 
-const HomeHighlightsWrapper = ({ emojis, highlights, loading, mutate, isError }: HomeHighlightWrapperProps) => {
+const HomeHighlightsWrapper = ({ emojis, highlights, loading, mutate }: HomeHighlightWrapperProps) => {
   return (
     <div>
       <div className="flex flex-col gap-8 mt-10">
@@ -27,7 +26,7 @@ const HomeHighlightsWrapper = ({ emojis, highlights, loading, mutate, isError }:
             <SkeletonWrapper height={300} />
           </div>
         )}
-        {isError && <>An error occurred...</>}
+
         {highlights &&
           highlights.length > 0 &&
           highlights.map(({ id, url, title, created_at, highlight, shipped_at, login }) => (

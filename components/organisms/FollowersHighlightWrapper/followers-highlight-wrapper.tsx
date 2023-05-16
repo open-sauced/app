@@ -36,7 +36,7 @@ const FollowersHighlightWrapper = ({ emojis, selectedFilter }: HighlightWrapperP
             <SkeletonWrapper height={300} />
           </div>
         )}
-        {isError && <>An error occurred...</>}
+
         {data &&
           data.length > 0 &&
           data.map(({ id, url, title, created_at, highlight, shipped_at, login }) => (

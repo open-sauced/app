@@ -168,13 +168,7 @@ const Feeds: WithPageLayout = () => {
           </div>
         )}
         <TabsContent value="home">
-          <HomeHighlightsWrapper
-            isError={isError}
-            emojis={emojis}
-            mutate={mutate}
-            highlights={data}
-            loading={isLoading}
-          />
+          <HomeHighlightsWrapper emojis={emojis} mutate={mutate} highlights={data} loading={isLoading} />
           {meta.pageCount > 1 && (
             <div className="mt-10 max-w-[48rem] flex px-2 items-center justify-between">
               <div>
