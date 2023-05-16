@@ -219,4 +219,5 @@ interface DbUserNotification {
   readonly from_user_id: number;
   readonly notified_at: string;
   readonly user_id: number;
+  readonly meta_id: string;
 }
