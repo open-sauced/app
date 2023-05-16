@@ -2,7 +2,7 @@ import { ComponentStory } from "@storybook/react";
 import NotificationCard from "components/atoms/NotificationsCard/notification-card";
 
 const storyConfig = {
-  title: "Design System/Atoms/NotificationCard"
+  title: "Design System/Atoms/NotificationCard",
 };
 export default storyConfig;
 
@@ -14,15 +14,18 @@ export const Collaborations = NotificationCardTemplate.bind({});
 
 Reations.args = {
   type: "highlight_reaction",
-  message: "Sam Smith reacted to your highlight"
+  message: "sam-smith reacted to your highlight",
+  id: "114",
 };
 
 Follows.args = {
   type: "follow",
-  message: "Sam Smith reacted to your highlight"
+  message: "bdougie followed you",
+  id: "bdougie",
 };
 
 Collaborations.args = {
   type: "collaboration",
-  message: "Sam Smith reacted to your highlight"
+  message: "bdougie invited you to collaborate",
+  id: "1s356g",
 };
