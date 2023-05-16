@@ -21,8 +21,8 @@ import Pagination from "components/molecules/Pagination/pagination";
 import PaginationResults from "components/molecules/PaginationResults/pagination-result";
 import useFetchAllEmojis from "lib/hooks/useFetchAllEmojis";
 import clsx from "clsx";
-import FollowersHighlightWrapper from "components/organisms/FollowersHighlightWrapper/followers-highlight-wrapper";
-import { useFetchFollowersHighlightRepos } from "lib/hooks/useFetchFollowersHighlightRepos";
+import FollowingHighlightWrapper from "components/organisms/FollowersHighlightWrapper/following-highlight-wrapper";
+import { useFetchFollowersHighlightRepos } from "lib/hooks/useFetchFollowingHighlightRepos";
 import HomeHighlightsWrapper from "components/organisms/HomeHighlightsWrapper/home-highlights-wrapper";
 
 type activeTabType = "home" | "following";
@@ -190,7 +190,7 @@ const Feeds: WithPageLayout = () => {
           )}
         </TabsContent>
         <TabsContent value="following">
-          <FollowersHighlightWrapper selectedFilter={selectedRepo} emojis={emojis} />
+          <FollowingHighlightWrapper selectedFilter={selectedRepo} emojis={emojis} />
         </TabsContent>
       </Tabs>
       <div className="hidden mt-10 md:block">

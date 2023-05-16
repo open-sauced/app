@@ -6,7 +6,7 @@ interface useFetchUserHighlightsResponse {
   data: DbHighlight[];
   meta: Meta;
 }
-const useFetchFollowersHighlights = (repo = "") => {
+const useFetchFollowingHighlights = (repo = "") => {
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
 
@@ -29,4 +29,4 @@ const useFetchFollowersHighlights = (repo = "") => {
   };
 };
 
-export { useFetchFollowersHighlights };
+export { useFetchFollowingHighlights };

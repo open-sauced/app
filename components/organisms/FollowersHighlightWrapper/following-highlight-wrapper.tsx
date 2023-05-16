@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import Link from "next/link";
 
 import { getFormattedDate } from "lib/utils/date-utils";
-import { useFetchFollowersHighlights } from "lib/hooks/useFetchFollowersHighlights";
+import { useFetchFollowingHighlights } from "lib/hooks/useFetchFollowingHighlights";
 
 import Avatar from "components/atoms/Avatar/avatar";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
@@ -15,9 +15,9 @@ export interface HighlightWrapperProps {
   emojis: DbEmojis[];
   selectedFilter: string;
 }
-const FollowersHighlightWrapper = ({ emojis, selectedFilter }: HighlightWrapperProps) => {
+const FollowingHighlightWrapper = ({ emojis, selectedFilter }: HighlightWrapperProps) => {
   const router = useRouter();
-  const { data, isLoading, isError, mutate, meta, setPage } = useFetchFollowersHighlights(selectedFilter);
+  const { data, isLoading, isError, mutate, meta, setPage } = useFetchFollowingHighlights(selectedFilter);
 
   useEffect(() => {
     if (selectedFilter) {
@@ -94,4 +94,4 @@ const FollowersHighlightWrapper = ({ emojis, selectedFilter }: HighlightWrapperP
   );
 };
 
-export default FollowersHighlightWrapper;
+export default FollowingHighlightWrapper;
