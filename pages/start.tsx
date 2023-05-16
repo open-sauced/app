@@ -172,9 +172,10 @@ const LoginStep2: React.FC<LoginStep2Props> = ({
 interface LoginStep3Props {
   handleLoginStep: handleLoginStep;
   interests: string[];
+  user: User | null;
 }
 
-const LoginStep3: React.FC<LoginStep3Props> = ({ interests }) => {
+const LoginStep3: React.FC<LoginStep3Props> = ({ interests, user }) => {
   captureAnayltics("User Onboarding", "onboardingStep3", "visited");
   const store = useStore();
   const router = useRouter();
@@ -196,7 +197,7 @@ const LoginStep3: React.FC<LoginStep3Props> = ({ interests }) => {
 
       if (data.ok) {
         store.onboardUser();
-        router.push(`/${interests[0]}/repositories/filter/recent`);
+        router.push(`/user/${user?.user_metadata.user_name}`);
       } else {
         setLoading(false);
         console.error("Error onboarding user");
@@ -345,7 +346,7 @@ const Login: WithPageLayout = () => {
               handleUpdateInterests={(interests) => setInterests(interests)}
             />
           )}
-          {currentLoginStep >= 3 && <LoginStep3 handleLoginStep={handleLoginStep} interests={interests} />}
+          {currentLoginStep >= 3 && <LoginStep3 handleLoginStep={handleLoginStep} interests={interests} user={user} />}
         </section>
       </>
     </Card>

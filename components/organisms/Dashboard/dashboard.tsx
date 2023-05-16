@@ -36,12 +36,12 @@ const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
   let scatterChartData: ScatterChartDataItems[] = [];
   let metadata: ScatterChartMetadata = {
     allPrs: prData.length,
-    openPrs: prData.filter((pr) => pr.state === "open").length,
-    closedPrs: prData.filter((pr) => pr.state === "closed").length
+    openPrs: prData.filter((pr) => pr.state.toLowerCase() === "open").length,
+    closedPrs: prData.filter((pr) => pr.state.toLowerCase() === "closed" || pr.state.toLowerCase() === "merged").length
   };
 
   const uniqueContributors: ContributorPrMap = prData.reduce((prs, curr) => {
-    if (curr.state !== prStateFilter && prStateFilter !== "all") return prs;
+    if (curr.state.toLowerCase() !== prStateFilter && prStateFilter !== "all") return prs;
 
     if (prs[curr.author_login]) {
       prs[curr.author_login].linesCount += Math.abs(curr.additions - curr.deletions);

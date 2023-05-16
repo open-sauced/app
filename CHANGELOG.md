@@ -5,6 +5,73 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.46.0-beta.5](https://github.com/open-sauced/insights/compare/v1.46.0-beta.4...v1.46.0-beta.5) (2023-05-15)
+
+
+### 🐛 Bug Fixes
+
+* update highlight copy link button alignment ([#1177](https://github.com/open-sauced/insights/issues/1177)) ([250267e](https://github.com/open-sauced/insights/commit/250267e23398819d52113dcf67fff1345942a0c8))
+
+
+### 🍕 Features
+
+*  add context clue card to design system ([#1170](https://github.com/open-sauced/insights/issues/1170)) ([7ce1fa7](https://github.com/open-sauced/insights/commit/7ce1fa7f0abed77a1e9ea70ebf7918a2ba999405))
+
+## [1.46.0-beta.4](https://github.com/open-sauced/insights/compare/v1.46.0-beta.3...v1.46.0-beta.4) (2023-05-12)
+
+
+### 🍕 Features
+
+* redirect user to profile after onboarding  ([#1173](https://github.com/open-sauced/insights/issues/1173)) ([8ed3e7b](https://github.com/open-sauced/insights/commit/8ed3e7b1e856232e1f3675fc068f4aa5d71f821f))
+
+## [1.46.0-beta.3](https://github.com/open-sauced/insights/compare/v1.46.0-beta.2...v1.46.0-beta.3) (2023-05-12)
+
+
+### 🍕 Features
+
+* add contributors filter/dropdown and insights list dropdown component to design system ([#1165](https://github.com/open-sauced/insights/issues/1165)) ([4a09cf8](https://github.com/open-sauced/insights/commit/4a09cf8e2a250686a210e9dcd0ca5c26a95ffdf3))
+
+## [1.46.0-beta.2](https://github.com/open-sauced/insights/compare/v1.46.0-beta.1...v1.46.0-beta.2) (2023-05-11)
+
+
+### 🍕 Features
+
+* implement highlight and follow user notifications ([#1167](https://github.com/open-sauced/insights/issues/1167)) ([8b60634](https://github.com/open-sauced/insights/commit/8b606349c054a0807e543025126c6f0fd4dcc688))
+
+## [1.46.0-beta.1](https://github.com/open-sauced/insights/compare/v1.45.1-beta.3...v1.46.0-beta.1) (2023-05-11)
+
+
+### 🍕 Features
+
+* add notification card to design system ([#1136](https://github.com/open-sauced/insights/issues/1136)) ([b20fcce](https://github.com/open-sauced/insights/commit/b20fcce50fe31e87bfde8da2339eeebb9e46bf3d))
+
+
+### 🐛 Bug Fixes
+
+* auto row expansion on text area ([#1137](https://github.com/open-sauced/insights/issues/1137)) ([f1e54b0](https://github.com/open-sauced/insights/commit/f1e54b098f4758fd48e41a16a774a974bb4ef719))
+* normalize casing for PR status filters ([#1168](https://github.com/open-sauced/insights/issues/1168)) ([ec4e51c](https://github.com/open-sauced/insights/commit/ec4e51c6b41c1a61bee4da944cefda18b6b99a68))
+
+### [1.45.1-beta.3](https://github.com/open-sauced/insights/compare/v1.45.1-beta.2...v1.45.1-beta.3) (2023-05-10)
+
+
+### 🔁 Continuous Integration
+
+* update default env and trigger re-deploy ([4df4451](https://github.com/open-sauced/insights/commit/4df44513973f23e9344095c86c51722b5658b9ee))
+
+### [1.45.1-beta.2](https://github.com/open-sauced/insights/compare/v1.45.1-beta.1...v1.45.1-beta.2) (2023-05-09)
+
+
+### 🐛 Bug Fixes
+
+* disable retry on error in SWR config ([#1164](https://github.com/open-sauced/insights/issues/1164)) ([352fefe](https://github.com/open-sauced/insights/commit/352fefef4171430a0a950da6b5561ac8c3096f99))
+
+### [1.45.1-beta.1](https://github.com/open-sauced/insights/compare/v1.45.0...v1.45.1-beta.1) (2023-05-09)
+
+
+### 🐛 Bug Fixes
+
+* make auth session calls earlier and less often ([#1148](https://github.com/open-sauced/insights/issues/1148)) ([8f899e8](https://github.com/open-sauced/insights/commit/8f899e85a065a12d8a9eb5133d5d0be0d6e0c000))
+
 ## [1.45.0](https://github.com/open-sauced/insights/compare/v1.44.0...v1.45.0) (2023-05-02)
 
 
