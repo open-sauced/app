@@ -39,7 +39,7 @@ const useSupabaseAuth = (loadSession = false) => {
   return {
     signIn: (data: SignInWithOAuthCredentials) => supabase.auth.signInWithOAuth({
       ...data,
-      options: {
+      options: data.options ?? {
         redirectTo: process.env.NEXT_PUBLIC_BASE_URL ?? "/"
       }
     }),

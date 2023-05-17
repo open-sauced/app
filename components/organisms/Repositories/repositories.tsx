@@ -55,7 +55,15 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
         "/hub/insights/new"
       );
     } else {
-      signIn({ provider: "github" });
+      signIn({ 
+        provider: "github",
+        options: {
+          redirectTo: `${window.location.origin}/hub/insights/new`,
+          queryParams:{ 
+            selectedRepos: JSON.stringify(selectedRepos)
+          }
+        },
+      });
     }
   };
 
