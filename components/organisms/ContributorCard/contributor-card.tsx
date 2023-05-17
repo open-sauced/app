@@ -2,20 +2,14 @@ import { useState } from "react";
 
 import Card from "components/atoms/Card/card";
 import Text from "components/atoms/Typography/text";
-import CardHorizontalBarChart, {
-  LanguageObject
-} from "components/molecules/CardHorizontalBarChart/card-horizontal-bar-chart";
+import CardHorizontalBarChart from "components/molecules/CardHorizontalBarChart/card-horizontal-bar-chart";
 import CardLineChart from "components/molecules/CardLineChart/card-line-chart";
 import CardProfile from "components/molecules/CardProfile/card-profile";
-import CardRepoList, { RepoList } from "components/molecules/CardRepoList/card-repo-list";
+import CardRepoList from "components/molecules/CardRepoList/card-repo-list";
 import PullRequestTable from "components/molecules/PullRequestTable/pull-request-table";
 
 import { useContributorPullRequestsChart } from "lib/hooks/useContributorPullRequestsChart";
-import color from "lib/utils/color.json";
-import { getAvatarByUsername } from "lib/utils/github";
-import useRepositories from "lib/hooks/api/useRepositories";
-
-const colorKeys = Object.keys(color);
+import useContributorLanguages from "lib/hooks/api/useContributorLanguages";
 
 export interface ContributorObject {
   profile: {
@@ -37,27 +31,8 @@ const ContributorCard = ({ className, contributor, topic, repositories, range }:
   const { profile } = contributor;
 
   const [showPRs, setShowPRs] = useState(false);
-  const { chart, data, meta } = useContributorPullRequestsChart(profile.githubName, topic, repositories, range);
-  const repoList: RepoList[] = Array.from(new Set(data.map(prData => prData.full_name))).map(repo => {
-    const [repoOwner, repoName] = repo.split("/");
-
-    return {
-      repoName: repoName,
-      repoIcon: getAvatarByUsername(repoOwner)
-    };
-  });
-  const repoIds = data.map(pr => pr.repo_id);
-  const { data: repoData } = useRepositories(repoIds);
-  const contributorLanguageList = Array.from(new Set(repoData.map(repo => repo.language).filter(language => !!language)));
-  const languageList: LanguageObject[] = contributorLanguageList
-    .map((language) => {
-      const preparedLanguageKey = colorKeys.find((key) => key.toLowerCase() === language.toLowerCase());
-    
-      return {
-        languageName: preparedLanguageKey ? preparedLanguageKey.toLowerCase() : language,
-        percentageUsed: Math.round((1 / contributorLanguageList.length) * 100)
-      };
-    });
+  const { chart, repoList, meta } = useContributorPullRequestsChart(profile.githubName, topic, repositories, range);
+  const languageList = useContributorLanguages(profile.githubName);
 
   return (
     <Card className={className && className}>

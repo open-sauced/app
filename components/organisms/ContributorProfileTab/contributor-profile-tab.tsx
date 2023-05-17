@@ -35,7 +35,7 @@ interface ContributorProfileTabProps {
   contributor?: DbUser;
   prTotal: number;
   openPrs: number;
-  prVelocity: number;
+  prVelocity?: number;
   prMerged: number;
   recentContributionCount: number;
   prsMergedPercentage: number;
