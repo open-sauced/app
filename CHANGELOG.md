@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.47.0-beta.5](https://github.com/open-sauced/insights/compare/v1.47.0-beta.4...v1.47.0-beta.5) (2023-05-17)
+
+
+### 🍕 Features
+
+* update user profile to use languages from API and link repos ([#1193](https://github.com/open-sauced/insights/issues/1193)) ([b794978](https://github.com/open-sauced/insights/commit/b7949786a86c3c65403d819a25d1d03396344ab6))
+
 ## [1.47.0-beta.4](https://github.com/open-sauced/insights/compare/v1.47.0-beta.3...v1.47.0-beta.4) (2023-05-17)
 
 
