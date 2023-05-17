@@ -51,6 +51,7 @@ const useContributorPullRequestsChart = (contributor: string, topic: string, rep
 
     return {
       repoName: repoName,
+      repoOwner,
       repoIcon: getAvatarByUsername(repoOwner),
     };
   });
