@@ -169,18 +169,18 @@ const ContributorProfileTab = ({
           {/* <HightlightEmptyState /> */}
 
           {isError && <>An error occured</>}
-          {isLoading && <>
-            {Array.from({ length: 3 }).map((_, index) => (
-              <div className="flex flex-col gap-3" key={index}>
-                <div className="flex gap-3">
-                  <SkeletonWrapper radius={100} width={40} height={40} />{" "}
-                  <SkeletonWrapper width={200} height={40} />
+          {true && <>
+            {Array.from({ length: 2 }).map((_, index) => (
+              <div className="flex flex-col gap-2 lg:flex-row lg:gap-6" key={index}>
+                <SkeletonWrapper width={100} height={20} />
+                <div className="md:max-w-[40rem]">
+                  <SkeletonWrapper height={20} width={500} classNames="mb-2" />
+                  <SkeletonWrapper height={300}  />
                 </div>
-                <SkeletonWrapper height={300} />
               </div>
             ))}
           </>}
-          <>
+          {/* <>
             {!isError && highlights && highlights.length > 0 ? (
               <div>
                 {highlights.map(({ id, title, highlight, url, shipped_at, created_at }) => (
@@ -244,7 +244,7 @@ const ContributorProfileTab = ({
                 </div>
               </DashContainer>
             )}
-          </>
+          </> */}
         </div>
       </TabsContent>
 
