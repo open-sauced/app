@@ -6,14 +6,16 @@ const useContributorLanguages = (username: string) => {
   const contributorLanguageTotal = Object.keys(contributor?.languages || {}).reduce((total, language) => {
     return (total += (contributor!.languages as { [lang: string]: number })[language]);
   }, 0);
-  let contributorLanguageList = Object.keys(contributor?.languages || {}).map((lang) => {
-    return {
-      languageName: lang,
-      percentageUsed: Math.round(
-        ((contributor?.languages as { [lang: string]: number })[lang] / contributorLanguageTotal) * 100
-      ),
-    };
-  });
+  let contributorLanguageList = Object.keys(contributor?.languages || {})
+    .map((lang) => {
+      return {
+        languageName: lang,
+        percentageUsed: Math.round(
+          ((contributor?.languages as { [lang: string]: number })[lang] / contributorLanguageTotal) * 100
+        ),
+      };
+    })
+    .filter((lang) => lang.percentageUsed !== 0);
 
   if (contributorLanguageList.length === 0) {
     contributorLanguageList = contributorLanguageList.concat({ languageName: "javascript", percentageUsed: 100 });
