@@ -169,7 +169,7 @@ const ContributorProfileTab = ({
 
           {isError && <>An error occured</>}
           {isLoading && <>
-            {Array.from({ length: 3 }).map((_, index) => (
+            {Array.from({ length: 2 }).map((_, index) => (
               <div className="flex flex-col gap-3" key={index}>
                 <div className="flex gap-3">
                   <SkeletonWrapper radius={100} width={40} height={40} />{" "}
