@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.47.0-beta.4](https://github.com/open-sauced/insights/compare/v1.47.0-beta.3...v1.47.0-beta.4) (2023-05-17)
+
+
+### 🍕 Features
+
+* implement following highlights tab ([#1186](https://github.com/open-sauced/insights/issues/1186)) ([c7c620e](https://github.com/open-sauced/insights/commit/c7c620ee4503f3d420e9f4094da35eb2f61de358))
+
 ## [1.47.0-beta.3](https://github.com/open-sauced/insights/compare/v1.47.0-beta.2...v1.47.0-beta.3) (2023-05-17)
 
 
