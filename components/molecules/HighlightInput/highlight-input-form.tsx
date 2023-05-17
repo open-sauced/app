@@ -133,7 +133,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
           </CollapsibleTrigger>
           <CollapsibleContent>
             <Textarea
-              className={`resize-none font-normal text-light-slate-11 mb-2 transition focus:outline-none rounded-lg ${
+              className={`resize-y min-h-[80px] max-h-99 font-normal text-light-slate-11 mb-2 transition focus:outline-none rounded-lg ${
                 !isDivFocused ? "hidden" : ""
               }`}
               ref={textAreaRef}
