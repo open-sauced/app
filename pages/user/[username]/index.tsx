@@ -13,6 +13,7 @@ import useContributorPullRequests from "lib/hooks/api/useContributorPullRequests
 import { useFetchUser } from "lib/hooks/useFetchUser";
 import useRepoList from "lib/hooks/useRepoList";
 import { getAvatarByUsername } from "lib/utils/github";
+import useContributorLanguages from "lib/hooks/api/useContributorLanguages";
 
 // A quick fix to the hydration issue. Should be replaced with a real solution.
 // Slows down the page's initial client rendering as the component won't be loaded on the server.
@@ -34,17 +35,7 @@ const Contributor: WithPageLayout<ContributorSSRProps> = ({ username, user, ogIm
   const isError = contributorError;
   const repoList = useRepoList(Array.from(new Set(contributorPRData.map((prData) => prData.full_name))).join(","));
   const mergedPrs = contributorPRData.filter((prData) => prData.merged);
-  const contributorLanguageTotal = Object.keys(contributor?.languages || {}).reduce((total, language) => {
-    return (total += (contributor!.languages as { [lang: string]: number })[language]);
-  }, 0);
-  const contributorLanguageList = Object.keys(contributor?.languages || {}).map((lang) => {
-    return {
-      languageName: lang,
-      percentageUsed: Math.round(
-        ((contributor?.languages as { [lang: string]: number })[lang] / contributorLanguageTotal) * 100
-      ),
-    };
-  });
+  const contributorLanguageList = useContributorLanguages(username);
   const githubAvatar = getAvatarByUsername(username, 300);
 
   return (

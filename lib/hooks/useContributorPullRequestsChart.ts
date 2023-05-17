@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import getPullRequestsToDays from "lib/utils/get-prs-to-days";
 import useContributorPullRequests from "./api/useContributorPullRequests";
+import { RepoList } from "components/molecules/CardRepoList/card-repo-list";
+import { getAvatarByUsername } from "lib/utils/github";
 
 const useContributorPullRequestsChart = (contributor: string, topic: string, repoIds: number[] = [], range = 30) => {
   const lineChart = {
     xAxis: {
       type: "category",
       boundaryGap: false,
-      axisLabel: false
+      axisLabel: false,
     },
     yAxis: {
       type: "value",
@@ -15,16 +17,16 @@ const useContributorPullRequestsChart = (contributor: string, topic: string, rep
       axisLabel: false,
       splitLine: {
         lineStyle: {
-          type: "dashed"
-        }
-      }
+          type: "dashed",
+        },
+      },
     },
     grid: {
       height: 100,
       top: 0,
       bottom: 0,
       right: 0,
-      left: 0
+      left: 0,
     },
     series: [
       {
@@ -32,18 +34,26 @@ const useContributorPullRequestsChart = (contributor: string, topic: string, rep
         smooth: true,
         showSymbol: false,
         lineStyle: {
-          color: "#ff9800"
+          color: "#ff9800",
         },
         areaStyle: {
           color: "#FFB74D",
-          opacity: 0.6
-        }
-      }
-    ]
+          opacity: 0.6,
+        },
+      },
+    ],
   };
 
   const [chart, setChart] = useState(lineChart);
   const { data, meta } = useContributorPullRequests(contributor, topic, repoIds, 100, range);
+  const repoList: RepoList[] = Array.from(new Set(data.map((prData) => prData.full_name))).map((repo) => {
+    const [repoOwner, repoName] = repo.split("/");
+
+    return {
+      repoName: repoName,
+      repoIcon: getAvatarByUsername(repoOwner),
+    };
+  });
 
   useEffect(() => {
     if (data && Array.isArray(data)) {
@@ -53,12 +63,12 @@ const useContributorPullRequestsChart = (contributor: string, topic: string, rep
         ...prevChart,
         xAxis: {
           ...prevChart.xAxis,
-          data: graphData.map((commit) => `${commit.x}`)
+          data: graphData.map((commit) => `${commit.x}`),
         },
         series: prevChart.series.map((cs) => ({
           ...cs,
-          data: graphData.map((commit) => commit.y)
-        }))
+          data: graphData.map((commit) => commit.y),
+        })),
       }));
     }
   }, [data]);
@@ -66,7 +76,8 @@ const useContributorPullRequestsChart = (contributor: string, topic: string, rep
   return {
     chart,
     data,
-    meta
+    meta,
+    repoList,
   };
 };
 
