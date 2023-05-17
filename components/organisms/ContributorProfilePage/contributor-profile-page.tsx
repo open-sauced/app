@@ -39,13 +39,14 @@ interface ContributorProfilePageProps {
   listOfPRs?: PrObjectType[];
   githubAvatar?: string;
   githubName: string;
-  langList: string[];
+  langList: { languageName: string; percentageUsed: number }[];
   recentContributionCount: number;
+  prFirstOpenedDate?: string;
   user?: DbUser;
   prTotal: number;
   openPrs: number;
-  prReviews: number;
-  prVelocity: number;
+  prReviews?: number;
+  prVelocity?: number;
   prMerged: number;
   loading: boolean;
   error: boolean;
@@ -61,25 +62,26 @@ const ContributorProfilePage = ({
   prTotal,
   loading,
   prMerged,
-  prVelocity
+  prVelocity,
+  prFirstOpenedDate,
 }: ContributorProfilePageProps) => {
-  const languageList = langList?.map((language) => {
-    const preparedLanguageKey = colorKeys.find((key) => key.toLowerCase() === language.toLowerCase());
+  const languageList = (langList || []).map((language) => {
+    const preparedLanguageKey = colorKeys.find((key) => key.toLowerCase() === language.languageName.toLowerCase());
 
     return {
-      languageName: preparedLanguageKey ? preparedLanguageKey : language,
-      percentageUsed: Math.round((1 / langList.length) * 100)
+      languageName: preparedLanguageKey ? preparedLanguageKey : language.languageName,
+      percentageUsed: language.percentageUsed,
     };
   });
 
   const { user: loggedInUser, signIn } = useSupabaseAuth();
   const { chart, data } = useContributorPullRequestsChart(githubName, "*", repositories);
-  const repoList: RepoList[] = Array.from(new Set(data.map(prData => prData.full_name))).map(repo => {
+  const repoList: RepoList[] = Array.from(new Set(data.map((prData) => prData.full_name))).map((repo) => {
     const [repoOwner, repoName] = repo.split("/");
 
     return {
       repoName: repoName,
-      repoIcon: getAvatarByUsername(repoOwner)
+      repoIcon: getAvatarByUsername(repoOwner),
     };
   });
   const prsMergedPercentage = getPercent(prTotal, prMerged || 0);
@@ -94,7 +96,7 @@ const ContributorProfilePage = ({
     timezone,
     github_sponsors_url: githubSponsorsUrl,
     linkedin_url: linkedInUrl,
-    display_local_time: displayLocalTime
+    display_local_time: displayLocalTime,
   } = user || {};
 
   const iscConnected = !!user?.is_open_sauced_member;
@@ -125,7 +127,6 @@ const ContributorProfilePage = ({
             <>
               <ContributorProfileInfo
                 interests={interests}
-                // eslint-disable-next-line camelcase
                 twitterUsername={twitter_username}
                 bio={bio}
                 githubName={githubName}
@@ -134,6 +135,7 @@ const ContributorProfilePage = ({
                 displayLocalTime={displayLocalTime}
                 githubSponsorsUrl={githubSponsorsUrl}
                 linkedInUrl={linkedInUrl}
+                prFirstOpenedDate={prFirstOpenedDate}
               />
 
               <div>

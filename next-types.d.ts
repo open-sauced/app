@@ -161,6 +161,8 @@ interface DbUser {
   readonly github_sponsors_url: string;
   readonly linkedin_url: string;
   readonly notification_count: number;
+  readonly languages: { [lang]: number };
+  readonly first_opened_pr_at: string;
 }
 
 interface DbHighlight {
