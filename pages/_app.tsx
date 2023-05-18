@@ -13,7 +13,7 @@ import posthog from "posthog-js";
 
 import { TipProvider } from "components/atoms/Tooltip/tooltip";
 
-import apiFetcher from "lib/hooks/useSWR";
+import publicApiFetcher from "lib/utils/public-api-fetcher";
 import { initiateAnalytics } from "lib/utils/analytics";
 import { supabase } from "lib/utils/supabase";
 
@@ -96,8 +96,8 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
         value={{
           revalidateOnFocus: false,
           shouldRetryOnError: false,
-          fetcher: apiFetcher,
-          provider: localStorageProvider
+          fetcher: publicApiFetcher,
+          provider: localStorageProvider,
         }}
       >
         {/* <Toaster position="top-center" /> */}
