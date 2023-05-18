@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.47.0-beta.6](https://github.com/open-sauced/insights/compare/v1.47.0-beta.5...v1.47.0-beta.6) (2023-05-18)
+
+
+### 🍕 Features
+
+* add skeleton loading in the user's highlights tab ([#1191](https://github.com/open-sauced/insights/issues/1191)) ([b159788](https://github.com/open-sauced/insights/commit/b159788f8aa88750109eea4bcbfa691f6f76da54))
+* limit length title in highlight ([#1194](https://github.com/open-sauced/insights/issues/1194)) ([2fb9ef7](https://github.com/open-sauced/insights/commit/2fb9ef76641cf3b8ee7c2ed8523595dacf55a664))
+
 ## [1.47.0-beta.5](https://github.com/open-sauced/insights/compare/v1.47.0-beta.4...v1.47.0-beta.5) (2023-05-17)
 
 
