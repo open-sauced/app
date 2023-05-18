@@ -5,6 +5,20 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.47.0](https://github.com/open-sauced/insights/compare/v1.46.0...v1.47.0) (2023-05-18)
+
+
+### 🍕 Features
+
+* add links to user notifications based on type ([#1185](https://github.com/open-sauced/insights/issues/1185)) ([e6aeb74](https://github.com/open-sauced/insights/commit/e6aeb74debde34e2ce7efb6886a0030042323fc2))
+* add repo recommendations to user profile ([#1174](https://github.com/open-sauced/insights/issues/1174)) ([1777aca](https://github.com/open-sauced/insights/commit/1777aca91bb1721c51608e5e2b6a0d9cfa9e41d7))
+* add skeleton loading in the user's highlights tab ([#1191](https://github.com/open-sauced/insights/issues/1191)) ([b159788](https://github.com/open-sauced/insights/commit/b159788f8aa88750109eea4bcbfa691f6f76da54))
+* format highlight date ([#1190](https://github.com/open-sauced/insights/issues/1190)) ([bfcd45b](https://github.com/open-sauced/insights/commit/bfcd45bcf4937dfc768f31b540e8745e71918505))
+* implement following highlights tab ([#1186](https://github.com/open-sauced/insights/issues/1186)) ([c7c620e](https://github.com/open-sauced/insights/commit/c7c620ee4503f3d420e9f4094da35eb2f61de358))
+* limit length title in highlight ([#1194](https://github.com/open-sauced/insights/issues/1194)) ([2fb9ef7](https://github.com/open-sauced/insights/commit/2fb9ef76641cf3b8ee7c2ed8523595dacf55a664))
+* make highlight textarea expandable ([#1189](https://github.com/open-sauced/insights/issues/1189)) ([21f94cb](https://github.com/open-sauced/insights/commit/21f94cbf07464891cf19c712df6d553bfb05cf9e))
+* update user profile to use languages from API and link repos ([#1193](https://github.com/open-sauced/insights/issues/1193)) ([b794978](https://github.com/open-sauced/insights/commit/b7949786a86c3c65403d819a25d1d03396344ab6))
+
 ## [1.47.0-beta.6](https://github.com/open-sauced/insights/compare/v1.47.0-beta.5...v1.47.0-beta.6) (2023-05-18)
 
 
