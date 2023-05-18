@@ -30,6 +30,7 @@ import LanguagePill from "components/atoms/LanguagePill/LanguagePill";
 import RecommendedRepoCard from "components/molecules/RecommendedRepoCard/recommended-repo-card";
 import recommendations from "lib/utils/recommendations";
 import Title from "components/atoms/Typography/title";
+import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 
 interface ContributorProfileTabProps {
   contributor?: DbUser;
@@ -168,7 +169,17 @@ const ContributorProfileTab = ({
           {/* <HightlightEmptyState /> */}
 
           {isError && <>An error occured</>}
-          {isLoading && <>Loading...</>}
+          {isLoading && <>
+            {Array.from({ length: 2 }).map((_, index) => (
+              <div className="flex flex-col gap-2 lg:flex-row lg:gap-6" key={index}>
+                <SkeletonWrapper width={100} height={20} />
+                <div className="md:max-w-[40rem]">
+                  <SkeletonWrapper height={20} width={500} classNames="mb-2" />
+                  <SkeletonWrapper height={300}  />
+                </div>
+              </div>
+            ))}
+          </>}
           <>
             {!isError && highlights && highlights.length > 0 ? (
               <div>
