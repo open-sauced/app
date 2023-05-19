@@ -89,13 +89,23 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
     setHydrated(true);
   }, []);
 
-  if (!hydrated) return <></>;
+  if (!hydrated)
+    return (
+      <>
+        <SEO
+          title={`${props?.highlight ? "Highlight | OpenSauced" : "Highlights | OpenSauced"}`}
+          description={`${props?.highlight?.highlight || "OpenSauced Highlight"}`}
+          image={props?.ogImage}
+          twitterCard="summary_large_image"
+        />
+      </>
+    );
 
   return (
     <>
       <SEO
         title={`${props?.highlight ? "Highlight | OpenSauced" : "Highlights | OpenSauced"}`}
-        description={`${props?.highlight?.title}`}
+        description={`${props?.highlight?.highlight || "OpenSauced Highlight"}`}
         image={props?.ogImage}
         twitterCard="summary_large_image"
       />
