@@ -28,7 +28,7 @@ enum RepoLookupError {
   Initial = 0,
   NotIndexed = 1,
   Invalid = 3,
-  Error = 4
+  Error = 4,
 }
 
 interface InsightPageProps {
@@ -53,7 +53,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
     data.map((member) => ({
       ...member,
       email: member.invitation_email,
-      avatarUrl: !!member.user_id ? getAvatarById(String(member.user_id)) : ""
+      avatarUrl: !!member.user_id ? getAvatarById(String(member.user_id)) : "",
     }));
 
   const insightOwner: TeamMemberData = {
@@ -62,7 +62,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
     id: String(insight?.user.id),
     name: String(insight?.user.name || insight?.user.login),
     avatarUrl: getAvatarByUsername(String(insight?.user.login)),
-    access: "owner"
+    access: "owner",
   };
 
   // Loading States
@@ -104,7 +104,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
       repoName: repoName,
       totalPrs,
       avatar: getAvatarByUsername(repoOwner, 60),
-      handleRemoveItem: () => {}
+      handleRemoveItem: () => {},
     };
   });
 
@@ -134,14 +134,14 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
       method: "POST",
       headers: {
         "Content-type": "application/json",
-        Authorization: `Bearer ${sessionToken}`
+        Authorization: `Bearer ${sessionToken}`,
       },
       body: JSON.stringify({
         name,
         repos: repos.map((repo) => ({ id: repo.id, fullName: repo.full_name })),
         // eslint-disable-next-line
-        is_public: isPublic
-      })
+        is_public: isPublic,
+      }),
     });
     setCreateLoading(false);
     if (response.ok) {
@@ -161,14 +161,14 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
       method: "PATCH",
       headers: {
         "Content-type": "application/json",
-        Authorization: `Bearer ${sessionToken}`
+        Authorization: `Bearer ${sessionToken}`,
       },
       body: JSON.stringify({
         name,
         repos: repos.map((repo) => ({ id: repo.id, fullName: repo.full_name })),
         // eslint-disable-next-line
-        is_public: isPublic
-      })
+        is_public: isPublic,
+      }),
     });
     setCreateLoading(false);
     if (response && response.ok) {
@@ -210,7 +210,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
           // create a stub repo to send to API
           const addedRepo = {
             id: publicRepo.id,
-            full_name: publicRepo.full_name
+            full_name: publicRepo.full_name,
           } as DbRepo;
 
           setRepos((repos) => {
@@ -274,8 +274,8 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
       method: "DELETE",
       headers: {
         "Content-type": "application/json",
-        Authorization: `Bearer ${sessionToken}`
-      }
+        Authorization: `Bearer ${sessionToken}`,
+      },
     });
 
     setDeleteLoading(false);
@@ -303,10 +303,10 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
         ...(providerToken
           ? {
             headers: {
-              Authorization: `Bearer ${providerToken}`
-            }
+              Authorization: `Bearer ${providerToken}`,
+            },
           }
-          : {})
+          : {}),
       }
     );
 
@@ -331,26 +331,26 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
       prCount: 8,
       repoName: "insights",
       issueCount: 87,
-      orgName: "open-sauced"
+      orgName: "open-sauced",
     },
     {
       avatar: "https://avatars.githubusercontent.com/u/59704711?s=200&v=4",
       prCount: 26,
       repoName: "cli",
       issueCount: 398,
-      orgName: "cli"
+      orgName: "cli",
     },
     {
       avatar: "https://avatars.githubusercontent.com/u/42048915?s=200&v=4",
       prCount: 100,
       repoName: "deno",
       issueCount: 1200,
-      orgName: "denoland"
-    }
+      orgName: "denoland",
+    },
   ];
 
   return (
-    <section className="flex flex-col justify-center w-full py-4 lg:flex-row lg:gap-20 lg:pl-28 ">
+    <section className="flex flex-col justify-center w-full py-4 xl:flex-row xl:gap-20 xl:pl-28 ">
       <div className="flex flex-col gap-8">
         <div className="pb-6 border-b border-light-slate-8">
           <Title className="!text-2xl !leading-none mb-4" level={1}>
