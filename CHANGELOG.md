@@ -5,6 +5,18 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.48.0-beta.1](https://github.com/open-sauced/insights/compare/v1.47.0...v1.48.0-beta.1) (2023-05-19)
+
+
+### 🍕 Features
+
+* add OpenGraph image for individual highlights ([#1205](https://github.com/open-sauced/insights/issues/1205)) ([0e2b49f](https://github.com/open-sauced/insights/commit/0e2b49f26cac2443b1f0c6d4dfd31d660061b6bd))
+
+
+### 🐛 Bug Fixes
+
+* fix package.json merge ([287d999](https://github.com/open-sauced/insights/commit/287d999a3abf77a5cc8980ae62e62946abeff508))
+
 ## [1.47.0](https://github.com/open-sauced/insights/compare/v1.46.0...v1.47.0) (2023-05-18)
 
 
