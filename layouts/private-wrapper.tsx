@@ -1,6 +1,6 @@
-import { useUser } from '@supabase/auth-helpers-react'
-import { useRouter } from 'next/router'
-import React, { useEffect } from 'react'
+import { useUser } from "@supabase/auth-helpers-react";
+import { useRouter } from "next/router";
+import React, { useEffect } from "react";
 
 interface PrivateWrapperProps {
   isPrivateRoute?: boolean;
@@ -8,16 +8,16 @@ interface PrivateWrapperProps {
 }
 
 const PrivateWrapper = ({ isPrivateRoute = false, children }: PrivateWrapperProps) => {
-  const user = useUser()
-  const router = useRouter()
+  const user = useUser();
+  const router = useRouter();
   
   useEffect(() => {
     if (isPrivateRoute) {
-      if (!user) router.replace('/javascript/dashboard/filter/recent')
+      if (!user) router.replace("/javascript/dashboard/filter/recent");
     }
-  }, [user])
+  }, [user]);
 
-  return <>{children}</>
-}
+  return <>{children}</>;
+};
 
-export default PrivateWrapper
+export default PrivateWrapper;

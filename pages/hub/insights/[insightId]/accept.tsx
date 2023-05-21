@@ -77,6 +77,7 @@ const AcceptMemberInvitePage = () => {
 };
 
 AcceptMemberInvitePage.PageLayout = HubLayout;
+AcceptMemberInvitePage.isPrivateRoute = true;
 AcceptMemberInvitePage.SEO = {
   title: "Accept Insight Member Invitation | Open Sauced Insights",
   noindex: true
