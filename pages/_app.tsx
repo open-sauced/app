@@ -21,12 +21,14 @@ import SEO from "layouts/SEO/SEO";
 import { Toaster } from "components/molecules/Toaster/toaster";
 import Script from "next/script";
 import useSession from "lib/hooks/useSession";
+import PrivateWrapper from "layouts/private-wrapper";
 
 type ComponentWithPageLayout = AppProps & {
   Component: AppProps["Component"] & {
     PageLayout?: React.ComponentType<any>;
     SEO?: SEOobject;
     updateSEO?: (SEO: SEOobject) => void;
+    isPrivateRoute?: boolean;
   };
 };
 
@@ -103,15 +105,17 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
         {/* <Toaster position="top-center" /> */}
         <Toaster />
         <SessionContextProvider supabaseClient={supabase} initialSession={pageProps.initialSession}>
-          <TipProvider>
-            {Component.PageLayout ? (
-              <Component.PageLayout>
+          <PrivateWrapper isPrivateRoute={Component.isPrivateRoute}>
+            <TipProvider>
+              {Component.PageLayout ? (
+                <Component.PageLayout>
+                  <Component {...pageProps} />
+                </Component.PageLayout>
+              ) : (
                 <Component {...pageProps} />
-              </Component.PageLayout>
-            ) : (
-              <Component {...pageProps} />
-            )}
-          </TipProvider>
+              )}
+            </TipProvider>
+          </PrivateWrapper>
           <Script
             id="ze-snippet"
             src="https://static.zdassets.com/ekr/snippet.js?key=765edcc9-b888-4651-8b22-79e4365e06f1"
