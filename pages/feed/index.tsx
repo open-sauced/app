@@ -1,57 +1,79 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import Link from "next/link";
+import formatDistanceToNowStrict from "date-fns/formatDistanceToNowStrict";
+import clsx from "clsx";
 
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
-import { getFormattedDate } from "lib/utils/date-utils";
 import { useFetchAllHighlights } from "lib/hooks/useFetchAllHighlights";
 import { useFetchHighlightRepos } from "lib/hooks/useFetchHiglightRepos";
-import { useFetchSingleHighlight } from "lib/hooks/useFetchSingleHighlight";
+import useFetchAllEmojis from "lib/hooks/useFetchAllEmojis";
+import { useFetchFollowersHighlightRepos } from "lib/hooks/useFetchFollowingHighlightRepos";
 
-import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
+import { WithPageLayout } from "interfaces/with-page-layout";
+import ProfileLayout from "layouts/profile";
+import SEO from "layouts/SEO/SEO";
+
 import { Dialog, DialogCloseButton, DialogContent } from "components/molecules/Dialog/dialog";
 import Avatar from "components/atoms/Avatar/avatar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "components/atoms/Tabs/tabs";
 import ContributorHighlightCard from "components/molecules/ContributorHighlight/contributor-highlight-card";
 import HighlightInputForm from "components/molecules/HighlightInput/highlight-input-form";
 import HighlightsFilterCard from "components/molecules/HighlightsFeedCard/highlights-filter-card";
-import ProfileLayout from "layouts/profile";
-import { WithPageLayout } from "interfaces/with-page-layout";
 import Pagination from "components/molecules/Pagination/pagination";
 import PaginationResults from "components/molecules/PaginationResults/pagination-result";
-import useFetchAllEmojis from "lib/hooks/useFetchAllEmojis";
+import FollowingHighlightWrapper from "components/organisms/FollowersHighlightWrapper/following-highlight-wrapper";
+import HomeHighlightsWrapper from "components/organisms/HomeHighlightsWrapper/home-highlights-wrapper";
 
-const Feeds: WithPageLayout = () => {
+type activeTabType = "home" | "following";
+type highlightReposType = { repoName: string; repoIcon: string; full_name: string };
+
+interface HighlightSSRProps {
+  highlight: DbHighlight | null;
+  ogImage?: string;
+}
+
+const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
   const { user } = useSupabaseAuth();
   const router = useRouter();
   const [hydrated, setHydrated] = useState(false);
   const [openSingleHighlight, setOpenSingleHighlight] = useState(false);
   const [selectedRepo, setSelectedRepo] = useState("");
+  const [activeTab, setActiveTab] = useState<activeTabType>("home");
+  const [repoList, setRepoList] = useState<highlightReposType[]>();
 
   const { id } = router.query;
-  const highlightId = id as string;
+  const singleHighlight = props.highlight;
+  const highlightId = props.highlight?.id as string;
 
   const { data: repos } = useFetchHighlightRepos();
+  const { data: followersRepo } = useFetchFollowersHighlightRepos();
 
-  const { data, isLoading, mutate, meta, setPage } = useFetchAllHighlights(selectedRepo);
-  const { data: singleHighlight } = useFetchSingleHighlight(id as unknown as number);
+  const { data, mutate, setPage, isError, isLoading, meta } = useFetchAllHighlights(selectedRepo);
   const { data: emojis } = useFetchAllEmojis();
 
-  const repoList =
-    repos && // eslint-disable-next-line camelcase
-    repos.map(({ full_name }) => {
-      // eslint-disable-next-line camelcase
+  const repoTofilterList = (repos: { full_name: string }[]): highlightReposType[] => {
+    const filtersArray = repos.map(({ full_name }) => {
       const [orgName, repo] = full_name.split("/");
-      // eslint-disable-next-line camelcase
       return { repoName: repo, repoIcon: `https://www.github.com/${orgName}.png?size=300`, full_name };
     });
+
+    return filtersArray;
+  };
+
+  useEffect(() => {
+    setSelectedRepo("");
+    if (activeTab === "home" && repos) {
+      setRepoList(repoTofilterList(repos));
+    } else if (activeTab === "following" && followersRepo) {
+      setRepoList(repoTofilterList(followersRepo));
+    }
+  }, [activeTab]);
 
   useEffect(() => {
     if (selectedRepo) {
       router.push(`/feed?repo=${selectedRepo}`);
       setPage(1);
     }
-
     if (highlightId) {
       setOpenSingleHighlight(true);
       router.push(`/feed/${id}`);
@@ -67,161 +89,141 @@ const Feeds: WithPageLayout = () => {
     setHydrated(true);
   }, []);
 
-  if (!hydrated) return <></>;
+  if (!hydrated)
+    return (
+      <>
+        <SEO
+          title={`${props?.highlight ? "Highlight | OpenSauced" : "Highlights | OpenSauced"}`}
+          description={`${props?.highlight?.highlight || "OpenSauced Highlight"}`}
+          image={props?.ogImage}
+          twitterCard="summary_large_image"
+        />
+      </>
+    );
 
   return (
-    <div className="container flex flex-col gap-12 px-2 pt-12 mx-auto md:px-16 lg:justify-end md:flex-row">
-      {singleHighlight && (
-        <Dialog
-          open={openSingleHighlight}
-          onOpenChange={(open) => {
-            if (!open) {
-              router.push("/feed");
-            }
-          }}
-        >
-          <DialogContent className=" sm:max-w-[80%] w-full  sm:max-h-screen ">
-            <div className="flex flex-col gap-8 mx-auto mt-10">
-              <div className="flex flex-col gap-6 px-3 ">
-                <div className="flex items-center gap-3 ">
-                  <Avatar
-                    alt="user profile avatar"
-                    isCircle
-                    size="sm"
-                    avatarURL={`https://www.github.com/${singleHighlight.login}.png?size=300`}
-                  />
-                  <strong>{singleHighlight.login}</strong>
-                  <span className="text-xs font-normal text-light-slate-11">
-                    {getFormattedDate(singleHighlight.shipped_at)}
-                  </span>
-                  <DialogCloseButton onClick={() => router.push("/feed")} />
-                </div>
-
-                <div className="w-full px-2 py-6 border bg-light-slate-1 md:px-6 lg:px-12 rounded-xl">
-                  <ContributorHighlightCard
-                    emojis={emojis}
-                    title={singleHighlight.title}
-                    desc={singleHighlight.highlight}
-                    prLink={singleHighlight.url}
-                    user={singleHighlight.login}
-                    id={singleHighlight.id}
-                    shipped_date={singleHighlight.shipped_at}
-                    refreshCallBack={mutate}
-                  />
-                </div>
-              </div>
-            </div>
-          </DialogContent>
-        </Dialog>
-      )}
-      <Tabs defaultValue="Highlights" className="flex-1 lg:pl-[21.875rem]">
-        <TabsList className="justify-start hidden w-full border-b">
-          <TabsTrigger
-            className="data-[state=active]:border-sauced-orange data-[state=active]:border-b-2 text-2xl"
-            value="Highlights"
+    <>
+      <SEO
+        title={`${props?.highlight ? "Highlight | OpenSauced" : "Highlights | OpenSauced"}`}
+        description={`${props?.highlight?.highlight || "OpenSauced Highlight"}`}
+        image={props?.ogImage}
+        twitterCard="summary_large_image"
+      />
+      <div className="container flex flex-col gap-12 px-2 pt-12 mx-auto md:px-16 lg:justify-end md:flex-row">
+        {singleHighlight && (
+          <Dialog
+            open={openSingleHighlight}
+            onOpenChange={(open) => {
+              if (!open) {
+                router.push("/feed");
+              }
+            }}
           >
-            Home
-          </TabsTrigger>
-          <TabsTrigger
-            className="data-[state=active]:border-sauced-orange  data-[state=active]:border-b-2 text-2xl"
-            value="Following"
-          >
-            Following
-          </TabsTrigger>
-        </TabsList>
-        <TabsContent value="Highlights">
-          {data && data.length > 0 && (
-            <>
-              {user && (
-                <div className="lg:gap-x-3 px-3 pt-4 flex max-w-[48rem]">
-                  <div className="hidden lg:inline-flex pt-[0.4rem]">
+            <DialogContent className=" sm:max-w-[80%] w-full  sm:max-h-screen ">
+              <div className="flex flex-col gap-8 mx-auto mt-10">
+                <div className="flex flex-col gap-6 px-3 ">
+                  <div className="flex items-center gap-3 ">
                     <Avatar
                       alt="user profile avatar"
                       isCircle
                       size="sm"
-                      avatarURL={`https://www.github.com/${user?.user_metadata.user_name}.png?size=300`}
+                      avatarURL={`https://www.github.com/${singleHighlight.login}.png?size=300`}
+                    />
+                    <strong>{singleHighlight.login}</strong>
+                    <span className="text-xs font-normal text-light-slate-11">
+                      {formatDistanceToNowStrict(new Date(singleHighlight.created_at), {
+                        addSuffix: true,
+                      })}
+                    </span>
+                    <DialogCloseButton onClick={() => router.push("/feed")} />
+                  </div>
+
+                  <div className="w-full px-2 py-6 border bg-light-slate-1 md:px-6 lg:px-12 rounded-xl">
+                    <ContributorHighlightCard
+                      emojis={emojis}
+                      title={singleHighlight.title}
+                      desc={singleHighlight.highlight}
+                      prLink={singleHighlight.url}
+                      user={singleHighlight.login}
+                      id={singleHighlight.id}
+                      shipped_date={singleHighlight.shipped_at}
+                      refreshCallBack={mutate}
                     />
                   </div>
-
-                  <HighlightInputForm refreshCallback={mutate} />
                 </div>
-              )}
+              </div>
+            </DialogContent>
+          </Dialog>
+        )}
+        <Tabs
+          onValueChange={(value) => {
+            setActiveTab(value as activeTabType);
+          }}
+          defaultValue="home"
+          className="flex-1 lg:pl-[21.875rem]"
+        >
+          <TabsList className={clsx("justify-start  w-full border-b", !user && "hidden")}>
+            <TabsTrigger
+              className="data-[state=active]:border-sauced-orange data-[state=active]:border-b-2 text-2xl"
+              value="home"
+            >
+              Home
+            </TabsTrigger>
+            <TabsTrigger
+              className="data-[state=active]:border-sauced-orange  data-[state=active]:border-b-2 text-2xl"
+              value="following"
+            >
+              Following
+            </TabsTrigger>
+          </TabsList>
 
-              {/* Highlights List section */}
-              <div className="flex flex-col gap-8 mt-10">
-                {isLoading && (
-                  <div className="flex flex-col gap-3">
-                    <div className="flex gap-3">
-                      <SkeletonWrapper radius={100} width={40} height={40} />{" "}
-                      <SkeletonWrapper width={200} height={40} />
-                    </div>
-                    <SkeletonWrapper height={300} />
-                  </div>
-                )}
-                {data &&
-                  data.length > 0 &&
-                  // eslint-disable-next-line camelcase
-                  data.map(({ id, url, title, created_at, highlight, shipped_at, login }) => (
-                    <div key={id} className="flex flex-col gap-6 px-1">
-                      <div className="flex items-center gap-3">
-                        <Link href={`/user/${login}`} className="flex items-center gap-3">
-                          <Avatar
-                            alt="user profile avatar"
-                            isCircle
-                            size="sm"
-                            avatarURL={`https://www.github.com/${login}.png?size=300`}
-                          />
-                          <strong>{login}</strong>
-                        </Link>
-                        <Link href={`/feed/${id}`}>
-                          <span className="text-xs font-normal text-light-slate-11">
-                            {getFormattedDate(created_at)}
-                          </span>
-                        </Link>
-                      </div>
-                      <div className="p-4 py-6 border bg-light-slate-1 md:px-6 lg:px-12 rounded-xl">
-                        <ContributorHighlightCard
-                          emojis={emojis}
-                          refreshCallBack={mutate}
-                          title={title}
-                          desc={highlight}
-                          prLink={url}
-                          shipped_date={shipped_at}
-                          user={login}
-                          id={id}
-                        />
-                      </div>
-                    </div>
-                  ))}
+          {user && (
+            <div className="lg:gap-x-3 px-3 pt-4 flex max-w-[48rem]">
+              <div className="hidden lg:inline-flex pt-[0.4rem]">
+                <Avatar
+                  alt="user profile avatar"
+                  isCircle
+                  size="sm"
+                  avatarURL={`https://www.github.com/${user?.user_metadata.user_name}.png?size=300`}
+                />
               </div>
-            </>
-          )}
-          {meta.pageCount > 1 && (
-            <div className="mt-10 max-w-[48rem] flex px-2 items-center justify-between">
-              <div>
-                <PaginationResults metaInfo={meta} total={meta.itemCount} entity={"highlights"} />
-              </div>
-              <Pagination
-                pages={[]}
-                totalPage={meta.pageCount}
-                page={meta.page}
-                pageSize={meta.itemCount}
-                goToPage
-                hasNextPage={meta.hasNextPage}
-                hasPreviousPage={meta.hasPreviousPage}
-                onPageChange={function (page: number): void {
-                  setPage(page);
-                }}
-              />
+
+              <HighlightInputForm refreshCallback={mutate} />
             </div>
           )}
-        </TabsContent>
-        <TabsContent value="Following"></TabsContent>
-      </Tabs>
-      <div className="hidden mt-10 md:block">
-        {repoList.length > 0 && <HighlightsFilterCard setSelected={setSelectedRepo} repos={repoList} />}
+          <TabsContent value="home">
+            <HomeHighlightsWrapper emojis={emojis} mutate={mutate} highlights={data} loading={isLoading} />
+            {meta.pageCount > 1 && (
+              <div className="mt-10 max-w-[48rem] flex px-2 items-center justify-between">
+                <div>
+                  <PaginationResults metaInfo={meta} total={meta.itemCount} entity={"highlights"} />
+                </div>
+                <Pagination
+                  pages={[]}
+                  totalPage={meta.pageCount}
+                  page={meta.page}
+                  pageSize={meta.itemCount}
+                  goToPage
+                  hasNextPage={meta.hasNextPage}
+                  hasPreviousPage={meta.hasPreviousPage}
+                  onPageChange={function (page: number): void {
+                    setPage(page);
+                  }}
+                />
+              </div>
+            )}
+          </TabsContent>
+          <TabsContent value="following">
+            <FollowingHighlightWrapper selectedFilter={selectedRepo} emojis={emojis} />
+          </TabsContent>
+        </Tabs>
+        <div className="hidden mt-10 md:block">
+          {repoList && repoList.length > 0 && (
+            <HighlightsFilterCard selectedFilter={selectedRepo} setSelected={setSelectedRepo} repos={repoList} />
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

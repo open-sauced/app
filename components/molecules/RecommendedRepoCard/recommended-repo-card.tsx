@@ -3,88 +3,92 @@ import { BiGitPullRequest } from "react-icons/bi";
 import { VscIssues } from "react-icons/vsc";
 import { AiOutlineStar } from "react-icons/ai";
 import { getAvatarByUsername } from "lib/utils/github";
-import StackedAvatar from "../StackedAvatar/stacked-avatar";
+import StackedAvatar, { Contributor } from "../StackedAvatar/stacked-avatar";
+import clsx from "clsx";
+import useFetchRecommendedRepoByRepoName from "lib/hooks/fetchRecommendationByRepo";
+import { truncateString } from "lib/utils/truncate-string";
+import useRepositoryPullRequests from "lib/hooks/api/useRepositoryPullRequests";
+import getPullRequestsContributors from "lib/utils/get-pr-contributors";
+import { Spinner } from "components/atoms/SpinLoader/spin-loader";
 
-export declare interface RecommendedRepoCardProps {
-  fullname: string;
-  description: string;
-  issues: number;
-  stars: number;
-  pullRequests: number;
-  contributions: DbContribution[];
+export declare interface RecommendedRepoCardProps extends React.ComponentProps<"div"> {
+  fullName: string;
 }
 
-const RecommendedRepoCard = ({ fullname, description, issues, pullRequests, stars, contributions }: RecommendedRepoCardProps): JSX.Element => {
-
-  const [owner, name] = fullname.split("/");
+const RecommendedRepoCard = ({ fullName, className }: RecommendedRepoCardProps): JSX.Element => {
+  const [owner, name] = fullName.split("/");
+  const { data, isLoading, isError } = useFetchRecommendedRepoByRepoName(owner, name);
+  const { data: repositoryPullRequests, isError: pullError, meta } = useRepositoryPullRequests(fullName);
+  const contributorData = getPullRequestsContributors(repositoryPullRequests);
 
   return (
-    <div className="p-4 border rounded-2xl bg-white w-full min-w-fit space-y-1 relative">
-      <div className="flex justify-between w-full">
-        <div className="flex gap-1 items-center">
-          <img
-            alt="Hot Repo Icon"
-            className="h-4 w-4 rounded-md overflow-hidden"
-            src={getAvatarByUsername(owner)}
-          />
-
-          <span className="text-sm font-medium text-lightSlate11">
-            {owner}
-          </span>
+    <div className={clsx("relative w-full flex flex-col gap-2 p-4  bg-white border rounded-2xl ", className)}>
+      {isLoading && (
+        <div className="flex items-center justify-center w-full h-36">
+          <Spinner />
         </div>
-      </div>
-
-      <div className="flex flex-col pb-10">
-        <a
-          className="text-xl font-semibold"
-          href={`https://insights.opensauced.pizza/hot/repositories/filter/${fullname}`}
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          {name}
-        </a>
-
-        <p className="text-gray-500 font-medium text-xs w-5/6">
-          {description}
-        </p>
-      </div>
-
-      <div className="flex items-center justify-between flex-wrap">
-        <div className="flex space-x-3 text-xs">
-          <div className="flex text-sm space-x-1 justify-center items-center">
-            <VscIssues
-              className="fill-lightSlate10"
-              size={16}
-            />
-
-            <span className="text-lightSlate11">
-              {humanizeNumber(issues, "abbreviation")}
-            </span>
+      )}
+      {isError && <>An error occured loading ...</>}
+      {data && (
+        <>
+          <div className="flex justify-between w-full">
+            <a
+              target="_blank"
+              href={`https://github.com/${fullName}`}
+              className="flex items-center gap-1.5"
+              rel="noreferrer"
+            >
+              <picture>
+                <img
+                  alt="Hot Repo Icon"
+                  className="w-4 h-4 overflow-hidden rounded-md"
+                  src={getAvatarByUsername(owner)}
+                />
+              </picture>
+              <span className="text-sm font-medium text-light-slate-11">{owner}</span>
+            </a>
           </div>
 
-          <div className="flex text-sm space-x-1 justify-center items-center">
-            <AiOutlineStar
-              className="fill-lightSlate10"
-              size={16}
-            />
+          <div className="flex flex-col gap-2 pb-3">
+            <a
+              className="text-xl font-semibold"
+              href={`https://insights.opensauced.pizza/hot/repositories/filter/${fullName}`}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              {name}
+            </a>
 
-            <span className="text-lightSlate11">
-              {humanizeNumber(stars, "abbreviation")}
-            </span>
+            <p title={data.description} className="w-5/6 text-sm font-medium text-gray-500">
+              {truncateString(data.description, 100)}
+            </p>
           </div>
 
-          <div className="flex text-sm space-x-1 justify-center items-center">
-            <BiGitPullRequest
-              className="fill-lightSlate10"
-              size={16}
-            />
+          <div className="flex flex-wrap items-center justify-between mt-auto text-light-slate-10">
+            <div className="flex space-x-3 text-xs">
+              <div className="flex items-center justify-center space-x-1 text-sm">
+                <VscIssues className="fill-light-slate-10" size={16} />
 
-            <span className="text-lightSlate11">{humanizeNumber(pullRequests, "abbreviation")}</span>
+                <span className="text-lightSlate11">{humanizeNumber(Number(data.issues), "abbreviation")}</span>
+              </div>
+
+              <div className="flex items-center justify-center space-x-1 text-sm">
+                <AiOutlineStar className="fill-lightSlate10" size={16} />
+
+                <span className="text-lightSlate11">{humanizeNumber(Number(data.stars), "abbreviation")}</span>
+              </div>
+
+              <div className="flex items-center justify-center space-x-1 text-sm">
+                <BiGitPullRequest className="fill-lightSlate10" size={16} />
+
+                <span className="text-lightSlate11">{humanizeNumber(meta.itemCount, "abbreviation")}</span>
+              </div>
+            </div>
+
+            <StackedAvatar contributors={contributorData} />
           </div>
-        </div>
-
-        <StackedAvatar contributors={contributions} />
-      </div>
+        </>
+      )}
     </div>
   );
 };
