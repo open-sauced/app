@@ -3,7 +3,7 @@ import Text from "components/atoms/Typography/text";
 import ContributorProfileHeader from "components/molecules/ContributorProfileHeader/contributor-profile-header";
 import { ContributorObject } from "../ContributorCard/contributor-card";
 import CardLineChart from "components/molecules/CardLineChart/card-line-chart";
-import CardRepoList, { RepoList } from "components/molecules/CardRepoList/card-repo-list";
+import CardRepoList from "components/molecules/CardRepoList/card-repo-list";
 import PullRequestTable from "components/molecules/PullRequestTable/pull-request-table";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 
@@ -17,7 +17,6 @@ import ContributorProfileTab from "../ContributorProfileTab/contributor-profile-
 import ProfileLanguageChart from "components/molecules/ProfileLanguageChart/profile-language-chart";
 import useFollowUser from "lib/hooks/useFollowUser";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
-import { getAvatarByUsername } from "lib/utils/github";
 
 const colorKeys = Object.keys(color);
 interface PrObjectType {
@@ -39,13 +38,14 @@ interface ContributorProfilePageProps {
   listOfPRs?: PrObjectType[];
   githubAvatar?: string;
   githubName: string;
-  langList: string[];
+  langList: { languageName: string; percentageUsed: number }[];
   recentContributionCount: number;
+  prFirstOpenedDate?: string;
   user?: DbUser;
   prTotal: number;
   openPrs: number;
-  prReviews: number;
-  prVelocity: number;
+  prReviews?: number;
+  prVelocity?: number;
   prMerged: number;
   loading: boolean;
   error: boolean;
@@ -61,27 +61,21 @@ const ContributorProfilePage = ({
   prTotal,
   loading,
   prMerged,
-  prVelocity
+  prVelocity,
+  prFirstOpenedDate,
 }: ContributorProfilePageProps) => {
-  const languageList = langList?.map((language) => {
-    const preparedLanguageKey = colorKeys.find((key) => key.toLowerCase() === language.toLowerCase());
+  const languageList = (langList || []).map((language) => {
+    const preparedLanguageKey = colorKeys.find((key) => key.toLowerCase() === language.languageName.toLowerCase());
 
     return {
-      languageName: preparedLanguageKey ? preparedLanguageKey : language,
-      percentageUsed: Math.round((1 / langList.length) * 100)
+      languageName: preparedLanguageKey ? preparedLanguageKey : language.languageName,
+      percentageUsed: language.percentageUsed,
     };
   });
 
   const { user: loggedInUser, signIn } = useSupabaseAuth();
-  const { chart, data } = useContributorPullRequestsChart(githubName, "*", repositories);
-  const repoList: RepoList[] = Array.from(new Set(data.map(prData => prData.full_name))).map(repo => {
-    const [repoOwner, repoName] = repo.split("/");
+  const { chart, repoList } = useContributorPullRequestsChart(githubName, "*", repositories);
 
-    return {
-      repoName: repoName,
-      repoIcon: getAvatarByUsername(repoOwner)
-    };
-  });
   const prsMergedPercentage = getPercent(prTotal, prMerged || 0);
   const { data: Follower, isError: followError, follow, unFollow } = useFollowUser(user?.login || "");
 
@@ -94,7 +88,7 @@ const ContributorProfilePage = ({
     timezone,
     github_sponsors_url: githubSponsorsUrl,
     linkedin_url: linkedInUrl,
-    display_local_time: displayLocalTime
+    display_local_time: displayLocalTime,
   } = user || {};
 
   const iscConnected = !!user?.is_open_sauced_member;
@@ -125,7 +119,6 @@ const ContributorProfilePage = ({
             <>
               <ContributorProfileInfo
                 interests={interests}
-                // eslint-disable-next-line camelcase
                 twitterUsername={twitter_username}
                 bio={bio}
                 githubName={githubName}
@@ -134,6 +127,7 @@ const ContributorProfilePage = ({
                 displayLocalTime={displayLocalTime}
                 githubSponsorsUrl={githubSponsorsUrl}
                 linkedInUrl={linkedInUrl}
+                prFirstOpenedDate={prFirstOpenedDate}
               />
 
               <div>

@@ -5,35 +5,41 @@ import InsightPageCard from "components/molecules/InsightPageCard/insight-page-c
 import TestRepoAvatar from "img/icons/test-repo-avatar.svg";
 
 const storyConfig = {
-  title: "Design System/Molecules/InsightPageCard"
+  title: "Design System/Molecules/InsightPageCard",
 };
 export default storyConfig;
 
 const repoList: RepoList[] = [
   {
+    repoOwner: "test",
     repoName: "test",
-    repoIcon: TestRepoAvatar
+    repoIcon: TestRepoAvatar,
   },
   {
+    repoOwner: "test",
     repoName: "test2",
-    repoIcon: TestRepoAvatar
+    repoIcon: TestRepoAvatar,
   },
   {
+    repoOwner: "test",
     repoName: "test3",
-    repoIcon: TestRepoAvatar
+    repoIcon: TestRepoAvatar,
   },
   {
+    repoOwner: "test",
     repoName: "test4",
-    repoIcon: TestRepoAvatar
+    repoIcon: TestRepoAvatar,
   },
   {
+    repoOwner: "test",
     repoName: "test5",
-    repoIcon: TestRepoAvatar
+    repoIcon: TestRepoAvatar,
   },
   {
+    repoOwner: "test",
     repoName: "test6",
-    repoIcon: TestRepoAvatar
-  }
+    repoIcon: TestRepoAvatar,
+  },
 ];
 
 const InsightPageCardTemplate: ComponentStory<typeof InsightPageCard> = (args) => <InsightPageCard {...args} />;

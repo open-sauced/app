@@ -16,6 +16,8 @@ interface DbRepo {
   readonly pr_velocity_count?: number;
   readonly churnTotalCount?: number;
   readonly language: string;
+  readonly stars: number;
+  readonly description: string;
 }
 
 interface DbRepoPR {
@@ -159,6 +161,8 @@ interface DbUser {
   readonly github_sponsors_url: string;
   readonly linkedin_url: string;
   readonly notification_count: number;
+  readonly languages: { [lang]: number };
+  readonly first_opened_pr_at: string;
 }
 
 interface DbHighlight {
@@ -219,4 +223,5 @@ interface DbUserNotification {
   readonly from_user_id: number;
   readonly notified_at: string;
   readonly user_id: number;
+  readonly meta_id: string;
 }

@@ -406,7 +406,7 @@ const ContributorHighlightCard = ({
                       setError("");
                       setWordCount(e.target.value.length);
                     }}
-                    className="px-2 mb-2 font-normal transition rounded-lg resize-none h-28 text-light-slate-11 focus:outline-none"
+                    className="px-2 mb-2 font-normal transition rounded-lg resize-y min-h-[90px]  max-h-96 h-28 text-light-slate-11 focus:outline-none"
                   ></Textarea>
                   <div className="flex items-center justify-between py-1 pl-3">
                     <Tooltip direction="top" content="Pick a date">

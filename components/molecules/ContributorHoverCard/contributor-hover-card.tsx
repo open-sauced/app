@@ -15,7 +15,7 @@ interface ContributorHoverCardProps {
   githubAvatar: string;
   githubName: string;
   totalPR: number;
-  dateOfFirstPr: string;
+  dateOfFirstPr: string | undefined;
   topic?: string;
   repositories?: number[];
 }
@@ -25,7 +25,7 @@ const ContributorHoverCard = ({
   totalPR,
   dateOfFirstPr,
   githubAvatar,
-  repositories
+  repositories,
 }: ContributorHoverCardProps) => {
   const router = useRouter();
   const { filterName } = router.query;

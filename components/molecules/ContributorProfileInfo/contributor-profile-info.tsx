@@ -10,6 +10,7 @@ import Badge from "components/atoms/Badge/badge";
 import { getTimeByTimezone, getTimezone } from "lib/utils/timezones";
 import clsx from "clsx";
 import Tooltip from "components/atoms/Tooltip/tooltip";
+import { getFormattedDate } from "lib/utils/date-utils";
 
 interface ContributorProfileInfoProps {
   githubName: string;
@@ -22,6 +23,7 @@ interface ContributorProfileInfoProps {
   displayLocalTime?: boolean;
   githubSponsorsUrl?: string;
   linkedInUrl?: string;
+  prFirstOpenedDate?: string;
 }
 
 const ContributorProfileInfo = ({
@@ -33,7 +35,8 @@ const ContributorProfileInfo = ({
   timezone,
   displayLocalTime,
   githubSponsorsUrl,
-  linkedInUrl
+  linkedInUrl,
+  prFirstOpenedDate,
 }: ContributorProfileInfoProps) => {
   const interestArray = interests?.split(",");
 
@@ -60,10 +63,10 @@ const ContributorProfileInfo = ({
                 </span>
               )}
               <span className="flex text-light-slate-10 gap-2 items-center">
-                <Tooltip content="First commit date">
+                <Tooltip content="First PR Opened Date">
                   <AiOutlineGift className="text-light-slate-9" />
                 </Tooltip>
-                June 2022
+                {prFirstOpenedDate ? getFormattedDate(prFirstOpenedDate) : "June 2022"}
               </span>
             </>
           )}

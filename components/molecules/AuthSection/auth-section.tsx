@@ -39,8 +39,8 @@ const AuthSection: React.FC = ({}) => {
       const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/notifications`, {
         headers: {
           accept: "application/json",
-          Authorization: `Bearer ${sessionToken}`
-        }
+          Authorization: `Bearer ${sessionToken}`,
+        },
       });
       setLoading(false);
       if (req.ok) {
@@ -90,8 +90,8 @@ const AuthSection: React.FC = ({}) => {
       >
         <FiLogOut className="group-hover:text-light-orange-10" />
         <Text className="group-hover:text-light-orange-10">Disconnect</Text>
-      </span>
-    ]
+      </span>,
+    ],
   };
 
   return (
@@ -130,8 +130,8 @@ const AuthSection: React.FC = ({}) => {
                   <>
                     {notifications.length > 0 ? (
                       <div className="space-y-1">
-                        {notifications.map(({ type, message, id }) => (
-                          <NotificationCard key={id} message={message} type={type} />
+                        {notifications.map(({ type, message, id, meta_id }) => (
+                          <NotificationCard key={id} message={message} type={type} id={meta_id} />
                         ))}
                       </div>
                     ) : (
