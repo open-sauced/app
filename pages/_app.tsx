@@ -22,18 +22,18 @@ import { Toaster } from "components/molecules/Toaster/toaster";
 import Script from "next/script";
 import useSession from "lib/hooks/useSession";
 
-import posthog from "posthog-js"
-import { PostHogProvider } from 'posthog-js/react'
+import posthog from "posthog-js";
+import { PostHogProvider } from "posthog-js/react";
 
 // Check that PostHog is client-side (used to handle Next.js SSR)
-if (typeof window !== 'undefined') {
+if (typeof window !== "undefined") {
   posthog.init(process.env.NEXT_PUBLIC_POSTHOG_ID || "", {
-    api_host: 'https://app.posthog.com',
+    api_host: "https://app.posthog.com",
     // Enable debug mode in development
     loaded: (posthog) => {
-      if (process.env.NODE_ENV === 'development') posthog.debug()
+      if (process.env.NODE_ENV === "development") posthog.debug();
     }
-  })
+  });
 }
 
 type ComponentWithPageLayout = AppProps & {
@@ -68,13 +68,13 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
 
   useEffect(() => {
     // Track page views
-    const handleRouteChange = () => posthog?.capture('$pageview')
-    router.events.on('routeChangeComplete', handleRouteChange)
+    const handleRouteChange = () => posthog?.capture("$pageview");
+    router.events.on("routeChangeComplete", handleRouteChange);
 
     return () => {
-      router.events.off('routeChangeComplete', handleRouteChange)
-    }
-  }, [])
+      router.events.off("routeChangeComplete", handleRouteChange);
+    };
+  }, []);
 
   const { filterName, toolName } = router.query;
 
