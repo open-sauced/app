@@ -112,11 +112,9 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
               <Component {...pageProps} />
             )}
           </TipProvider>
-          <Script
-            id="ze-snippet"
-            src="https://static.zdassets.com/ekr/snippet.js?key=765edcc9-b888-4651-8b22-79e4365e06f1"
-            strategy="afterInteractive"
-          />
+          <Script id="siteGPT" type="text/javascript">
+            {"d=document;s=d.createElement(\"script\");s.src=\"https://sitegpt.ai/widget/365440930125185604.js\";s.async=1;d.getElementsByTagName(\"head\")[0].appendChild(s);"}
+          </Script>
         </SessionContextProvider>
       </SWRConfig>
     </>
