@@ -9,7 +9,6 @@ import type { AppProps } from "next/app";
 import { useRouter } from "next/router";
 import { SessionContextProvider } from "@supabase/auth-helpers-react";
 import { SWRConfig } from "swr";
-import posthog from "posthog-js";
 
 import { TipProvider } from "components/atoms/Tooltip/tooltip";
 
