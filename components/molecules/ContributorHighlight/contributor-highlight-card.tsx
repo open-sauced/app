@@ -227,7 +227,7 @@ const ContributorHighlightCard = ({
           <span>Follow {user}</span>
         </div>
       </DropdownMenuItem>
-    ))
+    ));
   }
 
   return (
