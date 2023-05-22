@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.48.0-beta.2](https://github.com/open-sauced/insights/compare/v1.48.0-beta.1...v1.48.0-beta.2) (2023-05-22)
+
+
+### 🐛 Bug Fixes
+
+* fix repo overlap issue in Insight page ([#1204](https://github.com/open-sauced/insights/issues/1204)) ([26f07b9](https://github.com/open-sauced/insights/commit/26f07b9dabdd330956d4cb8d662f7cbc33bfbfda))
+
 ## [1.48.0-beta.1](https://github.com/open-sauced/insights/compare/v1.47.0...v1.48.0-beta.1) (2023-05-19)
 
 
