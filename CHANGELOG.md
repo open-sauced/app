@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.48.0-beta.3](https://github.com/open-sauced/insights/compare/v1.48.0-beta.2...v1.48.0-beta.3) (2023-05-22)
+
+
+### 🍕 Features
+
+* Replace zendesk with SiteGPT ([#1209](https://github.com/open-sauced/insights/issues/1209)) ([cb85a45](https://github.com/open-sauced/insights/commit/cb85a457ecef9c1be5851d68849f822ef9f85fda))
+
 ## [1.48.0-beta.2](https://github.com/open-sauced/insights/compare/v1.48.0-beta.1...v1.48.0-beta.2) (2023-05-22)
 
 
