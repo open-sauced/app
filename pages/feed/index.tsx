@@ -68,7 +68,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
     } else if (activeTab === "following") {
       setRepoList(repoTofilterList(followersRepo));
     }
-  }, [activeTab]);
+  }, [activeTab, followersRepo, repoList, repos]);
 
   useEffect(() => {
     if (selectedRepo) {
