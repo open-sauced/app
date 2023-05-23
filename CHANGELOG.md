@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.48.0-beta.5](https://github.com/open-sauced/insights/compare/v1.48.0-beta.4...v1.48.0-beta.5) (2023-05-23)
+
+
+### 🐛 Bug Fixes
+
+* check user follow after opening highlight menu ([#1197](https://github.com/open-sauced/insights/issues/1197)) ([7ded9aa](https://github.com/open-sauced/insights/commit/7ded9aa684e01dccaf915eba398694aaedd8c145))
+
 ## [1.48.0-beta.4](https://github.com/open-sauced/insights/compare/v1.48.0-beta.3...v1.48.0-beta.4) (2023-05-23)
 
 
