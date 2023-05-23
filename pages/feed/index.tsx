@@ -34,18 +34,19 @@ interface HighlightSSRProps {
 
 const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
   const { user } = useSupabaseAuth();
+  const { data: repos } = useFetchHighlightRepos();
+
   const router = useRouter();
   const [hydrated, setHydrated] = useState(false);
   const [openSingleHighlight, setOpenSingleHighlight] = useState(false);
   const [selectedRepo, setSelectedRepo] = useState("");
   const [activeTab, setActiveTab] = useState<activeTabType>("home");
-  const [repoList, setRepoList] = useState<highlightReposType[]>();
+  const [repoList, setRepoList] = useState<highlightReposType[]>(repos as highlightReposType[]);
 
   const { id } = router.query;
   const singleHighlight = props.highlight;
   const highlightId = props.highlight?.id as string;
 
-  const { data: repos } = useFetchHighlightRepos();
   const { data: followersRepo } = useFetchFollowersHighlightRepos();
 
   const { data, mutate, setPage, isError, isLoading, meta } = useFetchAllHighlights(selectedRepo);
@@ -62,12 +63,12 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
 
   useEffect(() => {
     setSelectedRepo("");
-    if (activeTab === "home" && repos) {
+    if (activeTab === "home") {
       setRepoList(repoTofilterList(repos));
-    } else if (activeTab === "following" && followersRepo) {
+    } else if (activeTab === "following") {
       setRepoList(repoTofilterList(followersRepo));
     }
-  }, [activeTab]);
+  }, [activeTab, followersRepo, repoList, repos]);
 
   useEffect(() => {
     if (selectedRepo) {
