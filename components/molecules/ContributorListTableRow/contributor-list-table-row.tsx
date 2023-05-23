@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from "react";
 import clsx from "clsx";
+import formatDistanceToNowStrict from "date-fns/formatDistanceToNowStrict";
 
 import DevProfile from "../DevProfile/dev-profile";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/solid";
 import Sparkline from "components/atoms/Sparkline/sparkline";
-import useContributorPullRequests from "lib/hooks/api/useContributorPullRequests";
 import getPullRequestsToDays from "lib/utils/get-prs-to-days";
+import { classNames } from "components/organisms/RepositoriesTable/repositories-table";
 
+import useContributorPullRequests from "lib/hooks/api/useContributorPullRequests";
 import { getActivity } from "../RepoRow/repo-row";
 import useRepoList from "lib/hooks/useRepoList";
-import { getFormattedDate } from "lib/utils/date-utils";
 import { useFetchUser } from "lib/hooks/useFetchUser";
-import { classNames } from "components/organisms/RepositoriesTable/repositories-table";
-import Checkbox from "components/atoms/Checkbox/checkbox";
 
 interface ContributorListTableRow {
   contributor: DbRepoPR;
@@ -27,7 +26,7 @@ function getLastContributionDate(contributions: DbRepoPR[]) {
     return +new Date(b.merged_at) - +new Date(a.merged_at);
   });
 
-  return getFormattedDate(sortedContributions[0]?.merged_at);
+  return formatDistanceToNowStrict(new Date(sortedContributions[0]?.merged_at), { addSuffix: true });
 }
 const ContributorListTableRow = ({ contributor, topic }: ContributorListTableRow) => {
   const [tableOpen, setTableOpen] = useState(false);
@@ -53,15 +52,12 @@ const ContributorListTableRow = ({ contributor, topic }: ContributorListTableRow
     <>
       {/* Mobile version */}
       <div className="px-5 py-2 overflow-hidden odd:bg-white md:hidden even:bg-light-slate-2">
-        <div className="flex items-center gap-x-3">
+        <div className="flex items-center gap-x-3 text-light-slate-12">
           <div className="w-[65%]">
             <DevProfile company={user?.company || "-"} username={contributor.author_login} />
           </div>
-          <div className="w-[35%] text-normal text-light-slate-12">
-            <p>
-              {contributorLanguageList[0]}
-              {contributorLanguageList.length > 1 ? `,+${contributorLanguageList.length - 1}` : ""}
-            </p>
+          <div className="w-[35%] text-normal">
+            <div className="flex gap-x-3">{<p>{getLastContributionDate(mergedPrs)}</p>}</div>
           </div>
           <div className="">
             <div
@@ -94,8 +90,15 @@ const ContributorListTableRow = ({ contributor, topic }: ContributorListTableRow
           </div>
 
           <div className="flex items-center justify-between py-3 border-b">
-            <div>Last Contributed</div>
-            <div className="flex gap-x-3">{<p>{getLastContributionDate(mergedPrs)}</p>}</div>
+            <div>Languages</div>
+            {contributorLanguageList.length > 0 ? (
+              <p>
+                {contributorLanguageList[0]}
+                {contributorLanguageList.length > 1 ? `,+${contributorLanguageList.length - 1}` : ""}
+              </p>
+            ) : (
+              "-"
+            )}
           </div>
           <div className="flex items-center justify-between py-3 border-b">
             <div>Time Zone</div>
@@ -106,7 +109,7 @@ const ContributorListTableRow = ({ contributor, topic }: ContributorListTableRow
 
       {/* Desktop Version */}
 
-      <div className={`${classNames.row} `}>
+      <div className={`${classNames.row} text-light-slate-11`}>
         {/* <Checkbox
           checked={true}
           onCheckedChange={() => console.log("yeah")}
@@ -127,7 +130,7 @@ const ContributorListTableRow = ({ contributor, topic }: ContributorListTableRow
         <div className={clsx("flex-1 lg:max-w-[100px] flex justify-center ")}>{repoList.length}</div>
 
         {/* Column: Last Contribution */}
-        <div className={clsx("flex-1 lg:min-w-[130px] flex justify-center ")}>
+        <div className={clsx("flex-1 lg:min-w-[130px] flex text-light-slate-11 justify-center ")}>
           <div className="flex">{<p>{getLastContributionDate(mergedPrs)}</p>}</div>
         </div>
 
@@ -144,7 +147,7 @@ const ContributorListTableRow = ({ contributor, topic }: ContributorListTableRow
         </div>
 
         {/* Column: Time Zone */}
-        <div className={clsx("flex-1 hidden lg:max-w-[80px] justify-center   lg:flex ")}>
+        <div className={clsx("flex-1 hidden lg:max-w-[80px] text-light-slate-11 justify-center   lg:flex ")}>
           <div className="flex gap-x-3">{user && user.timezone ? <p>{user.timezone}</p> : "-"}</div>
         </div>
 

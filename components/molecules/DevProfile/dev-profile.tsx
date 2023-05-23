@@ -12,7 +12,7 @@ interface DevProfileProps {
 }
 const DevProfile = ({ username, company }: DevProfileProps) => {
   return (
-    <Link href={`/user/${username}`} className="flex items-center gap-2">
+    <Link href={`/user/${username}`} className="flex items-center gap-2 text-light-slate-11">
       {/* Mobile */}
       <div className="rounded-full md:hidden">
         <Avatar className="" size={45} isCircle avatarURL={getAvatarByUsername(username)} />

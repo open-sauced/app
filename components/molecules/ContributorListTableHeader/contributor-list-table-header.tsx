@@ -11,7 +11,7 @@ const ContributorListTableHeaders = () => {
           <TableTitle>Developer</TableTitle>
         </div>
         <div className="flex-1 w-[42%]">
-          <TableTitle>Languages</TableTitle>
+          <TableTitle>Last Contributed </TableTitle>
         </div>
       </div>
       <div className="hidden gap-6 px-6 py-4 border rounded-t-lg md:flex bg-light-slate-3">
