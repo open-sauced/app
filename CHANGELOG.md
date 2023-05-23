@@ -5,6 +5,18 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.48.0-beta.4](https://github.com/open-sauced/insights/compare/v1.48.0-beta.3...v1.48.0-beta.4) (2023-05-23)
+
+
+### 🍕 Features
+
+* add Posthog as Next middleware ([#1210](https://github.com/open-sauced/insights/issues/1210)) ([1f19b43](https://github.com/open-sauced/insights/commit/1f19b43bb9f5e752791a790c159c96092bdec3c2))
+
+
+### 🔁 Continuous Integration
+
+* move unit and e2e tests into separate jobs ([#1213](https://github.com/open-sauced/insights/issues/1213)) ([d1ac6a0](https://github.com/open-sauced/insights/commit/d1ac6a0a27797bbe1780b0958f67fab606b3e1d7))
+
 ## [1.48.0-beta.3](https://github.com/open-sauced/insights/compare/v1.48.0-beta.2...v1.48.0-beta.3) (2023-05-22)
 
 
