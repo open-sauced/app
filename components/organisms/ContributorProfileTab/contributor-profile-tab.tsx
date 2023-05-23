@@ -169,24 +169,27 @@ const ContributorProfileTab = ({
           {/* <HightlightEmptyState /> */}
 
           {isError && <>An error occured</>}
-          {isLoading && <>
-            {Array.from({ length: 2 }).map((_, index) => (
-              <div className="flex flex-col gap-2 lg:flex-row lg:gap-6" key={index}>
-                <SkeletonWrapper width={100} height={20} />
-                <div className="md:max-w-[40rem]">
-                  <SkeletonWrapper height={20} width={500} classNames="mb-2" />
-                  <SkeletonWrapper height={300}  />
+          {isLoading && (
+            <>
+              {Array.from({ length: 2 }).map((_, index) => (
+                <div className="flex flex-col gap-2 lg:flex-row lg:gap-6" key={index}>
+                  <SkeletonWrapper width={100} height={20} />
+                  <div className="md:max-w-[40rem]">
+                    <SkeletonWrapper height={20} width={500} classNames="mb-2" />
+                    <SkeletonWrapper height={300} />
+                  </div>
                 </div>
-              </div>
-            ))}
-          </>}
+              ))}
+            </>
+          )}
           <>
             {!isError && highlights && highlights.length > 0 ? (
               <div>
                 {highlights.map(({ id, title, highlight, url, shipped_at, created_at }) => (
                   <div className="flex flex-col gap-2 mb-6 lg:flex-row lg:gap-7" key={id}>
                     <Link href={`/feed/${id}`}>
-                      <p className="text-sm text-light-slate-10">{formatDistanceToNowStrict(new Date(created_at), { addSuffix: true })}
+                      <p className="text-sm text-light-slate-10">
+                        {formatDistanceToNowStrict(new Date(created_at), { addSuffix: true })}
                       </p>
                     </Link>
                     <ContributorHighlightCard
@@ -264,8 +267,8 @@ const ContributorProfileTab = ({
                   <div className="flex items-end justify-center mt-1"> - </div>
                 )}
               </div>
-              <div className="hidden">
-                <span className="text-xs text-light-slate-11">Avg PRs velocity</span>
+              <div>
+                <span className="text-xs text-light-slate-11">Avg PR velocity</span>
                 {prVelocity ? (
                   <div className="flex items-center gap-2 lg:justify-center">
                     <Text className="!text-lg md:!text-xl lg:!text-2xl !text-black !leading-none">
