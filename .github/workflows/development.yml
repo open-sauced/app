@@ -10,4 +10,27 @@ on:
 
 jobs:
   test:
+    name: Unit Tests and Lint Checks
     uses: open-sauced/open-sauced/.github/workflows/development.yml@main
+
+  e2e:
+    name: E2E Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: "☁️ checkout repository"
+        uses: actions/checkout@v2
+
+      - name: "🔧 setup node"
+        uses: actions/setup-node@v2.1.5
+        with:
+          node-version: 16
+
+      - name: "🔧 install npm@latest"
+        run: npm i -g npm@latest
+
+      - name: "📦 install dependencies"
+        uses: bahmutov/npm-install@v1
+
+      - name: "🔍 run tests"
+        run: npm run test:e2e --if-present
