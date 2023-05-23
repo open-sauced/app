@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.48.0-beta.7](https://github.com/open-sauced/insights/compare/v1.48.0-beta.6...v1.48.0-beta.7) (2023-05-23)
+
+
+### 🍕 Features
+
+* add pull request velocity to user profile page ([#1215](https://github.com/open-sauced/insights/issues/1215)) ([e458956](https://github.com/open-sauced/insights/commit/e458956b148d2d4046bdda69a750b1fb9798550f))
+
 ## [1.48.0-beta.6](https://github.com/open-sauced/insights/compare/v1.48.0-beta.5...v1.48.0-beta.6) (2023-05-23)
 
 
