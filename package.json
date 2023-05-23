@@ -31,7 +31,7 @@
     "prebuild": "node generate-netlify-env.js",
     "build": "next build",
     "start": "next start",
-    "test": "npm run test:jest && npm run test:e2e",
+    "test": "npm run test:jest",
     "test:jest": "jest",
     "test:playwright": "npx playwright",
     "pretest:e2e": "npm run test:e2e-install",
