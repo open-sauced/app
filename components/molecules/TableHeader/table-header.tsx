@@ -8,6 +8,7 @@ import Title from "components/atoms/Typography/title";
 import ComponentDateFilter from "../ComponentDateFilter/component-date-filter";
 import PaginationResult from "../PaginationResults/pagination-result";
 import LimitSelect from "components/atoms/Select/limit-select";
+import LayoutToggle, { ToggleValue } from "components/atoms/LayoutToggle/layout-toggle";
 
 interface TableHeaderProps {
   title?: string;
@@ -17,6 +18,8 @@ interface TableHeaderProps {
   updateLimit: Function;
   range?: number;
   setRangeFilter?: (range: number) => void;
+  layout?: ToggleValue;
+  onLayoutToggle?: (value: ToggleValue) => void;
 }
 
 const options = [
@@ -24,7 +27,7 @@ const options = [
   { name: "20 per page", value: 20 },
   { name: "30 per page", value: 30 },
   { name: "40 per page", value: 40 },
-  { name: "50 per page", value: 50 }
+  { name: "50 per page", value: 50 },
 ];
 const TableHeader = ({
   title,
@@ -33,7 +36,9 @@ const TableHeader = ({
   updateLimit,
   onSearch,
   range,
-  setRangeFilter
+  setRangeFilter,
+  layout,
+  onLayoutToggle,
 }: TableHeaderProps): JSX.Element => {
   const router = useRouter();
   const { filterName } = router.query;
@@ -42,23 +47,17 @@ const TableHeader = ({
   const [selected, setSelected] = React.useState<null | number>(null);
   const { providerToken } = useSupabaseAuth();
 
-  // const handleSelected = (value: string) => {
-  //   const limit = Number(value);
-  //   setSelected(limit);
-  //   updateLimit(limit);
-  // };
-
   const updateSuggestionsDebounced = useDebounce(async () => {
     const req = await fetch(
       `https://api.github.com/search/repositories?q=${encodeURIComponent(`${searchTerm} topic:${filterName} in:name`)}`,
       {
         ...(providerToken
           ? {
-            headers: {
-              Authorization: `Bearer ${providerToken}`
+              headers: {
+                Authorization: `Bearer ${providerToken}`,
+              },
             }
-          }
-          : {})
+          : {}),
       }
     );
 
@@ -77,11 +76,18 @@ const TableHeader = ({
   }, [searchTerm]);
 
   return (
-    <div className="flex flex-col flex-wrap w-full gap-y-2 md:flex-row md:justify-between md:items-end md:pb-4">
-      <div className="flex items-end gap-x-4">
+    <div className="flex flex-col flex-wrap w-full px-4 gap-y-2 md:flex-row md:justify-between md:items-end md:pb-4">
+      <div className="flex items-center justify-between gap-x-4 md:justify-start">
         <Title className="!text-2xl !leading-none " level={1}>
           {title}
         </Title>
+        {layout ? (
+          <div className="md:hidden">
+            <LayoutToggle value={layout} onChange={onLayoutToggle} />
+          </div>
+        ) : (
+          ""
+        )}
         <PaginationResult
           total={metaInfo.itemCount}
           className="hidden !translate-y-[2px]  md:inline-flex"
@@ -89,9 +95,17 @@ const TableHeader = ({
           entity={entity}
         />
       </div>
-      <div className="flex flex-col-reverse items-start gap-3 md:flex-row md:items-end">
+      <div className="flex flex-col-reverse items-start gap-3 md:flex-row md:items-end ">
         {range ? (
           <ComponentDateFilter setRangeFilter={(range: number) => setRangeFilter?.(range)} defaultRange={range} />
+        ) : (
+          ""
+        )}
+
+        {layout ? (
+          <div className="hidden md:inline-flex">
+            <LayoutToggle value={layout} onChange={onLayoutToggle} />
+          </div>
         ) : (
           ""
         )}
@@ -115,7 +129,7 @@ const TableHeader = ({
             { name: "20 per page", value: "20" },
             { name: "30 per page", value: "30" },
             { name: "40 per page", value: "40" },
-            { name: "50 per page", value: "50" }
+            { name: "50 per page", value: "50" },
           ]}
           className="hidden ml-auto min-w-max md:inline-block"
           onChange={function (limit: string): void {
