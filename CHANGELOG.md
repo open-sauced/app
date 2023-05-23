@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.48.0-beta.6](https://github.com/open-sauced/insights/compare/v1.48.0-beta.5...v1.48.0-beta.6) (2023-05-23)
+
+
+### 🐛 Bug Fixes
+
+* set default value to repo filter state ([#1214](https://github.com/open-sauced/insights/issues/1214)) ([2f8b8d2](https://github.com/open-sauced/insights/commit/2f8b8d2163317c4226348f9b0738848c333df812))
+
 ## [1.48.0-beta.5](https://github.com/open-sauced/insights/compare/v1.48.0-beta.4...v1.48.0-beta.5) (2023-05-23)
 
 
