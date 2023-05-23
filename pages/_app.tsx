@@ -125,8 +125,8 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
       >
         {/* <Toaster position="top-center" /> */}
         <Toaster />
-        <PostHogProvider client={posthog}>
-          <SessionContextProvider supabaseClient={supabase} initialSession={pageProps.initialSession}>
+        <SessionContextProvider supabaseClient={supabase} initialSession={pageProps.initialSession}>
+          <PostHogProvider client={posthog}>
             <TipProvider>
               {Component.PageLayout ? (
                 <Component.PageLayout>
@@ -139,8 +139,8 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
             <Script id="siteGPT" type="text/javascript">
               {"d=document;s=d.createElement(\"script\");s.src=\"https://sitegpt.ai/widget/365440930125185604.js\";s.async=1;d.getElementsByTagName(\"head\")[0].appendChild(s);"}
             </Script>
-          </SessionContextProvider>
-        </PostHogProvider>
+          </PostHogProvider>
+        </SessionContextProvider>
       </SWRConfig>
     </>
   );
