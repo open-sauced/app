@@ -10,10 +10,7 @@ interface LayoutToggleProps {
   value?: ToggleValue;
 }
 const LayoutToggle = ({ value, onChange }: LayoutToggleProps) => {
-  const [layout, setLayout] = useState<ToggleValue>(value || "grid");
-
   const handleToggle = (value: ToggleValue) => {
-    setLayout(value);
     onChange?.(value);
   };
 
@@ -24,7 +21,7 @@ const LayoutToggle = ({ value, onChange }: LayoutToggleProps) => {
         role="toggle"
         className={clsx(
           "flex items-center cursor-pointer justify-center flex-1 transition rounded-lg",
-          layout === "list" && "bg-light-slate-4 "
+          value === "list" && "bg-light-slate-4 "
         )}
       >
         <BsListUl className="text-2xl" />
@@ -34,7 +31,7 @@ const LayoutToggle = ({ value, onChange }: LayoutToggleProps) => {
         role="toggle"
         className={clsx(
           "flex items-center justify-center flex-1 rounded-lg transition cursor-pointer",
-          layout === "grid" && "bg-light-slate-4 "
+          value === "grid" && "bg-light-slate-4 "
         )}
       >
         <BiGridAlt className="text-2xl" />

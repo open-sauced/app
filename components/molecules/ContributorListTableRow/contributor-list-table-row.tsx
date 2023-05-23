@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
+import clsx from "clsx";
+
 import DevProfile from "../DevProfile/dev-profile";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/solid";
 import Sparkline from "components/atoms/Sparkline/sparkline";
 import useContributorPullRequests from "lib/hooks/api/useContributorPullRequests";
 import getPullRequestsToDays from "lib/utils/get-prs-to-days";
-import { useSingleContributor } from "lib/hooks/useSingleContributor";
+
 import { getActivity } from "../RepoRow/repo-row";
 import useRepoList from "lib/hooks/useRepoList";
 import { getFormattedDate } from "lib/utils/date-utils";
 import { useFetchUser } from "lib/hooks/useFetchUser";
 import { classNames } from "components/organisms/RepositoriesTable/repositories-table";
 import Checkbox from "components/atoms/Checkbox/checkbox";
-import clsx from "clsx";
 
 interface ContributorListTableRow {
   contributor: DbRepoPR;
@@ -33,9 +34,8 @@ const ContributorListTableRow = ({ contributor, topic }: ContributorListTableRow
 
   const { data: user } = useFetchUser(contributor.author_login);
   const { data } = useContributorPullRequests(contributor.author_login, topic, [], 30);
-  const { data: contributors, isError: contributorError } = useSingleContributor(contributor.author_login);
   const repoList = useRepoList(Array.from(new Set(data.map((prData) => prData.full_name))).join(","));
-  const contributorLanguageList = (contributors[0]?.langs || "").split(",");
+  const contributorLanguageList = user ? Object.keys(user.languages).map((language) => language) : [];
   const days = getPullRequestsToDays(data);
   const totalPrs = data.length;
   const last30days = [
