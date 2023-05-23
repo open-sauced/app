@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.48.1](https://github.com/open-sauced/insights/compare/v1.48.0...v1.48.1) (2023-05-23)
+
+
+### 🐛 Bug Fixes
+
+* remove repoList from dependency array on highlights feed ([461a3f7](https://github.com/open-sauced/insights/commit/461a3f7d1c1bf02698153d2a1b6df70441330357))
+
 ## [1.48.0](https://github.com/open-sauced/insights/compare/v1.47.0...v1.48.0) (2023-05-23)
 
 
