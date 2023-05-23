@@ -1,8 +1,10 @@
+import Link from "next/link";
 import Icon from "components/atoms/Icon/icon";
 import Tooltip from "components/atoms/Tooltip/tooltip";
 import { StaticImageData } from "next/image";
 
 export interface RepoList {
+  repoOwner: string;
   repoName: string;
   repoIcon: StaticImageData | string;
 }
@@ -24,21 +26,27 @@ const CardRepoList = ({ repoList, limit = 5, fontSizeClassName, total }: CardRep
       {repoList.length > 0 ? (
         <>
           {sanitizedRepoList
-            .filter((repo, arrCount) => arrCount < limit)
-            .map(({ repoName, repoIcon }, index) => (
-              <div key={`repo_${index}`}>
-                {repoName && repoIcon ? (
-                  <Tooltip content={repoName}>
-                    <div className="flex gap-1  p-1 pr-2 border-[1px] border-light-slate-6 rounded-lg text-light-slate-12">
-                      <Icon IconImage={repoIcon} className="rounded-[4px] overflow-hidden" />
-                      <span className={`max-w-[45px] md:max-w-[100px] truncate ${fontSizeClassName}`}>{repoName}</span>
-                    </div>
-                  </Tooltip>
-                ) : (
-                  ""
-                )}
-              </div>
-            ))}
+            .filter((_, arrCount) => arrCount < limit)
+            .map(({ repoOwner, repoName, repoIcon }, index) => {
+              return (
+                <div key={`repo_${index}`}>
+                  {repoName && repoIcon ? (
+                    <Tooltip content={repoName}>
+                      <div className="flex gap-1  p-1 pr-2 border-[1px] border-light-slate-6 rounded-lg text-light-slate-12">
+                        <Icon IconImage={repoIcon} className="rounded-[4px] overflow-hidden" />
+                        <span className={`max-w-[45px] md:max-w-[100px] truncate ${fontSizeClassName}`}>
+                          <Link href={`https://github.com/${repoOwner}/${repoName}`} target="_blank" rel="noreferrer">
+                            {repoName}
+                          </Link>
+                        </span>
+                      </div>
+                    </Tooltip>
+                  ) : (
+                    ""
+                  )}
+                </div>
+              );
+            })}
           <div>{repoTotal > limit ? `+${repoTotal - limit}` : null}</div>
         </>
       ) : (

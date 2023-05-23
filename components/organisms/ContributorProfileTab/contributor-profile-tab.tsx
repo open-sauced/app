@@ -2,12 +2,13 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import clsx from "clsx";
+import formatDistanceToNowStrict from "date-fns/formatDistanceToNowStrict";
 
 import Avatar from "components/atoms/Avatar/avatar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "components/atoms/Tabs/tabs";
 import HighlightInputForm from "components/molecules/HighlightInput/highlight-input-form";
 import Text from "components/atoms/Typography/text";
-import { getFormattedDate, getRelativeDays } from "lib/utils/date-utils";
+import { getRelativeDays } from "lib/utils/date-utils";
 import Pill from "components/atoms/Pill/pill";
 import CardLineChart from "components/molecules/CardLineChart/card-line-chart";
 import CardRepoList, { RepoList } from "components/molecules/CardRepoList/card-repo-list";
@@ -29,12 +30,13 @@ import LanguagePill from "components/atoms/LanguagePill/LanguagePill";
 import RecommendedRepoCard from "components/molecules/RecommendedRepoCard/recommended-repo-card";
 import recommendations from "lib/utils/recommendations";
 import Title from "components/atoms/Typography/title";
+import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 
 interface ContributorProfileTabProps {
   contributor?: DbUser;
   prTotal: number;
   openPrs: number;
-  prVelocity: number;
+  prVelocity?: number;
   prMerged: number;
   recentContributionCount: number;
   prsMergedPercentage: number;
@@ -167,14 +169,25 @@ const ContributorProfileTab = ({
           {/* <HightlightEmptyState /> */}
 
           {isError && <>An error occured</>}
-          {isLoading && <>Loading...</>}
+          {isLoading && <>
+            {Array.from({ length: 2 }).map((_, index) => (
+              <div className="flex flex-col gap-2 lg:flex-row lg:gap-6" key={index}>
+                <SkeletonWrapper width={100} height={20} />
+                <div className="md:max-w-[40rem]">
+                  <SkeletonWrapper height={20} width={500} classNames="mb-2" />
+                  <SkeletonWrapper height={300}  />
+                </div>
+              </div>
+            ))}
+          </>}
           <>
             {!isError && highlights && highlights.length > 0 ? (
               <div>
                 {highlights.map(({ id, title, highlight, url, shipped_at, created_at }) => (
                   <div className="flex flex-col gap-2 mb-6 lg:flex-row lg:gap-7" key={id}>
                     <Link href={`/feed/${id}`}>
-                      <p className="text-sm text-light-slate-10">{getFormattedDate(created_at)}</p>
+                      <p className="text-sm text-light-slate-10">{formatDistanceToNowStrict(new Date(created_at), { addSuffix: true })}
+                      </p>
                     </Link>
                     <ContributorHighlightCard
                       emojis={emojis}
