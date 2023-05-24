@@ -23,7 +23,6 @@ import useSession from "lib/hooks/useSession";
 
 import posthog from "posthog-js";
 import { PostHogProvider } from "posthog-js/react";
-import { useMediaQuery } from "lib/hooks/useMediaQuery";
 
 // Check that PostHog is client-side (used to handle Next.js SSR)
 if (typeof window !== "undefined") {
@@ -50,7 +49,6 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
   const [seo, updateSEO] = useState<SEOobject>(Component.SEO || {});
   Component.updateSEO = updateSEO;
 
-  const isMobile = useMediaQuery("(max-width:720px)");
   let hostname = "";
 
   if (typeof window !== "undefined")
@@ -62,7 +60,7 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
     const interval = setInterval(() => {
       chatButton = document.getElementById("sitegpt-chat-icon");
       if (chatButton) {
-        if (hostname !== "insights.opensauced.pizza" || isMobile) {
+        if (hostname !== "insights.opensauced.pizza") {
           chatButton.style.display = "none";
         } else {
           chatButton.style.display = "block";
@@ -72,7 +70,7 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
     }, 500);
 
     return () => clearInterval(interval);
-  },[hostname, isMobile, router.isReady]);
+  },[hostname, router.isReady]);
 
   useEffect(() => {
     updateSEO(Component.SEO || {});
