@@ -5,6 +5,69 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.48.1](https://github.com/open-sauced/insights/compare/v1.48.0...v1.48.1) (2023-05-23)
+
+
+### 🐛 Bug Fixes
+
+* remove repoList from dependency array on highlights feed ([461a3f7](https://github.com/open-sauced/insights/commit/461a3f7d1c1bf02698153d2a1b6df70441330357))
+
+## [1.48.0](https://github.com/open-sauced/insights/compare/v1.47.0...v1.48.0) (2023-05-23)
+
+
+### 🔁 Continuous Integration
+
+* move unit and e2e tests into separate jobs ([#1213](https://github.com/open-sauced/insights/issues/1213)) ([d1ac6a0](https://github.com/open-sauced/insights/commit/d1ac6a0a27797bbe1780b0958f67fab606b3e1d7))
+
+
+### 🐛 Bug Fixes
+
+* check user follow after opening highlight menu ([#1197](https://github.com/open-sauced/insights/issues/1197)) ([7ded9aa](https://github.com/open-sauced/insights/commit/7ded9aa684e01dccaf915eba398694aaedd8c145))
+* fix package.json merge ([287d999](https://github.com/open-sauced/insights/commit/287d999a3abf77a5cc8980ae62e62946abeff508))
+* fix repo overlap issue in Insight page ([#1204](https://github.com/open-sauced/insights/issues/1204)) ([26f07b9](https://github.com/open-sauced/insights/commit/26f07b9dabdd330956d4cb8d662f7cbc33bfbfda))
+* set default value to repo filter state ([#1214](https://github.com/open-sauced/insights/issues/1214)) ([2f8b8d2](https://github.com/open-sauced/insights/commit/2f8b8d2163317c4226348f9b0738848c333df812))
+
+
+### 🍕 Features
+
+* add OpenGraph image for individual highlights ([#1205](https://github.com/open-sauced/insights/issues/1205)) ([0e2b49f](https://github.com/open-sauced/insights/commit/0e2b49f26cac2443b1f0c6d4dfd31d660061b6bd))
+* add Posthog as Next middleware ([#1210](https://github.com/open-sauced/insights/issues/1210)) ([1f19b43](https://github.com/open-sauced/insights/commit/1f19b43bb9f5e752791a790c159c96092bdec3c2))
+* add pull request velocity to user profile page ([#1215](https://github.com/open-sauced/insights/issues/1215)) ([e458956](https://github.com/open-sauced/insights/commit/e458956b148d2d4046bdda69a750b1fb9798550f))
+* Replace zendesk with SiteGPT ([#1209](https://github.com/open-sauced/insights/issues/1209)) ([cb85a45](https://github.com/open-sauced/insights/commit/cb85a457ecef9c1be5851d68849f822ef9f85fda))
+
+## [1.48.0-beta.7](https://github.com/open-sauced/insights/compare/v1.48.0-beta.6...v1.48.0-beta.7) (2023-05-23)
+
+
+### 🍕 Features
+
+* add pull request velocity to user profile page ([#1215](https://github.com/open-sauced/insights/issues/1215)) ([e458956](https://github.com/open-sauced/insights/commit/e458956b148d2d4046bdda69a750b1fb9798550f))
+
+## [1.48.0-beta.6](https://github.com/open-sauced/insights/compare/v1.48.0-beta.5...v1.48.0-beta.6) (2023-05-23)
+
+
+### 🐛 Bug Fixes
+
+* set default value to repo filter state ([#1214](https://github.com/open-sauced/insights/issues/1214)) ([2f8b8d2](https://github.com/open-sauced/insights/commit/2f8b8d2163317c4226348f9b0738848c333df812))
+
+## [1.48.0-beta.5](https://github.com/open-sauced/insights/compare/v1.48.0-beta.4...v1.48.0-beta.5) (2023-05-23)
+
+
+### 🐛 Bug Fixes
+
+* check user follow after opening highlight menu ([#1197](https://github.com/open-sauced/insights/issues/1197)) ([7ded9aa](https://github.com/open-sauced/insights/commit/7ded9aa684e01dccaf915eba398694aaedd8c145))
+
+## [1.48.0-beta.4](https://github.com/open-sauced/insights/compare/v1.48.0-beta.3...v1.48.0-beta.4) (2023-05-23)
+
+
+### 🍕 Features
+
+* add Posthog as Next middleware ([#1210](https://github.com/open-sauced/insights/issues/1210)) ([1f19b43](https://github.com/open-sauced/insights/commit/1f19b43bb9f5e752791a790c159c96092bdec3c2))
+
+
+### 🔁 Continuous Integration
+
+* move unit and e2e tests into separate jobs ([#1213](https://github.com/open-sauced/insights/issues/1213)) ([d1ac6a0](https://github.com/open-sauced/insights/commit/d1ac6a0a27797bbe1780b0958f67fab606b3e1d7))
+
 ## [1.48.0-beta.3](https://github.com/open-sauced/insights/compare/v1.48.0-beta.2...v1.48.0-beta.3) (2023-05-22)
 
 

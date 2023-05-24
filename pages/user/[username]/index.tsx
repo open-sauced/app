@@ -14,6 +14,7 @@ import { useFetchUser } from "lib/hooks/useFetchUser";
 import useRepoList from "lib/hooks/useRepoList";
 import { getAvatarByUsername } from "lib/utils/github";
 import useContributorLanguages from "lib/hooks/api/useContributorLanguages";
+import getContributorPullRequestVelocity from "lib/utils/get-contributor-pr-velocity";
 
 // A quick fix to the hydration issue. Should be replaced with a real solution.
 // Slows down the page's initial client rendering as the component won't be loaded on the server.
@@ -37,6 +38,7 @@ const Contributor: WithPageLayout<ContributorSSRProps> = ({ username, user, ogIm
   const mergedPrs = contributorPRData.filter((prData) => prData.merged);
   const contributorLanguageList = useContributorLanguages(username);
   const githubAvatar = getAvatarByUsername(username, 300);
+  const prVelocity = getContributorPullRequestVelocity(contributorPRData);
 
   return (
     <>
@@ -78,6 +80,7 @@ const Contributor: WithPageLayout<ContributorSSRProps> = ({ username, user, ogIm
           openPrs={contributorPRData.length}
           recentContributionCount={repoList.length}
           prFirstOpenedDate={contributor?.first_opened_pr_at}
+          prVelocity={prVelocity}
         />
       </div>
     </>
