@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.49.0-beta.1](https://github.com/open-sauced/insights/compare/v1.48.2-beta.1...v1.49.0-beta.1) (2023-05-24)
+
+
+### 🍕 Features
+
+* hide chatbot on non-prod environment and mobile screens ([#1218](https://github.com/open-sauced/insights/issues/1218)) ([027248e](https://github.com/open-sauced/insights/commit/027248e60aa6a36ab8a83e16551de565080f5ade))
+
 ### [1.48.2-beta.1](https://github.com/open-sauced/insights/compare/v1.48.1...v1.48.2-beta.1) (2023-05-24)
 
 
