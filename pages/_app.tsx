@@ -51,24 +51,28 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
   Component.updateSEO = updateSEO;
 
   const isMobile = useMediaQuery("(max-width:720px)");
-
   let hostname = "";
+
   if (typeof window !== "undefined")
     hostname = window.location.hostname;
 
-  // JUST CHECKING WHAT THE HOSNAME WILL BE ON DEPLOY PREVIEW 😅
-  console.log({hostname});
-
   useEffect(() => {
-    const chatWidget = document.getElementById("sitegpt-chat-icon");
-    if (chatWidget) {
-      if (isMobile || process.env.NODE_ENV !== "production" || hostname !== "insights.opensauced.pizza") {
-        chatWidget.style.display = "none";
-      } else {
-        chatWidget.style.display = "block";
+    let chatButton = document.getElementById("sitegpt-chat-icon");
+
+    const interval = setInterval(() => {
+      chatButton = document.getElementById("sitegpt-chat-icon");
+      if (chatButton) {
+        if (hostname !== "insights.opensauced.pizza" || isMobile) {
+          chatButton.style.display = "none";
+        } else {
+          chatButton.style.display = "block";
+        }
+        clearInterval(interval);
       }
-    }
-  },[isMobile, hostname]);
+    }, 500);
+
+    return () => clearInterval(interval);
+  },[hostname, isMobile, router.isReady]);
 
   useEffect(() => {
     updateSEO(Component.SEO || {});
