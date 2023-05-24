@@ -7,7 +7,7 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuTrigger
+  DropdownMenuTrigger,
 } from "components/atoms/Dropdown/dropdown";
 import { HiOutlineEmojiHappy } from "react-icons/hi";
 import { TfiMoreAlt } from "react-icons/tfi";
@@ -25,7 +25,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogDescription,
-  DialogCloseButton
+  DialogCloseButton,
 } from "../Dialog/dialog";
 import { generateApiPrUrl } from "lib/utils/github";
 import { fetchGithubPRInfo } from "lib/hooks/fetchGithubPRInfo";
@@ -39,7 +39,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger
+  AlertDialogTrigger,
 } from "../AlertDialog/alert-dialog";
 import { deleteHighlight } from "lib/hooks/deleteHighlight";
 import { useToast } from "lib/hooks/useToast";
@@ -72,7 +72,7 @@ const ContributorHighlightCard = ({
   id,
   refreshCallBack,
   emojis,
-  shipped_date
+  shipped_date,
 }: ContributorHighlightCardProps) => {
   const { toast } = useToast();
   const twitterTweet = `${title || "Open Source Highlight"} - OpenSauced from ${user}`;
@@ -202,14 +202,11 @@ const ContributorHighlightCard = ({
     }
   }, [highlight]);
 
-  function FollowUser(){
-    
+  function FollowUser() {
     const { follow, unFollow, isError } = useFollowUser(user);
-                
-    return (loggedInUser ? (
-      <DropdownMenuItem
-        className={`rounded-md ${loggedInUser.user_metadata.user_name === user && "hidden"}`}
-      >
+
+    return loggedInUser ? (
+      <DropdownMenuItem className={`rounded-md ${loggedInUser.user_metadata.user_name === user && "hidden"}`}>
         <div onClick={isError ? follow : unFollow} className="flex gap-2.5 py-1 items-center pl-3 pr-7 cursor-pointer">
           <FaUserPlus size={22} />
           <span>
@@ -227,7 +224,7 @@ const ContributorHighlightCard = ({
           <span>Follow {user}</span>
         </div>
       </DropdownMenuItem>
-    ));
+    );
   }
 
   return (
@@ -269,11 +266,8 @@ const ContributorHighlightCard = ({
                     <span>Share to Linkedin</span>
                   </a>
                 </DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={() => handleCopyToClipboard(`${host}/feed/${id}`)}
-                  className="rounded-md"
-                >
-                  <div className = "flex gap-2.5 py-1 items-center pl-3 pr-7 cursor-pointer">
+                <DropdownMenuItem onClick={() => handleCopyToClipboard(`${host}/feed/${id}`)} className="rounded-md">
+                  <div className="flex gap-2.5 py-1 items-center pl-3 pr-7 cursor-pointer">
                     <BsLink45Deg size={22} />
                     <span>Copy link</span>
                   </div>
