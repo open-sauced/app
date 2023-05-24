@@ -28,6 +28,17 @@ function getLastContributionDate(contributions: DbRepoPR[]) {
 
   return formatDistanceToNowStrict(new Date(sortedContributions[0]?.merged_at), { addSuffix: true });
 }
+
+function getLastContributedRepo(pullRequests: DbRepoPR[]) {
+  if (pullRequests.length === 0) {
+    return "-";
+  }
+  const sortedPullRequests = pullRequests.sort((a, b) => {
+    return +new Date(b.last_updated_at) - +new Date(a.last_updated_at);
+  });
+
+  return sortedPullRequests[0].full_name;
+}
 const ContributorListTableRow = ({ contributor, topic }: ContributorListTableRow) => {
   const [tableOpen, setTableOpen] = useState(false);
 
@@ -53,10 +64,10 @@ const ContributorListTableRow = ({ contributor, topic }: ContributorListTableRow
       {/* Mobile version */}
       <div className="px-5 py-2 overflow-hidden odd:bg-white md:hidden even:bg-light-slate-2">
         <div className="flex items-center gap-x-3 text-light-slate-12">
-          <div className="w-[65%]">
-            <DevProfile company={user?.company || "-"} username={contributor.author_login} />
+          <div className="w-[66%]">
+            <DevProfile company={user?.company || getLastContributedRepo(data)} username={contributor.author_login} />
           </div>
-          <div className="w-[35%] text-normal">
+          <div className="w-[34%] text-normal  h-full">
             <div className="flex gap-x-3">{<p>{getLastContributionDate(mergedPrs)}</p>}</div>
           </div>
           <div className="">
@@ -109,7 +120,7 @@ const ContributorListTableRow = ({ contributor, topic }: ContributorListTableRow
 
       {/* Desktop Version */}
 
-      <div className={`${classNames.row} text-light-slate-11`}>
+      <div className={`${classNames.row} !gap-6 text-light-slate-11`}>
         {/* <Checkbox
           checked={true}
           onCheckedChange={() => console.log("yeah")}
@@ -119,23 +130,25 @@ const ContributorListTableRow = ({ contributor, topic }: ContributorListTableRow
         /> */}
 
         {/* Column: Developers */}
-        <div className={clsx(classNames.cols.repository, "lg:min-w-[280px] ")}>
-          <DevProfile company={user?.company || "-"} username={contributor.author_login} />
+        <div className={clsx("flex-1 lg:min-w-[250px] overflow-hidden")}>
+          <DevProfile company={user?.company || getLastContributedRepo(data)} username={contributor.author_login} />
         </div>
 
         {/* Column: Act */}
-        <div className={clsx("flex-1 flex lg:max-w-[100px] w-fit  justify-center")}>{getActivity(totalPrs, false)}</div>
+        <div className={clsx("flex-1 flex lg:max-w-[100px] w-fit   justify-center")}>
+          {getActivity(totalPrs, false)}
+        </div>
 
         {/* Column Repositories */}
-        <div className={clsx("flex-1 lg:max-w-[100px] flex justify-center ")}>{repoList.length}</div>
+        <div className={clsx("flex-1 lg:max-w-[100px]  flex justify-center ")}>{repoList.length}</div>
 
         {/* Column: Last Contribution */}
-        <div className={clsx("flex-1 lg:min-w-[130px] flex text-light-slate-11 justify-center ")}>
+        <div className={clsx("flex-1 lg:max-w-[130px]  flex text-light-slate-11 justify-center ")}>
           <div className="flex">{<p>{getLastContributionDate(mergedPrs)}</p>}</div>
         </div>
 
         {/* Column: Language */}
-        <div className={clsx("flex-1 hidden lg:min-w-[140px]  justify-center lg:flex")}>
+        <div className={clsx("flex-1 hidden lg:max-w-[120px]  justify-center lg:flex")}>
           {contributorLanguageList.length > 0 ? (
             <p>
               {contributorLanguageList[0]}

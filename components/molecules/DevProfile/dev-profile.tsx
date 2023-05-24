@@ -23,9 +23,12 @@ const DevProfile = ({ username, company }: DevProfileProps) => {
       </div>
       <div>
         <h1 className="text-light-slate-12">
-          {username && username.length > 10 ? truncateString(username, 15) : username}
+          {username && username.length > 10 ? truncateString(username, 11) : username}
         </h1>
-        <p className="text-sm font-normal text-light-slate-9">{company}</p>
+        {/* Mobile */}
+        <p className="text-sm font-normal truncate text-light-slate-9 md:hidden">{truncateString(company, 15)}</p>
+        {/* Desktop */}
+        <p className="hidden text-sm font-normal md:inline-flex text-light-slate-9">{truncateString(company, 20)}</p>
       </div>
     </Link>
   );
