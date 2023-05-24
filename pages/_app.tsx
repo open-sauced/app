@@ -56,6 +56,9 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
   if (typeof window !== "undefined")
     hostname = window.location.hostname;
 
+  // JUST CHECKING WHAT THE HOSNAME WILL BE ON DEPLOY PREVIEW 😅
+  console.log({hostname});
+
   useEffect(() => {
     const chatWidget = document.getElementById("sitegpt-chat-icon");
     if (chatWidget) {
@@ -65,7 +68,7 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
         chatWidget.style.display = "block";
       }
     }
-  },[isMobile, hostname, process.env.NODE_ENV]);
+  },[isMobile, hostname]);
 
   useEffect(() => {
     updateSEO(Component.SEO || {});
