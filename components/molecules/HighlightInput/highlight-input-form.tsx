@@ -93,7 +93,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
           highlight,
           title,
           url: url,
-          shipped_at: date
+          shipped_at: date,
         });
 
         setLoading(false);
