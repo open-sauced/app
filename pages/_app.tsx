@@ -52,16 +52,20 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
 
   const isMobile = useMediaQuery("(max-width:720px)");
 
+  let hostname = "";
+  if (typeof window !== "undefined")
+    hostname = window.location.hostname;
+
   useEffect(() => {
     const chatWidget = document.getElementById("sitegpt-chat-icon");
     if (chatWidget) {
-      if (isMobile || process.env.NODE_ENV !== "production") {
+      if (isMobile || process.env.NODE_ENV !== "production" || hostname !== "insights.opensauced.pizza") {
         chatWidget.style.display = "none";
       } else {
         chatWidget.style.display = "block";
       }
     }
-  },[isMobile]);
+  },[isMobile, hostname, process.env.NODE_ENV]);
 
   useEffect(() => {
     updateSEO(Component.SEO || {});
