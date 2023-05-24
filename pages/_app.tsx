@@ -23,6 +23,7 @@ import useSession from "lib/hooks/useSession";
 
 import posthog from "posthog-js";
 import { PostHogProvider } from "posthog-js/react";
+import { useMediaQuery } from "lib/hooks/useMediaQuery";
 
 // Check that PostHog is client-side (used to handle Next.js SSR)
 if (typeof window !== "undefined") {
@@ -49,6 +50,19 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
   const [seo, updateSEO] = useState<SEOobject>(Component.SEO || {});
   Component.updateSEO = updateSEO;
 
+  const isMobile = useMediaQuery("(max-width:720px)");
+
+  useEffect(() => {
+    const chatWidget = document.getElementById("sitegpt-chat-icon");
+    if (chatWidget) {
+      if (isMobile || process.env.NODE_ENV !== "production") {
+        chatWidget.style.display = "none";
+      } else {
+        chatWidget.style.display = "block";
+      }
+    }
+  },[isMobile]);
+
   useEffect(() => {
     updateSEO(Component.SEO || {});
   }, [Component]);
@@ -74,8 +88,6 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
       router.events.off("routeChangeComplete", handleRouteChange);
     };
   }, []);
-
-  const { filterName, toolName } = router.query;
 
   function localStorageProvider() {
     if (typeof window !== "undefined") {
