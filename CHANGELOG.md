@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.48.2-beta.1](https://github.com/open-sauced/insights/compare/v1.48.1...v1.48.2-beta.1) (2023-05-24)
+
+
+### 🐛 Bug Fixes
+
+* round velocity after calculation ([#1220](https://github.com/open-sauced/insights/issues/1220)) ([445a57f](https://github.com/open-sauced/insights/commit/445a57f862c2810d878d2a03c9fdab94d0125330))
+
 ### [1.48.1](https://github.com/open-sauced/insights/compare/v1.48.0...v1.48.1) (2023-05-23)
 
 
