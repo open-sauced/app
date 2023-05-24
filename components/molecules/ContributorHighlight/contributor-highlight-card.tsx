@@ -90,8 +90,6 @@ const ContributorHighlightCard = ({
 
   const [date, setDate] = useState<Date | undefined>(shipped_date ? new Date(shipped_date) : undefined);
 
-  const { follow, unFollow, isError } = useFollowUser(user);
-
   const { data: reactions, mutate } = useHighlightReactions(id);
   const { data: userReaction, deleteReaction, addReaction } = useUserHighlightReactions(id);
 
@@ -204,6 +202,34 @@ const ContributorHighlightCard = ({
     }
   }, [highlight]);
 
+  function FollowUser(){
+    
+    const { follow, unFollow, isError } = useFollowUser(user);
+                
+    return (loggedInUser ? (
+      <DropdownMenuItem
+        className={`rounded-md ${loggedInUser.user_metadata.user_name === user && "hidden"}`}
+      >
+        <div onClick={isError ? follow : unFollow} className="flex gap-2.5 py-1 items-center pl-3 pr-7 cursor-pointer">
+          <FaUserPlus size={22} />
+          <span>
+            {!isError ? "Unfollow" : "Follow"} {user}
+          </span>
+        </div>
+      </DropdownMenuItem>
+    ) : (
+      <DropdownMenuItem className="rounded-md">
+        <div
+          onClick={async () => await signIn({ provider: "github" })}
+          className="flex gap-2.5 py-1  items-center pl-3 pr-7"
+        >
+          <FaUserPlus size={22} />
+          <span>Follow {user}</span>
+        </div>
+      </DropdownMenuItem>
+    ));
+  }
+
   return (
     <article className="flex flex-col  md:max-w-[40rem] flex-1 gap-3 lg:gap-6">
       <div>
@@ -252,28 +278,7 @@ const ContributorHighlightCard = ({
                     <span>Copy link</span>
                   </div>
                 </DropdownMenuItem>
-                {loggedInUser ? (
-                  <DropdownMenuItem
-                    className={`rounded-md ${loggedInUser.user_metadata.user_name === user && "hidden"}`}
-                  >
-                    <div onClick={isError ? follow : unFollow} className="flex gap-2.5 py-1 items-center pl-3 pr-7 cursor-pointer">
-                      <FaUserPlus size={22} />
-                      <span>
-                        {!isError ? "Unfollow" : "Follow"} {user}
-                      </span>
-                    </div>
-                  </DropdownMenuItem>
-                ) : (
-                  <DropdownMenuItem className="rounded-md">
-                    <div
-                      onClick={async () => await signIn({ provider: "github" })}
-                      className="flex gap-2.5 py-1  items-center pl-3 pr-7"
-                    >
-                      <FaUserPlus size={22} />
-                      <span>Follow {user}</span>
-                    </div>
-                  </DropdownMenuItem>
-                )}
+                <FollowUser />
                 {loggedInUser && (
                   <DropdownMenuItem
                     className={`rounded-md ${
