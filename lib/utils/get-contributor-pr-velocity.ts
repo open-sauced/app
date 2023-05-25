@@ -14,7 +14,7 @@ const getContributorPullRequestVelocity = (repositoryPullRequests: DbRepoPR[]) =
     return 1;
   }
 
-  return averageVelocity;
+  return averageVelocity ? Math.floor(averageVelocity) : averageVelocity;
 };
 
 export default getContributorPullRequestVelocity;
