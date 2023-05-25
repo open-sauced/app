@@ -101,6 +101,7 @@ const ContributorProfilePage = ({
         <ContributorProfileHeader
           handleSignIn={signIn}
           username={user?.login}
+          isRecievingCollaborations={user?.receive_collaboration}
           user={loggedInUser}
           isFollowing={followError ? false : true}
           isConnected={iscConnected}

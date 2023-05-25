@@ -1,15 +1,16 @@
+import { useRouter } from "next/router";
 import React, { useState, useEffect, ChangeEvent, useRef } from "react";
 import Avatar from "components/atoms/Avatar/avatar";
 import Image from "next/image";
 import RainbowBg from "img/rainbow-cover.png";
 import Button from "components/atoms/Button/button";
 import Link from "next/link";
-import { MarkGithubIcon } from "@primer/octicons-react";
+
 import { User } from "@supabase/supabase-js";
 import { FiCopy } from "react-icons/fi";
 import { useToast } from "lib/hooks/useToast";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../Dialog/dialog";
-import TextInput from "components/atoms/TextInput/text-input";
+
 import { Textarea } from "components/atoms/Textarea/text-area";
 import { useUserCollaborations } from "lib/hooks/useUserCollaborations";
 
@@ -24,6 +25,7 @@ interface ContributorProfileHeaderProps {
   username: string | undefined;
   handleSignIn: Function;
   isOwner: boolean;
+  isRecievingCollaborations?: boolean;
 }
 const ContributorProfileHeader = ({
   avatarUrl,
@@ -36,9 +38,13 @@ const ContributorProfileHeader = ({
   user,
   handleSignIn,
   isOwner,
+  isRecievingCollaborations,
 }: ContributorProfileHeaderProps) => {
+  const router = useRouter();
+  const currentPath = router.asPath;
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+
   const { requestCollaboration } = useUserCollaborations();
   const [row, setRow] = useState(1);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
@@ -141,23 +147,36 @@ const ContributorProfileHeader = ({
                   <Button onClick={handleFollowClick} className="px-10 py-2 mb-10 bg-white md:mb-6" variant="text">
                     {isFollowing ? "Following" : "Follow"}
                   </Button>
+                  {isRecievingCollaborations && (
+                    <Button
+                      onClick={() => setIsDialogOpen(true)}
+                      className="px-10 py-2 mb-10 bg-white md:mb-6 "
+                      variant="primary"
+                    >
+                      Collaborate
+                    </Button>
+                  )}
+                </>
+              )
+            ) : (
+              <>
+                <Button
+                  onClick={async () => await handleSignIn({ provider: "github" })}
+                  className="px-10 py-2 mb-10 bg-white md:mb-6 "
+                  variant="text"
+                >
+                  Follow
+                </Button>
+                {isRecievingCollaborations && (
                   <Button
-                    onClick={() => setIsDialogOpen(true)}
+                    onClick={async () => await handleSignIn({ provider: "github" })}
                     className="px-10 py-2 mb-10 bg-white md:mb-6 "
                     variant="primary"
                   >
                     Collaborate
                   </Button>
-                </>
-              )
-            ) : (
-              <Button
-                onClick={async () => await handleSignIn({ provider: "github" })}
-                className="px-10 py-2 mb-10 bg-white md:mb-6 "
-                variant="text"
-              >
-                Follow
-              </Button>
+                )}
+              </>
             )}
 
             <Link href="#">
