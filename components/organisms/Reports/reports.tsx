@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useUser } from "@supabase/auth-helpers-react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 import GitHubIcon from "img/icons/github-icon.svg";
 
@@ -27,7 +29,14 @@ const Reports = ({ hasReports, repositories }: ReportsProps): JSX.Element => {
   const userDeviceState = localStorage.getItem(USERDEVICESTORAGENAME);
   const initialState = userDeviceState ? JSON.parse(userDeviceState as string) : [];
   const [reports, setReports] = useState<Report[]>(initialState);
-  const { user, signIn } = useSupabaseAuth();
+
+  const { signIn } = useSupabaseAuth();
+  const user = useUser();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!user) router.replace("/javascript/dashboard/filter/recent");
+  },[user]);
 
   const filterOptions = useFilterOptions();
   const filterList = filterOptions.map((filter) => {

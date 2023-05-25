@@ -22,10 +22,31 @@ jobs:
           echo "::set-output name=DEPLOY_ENVIRONMENT::$([[ ${{ github.ref_name }} == 'main' ]] && echo 'production' || echo ${{ github.ref_name }})"
           echo "::set-output name=DEPLOY_SUBDOMAIN::$([[ ${{ github.ref_name }} == 'main' ]] && echo '' || echo '${{ github.ref_name }}.')"
 
-
   test:
-    name: Test and lint
-    uses: open-sauced/open-sauced/.github/workflows/development.yml@main
+    name: Unit Tests and Lint Checks
+    uses: open-sauced/hot/.github/workflows/development.yml@main
+
+  e2e:
+    name: E2E Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: "☁️ checkout repository"
+        uses: actions/checkout@v2
+
+      - name: "🔧 setup node"
+        uses: actions/setup-node@v2.1.5
+        with:
+          node-version: 16
+
+      - name: "🔧 install npm@latest"
+        run: npm i -g npm@latest
+
+      - name: "📦 install dependencies"
+        uses: bahmutov/npm-install@v1
+
+      - name: "🔍 run tests"
+        run: npm run test:e2e --if-present
 
   build:
     name: Build application
@@ -63,6 +84,7 @@ jobs:
     needs:
       - setup
       - test
+      - e2e
       - build
     runs-on: ubuntu-latest
     timeout-minutes: 10
