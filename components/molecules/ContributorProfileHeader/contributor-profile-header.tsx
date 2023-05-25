@@ -13,6 +13,13 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../Dialog/dial
 
 import { Textarea } from "components/atoms/Textarea/text-area";
 import { useUserCollaborations } from "lib/hooks/useUserCollaborations";
+import { TfiMoreAlt } from "react-icons/tfi";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "components/atoms/Dropdown/dropdown";
 
 interface ContributorProfileHeaderProps {
   avatarUrl?: string;
@@ -120,7 +127,7 @@ const ContributorProfileHeader = ({
             isCircle
           />
         </div>
-        <div className="translate-y-[125px] md:hidden ">
+        <div className="translate-y-[110px] md:hidden ">
           <Avatar
             initialsClassName="text-[70px] -translate-y-1 leading-none"
             initials={githubName?.charAt(0)}
@@ -132,10 +139,47 @@ const ContributorProfileHeader = ({
           />
         </div>
         {isConnected && (
-          <div className="flex flex-col items-center gap-3 md:translate-y-0 translate-y-28 md:flex-row">
+          <div className="flex flex-col items-center gap-3 translate-y-24 md:translate-y-0 md:flex-row">
+            {/* Mobile dropdown menu */}
+            <DropdownMenu>
+              <DropdownMenuTrigger className="p-2 mb-10 mr-3 bg-white rounded-full cursor-pointer md:hidden">
+                <TfiMoreAlt size={20} className="" />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="flex flex-col gap-1 py-2 rounded-lg">
+                <DropdownMenuItem className="rounded-md">
+                  <button className="flex gap-2.5  items-center pl-3 pr-7">Share</button>
+                </DropdownMenuItem>
+                {user ? (
+                  !isOwner && (
+                    <DropdownMenuItem className="rounded-md">
+                      <button className="flex items-center gap-1 pl-3 pr-7">
+                        {isFollowing ? "Following" : "Follow"}
+                      </button>
+                    </DropdownMenuItem>
+                  )
+                ) : (
+                  <>
+                    <DropdownMenuItem className="rounded-md">
+                      <button className="flex items-center gap-1 pl-3 pr-7">Follow</button>
+                    </DropdownMenuItem>
+                    {isRecievingCollaborations && (
+                      <DropdownMenuItem className="rounded-md">
+                        <button className="flex items-center gap-1 pl-3 pr-7">Collaborate</button>
+                      </DropdownMenuItem>
+                    )}
+                  </>
+                )}
+
+                <DropdownMenuItem className="rounded-md">
+                  <button onClick={() => setIsDialogOpen(true)} className="flex gap-2.5 items-center  pl-3 pr-7">
+                    Collaborate
+                  </button>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
             <Button
               onClick={() => handleCopyToClipboard(`${host}/user/${user?.user_metadata.user_name}`)}
-              className="px-10 py-2 mb-10 bg-white md:mb-6 "
+              className="hidden px-10 py-2 mb-10 bg-white md:inline-flex md:mb-6 "
               variant="text"
             >
               <FiCopy className="mt-1 mr-1" /> Share
@@ -144,13 +188,17 @@ const ContributorProfileHeader = ({
             {user ? (
               !isOwner && (
                 <>
-                  <Button onClick={handleFollowClick} className="px-10 py-2 mb-10 bg-white md:mb-6" variant="text">
+                  <Button
+                    onClick={handleFollowClick}
+                    className="hidden px-10 py-2 mb-10 bg-white md:block md:mb-6"
+                    variant="text"
+                  >
                     {isFollowing ? "Following" : "Follow"}
                   </Button>
                   {isRecievingCollaborations && (
                     <Button
                       onClick={() => setIsDialogOpen(true)}
-                      className="px-10 py-2 mb-10 bg-white md:mb-6 "
+                      className="hidden px-10 py-2 mb-10 md:block md:mb-6 "
                       variant="primary"
                     >
                       Collaborate
@@ -162,7 +210,7 @@ const ContributorProfileHeader = ({
               <>
                 <Button
                   onClick={async () => await handleSignIn({ provider: "github" })}
-                  className="px-10 py-2 mb-10 bg-white md:mb-6 "
+                  className="hidden px-10 py-2 mb-10 bg-white md:block md:mb-6 "
                   variant="text"
                 >
                   Follow
@@ -170,7 +218,7 @@ const ContributorProfileHeader = ({
                 {isRecievingCollaborations && (
                   <Button
                     onClick={async () => await handleSignIn({ provider: "github" })}
-                    className="px-10 py-2 mb-10 bg-white md:mb-6 "
+                    className="hidden px-10 py-2 mb-10 bg-white md:mb-6 md:block"
                     variant="primary"
                   >
                     Collaborate
@@ -178,12 +226,6 @@ const ContributorProfileHeader = ({
                 )}
               </>
             )}
-
-            <Link href="#">
-              <Button className="hidden px-8 py-2" variant="primary">
-                Collaborate
-              </Button>
-            </Link>
           </div>
         )}
       </div>

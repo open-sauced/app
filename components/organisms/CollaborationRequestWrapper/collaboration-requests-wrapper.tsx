@@ -17,6 +17,7 @@ function formatPostDate(date: Date) {
 const CollaborationRequestsWrapper = () => {
   const { data, updateCollaborationStatus, deleteCollaborationRequest } = useUserCollaborations();
   let currentDate: string;
+  console.log(data);
 
   const getDateGroupHeader = (date: Date, index: number) => {
     const dateString = date.toLocaleDateString();
