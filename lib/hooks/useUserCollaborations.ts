@@ -4,7 +4,7 @@ import useSupabaseAuth from "./useSupabaseAuth";
 import { useToast } from "./useToast";
 
 interface UserCollaborationResponse {
-  data?: DbUserCollaboration;
+  data?: DbUserCollaboration[];
   meta: Meta;
 }
 
@@ -15,7 +15,7 @@ type collaborationRequestPayload = {
 const useUserCollaborations = () => {
   const { sessionToken } = useSupabaseAuth();
   const { toast } = useToast();
-  const { data, error } = useSWR<UserCollaborationResponse, Error>(
+  const { data, error, mutate } = useSWR<UserCollaborationResponse, Error>(
     "user/collaborations",
     publicApiFetcher as Fetcher<UserCollaborationResponse, Error>
   );
@@ -41,9 +41,35 @@ const useUserCollaborations = () => {
     }
   }
 
-  async function updateCollaborationStatus() {}
+  async function updateCollaborationStatus(requestId: string) {
+    const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/collaborations/${requestId}`, {
+      method: "PATCH",
+      headers: {
+        Authorization: `Bearer ${sessionToken}`,
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({ status: "accept" }),
+    });
 
-  async function deleteCollaborationRequest() {}
+    if (req.ok) {
+      toast({ description: "Request accepted successfully!", title: "Success", variant: "success" });
+      mutate();
+    }
+  }
+
+  async function deleteCollaborationRequest(requestId: string) {
+    const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/collaborations/${requestId}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${sessionToken}`,
+        "content-type": "application/json",
+      },
+    });
+    if (req.ok) {
+      toast({ description: "Request deleted successfully!", title: "Success", variant: "success" });
+      mutate();
+    }
+  }
 
   return {
     data: data?.data ?? [],
