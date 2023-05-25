@@ -17,16 +17,21 @@ const CollaborationRequestsWrapper = () => {
   const { data, updateCollaborationStatus, deleteCollaborationRequest } = useUserCollaborations();
   let currentDate: string;
 
-  const getDateGroupHeader = (date: Date) => {
+  const getDateGroupHeader = (date: Date, index: number) => {
     const dateString = date.toLocaleDateString();
     if (dateString !== currentDate) {
       currentDate = dateString;
 
-      return <p className="mt-4 border-t text-light-slate-10 md:pt-4 md:mt-8">{formatPostDate(new Date(date))}</p>;
+      return (
+        <p className={`mt-4 text-light-slate-10 md:pt-4 md:mt-8 ${index !== 0 && " border-t"}`}>
+          {formatPostDate(new Date(date))}
+        </p>
+      );
     }
     return;
   };
 
+  console.log(data);
   return (
     <div>
       {data && data.length > 0 ? (
@@ -37,7 +42,7 @@ const CollaborationRequestsWrapper = () => {
             return (
               <div className="flex flex-col w-full " key={i}>
                 <div className="w-full mt-1 text-center md:text-left">
-                  {getDateGroupHeader(new Date(requests.created_at))}
+                  {getDateGroupHeader(new Date(requests.created_at), i)}
                 </div>
                 <CollaborationCard
                   onDecline={deleteCollaborationRequest}
