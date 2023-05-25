@@ -141,6 +141,7 @@ const ContributorProfileTab = ({
               tab === "Recommendations" &&
                 "font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#EA4600] to-[#EB9B00]",
               user && user.user_metadata.user_name !== login && tab === "Recommendations" && "hidden",
+              user && user.user_metadata.user_name !== login && tab === "Requests" && "hidden",
               !user && tab === "Recommendations" && "hidden",
               !user && tab === "Requests" && "hidden",
               !receive_collaboration && tab === "Requests" && "hidden"

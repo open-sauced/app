@@ -43,7 +43,7 @@ const CollaborationRequestsWrapper = () => {
                   onDecline={deleteCollaborationRequest}
                   onAccept={updateCollaborationStatus}
                   requestId={requests.id}
-                  className="self-end w-full mt-1 md:w-4/5 md:mt-1"
+                  className="self-end w-full mt-1 md:w-5/6 md:mt-1"
                   outreachMessage={requests.message}
                   requestor={requests.request_user}
                 />
