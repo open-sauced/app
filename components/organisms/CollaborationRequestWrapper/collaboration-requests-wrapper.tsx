@@ -13,6 +13,7 @@ function formatPostDate(date: Date) {
     return formatDistanceToNowStrict(date, { addSuffix: true });
   }
 }
+
 const CollaborationRequestsWrapper = () => {
   const { data, updateCollaborationStatus, deleteCollaborationRequest } = useUserCollaborations();
   let currentDate: string;
@@ -31,7 +32,6 @@ const CollaborationRequestsWrapper = () => {
     return;
   };
 
-  console.log(data);
   return (
     <div>
       {data && data.length > 0 ? (
