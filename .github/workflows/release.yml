@@ -24,7 +24,7 @@ jobs:
 
   test:
     name: Unit Tests and Lint Checks
-    uses: open-sauced/open-sauced/.github/workflows/development.yml@main
+    uses: open-sauced/hot/.github/workflows/development.yml@main
 
   e2e:
     name: E2E Tests

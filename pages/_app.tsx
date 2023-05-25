@@ -49,6 +49,29 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
   const [seo, updateSEO] = useState<SEOobject>(Component.SEO || {});
   Component.updateSEO = updateSEO;
 
+  let hostname = "";
+
+  if (typeof window !== "undefined")
+    hostname = window.location.hostname;
+
+  useEffect(() => {
+    let chatButton = document.getElementById("sitegpt-chat-icon");
+
+    const interval = setInterval(() => {
+      chatButton = document.getElementById("sitegpt-chat-icon");
+      if (chatButton) {
+        if (hostname !== "insights.opensauced.pizza") {
+          chatButton.style.display = "none";
+        } else {
+          chatButton.style.display = "block";
+        }
+        clearInterval(interval);
+      }
+    }, 500);
+
+    return () => clearInterval(interval);
+  },[hostname, router.isReady]);
+
   useEffect(() => {
     updateSEO(Component.SEO || {});
   }, [Component]);
@@ -74,8 +97,6 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
       router.events.off("routeChangeComplete", handleRouteChange);
     };
   }, []);
-
-  const { filterName, toolName } = router.query;
 
   function localStorageProvider() {
     if (typeof window !== "undefined") {
