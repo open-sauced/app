@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { format, isToday, isYesterday, formatDistanceToNowStrict } from "date-fns";
 import CollaborationCard from "components/molecules/CollaborationCard/collaboration-card";
 import { useUserCollaborations } from "lib/hooks/useUserCollaborations";
+import DashContainer from "components/atoms/DashedContainer/DashContainer";
 
 function formatPostDate(date: Date) {
   if (isToday(date)) {
@@ -50,7 +51,13 @@ const CollaborationRequestsWrapper = () => {
             );
           })
       ) : (
-        <></>
+        <DashContainer className="flex-col gap-6 md:gap-8 text-light-slate-9">
+          <p>No pending requests.</p>
+          <p className="text-center md:px-16">
+            Sometimes you got to be a friend to make a friend. Considering requesting collaboration on sharing profile
+            on social channels like GitHub or Twitter
+          </p>
+        </DashContainer>
       )}
     </div>
   );
