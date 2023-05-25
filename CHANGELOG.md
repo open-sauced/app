@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.49.0-beta.2](https://github.com/open-sauced/insights/compare/v1.49.0-beta.1...v1.49.0-beta.2) (2023-05-25)
+
+
+### 🔁 Continuous Integration
+
+* remove all open-sauced/open-sauced workflows ([#1222](https://github.com/open-sauced/insights/issues/1222)) ([a17b257](https://github.com/open-sauced/insights/commit/a17b257193e63d063491200fd83427984b0d54d3))
+
 ## [1.49.0-beta.1](https://github.com/open-sauced/insights/compare/v1.48.2-beta.1...v1.49.0-beta.1) (2023-05-24)
 
 
