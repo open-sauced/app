@@ -6,7 +6,7 @@ import RainbowBg from "img/rainbow-cover.png";
 import Button from "components/atoms/Button/button";
 import Link from "next/link";
 
-import { User } from "@supabase/supabase-js";
+import { SignInWithOAuthCredentials, User } from "@supabase/supabase-js";
 import { FiCopy } from "react-icons/fi";
 import { useToast } from "lib/hooks/useToast";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../Dialog/dialog";
@@ -30,7 +30,7 @@ interface ContributorProfileHeaderProps {
   handleUnfollow: Function;
   user: User | null;
   username: string | undefined;
-  handleSignIn: Function;
+  handleSignIn: (params: SignInWithOAuthCredentials) => void;
   isOwner: boolean;
   isRecievingCollaborations?: boolean;
 }
@@ -162,7 +162,7 @@ const ContributorProfileHeader = ({
                 {user ? (
                   !isOwner && (
                     <DropdownMenuItem className="rounded-md">
-                      <button className="flex items-center gap-1 pl-3 pr-7">
+                      <button onClick={handleFollowClick} className="flex items-center gap-1 pl-3 pr-7">
                         {isFollowing ? "Following" : "Follow"}
                       </button>
                     </DropdownMenuItem>
@@ -220,7 +220,9 @@ const ContributorProfileHeader = ({
             ) : (
               <>
                 <Button
-                  onClick={async () => await handleSignIn({ provider: "github" })}
+                  onClick={async () =>
+                    handleSignIn({ provider: "github", options: { redirectTo: `${host}/${currentPath}` } })
+                  }
                   className="hidden px-10 py-2 mb-10 bg-white md:block md:mb-6 "
                   variant="text"
                 >
@@ -228,7 +230,9 @@ const ContributorProfileHeader = ({
                 </Button>
                 {isRecievingCollaborations && (
                   <Button
-                    onClick={async () => await handleSignIn({ provider: "github" })}
+                    onClick={async () =>
+                      handleSignIn({ provider: "github", options: { redirectTo: `${host}/${currentPath}` } })
+                    }
                     className="hidden px-10 py-2 mb-10 bg-white md:mb-6 md:block"
                     variant="primary"
                   >
@@ -242,7 +246,7 @@ const ContributorProfileHeader = ({
       </div>
 
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="px-4 py-8 md:w-3/6 md:space-y-4">
+        <DialogContent className="px-4 py-8 md:w-4/6 md:space-y-4">
           <DialogHeader>
             <DialogTitle className="!text-3xl text-left">Collaborate with {username}!</DialogTitle>
           </DialogHeader>
