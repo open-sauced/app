@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.49.0-beta.3](https://github.com/open-sauced/insights/compare/v1.49.0-beta.2...v1.49.0-beta.3) (2023-05-26)
+
+
+### 🐛 Bug Fixes
+
+* format highlight date on feeds page to distance from now ([#1228](https://github.com/open-sauced/insights/issues/1228)) ([1de2746](https://github.com/open-sauced/insights/commit/1de2746fb81969a22160802f673b66a131659e4b))
+
 ## [1.49.0-beta.2](https://github.com/open-sauced/insights/compare/v1.49.0-beta.1...v1.49.0-beta.2) (2023-05-25)
 
 
