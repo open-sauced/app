@@ -141,14 +141,24 @@ const ContributorProfileHeader = ({
         {isConnected && (
           <div className="flex flex-col items-center gap-3 translate-y-24 md:translate-y-0 md:flex-row">
             {/* Mobile dropdown menu */}
+
             <DropdownMenu>
-              <DropdownMenuTrigger className="p-2 mb-10 mr-3 bg-white rounded-full cursor-pointer md:hidden">
-                <TfiMoreAlt size={20} className="" />
-              </DropdownMenuTrigger>
+              <div className="flex items-center gap-2 mb-10">
+                <Button
+                  onClick={() => handleCopyToClipboard(`${host}/user/${user?.user_metadata.user_name}`)}
+                  className="px-8 py-2 bg-white md:hidden"
+                  variant="text"
+                >
+                  <FiCopy className="mt-1 mr-1" /> Share
+                </Button>
+                {!isOwner && (
+                  <DropdownMenuTrigger className="p-2 mr-3 bg-white rounded-full cursor-pointer md:hidden">
+                    <TfiMoreAlt size={20} className="" />
+                  </DropdownMenuTrigger>
+                )}
+              </div>
+
               <DropdownMenuContent align="end" className="flex flex-col gap-1 py-2 rounded-lg">
-                <DropdownMenuItem className="rounded-md">
-                  <button className="flex gap-2.5  items-center pl-3 pr-7">Share</button>
-                </DropdownMenuItem>
                 {user ? (
                   !isOwner && (
                     <DropdownMenuItem className="rounded-md">
@@ -169,12 +179,13 @@ const ContributorProfileHeader = ({
                     )}
                   </>
                 )}
-
-                <DropdownMenuItem className="rounded-md">
-                  <button onClick={() => setIsDialogOpen(true)} className="flex gap-2.5 items-center  pl-3 pr-7">
-                    Collaborate
-                  </button>
-                </DropdownMenuItem>
+                {!user && (
+                  <DropdownMenuItem className="rounded-md">
+                    <button onClick={() => setIsDialogOpen(true)} className="flex gap-2.5 items-center  pl-3 pr-7">
+                      Collaborate
+                    </button>
+                  </DropdownMenuItem>
+                )}
               </DropdownMenuContent>
             </DropdownMenu>
             <Button
