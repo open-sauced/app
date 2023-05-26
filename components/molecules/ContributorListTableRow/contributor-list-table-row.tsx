@@ -67,13 +67,13 @@ const ContributorListTableRow = ({ contributor, topic }: ContributorListTableRow
           <div className="w-[66%]">
             <DevProfile company={user?.company || getLastContributedRepo(data)} username={contributor.author_login} />
           </div>
-          <div className="w-[34%] text-normal  h-full">
+          <div className="w-[34%] text-normal text-light-slate-11  h-full">
             <div className="flex gap-x-3">{<p>{getLastContributionDate(mergedPrs)}</p>}</div>
           </div>
           <div className="">
             <div
               onClick={() => setTableOpen(!tableOpen)}
-              className="items-center justify-between w-6 h-6 p-1 border rounded-md"
+              className="items-center justify-between w-6 h-6 p-1 border rounded-md "
             >
               {tableOpen ? <ChevronUpIcon className="" /> : <ChevronDownIcon />}
             </div>
