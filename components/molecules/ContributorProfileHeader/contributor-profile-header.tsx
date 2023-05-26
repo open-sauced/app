@@ -170,21 +170,37 @@ const ContributorProfileHeader = ({
                 ) : (
                   <>
                     <DropdownMenuItem className="rounded-md">
-                      <button className="flex items-center gap-1 pl-3 pr-7">Follow</button>
+                      <button
+                        onClick={async () =>
+                          handleSignIn({ provider: "github", options: { redirectTo: `${host}/${currentPath}` } })
+                        }
+                        className="flex items-center gap-1 pl-3 pr-7"
+                      >
+                        Follow
+                      </button>
                     </DropdownMenuItem>
                     {isRecievingCollaborations && (
                       <DropdownMenuItem className="rounded-md">
-                        <button className="flex items-center gap-1 pl-3 pr-7">Collaborate</button>
+                        <button onClick={() => setIsDialogOpen(true)} className="flex items-center gap-1 pl-3 pr-7">
+                          Collaborate
+                        </button>
                       </DropdownMenuItem>
                     )}
                   </>
                 )}
                 {!user && (
-                  <DropdownMenuItem className="rounded-md">
-                    <button onClick={() => setIsDialogOpen(true)} className="flex gap-2.5 items-center  pl-3 pr-7">
-                      Collaborate
-                    </button>
-                  </DropdownMenuItem>
+                  <>
+                    <DropdownMenuItem className="rounded-md">
+                      <button
+                        onClick={async () =>
+                          handleSignIn({ provider: "github", options: { redirectTo: `${host}/${currentPath}` } })
+                        }
+                        className="flex gap-2.5 items-center  pl-3 pr-7"
+                      >
+                        Collaborate
+                      </button>
+                    </DropdownMenuItem>
+                  </>
                 )}
               </DropdownMenuContent>
             </DropdownMenu>
