@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
-import { getFormattedDate } from "lib/utils/date-utils";
+import formatDistanceToNowStrict from "date-fns/formatDistanceToNowStrict";
+
 import { useFetchFollowingHighlights } from "lib/hooks/useFetchFollowingHighlights";
 
 import Avatar from "components/atoms/Avatar/avatar";
@@ -9,7 +11,6 @@ import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 import ContributorHighlightCard from "components/molecules/ContributorHighlight/contributor-highlight-card";
 import Pagination from "components/molecules/Pagination/pagination";
 import PaginationResults from "components/molecules/PaginationResults/pagination-result";
-import { useRouter } from "next/router";
 import DashContainer from "components/atoms/DashedContainer/DashContainer";
 
 export interface HighlightWrapperProps {
@@ -52,7 +53,9 @@ const FollowingHighlightWrapper = ({ emojis, selectedFilter }: HighlightWrapperP
                   <strong>{login}</strong>
                 </Link>
                 <Link href={`/feed/${id}`}>
-                  <span className="text-xs font-normal text-light-slate-11">{getFormattedDate(created_at)}</span>
+                  <span className="text-xs font-normal text-light-slate-11">
+                    {formatDistanceToNowStrict(new Date(created_at), { addSuffix: true })}
+                  </span>
                 </Link>
               </div>
               <div className="p-4 py-6 border bg-light-slate-1 md:px-6 lg:px-12 rounded-xl">
