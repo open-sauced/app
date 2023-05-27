@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.49.0-beta.4](https://github.com/open-sauced/insights/compare/v1.49.0-beta.3...v1.49.0-beta.4) (2023-05-27)
+
+
+### 🐛 Bug Fixes
+
+* enable triage.yml ([0ced814](https://github.com/open-sauced/insights/commit/0ced8141beaef3db95ad2a5e5459b6fca99b7155))
+
 ## [1.49.0-beta.3](https://github.com/open-sauced/insights/compare/v1.49.0-beta.2...v1.49.0-beta.3) (2023-05-26)
 
 
