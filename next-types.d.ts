@@ -38,6 +38,7 @@ interface DbRepoPR {
   readonly deletions: number;
   readonly changed_files: number;
   readonly repo_id: number;
+  readonly last_updated_at: string;
 }
 
 interface DbFollowUser {
