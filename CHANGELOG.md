@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.49.0-beta.6](https://github.com/open-sauced/insights/compare/v1.49.0-beta.5...v1.49.0-beta.6) (2023-05-30)
+
+
+### 🍕 Features
+
+* implement contributor list view ([#1211](https://github.com/open-sauced/insights/issues/1211)) ([77e9034](https://github.com/open-sauced/insights/commit/77e9034c3487534a6155cf822e80557f91975e39))
+
 ## [1.49.0-beta.5](https://github.com/open-sauced/insights/compare/v1.49.0-beta.4...v1.49.0-beta.5) (2023-05-30)
 
 
