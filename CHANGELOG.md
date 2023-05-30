@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.49.0-beta.5](https://github.com/open-sauced/insights/compare/v1.49.0-beta.4...v1.49.0-beta.5) (2023-05-30)
+
+
+### 🐛 Bug Fixes
+
+* update pagination layout on medium screens ([#1195](https://github.com/open-sauced/insights/issues/1195)) ([3c27da3](https://github.com/open-sauced/insights/commit/3c27da37bf639c8c67aed521cd4190b266bed498))
+
 ## [1.49.0-beta.4](https://github.com/open-sauced/insights/compare/v1.49.0-beta.3...v1.49.0-beta.4) (2023-05-27)
 
 
