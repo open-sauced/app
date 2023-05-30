@@ -44,7 +44,7 @@ const Pagination = ({
 
   return (
     <>
-      <div className=" w-max flex gap-x-4 items-center ">
+      <div className="w-max flex gap-x-4 items-center">
         <div className="flex items-center gap-x-4">
           <button
             className="text-light-slate-9 disabled:text-light-slate-7"
@@ -82,7 +82,8 @@ const Pagination = ({
         <div
           className={`${divisor && "md:border-r-2 border-r-light-slate-6"} text-sm text-light-slate-9    py-1 md:pr-4`}
         >
-          Total {totalPage > 999 ? humanizeNumber(totalPage, null) : totalPage} pages
+          Total {totalPage > 999 ? humanizeNumber(totalPage, null) : totalPage} 
+          <span className="md:invisible lg:visible"> pages </span>
         </div>
         {goToPage && (
           <div className="hidden md:block">

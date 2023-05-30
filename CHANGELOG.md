@@ -5,6 +5,27 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.49.0-beta.7](https://github.com/open-sauced/insights/compare/v1.49.0-beta.6...v1.49.0-beta.7) (2023-05-30)
+
+
+### 🐛 Bug Fixes
+
+* search result suggestions click non-responsiveness ([#1232](https://github.com/open-sauced/insights/issues/1232)) ([9f4097c](https://github.com/open-sauced/insights/commit/9f4097c71c8c301a85c70dd8ea49f389a076ae6e))
+
+## [1.49.0-beta.6](https://github.com/open-sauced/insights/compare/v1.49.0-beta.5...v1.49.0-beta.6) (2023-05-30)
+
+
+### 🍕 Features
+
+* implement contributor list view ([#1211](https://github.com/open-sauced/insights/issues/1211)) ([77e9034](https://github.com/open-sauced/insights/commit/77e9034c3487534a6155cf822e80557f91975e39))
+
+## [1.49.0-beta.5](https://github.com/open-sauced/insights/compare/v1.49.0-beta.4...v1.49.0-beta.5) (2023-05-30)
+
+
+### 🐛 Bug Fixes
+
+* update pagination layout on medium screens ([#1195](https://github.com/open-sauced/insights/issues/1195)) ([3c27da3](https://github.com/open-sauced/insights/commit/3c27da37bf639c8c67aed521cd4190b266bed498))
+
 ## [1.49.0-beta.4](https://github.com/open-sauced/insights/compare/v1.49.0-beta.3...v1.49.0-beta.4) (2023-05-27)
 
 
