@@ -12,9 +12,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - name: disable take an issue
+      - name: take an issue
         uses: bdougie/take-action@main
         with:
-          message: The auto-take issues workflow is not enabled here, we can only assign issues to @open-sauced/triage, @open-sauced/committers, @open-sauced/maintainers in this repo for now. We suggest folks not on the team open issues and take a look at the [Bugs](https://github.com/orgs/open-sauced/projects/6) or [Papercuts](https://github.com/open-sauced/insights/issues?q=is%3Aopen+is%3Aissue+milestone%3APapercuts). If you would like to find good first issues, please check out the companion project to this, [open-sauced/hot](https://github.com/open-sauced/hot).
           issueCurrentlyAssignedMessage: Thanks for being interested in this issue. It looks like this ticket is already assigned to a contributor.
           token: ${{ secrets.GITHUB_TOKEN }}

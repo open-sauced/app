@@ -9,7 +9,6 @@ import type { AppProps } from "next/app";
 import { useRouter } from "next/router";
 import { SessionContextProvider } from "@supabase/auth-helpers-react";
 import { SWRConfig } from "swr";
-import posthog from "posthog-js";
 
 import { TipProvider } from "components/atoms/Tooltip/tooltip";
 
@@ -21,6 +20,20 @@ import SEO from "layouts/SEO/SEO";
 import { Toaster } from "components/molecules/Toaster/toaster";
 import Script from "next/script";
 import useSession from "lib/hooks/useSession";
+
+import posthog from "posthog-js";
+import { PostHogProvider } from "posthog-js/react";
+
+// Check that PostHog is client-side (used to handle Next.js SSR)
+if (typeof window !== "undefined") {
+  posthog.init(process.env.NEXT_PUBLIC_POSTHOG_ID || "", {
+    api_host: "https://app.posthog.com",
+    // Enable debug mode in development
+    loaded: (posthog) => {
+      if (process.env.NODE_ENV === "development") posthog.debug();
+    }
+  });
+}
 
 type ComponentWithPageLayout = AppProps & {
   Component: AppProps["Component"] & {
@@ -35,6 +48,29 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
   const router = useRouter();
   const [seo, updateSEO] = useState<SEOobject>(Component.SEO || {});
   Component.updateSEO = updateSEO;
+
+  let hostname = "";
+
+  if (typeof window !== "undefined")
+    hostname = window.location.hostname;
+
+  useEffect(() => {
+    let chatButton = document.getElementById("sitegpt-chat-icon");
+
+    const interval = setInterval(() => {
+      chatButton = document.getElementById("sitegpt-chat-icon");
+      if (chatButton) {
+        if (hostname !== "insights.opensauced.pizza") {
+          chatButton.style.display = "none";
+        } else {
+          chatButton.style.display = "block";
+        }
+        clearInterval(interval);
+      }
+    }, 500);
+
+    return () => clearInterval(interval);
+  },[hostname, router.isReady]);
 
   useEffect(() => {
     updateSEO(Component.SEO || {});
@@ -52,7 +88,15 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
     };
   }, [router.events]);
 
-  const { filterName, toolName } = router.query;
+  useEffect(() => {
+    // Track page views
+    const handleRouteChange = () => posthog?.capture("$pageview");
+    router.events.on("routeChangeComplete", handleRouteChange);
+
+    return () => {
+      router.events.off("routeChangeComplete", handleRouteChange);
+    };
+  }, []);
 
   function localStorageProvider() {
     if (typeof window !== "undefined") {
@@ -103,20 +147,20 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
         {/* <Toaster position="top-center" /> */}
         <Toaster />
         <SessionContextProvider supabaseClient={supabase} initialSession={pageProps.initialSession}>
-          <TipProvider>
-            {Component.PageLayout ? (
-              <Component.PageLayout>
+          <PostHogProvider client={posthog}>
+            <TipProvider>
+              {Component.PageLayout ? (
+                <Component.PageLayout>
+                  <Component {...pageProps} />
+                </Component.PageLayout>
+              ) : (
                 <Component {...pageProps} />
-              </Component.PageLayout>
-            ) : (
-              <Component {...pageProps} />
-            )}
-          </TipProvider>
-          <Script
-            id="ze-snippet"
-            src="https://static.zdassets.com/ekr/snippet.js?key=765edcc9-b888-4651-8b22-79e4365e06f1"
-            strategy="afterInteractive"
-          />
+              )}
+            </TipProvider>
+            <Script id="siteGPT" type="text/javascript">
+              {"d=document;s=d.createElement(\"script\");s.src=\"https://sitegpt.ai/widget/365440930125185604.js\";s.async=1;d.getElementsByTagName(\"head\")[0].appendChild(s);"}
+            </Script>
+          </PostHogProvider>
         </SessionContextProvider>
       </SWRConfig>
     </>

@@ -12,4 +12,4 @@ permissions:
 
 jobs:
   compliance:
-    uses: open-sauced/open-sauced/.github/workflows/compliance.yml@main
+    uses: open-sauced/hot/.github/workflows/compliance.yml@main
