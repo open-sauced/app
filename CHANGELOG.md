@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.49.0-beta.8](https://github.com/open-sauced/insights/compare/v1.49.0-beta.7...v1.49.0-beta.8) (2023-05-31)
+
+
+### 🍕 Features
+
+* add initial setup for error reporting ([#1234](https://github.com/open-sauced/insights/issues/1234)) ([75aa4ea](https://github.com/open-sauced/insights/commit/75aa4ea60a6301a4b8462485a49e1328296b311b))
+
 ## [1.49.0-beta.7](https://github.com/open-sauced/insights/compare/v1.49.0-beta.6...v1.49.0-beta.7) (2023-05-30)
 
 
