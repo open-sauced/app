@@ -35,7 +35,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
     isError: repoListIsError,
     isLoading: repoListIsLoading,
     setPage,
-    setLimit,
+    setLimit
   } = useRepositories(repositories, range);
   const filteredRepoNotIndexed = selectedFilter && !repoListIsLoading && !repoListIsError && repoListData.length === 0;
   const [selectedRepos, setSelectedRepos] = useState<DbRepo[]>([]);
@@ -55,13 +55,15 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
         "/hub/insights/new"
       );
     } else {
+      debugger;
       signIn({ 
         provider: "github",
         options: {
-          redirectTo: `${window.location.origin}/hub/insights/new`,
-          queryParams:{ 
-            selectedRepos: JSON.stringify(selectedRepos)
-          }
+          redirectTo: `${window.location.origin}/hub/insights/new?selectedRepos=${JSON.stringify(selectedRepos)}&`,
+          queryParams: {
+            query: "testing the query params",
+            "selectedRepos": `${JSON.stringify(selectedRepos)}`,
+          },
         },
       });
     }
@@ -105,10 +107,10 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
         <div className="lg:min-w-[1150px]">
           <div className="flex justify-between gap-2 px-6 py-4 md:hidden bg-light-slate-3">
             <div className="flex-1">
-              <TableTitle>Repositories</TableTitle>
+              <TableTitle text="Repository"></TableTitle>
             </div>
             <div className="flex-1">
-              <TableTitle>Pr Overview</TableTitle>
+              <TableTitle text="Pr Overview"></TableTitle>
             </div>
           </div>
           <div className="hidden gap-2 px-6 py-4 md:flex bg-light-slate-3">
@@ -120,25 +122,25 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
               />
             </div>
             <div className={clsx(classNames.cols.repository)}>
-              <TableTitle>Repository</TableTitle>
+              <TableTitle text="Repository"></TableTitle>
             </div>
             <div className={clsx(classNames.cols.activity)}>
-              <TableTitle>Activity</TableTitle>
+              <TableTitle text="Activity"></TableTitle>
             </div>
             <div className={clsx(classNames.cols.prOverview)}>
-              <TableTitle>PR Overview</TableTitle>
+              <TableTitle text="PR Overview"></TableTitle>
             </div>
             <div className={clsx(classNames.cols.prVelocity)}>
-              <TableTitle>PR Velocity</TableTitle>
+              <TableTitle text="PR Velocity"></TableTitle>
             </div>
             <div className={clsx(classNames.cols.spam)}>
-              <TableTitle>SPAM</TableTitle>
+              <TableTitle text="SPAM"></TableTitle>
             </div>
             <div className={clsx(classNames.cols.contributors, "hidden lg:flex")}>
-              <TableTitle>Contributors</TableTitle>
+              <TableTitle text="Contributors"></TableTitle>
             </div>
             <div className={clsx(classNames.cols.last30days, "hidden lg:flex")}>
-              <TableTitle>Last 30 Days</TableTitle>
+              <TableTitle text="Last 30 Days"></TableTitle>
             </div>
           </div>
 
@@ -171,7 +173,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
                 { name: "20 per page", value: "20" },
                 { name: "30 per page", value: "30" },
                 { name: "40 per page", value: "40" },
-                { name: "50 per page", value: "50" },
+                { name: "50 per page", value: "50" }
               ]}
               className="!w-36 ml-auto md:hidden overflow-x-hidden"
               onChange={function (limit: string): void {

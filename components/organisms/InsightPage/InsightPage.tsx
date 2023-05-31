@@ -41,9 +41,14 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
   const { sessionToken, providerToken } = useSupabaseAuth();
   const { toast } = useToast();
   const router = useRouter();
+  const pageHref = router.asPath;
+  const searchParams = new URLSearchParams(pageHref.substring(pageHref.indexOf("?")));
   let receivedData = [];
+  debugger;
   if (router.query.selectedRepos) {
-    receivedData = JSON.parse(router.query.selectedRepos as string);
+    receivedData = JSON.parse(router.query.selectedRepos as string) || [];
+  } else if (searchParams.has("selectedRepos")) {    
+    receivedData = JSON.parse(searchParams.get("selectedRepos") as string) || [];
   }
 
   const { data, addMember, deleteMember, updateMember } = useInsightMembers(insight?.id || 0);
@@ -72,7 +77,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
   const [name, setName] = useState(insight?.name || "");
   const [isNameValid, setIsNameValid] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [repos, setRepos] = useState<DbRepo[]>(receivedData);
+  const [repos, setRepos] = useState<DbRepo[]>(receivedData ?? []);
   const [repoHistory, setRepoHistory] = useState<DbRepo[]>([]);
   const [addRepoError, setAddRepoError] = useState<RepoLookupError>(RepoLookupError.Initial);
   const [isPublic, setIsPublic] = useState(!!insight?.is_public);
