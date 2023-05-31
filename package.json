@@ -66,6 +66,7 @@
     "@radix-ui/react-toggle-group": "^1.0.2",
     "@radix-ui/react-tooltip": "^1.0.3",
     "@react-spring/web": "^9.6.1",
+    "@sentry/nextjs": "^7.53.1",
     "@stripe/stripe-js": "^1.46.0",
     "@supabase/auth-helpers-nextjs": "^0.5.4",
     "@supabase/auth-helpers-react": "^0.3.1",
