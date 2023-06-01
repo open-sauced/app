@@ -3,7 +3,7 @@ import TableTitle from "components/atoms/TableTitle/table-title";
 
 const storyConfig = {
   title: "Design System/Atoms/TableTitle",
-  component: "TableTitle"
+  component: "TableTitle",
 };
 
 export default storyConfig;
@@ -14,5 +14,5 @@ const TableTitleTemplate: ComponentStory<typeof TableTitle> = (args) => <TableTi
 export const Default = TableTitleTemplate.bind({});
 
 Default.args = {
-  text: "Some text"
+  children: "Some text",
 };
