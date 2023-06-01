@@ -41,6 +41,11 @@ interface DbRepoPR {
   readonly last_updated_at: string;
 }
 
+interface DbPRContributor {
+  readonly author_login: string;
+  readonly updated_at: string;
+}
+
 interface DbFollowUser {
   readonly id: number;
   readonly user_id: number;

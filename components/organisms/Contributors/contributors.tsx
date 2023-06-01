@@ -34,25 +34,23 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
   const contributors = data.map((pr) => {
     return {
       host_login: pr.author_login,
-      first_commit_time: pr.created_at,
+      first_commit_time: pr.updated_at,
     };
   });
 
   const contributorArray = isError
     ? []
     : contributors.map((contributor) => {
-      const timeSinceFirstCommit = calcDistanceFromToday(new Date(contributor.first_commit_time));
+        const timeSinceFirstCommit = calcDistanceFromToday(new Date(contributor.first_commit_time));
 
-      return {
-        profile: {
-          githubAvatar: getAvatarByUsername(contributor.host_login),
-          githubName: contributor.host_login,
-          dateOfFirstPR: timeSinceFirstCommit,
-        },
-      };
-    });
-
-  // console.log(data);
+        return {
+          profile: {
+            githubAvatar: getAvatarByUsername(contributor.host_login),
+            githubName: contributor.host_login,
+            dateOfFirstPR: timeSinceFirstCommit,
+          },
+        };
+      });
 
   return (
     <>
