@@ -5,6 +5,24 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.50.0](https://github.com/open-sauced/insights/compare/v1.49.0...v1.50.0) (2023-06-01)
+
+
+### 🍕 Features
+
+* add initial setup for error reporting ([#1234](https://github.com/open-sauced/insights/issues/1234)) ([75aa4ea](https://github.com/open-sauced/insights/commit/75aa4ea60a6301a4b8462485a49e1328296b311b))
+* implement contributor list view ([#1211](https://github.com/open-sauced/insights/issues/1211)) ([77e9034](https://github.com/open-sauced/insights/commit/77e9034c3487534a6155cf822e80557f91975e39))
+
+
+### 🐛 Bug Fixes
+
+* enable triage.yml ([0ced814](https://github.com/open-sauced/insights/commit/0ced8141beaef3db95ad2a5e5459b6fca99b7155))
+* force login in reports page ([#1236](https://github.com/open-sauced/insights/issues/1236)) ([5c912bd](https://github.com/open-sauced/insights/commit/5c912bd5b088325f61f1cc39639bed5e3edfc89f))
+* format highlight date on feeds page to distance from now ([#1228](https://github.com/open-sauced/insights/issues/1228)) ([1de2746](https://github.com/open-sauced/insights/commit/1de2746fb81969a22160802f673b66a131659e4b))
+* redirect user to dashboard after logout on private pages ([#1208](https://github.com/open-sauced/insights/issues/1208)) ([a8b59a5](https://github.com/open-sauced/insights/commit/a8b59a5066713c329d7066d0f08990de654d4850))
+* search result suggestions click non-responsiveness ([#1232](https://github.com/open-sauced/insights/issues/1232)) ([9f4097c](https://github.com/open-sauced/insights/commit/9f4097c71c8c301a85c70dd8ea49f389a076ae6e))
+* update pagination layout on medium screens ([#1195](https://github.com/open-sauced/insights/issues/1195)) ([3c27da3](https://github.com/open-sauced/insights/commit/3c27da37bf639c8c67aed521cd4190b266bed498))
+
 ## [1.50.0-beta.1](https://github.com/open-sauced/insights/compare/v1.49.0...v1.50.0-beta.1) (2023-06-01)
 
 
