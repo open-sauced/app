@@ -24,7 +24,6 @@ interface ReportsProps {
 }
 
 const Reports = ({ hasReports, repositories }: ReportsProps): JSX.Element => {
-  console.log({hasReports});
   const userDeviceState = localStorage.getItem(USERDEVICESTORAGENAME);
   const initialState = userDeviceState ? JSON.parse(userDeviceState as string) : [];
   const [reports, setReports] = useState<Report[]>(initialState);
