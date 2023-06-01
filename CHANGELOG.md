@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.49.0-beta.9](https://github.com/open-sauced/insights/compare/v1.49.0-beta.8...v1.49.0-beta.9) (2023-06-01)
+
+
+### 🐛 Bug Fixes
+
+* redirect user to dashboard after logout on private pages ([#1208](https://github.com/open-sauced/insights/issues/1208)) ([a8b59a5](https://github.com/open-sauced/insights/commit/a8b59a5066713c329d7066d0f08990de654d4850))
+
 ## [1.49.0-beta.8](https://github.com/open-sauced/insights/compare/v1.49.0-beta.7...v1.49.0-beta.8) (2023-05-31)
 
 
