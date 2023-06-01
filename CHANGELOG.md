@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.50.1-beta.1](https://github.com/open-sauced/insights/compare/v1.50.0...v1.50.1-beta.1) (2023-06-01)
+
+
+### 🐛 Bug Fixes
+
+* update contributors hook to use contributor API endpoint ([#1238](https://github.com/open-sauced/insights/issues/1238)) ([eff01c0](https://github.com/open-sauced/insights/commit/eff01c0f88c05f57925a0ec021e78676ba9d915f))
+
 ## [1.50.0](https://github.com/open-sauced/insights/compare/v1.49.0...v1.50.0) (2023-06-01)
 
 
