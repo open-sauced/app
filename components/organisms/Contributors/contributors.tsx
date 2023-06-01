@@ -41,16 +41,16 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
   const contributorArray = isError
     ? []
     : contributors.map((contributor) => {
-        const timeSinceFirstCommit = calcDistanceFromToday(new Date(contributor.first_commit_time));
+      const timeSinceFirstCommit = calcDistanceFromToday(new Date(contributor.first_commit_time));
 
-        return {
-          profile: {
-            githubAvatar: getAvatarByUsername(contributor.host_login),
-            githubName: contributor.host_login,
-            dateOfFirstPR: timeSinceFirstCommit,
-          },
-        };
-      });
+      return {
+        profile: {
+          githubAvatar: getAvatarByUsername(contributor.host_login),
+          githubName: contributor.host_login,
+          dateOfFirstPR: timeSinceFirstCommit,
+        },
+      };
+    });
 
   return (
     <>
