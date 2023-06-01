@@ -12,7 +12,7 @@ import { getInsights, useInsights } from "lib/hooks/api/useInsights";
 import { calcDaysFromToday } from "lib/utils/date-utils";
 import roundedImage from "lib/utils/roundedImages";
 import usePullRequests from "lib/hooks/api/usePullRequests";
-import getPullRequestsContributors from "lib/utils/get-pr-contributors";
+import useContributors from "lib/hooks/api/useContributors";
 
 type ContributorPrMap = { [contributor: string]: DbRepoPR };
 export type PrStatusFilter = "open" | "closed" | "all";
@@ -23,11 +23,11 @@ interface DashboardProps {
 
 const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
   const { data: insightsData, isLoading } = useInsights(repositories);
-  const { data: prData, meta: prMeta, isError: prError } = usePullRequests(undefined, repositories);
+  const { data: prData, isError: prError } = usePullRequests(undefined, repositories);
+  const { data: contributorData, meta: contributorMeta } = useContributors(undefined, repositories);
   const [showBots, setShowBots] = useState(false);
   const isMobile = useMediaQuery("(max-width:720px)");
   const [prStateFilter, setPrStateFilter] = useState<PrStatusFilter>("all");
-  const contributorData = getPullRequestsContributors(prData);
 
   const handleSetPrFilter = (state: PrStatusFilter) => {
     setPrStateFilter(state);
@@ -37,7 +37,7 @@ const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
   let metadata: ScatterChartMetadata = {
     allPrs: prData.length,
     openPrs: prData.filter((pr) => pr.state.toLowerCase() === "open").length,
-    closedPrs: prData.filter((pr) => pr.state.toLowerCase() === "closed" || pr.state.toLowerCase() === "merged").length
+    closedPrs: prData.filter((pr) => pr.state.toLowerCase() === "closed" || pr.state.toLowerCase() === "merged").length,
   };
 
   const uniqueContributors: ContributorPrMap = prData.reduce((prs, curr) => {
@@ -73,7 +73,7 @@ const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
         x: calcDaysFromToday(new Date(updated_at)),
         y: linesCount,
         contributor: author_login,
-        image: roundedImage(`https://www.github.com/${author_image}.png?size=60`, process.env.NEXT_PUBLIC_CLOUD_NAME)
+        image: roundedImage(`https://www.github.com/${author_image}.png?size=60`, process.env.NEXT_PUBLIC_CLOUD_NAME),
       };
       return data;
     });
@@ -99,8 +99,8 @@ const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
           metricIncreases={compare1.allPrsTotal - compare2.allPrsTotal >= 0}
           increased={compare1.allPrsTotal - compare2.allPrsTotal >= 0}
           numChanged={humanizeNumber(Math.abs(compare1.allPrsTotal - compare2.allPrsTotal), "abbreviation")}
-          value={humanizeNumber(prMeta.itemCount, "comma")}
-          contributors={contributorData}
+          value={humanizeNumber(contributorMeta.itemCount, "comma")}
+          contributors={contributorData.map((contributor) => ({ host_login: contributor.author_login }))}
           isLoading={isLoading}
         />
         <HighlightCard
