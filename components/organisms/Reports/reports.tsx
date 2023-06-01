@@ -24,6 +24,7 @@ interface ReportsProps {
 }
 
 const Reports = ({ hasReports, repositories }: ReportsProps): JSX.Element => {
+  console.log({hasReports});
   const userDeviceState = localStorage.getItem(USERDEVICESTORAGENAME);
   const initialState = userDeviceState ? JSON.parse(userDeviceState as string) : [];
   const [reports, setReports] = useState<Report[]>(initialState);
@@ -59,35 +60,30 @@ const Reports = ({ hasReports, repositories }: ReportsProps): JSX.Element => {
           Contribution Insights
         </Title>
         <hr className="border-light-slate-6 my-4" />
+        {user ? (
+          hasReports ? (
+            <>
+              <SelectReportsFilter filterList={filterList} callback={handleFilterClick} />
 
-        {hasReports ? (
-          <>
-            <SelectReportsFilter filterList={filterList} callback={handleFilterClick} />
-
-            {reports.length > 0 && (
-              <>
-                <Title className=" relative mt-16" level={3}>
+              {reports.length > 0 && (
+                <>
+                  <Title className=" relative mt-16" level={3}>
                   Download History
-                </Title>
-                <hr className="border-light-slate-6 my-4" />
-                <ReportsHistory reportList={reports} repositories={repositories} />
-              </>
-            )}
-          </>
-        ) : hasReports === undefined ? (
-          <div>
-            {user ? (
-              <div>Loading...</div>
-            ) : (
-              <div className="flex justify-center py-4">
-                <Button variant="primary" onClick={async () => await signIn({ provider: "github" })}>
-                  Connect with GitHub <Icon IconImage={GitHubIcon} className="ml-2" />
-                </Button>
-              </div>
-            )}
-          </div>
+                  </Title>
+                  <hr className="border-light-slate-6 my-4" />
+                  <ReportsHistory reportList={reports} repositories={repositories} />
+                </>
+              )}
+            </>
+          ) : (
+            <StripeCheckoutButton />
+          )
         ) : (
-          <StripeCheckoutButton />
+          <div className="flex justify-center py-4">
+            <Button variant="primary" onClick={async () => await signIn({ provider: "github" })}>
+                  Connect with GitHub <Icon IconImage={GitHubIcon} className="ml-2" />
+            </Button>
+          </div>
         )}
       </div>
     </section>
