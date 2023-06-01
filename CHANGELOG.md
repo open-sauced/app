@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.49.0-beta.10](https://github.com/open-sauced/insights/compare/v1.49.0-beta.9...v1.49.0-beta.10) (2023-06-01)
+
+
+### 🐛 Bug Fixes
+
+* force login in reports page ([#1236](https://github.com/open-sauced/insights/issues/1236)) ([5c912bd](https://github.com/open-sauced/insights/commit/5c912bd5b088325f61f1cc39639bed5e3edfc89f))
+
 ## [1.49.0-beta.9](https://github.com/open-sauced/insights/compare/v1.49.0-beta.8...v1.49.0-beta.9) (2023-06-01)
 
 
