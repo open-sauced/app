@@ -1,25 +1,24 @@
-import { useRouter } from "next/router";
 import React, { useState, useEffect, ChangeEvent, useRef } from "react";
-import Avatar from "components/atoms/Avatar/avatar";
+import { useRouter } from "next/router";
 import Image from "next/image";
+import { TfiMoreAlt } from "react-icons/tfi";
+import { FiCopy } from "react-icons/fi";
+import { SignInWithOAuthCredentials, User } from "@supabase/supabase-js";
+
+import Avatar from "components/atoms/Avatar/avatar";
 import RainbowBg from "img/rainbow-cover.png";
 import Button from "components/atoms/Button/button";
-import Link from "next/link";
-
-import { SignInWithOAuthCredentials, User } from "@supabase/supabase-js";
-import { FiCopy } from "react-icons/fi";
-import { useToast } from "lib/hooks/useToast";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../Dialog/dialog";
-
 import { Textarea } from "components/atoms/Textarea/text-area";
-import { useUserCollaborations } from "lib/hooks/useUserCollaborations";
-import { TfiMoreAlt } from "react-icons/tfi";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "components/atoms/Dropdown/dropdown";
+
+import { useToast } from "lib/hooks/useToast";
+import { useUserCollaborations } from "lib/hooks/useUserCollaborations";
 
 interface ContributorProfileHeaderProps {
   avatarUrl?: string;
@@ -51,15 +50,11 @@ const ContributorProfileHeader = ({
   const currentPath = router.asPath;
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-
   const { requestCollaboration } = useUserCollaborations();
-  const [row, setRow] = useState(1);
-  const textAreaRef = useRef<HTMLTextAreaElement>(null);
-  let rowLomit = 6;
-  let messageLastScrollHeight = textAreaRef.current ? textAreaRef.current?.scrollHeight : 50;
   const [message, setMessage] = useState("");
   const { toast } = useToast();
   const [host, setHost] = useState("");
+
   const handleFollowClick = () => {
     if (isFollowing) {
       handleUnfollow();
@@ -75,20 +70,16 @@ const ContributorProfileHeader = ({
       setLoading(true);
       await requestCollaboration({ username, message });
       setIsDialogOpen(false);
+      setTimeout(() => {
+        document.body.setAttribute("style", "pointer-events:auto !important");
+      }, 1);
       setLoading(false);
       setMessage("");
     }
   };
 
-  const handleTextAreaInputChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setMessage(e.target.value);
-    if (row < rowLomit && textAreaRef.current && textAreaRef.current?.scrollHeight > messageLastScrollHeight) {
-      setRow((prev) => prev + 1);
-    } else if (row > 1 && textAreaRef.current && textAreaRef.current?.scrollHeight < messageLastScrollHeight) {
-      setRow((prev) => prev--);
-    }
-    if (!message) setRow(1);
-    messageLastScrollHeight = textAreaRef.current?.scrollHeight || 80;
+  const handleTextAreaInputChange = (e: string) => {
+    setMessage(e);
   };
 
   const handleCopyToClipboard = async (content: string) => {
@@ -143,16 +134,16 @@ const ContributorProfileHeader = ({
             {/* Mobile dropdown menu */}
 
             <DropdownMenu>
-              <div className="flex items-center gap-2 mb-10">
+              <div className="flex items-center gap-2 mb-10 md:gap-6">
                 <Button
                   onClick={() => handleCopyToClipboard(`${host}/user/${user?.user_metadata.user_name}`)}
-                  className="px-8 py-2 bg-white md:hidden"
+                  className="px-8 py-2 bg-white "
                   variant="text"
                 >
                   <FiCopy className="mt-1 mr-1" /> Share
                 </Button>
                 {!isOwner && (
-                  <DropdownMenuTrigger className="p-2 mr-3 bg-white rounded-full cursor-pointer md:hidden">
+                  <DropdownMenuTrigger title="More options" className="p-2 mr-3 bg-white rounded-full cursor-pointer ">
                     <TfiMoreAlt size={20} className="" />
                   </DropdownMenuTrigger>
                 )}
@@ -161,11 +152,20 @@ const ContributorProfileHeader = ({
               <DropdownMenuContent align="end" className="flex flex-col gap-1 py-2 rounded-lg">
                 {user ? (
                   !isOwner && (
-                    <DropdownMenuItem className="rounded-md">
-                      <button onClick={handleFollowClick} className="flex items-center gap-1 pl-3 pr-7">
-                        {isFollowing ? "Following" : "Follow"}
-                      </button>
-                    </DropdownMenuItem>
+                    <>
+                      <DropdownMenuItem className="rounded-md">
+                        <button onClick={handleFollowClick} className="flex items-center gap-1 pl-3 pr-7">
+                          {isFollowing ? "Following" : "Follow"}
+                        </button>
+                      </DropdownMenuItem>
+                      {isRecievingCollaborations && (
+                        <DropdownMenuItem className="rounded-md">
+                          <button onClick={() => setIsDialogOpen(true)} className="flex items-center gap-1 pl-3 pr-7">
+                            Collaborate
+                          </button>
+                        </DropdownMenuItem>
+                      )}
+                    </>
                   )
                 ) : (
                   <>
@@ -181,103 +181,40 @@ const ContributorProfileHeader = ({
                     </DropdownMenuItem>
                     {isRecievingCollaborations && (
                       <DropdownMenuItem className="rounded-md">
-                        <button onClick={() => setIsDialogOpen(true)} className="flex items-center gap-1 pl-3 pr-7">
+                        <button
+                          onClick={async () =>
+                            handleSignIn({ provider: "github", options: { redirectTo: `${host}/${currentPath}` } })
+                          }
+                          className="flex items-center gap-1 pl-3 pr-7"
+                        >
                           Collaborate
                         </button>
                       </DropdownMenuItem>
                     )}
                   </>
                 )}
-                {!user && (
-                  <>
-                    <DropdownMenuItem className="rounded-md">
-                      <button
-                        onClick={async () =>
-                          handleSignIn({ provider: "github", options: { redirectTo: `${host}/${currentPath}` } })
-                        }
-                        className="flex gap-2.5 items-center  pl-3 pr-7"
-                      >
-                        Collaborate
-                      </button>
-                    </DropdownMenuItem>
-                  </>
-                )}
               </DropdownMenuContent>
             </DropdownMenu>
-            <Button
-              onClick={() => handleCopyToClipboard(`${host}/user/${user?.user_metadata.user_name}`)}
-              className="hidden px-10 py-2 mb-10 bg-white md:inline-flex md:mb-6 "
-              variant="text"
-            >
-              <FiCopy className="mt-1 mr-1" /> Share
-            </Button>
-
-            {user ? (
-              !isOwner && (
-                <>
-                  <Button
-                    onClick={handleFollowClick}
-                    className="hidden px-10 py-2 mb-10 bg-white md:block md:mb-6"
-                    variant="text"
-                  >
-                    {isFollowing ? "Following" : "Follow"}
-                  </Button>
-                  {isRecievingCollaborations && (
-                    <Button
-                      onClick={() => setIsDialogOpen(true)}
-                      className="hidden px-10 py-2 mb-10 md:block md:mb-6 "
-                      variant="primary"
-                    >
-                      Collaborate
-                    </Button>
-                  )}
-                </>
-              )
-            ) : (
-              <>
-                <Button
-                  onClick={async () =>
-                    handleSignIn({ provider: "github", options: { redirectTo: `${host}/${currentPath}` } })
-                  }
-                  className="hidden px-10 py-2 mb-10 bg-white md:block md:mb-6 "
-                  variant="text"
-                >
-                  Follow
-                </Button>
-                {isRecievingCollaborations && (
-                  <Button
-                    onClick={async () =>
-                      handleSignIn({ provider: "github", options: { redirectTo: `${host}/${currentPath}` } })
-                    }
-                    className="hidden px-10 py-2 mb-10 bg-white md:mb-6 md:block"
-                    variant="primary"
-                  >
-                    Collaborate
-                  </Button>
-                )}
-              </>
-            )}
           </div>
         )}
       </div>
 
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="px-4 py-8 md:w-4/6 md:space-y-4">
+        <DialogContent className="w-full md:!w-2/3 px-4 py-8 md:space-y-4">
           <DialogHeader>
             <DialogTitle className="!text-3xl text-left">Collaborate with {username}!</DialogTitle>
           </DialogHeader>
 
-          <form onSubmit={handleCollaborationRequest} className="flex flex-col gap-4 px-4 md:gap-8 md:px-14 ">
+          <form onSubmit={handleCollaborationRequest} className="flex flex-col w-full gap-4 px-4 md:gap-8 md:px-14 ">
             <div className="space-y-2">
               <label htmlFor="message">Send a message</label>
               <Textarea
-                rows={row}
-                ref={textAreaRef}
+                defaultRow={1}
                 value={message}
-                className="px-2 mb-2 transition text-light-slate-11 focus:outline-none"
+                className="w-full px-2 mb-2 transition text-light-slate-11 focus:outline-none"
                 name="message"
                 id="message"
-                onChange={handleTextAreaInputChange}
+                onChangeText={handleTextAreaInputChange}
               />
             </div>
 

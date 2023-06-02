@@ -23,16 +23,12 @@ interface HighlightInputFormProps {
 const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.Element => {
   const [isDivFocused, setIsDivFocused] = useState(false);
   const [loading, setLoading] = useState(false);
-  const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const [bodyText, setBodyText] = useState("");
-  const [row, setRow] = useState(4);
   const [title, setTitle] = useState("");
   const [charCount, setCharCount] = useState(0);
   const [pullrequestLink, setPullRequestLink] = useState("");
 
-  let rowLomit = 10;
   const charLimit = 500;
-  let messageLastScrollHeight = textAreaRef.current ? textAreaRef.current?.scrollHeight : 50;
 
   const [date, setDate] = useState<Date | undefined>();
 
@@ -54,15 +50,8 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
     }
   }, [bodyText, pullrequestLink]);
 
-  const handleTextAreaInputChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setBodyText(e.target.value);
-    if (row < rowLomit && textAreaRef.current && textAreaRef.current?.scrollHeight > messageLastScrollHeight) {
-      setRow((prev) => prev + 1);
-    } else if (row > 1 && textAreaRef.current && textAreaRef.current?.scrollHeight < messageLastScrollHeight) {
-      setRow((prev) => prev--);
-    }
-    if (!bodyText) setRow(1);
-    messageLastScrollHeight = textAreaRef.current?.scrollHeight || 80;
+  const handleTextAreaInputChange = (value: string) => {
+    setBodyText(value);
   };
 
   // Handle submit highlights
@@ -137,15 +126,14 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
               className={`resize-y min-h-[80px] max-h-99 font-normal text-light-slate-11 mb-2 transition focus:outline-none rounded-lg ${
                 !isDivFocused ? "hidden" : ""
               }`}
-              ref={textAreaRef}
-              rows={row}
+              defaultRow={4}
               value={bodyText}
               placeholder={`Share your thoughts and link to it.
 
 https://github.com/open-sauced/insights/pull/913`}
-              onChange={(e) => {
-                handleTextAreaInputChange(e);
-                setCharCount(e.target.value.length);
+              onChangeText={(value) => {
+                handleTextAreaInputChange(value);
+                setCharCount(value.length);
               }}
             />
 
