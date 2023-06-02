@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import { UserGroupIcon } from "@heroicons/react/24/outline";
 
@@ -11,6 +11,7 @@ import RepositoriesCart from "components/organisms/RepositoriesCart/repositories
 import RepositoryCartItem from "components/molecules/ReposoitoryCartItem/repository-cart-item";
 import RepoNotIndexed from "components/organisms/Repositories/repository-not-indexed";
 import DeleteInsightPageModal from "./DeleteInsightPageModal";
+import useRepositories from "lib/hooks/api/useRepositories";
 
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { getAvatarById, getAvatarByUsername } from "lib/utils/github";
@@ -43,13 +44,30 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
   const router = useRouter();
   const pageHref = router.asPath;
   const searchParams = new URLSearchParams(pageHref.substring(pageHref.indexOf("?")));
-  let receivedData = [];
+  const [receivedData, setReceivedData] = useState<DbRepo[]>([]);
+  const [reposIds, setReposIds] = useState<number[]>([]);
+  const {data: repoListData} = useRepositories(reposIds);
+
   debugger;
-  if (router.query.selectedRepos) {
-    receivedData = JSON.parse(router.query.selectedRepos as string) || [];
-  } else if (searchParams.has("selectedRepos")) {    
-    receivedData = JSON.parse(searchParams.get("selectedRepos") as string) || [];
-  }
+
+
+  useEffect(() => {
+    if (router.query.selectedRepos) {
+      setReceivedData(JSON.parse(router.query.selectedRepos as string) || []);
+    } else if (searchParams.has("selectedRepos")) {
+      setReposIds(JSON.parse(searchParams.get("selectedRepos") as string) || []);
+      debugger;
+    }
+  }, []);
+
+
+  useEffect(() => {
+    setReceivedData(repoListData);
+  }, [repoListData]);
+
+
+
+
 
   const { data, addMember, deleteMember, updateMember } = useInsightMembers(insight?.id || 0);
 
@@ -65,6 +83,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
     insight_id: Number(insight?.id),
     email: String(insight?.user.email),
     id: String(insight?.user.id),
+
     name: String(insight?.user.name || insight?.user.login),
     avatarUrl: getAvatarByUsername(String(insight?.user.login)),
     access: "owner",
@@ -109,7 +128,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
       repoName: repoName,
       totalPrs,
       avatar: getAvatarByUsername(repoOwner, 60),
-      handleRemoveItem: () => {},
+      handleRemoveItem: () => { },
     };
   });
 
@@ -243,7 +262,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
       setRepoHistory((historyRepos) => {
         return historyRepos.filter((repo) => `${repo.full_name}` !== repoAdded);
       });
-    } catch (e) {}
+    } catch (e) { }
   };
 
   const handleRemoveRepository = (id: string) => {

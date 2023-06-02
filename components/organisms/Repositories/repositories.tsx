@@ -56,10 +56,11 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
       );
     } else {
       debugger;
+      const reposIds = selectedRepos.map((repo) => repo.id);
       signIn({ 
         provider: "github",
         options: {
-          redirectTo: `${window.location.origin}/hub/insights/new?selectedRepos=${JSON.stringify(selectedRepos)}&`,
+          redirectTo: `${window.location.origin}/hub/insights/new?selectedRepos=${JSON.stringify(reposIds)}&`,
           queryParams: {
             query: "testing the query params",
             "selectedRepos": `${JSON.stringify(selectedRepos)}`,
