@@ -20,7 +20,9 @@ const useSupabaseAuth = () => {
 
     getUserSession();
 
-    const { data: { subscription: listener } } = supabase.auth.onAuthStateChange((_, session) => {
+    const {
+      data: { subscription: listener },
+    } = supabase.auth.onAuthStateChange((_, session) => {
       setUser(session?.user ?? null);
       setSessionToken(session?.access_token);
       setProviderToken(session?.provider_token);
@@ -33,17 +35,18 @@ const useSupabaseAuth = () => {
   }, []);
 
   return {
-    signIn: (data: SignInWithOAuthCredentials) => supabase.auth.signInWithOAuth({
-      ...data,
-      options: {
-        redirectTo: process.env.NEXT_PUBLIC_BASE_URL ?? "/"
-      }
-    }),
+    signIn: (data: SignInWithOAuthCredentials) =>
+      supabase.auth.signInWithOAuth({
+        ...data,
+        options: data.options ?? {
+          redirectTo: process.env.NEXT_PUBLIC_BASE_URL ?? "/",
+        },
+      }),
     signOut: () => supabase.auth.signOut(),
     user,
     sessionToken,
     providerToken,
-    userId
+    userId,
   };
 };
 
