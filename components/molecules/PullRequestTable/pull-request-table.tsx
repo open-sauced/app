@@ -19,10 +19,11 @@ interface CardTableProps {
   repositories?: number[];
   limit?: number;
   isHoverCard?: boolean;
+  range?: number;
 }
 
-const PullRequestTable = ({ contributor, topic, repositories, limit, isHoverCard }: CardTableProps): JSX.Element => {
-  const { data, isLoading } = useContributorPullRequests(contributor, topic, repositories, limit);
+const PullRequestTable = ({ contributor, topic, repositories, limit, isHoverCard, range }: CardTableProps): JSX.Element => {
+  const { data, isLoading } = useContributorPullRequests(contributor, topic, repositories, limit, range);
 
   return data.length > 0 ? (
     <>
@@ -35,6 +36,7 @@ const PullRequestTable = ({ contributor, topic, repositories, limit, isHoverCard
                 title: prName,
                 state: prStatus,
                 merged,
+                draft,
                 merged_at: prMergedTime,
                 created_at: prIssuedTime,
                 changed_files: noOfFilesChanged,
@@ -52,6 +54,7 @@ const PullRequestTable = ({ contributor, topic, repositories, limit, isHoverCard
                 prMergedTime,
                 prStatus,
                 merged,
+                draft,
                 noOfFilesChanged,
                 noOfLinesChanged: Math.abs(additions - deletions),
                 repoFullName: fullName,

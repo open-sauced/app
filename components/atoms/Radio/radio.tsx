@@ -34,11 +34,11 @@ const Radio = ({ className, withLabel, id, children, value, checked = false, onC
       />
       <label className="flex -mt-5 cursor-pointer item-center" htmlFor={id}>
         {checked ? (
-          <BsFillCheckCircleFill className="text-xl   text-light-orange-9" />
+          <BsFillCheckCircleFill className="text-xl text-light-orange-9" />
         ) : (
           <MdOutlineRadioButtonUnchecked className="text-xl group-hover:text-orange-300 text-light-slate-6" />
         )}
-        <span className="ml-3 leading-none my-auto">{children}</span>
+        <span className="my-auto ml-3 leading-none">{children}</span>
         {withLabel && (
           <span
             className={`${

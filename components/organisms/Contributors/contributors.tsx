@@ -1,19 +1,22 @@
+import { useState } from "react";
 import { useRouter } from "next/router";
 import useStore from "lib/store";
 
 import Pagination from "components/molecules/Pagination/pagination";
 import PaginationResults from "components/molecules/PaginationResults/pagination-result";
 import TableHeader from "components/molecules/TableHeader/table-header";
-import Select from "components/atoms/Select/custom-select";
 
 import { calcDistanceFromToday } from "lib/utils/date-utils";
-import color from "lib/utils/color.json";
-import { useTopicContributions } from "lib/hooks/useTopicContributions";
 
 import ContributorCard from "../ContributorCard/contributor-card";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
+import LimitSelect from "components/atoms/Select/limit-select";
 
-const colorKeys = Object.keys(color);
+import useContributors from "lib/hooks/api/useContributors";
+import { getAvatarByUsername } from "lib/utils/github";
+import { ToggleValue } from "components/atoms/LayoutToggle/layout-toggle";
+import ContributorListTableHeaders from "components/molecules/ContributorListTableHeader/contributor-list-table-header";
+import ContributorTable from "../ContributorsTable/contributors-table";
 
 interface ContributorProps {
   repositories?: number[];
@@ -23,41 +26,29 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
   const router = useRouter();
   const { filterName } = router.query;
   const topic = filterName as string;
-  const { data, setLimit, meta, setPage, page, isError, isLoading } = useTopicContributions(10, repositories);
-  const range = useStore((state) => state.range);
   const store = useStore();
+  const range = useStore((state) => state.range);
+  const [layout, setLayout] = useState<ToggleValue>("grid");
+  const { data, meta, setPage, setLimit, isError, isLoading } = useContributors(10, repositories, range);
+
+  const contributors = data.map((pr) => {
+    return {
+      host_login: pr.author_login,
+      first_commit_time: pr.updated_at,
+    };
+  });
 
   const contributorArray = isError
     ? []
-    : data?.map((contributor) => {
-      const timeSinceFirstCommit = calcDistanceFromToday(new Date(parseInt(contributor.first_commit_time)));
-      const contributorLanguageList = (contributor.langs || "").split(",");
-      const repoList = (contributor.recent_repo_list || "").split(",").map((repo) => {
-        const [repoOwner, repoName] = repo.split("/");
-
-        return {
-          repoName,
-          repoIcon: `https://www.github.com/${repoOwner ?? "github"}.png?size=460`
-        };
-      });
-      const languageList = contributorLanguageList.map((language) => {
-        const preparedLanguageKey = colorKeys.find((key) => key.toLowerCase() === language.toLowerCase());
-
-        return {
-          languageName: preparedLanguageKey ? preparedLanguageKey : language,
-          percentageUsed: Math.round((1 / contributorLanguageList.length) * 100)
-        };
-      });
+    : contributors.map((contributor) => {
+      const timeSinceFirstCommit = calcDistanceFromToday(new Date(contributor.first_commit_time));
 
       return {
         profile: {
-          githubAvatar: `https://www.github.com/${contributor.host_login}.png?size=60`,
+          githubAvatar: getAvatarByUsername(contributor.host_login),
           githubName: contributor.host_login,
-          totalPRs: contributor.recent_pr_total,
-          dateOfFirstPR: timeSinceFirstCommit
+          dateOfFirstPR: timeSinceFirstCommit,
         },
-        languageList,
-        repoList
       };
     });
 
@@ -71,39 +62,49 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
         range={range}
         setRangeFilter={store.updateRange}
         title="Contributors"
+        layout={layout}
+        onLayoutToggle={() => setLayout((prev) => (prev === "list" ? "grid" : "list"))}
       />
 
-      <div className="grid w-full gap-3 grid-cols-automobile md:grid-cols-autodesktop">
-        {isLoading ? <SkeletonWrapper height={210} radius={12} count={9} /> : ""}
-        {isError ? <>An error occurred!..</> : ""}
-        {contributorArray.map((contributor, index) => (
-          <ContributorCard
-            key={index}
-            className=""
-            contributor={{ ...contributor }}
-            topic={topic}
-            repositories={repositories}
-          />
-        ))}
-      </div>
+      {layout === "grid" ? (
+        <div className="grid w-full gap-3 grid-cols-automobile md:grid-cols-autodesktop">
+          {isLoading ? <SkeletonWrapper height={210} radius={12} count={9} /> : ""}
+          {isError ? <>An error occurred!..</> : ""}
+          {contributorArray.map((contributor, index) => (
+            <ContributorCard
+              key={index}
+              className=""
+              contributor={{ ...contributor }}
+              topic={topic}
+              repositories={repositories}
+              range={range}
+            />
+          ))}
+        </div>
+      ) : (
+        <div className="lg:min-w-[1150px]">
+          <ContributorListTableHeaders />
+          <ContributorTable loading={isLoading} topic={topic} contributors={data}></ContributorTable>
+        </div>
+      )}
 
       {/* Table footer */}
 
       <div className="flex flex-col w-full px-2 mt-5 gap-y-3 md:flex-row">
-        <Select
+        <LimitSelect
           placeholder="10 per page"
           options={[
-            { name: "10 per page", value: 10 },
-            { name: "20 per page", value: 20 },
-            { name: "30 per page", value: 30 },
-            { name: "40 per page", value: 40 },
-            { name: "50 per page", value: 50 }
+            { name: "10 per page", value: "10" },
+            { name: "20 per page", value: "20" },
+            { name: "30 per page", value: "30" },
+            { name: "40 per page", value: "40" },
+            { name: "50 per page", value: "50" },
           ]}
           className="!w-36 ml-auto md:hidden overflow-x-hidden"
-          onChange={function (limit: number): void {
-            setLimit(limit);
+          onChange={function (limit: string): void {
+            setLimit(Number(limit));
           }}
-        ></Select>
+        />
 
         <div className="flex items-center justify-between w-full py-1 md:py-4 md:mt-5">
           <div>

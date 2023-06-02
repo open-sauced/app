@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import clsx from "clsx";
 
-import Select from "components/atoms/Select/custom-select";
 import TableTitle from "components/atoms/TableTitle/table-title";
 import Pagination from "components/molecules/Pagination/pagination";
 import PaginationResults from "components/molecules/PaginationResults/pagination-result";
@@ -10,12 +9,13 @@ import TableHeader from "components/molecules/TableHeader/table-header";
 
 import useRepositories from "lib/hooks/api/useRepositories";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
+import useStore from "lib/store";
 
 import RepositoriesTable, { classNames, RepositoriesRows } from "../RepositoriesTable/repositories-table";
 import RepoNotIndexed from "./repository-not-indexed";
 import Checkbox from "components/atoms/Checkbox/checkbox";
 import Button from "components/atoms/Button/button";
-import useStore from "lib/store";
+import LimitSelect from "components/atoms/Select/limit-select";
 
 interface RepositoriesProps {
   repositories?: number[];
@@ -35,13 +35,13 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
     isError: repoListIsError,
     isLoading: repoListIsLoading,
     setPage,
-    setLimit
-  } = useRepositories(repositories);
+    setLimit,
+  } = useRepositories(repositories, range);
   const filteredRepoNotIndexed = selectedFilter && !repoListIsLoading && !repoListIsError && repoListData.length === 0;
   const [selectedRepos, setSelectedRepos] = useState<DbRepo[]>([]);
 
-  const handleOnSelectAllChecked = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.checked) {
+  const handleOnSelectAllChecked = (state: boolean) => {
+    if (state) {
       setSelectedRepos(repoListData);
     } else {
       setSelectedRepos([]);
@@ -93,53 +93,50 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
         setRangeFilter={store.updateRange}
         title="Repositories"
       />
-      <div className="flex flex-col rounded-lg overflow-x-auto border w-full">
+      <div className="flex flex-col w-full overflow-x-auto border rounded-lg">
         <div className="lg:min-w-[1150px]">
-          <div className="flex md:hidden justify-between  py-4 px-6 bg-light-slate-3 gap-2">
+          <div className="flex justify-between gap-2 px-6 py-4 md:hidden bg-light-slate-3">
             <div className="flex-1">
-              <TableTitle text="Repository"></TableTitle>
+              <TableTitle>Repositories</TableTitle>
             </div>
             <div className="flex-1">
-              <TableTitle text="Pr Overview"></TableTitle>
+              <TableTitle>Pr Overview</TableTitle>
             </div>
           </div>
-          <div className="hidden md:flex py-4 px-6 bg-light-slate-3 gap-2">
+          <div className="hidden gap-2 px-6 py-4 md:flex bg-light-slate-3">
             <div className={clsx(classNames.cols.checkbox)}>
               <Checkbox
-                label=""
-                onChange={handleOnSelectAllChecked}
+                onCheckedChange={handleOnSelectAllChecked}
                 disabled={!user}
                 title={!user ? "Connect to GitHub" : ""}
-                className={`checked:[&>*]:!bg-orange-500 ${
-                  user ? "[&>*]:!border-orange-500 [&>*]:hover:!bg-orange-600" : "[&>*]:!border-light-slate-8"
-                }`}
+                className={`${user && "border-orange-500 hover:bg-orange-600"}`}
               />
             </div>
             <div className={clsx(classNames.cols.repository)}>
-              <TableTitle text="Repository"></TableTitle>
+              <TableTitle>Repository</TableTitle>
             </div>
             <div className={clsx(classNames.cols.activity)}>
-              <TableTitle text="Activity"></TableTitle>
+              <TableTitle>Activity</TableTitle>
             </div>
             <div className={clsx(classNames.cols.prOverview)}>
-              <TableTitle text="PR Overview"></TableTitle>
+              <TableTitle>PR Overview</TableTitle>
             </div>
             <div className={clsx(classNames.cols.prVelocity)}>
-              <TableTitle text="PR Velocity"></TableTitle>
+              <TableTitle>PR Velocity</TableTitle>
             </div>
             <div className={clsx(classNames.cols.spam)}>
-              <TableTitle text="SPAM"></TableTitle>
+              <TableTitle>SPAM</TableTitle>
             </div>
             <div className={clsx(classNames.cols.contributors, "hidden lg:flex")}>
-              <TableTitle text="Contributors"></TableTitle>
+              <TableTitle>Contributors</TableTitle>
             </div>
             <div className={clsx(classNames.cols.last30days, "hidden lg:flex")}>
-              <TableTitle text="Last 30 Days"></TableTitle>
+              <TableTitle>Last 30 Days</TableTitle>
             </div>
           </div>
 
           {selectedRepos.length > 0 && (
-            <div className="p-3 px-6 border-b-2 text-light-slate-11 flex justify-between">
+            <div className="flex justify-between p-3 px-6 border-b-2 text-light-slate-11">
               <div>{selectedRepos.length} Repositories selected</div>
               <Button onClick={handleOnAddtoInsights} variant="primary">
                 Add to Insight Page
@@ -159,22 +156,22 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
           />
 
           {/* Table Footer */}
-          <div className="mt-5 w-full px-4 flex flex-col gap-y-3 md:flex-row">
-            <Select
+          <div className="flex flex-col w-full px-4 mt-5 gap-y-3 md:flex-row">
+            <LimitSelect
               placeholder="10 per page"
               options={[
-                { name: "10 per page", value: 10 },
-                { name: "20 per page", value: 20 },
-                { name: "30 per page", value: 30 },
-                { name: "40 per page", value: 40 },
-                { name: "50 per page", value: 50 }
+                { name: "10 per page", value: "10" },
+                { name: "20 per page", value: "20" },
+                { name: "30 per page", value: "30" },
+                { name: "40 per page", value: "40" },
+                { name: "50 per page", value: "50" },
               ]}
               className="!w-36 ml-auto md:hidden overflow-x-hidden"
-              onChange={function (limit: number): void {
-                setLimit(limit);
+              onChange={function (limit: string): void {
+                setLimit(Number(limit));
               }}
-            ></Select>
-            <div className="py-1 md:py-4 flex w-full md:mt-5 justify-between items-center">
+            />
+            <div className="flex items-center justify-between w-full py-1 md:py-4 md:mt-5">
               <div>
                 <div className="">
                   <PaginationResults metaInfo={repoMeta} total={repoMeta.itemCount} entity={"repos"} />

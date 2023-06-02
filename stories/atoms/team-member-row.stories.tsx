@@ -20,23 +20,23 @@ Default.args = {
   className: "max-w-2xl",
   name: "John Doe",
   avatarUrl: "https://avatars.githubusercontent.com/u/7252105?v=4",
-  role: "admin"
+  access: "admin"
 };
 Editor.args = {
   className: "max-w-2xl",
   name: "John Doe",
   avatarUrl: "https://avatars.githubusercontent.com/u/7252105?v=4",
-  role: "editor"
+  access: "edit"
 };
 Viewer.args = {
   className: "max-w-2xl",
   name: "John Doe",
   avatarUrl: "https://avatars.githubusercontent.com/u/7252105?v=4",
-  role: "viewer"
+  access: "view"
 };
 Pending.args = {
   className: "max-w-2xl",
   name: "John Doe",
   avatarUrl: "https://avatars.githubusercontent.com/u/7252105?v=4",
-  role: "pending"
+  access: "pending"
 };

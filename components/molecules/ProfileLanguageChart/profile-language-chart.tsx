@@ -14,6 +14,8 @@ const ProfileLanguageChart = ({ languageList }: ProfileLanguageChartProps) => {
   const [percentage, setPercentage] = useState<any>(0);
 
   useEffect(() => {
+    if (sortedLangArray.length === 0) return;
+
     const totalSumOfFirstFivePercentage = sortedLangArray
       .slice(0, 5)
       .map((lang) => lang.percentageUsed)
@@ -34,7 +36,7 @@ const ProfileLanguageChart = ({ languageList }: ProfileLanguageChartProps) => {
                   width: `${percentageUsed < 20 ? (percentageUsed / percentage) * 100 : percentageUsed}%`,
                   backgroundColor: languageToColor[languageName]
                     ? (languageToColor[languageName].color as string)
-                    : NOTSUPPORTED
+                    : NOTSUPPORTED,
                 }}
               />
             )
@@ -50,7 +52,7 @@ const ProfileLanguageChart = ({ languageList }: ProfileLanguageChartProps) => {
                   style={{
                     backgroundColor: languageToColor[languageName]
                       ? (languageToColor[languageName].color as string)
-                      : NOTSUPPORTED
+                      : NOTSUPPORTED,
                   }}
                   className="w-2.5 h-2.5 rounded-full "
                 ></span>

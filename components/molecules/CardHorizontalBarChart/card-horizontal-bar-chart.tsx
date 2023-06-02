@@ -29,13 +29,15 @@ const CardHorizontalBarChart = ({ languageList, withDescription }: CardHorizonta
   // used this state to calculate thte percentage of each language
   const [percentage, setPercentage] = useState<any>(0);
 
-  const [descriptText, setDescriptText] = useState(sortedLangArray[0].languageName);
+  const [descriptText, setDescriptText] = useState(sortedLangArray[0]?.languageName || "javascript");
 
   const handleChangeDescriptText = (descriptText: string) => {
     setDescriptText(descriptText);
   };
 
   useEffect(() => {
+    if (sortedLangArray.length === 0) return;
+
     const totalSumOfFirstFivePercentage = sortedLangArray
       .slice(0, 4)
       .map((lang) => lang.percentageUsed)

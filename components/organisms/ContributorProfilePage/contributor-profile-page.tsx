@@ -3,12 +3,12 @@ import Text from "components/atoms/Typography/text";
 import ContributorProfileHeader from "components/molecules/ContributorProfileHeader/contributor-profile-header";
 import { ContributorObject } from "../ContributorCard/contributor-card";
 import CardLineChart from "components/molecules/CardLineChart/card-line-chart";
-import CardRepoList, { RepoList } from "components/molecules/CardRepoList/card-repo-list";
+import CardRepoList from "components/molecules/CardRepoList/card-repo-list";
 import PullRequestTable from "components/molecules/PullRequestTable/pull-request-table";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 
 import color from "lib/utils/color.json";
-import { useTopicContributorCommits } from "lib/hooks/useTopicContributorCommits";
+import { useContributorPullRequestsChart } from "lib/hooks/useContributorPullRequestsChart";
 import { getRelativeDays } from "lib/utils/date-utils";
 import Pill from "components/atoms/Pill/pill";
 import getPercent from "lib/utils/get-percent";
@@ -38,14 +38,14 @@ interface ContributorProfilePageProps {
   listOfPRs?: PrObjectType[];
   githubAvatar?: string;
   githubName: string;
-  langList: string[];
-  repoList: RepoList[];
+  langList: { languageName: string; percentageUsed: number }[];
   recentContributionCount: number;
+  prFirstOpenedDate?: string;
   user?: DbUser;
   prTotal: number;
   openPrs: number;
-  prReviews: number;
-  prVelocity: number;
+  prReviews?: number;
+  prVelocity?: number;
   prMerged: number;
   loading: boolean;
   error: boolean;
@@ -57,25 +57,25 @@ const ContributorProfilePage = ({
   githubAvatar,
   githubName,
   langList,
-  repoList,
   openPrs,
   prTotal,
   loading,
   prMerged,
-  prVelocity
+  prVelocity,
+  prFirstOpenedDate,
 }: ContributorProfilePageProps) => {
-  const languageList = langList?.map((language) => {
-    const preparedLanguageKey = colorKeys.find((key) => key.toLowerCase() === language.toLowerCase());
+  const languageList = (langList || []).map((language) => {
+    const preparedLanguageKey = colorKeys.find((key) => key.toLowerCase() === language.languageName.toLowerCase());
 
     return {
-      languageName: preparedLanguageKey ? preparedLanguageKey : language,
-      percentageUsed: Math.round((1 / langList.length) * 100)
+      languageName: preparedLanguageKey ? preparedLanguageKey : language.languageName,
+      percentageUsed: language.percentageUsed,
     };
   });
 
   const { user: loggedInUser, signIn } = useSupabaseAuth();
+  const { chart, repoList } = useContributorPullRequestsChart(githubName, "*", repositories);
 
-  const { chart } = useTopicContributorCommits(githubName, "*", repositories);
   const prsMergedPercentage = getPercent(prTotal, prMerged || 0);
   const { data: Follower, isError: followError, follow, unFollow } = useFollowUser(user?.login || "");
 
@@ -88,8 +88,10 @@ const ContributorProfilePage = ({
     timezone,
     github_sponsors_url: githubSponsorsUrl,
     linkedin_url: linkedInUrl,
-    display_local_time: displayLocalTime
+    display_local_time: displayLocalTime,
   } = user || {};
+
+  const iscConnected = !!user?.is_open_sauced_member;
 
   return (
     <div className="w-full ">
@@ -101,7 +103,7 @@ const ContributorProfilePage = ({
           username={user?.login}
           user={loggedInUser}
           isFollowing={followError ? false : true}
-          isConnected={!!user}
+          isConnected={iscConnected}
           githubName={githubName}
           avatarUrl={githubAvatar}
           handleFollow={follow}
@@ -117,15 +119,15 @@ const ContributorProfilePage = ({
             <>
               <ContributorProfileInfo
                 interests={interests}
-                // eslint-disable-next-line camelcase
                 twitterUsername={twitter_username}
                 bio={bio}
                 githubName={githubName}
-                isConnected={!!user}
+                isConnected={iscConnected}
                 timezone={timezone}
                 displayLocalTime={displayLocalTime}
                 githubSponsorsUrl={githubSponsorsUrl}
                 linkedInUrl={linkedInUrl}
+                prFirstOpenedDate={prFirstOpenedDate}
               />
 
               <div>
@@ -164,7 +166,7 @@ const ContributorProfilePage = ({
                     <div className="flex flex-col justify-between gap-2 lg:flex-row md:gap-12 lg:gap-16">
                       <div>
                         <span className="text-xs text-light-slate-11">PRs opened</span>
-                        {openPrs ? (
+                        {openPrs >= 0 ? (
                           <div className="flex mt-1 lg:justify-center md:pr-8">
                             <Text className="!text-lg md:!text-xl lg:!text-2xl !text-black !leading-none">
                               {openPrs} PRs
@@ -190,7 +192,7 @@ const ContributorProfilePage = ({
                       </div>
                       <div>
                         <span className="text-xs text-light-slate-11">Contributed Repos</span>
-                        {recentContributionCount ? (
+                        {recentContributionCount >= 0 ? (
                           <div className="flex mt-1 lg:justify-center">
                             <Text className="!text-lg md:!text-xl lg:!text-2xl !text-black !leading-none">
                               {`${recentContributionCount} Repo${recentContributionCount > 1 ? "s" : ""}`}
@@ -205,7 +207,7 @@ const ContributorProfilePage = ({
                       <CardLineChart lineChartOption={chart} className="!h-32" />
                     </div>
                     <div>
-                      <CardRepoList limit={7} repoList={repoList} />
+                      <CardRepoList limit={7} repoList={repoList} total={repoList.length} />
                     </div>
 
                     <div className="mt-6">

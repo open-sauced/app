@@ -1,30 +1,22 @@
 import { useState } from "react";
 
-import { useTopicContributorCommits } from "lib/hooks/useTopicContributorCommits";
-
 import Card from "components/atoms/Card/card";
 import Text from "components/atoms/Typography/text";
-import CardHorizontalBarChart, {
-  LanguageObject
-} from "components/molecules/CardHorizontalBarChart/card-horizontal-bar-chart";
+import CardHorizontalBarChart from "components/molecules/CardHorizontalBarChart/card-horizontal-bar-chart";
 import CardLineChart from "components/molecules/CardLineChart/card-line-chart";
 import CardProfile from "components/molecules/CardProfile/card-profile";
-import CardRepoList, { RepoList } from "components/molecules/CardRepoList/card-repo-list";
+import CardRepoList from "components/molecules/CardRepoList/card-repo-list";
 import PullRequestTable from "components/molecules/PullRequestTable/pull-request-table";
 
-/*
-  Use this hook in the Contributor Page componenttbecause it has all the mock data:
-  import useContributorCard from "lib/hooks/useContributorCard";
-*/
+import { useContributorPullRequestsChart } from "lib/hooks/useContributorPullRequestsChart";
+import useContributorLanguages from "lib/hooks/api/useContributorLanguages";
+
 export interface ContributorObject {
   profile: {
     githubAvatar: string;
     githubName: string;
-    totalPRs: number;
     dateOfFirstPR: string;
   };
-  repoList: RepoList[];
-  languageList: LanguageObject[];
 }
 
 interface ContributorCardProps {
@@ -32,19 +24,21 @@ interface ContributorCardProps {
   contributor: ContributorObject;
   topic: string;
   repositories?: number[];
+  range?: number;
 }
 
-const ContributorCard = ({ className, contributor, topic, repositories }: ContributorCardProps) => {
-  const { profile, repoList, languageList } = contributor;
+const ContributorCard = ({ className, contributor, topic, repositories, range }: ContributorCardProps) => {
+  const { profile } = contributor;
 
   const [showPRs, setShowPRs] = useState(false);
-  const { chart } = useTopicContributorCommits(profile.githubName, topic, repositories);
+  const { chart, repoList, meta } = useContributorPullRequestsChart(profile.githubName, topic, repositories, range);
+  const languageList = useContributorLanguages(profile.githubName);
 
   return (
     <Card className={className && className}>
       <div className="flex flex-col gap-3">
         <div className="flex w-full justify-between items-center gap-2">
-          <CardProfile {...profile} />
+          <CardProfile {...profile} totalPRs={meta.itemCount} />
           <div>
             <CardHorizontalBarChart withDescription={false} languageList={languageList} />
           </div>
@@ -52,10 +46,10 @@ const ContributorCard = ({ className, contributor, topic, repositories }: Contri
         <div className="h-[110px] overflow-hidden">
           <CardLineChart lineChartOption={chart} />
         </div>
-        <CardRepoList repoList={repoList} />
+        <CardRepoList repoList={repoList} total={repoList.length} />
 
         {showPRs ? (
-          <PullRequestTable contributor={profile.githubName} topic={topic} repositories={repositories} />
+          <PullRequestTable contributor={profile.githubName} topic={topic} repositories={repositories} range={range} />
         ) : null}
 
         <div className="flex w-full justify-center">

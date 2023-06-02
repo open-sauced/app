@@ -10,6 +10,7 @@ import changeCapitalization from "lib/utils/change-capitalization";
 import useInsight from "lib/hooks/useInsight";
 import { useEffect } from "react";
 import SpinLoader from "components/atoms/SpinLoader/spin-loader";
+import { useUser } from "@supabase/auth-helpers-react";
 
 const HubPage: WithPageLayout = () => {
   const router = useRouter();
@@ -19,6 +20,12 @@ const HubPage: WithPageLayout = () => {
   const repositories = insight ? insight.repos.map((repo) => repo.repo_id) : [];
 
   const title = `${insight && insight.name} | Open Sauced Insights Hub`;
+
+  const user = useUser();
+
+  useEffect(() => {
+    if (!user && !insight?.is_public) router.replace("/javascript/dashboard/filter/recent");
+  },[user]);
 
   useEffect(() => {
     HubPage.updateSEO!({
@@ -61,7 +68,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   }
 
   const userId = session?.user?.user_metadata.sub as string;
-  const isOwner = !!(userId && insight && `${userId}` === `${insight.user.id}`);
+  const isOwner = !!(userId && insight && `${userId}` === `${insight.user?.id}`);
 
   if (insight && !insight.is_public && !isOwner) {
     return {

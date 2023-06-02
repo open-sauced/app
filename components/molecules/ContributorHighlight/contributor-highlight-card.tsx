@@ -12,7 +12,7 @@ import {
 import { HiOutlineEmojiHappy } from "react-icons/hi";
 import { TfiMoreAlt } from "react-icons/tfi";
 import { FiEdit, FiLinkedin, FiTwitter } from "react-icons/fi";
-import { BsLink45Deg } from "react-icons/bs";
+import { BsCalendar2Event, BsLink45Deg } from "react-icons/bs";
 import { FaUserPlus } from "react-icons/fa";
 import { GrFlag } from "react-icons/gr";
 import Emoji from "react-emoji-render";
@@ -48,6 +48,10 @@ import useFetchAllEmojis from "lib/hooks/useFetchAllEmojis";
 import useHighlightReactions from "lib/hooks/useHighlightReactions";
 import useUserHighlightReactions from "lib/hooks/useUserHighlightReactions";
 import { truncateString } from "lib/utils/truncate-string";
+import Tooltip from "components/atoms/Tooltip/tooltip";
+import { Popover, PopoverContent, PopoverTrigger } from "../Popover/popover";
+import { Calendar } from "../Calendar/calendar";
+import { format } from "date-fns";
 
 interface ContributorHighlightCardProps {
   title?: string;
@@ -55,6 +59,7 @@ interface ContributorHighlightCardProps {
   prLink: string;
   user: string;
   id: string;
+  shipped_date: string;
   refreshCallBack?: () => void;
   emojis: DbEmojis[];
 }
@@ -66,7 +71,8 @@ const ContributorHighlightCard = ({
   user,
   id,
   refreshCallBack,
-  emojis
+  emojis,
+  shipped_date
 }: ContributorHighlightCardProps) => {
   const { toast } = useToast();
   const twitterTweet = `${title || "Open Source Highlight"} - OpenSauced from ${user}`;
@@ -82,11 +88,12 @@ const ContributorHighlightCard = ({
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [host, setHost] = useState("");
 
-  const { follow, unFollow, isError } = useFollowUser(user);
+  const [date, setDate] = useState<Date | undefined>(shipped_date ? new Date(shipped_date) : undefined);
 
   const { data: reactions, mutate } = useHighlightReactions(id);
   const { data: userReaction, deleteReaction, addReaction } = useUserHighlightReactions(id);
 
+  // console.log(shipped_date);
   useEffect(() => {
     if (!openEdit) {
       setTimeout(() => {
@@ -94,6 +101,10 @@ const ContributorHighlightCard = ({
       }, 1);
     }
   }, [openEdit]);
+
+  useEffect(() => {
+    setDate(shipped_date ? new Date(shipped_date) : undefined);
+  }, [shipped_date]);
 
   const isUserReaction = (id: string) => {
     const matches = userReaction.find((reaction) => reaction.emoji_id === id);
@@ -145,12 +156,13 @@ const ContributorHighlightCard = ({
         return;
       } else {
         const res = await updateHighlights(
-          { url: highlight.prLink, highlight: highlight.desc || "", title: highlight.title },
+          { url: highlight.prLink, highlight: highlight.desc || "", title: highlight.title, shipped_at: date },
           id
         );
         setLoading(false);
         if (res) {
           toast({ description: "Highlights Updated Successfully", variant: "success" });
+          setDate(undefined);
           refreshCallBack && refreshCallBack();
           setOpenEdit(false);
         } else {
@@ -189,6 +201,34 @@ const ContributorHighlightCard = ({
       setHost(window.location.origin as string);
     }
   }, [highlight]);
+
+  function FollowUser(){
+    
+    const { follow, unFollow, isError } = useFollowUser(user);
+                
+    return (loggedInUser ? (
+      <DropdownMenuItem
+        className={`rounded-md ${loggedInUser.user_metadata.user_name === user && "hidden"}`}
+      >
+        <div onClick={isError ? follow : unFollow} className="flex gap-2.5 py-1 items-center pl-3 pr-7 cursor-pointer">
+          <FaUserPlus size={22} />
+          <span>
+            {!isError ? "Unfollow" : "Follow"} {user}
+          </span>
+        </div>
+      </DropdownMenuItem>
+    ) : (
+      <DropdownMenuItem className="rounded-md">
+        <div
+          onClick={async () => await signIn({ provider: "github" })}
+          className="flex gap-2.5 py-1  items-center pl-3 pr-7"
+        >
+          <FaUserPlus size={22} />
+          <span>Follow {user}</span>
+        </div>
+      </DropdownMenuItem>
+    ));
+  }
 
   return (
     <article className="flex flex-col  md:max-w-[40rem] flex-1 gap-3 lg:gap-6">
@@ -231,33 +271,14 @@ const ContributorHighlightCard = ({
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() => handleCopyToClipboard(`${host}/feed/${id}`)}
-                  className="rounded-md flex gap-2.5 py-1 items-center pl-3 pr-7"
+                  className="rounded-md"
                 >
-                  <BsLink45Deg size={22} />
-                  <span>Copy link</span>
+                  <div className = "flex gap-2.5 py-1 items-center pl-3 pr-7 cursor-pointer">
+                    <BsLink45Deg size={22} />
+                    <span>Copy link</span>
+                  </div>
                 </DropdownMenuItem>
-                {loggedInUser ? (
-                  <DropdownMenuItem
-                    className={`rounded-md ${loggedInUser.user_metadata.user_name === user && "hidden"}`}
-                  >
-                    <div onClick={isError ? follow : unFollow} className="flex gap-2.5 py-1  items-center pl-3 pr-7">
-                      <FaUserPlus size={22} />
-                      <span>
-                        {!isError ? "Unfollow" : "Follow"} {user}
-                      </span>
-                    </div>
-                  </DropdownMenuItem>
-                ) : (
-                  <DropdownMenuItem className="rounded-md">
-                    <div
-                      onClick={async () => await signIn({ provider: "github" })}
-                      className="flex gap-2.5 py-1  items-center pl-3 pr-7"
-                    >
-                      <FaUserPlus size={22} />
-                      <span>Follow {user}</span>
-                    </div>
-                  </DropdownMenuItem>
-                )}
+                <FollowUser />
                 {loggedInUser && (
                   <DropdownMenuItem
                     className={`rounded-md ${
@@ -385,14 +406,36 @@ const ContributorHighlightCard = ({
                       setError("");
                       setWordCount(e.target.value.length);
                     }}
-                    className="px-2 mb-2 font-normal transition rounded-lg resize-none h-28 text-light-slate-11 focus:outline-none"
+                    className="px-2 mb-2 font-normal transition rounded-lg resize-y min-h-[90px]  max-h-96 h-28 text-light-slate-11 focus:outline-none"
                   ></Textarea>
-                  <p className="flex justify-end gap-1 px-2 text-xs text-light-slate-9">
-                    <span className={`${wordCount > wordLimit && "text-red-600"}`}>
-                      {wordCount > wordLimit ? `-${wordCount - wordLimit}` : wordCount}
-                    </span>
-                    / <span>{wordLimit}</span>
-                  </p>
+                  <div className="flex items-center justify-between py-1 pl-3">
+                    <Tooltip direction="top" content="Pick a date">
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <button className="flex items-center gap-2 text-base text-light-slate-9">
+                            <BsCalendar2Event className="text-light-slate-9" />
+                            {date && <span className="text-xs">{format(date, "PPP")}</span>}
+                          </button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0 bg-white">
+                          <Calendar
+                            // block user's from selecting a future date
+                            toDate={new Date()}
+                            mode="single"
+                            selected={date}
+                            onSelect={setDate}
+                            className="border rounded-md"
+                          />
+                        </PopoverContent>
+                      </Popover>
+                    </Tooltip>
+                    <p className="flex justify-end gap-1 px-2 text-xs text-light-slate-9">
+                      <span className={`${wordCount > wordLimit && "text-red-600"}`}>
+                        {wordCount > wordLimit ? `-${wordCount - wordLimit}` : wordCount}
+                      </span>
+                      / <span>{wordLimit}</span>
+                    </p>
+                  </div>
                 </div>
               </fieldset>
               <fieldset className="flex flex-col w-full gap-1">

@@ -15,6 +15,9 @@ interface DbRepo {
   readonly spam_prs_count?: number;
   readonly pr_velocity_count?: number;
   readonly churnTotalCount?: number;
+  readonly language: string;
+  readonly stars: number;
+  readonly description: string;
 }
 
 interface DbRepoPR {
@@ -28,11 +31,19 @@ interface DbRepoPR {
   readonly filesCount: number;
   linesCount: number;
   readonly merged: boolean;
+  readonly draft: boolean;
   readonly full_name: string;
   readonly number: number;
   readonly additions: number;
   readonly deletions: number;
   readonly changed_files: number;
+  readonly repo_id: number;
+  readonly last_updated_at: string;
+}
+
+interface DbPRContributor {
+  readonly author_login: string;
+  readonly updated_at: string;
 }
 
 interface DbFollowUser {
@@ -98,6 +109,18 @@ interface DbInsight {
   readonly accepted_repo_total: number;
 }
 
+interface DbInsightMember {
+  readonly id: string;
+  readonly insight_id: number;
+  readonly user_id: number;
+  readonly name: string;
+  readonly access: "pending" | "admin" | "edit" | "view";
+  readonly created_at: string;
+  readonly updated_at: string;
+  readonly deleted_at: string;
+  readonly invitation_emailed_at: string;
+  readonly invitation_email: string;
+}
 interface DbUserInsight {
   readonly id: number;
   readonly user_id: number;
@@ -143,6 +166,9 @@ interface DbUser {
   readonly timezone: string;
   readonly github_sponsors_url: string;
   readonly linkedin_url: string;
+  readonly notification_count: number;
+  readonly languages: { [lang]: number };
+  readonly first_opened_pr_at: string;
 }
 
 interface DbHighlight {
@@ -157,6 +183,7 @@ interface DbHighlight {
   readonly deleted_at: string;
   readonly name: string;
   readonly login: string;
+  readonly shipped_at: string;
 }
 
 interface SEOobject {
@@ -193,4 +220,14 @@ interface DbEmojis {
   readonly display_order: number;
   readonly created_at: string;
   readonly updated_at: string;
+}
+
+interface DbUserNotification {
+  readonly id: string;
+  readonly message: string;
+  readonly type: "highlight_reaction" | "follow";
+  readonly from_user_id: number;
+  readonly notified_at: string;
+  readonly user_id: number;
+  readonly meta_id: string;
 }

@@ -1,7 +1,6 @@
 {
-  "extends": "next/core-web-vitals",
+  "extends": ["next/core-web-vitals", "prettier"],
   "rules": {
-    "comma-dangle": "error",
     "quotes": "error",
     "jsx-quotes": "error",
     "semi": "error",
