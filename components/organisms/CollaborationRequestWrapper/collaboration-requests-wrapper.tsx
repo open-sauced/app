@@ -17,7 +17,6 @@ function formatPostDate(date: Date) {
 const CollaborationRequestsWrapper = () => {
   const { data, updateCollaborationStatus, deleteCollaborationRequest } = useUserCollaborations();
   let currentDate: string;
-  console.log(data);
 
   const getDateGroupHeader = (date: Date, index: number) => {
     const dateString = date.toLocaleDateString();
@@ -37,6 +36,7 @@ const CollaborationRequestsWrapper = () => {
     <div>
       {data && data.length > 0 ? (
         data
+          .slice()
           .filter((request) => request.status === "pending")
           .sort((a, b) => +new Date(b.created_at) - +new Date(a.created_at))
           .map((requests, i) => {
