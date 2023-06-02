@@ -1,4 +1,4 @@
-import React, { useState, useEffect, ChangeEvent, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { TfiMoreAlt } from "react-icons/tfi";

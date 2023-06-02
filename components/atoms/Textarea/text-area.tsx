@@ -1,6 +1,5 @@
-import * as React from "react";
+import React, { ChangeEvent, useRef } from "react";
 import clsx from "clsx";
-import { ChangeEvent, ChangeEventHandler, useRef } from "react";
 
 interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   defaultRow?: number;
