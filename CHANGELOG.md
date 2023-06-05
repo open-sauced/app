@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.50.1-beta.2](https://github.com/open-sauced/insights/compare/v1.50.1-beta.1...v1.50.1-beta.2) (2023-06-05)
+
+
+### 🐛 Bug Fixes
+
+* Footer Location on Smaller Screens ([#1242](https://github.com/open-sauced/insights/issues/1242)) ([8b2356a](https://github.com/open-sauced/insights/commit/8b2356ab0b28a3582c32a28985356110e405448e))
+
 ### [1.50.1-beta.1](https://github.com/open-sauced/insights/compare/v1.50.0...v1.50.1-beta.1) (2023-06-01)
 
 
