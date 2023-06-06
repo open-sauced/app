@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import Link from "next/link";
 
 import { IoNotifications } from "react-icons/io5";
@@ -26,11 +27,20 @@ import { authSession } from "lib/hooks/authSession";
 import { Spinner } from "components/atoms/SpinLoader/spin-loader";
 
 const AuthSection: React.FC = ({}) => {
+  const router = useRouter();
+  const currentPath = router.asPath;
+
   const { signIn, signOut, user, sessionToken } = useSupabaseAuth();
   const { onboarded } = useSession();
   const [notifications, setNotifications] = useState<DbUserNotification[]>([]);
   const [loading, setLoading] = useState(false);
   const [userInfo, setUserInfo] = useState<DbUser | undefined>(undefined);
+  const [host, setHost] = useState<string>("");
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setHost(window.location.origin as string);
+    }
+  }, []);
 
   // Fetch user notifications
   const fetchNotifications = async () => {
@@ -158,7 +168,12 @@ const AuthSection: React.FC = ({}) => {
             </DropdownList>
           </>
         ) : (
-          <Button variant="primary" onClick={async () => await signIn({ provider: "github" })}>
+          <Button
+            variant="primary"
+            onClick={async () =>
+              await signIn({ provider: "github", options: { redirectTo: `${host}/${currentPath}` } })
+            }
+          >
             Connect with GitHub <Icon IconImage={GitHubIcon} className="ml-2" />
           </Button>
         )}

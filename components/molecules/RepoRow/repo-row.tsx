@@ -4,7 +4,7 @@ import {
   ArrowTrendingUpIcon,
   ChevronDownIcon,
   ChevronUpIcon,
-  MinusSmallIcon
+  MinusSmallIcon,
 } from "@heroicons/react/24/solid";
 import clsx from "clsx";
 
@@ -34,20 +34,20 @@ interface RepoProps {
   handleOnSelectRepo: (repo: RepositoriesRows) => void;
 }
 
-const getActivity = (total?: number, loading?: boolean) => {
+export const getActivity = (total?: number, loading?: boolean) => {
   if (total === undefined || loading) {
     return "-";
   }
 
   if (total > 80) {
-    return <Pill icon={<ArrowTrendingUpIcon color="green" className="h-4 w-4" />} text="High" color="green" />;
+    return <Pill icon={<ArrowTrendingUpIcon color="green" className="w-4 h-4" />} text="High" color="green" />;
   }
 
-  if (total >= 20 && total <= 80) {
-    return <Pill icon={<MinusSmallIcon color="black" className="h-4 w-4" />} text="Medium" color="yellow" />;
+  if (total >= 5 && total <= 80) {
+    return <Pill icon={<MinusSmallIcon color="black" className="w-4 h-4" />} text="Medium" color="yellow" />;
   }
 
-  return <Pill icon={<ArrowTrendingDownIcon color="red" className="h-4 w-4" />} text="Low" color="red" />;
+  return <Pill icon={<ArrowTrendingDownIcon color="red" className="w-4 h-4" />} text="Low" color="red" />;
 };
 
 const getTotalPrs = (
@@ -88,7 +88,7 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
     draft_prs_count: draftPrsCount,
     merged_prs_count: mergedPrsCount,
     spam_prs_count: spamPrsCount,
-    pr_velocity_count: prVelocityCount
+    pr_velocity_count: prVelocityCount,
   } = repo;
   const ownerAvatar = getAvatarByUsername(fullName.split("/")[0]);
 
@@ -106,8 +106,8 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
     {
       id: `last30-${repo.id}`,
       color: "hsl(63, 70%, 50%)",
-      data: days
-    }
+      data: days,
+    },
   ];
 
   const [tableOpen, setTableOpen] = useState<boolean>(false);
@@ -120,7 +120,7 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
     <>
       <div
         key={`${ownerAvatar}/${name}`}
-        className="odd:bg-white md:hidden px-5 overflow-hidden py-2  even:bg-light-slate-2"
+        className="px-5 py-2 overflow-hidden odd:bg-white md:hidden even:bg-light-slate-2"
       >
         {/* Row: Repository Name and Pr overview */}
         <div className="flex items-center gap-x-3">
@@ -142,7 +142,7 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
           <div className="">
             <div
               onClick={() => setTableOpen(!tableOpen)}
-              className="border rounded-md p-1 w-6 h-6 items-center justify-between"
+              className="items-center justify-between w-6 h-6 p-1 border rounded-md"
             >
               {tableOpen ? <ChevronUpIcon className="" /> : <ChevronDownIcon />}
             </div>
@@ -153,13 +153,13 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
           {/* Column: Last 30 Days */}
           <div className="py-3">{last30days && <Sparkline data={last30days} width="100%" height={54} />}</div>
           {/* Row: Activity */}
-          <div className="flex items-center py-3 border-b justify-between">
+          <div className="flex items-center justify-between py-3 border-b">
             <div>Activity</div>
             {getActivity(totalPrs, false)}
           </div>
 
           {/* Row: Pr velocity */}
-          <div className="flex items-center py-3 border-b justify-between">
+          <div className="flex items-center justify-between py-3 border-b">
             <div>Pr Velocity</div>
             <div className="flex text-base gap-x-3">
               <div>{prVelocityInDays}</div>
@@ -168,7 +168,7 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
           </div>
 
           {/* Row: SPAM */}
-          <div className="flex items-center py-3 border-b justify-between">
+          <div className="flex items-center justify-between py-3 border-b">
             <div>Spam</div>
             <div className="flex text-base gap-x-3">
               {spamPrsCount && spamPrsCount > 0 ? (
@@ -190,15 +190,15 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
 
           {/* Row: Contributors */}
 
-          <div className="flex items-center py-3 justify-between">
+          <div className="flex items-center justify-between py-3">
             <div>Contributors</div>
-            <div className="flex text-base items-center">
+            <div className="flex items-center text-base">
               {contributorData.length! > 0 ? <StackedAvatar contributors={contributorData} /> : "-"}
               {contributorData.length! >= 5 ? <div>&nbsp;{`+${contributorData.length - 5}`}</div> : ""}
             </div>
           </div>
 
-          <div onClick={() => setTableOpen(!tableOpen)} className="text-center border rounded-lg py-1 mt-3">
+          <div onClick={() => setTableOpen(!tableOpen)} className="py-1 mt-3 text-center border rounded-lg">
             Hide details
           </div>
         </div>

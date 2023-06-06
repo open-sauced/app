@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
 
-import { getFormattedDate } from "lib/utils/date-utils";
+import formatDistanceToNowStrict from "date-fns/formatDistanceToNowStrict";
 
 import Avatar from "components/atoms/Avatar/avatar";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
@@ -42,7 +42,9 @@ const HomeHighlightsWrapper = ({ emojis, highlights, loading, mutate }: HomeHigh
                   <strong>{login}</strong>
                 </Link>
                 <Link href={`/feed/${id}`}>
-                  <span className="text-xs font-normal text-light-slate-11">{getFormattedDate(created_at)}</span>
+                  <span className="text-xs font-normal text-light-slate-11">
+                    {formatDistanceToNowStrict(new Date(created_at), { addSuffix: true })}
+                  </span>
                 </Link>
               </div>
               <div className="p-4 py-6 border bg-light-slate-1 md:px-6 lg:px-12 rounded-xl">

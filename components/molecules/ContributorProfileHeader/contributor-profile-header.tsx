@@ -18,7 +18,11 @@ import {
 } from "components/atoms/Dropdown/dropdown";
 
 import { useToast } from "lib/hooks/useToast";
+
 import { useUserCollaborations } from "lib/hooks/useUserCollaborations";
+
+import { usePostHogContext } from "posthog-js/react";
+
 
 interface ContributorProfileHeaderProps {
   avatarUrl?: string;
@@ -48,12 +52,16 @@ const ContributorProfileHeader = ({
   isRecievingCollaborations,
   isPremium,
 }: ContributorProfileHeaderProps) => {
+
   const router = useRouter();
   const currentPath = router.asPath;
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const { requestCollaboration } = useUserCollaborations();
   const [message, setMessage] = useState("");
+
+  const posthog = usePostHogContext();
+
   const { toast } = useToast();
   const [host, setHost] = useState("");
 
@@ -86,6 +94,12 @@ const ContributorProfileHeader = ({
 
   const handleCopyToClipboard = async (content: string) => {
     const url = new URL(content).toString();
+    posthog.capture(
+      "clicked: profile copied",
+      {
+        profile: user?.user_metadata.user_name,
+      });
+
     try {
       await navigator.clipboard.writeText(url);
       toast({ description: "Copied to clipboard", variant: "success" });
