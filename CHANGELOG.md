@@ -5,6 +5,19 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.51.0-beta.2](https://github.com/open-sauced/insights/compare/v1.51.0-beta.1...v1.51.0-beta.2) (2023-06-06)
+
+
+### 🍕 Features
+
+* add share tracking ([#1250](https://github.com/open-sauced/insights/issues/1250)) ([5b7d331](https://github.com/open-sauced/insights/commit/5b7d3317d4670d46611ed6bb1439e24974f7ddc4))
+
+
+### 🐛 Bug Fixes
+
+* update hook for Posthog ([cd4f32c](https://github.com/open-sauced/insights/commit/cd4f32c506dc370a88fa2fa451995704f4818994))
+* update medium activity threshold for repositories ([#1251](https://github.com/open-sauced/insights/issues/1251)) ([4730533](https://github.com/open-sauced/insights/commit/4730533c2426a58f39bbc4d6b06cd7291d96652f)), closes [#1224](https://github.com/open-sauced/insights/issues/1224)
+
 ## [1.51.0-beta.1](https://github.com/open-sauced/insights/compare/v1.50.1-beta.3...v1.51.0-beta.1) (2023-06-06)
 
 
