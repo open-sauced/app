@@ -34,7 +34,7 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
   const contributors = data.map((pr) => {
     return {
       host_login: pr.author_login,
-      first_commit_time: pr.created_at,
+      first_commit_time: pr.updated_at,
     };
   });
 
@@ -51,8 +51,6 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
         },
       };
     });
-
-  // console.log(data);
 
   return (
     <>

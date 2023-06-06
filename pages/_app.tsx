@@ -20,6 +20,7 @@ import SEO from "layouts/SEO/SEO";
 import { Toaster } from "components/molecules/Toaster/toaster";
 import Script from "next/script";
 import useSession from "lib/hooks/useSession";
+import PrivateWrapper from "layouts/private-wrapper";
 
 import posthog from "posthog-js";
 import { PostHogProvider } from "posthog-js/react";
@@ -40,6 +41,7 @@ type ComponentWithPageLayout = AppProps & {
     PageLayout?: React.ComponentType<any>;
     SEO?: SEOobject;
     updateSEO?: (SEO: SEOobject) => void;
+    isPrivateRoute?: boolean;
   };
 };
 
@@ -148,18 +150,20 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
         <Toaster />
         <SessionContextProvider supabaseClient={supabase} initialSession={pageProps.initialSession}>
           <PostHogProvider client={posthog}>
-            <TipProvider>
-              {Component.PageLayout ? (
-                <Component.PageLayout>
+            <PrivateWrapper isPrivateRoute={Component.isPrivateRoute}>
+              <TipProvider>
+                {Component.PageLayout ? (
+                  <Component.PageLayout>
+                    <Component {...pageProps} />
+                  </Component.PageLayout>
+                ) : (
                   <Component {...pageProps} />
-                </Component.PageLayout>
-              ) : (
-                <Component {...pageProps} />
-              )}
-            </TipProvider>
-            <Script id="siteGPT" type="text/javascript">
-              {"d=document;s=d.createElement(\"script\");s.src=\"https://sitegpt.ai/widget/365440930125185604.js\";s.async=1;d.getElementsByTagName(\"head\")[0].appendChild(s);"}
-            </Script>
+                )}
+              </TipProvider>
+              <Script id="siteGPT" type="text/javascript">
+                {"d=document;s=d.createElement(\"script\");s.src=\"https://sitegpt.ai/widget/365440930125185604.js\";s.async=1;d.getElementsByTagName(\"head\")[0].appendChild(s);"}
+              </Script>
+            </PrivateWrapper>
           </PostHogProvider>
         </SessionContextProvider>
       </SWRConfig>
