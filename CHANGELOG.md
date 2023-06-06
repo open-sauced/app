@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.50.1-beta.3](https://github.com/open-sauced/insights/compare/v1.50.1-beta.2...v1.50.1-beta.3) (2023-06-06)
+
+
+### 🐛 Bug Fixes
+
+* reports select issue ([#1239](https://github.com/open-sauced/insights/issues/1239)) ([a48bc87](https://github.com/open-sauced/insights/commit/a48bc879b23bf9bfe43164b4377a607741a58d2a))
+
 ### [1.50.1-beta.2](https://github.com/open-sauced/insights/compare/v1.50.1-beta.1...v1.50.1-beta.2) (2023-06-05)
 
 
