@@ -8,7 +8,7 @@ import { MarkGithubIcon } from "@primer/octicons-react";
 import { User } from "@supabase/supabase-js";
 import { FiCopy } from "react-icons/fi";
 import { useToast } from "lib/hooks/useToast";
-import { usePostHogContext } from "posthog-js/react";
+import { usePostHog } from "posthog-js/react";
 
 interface ContributorProfileHeaderProps {
   avatarUrl?: string;
@@ -32,9 +32,9 @@ const ContributorProfileHeader = ({
   username,
   user,
   handleSignIn,
-  isOwner
+  isOwner,
 }: ContributorProfileHeaderProps) => {
-  const posthog = usePostHogContext();
+  const posthog = usePostHog();
   const { toast } = useToast();
   const [host, setHost] = useState("");
   const handleFollowClick = () => {
@@ -47,11 +47,9 @@ const ContributorProfileHeader = ({
 
   const handleCopyToClipboard = async (content: string) => {
     const url = new URL(content).toString();
-    posthog.capture(
-      "clicked: profile copied",
-      {
-        profile: user?.user_metadata.user_name,
-      });
+    posthog!.capture("clicked: profile copied", {
+      profile: user?.user_metadata.user_name,
+    });
 
     try {
       await navigator.clipboard.writeText(url);
@@ -100,7 +98,11 @@ const ContributorProfileHeader = ({
         </div>
         {isConnected && (
           <div className="flex flex-col items-center gap-3 md:translate-y-0 translate-y-28 md:flex-row">
-            <Button onClick={() => handleCopyToClipboard(`${host}/user/${user?.user_metadata.user_name}`)} className="px-10 py-2 mb-10 bg-white md:mb-6 " variant="text">
+            <Button
+              onClick={() => handleCopyToClipboard(`${host}/user/${user?.user_metadata.user_name}`)}
+              className="px-10 py-2 mb-10 bg-white md:mb-6 "
+              variant="text"
+            >
               <FiCopy className="mr-1 mt-1" /> Share
             </Button>
             {user ? (
