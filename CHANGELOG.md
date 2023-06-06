@@ -5,6 +5,47 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.51.0-beta.2](https://github.com/open-sauced/insights/compare/v1.51.0-beta.1...v1.51.0-beta.2) (2023-06-06)
+
+
+### 🍕 Features
+
+* add share tracking ([#1250](https://github.com/open-sauced/insights/issues/1250)) ([5b7d331](https://github.com/open-sauced/insights/commit/5b7d3317d4670d46611ed6bb1439e24974f7ddc4))
+
+
+### 🐛 Bug Fixes
+
+* update hook for Posthog ([cd4f32c](https://github.com/open-sauced/insights/commit/cd4f32c506dc370a88fa2fa451995704f4818994))
+* update medium activity threshold for repositories ([#1251](https://github.com/open-sauced/insights/issues/1251)) ([4730533](https://github.com/open-sauced/insights/commit/4730533c2426a58f39bbc4d6b06cd7291d96652f)), closes [#1224](https://github.com/open-sauced/insights/issues/1224)
+
+## [1.51.0-beta.1](https://github.com/open-sauced/insights/compare/v1.50.1-beta.3...v1.51.0-beta.1) (2023-06-06)
+
+
+### 🍕 Features
+
+* implement dynamic redirect on auth ([#1240](https://github.com/open-sauced/insights/issues/1240)) ([548cc4d](https://github.com/open-sauced/insights/commit/548cc4df7c4758c9fbe45054ab4b889b7180f011))
+
+### [1.50.1-beta.3](https://github.com/open-sauced/insights/compare/v1.50.1-beta.2...v1.50.1-beta.3) (2023-06-06)
+
+
+### 🐛 Bug Fixes
+
+* reports select issue ([#1239](https://github.com/open-sauced/insights/issues/1239)) ([a48bc87](https://github.com/open-sauced/insights/commit/a48bc879b23bf9bfe43164b4377a607741a58d2a))
+
+### [1.50.1-beta.2](https://github.com/open-sauced/insights/compare/v1.50.1-beta.1...v1.50.1-beta.2) (2023-06-05)
+
+
+### 🐛 Bug Fixes
+
+* Footer Location on Smaller Screens ([#1242](https://github.com/open-sauced/insights/issues/1242)) ([8b2356a](https://github.com/open-sauced/insights/commit/8b2356ab0b28a3582c32a28985356110e405448e))
+
+### [1.50.1-beta.1](https://github.com/open-sauced/insights/compare/v1.50.0...v1.50.1-beta.1) (2023-06-01)
+
+
+### 🐛 Bug Fixes
+
+* update contributors hook to use contributor API endpoint ([#1238](https://github.com/open-sauced/insights/issues/1238)) ([eff01c0](https://github.com/open-sauced/insights/commit/eff01c0f88c05f57925a0ec021e78676ba9d915f))
+
 ## [1.50.0](https://github.com/open-sauced/insights/compare/v1.49.0...v1.50.0) (2023-06-01)
 
 

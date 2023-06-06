@@ -3,7 +3,7 @@ import ContributorListTableRow from "components/molecules/ContributorListTableRo
 import React from "react";
 
 export interface ContributorTableProps {
-  contributors: DbRepoPR[];
+  contributors: DbPRContributor[];
   topic: string;
   loading?: boolean;
 }
