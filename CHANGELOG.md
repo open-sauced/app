@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.51.0-beta.1](https://github.com/open-sauced/insights/compare/v1.50.1-beta.3...v1.51.0-beta.1) (2023-06-06)
+
+
+### 🍕 Features
+
+* implement dynamic redirect on auth ([#1240](https://github.com/open-sauced/insights/issues/1240)) ([548cc4d](https://github.com/open-sauced/insights/commit/548cc4df7c4758c9fbe45054ab4b889b7180f011))
+
 ### [1.50.1-beta.3](https://github.com/open-sauced/insights/compare/v1.50.1-beta.2...v1.50.1-beta.3) (2023-06-06)
 
 
