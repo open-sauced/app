@@ -48,7 +48,7 @@ const ContributorProfileHeader = ({
   const handleCopyToClipboard = async (content: string) => {
     const url = new URL(content).toString();
     posthog.capture(
-      "profile copied",
+      "clicked: profile copied",
       {
         profile: user?.user_metadata.user_name,
       });
