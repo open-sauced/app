@@ -8,7 +8,7 @@ import { MarkGithubIcon } from "@primer/octicons-react";
 import { User } from "@supabase/supabase-js";
 import { FiCopy } from "react-icons/fi";
 import { useToast } from "lib/hooks/useToast";
-import { usePostHog } from 'posthog-js/react'
+import { usePostHogContext } from 'posthog-js/react'
 
 interface ContributorProfileHeaderProps {
   avatarUrl?: string;
@@ -34,7 +34,7 @@ const ContributorProfileHeader = ({
   handleSignIn,
   isOwner
 }: ContributorProfileHeaderProps) => {
-  const posthog = usePostHog()
+  const posthog = usePostHogContext()
   const { toast } = useToast();
   const [host, setHost] = useState("");
   const handleFollowClick = () => {
