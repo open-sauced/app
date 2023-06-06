@@ -99,6 +99,7 @@ const ContributorProfilePage = ({
         <SkeletonWrapper height={200} />
       ) : (
         <ContributorProfileHeader
+          isPremium={user ? user.role >= 50 : false}
           handleSignIn={signIn}
           username={user?.login}
           isRecievingCollaborations={user?.receive_collaboration}

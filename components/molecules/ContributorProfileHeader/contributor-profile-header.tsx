@@ -32,6 +32,7 @@ interface ContributorProfileHeaderProps {
   handleSignIn: (params: SignInWithOAuthCredentials) => void;
   isOwner: boolean;
   isRecievingCollaborations?: boolean;
+  isPremium?: boolean;
 }
 const ContributorProfileHeader = ({
   avatarUrl,
@@ -45,6 +46,7 @@ const ContributorProfileHeader = ({
   handleSignIn,
   isOwner,
   isRecievingCollaborations,
+  isPremium,
 }: ContributorProfileHeaderProps) => {
   const router = useRouter();
   const currentPath = router.asPath;
@@ -158,7 +160,7 @@ const ContributorProfileHeader = ({
                           {isFollowing ? "Following" : "Follow"}
                         </button>
                       </DropdownMenuItem>
-                      {isRecievingCollaborations && (
+                      {isPremium && isRecievingCollaborations && (
                         <DropdownMenuItem className="rounded-md">
                           <button onClick={() => setIsDialogOpen(true)} className="flex items-center gap-1 pl-3 pr-7">
                             Collaborate
