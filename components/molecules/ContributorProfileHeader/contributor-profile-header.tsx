@@ -4,6 +4,7 @@ import Image from "next/image";
 import { TfiMoreAlt } from "react-icons/tfi";
 import { FiCopy } from "react-icons/fi";
 import { SignInWithOAuthCredentials, User } from "@supabase/supabase-js";
+import { usePostHog } from "posthog-js/react";
 
 import Avatar from "components/atoms/Avatar/avatar";
 import RainbowBg from "img/rainbow-cover.png";
@@ -17,8 +18,8 @@ import {
   DropdownMenuTrigger,
 } from "components/atoms/Dropdown/dropdown";
 
-import { useToast } from "lib/hooks/useToast";
 import { useUserCollaborations } from "lib/hooks/useUserCollaborations";
+import { useToast } from "lib/hooks/useToast";
 
 interface ContributorProfileHeaderProps {
   avatarUrl?: string;
@@ -54,6 +55,9 @@ const ContributorProfileHeader = ({
   const [loading, setLoading] = useState(false);
   const { requestCollaboration } = useUserCollaborations();
   const [message, setMessage] = useState("");
+
+  const posthog = usePostHog();
+
   const { toast } = useToast();
   const [host, setHost] = useState("");
 
@@ -86,6 +90,10 @@ const ContributorProfileHeader = ({
 
   const handleCopyToClipboard = async (content: string) => {
     const url = new URL(content).toString();
+    posthog!.capture("clicked: profile copied", {
+      profile: user?.user_metadata.user_name,
+    });
+
     try {
       await navigator.clipboard.writeText(url);
       toast({ description: "Copied to clipboard", variant: "success" });

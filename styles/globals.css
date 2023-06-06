@@ -5,6 +5,9 @@
 * {
   font-weight: 500;
 }
+body {
+  background-color: #f8f9fa;
+}
 .login-step .sbui-btn-container {
   width: 100%;
 }

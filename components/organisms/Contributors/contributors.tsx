@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useRouter } from "next/router";
 import useStore from "lib/store";
 
@@ -13,6 +14,9 @@ import LimitSelect from "components/atoms/Select/limit-select";
 
 import useContributors from "lib/hooks/api/useContributors";
 import { getAvatarByUsername } from "lib/utils/github";
+import { ToggleValue } from "components/atoms/LayoutToggle/layout-toggle";
+import ContributorListTableHeaders from "components/molecules/ContributorListTableHeader/contributor-list-table-header";
+import ContributorTable from "../ContributorsTable/contributors-table";
 
 interface ContributorProps {
   repositories?: number[];
@@ -24,12 +28,13 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
   const topic = filterName as string;
   const store = useStore();
   const range = useStore((state) => state.range);
+  const [layout, setLayout] = useState<ToggleValue>("grid");
   const { data, meta, setPage, setLimit, isError, isLoading } = useContributors(10, repositories, range);
 
   const contributors = data.map((pr) => {
     return {
       host_login: pr.author_login,
-      first_commit_time: pr.created_at
+      first_commit_time: pr.updated_at,
     };
   });
 
@@ -42,8 +47,8 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
         profile: {
           githubAvatar: getAvatarByUsername(contributor.host_login),
           githubName: contributor.host_login,
-          dateOfFirstPR: timeSinceFirstCommit
-        }
+          dateOfFirstPR: timeSinceFirstCommit,
+        },
       };
     });
 
@@ -57,22 +62,31 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
         range={range}
         setRangeFilter={store.updateRange}
         title="Contributors"
+        layout={layout}
+        onLayoutToggle={() => setLayout((prev) => (prev === "list" ? "grid" : "list"))}
       />
 
-      <div className="grid w-full gap-3 grid-cols-automobile md:grid-cols-autodesktop">
-        {isLoading ? <SkeletonWrapper height={210} radius={12} count={9} /> : ""}
-        {isError ? <>An error occurred!..</> : ""}
-        {contributorArray.map((contributor, index) => (
-          <ContributorCard
-            key={index}
-            className=""
-            contributor={{ ...contributor }}
-            topic={topic}
-            repositories={repositories}
-            range={range}
-          />
-        ))}
-      </div>
+      {layout === "grid" ? (
+        <div className="grid w-full gap-3 grid-cols-automobile md:grid-cols-autodesktop">
+          {isLoading ? <SkeletonWrapper height={210} radius={12} count={9} /> : ""}
+          {isError ? <>An error occurred!..</> : ""}
+          {contributorArray.map((contributor, index) => (
+            <ContributorCard
+              key={index}
+              className=""
+              contributor={{ ...contributor }}
+              topic={topic}
+              repositories={repositories}
+              range={range}
+            />
+          ))}
+        </div>
+      ) : (
+        <div className="lg:min-w-[1150px]">
+          <ContributorListTableHeaders />
+          <ContributorTable loading={isLoading} topic={topic} contributors={data}></ContributorTable>
+        </div>
+      )}
 
       {/* Table footer */}
 
@@ -84,7 +98,7 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
             { name: "20 per page", value: "20" },
             { name: "30 per page", value: "30" },
             { name: "40 per page", value: "40" },
-            { name: "50 per page", value: "50" }
+            { name: "50 per page", value: "50" },
           ]}
           className="!w-36 ml-auto md:hidden overflow-x-hidden"
           onChange={function (limit: string): void {
