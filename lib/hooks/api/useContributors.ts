@@ -6,18 +6,17 @@ import publicApiFetcher from "lib/utils/public-api-fetcher";
 import getFilterQuery from "lib/utils/get-filter-query";
 
 interface PaginatedResponse {
-  readonly data: DbRepoPR[];
+  readonly data: DbPRContributor[];
   readonly meta: Meta;
 }
 
 /**
  * Fetch contributors based on pull requests.
- * Replace with contributors API endpoint when available.
- * 
- * @param intialLimit 
- * @param repoIds 
- * @param range 
- * @returns 
+ *
+ * @param intialLimit
+ * @param repoIds
+ * @param range
+ * @returns
  */
 const useContributors = (intialLimit = 10, repoIds: number[] = [], range = 30) => {
   const router = useRouter();
@@ -51,7 +50,7 @@ const useContributors = (intialLimit = 10, repoIds: number[] = [], range = 30) =
 
   query.set("range", `${range}`);
 
-  const baseEndpoint = "prs/search";
+  const baseEndpoint = "contributors/search";
   const endpointString = `${baseEndpoint}?${query.toString()}`;
 
   const { data, error, mutate } = useSWR<PaginatedResponse, Error>(
@@ -67,7 +66,7 @@ const useContributors = (intialLimit = 10, repoIds: number[] = [], range = 30) =
     mutate,
     page,
     setPage,
-    setLimit
+    setLimit,
   };
 };
 

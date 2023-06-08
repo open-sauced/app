@@ -59,7 +59,7 @@ const footerContext = [
 
 const Footer = (): JSX.Element => {
   return (
-    <footer className=" h-24 w-full bg-light-slate-2 transition">
+    <footer className="h-24 w-full transition">
       <div className=" container mx-auto px-2 md:px-16  lg:border-t lg:py-8 lg:items-center lg:justify-between lg:gap-x-4 flex flex-col gap-y-4 lg:flex-row py-2 w-full">
         <div className="text-center lg:text-left justify-center gap-1 flex items-center">
           <div className="w-6 h-6 relative !min-w-[24px] min-h-[24px]">

@@ -6,10 +6,10 @@ import { supabase } from "../utils/supabase";
 
 const useSupabaseAuth = (loadSession = false) => {
   const store = useStore();
-  const user = useStore(state => state.user);
-  const sessionToken = useStore(state => state.sessionToken);
-  const providerToken = useStore(state => state.providerToken);
-  const userId = useStore(state => state.userId);
+  const user = useStore((state) => state.user);
+  const sessionToken = useStore((state) => state.sessionToken);
+  const providerToken = useStore((state) => state.providerToken);
+  const userId = useStore((state) => state.userId);
 
   useEffect(() => {
     async function getUserSession() {
@@ -24,7 +24,9 @@ const useSupabaseAuth = (loadSession = false) => {
       getUserSession();
     }
 
-    const { data: { subscription: listener } } = supabase.auth.onAuthStateChange((_, session) => {
+    const {
+      data: { subscription: listener },
+    } = supabase.auth.onAuthStateChange((_, session) => {
       store.setUser(session?.user ?? null);
       store.setSessionToken(session?.access_token);
       store.setProviderToken(session?.provider_token);
@@ -37,17 +39,18 @@ const useSupabaseAuth = (loadSession = false) => {
   }, []);
 
   return {
-    signIn: (data: SignInWithOAuthCredentials) => supabase.auth.signInWithOAuth({
-      ...data,
-      options: data.options ?? {
-        redirectTo: process.env.NEXT_PUBLIC_BASE_URL ?? "/"
-      }
-    }),
+    signIn: (data: SignInWithOAuthCredentials) =>
+      supabase.auth.signInWithOAuth({
+        ...data,
+        options: data.options ?? {
+          redirectTo: process.env.NEXT_PUBLIC_BASE_URL ?? "/",
+        },
+      }),
     signOut: () => supabase.auth.signOut(),
     user,
     sessionToken,
     providerToken,
-    userId
+    userId,
   };
 };
 

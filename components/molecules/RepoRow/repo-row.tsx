@@ -43,7 +43,7 @@ export const getActivity = (total?: number, loading?: boolean) => {
     return <Pill icon={<ArrowTrendingUpIcon color="green" className="w-4 h-4" />} text="High" color="green" />;
   }
 
-  if (total >= 20 && total <= 80) {
+  if (total >= 5 && total <= 80) {
     return <Pill icon={<MinusSmallIcon color="black" className="w-4 h-4" />} text="Medium" color="yellow" />;
   }
 

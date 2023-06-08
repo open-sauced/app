@@ -14,7 +14,7 @@ import useRepoList from "lib/hooks/useRepoList";
 import { useFetchUser } from "lib/hooks/useFetchUser";
 
 interface ContributorListTableRow {
-  contributor: DbRepoPR;
+  contributor: DbPRContributor;
   topic: string;
 }
 
@@ -50,7 +50,7 @@ const ContributorListTableRow = ({ contributor, topic }: ContributorListTableRow
   const totalPrs = data.length;
   const last30days = [
     {
-      id: `last30-${contributor.repo_id}`,
+      id: `last30-${contributor.author_login}`,
       color: "hsl(63, 70%, 50%)",
       data: days,
     },

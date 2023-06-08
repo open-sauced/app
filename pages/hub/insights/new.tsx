@@ -8,6 +8,7 @@ const NewInsightPage: WithPageLayout = () => {
 };
 
 NewInsightPage.PageLayout = HubLayout;
+NewInsightPage.isPrivateRoute = true;
 NewInsightPage.SEO = {
   title: "Create Insight Page | Open Sauced Insights",
   description: "An insight page is a dashboard containing selected repositories that you and your team can get insights from."
