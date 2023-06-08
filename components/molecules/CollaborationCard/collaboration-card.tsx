@@ -1,27 +1,44 @@
 import React from "react";
 import Avatar from "components/atoms/Avatar/avatar";
+import clsx from "clsx";
+import { getAvatarByUsername } from "lib/utils/github";
+import Button from "components/atoms/Button/button";
 
-export interface CollaborationRequestObject {
+export interface CollaborationRequestObject extends React.ComponentProps<"div"> {
   requestor: DbUser | undefined;
   outreachMessage: string;
+  requestId: string;
+  onAccept: (id: string) => void;
+  onDecline: (id: string) => void;
 }
 
-const CollaborationCard = ({ requestor, outreachMessage }: CollaborationRequestObject) => {
+const CollaborationCard = ({
+  requestor,
+  outreachMessage,
+  className,
+  requestId,
+  onAccept,
+  onDecline,
+}: CollaborationRequestObject) => {
   return (
-    <div className="bg-white flex flex-col gap-4 rounded-2xl p-4 border border-light-slate-6 max-w-2xl">
-      <div className="flex justify-between text-sm items-center ">
-        <div className="flex gap-2 text-sm items-center">
-          <Avatar
-            className="!rounded-none"
-            size="sm"
-            avatarURL="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1064&q=80"
-          />
+    <div className={clsx("flex flex-col w-full gap-4 p-4 bg-white border rounded-2xl border-light-slate-6", className)}>
+      <div className="flex items-center justify-between text-sm ">
+        <div className="flex items-center gap-2 text-sm">
+          <Avatar className="!rounded-none" size="sm" avatarURL={getAvatarByUsername(requestor?.login || "")} />
 
-          <div>Microsoft</div>
+          <div>{requestor?.name}</div>
         </div>
         <div className="flex gap-2">
-          <button className="px-2">Ignore</button>
-          <button className="bg-light-orange-9 px-2 py-1 outline-none rounded-lg text-white">Accept</button>
+          <button onClick={() => onDecline(requestId)} className="px-2">
+            Ignore
+          </button>
+          <Button
+            onClick={() => onAccept(requestId)}
+            variant="primary"
+            className="!px-2 !py-1 !text-xs md:text-sm text-white rounded-lg outline-none bg-light-orange-9"
+          >
+            Accept
+          </Button>
         </div>
       </div>
       <div>{outreachMessage}</div>
