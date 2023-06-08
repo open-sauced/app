@@ -46,23 +46,20 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
   const searchParams = new URLSearchParams(pageHref.substring(pageHref.indexOf("?")));
   const [receivedData, setReceivedData] = useState<DbRepo[]>([]);
   const [reposIds, setReposIds] = useState<number[]>([]);
-  const {data: repoListData} = useRepositories(reposIds);
-
-  debugger;
-
+  const { data: repoListData } = useRepositories(reposIds);
 
   useEffect(() => {
     if (router.query.selectedRepos) {
       setReceivedData(JSON.parse(router.query.selectedRepos as string) || []);
     } else if (searchParams.has("selectedRepos")) {
       setReposIds(JSON.parse(searchParams.get("selectedRepos") as string) || []);
-      debugger;
+      setRepos(repoListData);
     }
   }, []);
 
 
   useEffect(() => {
-    setReceivedData(repoListData);
+    setRepos(repoListData);
   }, [repoListData]);
 
 

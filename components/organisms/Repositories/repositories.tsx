@@ -61,10 +61,6 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
         provider: "github",
         options: {
           redirectTo: `${window.location.origin}/hub/insights/new?selectedRepos=${JSON.stringify(reposIds)}&`,
-          queryParams: {
-            query: "testing the query params",
-            "selectedRepos": `${JSON.stringify(selectedRepos)}`,
-          },
         },
       });
     }
