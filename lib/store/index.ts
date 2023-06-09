@@ -10,7 +10,8 @@ const initialState: GlobalStateInterface = {
   sessionToken: null,
   providerToken: null,
   userId: null,
-  hasReports: false
+  hasReports: false,
+  isLoading: false
 };
 
 interface AppStore extends GlobalStateInterface {
@@ -31,6 +32,7 @@ interface AppStore extends GlobalStateInterface {
   setProviderToken: (providerToken?: string | null) => void;
   setUserId: (userId?: number | null) => void;
   setHasReports: (hasReports: boolean) => void;
+  setIsLoading: (isLoading: boolean) => void;
 }
 
 const store = create<AppStore>()((set) => ({
@@ -51,7 +53,8 @@ const store = create<AppStore>()((set) => ({
   setSessionToken: (sessionToken?: string | null) => set((state) => ({ ...state, sessionToken })),
   setProviderToken: (providerToken?: string | null) => set((state) => ({ ...state, providerToken })),
   setUserId: (userId?: number | null) => set((state) => ({ ...state, userId })),
-  setHasReports: (hasReports: boolean) => set((state) => ({ ...state, hasReports }))
+  setHasReports: (hasReports: boolean) => set((state) => ({ ...state, hasReports })),
+  setIsLoading: (isLoading: boolean) => set((state) => ({ ...state, isLoading }))
 }));
 
 export default store;

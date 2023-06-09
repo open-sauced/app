@@ -10,4 +10,5 @@ export interface GlobalStateInterface {
   providerToken?: string | null;
   userId?: number | null;
   hasReports?: boolean;
+  isLoading?: boolean;
 }

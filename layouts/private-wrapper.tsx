@@ -1,6 +1,7 @@
 import { useUser } from "@supabase/auth-helpers-react";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
+import useStore from "lib/store";
 
 interface PrivateWrapperProps {
   isPrivateRoute?: boolean;
@@ -10,15 +11,17 @@ interface PrivateWrapperProps {
 const PrivateWrapper = ({ isPrivateRoute = false, children }: PrivateWrapperProps) => {
   const user = useUser();
   const router = useRouter();
+  const isLoading = useStore(state => state.isLoading);
   
   
   useEffect(() => {
-    if (router.asPath.includes("selectedReposIDs")) return;
+    debugger;
+    if (isLoading) return;
 
     if (isPrivateRoute && !user) {
       router.replace("/javascript/dashboard/filter/recent");
     }
-  }, [user]);
+  }, [user, isLoading]);
 
   return <>{children}</>;
 };

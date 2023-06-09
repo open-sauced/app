@@ -39,13 +39,18 @@ const useSupabaseAuth = (loadSession = false) => {
   }, []);
 
   return {
-    signIn: (data: SignInWithOAuthCredentials) =>
-      supabase.auth.signInWithOAuth({
+    signIn: async (data: SignInWithOAuthCredentials) => {
+      debugger;
+      store.setIsLoading(true);
+      await supabase.auth.signInWithOAuth({
         ...data,
         options: data.options ?? {
           redirectTo: process.env.NEXT_PUBLIC_BASE_URL ?? "/",
         },
-      }),
+      });
+      debugger;
+      store.setIsLoading(false);
+    },
     signOut: () => supabase.auth.signOut(),
     user,
     sessionToken,
