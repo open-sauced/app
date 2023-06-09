@@ -43,24 +43,22 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
   const { toast } = useToast();
   const router = useRouter();
   const pageHref = router.asPath;
-  const searchParams = new URLSearchParams(pageHref.substring(pageHref.indexOf("?")));
   const [receivedData, setReceivedData] = useState<DbRepo[]>([]);
   const [reposIds, setReposIds] = useState<number[]>([]);
   const { data: repoListData } = useRepositories(reposIds);
 
   useEffect(() => {
+    const searchParams = new URLSearchParams(pageHref.substring(pageHref.indexOf("?")));
+
     if (router.query.selectedRepos) {
       setReceivedData(JSON.parse(router.query.selectedRepos as string) || []);
-    } else if (searchParams.has("selectedRepos")) {
-      setReposIds(JSON.parse(searchParams.get("selectedRepos") as string) || []);
+    } else if (searchParams.has("selectedReposIDs")) {
+      setReposIds(JSON.parse(searchParams.get("selectedReposIDs") as string) || []);
       setRepos(repoListData);
     }
-  }, []);
+  }, [repoListData, router.query.selectedRepos, pageHref]);
 
 
-  useEffect(() => {
-    setRepos(repoListData);
-  }, [repoListData]);
 
 
 
