@@ -3,6 +3,9 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 export async function middleware(req: NextRequest) {
+  if (req.nextUrl.searchParams.has("selectedReposIDs")) {
+    return NextResponse.next(); 
+  }
   const res = NextResponse.next();
   // Create authenticated Supabase Client.
   const supabase = createMiddlewareSupabaseClient({ req, res });

@@ -11,9 +11,12 @@ const PrivateWrapper = ({ isPrivateRoute = false, children }: PrivateWrapperProp
   const user = useUser();
   const router = useRouter();
   
+  
   useEffect(() => {
-    if (isPrivateRoute) {
-      if (!user) router.replace("/javascript/dashboard/filter/recent");
+    if (router.asPath.includes("selectedReposIDs")) return;
+
+    if (isPrivateRoute && !user) {
+      router.replace("/javascript/dashboard/filter/recent");
     }
   }, [user]);
 

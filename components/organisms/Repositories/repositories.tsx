@@ -55,12 +55,11 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
         "/hub/insights/new"
       );
     } else {
-      debugger;
       const reposIds = selectedRepos.map((repo) => repo.id);
       signIn({ 
         provider: "github",
         options: {
-          redirectTo: `${window.location.origin}/hub/insights/new?selectedRepos=${JSON.stringify(reposIds)}&`,
+          redirectTo: `${window.location.origin}/hub/insights/new?selectedReposIDs=${JSON.stringify(reposIds)}&`,
         },
       });
     }
