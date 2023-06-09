@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.52.0-beta.2](https://github.com/open-sauced/insights/compare/v1.52.0-beta.1...v1.52.0-beta.2) (2023-06-09)
+
+
+### 🐛 Bug Fixes
+
+* remove duplicate redirect check and use server props on insight page ([#1255](https://github.com/open-sauced/insights/issues/1255)) ([9ef2780](https://github.com/open-sauced/insights/commit/9ef2780ea7fbfc170a8a2ead44f93fecd5777e56))
+
 ## [1.52.0-beta.1](https://github.com/open-sauced/insights/compare/v1.51.0...v1.52.0-beta.1) (2023-06-07)
 
 
