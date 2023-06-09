@@ -1,4 +1,6 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
+
 
 import { GlobalStateInterface } from "interfaces/global-state-types";
 import { User } from "@supabase/supabase-js";
@@ -35,26 +37,30 @@ interface AppStore extends GlobalStateInterface {
   setIsLoading: (isLoading: boolean) => void;
 }
 
-const store = create<AppStore>()((set) => ({
-  ...initialState,
-  setWaitlisted: () => set((state) => ({ ...state, waitlisted: true })),
-  onboardUser: () => set((state) => ({ ...state, onboarded: true })),
-  setSession: ({
-    onboarded,
-    waitlisted,
-    insightRepoLimit
-  }: {
+const store = create<AppStore>()(
+  persist((set) => ({
+    ...initialState,
+    setWaitlisted: () => set((state) => ({ ...state, waitlisted: true })),
+    onboardUser: () => set((state) => ({ ...state, onboarded: true })),
+    setSession: ({
+      onboarded,
+      waitlisted,
+      insightRepoLimit
+    }: {
     onboarded: boolean;
     waitlisted: boolean;
     insightRepoLimit: number;
   }) => set((state) => ({ ...state, onboarded, waitlisted, insightRepoLimit })),
-  updateRange: (range: number) => set((state) => ({ ...state, range })),
-  setUser: (user: User | null) => set((state) => ({ ...state, user })),
-  setSessionToken: (sessionToken?: string | null) => set((state) => ({ ...state, sessionToken })),
-  setProviderToken: (providerToken?: string | null) => set((state) => ({ ...state, providerToken })),
-  setUserId: (userId?: number | null) => set((state) => ({ ...state, userId })),
-  setHasReports: (hasReports: boolean) => set((state) => ({ ...state, hasReports })),
-  setIsLoading: (isLoading: boolean) => set((state) => ({ ...state, isLoading }))
-}));
+    updateRange: (range: number) => set((state) => ({ ...state, range })),
+    setUser: (user: User | null) => set((state) => ({ ...state, user })),
+    setSessionToken: (sessionToken?: string | null) => set((state) => ({ ...state, sessionToken })),
+    setProviderToken: (providerToken?: string | null) => set((state) => ({ ...state, providerToken })),
+    setUserId: (userId?: number | null) => set((state) => ({ ...state, userId })),
+    setHasReports: (hasReports: boolean) => set((state) => ({ ...state, hasReports })),
+    setIsLoading: (isLoading: boolean) => set((state) => ({ ...state, isLoading }))
+  }), {
+    name: "open-sauced-storage",
+    getStorage: () => localStorage
+  }));
 
 export default store;
