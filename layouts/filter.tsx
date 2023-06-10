@@ -12,9 +12,9 @@ const FilterLayout = ({ children }: { children: React.ReactNode }) => {
   const { toolList, selectedTool, filterName, selectedFilter, userOrg } = useNav();
 
   return (
-    <>
+    <div className="min-h-screen flex flex-col">
       <TopNav />
-      <div className="page-container flex min-h-[calc(100vh-(54px+95px))] bg-light-slate-3 flex-col items-center">
+      <div className="page-container flex grow bg-light-slate-3 flex-col items-center">
         <div className="info-container container w-full min-h-[100px]">
           <Header>
             <FilterHeader />
@@ -33,7 +33,7 @@ const FilterLayout = ({ children }: { children: React.ReactNode }) => {
         </main>
       </div>
       <Footer />
-    </>
+    </div>
   );
 };
 
