@@ -106,7 +106,6 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     }
   }
 
-  // Runs the data fetching in parallel. Decreases the loading time by 50%.
   await fetchSocialCardURL();
 
   return {
