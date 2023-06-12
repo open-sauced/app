@@ -99,7 +99,6 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
         }); // trigger the generation of the social card
       }
       ogImage = ogReq.headers.get("x-amz-meta-location");
-      console.log(ogImage);
     } catch (e) {
       // This is to prevent the page from crashing if the social card is not generated for some reasons.
       ogImage = "";
