@@ -11,7 +11,6 @@ interface PrivateWrapperProps {
 const PrivateWrapper = ({ isPrivateRoute = false, children }: PrivateWrapperProps) => {
   const user = useUser();
   const router = useRouter();
-  const isLoading = useStore(state => state.isLoading);
   
   
   useEffect(() => {
