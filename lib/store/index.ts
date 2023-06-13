@@ -1,6 +1,4 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
-
 
 import { GlobalStateInterface } from "interfaces/global-state-types";
 import { User } from "@supabase/supabase-js";
