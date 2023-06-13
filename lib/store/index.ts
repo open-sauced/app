@@ -33,13 +33,11 @@ interface AppStore extends GlobalStateInterface {
   setProviderToken: (providerToken?: string | null) => void;
   setUserId: (userId?: number | null) => void;
   setHasReports: (hasReports: boolean) => void;
-  setIsLoading: (isLoading: boolean) => void;
 }
 
 const store = create<AppStore>()(
   (set) => ({
     ...initialState,
-    isLoading:  (typeof window !== "undefined") && Boolean(localStorage.getItem("OpenSauced_Login_isLoading")) ? true : false, 
     setWaitlisted: () => set((state) => ({ ...state, waitlisted: true })),
     onboardUser: () => set((state) => ({ ...state, onboarded: true })),
     setSession: ({
@@ -57,7 +55,6 @@ const store = create<AppStore>()(
     setProviderToken: (providerToken?: string | null) => set((state) => ({ ...state, providerToken })),
     setUserId: (userId?: number | null) => set((state) => ({ ...state, userId })),
     setHasReports: (hasReports: boolean) => set((state) => ({ ...state, hasReports })),
-    setIsLoading: (isLoading: boolean) => set(() => ({ isLoading }))
   }));
 
 export default store;

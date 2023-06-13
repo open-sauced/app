@@ -59,7 +59,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
       signIn({ 
         provider: "github",
         options: {
-          redirectTo: `${window.location.origin}/hub/insights/new?selectedReposIDs=${JSON.stringify(reposIds)}&`,
+          redirectTo: `${window.location.origin}/hub/insights/new?selectedReposIDs=${JSON.stringify(reposIds)}&login=true&`,
         },
       });
     }

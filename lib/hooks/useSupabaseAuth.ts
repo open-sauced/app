@@ -40,10 +40,6 @@ const useSupabaseAuth = (loadSession = false) => {
 
   return {
     signIn: async (data: SignInWithOAuthCredentials) => {
-      debugger;
-      // set local storage to true
-      (typeof window !== "undefined") && localStorage.setItem("OpenSauced_Login_isLoading", "true");
-      store.setIsLoading(true);
       await supabase.auth.signInWithOAuth({
         ...data,
         options: data.options ?? {
