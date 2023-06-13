@@ -19,7 +19,7 @@ const PrivateWrapper = ({ isPrivateRoute = false, children }: PrivateWrapperProp
     if (isPrivateRoute && !user) {
       router.replace("/javascript/dashboard/filter/recent");
     }
-  }, [user, isLoading]);
+  }, [user]);
 
   return <>{children}</>;
 };
