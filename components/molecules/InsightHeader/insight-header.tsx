@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { FaEdit } from "react-icons/fa";
 import Link from "next/link";
 
@@ -11,7 +12,6 @@ import ContextThumbnail from "components/atoms/ContextThumbnail/context-thumbnai
 import CardRepoList from "../CardRepoList/card-repo-list";
 import { truncateString } from "lib/utils/truncate-string";
 import useRepositories from "lib/hooks/api/useRepositories";
-import { useEffect, useState } from "react";
 import { useToast } from "lib/hooks/useToast";
 
 interface InsightHeaderProps {
