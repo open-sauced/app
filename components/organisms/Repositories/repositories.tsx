@@ -113,7 +113,6 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
             <div className={clsx(classNames.cols.checkbox)}>
               <Checkbox
                 onCheckedChange={handleOnSelectAllChecked}
-                title={!user ? "Connect to GitHub" : ""}
                 className={`${user && "border-orange-500 hover:bg-orange-600"}`}
               />
             </div>
