@@ -31,7 +31,6 @@ const InsightHeader = ({ insight, repositories, insightId, isOwner }: InsightHea
     if (typeof window !== "undefined") {
       setInsightPageLink(window.location.href);
 
-      console.log(insightPageLink);
     }
   }, [insight]);
 
