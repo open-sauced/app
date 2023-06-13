@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.52.0-beta.3](https://github.com/open-sauced/insights/compare/v1.52.0-beta.2...v1.52.0-beta.3) (2023-06-13)
+
+
+### 🐛 Bug Fixes
+
+* add session check before redirecting in private wrapper component ([#1261](https://github.com/open-sauced/insights/issues/1261)) ([891e4c9](https://github.com/open-sauced/insights/commit/891e4c986cb7703b300c0a219aa4f710d2874df1)), closes [#1260](https://github.com/open-sauced/insights/issues/1260)
+
 ## [1.52.0-beta.2](https://github.com/open-sauced/insights/compare/v1.52.0-beta.1...v1.52.0-beta.2) (2023-06-09)
 
 
