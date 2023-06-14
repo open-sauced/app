@@ -1,6 +1,7 @@
 import { GetServerSidePropsContext } from "next";
 
 import Feed from "../feed";
+import fetchSocialCard from "lib/utils/fetch-social-card";
 
 export default Feed;
 
@@ -27,20 +28,10 @@ export async function handleHighlightSSR({ params }: GetServerSidePropsContext<{
     }
   }
 
-  async function fetchSocialCardURL() {
-    const socialCardUrl = `${String(process.env.NEXT_PUBLIC_OPENGRAPH_URL ?? "")}/highlights/${id}`;
-    const ogReq = await fetch(`${socialCardUrl}/metadata`); //status returned: 204 or 304 or 404
-    if (ogReq.status !== 204) {
-      fetch(socialCardUrl, {
-        method: "HEAD",
-      }); // trigger the generation of the social card
-    }
-
-    ogImage = ogReq.headers.get("x-amz-meta-location");
-  }
-
   // Runs the data fetching in parallel. Decreases the loading time by 50%.
-  await Promise.allSettled([fetchUserData(), fetchSocialCardURL()]);
+  const [, ogData] = await Promise.allSettled([fetchUserData(), fetchSocialCard(`highlights/${id}`)]);
+
+  ogImage = ogData.status === "fulfilled" ? ogData.value : "";
 
   return {
     props: { highlight, ogImage },
