@@ -2,9 +2,9 @@ import { useRouter } from "next/router";
 
 import ContributorHoverCard, { ContributorsProfileType } from "../ContributorHoverCard/contributor-hover-card";
 
-import roundedImage from "lib/utils/roundedImages";
 import { useFetchUser } from "lib/hooks/useFetchUser";
 import { useContributorPullRequestsChart } from "lib/hooks/useContributorPullRequestsChart";
+import { getAvatarByUsername } from "lib/utils/github";
 
 interface HoverCardWrapperProps {
   username: string;
@@ -18,7 +18,7 @@ const HoverCardWrapper = ({ username, repositories }: HoverCardWrapperProps) => 
   const { repoList } = useContributorPullRequestsChart(username, "*", repositories);
 
   const profile: ContributorsProfileType = {
-    githubAvatar: roundedImage(`https://www.github.com/${username}.png?size=60`, process.env.NEXT_PUBLIC_CLOUD_NAME),
+    githubAvatar: getAvatarByUsername(username, 40),
     githubName: username,
     totalPR: repoList.length,
   };

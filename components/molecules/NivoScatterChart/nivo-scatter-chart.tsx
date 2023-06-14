@@ -1,16 +1,16 @@
 import { useRouter } from "next/router";
 import { MouseEvent, useCallback, useState } from "react";
 
-import { ResponsiveScatterPlot } from "@nivo/scatterplot";
+import { ResponsiveScatterPlot, ScatterPlotNodeProps } from "@nivo/scatterplot";
 import { animated } from "@react-spring/web";
 
 import humanizeNumber from "lib/utils/humanizeNumber";
 
 import ToggleOption from "components/atoms/ToggleOption/toggle-option";
 import Title from "components/atoms/Typography/title";
-import HoverCardWrapper from "../HoverCardWrapper/hover-card-wrapper";
 import ToggleGroup from "components/atoms/ToggleGroup/toggle-group";
 import { PrStatusFilter } from "components/organisms/Dashboard/dashboard";
+import AvatarHoverCard from "components/atoms/Avatar/avatar-hover-card";
 
 export interface ScatterChartDataItems {
   x: string | number;
@@ -49,12 +49,51 @@ const NivoScatterPlot = ({
   isMobile,
   repositories,
   metadata,
-  handleSetPrFilter
+  handleSetPrFilter,
 }: ScatterPlotProps) => {
   const [showMembers, setShowMembers] = useState<boolean>(false);
   const [isLogarithmic, setIsLogarithmic] = useState<boolean>(false);
 
   let functionTimeout: any;
+
+  // Brought this in here to have access to repositories
+  const CustomNode = (props: ScatterPlotNodeProps<ScatterChartDataItems>) => {
+    const router = useRouter();
+    const handleMouseEnter = useCallback(
+      (event: React.MouseEvent) => props.onMouseEnter?.(props.node, event),
+      [props.node.data.contributor, props.onMouseEnter]
+    );
+    const handleMouseMove = useCallback(
+      (event: MouseEvent) => props.onMouseMove?.(props.node, event),
+      [props.node.data.contributor, props.onMouseMove]
+    );
+    const handleMouseLeave = useCallback(
+      (event: React.MouseEvent) => props.onMouseLeave?.(props.node, event),
+      [props.node, props.onMouseLeave]
+    );
+    const handleClick = useCallback(
+      (event: React.MouseEvent) => router.push(`/user/${props.node.data.contributor}`),
+      [props.node, props.onClick]
+    );
+
+    return (
+      <animated.foreignObject
+        className="cursor-pointer"
+        width={35}
+        height={35}
+        r={props.style.size.to((size: number) => size / 2) as unknown as number}
+        y={props.style.y.to((yVal: number) => yVal - 35 / 1) as unknown as number}
+        x={props.style.x.to((xVal: number) => xVal - 35 / 2) as unknown as number}
+        // href={props.node.data.image}
+        onMouseEnter={props.isInteractive ? handleMouseEnter : undefined}
+        onMouseMove={props.isInteractive ? handleMouseMove : undefined}
+        onMouseLeave={props.isInteractive ? handleMouseLeave : undefined}
+        onClick={props.isInteractive ? handleClick : undefined}
+      >
+        <AvatarHoverCard contributor={props.node.data.contributor} repositories={repositories!} />
+      </animated.foreignObject>
+    );
+  };
 
   const handleTogglePrFilter = (val: string) => {
     switch (val) {
@@ -102,7 +141,7 @@ const NivoScatterPlot = ({
 
   return (
     <>
-      <div className="flex flex-col md:flex-row justify-between px-7 pt-3 items-center">
+      <div className="flex flex-col items-center justify-between pt-3 md:flex-row px-7">
         <Title level={4} className="!text-sm  !text-light-slate-12">
           {title}
         </Title>
@@ -127,7 +166,7 @@ const NivoScatterPlot = ({
           </>
         </ToggleGroup>
         {/* replaced display flex to hidden on show/bots container */}
-        <div className="flex mt-3 md:mt-0 flex-col md:flex-row gap-2">
+        <div className="flex flex-col gap-2 mt-3 md:mt-0 md:flex-row">
           <div>
             <ToggleOption handleToggle={handleShowBots} checked={showBots} optionText="Show Bots"></ToggleOption>
           </div>
@@ -142,9 +181,8 @@ const NivoScatterPlot = ({
       </div>
       <div className="h-[400px]">
         <ResponsiveScatterPlot
-          tooltip={({ node }) => (
-            <>{isMobile ? "" : <HoverCardWrapper repositories={repositories} username={node.data.contributor} />}</>
-          )}
+          // leaving this here for now so we don't see the default tooltip from nivo
+          tooltip={() => <></>}
           nodeSize={isMobile ? 25 : 35}
           data={isMobile ? filteredData : data}
           margin={{ top: 30, right: isMobile ? 30 : 60, bottom: 70, left: isMobile ? 75 : 90 }}
@@ -152,7 +190,7 @@ const NivoScatterPlot = ({
           yScale={{
             type: isLogarithmic ? "symlog" : "linear",
             min: 0,
-            max: Math.max(Math.round(maxFilesModified * 3), 10)
+            max: Math.max(Math.round(maxFilesModified * 3), 10),
           }}
           blendMode="normal"
           useMesh={false}
@@ -163,7 +201,7 @@ const NivoScatterPlot = ({
             tickPadding: 5,
             tickRotation: 0,
             tickValues: isMobile ? 4 : 7,
-            format: (value) => (value === 0 ? "Today" : value > 32 ? "30+ days ago" : `${value} days ago`)
+            format: (value) => (value === 0 ? "Today" : value > 32 ? "30+ days ago" : `${value} days ago`),
           }}
           theme={{
             axis: {},
@@ -171,9 +209,9 @@ const NivoScatterPlot = ({
               line: {
                 strokeDasharray: "4 4",
                 strokeWidth: 1,
-                strokeOpacity: 0.7
-              }
-            }
+                strokeOpacity: 0.7,
+              },
+            },
           }}
           isInteractive={true}
           axisLeft={{
@@ -186,47 +224,11 @@ const NivoScatterPlot = ({
             legendOffset: -60,
             format: (value: number) => {
               return parseInt(`${value}`) >= 1000 ? humanizeNumber(value, "abbreviation") : `${value}`;
-            }
+            },
           }}
         />
       </div>
     </>
-  );
-};
-
-const CustomNode = (props: any) => {
-  const router = useRouter();
-  const handleMouseEnter = useCallback(
-    (event: React.MouseEvent) => props.onMouseEnter?.(props.node, event),
-    [props.node.data.contributor, props.onMouseEnter]
-  );
-  const handleMouseMove = useCallback(
-    (event: MouseEvent) => props.onMouseMove?.(props.node, event),
-    [props.node.data.contributor, props.onMouseMove]
-  );
-  const handleMouseLeave = useCallback(
-    (event: React.MouseEvent) => props.onMouseLeave?.(props.node, event),
-    [props.node, props.onMouseLeave]
-  );
-  const handleClick = useCallback(
-    (event: React.MouseEvent) => router.push(`/user/${props.node.data.contributor}`),
-    [props.node, props.onClick]
-  );
-
-  return (
-    <animated.image
-      className="cursor-pointer"
-      width={35}
-      height={35}
-      r={props.style.size.to((size: number) => size / 2)}
-      y={props.style.y.to((yVal: number) => yVal - 35 / 1)}
-      x={props.style.x.to((xVal: number) => xVal - 35 / 2)}
-      href={props.node.data.image}
-      onMouseEnter={props.isInteractive ? handleMouseEnter : undefined}
-      onMouseMove={props.isInteractive ? handleMouseMove : undefined}
-      onMouseLeave={props.isInteractive ? handleMouseLeave : undefined}
-      onClick={props.isInteractive ? handleClick : undefined}
-    />
   );
 };
 
