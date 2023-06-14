@@ -46,8 +46,6 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
   const { id } = router.query;
   const singleHighlight = props.highlight;
   const highlightId = props.highlight?.id as string;
-  console.log({highlightId, id});
-  console.log("RENDERING...");
 
   const { data: followersRepo } = useFetchFollowersHighlightRepos();
 
