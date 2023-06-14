@@ -58,24 +58,6 @@ const NivoScatterPlot = ({
 
   // Brought this in here to have access to repositories
   const CustomNode = (props: ScatterPlotNodeProps<ScatterChartDataItems>) => {
-    const router = useRouter();
-    const handleMouseEnter = useCallback(
-      (event: React.MouseEvent) => props.onMouseEnter?.(props.node, event),
-      [props.node.data.contributor, props.onMouseEnter]
-    );
-    const handleMouseMove = useCallback(
-      (event: MouseEvent) => props.onMouseMove?.(props.node, event),
-      [props.node.data.contributor, props.onMouseMove]
-    );
-    const handleMouseLeave = useCallback(
-      (event: React.MouseEvent) => props.onMouseLeave?.(props.node, event),
-      [props.node, props.onMouseLeave]
-    );
-    const handleClick = useCallback(
-      (event: React.MouseEvent) => router.push(`/user/${props.node.data.contributor}`),
-      [props.node, props.onClick]
-    );
-
     return (
       <animated.foreignObject
         className="cursor-pointer"
@@ -84,11 +66,6 @@ const NivoScatterPlot = ({
         r={props.style.size.to((size: number) => size / 2) as unknown as number}
         y={props.style.y.to((yVal: number) => yVal - 35 / 1) as unknown as number}
         x={props.style.x.to((xVal: number) => xVal - 35 / 2) as unknown as number}
-        // href={props.node.data.image}
-        onMouseEnter={props.isInteractive ? handleMouseEnter : undefined}
-        onMouseMove={props.isInteractive ? handleMouseMove : undefined}
-        onMouseLeave={props.isInteractive ? handleMouseLeave : undefined}
-        onClick={props.isInteractive ? handleClick : undefined}
       >
         <AvatarHoverCard contributor={props.node.data.contributor} repositories={repositories!} />
       </animated.foreignObject>
@@ -182,7 +159,6 @@ const NivoScatterPlot = ({
       <div className="h-[400px]">
         <ResponsiveScatterPlot
           // leaving this here for now so we don't see the default tooltip from nivo
-          tooltip={() => <></>}
           nodeSize={isMobile ? 25 : 35}
           data={isMobile ? filteredData : data}
           margin={{ top: 30, right: isMobile ? 30 : 60, bottom: 70, left: isMobile ? 75 : 90 }}
