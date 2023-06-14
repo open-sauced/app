@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.52.0-beta.4](https://github.com/open-sauced/insights/compare/v1.52.0-beta.3...v1.52.0-beta.4) (2023-06-14)
+
+
+### 🍕 Features
+
+* add openGraph image to public insight pages ([#1258](https://github.com/open-sauced/insights/issues/1258)) ([f0a7f7e](https://github.com/open-sauced/insights/commit/f0a7f7e7f1f0f3f2d6510a7b897c9fc36e068364))
+
 ## [1.52.0-beta.3](https://github.com/open-sauced/insights/compare/v1.52.0-beta.2...v1.52.0-beta.3) (2023-06-13)
 
 
