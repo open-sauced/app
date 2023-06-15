@@ -5,6 +5,41 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.52.0-beta.5](https://github.com/open-sauced/insights/compare/v1.52.0-beta.4...v1.52.0-beta.5) (2023-06-15)
+
+
+### 🐛 Bug Fixes
+
+* remove hard-coded height from layouts ([#1257](https://github.com/open-sauced/insights/issues/1257)) ([20061bc](https://github.com/open-sauced/insights/commit/20061bc3bd5fc791f23b97fb45783de24bcf90f8))
+
+## [1.52.0-beta.4](https://github.com/open-sauced/insights/compare/v1.52.0-beta.3...v1.52.0-beta.4) (2023-06-14)
+
+
+### 🍕 Features
+
+* add openGraph image to public insight pages ([#1258](https://github.com/open-sauced/insights/issues/1258)) ([f0a7f7e](https://github.com/open-sauced/insights/commit/f0a7f7e7f1f0f3f2d6510a7b897c9fc36e068364))
+
+## [1.52.0-beta.3](https://github.com/open-sauced/insights/compare/v1.52.0-beta.2...v1.52.0-beta.3) (2023-06-13)
+
+
+### 🐛 Bug Fixes
+
+* add session check before redirecting in private wrapper component ([#1261](https://github.com/open-sauced/insights/issues/1261)) ([891e4c9](https://github.com/open-sauced/insights/commit/891e4c986cb7703b300c0a219aa4f710d2874df1)), closes [#1260](https://github.com/open-sauced/insights/issues/1260)
+
+## [1.52.0-beta.2](https://github.com/open-sauced/insights/compare/v1.52.0-beta.1...v1.52.0-beta.2) (2023-06-09)
+
+
+### 🐛 Bug Fixes
+
+* remove duplicate redirect check and use server props on insight page ([#1255](https://github.com/open-sauced/insights/issues/1255)) ([9ef2780](https://github.com/open-sauced/insights/commit/9ef2780ea7fbfc170a8a2ead44f93fecd5777e56))
+
+## [1.52.0-beta.1](https://github.com/open-sauced/insights/compare/v1.51.0...v1.52.0-beta.1) (2023-06-07)
+
+
+### 🍕 Features
+
+* implement user collaboration features ([#1221](https://github.com/open-sauced/insights/issues/1221)) ([00b6d1a](https://github.com/open-sauced/insights/commit/00b6d1a349a2fc96149334533e9d8d1c5bcc2e14))
+
 ## [1.51.0](https://github.com/open-sauced/insights/compare/v1.50.0...v1.51.0) (2023-06-06)
 
 

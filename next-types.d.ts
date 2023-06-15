@@ -231,3 +231,17 @@ interface DbUserNotification {
   readonly user_id: number;
   readonly meta_id: string;
 }
+
+interface DbUserCollaboration {
+  readonly id: string;
+  readonly user_id: number;
+  readonly request_user_id: number;
+  readonly request_user: DbUser;
+  readonly created_at: string;
+  readonly updated_at: string;
+  readonly deleted_at: string;
+  readonly request_emailed_at: string;
+  readonly collaboration_emailed_at: string;
+  readonly status: "pending" | "accept" | "reject";
+  readonly message: string;
+}
