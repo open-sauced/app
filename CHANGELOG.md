@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.52.0-beta.5](https://github.com/open-sauced/insights/compare/v1.52.0-beta.4...v1.52.0-beta.5) (2023-06-15)
+
+
+### 🐛 Bug Fixes
+
+* remove hard-coded height from layouts ([#1257](https://github.com/open-sauced/insights/issues/1257)) ([20061bc](https://github.com/open-sauced/insights/commit/20061bc3bd5fc791f23b97fb45783de24bcf90f8))
+
 ## [1.52.0-beta.4](https://github.com/open-sauced/insights/compare/v1.52.0-beta.3...v1.52.0-beta.4) (2023-06-14)
 
 
