@@ -25,9 +25,9 @@ const HubPageLayout = ({ children }: { children: React.ReactNode }) => {
   let isOwner = !!(userId && insight && `${userId}` === `${insight.user.id}`);
 
   return (
-    <>
+    <div className="flex flex-col min-h-screen">
       <TopNav />
-      <div className="page-container flex min-h-[calc(100vh-(54px+95px))] bg-light-slate-3 flex-col items-center">
+      <div className="page-container flex grow bg-light-slate-3 flex-col items-center">
         <div className="info-container container w-full min-h-[100px]">
           <Header>
             {insight ? (
@@ -65,7 +65,7 @@ const HubPageLayout = ({ children }: { children: React.ReactNode }) => {
         </main>
       </div>
       <Footer />
-    </>
+    </div>
   );
 };
 
