@@ -75,16 +75,16 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
       router.push(`/feed?repo=${selectedRepo}`);
       setPage(1);
     }
-    if (highlightId) {
+    if (id) {
       setOpenSingleHighlight(true);
       router.push(`/feed/${id}`);
     }
 
-    if (!selectedRepo && !highlightId) {
+    if (!selectedRepo && !id) {
       router.push("/feed");
       setPage(1);
     }
-  }, [selectedRepo, highlightId]);
+  }, [selectedRepo, id]);
 
   useEffect(() => {
     setHydrated(true);
@@ -116,6 +116,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
             open={openSingleHighlight}
             onOpenChange={(open) => {
               if (!open) {
+                setOpenSingleHighlight(false);
                 router.push("/feed");
               }
             }}
