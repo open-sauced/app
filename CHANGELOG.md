@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.52.0-beta.6](https://github.com/open-sauced/insights/compare/v1.52.0-beta.5...v1.52.0-beta.6) (2023-06-16)
+
+
+### 🍕 Features
+
+* handle close highlight dialog ([#1268](https://github.com/open-sauced/insights/issues/1268)) ([b6a78c7](https://github.com/open-sauced/insights/commit/b6a78c79dd45d62ba956590c97cad9c7e3176e42))
+
 ## [1.52.0-beta.5](https://github.com/open-sauced/insights/compare/v1.52.0-beta.4...v1.52.0-beta.5) (2023-06-15)
 
 
