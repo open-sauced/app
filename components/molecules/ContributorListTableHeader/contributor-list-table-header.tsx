@@ -9,7 +9,7 @@ const ContributorListTableHeaders = () => {
       {/* Mobile */}
       <div className="flex justify-between gap-2 px-6 py-4 rounded-t-lg md:hidden bg-light-slate-3">
         <div className="w-[58%]">
-          <TableTitle>Developer</TableTitle>
+          <TableTitle>Contributor</TableTitle>
         </div>
         <div className="flex-1 w-[42%]">
           <TableTitle>Last Contributed </TableTitle>
@@ -18,7 +18,7 @@ const ContributorListTableHeaders = () => {
       {/* Desktop */}
       <div className="hidden gap-6 px-6 py-4 border rounded-t-lg md:flex bg-light-slate-3">
         <div className={clsx("flex-1 lg:min-w-[250px]  flex justify-center")}>
-          <TableTitle>Developer</TableTitle>
+          <TableTitle>Contributor</TableTitle>
         </div>
         <div className={clsx(" flex-1 lg:max-w-[100px]   flex justify-center ")}>
           <TableTitle>Act</TableTitle>
