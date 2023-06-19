@@ -1,6 +1,6 @@
 import React from "react";
 
-interface PillProps {
+export interface PillProps {
   className?: string;
   text: string | number;
   color?: "slate" | "green" | "yellow" | "red" | "purple";
