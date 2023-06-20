@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.53.0-beta.2](https://github.com/open-sauced/insights/compare/v1.53.0-beta.1...v1.53.0-beta.2) (2023-06-20)
+
+
+### 🐛 Bug Fixes
+
+* language update - change developer to contributor ([#1274](https://github.com/open-sauced/insights/issues/1274)) ([7e86ac9](https://github.com/open-sauced/insights/commit/7e86ac9a4d679a0cafd4e129104115b4c6c3d2f5)), closes [#1247](https://github.com/open-sauced/insights/issues/1247)
+
 ## [1.53.0-beta.1](https://github.com/open-sauced/insights/compare/v1.52.0...v1.53.0-beta.1) (2023-06-20)
 
 
