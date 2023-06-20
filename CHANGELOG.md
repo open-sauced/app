@@ -5,21 +5,20 @@
 
 > All notable changes to this project will be documented in this file
 
-## [1.52.0-beta.7](https://github.com/open-sauced/insights/compare/v1.52.0-beta.6...v1.52.0-beta.7) (2023-06-20)
-
-
-### 🐛 Bug Fixes
-
-* link single highlight dialog contributor info div to contributor profile ([#1279](https://github.com/open-sauced/insights/issues/1279)) ([67d5a16](https://github.com/open-sauced/insights/commit/67d5a16cd9e873245a141b5b1e130555c1918578))
-* remove failing maintenance actions ([#1271](https://github.com/open-sauced/insights/issues/1271)) ([bc516c3](https://github.com/open-sauced/insights/commit/bc516c3e9a8e8c26a7e62abc187202ec6b425ebb))
-* scatter plot tooltip issue and remove cloudinary rounded image solution ([#1266](https://github.com/open-sauced/insights/issues/1266)) ([ec6b3d5](https://github.com/open-sauced/insights/commit/ec6b3d5831327e1ab898a91fe3a65b40324fb8fc))
-
-## [1.52.0-beta.6](https://github.com/open-sauced/insights/compare/v1.52.0-beta.5...v1.52.0-beta.6) (2023-06-16)
+## [1.52.0](https://github.com/open-sauced/insights/compare/v1.51.0...v1.52.0) (2023-06-15)
 
 
 ### 🍕 Features
 
-* handle close highlight dialog ([#1268](https://github.com/open-sauced/insights/issues/1268)) ([b6a78c7](https://github.com/open-sauced/insights/commit/b6a78c79dd45d62ba956590c97cad9c7e3176e42))
+* add openGraph image to public insight pages ([#1258](https://github.com/open-sauced/insights/issues/1258)) ([f0a7f7e](https://github.com/open-sauced/insights/commit/f0a7f7e7f1f0f3f2d6510a7b897c9fc36e068364))
+* implement user collaboration features ([#1221](https://github.com/open-sauced/insights/issues/1221)) ([00b6d1a](https://github.com/open-sauced/insights/commit/00b6d1a349a2fc96149334533e9d8d1c5bcc2e14))
+
+
+### 🐛 Bug Fixes
+
+* add session check before redirecting in private wrapper component ([#1261](https://github.com/open-sauced/insights/issues/1261)) ([891e4c9](https://github.com/open-sauced/insights/commit/891e4c986cb7703b300c0a219aa4f710d2874df1)), closes [#1260](https://github.com/open-sauced/insights/issues/1260)
+* remove duplicate redirect check and use server props on insight page ([#1255](https://github.com/open-sauced/insights/issues/1255)) ([9ef2780](https://github.com/open-sauced/insights/commit/9ef2780ea7fbfc170a8a2ead44f93fecd5777e56))
+* remove hard-coded height from layouts ([#1257](https://github.com/open-sauced/insights/issues/1257)) ([20061bc](https://github.com/open-sauced/insights/commit/20061bc3bd5fc791f23b97fb45783de24bcf90f8))
 
 ## [1.52.0-beta.5](https://github.com/open-sauced/insights/compare/v1.52.0-beta.4...v1.52.0-beta.5) (2023-06-15)
 
