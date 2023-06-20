@@ -39,8 +39,8 @@ const useSupabaseAuth = (loadSession = false) => {
   }, []);
 
   return {
-    signIn: async (data: SignInWithOAuthCredentials) => {
-      await supabase.auth.signInWithOAuth({
+    signIn: (data: SignInWithOAuthCredentials) => {
+      supabase.auth.signInWithOAuth({
         ...data,
         options: data.options ?? {
           redirectTo: process.env.NEXT_PUBLIC_BASE_URL ?? "/",

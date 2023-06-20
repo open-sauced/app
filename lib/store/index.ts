@@ -10,7 +10,7 @@ const initialState: GlobalStateInterface = {
   sessionToken: null,
   providerToken: null,
   userId: null,
-  hasReports: false,
+  hasReports: false
 };
 
 interface AppStore extends GlobalStateInterface {

@@ -43,7 +43,6 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
   const { toast } = useToast();
   const router = useRouter();
   const pageHref = router.asPath;
-  const [receivedData, setReceivedData] = useState<DbRepo[]>([]);
   const [reposIds, setReposIds] = useState<number[]>([]);
   const { data: repoListData } = useRepositories(reposIds);
 
@@ -59,12 +58,6 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
       setRepos(repoListData);
     }
   }, [repoListData, router.query.selectedRepos, pageHref]);
-
-
-
-
-
-
 
   const { data, addMember, deleteMember, updateMember } = useInsightMembers(insight?.id || 0);
 
@@ -93,7 +86,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
   const [name, setName] = useState(insight?.name || "");
   const [isNameValid, setIsNameValid] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [repos, setRepos] = useState<DbRepo[]>(receivedData ?? []);
+  const [repos, setRepos] = useState<DbRepo[]>([]);
   const [repoHistory, setRepoHistory] = useState<DbRepo[]>([]);
   const [addRepoError, setAddRepoError] = useState<RepoLookupError>(RepoLookupError.Initial);
   const [isPublic, setIsPublic] = useState(!!insight?.is_public);
