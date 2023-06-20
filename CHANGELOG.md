@@ -5,6 +5,15 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.52.0-beta.7](https://github.com/open-sauced/insights/compare/v1.52.0-beta.6...v1.52.0-beta.7) (2023-06-20)
+
+
+### 🐛 Bug Fixes
+
+* link single highlight dialog contributor info div to contributor profile ([#1279](https://github.com/open-sauced/insights/issues/1279)) ([67d5a16](https://github.com/open-sauced/insights/commit/67d5a16cd9e873245a141b5b1e130555c1918578))
+* remove failing maintenance actions ([#1271](https://github.com/open-sauced/insights/issues/1271)) ([bc516c3](https://github.com/open-sauced/insights/commit/bc516c3e9a8e8c26a7e62abc187202ec6b425ebb))
+* scatter plot tooltip issue and remove cloudinary rounded image solution ([#1266](https://github.com/open-sauced/insights/issues/1266)) ([ec6b3d5](https://github.com/open-sauced/insights/commit/ec6b3d5831327e1ab898a91fe3a65b40324fb8fc))
+
 ## [1.52.0-beta.6](https://github.com/open-sauced/insights/compare/v1.52.0-beta.5...v1.52.0-beta.6) (2023-06-16)
 
 
