@@ -14,19 +14,26 @@ interface CardProfileProps {
   githubName: string;
   totalPRs: number;
   dateOfFirstPR: string;
+  isRoundedAvatar?: boolean;
 }
 
-const CardProfile = ({ githubAvatar, githubName, totalPRs, dateOfFirstPR }: CardProfileProps): JSX.Element => {
+const CardProfile = ({
+  githubAvatar,
+  githubName,
+  totalPRs,
+  dateOfFirstPR,
+  isRoundedAvatar,
+}: CardProfileProps): JSX.Element => {
   return (
     <Link href={`/user/${githubName}`} as={`/user/${githubName}`}>
       <div className="flex items-center gap-2">
-        <Avatar size={40} avatarURL={githubAvatar ? githubAvatar : undefined} />
+        <Avatar isCircle={isRoundedAvatar} size={40} avatarURL={githubAvatar ? githubAvatar : undefined} />
         <div>
           <div>
             <Text className="!text-base !text-black  ">{githubName}</Text>
           </div>
-          <div className="flex gap-2   text-xs">
-            <div className="flex text-xs items-center gap-1 text-light-slate-11">
+          <div className="flex gap-2 text-xs">
+            <div className="flex items-center gap-1 text-xs text-light-slate-11">
               {totalPRs !== undefined && (
                 <>
                   <Tooltip content="PRs merged">
