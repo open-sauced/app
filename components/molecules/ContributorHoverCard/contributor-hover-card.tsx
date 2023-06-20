@@ -40,6 +40,7 @@ const ContributorHoverCard = ({
           githubAvatar={githubAvatar}
           githubName={githubName}
           totalPRs={totalPR}
+          isRoundedAvatar={true}
         />
       </div>
       <div className="">

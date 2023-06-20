@@ -129,7 +129,7 @@ const ContributorListTableRow = ({ contributor, topic }: ContributorListTableRow
           className={`${user && "border-orange-500 hover:bg-orange-600"}`}
         /> */}
 
-        {/* Column: Developers */}
+        {/* Column: Contributors */}
         <div className={clsx("flex-1 lg:min-w-[250px] overflow-hidden")}>
           <DevProfile company={user?.company || getLastContributedRepo(data)} username={contributor.author_login} />
         </div>

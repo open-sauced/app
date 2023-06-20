@@ -10,9 +10,9 @@ import humanizeNumber from "lib/utils/humanizeNumber";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
 import { getInsights, useInsights } from "lib/hooks/api/useInsights";
 import { calcDaysFromToday } from "lib/utils/date-utils";
-import roundedImage from "lib/utils/roundedImages";
 import usePullRequests from "lib/hooks/api/usePullRequests";
 import useContributors from "lib/hooks/api/useContributors";
+import { getAvatarByUsername } from "lib/utils/github";
 
 type ContributorPrMap = { [contributor: string]: DbRepoPR };
 export type PrStatusFilter = "open" | "closed" | "all";
@@ -73,7 +73,7 @@ const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
         x: calcDaysFromToday(new Date(updated_at)),
         y: linesCount,
         contributor: author_login,
-        image: roundedImage(`https://www.github.com/${author_image}.png?size=60`, process.env.NEXT_PUBLIC_CLOUD_NAME),
+        image: getAvatarByUsername(author_image, 40),
       };
       return data;
     });
@@ -92,7 +92,7 @@ const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
 
   return (
     <div className="flex flex-col w-full gap-4">
-      <section className="flex flex-wrap gap-4 items-center lg:flex-row lg:flex-nowrap max-w-full">
+      <section className="flex flex-wrap items-center max-w-full gap-4 lg:flex-row lg:flex-nowrap">
         <HighlightCard
           label="Contributors"
           icon="contributors"
@@ -134,7 +134,7 @@ const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
           isLoading={isLoading}
         />
       </section>
-      <section className="flex flex-col lg:flex-row max-w-full gap-4 mb-6">
+      <section className="flex flex-col max-w-full gap-4 mb-6 lg:flex-row">
         <div className="flex flex-col w-full">
           <Card className="w-full">
             <NivoScatterPlot
