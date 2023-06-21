@@ -1198,5 +1198,5 @@ export const getTimeByTimezone = (offset: number) => {
   // using supplied offset
   const time = new Date(utc + 3600000 * offset);
 
-  return `${time.getHours()}:${time.getMinutes()}${time.getHours() > 11 ? "pm" : "am"}`;
+  return `${time.getHours()}:${`0${time.getMinutes()}`.slice(-2)}${time.getHours() > 11 ? "pm" : "am"}`;
 };
