@@ -22,11 +22,12 @@ export interface DevCardProps {
   avatarURL: string;
   prs?: number;
   contributions?: number;
-  isLoading: boolean;
   activity?: Activity;
   bio?: string;
   prVelocity?: number;
-  flipped?: boolean;
+  isLoading: boolean;
+  isFlipped?: boolean;
+  isInteractive?: boolean;
   onFlip?: () => void;
 }
 
@@ -54,18 +55,25 @@ const face = cntl`
 export default function DevCard(props: DevCardProps) {
   const ref = useRef(null);
   const { docX, docY, posX, posY, elW, elH } = useMouse(ref);
-  const [isFlipped, setIsFlipped] = useState(props.flipped);
+  const [isFlipped, setIsFlipped] = useState(props.isFlipped ?? false);
+  const isInteractive = props.isInteractive ?? true;
 
   useEffect(() => {
-    setIsFlipped(props.flipped);
-  }, [props.flipped]);
+    setIsFlipped(props.isFlipped ?? false);
+  }, [props.isFlipped]);
+
+  useEffect(() => {
+    if (!props.isInteractive) {
+      setIsFlipped(props.isFlipped ?? false);
+    }
+  }, [props.isInteractive, props.isFlipped]);
 
   const halfWidth = elW / 2;
   const halfHeight = elH / 2;
   const elCenterX = posX + halfWidth;
   const elCenterY = posY + halfHeight;
-  const mouseOffsetX = elCenterX - docX;
-  const mouseOffsetY = elCenterY - docY;
+  const mouseOffsetX = isInteractive ? elCenterX - docX : 0;
+  const mouseOffsetY = isInteractive ? elCenterY - docY : 0;
   // Cap the offset so that it asymptomatically approaches the max offset
 
   const calcAngleX = asymptoticLinear(mouseOffsetX / 20, 20, 0.1) + (isFlipped ? 180 : 0);
@@ -95,7 +103,7 @@ export default function DevCard(props: DevCardProps) {
   function handleCardClick(event: React.MouseEvent<HTMLElement, MouseEvent>) {
     // flip the card if the click is not on the button
     if (!(event.target instanceof HTMLAnchorElement || event.target instanceof HTMLButtonElement)) {
-      if (props["flipped"] === undefined) {
+      if (props.isFlipped === undefined) {
         setIsFlipped(!isFlipped);
       } else {
         props.onFlip?.();
@@ -174,10 +182,10 @@ export default function DevCard(props: DevCardProps) {
             alt="avatar"
             width={116}
             height={116}
-            className="absolute top-1/2 left-1/2 border-white border-2 block rounded-full w-28 h-28"
+            className="absolute top-1/2 left-1/2 bg-white border-white border-2 block rounded-full w-28 h-28"
             style={{ transform: "translate(-50%, -75%)" }}
           />
-          {isFlipped ? null : <div className="glare" style={glareStyle} />}
+          {isFlipped || !isInteractive ? null : <div className="glare" style={glareStyle} />}
         </div>
         <div
           className={`DevCard-back ${face}`}

@@ -2,7 +2,7 @@ import React, { ForwardedRef } from "react";
 import clsx from "clsx";
 
 export interface ButtonsProps extends React.ButtonHTMLAttributes<HTMLButtonElement | HTMLAnchorElement> {
-  variant: "primary" | "default" | "outline" | "link" | "text";
+  variant: "primary" | "default" | "dark" | "outline" | "link" | "text";
   loading?: boolean;
   href?: string;
 }
@@ -16,6 +16,9 @@ const Button = React.forwardRef<HTMLElement, ButtonsProps>(
       default: `bg-white border-light-slate-8 text-light-slate-11 hover:bg-light-slate-2 ${
         disabled ? "bg-light-slate-4 text-light-slate-9 pointer-events-none" : ""
       }`,
+      dark: `bg-dark-slate-6 border-dark-slate-8 text-light-orange-2 hover:bg-dark-slate-8 ${
+        disabled ? "bg-dark-slate-4 text-dark-slate-9 pointer-events-none" : ""
+      }`,
       outline: `bg-orange-50 border-orange-500 text-orange-600 hover:bg-orange-100 ${
         disabled ? "bg-light-orange-3 pointer-events-none text-light-orange-7 border-light-orange-5" : ""
       }`,
@@ -26,6 +29,7 @@ const Button = React.forwardRef<HTMLElement, ButtonsProps>(
       className,
       props.variant === "primary" && styles.primary,
       props.variant === "default" && styles.default,
+      props.variant === "dark" && styles.dark,
       props.variant === "outline" && styles.outline,
       props.variant === "link" && styles.link,
       disabled && "bg-light-orange-7 hover:bg-light-orange-7 border-none pointer-events-none",

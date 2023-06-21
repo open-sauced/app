@@ -4,11 +4,14 @@ import Button from "../../components/atoms/Button/button";
 const storyConfig = {
   title: "Design System/Atoms/Button",
   argTypes: {
+    disabled: {
+      control: { type: "boolean" },
+    },
     type: {
-      options: ["primary", "outline", "default", "link"],
-      control: { type: "select" }
-    }
-  }
+      options: ["primary", "outline", "default", "dark", "link"],
+      control: { type: "select" },
+    },
+  },
 };
 
 export default storyConfig;
@@ -29,6 +32,9 @@ Default.args = { variant: "default" };
 
 export const Primary = ButtonTemplate.bind({});
 Primary.args = { variant: "primary" };
+
+export const Dark = ButtonTemplate.bind({});
+Dark.args = { variant: "dark" };
 
 export const Outline = ButtonTemplate.bind({});
 Outline.args = { variant: "outline" };
