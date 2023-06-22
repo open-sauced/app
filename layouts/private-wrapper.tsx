@@ -13,9 +13,11 @@ const PrivateWrapper = ({ isPrivateRoute = false, children }: PrivateWrapperProp
   const router = useRouter();
 
   async function checkSession() {
+    console.log("checkSession", router.asPath);
     if (router.asPath?.includes("login")) return;
 
     const isValid = await authSession();
+    console.log("checkSession isValid", isValid);
 
     if (!isValid) {
       router.replace("/javascript/dashboard/filter/recent");
