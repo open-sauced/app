@@ -48,14 +48,10 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
 
   useEffect(() => {
     const searchParams = new URLSearchParams(pageHref.substring(pageHref.indexOf("?")));
-    console.log("page href", pageHref);
-    debugger;
     if (router.query.selectedRepos) {
       setRepos(JSON.parse(router.query.selectedRepos as string) || []);
     } else if (searchParams.has("selectedReposIDs")) {
       setReposIds(JSON.parse(searchParams.get("selectedReposIDs") as string) || []);
-      // searchParams.delete("login");
-      router.replace(`${pageHref.substring(0, pageHref.indexOf("?"))}?${searchParams.toString()}`);
       setRepos(repoListData);
     }
   }, [repoListData, router.query.selectedRepos, pageHref]);
