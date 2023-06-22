@@ -54,7 +54,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
       setRepos(JSON.parse(router.query.selectedRepos as string) || []);
     } else if (searchParams.has("selectedReposIDs")) {
       setReposIds(JSON.parse(searchParams.get("selectedReposIDs") as string) || []);
-      // searchParams.delete("login");
+      searchParams.delete("login");
       router.replace(`${pageHref.substring(0, pageHref.indexOf("?"))}?${searchParams.toString()}`);
       setRepos(repoListData);
     }
