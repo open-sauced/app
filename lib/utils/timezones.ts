@@ -1,3 +1,5 @@
+import { format } from "date-fns";
+
 export const timezones = [
   {
     value: "Dateline Standard Time",
@@ -1198,5 +1200,5 @@ export const getTimeByTimezone = (offset: number) => {
   // using supplied offset
   const time = new Date(utc + 3600000 * offset);
 
-  return `${time.getHours()}:${`0${time.getMinutes()}`.slice(-2)}${time.getHours() > 11 ? "pm" : "am"}`;
+  return format(time, "hh:mmaaa");
 };
