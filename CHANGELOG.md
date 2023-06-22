@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.53.0-beta.3](https://github.com/open-sauced/insights/compare/v1.53.0-beta.2...v1.53.0-beta.3) (2023-06-22)
+
+
+### 🐛 Bug Fixes
+
+* properly format local time displayed on user's profile ([#1282](https://github.com/open-sauced/insights/issues/1282)) ([604cc62](https://github.com/open-sauced/insights/commit/604cc62a37a8e5c6b441b8b9b9ac5af87b5e6660))
+
 ## [1.53.0-beta.2](https://github.com/open-sauced/insights/compare/v1.53.0-beta.1...v1.53.0-beta.2) (2023-06-20)
 
 
