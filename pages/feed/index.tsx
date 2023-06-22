@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import Link from "next/link";
 import formatDistanceToNowStrict from "date-fns/formatDistanceToNowStrict";
 import clsx from "clsx";
 
@@ -75,16 +76,16 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
       router.push(`/feed?repo=${selectedRepo}`);
       setPage(1);
     }
-    if (highlightId) {
+    if (id) {
       setOpenSingleHighlight(true);
       router.push(`/feed/${id}`);
     }
 
-    if (!selectedRepo && !highlightId) {
+    if (!selectedRepo && !id) {
       router.push("/feed");
       setPage(1);
     }
-  }, [selectedRepo, highlightId]);
+  }, [selectedRepo, id]);
 
   useEffect(() => {
     setHydrated(true);
@@ -116,6 +117,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
             open={openSingleHighlight}
             onOpenChange={(open) => {
               if (!open) {
+                setOpenSingleHighlight(false);
                 router.push("/feed");
               }
             }}
@@ -124,13 +126,15 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
               <div className="flex flex-col gap-8 mx-auto mt-10">
                 <div className="flex flex-col gap-6 px-3 ">
                   <div className="flex items-center gap-3 ">
-                    <Avatar
-                      alt="user profile avatar"
-                      isCircle
-                      size="sm"
-                      avatarURL={`https://www.github.com/${singleHighlight.login}.png?size=300`}
-                    />
-                    <strong>{singleHighlight.login}</strong>
+                    <Link href={`/user/${singleHighlight.login}`} className="flex items-center gap-3">
+                      <Avatar
+                        alt="user profile avatar"
+                        isCircle
+                        size="sm"
+                        avatarURL={`https://www.github.com/${singleHighlight.login}.png?size=300`}
+                      />
+                      <strong>{singleHighlight.login}</strong>
+                    </Link>
                     <span className="text-xs font-normal text-light-slate-11">
                       {formatDistanceToNowStrict(new Date(singleHighlight.created_at), {
                         addSuffix: true,
