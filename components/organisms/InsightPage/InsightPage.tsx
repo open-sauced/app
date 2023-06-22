@@ -48,7 +48,8 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
 
   useEffect(() => {
     const searchParams = new URLSearchParams(pageHref.substring(pageHref.indexOf("?")));
-
+    console.log("page href", pageHref);
+    debugger;
     if (router.query.selectedRepos) {
       setRepos(JSON.parse(router.query.selectedRepos as string) || []);
     } else if (searchParams.has("selectedReposIDs")) {

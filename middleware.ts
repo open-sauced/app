@@ -10,6 +10,8 @@ export async function middleware(req: NextRequest) {
   const {
     data: { session },
   } = await supabase.auth.getSession();
+  console.log(req.nextUrl.pathname, "Pathnam", req.nextUrl.searchParams.has("login"));
+  debugger;
   // Check auth condition
   if (session?.user || req.nextUrl.searchParams.has("login")) {
     // Authentication successful, forward request to protected route.
