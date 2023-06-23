@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.54.0-beta.1](https://github.com/open-sauced/insights/compare/v1.53.0...v1.54.0-beta.1) (2023-06-23)
+
+
+### 🍕 Features
+
+* add `UserCard` component to storybook design system ([#1295](https://github.com/open-sauced/insights/issues/1295)) ([6867011](https://github.com/open-sauced/insights/commit/68670119da83d25783959d4f27e73a2665b9e920))
+
 ## [1.53.0](https://github.com/open-sauced/insights/compare/v1.52.0...v1.53.0) (2023-06-22)
 
 
