@@ -39,7 +39,9 @@ Default.args = {
   }
 }
 
-const SelectOptions = Array.from({ length: 50 }).map((_, i, a) => `v1.2.0-beta.${a.length - i}`)
+const SelectOptions = Array.from({ length: 50 }).map((value, index, array) => `v1.2.0-beta.${array.length - index}`);
+
+
 
 const ScrollInSelectTemplate: ComponentStory<typeof Select> = (args) => (
   <Select {...args}>
