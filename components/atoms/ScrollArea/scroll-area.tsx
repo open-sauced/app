@@ -50,7 +50,7 @@ const ScrollBar = React.forwardRef<
   <ScrollAreaPrimitive.Scrollbar
     ref={ref}
     className={clsx(
-      "flex touch-none select-none p-[1px] transition-colors duration-[160ms] ease-out",
+      "flex touch-none select-none p-0.5 transition-colors duration-[160ms] ease-out",
       orientation === "vertical" &&
         "h-full w-2 border-l border-l-transparent",
       orientation === "horizontal" &&
