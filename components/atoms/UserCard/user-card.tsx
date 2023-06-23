@@ -2,14 +2,16 @@ import { getAvatarByUsername } from "lib/utils/github";
 import Image from "next/image";
 import React from "react";
 
+type MetaObj = {
+  name: "Followers" | "Following" | "Highlights";
+  count: number;
+};
 interface UserCardProps {
   username: string;
-  followersCount: number;
-  highlightsCount: number;
-  followingCount: number;
+  meta: MetaObj[];
   name: string;
 }
-const UserCard = ({ username, name, followersCount, followingCount, highlightsCount }: UserCardProps) => {
+const UserCard = ({ username, name, meta }: UserCardProps) => {
   const avatarUrl = getAvatarByUsername(username);
 
   return (
@@ -29,7 +31,13 @@ const UserCard = ({ username, name, followersCount, followingCount, highlightsCo
           </div>
         </div>
         <div className="flex items-center gap-5 text-lg text-center">
-          <div>
+          {meta.map(({ name, count }, i) => (
+            <div key={i.toLocaleString()}>
+              <p className="text-center text-light-slate-9">{name}</p>
+              {count > 0 ? count : "-"}
+            </div>
+          ))}
+          {/* <div>
             <p className="text-center text-light-slate-9">Followers</p>
             {followersCount > 0 ? followersCount : "-"}
           </div>
@@ -40,7 +48,7 @@ const UserCard = ({ username, name, followersCount, followingCount, highlightsCo
           <div>
             <p className="text-center text-light-slate-9">Highlights</p>
             {highlightsCount > 0 ? highlightsCount : "-"}
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

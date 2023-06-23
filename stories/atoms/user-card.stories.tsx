@@ -16,15 +16,19 @@ export const NoActivities = UserCardTemplate.bind({});
 UserCardStory.args = {
   username: "foxyblocks",
   name: "Chris Schlensker",
-  followersCount: 2,
-  highlightsCount: 57,
-  followingCount: 102,
+  meta: [
+    { name: "Followers", count: 3 },
+    { name: "Following", count: 103 },
+    { name: "Highlights", count: 55 },
+  ],
 };
 
 NoActivities.args = {
   username: "foxyblocks",
   name: "Chris Schlensker",
-  followersCount: 0,
-  followingCount: 0,
-  highlightsCount: 0,
+  meta: [
+    { name: "Followers", count: 0 },
+    { name: "Following", count: 0 },
+    { name: "Highlights", count: 0 },
+  ],
 };
