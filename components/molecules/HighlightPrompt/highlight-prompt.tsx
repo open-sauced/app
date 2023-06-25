@@ -13,8 +13,8 @@ const HighlightPrompt = ({ prompt }: HighlightPromptProps) => {
   return (
     <div className="p-6 space-y-3 border rounded-lg border-light-slate-6 w-max">
       <h3 className="text-sm font-normal text-light-slate-11">Prompt of the month</h3>
-      <p className="w-64 text-3xl">{prompt}</p>
-      <div className="flex gap-3">
+      <p className="w-64 pr-3 text-2xl">{prompt}</p>
+      <div className="flex gap-3 mt-2">
         <Button className="border text-light-orange-10 border-light-orange-7 bg-light-orange-3" variant="text">
           Post an answer
         </Button>

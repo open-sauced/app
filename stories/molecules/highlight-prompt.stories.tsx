@@ -12,5 +12,5 @@ const HighlightPromptTemplate: ComponentStory<typeof HighlightPrompt> = (args) =
 export const HighlightPromptStory = HighlightPromptTemplate.bind({});
 
 HighlightPromptStory.args = {
-  prompt: "This is the prompt of the month",
+  prompt: "What’s the code you are most proud of?",
 };
