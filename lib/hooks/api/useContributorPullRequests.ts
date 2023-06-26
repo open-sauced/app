@@ -1,18 +1,23 @@
-import useSWR, { Fetcher } from "swr";
+import useSWR, { Arguments, Fetcher } from "swr";
 import { useRouter } from "next/router";
 
 import publicApiFetcher from "lib/utils/public-api-fetcher";
 import getFilterQuery from "lib/utils/get-filter-query";
 
-interface PaginatedResponse {
+export interface PaginatedResponse {
   readonly data: DbRepoPR[];
   readonly meta: Meta;
 }
 
-const useContributorPullRequests = (contributor: string, topic: string, repoIds: number[] = [], limit = 8, range = 30) => {
-  const router = useRouter();
-  const { selectedFilter } = router.query;
-  const filterQuery = getFilterQuery(selectedFilter);
+export function getContributorPRUrl(
+  contributor: string,
+  filter: string | string[] | undefined,
+  topic: string,
+  repoIds: number[] = [],
+  limit = 8,
+  range = 30
+) {
+  const filterQuery = getFilterQuery(filter);
   const query = new URLSearchParams(filterQuery);
 
   if (Number.isNaN(Number(topic)) && topic !== "*") {
@@ -31,6 +36,25 @@ const useContributorPullRequests = (contributor: string, topic: string, repoIds:
 
   const baseEndpoint = `users/${contributor}/prs`;
   const endpointString = `${baseEndpoint}?${query.toString()}`;
+  return endpointString;
+}
+
+export const fetchContributorPRs = async (...args: Parameters<typeof getContributorPRUrl>) => {
+  return (publicApiFetcher as Fetcher<PaginatedResponse, string>)(
+    getContributorPRUrl(...args)
+  );
+};
+
+const useContributorPullRequests = (
+  contributor: string,
+  topic: string,
+  repoIds: number[] = [],
+  limit = 8,
+  range = 30
+) => {
+  const router = useRouter();
+  const { selectedFilter } = router.query;
+  const endpointString = getContributorPRUrl(contributor, selectedFilter, topic, repoIds, limit, range);
 
   const { data, error, mutate } = useSWR<PaginatedResponse, Error>(
     contributor ? endpointString : null,
@@ -42,7 +66,7 @@ const useContributorPullRequests = (contributor: string, topic: string, repoIds:
     meta: data?.meta ?? { itemCount: 0, limit: 0, page: 0, hasNextPage: false, hasPreviousPage: false, pageCount: 0 },
     isLoading: !error && !data,
     isError: !!error,
-    mutate
+    mutate,
   };
 };
 

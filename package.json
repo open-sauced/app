@@ -75,6 +75,7 @@
     "@supabase/supabase-js": "^2.7.0",
     "@supabase/ui": "^0.36.5",
     "@use-gesture/react": "^10.2.27",
+    "@vercel/og": "^0.5.8",
     "clsx": "^1.2.1",
     "cntl": "^1.0.0",
     "date-fns": "^2.29.3",
