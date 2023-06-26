@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.54.0-beta.4](https://github.com/open-sauced/insights/compare/v1.54.0-beta.3...v1.54.0-beta.4) (2023-06-26)
+
+
+### 🍕 Features
+
+* allow login flow after selecting repositories to add to insight page (close [#1132](https://github.com/open-sauced/insights/issues/1132)) ([#1184](https://github.com/open-sauced/insights/issues/1184)) ([21aaa0b](https://github.com/open-sauced/insights/commit/21aaa0bbf286f94d38f8708b7ee39c88559dfe61))
+
 ## [1.54.0-beta.3](https://github.com/open-sauced/insights/compare/v1.54.0-beta.2...v1.54.0-beta.3) (2023-06-26)
 
 
