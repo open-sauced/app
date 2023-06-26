@@ -207,8 +207,6 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
         <Checkbox
           checked={selected ? true : false}
           onCheckedChange={handleSelectCheckbox}
-          disabled={!user}
-          title={!user ? "Connect to GitHub" : ""}
           className={`${user && "border-orange-500 hover:bg-orange-600"}`}
         />
         {/* Column: Repository Name */}

@@ -13,6 +13,8 @@ const PrivateWrapper = ({ isPrivateRoute = false, children }: PrivateWrapperProp
   const router = useRouter();
 
   async function checkSession() {
+    if (router.asPath?.includes("login")) return;
+
     const isValid = await authSession();
 
     if (!isValid) {
