@@ -34,7 +34,7 @@ const Pill: React.FC<PillProps> = ({ className, text, color = "slate", size = "b
     color === "green"
       ? "text-light-grass-11"
       : color === "yellow"
-        ? "text-light-amber-10"
+        ? "text-amber-700"
         : color === "red"
           ? "text-light-red-11"
           : color === "purple"
