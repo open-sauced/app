@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { GetServerSidePropsContext } from "next";
-import { createServerSupabaseClient } from "@supabase/auth-helpers-nextjs";
+import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 
 import Tool from "components/organisms/ToolsDisplay/tools-display";
 
@@ -28,7 +28,7 @@ const HubPage: WithPageLayout<InsightFilterPageProps> = ({ insight, pageName }: 
 };
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
-  const supabase = createServerSupabaseClient(ctx);
+  const supabase = createPagesServerClient(ctx);
 
   const {
     data: { session },
