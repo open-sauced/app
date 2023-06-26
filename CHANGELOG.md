@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.54.0-beta.2](https://github.com/open-sauced/insights/compare/v1.54.0-beta.1...v1.54.0-beta.2) (2023-06-26)
+
+
+### 🍕 Features
+
+* add highlight prompt to design system ([#1297](https://github.com/open-sauced/insights/issues/1297)) ([4a85e74](https://github.com/open-sauced/insights/commit/4a85e74badbd37ea7ff411daa58fc9ef0a787533))
+* implemented/added scroll-area component to design-system  ([#1283](https://github.com/open-sauced/insights/issues/1283)) ([b7280ab](https://github.com/open-sauced/insights/commit/b7280abb2f4e690f18f8630d0f5c0569b61414ed))
+
 ## [1.54.0-beta.1](https://github.com/open-sauced/insights/compare/v1.53.0...v1.54.0-beta.1) (2023-06-23)
 
 
