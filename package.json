@@ -52,6 +52,7 @@
     "@nivo/scatterplot": "^0.80.0",
     "@primer/octicons-react": "^17.11.1",
     "@radix-ui/react-alert-dialog": "^1.0.2",
+    "@radix-ui/react-aspect-ratio": "^1.0.3",
     "@radix-ui/react-checkbox": "^1.0.1",
     "@radix-ui/react-collapsible": "^1.0.2",
     "@radix-ui/react-context-menu": "^1.0.0",
