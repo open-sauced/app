@@ -194,7 +194,7 @@ const Card: NextPage<CardProps> = ({ username, cards }) => {
             {iframeTransition((style, username) => {
               return (
                 <animated.div
-                  className="gridrelative place-content-center"
+                  className="grid relative place-content-center"
                   style={{
                     ...style,
                     gridArea: "1 / 1",
