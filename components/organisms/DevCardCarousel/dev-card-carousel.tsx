@@ -3,7 +3,7 @@ import DevCard, { DevCardProps } from "components/molecules/DevCard/dev-card";
 import { animated, to, useSprings } from "react-spring";
 import { useGesture } from "@use-gesture/react";
 import { useCallback, useEffect, useState } from "react";
-import { useKey, useKeyPress } from "react-use";
+import { useKey } from "react-use";
 
 export interface DevCardCarouselProps {
   cards: DevCardProps[];
@@ -55,9 +55,6 @@ export default function DevCardCarousel(props: DevCardCarouselProps) {
     [cardOrder, props, setCardOrder]
   );
 
-  const [keyLeftIsPressed] = useKeyPress("ArrowLeft");
-  const [keyRightIsPressed] = useKeyPress("ArrowRight");
-
   useKey(
     "ArrowRight",
     () => {
@@ -90,10 +87,6 @@ export default function DevCardCarousel(props: DevCardCarouselProps) {
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex justify-center gap-2 text-white">
-        <ArrowIndicator direction="left" isActive={keyLeftIsPressed} />
-        <ArrowIndicator direction="right" isActive={keyRightIsPressed} />
-      </div>
       <div className="grid place-content-center">
         {springProps.map(({ x, y, scale, zIndex, coverOpacity }, index) => {
           const cardProps = props.cards[index];
@@ -138,27 +131,3 @@ export default function DevCardCarousel(props: DevCardCarouselProps) {
     </div>
   );
 }
-
-const ArrowIndicator = ({direction, isActive}: { direction: "left" | "right", isActive: boolean}) => {
-  const baseClass = cntl`
-    grid
-    rounded-md
-    border
-    w-6
-    h-6
-    text-xs
-    border-white
-    cursor-default
-    place-content-center
-    ${isActive ? "opacity-100" : "opacity-40"}
-  `;
-
-  const text = direction === "left" ? "◀" : "▶";
-
-  return (
-    <div className={baseClass}>
-      {text}
-    </div>
-  );
-
-};

@@ -176,7 +176,7 @@ const Card: NextPage<CardProps> = ({ username, cards }) => {
             columnGap: "4%",
           }}
         >
-          <div className="flex items-center md:justify-end">
+          <div className="flex items-center justify-center md:justify-end">
             <div className="flex flex-col gap-10">
               <DevCardCarousel cards={fullCardsData} onSelect={(name) => setSelectedUserName(name)} />
               <div className="hidden md:flex align-self-stretch justify-center">
