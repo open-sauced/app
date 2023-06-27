@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.54.0-beta.7](https://github.com/open-sauced/insights/compare/v1.54.0-beta.6...v1.54.0-beta.7) (2023-06-27)
+
+
+### 🍕 Features
+
+* add `BillBoard` component to design system ([#1306](https://github.com/open-sauced/insights/issues/1306)) ([1181cfd](https://github.com/open-sauced/insights/commit/1181cfd886c01421f046c880f0bf378d7fe5b034))
+
 ## [1.54.0-beta.6](https://github.com/open-sauced/insights/compare/v1.54.0-beta.5...v1.54.0-beta.6) (2023-06-27)
 
 
