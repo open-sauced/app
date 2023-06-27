@@ -232,23 +232,15 @@ const ContributorProfileTab = ({
                 </div>
               ) : (
                 <DashContainer>
-                  <div className="text-center">
-                    {user?.user_metadata.user_name === login ? (
-                      <>
-                        <p>
-                          You don&apos;t have any highlights yet! <br /> Highlights are a great way to show off your
-                          contributions. Merge any pull requests recently?
-                        </p>
-                        {!inputVisible && (
-                          <Button onClick={() => setInputVisible(true)} className="mt-5" variant="primary">
-                            Add a highlight
-                          </Button>
-                        )}
-                      </>
-                    ) : (
-                      <>
-                        <p>{` ${login} hasn't posted any highlights yet!`}</p>
-                      </>
+                  <div className="text-center"> 
+                    <p>
+                      You don&apos;t have any highlights yet! <br /> Highlights are a great way to show off your
+                      contributions. Merge any pull requests recently?
+                    </p>
+                    {!inputVisible && (
+                      <Button onClick={() => setInputVisible(true)} className="mt-5" variant="primary">
+                        Add a highlight
+                      </Button>
                     )}
                   </div>
                 </DashContainer>
