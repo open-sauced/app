@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.54.0-beta.5](https://github.com/open-sauced/insights/compare/v1.54.0-beta.4...v1.54.0-beta.5) (2023-06-27)
+
+
+### 🍕 Features
+
+* add top users panel component to design system ([#1300](https://github.com/open-sauced/insights/issues/1300)) ([9c05fec](https://github.com/open-sauced/insights/commit/9c05fec425f88799664dc76f2591c9d3bba1589a))
+
 ## [1.54.0-beta.4](https://github.com/open-sauced/insights/compare/v1.54.0-beta.3...v1.54.0-beta.4) (2023-06-26)
 
 
