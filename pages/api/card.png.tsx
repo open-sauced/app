@@ -16,7 +16,7 @@ export const config = {
 
 const ASPECT_RATIO = 245 / 348;
 const BASE_WIDTH = 245;
-const DEFAULT_WIDTH = 980;
+const DEFAULT_WIDTH = 735;
 const MAX_WIDTH = 1960;
 
 // Make sure the font exists in the specified path:
@@ -36,29 +36,31 @@ export default async function handler(request: NextRequest) {
 
   const requestedWidth = Number.parseInt(searchParams.get("w") ?? "0", 10) || DEFAULT_WIDTH;
 
-  const interSemiBoldFontData = await interSemiBoldFont;
-  const interBlackFontData = await interBlackFont;
-  const logoImgData = await logoImg;
-
   const width = Math.min(requestedWidth, MAX_WIDTH);
   const height = width / ASPECT_RATIO;
+  const avatarURL = getAvatarByUsername(username, 600);
 
   function size(size: number) {
     return size * (width / BASE_WIDTH);
   }
 
+  const bufferSize = size(50);
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${username}`);
-  if (!res.ok) {
-    return new Response(res.statusText, { status: res.status });
-  }
-  const avatarURL = getAvatarByUsername(username, 600);
+  const [
+    interSemiBoldFontData,
+    interBlackFontData,
+    logoImgData,
+    prReq,
+  ] = await Promise.all([
+    interSemiBoldFont,
+    interBlackFont,
+    logoImg,
+    fetchContributorPRs(username, undefined, "*", [], 100)
+  ]);
 
-  const { data: prData, meta: prMeta } = await fetchContributorPRs(username, undefined, "*", [], 100);
+  const { data: prData } = prReq; 
   const prs = prData.length;
   const contributions = getRepoList(Array.from(new Set(prData.map((prData) => prData.full_name))).join(",")).length;
-
-  const bufferSize = size(50);
 
   return new ImageResponse(
     (
