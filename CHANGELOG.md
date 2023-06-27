@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.54.0-beta.6](https://github.com/open-sauced/insights/compare/v1.54.0-beta.5...v1.54.0-beta.6) (2023-06-27)
+
+
+### 🍕 Features
+
+*  hide highlights tab components on profiles without highlights ([#1304](https://github.com/open-sauced/insights/issues/1304)) ([976739f](https://github.com/open-sauced/insights/commit/976739f734d8ed3e1c2dd049cf87111093b56455))
+
 ## [1.54.0-beta.5](https://github.com/open-sauced/insights/compare/v1.54.0-beta.4...v1.54.0-beta.5) (2023-06-27)
 
 
