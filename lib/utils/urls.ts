@@ -34,7 +34,7 @@ export const twitterCardShareUrl = (username: string) => {
 export const linkedinCardShareUrl = (username: string, summary: string) => {
   const url = new URL("https://www.linkedin.com/shareArticle?mini=true");
   url.searchParams.append("url", cardPageUrl(username));
-  url.searchParams.append("title", "Check out my Open Sauced DevCard!");
+  url.searchParams.append("title", "Check out my open-source contributions card!");
   url.searchParams.append("summary", summary);
   return url.toString();
 };
