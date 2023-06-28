@@ -16,7 +16,6 @@ export const config = {
 
 const ASPECT_RATIO = 245 / 348;
 const BASE_WIDTH = 245;
-const DEFAULT_WIDTH = 735;
 const MAX_WIDTH = 1960;
 
 // Make sure the font exists in the specified path:
@@ -34,7 +33,7 @@ export default async function handler(request: NextRequest) {
     return new Response("A username must be specified", { status: 403 });
   }
 
-  const requestedWidth = Number.parseInt(searchParams.get("w") ?? "0", 10) || DEFAULT_WIDTH;
+  const requestedWidth = Number.parseInt(searchParams.get("w") ?? "0", 10) || BASE_WIDTH;
 
   const width = Math.min(requestedWidth, MAX_WIDTH);
   const height = width / ASPECT_RATIO;
