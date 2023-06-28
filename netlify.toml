@@ -1,6 +1,5 @@
 [build.environment]
 NODE_VERSION = "16"
-NEXT_USE_NETLIFY_EDGE = "true"
 
 [[plugins]]
 package = "@netlify/plugin-nextjs"
@@ -13,3 +12,7 @@ environment = { CHANNEL = "beta" }
 
 [dev]
 framework = "#static"
+
+[[edge_functions]]
+  path = "/api/card.png"
+  function = "pages/api/card.png.tsx"
