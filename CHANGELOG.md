@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.54.0-beta.9](https://github.com/open-sauced/insights/compare/v1.54.0-beta.8...v1.54.0-beta.9) (2023-06-28)
+
+
+### 🍕 Features
+
+* add `FeaturedHighlightPanel` component to design system ([#1307](https://github.com/open-sauced/insights/issues/1307)) ([452213c](https://github.com/open-sauced/insights/commit/452213cc1dab7373e305c283d09458a60a64f5e3))
+
 ## [1.54.0-beta.8](https://github.com/open-sauced/insights/compare/v1.54.0-beta.7...v1.54.0-beta.8) (2023-06-28)
 
 
