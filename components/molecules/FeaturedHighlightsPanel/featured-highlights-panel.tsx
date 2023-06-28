@@ -2,9 +2,9 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 interface FeaturedHighlightsPanelProps {
-  highlightIds: { id: number; title: string }[];
+  highlights: { id: number; title: string }[];
 }
-const FeaturedHighlightsPanel = ({ highlightIds }: FeaturedHighlightsPanelProps) => {
+const FeaturedHighlightsPanel = ({ highlights }: FeaturedHighlightsPanelProps) => {
   const [host, setHost] = useState("");
 
   useEffect(() => {
@@ -14,10 +14,10 @@ const FeaturedHighlightsPanel = ({ highlightIds }: FeaturedHighlightsPanelProps)
   }, []);
 
   return (
-    <div className="border max-w-[18.6rem] rounded-lg p-5 space-y-4">
+    <div className="p-5 space-y-4 border rounded-lg w-72">
       <h2 className="pb-2 text-lg border-b">Featured Highlights</h2>
       <div className="flex flex-col gap-4 text-sm">
-        {highlightIds.map(({ id, title }) => (
+        {highlights.map(({ id, title }) => (
           <Link className="transition hover:text-light-orange-10" key={id} href={`${host}/feed/${id}`}>
             {title}
           </Link>

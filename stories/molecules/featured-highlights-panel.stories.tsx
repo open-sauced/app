@@ -20,5 +20,5 @@ const FeaturedHighlightsPanelTemplate: ComponentStory<typeof FeaturedHighlightsP
 export const Default = FeaturedHighlightsPanelTemplate.bind({});
 
 Default.args = {
-  highlightIds: sampleHighlights,
+  highlights: sampleHighlights,
 };
