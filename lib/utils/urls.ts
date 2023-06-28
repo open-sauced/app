@@ -25,7 +25,7 @@ export const cardImageUrl = (username: string) => siteUrl(`api/card.png?username
 
 export const twitterCardShareUrl = (username: string) => {
   const url = new URL("https://twitter.com/intent/tweet");
-  url.searchParams.append("text", "Check out my Open Sauced DevCard!");
+  url.searchParams.append("text", "Check out my open-source contributions card!");
   url.searchParams.append("via", "saucedopen");
   url.searchParams.append("url", cardPageUrl(username));
   return url.toString();
