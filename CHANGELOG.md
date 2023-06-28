@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.54.0-beta.8](https://github.com/open-sauced/insights/compare/v1.54.0-beta.7...v1.54.0-beta.8) (2023-06-28)
+
+
+### 🍕 Features
+
+* add URL for collaboration requests ([#1305](https://github.com/open-sauced/insights/issues/1305)) ([b3f8ea5](https://github.com/open-sauced/insights/commit/b3f8ea5abff60b7fd9c75d675c9a3df94d809b67))
+
 ## [1.54.0-beta.7](https://github.com/open-sauced/insights/compare/v1.54.0-beta.6...v1.54.0-beta.7) (2023-06-27)
 
 
