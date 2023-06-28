@@ -1,7 +1,6 @@
 import Title from "components/atoms/Typography/title";
 import Text from "components/atoms/Typography/text";
 import ContributorProfileHeader from "components/molecules/ContributorProfileHeader/contributor-profile-header";
-import { ContributorObject } from "../ContributorCard/contributor-card";
 import CardLineChart from "components/molecules/CardLineChart/card-line-chart";
 import CardRepoList from "components/molecules/CardRepoList/card-repo-list";
 import PullRequestTable from "components/molecules/PullRequestTable/pull-request-table";
@@ -13,10 +12,11 @@ import { getRelativeDays } from "lib/utils/date-utils";
 import Pill from "components/atoms/Pill/pill";
 import getPercent from "lib/utils/get-percent";
 import ContributorProfileInfo from "components/molecules/ContributorProfileInfo/contributor-profile-info";
-import ContributorProfileTab from "../ContributorProfileTab/contributor-profile-tab";
 import ProfileLanguageChart from "components/molecules/ProfileLanguageChart/profile-language-chart";
 import useFollowUser from "lib/hooks/useFollowUser";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
+import ContributorProfileTab from "../ContributorProfileTab/contributor-profile-tab";
+import { ContributorObject } from "../ContributorCard/contributor-card";
 
 const colorKeys = Object.keys(color);
 interface PrObjectType {

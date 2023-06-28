@@ -1,15 +1,15 @@
-import humanizeNumber from "lib/utils/humanizeNumber";
 import { BiGitPullRequest } from "react-icons/bi";
 import { VscIssues } from "react-icons/vsc";
 import { AiOutlineStar } from "react-icons/ai";
-import { getAvatarByUsername } from "lib/utils/github";
-import StackedAvatar, { Contributor } from "../StackedAvatar/stacked-avatar";
 import clsx from "clsx";
+import { getAvatarByUsername } from "lib/utils/github";
+import humanizeNumber from "lib/utils/humanizeNumber";
 import useFetchRecommendedRepoByRepoName from "lib/hooks/fetchRecommendationByRepo";
 import { truncateString } from "lib/utils/truncate-string";
 import useRepositoryPullRequests from "lib/hooks/api/useRepositoryPullRequests";
 import getPullRequestsContributors from "lib/utils/get-pr-contributors";
 import { Spinner } from "components/atoms/SpinLoader/spin-loader";
+import StackedAvatar from "../StackedAvatar/stacked-avatar";
 
 export declare interface RecommendedRepoCardProps extends React.ComponentProps<"div"> {
   fullName: string;

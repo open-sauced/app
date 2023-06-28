@@ -1,7 +1,7 @@
+import React from "react";
 import Title from "components/atoms/Typography/title";
 import { RepoCardProfileProps } from "components/molecules/RepoCardProfile/repo-card-profile";
 import SuggestedRepository from "components/molecules/SuggestedRepo/suggested-repo";
-import React from "react";
 
 interface SuggestedRepositoriesListProps {
   reposData: RepoCardProfileProps[];

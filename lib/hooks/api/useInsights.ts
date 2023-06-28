@@ -1,7 +1,7 @@
-import getFilterQuery from "lib/utils/get-filter-query";
-import publicApiFetcher from "lib/utils/public-api-fetcher";
 import { useRouter } from "next/router";
 import useSWR, { Fetcher } from "swr";
+import getFilterQuery from "lib/utils/get-filter-query";
+import publicApiFetcher from "lib/utils/public-api-fetcher";
 
 interface Insight {
   allReposTotal: number;

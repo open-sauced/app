@@ -4,17 +4,17 @@ import Image from "next/image";
 import cntl from "cntl";
 import { useEffect, useRef, useState } from "react";
 import { useMouse } from "react-use";
-import Button from "components/atoms/Button/button";
 import { ArrowTrendingUpIcon, MinusSmallIcon, ArrowSmallUpIcon, ArrowSmallDownIcon } from "@heroicons/react/24/solid";
 import { GiftIcon } from "@heroicons/react/24/outline";
+import Link from "next/link";
+import clsx from "clsx";
+import Button from "components/atoms/Button/button";
 import Pill, { PillProps } from "components/atoms/Pill/pill";
 import Icon from "components/atoms/Icon/icon";
 import CardSauceBGSVG from "img/card-sauce-bg.svg";
 import openSaucedImg from "img/openSauced-icon.png";
 import PRIcon from "img/icons/pr-icon.svg";
-import Link from "next/link";
 import { getRelativeDays } from "lib/utils/date-utils";
-import clsx from "clsx";
 
 type Activity = "high" | "mid";
 

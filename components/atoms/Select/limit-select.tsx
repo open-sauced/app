@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "components/atoms/Select/select";
 import clsx from "clsx";
 import { RiArrowUpSLine, RiArrowDownSLine } from "react-icons/ri";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "components/atoms/Select/select";
 
 interface LimitSelectProps {
   placeholder: string;

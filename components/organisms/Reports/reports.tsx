@@ -8,13 +8,13 @@ import Icon from "components/atoms/Icon/icon";
 import Title from "components/atoms/Typography/title";
 import ReportsHistory from "components/molecules/ReportsHistory/reports-history";
 import SelectReportsFilter from "components/molecules/SelectReportsFilter/select-reports-filter";
-import StripeCheckoutButton from "../StripeCheckoutButton/stripe-checkout-button";
 
 import { Report } from "interfaces/report-type";
 
 import useFilterOptions from "lib/hooks/useFilterOptions";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import getCurrentDate from "lib/utils/get-current-date";
+import StripeCheckoutButton from "../StripeCheckoutButton/stripe-checkout-button";
 
 const USERDEVICESTORAGENAME = "reportState";
 

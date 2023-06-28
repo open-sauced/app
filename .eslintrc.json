@@ -1,9 +1,26 @@
 {
   "extends": ["next/core-web-vitals", "prettier"],
+  "plugins": ["unused-imports"],
   "rules": {
     "quotes": "error",
     "jsx-quotes": "error",
     "semi": "error",
-    "indent": ["error", 2]
+    "indent": ["error", 2],
+    "unused-imports/no-unused-imports": "error",
+    "import/order": [
+      "error",
+      {
+        "groups": [
+          "builtin",
+          "external",
+          "internal",
+          "object",
+          "type",
+          "index",
+          "parent",
+          "sibling"
+        ]
+      }
+    ]
   }
 }

@@ -5,16 +5,16 @@ import { format } from "date-fns";
 
 import Button from "components/atoms/Button/button";
 import { Textarea } from "components/atoms/Textarea/text-area";
-import GhOpenGraphImg from "../GhOpenGraphImg/gh-open-graph-img";
-import { Popover, PopoverContent, PopoverTrigger } from "../Popover/popover";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../Collapsible/collapsible";
 import Tooltip from "components/atoms/Tooltip/tooltip";
-import { Calendar } from "../Calendar/calendar";
 
 import { createHighlights } from "lib/hooks/createHighlights";
 import { generateApiPrUrl } from "lib/utils/github";
 import { fetchGithubPRInfo } from "lib/hooks/fetchGithubPRInfo";
 import { useToast } from "lib/hooks/useToast";
+import { Calendar } from "../Calendar/calendar";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../Collapsible/collapsible";
+import { Popover, PopoverContent, PopoverTrigger } from "../Popover/popover";
+import GhOpenGraphImg from "../GhOpenGraphImg/gh-open-graph-img";
 
 interface HighlightInputFormProps {
   refreshCallback?: Function;

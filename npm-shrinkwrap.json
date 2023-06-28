@@ -8,7 +8,7 @@
       "name": "@open-sauced/insights",
       "version": "1.55.0-beta.1",
       "hasInstallScript": true,
-      "license": "MIT",
+      "license": "Apache 2.0",
       "dependencies": {
         "@headlessui/react": "^1.7.8",
         "@heroicons/react": "^2.0.14",
@@ -99,6 +99,7 @@
         "eslint": "^8.33.0",
         "eslint-config-next": "^13.1.6",
         "eslint-config-prettier": "^8.8.0",
+        "eslint-plugin-unused-imports": "^2.0.0",
         "jest": "^28.1.3",
         "jest-environment-jsdom": "^29.5.0",
         "postcss": "^8.4.21",
@@ -22190,6 +22191,36 @@
       },
       "funding": {
         "url": "https://github.com/sponsors/ljharb"
+      }
+    },
+    "node_modules/eslint-plugin-unused-imports": {
+      "version": "2.0.0",
+      "resolved": "https://registry.npmjs.org/eslint-plugin-unused-imports/-/eslint-plugin-unused-imports-2.0.0.tgz",
+      "integrity": "sha512-3APeS/tQlTrFa167ThtP0Zm0vctjr4M44HMpeg1P4bK6wItarumq0Ma82xorMKdFsWpphQBlRPzw/pxiVELX1A==",
+      "dev": true,
+      "dependencies": {
+        "eslint-rule-composer": "^0.3.0"
+      },
+      "engines": {
+        "node": "^12.22.0 || ^14.17.0 || >=16.0.0"
+      },
+      "peerDependencies": {
+        "@typescript-eslint/eslint-plugin": "^5.0.0",
+        "eslint": "^8.0.0"
+      },
+      "peerDependenciesMeta": {
+        "@typescript-eslint/eslint-plugin": {
+          "optional": true
+        }
+      }
+    },
+    "node_modules/eslint-rule-composer": {
+      "version": "0.3.0",
+      "resolved": "https://registry.npmjs.org/eslint-rule-composer/-/eslint-rule-composer-0.3.0.tgz",
+      "integrity": "sha512-bt+Sh8CtDmn2OajxvNO+BX7Wn4CIWMpTRm3MaiKPCQcnnlm0CS2mhui6QaoeQugs+3Kj2ESKEEGJUdVafwhiCg==",
+      "dev": true,
+      "engines": {
+        "node": ">=4.0.0"
       }
     },
     "node_modules/eslint-scope": {

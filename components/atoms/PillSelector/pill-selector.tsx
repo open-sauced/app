@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import Icon from "../Icon/icon";
 import cancelIcon from "img/x-circle.svg";
+import Icon from "../Icon/icon";
 
 interface PillSelectorButtonProps {
   className?: string;

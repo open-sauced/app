@@ -1,6 +1,6 @@
+import React from "react";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 import ContributorListTableRow from "components/molecules/ContributorListTableRow/contributor-list-table-row";
-import React from "react";
 
 export interface ContributorTableProps {
   contributors: DbPRContributor[];

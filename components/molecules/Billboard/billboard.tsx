@@ -1,6 +1,4 @@
 import * as AspectRatio from "@radix-ui/react-aspect-ratio";
-import Button from "components/atoms/Button/button";
-import Image from "next/image";
 import React from "react";
 
 interface BillBoardProps {

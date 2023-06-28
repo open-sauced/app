@@ -6,8 +6,8 @@ import { BsCheck2 } from "react-icons/bs";
 import pendingImg from "img/icons/fallback-image-disabled-square.svg";
 
 import Avatar from "components/atoms/Avatar/avatar";
-import { MemberAccess, TeamMemberData } from "../TeamMembersConfig/team-members-config";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "components/atoms/Select/select";
+import { MemberAccess, TeamMemberData } from "../TeamMembersConfig/team-members-config";
 
 interface TeamMemberRowProps extends TeamMemberData {
   className?: string;

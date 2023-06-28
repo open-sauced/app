@@ -1,8 +1,8 @@
 import { useRouter } from "next/router";
 
+import { calcDistanceFromToday } from "lib/utils/date-utils";
 import CardProfile from "../CardProfile/card-profile";
 import CardRepoList, { RepoList } from "../CardRepoList/card-repo-list";
-import { calcDistanceFromToday } from "lib/utils/date-utils";
 import PullRequestTable from "../PullRequestTable/pull-request-table";
 
 export interface ContributorsProfileType {

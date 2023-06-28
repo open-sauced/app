@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Text from "components/atoms/Typography/text";
-import colors from "../../../lib/utils/color.json";
 import Tooltip from "components/atoms/Tooltip/tooltip";
+import colors from "../../../lib/utils/color.json";
 
 export interface AllSimpleColors {
   [key: string]: {

@@ -1,11 +1,12 @@
+import { ParsedUrlQuery } from "querystring";
 import { GetServerSideProps, NextPage } from "next";
 import { useEffect, useState } from "react";
 import { useTransition, animated } from "react-spring";
+import Image from "next/image";
+import cntl from "cntl";
 import Button from "components/atoms/Button/button";
 import HeaderLogo from "components/molecules/HeaderLogo/header-logo";
 import DevCardCarousel, { DevCardCarouselProps } from "components/organisms/DevCardCarousel/dev-card-carousel";
-import BubbleBG from "../../../img/bubble-bg.svg";
-import { ParsedUrlQuery } from "querystring";
 import { getAvatarByUsername } from "lib/utils/github";
 import { fetchContributorPRs } from "lib/hooks/api/useContributorPullRequests";
 import getContributorPullRequestVelocity from "lib/utils/get-contributor-pr-velocity";
@@ -13,12 +14,11 @@ import getPercent from "lib/utils/get-percent";
 import { getRepoList } from "lib/hooks/useRepoList";
 import { DevCardProps } from "components/molecules/DevCard/dev-card";
 import SEO from "layouts/SEO/SEO";
-import TwitterIcon from "../../../img/icons/social-twitter.svg";
-import LinkinIcon from "../../../img/icons/social-linkedin.svg";
-import Image from "next/image";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { cardImageUrl, linkedinCardShareUrl, twitterCardShareUrl } from "lib/utils/urls";
-import cntl from "cntl";
+import TwitterIcon from "../../../img/icons/social-twitter.svg";
+import LinkinIcon from "../../../img/icons/social-linkedin.svg";
+import BubbleBG from "../../../img/bubble-bg.svg";
 ;
 const ADDITIONAL_PROFILES_TO_LOAD = [
   "bdougie",

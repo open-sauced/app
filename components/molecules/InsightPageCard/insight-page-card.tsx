@@ -9,10 +9,10 @@ import Text from "components/atoms/Typography/text";
 import { getRelativeDays } from "lib/utils/date-utils";
 import getRepoInsights from "lib/utils/get-repo-insights";
 
+import useRepositories from "lib/hooks/api/useRepositories";
 import CardRepoList from "../CardRepoList/card-repo-list";
 import PieChart, { PieData } from "../PieChart/pie-chart";
 import StackedAvatar from "../StackedAvatar/stacked-avatar";
-import useRepositories from "lib/hooks/api/useRepositories";
 
 interface InsightPageCardProps {
   user: User | null;
