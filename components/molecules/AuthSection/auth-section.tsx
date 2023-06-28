@@ -94,7 +94,16 @@ const AuthSection: React.FC = ({}) => {
         <Text className="group-hover:text-light-orange-10">Settings</Text>
       </Link>,
       <span
-        onClick={async () => await signOut()}
+        onClick={async () => {
+          const pageHref = window.location.href;
+          const searchParams = new URLSearchParams(pageHref.substring(pageHref.indexOf("?")));
+          if (searchParams.has("login")){
+            searchParams.delete("login");
+            router.replace(`${pageHref.substring(0, pageHref.indexOf("?"))}?${searchParams.toString()}`);
+          }
+          
+          await signOut();
+        }}
         key="authorized"
         className="flex items-center px-4 py-2 text-lg transition rounded-md cursor-pointer group gap-x-3 hover:bg-light-orange-3"
       >

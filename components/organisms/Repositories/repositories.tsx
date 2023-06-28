@@ -35,7 +35,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
     isError: repoListIsError,
     isLoading: repoListIsLoading,
     setPage,
-    setLimit,
+    setLimit
   } = useRepositories(repositories, range);
   const filteredRepoNotIndexed = selectedFilter && !repoListIsLoading && !repoListIsError && repoListData.length === 0;
   const [selectedRepos, setSelectedRepos] = useState<DbRepo[]>([]);
@@ -55,7 +55,13 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
         "/hub/insights/new"
       );
     } else {
-      signIn({ provider: "github" });
+      const reposIds = selectedRepos.map((repo) => repo.id);
+      signIn({ 
+        provider: "github",
+        options: {
+          redirectTo: `${window.location.origin}/hub/insights/new?selectedReposIDs=${JSON.stringify(reposIds)}&login=true&`,
+        },
+      });
     }
   };
 
@@ -97,26 +103,24 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
         <div className="lg:min-w-[1150px]">
           <div className="flex justify-between gap-2 px-6 py-4 md:hidden bg-light-slate-3">
             <div className="flex-1">
-              <TableTitle>Repositories</TableTitle>
+              <TableTitle> Repository </TableTitle>
             </div>
             <div className="flex-1">
-              <TableTitle>Pr Overview</TableTitle>
+              <TableTitle> Pr Overview </TableTitle>
             </div>
           </div>
           <div className="hidden gap-2 px-6 py-4 md:flex bg-light-slate-3">
             <div className={clsx(classNames.cols.checkbox)}>
               <Checkbox
                 onCheckedChange={handleOnSelectAllChecked}
-                disabled={!user}
-                title={!user ? "Connect to GitHub" : ""}
                 className={`${user && "border-orange-500 hover:bg-orange-600"}`}
               />
             </div>
             <div className={clsx(classNames.cols.repository)}>
-              <TableTitle>Repository</TableTitle>
+              <TableTitle> Repository </TableTitle>
             </div>
             <div className={clsx(classNames.cols.activity)}>
-              <TableTitle>Activity</TableTitle>
+              <TableTitle >Activity</TableTitle>
             </div>
             <div className={clsx(classNames.cols.prOverview)}>
               <TableTitle>PR Overview</TableTitle>
@@ -125,10 +129,10 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
               <TableTitle>PR Velocity</TableTitle>
             </div>
             <div className={clsx(classNames.cols.spam)}>
-              <TableTitle>SPAM</TableTitle>
+              <TableTitle >SPAM</TableTitle>
             </div>
             <div className={clsx(classNames.cols.contributors, "hidden lg:flex")}>
-              <TableTitle>Contributors</TableTitle>
+              <TableTitle >Contributors</TableTitle>
             </div>
             <div className={clsx(classNames.cols.last30days, "hidden lg:flex")}>
               <TableTitle>Last 30 Days</TableTitle>
@@ -139,7 +143,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
             <div className="flex justify-between p-3 px-6 border-b-2 text-light-slate-11">
               <div>{selectedRepos.length} Repositories selected</div>
               <Button onClick={handleOnAddtoInsights} variant="primary">
-                Add to Insight Page
+                 Add to Insight Page
               </Button>
             </div>
           )}
@@ -164,7 +168,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
                 { name: "20 per page", value: "20" },
                 { name: "30 per page", value: "30" },
                 { name: "40 per page", value: "40" },
-                { name: "50 per page", value: "50" },
+                { name: "50 per page", value: "50" }
               ]}
               className="!w-36 ml-auto md:hidden overflow-x-hidden"
               onChange={function (limit: string): void {

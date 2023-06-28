@@ -11,6 +11,7 @@ import RepositoriesCart from "components/organisms/RepositoriesCart/repositories
 import RepositoryCartItem from "components/molecules/ReposoitoryCartItem/repository-cart-item";
 import RepoNotIndexed from "components/organisms/Repositories/repository-not-indexed";
 import DeleteInsightPageModal from "./DeleteInsightPageModal";
+import useRepositories from "lib/hooks/api/useRepositories";
 
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { getAvatarById, getAvatarByUsername } from "lib/utils/github";
@@ -41,10 +42,19 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
   const { sessionToken, providerToken } = useSupabaseAuth();
   const { toast } = useToast();
   const router = useRouter();
-  let receivedData = [];
-  if (router.query.selectedRepos) {
-    receivedData = JSON.parse(router.query.selectedRepos as string);
-  }
+  const pageHref = router.asPath;
+  const [reposIds, setReposIds] = useState<number[]>([]);
+  const { data: repoListData } = useRepositories(reposIds);
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(pageHref.substring(pageHref.indexOf("?")));
+    if (router.query.selectedRepos) {
+      setRepos(JSON.parse(router.query.selectedRepos as string) || []);
+    } else if (searchParams.has("selectedReposIDs")) {
+      setReposIds(JSON.parse(searchParams.get("selectedReposIDs") as string) || []);
+      setRepos(repoListData);
+    }
+  }, [repoListData, router.query.selectedRepos, pageHref]);
 
   const { data, addMember, deleteMember, updateMember } = useInsightMembers(insight?.id || 0);
 
@@ -60,6 +70,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
     insight_id: Number(insight?.id),
     email: String(insight?.user.email),
     id: String(insight?.user.id),
+
     name: String(insight?.user.name || insight?.user.login),
     avatarUrl: getAvatarByUsername(String(insight?.user.login)),
     access: "owner",
@@ -72,7 +83,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
   const [name, setName] = useState(insight?.name || "");
   const [isNameValid, setIsNameValid] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [repos, setRepos] = useState<DbRepo[]>(receivedData);
+  const [repos, setRepos] = useState<DbRepo[]>([]);
   const [repoHistory, setRepoHistory] = useState<DbRepo[]>([]);
   const [addRepoError, setAddRepoError] = useState<RepoLookupError>(RepoLookupError.Initial);
   const [isPublic, setIsPublic] = useState(!!insight?.is_public);
@@ -104,7 +115,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
       repoName: repoName,
       totalPrs,
       avatar: getAvatarByUsername(repoOwner, 60),
-      handleRemoveItem: () => {},
+      handleRemoveItem: () => { },
     };
   });
 
@@ -238,7 +249,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
       setRepoHistory((historyRepos) => {
         return historyRepos.filter((repo) => `${repo.full_name}` !== repoAdded);
       });
-    } catch (e) {}
+    } catch (e) { }
   };
 
   const handleRemoveRepository = (id: string) => {

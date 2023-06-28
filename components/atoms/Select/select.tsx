@@ -2,6 +2,8 @@ import * as React from "react";
 import * as SelectPrimitive from "@radix-ui/react-select";
 import clsx from "clsx";
 
+import { ScrollArea, ScrollViewport } from "components/atoms/ScrollArea/scroll-area";
+
 const Select = SelectPrimitive.Root;
 
 const SelectGroup = SelectPrimitive.Group;
@@ -43,15 +45,20 @@ const SelectContent = React.forwardRef<
       position={position}
       {...props}
     >
-      <SelectPrimitive.Viewport
-        className={clsx(
-          "p-1",
-          position === "popper" &&
-            "h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)]"
-        )}
-      >
-        {children}
-      </SelectPrimitive.Viewport>
+      <ScrollArea type="auto">
+        <SelectPrimitive.Viewport
+          asChild 
+          className={clsx(
+            "p-1",
+            position === "popper" &&
+              "max-h-[var(--radix-select-content-available-height)] w-full min-w-[var(--radix-select-trigger-width)]"
+          )}
+        >        
+          <ScrollViewport className="max-h-[var(--radix-select-content-available-height)] w-full">
+            {children}
+          </ScrollViewport>
+        </SelectPrimitive.Viewport>
+      </ScrollArea>
     </SelectPrimitive.Content>
   </SelectPrimitive.Portal>
 ));
