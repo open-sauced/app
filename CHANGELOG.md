@@ -5,6 +5,18 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.55.0-beta.1](https://github.com/open-sauced/insights/compare/v1.54.0...v1.55.0-beta.1) (2023-06-29)
+
+
+### 🍕 Features
+
+* Hookup devcard page to real data ([#1302](https://github.com/open-sauced/insights/issues/1302)) ([6c58d74](https://github.com/open-sauced/insights/commit/6c58d74a1d51bace163822c6804f91842d2544cc))
+
+
+### 🐛 Bug Fixes
+
+* update author and license ([9a2c7de](https://github.com/open-sauced/insights/commit/9a2c7de62b23759b0e7cdcec473070721440201e))
+
 ## [1.54.0](https://github.com/open-sauced/insights/compare/v1.53.0...v1.54.0) (2023-06-28)
 
 
