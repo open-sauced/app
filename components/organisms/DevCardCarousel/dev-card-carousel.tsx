@@ -5,9 +5,8 @@ import { useGesture } from "@use-gesture/react";
 import { useCallback, useEffect, useState } from "react";
 import { useKey } from "react-use";
 
-interface DevCardCarouselProps {
-  isLoading?: boolean;
-  cards: Omit<DevCardProps, "isLoading">[];
+export interface DevCardCarouselProps {
+  cards: DevCardProps[];
   onSelect?: (username: string) => void;
 }
 
@@ -84,8 +83,10 @@ export default function DevCardCarousel(props: DevCardCarouselProps) {
     });
   }, [cardOrder, api]);
 
+
+
   return (
-    <div>
+    <div className="flex flex-col gap-6">
       <div className="grid place-content-center">
         {springProps.map(({ x, y, scale, zIndex, coverOpacity }, index) => {
           const cardProps = props.cards[index];
@@ -105,6 +106,8 @@ export default function DevCardCarousel(props: DevCardCarouselProps) {
               {...bind(index)}
               key={cardProps.username}
               className={className}
+              role="button"
+              title={cardProps.username}
               style={{
                 gridArea: "1 / 1",
                 zIndex: zIndex,
@@ -112,10 +115,10 @@ export default function DevCardCarousel(props: DevCardCarouselProps) {
                 transformOrigin: "left center",
               }}
             >
-              <DevCard isLoading={false} isInteractive={index === cardOrder[0]} {...cardProps} />
+              <DevCard isInteractive={index === cardOrder[0]} {...cardProps} />
               <animated.div
                 className="DevCardCarousel-darken absolute left-0 right-0 top-0 bottom-0 bg-black rounded-3xl z-10"
-                title={cardProps.username}
+                title={`Select @${cardProps.username}`}
                 style={{ opacity: coverOpacity, pointerEvents: index === cardOrder[0] ? "none" : "auto" }}
                 onClick={() => {
                   handleClick(cardOrderIndex);

@@ -6,7 +6,6 @@ export const STUB_DEV_CARDS = [
     prs: 2,
     contributions: 57,
     bio: "This is the story all about how my life got flipped turned upside down, and I'd like to take a minute just sit right there, I'll tell you how I became the prince of a town called Bel-Air.",
-    activity: "high",
     prVelocity: 102,
   },
   {
@@ -16,7 +15,6 @@ export const STUB_DEV_CARDS = [
     prs: 31,
     contributions: 1,
     bio: "This is the story all about how my life got flipped turned upside down, and I'd like to take a minute just sit right there, I'll tell you how I became the prince of a town called Bel-Air.",
-    activity: "high",
     prVelocity: 67,
   },
   {
@@ -26,7 +24,6 @@ export const STUB_DEV_CARDS = [
     prs: 31,
     contributions: 1,
     bio: "This is the story all about how my life got flipped turned upside down, and I'd like to take a minute just sit right there, I'll tell you how I became the prince of a town called Bel-Air.",
-    activity: "high",
     prVelocity: 67,
   },
   {
@@ -36,7 +33,6 @@ export const STUB_DEV_CARDS = [
     prs: 31,
     contributions: 1,
     bio: "This is the story all about how my life got flipped turned upside down, and I'd like to take a minute just sit right there, I'll tell you how I became the prince of a town called Bel-Air.",
-    activity: "high",
     prVelocity: 67,
   },
   {
@@ -46,7 +42,6 @@ export const STUB_DEV_CARDS = [
     prs: 31,
     contributions: 1,
     bio: "This is the story all about how my life got flipped turned upside down, and I'd like to take a minute just sit right there, I'll tell you how I became the prince of a town called Bel-Air.",
-    activity: "high",
     prVelocity: 67,
   },
   {
@@ -56,7 +51,6 @@ export const STUB_DEV_CARDS = [
     prs: 31,
     contributions: 1,
     bio: "This is the story all about how my life got flipped turned upside down, and I'd like to take a minute just sit right there, I'll tell you how I became the prince of a town called Bel-Air.",
-    activity: "high",
     prVelocity: 67,
   },
 ] as const;

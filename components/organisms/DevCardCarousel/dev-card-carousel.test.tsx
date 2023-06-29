@@ -14,10 +14,10 @@ describe("DevCardCarousel", () => {
   });
 
   describe("when the user clicks on a card", () => {
-    it("should trigger the onSelect", () => {
+    it("should trigger the onSelect", async () => {
       const onSelect = jest.fn();
       render(<DevCardCarousel cards={[...STUB_DEV_CARDS]} onSelect={onSelect} />);
-      const thirdDevCard = screen.getByTitle(STUB_DEV_CARDS[2].username);
+      const thirdDevCard = await screen.getByTitle(`Select @${STUB_DEV_CARDS[2].username}`);
       userEvent.click(thirdDevCard);
       expect(onSelect).toHaveBeenCalledWith(STUB_DEV_CARDS[2].username);
     });
