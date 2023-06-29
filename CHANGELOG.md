@@ -5,6 +5,26 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.54.0](https://github.com/open-sauced/insights/compare/v1.53.0...v1.54.0) (2023-06-28)
+
+
+### 🐛 Bug Fixes
+
+* fix yellow color for `<Pill />` component ([#1299](https://github.com/open-sauced/insights/issues/1299)) ([2f2d9f5](https://github.com/open-sauced/insights/commit/2f2d9f54e539fed192bc616176628185bb1ed866))
+
+
+### 🍕 Features
+
+*  hide highlights tab components on profiles without highlights ([#1304](https://github.com/open-sauced/insights/issues/1304)) ([976739f](https://github.com/open-sauced/insights/commit/976739f734d8ed3e1c2dd049cf87111093b56455))
+* add `BillBoard` component to design system ([#1306](https://github.com/open-sauced/insights/issues/1306)) ([1181cfd](https://github.com/open-sauced/insights/commit/1181cfd886c01421f046c880f0bf378d7fe5b034))
+* add `FeaturedHighlightPanel` component to design system ([#1307](https://github.com/open-sauced/insights/issues/1307)) ([452213c](https://github.com/open-sauced/insights/commit/452213cc1dab7373e305c283d09458a60a64f5e3))
+* add `UserCard` component to storybook design system ([#1295](https://github.com/open-sauced/insights/issues/1295)) ([6867011](https://github.com/open-sauced/insights/commit/68670119da83d25783959d4f27e73a2665b9e920))
+* add highlight prompt to design system ([#1297](https://github.com/open-sauced/insights/issues/1297)) ([4a85e74](https://github.com/open-sauced/insights/commit/4a85e74badbd37ea7ff411daa58fc9ef0a787533))
+* add top users panel component to design system ([#1300](https://github.com/open-sauced/insights/issues/1300)) ([9c05fec](https://github.com/open-sauced/insights/commit/9c05fec425f88799664dc76f2591c9d3bba1589a))
+* add URL for collaboration requests ([#1305](https://github.com/open-sauced/insights/issues/1305)) ([b3f8ea5](https://github.com/open-sauced/insights/commit/b3f8ea5abff60b7fd9c75d675c9a3df94d809b67))
+* allow login flow after selecting repositories to add to insight page (close [#1132](https://github.com/open-sauced/insights/issues/1132)) ([#1184](https://github.com/open-sauced/insights/issues/1184)) ([21aaa0b](https://github.com/open-sauced/insights/commit/21aaa0bbf286f94d38f8708b7ee39c88559dfe61))
+* implemented/added scroll-area component to design-system  ([#1283](https://github.com/open-sauced/insights/issues/1283)) ([b7280ab](https://github.com/open-sauced/insights/commit/b7280abb2f4e690f18f8630d0f5c0569b61414ed))
+
 ## [1.54.0-beta.9](https://github.com/open-sauced/insights/compare/v1.54.0-beta.8...v1.54.0-beta.9) (2023-06-28)
 
 
