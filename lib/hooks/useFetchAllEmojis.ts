@@ -1,5 +1,5 @@
-import publicApiFetcher from "lib/utils/public-api-fetcher";
 import useSWR, { Fetcher } from "swr";
+import publicApiFetcher from "lib/utils/public-api-fetcher";
 
 interface PaginatedEmojiResponse {
   data: DbEmojis[];

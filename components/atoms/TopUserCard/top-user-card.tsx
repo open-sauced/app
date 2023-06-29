@@ -1,6 +1,6 @@
 import React from "react";
-import Avatar from "../Avatar/avatar";
 import { getAvatarByUsername } from "lib/utils/github";
+import Avatar from "../Avatar/avatar";
 import Button from "../Button/button";
 
 export interface TopUserCardProps {

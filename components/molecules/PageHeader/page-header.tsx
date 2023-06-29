@@ -1,5 +1,5 @@
-import Title from "components/atoms/Typography/title";
 import React from "react";
+import Title from "components/atoms/Typography/title";
 interface PageHeaderProps {
   title: string;
   rightComponent: React.ReactNode;

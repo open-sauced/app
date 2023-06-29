@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 import { BsListUl } from "react-icons/bs";
 import { BiGridAlt } from "react-icons/bi";

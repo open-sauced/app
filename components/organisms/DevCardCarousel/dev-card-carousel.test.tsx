@@ -5,8 +5,8 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom";
-import DevCardCarousel from "./dev-card-carousel";
 import { STUB_DEV_CARDS } from "components/organisms/DevCardCarousel/stubData";
+import DevCardCarousel from "./dev-card-carousel";
 
 describe("DevCardCarousel", () => {
   it("should render", () => {

@@ -1,11 +1,11 @@
-import ContextFilterButton from "components/atoms/ContextFilterButton/context-filter-button";
 
 import React, { useEffect, useRef, useState } from "react";
-import Icon from "../../atoms/Icon/icon";
+import ContextFilterButton from "components/atoms/ContextFilterButton/context-filter-button";
 import cancelIcon from "img/x-circle.svg";
 import Radio from "components/atoms/Radio/radio";
 import humanizeNumber from "lib/utils/humanizeNumber";
 import getFilterKey from "lib/utils/get-filter-key";
+import Icon from "../../atoms/Icon/icon";
 
 interface SuperlativeSelectorProps {
   filterOptions: string[];

@@ -1,6 +1,6 @@
-import publicApiFetcher from "lib/utils/public-api-fetcher";
 import { useState } from "react";
 import useSWR, { Fetcher } from "swr";
+import publicApiFetcher from "lib/utils/public-api-fetcher";
 
 interface useFetchUserHighlightsResponse {
   data: { full_name: string }[];

@@ -1,5 +1,5 @@
-import TopUserCard, { TopUserCardProps } from "components/atoms/TopUserCard/top-user-card";
 import React from "react";
+import TopUserCard, { TopUserCardProps } from "components/atoms/TopUserCard/top-user-card";
 
 interface TopUsersPanelProps {
   users: TopUserCardProps[];

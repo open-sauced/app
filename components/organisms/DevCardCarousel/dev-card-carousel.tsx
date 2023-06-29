@@ -1,9 +1,9 @@
 import cntl from "cntl";
-import DevCard, { DevCardProps } from "components/molecules/DevCard/dev-card";
 import { animated, to, useSprings } from "react-spring";
 import { useGesture } from "@use-gesture/react";
 import { useCallback, useEffect, useState } from "react";
 import { useKey } from "react-use";
+import DevCard, { DevCardProps } from "components/molecules/DevCard/dev-card";
 
 export interface DevCardCarouselProps {
   cards: DevCardProps[];

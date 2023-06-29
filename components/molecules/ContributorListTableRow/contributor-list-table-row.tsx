@@ -2,16 +2,16 @@ import React, { useEffect, useState } from "react";
 import clsx from "clsx";
 import formatDistanceToNowStrict from "date-fns/formatDistanceToNowStrict";
 
-import DevProfile from "../DevProfile/dev-profile";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/solid";
 import Sparkline from "components/atoms/Sparkline/sparkline";
 import getPullRequestsToDays from "lib/utils/get-prs-to-days";
 import { classNames } from "components/organisms/RepositoriesTable/repositories-table";
 
 import useContributorPullRequests from "lib/hooks/api/useContributorPullRequests";
-import { getActivity } from "../RepoRow/repo-row";
 import useRepoList from "lib/hooks/useRepoList";
 import { useFetchUser } from "lib/hooks/useFetchUser";
+import { getActivity } from "../RepoRow/repo-row";
+import DevProfile from "../DevProfile/dev-profile";
 
 interface ContributorListTableRow {
   contributor: DbPRContributor;

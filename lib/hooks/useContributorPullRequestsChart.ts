@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import getPullRequestsToDays from "lib/utils/get-prs-to-days";
-import useContributorPullRequests from "./api/useContributorPullRequests";
 import { RepoList } from "components/molecules/CardRepoList/card-repo-list";
 import { getAvatarByUsername } from "lib/utils/github";
+import useContributorPullRequests from "./api/useContributorPullRequests";
 
 const useContributorPullRequestsChart = (contributor: string, topic: string, repoIds: number[] = [], range = 30) => {
   const lineChart = {

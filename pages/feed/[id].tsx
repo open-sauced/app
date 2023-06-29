@@ -1,7 +1,7 @@
 import { GetServerSidePropsContext } from "next";
 
-import Feed from "../feed";
 import fetchSocialCard from "lib/utils/fetch-social-card";
+import Feed from "../feed";
 
 export default Feed;
 

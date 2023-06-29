@@ -1,4 +1,4 @@
-import useSWR, { Arguments, Fetcher } from "swr";
+import useSWR, { Fetcher } from "swr";
 import { useRouter } from "next/router";
 
 import publicApiFetcher from "lib/utils/public-api-fetcher";

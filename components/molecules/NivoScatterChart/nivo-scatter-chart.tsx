@@ -1,5 +1,4 @@
-import { useRouter } from "next/router";
-import { MouseEvent, useCallback, useState } from "react";
+import { useState } from "react";
 
 import { ResponsiveScatterPlot, ScatterPlotNodeProps } from "@nivo/scatterplot";
 import { animated } from "@react-spring/web";
