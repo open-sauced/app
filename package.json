@@ -3,9 +3,9 @@
   "description": "🍕The dashboard for open source discovery.",
   "keywords": [],
   "version": "1.54.0",
-  "author": "TED Vortex <ted.vortex@gmail.com>",
+  "author": "Brian Douglas <brian@opensauced.pizza>",
   "private": true,
-  "license": "MIT",
+  "license": "Apache 2.0",
   "files": [
     "build/**/*"
   ],
