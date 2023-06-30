@@ -1,9 +1,8 @@
+import React, { useState } from "react";
+import Image from "next/image";
 import Button from "components/atoms/Button/button";
 import TextInput from "components/atoms/TextInput/text-input";
-import { set } from "date-fns";
-import React, { useState } from "react";
 import SaucedLogo from "img/fallbackImageColor.svg";
-import Image from "next/image";
 
 const NewsletterForm = () => {
   const [loading, setLoading] = useState(false);
