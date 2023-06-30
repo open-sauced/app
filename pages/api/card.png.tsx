@@ -142,7 +142,7 @@ export default async function handler(request: NextRequest) {
                       {repos}
                     </div>
                     <div tw="flex" style={{ fontSize: size(12) }}>
-                      {repos > 1 ? "Repos" : "Repo"}
+                      {repos <= 1 ? "Repo" : "Repos"}
                     </div>
                   </div>
                 </div>
