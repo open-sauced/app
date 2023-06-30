@@ -1,21 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Button from "components/atoms/Button/button";
 import TextInput from "components/atoms/TextInput/text-input";
 import SaucedLogo from "img/fallbackImageColor.svg";
+import { AiFillCloseCircle } from "react-icons/ai";
 
 const NewsletterForm = () => {
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [isValidEmail, setIsValidEmail] = useState(false);
   const [isSubscribed, setIsSubscribed] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const isValidEmail = email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
-    setIsValidEmail(!!isValidEmail);
-    if (!isValidEmail) return;
+    if (!isValidEmail) {
+      setErrorMsg("Please enter a valid email");
+      return;
+    }
+
     setLoading(true);
 
     // TODO: Add API call to subscribe user
@@ -24,6 +28,18 @@ const NewsletterForm = () => {
       setIsSubscribed(true);
     }, 3000);
   };
+
+  const handleChange = (value: string) => {
+    setEmail(value);
+    const isValidEmail = email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
+    setIsValidEmail(!!isValidEmail);
+  };
+
+  useEffect(() => {
+    if (isValidEmail) {
+      setErrorMsg("");
+    }
+  }, [isValidEmail]);
   return (
     <>
       {isSubscribed ? (
@@ -42,22 +58,27 @@ const NewsletterForm = () => {
           <form className="w-full" onSubmit={handleSubmit}>
             <div className="flex items-center justify-between gap-1 ">
               <TextInput
-                onChange={(e) => setEmail(e.target.value)}
+                handleChange={(value) => handleChange(value)}
+                state={isValidEmail ? "valid" : "invalid"}
                 value={email}
                 className="w-32 text-sm focus:outline-none"
-                type="email"
+                type="text"
                 placeholder="Email"
-                required
               />
               <Button
                 loading={loading}
-                className="py-1 border-light-orange-7 text-light-orange-10"
+                className="inline-block py-1 border-light-orange-7 text-light-orange-10"
                 type="submit"
                 variant="text"
               >
                 Subscribe
               </Button>
             </div>
+            {errorMsg && (
+              <p className="flex items-center gap-1 mt-2 text-xs font-light text-red-500">
+                <AiFillCloseCircle onClick={() => setErrorMsg("")} className="text-sm" /> {errorMsg}
+              </p>
+            )}
           </form>
         </div>
       )}

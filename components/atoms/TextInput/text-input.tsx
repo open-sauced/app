@@ -44,8 +44,8 @@ const TextInput = ({
 
   return (
     <>
-      <label className="flex w-full flex-col">
-        {label && <p className="mb-2 text-light-slate-9 text-sm">{label}</p>}
+      <label className="flex flex-col w-full">
+        {label && <p className="mb-2 text-sm text-light-slate-9">{label}</p>}
         <div
           className={clsx(
             "flex-1 px-3 text-light-slate-12 bg-white shadow-input border transition rounded-lg py-1 flex items-center",
@@ -72,10 +72,10 @@ const TextInput = ({
           {!disabled && (
             <>
               {state === "valid" ? (
-                <CheckCircleFillIcon className="text-light-orange-9" size={14} />
+                <CheckCircleFillIcon className="text-light-orange-9" size={12} />
               ) : !!value ? (
                 <span className="flex items-center" onClick={handleResetInput}>
-                  <XCircleFillIcon className="text-light-red-11" size={14} />
+                  <XCircleFillIcon className="text-light-red-11" size={12} />
                 </span>
               ) : (
                 ""
@@ -84,8 +84,8 @@ const TextInput = ({
           )}
         </div>
       </label>
-      {descriptionText ? <p className="mt-2 text-light-slate-9 text-sm">{descriptionText}</p> : ""}
-      {state === "invalid" && errorMsg ? <p className="mt-3 text-sm text-light-red-11  ">{errorMsg}</p> : ""}
+      {descriptionText ? <p className="mt-2 text-sm text-light-slate-9">{descriptionText}</p> : ""}
+      {state === "invalid" && errorMsg ? <p className="mt-3 text-sm text-light-red-11 ">{errorMsg}</p> : ""}
     </>
   );
 };
