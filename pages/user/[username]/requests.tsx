@@ -1,9 +1,9 @@
-import { createServerSupabaseClient } from "@supabase/auth-helpers-nextjs";
+import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 
 import Contributor, { handleUserSSR, UserSSRPropsContext } from "./index";
 
 export const getServerSideProps = async (context: UserSSRPropsContext) => {
-  const supabase = createServerSupabaseClient(context);
+  const supabase = createPagesServerClient(context);
   const username = context?.params?.username;
 
   if (!username) {
