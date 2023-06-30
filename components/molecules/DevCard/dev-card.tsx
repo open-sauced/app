@@ -23,7 +23,7 @@ export interface DevCardProps {
   name?: string;
   avatarURL: string;
   prs?: number;
-  contributions?: number;
+  repos?: number;
   bio?: string;
   prVelocity?: number;
   prMergePercentage?: number;
@@ -184,8 +184,8 @@ export default function DevCard(props: DevCardProps) {
                   <div className="text-xs">PRs created</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-6xl font-black">{props.isLoading ? "-" : props.contributions}</div>
-                  <div className="text-xs">Contributions</div>
+                  <div className="text-6xl font-black">{props.isLoading ? "-" : props.repos}</div>
+                  <div className="text-xs">{props.repos! > 1 ? "Repos" : "Repo"}</div>
                 </div>
               </div>
             </div>
