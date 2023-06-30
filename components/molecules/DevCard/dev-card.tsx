@@ -235,7 +235,9 @@ export default function DevCard(props: DevCardProps) {
                   {props.age !== undefined && (
                     <div className="flex items-center">
                       <GiftIcon className="w-3 h-3 mr-1" />
-                      <div className="flex text-xs">{props.age}d</div>
+                      <div className="flex text-xs">
+                        {getRelativeDays(props.age)}
+                      </div>
                     </div>
                   )}
                 </div>
