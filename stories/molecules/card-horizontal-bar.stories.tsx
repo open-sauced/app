@@ -1,6 +1,6 @@
 import { ComponentStory } from "@storybook/react";
-import CardHorizontalBarChart from "components/molecules/CardHorizontalBarChart/card-horizontal-bar-chart";
 import { TooltipProvider } from "@radix-ui/react-tooltip";
+import CardHorizontalBarChart from "components/molecules/CardHorizontalBarChart/card-horizontal-bar-chart";
 const storyConfig = {
   title: "Design System/Molecules/Card Horizontal Bar",
   component: "CardHorizontalBar"

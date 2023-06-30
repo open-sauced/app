@@ -1,6 +1,6 @@
+import { ComponentStory } from "@storybook/react";
 import InsightPageTable from "components/molecules/InsightPageTable/insight-page-table";
 import TestRepoAvatar from "img/icons/test-repo-avatar.svg";
-import { ComponentStory } from "@storybook/react";
 
 
 const StoryConfig = {

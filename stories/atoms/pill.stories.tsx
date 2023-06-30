@@ -1,7 +1,7 @@
 import React from "react";
 import { ComponentStory } from "@storybook/react";
-import Pill from "components/atoms/Pill/pill";
 import { HiTrendingUp } from "react-icons/hi";
+import Pill from "components/atoms/Pill/pill";
 
 const storyConfig = {
   title: "Design System/Atoms/Pill",
