@@ -59,13 +59,13 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
   const { meta: loggedInUserHighlightsMeta } = useFetchUserHighlights(loggedInUser?.login as string);
 
   const { followers, following } = loggedInUser || {};
+
   const userMetaArray = [
     { name: "Followers", count: followers ?? 0 },
     { name: "Following", count: following ?? 0 },
     { name: "Highlights", count: loggedInUserHighlightsMeta?.itemCount ?? 0 },
   ];
 
-  console.log(loggedInUserHighlightsMeta);
   const repoTofilterList = (repos: { full_name: string }[]): highlightReposType[] => {
     const filtersArray = repos.map(({ full_name }) => {
       const [orgName, repo] = full_name.split("/");
