@@ -5,7 +5,12 @@ module.exports = {
     "@storybook/addon-essentials",
     "@storybook/addon-interactions",
     "@storybook/addon-a11y",
-    "@storybook/addon-styling",
+    {
+      name: "@storybook/addon-styling",
+      options: {
+        postCss: true,
+      },
+    },
   ],
   framework: "@storybook/nextjs",
   options: {},
