@@ -1,5 +1,5 @@
-import RepoCardProfile from "components/molecules/RepoCardProfile/repo-card-profile";
 import { ComponentStory } from "@storybook/react";
+import RepoCardProfile from "components/molecules/RepoCardProfile/repo-card-profile";
 
 const storyConfig = {
   title: "Design System/Molecules/RepoCardProfile"

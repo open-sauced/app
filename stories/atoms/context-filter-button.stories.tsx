@@ -1,5 +1,5 @@
-import ContextFilterButton from "components/atoms/ContextFilterButton/context-filter-button";
 import { ComponentStory } from "@storybook/react";
+import ContextFilterButton from "components/atoms/ContextFilterButton/context-filter-button";
 
 const storyConfig = {
   title: "Design System/Atoms/ContextFilterButton"

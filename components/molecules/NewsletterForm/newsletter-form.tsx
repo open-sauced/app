@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import { AiFillCloseCircle } from "react-icons/ai";
 import Button from "components/atoms/Button/button";
 import TextInput from "components/atoms/TextInput/text-input";
 import SaucedLogo from "img/fallbackImageColor.svg";
-import { AiFillCloseCircle } from "react-icons/ai";
 
 const NewsletterForm = () => {
   const [loading, setLoading] = useState(false);
