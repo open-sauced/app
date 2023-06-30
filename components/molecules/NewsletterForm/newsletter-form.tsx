@@ -76,7 +76,7 @@ const NewsletterForm = () => {
             </div>
             {errorMsg && (
               <p className="flex items-center gap-1 mt-2 text-xs font-light text-red-500">
-                <AiFillCloseCircle onClick={() => setErrorMsg("")} className="text-sm" /> {errorMsg}
+                <AiFillCloseCircle onClick={() => setErrorMsg("")} className="text-sm cursor-pointer" /> {errorMsg}
               </p>
             )}
           </form>
