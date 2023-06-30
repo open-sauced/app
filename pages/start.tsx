@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { User } from "@supabase/supabase-js";
 
+import { RiArrowDownSLine, RiArrowUpSLine } from "react-icons/ri";
 import CompletedIcon from "img/icons/completed-icon.svg";
 import GitHubAuthActiveIcon from "img/icons/github-auth-active-icon.svg";
 import ChooseTimezoneIcon from "img/icons/choose-timezone.svg";
@@ -31,7 +32,6 @@ import LanguagePill from "components/atoms/LanguagePill/LanguagePill";
 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "components/atoms/Select/select";
 import { timezones } from "lib/utils/timezones";
-import { RiArrowDownSLine, RiArrowUpSLine } from "react-icons/ri";
 
 type handleLoginStep = () => void;
 

@@ -9,7 +9,6 @@ import { usePostHog } from "posthog-js/react";
 import Avatar from "components/atoms/Avatar/avatar";
 import RainbowBg from "img/rainbow-cover.png";
 import Button from "components/atoms/Button/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../Dialog/dialog";
 import { Textarea } from "components/atoms/Textarea/text-area";
 import {
   DropdownMenu,
@@ -20,6 +19,7 @@ import {
 
 import { useUserCollaborations } from "lib/hooks/useUserCollaborations";
 import { useToast } from "lib/hooks/useToast";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../Dialog/dialog";
 
 interface ContributorProfileHeaderProps {
   avatarUrl?: string;

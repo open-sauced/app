@@ -1,8 +1,8 @@
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 import openSaucedImg from "../../../img/openSauced-icon.png";
 import openSaucedImgWithBg from "../../../img/open-sourced-with-bg-icon.png";
-import Link from "next/link";
 
 interface HeaderLogoProps {
   textIsBlack?: boolean;

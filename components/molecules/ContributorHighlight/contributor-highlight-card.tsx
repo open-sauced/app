@@ -1,5 +1,14 @@
-import Title from "components/atoms/Typography/title";
 import React, { useState, useEffect } from "react";
+import { HiOutlineEmojiHappy } from "react-icons/hi";
+import { TfiMoreAlt } from "react-icons/tfi";
+import { FiEdit, FiLinkedin, FiTwitter } from "react-icons/fi";
+import { BsCalendar2Event, BsLink45Deg } from "react-icons/bs";
+import { FaUserPlus } from "react-icons/fa";
+import { GrFlag } from "react-icons/gr";
+import Emoji from "react-emoji-render";
+import { MdError } from "react-icons/md";
+import { format } from "date-fns";
+import Title from "components/atoms/Typography/title";
 
 import { Textarea } from "components/atoms/Textarea/text-area";
 import Button from "components/atoms/Button/button";
@@ -9,15 +18,17 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "components/atoms/Dropdown/dropdown";
-import { HiOutlineEmojiHappy } from "react-icons/hi";
-import { TfiMoreAlt } from "react-icons/tfi";
-import { FiEdit, FiLinkedin, FiTwitter } from "react-icons/fi";
-import { BsCalendar2Event, BsLink45Deg } from "react-icons/bs";
-import { FaUserPlus } from "react-icons/fa";
-import { GrFlag } from "react-icons/gr";
-import Emoji from "react-emoji-render";
 
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
+import { generateApiPrUrl } from "lib/utils/github";
+import { fetchGithubPRInfo } from "lib/hooks/fetchGithubPRInfo";
+import { updateHighlights } from "lib/hooks/updateHighlight";
+import { deleteHighlight } from "lib/hooks/deleteHighlight";
+import { useToast } from "lib/hooks/useToast";
+import useFollowUser from "lib/hooks/useFollowUser";
+import useHighlightReactions from "lib/hooks/useHighlightReactions";
+import useUserHighlightReactions from "lib/hooks/useUserHighlightReactions";
+import Tooltip from "components/atoms/Tooltip/tooltip";
 import GhOpenGraphImg from "../GhOpenGraphImg/gh-open-graph-img";
 import {
   Dialog,
@@ -27,10 +38,6 @@ import {
   DialogDescription,
   DialogCloseButton,
 } from "../Dialog/dialog";
-import { generateApiPrUrl } from "lib/utils/github";
-import { fetchGithubPRInfo } from "lib/hooks/fetchGithubPRInfo";
-import { updateHighlights } from "lib/hooks/updateHighlight";
-import { MdError } from "react-icons/md";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -41,17 +48,8 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "../AlertDialog/alert-dialog";
-import { deleteHighlight } from "lib/hooks/deleteHighlight";
-import { useToast } from "lib/hooks/useToast";
-import useFollowUser from "lib/hooks/useFollowUser";
-import useFetchAllEmojis from "lib/hooks/useFetchAllEmojis";
-import useHighlightReactions from "lib/hooks/useHighlightReactions";
-import useUserHighlightReactions from "lib/hooks/useUserHighlightReactions";
-import { truncateString } from "lib/utils/truncate-string";
-import Tooltip from "components/atoms/Tooltip/tooltip";
 import { Popover, PopoverContent, PopoverTrigger } from "../Popover/popover";
 import { Calendar } from "../Calendar/calendar";
-import { format } from "date-fns";
 
 interface ContributorHighlightCardProps {
   title?: string;

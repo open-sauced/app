@@ -1,10 +1,9 @@
-import type { StaticImageData } from "next/image";
 import { Serie } from "@nivo/line";
 
 import RepoRow from "components/molecules/RepoRow/repo-row";
 
-import { getAvatarByUsername } from "lib/utils/github";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
+import type { StaticImageData } from "next/image";
 
 interface ContributorsRows {
   name?: string;

@@ -1,6 +1,6 @@
+import { StaticImageData } from "next/image";
 import Avatar from "components/atoms/Avatar/avatar";
 import { truncateString } from "lib/utils/truncate-string";
-import { StaticImageData } from "next/image";
 
 interface TableRepositoryNameProps {
   avatarURL?: string | StaticImageData;

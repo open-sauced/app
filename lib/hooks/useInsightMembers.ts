@@ -1,7 +1,7 @@
 import useSWR, { Fetcher } from "swr";
-import useSupabaseAuth from "./useSupabaseAuth";
 import publicApiFetcher from "lib/utils/public-api-fetcher";
 import { MemberAccess } from "components/molecules/TeamMembersConfig/team-members-config";
+import useSupabaseAuth from "./useSupabaseAuth";
 interface PaginatedInsightMembers {
   data: DbInsightMember[];
   meta: Meta;

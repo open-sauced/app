@@ -1,6 +1,6 @@
 import React from "react";
-import Text from "../Typography/text";
 import { FiPlus } from "react-icons/fi";
+import Text from "../Typography/text";
 interface ContextFilterButtonProps {
   className?: string;
   children?: React.ReactNode;

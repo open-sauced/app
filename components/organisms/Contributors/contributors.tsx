@@ -8,7 +8,6 @@ import TableHeader from "components/molecules/TableHeader/table-header";
 
 import { calcDistanceFromToday } from "lib/utils/date-utils";
 
-import ContributorCard from "../ContributorCard/contributor-card";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 import LimitSelect from "components/atoms/Select/limit-select";
 
@@ -16,6 +15,7 @@ import useContributors from "lib/hooks/api/useContributors";
 import { getAvatarByUsername } from "lib/utils/github";
 import { ToggleValue } from "components/atoms/LayoutToggle/layout-toggle";
 import ContributorListTableHeaders from "components/molecules/ContributorListTableHeader/contributor-list-table-header";
+import ContributorCard from "../ContributorCard/contributor-card";
 import ContributorTable from "../ContributorsTable/contributors-table";
 
 interface ContributorProps {

@@ -1,5 +1,5 @@
-import publicApiFetcher from "lib/utils/public-api-fetcher";
 import useSWR, { Fetcher } from "swr";
+import publicApiFetcher from "lib/utils/public-api-fetcher";
 
 const useFetchRecommendedRepoByRepoName = (owner: string, repo: string) => {
   const { data, error, mutate } = useSWR<DbRepo, Error>(

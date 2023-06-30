@@ -1,6 +1,6 @@
-import { getAvatarByUsername } from "lib/utils/github";
 import Image from "next/image";
 import React from "react";
+import { getAvatarByUsername } from "lib/utils/github";
 
 type MetaObj = {
   name: "Followers" | "Following" | "Highlights";

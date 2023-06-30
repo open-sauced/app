@@ -4,11 +4,11 @@ import Link from "next/link";
 import { AiOutlineGift } from "react-icons/ai";
 import { FiClock, FiGithub, FiLinkedin, FiTwitter } from "react-icons/fi";
 
+import clsx from "clsx";
 import LanguagePill from "components/atoms/LanguagePill/LanguagePill";
 import Title from "components/atoms/Typography/title";
 import Badge from "components/atoms/Badge/badge";
 import { getTimeByTimezone, getTimezone } from "lib/utils/timezones";
-import clsx from "clsx";
 import Tooltip from "components/atoms/Tooltip/tooltip";
 import { getFormattedDate } from "lib/utils/date-utils";
 

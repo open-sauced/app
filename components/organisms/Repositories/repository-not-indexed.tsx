@@ -1,5 +1,5 @@
-import Text from "components/atoms/Typography/text";
 import Link from "next/link";
+import Text from "components/atoms/Typography/text";
 
 const RepoNotIndexed = () => {
   return (

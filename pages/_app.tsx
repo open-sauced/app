@@ -5,11 +5,13 @@ import "react-loading-skeleton/dist/skeleton.css";
 
 import { useEffect, useState } from "react";
 import Head from "next/head";
-import type { AppProps } from "next/app";
 import { useRouter } from "next/router";
 import { SessionContextProvider } from "@supabase/auth-helpers-react";
 import { SWRConfig } from "swr";
 
+import Script from "next/script";
+import posthog from "posthog-js";
+import { PostHogProvider } from "posthog-js/react";
 import { TipProvider } from "components/atoms/Tooltip/tooltip";
 
 import publicApiFetcher from "lib/utils/public-api-fetcher";
@@ -18,12 +20,10 @@ import { supabase } from "lib/utils/supabase";
 
 import SEO from "layouts/SEO/SEO";
 import { Toaster } from "components/molecules/Toaster/toaster";
-import Script from "next/script";
 import useSession from "lib/hooks/useSession";
 import PrivateWrapper from "layouts/private-wrapper";
 
-import posthog from "posthog-js";
-import { PostHogProvider } from "posthog-js/react";
+import type { AppProps } from "next/app";
 
 // Check that PostHog is client-side (used to handle Next.js SSR)
 if (typeof window !== "undefined") {
