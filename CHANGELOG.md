@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.55.0-beta.2](https://github.com/open-sauced/insights/compare/v1.55.0-beta.1...v1.55.0-beta.2) (2023-06-30)
+
+
+### 🐛 Bug Fixes
+
+* update DevCard component first contribution date format ([#1322](https://github.com/open-sauced/insights/issues/1322)) ([951945c](https://github.com/open-sauced/insights/commit/951945c6becffdd01c245f242350861bbf35084e))
+
 ## [1.55.0-beta.1](https://github.com/open-sauced/insights/compare/v1.54.0...v1.55.0-beta.1) (2023-06-29)
 
 
