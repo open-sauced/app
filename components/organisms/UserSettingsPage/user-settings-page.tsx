@@ -30,8 +30,8 @@ type EmailPreferenceType = {
   receive_collaboration?: boolean;
 };
 const UserSettingsPage = ({ user }: userSettingsPageProps) => {
-  const { data: insightsUser } = useFetchUser(user?.user_metadata.user_name, {
-    revalidateOnFocus: false
+  const { data: insightsUser, mutate } = useFetchUser(user?.user_metadata.user_name, {
+    revalidateOnFocus: false,
   });
 
   const { toast } = useToast();
@@ -45,7 +45,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
     // eslint-disable-next-line camelcase
     display_email: false,
     // eslint-disable-next-line camelcase
-    receive_collaboration: false
+    receive_collaboration: false,
   });
   const [selectedInterest, setSelectedInterest] = useState<string[]>([]);
   const formRef = useRef<HTMLFormElement>(null);
@@ -77,7 +77,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
         // eslint-disable-next-line camelcase
         display_email: insightsUser?.display_email,
         // eslint-disable-next-line camelcase
-        receive_collaboration: insightsUser?.receive_collaboration
+        receive_collaboration: insightsUser?.receive_collaboration,
       });
       setSelectedInterest(insightsUser?.interests?.split(","));
       setDisplayLocalTime(insightsUser?.display_local_time);
@@ -120,9 +120,10 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
   const handleUpdateInterest = async () => {
     const data = await updateUser({
       data: { interests: selectedInterest },
-      params: "interests"
+      params: "interests",
     });
     if (data) {
+      mutate();
       toast({ description: "Updated successfully", variant: "success" });
     } else {
       toast({ description: "An error occured!", variant: "danger" });
@@ -146,17 +147,18 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
       github_sponsors_url:
         formRef.current!.github_sponsors_url.value !== "" ? formRef.current!.github_sponsors_url.value : undefined,
       // eslint-disable-next-line camelcase
-      linkedin_url: formRef.current!.linkedin_url.value !== "" ? formRef.current!.linkedin_url.value : undefined
+      linkedin_url: formRef.current!.linkedin_url.value !== "" ? formRef.current!.linkedin_url.value : undefined,
     };
     if (formRef.current?.url.value) {
       payload.url = formRef.current!.url.value;
     }
 
     const data = await updateUser({
-      data: payload
+      data: payload,
     });
 
     if (data) {
+      mutate();
       toast({ description: "Updated successfully", variant: "success" });
     } else {
       toast({ description: "An error occured!", variant: "danger" });
@@ -265,7 +267,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
 
                 <SelectContent position="item-aligned" className="bg-white">
                   {timezones.map((timezone, index) => (
-                    <SelectItem key={index} value={timezone.value}>
+                    <SelectItem key={`timezone_${index}`} value={timezone.value}>
                       {timezone.text}
                     </SelectItem>
                   ))}

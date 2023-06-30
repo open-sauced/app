@@ -9,7 +9,7 @@ const useFollowUser = (username: string) => {
   const { sessionToken } = useSupabaseAuth();
 
   const { data, error, mutate } = useSWR<FollowUserResponse, Error>(
-    `users/${username}/follow`,
+    username ? `users/${username}/follow` : null,
     publicApiFetcher as Fetcher<FollowUserResponse, Error>
   );
 
@@ -17,8 +17,8 @@ const useFollowUser = (username: string) => {
     const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${username}/follow`, {
       method: "PUT",
       headers: {
-        Authorization: `Bearer ${sessionToken}`
-      }
+        Authorization: `Bearer ${sessionToken}`,
+      },
     }).catch((err) => console.log(err));
 
     if (req && req.ok) {
@@ -30,8 +30,8 @@ const useFollowUser = (username: string) => {
     const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${username}/follow`, {
       method: "DELETE",
       headers: {
-        Authorization: `Bearer ${sessionToken}`
-      }
+        Authorization: `Bearer ${sessionToken}`,
+      },
     }).catch((err) => console.log(err));
 
     if (req && req.ok) {
@@ -45,7 +45,7 @@ const useFollowUser = (username: string) => {
     isError: !!error,
     mutate,
     follow,
-    unFollow
+    unFollow,
   };
 };
 

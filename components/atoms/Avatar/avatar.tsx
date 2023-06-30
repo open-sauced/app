@@ -22,20 +22,21 @@ const Avatar = (props: AvatarProps): JSX.Element => {
 
   try {
     // Checks if the avatarURL is a proper URL. If not, it will throw an error.
-    if(typeof props.avatarURL === "string") new URL(props.avatarURL);
+    if (typeof props.avatarURL === "string" && props.avatarURL.length > 0) new URL(props.avatarURL);
 
-    imageSource = props.avatarURL && props.isCached
-      ? cachedImage(props.avatarURL as string, process.env.NEXT_PUBLIC_CLOUD_NAME)
-      : props.avatarURL;
+    imageSource =
+      props.avatarURL && props.isCached
+        ? cachedImage(props.avatarURL as string, process.env.NEXT_PUBLIC_CLOUD_NAME)
+        : props.avatarURL;
   } catch (error) {
     console.error(error);
   }
 
   switch (typeof props.size) {
-  case "string":
-    return <DefaultAvatar {...props} avatarURL={imageSource} />;
-  case "number":
-    return <CustomAvatar {...props} avatarURL={imageSource} />;
+    case "string":
+      return <DefaultAvatar {...props} avatarURL={imageSource} />;
+    case "number":
+      return <CustomAvatar {...props} avatarURL={imageSource} />;
   }
 };
 
@@ -49,7 +50,7 @@ const CustomAvatar = ({
   size,
   hasBorder,
   isCircle,
-  initialsClassName
+  initialsClassName,
 }: AvatarProps): JSX.Element => {
   return (
     <div
@@ -89,7 +90,7 @@ const DefaultAvatar = ({
   alt,
   size,
   hasBorder,
-  isCircle
+  isCircle,
 }: AvatarProps): JSX.Element => {
   return (
     <div
