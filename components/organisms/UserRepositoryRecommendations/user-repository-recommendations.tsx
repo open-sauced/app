@@ -99,7 +99,7 @@ const UserRepositoryRecommendations = ({ contributor, userInterests }: UserRepoR
           {/* Empty Interest state */}
           <div className="flex flex-col items-center gap-4">
             <p className="font-normal text-center">
-              If you're just getting started, recommendations are a great to find projects and start making
+              If you&apos;re just getting started, recommendations are a great to find projects and start making
               contributions on repositories.
               <br /> <br /> Select some interests and we give you some recommendations!
             </p>
