@@ -1,6 +1,6 @@
-import ContributorProfilePage from "components/organisms/ContributorProfilePage/contributor-profile-page";
 import { ComponentStory } from "@storybook/react";
 import { TooltipProvider } from "@radix-ui/react-tooltip";
+import ContributorProfilePage from "components/organisms/ContributorProfilePage/contributor-profile-page";
 
 const storyConfig = {
   title: "Design System/Organisms/Contributor Profile Page"

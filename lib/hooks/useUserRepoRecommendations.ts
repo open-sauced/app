@@ -7,7 +7,7 @@ interface RepoRecommendationResponse {
 
 const useUserRepoRecommendations = () => {
   const { data, error, mutate } = useSWR<RepoRecommendationResponse, Error>(
-    `user/recommendations/repos`,
+    "user/recommendations/repos",
     publicApiFetcher as Fetcher<RepoRecommendationResponse, Error>
   );
 

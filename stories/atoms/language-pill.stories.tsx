@@ -1,5 +1,5 @@
-import LanguagePill from "components/atoms/LanguagePill/LanguagePill";
 import { ComponentStory } from "@storybook/react";
+import LanguagePill from "components/atoms/LanguagePill/LanguagePill";
 
 const Storyconfig = {
   title: "Design System/Atoms/LanguagePill"

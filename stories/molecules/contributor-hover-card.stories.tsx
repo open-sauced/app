@@ -1,6 +1,6 @@
+import { ComponentStory } from "@storybook/react";
 import { TipProvider } from "components/atoms/Tooltip/tooltip";
 import ContributorHoverCard from "components/molecules/ContributorHoverCard/contributor-hover-card";
-import { ComponentStory } from "@storybook/react";
 
 const storyConfig = {
   title: "Design System/Molecules/ContributorHoverCard"
