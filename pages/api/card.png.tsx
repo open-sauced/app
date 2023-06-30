@@ -60,7 +60,7 @@ export default async function handler(request: NextRequest) {
 
   const { data: prData } = prReq; 
   const prs = prData.length;
-  const contributions = getRepoList(Array.from(new Set(prData.map((prData) => prData.full_name))).join(",")).length;
+  const repos = getRepoList(Array.from(new Set(prData.map((prData) => prData.full_name))).join(",")).length;
 
   return new ImageResponse(
     (
@@ -139,10 +139,10 @@ export default async function handler(request: NextRequest) {
                   </div>
                   <div tw="flex flex-col text-center items-center">
                     <div tw="flex font-black" style={{ fontSize: size(60) }}>
-                      {contributions}
+                      {repos}
                     </div>
                     <div tw="flex" style={{ fontSize: size(12) }}>
-                      Contributions
+                      {repos > 1 ? "Repos" : "Repo"}
                     </div>
                   </div>
                 </div>
