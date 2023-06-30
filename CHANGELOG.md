@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.55.0-beta.3](https://github.com/open-sauced/insights/compare/v1.55.0-beta.2...v1.55.0-beta.3) (2023-06-30)
+
+
+### 🍕 Features
+
+* use repository recommendations from the API ([#1323](https://github.com/open-sauced/insights/issues/1323)) ([aa8c33d](https://github.com/open-sauced/insights/commit/aa8c33d6c187af1114cc67382d296e6b1bab61c9))
+
 ## [1.55.0-beta.2](https://github.com/open-sauced/insights/compare/v1.55.0-beta.1...v1.55.0-beta.2) (2023-06-30)
 
 
