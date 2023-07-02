@@ -82,7 +82,7 @@ const ContributorProfileTab = ({
 
   return (
     <Tabs defaultValue={uppercaseFirst(currentPathname as string)} className="" onValueChange={handleTabUrl}>
-      <TabsList className="justify-start w-full overflow-x-scroll border-b">
+      <TabsList className="justify-start w-full overflow-x-auto border-b">
         {tabLinks.map((tab) => (
           <TabsTrigger
             key={tab}
