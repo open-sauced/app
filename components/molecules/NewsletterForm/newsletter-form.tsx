@@ -4,6 +4,7 @@ import { AiFillCloseCircle } from "react-icons/ai";
 import Button from "components/atoms/Button/button";
 import TextInput from "components/atoms/TextInput/text-input";
 import SaucedLogo from "img/fallbackImageColor.svg";
+import { validateEmail } from "lib/utils/validate-email";
 
 const NewsletterForm = () => {
   const [loading, setLoading] = useState(false);
@@ -31,7 +32,7 @@ const NewsletterForm = () => {
 
   const handleChange = (value: string) => {
     setEmail(value);
-    const isValidEmail = email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
+    const isValidEmail = validateEmail(email);
     setIsValidEmail(!!isValidEmail);
   };
 
