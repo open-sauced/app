@@ -99,25 +99,33 @@ export type UserSSRPropsContext = GetServerSidePropsContext<{ username: string }
 
 export async function handleUserSSR({ params }: GetServerSidePropsContext<{ username: string }>) {
   const { username } = params!;
-  let user;
-  let ogImage;
 
   async function fetchUserData() {
-    const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${username}`, {
-      headers: {
-        accept: "application/json",
-      },
-    });
+    try {
+      const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${username}`, {
+        headers: {
+          accept: "application/json",
+        },
+      });
 
-    user = (await req.json()) as DbUser;
+      if (!req.ok) {
+        return null;
+      }
+
+      return (await req.json()) as DbUser;
+    } catch (e) {
+      console.error(e);
+      return null;
+    }
   }
 
   // Runs the data fetching in parallel. Decreases the loading time by 50%.
-  const [, ogData] = await Promise.allSettled([fetchUserData(), fetchSocialCard(`users/${username}`)]);
+  const [user, ogData] = await Promise.allSettled([fetchUserData(), fetchSocialCard(`users/${username}`)]);
 
-  ogImage = ogData.status === "fulfilled" ? ogData.value : "";
+  const ogImage = ogData.status === "fulfilled" ? ogData.value : "";
+  const userData = user.status === "fulfilled" ? user.value : null;
 
   return {
-    props: { username, user, ogImage },
+    props: { username, user: userData, ogImage },
   };
 }
