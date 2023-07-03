@@ -10,7 +10,7 @@ const storyConfig = {
 
 export default storyConfig;
 const ScrollTemplate: ComponentStory<typeof ScrollArea> = (args) => (
-  <ScrollArea className="rounded-md border p-4" {...args}>
+  <ScrollArea className="p-4 border rounded-md" {...args}>
     Jokester began sneaking into the castle in the middle of the night and leaving jokes all over the place: under the
     king&apos;s pillow, in his soup, even in the royal toilet. The king was furious, but he couldn&apos;t seem to stop
     Jokester. And then, one day, the people of the kingdom discovered that the jokes left by Jokester were so funny that
