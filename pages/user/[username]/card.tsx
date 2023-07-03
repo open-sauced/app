@@ -73,19 +73,19 @@ async function fetchInitialCardData(username: string): Promise<DevCardProps> {
 
 async function fetchRemainingCardData(
   username: string
-): Promise<Pick<DevCardProps, "prs" | "prVelocity" | "prMergePercentage" | "contributions">> {
+): Promise<Pick<DevCardProps, "prs" | "prVelocity" | "prMergePercentage" | "repos">> {
   const { data, meta } = await fetchContributorPRs(username, undefined, "*", [], 100);
   const prs = data.length;
   const prVelocity = getContributorPullRequestVelocity(data);
   const prTotal = meta.itemCount;
   const mergedPrs = data.filter((prData) => prData.merged);
   const prMergePercentage = getPercent(prTotal, mergedPrs.length || 0);
-  const contributions = getRepoList(Array.from(new Set(data.map((prData) => prData.full_name))).join(",")).length;
+  const repos = getRepoList(Array.from(new Set(data.map((prData) => prData.full_name))).join(",")).length;
   return {
     prs,
     prVelocity,
     prMergePercentage,
-    contributions,
+    repos,
   };
 }
 
