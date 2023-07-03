@@ -106,6 +106,7 @@
   "devDependencies": {
     "@babel/core": "^7.20.12",
     "@netlify/plugin-nextjs": "^4.38.1",
+    "@netlify/esbuild": "0.14.25",
     "@open-sauced/check-engines": "^1.2.0",
     "@open-sauced/conventional-commit": "^1.0.1",
     "@playwright/test": "^1.30.0",
