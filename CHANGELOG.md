@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.55.0-beta.4](https://github.com/open-sauced/insights/compare/v1.55.0-beta.3...v1.55.0-beta.4) (2023-07-03)
+
+
+### 🍕 Features
+
+* add `NewsletterForm` component to design system ([#1311](https://github.com/open-sauced/insights/issues/1311)) ([52573fb](https://github.com/open-sauced/insights/commit/52573fbe8ea20cba4878c2c53285b2685bd65f85))
+
 ## [1.55.0-beta.3](https://github.com/open-sauced/insights/compare/v1.55.0-beta.2...v1.55.0-beta.3) (2023-06-30)
 
 
