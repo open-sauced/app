@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.55.0-beta.5](https://github.com/open-sauced/insights/compare/v1.55.0-beta.4...v1.55.0-beta.5) (2023-07-03)
+
+
+### 🐛 Bug Fixes
+
+* hide unnecessary scrollbar in profilepage ([#1327](https://github.com/open-sauced/insights/issues/1327)) ([770f999](https://github.com/open-sauced/insights/commit/770f9991028bf66c54beea4eb3a60ad7b6d39a7e))
+
 ## [1.55.0-beta.4](https://github.com/open-sauced/insights/compare/v1.55.0-beta.3...v1.55.0-beta.4) (2023-07-03)
 
 
