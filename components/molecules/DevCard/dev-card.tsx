@@ -185,7 +185,7 @@ export default function DevCard(props: DevCardProps) {
                 </div>
                 <div className="text-center">
                   <div className="text-6xl font-black">{props.isLoading ? "-" : props.repos}</div>
-                  <div className="text-xs">{props.repos! <= 1 ? "Repo" : "Repos"}</div>
+                  <div className="text-xs">{props.repos! === 1 ? "Repo" : "Repos"}</div>
                 </div>
               </div>
             </div>
