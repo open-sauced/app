@@ -1,7 +1,7 @@
 import { ComponentStory } from "@storybook/react";
+import { TooltipProvider } from "@radix-ui/react-tooltip";
 import PullRequestSocialCard from "components/molecules/PullRequestSocialCard/pull-request-social-card";
 import { testLanguageList } from "./card-horizontal-bar.stories";
-import { TooltipProvider } from "@radix-ui/react-tooltip";
 
 const StoryConfig = {
   title: "Design System/Molecules/PullRequestSocialCard"

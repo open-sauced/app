@@ -1,7 +1,7 @@
 import { useUser } from "@supabase/auth-helpers-react";
-import { authSession } from "lib/hooks/authSession";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
+import { authSession } from "lib/hooks/authSession";
 
 interface PrivateWrapperProps {
   isPrivateRoute?: boolean;

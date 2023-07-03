@@ -5,6 +5,41 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.55.0-beta.6](https://github.com/open-sauced/insights/compare/v1.55.0-beta.5...v1.55.0-beta.6) (2023-07-03)
+
+
+### 🍕 Features
+
+* implemented  tracking on every share button ([#1328](https://github.com/open-sauced/insights/issues/1328)) ([4c20717](https://github.com/open-sauced/insights/commit/4c2071739def6595b810123a1a4b16e4b24b2303))
+
+## [1.55.0-beta.5](https://github.com/open-sauced/insights/compare/v1.55.0-beta.4...v1.55.0-beta.5) (2023-07-03)
+
+
+### 🐛 Bug Fixes
+
+* hide unnecessary scrollbar in profilepage ([#1327](https://github.com/open-sauced/insights/issues/1327)) ([770f999](https://github.com/open-sauced/insights/commit/770f9991028bf66c54beea4eb3a60ad7b6d39a7e))
+
+## [1.55.0-beta.4](https://github.com/open-sauced/insights/compare/v1.55.0-beta.3...v1.55.0-beta.4) (2023-07-03)
+
+
+### 🍕 Features
+
+* add `NewsletterForm` component to design system ([#1311](https://github.com/open-sauced/insights/issues/1311)) ([52573fb](https://github.com/open-sauced/insights/commit/52573fbe8ea20cba4878c2c53285b2685bd65f85))
+
+## [1.55.0-beta.3](https://github.com/open-sauced/insights/compare/v1.55.0-beta.2...v1.55.0-beta.3) (2023-06-30)
+
+
+### 🍕 Features
+
+* use repository recommendations from the API ([#1323](https://github.com/open-sauced/insights/issues/1323)) ([aa8c33d](https://github.com/open-sauced/insights/commit/aa8c33d6c187af1114cc67382d296e6b1bab61c9))
+
+## [1.55.0-beta.2](https://github.com/open-sauced/insights/compare/v1.55.0-beta.1...v1.55.0-beta.2) (2023-06-30)
+
+
+### 🐛 Bug Fixes
+
+* update DevCard component first contribution date format ([#1322](https://github.com/open-sauced/insights/issues/1322)) ([951945c](https://github.com/open-sauced/insights/commit/951945c6becffdd01c245f242350861bbf35084e))
+
 ## [1.55.0-beta.1](https://github.com/open-sauced/insights/compare/v1.54.0...v1.55.0-beta.1) (2023-06-29)
 
 

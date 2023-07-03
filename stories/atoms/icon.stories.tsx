@@ -1,6 +1,6 @@
 import { ComponentStory } from "@storybook/react";
-import Icon from "../../components/atoms/Icon/icon";
 import ForkIcon from "img/icons/fork-icon.svg";
+import Icon from "../../components/atoms/Icon/icon";
 
 const storyConfig = {
   title: "Design System/Atoms/Icon",

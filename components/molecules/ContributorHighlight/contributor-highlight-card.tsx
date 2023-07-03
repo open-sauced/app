@@ -6,6 +6,7 @@ import { BsCalendar2Event, BsLink45Deg } from "react-icons/bs";
 import { FaUserPlus } from "react-icons/fa";
 import { GrFlag } from "react-icons/gr";
 import Emoji from "react-emoji-render";
+import { usePostHog } from "posthog-js/react";
 import { MdError } from "react-icons/md";
 import { format } from "date-fns";
 import Title from "components/atoms/Typography/title";
@@ -91,6 +92,8 @@ const ContributorHighlightCard = ({
   const { data: reactions, mutate } = useHighlightReactions(id);
   const { data: userReaction, deleteReaction, addReaction } = useUserHighlightReactions(id);
 
+  const posthog = usePostHog();
+
   // console.log(shipped_date);
   useEffect(() => {
     if (!openEdit) {
@@ -123,8 +126,21 @@ const ContributorHighlightCard = ({
       mutate();
     }
   };
+
+  const handleCaptureClickDetailsForAnalytics = (medium: "linkedin" | "twitter" | "link") => {
+    let text;
+    if (medium === "linkedin") {
+      text = "highlight shared to linkedin";
+    } else if (medium === "twitter") {
+      text = "higlight tweeted";
+    } else text = "highlight copied";
+    posthog!.capture(`clicked: ${text}`);
+  };
+
   const handleCopyToClipboard = async (content: string) => {
     const url = new URL(content).toString();
+    handleCaptureClickDetailsForAnalytics("link");
+
     try {
       await navigator.clipboard.writeText(url);
       toast({ description: "Copied to clipboard", variant: "success" });
@@ -244,6 +260,9 @@ const ContributorHighlightCard = ({
               <DropdownMenuContent align="end" className="flex flex-col gap-1 py-2 rounded-lg">
                 <DropdownMenuItem className="rounded-md">
                   <a
+                    onClick={() => {
+                      handleCaptureClickDetailsForAnalytics("twitter");
+                    }}
                     target="_blank"
                     rel="noreferrer"
                     href={`https://twitter.com/intent/tweet?text=${twitterTweet}&url=${host}/feed/${id}`}
@@ -255,6 +274,9 @@ const ContributorHighlightCard = ({
                 </DropdownMenuItem>
                 <DropdownMenuItem className="rounded-md">
                   <a
+                    onClick={() => {
+                      handleCaptureClickDetailsForAnalytics("linkedin");
+                    }}
                     target="_blank"
                     rel="noreferrer"
                     href={`https://www.linkedin.com/sharing/share-offsite/?url=${host}/feed/${id}`}

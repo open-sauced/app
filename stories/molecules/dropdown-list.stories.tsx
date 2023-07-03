@@ -1,5 +1,5 @@
-import DropdownList from "../../components/molecules/DropdownList/dropdown-list";
 import Text from "components/atoms/Typography/text";
+import DropdownList from "../../components/molecules/DropdownList/dropdown-list";
 
 const storyConfig = {
   title: "Design System/Molecules/Dropdown List"

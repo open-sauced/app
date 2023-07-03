@@ -1,5 +1,5 @@
-import UserCard from "components/atoms/UserCard/user-card";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
+import UserCard from "components/atoms/UserCard/user-card";
 
 const storyConfig = {
   title: "Design System/Atoms/UserCard",
