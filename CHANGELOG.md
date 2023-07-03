@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.55.0-beta.6](https://github.com/open-sauced/insights/compare/v1.55.0-beta.5...v1.55.0-beta.6) (2023-07-03)
+
+
+### 🍕 Features
+
+* implemented  tracking on every share button ([#1328](https://github.com/open-sauced/insights/issues/1328)) ([4c20717](https://github.com/open-sauced/insights/commit/4c2071739def6595b810123a1a4b16e4b24b2303))
+
 ## [1.55.0-beta.5](https://github.com/open-sauced/insights/compare/v1.55.0-beta.4...v1.55.0-beta.5) (2023-07-03)
 
 
