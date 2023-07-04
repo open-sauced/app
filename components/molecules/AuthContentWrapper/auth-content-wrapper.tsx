@@ -10,15 +10,14 @@ import GitHubIcon from "img/icons/github-icon.svg";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 
 interface AuthContentWrapperProps {
-  isAuthenticated: boolean;
   children: React.ReactNode;
 }
 
-const AuthContentWrapper: React.FC<AuthContentWrapperProps> = ({ isAuthenticated, children }) => {
+const AuthContentWrapper: React.FC<AuthContentWrapperProps> = ({ children }) => {
   const router = useRouter();
   const currentPath = router.asPath;
 
-  const { signIn } = useSupabaseAuth();
+  const { signIn, user: isAuthed } = useSupabaseAuth();
 
   const [host, setHost] = useState<string>("");
   useEffect(() => {
@@ -29,7 +28,7 @@ const AuthContentWrapper: React.FC<AuthContentWrapperProps> = ({ isAuthenticated
 
   return (
     <div className="relative">
-      {!isAuthenticated && (
+      {!isAuthed && (
         <div className="absolute z-10 w-full h-full top-0 left-0 flex items-center justify-center">
           <Button 
             variant="primary" 
@@ -38,13 +37,14 @@ const AuthContentWrapper: React.FC<AuthContentWrapperProps> = ({ isAuthenticated
               await signIn({ provider: "github", options: { redirectTo: `${host}/${currentPath}` } });
             }}
           >
-            <Icon IconImage={GitHubIcon} className="mr-2" /> Connect with GitHub
+            <Icon IconImage={GitHubIcon} className="mr-2" /> 
+            Connect with GitHub
           </Button>
         </div>
       )}
       <div className={clsx(
         "relative",
-        !isAuthenticated && "blur-sm",
+        !isAuthed && "blur-sm",
       )}>
         {children}
       </div>
