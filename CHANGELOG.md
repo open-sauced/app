@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.55.0-beta.7](https://github.com/open-sauced/insights/compare/v1.55.0-beta.6...v1.55.0-beta.7) (2023-07-03)
+
+
+### 🐛 Bug Fixes
+
+* update DevCard Contribution term to Repo ([#1321](https://github.com/open-sauced/insights/issues/1321)) ([bc0d0cf](https://github.com/open-sauced/insights/commit/bc0d0cfdc129dea3d7e9a9f15dc79b666717c33e))
+
 ## [1.55.0-beta.6](https://github.com/open-sauced/insights/compare/v1.55.0-beta.5...v1.55.0-beta.6) (2023-07-03)
 
 
