@@ -29,7 +29,7 @@ const AuthContentWrapper: React.FC<AuthContentWrapperProps> = ({ children }) => 
   return (
     <div className="relative">
       {!isAuthed && (
-        <div className="absolute z-10 w-full h-full top-0 left-0 flex items-center justify-center">
+        <div className="absolute z-10 w-full h-full top-0 left-0 flex items-center justify-center rounded-lg bg-white/50">
           <Button 
             variant="primary" 
             className="z-1 items-center px-2.5 py-1"
