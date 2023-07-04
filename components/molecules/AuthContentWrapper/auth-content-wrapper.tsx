@@ -33,8 +33,8 @@ const AuthContentWrapper: React.FC<AuthContentWrapperProps> = ({ children }) => 
           <Button 
             variant="primary" 
             className="z-1 items-center px-2.5 py-1"
-            onClick={async () => {
-              await signIn({ provider: "github", options: { redirectTo: `${host}/${currentPath}` } });
+            onClick={() => {
+              signIn({ provider: "github", options: { redirectTo: `${host}${currentPath}` } });
             }}
           >
             <Icon IconImage={GitHubIcon} className="mr-2" /> 
