@@ -5,10 +5,11 @@ export interface ButtonsProps extends React.ButtonHTMLAttributes<HTMLButtonEleme
   variant: "primary" | "default" | "dark" | "outline" | "link" | "text";
   loading?: boolean;
   href?: string;
+  showLoadingText?: boolean;
 }
 
 const Button = React.forwardRef<HTMLElement, ButtonsProps>(
-  ({ className, children, loading, disabled, href, ...props }, ref) => {
+  ({ className, children, loading, disabled, showLoadingText = true, href, ...props }, ref) => {
     const styles = {
       primary: `bg-light-orange-9 text-light-orange-2 border-light-orange-9 hover:bg-light-orange-10 ${
         disabled ? "bg-light-orange-7 hover:bg-light-orange-7 border-none  pointer-events-none" : ""
@@ -26,14 +27,14 @@ const Button = React.forwardRef<HTMLElement, ButtonsProps>(
     };
 
     const rootClass = clsx(
-      className,
       props.variant === "primary" && styles.primary,
       props.variant === "default" && styles.default,
       props.variant === "dark" && styles.dark,
       props.variant === "outline" && styles.outline,
       props.variant === "link" && styles.link,
       disabled && "bg-light-orange-7 hover:bg-light-orange-7 border-none pointer-events-none",
-      "inline-flex text-sm font-semibold tracking-tight border py-2 px-4 rounded-md focus-visible:border-orange-500 focus:outline-none focus-visible:ring focus-visible:ring-orange-200 whitespace-nowrap"
+      "inline-flex text-sm font-semibold tracking-tight border py-2 px-4 rounded-md focus-visible:border-orange-500 focus:outline-none focus-visible:ring focus-visible:ring-orange-200 whitespace-nowrap",
+      className
     );
 
     const content = loading ? (
@@ -41,7 +42,7 @@ const Button = React.forwardRef<HTMLElement, ButtonsProps>(
         <svg
           aria-hidden="true"
           role="status"
-          className="inline w-4 h-4 mr-3 text-white animate-spin"
+          className={clsx("inline w-4 h-4 text-white animate-spin", showLoadingText ? "mr-2" : "")}
           viewBox="0 0 100 101"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -55,7 +56,7 @@ const Button = React.forwardRef<HTMLElement, ButtonsProps>(
             fill="currentColor"
           ></path>
         </svg>
-        Loading...
+        {showLoadingText && <span>Loading...</span>}
       </div>
     ) : (
       children

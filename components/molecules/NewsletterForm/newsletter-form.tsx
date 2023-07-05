@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { AiFillCloseCircle } from "react-icons/ai";
+import clsx from "clsx";
 import Button from "components/atoms/Button/button";
 import TextInput from "components/atoms/TextInput/text-input";
 import SaucedLogo from "img/fallbackImageColor.svg";
@@ -46,12 +47,6 @@ const NewsletterForm = () => {
     } finally {
       setLoading(false);
     }
-
-    // TODO: Add API call to subscribe user
-    setTimeout(() => {
-      setLoading(false);
-      setIsSubscribed(true);
-    }, 3000);
   };
 
   const handleChange = (value: string) => {
@@ -99,14 +94,18 @@ const NewsletterForm = () => {
                 handleChange={(value) => handleChange(value)}
                 state={isValidEmail ? "valid" : "invalid"}
                 value={email}
-                className="w-32 text-sm focus:outline-none"
+                className="w-full text-sm focus:outline-none"
                 type="text"
                 name="Your email"
                 placeholder="Email"
               />
               <Button
                 loading={loading}
-                className="inline-block py-1 border-light-orange-7 text-light-orange-10"
+                className={clsx(
+                  "flex justify-center py-1 w-32  border-light-orange-7 text-light-orange-10",
+                  loading && "px-2"
+                )}
+                showLoadingText={false}
                 type="submit"
                 variant="text"
               >
@@ -114,7 +113,7 @@ const NewsletterForm = () => {
               </Button>
             </div>
             {errorMsg && (
-              <p className="flex items-center gap-1 mt-2 text-xs font-light text-red-500">
+              <p className="flex items-center gap-1 mt-2 text-xs font-light ">
                 <AiFillCloseCircle onClick={() => setErrorMsg("")} className="text-sm cursor-pointer" /> {errorMsg}
               </p>
             )}
