@@ -10,7 +10,6 @@ import { useFetchHighlightRepos } from "lib/hooks/useFetchHiglightRepos";
 import useFetchAllEmojis from "lib/hooks/useFetchAllEmojis";
 import { useFetchFollowersHighlightRepos } from "lib/hooks/useFetchFollowingHighlightRepos";
 import { useFetchUser } from "lib/hooks/useFetchUser";
-import { useFetchUserHighlights } from "lib/hooks/useFetchUserHighlights";
 
 import { WithPageLayout } from "interfaces/with-page-layout";
 import ProfileLayout from "layouts/profile";
@@ -56,14 +55,13 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
   const { data, mutate, setPage, isLoading, meta } = useFetchAllHighlights(selectedRepo);
   const { data: emojis } = useFetchAllEmojis();
   const { data: loggedInUser, isLoading: loggedInUserLoading } = useFetchUser(user?.user_metadata.user_name as string);
-  const { meta: loggedInUserHighlightsMeta } = useFetchUserHighlights(loggedInUser?.login as string);
 
-  const { followers, following } = loggedInUser || {};
+  const { followers_count, following_count, highlights_count } = loggedInUser || {};
 
   const userMetaArray = [
-    { name: "Followers", count: followers ?? 0 },
-    { name: "Following", count: following ?? 0 },
-    { name: "Highlights", count: loggedInUserHighlightsMeta?.itemCount ?? 0 },
+    { name: "Followers", count: followers_count ?? 0 },
+    { name: "Following", count: following_count ?? 0 },
+    { name: "Highlights", count: highlights_count ?? 0 },
   ];
 
   const repoTofilterList = (repos: { full_name: string }[]): highlightReposType[] => {
