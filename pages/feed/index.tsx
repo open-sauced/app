@@ -228,9 +228,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
             <HighlightsFilterCard selectedFilter={selectedRepo} setSelected={setSelectedRepo} repos={repoList} />
           )}
 
-          <div className="">
-            <NewsletterForm />
-          </div>
+          <NewsletterForm />
         </div>
       </div>
     </>
