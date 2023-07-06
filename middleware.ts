@@ -1,16 +1,16 @@
-import { createMiddlewareSupabaseClient } from "@supabase/auth-helpers-nextjs";
+import { createMiddlewareClient } from "@supabase/auth-helpers-nextjs";
 import { NextResponse } from "next/server";
 import { NextRequest } from "next/server";
 
 export async function middleware(req: NextRequest) {
   const res = NextResponse.next();
   // Create authenticated Supabase Client.
-  const supabase = createMiddlewareSupabaseClient({ req, res });
+  const supabase = createMiddlewareClient({ req, res });
   // Check if we have a session
   const {
     data: { session },
   } = await supabase.auth.getSession();
-  
+
   // Check auth condition
   if (session?.user || req.nextUrl.searchParams.has("login")) {
     // Authentication successful, forward request to protected route.

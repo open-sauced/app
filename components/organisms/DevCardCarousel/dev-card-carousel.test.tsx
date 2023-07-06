@@ -17,26 +17,26 @@ describe("DevCardCarousel", () => {
     it("should trigger the onSelect", async () => {
       const onSelect = jest.fn();
       render(<DevCardCarousel cards={[...STUB_DEV_CARDS]} onSelect={onSelect} />);
-      const thirdDevCard = await screen.getByTitle(`Select @${STUB_DEV_CARDS[2].username}`);
-      userEvent.click(thirdDevCard);
+      const thirdDevCard = screen.getByTitle(`Select @${STUB_DEV_CARDS[2].username}`);
+      await userEvent.click(thirdDevCard);
       expect(onSelect).toHaveBeenCalledWith(STUB_DEV_CARDS[2].username);
     });
   });
 
   describe("when the user uses the arrow keys", () => {
     describe("when the user presses the right arrow key", () => {
-      it("should select last card", () => {
+      it("should select last card", async () => {
         const onSelect = jest.fn();
         render(<DevCardCarousel cards={[...STUB_DEV_CARDS]} onSelect={onSelect} />);
-        userEvent.keyboard("{arrowright}");
+        await userEvent.keyboard("{arrowright}");
         expect(onSelect).toHaveBeenCalledWith(STUB_DEV_CARDS.slice(-1)[0].username);
       });
     });
     describe("when the user presses the left arrow key", () => {
-      it("should select the second card", () => {
+      it("should select the second card", async () => {
         const onSelect = jest.fn();
         render(<DevCardCarousel cards={[...STUB_DEV_CARDS]} onSelect={onSelect} />);
-        userEvent.keyboard("{arrowleft}");
+        await userEvent.keyboard("{arrowleft}");
         expect(onSelect).toHaveBeenCalledWith(STUB_DEV_CARDS[1].username);
       });
     });
