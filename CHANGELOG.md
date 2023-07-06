@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.55.0-beta.9](https://github.com/open-sauced/insights/compare/v1.55.0-beta.8...v1.55.0-beta.9) (2023-07-06)
+
+
+### 🍕 Features
+
+* add  `UserCard` to feeds page ([#1326](https://github.com/open-sauced/insights/issues/1326)) ([b225eb3](https://github.com/open-sauced/insights/commit/b225eb3193dc95270b1e1ca6197da3a19a3b0f81))
+
 ## [1.55.0-beta.8](https://github.com/open-sauced/insights/compare/v1.55.0-beta.7...v1.55.0-beta.8) (2023-07-06)
 
 
