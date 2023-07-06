@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.55.0-beta.8](https://github.com/open-sauced/insights/compare/v1.55.0-beta.7...v1.55.0-beta.8) (2023-07-06)
+
+
+### 🐛 Bug Fixes
+
+* adjust contributor distribution chart yscale max height ([#1329](https://github.com/open-sauced/insights/issues/1329)) ([0c6b176](https://github.com/open-sauced/insights/commit/0c6b176c35f7b35633a207d1e924918fba1028d2))
+
 ## [1.55.0-beta.7](https://github.com/open-sauced/insights/compare/v1.55.0-beta.6...v1.55.0-beta.7) (2023-07-03)
 
 
