@@ -9,6 +9,7 @@ import { useFetchAllHighlights } from "lib/hooks/useFetchAllHighlights";
 import { useFetchHighlightRepos } from "lib/hooks/useFetchHiglightRepos";
 import useFetchAllEmojis from "lib/hooks/useFetchAllEmojis";
 import { useFetchFollowersHighlightRepos } from "lib/hooks/useFetchFollowingHighlightRepos";
+import { useFetchUser } from "lib/hooks/useFetchUser";
 
 import { WithPageLayout } from "interfaces/with-page-layout";
 import ProfileLayout from "layouts/profile";
@@ -24,6 +25,7 @@ import Pagination from "components/molecules/Pagination/pagination";
 import PaginationResults from "components/molecules/PaginationResults/pagination-result";
 import FollowingHighlightWrapper from "components/organisms/FollowersHighlightWrapper/following-highlight-wrapper";
 import HomeHighlightsWrapper from "components/organisms/HomeHighlightsWrapper/home-highlights-wrapper";
+import UserCard, { MetaObj } from "components/atoms/UserCard/user-card";
 
 type activeTabType = "home" | "following";
 type highlightReposType = { repoName: string; repoIcon: string; full_name: string };
@@ -50,8 +52,17 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
 
   const { data: followersRepo } = useFetchFollowersHighlightRepos();
 
-  const { data, mutate, setPage, isError, isLoading, meta } = useFetchAllHighlights(selectedRepo);
+  const { data, mutate, setPage, isLoading, meta } = useFetchAllHighlights(selectedRepo);
   const { data: emojis } = useFetchAllEmojis();
+  const { data: loggedInUser, isLoading: loggedInUserLoading } = useFetchUser(user?.user_metadata.user_name as string);
+
+  const { followers_count, following_count, highlights_count } = loggedInUser || {};
+
+  const userMetaArray = [
+    { name: "Followers", count: followers_count ?? 0 },
+    { name: "Following", count: following_count ?? 0 },
+    { name: "Highlights", count: highlights_count ?? 0 },
+  ];
 
   const repoTofilterList = (repos: { full_name: string }[]): highlightReposType[] => {
     const filtersArray = repos.map(({ full_name }) => {
@@ -111,7 +122,19 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
         image={props?.ogImage}
         twitterCard="summary_large_image"
       />
-      <div className="container flex flex-col gap-12 px-2 pt-12 mx-auto md:px-16 lg:justify-end md:flex-row">
+      <div className="container flex flex-col gap-16 px-2 pt-12 mx-auto md:px-16 lg:justify-end md:flex-row">
+        <div className="flex-col flex-1 hidden gap-8 mt-12 md:flex">
+          {user && (
+            <div>
+              <UserCard
+                loading={loggedInUserLoading}
+                username={loggedInUser?.login as string}
+                meta={userMetaArray as MetaObj[]}
+                name={loggedInUser?.name as string}
+              />
+            </div>
+          )}
+        </div>
         {singleHighlight && (
           <Dialog
             open={openSingleHighlight}
@@ -165,7 +188,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
             setActiveTab(value as activeTabType);
           }}
           defaultValue="home"
-          className="flex-1 lg:pl-[21.875rem]"
+          className="md:flex-[2] "
         >
           <TabsList className={clsx("justify-start  w-full border-b", !user && "hidden")}>
             <TabsTrigger
@@ -222,7 +245,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
             <FollowingHighlightWrapper selectedFilter={selectedRepo} emojis={emojis} />
           </TabsContent>
         </Tabs>
-        <div className="hidden mt-10 md:block">
+        <div className="flex-1 hidden mt-10 md:block">
           {repoList && repoList.length > 0 && (
             <HighlightsFilterCard selectedFilter={selectedRepo} setSelected={setSelectedRepo} repos={repoList} />
           )}
