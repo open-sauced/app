@@ -1,13 +1,13 @@
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import Image from "next/image";
 
 import { BsFillCheckCircleFill } from "react-icons/bs";
 
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "components/atoms/Select/select";
 import hashIcon from "../../../img/icons/hash.svg";
 import orgIcon from "../../../img/icons/org.svg";
 import personIcon from "../../../img/icons/person.svg";
 import repoIcon from "../../../img/icons/repo.svg";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "components/atoms/Select/select";
 
 interface FilterCardSelectProps {
   selected: string;

@@ -2,8 +2,8 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useSWRConfig } from "swr";
 import getFilterKey from "lib/utils/get-filter-key";
-import useFilterOptions from "./useFilterOptions";
 import publicApiFetcher from "lib/utils/public-api-fetcher";
+import useFilterOptions from "./useFilterOptions";
 
 type FilterValues = { [name: string]: number | undefined };
 

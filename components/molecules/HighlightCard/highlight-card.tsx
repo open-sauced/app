@@ -1,14 +1,14 @@
 import React from "react";
 import Image from "next/image";
+import Card from "components/atoms/Card/card";
+import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 import repoIcon from "../../../img/icons/icon-repo--blue.svg";
 import prIcon from "../../../img/icons/icon-pr--green.svg";
 import personIcon from "../../../img/icons/person-icon.svg";
 import labelIcon from "../../../img/icons/icon-label--blue.svg";
 import thumbsIcon from "../../../img/icons/icon-thumbs-down--yellow.svg";
 import metricArrow from "../../../img/icons/metric-arrow.svg";
-import Card from "components/atoms/Card/card";
 import StackedAvatar, { Contributor } from "../StackedAvatar/stacked-avatar";
-import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 
 interface HighlightCardProps {
   className?: string;

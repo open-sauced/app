@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { UserGroupIcon } from "@heroicons/react/24/outline";
 
+import { useDebounce } from "rooks";
 import Button from "components/atoms/Button/button";
 import TextInput from "components/atoms/TextInput/text-input";
 import ToggleSwitch from "components/atoms/ToggleSwitch/toggle-switch";
@@ -10,7 +11,6 @@ import Title from "components/atoms/Typography/title";
 import RepositoriesCart from "components/organisms/RepositoriesCart/repositories-cart";
 import RepositoryCartItem from "components/molecules/ReposoitoryCartItem/repository-cart-item";
 import RepoNotIndexed from "components/organisms/Repositories/repository-not-indexed";
-import DeleteInsightPageModal from "./DeleteInsightPageModal";
 import useRepositories from "lib/hooks/api/useRepositories";
 
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
@@ -18,12 +18,12 @@ import { getAvatarById, getAvatarByUsername } from "lib/utils/github";
 import useStore from "lib/store";
 import Error from "components/atoms/Error/Error";
 import Search from "components/atoms/Search/search";
-import { useDebounce } from "rooks";
-import SuggestedRepositoriesList from "../SuggestedRepoList/suggested-repo-list";
 import { RepoCardProfileProps } from "components/molecules/RepoCardProfile/repo-card-profile";
 import { useToast } from "lib/hooks/useToast";
 import TeamMembersConfig, { TeamMemberData } from "components/molecules/TeamMembersConfig/team-members-config";
 import useInsightMembers from "lib/hooks/useInsightMembers";
+import SuggestedRepositoriesList from "../SuggestedRepoList/suggested-repo-list";
+import DeleteInsightPageModal from "./DeleteInsightPageModal";
 
 enum RepoLookupError {
   Initial = 0,

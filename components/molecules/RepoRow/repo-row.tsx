@@ -12,9 +12,6 @@ import { RepositoriesRows } from "components/organisms/RepositoriesTable/reposit
 import Pill from "components/atoms/Pill/pill";
 import Sparkline from "components/atoms/Sparkline/sparkline";
 import { classNames } from "components/organisms/RepositoriesTable/repositories-table";
-import StackedAvatar from "../StackedAvatar/stacked-avatar";
-import PullRequestOverview from "../PullRequestOverview/pull-request-overview";
-import TableRepositoryName from "../TableRepositoryName/table-repository-name";
 import Checkbox from "components/atoms/Checkbox/checkbox";
 
 import { getRelativeDays } from "lib/utils/date-utils";
@@ -25,6 +22,9 @@ import useRepositoryPullRequests from "lib/hooks/api/useRepositoryPullRequests";
 import getPullRequestsToDays from "lib/utils/get-prs-to-days";
 import getPullRequestsContributors from "lib/utils/get-pr-contributors";
 import useStore from "lib/store";
+import TableRepositoryName from "../TableRepositoryName/table-repository-name";
+import PullRequestOverview from "../PullRequestOverview/pull-request-overview";
+import StackedAvatar from "../StackedAvatar/stacked-avatar";
 
 interface RepoProps {
   repo: RepositoriesRows;

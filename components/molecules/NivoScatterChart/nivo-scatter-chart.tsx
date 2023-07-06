@@ -1,5 +1,4 @@
-import { useRouter } from "next/router";
-import { MouseEvent, useCallback, useState } from "react";
+import { useState } from "react";
 
 import { ResponsiveScatterPlot, ScatterPlotNodeProps } from "@nivo/scatterplot";
 import { animated } from "@react-spring/web";
@@ -166,7 +165,7 @@ const NivoScatterPlot = ({
           yScale={{
             type: isLogarithmic ? "symlog" : "linear",
             min: 0,
-            max: Math.max(Math.round(maxFilesModified * 3), 10),
+            max: Math.max(Math.round(maxFilesModified * 1.5), 10),
           }}
           blendMode="normal"
           useMesh={false}

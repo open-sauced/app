@@ -1,6 +1,6 @@
 import React from "react";
-import Avatar from "components/atoms/Avatar/avatar";
 import clsx from "clsx";
+import Avatar from "components/atoms/Avatar/avatar";
 import { getAvatarByUsername } from "lib/utils/github";
 import Button from "components/atoms/Button/button";
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { ComponentStory, ComponentMeta } from "@storybook/react";
+import { ComponentStory } from "@storybook/react";
 
 import { TooltipProvider } from "@radix-ui/react-tooltip";
 import ProfileLanguageChart from "components/molecules/ProfileLanguageChart/profile-language-chart";

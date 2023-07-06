@@ -4,15 +4,17 @@ import Image from "next/image";
 import cntl from "cntl";
 import { useEffect, useRef, useState } from "react";
 import { useMouse } from "react-use";
-import Button from "components/atoms/Button/button";
 import { ArrowTrendingUpIcon, MinusSmallIcon, ArrowSmallUpIcon, ArrowSmallDownIcon } from "@heroicons/react/24/solid";
 import { GiftIcon } from "@heroicons/react/24/outline";
+import Link from "next/link";
+import clsx from "clsx";
+import Button from "components/atoms/Button/button";
 import Pill, { PillProps } from "components/atoms/Pill/pill";
 import Icon from "components/atoms/Icon/icon";
 import CardSauceBGSVG from "img/card-sauce-bg.svg";
 import openSaucedImg from "img/openSauced-icon.png";
 import PRIcon from "img/icons/pr-icon.svg";
-import Link from "next/link";
+import { getRelativeDays } from "lib/utils/date-utils";
 
 type Activity = "high" | "mid";
 
@@ -21,13 +23,14 @@ export interface DevCardProps {
   name?: string;
   avatarURL: string;
   prs?: number;
-  contributions?: number;
-  activity?: Activity;
+  repos?: number;
   bio?: string;
   prVelocity?: number;
-  isLoading: boolean;
+  prMergePercentage?: number;
+  isLoading?: boolean;
   isFlipped?: boolean;
   isInteractive?: boolean;
+  age?: number;
   onFlip?: () => void;
 }
 
@@ -52,11 +55,21 @@ const face = cntl`
   border-[2px]
 `;
 
+function getActivity(prs: number): Activity {
+  if (prs > 4) {
+    return "high";
+  } else {
+    return "mid";
+  }
+}
+
 export default function DevCard(props: DevCardProps) {
   const ref = useRef(null);
   const { docX, docY, posX, posY, elW, elH } = useMouse(ref);
   const [isFlipped, setIsFlipped] = useState(props.isFlipped ?? false);
   const isInteractive = props.isInteractive ?? true;
+
+  const activity = getActivity(props.prs ?? 0);
 
   useEffect(() => {
     setIsFlipped(props.isFlipped ?? false);
@@ -159,9 +172,9 @@ export default function DevCard(props: DevCardProps) {
               </div>
             </div>
             <div className="DevCard-bottom relative text-white flex flex-col items-center pt-10">
-              {props.activity && (
+              {!props.isLoading && (
                 <div className="absolute right-[8px] top-[8px]">
-                  <ActivityPill activity={props.activity} />
+                  <ActivityPill activity={activity} />
                 </div>
               )}
               <div className="text-sm mb-3 font-semibold">@{props.username}</div>
@@ -171,20 +184,20 @@ export default function DevCard(props: DevCardProps) {
                   <div className="text-xs">PRs created</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-6xl font-black">{props.isLoading ? "-" : props.contributions}</div>
-                  <div className="text-xs">Contributions</div>
+                  <div className="text-6xl font-black">{props.isLoading ? "-" : props.repos}</div>
+                  <div className="text-xs">{props.repos! === 1 ? "Repo" : "Repos"}</div>
                 </div>
               </div>
             </div>
           </div>
-          <Image
-            src={props.avatarURL}
-            alt="avatar"
-            width={116}
-            height={116}
-            className="absolute top-1/2 left-1/2 bg-white border-white border-2 block rounded-full w-28 h-28"
+          <div
+            className={clsx(
+              "absolute top-1/2 left-1/2 bg-white border-white border-2 block rounded-full w-28 h-28 text-transparent overflow-hidden"
+            )}
             style={{ transform: "translate(-50%, -75%)" }}
-          />
+          >
+            <Image src={props.avatarURL} alt="avatar" width={116} height={116} />
+          </div>
           {isFlipped || !isInteractive ? null : <div className="glare" style={glareStyle} />}
         </div>
         <div
@@ -211,42 +224,53 @@ export default function DevCard(props: DevCardProps) {
                 className="border-white border-[2px] block rounded-full mr-2"
               />
               <div className="py-0.5">
-                <div className="text-xs font-semibold">{props.name}</div>
+                <div className="text-xs font-semibold">{props.name ?? props.username}</div>
                 <div className="flex items-center gap-2">
-                  <div className="flex items-center">
-                    <Icon IconImage={PRIcon} className="w-3 h-3 mr-1" />
-                    <div className="flex text-xs">{props.prs} PR</div>
-                  </div>
-                  <div className="flex items-center">
-                    <GiftIcon className="w-3 h-3 mr-1" />
-                    <div className="flex text-xs">4d</div>
-                  </div>
+                  {props.prs !== undefined && (
+                    <div className="flex items-center">
+                      <Icon IconImage={PRIcon} className="w-3 h-3 mr-1" />
+                      <div className="flex text-xs">{props.prs} PR</div>
+                    </div>
+                  )}
+                  {props.age !== undefined && (
+                    <div className="flex items-center">
+                      <GiftIcon className="w-3 h-3 mr-1" />
+                      <div className="flex text-xs">
+                        {getRelativeDays(props.age)}
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
-            <div className="px-2 mt-auto">
-              {props.activity && (
-                <>
-                  <div className="flex justify-between items-center">
-                    <div className="text-xs text-slate-300">Activity</div>
-                    <ActivityPill activity={props.activity} size="small" />
-                  </div>
-                  <Seperator />
-                </>
-              )}
-              {props.prVelocity && (
-                <>
-                  <div className="flex justify-between items-center">
-                    <div className="text-xs text-slate-300">PRs Velocity</div>
-                    <div className="flex items-center ml-auto gap-1">
-                      <div className="text-xs text-slate-300 font-extralight">2 Days</div>
-                      <VelocityPill velocity={props.prVelocity} size="small" />
-                    </div>
-                  </div>
-                  <Seperator />
-                </>
-              )}
+            <div className="px-2">
+              <div className="flex justify-between items-center">
+                <div className="text-xs text-slate-300">Activity</div>
+                {!props.isLoading ? (
+                  <ActivityPill activity={activity} size="small" />
+                ) : (
+                  <div className="text-xs text-slate-300 font-extralight">-</div>
+                )}
+              </div>
+              <Seperator />
+              <div className="flex justify-between items-center">
+                <div className="text-xs text-slate-300">PRs Velocity</div>
+                <div className="flex items-center ml-auto gap-1">
+                  {!props.prVelocity || props.prMergePercentage == undefined ? (
+                    <div className="text-xs text-slate-300 font-extralight">-</div>
+                  ) : (
+                    <>
+                      <div className="text-xs text-slate-300 font-extralight">{getRelativeDays(props.prVelocity)}</div>
+                      <VelocityPill velocity={props.prMergePercentage} size="small" />
+                    </>
+                  )}
+                </div>
+              </div>
+              <Seperator />
               <div className="text-xs text-slate-300 text-ellipsis">{props.bio}</div>
+            </div>
+            {/* bottom */}
+            <div className="px-2 mt-auto justify-self-end">
               <Link href={profileHref} passHref>
                 <Button variant="primary" className="w-full text-center justify-center mt-4 !py-1">
                   View Profile

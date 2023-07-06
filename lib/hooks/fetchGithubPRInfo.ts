@@ -1,5 +1,5 @@
-import { supabase } from "lib/utils/supabase";
 import { Octokit } from "octokit";
+import { supabase } from "lib/utils/supabase";
 
 interface GhPullInfoResponse {
   data: GhPRInfoResponse;

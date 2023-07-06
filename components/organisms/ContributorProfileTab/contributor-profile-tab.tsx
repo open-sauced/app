@@ -19,19 +19,13 @@ import Button from "components/atoms/Button/button";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import uppercaseFirst from "lib/utils/uppercase-first";
 import useFetchAllEmojis from "lib/hooks/useFetchAllEmojis";
-import { getInterestOptions, interestsType } from "lib/utils/getInterestOptions";
-import { updateUser } from "lib/hooks/update-user";
-import { useToast } from "lib/hooks/useToast";
 
 import PaginationResults from "components/molecules/PaginationResults/pagination-result";
 import Pagination from "components/molecules/Pagination/pagination";
 import DashContainer from "components/atoms/DashedContainer/DashContainer";
-import LanguagePill from "components/atoms/LanguagePill/LanguagePill";
-import RecommendedRepoCard from "components/molecules/RecommendedRepoCard/recommended-repo-card";
-import recommendations from "lib/utils/recommendations";
-import Title from "components/atoms/Typography/title";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 import CollaborationRequestsWrapper from "../CollaborationRequestWrapper/collaboration-requests-wrapper";
+import UserRepositoryRecommendations from "../UserRepositoryRecommendations/user-repository-recommendations";
 
 interface ContributorProfileTabProps {
   contributor?: DbUser;
@@ -51,8 +45,6 @@ const tabLinks: string[] = ["Highlights", "Contributions", "Requests", "Recommen
 const ContributorProfileTab = ({
   contributor,
   openPrs,
-  prMerged,
-  prTotal,
   prVelocity,
   prsMergedPercentage,
   chart,
@@ -62,50 +54,14 @@ const ContributorProfileTab = ({
 }: ContributorProfileTabProps): JSX.Element => {
   const { login, interests: userInterests, receive_collaboration } = contributor || {};
   const { user } = useSupabaseAuth();
-  const [selectedInterest, setSelectedInterest] = useState<string[]>([]);
-  const [showInterests, setShowInterests] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [recommendedrepos, setRecommendedRepos] = useState<string[]>([]);
 
-  const { toast } = useToast();
-
-  const interests = userInterests ? userInterests.split(",") : [];
   const { data: highlights, isError, isLoading, mutate, meta, setPage } = useFetchUserHighlights(login || "");
   const { data: emojis } = useFetchAllEmojis();
 
   const [inputVisible, setInputVisible] = useState(false);
   const pathnameRef = useRef<string | null>();
-  const interestArray = getInterestOptions();
+
   const router = useRouter();
-
-  const handleSelectInterest = (interest: string) => {
-    if (selectedInterest.length > 0 && selectedInterest.includes(interest)) {
-      setSelectedInterest((prev) => prev.filter((item) => item !== interest));
-    } else {
-      setSelectedInterest((prev) => [...prev, interest]);
-    }
-  };
-
-  const handleUpdateInterest = async () => {
-    setLoading(true);
-    const data = await updateUser({
-      data: { interests: selectedInterest },
-      params: "interests",
-    });
-    setLoading(false);
-    if (data) {
-      toast({ description: "Updated successfully", variant: "success" });
-    } else {
-      toast({ description: "An error occured!", variant: "danger" });
-    }
-  };
-
-  const getRepoFullNameByInterests = () => {
-    const repoFullNames = interests.map((interest) => {
-      return recommendations[interest as interestsType];
-    });
-    setRecommendedRepos(repoFullNames[0]);
-  };
 
   const hasHighlights = highlights?.length > 0;
   pathnameRef.current = router.pathname.split("/").at(-1);
@@ -124,15 +80,9 @@ const ContributorProfileTab = ({
     }
   }, [highlights]);
 
-  useEffect(() => {
-    if (userInterests && userInterests.length > 0) setSelectedInterest(userInterests.split(","));
-
-    getRepoFullNameByInterests();
-  }, [userInterests]);
-
   return (
-    <Tabs defaultValue={uppercaseFirst(currentPathname as string)} className="">
-      <TabsList className="justify-start w-full overflow-x-scroll border-b">
+    <Tabs defaultValue={uppercaseFirst(currentPathname as string)} className="" onValueChange={handleTabUrl}>
+      <TabsList className="justify-start w-full overflow-x-auto border-b">
         {tabLinks.map((tab) => (
           <TabsTrigger
             key={tab}
@@ -232,7 +182,7 @@ const ContributorProfileTab = ({
                 </div>
               ) : (
                 <DashContainer>
-                  <div className="text-center"> 
+                  <div className="text-center">
                     <p>
                       You don&apos;t have any highlights yet! <br /> Highlights are a great way to show off your
                       contributions. Merge any pull requests recently?
@@ -319,55 +269,7 @@ const ContributorProfileTab = ({
 
           {/* Recommendation tab details */}
           <TabsContent value="Recommendations">
-            {userInterests && userInterests.length > 0 ? (
-              <div className="space-y-2 ">
-                <Title className="!font-normal my-6" level={5}>
-                  Here are some repositories we think would be great for you. Click on one that you like and start
-                  contributing!
-                </Title>
-                <div className="flex flex-wrap gap-4">
-                  {recommendedrepos.map((repo, i) => (
-                    <RecommendedRepoCard className="md:w-[45%]" key={i.toString()} fullName={repo} />
-                  ))}
-                  {recommendedrepos.length === 1 && (
-                    <RecommendedRepoCard className="md:w-[45%]" fullName="open-sauced/insights" />
-                  )}
-                </div>
-              </div>
-            ) : (
-              <DashContainer>
-                {/* Empty Interest state */}
-                <div className="flex flex-col items-center gap-4">
-                  <p className="font-normal text-center">
-                    If you’re just getting started, recommendations are a great to find projects and start making
-                    contributions on repositories.
-                    <br /> <br /> Select some interests and we give you some recommendations!
-                  </p>
-
-                  {showInterests && (
-                    <div className="flex flex-wrap justify-center w-full gap-2 mt-6 md:max-w-sm">
-                      {interestArray.map((topic, index) => (
-                        <LanguagePill
-                          onClick={() => handleSelectInterest(topic)}
-                          classNames={`${(selectedInterest || []).includes(topic) && "bg-light-orange-10 text-white"}`}
-                          topic={topic}
-                          key={index}
-                        />
-                      ))}
-                    </div>
-                  )}
-                  {showInterests ? (
-                    <Button loading={loading} className="mt-4" onClick={handleUpdateInterest} variant="primary">
-                      Save Interests
-                    </Button>
-                  ) : (
-                    <Button onClick={() => setShowInterests(true)} variant="primary">
-                      Select Interests
-                    </Button>
-                  )}
-                </div>
-              </DashContainer>
-            )}
+            <UserRepositoryRecommendations contributor={contributor} userInterests={userInterests} />
           </TabsContent>
         </>
       )}

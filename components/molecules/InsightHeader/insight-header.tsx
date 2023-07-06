@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { FaEdit } from "react-icons/fa";
 import Link from "next/link";
+import { usePostHog } from "posthog-js/react";
 
 import { FiCopy } from "react-icons/fi";
 
@@ -9,10 +10,10 @@ import Button from "components/atoms/Button/button";
 import Title from "components/atoms/Typography/title";
 import Badge from "components/atoms/InsightBadge/insight-badge";
 import ContextThumbnail from "components/atoms/ContextThumbnail/context-thumbnail";
-import CardRepoList from "../CardRepoList/card-repo-list";
 import { truncateString } from "lib/utils/truncate-string";
 import useRepositories from "lib/hooks/api/useRepositories";
 import { useToast } from "lib/hooks/useToast";
+import CardRepoList from "../CardRepoList/card-repo-list";
 
 interface InsightHeaderProps {
   insight?: DbUserInsight;
@@ -26,16 +27,17 @@ const InsightHeader = ({ insight, repositories, insightId, isOwner }: InsightHea
   const { repoList } = getRepoInsights(repoData);
   const [insightPageLink, setInsightPageLink] = useState("");
   const { toast } = useToast();
+  const posthog = usePostHog();
 
   useEffect(() => {
     if (typeof window !== "undefined") {
       setInsightPageLink(window.location.href);
-
     }
   }, [insight]);
 
   const handleCopyToClipboard = async (content: string) => {
     const url = new URL(content).toString();
+    posthog!.capture("clicked: Insights copied");
 
     try {
       await navigator.clipboard.writeText(url);

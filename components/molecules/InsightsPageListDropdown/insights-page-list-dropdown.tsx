@@ -1,5 +1,6 @@
 import React from "react";
 
+import { BsPlusCircleFill } from "react-icons/bs";
 import Button from "components/atoms/Button/button";
 import {
   DropdownMenu,
@@ -8,7 +9,6 @@ import {
   DropdownMenuTrigger
 } from "components/atoms/Dropdown/dropdown";
 import InsightsPageListItem from "components/atoms/InsightsPageListItem/insights-page-list-item";
-import { BsPlusCircleFill } from "react-icons/bs";
 
 const InsightsPageListDropdown = () => {
   return (

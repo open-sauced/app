@@ -1,5 +1,4 @@
 import Image, { StaticImageData } from "next/image";
-import AvatarImage from "../../../img/hacktoberfest-icon.png";
 import cachedImage from "lib/utils/cachedImages";
 
 interface AvatarProps {
@@ -23,11 +22,12 @@ const Avatar = (props: AvatarProps): JSX.Element => {
 
   try {
     // Checks if the avatarURL is a proper URL. If not, it will throw an error.
-    if(typeof props.avatarURL === "string") new URL(props.avatarURL);
+    if (typeof props.avatarURL === "string" && props.avatarURL.length > 0) new URL(props.avatarURL);
 
-    imageSource = props.avatarURL && props.isCached
-      ? cachedImage(props.avatarURL as string, process.env.NEXT_PUBLIC_CLOUD_NAME)
-      : props.avatarURL;
+    imageSource =
+      props.avatarURL && props.isCached
+        ? cachedImage(props.avatarURL as string, process.env.NEXT_PUBLIC_CLOUD_NAME)
+        : props.avatarURL;
   } catch (error) {
     console.error(error);
   }
@@ -50,7 +50,7 @@ const CustomAvatar = ({
   size,
   hasBorder,
   isCircle,
-  initialsClassName
+  initialsClassName,
 }: AvatarProps): JSX.Element => {
   return (
     <div
@@ -90,7 +90,7 @@ const DefaultAvatar = ({
   alt,
   size,
   hasBorder,
-  isCircle
+  isCircle,
 }: AvatarProps): JSX.Element => {
   return (
     <div

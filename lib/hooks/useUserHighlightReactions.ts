@@ -1,6 +1,6 @@
 import useSWR, { Fetcher } from "swr";
-import { HighlightReactionResponse } from "./useHighlightReactions";
 import publicApiFetcher from "lib/utils/public-api-fetcher";
+import { HighlightReactionResponse } from "./useHighlightReactions";
 import useSupabaseAuth from "./useSupabaseAuth";
 
 const useUserHighlightReactions = (id: string) => {

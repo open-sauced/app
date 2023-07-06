@@ -1,5 +1,5 @@
-import ToggleSwitch from "../ToggleSwitch/toggle-switch";
 import { HiInformationCircle } from "react-icons/hi";
+import ToggleSwitch from "../ToggleSwitch/toggle-switch";
 interface ToogleOptionProps {
   optionText: string;
   withIcon?: boolean;

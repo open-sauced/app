@@ -1,5 +1,5 @@
-import SearchResults from "components/molecules/SearchResults/search-results";
 import { ComponentStory } from "@storybook/react";
+import SearchResults from "components/molecules/SearchResults/search-results";
 import RepositoryResult from "components/molecules/RepositoryResult/repository-result";
 const StoryConfig = {
   title: "Design System/Molecules/SearchResults"

@@ -1,7 +1,7 @@
 import { create } from "zustand";
 
-import { GlobalStateInterface } from "interfaces/global-state-types";
 import { User } from "@supabase/supabase-js";
+import { GlobalStateInterface } from "interfaces/global-state-types";
 
 const initialState: GlobalStateInterface = {
   range: 30,

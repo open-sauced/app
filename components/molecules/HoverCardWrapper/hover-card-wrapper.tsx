@@ -1,10 +1,10 @@
 import { useRouter } from "next/router";
 
-import ContributorHoverCard, { ContributorsProfileType } from "../ContributorHoverCard/contributor-hover-card";
 
 import { useFetchUser } from "lib/hooks/useFetchUser";
 import { useContributorPullRequestsChart } from "lib/hooks/useContributorPullRequestsChart";
 import { getAvatarByUsername } from "lib/utils/github";
+import ContributorHoverCard, { ContributorsProfileType } from "../ContributorHoverCard/contributor-hover-card";
 
 interface HoverCardWrapperProps {
   username: string;

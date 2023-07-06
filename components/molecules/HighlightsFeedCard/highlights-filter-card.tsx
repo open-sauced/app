@@ -1,6 +1,6 @@
+import { useEffect, useState } from "react";
 import Title from "components/atoms/Typography/title";
 import Icon from "components/atoms/Icon/icon";
-import { useEffect, useState } from "react";
 
 interface HighlightsFilterCardProps {
   repos: { repoName: string; repoIcon: string; full_name: string }[];

@@ -1,5 +1,5 @@
-import Button from "components/atoms/Button/button";
 import React from "react";
+import Button from "components/atoms/Button/button";
 
 interface HighlightPromptProps extends React.HTMLAttributes<HTMLDivElement> {
   prompt: string;
