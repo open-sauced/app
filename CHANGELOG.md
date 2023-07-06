@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.56.0-beta.1](https://github.com/open-sauced/insights/compare/v1.55.0...v1.56.0-beta.1) (2023-07-06)
+
+
+### 🍕 Features
+
+* upgrade to Next 13.4, Supabase helper libs to 0.7.x ([#1301](https://github.com/open-sauced/insights/issues/1301)) ([26876c2](https://github.com/open-sauced/insights/commit/26876c260546815102ac5584c0579e12b1323361))
+
 ## [1.55.0](https://github.com/open-sauced/insights/compare/v1.54.0...v1.55.0) (2023-07-06)
 
 
