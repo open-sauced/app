@@ -26,6 +26,8 @@ import PaginationResults from "components/molecules/PaginationResults/pagination
 import FollowingHighlightWrapper from "components/organisms/FollowersHighlightWrapper/following-highlight-wrapper";
 import HomeHighlightsWrapper from "components/organisms/HomeHighlightsWrapper/home-highlights-wrapper";
 import UserCard, { MetaObj } from "components/atoms/UserCard/user-card";
+import FeaturedHighlightsPanel from "components/molecules/FeaturedHighlightsPanel/featured-highlights-panel";
+import { useFetchFeaturedHighlights } from "lib/hooks/useFetchFeaturedHighlights";
 
 type activeTabType = "home" | "following";
 type highlightReposType = { repoName: string; repoIcon: string; full_name: string };
@@ -39,6 +41,12 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
   const { user } = useSupabaseAuth();
   const { data: repos } = useFetchHighlightRepos();
 
+  const { data: FeaturedHighlights } = useFetchFeaturedHighlights();
+
+  const panelFormattedFeaturedHighlights = FeaturedHighlights?.map(({ id, title }) => ({
+    id,
+    title,
+  }));
   const router = useRouter();
   const [hydrated, setHydrated] = useState(false);
   const [openSingleHighlight, setOpenSingleHighlight] = useState(false);
@@ -245,9 +253,13 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
             <FollowingHighlightWrapper selectedFilter={selectedRepo} emojis={emojis} />
           </TabsContent>
         </Tabs>
-        <div className="flex-1 hidden mt-10 md:block">
+        <div className="flex-1 hidden mt-10 md:flex md:flex-col md:gap-6">
           {repoList && repoList.length > 0 && (
             <HighlightsFilterCard selectedFilter={selectedRepo} setSelected={setSelectedRepo} repos={repoList} />
+          )}
+
+          {panelFormattedFeaturedHighlights.length > 0 && (
+            <FeaturedHighlightsPanel highlights={panelFormattedFeaturedHighlights} />
           )}
         </div>
       </div>
