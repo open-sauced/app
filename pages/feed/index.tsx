@@ -142,6 +142,10 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
               />
             </div>
           )}
+
+          {panelFormattedFeaturedHighlights.length > 0 && (
+            <FeaturedHighlightsPanel highlights={panelFormattedFeaturedHighlights} />
+          )}
         </div>
         {singleHighlight && (
           <Dialog
@@ -256,10 +260,6 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
         <div className="flex-1 hidden mt-10 md:flex md:flex-col md:gap-6">
           {repoList && repoList.length > 0 && (
             <HighlightsFilterCard selectedFilter={selectedRepo} setSelected={setSelectedRepo} repos={repoList} />
-          )}
-
-          {panelFormattedFeaturedHighlights.length > 0 && (
-            <FeaturedHighlightsPanel highlights={panelFormattedFeaturedHighlights} />
           )}
         </div>
       </div>
