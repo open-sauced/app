@@ -486,7 +486,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
 
         <div className="flex justify-between">
           <div className="flex items-center">
-            <UserGroupIcon className="w-[24px] h-[24px] text-light-slate-9" />
+            <UserGroupIcon className="w-6 h-6 text-light-slate-9" />
             <Text className="pl-2">Make this page publicly visible</Text>
           </div>
 
