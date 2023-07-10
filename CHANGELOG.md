@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.56.0-beta.2](https://github.com/open-sauced/insights/compare/v1.56.0-beta.1...v1.56.0-beta.2) (2023-07-10)
+
+
+### 🐛 Bug Fixes
+
+* ensure font color of selected interests pill changed is white  ([#1342](https://github.com/open-sauced/insights/issues/1342)) ([b778f11](https://github.com/open-sauced/insights/commit/b778f11484d02b4d159fe3cd22f43de4a5c28196))
+
 ## [1.56.0-beta.1](https://github.com/open-sauced/insights/compare/v1.55.0...v1.56.0-beta.1) (2023-07-06)
 
 
