@@ -96,7 +96,7 @@ const NewsletterForm = () => {
                 value={email}
                 className="w-full text-sm focus:outline-none"
                 type="text"
-                name="Your email"
+                name="email"
                 placeholder="Email"
               />
               <Button
