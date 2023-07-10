@@ -78,7 +78,7 @@ const NewsletterForm = () => {
           <form
             name="newsletter"
             data-netlify="true"
-            data-netlify-honeypot="bot-field"
+            method="post"
             autoComplete="off"
             className="w-full"
             onSubmit={handleSubmit}
@@ -96,7 +96,7 @@ const NewsletterForm = () => {
                 value={email}
                 className="w-full text-sm focus:outline-none"
                 type="text"
-                name="Your email"
+                name="email"
                 placeholder="Email"
               />
               <Button
