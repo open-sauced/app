@@ -1,13 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import cntl from "cntl";
-import { useEffect, useRef, useState } from "react";
-import { useMouse } from "react-use";
+import { useEffect, useState } from "react";
 import { ArrowTrendingUpIcon, MinusSmallIcon, ArrowSmallUpIcon, ArrowSmallDownIcon } from "@heroicons/react/24/solid";
 import { GiftIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import clsx from "clsx";
+import Tilt from "react-parallax-tilt";
 import Button from "components/atoms/Button/button";
 import Pill, { PillProps } from "components/atoms/Pill/pill";
 import Icon from "components/atoms/Icon/icon";
@@ -15,8 +14,6 @@ import CardSauceBGSVG from "img/card-sauce-bg.svg";
 import openSaucedImg from "img/openSauced-icon.png";
 import PRIcon from "img/icons/pr-icon.svg";
 import { getRelativeDays } from "lib/utils/date-utils";
-
-type Activity = "high" | "mid";
 
 export interface DevCardProps {
   username: string;
@@ -34,38 +31,7 @@ export interface DevCardProps {
   onFlip?: () => void;
 }
 
-const card = cntl`
-  DevCard-card
-  relative
-  rounded-3xl
-`;
-
-const face = cntl`
-  flex
-  items-stretch
-  justify-stretch
-  w-full
-  h-full
-  left-0
-  top-0
-  overflow-hidden
-  absolute
-  rounded-3xl
-  border-white
-  border-[2px]
-`;
-
-function getActivity(prs: number): Activity {
-  if (prs > 4) {
-    return "high";
-  } else {
-    return "mid";
-  }
-}
-
 export default function DevCard(props: DevCardProps) {
-  const ref = useRef(null);
-  const { docX, docY, posX, posY, elW, elH } = useMouse(ref);
   const [isFlipped, setIsFlipped] = useState(props.isFlipped ?? false);
   const isInteractive = props.isInteractive ?? true;
 
@@ -81,36 +47,6 @@ export default function DevCard(props: DevCardProps) {
     }
   }, [props.isInteractive, props.isFlipped]);
 
-  const halfWidth = elW / 2;
-  const halfHeight = elH / 2;
-  const elCenterX = posX + halfWidth;
-  const elCenterY = posY + halfHeight;
-  const mouseOffsetX = isInteractive ? elCenterX - docX : 0;
-  const mouseOffsetY = isInteractive ? elCenterY - docY : 0;
-  // Cap the offset so that it asymptomatically approaches the max offset
-
-  const calcAngleX = asymptoticLinear(mouseOffsetX / 20, 20, 0.1) + (isFlipped ? 180 : 0);
-  const calcAngleY = asymptoticLinear(mouseOffsetY / 40, 20, 0.1);
-
-  const glareX = (1 - mouseOffsetX / elW) * 100;
-  const glareY = (1 - mouseOffsetY / elH) * 100;
-  const calcShadowX = asymptoticLinear((mouseOffsetX - halfWidth) / 12, 20, 0.1);
-  const calcShadowY = asymptoticLinear((mouseOffsetY - halfHeight) / 24, 20, 0.1);
-
-  const glareStyle: React.CSSProperties = {
-    position: "absolute",
-    left: 0,
-    top: 0,
-    width: "100%",
-    height: "100%",
-    pointerEvents: "none",
-    zIndex: 2,
-    mixBlendMode: "hard-light",
-    opacity: 0.5,
-    transform: "translateZ(80px)",
-    background: `radial-gradient(circle at ${glareX}% ${glareY}%, rgb(199 198 243), transparent)`,
-  };
-
   const profileHref = `/user/${props.username}`;
 
   function handleCardClick(event: React.MouseEvent<HTMLElement, MouseEvent>) {
@@ -124,37 +60,60 @@ export default function DevCard(props: DevCardProps) {
     }
   }
 
+  const faceClasses = clsx(
+    "flex",
+    "flex-col",
+    "items-stretch",
+    "justify-items-stretch",
+    "overflow-hidden",
+    "rounded-3xl",
+    "border-white",
+    "cursor-pointer",
+    "w-full",
+    "h-full",
+    "absolute",
+    "left-0",
+    "top-0",
+  );
+
+  const faceStyle: React.CSSProperties = {
+    backfaceVisibility: "hidden",
+    background: "#11181c linear-gradient(152.13deg, rgba(217, 217, 217, 0.1) 0%, rgba(255, 255, 255, 0.1) 100%)",
+    gridArea: "1/1",
+    border: "2px",
+  };
+
   return (
     <div
-      onClick={handleCardClick}
+      className="DevCard rounded-3x"
       style={{
-        cursor: "pointer",
-        perspective: "1000px",
         width: "245px",
         height: "348px",
+        boxShadow: "0px 0px 20px -12px rgba(0, 0, 0, 0.25)",
       }}
-      ref={ref}
     >
-      <div
-        className={card}
+      <Tilt
+        tiltEnable={isInteractive}
+        glareEnable={isInteractive}
+        trackOnWindow={isInteractive}
+        glareBorderRadius="1.5rem"
+        flipHorizontally={isFlipped}
+        className={clsx(
+          "DevCard-card",
+          "relative",
+          "rounded-3x",
+          "w-full",
+          "h-full",
+        )}
         style={{
-          width: "100%",
-          height: "100%",
-          position: "relative",
-          boxShadow: `${-calcShadowX}px ${-calcShadowY}px 50px -12px rgba(0, 0, 0, 0.25)`,
-          transform: `rotateY(${calcAngleX}deg) rotateX(${-calcAngleY}deg)`,
-          transition: "transform 0.2s ease-out",
           transformStyle: "preserve-3d",
-          willChange: "transform, box-shadow",
         }}
       >
         <div
-          className={`DevCard-front ${face}`}
+          className={clsx("DevCard-front", faceClasses)}
+          onClick={handleCardClick}
           style={{
-            background:
-              "#11181C linear-gradient(152.13deg, rgba(217, 217, 217, 0.6) 4.98%, rgba(217, 217, 217, 0.1) 65.85%)",
-            backfaceVisibility: "hidden",
-            pointerEvents: "none",
+            ...faceStyle,
           }}
         >
           <div className="grid grid-rows-2 grid-cols-1 flex-shrink-0 w-full h-full">
@@ -192,28 +151,38 @@ export default function DevCard(props: DevCardProps) {
           </div>
           <div
             className={clsx(
-              "absolute top-1/2 left-1/2 bg-white border-white border-2 block rounded-full w-28 h-28 text-transparent overflow-hidden"
+              "DevCard-avatar",
+              "absolute",
+              "top-1/2",
+              "left-1/2",
+              "bg-white",
+              "border-white",
+              "border-2",
+              "block",
+              "rounded-full",
+              "w-28",
+              "h-28",
+              "text-transparent",
+              "overflow-hidden"
             )}
             style={{ transform: "translate(-50%, -75%)" }}
           >
             <Image src={props.avatarURL} alt="avatar" width={116} height={116} />
           </div>
-          {isFlipped || !isInteractive ? null : <div className="glare" style={glareStyle} />}
         </div>
         <div
-          className={`DevCard-back ${face}`}
+          className={clsx("DevCard-back", faceClasses)}
+          onClick={handleCardClick}
           style={{
-            background:
-              "#11181C linear-gradient(152.13deg, rgba(217, 217, 217, 0.6) 4.98%, rgba(217, 217, 217, 0.1) 65.85%)",
-            backfaceVisibility: "hidden",
+            ...faceStyle,
             transform: "rotateY(180deg)",
           }}
         >
-          <div className="p-2 pt-4 w-full flex flex-col">
+          <div className="p-2 pt-4 w-full h-full flex flex-col">
             <div
               className="text-white rounded-full w-full bg-[#F98026] mb-2 flex items-center"
               style={{
-                boxShadow: "0px 10px 15px -3px rgba(249, 128, 38, 0.1), 0px 4px 6px -2px rgba(249, 128, 38, 0.05);",
+                boxShadow: "0px 10px 15px -3px rgba(249, 128, 38, 0.1), 0px 4px 6px -2px rgba(249, 128, 38, 0.05)",
               }}
             >
               <Image
@@ -235,9 +204,7 @@ export default function DevCard(props: DevCardProps) {
                   {props.age !== undefined && (
                     <div className="flex items-center">
                       <GiftIcon className="w-3 h-3 mr-1" />
-                      <div className="flex text-xs">
-                        {getRelativeDays(props.age)}
-                      </div>
+                      <div className="flex text-xs">{getRelativeDays(props.age)}</div>
                     </div>
                   )}
                 </div>
@@ -284,11 +251,20 @@ export default function DevCard(props: DevCardProps) {
               </div>
             </div>
           </div>
-          {isFlipped ? <div className="glare" style={glareStyle} /> : null}
         </div>
-      </div>
+      </Tilt>
     </div>
   );
+}
+
+type Activity = "high" | "mid";
+
+function getActivity(prs: number): Activity {
+  if (prs > 4) {
+    return "high";
+  } else {
+    return "mid";
+  }
 }
 
 function VelocityPill({ velocity, ...props }: { velocity: number } & Omit<PillProps, "text" | "icon">) {
@@ -317,24 +293,4 @@ function Seperator() {
       style={{ background: "linear-gradient(90deg, hsla(206, 12%, 89%, 0.6), hsla(206, 12%, 89%, 0.01)" }}
     ></div>
   );
-}
-
-/**
- * Computes the value of a linear function that asymptotically approaches a capped value.
- *
- * @param {number} value - The input value
- * @param {number} cap - The capped value that the function will never exceed.
- * @param {number} slope - The slope controlling the rate at which the function approaches the cap.
- * @returns {number} The computed value based on the input value, cap, and slope.
- */
-function asymptoticLinear(value: number, cap: number, slope: number = 0.1) {
-  // Calculate the scale factor to ensure z never exceeds cap
-  const scaleFactor = cap / (Math.PI / 2);
-
-  // Use the inverse tangent function to achieve asymptotic behavior
-  const asymptoticValue = Math.atan(slope * value);
-
-  // Scale the result and return z
-  const z = scaleFactor * asymptoticValue;
-  return z;
 }

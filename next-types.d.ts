@@ -169,6 +169,9 @@ interface DbUser {
   readonly notification_count: number;
   readonly languages: { [lang]: number };
   readonly first_opened_pr_at: string;
+  readonly followers_count: number;
+  readonly following_count: number;
+  readonly highlights_count: number;
 }
 
 interface DbHighlight {

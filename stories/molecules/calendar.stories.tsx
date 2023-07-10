@@ -2,15 +2,15 @@ import { ComponentStory } from "@storybook/react";
 import { Calendar } from "components/molecules/Calendar/calendar";
 
 const storyConfig = {
-  title: "Design System/Molecules/Calendar"
+  title: "Design System/Molecules/Calendar",
 };
 export default storyConfig;
 
-const CalendarTemplate: ComponentStory<typeof Calendar> = (args) => <Calendar {...args} />;
+const CalendarTemplate: ComponentStory<typeof Calendar> = (args: any) => <Calendar {...args} />;
 
 export const Default = CalendarTemplate.bind({});
 
 Default.args = {
   mode: "single",
-  className: "border w-max rounded-md"
+  className: "border w-max rounded-md",
 };
