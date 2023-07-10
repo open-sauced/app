@@ -25,6 +25,7 @@ import Pagination from "components/molecules/Pagination/pagination";
 import PaginationResults from "components/molecules/PaginationResults/pagination-result";
 import FollowingHighlightWrapper from "components/organisms/FollowersHighlightWrapper/following-highlight-wrapper";
 import HomeHighlightsWrapper from "components/organisms/HomeHighlightsWrapper/home-highlights-wrapper";
+import NewsletterForm from "components/molecules/NewsletterForm/newsletter-form";
 import UserCard, { MetaObj } from "components/atoms/UserCard/user-card";
 
 type activeTabType = "home" | "following";
@@ -245,10 +246,12 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
             <FollowingHighlightWrapper selectedFilter={selectedRepo} emojis={emojis} />
           </TabsContent>
         </Tabs>
-        <div className="flex-1 hidden mt-10 md:block">
+        <div className="hidden gap-6 mt-10 md:flex-1 md:flex md:flex-col">
           {repoList && repoList.length > 0 && (
             <HighlightsFilterCard selectedFilter={selectedRepo} setSelected={setSelectedRepo} repos={repoList} />
           )}
+
+          <NewsletterForm />
         </div>
       </div>
     </>
