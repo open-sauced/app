@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.56.0-beta.4](https://github.com/open-sauced/insights/compare/v1.56.0-beta.3...v1.56.0-beta.4) (2023-07-10)
+
+
+### 🍕 Features
+
+* change position of visibility action component ([#1331](https://github.com/open-sauced/insights/issues/1331)) ([f3f615c](https://github.com/open-sauced/insights/commit/f3f615caf3b8a69943d6b1443ac0b35075501b4b))
+
 ## [1.56.0-beta.3](https://github.com/open-sauced/insights/compare/v1.56.0-beta.2...v1.56.0-beta.3) (2023-07-10)
 
 
