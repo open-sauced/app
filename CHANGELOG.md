@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.56.0-beta.3](https://github.com/open-sauced/insights/compare/v1.56.0-beta.2...v1.56.0-beta.3) (2023-07-10)
+
+
+### 🍕 Features
+
+* implement newsletter submission functionality ([#1332](https://github.com/open-sauced/insights/issues/1332)) ([d996ac7](https://github.com/open-sauced/insights/commit/d996ac714fa2cf6394416fcb542c278634edc394))
+
 ## [1.56.0-beta.2](https://github.com/open-sauced/insights/compare/v1.56.0-beta.1...v1.56.0-beta.2) (2023-07-10)
 
 
