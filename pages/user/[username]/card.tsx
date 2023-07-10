@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useTransition, animated } from "react-spring";
 import Image from "next/image";
 import cntl from "cntl";
+import { useWindowSize } from "rooks";
 import Button from "components/atoms/Button/button";
 import HeaderLogo from "components/molecules/HeaderLogo/header-logo";
 import DevCardCarousel, { DevCardCarouselProps } from "components/organisms/DevCardCarousel/dev-card-carousel";
@@ -111,6 +112,8 @@ export const getServerSideProps: GetServerSideProps<CardProps, Params> = async (
 
 const Card: NextPage<CardProps> = ({ username, cards }) => {
   const { user: loggedInUser } = useSupabaseAuth();
+  const { innerHeight } = useWindowSize();
+  const [minHeight, setMinHeight] = useState<string>("100vh");
   const [selectedUserName, setSelectedUserName] = useState<string>(username);
   const iframeTransition = useTransition(selectedUserName, {
     from: { opacity: 0, transform: "translate3d(100%, 0, 0)" },
@@ -149,6 +152,11 @@ const Card: NextPage<CardProps> = ({ username, cards }) => {
     });
   }, [cards]);
 
+  useEffect(() => {
+    setMinHeight(`${innerHeight}px`);
+  }, [innerHeight]);
+
+
   return (
     <div
       style={{
@@ -163,8 +171,13 @@ const Card: NextPage<CardProps> = ({ username, cards }) => {
         twitterCard="summary_large_image"
       />
       <main
-        className="grid w-full h-full min-h-screen md:max-h-screen md:overflow-hidden md:pb-20"
-        style={{ gridTemplateRows: "auto 1fr auto" }}
+        className="grid w-full h-full min-h-screen max-h-screen md:max-h-fit md:overflow-hidden md:pb-20"
+        style={{
+          gridTemplateRows: "auto 1fr auto",
+          // using the JS calculated min-height here to account for mobile browser toolbars
+          // see https://dev.to/nirazanbasnet/dont-use-100vh-for-mobile-responsive-3o97
+          minHeight
+        }}
       >
         <div className="grid justify-center place-content-start py-7 px-3 md:justify-start">
           <HeaderLogo withBg={false} />

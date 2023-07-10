@@ -1,12 +1,12 @@
 {
   "name": "@open-sauced/insights",
-  "version": "1.56.0-beta.1",
+  "version": "1.56.0-beta.3",
   "lockfileVersion": 3,
   "requires": true,
   "packages": {
     "": {
       "name": "@open-sauced/insights",
-      "version": "1.56.0-beta.1",
+      "version": "1.56.0-beta.3",
       "hasInstallScript": true,
       "license": "Apache 2.0",
       "dependencies": {
@@ -59,6 +59,7 @@
         "react-hot-toast": "^2.4.0",
         "react-icons": "^4.7.1",
         "react-loading-skeleton": "^3.1.0",
+        "react-parallax-tilt": "^1.7.151",
         "react-schemaorg": "^2.0.0",
         "react-spring": "^9.6.1",
         "react-use": "^17.4.0",
@@ -31192,6 +31193,15 @@
       "integrity": "sha512-j1U1CWWs68nBPOg7tkQqnlFcAMFF6oEK6MgqAo15f8A5p7mjH6xyKn2gHbkcimpwfO0VQXqxAswnSYVr8lWzjw==",
       "peerDependencies": {
         "react": ">=16.8.0"
+      }
+    },
+    "node_modules/react-parallax-tilt": {
+      "version": "1.7.151",
+      "resolved": "https://registry.npmjs.org/react-parallax-tilt/-/react-parallax-tilt-1.7.151.tgz",
+      "integrity": "sha512-gizWQRbJfsMmQ1NNc6S7bolSnvvopw1YP6Lu04deV3NHDK/XA2M3v0/GkwvVTpOuFTPqcaek4p3PSM8cFezk7g==",
+      "peerDependencies": {
+        "react": "^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0",
+        "react-dom": "^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0"
       }
     },
     "node_modules/react-refresh": {
