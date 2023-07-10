@@ -10,7 +10,7 @@ export default storyConfig;
 const sampleHighlights: DbHighlight[] = [
   {
     id: "1",
-    name: "OAuth, never missing a chance to surprise! 🍕",
+    name: "A Pizza Surprise: Unleashing the Power of OAuth! 🍕🔥",
     title: "OAuth, never missing a chance to surprise! 🍕",
     url: "supabase/supabase",
     highlight: "supabase",
