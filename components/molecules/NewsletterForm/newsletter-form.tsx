@@ -7,11 +7,6 @@ import TextInput from "components/atoms/TextInput/text-input";
 import SaucedLogo from "img/fallbackImageColor.svg";
 import { validateEmail } from "lib/utils/validate-email";
 
-function encode(data: { [key: string]: string }) {
-  return Object.keys(data)
-    .map((key) => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
-    .join("&");
-}
 const NewsletterForm = () => {
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
