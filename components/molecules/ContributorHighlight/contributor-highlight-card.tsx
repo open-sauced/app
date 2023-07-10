@@ -90,7 +90,9 @@ const ContributorHighlightCard = ({
   const [date, setDate] = useState<Date | undefined>(shipped_date ? new Date(shipped_date) : undefined);
 
   const { data: reactions, mutate } = useHighlightReactions(id);
-  const { data: userReaction, deleteReaction, addReaction } = useUserHighlightReactions(id);
+  const { data: userReaction, deleteReaction, addReaction } = useUserHighlightReactions(sessionToken ? id : "");
+
+  console.log(reactions, userReaction);
 
   const posthog = usePostHog();
 
@@ -108,7 +110,7 @@ const ContributorHighlightCard = ({
   }, [shipped_date]);
 
   const isUserReaction = (id: string) => {
-    const matches = userReaction.find((reaction) => reaction.emoji_id === id);
+    const matches = sessionToken && userReaction.find((reaction) => reaction.emoji_id === id);
     return !matches ? false : true;
   };
 
@@ -352,7 +354,7 @@ const ContributorHighlightCard = ({
               emojis.length > 0 &&
               emojis.map(({ id, name }) => (
                 <DropdownMenuItem
-                  onClick={async () => (sessionToken ? handleUpdateReaction(id) : await signIn({ provider: "github" }))}
+                  onClick={async () => (sessionToken ? handleUpdateReaction(id) : signIn({ provider: "github" }))}
                   key={id}
                   className="rounded-full !px-2 !cursor-pointer"
                 >
@@ -369,9 +371,7 @@ const ContributorHighlightCard = ({
               className={`px-1 py-0 md:py-0.5 hover:bg-light-slate-6 transition  md:px-1.5 shrink-0 border flex items-center justify-center rounded-full cursor-pointer ${
                 isUserReaction(emoji_id) && "bg-light-slate-6"
               }`}
-              onClick={async () =>
-                sessionToken ? handleUpdateReaction(emoji_id) : await signIn({ provider: "github" })
-              }
+              onClick={async () => (sessionToken ? handleUpdateReaction(emoji_id) : signIn({ provider: "github" }))}
               key={emoji_id}
             >
               <Emoji
