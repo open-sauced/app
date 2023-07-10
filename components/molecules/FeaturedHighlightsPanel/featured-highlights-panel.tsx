@@ -2,7 +2,7 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 interface FeaturedHighlightsPanelProps {
-  highlights: { id: string; title: string }[];
+  highlights: DbHighlight[];
 }
 const FeaturedHighlightsPanel = ({ highlights }: FeaturedHighlightsPanelProps) => {
   const [host, setHost] = useState("");
@@ -14,7 +14,7 @@ const FeaturedHighlightsPanel = ({ highlights }: FeaturedHighlightsPanelProps) =
   }, []);
 
   return (
-    <div className="w-full p-5 space-y-4 bg-white border rounded-lg">
+    <div className="w-full p-5 space-y-4 border rounded-lg bg-light-slate-1">
       <h2 className="pb-2 text-lg border-b">Featured Highlights</h2>
       <div className="flex flex-col gap-4 text-sm">
         {highlights.map(({ id, title }) => (

@@ -41,12 +41,8 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
   const { user } = useSupabaseAuth();
   const { data: repos } = useFetchHighlightRepos();
 
-  const { data: FeaturedHighlights } = useFetchFeaturedHighlights();
+  const { data: featuredHighlights } = useFetchFeaturedHighlights();
 
-  const panelFormattedFeaturedHighlights = FeaturedHighlights?.map(({ id, title }) => ({
-    id,
-    title,
-  }));
   const router = useRouter();
   const [hydrated, setHydrated] = useState(false);
   const [openSingleHighlight, setOpenSingleHighlight] = useState(false);
@@ -141,10 +137,6 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
                 name={loggedInUser?.name as string}
               />
             </div>
-          )}
-
-          {panelFormattedFeaturedHighlights.length > 0 && (
-            <FeaturedHighlightsPanel highlights={panelFormattedFeaturedHighlights} />
           )}
         </div>
         {singleHighlight && (
@@ -260,6 +252,10 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
         <div className="flex-1 hidden mt-10 md:flex md:flex-col md:gap-6">
           {repoList && repoList.length > 0 && (
             <HighlightsFilterCard selectedFilter={selectedRepo} setSelected={setSelectedRepo} repos={repoList} />
+          )}
+
+          {featuredHighlights && featuredHighlights.length > 0 && (
+            <FeaturedHighlightsPanel highlights={featuredHighlights} />
           )}
         </div>
       </div>

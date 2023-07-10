@@ -7,10 +7,35 @@ const storyConfig = {
 
 export default storyConfig;
 
-const sampleHighlights = [
-  { id: "1", title: "OAuth, never missing a chance to surprise! 🍕" },
-  { id: "106", title: "Replaced Supabase ui checkbox with Radix UI for better performance" },
-  { id: "106", title: "Even docs can experience breaking changes! 😅" },
+const sampleHighlights: DbHighlight[] = [
+  {
+    id: "1",
+    name: "OAuth, never missing a chance to surprise! 🍕",
+    title: "OAuth, never missing a chance to surprise! 🍕",
+    url: "supabase/supabase",
+    highlight: "supabase",
+    user_id: "1",
+    created_at: "2021-08-24T09:00:00.000Z",
+    updated_at: "2021-08-24T09:00:00.000Z",
+    login: "supabase",
+    shipped_at: "2021-08-24T09:00:00.000Z",
+    pinned: false,
+    deleted_at: "2021-08-24T09:00:00.000Z",
+  },
+  {
+    id: "2",
+    name: "OAuth, never missing a chance to surprise! 🍕",
+    title: "OAuth, never missing a chance to surprise! 🍕",
+    url: "supabase/supabase",
+    highlight: "supabase",
+    user_id: "1",
+    created_at: "2021-08-24T09:00:00.000Z",
+    updated_at: "2021-08-24T09:00:00.000Z",
+    login: "supabase",
+    shipped_at: "2021-08-24T09:00:00.000Z",
+    pinned: false,
+    deleted_at: "2021-08-24T09:00:00.000Z",
+  },
 ];
 
 const FeaturedHighlightsPanelTemplate: StoryFn<typeof FeaturedHighlightsPanel> = (args) => (
