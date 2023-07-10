@@ -92,7 +92,6 @@ const ContributorHighlightCard = ({
   const { data: reactions, mutate } = useHighlightReactions(id);
   const { data: userReaction, deleteReaction, addReaction } = useUserHighlightReactions(sessionToken ? id : "");
 
-  console.log(reactions, userReaction);
 
   const posthog = usePostHog();
 
