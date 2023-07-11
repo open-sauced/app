@@ -19,7 +19,7 @@ const AuthContentWrapper: React.FC<AuthContentWrapperProps> = ({ children }) => 
 
   const { signIn, user: isAuthed } = useSupabaseAuth();
 
-  const [host, setHost] = useState<string>("");
+  const [host, setHost] = useState("");
   useEffect(() => {
     if (typeof window !== "undefined") {
       setHost(window.location.origin as string);
