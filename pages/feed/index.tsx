@@ -27,6 +27,8 @@ import FollowingHighlightWrapper from "components/organisms/FollowersHighlightWr
 import HomeHighlightsWrapper from "components/organisms/HomeHighlightsWrapper/home-highlights-wrapper";
 import NewsletterForm from "components/molecules/NewsletterForm/newsletter-form";
 import UserCard, { MetaObj } from "components/atoms/UserCard/user-card";
+import FeaturedHighlightsPanel from "components/molecules/FeaturedHighlightsPanel/featured-highlights-panel";
+import { useFetchFeaturedHighlights } from "lib/hooks/useFetchFeaturedHighlights";
 
 type activeTabType = "home" | "following";
 type highlightReposType = { repoName: string; repoIcon: string; full_name: string };
@@ -39,6 +41,8 @@ interface HighlightSSRProps {
 const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
   const { user } = useSupabaseAuth();
   const { data: repos } = useFetchHighlightRepos();
+
+  const { data: featuredHighlights } = useFetchFeaturedHighlights();
 
   const router = useRouter();
   const [hydrated, setHydrated] = useState(false);
@@ -251,6 +255,9 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
             <HighlightsFilterCard selectedFilter={selectedRepo} setSelected={setSelectedRepo} repos={repoList} />
           )}
 
+          {featuredHighlights && featuredHighlights.length > 0 && (
+            <FeaturedHighlightsPanel highlights={featuredHighlights} />
+          )}
           <NewsletterForm />
         </div>
       </div>
