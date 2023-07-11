@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.56.0-beta.5](https://github.com/open-sauced/insights/compare/v1.56.0-beta.4...v1.56.0-beta.5) (2023-07-11)
+
+
+### 🍕 Features
+
+* add force login component to design system ([#1330](https://github.com/open-sauced/insights/issues/1330)) ([9d68ffc](https://github.com/open-sauced/insights/commit/9d68ffcef1bbd2f17f05492d1b4e9d4ce4263de4))
+* implement featured highlights list ([#1337](https://github.com/open-sauced/insights/issues/1337)) ([ed32594](https://github.com/open-sauced/insights/commit/ed32594c64dc616e57e7b9fbea299ba4584bdb68))
+
 ## [1.56.0-beta.4](https://github.com/open-sauced/insights/compare/v1.56.0-beta.3...v1.56.0-beta.4) (2023-07-10)
 
 
