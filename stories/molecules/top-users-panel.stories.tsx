@@ -7,12 +7,10 @@ const storyConfig = {
 
 export default storyConfig;
 
-const sampleUsers = ["bdougie", "diivi", "ogdev-01", "brandonroberts"];
-
 const TopUsersPanelTemplate: StoryFn<typeof TopUsersPanel> = (args) => <TopUsersPanel {...args} />;
 
 export const Default = TopUsersPanelTemplate.bind({});
 
 Default.args = {
-  users: sampleUsers,
+  loggedInUserLogin: "ogdev-01",
 };
