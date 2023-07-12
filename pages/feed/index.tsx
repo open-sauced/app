@@ -50,8 +50,8 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
   const [activeTab, setActiveTab] = useState<activeTabType>("home");
   const [repoList, setRepoList] = useState<highlightReposType[]>(repos as highlightReposType[]);
 
-  const { id } = router.query;
   const singleHighlight = props.highlight;
+  const id = props.highlight?.id;
   const ogImage = props?.highlight
     ? `${process.env.NEXT_PUBLIC_OPENGRAPH_URL}/highlights/${props.highlight.id}`
     : undefined;
