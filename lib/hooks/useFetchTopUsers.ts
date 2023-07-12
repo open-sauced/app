@@ -1,18 +1,16 @@
 import useSWR, { Fetcher } from "swr";
 import publicApiFetcher from "lib/utils/public-api-fetcher";
 
-interface TopUsersResponse {
-  data: { login: string }[];
-}
+type TopUsersResponse = { login: string }[];
 
-const useFetchTopUsers = (limit: number) => {
+const useFetchTopUsers = () => {
   const { data, error, mutate } = useSWR<TopUsersResponse, Error>(
-    limit ? `users/top?limit=${limit}` : null,
+    "users/top",
     publicApiFetcher as Fetcher<TopUsersResponse, Error>
   );
 
   return {
-    data: data?.data ?? [],
+    data: data ?? [],
     isLoading: !error && !data,
     isError: !!error,
     mutate,

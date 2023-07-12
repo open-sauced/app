@@ -54,12 +54,12 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
 
   const { id } = router.query;
   const singleHighlight = props.highlight;
-  const highlightId = props.highlight?.id as string;
 
   const { data: followersRepo } = useFetchFollowersHighlightRepos();
 
   const { data, mutate, setPage, isLoading, meta } = useFetchAllHighlights(selectedRepo);
   const { data: emojis } = useFetchAllEmojis();
+
   const { data: loggedInUser, isLoading: loggedInUserLoading } = useFetchUser(user?.user_metadata.user_name as string);
 
   const { followers_count, following_count, highlights_count } = loggedInUser || {};
@@ -140,7 +140,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
               />
             </div>
           )}
-          <TopUsersPanel users={["bdougie", "brandonroberts", "ogdev-01"]} />
+          <TopUsersPanel loggedInUserLogin={loggedInUser?.login ?? ""} />
         </div>
         {singleHighlight && (
           <Dialog
