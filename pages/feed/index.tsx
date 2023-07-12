@@ -60,7 +60,6 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
   const [hydrated, setHydrated] = useState(false);
 
   const singleHighlight = props.highlight;
-  const id = props.highlight?.id;
   const ogImage = props?.highlight
     ? `${process.env.NEXT_PUBLIC_OPENGRAPH_URL}/highlights/${props.highlight.id}`
     : undefined;
@@ -89,20 +88,21 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
   }, [activeTab, followersRepo, repos]);
 
   useEffect(() => {
+    console.log("id", props.highlight?.id);
     if (selectedRepo) {
       router.push(`/feed?repo=${selectedRepo}`);
       setPage(1);
     }
-    if (id) {
+    if (props.highlight?.id) {
       setOpenSingleHighlight(true);
-      router.push(`/feed/${id}`);
+      router.push(`/feed/${props.highlight?.id}`);
     }
 
-    if (!selectedRepo && !id) {
+    if (!selectedRepo && !props.highlight?.id) {
       router.push("/feed");
       setPage(1);
     }
-  }, [selectedRepo, id]);
+  }, [selectedRepo, props.highlight?.id]);
 
   useEffect(() => {
     setHydrated(true);
