@@ -1,6 +1,8 @@
 import { GetServerSidePropsContext } from "next";
-import Feeds from "components/organisms/HighlightsFeed/feed";
-import ProfileLayout from "layouts/profile";
+
+import Feed from "./index";
+
+export default Feed;
 
 export const getServerSideProps = async (context: HighlightSSRPropsContext) => {
   return await handleHighlightSSR(context);
@@ -31,7 +33,3 @@ export async function handleHighlightSSR({ params }: GetServerSidePropsContext<{
     props: { highlight },
   };
 }
-
-Feeds.PageLayout = ProfileLayout;
-
-export default Feeds;
