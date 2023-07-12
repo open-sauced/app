@@ -43,12 +43,21 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
 
   const { data: featuredHighlights } = useFetchFeaturedHighlights();
 
+  const repoTofilterList = (repos: { full_name: string }[]): highlightReposType[] => {
+    const filtersArray = repos.map(({ full_name }) => {
+      const [orgName, repo] = full_name.split("/");
+      return { repoName: repo, repoIcon: `https://www.github.com/${orgName}.png?size=300`, full_name };
+    });
+
+    return filtersArray;
+  };
+
   const router = useRouter();
-  const [hydrated, setHydrated] = useState(false);
   const [openSingleHighlight, setOpenSingleHighlight] = useState(false);
   const [selectedRepo, setSelectedRepo] = useState("");
   const [activeTab, setActiveTab] = useState<activeTabType>("home");
-  const [repoList, setRepoList] = useState<highlightReposType[]>(repos as highlightReposType[]);
+  const [repoList, setRepoList] = useState<highlightReposType[]>(repoTofilterList(repos as highlightReposType[]));
+  const [hydrated, setHydrated] = useState(false);
 
   const singleHighlight = props.highlight;
   const id = props.highlight?.id;
@@ -69,15 +78,6 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
     { name: "Following", count: following_count ?? 0 },
     { name: "Highlights", count: highlights_count ?? 0 },
   ];
-
-  const repoTofilterList = (repos: { full_name: string }[]): highlightReposType[] => {
-    const filtersArray = repos.map(({ full_name }) => {
-      const [orgName, repo] = full_name.split("/");
-      return { repoName: repo, repoIcon: `https://www.github.com/${orgName}.png?size=300`, full_name };
-    });
-
-    return filtersArray;
-  };
 
   useEffect(() => {
     setSelectedRepo("");
