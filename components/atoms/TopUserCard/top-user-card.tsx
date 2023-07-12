@@ -16,17 +16,18 @@ export interface TopUserCardProps {
 const TopUserCard = ({ login }: TopUserCardProps) => {
   const router = useRouter();
   const currentPath = router.asPath;
-  const { data: isFollowing, follow, unFollow } = useFollowUser(login);
+
+  const { isError: notFollowing, follow, unFollow } = useFollowUser(login);
   const [host, setHost] = useState("");
   const { sessionToken, signIn } = useSupabaseAuth();
 
   const handleFollowUser = async () => {
     try {
-      if (isFollowing) {
-        await unFollow();
+      if (notFollowing) {
+        await follow();
         return;
       }
-      await follow();
+      await unFollow();
     } catch (error) {
       console.log(error);
     }
@@ -46,7 +47,7 @@ const TopUserCard = ({ login }: TopUserCardProps) => {
           <p className="font-semibold text-light-slate-12">{login}</p>
         </div>
       </Link>
-      {sessionToken && isFollowing ? (
+      {sessionToken && !notFollowing ? (
         <Button
           onClick={() =>
             sessionToken
