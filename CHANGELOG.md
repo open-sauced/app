@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.56.0-beta.6](https://github.com/open-sauced/insights/compare/v1.56.0-beta.5...v1.56.0-beta.6) (2023-07-12)
+
+
+### 🍕 Features
+
+* changed the last commit date icon with a calender ([#1350](https://github.com/open-sauced/insights/issues/1350)) ([2ae9d53](https://github.com/open-sauced/insights/commit/2ae9d5330e9231d108a9a20b458aed5398c7d24c))
+
 ## [1.56.0-beta.5](https://github.com/open-sauced/insights/compare/v1.56.0-beta.4...v1.56.0-beta.5) (2023-07-11)
 
 
