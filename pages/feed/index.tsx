@@ -29,6 +29,7 @@ import NewsletterForm from "components/molecules/NewsletterForm/newsletter-form"
 import UserCard, { MetaObj } from "components/atoms/UserCard/user-card";
 import FeaturedHighlightsPanel from "components/molecules/FeaturedHighlightsPanel/featured-highlights-panel";
 import { useFetchFeaturedHighlights } from "lib/hooks/useFetchFeaturedHighlights";
+import TopUsersPanel from "components/molecules/TopUsersPanel/top-user-panel";
 
 type activeTabType = "home" | "following";
 type highlightReposType = { repoName: string; repoIcon: string; full_name: string };
@@ -139,6 +140,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
               />
             </div>
           )}
+          <TopUsersPanel users={["bdougie", "brandonroberts", "ogdev-01"]} />
         </div>
         {singleHighlight && (
           <Dialog

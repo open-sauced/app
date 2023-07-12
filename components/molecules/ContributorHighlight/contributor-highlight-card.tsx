@@ -229,10 +229,7 @@ const ContributorHighlightCard = ({
       </DropdownMenuItem>
     ) : (
       <DropdownMenuItem className="rounded-md">
-        <div
-          onClick={async () => await signIn({ provider: "github" })}
-          className="flex gap-2.5 py-1  items-center pl-3 pr-7"
-        >
+        <div onClick={async () => signIn({ provider: "github" })} className="flex gap-2.5 py-1  items-center pl-3 pr-7">
           <FaUserPlus size={22} />
           <span>Follow {user}</span>
         </div>
