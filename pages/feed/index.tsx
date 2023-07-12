@@ -35,7 +35,6 @@ type highlightReposType = { repoName: string; repoIcon: string; full_name: strin
 
 interface HighlightSSRProps {
   highlight: DbHighlight | null;
-  ogImage?: string;
 }
 
 const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
@@ -53,7 +52,9 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
 
   const { id } = router.query;
   const singleHighlight = props.highlight;
-  const highlightId = props.highlight?.id as string;
+  const ogImage = props?.highlight
+    ? `${process.env.NEXT_PUBLIC_OPENGRAPH_URL}/highlights/${props.highlight.id}`
+    : undefined;
 
   const { data: followersRepo } = useFetchFollowersHighlightRepos();
 
@@ -113,7 +114,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
         <SEO
           title={`${props?.highlight ? "Highlight | OpenSauced" : "Highlights | OpenSauced"}`}
           description={`${props?.highlight?.highlight || "OpenSauced Highlight"}`}
-          image={props?.ogImage}
+          image={ogImage}
           twitterCard="summary_large_image"
         />
       </>
@@ -124,7 +125,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
       <SEO
         title={`${props?.highlight ? "Highlight | OpenSauced" : "Highlights | OpenSauced"}`}
         description={`${props?.highlight?.highlight || "OpenSauced Highlight"}`}
-        image={props?.ogImage}
+        image={ogImage}
         twitterCard="summary_large_image"
       />
       <div className="container flex flex-col gap-16 px-2 pt-12 mx-auto md:px-16 lg:justify-end md:flex-row">
