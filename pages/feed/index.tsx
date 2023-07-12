@@ -129,7 +129,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
         twitterCard="summary_large_image"
       />
       <div className="container flex flex-col gap-16 px-2 pt-12 mx-auto md:px-16 lg:justify-end md:flex-row">
-        <div className="flex-col flex-1 hidden gap-8 mt-12 md:flex">
+        <div className="flex-col flex-1 hidden gap-6 mt-12 md:flex">
           {user && (
             <div>
               <UserCard

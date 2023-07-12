@@ -1,20 +1,15 @@
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import TopUsersPanel from "components/molecules/TopUsersPanel/top-user-panel";
 
 const storyConfig = {
   title: "Design System/Molecules/TopUsersPanel",
-} as ComponentMeta<typeof TopUsersPanel>;
+} as Meta<typeof TopUsersPanel>;
 
 export default storyConfig;
 
-const sampleUsers = [
-  { username: "bdougie", following: true },
-  { username: "diivi", following: false },
-  { username: "ogdev-01", following: false },
-  { username: "brandonroberts", following: true },
-];
+const sampleUsers = ["bdougie", "diivi", "ogdev-01", "brandonroberts"];
 
-const TopUsersPanelTemplate: ComponentStory<typeof TopUsersPanel> = (args) => <TopUsersPanel {...args} />;
+const TopUsersPanelTemplate: StoryFn<typeof TopUsersPanel> = (args) => <TopUsersPanel {...args} />;
 
 export const Default = TopUsersPanelTemplate.bind({});
 

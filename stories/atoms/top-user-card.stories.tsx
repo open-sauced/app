@@ -1,4 +1,4 @@
-import { ComponentStory } from "@storybook/react";
+import { StoryFn } from "@storybook/react";
 import TopUserCard from "components/atoms/TopUserCard/top-user-card";
 
 const storyConfig = {
@@ -6,17 +6,15 @@ const storyConfig = {
 };
 export default storyConfig;
 
-const TopUserCardTemplate: ComponentStory<typeof TopUserCard> = (args) => <TopUserCard {...args} />;
+const TopUserCardTemplate: StoryFn<typeof TopUserCard> = (args) => <TopUserCard {...args} />;
 
 export const Following = TopUserCardTemplate.bind({});
 export const NotFollowing = TopUserCardTemplate.bind({});
 
 Following.args = {
-  username: "diivi",
-  following: true,
+  login: "diivi",
 };
 
 NotFollowing.args = {
-  username: "ogdev-01",
-  following: false,
+  login: "ogdev-01",
 };
