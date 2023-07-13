@@ -121,6 +121,9 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
           image={ogImage}
           twitterCard="summary_large_image"
         />
+        <div className="hidden">
+          <NewsletterForm />
+        </div>
       </>
     );
 
