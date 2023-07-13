@@ -102,7 +102,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
   }, [selectedRepo]);
 
   useEffect(() => {
-    if (singleHighlight) {
+    if (singleHighlight && !openSingleHighlight) {
       router.push(`/feed/${props.highlight?.id}`);
       setOpenSingleHighlight(true);
     }
