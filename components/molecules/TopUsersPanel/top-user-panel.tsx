@@ -13,7 +13,6 @@ const TopUsersPanel = ({ loggedInUserLogin }: TopUsersPanelProps) => {
 
   const topUsersWithoutLoggedInUser = data ? data.filter((user) => user.login !== loggedInUserLogin) : [];
   const top3Users = topUsersWithoutLoggedInUser.slice(0, 3).map((user) => user.login);
-  console.log(loggedInUserLogin);
 
   return (
     <div className="flex flex-col max-w-xs gap-6 p-6 bg-white border rounded-xl">
