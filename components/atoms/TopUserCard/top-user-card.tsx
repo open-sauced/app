@@ -11,9 +11,10 @@ import Button from "../Button/button";
 
 export interface TopUserCardProps {
   login: string;
+  refreshCallback?: () => void;
 }
 
-const TopUserCard = ({ login }: TopUserCardProps) => {
+const TopUserCard = ({ login, refreshCallback }: TopUserCardProps) => {
   const router = useRouter();
   const currentPath = router.asPath;
 
@@ -30,6 +31,8 @@ const TopUserCard = ({ login }: TopUserCardProps) => {
       await unFollow();
     } catch (error) {
       console.log(error);
+    } finally {
+      refreshCallback && refreshCallback();
     }
   };
 
