@@ -88,7 +88,6 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
   }, [activeTab, followersRepo, repos]);
 
   useEffect(() => {
-    console.log("id", props.highlight?.id);
     if (selectedRepo) {
       router.push(`/feed?repo=${selectedRepo}`);
       setPage(1);
