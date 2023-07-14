@@ -8,6 +8,7 @@ import Emoji from "react-emoji-render";
 import { usePostHog } from "posthog-js/react";
 import { MdError } from "react-icons/md";
 import { format } from "date-fns";
+import { FaUserPlus } from "react-icons/fa";
 import Title from "components/atoms/Typography/title";
 
 import { Textarea } from "components/atoms/Textarea/text-area";
@@ -28,6 +29,7 @@ import { useToast } from "lib/hooks/useToast";
 import useHighlightReactions from "lib/hooks/useHighlightReactions";
 import useUserHighlightReactions from "lib/hooks/useUserHighlightReactions";
 import Tooltip from "components/atoms/Tooltip/tooltip";
+import useFollowUser from "lib/hooks/useFollowUser";
 import GhOpenGraphImg from "../GhOpenGraphImg/gh-open-graph-img";
 import {
   Dialog,
@@ -49,8 +51,6 @@ import {
 } from "../AlertDialog/alert-dialog";
 import { Popover, PopoverContent, PopoverTrigger } from "../Popover/popover";
 import { Calendar } from "../Calendar/calendar";
-import useFollowUser from "lib/hooks/useFollowUser";
-import { FaUserPlus } from "react-icons/fa";
 
 interface ContributorHighlightCardProps {
   title?: string;
