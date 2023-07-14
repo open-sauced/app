@@ -49,7 +49,8 @@ import {
 } from "../AlertDialog/alert-dialog";
 import { Popover, PopoverContent, PopoverTrigger } from "../Popover/popover";
 import { Calendar } from "../Calendar/calendar";
-import FollowUser from "./follow-user";
+import useFollowUser from "lib/hooks/useFollowUser";
+import { FaUserPlus } from "react-icons/fa";
 
 interface ContributorHighlightCardProps {
   title?: string;
@@ -85,6 +86,9 @@ const ContributorHighlightCard = ({
   const [alertOpen, setAlertOpen] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [host, setHost] = useState("");
+  const { follow, unFollow, isError } = useFollowUser(
+    loggedInUser && loggedInUser?.user_metadata.username !== user ? user : ""
+  );
 
   const [date, setDate] = useState<Date | undefined>(shipped_date ? new Date(shipped_date) : undefined);
 
@@ -265,7 +269,31 @@ const ContributorHighlightCard = ({
                     <span>Copy link</span>
                   </div>
                 </DropdownMenuItem>
-                <FollowUser username={user} />
+                {loggedInUser ? (
+                  <DropdownMenuItem
+                    className={`rounded-md ${loggedInUser?.user_metadata?.user_name === user && "hidden"}`}
+                  >
+                    <div
+                      onClick={isError ? follow : unFollow}
+                      className="flex gap-2.5 py-1 items-center pl-3 pr-7 cursor-pointer"
+                    >
+                      <FaUserPlus size={22} />
+                      <span>
+                        {!isError ? "Unfollow" : "Follow"} {user}
+                      </span>
+                    </div>
+                  </DropdownMenuItem>
+                ) : (
+                  <DropdownMenuItem className="rounded-md">
+                    <div
+                      onClick={async () => signIn({ provider: "github" })}
+                      className="flex gap-2.5 py-1  items-center pl-3 pr-7"
+                    >
+                      <FaUserPlus size={22} />
+                      <span>Follow {user}</span>
+                    </div>
+                  </DropdownMenuItem>
+                )}
                 {loggedInUser && (
                   <DropdownMenuItem
                     className={`rounded-md ${
