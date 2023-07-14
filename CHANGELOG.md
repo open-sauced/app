@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.56.0-beta.9](https://github.com/open-sauced/insights/compare/v1.56.0-beta.8...v1.56.0-beta.9) (2023-07-14)
+
+
+### 🐛 Bug Fixes
+
+* improve loading performance of individual highlight ([#1349](https://github.com/open-sauced/insights/issues/1349)) ([9e193fe](https://github.com/open-sauced/insights/commit/9e193feae32739894051ec9d3236826cb00a1c88))
+
 ## [1.56.0-beta.8](https://github.com/open-sauced/insights/compare/v1.56.0-beta.7...v1.56.0-beta.8) (2023-07-14)
 
 
