@@ -79,27 +79,12 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
   ];
 
   useEffect(() => {
-    setSelectedRepo("");
     if (activeTab === "home") {
       setRepoList(repoTofilterList(repos));
     } else if (activeTab === "following") {
       setRepoList(repoTofilterList(followersRepo));
     }
-  }, [activeTab, followersRepo, repos]);
-
-  useEffect(() => {
-    if (selectedRepo) {
-      router.push(`/feed?repo=${selectedRepo}`);
-      setPage(1);
-      return;
-    }
-
-    if (!selectedRepo) {
-      router.push("/feed");
-      setPage(1);
-      return;
-    }
-  }, [selectedRepo]);
+  }, [activeTab]);
 
   useEffect(() => {
     if (singleHighlight && !openSingleHighlight) {
@@ -260,7 +245,17 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
         </Tabs>
         <div className="hidden gap-6 mt-10 md:flex-1 md:flex md:flex-col">
           {repoList && repoList.length > 0 && (
-            <HighlightsFilterCard selectedFilter={selectedRepo} setSelected={setSelectedRepo} repos={repoList} />
+            <HighlightsFilterCard
+              selectedFilter={selectedRepo}
+              setSelected={(repo) => {
+                if (!openSingleHighlight) {
+                  router.push(`/feed${repo ? `?repo=${repo}` : ""}`);
+                  setPage(1);
+                  setSelectedRepo(repo);
+                }
+              }}
+              repos={repoList}
+            />
           )}
 
           {featuredHighlights && featuredHighlights.length > 0 && (
