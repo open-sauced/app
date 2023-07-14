@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.56.0-beta.7](https://github.com/open-sauced/insights/compare/v1.56.0-beta.6...v1.56.0-beta.7) (2023-07-12)
+
+
+### 🐛 Bug Fixes
+
+* add hidden form for Netlify forms submission ([#1351](https://github.com/open-sauced/insights/issues/1351)) ([8075012](https://github.com/open-sauced/insights/commit/80750124072a742443a89716f9b2e956f7bdcb25))
+
 ## [1.56.0-beta.6](https://github.com/open-sauced/insights/compare/v1.56.0-beta.5...v1.56.0-beta.6) (2023-07-12)
 
 
