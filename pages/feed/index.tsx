@@ -124,13 +124,14 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
 
   return (
     <>
+
       <SEO
         title={`${props?.highlight ? "Highlight | OpenSauced" : "Highlights | OpenSauced"}`}
         description={`${props?.highlight?.highlight || "OpenSauced Highlight"}`}
         image={props?.ogImage}
         twitterCard="summary_large_image"
       />
-      <div className="container flex flex-col gap-16 px-2 pt-12 mx-auto md:px-16 lg:justify-end md:flex-row">
+      <div className="container flex flex-col gap-16 px-2 pt-12 mx-auto md:px-16 lg:justify-center lg: gap-10 md:flex-row">
         <div className="flex-col flex-1 hidden gap-8 mt-12 md:flex">
           {user && (
             <div>
@@ -196,7 +197,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
             setActiveTab(value as activeTabType);
           }}
           defaultValue="home"
-          className="md:flex-[2] "
+          className="md:flex-[2] lg:w-2/4"
         >
           <TabsList className={clsx("justify-start  w-full border-b", !user && "hidden")}>
             <TabsTrigger
@@ -253,6 +254,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
             <FollowingHighlightWrapper selectedFilter={selectedRepo} emojis={emojis} />
           </TabsContent>
         </Tabs>
+        
         <div className="hidden gap-6 mt-10 md:flex-1 md:flex md:flex-col">
           {repoList && repoList.length > 0 && (
             <HighlightsFilterCard selectedFilter={selectedRepo} setSelected={setSelectedRepo} repos={repoList} />
