@@ -88,6 +88,7 @@ const ContributorProfilePage = ({
     timezone,
     github_sponsors_url: githubSponsorsUrl,
     linkedin_url: linkedInUrl,
+    discord_url: discordUrl,
     display_local_time: displayLocalTime,
   } = user || {};
 
@@ -129,6 +130,7 @@ const ContributorProfilePage = ({
                 displayLocalTime={displayLocalTime}
                 githubSponsorsUrl={githubSponsorsUrl}
                 linkedInUrl={linkedInUrl}
+                discordUrl={discordUrl}
                 prFirstOpenedDate={prFirstOpenedDate}
               />
 
