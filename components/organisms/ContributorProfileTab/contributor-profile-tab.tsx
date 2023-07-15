@@ -263,7 +263,7 @@ const ContributorProfileTab = ({
         <>
           {/* Collaboration requests tab details */}
           <TabsContent value="Requests">
-            <CollaborationRequestsWrapper />
+            <CollaborationRequestsWrapper user={user} />
           </TabsContent>
 
           {/* Recommendation tab details */}
