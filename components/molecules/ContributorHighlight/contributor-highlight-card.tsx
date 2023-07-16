@@ -9,8 +9,11 @@ import { usePostHog } from "posthog-js/react";
 import { MdError } from "react-icons/md";
 import { format } from "date-fns";
 import { FaUserPlus } from "react-icons/fa";
-import Title from "components/atoms/Typography/title";
+import ReactMarkdown from "react-markdown";
+import SyntaxHighlighter from "react-syntax-highlighter";
+import { atomOneDark } from "react-syntax-highlighter/dist/cjs/styles/hljs";
 
+import Title from "components/atoms/Typography/title";
 import { Textarea } from "components/atoms/Textarea/text-area";
 import Button from "components/atoms/Button/button";
 import {
@@ -328,7 +331,33 @@ const ContributorHighlightCard = ({
 
         {/* Highlight body section */}
         <div className="w-full ">
-          <p className="text-sm font-normal break-words text-light-slate-11 lg:text-base">{desc}</p>
+          <ReactMarkdown
+            // eslint-disable-next-line react/no-children-prop
+            children={desc || ""}
+            components={{
+              p: ({ node, ...props }) => (
+                <p {...props} className="text-sm font-normal break-words text-light-slate-11 lg:text-base" />
+              ),
+              code({ node, inline, className, children, ...props }) {
+                const match = /language-(\w+)/.exec(className || "");
+                return !inline && match ? (
+                  <SyntaxHighlighter
+                    {...props}
+                    // eslint-disable-next-line react/no-children-prop
+                    children={String(children).replace(/\n$/, "")}
+                    style={atomOneDark}
+                    className="rounded-md my-2"
+                    language={match[1]}
+                    PreTag="div"
+                  />
+                ) : (
+                  <code {...props} className={className}>
+                    {children}
+                  </code>
+                );
+              },
+            }}
+          />
         </div>
         {/* Highlight Link section */}
 
