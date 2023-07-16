@@ -9,12 +9,11 @@ import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import Avatar from "../Avatar/avatar";
 import Button from "../Button/button";
 
-export interface TopUserCardProps {
+export interface TopContributorCardProps {
   login: string;
-  refreshCallback?: () => void;
 }
 
-const TopUserCard = ({ login, refreshCallback }: TopUserCardProps) => {
+const TopContributorCard = ({ login }: TopContributorCardProps) => {
   const router = useRouter();
   const currentPath = router.asPath;
 
@@ -31,8 +30,6 @@ const TopUserCard = ({ login, refreshCallback }: TopUserCardProps) => {
       await unFollow();
     } catch (error) {
       console.log(error);
-    } finally {
-      refreshCallback && refreshCallback();
     }
   };
 
@@ -79,4 +76,4 @@ const TopUserCard = ({ login, refreshCallback }: TopUserCardProps) => {
   );
 };
 
-export default TopUserCard;
+export default TopContributorCard;

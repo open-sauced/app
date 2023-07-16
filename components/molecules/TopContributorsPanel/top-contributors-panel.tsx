@@ -1,13 +1,13 @@
 import React from "react";
 import { useSWRConfig } from "swr";
-import TopUserCard from "components/atoms/TopUserCard/top-user-card";
+import TopContributorCard from "components/atoms/TopContributorCard/top-contributor-card";
 import { useFetchTopUsers } from "lib/hooks/useFetchTopUsers";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 
-interface TopUsersPanelProps {
+interface TopContributorsPanelProps {
   loggedInUserLogin: string;
 }
-const TopUsersPanel = ({ loggedInUserLogin }: TopUsersPanelProps) => {
+const TopContributorsPanel = ({ loggedInUserLogin }: TopContributorsPanelProps) => {
   const { data, isLoading } = useFetchTopUsers();
   const { mutate } = useSWRConfig();
 
@@ -25,10 +25,10 @@ const TopUsersPanel = ({ loggedInUserLogin }: TopUsersPanelProps) => {
           </div>
         ))}
       {top3Users.map((login, i) => (
-        <TopUserCard refreshCallback={() => mutate(`users/${loggedInUserLogin}`)} key={i} login={login} />
+        <TopContributorCard key={i} login={login} />
       ))}
     </div>
   );
 };
 
-export default TopUsersPanel;
+export default TopContributorsPanel;

@@ -1,4 +1,4 @@
-import useSWR, { Fetcher } from "swr";
+import useSWR, { Fetcher, useSWRConfig } from "swr";
 import publicApiFetcher from "lib/utils/public-api-fetcher";
 import useSupabaseAuth from "./useSupabaseAuth";
 
@@ -6,7 +6,8 @@ interface FollowUserResponse {
   data: DbFollowUser;
 }
 const useFollowUser = (username: string) => {
-  const { sessionToken } = useSupabaseAuth();
+  const { sessionToken, user } = useSupabaseAuth();
+  const { mutate: GlobalMutate } = useSWRConfig(); // adding this to mutate the global user data to update the users card status on follow/unfollow
 
   const { data, error, mutate } = useSWR<FollowUserResponse, Error>(
     username ? `users/${username}/follow` : null,
@@ -23,6 +24,7 @@ const useFollowUser = (username: string) => {
 
     if (req && req.ok) {
       mutate();
+      GlobalMutate(`user/${user?.user_metadata?.username}`);
     }
   };
 
@@ -36,6 +38,7 @@ const useFollowUser = (username: string) => {
 
     if (req && req.ok) {
       mutate();
+      GlobalMutate(`user/${user?.user_metadata?.username}`);
     }
   };
 
