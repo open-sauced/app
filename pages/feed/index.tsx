@@ -36,7 +36,6 @@ type highlightReposType = { repoName: string; repoIcon: string; full_name: strin
 
 interface HighlightSSRProps {
   highlight: DbHighlight | null;
-  ogImage?: string;
 }
 
 const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
@@ -45,15 +44,26 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
 
   const { data: featuredHighlights } = useFetchFeaturedHighlights();
 
+  const repoTofilterList = (repos: { full_name: string }[]): highlightReposType[] => {
+    const filtersArray = repos.map(({ full_name }) => {
+      const [orgName, repo] = full_name.split("/");
+      return { repoName: repo, repoIcon: `https://www.github.com/${orgName}.png?size=300`, full_name };
+    });
+
+    return filtersArray;
+  };
+
   const router = useRouter();
-  const [hydrated, setHydrated] = useState(false);
   const [openSingleHighlight, setOpenSingleHighlight] = useState(false);
   const [selectedRepo, setSelectedRepo] = useState("");
   const [activeTab, setActiveTab] = useState<activeTabType>("home");
-  const [repoList, setRepoList] = useState<highlightReposType[]>(repos as highlightReposType[]);
+  const [repoList, setRepoList] = useState<highlightReposType[]>(repoTofilterList(repos as highlightReposType[]));
+  const [hydrated, setHydrated] = useState(false);
 
-  const { id } = router.query;
   const singleHighlight = props.highlight;
+  const ogImage = props?.highlight
+    ? `${process.env.NEXT_PUBLIC_OPENGRAPH_URL}/highlights/${props.highlight.id}`
+    : undefined;
 
   const { data: followersRepo } = useFetchFollowersHighlightRepos();
 
@@ -70,39 +80,20 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
     { name: "Highlights", count: highlights_count ?? 0 },
   ];
 
-  const repoTofilterList = (repos: { full_name: string }[]): highlightReposType[] => {
-    const filtersArray = repos.map(({ full_name }) => {
-      const [orgName, repo] = full_name.split("/");
-      return { repoName: repo, repoIcon: `https://www.github.com/${orgName}.png?size=300`, full_name };
-    });
-
-    return filtersArray;
-  };
-
   useEffect(() => {
-    setSelectedRepo("");
     if (activeTab === "home") {
       setRepoList(repoTofilterList(repos));
     } else if (activeTab === "following") {
       setRepoList(repoTofilterList(followersRepo));
     }
-  }, [activeTab, followersRepo, repos]);
+  }, [activeTab]);
 
   useEffect(() => {
-    if (selectedRepo) {
-      router.push(`/feed?repo=${selectedRepo}`);
-      setPage(1);
-    }
-    if (id) {
+    if (singleHighlight && !openSingleHighlight) {
+      router.push(`/feed/${props.highlight?.id}`);
       setOpenSingleHighlight(true);
-      router.push(`/feed/${id}`);
     }
-
-    if (!selectedRepo && !id) {
-      router.push("/feed");
-      setPage(1);
-    }
-  }, [selectedRepo, id]);
+  }, [singleHighlight]);
 
   useEffect(() => {
     setHydrated(true);
@@ -114,9 +105,12 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
         <SEO
           title={`${props?.highlight ? "Highlight | OpenSauced" : "Highlights | OpenSauced"}`}
           description={`${props?.highlight?.highlight || "OpenSauced Highlight"}`}
-          image={props?.ogImage}
+          image={ogImage}
           twitterCard="summary_large_image"
         />
+        <div className="hidden">
+          <NewsletterForm />
+        </div>
       </>
     );
 
@@ -125,7 +119,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
       <SEO
         title={`${props?.highlight ? "Highlight | OpenSauced" : "Highlights | OpenSauced"}`}
         description={`${props?.highlight?.highlight || "OpenSauced Highlight"}`}
-        image={props?.ogImage}
+        image={ogImage}
         twitterCard="summary_large_image"
       />
       <div className="container flex flex-col gap-16 px-2 pt-12 mx-auto md:px-16 lg:justify-end md:flex-row">
@@ -254,7 +248,17 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
         </Tabs>
         <div className="hidden gap-6 mt-10 md:flex-1 md:flex md:flex-col">
           {repoList && repoList.length > 0 && (
-            <HighlightsFilterCard selectedFilter={selectedRepo} setSelected={setSelectedRepo} repos={repoList} />
+            <HighlightsFilterCard
+              selectedFilter={selectedRepo}
+              setSelected={(repo) => {
+                if (!openSingleHighlight) {
+                  router.push(`/feed${repo ? `?repo=${repo}` : ""}`);
+                  setPage(1);
+                  setSelectedRepo(repo);
+                }
+              }}
+              repos={repoList}
+            />
           )}
 
           {featuredHighlights && featuredHighlights.length > 0 && (

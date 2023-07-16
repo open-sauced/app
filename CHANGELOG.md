@@ -5,6 +5,34 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.56.0-beta.9](https://github.com/open-sauced/insights/compare/v1.56.0-beta.8...v1.56.0-beta.9) (2023-07-14)
+
+
+### 🐛 Bug Fixes
+
+* improve loading performance of individual highlight ([#1349](https://github.com/open-sauced/insights/issues/1349)) ([9e193fe](https://github.com/open-sauced/insights/commit/9e193feae32739894051ec9d3236826cb00a1c88))
+
+## [1.56.0-beta.8](https://github.com/open-sauced/insights/compare/v1.56.0-beta.7...v1.56.0-beta.8) (2023-07-14)
+
+
+### 🍕 Features
+
+* added new topics to the list ([#1357](https://github.com/open-sauced/insights/issues/1357)) ([33f03bb](https://github.com/open-sauced/insights/commit/33f03bb53b82e8bb18e49c7e5ccba80c77ab982d))
+
+## [1.56.0-beta.7](https://github.com/open-sauced/insights/compare/v1.56.0-beta.6...v1.56.0-beta.7) (2023-07-12)
+
+
+### 🐛 Bug Fixes
+
+* add hidden form for Netlify forms submission ([#1351](https://github.com/open-sauced/insights/issues/1351)) ([8075012](https://github.com/open-sauced/insights/commit/80750124072a742443a89716f9b2e956f7bdcb25))
+
+## [1.56.0-beta.6](https://github.com/open-sauced/insights/compare/v1.56.0-beta.5...v1.56.0-beta.6) (2023-07-12)
+
+
+### 🍕 Features
+
+* changed the last commit date icon with a calender ([#1350](https://github.com/open-sauced/insights/issues/1350)) ([2ae9d53](https://github.com/open-sauced/insights/commit/2ae9d5330e9231d108a9a20b458aed5398c7d24c))
+
 ## [1.56.0-beta.5](https://github.com/open-sauced/insights/compare/v1.56.0-beta.4...v1.56.0-beta.5) (2023-07-11)
 
 

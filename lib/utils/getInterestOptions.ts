@@ -12,7 +12,9 @@ const interests = [
   "ml",
   "react",
   "golang",
-  "rust"
+  "rust",
+  "vue",
+  "kubernetes"
 ] as const;
 export type interestsType = typeof interests[number];
 

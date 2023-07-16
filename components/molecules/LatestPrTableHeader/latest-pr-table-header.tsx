@@ -1,7 +1,7 @@
 import { IconContext } from "react-icons";
 import { GoDiff } from "react-icons/go";
 import { BsFileDiff } from "react-icons/bs";
-import { FaRegCheckCircle, FaRegDotCircle } from "react-icons/fa";
+import { FaRegCheckCircle, FaRegCalendar } from "react-icons/fa";
 
 import Text from "components/atoms/Typography/text";
 import Tooltip from "components/atoms/Tooltip/tooltip";
@@ -20,7 +20,7 @@ const LatestPrTableHeader = ({ classNames, isHoverCard }: LatestPrTableHeaderPro
       <IconContext.Provider value={{ color: "gray", style: { width: 14, height: 14 } }}>
         <div className={`${isHoverCard && "ml-auto"} justify-end w-[calc(10%-4px)]`}>
           <Tooltip content="Last Commit Date">
-            <FaRegDotCircle />
+            <FaRegCalendar />
           </Tooltip>
         </div>
       </IconContext.Provider>
