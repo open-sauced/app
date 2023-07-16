@@ -106,7 +106,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
   return (
     <form onSubmit={handlePostHighlight} className="flex flex-col flex-1 gap-4">
       <Collapsible onOpenChange={setIsDivFocused} open={isDivFocused}>
-        <div className="flex flex-col gap-2 p-2 overflow-hidden text-sm bg-white border rounded-lg ">
+        <div className="flex flex-col gap-2 p-2 overflow-hidden text-sm bg-white border rounded-lg">
           <CollapsibleTrigger asChild>
             <div className="flex pr-2">
               <input
