@@ -114,7 +114,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
   };
 
   const handleUpdateEmailPreference = async () => {
-    setUpdating(prev => ({ ...prev, emailPreferences: true }));
+    setUpdating((prev) => ({ ...prev, emailPreferences: true }));
 
     const data = await updateEmailPreferences({ ...emailPreference });
     if (data) {
@@ -123,11 +123,11 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
       toast({ description: "An error occured!", variant: "danger" });
     }
 
-    setUpdating(prev => ({...prev, emailPreferences: false}));
+    setUpdating((prev) => ({ ...prev, emailPreferences: false }));
   };
 
   const handleUpdateInterest = async () => {
-    setUpdating(prev => ({ ...prev, interests: true }));
+    setUpdating((prev) => ({ ...prev, interests: true }));
 
     const data = await updateUser({
       data: { interests: selectedInterest },
@@ -146,7 +146,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
 
   const handleUpdateProfile = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setUpdating(prev => ({...prev, profile: true}));
+    setUpdating((prev) => ({ ...prev, profile: true }));
     const payload: UpdateUserPayload = {
       name: formRef.current!.nameInput.value,
       email,
@@ -191,14 +191,14 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
           </Title>
           <form onSubmit={handleUpdateProfile} className="flex flex-col gap-6 mt-6" ref={formRef}>
             <TextInput
-              classNames="bg-light-slate-4 text-light-slate-11 font-medium"
+              className="font-medium bg-light-slate-4 text-light-slate-11"
               label="Name*"
               placeholder="April O'Neil"
               required
               name="nameInput"
             />
             <TextInput
-              classNames="bg-light-slate-4 text-light-slate-11 font-medium"
+              className="font-medium bg-light-slate-4 text-light-slate-11"
               placeholder="april@stockgen.com"
               handleChange={handleEmailChange}
               label="Email*"
@@ -217,41 +217,41 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
               ></textarea>
             </div>
             <TextInput
-              classNames="bg-light-slate-4 text-light-slate-11 font-medium"
+              className="font-medium bg-light-slate-4 text-light-slate-11"
               placeholder="https://opensauced.pizza"
               label="URL"
               pattern="http[s]?://.*\..{2,}"
               name="url"
             />
             <TextInput
-              classNames="bg-light-slate-4 text-light-slate-11 font-medium"
+              className="font-medium bg-light-slate-4 text-light-slate-11"
               placeholder="https://github.com/sponsors/open-sauced"
               label="GitHub Sponsors URL"
               pattern="http[s]?://.*\..{2,}"
               name="github_sponsors_url"
             />
             <TextInput
-              classNames="bg-light-slate-4 text-light-slate-11 font-medium"
+              className="font-medium bg-light-slate-4 text-light-slate-11"
               placeholder="https://www.linkedin.com/in/brianldouglas"
               label="LinkedIn URL"
               pattern="http[s]?://.*\..{2,}"
               name="linkedin_url"
             />
             <TextInput
-              classNames="bg-light-slate-4 text-light-slate-11"
+              className="bg-light-slate-4 text-light-slate-11"
               placeholder="saucedopen"
               label="Twitter Username"
               onChange={handleTwitterUsernameChange}
               name="twitter_username"
             />
             <TextInput
-              classNames="bg-light-slate-4 text-light-slate-11 font-medium"
+              className="font-medium bg-light-slate-4 text-light-slate-11"
               placeholder="OpenSauced"
               label="Company"
               name="company"
             />
             <TextInput
-              classNames="bg-light-slate-4 text-light-slate-11 font-medium"
+              className="font-medium bg-light-slate-4 text-light-slate-11"
               placeholder="USA"
               label="Location"
               name="location"
