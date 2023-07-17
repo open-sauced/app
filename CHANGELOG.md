@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.56.0-beta.11](https://github.com/open-sauced/insights/compare/v1.56.0-beta.10...v1.56.0-beta.11) (2023-07-17)
+
+
+### 🎨 Styles
+
+* text inputs colors were not consistent in the user settings page ([#1360](https://github.com/open-sauced/insights/issues/1360)) ([edae9c4](https://github.com/open-sauced/insights/commit/edae9c4a26bbc21921422356c623f2a8c0ca0939))
+
 ## [1.56.0-beta.10](https://github.com/open-sauced/insights/compare/v1.56.0-beta.9...v1.56.0-beta.10) (2023-07-17)
 
 
