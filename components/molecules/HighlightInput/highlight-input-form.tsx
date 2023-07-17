@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 
-import { BsCalendar2Event } from "react-icons/bs";
+import { FiCalendar } from "react-icons/fi";
 import { format } from "date-fns";
 
+import { HiOutlineSparkles } from "react-icons/hi";
 import Button from "components/atoms/Button/button";
 import { Textarea } from "components/atoms/Textarea/text-area";
 import Tooltip from "components/atoms/Tooltip/tooltip";
@@ -11,6 +12,7 @@ import { createHighlights } from "lib/hooks/createHighlights";
 import { generateApiPrUrl } from "lib/utils/github";
 import { fetchGithubPRInfo } from "lib/hooks/fetchGithubPRInfo";
 import { useToast } from "lib/hooks/useToast";
+import TextInput from "components/atoms/TextInput/text-input";
 import { Calendar } from "../Calendar/calendar";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../Collapsible/collapsible";
 import { Popover, PopoverContent, PopoverTrigger } from "../Popover/popover";
@@ -115,9 +117,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                 onChange={(e) => setTitle(e.target.value)}
                 className="flex-1 focus:outline-none"
                 type="text"
-                placeholder={
-                  isDivFocused ? "Add title (optional)" : "Click here to highlight your merged PRs and provide a link!"
-                }
+                placeholder={isDivFocused ? "Add title (optional)" : "Post a highlight to show your work!"}
               />
             </div>
           </CollapsibleTrigger>
@@ -128,45 +128,57 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
               }`}
               defaultRow={4}
               value={bodyText}
-              placeholder={`Share your thoughts and link to it.
-
-https://github.com/open-sauced/insights/pull/913`}
+              placeholder={` Tell us about your highlight and add a link
+              `}
               onChangeText={(value) => {
                 handleTextAreaInputChange(value);
                 setCharCount(value.length);
               }}
             />
+            <p className="flex justify-end gap-1 pb-2 text-xs text-light-slate-9">
+              <span className={`${!validCharLimit() && "text-red-600"}`}>
+                {!validCharLimit()
+                  ? `-${charCount - pullrequestLink.length - charLimit}`
+                  : charCount - pullrequestLink.length}
+              </span>
+              / <span>{charLimit}</span>
+            </p>
 
-            <div className="flex justify-between">
-              <Tooltip direction="top" content="Pick a date">
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <button className="flex items-center gap-2 text-base text-light-slate-9">
-                      <BsCalendar2Event className="text-light-slate-9" />
-                      {date && <span className="text-xs">{format(date, "PPP")}</span>}
-                    </button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0 bg-white">
-                    <Calendar
-                      // block user's from selecting a future date
-                      toDate={new Date()}
-                      mode="single"
-                      selected={date}
-                      onSelect={setDate}
-                      className="border rounded-md"
-                    />
-                  </PopoverContent>
-                </Popover>
-              </Tooltip>
-
-              <p className="flex justify-end gap-1 pb-2 text-xs text-light-slate-9">
-                <span className={`${!validCharLimit() && "text-red-600"}`}>
-                  {!validCharLimit()
-                    ? `-${charCount - pullrequestLink.length - charLimit}`
-                    : charCount - pullrequestLink.length}
-                </span>
-                / <span>{charLimit}</span>
-              </p>
+            <div className="flex">
+              <div className="flex w-full gap-1">
+                <Tooltip direction="top" content="Pick a date">
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <button className="flex items-center gap-2 p-2 text-base rounded-full text-light-slate-9 bg-light-slate-3">
+                        <FiCalendar className="text-light-slate-11" />
+                        {date && <span className="text-xs">{format(date, "PPP")}</span>}
+                      </button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0 bg-white">
+                      <Calendar
+                        // block user's from selecting a future date
+                        toDate={new Date()}
+                        mode="single"
+                        selected={date}
+                        onSelect={setDate}
+                        className="border rounded-md"
+                      />
+                    </PopoverContent>
+                  </Popover>
+                </Tooltip>
+                <Tooltip className="text-xs" direction="top" content="Auto-Summarize">
+                  <button className="p-2 rounded-full bg-light-slate-3 text-light-slate-11">
+                    <HiOutlineSparkles className="text-base" />
+                  </button>
+                </Tooltip>
+                <TextInput
+                  placeholderClassNames="text-xs"
+                  className="text-sm"
+                  value={pullrequestLink}
+                  onChange={(e) => setPullRequestLink(e.target.value)}
+                  placeholder="Paste your PR URL and get it auto-summarized!"
+                />
+              </div>
             </div>
           </CollapsibleContent>
         </div>

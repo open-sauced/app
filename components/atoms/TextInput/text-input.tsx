@@ -7,10 +7,10 @@ interface TextInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   state?: "default" | "valid" | "invalid";
   borderless?: boolean;
   descriptionText?: string;
-  classNames?: string;
   errorMsg?: string;
   fieldRef?: React.RefObject<HTMLInputElement>;
   handleChange?: (value: string) => void;
+  placeholderClassNames?: string;
 }
 
 const TextInput = ({
@@ -21,12 +21,13 @@ const TextInput = ({
   id,
   value,
   descriptionText,
-  classNames,
+  className,
   fieldRef,
   disabled = false,
   borderless = false,
   handleChange,
   errorMsg = "",
+  placeholderClassNames,
   ...props
 }: TextInputProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -52,7 +53,7 @@ const TextInput = ({
             borderless && "!border-none",
             state === "invalid" ? "focus-within:border-light-red-10" : "focus-within:border-light-orange-9 ",
             disabled && "bg-light-slate-3 text-light-slate-6",
-            classNames
+            className
           )}
         >
           <input
@@ -61,9 +62,11 @@ const TextInput = ({
             name={name}
             id={id || name || ""}
             placeholder={placeholder || ""}
-            className={`flex-1 focus:outline-none  ${
-              disabled && "bg-light-slate-3  cursor-not-allowed  text-light-slate-9"
-            } `}
+            className={clsx(
+              "flex-1 focus:outline-none ",
+              disabled && "bg-light-slate-3  cursor-not-allowed text-light-slate-9",
+              placeholderClassNames ?? ""
+            )}
             disabled={disabled}
             value={value}
             onChange={handleChangeState}
@@ -72,7 +75,7 @@ const TextInput = ({
           {!disabled && (
             <>
               {state === "valid" ? (
-                <CheckCircleFillIcon className="ml-1  text-light-orange-9" size={12} />
+                <CheckCircleFillIcon className="ml-1 text-light-orange-9" size={12} />
               ) : !!value ? (
                 <span title="Clear input" className="flex items-center ml-1" onClick={handleResetInput}>
                   <XCircleFillIcon
