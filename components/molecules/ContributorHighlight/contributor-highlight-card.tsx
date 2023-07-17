@@ -9,9 +9,6 @@ import { usePostHog } from "posthog-js/react";
 import { MdError } from "react-icons/md";
 import { format } from "date-fns";
 import { FaUserPlus } from "react-icons/fa";
-import ReactMarkdown from "react-markdown";
-import SyntaxHighlighter from "react-syntax-highlighter";
-import { atomOneDark } from "react-syntax-highlighter/dist/cjs/styles/hljs";
 
 import Title from "components/atoms/Typography/title";
 import { Textarea } from "components/atoms/Textarea/text-area";
@@ -54,6 +51,7 @@ import {
 } from "../AlertDialog/alert-dialog";
 import { Popover, PopoverContent, PopoverTrigger } from "../Popover/popover";
 import { Calendar } from "../Calendar/calendar";
+import MarkdownWrapper from "../MarkdownWrapper/markdown-wrapper";
 
 interface ContributorHighlightCardProps {
   title?: string;
@@ -222,7 +220,7 @@ const ContributorHighlightCard = ({
   }, []);
 
   return (
-    <article className="flex flex-col  md:max-w-[40rem] flex-1 gap-3 lg:gap-6">
+    <article className="flex flex-col  md:max-w-[30rem] flex-1 gap-3 lg:gap-6">
       <div>
         <div className="flex items-center justify-between w-full">
           <div className="flex items-center justify-between gap-1 pr-2">
@@ -331,32 +329,9 @@ const ContributorHighlightCard = ({
 
         {/* Highlight body section */}
         <div className="w-full ">
-          <ReactMarkdown
-            // eslint-disable-next-line react/no-children-prop
-            children={desc || ""}
-            components={{
-              p: ({ node, ...props }) => (
-                <p {...props} className="text-sm font-normal break-words text-light-slate-11 lg:text-base" />
-              ),
-              code({ node, inline, className, children, ...props }) {
-                const match = /language-(\w+)/.exec(className || "");
-                return !inline && match ? (
-                  <SyntaxHighlighter
-                    {...props}
-                    // eslint-disable-next-line react/no-children-prop
-                    children={String(children).replace(/\n$/, "")}
-                    style={atomOneDark}
-                    className="rounded-md my-2"
-                    language={match[1]}
-                    PreTag="div"
-                  />
-                ) : (
-                  <code {...props} className={className}>
-                    {children}
-                  </code>
-                );
-              },
-            }}
+          <MarkdownWrapper
+            content={desc}
+            pClassName="text-sm font-normal break-words text-light-slate-11 lg:text-base"
           />
         </div>
         {/* Highlight Link section */}
