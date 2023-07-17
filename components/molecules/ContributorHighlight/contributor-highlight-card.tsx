@@ -331,7 +331,7 @@ const ContributorHighlightCard = ({
         <div className="w-full ">
           <MarkdownWrapper
             content={desc || ""}
-            pClassName="text-sm font-normal break-words text-light-slate-11 lg:text-base"
+            paragraphClassName="text-sm font-normal break-words text-light-slate-11 lg:text-base"
           />
         </div>
         {/* Highlight Link section */}
