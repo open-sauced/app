@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.56.0-beta.10](https://github.com/open-sauced/insights/compare/v1.56.0-beta.9...v1.56.0-beta.10) (2023-07-17)
+
+
+### 🐛 Bug Fixes
+
+* prevent concurrent user profile update requests ([#1372](https://github.com/open-sauced/insights/issues/1372)) ([b23b9df](https://github.com/open-sauced/insights/commit/b23b9df076596b7d5163ef9f8d7bc7f28ecde92a))
+
 ## [1.56.0-beta.9](https://github.com/open-sauced/insights/compare/v1.56.0-beta.8...v1.56.0-beta.9) (2023-07-14)
 
 
