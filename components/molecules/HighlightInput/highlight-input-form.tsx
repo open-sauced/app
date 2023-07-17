@@ -172,8 +172,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                   </button>
                 </Tooltip>
                 <TextInput
-                  placeholderClassNames="text-xs"
-                  className="text-sm"
+                  className="text-xs"
                   value={pullrequestLink}
                   onChange={(e) => setPullRequestLink(e.target.value)}
                   placeholder="Paste your PR URL and get it auto-summarized!"
