@@ -7,7 +7,7 @@ interface FollowUserResponse {
 }
 const useFollowUser = (username: string) => {
   const { sessionToken, user } = useSupabaseAuth();
-  const { mutate: GlobalMutate } = useSWRConfig(); // adding this to mutate the global user data to update the users card status on follow/unfollow
+  const { mutate: mutateGlobal } = useSWRConfig(); // adding this to mutate the global user data to update the users card status on follow/unfollow
 
   const { data, error, mutate } = useSWR<FollowUserResponse, Error>(
     username ? `users/${username}/follow` : null,
@@ -24,7 +24,7 @@ const useFollowUser = (username: string) => {
 
     if (req && req.ok) {
       mutate();
-      GlobalMutate(`user/${user?.user_metadata?.username}`);
+      mutateGlobal(`user/${user?.user_metadata?.username}`);
     }
   };
 
@@ -38,7 +38,7 @@ const useFollowUser = (username: string) => {
 
     if (req && req.ok) {
       mutate();
-      GlobalMutate(`user/${user?.user_metadata?.username}`);
+      mutateGlobal(`user/${user?.user_metadata?.username}`);
     }
   };
 

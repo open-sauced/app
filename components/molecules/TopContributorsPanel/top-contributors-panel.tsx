@@ -1,18 +1,16 @@
 import React from "react";
-import { useSWRConfig } from "swr";
 import TopContributorCard from "components/atoms/TopContributorCard/top-contributor-card";
-import { useFetchTopUsers } from "lib/hooks/useFetchTopUsers";
+import { useFetchTopContributors } from "lib/hooks/useFetchTopContributors";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 
 interface TopContributorsPanelProps {
   loggedInUserLogin: string;
 }
 const TopContributorsPanel = ({ loggedInUserLogin }: TopContributorsPanelProps) => {
-  const { data, isLoading } = useFetchTopUsers();
-  const { mutate } = useSWRConfig();
+  const { data, isLoading } = useFetchTopContributors();
 
-  const topUsersWithoutLoggedInUser = data ? data.filter((user) => user.login !== loggedInUserLogin) : [];
-  const top3Users = topUsersWithoutLoggedInUser.slice(0, 3).map((user) => user.login);
+  const topContributorsWithoutLoggedInUser = data ? data.filter((user) => user.login !== loggedInUserLogin) : [];
+  const top3Contributors = topContributorsWithoutLoggedInUser.slice(0, 3).map((user) => user.login);
 
   return (
     <div className="flex flex-col max-w-xs gap-6 p-6 bg-white border rounded-xl">
@@ -24,7 +22,7 @@ const TopContributorsPanel = ({ loggedInUserLogin }: TopContributorsPanelProps) 
             <SkeletonWrapper radius={100} height={40} width={40} /> <SkeletonWrapper height={40} classNames="w-full" />
           </div>
         ))}
-      {top3Users.map((login, i) => (
+      {top3Contributors.map((login, i) => (
         <TopContributorCard key={i} login={login} />
       ))}
     </div>

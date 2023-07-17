@@ -21,7 +21,7 @@ const TopContributorCard = ({ login }: TopContributorCardProps) => {
   const [host, setHost] = useState("");
   const { sessionToken, signIn } = useSupabaseAuth();
 
-  const handleFollowUser = async () => {
+  const handleFollowContributor = async () => {
     try {
       if (notFollowing) {
         await follow();
@@ -51,7 +51,7 @@ const TopContributorCard = ({ login }: TopContributorCardProps) => {
         <Button
           onClick={() =>
             sessionToken
-              ? handleFollowUser()
+              ? handleFollowContributor()
               : signIn({ provider: "github", options: { redirectTo: `${host}/${currentPath}` } })
           }
           className="!px-2 !py-1"
@@ -63,7 +63,7 @@ const TopContributorCard = ({ login }: TopContributorCardProps) => {
         <Button
           onClick={() =>
             sessionToken
-              ? handleFollowUser()
+              ? handleFollowContributor()
               : signIn({ provider: "github", options: { redirectTo: `${host}/${currentPath}` } })
           }
           className="!px-2 !py-1 border-light-orange-7 text-light-orange-10"

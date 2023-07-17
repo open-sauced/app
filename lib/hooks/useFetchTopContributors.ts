@@ -3,7 +3,7 @@ import publicApiFetcher from "lib/utils/public-api-fetcher";
 
 type TopUsersResponse = { login: string }[];
 
-const useFetchTopUsers = () => {
+const useFetchTopContributors = () => {
   const { data, error, mutate } = useSWR<TopUsersResponse, Error>(
     "users/top",
     publicApiFetcher as Fetcher<TopUsersResponse, Error>
@@ -17,4 +17,4 @@ const useFetchTopUsers = () => {
   };
 };
 
-export { useFetchTopUsers };
+export { useFetchTopContributors };
