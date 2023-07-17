@@ -10,7 +10,6 @@ interface TextInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   errorMsg?: string;
   fieldRef?: React.RefObject<HTMLInputElement>;
   handleChange?: (value: string) => void;
-  placeholderClassNames?: string;
 }
 
 const TextInput = ({
@@ -27,7 +26,6 @@ const TextInput = ({
   borderless = false,
   handleChange,
   errorMsg = "",
-  placeholderClassNames,
   ...props
 }: TextInputProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -63,9 +61,9 @@ const TextInput = ({
             id={id || name || ""}
             placeholder={placeholder || ""}
             className={clsx(
-              "flex-1 focus:outline-none ",
-              disabled && "bg-light-slate-3  cursor-not-allowed text-light-slate-9",
-              placeholderClassNames ?? ""
+              "flex-1 focus:outline-none",
+              disabled && "bg-light-slate-3 cursor-not-allowed text-light-slate-9",
+              className
             )}
             disabled={disabled}
             value={value}
