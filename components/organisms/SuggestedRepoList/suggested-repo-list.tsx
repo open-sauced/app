@@ -15,7 +15,7 @@ const SuggestedRepositoriesList = ({ reposData, onAddRepo }: SuggestedRepositori
         Suggested Repositories:
       </Title>
 
-      <div className="flex flex-col gap-3 pb-10 mt-6 border-b">
+      <div className="flex flex-col gap-3 pb-10 mt-6git ">
         {reposData.map((item, index) => (
           <SuggestedRepository key={index} data={item} onAddRepo={onAddRepo} />
         ))}
