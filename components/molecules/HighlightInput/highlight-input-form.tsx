@@ -111,7 +111,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
             <div className="flex pr-2">
               <input
                 value={title}
-                maxLength={300}
+                maxLength={50}
                 onChange={(e) => setTitle(e.target.value)}
                 className="flex-1 focus:outline-none"
                 type="text"
