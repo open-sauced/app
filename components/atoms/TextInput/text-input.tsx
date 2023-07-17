@@ -66,7 +66,6 @@ const TextInput = ({
               disabled && "bg-light-slate-3 cursor-not-allowed text-light-slate-9",
               classNames
             )}
-
             disabled={disabled}
             value={value}
             onChange={handleChangeState}
