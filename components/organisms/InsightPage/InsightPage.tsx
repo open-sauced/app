@@ -412,26 +412,6 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
 
         <div>{getRepoLookupError(addRepoError)}</div>
 
-        <Title className="!text-1xl !leading-none mb-4 my-4" level={4}>
-          Page Visibility
-        </Title>
-
-        <div className="flex justify-between">
-          <div className="flex items-center">
-            <UserGroupIcon className="w-[24px] h-[24px] text-light-slate-9" />
-            <Text className="pl-2">Make this page publicly visible</Text>
-          </div>
-
-          <div className="flex mx-4 !border-red-900 items-center">
-            <Text className="!text-orange-600 pr-2">Make Public</Text>
-            <ToggleSwitch
-              name="isPublic"
-              checked={isPublic}
-              handleToggle={() => setIsPublic((isPublic) => !isPublic)}
-            />
-          </div>
-        </div>
-
         {edit && (
           <div className="pt-12 mt-12 border-t border-light-slate-8">
             <TeamMembersConfig
@@ -500,6 +480,27 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
             );
           })}
         </RepositoriesCart>
+        <div className="flex flex-col justify-between mt-8 pt-8 border-t">
+          <Title className="!text-1xl !leading-none mb-4 mt-8" level={4}>
+            Page Visibility
+          </Title>
+
+          <div className="flex justify-between">
+            <div className="flex items-center">
+              <UserGroupIcon className="w-6 h-6 text-light-slate-9" />
+              <Text className="pl-2">Make this page publicly visible</Text>
+            </div>
+
+            <div className="flex ml-2 !border-red-900 items-center">
+              <Text className="!text-orange-600 pr-2 hidden md:block">Make Public</Text>
+              <ToggleSwitch
+                name="isPublic"
+                checked={isPublic}
+                handleToggle={() => setIsPublic((isPublic) => !isPublic)}
+              />
+            </div>
+          </div>
+        </div>  
       </div>
 
       <DeleteInsightPageModal

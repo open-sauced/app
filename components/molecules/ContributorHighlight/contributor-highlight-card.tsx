@@ -3,12 +3,12 @@ import { HiOutlineEmojiHappy } from "react-icons/hi";
 import { TfiMoreAlt } from "react-icons/tfi";
 import { FiEdit, FiLinkedin, FiTwitter } from "react-icons/fi";
 import { BsCalendar2Event, BsLink45Deg } from "react-icons/bs";
-import { FaUserPlus } from "react-icons/fa";
 import { GrFlag } from "react-icons/gr";
 import Emoji from "react-emoji-render";
 import { usePostHog } from "posthog-js/react";
 import { MdError } from "react-icons/md";
 import { format } from "date-fns";
+import { FaUserPlus } from "react-icons/fa";
 import Title from "components/atoms/Typography/title";
 
 import { Textarea } from "components/atoms/Textarea/text-area";
@@ -26,10 +26,10 @@ import { fetchGithubPRInfo } from "lib/hooks/fetchGithubPRInfo";
 import { updateHighlights } from "lib/hooks/updateHighlight";
 import { deleteHighlight } from "lib/hooks/deleteHighlight";
 import { useToast } from "lib/hooks/useToast";
-import useFollowUser from "lib/hooks/useFollowUser";
 import useHighlightReactions from "lib/hooks/useHighlightReactions";
 import useUserHighlightReactions from "lib/hooks/useUserHighlightReactions";
 import Tooltip from "components/atoms/Tooltip/tooltip";
+import useFollowUser from "lib/hooks/useFollowUser";
 import GhOpenGraphImg from "../GhOpenGraphImg/gh-open-graph-img";
 import {
   Dialog,
@@ -86,15 +86,17 @@ const ContributorHighlightCard = ({
   const [alertOpen, setAlertOpen] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [host, setHost] = useState("");
+  const { follow, unFollow, isError } = useFollowUser(
+    loggedInUser && loggedInUser?.user_metadata.username !== user ? user : ""
+  );
 
   const [date, setDate] = useState<Date | undefined>(shipped_date ? new Date(shipped_date) : undefined);
 
   const { data: reactions, mutate } = useHighlightReactions(id);
-  const { data: userReaction, deleteReaction, addReaction } = useUserHighlightReactions(id);
+  const { data: userReaction, deleteReaction, addReaction } = useUserHighlightReactions(sessionToken ? id : "");
 
   const posthog = usePostHog();
 
-  // console.log(shipped_date);
   useEffect(() => {
     if (!openEdit) {
       setTimeout(() => {
@@ -108,7 +110,7 @@ const ContributorHighlightCard = ({
   }, [shipped_date]);
 
   const isUserReaction = (id: string) => {
-    const matches = userReaction.find((reaction) => reaction.emoji_id === id);
+    const matches = sessionToken && userReaction.find((reaction) => reaction.emoji_id === id);
     return !matches ? false : true;
   };
 
@@ -214,32 +216,7 @@ const ContributorHighlightCard = ({
     if (window !== undefined) {
       setHost(window.location.origin as string);
     }
-  }, [highlight]);
-
-  function FollowUser() {
-    const { follow, unFollow, isError } = useFollowUser(user);
-
-    return loggedInUser ? (
-      <DropdownMenuItem className={`rounded-md ${loggedInUser.user_metadata.user_name === user && "hidden"}`}>
-        <div onClick={isError ? follow : unFollow} className="flex gap-2.5 py-1 items-center pl-3 pr-7 cursor-pointer">
-          <FaUserPlus size={22} />
-          <span>
-            {!isError ? "Unfollow" : "Follow"} {user}
-          </span>
-        </div>
-      </DropdownMenuItem>
-    ) : (
-      <DropdownMenuItem className="rounded-md">
-        <div
-          onClick={async () => await signIn({ provider: "github" })}
-          className="flex gap-2.5 py-1  items-center pl-3 pr-7"
-        >
-          <FaUserPlus size={22} />
-          <span>Follow {user}</span>
-        </div>
-      </DropdownMenuItem>
-    );
-  }
+  }, []);
 
   return (
     <article className="flex flex-col  md:max-w-[40rem] flex-1 gap-3 lg:gap-6">
@@ -292,7 +269,31 @@ const ContributorHighlightCard = ({
                     <span>Copy link</span>
                   </div>
                 </DropdownMenuItem>
-                <FollowUser />
+                {loggedInUser ? (
+                  <DropdownMenuItem
+                    className={`rounded-md ${loggedInUser?.user_metadata?.user_name === user && "hidden"}`}
+                  >
+                    <div
+                      onClick={isError ? follow : unFollow}
+                      className="flex gap-2.5 py-1 items-center pl-3 pr-7 cursor-pointer"
+                    >
+                      <FaUserPlus size={22} />
+                      <span>
+                        {!isError ? "Unfollow" : "Follow"} {user}
+                      </span>
+                    </div>
+                  </DropdownMenuItem>
+                ) : (
+                  <DropdownMenuItem className="rounded-md">
+                    <div
+                      onClick={async () => signIn({ provider: "github" })}
+                      className="flex gap-2.5 py-1  items-center pl-3 pr-7"
+                    >
+                      <FaUserPlus size={22} />
+                      <span>Follow {user}</span>
+                    </div>
+                  </DropdownMenuItem>
+                )}
                 {loggedInUser && (
                   <DropdownMenuItem
                     className={`rounded-md ${
@@ -352,7 +353,7 @@ const ContributorHighlightCard = ({
               emojis.length > 0 &&
               emojis.map(({ id, name }) => (
                 <DropdownMenuItem
-                  onClick={async () => (sessionToken ? handleUpdateReaction(id) : await signIn({ provider: "github" }))}
+                  onClick={async () => (sessionToken ? handleUpdateReaction(id) : signIn({ provider: "github" }))}
                   key={id}
                   className="rounded-full !px-2 !cursor-pointer"
                 >
@@ -369,9 +370,7 @@ const ContributorHighlightCard = ({
               className={`px-1 py-0 md:py-0.5 hover:bg-light-slate-6 transition  md:px-1.5 shrink-0 border flex items-center justify-center rounded-full cursor-pointer ${
                 isUserReaction(emoji_id) && "bg-light-slate-6"
               }`}
-              onClick={async () =>
-                sessionToken ? handleUpdateReaction(emoji_id) : await signIn({ provider: "github" })
-              }
+              onClick={async () => (sessionToken ? handleUpdateReaction(emoji_id) : signIn({ provider: "github" }))}
               key={emoji_id}
             >
               <Emoji

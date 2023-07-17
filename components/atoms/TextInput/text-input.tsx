@@ -61,9 +61,11 @@ const TextInput = ({
             name={name}
             id={id || name || ""}
             placeholder={placeholder || ""}
-            className={`flex-1 focus:outline-none  ${classNames} ${
-              disabled && "bg-light-slate-3 cursor-not-allowed  text-light-slate-9"
-            }`}
+            className={clsx(
+              "flex-1 focus:outline-none",
+              disabled && "bg-light-slate-3 cursor-not-allowed text-light-slate-9",
+              classNames
+            )}
             disabled={disabled}
             value={value}
             onChange={handleChangeState}
@@ -72,9 +74,9 @@ const TextInput = ({
           {!disabled && (
             <>
               {state === "valid" ? (
-                <CheckCircleFillIcon className="text-light-orange-9" size={12} />
+                <CheckCircleFillIcon className="ml-1  text-light-orange-9" size={12} />
               ) : !!value ? (
-                <span title="Clear input" className="flex items-center" onClick={handleResetInput}>
+                <span title="Clear input" className="flex items-center ml-1" onClick={handleResetInput}>
                   <XCircleFillIcon
                     className={clsx(
                       state === "invalid" && errorMsg ? "text-light-red-11" : "text-light-slate-8",

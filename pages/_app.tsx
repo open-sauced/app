@@ -32,7 +32,7 @@ if (typeof window !== "undefined") {
     // Enable debug mode in development
     loaded: (posthog) => {
       if (process.env.NODE_ENV === "development") posthog.debug();
-    }
+    },
   });
 }
 
@@ -50,11 +50,11 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
   const router = useRouter();
   const [seo, updateSEO] = useState<SEOobject>(Component.SEO || {});
   Component.updateSEO = updateSEO;
+  const [supabaseClient] = useState(() => supabase);
 
   let hostname = "";
 
-  if (typeof window !== "undefined")
-    hostname = window.location.hostname;
+  if (typeof window !== "undefined") hostname = window.location.hostname;
 
   useEffect(() => {
     let chatButton = document.getElementById("sitegpt-chat-icon");
@@ -72,7 +72,7 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
     }, 500);
 
     return () => clearInterval(interval);
-  },[hostname, router.isReady]);
+  }, [hostname, router.isReady]);
 
   useEffect(() => {
     updateSEO(Component.SEO || {});
@@ -148,7 +148,7 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
       >
         {/* <Toaster position="top-center" /> */}
         <Toaster />
-        <SessionContextProvider supabaseClient={supabase} initialSession={pageProps.initialSession}>
+        <SessionContextProvider supabaseClient={supabaseClient} initialSession={pageProps.initialSession}>
           <PostHogProvider client={posthog}>
             <PrivateWrapper isPrivateRoute={Component.isPrivateRoute}>
               <TipProvider>
@@ -161,7 +161,9 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
                 )}
               </TipProvider>
               <Script id="siteGPT" type="text/javascript">
-                {"d=document;s=d.createElement(\"script\");s.src=\"https://sitegpt.ai/widget/365440930125185604.js\";s.async=1;d.getElementsByTagName(\"head\")[0].appendChild(s);"}
+                {
+                  "d=document;s=d.createElement(\"script\");s.src=\"https://sitegpt.ai/widget/365440930125185604.js\";s.async=1;d.getElementsByTagName(\"head\")[0].appendChild(s);"
+                }
               </Script>
             </PrivateWrapper>
           </PostHogProvider>
