@@ -45,7 +45,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
   const pageHref = router.asPath;
   const [reposIds, setReposIds] = useState<number[]>([]);
   const { data: repoListData } = useRepositories(reposIds);
-
+  
   useEffect(() => {
     const searchParams = new URLSearchParams(pageHref.substring(pageHref.indexOf("?")));
     if (router.query.selectedRepos) {
@@ -325,7 +325,6 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
     if (req.ok) {
       const res = await req.json();
       const suggestions = res.items.map((item: any) => item.full_name);
-      if (suggestions.length > 5) suggestions.length = 5;
       setSuggestions(suggestions);
     }
   }, 250);
