@@ -1,12 +1,12 @@
 import useSWR, { Fetcher } from "swr";
 import publicApiFetcher from "lib/utils/public-api-fetcher";
 
-type TopUsersResponse = { login: string }[];
+type TopContributorsResponse = { login: string }[];
 
 const useFetchTopContributors = () => {
-  const { data, error, mutate } = useSWR<TopUsersResponse, Error>(
+  const { data, error, mutate } = useSWR<TopContributorsResponse, Error>(
     "users/top",
-    publicApiFetcher as Fetcher<TopUsersResponse, Error>
+    publicApiFetcher as Fetcher<TopContributorsResponse, Error>
   );
 
   return {
