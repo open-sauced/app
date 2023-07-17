@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.56.0-beta.12](https://github.com/open-sauced/insights/compare/v1.56.0-beta.11...v1.56.0-beta.12) (2023-07-17)
+
+
+### 🍕 Features
+
+* add top contributors panel to feeds page ([#1347](https://github.com/open-sauced/insights/issues/1347)) ([5b58dd5](https://github.com/open-sauced/insights/commit/5b58dd532ff495fa921053ee1bb48eef2544d678))
+
 ## [1.56.0-beta.11](https://github.com/open-sauced/insights/compare/v1.56.0-beta.10...v1.56.0-beta.11) (2023-07-17)
 
 
