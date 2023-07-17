@@ -10,7 +10,7 @@ interface MarkdownWrapperProps {
 const MarkdownWrapper = ({ content, pClassName }: MarkdownWrapperProps) => (
   <ReactMarkdown
     // eslint-disable-next-line react/no-children-prop
-    children={content || ""}
+    children={content}
     className=""
     components={{
       p: ({ node, ...props }) => <p {...props} className={pClassName} />,
