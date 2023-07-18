@@ -11,6 +11,7 @@ import { useFetchHighlightRepos } from "lib/hooks/useFetchHiglightRepos";
 import useFetchAllEmojis from "lib/hooks/useFetchAllEmojis";
 import { useFetchFollowersHighlightRepos } from "lib/hooks/useFetchFollowingHighlightRepos";
 import { useFetchUser } from "lib/hooks/useFetchUser";
+import { useFetchFeaturedHighlights } from "lib/hooks/useFetchFeaturedHighlights";
 
 import { WithPageLayout } from "interfaces/with-page-layout";
 import ProfileLayout from "layouts/profile";
@@ -29,7 +30,7 @@ import HomeHighlightsWrapper from "components/organisms/HomeHighlightsWrapper/ho
 import NewsletterForm from "components/molecules/NewsletterForm/newsletter-form";
 import UserCard, { MetaObj } from "components/atoms/UserCard/user-card";
 import FeaturedHighlightsPanel from "components/molecules/FeaturedHighlightsPanel/featured-highlights-panel";
-import { useFetchFeaturedHighlights } from "lib/hooks/useFetchFeaturedHighlights";
+import AnnouncementCard from "components/molecules/AnnouncementCard/announcement-card";
 
 type activeTabType = "home" | "following";
 type highlightReposType = { repoName: string; repoIcon: string; full_name: string };
@@ -122,7 +123,10 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
         image={ogImage}
         twitterCard="summary_large_image"
       />
-      <div className="container flex flex-col gap-16 px-2 pt-12 mx-auto md:px-16 lg:justify-end md:flex-row" ref={topRef}>
+      <div
+        className="container flex flex-col gap-16 px-2 pt-12 mx-auto md:px-16 lg:justify-end md:flex-row"
+        ref={topRef}
+      >
         <div className="flex-col flex-1 hidden gap-6 mt-12 md:flex">
           {user && (
             <div>
@@ -135,6 +139,17 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
             </div>
           )}
           <TopContributorsPanel loggedInUserLogin={loggedInUser?.login ?? ""} />
+
+          <AnnouncementCard
+            title="#100DaysOfOSS 🚀 "
+            description={
+              "Join us for 100 days of supporting, sharing knowledge, and exploring the open source ecosystem together."
+            }
+            bannerSrc={
+              "https://user-images.githubusercontent.com/5713670/254358937-8e9aa76d-4ed3-4616-a58a-2283796b10e1.png"
+            }
+            url={"https://dev.to/opensauced/100daysofoss-growing-skills-and-real-world-experience-3o5k"}
+          />
         </div>
         {singleHighlight && (
           <Dialog
@@ -239,7 +254,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
                     setPage(page);
                     if (topRef.current) {
                       topRef.current.scrollIntoView({
-                        behavior: "smooth"
+                        behavior: "smooth",
                       });
                     }
                   }}
