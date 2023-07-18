@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.56.1-beta.2](https://github.com/open-sauced/insights/compare/v1.56.1-beta.1...v1.56.1-beta.2) (2023-07-18)
+
+
+### 🐛 Bug Fixes
+
+* Improved the user experience of the highlights input form ([#1362](https://github.com/open-sauced/insights/issues/1362)) ([2425dc4](https://github.com/open-sauced/insights/commit/2425dc419231ae72d75f4bf204c8b20ec77cbc5b))
+
 ### [1.56.1-beta.1](https://github.com/open-sauced/insights/compare/v1.56.0...v1.56.1-beta.1) (2023-07-18)
 
 
