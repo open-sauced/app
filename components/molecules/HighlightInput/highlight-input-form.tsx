@@ -26,6 +26,7 @@ interface HighlightInputFormProps {
 const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.Element => {
   const [isDivFocused, setIsDivFocused] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [isTyping, setIsTyping] = useState(false);
   const [bodyText, setBodyText] = useState("");
   const [title, setTitle] = useState("");
   const [charCount, setCharCount] = useState(0);
@@ -42,28 +43,13 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
     return charCount - pullrequestLink.length <= charLimit;
   };
 
-  // useEffect(() => {
-  //   const pullLink = bodyText.match(/((https?:\/\/)?(www\.)?github\.com\/[^\/]+\/[^\/]+\/pull\/[0-9]+)/);
-  //   const link =
-  //     pullLink && new URL(pullLink.includes("https://") ? (pullLink as unknown as string) : `https://${pullLink}`);
-
-  //   if (pullLink && pullLink.length > 0 && link?.hostname === "github.com" && link?.pathname.includes("pull")) {
-  //     setPullRequestLink(pullLink[0]);
-  //   } else {
-  //     // setPullRequestLink("");
-  //   }
-  // }, [bodyText, pullrequestLink]);
-
-  // getPullRequestCommitMessageFromUrl("https://github.com/open-sauced/insights/pull/1380").then((commits) => {
-  //   console.log(commits);
-  // });
-
   const handleTextAreaInputChange = (value: string) => {
     setBodyText(value);
   };
 
   const handleGenerateHighlightSummary = async () => {
     if (!pullrequestLink || !isValidPullRequestUrl(pullrequestLink)) {
+      toast({ description: "Please provide a valid pull request link!", title: "Error", variant: "danger" });
       return;
     }
 
@@ -71,35 +57,26 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
     const summary = await generatePrHighlightSummaryByCommitMsg(commitMessages);
 
     if (summary) {
-      // if (!textAreaRef.current?.focus) {
-      //   textAreaRef.current?.focus();
-      // }
-      // let length = 0;
-      // const typewriter = setInterval(() => {
-      //   textAreaRef.current?.setRangeText(
-      //     summary[length++],
-      //     textAreaRef.current?.selectionStart,
-      //     textAreaRef.current?.selectionEnd,
-      //     "end"
-      //   );
-      //   if (length === summary.length) clearInterval(typewriter);
-      // }, 10);
       setBodyText(summary);
-      console.log(summary);
+
+      setIsTyping(true);
+      setTimeout(() => {
+        setIsTyping(false);
+      }, 1000);
+      setCharCount(summary.length);
+    } else {
+      toast({ description: "An error occured!", title: "Error", variant: "danger" });
     }
   };
+
   // Handle submit highlights
   const handlePostHighlight = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // Regex check for github pull request link match
-    const pullLink = bodyText.match(/((https?:\/\/)?(www\.)?github\.com\/[^\/]+\/[^\/]+\/pull\/[0-9]+)/);
+    const highlight = bodyText;
 
-    const [url] = pullLink || [];
-    const highlight = bodyText.replace(url as string, "");
-
-    if (pullLink && url) {
-      const { apiPaths } = generateApiPrUrl(url);
+    if (isValidPullRequestUrl(pullrequestLink)) {
+      const { apiPaths } = generateApiPrUrl(pullrequestLink);
       const { repoName, orgName, issueId } = apiPaths;
       setLoading(true);
       // Api validation to check validity of github pull request link match
@@ -115,7 +92,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
         const res = await createHighlights({
           highlight,
           title,
-          url: url,
+          url: pullrequestLink,
           shipped_at: date,
         });
 
@@ -162,6 +139,8 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
               value={bodyText}
               placeholder={` Tell us about your highlight and add a link
               `}
+              typewrite={isTyping}
+              textContent={bodyText}
               onChangeText={(value) => {
                 handleTextAreaInputChange(value);
                 setCharCount(value.length);
@@ -170,9 +149,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
             />
             <p className="flex justify-end gap-1 pb-2 text-xs text-light-slate-9">
               <span className={`${!validCharLimit() && "text-red-600"}`}>
-                {!validCharLimit()
-                  ? `-${charCount - pullrequestLink.length - charLimit}`
-                  : charCount - pullrequestLink.length}
+                {!validCharLimit() ? `-${charCount - charLimit}` : charCount}
               </span>
               / <span>{charLimit}</span>
             </p>
@@ -201,6 +178,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                 </Tooltip>
                 <Tooltip className="text-xs" direction="top" content="Auto-Summarize">
                   <button
+                    type="button"
                     onClick={handleGenerateHighlightSummary}
                     className="p-2 rounded-full bg-light-slate-3 text-light-slate-11"
                   >
