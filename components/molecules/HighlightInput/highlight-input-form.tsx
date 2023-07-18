@@ -60,6 +60,8 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
       setBodyText(summary);
 
       setIsTyping(true);
+
+      // Set timeout to stop typing animation
       setTimeout(() => {
         setIsTyping(false);
       }, 1000);
