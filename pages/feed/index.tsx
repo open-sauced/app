@@ -146,7 +146,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
               "Join us for 100 days of supporting, sharing knowledge, and exploring the open source ecosystem together."
             }
             bannerSrc={
-              "https://user-images.githubusercontent.com/5713670/254378015-8497f568-a337-463f-a880-3856dc1a7265.png"
+              "https://user-images.githubusercontent.com/5713670/254358937-8e9aa76d-4ed3-4616-a58a-2283796b10e1.png"
             }
             url={"https://dev.to/opensauced/100daysofoss-growing-skills-and-real-world-experience-3o5k"}
           />
