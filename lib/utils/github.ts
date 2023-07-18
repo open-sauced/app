@@ -3,6 +3,12 @@
  * @todo Use `getAvatarById` instead of `getAvatarByUsername` whenever possible
  * @see {@link https://github.com/open-sauced/insights/issues/746}
  */
+export interface Commit {
+  commit: {
+    message: string;
+  };
+}
+
 const getAvatarByUsername = (username: string | null, size = 460) =>
   `https://www.github.com/${username ?? "github"}.png?size=${size}`;
 
@@ -55,6 +61,21 @@ const generateGhOgImage = (githubUrl: string): { isValid: boolean; url: string }
   }
 };
 
+const getPullRequestCommitMessageFromUrl = async (url: string): Promise<string[]> => {
+  const [, , , owner, repoName, , pullRequestNumber] = url.split("/");
+
+  const apiUrl = `https://api.github.com/repos/${owner}/${repoName}/pulls/${pullRequestNumber}/commits`;
+
+  const response = await fetch(apiUrl);
+  const data = await response.json();
+
+  if (Array.isArray(data?.commits)) {
+    return (data.commits as Commit[]).map((commit: Commit): string => commit.commit.message);
+  }
+
+  return (data as Commit[]).map((commit: Commit): string => commit.commit.message);
+};
+
 const isValidPullRequestUrl = (url: string): boolean => {
   return url.match(/((https?:\/\/)?(www\.)?github\.com\/[^\/]+\/[^\/]+\/pull\/[0-9]+)/) ? true : false;
 };
@@ -67,4 +88,5 @@ export {
   generateApiPrUrl,
   generateGhOgImage,
   isValidPullRequestUrl,
+  getPullRequestCommitMessageFromUrl,
 };

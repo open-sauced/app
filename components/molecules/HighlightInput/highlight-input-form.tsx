@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useRef, useState } from "react";
 
 import { FiCalendar } from "react-icons/fi";
 import { format } from "date-fns";
@@ -9,10 +9,11 @@ import { Textarea } from "components/atoms/Textarea/text-area";
 import Tooltip from "components/atoms/Tooltip/tooltip";
 
 import { createHighlights } from "lib/hooks/createHighlights";
-import { generateApiPrUrl } from "lib/utils/github";
+import { generateApiPrUrl, getPullRequestCommitMessageFromUrl, isValidPullRequestUrl } from "lib/utils/github";
 import { fetchGithubPRInfo } from "lib/hooks/fetchGithubPRInfo";
 import { useToast } from "lib/hooks/useToast";
 import TextInput from "components/atoms/TextInput/text-input";
+import { generatePrHighlightSummaryByCommitMsg } from "lib/utils/generate-pr-highlight-summary";
 import { Calendar } from "../Calendar/calendar";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../Collapsible/collapsible";
 import { Popover, PopoverContent, PopoverTrigger } from "../Popover/popover";
@@ -29,6 +30,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
   const [title, setTitle] = useState("");
   const [charCount, setCharCount] = useState(0);
   const [pullrequestLink, setPullRequestLink] = useState("");
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
   const charLimit = 500;
 
@@ -40,22 +42,52 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
     return charCount - pullrequestLink.length <= charLimit;
   };
 
-  useEffect(() => {
-    const pullLink = bodyText.match(/((https?:\/\/)?(www\.)?github\.com\/[^\/]+\/[^\/]+\/pull\/[0-9]+)/);
-    const link =
-      pullLink && new URL(pullLink.includes("https://") ? (pullLink as unknown as string) : `https://${pullLink}`);
+  // useEffect(() => {
+  //   const pullLink = bodyText.match(/((https?:\/\/)?(www\.)?github\.com\/[^\/]+\/[^\/]+\/pull\/[0-9]+)/);
+  //   const link =
+  //     pullLink && new URL(pullLink.includes("https://") ? (pullLink as unknown as string) : `https://${pullLink}`);
 
-    if (pullLink && pullLink.length > 0 && link?.hostname === "github.com" && link?.pathname.includes("pull")) {
-      setPullRequestLink(pullLink[0]);
-    } else {
-      setPullRequestLink("");
-    }
-  }, [bodyText, pullrequestLink]);
+  //   if (pullLink && pullLink.length > 0 && link?.hostname === "github.com" && link?.pathname.includes("pull")) {
+  //     setPullRequestLink(pullLink[0]);
+  //   } else {
+  //     // setPullRequestLink("");
+  //   }
+  // }, [bodyText, pullrequestLink]);
+
+  // getPullRequestCommitMessageFromUrl("https://github.com/open-sauced/insights/pull/1380").then((commits) => {
+  //   console.log(commits);
+  // });
 
   const handleTextAreaInputChange = (value: string) => {
     setBodyText(value);
   };
 
+  const handleGenerateHighlightSummary = async () => {
+    if (!pullrequestLink || !isValidPullRequestUrl(pullrequestLink)) {
+      return;
+    }
+
+    const commitMessages = await getPullRequestCommitMessageFromUrl(pullrequestLink);
+    const summary = await generatePrHighlightSummaryByCommitMsg(commitMessages);
+
+    if (summary) {
+      // if (!textAreaRef.current?.focus) {
+      //   textAreaRef.current?.focus();
+      // }
+      // let length = 0;
+      // const typewriter = setInterval(() => {
+      //   textAreaRef.current?.setRangeText(
+      //     summary[length++],
+      //     textAreaRef.current?.selectionStart,
+      //     textAreaRef.current?.selectionEnd,
+      //     "end"
+      //   );
+      //   if (length === summary.length) clearInterval(typewriter);
+      // }, 10);
+      setBodyText(summary);
+      console.log(summary);
+    }
+  };
   // Handle submit highlights
   const handlePostHighlight = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -134,6 +166,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                 handleTextAreaInputChange(value);
                 setCharCount(value.length);
               }}
+              ref={textAreaRef}
             />
             <p className="flex justify-end gap-1 pb-2 text-xs text-light-slate-9">
               <span className={`${!validCharLimit() && "text-red-600"}`}>
@@ -167,14 +200,17 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                   </Popover>
                 </Tooltip>
                 <Tooltip className="text-xs" direction="top" content="Auto-Summarize">
-                  <button className="p-2 rounded-full bg-light-slate-3 text-light-slate-11">
+                  <button
+                    onClick={handleGenerateHighlightSummary}
+                    className="p-2 rounded-full bg-light-slate-3 text-light-slate-11"
+                  >
                     <HiOutlineSparkles className="text-base" />
                   </button>
                 </Tooltip>
                 <TextInput
                   className="text-xs"
                   value={pullrequestLink}
-                  onChange={(e) => setPullRequestLink(e.target.value)}
+                  handleChange={(value) => setPullRequestLink(value)}
                   placeholder="Paste your PR URL and get it auto-summarized!"
                 />
               </div>
