@@ -119,8 +119,7 @@ const ContributorProfileInfo = ({
                 <span className="flex gap-2 items-center">
                   <BsDiscord className="text-light-slate-9" />
                   <Link href={discordUrl} target="_blank" rel="noreferrer" className="w-max hover:text-orange-500 ">
-                    {/* {discordUrl.replace(/^(http(s)?:\/\/)?(www\.)?discord(app)?\.com\/users\//, "")} */}
-                    takanome-dev
+                    {discordUrl}
                   </Link>
                 </span>
               )}

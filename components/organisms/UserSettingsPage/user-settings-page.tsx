@@ -224,7 +224,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
             />
             <TextInput
               classNames="bg-light-slate-4 text-light-slate-11 font-medium"
-              placeholder="https://discord.gg/opensauced"
+              placeholder="https://discordapp.com/users/832877193112762362"
               label="Discord URL"
               pattern="http[s]?://.*\..{2,}"
               name="discord_url"
