@@ -5,11 +5,11 @@ export const generatePrHighlightSummaryByCommitMsg = async (commitMessages: stri
   const sessionResponse = await supabase.auth.getSession();
   const sessionToken = sessionResponse?.data.session?.access_token;
   const payload = {
-    descriptionLength: 250,
+    descriptionLength: 500,
     commitMessages,
     language: "english",
     diff: "commitMessage",
-    tone: "formal",
+    tone: "informative",
     temperature: 7,
   };
 
@@ -27,8 +27,6 @@ export const generatePrHighlightSummaryByCommitMsg = async (commitMessages: stri
       const data = await res.json();
       return data.description as string;
     }
-
-    console.log(res);
   } catch (err) {
     console.log(err);
     return null;
