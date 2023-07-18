@@ -91,36 +91,37 @@ const CollaborationRequestsWrapper = ({ user }: CollaborationRequestsWrapperProp
 
   return (
     <div>
-      <div className={clsx(
-        "flex flex-col sm:flex-row rounded-md border py-2 px-3 my-4 sm:space-x-2 space-y-2 sm:space-y-0 items-center",
-        emailPreference.receive_collaboration ? "border-green-500 bg-green-200" : "border-light-red-6 bg-light-red-4"
-      )}>
-        <Text className={clsx(
-          "font-semibold !text-sm md:mr-2 grow",
-          emailPreference.receive_collaboration ? "!text-green-600" :"!text-light-red-10"
+      {!insightsUser?.receive_collaboration && (
+        <div className={clsx(
+          "flex flex-col sm:flex-row rounded-md border py-2 px-3 my-4 sm:space-x-2 space-y-2 sm:space-y-0 items-center",
+          !emailPreference.receive_collaboration && "border-light-red-6 bg-light-red-4"
         )}>
-          { emailPreference.receive_collaboration ? (
-            "You are currently accepting collaboration requests."
-          ) : (
-            "You are currently not accepting collaboration requests." 
-          )}
-        </Text>
-        <div className="flex items-center">
-          <span className={clsx(
-            "pr-2 !text-sm truncate",
-            emailPreference.receive_collaboration ? "!text-green-600" :"!text-light-red-10"
+          <Text className={clsx(
+            "font-semibold !text-sm md:mr-2 grow",
+            !emailPreference.receive_collaboration && "!text-light-red-10"
           )}>
-            Enable
-          </span> 
-          <ToggleSwitch
-            name="receive_collaboration"
-            size="sm"
-            checked={emailPreference.receive_collaboration as boolean} 
-            classNames={`${emailPreference.receive_collaboration && "!bg-green-600"}`}
-            handleToggle={handleUpdateReceiveCollaboration}   
-          />
+            { emailPreference.receive_collaboration ? (
+              "You can now accept collaboration requests."
+            ) : (
+              "You are currently not accepting collaboration requests." 
+            )}
+          </Text>
+          <div className="flex items-center">
+            <span className={clsx(
+              "pr-2 !text-sm truncate",
+              !emailPreference.receive_collaboration && "!text-light-red-10"
+            )}>
+              Enable
+            </span> 
+            <ToggleSwitch
+              name="receive_collaboration"
+              size="sm"
+              checked={emailPreference.receive_collaboration as boolean} 
+              handleToggle={handleUpdateReceiveCollaboration}   
+            />
+          </div>
         </div>
-      </div>
+      )}
 
       {data && data.length > 0 ? (
         data
