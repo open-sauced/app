@@ -103,9 +103,20 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
     }
   };
 
+
+  // Handle collapsible change
+  const handleCollapsibleOpenChange = () => {
+    if(isDivFocused && !charCount) {
+      setIsDivFocused(false);
+    } else{
+      setIsDivFocused(true);
+    }
+  };
+
+
   return (
     <form onSubmit={handlePostHighlight} className="flex flex-col flex-1 gap-4">
-      <Collapsible onOpenChange={setIsDivFocused} open={isDivFocused}>
+      <Collapsible onOpenChange={handleCollapsibleOpenChange} open={isDivFocused}>
         <div className="flex flex-col gap-2 p-2 overflow-hidden text-sm bg-white border rounded-lg ">
           <CollapsibleTrigger asChild>
             <div className="flex pr-2">
