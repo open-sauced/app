@@ -28,6 +28,7 @@ interface HighlightInputFormProps {
 
 const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.Element => {
   const [isDivFocused, setIsDivFocused] = useState(false);
+  const [isSummaryButtonDisabled, setIsSummaryButtonDisabled] = useState(false);
   const [isFormOpenMobile, setIsFormOpenMobile] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
@@ -66,8 +67,12 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
       return;
     }
 
+    setIsSummaryButtonDisabled(true);
+
     const commitMessages = await getPullRequestCommitMessageFromUrl(pullrequestLink);
     const summary = await generatePrHighlightSummaryByCommitMsg(commitMessages);
+
+    setIsSummaryButtonDisabled(false);
 
     if (summary) {
       setBodyText(summary);
@@ -205,9 +210,10 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                 </Tooltip>
                 <Tooltip className="text-xs" direction="top" content="Auto-Summarize">
                   <button
+                    disabled={!pullrequestLink || isSummaryButtonDisabled}
                     type="button"
                     onClick={handleGenerateHighlightSummary}
-                    className="p-2 rounded-full bg-light-slate-3 text-light-slate-11"
+                    className="p-2 rounded-full bg-light-slate-3 text-light-slate-11 disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     <HiOutlineSparkles className="text-base" />
                   </button>
@@ -307,9 +313,10 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                 </Tooltip>
                 <Tooltip className="text-xs" direction="top" content="Auto-Summarize">
                   <button
+                    disabled={!pullrequestLink || !isValidPullRequestUrl(pullrequestLink) || isSummaryButtonDisabled}
                     type="button"
                     onClick={handleGenerateHighlightSummary}
-                    className="p-2 rounded-full bg-light-slate-3 text-light-slate-11"
+                    className="p-2 rounded-full bg-light-slate-3 text-light-slate-11 disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     <HiOutlineSparkles className="text-base" />
                   </button>
