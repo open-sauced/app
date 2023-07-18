@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.56.1-beta.1](https://github.com/open-sauced/insights/compare/v1.56.0...v1.56.1-beta.1) (2023-07-18)
+
+
+### 🐛 Bug Fixes
+
+* Issue [#1374](https://github.com/open-sauced/insights/issues/1374) All suggestions are being displayed with scroll area ([#1380](https://github.com/open-sauced/insights/issues/1380)) ([1de56c7](https://github.com/open-sauced/insights/commit/1de56c7b095a1a333ae4e6e14c10672f97cfad84))
+
 ## [1.56.0](https://github.com/open-sauced/insights/compare/v1.55.0...v1.56.0) (2023-07-17)
 
 
