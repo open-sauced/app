@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.57.0-beta.1](https://github.com/open-sauced/insights/compare/v1.56.1-beta.3...v1.57.0-beta.1) (2023-07-18)
+
+
+### 🍕 Features
+
+* add `[#100](https://github.com/open-sauced/insights/issues/100)DayOfOSS` challenge anouncement to feeds ([#1389](https://github.com/open-sauced/insights/issues/1389)) ([751dbbf](https://github.com/open-sauced/insights/commit/751dbbfc4004f9f6cc1cd3c171a221707ca36d7a))
+
 ### [1.56.1-beta.3](https://github.com/open-sauced/insights/compare/v1.56.1-beta.2...v1.56.1-beta.3) (2023-07-18)
 
 
