@@ -9,11 +9,9 @@ interface MarkdownWrapperProps {
 
 const MarkdownWrapper = ({ content, paragraphClassName }: MarkdownWrapperProps) => (
   <ReactMarkdown
+    className={paragraphClassName}
     components={{
       p: ({ node, ...props }) => <p {...props} className={paragraphClassName} />,
-      h1: ({ node, ...props }) => <h1 {...props} className="text-3xl" />,
-      h2: ({ node, ...props }) => <h2 {...props} className="text-2xl" />,
-      h3: ({ node, ...props }) => <h3 {...props} className="text-xl" />,
       code({ node, inline, className, children, ...props }) {
         const match = /language-(\w+)/.exec(className || "");
         return !inline && match ? (
