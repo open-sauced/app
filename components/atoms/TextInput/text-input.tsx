@@ -61,9 +61,11 @@ const TextInput = ({
             name={name}
             id={id || name || ""}
             placeholder={placeholder || ""}
-            className={`flex-1 focus:outline-none  ${
-              disabled && "bg-light-slate-3  cursor-not-allowed  text-light-slate-9"
-            } `}
+            className={clsx(
+              "flex-1 focus:outline-none",
+              disabled && "bg-light-slate-3 cursor-not-allowed text-light-slate-9",
+              classNames
+            )}
             disabled={disabled}
             value={value}
             onChange={handleChangeState}
