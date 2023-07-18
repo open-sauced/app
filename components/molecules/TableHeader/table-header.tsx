@@ -64,7 +64,6 @@ const TableHeader = ({
     if (req.ok) {
       const res = await req.json();
       const suggestions = res.items.map((item: any) => item.full_name);
-      if (suggestions.length > 5) suggestions.length = 5;
       setSuggestions(suggestions);
     }
   }, 250);
