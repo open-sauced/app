@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { GrClose } from "react-icons/gr";
 import { FaSearch } from "react-icons/fa";
 import { Spinner } from "../SpinLoader/spin-loader";
-import { ScrollArea, ScrollViewport } from "../ScrollArea/scroll-area";
+import { ScrollArea } from "../ScrollArea/scroll-area";
 
 interface SearchProps {
   name: string;
@@ -87,19 +87,17 @@ const Search = ({
       />
       {suggestions && suggestions.length > 0 && showSuggestions && (
         <div className="absolute left-0 z-10 w-full pb-1 space-y-1 bg-white border rounded-lg cursor-pointer shadow-input border-light-slate-6 top-full">
-          <ScrollArea type="auto">
-            <ScrollViewport className="max-h-60 w-full">
-              {suggestions.map((suggestion, index) => (
-                <div
-                  className="px-4 py-2 overflow-hidden break-all text-light-slate-9 hover:bg-light-slate-2"
-                  style={suggestionsStyle}
-                  key={index}
-                  onClick={() => handleOnSelect(suggestion)}
-                >
-                  <span className="pl-5 text-sm ">{suggestion}</span>
-                </div>
-              ))}
-            </ScrollViewport>
+          <ScrollArea type="auto" className="h-60">
+            {suggestions.map((suggestion, index) => (
+              <div
+                className="px-4 py-2 overflow-hidden break-all text-light-slate-9 hover:bg-light-slate-2"
+                style={suggestionsStyle}
+                key={index}
+                onClick={() => handleOnSelect(suggestion)}
+              >
+                <span className="pl-5 text-sm ">{suggestion}</span>
+              </div>
+            ))}
           </ScrollArea>
         </div>
       )}
