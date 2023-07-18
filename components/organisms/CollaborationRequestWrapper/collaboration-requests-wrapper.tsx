@@ -110,7 +110,7 @@ const CollaborationRequestsWrapper = ({ user }: CollaborationRequestsWrapperProp
             "pr-2 !text-sm truncate",
             emailPreference.receive_collaboration ? "!text-green-600" :"!text-light-red-10"
           )}>
-            Change Status
+            Enable
           </span> 
           <ToggleSwitch
             name="receive_collaboration"
