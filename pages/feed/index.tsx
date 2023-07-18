@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import formatDistanceToNowStrict from "date-fns/formatDistanceToNowStrict";
@@ -59,7 +59,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
   const [activeTab, setActiveTab] = useState<activeTabType>("home");
   const [repoList, setRepoList] = useState<highlightReposType[]>(repoTofilterList(repos as highlightReposType[]));
   const [hydrated, setHydrated] = useState(false);
-
+  const topRef = useRef<HTMLDivElement>(null);
   const singleHighlight = props.highlight;
   const ogImage = props?.highlight
     ? `${process.env.NEXT_PUBLIC_OPENGRAPH_URL}/highlights/${props.highlight.id}`
@@ -122,7 +122,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
         image={ogImage}
         twitterCard="summary_large_image"
       />
-      <div className="container flex flex-col gap-16 px-2 pt-12 mx-auto md:px-16 lg:justify-end md:flex-row">
+      <div className="container flex flex-col gap-16 px-2 pt-12 mx-auto md:px-16 lg:justify-end md:flex-row" ref={topRef}>
         <div className="flex-col flex-1 hidden gap-6 mt-12 md:flex">
           {user && (
             <div>
@@ -237,6 +237,11 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
                   hasPreviousPage={meta.hasPreviousPage}
                   onPageChange={function (page: number): void {
                     setPage(page);
+                    if (topRef.current) {
+                      topRef.current.scrollIntoView({
+                        behavior: "smooth"
+                      });
+                    }
                   }}
                 />
               </div>
