@@ -5,6 +5,54 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.56.0](https://github.com/open-sauced/insights/compare/v1.55.0...v1.56.0) (2023-07-17)
+
+
+### 🐛 Bug Fixes
+
+* add hidden form for Netlify forms submission ([#1351](https://github.com/open-sauced/insights/issues/1351)) ([8075012](https://github.com/open-sauced/insights/commit/80750124072a742443a89716f9b2e956f7bdcb25))
+* ensure font color of selected interests pill changed is white  ([#1342](https://github.com/open-sauced/insights/issues/1342)) ([b778f11](https://github.com/open-sauced/insights/commit/b778f11484d02b4d159fe3cd22f43de4a5c28196))
+* improve loading performance of individual highlight ([#1349](https://github.com/open-sauced/insights/issues/1349)) ([9e193fe](https://github.com/open-sauced/insights/commit/9e193feae32739894051ec9d3236826cb00a1c88))
+* prevent concurrent user profile update requests ([#1372](https://github.com/open-sauced/insights/issues/1372)) ([b23b9df](https://github.com/open-sauced/insights/commit/b23b9df076596b7d5163ef9f8d7bc7f28ecde92a))
+
+
+### 🎨 Styles
+
+* text inputs colors were not consistent in the user settings page ([#1360](https://github.com/open-sauced/insights/issues/1360)) ([edae9c4](https://github.com/open-sauced/insights/commit/edae9c4a26bbc21921422356c623f2a8c0ca0939))
+
+
+### 🍕 Features
+
+* add force login component to design system ([#1330](https://github.com/open-sauced/insights/issues/1330)) ([9d68ffc](https://github.com/open-sauced/insights/commit/9d68ffcef1bbd2f17f05492d1b4e9d4ce4263de4))
+* add top contributors panel to feeds page ([#1347](https://github.com/open-sauced/insights/issues/1347)) ([5b58dd5](https://github.com/open-sauced/insights/commit/5b58dd532ff495fa921053ee1bb48eef2544d678))
+* added new topics to the list ([#1357](https://github.com/open-sauced/insights/issues/1357)) ([33f03bb](https://github.com/open-sauced/insights/commit/33f03bb53b82e8bb18e49c7e5ccba80c77ab982d))
+* change position of visibility action component ([#1331](https://github.com/open-sauced/insights/issues/1331)) ([f3f615c](https://github.com/open-sauced/insights/commit/f3f615caf3b8a69943d6b1443ac0b35075501b4b))
+* changed the last commit date icon with a calender ([#1350](https://github.com/open-sauced/insights/issues/1350)) ([2ae9d53](https://github.com/open-sauced/insights/commit/2ae9d5330e9231d108a9a20b458aed5398c7d24c))
+* implement featured highlights list ([#1337](https://github.com/open-sauced/insights/issues/1337)) ([ed32594](https://github.com/open-sauced/insights/commit/ed32594c64dc616e57e7b9fbea299ba4584bdb68))
+* implement newsletter submission functionality ([#1332](https://github.com/open-sauced/insights/issues/1332)) ([d996ac7](https://github.com/open-sauced/insights/commit/d996ac714fa2cf6394416fcb542c278634edc394))
+* upgrade to Next 13.4, Supabase helper libs to 0.7.x ([#1301](https://github.com/open-sauced/insights/issues/1301)) ([26876c2](https://github.com/open-sauced/insights/commit/26876c260546815102ac5584c0579e12b1323361))
+
+## [1.56.0-beta.12](https://github.com/open-sauced/insights/compare/v1.56.0-beta.11...v1.56.0-beta.12) (2023-07-17)
+
+
+### 🍕 Features
+
+* add top contributors panel to feeds page ([#1347](https://github.com/open-sauced/insights/issues/1347)) ([5b58dd5](https://github.com/open-sauced/insights/commit/5b58dd532ff495fa921053ee1bb48eef2544d678))
+
+## [1.56.0-beta.11](https://github.com/open-sauced/insights/compare/v1.56.0-beta.10...v1.56.0-beta.11) (2023-07-17)
+
+
+### 🎨 Styles
+
+* text inputs colors were not consistent in the user settings page ([#1360](https://github.com/open-sauced/insights/issues/1360)) ([edae9c4](https://github.com/open-sauced/insights/commit/edae9c4a26bbc21921422356c623f2a8c0ca0939))
+
+## [1.56.0-beta.10](https://github.com/open-sauced/insights/compare/v1.56.0-beta.9...v1.56.0-beta.10) (2023-07-17)
+
+
+### 🐛 Bug Fixes
+
+* prevent concurrent user profile update requests ([#1372](https://github.com/open-sauced/insights/issues/1372)) ([b23b9df](https://github.com/open-sauced/insights/commit/b23b9df076596b7d5163ef9f8d7bc7f28ecde92a))
+
 ## [1.56.0-beta.9](https://github.com/open-sauced/insights/compare/v1.56.0-beta.8...v1.56.0-beta.9) (2023-07-14)
 
 

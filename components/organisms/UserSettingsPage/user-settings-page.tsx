@@ -36,6 +36,11 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
 
   const { toast } = useToast();
 
+  const [updating, setUpdating] = useState({
+    profile: false,
+    emailPreferences: false,
+    interests: false,
+  });
   const [isValidEmail, setIsValidEmail] = useState<boolean>(true);
   const [displayLocalTime, setDisplayLocalTime] = useState(false);
   const [timezone, setTimezone] = useState("");
@@ -110,19 +115,28 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
   };
 
   const handleUpdateEmailPreference = async () => {
+    setUpdating(prev => ({ ...prev, emailPreferences: true }));
+
     const data = await updateEmailPreferences({ ...emailPreference });
     if (data) {
       toast({ description: "Updated successfully", variant: "success" });
     } else {
       toast({ description: "An error occured!", variant: "danger" });
     }
+
+    setUpdating(prev => ({...prev, emailPreferences: false}));
   };
 
   const handleUpdateInterest = async () => {
+    setUpdating(prev => ({ ...prev, interests: true }));
+
     const data = await updateUser({
       data: { interests: selectedInterest },
       params: "interests",
     });
+
+    setUpdating((prev) => ({ ...prev, interests: false }));
+
     if (data) {
       mutate();
       toast({ description: "Updated successfully", variant: "success" });
@@ -133,6 +147,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
 
   const handleUpdateProfile = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setUpdating(prev => ({...prev, profile: true}));
     const payload: UpdateUserPayload = {
       name: formRef.current!.nameInput.value,
       email,
@@ -158,6 +173,8 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
     const data = await updateUser({
       data: payload,
     });
+
+    setUpdating((prev) => ({ ...prev, profile: false }));
 
     if (data) {
       mutate();
@@ -283,7 +300,12 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
                 </SelectContent>
               </Select>
             </div>
-            <Button className="w-max" disabled={!isValidEmail} variant="primary">
+            <Button
+              className="w-max"
+              disabled={!isValidEmail || updating.profile}
+              variant="primary"
+              loading={updating.profile}
+            >
               Update profile
             </Button>
           </form>
@@ -305,9 +327,10 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
             </div>
             <Button
               variant="default"
-              disabled={selectedInterest.length === 0}
+              disabled={selectedInterest.length === 0 || updating.interests}
               onClick={handleUpdateInterest}
               className="w-max"
+              loading={updating.interests}
             >
               Update Interests
             </Button>
@@ -336,6 +359,8 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
               onClick={handleUpdateEmailPreference}
               variant="default"
               className="px-4 py-2 w-max bg-light-slate-4 "
+              disabled={updating.emailPreferences}
+              loading={updating.emailPreferences}
             >
               Update Preferences
             </Button>
