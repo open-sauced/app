@@ -1,3 +1,8 @@
+/**
+ * @deprecated This function is deprecated and has been replaced by the `useSession` hook.
+ * Please update your code to use the `useSession` hook instead.
+ */
+
 import { supabase } from "lib/utils/supabase";
 
 const baseUrl = process.env.NEXT_PUBLIC_API_URL;
