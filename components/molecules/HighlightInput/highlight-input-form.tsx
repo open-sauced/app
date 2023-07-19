@@ -210,10 +210,10 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                 </Tooltip>
                 <Tooltip className="text-xs" direction="top" content="Auto-Summarize">
                   <button
-                    disabled={!pullrequestLink || isSummaryButtonDisabled}
+                    disabled={isSummaryButtonDisabled}
                     type="button"
                     onClick={handleGenerateHighlightSummary}
-                    className="p-2 rounded-full bg-light-slate-3 text-light-slate-11 disabled:cursor-not-allowed disabled:opacity-50"
+                    className="p-2 rounded-full bg-light-slate-3 text-light-slate-11 disabled:cursor-not-allowed disabled:animate-pulse disabled:text-light-orange-9"
                   >
                     <HiOutlineSparkles className="text-base" />
                   </button>
@@ -246,7 +246,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
       {/* Mobile popup form */}
 
       {isFormOpenMobile && (
-        <div className="fixed left-0 right-0 z-50 h-screen py-4 transition bg-white top-24 md:hidden">
+        <div className="fixed left-0 right-0 z-30 h-screen py-4 transition bg-white top-24 md:hidden">
           <div className="flex items-center justify-between w-full px-2">
             <button onClick={() => setIsFormOpenMobile(false)} type="button">
               <IoClose className="text-2xl text-light-slate-10" />
@@ -313,10 +313,10 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                 </Tooltip>
                 <Tooltip className="text-xs" direction="top" content="Auto-Summarize">
                   <button
-                    disabled={!pullrequestLink || !isValidPullRequestUrl(pullrequestLink) || isSummaryButtonDisabled}
+                    disabled={isSummaryButtonDisabled}
                     type="button"
                     onClick={handleGenerateHighlightSummary}
-                    className="p-2 rounded-full bg-light-slate-3 text-light-slate-11 disabled:cursor-not-allowed disabled:opacity-50"
+                    className="p-2 rounded-full bg-light-slate-3 text-light-slate-11 disabled:cursor-not-allowed disabled:animate-pulse disabled:text-light-orange-9"
                   >
                     <HiOutlineSparkles className="text-base" />
                   </button>

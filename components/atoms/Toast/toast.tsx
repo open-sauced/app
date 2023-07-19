@@ -13,7 +13,7 @@ const ToastViewport = React.forwardRef<
   <ToastPrimitives.Viewport
     ref={ref}
     className={clsx(
-      "fixed z-[10] top-24 md:top-14 flex max-h-screen w-full flex-col-reverse right-0 lg:right-4  sm:flex-col md:max-w-[420px]",
+      "fixed z-50 top-24 md:top-14 flex max-h-screen w-full flex-col-reverse right-0 lg:right-4  sm:flex-col md:max-w-[420px]",
       className
     )}
     {...props}
@@ -23,14 +23,12 @@ ToastViewport.displayName = ToastPrimitives.Viewport.displayName;
 
 const Toast = React.forwardRef<
   React.ElementRef<typeof ToastPrimitives.Root>,
-  React.ComponentPropsWithoutRef<typeof ToastPrimitives.Root> &{variant? : "success" | "warning" | "danger"  }
+  React.ComponentPropsWithoutRef<typeof ToastPrimitives.Root> & { variant?: "success" | "warning" | "danger" }
 >(({ className, variant, ...props }, ref) => {
-
   return (
     <ToastPrimitives.Root
-
       ref={ref}
-      className={clsx(className,"bg-light-slate-2 rounded-lg border border-light-slate-6 p-2 text-center")}
+      className={clsx(className, "bg-light-slate-2 rounded-lg border border-light-slate-6 p-2 text-center")}
       {...props}
     />
   );
@@ -98,5 +96,5 @@ export {
   ToastTitle,
   ToastDescription,
   ToastClose,
-  ToastAction
+  ToastAction,
 };
