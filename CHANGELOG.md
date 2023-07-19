@@ -5,6 +5,34 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.57.0-beta.2](https://github.com/open-sauced/insights/compare/v1.57.0-beta.1...v1.57.0-beta.2) (2023-07-19)
+
+
+### 🍕 Features
+
+* add discord link to user profile ([#1370](https://github.com/open-sauced/insights/issues/1370)) ([f94bc3b](https://github.com/open-sauced/insights/commit/f94bc3b6c27588cca3399fa0e0c789b934c56ab9))
+
+## [1.57.0-beta.1](https://github.com/open-sauced/insights/compare/v1.56.1-beta.3...v1.57.0-beta.1) (2023-07-18)
+
+
+### 🍕 Features
+
+* add `[#100](https://github.com/open-sauced/insights/issues/100)DayOfOSS` challenge anouncement to feeds ([#1389](https://github.com/open-sauced/insights/issues/1389)) ([751dbbf](https://github.com/open-sauced/insights/commit/751dbbfc4004f9f6cc1cd3c171a221707ca36d7a))
+
+### [1.56.1-beta.3](https://github.com/open-sauced/insights/compare/v1.56.1-beta.2...v1.56.1-beta.3) (2023-07-18)
+
+
+### 🐛 Bug Fixes
+
+* Auto-Scroll Not Triggered Upon Clicking 'Next Page' in Highlight… ([#1387](https://github.com/open-sauced/insights/issues/1387)) ([77b161d](https://github.com/open-sauced/insights/commit/77b161d3fb7af262f0e93d1221f8924f481ee42e))
+
+### [1.56.1-beta.2](https://github.com/open-sauced/insights/compare/v1.56.1-beta.1...v1.56.1-beta.2) (2023-07-18)
+
+
+### 🐛 Bug Fixes
+
+* Improved the user experience of the highlights input form ([#1362](https://github.com/open-sauced/insights/issues/1362)) ([2425dc4](https://github.com/open-sauced/insights/commit/2425dc419231ae72d75f4bf204c8b20ec77cbc5b))
+
 ### [1.56.1-beta.1](https://github.com/open-sauced/insights/compare/v1.56.0...v1.56.1-beta.1) (2023-07-18)
 
 
