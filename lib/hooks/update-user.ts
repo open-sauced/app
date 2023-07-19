@@ -13,6 +13,7 @@ export interface UpdateUserPayload {
   timezone?: string;
   github_sponsors_url?: string;
   linkedin_url?: string;
+  discord_url?: string;
 }
 
 interface useUpdateUserProps {
