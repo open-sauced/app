@@ -119,7 +119,7 @@ const ContributorProfileInfo = ({
               {discordUrl && (
                 <span className="flex gap-2 items-center">
                   <BsDiscord className="text-light-slate-9" />
-                  <Link href={discordUrl} target="_blank" rel="noreferrer" className="w-max hover:text-orange-500 ">
+                  <Link href={discordUrl} target="_blank" rel="noreferrer" className="w-max hover:text-orange-500">
                     {`discord/#${discordUserId}`}
                   </Link>
                 </span>

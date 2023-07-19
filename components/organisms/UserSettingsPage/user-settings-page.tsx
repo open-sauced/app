@@ -106,6 +106,13 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
     event.target.reportValidity();
   };
 
+  const handleValidateDiscordUrl = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const regex = new RegExp(/^https:\/\/discord(app)?\.com\/users\/\d{17,}$/);
+    event.target.setCustomValidity(regex.test(event.target.value) ? "" : "Invalid Discord URL");
+    event.target.reportValidity();
+  };
+
+
   const handleSelectInterest = (interest: string) => {
     if (selectedInterest.length > 0 && selectedInterest.includes(interest)) {
       setSelectedInterest((prev) => prev.filter((item) => item !== interest));
@@ -243,7 +250,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
               classNames="bg-light-slate-4 text-light-slate-11 font-medium"
               placeholder="https://discordapp.com/users/832877193112762362"
               label="Discord URL"
-              pattern="http[s]?://.*\..{2,}"
+              onChange={handleValidateDiscordUrl}
               name="discord_url"
             />
             <TextInput
