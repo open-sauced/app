@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.57.0-beta.2](https://github.com/open-sauced/insights/compare/v1.57.0-beta.1...v1.57.0-beta.2) (2023-07-19)
+
+
+### 🍕 Features
+
+* add discord link to user profile ([#1370](https://github.com/open-sauced/insights/issues/1370)) ([f94bc3b](https://github.com/open-sauced/insights/commit/f94bc3b6c27588cca3399fa0e0c789b934c56ab9))
+
 ## [1.57.0-beta.1](https://github.com/open-sauced/insights/compare/v1.56.1-beta.3...v1.57.0-beta.1) (2023-07-18)
 
 
