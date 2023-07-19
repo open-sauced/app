@@ -12,7 +12,7 @@ import LanguagePill from "components/atoms/LanguagePill/LanguagePill";
 
 import { updateUser, UpdateUserPayload } from "lib/hooks/update-user";
 
-import { authSession } from "lib/hooks/authSession";
+import useSession from "lib/hooks/useSession";
 import { validateEmail } from "lib/utils/validate-email";
 import { timezones } from "lib/utils/timezones";
 import { updateEmailPreferences } from "lib/hooks/updateEmailPreference";
@@ -55,6 +55,8 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
   const [selectedInterest, setSelectedInterest] = useState<string[]>([]);
   const formRef = useRef<HTMLFormElement>(null);
   const interestArray = getInterestOptions();
+
+  const { authSession } = useSession(true);
 
   useEffect(() => {
     async function fetchAuthSession() {

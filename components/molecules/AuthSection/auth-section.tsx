@@ -17,7 +17,6 @@ import Text from "components/atoms/Typography/text";
 import GitHubIcon from "img/icons/github-icon.svg";
 import Icon from "components/atoms/Icon/icon";
 import NotificationCard from "components/atoms/NotificationsCard/notification-card";
-import { authSession } from "lib/hooks/authSession";
 import { Spinner } from "components/atoms/SpinLoader/spin-loader";
 import { Popover, PopoverContent, PopoverTrigger } from "../Popover/popover";
 import DropdownList from "../DropdownList/dropdown-list";
@@ -31,7 +30,7 @@ const AuthSection: React.FC = ({}) => {
   const currentPath = router.asPath;
 
   const { signIn, signOut, user, sessionToken } = useSupabaseAuth();
-  const { onboarded } = useSession();
+  const { onboarded, authSession } = useSession(true);
   const [notifications, setNotifications] = useState<DbUserNotification[]>([]);
   const [loading, setLoading] = useState(false);
   const [userInfo, setUserInfo] = useState<DbUser | undefined>(undefined);
