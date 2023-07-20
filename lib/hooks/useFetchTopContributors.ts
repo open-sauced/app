@@ -1,7 +1,10 @@
 import useSWR, { Fetcher } from "swr";
 import publicApiFetcher from "lib/utils/public-api-fetcher";
 
-type TopContributorsResponse = { login: string }[];
+type TopContributorsResponse = {
+  data: { login: string }[];
+  meta: Meta;
+};
 
 const useFetchTopContributors = () => {
   const { data, error, mutate } = useSWR<TopContributorsResponse, Error>(
@@ -10,7 +13,7 @@ const useFetchTopContributors = () => {
   );
 
   return {
-    data: data ?? [],
+    data: data?.data ?? [],
     isLoading: !error && !data,
     isError: !!error,
     mutate,
