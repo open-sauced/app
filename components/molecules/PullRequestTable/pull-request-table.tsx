@@ -22,7 +22,14 @@ interface CardTableProps {
   range?: number;
 }
 
-const PullRequestTable = ({ contributor, topic, repositories, limit, isHoverCard, range }: CardTableProps): JSX.Element => {
+const PullRequestTable = ({
+  contributor,
+  topic,
+  repositories,
+  limit,
+  isHoverCard,
+  range,
+}: CardTableProps): JSX.Element => {
   const { data, isLoading } = useContributorPullRequests(contributor, topic, repositories, limit, range);
 
   return data.length > 0 ? (
@@ -44,7 +51,7 @@ const PullRequestTable = ({ contributor, topic, repositories, limit, isHoverCard
                 deletions,
                 number: prNumber,
                 full_name: fullName,
-                updated_at: prUpdatedTime
+                updated_at: prUpdatedTime,
               },
               index
             ) => {
@@ -59,7 +66,7 @@ const PullRequestTable = ({ contributor, topic, repositories, limit, isHoverCard
                 noOfLinesChanged: Math.abs(additions - deletions),
                 repoFullName: fullName,
                 prNumber,
-                prUpdatedTime
+                prUpdatedTime,
               };
 
               return <LatestPrTableRow isHoverCard={isHoverCard} key={index} {...latestPrs} />;

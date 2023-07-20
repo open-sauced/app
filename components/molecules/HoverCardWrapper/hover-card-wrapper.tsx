@@ -1,6 +1,5 @@
 import { useRouter } from "next/router";
 
-
 import { useFetchUser } from "lib/hooks/useFetchUser";
 import { useContributorPullRequestsChart } from "lib/hooks/useContributorPullRequestsChart";
 import { getAvatarByUsername } from "lib/utils/github";

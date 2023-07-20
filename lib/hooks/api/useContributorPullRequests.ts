@@ -40,9 +40,7 @@ export function getContributorPRUrl(
 }
 
 export const fetchContributorPRs = async (...args: Parameters<typeof getContributorPRUrl>) => {
-  return (publicApiFetcher as Fetcher<PaginatedResponse, string>)(
-    getContributorPRUrl(...args)
-  );
+  return (publicApiFetcher as Fetcher<PaginatedResponse, string>)(getContributorPRUrl(...args));
 };
 
 const useContributorPullRequests = (

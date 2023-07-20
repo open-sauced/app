@@ -69,8 +69,8 @@ const InsightsHub: WithPageLayout = () => {
         {isLoading
           ? "Loading..."
           : isError
-            ? "Error..."
-            : insightsData.map((insight, index) => {
+          ? "Error..."
+          : insightsData.map((insight, index) => {
               return <InsightRow key={`insights_${insight.id}`} user={user} insight={insight} />;
             })}
       </section>
@@ -85,7 +85,7 @@ const InsightsHub: WithPageLayout = () => {
 
       <div
         className={clsx("py-1 md:py-4 flex w-full md:mt-5 justify-between items-center", {
-          hidden: insightsMeta.itemCount <= insightsMeta.limit
+          hidden: insightsMeta.itemCount <= insightsMeta.limit,
         })}
       >
         <PaginationResults metaInfo={insightsMeta} total={insightsMeta.itemCount} entity={"insights"} />
@@ -111,7 +111,7 @@ const InsightsHub: WithPageLayout = () => {
 InsightsHub.PageLayout = HubLayout;
 InsightsHub.isPrivateRoute = true;
 InsightsHub.SEO = {
-  title: "Insights Hub | Open Sauced Insights"
+  title: "Insights Hub | Open Sauced Insights",
 };
 
 export default InsightsHub;

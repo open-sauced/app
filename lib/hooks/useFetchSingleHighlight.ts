@@ -13,7 +13,7 @@ const useFetchSingleHighlight = (id: number | undefined) => {
   return {
     data: data ?? undefined,
     isLoading: !error && !data,
-    isError: !!error
+    isError: !!error,
   };
 };
 

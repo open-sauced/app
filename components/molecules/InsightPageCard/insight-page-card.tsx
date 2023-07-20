@@ -30,26 +30,26 @@ const InsightPageCard = ({ insight, user }: InsightPageCardProps): JSX.Element =
       label: "open",
       value: open,
       id: "open",
-      color: "hsla(131, 41%, 46%, 1)"
+      color: "hsla(131, 41%, 46%, 1)",
     },
     {
       label: "merged",
       value: merged,
       id: "merged",
-      color: "hsla(272, 51%, 54%, 1)"
+      color: "hsla(272, 51%, 54%, 1)",
     },
     {
       label: "closed",
       value: closed,
       id: "closed",
-      color: "hsla(11, 89%, 54%, 1)"
+      color: "hsla(11, 89%, 54%, 1)",
     },
     {
       label: "draft",
       value: drafts,
       id: "draft",
-      color: "hsla(205, 11%, 78%, 1)"
-    }
+      color: "hsla(205, 11%, 78%, 1)",
+    },
   ];
 
   // Function to handle copy to clipboard

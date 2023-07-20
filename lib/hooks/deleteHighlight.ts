@@ -9,9 +9,9 @@ const deleteHighlight = async (id: string) => {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: `Bearer ${sessionToken}`
+        Authorization: `Bearer ${sessionToken}`,
       },
-      method: "DELETE"
+      method: "DELETE",
     });
 
     if (res.ok) {

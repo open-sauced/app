@@ -38,13 +38,13 @@ const PieChart = ({ data }: PierChartProps) => {
         activeOuterRadiusOffset={4}
         colors={{ datum: "data.color" }}
         borderColor={{
-          from: "color"
+          from: "color",
         }}
         enableArcLinkLabels={false}
         enableArcLabels={false}
         arcLabelsSkipAngle={10}
         arcLabelsTextColor={{
-          from: "color"
+          from: "color",
         }}
         tooltip={function (e) {
           var t = e.datum;

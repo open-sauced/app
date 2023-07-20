@@ -14,7 +14,7 @@ const useInsight = (id: string) => {
     data: data,
     isLoading: !error && !data,
     isError: !!error && Object.keys(error).length > 0,
-    mutate
+    mutate,
   };
 };
 
