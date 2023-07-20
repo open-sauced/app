@@ -32,9 +32,8 @@ const LatestPrTableRow = ({
   isHoverCard,
   repoFullName,
   prNumber,
-  prUpdatedTime
+  prUpdatedTime,
 }: LatestPrTableRowProps) => {
-
   return (
     <div className="flex gap-2 items-center px-2 py-1">
       <div className={`flex item-center gap-2 w-3/5 ${isHoverCard && "w-5/6"}`}>
@@ -42,7 +41,7 @@ const LatestPrTableRow = ({
           <IconContext.Provider value={{ color: "green", style: { width: 14, height: 14, marginTop: 2 } }}>
             <VscGitPullRequest title="Open Pull Request" />
           </IconContext.Provider>
-        ) : (!draft && prStatus.toLowerCase() === "closed" || prStatus.toLowerCase() === "merged") ? (
+        ) : (!draft && prStatus.toLowerCase() === "closed") || prStatus.toLowerCase() === "merged" ? (
           <IconContext.Provider
             value={{ color: merged ? "purple" : "red", style: { width: 14, height: 14, marginTop: 2 } }}
           >

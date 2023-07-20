@@ -97,11 +97,11 @@ const AuthSection: React.FC = ({}) => {
         onClick={async () => {
           const pageHref = window.location.href;
           const searchParams = new URLSearchParams(pageHref.substring(pageHref.indexOf("?")));
-          if (searchParams.has("login")){
+          if (searchParams.has("login")) {
             searchParams.delete("login");
             router.replace(`${pageHref.substring(0, pageHref.indexOf("?"))}?${searchParams.toString()}`);
           }
-          
+
           await signOut();
         }}
         key="authorized"

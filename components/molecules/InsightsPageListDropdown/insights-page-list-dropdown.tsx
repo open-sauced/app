@@ -6,7 +6,7 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuTrigger
+  DropdownMenuTrigger,
 } from "components/atoms/Dropdown/dropdown";
 import InsightsPageListItem from "components/atoms/InsightsPageListItem/insights-page-list-item";
 

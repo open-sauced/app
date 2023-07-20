@@ -30,7 +30,7 @@ const useUserInsights = () => {
     mutate,
     page,
     setPage,
-    setLimit
+    setLimit,
   };
 };
 

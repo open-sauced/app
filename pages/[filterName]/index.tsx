@@ -13,9 +13,7 @@ const Filter: React.FC = () => {
     }
   }, [router, topic]);
 
-  return (
-    <Loader theme={"dark"}/>
-  );
+  return <Loader theme={"dark"} />;
 };
 
 export default Filter;

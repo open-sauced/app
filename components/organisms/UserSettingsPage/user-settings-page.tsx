@@ -112,7 +112,6 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
     event.target.reportValidity();
   };
 
-
   const handleSelectInterest = (interest: string) => {
     if (selectedInterest.length > 0 && selectedInterest.includes(interest)) {
       setSelectedInterest((prev) => prev.filter((item) => item !== interest));
@@ -122,7 +121,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
   };
 
   const handleUpdateEmailPreference = async () => {
-    setUpdating(prev => ({ ...prev, emailPreferences: true }));
+    setUpdating((prev) => ({ ...prev, emailPreferences: true }));
 
     const data = await updateEmailPreferences({ ...emailPreference });
     if (data) {
@@ -131,11 +130,11 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
       toast({ description: "An error occured!", variant: "danger" });
     }
 
-    setUpdating(prev => ({...prev, emailPreferences: false}));
+    setUpdating((prev) => ({ ...prev, emailPreferences: false }));
   };
 
   const handleUpdateInterest = async () => {
-    setUpdating(prev => ({ ...prev, interests: true }));
+    setUpdating((prev) => ({ ...prev, interests: true }));
 
     const data = await updateUser({
       data: { interests: selectedInterest },
@@ -154,7 +153,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
 
   const handleUpdateProfile = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setUpdating(prev => ({...prev, profile: true}));
+    setUpdating((prev) => ({ ...prev, profile: true }));
     const payload: UpdateUserPayload = {
       name: formRef.current!.nameInput.value,
       email,

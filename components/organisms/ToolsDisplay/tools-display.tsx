@@ -12,22 +12,22 @@ interface ToolProps {
 }
 
 const Tool = ({ tool, repositories }: ToolProps): JSX.Element => {
-  const { hasReports, waitlisted } = useSession();  
+  const { hasReports, waitlisted } = useSession();
   captureAnayltics("Tools Display", "tools", `${tool} selected`);
 
   switch (tool) {
-  case "Dashboard":
-    return <Dashboard repositories={repositories} />;
+    case "Dashboard":
+      return <Dashboard repositories={repositories} />;
 
-  case "Repositories":
-    return <Repositories repositories={repositories} />;
+    case "Repositories":
+      return <Repositories repositories={repositories} />;
 
-  case "Reports":
-    return <Reports hasReports={hasReports} waitlisted={waitlisted} repositories={repositories} />;
-  case "Contributors":
-    return <Contributors repositories={repositories} />;
-  default:
-    return <> {tool ? `${tool}` : "Test"} Tool Page</>;
+    case "Reports":
+      return <Reports hasReports={hasReports} waitlisted={waitlisted} repositories={repositories} />;
+    case "Contributors":
+      return <Contributors repositories={repositories} />;
+    default:
+      return <> {tool ? `${tool}` : "Test"} Tool Page</>;
   }
 };
 

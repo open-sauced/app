@@ -5,7 +5,7 @@ import {
   ToastDescription,
   ToastProvider,
   ToastTitle,
-  ToastViewport
+  ToastViewport,
 } from "components/atoms/Toast/toast";
 
 import successIcon from "img/icons/success.svg";

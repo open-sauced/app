@@ -26,7 +26,7 @@ const PullRequestSocialCard = ({
   prTicketId,
   commentsCount,
   linesAdded,
-  linesRemoved
+  linesRemoved,
 }: PullRequestSocialCardProps) => {
   return (
     <div className="w-[26.375rem] cursor-pointer border rounded-xl px-5 py-4">

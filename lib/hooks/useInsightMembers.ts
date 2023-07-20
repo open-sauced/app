@@ -20,9 +20,9 @@ const useInsightMembers = (insightId: number) => {
       method: "POST",
       headers: {
         "Content-type": "application/json",
-        Authorization: `Bearer ${sessionToken}`
+        Authorization: `Bearer ${sessionToken}`,
       },
-      body: JSON.stringify({ email })
+      body: JSON.stringify({ email }),
     });
 
     if (!req.ok) {
@@ -39,9 +39,9 @@ const useInsightMembers = (insightId: number) => {
       method: "PATCH",
       headers: {
         "Content-type": "application/json",
-        Authorization: `Bearer ${sessionToken}`
+        Authorization: `Bearer ${sessionToken}`,
       },
-      body: JSON.stringify({ access })
+      body: JSON.stringify({ access }),
     });
 
     if (!req.ok) {
@@ -59,8 +59,8 @@ const useInsightMembers = (insightId: number) => {
       method: "DELETE",
       headers: {
         "Content-type": "application/json",
-        Authorization: `Bearer ${sessionToken}`
-      }
+        Authorization: `Bearer ${sessionToken}`,
+      },
     });
 
     if (req.ok) {
@@ -75,7 +75,7 @@ const useInsightMembers = (insightId: number) => {
     mutate,
     addMember,
     updateMember,
-    deleteMember
+    deleteMember,
   };
 };
 

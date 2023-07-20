@@ -20,7 +20,6 @@ import { cardImageUrl, linkedinCardShareUrl, twitterCardShareUrl } from "lib/uti
 import TwitterIcon from "../../../img/icons/social-twitter.svg";
 import LinkinIcon from "../../../img/icons/social-linkedin.svg";
 import BubbleBG from "../../../img/bubble-bg.svg";
-;
 const ADDITIONAL_PROFILES_TO_LOAD = [
   "bdougie",
   "nickytonline",
@@ -61,7 +60,6 @@ async function fetchInitialCardData(username: string): Promise<DevCardProps> {
     ? Math.floor((Date.now() - Date.parse(user.first_opened_pr_at)) / 86400000)
     : 0;
 
-
   return {
     username,
     avatarURL: githubAvatar,
@@ -100,7 +98,6 @@ export const getServerSideProps: GetServerSideProps<CardProps, Params> = async (
 
   const uniqueUsernames = [...new Set([username, ...ADDITIONAL_PROFILES_TO_LOAD])];
   const cards = await Promise.all(uniqueUsernames.map(fetchInitialCardData));
-
 
   return {
     props: {
@@ -156,7 +153,6 @@ const Card: NextPage<CardProps> = ({ username, cards }) => {
     setMinHeight(`${innerHeight}px`);
   }, [innerHeight]);
 
-
   return (
     <div
       style={{
@@ -176,7 +172,7 @@ const Card: NextPage<CardProps> = ({ username, cards }) => {
           gridTemplateRows: "auto 1fr auto",
           // using the JS calculated min-height here to account for mobile browser toolbars
           // see https://dev.to/nirazanbasnet/dont-use-100vh-for-mobile-responsive-3o97
-          minHeight
+          minHeight,
         }}
       >
         <div className="grid justify-center place-content-start py-7 px-3 md:justify-start">
@@ -249,10 +245,10 @@ const Card: NextPage<CardProps> = ({ username, cards }) => {
           ) : (
             <div className="flex flex-col gap-2">
               <Button variant="primary" className="justify-center" href={`/user/${selectedUserName}`}>
-              See Full Profile
+                See Full Profile
               </Button>
               <Button variant="dark" className="justify-center" href="/start">
-              Create your own dev card!
+                Create your own dev card!
               </Button>
             </div>
           )}
@@ -264,8 +260,7 @@ const Card: NextPage<CardProps> = ({ username, cards }) => {
 
 export default Card;
 
-
-function SocialButtons({username, summary} : {username: string, summary: string }) {
+function SocialButtons({ username, summary }: { username: string; summary: string }) {
   const icons = [
     {
       name: "Twitter",
@@ -301,7 +296,7 @@ function SocialButtons({username, summary} : {username: string, summary: string 
             key={icon.src}
             href={icon.url}
             className={linkStyle}
-            style={{ backgroundColor: icon.color, borderColor: "rgba(255,255,255,0.2)"}}
+            style={{ backgroundColor: icon.color, borderColor: "rgba(255,255,255,0.2)" }}
             target="_blank"
             rel="noreferrer"
           >

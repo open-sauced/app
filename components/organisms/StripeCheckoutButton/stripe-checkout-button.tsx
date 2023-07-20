@@ -13,8 +13,8 @@ const StripeCheckoutButton = () => {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/checkout/session`, {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${sessionToken}`
-        }
+          Authorization: `Bearer ${sessionToken}`,
+        },
       });
 
       if (response.ok) {

@@ -58,8 +58,8 @@ export const classNames = {
     prVelocity: "flex justify-center lg:min-w-[100px] items-center gap-3 flex-1",
     spam: "flex items-center justify-center lg:min-w-[50px] lg:justify-start gap-3 flex-1 ",
     contributors: "flex-1 lg:min-w-[200px] items-center",
-    last30days: "flex-1 lg:min-w-[150px]"
-  }
+    last30days: "flex-1 lg:min-w-[150px]",
+  },
 };
 
 const RepositoriesTable = ({
@@ -70,11 +70,11 @@ const RepositoriesTable = ({
   user,
   repo,
   selectedRepos,
-  handleOnSelectRepo
+  handleOnSelectRepo,
 }: RepositoriesTableProps): JSX.Element => {
   const isLoadedWithRepos = !loading && !error && Array.isArray(listOfRepositories) && listOfRepositories.length > 0;
   const isFilteredRepoNotIndexed =
-  Array.isArray(repo) && !loading && !error && Array.isArray(listOfRepositories) && listOfRepositories.length === 0;
+    Array.isArray(repo) && !loading && !error && Array.isArray(listOfRepositories) && listOfRepositories.length === 0;
 
   return (
     <section className="flex flex-col">
@@ -83,9 +83,16 @@ const RepositoriesTable = ({
 
       {isLoadedWithRepos &&
         listOfRepositories.map((item, index) => {
-          const isSelected = selectedRepos.find(iteratedRepo => iteratedRepo.id == item.id) != undefined;
+          const isSelected = selectedRepos.find((iteratedRepo) => iteratedRepo.id == item.id) != undefined;
           return (
-            <RepoRow key={`${item.full_name}/${index}`} topic={topic} repo={item} userPage={user} selected={isSelected} handleOnSelectRepo={handleOnSelectRepo} />
+            <RepoRow
+              key={`${item.full_name}/${index}`}
+              topic={topic}
+              repo={item}
+              userPage={user}
+              selected={isSelected}
+              handleOnSelectRepo={handleOnSelectRepo}
+            />
           );
         })}
       {isFilteredRepoNotIndexed && (
@@ -94,7 +101,7 @@ const RepositoriesTable = ({
           // eslint-disable-next-line
           repo={{
             id: "",
-            full_name: repo.join("/") as string
+            full_name: repo.join("/") as string,
           }}
           userPage={user}
           handleOnSelectRepo={handleOnSelectRepo}

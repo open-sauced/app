@@ -162,7 +162,7 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
               </TipProvider>
               <Script id="siteGPT" type="text/javascript">
                 {
-                  "d=document;s=d.createElement(\"script\");s.src=\"https://sitegpt.ai/widget/365440930125185604.js\";s.async=1;d.getElementsByTagName(\"head\")[0].appendChild(s);"
+                  'd=document;s=d.createElement("script");s.src="https://sitegpt.ai/widget/365440930125185604.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);'
                 }
               </Script>
             </PrivateWrapper>

@@ -7,10 +7,9 @@ interface SparklineProps {
   data?: Serie[];
 }
 
-
 const Sparkline: React.FC<SparklineProps> = ({ width = 120, height = 40, data = [] }) => {
   return (
-    <div style={{height: height, width: width}}>
+    <div style={{ height: height, width: width }}>
       <ResponsiveLine
         data={data}
         margin={{ top: 5, right: 0, bottom: 5, left: 0 }}
@@ -20,7 +19,7 @@ const Sparkline: React.FC<SparklineProps> = ({ width = 120, height = 40, data = 
           min: "auto",
           max: "auto",
           stacked: true,
-          reverse: false
+          reverse: false,
         }}
         yFormat=" >-.2f"
         curve="cardinal"
@@ -37,10 +36,10 @@ const Sparkline: React.FC<SparklineProps> = ({ width = 120, height = 40, data = 
         pointBorderColor={{ from: "serieColor" }}
         pointLabelYOffset={-12}
         isInteractive={false}
-        legends={[]} />
+        legends={[]}
+      />
     </div>
   );
 };
-
 
 export default Sparkline;

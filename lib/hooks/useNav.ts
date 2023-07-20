@@ -5,25 +5,25 @@ import useContributors from "./api/useContributors";
 
 const useNav = (repositories: number[] = []) => {
   const router = useRouter();
-  const range = useStore(state => state.range);
+  const range = useStore((state) => state.range);
   const { meta: repoMetaData } = useRepositories(repositories, range);
   const { meta: conMetaData } = useContributors(10, repositories, range);
 
   const defaultTools = [
     {
-      name: "Dashboard"
+      name: "Dashboard",
     },
     {
-      name: "Reports"
+      name: "Reports",
     },
     {
       name: "Repositories",
-      numOf: repoMetaData.itemCount
+      numOf: repoMetaData.itemCount,
     },
     {
       name: "Contributors",
-      numOf: conMetaData.itemCount
-    }
+      numOf: conMetaData.itemCount,
+    },
   ];
 
   const { filterName, toolName: selectedTool, selectedFilter, userOrg } = router.query;
@@ -35,7 +35,7 @@ const useNav = (repositories: number[] = []) => {
     selectedTool,
     selectedFilter,
     filterName,
-    userOrg
+    userOrg,
   };
 };
 

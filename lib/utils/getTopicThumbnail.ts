@@ -35,7 +35,7 @@ const topicThumbnails: Record<interestsType, string> = {
   golang: go,
   rust: rust,
   vue: vue,
-  kubernetes: kubernetes
+  kubernetes: kubernetes,
 };
 
 const getTopicThumbnail = (topic: keyof typeof topicThumbnails) => {

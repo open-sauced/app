@@ -5,7 +5,7 @@ const { Text: SupabaseTextComponent } = Typography;
 
 interface TextProps extends React.ComponentProps<typeof SupabaseTextComponent> {
   //Add additional prop definitions here
-  title?: string
+  title?: string;
 }
 
 const Text: React.FC<TextProps> = (props) => {
