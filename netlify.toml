@@ -10,3 +10,11 @@ environment = { CHANNEL = "beta" }
 
 [dev]
 framework = "#static"
+
+[[edge_functions]]
+function = "pages/api/card.png"
+path = "/api/card.png"
+
+[[edge_handlers]]
+handler = "pages/api/card.png"
+path = "/api/card.png"
