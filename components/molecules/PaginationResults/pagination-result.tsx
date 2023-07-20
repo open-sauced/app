@@ -19,7 +19,11 @@ const PaginationResults = ({ metaInfo, entity, total, className }: PaginationRes
       ? metaInfo.page * metaInfo.limit
       : metaInfo.itemCount;
   return (
-    <div className={`${className ? className : ""} md:inline-block items-center gap-x-1   text-sm text-light-slate-9 tracking-tight`}>
+    <div
+      className={`${
+        className ? className : ""
+      } md:inline-block items-center gap-x-1   text-sm text-light-slate-9 tracking-tight`}
+    >
       <span className="hidden md:inline-block">Showing</span> <span className="text-light-slate-12">{from} -</span>
       <span className="text-light-slate-12">{to}</span> of {total > 999 ? humanizeNumber(total, null) : total}
       {/* hide on medium screens */}

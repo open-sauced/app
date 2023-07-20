@@ -73,7 +73,7 @@ export default function DevCard(props: DevCardProps) {
     "h-full",
     "absolute",
     "left-0",
-    "top-0",
+    "top-0"
   );
 
   const faceStyle: React.CSSProperties = {
@@ -98,13 +98,7 @@ export default function DevCard(props: DevCardProps) {
         trackOnWindow={isInteractive}
         glareBorderRadius="1.5rem"
         flipHorizontally={isFlipped}
-        className={clsx(
-          "DevCard-card",
-          "relative",
-          "rounded-3x",
-          "w-full",
-          "h-full",
-        )}
+        className={clsx("DevCard-card", "relative", "rounded-3x", "w-full", "h-full")}
         style={{
           transformStyle: "preserve-3d",
         }}

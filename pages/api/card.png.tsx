@@ -8,7 +8,6 @@ import { getRepoList } from "lib/hooks/useRepoList";
  * @params {string} username - username for the requested user
  * @params {number} w - Width of the card
  */
-  
 
 export const config = {
   runtime: "edge",
@@ -46,19 +45,14 @@ export default async function handler(request: NextRequest) {
 
   const bufferSize = size(50);
 
-  const [
-    interSemiBoldFontData,
-    interBlackFontData,
-    logoImgData,
-    prReq,
-  ] = await Promise.all([
+  const [interSemiBoldFontData, interBlackFontData, logoImgData, prReq] = await Promise.all([
     interSemiBoldFont,
     interBlackFont,
     logoImg,
-    fetchContributorPRs(username, undefined, "*", [], 100)
+    fetchContributorPRs(username, undefined, "*", [], 100),
   ]);
 
-  const { data: prData } = prReq; 
+  const { data: prData } = prReq;
   const prs = prData.length;
   const repos = getRepoList(Array.from(new Set(prData.map((prData) => prData.full_name))).join(",")).length;
 
@@ -67,7 +61,7 @@ export default async function handler(request: NextRequest) {
       <div
         tw="flex"
         style={{
-          fontFamily: "\"Inter\"",
+          fontFamily: '"Inter"',
           fontSize: size(16),
           fontWeight: 700,
           paddingBottom: bufferSize,
@@ -83,7 +77,8 @@ export default async function handler(request: NextRequest) {
             borderRadius: size(16),
             borderWidth: size(2),
             boxShadow: `0px ${size(20)} ${size(30)} -12px rgba(0, 0, 0, 0.25)`,
-            background: "#11181C linear-gradient(152.13deg, rgba(217, 217, 217, 0.6) 4.98%, rgba(217, 217, 217, 0.1) 65.85%)",
+            background:
+              "#11181C linear-gradient(152.13deg, rgba(217, 217, 217, 0.6) 4.98%, rgba(217, 217, 217, 0.1) 65.85%)",
           }}
         >
           <div tw="flex items-stretch w-full h-full overflow-hidden">

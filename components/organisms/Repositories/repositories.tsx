@@ -35,7 +35,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
     isError: repoListIsError,
     isLoading: repoListIsLoading,
     setPage,
-    setLimit
+    setLimit,
   } = useRepositories(repositories, range);
   const filteredRepoNotIndexed = selectedFilter && !repoListIsLoading && !repoListIsError && repoListData.length === 0;
   const [selectedRepos, setSelectedRepos] = useState<DbRepo[]>([]);
@@ -56,10 +56,12 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
       );
     } else {
       const reposIds = selectedRepos.map((repo) => repo.id);
-      signIn({ 
+      signIn({
         provider: "github",
         options: {
-          redirectTo: `${window.location.origin}/hub/insights/new?selectedReposIDs=${JSON.stringify(reposIds)}&login=true&`,
+          redirectTo: `${window.location.origin}/hub/insights/new?selectedReposIDs=${JSON.stringify(
+            reposIds
+          )}&login=true&`,
         },
       });
     }
@@ -120,7 +122,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
               <TableTitle> Repository </TableTitle>
             </div>
             <div className={clsx(classNames.cols.activity)}>
-              <TableTitle >Activity</TableTitle>
+              <TableTitle>Activity</TableTitle>
             </div>
             <div className={clsx(classNames.cols.prOverview)}>
               <TableTitle>PR Overview</TableTitle>
@@ -129,10 +131,10 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
               <TableTitle>PR Velocity</TableTitle>
             </div>
             <div className={clsx(classNames.cols.spam)}>
-              <TableTitle >SPAM</TableTitle>
+              <TableTitle>SPAM</TableTitle>
             </div>
             <div className={clsx(classNames.cols.contributors, "hidden lg:flex")}>
-              <TableTitle >Contributors</TableTitle>
+              <TableTitle>Contributors</TableTitle>
             </div>
             <div className={clsx(classNames.cols.last30days, "hidden lg:flex")}>
               <TableTitle>Last 30 Days</TableTitle>
@@ -143,7 +145,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
             <div className="flex justify-between p-3 px-6 border-b-2 text-light-slate-11">
               <div>{selectedRepos.length} Repositories selected</div>
               <Button onClick={handleOnAddtoInsights} variant="primary">
-                 Add to Insight Page
+                Add to Insight Page
               </Button>
             </div>
           )}
@@ -168,7 +170,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
                 { name: "20 per page", value: "20" },
                 { name: "30 per page", value: "30" },
                 { name: "40 per page", value: "40" },
-                { name: "50 per page", value: "50" }
+                { name: "50 per page", value: "50" },
               ]}
               className="!w-36 ml-auto md:hidden overflow-x-hidden"
               onChange={function (limit: string): void {

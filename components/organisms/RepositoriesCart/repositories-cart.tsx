@@ -31,7 +31,7 @@ const RepositoriesCart = ({
   handleUpdatePage,
   handleAddToCart,
   createPageButtonDisabled,
-  loading
+  loading,
 }: RepositoriesCartProps): JSX.Element => {
   const cartItems = Children.toArray(children);
 

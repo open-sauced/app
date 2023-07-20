@@ -15,7 +15,7 @@ const useFetchAllEmojis = () => {
     data: data?.data ?? [],
     isError: !!error,
     isLoading: !error && !data,
-    mutate
+    mutate,
   };
 };
 

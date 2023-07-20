@@ -14,15 +14,13 @@ const Filter: WithPageLayout = () => {
     toolName ? ` / ${changeCapitalization(toolName.toString(), true)}` : ""
   }`;
 
-  useEffect( () => {
+  useEffect(() => {
     Filter.updateSEO!({
-      title: title
+      title: title,
     });
   }, [title]);
 
-  return (
-    <Tool tool={toolName ? changeCapitalization(toolName.toString(), true) : undefined} />
-  );
+  return <Tool tool={toolName ? changeCapitalization(toolName.toString(), true) : undefined} />;
 };
 
 Filter.PageLayout = FilterLayout;

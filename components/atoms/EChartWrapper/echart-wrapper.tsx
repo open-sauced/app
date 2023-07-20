@@ -8,19 +8,13 @@ Docs for ReactECharts: https://github.com/hustcc/echarts-for-react
  */
 
 interface EChartWrapperProps {
-    option: Object;
-    className?: string;
+  option: Object;
+  className?: string;
 }
 
 const EChartWrapper: React.FC<EChartWrapperProps> = ({ option, className }) => {
   return (
-    <ReactECharts
-      option={option}
-      className={className || ""}
-      notMerge={true}
-      lazyUpdate={true}
-      theme={"theme_name"}
-    />
+    <ReactECharts option={option} className={className || ""} notMerge={true} lazyUpdate={true} theme={"theme_name"} />
   );
 };
 

@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from "react";
 import ContextFilterButton from "components/atoms/ContextFilterButton/context-filter-button";
 import cancelIcon from "img/x-circle.svg";
@@ -21,7 +20,7 @@ const SuperativeSelector: React.FC<SuperlativeSelectorProps> = ({
   filterValues,
   handleFilterClick,
   handleCancelClick,
-  selected
+  selected,
 }) => {
   const ref = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);

@@ -38,7 +38,7 @@ const CSVDownload = ({ report, repositories }: CSVDownloadProps) => {
     query.set("filter", selectedFilter);
     query.set("limit", "100");
     query.set("range", "30");
-    
+
     if (repositories && repositories.length > 0) {
       query.set("repoIds", repositories.join(","));
     }

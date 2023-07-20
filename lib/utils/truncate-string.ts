@@ -7,4 +7,4 @@ export function truncateString(str: string | undefined, num: number) {
     return str;
   }
   return str.slice(0, num) + "...";
-};
+}
