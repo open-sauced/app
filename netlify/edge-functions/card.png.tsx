@@ -1,17 +1,13 @@
-import { NextRequest } from "next/server";
-import { ImageResponse } from "@vercel/og";
-import { getAvatarByUsername } from "lib/utils/github";
-import { fetchContributorPRs } from "lib/hooks/api/useContributorPullRequests";
-import { getRepoList } from "lib/hooks/useRepoList";
+import React from "https://esm.sh/react@18.2.0";
+import { ImageResponse } from "https://deno.land/x/og_edge@0.0.2/mod.ts";
+import { getAvatarByUsername } from "../../lib/utils/github.ts";
+import { fetchContributorPRs } from "../../lib/hooks/api/useContributorPullRequests.ts";
+import { getRepoList } from "../../lib/hooks/useRepoList.ts";
 
 /**
  * @params {string} username - username for the requested user
  * @params {number} w - Width of the card
  */
-
-export const config = {
-  runtime: "edge",
-};
 
 const ASPECT_RATIO = 245 / 348;
 const BASE_WIDTH = 245;
@@ -25,7 +21,11 @@ const interSemiBoldFont = fetch(new URL("../../font/Inter-SemiBold.ttf", import.
 );
 const interBlackFont = fetch(new URL("../../font/Inter-Black.ttf", import.meta.url)).then((res) => res.arrayBuffer());
 
-export default async function handler(request: NextRequest) {
+// export const config: Config = {
+//   path: "/api/card.png",
+// };
+
+export default async function handler(request: Request) {
   const { searchParams } = new URL(request.url);
   const username = searchParams.get("username");
 
