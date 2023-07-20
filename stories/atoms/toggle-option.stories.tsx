@@ -2,7 +2,7 @@ import { ComponentStory } from "@storybook/react";
 import ToggleOption from "components/atoms/ToggleOption/toggle-option";
 
 const storyConfig = {
-  title: "Design System/Atoms/ToggleOption"
+  title: "Design System/Atoms/ToggleOption",
 };
 
 export default storyConfig;
@@ -11,9 +11,9 @@ const ToggleOptionTemplate: ComponentStory<typeof ToggleOption> = (args) => <Tog
 export const Default = ToggleOptionTemplate.bind({});
 export const WithIcon = ToggleOptionTemplate.bind({});
 Default.args = {
-  optionText: "test"
+  optionText: "test",
 };
-WithIcon.args ={
+WithIcon.args = {
   optionText: "text",
-  withIcon: true
+  withIcon: true,
 };
