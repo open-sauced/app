@@ -9,6 +9,7 @@ import TextInput from "components/atoms/TextInput/text-input";
 import Title from "components/atoms/Typography/title";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "components/atoms/Select/select";
 import LanguagePill from "components/atoms/LanguagePill/LanguagePill";
+import StripeCheckoutButton from "components/organisms/StripeCheckoutButton/stripe-checkout-button";
 
 import { updateUser, UpdateUserPayload } from "lib/hooks/update-user";
 
@@ -370,6 +371,12 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
             >
               Update Preferences
             </Button>
+          </div>
+          <div className="flex flex-col gap-3 order-first md:order-last">
+            <label className="text-2xl font-normal text-light-slate-11">Upgrade Access</label>
+            <div className="text-center p-3 border border-dashed rounded-xl border-light-slate-8">
+              <StripeCheckoutButton />
+            </div>
           </div>
         </div>
       </div>
