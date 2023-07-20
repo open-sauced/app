@@ -40,7 +40,8 @@ export default function DevCardWall({ isLoading = false, cards, initialCardIndex
     setActiveCardIndex(null);
   });
 
-  const [arrowIsPressed] = useKeyPress("ArrowLeft");
+  const [leftArrowIsPressed] = useKeyPress("ArrowLeft");
+  const [downArrowIsPressed] = useKeyPress("ArrowDown");
 
   const pulseAnimation = useSpring({
     from: {
@@ -48,13 +49,13 @@ export default function DevCardWall({ isLoading = false, cards, initialCardIndex
     },
     to: isLoading
       ? [
-          {
-            opacity: 0.2,
-          },
-          {
-            opacity: 0.1,
-          },
-        ]
+        {
+          opacity: 0.2,
+        },
+        {
+          opacity: 0.1,
+        },
+      ]
       : { opacity: 0 },
     loop: isLoading,
     config: {
@@ -76,8 +77,8 @@ export default function DevCardWall({ isLoading = false, cards, initialCardIndex
   };
 
   const [nextButtonSpringStyle, nextButtonSpringApi] = useSpring(
-    () => (arrowIsPressed ? nextButtonActiveStyle : nextButtonDefaultStyle),
-    [arrowIsPressed]
+    () => (leftArrowIsPressed ? nextButtonActiveStyle : nextButtonDefaultStyle),
+    [leftArrowIsPressed]
   );
 
   const bindHover = useGesture({
@@ -129,28 +130,28 @@ export default function DevCardWall({ isLoading = false, cards, initialCardIndex
       cardApi.start((i) => {
         return i === activeCardIndex
           ? {
-              scale: 1.1,
-              translateY: 0,
-              opacity: 1,
-              zIndex: 49,
-              x: 0,
-              y: height / 2 - cellHeight / 2,
-              immediate: "zIndex",
-            }
+            scale: 1.1,
+            translateY: 0,
+            opacity: 1,
+            zIndex: 49,
+            x: 0,
+            y: height / 2 - cellHeight / 2,
+            immediate: "zIndex",
+          }
           : { scale: 1, translateY: 0, opacity: 1, zIndex: 0, ...coordinatesForIndex(height)(i), immediate: "zIndex" };
       });
 
       cardButtonApi.start((i) => {
         return i === activeCardIndex
           ? {
-              opacity: 1,
-              translateY: 0,
-              delay: 250,
-            }
+            opacity: 1,
+            translateY: 0,
+            delay: 250,
+          }
           : {
-              opacity: 0,
-              translateY: 50,
-            };
+            opacity: 0,
+            translateY: 50,
+          };
       });
     })();
   }, [activeCardIndex, cardApi, cardButtonApi, height]);
@@ -171,9 +172,10 @@ export default function DevCardWall({ isLoading = false, cards, initialCardIndex
   }, [cards]);
 
   useKey("ArrowLeft", nextCard, {}, [nextCard]);
+  useKey("ArrowDown", nextCard, {}, [nextCard]);
 
   useEffect(() => {
-    if (arrowIsPressed) {
+    if (leftArrowIsPressed || downArrowIsPressed) {
       nextButtonSpringApi.start({
         opacity: 0.8,
         translateY: 4,
@@ -187,7 +189,7 @@ export default function DevCardWall({ isLoading = false, cards, initialCardIndex
         translateY: 0,
       });
     }
-  }, [arrowIsPressed, nextButtonSpringApi]);
+  }, [leftArrowIsPressed, downArrowIsPressed, nextButtonSpringApi]);
 
   function handleNextButtonClick(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     event.stopPropagation();
