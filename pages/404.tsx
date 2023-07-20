@@ -14,7 +14,7 @@ import { getAvatarByUsername } from "lib/utils/github";
 import BubbleBG from "../img/bubble-bg.svg";
 
 export default function Custom404() {
-  const { data } = useFetchTopContributors();
+  const { data } = useFetchTopContributors({ limit: 20 });
   const [cards, setCards] = useState<DevCardProps[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [initialCardIndex, setInitialCardIndex] = useState<number | undefined>();
