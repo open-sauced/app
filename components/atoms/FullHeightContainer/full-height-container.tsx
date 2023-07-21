@@ -9,8 +9,7 @@ import clsx from "clsx";
 import React, { useEffect, useState } from "react";
 import { useWindowSize } from "react-use";
 
-interface Props extends React.HTMLAttributes<HTMLDivElement> {
-}
+interface Props extends React.HTMLAttributes<HTMLDivElement> {}
 
 export default function FullHeightContainer(props: Props) {
   const { children, className, ...rest } = props;
@@ -22,11 +21,7 @@ export default function FullHeightContainer(props: Props) {
   }, [innerHeight]);
 
   return (
-    <div
-      className={clsx("grid min-h-screen max-h-screen", className)}
-      style={{ minHeight: minHeight }}
-      {...rest}
-    >
+    <div className={clsx("grid min-h-screen max-h-screen", className)} style={{ minHeight: minHeight }} {...rest}>
       {children}
     </div>
   );
