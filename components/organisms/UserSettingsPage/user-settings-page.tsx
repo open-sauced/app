@@ -376,7 +376,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
           <div className="flex flex-col gap-6 order-first md:order-last">
             <div className="flex flex-col gap-3">
               <label className="text-2xl font-normal text-light-slate-11">Upgrade Access</label>
-              <div className="w-full sm:max-w-[330px]">
+              <div className="w-full sm:max-w-80">
                 <Text>Upgrade to a subscription to gain access to generate custom reports!</Text>
               </div>
             </div>
