@@ -2,7 +2,7 @@ import { ComponentStory } from "@storybook/react";
 import ComponentDateFilter from "components/molecules/ComponentDateFilter/component-date-filter";
 
 const storyConfig = {
-  title: "Design System/Molecules/ComponentDateFilter"
+  title: "Design System/Molecules/ComponentDateFilter",
 };
 
 export default storyConfig;
@@ -15,5 +15,5 @@ export const DateFilterStory = componentDateFilterTemplate.bind({});
 
 DateFilterStory.args = {
   defaultRange: 30,
-  setRangeFilter: () => console.log("i was click")
+  setRangeFilter: () => console.log("i was click"),
 };

@@ -1,7 +1,7 @@
 import Footer from "../../components/organisms/Footer/footer";
 
 const storyConfig = {
-  title: "Design System/Organisms/Footer"
+  title: "Design System/Organisms/Footer",
 };
 
 export default storyConfig;

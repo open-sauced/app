@@ -2,7 +2,7 @@ import { ComponentStory } from "@storybook/react";
 import LimitSelect from "components/atoms/Select/limit-select";
 
 const StoryConfig = {
-  title: "Design System/Atoms/Limit Select"
+  title: "Design System/Atoms/Limit Select",
 };
 
 export default StoryConfig;
@@ -19,7 +19,7 @@ Default.args = {
   options: [
     { name: "select", value: "select" },
     { name: "food", value: "food" },
-    { name: "fruit", value: "fruit" }
+    { name: "fruit", value: "fruit" },
   ],
-  placeholder: "Select an option"
+  placeholder: "Select an option",
 };

@@ -82,7 +82,7 @@ const Reports = ({ hasReports, repositories }: ReportsProps): JSX.Element => {
             <>
               <Text>Upgrade to a subscription to gain access to generate custom reports!</Text>
               <p className="flex justify-center py-4 px-2">
-                <StripeCheckoutButton variant="primary" className="w-52 h-[38px] flex justify-center"/>
+                <StripeCheckoutButton variant="primary" className="w-52 h-[38px] flex justify-center" />
               </p>
             </>
           )

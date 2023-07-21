@@ -3,11 +3,11 @@ import Button, { ButtonsProps } from "components/atoms/Button/button";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { getStripe } from "lib/utils/stripe-client";
 
-interface StripeCheckoutButtonProps extends ButtonsProps{};
+interface StripeCheckoutButtonProps extends ButtonsProps {}
 
-const StripeCheckoutButton = ({children, ...props}: StripeCheckoutButtonProps) => {
+const StripeCheckoutButton = ({ children, ...props }: StripeCheckoutButtonProps) => {
   const { sessionToken } = useSupabaseAuth();
-  
+
   const handleFormSubmit = async (event: any) => {
     event.preventDefault();
 
@@ -35,9 +35,7 @@ const StripeCheckoutButton = ({children, ...props}: StripeCheckoutButtonProps) =
 
   return (
     <form onSubmit={handleFormSubmit}>
-      <Button {...props}>
-        {children || "Upgrade Access"}
-      </Button>
+      <Button {...props}>{children || "Upgrade Access"}</Button>
     </form>
   );
 };

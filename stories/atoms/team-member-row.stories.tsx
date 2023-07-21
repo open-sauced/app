@@ -3,7 +3,7 @@ import TeamMemberRow from "components/molecules/TeamMemberRow/team-member-row";
 
 const storyConfig = {
   title: "Design System/Molecules/Team Member Row",
-  component: "TeamMemberRow"
+  component: "TeamMemberRow",
 };
 
 export default storyConfig;
@@ -20,23 +20,23 @@ Default.args = {
   className: "max-w-2xl",
   name: "John Doe",
   avatarUrl: "https://avatars.githubusercontent.com/u/7252105?v=4",
-  access: "admin"
+  access: "admin",
 };
 Editor.args = {
   className: "max-w-2xl",
   name: "John Doe",
   avatarUrl: "https://avatars.githubusercontent.com/u/7252105?v=4",
-  access: "edit"
+  access: "edit",
 };
 Viewer.args = {
   className: "max-w-2xl",
   name: "John Doe",
   avatarUrl: "https://avatars.githubusercontent.com/u/7252105?v=4",
-  access: "view"
+  access: "view",
 };
 Pending.args = {
   className: "max-w-2xl",
   name: "John Doe",
   avatarUrl: "https://avatars.githubusercontent.com/u/7252105?v=4",
-  access: "pending"
+  access: "pending",
 };

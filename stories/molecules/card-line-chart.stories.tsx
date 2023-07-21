@@ -3,17 +3,17 @@ import CardLineChart from "components/molecules/CardLineChart/card-line-chart";
 
 const storyConfig = {
   title: "Design System/Molecules/Card Line Chart",
-  component: "ScatterChart"
+  component: "ScatterChart",
 };
 
 export default storyConfig;
 
-const testOptions  = {
+const testOptions = {
   grid: {
     left: 40,
     top: 10,
     right: 40,
-    bottom: 20
+    bottom: 20,
   },
   xAxis: {
     type: "category",
@@ -21,21 +21,21 @@ const testOptions  = {
     axisLabel: {
       fontSize: 14,
       fontWeight: "bold",
-      color: "darkgray"
+      color: "darkgray",
     },
-    data: ["Jan 2022", "Mar 2022", "Jun 2022"]
+    data: ["Jan 2022", "Mar 2022", "Jun 2022"],
   },
   yAxis: {
     type: "value",
     splitNumber: 1,
     axisLabel: {
-      show: false
+      show: false,
     },
     splitLine: {
       lineStyle: {
-        type: "dashed"
-      }
-    }
+        type: "dashed",
+      },
+    },
   },
   series: [
     {
@@ -44,14 +44,14 @@ const testOptions  = {
       smooth: true,
       showSymbol: false,
       lineStyle: {
-        color: "#ff9800"
+        color: "#ff9800",
       },
       areaStyle: {
         color: "#FFB74D",
-        opacity: 0.6
-      }
-    }
-  ]
+        opacity: 0.6,
+      },
+    },
+  ],
 };
 
 // ScatterChart Template

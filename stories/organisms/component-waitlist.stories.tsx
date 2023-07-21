@@ -1,7 +1,7 @@
 import WaitlistComponent from "components/organisms/Waitlist/waitlist";
 
 const StoryConfig = {
-  title: "Design System/Organisms/WaitlistComponent"
+  title: "Design System/Organisms/WaitlistComponent",
 };
 export default StoryConfig;
 
