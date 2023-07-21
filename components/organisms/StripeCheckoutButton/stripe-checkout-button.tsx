@@ -36,7 +36,7 @@ const StripeCheckoutButton = ({children, ...props}: StripeCheckoutButtonProps) =
   return (
     <form onSubmit={handleFormSubmit}>
       <Button {...props}>
-        { children || "Upgrade Access" }
+        {children || "Upgrade Access"}
       </Button>
     </form>
   );
