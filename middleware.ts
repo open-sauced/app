@@ -17,6 +17,10 @@ export async function middleware(req: NextRequest) {
     return res;
   }
 
+  if (req.nextUrl.pathname.startsWith("/api")) {
+    return res;
+  }
+
   // Auth condition not met, redirect to home page.
   const redirectUrl = req.nextUrl.clone();
   redirectUrl.pathname = "/javascript/dashboard/filter/recent";
