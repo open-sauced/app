@@ -1,7 +1,7 @@
 import LoginTopNav from "../../components/organisms/LoginTopNav/login-top-nav";
 
 const storyConfig = {
-  title: "Design System/Organisms/Login Top Nav"
+  title: "Design System/Organisms/Login Top Nav",
 };
 
 export default storyConfig;

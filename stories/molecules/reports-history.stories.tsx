@@ -4,7 +4,7 @@ import { Report } from "interfaces/report-type";
 
 const storyConfig = {
   title: "Design System/Molecules/Reports History",
-  component: "ReportsHistory"
+  component: "ReportsHistory",
 };
 
 export default storyConfig;
@@ -13,13 +13,13 @@ const testReportList: Report[] = [
   {
     reportName: "Top Ten",
     reportDate: "Jun 3, 2022",
-    reportFormat: "CSV"
+    reportFormat: "CSV",
   },
   {
     reportName: "Top Five",
     reportDate: "Jun 3, 2022",
-    reportFormat: "CSV"
-  }
+    reportFormat: "CSV",
+  },
 ];
 
 //ReportsHistory Template
@@ -29,5 +29,5 @@ export const Default = ReportsHistoryTemplate.bind({});
 export const NoReports = ReportsHistoryTemplate.bind({});
 
 Default.args = {
-  reportList: testReportList
+  reportList: testReportList,
 };

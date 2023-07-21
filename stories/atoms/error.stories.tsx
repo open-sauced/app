@@ -6,9 +6,9 @@ const storyConfig = {
   argTypes: {
     type: {
       options: ["default", "full-wide"],
-      control: { type: "select" }
-    }
-  }
+      control: { type: "select" },
+    },
+  },
 };
 
 export default storyConfig;
