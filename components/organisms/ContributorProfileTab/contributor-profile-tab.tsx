@@ -66,9 +66,11 @@ const ContributorProfileTab = ({
   const hasHighlights = highlights?.length > 0;
   pathnameRef.current = router.pathname.split("/").at(-1);
 
-  const currentPathname =
-    pathnameRef.current !== "[username]" ? pathnameRef.current : hasHighlights ? "highlights" : "contributions";
+  const getCurrentPathName = () => {
+    return pathnameRef.current !== "[username]" ? pathnameRef.current : hasHighlights ? "highlights" : "contributions";
+  };
 
+  const [currentPathname, setCurrentPathname] = useState(getCurrentPathName());
   const handleTabUrl = (tab: string) => {
     router.push(`/user/${login}/${tab.toLowerCase()}`);
   };
@@ -76,12 +78,16 @@ const ContributorProfileTab = ({
   useEffect(() => {
     setInputVisible(highlights && highlights.length !== 0 ? true : false);
     if (login && currentPathname) {
-      router.push(`/user/${login}/${currentPathname}`);
+      if (currentPathname === "highlights" && !hasHighlights) {
+        setCurrentPathname("contributions");
+      } else {
+        router.push(`/user/${login}/${currentPathname}`);
+      }
     }
-  }, [highlights]);
+  }, [highlights, currentPathname]);
 
   return (
-    <Tabs defaultValue={uppercaseFirst(currentPathname as string)} className="" onValueChange={handleTabUrl}>
+    <Tabs value={uppercaseFirst(currentPathname as string)} className="" onValueChange={handleTabUrl}>
       <TabsList className="justify-start w-full overflow-x-auto border-b">
         {tabLinks.map((tab) => (
           <TabsTrigger
