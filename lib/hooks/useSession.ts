@@ -1,13 +1,14 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useStore from "lib/store";
 import useSupabaseAuth from "./useSupabaseAuth";
 
 const useSession = (getSession = false) => {
   const { sessionToken } = useSupabaseAuth(getSession);
   const store = useStore();
-  const hasReports = useStore((state) => state.hasReports);
-  const onboarded = useStore((state) => state.onboarded);
-  const waitlisted = useStore((state) => state.waitlisted);
+  const hasReports = useStore(state => state.hasReports);
+  const onboarded = useStore(state => state.onboarded);
+  const waitlisted = useStore(state => state.waitlisted);
+  const [session, setSession] = useState<false|DbUser>(false);
 
   const loadSession = async () => {
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/session`, {
@@ -45,6 +46,7 @@ const useSession = (getSession = false) => {
     (async () => {
       if (sessionToken && getSession) {
         const data = await loadSession();
+        setSession(data);
         setStoreData(
           data.is_onboarded, 
           data.is_waitlisted, 
@@ -58,7 +60,7 @@ const useSession = (getSession = false) => {
     onboarded, 
     waitlisted, 
     hasReports, 
-    authSession: loadSession
+    session
   };
 };
 
