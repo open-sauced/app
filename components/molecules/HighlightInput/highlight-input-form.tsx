@@ -7,7 +7,6 @@ import { HiOutlineSparkles } from "react-icons/hi";
 import { RxPencil1 } from "react-icons/rx";
 import { IoClose } from "react-icons/io5";
 import Button from "components/atoms/Button/button";
-import { Textarea } from "components/atoms/Textarea/text-area";
 import Tooltip from "components/atoms/Tooltip/tooltip";
 
 import { createHighlights } from "lib/hooks/createHighlights";
@@ -17,6 +16,7 @@ import { useToast } from "lib/hooks/useToast";
 import TextInput from "components/atoms/TextInput/text-input";
 import { generatePrHighlightSummaryByCommitMsg } from "lib/utils/generate-pr-highlight-summary";
 import Fab from "components/atoms/Fab/fab";
+import { TypeWriterTextArea } from "components/atoms/TypeWriterTextArea/type-writer-text-area";
 import { Calendar } from "../Calendar/calendar";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../Collapsible/collapsible";
 import { Popover, PopoverContent, PopoverTrigger } from "../Popover/popover";
@@ -162,7 +162,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
             </div>
           </CollapsibleTrigger>
           <CollapsibleContent>
-            <Textarea
+            <TypeWriterTextArea
               className={`resize-y min-h-[80px] max-h-99 font-normal text-light-slate-11 mb-2 transition focus:outline-none rounded-lg ${
                 !isDivFocused ? "hidden" : ""
               }`}
@@ -266,7 +266,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                 placeholder={"Add title (optional)"}
               />
             </div>
-            <Textarea
+            <TypeWriterTextArea
               className="resize-y min-h-[80px] max-h-99 font-normal text-light-slate-11 mb-2 transition focus:outline-none rounded-lg "
               defaultRow={4}
               value={bodyText}
