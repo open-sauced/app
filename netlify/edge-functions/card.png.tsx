@@ -1,5 +1,8 @@
+//@ts-ignore
 import React from "https://esm.sh/react@18.2.0";
+//@ts-ignore
 import { ImageResponse } from "https://deno.land/x/og_edge@0.0.2/mod.ts";
+//@ts-ignore
 import type { Config } from "https://edge.netlify.com";
 
 /**
@@ -137,6 +140,7 @@ export default async function handler(request: Request) {
                       {repos}
                     </div>
                     <div tw="flex" style={{ fontSize: size(12) }}>
+                      {/* @ts-ignore */}
                       {repos === 1 ? "Repo" : "Repos"}
                     </div>
                   </div>
