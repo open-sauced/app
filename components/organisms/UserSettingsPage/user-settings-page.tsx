@@ -71,6 +71,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
       formRef.current!.location.value = response.location;
       formRef.current!.github_sponsors_url.value = response.github_sponsors_url;
       formRef.current!.linkedin_url.value = response.linkedin_url;
+      formRef.current!.discord_url.value = response.discord_url;
     }
   }, [user]);
 
