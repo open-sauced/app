@@ -29,7 +29,7 @@ const interBlackFont = fetch(new URL("../../../../font/Inter-Black.ttf", import.
 export default async function handler(request: NextRequest) {
   // pull username from the request url
   // at /api/user/[username]/card.png
-  const username = request.nextUrl.searchParams.get("username");
+  const username = new URL(request.url).pathname?.split("/")[3];
 
   if (!username) {
     return new Response("A username must be specified", { status: 403 });
