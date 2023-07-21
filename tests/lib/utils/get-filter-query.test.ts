@@ -1,7 +1,6 @@
 import getFilterQuery from "lib/utils/get-filter-query";
 
 describe("[lib] getFilterQuery()", () => {
-
   it("Should return a filter query if single string or array of 1 string", () => {
     let testString = "recent";
     let result = getFilterQuery(testString);

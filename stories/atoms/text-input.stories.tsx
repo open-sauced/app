@@ -4,15 +4,13 @@ import TextInput from "components/atoms/TextInput/text-input";
 
 const storyConfig = {
   title: "Design System/Atoms/Text Input",
-  component: "TextInput"
+  component: "TextInput",
 };
 
 export default storyConfig;
 
 //TextInput Template
-const TextInputTemplate: ComponentStory<typeof TextInput> = (args) => (
-  <TextInput {...args} />
-);
+const TextInputTemplate: ComponentStory<typeof TextInput> = (args) => <TextInput {...args} />;
 
 export const Default = TextInputTemplate.bind({});
 export const WithLabel = TextInputTemplate.bind({});
@@ -23,21 +21,21 @@ Default.args = {
   placeholder: "Test",
   disabled: false,
   autoFocus: true,
-  borderless: false
+  borderless: false,
 };
 WithLabel.args = {
   placeholder: "Test",
   disabled: false,
   autoFocus: true,
   borderless: false,
-  label: "Input label"
+  label: "Input label",
 };
 WithDescriptionText.args = {
   placeholder: "Test",
   disabled: false,
   autoFocus: true,
   borderless: false,
-  descriptionText: "insights.opensauced.pizza/statelyai/slug"
+  descriptionText: "insights.opensauced.pizza/statelyai/slug",
 };
 
 IsInvalid.args = {
@@ -46,12 +44,12 @@ IsInvalid.args = {
   autoFocus: true,
   borderless: false,
   state: "invalid",
-  errorMsg: "An error occured !!!"
+  errorMsg: "An error occured !!!",
 };
 IsValid.args = {
   placeholder: "Test",
   disabled: false,
   autoFocus: true,
   borderless: false,
-  state: "valid"
+  state: "valid",
 };

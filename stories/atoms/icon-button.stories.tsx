@@ -3,7 +3,7 @@ import IconButton from "../../components/atoms/IconButton/icon-button";
 
 const storyConfig = {
   title: "Design System/Atoms/Icon Button",
-  component: "Icon Button"
+  component: "Icon Button",
 };
 
 export default storyConfig;
@@ -12,4 +12,4 @@ export default storyConfig;
 const IconButtonTemplate: ComponentStory<typeof IconButton> = (args) => <IconButton {...args} />;
 
 export const Default = IconButtonTemplate.bind({});
-Default.args = {  };
+Default.args = {};

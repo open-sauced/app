@@ -2,7 +2,7 @@ import { ComponentStory } from "@storybook/react";
 import RadioCheck from "components/atoms/RadioCheck/radio-check";
 
 const storyConfig = {
-  title: "Design System/Atoms/Radio Check"
+  title: "Design System/Atoms/Radio Check",
 };
 export default storyConfig;
 
@@ -12,9 +12,9 @@ export const Checked = RadioTemplate.bind({});
 Checked.args = {
   children: "Test",
   checked: true,
-  className: "w-full"
+  className: "w-full",
 };
 Default.args = {
   children: "Test",
-  className: "w-max"
+  className: "w-max",
 };

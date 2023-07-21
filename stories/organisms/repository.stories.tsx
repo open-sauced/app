@@ -1,7 +1,7 @@
 import Repositories from "components/organisms/Repositories/repositories";
 
 const StoryConfig = {
-  title: "Design System/organisms/Repositories"
+  title: "Design System/organisms/Repositories",
 };
 
 export default StoryConfig;

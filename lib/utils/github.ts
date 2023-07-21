@@ -1,8 +1,16 @@
+import { supabase } from "./supabase";
+
 /**
  * This method replaces the `getAvatarLink` method
  * @todo Use `getAvatarById` instead of `getAvatarByUsername` whenever possible
  * @see {@link https://github.com/open-sauced/insights/issues/746}
  */
+export interface Commit {
+  commit: {
+    message: string;
+  };
+}
+
 const getAvatarByUsername = (username: string | null, size = 460) =>
   `https://www.github.com/${username ?? "github"}.png?size=${size}`;
 
@@ -55,4 +63,40 @@ const generateGhOgImage = (githubUrl: string): { isValid: boolean; url: string }
   }
 };
 
-export { getAvatarById, getAvatarByUsername, getProfileLink, getRepoIssuesLink, generateApiPrUrl, generateGhOgImage };
+const getPullRequestCommitMessageFromUrl = async (url: string): Promise<string[]> => {
+  const sessionResponse = await supabase.auth.getSession();
+  const githubToken = sessionResponse?.data.session?.provider_token;
+  const [, , , owner, repoName, , pullRequestNumber] = url.split("/");
+
+  const apiUrl = `https://api.github.com/repos/${owner}/${repoName}/pulls/${pullRequestNumber}/commits`;
+
+  const response = await fetch(apiUrl, {
+    headers: {
+      Authorization: `token ${githubToken}`,
+    },
+  });
+  const data = await response.json();
+
+  console.log(sessionResponse);
+
+  if (Array.isArray(data?.commits)) {
+    return (data.commits as Commit[]).map((commit: Commit): string => commit.commit.message);
+  }
+
+  return (data as Commit[]).map((commit: Commit): string => commit.commit.message);
+};
+
+const isValidPullRequestUrl = (url: string): boolean => {
+  return url.match(/((https?:\/\/)?(www\.)?github\.com\/[^\/]+\/[^\/]+\/pull\/[0-9]+)/) ? true : false;
+};
+
+export {
+  getAvatarById,
+  getAvatarByUsername,
+  getProfileLink,
+  getRepoIssuesLink,
+  generateApiPrUrl,
+  generateGhOgImage,
+  isValidPullRequestUrl,
+  getPullRequestCommitMessageFromUrl,
+};
