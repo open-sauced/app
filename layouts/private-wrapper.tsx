@@ -11,12 +11,12 @@ interface PrivateWrapperProps {
 const PrivateWrapper = ({ isPrivateRoute = false, children }: PrivateWrapperProps) => {
   const user = useUser();
   const router = useRouter();
-  const { session } = useSession(true);
+  const { session: isValid } = useSession(true);
 
   async function checkSession() {
     if (router.asPath?.includes("login")) return;
 
-    if (!session) {
+    if (!isValid) {
       router.replace("/javascript/dashboard/filter/recent");
     }
   }
