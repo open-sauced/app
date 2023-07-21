@@ -8,5 +8,3 @@ environment = { CHANNEL = "alpha" }
 [context.beta]
 environment = { CHANNEL = "beta" }
 
-[[plugins]]
-package = "@netlify/plugin-nextjs"
