@@ -53,10 +53,10 @@ const TableHeader = ({
       {
         ...(providerToken
           ? {
-            headers: {
-              Authorization: `Bearer ${providerToken}`,
-            },
-          }
+              headers: {
+                Authorization: `Bearer ${providerToken}`,
+              },
+            }
           : {}),
       }
     );

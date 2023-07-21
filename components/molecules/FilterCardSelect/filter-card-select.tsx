@@ -19,27 +19,27 @@ interface FilterCardSelectProps {
 const icons = {
   topic: {
     src: hashIcon.src,
-    alt: "Topic"
+    alt: "Topic",
   },
   org: {
     src: orgIcon.src,
-    alt: "Organization"
+    alt: "Organization",
   },
   contributor: {
     src: personIcon.src,
-    alt: "Contributor"
+    alt: "Contributor",
   },
   repo: {
     src: repoIcon.src,
-    alt: "Repository"
-  }
+    alt: "Repository",
+  },
 };
 
 const FilterCardSelect: React.FC<FilterCardSelectProps> = ({
   selected: filterName,
   icon = "topic",
   options,
-  handleFilterClick
+  handleFilterClick,
 }) => {
   return (
     <Select onValueChange={(value) => handleFilterClick(value)} value={filterName}>

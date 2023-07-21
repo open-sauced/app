@@ -35,11 +35,11 @@ function Calendar({ className, classNames, showOutsideDays = true, ...props }: C
         day_disabled: "opacity-50",
         day_range_middle: "aria-selected:bg-light-slate-3 ",
         day_hidden: "invisible",
-        ...classNames
+        ...classNames,
       }}
       components={{
         IconLeft: ({ ...props }) => <HiArrowSmLeft className="w-4 h-4" />,
-        IconRight: ({ ...props }) => <HiArrowSmRight className="w-4 h-4" />
+        IconRight: ({ ...props }) => <HiArrowSmRight className="w-4 h-4" />,
       }}
       {...props}
     />

@@ -26,13 +26,13 @@ const generateApiPrUrl = (
     if (githubUrl.hostname !== "github.com") {
       return {
         isValidUrl: false,
-        apiPaths: { orgName: null, repoName: null, issueId: null }
+        apiPaths: { orgName: null, repoName: null, issueId: null },
       };
     }
 
     return {
       isValidUrl: true,
-      apiPaths: { orgName, repoName, issueId }
+      apiPaths: { orgName, repoName, issueId },
     };
   } catch (err) {
     return { isValidUrl: false, apiPaths: { orgName: null, repoName: null, issueId: null } };

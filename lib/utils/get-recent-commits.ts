@@ -15,7 +15,7 @@ export const getCommitsLast30Days = (commits: DbRepoCommit[]): CommitGraphData[]
   }, {});
 
   const days: any[] = [];
-  for(let d=30;d>=0;d--) {
+  for (let d = 30; d >= 0; d--) {
     days.push({ x: d, y: commitDays[d] || 0 });
   }
 

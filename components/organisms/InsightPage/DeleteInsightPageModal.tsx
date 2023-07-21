@@ -23,7 +23,7 @@ const DeleteInsightPageModal: FC<ModalProps> = ({
   pageName,
   onConfirm,
   onClose,
-  isLoading
+  isLoading,
 }) => {
   const [input, setInput] = useState("");
 

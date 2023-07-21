@@ -2,11 +2,11 @@ import React from "react";
 import Image, { StaticImageData } from "next/image";
 
 interface IconProps {
-    IconImage: StaticImageData | string;
-    className?: string;
-    alt?: string;
-    size?: number;
-    onClick?: (...args: any) => any;
+  IconImage: StaticImageData | string;
+  className?: string;
+  alt?: string;
+  size?: number;
+  onClick?: (...args: any) => any;
 }
 
 const Icon: React.FC<IconProps> = ({ onClick, className, IconImage, alt, size = 16 }) => {
@@ -21,8 +21,9 @@ const Icon: React.FC<IconProps> = ({ onClick, className, IconImage, alt, size = 
         src={IconImage}
         style={{
           maxWidth: "100%",
-          height: "auto"
-        }} />
+          height: "auto",
+        }}
+      />
     </div>
   );
 };

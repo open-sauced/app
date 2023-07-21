@@ -43,7 +43,9 @@ const InsightRow = ({ insight, user }: InsightRowProps) => {
           </div>
         </div>
         <div className="w-full truncate">
-          {insight.repos && insight.repos.length > 0 && <CardRepoList limit={3} repoList={repoList} total={repoMeta.itemCount} />}
+          {insight.repos && insight.repos.length > 0 && (
+            <CardRepoList limit={3} repoList={repoList} total={repoMeta.itemCount} />
+          )}
         </div>
       </div>
       <div className="flex-1 w-full">
@@ -80,10 +82,7 @@ const InsightRow = ({ insight, user }: InsightRowProps) => {
             </Link>
             <Link href={`/pages/${user?.user_metadata.user_name}/${insight.id}/dashboard`}>
               <span className=" bg-light-slate-1 inline-block rounded-lg p-2.5 border cursor-pointer">
-                <MdOutlineArrowForwardIos
-                  title="Go To Insight Page"
-                  className="text-light-slate-10 text-lg"
-                />
+                <MdOutlineArrowForwardIos title="Go To Insight Page" className="text-light-slate-10 text-lg" />
               </span>
             </Link>
           </div>

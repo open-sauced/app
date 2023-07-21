@@ -36,7 +36,7 @@ const Reports = ({ hasReports, repositories }: ReportsProps): JSX.Element => {
   const filterList = filterOptions.map((filter) => {
     return {
       filterName: filter,
-      filterValue: filter.toLowerCase().replaceAll(" ", "-")
+      filterValue: filter.toLowerCase().replaceAll(" ", "-"),
     };
   });
 
@@ -44,7 +44,7 @@ const Reports = ({ hasReports, repositories }: ReportsProps): JSX.Element => {
     const constructedReport = {
       reportName: selectedFilter,
       reportDate: getCurrentDate(),
-      reportFormat: "CSV"
+      reportFormat: "CSV",
     };
 
     setReports((prevState) => {
@@ -70,7 +70,7 @@ const Reports = ({ hasReports, repositories }: ReportsProps): JSX.Element => {
               {reports.length > 0 && (
                 <>
                   <Title className=" relative mt-16" level={3}>
-                  Download History
+                    Download History
                   </Title>
                   <hr className="border-light-slate-6 my-4" />
                   <ReportsHistory reportList={reports} repositories={repositories} />
@@ -83,7 +83,7 @@ const Reports = ({ hasReports, repositories }: ReportsProps): JSX.Element => {
         ) : (
           <div className="flex justify-center py-4">
             <Button variant="primary" onClick={async () => await signIn({ provider: "github" })}>
-                  Connect with GitHub <Icon IconImage={GitHubIcon} className="ml-2" />
+              Connect with GitHub <Icon IconImage={GitHubIcon} className="ml-2" />
             </Button>
           </div>
         )}

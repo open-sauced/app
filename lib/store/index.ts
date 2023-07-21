@@ -10,7 +10,7 @@ const initialState: GlobalStateInterface = {
   sessionToken: null,
   providerToken: null,
   userId: null,
-  hasReports: false
+  hasReports: false,
 };
 
 interface AppStore extends GlobalStateInterface {
@@ -19,7 +19,7 @@ interface AppStore extends GlobalStateInterface {
   setSession: ({
     onboarded,
     waitlisted,
-    insightRepoLimit
+    insightRepoLimit,
   }: {
     onboarded: boolean;
     waitlisted: boolean;
@@ -33,26 +33,25 @@ interface AppStore extends GlobalStateInterface {
   setHasReports: (hasReports: boolean) => void;
 }
 
-const store = create<AppStore>()(
-  (set) => ({
-    ...initialState,
-    setWaitlisted: () => set((state) => ({ ...state, waitlisted: true })),
-    onboardUser: () => set((state) => ({ ...state, onboarded: true })),
-    setSession: ({
-      onboarded,
-      waitlisted,
-      insightRepoLimit
-    }: {
+const store = create<AppStore>()((set) => ({
+  ...initialState,
+  setWaitlisted: () => set((state) => ({ ...state, waitlisted: true })),
+  onboardUser: () => set((state) => ({ ...state, onboarded: true })),
+  setSession: ({
+    onboarded,
+    waitlisted,
+    insightRepoLimit,
+  }: {
     onboarded: boolean;
     waitlisted: boolean;
     insightRepoLimit: number;
   }) => set((state) => ({ ...state, onboarded, waitlisted, insightRepoLimit })),
-    updateRange: (range: number) => set((state) => ({ ...state, range })),
-    setUser: (user: User | null) => set((state) => ({ ...state, user })),
-    setSessionToken: (sessionToken?: string | null) => set((state) => ({ ...state, sessionToken })),
-    setProviderToken: (providerToken?: string | null) => set((state) => ({ ...state, providerToken })),
-    setUserId: (userId?: number | null) => set((state) => ({ ...state, userId })),
-    setHasReports: (hasReports: boolean) => set((state) => ({ ...state, hasReports })),
-  }));
+  updateRange: (range: number) => set((state) => ({ ...state, range })),
+  setUser: (user: User | null) => set((state) => ({ ...state, user })),
+  setSessionToken: (sessionToken?: string | null) => set((state) => ({ ...state, sessionToken })),
+  setProviderToken: (providerToken?: string | null) => set((state) => ({ ...state, providerToken })),
+  setUserId: (userId?: number | null) => set((state) => ({ ...state, userId })),
+  setHasReports: (hasReports: boolean) => set((state) => ({ ...state, hasReports })),
+}));
 
 export default store;

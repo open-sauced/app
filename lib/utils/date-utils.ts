@@ -3,7 +3,7 @@ const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "
 
 export const calcDaysFromToday = (endDate: Date) => {
   const timeFromNowArray = formatDistanceToNowStrict(endDate, {
-    unit: "day"
+    unit: "day",
   }).split(" ");
 
   const daysFromNow = parseInt(timeFromNowArray[0]);
@@ -13,7 +13,7 @@ export const calcDaysFromToday = (endDate: Date) => {
 
 export const calcMonthsFromToday = (endDate: Date) => {
   const timeFromNowArray = formatDistanceToNowStrict(endDate, {
-    unit: "month"
+    unit: "month",
   }).split(" ");
 
   const monthsFromNow = parseInt(timeFromNowArray[0]);
@@ -23,7 +23,7 @@ export const calcMonthsFromToday = (endDate: Date) => {
 
 export const calcYearsFromToday = (endDate: Date) => {
   const timeFromNowArray = formatDistanceToNowStrict(endDate, {
-    unit: "year"
+    unit: "year",
   }).split(" ");
 
   const monthsFromNow = parseInt(timeFromNowArray[0]);
