@@ -56,27 +56,23 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
   const formRef = useRef<HTMLFormElement>(null);
   const interestArray = getInterestOptions();
 
-  const { session } = useSession(true);
+  const { session: response } = useSession(true);
 
   useEffect(() => {
-    async function fetchAuthSession() {
-      const response = session;
-      if (response && !userInfo) {
-        setUserInfo(response);
-        formRef.current!.nameInput.value = response.name;
-        setEmail(response.email);
-        setDisplayLocalTime(response.displayLocalTime);
-        formRef.current!.bio.value = response.bio;
-        formRef.current!.url.value = response.url;
-        formRef.current!.twitter_username.value = response.twitter_username;
-        formRef.current!.company.value = response.company;
-        formRef.current!.location.value = response.location;
-        formRef.current!.github_sponsors_url.value = response.github_sponsors_url;
-        formRef.current!.linkedin_url.value = response.linkedin_url;
-        formRef.current!.discord_url.value = response.discord_url;
-      }
+    if (response && !userInfo) {
+      setUserInfo(response);
+      formRef.current!.nameInput.value = response.name;
+      setEmail(response.email);
+      setDisplayLocalTime(response.display_local_time);
+      formRef.current!.bio.value = response.bio;
+      formRef.current!.url.value = response.url;
+      formRef.current!.twitter_username.value = response.twitter_username;
+      formRef.current!.company.value = response.company;
+      formRef.current!.location.value = response.location;
+      formRef.current!.github_sponsors_url.value = response.github_sponsors_url;
+      formRef.current!.linkedin_url.value = response.linkedin_url;
+      formRef.current!.discord_url.value = response.discord_url;
     }
-    fetchAuthSession();
   }, [user]);
 
   useEffect(() => {
