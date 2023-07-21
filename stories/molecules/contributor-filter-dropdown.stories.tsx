@@ -2,7 +2,7 @@ import { ComponentStory } from "@storybook/react";
 import ContributorFilterDropdown from "components/molecules/ContributorFilterDropdown/contributor-filter-dropdown";
 
 const storyConfig = {
-  title: "Design System/Molecules/ContributorFilterDropdown"
+  title: "Design System/Molecules/ContributorFilterDropdown",
 };
 
 export default storyConfig;

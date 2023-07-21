@@ -7,11 +7,10 @@ module.exports = {
       "images.unsplash.com",
       "www.github.com",
       "github.com",
-      "res.cloudinary.com"
-    ]
-  }
+      "res.cloudinary.com",
+    ],
+  },
 };
-
 
 // Injected content via Sentry wizard below
 

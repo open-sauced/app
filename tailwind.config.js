@@ -4,33 +4,33 @@ module.exports = {
     extend: {
       gridTemplateColumns: {
         autodesktop: "repeat(auto-fit, minmax(410px, 1fr))",
-        automobile: "repeat(auto-fit, minmax(300px, 1fr))"
+        automobile: "repeat(auto-fit, minmax(300px, 1fr))",
       },
       screens: {
         xs: "425px",
         // => @media (min-width: 425px) { ... }
 
-        "2xl": "1440px"
+        "2xl": "1440px",
         // => @media (min-width: 1440px) { ... }
       },
       blur: {
-        "4xl": "5rem"
+        "4xl": "5rem",
       },
       spacing: {
         98: "29rem",
         97: "28rem",
-        99: "56rem"
+        99: "56rem",
       },
       colors: {
         sauced: {
           orange: "hsla(19, 100%, 50%, 1)",
-          light: "hsl(24, 100%, 95%)"
+          light: "hsl(24, 100%, 95%)",
         },
         gradient: {
           "dark-two": "hsl(26, 54%, 15%)",
           "dark-one": "hsl(23, 75%, 5%)",
           "orange-one": "	hsl(33, 100%, 50%)",
-          "orange-two": "	hsl(19, 100%, 50%)"
+          "orange-two": "	hsl(19, 100%, 50%)",
         },
         light: {
           slate: {
@@ -45,7 +45,7 @@ module.exports = {
             9: "hsl(206, 6.0%, 56.1%)",
             10: "hsl(206, 5.8%, 52.3%)",
             11: "hsl(206, 6.0%, 43.5%)",
-            12: "hsl(206, 24.0%, 9.0%)"
+            12: "hsl(206, 24.0%, 9.0%)",
           },
           "slate-opacity": {
             1: "hsla(210, 92.6%, 26.5%, 0.016)",
@@ -59,7 +59,7 @@ module.exports = {
             9: "hsla(206, 98.8%, 5.9%, 0.467)",
             10: "hsla(206, 99.6%, 5.4%, 0.506)",
             11: "hsla(206, 97.0%, 4.8%, 0.593)",
-            12: "hsla(202, 97.0%, 2.4%, 0.934)"
+            12: "hsla(202, 97.0%, 2.4%, 0.934)",
           },
           orange: {
             1: "hsl(24, 70.0%, 99.0%)",
@@ -73,7 +73,7 @@ module.exports = {
             9: "hsl(24, 94.0%, 50.0%)",
             10: "hsl(24, 100%, 46.5%)",
             11: "hsl(24, 100%, 37.0%)",
-            12: "hsl(15, 60.0%, 17.0%)"
+            12: "hsl(15, 60.0%, 17.0%)",
           },
           blue: {
             1: "hsl(206, 100%, 99.2%)",
@@ -87,7 +87,7 @@ module.exports = {
             9: "hsl(206, 100%, 50.0%)",
             10: "hsl(208, 100%, 47.3%)",
             11: "hsl(211, 100%, 43.2%)",
-            12: "hsl(211, 100%, 15.0%)"
+            12: "hsl(211, 100%, 15.0%)",
           },
           red: {
             1: "hsl(359, 100%, 99.4%)",
@@ -101,7 +101,7 @@ module.exports = {
             9: "hsl(358, 75.0%, 59.0%)",
             10: "hsl(358, 69.4%, 55.2%)",
             11: "hsl(358, 65.0%, 48.7%)",
-            12: "hsl(354, 50.0%, 14.6%)"
+            12: "hsl(354, 50.0%, 14.6%)",
           },
           grass: {
             1: "hsl(116, 50.0%, 98.9%)",
@@ -115,8 +115,8 @@ module.exports = {
             9: "hsl(131, 41.0%, 46.5%)",
             10: "hsl(132, 43.1%, 42.2%)",
             11: "hsl(133, 50.0%, 32.5%)",
-            12: "hsl(130, 30.0%, 14.9%)"
-          }
+            12: "hsl(130, 30.0%, 14.9%)",
+          },
         },
         dark: {
           slate: {
@@ -131,7 +131,7 @@ module.exports = {
             9: "hsl(206, 6.0%, 43.9%)",
             10: "hsl(206, 5.2%, 49.5%)",
             11: "hsl(206, 6.0%, 63.0%)",
-            12: "hsl(210, 6.0%, 93.0%)"
+            12: "hsl(210, 6.0%, 93.0%)",
           },
           "slate-opacity": {
             1: "hsla(0, 0%, 0%, 0)",
@@ -145,7 +145,7 @@ module.exports = {
             9: "hsla(207, 97.3%, 94.0%, 0.412)",
             10: "hsla(209, 99.4%, 95.2%, 0.472)",
             11: "hsla(208, 98.7%, 96.8%, 0.615)",
-            12: "hsla(211, 86.7%, 99.6%, 0.927)"
+            12: "hsla(211, 86.7%, 99.6%, 0.927)",
           },
           orange: {
             1: "hsl(30, 70.0%, 7.2%)",
@@ -159,7 +159,7 @@ module.exports = {
             9: "hsl(24, 94.0%, 50.0%)",
             10: "hsl(24, 100%, 58.5%)",
             11: "hsl(24, 100%, 62.2%)",
-            12: "hsl(24, 97.0%, 93.2%)"
+            12: "hsl(24, 97.0%, 93.2%)",
           },
           blue: {
             1: "hsl(212, 35.0%, 9.2%)",
@@ -173,7 +173,7 @@ module.exports = {
             9: "hsl(206, 100%, 50.0%)",
             10: "hsl(209, 100%, 60.6%)",
             11: "hsl(210, 100%, 66.1%)",
-            12: "hsl(206, 98.0%, 95.8%)"
+            12: "hsl(206, 98.0%, 95.8%)",
           },
           red: {
             1: "hsl(353, 23.0%, 9.8%)",
@@ -187,7 +187,7 @@ module.exports = {
             9: "hsl(358, 75.0%, 59.0%)",
             10: "hsl(358, 85.3%, 64.0%)",
             11: "hsl(358, 100%, 69.5%)",
-            12: "hsl(351, 89.0%, 96.0%)"
+            12: "hsl(351, 89.0%, 96.0%)",
           },
           grass: {
             1: "hsl(146, 30.0%, 7.4%)",
@@ -201,20 +201,20 @@ module.exports = {
             9: "hsl(131, 41.0%, 46.5%)",
             10: "hsl(131, 39.0%, 52.1%)",
             11: "hsl(131, 43.0%, 57.2%)",
-            12: "hsl(137, 72.0%, 94.0%)"
-          }
-        }
+            12: "hsl(137, 72.0%, 94.0%)",
+          },
+        },
       },
       boxShadow: {
         login: "0px 64px 100px -80px #FF5F13, 0px 16px 56px rgba(181, 107, 72, 0.19)",
         superlative: "0px 22px 24px -8px rgba(0, 0, 0, 0.05), 0px 4px 8px rgba(0, 0, 0, 0.1)",
         paginate: "0px 1px 2px rgba(237, 95, 0, 0.05), 0px 1px 1px rgba(237, 95, 0, 0.05)",
-        input: "0px 1px 2px rgba(17, 24, 28, 0.05), 0px 1px 1px rgba(17, 24, 28, 0.05)"
+        input: "0px 1px 2px rgba(17, 24, 28, 0.05), 0px 1px 1px rgba(17, 24, 28, 0.05)",
       },
       backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))"
-      }
-    }
+        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
+      },
+    },
   },
-  plugins: [require("tailwindcss-radix")()]
+  plugins: [require("tailwindcss-radix")()],
 };

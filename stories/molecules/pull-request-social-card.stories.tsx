@@ -4,7 +4,7 @@ import PullRequestSocialCard from "components/molecules/PullRequestSocialCard/pu
 import { testLanguageList } from "./card-horizontal-bar.stories";
 
 const StoryConfig = {
-  title: "Design System/Molecules/PullRequestSocialCard"
+  title: "Design System/Molecules/PullRequestSocialCard",
 };
 export default StoryConfig;
 
@@ -27,5 +27,5 @@ PullRequestSocialCardStory.args = {
   prTicketId: "#223",
   commentsCount: 5,
   linesAdded: 12,
-  linesRemoved: 4
+  linesRemoved: 4,
 };

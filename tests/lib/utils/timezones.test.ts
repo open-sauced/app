@@ -1,7 +1,6 @@
 import { getTimezone } from "lib/utils/timezones";
 
 describe("[lib] getTimezone()", () => {
-
   it("Should return the offset of a timezone", () => {
     const result = getTimezone("Tonga Standard Time");
 

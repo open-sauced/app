@@ -1,3 +1,5 @@
+import { supabase } from "./supabase";
+
 /**
  * This method replaces the `getAvatarLink` method
  * @todo Use `getAvatarById` instead of `getAvatarByUsername` whenever possible
@@ -62,12 +64,20 @@ const generateGhOgImage = (githubUrl: string): { isValid: boolean; url: string }
 };
 
 const getPullRequestCommitMessageFromUrl = async (url: string): Promise<string[]> => {
+  const sessionResponse = await supabase.auth.getSession();
+  const githubToken = sessionResponse?.data.session?.provider_token;
   const [, , , owner, repoName, , pullRequestNumber] = url.split("/");
 
   const apiUrl = `https://api.github.com/repos/${owner}/${repoName}/pulls/${pullRequestNumber}/commits`;
 
-  const response = await fetch(apiUrl);
+  const response = await fetch(apiUrl, {
+    headers: {
+      Authorization: `token ${githubToken}`,
+    },
+  });
   const data = await response.json();
+
+  console.log(sessionResponse);
 
   if (Array.isArray(data?.commits)) {
     return (data.commits as Commit[]).map((commit: Commit): string => commit.commit.message);

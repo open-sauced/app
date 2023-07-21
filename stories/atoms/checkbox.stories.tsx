@@ -2,7 +2,7 @@ import { ComponentStory } from "@storybook/react";
 import Checkbox from "components/atoms/Checkbox/checkbox";
 
 const storyConfig = {
-  title: "Design System/Atoms/Checkbox"
+  title: "Design System/Atoms/Checkbox",
 };
 
 export default storyConfig;

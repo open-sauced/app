@@ -2,7 +2,7 @@ import { ComponentStory } from "@storybook/react";
 import NivoScatterPlot from "components/molecules/NivoScatterChart/nivo-scatter-chart";
 
 const storyConfig = {
-  title: "Design System/Molecules/ScatterChart"
+  title: "Design System/Molecules/ScatterChart",
 };
 
 const data = [
@@ -15,9 +15,9 @@ const data = [
       { x: 6.05, y: 8.03, image: "", contributor: "Sunday" },
       { x: 10.02, y: 5.01, image: "", contributor: "Sunday" },
       { x: 12.07, y: 9.08, image: "", contributor: "Sunday" },
-      { x: 18.01, y: 12.04, image: "", contributor: "Sunday" }
-    ]
-  }
+      { x: 18.01, y: 12.04, image: "", contributor: "Sunday" },
+    ],
+  },
 ];
 export default storyConfig;
 
@@ -26,5 +26,5 @@ const ScatterChartTemplate: ComponentStory<typeof NivoScatterPlot> = (args) => <
 export const Scatterchart = ScatterChartTemplate.bind({});
 
 Scatterchart.args = {
-  data: data
+  data: data,
 };

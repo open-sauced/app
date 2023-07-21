@@ -3,7 +3,7 @@ import EChartWrapper from "../../components/atoms/EChartWrapper/echart-wrapper";
 
 const storyConfig = {
   title: "Design System/Atoms/eChart Wrapper",
-  component: "EChartWrapper"
+  component: "EChartWrapper",
 };
 
 export default storyConfig;
@@ -11,17 +11,17 @@ export default storyConfig;
 const testOptions = {
   xAxis: {
     type: "category",
-    data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+    data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
   },
   yAxis: {
-    type: "value"
+    type: "value",
   },
   series: [
     {
       data: [150, 230, 224, 218, 135, 147, 260],
-      type: "line"
-    }
-  ]
+      type: "line",
+    },
+  ],
 };
 
 // EChartWrapper Template

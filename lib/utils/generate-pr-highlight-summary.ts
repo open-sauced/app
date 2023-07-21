@@ -26,6 +26,8 @@ export const generatePrHighlightSummaryByCommitMsg = async (commitMessages: stri
     if (res.ok) {
       const data = await res.json();
       return data.description as string;
+    } else {
+      return null;
     }
   } catch (err) {
     console.log(err);
