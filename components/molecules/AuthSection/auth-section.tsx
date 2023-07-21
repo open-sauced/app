@@ -31,7 +31,7 @@ const AuthSection: React.FC = ({}) => {
   const currentPath = router.asPath;
 
   const { signIn, signOut, user, sessionToken } = useSupabaseAuth();
-  const { onboarded, authSession } = useSession(true);
+  const { onboarded, session } = useSession(true);
   const [notifications, setNotifications] = useState<DbUserNotification[]>([]);
   const [loading, setLoading] = useState(false);
   const [userInfo, setUserInfo] = useState<DbUser | undefined>(undefined);
@@ -64,9 +64,8 @@ const AuthSection: React.FC = ({}) => {
 
   useEffect(() => {
     const getUser = async () => {
-      const response = await authSession();
-      if (response !== false && !userInfo) {
-        setUserInfo(response);
+      if (session && !userInfo) {
+        setUserInfo(session);
       }
     };
 
