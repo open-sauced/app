@@ -1,5 +1,6 @@
 [build.environment]
 NODE_VERSION = "16"
+NEXT_USE_NETLIFY_EDGE = "true"
 
 [context.alpha]
 environment = { CHANNEL = "alpha" }
@@ -7,5 +8,5 @@ environment = { CHANNEL = "alpha" }
 [context.beta]
 environment = { CHANNEL = "beta" }
 
-[dev]
-framework = "#static"
+[[plugins]]
+package = "@netlify/plugin-nextjs"
