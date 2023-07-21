@@ -56,12 +56,12 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
   const formRef = useRef<HTMLFormElement>(null);
   const interestArray = getInterestOptions();
 
-  const { authSession } = useSession(true);
+  const { session } = useSession(true);
 
   useEffect(() => {
     async function fetchAuthSession() {
-      const response = await authSession();
-      if (response !== false && !userInfo) {
+      const response = session;
+      if (response && !userInfo) {
         setUserInfo(response);
         formRef.current!.nameInput.value = response.name;
         setEmail(response.email);
@@ -107,13 +107,6 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
     event.target.setCustomValidity(validateTwitterUsername(event.target.value).message);
     event.target.reportValidity();
   };
-
-  const handleValidateDiscordUrl = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const regex = new RegExp(/^https:\/\/discord(app)?\.com\/users\/\d{17,}$/);
-    event.target.setCustomValidity(regex.test(event.target.value) ? "" : "Invalid Discord URL");
-    event.target.reportValidity();
-  };
-
 
   const handleSelectInterest = (interest: string) => {
     if (selectedInterest.length > 0 && selectedInterest.includes(interest)) {
@@ -173,7 +166,6 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
         formRef.current!.github_sponsors_url.value !== "" ? formRef.current!.github_sponsors_url.value : undefined,
       // eslint-disable-next-line camelcase
       linkedin_url: formRef.current!.linkedin_url.value !== "" ? formRef.current!.linkedin_url.value : undefined,
-      discord_url: formRef.current!.discord_url.value !== "" ? formRef.current!.discord_url.value : undefined,
     };
     if (formRef.current?.url.value) {
       payload.url = formRef.current!.url.value;
@@ -247,13 +239,6 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
               label="LinkedIn URL"
               pattern="http[s]?://.*\..{2,}"
               name="linkedin_url"
-            />
-            <TextInput
-              classNames="bg-light-slate-4 text-light-slate-11 font-medium"
-              placeholder="https://discordapp.com/users/832877193112762362"
-              label="Discord URL"
-              onChange={handleValidateDiscordUrl}
-              name="discord_url"
             />
             <TextInput
               classNames="bg-light-slate-4 text-light-slate-11"
