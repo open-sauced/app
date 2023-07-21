@@ -17,7 +17,7 @@ const Fab = ({ position, children, className }: FabProps) => {
       case "bottom-right":
         return "bottom-4 right-4";
       default:
-        return "bottom-20 right-4";
+        return "bottom-8 right-8";
     }
   };
   return (
