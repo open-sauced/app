@@ -1,5 +1,5 @@
-import { NextRequest } from "next/server";
 import { ImageResponse } from "@vercel/og";
+import { NextRequest } from "next/server";
 import { getAvatarByUsername } from "lib/utils/github";
 import { fetchContributorPRs } from "lib/hooks/api/useContributorPullRequests";
 import { getRepoList } from "lib/hooks/useRepoList";
@@ -9,33 +9,36 @@ import { getRepoList } from "lib/hooks/useRepoList";
  * @params {number} w - Width of the card
  */
 
-export const config = {
-  runtime: "edge",
-};
-
 const ASPECT_RATIO = 245 / 348;
 const BASE_WIDTH = 245;
 const DEFAULT_WIDTH = 735;
 const MAX_WIDTH = 1960;
 
-// Make sure the font exists in the specified path:
-const logoImg = fetch(new URL("../../img/openSauced-icon.png", import.meta.url)).then((res) => res.arrayBuffer());
-const interSemiBoldFont = fetch(new URL("../../font/Inter-SemiBold.ttf", import.meta.url)).then((res) =>
+export const config = {
+  runtime: "edge",
+};
+
+const logoImg = fetch(new URL("../../../../img/openSauced-icon.png", import.meta.url)).then((res) => res.arrayBuffer());
+const interSemiBoldFont = fetch(new URL("../../../../font/Inter-SemiBold.ttf", import.meta.url)).then((res) =>
   res.arrayBuffer()
 );
-const interBlackFont = fetch(new URL("../../font/Inter-Black.ttf", import.meta.url)).then((res) => res.arrayBuffer());
+const interBlackFont = fetch(new URL("../../../../font/Inter-Black.ttf", import.meta.url)).then((res) =>
+  res.arrayBuffer()
+);
 
 export default async function handler(request: NextRequest) {
-  const { searchParams } = new URL(request.url);
-  const username = searchParams.get("username");
+  // pull username from the request url
+  // at /api/user/[username]/card.png
+  const username = new URL(request.url).pathname?.split("/")[3];
 
   if (!username) {
     return new Response("A username must be specified", { status: 403 });
   }
 
-  const requestedWidth = Number.parseInt(searchParams.get("w") ?? "0", 10) || DEFAULT_WIDTH;
+  // const requestedWidth = Number.parseInt(searchParams.get("w") ?? "0", 10) || DEFAULT_WIDTH;
 
-  const width = Math.min(requestedWidth, MAX_WIDTH);
+  // const width = Math.min(requestedWidth, MAX_WIDTH);
+  const width = DEFAULT_WIDTH;
   const height = width / ASPECT_RATIO;
   const avatarURL = getAvatarByUsername(username, 600);
 
