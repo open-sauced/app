@@ -1,0 +1,7 @@
+{
+  "imports": {
+    "lib/": "./lib/",
+    "lib/hooks/useRepoList": "./lib/hooks/userRepoList",
+    "./": "./"
+  }
+}

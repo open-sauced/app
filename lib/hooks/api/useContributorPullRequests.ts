@@ -1,8 +1,8 @@
 import useSWR, { Fetcher } from "swr";
 import { useRouter } from "next/router";
 
-import publicApiFetcher from "lib/utils/public-api-fetcher";
-import getFilterQuery from "lib/utils/get-filter-query";
+import publicApiFetcher from "../../utils/public-api-fetcher";
+import getFilterQuery from "../..//utils/get-filter-query";
 
 export interface PaginatedResponse {
   readonly data: DbRepoPR[];

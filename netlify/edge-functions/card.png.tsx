@@ -1,8 +1,6 @@
 import React from "https://esm.sh/react@18.2.0";
 import { ImageResponse } from "https://deno.land/x/og_edge@0.0.2/mod.ts";
-import { getAvatarByUsername } from "../../lib/utils/github.ts";
-import { fetchContributorPRs } from "../../lib/hooks/api/useContributorPullRequests.ts";
-import { getRepoList } from "../../lib/hooks/useRepoList.ts";
+import type { Config } from "https://edge.netlify.com";
 
 /**
  * @params {string} username - username for the requested user
@@ -21,9 +19,9 @@ const interSemiBoldFont = fetch(new URL("../../font/Inter-SemiBold.ttf", import.
 );
 const interBlackFont = fetch(new URL("../../font/Inter-Black.ttf", import.meta.url)).then((res) => res.arrayBuffer());
 
-// export const config: Config = {
-//   path: "/api/card.png",
-// };
+export const config: Config = {
+  path: "/api/card.png",
+};
 
 export default async function handler(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -45,16 +43,18 @@ export default async function handler(request: Request) {
 
   const bufferSize = size(50);
 
-  const [interSemiBoldFontData, interBlackFontData, logoImgData, prReq] = await Promise.all([
+  const [interSemiBoldFontData, interBlackFontData, logoImgData] = await Promise.all([
     interSemiBoldFont,
     interBlackFont,
     logoImg,
-    fetchContributorPRs(username, undefined, "*", [], 100),
+    // fetchContributorPRs(username, undefined, "*", [], 100),
   ]);
 
-  const { data: prData } = prReq;
-  const prs = prData.length;
-  const repos = getRepoList(Array.from(new Set(prData.map((prData) => prData.full_name))).join(",")).length;
+  // const { data: prData } = prReq;
+  // const prs = prData.length;
+  // const repos = getRepoList(Array.from(new Set(prData.map((prData) => prData.full_name))).join(",")).length;
+  const prs = 42;
+  const repos = 42;
 
   return new ImageResponse(
     (
@@ -354,3 +354,20 @@ const CardSauceBG = ({ ...props }) => (
     </defs>
   </svg>
 );
+
+function getRepoList(repos: string) {
+  return repos
+    .split(",")
+    .filter((rpo) => !!rpo)
+    .map((repo) => {
+      const [repoOwner, repoName] = repo.split("/");
+
+      return {
+        repoName,
+        repoIcon: `https://www.github.com/${repoOwner ?? "github"}.png?size=460`,
+      };
+    });
+}
+
+const getAvatarByUsername = (username: string | null, size = 460) =>
+  `https://www.github.com/${username ?? "github"}.png?size=${size}`;

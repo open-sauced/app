@@ -1,0 +1,22 @@
+{
+  "version": "2",
+  "remote": {
+    "https://deno.land/x/og_edge@0.0.2/emoji.ts": "f14b3b9fbf52fdc389ee474a67f8e112ff6b17c70a7ee4dd5b242c4243abca98",
+    "https://deno.land/x/og_edge@0.0.2/mod.ts": "bc4bcdd838707a0e2189c25a864f3cf833dfb3b2e7f44887d1ee1252fb0e36d7",
+    "https://esm.sh/@resvg/resvg-wasm@2.0.0-alpha.4": "03c70ae67652eda8d2bc35f8a6d8850657c04e5232e3a8397c7d87fa733bae2a",
+    "https://esm.sh/react@18.2.0": "8950a34a030620fce8349d6bd3913b3bdb186c5ec7968fa5ba4d054e22d78e6c",
+    "https://esm.sh/satori@0.0.40/wasm": "96c60d82205364768baf8c39f7f416d8241af7448f2f47c1fec543f44356c5b6",
+    "https://esm.sh/stable/react@18.2.0/denonext/react.mjs": "3c4f23bcfc53b256fcfaf6f834fa9f584c3bb7be667b2682c6cb6ba8ef88f8e6",
+    "https://esm.sh/v128/@resvg/resvg-wasm@2.0.0-alpha.4/denonext/resvg-wasm.mjs": "3fa826b8790eeea38da20260a26abf6d4cb2c889ac03c89db4496dcb9bd885d6",
+    "https://esm.sh/v128/@shuding/opentype.js@1.4.0-beta.0/denonext/opentype.mjs": "ba944353ade58accbdca083c045d3f364da1fedef03e8e9361b0ff25399825e6",
+    "https://esm.sh/v128/camelize@1.0.1/denonext/camelize.mjs": "2267a92f6a41e681646e3cf4014829df7643070ef525de6fb2a432e70dfcf211",
+    "https://esm.sh/v128/css-background-parser@0.1.0/denonext/css-background-parser.mjs": "8bcaf3c95ddd47e9cf8f45ca088cbb42f5a56bb1b2a0a1d04c647e07d5bc2f38",
+    "https://esm.sh/v128/css-box-shadow@1.0.0-3/denonext/css-box-shadow.mjs": "d63628e169469210e23b6b84107526e4e9fe7e086163dd7f0cbbb3a2a57b1a56",
+    "https://esm.sh/v128/css-color-keywords@1.0.0/denonext/css-color-keywords.mjs": "751fa4992522b9acd404c6fc5df295e34eec8fde87b584173c249868eae39952",
+    "https://esm.sh/v128/css-to-react-native@3.2.0/denonext/css-to-react-native.mjs": "ed7f870e5b36101c69a0892ba36cf14017896ab4827ed723c7f9ccd246fc08fb",
+    "https://esm.sh/v128/postcss-value-parser@4.2.0/denonext/postcss-value-parser.mjs": "846025de2c7dd40b61d32aabe6594a2a7ea1c1e4c356c7b9bfc58cc991d7e69c",
+    "https://esm.sh/v128/satori@0.0.40/denonext/wasm.js": "0e756d23d3d5474b065ffec6b437bef14b95e09d2a6d1cdae8a40aa2e9b035fa",
+    "https://esm.sh/v128/yoga-wasm-web@0.1.2/denonext/yoga-wasm-web.mjs": "4dd43b79da26181ebe437a9ee7abc229dd567007e626f8a29ea17cf59a29da03",
+    "https://esm.sh/yoga-wasm-web@0.1.2": "222691444ec277e51f4419c8d45572e1e95818b352e89878d9cd35b9d40612ee"
+  }
+}
