@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import clsx from "clsx";
 import formatDistanceToNowStrict from "date-fns/formatDistanceToNowStrict";
@@ -66,28 +66,34 @@ const ContributorProfileTab = ({
   const hasHighlights = highlights?.length > 0;
   pathnameRef.current = router.pathname.split("/").at(-1);
 
-  const getCurrentPathName = () => {
-    return pathnameRef.current !== "[username]" ? pathnameRef.current : hasHighlights ? "highlights" : "contributions";
-  };
+  const getCurrentPathName = useMemo(() => {
+    return pathnameRef.current && pathnameRef.current !== "[username]"
+      ? pathnameRef.current
+      : hasHighlights
+      ? "highlights"
+      : "contributions";
+  }, [hasHighlights]);
 
-  const [currentPathname, setCurrentPathname] = useState(getCurrentPathName());
+  const [currentPathname, setCurrentPathname] = useState(getCurrentPathName);
   const handleTabUrl = (tab: string) => {
     router.push(`/user/${login}/${tab.toLowerCase()}`);
+    setCurrentPathname(tab.toLowerCase());
   };
 
   useEffect(() => {
     setInputVisible(highlights && highlights.length !== 0 ? true : false);
     if (login && currentPathname) {
-      if (currentPathname === "highlights" && !hasHighlights) {
-        setCurrentPathname("contributions");
-      } else {
-        router.push(`/user/${login}/${currentPathname}`);
-      }
+      router.push(`/user/${login}/${currentPathname}`);
+      setCurrentPathname(getCurrentPathName);
     }
-  }, [highlights, currentPathname]);
+    if (login && !hasHighlights) {
+      router.push(`/user/${login}/contributions`);
+      setCurrentPathname("contributions");
+    }
+  }, [highlights]);
 
   return (
-    <Tabs value={uppercaseFirst(currentPathname as string)} className="" onValueChange={handleTabUrl}>
+    <Tabs value={uppercaseFirst(currentPathname as string)} onValueChange={handleTabUrl}>
       <TabsList className="justify-start w-full overflow-x-auto border-b">
         {tabLinks.map((tab) => (
           <TabsTrigger
