@@ -5,7 +5,6 @@ import Link from "next/link";
 
 import { IoNotifications } from "react-icons/io5";
 import { FiLogOut, FiSettings } from "react-icons/fi";
-import { BiLinkExternal } from "react-icons/bi";
 import { Divider } from "@supabase/ui";
 
 import useSession from "lib/hooks/useSession";
@@ -87,14 +86,6 @@ const AuthSection: React.FC = ({}) => {
         <Text className="group-hover:text-light-orange-10">{user?.user_metadata.user_name}</Text>
       </Link>,
       <Link
-        href={"https://docs.opensauced.pizza/community/faqs/"}
-        key="faqs"
-        className="flex items-center px-4 py-2 text-lg transition rounded-md cursor-pointer group gap-x-3 hover:bg-light-orange-3"
-      >
-        <BiLinkExternal className="group-hover:text-light-orange-10" />
-        <Text className="group-hover:text-light-orange-10">FAQs</Text>
-      </Link>,
-      <Link
         href="/user/settings"
         key="settings"
         className="flex items-center px-4 py-2 text-lg transition rounded-md cursor-pointer group gap-x-3 hover:bg-light-orange-3"
@@ -121,6 +112,7 @@ const AuthSection: React.FC = ({}) => {
       </span>,
     ],
   };
+
   return (
     <div className="flex p-2 m-1 sm:py-0">
       <div className="flex items-center gap-2 lg:gap-3">
