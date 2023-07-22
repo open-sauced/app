@@ -138,7 +138,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
 
   // Handle collapsible change
   const handleCollapsibleOpenChange = () => {
-    if (isDivFocused && !charCount) {
+    if (isDivFocused && !charCount && !pullrequestLink) {
       setIsDivFocused(false);
     } else {
       setIsDivFocused(true);
