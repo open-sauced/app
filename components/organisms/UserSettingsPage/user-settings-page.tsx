@@ -14,6 +14,7 @@ import StripeCheckoutButton from "components/organisms/StripeCheckoutButton/stri
 
 import { updateUser, UpdateUserPayload } from "lib/hooks/update-user";
 
+import useSession from "lib/hooks/useSession";
 import { authSession } from "lib/hooks/authSession";
 import { validateEmail } from "lib/utils/validate-email";
 import { timezones } from "lib/utils/timezones";
@@ -35,6 +36,8 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
   const { data: insightsUser, mutate } = useFetchUser(user?.user_metadata.user_name, {
     revalidateOnFocus: false,
   });
+
+  const { hasReports } = useSession();
 
   const { toast } = useToast();
 
@@ -373,15 +376,17 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
               Update Preferences
             </Button>
           </div>
-          <div className="flex flex-col gap-6 order-first md:order-last">
-            <div className="flex flex-col gap-3">
-              <label className="text-2xl font-normal text-light-slate-11">Upgrade Access</label>
-              <div className="w-full sm:max-w-80">
-                <Text>Upgrade to a subscription to gain access to generate custom reports!</Text>
+          {!hasReports && (
+            <div className="flex flex-col gap-6 order-first md:order-last">
+              <div className="flex flex-col gap-3">
+                <label className="text-2xl font-normal text-light-slate-11">Upgrade Access</label>
+                <div className="w-full sm:max-w-80">
+                  <Text>Upgrade to a subscription to gain access to generate custom reports!</Text>
+                </div>
               </div>
+              <StripeCheckoutButton variant="primary" />
             </div>
-            <StripeCheckoutButton variant="primary" />
-          </div>
+          )}
         </div>
       </div>
     </div>
