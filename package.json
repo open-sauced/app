@@ -42,7 +42,7 @@
     "build-storybook": "storybook build",
     "lint": "next lint",
     "format": "next lint -- --fix --dir .",
-    "prepare": "husky install"
+    "prepare": "npx husky install"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.8",
