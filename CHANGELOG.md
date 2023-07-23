@@ -5,6 +5,31 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.57.0-beta.3](https://github.com/open-sauced/insights/compare/v1.57.0-beta.2...v1.57.0-beta.3) (2023-07-23)
+
+
+### 🤖 Build System
+
+* update eslint prettier config and setup commit hooks ([#1396](https://github.com/open-sauced/insights/issues/1396)) ([ac9b276](https://github.com/open-sauced/insights/commit/ac9b2767b68a06c354dd0cee9c50c55562816f9e))
+
+
+### 🍕 Features
+
+* Add links to getting started docs ([#1395](https://github.com/open-sauced/insights/issues/1395)) ([c58cc80](https://github.com/open-sauced/insights/commit/c58cc80dac3a1476bbb9d8fca26d27bc0ead7da8))
+* implement improved highlights form with ai auto-summarise ([#1381](https://github.com/open-sauced/insights/issues/1381)) ([023f576](https://github.com/open-sauced/insights/commit/023f57635de1918997867dd1b908280292d809f3))
+
+
+### 🐛 Bug Fixes
+
+* Move card image api route ([#1401](https://github.com/open-sauced/insights/issues/1401)) ([d650161](https://github.com/open-sauced/insights/commit/d650161d1a4fdd3dd219bdba931af34283f0c2d7))
+* update top contributors response data ([#1397](https://github.com/open-sauced/insights/issues/1397)) ([9053091](https://github.com/open-sauced/insights/commit/9053091b6d3c9b8666ed5302277091638984e21e))
+
+
+### 🔁 Continuous Integration
+
+* disable husky for release ([2537649](https://github.com/open-sauced/insights/commit/253764918f117734aafbdaef242e4cc7497b082c))
+* fix husky command during release ([3e493a2](https://github.com/open-sauced/insights/commit/3e493a2f0bc998827e15aa09b2b69ab7dec4cdec))
+
 ## [1.57.0-beta.2](https://github.com/open-sauced/insights/compare/v1.57.0-beta.1...v1.57.0-beta.2) (2023-07-19)
 
 
