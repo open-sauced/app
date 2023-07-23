@@ -50,6 +50,9 @@ const testOptions = {
         color: "#FFB74D",
         opacity: 0.6,
       },
+      tooltip: {
+        trigger: "axis",
+      },
     },
   ],
 };
