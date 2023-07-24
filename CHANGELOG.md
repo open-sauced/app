@@ -5,6 +5,19 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.57.0-beta.4](https://github.com/open-sauced/insights/compare/v1.57.0-beta.3...v1.57.0-beta.4) (2023-07-24)
+
+
+### 🐛 Bug Fixes
+
+* flash of "test content" while loading in dashboard page ([#1409](https://github.com/open-sauced/insights/issues/1409)) ([ad23f14](https://github.com/open-sauced/insights/commit/ad23f1496fef57173b90010797b110801efa82f6))
+
+
+### 🍕 Features
+
+* add upgrade access button to user settings page ([#1398](https://github.com/open-sauced/insights/issues/1398)) ([671ebf4](https://github.com/open-sauced/insights/commit/671ebf42c7c5adf06896bf4ebaaec9e7c34e4437))
+* implemented hover and highlight contribution graph ([#1404](https://github.com/open-sauced/insights/issues/1404)) ([0453370](https://github.com/open-sauced/insights/commit/0453370d76cb30e2be0adbeefadb04fc1ebdc965))
+
 ## [1.57.0-beta.3](https://github.com/open-sauced/insights/compare/v1.57.0-beta.2...v1.57.0-beta.3) (2023-07-23)
 
 
