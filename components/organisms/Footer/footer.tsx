@@ -121,7 +121,7 @@ const Footer = (): JSX.Element => {
             </a>
           ))}
         </div>
-        <div className="flex md:justify-center lg:hidden lg:border-none lg:order-2 border-t py-3 pb-4 mt-2 text-sm justify-between">
+        <div className="flex md:justify-center lg:hidden lg:border-none lg:order-2 border-t py-3 pb-4 mt-2 text-sm gap-x-14">
           <Text className="text-light-slate-9">
             © {new Date().getFullYear()} <span className="hidden md:inline-block">Open sauced</span>
           </Text>
