@@ -6,16 +6,16 @@ const storyConfig = {
   component: "HighlightCard",
   argTypes: {
     label: {
-      control: { type: "text" }
+      control: { type: "text" },
     },
     icon: {
       options: ["participation", "accepted-pr", "unlabeled-pr", "spam"],
-      control: { type: "select" }
+      control: { type: "select" },
     },
     url: {
-      control: { type: "text" }
-    }
-  }
+      control: { type: "text" },
+    },
+  },
 };
 
 export default storyConfig;
@@ -25,24 +25,24 @@ const HighlightCardTemplate: ComponentStory<typeof HighlightCard> = (args) => <H
 
 // HighlightCard: Metric Increases
 export const Increases = HighlightCardTemplate.bind({});
-Increases.args = { 
+Increases.args = {
   label: "Participation",
   icon: "participation",
   metricIncreases: true,
   increased: true,
   numChanged: 38,
   percentage: 42,
-  percentageLabel: "of 49,999"
+  percentageLabel: "of 49,999",
 };
 
 // HighlightCard: Metric Decreases
 export const Decreases = HighlightCardTemplate.bind({});
-Decreases.args = { 
+Decreases.args = {
   label: "Spam",
   icon: "spam",
   metricIncreases: false,
   increased: true,
   numChanged: 98,
   percentage: 80,
-  percentageLabel: "of 49,999"
+  percentageLabel: "of 49,999",
 };

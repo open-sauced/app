@@ -2,7 +2,7 @@ import { ComponentStory } from "@storybook/react";
 import UserSettingsPage from "components/organisms/UserSettingsPage/user-settings-page";
 
 const StoryConfig = {
-  title: "Design System/Organisms/UserSettingsPage"
+  title: "Design System/Organisms/UserSettingsPage",
 };
 export default StoryConfig;
 

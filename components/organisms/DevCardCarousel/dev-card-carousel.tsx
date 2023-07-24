@@ -83,8 +83,6 @@ export default function DevCardCarousel(props: DevCardCarouselProps) {
     });
   }, [cardOrder, api]);
 
-
-
   return (
     <div className="flex flex-col gap-6">
       <div className="grid place-content-center">

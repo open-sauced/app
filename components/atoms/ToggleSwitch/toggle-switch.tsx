@@ -14,7 +14,7 @@ const ToggleSwitch = ({
   checked = false,
   handleToggle,
   size = "base",
-  classNames
+  classNames,
 }: ToggleSwitchProps): JSX.Element => {
   return (
     <Switch.Root

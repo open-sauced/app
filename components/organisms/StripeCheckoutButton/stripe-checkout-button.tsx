@@ -1,11 +1,13 @@
-import Text from "components/atoms/Typography/text";
-import Button from "components/atoms/Button/button";
-import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
+import Button, { ButtonsProps } from "components/atoms/Button/button";
 
+import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { getStripe } from "lib/utils/stripe-client";
 
-const StripeCheckoutButton = () => {
+interface StripeCheckoutButtonProps extends ButtonsProps {}
+
+const StripeCheckoutButton = ({ children, ...props }: StripeCheckoutButtonProps) => {
   const { sessionToken } = useSupabaseAuth();
+
   const handleFormSubmit = async (event: any) => {
     event.preventDefault();
 
@@ -13,8 +15,8 @@ const StripeCheckoutButton = () => {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/checkout/session`, {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${sessionToken}`
-        }
+          Authorization: `Bearer ${sessionToken}`,
+        },
       });
 
       if (response.ok) {
@@ -32,17 +34,9 @@ const StripeCheckoutButton = () => {
   };
 
   return (
-    <div>
-      <Text className="">Upgrade to a subscription to gain access to generate custom reports!</Text>
-
-      <p className="flex justify-center py-4 px-2">
-        <form onSubmit={handleFormSubmit}>
-          <Button variant="primary" className="w-52 h-[38px] flex justify-center">
-            Upgrade Access
-          </Button>
-        </form>
-      </p>
-    </div>
+    <form onSubmit={handleFormSubmit}>
+      <Button {...props}>{children || "Upgrade Access"}</Button>
+    </form>
   );
 };
 

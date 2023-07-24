@@ -45,7 +45,7 @@ const PillSelector: React.FC<PillSelectorProps> = ({
   handlePillClick,
   handleCancelClick,
   className,
-  selected
+  selected,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const show = isOpen ? "flex" : "hidden";

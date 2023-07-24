@@ -24,10 +24,10 @@ const createHighlights = async (data: CreateHighlightsProps) => {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: `Bearer ${sessionToken}`
+        Authorization: `Bearer ${sessionToken}`,
       },
       method: "POST",
-      body: JSON.stringify({ ...data })
+      body: JSON.stringify({ ...data }),
     });
 
     if (!response.ok) {
@@ -35,7 +35,6 @@ const createHighlights = async (data: CreateHighlightsProps) => {
     }
 
     return response.json();
-
   } catch (error) {
     return (error as Response).json().then((err: Error | ServerError) => {
       if (err instanceof Error) {

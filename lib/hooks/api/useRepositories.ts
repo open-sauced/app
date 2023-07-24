@@ -33,7 +33,7 @@ const useRepositories = (repoIds: number[] = [], range = 30) => {
 
   if (range) {
     query.set("range", `${range}`);
-  }  
+  }
 
   if (repoIds?.length > 0) {
     query.delete("topic");
@@ -60,7 +60,7 @@ const useRepositories = (repoIds: number[] = [], range = 30) => {
     mutate,
     page,
     setPage,
-    setLimit
+    setLimit,
   };
 };
 

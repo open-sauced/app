@@ -10,8 +10,8 @@ const authSession = async () => {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
-      Authorization: `Bearer ${sessionToken}`
-    }
+      Authorization: `Bearer ${sessionToken}`,
+    },
   });
 
   if (response.status === 200) {

@@ -30,24 +30,19 @@ const AuthContentWrapper: React.FC<AuthContentWrapperProps> = ({ children }) => 
     <div className="relative">
       {!isAuthed && (
         <div className="absolute z-10 w-full h-full top-0 left-0 flex items-center justify-center rounded-lg bg-white/50">
-          <Button 
-            variant="primary" 
+          <Button
+            variant="primary"
             className="z-1 items-center px-2.5 py-1"
             onClick={() => {
               signIn({ provider: "github", options: { redirectTo: `${host}${currentPath}` } });
             }}
           >
-            <Icon IconImage={GitHubIcon} className="mr-2" /> 
+            <Icon IconImage={GitHubIcon} className="mr-2" />
             Connect with GitHub
           </Button>
         </div>
       )}
-      <div className={clsx(
-        "relative",
-        !isAuthed && "blur-sm",
-      )}>
-        {children}
-      </div>
+      <div className={clsx("relative", !isAuthed && "blur-sm")}>{children}</div>
     </div>
   );
 };

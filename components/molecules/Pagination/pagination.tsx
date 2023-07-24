@@ -25,7 +25,7 @@ const Pagination = ({
   pageSize = 10,
   hasPreviousPage = false,
   hasNextPage = true,
-  onPageChange
+  onPageChange,
 }: PaginationProps): JSX.Element => {
   // This logics are meant for testing purpose
   const [selected, setSelected] = useState(page);
@@ -82,7 +82,7 @@ const Pagination = ({
         <div
           className={`${divisor && "md:border-r-2 border-r-light-slate-6"} text-sm text-light-slate-9    py-1 md:pr-4`}
         >
-          Total {totalPage > 999 ? humanizeNumber(totalPage, null) : totalPage} 
+          Total {totalPage > 999 ? humanizeNumber(totalPage, null) : totalPage}
           <span className="md:invisible lg:visible"> pages </span>
         </div>
         {goToPage && (

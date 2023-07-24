@@ -1,6 +1,5 @@
 import Image, { StaticImageData } from "next/image";
 
-
 import JavascriptIcon from "img/icons/interests/javascript.svg";
 import ReactIcon from "/img/icons/interests/react.svg";
 import PythonIcon from "/img/icons/interests/python.svg";
@@ -19,7 +18,6 @@ import VueIcon from "img/icons/interests/vuejs.svg";
 import KubernetesIcon from "img/icons/interests/kubernetes.svg";
 
 import topicNameFormatting from "lib/utils/topic-name-formatting";
-
 
 interface LanguagePillProps {
   topic:
@@ -61,7 +59,7 @@ const LanguagePill = ({ topic, classNames, onClick }: LanguagePillProps) => {
       java: JavaIcon,
       golang: GolangIcon,
       vue: VueIcon,
-      kubernetes: KubernetesIcon
+      kubernetes: KubernetesIcon,
     };
 
     return iconMap[name] || "";

@@ -12,8 +12,6 @@ export const siteUrl = (path: string = "") => {
   return url;
 };
 
-
-
 /**
  * -------------------------------------------------------------------------------
  *  DevCard URLs
@@ -21,7 +19,7 @@ export const siteUrl = (path: string = "") => {
  */
 export const cardPageUrl = (username: string) => siteUrl(`user/${username}/card`);
 
-export const cardImageUrl = (username: string) => siteUrl(`api/card.png?username=${username}`);
+export const cardImageUrl = (username: string) => siteUrl(`api/user/${username}/card.png`);
 
 export const twitterCardShareUrl = (username: string) => {
   const url = new URL("https://twitter.com/intent/tweet");

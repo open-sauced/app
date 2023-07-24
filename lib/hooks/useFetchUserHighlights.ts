@@ -23,7 +23,7 @@ const useFetchUserHighlights = (username: string) => {
     isLoading: !error && !data,
     isError: !!error,
     setPage,
-    mutate
+    mutate,
   };
 };
 

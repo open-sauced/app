@@ -15,9 +15,9 @@ const SelectedFilter: WithPageLayout = () => {
     toolName ? ` / ${changeCapitalization(toolName.toString(), true)}` : ""
   }`;
 
-  useEffect( () => {
+  useEffect(() => {
     SelectedFilter.updateSEO!({
-      title: title
+      title: title,
     });
   }, [title]);
 

@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { useTransition, animated } from "react-spring";
 import Image from "next/image";
 import cntl from "cntl";
-import { useWindowSize } from "rooks";
 import Button from "components/atoms/Button/button";
 import HeaderLogo from "components/molecules/HeaderLogo/header-logo";
 import DevCardCarousel, { DevCardCarouselProps } from "components/organisms/DevCardCarousel/dev-card-carousel";
@@ -17,10 +16,10 @@ import { DevCardProps } from "components/molecules/DevCard/dev-card";
 import SEO from "layouts/SEO/SEO";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { cardImageUrl, linkedinCardShareUrl, twitterCardShareUrl } from "lib/utils/urls";
+import FullHeightContainer from "components/atoms/FullHeightContainer/full-height-container";
 import TwitterIcon from "../../../img/icons/social-twitter.svg";
 import LinkinIcon from "../../../img/icons/social-linkedin.svg";
 import BubbleBG from "../../../img/bubble-bg.svg";
-;
 const ADDITIONAL_PROFILES_TO_LOAD = [
   "bdougie",
   "nickytonline",
@@ -61,7 +60,6 @@ async function fetchInitialCardData(username: string): Promise<DevCardProps> {
     ? Math.floor((Date.now() - Date.parse(user.first_opened_pr_at)) / 86400000)
     : 0;
 
-
   return {
     username,
     avatarURL: githubAvatar,
@@ -101,7 +99,6 @@ export const getServerSideProps: GetServerSideProps<CardProps, Params> = async (
   const uniqueUsernames = [...new Set([username, ...ADDITIONAL_PROFILES_TO_LOAD])];
   const cards = await Promise.all(uniqueUsernames.map(fetchInitialCardData));
 
-
   return {
     props: {
       username,
@@ -112,8 +109,6 @@ export const getServerSideProps: GetServerSideProps<CardProps, Params> = async (
 
 const Card: NextPage<CardProps> = ({ username, cards }) => {
   const { user: loggedInUser } = useSupabaseAuth();
-  const { innerHeight } = useWindowSize();
-  const [minHeight, setMinHeight] = useState<string>("100vh");
   const [selectedUserName, setSelectedUserName] = useState<string>(username);
   const iframeTransition = useTransition(selectedUserName, {
     from: { opacity: 0, transform: "translate3d(100%, 0, 0)" },
@@ -152,18 +147,8 @@ const Card: NextPage<CardProps> = ({ username, cards }) => {
     });
   }, [cards]);
 
-  useEffect(() => {
-    setMinHeight(`${innerHeight}px`);
-  }, [innerHeight]);
-
-
   return (
-    <div
-      style={{
-        background: `url(${BubbleBG.src}) no-repeat center center, linear-gradient(147deg, #212121 13.41%, #2E2E2E 86.8%)`,
-        backgroundSize: "cover",
-      }}
-    >
+    <FullHeightContainer>
       <SEO
         title={`${username} | OpenSauced`}
         description={socialSummary}
@@ -171,12 +156,11 @@ const Card: NextPage<CardProps> = ({ username, cards }) => {
         twitterCard="summary_large_image"
       />
       <main
-        className="grid w-full h-full min-h-screen max-h-screen md:max-h-fit md:overflow-hidden md:pb-20"
+        className="grid max-h-screen md:overflow-hidden md:pb-20"
         style={{
+          background: `url(${BubbleBG.src}) no-repeat center center, linear-gradient(147deg, #212121 13.41%, #2E2E2E 86.8%)`,
+          backgroundSize: "cover",
           gridTemplateRows: "auto 1fr auto",
-          // using the JS calculated min-height here to account for mobile browser toolbars
-          // see https://dev.to/nirazanbasnet/dont-use-100vh-for-mobile-responsive-3o97
-          minHeight
         }}
       >
         <div className="grid justify-center place-content-start py-7 px-3 md:justify-start">
@@ -249,23 +233,22 @@ const Card: NextPage<CardProps> = ({ username, cards }) => {
           ) : (
             <div className="flex flex-col gap-2">
               <Button variant="primary" className="justify-center" href={`/user/${selectedUserName}`}>
-              See Full Profile
+                See Full Profile
               </Button>
               <Button variant="dark" className="justify-center" href="/start">
-              Create your own dev card!
+                Create your own dev card!
               </Button>
             </div>
           )}
         </div>
       </main>
-    </div>
+    </FullHeightContainer>
   );
 };
 
 export default Card;
 
-
-function SocialButtons({username, summary} : {username: string, summary: string }) {
+function SocialButtons({ username, summary }: { username: string; summary: string }) {
   const icons = [
     {
       name: "Twitter",
@@ -301,7 +284,7 @@ function SocialButtons({username, summary} : {username: string, summary: string 
             key={icon.src}
             href={icon.url}
             className={linkStyle}
-            style={{ backgroundColor: icon.color, borderColor: "rgba(255,255,255,0.2)"}}
+            style={{ backgroundColor: icon.color, borderColor: "rgba(255,255,255,0.2)" }}
             target="_blank"
             rel="noreferrer"
           >

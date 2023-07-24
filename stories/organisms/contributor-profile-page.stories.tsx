@@ -3,7 +3,7 @@ import { TooltipProvider } from "@radix-ui/react-tooltip";
 import ContributorProfilePage from "components/organisms/ContributorProfilePage/contributor-profile-page";
 
 const storyConfig = {
-  title: "Design System/Organisms/Contributor Profile Page"
+  title: "Design System/Organisms/Contributor Profile Page",
 };
 export default storyConfig;
 const listOfPRs = [
@@ -16,7 +16,7 @@ const listOfPRs = [
     noOfLinesChanged: 837,
     repoName: "open-sauced",
     repoOwner: "open-sauced",
-    prNumber: 1
+    prNumber: 1,
   },
   {
     prName: "Merging some work",
@@ -27,7 +27,7 @@ const listOfPRs = [
     noOfLinesChanged: 837,
     repoName: "open-sauced",
     repoOwner: "open-sauced",
-    prNumber: 2
+    prNumber: 2,
   },
   {
     prName: "Merging some work",
@@ -38,7 +38,7 @@ const listOfPRs = [
     noOfLinesChanged: 837,
     repoName: "open-sauced",
     repoOwner: "open-sauced",
-    prNumber: 3
+    prNumber: 3,
   },
   {
     prName: "Merging some work",
@@ -49,8 +49,8 @@ const listOfPRs = [
     noOfLinesChanged: 837,
     repoName: "open-sauced",
     repoOwner: "open-sauced",
-    prNumber: 4
-  }
+    prNumber: 4,
+  },
 ];
 
 const ContributorProfilePageTemplate: ComponentStory<typeof ContributorProfilePage> = (args) => (
@@ -62,5 +62,5 @@ const ContributorProfilePageTemplate: ComponentStory<typeof ContributorProfilePa
 export const Default = ContributorProfilePageTemplate.bind({});
 
 Default.args = {
-  listOfPRs: listOfPRs
+  listOfPRs: listOfPRs,
 };

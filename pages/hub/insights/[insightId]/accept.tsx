@@ -25,9 +25,9 @@ const AcceptMemberInvitePage = () => {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${sessionToken}`
+        Authorization: `Bearer ${sessionToken}`,
       },
-      body: JSON.stringify({ access: "view" })
+      body: JSON.stringify({ access: "view" }),
     });
 
     if (response.ok) {
@@ -80,7 +80,7 @@ AcceptMemberInvitePage.PageLayout = HubLayout;
 AcceptMemberInvitePage.isPrivateRoute = true;
 AcceptMemberInvitePage.SEO = {
   title: "Accept Insight Member Invitation | Open Sauced Insights",
-  noindex: true
+  noindex: true,
 };
 
 export default AcceptMemberInvitePage;

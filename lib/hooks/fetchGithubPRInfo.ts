@@ -15,19 +15,19 @@ const fetchGithubPRInfo = async (orgName: string | null, repoName: string | null
     const response: GhPullInfoResponse = await octokit.request("GET /repos/{orgName}/{repoName}/pulls/{issueId}", {
       orgName,
       repoName,
-      issueId
+      issueId,
     });
 
     return {
       data: response.data ?? undefined,
-      isError: null
+      isError: null,
     };
   } catch (e) {
     console.log(e);
 
     return {
       data: null,
-      isError: true
+      isError: true,
     };
   }
 };

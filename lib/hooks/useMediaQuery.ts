@@ -27,14 +27,14 @@ export function useMediaQuery(query: string): boolean {
     // Listen matchMedia
 
     if (isOldBrowser) {
-      matchMedia.addEventListener("change",handleChange);
+      matchMedia.addEventListener("change", handleChange);
     } else {
       matchMedia.addEventListener("change", handleChange);
     }
 
     return () => {
       if (isOldBrowser) {
-        matchMedia.removeEventListener("change",handleChange);
+        matchMedia.removeEventListener("change", handleChange);
       } else {
         matchMedia.removeEventListener("change", handleChange);
       }

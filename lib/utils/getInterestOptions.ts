@@ -14,9 +14,9 @@ const interests = [
   "golang",
   "rust",
   "vue",
-  "kubernetes"
+  "kubernetes",
 ] as const;
-export type interestsType = typeof interests[number];
+export type interestsType = (typeof interests)[number];
 
 export const getInterestOptions = () => {
   // returning mutable type array instead of `Read Only` type.

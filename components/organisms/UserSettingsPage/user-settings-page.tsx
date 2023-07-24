@@ -7,11 +7,14 @@ import Button from "components/atoms/Button/button";
 import Checkbox from "components/atoms/Checkbox/checkbox";
 import TextInput from "components/atoms/TextInput/text-input";
 import Title from "components/atoms/Typography/title";
+import Text from "components/atoms/Typography/text";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "components/atoms/Select/select";
 import LanguagePill from "components/atoms/LanguagePill/LanguagePill";
+import StripeCheckoutButton from "components/organisms/StripeCheckoutButton/stripe-checkout-button";
 
 import { updateUser, UpdateUserPayload } from "lib/hooks/update-user";
 
+import useSession from "lib/hooks/useSession";
 import { authSession } from "lib/hooks/authSession";
 import { validateEmail } from "lib/utils/validate-email";
 import { timezones } from "lib/utils/timezones";
@@ -33,6 +36,8 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
   const { data: insightsUser, mutate } = useFetchUser(user?.user_metadata.user_name, {
     revalidateOnFocus: false,
   });
+
+  const { hasReports } = useSession();
 
   const { toast } = useToast();
 
@@ -71,6 +76,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
         formRef.current!.location.value = response.location;
         formRef.current!.github_sponsors_url.value = response.github_sponsors_url;
         formRef.current!.linkedin_url.value = response.linkedin_url;
+        formRef.current!.discord_url.value = response.discord_url;
       }
     }
     fetchAuthSession();
@@ -105,6 +111,12 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
     event.target.reportValidity();
   };
 
+  const handleValidateDiscordUrl = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const regex = new RegExp(/^https:\/\/discord(app)?\.com\/users\/\d{17,}$/);
+    event.target.setCustomValidity(regex.test(event.target.value) ? "" : "Invalid Discord URL");
+    event.target.reportValidity();
+  };
+
   const handleSelectInterest = (interest: string) => {
     if (selectedInterest.length > 0 && selectedInterest.includes(interest)) {
       setSelectedInterest((prev) => prev.filter((item) => item !== interest));
@@ -114,7 +126,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
   };
 
   const handleUpdateEmailPreference = async () => {
-    setUpdating(prev => ({ ...prev, emailPreferences: true }));
+    setUpdating((prev) => ({ ...prev, emailPreferences: true }));
 
     const data = await updateEmailPreferences({ ...emailPreference });
     if (data) {
@@ -123,11 +135,11 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
       toast({ description: "An error occured!", variant: "danger" });
     }
 
-    setUpdating(prev => ({...prev, emailPreferences: false}));
+    setUpdating((prev) => ({ ...prev, emailPreferences: false }));
   };
 
   const handleUpdateInterest = async () => {
-    setUpdating(prev => ({ ...prev, interests: true }));
+    setUpdating((prev) => ({ ...prev, interests: true }));
 
     const data = await updateUser({
       data: { interests: selectedInterest },
@@ -146,7 +158,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
 
   const handleUpdateProfile = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setUpdating(prev => ({...prev, profile: true}));
+    setUpdating((prev) => ({ ...prev, profile: true }));
     const payload: UpdateUserPayload = {
       name: formRef.current!.nameInput.value,
       email,
@@ -163,6 +175,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
         formRef.current!.github_sponsors_url.value !== "" ? formRef.current!.github_sponsors_url.value : undefined,
       // eslint-disable-next-line camelcase
       linkedin_url: formRef.current!.linkedin_url.value !== "" ? formRef.current!.linkedin_url.value : undefined,
+      discord_url: formRef.current!.discord_url.value !== "" ? formRef.current!.discord_url.value : undefined,
     };
     if (formRef.current?.url.value) {
       payload.url = formRef.current!.url.value;
@@ -191,14 +204,14 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
           </Title>
           <form onSubmit={handleUpdateProfile} className="flex flex-col gap-6 mt-6" ref={formRef}>
             <TextInput
-              classNames="bg-light-slate-4 text-light-slate-11 font-medium"
+              className="font-medium bg-light-slate-4 text-light-slate-11"
               label="Name*"
               placeholder="April O'Neil"
               required
               name="nameInput"
             />
             <TextInput
-              classNames="bg-light-slate-4 text-light-slate-11 font-medium"
+              className="font-medium bg-light-slate-4 text-light-slate-11"
               placeholder="april@stockgen.com"
               handleChange={handleEmailChange}
               label="Email*"
@@ -217,41 +230,48 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
               ></textarea>
             </div>
             <TextInput
-              classNames="bg-light-slate-4 text-light-slate-11 font-medium"
+              className="font-medium bg-light-slate-4 text-light-slate-11"
               placeholder="https://opensauced.pizza"
               label="URL"
               pattern="http[s]?://.*\..{2,}"
               name="url"
             />
             <TextInput
-              classNames="bg-light-slate-4 text-light-slate-11 font-medium"
+              className="font-medium bg-light-slate-4 text-light-slate-11"
               placeholder="https://github.com/sponsors/open-sauced"
               label="GitHub Sponsors URL"
               pattern="http[s]?://.*\..{2,}"
               name="github_sponsors_url"
             />
             <TextInput
-              classNames="bg-light-slate-4 text-light-slate-11 font-medium"
+              className="font-medium bg-light-slate-4 text-light-slate-11"
               placeholder="https://www.linkedin.com/in/brianldouglas"
               label="LinkedIn URL"
               pattern="http[s]?://.*\..{2,}"
               name="linkedin_url"
             />
             <TextInput
-              classNames="bg-light-slate-4 text-light-slate-11"
+              className="font-medium bg-light-slate-4 text-light-slate-11"
+              placeholder="https://discordapp.com/users/832877193112762362"
+              label="Discord URL"
+              onChange={handleValidateDiscordUrl}
+              name="discord_url"
+            />
+            <TextInput
+              className="bg-light-slate-4 text-light-slate-11"
               placeholder="saucedopen"
               label="Twitter Username"
               onChange={handleTwitterUsernameChange}
               name="twitter_username"
             />
             <TextInput
-              classNames="bg-light-slate-4 text-light-slate-11 font-medium"
+              className="font-medium bg-light-slate-4 text-light-slate-11"
               placeholder="OpenSauced"
               label="Company"
               name="company"
             />
             <TextInput
-              classNames="bg-light-slate-4 text-light-slate-11 font-medium"
+              className="font-medium bg-light-slate-4 text-light-slate-11"
               placeholder="USA"
               label="Location"
               name="location"
@@ -356,6 +376,17 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
               Update Preferences
             </Button>
           </div>
+          {!hasReports && (
+            <div className="flex flex-col gap-6 order-first md:order-last">
+              <div className="flex flex-col gap-3">
+                <label className="text-2xl font-normal text-light-slate-11">Upgrade Access</label>
+                <div className="w-full sm:max-w-80">
+                  <Text>Upgrade to a subscription to gain access to generate custom reports!</Text>
+                </div>
+              </div>
+              <StripeCheckoutButton variant="primary" />
+            </div>
+          )}
         </div>
       </div>
     </div>

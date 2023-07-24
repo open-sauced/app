@@ -32,7 +32,7 @@ const getInsights = (insights: DbInsight[], intervalDay = 0): Insight => {
       unlabeledPercentage: 0,
       allContributors: 0,
       spamContributors: 0,
-      acceptedContributors: 0
+      acceptedContributors: 0,
     };
   }
 
@@ -57,7 +57,7 @@ const getInsights = (insights: DbInsight[], intervalDay = 0): Insight => {
     unlabeledPercentage: unlabeled,
     allContributors: currentInsights.all_contributors,
     spamContributors: currentInsights.spam_contributors,
-    acceptedContributors: currentInsights.accepted_contributors
+    acceptedContributors: currentInsights.accepted_contributors,
   };
 };
 
@@ -79,7 +79,7 @@ const useInsights = (repoIds: number[] = []) => {
 
   if (query.get("repo")) {
     query.delete("topic");
-  }  
+  }
 
   const baseEndpoint = "prs/insights";
   const endpointString = `${baseEndpoint}?${query}`;
@@ -93,7 +93,7 @@ const useInsights = (repoIds: number[] = []) => {
     data: data || [],
     isLoading: !error && !data,
     isError: !!error,
-    mutate
+    mutate,
   };
 };
 

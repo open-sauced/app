@@ -60,7 +60,7 @@ const CardHorizontalBarChart = ({ languageList, withDescription }: CardHorizonta
                   width: `${percentageUsed < 20 ? (percentageUsed / percentage) * 100 : percentageUsed}%`,
                   backgroundColor: languageToColor[languageName]
                     ? (languageToColor[languageName].color as string)
-                    : NOTSUPPORTED
+                    : NOTSUPPORTED,
                 }}
               />
             )
@@ -74,7 +74,7 @@ const CardHorizontalBarChart = ({ languageList, withDescription }: CardHorizonta
             style={{
               backgroundColor: languageToColor[descriptText]
                 ? (languageToColor[descriptText].color as string)
-                : NOTSUPPORTED
+                : NOTSUPPORTED,
             }}
           />
           <Tooltip className="max-w-[100px]" content={descriptText}>

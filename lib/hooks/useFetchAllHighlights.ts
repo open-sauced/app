@@ -25,7 +25,7 @@ const useFetchAllHighlights = (repo = "") => {
     isLoading: !error && !data,
     isError: !!error,
     setPage,
-    mutate
+    mutate,
   };
 };
 

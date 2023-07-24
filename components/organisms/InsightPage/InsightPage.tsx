@@ -115,7 +115,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
       repoName: repoName,
       totalPrs,
       avatar: getAvatarByUsername(repoOwner, 60),
-      handleRemoveItem: () => { },
+      handleRemoveItem: () => {},
     };
   });
 
@@ -249,7 +249,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
       setRepoHistory((historyRepos) => {
         return historyRepos.filter((repo) => `${repo.full_name}` !== repoAdded);
       });
-    } catch (e) { }
+    } catch (e) {}
   };
 
   const handleRemoveRepository = (id: string) => {
@@ -313,10 +313,10 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
       {
         ...(providerToken
           ? {
-            headers: {
-              Authorization: `Bearer ${providerToken}`,
-            },
-          }
+              headers: {
+                Authorization: `Bearer ${providerToken}`,
+              },
+            }
           : {}),
       }
     );
@@ -325,7 +325,6 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
     if (req.ok) {
       const res = await req.json();
       const suggestions = res.items.map((item: any) => item.full_name);
-      if (suggestions.length > 5) suggestions.length = 5;
       setSuggestions(suggestions);
     }
   }, 250);
@@ -500,7 +499,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
               />
             </div>
           </div>
-        </div>  
+        </div>
       </div>
 
       <DeleteInsightPageModal

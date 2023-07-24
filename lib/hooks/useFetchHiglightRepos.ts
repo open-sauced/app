@@ -24,7 +24,7 @@ const useFetchHighlightRepos = () => {
     isLoading: !error && !data,
     isError: !!error,
     setPage,
-    mutate
+    mutate,
   };
 };
 

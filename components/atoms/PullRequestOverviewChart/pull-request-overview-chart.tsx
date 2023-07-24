@@ -15,16 +15,16 @@ const PullRequestOverviewChartBar: React.FC<PullRequestOverviewChartBarProps & R
       {...event}
       className={`
         ${
-    type === "open"
-      ? "bg-light-grass-9"
-      : type === "merged"
-        ? "bg-purple-600"
-        : type === "closed"
-          ? "bg-light-red-9"
-          : type === "draft"
+          type === "open"
+            ? "bg-light-grass-9"
+            : type === "merged"
+            ? "bg-purple-600"
+            : type === "closed"
+            ? "bg-light-red-9"
+            : type === "draft"
             ? "bg-light-slate-9"
             : ""
-    }
+        }
     ${percent === 0 && "hidden"}
         transition-all shrink-0 duration-500 ease-in-out rounded-full`}
       style={{ width: `${percent}%` }}
@@ -49,7 +49,7 @@ const PullRequestOverviewChart: React.FC<PullRequestOverviewChartProps> = ({
   closed,
   draft,
   totalPullRequests,
-  setOverviewDetails
+  setOverviewDetails,
 }) => {
   const getPercentage = (PullRequestType: number | undefined) => {
     return ((!!PullRequestType ? PullRequestType : 0) * 100) / (!!totalPullRequests ? totalPullRequests : 0);

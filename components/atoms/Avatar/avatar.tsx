@@ -33,10 +33,10 @@ const Avatar = (props: AvatarProps): JSX.Element => {
   }
 
   switch (typeof props.size) {
-  case "string":
-    return <DefaultAvatar {...props} avatarURL={imageSource} />;
-  case "number":
-    return <CustomAvatar {...props} avatarURL={imageSource} />;
+    case "string":
+      return <DefaultAvatar {...props} avatarURL={imageSource} />;
+    case "number":
+      return <CustomAvatar {...props} avatarURL={imageSource} />;
   }
 };
 

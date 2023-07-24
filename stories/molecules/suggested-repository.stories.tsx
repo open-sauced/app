@@ -2,7 +2,7 @@ import { ComponentStory } from "@storybook/react";
 import SuggestedRepository from "components/molecules/SuggestedRepo/suggested-repo";
 
 const storyConfig = {
-  title: "Design System/Molecules/SuggestedRepo"
+  title: "Design System/Molecules/SuggestedRepo",
 };
 export default storyConfig;
 
@@ -18,6 +18,6 @@ SuggestedRepoStory.args = {
     orgName: "statelyai",
     repoName: "xstate",
     prCount: 56,
-    issueCount: 256
-  }
+    issueCount: 256,
+  },
 };

@@ -38,7 +38,7 @@ const usePullRequests = (intialLimit = 1000, repoIds: number[] = [], range = 30)
 
   if (query.get("repo")) {
     query.delete("topic");
-  }  
+  }
 
   query.set("range", `${range}`);
 
@@ -58,7 +58,7 @@ const usePullRequests = (intialLimit = 1000, repoIds: number[] = [], range = 30)
     mutate,
     page,
     setPage,
-    setLimit
+    setLimit,
   };
 };
 

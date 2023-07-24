@@ -10,8 +10,8 @@ const publicApiFetcher: Fetcher = async (apiUrl: string) => {
   const res = await fetch(`${baseUrl}/${apiUrl}`, {
     headers: {
       accept: "application/json",
-      Authorization: `Bearer ${sessionToken}`
-    }
+      Authorization: `Bearer ${sessionToken}`,
+    },
   });
 
   if (!res.ok) {
