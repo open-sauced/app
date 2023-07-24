@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import clsx from "clsx";
 import formatDistanceToNowStrict from "date-fns/formatDistanceToNowStrict";
@@ -57,31 +57,50 @@ const ContributorProfileTab = ({
 
   const { data: highlights, isError, isLoading, mutate, meta, setPage } = useFetchUserHighlights(login || "");
   const { data: emojis } = useFetchAllEmojis();
+  const [hasHighlights, setHasHighlights] = useState(true);
 
   const [inputVisible, setInputVisible] = useState(false);
   const pathnameRef = useRef<string | null>();
 
   const router = useRouter();
 
-  const hasHighlights = highlights?.length > 0;
   pathnameRef.current = router.pathname.split("/").at(-1);
 
-  const currentPathname =
-    pathnameRef.current !== "[username]" ? pathnameRef.current : hasHighlights ? "highlights" : "contributions";
+  const getCurrentPathName = useMemo(() => {
+    return pathnameRef.current && pathnameRef.current !== "[username]"
+      ? pathnameRef.current
+      : hasHighlights
+      ? "highlights"
+      : "contributions";
+  }, [hasHighlights]);
 
+  const [currentPathname, setCurrentPathname] = useState(getCurrentPathName);
   const handleTabUrl = (tab: string) => {
     router.push(`/user/${login}/${tab.toLowerCase()}`);
+    setCurrentPathname(tab.toLowerCase());
   };
 
   useEffect(() => {
     setInputVisible(highlights && highlights.length !== 0 ? true : false);
     if (login && currentPathname) {
       router.push(`/user/${login}/${currentPathname}`);
+      setCurrentPathname(getCurrentPathName);
+    }
+    if (login && !hasHighlights) {
+      router.push(`/user/${login}/contributions`);
+      setCurrentPathname("contributions");
+    }
+  }, [currentPathname, hasHighlights, highlights, login]);
+
+  useEffect(() => {
+    // sets the highlights state to true if the user has highlights on profile route change
+    if (highlights) {
+      setHasHighlights(highlights?.length > 0);
     }
   }, [highlights]);
 
   return (
-    <Tabs defaultValue={uppercaseFirst(currentPathname as string)} className="" onValueChange={handleTabUrl}>
+    <Tabs value={uppercaseFirst(currentPathname as string)} onValueChange={handleTabUrl}>
       <TabsList className="justify-start w-full overflow-x-auto border-b">
         {tabLinks.map((tab) => (
           <TabsTrigger
