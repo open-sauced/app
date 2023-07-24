@@ -87,7 +87,7 @@ const ContributorProfileTab = ({
           <TabsTrigger
             key={tab}
             className={clsx(
-              "data-[state=active]:border-sauced-orange shrink-0 data-[state=active]:border-b-2 text-2xl",
+              "data-[state=active]:border-sauced-orange shrink-0 data-[state=active]:border-b-2 text-lg",
               tab === "Recommendations" &&
                 "font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#EA4600] to-[#EB9B00]",
               user?.user_metadata.user_name !== login && !hasHighlights && tab === "Highlights" && "hidden",
