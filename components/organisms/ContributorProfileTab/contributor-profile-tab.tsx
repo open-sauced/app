@@ -57,7 +57,7 @@ const ContributorProfileTab = ({
 
   const { data: highlights, isError, isLoading, mutate, meta, setPage } = useFetchUserHighlights(login || "");
   const { data: emojis } = useFetchAllEmojis();
-  const [hasHighlights, setHasHighlights] = useState(highlights?.length > 0);
+  const [hasHighlights, setHasHighlights] = useState(true);
 
   const [inputVisible, setInputVisible] = useState(false);
   const pathnameRef = useRef<string | null>();
@@ -90,7 +90,7 @@ const ContributorProfileTab = ({
       router.push(`/user/${login}/contributions`);
       setCurrentPathname("contributions");
     }
-  }, [highlights]);
+  }, [currentPathname, hasHighlights, highlights, login]);
 
   useEffect(() => {
     // sets the highlights state to true if the user has highlights on profile route change
