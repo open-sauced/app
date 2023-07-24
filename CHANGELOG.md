@@ -5,6 +5,41 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.57.0](https://github.com/open-sauced/insights/compare/v1.56.0...v1.57.0) (2023-07-24)
+
+
+### 🤖 Build System
+
+* update eslint prettier config and setup commit hooks ([#1396](https://github.com/open-sauced/insights/issues/1396)) ([ac9b276](https://github.com/open-sauced/insights/commit/ac9b2767b68a06c354dd0cee9c50c55562816f9e))
+
+
+### 🔁 Continuous Integration
+
+* disable husky for release ([2537649](https://github.com/open-sauced/insights/commit/253764918f117734aafbdaef242e4cc7497b082c))
+* fix husky command during release ([3e493a2](https://github.com/open-sauced/insights/commit/3e493a2f0bc998827e15aa09b2b69ab7dec4cdec))
+
+
+### 🐛 Bug Fixes
+
+* add `pullrequestLink` check into `HighlightInput` form `isDivFocused` condition ([#1406](https://github.com/open-sauced/insights/issues/1406)) ([f3fda46](https://github.com/open-sauced/insights/commit/f3fda46592a714801edb36263a0621ce1ec52c36))
+* Auto-Scroll Not Triggered Upon Clicking 'Next Page' in Highlight… ([#1387](https://github.com/open-sauced/insights/issues/1387)) ([77b161d](https://github.com/open-sauced/insights/commit/77b161d3fb7af262f0e93d1221f8924f481ee42e))
+* flash of "test content" while loading in dashboard page ([#1409](https://github.com/open-sauced/insights/issues/1409)) ([ad23f14](https://github.com/open-sauced/insights/commit/ad23f1496fef57173b90010797b110801efa82f6))
+* Improved the user experience of the highlights input form ([#1362](https://github.com/open-sauced/insights/issues/1362)) ([2425dc4](https://github.com/open-sauced/insights/commit/2425dc419231ae72d75f4bf204c8b20ec77cbc5b))
+* Issue [#1374](https://github.com/open-sauced/insights/issues/1374) All suggestions are being displayed with scroll area ([#1380](https://github.com/open-sauced/insights/issues/1380)) ([1de56c7](https://github.com/open-sauced/insights/commit/1de56c7b095a1a333ae4e6e14c10672f97cfad84))
+* Move card image api route ([#1401](https://github.com/open-sauced/insights/issues/1401)) ([d650161](https://github.com/open-sauced/insights/commit/d650161d1a4fdd3dd219bdba931af34283f0c2d7))
+* update top contributors response data ([#1397](https://github.com/open-sauced/insights/issues/1397)) ([9053091](https://github.com/open-sauced/insights/commit/9053091b6d3c9b8666ed5302277091638984e21e))
+
+
+### 🍕 Features
+
+* add `[#100](https://github.com/open-sauced/insights/issues/100)DayOfOSS` challenge anouncement to feeds ([#1389](https://github.com/open-sauced/insights/issues/1389)) ([751dbbf](https://github.com/open-sauced/insights/commit/751dbbfc4004f9f6cc1cd3c171a221707ca36d7a))
+* add 404 page ([#1390](https://github.com/open-sauced/insights/issues/1390)) ([37bd475](https://github.com/open-sauced/insights/commit/37bd4752559a726afeccd533078ef1ff49e33c2e))
+* add discord link to user profile ([#1370](https://github.com/open-sauced/insights/issues/1370)) ([f94bc3b](https://github.com/open-sauced/insights/commit/f94bc3b6c27588cca3399fa0e0c789b934c56ab9))
+* Add links to getting started docs ([#1395](https://github.com/open-sauced/insights/issues/1395)) ([c58cc80](https://github.com/open-sauced/insights/commit/c58cc80dac3a1476bbb9d8fca26d27bc0ead7da8))
+* add upgrade access button to user settings page ([#1398](https://github.com/open-sauced/insights/issues/1398)) ([671ebf4](https://github.com/open-sauced/insights/commit/671ebf42c7c5adf06896bf4ebaaec9e7c34e4437))
+* implement improved highlights form with ai auto-summarise ([#1381](https://github.com/open-sauced/insights/issues/1381)) ([023f576](https://github.com/open-sauced/insights/commit/023f57635de1918997867dd1b908280292d809f3))
+* implemented hover and highlight contribution graph ([#1404](https://github.com/open-sauced/insights/issues/1404)) ([0453370](https://github.com/open-sauced/insights/commit/0453370d76cb30e2be0adbeefadb04fc1ebdc965))
+
 ## [1.57.0-beta.6](https://github.com/open-sauced/insights/compare/v1.57.0-beta.5...v1.57.0-beta.6) (2023-07-24)
 
 
