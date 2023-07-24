@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.57.1-beta.2](https://github.com/open-sauced/insights/compare/v1.57.1-beta.1...v1.57.1-beta.2) (2023-07-24)
+
+
+### 🐛 Bug Fixes
+
+* tab inconsistency in user profile matching the url ([#1403](https://github.com/open-sauced/insights/issues/1403)) ([f8c6766](https://github.com/open-sauced/insights/commit/f8c67660b1b620e4fd2235c618394f2b0020accc))
+
 ### [1.57.1-beta.1](https://github.com/open-sauced/insights/compare/v1.57.0...v1.57.1-beta.1) (2023-07-24)
 
 
