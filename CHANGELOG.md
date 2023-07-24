@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.57.1-beta.1](https://github.com/open-sauced/insights/compare/v1.57.0...v1.57.1-beta.1) (2023-07-24)
+
+
+### 🐛 Bug Fixes
+
+* reduce tab font size in contributors profile page ([#1413](https://github.com/open-sauced/insights/issues/1413)) ([238dc2f](https://github.com/open-sauced/insights/commit/238dc2f13f81c754c488628ed534de867dcea02a))
+
 ## [1.57.0](https://github.com/open-sauced/insights/compare/v1.56.0...v1.57.0) (2023-07-24)
 
 ### 🤖 Build System
