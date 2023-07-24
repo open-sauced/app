@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.57.0-beta.5](https://github.com/open-sauced/insights/compare/v1.57.0-beta.4...v1.57.0-beta.5) (2023-07-24)
+
+
+### 🐛 Bug Fixes
+
+* add `pullrequestLink` check into `HighlightInput` form `isDivFocused` condition ([#1406](https://github.com/open-sauced/insights/issues/1406)) ([f3fda46](https://github.com/open-sauced/insights/commit/f3fda46592a714801edb36263a0621ce1ec52c36))
+
 ## [1.57.0-beta.4](https://github.com/open-sauced/insights/compare/v1.57.0-beta.3...v1.57.0-beta.4) (2023-07-24)
 
 
