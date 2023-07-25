@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.57.1-beta.4](https://github.com/open-sauced/insights/compare/v1.57.1-beta.3...v1.57.1-beta.4) (2023-07-25)
+
+
+### 🐛 Bug Fixes
+
+* Deleted page button changed to delete highlight ([#1419](https://github.com/open-sauced/insights/issues/1419)) ([d502605](https://github.com/open-sauced/insights/commit/d5026050bfa28a21b44bbfe7b3dcd1e6a54ac9c3))
+
 ### [1.57.1-beta.3](https://github.com/open-sauced/insights/compare/v1.57.1-beta.2...v1.57.1-beta.3) (2023-07-25)
 
 
