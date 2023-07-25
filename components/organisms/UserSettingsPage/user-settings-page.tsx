@@ -36,7 +36,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
     revalidateOnFocus: false,
   });
 
-  const { hasReports } = useSession();
+  const { hasReports, session } = useSession(true);
 
   const { toast } = useToast();
 
@@ -60,9 +60,9 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
   const formRef = useRef<HTMLFormElement>(null);
   const interestArray = getInterestOptions();
 
-  const { session: response } = useSession(true);
-
   useEffect(() => {
+    const response = session;
+
     if (response && !userInfo) {
       setUserInfo(response);
       formRef.current!.nameInput.value = response.name;
