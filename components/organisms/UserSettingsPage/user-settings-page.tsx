@@ -248,14 +248,14 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
               name="linkedin_url"
             />
             <TextInput
-              classNames="bg-light-slate-4 text-light-slate-11 font-medium"
+              className="bg-light-slate-4 text-light-slate-11 font-medium"
               placeholder="https://discordapp.com/users/832877193112762362"
               label="Discord URL"
               onChange={handleValidateDiscordUrl}
               name="discord_url"
             />
             <TextInput
-              classNames="bg-light-slate-4 text-light-slate-11"
+              className="bg-light-slate-4 text-light-slate-11"
               placeholder="saucedopen"
               label="Twitter Username"
               onChange={handleTwitterUsernameChange}
