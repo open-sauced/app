@@ -472,7 +472,7 @@ const ContributorHighlightCard = ({
                     className="text-red-600 border bg-light-red-7 border-light-red-400 hover:bg-light-red-8 hover:text-red-700"
                     variant="primary"
                   >
-                    Delete Page
+                    Delete Highlight
                   </Button>
                 </AlertDialogTrigger>
                 <AlertDialogContent>
