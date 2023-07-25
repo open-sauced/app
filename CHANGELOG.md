@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.57.1-beta.6](https://github.com/open-sauced/insights/compare/v1.57.1-beta.5...v1.57.1-beta.6) (2023-07-25)
+
+
+### 🧑‍💻 Code Refactoring
+
+*  merge `authSession` function into `useSession` hook ([#1391](https://github.com/open-sauced/insights/issues/1391)) ([d6c230d](https://github.com/open-sauced/insights/commit/d6c230ddc830dd3b4519f60ae22723f88bd5a42c))
+
 ### [1.57.1-beta.5](https://github.com/open-sauced/insights/compare/v1.57.1-beta.4...v1.57.1-beta.5) (2023-07-25)
 
 
