@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.57.1-beta.5](https://github.com/open-sauced/insights/compare/v1.57.1-beta.4...v1.57.1-beta.5) (2023-07-25)
+
+
+### 🐛 Bug Fixes
+
+* show repo filters on initial `feeds` route visit ([#1426](https://github.com/open-sauced/insights/issues/1426)) ([833ee30](https://github.com/open-sauced/insights/commit/833ee30562224bfcbaa028732826e0dbac432f50))
+
 ### [1.57.1-beta.4](https://github.com/open-sauced/insights/compare/v1.57.1-beta.3...v1.57.1-beta.4) (2023-07-25)
 
 
