@@ -5,6 +5,21 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.57.1-beta.3](https://github.com/open-sauced/insights/compare/v1.57.1-beta.2...v1.57.1-beta.3) (2023-07-25)
+
+
+### 🐛 Bug Fixes
+
+* fixed bug on chatbot button overlay ([#1420](https://github.com/open-sauced/insights/issues/1420)) ([2a94583](https://github.com/open-sauced/insights/commit/2a94583de3f79c86d4fb9143042041347bdca0a3))
+* misaligned chat button close icon ([#1422](https://github.com/open-sauced/insights/issues/1422)) ([60f22bd](https://github.com/open-sauced/insights/commit/60f22bd24cc56771e5acf91df254fc17ef8df78d))
+
+### [1.57.1-beta.2](https://github.com/open-sauced/insights/compare/v1.57.1-beta.1...v1.57.1-beta.2) (2023-07-24)
+
+
+### 🐛 Bug Fixes
+
+* tab inconsistency in user profile matching the url ([#1403](https://github.com/open-sauced/insights/issues/1403)) ([f8c6766](https://github.com/open-sauced/insights/commit/f8c67660b1b620e4fd2235c618394f2b0020accc))
+
 ### [1.57.1-beta.1](https://github.com/open-sauced/insights/compare/v1.57.0...v1.57.1-beta.1) (2023-07-24)
 
 
