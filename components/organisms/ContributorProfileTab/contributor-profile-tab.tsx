@@ -83,14 +83,14 @@ const ContributorProfileTab = ({
   useEffect(() => {
     setInputVisible(highlights && highlights.length !== 0 ? true : false);
     if (login && currentPathname) {
-      router.push(`/user/${login}/${currentPathname}`);
       setCurrentPathname(getCurrentPathName);
+      router.push(`/user/${login}/${currentPathname}`);
     }
-    if (login && !hasHighlights) {
-      router.push(`/user/${login}/contributions`);
-      setCurrentPathname("contributions");
+    if (login && !hasHighlights && currentPathname) {
+      setCurrentPathname(currentPathname);
+      router.push(`/user/${login}/${currentPathname}`);
     }
-  }, [currentPathname, hasHighlights, highlights, login]);
+  }, [login, hasHighlights]);
 
   useEffect(() => {
     // sets the highlights state to true if the user has highlights on profile route change
@@ -100,7 +100,7 @@ const ContributorProfileTab = ({
   }, [highlights]);
 
   return (
-    <Tabs value={uppercaseFirst(currentPathname as string)} onValueChange={handleTabUrl}>
+    <Tabs defaultValue={uppercaseFirst(currentPathname as string)} onValueChange={handleTabUrl}>
       <TabsList className="justify-start w-full overflow-x-auto border-b">
         {tabLinks.map((tab) => (
           <TabsTrigger
@@ -262,8 +262,8 @@ const ContributorProfileTab = ({
                 )}
               </div>
             </div>
-            <div className="h-32 mt-10">
-              <CardLineChart lineChartOption={chart} className="!h-32" />
+            <div className="mt-2 h-36">
+              <CardLineChart lineChartOption={chart} className="!h-36" />
             </div>
             <div>
               <CardRepoList limit={7} repoList={repoList} />
