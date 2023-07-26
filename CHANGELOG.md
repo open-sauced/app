@@ -5,6 +5,18 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.57.1-beta.7](https://github.com/open-sauced/insights/compare/v1.57.1-beta.6...v1.57.1-beta.7) (2023-07-26)
+
+
+### 🎨 Styles
+
+* remove irrelevant padding in page divider ([#1427](https://github.com/open-sauced/insights/issues/1427)) ([5faaa4e](https://github.com/open-sauced/insights/commit/5faaa4eb501999ebdfbbd896550559e909807a57))
+
+
+### 🐛 Bug Fixes
+
+* mismatched selection color ([#1430](https://github.com/open-sauced/insights/issues/1430)) ([8a1d37b](https://github.com/open-sauced/insights/commit/8a1d37b996ebd8e74b113c0974a5de763fc1515e))
+
 ### [1.57.1-beta.6](https://github.com/open-sauced/insights/compare/v1.57.1-beta.5...v1.57.1-beta.6) (2023-07-25)
 
 
