@@ -139,12 +139,12 @@ const AuthSection: React.FC = ({}) => {
               }}
             >
               <PopoverTrigger onClick={async () => await fetchNotifications()} asChild>
-                <div className="relative cursor-pointer">
+                <button className="relative cursor-pointer">
                   {userInfo && userInfo.notification_count > 0 && (
                     <span className="absolute right-0 block w-2 h-2 bg-orange-300 rounded-full"></span>
                   )}
                   <IoNotifications className="text-xl text-light-slate-9" />
-                </div>
+                </button>
               </PopoverTrigger>
               <PopoverContent align="end" className="bg-white !rounded-xl p-1  ">
                 {loading ? (
