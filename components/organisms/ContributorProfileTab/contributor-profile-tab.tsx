@@ -128,7 +128,7 @@ const ContributorProfileTab = ({
       {(user?.user_metadata.user_name === login || hasHighlights) && (
         <TabsContent value="Highlights">
           {inputVisible && user?.user_metadata.user_name === login && (
-            <div className="lg:pl-20 lg:gap-x-3 pt-4 flex max-w-[48rem]">
+            <div className="lg:pl-20 lg:gap-x-4 pt-4 flex max-w-[48rem]">
               <div className="hidden lg:inline-flex">
                 <Avatar
                   alt="user profile avatar"
@@ -163,7 +163,7 @@ const ContributorProfileTab = ({
                   {highlights.map(({ id, title, highlight, url, shipped_at, created_at }) => (
                     <div className="flex flex-col gap-2 mb-6 lg:flex-row lg:gap-7" key={id}>
                       <Link href={`/feed/${id}`}>
-                        <p className="text-sm text-light-slate-10">
+                        <p className="text-sm text-light-slate-10 w-28 max-w-28">
                           {formatDistanceToNowStrict(new Date(created_at), { addSuffix: true })}
                         </p>
                       </Link>
