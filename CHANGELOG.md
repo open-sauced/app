@@ -5,6 +5,18 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.57.1-beta.8](https://github.com/open-sauced/insights/compare/v1.57.1-beta.7...v1.57.1-beta.8) (2023-07-26)
+
+
+### 🎨 Styles
+
+* add width and max width for created at in contributor-profile-tab ([#1429](https://github.com/open-sauced/insights/issues/1429)) ([5614886](https://github.com/open-sauced/insights/commit/561488660390328850f29e72b5f90592bed621a5))
+
+
+### 🐛 Bug Fixes
+
+* contributor profile tab click state flicker ([#1432](https://github.com/open-sauced/insights/issues/1432)) ([c9cf8ed](https://github.com/open-sauced/insights/commit/c9cf8edfd2fb1b48850dec25c705b6791f5e05dc))
+
 ### [1.57.1-beta.7](https://github.com/open-sauced/insights/compare/v1.57.1-beta.6...v1.57.1-beta.7) (2023-07-26)
 
 
