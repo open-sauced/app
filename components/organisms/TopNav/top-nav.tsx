@@ -22,26 +22,32 @@ const TopNav: React.FC = () => {
       <div className="flex justify-between items-start sm:items-center mx-auto container px-2 md:px-16">
         <div className="flex gap-3 md:gap-8 items-center flex-wrap">
           <HeaderLogo withBg={false} textIsBlack />
-          <div className="flex flex-wrap gap-3 md:gap-8 mb-3 ml-2 sm:m-0 w-full sm:w-auto">
-            {!!user && onboarded ? (
-              <Link className={`text-sm ${getActiveStyle(router.asPath === "/hub/insights")}`} href={"/hub/insights"}>
-                Insights
+          <nav>
+            <ul className="flex flex-wrap gap-3 md:gap-8 mb-3 ml-2 sm:m-0 w-full sm:w-auto">
+              <li>
+                {!!user && onboarded ? (
+                <Link className={`text-sm ${getActiveStyle(router.asPath === "/hub/insights")}`} href={"/hub/insights"}>
+                  Insights
+                </Link>
+              ) : (
+                ""
+              )}
+              </li>
+            <li>
+              <Link
+                className={`text-sm ${getActiveStyle(router.asPath === `/${userInterest}/dashboard/filter/recent`)}`}
+                href={`/${userInterest}/dashboard/filter/recent`}
+              >
+                Explore
               </Link>
-            ) : (
-              ""
-            )}
-
-            <Link
-              className={`text-sm ${getActiveStyle(router.asPath === `/${userInterest}/dashboard/filter/recent`)}`}
-              href={`/${userInterest}/dashboard/filter/recent`}
-            >
-              Explore
-            </Link>
-
-            <Link className={`text-sm ${getActiveStyle(router.asPath === "/feed")}`} href={"/feed"}>
-              Highlights
-            </Link>
-          </div>
+            </li>
+            <li>
+              <Link className={`text-sm ${getActiveStyle(router.asPath === "/feed")}`} href={"/feed"}>
+                Highlights
+              </Link>
+            </li>
+            </ul>
+          </nav>
         </div>
         <AuthSection />
       </div>
