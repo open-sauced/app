@@ -83,14 +83,14 @@ const ContributorProfileTab = ({
   useEffect(() => {
     setInputVisible(highlights && highlights.length !== 0 ? true : false);
     if (login && currentPathname) {
-      router.push(`/user/${login}/${currentPathname}`);
       setCurrentPathname(getCurrentPathName);
+      router.push(`/user/${login}/${currentPathname}`);
     }
-    if (login && !hasHighlights) {
-      router.push(`/user/${login}/contributions`);
-      setCurrentPathname("contributions");
+    if (login && !hasHighlights && currentPathname) {
+      setCurrentPathname(currentPathname);
+      router.push(`/user/${login}/${currentPathname}`);
     }
-  }, [currentPathname, hasHighlights, highlights, login]);
+  }, [login, hasHighlights]);
 
   useEffect(() => {
     // sets the highlights state to true if the user has highlights on profile route change
@@ -100,7 +100,7 @@ const ContributorProfileTab = ({
   }, [highlights]);
 
   return (
-    <Tabs value={uppercaseFirst(currentPathname as string)} onValueChange={handleTabUrl}>
+    <Tabs defaultValue={uppercaseFirst(currentPathname as string)} onValueChange={handleTabUrl}>
       <TabsList className="justify-start w-full overflow-x-auto border-b">
         {tabLinks.map((tab) => (
           <TabsTrigger
@@ -128,7 +128,7 @@ const ContributorProfileTab = ({
       {(user?.user_metadata.user_name === login || hasHighlights) && (
         <TabsContent value="Highlights">
           {inputVisible && user?.user_metadata.user_name === login && (
-            <div className="lg:pl-20 lg:gap-x-3 pt-4 flex max-w-[48rem]">
+            <div className="lg:pl-20 lg:gap-x-4 pt-4 flex max-w-[48rem]">
               <div className="hidden lg:inline-flex">
                 <Avatar
                   alt="user profile avatar"
@@ -163,7 +163,7 @@ const ContributorProfileTab = ({
                   {highlights.map(({ id, title, highlight, url, shipped_at, created_at }) => (
                     <div className="flex flex-col gap-2 mb-6 lg:flex-row lg:gap-7" key={id}>
                       <Link href={`/feed/${id}`}>
-                        <p className="text-sm text-light-slate-10">
+                        <p className="text-sm text-light-slate-10 w-28 max-w-28">
                           {formatDistanceToNowStrict(new Date(created_at), { addSuffix: true })}
                         </p>
                       </Link>
@@ -262,8 +262,8 @@ const ContributorProfileTab = ({
                 )}
               </div>
             </div>
-            <div className="h-32 mt-10">
-              <CardLineChart lineChartOption={chart} className="!h-32" />
+            <div className="mt-2 h-36">
+              <CardLineChart lineChartOption={chart} className="!h-36" />
             </div>
             <div>
               <CardRepoList limit={7} repoList={repoList} />

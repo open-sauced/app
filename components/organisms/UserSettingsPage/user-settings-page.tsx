@@ -15,7 +15,6 @@ import StripeCheckoutButton from "components/organisms/StripeCheckoutButton/stri
 import { updateUser, UpdateUserPayload } from "lib/hooks/update-user";
 
 import useSession from "lib/hooks/useSession";
-import { authSession } from "lib/hooks/authSession";
 import { validateEmail } from "lib/utils/validate-email";
 import { timezones } from "lib/utils/timezones";
 import { updateEmailPreferences } from "lib/hooks/updateEmailPreference";
@@ -37,7 +36,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
     revalidateOnFocus: false,
   });
 
-  const { hasReports } = useSession();
+  const { hasReports, session } = useSession(true);
 
   const { toast } = useToast();
 
@@ -62,24 +61,22 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
   const interestArray = getInterestOptions();
 
   useEffect(() => {
-    async function fetchAuthSession() {
-      const response = await authSession();
-      if (response !== false && !userInfo) {
-        setUserInfo(response);
-        formRef.current!.nameInput.value = response.name;
-        setEmail(response.email);
-        setDisplayLocalTime(response.displayLocalTime);
-        formRef.current!.bio.value = response.bio;
-        formRef.current!.url.value = response.url;
-        formRef.current!.twitter_username.value = response.twitter_username;
-        formRef.current!.company.value = response.company;
-        formRef.current!.location.value = response.location;
-        formRef.current!.github_sponsors_url.value = response.github_sponsors_url;
-        formRef.current!.linkedin_url.value = response.linkedin_url;
-        formRef.current!.discord_url.value = response.discord_url;
-      }
+    const response = session;
+
+    if (response && !userInfo) {
+      setUserInfo(response);
+      formRef.current!.nameInput.value = response.name;
+      setEmail(response.email);
+      setDisplayLocalTime(response.display_local_time);
+      formRef.current!.bio.value = response.bio;
+      formRef.current!.url.value = response.url;
+      formRef.current!.twitter_username.value = response.twitter_username;
+      formRef.current!.company.value = response.company;
+      formRef.current!.location.value = response.location;
+      formRef.current!.github_sponsors_url.value = response.github_sponsors_url;
+      formRef.current!.linkedin_url.value = response.linkedin_url;
+      formRef.current!.discord_url.value = response.discord_url;
     }
-    fetchAuthSession();
   }, [user]);
 
   useEffect(() => {
@@ -251,7 +248,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
               name="linkedin_url"
             />
             <TextInput
-              className="font-medium bg-light-slate-4 text-light-slate-11"
+              className="bg-light-slate-4 text-light-slate-11 font-medium"
               placeholder="https://discordapp.com/users/832877193112762362"
               label="Discord URL"
               onChange={handleValidateDiscordUrl}

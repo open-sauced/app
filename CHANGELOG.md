@@ -5,6 +5,44 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.57.1-beta.8](https://github.com/open-sauced/insights/compare/v1.57.1-beta.7...v1.57.1-beta.8) (2023-07-26)
+
+
+### 🎨 Styles
+
+* add width and max width for created at in contributor-profile-tab ([#1429](https://github.com/open-sauced/insights/issues/1429)) ([5614886](https://github.com/open-sauced/insights/commit/561488660390328850f29e72b5f90592bed621a5))
+
+
+### 🐛 Bug Fixes
+
+* contributor profile tab click state flicker ([#1432](https://github.com/open-sauced/insights/issues/1432)) ([c9cf8ed](https://github.com/open-sauced/insights/commit/c9cf8edfd2fb1b48850dec25c705b6791f5e05dc))
+
+### [1.57.1-beta.7](https://github.com/open-sauced/insights/compare/v1.57.1-beta.6...v1.57.1-beta.7) (2023-07-26)
+
+
+### 🎨 Styles
+
+* remove irrelevant padding in page divider ([#1427](https://github.com/open-sauced/insights/issues/1427)) ([5faaa4e](https://github.com/open-sauced/insights/commit/5faaa4eb501999ebdfbbd896550559e909807a57))
+
+
+### 🐛 Bug Fixes
+
+* mismatched selection color ([#1430](https://github.com/open-sauced/insights/issues/1430)) ([8a1d37b](https://github.com/open-sauced/insights/commit/8a1d37b996ebd8e74b113c0974a5de763fc1515e))
+
+### [1.57.1-beta.6](https://github.com/open-sauced/insights/compare/v1.57.1-beta.5...v1.57.1-beta.6) (2023-07-25)
+
+
+### 🧑‍💻 Code Refactoring
+
+*  merge `authSession` function into `useSession` hook ([#1391](https://github.com/open-sauced/insights/issues/1391)) ([d6c230d](https://github.com/open-sauced/insights/commit/d6c230ddc830dd3b4519f60ae22723f88bd5a42c))
+
+### [1.57.1-beta.5](https://github.com/open-sauced/insights/compare/v1.57.1-beta.4...v1.57.1-beta.5) (2023-07-25)
+
+
+### 🐛 Bug Fixes
+
+* show repo filters on initial `feeds` route visit ([#1426](https://github.com/open-sauced/insights/issues/1426)) ([833ee30](https://github.com/open-sauced/insights/commit/833ee30562224bfcbaa028732826e0dbac432f50))
+
 ### [1.57.1-beta.4](https://github.com/open-sauced/insights/compare/v1.57.1-beta.3...v1.57.1-beta.4) (2023-07-25)
 
 
