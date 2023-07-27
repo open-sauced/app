@@ -26,7 +26,10 @@ const TopNav: React.FC = () => {
             <ul className="flex flex-wrap gap-3 md:gap-8 mb-3 ml-2 sm:m-0 w-full sm:w-auto">
               <li>
                 {!!user && onboarded ? (
-                  <Link className={`text-sm ${getActiveStyle(router.asPath === "/hub/insights")}`} href={"/hub/insights"}>
+                  <Link
+                    className={`text-sm ${getActiveStyle(router.asPath === "/hub/insights")}`}
+                    href={"/hub/insights"}
+                  >
                     Insights
                   </Link>
                 ) : (
