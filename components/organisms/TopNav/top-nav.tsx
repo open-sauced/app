@@ -26,26 +26,26 @@ const TopNav: React.FC = () => {
             <ul className="flex flex-wrap gap-3 md:gap-8 mb-3 ml-2 sm:m-0 w-full sm:w-auto">
               <li>
                 {!!user && onboarded ? (
-                <Link className={`text-sm ${getActiveStyle(router.asPath === "/hub/insights")}`} href={"/hub/insights"}>
-                  Insights
-                </Link>
-              ) : (
-                ""
-              )}
+                  <Link className={`text-sm ${getActiveStyle(router.asPath === "/hub/insights")}`} href={"/hub/insights"}>
+                    Insights
+                  </Link>
+                ) : (
+                  ""
+                )}
               </li>
-            <li>
-              <Link
-                className={`text-sm ${getActiveStyle(router.asPath === `/${userInterest}/dashboard/filter/recent`)}`}
-                href={`/${userInterest}/dashboard/filter/recent`}
-              >
-                Explore
-              </Link>
-            </li>
-            <li>
-              <Link className={`text-sm ${getActiveStyle(router.asPath === "/feed")}`} href={"/feed"}>
-                Highlights
-              </Link>
-            </li>
+              <li>
+                <Link
+                  className={`text-sm ${getActiveStyle(router.asPath === `/${userInterest}/dashboard/filter/recent`)}`}
+                  href={`/${userInterest}/dashboard/filter/recent`}
+                >
+                  Explore
+                </Link>
+              </li>
+              <li>
+                <Link className={`text-sm ${getActiveStyle(router.asPath === "/feed")}`} href={"/feed"}>
+                  Highlights
+                </Link>
+              </li>
             </ul>
           </nav>
         </div>
