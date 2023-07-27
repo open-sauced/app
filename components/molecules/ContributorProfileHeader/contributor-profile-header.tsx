@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { TfiMoreAlt } from "react-icons/tfi";
-import { FiCopy  } from "react-icons/fi";
+import { FiCopy } from "react-icons/fi";
 import { FaIdCard } from "react-icons/fa";
 import { SignInWithOAuthCredentials, User } from "@supabase/supabase-js";
 import { usePostHog } from "posthog-js/react";
