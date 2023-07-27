@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.57.1-beta.9](https://github.com/open-sauced/insights/compare/v1.57.1-beta.8...v1.57.1-beta.9) (2023-07-27)
+
+
+### 🐛 Bug Fixes
+
+* Improve Keyboard Accessibility for Notification Icon ([#1435](https://github.com/open-sauced/insights/issues/1435)) ([05291c0](https://github.com/open-sauced/insights/commit/05291c0697a3a84820499fd8670e99ecc5eb3d92))
+
 ### [1.57.1-beta.8](https://github.com/open-sauced/insights/compare/v1.57.1-beta.7...v1.57.1-beta.8) (2023-07-26)
 
 
