@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.57.1-beta.10](https://github.com/open-sauced/insights/compare/v1.57.1-beta.9...v1.57.1-beta.10) (2023-07-27)
+
+
+### 🐛 Bug Fixes
+
+* add navigation to improve accessibility ([#1436](https://github.com/open-sauced/insights/issues/1436)) ([d1d85f7](https://github.com/open-sauced/insights/commit/d1d85f7ecc64fa1b566c96c3009caa97596ccfb8))
+
 ### [1.57.1-beta.9](https://github.com/open-sauced/insights/compare/v1.57.1-beta.8...v1.57.1-beta.9) (2023-07-27)
 
 
