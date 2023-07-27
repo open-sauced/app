@@ -29,7 +29,7 @@ const TeamMembersConfig = ({
   members,
   onAddMember,
   onDeleteMember,
-  onUpdateMember
+  onUpdateMember,
 }: TeamMembersConfigProps) => {
   const [validInput, setValidInput] = useState(false);
   const [email, setEmail] = useState("");

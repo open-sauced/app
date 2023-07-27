@@ -73,17 +73,17 @@ const NivoScatterPlot = ({
 
   const handleTogglePrFilter = (val: string) => {
     switch (val) {
-    case "0":
-      handleSetPrFilter("all");
-      break;
+      case "0":
+        handleSetPrFilter("all");
+        break;
 
-    case "1":
-      handleSetPrFilter("open");
-      break;
+      case "1":
+        handleSetPrFilter("open");
+        break;
 
-    case "2":
-      handleSetPrFilter("closed");
-      break;
+      case "2":
+        handleSetPrFilter("closed");
+        break;
     }
   };
 

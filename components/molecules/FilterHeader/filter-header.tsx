@@ -37,7 +37,10 @@ const HeaderFilter = () => {
   return (
     <>
       <div className="header-image mr-2 p-2 min-w-[130px] ">
-        <ContextThumbnail size={120} ContextThumbnailURL={getTopicThumbnail(filterName as interestsType)}></ContextThumbnail>
+        <ContextThumbnail
+          size={120}
+          ContextThumbnailURL={getTopicThumbnail(filterName as interestsType)}
+        ></ContextThumbnail>
       </div>
       <div className="header-info md:truncate flex flex-col grow justify-center p-2">
         <Title level={1} className="!text-3xl font-semibold tracking-tight text-slate-900">

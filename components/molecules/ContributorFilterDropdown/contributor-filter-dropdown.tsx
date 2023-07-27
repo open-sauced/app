@@ -14,7 +14,7 @@ const filterOptions: { name: string; value: string }[] = [
   { name: "Contribution", value: "contribution" },
   { name: "Last 30 Days", value: "last-30-days" },
   { name: "Activities", value: "activities" },
-  { name: "Seniority", value: "seniority" }
+  { name: "Seniority", value: "seniority" },
 ];
 
 const ContributorFilterDropdown = () => {

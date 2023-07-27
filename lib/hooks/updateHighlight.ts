@@ -16,10 +16,10 @@ const updateHighlights = async (data: CreateHighlightsProps, id: string) => {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: `Bearer ${sessionToken}`
+        Authorization: `Bearer ${sessionToken}`,
       },
       method: "PATCH",
-      body: JSON.stringify({ ...data })
+      body: JSON.stringify({ ...data }),
     });
 
     return res.json();

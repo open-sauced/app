@@ -3,7 +3,7 @@ import ComponentHeader from "../../components/molecules/ComponentHeader/componen
 
 const storyConfig = {
   title: "Design System/Molecules/Component Header",
-  component: "ComponentHeader"
+  component: "ComponentHeader",
 };
 
 export default storyConfig;
@@ -13,4 +13,4 @@ const ComponentHeaderTemplate: ComponentStory<typeof ComponentHeader> = (args) =
 
 // ComponentHeader Default
 export const Default = ComponentHeaderTemplate.bind({});
-Default.args = {title: "Test Title" };
+Default.args = { title: "Test Title" };

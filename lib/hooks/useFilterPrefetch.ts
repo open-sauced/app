@@ -16,7 +16,7 @@ const useFilterPrefetch = () => {
 
   useEffect(() => {
     if (topic) {
-      filterOptions.forEach(async(filterName) => {
+      filterOptions.forEach(async (filterName) => {
         const filterKey = getFilterKey(filterName);
         const url = `repos/search?topic=${topic}&filter=${filterKey}&page=1`;
 
@@ -24,17 +24,17 @@ const useFilterPrefetch = () => {
           // @ts-ignore
           const result: { meta: Meta } = await mutate(url, publicApiFetcher(url));
 
-          setFilterValues(values => {
+          setFilterValues((values) => {
             return {
               ...values,
-              [filterKey]: result.meta.itemCount
+              [filterKey]: result.meta.itemCount,
             };
           });
         } catch (e) {
-          setFilterValues(values => {
+          setFilterValues((values) => {
             return {
               ...values,
-              [filterKey]: undefined
+              [filterKey]: undefined,
             };
           });
         }

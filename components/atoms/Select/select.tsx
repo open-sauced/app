@@ -47,13 +47,13 @@ const SelectContent = React.forwardRef<
     >
       <ScrollArea type="auto">
         <SelectPrimitive.Viewport
-          asChild 
+          asChild
           className={clsx(
             "p-1",
             position === "popper" &&
               "max-h-[var(--radix-select-content-available-height)] w-full min-w-[var(--radix-select-trigger-width)]"
           )}
-        >        
+        >
           <ScrollViewport className="max-h-[var(--radix-select-content-available-height)] w-full">
             {children}
           </ScrollViewport>

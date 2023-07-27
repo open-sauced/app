@@ -15,7 +15,7 @@ const useHighlightReactions = (id: string) => {
     data: data ?? [],
     isError: !!error,
     isLoading: !error && !data,
-    mutate
+    mutate,
   };
 };
 

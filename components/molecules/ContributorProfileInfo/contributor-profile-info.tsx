@@ -2,6 +2,7 @@
 import Link from "next/link";
 
 import { AiOutlineGift } from "react-icons/ai";
+import { BsDiscord } from "react-icons/bs";
 import { FiClock, FiGithub, FiLinkedin, FiTwitter } from "react-icons/fi";
 
 import clsx from "clsx";
@@ -23,6 +24,7 @@ interface ContributorProfileInfoProps {
   displayLocalTime?: boolean;
   githubSponsorsUrl?: string;
   linkedInUrl?: string;
+  discordUrl?: string;
   prFirstOpenedDate?: string;
 }
 
@@ -36,9 +38,11 @@ const ContributorProfileInfo = ({
   displayLocalTime,
   githubSponsorsUrl,
   linkedInUrl,
+  discordUrl,
   prFirstOpenedDate,
 }: ContributorProfileInfoProps) => {
   const interestArray = interests?.split(",");
+  const discordUserId = discordUrl?.match(/\d{4}$/)?.[0];
 
   return (
     <div className="flex flex-col gap-6">
@@ -108,6 +112,15 @@ const ContributorProfileInfo = ({
                   <FiLinkedin className="text-light-slate-9" />
                   <Link href={linkedInUrl} target="_blank" rel="noreferrer" className="w-max hover:text-orange-500 ">
                     {linkedInUrl?.replace(/^(http(s)?:\/\/)?([\w]+\.)?linkedin\.com\/(pub|in|profile|company)/, "in")}
+                  </Link>
+                </span>
+              )}
+
+              {discordUrl && (
+                <span className="flex gap-2 items-center">
+                  <BsDiscord className="text-light-slate-9" />
+                  <Link href={discordUrl} target="_blank" rel="noreferrer" className="w-max hover:text-orange-500">
+                    {`discord/#${discordUserId}`}
                   </Link>
                 </span>
               )}

@@ -6,15 +6,16 @@ import GitHubIcon from "img/icons/github-icon.svg";
 import Button from "components/atoms/Button/button";
 import Icon from "components/atoms/Icon/icon";
 import Title from "components/atoms/Typography/title";
+import Text from "components/atoms/Typography/text";
 import ReportsHistory from "components/molecules/ReportsHistory/reports-history";
 import SelectReportsFilter from "components/molecules/SelectReportsFilter/select-reports-filter";
+import StripeCheckoutButton from "components/organisms/StripeCheckoutButton/stripe-checkout-button";
 
 import { Report } from "interfaces/report-type";
 
 import useFilterOptions from "lib/hooks/useFilterOptions";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import getCurrentDate from "lib/utils/get-current-date";
-import StripeCheckoutButton from "../StripeCheckoutButton/stripe-checkout-button";
 
 const USERDEVICESTORAGENAME = "reportState";
 
@@ -36,7 +37,7 @@ const Reports = ({ hasReports, repositories }: ReportsProps): JSX.Element => {
   const filterList = filterOptions.map((filter) => {
     return {
       filterName: filter,
-      filterValue: filter.toLowerCase().replaceAll(" ", "-")
+      filterValue: filter.toLowerCase().replaceAll(" ", "-"),
     };
   });
 
@@ -44,7 +45,7 @@ const Reports = ({ hasReports, repositories }: ReportsProps): JSX.Element => {
     const constructedReport = {
       reportName: selectedFilter,
       reportDate: getCurrentDate(),
-      reportFormat: "CSV"
+      reportFormat: "CSV",
     };
 
     setReports((prevState) => {
@@ -70,7 +71,7 @@ const Reports = ({ hasReports, repositories }: ReportsProps): JSX.Element => {
               {reports.length > 0 && (
                 <>
                   <Title className=" relative mt-16" level={3}>
-                  Download History
+                    Download History
                   </Title>
                   <hr className="border-light-slate-6 my-4" />
                   <ReportsHistory reportList={reports} repositories={repositories} />
@@ -78,12 +79,17 @@ const Reports = ({ hasReports, repositories }: ReportsProps): JSX.Element => {
               )}
             </>
           ) : (
-            <StripeCheckoutButton />
+            <>
+              <Text>Upgrade to a subscription to gain access to generate custom reports!</Text>
+              <p className="flex justify-center py-4 px-2">
+                <StripeCheckoutButton variant="primary" className="w-52 h-[38px] flex justify-center" />
+              </p>
+            </>
           )
         ) : (
           <div className="flex justify-center py-4">
             <Button variant="primary" onClick={async () => await signIn({ provider: "github" })}>
-                  Connect with GitHub <Icon IconImage={GitHubIcon} className="ml-2" />
+              Connect with GitHub <Icon IconImage={GitHubIcon} className="ml-2" />
             </Button>
           </div>
         )}

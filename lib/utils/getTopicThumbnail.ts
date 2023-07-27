@@ -12,6 +12,8 @@ import go from "img/topic-thumbnails/go.svg";
 import ml from "img/topic-thumbnails/machine-learning.svg";
 import react from "img/topic-thumbnails/react.svg";
 import rust from "img/topic-thumbnails/rust.svg";
+import vue from "img/topic-thumbnails/vue.svg";
+import kubernetes from "img/topic-thumbnails/kubernetes.svg";
 
 import contextThumbnailImage from "../../img/open-sourced-with-bg-icon.png";
 
@@ -31,7 +33,9 @@ const topicThumbnails: Record<interestsType, string> = {
   react: react,
   ml: ml,
   golang: go,
-  rust: rust
+  rust: rust,
+  vue: vue,
+  kubernetes: kubernetes,
 };
 
 const getTopicThumbnail = (topic: keyof typeof topicThumbnails) => {

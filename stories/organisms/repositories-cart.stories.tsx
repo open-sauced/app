@@ -3,7 +3,7 @@ import RepositoriesCart from "components/organisms/RepositoriesCart/repositories
 import RepositoryCartItem from "components/molecules/ReposoitoryCartItem/repository-cart-item";
 
 const storyConfig = {
-  title: "Design System/Organisms/RepositoriesCart"
+  title: "Design System/Organisms/RepositoriesCart",
 };
 
 export default storyConfig;
@@ -34,12 +34,12 @@ export const FilledState = RepositoriesCartTemplate.bind({});
 export const WithHistory = RepositoriesCartTemplate.bind({});
 
 FilledState.args = {
-  hasItems: true
+  hasItems: true,
 };
 WithHistory.args = {
   history: [
     { orgName: "open sauced", repoName: "insights", totalPrs: 87, handleRemoveItem: () => {} },
-    { orgName: "facebook", repoName: "react", totalPrs: 233, handleRemoveItem: () => {} }
+    { orgName: "facebook", repoName: "react", totalPrs: 233, handleRemoveItem: () => {} },
   ],
-  hasItems: true
+  hasItems: true,
 };

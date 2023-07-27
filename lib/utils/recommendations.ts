@@ -1,6 +1,5 @@
 import { interestsType } from "./getInterestOptions";
 
-
 const recommendations: Record<interestsType, string[]> = {
   react: ["Skyscanner/backpack"],
   javascript: ["EddieHubCommunity/LinkFree"],
@@ -15,7 +14,9 @@ const recommendations: Record<interestsType, string[]> = {
   php: ["laravel/framework"],
   java: ["thingsboard/thingsboard"],
   typescript: ["sequelize/sequelize"],
-  golang: ["cli/cli"]
+  golang: ["cli/cli"],
+  vue: ["vuejs/vue"],
+  kubernetes: ["kubernetes/kubernetes"],
 };
 
 export default recommendations;

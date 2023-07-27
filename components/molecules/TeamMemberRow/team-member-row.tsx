@@ -20,14 +20,14 @@ const mapRoleToText: Record<TeamMemberRowProps["access"], string> = {
   admin: "Admin",
   edit: "can edit",
   view: "can view",
-  pending: "Pending"
+  pending: "Pending",
 };
 
 const filterOptions = [
   { name: "Admin", value: "admin" },
   { name: "can edit", value: "edit" },
   { name: "can view", value: "view" },
-  { name: "remove", value: "remove" }
+  { name: "remove", value: "remove" },
 ];
 
 const TeamMemberRow = ({ className, name, avatarUrl, access, email, onDelete, onUpdate, id }: TeamMemberRowProps) => {

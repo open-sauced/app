@@ -1,46 +1,59 @@
-import { useEffect } from "react";
-
+import { useEffect, useState } from "react";
 import useStore from "lib/store";
-
 import useSupabaseAuth from "./useSupabaseAuth";
 
 const useSession = (getSession = false) => {
   const { sessionToken } = useSupabaseAuth(getSession);
   const store = useStore();
-  const hasReports = useStore(state => state.hasReports);
-  const onboarded = useStore(state => state.onboarded);
-  const waitlisted = useStore(state => state.waitlisted);
+  const hasReports = useStore((state) => state.hasReports);
+  const onboarded = useStore((state) => state.onboarded);
+  const waitlisted = useStore((state) => state.waitlisted);
+  const [session, setSession] = useState<false | DbUser>(false);
 
-  async function loadSession() {
-    const resp = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/session`, {
+  const loadSession = async () => {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/session`, {
       method: "GET",
       headers: {
-        Authorization: `Bearer ${sessionToken}`
-      }
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${sessionToken}`,
+      },
     });
 
-    if (resp.ok) {
-      const data = await resp.json();
-
-      store.setSession({
-        onboarded: data.is_onboarded,
-        waitlisted: data.is_waitlisted,
-        insightRepoLimit: data.insights_role >= 50 ? 50 : 10
-      });
-
-      store.setHasReports(data.insights_role >= 50);
+    if (response.status === 200) {
+      const data = await response.json();
+      return data;
     } else {
-    // show an alert
+      return false;
     }
-  }
+  };
+
+  const setStoreData = (isOnboarded: boolean, isWaitlisted: boolean, insightsRole: number) => {
+    store.setSession({
+      onboarded: isOnboarded,
+      waitlisted: isWaitlisted,
+      insightRepoLimit: insightsRole >= 50 ? 50 : 10,
+    });
+
+    store.setHasReports(insightsRole >= 50);
+  };
 
   useEffect(() => {
-    if (sessionToken && getSession) {
-      loadSession();
-    }
+    (async () => {
+      if (sessionToken && getSession) {
+        const data = await loadSession();
+        setSession(data);
+        setStoreData(data.is_onboarded, data.is_waitlisted, data.insights_role);
+      }
+    })();
   }, [sessionToken]);
 
-  return { onboarded, waitlisted, hasReports };
+  return {
+    onboarded,
+    waitlisted,
+    hasReports,
+    session,
+  };
 };
 
 export default useSession;

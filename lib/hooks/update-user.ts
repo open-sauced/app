@@ -13,6 +13,7 @@ export interface UpdateUserPayload {
   timezone?: string;
   github_sponsors_url?: string;
   linkedin_url?: string;
+  discord_url?: string;
 }
 
 interface useUpdateUserProps {
@@ -29,10 +30,10 @@ const updateUser = async ({ data, params }: useUpdateUserProps) => {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: `Bearer ${sessionToken}`
+        Authorization: `Bearer ${sessionToken}`,
       },
       method: "PATCH",
-      body: JSON.stringify({ ...data })
+      body: JSON.stringify({ ...data }),
     });
 
     if (res.status === 200) {

@@ -36,7 +36,7 @@ EditInsightPage.PageLayout = HubLayout;
 EditInsightPage.isPrivateRoute = true;
 EditInsightPage.SEO = {
   title: "Edit Insight Page | Open Sauced Insights",
-  noindex: true
+  noindex: true,
 };
 
 export default EditInsightPage;

@@ -2,7 +2,7 @@ import { ComponentStory } from "@storybook/react";
 import SpinLoader from "components/atoms/SpinLoader/spin-loader";
 
 const storyConfig = {
-  title: "Design System/Atoms/SpinLoader"
+  title: "Design System/Atoms/SpinLoader",
 };
 export default storyConfig;
 

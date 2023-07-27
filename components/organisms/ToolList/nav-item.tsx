@@ -6,12 +6,12 @@ import humanizeNumber from "lib/utils/humanizeNumber";
 interface NavItemProps {
   username?: string | string[] | undefined;
   filterName?: string | string[] | undefined;
-  tool: { name: string, numOf?: number};
+  tool: { name: string; numOf?: number };
   selectedFilter?: string | string[] | undefined;
   selectedTool: string | string[];
 }
 
-const NavItem:  React.FC<NavItemProps> = ({ username, filterName, tool, selectedFilter, selectedTool }) => {
+const NavItem: React.FC<NavItemProps> = ({ username, filterName, tool, selectedFilter, selectedTool }) => {
   const [total, setTotal] = useState<number>();
 
   useEffect(() => {
@@ -21,10 +21,9 @@ const NavItem:  React.FC<NavItemProps> = ({ username, filterName, tool, selected
   return (
     <Link
       href={`/${username ? `pages/${username}/` : ""}${filterName}/${tool.name.toLowerCase()}${
-        selectedFilter
-          ? `/filter/${Array.isArray(selectedFilter) ? selectedFilter.join("/") : selectedFilter}`
-          : ""
-      }`}>
+        selectedFilter ? `/filter/${Array.isArray(selectedFilter) ? selectedFilter.join("/") : selectedFilter}` : ""
+      }`}
+    >
       {/* Button component was here and needed to be removed to resolve issue #187. Button component had styling that will eventually need to be replaced. */}
       <div
         className={`flex h-11 px-2 md:px-4 items-center rounded-t-lg ${
@@ -36,16 +35,20 @@ const NavItem:  React.FC<NavItemProps> = ({ username, filterName, tool, selected
         <span
           className={
             "text-base whitespace-nowrap " +
-          (selectedTool === tool.name.toLowerCase() ? "text-slate-900" : "text-slate-500")
+            (selectedTool === tool.name.toLowerCase() ? "text-slate-900" : "text-slate-500")
           }
         >
           {tool.name}
         </span>
-        {total !== undefined && <div className={"ml-2 py-0.5 px-1.5 h-fit bg-slate-200 text-slate-500 border rounded-full text-xs font-semibold"}>
-          { humanizeNumber(total, null) }
-        </div>}
+        {total !== undefined && (
+          <div
+            className={"ml-2 py-0.5 px-1.5 h-fit bg-slate-200 text-slate-500 border rounded-full text-xs font-semibold"}
+          >
+            {humanizeNumber(total, null)}
+          </div>
+        )}
       </div>
-    </Link>    
+    </Link>
   );
 };
 

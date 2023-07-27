@@ -155,6 +155,7 @@ interface DbUser {
   readonly is_waitlisted: boolean;
   readonly role: number;
   readonly bio: string;
+  readonly url: string;
   readonly twitter_username: string;
   readonly company: string;
   readonly location: string;
@@ -166,6 +167,7 @@ interface DbUser {
   readonly timezone: string;
   readonly github_sponsors_url: string;
   readonly linkedin_url: string;
+  readonly discord_url: string;
   readonly notification_count: number;
   readonly languages: { [lang]: number };
   readonly first_opened_pr_at: string;

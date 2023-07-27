@@ -16,10 +16,10 @@ import { DevCardProps } from "components/molecules/DevCard/dev-card";
 import SEO from "layouts/SEO/SEO";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { cardImageUrl, linkedinCardShareUrl, twitterCardShareUrl } from "lib/utils/urls";
+import FullHeightContainer from "components/atoms/FullHeightContainer/full-height-container";
 import TwitterIcon from "../../../img/icons/social-twitter.svg";
 import LinkinIcon from "../../../img/icons/social-linkedin.svg";
 import BubbleBG from "../../../img/bubble-bg.svg";
-;
 const ADDITIONAL_PROFILES_TO_LOAD = [
   "bdougie",
   "nickytonline",
@@ -60,7 +60,6 @@ async function fetchInitialCardData(username: string): Promise<DevCardProps> {
     ? Math.floor((Date.now() - Date.parse(user.first_opened_pr_at)) / 86400000)
     : 0;
 
-
   return {
     username,
     avatarURL: githubAvatar,
@@ -99,7 +98,6 @@ export const getServerSideProps: GetServerSideProps<CardProps, Params> = async (
 
   const uniqueUsernames = [...new Set([username, ...ADDITIONAL_PROFILES_TO_LOAD])];
   const cards = await Promise.all(uniqueUsernames.map(fetchInitialCardData));
-
 
   return {
     props: {
@@ -150,12 +148,7 @@ const Card: NextPage<CardProps> = ({ username, cards }) => {
   }, [cards]);
 
   return (
-    <div
-      style={{
-        background: `url(${BubbleBG.src}) no-repeat center center, linear-gradient(147deg, #212121 13.41%, #2E2E2E 86.8%)`,
-        backgroundSize: "cover",
-      }}
-    >
+    <FullHeightContainer>
       <SEO
         title={`${username} | OpenSauced`}
         description={socialSummary}
@@ -163,8 +156,12 @@ const Card: NextPage<CardProps> = ({ username, cards }) => {
         twitterCard="summary_large_image"
       />
       <main
-        className="grid w-full h-full min-h-screen md:max-h-screen md:overflow-hidden md:pb-20"
-        style={{ gridTemplateRows: "auto 1fr auto" }}
+        className="grid max-h-screen md:overflow-hidden md:pb-20"
+        style={{
+          background: `url(${BubbleBG.src}) no-repeat center center, linear-gradient(147deg, #212121 13.41%, #2E2E2E 86.8%)`,
+          backgroundSize: "cover",
+          gridTemplateRows: "auto 1fr auto",
+        }}
       >
         <div className="grid justify-center place-content-start py-7 px-3 md:justify-start">
           <HeaderLogo withBg={false} />
@@ -236,23 +233,22 @@ const Card: NextPage<CardProps> = ({ username, cards }) => {
           ) : (
             <div className="flex flex-col gap-2">
               <Button variant="primary" className="justify-center" href={`/user/${selectedUserName}`}>
-              See Full Profile
+                See Full Profile
               </Button>
               <Button variant="dark" className="justify-center" href="/start">
-              Create your own dev card!
+                Create your own dev card!
               </Button>
             </div>
           )}
         </div>
       </main>
-    </div>
+    </FullHeightContainer>
   );
 };
 
 export default Card;
 
-
-function SocialButtons({username, summary} : {username: string, summary: string }) {
+function SocialButtons({ username, summary }: { username: string; summary: string }) {
   const icons = [
     {
       name: "Twitter",
@@ -288,7 +284,7 @@ function SocialButtons({username, summary} : {username: string, summary: string 
             key={icon.src}
             href={icon.url}
             className={linkStyle}
-            style={{ backgroundColor: icon.color, borderColor: "rgba(255,255,255,0.2)"}}
+            style={{ backgroundColor: icon.color, borderColor: "rgba(255,255,255,0.2)" }}
             target="_blank"
             rel="noreferrer"
           >

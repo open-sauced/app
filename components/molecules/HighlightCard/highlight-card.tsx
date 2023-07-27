@@ -32,28 +32,28 @@ const icons = {
   contributors: {
     src: personIcon.src,
     label: "Contributors",
-    color: "bg-blue-100"
+    color: "bg-blue-100",
   },
   participation: {
     src: repoIcon.src,
     label: "Participation",
-    color: "bg-blue-100"
+    color: "bg-blue-100",
   },
   "accepted-pr": {
     src: prIcon.src,
     label: "Accepted PRs",
-    color: "bg-green-100"
+    color: "bg-green-100",
   },
   "unlabeled-pr": {
     src: labelIcon.src,
     label: "Unlabeled PRs",
-    color: "bg-cyan-100"
+    color: "bg-cyan-100",
   },
   spam: {
     src: thumbsIcon.src,
     label: "Spam",
-    color: "bg-orange-100"
-  }
+    color: "bg-orange-100",
+  },
 };
 
 const HighlightCard: React.FC<HighlightCardProps> = ({
@@ -68,7 +68,7 @@ const HighlightCard: React.FC<HighlightCardProps> = ({
   value,
   valueLabel,
   contributors = [],
-  isLoading
+  isLoading,
 }) => {
   return (
     <Card className={`${className ? className : ""} flex flex-col w-full sm:max-w-[calc(50%-(1rem/2))] h-auto `}>
@@ -110,7 +110,7 @@ const HighlightCard: React.FC<HighlightCardProps> = ({
         </div>
 
         {/* Main Information */}
-        { isLoading ? (
+        {isLoading ? (
           <SkeletonWrapper height={79} count={2} />
         ) : (
           <div className="flex flex-col w-full px-6 pb-5 mt-2">
@@ -118,19 +118,25 @@ const HighlightCard: React.FC<HighlightCardProps> = ({
             <div className="flex flex-col items-center">
               {/* Percentage */}
               <div className="text-4xl">
-                {percentage !== undefined ? `${percentage}%` : <span></span>}{value !== undefined ? value : ""}
+                {percentage !== undefined ? `${percentage}%` : <span></span>}
+                {value !== undefined ? value : ""}
               </div>
 
               {/* Label */}
               <div className="text-base   text-slate-600 mt-0.5">
-                <span>{percentageLabel ? percentageLabel : ""}{valueLabel ? valueLabel : ""}&nbsp;</span>
+                <span>
+                  {percentageLabel ? percentageLabel : ""}
+                  {valueLabel ? valueLabel : ""}&nbsp;
+                </span>
               </div>
             </div>
 
             {/* Contributor Cards */}
-            { contributors && <div className="flex items-center justify-center mt-7 h-1">
-              <StackedAvatar contributors={contributors} visibleQuantity={5} />
-            </div> }
+            {contributors && (
+              <div className="flex items-center justify-center mt-7 h-1">
+                <StackedAvatar contributors={contributors} visibleQuantity={5} />
+              </div>
+            )}
 
             {/* Progress Bar */}
             <div
@@ -144,18 +150,22 @@ const HighlightCard: React.FC<HighlightCardProps> = ({
                     ? percentage && percentage > 70
                       ? "bg-green-500"
                       : percentage && percentage > 30
-                        ? "bg-yellow-500"
-                        : "bg-red-500"
+                      ? "bg-yellow-500"
+                      : "bg-red-500"
                     : percentage && percentage > 70
-                      ? "bg-red-500"
-                      : percentage && percentage > 30
-                        ? "bg-yellow-500"
-                        : "bg-green-500"
+                    ? "bg-red-500"
+                    : percentage && percentage > 30
+                    ? "bg-yellow-500"
+                    : "bg-green-500"
                 } h-3 rounded-full transition-all duration-500 ease-in-out`}
                 style={{ width: (percentage ? percentage : 0) + "%" }}
               ></div>
 
-              <div className={`${ percentage !== undefined && "bg-gray-200"} w-auto flex-auto h-3 rounded-full transition-all duration-500 ease-in-out`}></div>
+              <div
+                className={`${
+                  percentage !== undefined && "bg-gray-200"
+                } w-auto flex-auto h-3 rounded-full transition-all duration-500 ease-in-out`}
+              ></div>
             </div>
           </div>
         )}
