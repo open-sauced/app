@@ -300,7 +300,7 @@ const ContributorHighlightCard = ({
                     <BsTwitter className="text-lg text-light-orange-9 md:text-xl" />
                   </a>
                 </Tooltip>
-                <DropdownMenuTrigger className=" py-2 px-2 rounded-full data-[state=open]:bg-light-slate-7">
+                <DropdownMenuTrigger className="py-2 px-2 rounded-full data-[state=open]:bg-light-slate-7">
                   <TfiMoreAlt size={24} />
                 </DropdownMenuTrigger>
               </div>
