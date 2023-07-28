@@ -11,6 +11,7 @@ import { format } from "date-fns";
 import { FaUserPlus } from "react-icons/fa";
 import { BiGitPullRequest } from "react-icons/bi";
 import { VscIssues } from "react-icons/vsc";
+import clsx from "clsx";
 import Title from "components/atoms/Typography/title";
 
 import { Textarea } from "components/atoms/Textarea/text-area";
@@ -23,7 +24,7 @@ import {
 } from "components/atoms/Dropdown/dropdown";
 
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
-import { generateApiPrUrl, getAvatarByUsername } from "lib/utils/github";
+import { generateApiPrUrl, getAvatarByUsername, getOwnerAndRepoNameFromUrl } from "lib/utils/github";
 import { fetchGithubPRInfo } from "lib/hooks/fetchGithubPRInfo";
 import { updateHighlights } from "lib/hooks/updateHighlight";
 import { deleteHighlight } from "lib/hooks/deleteHighlight";
@@ -157,7 +158,7 @@ const ContributorHighlightCard = ({
     }
   };
 
-  const [, , , repoOwner, repoName] = prLink.split("/");
+  const { owner: repoOwner, repoName } = getOwnerAndRepoNameFromUrl(prLink);
   const repoIcon = getAvatarByUsername(repoOwner, 60);
 
   const repo: RepoList = {
@@ -271,8 +272,7 @@ const ContributorHighlightCard = ({
   return (
     <article className="flex flex-col  md:max-w-[40rem] flex-1 gap-3 lg:gap-6">
       <div>
-        {}
-        <div className="flex items-center gap-1 text-light-slate-12">
+        <div className={clsx("flex items-center gap-1 text-light-slate-12", title && "mb-2")}>
           {icon}
           <span className="text-sm md:text-base text-light-slate-10">{getHighlightTypePreset(type).text}</span>
         </div>
