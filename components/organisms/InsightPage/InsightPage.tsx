@@ -22,6 +22,7 @@ import { RepoCardProfileProps } from "components/molecules/RepoCardProfile/repo-
 import { useToast } from "lib/hooks/useToast";
 import TeamMembersConfig, { TeamMemberData } from "components/molecules/TeamMembersConfig/team-members-config";
 import useInsightMembers from "lib/hooks/useInsightMembers";
+import { isValidRepoUrl } from "lib/utils/validate-repo-urls";
 import SuggestedRepositoriesList from "../SuggestedRepoList/suggested-repo-list";
 import DeleteInsightPageModal from "./DeleteInsightPageModal";
 
@@ -201,8 +202,17 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
       return;
     }
 
+    const validatedRepoUrl = isValidRepoUrl(repoToAdd);
+
+    if (!validatedRepoUrl[0]) {
+      setAddRepoError(RepoLookupError.Invalid);
+      return;
+    }
+
+    const repoNameToAdd = validatedRepoUrl[1];
+
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/repos/${repoToAdd}`);
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/repos/${repoNameToAdd}`);
 
       if (response.ok) {
         const addedRepo = (await response.json()) as DbRepo;
@@ -213,7 +223,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
         setAddRepoError(RepoLookupError.Initial);
         setRepoSearchTerm("");
       } else {
-        const publicRepoResponse = await fetch(`https://api.github.com/repos/${repoToAdd}`);
+        const publicRepoResponse = await fetch(`https://api.github.com/repos/${repoNameToAdd}`);
 
         if (publicRepoResponse.ok) {
           const publicRepo = await publicRepoResponse.json();
