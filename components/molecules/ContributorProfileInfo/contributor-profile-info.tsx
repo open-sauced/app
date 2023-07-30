@@ -54,7 +54,7 @@ const ContributorProfileInfo = ({
           {isConnected && <Badge text="beta" />}
         </div>
         <div className="flex items-center text-sm gap-3">
-          <span className="text-light-slate-11 text-sm">{`@${githubName}`}</span>
+          <a className="text-light-slate-11 text-sm" href={`https://github.coom/${githubName}`}>{`@${githubName}`}</a>
 
           {isConnected && (
             <>
