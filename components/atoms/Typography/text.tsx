@@ -6,6 +6,7 @@ import TypographyWrapper from "./wrapper";
 
 interface TextProps {
   children: React.ReactNode;
+  title?: string;
   className?: string;
   type?: "default" | "secondary" | "success" | "warning" | "danger";
   disabled?: boolean;
