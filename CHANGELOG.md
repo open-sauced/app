@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.58.0-beta.3](https://github.com/open-sauced/insights/compare/v1.58.0-beta.2...v1.58.0-beta.3) (2023-07-31)
+
+
+### 🐛 Bug Fixes
+
+* improve layout design for large screens [#1231](https://github.com/open-sauced/insights/issues/1231) ([#1437](https://github.com/open-sauced/insights/issues/1437)) ([d8ae808](https://github.com/open-sauced/insights/commit/d8ae8088b5b0e62f8ea63dfa8c7863db16cd7014))
+
 ## [1.58.0-beta.2](https://github.com/open-sauced/insights/compare/v1.58.0-beta.1...v1.58.0-beta.2) (2023-07-31)
 
 
