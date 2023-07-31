@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.58.0-beta.1](https://github.com/open-sauced/insights/compare/v1.57.1-beta.10...v1.58.0-beta.1) (2023-07-31)
+
+
+### 🍕 Features
+
+* add devcard button to user profile ([#1339](https://github.com/open-sauced/insights/issues/1339)) ([6a1dbdc](https://github.com/open-sauced/insights/commit/6a1dbdce4aa520c463f9771af57cf8ec16d312e8))
+
 ### [1.57.1-beta.10](https://github.com/open-sauced/insights/compare/v1.57.1-beta.9...v1.57.1-beta.10) (2023-07-27)
 
 
