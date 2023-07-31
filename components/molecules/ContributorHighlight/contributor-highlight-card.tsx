@@ -173,7 +173,7 @@ const ContributorHighlightCard = ({
         return { text: "Pull request", icon: <BiGitPullRequest className="text-lg md:text-xl" /> };
       case "blog":
         return {
-          text: "Blogpost",
+          text: "Blog post",
           icon: (
             // Used svg as i could not find the exact icon in react-icons
             <svg
