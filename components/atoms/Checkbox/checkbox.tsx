@@ -10,7 +10,7 @@ interface CheckboxProps extends React.ComponentPropsWithoutRef<typeof CheckboxPr
 
 const Checkbox = React.forwardRef<React.ElementRef<typeof CheckboxPrimitive.Root>, CheckboxProps>(
   ({ className, label, id, ...props }, ref) => {
-    id = id ? id : label?.replaceAll(" ", "_").toLowerCase();
+    const getId = () => id ? id : label?.replaceAll(" ", "_").toLowerCase();
     return (
       <div className="flex items-center">
         <CheckboxPrimitive.Root
@@ -20,7 +20,7 @@ const Checkbox = React.forwardRef<React.ElementRef<typeof CheckboxPrimitive.Root
             className
           )}
           {...props}
-          id={id}
+          id={getId()}
         >
           <CheckboxPrimitive.Indicator className={clsx("flex items-center justify-center text-white")}>
             <FiCheck className="w-full h-full" />
@@ -28,7 +28,7 @@ const Checkbox = React.forwardRef<React.ElementRef<typeof CheckboxPrimitive.Root
         </CheckboxPrimitive.Root>
         {label && (
           <label
-            htmlFor={id}
+            htmlFor={getId()}
             className="ml-3 text-sm font-medium leading-none cursor-pointer text-light-slate-12 peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
           >
             {label}
