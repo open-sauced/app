@@ -1,4 +1,4 @@
-import type { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react";
 import Text from "../../components/atoms/Typography/text";
 
 const meta: Meta<typeof Text> = {
@@ -14,17 +14,47 @@ const meta: Meta<typeof Text> = {
 
 export default meta;
 
-//Text Template
-const TextTemplate: StoryFn<typeof Text> = (args) => <Text {...args} />;
+type Story = StoryObj<typeof Text>;
 
-export const Default = TextTemplate.bind({});
+export const Default: Story = {
+  args: {
+    children: "Test",
+    type: "default",
+    strong: false,
+    underline: false,
+    strikethrough: false,
+    mark: false,
+    code: false,
+    keyboard: false,
+    small: false,
+    disabled: false,
+  },
+};
 
-Default.args = {
-  children: "Test",
-  strong: false,
-  type: "default",
-  strikethrough: false,
-  underline: false,
-  small: false,
-  disabled: false,
+export const KeyboardText: Story = {
+  args: {
+    ...Default.args,
+    keyboard: true,
+  },
+};
+
+export const CodeText: Story = {
+  args: {
+    ...Default.args,
+    code: true,
+  },
+};
+
+export const DisbaledText: Story = {
+  args: {
+    ...Default.args,
+    disabled: true,
+  },
+};
+
+export const SmallText: Story = {
+  args: {
+    ...Default.args,
+    small: true,
+  },
 };
