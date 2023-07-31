@@ -3,8 +3,14 @@ import type { Meta, StoryFn } from "@storybook/react";
 import TypographyWrapper from "../../components/atoms/Typography/wrapper";
 
 const meta: Meta<typeof TypographyWrapper> = {
-  title: "Design System/Atoms/TypographyWrapper",
+  title: "Design System/Atoms/Typography/Wrapper",
   component: TypographyWrapper,
+  argTypes: {
+    size: {
+      options: ["sm", "base", "lg", "xl", "2xl"],
+      control: { type: "select" },
+    },
+  },
 };
 
 export default meta;
@@ -219,3 +225,7 @@ const TypographyTemplate: StoryFn<typeof TypographyWrapper> = (args) => (
 );
 
 export const Default = TypographyTemplate.bind({});
+
+Default.args = {
+  size: "sm",
+};
