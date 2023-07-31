@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.58.0-beta.2](https://github.com/open-sauced/insights/compare/v1.58.0-beta.1...v1.58.0-beta.2) (2023-07-31)
+
+
+### 🍕 Features
+
+* new contributor highlight card ([#1443](https://github.com/open-sauced/insights/issues/1443)) ([c88000b](https://github.com/open-sauced/insights/commit/c88000b3b7474ec302ea796083294dc373fbd2b8))
+
 ## [1.58.0-beta.1](https://github.com/open-sauced/insights/compare/v1.57.1-beta.10...v1.58.0-beta.1) (2023-07-31)
 
 
