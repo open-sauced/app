@@ -1,15 +1,21 @@
-import { ComponentStory } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react";
 import Text from "../../components/atoms/Typography/text";
 
-const storyConfig = {
-  title: "Design System/Atoms/Text",
-  component: "Text",
+const meta: Meta<typeof Text> = {
+  title: "Design System/Atoms/Typography/Text",
+  component: Text,
+  argTypes: {
+    type: {
+      options: ["default", "secondary", "success", "warning", "danger"],
+      control: { type: "select" },
+    },
+  },
 };
 
-export default storyConfig;
+export default meta;
 
 //Text Template
-const TextTemplate: ComponentStory<typeof Text> = (args) => <Text {...args} />;
+const TextTemplate: StoryFn<typeof Text> = (args) => <Text {...args} />;
 
 export const Default = TextTemplate.bind({});
 
