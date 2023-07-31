@@ -102,7 +102,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
         title="Repositories"
       />
       <div className="flex flex-col w-full overflow-x-auto border rounded-lg">
-        <div className="lg:min-w-[1150px]">
+        <div>
           <div className="flex justify-between gap-2 px-6 py-4 md:hidden bg-light-slate-3">
             <div className="flex-1">
               <TableTitle> Repository </TableTitle>
@@ -133,10 +133,10 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
             <div className={clsx(classNames.cols.spam)}>
               <TableTitle>SPAM</TableTitle>
             </div>
-            <div className={clsx(classNames.cols.contributors, "hidden lg:flex")}>
+            <div className={clsx(classNames.cols.contributors, "hidden xl:flex")}>
               <TableTitle>Contributors</TableTitle>
             </div>
-            <div className={clsx(classNames.cols.last30days, "hidden lg:flex")}>
+            <div className={clsx(classNames.cols.last30days, "hidden xl:flex")}>
               <TableTitle>Last 30 Days</TableTitle>
             </div>
           </div>
