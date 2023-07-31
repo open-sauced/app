@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { HiOutlineEmojiHappy } from "react-icons/hi";
 import { TfiMoreAlt } from "react-icons/tfi";
-import { FiEdit, FiLinkedin, FiTwitter } from "react-icons/fi";
-import { BsCalendar2Event, BsLink45Deg } from "react-icons/bs";
+import { FiEdit, FiLinkedin } from "react-icons/fi";
+import { BsCalendar2Event, BsLink45Deg, BsTwitter } from "react-icons/bs";
 import { GrFlag } from "react-icons/gr";
 import Emoji from "react-emoji-render";
 import { usePostHog } from "posthog-js/react";
 import { MdError } from "react-icons/md";
 import { format } from "date-fns";
 import { FaUserPlus } from "react-icons/fa";
+import { BiGitPullRequest } from "react-icons/bi";
+import { VscIssues } from "react-icons/vsc";
+import clsx from "clsx";
 import Title from "components/atoms/Typography/title";
 
 import { Textarea } from "components/atoms/Textarea/text-area";
@@ -21,7 +24,7 @@ import {
 } from "components/atoms/Dropdown/dropdown";
 
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
-import { generateApiPrUrl } from "lib/utils/github";
+import { generateApiPrUrl, getAvatarByUsername, getOwnerAndRepoNameFromUrl } from "lib/utils/github";
 import { fetchGithubPRInfo } from "lib/hooks/fetchGithubPRInfo";
 import { updateHighlights } from "lib/hooks/updateHighlight";
 import { deleteHighlight } from "lib/hooks/deleteHighlight";
@@ -51,6 +54,7 @@ import {
 } from "../AlertDialog/alert-dialog";
 import { Popover, PopoverContent, PopoverTrigger } from "../Popover/popover";
 import { Calendar } from "../Calendar/calendar";
+import CardRepoList, { RepoList } from "../CardRepoList/card-repo-list";
 
 interface ContributorHighlightCardProps {
   title?: string;
@@ -61,7 +65,9 @@ interface ContributorHighlightCardProps {
   shipped_date: string;
   refreshCallBack?: () => void;
   emojis: DbEmojis[];
+  type?: HighlightType;
 }
+type HighlightType = "pull_request" | "issue" | "blog";
 
 const ContributorHighlightCard = ({
   title,
@@ -71,6 +77,7 @@ const ContributorHighlightCard = ({
   id,
   refreshCallBack,
   emojis,
+  type = "pull_request",
   shipped_date,
 }: ContributorHighlightCardProps) => {
   const { toast } = useToast();
@@ -151,6 +158,50 @@ const ContributorHighlightCard = ({
     }
   };
 
+  const { owner: repoOwner, repoName } = getOwnerAndRepoNameFromUrl(prLink);
+  const repoIcon = getAvatarByUsername(repoOwner, 60);
+
+  const repo: RepoList = {
+    repoIcon,
+    repoName,
+    repoOwner,
+  };
+
+  const getHighlightTypePreset = (type: HighlightType): { text: string; icon?: React.ReactElement } => {
+    switch (type) {
+      case "pull_request":
+        return { text: "Pull request", icon: <BiGitPullRequest className="text-lg md:text-xl" /> };
+      case "blog":
+        return {
+          text: "Blog post",
+          icon: (
+            // Used svg as i could not find the exact icon in react-icons
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
+              />
+            </svg>
+          ),
+        };
+      case "issue":
+        return { text: "Issue", icon: <VscIssues className="text-lg md:text-xl" /> };
+
+      default:
+        return { text: "Pull request", icon: <BiGitPullRequest className="text-lg md:text-xl" /> };
+    }
+  };
+
+  const { icon, text } = getHighlightTypePreset(type);
+
   const handleUpdateHighlight = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -221,6 +272,10 @@ const ContributorHighlightCard = ({
   return (
     <article className="flex flex-col  md:max-w-[40rem] flex-1 gap-3 lg:gap-6">
       <div>
+        <div className={clsx("flex items-center gap-1 text-light-slate-12", title && "mb-2")}>
+          {icon}
+          <span className="text-sm md:text-base text-light-slate-10">{getHighlightTypePreset(type).text}</span>
+        </div>
         <div className="flex items-center justify-between w-full">
           <div className="flex items-center justify-between gap-1 pr-2">
             {title && (
@@ -231,11 +286,8 @@ const ContributorHighlightCard = ({
           </div>
           <div className="flex items-center gap-3 ml-auto lg:gap-3">
             <DropdownMenu>
-              <DropdownMenuTrigger className=" py-2 px-2 rounded-full data-[state=open]:bg-light-slate-7">
-                <TfiMoreAlt size={24} />
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="flex flex-col gap-1 py-2 rounded-lg">
-                <DropdownMenuItem className="rounded-md">
+              <div className="flex items-center gap-3 w-max">
+                <Tooltip direction="top" content="share on twitter">
                   <a
                     onClick={() => {
                       handleCaptureClickDetailsForAnalytics("twitter");
@@ -243,12 +295,17 @@ const ContributorHighlightCard = ({
                     target="_blank"
                     rel="noreferrer"
                     href={`https://twitter.com/intent/tweet?text=${twitterTweet}&url=${host}/feed/${id}`}
-                    className="flex gap-2.5 py-1 items-center pl-3 pr-7"
+                    className="flex items-center p-3 transition rounded-full hover:bg-light-orange-5"
                   >
-                    <FiTwitter size={22} />
-                    <span>Share to Twitter</span>
+                    <BsTwitter className="text-lg text-light-orange-9 md:text-xl" />
                   </a>
-                </DropdownMenuItem>
+                </Tooltip>
+                <DropdownMenuTrigger className="py-2 px-2 rounded-full data-[state=open]:bg-light-slate-7">
+                  <TfiMoreAlt size={24} />
+                </DropdownMenuTrigger>
+              </div>
+
+              <DropdownMenuContent align="end" className="flex flex-col gap-1 py-2 rounded-lg">
                 <DropdownMenuItem className="rounded-md">
                   <a
                     onClick={() => {
@@ -379,6 +436,11 @@ const ContributorHighlightCard = ({
               />
             </div>
           ))}
+        {type === "pull_request" && (
+          <div className="ml-auto">
+            <CardRepoList repoList={[repo]} />
+          </div>
+        )}
       </div>
 
       <Dialog open={openEdit} onOpenChange={setOpenEdit}>
