@@ -1,4 +1,4 @@
-import type { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react";
 import Title from "../../components/atoms/Typography/title";
 
 const meta: Meta = {
@@ -18,12 +18,9 @@ const meta: Meta = {
 
 export default meta;
 
-//Title Template
-const TitleTemplate: StoryFn<typeof Title> = (args) => <Title {...args} />;
-
-export const Default = TitleTemplate.bind({});
-
-Default.args = {
-  children: "Test",
-  level: 1,
+export const Default: StoryObj<typeof Title> = {
+  args: {
+    children: "Test",
+    level: 1,
+  },
 };
