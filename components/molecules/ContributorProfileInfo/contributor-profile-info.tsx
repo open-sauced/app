@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import { AiOutlineGift } from "react-icons/ai";
 import { BsDiscord } from "react-icons/bs";
-import { FiClock, FiGithub, FiLinkedin, FiTwitter, FiGithub} from "react-icons/fi";
+import { FiClock, FiGithub, FiLinkedin, FiTwitter } from "react-icons/fi";
 
 import clsx from "clsx";
 import LanguagePill from "components/atoms/LanguagePill/LanguagePill";
@@ -94,15 +94,15 @@ const ContributorProfileInfo = ({
               )}
 
               <span className="flex gap-2 items-center">
-                  <FiGithub className="text-light-slate-9" />
-                  <Link
-                    href={`https://github.com/${githubName}`}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="w-max hover:text-orange-500 "
-                  >
-                    {twitterUsername}
-                  </Link>
+                <FiGithub className="text-light-slate-9" />
+                <Link
+                  href={`https://github.com/${githubName}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="w-max hover:text-orange-500 "
+                >
+                  {githubName}
+                </Link>
               </span>
 
               {twitterUsername && (
