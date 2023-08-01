@@ -33,8 +33,8 @@ const UserCard = ({ username, name, meta, loading }: UserCardProps) => {
               alt={`${username}'s avatar image`}
             />
             <div className="text-center">
-              <h3 className="text-base text-center">{name}</h3>
-              <a className="text-center text-light-slate-9" href={`/user/${username}`}>{`@${username}`}</a>
+              <h3>{name}</h3>
+              <a className="text-light-slate-9" href={`/user/${username}`}>{`@${username}`}</a>
             </div>
           </div>
           <div className="flex items-center gap-5 text-base text-center ">
