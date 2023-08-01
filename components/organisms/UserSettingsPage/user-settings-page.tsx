@@ -248,7 +248,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
               name="linkedin_url"
             />
             <TextInput
-              className="bg-light-slate-4 text-light-slate-11 font-medium"
+              className="font-medium bg-light-slate-4 text-light-slate-11"
               placeholder="https://discordapp.com/users/832877193112762362"
               label="Discord URL"
               onChange={handleValidateDiscordUrl}
@@ -373,8 +373,8 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
               Update Preferences
             </Button>
           </div>
-          {!hasReports && (
-            <div className="flex flex-col gap-6 order-first md:order-last">
+          {!hasReports ? (
+            <div className="flex flex-col order-first gap-6 md:order-last">
               <div className="flex flex-col gap-3">
                 <label className="text-2xl font-normal text-light-slate-11">Upgrade Access</label>
                 <div className="w-full sm:max-w-80">
@@ -382,6 +382,19 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
                 </div>
               </div>
               <StripeCheckoutButton variant="primary" />
+            </div>
+          ) : (
+            <div className="flex flex-col order-first gap-6 md:order-last">
+              <div className="flex flex-col gap-3">
+                <label className="text-2xl font-normal text-light-slate-11">Manage Subscriptions</label>
+                <div className="w-full sm:max-w-sm">
+                  <Text>
+                    You are currently subscribed to the <span className="font-bold">Pro</span> plan and have access to
+                    all premium features.
+                  </Text>
+                </div>
+              </div>
+              <StripeCheckoutButton variant="primary">Cancel Subscription</StripeCheckoutButton>
             </div>
           )}
         </div>
