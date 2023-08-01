@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import { AiOutlineGift } from "react-icons/ai";
 import { BsDiscord } from "react-icons/bs";
-import { FiClock, FiGithub, FiLinkedin, FiTwitter } from "react-icons/fi";
+import { FiClock, FiGithub, FiLinkedin, FiTwitter, FiGithub} from "react-icons/fi";
 
 import clsx from "clsx";
 import LanguagePill from "components/atoms/LanguagePill/LanguagePill";
@@ -54,7 +54,7 @@ const ContributorProfileInfo = ({
           {isConnected && <Badge text="beta" />}
         </div>
         <div className="flex items-center text-sm gap-3">
-          <span className="text-light-slate-11 text-sm">{`@${githubName}`}</span>
+          <a className="text-light-slate-11 text-sm" href={`https://github.com/${githubName}`}>{`@${githubName}`}</a>
 
           {isConnected && (
             <>
@@ -93,11 +93,23 @@ const ContributorProfileInfo = ({
                 </span>
               )}
 
+              <span className="flex gap-2 items-center">
+                  <FiGithub className="text-light-slate-9" />
+                  <Link
+                    href={`https://twitter.com/${twitterUsername}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="w-max hover:text-orange-500 "
+                  >
+                    {twitterUsername}
+                  </Link>
+              </span>
+
               {twitterUsername && (
                 <span className="flex gap-2 items-center">
                   <FiTwitter className="text-light-slate-9" />
                   <Link
-                    href={`https://twitter.com/${twitterUsername}`}
+                    href={`https://github.com/${githubName}`}
                     target="_blank"
                     rel="noreferrer"
                     className="w-max hover:text-orange-500 "
