@@ -21,6 +21,7 @@ interface TextProps {
 
 const Text: React.FC<TextProps> = ({
   children,
+  title,
   className,
   type = "default",
   disabled,
@@ -51,19 +52,18 @@ const Text: React.FC<TextProps> = ({
   };
 
   return (
-    <TypographyWrapper>
-      <TextTag
-        className={clsx(
-          disabled && "cursor-not-allowed select-none text-light-slate-11/50",
-          keyboard && "text-white bg-dark-slate-5 rounded shadow-input px-2 py-1 border border-light-slate-11/50",
-          underline && "underline",
-          strikethrough && "line-through",
-          getTypeClass(type)
-        )}
-        {...props}
-      >
-        {children}
-      </TextTag>
+    <TypographyWrapper
+      className={clsx(
+        className,
+        disabled && "cursor-not-allowed select-none text-light-slate-11/50",
+        keyboard && "text-white bg-light-slate-4/50 rounded px-2 border border-b-2 border-light-slate-8/50",
+        underline && "underline",
+        strikethrough && "line-through",
+        getTypeClass(type)
+      )}
+      {...props}
+    >
+      <TextTag title={title}>{children}</TextTag>
     </TypographyWrapper>
   );
 };
