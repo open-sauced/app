@@ -96,7 +96,7 @@ const ContributorProfileInfo = ({
               <span className="flex gap-2 items-center">
                   <FiGithub className="text-light-slate-9" />
                   <Link
-                    href={`https://twitter.com/${twitterUsername}`}
+                    href={`https://github.com/${githubName}`}
                     target="_blank"
                     rel="noreferrer"
                     className="w-max hover:text-orange-500 "
@@ -109,7 +109,7 @@ const ContributorProfileInfo = ({
                 <span className="flex gap-2 items-center">
                   <FiTwitter className="text-light-slate-9" />
                   <Link
-                    href={`https://github.com/${githubName}`}
+                    href={`https://twitter.com/${twitterUsername}`}
                     target="_blank"
                     rel="noreferrer"
                     className="w-max hover:text-orange-500 "
