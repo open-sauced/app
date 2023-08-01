@@ -216,6 +216,13 @@ module.exports = {
       },
     },
   },
-  safelist: ["prose-sm"],
+  safelist: [
+    {
+      pattern: /prose-(sm|base|lg|xl|2xl)/,
+    },
+    {
+      pattern: /font-(thin|extralight|light|normal|medium|semibold|bold|extrabold|black)/,
+    },
+  ],
   plugins: [require("tailwindcss-radix")(), require("@tailwindcss/typography")],
 };
