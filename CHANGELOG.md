@@ -5,6 +5,27 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.58.0-beta.3](https://github.com/open-sauced/insights/compare/v1.58.0-beta.2...v1.58.0-beta.3) (2023-07-31)
+
+
+### 🐛 Bug Fixes
+
+* improve layout design for large screens [#1231](https://github.com/open-sauced/insights/issues/1231) ([#1437](https://github.com/open-sauced/insights/issues/1437)) ([d8ae808](https://github.com/open-sauced/insights/commit/d8ae8088b5b0e62f8ea63dfa8c7863db16cd7014))
+
+## [1.58.0-beta.2](https://github.com/open-sauced/insights/compare/v1.58.0-beta.1...v1.58.0-beta.2) (2023-07-31)
+
+
+### 🍕 Features
+
+* new contributor highlight card ([#1443](https://github.com/open-sauced/insights/issues/1443)) ([c88000b](https://github.com/open-sauced/insights/commit/c88000b3b7474ec302ea796083294dc373fbd2b8))
+
+## [1.58.0-beta.1](https://github.com/open-sauced/insights/compare/v1.57.1-beta.10...v1.58.0-beta.1) (2023-07-31)
+
+
+### 🍕 Features
+
+* add devcard button to user profile ([#1339](https://github.com/open-sauced/insights/issues/1339)) ([6a1dbdc](https://github.com/open-sauced/insights/commit/6a1dbdce4aa520c463f9771af57cf8ec16d312e8))
+
 ### [1.57.1-beta.10](https://github.com/open-sauced/insights/compare/v1.57.1-beta.9...v1.57.1-beta.10) (2023-07-27)
 
 

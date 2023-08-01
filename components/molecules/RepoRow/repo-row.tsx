@@ -261,14 +261,14 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
         </div>
 
         {/* Column: Contributors */}
-        <div className={clsx(classNames.cols.contributors, "hidden lg:flex")}>
+        <div className={clsx(classNames.cols.contributors, "hidden xl:flex")}>
           {contributorData.length! > 0 ? <StackedAvatar contributors={contributorData} /> : "-"}
 
           {contributorData.length! > 5 ? <div>&nbsp;{`+${contributorData.length - 5}`}</div> : ""}
         </div>
 
         {/* Column: Last 30 Days */}
-        <div className={clsx(classNames.cols.last30days, "hidden lg:flex")}>
+        <div className={clsx(classNames.cols.last30days, "hidden xl:flex")}>
           {repo.id && last30days ? <Sparkline data={last30days} /> : "-"}
         </div>
       </div>
