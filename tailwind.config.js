@@ -216,5 +216,6 @@ module.exports = {
       },
     },
   },
+  safelist: ["prose-sm"],
   plugins: [require("tailwindcss-radix")(), require("@tailwindcss/typography")],
 };
