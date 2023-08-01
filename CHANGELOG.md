@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.58.0-beta.4](https://github.com/open-sauced/insights/compare/v1.58.0-beta.3...v1.58.0-beta.4) (2023-08-01)
+
+
+### 🐛 Bug Fixes
+
+* hide onboarding button on mobile ([#1460](https://github.com/open-sauced/insights/issues/1460)) ([f63f240](https://github.com/open-sauced/insights/commit/f63f240f7f74aac04ea197d1fbb06cab383ded7c))
+
 ## [1.58.0-beta.3](https://github.com/open-sauced/insights/compare/v1.58.0-beta.2...v1.58.0-beta.3) (2023-07-31)
 
 
