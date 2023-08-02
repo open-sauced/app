@@ -18,7 +18,7 @@ const UserCard = ({ username, name, meta, loading }: UserCardProps) => {
   const avatarUrl = getAvatarByUsername(username);
 
   return (
-    <div className="pb-6 border rounded-lg bg-light-slate-1 w-max border-zinc-200">
+    <div className="w-full pb-6 border rounded-lg bg-light-slate-1 border-zinc-200">
       {loading ? (
         <div className="flex items-center justify-center h-32 w-72">
           <Spinner className="mt-6 " />
