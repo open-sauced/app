@@ -373,7 +373,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
               Update Preferences
             </Button>
           </div>
-          {!hasReports ? (
+          {!hasReports && (
             <div className="flex flex-col order-first gap-6 md:order-last">
               <div className="flex flex-col gap-3">
                 <label className="text-2xl font-normal text-light-slate-11">Upgrade Access</label>
@@ -382,19 +382,6 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
                 </div>
               </div>
               <StripeCheckoutButton variant="primary" />
-            </div>
-          ) : (
-            <div className="flex flex-col order-first gap-6 md:order-last">
-              <div className="flex flex-col gap-3">
-                <label className="text-2xl font-normal text-light-slate-11">Manage Subscriptions</label>
-                <div className="w-full sm:max-w-sm">
-                  <Text>
-                    You are currently subscribed to the <span className="font-bold">Pro</span> plan and have access to
-                    all premium features.
-                  </Text>
-                </div>
-              </div>
-              <StripeCheckoutButton variant="primary">Cancel Subscription</StripeCheckoutButton>
             </div>
           )}
         </div>
