@@ -13,7 +13,7 @@ if (process.env.CI === "true") {
     if (process.env.CHANNEL !== undefined && ["alpha", "beta"].includes(process.env.CHANNEL)) {
       console.log(`Running in Netlify ${process.env.CHANNEL} environment`);
 
-      const {protocol, hostname} = new URL(process.env.URL);
+      const { protocol, hostname } = new URL(process.env.URL);
       base = `${protocol}//${process.env.CHANNEL}.${hostname}/`;
     }
   }

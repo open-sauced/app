@@ -2,7 +2,7 @@ import { ComponentStory } from "@storybook/react";
 import Search from "components/atoms/Search/search";
 
 const StoryConfig = {
-  title: "Design System/Atoms/Search"
+  title: "Design System/Atoms/Search",
 };
 export default StoryConfig;
 
@@ -14,15 +14,15 @@ export const WithSuggestions = SearchTemplate.bind({});
 
 Default.args = {
   placeholder: "Search repositories",
-  name: "Search"
+  name: "Search",
 };
 Focused.args = {
   placeholder: "Search repositories",
   name: "Search",
-  autoFocus: true
+  autoFocus: true,
 };
 WithSuggestions.args = {
   placeholder: "Search repositories",
   name: "Search",
-  suggestions: ["openarch/north", "opencv/opencv", "openmusic5/featurecity"]
+  suggestions: ["openarch/north", "opencv/opencv", "openmusic5/featurecity"],
 };

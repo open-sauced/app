@@ -3,7 +3,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "c
 
 const storyConfig = {
   title: "Design System/Atoms/Select",
-  component: "Select"
+  component: "Select",
 };
 
 const SelectOptions = ["test", "Main", "Beta"];

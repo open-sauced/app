@@ -3,7 +3,7 @@ import FavoriteRepoCard from "components/molecules/FavoriteRepoCard/favorite-rep
 
 const storyConfig = {
   title: "Design System/Molecules/Favorite Repo Card",
-  component: "FavoriteRepoCard"
+  component: "FavoriteRepoCard",
 };
 
 export default storyConfig;
@@ -16,5 +16,5 @@ export const Default = FavoriteRepoCardTemplate.bind({});
 Default.args = {
   name: "jsonhero-web",
   owner: "apihero-run",
-  avatarURL: "https://avatars.githubusercontent.com/u/7252105?v=4"
+  avatarURL: "https://avatars.githubusercontent.com/u/7252105?v=4",
 };

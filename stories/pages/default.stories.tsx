@@ -8,17 +8,18 @@ const storyConfig = {
   argTypes: {
     tool: {
       options: ["Dashboard", "Reports", "Activity", "Repositories", "Contributors"],
-      control: { type: "select" }
-    }
-  }
+      control: { type: "select" },
+    },
+  },
 };
 
 export default storyConfig;
 
-const SelectedFilterTemplate: ComponentStory<typeof Tool> = (args) => 
+const SelectedFilterTemplate: ComponentStory<typeof Tool> = (args) => (
   <FilterLayout>
     <Tool {...args} />
-  </FilterLayout>;
+  </FilterLayout>
+);
 
 export const SelectedTool = SelectedFilterTemplate.bind({});
 SelectedTool.args = { tool: "Dashboard" };

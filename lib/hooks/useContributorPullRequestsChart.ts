@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import getPullRequestsToDays from "lib/utils/get-prs-to-days";
 import { RepoList } from "components/molecules/CardRepoList/card-repo-list";
 import { getAvatarByUsername } from "lib/utils/github";
+import getFormattedTooltipValue from "lib/utils/get-formatted-tooltip-value";
 import useContributorPullRequests from "./api/useContributorPullRequests";
 
 const useContributorPullRequestsChart = (contributor: string, topic: string, repoIds: number[] = [], range = 30) => {
@@ -22,7 +23,7 @@ const useContributorPullRequestsChart = (contributor: string, topic: string, rep
       },
     },
     grid: {
-      height: 100,
+      height: 130,
       top: 0,
       bottom: 0,
       right: 0,
@@ -40,8 +41,13 @@ const useContributorPullRequestsChart = (contributor: string, topic: string, rep
           color: "#FFB74D",
           opacity: 0.6,
         },
+        clip: false,
       },
     ],
+    tooltip: {
+      trigger: "axis",
+      formatter: getFormattedTooltipValue,
+    },
   };
 
   const [chart, setChart] = useState(lineChart);

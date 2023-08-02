@@ -4,7 +4,7 @@ import Icon from "../../components/atoms/Icon/icon";
 
 const storyConfig = {
   title: "Design System/Atoms/Icon",
-  component: "Icon Button"
+  component: "Icon Button",
 };
 
 export default storyConfig;

@@ -1,4 +1,4 @@
 export interface CommitGraphData {
-  x: number,
+  x: number;
   y: number;
 }

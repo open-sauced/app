@@ -1,5 +1,6 @@
 import React from "react";
 import * as TooltipPrimitive from "@radix-ui/react-tooltip";
+import clsx from "clsx";
 
 interface TooltipProps {
   children: React.ReactNode;
@@ -10,7 +11,7 @@ interface TooltipProps {
   tipClassName?: string;
 }
 const Tooltip = ({ children, content, className, direction }: TooltipProps): JSX.Element => {
-  const { Portal, Root, Content, Trigger } = TooltipPrimitive;
+  const { Portal, Root, Content, Trigger, Arrow } = TooltipPrimitive;
 
   return (
     <Root>
@@ -19,13 +20,10 @@ const Tooltip = ({ children, content, className, direction }: TooltipProps): JSX
       </Trigger>
       <Portal>
         <Content sideOffset={4} collisionPadding={10} side={!!direction ? direction : "bottom"} avoidCollisions>
-          <div
-            className={`${
-              className && className
-            } text-xs py-1 px-2 rounded shadow-lg  bg-dark-slate-2 text-dark-slate-12  `}
-          >
+          <div className={clsx("text-xs py-1 px-2 rounded shadow-lg  bg-dark-slate-2 text-dark-slate-12", className)}>
             {content}
           </div>
+          <Arrow className="fill-dark " />
         </Content>
       </Portal>
     </Root>

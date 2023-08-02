@@ -3,7 +3,7 @@ import Text from "../../components/atoms/Typography/text";
 
 const storyConfig = {
   title: "Design System/Atoms/Text",
-  component: "Text"
+  component: "Text",
 };
 
 export default storyConfig;
@@ -20,5 +20,5 @@ Default.args = {
   strikethrough: false,
   underline: false,
   small: false,
-  disabled: false
+  disabled: false,
 };

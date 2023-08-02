@@ -27,7 +27,7 @@ const Tool = ({ tool, repositories }: ToolProps): JSX.Element => {
     case "Contributors":
       return <Contributors repositories={repositories} />;
     default:
-      return <> {tool ? `${tool}` : "Test"} Tool Page</>;
+      return <> {tool ? `${tool}` : ""}</>;
   }
 };
 

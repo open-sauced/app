@@ -2,7 +2,7 @@ import { ComponentStory } from "@storybook/react";
 import ContextFilterOption from "components/atoms/ContextFilterOption/context-filter-option";
 
 const storyConfig = {
-  title: "Design System/Atoms/ContextFilterOption"
+  title: "Design System/Atoms/ContextFilterOption",
 };
 export default storyConfig;
 
@@ -12,9 +12,9 @@ const ContextFilterOptionTemplate: ComponentStory<typeof ContextFilterOption> = 
 export const Default = ContextFilterOptionTemplate.bind({});
 export const Selected = ContextFilterOptionTemplate.bind({});
 Default.args = {
-  children: <div>Have &gt;5 contributors</div>
+  children: <div>Have &gt;5 contributors</div>,
 };
 Selected.args = {
   children: <div>Have &gt;5 contributors</div>,
-  isSelected: true
+  isSelected: true,
 };

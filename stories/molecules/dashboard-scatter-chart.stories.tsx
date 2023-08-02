@@ -4,7 +4,7 @@ import DashboardScatterChart from "../../components/molecules/DashboardScatterCh
 
 const storyConfig = {
   title: "Design System/Molecules/Dashboard Scatter Chart",
-  component: "ScatterChart"
+  component: "ScatterChart",
 };
 
 export default storyConfig;
@@ -14,7 +14,7 @@ const testOptions = {
     left: 40,
     top: 10,
     right: 40,
-    bottom: 20
+    bottom: 20,
   },
   xAxis: {
     boundaryGap: false,
@@ -25,13 +25,13 @@ const testOptions = {
     max: 35,
     axisLabel: {
       formatter: (value: number, index: number) =>
-        value === 0 ? "Today" : value === 35 ? "35+ days ago" : `${value} days ago`
+        value === 0 ? "Today" : value === 35 ? "35+ days ago" : `${value} days ago`,
     },
     splitLine: {
       lineStyle: {
-        type: "dashed"
-      }
-    }
+        type: "dashed",
+      },
+    },
   },
   yAxis: {
     min: 0,
@@ -40,13 +40,13 @@ const testOptions = {
     boundaryGap: false,
     axisLabel: {
       showMinLabel: true,
-      formatter: (value: number) => (value >= 1000 ? humanizeNumber(value, null) : value)
+      formatter: (value: number) => (value >= 1000 ? humanizeNumber(value, null) : value),
     },
     splitLine: {
       lineStyle: {
-        type: "dashed"
-      }
-    }
+        type: "dashed",
+      },
+    },
   },
   series: [
     {
@@ -73,11 +73,11 @@ const testOptions = {
         [12.0, 6.26],
         [12.0, 8.84],
         [7.08, 5.82],
-        [5.02, 5.68]
+        [5.02, 5.68],
       ],
-      type: "scatter"
-    }
-  ]
+      type: "scatter",
+    },
+  ],
 };
 
 const testOptionsWithImage = {
@@ -85,7 +85,7 @@ const testOptionsWithImage = {
     left: 40,
     top: 10,
     right: 40,
-    bottom: 20
+    bottom: 20,
   },
   xAxis: {
     boundaryGap: false,
@@ -95,13 +95,14 @@ const testOptionsWithImage = {
     min: 0,
     max: 35,
     axisLabel: {
-      formatter: (value: number, index: number) => value === 0 ? "Today" : value === 35 ? "35+ days ago" : `${value} days ago`
+      formatter: (value: number, index: number) =>
+        value === 0 ? "Today" : value === 35 ? "35+ days ago" : `${value} days ago`,
     },
     splitLine: {
       lineStyle: {
-        type: "dashed"
-      }
-    }
+        type: "dashed",
+      },
+    },
   },
   yAxis: {
     min: 0,
@@ -110,18 +111,21 @@ const testOptionsWithImage = {
     boundaryGap: false,
     axisLabel: {
       showMinLabel: true,
-      formatter: (value: number)=> value >= 1000 ? humanizeNumber(value, null) : value
+      formatter: (value: number) => (value >= 1000 ? humanizeNumber(value, null) : value),
     },
     splitLine: {
       lineStyle: {
-        type: "dashed"
-      }
-    }
+        type: "dashed",
+      },
+    },
   },
   series: [
     {
       symbolSize: 30,
-      symbol: (value: number[]) => value[0] > 8 ? "image://https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1064&q=80" : "circle",
+      symbol: (value: number[]) =>
+        value[0] > 8
+          ? "image://https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1064&q=80"
+          : "circle",
       data: [
         [10.0, 8.04],
         [8.07, 6.95],
@@ -144,15 +148,17 @@ const testOptionsWithImage = {
         [12.0, 6.26],
         [12.0, 8.84],
         [7.08, 5.82],
-        [5.02, 5.68]
+        [5.02, 5.68],
       ],
-      type: "scatter"
-    }
-  ]
+      type: "scatter",
+    },
+  ],
 };
 
 // ScatterChart Template
-const ScatterChartTemplate: ComponentStory<typeof DashboardScatterChart> = (args) => <DashboardScatterChart {...args} />;
+const ScatterChartTemplate: ComponentStory<typeof DashboardScatterChart> = (args) => (
+  <DashboardScatterChart {...args} />
+);
 
 // ScatterChart Default
 export const Default = ScatterChartTemplate.bind({});

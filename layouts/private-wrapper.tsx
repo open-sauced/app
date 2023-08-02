@@ -1,7 +1,7 @@
 import { useUser } from "@supabase/auth-helpers-react";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
-import { authSession } from "lib/hooks/authSession";
+import useSession from "lib/hooks/useSession";
 
 interface PrivateWrapperProps {
   isPrivateRoute?: boolean;
@@ -11,11 +11,10 @@ interface PrivateWrapperProps {
 const PrivateWrapper = ({ isPrivateRoute = false, children }: PrivateWrapperProps) => {
   const user = useUser();
   const router = useRouter();
+  const { session: isValid } = useSession(true);
 
   async function checkSession() {
     if (router.asPath?.includes("login")) return;
-
-    const isValid = await authSession();
 
     if (!isValid) {
       router.replace("/javascript/dashboard/filter/recent");

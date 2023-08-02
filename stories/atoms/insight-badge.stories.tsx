@@ -2,7 +2,7 @@ import { ComponentStory } from "@storybook/react";
 import InsightsBadge from "components/atoms/InsightBadge/insight-badge";
 
 const storyConfig = {
-  title: "Design System/Atoms/InsightsBadge"
+  title: "Design System/Atoms/InsightsBadge",
 };
 
 export default storyConfig;

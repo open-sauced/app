@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import clsx from "clsx";
 import formatDistanceToNowStrict from "date-fns/formatDistanceToNowStrict";
@@ -57,37 +57,56 @@ const ContributorProfileTab = ({
 
   const { data: highlights, isError, isLoading, mutate, meta, setPage } = useFetchUserHighlights(login || "");
   const { data: emojis } = useFetchAllEmojis();
+  const [hasHighlights, setHasHighlights] = useState(true);
 
   const [inputVisible, setInputVisible] = useState(false);
   const pathnameRef = useRef<string | null>();
 
   const router = useRouter();
 
-  const hasHighlights = highlights?.length > 0;
   pathnameRef.current = router.pathname.split("/").at(-1);
 
-  const currentPathname =
-    pathnameRef.current !== "[username]" ? pathnameRef.current : hasHighlights ? "highlights" : "contributions";
+  const getCurrentPathName = useMemo(() => {
+    return pathnameRef.current && pathnameRef.current !== "[username]"
+      ? pathnameRef.current
+      : hasHighlights
+      ? "highlights"
+      : "contributions";
+  }, [hasHighlights]);
 
+  const [currentPathname, setCurrentPathname] = useState(getCurrentPathName);
   const handleTabUrl = (tab: string) => {
     router.push(`/user/${login}/${tab.toLowerCase()}`);
+    setCurrentPathname(tab.toLowerCase());
   };
 
   useEffect(() => {
     setInputVisible(highlights && highlights.length !== 0 ? true : false);
     if (login && currentPathname) {
+      setCurrentPathname(getCurrentPathName);
       router.push(`/user/${login}/${currentPathname}`);
+    }
+    if (login && !hasHighlights && currentPathname) {
+      setCurrentPathname(currentPathname);
+      router.push(`/user/${login}/${currentPathname}`);
+    }
+  }, [login, hasHighlights]);
+
+  useEffect(() => {
+    // sets the highlights state to true if the user has highlights on profile route change
+    if (highlights) {
+      setHasHighlights(highlights?.length > 0);
     }
   }, [highlights]);
 
   return (
-    <Tabs defaultValue={uppercaseFirst(currentPathname as string)} className="" onValueChange={handleTabUrl}>
+    <Tabs defaultValue={uppercaseFirst(currentPathname as string)} onValueChange={handleTabUrl}>
       <TabsList className="justify-start w-full overflow-x-auto border-b">
         {tabLinks.map((tab) => (
           <TabsTrigger
             key={tab}
             className={clsx(
-              "data-[state=active]:border-sauced-orange shrink-0 data-[state=active]:border-b-2 text-2xl",
+              "data-[state=active]:border-sauced-orange shrink-0 data-[state=active]:border-b-2 text-lg",
               tab === "Recommendations" &&
                 "font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#EA4600] to-[#EB9B00]",
               user?.user_metadata.user_name !== login && !hasHighlights && tab === "Highlights" && "hidden",
@@ -109,7 +128,7 @@ const ContributorProfileTab = ({
       {(user?.user_metadata.user_name === login || hasHighlights) && (
         <TabsContent value="Highlights">
           {inputVisible && user?.user_metadata.user_name === login && (
-            <div className="lg:pl-20 lg:gap-x-3 pt-4 flex max-w-[48rem]">
+            <div className="lg:pl-20 lg:gap-x-4 pt-4 flex max-w-[48rem]">
               <div className="hidden lg:inline-flex">
                 <Avatar
                   alt="user profile avatar"
@@ -144,7 +163,7 @@ const ContributorProfileTab = ({
                   {highlights.map(({ id, title, highlight, url, shipped_at, created_at }) => (
                     <div className="flex flex-col gap-2 mb-6 lg:flex-row lg:gap-7" key={id}>
                       <Link href={`/feed/${id}`}>
-                        <p className="text-sm text-light-slate-10">
+                        <p className="text-sm text-light-slate-10 w-28 max-w-28">
                           {formatDistanceToNowStrict(new Date(created_at), { addSuffix: true })}
                         </p>
                       </Link>
@@ -243,8 +262,8 @@ const ContributorProfileTab = ({
                 )}
               </div>
             </div>
-            <div className="h-32 mt-10">
-              <CardLineChart lineChartOption={chart} className="!h-32" />
+            <div className="mt-2 h-36">
+              <CardLineChart lineChartOption={chart} className="!h-36" />
             </div>
             <div>
               <CardRepoList limit={7} repoList={repoList} />

@@ -4,7 +4,7 @@ import Thumbnail from "../../img/hacktoberfest-icon.png";
 
 const storyConfig = {
   title: "Design System/Atoms/Context Thumbnail",
-  component: "ContextThumbnail"
+  component: "ContextThumbnail",
 };
 
 export default storyConfig;
@@ -17,5 +17,5 @@ export const Default = ContextThumbnailTemplate.bind({});
 Default.args = {
   ContextThumbnailURL: Thumbnail.src,
   alt: "Test",
-  size: 96
+  size: 96,
 };

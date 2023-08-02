@@ -2,7 +2,7 @@ import { ComponentStory } from "@storybook/react";
 import RepoCardProfile from "components/molecules/RepoCardProfile/repo-card-profile";
 
 const storyConfig = {
-  title: "Design System/Molecules/RepoCardProfile"
+  title: "Design System/Molecules/RepoCardProfile",
 };
 export default storyConfig;
 
@@ -16,5 +16,5 @@ Default.args = {
   orgName: "statelyai",
   repoName: "xstate",
   prCount: 56,
-  issueCount: 256
+  issueCount: 256,
 };

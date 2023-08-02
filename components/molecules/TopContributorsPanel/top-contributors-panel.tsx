@@ -7,7 +7,7 @@ interface TopContributorsPanelProps {
   loggedInUserLogin: string;
 }
 const TopContributorsPanel = ({ loggedInUserLogin }: TopContributorsPanelProps) => {
-  const { data, isLoading } = useFetchTopContributors();
+  const { data, isLoading } = useFetchTopContributors({ limit: 20 });
 
   const topContributorsWithoutLoggedInUser = data ? data.filter((user) => user.login !== loggedInUserLogin) : [];
   const top3Contributors = topContributorsWithoutLoggedInUser.slice(0, 3).map((user) => user.login);

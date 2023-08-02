@@ -3,7 +3,7 @@ import RepositoriesTable from "../../components/organisms/RepositoriesTable/repo
 
 const storyConfig = {
   title: "Design System/Molecules/Repositories Table",
-  component: "RepositoriesTable"
+  component: "RepositoriesTable",
 };
 
 export default storyConfig;
@@ -25,111 +25,111 @@ const previewRepositories = [
       closed: 3,
       draft: 8,
       churn: 40,
-      churnDirection: "up"
+      churnDirection: "up",
     },
     prVelocity: {
       amount: "2 mo",
       churn: "30%",
-      churnDirection: "up"
+      churnDirection: "up",
     },
     spam: {
       amount: "3 PRs",
       churn: "10%",
-      churnDirection: "up"
+      churnDirection: "up",
     },
     contributors: [
       {
         avatarURL: "",
         initials: "ES",
-        alt: "E"
+        alt: "E",
       },
       {
         avatarURL: "",
         initials: "ES",
-        alt: "E"
+        alt: "E",
       },
       {
         avatarURL: "",
         initials: "ES",
-        alt: "E"
-      }
+        alt: "E",
+      },
     ],
     last30days: [
       {
-        "id": "japan",
-        "color": "hsl(63, 70%, 50%)",
-        "data": [
+        id: "japan",
+        color: "hsl(63, 70%, 50%)",
+        data: [
           {
-            "x": "plane",
-            "y": 287
+            x: "plane",
+            y: 287,
           },
           {
-            "x": "helicopter",
-            "y": 183
+            x: "helicopter",
+            y: 183,
           },
           {
-            "x": "boat",
-            "y": 112
+            x: "boat",
+            y: 112,
           },
           {
-            "x": "train",
-            "y": 78
+            x: "train",
+            y: 78,
           },
           {
-            "x": "subway",
-            "y": 47
+            x: "subway",
+            y: 47,
           },
           {
-            "x": "bus",
-            "y": 218
+            x: "bus",
+            y: 218,
           },
           {
-            "x": "car",
-            "y": 106
+            x: "car",
+            y: 106,
           },
           {
-            "x": "moto",
-            "y": 190
+            x: "moto",
+            y: 190,
           },
           {
-            "x": "bicycle",
-            "y": 88
+            x: "bicycle",
+            y: 88,
           },
           {
-            "x": "horse",
-            "y": 8
+            x: "horse",
+            y: 8,
           },
           {
-            "x": "skateboard",
-            "y": 248
+            x: "skateboard",
+            y: 248,
           },
           {
-            "x": "others",
-            "y": 76
+            x: "others",
+            y: 76,
           },
           {
-            "x": "adwawd",
-            "y": 76
+            x: "adwawd",
+            y: 76,
           },
           {
-            "x": "awdawdd",
-            "y": 38
+            x: "awdawdd",
+            y: 38,
           },
           {
-            "x": "awd",
-            "y": 42
+            x: "awd",
+            y: 42,
           },
           {
-            "x": "adwadadw",
-            "y": 26
+            x: "adwadadw",
+            y: 26,
           },
           {
-            "x": "dadawda",
-            "y": 76
-          }
-        ]
-      }
-    ]
+            x: "dadawda",
+            y: 76,
+          },
+        ],
+      },
+    ],
   },
   {
     id: "2",
@@ -141,111 +141,111 @@ const previewRepositories = [
       closed: 0,
       draft: 1,
       churn: 100,
-      churnDirection: "down"
+      churnDirection: "down",
     },
     prVelocity: {
       amount: "2 mo",
       churn: "30%",
-      churnDirection: "up"
+      churnDirection: "up",
     },
     spam: {
       amount: "3 PRs",
       churn: "10%",
-      churnDirection: "up"
+      churnDirection: "up",
     },
     contributors: [
       {
         avatarURL: "",
         initials: "ES",
-        alt: "E"
+        alt: "E",
       },
       {
         avatarURL: "",
         initials: "ES",
-        alt: "E"
+        alt: "E",
       },
       {
         avatarURL: "",
         initials: "ES",
-        alt: "E"
-      }
+        alt: "E",
+      },
     ],
     last30days: [
       {
-        "id": "japan",
-        "color": "hsl(63, 70%, 50%)",
-        "data": [
+        id: "japan",
+        color: "hsl(63, 70%, 50%)",
+        data: [
           {
-            "x": "plane",
-            "y": 287
+            x: "plane",
+            y: 287,
           },
           {
-            "x": "helicopter",
-            "y": 183
+            x: "helicopter",
+            y: 183,
           },
           {
-            "x": "boat",
-            "y": 112
+            x: "boat",
+            y: 112,
           },
           {
-            "x": "train",
-            "y": 78
+            x: "train",
+            y: 78,
           },
           {
-            "x": "subway",
-            "y": 47
+            x: "subway",
+            y: 47,
           },
           {
-            "x": "bus",
-            "y": 218
+            x: "bus",
+            y: 218,
           },
           {
-            "x": "car",
-            "y": 106
+            x: "car",
+            y: 106,
           },
           {
-            "x": "moto",
-            "y": 190
+            x: "moto",
+            y: 190,
           },
           {
-            "x": "bicycle",
-            "y": 88
+            x: "bicycle",
+            y: 88,
           },
           {
-            "x": "horse",
-            "y": 8
+            x: "horse",
+            y: 8,
           },
           {
-            "x": "skateboard",
-            "y": 248
+            x: "skateboard",
+            y: 248,
           },
           {
-            "x": "others",
-            "y": 76
+            x: "others",
+            y: 76,
           },
           {
-            "x": "adwawd",
-            "y": 76
+            x: "adwawd",
+            y: 76,
           },
           {
-            "x": "awdawdd",
-            "y": 38
+            x: "awdawdd",
+            y: 38,
           },
           {
-            "x": "awd",
-            "y": 42
+            x: "awd",
+            y: 42,
           },
           {
-            "x": "adwadadw",
-            "y": 26
+            x: "adwadadw",
+            y: 26,
           },
           {
-            "x": "dadawda",
-            "y": 76
-          }
-        ]
-      }
-    ]
+            x: "dadawda",
+            y: 76,
+          },
+        ],
+      },
+    ],
   },
   {
     id: "3",
@@ -257,114 +257,114 @@ const previewRepositories = [
       closed: 4,
       draft: 0,
       churn: 20,
-      churnDirection: "up"
+      churnDirection: "up",
     },
     prVelocity: {
       amount: "2 mo",
       churn: "30%",
-      churnDirection: "up"
+      churnDirection: "up",
     },
     spam: {
       amount: "3 PRs",
       churn: "10%",
-      churnDirection: "up"
+      churnDirection: "up",
     },
     contributors: [
       {
         avatarURL: "",
         initials: "ES",
-        alt: "E"
+        alt: "E",
       },
       {
         avatarURL: "",
         initials: "ES",
-        alt: "E"
+        alt: "E",
       },
       {
         avatarURL: "",
         initials: "ES",
-        alt: "E"
-      }
+        alt: "E",
+      },
     ],
     last30days: [
       {
-        "id": "japan",
-        "color": "hsl(63, 70%, 50%)",
-        "data": [
+        id: "japan",
+        color: "hsl(63, 70%, 50%)",
+        data: [
           {
-            "x": "plane",
-            "y": 287
+            x: "plane",
+            y: 287,
           },
           {
-            "x": "helicopter",
-            "y": 183
+            x: "helicopter",
+            y: 183,
           },
           {
-            "x": "boat",
-            "y": 112
+            x: "boat",
+            y: 112,
           },
           {
-            "x": "train",
-            "y": 78
+            x: "train",
+            y: 78,
           },
           {
-            "x": "subway",
-            "y": 47
+            x: "subway",
+            y: 47,
           },
           {
-            "x": "bus",
-            "y": 218
+            x: "bus",
+            y: 218,
           },
           {
-            "x": "car",
-            "y": 106
+            x: "car",
+            y: 106,
           },
           {
-            "x": "moto",
-            "y": 190
+            x: "moto",
+            y: 190,
           },
           {
-            "x": "bicycle",
-            "y": 88
+            x: "bicycle",
+            y: 88,
           },
           {
-            "x": "horse",
-            "y": 8
+            x: "horse",
+            y: 8,
           },
           {
-            "x": "skateboard",
-            "y": 248
+            x: "skateboard",
+            y: 248,
           },
           {
-            "x": "others",
-            "y": 76
+            x: "others",
+            y: 76,
           },
           {
-            "x": "adwawd",
-            "y": 76
+            x: "adwawd",
+            y: 76,
           },
           {
-            "x": "awdawdd",
-            "y": 38
+            x: "awdawdd",
+            y: 38,
           },
           {
-            "x": "awd",
-            "y": 42
+            x: "awd",
+            y: 42,
           },
           {
-            "x": "adwadadw",
-            "y": 26
+            x: "adwadadw",
+            y: 26,
           },
           {
-            "x": "dadawda",
-            "y": 76
-          }
-        ]
-      }
-    ]
-  }
+            x: "dadawda",
+            y: 76,
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 Default.args = {
-  listOfRepositories: previewRepositories
+  listOfRepositories: previewRepositories,
 };

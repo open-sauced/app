@@ -2,7 +2,7 @@ import { ComponentStory } from "@storybook/react";
 import LanguagePill from "components/atoms/LanguagePill/LanguagePill";
 
 const Storyconfig = {
-  title: "Design System/Atoms/LanguagePill"
+  title: "Design System/Atoms/LanguagePill",
 };
 export default Storyconfig;
 
@@ -12,11 +12,11 @@ export const LanguagePillDefault = LanguagePillTemplate.bind({});
 export const LanguagePillSelected = LanguagePillTemplate.bind({});
 
 LanguagePillDefault.args = {
-  topic: "javascript"
+  topic: "javascript",
 };
 
 LanguagePillSelected.args = {
   topic: "python",
 
-  classNames: "bg-light-orange-10 text-white"
+  classNames: "bg-light-orange-10 text-white",
 };

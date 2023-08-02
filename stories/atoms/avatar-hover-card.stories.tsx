@@ -3,7 +3,7 @@ import { ComponentStory } from "@storybook/react";
 import AvatarHoverCard from "components/atoms/Avatar/avatar-hover-card";
 
 const storyConfig = {
-  title: "Design System/Atoms/AvatarHoverCard"
+  title: "Design System/Atoms/AvatarHoverCard",
 };
 
 export default storyConfig;
@@ -20,5 +20,5 @@ export const AvatarHoverCardStory = AvatarTemplate.bind({});
 
 AvatarHoverCardStory.args = {
   contributor: "bdougie",
-  repositories: []
+  repositories: [],
 };

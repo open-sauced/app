@@ -20,6 +20,7 @@ import { supabase } from "lib/utils/supabase";
 
 import SEO from "layouts/SEO/SEO";
 import { Toaster } from "components/molecules/Toaster/toaster";
+import { useMediaQuery } from "lib/hooks/useMediaQuery";
 import useSession from "lib/hooks/useSession";
 import PrivateWrapper from "layouts/private-wrapper";
 
@@ -49,6 +50,7 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
   useSession(true);
   const router = useRouter();
   const [seo, updateSEO] = useState<SEOobject>(Component.SEO || {});
+  const isMobile = useMediaQuery("(max-width: 640px)");
   Component.updateSEO = updateSEO;
   const [supabaseClient] = useState(() => supabase);
 
@@ -63,6 +65,9 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
       chatButton = document.getElementById("sitegpt-chat-icon");
       if (chatButton) {
         if (hostname !== "insights.opensauced.pizza") {
+          chatButton.style.display = "none";
+        }
+        if (router.asPath === "/feed" && isMobile) {
           chatButton.style.display = "none";
         } else {
           chatButton.style.display = "block";

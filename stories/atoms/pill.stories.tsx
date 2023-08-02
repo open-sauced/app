@@ -9,13 +9,13 @@ const storyConfig = {
   argTypes: {
     color: {
       options: ["slate", "green", "yellow", "red"],
-      control: { type: "select" }
+      control: { type: "select" },
     },
     size: {
       options: ["base", "small"],
-      control: { type: "select" }
-    }
-  }
+      control: { type: "select" },
+    },
+  },
 };
 
 export default storyConfig;

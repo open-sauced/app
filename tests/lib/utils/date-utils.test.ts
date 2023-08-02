@@ -1,8 +1,12 @@
-import { calcDaysFromToday, calcDistanceFromToday, calcMonthsFromToday, calcYearsFromToday, getRelativeDays } from "lib/utils/date-utils";
-
+import {
+  calcDaysFromToday,
+  calcDistanceFromToday,
+  calcMonthsFromToday,
+  calcYearsFromToday,
+  getRelativeDays,
+} from "lib/utils/date-utils";
 
 describe("[lib] date-utils methods", () => {
-
   // from lib\utils\date-utils.ts
 
   // calcDaysfromToday
@@ -34,7 +38,6 @@ describe("[lib] date-utils methods", () => {
 
   // getRelativeDays
   it("getRelativeDays() Should properly produce formats depending on the number of days", () => {
-
     let days = 0;
     let result = getRelativeDays(days);
     expect(result).toEqual("-");
@@ -78,7 +81,5 @@ describe("[lib] date-utils methods", () => {
     date5.setDate(new Date().getDate() - 65);
     const result5 = calcDistanceFromToday(date5);
     expect(result5).toEqual("2mo");
-
   });
-
 });

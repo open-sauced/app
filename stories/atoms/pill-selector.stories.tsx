@@ -3,7 +3,7 @@ import PillSelector from "../../components/atoms/PillSelector/pill-selector";
 
 const storyConfig = {
   title: "Design System/Atoms/PillSelector",
-  component: "PillSelector"
+  component: "PillSelector",
 };
 
 const filterOptions = ["Top 1k Repos", "Minimum 5 Contributors", "1k Stars", "Most Active", "Most Spammed"];

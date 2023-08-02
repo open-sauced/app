@@ -3,7 +3,7 @@ import Title from "../../components/atoms/Typography/title";
 
 const storyConfig = {
   title: "Design System/Atoms/Title",
-  component: "Title"
+  component: "Title",
 };
 
 export default storyConfig;
@@ -15,5 +15,5 @@ export const Default = TitleTemplate.bind({});
 
 Default.args = {
   children: "Test",
-  level: 1
+  level: 1,
 };

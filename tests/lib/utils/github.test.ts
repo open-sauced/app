@@ -3,7 +3,7 @@ import {
   getAvatarByUsername,
   getProfileLink,
   getRepoIssuesLink,
-  generateGhOgImage
+  generateGhOgImage,
 } from "lib/utils/github";
 
 describe("[lib] github methods", () => {

@@ -1,5 +1,5 @@
 export const siteUrl = (path: string = "") => {
-  let url = process.env.NEXT_PUBLIC_BASE_URL || "/";
+  let url = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000/";
   // Make sure to include `https://` when not localhost.
   url = url.includes("http") ? url : `https://${url}`;
   // Make sure to including trailing `/`.
@@ -19,7 +19,7 @@ export const siteUrl = (path: string = "") => {
  */
 export const cardPageUrl = (username: string) => siteUrl(`user/${username}/card`);
 
-export const cardImageUrl = (username: string) => siteUrl(`api/card.png?username=${username}`);
+export const cardImageUrl = (username: string) => siteUrl(`api/user/${username}/card.png`);
 
 export const twitterCardShareUrl = (username: string) => {
   const url = new URL("https://twitter.com/intent/tweet");

@@ -3,7 +3,7 @@ import TeamMembersConfig from "components/molecules/TeamMembersConfig/team-membe
 
 const storyConfig = {
   title: "Design System/Molecules/Team Members Config",
-  component: "TeamMembersConfig"
+  component: "TeamMembersConfig",
 };
 
 export default storyConfig;
@@ -20,21 +20,21 @@ Default.args = {
       avatarUrl: "https://avatars.githubusercontent.com/u/7252105?v=4",
       access: "admin",
       id: "3",
-      insight_id: 3
+      insight_id: 3,
     },
     {
       name: "John Cena",
       avatarUrl: "https://avatars.githubusercontent.com/u/7252105?v=4",
       access: "edit",
       id: "4",
-      insight_id: 4
+      insight_id: 4,
     },
     {
       name: "John Wick",
       avatarUrl: "https://avatars.githubusercontent.com/u/7252105?v=4",
       access: "view",
       id: "5",
-      insight_id: 5
-    }
-  ]
+      insight_id: 5,
+    },
+  ],
 };

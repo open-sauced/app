@@ -3,7 +3,7 @@ import FilterCardSelect from "components/molecules/FilterCardSelect/filter-card-
 
 const storyConfig = {
   title: "Design System/Molecules/FilterCardSelect",
-  component: "FilterCardSelect"
+  component: "FilterCardSelect",
 };
 
 export default storyConfig;
@@ -15,5 +15,5 @@ export const Default = SelectTemplate.bind({});
 
 Default.args = {
   options: ["option1", "option2", "option3"],
-  selected: "option1"
+  selected: "option1",
 };

@@ -3,16 +3,18 @@ import TableRepositoryName from "components/molecules/TableRepositoryName/table-
 
 const storyConfig = {
   title: "Design System/Molecules/Table Repository Name",
-  component: "TableRepositoryName"
+  component: "TableRepositoryName",
 };
 
 export default storyConfig;
 
 //TableRepositoryName Template
-const TableRepositoryNameTemplate: ComponentStory<typeof TableRepositoryName> = (args) => <TableRepositoryName {...args} />;
+const TableRepositoryNameTemplate: ComponentStory<typeof TableRepositoryName> = (args) => (
+  <TableRepositoryName {...args} />
+);
 
 export const Default = TableRepositoryNameTemplate.bind({});
 
 Default.args = {
-  fullName: "open-sauced/insights"
+  fullName: "open-sauced/insights",
 };

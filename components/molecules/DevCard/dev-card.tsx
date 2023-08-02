@@ -27,6 +27,7 @@ export interface DevCardProps {
   isLoading?: boolean;
   isFlipped?: boolean;
   isInteractive?: boolean;
+  hideProfileButton?: boolean;
   age?: number;
   onFlip?: () => void;
 }
@@ -50,6 +51,9 @@ export default function DevCard(props: DevCardProps) {
   const profileHref = `/user/${props.username}`;
 
   function handleCardClick(event: React.MouseEvent<HTMLElement, MouseEvent>) {
+    if (!isInteractive) {
+      return;
+    }
     // flip the card if the click is not on the button
     if (!(event.target instanceof HTMLAnchorElement || event.target instanceof HTMLButtonElement)) {
       if (props.isFlipped === undefined) {
@@ -85,11 +89,10 @@ export default function DevCard(props: DevCardProps) {
 
   return (
     <div
-      className="DevCard rounded-3x"
+      className="DevCard"
       style={{
         width: "245px",
         height: "348px",
-        boxShadow: "0px 0px 20px -12px rgba(0, 0, 0, 0.25)",
       }}
     >
       <Tilt
@@ -98,8 +101,9 @@ export default function DevCard(props: DevCardProps) {
         trackOnWindow={isInteractive}
         glareBorderRadius="1.5rem"
         flipHorizontally={isFlipped}
-        className={clsx("DevCard-card", "relative", "rounded-3x", "w-full", "h-full")}
+        className={clsx("DevCard-card", "relative", "rounded-3xl", "w-full", "h-full", "border", "border-gray-400")}
         style={{
+          boxShadow: "0px 0px 20px -12px rgba(0, 0, 0, 0.25)",
           transformStyle: "preserve-3d",
         }}
       >
@@ -232,11 +236,13 @@ export default function DevCard(props: DevCardProps) {
             </div>
             {/* bottom */}
             <div className="px-2 mt-auto justify-self-end">
-              <Link href={profileHref} passHref>
-                <Button variant="primary" className="w-full text-center justify-center mt-4 !py-1">
-                  View Profile
-                </Button>
-              </Link>
+              {!props.hideProfileButton && (
+                <Link href={profileHref} passHref>
+                  <Button variant="primary" className="w-full text-center justify-center mt-4 !py-1">
+                    View Profile
+                  </Button>
+                </Link>
+              )}
               <div className="flex justify-center mt-2">
                 <Image className="rounded" alt="Open Sauced Logo" width={13} height={13} src={openSaucedImg} />
                 <p className={"font-semibold text-white ml-1"} style={{ fontSize: "8px" }}>

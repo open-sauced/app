@@ -1,7 +1,6 @@
 import { validateTwitterUsername } from "lib/utils/validate-twitter-username";
 
 describe("[lib] validateTwitterUsername()", () => {
-
   it("Should return true if string is a valid", () => {
     const testString = "username_valid";
     const result = validateTwitterUsername(testString);

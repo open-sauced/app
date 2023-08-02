@@ -3,14 +3,14 @@ import PullRequestOverview from "components/molecules/PullRequestOverview/pull-r
 
 const storyConfig = {
   title: "Design System/Molecules/Pull Request Overview",
-  component: "PullRequestOverview"
+  component: "PullRequestOverview",
 };
 
 export default storyConfig;
 
 //PullRequestOverview Template
 const PullRequestOverviewTemplate: ComponentStory<typeof PullRequestOverview> = (args) => (
-  <div style={{width: "8rem"}}>
+  <div style={{ width: "8rem" }}>
     <PullRequestOverview {...args} />
   </div>
 );
@@ -23,5 +23,5 @@ Default.args = {
   closed: 0,
   draft: 3,
   churn: 20,
-  churnDirection: "up"
+  churnDirection: "up",
 };

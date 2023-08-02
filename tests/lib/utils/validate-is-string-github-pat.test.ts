@@ -1,7 +1,6 @@
 import validateIsStringGitHubPAT from "lib/utils/validate-is-string-github-pat";
 
 describe("[lib] validateGitHubPAT()", () => {
-
   it("Should return true if string looks like a GitHub Personal Access Token", () => {
     const testString = "ghp_TestStringas09Dsaasdfaljm0d32dasdfas";
     const result = validateIsStringGitHubPAT(testString);

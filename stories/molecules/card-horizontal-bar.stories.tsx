@@ -3,7 +3,7 @@ import { TooltipProvider } from "@radix-ui/react-tooltip";
 import CardHorizontalBarChart from "components/molecules/CardHorizontalBarChart/card-horizontal-bar-chart";
 const storyConfig = {
   title: "Design System/Molecules/Card Horizontal Bar",
-  component: "CardHorizontalBar"
+  component: "CardHorizontalBar",
 };
 
 export default storyConfig;
@@ -11,17 +11,17 @@ export default storyConfig;
 export const testLanguageList = [
   {
     languageName: "TypeScript",
-    percentageUsed: 50
+    percentageUsed: 50,
   },
   {
     languageName: "JavaScript",
-    percentageUsed: 20
+    percentageUsed: 20,
   },
   {
     languageName: "Rust",
-    percentageUsed: 15
+    percentageUsed: 15,
   },
-  { languageName: "React", percentageUsed: 15 }
+  { languageName: "React", percentageUsed: 15 },
 ];
 
 //CardHorizontalBarChart Template
@@ -37,15 +37,15 @@ OneLanguage.args = {
   languageList: [
     {
       languageName: "JavaScript",
-      percentageUsed: 100
-    }
-  ]
+      percentageUsed: 100,
+    },
+  ],
 };
 
 export const MultipleLanguages = CardHorizontalBarTemplate.bind({});
 
 MultipleLanguages.args = {
-  languageList: testLanguageList
+  languageList: testLanguageList,
 };
 export const notSupportedLanguage = CardHorizontalBarTemplate.bind({});
 
@@ -53,7 +53,7 @@ notSupportedLanguage.args = {
   languageList: [
     {
       languageName: "qBasic",
-      percentageUsed: 100
-    }
-  ]
+      percentageUsed: 100,
+    },
+  ],
 };
