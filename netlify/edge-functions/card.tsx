@@ -1,33 +1,21 @@
-//@ts-ignore
+// @ts-ignore
 import React from "https://esm.sh/react@18.2.0";
-//@ts-ignore
-import { ImageResponse } from "https://deno.land/x/og_edge@0.0.2/mod.ts";
-//@ts-ignore
+// @ts-ignore
+import { ImageResponse } from "https://deno.land/x/og_edge/mod.ts";
+// @ts-ignore
 import type { Config } from "https://edge.netlify.com";
-
-/**
- * @params {string} username - username for the requested user
- * @params {number} w - Width of the card
- */
 
 const ASPECT_RATIO = 245 / 348;
 const BASE_WIDTH = 245;
 const DEFAULT_WIDTH = 735;
 const MAX_WIDTH = 1960;
 
-// Make sure the font exists in the specified path:
-const logoImg = fetch(new URL("../../img/openSauced-icon.png", import.meta.url)).then((res) => res.arrayBuffer());
-const interSemiBoldFont = fetch(new URL("../../font/Inter-SemiBold.ttf", import.meta.url)).then((res) =>
-  res.arrayBuffer()
-);
-const interBlackFont = fetch(new URL("../../font/Inter-Black.ttf", import.meta.url)).then((res) => res.arrayBuffer());
-
 export const config: Config = {
-  path: "/api/card.png",
+  path: "/api/card",
 };
 
-export default async function handler(request: Request) {
-  const { searchParams } = new URL(request.url);
+export default async function handler(req: Request) {
+  const { searchParams } = new URL(req.url);
   const username = searchParams.get("username");
 
   if (!username) {
@@ -46,18 +34,27 @@ export default async function handler(request: Request) {
 
   const bufferSize = size(50);
 
-  const [interSemiBoldFontData, interBlackFontData, logoImgData] = await Promise.all([
+  const BASE_URL = Netlify.env.get("URL") ?? `http://localhost:3000/`;
+
+  function getLocalAsset(path: string): Promise<ArrayBuffer> {
+    return fetch(new URL(`/assets/card/${path}`, BASE_URL)).then((res) => res.arrayBuffer());
+  }
+
+  // // Make sure the font exists in the specified path:
+  const logoImg = getLocalAsset("/logo.png");
+  const interSemiBoldFont = getLocalAsset("/Inter-SemiBold.ttf");
+  const interBlackFont = getLocalAsset("/Inter-Black.ttf");
+
+  const [interSemiBoldFontData, interBlackFontData, logoImgData, prReq] = await Promise.all([
     interSemiBoldFont,
     interBlackFont,
     logoImg,
-    // fetchContributorPRs(username, undefined, "*", [], 100),
+    fetchContributorPRs(username),
   ]);
 
-  // const { data: prData } = prReq;
-  // const prs = prData.length;
-  // const repos = getRepoList(Array.from(new Set(prData.map((prData) => prData.full_name))).join(",")).length;
-  const prs = 42;
-  const repos = 42;
+  const { data: prData } = prReq;
+  const prs = prData.length;
+  const repos = getRepoList(Array.from(new Set(prData.map((prData: any) => prData.full_name))).join(",")).length;
 
   return new ImageResponse(
     (
@@ -123,7 +120,13 @@ export default async function handler(request: Request) {
               </div>
               <div
                 tw="flex flex-col relative justify-end items-center text-white"
-                style={{ height: "50%", flexShrink: 0, flexGrow: 1, paddingTop: size(40), paddingBottom: size(18) }}
+                style={{
+                  height: "50%",
+                  flexShrink: 0,
+                  flexGrow: 1,
+                  paddingTop: size(40),
+                  paddingBottom: size(18),
+                }}
               >
                 <div style={{ fontSize: size(14), marginBottom: size(12), fontWeight: 700 }}>{`@${username}`}</div>
                 <div tw="flex w-full justify-around">
@@ -140,7 +143,6 @@ export default async function handler(request: Request) {
                       {repos}
                     </div>
                     <div tw="flex" style={{ fontSize: size(12) }}>
-                      {/* @ts-ignore */}
                       {repos === 1 ? "Repo" : "Repos"}
                     </div>
                   </div>
@@ -201,6 +203,43 @@ export default async function handler(request: Request) {
       ],
     }
   );
+}
+
+function getRepoList(repos: string) {
+  return repos
+    .split(",")
+    .filter((rpo) => !!rpo)
+    .map((repo) => {
+      const [repoOwner, repoName] = repo.split("/");
+
+      return {
+        repoName,
+        repoIcon: `https://www.github.com/${repoOwner ?? "github"}.png?size=460`,
+      };
+    });
+}
+
+const getAvatarByUsername = (username: string | null, size = 460) =>
+  `https://www.github.com/${username ?? "github"}.png?size=${size}`;
+
+async function fetchContributorPRs(username: string) {
+  const query = new URLSearchParams();
+
+  query.set("topic", "*");
+  query.set("limit", "100");
+  query.set("range", "30");
+
+  const baseEndpoint = `users/${username}/prs`;
+  const endpointString = `${baseEndpoint}?${query.toString()}`;
+  const url = `https://beta.api.opensauced.pizza/v1/${endpointString}`;
+
+  const res = await fetch(url, {
+    headers: {
+      accept: "application/json",
+    },
+  });
+
+  return res.json();
 }
 
 const CardSauceBG = ({ ...props }) => (
@@ -358,20 +397,3 @@ const CardSauceBG = ({ ...props }) => (
     </defs>
   </svg>
 );
-
-function getRepoList(repos: string) {
-  return repos
-    .split(",")
-    .filter((rpo) => !!rpo)
-    .map((repo) => {
-      const [repoOwner, repoName] = repo.split("/");
-
-      return {
-        repoName,
-        repoIcon: `https://www.github.com/${repoOwner ?? "github"}.png?size=460`,
-      };
-    });
-}
-
-const getAvatarByUsername = (username: string | null, size = 460) =>
-  `https://www.github.com/${username ?? "github"}.png?size=${size}`;

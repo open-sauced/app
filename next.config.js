@@ -1,8 +1,5 @@
 /** @type {import('next').NextConfig} */
 module.exports = {
-  experimental: {
-    runtime: "experimental-edge",
-  },
   reactStrictMode: true,
   images: {
     domains: [
@@ -10,11 +7,10 @@ module.exports = {
       "images.unsplash.com",
       "www.github.com",
       "github.com",
-      "res.cloudinary.com"
-    ]
-  }
+      "res.cloudinary.com",
+    ],
+  },
 };
-
 
 // Injected content via Sentry wizard below
 

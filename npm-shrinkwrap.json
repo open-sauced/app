@@ -73,7 +73,7 @@
       "devDependencies": {
         "@babel/core": "^7.20.12",
         "@netlify/esbuild": "0.14.39",
-        "@netlify/plugin-nextjs": "^4.38.1",
+        "@netlify/plugin-nextjs": "^4.39.2",
         "@open-sauced/check-engines": "^1.2.0",
         "@open-sauced/conventional-commit": "^1.0.1",
         "@playwright/test": "^1.30.0",
@@ -4883,9 +4883,9 @@
       }
     },
     "node_modules/@netlify/plugin-nextjs": {
-      "version": "4.38.1",
-      "resolved": "https://registry.npmjs.org/@netlify/plugin-nextjs/-/plugin-nextjs-4.38.1.tgz",
-      "integrity": "sha512-59iDg+zQzj9PZOVEGiEhCD84AdTXtWC6C8SQylBPfGMJ7xVYIVXdulNUpSy9F7NXhjDeM1y9IPyTKKan6D5QIA==",
+      "version": "4.39.2",
+      "resolved": "https://registry.npmjs.org/@netlify/plugin-nextjs/-/plugin-nextjs-4.39.2.tgz",
+      "integrity": "sha512-8ZqZpBZeXX0zaSuLkrSjoh2ry6BFlXIiCEYgEMRyBBwgex2v5qR28OI/YTS9F+8aJXIShh530lHUD8Grzn0sFQ==",
       "dev": true,
       "dependencies": {
         "@netlify/esbuild": "0.14.39",
@@ -4905,7 +4905,7 @@
         "node-stream-zip": "^1.15.0",
         "outdent": "^0.8.0",
         "p-limit": "^3.1.0",
-        "pathe": "^0.2.0",
+        "pathe": "^0.3.0",
         "pretty-bytes": "^5.6.0",
         "regexp-tree": "^0.1.24",
         "semver": "^7.3.5",
@@ -30786,9 +30786,9 @@
       }
     },
     "node_modules/pathe": {
-      "version": "0.2.0",
-      "resolved": "https://registry.npmjs.org/pathe/-/pathe-0.2.0.tgz",
-      "integrity": "sha512-sTitTPYnn23esFR3RlqYBWn4c45WGeLcsKzQiUpXJAyfcWkolvlYpV8FLo7JishK946oQwMFUCHXQ9AjGPKExw==",
+      "version": "0.3.9",
+      "resolved": "https://registry.npmjs.org/pathe/-/pathe-0.3.9.tgz",
+      "integrity": "sha512-6Y6s0vT112P3jD8dGfuS6r+lpa0qqNrLyHPOwvXMnyNTQaYiwgau2DP3aNDsR13xqtGj7rrPo+jFUATpU6/s+g==",
       "dev": true
     },
     "node_modules/pbkdf2": {
