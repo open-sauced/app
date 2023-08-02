@@ -25,7 +25,7 @@ const HighlightsFilterCard = ({ repos, setSelected, selectedFilter }: Highlights
 
   return (
     <div className="py-4 px-6 rounded-lg bg-light-slate-1  border w-[18.625rem] h-max">
-      <Title className="!font-normal" level={3}>
+      <Title className="!font-normal !text-lg" level={3}>
         Repositories
       </Title>
       <p className="mb-2 text-sm font-normal text-light-slate-11">Click to filter the highlights</p>
