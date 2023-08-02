@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -37,6 +38,7 @@ type highlightReposType = { repoName: string; repoIcon: string; full_name: strin
 
 interface HighlightSSRProps {
   highlight: DbHighlight | null;
+  referer: string;
 }
 
 const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
