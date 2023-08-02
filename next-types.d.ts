@@ -155,6 +155,7 @@ interface DbUser {
   readonly is_waitlisted: boolean;
   readonly role: number;
   readonly bio: string;
+  readonly url: string;
   readonly twitter_username: string;
   readonly company: string;
   readonly location: string;

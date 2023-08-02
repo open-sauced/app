@@ -18,7 +18,6 @@ import Text from "components/atoms/Typography/text";
 import GitHubIcon from "img/icons/github-icon.svg";
 import Icon from "components/atoms/Icon/icon";
 import NotificationCard from "components/atoms/NotificationsCard/notification-card";
-import { authSession } from "lib/hooks/authSession";
 import { Spinner } from "components/atoms/SpinLoader/spin-loader";
 import { Popover, PopoverContent, PopoverTrigger } from "../Popover/popover";
 import DropdownList from "../DropdownList/dropdown-list";
@@ -32,7 +31,7 @@ const AuthSection: React.FC = ({}) => {
   const currentPath = router.asPath;
 
   const { signIn, signOut, user, sessionToken } = useSupabaseAuth();
-  const { onboarded } = useSession();
+  const { onboarded, session } = useSession(true);
   const [notifications, setNotifications] = useState<DbUserNotification[]>([]);
   const [loading, setLoading] = useState(false);
   const [userInfo, setUserInfo] = useState<DbUser | undefined>(undefined);
@@ -65,9 +64,8 @@ const AuthSection: React.FC = ({}) => {
 
   useEffect(() => {
     const getUser = async () => {
-      const response = await authSession();
-      if (response !== false && !userInfo) {
-        setUserInfo(response);
+      if (session && !userInfo) {
+        setUserInfo(session);
       }
     };
 
@@ -141,12 +139,12 @@ const AuthSection: React.FC = ({}) => {
               }}
             >
               <PopoverTrigger onClick={async () => await fetchNotifications()} asChild>
-                <div className="relative cursor-pointer">
+                <button className="relative cursor-pointer">
                   {userInfo && userInfo.notification_count > 0 && (
                     <span className="absolute right-0 block w-2 h-2 bg-orange-300 rounded-full"></span>
                   )}
                   <IoNotifications className="text-xl text-light-slate-9" />
-                </div>
+                </button>
               </PopoverTrigger>
               <PopoverContent align="end" className="bg-white !rounded-xl p-1  ">
                 {loading ? (
