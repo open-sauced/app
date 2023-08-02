@@ -22,7 +22,7 @@ const Home: WithPageLayout = () => {
     async function getAccess() {
       const currentUser = await supabase.auth.getSession();
       if (!currentUser?.data?.session) {
-        redirect("/javascript");
+        redirect("/feed");
       }
 
       if (onboarded === undefined) {
@@ -32,7 +32,7 @@ const Home: WithPageLayout = () => {
       if (currentUser?.data?.session && onboarded === true) {
         redirect("/hub/insights");
       } else {
-        redirect("/javascript");
+        redirect("/feed");
       }
     }
 
