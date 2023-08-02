@@ -5,6 +5,14 @@ import { ImageResponse } from "https://deno.land/x/og_edge/mod.ts";
 // @ts-ignore
 import type { Config } from "https://edge.netlify.com";
 
+declare global {
+  var Netlify: {
+    env: {
+      get: (name: string) => string;
+    };
+  };
+}
+
 const ASPECT_RATIO = 245 / 348;
 const BASE_WIDTH = 245;
 const DEFAULT_WIDTH = 735;
