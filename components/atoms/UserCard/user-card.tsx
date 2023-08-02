@@ -1,5 +1,6 @@
 import Image from "next/image";
 import React from "react";
+import Link from "next/link";
 import { getAvatarByUsername } from "lib/utils/github";
 import { Spinner } from "../SpinLoader/spin-loader";
 
@@ -34,7 +35,7 @@ const UserCard = ({ username, name, meta, loading }: UserCardProps) => {
             />
             <div className="text-center">
               <h3>{name}</h3>
-              <a className="text-light-slate-9" href={`/user/${username}`}>{`@${username}`}</a>
+              <Link className="text-light-slate-9" href={`/user/${username}`}>{`@${username}`}</Link>
             </div>
           </div>
           <div className="flex items-center gap-5 text-base text-center ">
