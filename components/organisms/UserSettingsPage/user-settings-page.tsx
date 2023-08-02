@@ -374,7 +374,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
             </Button>
           </div>
           {!hasReports && (
-            <div className="flex flex-col order-first gap-6 md:order-last">
+            <div className="flex flex-col gap-6 order-first md:order-last">
               <div className="flex flex-col gap-3">
                 <label className="text-2xl font-normal text-light-slate-11">Upgrade Access</label>
                 <div className="w-full sm:max-w-80">
