@@ -5,6 +5,7 @@ import Link from "next/link";
 import formatDistanceToNowStrict from "date-fns/formatDistanceToNowStrict";
 import clsx from "clsx";
 
+import { AiOutlineClose } from "react-icons/ai";
 import TopContributorsPanel from "components/molecules/TopContributorsPanel/top-contributors-panel";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { useFetchAllHighlights } from "lib/hooks/useFetchAllHighlights";
@@ -20,6 +21,7 @@ import SEO from "layouts/SEO/SEO";
 
 import { Dialog, DialogCloseButton, DialogContent } from "components/molecules/Dialog/dialog";
 import Avatar from "components/atoms/Avatar/avatar";
+import Button from "components/atoms/Button/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "components/atoms/Tabs/tabs";
 import ContributorHighlightCard from "components/molecules/ContributorHighlight/contributor-highlight-card";
 import HighlightInputForm from "components/molecules/HighlightInput/highlight-input-form";
@@ -180,7 +182,18 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
                         addSuffix: true,
                       })}
                     </span>
-                    <DialogCloseButton onClick={() => router.push("/feed")} />
+                    {props.referer !== null && !props.referer.includes("/feed") ? (
+                      <Button
+                        variant="text"
+                        onClick={() => router.back()}
+                        className="!p-0 !border-0 absolute top-4 right-4 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-slate-100"
+                      >
+                        <AiOutlineClose size={20} />
+                        <span className="sr-only">Close</span>
+                      </Button>
+                    ) : (
+                      <DialogCloseButton onClick={() => router.replace("/feed")} />
+                    )}
                   </div>
 
                   <div className="w-full px-2 py-6 border bg-light-slate-1 md:px-6 lg:px-12 rounded-xl">
