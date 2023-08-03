@@ -5,6 +5,18 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.58.0-beta.5](https://github.com/open-sauced/insights/compare/v1.58.0-beta.4...v1.58.0-beta.5) (2023-08-02)
+
+
+### 🍕 Features
+
+* update redirect to feed page for unauthenticated users ([#1464](https://github.com/open-sauced/insights/issues/1464)) ([6d8505f](https://github.com/open-sauced/insights/commit/6d8505facf6d12c49714ec94b8790e5c13313e77))
+
+
+### 🐛 Bug Fixes
+
+* add checkbox id name if not available based on label ([#1466](https://github.com/open-sauced/insights/issues/1466)) ([68f66a7](https://github.com/open-sauced/insights/commit/68f66a70bef124ceecb3f2ee0952b366e208578b))
+
 ## [1.58.0-beta.4](https://github.com/open-sauced/insights/compare/v1.58.0-beta.3...v1.58.0-beta.4) (2023-08-01)
 
 
