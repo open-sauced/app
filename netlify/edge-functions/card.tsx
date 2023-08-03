@@ -5,14 +5,6 @@ import { ImageResponse } from "https://deno.land/x/og_edge/mod.ts";
 // @ts-ignore
 import type { Config } from "https://edge.netlify.com";
 
-declare global {
-  var Netlify: {
-    env: {
-      get: (name: string) => string;
-    };
-  };
-}
-
 const ASPECT_RATIO = 245 / 348;
 const BASE_WIDTH = 245;
 const DEFAULT_WIDTH = 735;
@@ -42,7 +34,14 @@ export default async function handler(req: Request) {
 
   const bufferSize = size(50);
 
-  const BASE_URL = Netlify.env.get("URL") ?? `http://localhost:3000/`;
+  // get the origin from the request
+  let BASE_URL = new URL(req.url).origin;
+  if (BASE_URL.includes("localhost")) {
+    // It sucks that we have to do this but I'm not sure how else to get this working in local dev.
+    // The functions are running at localhost:8888 but the frontend is running at localhost:3000
+    // This will definitely break if you're running the frontend on a different port.
+    BASE_URL = "http://localhost:3000/";
+  }
 
   function getLocalAsset(path: string): Promise<ArrayBuffer> {
     return fetch(new URL(`/assets/card/${path}`, BASE_URL)).then((res) => res.arrayBuffer());
