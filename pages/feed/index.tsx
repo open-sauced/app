@@ -158,9 +158,13 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
           <Dialog
             open={openSingleHighlight}
             onOpenChange={(open) => {
-              if (!open) {
-                setOpenSingleHighlight(false);
-                router.push("/feed");
+              if (openSingleHighlight && !open) {
+                if (props.referer !== null && !props.referer.includes("/feed")) {
+                  router.back();
+                } else {
+                  setOpenSingleHighlight(false);
+                  router.replace("/feed");
+                }
               }
             }}
           >
