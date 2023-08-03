@@ -93,7 +93,6 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
 
   useEffect(() => {
     if (singleHighlight && !openSingleHighlight) {
-      router.push(`/feed/${props.highlight?.id}`);
       setOpenSingleHighlight(true);
     }
   }, [singleHighlight]);
