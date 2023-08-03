@@ -5,6 +5,18 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.59.0-beta.1](https://github.com/open-sauced/insights/compare/v1.58.0...v1.59.0-beta.1) (2023-08-03)
+
+
+### 🐛 Bug Fixes
+
+* update user interest logo error for machine learning ([#1474](https://github.com/open-sauced/insights/issues/1474)) ([a286eda](https://github.com/open-sauced/insights/commit/a286eda7478e1ba03898a1086e0d86e9eb18f692))
+
+
+### 🍕 Features
+
+* add conditional routing to single highlight dialog close action ([#1473](https://github.com/open-sauced/insights/issues/1473)) ([1341cba](https://github.com/open-sauced/insights/commit/1341cba30eea245fe2755f072e0bd49c33b84667))
+
 ## [1.58.0](https://github.com/open-sauced/insights/compare/v1.57.0...v1.58.0) (2023-08-02)
 
 
