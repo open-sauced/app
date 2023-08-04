@@ -183,6 +183,14 @@ const LoginStep3: React.FC<LoginStep3Props> = ({ interests, user }) => {
   const [timezone, setTimezone] = useState("");
   const [loading, setLoading] = useState(false);
 
+  useEffect(() => {
+    const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const timezone = timezones.find((timezone) => timezone.utc.includes(userTimezone));
+    if (timezone) {
+      setTimezone(timezone.value);
+    }
+  }, []);
+
   const handleUpdateTimezone = async () => {
     setLoading(true);
     try {
