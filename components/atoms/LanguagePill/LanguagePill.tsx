@@ -4,7 +4,7 @@ import JavascriptIcon from "img/icons/interests/javascript.svg";
 import ReactIcon from "/img/icons/interests/react.svg";
 import PythonIcon from "/img/icons/interests/python.svg";
 import AIIcon from "/img/icons/interests/ai.svg";
-import MLIcon from "/img/icons//interests/machine-learning.svg";
+import MLIcon from "/img/icons/interests/machine-learning.svg";
 import RustIcon from "/img/icons/interests/rust.svg";
 import PhpIcon from "/img/icons/interests/php.svg";
 import CsharpIcon from "/img/icons/interests/c-sharp.svg";

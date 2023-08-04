@@ -10,8 +10,9 @@ export const getServerSideProps = async (context: HighlightSSRPropsContext) => {
 
 export type HighlightSSRPropsContext = GetServerSidePropsContext<{ id: string }>;
 
-export async function handleHighlightSSR({ params }: GetServerSidePropsContext<{ id: string }>) {
+export async function handleHighlightSSR({ req, params }: GetServerSidePropsContext<{ id: string }>) {
   const { id } = params!;
+  const { referer } = req.headers;
 
   async function fetchHighlight() {
     const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/highlights/${id}`, {
@@ -30,6 +31,9 @@ export async function handleHighlightSSR({ params }: GetServerSidePropsContext<{
   const highlight = await fetchHighlight();
 
   return {
-    props: { highlight },
+    props: {
+      highlight,
+      referer: referer ?? null,
+    },
   };
 }
