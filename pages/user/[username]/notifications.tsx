@@ -31,7 +31,6 @@ const Notifications: WithPageLayout = () => {
   const [filter, setFilter] = useState<"all" | "follow" | "highlight_reaction">("all");
   const topRef = useRef<HTMLDivElement>(null);
   const { sessionToken } = useSupabaseAuth(true);
-  console.log({ notificationsResponse });
 
   const router = useRouter();
   const { username } = router.query;
@@ -66,13 +65,19 @@ const Notifications: WithPageLayout = () => {
 
   const notifications = useMemo(() => {
     if (!notificationsResponse?.data) return [];
-    if (filter === "all") return notificationsResponse?.data!;
-    return notificationsResponse?.data.filter((notification) => notification.type === filter);
+    if (filter === "all")
+      return notificationsResponse?.data?.sort(
+        (a, b) => new Date(b.notified_at).getTime() - new Date(a.notified_at).getTime()
+      );
+    return notificationsResponse?.data
+      .filter((notification) => notification.type === filter)
+      ?.sort((a, b) => new Date(b.notified_at).getTime() - new Date(a.notified_at).getTime());
   }, [notificationsResponse?.data, filter]);
 
   useEffect(() => {
     fetchNotifications();
     fetchUserData();
+
     if (username && sessionToken) {
       router.push(`/user/${username}/notifications?filter=all`);
     }
@@ -172,7 +177,7 @@ const Notifications: WithPageLayout = () => {
                   />
                   <div className="flex flex-col gap-2">
                     <p className="text-light-slate-12 flex gap-2">
-                      <Link href={getNotificationURL(notification.type, notification.id)} className="font-bold">
+                      <Link href={getNotificationURL(notification.type, notification.meta_id)} className="font-bold">
                         {notification.meta_id}
                       </Link>
                       <span>{notification.message.replace(notification.meta_id, " ")}</span>
