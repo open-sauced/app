@@ -153,7 +153,7 @@ const Notifications: WithPageLayout = () => {
                 </div>
               ))}
             </div>
-          ) : notifications?.length <= 0 ? (
+          ) : notifications?.length <= 0 && !loading ? (
             <DashContainer>
               <div className="text-center">
                 <p>
