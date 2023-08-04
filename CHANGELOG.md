@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.59.0-beta.2](https://github.com/open-sauced/insights/compare/v1.59.0-beta.1...v1.59.0-beta.2) (2023-08-04)
+
+
+### 🐛 Bug Fixes
+
+* feeds page typography and styles improvements ([#1467](https://github.com/open-sauced/insights/issues/1467)) ([a3b289e](https://github.com/open-sauced/insights/commit/a3b289e97300a6225c002d87d19a882ee09323ff))
+
 ## [1.59.0-beta.1](https://github.com/open-sauced/insights/compare/v1.58.0...v1.59.0-beta.1) (2023-08-03)
 
 
