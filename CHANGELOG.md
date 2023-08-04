@@ -5,6 +5,18 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.59.0-beta.3](https://github.com/open-sauced/insights/compare/v1.59.0-beta.2...v1.59.0-beta.3) (2023-08-04)
+
+
+### 🧑‍💻 Code Refactoring
+
+* replace supabase/ui in design system typography components ([#1438](https://github.com/open-sauced/insights/issues/1438)) ([38cfb30](https://github.com/open-sauced/insights/commit/38cfb305f3abad32ffbac7acff3dbb9b08498b4e))
+
+
+### 🐛 Bug Fixes
+
+* update release workflow to use GitHub app for semantic versioning ([#1484](https://github.com/open-sauced/insights/issues/1484)) ([3f1ce84](https://github.com/open-sauced/insights/commit/3f1ce845790e7d6e9bb522756d24346319384ee1))
+
 ## [1.59.0-beta.2](https://github.com/open-sauced/insights/compare/v1.59.0-beta.1...v1.59.0-beta.2) (2023-08-04)
 
 
