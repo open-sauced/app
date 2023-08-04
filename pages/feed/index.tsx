@@ -44,7 +44,7 @@ interface HighlightSSRProps {
 }
 
 const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
-  const { user } = useSupabaseAuth();
+  const { user, signIn } = useSupabaseAuth();
   const { data: repos } = useFetchHighlightRepos();
 
   const { data: featuredHighlights } = useFetchFeaturedHighlights();
@@ -88,6 +88,11 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
   useEffect(() => {
     const queryParams = new URLSearchParams(window.location.search);
     const newHighlight = queryParams.get("new");
+    const signInRequired = queryParams.get("signIn");
+
+    if (newHighlight && signInRequired) {
+      signIn({ provider: "github", options: { redirectTo: `${window.location.href}` } });
+    }
 
     const focusOnHighlighCreationInput = setInterval(() => {
       const highlightCreationInput = document.getElementById("highlight-create-input");

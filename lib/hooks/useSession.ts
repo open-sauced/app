@@ -53,6 +53,7 @@ const useSession = (getSession = false) => {
     waitlisted,
     hasReports,
     session,
+    loadSession,
   };
 };
 
