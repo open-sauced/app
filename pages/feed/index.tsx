@@ -86,6 +86,24 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
   ];
 
   useEffect(() => {
+    const queryParams = new URLSearchParams(window.location.search);
+    const newHighlight = queryParams.get("new");
+
+    const focusOnHighlighCreationInput = setInterval(() => {
+      const highlightCreationInput = document.getElementById("highlight-create-input");
+      if (newHighlight && highlightCreationInput) {
+        highlightCreationInput.click();
+        highlightCreationInput.focus();
+        clearInterval(focusOnHighlighCreationInput);
+      }
+    }, 1000);
+
+    return () => {
+      clearInterval(focusOnHighlighCreationInput);
+    };
+  }, []);
+
+  useEffect(() => {
     if (activeTab === "home") {
       setRepoList(repoTofilterList(repos));
     } else if (activeTab === "following") {
@@ -290,7 +308,10 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
               selectedFilter={selectedRepo}
               setSelected={(repo) => {
                 if (!openSingleHighlight) {
-                  router.push(`/feed${repo ? `?repo=${repo}` : ""}`);
+                  const queryParams = new URLSearchParams(window.location.search);
+                  router.push(
+                    `/feed${repo ? `?repo=${repo}` : queryParams.toString() ? `?${queryParams.toString()}` : ""}`
+                  );
                   setPage(1);
                   setSelectedRepo(repo);
                 }
