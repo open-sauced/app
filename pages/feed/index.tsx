@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useMemo } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import formatDistanceToNowStrict from "date-fns/formatDistanceToNowStrict";
@@ -34,6 +34,7 @@ import NewsletterForm from "components/molecules/NewsletterForm/newsletter-form"
 import UserCard, { MetaObj } from "components/atoms/UserCard/user-card";
 import FeaturedHighlightsPanel from "components/molecules/FeaturedHighlightsPanel/featured-highlights-panel";
 import AnnouncementCard from "components/molecules/AnnouncementCard/announcement-card";
+import Title from "components/atoms/Typography/title";
 
 type activeTabType = "home" | "following";
 type highlightReposType = { repoName: string; repoIcon: string; full_name: string };
@@ -46,6 +47,7 @@ interface HighlightSSRProps {
 const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
   const { user } = useSupabaseAuth();
   const { data: repos } = useFetchHighlightRepos();
+  const router = useRouter();
 
   const { data: featuredHighlights } = useFetchFeaturedHighlights();
 
@@ -58,9 +60,13 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
     return filtersArray;
   };
 
-  const router = useRouter();
+  const isCreateHighlight = useMemo(() => {
+    return router.pathname === "/feed/highlights/new";
+  }, [router.pathname]);
+
   const [openSingleHighlight, setOpenSingleHighlight] = useState(false);
   const [selectedRepo, setSelectedRepo] = useState("");
+  const [openCreateHighlight, setOpenCreateHighlight] = useState<boolean>(isCreateHighlight);
   const [activeTab, setActiveTab] = useState<activeTabType>("home");
   const [repoList, setRepoList] = useState<highlightReposType[]>(repoTofilterList(repos as highlightReposType[]));
   const [hydrated, setHydrated] = useState(false);
@@ -100,7 +106,24 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
   }, [singleHighlight]);
 
   useEffect(() => {
+    if (!openCreateHighlight) {
+      router.replace("/feed");
+      setOpenCreateHighlight(false);
+    } else {
+      setOpenCreateHighlight(true);
+      router.replace("/feed/highlights/new");
+    }
+  }, [isCreateHighlight, openCreateHighlight]);
+
+  useEffect(() => {
     setHydrated(true);
+    if (props.highlight && !openSingleHighlight) {
+      setOpenSingleHighlight(true);
+    }
+
+    if (isCreateHighlight) {
+      setOpenCreateHighlight(true);
+    }
   }, []);
 
   if (!hydrated)
@@ -246,11 +269,16 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
                   alt="user profile avatar"
                   isCircle
                   size="sm"
-                  avatarURL={`https://www.github.com/${user?.user_metadata.user_name}.png?size=300`}
+                  avatarURL={`https://www.github.com/${user?.user_metadata.user_name}.png?size=100`}
                 />
               </div>
 
-              <HighlightInputForm refreshCallback={mutate} />
+              <button
+                className="flex items-center w-full h-10 px-4 text-sm font-normal border rounded-lg cursor-text text-light-slate-9"
+                onClick={() => setOpenCreateHighlight(true)}
+              >
+                Post a highlight to show your work!
+              </button>
             </div>
           )}
           <TabsContent value="home">
@@ -304,6 +332,28 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
           )}
           <NewsletterForm />
         </div>
+
+        {isCreateHighlight && (
+          <Dialog
+            open={openCreateHighlight}
+            onOpenChange={(open) => {
+              if (!open) {
+                setOpenCreateHighlight(false);
+                router.replace("/feed");
+              } else {
+                setOpenCreateHighlight(true);
+                router.replace("/feed/highlights/new");
+              }
+            }}
+          >
+            <DialogContent className="sm:max-w-[80%] w-full  sm:max-h-screen ">
+              <div className="space-y-5 w-96">
+                <Title level={3}>What&apos;s new!</Title>
+                <HighlightInputForm />
+              </div>
+            </DialogContent>
+          </Dialog>
+        )}
       </div>
     </>
   );

@@ -27,7 +27,7 @@ interface HighlightInputFormProps {
 }
 
 const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.Element => {
-  const [isDivFocused, setIsDivFocused] = useState(false);
+  const [isDivFocused, setIsDivFocused] = useState(true);
   const [isSummaryButtonDisabled, setIsSummaryButtonDisabled] = useState(false);
   const [isFormOpenMobile, setIsFormOpenMobile] = useState(false);
   const [loading, setLoading] = useState(false);
