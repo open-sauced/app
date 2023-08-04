@@ -17,9 +17,6 @@ import Button from "components/atoms/Button/button";
 import Text from "components/atoms/Typography/text";
 import GitHubIcon from "img/icons/github-icon.svg";
 import Icon from "components/atoms/Icon/icon";
-import NotificationCard from "components/atoms/NotificationsCard/notification-card";
-import { Spinner } from "components/atoms/SpinLoader/spin-loader";
-import { Popover, PopoverContent, PopoverTrigger } from "../Popover/popover";
 import DropdownList from "../DropdownList/dropdown-list";
 import OnboardingButton from "../OnboardingButton/onboarding-button";
 import userAvatar from "../../../img/ellipse-1.png";
@@ -41,26 +38,6 @@ const AuthSection: React.FC = ({}) => {
       setHost(window.location.origin as string);
     }
   }, []);
-
-  // Fetch user notifications
-  const fetchNotifications = async () => {
-    if (userInfo && userInfo.notification_count > 0) {
-      setLoading(true);
-      const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/notifications`, {
-        headers: {
-          accept: "application/json",
-          Authorization: `Bearer ${sessionToken}`,
-        },
-      });
-      setLoading(false);
-      if (req.ok) {
-        const notifications = await req.json();
-        setNotifications(notifications.data as DbUserNotification[]);
-      }
-    } else {
-      return;
-    }
-  };
 
   useEffect(() => {
     const getUser = async () => {
@@ -132,42 +109,15 @@ const AuthSection: React.FC = ({}) => {
             ) : (
               ""
             )}
-            <Popover
-              onOpenChange={(state) => {
-                // reset the notification state to empty when the popover is closed
-                if (!loading && !state) setUserInfo(undefined);
-              }}
+            <button
+              className="relative cursor-pointer"
+              onClick={() => router.push(`/user/${user?.user_metadata.user_name}/notifications`)}
             >
-              <PopoverTrigger onClick={async () => await fetchNotifications()} asChild>
-                <button className="relative cursor-pointer">
-                  {userInfo && userInfo.notification_count > 0 && (
-                    <span className="absolute right-0 block w-2 h-2 bg-orange-300 rounded-full"></span>
-                  )}
-                  <IoNotifications className="text-xl text-light-slate-9" />
-                </button>
-              </PopoverTrigger>
-              <PopoverContent align="end" className="bg-white !rounded-xl p-1  ">
-                {loading ? (
-                  <div className="flex items-center justify-center py-2">
-                    <Spinner />
-                  </div>
-                ) : (
-                  <>
-                    {notifications.length > 0 ? (
-                      <div className="space-y-1">
-                        {notifications.map(({ type, message, id, meta_id }) => (
-                          <NotificationCard key={id} message={message} type={type} id={meta_id} />
-                        ))}
-                      </div>
-                    ) : (
-                      <div className="px-3 py-2 text-sm text-center text-light-slate-9">
-                        You do not have any unread notification
-                      </div>
-                    )}
-                  </>
-                )}
-              </PopoverContent>
-            </Popover>
+              {userInfo && userInfo.notification_count > 0 && (
+                <span className="absolute right-0 block w-2 h-2 bg-orange-300 rounded-full"></span>
+              )}
+              <IoNotifications className="text-xl text-light-slate-9" />
+            </button>
 
             <DropdownList menuContent={authMenu.authed}>
               <div className="flex justify-end min-w-[60px] gap-2">

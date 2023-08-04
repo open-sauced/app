@@ -1,8 +1,8 @@
-import { NextPage } from "next";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import clsx from "clsx";
 import Link from "next/link";
+
 import formatDistanceToNowStrict from "date-fns/formatDistanceToNowStrict";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import TopNav from "components/organisms/TopNav/top-nav";
@@ -16,14 +16,14 @@ import Avatar from "components/atoms/Avatar/avatar";
 import { getAvatarByUsername } from "lib/utils/github";
 import { getNotificationURL } from "lib/utils/get-notification-url";
 import changeCapitalization from "lib/utils/change-capitalization";
+import { WithPageLayout } from "interfaces/with-page-layout";
 
-interface NotificationProps {}
 interface NotificationResponse {
   data: DbUserNotification[];
   meta: Meta;
 }
 
-const Notifications: NextPage<NotificationProps> = () => {
+const Notifications: WithPageLayout = () => {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState<DbUser>();
@@ -36,10 +36,10 @@ const Notifications: NextPage<NotificationProps> = () => {
   const router = useRouter();
   const { username } = router.query;
 
-  const fetchUserData = async (page = 1) => {
+  const fetchUserData = async () => {
     if (!username) return;
     setLoading(true);
-    const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${username}?limit=10&page=${page}`, {
+    const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${username}`, {
       headers: {
         accept: "application/json",
       },
@@ -50,10 +50,10 @@ const Notifications: NextPage<NotificationProps> = () => {
     setLoading(false);
   };
 
-  const fetchNotifications = async () => {
+  const fetchNotifications = async (page = 1) => {
     if (!sessionToken) return;
     setLoading(true);
-    const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/notifications`, {
+    const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/notifications?limit=10&page=${page}`, {
       headers: {
         accept: "application/json",
         Authorization: `Bearer ${sessionToken}`,
@@ -76,18 +76,23 @@ const Notifications: NextPage<NotificationProps> = () => {
     if (username && sessionToken) {
       router.push(`/user/${username}/notifications?filter=all`);
     }
-  }, [sessionToken]);
+  }, [sessionToken, username]);
 
   const handlePageChange = (page: number) => {
     setPage(page);
-    fetchUserData(page);
+    fetchNotifications(page);
+    if (topRef.current) {
+      topRef.current.scrollIntoView({
+        behavior: "smooth",
+      });
+    }
   };
 
   return (
     <div className="w-full ">
       <TopNav />
       <div
-        className="container flex flex-col justify-between w-full px-2 pt-16 mx-auto overflow-hidden md:px-16 lg:flex-row lg:gap-40"
+        className="container flex flex-col justify-between w-full px-2 pt-16 mx-auto overflow-hidden md:px-16 md:flex-row md:gap-20 lg:gap-40"
         ref={topRef}
       >
         <div className="flex flex-col gap-4 w-80 ">
@@ -130,10 +135,10 @@ const Notifications: NextPage<NotificationProps> = () => {
             </Button>
           </aside>
         </div>
-        <div className="flex-1 mt-10 lg:mt-0">
-          <div className="flex flex-col gap-4">
-            {loading &&
-              Array.from({ length: 8 }).map((_, index) => (
+        <div className="flex-1 mt-10 md:mt-0">
+          {loading ? (
+            <div className="flex flex-col gap-4">
+              {Array.from({ length: 8 }).map((_, index) => (
                 <div className="flex gap-2" key={index}>
                   <SkeletonWrapper width={50} height={50} />
                   <div className="">
@@ -142,8 +147,8 @@ const Notifications: NextPage<NotificationProps> = () => {
                   </div>
                 </div>
               ))}
-          </div>
-          {!loading && !notifications?.length ? (
+            </div>
+          ) : notifications?.length <= 0 ? (
             <DashContainer>
               <div className="text-center">
                 <p>
@@ -160,7 +165,6 @@ const Notifications: NextPage<NotificationProps> = () => {
                   <Avatar
                     initialsClassName="text-[100px] leading-none"
                     initials={notification.meta_id.charAt(0)}
-                    className=""
                     hasBorder
                     avatarURL={!!user?.is_open_sauced_member ? getAvatarByUsername(notification.meta_id, 300) : ""}
                     size={50}
@@ -181,8 +185,8 @@ const Notifications: NextPage<NotificationProps> = () => {
               ))}
             </div>
           )}
-          {(notificationsResponse?.meta?.pageCount ?? 0) > 1 && (
-            <div className="my-10 max-w-[48rem] flex px-2 items-center justify-between">
+          {notifications?.length > 0 && (notificationsResponse?.meta?.pageCount ?? 0) > 1 && (
+            <div className="my-10 flex px-2 items-center justify-between">
               <div className="flex items-center w-max gap-x-4">
                 <PaginationResults
                   metaInfo={
@@ -196,25 +200,18 @@ const Notifications: NextPage<NotificationProps> = () => {
                     }
                   }
                   total={notificationsResponse?.meta?.itemCount ?? 0}
-                  entity={"highlights"}
+                  entity={"notifications"}
                 />
               </div>
               <Pagination
                 pages={[]}
                 totalPage={notificationsResponse?.meta?.pageCount ?? 0}
                 page={notificationsResponse?.meta?.page ?? 0}
-                pageSize={notificationsResponse?.meta?.itemCount}
+                pageSize={notificationsResponse?.meta?.itemCount ?? 0}
                 goToPage
-                hasNextPage={notificationsResponse?.meta?.hasNextPage}
-                hasPreviousPage={notificationsResponse?.meta?.hasPreviousPage}
-                onPageChange={function (page: number): void {
-                  handlePageChange(page);
-                  if (topRef.current) {
-                    topRef.current.scrollIntoView({
-                      behavior: "smooth",
-                    });
-                  }
-                }}
+                hasNextPage={notificationsResponse?.meta?.hasNextPage ?? false}
+                hasPreviousPage={notificationsResponse?.meta?.hasPreviousPage ?? false}
+                onPageChange={(pageNumber) => handlePageChange(pageNumber)}
               />
             </div>
           )}
@@ -224,4 +221,5 @@ const Notifications: NextPage<NotificationProps> = () => {
   );
 };
 
+Notifications.isPrivateRoute = true;
 export default Notifications;
