@@ -136,7 +136,7 @@ const Notifications: WithPageLayout = () => {
                 router.push(`/user/${username}/notifications?filter=highlight_reaction`);
               }}
             >
-             Reaction
+              Reaction
             </Button>
           </aside>
         </div>
@@ -158,8 +158,8 @@ const Notifications: WithPageLayout = () => {
               <div className="text-center">
                 <p>
                   You don&apos;t have any{" "}
-                  {changeCapitalization(filter === "highlight_reaction" ? "reaction" : filter, true)}{" "}
-                  notifications yet! <br />
+                  {changeCapitalization(filter === "highlight_reaction" ? "reaction" : filter, true)} notifications yet!{" "}
+                  <br />
                 </p>
               </div>
             </DashContainer>
