@@ -158,7 +158,7 @@ const Notifications: WithPageLayout = () => {
               <div className="text-center">
                 <p>
                   You don&apos;t have any{" "}
-                  {changeCapitalization(filter === "highlight_reaction" ? "Highlight Reactions" : filter, true)}{" "}
+                  {changeCapitalization(filter === "highlight_reaction" ? "reaction" : filter, true)}{" "}
                   notifications yet! <br />
                 </p>
               </div>
