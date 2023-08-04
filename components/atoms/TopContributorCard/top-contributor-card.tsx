@@ -44,7 +44,7 @@ const TopContributorCard = ({ login }: TopContributorCardProps) => {
       <Link href={`/user/${login}`}>
         <div className="flex items-center gap-2">
           <Avatar isCircle size={35} avatarURL={getAvatarByUsername(login)} />
-          <p className="font-semibold text-light-slate-12">{login}</p>
+          <p className="text-sm font-semibold text-light-slate-12">{login}</p>
         </div>
       </Link>
       {sessionToken && !notFollowing ? (

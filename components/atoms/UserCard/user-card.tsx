@@ -1,5 +1,6 @@
 import Image from "next/image";
 import React from "react";
+import Link from "next/link";
 import { getAvatarByUsername } from "lib/utils/github";
 import { Spinner } from "../SpinLoader/spin-loader";
 
@@ -17,7 +18,7 @@ const UserCard = ({ username, name, meta, loading }: UserCardProps) => {
   const avatarUrl = getAvatarByUsername(username);
 
   return (
-    <div className="pb-6 border bg-light-slate-1 w-max rounded-2xl border-zinc-200">
+    <div className="w-full pb-6 border rounded-lg bg-light-slate-1 border-zinc-200">
       {loading ? (
         <div className="flex items-center justify-center h-32 w-72">
           <Spinner className="mt-6 " />
@@ -32,15 +33,15 @@ const UserCard = ({ username, name, meta, loading }: UserCardProps) => {
               src={avatarUrl}
               alt={`${username}'s avatar image`}
             />
-            <div>
-              <h3 className="text-base text-center">{name}</h3>
-              <p className="text-center text-light-slate-9">{`@${username}`}</p>
+            <div className="text-center">
+              <h3 className="text-lg ">{name}</h3>
+              <Link className="text-lg text-slate-700" href={`/user/${username}`}>{`@${username}`}</Link>
             </div>
           </div>
           <div className="flex items-center gap-5 text-base text-center ">
             {meta.map(({ name, count }, i) => (
               <div key={i.toLocaleString()}>
-                <p className="text-center text-light-slate-9">{name}</p>
+                <p className="text-xs text-center text-light-slate-9">{name}</p>
                 {count > 0 ? count : "-"}
               </div>
             ))}
