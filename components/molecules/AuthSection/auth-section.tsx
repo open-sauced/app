@@ -27,12 +27,11 @@ const AuthSection: React.FC = ({}) => {
   const router = useRouter();
   const currentPath = router.asPath;
 
-  const { signIn, signOut, user, sessionToken } = useSupabaseAuth();
+  const { signIn, signOut, user } = useSupabaseAuth();
   const { onboarded, session } = useSession(true);
-  const [notifications, setNotifications] = useState<DbUserNotification[]>([]);
-  const [loading, setLoading] = useState(false);
   const [userInfo, setUserInfo] = useState<DbUser | undefined>(undefined);
   const [host, setHost] = useState<string>("");
+
   useEffect(() => {
     if (typeof window !== "undefined") {
       setHost(window.location.origin as string);
@@ -109,10 +108,7 @@ const AuthSection: React.FC = ({}) => {
             ) : (
               ""
             )}
-            <button
-              className="relative cursor-pointer"
-              onClick={() => router.push(`/user/${user?.user_metadata.user_name}/notifications`)}
-            >
+            <button className="relative cursor-pointer" onClick={() => router.push(`/user/notifications`)}>
               {userInfo && userInfo.notification_count > 0 && (
                 <span className="absolute right-0 block w-2 h-2 bg-orange-300 rounded-full"></span>
               )}

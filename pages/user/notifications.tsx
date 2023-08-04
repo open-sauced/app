@@ -26,28 +26,14 @@ interface NotificationResponse {
 const Notifications: WithPageLayout = () => {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
-  const [user, setUser] = useState<DbUser>();
   const [notificationsResponse, setNotificationsResponse] = useState<NotificationResponse>();
   const [filter, setFilter] = useState<"all" | "follow" | "highlight_reaction">("all");
+
   const topRef = useRef<HTMLDivElement>(null);
-  const { sessionToken } = useSupabaseAuth(true);
+  const { sessionToken, user } = useSupabaseAuth(true);
 
   const router = useRouter();
-  const { username } = router.query;
-
-  const fetchUserData = async () => {
-    if (!username) return;
-    setLoading(true);
-    const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${username}`, {
-      headers: {
-        accept: "application/json",
-      },
-    });
-
-    const data = (await req.json()) as DbUser;
-    setUser(data);
-    setLoading(false);
-  };
+  const username = user?.user_metadata.user_name as string;
 
   const fetchNotifications = async (page = 1) => {
     if (!sessionToken) return;
@@ -76,12 +62,11 @@ const Notifications: WithPageLayout = () => {
 
   useEffect(() => {
     fetchNotifications();
-    fetchUserData();
 
-    if (username && sessionToken) {
-      router.push(`/user/${username}/notifications?filter=all`);
+    if (sessionToken) {
+      router.push(`/user/notifications?filter=all`);
     }
-  }, [sessionToken, username]);
+  }, [sessionToken]);
 
   const handlePageChange = (page: number) => {
     setPage(page);
@@ -100,7 +85,7 @@ const Notifications: WithPageLayout = () => {
         className="container flex flex-col justify-between w-full px-2 pt-16 mx-auto overflow-hidden md:px-16 md:flex-row md:gap-20 lg:gap-40"
         ref={topRef}
       >
-        <div className="flex flex-col gap-4 w-80 ">
+        <div className="flex flex-col gap-4 w-80">
           <Title className="!text-2xl !text-light-slate-12" level={3}>
             Notifications
           </Title>
@@ -110,7 +95,7 @@ const Notifications: WithPageLayout = () => {
               className={clsx("hover:text-orange-600", filter === "all" ? "text-orange-600" : "text-light-slate-11")}
               onClick={() => {
                 setFilter("all");
-                router.push(`/user/${username}/notifications?filter=all`);
+                router.push(`/user/notifications?filter=all`);
               }}
             >
               All
@@ -120,7 +105,7 @@ const Notifications: WithPageLayout = () => {
               className={clsx("hover:text-orange-600", filter === "follow" ? "text-orange-600" : "text-light-slate-11")}
               onClick={() => {
                 setFilter("follow");
-                router.push(`/user/${username}/notifications?filter=follow`);
+                router.push(`/user/notifications?filter=follow`);
               }}
             >
               Follow
@@ -133,7 +118,7 @@ const Notifications: WithPageLayout = () => {
               )}
               onClick={() => {
                 setFilter("highlight_reaction");
-                router.push(`/user/${username}/notifications?filter=highlight_reaction`);
+                router.push(`/user/notifications?filter=highlight_reaction`);
               }}
             >
               Reaction
@@ -171,7 +156,7 @@ const Notifications: WithPageLayout = () => {
                     initialsClassName="text-[100px] leading-none"
                     initials={notification.meta_id.charAt(0)}
                     hasBorder
-                    avatarURL={!!user?.is_open_sauced_member ? getAvatarByUsername(notification.meta_id, 300) : ""}
+                    avatarURL={getAvatarByUsername(notification.meta_id, 300)}
                     size={50}
                     isCircle
                   />
