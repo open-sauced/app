@@ -265,6 +265,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                 className="flex-1 focus:outline-none"
                 type="text"
                 placeholder={"Add title (optional)"}
+                id="highlight-create-input"
               />
             </div>
             <TypeWriterTextArea
@@ -338,6 +339,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
         <div
           onClick={() => setIsFormOpenMobile(true)}
           className="p-3 text-white rounded-full shadow-lg bg-light-orange-10"
+          id="mobile-highlight-create-button"
         >
           <RxPencil1 className="text-3xl" />
         </div>
