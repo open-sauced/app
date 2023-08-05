@@ -16,6 +16,7 @@ import Avatar from "components/atoms/Avatar/avatar";
 import { getAvatarByUsername } from "lib/utils/github";
 import { getNotificationURL } from "lib/utils/get-notification-url";
 import changeCapitalization from "lib/utils/change-capitalization";
+import ProfileLayout from "layouts/profile";
 import { WithPageLayout } from "interfaces/with-page-layout";
 
 interface NotificationResponse {
