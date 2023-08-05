@@ -124,7 +124,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
         twitterCard="summary_large_image"
       />
       <div
-        className="container flex flex-col gap-16 px-2 pt-12 mx-auto md:px-16 lg:justify-end md:flex-row"
+        className="container flex flex-col md:gap-6 xl:gap-16 px-2 pt-12 mx-auto md:px-16 xl:justify-end md:flex-row"
         ref={topRef}
       >
         <div className="flex-col flex-1 hidden gap-6 mt-12 md:flex">
@@ -204,7 +204,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
             setActiveTab(value as activeTabType);
           }}
           defaultValue="home"
-          className="md:flex-[2] "
+          className="sm:w-full md:w-80 xl:w-auto"
         >
           <TabsList className={clsx("justify-start  w-full border-b", !user && "hidden")}>
             <TabsTrigger
