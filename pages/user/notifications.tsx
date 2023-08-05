@@ -120,7 +120,7 @@ const Notifications: WithPageLayout = () => {
                 router.push(`/user/notifications?filter=highlight_reaction`);
               }}
             >
-              Reaction
+              Reactions
             </Button>
           </aside>
         </div>
