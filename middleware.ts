@@ -12,7 +12,7 @@ export async function middleware(req: NextRequest) {
   } = await supabase.auth.getSession();
 
   const redirectUrl = req.nextUrl.clone();
-  redirectUrl.pathname = "/javascript/dashboard/filter/recent";
+  redirectUrl.pathname = "/feed";
   redirectUrl.searchParams.set("redirectedFrom", req.nextUrl.pathname);
 
   // Check auth condition
