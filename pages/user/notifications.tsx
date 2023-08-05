@@ -5,7 +5,6 @@ import Link from "next/link";
 
 import formatDistanceToNowStrict from "date-fns/formatDistanceToNowStrict";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
-import TopNav from "components/organisms/TopNav/top-nav";
 import Title from "components/atoms/Typography/title";
 import Button from "components/atoms/Button/button";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
@@ -81,7 +80,6 @@ const Notifications: WithPageLayout = () => {
 
   return (
     <div className="w-full ">
-      <TopNav />
       <div
         className="container flex flex-col justify-between w-full px-2 pt-16 mx-auto overflow-hidden md:px-16 md:flex-row md:gap-20 lg:gap-40"
         ref={topRef}
@@ -212,5 +210,6 @@ const Notifications: WithPageLayout = () => {
   );
 };
 
+Notifications.PageLayout = ProfileLayout;
 Notifications.isPrivateRoute = true;
 export default Notifications;
