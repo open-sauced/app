@@ -63,14 +63,10 @@ const AuthSection: React.FC = ({}) => {
   };
 
   useEffect(() => {
-    const getUser = async () => {
-      if (session && !userInfo) {
-        setUserInfo(session);
-      }
-    };
-
-    getUser();
-  }, [userInfo]);
+    if (session && !userInfo) {
+      setUserInfo(session);
+    }
+  }, [session]);
 
   const authMenu = {
     authed: [
@@ -139,12 +135,12 @@ const AuthSection: React.FC = ({}) => {
               }}
             >
               <PopoverTrigger onClick={async () => await fetchNotifications()} asChild>
-                <div className="relative cursor-pointer">
+                <button className="relative cursor-pointer">
                   {userInfo && userInfo.notification_count > 0 && (
                     <span className="absolute right-0 block w-2 h-2 bg-orange-300 rounded-full"></span>
                   )}
                   <IoNotifications className="text-xl text-light-slate-9" />
-                </div>
+                </button>
               </PopoverTrigger>
               <PopoverContent align="end" className="bg-white !rounded-xl p-1  ">
                 {loading ? (
@@ -161,7 +157,7 @@ const AuthSection: React.FC = ({}) => {
                       </div>
                     ) : (
                       <div className="px-3 py-2 text-sm text-center text-light-slate-9">
-                        You do not have any unread notification
+                        You don&apos;t have any unread notifications
                       </div>
                     )}
                   </>
