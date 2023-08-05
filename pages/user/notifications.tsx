@@ -107,7 +107,7 @@ const Notifications: WithPageLayout = () => {
                 router.push(`/user/notifications?filter=follow`);
               }}
             >
-              Follow
+              Follows
             </Button>
             <Button
               variant="link"
