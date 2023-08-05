@@ -118,7 +118,7 @@ const ContributorProfileHeader = ({
         </div>
       )}
 
-      <div className="container flex flex-row items-end justify-between px-2 py-6 mx-auto md:px-16">
+      <div className="container flex flex-row items-end justify-between gap-2 px-2 py-6 mx-auto md:px-16">
         <div className="translate-y-[65px] hidden md:inline-flex">
           <Avatar
             initialsClassName="text-[100px] -translate-y-2.5  leading-none"
