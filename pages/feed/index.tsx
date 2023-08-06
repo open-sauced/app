@@ -127,32 +127,34 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
         twitterCard="summary_large_image"
       />
       <div
-        className="container flex flex-col gap-16 px-2 pt-12 mx-auto md:px-16 lg:justify-end md:flex-row"
+        className="container flex flex-col gap-16 px-2 pt-12 md:items-start md:justify-between mx-auto md:px-16 lg:justify-end md:flex-row"
         ref={topRef}
       >
-        <div className="flex-col flex-1 hidden gap-6 mt-12 md:flex">
-          {user && (
-            <div>
-              <UserCard
-                loading={loggedInUserLoading}
-                username={loggedInUser?.login as string}
-                meta={userMetaArray as MetaObj[]}
-                name={loggedInUser?.name as string}
-              />
-            </div>
-          )}
-          <TopContributorsPanel loggedInUserLogin={loggedInUser?.login ?? ""} />
+        <div className="sticky top-8">
+          <div className="flex-col flex-1 hidden gap-6 mt-12 md:flex">
+            {user && (
+              <div>
+                <UserCard
+                  loading={loggedInUserLoading}
+                  username={loggedInUser?.login as string}
+                  meta={userMetaArray as MetaObj[]}
+                  name={loggedInUser?.name as string}
+                />
+              </div>
+            )}
+            <TopContributorsPanel loggedInUserLogin={loggedInUser?.login ?? ""} />
 
-          <AnnouncementCard
-            title="#100DaysOfOSS 🚀 "
-            description={
-              "Join us for 100 days of supporting, sharing knowledge, and exploring the open source ecosystem together."
-            }
-            bannerSrc={
-              "https://user-images.githubusercontent.com/5713670/254358937-8e9aa76d-4ed3-4616-a58a-2283796b10e1.png"
-            }
-            url={"https://dev.to/opensauced/100daysofoss-growing-skills-and-real-world-experience-3o5k"}
-          />
+            <AnnouncementCard
+              title="#100DaysOfOSS 🚀 "
+              description={
+                "Join us for 100 days of supporting, sharing knowledge, and exploring the open source ecosystem together."
+              }
+              bannerSrc={
+                "https://user-images.githubusercontent.com/5713670/254358937-8e9aa76d-4ed3-4616-a58a-2283796b10e1.png"
+              }
+              url={"https://dev.to/opensauced/100daysofoss-growing-skills-and-real-world-experience-3o5k"}
+            />
+          </div>
         </div>
         {singleHighlight && (
           <Dialog
@@ -284,7 +286,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
             <FollowingHighlightWrapper selectedFilter={selectedRepo} emojis={emojis} />
           </TabsContent>
         </Tabs>
-        <div className="hidden gap-6 mt-10 md:flex-1 md:flex md:flex-col">
+        <div className="hidden gap-6 mt-10 md:flex-1 md:flex md:flex-col sticky top-20">
           {repoList && repoList.length > 0 && (
             <HighlightsFilterCard
               selectedFilter={selectedRepo}
