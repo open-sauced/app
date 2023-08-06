@@ -127,7 +127,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
         twitterCard="summary_large_image"
       />
       <div className="w-full gap-[2rem] justify-center flex flex-col md:gap-6 xl:gap-16 pt-12 md:flex-row" ref={topRef}>
-        <div className="flex-col flex-1 hidden gap-6 mt-12 md:flex">
+        <div className="flex-col flex-1 xl:flex hidden gap-6 mt-12">
           {user && (
             <div className="md:w-1/2 lg:w-1/3">
               <UserCard
@@ -281,7 +281,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
             <FollowingHighlightWrapper selectedFilter={selectedRepo} emojis={emojis} />
           </TabsContent>
         </Tabs>
-        <div className="hidden gap-6 mt-10 md:flex-1 md:flex md:flex-col">
+        <div className="md:hidden gap-6 mt-10 md:flex-1 lg:flex md:flex-col">
           {repoList && repoList.length > 0 && (
             <HighlightsFilterCard
               selectedFilter={selectedRepo}
