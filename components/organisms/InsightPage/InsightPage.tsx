@@ -397,7 +397,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
           </Title>
           <Search
             isLoading={createLoading}
-            placeholder="Repository Full Name (ex: open-sauced/open-sauced)"
+            placeholder="Repository URL or Full Name (ex: open-sauced/open-sauced)"
             className="!w-full text-md text-gra"
             name={"query"}
             suggestions={suggestions}
