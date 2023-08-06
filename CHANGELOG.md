@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.59.0-beta.4](https://github.com/open-sauced/insights/compare/v1.59.0-beta.3...v1.59.0-beta.4) (2023-08-04)
+
+
+### 🐛 Bug Fixes
+
+* uses session to update user info for notifications check ([#1486](https://github.com/open-sauced/insights/issues/1486)) ([60d787e](https://github.com/open-sauced/insights/commit/60d787ef4c9a6867ab0159c5576fed429f9a48c6))
+
 ## [1.59.0-beta.3](https://github.com/open-sauced/insights/compare/v1.59.0-beta.2...v1.59.0-beta.3) (2023-08-04)
 
 
