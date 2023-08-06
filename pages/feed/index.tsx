@@ -219,7 +219,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
             setActiveTab(value as activeTabType);
           }}
           defaultValue="home"
-          className="sm:w-full md:w-80 xl:w-auto"
+          className="grow"
         >
           <TabsList className={clsx("justify-start  w-full border-b", !user && "hidden")}>
             <TabsTrigger
