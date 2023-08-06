@@ -90,6 +90,10 @@ const isValidPullRequestUrl = (url: string): boolean => {
   return url.match(/((https?:\/\/)?(www\.)?github\.com\/[^\/]+\/[^\/]+\/pull\/[0-9]+)/) ? true : false;
 };
 
+const isValidIssueUrl = (url: string): boolean => {
+  return url.match(/((https?:\/\/)?(www\.)?github\.com\/[^\/]+\/[^\/]+\/issues\/[0-9]+)/) ? true : false;
+};
+
 const getOwnerAndRepoNameFromUrl = (url: string): { owner: string; repoName: string } => {
   const [, , , owner, repoName] = url.split("/");
 
@@ -105,5 +109,6 @@ export {
   generateApiPrUrl,
   generateGhOgImage,
   isValidPullRequestUrl,
+  isValidIssueUrl,
   getPullRequestCommitMessageFromUrl,
 };
