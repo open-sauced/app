@@ -126,7 +126,10 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
         image={ogImage}
         twitterCard="summary_large_image"
       />
-      <div className="w-full gap-[2rem] justify-center flex flex-col md:gap-6 xl:gap-16 pt-12 md:flex-row" ref={topRef}>
+      <div
+        className="container px-2 md:px-16 w-full gap-[2rem] justify-center flex flex-col md:gap-6 xl:gap-16 pt-12 md:flex-row"
+        ref={topRef}
+      >
         <div className="flex-col flex-1 xl:flex hidden gap-6 mt-12">
           {user && (
             <div className="md:w-1/2 lg:w-1/3">
