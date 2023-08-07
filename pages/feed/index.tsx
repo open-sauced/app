@@ -160,13 +160,10 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
         image={ogImage}
         twitterCard="summary_large_image"
       />
-      <div
-        className="container flex flex-col gap-16 px-2 pt-12 mx-auto md:px-16 lg:justify-end md:flex-row"
-        ref={topRef}
-      >
-        <div className="flex-col flex-1 hidden gap-6 mt-12 md:flex">
+      <div className="w-full gap-[2rem] justify-center flex flex-col md:gap-6 xl:gap-16 pt-12 md:flex-row" ref={topRef}>
+        <div className="flex-col flex-1 xl:flex hidden gap-6 mt-12">
           {user && (
-            <div>
+            <div className="md:w-1/2 lg:w-1/3">
               <UserCard
                 loading={loggedInUserLoading}
                 username={loggedInUser?.login as string}
@@ -256,7 +253,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
             setActiveTab(value as activeTabType);
           }}
           defaultValue="home"
-          className="md:flex-[2] "
+          className="grow"
         >
           <TabsList className={clsx("justify-start  w-full border-b", !user && "hidden")}>
             <TabsTrigger
@@ -318,7 +315,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
             <FollowingHighlightWrapper selectedFilter={selectedRepo} emojis={emojis} />
           </TabsContent>
         </Tabs>
-        <div className="hidden gap-6 mt-10 md:flex-1 md:flex md:flex-col">
+        <div className="md:hidden gap-6 mt-10 md:flex-1 lg:flex md:flex-col">
           {repoList && repoList.length > 0 && (
             <HighlightsFilterCard
               selectedFilter={selectedRepo}
