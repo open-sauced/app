@@ -11,10 +11,6 @@ export async function middleware(req: NextRequest) {
     data: { session },
   } = await supabase.auth.getSession();
 
-  const redirectUrl = req.nextUrl.clone();
-  redirectUrl.pathname = "/feed";
-  redirectUrl.searchParams.set("redirectedFrom", req.nextUrl.pathname);
-
   // Check auth condition
   if (session?.user || req.nextUrl.searchParams.has("login")) {
     // Authentication successful, forward request to protected route.
@@ -22,6 +18,9 @@ export async function middleware(req: NextRequest) {
   }
 
   // Auth condition not met, redirect to home page.
+  const redirectUrl = req.nextUrl.clone();
+  redirectUrl.pathname = "/feed";
+  redirectUrl.searchParams.set("redirectedFrom", req.nextUrl.pathname);
   return NextResponse.redirect(redirectUrl);
 }
 
