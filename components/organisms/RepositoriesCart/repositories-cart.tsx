@@ -57,7 +57,7 @@ const RepositoriesCart = ({
   return (
     <>
       <Title className="!text-1xl !leading-none mb-4 xl:mt-10 font-medium" level={4}>
-        Added Repositories
+       Repositories Added
       </Title>
       <div className="w-full lg:w-[364px] border flex flex-col gap-2 rounded-lg p-6">
         {/* Empty state of Cart */}
