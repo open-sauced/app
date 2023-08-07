@@ -63,14 +63,10 @@ const AuthSection: React.FC = ({}) => {
   };
 
   useEffect(() => {
-    const getUser = async () => {
-      if (session && !userInfo) {
-        setUserInfo(session);
-      }
-    };
-
-    getUser();
-  }, [userInfo]);
+    if (session && !userInfo) {
+      setUserInfo(session);
+    }
+  }, [session]);
 
   const authMenu = {
     authed: [
@@ -161,7 +157,7 @@ const AuthSection: React.FC = ({}) => {
                       </div>
                     ) : (
                       <div className="px-3 py-2 text-sm text-center text-light-slate-9">
-                        You do not have any unread notification
+                        You don&apos;t have any unread notifications
                       </div>
                     )}
                   </>
