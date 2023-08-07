@@ -132,7 +132,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
       >
         <div className="hidden xl:flex flex-col flex-none w-[24%] gap-6 mt-12">
           {user && (
-            <div className="md:w-1/2 lg:w-1/3">
+            <div className="w-full">
               <UserCard
                 loading={loggedInUserLoading}
                 username={loggedInUser?.login as string}
