@@ -47,6 +47,35 @@ const generateApiPrUrl = (
   }
 };
 
+const generateRepoFullName = (url: string): { isValidRepo: boolean; repoFullName: string | null } => {
+  try {
+    const trimmedUrl = url.trim();
+
+    const githubUrl = new URL(
+      trimmedUrl.includes("https://") || trimmedUrl.includes("http://") || trimmedUrl.includes("www.")
+        ? trimmedUrl
+        : `https://github.com/${trimmedUrl}`
+    );
+    const { pathname } = githubUrl;
+
+    const [, orgName, repoName] = pathname.split("/");
+
+    if (githubUrl.hostname !== "github.com" || !orgName || !repoName) {
+      return {
+        isValidRepo: false,
+        repoFullName: null,
+      };
+    }
+
+    return {
+      isValidRepo: true,
+      repoFullName: `${orgName}/${repoName}`,
+    };
+  } catch (err) {
+    return { isValidRepo: false, repoFullName: null };
+  }
+};
+
 const generateGhOgImage = (githubUrl: string): { isValid: boolean; url: string } => {
   try {
     const trimmedUrl = githubUrl.trim();
@@ -103,6 +132,7 @@ export {
   getProfileLink,
   getRepoIssuesLink,
   generateApiPrUrl,
+  generateRepoFullName,
   generateGhOgImage,
   isValidPullRequestUrl,
   getPullRequestCommitMessageFromUrl,

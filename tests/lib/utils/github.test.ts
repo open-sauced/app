@@ -4,6 +4,7 @@ import {
   getProfileLink,
   getRepoIssuesLink,
   generateGhOgImage,
+  generateRepoFullName,
 } from "lib/utils/github";
 
 describe("[lib] github methods", () => {
@@ -33,5 +34,33 @@ describe("[lib] github methods", () => {
   it("Should return an object with isValid set to false", () => {
     const result = generateGhOgImage("https://gitub.com/open-sauced/hot/pull/448");
     expect(result).toEqual({ isValid: false, url: "" });
+  });
+  it("Should return true with a valid repo name", () => {
+    const testAbsoluteUrl = "https://github.com/open-sauced/insights";
+    const result = generateRepoFullName(testAbsoluteUrl);
+
+    expect(result.isValidRepo).toBe(true);
+    expect(result.repoFullName).toEqual("open-sauced/insights");
+  });
+  it("Should return true with a valid repo name", () => {
+    const testRelativeUrl = "open-sauced/insights";
+    const result = generateRepoFullName(testRelativeUrl);
+
+    expect(result.isValidRepo).toBe(true);
+    expect(result.repoFullName).toEqual("open-sauced/insights");
+  });
+  it("Should return false", () => {
+    const testInvalidAbsoluteUrl = "https://insights.opensauced.pizza/hub/insights/new";
+    const result = generateRepoFullName(testInvalidAbsoluteUrl);
+
+    expect(result.isValidRepo).toBeFalsy();
+    expect(result.repoFullName).toBe(null);
+  });
+  it("Should return false", () => {
+    const testNotAUrl = "🍕";
+    const result = generateRepoFullName(testNotAUrl);
+
+    expect(result.isValidRepo).toBeFalsy();
+    expect(result.repoFullName).toBe(null);
   });
 });

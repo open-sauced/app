@@ -14,7 +14,7 @@ import RepoNotIndexed from "components/organisms/Repositories/repository-not-ind
 import useRepositories from "lib/hooks/api/useRepositories";
 
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
-import { getAvatarById, getAvatarByUsername } from "lib/utils/github";
+import { generateRepoFullName, getAvatarById, getAvatarByUsername } from "lib/utils/github";
 import useStore from "lib/store";
 import Error from "components/atoms/Error/Error";
 import Search from "components/atoms/Search/search";
@@ -22,7 +22,6 @@ import { RepoCardProfileProps } from "components/molecules/RepoCardProfile/repo-
 import { useToast } from "lib/hooks/useToast";
 import TeamMembersConfig, { TeamMemberData } from "components/molecules/TeamMembersConfig/team-members-config";
 import useInsightMembers from "lib/hooks/useInsightMembers";
-import { isValidRepoUrl } from "lib/utils/validate-repo-urls";
 import SuggestedRepositoriesList from "../SuggestedRepoList/suggested-repo-list";
 import DeleteInsightPageModal from "./DeleteInsightPageModal";
 
@@ -202,14 +201,14 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
       return;
     }
 
-    const validatedRepoUrl = isValidRepoUrl(repoToAdd);
+    const validatedRepoUrl = generateRepoFullName(repoToAdd);
 
-    if (!validatedRepoUrl[0]) {
+    if (!validatedRepoUrl.isValidRepo) {
       setAddRepoError(RepoLookupError.Invalid);
       return;
     }
 
-    const repoNameToAdd = validatedRepoUrl[1];
+    const repoNameToAdd = validatedRepoUrl.repoFullName;
 
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/repos/${repoNameToAdd}`);
