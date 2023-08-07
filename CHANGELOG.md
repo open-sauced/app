@@ -5,6 +5,18 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.59.0-beta.5](https://github.com/open-sauced/insights/compare/v1.59.0-beta.4...v1.59.0-beta.5) (2023-08-07)
+
+
+### 🐛 Bug Fixes
+
+* Feed page responsiveness  ([#1490](https://github.com/open-sauced/insights/issues/1490)) ([67662b2](https://github.com/open-sauced/insights/commit/67662b224d22898d97e6f8cb7a67e6a9ca13c6f9))
+
+
+### 🍕 Features
+
+* onboarding auto fetch timezone ([#1488](https://github.com/open-sauced/insights/issues/1488)) ([ae5cdd7](https://github.com/open-sauced/insights/commit/ae5cdd7e2a9ee18798db1da051cacf41139b85e8))
+
 ## [1.59.0-beta.4](https://github.com/open-sauced/insights/compare/v1.59.0-beta.3...v1.59.0-beta.4) (2023-08-04)
 
 
