@@ -5,6 +5,38 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.59.0-beta.4](https://github.com/open-sauced/insights/compare/v1.59.0-beta.3...v1.59.0-beta.4) (2023-08-04)
+
+### 🐛 Bug Fixes
+
+- uses session to update user info for notifications check ([#1486](https://github.com/open-sauced/insights/issues/1486)) ([60d787e](https://github.com/open-sauced/insights/commit/60d787ef4c9a6867ab0159c5576fed429f9a48c6))
+
+## [1.59.0-beta.3](https://github.com/open-sauced/insights/compare/v1.59.0-beta.2...v1.59.0-beta.3) (2023-08-04)
+
+### 🧑‍💻 Code Refactoring
+
+- replace supabase/ui in design system typography components ([#1438](https://github.com/open-sauced/insights/issues/1438)) ([38cfb30](https://github.com/open-sauced/insights/commit/38cfb305f3abad32ffbac7acff3dbb9b08498b4e))
+
+### 🐛 Bug Fixes
+
+- update release workflow to use GitHub app for semantic versioning ([#1484](https://github.com/open-sauced/insights/issues/1484)) ([3f1ce84](https://github.com/open-sauced/insights/commit/3f1ce845790e7d6e9bb522756d24346319384ee1))
+
+## [1.59.0-beta.2](https://github.com/open-sauced/insights/compare/v1.59.0-beta.1...v1.59.0-beta.2) (2023-08-04)
+
+### 🐛 Bug Fixes
+
+- feeds page typography and styles improvements ([#1467](https://github.com/open-sauced/insights/issues/1467)) ([a3b289e](https://github.com/open-sauced/insights/commit/a3b289e97300a6225c002d87d19a882ee09323ff))
+
+## [1.59.0-beta.1](https://github.com/open-sauced/insights/compare/v1.58.0...v1.59.0-beta.1) (2023-08-03)
+
+### 🐛 Bug Fixes
+
+- update user interest logo error for machine learning ([#1474](https://github.com/open-sauced/insights/issues/1474)) ([a286eda](https://github.com/open-sauced/insights/commit/a286eda7478e1ba03898a1086e0d86e9eb18f692))
+
+### 🍕 Features
+
+- add conditional routing to single highlight dialog close action ([#1473](https://github.com/open-sauced/insights/issues/1473)) ([1341cba](https://github.com/open-sauced/insights/commit/1341cba30eea245fe2755f072e0bd49c33b84667))
+
 ## [1.58.0](https://github.com/open-sauced/insights/compare/v1.57.0...v1.58.0) (2023-08-02)
 
 ### 🧑‍💻 Code Refactoring
