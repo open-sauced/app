@@ -24,7 +24,7 @@ const UserCard = ({ username, name, meta, loading }: UserCardProps) => {
           <Spinner className="mt-6 " />
         </div>
       ) : (
-        <div className="flex flex-col items-center gap-6 px-9">
+        <div className="flex flex-col items-center gap-6 px-6">
           <div className="flex flex-col items-center gap-2 -mt-10">
             <Image
               className="border border-white rounded-full "
