@@ -15,7 +15,7 @@ const TopContributorsPanel = ({ loggedInUserLogin }: TopContributorsPanelProps) 
   return (
     <div className="flex flex-col max-w-xs w-full gap-6 p-6 border bg-light-slate-1 rounded-xl">
       <h2 className="pb-2 text-2xl border-b">Top Contributors</h2>
-
+      
       {isLoading &&
         Array.from({ length: 3 }).map((_, i) => (
           <div key={i} className="flex items-center justify-between gap-4 ">

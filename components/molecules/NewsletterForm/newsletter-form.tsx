@@ -68,7 +68,9 @@ const NewsletterForm = () => {
         <div className="flex flex-col w-full gap-3 px-4 py-6 border rounded-lg bg-light-slate-1">
           <div className="w-full space-y-1">
             <h2 className="text-lg">Subscribe to our newsletter</h2>
-            <p className="text-sm text-light-slate-11">Stay up to date with the latest OpenSauced news and trends!</p>
+            <p className="text-sm font-normal text-light-slate-11">
+              Stay up to date with the latest OpenSauced news and trends!
+            </p>
           </div>
           <form
             name="newsletter"
