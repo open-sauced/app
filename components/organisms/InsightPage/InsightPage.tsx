@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { UserGroupIcon } from "@heroicons/react/24/outline";
-import clsx from "clsx";
 
 import { useDebounce } from "rooks";
 import Button from "components/atoms/Button/button";
@@ -451,10 +450,14 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
 
       <div className="top-0 py-4 mt-5 lg:sticky md:mt-0 lg:py-0">
         <RepositoriesCart
+          loading={createLoading}
           edit={edit}
           hasItems={repos.length > 0}
+          handleCreatePage={handleCreateInsightPage}
+          handleUpdatePage={handleUpdateInsightPage}
           handleAddToCart={handleReAddRepository}
           history={reposRemoved}
+          createPageButtonDisabled={disableCreateButton()}
         >
           {repos.map((repo) => {
             const [repoOwner, repoName] = repo.full_name.split("/");
@@ -495,20 +498,6 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
                 handleToggle={() => setIsPublic((isPublic) => !isPublic)}
               />
             </div>
-          </div>
-          <div className="w-full mt-1 ">
-            <Button
-              disabled={repos.length === 0 && (createLoading || disableCreateButton())}
-              variant="primary"
-              loading={createLoading}
-              onClick={() => (edit ? handleUpdateInsightPage() : handleCreateInsightPage())}
-              className={clsx(
-                "w-full text-sm flex justify-center items-center py-3 px-5 rounded-lg",
-                "text-white bg-light-orange-9"
-              )}
-            >
-              {edit ? "Update" : "Create"} Page
-            </Button>
           </div>
         </div>
       </div>

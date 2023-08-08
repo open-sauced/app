@@ -1,4 +1,5 @@
 import { Children } from "react";
+import clsx from "clsx";
 
 import { BiPlus } from "react-icons/bi";
 
@@ -7,16 +8,44 @@ import CartIllustration from "components/atoms/CartIllustration/cart-illustratio
 import Text from "components/atoms/Typography/text";
 
 import { RepositoryCartItemProps } from "components/molecules/ReposoitoryCartItem/repository-cart-item";
+import Button from "components/atoms/Button/button";
 
 interface RepositoriesCartProps {
+  edit?: boolean;
   children?: React.ReactNode;
   hasItems?: boolean;
   history?: RepositoryCartItemProps[];
+  handleCreatePage?: Function;
+  handleUpdatePage?: Function;
   handleAddToCart?: (fullRepoName: string) => void;
+  createPageButtonDisabled?: boolean;
+  loading?: boolean;
 }
 
-const RepositoriesCart = ({ children, hasItems, history, handleAddToCart }: RepositoriesCartProps): JSX.Element => {
+const RepositoriesCart = ({
+  edit,
+  children,
+  hasItems,
+  history,
+  handleCreatePage,
+  handleUpdatePage,
+  handleAddToCart,
+  createPageButtonDisabled,
+  loading,
+}: RepositoriesCartProps): JSX.Element => {
   const cartItems = Children.toArray(children);
+
+  const onHandleCreatePage = () => {
+    if (handleCreatePage) {
+      handleCreatePage();
+    }
+  };
+
+  const onHandleUpdatePage = () => {
+    if (handleUpdatePage) {
+      handleUpdatePage();
+    }
+  };
 
   const onAddToCart = (fullRepoName: string) => {
     if (handleAddToCart) {
@@ -63,6 +92,23 @@ const RepositoriesCart = ({ children, hasItems, history, handleAddToCart }: Repo
                 </div>
               </div>
             ))}
+        </div>
+      )}
+
+      {hasItems && (
+        <div className="w-full mt-1 ">
+          <Button
+            variant="primary"
+            disabled={createPageButtonDisabled}
+            loading={loading}
+            onClick={() => (edit ? onHandleUpdatePage() : onHandleCreatePage())}
+            className={clsx(
+              "w-full text-sm flex justify-center items-center py-3 px-5 rounded-lg",
+              "text-white bg-light-orange-9"
+            )}
+          >
+            {edit ? "Update" : "Create"} Page
+          </Button>
         </div>
       )}
     </div>
