@@ -90,7 +90,7 @@ const RepositoriesCart = ({
                   <div className="flex items-center gap-2 text-sm text-light-slate-10">
                     <button
                       onClick={() => onAddToCart(`${orgName}/${repoName}`)}
-                      className="border text-xs flex items-center px-[6px] p-[3px] rounded-md"
+                      className="border text-xs flex items-center px-1.5 p-0.5 rounded-md"
                     >
                       Add <BiPlus className="text-lg" />
                     </button>
