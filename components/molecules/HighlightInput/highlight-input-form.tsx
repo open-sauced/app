@@ -155,9 +155,10 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                 value={title}
                 maxLength={50}
                 onChange={(e) => setTitle(e.target.value)}
-                className="flex-1 focus:outline-none"
+                className="flex-1 font-normal placeholder:text-sm focus:outline-none"
                 type="text"
                 placeholder={isDivFocused ? "Add title (optional)" : "Post a highlight to show your work!"}
+                id="highlight-create-input"
               />
             </div>
           </CollapsibleTrigger>
@@ -264,6 +265,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                 className="flex-1 focus:outline-none"
                 type="text"
                 placeholder={"Add title (optional)"}
+                id="highlight-create-input"
               />
             </div>
             <TypeWriterTextArea
@@ -337,6 +339,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
         <div
           onClick={() => setIsFormOpenMobile(true)}
           className="p-3 text-white rounded-full shadow-lg bg-light-orange-10"
+          id="mobile-highlight-create-button"
         >
           <RxPencil1 className="text-3xl" />
         </div>
