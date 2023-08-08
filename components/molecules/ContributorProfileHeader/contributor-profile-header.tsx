@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import { TfiMoreAlt } from "react-icons/tfi";
 import { FiCopy } from "react-icons/fi";
-import { FaIdCard } from "react-icons/fa";
 import { SignInWithOAuthCredentials, User } from "@supabase/supabase-js";
 import { usePostHog } from "posthog-js/react";
 
@@ -20,7 +19,6 @@ import {
 
 import { useUserCollaborations } from "lib/hooks/useUserCollaborations";
 import { useToast } from "lib/hooks/useToast";
-import { cardPageUrl } from "lib/utils/urls";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../Dialog/dialog";
 
 interface ContributorProfileHeaderProps {
@@ -146,10 +144,7 @@ const ContributorProfileHeader = ({
             {/* Mobile dropdown menu */}
 
             <DropdownMenu>
-              <div className="flex items-center gap-2 mb-10 md:gap-6 flex-wrap">
-                <Button variant="primary" href={cardPageUrl(username!)}>
-                  <FaIdCard className="mt-1 mr-1" /> Get Card
-                </Button>
+              <div className="flex items-center gap-2 mb-10 md:gap-6">
                 <Button
                   onClick={() => handleCopyToClipboard(`${host}/user/${user?.user_metadata.user_name}`)}
                   className="px-8 py-2 bg-white "

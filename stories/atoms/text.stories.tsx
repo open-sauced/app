@@ -1,60 +1,24 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import { ComponentStory } from "@storybook/react";
 import Text from "../../components/atoms/Typography/text";
 
-const meta: Meta<typeof Text> = {
-  title: "Design System/Atoms/Typography/Text",
-  component: Text,
-  argTypes: {
-    type: {
-      options: ["default", "secondary", "success", "warning", "danger"],
-      control: { type: "select" },
-    },
-  },
+const storyConfig = {
+  title: "Design System/Atoms/Text",
+  component: "Text",
 };
 
-export default meta;
+export default storyConfig;
 
-type Story = StoryObj<typeof Text>;
+//Text Template
+const TextTemplate: ComponentStory<typeof Text> = (args) => <Text {...args} />;
 
-export const Default: Story = {
-  args: {
-    children: "Test",
-    type: "default",
-    strong: false,
-    underline: false,
-    strikethrough: false,
-    mark: false,
-    code: false,
-    keyboard: false,
-    small: false,
-    disabled: false,
-  },
-};
+export const Default = TextTemplate.bind({});
 
-export const KeyboardText: Story = {
-  args: {
-    ...Default.args,
-    keyboard: true,
-  },
-};
-
-export const CodeText: Story = {
-  args: {
-    ...Default.args,
-    code: true,
-  },
-};
-
-export const DisbaledText: Story = {
-  args: {
-    ...Default.args,
-    disabled: true,
-  },
-};
-
-export const SmallText: Story = {
-  args: {
-    ...Default.args,
-    small: true,
-  },
+Default.args = {
+  children: "Test",
+  strong: false,
+  type: "default",
+  strikethrough: false,
+  underline: false,
+  small: false,
+  disabled: false,
 };

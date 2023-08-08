@@ -54,6 +54,8 @@ const ContributorProfileInfo = ({
           {isConnected && <Badge text="beta" />}
         </div>
         <div className="flex items-center text-sm gap-3">
+          <span className="text-light-slate-11 text-sm">{`@${githubName}`}</span>
+
           {isConnected && (
             <>
               {displayLocalTime && (
@@ -90,18 +92,6 @@ const ContributorProfileInfo = ({
                   <span> {getTimeByTimezone(timezone ? getTimezone(timezone) : 1)}</span>
                 </span>
               )}
-
-              <span className="flex gap-2 items-center">
-                <FiGithub className="text-light-slate-9" />
-                <Link
-                  href={`https://github.com/${githubName}`}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="w-max hover:text-orange-500 "
-                >
-                  {githubName}
-                </Link>
-              </span>
 
               {twitterUsername && (
                 <span className="flex gap-2 items-center">

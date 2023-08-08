@@ -13,8 +13,8 @@ const TopContributorsPanel = ({ loggedInUserLogin }: TopContributorsPanelProps) 
   const top3Contributors = topContributorsWithoutLoggedInUser.slice(0, 3).map((user) => user.login);
 
   return (
-    <div className="flex flex-col max-w-xs gap-5 p-6 border rounded-lg bg-light-slate-1">
-      <h2 className="pb-2 text-lg border-b">Top Contributors</h2>
+    <div className="flex flex-col max-w-xs gap-6 p-6 border bg-light-slate-1 rounded-xl">
+      <h2 className="pb-2 text-2xl border-b">Top Contributors</h2>
 
       {isLoading &&
         Array.from({ length: 3 }).map((_, i) => (

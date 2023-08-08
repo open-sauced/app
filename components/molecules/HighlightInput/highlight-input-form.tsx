@@ -155,7 +155,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                 value={title}
                 maxLength={50}
                 onChange={(e) => setTitle(e.target.value)}
-                className="flex-1 font-normal placeholder:text-sm focus:outline-none"
+                className="flex-1 focus:outline-none"
                 type="text"
                 placeholder={isDivFocused ? "Add title (optional)" : "Post a highlight to show your work!"}
               />

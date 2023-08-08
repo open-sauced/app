@@ -39,10 +39,14 @@ const AuthSection: React.FC = ({}) => {
   }, []);
 
   useEffect(() => {
-    if (session && !userInfo) {
-      setUserInfo(session);
-    }
-  }, [session]);
+    const getUser = async () => {
+      if (session && !userInfo) {
+        setUserInfo(session);
+      }
+    };
+
+    getUser();
+  }, [userInfo]);
 
   const authMenu = {
     authed: [

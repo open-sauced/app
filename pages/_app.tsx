@@ -58,6 +58,8 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
 
   if (typeof window !== "undefined") hostname = window.location.hostname;
 
+  console.log(router.asPath);
+
   useEffect(() => {
     let chatButton = document.getElementById("sitegpt-chat-icon");
 

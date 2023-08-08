@@ -23,7 +23,7 @@ const useContributorPullRequestsChart = (contributor: string, topic: string, rep
       },
     },
     grid: {
-      height: 130,
+      height: 100,
       top: 0,
       bottom: 0,
       right: 0,
@@ -41,7 +41,6 @@ const useContributorPullRequestsChart = (contributor: string, topic: string, rep
           color: "#FFB74D",
           opacity: 0.6,
         },
-        clip: false,
       },
     ],
     tooltip: {

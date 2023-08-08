@@ -1,26 +1,19 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import { ComponentStory } from "@storybook/react";
 import Title from "../../components/atoms/Typography/title";
 
-const meta: Meta = {
-  title: "Design System/Atoms/Typography/Title",
-  component: Title,
-  argTypes: {
-    level: {
-      options: [1, 2, 3, 4, 5],
-      control: { type: "select" },
-    },
-    weight: {
-      options: ["thin", "extralight", "light", "normal", "medium", "semibold", "bold", "extrabold", "black"],
-      control: { type: "select" },
-    },
-  },
+const storyConfig = {
+  title: "Design System/Atoms/Title",
+  component: "Title",
 };
 
-export default meta;
+export default storyConfig;
 
-export const Default: StoryObj<typeof Title> = {
-  args: {
-    children: "Test",
-    level: 1,
-  },
+//Title Template
+const TitleTemplate: ComponentStory<typeof Title> = (args) => <Title {...args} />;
+
+export const Default = TitleTemplate.bind({});
+
+Default.args = {
+  children: "Test",
+  level: 1,
 };
