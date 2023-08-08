@@ -93,6 +93,12 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
     if (newHighlight && signInRequired) {
       signIn({ provider: "github", options: { redirectTo: `${window.location.origin}/feed?new=${newHighlight}` } });
     }
+
+    // no need to create intervals for checking the highlight creation input if there is no new highlight
+    if (!newHighlight) {
+      return;
+    }
+
     var focusOnHighlighCreationInput: NodeJS.Timeout;
 
     if (window.innerWidth > 768) {
