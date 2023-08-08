@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.59.0-beta.8](https://github.com/open-sauced/insights/compare/v1.59.0-beta.7...v1.59.0-beta.8) (2023-08-08)
+
+
+### 🍕 Features
+
+* add support for highlight.new ([#1487](https://github.com/open-sauced/insights/issues/1487)) ([3daa5c0](https://github.com/open-sauced/insights/commit/3daa5c0a0963f2dd4c8facd8e309cc66952f69d7))
+* improved the UX on the feeds page and scroll behaviour ([#1506](https://github.com/open-sauced/insights/issues/1506)) ([31c1593](https://github.com/open-sauced/insights/commit/31c15937e196cb2eab44f81b60682e5d30931334))
+
 ## [1.59.0-beta.7](https://github.com/open-sauced/insights/compare/v1.59.0-beta.6...v1.59.0-beta.7) (2023-08-08)
 
 
