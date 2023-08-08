@@ -5,6 +5,37 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.59.0-beta.5](https://github.com/open-sauced/insights/compare/v1.59.0-beta.4...v1.59.0-beta.5) (2023-08-07)
+
+
+### 🐛 Bug Fixes
+
+* Feed page responsiveness  ([#1490](https://github.com/open-sauced/insights/issues/1490)) ([67662b2](https://github.com/open-sauced/insights/commit/67662b224d22898d97e6f8cb7a67e6a9ca13c6f9))
+
+
+### 🍕 Features
+
+* onboarding auto fetch timezone ([#1488](https://github.com/open-sauced/insights/issues/1488)) ([ae5cdd7](https://github.com/open-sauced/insights/commit/ae5cdd7e2a9ee18798db1da051cacf41139b85e8))
+
+## [1.59.0-beta.4](https://github.com/open-sauced/insights/compare/v1.59.0-beta.3...v1.59.0-beta.4) (2023-08-04)
+
+
+### 🐛 Bug Fixes
+
+* uses session to update user info for notifications check ([#1486](https://github.com/open-sauced/insights/issues/1486)) ([60d787e](https://github.com/open-sauced/insights/commit/60d787ef4c9a6867ab0159c5576fed429f9a48c6))
+
+## [1.59.0-beta.3](https://github.com/open-sauced/insights/compare/v1.59.0-beta.2...v1.59.0-beta.3) (2023-08-04)
+
+
+### 🧑‍💻 Code Refactoring
+
+* replace supabase/ui in design system typography components ([#1438](https://github.com/open-sauced/insights/issues/1438)) ([38cfb30](https://github.com/open-sauced/insights/commit/38cfb305f3abad32ffbac7acff3dbb9b08498b4e))
+
+
+### 🐛 Bug Fixes
+
+* update release workflow to use GitHub app for semantic versioning ([#1484](https://github.com/open-sauced/insights/issues/1484)) ([3f1ce84](https://github.com/open-sauced/insights/commit/3f1ce845790e7d6e9bb522756d24346319384ee1))
+
 ## [1.59.0-beta.2](https://github.com/open-sauced/insights/compare/v1.59.0-beta.1...v1.59.0-beta.2) (2023-08-04)
 
 
