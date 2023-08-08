@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.59.0-beta.9](https://github.com/open-sauced/insights/compare/v1.59.0-beta.8...v1.59.0-beta.9) (2023-08-08)
+
+
+### 🐛 Bug Fixes
+
+* update environment variable for Sentry ([#1521](https://github.com/open-sauced/insights/issues/1521)) ([56ac14b](https://github.com/open-sauced/insights/commit/56ac14b6261eeb9cac440930ff581d392c6e4e5e))
+
 ## [1.59.0-beta.8](https://github.com/open-sauced/insights/compare/v1.59.0-beta.7...v1.59.0-beta.8) (2023-08-08)
 
 
