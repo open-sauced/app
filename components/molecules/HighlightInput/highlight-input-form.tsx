@@ -12,6 +12,7 @@ import Tooltip from "components/atoms/Tooltip/tooltip";
 import { createHighlights } from "lib/hooks/createHighlights";
 import {
   generateApiPrUrl,
+  getGithubIssueDetails,
   getPullRequestCommitMessageFromUrl,
   isValidIssueUrl,
   isValidPullRequestUrl,
@@ -23,6 +24,7 @@ import { generatePrHighlightSummaryByCommitMsg } from "lib/utils/generate-pr-hig
 import Fab from "components/atoms/Fab/fab";
 import { TypeWriterTextArea } from "components/atoms/TypeWriterTextArea/type-writer-text-area";
 import { fetchGithubIssueInfo } from "lib/hooks/fetchGithubIssueInfo";
+import generateIssueHighlightSummary from "lib/utils/generate-issue-highlight-summary";
 import { Calendar } from "../Calendar/calendar";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../Collapsible/collapsible";
 import { Popover, PopoverContent, PopoverTrigger } from "../Popover/popover";
@@ -68,15 +70,21 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
   }, [isFormOpenMobile]);
 
   const handleGenerateHighlightSummary = async () => {
-    if (!pullrequestLink || !isValidPullRequestUrl(pullrequestLink)) {
-      toast({ description: "Please provide a valid pull request link!", title: "Error", variant: "danger" });
+    if (!pullrequestLink || (!isValidPullRequestUrl(pullrequestLink) && !isValidIssueUrl(pullrequestLink))) {
+      toast({ description: "Please provide a valid issue or pull request link!", title: "Error", variant: "danger" });
       return;
     }
 
     setIsSummaryButtonDisabled(true);
 
-    const commitMessages = await getPullRequestCommitMessageFromUrl(pullrequestLink);
-    const summary = await generatePrHighlightSummaryByCommitMsg(commitMessages);
+    var summary: string | null;
+    if (isValidPullRequestUrl(pullrequestLink)) {
+      const commitMessages = await getPullRequestCommitMessageFromUrl(pullrequestLink);
+      summary = await generatePrHighlightSummaryByCommitMsg(commitMessages);
+    } else {
+      const { title: issueTitle, body: issueBody } = await getGithubIssueDetails(pullrequestLink);
+      summary = await generateIssueHighlightSummary(issueTitle, issueBody);
+    }
 
     setIsSummaryButtonDisabled(false);
 
