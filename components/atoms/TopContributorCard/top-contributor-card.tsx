@@ -43,7 +43,7 @@ const TopContributorCard = ({ login }: TopContributorCardProps) => {
     <div className="flex items-center justify-between w-full gap-4 bg-light-slate-1">
       <Link className="overflow-hidden" href={`/user/${login}`}>
         <div className="flex items-center gap-2">
-          <Avatar isCircle size={35} avatarURL={getAvatarByUsername(login)} />
+          <Avatar className="flex-none" isCircle size={35} avatarURL={getAvatarByUsername(login)} />
           <p className="font-semibold truncate text-light-slate-12">{login}</p>
         </div>
       </Link>
