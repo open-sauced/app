@@ -99,7 +99,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
       return;
     }
 
-    var focusOnHighlighCreationInput: NodeJS.Timeout;
+    let focusOnHighlighCreationInput: NodeJS.Timeout;
 
     if (window.innerWidth > 768) {
       focusOnHighlighCreationInput = setInterval(() => {
