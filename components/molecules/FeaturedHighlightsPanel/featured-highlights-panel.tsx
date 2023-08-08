@@ -18,7 +18,7 @@ const FeaturedHighlightsPanel = ({ highlights }: FeaturedHighlightsPanelProps) =
       <h2 className="pb-2 text-lg border-b">Featured Highlights</h2>
       <div className="flex flex-col gap-4 text-sm">
         {highlights.map(({ id, title }) => (
-          <Link className="transition hover:text-light-orange-10" key={id} href={`${host}/feed/${id}`}>
+          <Link className="font-normal transition hover:text-light-orange-10" key={id} href={`${host}/feed/${id}`}>
             {title}
           </Link>
         ))}
