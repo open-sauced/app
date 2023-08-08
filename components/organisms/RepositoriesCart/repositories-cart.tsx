@@ -94,23 +94,20 @@ const RepositoriesCart = ({
             ))}
         </div>
       )}
-
-      {hasItems && (
-        <div className="w-full mt-1 ">
-          <Button
-            variant="primary"
-            disabled={createPageButtonDisabled}
-            loading={loading}
-            onClick={() => (edit ? onHandleUpdatePage() : onHandleCreatePage())}
-            className={clsx(
-              "w-full text-sm flex justify-center items-center py-3 px-5 rounded-lg",
-              "text-white bg-light-orange-9"
-            )}
-          >
-            {edit ? "Update" : "Create"} Page
-          </Button>
-        </div>
-      )}
+      <div className="w-full mt-1 ">
+        <Button
+          variant="primary"
+          disabled={createPageButtonDisabled}
+          loading={loading}
+          onClick={() => (edit ? onHandleUpdatePage() : onHandleCreatePage())}
+          className={clsx(
+            "w-full text-sm flex justify-center items-center py-3 px-5 rounded-lg",
+            "text-white bg-light-orange-9"
+          )}
+        >
+          {edit ? "Update" : "Create"} Page
+        </Button>
+      </div>
     </div>
   );
 };
