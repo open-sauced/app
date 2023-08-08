@@ -5,6 +5,18 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.59.0-beta.7](https://github.com/open-sauced/insights/compare/v1.59.0-beta.6...v1.59.0-beta.7) (2023-08-08)
+
+
+### 🐛 Bug Fixes
+
+* on page reload Insights page redirecting to Dashboard ([#1517](https://github.com/open-sauced/insights/issues/1517)) ([397c36e](https://github.com/open-sauced/insights/commit/397c36eab096f5a43ef09a8c528f13ada5cc4940))
+
+
+### 🍕 Features
+
+* add a user notifications page ([#1478](https://github.com/open-sauced/insights/issues/1478)) ([022dc69](https://github.com/open-sauced/insights/commit/022dc695067049874a4ae1f8fcdd57a21a266220))
+
 ## [1.59.0-beta.6](https://github.com/open-sauced/insights/compare/v1.59.0-beta.5...v1.59.0-beta.6) (2023-08-07)
 
 
