@@ -7,50 +7,58 @@
 
 ### [1.57.1-beta.7](https://github.com/open-sauced/insights/compare/v1.57.1-beta.6...v1.57.1-beta.7) (2023-07-26)
 
+
 ### 🎨 Styles
 
-- remove irrelevant padding in page divider ([#1427](https://github.com/open-sauced/insights/issues/1427)) ([5faaa4e](https://github.com/open-sauced/insights/commit/5faaa4eb501999ebdfbbd896550559e909807a57))
+* remove irrelevant padding in page divider ([#1427](https://github.com/open-sauced/insights/issues/1427)) ([5faaa4e](https://github.com/open-sauced/insights/commit/5faaa4eb501999ebdfbbd896550559e909807a57))
+
 
 ### 🐛 Bug Fixes
 
-- mismatched selection color ([#1430](https://github.com/open-sauced/insights/issues/1430)) ([8a1d37b](https://github.com/open-sauced/insights/commit/8a1d37b996ebd8e74b113c0974a5de763fc1515e))
+* mismatched selection color ([#1430](https://github.com/open-sauced/insights/issues/1430)) ([8a1d37b](https://github.com/open-sauced/insights/commit/8a1d37b996ebd8e74b113c0974a5de763fc1515e))
 
 ### [1.57.1-beta.6](https://github.com/open-sauced/insights/compare/v1.57.1-beta.5...v1.57.1-beta.6) (2023-07-25)
 
+
 ### 🧑‍💻 Code Refactoring
 
-- merge `authSession` function into `useSession` hook ([#1391](https://github.com/open-sauced/insights/issues/1391)) ([d6c230d](https://github.com/open-sauced/insights/commit/d6c230ddc830dd3b4519f60ae22723f88bd5a42c))
+*  merge `authSession` function into `useSession` hook ([#1391](https://github.com/open-sauced/insights/issues/1391)) ([d6c230d](https://github.com/open-sauced/insights/commit/d6c230ddc830dd3b4519f60ae22723f88bd5a42c))
 
 ### [1.57.1-beta.5](https://github.com/open-sauced/insights/compare/v1.57.1-beta.4...v1.57.1-beta.5) (2023-07-25)
 
+
 ### 🐛 Bug Fixes
 
-- show repo filters on initial `feeds` route visit ([#1426](https://github.com/open-sauced/insights/issues/1426)) ([833ee30](https://github.com/open-sauced/insights/commit/833ee30562224bfcbaa028732826e0dbac432f50))
+* show repo filters on initial `feeds` route visit ([#1426](https://github.com/open-sauced/insights/issues/1426)) ([833ee30](https://github.com/open-sauced/insights/commit/833ee30562224bfcbaa028732826e0dbac432f50))
 
 ### [1.57.1-beta.4](https://github.com/open-sauced/insights/compare/v1.57.1-beta.3...v1.57.1-beta.4) (2023-07-25)
 
+
 ### 🐛 Bug Fixes
 
-- Deleted page button changed to delete highlight ([#1419](https://github.com/open-sauced/insights/issues/1419)) ([d502605](https://github.com/open-sauced/insights/commit/d5026050bfa28a21b44bbfe7b3dcd1e6a54ac9c3))
+* Deleted page button changed to delete highlight ([#1419](https://github.com/open-sauced/insights/issues/1419)) ([d502605](https://github.com/open-sauced/insights/commit/d5026050bfa28a21b44bbfe7b3dcd1e6a54ac9c3))
 
 ### [1.57.1-beta.3](https://github.com/open-sauced/insights/compare/v1.57.1-beta.2...v1.57.1-beta.3) (2023-07-25)
 
+
 ### 🐛 Bug Fixes
 
-- fixed bug on chatbot button overlay ([#1420](https://github.com/open-sauced/insights/issues/1420)) ([2a94583](https://github.com/open-sauced/insights/commit/2a94583de3f79c86d4fb9143042041347bdca0a3))
-- misaligned chat button close icon ([#1422](https://github.com/open-sauced/insights/issues/1422)) ([60f22bd](https://github.com/open-sauced/insights/commit/60f22bd24cc56771e5acf91df254fc17ef8df78d))
+* fixed bug on chatbot button overlay ([#1420](https://github.com/open-sauced/insights/issues/1420)) ([2a94583](https://github.com/open-sauced/insights/commit/2a94583de3f79c86d4fb9143042041347bdca0a3))
+* misaligned chat button close icon ([#1422](https://github.com/open-sauced/insights/issues/1422)) ([60f22bd](https://github.com/open-sauced/insights/commit/60f22bd24cc56771e5acf91df254fc17ef8df78d))
 
 ### [1.57.1-beta.2](https://github.com/open-sauced/insights/compare/v1.57.1-beta.1...v1.57.1-beta.2) (2023-07-24)
 
+
 ### 🐛 Bug Fixes
 
-- tab inconsistency in user profile matching the url ([#1403](https://github.com/open-sauced/insights/issues/1403)) ([f8c6766](https://github.com/open-sauced/insights/commit/f8c67660b1b620e4fd2235c618394f2b0020accc))
+* tab inconsistency in user profile matching the url ([#1403](https://github.com/open-sauced/insights/issues/1403)) ([f8c6766](https://github.com/open-sauced/insights/commit/f8c67660b1b620e4fd2235c618394f2b0020accc))
 
 ### [1.57.1-beta.1](https://github.com/open-sauced/insights/compare/v1.57.0...v1.57.1-beta.1) (2023-07-24)
 
+
 ### 🐛 Bug Fixes
 
-- reduce tab font size in contributors profile page ([#1413](https://github.com/open-sauced/insights/issues/1413)) ([238dc2f](https://github.com/open-sauced/insights/commit/238dc2f13f81c754c488628ed534de867dcea02a))
+* reduce tab font size in contributors profile page ([#1413](https://github.com/open-sauced/insights/issues/1413)) ([238dc2f](https://github.com/open-sauced/insights/commit/238dc2f13f81c754c488628ed534de867dcea02a))
 
 ## [1.57.0](https://github.com/open-sauced/insights/compare/v1.56.0...v1.57.0) (2023-07-24)
 
