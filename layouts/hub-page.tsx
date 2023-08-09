@@ -27,7 +27,7 @@ const HubPageLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="flex flex-col min-h-screen">
       <TopNav />
-      <div className="page-container flex grow bg-light-slate-3 flex-col items-center">
+      <div className="page-container flex grow bg-light-slate-3 flex-col items-center pt-28 sm:pt-20 md:pt-14">
         <div className="info-container container w-full min-h-[100px]">
           <Header>
             {insight ? (
