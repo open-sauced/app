@@ -4,6 +4,7 @@ import {
   getProfileLink,
   getRepoIssuesLink,
   generateGhOgImage,
+  isValidIssueUrl,
 } from "lib/utils/github";
 
 describe("[lib] github methods", () => {
@@ -33,5 +34,9 @@ describe("[lib] github methods", () => {
   it("Should return an object with isValid set to false", () => {
     const result = generateGhOgImage("https://gitub.com/open-sauced/hot/pull/448");
     expect(result).toEqual({ isValid: false, url: "" });
+  });
+  it("Should return false", () => {
+    const result = isValidIssueUrl("https://gitub.com/open-sauced/hot/pull/448");
+    expect(result).toEqual(false);
   });
 });
