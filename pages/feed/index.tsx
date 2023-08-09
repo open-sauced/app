@@ -168,7 +168,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
       />
 
       <div
-        className="mt-10 md:mt-0 w-full gap-[2rem] flex flex-col justify-center md:gap-6 xl:gap-16 px-2 pt-12 md:items-start md:justify-between mx-auto md:px-16 lg:justify-end md:flex-row"
+        className="mt-5 md:mt-0 w-full gap-[2rem] flex flex-col justify-center md:gap-6 xl:gap-16 px-2 pt-12 md:items-start md:justify-between mx-auto md:px-16 lg:justify-end md:flex-row"
         ref={topRef}
       >
         <div className="sticky top-8">
