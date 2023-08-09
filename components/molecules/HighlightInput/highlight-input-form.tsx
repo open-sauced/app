@@ -13,6 +13,7 @@ import { createHighlights } from "lib/hooks/createHighlights";
 import {
   generateApiPrUrl,
   getGithubIssueDetails,
+  getGithubIssueComments,
   getPullRequestCommitMessageFromUrl,
   isValidIssueUrl,
   isValidPullRequestUrl,
@@ -83,7 +84,8 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
       summary = await generatePrHighlightSummaryByCommitMsg(commitMessages);
     } else {
       const { title: issueTitle, body: issueBody } = await getGithubIssueDetails(pullrequestLink);
-      summary = await generateIssueHighlightSummary(issueTitle, issueBody);
+      const issueComments = await getGithubIssueComments(pullrequestLink);
+      summary = await generateIssueHighlightSummary(issueTitle, issueBody, issueComments);
     }
 
     setIsSummaryButtonDisabled(false);

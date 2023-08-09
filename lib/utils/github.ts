@@ -106,6 +106,24 @@ const getGithubIssueDetails = async (url: string): Promise<any> => {
   };
 };
 
+const getGithubIssueComments = async (url: string): Promise<any> => {
+  const sessionResponse = await supabase.auth.getSession();
+  const githubToken = sessionResponse?.data.session?.provider_token;
+  const [, , , owner, repoName, , issueNumber] = url.split("/");
+
+  const apiUrl = `https://api.github.com/repos/${owner}/${repoName}/issues/${issueNumber}/comments`;
+
+  const response = await fetch(apiUrl, {
+    headers: {
+      Authorization: `token ${githubToken}`,
+    },
+  });
+  const data = await response.json();
+  const allComments = data.map((comment: any) => comment.body).join(" ");
+
+  return allComments;
+};
+
 const isValidPullRequestUrl = (url: string): boolean => {
   return url.match(/((https?:\/\/)?(www\.)?github\.com\/[^\/]+\/[^\/]+\/pull\/[0-9]+)/) ? true : false;
 };
@@ -132,4 +150,5 @@ export {
   isValidIssueUrl,
   getPullRequestCommitMessageFromUrl,
   getGithubIssueDetails,
+  getGithubIssueComments,
 };

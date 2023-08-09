@@ -1,13 +1,14 @@
 import { supabase } from "./supabase";
 
 const baseUrl = process.env.NEXT_PUBLIC_API_URL;
-const generateIssueHighlightSummary = async (issueTitle: string, issueBody: string) => {
+const generateIssueHighlightSummary = async (issueTitle: string, issueBody: string, issueComments: string) => {
   const sessionResponse = await supabase.auth.getSession();
   const sessionToken = sessionResponse?.data.session?.access_token;
   const payload = {
-    descriptionLength: 400,
+    summaryLength: 400,
     issueTitle,
-    issueBody,
+    issueDescription: issueBody,
+    issueComments,
     language: "english",
     diff: "issue",
     tone: "formal",
@@ -15,7 +16,7 @@ const generateIssueHighlightSummary = async (issueTitle: string, issueBody: stri
   };
 
   try {
-    const res = await fetch(`${baseUrl}/issues/description/generate`, {
+    const res = await fetch(`${baseUrl}/issues/summary/generate`, {
       method: "POST",
       headers: {
         "Content-type": "application/json",
@@ -26,7 +27,7 @@ const generateIssueHighlightSummary = async (issueTitle: string, issueBody: stri
 
     if (res.ok) {
       const data = await res.json();
-      return data.description as string;
+      return data.summary as string;
     } else {
       return null;
     }
