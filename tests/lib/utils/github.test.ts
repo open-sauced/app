@@ -39,4 +39,8 @@ describe("[lib] github methods", () => {
     const result = isValidIssueUrl("https://gitub.com/open-sauced/hot/pull/448");
     expect(result).toEqual(false);
   });
+  it("Should return true", () => {
+    const result = isValidIssueUrl("https://github.com/open-sauced/pizza-cli/issues/19");
+    expect(result).toEqual(true);
+  });
 });

@@ -222,7 +222,8 @@ const ContributorHighlightCard = ({
       const { apiPaths } = generateApiPrUrl(highlight.prLink);
       const { repoName, orgName, issueId } = apiPaths;
       setLoading(true);
-      const res = highlight.prLink.includes("issues")
+      const isIssue = highlight.prLink.includes("issues");
+      const res = isIssue
         ? await fetchGithubIssueInfo(orgName, repoName, issueId)
         : await fetchGithubPRInfo(orgName, repoName, issueId);
 
@@ -237,7 +238,7 @@ const ContributorHighlightCard = ({
             highlight: highlight.desc || "",
             title: highlight.title,
             shipped_at: date,
-            type: highlight.prLink.includes("issues") ? "issue" : "pull_request",
+            type: isIssue ? "issue" : "pull_request",
           },
           id
         );
@@ -253,7 +254,7 @@ const ContributorHighlightCard = ({
         }
       }
     } else {
-      setError("Please provide a valid github issue or pull request url");
+      setError("Please provide a valid GitHub issue or pull request url");
     }
   };
 
@@ -529,7 +530,7 @@ const ContributorHighlightCard = ({
                 </div>
               </fieldset>
               <fieldset className="flex flex-col w-full gap-1">
-                <label htmlFor="title">Highlighted link</label>
+                <label htmlFor="title">Highlight link</label>
                 <input
                   onChange={(e) => {
                     setHighlight((prev) => ({ ...prev, prLink: e.target.value }));

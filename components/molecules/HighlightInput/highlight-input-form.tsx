@@ -78,7 +78,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
 
     setIsSummaryButtonDisabled(true);
 
-    var summary: string | null;
+    let summary: string | null;
     if (isValidPullRequestUrl(pullrequestLink)) {
       const commitMessages = await getPullRequestCommitMessageFromUrl(pullrequestLink);
       summary = await generatePrHighlightSummaryByCommitMsg(commitMessages);
