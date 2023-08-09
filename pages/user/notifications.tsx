@@ -23,6 +23,10 @@ interface NotificationResponse {
   meta: Meta;
 }
 
+const getNotificationUsername = (notification: DbUserNotification) => {
+  return notification.type === "highlight_reaction" ? notification.message.split(" ")[0] : notification.meta_id;
+};
+
 const Notifications: WithPageLayout = () => {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -30,10 +34,9 @@ const Notifications: WithPageLayout = () => {
   const [filter, setFilter] = useState<"all" | "follow" | "highlight_reaction">("all");
 
   const topRef = useRef<HTMLDivElement>(null);
-  const { sessionToken, user } = useSupabaseAuth(true);
+  const { sessionToken } = useSupabaseAuth(true);
 
   const router = useRouter();
-  const username = user?.user_metadata.user_name as string;
 
   const fetchNotifications = async (page = 1) => {
     if (!sessionToken) return;
@@ -155,16 +158,16 @@ const Notifications: WithPageLayout = () => {
                     initialsClassName="text-[100px] leading-none"
                     initials={notification.meta_id.charAt(0)}
                     hasBorder
-                    avatarURL={getAvatarByUsername(notification.meta_id, 300)}
+                    avatarURL={getAvatarByUsername(getNotificationUsername(notification), 300)}
                     size={50}
                     isCircle
                   />
                   <div className="flex flex-col gap-2">
                     <p className="text-light-slate-12 flex gap-2">
                       <Link href={getNotificationURL(notification.type, notification.meta_id)} className="font-bold">
-                        {notification.meta_id}
+                        {getNotificationUsername(notification)}
                       </Link>
-                      <span>{notification.message.replace(notification.meta_id, " ")}</span>
+                      <span>{notification.message.replace(getNotificationUsername(notification), " ")}</span>
                     </p>
                     <span className="text-xs font-normal text-light-slate-11">
                       {formatDistanceToNowStrict(new Date(notification.notified_at), { addSuffix: true })}
