@@ -321,7 +321,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
             <FollowingHighlightWrapper selectedFilter={selectedRepo} emojis={emojis} />
           </TabsContent>
         </Tabs>
-        <div className="hidden lg:w-[24%] w-[30%] gap-6 mt-10 flex-none lg:flex flex-col">
+        <div className="hidden xl:w-[24%] w-[30%] gap-6 mt-10 flex-none lg:flex flex-col">
           {repoList && repoList.length > 0 && (
             <HighlightsFilterCard
               selectedFilter={selectedRepo}
