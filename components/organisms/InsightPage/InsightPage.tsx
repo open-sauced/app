@@ -14,7 +14,7 @@ import RepoNotIndexed from "components/organisms/Repositories/repository-not-ind
 import useRepositories from "lib/hooks/api/useRepositories";
 
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
-import { generateRepoFullName, getAvatarById, getAvatarByUsername } from "lib/utils/github";
+import { generateRepoParts, getAvatarById, getAvatarByUsername } from "lib/utils/github";
 import useStore from "lib/store";
 import Error from "components/atoms/Error/Error";
 import Search from "components/atoms/Search/search";
@@ -201,17 +201,17 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
       return;
     }
 
-    const validatedRepoUrl = generateRepoFullName(repoToAdd);
+    const { apiPaths, isValidUrl } = generateRepoParts(repoToAdd);
 
-    if (!validatedRepoUrl.isValidRepo) {
+    if (!isValidUrl) {
       setAddRepoError(RepoLookupError.Invalid);
       return;
     }
 
-    const repoNameToAdd = validatedRepoUrl.repoFullName;
+    const { repoFullName } = apiPaths;
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/repos/${repoNameToAdd}`);
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/repos/${repoFullName}`);
 
       if (response.ok) {
         const addedRepo = (await response.json()) as DbRepo;
@@ -222,7 +222,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
         setAddRepoError(RepoLookupError.Initial);
         setRepoSearchTerm("");
       } else {
-        const publicRepoResponse = await fetch(`https://api.github.com/repos/${repoNameToAdd}`);
+        const publicRepoResponse = await fetch(`https://api.github.com/repos/${repoFullName}`);
 
         if (publicRepoResponse.ok) {
           const publicRepo = await publicRepoResponse.json();

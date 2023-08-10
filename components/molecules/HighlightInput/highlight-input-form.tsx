@@ -10,7 +10,7 @@ import Button from "components/atoms/Button/button";
 import Tooltip from "components/atoms/Tooltip/tooltip";
 
 import { createHighlights } from "lib/hooks/createHighlights";
-import { generateApiPrUrl, getPullRequestCommitMessageFromUrl, isValidPullRequestUrl } from "lib/utils/github";
+import { generateRepoParts, getPullRequestCommitMessageFromUrl, isValidPullRequestUrl } from "lib/utils/github";
 import { fetchGithubPRInfo } from "lib/hooks/fetchGithubPRInfo";
 import { useToast } from "lib/hooks/useToast";
 import TextInput from "components/atoms/TextInput/text-input";
@@ -96,7 +96,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
     const highlight = bodyText;
 
     if (isValidPullRequestUrl(pullrequestLink)) {
-      const { apiPaths } = generateApiPrUrl(pullrequestLink);
+      const { apiPaths } = generateRepoParts(pullrequestLink);
       const { repoName, orgName, issueId } = apiPaths;
       setLoading(true);
       // Api validation to check validity of github pull request link match

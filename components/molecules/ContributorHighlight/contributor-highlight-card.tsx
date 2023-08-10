@@ -24,7 +24,7 @@ import {
 } from "components/atoms/Dropdown/dropdown";
 
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
-import { generateApiPrUrl, getAvatarByUsername, getOwnerAndRepoNameFromUrl } from "lib/utils/github";
+import { generateRepoParts, getAvatarByUsername, getOwnerAndRepoNameFromUrl } from "lib/utils/github";
 import { fetchGithubPRInfo } from "lib/hooks/fetchGithubPRInfo";
 import { updateHighlights } from "lib/hooks/updateHighlight";
 import { deleteHighlight } from "lib/hooks/deleteHighlight";
@@ -212,7 +212,7 @@ const ContributorHighlightCard = ({
     }
 
     if (isValidGhUrl) {
-      const { apiPaths } = generateApiPrUrl(highlight.prLink);
+      const { apiPaths } = generateRepoParts(highlight.prLink);
       const { repoName, orgName, issueId } = apiPaths;
       setLoading(true);
       const res = await fetchGithubPRInfo(orgName, repoName, issueId);
