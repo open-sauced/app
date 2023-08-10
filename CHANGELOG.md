@@ -5,6 +5,80 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.60.0-beta.2](https://github.com/open-sauced/insights/compare/v1.60.0-beta.1...v1.60.0-beta.2) (2023-08-10)
+
+
+### 🐛 Bug Fixes
+
+* check session when updating user settings ([#1541](https://github.com/open-sauced/insights/issues/1541)) ([89a0847](https://github.com/open-sauced/insights/commit/89a084712479858fd1bfcb49e8ba0644f6bed902))
+
+## [1.60.0-beta.1](https://github.com/open-sauced/insights/compare/v1.59.0...v1.60.0-beta.1) (2023-08-10)
+
+
+### 🐛 Bug Fixes
+
+* better responsiveness with long names on the feed page ([#1533](https://github.com/open-sauced/insights/issues/1533)) ([f00b42d](https://github.com/open-sauced/insights/commit/f00b42d98fd718e3be763489039091257f5f2538))
+
+
+### 🍕 Features
+
+* add repositories cart title ([#1500](https://github.com/open-sauced/insights/issues/1500)) ([d2693e2](https://github.com/open-sauced/insights/commit/d2693e29cacedd7bb7daceb5b6f9d889df07f6cc))
+
+## [1.59.0](https://github.com/open-sauced/insights/compare/v1.58.0...v1.59.0) (2023-08-08)
+
+
+### 🧑‍💻 Code Refactoring
+
+* replace supabase/ui in design system typography components ([#1438](https://github.com/open-sauced/insights/issues/1438)) ([38cfb30](https://github.com/open-sauced/insights/commit/38cfb305f3abad32ffbac7acff3dbb9b08498b4e))
+
+
+### 🍕 Features
+
+* add a user notifications page ([#1478](https://github.com/open-sauced/insights/issues/1478)) ([022dc69](https://github.com/open-sauced/insights/commit/022dc695067049874a4ae1f8fcdd57a21a266220))
+* add conditional routing to single highlight dialog close action ([#1473](https://github.com/open-sauced/insights/issues/1473)) ([1341cba](https://github.com/open-sauced/insights/commit/1341cba30eea245fe2755f072e0bd49c33b84667))
+* add github link to profile ([#1459](https://github.com/open-sauced/insights/issues/1459)) ([d42bc6d](https://github.com/open-sauced/insights/commit/d42bc6d031eb4e3dd656f759adc500049b6ccf52))
+* add support for highlight.new ([#1487](https://github.com/open-sauced/insights/issues/1487)) ([3daa5c0](https://github.com/open-sauced/insights/commit/3daa5c0a0963f2dd4c8facd8e309cc66952f69d7))
+* improved the UX on the feeds page and scroll behaviour ([#1506](https://github.com/open-sauced/insights/issues/1506)) ([31c1593](https://github.com/open-sauced/insights/commit/31c15937e196cb2eab44f81b60682e5d30931334))
+* onboarding auto fetch timezone ([#1488](https://github.com/open-sauced/insights/issues/1488)) ([ae5cdd7](https://github.com/open-sauced/insights/commit/ae5cdd7e2a9ee18798db1da051cacf41139b85e8))
+
+
+### 🐛 Bug Fixes
+
+* Feed page responsiveness  ([#1490](https://github.com/open-sauced/insights/issues/1490)) ([67662b2](https://github.com/open-sauced/insights/commit/67662b224d22898d97e6f8cb7a67e6a9ca13c6f9))
+* feeds page typography and styles improvements ([#1467](https://github.com/open-sauced/insights/issues/1467)) ([a3b289e](https://github.com/open-sauced/insights/commit/a3b289e97300a6225c002d87d19a882ee09323ff))
+* on page reload Insights page redirecting to Dashboard ([#1517](https://github.com/open-sauced/insights/issues/1517)) ([397c36e](https://github.com/open-sauced/insights/commit/397c36eab096f5a43ef09a8c528f13ada5cc4940))
+* update environment variable for Sentry ([#1521](https://github.com/open-sauced/insights/issues/1521)) ([56ac14b](https://github.com/open-sauced/insights/commit/56ac14b6261eeb9cac440930ff581d392c6e4e5e))
+* update release workflow to use GitHub app for semantic versioning ([#1484](https://github.com/open-sauced/insights/issues/1484)) ([3f1ce84](https://github.com/open-sauced/insights/commit/3f1ce845790e7d6e9bb522756d24346319384ee1))
+* update user interest logo error for machine learning ([#1474](https://github.com/open-sauced/insights/issues/1474)) ([a286eda](https://github.com/open-sauced/insights/commit/a286eda7478e1ba03898a1086e0d86e9eb18f692))
+* uses session to update user info for notifications check ([#1486](https://github.com/open-sauced/insights/issues/1486)) ([60d787e](https://github.com/open-sauced/insights/commit/60d787ef4c9a6867ab0159c5576fed429f9a48c6))
+
+## [1.59.0-beta.9](https://github.com/open-sauced/insights/compare/v1.59.0-beta.8...v1.59.0-beta.9) (2023-08-08)
+
+
+### 🐛 Bug Fixes
+
+* update environment variable for Sentry ([#1521](https://github.com/open-sauced/insights/issues/1521)) ([56ac14b](https://github.com/open-sauced/insights/commit/56ac14b6261eeb9cac440930ff581d392c6e4e5e))
+
+## [1.59.0-beta.8](https://github.com/open-sauced/insights/compare/v1.59.0-beta.7...v1.59.0-beta.8) (2023-08-08)
+
+
+### 🍕 Features
+
+* add support for highlight.new ([#1487](https://github.com/open-sauced/insights/issues/1487)) ([3daa5c0](https://github.com/open-sauced/insights/commit/3daa5c0a0963f2dd4c8facd8e309cc66952f69d7))
+* improved the UX on the feeds page and scroll behaviour ([#1506](https://github.com/open-sauced/insights/issues/1506)) ([31c1593](https://github.com/open-sauced/insights/commit/31c15937e196cb2eab44f81b60682e5d30931334))
+
+## [1.59.0-beta.7](https://github.com/open-sauced/insights/compare/v1.59.0-beta.6...v1.59.0-beta.7) (2023-08-08)
+
+
+### 🐛 Bug Fixes
+
+* on page reload Insights page redirecting to Dashboard ([#1517](https://github.com/open-sauced/insights/issues/1517)) ([397c36e](https://github.com/open-sauced/insights/commit/397c36eab096f5a43ef09a8c528f13ada5cc4940))
+
+
+### 🍕 Features
+
+* add a user notifications page ([#1478](https://github.com/open-sauced/insights/issues/1478)) ([022dc69](https://github.com/open-sauced/insights/commit/022dc695067049874a4ae1f8fcdd57a21a266220))
+
 ## [1.59.0-beta.6](https://github.com/open-sauced/insights/compare/v1.59.0-beta.5...v1.59.0-beta.6) (2023-08-07)
 
 ### 🍕 Features

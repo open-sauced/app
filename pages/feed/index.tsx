@@ -44,7 +44,7 @@ interface HighlightSSRProps {
 }
 
 const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
-  const { user } = useSupabaseAuth();
+  const { user, signIn } = useSupabaseAuth();
   const { data: repos } = useFetchHighlightRepos();
 
   const { data: featuredHighlights } = useFetchFeaturedHighlights();
@@ -84,6 +84,46 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
     { name: "Following", count: following_count ?? 0 },
     { name: "Highlights", count: highlights_count ?? 0 },
   ];
+
+  useEffect(() => {
+    const queryParams = new URLSearchParams(window.location.search);
+    const newHighlight = queryParams.get("new");
+    const signInRequired = queryParams.get("signIn");
+
+    if (newHighlight && signInRequired) {
+      signIn({ provider: "github", options: { redirectTo: `${window.location.origin}/feed?new=${newHighlight}` } });
+    }
+
+    // no need to create intervals for checking the highlight creation input if there is no new highlight
+    if (!newHighlight) {
+      return;
+    }
+
+    let focusOnHighlighCreationInput: NodeJS.Timeout;
+
+    if (window.innerWidth > 768) {
+      focusOnHighlighCreationInput = setInterval(() => {
+        const highlightCreationInput = document.getElementById("highlight-create-input");
+        if (newHighlight && highlightCreationInput) {
+          highlightCreationInput.click();
+          highlightCreationInput.focus();
+          clearInterval(focusOnHighlighCreationInput);
+        }
+      }, 1000);
+    } else {
+      // for mobile. No need to focus on input, just click on the button as it opens up a form anyway.
+      focusOnHighlighCreationInput = setInterval(() => {
+        const mobileHighlightCreateButton = document.getElementById("mobile-highlight-create-button");
+        if (newHighlight && mobileHighlightCreateButton) {
+          mobileHighlightCreateButton.click();
+          clearInterval(focusOnHighlighCreationInput);
+        }
+      }, 1000);
+    }
+    return () => {
+      clearInterval(focusOnHighlighCreationInput);
+    };
+  }, []);
 
   useEffect(() => {
     if (activeTab === "home") {
@@ -126,30 +166,35 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
         image={ogImage}
         twitterCard="summary_large_image"
       />
-      <div className="w-full gap-[2rem] justify-center flex flex-col md:gap-6 xl:gap-16 pt-12 md:flex-row" ref={topRef}>
-        <div className="flex-col flex-1 xl:flex hidden gap-6 mt-12">
-          {user && (
-            <div className="md:w-1/2 lg:w-1/3">
-              <UserCard
-                loading={loggedInUserLoading}
-                username={loggedInUser?.login as string}
-                meta={userMetaArray as MetaObj[]}
-                name={loggedInUser?.name as string}
-              />
-            </div>
-          )}
-          <TopContributorsPanel loggedInUserLogin={loggedInUser?.login ?? ""} />
 
-          <AnnouncementCard
-            title="#100DaysOfOSS 🚀 "
-            description={
-              "Join us for 100 days of supporting, sharing knowledge, and exploring the open source ecosystem together."
-            }
-            bannerSrc={
-              "https://user-images.githubusercontent.com/5713670/254358937-8e9aa76d-4ed3-4616-a58a-2283796b10e1.png"
-            }
-            url={"https://dev.to/opensauced/100daysofoss-growing-skills-and-real-world-experience-3o5k"}
-          />
+      <div
+        className=" w-full gap-[2rem] flex flex-col justify-center md:gap-6 xl:gap-16 px-2 pt-12 md:items-start md:justify-between mx-auto md:px-16 lg:justify-end md:flex-row"
+        ref={topRef}
+      >
+        <div className="sticky top-8">
+          <div className="flex-col flex-1 xl:flex hidden gap-6 mt-12">
+            {user && (
+              <div className="md:w-1/2 lg:w-1/3">
+                <UserCard
+                  loading={loggedInUserLoading}
+                  username={loggedInUser?.login as string}
+                  meta={userMetaArray as MetaObj[]}
+                  name={loggedInUser?.name as string}
+                />
+              </div>
+            )}
+            <TopContributorsPanel loggedInUserLogin={loggedInUser?.login ?? ""} />
+            <AnnouncementCard
+              title="#100DaysOfOSS 🚀 "
+              description={
+                "Join us for 100 days of supporting, sharing knowledge, and exploring the open source ecosystem together."
+              }
+              bannerSrc={
+                "https://user-images.githubusercontent.com/5713670/254358937-8e9aa76d-4ed3-4616-a58a-2283796b10e1.png"
+              }
+              url={"https://dev.to/opensauced/100daysofoss-growing-skills-and-real-world-experience-3o5k"}
+            />
+          </div>
         </div>
         {singleHighlight && (
           <Dialog
@@ -281,13 +326,16 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
             <FollowingHighlightWrapper selectedFilter={selectedRepo} emojis={emojis} />
           </TabsContent>
         </Tabs>
-        <div className="md:hidden gap-6 mt-10 md:flex-1 lg:flex md:flex-col">
+        <div className="md:hidden gap-6 mt-10 md:flex-1 lg:flex md:flex-col sticky top-20">
           {repoList && repoList.length > 0 && (
             <HighlightsFilterCard
               selectedFilter={selectedRepo}
               setSelected={(repo) => {
                 if (!openSingleHighlight) {
-                  router.push(`/feed${repo ? `?repo=${repo}` : ""}`);
+                  const queryParams = new URLSearchParams(window.location.search);
+                  router.push(
+                    `/feed${repo ? `?repo=${repo}` : queryParams.toString() ? `?${queryParams.toString()}` : ""}`
+                  );
                   setPage(1);
                   setSelectedRepo(repo);
                 }

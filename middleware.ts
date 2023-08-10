@@ -24,10 +24,16 @@ export async function middleware(req: NextRequest) {
   // Auth condition not met, redirect to home page.
   const redirectUrl = req.nextUrl.clone();
   redirectUrl.pathname = "/feed";
+  if (req.nextUrl.pathname === "/feed" && req.nextUrl.searchParams.has("new")) {
+    redirectUrl.searchParams.set("signIn", "true");
+  }
   redirectUrl.searchParams.set("redirectedFrom", req.nextUrl.pathname);
-  return NextResponse.redirect(redirectUrl);
+
+  if (!req.nextUrl.searchParams.has("redirectedFrom")) {
+    return NextResponse.redirect(redirectUrl);
+  }
 }
 
 export const config = {
-  matcher: ["/hub/insights/:path*", "/user/:path"],
+  matcher: ["/hub/insights/:path*", "/user/:path", "/feed/"],
 };
