@@ -5,6 +5,18 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.60.0-beta.1](https://github.com/open-sauced/insights/compare/v1.59.0...v1.60.0-beta.1) (2023-08-10)
+
+
+### 🐛 Bug Fixes
+
+* better responsiveness with long names on the feed page ([#1533](https://github.com/open-sauced/insights/issues/1533)) ([f00b42d](https://github.com/open-sauced/insights/commit/f00b42d98fd718e3be763489039091257f5f2538))
+
+
+### 🍕 Features
+
+* add repositories cart title ([#1500](https://github.com/open-sauced/insights/issues/1500)) ([d2693e2](https://github.com/open-sauced/insights/commit/d2693e29cacedd7bb7daceb5b6f9d889df07f6cc))
+
 ## [1.59.0](https://github.com/open-sauced/insights/compare/v1.58.0...v1.59.0) (2023-08-08)
 
 
