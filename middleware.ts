@@ -17,11 +17,7 @@ export async function middleware(req: NextRequest) {
     return res;
   }
 
-  if (req.nextUrl.pathname.startsWith("/api")) {
-    return res;
-  }
-
-  if (req.nextUrl.pathname.startsWith("/assets")) {
+  if (/^\/(api|assets)/.test(req.nextUrl.pathname)) {
     return res;
   }
 

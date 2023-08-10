@@ -13,3 +13,4 @@ environment = { CHANNEL = "beta" }
 
 [dev]
 command = "next dev"
+autoLaunch = false
