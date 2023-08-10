@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.60.0-beta.2](https://github.com/open-sauced/insights/compare/v1.60.0-beta.1...v1.60.0-beta.2) (2023-08-10)
+
+
+### 🐛 Bug Fixes
+
+* check session when updating user settings ([#1541](https://github.com/open-sauced/insights/issues/1541)) ([89a0847](https://github.com/open-sauced/insights/commit/89a084712479858fd1bfcb49e8ba0644f6bed902))
+
 ## [1.60.0-beta.1](https://github.com/open-sauced/insights/compare/v1.59.0...v1.60.0-beta.1) (2023-08-10)
 
 
