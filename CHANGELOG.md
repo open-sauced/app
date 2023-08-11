@@ -5,6 +5,27 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.60.0-beta.5](https://github.com/open-sauced/insights/compare/v1.60.0-beta.4...v1.60.0-beta.5) (2023-08-11)
+
+
+### 🍕 Features
+
+* add issues to highlights ([#1496](https://github.com/open-sauced/insights/issues/1496)) ([98e106e](https://github.com/open-sauced/insights/commit/98e106ef9b58f5cc7a9ceeb2ed668bac5b792de3))
+
+## [1.60.0-beta.4](https://github.com/open-sauced/insights/compare/v1.60.0-beta.3...v1.60.0-beta.4) (2023-08-11)
+
+
+### 🐛 Bug Fixes
+
+* exclude empty interests on profile page ([#1539](https://github.com/open-sauced/insights/issues/1539)) ([330bb8d](https://github.com/open-sauced/insights/commit/330bb8df96cc4456993c3a0eb700cbaf51414743))
+
+## [1.60.0-beta.3](https://github.com/open-sauced/insights/compare/v1.60.0-beta.2...v1.60.0-beta.3) (2023-08-11)
+
+
+### 🐛 Bug Fixes
+
+* fixed margin issues on layout ([#1534](https://github.com/open-sauced/insights/issues/1534)) ([719b4cb](https://github.com/open-sauced/insights/commit/719b4cb78940eae41e2b3c2a20f59c210c09f7cb))
+
 ## [1.60.0-beta.2](https://github.com/open-sauced/insights/compare/v1.60.0-beta.1...v1.60.0-beta.2) (2023-08-10)
 
 
