@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.60.0-beta.3](https://github.com/open-sauced/insights/compare/v1.60.0-beta.2...v1.60.0-beta.3) (2023-08-11)
+
+
+### 🐛 Bug Fixes
+
+* fixed margin issues on layout ([#1534](https://github.com/open-sauced/insights/issues/1534)) ([719b4cb](https://github.com/open-sauced/insights/commit/719b4cb78940eae41e2b3c2a20f59c210c09f7cb))
+
 ## [1.60.0-beta.2](https://github.com/open-sauced/insights/compare/v1.60.0-beta.1...v1.60.0-beta.2) (2023-08-10)
 
 
