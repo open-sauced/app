@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.60.0-beta.5](https://github.com/open-sauced/insights/compare/v1.60.0-beta.4...v1.60.0-beta.5) (2023-08-11)
+
+
+### 🍕 Features
+
+* add issues to highlights ([#1496](https://github.com/open-sauced/insights/issues/1496)) ([98e106e](https://github.com/open-sauced/insights/commit/98e106ef9b58f5cc7a9ceeb2ed668bac5b792de3))
+
 ## [1.60.0-beta.4](https://github.com/open-sauced/insights/compare/v1.60.0-beta.3...v1.60.0-beta.4) (2023-08-11)
 
 
