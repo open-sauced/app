@@ -1,17 +1,25 @@
+/* eslint-disable prettier/prettier */
 import React from "react";
-import { Typography } from "@supabase/ui";
+import clsx from "clsx";
 
-const { Title: SupabaseTitleComponent } = Typography;
+import TypographyWrapper from "./wrapper";
 
-interface TitleProps extends React.ComponentProps<typeof SupabaseTitleComponent> {
-  //Add additional prop definitions here
+interface TitleProps {
+  children: React.ReactNode;
+  level?: 1 | 2 | 3 | 4 | 5;
+  weight?: "thin" | "extralight" | "light" | "normal" | "medium" | "semibold" | "bold" | "extrabold" | "black";
+  className?: string;
 }
 
-const Title: React.FC<TitleProps> = (props) => {
+const Title: React.FC<TitleProps> = ({ children, level = 1, weight = "medium", className, ...props }) => {
+  const TitleTag = `h${level}` as keyof JSX.IntrinsicElements;
+
   return (
-    <SupabaseTitleComponent className={`${props.className && props.className}`} {...props}>
-      {props.children}
-    </SupabaseTitleComponent>
+    <TypographyWrapper>
+      <TitleTag className={clsx(className, `font-${weight}`)} {...props}>
+        {children}
+      </TitleTag>
+    </TypographyWrapper>
   );
 };
 
