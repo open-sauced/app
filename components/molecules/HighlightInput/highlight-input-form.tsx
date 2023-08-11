@@ -244,7 +244,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                   className="text-xs"
                   value={pullrequestLink}
                   handleChange={(value) => setPullRequestLink(value)}
-                  placeholder="Paste your PR URL and get it auto-summarized!"
+                  placeholder="Paste the URL to your Pull Request or Issue."
                 />
               </div>
             </div>
