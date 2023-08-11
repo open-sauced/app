@@ -1,9 +1,23 @@
 import { createMiddlewareClient } from "@supabase/auth-helpers-nextjs";
 import { NextResponse } from "next/server";
 import { NextRequest } from "next/server";
+import { pathToRegexp } from "path-to-regexp";
+
+// prettier-ignore
+const pathsToMatch = [
+  "/hub/insights/:path*",
+  "/feed/",
+  "/user/notifications",
+  "/user/settings",
+];
 
 export async function middleware(req: NextRequest) {
   const res = NextResponse.next();
+
+  if (!pathsToMatch.some((matcher) => pathToRegexp(matcher).test(req.nextUrl.pathname))) {
+    return res;
+  }
+
   // Create authenticated Supabase Client.
   const supabase = createMiddlewareClient({ req, res });
   // Check if we have a session
@@ -29,7 +43,3 @@ export async function middleware(req: NextRequest) {
     return NextResponse.redirect(redirectUrl);
   }
 }
-
-export const config = {
-  matcher: ["/hub/insights/:path*", "/user/:path", "/feed/"],
-};
