@@ -47,7 +47,6 @@
   "dependencies": {
     "@headlessui/react": "^1.7.8",
     "@heroicons/react": "^2.0.14",
-    "@netlify/esbuild": "^0.14.39",
     "@nivo/core": "^0.80.0",
     "@nivo/line": "^0.80.0",
     "@nivo/pie": "^0.80.0",
@@ -84,7 +83,7 @@
     "date-fns": "^2.29.3",
     "echarts": "^5.4.1",
     "echarts-for-react": "^3.0.2",
-    "next": "^13.4.12",
+    "next": "^13.4.7",
     "octokit": "^2.0.14",
     "path-to-regexp": "^6.2.1",
     "posthog-js": "^1.57.2",
@@ -109,6 +108,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.20.12",
+    "@netlify/esbuild": "^0.14.39",
     "@open-sauced/check-engines": "^1.2.0",
     "@open-sauced/conventional-commit": "^1.0.1",
     "@playwright/test": "^1.30.0",
