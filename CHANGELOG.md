@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.60.0-beta.4](https://github.com/open-sauced/insights/compare/v1.60.0-beta.3...v1.60.0-beta.4) (2023-08-11)
+
+
+### 🐛 Bug Fixes
+
+* exclude empty interests on profile page ([#1539](https://github.com/open-sauced/insights/issues/1539)) ([330bb8d](https://github.com/open-sauced/insights/commit/330bb8df96cc4456993c3a0eb700cbaf51414743))
+
 ## [1.60.0-beta.3](https://github.com/open-sauced/insights/compare/v1.60.0-beta.2...v1.60.0-beta.3) (2023-08-11)
 
 
