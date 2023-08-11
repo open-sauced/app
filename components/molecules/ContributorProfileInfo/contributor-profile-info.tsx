@@ -41,7 +41,7 @@ const ContributorProfileInfo = ({
   discordUrl,
   prFirstOpenedDate,
 }: ContributorProfileInfoProps) => {
-  const interestArray = interests?.split(",");
+  const interestArray = interests?.split(",").filter(Boolean);
   const discordUserId = discordUrl?.match(/\d{4}$/)?.[0];
 
   return (
