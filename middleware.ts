@@ -4,6 +4,15 @@ import { NextRequest } from "next/server";
 
 export async function middleware(req: NextRequest) {
   const res = NextResponse.next();
+  /**
+   * HACK: This is to work around the fact that when running with the `netlify dev` command,
+   * the matcher config below doesn't work properly and the middleware is run on every request.
+   * see https://github.com/open-sauced/insights/pull/1400#discussion_r1291653618
+   */
+  if (!/^\/(hub\/insights|user|feed)/.test(req.nextUrl.pathname)) {
+    return res;
+  }
+
   // Create authenticated Supabase Client.
   const supabase = createMiddlewareClient({ req, res });
   // Check if we have a session
@@ -14,10 +23,6 @@ export async function middleware(req: NextRequest) {
   // Check auth condition
   if (session?.user || req.nextUrl.searchParams.has("login")) {
     // Authentication successful, forward request to protected route.
-    return res;
-  }
-
-  if (/^\/(api|assets)/.test(req.nextUrl.pathname)) {
     return res;
   }
 
