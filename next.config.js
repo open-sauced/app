@@ -10,15 +10,6 @@ module.exports = {
       "res.cloudinary.com",
     ],
   },
-  // async rewrites() {
-  //   const apiHOST = process.env.NODE_ENV === "production" ? "/" : "http://localhost:8888/";
-  //   return [
-  //     {
-  //       source: "/api/:path*",
-  //       destination: `${apiHOST}api/:path*`,
-  //     },
-  //   ];
-  // },
 };
 
 // Injected content via Sentry wizard below
