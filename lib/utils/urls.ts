@@ -1,5 +1,5 @@
 export const siteUrl = (path: string = "", params: { [key: string]: any } = {}) => {
-  let urlString = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:8888/";
+  let urlString = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000/";
   // Make sure to include `https://` when not localhost.
   urlString = urlString.includes("http") ? urlString : `https://${urlString}`;
   // Make sure to including trailing `/`.
