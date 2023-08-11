@@ -251,6 +251,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
                       user={singleHighlight.login}
                       id={singleHighlight.id}
                       shipped_date={singleHighlight.shipped_at}
+                      type={singleHighlight.type}
                       refreshCallBack={mutate}
                     />
                   </div>
