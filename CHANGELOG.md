@@ -5,6 +5,16 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.60.0-beta.6](https://github.com/open-sauced/insights/compare/v1.60.0-beta.5...v1.60.0-beta.6) (2023-08-11)
+
+
+### 🐛 Bug Fixes
+
+* check session when updating user settings ([#1541](https://github.com/open-sauced/insights/issues/1541)) ([6961962](https://github.com/open-sauced/insights/commit/696196237772d7b144630931fa59f9e5bf621994))
+* exclude empty interests on profile page ([#1539](https://github.com/open-sauced/insights/issues/1539)) ([34fc885](https://github.com/open-sauced/insights/commit/34fc88549758cca690db427f1a2e11095c32028d))
+* fixed margin issues on layout ([#1534](https://github.com/open-sauced/insights/issues/1534)) ([2ab0b02](https://github.com/open-sauced/insights/commit/2ab0b0292d18ce01a142558f82da7e3da4b02191))
+* release 1.59 hot fixes ([#1547](https://github.com/open-sauced/insights/issues/1547)) ([30a7eea](https://github.com/open-sauced/insights/commit/30a7eeaebc20e62cf62757cabf17c2b6b9343615))
+
 ### [1.59.1](https://github.com/open-sauced/insights/compare/v1.59.0...v1.59.1) (2023-08-11)
 
 ### 🐛 Bug Fixes
