@@ -235,6 +235,7 @@ interface DbUserNotification {
   readonly notified_at: string;
   readonly user_id: number;
   readonly meta_id: string;
+  readonly from_user: DbUser;
 }
 
 interface DbUserCollaboration {

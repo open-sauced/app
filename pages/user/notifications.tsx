@@ -23,10 +23,6 @@ interface NotificationResponse {
   meta: Meta;
 }
 
-const getNotificationUsername = (notification: DbUserNotification) => {
-  return notification.type === "highlight_reaction" ? notification.message.split(" ")[0] : notification.meta_id;
-};
-
 const Notifications: WithPageLayout = () => {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -54,13 +50,8 @@ const Notifications: WithPageLayout = () => {
 
   const notifications = useMemo(() => {
     if (!notificationsResponse?.data) return [];
-    if (filter === "all")
-      return notificationsResponse?.data?.sort(
-        (a, b) => new Date(b.notified_at).getTime() - new Date(a.notified_at).getTime()
-      );
-    return notificationsResponse?.data
-      .filter((notification) => notification.type === filter)
-      ?.sort((a, b) => new Date(b.notified_at).getTime() - new Date(a.notified_at).getTime());
+    if (filter === "all") return notificationsResponse?.data;
+    return notificationsResponse?.data.filter((notification) => notification.type === filter);
   }, [notificationsResponse?.data, filter]);
 
   useEffect(() => {
@@ -158,16 +149,16 @@ const Notifications: WithPageLayout = () => {
                     initialsClassName="text-[100px] leading-none"
                     initials={notification.meta_id.charAt(0)}
                     hasBorder
-                    avatarURL={getAvatarByUsername(getNotificationUsername(notification), 300)}
+                    avatarURL={getAvatarByUsername(notification.from_user.login, 300)}
                     size={50}
                     isCircle
                   />
                   <div className="flex flex-col gap-2">
                     <p className="text-light-slate-12 flex gap-2">
                       <Link href={getNotificationURL(notification.type, notification.meta_id)} className="font-bold">
-                        {getNotificationUsername(notification)}
+                        {notification.from_user.login}
                       </Link>
-                      <span>{notification.message.replace(getNotificationUsername(notification), " ")}</span>
+                      <span>{notification.message.replace(notification.from_user.login, " ")}</span>
                     </p>
                     <span className="text-xs font-normal text-light-slate-11">
                       {formatDistanceToNowStrict(new Date(notification.notified_at), { addSuffix: true })}
