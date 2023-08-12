@@ -143,6 +143,8 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
     setHydrated(true);
   }, []);
 
+  console.log(props.referer);
+
   if (!hydrated)
     return (
       <>
