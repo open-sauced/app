@@ -1,8 +1,5 @@
-// @ts-ignore
 import React from "https://esm.sh/react@18.2.0";
-// @ts-ignore
 import { ImageResponse } from "https://deno.land/x/og_edge/mod.ts";
-// @ts-ignore
 import type { Config } from "https://edge.netlify.com";
 
 const ASPECT_RATIO = 245 / 348;
