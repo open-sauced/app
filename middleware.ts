@@ -3,6 +3,9 @@ import { NextResponse } from "next/server";
 import { NextRequest } from "next/server";
 import { pathToRegexp } from "path-to-regexp";
 
+// HACK: this is to get around the fact that the normal next.js middleware is not always functioning
+// correctly.
+// see https://github.com/open-sauced/insights/pull/1549
 // prettier-ignore
 const pathsToMatch = [
   "/hub/insights/:path*",
