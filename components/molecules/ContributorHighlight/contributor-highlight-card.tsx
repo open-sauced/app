@@ -24,7 +24,13 @@ import {
 } from "components/atoms/Dropdown/dropdown";
 
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
-import { generateRepoParts, getAvatarByUsername, getOwnerAndRepoNameFromUrl } from "lib/utils/github";
+import {
+  generateRepoParts,
+  getAvatarByUsername,
+  getOwnerAndRepoNameFromUrl,
+  isValidIssueUrl,
+  isValidPullRequestUrl,
+} from "lib/utils/github";
 import { fetchGithubPRInfo } from "lib/hooks/fetchGithubPRInfo";
 import { updateHighlights } from "lib/hooks/updateHighlight";
 import { deleteHighlight } from "lib/hooks/deleteHighlight";
@@ -33,6 +39,7 @@ import useHighlightReactions from "lib/hooks/useHighlightReactions";
 import useUserHighlightReactions from "lib/hooks/useUserHighlightReactions";
 import Tooltip from "components/atoms/Tooltip/tooltip";
 import useFollowUser from "lib/hooks/useFollowUser";
+import { fetchGithubIssueInfo } from "lib/hooks/fetchGithubIssueInfo";
 import GhOpenGraphImg from "../GhOpenGraphImg/gh-open-graph-img";
 import {
   Dialog,
@@ -205,25 +212,34 @@ const ContributorHighlightCard = ({
   const handleUpdateHighlight = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const isValidGhUrl = highlight.prLink.match(/((https?:\/\/)?(www\.)?github\.com\/[^\/]+\/[^\/]+\/pull\/[0-9]+)/);
+    const pullrequestLink = highlight.prLink.trim();
     if (wordCount > wordLimit) {
       setError("Character limit exceeded");
       return;
     }
 
-    if (isValidGhUrl) {
+    if (isValidPullRequestUrl(pullrequestLink) || isValidIssueUrl(pullrequestLink)) {
       const { apiPaths } = generateRepoParts(highlight.prLink);
       const { repoName, orgName, issueId } = apiPaths;
       setLoading(true);
-      const res = await fetchGithubPRInfo(orgName, repoName, issueId);
+      const isIssue = highlight.prLink.includes("issues");
+      const res = isIssue
+        ? await fetchGithubIssueInfo(orgName, repoName, issueId)
+        : await fetchGithubPRInfo(orgName, repoName, issueId);
 
       if (res.isError) {
         setLoading(false);
-        setError("Please provide a valid github pull request url");
+        setError("Please provide a valid github issue or pull request url");
         return;
       } else {
         const res = await updateHighlights(
-          { url: highlight.prLink, highlight: highlight.desc || "", title: highlight.title, shipped_at: date },
+          {
+            url: highlight.prLink,
+            highlight: highlight.desc || "",
+            title: highlight.title,
+            shipped_at: date,
+            type: isIssue ? "issue" : "pull_request",
+          },
           id
         );
         setLoading(false);
@@ -238,7 +254,7 @@ const ContributorHighlightCard = ({
         }
       }
     } else {
-      setError("Please provide a valid github pull request url");
+      setError("Please provide a valid GitHub issue or pull request url");
     }
   };
 
@@ -514,7 +530,7 @@ const ContributorHighlightCard = ({
                 </div>
               </fieldset>
               <fieldset className="flex flex-col w-full gap-1">
-                <label htmlFor="title">Pull request link</label>
+                <label htmlFor="title">Highlight link</label>
                 <input
                   onChange={(e) => {
                     setHighlight((prev) => ({ ...prev, prLink: e.target.value }));

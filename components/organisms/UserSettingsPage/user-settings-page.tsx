@@ -77,7 +77,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
       formRef.current!.linkedin_url.value = response.linkedin_url;
       formRef.current!.discord_url.value = response.discord_url;
     }
-  }, [user]);
+  }, [user, session]);
 
   useEffect(() => {
     if (insightsUser) {

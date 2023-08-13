@@ -5,6 +5,7 @@ import {
   getRepoIssuesLink,
   generateGhOgImage,
   generateRepoParts,
+  isValidIssueUrl,
 } from "lib/utils/github";
 
 describe("[lib] github methods", () => {
@@ -82,5 +83,13 @@ describe("[lib] github methods", () => {
   it("Should return an object with isValidUrl set to false", () => {
     const result = generateRepoParts("🍕");
     expect(result.isValidUrl).toBeFalsy();
+  });
+  it("Should return false", () => {
+    const result = isValidIssueUrl("https://gitub.com/open-sauced/hot/pull/448");
+    expect(result).toEqual(false);
+  });
+  it("Should return true", () => {
+    const result = isValidIssueUrl("https://github.com/open-sauced/pizza-cli/issues/19");
+    expect(result).toEqual(true);
   });
 });
