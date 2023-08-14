@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.60.0-beta.7](https://github.com/open-sauced/insights/compare/v1.60.0-beta.6...v1.60.0-beta.7) (2023-08-14)
+
+
+### 🐛 Bug Fixes
+
+* disabled the button while it's loading, so it doesn't add the same repo again ([#1536](https://github.com/open-sauced/insights/issues/1536)) ([61a8d3a](https://github.com/open-sauced/insights/commit/61a8d3a5b797fb59210c41a78fef196764c67939))
+
 ## [1.60.0-beta.6](https://github.com/open-sauced/insights/compare/v1.60.0-beta.5...v1.60.0-beta.6) (2023-08-11)
 
 
