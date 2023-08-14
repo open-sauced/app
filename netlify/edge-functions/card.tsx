@@ -1,44 +1,31 @@
-import { ImageResponse } from "@vercel/og";
-import { NextRequest } from "next/server";
-import { getAvatarByUsername } from "lib/utils/github";
-import { fetchContributorPRs } from "lib/hooks/api/useContributorPullRequests";
-import { getRepoList } from "lib/hooks/useRepoList";
-
-/**
- * @params {string} username - username for the requested user
- * @params {number} w - Width of the card
- */
+// @ts-ignore
+import React from "https://esm.sh/react@18.2.0";
+// @ts-ignore
+import { ImageResponse } from "https://deno.land/x/og_edge/mod.ts";
+// @ts-ignore
+import type { Config } from "https://edge.netlify.com";
 
 const ASPECT_RATIO = 245 / 348;
 const BASE_WIDTH = 245;
 const DEFAULT_WIDTH = 735;
 const MAX_WIDTH = 1960;
 
-export const config = {
-  runtime: "edge",
+export const config: Config = {
+  path: "/api/card",
+  cache: "manual",
 };
 
-const logoImg = fetch(new URL("../../../../img/openSauced-icon.png", import.meta.url)).then((res) => res.arrayBuffer());
-const interSemiBoldFont = fetch(new URL("../../../../font/Inter-SemiBold.ttf", import.meta.url)).then((res) =>
-  res.arrayBuffer()
-);
-const interBlackFont = fetch(new URL("../../../../font/Inter-Black.ttf", import.meta.url)).then((res) =>
-  res.arrayBuffer()
-);
-
-export default async function handler(request: NextRequest) {
-  // pull username from the request url
-  // at /api/user/[username]/card.png
-  const username = new URL(request.url).pathname?.split("/")[3];
+export default async function handler(req: Request) {
+  const { searchParams } = new URL(req.url);
+  const username = searchParams.get("username");
 
   if (!username) {
     return new Response("A username must be specified", { status: 403 });
   }
 
-  // const requestedWidth = Number.parseInt(searchParams.get("w") ?? "0", 10) || DEFAULT_WIDTH;
+  const requestedWidth = Number.parseInt(searchParams.get("w") ?? "0", 10) || DEFAULT_WIDTH;
 
-  // const width = Math.min(requestedWidth, MAX_WIDTH);
-  const width = DEFAULT_WIDTH;
+  const width = Math.min(requestedWidth, MAX_WIDTH);
   const height = width / ASPECT_RATIO;
   const avatarURL = getAvatarByUsername(username, 600);
 
@@ -48,16 +35,34 @@ export default async function handler(request: NextRequest) {
 
   const bufferSize = size(50);
 
+  // get the origin from the request
+  let BASE_URL = new URL(req.url).origin;
+  // if (BASE_URL.includes("localhost")) {
+  //   // It sucks that we have to do this but I'm not sure how else to get this working in local dev.
+  //   // The functions are running at localhost:8888 but the frontend is running at localhost:3000
+  //   // This will definitely break if you're running the frontend on a different port.
+  //   BASE_URL = "http://localhost:3000/";
+  // }
+
+  function getLocalAsset(path: string): Promise<ArrayBuffer> {
+    return fetch(new URL(`/assets/card/${path}`, BASE_URL)).then((res) => res.arrayBuffer());
+  }
+
+  // // Make sure the font exists in the specified path:
+  const logoImg = getLocalAsset("/logo.png");
+  const interSemiBoldFont = getLocalAsset("/Inter-SemiBold.ttf");
+  const interBlackFont = getLocalAsset("/Inter-Black.ttf");
+
   const [interSemiBoldFontData, interBlackFontData, logoImgData, prReq] = await Promise.all([
     interSemiBoldFont,
     interBlackFont,
     logoImg,
-    fetchContributorPRs(username, undefined, "*", [], 100),
+    fetchContributorPRs(username),
   ]);
 
   const { data: prData } = prReq;
   const prs = prData.length;
-  const repos = getRepoList(Array.from(new Set(prData.map((prData) => prData.full_name))).join(",")).length;
+  const repos = getRepoList(Array.from(new Set(prData.map((prData: any) => prData.full_name))).join(",")).length;
 
   return new ImageResponse(
     (
@@ -123,7 +128,13 @@ export default async function handler(request: NextRequest) {
               </div>
               <div
                 tw="flex flex-col relative justify-end items-center text-white"
-                style={{ height: "50%", flexShrink: 0, flexGrow: 1, paddingTop: size(40), paddingBottom: size(18) }}
+                style={{
+                  height: "50%",
+                  flexShrink: 0,
+                  flexGrow: 1,
+                  paddingTop: size(40),
+                  paddingBottom: size(18),
+                }}
               >
                 <div style={{ fontSize: size(14), marginBottom: size(12), fontWeight: 700 }}>{`@${username}`}</div>
                 <div tw="flex w-full justify-around">
@@ -184,6 +195,9 @@ export default async function handler(request: NextRequest) {
     {
       width: width + bufferSize * 2,
       height: height + bufferSize,
+      headers: {
+        "cache-control": "public, s-maxage=86400", // 1 day
+      },
       fonts: [
         {
           name: "Inter",
@@ -200,6 +214,43 @@ export default async function handler(request: NextRequest) {
       ],
     }
   );
+}
+
+function getRepoList(repos: string) {
+  return repos
+    .split(",")
+    .filter((rpo) => !!rpo)
+    .map((repo) => {
+      const [repoOwner, repoName] = repo.split("/");
+
+      return {
+        repoName,
+        repoIcon: `https://www.github.com/${repoOwner ?? "github"}.png?size=460`,
+      };
+    });
+}
+
+const getAvatarByUsername = (username: string | null, size = 460) =>
+  `https://www.github.com/${username ?? "github"}.png?size=${size}`;
+
+async function fetchContributorPRs(username: string) {
+  const query = new URLSearchParams();
+
+  query.set("topic", "*");
+  query.set("limit", "100");
+  query.set("range", "30");
+
+  const baseEndpoint = `users/${username}/prs`;
+  const endpointString = `${baseEndpoint}?${query.toString()}`;
+  const url = `https://beta.api.opensauced.pizza/v1/${endpointString}`;
+
+  const res = await fetch(url, {
+    headers: {
+      accept: "application/json",
+    },
+  });
+
+  return res.json();
 }
 
 const CardSauceBG = ({ ...props }) => (
