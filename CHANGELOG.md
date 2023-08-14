@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.60.0-beta.8](https://github.com/open-sauced/insights/compare/v1.60.0-beta.7...v1.60.0-beta.8) (2023-08-14)
+
+
+### 🐛 Bug Fixes
+
+* enhance feed layout responsiveness ([#1553](https://github.com/open-sauced/insights/issues/1553)) ([2d5fb3e](https://github.com/open-sauced/insights/commit/2d5fb3e32037c46d15459b5b934a13f3985c27b4))
+
 ## [1.60.0-beta.7](https://github.com/open-sauced/insights/compare/v1.60.0-beta.6...v1.60.0-beta.7) (2023-08-14)
 
 
