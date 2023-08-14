@@ -151,9 +151,6 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
     }
   }, []);
 
-  console.log(`${host}/feed`);
-  console.log(props.referer);
-
   const shouldAllowDialogCloseAction =
     props.referer === null ||
     (typeof props.referer === "string" && !props.referer.includes(host)) ||
