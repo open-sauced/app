@@ -168,13 +168,13 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
       />
 
       <div
-        className="container mt-5 md:mt-0 w-full gap-12 flex flex-col justify-center px-2 pt-12 md:items-start md:px-16 lg:justify-end md:flex-row"
+        className="container mt-5 md:mt-0 w-full gap-12 flex flex-col justify-center px-2 pt-12 md:items-start md:px-16 md:flex-row"
         ref={topRef}
       >
         <div className="sticky top-8 xl:flex hidden flex-none w-[24%]">
-          <div className="flex flex-col gap-6 mt-12">
+          <div className="flex flex-col w-full gap-6 mt-12">
             {user && (
-              <div className="md:w-1/2 lg:w-1/3">
+              <div className="w-full">
                 <UserCard
                   loading={loggedInUserLoading}
                   username={loggedInUser?.login as string}
