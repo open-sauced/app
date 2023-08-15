@@ -81,7 +81,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
       (!isValidPullRequestUrl(highlightLink) && !isValidIssueUrl(highlightLink) && !isValidBlogUrl(highlightLink))
     ) {
       toast({
-        description: "Please provide a valid pull request, issue or blog link!",
+        description: "Please provide a valid pull request, issue or dev.to blog link!",
         title: "Error",
         variant: "danger",
       });
@@ -140,9 +140,10 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
         const { repoName, orgName, issueId } = apiPaths;
         setLoading(true);
         // Api validation to check validity of github pull request link match
-        res = highlightLink.includes("issues")
-          ? await fetchGithubIssueInfo(orgName, repoName, issueId)
-          : await fetchGithubPRInfo(orgName, repoName, issueId);
+        res =
+          highlightType === "issue"
+            ? await fetchGithubIssueInfo(orgName, repoName, issueId)
+            : await fetchGithubPRInfo(orgName, repoName, issueId);
       } else {
         res = await fetchDevToBlogInfo(highlightLink);
       }
@@ -150,7 +151,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
       if (res.isError) {
         setLoading(false);
 
-        toast({ description: "A valid Pull request, Issue or Blog Link is required", variant: "danger" });
+        toast({ description: "A valid Pull request, Issue or dev.to Blog Link is required", variant: "danger" });
         return;
       } else {
         setLoading(true);
@@ -179,7 +180,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
       }
     } else {
       toast({
-        description: "Please provide a valid pull request, issue or blog link!",
+        description: "Please provide a valid pull request, issue or dev.to blog link!",
         title: "Error",
         variant: "danger",
       });

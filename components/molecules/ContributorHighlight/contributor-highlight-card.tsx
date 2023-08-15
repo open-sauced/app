@@ -223,7 +223,7 @@ const ContributorHighlightCard = ({
       const { apiPaths } = generateApiPrUrl(highlight.highlightLink);
       const { repoName, orgName, issueId } = apiPaths;
       setLoading(true);
-      const isIssue = highlight.highlightLink.includes("issues");
+      const isIssue = isValidIssueUrl(pullrequestLink);
       const res = isIssue
         ? await fetchGithubIssueInfo(orgName, repoName, issueId)
         : await fetchGithubPRInfo(orgName, repoName, issueId);
