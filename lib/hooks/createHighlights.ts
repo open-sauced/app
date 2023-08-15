@@ -6,7 +6,7 @@ interface CreateHighlightsProps {
   title?: string;
   highlight: string;
   shipped_at?: Date;
-  type: "issue" | "pull_request";
+  type: "issue" | "pull_request" | "blog_post";
 }
 
 interface ServerError {

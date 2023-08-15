@@ -62,11 +62,12 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from "../Popover/popover";
 import { Calendar } from "../Calendar/calendar";
 import CardRepoList, { RepoList } from "../CardRepoList/card-repo-list";
+import DevToSocialImg from "../DevToSocialImage.tsx/dev-to-social-img";
 
 interface ContributorHighlightCardProps {
   title?: string;
   desc?: string;
-  prLink: string;
+  highlightLink: string;
   user: string;
   id: string;
   shipped_date: string;
@@ -74,12 +75,12 @@ interface ContributorHighlightCardProps {
   emojis: DbEmojis[];
   type?: HighlightType;
 }
-type HighlightType = "pull_request" | "issue" | "blog";
+type HighlightType = "pull_request" | "issue" | "blog_post";
 
 const ContributorHighlightCard = ({
   title,
   desc,
-  prLink,
+  highlightLink,
   user,
   id,
   refreshCallBack,
@@ -90,7 +91,7 @@ const ContributorHighlightCard = ({
   const { toast } = useToast();
   const twitterTweet = `${title || "Open Source Highlight"} - OpenSauced from ${user}`;
   const reportSubject = `Reported Highlight ${user}: ${title}`;
-  const [highlight, setHighlight] = useState({ title, desc, prLink });
+  const [highlight, setHighlight] = useState({ title, desc, highlightLink });
   const [wordCount, setWordCount] = useState(highlight.desc?.length || 0);
   const wordLimit = 500;
   const [errorMsg, setError] = useState("");
@@ -165,7 +166,7 @@ const ContributorHighlightCard = ({
     }
   };
 
-  const { owner: repoOwner, repoName } = getOwnerAndRepoNameFromUrl(prLink);
+  const { owner: repoOwner, repoName } = getOwnerAndRepoNameFromUrl(highlightLink);
   const repoIcon = getAvatarByUsername(repoOwner, 60);
 
   const repo: RepoList = {
@@ -178,7 +179,7 @@ const ContributorHighlightCard = ({
     switch (type) {
       case "pull_request":
         return { text: "Pull request", icon: <BiGitPullRequest className="text-lg md:text-xl" /> };
-      case "blog":
+      case "blog_post":
         return {
           text: "Blog post",
           icon: (
@@ -212,17 +213,17 @@ const ContributorHighlightCard = ({
   const handleUpdateHighlight = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const pullrequestLink = highlight.prLink.trim();
+    const pullrequestLink = highlight.highlightLink.trim();
     if (wordCount > wordLimit) {
       setError("Character limit exceeded");
       return;
     }
 
     if (isValidPullRequestUrl(pullrequestLink) || isValidIssueUrl(pullrequestLink)) {
-      const { apiPaths } = generateApiPrUrl(highlight.prLink);
+      const { apiPaths } = generateApiPrUrl(highlight.highlightLink);
       const { repoName, orgName, issueId } = apiPaths;
       setLoading(true);
-      const isIssue = highlight.prLink.includes("issues");
+      const isIssue = highlight.highlightLink.includes("issues");
       const res = isIssue
         ? await fetchGithubIssueInfo(orgName, repoName, issueId)
         : await fetchGithubPRInfo(orgName, repoName, issueId);
@@ -234,7 +235,7 @@ const ContributorHighlightCard = ({
       } else {
         const res = await updateHighlights(
           {
-            url: highlight.prLink,
+            url: highlight.highlightLink,
             highlight: highlight.desc || "",
             title: highlight.title,
             shipped_at: date,
@@ -406,14 +407,18 @@ const ContributorHighlightCard = ({
         {/* Highlight Link section */}
 
         <div>
-          <a href={prLink} className="underline break-words cursor-pointer text-sauced-orange">
-            {prLink}
+          <a href={highlightLink} className="underline break-words cursor-pointer text-sauced-orange">
+            {highlightLink}
           </a>
         </div>
       </div>
 
       {/* Generated OG card section */}
-      <GhOpenGraphImg githubLink={prLink} />
+      {type === "pull_request" || type === "issue" ? (
+        <GhOpenGraphImg githubLink={highlightLink} />
+      ) : (
+        <DevToSocialImg blogLink={highlightLink} />
+      )}
 
       <div className="flex flex-wrap items-center gap-1">
         <DropdownMenu>
@@ -533,10 +538,10 @@ const ContributorHighlightCard = ({
                 <label htmlFor="title">Highlight link</label>
                 <input
                   onChange={(e) => {
-                    setHighlight((prev) => ({ ...prev, prLink: e.target.value }));
+                    setHighlight((prev) => ({ ...prev, highlightLink: e.target.value }));
                     setError("");
                   }}
-                  value={highlight.prLink}
+                  value={highlight.highlightLink}
                   name="title"
                   className="h-8 px-2 font-normal text-orange-600 rounded-lg focus:outline-none focus:border "
                 />

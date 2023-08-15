@@ -17,6 +17,7 @@ import {
   getPullRequestCommitMessageFromUrl,
   isValidIssueUrl,
   isValidPullRequestUrl,
+  isValidBlogUrl,
 } from "lib/utils/github";
 import { fetchGithubPRInfo } from "lib/hooks/fetchGithubPRInfo";
 import { useToast } from "lib/hooks/useToast";
@@ -26,10 +27,12 @@ import Fab from "components/atoms/Fab/fab";
 import { TypeWriterTextArea } from "components/atoms/TypeWriterTextArea/type-writer-text-area";
 import { fetchGithubIssueInfo } from "lib/hooks/fetchGithubIssueInfo";
 import generateIssueHighlightSummary from "lib/utils/generate-issue-highlight-summary";
+import { fetchDevToBlogInfo } from "lib/hooks/fetchDevToBlogInfo";
 import { Calendar } from "../Calendar/calendar";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../Collapsible/collapsible";
 import { Popover, PopoverContent, PopoverTrigger } from "../Popover/popover";
 import GhOpenGraphImg from "../GhOpenGraphImg/gh-open-graph-img";
+import DevToSocialImg from "../DevToSocialImage.tsx/dev-to-social-img";
 
 interface HighlightInputFormProps {
   refreshCallback?: Function;
@@ -44,7 +47,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
   const [bodyText, setBodyText] = useState("");
   const [title, setTitle] = useState("");
   const [charCount, setCharCount] = useState(0);
-  const [pullrequestLink, setPullRequestLink] = useState("");
+  const [highlightLink, setHighlightLink] = useState("");
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
   const charLimit = 500;
@@ -54,7 +57,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
   const { toast } = useToast();
 
   const validCharLimit = () => {
-    return charCount - pullrequestLink.length <= charLimit;
+    return charCount - highlightLink.length <= charLimit;
   };
 
   const handleTextAreaInputChange = (value: string) => {
@@ -71,7 +74,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
   }, [isFormOpenMobile]);
 
   const handleGenerateHighlightSummary = async () => {
-    if (!pullrequestLink || (!isValidPullRequestUrl(pullrequestLink) && !isValidIssueUrl(pullrequestLink))) {
+    if (!highlightLink || (!isValidPullRequestUrl(highlightLink) && !isValidIssueUrl(highlightLink))) {
       toast({ description: "Please provide a valid issue or pull request link!", title: "Error", variant: "danger" });
       return;
     }
@@ -79,12 +82,12 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
     setIsSummaryButtonDisabled(true);
 
     let summary: string | null;
-    if (isValidPullRequestUrl(pullrequestLink)) {
-      const commitMessages = await getPullRequestCommitMessageFromUrl(pullrequestLink);
+    if (isValidPullRequestUrl(highlightLink)) {
+      const commitMessages = await getPullRequestCommitMessageFromUrl(highlightLink);
       summary = await generatePrHighlightSummaryByCommitMsg(commitMessages);
     } else {
-      const { title: issueTitle, body: issueBody } = await getGithubIssueDetails(pullrequestLink);
-      const issueComments = await getGithubIssueComments(pullrequestLink);
+      const { title: issueTitle, body: issueBody } = await getGithubIssueDetails(highlightLink);
+      const issueComments = await getGithubIssueComments(highlightLink);
       summary = await generateIssueHighlightSummary(issueTitle, issueBody, issueComments);
     }
 
@@ -111,30 +114,40 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
 
     const highlight = bodyText;
 
-    if (isValidPullRequestUrl(pullrequestLink) || isValidIssueUrl(pullrequestLink)) {
+    if (isValidPullRequestUrl(highlightLink) || isValidIssueUrl(highlightLink) || isValidBlogUrl(highlightLink)) {
       // generateApiPrUrl will return an object with repoName, orgName and issueId
       // it can work with both issue and pull request links
-      const { apiPaths } = generateApiPrUrl(pullrequestLink);
-      const { repoName, orgName, issueId } = apiPaths;
-      setLoading(true);
-      // Api validation to check validity of github pull request link match
-      const res = pullrequestLink.includes("issues")
-        ? await fetchGithubIssueInfo(orgName, repoName, issueId)
-        : await fetchGithubPRInfo(orgName, repoName, issueId);
+      const highlightType = highlightLink.includes("issues")
+        ? "issue"
+        : highlightLink.includes("pull")
+        ? "pull_request"
+        : "blog_post";
+      let res: any = {};
+      if (highlightType === "pull_request" || highlightType === "issue") {
+        const { apiPaths } = generateApiPrUrl(highlightLink);
+        const { repoName, orgName, issueId } = apiPaths;
+        setLoading(true);
+        // Api validation to check validity of github pull request link match
+        res = highlightLink.includes("issues")
+          ? await fetchGithubIssueInfo(orgName, repoName, issueId)
+          : await fetchGithubPRInfo(orgName, repoName, issueId);
+      } else {
+        res = await fetchDevToBlogInfo(highlightLink);
+      }
 
       if (res.isError) {
         setLoading(false);
 
-        toast({ description: "A valid Issue or Pull request Link is required", variant: "danger" });
+        toast({ description: "A valid Pull request, Issue or Blog Link is required", variant: "danger" });
         return;
       } else {
         setLoading(true);
         const res = await createHighlights({
           highlight,
           title,
-          url: pullrequestLink,
+          url: highlightLink,
           shipped_at: date,
-          type: pullrequestLink.includes("issues") ? "issue" : "pull_request",
+          type: highlightType,
         });
 
         setLoading(false);
@@ -145,7 +158,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
 
         refreshCallback && refreshCallback();
         setBodyText("");
-        setPullRequestLink("");
+        setHighlightLink("");
         setTitle("");
         setDate(undefined);
         setIsDivFocused(false);
@@ -153,13 +166,17 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
         toast({ description: "Highlight Posted!", title: "Success", variant: "success" });
       }
     } else {
-      toast({ description: "Please provide a valid issue or pull request link!", title: "Error", variant: "danger" });
+      toast({
+        description: "Please provide a valid pull request, issue or blog link!",
+        title: "Error",
+        variant: "danger",
+      });
     }
   };
 
   // Handle collapsible change
   const handleCollapsibleOpenChange = () => {
-    if (isDivFocused && !charCount && !pullrequestLink) {
+    if (isDivFocused && !charCount && !highlightLink) {
       setIsDivFocused(false);
     } else {
       setIsDivFocused(true);
@@ -242,8 +259,8 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                 </Tooltip>
                 <TextInput
                   className="text-xs"
-                  value={pullrequestLink}
-                  handleChange={(value) => setPullRequestLink(value)}
+                  value={highlightLink}
+                  handleChange={(value) => setHighlightLink(value)}
                   placeholder="Paste the URL to your Pull Request or Issue."
                 />
               </div>
@@ -252,7 +269,12 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
         </div>
       </Collapsible>
 
-      {pullrequestLink && isDivFocused && <GhOpenGraphImg className="max-sm:hidden" githubLink={pullrequestLink} />}
+      {highlightLink && isDivFocused && highlightLink.includes("github") && (
+        <GhOpenGraphImg className="max-sm:hidden" githubLink={highlightLink} />
+      )}
+      {highlightLink && isDivFocused && highlightLink.includes("dev.to") && (
+        <DevToSocialImg className="max-sm:hidden" blogLink={highlightLink} />
+      )}
 
       {isDivFocused && (
         <Button
@@ -346,8 +368,8 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                 </Tooltip>
                 <TextInput
                   className="text-xs"
-                  value={pullrequestLink}
-                  handleChange={(value) => setPullRequestLink(value)}
+                  value={highlightLink}
+                  handleChange={(value) => setHighlightLink(value)}
                   placeholder="Paste your PR URL and get it auto-summarized!"
                 />
               </div>
