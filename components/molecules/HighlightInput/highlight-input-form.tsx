@@ -34,7 +34,7 @@ import { Calendar } from "../Calendar/calendar";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../Collapsible/collapsible";
 import { Popover, PopoverContent, PopoverTrigger } from "../Popover/popover";
 import GhOpenGraphImg from "../GhOpenGraphImg/gh-open-graph-img";
-import DevToSocialImg from "../DevToSocialImage.tsx/dev-to-social-img";
+import DevToSocialImg from "../DevToSocialImage/dev-to-social-img";
 
 interface HighlightInputFormProps {
   refreshCallback?: Function;

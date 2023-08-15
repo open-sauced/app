@@ -62,7 +62,7 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from "../Popover/popover";
 import { Calendar } from "../Calendar/calendar";
 import CardRepoList, { RepoList } from "../CardRepoList/card-repo-list";
-import DevToSocialImg from "../DevToSocialImage.tsx/dev-to-social-img";
+import DevToSocialImg from "../DevToSocialImage/dev-to-social-img";
 
 interface ContributorHighlightCardProps {
   title?: string;
