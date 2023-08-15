@@ -28,6 +28,8 @@ import { TypeWriterTextArea } from "components/atoms/TypeWriterTextArea/type-wri
 import { fetchGithubIssueInfo } from "lib/hooks/fetchGithubIssueInfo";
 import generateIssueHighlightSummary from "lib/utils/generate-issue-highlight-summary";
 import { fetchDevToBlogInfo } from "lib/hooks/fetchDevToBlogInfo";
+import { getBlogDetails } from "lib/utils/dev-to";
+import generateBlogHighlightSummary from "lib/utils/generate-blog-highlight-summary";
 import { Calendar } from "../Calendar/calendar";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../Collapsible/collapsible";
 import { Popover, PopoverContent, PopoverTrigger } from "../Popover/popover";
@@ -74,8 +76,15 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
   }, [isFormOpenMobile]);
 
   const handleGenerateHighlightSummary = async () => {
-    if (!highlightLink || (!isValidPullRequestUrl(highlightLink) && !isValidIssueUrl(highlightLink))) {
-      toast({ description: "Please provide a valid issue or pull request link!", title: "Error", variant: "danger" });
+    if (
+      !highlightLink ||
+      (!isValidPullRequestUrl(highlightLink) && !isValidIssueUrl(highlightLink) && !isValidBlogUrl(highlightLink))
+    ) {
+      toast({
+        description: "Please provide a valid pull request, issue or blog link!",
+        title: "Error",
+        variant: "danger",
+      });
       return;
     }
 
@@ -85,10 +94,13 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
     if (isValidPullRequestUrl(highlightLink)) {
       const commitMessages = await getPullRequestCommitMessageFromUrl(highlightLink);
       summary = await generatePrHighlightSummaryByCommitMsg(commitMessages);
-    } else {
+    } else if (isValidIssueUrl(highlightLink)) {
       const { title: issueTitle, body: issueBody } = await getGithubIssueDetails(highlightLink);
       const issueComments = await getGithubIssueComments(highlightLink);
       summary = await generateIssueHighlightSummary(issueTitle, issueBody, issueComments);
+    } else {
+      const { title: blogTitle, markdown: blogMarkdown } = await getBlogDetails(highlightLink);
+      summary = await generateBlogHighlightSummary(blogTitle, blogMarkdown);
     }
 
     setIsSummaryButtonDisabled(false);
