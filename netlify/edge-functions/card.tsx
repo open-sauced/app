@@ -278,15 +278,11 @@ const getAvatarByUsername = (username: string | null, size = 460) =>
   `https://www.github.com/${username ?? "github"}.png?size=${size}`;
 
 async function fetchContributorPRs(username: string) {
-  const query = new URLSearchParams();
+  const url = new URL(`${Deno.env.get("NEXT_PUBLIC_API_URL")}/users/${username}/prs`);
 
-  query.set("topic", "*");
-  query.set("limit", "100");
-  query.set("range", "30");
-
-  const baseEndpoint = `users/${username}/prs`;
-  const endpointString = `${baseEndpoint}?${query.toString()}`;
-  const url = `https://beta.api.opensauced.pizza/v1/${endpointString}`;
+  url.searchParams.set("topic", "*");
+  url.searchParams.set("limit", "100");
+  url.searchParams.set("range", "30");
 
   const res = await fetch(url, {
     headers: {
