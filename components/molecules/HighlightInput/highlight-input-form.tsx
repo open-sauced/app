@@ -129,9 +129,9 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
     if (isValidPullRequestUrl(highlightLink) || isValidIssueUrl(highlightLink) || isValidBlogUrl(highlightLink)) {
       // generateApiPrUrl will return an object with repoName, orgName and issueId
       // it can work with both issue and pull request links
-      const highlightType = highlightLink.includes("issues")
+      const highlightType = isValidIssueUrl(highlightLink)
         ? "issue"
-        : highlightLink.includes("pull")
+        : isValidPullRequestUrl(highlightLink)
         ? "pull_request"
         : "blog_post";
       let res: any = {};
