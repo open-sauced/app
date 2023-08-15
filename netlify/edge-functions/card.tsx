@@ -1,8 +1,5 @@
-// @ts-ignore
-import React from "https://esm.sh/react@18.2.0";
-// @ts-ignore
-import { ImageResponse } from "https://deno.land/x/og_edge/mod.ts";
-// @ts-ignore
+import React from "react";
+import { ImageResponse } from "og_edge";
 import type { Config } from "https://edge.netlify.com";
 
 const ASPECT_RATIO = 245 / 348;
@@ -36,13 +33,7 @@ export default async function handler(req: Request) {
   const bufferSize = size(50);
 
   // get the origin from the request
-  let BASE_URL = new URL(req.url).origin;
-  // if (BASE_URL.includes("localhost")) {
-  //   // It sucks that we have to do this but I'm not sure how else to get this working in local dev.
-  //   // The functions are running at localhost:8888 but the frontend is running at localhost:3000
-  //   // This will definitely break if you're running the frontend on a different port.
-  //   BASE_URL = "http://localhost:3000/";
-  // }
+  const BASE_URL = new URL(req.url).origin;
 
   function getLocalAsset(path: string): Promise<ArrayBuffer> {
     return fetch(new URL(`/assets/card/${path}`, BASE_URL)).then((res) => res.arrayBuffer());
@@ -67,19 +58,25 @@ export default async function handler(req: Request) {
   return new ImageResponse(
     (
       <div
-        tw="flex"
         style={{
           fontFamily: '"Inter"',
+          display: "flex",
           fontSize: size(16),
           fontWeight: 700,
           paddingBottom: bufferSize,
           paddingLeft: bufferSize,
           paddingRight: bufferSize,
+          background:
+            "#11181C linear-gradient(152.13deg, rgba(217, 217, 217, 0.6) 4.98%, rgba(217, 217, 217, 0.1) 65.85%)",
         }}
       >
         <div
-          tw="flex relative items-stretch overflow-hidden border-white"
           style={{
+            display: "flex",
+            position: "relative",
+            alignItems: "stretch",
+            overflow: "hidden",
+            border: "2px solid #fff",
             width,
             height,
             borderRadius: size(16),
@@ -89,11 +86,27 @@ export default async function handler(req: Request) {
               "#11181C linear-gradient(152.13deg, rgba(217, 217, 217, 0.6) 4.98%, rgba(217, 217, 217, 0.1) 65.85%)",
           }}
         >
-          <div tw="flex items-stretch w-full h-full overflow-hidden">
-            <div tw="flex flex-col flex-shrink-0 w-full h-full">
+          <div
+            style={{
+              display: "flex",
+              alignItems: "stretch",
+              overflow: "hidden",
+              width: "100%",
+              height: "100%",
+            }}
+          >
+            <div
+              style={{
+                width: "100%",
+                height: "100%",
+                display: "flex",
+                flexDirection: "column",
+                flexShrink: 0,
+              }}
+            >
               <div
-                tw="flex"
                 style={{
+                  display: "flex",
                   height: "50%",
                   width: "100%",
                   position: "relative",
@@ -112,7 +125,16 @@ export default async function handler(req: Request) {
                 >
                   <CardSauceBG width={size(245)} height={size(177)} />
                 </div>
-                <div tw="flex absolute items-center" style={{ left: size(10), top: size(10), height: size(13) }}>
+                <div
+                  style={{
+                    display: "flex",
+                    position: "absolute",
+                    alignItems: "center",
+                    left: size(10),
+                    top: size(10),
+                    height: size(13),
+                  }}
+                >
                   {/* eslint-disable-next-line @next/next/no-img-element  */}
                   <img
                     alt="Open Sauced Logo"
@@ -121,14 +143,17 @@ export default async function handler(req: Request) {
                     // @ts-ignore
                     src={logoImgData}
                   />
-                  <p tw={"text-white"} style={{ fontSize: `${size(8)}px` }}>
-                    OpenSauced
-                  </p>
+                  <p style={{ fontSize: `${size(8)}px`, color: "white" }}>OpenSauced</p>
                 </div>
               </div>
               <div
-                tw="flex flex-col relative justify-end items-center text-white"
                 style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  position: "relative",
+                  alignItems: "center",
+                  justifyContent: "flex-end",
+                  color: "#fff",
                   height: "50%",
                   flexShrink: 0,
                   flexGrow: 1,
@@ -137,22 +162,42 @@ export default async function handler(req: Request) {
                 }}
               >
                 <div style={{ fontSize: size(14), marginBottom: size(12), fontWeight: 700 }}>{`@${username}`}</div>
-                <div tw="flex w-full justify-around">
-                  <div tw="flex flex-col text-center items-center">
-                    <div tw="flex font-black" style={{ fontSize: size(60) }}>
+                <div
+                  style={{
+                    display: "flex",
+                    width: "100%",
+                    justifyContent: "space-around",
+                  }}
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      textAlign: "center",
+                    }}
+                  >
+                    <div
+                      style={{
+                        fontWeight: 900,
+                        display: "flex",
+                        fontSize: size(60),
+                      }}
+                    >
                       {prs}
                     </div>
-                    <div tw="flex" style={{ fontSize: size(12) }}>
-                      PRs created
-                    </div>
+                    <div style={{ display: "flex", fontSize: size(12) }}>PRs created</div>
                   </div>
-                  <div tw="flex flex-col text-center items-center">
-                    <div tw="flex font-black" style={{ fontSize: size(60) }}>
-                      {repos}
-                    </div>
-                    <div tw="flex" style={{ fontSize: size(12) }}>
-                      {repos === 1 ? "Repo" : "Repos"}
-                    </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      textAlign: "center",
+                    }}
+                  >
+                    <div style={{ display: "flex", fontWeight: 900, fontSize: size(60) }}>{repos}</div>
+                    <div style={{ display: "flex", fontSize: size(12) }}>{repos === 1 ? "Repo" : "Repos"}</div>
                   </div>
                 </div>
               </div>
@@ -163,8 +208,9 @@ export default async function handler(req: Request) {
               alt="avatar"
               width={size(116)}
               height={size(116)}
-              tw="absolute rounded-full"
               style={{
+                position: "absolute",
+                borderRadius: "1000px",
                 border: `${size(2)}px solid #fff`,
                 left: "50%",
                 top: "50%",
@@ -173,7 +219,6 @@ export default async function handler(req: Request) {
               }}
             />
             <div
-              tw="flex"
               style={{
                 position: "absolute",
                 left: 0,
@@ -221,11 +266,10 @@ function getRepoList(repos: string) {
     .split(",")
     .filter((rpo) => !!rpo)
     .map((repo) => {
-      const [repoOwner, repoName] = repo.split("/");
+      const [, repoName] = repo.split("/");
 
       return {
         repoName,
-        repoIcon: `https://www.github.com/${repoOwner ?? "github"}.png?size=460`,
       };
     });
 }
