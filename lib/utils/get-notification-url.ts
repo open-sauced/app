@@ -7,6 +7,7 @@
 export const getNotificationURL = (type: string, id: string | number) => {
   switch (type) {
     case "highlight_reaction":
+    case "highlight_created":
       return `/feed/${id}`;
     case "follow":
       return `/user/${id}`;
