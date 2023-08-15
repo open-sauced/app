@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.60.0-beta.10](https://github.com/open-sauced/insights/compare/v1.60.0-beta.9...v1.60.0-beta.10) (2023-08-15)
+
+
+### 🐛 Bug Fixes
+
+* refactor notification username retrieval and display logic ([#1537](https://github.com/open-sauced/insights/issues/1537)) ([6657a75](https://github.com/open-sauced/insights/commit/6657a7514e27eac4aaea972e7b8e26004559591c))
+
 ## [1.60.0-beta.9](https://github.com/open-sauced/insights/compare/v1.60.0-beta.8...v1.60.0-beta.9) (2023-08-15)
 
 
