@@ -160,7 +160,7 @@ const ContributorProfileTab = ({
             <>
               {!isError && highlights && highlights.length > 0 ? (
                 <div>
-                  {highlights.map(({ id, title, highlight, url, shipped_at, created_at }) => (
+                  {highlights.map(({ id, title, highlight, url, shipped_at, created_at, type }) => (
                     <div className="flex flex-col gap-2 mb-6 lg:flex-row lg:gap-7" key={id}>
                       <Link href={`/feed/${id}`}>
                         <p className="text-sm text-light-slate-10 w-28 max-w-28">
@@ -175,6 +175,7 @@ const ContributorProfileTab = ({
                         desc={highlight}
                         prLink={url}
                         shipped_date={shipped_at}
+                        type={type}
                         refreshCallBack={mutate}
                       />
                     </div>

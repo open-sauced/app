@@ -10,13 +10,22 @@ import Button from "components/atoms/Button/button";
 import Tooltip from "components/atoms/Tooltip/tooltip";
 
 import { createHighlights } from "lib/hooks/createHighlights";
-import { generateApiPrUrl, getPullRequestCommitMessageFromUrl, isValidPullRequestUrl } from "lib/utils/github";
+import {
+  generateApiPrUrl,
+  getGithubIssueDetails,
+  getGithubIssueComments,
+  getPullRequestCommitMessageFromUrl,
+  isValidIssueUrl,
+  isValidPullRequestUrl,
+} from "lib/utils/github";
 import { fetchGithubPRInfo } from "lib/hooks/fetchGithubPRInfo";
 import { useToast } from "lib/hooks/useToast";
 import TextInput from "components/atoms/TextInput/text-input";
 import { generatePrHighlightSummaryByCommitMsg } from "lib/utils/generate-pr-highlight-summary";
 import Fab from "components/atoms/Fab/fab";
 import { TypeWriterTextArea } from "components/atoms/TypeWriterTextArea/type-writer-text-area";
+import { fetchGithubIssueInfo } from "lib/hooks/fetchGithubIssueInfo";
+import generateIssueHighlightSummary from "lib/utils/generate-issue-highlight-summary";
 import { Calendar } from "../Calendar/calendar";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../Collapsible/collapsible";
 import { Popover, PopoverContent, PopoverTrigger } from "../Popover/popover";
@@ -62,15 +71,22 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
   }, [isFormOpenMobile]);
 
   const handleGenerateHighlightSummary = async () => {
-    if (!pullrequestLink || !isValidPullRequestUrl(pullrequestLink)) {
-      toast({ description: "Please provide a valid pull request link!", title: "Error", variant: "danger" });
+    if (!pullrequestLink || (!isValidPullRequestUrl(pullrequestLink) && !isValidIssueUrl(pullrequestLink))) {
+      toast({ description: "Please provide a valid issue or pull request link!", title: "Error", variant: "danger" });
       return;
     }
 
     setIsSummaryButtonDisabled(true);
 
-    const commitMessages = await getPullRequestCommitMessageFromUrl(pullrequestLink);
-    const summary = await generatePrHighlightSummaryByCommitMsg(commitMessages);
+    let summary: string | null;
+    if (isValidPullRequestUrl(pullrequestLink)) {
+      const commitMessages = await getPullRequestCommitMessageFromUrl(pullrequestLink);
+      summary = await generatePrHighlightSummaryByCommitMsg(commitMessages);
+    } else {
+      const { title: issueTitle, body: issueBody } = await getGithubIssueDetails(pullrequestLink);
+      const issueComments = await getGithubIssueComments(pullrequestLink);
+      summary = await generateIssueHighlightSummary(issueTitle, issueBody, issueComments);
+    }
 
     setIsSummaryButtonDisabled(false);
 
@@ -95,17 +111,21 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
 
     const highlight = bodyText;
 
-    if (isValidPullRequestUrl(pullrequestLink)) {
+    if (isValidPullRequestUrl(pullrequestLink) || isValidIssueUrl(pullrequestLink)) {
+      // generateApiPrUrl will return an object with repoName, orgName and issueId
+      // it can work with both issue and pull request links
       const { apiPaths } = generateApiPrUrl(pullrequestLink);
       const { repoName, orgName, issueId } = apiPaths;
       setLoading(true);
       // Api validation to check validity of github pull request link match
-      const res = await fetchGithubPRInfo(orgName, repoName, issueId);
+      const res = pullrequestLink.includes("issues")
+        ? await fetchGithubIssueInfo(orgName, repoName, issueId)
+        : await fetchGithubPRInfo(orgName, repoName, issueId);
 
       if (res.isError) {
         setLoading(false);
 
-        toast({ description: "A valid Pull request Link is required", variant: "danger" });
+        toast({ description: "A valid Issue or Pull request Link is required", variant: "danger" });
         return;
       } else {
         setLoading(true);
@@ -114,6 +134,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
           title,
           url: pullrequestLink,
           shipped_at: date,
+          type: pullrequestLink.includes("issues") ? "issue" : "pull_request",
         });
 
         setLoading(false);
@@ -132,7 +153,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
         toast({ description: "Highlight Posted!", title: "Success", variant: "success" });
       }
     } else {
-      toast({ description: "Please provide a valid pull request link!", title: "Error", variant: "danger" });
+      toast({ description: "Please provide a valid issue or pull request link!", title: "Error", variant: "danger" });
     }
   };
 
@@ -158,6 +179,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                 className="flex-1 font-normal placeholder:text-sm focus:outline-none"
                 type="text"
                 placeholder={isDivFocused ? "Add title (optional)" : "Post a highlight to show your work!"}
+                id="highlight-create-input"
               />
             </div>
           </CollapsibleTrigger>
@@ -222,7 +244,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                   className="text-xs"
                   value={pullrequestLink}
                   handleChange={(value) => setPullRequestLink(value)}
-                  placeholder="Paste your PR URL and get it auto-summarized!"
+                  placeholder="Paste the URL to your Pull Request or Issue."
                 />
               </div>
             </div>
@@ -264,6 +286,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                 className="flex-1 focus:outline-none"
                 type="text"
                 placeholder={"Add title (optional)"}
+                id="highlight-create-input"
               />
             </div>
             <TypeWriterTextArea
@@ -337,6 +360,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
         <div
           onClick={() => setIsFormOpenMobile(true)}
           className="p-3 text-white rounded-full shadow-lg bg-light-orange-10"
+          id="mobile-highlight-create-button"
         >
           <RxPencil1 className="text-3xl" />
         </div>
