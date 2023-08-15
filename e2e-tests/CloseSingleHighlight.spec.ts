@@ -19,7 +19,7 @@ test("Close Single Highlight Opened from 'null' referer", async ({ page }) => {
 test("Close Single Highlight Opened from 'Feed Page' as referer", async ({ page }) => {
   await page.goto("/feed", { waitUntil: "domcontentloaded" });
 
-  const singleHighlight = await page.waitForSelector(`a[href^="${/^\/feed\/\d+$/}"]`);
+  const singleHighlight = await page.waitForSelector(`a[href^="${/\/feed\/\d+$/}"]`);
   if (singleHighlight) await singleHighlight.click();
 
   const dialog = page.getByRole("dialog");
