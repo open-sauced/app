@@ -21,7 +21,7 @@ Default.args = {
   title: "Contributor Highlight",
   desc: "This is a description",
   user: "bdougie",
-  prLink: "https://github.com/open-sauced/insights/pull/1",
+  highlightLink: "https://github.com/open-sauced/insights/pull/1",
   shipped_date: "2023-01-19 13:24:51.000000",
   emojis: [
     {
@@ -39,7 +39,7 @@ PullRequest.args = {
   title: "Contributor Highlight",
   desc: "This is a description",
   user: "bdougie",
-  prLink: "https://github.com/open-sauced/insights/pull/1",
+  highlightLink: "https://github.com/open-sauced/insights/pull/1",
   shipped_date: "2023-01-19 13:24:51.000000",
   emojis: [
     {
@@ -58,7 +58,7 @@ Issue.args = {
   title: "Contributor Highlight",
   desc: "This is a description",
   user: "bdougie",
-  prLink: "https://github.com/open-sauced/insights/pull/1",
+  highlightLink: "https://github.com/open-sauced/insights/pull/1",
   shipped_date: "2023-01-19 13:24:51.000000",
   emojis: [
     {
@@ -77,7 +77,7 @@ BlogPost.args = {
   title: "Contributor Highlight",
   desc: "This is a description",
   user: "bdougie",
-  prLink: "https://github.com/open-sauced/insights/pull/1",
+  highlightLink: "https://github.com/open-sauced/insights/pull/1",
   shipped_date: "2023-01-19 13:24:51.000000",
   emojis: [
     {
@@ -89,5 +89,5 @@ BlogPost.args = {
       updated_at: "",
     },
   ],
-  type: "blog",
+  type: "blog_post",
 };

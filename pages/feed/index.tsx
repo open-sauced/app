@@ -247,7 +247,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
                       emojis={emojis}
                       title={singleHighlight.title}
                       desc={singleHighlight.highlight}
-                      prLink={singleHighlight.url}
+                      highlightLink={singleHighlight.url}
                       user={singleHighlight.login}
                       id={singleHighlight.id}
                       shipped_date={singleHighlight.shipped_at}
