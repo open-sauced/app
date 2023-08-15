@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.60.0-beta.9](https://github.com/open-sauced/insights/compare/v1.60.0-beta.8...v1.60.0-beta.9) (2023-08-15)
+
+
+### 🐛 Bug Fixes
+
+* add space between avatar and  cta menu ([#1492](https://github.com/open-sauced/insights/issues/1492)) ([3f334b0](https://github.com/open-sauced/insights/commit/3f334b09eb74cf97e7390ed2ebcf8b0281912fe0))
+
 ## [1.60.0-beta.8](https://github.com/open-sauced/insights/compare/v1.60.0-beta.7...v1.60.0-beta.8) (2023-08-14)
 
 
