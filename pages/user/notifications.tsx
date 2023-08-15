@@ -145,24 +145,26 @@ const Notifications: WithPageLayout = () => {
             <div className="flex flex-col gap-2 mb-10">
               {notifications?.map((notification) => (
                 <div className="p-2 border bg-light-slate-2 rounded-lg flex items-center gap-4" key={notification.id}>
-                  <Avatar
-                    initialsClassName="text-[100px] leading-none"
-                    initials={notification.meta_id.charAt(0)}
-                    hasBorder
-                    avatarURL={getAvatarByUsername(notification.from_user.login, 300)}
-                    size={50}
-                    isCircle
-                  />
+                  <Link href={`/user/${notification.from_user.login}`}>
+                    <Avatar
+                      initialsClassName="text-[100px] leading-none"
+                      initials={notification.meta_id.charAt(0)}
+                      hasBorder
+                      avatarURL={getAvatarByUsername(notification.from_user.login, 300)}
+                      size={50}
+                      isCircle
+                    />
+                  </Link>
                   <div className="flex flex-col gap-2">
-                    <p className="text-light-slate-12 flex gap-2">
-                      <Link href={getNotificationURL(notification.type, notification.meta_id)} className="font-bold">
-                        {notification.from_user.login}
-                      </Link>
-                      <span>{notification.message.replace(notification.from_user.login, " ")}</span>
-                    </p>
-                    <span className="text-xs font-normal text-light-slate-11">
-                      {formatDistanceToNowStrict(new Date(notification.notified_at), { addSuffix: true })}
-                    </span>
+                    <Link href={getNotificationURL(notification.type, notification.meta_id)}>
+                      <p className="text-light-slate-12 flex gap-2">
+                        <span className="font-bold">{notification.from_user.login}</span>
+                        <span>{notification.message.replace(notification.from_user.login, " ")}</span>
+                      </p>
+                      <span className="text-xs font-normal text-light-slate-11">
+                        {formatDistanceToNowStrict(new Date(notification.notified_at), { addSuffix: true })}
+                      </span>
+                    </Link>
                   </div>
                 </div>
               ))}
