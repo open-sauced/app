@@ -47,6 +47,8 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
   const { user, signIn } = useSupabaseAuth();
   const { data: repos } = useFetchHighlightRepos();
 
+  const [host, setHost] = useState("");
+
   const { data: featuredHighlights } = useFetchFeaturedHighlights();
 
   const repoTofilterList = (repos: { full_name: string }[]): highlightReposType[] => {
@@ -143,6 +145,17 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
     setHydrated(true);
   }, []);
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setHost(window.location.origin as string);
+    }
+  }, []);
+
+  const shouldAllowDialogCloseAction =
+    props.referer === null ||
+    (typeof props.referer === "string" && !props.referer.includes(host)) ||
+    (typeof props.referer === "string" && props.referer === `${host}/feed`);
+
   if (!hydrated)
     return (
       <>
@@ -201,11 +214,11 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
             open={openSingleHighlight}
             onOpenChange={(open) => {
               if (openSingleHighlight && !open) {
-                if (props.referer !== null && !props.referer.includes("/feed")) {
-                  router.back();
-                } else {
+                if (shouldAllowDialogCloseAction) {
                   setOpenSingleHighlight(false);
                   router.replace("/feed");
+                } else {
+                  router.back();
                 }
               }
             }}
@@ -228,7 +241,9 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
                         addSuffix: true,
                       })}
                     </span>
-                    {props.referer !== null && !props.referer.includes("/feed") ? (
+                    {shouldAllowDialogCloseAction ? (
+                      <DialogCloseButton onClick={() => router.replace("/feed")} />
+                    ) : (
                       <Button
                         variant="text"
                         onClick={() => router.back()}
@@ -237,8 +252,6 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
                         <AiOutlineClose size={20} />
                         <span className="sr-only">Close</span>
                       </Button>
-                    ) : (
-                      <DialogCloseButton onClick={() => router.replace("/feed")} />
                     )}
                   </div>
 

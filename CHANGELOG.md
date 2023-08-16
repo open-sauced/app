@@ -5,6 +5,25 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.60.0-beta.11](https://github.com/open-sauced/insights/compare/v1.60.0-beta.10...v1.60.0-beta.11) (2023-08-15)
+
+
+### 🐛 Bug Fixes
+
+* single highlight dialog close button not working in new browser tab ([#1551](https://github.com/open-sauced/insights/issues/1551)) ([b6312d5](https://github.com/open-sauced/insights/commit/b6312d5615a369c5143679e22236bf86e41a9bb2))
+
+
+### 🍕 Features
+
+* update beta badge with maintainer badge to contributor profile ([#1557](https://github.com/open-sauced/insights/issues/1557)) ([51451a6](https://github.com/open-sauced/insights/commit/51451a67614e31467d20544ce38ec3a50ab4126e))
+
+## [1.60.0-beta.10](https://github.com/open-sauced/insights/compare/v1.60.0-beta.9...v1.60.0-beta.10) (2023-08-15)
+
+
+### 🐛 Bug Fixes
+
+* refactor notification username retrieval and display logic ([#1537](https://github.com/open-sauced/insights/issues/1537)) ([6657a75](https://github.com/open-sauced/insights/commit/6657a7514e27eac4aaea972e7b8e26004559591c))
+
 ## [1.60.0-beta.9](https://github.com/open-sauced/insights/compare/v1.60.0-beta.8...v1.60.0-beta.9) (2023-08-15)
 
 

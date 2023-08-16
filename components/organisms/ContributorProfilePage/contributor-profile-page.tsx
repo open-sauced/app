@@ -90,6 +90,7 @@ const ContributorProfilePage = ({
     linkedin_url: linkedInUrl,
     discord_url: discordUrl,
     display_local_time: displayLocalTime,
+    is_maintainer: isMaintainer,
   } = user || {};
 
   const iscConnected = !!user?.is_open_sauced_member;
@@ -132,6 +133,7 @@ const ContributorProfilePage = ({
                 linkedInUrl={linkedInUrl}
                 discordUrl={discordUrl}
                 prFirstOpenedDate={prFirstOpenedDate}
+                isMaintainer={isMaintainer}
               />
 
               <div>
