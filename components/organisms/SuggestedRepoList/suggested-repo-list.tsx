@@ -6,9 +6,14 @@ import SuggestedRepository from "components/molecules/SuggestedRepo/suggested-re
 interface SuggestedRepositoriesListProps {
   reposData: RepoCardProfileProps[];
   onAddRepo?: (repo: string) => void;
+  loadingData?: {
+    repoName: string;
+    isLoading: boolean;
+    isAddedFromCart: boolean;
+  };
 }
 
-const SuggestedRepositoriesList = ({ reposData, onAddRepo }: SuggestedRepositoriesListProps) => {
+const SuggestedRepositoriesList = ({ reposData, onAddRepo, loadingData }: SuggestedRepositoriesListProps) => {
   return (
     <div>
       <Title className="!text-light-slate-11 !text-sm" level={4}>
@@ -17,7 +22,7 @@ const SuggestedRepositoriesList = ({ reposData, onAddRepo }: SuggestedRepositori
 
       <div className="flex flex-col gap-3 mt-6">
         {reposData.map((item, index) => (
-          <SuggestedRepository key={index} data={item} onAddRepo={onAddRepo} />
+          <SuggestedRepository key={index} data={item} loadingData={loadingData} onAddRepo={onAddRepo} />
         ))}
       </div>
     </div>
