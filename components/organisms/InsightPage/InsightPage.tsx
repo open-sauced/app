@@ -79,6 +79,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
   // Loading States
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [createLoading, setCreateLoading] = useState(false);
+  const [addRepoLoading, setAddRepoLoading] = useState({ repoName: "", isAddedFromCart: false, isLoading: false });
 
   const [name, setName] = useState(insight?.name || "");
   const [isNameValid, setIsNameValid] = useState(false);
@@ -192,7 +193,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
     setSubmitted(false);
   };
 
-  const loadAndAddRepo = async (repoToAdd: string) => {
+  const loadAndAddRepo = async (repoToAdd: string, isAddedFromCart = false) => {
     setAddRepoError(RepoLookupError.Initial);
 
     const hasRepo = repos.find((repo) => `${repo.full_name}` === repoToAdd);
@@ -210,8 +211,10 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
 
     const { repoFullName } = apiPaths;
 
+    setAddRepoLoading({ repoName: repoToAdd, isAddedFromCart, isLoading: true });
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/repos/${repoFullName}`);
+      setAddRepoLoading({ repoName: repoToAdd, isAddedFromCart, isLoading: false });
 
       if (response.ok) {
         const addedRepo = (await response.json()) as DbRepo;
@@ -243,6 +246,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
         }
       }
     } catch {
+      setAddRepoLoading({ repoName: repoToAdd, isAddedFromCart, isLoading: false });
       setAddRepoError(RepoLookupError.Error);
     }
   };
@@ -253,7 +257,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
 
   const handleReAddRepository = async (repoAdded: string) => {
     try {
-      await loadAndAddRepo(repoAdded);
+      await loadAndAddRepo(repoAdded, true);
 
       setRepoHistory((historyRepos) => {
         return historyRepos.filter((repo) => `${repo.full_name}` !== repoAdded);
@@ -405,13 +409,22 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
           />
 
           <div>
-            <Button disabled={repos.length === insightRepoLimit} onClick={handleAddRepository} variant="outline">
+            <Button
+              disabled={
+                repos.length === insightRepoLimit ||
+                (addRepoLoading.repoName === repoSearchTerm && addRepoLoading.isLoading)
+              }
+              loading={addRepoLoading.repoName === repoSearchTerm && addRepoLoading.isLoading}
+              onClick={handleAddRepository}
+              variant="outline"
+            >
               Add Repository
             </Button>
           </div>
 
           <SuggestedRepositoriesList
             reposData={staticSuggestedRepos}
+            loadingData={addRepoLoading}
             onAddRepo={(repo) => {
               loadAndAddRepo(repo);
             }}

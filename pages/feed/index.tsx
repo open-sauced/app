@@ -47,6 +47,8 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
   const { user, signIn } = useSupabaseAuth();
   const { data: repos } = useFetchHighlightRepos();
 
+  const [host, setHost] = useState("");
+
   const { data: featuredHighlights } = useFetchFeaturedHighlights();
 
   const repoTofilterList = (repos: { full_name: string }[]): highlightReposType[] => {
@@ -143,6 +145,17 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
     setHydrated(true);
   }, []);
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setHost(window.location.origin as string);
+    }
+  }, []);
+
+  const shouldAllowDialogCloseAction =
+    props.referer === null ||
+    (typeof props.referer === "string" && !props.referer.includes(host)) ||
+    (typeof props.referer === "string" && props.referer === `${host}/feed`);
+
   if (!hydrated)
     return (
       <>
@@ -168,13 +181,13 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
       />
 
       <div
-        className="mt-5 md:mt-0 w-full gap-[2rem] flex flex-col justify-center md:gap-6 xl:gap-16 px-2 pt-12 md:items-start md:justify-between mx-auto md:px-16 lg:justify-end md:flex-row"
+        className="container mt-5 md:mt-0 w-full gap-12 flex flex-col justify-center px-2 pt-12 md:items-start md:px-16 md:flex-row"
         ref={topRef}
       >
-        <div className="sticky top-8">
-          <div className="flex-col flex-1 xl:flex hidden gap-6 mt-12">
+        <div className="sticky top-8 xl:flex hidden flex-none w-[22%]">
+          <div className="flex flex-col w-full gap-6 mt-12">
             {user && (
-              <div className="md:w-1/2 lg:w-1/3">
+              <div className="w-full">
                 <UserCard
                   loading={loggedInUserLoading}
                   username={loggedInUser?.login as string}
@@ -201,11 +214,11 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
             open={openSingleHighlight}
             onOpenChange={(open) => {
               if (openSingleHighlight && !open) {
-                if (props.referer !== null && !props.referer.includes("/feed")) {
-                  router.back();
-                } else {
+                if (shouldAllowDialogCloseAction) {
                   setOpenSingleHighlight(false);
                   router.replace("/feed");
+                } else {
+                  router.back();
                 }
               }
             }}
@@ -228,7 +241,9 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
                         addSuffix: true,
                       })}
                     </span>
-                    {props.referer !== null && !props.referer.includes("/feed") ? (
+                    {shouldAllowDialogCloseAction ? (
+                      <DialogCloseButton onClick={() => router.replace("/feed")} />
+                    ) : (
                       <Button
                         variant="text"
                         onClick={() => router.back()}
@@ -237,8 +252,6 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
                         <AiOutlineClose size={20} />
                         <span className="sr-only">Close</span>
                       </Button>
-                    ) : (
-                      <DialogCloseButton onClick={() => router.replace("/feed")} />
                     )}
                   </div>
 
@@ -327,7 +340,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
             <FollowingHighlightWrapper selectedFilter={selectedRepo} emojis={emojis} />
           </TabsContent>
         </Tabs>
-        <div className="md:hidden gap-6 mt-10 md:flex-1 lg:flex md:flex-col sticky top-20">
+        <div className="hidden w-[30%] xl:w-[24%] flex-none gap-6 mt-10 lg:flex flex-col sticky top-20">
           {repoList && repoList.length > 0 && (
             <HighlightsFilterCard
               selectedFilter={selectedRepo}

@@ -174,6 +174,7 @@ interface DbUser {
   readonly followers_count: number;
   readonly following_count: number;
   readonly highlights_count: number;
+  readonly is_maintainer: boolean;
 }
 
 interface DbHighlight {
@@ -236,6 +237,7 @@ interface DbUserNotification {
   readonly notified_at: string;
   readonly user_id: number;
   readonly meta_id: string;
+  readonly from_user: DbUser;
 }
 
 interface DbUserCollaboration {
