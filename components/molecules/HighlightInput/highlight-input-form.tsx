@@ -6,6 +6,8 @@ import { format } from "date-fns";
 import { HiOutlineSparkles } from "react-icons/hi";
 import { RxPencil1 } from "react-icons/rx";
 import { IoClose } from "react-icons/io5";
+import { BsTagFill } from "react-icons/bs";
+import { useDebounce } from "rooks";
 import Button from "components/atoms/Button/button";
 import Tooltip from "components/atoms/Tooltip/tooltip";
 
@@ -18,6 +20,7 @@ import {
   isValidIssueUrl,
   isValidPullRequestUrl,
   isValidBlogUrl,
+  getAvatarByUsername,
 } from "lib/utils/github";
 import { fetchGithubPRInfo } from "lib/hooks/fetchGithubPRInfo";
 import { useToast } from "lib/hooks/useToast";
@@ -30,20 +33,33 @@ import generateIssueHighlightSummary from "lib/utils/generate-issue-highlight-su
 import { fetchDevToBlogInfo } from "lib/hooks/fetchDevToBlogInfo";
 import { getBlogDetails } from "lib/utils/dev-to";
 import generateBlogHighlightSummary from "lib/utils/generate-blog-highlight-summary";
+import Search from "components/atoms/Search/search";
+import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { Calendar } from "../Calendar/calendar";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../Collapsible/collapsible";
 import { Popover, PopoverContent, PopoverTrigger } from "../Popover/popover";
 import GhOpenGraphImg from "../GhOpenGraphImg/gh-open-graph-img";
 import DevToSocialImg from "../DevToSocialImage/dev-to-social-img";
+import CardRepoList, { RepoList } from "../CardRepoList/card-repo-list";
+import {
+  Dialog,
+  DialogCloseButton,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "../Dialog/dialog";
 
 interface HighlightInputFormProps {
   refreshCallback?: Function;
 }
 
 const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.Element => {
+  const { sessionToken, providerToken } = useSupabaseAuth();
   const [isDivFocused, setIsDivFocused] = useState(false);
   const [isSummaryButtonDisabled, setIsSummaryButtonDisabled] = useState(false);
   const [isFormOpenMobile, setIsFormOpenMobile] = useState(false);
+  const [addTaggedRepoFormOpen, setAddTaggedRepoFormOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
   const [bodyText, setBodyText] = useState("");
@@ -51,6 +67,10 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
   const [charCount, setCharCount] = useState(0);
   const [highlightLink, setHighlightLink] = useState("");
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
+  const [taggedRepoList, setTaggedRepoList] = useState<RepoList[]>([]);
+  const [taggedRepoSearchTerm, setTaggedRepoSearchTerm] = useState<string>("");
+  const [repoTagSuggestions, setRepoTagSuggestions] = useState<string[]>([]);
+  const [tagRepoSearchLoading, setTagRepoSearchLoading] = useState<boolean>(false);
 
   const charLimit = 500;
 
@@ -74,6 +94,35 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
       document.body.style.overflow = "auto";
     }
   }, [isFormOpenMobile]);
+
+  const handleTaggedRepoAdd = async (repoFullName: string) => {
+    // fetch github api to check if the repo exists
+    const req = await fetch(`https://api.github.com/repos/${repoFullName}`, {
+      ...(providerToken
+        ? {
+            headers: {
+              Authorization: `Bearer ${providerToken}`,
+            },
+          }
+        : {}),
+    });
+
+    if (!req.ok) {
+      toast({ description: "Repo not found!", title: "Error", variant: "danger" });
+      return;
+    }
+
+    const [ownerName, repoName] = repoFullName.split("/");
+    const repoIcon = getAvatarByUsername(ownerName, 60);
+    const newTaggedRepoList = [...taggedRepoList, { repoName, repoOwner: ownerName, repoIcon }];
+    setTaggedRepoList(newTaggedRepoList);
+    toast({ description: "Repo tag added!", title: "Success", variant: "success" });
+  };
+
+  const handleTaggedRepoDelete = (repoName: string) => {
+    const newTaggedRepoList = taggedRepoList.filter((repo) => repo.repoName !== repoName);
+    setTaggedRepoList(newTaggedRepoList);
+  };
 
   const handleGenerateHighlightSummary = async () => {
     if (
@@ -196,6 +245,38 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
     }
   };
 
+  const updateSuggestionsDebounced = useDebounce(async () => {
+    setTagRepoSearchLoading(true);
+
+    const req = await fetch(
+      `https://api.github.com/search/repositories?q=${encodeURIComponent(
+        `${taggedRepoSearchTerm} in:name in:repo:owner/name sort:updated`
+      )}`,
+      {
+        ...(providerToken
+          ? {
+              headers: {
+                Authorization: `Bearer ${providerToken}`,
+              },
+            }
+          : {}),
+      }
+    );
+
+    setTagRepoSearchLoading(false);
+    if (req.ok) {
+      const res = await req.json();
+      const suggestions = res.items.map((item: any) => item.full_name);
+      setRepoTagSuggestions(suggestions);
+    }
+  }, 250);
+
+  useEffect(() => {
+    setRepoTagSuggestions([]);
+    if (!taggedRepoSearchTerm) return;
+    updateSuggestionsDebounced();
+  }, [taggedRepoSearchTerm]);
+
   return (
     <form onSubmit={handlePostHighlight} className="flex flex-col flex-1 gap-4 ">
       <Collapsible className="max-sm:hidden" onOpenChange={handleCollapsibleOpenChange} open={isDivFocused}>
@@ -237,6 +318,30 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
               </span>
               / <span>{charLimit}</span>
             </p>
+
+            <div
+              className={`flex items-center justify-between w-full gap-1 p-1 text-sm bg-white border rounded-lg mb-4`}
+            >
+              <div className="flex w-full gap-1">
+                <CardRepoList
+                  repoList={taggedRepoList}
+                  deletable={true}
+                  onDelete={(repoName) => handleTaggedRepoDelete(repoName)}
+                />
+                <Tooltip content={"Add a repo"}>
+                  <button
+                    className="flex gap-1  p-1 pr-2 border-[1px] border-light-slate-6 rounded-lg text-light-slate-12 items-center cursor-pointer"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setAddTaggedRepoFormOpen(true);
+                    }}
+                  >
+                    <BsTagFill className="rounded-[4px] overflow-hidden" />
+                    <span className={"max-w-[45px] md:max-w-[100px] truncate"}>Add a repo</span>
+                  </button>
+                </Tooltip>
+              </div>
+            </div>
 
             <div className="flex">
               <div className="flex w-full gap-1">
@@ -300,6 +405,45 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
         </Button>
       )}
 
+      {/* Add Repo Popup Form */}
+
+      <Dialog open={addTaggedRepoFormOpen} onOpenChange={setAddTaggedRepoFormOpen}>
+        <DialogContent
+          style={{
+            width: "33vw",
+          }}
+        >
+          <DialogHeader>
+            <DialogTitle>Add a repo</DialogTitle>
+            <DialogDescription>Add a Repository to tag with this highlight.</DialogDescription>
+          </DialogHeader>
+          <Search
+            isLoading={tagRepoSearchLoading}
+            placeholder="Repository Full Name (ex: open-sauced/open-sauced)"
+            className="!w-full text-md text-gra"
+            name={"query"}
+            suggestions={repoTagSuggestions}
+            onChange={(value) => setTaggedRepoSearchTerm(value)}
+            onSearch={(search) => setTaggedRepoSearchTerm(search as string)}
+          />
+          <DialogCloseButton onClick={() => setAddTaggedRepoFormOpen(false)} />
+          <div className="flex justify-end gap-2">
+            <Button variant="default" onClick={() => setAddTaggedRepoFormOpen(false)}>
+              Cancel
+            </Button>
+            <Button
+              variant="primary"
+              onClick={() => {
+                setAddTaggedRepoFormOpen(false);
+                handleTaggedRepoAdd(taggedRepoSearchTerm);
+              }}
+              disabled={!taggedRepoSearchTerm}
+            >
+              Add
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
       {/* Mobile popup form */}
 
       {isFormOpenMobile && (
