@@ -12,7 +12,7 @@ interface SuggestedRopsitoryProps {
 }
 const SuggestedRepository = ({ data, onAddRepo, loadingData }: SuggestedRopsitoryProps) => {
   return (
-    <div className="flex items-center justify-between">
+    <div className="flex justify-between flex-col xs:flex-row xs:items-start">
       <RepoCardProfile {...data} />
       <Button
         disabled={
