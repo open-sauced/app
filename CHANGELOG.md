@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.60.0-beta.12](https://github.com/open-sauced/insights/compare/v1.60.0-beta.11...v1.60.0-beta.12) (2023-08-16)
+
+
+### 🍕 Features
+
+* use Netlify edge function for dev card ([#1400](https://github.com/open-sauced/insights/issues/1400)) ([5ae718e](https://github.com/open-sauced/insights/commit/5ae718e88a61ce34e973ed389f9d7394bb66e56b))
+
 ## [1.60.0-beta.11](https://github.com/open-sauced/insights/compare/v1.60.0-beta.10...v1.60.0-beta.11) (2023-08-15)
 
 
