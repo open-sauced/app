@@ -1,44 +1,28 @@
-import { ImageResponse } from "@vercel/og";
-import { NextRequest } from "next/server";
-import { getAvatarByUsername } from "lib/utils/github";
-import { fetchContributorPRs } from "lib/hooks/api/useContributorPullRequests";
-import { getRepoList } from "lib/hooks/useRepoList";
-
-/**
- * @params {string} username - username for the requested user
- * @params {number} w - Width of the card
- */
+import React from "react";
+import { ImageResponse } from "og_edge";
+import type { Config } from "https://edge.netlify.com";
 
 const ASPECT_RATIO = 245 / 348;
 const BASE_WIDTH = 245;
 const DEFAULT_WIDTH = 735;
 const MAX_WIDTH = 1960;
 
-export const config = {
-  runtime: "edge",
+export const config: Config = {
+  path: "/api/card",
+  cache: "manual",
 };
 
-const logoImg = fetch(new URL("../../../../img/openSauced-icon.png", import.meta.url)).then((res) => res.arrayBuffer());
-const interSemiBoldFont = fetch(new URL("../../../../font/Inter-SemiBold.ttf", import.meta.url)).then((res) =>
-  res.arrayBuffer()
-);
-const interBlackFont = fetch(new URL("../../../../font/Inter-Black.ttf", import.meta.url)).then((res) =>
-  res.arrayBuffer()
-);
-
-export default async function handler(request: NextRequest) {
-  // pull username from the request url
-  // at /api/user/[username]/card.png
-  const username = new URL(request.url).pathname?.split("/")[3];
+export default async function handler(req: Request) {
+  const { searchParams } = new URL(req.url);
+  const username = searchParams.get("username");
 
   if (!username) {
     return new Response("A username must be specified", { status: 403 });
   }
 
-  // const requestedWidth = Number.parseInt(searchParams.get("w") ?? "0", 10) || DEFAULT_WIDTH;
+  const requestedWidth = Number.parseInt(searchParams.get("w") ?? "0", 10) || DEFAULT_WIDTH;
 
-  // const width = Math.min(requestedWidth, MAX_WIDTH);
-  const width = DEFAULT_WIDTH;
+  const width = Math.min(requestedWidth, MAX_WIDTH);
   const height = width / ASPECT_RATIO;
   const avatarURL = getAvatarByUsername(username, 600);
 
@@ -48,33 +32,51 @@ export default async function handler(request: NextRequest) {
 
   const bufferSize = size(50);
 
+  // get the origin from the request
+  const BASE_URL = new URL(req.url).origin;
+
+  function getLocalAsset(path: string): Promise<ArrayBuffer> {
+    return fetch(new URL(`/assets/card/${path}`, BASE_URL)).then((res) => res.arrayBuffer());
+  }
+
+  // // Make sure the font exists in the specified path:
+  const logoImg = getLocalAsset("/logo.png");
+  const interSemiBoldFont = getLocalAsset("/Inter-SemiBold.ttf");
+  const interBlackFont = getLocalAsset("/Inter-Black.ttf");
+
   const [interSemiBoldFontData, interBlackFontData, logoImgData, prReq] = await Promise.all([
     interSemiBoldFont,
     interBlackFont,
     logoImg,
-    fetchContributorPRs(username, undefined, "*", [], 100),
+    fetchContributorPRs(username),
   ]);
 
   const { data: prData } = prReq;
   const prs = prData.length;
-  const repos = getRepoList(Array.from(new Set(prData.map((prData) => prData.full_name))).join(",")).length;
+  const repos = getRepoList(Array.from(new Set(prData.map((prData: any) => prData.full_name))).join(",")).length;
 
   return new ImageResponse(
     (
       <div
-        tw="flex"
         style={{
           fontFamily: '"Inter"',
+          display: "flex",
           fontSize: size(16),
           fontWeight: 700,
           paddingBottom: bufferSize,
           paddingLeft: bufferSize,
           paddingRight: bufferSize,
+          background:
+            "#11181C linear-gradient(152.13deg, rgba(217, 217, 217, 0.6) 4.98%, rgba(217, 217, 217, 0.1) 65.85%)",
         }}
       >
         <div
-          tw="flex relative items-stretch overflow-hidden border-white"
           style={{
+            display: "flex",
+            position: "relative",
+            alignItems: "stretch",
+            overflow: "hidden",
+            border: "2px solid #fff",
             width,
             height,
             borderRadius: size(16),
@@ -84,11 +86,27 @@ export default async function handler(request: NextRequest) {
               "#11181C linear-gradient(152.13deg, rgba(217, 217, 217, 0.6) 4.98%, rgba(217, 217, 217, 0.1) 65.85%)",
           }}
         >
-          <div tw="flex items-stretch w-full h-full overflow-hidden">
-            <div tw="flex flex-col flex-shrink-0 w-full h-full">
+          <div
+            style={{
+              display: "flex",
+              alignItems: "stretch",
+              overflow: "hidden",
+              width: "100%",
+              height: "100%",
+            }}
+          >
+            <div
+              style={{
+                width: "100%",
+                height: "100%",
+                display: "flex",
+                flexDirection: "column",
+                flexShrink: 0,
+              }}
+            >
               <div
-                tw="flex"
                 style={{
+                  display: "flex",
                   height: "50%",
                   width: "100%",
                   position: "relative",
@@ -107,7 +125,16 @@ export default async function handler(request: NextRequest) {
                 >
                   <CardSauceBG width={size(245)} height={size(177)} />
                 </div>
-                <div tw="flex absolute items-center" style={{ left: size(10), top: size(10), height: size(13) }}>
+                <div
+                  style={{
+                    display: "flex",
+                    position: "absolute",
+                    alignItems: "center",
+                    left: size(10),
+                    top: size(10),
+                    height: size(13),
+                  }}
+                >
                   {/* eslint-disable-next-line @next/next/no-img-element  */}
                   <img
                     alt="Open Sauced Logo"
@@ -116,32 +143,61 @@ export default async function handler(request: NextRequest) {
                     // @ts-ignore
                     src={logoImgData}
                   />
-                  <p tw={"text-white"} style={{ fontSize: `${size(8)}px` }}>
-                    OpenSauced
-                  </p>
+                  <p style={{ fontSize: `${size(8)}px`, color: "white" }}>OpenSauced</p>
                 </div>
               </div>
               <div
-                tw="flex flex-col relative justify-end items-center text-white"
-                style={{ height: "50%", flexShrink: 0, flexGrow: 1, paddingTop: size(40), paddingBottom: size(18) }}
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  position: "relative",
+                  alignItems: "center",
+                  justifyContent: "flex-end",
+                  color: "#fff",
+                  height: "50%",
+                  flexShrink: 0,
+                  flexGrow: 1,
+                  paddingTop: size(40),
+                  paddingBottom: size(18),
+                }}
               >
                 <div style={{ fontSize: size(14), marginBottom: size(12), fontWeight: 700 }}>{`@${username}`}</div>
-                <div tw="flex w-full justify-around">
-                  <div tw="flex flex-col text-center items-center">
-                    <div tw="flex font-black" style={{ fontSize: size(60) }}>
+                <div
+                  style={{
+                    display: "flex",
+                    width: "100%",
+                    justifyContent: "space-around",
+                  }}
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      textAlign: "center",
+                    }}
+                  >
+                    <div
+                      style={{
+                        fontWeight: 900,
+                        display: "flex",
+                        fontSize: size(60),
+                      }}
+                    >
                       {prs}
                     </div>
-                    <div tw="flex" style={{ fontSize: size(12) }}>
-                      PRs created
-                    </div>
+                    <div style={{ display: "flex", fontSize: size(12) }}>PRs created</div>
                   </div>
-                  <div tw="flex flex-col text-center items-center">
-                    <div tw="flex font-black" style={{ fontSize: size(60) }}>
-                      {repos}
-                    </div>
-                    <div tw="flex" style={{ fontSize: size(12) }}>
-                      {repos === 1 ? "Repo" : "Repos"}
-                    </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      textAlign: "center",
+                    }}
+                  >
+                    <div style={{ display: "flex", fontWeight: 900, fontSize: size(60) }}>{repos}</div>
+                    <div style={{ display: "flex", fontSize: size(12) }}>{repos === 1 ? "Repo" : "Repos"}</div>
                   </div>
                 </div>
               </div>
@@ -152,8 +208,9 @@ export default async function handler(request: NextRequest) {
               alt="avatar"
               width={size(116)}
               height={size(116)}
-              tw="absolute rounded-full"
               style={{
+                position: "absolute",
+                borderRadius: "1000px",
                 border: `${size(2)}px solid #fff`,
                 left: "50%",
                 top: "50%",
@@ -162,7 +219,6 @@ export default async function handler(request: NextRequest) {
               }}
             />
             <div
-              tw="flex"
               style={{
                 position: "absolute",
                 left: 0,
@@ -184,6 +240,9 @@ export default async function handler(request: NextRequest) {
     {
       width: width + bufferSize * 2,
       height: height + bufferSize,
+      headers: {
+        "cache-control": "public, s-maxage=86400", // 1 day
+      },
       fonts: [
         {
           name: "Inter",
@@ -200,6 +259,38 @@ export default async function handler(request: NextRequest) {
       ],
     }
   );
+}
+
+function getRepoList(repos: string) {
+  return repos
+    .split(",")
+    .filter((rpo) => !!rpo)
+    .map((repo) => {
+      const [, repoName] = repo.split("/");
+
+      return {
+        repoName,
+      };
+    });
+}
+
+const getAvatarByUsername = (username: string | null, size = 460) =>
+  `https://www.github.com/${username ?? "github"}.png?size=${size}`;
+
+async function fetchContributorPRs(username: string) {
+  const url = new URL(`${Deno.env.get("NEXT_PUBLIC_API_URL")}/users/${username}/prs`);
+
+  url.searchParams.set("topic", "*");
+  url.searchParams.set("limit", "100");
+  url.searchParams.set("range", "30");
+
+  const res = await fetch(url, {
+    headers: {
+      accept: "application/json",
+    },
+  });
+
+  return res.json();
 }
 
 const CardSauceBG = ({ ...props }) => (
