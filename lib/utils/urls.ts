@@ -1,15 +1,21 @@
-export const siteUrl = (path: string = "") => {
-  let url = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000/";
+export const siteUrl = (path: string = "", params: { [key: string]: any } = {}) => {
+  let urlString = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000/";
   // Make sure to include `https://` when not localhost.
-  url = url.includes("http") ? url : `https://${url}`;
+  urlString = urlString.includes("http") ? urlString : `https://${urlString}`;
   // Make sure to including trailing `/`.
-  url = url.charAt(url.length - 1) === "/" ? url : `${url}/`;
+  urlString = urlString.charAt(urlString.length - 1) === "/" ? urlString : `${urlString}/`;
 
   if (path) {
-    url = path.charAt(0) === "/" ? `${url}${path.slice(1)}` : `${url}${path}`;
+    urlString = path.charAt(0) === "/" ? `${urlString}${path.slice(1)}` : `${urlString}${path}`;
   }
 
-  return url;
+  let url = new URL(urlString);
+  // append params
+  Object.keys(params).forEach((key) => {
+    if (params[key] !== null || params[key] !== undefined) url.searchParams.append(key, params[key]);
+  });
+
+  return url.toString();
 };
 
 /**
@@ -19,7 +25,8 @@ export const siteUrl = (path: string = "") => {
  */
 export const cardPageUrl = (username: string) => siteUrl(`user/${username}/card`);
 
-export const cardImageUrl = (username: string) => siteUrl(`api/user/${username}/card.png`);
+export const cardImageUrl = (username: string, opts: { size?: string } = {}) =>
+  siteUrl(`api/card`, { username, ...opts });
 
 export const twitterCardShareUrl = (username: string) => {
   const url = new URL("https://twitter.com/intent/tweet");
