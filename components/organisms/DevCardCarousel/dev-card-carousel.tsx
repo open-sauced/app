@@ -1,5 +1,5 @@
 import cntl from "cntl";
-import { animated, to, useSprings } from "react-spring";
+import { animated, to, useSprings } from "@react-spring/web";
 import { useGesture } from "@use-gesture/react";
 import { useCallback, useEffect, useState } from "react";
 import { useKey } from "react-use";
