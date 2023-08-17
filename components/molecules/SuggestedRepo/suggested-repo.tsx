@@ -12,7 +12,7 @@ interface SuggestedRopsitoryProps {
 }
 const SuggestedRepository = ({ data, onAddRepo, loadingData }: SuggestedRopsitoryProps) => {
   return (
-    <div className="flex items-center justify-between">
+    <div className="flex justify-between flex-col xs:flex-row xs:items-start">
       <RepoCardProfile {...data} />
       <Button
         disabled={
@@ -26,7 +26,7 @@ const SuggestedRepository = ({ data, onAddRepo, loadingData }: SuggestedRopsitor
           !loadingData?.isAddedFromCart
         }
         variant="text"
-        className="border border-light-slate-6 shadow-input"
+        className="border border-light-slate-6 shadow-input w-fit"
         onClick={() => onAddRepo && onAddRepo(`${data.orgName}/${data.repoName}`)}
       >
         Add to Page

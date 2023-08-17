@@ -17,7 +17,7 @@ const RepoCardProfile = ({ avatar, orgName, repoName, prCount, issueCount, class
       <div className="h-max group-hover:border rounded-lg">
         <Avatar initials="BD" size={40} avatarURL={avatar} />
       </div>
-      <div className="flex flex-col gap-1 h-[46px]">
+      <div className="flex flex-col gap-1 sm:h-[60px]">
         <div className="text-base">
           <p className="text-light-slate-11 group-hover:text-dark-orange-12 -mt-1">
             {orgName} / <span className="text-light-slate-12 group-hover:text-white">{repoName}</span>
