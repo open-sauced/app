@@ -359,7 +359,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
       <Fab className="md:hidden">
         <div
           onClick={() => setIsFormOpenMobile(true)}
-          className="p-3 text-white rounded-full shadow-lg bg-light-orange-10"
+          className="p-3 text-white rounded-full shadow-lg bg-light-orange-10 mb-10 -mr-4"
           id="mobile-highlight-create-button"
         >
           <RxPencil1 className="text-3xl" />
