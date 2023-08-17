@@ -26,7 +26,7 @@ const SuggestedRepository = ({ data, onAddRepo, loadingData }: SuggestedRopsitor
           !loadingData?.isAddedFromCart
         }
         variant="text"
-        className="border border-light-slate-6 shadow-input"
+        className="border border-light-slate-6 shadow-input w-fit"
         onClick={() => onAddRepo && onAddRepo(`${data.orgName}/${data.repoName}`)}
       >
         Add to Page
