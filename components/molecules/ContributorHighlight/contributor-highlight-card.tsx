@@ -25,7 +25,7 @@ import {
 
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import {
-  generateApiPrUrl,
+  generateRepoParts,
   getAvatarByUsername,
   getOwnerAndRepoNameFromUrl,
   isValidIssueUrl,
@@ -219,7 +219,7 @@ const ContributorHighlightCard = ({
     }
 
     if (isValidPullRequestUrl(pullrequestLink) || isValidIssueUrl(pullrequestLink)) {
-      const { apiPaths } = generateApiPrUrl(highlight.prLink);
+      const { apiPaths } = generateRepoParts(highlight.prLink);
       const { repoName, orgName, issueId } = apiPaths;
       setLoading(true);
       const isIssue = highlight.prLink.includes("issues");

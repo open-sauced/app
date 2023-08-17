@@ -11,7 +11,7 @@ import Tooltip from "components/atoms/Tooltip/tooltip";
 
 import { createHighlights } from "lib/hooks/createHighlights";
 import {
-  generateApiPrUrl,
+  generateRepoParts,
   getGithubIssueDetails,
   getGithubIssueComments,
   getPullRequestCommitMessageFromUrl,
@@ -112,9 +112,9 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
     const highlight = bodyText;
 
     if (isValidPullRequestUrl(pullrequestLink) || isValidIssueUrl(pullrequestLink)) {
-      // generateApiPrUrl will return an object with repoName, orgName and issueId
+      // generateRepoParts will return an object with repoName, orgName and issueId
       // it can work with both issue and pull request links
-      const { apiPaths } = generateApiPrUrl(pullrequestLink);
+      const { apiPaths } = generateRepoParts(pullrequestLink);
       const { repoName, orgName, issueId } = apiPaths;
       setLoading(true);
       // Api validation to check validity of github pull request link match

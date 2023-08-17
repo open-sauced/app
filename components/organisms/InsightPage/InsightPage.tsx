@@ -14,7 +14,7 @@ import RepoNotIndexed from "components/organisms/Repositories/repository-not-ind
 import useRepositories from "lib/hooks/api/useRepositories";
 
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
-import { getAvatarById, getAvatarByUsername } from "lib/utils/github";
+import { generateRepoParts, getAvatarById, getAvatarByUsername } from "lib/utils/github";
 import useStore from "lib/store";
 import Error from "components/atoms/Error/Error";
 import Search from "components/atoms/Search/search";
@@ -202,10 +202,20 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
       return;
     }
 
+    const { apiPaths, isValidUrl } = generateRepoParts(repoToAdd);
+
+    if (!isValidUrl) {
+      setAddRepoError(RepoLookupError.Invalid);
+      return;
+    }
+
+    const { repoFullName } = apiPaths;
+
     setAddRepoLoading({ repoName: repoToAdd, isAddedFromCart, isLoading: true });
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/repos/${repoToAdd}`);
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/repos/${repoFullName}`);
       setAddRepoLoading({ repoName: repoToAdd, isAddedFromCart, isLoading: false });
+
       if (response.ok) {
         const addedRepo = (await response.json()) as DbRepo;
 
@@ -215,7 +225,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
         setAddRepoError(RepoLookupError.Initial);
         setRepoSearchTerm("");
       } else {
-        const publicRepoResponse = await fetch(`https://api.github.com/repos/${repoToAdd}`);
+        const publicRepoResponse = await fetch(`https://api.github.com/repos/${repoFullName}`);
 
         if (publicRepoResponse.ok) {
           const publicRepo = await publicRepoResponse.json();
@@ -390,7 +400,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
           </Title>
           <Search
             isLoading={createLoading}
-            placeholder="Repository Full Name (ex: open-sauced/open-sauced)"
+            placeholder="Repository URL or Full Name (ex: open-sauced/open-sauced)"
             className="!w-full text-md text-gra"
             name={"query"}
             suggestions={suggestions}
