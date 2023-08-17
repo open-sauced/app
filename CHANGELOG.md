@@ -5,6 +5,18 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.61.0-beta.1](https://github.com/open-sauced/insights/compare/v1.60.0...v1.61.0-beta.1) (2023-08-17)
+
+
+### 🐛 Bug Fixes
+
+* correct position of create highlight button ([#1565](https://github.com/open-sauced/insights/issues/1565)) ([2ce44bd](https://github.com/open-sauced/insights/commit/2ce44bd7611bdc82671e7180189b7fe840dbfe9c))
+
+
+### 🍕 Features
+
+* Support full URLs when adding repo to insights page ([#1470](https://github.com/open-sauced/insights/issues/1470)) ([ee53414](https://github.com/open-sauced/insights/commit/ee53414a80113c41b3b6b205b146d081e32bd51f))
+
 ## [1.60.0](https://github.com/open-sauced/insights/compare/v1.59.1...v1.60.0) (2023-08-16)
 
 
