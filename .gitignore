@@ -284,3 +284,6 @@ storybook-static
 
 # Sentry Auth Token
 .sentryclirc
+
+# Local Netlify folder
+.netlify
