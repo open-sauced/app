@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.61.0-beta.2](https://github.com/open-sauced/insights/compare/v1.61.0-beta.1...v1.61.0-beta.2) (2023-08-17)
+
+
+### 🐛 Bug Fixes
+
+* add bg color to reports select filter ([#1570](https://github.com/open-sauced/insights/issues/1570)) ([90f381c](https://github.com/open-sauced/insights/commit/90f381c6fd9bc9b6094498c2623a79b86a9905dc))
+
 ## [1.61.0-beta.1](https://github.com/open-sauced/insights/compare/v1.60.0...v1.61.0-beta.1) (2023-08-17)
 
 
