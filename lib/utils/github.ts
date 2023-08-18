@@ -21,29 +21,56 @@ const getProfileLink = (username: string | null) => `https://github.com/${userna
 
 const getRepoIssuesLink = (repoName: string | null) => `https://github.com/${(repoName && `${repoName}/issues`) || ""}`;
 
-const generateApiPrUrl = (
+const generateRepoParts = (
   url: string
-): { isValidUrl: boolean; apiPaths: { orgName: string | null; repoName: string | null; issueId: string | null } } => {
+): {
+  isValidUrl: boolean;
+  apiPaths: { orgName: string | null; repoName: string | null; repoFullName: string | null; issueId: string | null };
+} => {
   try {
     const trimmedUrl = url.trim();
+
+    if (
+      !(trimmedUrl.includes("https://") || trimmedUrl.includes("http://") || trimmedUrl.includes("www.")) &&
+      trimmedUrl.split("/").length === 2
+    ) {
+      const [orgName, repoName] = trimmedUrl.split("/");
+
+      const repoFullName = `${orgName}/${repoName}`;
+
+      return {
+        isValidUrl: true,
+        apiPaths: { orgName, repoName, repoFullName, issueId: null },
+      };
+    }
+
     const githubUrl = new URL(trimmedUrl.includes("https://") ? trimmedUrl : `https://${trimmedUrl}`);
     const { pathname } = githubUrl;
 
     const [, orgName, repoName, , issueId] = pathname.split("/");
 
-    if (githubUrl.hostname !== "github.com") {
+    const repoFullName = `${orgName}/${repoName}`;
+
+    if (githubUrl.hostname !== "github.com" || !orgName || !repoName) {
       return {
         isValidUrl: false,
-        apiPaths: { orgName: null, repoName: null, issueId: null },
+        apiPaths: { orgName: null, repoName: null, repoFullName: null, issueId: null },
+      };
+    }
+
+    if (!issueId) {
+      return {
+        isValidUrl: true,
+        apiPaths: { orgName, repoName, repoFullName, issueId: null },
       };
     }
 
     return {
       isValidUrl: true,
-      apiPaths: { orgName, repoName, issueId },
+      apiPaths: { orgName, repoName, repoFullName, issueId },
     };
   } catch (err) {
-    return { isValidUrl: false, apiPaths: { orgName: null, repoName: null, issueId: null } };
+    return { isValidUrl: false, apiPaths: { orgName: null, repoName: null, repoFullName: null, issueId: null } };
   }
 };
 
@@ -148,7 +175,7 @@ export {
   getAvatarByUsername,
   getProfileLink,
   getRepoIssuesLink,
-  generateApiPrUrl,
+  generateRepoParts,
   generateGhOgImage,
   isValidPullRequestUrl,
   isValidIssueUrl,

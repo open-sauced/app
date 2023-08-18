@@ -30,10 +30,9 @@ const Notifications: WithPageLayout = () => {
   const [filter, setFilter] = useState<"all" | "follow" | "highlight_reaction">("all");
 
   const topRef = useRef<HTMLDivElement>(null);
-  const { sessionToken, user } = useSupabaseAuth(true);
+  const { sessionToken } = useSupabaseAuth(true);
 
   const router = useRouter();
-  const username = user?.user_metadata.user_name as string;
 
   const fetchNotifications = async (page = 1) => {
     if (!sessionToken) return;
@@ -51,13 +50,8 @@ const Notifications: WithPageLayout = () => {
 
   const notifications = useMemo(() => {
     if (!notificationsResponse?.data) return [];
-    if (filter === "all")
-      return notificationsResponse?.data?.sort(
-        (a, b) => new Date(b.notified_at).getTime() - new Date(a.notified_at).getTime()
-      );
-    return notificationsResponse?.data
-      .filter((notification) => notification.type === filter)
-      ?.sort((a, b) => new Date(b.notified_at).getTime() - new Date(a.notified_at).getTime());
+    if (filter === "all") return notificationsResponse?.data;
+    return notificationsResponse?.data.filter((notification) => notification.type === filter);
   }, [notificationsResponse?.data, filter]);
 
   useEffect(() => {
@@ -151,24 +145,26 @@ const Notifications: WithPageLayout = () => {
             <div className="flex flex-col gap-2 mb-10">
               {notifications?.map((notification) => (
                 <div className="p-2 border bg-light-slate-2 rounded-lg flex items-center gap-4" key={notification.id}>
-                  <Avatar
-                    initialsClassName="text-[100px] leading-none"
-                    initials={notification.meta_id.charAt(0)}
-                    hasBorder
-                    avatarURL={getAvatarByUsername(notification.meta_id, 300)}
-                    size={50}
-                    isCircle
-                  />
+                  <Link href={`/user/${notification.from_user.login}`}>
+                    <Avatar
+                      initialsClassName="text-[100px] leading-none"
+                      initials={notification.meta_id.charAt(0)}
+                      hasBorder
+                      avatarURL={getAvatarByUsername(notification.from_user.login, 300)}
+                      size={50}
+                      isCircle
+                    />
+                  </Link>
                   <div className="flex flex-col gap-2">
-                    <p className="text-light-slate-12 flex gap-2">
-                      <Link href={getNotificationURL(notification.type, notification.meta_id)} className="font-bold">
-                        {notification.meta_id}
-                      </Link>
-                      <span>{notification.message.replace(notification.meta_id, " ")}</span>
-                    </p>
-                    <span className="text-xs font-normal text-light-slate-11">
-                      {formatDistanceToNowStrict(new Date(notification.notified_at), { addSuffix: true })}
-                    </span>
+                    <Link href={getNotificationURL(notification.type, notification.meta_id)}>
+                      <p className="text-light-slate-12 flex gap-2">
+                        <span className="font-bold">{notification.from_user.login}</span>
+                        <span>{notification.message.replace(notification.from_user.login, " ")}</span>
+                      </p>
+                      <span className="text-xs font-normal text-light-slate-11">
+                        {formatDistanceToNowStrict(new Date(notification.notified_at), { addSuffix: true })}
+                      </span>
+                    </Link>
                   </div>
                 </div>
               ))}

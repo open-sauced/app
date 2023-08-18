@@ -8,7 +8,7 @@
 
 ## 🖼️ Project Figma
 
-The figma for this project can be found [here](https://www.figma.com/file/OpVX6WT7dmWqnwRuEvADMF/OpenSauced-%E2%80%94-Insights-(insights.opensauced.pizza)).
+The figma for this project can be found [here](<https://www.figma.com/file/OpVX6WT7dmWqnwRuEvADMF/OpenSauced-%E2%80%94-Insights-(insights.opensauced.pizza)>).
 
 ## 🔬 Atomic Design
 
@@ -19,7 +19,7 @@ This project uses Atomic Design for it's Components. Here are several resources 
 
 ## 📙 Storybook
 
-The Storybook for this project can be found at [design-insights.opensauced.pizza](https://design-insights.opensauced.pizza). 
+The Storybook for this project can be found at [design-insights.opensauced.pizza](https://design-insights.opensauced.pizza).
 
 ### Run it locally
 
@@ -33,7 +33,6 @@ Navigate to the [Storybook Action](https://github.com/open-sauced/insights/actio
 
 <img width="1050" alt="storybook action tab" src="https://user-images.githubusercontent.com/5713670/178128835-d81205f3-a875-474f-8b4f-46a1ad814fe1.png">
 
-
 ## 🖥️ Local development
 
 To install the application:
@@ -46,6 +45,14 @@ To start a local copy of the app on port `3000`:
 
 ```shell
 npm run dev
+```
+
+### ☁️️ Netlify Edge Functions
+
+To start a local copy of the app on port `3000` with [Netlify Edge Functions](https://docs.netlify.com/edge-functions/overview/)):
+
+```shell
+npm run dev:netlify
 ```
 
 ### 🎨 Code linting

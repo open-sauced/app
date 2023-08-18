@@ -118,7 +118,7 @@ const ContributorProfileHeader = ({
         </div>
       )}
 
-      <div className="container flex flex-row items-end justify-between px-2 py-6 mx-auto md:px-16">
+      <div className="container flex flex-row items-end justify-between gap-2 px-2 py-6 mx-auto md:px-16">
         <div className="translate-y-[65px] hidden md:inline-flex">
           <Avatar
             initialsClassName="text-[100px] -translate-y-2.5  leading-none"
@@ -146,17 +146,29 @@ const ContributorProfileHeader = ({
             {/* Mobile dropdown menu */}
 
             <DropdownMenu>
-              <div className="flex items-center gap-2 mb-10 md:gap-6 flex-wrap">
-                <Button variant="primary" href={cardPageUrl(username!)}>
+              <div className="flex items-center md: gap-2 mb-10 md:gap-6 flex-wrap">
+                <Button className="sm:hidden" variant="primary" href={cardPageUrl(username!)}>
+                  <FaIdCard className="" />
+                </Button>
+                <Button className="hidden sm:inline-flex" variant="primary" href={cardPageUrl(username!)}>
                   <FaIdCard className="mt-1 mr-1" /> Get Card
+                </Button>
+
+                <Button
+                  onClick={() => handleCopyToClipboard(`${host}/user/${user?.user_metadata.user_name}`)}
+                  className="bg-white sm:hidden"
+                  variant="text"
+                >
+                  <FiCopy className="" />
                 </Button>
                 <Button
                   onClick={() => handleCopyToClipboard(`${host}/user/${user?.user_metadata.user_name}`)}
-                  className="px-8 py-2 bg-white "
+                  className="px-8 py-2 bg-white hidden sm:inline-flex"
                   variant="text"
                 >
                   <FiCopy className="mt-1 mr-1" /> Share
                 </Button>
+
                 {!isOwner && (
                   <DropdownMenuTrigger title="More options" className="p-2 mr-3 bg-white rounded-full cursor-pointer ">
                     <TfiMoreAlt size={20} className="" />
