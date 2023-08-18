@@ -197,6 +197,8 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
         res = await fetchDevToBlogInfo(highlightLink);
       }
 
+      const taggedRepoFullNames = taggedRepoList.map((repo) => `${repo.repoOwner}/${repo.repoName}`);
+
       if (res.isError) {
         setLoading(false);
 
@@ -210,6 +212,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
           url: highlightLink,
           shipped_at: date,
           type: highlightType,
+          taggedRepos: taggedRepoFullNames,
         });
 
         setLoading(false);

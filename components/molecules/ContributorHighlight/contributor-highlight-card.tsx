@@ -107,8 +107,6 @@ const ContributorHighlightCard = ({
     loggedInUser && loggedInUser?.user_metadata.username !== user ? user : ""
   );
 
-  console.log(taggedRepos);
-
   const [date, setDate] = useState<Date | undefined>(shipped_date ? new Date(shipped_date) : undefined);
 
   const { data: reactions, mutate } = useHighlightReactions(id);
@@ -467,11 +465,9 @@ const ContributorHighlightCard = ({
               />
             </div>
           ))}
-        {type === "pull_request" && (
-          <div className="ml-auto">
-            <CardRepoList repoList={repos} />
-          </div>
-        )}
+        <div className="ml-auto">
+          <CardRepoList repoList={repos} />
+        </div>
       </div>
 
       <Dialog open={openEdit} onOpenChange={setOpenEdit}>

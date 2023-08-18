@@ -7,6 +7,7 @@ interface CreateHighlightsProps {
   highlight: string;
   shipped_at?: Date;
   type: "issue" | "pull_request" | "blog_post";
+  taggedRepos: string[];
 }
 
 interface ServerError {
