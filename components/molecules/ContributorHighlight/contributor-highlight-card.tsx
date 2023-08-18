@@ -76,7 +76,7 @@ interface ContributorHighlightCardProps {
   type?: HighlightType;
   taggedRepos: string[];
 }
-type HighlightType = "pull_request" | "issue" | "blog_post";
+export type HighlightType = "pull_request" | "issue" | "blog_post";
 
 const ContributorHighlightCard = ({
   title,

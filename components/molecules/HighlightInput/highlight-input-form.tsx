@@ -95,6 +95,20 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
     }
   }, [isFormOpenMobile]);
 
+  // when user updates the highlight link, check if its a github link
+  // if its a github link, automatically tag the repo if its not already tagged
+  useEffect(() => {
+    if (highlightLink && (isValidPullRequestUrl(highlightLink) || isValidIssueUrl(highlightLink))) {
+      const { apiPaths } = generateApiPrUrl(highlightLink);
+      const { repoName, orgName, issueId } = apiPaths;
+      const repoIcon = getAvatarByUsername(orgName, 60);
+      if (taggedRepoList.some((repo) => repo.repoName === repoName)) return;
+      const newRepo = { repoName, repoOwner: orgName, repoIcon } as RepoList;
+      const newTaggedRepoList = [...taggedRepoList, newRepo];
+      setTaggedRepoList(newTaggedRepoList);
+    }
+  }, [highlightLink]);
+
   const handleTaggedRepoAdd = async (repoFullName: string) => {
     // fetch github api to check if the repo exists
     const req = await fetch(`https://api.github.com/repos/${repoFullName}`, {
