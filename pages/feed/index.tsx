@@ -253,6 +253,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
                       shipped_date={singleHighlight.shipped_at}
                       type={singleHighlight.type}
                       refreshCallBack={mutate}
+                      taggedRepos={singleHighlight.tagged_repos}
                     />
                   </div>
                 </div>

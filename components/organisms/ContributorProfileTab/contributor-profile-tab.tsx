@@ -160,8 +160,9 @@ const ContributorProfileTab = ({
             <>
               {!isError && highlights && highlights.length > 0 ? (
                 <div>
-                  {highlights.map(({ id, title, highlight, url, shipped_at, created_at, type }) => (
+                  {highlights.map(({ id, title, highlight, url, shipped_at, created_at, type, tagged_repos }) => (
                     <div className="flex flex-col gap-2 mb-6 lg:flex-row lg:gap-7" key={id}>
+                      {tagged_repos}
                       <Link href={`/feed/${id}`}>
                         <p className="text-sm text-light-slate-10 w-28 max-w-28">
                           {formatDistanceToNowStrict(new Date(created_at), { addSuffix: true })}
@@ -177,6 +178,7 @@ const ContributorProfileTab = ({
                         shipped_date={shipped_at}
                         type={type}
                         refreshCallBack={mutate}
+                        taggedRepos={tagged_repos}
                       />
                     </div>
                   ))}

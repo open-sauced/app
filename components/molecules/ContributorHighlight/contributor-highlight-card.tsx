@@ -74,6 +74,7 @@ interface ContributorHighlightCardProps {
   refreshCallBack?: () => void;
   emojis: DbEmojis[];
   type?: HighlightType;
+  taggedRepos: string[];
 }
 type HighlightType = "pull_request" | "issue" | "blog_post";
 
@@ -87,6 +88,7 @@ const ContributorHighlightCard = ({
   emojis,
   type = "pull_request",
   shipped_date,
+  taggedRepos,
 }: ContributorHighlightCardProps) => {
   const { toast } = useToast();
   const twitterTweet = `${title || "Open Source Highlight"} - OpenSauced from ${user}`;
@@ -104,6 +106,8 @@ const ContributorHighlightCard = ({
   const { follow, unFollow, isError } = useFollowUser(
     loggedInUser && loggedInUser?.user_metadata.username !== user ? user : ""
   );
+
+  console.log(taggedRepos);
 
   const [date, setDate] = useState<Date | undefined>(shipped_date ? new Date(shipped_date) : undefined);
 
@@ -166,14 +170,20 @@ const ContributorHighlightCard = ({
     }
   };
 
-  const { owner: repoOwner, repoName } = getOwnerAndRepoNameFromUrl(highlightLink);
-  const repoIcon = getAvatarByUsername(repoOwner, 60);
+  let repos: RepoList[] = [];
 
-  const repo: RepoList = {
-    repoIcon,
-    repoName,
-    repoOwner,
-  };
+  if (!taggedRepos) {
+    const { owner: repoOwner, repoName } = getOwnerAndRepoNameFromUrl(highlightLink);
+    const repoIcon = getAvatarByUsername(repoOwner, 60);
+
+    repos.push({ repoName, repoOwner, repoIcon });
+  } else {
+    taggedRepos.map((repo) => {
+      const [repoOwner, repoName] = repo.split("/");
+      const repoIcon = getAvatarByUsername(repoOwner, 60);
+      repos.push({ repoName, repoOwner, repoIcon });
+    });
+  }
 
   const getHighlightTypePreset = (type: HighlightType): { text: string; icon?: React.ReactElement } => {
     switch (type) {
@@ -459,7 +469,7 @@ const ContributorHighlightCard = ({
           ))}
         {type === "pull_request" && (
           <div className="ml-auto">
-            <CardRepoList repoList={[repo]} />
+            <CardRepoList repoList={repos} />
           </div>
         )}
       </div>
