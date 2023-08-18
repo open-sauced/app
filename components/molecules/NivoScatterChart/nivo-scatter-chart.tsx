@@ -142,7 +142,7 @@ const NivoScatterPlot = ({
           </>
         </ToggleGroup>
         {/* replaced display flex to hidden on show/bots container */}
-        <div className="flex flex-col gap-2 mt-3 md:mt-0 md:flex-row">
+        <div className="flex gap-2 mt-3 md:mt-0 flex-row">
           <div>
             <ToggleOption handleToggle={handleShowBots} checked={showBots} optionText="Show Bots"></ToggleOption>
           </div>
