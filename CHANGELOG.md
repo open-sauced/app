@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.61.0-beta.3](https://github.com/open-sauced/insights/compare/v1.61.0-beta.2...v1.61.0-beta.3) (2023-08-18)
+
+
+### 🐛 Bug Fixes
+
+* corrected repo card for mobile ([#1577](https://github.com/open-sauced/insights/issues/1577)) ([779862d](https://github.com/open-sauced/insights/commit/779862dede59682d5ec6121e8433ce88dd36d567))
+
 ## [1.61.0-beta.2](https://github.com/open-sauced/insights/compare/v1.61.0-beta.1...v1.61.0-beta.2) (2023-08-17)
 
 
