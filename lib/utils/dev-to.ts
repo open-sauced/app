@@ -11,3 +11,7 @@ export const getBlogDetails = async (blogLink: string) => {
     markdown: data.body_markdown,
   };
 };
+
+export const isValidBlogUrl = (url: string): boolean => {
+  return url.match(/((https?:\/\/)?(www\.)?dev\.to\/[^\/]+\/[^\/]+)/) ? true : false;
+};

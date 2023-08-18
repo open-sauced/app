@@ -132,10 +132,6 @@ const isValidIssueUrl = (url: string): boolean => {
   return url.match(/((https?:\/\/)?(www\.)?github\.com\/[^\/]+\/[^\/]+\/issues\/[0-9]+)/) ? true : false;
 };
 
-const isValidBlogUrl = (url: string): boolean => {
-  return url.match(/((https?:\/\/)?(www\.)?dev\.to\/[^\/]+\/[^\/]+)/) ? true : false;
-};
-
 const getOwnerAndRepoNameFromUrl = (url: string): { owner: string; repoName: string } => {
   const [, , , owner, repoName] = url.split("/");
 
@@ -152,7 +148,6 @@ export {
   generateGhOgImage,
   isValidPullRequestUrl,
   isValidIssueUrl,
-  isValidBlogUrl,
   getPullRequestCommitMessageFromUrl,
   getGithubIssueDetails,
   getGithubIssueComments,

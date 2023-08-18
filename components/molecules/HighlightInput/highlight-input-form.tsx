@@ -19,9 +19,9 @@ import {
   getPullRequestCommitMessageFromUrl,
   isValidIssueUrl,
   isValidPullRequestUrl,
-  isValidBlogUrl,
   getAvatarByUsername,
 } from "lib/utils/github";
+
 import { fetchGithubPRInfo } from "lib/hooks/fetchGithubPRInfo";
 import { useToast } from "lib/hooks/useToast";
 import TextInput from "components/atoms/TextInput/text-input";
@@ -31,7 +31,7 @@ import { TypeWriterTextArea } from "components/atoms/TypeWriterTextArea/type-wri
 import { fetchGithubIssueInfo } from "lib/hooks/fetchGithubIssueInfo";
 import generateIssueHighlightSummary from "lib/utils/generate-issue-highlight-summary";
 import { fetchDevToBlogInfo } from "lib/hooks/fetchDevToBlogInfo";
-import { getBlogDetails } from "lib/utils/dev-to";
+import { getBlogDetails, isValidBlogUrl } from "lib/utils/dev-to";
 import generateBlogHighlightSummary from "lib/utils/generate-blog-highlight-summary";
 import Search from "components/atoms/Search/search";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
