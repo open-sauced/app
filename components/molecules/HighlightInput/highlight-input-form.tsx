@@ -110,6 +110,16 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
   }, [highlightLink]);
 
   const handleTaggedRepoAdd = async (repoFullName: string) => {
+    if (taggedRepoList.length >= 3) {
+      toast({ description: "You can only tag up to 3 repos!", title: "Error", variant: "danger" });
+      return;
+    }
+
+    if (taggedRepoList.some((repo) => `${repo.repoOwner}/${repo.repoName}` === repoFullName)) {
+      toast({ description: "Repo already tagged!", title: "Error", variant: "danger" });
+      return;
+    }
+
     // fetch github api to check if the repo exists
     const req = await fetch(`https://api.github.com/repos/${repoFullName}`, {
       ...(providerToken
