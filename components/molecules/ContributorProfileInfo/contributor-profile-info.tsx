@@ -26,6 +26,7 @@ interface ContributorProfileInfoProps {
   linkedInUrl?: string;
   discordUrl?: string;
   prFirstOpenedDate?: string;
+  isMaintainer?: boolean;
 }
 
 const ContributorProfileInfo = ({
@@ -40,6 +41,7 @@ const ContributorProfileInfo = ({
   linkedInUrl,
   discordUrl,
   prFirstOpenedDate,
+  isMaintainer,
 }: ContributorProfileInfoProps) => {
   const interestArray = interests?.split(",").filter(Boolean);
   const discordUserId = discordUrl?.match(/\d{4}$/)?.[0];
@@ -51,7 +53,7 @@ const ContributorProfileInfo = ({
           <Title className="!text-2xl !text-light-slate-12" level={3}>
             {githubName}
           </Title>
-          {isConnected && <Badge text="beta" />}
+          {isMaintainer && <Badge text="maintainer" />}
         </div>
         <div className="flex items-center text-sm gap-3">
           {isConnected && (
