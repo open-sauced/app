@@ -25,7 +25,6 @@ import {
 
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import {
-  generateRepoParts,
   getAvatarByUsername,
   getOwnerAndRepoNameFromUrl,
   isValidIssueUrl,

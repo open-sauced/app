@@ -13,7 +13,6 @@ import Tooltip from "components/atoms/Tooltip/tooltip";
 
 import { createHighlights } from "lib/hooks/createHighlights";
 import {
-  generateRepoParts,
   getGithubIssueDetails,
   getGithubIssueComments,
   getPullRequestCommitMessageFromUrl,
