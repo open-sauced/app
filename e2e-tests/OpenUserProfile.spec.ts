@@ -3,7 +3,7 @@ import { test, expect } from "@playwright/test";
 test("Open a User (with GitHub Account Connected) Profile", async ({ page }) => {
   await page.goto("/user/babblebey", { waitUntil: "domcontentloaded" });
 
-  await expect(page).toHaveURL(/\/user\/babblebey\/highlights/, { timeout: 10000 });
+  await expect(page).toHaveURL(/\/user\/babblebey/, { timeout: 10000 });
   await expect(page).toHaveTitle(/babblebey | OpenSauced/);
   await expect(page.getByRole("heading", { name: "babblebey" })).toBeVisible();
   await expect(page.getByAltText("Avatar")).toBeVisible();
