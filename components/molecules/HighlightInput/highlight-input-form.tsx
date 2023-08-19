@@ -19,6 +19,7 @@ import {
   isValidIssueUrl,
   isValidPullRequestUrl,
   getAvatarByUsername,
+  generateRepoParts,
 } from "lib/utils/github";
 
 import { fetchGithubPRInfo } from "lib/hooks/fetchGithubPRInfo";
@@ -98,7 +99,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
   // if its a github link, automatically tag the repo if its not already tagged
   useEffect(() => {
     if (highlightLink && (isValidPullRequestUrl(highlightLink) || isValidIssueUrl(highlightLink))) {
-      const { apiPaths } = generateApiPrUrl(highlightLink);
+      const { apiPaths } = generateRepoParts(highlightLink);
       const { repoName, orgName, issueId } = apiPaths;
       const repoIcon = getAvatarByUsername(orgName, 60);
       if (taggedRepoList.some((repo) => repo.repoName === repoName)) return;
@@ -208,7 +209,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
         : "blog_post";
       let res: any = {};
       if (highlightType === "pull_request" || highlightType === "issue") {
-        const { apiPaths } = generateApiPrUrl(highlightLink);
+        const { apiPaths } = generateRepoParts(highlightLink);
         const { repoName, orgName, issueId } = apiPaths;
         setLoading(true);
         // Api validation to check validity of github pull request link match
