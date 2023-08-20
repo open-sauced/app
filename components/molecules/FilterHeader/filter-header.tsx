@@ -23,7 +23,8 @@ const HeaderFilter = () => {
 
   const { filterValues } = useFilterPrefetch();
   const { toolName, selectedFilter } = router.query;
-  const [filterName, setFilterName] = useState<string | string[] | undefined>(router.query.topicName);
+  const [filterName, setFilterName] = useState<string | string[] | undefined>(router.query.filterName);
+  console.log("filterName 1", filterName);
 
   const filterBtnRouting = (filter: string) => {
     captureAnayltics("Filters", "toolsFilter", `${filter} applied`);
@@ -42,8 +43,8 @@ const HeaderFilter = () => {
 
   useEffect(() => {
     // If filterName is null, get the value from the url
-    setFilterName(document.location.pathname.split("/")[1] as string);
-  }, []);
+    setFilterName(document.location.pathname.split("/")[1] || router.query.filterName);
+  }, [filterName, router.query.filterName]);
 
   return (
     <>
