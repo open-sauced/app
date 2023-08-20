@@ -343,7 +343,6 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
         <div className="hidden w-[30%] xl:w-[24%] flex-none gap-6 mt-10 lg:flex flex-col sticky top-20">
           {repoList && repoList.length > 0 && (
             <HighlightsFilterCard
-              selectedFilter={selectedRepo}
               setSelected={(repo) => {
                 if (!openSingleHighlight) {
                   const queryParams = new URLSearchParams(window.location.search);
