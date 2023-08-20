@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 
+import { useEffect, useState } from "react";
 import Text from "components/atoms/Typography/text";
 import Title from "components/atoms/Typography/title";
 import ContextThumbnail from "components/atoms/ContextThumbnail/context-thumbnail";
@@ -13,6 +14,7 @@ import FilterCardSelect from "components/molecules/FilterCardSelect/filter-card-
 import getTopicThumbnail from "lib/utils/getTopicThumbnail";
 import { interestsType } from "lib/utils/getInterestOptions";
 import { getInterestOptions } from "lib/utils/getInterestOptions";
+import Search from "components/atoms/Search/search";
 
 const HeaderFilter = () => {
   const router = useRouter();
@@ -20,7 +22,9 @@ const HeaderFilter = () => {
   const topicOptions = getInterestOptions();
 
   const { filterValues } = useFilterPrefetch();
-  const { filterName, toolName, selectedFilter } = router.query;
+  const { toolName, selectedFilter } = router.query;
+  const [filterName, setFilterName] = useState<string | string[] | undefined>(router.query.topicName);
+
   const filterBtnRouting = (filter: string) => {
     captureAnayltics("Filters", "toolsFilter", `${filter} applied`);
     return router.push(`/${filterName}/${toolName}/filter/${filter.toLocaleLowerCase()}`);
@@ -31,8 +35,15 @@ const HeaderFilter = () => {
   };
 
   const topicRouting = (topic: string) => {
+    if (!topic) return;
+    setFilterName(topic);
     router.push(`/${topic}/${toolName}${selectedFilter ? `/filter/${selectedFilter}` : ""}`);
   };
+
+  useEffect(() => {
+    // If filterName is null, get the value from the url
+    setFilterName(document.location.pathname.split("/")[1] as string);
+  }, []);
 
   return (
     <>
@@ -56,6 +67,22 @@ const HeaderFilter = () => {
             icon="topic"
             handleFilterClick={topicRouting}
           />
+          <span className="w-[1px] bg-slate-300 h-[1.5rem]"></span>
+          <Search
+            placeholder="Search topic"
+            name="topic-search"
+            value={filterName as string}
+            autoFocus={false}
+            className="text-base rounded-lg cursor-pointer h-[1.95rem] border-slate-300 hover:bg-slate-50 focus:ring-1  focus:ring-slate-300 shadow-none max-w-[10rem]"
+            onSearch={(value) => {
+              topicRouting((value as string).toLocaleLowerCase());
+            }}
+            suggestions={[]}
+            onChange={() => {}}
+            isLoading={false}
+          />
+        </div>
+        <div className="flex mt-4 items-center gap-2">
           <SuperativeSelector
             filterOptions={filterOptions}
             filterValues={filterValues}

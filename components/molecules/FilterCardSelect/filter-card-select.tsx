@@ -55,7 +55,7 @@ const FilterCardSelect: React.FC<FilterCardSelectProps> = ({
         }
         className="text-base rounded-lg cursor-pointer h-[1.95rem] w-max border-slate-300 hover:bg-slate-50 focus:ring-1 bg-slate-100 focus:ring-slate-300"
       >
-        <SelectValue placeholder="select topic" />
+        {!options.includes(filterName) ? filterName : <SelectValue placeholder="select topic" />}
       </SelectTrigger>
       <SelectContent className="bg-white">
         {options.map((option, index) => (
