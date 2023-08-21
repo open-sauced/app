@@ -67,7 +67,7 @@ const HeaderFilter = () => {
             icon="topic"
             handleFilterClick={topicRouting}
           />
-          <span className="w-[1px] bg-slate-300 h-[1.5rem]"></span>
+          <span className="w-0.5 bg-slate-300 h-6"></span>
           <Search
             placeholder="Search topic"
             name="topic-search"
