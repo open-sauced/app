@@ -73,7 +73,7 @@ const HeaderFilter = () => {
             name="topic-search"
             value={filterName as string}
             autoFocus={false}
-            className="text-base rounded-lg cursor-pointer h-[1.95rem] border-slate-300 hover:bg-slate-50 focus:ring-1  focus:ring-slate-300 shadow-none max-w-[10rem]"
+            className="text-base rounded-lg cursor-pointer h-8 border-slate-300 hover:bg-slate-50 focus:ring-1  focus:ring-slate-300 shadow-none max-w-40"
             onSearch={(value) => {
               topicRouting((value as string).toLocaleLowerCase());
             }}
