@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.61.0-beta.4](https://github.com/open-sauced/insights/compare/v1.61.0-beta.3...v1.61.0-beta.4) (2023-08-21)
+
+
+### 🐛 Bug Fixes
+
+* corrected Alignment for mobile view ([#1578](https://github.com/open-sauced/insights/issues/1578)) ([0d23330](https://github.com/open-sauced/insights/commit/0d2333091abfa6dbee340489ead8990a2b7e7b8f))
+* highlights nav item unselected when there were query params in URL ([#1584](https://github.com/open-sauced/insights/issues/1584)) ([68c3916](https://github.com/open-sauced/insights/commit/68c39165567778c980fc948928a8694d9ab518dc))
+
 ## [1.61.0-beta.3](https://github.com/open-sauced/insights/compare/v1.61.0-beta.2...v1.61.0-beta.3) (2023-08-18)
 
 
