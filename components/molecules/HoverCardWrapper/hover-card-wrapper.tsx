@@ -22,16 +22,19 @@ const HoverCardWrapper = ({ username, repositories }: HoverCardWrapperProps) => 
     totalPR: repoList.length,
   };
 
+  const { is_maintainer, first_opened_pr_at } = contributor ?? {};
+
   return (
     <>
       <ContributorHoverCard
-        dateOfFirstPr={contributor?.first_opened_pr_at}
+        dateOfFirstPr={first_opened_pr_at}
         totalPR={profile.totalPR}
         githubAvatar={profile.githubAvatar}
         githubName={profile.githubName}
         repoList={repoList}
         topic={topic}
         repositories={repositories}
+        isMaintainer={!!is_maintainer}
       />
     </>
   );
