@@ -1,9 +1,77 @@
+# 📦 open-sauced/app changelog
+
+[![conventional commits](https://img.shields.io/badge/conventional%20commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
+[![semantic versioning](https://img.shields.io/badge/semantic%20versioning-2.0.0-green.svg)](https://semver.org)
+
+> All notable changes to this project will be documented in this file
+
+## [1.61.0-beta.7](https://github.com/open-sauced/insights/compare/v1.61.0-beta.6...v1.61.0-beta.7) (2023-08-21)
+
+
+### 🐛 Bug Fixes
+
+* highlights page endless flicker on tab change (1576) ([#1582](https://github.com/open-sauced/insights/issues/1582)) ([56a3da9](https://github.com/open-sauced/insights/commit/56a3da95da85f1afd4e28d7f2775b69a8a53e816))
+
+
+### 🍕 Features
+
+* add Maintainer badge to dashboard `HoverCard` and `ContributorCard` ([#1586](https://github.com/open-sauced/insights/issues/1586)) ([ea34f7e](https://github.com/open-sauced/insights/commit/ea34f7e7dcc594df542667b40607596053482fea))
+* highlight blogs ([#1555](https://github.com/open-sauced/insights/issues/1555)) ([4058f79](https://github.com/open-sauced/insights/commit/4058f79a8cc25baf11fe6988ff61691ff6b4fc36))
+
+## [1.61.0-beta.6](https://github.com/open-sauced/insights/compare/v1.61.0-beta.5...v1.61.0-beta.6) (2023-08-21)
+
+
+### 🐛 Bug Fixes
+
+* show checkbox for repos table in small screens ([#1559](https://github.com/open-sauced/insights/issues/1559)) ([a6e6bb3](https://github.com/open-sauced/insights/commit/a6e6bb3d783e6468f8a0edb9dcd21cc2513ff6dc))
+
 # 📦 open-sauced/insights changelog
 
 [![conventional commits](https://img.shields.io/badge/conventional%20commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
 [![semantic versioning](https://img.shields.io/badge/semantic%20versioning-2.0.0-green.svg)](https://semver.org)
 
 > All notable changes to this project will be documented in this file
+
+## [1.61.0-beta.5](https://github.com/open-sauced/insights/compare/v1.61.0-beta.4...v1.61.0-beta.5) (2023-08-21)
+
+
+### 🐛 Bug Fixes
+
+* keep UserCard from leaving the viewport on sticky sidebar ([#1585](https://github.com/open-sauced/insights/issues/1585)) ([5b33b13](https://github.com/open-sauced/insights/commit/5b33b13d3be4a717ede09953a16a56505c658b49))
+
+## [1.61.0-beta.4](https://github.com/open-sauced/insights/compare/v1.61.0-beta.3...v1.61.0-beta.4) (2023-08-21)
+
+
+### 🐛 Bug Fixes
+
+* corrected Alignment for mobile view ([#1578](https://github.com/open-sauced/insights/issues/1578)) ([0d23330](https://github.com/open-sauced/insights/commit/0d2333091abfa6dbee340489ead8990a2b7e7b8f))
+* highlights nav item unselected when there were query params in URL ([#1584](https://github.com/open-sauced/insights/issues/1584)) ([68c3916](https://github.com/open-sauced/insights/commit/68c39165567778c980fc948928a8694d9ab518dc))
+
+## [1.61.0-beta.3](https://github.com/open-sauced/insights/compare/v1.61.0-beta.2...v1.61.0-beta.3) (2023-08-18)
+
+
+### 🐛 Bug Fixes
+
+* corrected repo card for mobile ([#1577](https://github.com/open-sauced/insights/issues/1577)) ([779862d](https://github.com/open-sauced/insights/commit/779862dede59682d5ec6121e8433ce88dd36d567))
+
+## [1.61.0-beta.2](https://github.com/open-sauced/insights/compare/v1.61.0-beta.1...v1.61.0-beta.2) (2023-08-17)
+
+
+### 🐛 Bug Fixes
+
+* add bg color to reports select filter ([#1570](https://github.com/open-sauced/insights/issues/1570)) ([90f381c](https://github.com/open-sauced/insights/commit/90f381c6fd9bc9b6094498c2623a79b86a9905dc))
+
+## [1.61.0-beta.1](https://github.com/open-sauced/insights/compare/v1.60.0...v1.61.0-beta.1) (2023-08-17)
+
+
+### 🐛 Bug Fixes
+
+* correct position of create highlight button ([#1565](https://github.com/open-sauced/insights/issues/1565)) ([2ce44bd](https://github.com/open-sauced/insights/commit/2ce44bd7611bdc82671e7180189b7fe840dbfe9c))
+
+
+### 🍕 Features
+
+* Support full URLs when adding repo to insights page ([#1470](https://github.com/open-sauced/insights/issues/1470)) ([ee53414](https://github.com/open-sauced/insights/commit/ee53414a80113c41b3b6b205b146d081e32bd51f))
 
 ## [1.60.0](https://github.com/open-sauced/insights/compare/v1.59.1...v1.60.0) (2023-08-16)
 

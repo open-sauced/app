@@ -6,18 +6,22 @@ import { format } from "date-fns";
 import { HiOutlineSparkles } from "react-icons/hi";
 import { RxPencil1 } from "react-icons/rx";
 import { IoClose } from "react-icons/io5";
+import { BsTagFill } from "react-icons/bs";
+import { useDebounce } from "rooks";
 import Button from "components/atoms/Button/button";
 import Tooltip from "components/atoms/Tooltip/tooltip";
 
 import { createHighlights } from "lib/hooks/createHighlights";
 import {
-  generateApiPrUrl,
   getGithubIssueDetails,
   getGithubIssueComments,
   getPullRequestCommitMessageFromUrl,
   isValidIssueUrl,
   isValidPullRequestUrl,
+  getAvatarByUsername,
+  generateRepoParts,
 } from "lib/utils/github";
+
 import { fetchGithubPRInfo } from "lib/hooks/fetchGithubPRInfo";
 import { useToast } from "lib/hooks/useToast";
 import TextInput from "components/atoms/TextInput/text-input";
@@ -26,26 +30,47 @@ import Fab from "components/atoms/Fab/fab";
 import { TypeWriterTextArea } from "components/atoms/TypeWriterTextArea/type-writer-text-area";
 import { fetchGithubIssueInfo } from "lib/hooks/fetchGithubIssueInfo";
 import generateIssueHighlightSummary from "lib/utils/generate-issue-highlight-summary";
+import { fetchDevToBlogInfo } from "lib/hooks/fetchDevToBlogInfo";
+import { getBlogDetails, isValidBlogUrl } from "lib/utils/dev-to";
+import generateBlogHighlightSummary from "lib/utils/generate-blog-highlight-summary";
+import Search from "components/atoms/Search/search";
+import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { Calendar } from "../Calendar/calendar";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../Collapsible/collapsible";
 import { Popover, PopoverContent, PopoverTrigger } from "../Popover/popover";
 import GhOpenGraphImg from "../GhOpenGraphImg/gh-open-graph-img";
+import DevToSocialImg from "../DevToSocialImage/dev-to-social-img";
+import CardRepoList, { RepoList } from "../CardRepoList/card-repo-list";
+import {
+  Dialog,
+  DialogCloseButton,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "../Dialog/dialog";
 
 interface HighlightInputFormProps {
   refreshCallback?: Function;
 }
 
 const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.Element => {
+  const { sessionToken, providerToken } = useSupabaseAuth();
   const [isDivFocused, setIsDivFocused] = useState(false);
   const [isSummaryButtonDisabled, setIsSummaryButtonDisabled] = useState(false);
   const [isFormOpenMobile, setIsFormOpenMobile] = useState(false);
+  const [addTaggedRepoFormOpen, setAddTaggedRepoFormOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
   const [bodyText, setBodyText] = useState("");
   const [title, setTitle] = useState("");
   const [charCount, setCharCount] = useState(0);
-  const [pullrequestLink, setPullRequestLink] = useState("");
+  const [highlightLink, setHighlightLink] = useState("");
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
+  const [taggedRepoList, setTaggedRepoList] = useState<RepoList[]>([]);
+  const [taggedRepoSearchTerm, setTaggedRepoSearchTerm] = useState<string>("");
+  const [repoTagSuggestions, setRepoTagSuggestions] = useState<string[]>([]);
+  const [tagRepoSearchLoading, setTagRepoSearchLoading] = useState<boolean>(false);
 
   const charLimit = 500;
 
@@ -54,7 +79,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
   const { toast } = useToast();
 
   const validCharLimit = () => {
-    return charCount - pullrequestLink.length <= charLimit;
+    return charCount - highlightLink.length <= charLimit;
   };
 
   const handleTextAreaInputChange = (value: string) => {
@@ -70,22 +95,85 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
     }
   }, [isFormOpenMobile]);
 
+  // when user updates the highlight link, check if its a github link
+  // if its a github link, automatically tag the repo if its not already tagged
+  useEffect(() => {
+    if (highlightLink && (isValidPullRequestUrl(highlightLink) || isValidIssueUrl(highlightLink))) {
+      const { apiPaths } = generateRepoParts(highlightLink);
+      const { repoName, orgName, issueId } = apiPaths;
+      const repoIcon = getAvatarByUsername(orgName, 60);
+      if (taggedRepoList.some((repo) => repo.repoName === repoName)) return;
+      const newRepo = { repoName, repoOwner: orgName, repoIcon } as RepoList;
+      const newTaggedRepoList = [...taggedRepoList, newRepo];
+      setTaggedRepoList(newTaggedRepoList);
+    }
+  }, [highlightLink]);
+
+  const handleTaggedRepoAdd = async (repoFullName: string) => {
+    if (taggedRepoList.length >= 3) {
+      toast({ description: "You can only tag up to 3 repos!", title: "Error", variant: "danger" });
+      return;
+    }
+
+    if (taggedRepoList.some((repo) => `${repo.repoOwner}/${repo.repoName}` === repoFullName)) {
+      toast({ description: "Repo already tagged!", title: "Error", variant: "danger" });
+      return;
+    }
+
+    // fetch github api to check if the repo exists
+    const req = await fetch(`https://api.github.com/repos/${repoFullName}`, {
+      ...(providerToken
+        ? {
+            headers: {
+              Authorization: `Bearer ${providerToken}`,
+            },
+          }
+        : {}),
+    });
+
+    if (!req.ok) {
+      toast({ description: "Repo not found!", title: "Error", variant: "danger" });
+      return;
+    }
+
+    const [ownerName, repoName] = repoFullName.split("/");
+    const repoIcon = getAvatarByUsername(ownerName, 60);
+    const newTaggedRepoList = [...taggedRepoList, { repoName, repoOwner: ownerName, repoIcon }];
+    setTaggedRepoList(newTaggedRepoList);
+    toast({ description: "Repo tag added!", title: "Success", variant: "success" });
+  };
+
+  const handleTaggedRepoDelete = (repoName: string) => {
+    const newTaggedRepoList = taggedRepoList.filter((repo) => repo.repoName !== repoName);
+    setTaggedRepoList(newTaggedRepoList);
+  };
+
   const handleGenerateHighlightSummary = async () => {
-    if (!pullrequestLink || (!isValidPullRequestUrl(pullrequestLink) && !isValidIssueUrl(pullrequestLink))) {
-      toast({ description: "Please provide a valid issue or pull request link!", title: "Error", variant: "danger" });
+    if (
+      !highlightLink ||
+      (!isValidPullRequestUrl(highlightLink) && !isValidIssueUrl(highlightLink) && !isValidBlogUrl(highlightLink))
+    ) {
+      toast({
+        description: "Please provide a valid pull request, issue or dev.to blog link!",
+        title: "Error",
+        variant: "danger",
+      });
       return;
     }
 
     setIsSummaryButtonDisabled(true);
 
     let summary: string | null;
-    if (isValidPullRequestUrl(pullrequestLink)) {
-      const commitMessages = await getPullRequestCommitMessageFromUrl(pullrequestLink);
+    if (isValidPullRequestUrl(highlightLink)) {
+      const commitMessages = await getPullRequestCommitMessageFromUrl(highlightLink);
       summary = await generatePrHighlightSummaryByCommitMsg(commitMessages);
-    } else {
-      const { title: issueTitle, body: issueBody } = await getGithubIssueDetails(pullrequestLink);
-      const issueComments = await getGithubIssueComments(pullrequestLink);
+    } else if (isValidIssueUrl(highlightLink)) {
+      const { title: issueTitle, body: issueBody } = await getGithubIssueDetails(highlightLink);
+      const issueComments = await getGithubIssueComments(highlightLink);
       summary = await generateIssueHighlightSummary(issueTitle, issueBody, issueComments);
+    } else {
+      const { title: blogTitle, markdown: blogMarkdown } = await getBlogDetails(highlightLink);
+      summary = await generateBlogHighlightSummary(blogTitle, blogMarkdown);
     }
 
     setIsSummaryButtonDisabled(false);
@@ -111,30 +199,44 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
 
     const highlight = bodyText;
 
-    if (isValidPullRequestUrl(pullrequestLink) || isValidIssueUrl(pullrequestLink)) {
+    if (isValidPullRequestUrl(highlightLink) || isValidIssueUrl(highlightLink) || isValidBlogUrl(highlightLink)) {
       // generateApiPrUrl will return an object with repoName, orgName and issueId
       // it can work with both issue and pull request links
-      const { apiPaths } = generateApiPrUrl(pullrequestLink);
-      const { repoName, orgName, issueId } = apiPaths;
-      setLoading(true);
-      // Api validation to check validity of github pull request link match
-      const res = pullrequestLink.includes("issues")
-        ? await fetchGithubIssueInfo(orgName, repoName, issueId)
-        : await fetchGithubPRInfo(orgName, repoName, issueId);
+      const highlightType = isValidIssueUrl(highlightLink)
+        ? "issue"
+        : isValidPullRequestUrl(highlightLink)
+        ? "pull_request"
+        : "blog_post";
+      let res: any = {};
+      if (highlightType === "pull_request" || highlightType === "issue") {
+        const { apiPaths } = generateRepoParts(highlightLink);
+        const { repoName, orgName, issueId } = apiPaths;
+        setLoading(true);
+        // Api validation to check validity of github pull request link match
+        res =
+          highlightType === "issue"
+            ? await fetchGithubIssueInfo(orgName, repoName, issueId)
+            : await fetchGithubPRInfo(orgName, repoName, issueId);
+      } else {
+        res = await fetchDevToBlogInfo(highlightLink);
+      }
+
+      const taggedRepoFullNames = taggedRepoList.map((repo) => `${repo.repoOwner}/${repo.repoName}`);
 
       if (res.isError) {
         setLoading(false);
 
-        toast({ description: "A valid Issue or Pull request Link is required", variant: "danger" });
+        toast({ description: "A valid Pull request, Issue or dev.to Blog Link is required", variant: "danger" });
         return;
       } else {
         setLoading(true);
         const res = await createHighlights({
           highlight,
           title,
-          url: pullrequestLink,
+          url: highlightLink,
           shipped_at: date,
-          type: pullrequestLink.includes("issues") ? "issue" : "pull_request",
+          type: highlightType,
+          taggedRepos: taggedRepoFullNames,
         });
 
         setLoading(false);
@@ -145,7 +247,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
 
         refreshCallback && refreshCallback();
         setBodyText("");
-        setPullRequestLink("");
+        setHighlightLink("");
         setTitle("");
         setDate(undefined);
         setIsDivFocused(false);
@@ -153,18 +255,54 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
         toast({ description: "Highlight Posted!", title: "Success", variant: "success" });
       }
     } else {
-      toast({ description: "Please provide a valid issue or pull request link!", title: "Error", variant: "danger" });
+      toast({
+        description: "Please provide a valid pull request, issue or dev.to blog link!",
+        title: "Error",
+        variant: "danger",
+      });
     }
   };
 
   // Handle collapsible change
   const handleCollapsibleOpenChange = () => {
-    if (isDivFocused && !charCount && !pullrequestLink) {
+    if (isDivFocused && !charCount && !highlightLink) {
       setIsDivFocused(false);
     } else {
       setIsDivFocused(true);
     }
   };
+
+  const updateSuggestionsDebounced = useDebounce(async () => {
+    setTagRepoSearchLoading(true);
+
+    const req = await fetch(
+      `https://api.github.com/search/repositories?q=${encodeURIComponent(
+        `${taggedRepoSearchTerm} in:name in:repo:owner/name sort:updated`
+      )}`,
+      {
+        ...(providerToken
+          ? {
+              headers: {
+                Authorization: `Bearer ${providerToken}`,
+              },
+            }
+          : {}),
+      }
+    );
+
+    setTagRepoSearchLoading(false);
+    if (req.ok) {
+      const res = await req.json();
+      const suggestions = res.items.map((item: any) => item.full_name);
+      setRepoTagSuggestions(suggestions);
+    }
+  }, 250);
+
+  useEffect(() => {
+    setRepoTagSuggestions([]);
+    if (!taggedRepoSearchTerm) return;
+    updateSuggestionsDebounced();
+  }, [taggedRepoSearchTerm]);
 
   return (
     <form onSubmit={handlePostHighlight} className="flex flex-col flex-1 gap-4 ">
@@ -208,6 +346,30 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
               / <span>{charLimit}</span>
             </p>
 
+            <div
+              className={`flex items-center justify-between w-full gap-1 p-1 text-sm bg-white border rounded-lg mb-4`}
+            >
+              <div className="flex w-full gap-1">
+                <CardRepoList
+                  repoList={taggedRepoList}
+                  deletable={true}
+                  onDelete={(repoName) => handleTaggedRepoDelete(repoName)}
+                />
+                <Tooltip content={"Add a repo"}>
+                  <button
+                    className="flex gap-1  p-1 pr-2 border-[1px] border-light-slate-6 rounded-lg text-light-slate-12 items-center cursor-pointer"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setAddTaggedRepoFormOpen(true);
+                    }}
+                  >
+                    <BsTagFill className="rounded-[4px] overflow-hidden" />
+                    <span className={"max-w-[45px] md:max-w-[100px] truncate"}>Add a repo</span>
+                  </button>
+                </Tooltip>
+              </div>
+            </div>
+
             <div className="flex">
               <div className="flex w-full gap-1">
                 <Tooltip direction="top" content="Pick a date">
@@ -242,8 +404,8 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                 </Tooltip>
                 <TextInput
                   className="text-xs"
-                  value={pullrequestLink}
-                  handleChange={(value) => setPullRequestLink(value)}
+                  value={highlightLink}
+                  handleChange={(value) => setHighlightLink(value)}
                   placeholder="Paste the URL to your Pull Request or Issue."
                 />
               </div>
@@ -252,7 +414,12 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
         </div>
       </Collapsible>
 
-      {pullrequestLink && isDivFocused && <GhOpenGraphImg className="max-sm:hidden" githubLink={pullrequestLink} />}
+      {highlightLink && isDivFocused && highlightLink.includes("github") && (
+        <GhOpenGraphImg className="max-sm:hidden" githubLink={highlightLink} />
+      )}
+      {highlightLink && isDivFocused && highlightLink.includes("dev.to") && (
+        <DevToSocialImg className="max-sm:hidden" blogLink={highlightLink} />
+      )}
 
       {isDivFocused && (
         <Button
@@ -265,6 +432,45 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
         </Button>
       )}
 
+      {/* Add Repo Popup Form */}
+
+      <Dialog open={addTaggedRepoFormOpen} onOpenChange={setAddTaggedRepoFormOpen}>
+        <DialogContent
+          style={{
+            width: "33vw",
+          }}
+        >
+          <DialogHeader>
+            <DialogTitle>Add a repo</DialogTitle>
+            <DialogDescription>Add a Repository to tag with this highlight.</DialogDescription>
+          </DialogHeader>
+          <Search
+            isLoading={tagRepoSearchLoading}
+            placeholder="Repository Full Name (ex: open-sauced/open-sauced)"
+            className="!w-full text-md text-gra"
+            name={"query"}
+            suggestions={repoTagSuggestions}
+            onChange={(value) => setTaggedRepoSearchTerm(value)}
+            onSearch={(search) => setTaggedRepoSearchTerm(search as string)}
+          />
+          <DialogCloseButton onClick={() => setAddTaggedRepoFormOpen(false)} />
+          <div className="flex justify-end gap-2">
+            <Button variant="default" onClick={() => setAddTaggedRepoFormOpen(false)}>
+              Cancel
+            </Button>
+            <Button
+              variant="primary"
+              onClick={() => {
+                setAddTaggedRepoFormOpen(false);
+                handleTaggedRepoAdd(taggedRepoSearchTerm);
+              }}
+              disabled={!taggedRepoSearchTerm}
+            >
+              Add
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
       {/* Mobile popup form */}
 
       {isFormOpenMobile && (
@@ -346,8 +552,8 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                 </Tooltip>
                 <TextInput
                   className="text-xs"
-                  value={pullrequestLink}
-                  handleChange={(value) => setPullRequestLink(value)}
+                  value={highlightLink}
+                  handleChange={(value) => setHighlightLink(value)}
                   placeholder="Paste your PR URL and get it auto-summarized!"
                 />
               </div>
@@ -359,7 +565,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
       <Fab className="md:hidden">
         <div
           onClick={() => setIsFormOpenMobile(true)}
-          className="p-3 text-white rounded-full shadow-lg bg-light-orange-10"
+          className="p-3 text-white rounded-full shadow-lg bg-light-orange-10 mb-10 -mr-4"
           id="mobile-highlight-create-button"
         >
           <RxPencil1 className="text-3xl" />
