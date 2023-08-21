@@ -117,7 +117,7 @@ const NivoScatterPlot = ({
 
   return (
     <>
-      <div className="flex flex-col items-center justify-between pt-3 md:flex-row px-7">
+      <div className="flex flex-col items-center justify-between px-0 pt-3 md:flex-row md:px-7">
         <Title level={4} className="!text-sm  !text-light-slate-12">
           {title}
         </Title>
@@ -142,7 +142,7 @@ const NivoScatterPlot = ({
           </>
         </ToggleGroup>
         {/* replaced display flex to hidden on show/bots container */}
-        <div className="flex flex-col gap-2 mt-3 md:mt-0 md:flex-row">
+        <div className="flex gap-2 mt-3 md:mt-0">
           <div>
             <ToggleOption handleToggle={handleShowBots} checked={showBots} optionText="Show Bots"></ToggleOption>
           </div>
