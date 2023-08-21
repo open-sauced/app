@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.61.0-beta.5](https://github.com/open-sauced/insights/compare/v1.61.0-beta.4...v1.61.0-beta.5) (2023-08-21)
+
+
+### 🐛 Bug Fixes
+
+* keep UserCard from leaving the viewport on sticky sidebar ([#1585](https://github.com/open-sauced/insights/issues/1585)) ([5b33b13](https://github.com/open-sauced/insights/commit/5b33b13d3be4a717ede09953a16a56505c658b49))
+
 ## [1.61.0-beta.4](https://github.com/open-sauced/insights/compare/v1.61.0-beta.3...v1.61.0-beta.4) (2023-08-21)
 
 
