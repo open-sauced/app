@@ -1,3 +1,4 @@
+import { HighlightType } from "components/molecules/ContributorHighlight/contributor-highlight-card";
 import changeCapitalization from "lib/utils/change-capitalization";
 import { supabase } from "lib/utils/supabase";
 
@@ -6,7 +7,8 @@ interface CreateHighlightsProps {
   title?: string;
   highlight: string;
   shipped_at?: Date;
-  type: "issue" | "pull_request";
+  type: HighlightType;
+  taggedRepos: string[];
 }
 
 interface ServerError {

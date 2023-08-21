@@ -40,7 +40,7 @@ const FollowingHighlightWrapper = ({ emojis, selectedFilter }: HighlightWrapperP
         )}
 
         {data && data.length > 0 ? (
-          data.map(({ id, url, title, created_at, highlight, shipped_at, login, type }) => (
+          data.map(({ id, url, title, created_at, highlight, shipped_at, login, type, tagged_repos }) => (
             <div key={id} className="flex flex-col gap-6 px-1">
               <div className="flex items-center gap-3">
                 <Link href={`/user/${login}`} className="flex items-center gap-3">
@@ -64,11 +64,12 @@ const FollowingHighlightWrapper = ({ emojis, selectedFilter }: HighlightWrapperP
                   refreshCallBack={mutate}
                   title={title}
                   desc={highlight}
-                  prLink={url}
+                  highlightLink={url}
                   shipped_date={shipped_at}
                   user={login}
                   id={id}
                   type={type}
+                  taggedRepos={tagged_repos}
                 />
               </div>
             </div>

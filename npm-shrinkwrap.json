@@ -1,12 +1,12 @@
 {
   "name": "@open-sauced/insights",
-  "version": "1.60.0",
+  "version": "1.61.0-beta.7",
   "lockfileVersion": 3,
   "requires": true,
   "packages": {
     "": {
       "name": "@open-sauced/insights",
-      "version": "1.60.0",
+      "version": "1.61.0-beta.7",
       "hasInstallScript": true,
       "license": "Apache 2.0",
       "dependencies": {
@@ -92,6 +92,7 @@
         "@types/eslint": "^8.21.0",
         "@types/jest": "^28.1.6",
         "@types/node": "^18.11.18",
+        "@types/path-to-regexp": "^1.7.0",
         "@types/react": "^18.0.27",
         "@types/react-csv": "^1.1.3",
         "@types/react-dom": "^18.0.10",
@@ -14119,6 +14120,16 @@
       "resolved": "https://registry.npmjs.org/@types/parse-json/-/parse-json-4.0.0.tgz",
       "integrity": "sha512-//oorEZjL6sbPcKUaCdIGlIUeH26mgzimjBB77G6XRgnDl/L5wOnpyBGRe/Mmf5CVW3PwEBE1NjiMZ/ssFh4wA==",
       "dev": true
+    },
+    "node_modules/@types/path-to-regexp": {
+      "version": "1.7.0",
+      "resolved": "https://registry.npmjs.org/@types/path-to-regexp/-/path-to-regexp-1.7.0.tgz",
+      "integrity": "sha512-ruXmJ/6LwB5L3mxUG2z3Ovi85vH9IVubXq+S9RArvMbjhbCnSLpXs0LrHQg3f0y2tKvXhWUNv7iQDySDfHSTDw==",
+      "deprecated": "This is a stub types definition for path-to-regexp (https://github.com/pillarjs/path-to-regexp). path-to-regexp provides its own type definitions, so you don't need @types/path-to-regexp installed!",
+      "dev": true,
+      "dependencies": {
+        "path-to-regexp": "*"
+      }
     },
     "node_modules/@types/phoenix": {
       "version": "1.6.0",

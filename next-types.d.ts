@@ -191,6 +191,7 @@ interface DbHighlight {
   readonly login: string;
   readonly shipped_at: string;
   readonly type: "issue" | "pull_request";
+  readonly tagged_repos: string[];
 }
 
 interface SEOobject {
