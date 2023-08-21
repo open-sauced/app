@@ -1,9 +1,8 @@
 import { memo } from "react";
 import { animated } from "@react-spring/web";
 import { NodeProps, htmlNodeTransform } from "@nivo/treemap";
-import { getAvatarByUsername } from "lib/utils/github";
 
-const NonMemoizedContributorNode = <Datum extends { id: string; value?: number; color: string }>({
+const NonMemoizedSpecialNode = <Datum extends object>({
   node,
   animatedProps,
   borderWidth,
@@ -12,8 +11,6 @@ const NonMemoizedContributorNode = <Datum extends { id: string; value?: number; 
 }: NodeProps<Datum>) => {
   const showLabel =
     enableLabel && node.isLeaf && (labelSkipSize === 0 || Math.min(node.width, node.height) > labelSkipSize);
-
-  const avatarURL = getAvatarByUsername(node.id);
 
   return (
     <animated.div
@@ -60,22 +57,10 @@ const NonMemoizedContributorNode = <Datum extends { id: string; value?: number; 
             placeItems: "flex-start",
           }}
         >
-          <div className="grid gap-x-2" style={{ gridTemplateColumns: "auto 1fr", gridTemplateRows: "auto auto" }}>
-            <img
-              className="col-start-1 col-span-1 row-span-2"
-              src={avatarURL}
-              width="42"
-              height="42"
-              style={{ display: "block", borderRadius: "50%", border: "solid 2px white", flexShrink: 0, flexGrow: 0 }}
-            />
-            <div className="font-medium" style={{ gridColumnStart: "2", alignItems: "center", alignSelf: "center" }}>
-              {node.id}
-            </div>
-            <div
-              className="font-normal"
-              style={{ textOverflow: "ellipsis", gridColumnStart: "2", marginTop: "-0.5rem" }}
-            >
-              {node.formattedValue} Contributions
+          <div className="grid gap-2">
+            <div className="font-medium text-sm">{node.id}</div>
+            <div className="font-normal text-xs" style={{ textOverflow: "ellipsis" }}>
+              {node.label}
             </div>
           </div>
         </animated.div>
@@ -84,4 +69,4 @@ const NonMemoizedContributorNode = <Datum extends { id: string; value?: number; 
   );
 };
 
-export const ContributorNode = memo(NonMemoizedContributorNode) as typeof NonMemoizedContributorNode;
+export const SpecialNode = memo(NonMemoizedSpecialNode) as typeof NonMemoizedSpecialNode;
