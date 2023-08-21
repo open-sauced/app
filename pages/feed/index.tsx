@@ -184,7 +184,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
         className="container mt-5 md:mt-0 w-full gap-12 flex flex-col justify-center px-2 pt-12 md:items-start md:px-16 md:flex-row"
         ref={topRef}
       >
-        <div className="sticky top-8 xl:flex hidden flex-none w-[22%]">
+        <div className={`sticky ${user ? "top-16" : "top-8"} xl:flex hidden flex-none w-[22%]`}>
           <div className="flex flex-col w-full gap-6 mt-12">
             {user && (
               <div className="w-full">
