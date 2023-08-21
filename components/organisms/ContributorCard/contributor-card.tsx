@@ -39,7 +39,7 @@ const ContributorCard = ({ className, contributor, topic, repositories, range }:
     revalidateOnFocus: false,
   });
 
-  const { is_maintainer } = user ?? {};
+  const { is_maintainer: isMaintainer } = user ?? {};
 
   return (
     <Card className={className && className}>
@@ -48,7 +48,7 @@ const ContributorCard = ({ className, contributor, topic, repositories, range }:
           <CardProfile {...profile} totalPRs={meta.itemCount} />
           <div className="flex flex-col items-end gap-2">
             <CardHorizontalBarChart withDescription={false} languageList={languageList} />
-            {is_maintainer && <Badge text="maintainer" />}
+            {!!isMaintainer && <Badge text="maintainer" />}
           </div>
         </div>
         <div className="h-[110px] overflow-hidden">
