@@ -10,7 +10,15 @@ export default StoryConfig;
 const HighlightsFilterCardTemplate: ComponentStory<typeof HighlightsFilterCard> = () => (
   <TooltipProvider>
     {/* eslint-disable-next-line camelcase */}
-    <HighlightsFilterCard repos={[{ repoIcon: "", repoName: "", full_name: "" }]} selectedFilter={"react"} />
+    <HighlightsFilterCard
+      repos={[
+        {
+          repoIcon: "https://www.github.com/open-sauced.png?size=300",
+          repoName: "insights",
+          full_name: "open-sauced/insights",
+        },
+      ]}
+    />
   </TooltipProvider>
 );
 
