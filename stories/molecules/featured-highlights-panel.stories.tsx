@@ -22,6 +22,7 @@ const sampleHighlights: DbHighlight[] = [
     shipped_at: "2021-08-24T09:00:00.000Z",
     pinned: false,
     deleted_at: "2021-08-24T09:00:00.000Z",
+    tagged_repos: [],
   },
   {
     id: "2",
@@ -37,6 +38,7 @@ const sampleHighlights: DbHighlight[] = [
     shipped_at: "2021-08-24T09:00:00.000Z",
     pinned: false,
     deleted_at: "2021-08-24T09:00:00.000Z",
+    tagged_repos: [],
   },
 ];
 
