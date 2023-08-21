@@ -14,8 +14,8 @@ const HighlightsFilterCardTemplate: ComponentStory<typeof HighlightsFilterCard> 
       repos={[
         {
           repoIcon: "https://www.github.com/open-sauced.png?size=300",
-          repoName: "insights",
-          full_name: "open-sauced/insights",
+          repoName: "app",
+          full_name: "open-sauced/app",
         },
       ]}
     />
