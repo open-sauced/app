@@ -1,3 +1,17 @@
+# 📦 open-sauced/app changelog
+
+[![conventional commits](https://img.shields.io/badge/conventional%20commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
+[![semantic versioning](https://img.shields.io/badge/semantic%20versioning-2.0.0-green.svg)](https://semver.org)
+
+> All notable changes to this project will be documented in this file
+
+## [1.61.0-beta.6](https://github.com/open-sauced/insights/compare/v1.61.0-beta.5...v1.61.0-beta.6) (2023-08-21)
+
+
+### 🐛 Bug Fixes
+
+* show checkbox for repos table in small screens ([#1559](https://github.com/open-sauced/insights/issues/1559)) ([a6e6bb3](https://github.com/open-sauced/insights/commit/a6e6bb3d783e6468f8a0edb9dcd21cc2513ff6dc))
+
 # 📦 open-sauced/insights changelog
 
 [![conventional commits](https://img.shields.io/badge/conventional%20commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
