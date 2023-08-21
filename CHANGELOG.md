@@ -5,6 +5,19 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.61.0-beta.7](https://github.com/open-sauced/insights/compare/v1.61.0-beta.6...v1.61.0-beta.7) (2023-08-21)
+
+
+### 🐛 Bug Fixes
+
+* highlights page endless flicker on tab change (1576) ([#1582](https://github.com/open-sauced/insights/issues/1582)) ([56a3da9](https://github.com/open-sauced/insights/commit/56a3da95da85f1afd4e28d7f2775b69a8a53e816))
+
+
+### 🍕 Features
+
+* add Maintainer badge to dashboard `HoverCard` and `ContributorCard` ([#1586](https://github.com/open-sauced/insights/issues/1586)) ([ea34f7e](https://github.com/open-sauced/insights/commit/ea34f7e7dcc594df542667b40607596053482fea))
+* highlight blogs ([#1555](https://github.com/open-sauced/insights/issues/1555)) ([4058f79](https://github.com/open-sauced/insights/commit/4058f79a8cc25baf11fe6988ff61691ff6b4fc36))
+
 ## [1.61.0-beta.6](https://github.com/open-sauced/insights/compare/v1.61.0-beta.5...v1.61.0-beta.6) (2023-08-21)
 
 
