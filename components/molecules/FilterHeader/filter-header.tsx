@@ -24,7 +24,6 @@ const HeaderFilter = () => {
   const { filterValues } = useFilterPrefetch();
   const { toolName, selectedFilter } = router.query;
   const [filterName, setFilterName] = useState<string | string[] | undefined>(router.query.filterName);
-  console.log("filterName 1", filterName);
 
   const filterBtnRouting = (filter: string) => {
     captureAnayltics("Filters", "toolsFilter", `${filter} applied`);
