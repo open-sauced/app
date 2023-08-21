@@ -10,6 +10,8 @@ import PullRequestTable from "components/molecules/PullRequestTable/pull-request
 
 import { useContributorPullRequestsChart } from "lib/hooks/useContributorPullRequestsChart";
 import useContributorLanguages from "lib/hooks/api/useContributorLanguages";
+import { useFetchUser } from "lib/hooks/useFetchUser";
+import Badge from "components/atoms/Badge/badge";
 
 export interface ContributorObject {
   profile: {
@@ -33,14 +35,20 @@ const ContributorCard = ({ className, contributor, topic, repositories, range }:
   const [showPRs, setShowPRs] = useState(false);
   const { chart, repoList, meta } = useContributorPullRequestsChart(profile.githubName, topic, repositories, range);
   const languageList = useContributorLanguages(profile.githubName);
+  const { data: user } = useFetchUser(profile.githubName, {
+    revalidateOnFocus: false,
+  });
+
+  const { is_maintainer } = user ?? {};
 
   return (
     <Card className={className && className}>
       <div className="flex flex-col gap-3">
-        <div className="flex w-full justify-between items-center gap-2">
+        <div className="flex items-center justify-between w-full gap-2">
           <CardProfile {...profile} totalPRs={meta.itemCount} />
-          <div>
+          <div className="flex flex-col items-end gap-2">
             <CardHorizontalBarChart withDescription={false} languageList={languageList} />
+            {is_maintainer && <Badge text="maintainer" />}
           </div>
         </div>
         <div className="h-[110px] overflow-hidden">
@@ -52,10 +60,10 @@ const ContributorCard = ({ className, contributor, topic, repositories, range }:
           <PullRequestTable contributor={profile.githubName} topic={topic} repositories={repositories} range={range} />
         ) : null}
 
-        <div className="flex w-full justify-center">
+        <div className="flex justify-center w-full">
           <button
             onClick={() => setShowPRs((prevState) => !prevState)}
-            className="w-full bg-white py-1 border-light-slate-6 hover:bg-light-slate-1 rounded-lg border transition"
+            className="w-full py-1 transition bg-white border rounded-lg border-light-slate-6 hover:bg-light-slate-1"
           >
             <Text className="!text-sm !text-light-slate-11  ">{showPRs ? "Hide" : "Show"} latest pull requests</Text>
           </button>
