@@ -1,6 +1,6 @@
 import { useKey, useKeyPress, useMeasure } from "react-use";
 import { useCallback, useEffect, useState } from "react";
-import { animated, useSpring, useSprings } from "react-spring";
+import { animated, useSpring, useSprings } from "@react-spring/web";
 import { useGesture } from "@use-gesture/react";
 import { useOutsideClickRef } from "rooks";
 import DevCard, { DevCardProps } from "components/molecules/DevCard/dev-card";

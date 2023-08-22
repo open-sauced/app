@@ -1,12 +1,12 @@
 {
   "name": "@open-sauced/insights",
-  "version": "1.61.0-beta.8",
+  "version": "1.61.0-beta.9",
   "lockfileVersion": 3,
   "requires": true,
   "packages": {
     "": {
       "name": "@open-sauced/insights",
-      "version": "1.61.0-beta.8",
+      "version": "1.61.0-beta.9",
       "hasInstallScript": true,
       "license": "Apache 2.0",
       "dependencies": {
@@ -33,7 +33,7 @@
         "@radix-ui/react-toast": "^1.1.2",
         "@radix-ui/react-toggle-group": "^1.0.2",
         "@radix-ui/react-tooltip": "^1.0.3",
-        "@react-spring/web": "^9.6.1",
+        "@react-spring/web": "^9.7.3",
         "@sentry/nextjs": "^7.53.1",
         "@stripe/stripe-js": "^1.46.0",
         "@supabase/auth-helpers-nextjs": "^0.7.2",
@@ -62,7 +62,6 @@
         "react-loading-skeleton": "^3.1.0",
         "react-parallax-tilt": "^1.7.151",
         "react-schemaorg": "^2.0.0",
-        "react-spring": "^9.6.1",
         "react-use": "^17.4.0",
         "rooks": "^7.4.4",
         "schema-dts": "^1.1.0",
@@ -8251,27 +8250,41 @@
         "@babel/runtime": "^7.13.10"
       }
     },
-    "node_modules/@react-spring/animated": {
-      "version": "9.6.1",
-      "resolved": "https://registry.npmjs.org/@react-spring/animated/-/animated-9.6.1.tgz",
-      "integrity": "sha512-ls/rJBrAqiAYozjLo5EPPLLOb1LM0lNVQcXODTC1SMtS6DbuBCPaKco5svFUQFMP2dso3O+qcC4k9FsKc0KxMQ==",
+    "node_modules/@react-spring/web": {
+      "version": "9.7.3",
+      "resolved": "https://registry.npmjs.org/@react-spring/web/-/web-9.7.3.tgz",
+      "integrity": "sha512-BXt6BpS9aJL/QdVqEIX9YoUy8CE6TJrU0mNCqSoxdXlIeNcEBWOfIyE6B14ENNsyQKS3wOWkiJfco0tCr/9tUg==",
       "dependencies": {
-        "@react-spring/shared": "~9.6.1",
-        "@react-spring/types": "~9.6.1"
+        "@react-spring/animated": "~9.7.3",
+        "@react-spring/core": "~9.7.3",
+        "@react-spring/shared": "~9.7.3",
+        "@react-spring/types": "~9.7.3"
+      },
+      "peerDependencies": {
+        "react": "^16.8.0 || ^17.0.0 || ^18.0.0",
+        "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0"
+      }
+    },
+    "node_modules/@react-spring/web/node_modules/@react-spring/animated": {
+      "version": "9.7.3",
+      "resolved": "https://registry.npmjs.org/@react-spring/animated/-/animated-9.7.3.tgz",
+      "integrity": "sha512-5CWeNJt9pNgyvuSzQH+uy2pvTg8Y4/OisoscZIR8/ZNLIOI+CatFBhGZpDGTF/OzdNFsAoGk3wiUYTwoJ0YIvw==",
+      "dependencies": {
+        "@react-spring/shared": "~9.7.3",
+        "@react-spring/types": "~9.7.3"
       },
       "peerDependencies": {
         "react": "^16.8.0 || ^17.0.0 || ^18.0.0"
       }
     },
-    "node_modules/@react-spring/core": {
-      "version": "9.6.1",
-      "resolved": "https://registry.npmjs.org/@react-spring/core/-/core-9.6.1.tgz",
-      "integrity": "sha512-3HAAinAyCPessyQNNXe5W0OHzRfa8Yo5P748paPcmMowZ/4sMfaZ2ZB6e5x5khQI8NusOHj8nquoutd6FRY5WQ==",
+    "node_modules/@react-spring/web/node_modules/@react-spring/core": {
+      "version": "9.7.3",
+      "resolved": "https://registry.npmjs.org/@react-spring/core/-/core-9.7.3.tgz",
+      "integrity": "sha512-IqFdPVf3ZOC1Cx7+M0cXf4odNLxDC+n7IN3MDcVCTIOSBfqEcBebSv+vlY5AhM0zw05PDbjKrNmBpzv/AqpjnQ==",
       "dependencies": {
-        "@react-spring/animated": "~9.6.1",
-        "@react-spring/rafz": "~9.6.1",
-        "@react-spring/shared": "~9.6.1",
-        "@react-spring/types": "~9.6.1"
+        "@react-spring/animated": "~9.7.3",
+        "@react-spring/shared": "~9.7.3",
+        "@react-spring/types": "~9.7.3"
       },
       "funding": {
         "type": "opencollective",
@@ -8281,106 +8294,21 @@
         "react": "^16.8.0 || ^17.0.0 || ^18.0.0"
       }
     },
-    "node_modules/@react-spring/konva": {
-      "version": "9.6.1",
-      "resolved": "https://registry.npmjs.org/@react-spring/konva/-/konva-9.6.1.tgz",
-      "integrity": "sha512-MevnU+tnG1LPsmMRpfJfevfLtI0ObIvrwYc+Xg+kmYJe00vwMRSdulQOztKANKalFXBewwk72XrQCeRLXFaUIg==",
+    "node_modules/@react-spring/web/node_modules/@react-spring/shared": {
+      "version": "9.7.3",
+      "resolved": "https://registry.npmjs.org/@react-spring/shared/-/shared-9.7.3.tgz",
+      "integrity": "sha512-NEopD+9S5xYyQ0pGtioacLhL2luflh6HACSSDUZOwLHoxA5eku1UPuqcJqjwSD6luKjjLfiLOspxo43FUHKKSA==",
       "dependencies": {
-        "@react-spring/animated": "~9.6.1",
-        "@react-spring/core": "~9.6.1",
-        "@react-spring/shared": "~9.6.1",
-        "@react-spring/types": "~9.6.1"
-      },
-      "peerDependencies": {
-        "konva": ">=2.6",
-        "react": "^16.8.0 || ^17.0.0 || ^18.0.0",
-        "react-konva": "^16.8.0 || ^17.0.0"
-      }
-    },
-    "node_modules/@react-spring/native": {
-      "version": "9.6.1",
-      "resolved": "https://registry.npmjs.org/@react-spring/native/-/native-9.6.1.tgz",
-      "integrity": "sha512-ZIfSytxFGLw4gYOb8gsmwG0+JZYxuM/Y1XPCXCkhuoMn+RmOYrr0kQ4gLczbmf+TRxth7OT1c8vBYz0+SCGcIQ==",
-      "dependencies": {
-        "@react-spring/animated": "~9.6.1",
-        "@react-spring/core": "~9.6.1",
-        "@react-spring/shared": "~9.6.1",
-        "@react-spring/types": "~9.6.1"
-      },
-      "peerDependencies": {
-        "react": "^16.8.0  || >=17.0.0 || >=18.0.0",
-        "react-native": ">=0.58"
-      }
-    },
-    "node_modules/@react-spring/rafz": {
-      "version": "9.6.1",
-      "resolved": "https://registry.npmjs.org/@react-spring/rafz/-/rafz-9.6.1.tgz",
-      "integrity": "sha512-v6qbgNRpztJFFfSE3e2W1Uz+g8KnIBs6SmzCzcVVF61GdGfGOuBrbjIcp+nUz301awVmREKi4eMQb2Ab2gGgyQ=="
-    },
-    "node_modules/@react-spring/shared": {
-      "version": "9.6.1",
-      "resolved": "https://registry.npmjs.org/@react-spring/shared/-/shared-9.6.1.tgz",
-      "integrity": "sha512-PBFBXabxFEuF8enNLkVqMC9h5uLRBo6GQhRMQT/nRTnemVENimgRd+0ZT4yFnAQ0AxWNiJfX3qux+bW2LbG6Bw==",
-      "dependencies": {
-        "@react-spring/rafz": "~9.6.1",
-        "@react-spring/types": "~9.6.1"
+        "@react-spring/types": "~9.7.3"
       },
       "peerDependencies": {
         "react": "^16.8.0 || ^17.0.0 || ^18.0.0"
       }
     },
-    "node_modules/@react-spring/three": {
-      "version": "9.6.1",
-      "resolved": "https://registry.npmjs.org/@react-spring/three/-/three-9.6.1.tgz",
-      "integrity": "sha512-Tyw2YhZPKJAX3t2FcqvpLRb71CyTe1GvT3V+i+xJzfALgpk10uPGdGaQQ5Xrzmok1340DAeg2pR/MCfaW7b8AA==",
-      "dependencies": {
-        "@react-spring/animated": "~9.6.1",
-        "@react-spring/core": "~9.6.1",
-        "@react-spring/shared": "~9.6.1",
-        "@react-spring/types": "~9.6.1"
-      },
-      "peerDependencies": {
-        "@react-three/fiber": ">=6.0",
-        "react": "^16.8.0 || ^17.0.0 || ^18.0.0",
-        "three": ">=0.126"
-      }
-    },
-    "node_modules/@react-spring/types": {
-      "version": "9.6.1",
-      "resolved": "https://registry.npmjs.org/@react-spring/types/-/types-9.6.1.tgz",
-      "integrity": "sha512-POu8Mk0hIU3lRXB3bGIGe4VHIwwDsQyoD1F394OK7STTiX9w4dG3cTLljjYswkQN+hDSHRrj4O36kuVa7KPU8Q=="
-    },
-    "node_modules/@react-spring/web": {
-      "version": "9.6.1",
-      "resolved": "https://registry.npmjs.org/@react-spring/web/-/web-9.6.1.tgz",
-      "integrity": "sha512-X2zR6q2Z+FjsWfGAmAXlQaoUHbPmfuCaXpuM6TcwXPpLE1ZD4A1eys/wpXboFQmDkjnrlTmKvpVna1MjWpZ5Hw==",
-      "dependencies": {
-        "@react-spring/animated": "~9.6.1",
-        "@react-spring/core": "~9.6.1",
-        "@react-spring/shared": "~9.6.1",
-        "@react-spring/types": "~9.6.1"
-      },
-      "peerDependencies": {
-        "react": "^16.8.0 || ^17.0.0 || ^18.0.0",
-        "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0"
-      }
-    },
-    "node_modules/@react-spring/zdog": {
-      "version": "9.6.1",
-      "resolved": "https://registry.npmjs.org/@react-spring/zdog/-/zdog-9.6.1.tgz",
-      "integrity": "sha512-0jSGm2OFW/+/+4dkRp46KzEkcLVfzV2k6DO1om0dLDtQ4q6FpX4dmDTlRc7Apzin6VtfQONMFIGITtbqoS28MQ==",
-      "dependencies": {
-        "@react-spring/animated": "~9.6.1",
-        "@react-spring/core": "~9.6.1",
-        "@react-spring/shared": "~9.6.1",
-        "@react-spring/types": "~9.6.1"
-      },
-      "peerDependencies": {
-        "react": "^16.8.0 || ^17.0.0 || ^18.0.0",
-        "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0",
-        "react-zdog": ">=1.0",
-        "zdog": ">=1.0"
-      }
+    "node_modules/@react-spring/web/node_modules/@react-spring/types": {
+      "version": "9.7.3",
+      "resolved": "https://registry.npmjs.org/@react-spring/types/-/types-9.7.3.tgz",
+      "integrity": "sha512-Kpx/fQ/ZFX31OtlqVEFfgaD1ACzul4NksrvIgYfIFq9JpDHFwQkMVZ10tbo0FU/grje4rcL4EIrjekl3kYwgWw=="
     },
     "node_modules/@resvg/resvg-wasm": {
       "version": "2.4.1",
@@ -43823,23 +43751,6 @@
         "react": ">=16.3.0",
         "schema-dts": ">=0.7.4",
         "typescript": ">=3.1.6"
-      }
-    },
-    "node_modules/react-spring": {
-      "version": "9.6.1",
-      "resolved": "https://registry.npmjs.org/react-spring/-/react-spring-9.6.1.tgz",
-      "integrity": "sha512-BeP80R4SLb1bZHW/Q62nECoScHw/fH+jzGkD7dc892HNGa+lbGIJXURc6U7N8JfZ8peEO46nPxR57aUMuYzquQ==",
-      "dependencies": {
-        "@react-spring/core": "~9.6.1",
-        "@react-spring/konva": "~9.6.1",
-        "@react-spring/native": "~9.6.1",
-        "@react-spring/three": "~9.6.1",
-        "@react-spring/web": "~9.6.1",
-        "@react-spring/zdog": "~9.6.1"
-      },
-      "peerDependencies": {
-        "react": "^16.8.0 || ^17.0.0 || ^18.0.0",
-        "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0"
       }
     },
     "node_modules/react-style-singleton": {
