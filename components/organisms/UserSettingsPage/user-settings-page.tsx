@@ -394,7 +394,13 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
                     </Text>
                   </div>
                 </div>
-                <Button href={process.env.NEXT_PUBLIC_STRIPE_SUB_CANCEL_URL} className="w-max" variant="primary">
+                <Button
+                  rel="noopener noreferrer"
+                  target="_blank"
+                  href={process.env.NEXT_PUBLIC_STRIPE_SUB_CANCEL_URL}
+                  className="w-max"
+                  variant="primary"
+                >
                   Cancel Subscription
                 </Button>
               </div>
