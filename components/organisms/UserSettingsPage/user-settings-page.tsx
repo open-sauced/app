@@ -394,11 +394,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
                     </Text>
                   </div>
                 </div>
-                <Button
-                  href="https://billing.stripe.com/p/login/test_bIY8xy3iy6fpeHu3cc"
-                  className="w-max"
-                  variant="primary"
-                >
+                <Button href={process.env.NEXT_PUBLIC_STRIPE_SUB_CANCEL_URL} className="w-max" variant="primary">
                   Cancel Subscription
                 </Button>
               </div>
