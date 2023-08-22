@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.61.0-beta.9](https://github.com/open-sauced/insights/compare/v1.61.0-beta.8...v1.61.0-beta.9) (2023-08-22)
+
+
+### 🐛 Bug Fixes
+
+* update react-spring imports and upgrade @react-spring/web ([#1567](https://github.com/open-sauced/insights/issues/1567)) ([44c80af](https://github.com/open-sauced/insights/commit/44c80af7e359e60c28994d5902b44c666d840787))
+
 ## [1.61.0-beta.8](https://github.com/open-sauced/insights/compare/v1.61.0-beta.7...v1.61.0-beta.8) (2023-08-22)
 
 
