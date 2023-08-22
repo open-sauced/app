@@ -40,6 +40,7 @@ import useUserHighlightReactions from "lib/hooks/useUserHighlightReactions";
 import Tooltip from "components/atoms/Tooltip/tooltip";
 import useFollowUser from "lib/hooks/useFollowUser";
 import { fetchGithubIssueInfo } from "lib/hooks/fetchGithubIssueInfo";
+import useHighlightReactors from "lib/hooks/useHighlightReactors";
 import GhOpenGraphImg from "../GhOpenGraphImg/gh-open-graph-img";
 import {
   Dialog,
@@ -110,6 +111,7 @@ const ContributorHighlightCard = ({
   const [date, setDate] = useState<Date | undefined>(shipped_date ? new Date(shipped_date) : undefined);
 
   const { data: reactions, mutate } = useHighlightReactions(id);
+  const { data: reactors, mutate: mutateReactors } = useHighlightReactors(id);
   const { data: userReaction, deleteReaction, addReaction } = useUserHighlightReactions(sessionToken ? id : "");
 
   const posthog = usePostHog();
@@ -131,6 +133,26 @@ const ContributorHighlightCard = ({
     return !matches ? false : true;
   };
 
+  const getEmojiReactors = (id: string) => {
+    const matches = reactors && reactors.find((reaction) => reaction.emoji_id === id);
+    // 1,2,3 and x more reacted with emoji
+    if (matches && matches.reaction_users.length > 3) {
+      return `${matches.reaction_users.slice(0, 3).join(", ")} and ${
+        matches.reaction_users.length - 3
+      } more reacted with the ${getEmojiNameById(id)} emoji`;
+    }
+    // 1,2,3 reacted with emoji
+    else if (matches && matches.reaction_users.length > 1) {
+      return `${matches.reaction_users.slice(0, 2).join(", ")} and ${
+        matches.reaction_users[2]
+      } reacted with the ${getEmojiNameById(id)} emoji`;
+    }
+    // 1 reacted with emoji
+    else if (matches && matches.reaction_users.length === 1) {
+      return `${matches.reaction_users[0]} reacted with the ${getEmojiNameById(id)} emoji`;
+    }
+  };
+
   const getEmojiNameById = (id: string) => {
     return emojis && emojis.length > 0 ? emojis.filter((emoji) => emoji.id === id)[0].name : "";
   };
@@ -140,9 +162,11 @@ const ContributorHighlightCard = ({
       // making sure the delete is triggered before the data is refetched
       await deleteReaction(id);
       mutate();
+      mutateReactors();
     } else {
       await addReaction(id);
       mutate();
+      mutateReactors();
     }
   };
 
@@ -452,18 +476,19 @@ const ContributorHighlightCard = ({
           emojis &&
           reactions.length > 0 &&
           reactions.map(({ emoji_id, reaction_count }) => (
-            <div
-              className={`px-1 py-0 md:py-0.5 hover:bg-light-slate-6 transition  md:px-1.5 shrink-0 border flex items-center justify-center rounded-full cursor-pointer ${
-                isUserReaction(emoji_id) && "bg-light-slate-6"
-              }`}
-              onClick={async () => (sessionToken ? handleUpdateReaction(emoji_id) : signIn({ provider: "github" }))}
-              key={emoji_id}
-            >
-              <Emoji
-                className="text-xs md:text-sm text-light-slate-10"
-                text={`:${getEmojiNameById(emoji_id)}: ${reaction_count}`}
-              />
-            </div>
+            <Tooltip key={emoji_id} direction="top" content={`${getEmojiReactors(emoji_id)}`}>
+              <div
+                className={`px-1 py-0 md:py-0.5 hover:bg-light-slate-6 transition  md:px-1.5 shrink-0 border flex items-center justify-center rounded-full cursor-pointer ${
+                  isUserReaction(emoji_id) && "bg-light-slate-6"
+                }`}
+                onClick={async () => (sessionToken ? handleUpdateReaction(emoji_id) : signIn({ provider: "github" }))}
+              >
+                <Emoji
+                  className="text-xs md:text-sm text-light-slate-10"
+                  text={`:${getEmojiNameById(emoji_id)}: ${reaction_count}`}
+                />
+              </div>
+            </Tooltip>
           ))}
         <div className="ml-auto">
           <CardRepoList repoList={repos} />
