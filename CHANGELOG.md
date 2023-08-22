@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.61.0-beta.8](https://github.com/open-sauced/insights/compare/v1.61.0-beta.7...v1.61.0-beta.8) (2023-08-22)
+
+
+### 🐛 Bug Fixes
+
+* fix crash on `/user/[username]` route due to browser support issue ([#1580](https://github.com/open-sauced/insights/issues/1580)) ([336a43e](https://github.com/open-sauced/insights/commit/336a43ef56e6b89ea1ddb9a72d330f7270a1ef75))
+
 ## [1.61.0-beta.7](https://github.com/open-sauced/insights/compare/v1.61.0-beta.6...v1.61.0-beta.7) (2023-08-21)
 
 

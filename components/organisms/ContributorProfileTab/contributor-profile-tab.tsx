@@ -64,7 +64,8 @@ const ContributorProfileTab = ({
 
   const router = useRouter();
 
-  pathnameRef.current = router.pathname.split("/").at(-1);
+  const pathnames = router.pathname.split("/");
+  pathnameRef.current = pathnames[pathnames.length - 1];
 
   const getCurrentPathName = useMemo(() => {
     return pathnameRef.current && pathnameRef.current !== "[username]"
