@@ -401,7 +401,6 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
                 >
                   Cancel Subscription
                 </Button>
-                {/* <StripeCheckoutButton  variant="primary" /> */}
               </div>
             </div>
           )}
