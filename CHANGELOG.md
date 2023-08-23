@@ -5,6 +5,18 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.61.0-beta.10](https://github.com/open-sauced/insights/compare/v1.61.0-beta.9...v1.61.0-beta.10) (2023-08-23)
+
+
+### 🐛 Bug Fixes
+
+* overflows in insights page on md screen size ([#1590](https://github.com/open-sauced/insights/issues/1590)) ([69ec31e](https://github.com/open-sauced/insights/commit/69ec31e4e7b32496420bf5036c3bfa53a26b7939))
+
+
+### 🍕 Features
+
+* add subscription management section to user settings ([#1587](https://github.com/open-sauced/insights/issues/1587)) ([3ceb2c8](https://github.com/open-sauced/insights/commit/3ceb2c8a131944470e8f238a09f4fceff93f8e6a))
+
 ## [1.61.0-beta.9](https://github.com/open-sauced/insights/compare/v1.61.0-beta.8...v1.61.0-beta.9) (2023-08-22)
 
 
