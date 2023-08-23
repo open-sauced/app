@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.61.0-beta.12](https://github.com/open-sauced/insights/compare/v1.61.0-beta.11...v1.61.0-beta.12) (2023-08-23)
+
+
+### 🐛 Bug Fixes
+
+* refetch following count after following a user ([#1596](https://github.com/open-sauced/insights/issues/1596)) ([cb31fd1](https://github.com/open-sauced/insights/commit/cb31fd1db724087291b3d41fad7eb79409f1ca76))
+
 ## [1.61.0-beta.11](https://github.com/open-sauced/insights/compare/v1.61.0-beta.10...v1.61.0-beta.11) (2023-08-23)
 
 
