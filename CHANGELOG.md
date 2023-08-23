@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.61.0-beta.11](https://github.com/open-sauced/insights/compare/v1.61.0-beta.10...v1.61.0-beta.11) (2023-08-23)
+
+
+### 🐛 Bug Fixes
+
+* remove tagged repos from highlight ([#1595](https://github.com/open-sauced/insights/issues/1595)) ([26a2be6](https://github.com/open-sauced/insights/commit/26a2be63da644e693f4e4142a9154e76abe4e5c7))
+
 ## [1.61.0-beta.10](https://github.com/open-sauced/insights/compare/v1.61.0-beta.9...v1.61.0-beta.10) (2023-08-23)
 
 
