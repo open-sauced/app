@@ -11,9 +11,10 @@ import Button from "../Button/button";
 
 export interface TopContributorCardProps {
   login: string;
+  refreshLoggedInUser: () => void;
 }
 
-const TopContributorCard = ({ login }: TopContributorCardProps) => {
+const TopContributorCard = ({ login, refreshLoggedInUser }: TopContributorCardProps) => {
   const router = useRouter();
   const currentPath = router.asPath;
 
@@ -25,9 +26,11 @@ const TopContributorCard = ({ login }: TopContributorCardProps) => {
     try {
       if (notFollowing) {
         await follow();
+        refreshLoggedInUser();
         return;
       }
       await unFollow();
+      refreshLoggedInUser();
     } catch (error) {
       console.log(error);
     }
