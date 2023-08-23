@@ -5,6 +5,32 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.61.0-beta.12](https://github.com/open-sauced/insights/compare/v1.61.0-beta.11...v1.61.0-beta.12) (2023-08-23)
+
+
+### 🐛 Bug Fixes
+
+* refetch following count after following a user ([#1596](https://github.com/open-sauced/insights/issues/1596)) ([cb31fd1](https://github.com/open-sauced/insights/commit/cb31fd1db724087291b3d41fad7eb79409f1ca76))
+
+## [1.61.0-beta.11](https://github.com/open-sauced/insights/compare/v1.61.0-beta.10...v1.61.0-beta.11) (2023-08-23)
+
+
+### 🐛 Bug Fixes
+
+* remove tagged repos from highlight ([#1595](https://github.com/open-sauced/insights/issues/1595)) ([26a2be6](https://github.com/open-sauced/insights/commit/26a2be63da644e693f4e4142a9154e76abe4e5c7))
+
+## [1.61.0-beta.10](https://github.com/open-sauced/insights/compare/v1.61.0-beta.9...v1.61.0-beta.10) (2023-08-23)
+
+
+### 🐛 Bug Fixes
+
+* overflows in insights page on md screen size ([#1590](https://github.com/open-sauced/insights/issues/1590)) ([69ec31e](https://github.com/open-sauced/insights/commit/69ec31e4e7b32496420bf5036c3bfa53a26b7939))
+
+
+### 🍕 Features
+
+* add subscription management section to user settings ([#1587](https://github.com/open-sauced/insights/issues/1587)) ([3ceb2c8](https://github.com/open-sauced/insights/commit/3ceb2c8a131944470e8f238a09f4fceff93f8e6a))
+
 ## [1.61.0-beta.9](https://github.com/open-sauced/insights/compare/v1.61.0-beta.8...v1.61.0-beta.9) (2023-08-22)
 
 

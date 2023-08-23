@@ -5,6 +5,8 @@ export interface ButtonsProps extends React.ButtonHTMLAttributes<HTMLButtonEleme
   variant: "primary" | "default" | "dark" | "outline" | "link" | "text";
   loading?: boolean;
   href?: string;
+  rel?: string;
+  target?: string;
   showLoadingText?: boolean;
 }
 
