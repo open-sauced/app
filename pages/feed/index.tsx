@@ -80,7 +80,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
   const {
     data: loggedInUser,
     isLoading: loggedInUserLoading,
-    mutate: mutateLoggedInUser,
+    mutate: refreshLoggedInUser,
   } = useFetchUser(user?.user_metadata.user_name as string);
 
   const { followers_count, following_count, highlights_count } = loggedInUser || {};
@@ -218,7 +218,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
             )}
             <TopContributorsPanel
               loggedInUserLogin={loggedInUser?.login ?? ""}
-              mutateLoggedInUser={mutateLoggedInUser}
+              refreshLoggedInUser={refreshLoggedInUser}
             />
             <AnnouncementCard
               title="#100DaysOfOSS 🚀 "

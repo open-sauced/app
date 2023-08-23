@@ -5,9 +5,9 @@ import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 
 interface TopContributorsPanelProps {
   loggedInUserLogin: string;
-  mutateLoggedInUser: () => void;
+  refreshLoggedInUser: () => void;
 }
-const TopContributorsPanel = ({ loggedInUserLogin, mutateLoggedInUser }: TopContributorsPanelProps) => {
+const TopContributorsPanel = ({ loggedInUserLogin, refreshLoggedInUser }: TopContributorsPanelProps) => {
   const { data, isLoading } = useFetchTopContributors({ limit: 20 });
 
   const topContributorsWithoutLoggedInUser = data ? data.filter((user) => user.login !== loggedInUserLogin) : [];
@@ -24,7 +24,7 @@ const TopContributorsPanel = ({ loggedInUserLogin, mutateLoggedInUser }: TopCont
           </div>
         ))}
       {top3Contributors.map((login, i) => (
-        <TopContributorCard key={i} login={login} mutateLoggedInUser={mutateLoggedInUser} />
+        <TopContributorCard key={i} login={login} refreshLoggedInUser={refreshLoggedInUser} />
       ))}
     </div>
   );
