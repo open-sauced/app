@@ -182,7 +182,7 @@ const ContributorProfileHeader = ({
                     <>
                       <DropdownMenuItem
                         onClick={handleFollowClick}
-                        className="rounded-md flex items-center gap-1 pl-3 pr-7 [&>span:nth-child(1)]:hover:hidden [&>span:nth-child(1)]:focus:hidden [&>span:nth-child(2)]:hover:inline [&>span:nth-child(2)]:focus:inline"
+                        className="rounded-md flex items-center gap-1 pl-3 pr-7 cursor-pointer [&>span:nth-child(1)]:hover:hidden [&>span:nth-child(1)]:focus:hidden [&>span:nth-child(2)]:hover:inline [&>span:nth-child(2)]:focus:inline"
                       >
                         {isFollowing ? (
                           <>
