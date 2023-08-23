@@ -11,9 +11,10 @@ import Button from "../Button/button";
 
 export interface TopContributorCardProps {
   login: string;
+  mutateLoggedInUser: () => void;
 }
 
-const TopContributorCard = ({ login }: TopContributorCardProps) => {
+const TopContributorCard = ({ login, mutateLoggedInUser }: TopContributorCardProps) => {
   const router = useRouter();
   const currentPath = router.asPath;
 
@@ -25,9 +26,11 @@ const TopContributorCard = ({ login }: TopContributorCardProps) => {
     try {
       if (notFollowing) {
         await follow();
+        mutateLoggedInUser();
         return;
       }
       await unFollow();
+      mutateLoggedInUser();
     } catch (error) {
       console.log(error);
     }

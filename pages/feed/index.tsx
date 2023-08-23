@@ -77,7 +77,11 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
   const { data, mutate, setPage, isLoading, meta } = useFetchAllHighlights(selectedRepo);
   const { data: emojis } = useFetchAllEmojis();
 
-  const { data: loggedInUser, isLoading: loggedInUserLoading } = useFetchUser(user?.user_metadata.user_name as string);
+  const {
+    data: loggedInUser,
+    isLoading: loggedInUserLoading,
+    mutate: mutateLoggedInUser,
+  } = useFetchUser(user?.user_metadata.user_name as string);
 
   const { followers_count, following_count, highlights_count } = loggedInUser || {};
 
@@ -212,7 +216,10 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
                 />
               </div>
             )}
-            <TopContributorsPanel loggedInUserLogin={loggedInUser?.login ?? ""} />
+            <TopContributorsPanel
+              loggedInUserLogin={loggedInUser?.login ?? ""}
+              mutateLoggedInUser={mutateLoggedInUser}
+            />
             <AnnouncementCard
               title="#100DaysOfOSS 🚀 "
               description={
