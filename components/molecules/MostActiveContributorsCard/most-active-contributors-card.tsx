@@ -105,7 +105,7 @@ export default function MostActiveContributorsCard(props: Props) {
             </Button>
           </div>
           {/* chart */}
-          <div className="relative grid place-content-stretch overflow-y-hidden">
+          <div className="relative grid place-content-stretch overflow-y-hidden mb-4">
             <div
               className="absolute left-0 bottom-0 right-0 h-6 w-full z-10"
               style={{ gridArea: "1 / 1", background: "linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.1))" }}
