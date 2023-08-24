@@ -463,7 +463,11 @@ const ContributorHighlightCard = ({
           emojis &&
           reactions.length > 0 &&
           reactions.map(({ emoji_id, reaction_count }) => (
-            <Tooltip key={emoji_id} direction="top" content={`${getEmojiReactors(emoji_id)}`}>
+            <Tooltip
+              key={emoji_id}
+              direction="top"
+              content={`${getEmojiReactors(emoji_id)} reacted with ${getEmojiNameById(emoji_id)} emoji`}
+            >
               <div
                 className={`px-1 py-0 md:py-0.5 hover:bg-light-slate-6 transition  md:px-1.5 shrink-0 border flex items-center justify-center rounded-full cursor-pointer ${
                   isUserReaction(emoji_id) && "bg-light-slate-6"
