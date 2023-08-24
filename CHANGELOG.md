@@ -5,6 +5,19 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.61.0-beta.13](https://github.com/open-sauced/insights/compare/v1.61.0-beta.12...v1.61.0-beta.13) (2023-08-24)
+
+
+### 🍕 Features
+
+* "Following" button to "Unfollow" on hover ([#1588](https://github.com/open-sauced/insights/issues/1588)) ([721cc36](https://github.com/open-sauced/insights/commit/721cc36bca810063b26b8e1bae54a9e498133c91))
+
+
+### 🐛 Bug Fixes
+
+* "53y" showing up as first PR age in Contributor hover Card for dashboard ([#1609](https://github.com/open-sauced/insights/issues/1609)) ([03522c9](https://github.com/open-sauced/insights/commit/03522c9a6875637949b0a0c29743f923b568bf77))
+* query param reset in repo filters & URL encoding ([#1597](https://github.com/open-sauced/insights/issues/1597)) ([c5c7df3](https://github.com/open-sauced/insights/commit/c5c7df312cbfd6fbc08d2cd311e9379e081ebb13))
+
 ## [1.61.0-beta.12](https://github.com/open-sauced/insights/compare/v1.61.0-beta.11...v1.61.0-beta.12) (2023-08-23)
 
 
