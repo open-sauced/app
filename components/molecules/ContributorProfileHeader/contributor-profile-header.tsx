@@ -180,10 +180,21 @@ const ContributorProfileHeader = ({
                 {user ? (
                   !isOwner && (
                     <>
-                      <DropdownMenuItem className="rounded-md">
-                        <button onClick={handleFollowClick} className="flex items-center gap-1 pl-3 pr-7">
-                          {isFollowing ? "Following" : "Follow"}
-                        </button>
+                      <DropdownMenuItem
+                        onClick={handleFollowClick}
+                        className="rounded-md flex items-center gap-1 !cursor-pointer [&>span>span:nth-child(1)]:hover:hidden [&>span>span:nth-child(1)]:focus:hidden [&>span>span:nth-child(2)]:hover:inline [&>span>span:nth-child(2)]:focus:inline"
+                      >
+                        {/* `span` tag changes below must be in line with the styles on the parent */}
+                        <span className="pl-3 pr-7">
+                          {isFollowing ? (
+                            <>
+                              <span className="">Following</span>
+                              <span className="hidden">Unfollow</span>
+                            </>
+                          ) : (
+                            "Follow"
+                          )}
+                        </span>
                       </DropdownMenuItem>
                       {isPremium && isRecievingCollaborations && (
                         <DropdownMenuItem className="rounded-md">
