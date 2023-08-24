@@ -14,6 +14,7 @@ import useFetchAllEmojis from "lib/hooks/useFetchAllEmojis";
 import { useFetchFollowersHighlightRepos } from "lib/hooks/useFetchFollowingHighlightRepos";
 import { useFetchUser } from "lib/hooks/useFetchUser";
 import { useFetchFeaturedHighlights } from "lib/hooks/useFetchFeaturedHighlights";
+import { setQueryParams } from "lib/utils/query-params";
 
 import { WithPageLayout } from "interfaces/with-page-layout";
 import ProfileLayout from "layouts/profile";
@@ -160,12 +161,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
     setSelectedRepo("");
 
     // Resetting URL search param for repo
-    const params = new URLSearchParams(window.location.search);
-    params.delete("repo");
-    router.push({
-      pathname: router.pathname,
-      search: params.toString(),
-    });
+    setQueryParams({}, ["repo"]);
 
     // Changing the active tab
     setActiveTab(value as activeTabType);
@@ -363,10 +359,11 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
             <HighlightsFilterCard
               setSelected={(repo) => {
                 if (!openSingleHighlight) {
-                  const queryParams = new URLSearchParams(window.location.search);
-                  router.push(
-                    `/feed${repo ? `?repo=${repo}` : queryParams.toString() ? `?${queryParams.toString()}` : ""}`
-                  );
+                  if (repo) {
+                    setQueryParams({ repo });
+                  } else {
+                    setQueryParams({}, ["repo"]);
+                  }
                   setPage(1);
                   setSelectedRepo(repo);
                 }
