@@ -4,6 +4,7 @@ import {
   getProfileLink,
   getRepoIssuesLink,
   generateGhOgImage,
+  generateRepoParts,
   isValidIssueUrl,
 } from "lib/utils/github";
 
@@ -34,6 +35,54 @@ describe("[lib] github methods", () => {
   it("Should return an object with isValid set to false", () => {
     const result = generateGhOgImage("https://gitub.com/open-sauced/hot/pull/448");
     expect(result).toEqual({ isValid: false, url: "" });
+  });
+  it("Should return an object with valid org name, repo name and issue", () => {
+    const result = generateRepoParts("https://github.com/open-sauced/insights/pull/1470");
+    expect(result.isValidUrl).toEqual(true);
+    expect(result.apiPaths).toEqual({
+      orgName: "open-sauced",
+      repoName: "insights",
+      repoFullName: "open-sauced/insights",
+      issueId: "1470",
+    });
+  });
+  it("Should return an object with valid org name, repo name and issue", () => {
+    const result = generateRepoParts("github.com/open-sauced/insights/pull/1470");
+    expect(result.isValidUrl).toEqual(true);
+    expect(result.apiPaths).toEqual({
+      orgName: "open-sauced",
+      repoName: "insights",
+      repoFullName: "open-sauced/insights",
+      issueId: "1470",
+    });
+  });
+  it("Should return an object with a valid org name and repo name", () => {
+    const result = generateRepoParts("https://github.com/open-sauced/insights");
+    expect(result.isValidUrl).toEqual(true);
+    expect(result.apiPaths).toEqual({
+      orgName: "open-sauced",
+      repoName: "insights",
+      repoFullName: "open-sauced/insights",
+      issueId: null,
+    });
+  });
+  it("Should return an object with a valid org name and repo name", () => {
+    const result = generateRepoParts("open-sauced/insights");
+    expect(result.isValidUrl).toEqual(true);
+    expect(result.apiPaths).toEqual({
+      orgName: "open-sauced",
+      repoName: "insights",
+      repoFullName: "open-sauced/insights",
+      issueId: null,
+    });
+  });
+  it("Should return an object with isValidUrl set to false", () => {
+    const result = generateRepoParts("https://insights.opensauced.pizza/hub/insights/new");
+    expect(result.isValidUrl).toBeFalsy();
+  });
+  it("Should return an object with isValidUrl set to false", () => {
+    const result = generateRepoParts("🍕");
+    expect(result.isValidUrl).toBeFalsy();
   });
   it("Should return false", () => {
     const result = isValidIssueUrl("https://gitub.com/open-sauced/hot/pull/448");

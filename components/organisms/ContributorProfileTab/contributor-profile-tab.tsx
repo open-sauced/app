@@ -64,7 +64,8 @@ const ContributorProfileTab = ({
 
   const router = useRouter();
 
-  pathnameRef.current = router.pathname.split("/").at(-1);
+  const pathnames = router.pathname.split("/");
+  pathnameRef.current = pathnames[pathnames.length - 1];
 
   const getCurrentPathName = useMemo(() => {
     return pathnameRef.current && pathnameRef.current !== "[username]"
@@ -160,7 +161,7 @@ const ContributorProfileTab = ({
             <>
               {!isError && highlights && highlights.length > 0 ? (
                 <div>
-                  {highlights.map(({ id, title, highlight, url, shipped_at, created_at, type }) => (
+                  {highlights.map(({ id, title, highlight, url, shipped_at, created_at, type, tagged_repos }) => (
                     <div className="flex flex-col gap-2 mb-6 lg:flex-row lg:gap-7" key={id}>
                       <Link href={`/feed/${id}`}>
                         <p className="text-sm text-light-slate-10 w-28 max-w-28">
@@ -173,10 +174,11 @@ const ContributorProfileTab = ({
                         user={login || ""}
                         title={title}
                         desc={highlight}
-                        prLink={url}
+                        highlightLink={url}
                         shipped_date={shipped_at}
                         type={type}
                         refreshCallBack={mutate}
+                        taggedRepos={tagged_repos}
                       />
                     </div>
                   ))}

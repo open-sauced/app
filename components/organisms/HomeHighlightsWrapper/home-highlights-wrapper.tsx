@@ -29,7 +29,7 @@ const HomeHighlightsWrapper = ({ emojis, highlights, loading, mutate }: HomeHigh
         )}
 
         {highlights && highlights.length > 0 ? (
-          highlights.map(({ id, url, title, created_at, highlight, shipped_at, login, type }) => (
+          highlights.map(({ id, url, title, created_at, highlight, shipped_at, login, type, tagged_repos }) => (
             <div key={id} className="flex flex-col gap-6 px-1">
               <div className="flex items-center gap-3">
                 <Link href={`/user/${login}`} className="flex items-center gap-3">
@@ -53,11 +53,12 @@ const HomeHighlightsWrapper = ({ emojis, highlights, loading, mutate }: HomeHigh
                   refreshCallBack={mutate}
                   title={title}
                   desc={highlight}
-                  prLink={url}
+                  highlightLink={url}
                   shipped_date={shipped_at}
                   user={login}
                   id={id}
                   type={type}
+                  taggedRepos={tagged_repos}
                 />
               </div>
             </div>

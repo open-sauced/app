@@ -5,9 +5,8 @@ import Icon from "components/atoms/Icon/icon";
 interface HighlightsFilterCardProps {
   repos: { repoName: string; repoIcon: string; full_name: string }[];
   setSelected?: (selected: string) => void;
-  selectedFilter: string;
 }
-const HighlightsFilterCard = ({ repos, setSelected, selectedFilter }: HighlightsFilterCardProps): JSX.Element => {
+const HighlightsFilterCard = ({ repos, setSelected }: HighlightsFilterCardProps): JSX.Element => {
   const [selected, setSelectedRepo] = useState("");
 
   const handleClick = (name: string) => {
@@ -17,11 +16,6 @@ const HighlightsFilterCard = ({ repos, setSelected, selectedFilter }: Highlights
   useEffect(() => {
     setSelected?.(selected);
   }, [selected]);
-
-  useEffect(() => {
-    // This is to handle resetting the filter state when the tab is switched
-    setSelectedRepo(selectedFilter);
-  }, [selectedFilter]);
 
   return (
     <div className="py-4 px-6 rounded-lg bg-light-slate-1  border w-full h-max">

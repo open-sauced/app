@@ -124,6 +124,11 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
       >
         {/* Row: Repository Name and Pr overview */}
         <div className="flex items-center gap-x-3">
+          <Checkbox
+            checked={selected ? true : false}
+            onCheckedChange={handleSelectCheckbox}
+            className={`${user && "border-orange-500 hover:bg-orange-600"}`}
+          />
           <div className="w-[55%]">
             <TableRepositoryName topic={topic} avatarURL={ownerAvatar} fullName={fullName as string} user={userPage} />
           </div>

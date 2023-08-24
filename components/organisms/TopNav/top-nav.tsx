@@ -45,7 +45,7 @@ const TopNav: React.FC = () => {
                 </Link>
               </li>
               <li>
-                <Link className={`text-sm ${getActiveStyle(router.asPath === "/feed")}`} href={"/feed"}>
+                <Link className={`text-sm ${getActiveStyle(router.pathname === "/feed")}`} href={"/feed"}>
                   Highlights
                 </Link>
               </li>

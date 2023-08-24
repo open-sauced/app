@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import Link from "next/link";
-import { useRouter } from "next/router";
 
 import formatDistanceToNowStrict from "date-fns/formatDistanceToNowStrict";
 
 import { useFetchFollowingHighlights } from "lib/hooks/useFetchFollowingHighlights";
+import { setQueryParams } from "lib/utils/query-params";
 
 import Avatar from "components/atoms/Avatar/avatar";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
@@ -18,15 +18,15 @@ export interface HighlightWrapperProps {
   selectedFilter: string;
 }
 const FollowingHighlightWrapper = ({ emojis, selectedFilter }: HighlightWrapperProps) => {
-  const router = useRouter();
   const { data, isLoading, isError, mutate, meta, setPage } = useFetchFollowingHighlights(selectedFilter);
 
   useEffect(() => {
     if (selectedFilter) {
-      router.push(`/feed?repo=${selectedFilter}`);
+      setQueryParams({ repo: selectedFilter });
       setPage(1);
     }
-  }, [selectedFilter]);
+  }, [selectedFilter, setPage]);
+
   return (
     <div>
       <div className="flex flex-col gap-8 mt-10">
@@ -40,7 +40,7 @@ const FollowingHighlightWrapper = ({ emojis, selectedFilter }: HighlightWrapperP
         )}
 
         {data && data.length > 0 ? (
-          data.map(({ id, url, title, created_at, highlight, shipped_at, login, type }) => (
+          data.map(({ id, url, title, created_at, highlight, shipped_at, login, type, tagged_repos }) => (
             <div key={id} className="flex flex-col gap-6 px-1">
               <div className="flex items-center gap-3">
                 <Link href={`/user/${login}`} className="flex items-center gap-3">
@@ -64,11 +64,12 @@ const FollowingHighlightWrapper = ({ emojis, selectedFilter }: HighlightWrapperP
                   refreshCallBack={mutate}
                   title={title}
                   desc={highlight}
-                  prLink={url}
+                  highlightLink={url}
                   shipped_date={shipped_at}
                   user={login}
                   id={id}
                   type={type}
+                  taggedRepos={tagged_repos}
                 />
               </div>
             </div>

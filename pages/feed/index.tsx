@@ -14,6 +14,7 @@ import useFetchAllEmojis from "lib/hooks/useFetchAllEmojis";
 import { useFetchFollowersHighlightRepos } from "lib/hooks/useFetchFollowingHighlightRepos";
 import { useFetchUser } from "lib/hooks/useFetchUser";
 import { useFetchFeaturedHighlights } from "lib/hooks/useFetchFeaturedHighlights";
+import { setQueryParams } from "lib/utils/query-params";
 
 import { WithPageLayout } from "interfaces/with-page-layout";
 import ProfileLayout from "layouts/profile";
@@ -77,7 +78,11 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
   const { data, mutate, setPage, isLoading, meta } = useFetchAllHighlights(selectedRepo);
   const { data: emojis } = useFetchAllEmojis();
 
-  const { data: loggedInUser, isLoading: loggedInUserLoading } = useFetchUser(user?.user_metadata.user_name as string);
+  const {
+    data: loggedInUser,
+    isLoading: loggedInUserLoading,
+    mutate: refreshLoggedInUser,
+  } = useFetchUser(user?.user_metadata.user_name as string);
 
   const { followers_count, following_count, highlights_count } = loggedInUser || {};
 
@@ -151,6 +156,17 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
     }
   }, []);
 
+  function onTabChange(value: string) {
+    // This is to handle resetting the filter state when the tab is switched
+    setSelectedRepo("");
+
+    // Resetting URL search param for repo
+    setQueryParams({}, ["repo"]);
+
+    // Changing the active tab
+    setActiveTab(value as activeTabType);
+  }
+
   const shouldAllowDialogCloseAction =
     props.referer === null ||
     (typeof props.referer === "string" && !props.referer.includes(host)) ||
@@ -184,7 +200,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
         className="container mt-5 md:mt-0 w-full gap-12 flex flex-col justify-center px-2 pt-12 md:items-start md:px-16 md:flex-row"
         ref={topRef}
       >
-        <div className="sticky top-8 xl:flex hidden flex-none w-[22%]">
+        <div className={`sticky ${user ? "top-16" : "top-8"} xl:flex hidden flex-none w-[22%]`}>
           <div className="flex flex-col w-full gap-6 mt-12">
             {user && (
               <div className="w-full">
@@ -196,7 +212,10 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
                 />
               </div>
             )}
-            <TopContributorsPanel loggedInUserLogin={loggedInUser?.login ?? ""} />
+            <TopContributorsPanel
+              loggedInUserLogin={loggedInUser?.login ?? ""}
+              refreshLoggedInUser={refreshLoggedInUser}
+            />
             <AnnouncementCard
               title="#100DaysOfOSS 🚀 "
               description={
@@ -260,12 +279,13 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
                       emojis={emojis}
                       title={singleHighlight.title}
                       desc={singleHighlight.highlight}
-                      prLink={singleHighlight.url}
+                      highlightLink={singleHighlight.url}
                       user={singleHighlight.login}
                       id={singleHighlight.id}
                       shipped_date={singleHighlight.shipped_at}
                       type={singleHighlight.type}
                       refreshCallBack={mutate}
+                      taggedRepos={singleHighlight.tagged_repos}
                     />
                   </div>
                 </div>
@@ -273,13 +293,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
             </DialogContent>
           </Dialog>
         )}
-        <Tabs
-          onValueChange={(value) => {
-            setActiveTab(value as activeTabType);
-          }}
-          defaultValue="home"
-          className="grow"
-        >
+        <Tabs onValueChange={onTabChange} defaultValue="home" className="grow">
           <TabsList className={clsx("justify-start  w-full border-b", !user && "hidden")}>
             <TabsTrigger
               className="data-[state=active]:border-sauced-orange data-[state=active]:border-b-2 text-2xl"
@@ -343,13 +357,13 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
         <div className="hidden w-[30%] xl:w-[24%] flex-none gap-6 mt-10 lg:flex flex-col sticky top-20">
           {repoList && repoList.length > 0 && (
             <HighlightsFilterCard
-              selectedFilter={selectedRepo}
               setSelected={(repo) => {
                 if (!openSingleHighlight) {
-                  const queryParams = new URLSearchParams(window.location.search);
-                  router.push(
-                    `/feed${repo ? `?repo=${repo}` : queryParams.toString() ? `?${queryParams.toString()}` : ""}`
-                  );
+                  if (repo) {
+                    setQueryParams({ repo });
+                  } else {
+                    setQueryParams({}, ["repo"]);
+                  }
                   setPage(1);
                   setSelectedRepo(repo);
                 }
