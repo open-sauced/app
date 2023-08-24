@@ -1,5 +1,7 @@
+const million = require("million/compiler");
+
 /** @type {import('next').NextConfig} */
-module.exports = {
+const nextConfig = {
   reactStrictMode: true,
   images: {
     domains: [
@@ -12,39 +14,24 @@ module.exports = {
   },
 };
 
-// Injected content via Sentry wizard below
-
+// Integrate both "million" and Sentry configurations
 const { withSentryConfig } = require("@sentry/nextjs");
 
-module.exports = withSentryConfig(
-  module.exports,
-  {
-    // For all available options, see:
-    // https://github.com/getsentry/sentry-webpack-plugin#options
+const sentryOptions = {
+  silent: true,
+  org: "opensauced",
+  project: "insights",
+};
 
-    // Suppresses source map uploading logs during build
-    silent: true,
+const sentryManualSetupOptions = {
+  widenClientFileUpload: true,
+  transpileClientSDK: true,
+  tunnelRoute: "/monitoring",
+  hideSourceMaps: true,
+  disableLogger: true,
+};
 
-    org: "opensauced",
-    project: "insights",
-  },
-  {
-    // For all available options, see:
-    // https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/
+const mergedConfig = withSentryConfig(nextConfig, sentryOptions, sentryManualSetupOptions);
 
-    // Upload a larger set of source maps for prettier stack traces (increases build time)
-    widenClientFileUpload: true,
-
-    // Transpiles SDK to be compatible with IE11 (increases bundle size)
-    transpileClientSDK: true,
-
-    // Routes browser requests to Sentry through a Next.js rewrite to circumvent ad-blockers (increases server load)
-    tunnelRoute: "/monitoring",
-
-    // Hides source maps from generated client bundles
-    hideSourceMaps: true,
-
-    // Automatically tree-shake Sentry logger statements to reduce bundle size
-    disableLogger: true,
-  }
-);
+// Wrap the mergedConfig with million.block() function
+module.exports = million.next(mergedConfig);
