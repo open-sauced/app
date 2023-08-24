@@ -59,10 +59,12 @@ const TopContributorCard = ({ login, refreshLoggedInUser }: TopContributorCardPr
               ? handleFollowContributor()
               : signIn({ provider: "github", options: { redirectTo: `${host}/${currentPath}` } })
           }
-          className="!px-2 !py-1"
+          className="!px-2 !py-1 [&>span:nth-child(1)]:hover:hidden [&>span:nth-child(1)]:focus-visible:hidden [&>span:nth-child(2)]:hover:inline [&>span:nth-child(2)]:focus-visible:inline"
           variant="primary"
         >
-          following
+          {/* `span` tag changes must be in line with the styles on the parent button */}
+          <span>following</span>
+          <span className="hidden">unfollow</span>
         </Button>
       ) : (
         <Button
