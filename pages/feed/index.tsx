@@ -201,7 +201,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
       />
 
       <div
-        className="container mt-5 md:mt-0 w-full gap-12 flex flex-col justify-center px-2 pt-12 md:items-start md:px-16 md:flex-row"
+        className="container flex flex-col justify-center w-full gap-12 px-2 pt-12 mt-5 md:mt-0 md:items-start md:px-16 md:flex-row"
         ref={topRef}
       >
         <div className={`sticky ${user ? "top-16" : "top-8"} xl:flex hidden flex-none w-[22%]`}>
@@ -218,6 +218,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
             )}
             <TopContributorsPanel
               loggedInUserLogin={loggedInUser?.login ?? ""}
+              loggedInUserId={loggedInUser?.id ?? undefined}
               refreshLoggedInUser={refreshLoggedInUser}
             />
             <AnnouncementCard

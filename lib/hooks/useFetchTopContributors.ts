@@ -6,20 +6,35 @@ type TopContributorsResponse = {
   data: { login: string }[];
   meta: Meta;
 };
-
-const defaultOptions = {
+type TopContributorsOptions = {
+  limit?: number;
+  userId?: number;
+};
+const defaultOptions: TopContributorsOptions = {
   limit: 10,
+  userId: undefined,
 };
 
 const useFetchTopContributors = (options: typeof defaultOptions) => {
+  const query = new URLSearchParams();
+
   const { limit } = { ...defaultOptions, ...options };
   const [page, setPage] = useState(1);
 
-  const pageQuery = page ? `page=${page}` : "";
-  const limitQuery = limit ? `&limit=${limit}` : "";
+  if (options.limit) {
+    query.set("limit", `${options.limit}`);
+  }
+
+  if (options.userId) {
+    query.set("userId", `${options.userId}`);
+  }
+  query.set("page", `${page}`);
+
+  const baseEndpoint = "users/top";
+  const endpointString = `${baseEndpoint}?${query}`;
 
   const { data, error, mutate } = useSWR<TopContributorsResponse, Error>(
-    `users/top?${pageQuery}${limitQuery}`,
+    endpointString,
     publicApiFetcher as Fetcher<TopContributorsResponse, Error>
   );
 
