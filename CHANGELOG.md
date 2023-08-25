@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.61.1-beta.1](https://github.com/open-sauced/insights/compare/v1.61.0...v1.61.1-beta.1) (2023-08-25)
+
+
+### 🧑‍💻 Code Refactoring
+
+* update top users implementation to remove already followed users ([#1607](https://github.com/open-sauced/insights/issues/1607)) ([ce586ca](https://github.com/open-sauced/insights/commit/ce586cac49f454e1df0f791e409302cb89b9899f))
+
 ## [1.61.0](https://github.com/open-sauced/insights/compare/v1.60.0...v1.61.0) (2023-08-24)
 
 
