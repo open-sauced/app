@@ -10,6 +10,30 @@ module.exports = {
       "res.cloudinary.com",
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: "/user/:username/highlights",
+        destination: "/user/:username?tab=highlights",
+        permanent: true,
+      },
+      {
+        source: "/user/:username/contributions",
+        destination: "/user/:username?tab=contributions",
+        permanent: true,
+      },
+      {
+        source: "/user/:username/recommendations",
+        destination: "/user/:username?tab=recommendations",
+        permanent: true,
+      },
+      {
+        source: "/user/:username/requests",
+        destination: "/user/:username?tab=requests",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 // Injected content via Sentry wizard below
