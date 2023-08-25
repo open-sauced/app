@@ -34,7 +34,10 @@ const ContributorHoverCard = ({
   const { filterName } = router.query;
   const topic = filterName as string;
 
-  const calculatedDateFromToday = dateOfFirstPr ? calcDistanceFromToday(new Date(parseInt(dateOfFirstPr))) : "-";
+  const calculatedDateFromToday = dateOfFirstPr
+    ? calcDistanceFromToday(new Date(parseInt(dateOfFirstPr).toString()))
+    : "-";
+
   return (
     <div className="w-[364px] bg-white gap-4 p-3 rounded-lg shadow-superlative flex flex-col">
       <div className="flex items-center justify-between">

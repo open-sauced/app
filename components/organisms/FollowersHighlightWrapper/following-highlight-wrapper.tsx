@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import Link from "next/link";
-import { useRouter } from "next/router";
 
 import formatDistanceToNowStrict from "date-fns/formatDistanceToNowStrict";
 
 import { useFetchFollowingHighlights } from "lib/hooks/useFetchFollowingHighlights";
+import { setQueryParams } from "lib/utils/query-params";
 
 import Avatar from "components/atoms/Avatar/avatar";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
@@ -18,15 +18,15 @@ export interface HighlightWrapperProps {
   selectedFilter: string;
 }
 const FollowingHighlightWrapper = ({ emojis, selectedFilter }: HighlightWrapperProps) => {
-  const router = useRouter();
   const { data, isLoading, isError, mutate, meta, setPage } = useFetchFollowingHighlights(selectedFilter);
 
   useEffect(() => {
     if (selectedFilter) {
-      router.push(`/feed?repo=${selectedFilter}`);
+      setQueryParams({ repo: selectedFilter });
       setPage(1);
     }
-  }, [selectedFilter]);
+  }, [selectedFilter, setPage]);
+
   return (
     <div>
       <div className="flex flex-col gap-8 mt-10">
