@@ -131,14 +131,15 @@ const ContributorHighlightCard = ({
     return !matches ? false : true;
   };
 
-  const getEmojiReactors = (id: string) => {
-    const matches = reactions && reactions.find((reaction) => reaction.emoji_id === id);
-    if (matches && matches?.reaction_users.length > 3) {
-      return `${matches.reaction_users.slice(0, 3).join(", ")} and ${matches.reaction_users.length - 3} others`;
-    } else if (matches && matches?.reaction_users.length > 1) {
-      return `${matches.reaction_users.join(" and ")}`;
-    } else if (matches && matches?.reaction_users.length === 1) {
-      return `${matches.reaction_users[0]}`;
+  const getEmojiReactors = (reaction_users: string[]) => {
+    if (reaction_users.length > 3) {
+      return `${reaction_users.slice(0, 3).join(", ")} and ${reaction_users.length - 3} others`;
+    } else if (reaction_users.length == 3) {
+      return `${reaction_users.slice(0, 2).join(", ")} and ${reaction_users[2]}`;
+    } else if (reaction_users.length == 2) {
+      return `${reaction_users[0]} and ${reaction_users[1]}`;
+    } else if (reaction_users.length === 1) {
+      return `${reaction_users[0]}`;
     }
   };
 
@@ -462,11 +463,11 @@ const ContributorHighlightCard = ({
         {reactions &&
           emojis &&
           reactions.length > 0 &&
-          reactions.map(({ emoji_id, reaction_count }) => (
+          reactions.map(({ emoji_id, reaction_count, reaction_users }) => (
             <Tooltip
               key={emoji_id}
               direction="top"
-              content={`${getEmojiReactors(emoji_id)} reacted with ${getEmojiNameById(emoji_id)} emoji`}
+              content={`${getEmojiReactors(reaction_users)} reacted with ${getEmojiNameById(emoji_id)} emoji`}
             >
               <div
                 className={`px-1 py-0 md:py-0.5 hover:bg-light-slate-6 transition  md:px-1.5 shrink-0 border flex items-center justify-center rounded-full cursor-pointer ${
