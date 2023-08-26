@@ -1,21 +1,15 @@
-import { useEffect, useState } from "react";
 import Title from "components/atoms/Typography/title";
 import Icon from "components/atoms/Icon/icon";
 
 interface HighlightsFilterCardProps {
   repos: { repoName: string; repoIcon: string; full_name: string }[];
-  setSelected?: (selected: string) => void;
+  setSelected: (selected: string) => void;
+  selectedFilter: string;
 }
-const HighlightsFilterCard = ({ repos, setSelected }: HighlightsFilterCardProps): JSX.Element => {
-  const [selected, setSelectedRepo] = useState("");
-
+const HighlightsFilterCard = ({ repos, setSelected, selectedFilter }: HighlightsFilterCardProps): JSX.Element => {
   const handleClick = (name: string) => {
-    setSelectedRepo((prev) => (prev === name ? "" : name));
+    setSelected(selectedFilter === name ? "" : name);
   };
-
-  useEffect(() => {
-    setSelected?.(selected);
-  }, [selected]);
 
   return (
     <div className="py-4 px-6 rounded-lg bg-light-slate-1  border w-full h-max">
@@ -29,7 +23,7 @@ const HighlightsFilterCard = ({ repos, setSelected }: HighlightsFilterCardProps)
             onClick={() => handleClick(full_name)}
             key={(repoName + repoIcon) as string}
             className={`${
-              selected === full_name ? "border-orange-600 bg-orange-200" : ""
+              selectedFilter === full_name ? "border-orange-600 bg-orange-200" : ""
             } flex hover:border-orange-600 hover:bg-orange-200 cursor-pointer gap-1 w-max  p-1 pr-2 border-[1px] border-light-slate-6 rounded-lg text-light-slate-12`}
           >
             <Icon IconImage={repoIcon} className="rounded-[4px] overflow-hidden" />
