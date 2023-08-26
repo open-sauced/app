@@ -3,7 +3,7 @@ import React from "react";
 interface CardProps {
   className?: string;
   heading?: JSX.Element | string;
-  children: JSX.Element;
+  children: React.ReactNode;
 }
 
 const Card: React.FC<CardProps> = ({ className, children, heading }) => {
@@ -15,7 +15,7 @@ const Card: React.FC<CardProps> = ({ className, children, heading }) => {
     >
       {heading ? (
         <>
-          <div className="px-3 md:px-6 py-3 rounded-t-lg bg-light-slate-3">{heading}</div>
+          <div className="px-3 py-3 rounded-t-lg md:px-6 bg-light-slate-3">{heading}</div>
           <div>{children}</div>
         </>
       ) : (

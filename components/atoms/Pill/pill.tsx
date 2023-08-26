@@ -2,7 +2,7 @@ import React from "react";
 
 export interface PillProps {
   className?: string;
-  text: string | number;
+  text?: string | number;
   color?: "slate" | "green" | "yellow" | "red" | "purple";
   size?: "base" | "small";
   icon?: JSX.Element;
