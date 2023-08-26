@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import clsx from "clsx";
 import formatDistanceToNowStrict from "date-fns/formatDistanceToNowStrict";
@@ -80,6 +80,13 @@ const ContributorProfileTab = ({
     const tabValue = value as TabKey;
     setQueryParams({ tab: tabValue } satisfies QueryParams);
   }
+
+  // Setting the query param "tab" if none exists
+  useEffect(() => {
+    if (currentTab === "highlights" && !router.query.tab) {
+      setQueryParams({ tab: "highlights" } satisfies QueryParams);
+    }
+  }, [currentTab, router.query.tab]);
 
   return (
     <Tabs value={currentTab} onValueChange={onTabChange}>
