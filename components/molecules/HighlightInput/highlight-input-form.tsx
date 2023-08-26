@@ -304,6 +304,8 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
     updateSuggestionsDebounced();
   }, [taggedRepoSearchTerm]);
 
+  console.log(taggedRepoList);
+
   return (
     <form onSubmit={handlePostHighlight} className="flex flex-col flex-1 gap-4 ">
       <Collapsible className="max-sm:hidden" onOpenChange={handleCollapsibleOpenChange} open={isDivFocused}>
@@ -565,7 +567,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
       <Fab className="md:hidden">
         <div
           onClick={() => setIsFormOpenMobile(true)}
-          className="p-3 text-white rounded-full shadow-lg bg-light-orange-10 mb-10 -mr-4"
+          className="p-3 mb-10 -mr-4 text-white rounded-full shadow-lg bg-light-orange-10"
           id="mobile-highlight-create-button"
         >
           <RxPencil1 className="text-3xl" />

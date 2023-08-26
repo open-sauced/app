@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { HiOutlineEmojiHappy } from "react-icons/hi";
 import { TfiMoreAlt } from "react-icons/tfi";
 import { FiEdit, FiLinkedin } from "react-icons/fi";
-import { BsCalendar2Event, BsLink45Deg, BsTwitter } from "react-icons/bs";
+import { BsCalendar2Event, BsLink45Deg, BsTagFill, BsTwitter } from "react-icons/bs";
 import { GrFlag } from "react-icons/gr";
 import Emoji from "react-emoji-render";
 import { usePostHog } from "posthog-js/react";
@@ -40,6 +40,8 @@ import useUserHighlightReactions from "lib/hooks/useUserHighlightReactions";
 import Tooltip from "components/atoms/Tooltip/tooltip";
 import useFollowUser from "lib/hooks/useFollowUser";
 import { fetchGithubIssueInfo } from "lib/hooks/fetchGithubIssueInfo";
+import { isValidBlogUrl } from "lib/utils/dev-to";
+import { fetchDevToBlogInfo } from "lib/hooks/fetchDevToBlogInfo";
 import GhOpenGraphImg from "../GhOpenGraphImg/gh-open-graph-img";
 import {
   Dialog,
@@ -102,17 +104,25 @@ const ContributorHighlightCard = ({
   const [openEdit, setOpenEdit] = useState(false);
   const [alertOpen, setAlertOpen] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
+  const [taggedRepoList, setTaggedRepoList] = useState<RepoList[]>([]);
   const [host, setHost] = useState("");
   const { follow, unFollow, isError } = useFollowUser(
     loggedInUser && loggedInUser?.user_metadata.username !== user ? user : ""
   );
 
+  const formattedTaggedRepos = taggedRepos.map((repo) => {
+    const [repoOwner, repoName] = repo.split("/");
+    const repoIcon = getAvatarByUsername(repoOwner, 60);
+    return { repoName, repoOwner, repoIcon };
+  });
   const [date, setDate] = useState<Date | undefined>(shipped_date ? new Date(shipped_date) : undefined);
 
   const { data: reactions, mutate } = useHighlightReactions(id);
   const { data: userReaction, deleteReaction, addReaction } = useUserHighlightReactions(sessionToken ? id : "");
 
   const posthog = usePostHog();
+
+  console.log(taggedRepos);
 
   useEffect(() => {
     if (!openEdit) {
@@ -121,6 +131,23 @@ const ContributorHighlightCard = ({
       }, 1);
     }
   }, [openEdit]);
+
+  // when user updates the highlight link, check if its a github link
+  // if its a github link, automatically tag the repo if its not already tagged
+  useEffect(() => {
+    if (
+      highlight.highlightLink &&
+      (isValidPullRequestUrl(highlight.highlightLink) || isValidIssueUrl(highlight.highlightLink))
+    ) {
+      const { apiPaths } = generateRepoParts(highlight.highlightLink);
+      const { repoName, orgName, issueId } = apiPaths;
+      const repoIcon = getAvatarByUsername(orgName, 60);
+      if (taggedRepoList.some((repo) => repo.repoName === repoName)) return;
+      const newRepo = { repoName, repoOwner: orgName, repoIcon } as RepoList;
+      const newTaggedRepoList = [...taggedRepoList, newRepo];
+      setTaggedRepoList(newTaggedRepoList);
+    }
+  }, [highlight.highlightLink]);
 
   useEffect(() => {
     setDate(shipped_date ? new Date(shipped_date) : undefined);
@@ -166,6 +193,11 @@ const ContributorHighlightCard = ({
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const handleTaggedRepoDelete = (repoName: string) => {
+    const newTaggedRepoList = taggedRepoList.filter((repo) => repo.repoName !== repoName);
+    setTaggedRepoList(newTaggedRepoList);
   };
 
   let repos: RepoList[] = [];
@@ -221,24 +253,35 @@ const ContributorHighlightCard = ({
   const handleUpdateHighlight = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const pullrequestLink = highlight.highlightLink.trim();
+    const highlightLink = highlight.highlightLink.trim();
     if (wordCount > wordLimit) {
       setError("Character limit exceeded");
       return;
     }
 
-    if (isValidPullRequestUrl(pullrequestLink) || isValidIssueUrl(pullrequestLink)) {
+    if (isValidPullRequestUrl(highlightLink) || isValidIssueUrl(highlightLink) || isValidBlogUrl(highlightLink)) {
       const { apiPaths } = generateRepoParts(highlight.highlightLink);
       const { repoName, orgName, issueId } = apiPaths;
       setLoading(true);
-      const isIssue = isValidIssueUrl(pullrequestLink);
-      const res = isIssue
-        ? await fetchGithubIssueInfo(orgName, repoName, issueId)
-        : await fetchGithubPRInfo(orgName, repoName, issueId);
+      let res: any = {};
+      const isIssue = isValidIssueUrl(highlightLink);
+      const highlightType = isValidIssueUrl(highlightLink)
+        ? "issue"
+        : isValidPullRequestUrl(highlightLink)
+        ? "pull_request"
+        : "blog_post";
+
+      if (highlightType === "issue" || highlightType === "pull_request") {
+        res = isIssue
+          ? await fetchGithubIssueInfo(orgName, repoName, issueId)
+          : await fetchGithubPRInfo(orgName, repoName, issueId);
+      } else {
+        res = await fetchDevToBlogInfo(highlightLink);
+      }
 
       if (res.isError) {
         setLoading(false);
-        setError("Please provide a valid github issue or pull request url");
+        setError("A valid Pull request, Issue or dev.to Blog Link is required");
         return;
       } else {
         const res = await updateHighlights(
@@ -247,7 +290,8 @@ const ContributorHighlightCard = ({
             highlight: highlight.desc || "",
             title: highlight.title,
             shipped_at: date,
-            type: isIssue ? "issue" : "pull_request",
+            type: highlightType,
+            taggedRepos: taggedRepos || [],
           },
           id
         );
@@ -552,6 +596,29 @@ const ContributorHighlightCard = ({
                   className="h-8 px-2 font-normal text-orange-600 rounded-lg focus:outline-none focus:border "
                 />
               </fieldset>
+
+              <label htmlFor="title">Tagged Repos</label>
+              <div className={`flex items-center justify-between w-full gap-1 p-1 text-sm bg-white  rounded-lg mb-4`}>
+                <div className="flex w-full gap-1">
+                  <CardRepoList
+                    repoList={formattedTaggedRepos}
+                    deletable={true}
+                    onDelete={(repoName) => handleTaggedRepoDelete(repoName)}
+                  />
+                  <Tooltip content={"Add a repo"}>
+                    <button
+                      className="flex gap-1  p-1 pr-2 border-[1px] border-light-slate-6 rounded-lg text-light-slate-12 items-center cursor-pointer"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        // setAddTaggedRepoFormOpen(true);
+                      }}
+                    >
+                      <BsTagFill className="rounded-[4px] overflow-hidden" />
+                      <span className={"max-w-[45px] md:max-w-[100px] truncate"}>Add a repo</span>
+                    </button>
+                  </Tooltip>
+                </div>
+              </div>
             </div>
             <div className="flex gap-3">
               {/* Delete alert dialog content */}
