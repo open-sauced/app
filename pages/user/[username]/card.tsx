@@ -1,7 +1,7 @@
 import { ParsedUrlQuery } from "querystring";
 import { GetServerSideProps, NextPage } from "next";
 import { useEffect, useState } from "react";
-import { useTransition, animated } from "react-spring";
+import { useTransition, animated } from "@react-spring/web";
 import Image from "next/image";
 import cntl from "cntl";
 import Button from "components/atoms/Button/button";

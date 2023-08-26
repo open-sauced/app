@@ -5,15 +5,21 @@ import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 
 interface TopContributorsPanelProps {
   loggedInUserLogin: string;
+  loggedInUserId?: number;
+  refreshLoggedInUser: () => void;
 }
-const TopContributorsPanel = ({ loggedInUserLogin }: TopContributorsPanelProps) => {
-  const { data, isLoading } = useFetchTopContributors({ limit: 20 });
+const TopContributorsPanel = ({
+  loggedInUserLogin,
+  refreshLoggedInUser,
+  loggedInUserId,
+}: TopContributorsPanelProps) => {
+  const { data, isLoading } = useFetchTopContributors({ limit: 20, userId: loggedInUserId });
 
   const topContributorsWithoutLoggedInUser = data ? data.filter((user) => user.login !== loggedInUserLogin) : [];
   const top3Contributors = topContributorsWithoutLoggedInUser.slice(0, 3).map((user) => user.login);
 
   return (
-    <div className="flex flex-col max-w-xs w-full gap-5 p-6 border rounded-lg bg-light-slate-1">
+    <div className="flex flex-col w-full max-w-xs gap-5 p-6 border rounded-lg bg-light-slate-1">
       <h2 className="pb-2 text-lg border-b">Top Contributors</h2>
 
       {isLoading &&
@@ -23,7 +29,7 @@ const TopContributorsPanel = ({ loggedInUserLogin }: TopContributorsPanelProps) 
           </div>
         ))}
       {top3Contributors.map((login, i) => (
-        <TopContributorCard key={i} login={login} />
+        <TopContributorCard key={i} login={login} refreshLoggedInUser={refreshLoggedInUser} />
       ))}
     </div>
   );
