@@ -12,6 +12,7 @@ import { FaUserPlus } from "react-icons/fa";
 import { BiGitPullRequest } from "react-icons/bi";
 import { VscIssues } from "react-icons/vsc";
 import clsx from "clsx";
+import { useDebounce } from "rooks";
 import Title from "components/atoms/Typography/title";
 
 import { Textarea } from "components/atoms/Textarea/text-area";
@@ -42,6 +43,7 @@ import useFollowUser from "lib/hooks/useFollowUser";
 import { fetchGithubIssueInfo } from "lib/hooks/fetchGithubIssueInfo";
 import { isValidBlogUrl } from "lib/utils/dev-to";
 import { fetchDevToBlogInfo } from "lib/hooks/fetchDevToBlogInfo";
+import Search from "components/atoms/Search/search";
 import GhOpenGraphImg from "../GhOpenGraphImg/gh-open-graph-img";
 import {
   Dialog,
@@ -93,6 +95,13 @@ const ContributorHighlightCard = ({
   taggedRepos,
 }: ContributorHighlightCardProps) => {
   const { toast } = useToast();
+
+  const formattedTaggedRepos = taggedRepos.map((repo) => {
+    const [repoOwner, repoName] = repo.split("/");
+    const repoIcon = getAvatarByUsername(repoOwner, 60);
+    return { repoName, repoOwner, repoIcon };
+  });
+
   const twitterTweet = `${title || "Open Source Highlight"} - OpenSauced from ${user}`;
   const reportSubject = `Reported Highlight ${user}: ${title}`;
   const [highlight, setHighlight] = useState({ title, desc, highlightLink });
@@ -100,29 +109,26 @@ const ContributorHighlightCard = ({
   const wordLimit = 500;
   const [errorMsg, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const { user: loggedInUser, sessionToken, signIn } = useSupabaseAuth();
+  const { user: loggedInUser, sessionToken, signIn, providerToken } = useSupabaseAuth();
   const [openEdit, setOpenEdit] = useState(false);
   const [alertOpen, setAlertOpen] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
-  const [taggedRepoList, setTaggedRepoList] = useState<RepoList[]>([]);
+  const [taggedRepoList, setTaggedRepoList] = useState<RepoList[]>(formattedTaggedRepos);
+  const [taggedRepoSearchTerm, setTaggedRepoSearchTerm] = useState<string>("");
+  const [repoTagSuggestions, setRepoTagSuggestions] = useState<string[]>([]);
+  const [tagRepoSearchLoading, setTagRepoSearchLoading] = useState<boolean>(false);
+  const [addTaggedRepoFormOpen, setAddTaggedRepoFormOpen] = useState(false);
   const [host, setHost] = useState("");
   const { follow, unFollow, isError } = useFollowUser(
     loggedInUser && loggedInUser?.user_metadata.username !== user ? user : ""
   );
 
-  const formattedTaggedRepos = taggedRepos.map((repo) => {
-    const [repoOwner, repoName] = repo.split("/");
-    const repoIcon = getAvatarByUsername(repoOwner, 60);
-    return { repoName, repoOwner, repoIcon };
-  });
   const [date, setDate] = useState<Date | undefined>(shipped_date ? new Date(shipped_date) : undefined);
 
   const { data: reactions, mutate } = useHighlightReactions(id);
   const { data: userReaction, deleteReaction, addReaction } = useUserHighlightReactions(sessionToken ? id : "");
 
   const posthog = usePostHog();
-
-  console.log(taggedRepos);
 
   useEffect(() => {
     if (!openEdit) {
@@ -332,6 +338,71 @@ const ContributorHighlightCard = ({
     }
   };
 
+  const handleTaggedRepoAdd = async (repoFullName: string) => {
+    if (taggedRepoList.length >= 3) {
+      setError("You can only tag up to 3 repos!");
+      return;
+    }
+
+    if (taggedRepoList.some((repo) => `${repo.repoOwner}/${repo.repoName}` === repoFullName)) {
+      setError("Repo already tagged!");
+      return;
+    }
+
+    // fetch github api to check if the repo exists
+    const req = await fetch(`https://api.github.com/repos/${repoFullName}`, {
+      ...(providerToken
+        ? {
+            headers: {
+              Authorization: `Bearer ${providerToken}`,
+            },
+          }
+        : {}),
+    });
+
+    if (!req.ok) {
+      setError("Repo does not exist!");
+      return;
+    }
+
+    const [ownerName, repoName] = repoFullName.split("/");
+    const repoIcon = getAvatarByUsername(ownerName, 60);
+    const newTaggedRepoList = [...taggedRepoList, { repoName, repoOwner: ownerName, repoIcon }];
+    setTaggedRepoList(newTaggedRepoList);
+    toast({ description: "Repo tag added!", title: "Success", variant: "success" });
+  };
+
+  const updateSuggestionsDebounced = useDebounce(async () => {
+    setTagRepoSearchLoading(true);
+
+    const req = await fetch(
+      `https://api.github.com/search/repositories?q=${encodeURIComponent(
+        `${taggedRepoSearchTerm} in:name in:repo:owner/name sort:updated`
+      )}`,
+      {
+        ...(providerToken
+          ? {
+              headers: {
+                Authorization: `Bearer ${providerToken}`,
+              },
+            }
+          : {}),
+      }
+    );
+
+    setTagRepoSearchLoading(false);
+    if (req.ok) {
+      const res = await req.json();
+      const suggestions = res.items.map((item: any) => item.full_name);
+      setRepoTagSuggestions(suggestions);
+    }
+  }, 250);
+
+  useEffect(() => {
+    setRepoTagSuggestions([]);
+    if (!taggedRepoSearchTerm) return;
+    updateSuggestionsDebounced();
+  }, [taggedRepoSearchTerm]);
   useEffect(() => {
     if (window !== undefined) {
       setHost(window.location.origin as string);
@@ -514,8 +585,10 @@ const ContributorHighlightCard = ({
         </div>
       </div>
 
+      {/* Edit highlight dialog */}
+
       <Dialog open={openEdit} onOpenChange={setOpenEdit}>
-        <DialogContent>
+        <DialogContent className="p-4">
           <DialogHeader>
             <DialogTitle>Edit Your Highlight</DialogTitle>
             <DialogDescription className="font-normal">
@@ -601,22 +674,54 @@ const ContributorHighlightCard = ({
               <div className={`flex items-center justify-between w-full gap-1 p-1 text-sm bg-white  rounded-lg mb-4`}>
                 <div className="flex w-full gap-1">
                   <CardRepoList
-                    repoList={formattedTaggedRepos}
+                    repoList={taggedRepoList}
                     deletable={true}
                     onDelete={(repoName) => handleTaggedRepoDelete(repoName)}
                   />
-                  <Tooltip content={"Add a repo"}>
-                    <button
-                      className="flex gap-1  p-1 pr-2 border-[1px] border-light-slate-6 rounded-lg text-light-slate-12 items-center cursor-pointer"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        // setAddTaggedRepoFormOpen(true);
-                      }}
-                    >
-                      <BsTagFill className="rounded-[4px] overflow-hidden" />
-                      <span className={"max-w-[45px] md:max-w-[100px] truncate"}>Add a repo</span>
-                    </button>
-                  </Tooltip>
+                  <AlertDialog open={addTaggedRepoFormOpen} onOpenChange={(prev) => !prev}>
+                    <AlertDialogTrigger asChild>
+                      <Tooltip content={"Add a repo"}>
+                        <button
+                          onClick={(e) => {
+                            e.preventDefault();
+                            setAddTaggedRepoFormOpen(true);
+                          }}
+                          className="flex gap-1  p-1 pr-2 border-[1px] border-light-slate-6 rounded-lg text-light-slate-12 items-center cursor-pointer"
+                        >
+                          <BsTagFill className="rounded-[4px] overflow-hidden" />
+                          <span className={"max-w-[45px] md:max-w-[100px] truncate"}>Add a repo</span>
+                        </button>
+                      </Tooltip>
+                    </AlertDialogTrigger>
+
+                    <AlertDialogContent className="z-100">
+                      <Search
+                        isLoading={tagRepoSearchLoading}
+                        placeholder="Repository Full Name (ex: open-sauced/open-sauced)"
+                        className="!w-full text-md text-gra"
+                        name={"query"}
+                        suggestions={repoTagSuggestions}
+                        onChange={(value) => setTaggedRepoSearchTerm(value)}
+                        onSearch={(search) => setTaggedRepoSearchTerm(search as string)}
+                      />
+
+                      <div className="flex justify-end gap-2">
+                        <Button variant="default" onClick={() => setAddTaggedRepoFormOpen(false)}>
+                          Cancel
+                        </Button>
+                        <Button
+                          variant="primary"
+                          onClick={() => {
+                            setAddTaggedRepoFormOpen(false);
+                            handleTaggedRepoAdd(taggedRepoSearchTerm);
+                          }}
+                          disabled={!taggedRepoSearchTerm}
+                        >
+                          Add
+                        </Button>
+                      </div>
+                    </AlertDialogContent>
+                  </AlertDialog>
                 </div>
               </div>
             </div>

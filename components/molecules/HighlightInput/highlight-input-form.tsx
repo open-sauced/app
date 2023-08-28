@@ -55,7 +55,7 @@ interface HighlightInputFormProps {
 }
 
 const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.Element => {
-  const { sessionToken, providerToken } = useSupabaseAuth();
+  const { providerToken } = useSupabaseAuth();
   const [isDivFocused, setIsDivFocused] = useState(false);
   const [isSummaryButtonDisabled, setIsSummaryButtonDisabled] = useState(false);
   const [isFormOpenMobile, setIsFormOpenMobile] = useState(false);
@@ -303,8 +303,6 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
     if (!taggedRepoSearchTerm) return;
     updateSuggestionsDebounced();
   }, [taggedRepoSearchTerm]);
-
-  console.log(taggedRepoList);
 
   return (
     <form onSubmit={handlePostHighlight} className="flex flex-col flex-1 gap-4 ">
