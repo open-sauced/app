@@ -364,27 +364,35 @@ const ContributorHighlightCard = ({
       return;
     }
 
-    // fetch github api to check if the repo exists
-    const req = await fetch(`https://api.github.com/repos/${repoFullName}`, {
-      ...(providerToken
-        ? {
-            headers: {
-              Authorization: `Bearer ${providerToken}`,
-            },
-          }
-        : {}),
-    });
+    // fetch API to check if the repo exists with a fallback to the GitHub API
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/repos/${repoFullName}`);
 
-    if (!req.ok) {
-      setError("Repo does not exist!");
-      return;
+      if (!response.ok) {
+        const req = await fetch(`https://api.github.com/repos/${repoFullName}`, {
+          ...(providerToken
+            ? {
+                headers: {
+                  Authorization: `Bearer ${providerToken}`,
+                },
+              }
+            : {}),
+        });
+        if (!req.ok) {
+          setError("Repo does not exist!");
+          return;
+        }
+      }
+
+      const [ownerName, repoName] = repoFullName.split("/");
+      const repoIcon = getAvatarByUsername(ownerName, 60);
+      const newTaggedRepoList = [...taggedRepoList, { repoName, repoOwner: ownerName, repoIcon }];
+      setTaggedRepoList(newTaggedRepoList);
+      toast({ description: "Repo tag added!", title: "Success", variant: "success" });
+    } catch (e) {
+      console.error(e);
+      setError("An error occured!");
     }
-
-    const [ownerName, repoName] = repoFullName.split("/");
-    const repoIcon = getAvatarByUsername(ownerName, 60);
-    const newTaggedRepoList = [...taggedRepoList, { repoName, repoOwner: ownerName, repoIcon }];
-    setTaggedRepoList(newTaggedRepoList);
-    toast({ description: "Repo tag added!", title: "Success", variant: "success" });
   };
 
   const updateSuggestionsDebounced = useDebounce(async () => {
