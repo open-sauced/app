@@ -255,6 +255,7 @@ const ContributorHighlightCard = ({
   };
 
   const { icon, text } = getHighlightTypePreset(type);
+  const taggedRepoFullNames = taggedRepoList.map((repo) => `${repo.repoOwner}/${repo.repoName}`);
 
   const handleUpdateHighlight = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -297,7 +298,7 @@ const ContributorHighlightCard = ({
             title: highlight.title,
             shipped_at: date,
             type: highlightType,
-            taggedRepos: taggedRepos || [],
+            taggedRepos: taggedRepoFullNames || [],
           },
           id
         );
