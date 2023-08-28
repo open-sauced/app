@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.62.0-beta.2](https://github.com/open-sauced/insights/compare/v1.62.0-beta.1...v1.62.0-beta.2) (2023-08-28)
+
+
+### 🐛 Bug Fixes
+
+* add check for reaction users array ([#1625](https://github.com/open-sauced/insights/issues/1625)) ([008f240](https://github.com/open-sauced/insights/commit/008f240e2fd0445dfacd731c697bcd2d236df270))
+
 ## [1.62.0-beta.1](https://github.com/open-sauced/insights/compare/v1.61.1-beta.1...v1.62.0-beta.1) (2023-08-28)
 
 
