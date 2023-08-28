@@ -131,6 +131,18 @@ const ContributorHighlightCard = ({
     return !matches ? false : true;
   };
 
+  const getEmojiReactors = (reaction_users: string[]) => {
+    if (reaction_users.length > 3) {
+      return `${reaction_users.slice(0, 3).join(", ")} and ${reaction_users.length - 3} others`;
+    } else if (reaction_users.length == 3) {
+      return `${reaction_users.slice(0, 2).join(", ")} and ${reaction_users[2]}`;
+    } else if (reaction_users.length == 2) {
+      return `${reaction_users[0]} and ${reaction_users[1]}`;
+    } else if (reaction_users.length === 1) {
+      return `${reaction_users[0]}`;
+    }
+  };
+
   const getEmojiNameById = (id: string) => {
     return emojis && emojis.length > 0 ? emojis.filter((emoji) => emoji.id === id)[0].name : "";
   };
@@ -451,19 +463,24 @@ const ContributorHighlightCard = ({
         {reactions &&
           emojis &&
           reactions.length > 0 &&
-          reactions.map(({ emoji_id, reaction_count }) => (
-            <div
-              className={`px-1 py-0 md:py-0.5 hover:bg-light-slate-6 transition  md:px-1.5 shrink-0 border flex items-center justify-center rounded-full cursor-pointer ${
-                isUserReaction(emoji_id) && "bg-light-slate-6"
-              }`}
-              onClick={async () => (sessionToken ? handleUpdateReaction(emoji_id) : signIn({ provider: "github" }))}
+          reactions.map(({ emoji_id, reaction_count, reaction_users }) => (
+            <Tooltip
               key={emoji_id}
+              direction="top"
+              content={`${getEmojiReactors(reaction_users)} reacted with ${getEmojiNameById(emoji_id)} emoji`}
             >
-              <Emoji
-                className="text-xs md:text-sm text-light-slate-10"
-                text={`:${getEmojiNameById(emoji_id)}: ${reaction_count}`}
-              />
-            </div>
+              <div
+                className={`px-1 py-0 md:py-0.5 hover:bg-light-slate-6 transition  md:px-1.5 shrink-0 border flex items-center justify-center rounded-full cursor-pointer ${
+                  isUserReaction(emoji_id) && "bg-light-slate-6"
+                }`}
+                onClick={async () => (sessionToken ? handleUpdateReaction(emoji_id) : signIn({ provider: "github" }))}
+              >
+                <Emoji
+                  className="text-xs md:text-sm text-light-slate-10"
+                  text={`:${getEmojiNameById(emoji_id)}: ${reaction_count}`}
+                />
+              </div>
+            </Tooltip>
           ))}
         <div className="ml-auto">
           <CardRepoList repoList={repos} />

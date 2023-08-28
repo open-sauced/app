@@ -4,6 +4,7 @@ import publicApiFetcher from "lib/utils/public-api-fetcher";
 export interface HighlightReactionResponse {
   emoji_id: string;
   reaction_count: string;
+  reaction_users: string[];
 }
 const useHighlightReactions = (id: string) => {
   const { data, error, mutate } = useSWR<HighlightReactionResponse[], Error>(

@@ -5,6 +5,18 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.62.0-beta.1](https://github.com/open-sauced/insights/compare/v1.61.1-beta.1...v1.62.0-beta.1) (2023-08-28)
+
+
+### 🍕 Features
+
+* show reactors who reacted to highlights ([#1591](https://github.com/open-sauced/insights/issues/1591)) ([3b73d97](https://github.com/open-sauced/insights/commit/3b73d97d06202b212c189aa3202c41db8f6faf67))
+
+
+### 🐛 Bug Fixes
+
+* hidden link on profile highlights (1618) ([#1623](https://github.com/open-sauced/insights/issues/1623)) ([97ce893](https://github.com/open-sauced/insights/commit/97ce8935c44d57a33497fd4a018cc23a51291ac0))
+
 ### [1.61.1-beta.1](https://github.com/open-sauced/insights/compare/v1.61.0...v1.61.1-beta.1) (2023-08-25)
 
 
