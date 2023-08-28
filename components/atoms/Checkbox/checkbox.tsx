@@ -10,7 +10,7 @@ interface CheckboxProps extends React.ComponentPropsWithoutRef<typeof CheckboxPr
 
 const Checkbox = React.forwardRef<React.ElementRef<typeof CheckboxPrimitive.Root>, CheckboxProps>(
   ({ className, label, id, ...props }, ref) => {
-    const getId = () => (id ? id : label?.replace(/\s+/g, "-").toLowerCase());
+    const getId = () => (id ? id : label?.replace(" ", "-").toLowerCase());
 
     const checkboxClasses = clsx(
       "group h-4 w-4 rounded cursor-pointer bg-white border border-light-slate-8 hover:border-orange-500 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50",
