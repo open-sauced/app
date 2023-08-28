@@ -132,6 +132,8 @@ const ContributorHighlightCard = ({
   };
 
   const getEmojiReactors = (reaction_users: string[]) => {
+    if (!Array.isArray(reaction_users)) return "";
+
     if (reaction_users.length > 3) {
       return `${reaction_users.slice(0, 3).join(", ")} and ${reaction_users.length - 3} others`;
     } else if (reaction_users.length == 3) {
