@@ -129,10 +129,10 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
             onCheckedChange={handleSelectCheckbox}
             className={`${user && "border-orange-500 hover:bg-orange-600"}`}
           />
-          <div className="w-[55%]">
+          <div className="w-5/12">
             <TableRepositoryName topic={topic} avatarURL={ownerAvatar} fullName={fullName as string} user={userPage} />
           </div>
-          <div className="w-[45%]">
+          <div className="w-7/12">
             {repo.id ? (
               <PullRequestOverview
                 open={openPrsCount}
