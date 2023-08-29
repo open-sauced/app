@@ -297,13 +297,13 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
         <Tabs onValueChange={onTabChange} defaultValue="home" className="grow">
           <TabsList className={clsx("justify-start  w-full border-b", !user && "hidden")}>
             <TabsTrigger
-              className="data-[state=active]:border-sauced-orange data-[state=active]:border-b-2 text-2xl"
+              className="data-[state=active]:border-sauced-orange data-[state=active]:border-b-2 text-lg"
               value="home"
             >
               Home
             </TabsTrigger>
             <TabsTrigger
-              className="data-[state=active]:border-sauced-orange  data-[state=active]:border-b-2 text-2xl"
+              className="data-[state=active]:border-sauced-orange  data-[state=active]:border-b-2 text-lg"
               value="following"
             >
               Following
