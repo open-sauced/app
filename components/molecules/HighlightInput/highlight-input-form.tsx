@@ -55,7 +55,7 @@ interface HighlightInputFormProps {
 }
 
 const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.Element => {
-  const { sessionToken, providerToken } = useSupabaseAuth();
+  const { providerToken } = useSupabaseAuth();
   const [isDivFocused, setIsDivFocused] = useState(false);
   const [isSummaryButtonDisabled, setIsSummaryButtonDisabled] = useState(false);
   const [isFormOpenMobile, setIsFormOpenMobile] = useState(false);
@@ -565,7 +565,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
       <Fab className="md:hidden">
         <div
           onClick={() => setIsFormOpenMobile(true)}
-          className="p-3 text-white rounded-full shadow-lg bg-light-orange-10 mb-10 -mr-4"
+          className="p-3 mb-10 -mr-4 text-white rounded-full shadow-lg bg-light-orange-10"
           id="mobile-highlight-create-button"
         >
           <RxPencil1 className="text-3xl" />

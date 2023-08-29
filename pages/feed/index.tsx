@@ -63,7 +63,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
 
   const router = useRouter();
   const [openSingleHighlight, setOpenSingleHighlight] = useState(false);
-  const [selectedRepo, setSelectedRepo] = useState("");
+  const selectedRepo = (router.query.repo as string) || "";
   const [activeTab, setActiveTab] = useState<activeTabType>("home");
   const [repoList, setRepoList] = useState<highlightReposType[]>(repoTofilterList(repos as highlightReposType[]));
   const [hydrated, setHydrated] = useState(false);
@@ -157,9 +157,6 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
   }, []);
 
   function onTabChange(value: string) {
-    // This is to handle resetting the filter state when the tab is switched
-    setSelectedRepo("");
-
     // Resetting URL search param for repo
     setQueryParams({}, ["repo"]);
 
@@ -366,10 +363,10 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
                     setQueryParams({}, ["repo"]);
                   }
                   setPage(1);
-                  setSelectedRepo(repo);
                 }
               }}
               repos={repoList}
+              selectedFilter={selectedRepo}
             />
           )}
 
