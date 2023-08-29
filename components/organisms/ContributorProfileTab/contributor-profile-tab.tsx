@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import clsx from "clsx";
 import formatDistanceToNowStrict from "date-fns/formatDistanceToNowStrict";
@@ -17,8 +17,8 @@ import ContributorHighlightCard from "components/molecules/ContributorHighlight/
 import { useFetchUserHighlights } from "lib/hooks/useFetchUserHighlights";
 import Button from "components/atoms/Button/button";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
-import uppercaseFirst from "lib/utils/uppercase-first";
 import useFetchAllEmojis from "lib/hooks/useFetchAllEmojis";
+import { setQueryParams } from "lib/utils/query-params";
 
 import PaginationResults from "components/molecules/PaginationResults/pagination-result";
 import Pagination from "components/molecules/Pagination/pagination";
@@ -40,7 +40,19 @@ interface ContributorProfileTabProps {
   repoList: RepoList[];
 }
 
-const tabLinks: string[] = ["Highlights", "Contributions", "Requests", "Recommendations"];
+type TabKey = "highlights" | "contributions" | "requests" | "recommendations";
+
+// Query Params type for this page
+interface QueryParams {
+  tab: TabKey;
+}
+
+const tabs: Record<TabKey, string> = {
+  highlights: "Highlights",
+  contributions: "Contributions",
+  requests: "Requests",
+  recommendations: "Recommendations",
+};
 
 const ContributorProfileTab = ({
   contributor,
@@ -57,69 +69,45 @@ const ContributorProfileTab = ({
 
   const { data: highlights, isError, isLoading, mutate, meta, setPage } = useFetchUserHighlights(login || "");
   const { data: emojis } = useFetchAllEmojis();
-  const [hasHighlights, setHasHighlights] = useState(true);
-
-  const [inputVisible, setInputVisible] = useState(false);
-  const pathnameRef = useRef<string | null>();
 
   const router = useRouter();
 
-  const pathnames = router.pathname.split("/");
-  pathnameRef.current = pathnames[pathnames.length - 1];
+  const hasHighlights = highlights ? highlights.length > 0 : false;
+  const [inputVisible, setInputVisible] = useState(false);
 
-  const getCurrentPathName = useMemo(() => {
-    return pathnameRef.current && pathnameRef.current !== "[username]"
-      ? pathnameRef.current
-      : hasHighlights
-      ? "highlights"
-      : "contributions";
-  }, [hasHighlights]);
+  const currentTab = (router.query.tab || "highlights") as TabKey;
+  function onTabChange(value: string) {
+    const tabValue = value as TabKey;
+    setQueryParams({ tab: tabValue } satisfies QueryParams);
+  }
 
-  const [currentPathname, setCurrentPathname] = useState(getCurrentPathName);
-  const handleTabUrl = (tab: string) => {
-    router.push(`/user/${login}/${tab.toLowerCase()}`);
-    setCurrentPathname(tab.toLowerCase());
-  };
-
+  // Setting the query param "tab" if none exists
   useEffect(() => {
-    setInputVisible(highlights && highlights.length !== 0 ? true : false);
-    if (login && currentPathname) {
-      setCurrentPathname(getCurrentPathName);
-      router.push(`/user/${login}/${currentPathname}`);
+    if (currentTab === "highlights" && !router.query.tab) {
+      setQueryParams({ tab: "highlights" } satisfies QueryParams);
     }
-    if (login && !hasHighlights && currentPathname) {
-      setCurrentPathname(currentPathname);
-      router.push(`/user/${login}/${currentPathname}`);
-    }
-  }, [login, hasHighlights]);
-
-  useEffect(() => {
-    // sets the highlights state to true if the user has highlights on profile route change
-    if (highlights) {
-      setHasHighlights(highlights?.length > 0);
-    }
-  }, [highlights]);
+  }, [currentTab, router.query.tab]);
 
   return (
-    <Tabs defaultValue={uppercaseFirst(currentPathname as string)} onValueChange={handleTabUrl}>
+    <Tabs value={currentTab} onValueChange={onTabChange}>
       <TabsList className="justify-start w-full overflow-x-auto border-b">
-        {tabLinks.map((tab) => (
+        {(Object.keys(tabs) as TabKey[]).map((tab) => (
           <TabsTrigger
             key={tab}
             className={clsx(
               "data-[state=active]:border-sauced-orange shrink-0 data-[state=active]:border-b-2 text-lg",
-              tab === "Recommendations" &&
+              tab === "recommendations" &&
                 "font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#EA4600] to-[#EB9B00]",
-              user?.user_metadata.user_name !== login && !hasHighlights && tab === "Highlights" && "hidden",
-              user && user.user_metadata.user_name !== login && tab === "Recommendations" && "hidden",
-              user && user.user_metadata.user_name !== login && tab === "Requests" && "hidden",
-              !user && tab === "Recommendations" && "hidden",
-              !user && tab === "Requests" && "hidden",
-              !receive_collaboration && tab === "Requests" && "hidden"
+              user?.user_metadata.user_name !== login && !hasHighlights && tab === "highlights" && "hidden",
+              user && user.user_metadata.user_name !== login && tab === "recommendations" && "hidden",
+              user && user.user_metadata.user_name !== login && tab === "requests" && "hidden",
+              !user && tab === "recommendations" && "hidden",
+              !user && tab === "requests" && "hidden",
+              !receive_collaboration && tab === "requests" && "hidden"
             )}
             value={tab}
           >
-            {tab}
+            {tabs[tab]}
           </TabsTrigger>
         ))}
       </TabsList>
@@ -127,8 +115,8 @@ const ContributorProfileTab = ({
       {/* Highlights Tab details */}
 
       {(user?.user_metadata.user_name === login || hasHighlights) && (
-        <TabsContent value="Highlights">
-          {inputVisible && user?.user_metadata.user_name === login && (
+        <TabsContent value={"highlights" satisfies TabKey}>
+          {(hasHighlights || inputVisible) && user?.user_metadata.user_name === login && (
             <div className="lg:pl-20 lg:gap-x-4 pt-4 flex max-w-[48rem]">
               <div className="hidden lg:inline-flex">
                 <Avatar
@@ -159,7 +147,7 @@ const ContributorProfileTab = ({
               </>
             )}
             <>
-              {!isError && highlights && highlights.length > 0 ? (
+              {!isError && hasHighlights ? (
                 <div>
                   {highlights.map(({ id, title, highlight, url, shipped_at, created_at, type, tagged_repos }) => (
                     <div className="flex flex-col gap-2 mb-6 lg:flex-row lg:gap-7" key={id}>
@@ -226,7 +214,7 @@ const ContributorProfileTab = ({
 
       {/* Contributions Tab Details */}
 
-      <TabsContent value="Contributions">
+      <TabsContent value={"contributions" satisfies TabKey}>
         <div className="mt-4">
           <div className="p-4 mt-4 bg-white border rounded-2xl md:p-6">
             <div className="flex flex-col justify-between gap-2 lg:flex-row md:gap-12 lg:gap-16">
@@ -287,12 +275,12 @@ const ContributorProfileTab = ({
       {user && user.user_metadata.user_name === login && (
         <>
           {/* Collaboration requests tab details */}
-          <TabsContent value="Requests">
+          <TabsContent value={"requests" satisfies TabKey}>
             <CollaborationRequestsWrapper />
           </TabsContent>
 
           {/* Recommendation tab details */}
-          <TabsContent value="Recommendations">
+          <TabsContent value={"recommendations" satisfies TabKey}>
             <UserRepositoryRecommendations contributor={contributor} userInterests={userInterests} />
           </TabsContent>
         </>
