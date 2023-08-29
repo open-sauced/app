@@ -5,6 +5,28 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.62.0](https://github.com/open-sauced/insights/compare/v1.61.0...v1.62.0) (2023-08-29)
+
+
+### 🧑‍💻 Code Refactoring
+
+* update top users implementation to remove already followed users ([#1607](https://github.com/open-sauced/insights/issues/1607)) ([ce586ca](https://github.com/open-sauced/insights/commit/ce586cac49f454e1df0f791e409302cb89b9899f))
+
+
+### 🍕 Features
+
+* profile tabs - path params to query params (1229) ([#1613](https://github.com/open-sauced/insights/issues/1613)) ([4c43de4](https://github.com/open-sauced/insights/commit/4c43de4d73f0304deceae63009c0b2bd33e6d4b0))
+* show reactors who reacted to highlights ([#1591](https://github.com/open-sauced/insights/issues/1591)) ([3b73d97](https://github.com/open-sauced/insights/commit/3b73d97d06202b212c189aa3202c41db8f6faf67))
+
+
+### 🐛 Bug Fixes
+
+* add check for reaction users array ([#1625](https://github.com/open-sauced/insights/issues/1625)) ([008f240](https://github.com/open-sauced/insights/commit/008f240e2fd0445dfacd731c697bcd2d236df270))
+* add support for blog highlight update ([#1621](https://github.com/open-sauced/insights/issues/1621)) ([6f16d7f](https://github.com/open-sauced/insights/commit/6f16d7f131b3202c1eed9041509b025ebcc62fc9))
+* hidden link on profile highlights (1618) ([#1623](https://github.com/open-sauced/insights/issues/1623)) ([97ce893](https://github.com/open-sauced/insights/commit/97ce8935c44d57a33497fd4a018cc23a51291ac0))
+* lint check happening two times on commit ([#1635](https://github.com/open-sauced/insights/issues/1635)) ([e6fb738](https://github.com/open-sauced/insights/commit/e6fb7380e2b2caa089264c4424d500d357fa3ffa))
+* repo filter query not filtering on page refresh (1610) ([#1617](https://github.com/open-sauced/insights/issues/1617)) ([a3d135d](https://github.com/open-sauced/insights/commit/a3d135d3d3f73e312b000dd49482ac8c21b6cc74))
+
 ## [1.62.0-beta.5](https://github.com/open-sauced/insights/compare/v1.62.0-beta.4...v1.62.0-beta.5) (2023-08-29)
 
 
