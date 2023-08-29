@@ -39,7 +39,7 @@ const ContributorHoverCard = ({
     : "-";
 
   return (
-    <div className="w-[364px] bg-white gap-4 p-3 rounded-lg shadow-superlative flex flex-col">
+    <div className="w-80 bg-white gap-4 p-3 rounded-lg shadow-superlative flex flex-col">
       <div className="flex items-center justify-between">
         <CardProfile
           dateOfFirstPR={calculatedDateFromToday}
