@@ -5,7 +5,8 @@ interface CreateHighlightsProps {
   title?: string;
   highlight: string;
   shipped_at?: Date;
-  type: "issue" | "pull_request";
+  type: "issue" | "pull_request" | "blog_post";
+  taggedRepos: string[];
 }
 
 const baseUrl = process.env.NEXT_PUBLIC_API_URL;
@@ -23,6 +24,9 @@ const updateHighlights = async (data: CreateHighlightsProps, id: string) => {
       body: JSON.stringify({ ...data }),
     });
 
+    if (!res.ok) {
+      return false;
+    }
     return res.json();
   } catch (e) {
     console.log(e);

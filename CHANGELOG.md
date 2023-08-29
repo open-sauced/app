@@ -5,6 +5,21 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.62.0-beta.4](https://github.com/open-sauced/insights/compare/v1.62.0-beta.3...v1.62.0-beta.4) (2023-08-29)
+
+
+### 🍕 Features
+
+* profile tabs - path params to query params (1229) ([#1613](https://github.com/open-sauced/insights/issues/1613)) ([4c43de4](https://github.com/open-sauced/insights/commit/4c43de4d73f0304deceae63009c0b2bd33e6d4b0))
+
+## [1.62.0-beta.3](https://github.com/open-sauced/insights/compare/v1.62.0-beta.2...v1.62.0-beta.3) (2023-08-29)
+
+
+### 🐛 Bug Fixes
+
+* add support for blog highlight update ([#1621](https://github.com/open-sauced/insights/issues/1621)) ([6f16d7f](https://github.com/open-sauced/insights/commit/6f16d7f131b3202c1eed9041509b025ebcc62fc9))
+* repo filter query not filtering on page refresh (1610) ([#1617](https://github.com/open-sauced/insights/issues/1617)) ([a3d135d](https://github.com/open-sauced/insights/commit/a3d135d3d3f73e312b000dd49482ac8c21b6cc74))
+
 ## [1.62.0-beta.2](https://github.com/open-sauced/insights/compare/v1.62.0-beta.1...v1.62.0-beta.2) (2023-08-28)
 
 
