@@ -327,7 +327,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
           <TabsContent value="home">
             <HomeHighlightsWrapper emojis={emojis} mutate={mutate} highlights={data} loading={isLoading} />
             {meta.pageCount > 1 && (
-              <div className="mt-10 max-w-screen-lg flex px-2 items-center justify-between">
+              <div className="mt-10 max-w-3xl flex px-2 items-center justify-between">
                 <div className="flex items-center w-max gap-x-4">
                   <PaginationResults metaInfo={meta} total={meta.itemCount} entity={"highlights"} />
                 </div>
