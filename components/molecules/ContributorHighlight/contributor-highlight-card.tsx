@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { HiOutlineEmojiHappy } from "react-icons/hi";
 import { TfiMoreAlt } from "react-icons/tfi";
 import { FiEdit, FiLinkedin } from "react-icons/fi";
-import { BsCalendar2Event, BsLink45Deg, BsTwitter } from "react-icons/bs";
+import { BsCalendar2Event, BsLink45Deg, BsTagFill, BsTwitter } from "react-icons/bs";
 import { GrFlag } from "react-icons/gr";
 import Emoji from "react-emoji-render";
 import { usePostHog } from "posthog-js/react";
@@ -12,6 +12,7 @@ import { FaUserPlus } from "react-icons/fa";
 import { BiGitPullRequest } from "react-icons/bi";
 import { VscIssues } from "react-icons/vsc";
 import clsx from "clsx";
+import { useDebounce } from "rooks";
 import Title from "components/atoms/Typography/title";
 
 import { Textarea } from "components/atoms/Textarea/text-area";
@@ -40,6 +41,9 @@ import useUserHighlightReactions from "lib/hooks/useUserHighlightReactions";
 import Tooltip from "components/atoms/Tooltip/tooltip";
 import useFollowUser from "lib/hooks/useFollowUser";
 import { fetchGithubIssueInfo } from "lib/hooks/fetchGithubIssueInfo";
+import { isValidBlogUrl } from "lib/utils/dev-to";
+import { fetchDevToBlogInfo } from "lib/hooks/fetchDevToBlogInfo";
+import Search from "components/atoms/Search/search";
 import GhOpenGraphImg from "../GhOpenGraphImg/gh-open-graph-img";
 import {
   Dialog,
@@ -91,6 +95,13 @@ const ContributorHighlightCard = ({
   taggedRepos,
 }: ContributorHighlightCardProps) => {
   const { toast } = useToast();
+
+  const formattedTaggedRepos = taggedRepos.map((repo) => {
+    const [repoOwner, repoName] = repo.split("/");
+    const repoIcon = getAvatarByUsername(repoOwner, 60);
+    return { repoName, repoOwner, repoIcon };
+  });
+
   const twitterTweet = `${title || "Open Source Highlight"} - OpenSauced from ${user}`;
   const reportSubject = `Reported Highlight ${user}: ${title}`;
   const [highlight, setHighlight] = useState({ title, desc, highlightLink });
@@ -98,10 +109,15 @@ const ContributorHighlightCard = ({
   const wordLimit = 500;
   const [errorMsg, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const { user: loggedInUser, sessionToken, signIn } = useSupabaseAuth();
+  const { user: loggedInUser, sessionToken, signIn, providerToken } = useSupabaseAuth();
   const [openEdit, setOpenEdit] = useState(false);
   const [alertOpen, setAlertOpen] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
+  const [taggedRepoList, setTaggedRepoList] = useState<RepoList[]>(formattedTaggedRepos);
+  const [taggedRepoSearchTerm, setTaggedRepoSearchTerm] = useState<string>("");
+  const [repoTagSuggestions, setRepoTagSuggestions] = useState<string[]>([]);
+  const [tagRepoSearchLoading, setTagRepoSearchLoading] = useState<boolean>(false);
+  const [addTaggedRepoFormOpen, setAddTaggedRepoFormOpen] = useState(false);
   const [host, setHost] = useState("");
   const { follow, unFollow, isError } = useFollowUser(
     loggedInUser && loggedInUser?.user_metadata.username !== user ? user : ""
@@ -122,6 +138,23 @@ const ContributorHighlightCard = ({
     }
   }, [openEdit]);
 
+  // when user updates the highlight link, check if its a github link
+  // if its a github link, automatically tag the repo if its not already tagged
+  useEffect(() => {
+    if (
+      highlight.highlightLink &&
+      (isValidPullRequestUrl(highlight.highlightLink) || isValidIssueUrl(highlight.highlightLink))
+    ) {
+      const { apiPaths } = generateRepoParts(highlight.highlightLink);
+      const { repoName, orgName, issueId } = apiPaths;
+      const repoIcon = getAvatarByUsername(orgName, 60);
+      if (taggedRepoList.some((repo) => repo.repoName === repoName)) return;
+      const newRepo = { repoName, repoOwner: orgName, repoIcon } as RepoList;
+      const newTaggedRepoList = [...taggedRepoList, newRepo];
+      setTaggedRepoList(newTaggedRepoList);
+    }
+  }, [highlight.highlightLink]);
+
   useEffect(() => {
     setDate(shipped_date ? new Date(shipped_date) : undefined);
   }, [shipped_date]);
@@ -129,6 +162,20 @@ const ContributorHighlightCard = ({
   const isUserReaction = (id: string) => {
     const matches = sessionToken && userReaction.find((reaction) => reaction.emoji_id === id);
     return !matches ? false : true;
+  };
+
+  const getEmojiReactors = (reaction_users: string[]) => {
+    if (!Array.isArray(reaction_users)) return "";
+
+    if (reaction_users.length > 3) {
+      return `${reaction_users.slice(0, 3).join(", ")} and ${reaction_users.length - 3} others`;
+    } else if (reaction_users.length == 3) {
+      return `${reaction_users.slice(0, 2).join(", ")} and ${reaction_users[2]}`;
+    } else if (reaction_users.length == 2) {
+      return `${reaction_users[0]} and ${reaction_users[1]}`;
+    } else if (reaction_users.length === 1) {
+      return `${reaction_users[0]}`;
+    }
   };
 
   const getEmojiNameById = (id: string) => {
@@ -166,6 +213,11 @@ const ContributorHighlightCard = ({
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const handleTaggedRepoDelete = (repoName: string) => {
+    const newTaggedRepoList = taggedRepoList.filter((repo) => repo.repoName !== repoName);
+    setTaggedRepoList(newTaggedRepoList);
   };
 
   let repos: RepoList[] = [];
@@ -217,28 +269,40 @@ const ContributorHighlightCard = ({
   };
 
   const { icon, text } = getHighlightTypePreset(type);
+  const taggedRepoFullNames = taggedRepoList.map((repo) => `${repo.repoOwner}/${repo.repoName}`);
 
   const handleUpdateHighlight = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const pullrequestLink = highlight.highlightLink.trim();
+    const highlightLink = highlight.highlightLink.trim();
     if (wordCount > wordLimit) {
       setError("Character limit exceeded");
       return;
     }
 
-    if (isValidPullRequestUrl(pullrequestLink) || isValidIssueUrl(pullrequestLink)) {
+    if (isValidPullRequestUrl(highlightLink) || isValidIssueUrl(highlightLink) || isValidBlogUrl(highlightLink)) {
       const { apiPaths } = generateRepoParts(highlight.highlightLink);
       const { repoName, orgName, issueId } = apiPaths;
       setLoading(true);
-      const isIssue = isValidIssueUrl(pullrequestLink);
-      const res = isIssue
-        ? await fetchGithubIssueInfo(orgName, repoName, issueId)
-        : await fetchGithubPRInfo(orgName, repoName, issueId);
+      let res: any = {};
+      const isIssue = isValidIssueUrl(highlightLink);
+      const highlightType = isValidIssueUrl(highlightLink)
+        ? "issue"
+        : isValidPullRequestUrl(highlightLink)
+        ? "pull_request"
+        : "blog_post";
+
+      if (highlightType === "issue" || highlightType === "pull_request") {
+        res = isIssue
+          ? await fetchGithubIssueInfo(orgName, repoName, issueId)
+          : await fetchGithubPRInfo(orgName, repoName, issueId);
+      } else {
+        res = await fetchDevToBlogInfo(highlightLink);
+      }
 
       if (res.isError) {
         setLoading(false);
-        setError("Please provide a valid github issue or pull request url");
+        setError("A valid Pull request, Issue or dev.to Blog Link is required");
         return;
       } else {
         const res = await updateHighlights(
@@ -247,7 +311,8 @@ const ContributorHighlightCard = ({
             highlight: highlight.desc || "",
             title: highlight.title,
             shipped_at: date,
-            type: isIssue ? "issue" : "pull_request",
+            type: highlightType,
+            taggedRepos: taggedRepoFullNames || [],
           },
           id
         );
@@ -288,6 +353,79 @@ const ContributorHighlightCard = ({
     }
   };
 
+  const handleTaggedRepoAdd = async (repoFullName: string) => {
+    if (taggedRepoList.length >= 3) {
+      setError("You can only tag up to 3 repos!");
+      return;
+    }
+
+    if (taggedRepoList.some((repo) => `${repo.repoOwner}/${repo.repoName}` === repoFullName)) {
+      setError("Repo already tagged!");
+      return;
+    }
+
+    // fetch API to check if the repo exists with a fallback to the GitHub API
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/repos/${repoFullName}`);
+
+      if (!response.ok) {
+        const req = await fetch(`https://api.github.com/repos/${repoFullName}`, {
+          ...(providerToken
+            ? {
+                headers: {
+                  Authorization: `Bearer ${providerToken}`,
+                },
+              }
+            : {}),
+        });
+        if (!req.ok) {
+          setError("Repo does not exist!");
+          return;
+        }
+      }
+
+      const [ownerName, repoName] = repoFullName.split("/");
+      const repoIcon = getAvatarByUsername(ownerName, 60);
+      const newTaggedRepoList = [...taggedRepoList, { repoName, repoOwner: ownerName, repoIcon }];
+      setTaggedRepoList(newTaggedRepoList);
+      toast({ description: "Repo tag added!", title: "Success", variant: "success" });
+    } catch (e) {
+      console.error(e);
+      setError("An error occured!");
+    }
+  };
+
+  const updateSuggestionsDebounced = useDebounce(async () => {
+    setTagRepoSearchLoading(true);
+
+    const req = await fetch(
+      `https://api.github.com/search/repositories?q=${encodeURIComponent(
+        `${taggedRepoSearchTerm} in:name in:repo:owner/name sort:updated`
+      )}`,
+      {
+        ...(providerToken
+          ? {
+              headers: {
+                Authorization: `Bearer ${providerToken}`,
+              },
+            }
+          : {}),
+      }
+    );
+
+    setTagRepoSearchLoading(false);
+    if (req.ok) {
+      const res = await req.json();
+      const suggestions = res.items.map((item: any) => item.full_name);
+      setRepoTagSuggestions(suggestions);
+    }
+  }, 250);
+
+  useEffect(() => {
+    setRepoTagSuggestions([]);
+    if (!taggedRepoSearchTerm) return;
+    updateSuggestionsDebounced();
+  }, [taggedRepoSearchTerm]);
   useEffect(() => {
     if (window !== undefined) {
       setHost(window.location.origin as string);
@@ -451,27 +589,34 @@ const ContributorHighlightCard = ({
         {reactions &&
           emojis &&
           reactions.length > 0 &&
-          reactions.map(({ emoji_id, reaction_count }) => (
-            <div
-              className={`px-1 py-0 md:py-0.5 hover:bg-light-slate-6 transition  md:px-1.5 shrink-0 border flex items-center justify-center rounded-full cursor-pointer ${
-                isUserReaction(emoji_id) && "bg-light-slate-6"
-              }`}
-              onClick={async () => (sessionToken ? handleUpdateReaction(emoji_id) : signIn({ provider: "github" }))}
+          reactions.map(({ emoji_id, reaction_count, reaction_users }) => (
+            <Tooltip
               key={emoji_id}
+              direction="top"
+              content={`${getEmojiReactors(reaction_users)} reacted with ${getEmojiNameById(emoji_id)} emoji`}
             >
-              <Emoji
-                className="text-xs md:text-sm text-light-slate-10"
-                text={`:${getEmojiNameById(emoji_id)}: ${reaction_count}`}
-              />
-            </div>
+              <div
+                className={`px-1 py-0 md:py-0.5 hover:bg-light-slate-6 transition  md:px-1.5 shrink-0 border flex items-center justify-center rounded-full cursor-pointer ${
+                  isUserReaction(emoji_id) && "bg-light-slate-6"
+                }`}
+                onClick={async () => (sessionToken ? handleUpdateReaction(emoji_id) : signIn({ provider: "github" }))}
+              >
+                <Emoji
+                  className="text-xs md:text-sm text-light-slate-10"
+                  text={`:${getEmojiNameById(emoji_id)}: ${reaction_count}`}
+                />
+              </div>
+            </Tooltip>
           ))}
         <div className="ml-auto">
           <CardRepoList repoList={repos} />
         </div>
       </div>
 
+      {/* Edit highlight dialog */}
+
       <Dialog open={openEdit} onOpenChange={setOpenEdit}>
-        <DialogContent>
+        <DialogContent className="p-4">
           <DialogHeader>
             <DialogTitle>Edit Your Highlight</DialogTitle>
             <DialogDescription className="font-normal">
@@ -552,6 +697,61 @@ const ContributorHighlightCard = ({
                   className="h-8 px-2 font-normal text-orange-600 rounded-lg focus:outline-none focus:border "
                 />
               </fieldset>
+
+              <label htmlFor="title">Tagged Repos</label>
+              <div className={`flex items-center justify-between w-full gap-1 p-1 text-sm bg-white  rounded-lg mb-4`}>
+                <div className="flex w-full gap-1">
+                  <CardRepoList
+                    repoList={taggedRepoList}
+                    deletable={true}
+                    onDelete={(repoName) => handleTaggedRepoDelete(repoName)}
+                  />
+                  <AlertDialog open={addTaggedRepoFormOpen} onOpenChange={(prev) => !prev}>
+                    <AlertDialogTrigger asChild>
+                      <Tooltip content={"Add a repo"}>
+                        <button
+                          onClick={(e) => {
+                            e.preventDefault();
+                            setAddTaggedRepoFormOpen(true);
+                          }}
+                          className="flex gap-1  p-1 pr-2 border-[1px] border-light-slate-6 rounded-lg text-light-slate-12 items-center cursor-pointer"
+                        >
+                          <BsTagFill className="rounded-[4px] overflow-hidden" />
+                          <span className={"max-w-[45px] md:max-w-[100px] truncate"}>Add a repo</span>
+                        </button>
+                      </Tooltip>
+                    </AlertDialogTrigger>
+
+                    <AlertDialogContent className="z-100">
+                      <Search
+                        isLoading={tagRepoSearchLoading}
+                        placeholder="Repository Full Name (ex: open-sauced/open-sauced)"
+                        className="!w-full text-md text-gra"
+                        name={"query"}
+                        suggestions={repoTagSuggestions}
+                        onChange={(value) => setTaggedRepoSearchTerm(value)}
+                        onSearch={(search) => setTaggedRepoSearchTerm(search as string)}
+                      />
+
+                      <div className="flex justify-end gap-2">
+                        <Button variant="default" onClick={() => setAddTaggedRepoFormOpen(false)}>
+                          Cancel
+                        </Button>
+                        <Button
+                          variant="primary"
+                          onClick={() => {
+                            setAddTaggedRepoFormOpen(false);
+                            handleTaggedRepoAdd(taggedRepoSearchTerm);
+                          }}
+                          disabled={!taggedRepoSearchTerm}
+                        >
+                          Add
+                        </Button>
+                      </div>
+                    </AlertDialogContent>
+                  </AlertDialog>
+                </div>
+              </div>
             </div>
             <div className="flex gap-3">
               {/* Delete alert dialog content */}
