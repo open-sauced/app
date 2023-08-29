@@ -36,7 +36,7 @@ test.skip("Close Single Highlight Opened from 'Feed Page' as referer", async ({ 
 
 test.skip("Close Single Highlight Opened from 'User Profile' as referer", async ({ page }) => {
   await page.goto("/user/babblebey", { waitUntil: "domcontentloaded" });
-  await expect(page).toHaveURL(/\/user\/babblebey\/highlights/, { timeout: 10000 });
+  await expect(page).toHaveURL(/\/user\/babblebey\?tab=highlights/, { timeout: 10000 });
 
   const highlightUrl = "/feed/183";
   const singleHighlight = await page.waitForSelector(`a[href="${highlightUrl}"]`);
@@ -49,5 +49,5 @@ test.skip("Close Single Highlight Opened from 'User Profile' as referer", async 
   const closeBtn = page.getByRole("button", { name: "Close" });
   if (await closeBtn.isVisible()) await closeBtn.click();
 
-  await expect(page).toHaveURL(/\/user\/babblebey\/highlights/, { timeout: 10000 });
+  await expect(page).toHaveURL(/\/user\/babblebey\?tab=highlights/, { timeout: 10000 });
 });
