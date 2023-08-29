@@ -311,7 +311,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
           </TabsList>
 
           {user && (
-            <div className="lg:gap-x-3 px-3 pt-4 flex max-w-screen-xl mx-auto">
+            <div className="lg:gap-x-3 px-3 pt-4 flex max-w-3xl mx-auto">
               <div className="hidden lg:inline-flex pt-[0.4rem]">
                 <Avatar
                   alt="user profile avatar"

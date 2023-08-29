@@ -4,7 +4,7 @@ interface CartIllustrationProps {
 
 const CartIllustration = ({ classNames }: CartIllustrationProps) => {
   return (
-    <div className={`inline-flex max-w-44 gap-1 items-center px-1.5 w-44 h-12 rounded-md border ${classNames ?? ""}`}>
+    <div className={`inline-flex gap-1 items-center px-1.5 w-44 h-12 rounded-md border ${classNames ?? ""}`}>
       <div className="h-9 w-9 border rounded bg-light-slate-5"></div>
       <div className="w-28 gap-2 rounded">
         <div className="border w-full h-3 bg-light-slate-5 rounded"></div>
