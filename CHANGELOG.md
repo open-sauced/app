@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.62.0-beta.5](https://github.com/open-sauced/insights/compare/v1.62.0-beta.4...v1.62.0-beta.5) (2023-08-29)
+
+
+### 🐛 Bug Fixes
+
+* lint check happening two times on commit ([#1635](https://github.com/open-sauced/insights/issues/1635)) ([e6fb738](https://github.com/open-sauced/insights/commit/e6fb7380e2b2caa089264c4424d500d357fa3ffa))
+
 ## [1.62.0-beta.4](https://github.com/open-sauced/insights/compare/v1.62.0-beta.3...v1.62.0-beta.4) (2023-08-29)
 
 
