@@ -125,12 +125,6 @@ export async function handleUserSSR({ params }: GetServerSidePropsContext<{ user
   const ogImage = ogData.status === "fulfilled" ? ogData.value : "";
   const userData = user.status === "fulfilled" ? user.value : null;
 
-  if (!userData) {
-    return {
-      notFound: true,
-    };
-  }
-
   return {
     props: { username, user: userData, ogImage },
   };
