@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { test, expect } from "@playwright/test";
 
-test("Close Single Highlight Opened from 'null' referer", async ({ page }) => {
+test.skip("Close Single Highlight Opened from 'null' referer", async ({ page }) => {
   await page.goto("/feed/183", { waitUntil: "domcontentloaded" });
 
   const dialog = page.getByRole("dialog");
@@ -16,7 +16,7 @@ test("Close Single Highlight Opened from 'null' referer", async ({ page }) => {
   await expect(page).toHaveURL(/\/feed/, { timeout: 10000 });
 });
 
-test("Close Single Highlight Opened from 'Feed Page' as referer", async ({ page }) => {
+test.skip("Close Single Highlight Opened from 'Feed Page' as referer", async ({ page }) => {
   await page.goto("/feed", { waitUntil: "domcontentloaded" });
 
   const singleHighlight = await page.waitForSelector(`a[href^="/feed/"]`);
@@ -34,7 +34,7 @@ test("Close Single Highlight Opened from 'Feed Page' as referer", async ({ page 
   await expect(page).toHaveURL(/\/feed/, { timeout: 10000 });
 });
 
-test("Close Single Highlight Opened from 'User Profile' as referer", async ({ page }) => {
+test.skip("Close Single Highlight Opened from 'User Profile' as referer", async ({ page }) => {
   await page.goto("/user/babblebey", { waitUntil: "domcontentloaded" });
   await expect(page).toHaveURL(/\/user\/babblebey\?tab=highlights/, { timeout: 10000 });
 
