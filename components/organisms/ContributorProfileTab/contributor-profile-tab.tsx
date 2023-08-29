@@ -87,14 +87,17 @@ const ContributorProfileTab = ({
 
   // Setting the query param "tab" if none exists
   useEffect(() => {
-    if (!tab || !Object.keys(tabs).includes(tab as string)) {
+    if (
+      !tab ||
+      !Object.keys(tabs).includes(tab as string) ||
+      (tab === "recommendations" && user_name !== login) ||
+      (tab === "requests" && !receive_collaboration) ||
+      (tab === "requests" && user_name !== login)
+    ) {
       setQueryParams({ tab: currentTab } satisfies QueryParams);
     }
 
     // If the user is not the owner of the profile, block them from accessing the recommendations tab
-    if (tab === "recommendations" && user_name !== login) {
-      setQueryParams({ tab: currentTab } satisfies QueryParams);
-    }
   }, [tab, currentTab]);
 
   const getTabTriggerClassName = (tab: TabKey): string => {
@@ -102,7 +105,6 @@ const ContributorProfileTab = ({
       "data-[state=active]:border-sauced-orange shrink-0 data-[state=active]:border-b-2 text-lg",
       tab === "recommendations" &&
         "font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#EA4600] to-[#EB9B00]",
-      // user?.user_metadata.user_name !== login && !hasHighlights && tab === "highlights" && "hidden",
       user && user_name !== login && tab === "recommendations" && "hidden",
       user && user_name !== login && tab === "requests" && "hidden",
       !user && tab === "recommendations" && "hidden",
