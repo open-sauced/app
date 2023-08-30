@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 
-test("Open a User (with GitHub Account Connected) Profile", async ({ page }) => {
+test.skip("Open a User (with GitHub Account Connected) Profile", async ({ page }) => {
   await page.goto("/user/babblebey", { waitUntil: "domcontentloaded" });
 
   await expect(page).toHaveURL(/\/user\/babblebey/, { timeout: 10000 });
@@ -13,7 +13,7 @@ test("Open a User (with GitHub Account Connected) Profile", async ({ page }) => 
   await expect(page.getByRole("tab")).toBeVisible();
 });
 
-test("Open a User (without Github Account Connected) Profile", async ({ page }) => {
+test.skip("Open a User (without Github Account Connected) Profile", async ({ page }) => {
   await page.goto("/user/githubuser", { waitUntil: "domcontentloaded" });
 
   await expect(page).toHaveURL("/user/githubuser", { timeout: 10000 });

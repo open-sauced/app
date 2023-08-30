@@ -29,154 +29,134 @@
 
 ## [1.62.0-beta.5](https://github.com/open-sauced/insights/compare/v1.62.0-beta.4...v1.62.0-beta.5) (2023-08-29)
 
-
 ### 🐛 Bug Fixes
 
-* lint check happening two times on commit ([#1635](https://github.com/open-sauced/insights/issues/1635)) ([e6fb738](https://github.com/open-sauced/insights/commit/e6fb7380e2b2caa089264c4424d500d357fa3ffa))
+- lint check happening two times on commit ([#1635](https://github.com/open-sauced/insights/issues/1635)) ([e6fb738](https://github.com/open-sauced/insights/commit/e6fb7380e2b2caa089264c4424d500d357fa3ffa))
 
 ## [1.62.0-beta.4](https://github.com/open-sauced/insights/compare/v1.62.0-beta.3...v1.62.0-beta.4) (2023-08-29)
 
-
 ### 🍕 Features
 
-* profile tabs - path params to query params (1229) ([#1613](https://github.com/open-sauced/insights/issues/1613)) ([4c43de4](https://github.com/open-sauced/insights/commit/4c43de4d73f0304deceae63009c0b2bd33e6d4b0))
+- profile tabs - path params to query params (1229) ([#1613](https://github.com/open-sauced/insights/issues/1613)) ([4c43de4](https://github.com/open-sauced/insights/commit/4c43de4d73f0304deceae63009c0b2bd33e6d4b0))
 
 ## [1.62.0-beta.3](https://github.com/open-sauced/insights/compare/v1.62.0-beta.2...v1.62.0-beta.3) (2023-08-29)
 
-
 ### 🐛 Bug Fixes
 
-* add support for blog highlight update ([#1621](https://github.com/open-sauced/insights/issues/1621)) ([6f16d7f](https://github.com/open-sauced/insights/commit/6f16d7f131b3202c1eed9041509b025ebcc62fc9))
-* repo filter query not filtering on page refresh (1610) ([#1617](https://github.com/open-sauced/insights/issues/1617)) ([a3d135d](https://github.com/open-sauced/insights/commit/a3d135d3d3f73e312b000dd49482ac8c21b6cc74))
+- add support for blog highlight update ([#1621](https://github.com/open-sauced/insights/issues/1621)) ([6f16d7f](https://github.com/open-sauced/insights/commit/6f16d7f131b3202c1eed9041509b025ebcc62fc9))
+- repo filter query not filtering on page refresh (1610) ([#1617](https://github.com/open-sauced/insights/issues/1617)) ([a3d135d](https://github.com/open-sauced/insights/commit/a3d135d3d3f73e312b000dd49482ac8c21b6cc74))
 
 ## [1.62.0-beta.2](https://github.com/open-sauced/insights/compare/v1.62.0-beta.1...v1.62.0-beta.2) (2023-08-28)
 
-
 ### 🐛 Bug Fixes
 
-* add check for reaction users array ([#1625](https://github.com/open-sauced/insights/issues/1625)) ([008f240](https://github.com/open-sauced/insights/commit/008f240e2fd0445dfacd731c697bcd2d236df270))
+- add check for reaction users array ([#1625](https://github.com/open-sauced/insights/issues/1625)) ([008f240](https://github.com/open-sauced/insights/commit/008f240e2fd0445dfacd731c697bcd2d236df270))
 
 ## [1.62.0-beta.1](https://github.com/open-sauced/insights/compare/v1.61.1-beta.1...v1.62.0-beta.1) (2023-08-28)
 
-
 ### 🍕 Features
 
-* show reactors who reacted to highlights ([#1591](https://github.com/open-sauced/insights/issues/1591)) ([3b73d97](https://github.com/open-sauced/insights/commit/3b73d97d06202b212c189aa3202c41db8f6faf67))
-
+- show reactors who reacted to highlights ([#1591](https://github.com/open-sauced/insights/issues/1591)) ([3b73d97](https://github.com/open-sauced/insights/commit/3b73d97d06202b212c189aa3202c41db8f6faf67))
 
 ### 🐛 Bug Fixes
 
-* hidden link on profile highlights (1618) ([#1623](https://github.com/open-sauced/insights/issues/1623)) ([97ce893](https://github.com/open-sauced/insights/commit/97ce8935c44d57a33497fd4a018cc23a51291ac0))
+- hidden link on profile highlights (1618) ([#1623](https://github.com/open-sauced/insights/issues/1623)) ([97ce893](https://github.com/open-sauced/insights/commit/97ce8935c44d57a33497fd4a018cc23a51291ac0))
 
 ### [1.61.1-beta.1](https://github.com/open-sauced/insights/compare/v1.61.0...v1.61.1-beta.1) (2023-08-25)
 
-
 ### 🧑‍💻 Code Refactoring
 
-* update top users implementation to remove already followed users ([#1607](https://github.com/open-sauced/insights/issues/1607)) ([ce586ca](https://github.com/open-sauced/insights/commit/ce586cac49f454e1df0f791e409302cb89b9899f))
+- update top users implementation to remove already followed users ([#1607](https://github.com/open-sauced/insights/issues/1607)) ([ce586ca](https://github.com/open-sauced/insights/commit/ce586cac49f454e1df0f791e409302cb89b9899f))
 
 ## [1.61.0](https://github.com/open-sauced/insights/compare/v1.60.0...v1.61.0) (2023-08-24)
 
-
 ### 🍕 Features
 
-* "Following" button to "Unfollow" on hover ([#1588](https://github.com/open-sauced/insights/issues/1588)) ([721cc36](https://github.com/open-sauced/insights/commit/721cc36bca810063b26b8e1bae54a9e498133c91))
-* add Maintainer badge to dashboard `HoverCard` and `ContributorCard` ([#1586](https://github.com/open-sauced/insights/issues/1586)) ([ea34f7e](https://github.com/open-sauced/insights/commit/ea34f7e7dcc594df542667b40607596053482fea))
-* add subscription management section to user settings ([#1587](https://github.com/open-sauced/insights/issues/1587)) ([3ceb2c8](https://github.com/open-sauced/insights/commit/3ceb2c8a131944470e8f238a09f4fceff93f8e6a))
-* highlight blogs ([#1555](https://github.com/open-sauced/insights/issues/1555)) ([4058f79](https://github.com/open-sauced/insights/commit/4058f79a8cc25baf11fe6988ff61691ff6b4fc36))
-* Support full URLs when adding repo to insights page ([#1470](https://github.com/open-sauced/insights/issues/1470)) ([ee53414](https://github.com/open-sauced/insights/commit/ee53414a80113c41b3b6b205b146d081e32bd51f))
-
+- "Following" button to "Unfollow" on hover ([#1588](https://github.com/open-sauced/insights/issues/1588)) ([721cc36](https://github.com/open-sauced/insights/commit/721cc36bca810063b26b8e1bae54a9e498133c91))
+- add Maintainer badge to dashboard `HoverCard` and `ContributorCard` ([#1586](https://github.com/open-sauced/insights/issues/1586)) ([ea34f7e](https://github.com/open-sauced/insights/commit/ea34f7e7dcc594df542667b40607596053482fea))
+- add subscription management section to user settings ([#1587](https://github.com/open-sauced/insights/issues/1587)) ([3ceb2c8](https://github.com/open-sauced/insights/commit/3ceb2c8a131944470e8f238a09f4fceff93f8e6a))
+- highlight blogs ([#1555](https://github.com/open-sauced/insights/issues/1555)) ([4058f79](https://github.com/open-sauced/insights/commit/4058f79a8cc25baf11fe6988ff61691ff6b4fc36))
+- Support full URLs when adding repo to insights page ([#1470](https://github.com/open-sauced/insights/issues/1470)) ([ee53414](https://github.com/open-sauced/insights/commit/ee53414a80113c41b3b6b205b146d081e32bd51f))
 
 ### 🐛 Bug Fixes
 
-* "53y" showing up as first PR age in Contributor hover Card for dashboard ([#1609](https://github.com/open-sauced/insights/issues/1609)) ([03522c9](https://github.com/open-sauced/insights/commit/03522c9a6875637949b0a0c29743f923b568bf77))
-* add bg color to reports select filter ([#1570](https://github.com/open-sauced/insights/issues/1570)) ([90f381c](https://github.com/open-sauced/insights/commit/90f381c6fd9bc9b6094498c2623a79b86a9905dc))
-* correct position of create highlight button ([#1565](https://github.com/open-sauced/insights/issues/1565)) ([2ce44bd](https://github.com/open-sauced/insights/commit/2ce44bd7611bdc82671e7180189b7fe840dbfe9c))
-* corrected Alignment for mobile view ([#1578](https://github.com/open-sauced/insights/issues/1578)) ([0d23330](https://github.com/open-sauced/insights/commit/0d2333091abfa6dbee340489ead8990a2b7e7b8f))
-* corrected repo card for mobile ([#1577](https://github.com/open-sauced/insights/issues/1577)) ([779862d](https://github.com/open-sauced/insights/commit/779862dede59682d5ec6121e8433ce88dd36d567))
-* fix crash on `/user/[username]` route due to browser support issue ([#1580](https://github.com/open-sauced/insights/issues/1580)) ([336a43e](https://github.com/open-sauced/insights/commit/336a43ef56e6b89ea1ddb9a72d330f7270a1ef75))
-* highlights nav item unselected when there were query params in URL ([#1584](https://github.com/open-sauced/insights/issues/1584)) ([68c3916](https://github.com/open-sauced/insights/commit/68c39165567778c980fc948928a8694d9ab518dc))
-* highlights page endless flicker on tab change (1576) ([#1582](https://github.com/open-sauced/insights/issues/1582)) ([56a3da9](https://github.com/open-sauced/insights/commit/56a3da95da85f1afd4e28d7f2775b69a8a53e816))
-* keep UserCard from leaving the viewport on sticky sidebar ([#1585](https://github.com/open-sauced/insights/issues/1585)) ([5b33b13](https://github.com/open-sauced/insights/commit/5b33b13d3be4a717ede09953a16a56505c658b49))
-* overflows in insights page on md screen size ([#1590](https://github.com/open-sauced/insights/issues/1590)) ([69ec31e](https://github.com/open-sauced/insights/commit/69ec31e4e7b32496420bf5036c3bfa53a26b7939))
-* query param reset in repo filters & URL encoding ([#1597](https://github.com/open-sauced/insights/issues/1597)) ([c5c7df3](https://github.com/open-sauced/insights/commit/c5c7df312cbfd6fbc08d2cd311e9379e081ebb13))
-* refetch following count after following a user ([#1596](https://github.com/open-sauced/insights/issues/1596)) ([cb31fd1](https://github.com/open-sauced/insights/commit/cb31fd1db724087291b3d41fad7eb79409f1ca76))
-* remove tagged repos from highlight ([#1595](https://github.com/open-sauced/insights/issues/1595)) ([26a2be6](https://github.com/open-sauced/insights/commit/26a2be63da644e693f4e4142a9154e76abe4e5c7))
-* show checkbox for repos table in small screens ([#1559](https://github.com/open-sauced/insights/issues/1559)) ([a6e6bb3](https://github.com/open-sauced/insights/commit/a6e6bb3d783e6468f8a0edb9dcd21cc2513ff6dc))
-* update react-spring imports and upgrade @react-spring/web ([#1567](https://github.com/open-sauced/insights/issues/1567)) ([44c80af](https://github.com/open-sauced/insights/commit/44c80af7e359e60c28994d5902b44c666d840787))
+- "53y" showing up as first PR age in Contributor hover Card for dashboard ([#1609](https://github.com/open-sauced/insights/issues/1609)) ([03522c9](https://github.com/open-sauced/insights/commit/03522c9a6875637949b0a0c29743f923b568bf77))
+- add bg color to reports select filter ([#1570](https://github.com/open-sauced/insights/issues/1570)) ([90f381c](https://github.com/open-sauced/insights/commit/90f381c6fd9bc9b6094498c2623a79b86a9905dc))
+- correct position of create highlight button ([#1565](https://github.com/open-sauced/insights/issues/1565)) ([2ce44bd](https://github.com/open-sauced/insights/commit/2ce44bd7611bdc82671e7180189b7fe840dbfe9c))
+- corrected Alignment for mobile view ([#1578](https://github.com/open-sauced/insights/issues/1578)) ([0d23330](https://github.com/open-sauced/insights/commit/0d2333091abfa6dbee340489ead8990a2b7e7b8f))
+- corrected repo card for mobile ([#1577](https://github.com/open-sauced/insights/issues/1577)) ([779862d](https://github.com/open-sauced/insights/commit/779862dede59682d5ec6121e8433ce88dd36d567))
+- fix crash on `/user/[username]` route due to browser support issue ([#1580](https://github.com/open-sauced/insights/issues/1580)) ([336a43e](https://github.com/open-sauced/insights/commit/336a43ef56e6b89ea1ddb9a72d330f7270a1ef75))
+- highlights nav item unselected when there were query params in URL ([#1584](https://github.com/open-sauced/insights/issues/1584)) ([68c3916](https://github.com/open-sauced/insights/commit/68c39165567778c980fc948928a8694d9ab518dc))
+- highlights page endless flicker on tab change (1576) ([#1582](https://github.com/open-sauced/insights/issues/1582)) ([56a3da9](https://github.com/open-sauced/insights/commit/56a3da95da85f1afd4e28d7f2775b69a8a53e816))
+- keep UserCard from leaving the viewport on sticky sidebar ([#1585](https://github.com/open-sauced/insights/issues/1585)) ([5b33b13](https://github.com/open-sauced/insights/commit/5b33b13d3be4a717ede09953a16a56505c658b49))
+- overflows in insights page on md screen size ([#1590](https://github.com/open-sauced/insights/issues/1590)) ([69ec31e](https://github.com/open-sauced/insights/commit/69ec31e4e7b32496420bf5036c3bfa53a26b7939))
+- query param reset in repo filters & URL encoding ([#1597](https://github.com/open-sauced/insights/issues/1597)) ([c5c7df3](https://github.com/open-sauced/insights/commit/c5c7df312cbfd6fbc08d2cd311e9379e081ebb13))
+- refetch following count after following a user ([#1596](https://github.com/open-sauced/insights/issues/1596)) ([cb31fd1](https://github.com/open-sauced/insights/commit/cb31fd1db724087291b3d41fad7eb79409f1ca76))
+- remove tagged repos from highlight ([#1595](https://github.com/open-sauced/insights/issues/1595)) ([26a2be6](https://github.com/open-sauced/insights/commit/26a2be63da644e693f4e4142a9154e76abe4e5c7))
+- show checkbox for repos table in small screens ([#1559](https://github.com/open-sauced/insights/issues/1559)) ([a6e6bb3](https://github.com/open-sauced/insights/commit/a6e6bb3d783e6468f8a0edb9dcd21cc2513ff6dc))
+- update react-spring imports and upgrade @react-spring/web ([#1567](https://github.com/open-sauced/insights/issues/1567)) ([44c80af](https://github.com/open-sauced/insights/commit/44c80af7e359e60c28994d5902b44c666d840787))
 
 ## [1.61.0-beta.13](https://github.com/open-sauced/insights/compare/v1.61.0-beta.12...v1.61.0-beta.13) (2023-08-24)
 
-
 ### 🍕 Features
 
-* "Following" button to "Unfollow" on hover ([#1588](https://github.com/open-sauced/insights/issues/1588)) ([721cc36](https://github.com/open-sauced/insights/commit/721cc36bca810063b26b8e1bae54a9e498133c91))
-
+- "Following" button to "Unfollow" on hover ([#1588](https://github.com/open-sauced/insights/issues/1588)) ([721cc36](https://github.com/open-sauced/insights/commit/721cc36bca810063b26b8e1bae54a9e498133c91))
 
 ### 🐛 Bug Fixes
 
-* "53y" showing up as first PR age in Contributor hover Card for dashboard ([#1609](https://github.com/open-sauced/insights/issues/1609)) ([03522c9](https://github.com/open-sauced/insights/commit/03522c9a6875637949b0a0c29743f923b568bf77))
-* query param reset in repo filters & URL encoding ([#1597](https://github.com/open-sauced/insights/issues/1597)) ([c5c7df3](https://github.com/open-sauced/insights/commit/c5c7df312cbfd6fbc08d2cd311e9379e081ebb13))
+- "53y" showing up as first PR age in Contributor hover Card for dashboard ([#1609](https://github.com/open-sauced/insights/issues/1609)) ([03522c9](https://github.com/open-sauced/insights/commit/03522c9a6875637949b0a0c29743f923b568bf77))
+- query param reset in repo filters & URL encoding ([#1597](https://github.com/open-sauced/insights/issues/1597)) ([c5c7df3](https://github.com/open-sauced/insights/commit/c5c7df312cbfd6fbc08d2cd311e9379e081ebb13))
 
 ## [1.61.0-beta.12](https://github.com/open-sauced/insights/compare/v1.61.0-beta.11...v1.61.0-beta.12) (2023-08-23)
 
-
 ### 🐛 Bug Fixes
 
-* refetch following count after following a user ([#1596](https://github.com/open-sauced/insights/issues/1596)) ([cb31fd1](https://github.com/open-sauced/insights/commit/cb31fd1db724087291b3d41fad7eb79409f1ca76))
+- refetch following count after following a user ([#1596](https://github.com/open-sauced/insights/issues/1596)) ([cb31fd1](https://github.com/open-sauced/insights/commit/cb31fd1db724087291b3d41fad7eb79409f1ca76))
 
 ## [1.61.0-beta.11](https://github.com/open-sauced/insights/compare/v1.61.0-beta.10...v1.61.0-beta.11) (2023-08-23)
 
-
 ### 🐛 Bug Fixes
 
-* remove tagged repos from highlight ([#1595](https://github.com/open-sauced/insights/issues/1595)) ([26a2be6](https://github.com/open-sauced/insights/commit/26a2be63da644e693f4e4142a9154e76abe4e5c7))
+- remove tagged repos from highlight ([#1595](https://github.com/open-sauced/insights/issues/1595)) ([26a2be6](https://github.com/open-sauced/insights/commit/26a2be63da644e693f4e4142a9154e76abe4e5c7))
 
 ## [1.61.0-beta.10](https://github.com/open-sauced/insights/compare/v1.61.0-beta.9...v1.61.0-beta.10) (2023-08-23)
 
-
 ### 🐛 Bug Fixes
 
-* overflows in insights page on md screen size ([#1590](https://github.com/open-sauced/insights/issues/1590)) ([69ec31e](https://github.com/open-sauced/insights/commit/69ec31e4e7b32496420bf5036c3bfa53a26b7939))
-
+- overflows in insights page on md screen size ([#1590](https://github.com/open-sauced/insights/issues/1590)) ([69ec31e](https://github.com/open-sauced/insights/commit/69ec31e4e7b32496420bf5036c3bfa53a26b7939))
 
 ### 🍕 Features
 
-* add subscription management section to user settings ([#1587](https://github.com/open-sauced/insights/issues/1587)) ([3ceb2c8](https://github.com/open-sauced/insights/commit/3ceb2c8a131944470e8f238a09f4fceff93f8e6a))
+- add subscription management section to user settings ([#1587](https://github.com/open-sauced/insights/issues/1587)) ([3ceb2c8](https://github.com/open-sauced/insights/commit/3ceb2c8a131944470e8f238a09f4fceff93f8e6a))
 
 ## [1.61.0-beta.9](https://github.com/open-sauced/insights/compare/v1.61.0-beta.8...v1.61.0-beta.9) (2023-08-22)
 
-
 ### 🐛 Bug Fixes
 
-* update react-spring imports and upgrade @react-spring/web ([#1567](https://github.com/open-sauced/insights/issues/1567)) ([44c80af](https://github.com/open-sauced/insights/commit/44c80af7e359e60c28994d5902b44c666d840787))
+- update react-spring imports and upgrade @react-spring/web ([#1567](https://github.com/open-sauced/insights/issues/1567)) ([44c80af](https://github.com/open-sauced/insights/commit/44c80af7e359e60c28994d5902b44c666d840787))
 
 ## [1.61.0-beta.8](https://github.com/open-sauced/insights/compare/v1.61.0-beta.7...v1.61.0-beta.8) (2023-08-22)
 
-
 ### 🐛 Bug Fixes
 
-* fix crash on `/user/[username]` route due to browser support issue ([#1580](https://github.com/open-sauced/insights/issues/1580)) ([336a43e](https://github.com/open-sauced/insights/commit/336a43ef56e6b89ea1ddb9a72d330f7270a1ef75))
+- fix crash on `/user/[username]` route due to browser support issue ([#1580](https://github.com/open-sauced/insights/issues/1580)) ([336a43e](https://github.com/open-sauced/insights/commit/336a43ef56e6b89ea1ddb9a72d330f7270a1ef75))
 
 ## [1.61.0-beta.7](https://github.com/open-sauced/insights/compare/v1.61.0-beta.6...v1.61.0-beta.7) (2023-08-21)
 
-
 ### 🐛 Bug Fixes
 
-* highlights page endless flicker on tab change (1576) ([#1582](https://github.com/open-sauced/insights/issues/1582)) ([56a3da9](https://github.com/open-sauced/insights/commit/56a3da95da85f1afd4e28d7f2775b69a8a53e816))
-
+- highlights page endless flicker on tab change (1576) ([#1582](https://github.com/open-sauced/insights/issues/1582)) ([56a3da9](https://github.com/open-sauced/insights/commit/56a3da95da85f1afd4e28d7f2775b69a8a53e816))
 
 ### 🍕 Features
 
-* add Maintainer badge to dashboard `HoverCard` and `ContributorCard` ([#1586](https://github.com/open-sauced/insights/issues/1586)) ([ea34f7e](https://github.com/open-sauced/insights/commit/ea34f7e7dcc594df542667b40607596053482fea))
-* highlight blogs ([#1555](https://github.com/open-sauced/insights/issues/1555)) ([4058f79](https://github.com/open-sauced/insights/commit/4058f79a8cc25baf11fe6988ff61691ff6b4fc36))
+- add Maintainer badge to dashboard `HoverCard` and `ContributorCard` ([#1586](https://github.com/open-sauced/insights/issues/1586)) ([ea34f7e](https://github.com/open-sauced/insights/commit/ea34f7e7dcc594df542667b40607596053482fea))
+- highlight blogs ([#1555](https://github.com/open-sauced/insights/issues/1555)) ([4058f79](https://github.com/open-sauced/insights/commit/4058f79a8cc25baf11fe6988ff61691ff6b4fc36))
 
 ## [1.61.0-beta.6](https://github.com/open-sauced/insights/compare/v1.61.0-beta.5...v1.61.0-beta.6) (2023-08-21)
 
-
 ### 🐛 Bug Fixes
 
-* show checkbox for repos table in small screens ([#1559](https://github.com/open-sauced/insights/issues/1559)) ([a6e6bb3](https://github.com/open-sauced/insights/commit/a6e6bb3d783e6468f8a0edb9dcd21cc2513ff6dc))
+- show checkbox for repos table in small screens ([#1559](https://github.com/open-sauced/insights/issues/1559)) ([a6e6bb3](https://github.com/open-sauced/insights/commit/a6e6bb3d783e6468f8a0edb9dcd21cc2513ff6dc))
 
 # 📦 open-sauced/insights changelog
 
@@ -187,124 +167,108 @@
 
 ## [1.61.0-beta.5](https://github.com/open-sauced/insights/compare/v1.61.0-beta.4...v1.61.0-beta.5) (2023-08-21)
 
-
 ### 🐛 Bug Fixes
 
-* keep UserCard from leaving the viewport on sticky sidebar ([#1585](https://github.com/open-sauced/insights/issues/1585)) ([5b33b13](https://github.com/open-sauced/insights/commit/5b33b13d3be4a717ede09953a16a56505c658b49))
+- keep UserCard from leaving the viewport on sticky sidebar ([#1585](https://github.com/open-sauced/insights/issues/1585)) ([5b33b13](https://github.com/open-sauced/insights/commit/5b33b13d3be4a717ede09953a16a56505c658b49))
 
 ## [1.61.0-beta.4](https://github.com/open-sauced/insights/compare/v1.61.0-beta.3...v1.61.0-beta.4) (2023-08-21)
 
-
 ### 🐛 Bug Fixes
 
-* corrected Alignment for mobile view ([#1578](https://github.com/open-sauced/insights/issues/1578)) ([0d23330](https://github.com/open-sauced/insights/commit/0d2333091abfa6dbee340489ead8990a2b7e7b8f))
-* highlights nav item unselected when there were query params in URL ([#1584](https://github.com/open-sauced/insights/issues/1584)) ([68c3916](https://github.com/open-sauced/insights/commit/68c39165567778c980fc948928a8694d9ab518dc))
+- corrected Alignment for mobile view ([#1578](https://github.com/open-sauced/insights/issues/1578)) ([0d23330](https://github.com/open-sauced/insights/commit/0d2333091abfa6dbee340489ead8990a2b7e7b8f))
+- highlights nav item unselected when there were query params in URL ([#1584](https://github.com/open-sauced/insights/issues/1584)) ([68c3916](https://github.com/open-sauced/insights/commit/68c39165567778c980fc948928a8694d9ab518dc))
 
 ## [1.61.0-beta.3](https://github.com/open-sauced/insights/compare/v1.61.0-beta.2...v1.61.0-beta.3) (2023-08-18)
 
-
 ### 🐛 Bug Fixes
 
-* corrected repo card for mobile ([#1577](https://github.com/open-sauced/insights/issues/1577)) ([779862d](https://github.com/open-sauced/insights/commit/779862dede59682d5ec6121e8433ce88dd36d567))
+- corrected repo card for mobile ([#1577](https://github.com/open-sauced/insights/issues/1577)) ([779862d](https://github.com/open-sauced/insights/commit/779862dede59682d5ec6121e8433ce88dd36d567))
 
 ## [1.61.0-beta.2](https://github.com/open-sauced/insights/compare/v1.61.0-beta.1...v1.61.0-beta.2) (2023-08-17)
 
-
 ### 🐛 Bug Fixes
 
-* add bg color to reports select filter ([#1570](https://github.com/open-sauced/insights/issues/1570)) ([90f381c](https://github.com/open-sauced/insights/commit/90f381c6fd9bc9b6094498c2623a79b86a9905dc))
+- add bg color to reports select filter ([#1570](https://github.com/open-sauced/insights/issues/1570)) ([90f381c](https://github.com/open-sauced/insights/commit/90f381c6fd9bc9b6094498c2623a79b86a9905dc))
 
 ## [1.61.0-beta.1](https://github.com/open-sauced/insights/compare/v1.60.0...v1.61.0-beta.1) (2023-08-17)
 
-
 ### 🐛 Bug Fixes
 
-* correct position of create highlight button ([#1565](https://github.com/open-sauced/insights/issues/1565)) ([2ce44bd](https://github.com/open-sauced/insights/commit/2ce44bd7611bdc82671e7180189b7fe840dbfe9c))
-
+- correct position of create highlight button ([#1565](https://github.com/open-sauced/insights/issues/1565)) ([2ce44bd](https://github.com/open-sauced/insights/commit/2ce44bd7611bdc82671e7180189b7fe840dbfe9c))
 
 ### 🍕 Features
 
-* Support full URLs when adding repo to insights page ([#1470](https://github.com/open-sauced/insights/issues/1470)) ([ee53414](https://github.com/open-sauced/insights/commit/ee53414a80113c41b3b6b205b146d081e32bd51f))
+- Support full URLs when adding repo to insights page ([#1470](https://github.com/open-sauced/insights/issues/1470)) ([ee53414](https://github.com/open-sauced/insights/commit/ee53414a80113c41b3b6b205b146d081e32bd51f))
 
 ## [1.60.0](https://github.com/open-sauced/insights/compare/v1.59.1...v1.60.0) (2023-08-16)
 
-
 ### 🐛 Bug Fixes
 
-* add space between avatar and  cta menu ([#1492](https://github.com/open-sauced/insights/issues/1492)) ([3f334b0](https://github.com/open-sauced/insights/commit/3f334b09eb74cf97e7390ed2ebcf8b0281912fe0))
-* better responsiveness with long names on the feed page ([#1533](https://github.com/open-sauced/insights/issues/1533)) ([f00b42d](https://github.com/open-sauced/insights/commit/f00b42d98fd718e3be763489039091257f5f2538))
-* check session when updating user settings ([#1541](https://github.com/open-sauced/insights/issues/1541)) ([89a0847](https://github.com/open-sauced/insights/commit/89a084712479858fd1bfcb49e8ba0644f6bed902))
-* disabled the button while it's loading, so it doesn't add the same repo again ([#1536](https://github.com/open-sauced/insights/issues/1536)) ([61a8d3a](https://github.com/open-sauced/insights/commit/61a8d3a5b797fb59210c41a78fef196764c67939))
-* enhance feed layout responsiveness ([#1553](https://github.com/open-sauced/insights/issues/1553)) ([2d5fb3e](https://github.com/open-sauced/insights/commit/2d5fb3e32037c46d15459b5b934a13f3985c27b4))
-* exclude empty interests on profile page ([#1539](https://github.com/open-sauced/insights/issues/1539)) ([330bb8d](https://github.com/open-sauced/insights/commit/330bb8df96cc4456993c3a0eb700cbaf51414743))
-* fixed margin issues on layout ([#1534](https://github.com/open-sauced/insights/issues/1534)) ([719b4cb](https://github.com/open-sauced/insights/commit/719b4cb78940eae41e2b3c2a20f59c210c09f7cb))
-* refactor notification username retrieval and display logic ([#1537](https://github.com/open-sauced/insights/issues/1537)) ([6657a75](https://github.com/open-sauced/insights/commit/6657a7514e27eac4aaea972e7b8e26004559591c))
-* single highlight dialog close button not working in new browser tab ([#1551](https://github.com/open-sauced/insights/issues/1551)) ([b6312d5](https://github.com/open-sauced/insights/commit/b6312d5615a369c5143679e22236bf86e41a9bb2))
-
+- add space between avatar and cta menu ([#1492](https://github.com/open-sauced/insights/issues/1492)) ([3f334b0](https://github.com/open-sauced/insights/commit/3f334b09eb74cf97e7390ed2ebcf8b0281912fe0))
+- better responsiveness with long names on the feed page ([#1533](https://github.com/open-sauced/insights/issues/1533)) ([f00b42d](https://github.com/open-sauced/insights/commit/f00b42d98fd718e3be763489039091257f5f2538))
+- check session when updating user settings ([#1541](https://github.com/open-sauced/insights/issues/1541)) ([89a0847](https://github.com/open-sauced/insights/commit/89a084712479858fd1bfcb49e8ba0644f6bed902))
+- disabled the button while it's loading, so it doesn't add the same repo again ([#1536](https://github.com/open-sauced/insights/issues/1536)) ([61a8d3a](https://github.com/open-sauced/insights/commit/61a8d3a5b797fb59210c41a78fef196764c67939))
+- enhance feed layout responsiveness ([#1553](https://github.com/open-sauced/insights/issues/1553)) ([2d5fb3e](https://github.com/open-sauced/insights/commit/2d5fb3e32037c46d15459b5b934a13f3985c27b4))
+- exclude empty interests on profile page ([#1539](https://github.com/open-sauced/insights/issues/1539)) ([330bb8d](https://github.com/open-sauced/insights/commit/330bb8df96cc4456993c3a0eb700cbaf51414743))
+- fixed margin issues on layout ([#1534](https://github.com/open-sauced/insights/issues/1534)) ([719b4cb](https://github.com/open-sauced/insights/commit/719b4cb78940eae41e2b3c2a20f59c210c09f7cb))
+- refactor notification username retrieval and display logic ([#1537](https://github.com/open-sauced/insights/issues/1537)) ([6657a75](https://github.com/open-sauced/insights/commit/6657a7514e27eac4aaea972e7b8e26004559591c))
+- single highlight dialog close button not working in new browser tab ([#1551](https://github.com/open-sauced/insights/issues/1551)) ([b6312d5](https://github.com/open-sauced/insights/commit/b6312d5615a369c5143679e22236bf86e41a9bb2))
 
 ### 🍕 Features
 
-* add issues to highlights ([#1496](https://github.com/open-sauced/insights/issues/1496)) ([98e106e](https://github.com/open-sauced/insights/commit/98e106ef9b58f5cc7a9ceeb2ed668bac5b792de3))
-* add repositories cart title ([#1500](https://github.com/open-sauced/insights/issues/1500)) ([d2693e2](https://github.com/open-sauced/insights/commit/d2693e29cacedd7bb7daceb5b6f9d889df07f6cc))
-* update beta badge with maintainer badge to contributor profile ([#1557](https://github.com/open-sauced/insights/issues/1557)) ([51451a6](https://github.com/open-sauced/insights/commit/51451a67614e31467d20544ce38ec3a50ab4126e))
-* use Netlify edge function for dev card ([#1400](https://github.com/open-sauced/insights/issues/1400)) ([5ae718e](https://github.com/open-sauced/insights/commit/5ae718e88a61ce34e973ed389f9d7394bb66e56b))
+- add issues to highlights ([#1496](https://github.com/open-sauced/insights/issues/1496)) ([98e106e](https://github.com/open-sauced/insights/commit/98e106ef9b58f5cc7a9ceeb2ed668bac5b792de3))
+- add repositories cart title ([#1500](https://github.com/open-sauced/insights/issues/1500)) ([d2693e2](https://github.com/open-sauced/insights/commit/d2693e29cacedd7bb7daceb5b6f9d889df07f6cc))
+- update beta badge with maintainer badge to contributor profile ([#1557](https://github.com/open-sauced/insights/issues/1557)) ([51451a6](https://github.com/open-sauced/insights/commit/51451a67614e31467d20544ce38ec3a50ab4126e))
+- use Netlify edge function for dev card ([#1400](https://github.com/open-sauced/insights/issues/1400)) ([5ae718e](https://github.com/open-sauced/insights/commit/5ae718e88a61ce34e973ed389f9d7394bb66e56b))
 
 ## [1.60.0-beta.12](https://github.com/open-sauced/insights/compare/v1.60.0-beta.11...v1.60.0-beta.12) (2023-08-16)
 
-
 ### 🍕 Features
 
-* use Netlify edge function for dev card ([#1400](https://github.com/open-sauced/insights/issues/1400)) ([5ae718e](https://github.com/open-sauced/insights/commit/5ae718e88a61ce34e973ed389f9d7394bb66e56b))
+- use Netlify edge function for dev card ([#1400](https://github.com/open-sauced/insights/issues/1400)) ([5ae718e](https://github.com/open-sauced/insights/commit/5ae718e88a61ce34e973ed389f9d7394bb66e56b))
 
 ## [1.60.0-beta.11](https://github.com/open-sauced/insights/compare/v1.60.0-beta.10...v1.60.0-beta.11) (2023-08-15)
 
-
 ### 🐛 Bug Fixes
 
-* single highlight dialog close button not working in new browser tab ([#1551](https://github.com/open-sauced/insights/issues/1551)) ([b6312d5](https://github.com/open-sauced/insights/commit/b6312d5615a369c5143679e22236bf86e41a9bb2))
-
+- single highlight dialog close button not working in new browser tab ([#1551](https://github.com/open-sauced/insights/issues/1551)) ([b6312d5](https://github.com/open-sauced/insights/commit/b6312d5615a369c5143679e22236bf86e41a9bb2))
 
 ### 🍕 Features
 
-* update beta badge with maintainer badge to contributor profile ([#1557](https://github.com/open-sauced/insights/issues/1557)) ([51451a6](https://github.com/open-sauced/insights/commit/51451a67614e31467d20544ce38ec3a50ab4126e))
+- update beta badge with maintainer badge to contributor profile ([#1557](https://github.com/open-sauced/insights/issues/1557)) ([51451a6](https://github.com/open-sauced/insights/commit/51451a67614e31467d20544ce38ec3a50ab4126e))
 
 ## [1.60.0-beta.10](https://github.com/open-sauced/insights/compare/v1.60.0-beta.9...v1.60.0-beta.10) (2023-08-15)
 
-
 ### 🐛 Bug Fixes
 
-* refactor notification username retrieval and display logic ([#1537](https://github.com/open-sauced/insights/issues/1537)) ([6657a75](https://github.com/open-sauced/insights/commit/6657a7514e27eac4aaea972e7b8e26004559591c))
+- refactor notification username retrieval and display logic ([#1537](https://github.com/open-sauced/insights/issues/1537)) ([6657a75](https://github.com/open-sauced/insights/commit/6657a7514e27eac4aaea972e7b8e26004559591c))
 
 ## [1.60.0-beta.9](https://github.com/open-sauced/insights/compare/v1.60.0-beta.8...v1.60.0-beta.9) (2023-08-15)
 
-
 ### 🐛 Bug Fixes
 
-* add space between avatar and  cta menu ([#1492](https://github.com/open-sauced/insights/issues/1492)) ([3f334b0](https://github.com/open-sauced/insights/commit/3f334b09eb74cf97e7390ed2ebcf8b0281912fe0))
+- add space between avatar and cta menu ([#1492](https://github.com/open-sauced/insights/issues/1492)) ([3f334b0](https://github.com/open-sauced/insights/commit/3f334b09eb74cf97e7390ed2ebcf8b0281912fe0))
 
 ## [1.60.0-beta.8](https://github.com/open-sauced/insights/compare/v1.60.0-beta.7...v1.60.0-beta.8) (2023-08-14)
 
-
 ### 🐛 Bug Fixes
 
-* enhance feed layout responsiveness ([#1553](https://github.com/open-sauced/insights/issues/1553)) ([2d5fb3e](https://github.com/open-sauced/insights/commit/2d5fb3e32037c46d15459b5b934a13f3985c27b4))
+- enhance feed layout responsiveness ([#1553](https://github.com/open-sauced/insights/issues/1553)) ([2d5fb3e](https://github.com/open-sauced/insights/commit/2d5fb3e32037c46d15459b5b934a13f3985c27b4))
 
 ## [1.60.0-beta.7](https://github.com/open-sauced/insights/compare/v1.60.0-beta.6...v1.60.0-beta.7) (2023-08-14)
 
-
 ### 🐛 Bug Fixes
 
-* disabled the button while it's loading, so it doesn't add the same repo again ([#1536](https://github.com/open-sauced/insights/issues/1536)) ([61a8d3a](https://github.com/open-sauced/insights/commit/61a8d3a5b797fb59210c41a78fef196764c67939))
+- disabled the button while it's loading, so it doesn't add the same repo again ([#1536](https://github.com/open-sauced/insights/issues/1536)) ([61a8d3a](https://github.com/open-sauced/insights/commit/61a8d3a5b797fb59210c41a78fef196764c67939))
 
 ## [1.60.0-beta.6](https://github.com/open-sauced/insights/compare/v1.60.0-beta.5...v1.60.0-beta.6) (2023-08-11)
 
-
 ### 🐛 Bug Fixes
 
-* check session when updating user settings ([#1541](https://github.com/open-sauced/insights/issues/1541)) ([6961962](https://github.com/open-sauced/insights/commit/696196237772d7b144630931fa59f9e5bf621994))
-* exclude empty interests on profile page ([#1539](https://github.com/open-sauced/insights/issues/1539)) ([34fc885](https://github.com/open-sauced/insights/commit/34fc88549758cca690db427f1a2e11095c32028d))
-* fixed margin issues on layout ([#1534](https://github.com/open-sauced/insights/issues/1534)) ([2ab0b02](https://github.com/open-sauced/insights/commit/2ab0b0292d18ce01a142558f82da7e3da4b02191))
-* release 1.59 hot fixes ([#1547](https://github.com/open-sauced/insights/issues/1547)) ([30a7eea](https://github.com/open-sauced/insights/commit/30a7eeaebc20e62cf62757cabf17c2b6b9343615))
+- check session when updating user settings ([#1541](https://github.com/open-sauced/insights/issues/1541)) ([6961962](https://github.com/open-sauced/insights/commit/696196237772d7b144630931fa59f9e5bf621994))
+- exclude empty interests on profile page ([#1539](https://github.com/open-sauced/insights/issues/1539)) ([34fc885](https://github.com/open-sauced/insights/commit/34fc88549758cca690db427f1a2e11095c32028d))
+- fixed margin issues on layout ([#1534](https://github.com/open-sauced/insights/issues/1534)) ([2ab0b02](https://github.com/open-sauced/insights/commit/2ab0b0292d18ce01a142558f82da7e3da4b02191))
+- release 1.59 hot fixes ([#1547](https://github.com/open-sauced/insights/issues/1547)) ([30a7eea](https://github.com/open-sauced/insights/commit/30a7eeaebc20e62cf62757cabf17c2b6b9343615))
 
 ### [1.59.1](https://github.com/open-sauced/insights/compare/v1.59.0...v1.59.1) (2023-08-11)
 
