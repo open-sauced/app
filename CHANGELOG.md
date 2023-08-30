@@ -5,6 +5,19 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.62.1-beta.1](https://github.com/open-sauced/insights/compare/v1.62.0...v1.62.1-beta.1) (2023-08-30)
+
+
+### 🧑‍💻 Code Refactoring
+
+* calcDistanceFromToday function ([#1633](https://github.com/open-sauced/insights/issues/1633)) ([b2286a4](https://github.com/open-sauced/insights/commit/b2286a482594963447dc3b10f5ed70a790b1c882))
+
+
+### 🐛 Bug Fixes
+
+* remove tailwind anti-pattern from the repo ([#1637](https://github.com/open-sauced/insights/issues/1637)) ([d2974ab](https://github.com/open-sauced/insights/commit/d2974ab9217be3c4e24639af120d573eb232bcc7))
+* show highlights tab without highlights ([#1631](https://github.com/open-sauced/insights/issues/1631)) ([65b3e99](https://github.com/open-sauced/insights/commit/65b3e99a2f76a04a66a02eb97a29531eb7d0b8ca))
+
 ## [1.62.0](https://github.com/open-sauced/insights/compare/v1.61.0...v1.62.0) (2023-08-29)
 
 
