@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.62.1-beta.2](https://github.com/open-sauced/insights/compare/v1.62.1-beta.1...v1.62.1-beta.2) (2023-08-30)
+
+
+### 🐛 Bug Fixes
+
+* reduce font size on the Highlights page navigation tabs  ([#1630](https://github.com/open-sauced/insights/issues/1630)) ([68e3ed6](https://github.com/open-sauced/insights/commit/68e3ed631b3cbd5f08cabebbde876497678a09f2))
+
 ### [1.62.1-beta.1](https://github.com/open-sauced/insights/compare/v1.62.0...v1.62.1-beta.1) (2023-08-30)
 
 
