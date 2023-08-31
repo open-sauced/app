@@ -75,6 +75,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
   const [tagRepoSearchLoading, setTagRepoSearchLoading] = useState<boolean>(false);
   const [errorMsg, setError] = useState("");
   const [highlightSuggestions, setHighlightSuggestions] = useState<any[]>([]);
+  const generateSummary = useRef(false);
 
   const charLimit = 500;
 
@@ -192,7 +193,12 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
         const mergedPullRequests = await fetchLatestMergedPullRequests();
         const openPullRequests = await fetchLatestOpenPullRequests();
 
-        const newHighlightSuggestions = [...issues, ...mergedPullRequests, ...openPullRequests];
+        const newHighlightSuggestions = [];
+        for (let i = 0; i < 5; i++) {
+          if (issues[i]) newHighlightSuggestions.push(issues[i]);
+          if (mergedPullRequests[i]) newHighlightSuggestions.push(mergedPullRequests[i]);
+          if (openPullRequests[i]) newHighlightSuggestions.push(openPullRequests[i]);
+        }
 
         setHighlightSuggestions(newHighlightSuggestions);
       } catch (err) {
@@ -206,6 +212,10 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
   // if its a github link, automatically tag the repo if its not already tagged
   useEffect(() => {
     if (highlightLink && (isValidPullRequestUrl(highlightLink) || isValidIssueUrl(highlightLink))) {
+      if (generateSummary.current) {
+        generateSummary.current = false;
+        handleGenerateHighlightSummary();
+      }
       const { apiPaths } = generateRepoParts(highlightLink);
       const { repoName, orgName, issueId } = apiPaths;
       const repoIcon = getAvatarByUsername(orgName, 60);
@@ -256,6 +266,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
   };
 
   const handleGenerateHighlightSummary = async () => {
+    console.log("HLLL", highlightLink);
     if (
       !highlightLink ||
       (!isValidPullRequestUrl(highlightLink) && !isValidIssueUrl(highlightLink) && !isValidBlogUrl(highlightLink))
@@ -558,26 +569,23 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
               <span className="text-sm font-semibold text-light-slate-9 ml-2">Based on your latest activity</span>
             </h1>
             <div className="flex flex-col gap-2 overflow-hidden text-sm w-full">
-              {highlightSuggestions
-                .sort(() => Math.random() - 0.5)
-                .splice(0, 3)
-                .map((suggestion) => (
-                  <div
-                    key={suggestion.url}
-                    className="flex items-center justify-between w-full gap-4 text-sm bg-white border rounded-lg p-2 cursor-pointer"
-                  >
-                    <div className="flex w-full gap-2">
-                      {suggestion.type === "pull_request" && (
-                        <BiGitMerge
-                          className={`
+              {highlightSuggestions.slice(0, 3).map((suggestion) => (
+                <div
+                  key={suggestion.url}
+                  className="flex items-center justify-between w-full gap-4 text-sm bg-white border rounded-lg p-2 cursor-pointer"
+                >
+                  <div className="flex w-full gap-2">
+                    {suggestion.type === "pull_request" && (
+                      <BiGitMerge
+                        className={`
                       text-xl
                       ${suggestion.status_reason === "open" ? "text-green-600" : "text-purple-600"}
                       `}
-                        />
-                      )}
-                      {suggestion.type === "issue" && (
-                        <VscIssues
-                          className={`
+                      />
+                    )}
+                    {suggestion.type === "issue" && (
+                      <VscIssues
+                        className={`
                       text-xl
                       ${
                         suggestion.status === "open"
@@ -587,44 +595,42 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                           : "text-purple-600"
                       }
                     `}
-                        />
-                      )}
-                      <p className="text-light-slate-11 truncate w-[16rem]">{suggestion.title}</p>
-                    </div>
-                    <Tooltip className="text-xs" direction="top" content="Add and Summarize">
-                      <button
-                        type="button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setHighlightLink(suggestion.url);
-                          setTitle(suggestion.title);
-                        }}
-                        disabled={isSummaryButtonDisabled}
-                        className="p-2 rounded-full hover:bg-light-slate-3 text-light-slate-11 transition"
-                      >
-                        <FiEdit2 className="text-xl" />
-                      </button>
-                    </Tooltip>
-
-                    <Tooltip className="text-xs" direction="top" content="Add and Summarize">
-                      <button
-                        type="button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setHighlightLink(suggestion.url);
-                          setTitle(suggestion.title);
-                          setTimeout(() => {
-                            handleGenerateHighlightSummary();
-                          }, 1000);
-                        }}
-                        disabled={isSummaryButtonDisabled}
-                        className="p-2 rounded-full hover:bg-light-slate-3 text-light-slate-11 transition disabled:cursor-not-allowed disabled:animate-pulse disabled:text-light-orange-9"
-                      >
-                        <HiOutlineSparkles className="text-base" />
-                      </button>
-                    </Tooltip>
+                      />
+                    )}
+                    <p className="text-light-slate-11 truncate w-[16rem]">{suggestion.title}</p>
                   </div>
-                ))}
+                  <Tooltip className="text-xs" direction="top" content="Add and Summarize">
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setHighlightLink(suggestion.url);
+                        setTitle(suggestion.title);
+                      }}
+                      disabled={isSummaryButtonDisabled}
+                      className="p-2 rounded-full hover:bg-light-slate-3 text-light-slate-11 transition"
+                    >
+                      <FiEdit2 className="text-xl" />
+                    </button>
+                  </Tooltip>
+
+                  <Tooltip className="text-xs" direction="top" content="Add and Summarize">
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setHighlightLink(suggestion.url);
+                        setTitle(suggestion.title);
+                        generateSummary.current = true;
+                      }}
+                      disabled={isSummaryButtonDisabled}
+                      className="p-2 rounded-full hover:bg-light-slate-3 text-light-slate-11 transition disabled:cursor-not-allowed disabled:animate-pulse disabled:text-light-orange-9"
+                    >
+                      <HiOutlineSparkles className="text-base" />
+                    </button>
+                  </Tooltip>
+                </div>
+              ))}
             </div>
           </form>
         </DialogContent>
