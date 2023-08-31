@@ -54,12 +54,14 @@ const RepositoriesCart = ({
     }
   };
 
+  console.log(history);
+
   return (
     <>
       <Title className="!text-1xl !leading-none mb-4 xl:mt-10 font-medium" level={4}>
         Repositories Added
       </Title>
-      <div className="w-full border flex flex-col gap-2 rounded-lg p-6">
+      <div className="flex flex-col w-full gap-2 p-6 border rounded-lg">
         {/* Empty state of Cart */}
         {cartItems.length > 0 && hasItems ? (
           cartItems.map((item, index) => (
@@ -79,7 +81,7 @@ const RepositoriesCart = ({
           <div className={`${history.length > 0 && "border-1"} mt-2 py-1`}>
             {history.length > 0 ? <Text>Add again:</Text> : ""}
             {history.length > 0 &&
-              history.map(({ orgName, repoName, totalPrs, avatar }, index) => (
+              history.slice(0, 5).map(({ orgName, repoName, avatar }, index) => (
                 <div key={`${index}/${orgName}/${repoName}`} className="flex items-center justify-between mt-2">
                   <div className="flex items-center gap-3 ">
                     <Avatar avatarURL={avatar} initials="" size="sm" className="" />

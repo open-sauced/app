@@ -18,10 +18,10 @@ import { generateRepoParts, getAvatarById, getAvatarByUsername } from "lib/utils
 import useStore from "lib/store";
 import Error from "components/atoms/Error/Error";
 import Search from "components/atoms/Search/search";
-import { RepoCardProfileProps } from "components/molecules/RepoCardProfile/repo-card-profile";
 import { useToast } from "lib/hooks/useToast";
 import TeamMembersConfig, { TeamMemberData } from "components/molecules/TeamMembersConfig/team-members-config";
 import useInsightMembers from "lib/hooks/useInsightMembers";
+import { useFetchInsightRecommendedRepositories } from "lib/hooks/useFetchOrgRecommendations";
 import SuggestedRepositoriesList from "../SuggestedRepoList/suggested-repo-list";
 import DeleteInsightPageModal from "./DeleteInsightPageModal";
 
@@ -57,6 +57,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
   }, [repoListData, router.query.selectedRepos, pageHref]);
 
   const { data, addMember, deleteMember, updateMember } = useInsightMembers(insight?.id || 0);
+  const { data: recommendedRepos } = useFetchInsightRecommendedRepositories();
 
   const members =
     data &&
@@ -92,6 +93,27 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [repoSearchTerm, setRepoSearchTerm] = useState<string>("");
   const [suggestions, setSuggestions] = useState<string[]>([]);
+
+  console.log("recommendedRepos", recommendedRepos);
+  console.log("repos", repos);
+
+  const recommendedReposWithoutSelected = recommendedRepos
+    ?.filter((repo) => !repos.find((selectedRepo) => selectedRepo.id === repo.id))
+    .map((repo) => {
+      const [orgName, repoName] = repo.full_name.split("/");
+      const totalPrs = (repo.open_prs_count || 0) + (repo.closed_prs_count || 0) + (repo.merged_prs_count || 0);
+      const avatar = getAvatarByUsername(orgName, 60);
+      const totalIssues = repo.issues || 0;
+
+      return {
+        orgName,
+        repoName,
+        totalPrs,
+        avatar,
+        totalIssues,
+      };
+    })
+    .slice(0, 3);
 
   useEffect(() => {
     if (pageRepos) {
@@ -151,7 +173,6 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
       body: JSON.stringify({
         name,
         repos: repos.map((repo) => ({ id: repo.id, fullName: repo.full_name })),
-        // eslint-disable-next-line
         is_public: isPublic,
       }),
     });
@@ -191,6 +212,20 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
     }
 
     setSubmitted(false);
+  };
+
+  const addSuggestedRepo = (repoToAdd: string) => {
+    const hasRepo = repos.find((repo) => `${repo.full_name}` === repoToAdd);
+
+    if (hasRepo) {
+      return;
+    }
+
+    const actualRepo = recommendedRepos?.find((repo) => repo.full_name === repoToAdd);
+
+    setRepos((repos) => {
+      return [...repos, actualRepo as unknown as DbRepo];
+    });
   };
 
   const loadAndAddRepo = async (repoToAdd: string, isAddedFromCart = false) => {
@@ -256,6 +291,19 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
   };
 
   const handleReAddRepository = async (repoAdded: string) => {
+    const existInSuggestions = recommendedRepos.find((repo) => `${repo.full_name}` === repoAdded);
+
+    console.log("existInSuggestions", existInSuggestions);
+
+    if (existInSuggestions) {
+      setRepoHistory((historyRepos) => {
+        return historyRepos.filter((repo) => `${repo.full_name}` !== repoAdded);
+      });
+
+      addSuggestedRepo(repoAdded);
+      return;
+    }
+
     try {
       await loadAndAddRepo(repoAdded, true);
 
@@ -270,8 +318,15 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
       return addedRepos.filter((repo) => repo.id !== id);
     });
 
+    const repoRemoved = repos.find((repo) => repo.id === id);
+
+    const repoAlreadyInHistory = repoHistory.find((repo) => repo.id === id);
+    if (repoAlreadyInHistory) {
+      return;
+    }
+
     setRepoHistory((historyRepos) => {
-      return [...historyRepos, repos.find((repo) => repo.id === id) as DbRepo];
+      return [...historyRepos, repoRemoved as DbRepo];
     });
   };
 
@@ -348,30 +403,6 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
     updateSuggestionsDebounced();
   }, [repoSearchTerm]);
 
-  const staticSuggestedRepos: RepoCardProfileProps[] = [
-    {
-      avatar: "https://avatars.githubusercontent.com/u/57568598?s=200&v=4",
-      prCount: 8,
-      repoName: "insights",
-      issueCount: 87,
-      orgName: "open-sauced",
-    },
-    {
-      avatar: "https://avatars.githubusercontent.com/u/59704711?s=200&v=4",
-      prCount: 26,
-      repoName: "cli",
-      issueCount: 398,
-      orgName: "cli",
-    },
-    {
-      avatar: "https://avatars.githubusercontent.com/u/42048915?s=200&v=4",
-      prCount: 100,
-      repoName: "deno",
-      issueCount: 1200,
-      orgName: "denoland",
-    },
-  ];
-
   return (
     <section className="flex flex-col justify-center w-full py-4 xl:flex-row xl:gap-20 xl:pl-28 ">
       <div className="flex flex-col gap-8">
@@ -423,10 +454,10 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
           </div>
 
           <SuggestedRepositoriesList
-            reposData={staticSuggestedRepos}
+            reposData={recommendedReposWithoutSelected}
             loadingData={addRepoLoading}
             onAddRepo={(repo) => {
-              loadAndAddRepo(repo);
+              addSuggestedRepo(repo);
             }}
           />
         </div>
@@ -478,7 +509,9 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
           handleCreatePage={handleCreateInsightPage}
           handleUpdatePage={handleUpdateInsightPage}
           handleAddToCart={handleReAddRepository}
-          history={reposRemoved}
+          history={reposRemoved.filter(
+            (repo) => !repos.find((r) => r.full_name === `${repo.orgName}/${repo.repoName}`)
+          )}
           createPageButtonDisabled={disableCreateButton()}
         >
           {repos.map((repo) => {
@@ -501,7 +534,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
             );
           })}
         </RepositoriesCart>
-        <div className="flex flex-col justify-between mt-8 pt-8 border-t">
+        <div className="flex flex-col justify-between pt-8 mt-8 border-t">
           <Title className="!text-1xl !leading-none mb-4 mt-8" level={4}>
             Page Visibility
           </Title>
