@@ -20,6 +20,35 @@ interface DbRepo {
   readonly description: string;
 }
 
+interface DbRecommendedInsightsRepo {
+  readonly id: string;
+  readonly size: number;
+  readonly stars: number;
+  readonly issues: number;
+  readonly full_name: string;
+  readonly pr_active_count?: number;
+  readonly open_prs_count?: number;
+  readonly merged_prs_count?: number;
+  readonly closed_prs_count?: number;
+  readonly draft_prs_count?: number;
+  readonly spam_prs_count?: number;
+  readonly pr_velocity_count?: number;
+  readonly churnTotalCount?: number;
+  readonly language: string;
+  readonly stars: number;
+  readonly description: string;
+  readonly forks: number;
+  readonly created_at: string;
+  readonly updated_at: string;
+  readonly watchers: number;
+  readonly url: string;
+  readonly topics: string[];
+  readonly pushed_at: string;
+  readonly node_id: string;
+  readonly name: string;
+  readonly default_branch: string;
+}
+
 interface DbRepoPR {
   readonly title: string;
   readonly author_login: string;
