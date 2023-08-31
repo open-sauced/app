@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-import { FiCalendar } from "react-icons/fi";
+import { FiCalendar, FiEdit2 } from "react-icons/fi";
 import { format } from "date-fns";
 
 import { HiOutlineSparkles } from "react-icons/hi";
@@ -8,6 +8,9 @@ import { RxPencil1 } from "react-icons/rx";
 import { IoClose } from "react-icons/io5";
 import { BsTagFill } from "react-icons/bs";
 import { useDebounce } from "rooks";
+import { MdError } from "react-icons/md";
+import { BiGitMerge } from "react-icons/bi";
+import { VscIssues } from "react-icons/vsc";
 import Button from "components/atoms/Button/button";
 import Tooltip from "components/atoms/Tooltip/tooltip";
 
@@ -36,7 +39,6 @@ import generateBlogHighlightSummary from "lib/utils/generate-blog-highlight-summ
 import Search from "components/atoms/Search/search";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { Calendar } from "../Calendar/calendar";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../Collapsible/collapsible";
 import { Popover, PopoverContent, PopoverTrigger } from "../Popover/popover";
 import GhOpenGraphImg from "../GhOpenGraphImg/gh-open-graph-img";
 import DevToSocialImg from "../DevToSocialImage/dev-to-social-img";
@@ -55,7 +57,7 @@ interface HighlightInputFormProps {
 }
 
 const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.Element => {
-  const { providerToken } = useSupabaseAuth();
+  const { providerToken, user: loggedInUser } = useSupabaseAuth();
   const [isDivFocused, setIsDivFocused] = useState(false);
   const [isSummaryButtonDisabled, setIsSummaryButtonDisabled] = useState(false);
   const [isFormOpenMobile, setIsFormOpenMobile] = useState(false);
@@ -71,6 +73,8 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
   const [taggedRepoSearchTerm, setTaggedRepoSearchTerm] = useState<string>("");
   const [repoTagSuggestions, setRepoTagSuggestions] = useState<string[]>([]);
   const [tagRepoSearchLoading, setTagRepoSearchLoading] = useState<boolean>(false);
+  const [errorMsg, setError] = useState("");
+  const [highlightSuggestions, setHighlightSuggestions] = useState<any[]>([]);
 
   const charLimit = 500;
 
@@ -94,6 +98,109 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
       document.body.style.overflow = "auto";
     }
   }, [isFormOpenMobile]);
+
+  // get the user's latest pull requests and issues that don't yet have highlights associated with them
+  // and suggest them to the user when they are creating a highlight.
+  useEffect(() => {
+    const fetchLatestIssues = async () => {
+      const req = await fetch(
+        `https://api.github.com/search/issues?q=author:${loggedInUser?.user_metadata.user_name}+is:issue&sort=updated&per_page=5`,
+        {
+          ...(providerToken
+            ? {
+                headers: {
+                  Authorization: `Bearer ${providerToken}`,
+                },
+              }
+            : {}),
+        }
+      );
+
+      if (req.ok) {
+        const res = await req.json();
+        const issues = res.items.map((item: any) => ({
+          title: item.title,
+          url: item.html_url,
+          type: "issue",
+          status: item.state,
+          status_reason: item.state_reason,
+        }));
+
+        return issues;
+      }
+    };
+
+    const fetchLatestMergedPullRequests = async () => {
+      const mergedReq = await fetch(
+        `https://api.github.com/search/issues?q=author:${loggedInUser?.user_metadata.user_name}+is:pr+is:merged&sort=updated&per_page=5`,
+        {
+          ...(providerToken
+            ? {
+                headers: {
+                  Authorization: `Bearer ${providerToken}`,
+                },
+              }
+            : {}),
+        }
+      );
+
+      if (mergedReq.ok) {
+        const res = await mergedReq.json();
+        const pullRequests = res.items.map((item: any) => ({
+          title: item.title,
+          url: item.html_url,
+          type: "pull_request",
+          status: item.state,
+          status_reason: "merged",
+        }));
+
+        return pullRequests;
+      }
+    };
+
+    const fetchLatestOpenPullRequests = async () => {
+      const openReq = await fetch(
+        `https://api.github.com/search/issues?q=author:${loggedInUser?.user_metadata.user_name}+is:pr+is:open&sort=updated&per_page=5`,
+        {
+          ...(providerToken
+            ? {
+                headers: {
+                  Authorization: `Bearer ${providerToken}`,
+                },
+              }
+            : {}),
+        }
+      );
+
+      if (openReq.ok) {
+        const res = await openReq.json();
+        const pullRequests = res.items.map((item: any) => ({
+          title: item.title,
+          url: item.html_url,
+          type: "pull_request",
+          status: item.state,
+          status_reason: "open",
+        }));
+
+        return pullRequests;
+      }
+    };
+
+    const fetchData = async () => {
+      try {
+        const issues = await fetchLatestIssues();
+        const mergedPullRequests = await fetchLatestMergedPullRequests();
+        const openPullRequests = await fetchLatestOpenPullRequests();
+
+        const newHighlightSuggestions = [...issues, ...mergedPullRequests, ...openPullRequests];
+
+        setHighlightSuggestions(newHighlightSuggestions);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchData();
+  }, [providerToken, loggedInUser]);
 
   // when user updates the highlight link, check if its a github link
   // if its a github link, automatically tag the repo if its not already tagged
@@ -255,20 +362,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
         toast({ description: "Highlight Posted!", title: "Success", variant: "success" });
       }
     } else {
-      toast({
-        description: "Please provide a valid pull request, issue or dev.to blog link!",
-        title: "Error",
-        variant: "danger",
-      });
-    }
-  };
-
-  // Handle collapsible change
-  const handleCollapsibleOpenChange = () => {
-    if (isDivFocused && !charCount && !highlightLink) {
-      setIsDivFocused(false);
-    } else {
-      setIsDivFocused(true);
+      setError("Please provide a valid pull request, issue or dev.to blog link!");
     }
   };
 
@@ -305,50 +399,82 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
   }, [taggedRepoSearchTerm]);
 
   return (
-    <form onSubmit={handlePostHighlight} className="flex flex-col flex-1 gap-4 ">
-      <Collapsible className="max-sm:hidden" onOpenChange={handleCollapsibleOpenChange} open={isDivFocused}>
+    <>
+      <div className="flex flex-col flex-1 gap-4">
         <div className="flex flex-col gap-2 p-2 overflow-hidden text-sm bg-white border rounded-lg">
-          <CollapsibleTrigger asChild>
-            <div className="flex pr-2">
-              <input
-                value={title}
-                maxLength={50}
-                onChange={(e) => setTitle(e.target.value)}
-                className="flex-1 font-normal placeholder:text-sm focus:outline-none"
-                type="text"
-                placeholder={isDivFocused ? "Add title (optional)" : "Post a highlight to show your work!"}
-                id="highlight-create-input"
-              />
-            </div>
-          </CollapsibleTrigger>
-          <CollapsibleContent>
-            <TypeWriterTextArea
-              className={`resize-y min-h-[80px] max-h-99 font-normal text-light-slate-11 mb-2 transition focus:outline-none rounded-lg ${
-                !isDivFocused ? "hidden" : ""
-              }`}
-              defaultRow={4}
-              value={bodyText}
-              placeholder={` Tell us about your highlight and add a link
-              `}
-              typewrite={isTyping}
-              textContent={bodyText}
-              onChangeText={(value) => {
-                handleTextAreaInputChange(value);
-                setCharCount(value.length);
-              }}
-              ref={textAreaRef}
+          <div className="flex pr-2">
+            <input
+              value={title}
+              maxLength={50}
+              onChange={(e) => setTitle(e.target.value)}
+              className="flex-1 font-normal placeholder:text-sm focus:outline-none"
+              type="text"
+              placeholder={"Post a highlight to show your work!"}
+              id="highlight-create-input"
+              onFocus={() => setIsDivFocused(true)}
             />
+          </div>
+        </div>
+      </div>
+      <Dialog
+        onOpenChange={() => {
+          setIsDivFocused(false);
+        }}
+        open={isDivFocused}
+      >
+        <DialogContent
+          className="p-4 scrollbar scrollbar-thumb-light-slate-12 scrollbar-track-light-slate-3 scrollbar-thin"
+          style={{ width: "33vw", maxHeight: "80vh", overflow: "auto" }}
+        >
+          <DialogHeader>
+            <DialogTitle>Post a highlight</DialogTitle>
+          </DialogHeader>
+          <DialogCloseButton onClick={() => setIsDivFocused(false)} />
+          <form onSubmit={handlePostHighlight} className="flex flex-col flex-1 gap-4 font-normal">
+            {errorMsg && (
+              <p className="inline-flex items-center gap-2 px-2 py-1 text-red-500 bg-red-100 border border-red-500 rounded-md w-full text-sm">
+                <MdError size={20} /> {errorMsg}
+              </p>
+            )}
+            <div className="flex flex-col gap-2 p-2 overflow-hidden text-sm bg-white border rounded-lg">
+              <div className="flex pr-2">
+                <input
+                  value={title}
+                  maxLength={50}
+                  onChange={(e) => setTitle(e.target.value)}
+                  className="flex-1 font-normal placeholder:text-sm focus:outline-none"
+                  type="text"
+                  placeholder={"Add title (optional)"}
+                  id="highlight-create-input"
+                  onFocus={() => setIsDivFocused(true)}
+                />
+              </div>
+              <TypeWriterTextArea
+                className={`resize-y min-h-[80px] max-h-99 font-normal text-light-slate-11 transition focus:outline-none rounded-lg ${
+                  !isDivFocused ? "hidden" : ""
+                }`}
+                defaultRow={4}
+                value={bodyText}
+                placeholder={` Tell us about your highlight and add a link
+              `}
+                typewrite={isTyping}
+                textContent={bodyText}
+                onChangeText={(value) => {
+                  handleTextAreaInputChange(value);
+                  setCharCount(value.length);
+                }}
+                ref={textAreaRef}
+              />
 
-            <p className="flex justify-end gap-1 pb-2 text-xs text-light-slate-9">
-              <span className={`${!validCharLimit() && "text-red-600"}`}>
-                {!validCharLimit() ? `-${charCount - charLimit}` : charCount}
-              </span>
-              / <span>{charLimit}</span>
-            </p>
+              <p className="flex justify-end gap-1 text-xs text-light-slate-9">
+                <span className={`${!validCharLimit() && "text-red-600"}`}>
+                  {!validCharLimit() ? `-${charCount - charLimit}` : charCount}
+                </span>
+                / <span>{charLimit}</span>
+              </p>
+            </div>
 
-            <div
-              className={`flex items-center justify-between w-full gap-1 p-1 text-sm bg-white border rounded-lg mb-4`}
-            >
+            <div className={`flex items-center justify-between w-full gap-1 p-1 text-sm bg-white border rounded-lg`}>
               <div className="flex w-full gap-1">
                 <CardRepoList
                   repoList={taggedRepoList}
@@ -363,8 +489,8 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                       setAddTaggedRepoFormOpen(true);
                     }}
                   >
-                    <BsTagFill className="rounded-[4px] overflow-hidden" />
-                    <span className={"max-w-[45px] md:max-w-[100px] truncate"}>Add a repo</span>
+                    <BsTagFill className="rounded-[4px] overflow-hidden text-light-slate-11" />
+                    <span className={"max-w-[45px] md:max-w-[100px] truncate text-light-slate-11"}>Add a repo</span>
                   </button>
                 </Tooltip>
               </div>
@@ -410,27 +536,99 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                 />
               </div>
             </div>
-          </CollapsibleContent>
-        </div>
-      </Collapsible>
 
-      {highlightLink && isDivFocused && highlightLink.includes("github") && (
-        <GhOpenGraphImg className="max-sm:hidden" githubLink={highlightLink} />
-      )}
-      {highlightLink && isDivFocused && highlightLink.includes("dev.to") && (
-        <DevToSocialImg className="max-sm:hidden" blogLink={highlightLink} />
-      )}
+            {highlightLink && isDivFocused && highlightLink.includes("github") && (
+              <GhOpenGraphImg className="max-sm:hidden" githubLink={highlightLink} />
+            )}
+            {highlightLink && isDivFocused && highlightLink.includes("dev.to") && (
+              <DevToSocialImg className="max-sm:hidden" blogLink={highlightLink} />
+            )}
 
-      {isDivFocused && (
-        <Button
-          loading={loading}
-          disabled={!bodyText || !validCharLimit()}
-          className="ml-auto max-sm:hidden "
-          variant="primary"
-        >
-          Post
-        </Button>
-      )}
+            <Button
+              loading={loading}
+              disabled={!bodyText || !validCharLimit()}
+              className="ml-auto max-sm:hidden "
+              variant="primary"
+            >
+              Post
+            </Button>
+
+            <h1 className="text-md font-semibold text-slate-900">
+              Highlight suggestions
+              <span className="text-sm font-semibold text-light-slate-9 ml-2">Based on your latest activity</span>
+            </h1>
+            <div className="flex flex-col gap-2 overflow-hidden text-sm w-full">
+              {highlightSuggestions
+                .sort(() => Math.random() - 0.5)
+                .splice(0, 3)
+                .map((suggestion) => (
+                  <div
+                    key={suggestion.url}
+                    className="flex items-center justify-between w-full gap-4 text-sm bg-white border rounded-lg p-2 cursor-pointer"
+                  >
+                    <div className="flex w-full gap-2">
+                      {suggestion.type === "pull_request" && (
+                        <BiGitMerge
+                          className={`
+                      text-xl
+                      ${suggestion.status_reason === "open" ? "text-green-600" : "text-purple-600"}
+                      `}
+                        />
+                      )}
+                      {suggestion.type === "issue" && (
+                        <VscIssues
+                          className={`
+                      text-xl
+                      ${
+                        suggestion.status === "open"
+                          ? "text-green-600"
+                          : suggestion.status_reason === "not_planned"
+                          ? "text-red-600"
+                          : "text-purple-600"
+                      }
+                    `}
+                        />
+                      )}
+                      <p className="text-light-slate-11 truncate w-[16rem]">{suggestion.title}</p>
+                    </div>
+                    <Tooltip className="text-xs" direction="top" content="Add and Summarize">
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setHighlightLink(suggestion.url);
+                          setTitle(suggestion.title);
+                        }}
+                        disabled={isSummaryButtonDisabled}
+                        className="p-2 rounded-full hover:bg-light-slate-3 text-light-slate-11 transition"
+                      >
+                        <FiEdit2 className="text-xl" />
+                      </button>
+                    </Tooltip>
+
+                    <Tooltip className="text-xs" direction="top" content="Add and Summarize">
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setHighlightLink(suggestion.url);
+                          setTitle(suggestion.title);
+                          setTimeout(() => {
+                            handleGenerateHighlightSummary();
+                          }, 1000);
+                        }}
+                        disabled={isSummaryButtonDisabled}
+                        className="p-2 rounded-full hover:bg-light-slate-3 text-light-slate-11 transition disabled:cursor-not-allowed disabled:animate-pulse disabled:text-light-orange-9"
+                      >
+                        <HiOutlineSparkles className="text-base" />
+                      </button>
+                    </Tooltip>
+                  </div>
+                ))}
+            </div>
+          </form>
+        </DialogContent>
+      </Dialog>
 
       {/* Add Repo Popup Form */}
 
@@ -571,7 +769,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
           <RxPencil1 className="text-3xl" />
         </div>
       </Fab>
-    </form>
+    </>
   );
 };
 

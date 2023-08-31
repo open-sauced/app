@@ -57,3 +57,14 @@ input[type="search"]::-webkit-search-cancel-button {
 .z-50 {
   z-index: 50;
 }
+
+div[role="dialog"]::-webkit-scrollbar {
+  width: 16px;
+  height: 10px;
+}
+div[role="dialog"]::-webkit-scrollbar-thumb {
+  border: 4px solid rgba(0, 0, 0, 0);
+  border-radius: 8px;
+  background: #c2c9d2;
+  background-clip: padding-box;
+}
