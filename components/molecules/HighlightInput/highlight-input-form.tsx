@@ -555,10 +555,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
         }}
         open={isDivFocused}
       >
-        <DialogContent
-          className="p-4 scrollbar scrollbar-thumb-light-slate-12 scrollbar-track-light-slate-3 scrollbar-thin"
-          style={{ width: "33vw", maxHeight: "80vh", overflow: "auto" }}
-        >
+        <DialogContent className="p-4" style={{ width: "33vw", maxHeight: "80vh", overflow: "auto" }}>
           <DialogHeader>
             <DialogTitle>Post a highlight</DialogTitle>
           </DialogHeader>
@@ -696,7 +693,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
               slidesPerView={1}
               onSlideChange={() => console.log("slide change")}
               onSwiper={(swiper) => console.log(swiper)}
-              className="max-w-[calc(33vw-3rem)]"
+              className="max-w-[calc(33vw-4rem)]"
               modules={[Pagination, A11y]}
               pagination={{
                 clickable: true,
@@ -708,23 +705,30 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
               {highlightSuggestions.map((suggestionPage) => (
                 <SwiperSlide key={suggestionPage[0].url}>
                   <div className="flex flex-col gap-2 overflow-hidden text-sm w-full">
-                    {suggestionPage.map((suggestion) => (
-                      <div
-                        key={suggestion.url}
-                        className="flex items-center justify-between w-full gap-4 text-sm bg-white border rounded-lg p-2"
-                      >
-                        <div className="flex w-full gap-2">
-                          {suggestion.type === "pull_request" && (
-                            <BiGitMerge
-                              className={`
+                    {suggestionPage.map(
+                      (suggestion: {
+                        url: string;
+                        type: string;
+                        status_reason: string;
+                        status: string;
+                        title: string;
+                      }) => (
+                        <div
+                          key={suggestion.url}
+                          className="flex items-center justify-between w-full gap-4 text-sm bg-white border rounded-lg p-2"
+                        >
+                          <div className="flex w-full gap-2">
+                            {suggestion.type === "pull_request" && (
+                              <BiGitMerge
+                                className={`
                       text-xl
                       ${suggestion.status_reason === "open" ? "text-green-600" : "text-purple-600"}
                       `}
-                            />
-                          )}
-                          {suggestion.type === "issue" && (
-                            <VscIssues
-                              className={`
+                              />
+                            )}
+                            {suggestion.type === "issue" && (
+                              <VscIssues
+                                className={`
                       text-xl
                       ${
                         suggestion.status === "open"
@@ -734,42 +738,43 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                           : "text-purple-600"
                       }
                     `}
-                            />
-                          )}
-                          <p className="text-light-slate-11 truncate w-[16rem]">{suggestion.title}</p>
-                        </div>
-                        <Tooltip className="text-xs" direction="top" content="Add and Summarize">
-                          <button
-                            type="button"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setHighlightLink(suggestion.url);
-                              setTitle(suggestion.title);
-                            }}
-                            disabled={isSummaryButtonDisabled}
-                            className="p-2 rounded-full hover:bg-light-slate-3 text-light-slate-11 transition"
-                          >
-                            <FiEdit2 className="text-xl" />
-                          </button>
-                        </Tooltip>
+                              />
+                            )}
+                            <p className="text-light-slate-11 truncate w-[16rem]">{suggestion.title}</p>
+                          </div>
+                          <Tooltip className="text-xs modal-tooltip" direction="top" content="Fill content">
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setHighlightLink(suggestion.url);
+                                setTitle(suggestion.title);
+                              }}
+                              disabled={isSummaryButtonDisabled}
+                              className="p-2 rounded-full hover:bg-light-slate-3 text-light-slate-11 transition"
+                            >
+                              <FiEdit2 className="text-xl" />
+                            </button>
+                          </Tooltip>
 
-                        <Tooltip className="text-xs" direction="top" content="Add and Summarize">
-                          <button
-                            type="button"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setHighlightLink(suggestion.url);
-                              setTitle(suggestion.title);
-                              generateSummary.current = true;
-                            }}
-                            disabled={isSummaryButtonDisabled}
-                            className="p-2 rounded-full hover:bg-light-slate-3 text-light-slate-11 transition disabled:cursor-not-allowed disabled:animate-pulse disabled:text-light-orange-9"
-                          >
-                            <HiOutlineSparkles className="text-base" />
-                          </button>
-                        </Tooltip>
-                      </div>
-                    ))}
+                          <Tooltip className="text-xs modal-tooltip" direction="top" content="Add and Summarize">
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setHighlightLink(suggestion.url);
+                                setTitle(suggestion.title);
+                                generateSummary.current = true;
+                              }}
+                              disabled={isSummaryButtonDisabled}
+                              className="p-2 rounded-full hover:bg-light-slate-3 text-light-slate-11 transition disabled:cursor-not-allowed disabled:animate-pulse disabled:text-light-orange-9"
+                            >
+                              <HiOutlineSparkles className="text-base" />
+                            </button>
+                          </Tooltip>
+                        </div>
+                      )
+                    )}
                   </div>
                 </SwiperSlide>
               ))}
