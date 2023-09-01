@@ -96,7 +96,7 @@ const ContributorHighlightCard = ({
 }: ContributorHighlightCardProps) => {
   const { toast } = useToast();
 
-  const formattedTaggedRepos = taggedRepos.map((repo) => {
+  const formattedTaggedRepos = (taggedRepos || []).map((repo) => {
     const [repoOwner, repoName] = repo.split("/");
     const repoIcon = getAvatarByUsername(repoOwner, 60);
     return { repoName, repoOwner, repoIcon };
@@ -226,12 +226,12 @@ const ContributorHighlightCard = ({
     const { owner: repoOwner, repoName } = getOwnerAndRepoNameFromUrl(highlightLink);
     const repoIcon = getAvatarByUsername(repoOwner, 60);
 
-    repos.push({ repoName, repoOwner, repoIcon });
+    repos = [{ repoName, repoOwner, repoIcon }];
   } else {
-    taggedRepos.map((repo) => {
+    repos = taggedRepos.map((repo) => {
       const [repoOwner, repoName] = repo.split("/");
       const repoIcon = getAvatarByUsername(repoOwner, 60);
-      repos.push({ repoName, repoOwner, repoIcon });
+      return { repoName, repoOwner, repoIcon };
     });
   }
 
