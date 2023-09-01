@@ -222,7 +222,7 @@ const ContributorHighlightCard = ({
 
   let repos: RepoList[] = [];
 
-  if (!taggedRepos) {
+  if (!taggedRepos || taggedRepos.length === 0) {
     const { owner: repoOwner, repoName } = getOwnerAndRepoNameFromUrl(highlightLink);
     const repoIcon = getAvatarByUsername(repoOwner, 60);
 
