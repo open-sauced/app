@@ -50,14 +50,6 @@ export const getRelativeDays = (days: number) => {
 export const calcDistanceFromToday = (endDate: Date) => {
   const daysFromNow = calcDaysFromToday(endDate);
 
-  if (daysFromNow >= 365) {
-    return `${getRelativeDays(calcDaysFromToday(endDate))}`;
-  }
-
-  if (daysFromNow > 30 && daysFromNow < 365) {
-    return `${getRelativeDays(calcDaysFromToday(endDate))}`;
-  }
-
   return `${getRelativeDays(daysFromNow)}`;
 };
 
