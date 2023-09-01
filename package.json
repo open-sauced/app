@@ -18,8 +18,8 @@
     "url": "git+ssh://git@github.com/open-sauced/insights.git"
   },
   "engines": {
-    "node": ">= 16.7.0",
-    "npm": ">= 8.0.0"
+    "node": "^18.17.0 || >=20.5.0",
+    "npm": ">= 9.6.0"
   },
   "scripts": {
     "types:auto-add": "npx typesync",
