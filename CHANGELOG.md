@@ -5,6 +5,18 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.62.1-beta.3](https://github.com/open-sauced/insights/compare/v1.62.1-beta.2...v1.62.1-beta.3) (2023-09-01)
+
+
+### 🐛 Bug Fixes
+
+* add check for undefined tagged_repos ([#1648](https://github.com/open-sauced/insights/issues/1648)) ([0236fa1](https://github.com/open-sauced/insights/commit/0236fa116f6cbbbce428415a939ad82c6200b6c0))
+
+
+### 🔁 Continuous Integration
+
+* update node version to 18 in workflows ([#1649](https://github.com/open-sauced/insights/issues/1649)) ([ea56fa0](https://github.com/open-sauced/insights/commit/ea56fa011276107ddc3249fe1d511d102f47e6b7))
+
 ### [1.62.1-beta.2](https://github.com/open-sauced/insights/compare/v1.62.1-beta.1...v1.62.1-beta.2) (2023-08-30)
 
 
