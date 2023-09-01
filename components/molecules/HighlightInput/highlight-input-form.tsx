@@ -83,11 +83,36 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
   const [highlightSuggestions, setHighlightSuggestions] = useState<any[]>([]);
   const generateSummary = useRef(false);
 
+  const fetchAllUserHighlights = async (page: number): Promise<DbHighlight[]> => {
+    const req = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/users/${loggedInUser?.user_metadata.user_name}/highlights?page=${page}`,
+      {
+        ...(providerToken
+          ? {
+              headers: {
+                Authorization: `Bearer ${providerToken}`,
+              },
+            }
+          : {}),
+      }
+    );
+
+    if (req.ok) {
+      const res = await req.json();
+      if (res.meta.hasNextPage) {
+        const nextPage = await fetchAllUserHighlights(page + 1);
+        return [...res.data, ...nextPage];
+      }
+      return res.data;
+    }
+    return [];
+  };
+
   const dummySuggestions = [
     [
       {
         title: "Add a title to your highlight 1",
-        url: "",
+        url: "https://dev.to/opensauced/how-open-source-helped-me-get-a-github-octernship-4f69",
         type: "pull_request",
         status: "open",
         status_reason: "open",
@@ -258,6 +283,22 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
       }
     };
 
+    const removeAlreadyHighlightedSuggestions = async (newHighlightSuggestions: any[]) => {
+      // get all the highlights of the user
+      const allHighlights = await fetchAllUserHighlights(1);
+      console.log("allHighlights", allHighlights);
+
+      // get all the urls of the highlights
+      const allHighlightUrls = allHighlights.map((highlight) => highlight.url);
+
+      // remove any suggestions that have already been highlighted
+      const filteredSuggestions = newHighlightSuggestions.map((suggestionPage) =>
+        suggestionPage.filter((suggestion: { url: string }) => !allHighlightUrls.includes(suggestion.url))
+      );
+
+      setHighlightSuggestions(filteredSuggestions);
+    };
+
     const fetchData = async () => {
       try {
         const issues = await fetchLatestIssues();
@@ -265,7 +306,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
         const openPullRequests = await fetchLatestOpenPullRequests();
 
         const newHighlightSuggestions = [];
-        for (let i = 0; i < 3; i++) {
+        for (let i = 0; i < 5; i++) {
           // 1 issue, 1 merged pull request, 1 open pull request per page
           const suggestionPage = [];
           if (issues && issues[i]) {
@@ -280,12 +321,13 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
           newHighlightSuggestions.push(suggestionPage);
         }
 
+        await removeAlreadyHighlightedSuggestions(newHighlightSuggestions);
         setHighlightSuggestions(newHighlightSuggestions);
       } catch (err) {
         console.log(err);
       }
     };
-    // fetchData();
+    fetchData();
   }, [providerToken, loggedInUser]);
 
   // when user updates the highlight link, check if its a github link
@@ -663,7 +705,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                 enabled: true,
               }}
             >
-              {dummySuggestions.map((suggestionPage) => (
+              {highlightSuggestions.map((suggestionPage) => (
                 <SwiperSlide key={suggestionPage[0].url}>
                   <div className="flex flex-col gap-2 overflow-hidden text-sm w-full">
                     {suggestionPage.map((suggestion) => (
