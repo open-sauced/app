@@ -108,71 +108,6 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
     return [];
   };
 
-  const dummySuggestions = [
-    [
-      {
-        title: "Add a title to your highlight 1",
-        url: "https://dev.to/opensauced/how-open-source-helped-me-get-a-github-octernship-4f69",
-        type: "pull_request",
-        status: "open",
-        status_reason: "open",
-      },
-      {
-        title: "Add a link to your highlight 2 ",
-        url: "",
-        type: "pull_request",
-        status: "closed",
-        status_reason: "merged",
-      },
-      {
-        title: "Add a link to your highlight 3",
-        url: "",
-        type: "issue",
-        status: "open",
-        status_reason: "open",
-      },
-    ],
-    [
-      {
-        title: "Add a link to your highlight 4",
-        url: "",
-        type: "issue",
-        status: "closed",
-        status_reason: "not_planned",
-      },
-      {
-        title: "Add a link to your highlight 5",
-        url: "",
-        type: "issue",
-        status: "closed",
-        status_reason: "not_planned",
-      },
-      {
-        title: "Add a link to your highlight 6",
-        url: "",
-        type: "issue",
-        status: "open",
-        status_reason: "open",
-      },
-    ],
-    [
-      {
-        title: "Add a link to your highlight 7",
-        url: "",
-        type: "issue",
-        status: "closed",
-        status_reason: "not_planned",
-      },
-      {
-        title: "Add a link to your highlight 8",
-        url: "",
-        type: "issue",
-        status: "closed",
-        status_reason: "not_planned",
-      },
-    ],
-  ];
-
   const charLimit = 500;
 
   const [date, setDate] = useState<Date | undefined>();
@@ -286,7 +221,6 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
     const removeAlreadyHighlightedSuggestions = async (newHighlightSuggestions: any[]) => {
       // get all the highlights of the user
       const allHighlights = await fetchAllUserHighlights(1);
-      console.log("allHighlights", allHighlights);
 
       // get all the urls of the highlights
       const allHighlightUrls = allHighlights.map((highlight) => highlight.url);
@@ -388,7 +322,6 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
   };
 
   const handleGenerateHighlightSummary = async () => {
-    console.log("HLLL", highlightLink);
     if (
       !highlightLink ||
       (!isValidPullRequestUrl(highlightLink) && !isValidIssueUrl(highlightLink) && !isValidBlogUrl(highlightLink))
@@ -533,7 +466,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
 
   return (
     <>
-      <div className="flex flex-col flex-1 gap-4">
+      <div className="flex flex-col flex-1 gap-4 max-sm:hidden">
         <div className="flex flex-col gap-2 p-2 overflow-hidden text-sm bg-white border rounded-lg">
           <div className="flex pr-2">
             <input
@@ -555,7 +488,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
         }}
         open={isDivFocused}
       >
-        <DialogContent className="p-4" style={{ width: "33vw", maxHeight: "80vh", overflow: "auto" }}>
+        <DialogContent className="p-4 w-[33vw]" style={{ maxHeight: "80vh", overflow: "auto" }}>
           <DialogHeader>
             <DialogTitle>Post a highlight</DialogTitle>
           </DialogHeader>
@@ -576,7 +509,6 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                   type="text"
                   placeholder={"Add title (optional)"}
                   id="highlight-create-input"
-                  onFocus={() => setIsDivFocused(true)}
                 />
               </div>
               <TypeWriterTextArea
@@ -691,9 +623,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
             <Swiper
               spaceBetween={8}
               slidesPerView={1}
-              onSlideChange={() => console.log("slide change")}
-              onSwiper={(swiper) => console.log(swiper)}
-              className="max-w-[calc(33vw-4rem)]"
+              className="w-[50vw]"
               modules={[Pagination, A11y]}
               pagination={{
                 clickable: true,
@@ -702,7 +632,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                 enabled: true,
               }}
             >
-              {highlightSuggestions.map((suggestionPage) => (
+              {highlightSuggestions?.map((suggestionPage) => (
                 <SwiperSlide key={suggestionPage[0].url}>
                   <div className="flex flex-col gap-2 overflow-hidden text-sm w-full">
                     {suggestionPage.map(
@@ -740,7 +670,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                     `}
                               />
                             )}
-                            <p className="text-light-slate-11 truncate w-[16rem]">{suggestion.title}</p>
+                            <p className="text-light-slate-11 truncate max-w-[16rem]">{suggestion.title}</p>
                           </div>
                           <Tooltip className="text-xs modal-tooltip" direction="top" content="Fill content">
                             <button
@@ -909,6 +839,96 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                 />
               </div>
             </div>
+            <h1 className="text-md font-semibold text-slate-900 my-2">Highlight suggestions</h1>
+            <Swiper
+              spaceBetween={8}
+              slidesPerView={1}
+              className="max-w-full"
+              modules={[Pagination, A11y]}
+              pagination={{
+                clickable: true,
+              }}
+              a11y={{
+                enabled: true,
+              }}
+            >
+              {highlightSuggestions?.map((suggestionPage) => (
+                <SwiperSlide key={suggestionPage[0].url}>
+                  <div className="flex flex-col gap-2 overflow-hidden text-sm w-full">
+                    {suggestionPage.map(
+                      (suggestion: {
+                        url: string;
+                        type: string;
+                        status_reason: string;
+                        status: string;
+                        title: string;
+                      }) => (
+                        <div
+                          key={suggestion.url}
+                          className="flex items-center justify-between w-full gap-4 text-sm bg-white border rounded-lg p-2"
+                        >
+                          <div className="flex w-full gap-2">
+                            {suggestion.type === "pull_request" && (
+                              <BiGitMerge
+                                className={`
+                      text-xl
+                      ${suggestion.status_reason === "open" ? "text-green-600" : "text-purple-600"}
+                      `}
+                              />
+                            )}
+                            {suggestion.type === "issue" && (
+                              <VscIssues
+                                className={`
+                      text-xl
+                      ${
+                        suggestion.status === "open"
+                          ? "text-green-600"
+                          : suggestion.status_reason === "not_planned"
+                          ? "text-red-600"
+                          : "text-purple-600"
+                      }
+                    `}
+                              />
+                            )}
+                            <p className="text-light-slate-11 truncate max-w-[16rem]">{suggestion.title}</p>
+                          </div>
+                          <Tooltip className="text-xs modal-tooltip" direction="top" content="Fill content">
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setHighlightLink(suggestion.url);
+                                setTitle(suggestion.title);
+                              }}
+                              disabled={isSummaryButtonDisabled}
+                              className="p-2 rounded-full hover:bg-light-slate-3 text-light-slate-11 transition"
+                            >
+                              <FiEdit2 className="text-xl" />
+                            </button>
+                          </Tooltip>
+
+                          <Tooltip className="text-xs modal-tooltip" direction="top" content="Add and Summarize">
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setHighlightLink(suggestion.url);
+                                setTitle(suggestion.title);
+                                generateSummary.current = true;
+                              }}
+                              disabled={isSummaryButtonDisabled}
+                              className="p-2 rounded-full hover:bg-light-slate-3 text-light-slate-11 transition disabled:cursor-not-allowed disabled:animate-pulse disabled:text-light-orange-9"
+                            >
+                              <HiOutlineSparkles className="text-base" />
+                            </button>
+                          </Tooltip>
+                        </div>
+                      )
+                    )}
+                  </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
           </div>
         </div>
       )}
