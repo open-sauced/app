@@ -108,6 +108,71 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
     return [];
   };
 
+  const dummySuggestions = [
+    [
+      {
+        title: "Add a title to your highlight 1",
+        url: "https://dev.to/opensauced/how-open-source-helped-me-get-a-github-octernship-4f69",
+        type: "pull_request",
+        status: "open",
+        status_reason: "open",
+      },
+      {
+        title: "Add a link to your highlight 2 ",
+        url: "",
+        type: "pull_request",
+        status: "closed",
+        status_reason: "merged",
+      },
+      {
+        title: "Add a link to your highlight 3",
+        url: "",
+        type: "issue",
+        status: "open",
+        status_reason: "open",
+      },
+    ],
+    [
+      {
+        title: "Add a link to your highlight 4",
+        url: "",
+        type: "issue",
+        status: "closed",
+        status_reason: "not_planned",
+      },
+      {
+        title: "Add a link to your highlight 5",
+        url: "",
+        type: "issue",
+        status: "closed",
+        status_reason: "not_planned",
+      },
+      {
+        title: "Add a link to your highlight 6",
+        url: "",
+        type: "issue",
+        status: "open",
+        status_reason: "open",
+      },
+    ],
+    [
+      {
+        title: "Add a link to your highlight 7",
+        url: "",
+        type: "issue",
+        status: "closed",
+        status_reason: "not_planned",
+      },
+      {
+        title: "Add a link to your highlight 8",
+        url: "",
+        type: "issue",
+        status: "closed",
+        status_reason: "not_planned",
+      },
+    ],
+  ];
+
   const charLimit = 500;
 
   const [date, setDate] = useState<Date | undefined>();
@@ -623,7 +688,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
             <Swiper
               spaceBetween={8}
               slidesPerView={1}
-              className="w-[50vw]"
+              className="lg:w-[33vw] md:w-[50vw]"
               modules={[Pagination, A11y]}
               pagination={{
                 clickable: true,
@@ -632,7 +697,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                 enabled: true,
               }}
             >
-              {highlightSuggestions?.map((suggestionPage) => (
+              {dummySuggestions?.map((suggestionPage) => (
                 <SwiperSlide key={suggestionPage[0].url}>
                   <div className="flex flex-col gap-2 overflow-hidden text-sm w-full">
                     {suggestionPage.map(
@@ -852,7 +917,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                 enabled: true,
               }}
             >
-              {highlightSuggestions?.map((suggestionPage) => (
+              {dummySuggestions?.map((suggestionPage) => (
                 <SwiperSlide key={suggestionPage[0].url}>
                   <div className="flex flex-col gap-2 overflow-hidden text-sm w-full">
                     {suggestionPage.map(
