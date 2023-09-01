@@ -349,12 +349,12 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
 
   const handleTaggedRepoAdd = async (repoFullName: string) => {
     if (taggedRepoList.length >= 3) {
-      toast({ description: "You can only tag up to 3 repos!", title: "Error", variant: "danger" });
+      setError("You can only tag up to 3 repos!");
       return;
     }
 
     if (taggedRepoList.some((repo) => `${repo.repoOwner}/${repo.repoName}` === repoFullName)) {
-      toast({ description: "Repo already tagged!", title: "Error", variant: "danger" });
+      setError("Repo already tagged!");
       return;
     }
 
@@ -370,7 +370,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
     });
 
     if (!req.ok) {
-      toast({ description: "Repo not found!", title: "Error", variant: "danger" });
+      setError("Repo not found!");
       return;
     }
 
@@ -378,7 +378,6 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
     const repoIcon = getAvatarByUsername(ownerName, 60);
     const newTaggedRepoList = [...taggedRepoList, { repoName, repoOwner: ownerName, repoIcon }];
     setTaggedRepoList(newTaggedRepoList);
-    toast({ description: "Repo tag added!", title: "Success", variant: "success" });
   };
 
   const handleTaggedRepoDelete = (repoName: string) => {
@@ -391,11 +390,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
       !highlightLink ||
       (!isValidPullRequestUrl(highlightLink) && !isValidIssueUrl(highlightLink) && !isValidBlogUrl(highlightLink))
     ) {
-      toast({
-        description: "Please provide a valid pull request, issue or dev.to blog link!",
-        title: "Error",
-        variant: "danger",
-      });
+      setError("Please provide a valid pull request, issue or dev.to blog link!");
       return;
     }
 
@@ -427,7 +422,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
       }, 1000);
       setCharCount(summary.length);
     } else {
-      toast({ description: "An error occured!", title: "Error", variant: "danger" });
+      setError("An error occured!");
     }
   };
 
@@ -464,7 +459,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
       if (res.isError) {
         setLoading(false);
 
-        toast({ description: "A valid Pull request, Issue or dev.to Blog Link is required", variant: "danger" });
+        setError("Please provide a valid pull request, issue or dev.to blog link!");
         return;
       } else {
         setLoading(true);
@@ -480,7 +475,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
         setLoading(false);
 
         if (typeof res === "string") {
-          return toast({ description: res, title: "Error", variant: "danger" });
+          setError(res);
         }
 
         refreshCallback && refreshCallback();
