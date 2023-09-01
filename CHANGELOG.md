@@ -5,6 +5,26 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.62.1](https://github.com/open-sauced/insights/compare/v1.62.0...v1.62.1) (2023-09-01)
+
+
+### 🧑‍💻 Code Refactoring
+
+* calcDistanceFromToday function ([#1633](https://github.com/open-sauced/insights/issues/1633)) ([b2286a4](https://github.com/open-sauced/insights/commit/b2286a482594963447dc3b10f5ed70a790b1c882))
+
+
+### 🐛 Bug Fixes
+
+* add check for undefined tagged_repos ([#1648](https://github.com/open-sauced/insights/issues/1648)) ([0236fa1](https://github.com/open-sauced/insights/commit/0236fa116f6cbbbce428415a939ad82c6200b6c0))
+* reduce font size on the Highlights page navigation tabs  ([#1630](https://github.com/open-sauced/insights/issues/1630)) ([68e3ed6](https://github.com/open-sauced/insights/commit/68e3ed631b3cbd5f08cabebbde876497678a09f2))
+* remove tailwind anti-pattern from the repo ([#1637](https://github.com/open-sauced/insights/issues/1637)) ([d2974ab](https://github.com/open-sauced/insights/commit/d2974ab9217be3c4e24639af120d573eb232bcc7))
+* show highlights tab without highlights ([#1631](https://github.com/open-sauced/insights/issues/1631)) ([65b3e99](https://github.com/open-sauced/insights/commit/65b3e99a2f76a04a66a02eb97a29531eb7d0b8ca))
+
+
+### 🔁 Continuous Integration
+
+* update node version to 18 in workflows ([#1649](https://github.com/open-sauced/insights/issues/1649)) ([ea56fa0](https://github.com/open-sauced/insights/commit/ea56fa011276107ddc3249fe1d511d102f47e6b7))
+
 ### [1.62.1-beta.3](https://github.com/open-sauced/insights/compare/v1.62.1-beta.2...v1.62.1-beta.3) (2023-09-01)
 
 
