@@ -9,8 +9,10 @@ import { IoClose } from "react-icons/io5";
 import { BsTagFill } from "react-icons/bs";
 import { useDebounce } from "rooks";
 import { MdError } from "react-icons/md";
+import { Swiper, SwiperSlide } from "swiper/react";
 import { BiGitMerge } from "react-icons/bi";
 import { VscIssues } from "react-icons/vsc";
+import { A11y, Pagination } from "swiper/modules";
 import Button from "components/atoms/Button/button";
 import Tooltip from "components/atoms/Tooltip/tooltip";
 
@@ -52,6 +54,10 @@ import {
   DialogTitle,
 } from "../Dialog/dialog";
 
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+
 interface HighlightInputFormProps {
   refreshCallback?: Function;
 }
@@ -76,6 +82,71 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
   const [errorMsg, setError] = useState("");
   const [highlightSuggestions, setHighlightSuggestions] = useState<any[]>([]);
   const generateSummary = useRef(false);
+
+  const dummySuggestions = [
+    [
+      {
+        title: "Add a title to your highlight 1",
+        url: "",
+        type: "pull_request",
+        status: "open",
+        status_reason: "open",
+      },
+      {
+        title: "Add a link to your highlight 2 ",
+        url: "",
+        type: "pull_request",
+        status: "closed",
+        status_reason: "merged",
+      },
+      {
+        title: "Add a link to your highlight 3",
+        url: "",
+        type: "issue",
+        status: "open",
+        status_reason: "open",
+      },
+    ],
+    [
+      {
+        title: "Add a link to your highlight 4",
+        url: "",
+        type: "issue",
+        status: "closed",
+        status_reason: "not_planned",
+      },
+      {
+        title: "Add a link to your highlight 5",
+        url: "",
+        type: "issue",
+        status: "closed",
+        status_reason: "not_planned",
+      },
+      {
+        title: "Add a link to your highlight 6",
+        url: "",
+        type: "issue",
+        status: "open",
+        status_reason: "open",
+      },
+    ],
+    [
+      {
+        title: "Add a link to your highlight 7",
+        url: "",
+        type: "issue",
+        status: "closed",
+        status_reason: "not_planned",
+      },
+      {
+        title: "Add a link to your highlight 8",
+        url: "",
+        type: "issue",
+        status: "closed",
+        status_reason: "not_planned",
+      },
+    ],
+  ];
 
   const charLimit = 500;
 
@@ -194,10 +265,19 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
         const openPullRequests = await fetchLatestOpenPullRequests();
 
         const newHighlightSuggestions = [];
-        for (let i = 0; i < 5; i++) {
-          if (issues[i]) newHighlightSuggestions.push(issues[i]);
-          if (mergedPullRequests[i]) newHighlightSuggestions.push(mergedPullRequests[i]);
-          if (openPullRequests[i]) newHighlightSuggestions.push(openPullRequests[i]);
+        for (let i = 0; i < 3; i++) {
+          // 1 issue, 1 merged pull request, 1 open pull request per page
+          const suggestionPage = [];
+          if (issues && issues[i]) {
+            suggestionPage.push(issues[i]);
+          }
+          if (mergedPullRequests && mergedPullRequests[i]) {
+            suggestionPage.push(mergedPullRequests[i]);
+          }
+          if (openPullRequests && openPullRequests[i]) {
+            suggestionPage.push(openPullRequests[i]);
+          }
+          newHighlightSuggestions.push(suggestionPage);
         }
 
         setHighlightSuggestions(newHighlightSuggestions);
@@ -205,7 +285,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
         console.log(err);
       }
     };
-    fetchData();
+    // fetchData();
   }, [providerToken, loggedInUser]);
 
   // when user updates the highlight link, check if its a github link
@@ -441,7 +521,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
             <DialogTitle>Post a highlight</DialogTitle>
           </DialogHeader>
           <DialogCloseButton onClick={() => setIsDivFocused(false)} />
-          <form onSubmit={handlePostHighlight} className="flex flex-col flex-1 gap-4 font-normal">
+          <form onSubmit={handlePostHighlight} className="flex flex-col gap-4 font-normal">
             {errorMsg && (
               <p className="inline-flex items-center gap-2 px-2 py-1 text-red-500 bg-red-100 border border-red-500 rounded-md w-full text-sm">
                 <MdError size={20} /> {errorMsg}
@@ -568,24 +648,41 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
               Highlight suggestions
               <span className="text-sm font-semibold text-light-slate-9 ml-2">Based on your latest activity</span>
             </h1>
-            <div className="flex flex-col gap-2 overflow-hidden text-sm w-full">
-              {highlightSuggestions.slice(0, 3).map((suggestion) => (
-                <div
-                  key={suggestion.url}
-                  className="flex items-center justify-between w-full gap-4 text-sm bg-white border rounded-lg p-2 cursor-pointer"
-                >
-                  <div className="flex w-full gap-2">
-                    {suggestion.type === "pull_request" && (
-                      <BiGitMerge
-                        className={`
+
+            <Swiper
+              spaceBetween={8}
+              slidesPerView={1}
+              onSlideChange={() => console.log("slide change")}
+              onSwiper={(swiper) => console.log(swiper)}
+              className="max-w-[calc(33vw-3rem)]"
+              modules={[Pagination, A11y]}
+              pagination={{
+                clickable: true,
+              }}
+              a11y={{
+                enabled: true,
+              }}
+            >
+              {dummySuggestions.map((suggestionPage) => (
+                <SwiperSlide key={suggestionPage[0].url}>
+                  <div className="flex flex-col gap-2 overflow-hidden text-sm w-full">
+                    {suggestionPage.map((suggestion) => (
+                      <div
+                        key={suggestion.url}
+                        className="flex items-center justify-between w-full gap-4 text-sm bg-white border rounded-lg p-2"
+                      >
+                        <div className="flex w-full gap-2">
+                          {suggestion.type === "pull_request" && (
+                            <BiGitMerge
+                              className={`
                       text-xl
                       ${suggestion.status_reason === "open" ? "text-green-600" : "text-purple-600"}
                       `}
-                      />
-                    )}
-                    {suggestion.type === "issue" && (
-                      <VscIssues
-                        className={`
+                            />
+                          )}
+                          {suggestion.type === "issue" && (
+                            <VscIssues
+                              className={`
                       text-xl
                       ${
                         suggestion.status === "open"
@@ -595,43 +692,46 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                           : "text-purple-600"
                       }
                     `}
-                      />
-                    )}
-                    <p className="text-light-slate-11 truncate w-[16rem]">{suggestion.title}</p>
-                  </div>
-                  <Tooltip className="text-xs" direction="top" content="Add and Summarize">
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setHighlightLink(suggestion.url);
-                        setTitle(suggestion.title);
-                      }}
-                      disabled={isSummaryButtonDisabled}
-                      className="p-2 rounded-full hover:bg-light-slate-3 text-light-slate-11 transition"
-                    >
-                      <FiEdit2 className="text-xl" />
-                    </button>
-                  </Tooltip>
+                            />
+                          )}
+                          <p className="text-light-slate-11 truncate w-[16rem]">{suggestion.title}</p>
+                        </div>
+                        <Tooltip className="text-xs" direction="top" content="Add and Summarize">
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setHighlightLink(suggestion.url);
+                              setTitle(suggestion.title);
+                            }}
+                            disabled={isSummaryButtonDisabled}
+                            className="p-2 rounded-full hover:bg-light-slate-3 text-light-slate-11 transition"
+                          >
+                            <FiEdit2 className="text-xl" />
+                          </button>
+                        </Tooltip>
 
-                  <Tooltip className="text-xs" direction="top" content="Add and Summarize">
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setHighlightLink(suggestion.url);
-                        setTitle(suggestion.title);
-                        generateSummary.current = true;
-                      }}
-                      disabled={isSummaryButtonDisabled}
-                      className="p-2 rounded-full hover:bg-light-slate-3 text-light-slate-11 transition disabled:cursor-not-allowed disabled:animate-pulse disabled:text-light-orange-9"
-                    >
-                      <HiOutlineSparkles className="text-base" />
-                    </button>
-                  </Tooltip>
-                </div>
+                        <Tooltip className="text-xs" direction="top" content="Add and Summarize">
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setHighlightLink(suggestion.url);
+                              setTitle(suggestion.title);
+                              generateSummary.current = true;
+                            }}
+                            disabled={isSummaryButtonDisabled}
+                            className="p-2 rounded-full hover:bg-light-slate-3 text-light-slate-11 transition disabled:cursor-not-allowed disabled:animate-pulse disabled:text-light-orange-9"
+                          >
+                            <HiOutlineSparkles className="text-base" />
+                          </button>
+                        </Tooltip>
+                      </div>
+                    ))}
+                  </div>
+                </SwiperSlide>
               ))}
-            </div>
+            </Swiper>
           </form>
         </DialogContent>
       </Dialog>
