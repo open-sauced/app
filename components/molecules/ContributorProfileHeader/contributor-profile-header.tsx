@@ -6,10 +6,12 @@ import { FiCopy } from "react-icons/fi";
 import { FaIdCard } from "react-icons/fa";
 import { SignInWithOAuthCredentials, User } from "@supabase/supabase-js";
 import { usePostHog } from "posthog-js/react";
+import { clsx } from "clsx";
 
 import Avatar from "components/atoms/Avatar/avatar";
 import RainbowBg from "img/rainbow-cover.png";
 import Button from "components/atoms/Button/button";
+import Text from "components/atoms/Typography/text";
 import { Textarea } from "components/atoms/Textarea/text-area";
 import {
   DropdownMenu,
@@ -243,20 +245,32 @@ const ContributorProfileHeader = ({
             <DialogTitle className="!text-3xl text-left">Collaborate with {username}!</DialogTitle>
           </DialogHeader>
 
-          <form onSubmit={handleCollaborationRequest} className="flex flex-col w-full gap-4 px-4 md:gap-8 md:px-14 ">
+          <form onSubmit={handleCollaborationRequest} className="flex flex-col w-full gap-2 px-4 md:gap-8 md:px-14 ">
             <div className="space-y-2">
               <label htmlFor="message">Send a message</label>
               <Textarea
                 defaultRow={1}
                 value={message}
-                className="w-full px-2 mb-2 transition text-light-slate-11 focus:outline-none"
+                className={clsx(
+                  "w-full px-2 mb-2 transition text-light-slate-11 focus:outline-none border",
+                  message.length > 0 && message.length < 20 && "border-red-500"
+                )}
                 name="message"
                 id="message"
                 onChangeText={handleTextAreaInputChange}
               />
+              <Text small className="select-none text-light-slate-11">
+                20 Characters Min.
+              </Text>
             </div>
 
-            <Button loading={loading} title="submit" className="self-end w-max" variant="primary">
+            <Button
+              loading={loading}
+              title="submit"
+              className="self-end w-max"
+              variant="primary"
+              disabled={message.length < 20}
+            >
               Send
             </Button>
           </form>
