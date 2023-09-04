@@ -259,9 +259,11 @@ const ContributorProfileHeader = ({
                 id="message"
                 onChangeText={handleTextAreaInputChange}
               />
-              <Text small className="select-none text-light-slate-11">
-                {message.length > 0 && message.length < 20 ? "20 Characters Min." : ""}
-              </Text>
+              {message.length > 0 && message.length < 20 && (
+                <Text small className="select-none text-light-slate-11">
+                  20 Characters Min.
+                </Text>
+              )}
             </div>
 
             <Button
