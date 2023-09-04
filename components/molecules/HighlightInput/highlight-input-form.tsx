@@ -108,71 +108,6 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
     return [];
   };
 
-  const dummySuggestions = [
-    [
-      {
-        title: "Add a title to your highlight 1",
-        url: "https://dev.to/opensauced/how-open-source-helped-me-get-a-github-octernship-4f69",
-        type: "pull_request",
-        status: "open",
-        status_reason: "open",
-      },
-      {
-        title: "Add a link to your highlight 2 ",
-        url: "",
-        type: "pull_request",
-        status: "closed",
-        status_reason: "merged",
-      },
-      {
-        title: "Add a link to your highlight 3",
-        url: "",
-        type: "issue",
-        status: "open",
-        status_reason: "open",
-      },
-    ],
-    [
-      {
-        title: "Add a link to your highlight 4",
-        url: "",
-        type: "issue",
-        status: "closed",
-        status_reason: "not_planned",
-      },
-      {
-        title: "Add a link to your highlight 5",
-        url: "",
-        type: "issue",
-        status: "closed",
-        status_reason: "not_planned",
-      },
-      {
-        title: "Add a link to your highlight 6",
-        url: "",
-        type: "issue",
-        status: "open",
-        status_reason: "open",
-      },
-    ],
-    [
-      {
-        title: "Add a link to your highlight 7",
-        url: "",
-        type: "issue",
-        status: "closed",
-        status_reason: "not_planned",
-      },
-      {
-        title: "Add a link to your highlight 8",
-        url: "",
-        type: "issue",
-        status: "closed",
-        status_reason: "not_planned",
-      },
-    ],
-  ];
-
   const charLimit = 500;
 
   const [date, setDate] = useState<Date | undefined>();
@@ -291,11 +226,11 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
       const allHighlightUrls = allHighlights.map((highlight) => highlight.url);
 
       // remove any suggestions that have already been highlighted
-      const filteredSuggestions = newHighlightSuggestions.map((suggestionPage) =>
-        suggestionPage.filter((suggestion: { url: string }) => !allHighlightUrls.includes(suggestion.url))
+      const filteredSuggestions = newHighlightSuggestions.filter(
+        (suggestion: { url: string }) => !allHighlightUrls.includes(suggestion.url)
       );
 
-      setHighlightSuggestions(filteredSuggestions);
+      return filteredSuggestions;
     };
 
     const fetchData = async () => {
@@ -304,24 +239,18 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
         const mergedPullRequests = await fetchLatestMergedPullRequests();
         const openPullRequests = await fetchLatestOpenPullRequests();
 
-        const newHighlightSuggestions = [];
-        for (let i = 0; i < 5; i++) {
-          // 1 issue, 1 merged pull request, 1 open pull request per page
-          const suggestionPage = [];
-          if (issues && issues[i]) {
-            suggestionPage.push(issues[i]);
-          }
-          if (mergedPullRequests && mergedPullRequests[i]) {
-            suggestionPage.push(mergedPullRequests[i]);
-          }
-          if (openPullRequests && openPullRequests[i]) {
-            suggestionPage.push(openPullRequests[i]);
-          }
-          newHighlightSuggestions.push(suggestionPage);
-        }
+        const newHighlightSuggestions = [...issues, ...mergedPullRequests, ...openPullRequests];
 
-        await removeAlreadyHighlightedSuggestions(newHighlightSuggestions);
-        setHighlightSuggestions(newHighlightSuggestions);
+        const unhighlightedSuggestions = await removeAlreadyHighlightedSuggestions(newHighlightSuggestions);
+
+        // make pages of 3 suggestions
+        const pages = [];
+        for (let i = 0; i < unhighlightedSuggestions.length; i += 3) {
+          console.log(i);
+          pages.push(unhighlightedSuggestions.slice(i, i + 3));
+        }
+        console.log("pages", pages);
+        setHighlightSuggestions(pages);
       } catch (err) {
         console.log(err);
       }
@@ -692,7 +621,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                 enabled: true,
               }}
             >
-              {dummySuggestions?.map((suggestionPage) => (
+              {highlightSuggestions?.map((suggestionPage) => (
                 <SwiperSlide key={suggestionPage[0].url}>
                   <div className="flex flex-col gap-2 overflow-hidden text-sm w-full">
                     {suggestionPage.map(
@@ -912,7 +841,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                 enabled: true,
               }}
             >
-              {dummySuggestions?.map((suggestionPage) => (
+              {highlightSuggestions?.map((suggestionPage) => (
                 <SwiperSlide key={suggestionPage[0].url}>
                   <div className="flex flex-col gap-2 overflow-hidden text-sm w-full">
                     {suggestionPage.map(
