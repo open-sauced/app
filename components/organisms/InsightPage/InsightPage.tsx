@@ -94,9 +94,6 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
   const [repoSearchTerm, setRepoSearchTerm] = useState<string>("");
   const [suggestions, setSuggestions] = useState<string[]>([]);
 
-  console.log("recommendedRepos", recommendedRepos);
-  console.log("repos", repos);
-
   const recommendedReposWithoutSelected = recommendedRepos
     ?.filter((repo) => !repos.find((selectedRepo) => selectedRepo.id === repo.id))
     .map((repo) => {
@@ -292,8 +289,6 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
 
   const handleReAddRepository = async (repoAdded: string) => {
     const existInSuggestions = recommendedRepos.find((repo) => `${repo.full_name}` === repoAdded);
-
-    console.log("existInSuggestions", existInSuggestions);
 
     if (existInSuggestions) {
       setRepoHistory((historyRepos) => {
