@@ -246,10 +246,8 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
         // make pages of 3 suggestions
         const pages = [];
         for (let i = 0; i < unhighlightedSuggestions.length; i += 3) {
-          console.log(i);
           pages.push(unhighlightedSuggestions.slice(i, i + 3));
         }
-        console.log("pages", pages);
         setHighlightSuggestions(pages);
       } catch (err) {
         console.log(err);
