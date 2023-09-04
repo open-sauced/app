@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.62.2-beta.1](https://github.com/open-sauced/insights/compare/v1.62.1...v1.62.2-beta.1) (2023-09-04)
+
+
+### 🐛 Bug Fixes
+
+* remove topic from query params when a repository is provided ([#1652](https://github.com/open-sauced/insights/issues/1652)) ([3c4d20e](https://github.com/open-sauced/insights/commit/3c4d20e8b866ffe98e96a9a6e7a7eeb9e7c1b843))
+
 ### [1.62.1](https://github.com/open-sauced/insights/compare/v1.62.0...v1.62.1) (2023-09-01)
 
 
