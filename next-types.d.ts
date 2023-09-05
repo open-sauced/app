@@ -254,3 +254,12 @@ interface DbUserCollaboration {
   readonly status: "pending" | "accept" | "reject";
   readonly message: string;
 }
+
+interface DbUserList {
+  readonly id: string;
+  readonly user: DbUser;
+  readonly name: string;
+  readonly is_public: boolean;
+  readonly created_at: string;
+  readonly updated_at: string;
+}
