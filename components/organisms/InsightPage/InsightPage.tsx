@@ -22,6 +22,7 @@ import { useToast } from "lib/hooks/useToast";
 import TeamMembersConfig, { TeamMemberData } from "components/molecules/TeamMembersConfig/team-members-config";
 import useInsightMembers from "lib/hooks/useInsightMembers";
 import { useFetchInsightRecommendedRepositories } from "lib/hooks/useFetchOrgRecommendations";
+import { RepoCardProfileProps } from "components/molecules/RepoCardProfile/repo-card-profile";
 import SuggestedRepositoriesList from "../SuggestedRepoList/suggested-repo-list";
 import DeleteInsightPageModal from "./DeleteInsightPageModal";
 
@@ -37,6 +38,29 @@ interface InsightPageProps {
   insight?: DbUserInsight;
   pageRepos?: DbRepo[];
 }
+const staticSuggestedRepos: RepoCardProfileProps[] = [
+  {
+    avatar: "https://avatars.githubusercontent.com/u/57568598?s=200&v=4",
+    prCount: 8,
+    repoName: "insights",
+    issueCount: 87,
+    orgName: "open-sauced",
+  },
+  {
+    avatar: "https://avatars.githubusercontent.com/u/59704711?s=200&v=4",
+    prCount: 26,
+    repoName: "cli",
+    issueCount: 398,
+    orgName: "cli",
+  },
+  {
+    avatar: "https://avatars.githubusercontent.com/u/42048915?s=200&v=4",
+    prCount: 100,
+    repoName: "deno",
+    issueCount: 1200,
+    orgName: "denoland",
+  },
+];
 
 const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
   const { sessionToken, providerToken } = useSupabaseAuth();
@@ -94,23 +118,26 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
   const [repoSearchTerm, setRepoSearchTerm] = useState<string>("");
   const [suggestions, setSuggestions] = useState<string[]>([]);
 
-  const recommendedReposWithoutSelected = recommendedRepos
-    ?.filter((repo) => !repos.find((selectedRepo) => selectedRepo.id === repo.id))
-    .map((repo) => {
-      const [orgName, repoName] = repo.full_name.split("/");
-      const totalPrs = (repo.open_prs_count || 0) + (repo.closed_prs_count || 0) + (repo.merged_prs_count || 0);
-      const avatar = getAvatarByUsername(orgName, 60);
-      const totalIssues = repo.issues || 0;
+  const recommendedReposWithoutSelected =
+    recommendedRepos && recommendedRepos.length > 0
+      ? recommendedRepos
+          .filter((repo) => !repos.find((selectedRepo) => selectedRepo.id === repo.id))
+          .map((repo) => {
+            const [orgName, repoName] = repo.full_name.split("/");
+            const totalPrs = (repo.open_prs_count || 0) + (repo.closed_prs_count || 0) + (repo.merged_prs_count || 0);
+            const avatar = getAvatarByUsername(orgName, 60);
+            const totalIssues = repo.issues || 0;
 
-      return {
-        orgName,
-        repoName,
-        totalPrs,
-        avatar,
-        totalIssues,
-      };
-    })
-    .slice(0, 3);
+            return {
+              orgName,
+              repoName,
+              totalPrs,
+              avatar,
+              totalIssues,
+            };
+          })
+          .slice(0, 3)
+      : staticSuggestedRepos;
 
   useEffect(() => {
     if (pageRepos) {

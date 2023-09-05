@@ -54,8 +54,6 @@ const RepositoriesCart = ({
     }
   };
 
-  console.log(history);
-
   return (
     <>
       <Title className="!text-1xl !leading-none mb-4 xl:mt-10 font-medium" level={4}>
