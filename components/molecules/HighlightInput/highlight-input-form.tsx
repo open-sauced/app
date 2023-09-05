@@ -13,6 +13,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { BiGitMerge } from "react-icons/bi";
 import { VscIssues } from "react-icons/vsc";
 import { A11y, Pagination } from "swiper/modules";
+import Skeleton from "react-loading-skeleton";
 import Button from "components/atoms/Button/button";
 import Tooltip from "components/atoms/Tooltip/tooltip";
 
@@ -55,7 +56,6 @@ import {
 } from "../Dialog/dialog";
 
 import "swiper/css";
-import "swiper/css/navigation";
 import "swiper/css/pagination";
 
 interface HighlightInputFormProps {
@@ -81,6 +81,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
   const [tagRepoSearchLoading, setTagRepoSearchLoading] = useState<boolean>(false);
   const [errorMsg, setError] = useState("");
   const [highlightSuggestions, setHighlightSuggestions] = useState<any[]>([]);
+  const [loadingSuggestions, setLoadingSuggestions] = useState<boolean>(false);
   const generateSummary = useRef(false);
 
   const fetchAllUserHighlights = async (page: number): Promise<DbHighlight[]> => {
@@ -249,10 +250,12 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
           pages.push(unhighlightedSuggestions.slice(i, i + 3));
         }
         setHighlightSuggestions(pages);
+        setLoadingSuggestions(false);
       } catch (err) {
         console.log(err);
       }
     };
+    setLoadingSuggestions(true);
     fetchData();
   }, [providerToken, loggedInUser]);
 
@@ -492,19 +495,19 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                   value={title}
                   maxLength={50}
                   onChange={(e) => setTitle(e.target.value)}
-                  className="flex-1 font-normal placeholder:text-sm focus:outline-none"
+                  className="flex-1 font-normal placeholder:text-slate-400 text-light-slate-12 placeholder:font-normal placeholder:text-sm focus:outline-none"
                   type="text"
                   placeholder={"Add title (optional)"}
                   id="highlight-create-input"
                 />
               </div>
               <TypeWriterTextArea
-                className={`resize-y min-h-[80px] max-h-99 font-normal text-light-slate-11 transition focus:outline-none rounded-lg ${
+                className={`resize-y min-h-[80px] max-h-99 font-normal placeholder:text-slate-400 text-light-slate-12 placeholder:font-normal placeholder:text-sm transition focus:outline-none rounded-lg ${
                   !isDivFocused ? "hidden" : ""
                 }`}
                 defaultRow={4}
                 value={bodyText}
-                placeholder={` Tell us about your highlight and add a link
+                placeholder={`Tell us about your highlight and add a link
               `}
                 typewrite={isTyping}
                 textContent={bodyText}
@@ -523,8 +526,10 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
               </p>
             </div>
 
-            <div className={`flex items-center justify-between w-full gap-1 p-1 text-sm bg-white border rounded-lg`}>
-              <div className="flex w-full gap-1">
+            <div
+              className={`flex items-center justify-between w-full gap-1 px-2 py-1 text-sm bg-white border rounded-lg`}
+            >
+              <div className="flex w-full">
                 <CardRepoList
                   repoList={taggedRepoList}
                   deletable={true}
@@ -539,7 +544,9 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                     }}
                   >
                     <BsTagFill className="rounded-[4px] overflow-hidden text-light-slate-11" />
-                    <span className={"max-w-[45px] md:max-w-[100px] truncate text-light-slate-11"}>Add a repo</span>
+                    <span className={"max-w-[45px] md:max-w-[100px] truncate text-light-slate-11 text-xs"}>
+                      Add a repo
+                    </span>
                   </button>
                 </Tooltip>
               </div>
@@ -578,7 +585,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                   </button>
                 </Tooltip>
                 <TextInput
-                  className="text-xs"
+                  className="text-xs shadow-none"
                   value={highlightLink}
                   handleChange={(value) => setHighlightLink(value)}
                   placeholder="Paste the URL to your Pull Request or Issue."
@@ -587,10 +594,10 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
             </div>
 
             {highlightLink && isDivFocused && highlightLink.includes("github") && (
-              <GhOpenGraphImg className="max-sm:hidden" githubLink={highlightLink} />
+              <GhOpenGraphImg className="max-sm:hidden lg:w-[33vw] md:w-[50vw]" githubLink={highlightLink} />
             )}
             {highlightLink && isDivFocused && highlightLink.includes("dev.to") && (
-              <DevToSocialImg className="max-sm:hidden" blogLink={highlightLink} />
+              <DevToSocialImg className="max-sm:hidden lg:w-[33vw] md:w-[50vw]" blogLink={highlightLink} />
             )}
 
             <Button
@@ -607,95 +614,112 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
               <span className="text-sm font-semibold text-light-slate-9 ml-2">Based on your latest activity</span>
             </h1>
 
-            <Swiper
-              spaceBetween={8}
-              slidesPerView={1}
-              className="lg:w-[33vw] md:w-[50vw]"
-              modules={[Pagination, A11y]}
-              pagination={{
-                clickable: true,
-              }}
-              a11y={{
-                enabled: true,
-              }}
-            >
-              {highlightSuggestions?.map((suggestionPage) => (
-                <SwiperSlide key={suggestionPage[0].url}>
-                  <div className="flex flex-col gap-2 overflow-hidden text-sm w-full">
-                    {suggestionPage.map(
-                      (suggestion: {
-                        url: string;
-                        type: string;
-                        status_reason: string;
-                        status: string;
-                        title: string;
-                      }) => (
-                        <div
-                          key={suggestion.url}
-                          className="flex items-center justify-between w-full gap-4 text-sm bg-white border rounded-lg p-2"
-                        >
-                          <div className="flex w-full gap-2">
-                            {suggestion.type === "pull_request" && (
-                              <BiGitMerge
-                                className={`
-                      text-xl
-                      ${suggestion.status_reason === "open" ? "text-green-600" : "text-purple-600"}
-                      `}
-                              />
-                            )}
-                            {suggestion.type === "issue" && (
-                              <VscIssues
-                                className={`
-                      text-xl
-                      ${
-                        suggestion.status === "open"
-                          ? "text-green-600"
-                          : suggestion.status_reason === "not_planned"
-                          ? "text-red-600"
-                          : "text-purple-600"
-                      }
-                    `}
-                              />
-                            )}
-                            <p className="text-light-slate-11 truncate max-w-[16rem]">{suggestion.title}</p>
-                          </div>
-                          <Tooltip className="text-xs modal-tooltip" direction="top" content="Fill content">
-                            <button
-                              type="button"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setHighlightLink(suggestion.url);
-                                setTitle(suggestion.title);
-                              }}
-                              disabled={isSummaryButtonDisabled}
-                              className="p-2 rounded-full hover:bg-light-slate-3 text-light-slate-11 transition"
-                            >
-                              <FiEdit2 className="text-xl" />
-                            </button>
-                          </Tooltip>
+            {loadingSuggestions ? (
+              <Skeleton
+                count={3}
+                height={40}
+                style={{
+                  margin: "0.5rem auto",
+                }}
+              />
+            ) : (
+              <Swiper
+                spaceBetween={8}
+                slidesPerView={1}
+                className="lg:w-[33vw] md:w-[50vw]"
+                modules={[Pagination, A11y]}
+                pagination={{
+                  clickable: true,
+                }}
+                a11y={{
+                  enabled: true,
+                }}
+              >
+                {highlightSuggestions?.map((suggestionPage) => (
+                  <SwiperSlide key={suggestionPage[0].url}>
+                    <div className="flex flex-col gap-2 overflow-hidden text-sm w-full">
+                      {suggestionPage.map(
+                        (suggestion: {
+                          url: string;
+                          type: string;
+                          status_reason: string;
+                          status: string;
+                          title: string;
+                        }) => (
+                          <div
+                            key={suggestion.url}
+                            className="flex items-center justify-between w-full gap-0.5 text-sm bg-white border rounded-lg p-2"
+                          >
+                            <div className="flex w-full gap-2">
+                              {suggestion.type === "pull_request" && (
+                                <BiGitMerge
+                                  className={`
+        text-xl
+        ${suggestion.status_reason === "open" ? "text-green-600" : "text-purple-600"}
+        `}
+                                />
+                              )}
+                              {suggestion.type === "issue" && (
+                                <VscIssues
+                                  className={`
+        text-xl
+        ${
+          suggestion.status === "open"
+            ? "text-green-600"
+            : suggestion.status_reason === "not_planned"
+            ? "text-red-600"
+            : "text-purple-600"
+        }
+      `}
+                                />
+                              )}
+                              <p
+                                className="text-light-slate-11 truncate max-w-[16rem]                         cursor-pointer hover:text-orange-600 transition"
+                                onClick={() => {
+                                  window.open(suggestion.url, "_blank");
+                                }}
+                              >
+                                {suggestion.title}
+                              </p>
+                            </div>
+                            <Tooltip className="text-xs modal-tooltip" direction="top" content="Fill content">
+                              <button
+                                type="button"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setHighlightLink(suggestion.url);
+                                  setTitle(suggestion.title);
+                                }}
+                                disabled={isSummaryButtonDisabled}
+                                className="p-2 rounded-full hover:bg-light-slate-3 text-light-slate-11 transition"
+                              >
+                                <FiEdit2 className="text-xl" />
+                              </button>
+                            </Tooltip>
 
-                          <Tooltip className="text-xs modal-tooltip" direction="top" content="Add and Summarize">
-                            <button
-                              type="button"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setHighlightLink(suggestion.url);
-                                setTitle(suggestion.title);
-                                generateSummary.current = true;
-                              }}
-                              disabled={isSummaryButtonDisabled}
-                              className="p-2 rounded-full hover:bg-light-slate-3 text-light-slate-11 transition disabled:cursor-not-allowed disabled:animate-pulse disabled:text-light-orange-9"
-                            >
-                              <HiOutlineSparkles className="text-base" />
-                            </button>
-                          </Tooltip>
-                        </div>
-                      )
-                    )}
-                  </div>
-                </SwiperSlide>
-              ))}
-            </Swiper>
+                            <Tooltip className="text-xs modal-tooltip" direction="top" content="Add and Summarize">
+                              <button
+                                type="button"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setHighlightLink(suggestion.url);
+                                  setTitle(suggestion.title);
+                                  generateSummary.current = true;
+                                }}
+                                disabled={isSummaryButtonDisabled}
+                                className="p-2 rounded-full hover:bg-light-slate-3 text-light-slate-11 transition disabled:cursor-not-allowed disabled:animate-pulse disabled:text-light-orange-9"
+                              >
+                                <HiOutlineSparkles className="text-xl" />
+                              </button>
+                            </Tooltip>
+                          </div>
+                        )
+                      )}
+                    </div>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            )}
           </form>
         </DialogContent>
       </Dialog>
@@ -715,7 +739,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
           <Search
             isLoading={tagRepoSearchLoading}
             placeholder="Repository Full Name (ex: open-sauced/open-sauced)"
-            className="!w-full text-md text-gra"
+            className="text-sm text-light-slate-9 font-normal !w-full px-2"
             name={"query"}
             suggestions={repoTagSuggestions}
             onChange={(value) => setTaggedRepoSearchTerm(value)}

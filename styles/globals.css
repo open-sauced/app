@@ -75,5 +75,5 @@ div[role="dialog"]::-webkit-scrollbar-thumb {
   --swiper-theme-color: hsla(19, 100%, 50%, 1) !important;
   --swiper-pagination-bottom: -5px;
   --swiper-pagination-bullet-inactive-color: rgb(255, 159, 115);
-  --swiper-pagination-bullet-size: 6px;
+  --swiper-pagination-bullet-size: 8px;
 }
