@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.63.0-beta.1](https://github.com/open-sauced/insights/compare/v1.62.2-beta.1...v1.63.0-beta.1) (2023-09-05)
+
+
+### 🍕 Features
+
+* add page layout and pages for lists overview, activity, and contributors ([#1674](https://github.com/open-sauced/insights/issues/1674)) ([c39a4ca](https://github.com/open-sauced/insights/commit/c39a4cab047d0819657d4abd9971c472fc25c4dd))
+
 ### [1.62.2-beta.1](https://github.com/open-sauced/insights/compare/v1.62.1...v1.62.2-beta.1) (2023-09-04)
 
 
