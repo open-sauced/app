@@ -63,7 +63,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
 
   const router = useRouter();
   const [openSingleHighlight, setOpenSingleHighlight] = useState(false);
-  const [selectedRepo, setSelectedRepo] = useState("");
+  const selectedRepo = (router.query.repo as string) || "";
   const [activeTab, setActiveTab] = useState<activeTabType>("home");
   const [repoList, setRepoList] = useState<highlightReposType[]>(repoTofilterList(repos as highlightReposType[]));
   const [hydrated, setHydrated] = useState(false);
@@ -157,9 +157,6 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
   }, []);
 
   function onTabChange(value: string) {
-    // This is to handle resetting the filter state when the tab is switched
-    setSelectedRepo("");
-
     // Resetting URL search param for repo
     setQueryParams({}, ["repo"]);
 
@@ -200,7 +197,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
         className="container flex flex-col justify-center w-full gap-12 px-2 pt-12 mt-5 md:mt-0 md:items-start md:px-16 md:flex-row"
         ref={topRef}
       >
-        <div className={`sticky ${user ? "top-16" : "top-8"} xl:flex hidden flex-none w-[22%]`}>
+        <div className={`sticky ${user ? "top-16" : "top-8"} xl:flex hidden flex-none w-1/5`}>
           <div className="flex flex-col w-full gap-6 mt-12">
             {user && (
               <div className="w-full">
@@ -243,7 +240,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
               }
             }}
           >
-            <DialogContent className=" sm:max-w-[80%] w-full  sm:max-h-screen ">
+            <DialogContent className="w-4/5 sm:max-h-screen">
               <div className="flex flex-col gap-8 mx-auto mt-10">
                 <div className="flex flex-col gap-6 px-3 ">
                   <div className="flex items-center gap-3 ">
@@ -297,13 +294,13 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
         <Tabs onValueChange={onTabChange} defaultValue="home" className="grow">
           <TabsList className={clsx("justify-start  w-full border-b", !user && "hidden")}>
             <TabsTrigger
-              className="data-[state=active]:border-sauced-orange data-[state=active]:border-b-2 text-2xl"
+              className="data-[state=active]:border-sauced-orange data-[state=active]:border-b-2 text-lg"
               value="home"
             >
               Home
             </TabsTrigger>
             <TabsTrigger
-              className="data-[state=active]:border-sauced-orange  data-[state=active]:border-b-2 text-2xl"
+              className="data-[state=active]:border-sauced-orange  data-[state=active]:border-b-2 text-lg"
               value="following"
             >
               Following
@@ -311,7 +308,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
           </TabsList>
 
           {user && (
-            <div className="lg:gap-x-3 px-3 pt-4 flex max-w-[48rem]">
+            <div className="lg:gap-x-3 px-3 pt-4 flex max-w-3xl">
               <div className="hidden lg:inline-flex pt-[0.4rem]">
                 <Avatar
                   alt="user profile avatar"
@@ -327,7 +324,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
           <TabsContent value="home">
             <HomeHighlightsWrapper emojis={emojis} mutate={mutate} highlights={data} loading={isLoading} />
             {meta.pageCount > 1 && (
-              <div className="mt-10 max-w-[48rem] flex px-2 items-center justify-between">
+              <div className="mt-10 max-w-3xl flex px-2 items-center justify-between">
                 <div className="flex items-center w-max gap-x-4">
                   <PaginationResults metaInfo={meta} total={meta.itemCount} entity={"highlights"} />
                 </div>
@@ -355,7 +352,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
             <FollowingHighlightWrapper selectedFilter={selectedRepo} emojis={emojis} />
           </TabsContent>
         </Tabs>
-        <div className="hidden w-[30%] xl:w-[24%] flex-none gap-6 mt-10 lg:flex flex-col sticky top-20">
+        <div className="hidden w-1/3 xl:w-1/4 flex-none gap-6 mt-10 lg:flex flex-col sticky top-20">
           {repoList && repoList.length > 0 && (
             <HighlightsFilterCard
               setSelected={(repo) => {
@@ -366,10 +363,10 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
                     setQueryParams({}, ["repo"]);
                   }
                   setPage(1);
-                  setSelectedRepo(repo);
                 }
               }}
               repos={repoList}
+              selectedFilter={selectedRepo}
             />
           )}
 

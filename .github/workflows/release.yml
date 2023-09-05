@@ -37,7 +37,7 @@ jobs:
       - name: "🔧 setup node"
         uses: actions/setup-node@v2.1.5
         with:
-          node-version: 16
+          node-version: 18
 
       - name: "🔧 install npm@latest"
         run: npm i -g npm@latest
@@ -59,7 +59,7 @@ jobs:
       - name: "🔧 setup node"
         uses: actions/setup-node@v2.1.5
         with:
-          node-version: 16
+          node-version: 18
 
       - name: "🔧 install npm@latest"
         run: npm i -g npm@latest
