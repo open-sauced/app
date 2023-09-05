@@ -238,7 +238,7 @@ const ContributorHighlightCard = ({
   const getHighlightTypePreset = (type: HighlightType): { text: string; icon?: React.ReactElement } => {
     switch (type) {
       case "pull_request":
-        return { text: "Pull request", icon: <BiGitPullRequest className="text-lg md:text-xl" /> };
+        return { text: "Pull request", icon: <BiGitPullRequest className="text-md md:text-lg" /> };
       case "blog_post":
         return {
           text: "Blog post",
@@ -437,7 +437,7 @@ const ContributorHighlightCard = ({
       <div>
         <div className={clsx("flex items-center gap-1 text-light-slate-12", title && "mb-2")}>
           {icon}
-          <span className="text-sm md:text-base text-light-slate-10">{getHighlightTypePreset(type).text}</span>
+          <span className="text-sm text-light-slate-12">{getHighlightTypePreset(type).text}</span>
           <div className="flex items-center gap-3 ml-auto lg:gap-3">
             <DropdownMenu>
               <div className="flex items-center gap-3 w-max">
