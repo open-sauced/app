@@ -438,15 +438,6 @@ const ContributorHighlightCard = ({
         <div className={clsx("flex items-center gap-1 text-light-slate-12", title && "mb-2")}>
           {icon}
           <span className="text-sm md:text-base text-light-slate-10">{getHighlightTypePreset(type).text}</span>
-        </div>
-        <div className="flex items-center justify-between w-full">
-          <div className="flex items-center justify-between gap-1 pr-2">
-            {title && (
-              <Title className="!text-sm  break-words lg:!text-xl !text-light-slate-12" level={4}>
-                {title}
-              </Title>
-            )}
-          </div>
           <div className="flex items-center gap-3 ml-auto lg:gap-3">
             <DropdownMenu>
               <div className="flex items-center gap-3 w-max">
@@ -543,6 +534,15 @@ const ContributorHighlightCard = ({
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
+          </div>
+        </div>
+        <div className="flex items-center justify-between w-full">
+          <div className="flex items-center justify-between gap-1 pr-2">
+            {title && (
+              <Title className="!text-sm  break-words lg:!text-xl !text-light-slate-12" level={4}>
+                {title}
+              </Title>
+            )}
           </div>
         </div>
 
