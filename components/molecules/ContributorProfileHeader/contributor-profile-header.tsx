@@ -59,6 +59,13 @@ const ContributorProfileHeader = ({
   const [loading, setLoading] = useState(false);
   const { requestCollaboration } = useUserCollaborations();
   const [message, setMessage] = useState("");
+  const [validMsgCharLength, setValidMsgCharLength] = useState<{
+    check: boolean;
+    status: undefined | boolean;
+  }>({
+    check: false,
+    status: undefined,
+  });
 
   const posthog = usePostHog();
 
@@ -91,6 +98,14 @@ const ContributorProfileHeader = ({
   const handleTextAreaInputChange = (e: string) => {
     setMessage(e);
   };
+  useEffect(() => {
+    if (message.length >= 20) {
+      setValidMsgCharLength({
+        check: false,
+        status: message.length > 0 && message.length < 20,
+      });
+    }
+  }, [message]);
 
   const handleCopyToClipboard = async (content: string) => {
     const url = new URL(content).toString();
@@ -111,6 +126,13 @@ const ContributorProfileHeader = ({
       setHost(window.location.origin as string);
     }
   }, [user]);
+
+  const handleCheckMsgCharLength = () => {
+    setValidMsgCharLength({
+      check: true,
+      status: message.length > 0 && message.length < 20,
+    });
+  };
 
   return (
     <div className="w-full relative  bg-light-slate-6 h-[216px]">
@@ -253,13 +275,14 @@ const ContributorProfileHeader = ({
                 value={message}
                 className={clsx(
                   "w-full px-2 mb-2 transition text-light-slate-11 focus:outline-none border",
-                  message.length > 0 && message.length < 20 && "border-red-500"
+                  validMsgCharLength.check && validMsgCharLength.status && "border-red-500"
                 )}
                 name="message"
                 id="message"
                 onChangeText={handleTextAreaInputChange}
+                onBlur={handleCheckMsgCharLength}
               />
-              {message.length > 0 && message.length < 20 && (
+              {validMsgCharLength.check && validMsgCharLength.status && (
                 <Text small className="select-none text-light-slate-11">
                   20 Characters Min.
                 </Text>
