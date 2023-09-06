@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.63.0-beta.3](https://github.com/open-sauced/insights/compare/v1.63.0-beta.2...v1.63.0-beta.3) (2023-09-06)
+
+
+### 🐛 Bug Fixes
+
+* fixed Overlay button in footer ([#1659](https://github.com/open-sauced/insights/issues/1659)) ([921bc10](https://github.com/open-sauced/insights/commit/921bc10a8131a2f44145cdc259ee8214d2141971))
+
 ## [1.63.0-beta.2](https://github.com/open-sauced/insights/compare/v1.63.0-beta.1...v1.63.0-beta.2) (2023-09-05)
 
 ### 🍕 Features
