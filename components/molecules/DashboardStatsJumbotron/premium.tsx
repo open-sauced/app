@@ -1,12 +1,13 @@
 import React from "react";
 
-import { DashboardProps } from "components/organisms/Dashboard/dashboard";
 import { useFetchInsightsContributors } from "lib/hooks/api/useInsights";
+import { DashboardProps } from "components/organisms/Dashboard/dashboard";
 import InsightsCard from "../InsightsCard/insights-card";
 
 interface PremiumStatsProps extends DashboardProps {
   prs?: DbRepoPR[];
 }
+
 const PremiumStats = ({ repositories, prs }: PremiumStatsProps) => {
   const { data: newContributors, meta: newContributorsMeta } = useFetchInsightsContributors(repositories, "new");
   const { data: activeContributors, meta: activeContributorsMeta } = useFetchInsightsContributors(

@@ -1,5 +1,8 @@
 import React from "react";
-
+import { RiGitRepositoryCommitsLine } from "react-icons/ri";
+import { HiPlus } from "react-icons/hi";
+import { GoClock, GoGitPullRequest } from "react-icons/go";
+import { TfiReload } from "react-icons/tfi";
 import { BsFillArrowUpCircleFill } from "react-icons/bs";
 import clsx from "clsx";
 
@@ -14,8 +17,13 @@ interface InsightsCardProps {
   label: string | number;
   chart?: { series: any[] };
 }
-
-type titleType = "pull requests" | "active contributors" | "new contributors" | "alumni contributors";
+const Icons = {
+  commit: <RiGitRepositoryCommitsLine className="" />,
+  newContributors: <HiPlus className="" />,
+  pullRequests: <GoGitPullRequest className="" />,
+  alumniContributors: <GoClock className="" />,
+  activeContributors: <TfiReload className="" />,
+} as const;
 
 const getIconColorClassNames = (title: string) => {
   switch (title.toLowerCase()) {
@@ -29,6 +37,22 @@ const getIconColorClassNames = (title: string) => {
       return "bg-amber-200 text-amber-500";
     default:
       return "bg-purple-200";
+  }
+};
+
+const getIcon = (title: string) => {
+  switch (title.toLowerCase()) {
+    case "pull requests":
+      return <RiGitRepositoryCommitsLine className="" />;
+    case "active contributors":
+      return <TfiReload className="" />;
+    case "new contributors":
+      return <HiPlus className="" />;
+    case "alumni contributors":
+      return <GoClock className="" />;
+
+    default:
+      return <RiGitRepositoryCommitsLine className="" />;
   }
 };
 
@@ -72,7 +96,9 @@ const InsightsCard = ({ icon, title, value, numberChanged, chart, label }: Insig
     <Card className="flex flex-col flex-1 w-full h-auto text-light-slate-9">
       <div className="flex items-center justify-between">
         <div className="flex items-center justify-between gap-2 text-sm">
-          <div className={clsx("p-1.5 rounded-full w-max text-base", getIconColorClassNames(title))}>{icon}</div>
+          <div className={clsx("p-1.5 rounded-full w-max text-base", getIconColorClassNames(title))}>
+            {getIcon(title)}
+          </div>
           {title}
         </div>
         <div className="flex items-center gap-2 text-sm">
