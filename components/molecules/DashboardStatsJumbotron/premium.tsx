@@ -2,6 +2,7 @@ import React from "react";
 
 import { useFetchInsightsContributors } from "lib/hooks/api/useInsights";
 import { DashboardProps } from "components/organisms/Dashboard/dashboard";
+import humanizeNumber from "lib/utils/humanizeNumber";
 import InsightsCard from "../InsightsCard/insights-card";
 
 interface PremiumStatsProps extends DashboardProps {
@@ -70,7 +71,12 @@ const PremiumStats = ({ repositories, prs }: PremiumStatsProps) => {
         value={activeContributorsMeta.itemCount}
         chart={lineChart}
       />
-      <InsightsCard title="New Contributors" label={"0"} value={newContributorsMeta.itemCount} chart={lineChart} />
+      <InsightsCard
+        title="New Contributors"
+        label={"0"}
+        value={humanizeNumber(newContributorsMeta.itemCount, "abbreviation")}
+        chart={lineChart}
+      />
       <InsightsCard
         title="Alumni Contributors"
         label={"0"}

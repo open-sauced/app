@@ -16,7 +16,7 @@ const DashboardStatsJumbotron = ({ repositories, prData }: DashboardProps) => {
 
   return (
     <>
-      {isPremium ? (
+      {isPremium && repositories ? (
         <PremiumStats prs={prData} repositories={repositories} />
       ) : (
         <FreemiumStats insights={insightsData} contributors={contributorData} contributorMeta={meta} />

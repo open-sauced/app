@@ -76,8 +76,6 @@ const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
     });
   }
 
-  console.log(prs);
-
   const maxFilesModified = scatterChartData.reduce((max, curr) => {
     const { y } = curr;
     if (Number(y) > max) {
