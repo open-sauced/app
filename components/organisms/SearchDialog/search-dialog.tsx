@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
+import { HiOutlineExclamation } from "react-icons/hi";
 import Text from "components/atoms/Typography/text";
 import useLockBody from "lib/hooks/useLockBody";
 
@@ -27,9 +28,25 @@ const SearchDialog = ({ setOpenSearch }: SearchDialogProps) => {
             ⌘K
           </Text>
         </div>
+        <div className="w-full h-full flex items-center">
+          <SearchInfo />
+        </div>
       </div>
     </div>
   );
 };
 
 export default SearchDialog;
+
+const SearchInfo = () => (
+  <Text className="block w-full py-1 px-4 text-slate-500 !font-normal leading-6">
+    Type 3 characters or more to start searching
+  </Text>
+);
+
+const SearchError = () => (
+  <Text className="block w-full py-1 px-4 text-sauced-orange !font-normal leading-6">
+    <HiOutlineExclamation className="text-sauced-orange inline-flex mr-2.5" fontSize={20} />
+    We couldn&apos;t find any users with that name
+  </Text>
+);
