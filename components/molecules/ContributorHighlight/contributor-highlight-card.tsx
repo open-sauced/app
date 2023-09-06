@@ -435,7 +435,7 @@ const ContributorHighlightCard = ({
   return (
     <article className="flex flex-col  md:max-w-[40rem] flex-1 gap-3 lg:gap-6">
       <div>
-        <div className={clsx("flex items-center gap-1 text-light-slate-12", title && "mb-2")}>
+        <div className={clsx("flex items-center mb-4 gap-1 text-light-slate-12", title && "mb-2")}>
           {icon}
           <span className="text-sm text-light-slate-12">{getHighlightTypePreset(type).text}</span>
           <div className="flex items-center gap-3 ml-auto lg:gap-3">
