@@ -15,6 +15,8 @@ interface InsightsCardProps {
   chart?: { series: any[] };
 }
 
+type titleType = "pull requests" | "active contributors" | "new contributors" | "alumni contributors";
+
 const getIconColorClassNames = (title: string) => {
   switch (title.toLowerCase()) {
     case "pull requests":
@@ -23,7 +25,7 @@ const getIconColorClassNames = (title: string) => {
       return "bg-green-200 text-green-500";
     case "new contributors":
       return "bg-blue-200 text-sky-500";
-    case "churned contributors":
+    case "alumni contributors":
       return "bg-amber-200 text-amber-500";
     default:
       return "bg-purple-200";
@@ -36,7 +38,7 @@ const getChartLineColor = (title: string) => {
       return "#22C55E";
     case "new contributors":
       return "#38BDF8";
-    case "churned contributors":
+    case "alumni contributors":
       return "#FBBF24";
     default:
       return "#8C54FF";
@@ -67,7 +69,7 @@ const InsightsCard = ({ icon, title, value, numberChanged, chart, label }: Insig
   };
 
   return (
-    <Card className="flex flex-col w-full sm:max-w-[calc(50%-(1rem/2))] h-auto text-light-slate-9">
+    <Card className="flex flex-col flex-1 w-full h-auto text-light-slate-9">
       <div className="flex items-center justify-between">
         <div className="flex items-center justify-between gap-2 text-sm">
           <div className={clsx("p-1.5 rounded-full w-max text-base", getIconColorClassNames(title))}>{icon}</div>
@@ -84,7 +86,7 @@ const InsightsCard = ({ icon, title, value, numberChanged, chart, label }: Insig
       </div>
 
       {chart && (
-        <div className="h-[80px] -mt-16 overflow-hidden">
+        <div className="h-[78px] -mt-20 overflow-hidden">
           <CardLineChart className="" lineChartOption={chartOption} />
         </div>
       )}

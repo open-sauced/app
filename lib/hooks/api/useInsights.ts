@@ -1,5 +1,7 @@
 import { useRouter } from "next/router";
 import useSWR, { Fetcher } from "swr";
+import { useState } from "react";
+
 import getFilterQuery from "lib/utils/get-filter-query";
 import publicApiFetcher from "lib/utils/public-api-fetcher";
 
@@ -16,7 +18,16 @@ interface Insight {
   spamContributors: number;
   acceptedContributors: number;
 }
+export interface Contributors {
+  author_login: string;
+  updated_at: string;
+}
 
+type contributorsType = "new" | "repeat" | "churn" | "recent";
+interface InsightContributorsResponse {
+  data: Contributors[];
+  meta: Meta;
+}
 const getInsights = (insights: DbInsight[], intervalDay = 0): Insight => {
   const currentInsights = insights.find((insight) => insight.interval === intervalDay) as DbInsight;
 
@@ -97,4 +108,35 @@ const useInsights = (repoIds: number[] = []) => {
   };
 };
 
-export { useInsights, getInsights };
+const useFetchInsightsContributors = (repoIds: number[] = [], type: contributorsType = "new", range: number = 30) => {
+  const [limit, setLimit] = useState(10);
+  const [page, setPage] = useState(1);
+  const query = new URLSearchParams();
+
+  if (repoIds?.length > 0) {
+    query.set("repoIds", repoIds.join(","));
+  }
+
+  query.set("limit", String(limit));
+  query.set("page", String(page));
+  query.set("range", String(range));
+
+  const baseEndpoint = `contributors/insights/${type}`;
+  const endpointString = `${baseEndpoint}?${query}`;
+  const { data, mutate, error } = useSWR<InsightContributorsResponse, Error>(
+    repoIds.length > 0 ? endpointString : null,
+    publicApiFetcher as Fetcher<InsightContributorsResponse, Error>
+  );
+
+  return {
+    data: data?.data ?? [],
+    isLoading: !error && !data,
+    isError: !!error,
+    meta: data?.meta ?? { itemCount: 0, limit: 0, page: 0, hasNextPage: false, hasPreviousPage: false, pageCount: 0 },
+    mutate,
+    setLimit,
+    setPage,
+  };
+};
+
+export { useInsights, getInsights, useFetchInsightsContributors };

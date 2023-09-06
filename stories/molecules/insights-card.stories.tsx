@@ -95,7 +95,7 @@ NewContributors.args = {
 };
 
 ChurnedContributors.args = {
-  title: "Churned Contributors",
+  title: "Alumni Contributors",
   value: 69,
   numberChanged: 76,
   icon: testIcons["churnedContributors"],
