@@ -15,7 +15,10 @@ const SearchDialog = ({ setOpenSearch }: SearchDialogProps) => {
 
   return (
     <div className="fixed z-[55] p-5 w-full h-full flex justify-center bg-white/30">
-      <div className="absolute w-full h-full left-0 top-0 z-[60] backdrop-blur-sm" />
+      <div
+        className="absolute w-full h-full left-0 top-0 z-[60] backdrop-blur-sm"
+        onClick={() => setOpenSearch(false)}
+      />
       <div className="flex flex-col w-full max-w-2xl h-fit max-h-full bg-white shadow-xl border transition rounded-lg ring-light-slate-6 relative z-[65] overflow-hidden">
         <div className="flex w-full h-full items-center border-b p-2 pl-3">
           <FaSearch className="text-light-slate-9" fontSize={16} />
@@ -37,7 +40,10 @@ const SearchDialog = ({ setOpenSearch }: SearchDialogProps) => {
 };
 
 const SearchDialogTrigger = ({ setOpenSearch }: SearchDialogProps) => (
-  <div className="flex justify-between p-1 pl-3 h-fit w-52 ml-auto bg-white border rounded-lg ring-light-slate-6 relative overflow-hidden">
+  <div
+    className="flex justify-between p-1 pl-3 h-fit w-52 ml-auto bg-white border rounded-lg ring-light-slate-6 relative overflow-hidden"
+    onClick={() => setOpenSearch(true)}
+  >
     <div className="flex items-center">
       <FaSearch className="text-light-slate-9" fontSize={16} />
       <Text className="pl-2 text-sm font-semibold text-light-slate-9">Search for users</Text>

@@ -111,7 +111,7 @@ const AuthSection: React.FC = ({}) => {
               <IoNotifications className="text-xl text-light-slate-9" />
             </button>
 
-            <DropdownList menuContent={authMenu.authed}>
+            <DropdownList className="-mb-1" menuContent={authMenu.authed}>
               <div className="flex justify-end min-w-[60px] gap-2">
                 <Avatar
                   alt="User Avatar"
