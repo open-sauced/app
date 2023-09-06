@@ -548,7 +548,7 @@ const ContributorHighlightCard = ({
 
         {/* Highlight body section */}
         <div className="w-full ">
-          <p className="text-sm font-normal break-words text-light-slate-11 lg:text-base">{desc}</p>
+          <p className="text-sm font-normal break-words text-light-slate-12 lg:text-base">{desc}</p>
         </div>
         {/* Highlight Link section */}
 
