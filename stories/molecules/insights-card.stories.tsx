@@ -1,8 +1,4 @@
 import { StoryFn, Meta } from "@storybook/react";
-import { RiGitRepositoryCommitsLine } from "react-icons/ri";
-import { HiPlus } from "react-icons/hi";
-import { GoGitPullRequest, GoClock } from "react-icons/go";
-import { TfiReload } from "react-icons/tfi";
 import InsightsCard from "components/molecules/InsightsCard/insights-card";
 
 export default {
@@ -52,14 +48,6 @@ const lineChart = {
   ],
 };
 
-const testIcons = {
-  commit: <RiGitRepositoryCommitsLine className="" />,
-  newContributors: <HiPlus className="" />,
-  pullRequests: <GoGitPullRequest className="" />,
-  churnedContributors: <GoClock className="" />,
-  activeContributors: <TfiReload className="" />,
-};
-
 const Template: StoryFn<typeof InsightsCard> = (args) => <InsightsCard {...args} />;
 
 export const Default = Template.bind({});
@@ -71,7 +59,6 @@ Default.args = {
   title: "Pull Requests",
   value: 34,
   numberChanged: 76,
-  icon: testIcons["pullRequests"],
   label: "in the last 30d",
   // chart: lineChart,
 };
@@ -80,7 +67,6 @@ ActiveContributors.args = {
   title: "Active Contributors",
   value: 69,
   numberChanged: 76,
-  icon: testIcons["activeContributors"],
   label: 221,
   chart: lineChart,
 };
@@ -89,7 +75,6 @@ NewContributors.args = {
   title: "New Contributors",
   value: "69%",
   numberChanged: 76,
-  icon: testIcons["newContributors"],
   label: 221,
   chart: lineChart,
 };
@@ -98,7 +83,6 @@ ChurnedContributors.args = {
   title: "Alumni Contributors",
   value: 69,
   numberChanged: 76,
-  icon: testIcons["churnedContributors"],
   label: 221,
   chart: lineChart,
 };

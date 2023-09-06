@@ -10,7 +10,6 @@ import Card from "components/atoms/Card/card";
 import CardLineChart from "../CardLineChart/card-line-chart";
 
 interface InsightsCardProps {
-  icon?: JSX.Element;
   title: string;
   value?: number | string;
   numberChanged?: number;
@@ -69,7 +68,7 @@ const getChartLineColor = (title: string) => {
   }
 };
 
-const InsightsCard = ({ icon, title, value, numberChanged, chart, label }: InsightsCardProps) => {
+const InsightsCard = ({ title, value, numberChanged, chart, label }: InsightsCardProps) => {
   const chartLineColor = getChartLineColor(title);
 
   const chartOption = {
