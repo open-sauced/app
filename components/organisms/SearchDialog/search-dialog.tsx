@@ -36,7 +36,17 @@ const SearchDialog = ({ setOpenSearch }: SearchDialogProps) => {
   );
 };
 
-export default SearchDialog;
+const SearchDialogTrigger = ({ setOpenSearch }: SearchDialogProps) => (
+  <div className="flex justify-between p-1 pl-3 h-fit w-52 ml-auto bg-white border rounded-lg ring-light-slate-6 relative overflow-hidden">
+    <div className="flex items-center">
+      <FaSearch className="text-light-slate-9" fontSize={16} />
+      <Text className="pl-2 text-sm font-semibold text-light-slate-9">Search for users</Text>
+    </div>
+    <Text keyboard className="text-gray-600 !border-b !px-1">
+      ⌘K
+    </Text>
+  </div>
+);
 
 const SearchInfo = () => (
   <Text className="block w-full py-1 px-4 text-slate-500 !font-normal leading-6">
@@ -50,3 +60,5 @@ const SearchError = () => (
     We couldn&apos;t find any users with that name
   </Text>
 );
+
+export { SearchDialog as default, SearchDialogTrigger };
