@@ -3,7 +3,6 @@ import { RiGitRepositoryCommitsLine } from "react-icons/ri";
 import { HiPlus } from "react-icons/hi";
 import { GoClock, GoGitPullRequest } from "react-icons/go";
 import { TfiReload } from "react-icons/tfi";
-import { BsFillArrowUpCircleFill } from "react-icons/bs";
 import clsx from "clsx";
 
 import Card from "components/atoms/Card/card";
@@ -100,9 +99,7 @@ const InsightsCard = ({ title, value, numberChanged, chart, label }: InsightsCar
           </div>
           {title}
         </div>
-        <div className="flex items-center gap-2 text-sm">
-          {numberChanged ?? 0} <BsFillArrowUpCircleFill className="text-base text-green-600" />
-        </div>
+        <div className="flex items-center text-sm">{numberChanged ?? 0}</div>
       </div>
 
       <div className="flex flex-col items-center justify-center pt-6 pb-8">

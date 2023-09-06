@@ -10,15 +10,9 @@ interface PremiumStatsProps extends DashboardProps {
 }
 
 const PremiumStats = ({ repositories, prs }: PremiumStatsProps) => {
-  const { data: newContributors, meta: newContributorsMeta } = useFetchInsightsContributors(repositories, "new");
-  const { data: activeContributors, meta: activeContributorsMeta } = useFetchInsightsContributors(
-    repositories,
-    "recent"
-  );
-  const { data: alumniContributors, meta: alumniContributorsMeta } = useFetchInsightsContributors(
-    repositories,
-    "churn"
-  );
+  const { meta: newContributorsMeta } = useFetchInsightsContributors(repositories, "new");
+  const { meta: activeContributorsMeta } = useFetchInsightsContributors(repositories, "recent");
+  const { meta: alumniContributorsMeta } = useFetchInsightsContributors(repositories, "churn");
 
   const lineChart = {
     xAxis: {
@@ -68,12 +62,14 @@ const PremiumStats = ({ repositories, prs }: PremiumStatsProps) => {
       <InsightsCard
         title="Active Contributors"
         label={"0"}
+        numberChanged={activeContributorsMeta.itemCount}
         value={activeContributorsMeta.itemCount}
         chart={lineChart}
       />
       <InsightsCard
         title="New Contributors"
         label={"0"}
+        numberChanged={newContributorsMeta.itemCount}
         value={humanizeNumber(newContributorsMeta.itemCount, "abbreviation")}
         chart={lineChart}
       />
@@ -81,6 +77,7 @@ const PremiumStats = ({ repositories, prs }: PremiumStatsProps) => {
         title="Alumni Contributors"
         label={"0"}
         value={String(alumniContributorsMeta.itemCount)}
+        numberChanged={alumniContributorsMeta.itemCount}
         chart={lineChart}
       />
     </section>
