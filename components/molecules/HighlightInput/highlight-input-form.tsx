@@ -615,13 +615,16 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
             </h1>
 
             {loadingSuggestions ? (
-              <Skeleton
-                count={3}
-                height={40}
-                style={{
-                  margin: "0.5rem auto",
-                }}
-              />
+              <div className="lg:w-[33vw] md:w-[50vw]">
+                <Skeleton
+                  count={3}
+                  height={40}
+                  style={{
+                    margin: "0.5rem auto",
+                  }}
+                  className="w-full"
+                />
+              </div>
             ) : (
               <Swiper
                 spaceBetween={8}
