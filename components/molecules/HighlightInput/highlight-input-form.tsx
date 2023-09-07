@@ -585,7 +585,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                   </button>
                 </Tooltip>
                 <TextInput
-                  className="text-xs shadow-none"
+                  className="text-xs shadow-none placeholder:text-slate-400"
                   value={highlightLink}
                   handleChange={(value) => setHighlightLink(value)}
                   placeholder="Paste the URL to your Pull Request or Issue."
@@ -742,7 +742,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
           <Search
             isLoading={tagRepoSearchLoading}
             placeholder="Repository Full Name (ex: open-sauced/open-sauced)"
-            className="text-sm text-light-slate-9 font-normal !w-full px-2"
+            className="text-sm font-normal !w-full px-2"
             name={"query"}
             suggestions={repoTagSuggestions}
             onChange={(value) => setTaggedRepoSearchTerm(value)}

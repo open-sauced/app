@@ -69,7 +69,7 @@ const Search = ({
     >
       <FaSearch className="text-light-slate-9" fontSize={16} onClick={handleOnSearch} />
       <input
-        className="w-full pl-2 placeholder:text-md placeholder: text-md focus:outline-none placeholder:text-light-slate-9"
+        className="w-full pl-2 placeholder:text-md focus:outline-none placeholder:text-slate-400"
         autoFocus={autoFocus}
         placeholder={placeholder}
         name={name}
