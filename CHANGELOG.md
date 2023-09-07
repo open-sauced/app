@@ -5,6 +5,32 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.63.0](https://github.com/open-sauced/insights/compare/v1.62.1...v1.63.0) (2023-09-07)
+
+
+### 🍕 Features
+
+* add page layout and pages for lists overview, activity, and contributors ([#1674](https://github.com/open-sauced/insights/issues/1674)) ([c39a4ca](https://github.com/open-sauced/insights/commit/c39a4cab047d0819657d4abd9971c472fc25c4dd))
+* create list card component ([8f25e65](https://github.com/open-sauced/insights/commit/8f25e6532ce8a7eccc0a705de5965dd0b0f1d926))
+* implement Live insights repo recommendations ([#1643](https://github.com/open-sauced/insights/issues/1643)) ([a37b283](https://github.com/open-sauced/insights/commit/a37b283a6fcef232db6eb860d3866204ae093a53))
+
+
+### 📝 Documentation
+
+* add list card story to design system ([9ddf63f](https://github.com/open-sauced/insights/commit/9ddf63f09723e81e7dd48c5e6b2e7d0997dcc3a2))
+
+
+### 🐛 Bug Fixes
+
+* fixed Overlay button in footer ([#1659](https://github.com/open-sauced/insights/issues/1659)) ([921bc10](https://github.com/open-sauced/insights/commit/921bc10a8131a2f44145cdc259ee8214d2141971))
+* remove topic from query params when a repository is provided ([#1652](https://github.com/open-sauced/insights/issues/1652)) ([3c4d20e](https://github.com/open-sauced/insights/commit/3c4d20e8b866ffe98e96a9a6e7a7eeb9e7c1b843))
+* update highlights page with minor style fixes ([#1677](https://github.com/open-sauced/insights/issues/1677)) ([81f7a25](https://github.com/open-sauced/insights/commit/81f7a25df9992a8531353b9269d1253feacf5374))
+
+
+### ⏩ Reverts
+
+* list component changes on beta ([#1679](https://github.com/open-sauced/insights/issues/1679)) ([703af7e](https://github.com/open-sauced/insights/commit/703af7e1e73a4c183657afb51734eaf5d0436f0b))
+
 ## [1.63.0-beta.4](https://github.com/open-sauced/insights/compare/v1.63.0-beta.3...v1.63.0-beta.4) (2023-09-07)
 
 
