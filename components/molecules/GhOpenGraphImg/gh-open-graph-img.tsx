@@ -12,7 +12,11 @@ const GhOpenGraphImg = ({ githubLink, className }: GhOpenGraphImgProps): JSX.Ele
     <>
       {url && (
         <picture className={className}>
-          <img src={isValid ? url : InvalidImage} alt={isValid ? "github og image" : "invalid url image"} />
+          <img
+            src={isValid ? url : InvalidImage}
+            alt={isValid ? "github og image" : "invalid url image"}
+            className={"border border-slate-100 rounded-lg"}
+          />
         </picture>
       )}
     </>
