@@ -24,7 +24,7 @@ export const Default = ListCardTemplate.bind({});
 
 Default.args = {
   list: {
-    id: 1,
+    id: "1",
     name: "List 1",
     is_public: true,
     created_at: "2021-08-10T14:00:00.000Z",

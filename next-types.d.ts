@@ -290,7 +290,7 @@ interface DbListOwner {
   readonly name: string;
 }
 interface DbUserList {
-  readonly id: number;
+  readonly id: string;
   readonly user: DbListOwner;
   readonly name: string;
   readonly is_public: boolean;
