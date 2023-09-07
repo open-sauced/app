@@ -4,7 +4,7 @@ import Button from "components/atoms/Button/button";
 import MostActiveContributorsCard from "components/molecules/MostActiveContributorsCard/most-active-contributors-card";
 
 const meta = {
-  title: "Design System/Molecules/Top Contributors",
+  title: "Design System/Molecules/Most Active Contributors Card",
   parameters: {
     layout: "fullscreen",
   },

@@ -106,21 +106,20 @@ export default function MostActiveContributorsCard(props: Props) {
           </div>
           {/* chart */}
           <div className="relative grid place-content-stretch overflow-y-hidden mb-4">
+            {/* inset shadow */}
             <div
-              className="absolute left-0 bottom-0 right-0 h-6 w-full z-10"
-              style={{ gridArea: "1 / 1", background: "linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.1))" }}
+              className="absolute left-0 bottom-0 right-0 h-4 w-full z-10"
+              style={{ gridArea: "1 / 1", background: "linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.05))" }}
             ></div>
             <div
-              className="overflow-y-scroll overflow-x-hidden mb-3 grid gap-x-2 gap-y-3 max-w-full h-full"
+              className="overflow-y-scroll overflow-x-hidden mb-3 pb-3 pr-3 grid gap-x-2 gap-y-3 max-w-full h-full"
               style={{
                 gridArea: "1 / 1",
                 gridTemplateColumns: "auto auto 1fr",
                 gridAutoFlow: "row",
                 alignItems: "stretch",
-                // boxShadow: "inset 0 -10px 10px rgba(0, 0, 0, 0.05)",
               }}
             >
-              {/* inset shadow */}
               {sortedData.map((user) => (
                 <GraphRow key={user.login} user={user} maxContributions={maxContributions} />
               ))}
