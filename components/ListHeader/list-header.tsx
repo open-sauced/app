@@ -13,7 +13,7 @@ import { useToast } from "lib/hooks/useToast";
 
 interface ListHeaderProps {
   list?: DbUserList;
-  listId: number;
+  listId: string;
   isOwner: boolean;
 }
 
