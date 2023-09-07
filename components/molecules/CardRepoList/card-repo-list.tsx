@@ -73,7 +73,7 @@ const CardRepoList = ({
           <div>{repoTotal > limit ? `+${repoTotal - limit}` : null}</div>
         </>
       ) : (
-        <>No repositories tagged...</>
+        <></>
       )}
     </div>
   );

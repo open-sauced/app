@@ -12,7 +12,7 @@ const HighlightsFilterCard = ({ repos, setSelected, selectedFilter }: Highlights
   };
 
   return (
-    <div className="py-4 px-6 rounded-lg bg-light-slate-1  border w-full h-max">
+    <div className="py-4 px-6 pb-6 rounded-lg bg-light-slate-1  border w-full h-max">
       <Title className="!text-lg" level={3}>
         Repositories
       </Title>
