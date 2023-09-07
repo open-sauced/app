@@ -10,16 +10,16 @@ interface AnnouncementCardProps {
 const AnnouncementCard = ({ title, description, bannerSrc, url }: AnnouncementCardProps) => {
   return (
     <div className="overflow-hidden border max-w-xs w-full rounded-lg bg-light-slate-1">
-      <div className="w-full p-0.5 ">
+      <div className="w-full">
         <AspectRatio.Root ratio={1.85 / 1}>
           <picture>
-            <img src={bannerSrc} className="object-cover w-full h-full rounded-t-xl" alt={`${title} banner image`} />
+            <img src={bannerSrc} className="object-cover w-full h-full" alt={`${title} banner image`} />
           </picture>
         </AspectRatio.Root>
       </div>
-      <div className="flex flex-col gap-3 p-5">
+      <div className="flex flex-col gap-3 p-6">
         <h1 className="text-lg">{title}</h1>
-        <p className="text-sm font-normal text-light-slate-11">{description}</p>
+        <p className="text-sm font-normal text-light-slate-11 pb-2">{description}</p>
         <a
           href={url}
           target="_blank"
