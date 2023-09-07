@@ -284,9 +284,14 @@ interface DbUserCollaboration {
   readonly message: string;
 }
 
+interface DbListOwner {
+  readonly id: number;
+  readonly login: string;
+  readonly name: string;
+}
 interface DbUserList {
-  readonly id: string;
-  readonly user: DbUser;
+  readonly id: number;
+  readonly user: DbListOwner;
   readonly name: string;
   readonly is_public: boolean;
   readonly created_at: string;
