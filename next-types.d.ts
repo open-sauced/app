@@ -254,3 +254,8 @@ interface DbUserCollaboration {
   readonly status: "pending" | "accept" | "reject";
   readonly message: string;
 }
+
+interface DbUserSearch {
+  readonly login: string;
+  readonly full_name: string;
+}
