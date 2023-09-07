@@ -6,7 +6,7 @@ const useList = (id: string) => {
   // const endpointString = `${baseEndpoint}`;
 
   const data: DbUserList = {
-    id: "1",
+    id: 1,
     name: "List Name",
     user: {
       id: 1,
