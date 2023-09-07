@@ -13,7 +13,7 @@ import { useToast } from "lib/hooks/useToast";
 
 interface ListHeaderProps {
   list?: DbUserList;
-  listId: string;
+  listId: number;
   isOwner: boolean;
 }
 
@@ -49,7 +49,7 @@ const ListHeader = ({ list, listId, isOwner }: ListHeaderProps): JSX.Element => 
           <div className="flex items-center gap-2 mt-4">1000 Contributors</div>
         </div>
       </div>
-      <div className="absolute right-0 flex flex-col gap-3 py-2 md:items-center md:flex-row md:static hidden">
+      <div className="absolute right-0 flex flex-col gap-3 py-2 md:items-center md:flex-row md:static">
         <Button onClick={() => handleCopyToClipboard()} className="px-6 py-2 bg-white " variant="text">
           <FiCopy className="mt-1 mr-2" /> Share
         </Button>
