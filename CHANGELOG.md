@@ -5,6 +5,28 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.63.0-beta.4](https://github.com/open-sauced/insights/compare/v1.63.0-beta.3...v1.63.0-beta.4) (2023-09-07)
+
+
+### 🍕 Features
+
+* create list card component ([8f25e65](https://github.com/open-sauced/insights/commit/8f25e6532ce8a7eccc0a705de5965dd0b0f1d926))
+
+
+### 📝 Documentation
+
+* add list card story to design system ([9ddf63f](https://github.com/open-sauced/insights/commit/9ddf63f09723e81e7dd48c5e6b2e7d0997dcc3a2))
+
+
+### 🐛 Bug Fixes
+
+* update highlights page with minor style fixes ([#1677](https://github.com/open-sauced/insights/issues/1677)) ([81f7a25](https://github.com/open-sauced/insights/commit/81f7a25df9992a8531353b9269d1253feacf5374))
+
+
+### ⏩ Reverts
+
+* list component changes on beta ([#1679](https://github.com/open-sauced/insights/issues/1679)) ([703af7e](https://github.com/open-sauced/insights/commit/703af7e1e73a4c183657afb51734eaf5d0436f0b))
+
 ## [1.63.0-beta.3](https://github.com/open-sauced/insights/compare/v1.63.0-beta.2...v1.63.0-beta.3) (2023-09-06)
 
 
