@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.64.0-beta.1](https://github.com/open-sauced/insights/compare/v1.63.1-beta.1...v1.64.0-beta.1) (2023-09-07)
+
+
+### 🍕 Features
+
+* add `ListNameHeader` component to design system ([#1680](https://github.com/open-sauced/insights/issues/1680)) ([4e5b885](https://github.com/open-sauced/insights/commit/4e5b88512625d25c91d8e978b6b7a30b92b38237))
+
 ### [1.63.1-beta.1](https://github.com/open-sauced/insights/compare/v1.63.0...v1.63.1-beta.1) (2023-09-07)
 
 
