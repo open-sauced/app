@@ -58,14 +58,14 @@ const NewsletterForm = () => {
   return (
     <>
       {isSubscribed ? (
-        <div className="flex items-center justify-center w-full gap-3 px-4 py-6 border rounded-lg h-44 bg-light-slate-1">
+        <div className="flex items-center justify-center w-full gap-3 p-6 pt-5 border rounded-lg h-44 bg-light-slate-1">
           <div className="text-2xl text-center ">
             <Image className="mx-auto" src={SaucedLogo} alt="Sauced Logo" />
             <p>You’re Subscribed!</p>
           </div>
         </div>
       ) : (
-        <div className="flex flex-col w-full gap-3 px-4 py-6 border rounded-lg bg-light-slate-1">
+        <div className="flex flex-col w-full gap-3 p-6 pt-5 border rounded-lg bg-light-slate-1">
           <div className="w-64 space-y-1">
             <h2 className="text-lg">Subscribe to our newsletter</h2>
             <p className="text-sm font-normal text-light-slate-11">
