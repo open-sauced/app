@@ -20,7 +20,11 @@ const useRepositoryPullRequests = (fullName: string, limit = 10, range = 30) => 
     query.set("topic", topic);
   }
 
-  if (query.get("repo") || fullName) {
+  if (!query.get("repo") && fullName) {
+    query.set("repo", fullName);
+  }
+
+  if (query.get("repo")) {
     query.delete("topic");
   }
 
