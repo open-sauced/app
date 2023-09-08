@@ -9,7 +9,13 @@
 body {
   background-color: #f8f9fa;
 }
-
+.auto-grow-input:not(:empty) {
+  color: black;
+}
+.auto-grow-input[contenteditable]:empty::before {
+  content: "List Name";
+  color: "#d1d5db" !important;
+}
 #sitegpt-chat-icon {
   display: flex !important;
 }

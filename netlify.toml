@@ -1,5 +1,5 @@
 [build.environment]
-NODE_VERSION = "16"
+NODE_VERSION = "18"
 
 [context.alpha]
 environment = { CHANNEL = "alpha" }
@@ -14,3 +14,15 @@ targetPort = 3001
 
 [functions]
 deno_import_map = "./netlify/edge-functions/deno.json"
+
+[[redirects]]
+  from = "https://insight.opensauced.pizza/*"
+  to = "https://insights.opensauced.pizza/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://app.opensauced.pizza/*"
+  to = "https://insights.opensauced.pizza/:splat"
+  status = 307
+  force = true
