@@ -3,15 +3,16 @@ import { format } from "date-fns";
 import Button from "components/atoms/Button/button";
 import Card from "components/atoms/Card/card";
 import Icon from "components/atoms/Icon/icon";
-import PersonIcon from "img/icons/person.svg";
-import CalendarIcon from "img/calendar.svg";
-import ChevronDownIcon from "img/chevron-down.svg";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "components/atoms/Dropdown/dropdown";
+import SVGIcon from "components/atoms/SVGIcon/svg-icon";
+import PeopleIcon from "img/icons/people.svg";
+import CalendarIcon from "img/calendar.svg";
+import ChevronDownIcon from "img/chevron-down.svg";
 
 const dataTypes = ["commits", "prsCreated", "prsReviewed", "issuesCreated", "comments"] as const;
 const colors = {
@@ -81,8 +82,8 @@ export default function ContributionsEvolutionCard(props: Props) {
             </DropdownMenu>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="default">
-                  <Icon IconImage={PersonIcon} className="w-4 h-4" />
+                <Button variant="default" className="items-center gap-1">
+                  <SVGIcon IconImage={`${PeopleIcon.src}#icon`} className="w-4 h-4" />
                   All Contributors
                   <Icon IconImage={ChevronDownIcon} className="w-4 h-4" />
                 </Button>

@@ -3,16 +3,18 @@ import Image from "next/image";
 import Button from "components/atoms/Button/button";
 import Card from "components/atoms/Card/card";
 import Icon from "components/atoms/Icon/icon";
-import { getAvatarByUsername } from "lib/utils/github";
-import PersonIcon from "img/icons/person.svg";
-import CalendarIcon from "img/calendar.svg";
-import ChevronDownIcon from "img/chevron-down.svg";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "components/atoms/Dropdown/dropdown";
+import { getAvatarByUsername } from "lib/utils/github";
+import PeopleIcon from "img/icons/people.svg";
+import CalendarIcon from "img/calendar.svg";
+import ChevronDownIcon from "img/chevron-down.svg";
+import SortArrowsIcon from "img/icons/sort-arrows.svg";
+import SVGIcon from "components/atoms/SVGIcon/svg-icon";
 
 const dataTypes = ["commits", "prsCreated", "prsReviewed", "issuesCreated", "comments"] as const;
 const colors = {
@@ -115,9 +117,24 @@ export default function MostActiveContributorsCard(props: Props) {
             </DropdownMenu>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="default">
-                  <Icon IconImage={PersonIcon} className="w-4 h-4" />
+                <Button variant="default" className="items-center gap-1">
+                  <SVGIcon IconImage={`${PeopleIcon.src}#icon`} className="w-4 h-4" />
                   All Contributors
+                  <Icon IconImage={ChevronDownIcon} className="w-4 h-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="flex flex-col gap-2">
+                <DropdownMenuItem className="rounded-md">One</DropdownMenuItem>
+                <DropdownMenuItem className="rounded-md">Two</DropdownMenuItem>
+                <DropdownMenuItem className="rounded-md">Three</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="default" className="items-center gap-1 justify-self-end ml-auto">
+                  <SVGIcon IconImage={`${SortArrowsIcon.src}#icon`} className="w-4 h-4" />
+                  {/* <Icon IconImage={SortArrowsIcon} className="w-4 h-4" /> */}
+                  Most Active
                   <Icon IconImage={ChevronDownIcon} className="w-4 h-4" />
                 </Button>
               </DropdownMenuTrigger>
