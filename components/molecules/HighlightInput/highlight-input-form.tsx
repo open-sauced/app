@@ -527,7 +527,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
             </div>
 
             <div
-              className={`flex items-center justify-between w-full gap-1 px-2 py-1 text-sm bg-white border rounded-lg`}
+              className={`flex items-center justify-between w-full gap-1 px-2 py-1 text-sm bg-white border rounded-lg h-10`}
             >
               <div className="flex w-full">
                 <CardRepoList
@@ -553,7 +553,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
             </div>
 
             <div className="flex">
-              <div className="flex w-full gap-1">
+              <div className="flex w-full gap-1 items-center">
                 <Tooltip direction="top" content="Pick a date">
                   <Popover>
                     <PopoverTrigger asChild>
@@ -585,7 +585,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                   </button>
                 </Tooltip>
                 <TextInput
-                  className="text-xs shadow-none placeholder:text-slate-400"
+                  className="text-sm shadow-none h-10 flex-none"
                   value={highlightLink}
                   handleChange={(value) => setHighlightLink(value)}
                   placeholder="Paste the URL to your Pull Request or Issue."
