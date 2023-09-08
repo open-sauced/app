@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.64.0-beta.2](https://github.com/open-sauced/insights/compare/v1.64.0-beta.1...v1.64.0-beta.2) (2023-09-08)
+
+
+### 🐛 Bug Fixes
+
+* apply repo query param for each repo if not using a global filter ([#1691](https://github.com/open-sauced/insights/issues/1691)) ([ed92ac8](https://github.com/open-sauced/insights/commit/ed92ac85bb6839c041100daa71bc14340487b7c4))
+
 ## [1.64.0-beta.1](https://github.com/open-sauced/insights/compare/v1.63.1-beta.1...v1.64.0-beta.1) (2023-09-07)
 
 
