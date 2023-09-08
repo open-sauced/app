@@ -1,5 +1,6 @@
 import { BarDatum, ResponsiveBar } from "@nivo/bar";
 import { format } from "date-fns";
+import { useState } from "react";
 import Button from "components/atoms/Button/button";
 import Card from "components/atoms/Card/card";
 import Icon from "components/atoms/Icon/icon";
@@ -31,6 +32,19 @@ const labels = {
   comments: "Comments",
 } as const;
 
+const dateFilters = {
+  last7days: "Last 7 days",
+  last30days: "Last 30 days",
+  last3months: "Last 3 months",
+};
+
+const peopleFilters = {
+  all: "All Contributors",
+  active: "Active Contributors",
+  new: "New Contributors",
+  churned: "Churned Contributors",
+};
+
 interface ContributionStat extends BarDatum {
   startTime: string;
   commits: number;
@@ -45,6 +59,9 @@ interface Props {
 }
 
 export default function ContributionsEvolutionCard(props: Props) {
+  const [currentDateFilter, setCurrentDateFilter] = useState<keyof typeof dateFilters>("last7days"); // TODO: make this a prop
+  const [currentPeopleFilter, setCurrentPeopleFilter] = useState<keyof typeof peopleFilters>("all"); // TODO: make this a prop
+
   const formattedData = props.data.map((datum) => ({
     ...datum,
     startTime: format(new Date(datum.startTime), "MM/dd"),
@@ -70,28 +87,40 @@ export default function ContributionsEvolutionCard(props: Props) {
               <DropdownMenuTrigger asChild>
                 <Button variant="default" className="items-center gap-1">
                   <Icon IconImage={CalendarIcon} className="w-4 h-4" />
-                  Last 7 days
+                  {dateFilters[currentDateFilter]}
                   <Icon IconImage={ChevronDownIcon} className="w-4 h-4" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="flex flex-col gap-2">
-                <DropdownMenuItem className="rounded-md">One</DropdownMenuItem>
-                <DropdownMenuItem className="rounded-md">Two</DropdownMenuItem>
-                <DropdownMenuItem className="rounded-md">Three</DropdownMenuItem>
+                {Object.entries(dateFilters).map(([key, value]) => (
+                  <DropdownMenuItem
+                    key={key}
+                    className="rounded-md !cursor-pointer"
+                    onClick={() => setCurrentDateFilter(key as keyof typeof dateFilters)}
+                  >
+                    {value}
+                  </DropdownMenuItem>
+                ))}
               </DropdownMenuContent>
             </DropdownMenu>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="default" className="items-center gap-1">
                   <SVGIcon IconImage={`${PeopleIcon.src}#icon`} className="w-4 h-4" />
-                  All Contributors
+                  {peopleFilters[currentPeopleFilter]}
                   <Icon IconImage={ChevronDownIcon} className="w-4 h-4" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="flex flex-col gap-2">
-                <DropdownMenuItem className="rounded-md">One</DropdownMenuItem>
-                <DropdownMenuItem className="rounded-md">Two</DropdownMenuItem>
-                <DropdownMenuItem className="rounded-md">Three</DropdownMenuItem>
+                {Object.entries(peopleFilters).map(([key, value]) => (
+                  <DropdownMenuItem
+                    key={key}
+                    className="rounded-md !cursor-pointer"
+                    onClick={() => setCurrentPeopleFilter(key as keyof typeof peopleFilters)}
+                  >
+                    {value}
+                  </DropdownMenuItem>
+                ))}
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
