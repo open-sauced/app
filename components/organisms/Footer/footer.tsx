@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 
 // icons
-// import { AiOutlineTwitter } from "react-icons/ai";
+import { FaXTwitter } from "react-icons/fa6";
 import { AiOutlineGithub } from "react-icons/ai";
 import { AiFillInstagram } from "react-icons/ai";
 import { AiFillYoutube } from "react-icons/ai";
@@ -10,7 +10,6 @@ import { FaDiscord } from "react-icons/fa";
 import { FaDev } from "react-icons/fa";
 import Text from "components/atoms/Typography/text";
 import OpenSaucedLogo from "img/openSauced-icon.png";
-import xTwitter from "img/icons/x-twitter.svg";
 
 const footerContext = [
   {
@@ -32,7 +31,7 @@ const footerContext = [
     socials: [
       {
         url: "https://twitter.com/saucedopen",
-        icon: <Image src={xTwitter} alt="" className="text-2xl hover:text-light-slate-10  text-light-slate-9" />,
+        icon: <FaXTwitter className="text-2xl hover:text-light-slate-10  text-light-slate-9" />,
       },
       {
         url: "https://github.com/open-sauced",
