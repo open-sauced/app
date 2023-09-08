@@ -7,6 +7,12 @@ import { getAvatarByUsername } from "lib/utils/github";
 import PersonIcon from "img/icons/person.svg";
 import CalendarIcon from "img/calendar.svg";
 import ChevronDownIcon from "img/chevron-down.svg";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "components/atoms/Dropdown/dropdown";
 
 const dataTypes = ["commits", "prsCreated", "prsReviewed", "issuesCreated", "comments"] as const;
 const colors = {
@@ -93,16 +99,34 @@ export default function MostActiveContributorsCard(props: Props) {
           </div>
           {/* buttons */}
           <div className="flex gap-1 mb-4">
-            <Button variant="default" className="items-center gap-1">
-              <Icon IconImage={CalendarIcon} className="w-4 h-4" />
-              Last 7 days
-              <Icon IconImage={ChevronDownIcon} className="w-4 h-4" />
-            </Button>
-            <Button variant="default">
-              <Icon IconImage={PersonIcon} className="w-4 h-4" />
-              All Contributors
-              <Icon IconImage={ChevronDownIcon} className="w-4 h-4" />
-            </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="default" className="items-center gap-1">
+                  <Icon IconImage={CalendarIcon} className="w-4 h-4" />
+                  Last 7 days
+                  <Icon IconImage={ChevronDownIcon} className="w-4 h-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="flex flex-col gap-2">
+                <DropdownMenuItem className="rounded-md">One</DropdownMenuItem>
+                <DropdownMenuItem className="rounded-md">Two</DropdownMenuItem>
+                <DropdownMenuItem className="rounded-md">Three</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="default">
+                  <Icon IconImage={PersonIcon} className="w-4 h-4" />
+                  All Contributors
+                  <Icon IconImage={ChevronDownIcon} className="w-4 h-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="flex flex-col gap-2">
+                <DropdownMenuItem className="rounded-md">One</DropdownMenuItem>
+                <DropdownMenuItem className="rounded-md">Two</DropdownMenuItem>
+                <DropdownMenuItem className="rounded-md">Three</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
           {/* chart */}
           <div className="relative grid place-content-stretch overflow-y-hidden mb-4">
