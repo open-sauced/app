@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.65.0-beta.1](https://github.com/open-sauced/insights/compare/v1.64.0...v1.65.0-beta.1) (2023-09-08)
+
+
+### 🍕 Features
+
+* add `ListCard` component to design system ([#1687](https://github.com/open-sauced/insights/issues/1687)) ([dd8df3e](https://github.com/open-sauced/insights/commit/dd8df3ece74c2375b1568174bbbe3d865658d6ff))
+
 ## [1.64.0](https://github.com/open-sauced/insights/compare/v1.63.0...v1.64.0) (2023-09-08)
 
 
