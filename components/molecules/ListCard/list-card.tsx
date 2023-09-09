@@ -34,7 +34,7 @@ const ListCard = ({ list }: ListCardProps) => {
   ];
   return (
     <div>
-      <div className="flex flex-col items-start w-full gap-4 px-4 py-5 bg-white rounded-lg md:items-center md:justify-between md:flex-row lg:px-8 lg:gap-2">
+      <div className="flex flex-col items-start w-full gap-4 px-4 py-6 bg-white rounded-lg md:items-center md:justify-between md:flex-row lg:px-8 lg:gap-2">
         <div className="flex flex-col flex-1 gap-4 lg:gap-6">
           <div className="flex items-center gap-4 lg:items-center ">
             <div className="w-4 h-4 rounded-full bg-light-orange-10"></div>
@@ -47,9 +47,9 @@ const ListCard = ({ list }: ListCardProps) => {
         <div className="">
           <div className="flex items-center justify-end w-full gap-8">
             {/* Contributors section */}
-            <div className="flex flex-col flex-1 gap-2 mr-2">
+            <div className="flex flex-col flex-1 gap-1 mr-2">
               <span className="text-xs text-light-slate-11">Contributors</span>
-              <Text className="flex items-center text-xl">{dummyContributorsCount}</Text>
+              <Text className="flex items-center text-2xl">{dummyContributorsCount}</Text>
             </div>
 
             <div className="flex items-center">
@@ -67,15 +67,14 @@ const ListCard = ({ list }: ListCardProps) => {
             </div>
             <div className="justify-end flex-1 hidden md:flex">
               {/* Delete button */}
-              <button type="button">
-                <span className=" bg-light-slate-1 inline-block rounded-lg p-2.5 border mr-2 cursor-pointer">
-                  <RiDeleteBinLine title="Edit Insight Page" className="text-lg text-light-slate-10" />
-                </span>
+              <button className="inline-block p-3 mr-2 border rounded-lg cursor-pointer bg-light-slate-1" type="button">
+                <RiDeleteBinLine title="Edit Insight Page" className="text-lg text-light-slate-10" />
               </button>
-              <Link href={`/list/${list.user.login}/${list.id}/overview`}>
-                <span className=" bg-light-slate-1 inline-block rounded-lg p-2.5 border cursor-pointer">
-                  <MdOutlineArrowForwardIos title="Go To Insight Page" className="text-lg text-light-slate-10" />
-                </span>
+              <Link
+                className="inline-block p-3 mr-2 border rounded-lg cursor-pointer bg-light-slate-1"
+                href={`/list/${list.user.login}/${list.id}/overview`}
+              >
+                <MdOutlineArrowForwardIos title="Go To Insight Page" className="text-lg text-light-slate-10" />
               </Link>
             </div>
           </div>

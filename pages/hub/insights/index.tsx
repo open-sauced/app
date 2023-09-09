@@ -17,6 +17,7 @@ import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { supabase } from "lib/utils/supabase";
 import useSession from "lib/hooks/useSession";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "components/atoms/Tabs/tabs";
+import ListCard from "components/molecules/ListCard/list-card";
 
 type TabKey = "insights" | "lists";
 
@@ -69,7 +70,7 @@ const InsightsHub: WithPageLayout = () => {
               <TabsTrigger
                 asChild
                 key={tab}
-                className="!px-0 !justify-start data-[state=active]:text-black text-gray-300 cursor-pointer"
+                className="!px-0 !justify-start data-[state=active]:text-black text-gray-300/80 cursor-pointer"
                 value={tab}
               >
                 <Title className={clsx("!text-3xl !leading-none !font-medium mx-0")} level={1}>
@@ -101,7 +102,18 @@ const InsightsHub: WithPageLayout = () => {
           </section>
         </TabsContent>
         <TabsContent value={"lists" satisfies TabKey}>
-          <section className="flex flex-col gap-4">Hello Lists</section>
+          <section className="flex flex-col gap-4">
+            <ListCard
+              list={{
+                id: "1",
+                user: { login: "bdougie", id: 1, name: "crap" },
+                name: "my ne list",
+                created_at: " ",
+                updated_at: "",
+                is_public: true,
+              }}
+            />
+          </section>
         </TabsContent>
 
         <Link
