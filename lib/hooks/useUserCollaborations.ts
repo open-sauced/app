@@ -35,7 +35,15 @@ const useUserCollaborations = () => {
       toast({ description: "Collaboration request Sent!", title: "Success", variant: "success" });
     } else {
       const response = await req?.json();
-      toast({ description: response.message[0], title: "Error", variant: "danger" });
+      if (response.statusCode === 401) {
+        toast({
+          description: "You require an upgraded access to use collaboration!",
+          title: "Not allowed",
+          variant: "danger",
+        });
+      } else {
+        toast({ description: response.message[0], title: "Error", variant: "danger" });
+      }
 
       console.log(response.message);
     }
