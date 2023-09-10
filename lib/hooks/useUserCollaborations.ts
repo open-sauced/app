@@ -42,7 +42,7 @@ const useUserCollaborations = () => {
           variant: "danger",
         });
       } else {
-        toast({ description: response.message[0], title: "Error", variant: "danger" });
+        toast({ description: response.message, title: "Error", variant: "danger" });
       }
 
       console.log(response.message);
