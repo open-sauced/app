@@ -5,6 +5,18 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.65.0-beta.2](https://github.com/open-sauced/insights/compare/v1.65.0-beta.1...v1.65.0-beta.2) (2023-09-11)
+
+
+### 🍕 Features
+
+* add feedback message to collab request form UI ([#1658](https://github.com/open-sauced/insights/issues/1658)) ([3ccb7aa](https://github.com/open-sauced/insights/commit/3ccb7aa6ad35c4f602e1b99d522c62f4acf6dc07))
+
+
+### 🐛 Bug Fixes
+
+* handle `401` error on collaboration feature ([#1694](https://github.com/open-sauced/insights/issues/1694)) ([756efdf](https://github.com/open-sauced/insights/commit/756efdf47b24852ec47efdaa7cfd9ab19599acef))
+
 ## [1.65.0-beta.1](https://github.com/open-sauced/insights/compare/v1.64.0...v1.65.0-beta.1) (2023-09-08)
 
 
