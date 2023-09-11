@@ -1,20 +1,17 @@
-import { TooltipProvider } from "@radix-ui/react-tooltip";
-import { ComponentStory } from "@storybook/react";
+import { Meta, StoryObj } from "@storybook/react";
 import StackedAvatar from "components/molecules/StackedAvatar/stacked-avatar";
-import { mockDbContributions } from "../mockedData";
+import { mockDbContributions } from "../testData/mockedData";
 
 const storyConfig = {
   title: "Design System/Molecules/Stacked Avatar",
-};
+  component: StackedAvatar,
+} satisfies Meta<typeof StackedAvatar>;
 export default storyConfig;
 
-const template: ComponentStory<typeof StackedAvatar> = (args) => (
-  <TooltipProvider>
-    <StackedAvatar {...args} />
-  </TooltipProvider>
-);
+type Story = StoryObj<typeof StackedAvatar>;
 
-export const Default = template.bind({});
-Default.args = {
-  contributors: mockDbContributions,
+export const Default: Story = {
+  args: {
+    contributors: mockDbContributions,
+  },
 };
