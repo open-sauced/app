@@ -1,6 +1,9 @@
 import { useSprings, animated } from "@react-spring/web";
+import { useGesture } from "@use-gesture/react";
 import Image from "next/image";
 import { useState } from "react";
+import * as Tooltip from "@radix-ui/react-tooltip";
+import clsx from "clsx";
 import Button from "components/atoms/Button/button";
 import Card from "components/atoms/Card/card";
 import Icon from "components/atoms/Icon/icon";
@@ -18,66 +21,28 @@ import SortArrowsIcon from "img/icons/sort-arrows.svg";
 import SVGIcon from "components/atoms/SVGIcon/svg-icon";
 
 const dataTypes = ["commits", "prsCreated", "prsReviewed", "issuesCreated", "comments"] as const;
+type Stat = (typeof dataTypes)[number];
+
+const dataLabels = {
+  commits: "Commits",
+  prsCreated: "PRs Created",
+  prsReviewed: "PRs Reviewed",
+  issuesCreated: "Issues Created",
+  comments: "Comments",
+} as const satisfies Record<Stat, string>;
+
 const colors = {
   commits: "hsla(217, 91%, 60%, 1)",
   prsCreated: "hsla(173, 80%, 40%, 1)",
   prsReviewed: "hsla(198, 93%, 60%, 1)",
   issuesCreated: "hsla(258, 90%, 66%, 1)",
   comments: "hsla(245, 58%, 51%, 1)",
-} as const;
-
-function GraphRow({ user, maxContributions }: { user: ContributorStat; maxContributions: number }) {
-  const [springs, api] = useSprings(
-    dataTypes.length,
-    (index: number) => ({
-      from: {
-        width: "0%",
-      },
-      to: {
-        width: `${(user.contributions[dataTypes[index]] / user.totalContributions) * 100}%`,
-      },
-    }),
-    [user.contributions, user.totalContributions, maxContributions]
-  );
-  return (
-    <>
-      <Image
-        className="block w-8 h-8 rounded-full grid-cols-1"
-        src={getAvatarByUsername(user.login, 64)}
-        width={64}
-        height={64}
-        alt={user.login}
-      />
-      <div className="flex items-center text-sm text-slate-900 grid-cols-2">{user.login}</div>
-      <div className="flex items-stretch grid-cols-3">
-        <div className="flex items-stretch" style={{ width: `${(user.totalContributions / maxContributions) * 100}%` }}>
-          {springs.map((spring, index) => (
-            <animated.div
-              key={dataTypes[index]}
-              style={{
-                backgroundColor: colors[dataTypes[index]],
-                ...spring,
-              }}
-            >
-              {" "}
-            </animated.div>
-          ))}
-        </div>
-      </div>
-    </>
-  );
-}
+} as const satisfies Record<Stat, string>;
 
 interface ContributorStat {
   login: string;
   totalContributions: number;
-  contributions: {
-    commits: number;
-    prsCreated: number;
-    prsReviewed: number;
-    issuesCreated: number;
-    comments: number;
-  };
+  contributions: Record<Stat, number>;
 }
 
 interface Props {
@@ -199,12 +164,98 @@ export default function MostActiveContributorsCard(props: Props) {
             {dataTypes.map((type) => (
               <div key={type} className="flex items-center gap-2">
                 <div className="w-3 h-3 rounded-sm" style={{ backgroundColor: colors[type] }}></div>
-                <div className="text-sm text-slate-900 capitalize">{type}</div>
+                <div className="text-sm text-slate-900 capitalize">{dataLabels[type]}</div>
               </div>
             ))}
           </div>
         </div>
       </Card>
     </div>
+  );
+}
+
+function RowTooltip({
+  contributor,
+  highlightedStat,
+  children,
+}: {
+  contributor: ContributorStat;
+  highlightedStat: keyof ContributorStat["contributions"];
+  children: React.ReactNode;
+}) {
+  return (
+    <Tooltip.Root>
+      <Tooltip.Trigger asChild>{children}</Tooltip.Trigger>
+      <Tooltip.Portal>
+        <Tooltip.Content sideOffset={-10} align="center" collisionPadding={10} side={"bottom"} avoidCollisions>
+          <div className={clsx("text-xs p-2 rounded shadow-lg bg-white font-light")}>
+            <div className="text-black font-bold mb-1">{contributor.login}</div>
+            {Object.keys(contributor.contributions).map((key) => (
+              <div key={key} className={clsx("flex items-center gap-2 font-bold", { "font-bold": true })}>
+                <div
+                  className="w-3 h-3 rounded-sm"
+                  style={{ backgroundColor: colors[key as keyof typeof colors] }}
+                ></div>
+                <div className={clsx(key === highlightedStat ? "font-bold" : "font-light")}>
+                  {contributor.contributions[key as keyof typeof contributor.contributions]} {dataLabels[key as Stat]}
+                </div>
+              </div>
+            ))}
+          </div>
+        </Tooltip.Content>
+      </Tooltip.Portal>
+    </Tooltip.Root>
+  );
+}
+
+function GraphRow({ user, maxContributions }: { user: ContributorStat; maxContributions: number }) {
+  const [isHovered, setIsHovered] = useState(false);
+  const [springs] = useSprings(
+    dataTypes.length,
+    (index: number) => ({
+      from: {
+        width: "0%",
+      },
+      to: {
+        width: `${(user.contributions[dataTypes[index]] / user.totalContributions) * 100}%`,
+      },
+    }),
+    [user.contributions, user.totalContributions, maxContributions]
+  );
+
+  // When hovered the tooltip should show for the the GraphRow
+  const hoverGesture = useGesture({
+    onHover: (state) => {
+      setIsHovered(Boolean(state.hovering));
+    },
+  });
+
+  return (
+    <>
+      <Image
+        className="block w-8 h-8 rounded-full grid-cols-1"
+        src={getAvatarByUsername(user.login, 64)}
+        width={64}
+        height={64}
+        alt={user.login}
+      />
+      <div className="flex items-center text-sm text-slate-900 grid-cols-2">{user.login}</div>
+      <div className="flex items-stretch grid-cols-3">
+        <div className="flex items-stretch" style={{ width: `${(user.totalContributions / maxContributions) * 100}%` }}>
+          {springs.map((spring, index) => (
+            <RowTooltip key={dataTypes[index]} highlightedStat={dataTypes[index]} contributor={user}>
+              <animated.div
+                style={{
+                  backgroundColor: colors[dataTypes[index]],
+                  ...spring,
+                }}
+              >
+                {" "}
+              </animated.div>
+            </RowTooltip>
+          ))}
+        </div>
+      </div>
+    </>
   );
 }
