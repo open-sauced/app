@@ -8,7 +8,7 @@ import TopNav from "components/organisms/TopNav/top-nav";
 import ListHeader from "components/ListHeader/list-header";
 import TabsList from "components/TabList/tab-list";
 
-import useList from "lib/hooks/useList";
+import { useList } from "lib/hooks/useList";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 
 const ListPageLayout = ({ children }: { children: React.ReactNode }) => {
@@ -32,7 +32,7 @@ const ListPageLayout = ({ children }: { children: React.ReactNode }) => {
     <div className="flex flex-col min-h-screen">
       <TopNav />
 
-      <div className="page-container flex grow bg-light-slate-3 flex-col items-center pt-20 md:pt-14">
+      <div className="flex flex-col items-center pt-20 page-container grow bg-light-slate-3 md:pt-14">
         <div className="info-container container w-full min-h-[100px]">
           <Header>
             {list ? (
