@@ -5,33 +5,21 @@ import { FiPlus } from "react-icons/fi";
 import { RiDeleteBinLine } from "react-icons/ri";
 import Text from "components/atoms/Typography/text";
 import Tooltip from "components/atoms/Tooltip/tooltip";
+import { useFetchListContributors } from "lib/hooks/useList";
 import StackedAvatar, { Contributor } from "../StackedAvatar/stacked-avatar";
 
 interface ListCardProps {
   list: DbUserList;
 }
 const ListCard = ({ list }: ListCardProps) => {
-  const dummyContributorsCount = 105;
-  const dummyContributors: Contributor[] = [
-    {
-      host_login: "bdougie",
-    },
-    {
-      host_login: "brandonroberts",
-    },
-    {
-      host_login: "ritadee",
-    },
-    {
-      host_login: "ogdev-01",
-    },
-    {
-      host_login: "jpmcb",
-    },
-    {
-      host_login: "divyanshu013",
-    },
-  ];
+  const { data: contributors } = useFetchListContributors(list.id);
+
+  const contributorsAvatar: Contributor[] = contributors?.map((contributor) => ({
+    host_login: contributor.login,
+  }));
+
+  const dummyContributorsCount = contributors?.length ?? 0;
+
   return (
     <div>
       <div className="flex flex-col items-start w-full gap-4 px-4 py-6 bg-white rounded-lg md:items-center md:justify-between md:flex-row lg:px-8 lg:gap-2">
@@ -47,13 +35,13 @@ const ListCard = ({ list }: ListCardProps) => {
         <div className="">
           <div className="flex items-center justify-end w-full gap-8">
             {/* Contributors section */}
-            <div className="flex flex-col flex-1 gap-1 mr-2">
+            <div className="flex flex-col items-center flex-1 gap-1 mr-2">
               <span className="text-xs text-light-slate-11">Contributors</span>
               <Text className="flex items-center text-2xl">{dummyContributorsCount}</Text>
             </div>
 
             <div className="flex items-center">
-              <StackedAvatar contributors={dummyContributors} visibleQuantity={6} classNames="scale-125" />
+              <StackedAvatar contributors={contributorsAvatar} visibleQuantity={6} classNames="scale-125" />
               <Tooltip content="Add more contributors">
                 <button
                   className="z-50 w-8 h-8 overflow-hidden scale-110 bg-white border-2 border-white rounded-full"
