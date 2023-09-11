@@ -1,11 +1,14 @@
-import { ComponentStory } from "@storybook/react";
-import { TooltipProvider } from "@radix-ui/react-tooltip";
+import { Meta, StoryObj } from "@storybook/react";
 import ContributorProfilePage from "components/organisms/ContributorProfilePage/contributor-profile-page";
 
 const storyConfig = {
   title: "Design System/Organisms/Contributor Profile Page",
-};
+  component: ContributorProfilePage,
+} satisfies Meta<typeof ContributorProfilePage>;
 export default storyConfig;
+
+type Story = StoryObj<typeof ContributorProfilePage>;
+
 const listOfPRs = [
   {
     prName: "Merging some work",
@@ -53,14 +56,8 @@ const listOfPRs = [
   },
 ];
 
-const ContributorProfilePageTemplate: ComponentStory<typeof ContributorProfilePage> = (args) => (
-  <TooltipProvider>
-    <ContributorProfilePage {...args} />
-  </TooltipProvider>
-);
-
-export const Default = ContributorProfilePageTemplate.bind({});
-
-Default.args = {
-  listOfPRs: listOfPRs,
+export const Default: Story = {
+  args: {
+    listOfPRs: listOfPRs,
+  },
 };
