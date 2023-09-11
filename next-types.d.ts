@@ -289,6 +289,22 @@ interface DbListOwner {
   readonly login: string;
   readonly name: string;
 }
+
+// interface DbLists {
+//   readonly id: string;
+//   readonly name: string;
+//   readonly is_public: boolean;
+//   readonly created_at: string;
+//   readonly updated_at: string;
+// }
+
+interface DbListContibutor {
+  readonly id: string;
+  readonly list_id: string;
+  readonly user_id: string;
+  readonly login: string;
+  readonly created_at: string;
+}
 interface DbUserList {
   readonly id: string;
   readonly user: DbListOwner;
