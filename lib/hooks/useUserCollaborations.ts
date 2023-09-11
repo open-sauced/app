@@ -37,7 +37,7 @@ const useUserCollaborations = () => {
       const response = await req?.json();
       if (response.statusCode === 401) {
         toast({
-          description: "You require an upgraded access to use collaboration!",
+          description: "You require upgraded access to use collaborations!",
           title: "Not allowed",
           variant: "danger",
         });
