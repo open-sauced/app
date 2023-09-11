@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import clsx from "clsx";
 
+import { User } from "@supabase/supabase-js";
 import Button from "components/atoms/Button/button";
 import InsightRow from "components/molecules/InsightRow/insight-row";
 import Search from "components/atoms/Search/search";
@@ -18,6 +19,8 @@ import { supabase } from "lib/utils/supabase";
 import useSession from "lib/hooks/useSession";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "components/atoms/Tabs/tabs";
 import ListCard from "components/molecules/ListCard/list-card";
+import { useFetchAllLists } from "lib/hooks/useList";
+import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 
 type TabKey = "insights" | "lists";
 
@@ -27,7 +30,6 @@ const tabs: Record<TabKey, string> = {
 };
 
 const InsightsHub: WithPageLayout = () => {
-  const { data: insightsData, meta: insightsMeta, isError, isLoading, page, setPage } = useUserInsights();
   const { user } = useSupabaseAuth();
   const router = useRouter();
   const { onboarded } = useSession();
@@ -64,13 +66,13 @@ const InsightsHub: WithPageLayout = () => {
     <Tabs value={router.pathname.split("/")[2] as TabKey} onValueChange={onTabChange}>
       <div className="container flex flex-col w-full gap-4 py-2">
         <Title className="-mb-6 text-base text-sauced-orange">Your pages</Title>
-        <div className="justify-between block py-2 sm:flex ">
+        <div className="items-center justify-between block py-2 sm:flex ">
           <TabsList className="gap-3">
             {(Object.keys(tabs) as TabKey[]).map((tab) => (
               <TabsTrigger
                 asChild
                 key={tab}
-                className="!px-0 !justify-start data-[state=active]:text-black text-gray-300/80 cursor-pointer"
+                className="!px-0 !justify-start data-[state=active]:text-black text-gray-300/90 cursor-pointer"
                 value={tab}
               >
                 <Title className={clsx("!text-3xl !leading-none !font-medium mx-0")} level={1}>
@@ -84,36 +86,23 @@ const InsightsHub: WithPageLayout = () => {
             <div className="hidden w-58">
               <Search placeholder="Search repositories" className="max-w-full" name={"query"} />
             </div>
-            <Link href={"/hub/insights/new"}>
-              <Button variant="primary">Add Insight Page</Button>
-            </Link>
+            {router.pathname.split("/")[2] === "insights" ? (
+              <Link href={"/hub/insights/new"}>
+                <Button variant="primary">Add Insight Page</Button>
+              </Link>
+            ) : (
+              <Link href={"/hub/lists/new"}>
+                <Button variant="primary">Add List</Button>
+              </Link>
+            )}
           </div>
         </div>
 
         <TabsContent value={"insights" satisfies TabKey}>
-          <section className="flex flex-col gap-4">
-            {isLoading
-              ? "Loading..."
-              : isError
-              ? "Error..."
-              : insightsData.map((insight) => {
-                  return <InsightRow key={`insights_${insight.id}`} user={user} insight={insight} />;
-                })}
-          </section>
+          <InsightsTab {...user} />
         </TabsContent>
         <TabsContent value={"lists" satisfies TabKey}>
-          <section className="flex flex-col gap-4">
-            <ListCard
-              list={{
-                id: "1",
-                user: { login: "bdougie", id: 1, name: "crap" },
-                name: "my ne list",
-                created_at: " ",
-                updated_at: "",
-                is_public: true,
-              }}
-            />
-          </section>
+          <ListTab />
         </TabsContent>
 
         <Link
@@ -121,32 +110,101 @@ const InsightsHub: WithPageLayout = () => {
           href={"/hub/insights/new"}
           className="w-full py-5 text-lg text-center border rounded-lg bg-light-slate-4 text-light-slate-11 md:py-8 lg:py-10 border-light-slate-7"
         >
-          Create a new Insight Page
+          {router.pathname.split("/")[2] === "insights" ? "Create a new Insight Page" : "Create a new List"}
         </Link>
-
-        <div
-          className={clsx("py-1 md:py-4 flex w-full md:mt-5 justify-between items-center", {
-            hidden: insightsMeta.itemCount <= insightsMeta.limit,
-          })}
-        >
-          <PaginationResults metaInfo={insightsMeta} total={insightsMeta.itemCount} entity={"insights"} />
-          <Pagination
-            pages={[]}
-            hasNextPage={insightsMeta.hasNextPage}
-            hasPreviousPage={insightsMeta.hasPreviousPage}
-            totalPage={insightsMeta.pageCount}
-            page={insightsMeta.page}
-            onPageChange={function (page: number): void {
-              setPage(page);
-            }}
-            divisor={true}
-            goToPage
-          />
-        </div>
       </div>
     </Tabs>
   ) : (
     <></>
+  );
+};
+
+const ListTab = () => {
+  const { data, isLoading, meta, setPage } = useFetchAllLists();
+
+  return (
+    <>
+      <section className="flex flex-col gap-4">
+        {data && data.length > 0 ? (
+          data.map(({ id, is_public, name }, index) => (
+            <ListCard
+              key={`list_${id}_${index}`}
+              list={{
+                id: id,
+                user: { login: "bdougie", id: 1, name: "crap" },
+                name: name,
+                created_at: " ",
+                updated_at: "",
+                is_public: is_public,
+              }}
+            />
+          ))
+        ) : (
+          <div className="flex flex-col items-center justify-center w-full gap-4 ">
+            <Title className="text-2xl">You currently have no list</Title>{" "}
+          </div>
+        )}
+
+        {isLoading && <SkeletonWrapper count={3} classNames="w-full" height={95} radius={10} />}
+      </section>
+      <div
+        className={clsx("py-1 md:py-4 flex w-full md:mt-5 justify-between items-center", {
+          hidden: meta.itemCount <= meta.limit,
+        })}
+      >
+        <PaginationResults metaInfo={meta} total={meta.itemCount} entity={"insights"} />
+        <Pagination
+          pages={[]}
+          hasNextPage={meta.hasNextPage}
+          hasPreviousPage={meta.hasPreviousPage}
+          totalPage={meta.pageCount}
+          page={meta.page}
+          onPageChange={function (page: number): void {
+            setPage(page);
+          }}
+          divisor={true}
+          goToPage
+        />
+      </div>
+    </>
+  );
+};
+
+const InsightsTab = (user: User) => {
+  const { data, meta, isError, isLoading, setPage } = useUserInsights();
+  return (
+    <>
+      <section className="flex flex-col gap-4">
+        {isLoading ? (
+          <SkeletonWrapper count={3} classNames="w-full" height={95} radius={10} />
+        ) : isError ? (
+          "Error..."
+        ) : (
+          data.map((insight) => {
+            return <InsightRow key={`insights_${insight.id}`} user={user} insight={insight} />;
+          })
+        )}
+      </section>
+      <div
+        className={clsx("py-1 md:py-4 flex w-full md:mt-5 justify-between items-center", {
+          hidden: meta.itemCount <= meta.limit,
+        })}
+      >
+        <PaginationResults metaInfo={meta} total={meta.itemCount} entity={"insights"} />
+        <Pagination
+          pages={[]}
+          hasNextPage={meta.hasNextPage}
+          hasPreviousPage={meta.hasPreviousPage}
+          totalPage={meta.pageCount}
+          page={meta.page}
+          onPageChange={function (page: number): void {
+            setPage(page);
+          }}
+          divisor={true}
+          goToPage
+        />
+      </div>
+    </>
   );
 };
 
