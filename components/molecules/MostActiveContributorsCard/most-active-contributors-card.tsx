@@ -25,10 +25,10 @@ type Stat = (typeof dataTypes)[number];
 
 const dataLabels = {
   commits: "Commits",
-  prsCreated: "PRs Created",
-  prsReviewed: "PRs Reviewed",
-  issuesCreated: "Issues Created",
-  comments: "Comments",
+  prsCreated: "Created PR",
+  prsReviewed: "Reviewed PR",
+  issuesCreated: "Created Issues",
+  comments: "Commented",
 } as const satisfies Record<Stat, string>;
 
 const colors = {
