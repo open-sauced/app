@@ -1,9 +1,16 @@
 /* eslint-disable prettier/prettier */
-import { useState } from "react";
+import Link from "next/link";
+import { useState, useEffect } from "react";
 import { FaSearch } from "react-icons/fa";
 import { HiOutlineExclamation } from "react-icons/hi";
 import Text from "components/atoms/Typography/text";
+import Avatar from "components/atoms/Avatar/avatar";
+import { ScrollArea } from "components/atoms/ScrollArea/scroll-area";
 import useLockBody from "lib/hooks/useLockBody";
+import { getAvatarByUsername } from "lib/utils/github";
+
+import { searchUsers } from "lib/hooks/search-users";
+import useDebounceTerm from "lib/hooks/useDebounceTerm";
 
 interface SearchDialogProps {
   setOpenSearch: React.Dispatch<React.SetStateAction<boolean>>;
@@ -12,6 +19,16 @@ interface SearchDialogProps {
 const SearchDialog = ({ setOpenSearch }: SearchDialogProps) => {
   useLockBody();
   const [searchTerm, setSearchTerm] = useState("");
+  const [searchResult, setSearchResult] = useState<{ data: DbUserSearch[]; meta: {} }>();
+  const debouncedSearchTerm = useDebounceTerm(searchTerm, 300);
+
+  useEffect(() => {
+    if (searchTerm.length >= 3) startSearch();
+    async function startSearch() {
+      const data = await searchUsers(debouncedSearchTerm);
+      setSearchResult(data);
+    }
+  }, [debouncedSearchTerm, searchTerm]);
 
   return (
     <div className="fixed z-[55] p-5 w-full h-full flex justify-center bg-white/30">
@@ -32,7 +49,13 @@ const SearchDialog = ({ setOpenSearch }: SearchDialogProps) => {
           </Text>
         </div>
         <div className="w-full h-full flex items-center">
-          <SearchInfo />
+          {searchTerm.length < 3 ? (
+            <SearchInfo />
+          ) : !!searchResult?.data?.length ? (
+            <SearchResult result={searchResult?.data} />
+          ) : (
+            <SearchError />
+          )}
         </div>
       </div>
     </div>
@@ -65,6 +88,29 @@ const SearchError = () => (
     <HiOutlineExclamation className="text-sauced-orange inline-flex mr-2.5" fontSize={20} />
     We couldn&apos;t find any users with that name
   </Text>
+);
+
+const SearchResult = ({ result }: { result: DbUserSearch[] }) => (
+  <div className="w-full py-1 overflow-hidden text-gray-600">
+    <Text className="block w-full py-1 px-4">Users</Text>
+    <div className="w-full h-full">
+      <ScrollArea className="w-full">
+        {result.map((user: DbUserSearch, i: number) => (
+          <UserResult key={i} {...user} />
+        ))}
+      </ScrollArea>
+    </div>
+  </div>
+);
+
+const UserResult = ({ login, full_name }: DbUserSearch) => (
+  <Link href={`/user/${login}`} className="w-full flex items-center py-2 p-4 gap-2 hover:bg-slate-100 cursor-pointer">
+    <Avatar size="sm" className="!rounded-full flex-none" avatarURL={getAvatarByUsername(login)} />
+    <div className="flex items-center gap-2 overflow-hidden">
+      <Text className="text-gray-900">@{login}</Text>
+      <Text className="!font-normal truncate">{full_name}</Text>
+    </div>
+  </Link>
 );
 
 export { SearchDialog as default, SearchDialogTrigger };
