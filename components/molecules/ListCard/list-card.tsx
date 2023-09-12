@@ -27,7 +27,7 @@ const ListCard = ({ list }: ListCardProps) => {
           <div className="flex items-center gap-4 lg:items-center ">
             <div className="w-4 h-4 rounded-full bg-light-orange-10"></div>
             <div className="flex justify-between text-xl text-light-slate-12">
-              <Link href={`/list/${list.user.login}/${list.id}/overview`}>{list.name}</Link>
+              <Link href={`/lists/${list.id}/overview`}>{list.name}</Link>
             </div>
             <div className="px-2 border rounded-2xl text-light-slate-11">{!!list.is_public ? "public" : "private"}</div>
           </div>
@@ -60,7 +60,7 @@ const ListCard = ({ list }: ListCardProps) => {
               </button>
               <Link
                 className="inline-block p-3 mr-2 border rounded-lg cursor-pointer bg-light-slate-1"
-                href={`/list/${list.user.login}/${list.id}/overview`}
+                href={`/lists/${list.id}/overview`}
               >
                 <MdOutlineArrowForwardIos title="Go To Insight Page" className="text-lg text-light-slate-10" />
               </Link>
