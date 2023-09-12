@@ -5,6 +5,42 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.65.0-beta.2](https://github.com/open-sauced/insights/compare/v1.65.0-beta.1...v1.65.0-beta.2) (2023-09-11)
+
+
+### 🍕 Features
+
+* add feedback message to collab request form UI ([#1658](https://github.com/open-sauced/insights/issues/1658)) ([3ccb7aa](https://github.com/open-sauced/insights/commit/3ccb7aa6ad35c4f602e1b99d522c62f4acf6dc07))
+
+
+### 🐛 Bug Fixes
+
+* handle `401` error on collaboration feature ([#1694](https://github.com/open-sauced/insights/issues/1694)) ([756efdf](https://github.com/open-sauced/insights/commit/756efdf47b24852ec47efdaa7cfd9ab19599acef))
+
+## [1.65.0-beta.1](https://github.com/open-sauced/insights/compare/v1.64.0...v1.65.0-beta.1) (2023-09-08)
+
+
+### 🍕 Features
+
+* add `ListCard` component to design system ([#1687](https://github.com/open-sauced/insights/issues/1687)) ([dd8df3e](https://github.com/open-sauced/insights/commit/dd8df3ece74c2375b1568174bbbe3d865658d6ff))
+
+## [1.64.0](https://github.com/open-sauced/insights/compare/v1.63.0...v1.64.0) (2023-09-08)
+
+
+### 🔁 Continuous Integration
+
+* fix command for storybook build on release ([#1686](https://github.com/open-sauced/insights/issues/1686)) ([eecb149](https://github.com/open-sauced/insights/commit/eecb1497eda26041962f78ced13ee7b44c260ced))
+
+
+### 🍕 Features
+
+* add `ListNameHeader` component to design system ([#1680](https://github.com/open-sauced/insights/issues/1680)) ([4e5b885](https://github.com/open-sauced/insights/commit/4e5b88512625d25c91d8e978b6b7a30b92b38237))
+
+
+### 🐛 Bug Fixes
+
+* apply repo query param for each repo if not using a global filter ([#1691](https://github.com/open-sauced/insights/issues/1691)) ([ed92ac8](https://github.com/open-sauced/insights/commit/ed92ac85bb6839c041100daa71bc14340487b7c4))
+
 ## [1.64.0-beta.2](https://github.com/open-sauced/insights/compare/v1.64.0-beta.1...v1.64.0-beta.2) (2023-09-08)
 
 
