@@ -14,7 +14,7 @@ const PaginationGotoPage = ({ page, name, setPage, totalPage }: PaginationGotoPa
     e.preventDefault();
 
     if (pageNumber === page) return;
-    if (pageNumber > totalPage) {
+    if (Number(pageNumber) > totalPage) {
       return;
     }
 
