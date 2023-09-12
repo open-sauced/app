@@ -150,7 +150,7 @@
     "prettier": "^3.0.0",
     "storybook": "^7.2.0",
     "tailwindcss": "^3.2.4",
-    "typescript": "^4.9.5",
+    "typescript": "5.1.6",
     "typesync": "^0.10.0"
   },
   "lint-staged": {
