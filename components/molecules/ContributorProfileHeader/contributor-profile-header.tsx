@@ -6,10 +6,12 @@ import { FiCopy } from "react-icons/fi";
 import { FaIdCard } from "react-icons/fa";
 import { SignInWithOAuthCredentials, User } from "@supabase/supabase-js";
 import { usePostHog } from "posthog-js/react";
+import { clsx } from "clsx";
 
 import Avatar from "components/atoms/Avatar/avatar";
 import RainbowBg from "img/rainbow-cover.png";
 import Button from "components/atoms/Button/button";
+import Text from "components/atoms/Typography/text";
 import { Textarea } from "components/atoms/Textarea/text-area";
 import {
   DropdownMenu,
@@ -57,11 +59,19 @@ const ContributorProfileHeader = ({
   const [loading, setLoading] = useState(false);
   const { requestCollaboration } = useUserCollaborations();
   const [message, setMessage] = useState("");
+  const [charCount, setCharCount] = useState(0);
+  const [isCheckingCharLimit, setIsCheckingCharLimit] = useState<boolean>(false);
 
   const posthog = usePostHog();
 
   const { toast } = useToast();
   const [host, setHost] = useState("");
+
+  const charLimit = { min: 20, max: 500 };
+
+  const isValidCharLimit = () => {
+    return charCount >= charLimit.min && charCount <= charLimit.max;
+  };
 
   const handleFollowClick = () => {
     if (isFollowing) {
@@ -86,8 +96,10 @@ const ContributorProfileHeader = ({
     }
   };
 
-  const handleTextAreaInputChange = (e: string) => {
-    setMessage(e);
+  const handleTextAreaInputChange = (value: string) => {
+    setMessage(value);
+    setCharCount(value.length);
+    isCheckingCharLimit && setIsCheckingCharLimit(false);
   };
 
   const handleCopyToClipboard = async (content: string) => {
@@ -243,20 +255,44 @@ const ContributorProfileHeader = ({
             <DialogTitle className="!text-3xl text-left">Collaborate with {username}!</DialogTitle>
           </DialogHeader>
 
-          <form onSubmit={handleCollaborationRequest} className="flex flex-col w-full gap-4 px-4 md:gap-8 md:px-14 ">
+          <form onSubmit={handleCollaborationRequest} className="flex flex-col w-full gap-2 px-4 md:gap-8 md:px-14 ">
             <div className="space-y-2">
               <label htmlFor="message">Send a message</label>
               <Textarea
                 defaultRow={1}
                 value={message}
-                className="w-full px-2 mb-2 transition text-light-slate-11 focus:outline-none"
+                className={clsx(
+                  "w-full px-2 mb-2 transition text-light-slate-11 focus:outline-none border",
+                  isCheckingCharLimit && !isValidCharLimit() && "border-red-500"
+                )}
                 name="message"
                 id="message"
                 onChangeText={handleTextAreaInputChange}
+                onBlur={() => setIsCheckingCharLimit(true)}
               />
+              <div className="flex items-center justify-between w-full">
+                {isCheckingCharLimit && !isValidCharLimit() && (
+                  <Text className="select-none !text-xs text-red-500 mr-2">
+                    {charCount < charLimit.min && "20 Characters Min."}
+                    {charCount > charLimit.max && "500 Characters Max."}
+                  </Text>
+                )}
+                <p className="flex justify-end gap-1 ml-auto text-xs text-light-slate-9">
+                  <span className={`${!isValidCharLimit() && "text-red-600"}`}>
+                    {!isValidCharLimit() && charCount > charLimit.max ? `-${charCount - charLimit.max}` : charCount}
+                  </span>
+                  / <span>{charLimit.max}</span>
+                </p>
+              </div>
             </div>
 
-            <Button loading={loading} title="submit" className="self-end w-max" variant="primary">
+            <Button
+              loading={loading}
+              title="submit"
+              className="self-end w-max"
+              variant="primary"
+              disabled={!isValidCharLimit()}
+            >
               Send
             </Button>
           </form>

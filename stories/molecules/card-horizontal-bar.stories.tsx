@@ -1,59 +1,40 @@
-import { ComponentStory } from "@storybook/react";
-import { TooltipProvider } from "@radix-ui/react-tooltip";
+import { Meta, StoryObj } from "@storybook/react";
 import CardHorizontalBarChart from "components/molecules/CardHorizontalBarChart/card-horizontal-bar-chart";
-const storyConfig = {
+import { testLanguageList } from "stories/testData/mockedData";
+
+const storyConfig: Meta<typeof CardHorizontalBarChart> = {
   title: "Design System/Molecules/Card Horizontal Bar",
-  component: "CardHorizontalBar",
+  component: CardHorizontalBarChart,
 };
 
 export default storyConfig;
 
-export const testLanguageList = [
-  {
-    languageName: "TypeScript",
-    percentageUsed: 50,
-  },
-  {
-    languageName: "JavaScript",
-    percentageUsed: 20,
-  },
-  {
-    languageName: "Rust",
-    percentageUsed: 15,
-  },
-  { languageName: "React", percentageUsed: 15 },
-];
+type Story = StoryObj<typeof CardHorizontalBarChart>;
 
-//CardHorizontalBarChart Template
-const CardHorizontalBarTemplate: ComponentStory<typeof CardHorizontalBarChart> = (args) => (
-  <TooltipProvider>
-    <CardHorizontalBarChart {...args} />
-  </TooltipProvider>
-);
-
-export const OneLanguage = CardHorizontalBarTemplate.bind({});
-
-OneLanguage.args = {
-  languageList: [
-    {
-      languageName: "JavaScript",
-      percentageUsed: 100,
-    },
-  ],
+export const OneLanguage: Story = {
+  args: {
+    languageList: [
+      {
+        languageName: "JavaScript",
+        percentageUsed: 100,
+      },
+    ],
+  },
 };
 
-export const MultipleLanguages = CardHorizontalBarTemplate.bind({});
-
-MultipleLanguages.args = {
-  languageList: testLanguageList,
+export const MultipleLanguages: Story = {
+  args: {
+    languageList: testLanguageList,
+  },
 };
-export const notSupportedLanguage = CardHorizontalBarTemplate.bind({});
 
-notSupportedLanguage.args = {
-  languageList: [
-    {
-      languageName: "qBasic",
-      percentageUsed: 100,
-    },
-  ],
+export const NotSupportedLanguage: Story = {
+  args: {
+    languageList: [
+      {
+        languageName: "qBasic",
+        percentageUsed: 100,
+      },
+    ],
+  },
 };
