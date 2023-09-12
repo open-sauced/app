@@ -41,7 +41,7 @@ const ListsHub: WithPageLayout = () => {
 
         {isLoading && <SkeletonWrapper count={3} classNames="w-full" height={95} radius={10} />}
         <Link
-          href={"/hub/insights/new"}
+          href={"/hub/lists/new"}
           className="w-full py-5 text-lg text-center border rounded-lg bg-light-slate-4 text-light-slate-11 md:py-8 lg:py-10 border-light-slate-7"
         >
           Create a new List
