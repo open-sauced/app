@@ -1,3 +1,14 @@
-import InsightsHub from "./insights";
+import { useRouter } from "next/router";
+import React, { useEffect } from "react";
 
-export default InsightsHub;
+const Hub = () => {
+  const router = useRouter();
+
+  useEffect(() => {
+    router.push("/hub/insights");
+  }, []);
+
+  return <></>;
+};
+
+export default Hub;
