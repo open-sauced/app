@@ -23,7 +23,7 @@ const meta = {
 export default meta;
 
 export const Default = () => {
-  const [data, setData] = useState<any>(generateData());
+  const [data, setData] = useState(generateData());
 
   return (
     <div>
