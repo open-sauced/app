@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.65.0-beta.4](https://github.com/open-sauced/insights/compare/v1.65.0-beta.3...v1.65.0-beta.4) (2023-09-12)
+
+
+### 🍕 Features
+
+* new highlight creation popup (with highlight suggestions) ([#1646](https://github.com/open-sauced/insights/issues/1646)) ([fe3d35d](https://github.com/open-sauced/insights/commit/fe3d35dd55fe0d7941dc7d807b54699dd725ef33))
+
 ## [1.65.0-beta.3](https://github.com/open-sauced/insights/compare/v1.65.0-beta.2...v1.65.0-beta.3) (2023-09-12)
 
 
