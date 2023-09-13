@@ -879,7 +879,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                       }) => (
                         <div
                           key={suggestion.url}
-                          className="flex items-center justify-between w-full gap-4 text-sm bg-white border rounded-lg p-2"
+                          className="flex items-center justify-between w-full text-sm bg-white border rounded-lg p-2"
                         >
                           <div className="flex w-full gap-2">
                             {suggestion.type === "pull_request" && (
