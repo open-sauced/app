@@ -71,7 +71,6 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
   const [loading, setLoading] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
   const [bodyText, setBodyText] = useState("");
-  const [title, setTitle] = useState("");
   const [charCount, setCharCount] = useState(0);
   const [highlightLink, setHighlightLink] = useState("");
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
@@ -395,7 +394,6 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
         setLoading(true);
         const res = await createHighlights({
           highlight,
-          title,
           url: highlightLink,
           shipped_at: date,
           type: highlightType,
@@ -411,7 +409,6 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
         refreshCallback && refreshCallback();
         setBodyText("");
         setHighlightLink("");
-        setTitle("");
         setDate(undefined);
         setIsDivFocused(false);
         setIsFormOpenMobile(false);
@@ -460,9 +457,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
         <div className="flex flex-col gap-2 p-2 overflow-hidden text-sm bg-white border rounded-lg">
           <div className="flex pr-2">
             <input
-              value={title}
               maxLength={50}
-              onChange={(e) => setTitle(e.target.value)}
               className="flex-1 font-normal placeholder:text-sm focus:outline-none"
               type="text"
               placeholder={"Post a highlight to show your work!"}
@@ -490,17 +485,6 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
               </p>
             )}
             <div className="flex flex-col gap-2 p-2 overflow-hidden text-sm bg-white border rounded-lg">
-              <div className="flex pr-2">
-                <input
-                  value={title}
-                  maxLength={50}
-                  onChange={(e) => setTitle(e.target.value)}
-                  className="flex-1 font-normal placeholder:text-slate-400 text-light-slate-12 placeholder:font-normal placeholder:text-sm focus:outline-none"
-                  type="text"
-                  placeholder={"Add title (optional)"}
-                  id="highlight-create-input"
-                />
-              </div>
               <TypeWriterTextArea
                 className={`resize-y min-h-[80px] max-h-99 font-normal placeholder:text-slate-400 text-light-slate-12 placeholder:font-normal placeholder:text-sm transition focus:outline-none rounded-lg ${
                   !isDivFocused ? "hidden" : ""
@@ -691,7 +675,6 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                                 onClick={(e) => {
                                   e.stopPropagation();
                                   setHighlightLink(suggestion.url);
-                                  setTitle(suggestion.title);
                                 }}
                                 disabled={isSummaryButtonDisabled}
                                 className="p-2 rounded-full hover:bg-light-slate-3 text-light-slate-11 transition"
@@ -706,7 +689,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                                 onClick={(e) => {
                                   e.stopPropagation();
                                   setHighlightLink(suggestion.url);
-                                  setTitle(suggestion.title);
+                                  // setTitle(suggestion.title);
                                   generateSummary.current = true;
                                 }}
                                 disabled={isSummaryButtonDisabled}
@@ -779,17 +762,6 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
             </Button>
           </div>
           <div className="flex flex-col gap-2 p-2 overflow-hidden text-sm bg-white ">
-            <div className="flex pr-2">
-              <input
-                value={title}
-                maxLength={50}
-                onChange={(e) => setTitle(e.target.value)}
-                className="flex-1 focus:outline-none"
-                type="text"
-                placeholder={"Add title (optional)"}
-                id="highlight-create-input"
-              />
-            </div>
             <TypeWriterTextArea
               className="resize-y min-h-[80px] max-h-99 font-normal text-light-slate-11 mb-2 transition focus:outline-none rounded-lg "
               defaultRow={4}
@@ -912,7 +884,6 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                               onClick={(e) => {
                                 e.stopPropagation();
                                 setHighlightLink(suggestion.url);
-                                setTitle(suggestion.title);
                               }}
                               disabled={isSummaryButtonDisabled}
                               className="p-2 rounded-full hover:bg-light-slate-3 text-light-slate-11 transition"
@@ -927,7 +898,6 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                               onClick={(e) => {
                                 e.stopPropagation();
                                 setHighlightLink(suggestion.url);
-                                setTitle(suggestion.title);
                                 generateSummary.current = true;
                               }}
                               disabled={isSummaryButtonDisabled}
