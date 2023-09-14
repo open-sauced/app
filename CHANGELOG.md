@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.65.0-beta.5](https://github.com/open-sauced/insights/compare/v1.65.0-beta.4...v1.65.0-beta.5) (2023-09-14)
+
+
+### 🍕 Features
+
+* Remove title input field from HighlightInputForm ([#1660](https://github.com/open-sauced/insights/issues/1660)) ([abea60b](https://github.com/open-sauced/insights/commit/abea60b0c77adc2ca953c83bd2faaab727e6b6ce))
+
 ## [1.65.0-beta.4](https://github.com/open-sauced/insights/compare/v1.65.0-beta.3...v1.65.0-beta.4) (2023-09-12)
 
 ### 🍕 Features
