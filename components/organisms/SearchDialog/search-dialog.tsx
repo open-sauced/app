@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { FaSearch } from "react-icons/fa";
@@ -31,7 +30,7 @@ const SearchDialog = ({ setOpenSearch }: SearchDialogProps) => {
   }, [debouncedSearchTerm, searchTerm]);
 
   return (
-    <div className="fixed z-[55] p-5 w-full h-full flex justify-center bg-white/30">
+    <div className="fixed left-0 top-0 z-[55] p-5 w-full h-full flex justify-center bg-white/30">
       <div
         className="absolute w-full h-full left-0 top-0 z-[60] backdrop-blur-sm"
         onClick={() => setOpenSearch(false)}
@@ -62,20 +61,27 @@ const SearchDialog = ({ setOpenSearch }: SearchDialogProps) => {
   );
 };
 
-const SearchDialogTrigger = ({ setOpenSearch }: SearchDialogProps) => (
-  <div
-    className="flex justify-between p-1 pl-3 h-fit w-52 ml-auto bg-white border rounded-lg ring-light-slate-6 relative overflow-hidden"
-    onClick={() => setOpenSearch(true)}
-  >
-    <div className="flex items-center">
-      <FaSearch className="text-light-slate-9" fontSize={16} />
-      <Text className="pl-2 text-sm font-semibold text-light-slate-9">Search for users</Text>
-    </div>
-    <Text keyboard className="text-gray-600 !border-b !px-1">
-      ⌘K
-    </Text>
-  </div>
-);
+const SearchDialogTrigger = ({ setOpenSearch }: SearchDialogProps) => {
+  return (
+    <>
+      <div
+        className="hidden sm:flex justify-between p-1 pl-3 h-fit w-52 ml-auto bg-white border rounded-lg ring-light-slate-6 relative overflow-hidden"
+        onClick={() => setOpenSearch(true)}
+      >
+        <div className="flex items-center">
+          <FaSearch className="text-light-slate-9" fontSize={16} />
+          <Text className="pl-2 text-sm font-semibold text-light-slate-9">Search for users</Text>
+        </div>
+        <Text keyboard className="text-gray-600 !border-b !px-1">
+          ⌘K
+        </Text>
+      </div>
+      <div className="flex sm:hidden p-1" onClick={() => setOpenSearch(true)}>
+        <FaSearch className=" text-light-slate-9 cursor-pointer" fontSize={16} />
+      </div>
+    </>
+  );
+};
 
 const SearchInfo = () => (
   <Text className="block w-full py-1 px-4 text-slate-500 !font-normal leading-6">
