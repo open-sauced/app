@@ -485,17 +485,6 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
               </p>
             )}
             <div className="flex flex-col gap-2 p-2 overflow-hidden text-sm bg-white border rounded-lg">
-              {/* <div className="flex pr-2">
-                <input
-                  value={title}
-                  maxLength={50}
-                  onChange={(e) => setTitle(e.target.value)}
-                  className="flex-1 font-normal placeholder:text-slate-400 text-light-slate-12 placeholder:font-normal placeholder:text-sm focus:outline-none"
-                  type="text"
-                  placeholder={"Add title (optional)"}
-                  id="highlight-create-input"
-                />
-              </div> */}
               <TypeWriterTextArea
                 className={`resize-y min-h-[80px] max-h-99 font-normal placeholder:text-slate-400 text-light-slate-12 placeholder:font-normal placeholder:text-sm transition focus:outline-none rounded-lg ${
                   !isDivFocused ? "hidden" : ""
