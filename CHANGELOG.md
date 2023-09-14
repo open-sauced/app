@@ -5,6 +5,18 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.65.0-beta.6](https://github.com/open-sauced/insights/compare/v1.65.0-beta.5...v1.65.0-beta.6) (2023-09-14)
+
+
+### 🍕 Features
+
+* new insights tab layout for list feature  ([#1682](https://github.com/open-sauced/insights/issues/1682)) ([9269f1c](https://github.com/open-sauced/insights/commit/9269f1cc0d8d4f2504ca668545a8dea85085bd35))
+
+
+### 🐛 Bug Fixes
+
+* new highlight responsiveness on mobile screens ([#1703](https://github.com/open-sauced/insights/issues/1703)) ([bedb9d5](https://github.com/open-sauced/insights/commit/bedb9d535d895ece14e031f44975c408362ae83a))
+
 ## [1.65.0-beta.5](https://github.com/open-sauced/insights/compare/v1.65.0-beta.4...v1.65.0-beta.5) (2023-09-14)
 
 
