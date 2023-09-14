@@ -6,11 +6,13 @@ import useFetchAllContributors from "lib/hooks/useFetchAllContributors";
 import ContributorTable from "components/organisms/ContributorsTable/contributors-table";
 import Header from "components/organisms/Header/header";
 import HubContributorsHeader from "components/molecules/HubContributorsHeader/hub-contributors-header";
+import Pagination from "components/molecules/Pagination/pagination";
+import PaginationResults from "components/molecules/PaginationResults/pagination-result";
 
 const NewListCreationPage: WithPageLayout = () => {
   const [isHydrated, setIsHydrated] = useState(false);
   const [selectedContributors, setSelectedContributors] = useState<DbPRContributor[]>([]);
-  const { data, meta, isLoading, setLimit } = useFetchAllContributors();
+  const { data, meta, isLoading, setLimit, setPage } = useFetchAllContributors();
 
   const contributors = data
     ? data.length > 0 &&
@@ -70,6 +72,29 @@ const NewListCreationPage: WithPageLayout = () => {
           handleSelectContributors={handleOnSelectChecked}
           contributors={contributors as DbPRContributor[]}
         ></ContributorTable>
+        <div className="flex items-center justify-between w-full py-1 md:py-4 md:mt-5">
+          <div>
+            <div className="">
+              <PaginationResults metaInfo={meta} total={meta.itemCount} entity={"contributors"} />
+            </div>
+          </div>
+          <div>
+            <div className="flex flex-col gap-4">
+              <Pagination
+                pages={[]}
+                hasNextPage={meta.hasNextPage}
+                hasPreviousPage={meta.hasPreviousPage}
+                totalPage={meta.pageCount}
+                page={meta.page}
+                onPageChange={function (page: number): void {
+                  setPage(page);
+                }}
+                divisor={true}
+                goToPage
+              />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

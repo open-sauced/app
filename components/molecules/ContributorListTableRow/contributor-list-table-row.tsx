@@ -129,13 +129,15 @@ const ContributorListTableRow = ({
       {/* Desktop Version */}
 
       <div className={`${classNames.row} !gap-6 text-light-slate-11`}>
-        <Checkbox
-          checked={selected ? true : false}
-          disabled={!user}
-          title={!user ? "Connect to GitHub" : ""}
-          onCheckedChange={(state) => handleOnSelectContributor?.(state as boolean, contributor)}
-          className={`${user && "border-orange-500 hover:bg-orange-600"}`}
-        />
+        {handleOnSelectContributor && (
+          <Checkbox
+            checked={selected ? true : false}
+            disabled={!user}
+            title={!user ? "Connect to GitHub" : ""}
+            onCheckedChange={(state) => handleOnSelectContributor?.(state as boolean, contributor)}
+            className={`${user && "border-orange-500 hover:bg-orange-600"}`}
+          />
+        )}
 
         {/* Column: Contributors */}
         <div className={clsx("flex-1 lg:min-w-[250px] overflow-hidden")}>

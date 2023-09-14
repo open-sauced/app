@@ -24,13 +24,15 @@ const ContributorListTableHeaders = ({ selected, handleOnSelectAllContributor }:
       </div>
       {/* Desktop */}
       <div className="hidden gap-6 px-6 py-4 border rounded-t-lg md:flex bg-light-slate-3">
-        <Checkbox
-          checked={selected ? true : false}
-          // disabled={!user}
-          // title={!user ? "Connect to GitHub" : ""}
-          onCheckedChange={handleOnSelectAllContributor}
-          className={`${"border-orange-500 hover:bg-orange-600"}`}
-        />
+        {handleOnSelectAllContributor && (
+          <Checkbox
+            checked={selected ? true : false}
+            // disabled={!user}
+            // title={!user ? "Connect to GitHub" : ""}
+            onCheckedChange={handleOnSelectAllContributor}
+            className={`${"border-orange-500 hover:bg-orange-600"}`}
+          />
+        )}
         <div className={clsx("flex-1 lg:min-w-[250px]  flex justify-center")}>
           <TableTitle>Contributor</TableTitle>
         </div>
