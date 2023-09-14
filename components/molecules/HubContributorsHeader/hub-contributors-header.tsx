@@ -1,8 +1,8 @@
 import { FaPlus } from "react-icons/fa";
-import { usePostHog } from "posthog-js/react";
 
 import clsx from "clsx";
 import Button from "components/atoms/Button/button";
+import Text from "components/atoms/Typography/text";
 
 import { useToast } from "lib/hooks/useToast";
 import ListNameHeader from "components/atoms/ListNameHeader/list-name-header";
@@ -11,35 +11,41 @@ import Search from "components/atoms/Search/search";
 import ComponentDateFilter from "../ComponentDateFilter/component-date-filter";
 
 interface ListHeaderProps {
-  list?: DbUserList;
-  listId: string;
-  isOwner: boolean;
-  setLimit: (limit: number) => void;
+  setLimit?: (limit: number) => void;
   setRangeFilter?: (range: number) => void;
+  selectedContributorsIds: number[];
 }
 
-const HubContributorsHeader = ({ list, listId, isOwner, setLimit, setRangeFilter }: ListHeaderProps): JSX.Element => {
+const HubContributorsHeader = ({ setLimit, setRangeFilter, selectedContributorsIds }: ListHeaderProps): JSX.Element => {
   const { toast } = useToast();
-  const posthog = usePostHog();
 
   return (
     <div className="relative flex flex-col justify-between w-full gap-6 py-2">
       <div className="flex flex-col justify-between w-full md:flex-row">
-        <div className="header-image mr-2  min-w-[130px]">
+        <div className="header-image mr-2  min-w-[130px] gap-3 flex flex-col">
           <ListNameHeader />
+          <Text className="text-light-slate-9">Select contributors to add to your list</Text>
         </div>
         <div className="flex flex-row items-center justify-center gap-6 header-info ">
           <div className="flex items-center gap-2">
             <span
               className={clsx(
-                "bg-light-slate-5 w-max min-w-[1.4rem] h-6  p-2 text-sm items-center flex place-content-center rounded-full"
+                "w-max min-w-[1.4rem] h-6  p-3 text-sm items-center flex place-content-center rounded-full",
+                selectedContributorsIds.length > 0 ? "bg-sauced-orange text-white" : "bg-light-slate-5 text-slate-400"
               )}
             >
-              0
+              {selectedContributorsIds.length}
             </span>
-            <p>Selected</p>
+            <p className="text-light-slate-9">Selected</p>
           </div>
-          <Button className={clsx("bg-slate-300 text-slate-100")} variant="text">
+          <Button
+            disabled={selectedContributorsIds.length === 0 ? true : false}
+            className={clsx(
+              "bg-sauced-orange !text-white",
+              selectedContributorsIds.length === 0 && "!bg-slate-300 !text-slate-100"
+            )}
+            variant="default"
+          >
             Add to List <FaPlus className="ml-2 text-lg" />
           </Button>
         </div>
@@ -62,7 +68,7 @@ const HubContributorsHeader = ({ list, listId, isOwner, setLimit, setRangeFilter
             ]}
             className="!w-36 overflow-x-hidden"
             onChange={function (limit: string): void {
-              setLimit(Number(limit));
+              setLimit?.(Number(limit));
             }}
           />
         </div>

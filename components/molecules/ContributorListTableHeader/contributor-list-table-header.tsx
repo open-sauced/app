@@ -2,8 +2,15 @@ import clsx from "clsx";
 import React from "react";
 import TableTitle from "components/atoms/TableTitle/table-title";
 import { classNames } from "components/organisms/RepositoriesTable/repositories-table";
+import Checkbox from "components/atoms/Checkbox/checkbox";
 
-const ContributorListTableHeaders = () => {
+interface ContributorListTableHeadersProps {
+  selected?: boolean;
+
+  handleOnSelectAllContributor?: (contributor: any) => void;
+}
+
+const ContributorListTableHeaders = ({ selected, handleOnSelectAllContributor }: ContributorListTableHeadersProps) => {
   return (
     <div className="mt-4">
       {/* Mobile */}
@@ -17,6 +24,13 @@ const ContributorListTableHeaders = () => {
       </div>
       {/* Desktop */}
       <div className="hidden gap-6 px-6 py-4 border rounded-t-lg md:flex bg-light-slate-3">
+        <Checkbox
+          checked={selected ? true : false}
+          // disabled={!user}
+          // title={!user ? "Connect to GitHub" : ""}
+          onCheckedChange={handleOnSelectAllContributor}
+          className={`${"border-orange-500 hover:bg-orange-600"}`}
+        />
         <div className={clsx("flex-1 lg:min-w-[250px]  flex justify-center")}>
           <TableTitle>Contributor</TableTitle>
         </div>

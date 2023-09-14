@@ -10,12 +10,15 @@ import { classNames } from "components/organisms/RepositoriesTable/repositories-
 import useContributorPullRequests from "lib/hooks/api/useContributorPullRequests";
 import useRepoList from "lib/hooks/useRepoList";
 import { useFetchUser } from "lib/hooks/useFetchUser";
+import Checkbox from "components/atoms/Checkbox/checkbox";
 import { getActivity } from "../RepoRow/repo-row";
 import DevProfile from "../DevProfile/dev-profile";
 
 interface ContributorListTableRow {
   contributor: DbPRContributor;
   topic: string;
+  selected?: boolean;
+  handleOnSelectContributor?: (state: boolean, contributor: DbPRContributor) => void;
 }
 
 function getLastContributionDate(contributions: DbRepoPR[]) {
@@ -39,7 +42,12 @@ function getLastContributedRepo(pullRequests: DbRepoPR[]) {
 
   return sortedPullRequests[0].full_name;
 }
-const ContributorListTableRow = ({ contributor, topic }: ContributorListTableRow) => {
+const ContributorListTableRow = ({
+  contributor,
+  topic,
+  selected,
+  handleOnSelectContributor,
+}: ContributorListTableRow) => {
   const [tableOpen, setTableOpen] = useState(false);
 
   const { data: user } = useFetchUser(contributor.author_login);
@@ -121,13 +129,13 @@ const ContributorListTableRow = ({ contributor, topic }: ContributorListTableRow
       {/* Desktop Version */}
 
       <div className={`${classNames.row} !gap-6 text-light-slate-11`}>
-        {/* <Checkbox
-          checked={true}
-          onCheckedChange={() => console.log("yeah")}
+        <Checkbox
+          checked={selected ? true : false}
           disabled={!user}
           title={!user ? "Connect to GitHub" : ""}
+          onCheckedChange={(state) => handleOnSelectContributor?.(state as boolean, contributor)}
           className={`${user && "border-orange-500 hover:bg-orange-600"}`}
-        /> */}
+        />
 
         {/* Column: Contributors */}
         <div className={clsx("flex-1 lg:min-w-[250px] overflow-hidden")}>
