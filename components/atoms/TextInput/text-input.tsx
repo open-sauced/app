@@ -47,7 +47,7 @@ const TextInput = ({
         {label && <p className="mb-2 text-sm text-light-slate-9">{label}</p>}
         <div
           className={clsx(
-            "flex-1 px-3 text-light-slate-12 bg-white shadow-input border transition rounded-lg py-1 flex items-center",
+            "flex-1 px-2 text-light-slate-12 bg-white shadow-input border transition rounded-lg py-1 flex items-center",
             borderless && "!border-none",
             state === "invalid" ? "focus-within:border-light-red-10" : "focus-within:border-light-orange-9 ",
             disabled && "bg-light-slate-3 text-light-slate-6",
@@ -61,9 +61,8 @@ const TextInput = ({
             id={id || name || ""}
             placeholder={placeholder || ""}
             className={clsx(
-              "flex-1 focus:outline-none",
-              disabled && "bg-light-slate-3 cursor-not-allowed text-light-slate-9",
-              className
+              "flex-1 focus:outline-none placeholder:font-normal placeholder-slate-400",
+              disabled && "bg-light-slate-3 cursor-not-allowed text-light-slate-9"
             )}
             disabled={disabled}
             value={value}

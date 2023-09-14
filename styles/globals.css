@@ -9,7 +9,13 @@
 body {
   background-color: #f8f9fa;
 }
-
+.auto-grow-input:not(:empty) {
+  color: black;
+}
+.auto-grow-input[contenteditable]:empty::before {
+  content: "List Name";
+  color: "#d1d5db" !important;
+}
 #sitegpt-chat-icon {
   display: flex !important;
 }
@@ -56,4 +62,24 @@ input[type="search"]::-webkit-search-cancel-button {
 
 .z-50 {
   z-index: 50;
+}
+
+div[role="dialog"]::-webkit-scrollbar {
+  width: 16px;
+  height: 10px;
+}
+div[role="dialog"]::-webkit-scrollbar-thumb {
+  border: 4px solid rgba(0, 0, 0, 0);
+  border-radius: 8px;
+  background: #c2c9d2;
+  background-clip: padding-box;
+}
+.swiper {
+  padding-bottom: 25px !important;
+}
+:root {
+  --swiper-theme-color: hsla(19, 100%, 50%, 1) !important;
+  --swiper-pagination-bottom: -5px;
+  --swiper-pagination-bullet-inactive-color: rgb(255, 159, 115);
+  --swiper-pagination-bullet-size: 8px;
 }
