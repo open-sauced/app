@@ -1,12 +1,12 @@
 {
   "name": "@open-sauced/insights",
-  "version": "1.62.2-beta.1",
+  "version": "1.65.0-beta.4",
   "lockfileVersion": 3,
   "requires": true,
   "packages": {
     "": {
       "name": "@open-sauced/insights",
-      "version": "1.62.2-beta.1",
+      "version": "1.65.0-beta.4",
       "hasInstallScript": true,
       "license": "Apache 2.0",
       "dependencies": {
@@ -66,6 +66,7 @@
         "rooks": "^7.4.4",
         "schema-dts": "^1.1.0",
         "stripe": "^11.8.0",
+        "swiper": "^10.2.0",
         "swr": "^2.0.3",
         "tailwindcss-radix": "^2.7.0",
         "zustand": "^4.3.2"
@@ -113,12 +114,12 @@
         "prettier": "^3.0.0",
         "storybook": "^7.2.0",
         "tailwindcss": "^3.2.4",
-        "typescript": "^4.9.5",
+        "typescript": "5.1.6",
         "typesync": "^0.10.0"
       },
       "engines": {
-        "node": ">= 16.7.0",
-        "npm": ">= 8.0.0"
+        "node": "^18.17.0 || >=20.5.0",
+        "npm": ">= 9.6.0"
       }
     },
     "node_modules/@adobe/css-tools": {
@@ -2621,6 +2622,20 @@
       },
       "engines": {
         "node": ">=8"
+      }
+    },
+    "node_modules/@commitlint/load/node_modules/typescript": {
+      "version": "4.9.5",
+      "resolved": "https://registry.npmjs.org/typescript/-/typescript-4.9.5.tgz",
+      "integrity": "sha512-1FXk9E2Hm+QzZQ7z+McJiHL4NW1F2EzMu9Nq9i3zAaGqibafqYwCVU6WyWAuyQRRzOlxou8xZSyXLEN8oKj24g==",
+      "dev": true,
+      "optional": true,
+      "bin": {
+        "tsc": "bin/tsc",
+        "tsserver": "bin/tsserver"
+      },
+      "engines": {
+        "node": ">=4.2.0"
       }
     },
     "node_modules/@commitlint/resolve-extends": {
@@ -45299,6 +45314,24 @@
         "webpack": ">=2"
       }
     },
+    "node_modules/swiper": {
+      "version": "10.2.0",
+      "resolved": "https://registry.npmjs.org/swiper/-/swiper-10.2.0.tgz",
+      "integrity": "sha512-nktQsOtBInJjr3f5DicxC8eHYGcLXDVIGPSon0QoXRaO6NjKnATCbQ8SZsD3dN1Ph1RH4EhVPwSYCcuDRFWHGQ==",
+      "funding": [
+        {
+          "type": "patreon",
+          "url": "https://www.patreon.com/swiperjs"
+        },
+        {
+          "type": "open_collective",
+          "url": "http://opencollective.com/swiper"
+        }
+      ],
+      "engines": {
+        "node": ">= 4.7.0"
+      }
+    },
     "node_modules/swr": {
       "version": "2.0.3",
       "resolved": "https://registry.npmjs.org/swr/-/swr-2.0.3.tgz",
@@ -46218,16 +46251,16 @@
       }
     },
     "node_modules/typescript": {
-      "version": "4.9.5",
-      "resolved": "https://registry.npmjs.org/typescript/-/typescript-4.9.5.tgz",
-      "integrity": "sha512-1FXk9E2Hm+QzZQ7z+McJiHL4NW1F2EzMu9Nq9i3zAaGqibafqYwCVU6WyWAuyQRRzOlxou8xZSyXLEN8oKj24g==",
+      "version": "5.1.6",
+      "resolved": "https://registry.npmjs.org/typescript/-/typescript-5.1.6.tgz",
+      "integrity": "sha512-zaWCozRZ6DLEWAWFrVDz1H6FVXzUSfTy5FUMWsQlU8Ym5JP9eO4xkTIROFCQvhQf61z6O/G6ugw3SgAnvvm+HA==",
       "dev": true,
       "bin": {
         "tsc": "bin/tsc",
         "tsserver": "bin/tsserver"
       },
       "engines": {
-        "node": ">=4.2.0"
+        "node": ">=14.17"
       }
     },
     "node_modules/typesync": {

@@ -30,7 +30,7 @@ jobs:
         uses: bahmutov/npm-install@v1
 
       - name: "📦 build Storybook"
-        run: npx build-storybook
+        run: npm run build-storybook
 
       - name: "🚀 deploy static"
         uses: peaceiris/actions-gh-pages@v3

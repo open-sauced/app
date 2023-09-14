@@ -19,7 +19,15 @@ const Tooltip = ({ children, content, className, direction }: TooltipProps): JSX
         <div>{children}</div>
       </Trigger>
       <Portal>
-        <Content sideOffset={4} collisionPadding={10} side={!!direction ? direction : "bottom"} avoidCollisions>
+        <Content
+          sideOffset={4}
+          collisionPadding={10}
+          side={!!direction ? direction : "bottom"}
+          avoidCollisions
+          style={{
+            zIndex: 9999,
+          }}
+        >
           <div className={clsx("text-xs py-1 px-2 rounded shadow-lg  bg-dark-slate-2 text-dark-slate-12", className)}>
             {content}
           </div>

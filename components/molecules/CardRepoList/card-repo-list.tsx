@@ -32,7 +32,7 @@ const CardRepoList = ({
   const sanitizedRepoList = [...new Map(repoList.map((item) => [item["repoName"], item])).values()];
 
   return (
-    <div className="flex gap-2 items-center max-w[175px] truncate flex-wrap text-xs text-light-slate-11">
+    <div className="flex gap-1 items-center max-w[175px] truncate flex-wrap text-xs text-light-slate-9">
       {repoList.length > 0 ? (
         <>
           {sanitizedRepoList
@@ -73,7 +73,7 @@ const CardRepoList = ({
           <div>{repoTotal > limit ? `+${repoTotal - limit}` : null}</div>
         </>
       ) : (
-        <>No repositories tagged...</>
+        <p className="mr-2 font-normal text-slate-400 text-sm">No repositories tagged...</p>
       )}
     </div>
   );
