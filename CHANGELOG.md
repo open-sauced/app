@@ -5,6 +5,32 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.65.0-beta.4](https://github.com/open-sauced/insights/compare/v1.65.0-beta.3...v1.65.0-beta.4) (2023-09-12)
+
+
+### 🍕 Features
+
+* new highlight creation popup (with highlight suggestions) ([#1646](https://github.com/open-sauced/insights/issues/1646)) ([fe3d35d](https://github.com/open-sauced/insights/commit/fe3d35dd55fe0d7941dc7d807b54699dd725ef33))
+
+## [1.65.0-beta.3](https://github.com/open-sauced/insights/compare/v1.65.0-beta.2...v1.65.0-beta.3) (2023-09-12)
+
+
+### 🍕 Features
+
+* add `hacktoberfest` topic to dashboard filters ([#1688](https://github.com/open-sauced/insights/issues/1688)) ([5c2beb0](https://github.com/open-sauced/insights/commit/5c2beb0b7a56027c67490c35ddd9cf5d522f2043))
+
+## [1.65.0-beta.2](https://github.com/open-sauced/insights/compare/v1.65.0-beta.1...v1.65.0-beta.2) (2023-09-11)
+
+
+### 🍕 Features
+
+* add feedback message to collab request form UI ([#1658](https://github.com/open-sauced/insights/issues/1658)) ([3ccb7aa](https://github.com/open-sauced/insights/commit/3ccb7aa6ad35c4f602e1b99d522c62f4acf6dc07))
+
+
+### 🐛 Bug Fixes
+
+* handle `401` error on collaboration feature ([#1694](https://github.com/open-sauced/insights/issues/1694)) ([756efdf](https://github.com/open-sauced/insights/commit/756efdf47b24852ec47efdaa7cfd9ab19599acef))
+
 ## [1.65.0-beta.1](https://github.com/open-sauced/insights/compare/v1.64.0...v1.65.0-beta.1) (2023-09-08)
 
 

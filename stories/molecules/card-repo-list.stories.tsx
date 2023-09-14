@@ -1,13 +1,15 @@
-import { ComponentStory } from "@storybook/react";
+import { Meta, StoryObj } from "@storybook/react";
 import CardRepoList from "components/molecules/CardRepoList/card-repo-list";
 import TestRepoAvatar from "img/icons/test-repo-avatar.svg";
 
 const storyConfig = {
   title: "Design System/Molecules/Card Repo List",
-  component: "Card Repo List",
-};
+  component: CardRepoList,
+} satisfies Meta<typeof CardRepoList>;
 
 export default storyConfig;
+
+type Story = StoryObj<typeof CardRepoList>;
 
 const testRepoList = [
   {
@@ -43,28 +45,27 @@ const testRepoList = [
 ];
 
 //CardRepoList Template
-const CardRepoListTemplate: ComponentStory<typeof CardRepoList> = (args) => <CardRepoList {...args} />;
 
-export const MoreThanFiveRepos = CardRepoListTemplate.bind({});
-
-MoreThanFiveRepos.args = {
-  repoList: testRepoList,
+export const MoreThanFiveRepos: Story = {
+  args: {
+    repoList: testRepoList,
+  },
 };
 
-export const LessThanFiveRepos = CardRepoListTemplate.bind({});
-
-LessThanFiveRepos.args = {
-  repoList: [
-    {
-      repoOwner: "test",
-      repoName: "test",
-      repoIcon: TestRepoAvatar,
-    },
-  ],
+export const LessThanFiveRepos: Story = {
+  args: {
+    repoList: [
+      {
+        repoOwner: "test",
+        repoName: "test",
+        repoIcon: TestRepoAvatar,
+      },
+    ],
+  },
 };
 
-export const NoRepos = CardRepoListTemplate.bind({});
-
-NoRepos.args = {
-  repoList: [],
+export const NoRepos: Story = {
+  args: {
+    repoList: [],
+  },
 };
