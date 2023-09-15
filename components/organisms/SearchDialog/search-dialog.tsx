@@ -62,6 +62,17 @@ const SearchDialog = ({ setOpenSearch }: SearchDialogProps) => {
 };
 
 const SearchDialogTrigger = ({ setOpenSearch }: SearchDialogProps) => {
+  useEffect(() => {
+    document.addEventListener("keydown", handleOpenSearch);
+    function handleOpenSearch(e: KeyboardEvent) {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        setOpenSearch(true);
+      }
+    }
+    return () => document.removeEventListener("keydown", handleOpenSearch);
+  }, [setOpenSearch]);
+
   return (
     <>
       <div
@@ -77,7 +88,7 @@ const SearchDialogTrigger = ({ setOpenSearch }: SearchDialogProps) => {
         </Text>
       </div>
       <div className="flex sm:hidden p-1" onClick={() => setOpenSearch(true)}>
-        <FaSearch className=" text-light-slate-9 cursor-pointer" fontSize={16} />
+        <FaSearch className="text-light-slate-9 cursor-pointer" fontSize={16} />
       </div>
     </>
   );
