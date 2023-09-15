@@ -13,17 +13,36 @@ import ComponentDateFilter from "../ComponentDateFilter/component-date-filter";
 interface ListHeaderProps {
   setLimit?: (limit: number) => void;
   setRangeFilter?: (range: number) => void;
+  range?: number;
   selectedContributorsIds: number[];
+  title?: string;
+  onAddToList?: () => void;
+  onTitleChange?: (title: string) => void;
+  loading?: boolean;
 }
 
-const HubContributorsHeader = ({ setLimit, setRangeFilter, selectedContributorsIds }: ListHeaderProps): JSX.Element => {
+const HubContributorsHeader = ({
+  setLimit,
+  setRangeFilter,
+  selectedContributorsIds,
+  title,
+  onAddToList,
+  onTitleChange,
+  range,
+  loading,
+}: ListHeaderProps): JSX.Element => {
   const { toast } = useToast();
 
   return (
     <div className="relative flex flex-col justify-between w-full gap-6 py-2">
       <div className="flex flex-col justify-between w-full md:flex-row">
         <div className="header-image mr-2  min-w-[130px] gap-3 flex flex-col">
-          <ListNameHeader />
+          <ListNameHeader
+            title={title}
+            onEditTitle={(title) => {
+              onTitleChange?.(title);
+            }}
+          />
           <Text className="text-light-slate-9">Select contributors to add to your list</Text>
         </div>
         <div className="flex flex-row items-center justify-center gap-6 header-info ">
@@ -39,12 +58,14 @@ const HubContributorsHeader = ({ setLimit, setRangeFilter, selectedContributorsI
             <p className="text-light-slate-9">Selected</p>
           </div>
           <Button
-            disabled={selectedContributorsIds.length === 0 ? true : false}
+            loading={loading}
+            disabled={selectedContributorsIds.length === 0 || loading ? true : false}
             className={clsx(
               "bg-sauced-orange !text-white",
               selectedContributorsIds.length === 0 && "!bg-slate-300 !text-slate-100"
             )}
-            variant="default"
+            variant="text"
+            onClick={onAddToList}
           >
             Add to List <FaPlus className="ml-2 text-lg" />
           </Button>
@@ -56,7 +77,7 @@ const HubContributorsHeader = ({ setLimit, setRangeFilter, selectedContributorsI
           <div className="w-58">
             <Search placeholder="Search for usernames" className="max-w-full" name={"query"} />
           </div>
-          <ComponentDateFilter setRangeFilter={(range: number) => setRangeFilter?.(range)} defaultRange={7} />
+          <ComponentDateFilter setRangeFilter={(range: number) => setRangeFilter?.(range)} defaultRange={range} />
           <LimitSelect
             placeholder="10 per page"
             options={[

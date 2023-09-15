@@ -9,7 +9,7 @@ interface ListNameHeaderProps {
   onEditTitle?: (value: string) => void;
 }
 const ListNameHeader = ({ title, onEditTitle }: ListNameHeaderProps) => {
-  const ref = useRef<HTMLSpanElement>(null);
+  const ref = useRef<HTMLInputElement>(null);
 
   const handleFocus = () => {
     ref.current?.focus();
@@ -21,21 +21,17 @@ const ListNameHeader = ({ title, onEditTitle }: ListNameHeaderProps) => {
     <div>
       <Title className="text-base text-sauced-orange">New List</Title>
       <div className="flex items-center gap-3">
-        {/* Using a span to mimic an input because native inputs can't auto grow in width relative to it's content
-         ** https://css-tricks.com/auto-growing-inputs-textareas/
-         */}
-        <span
+        <input
           ref={ref}
-          onInput={(e) => {
-            onEditTitle && onEditTitle(e.currentTarget.textContent ?? "");
+          onChange={(e) => {
+            onEditTitle?.(e.target.value);
           }}
-          suppressContentEditableWarning
-          className={clsx("text-3xl auto-grow-input text-gray-300 focus:outline-none cursor-text")}
-          role="text-box"
-          contentEditable
-        >
-          {title}
-        </span>
+          value={title}
+          type="text"
+          placeholder="List Name"
+          className={clsx("text-3xl w-40 bg-transparent text-light-slate-12 focus:outline-none cursor-text")}
+        />
+
         <button onClick={handleFocus} type="button">
           <HiPencil className="text-xl" />
         </button>

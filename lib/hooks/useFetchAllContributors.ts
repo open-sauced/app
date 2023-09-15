@@ -3,6 +3,7 @@ import useSWR, { Fetcher } from "swr";
 import { useRouter } from "next/router";
 
 import publicApiFetcher from "lib/utils/public-api-fetcher";
+import { useToast } from "./useToast";
 
 interface PaginatedResponse {
   readonly data: DBListContributor[];
@@ -10,6 +11,7 @@ interface PaginatedResponse {
 }
 
 const useFetchAllContributors = (initialLimit = 10) => {
+  const { toast } = useToast();
   const router = useRouter();
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(initialLimit);
