@@ -8,22 +8,18 @@ import { SignInWithOAuthCredentials, User } from "@supabase/supabase-js";
 import { usePostHog } from "posthog-js/react";
 import { clsx } from "clsx";
 
+import { Popover, PopoverTrigger } from "@radix-ui/react-popover";
 import Avatar from "components/atoms/Avatar/avatar";
 import RainbowBg from "img/rainbow-cover.png";
 import Button from "components/atoms/Button/button";
 import Text from "components/atoms/Typography/text";
 import { Textarea } from "components/atoms/Textarea/text-area";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "components/atoms/Dropdown/dropdown";
 
 import { useUserCollaborations } from "lib/hooks/useUserCollaborations";
 import { useToast } from "lib/hooks/useToast";
 import { cardPageUrl } from "lib/utils/urls";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../Dialog/dialog";
+import { PopoverContent } from "../Popover/popover";
 
 interface ContributorProfileHeaderProps {
   avatarUrl?: string;
@@ -38,6 +34,7 @@ interface ContributorProfileHeaderProps {
   isOwner: boolean;
   isRecievingCollaborations?: boolean;
   isPremium?: boolean;
+  linkUrl?: string;
 }
 const ContributorProfileHeader = ({
   avatarUrl,
@@ -157,7 +154,7 @@ const ContributorProfileHeader = ({
           <div className="flex flex-col items-center gap-3 translate-y-24 md:translate-y-0 md:flex-row">
             {/* Mobile dropdown menu */}
 
-            <DropdownMenu>
+            <Popover>
               <div className="flex items-center md: gap-2 mb-10 md:gap-6 flex-wrap">
                 <Button className="sm:hidden" variant="primary" href={cardPageUrl(username!)}>
                   <FaIdCard className="" />
@@ -182,17 +179,17 @@ const ContributorProfileHeader = ({
                 </Button>
 
                 {!isOwner && (
-                  <DropdownMenuTrigger title="More options" className="p-2 mr-3 bg-white rounded-full cursor-pointer ">
+                  <PopoverTrigger title="More options" className="p-2 mr-3 bg-white rounded-full cursor-pointer ">
                     <TfiMoreAlt size={20} className="" />
-                  </DropdownMenuTrigger>
+                  </PopoverTrigger>
                 )}
               </div>
 
-              <DropdownMenuContent align="end" className="flex flex-col gap-1 py-2 rounded-lg">
+              <PopoverContent align="end" className="flex flex-col gap-1 py-2 rounded-lg bg-white">
                 {user ? (
                   !isOwner && (
                     <>
-                      <DropdownMenuItem
+                      <button
                         onClick={handleFollowClick}
                         className="rounded-md flex items-center gap-1 !cursor-pointer [&>span>span:nth-child(1)]:hover:hidden [&>span>span:nth-child(1)]:focus:hidden [&>span>span:nth-child(2)]:hover:inline [&>span>span:nth-child(2)]:focus:inline"
                       >
@@ -207,44 +204,42 @@ const ContributorProfileHeader = ({
                             "Follow"
                           )}
                         </span>
-                      </DropdownMenuItem>
+                      </button>
                       {isPremium && isRecievingCollaborations && (
-                        <DropdownMenuItem className="rounded-md">
-                          <button onClick={() => setIsDialogOpen(true)} className="flex items-center gap-1 pl-3 pr-7">
-                            Collaborate
-                          </button>
-                        </DropdownMenuItem>
+                        <button
+                          onClick={() => setIsDialogOpen(true)}
+                          className="flex items-center gap-1 pl-3 pr-7 rounded-md"
+                        >
+                          Collaborate
+                        </button>
                       )}
                     </>
                   )
                 ) : (
                   <>
-                    <DropdownMenuItem className="rounded-md">
+                    <button
+                      onClick={async () =>
+                        handleSignIn({ provider: "github", options: { redirectTo: `${host}/${currentPath}` } })
+                      }
+                      className="flex items-center gap-1 pl-3 pr-7 rounded-md"
+                    >
+                      Follow
+                    </button>
+
+                    {isRecievingCollaborations && (
                       <button
                         onClick={async () =>
                           handleSignIn({ provider: "github", options: { redirectTo: `${host}/${currentPath}` } })
                         }
-                        className="flex items-center gap-1 pl-3 pr-7"
+                        className="flex items-center gap-1 pl-3 pr-7 rounded-md"
                       >
-                        Follow
+                        Collaborate
                       </button>
-                    </DropdownMenuItem>
-                    {isRecievingCollaborations && (
-                      <DropdownMenuItem className="rounded-md">
-                        <button
-                          onClick={async () =>
-                            handleSignIn({ provider: "github", options: { redirectTo: `${host}/${currentPath}` } })
-                          }
-                          className="flex items-center gap-1 pl-3 pr-7"
-                        >
-                          Collaborate
-                        </button>
-                      </DropdownMenuItem>
                     )}
                   </>
                 )}
-              </DropdownMenuContent>
-            </DropdownMenu>
+              </PopoverContent>
+            </Popover>
           </div>
         )}
       </div>
