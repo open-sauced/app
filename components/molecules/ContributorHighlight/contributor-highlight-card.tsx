@@ -14,7 +14,6 @@ import { BiGitPullRequest } from "react-icons/bi";
 import { VscIssues } from "react-icons/vsc";
 import clsx from "clsx";
 import { useDebounce } from "rooks";
-import Title from "components/atoms/Typography/title";
 
 import { Textarea } from "components/atoms/Textarea/text-area";
 import Button from "components/atoms/Button/button";
@@ -45,6 +44,7 @@ import { fetchGithubIssueInfo } from "lib/hooks/fetchGithubIssueInfo";
 import { isValidBlogUrl } from "lib/utils/dev-to";
 import { fetchDevToBlogInfo } from "lib/hooks/fetchDevToBlogInfo";
 import Search from "components/atoms/Search/search";
+import Title from "components/atoms/Typography/title";
 import GhOpenGraphImg from "../GhOpenGraphImg/gh-open-graph-img";
 import {
   Dialog,
@@ -632,18 +632,6 @@ const ContributorHighlightCard = ({
                   <MdError size={20} /> {errorMsg}
                 </p>
               )}
-              <fieldset className="flex flex-col w-full gap-1">
-                <label htmlFor="title">Title (optional)</label>
-                <input
-                  onChange={(e) => {
-                    setHighlight((prev) => ({ ...prev, title: e.target.value }));
-                    setError("");
-                  }}
-                  value={highlight.title}
-                  name="title"
-                  className="h-8 px-2 font-normal rounded-lg focus:border focus:outline-none "
-                />
-              </fieldset>
               <fieldset className="flex flex-col w-full gap-1">
                 <label htmlFor="description">Body</label>
                 <div className="bg-white rounded-lg focus-within:border">
