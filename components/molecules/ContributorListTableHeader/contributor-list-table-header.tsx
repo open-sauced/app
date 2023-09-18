@@ -30,23 +30,23 @@ const ContributorListTableHeaders = ({ selected, handleOnSelectAllContributor }:
             className={`${"border-orange-500 hover:bg-orange-600"}`}
           />
         )}
-        <div className={clsx("flex-1 lg:min-w-[250px]  flex justify-center")}>
+        <div className={clsx("flex-1 lg:min-w-[12.5rem]  flex justify-center")}>
           <TableTitle>Contributor</TableTitle>
         </div>
-        <div className={clsx(" flex-1 lg:max-w-[100px]   flex justify-center ")}>
+        <div className={clsx(" flex-1 lg:max-w-[6.25rem]   flex justify-center ")}>
           <TableTitle>Act</TableTitle>
         </div>
-        <div className={clsx("flex-1 lg:max-w-[100px]  ")}>
+        <div className={clsx("flex-1 lg:max-w-[6.25rem]  ")}>
           <TableTitle>Repositories</TableTitle>
         </div>
-        <div className={clsx("flex-1 lg:max-w-[130px]  ")}>
+        <div className={clsx("flex-1 lg:max-w-[8.1rem]  ")}>
           <TableTitle>Last Contributed</TableTitle>
         </div>
-        <div className={clsx(" flex flex-1 justify-center    max-w-[120px]")}>
+        <div className={clsx(" flex flex-1 justify-center    max-w-[7.5rem]")}>
           <TableTitle>Language</TableTitle>
         </div>
 
-        <div className={clsx("flex-1 hidden  lg:flex justify-center lg:max-w-[80px]")}>
+        <div className={clsx("flex-1 hidden  lg:flex justify-center lg:max-w-[5rem]")}>
           <TableTitle>Time zone</TableTitle>
         </div>
         <div className={clsx("flex-1 hidden lg:flex lg:max-w-fit")}>

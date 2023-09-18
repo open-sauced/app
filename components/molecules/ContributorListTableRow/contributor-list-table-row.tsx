@@ -140,17 +140,17 @@ const ContributorListTableRow = ({
         )}
 
         {/* Column: Contributors */}
-        <div className={clsx("flex-1 lg:min-w-[250px] overflow-hidden")}>
+        <div className={clsx("flex-1 lg:min-w-[12.5rem] overflow-hidden")}>
           <DevProfile company={user?.company || getLastContributedRepo(data)} username={contributor.author_login} />
         </div>
 
         {/* Column: Act */}
-        <div className={clsx("flex-1 flex lg:max-w-[100px] w-fit   justify-center")}>
+        <div className={clsx("flex-1 flex lg:max-w-[6.25rem] w-fit justify-center")}>
           {getActivity(totalPrs, false)}
         </div>
 
         {/* Column Repositories */}
-        <div className={clsx("flex-1 lg:max-w-[100px]  flex justify-center ")}>{repoList.length}</div>
+        <div className={clsx("flex-1 lg:max-w-[6.25rem]  flex justify-center ")}>{repoList.length}</div>
 
         {/* Column: Last Contribution */}
         <div className={clsx("flex-1 lg:max-w-[130px]  flex text-light-slate-11 justify-center ")}>
@@ -158,7 +158,7 @@ const ContributorListTableRow = ({
         </div>
 
         {/* Column: Language */}
-        <div className={clsx("flex-1 hidden lg:max-w-[120px]  justify-center lg:flex")}>
+        <div className={clsx("flex-1 hidden lg:max-w-[7.5rem]  justify-center lg:flex")}>
           {contributorLanguageList.length > 0 ? (
             <p>
               {contributorLanguageList[0]}
@@ -170,16 +170,16 @@ const ContributorListTableRow = ({
         </div>
 
         {/* Column: Time Zone */}
-        <div className={clsx("flex-1 hidden lg:max-w-[80px] text-light-slate-11 justify-center   lg:flex ")}>
+        <div className={clsx("flex-1 hidden lg:max-w-[5rem] text-light-slate-11 justify-center   lg:flex ")}>
           <div className="flex gap-x-3">{user && user.timezone ? <p>{user.timezone}</p> : "-"}</div>
         </div>
 
         {/* Column: Contributions */}
-        <div className={clsx("flex-1 hidden justify-center  lg:flex lg:max-w-[120px]")}>
+        <div className={clsx("flex-1 hidden justify-center  lg:flex lg:max-w-[7.5rem]")}>
           <p>{mergedPrs.length}</p>
         </div>
         {/* Column Last 30 Days */}
-        <div className={clsx("flex-1 lg:min-w-[150px] hidden lg:flex justify-center")}>
+        <div className={clsx("flex-1 lg:min-w-[9.37rem] hidden lg:flex justify-center")}>
           {last30days ? <Sparkline data={last30days} width="100%" height={54} /> : "-"}
         </div>
       </div>

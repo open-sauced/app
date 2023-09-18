@@ -131,7 +131,7 @@ const NewListCreationPage: WithPageLayout = () => {
 
   return (
     <Dialog open={isOpen}>
-      <div className="info-container container w-full min-h-[100px]">
+      <div className="info-container container w-full min-h-[6.25rem]">
         <Header>
           <HubContributorsHeader
             loading={createLoading}
