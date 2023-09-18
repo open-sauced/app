@@ -439,7 +439,7 @@ const ContributorHighlightCard = ({
           {icon}
           <span className="text-sm text-light-slate-11">{getHighlightTypePreset(type).text}</span>
           <div className="flex items-center gap-3 ml-auto lg:gap-3">
-            <DropdownMenu>
+            <Popover>
               <div className="flex items-center gap-3 w-max">
                 <Tooltip direction="top" content="share on twitter">
                   <a
@@ -454,13 +454,16 @@ const ContributorHighlightCard = ({
                     <BsTwitter className="text-lg text-light-orange-9 md:text-xl" />
                   </a>
                 </Tooltip>
-                <DropdownMenuTrigger className="py-2 px-2 rounded-full data-[state=open]:bg-light-slate-7">
+                <PopoverTrigger className="py-2 px-2 rounded-full data-[state=open]:bg-light-slate-7">
                   <TfiMoreAlt className={"fill-light-slate-11"} size={24} />
-                </DropdownMenuTrigger>
+                </PopoverTrigger>
               </div>
 
-              <DropdownMenuContent align="end" className="flex flex-col gap-1 py-2 rounded-lg">
-                <DropdownMenuItem className="rounded-md">
+              <PopoverContent
+                align="end"
+                className="flex flex-col gap-4 w-56 text-sm font-normal py-4 bg-white rounded-lg"
+              >
+                <button className="rounded-md">
                   <a
                     onClick={() => {
                       handleCaptureClickDetailsForAnalytics("linkedin");
@@ -473,17 +476,15 @@ const ContributorHighlightCard = ({
                     <FiLinkedin size={22} />
                     <span>Share to Linkedin</span>
                   </a>
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => handleCopyToClipboard(`${host}/feed/${id}`)} className="rounded-md">
+                </button>
+                <button onClick={() => handleCopyToClipboard(`${host}/feed/${id}`)} className="rounded-md">
                   <div className="flex gap-2.5 py-1 items-center pl-3 pr-7 cursor-pointer">
                     <BsLink45Deg size={22} />
                     <span>Copy link</span>
                   </div>
-                </DropdownMenuItem>
+                </button>
                 {loggedInUser ? (
-                  <DropdownMenuItem
-                    className={`rounded-md ${loggedInUser?.user_metadata?.user_name === user && "hidden"}`}
-                  >
+                  <button className={`rounded-md ${loggedInUser?.user_metadata?.user_name === user && "hidden"}`}>
                     <div
                       onClick={isError ? follow : unFollow}
                       className="flex gap-2.5 py-1 items-center pl-3 pr-7 cursor-pointer"
@@ -493,9 +494,9 @@ const ContributorHighlightCard = ({
                         {!isError ? "Unfollow" : "Follow"} {user}
                       </span>
                     </div>
-                  </DropdownMenuItem>
+                  </button>
                 ) : (
-                  <DropdownMenuItem className="rounded-md">
+                  <button className="rounded-md">
                     <div
                       onClick={async () => signIn({ provider: "github" })}
                       className="flex gap-2.5 py-1  items-center pl-3 pr-7"
@@ -503,10 +504,10 @@ const ContributorHighlightCard = ({
                       <FaUserPlus size={22} />
                       <span>Follow {user}</span>
                     </div>
-                  </DropdownMenuItem>
+                  </button>
                 )}
                 {loggedInUser && (
-                  <DropdownMenuItem
+                  <button
                     className={`rounded-md ${
                       loggedInUser && loggedInUser.user_metadata.user_name !== user && "hidden"
                     }`}
@@ -518,10 +519,10 @@ const ContributorHighlightCard = ({
                       <FiEdit size={22} />
                       <span>Edit</span>
                     </button>
-                  </DropdownMenuItem>
+                  </button>
                 )}
 
-                <DropdownMenuItem
+                <button
                   className={`rounded-md ${loggedInUser && loggedInUser.user_metadata.user_name === user && "hidden"}`}
                 >
                   <a
@@ -531,9 +532,9 @@ const ContributorHighlightCard = ({
                     <GrFlag size={22} />
                     <span>Report content</span>
                   </a>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+                </button>
+              </PopoverContent>
+            </Popover>
           </div>
         </div>
         <div className="flex items-center justify-between w-full">
