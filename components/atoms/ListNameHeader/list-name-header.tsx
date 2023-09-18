@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { HiPencil } from "react-icons/hi";
 import clsx from "clsx";
 
@@ -10,6 +10,7 @@ interface ListNameHeaderProps {
 }
 const ListNameHeader = ({ title, onEditTitle }: ListNameHeaderProps) => {
   const ref = useRef<HTMLInputElement>(null);
+  const [focused, setFocused] = useState(false);
 
   const handleFocus = () => {
     ref.current?.focus();
@@ -21,20 +22,38 @@ const ListNameHeader = ({ title, onEditTitle }: ListNameHeaderProps) => {
     <div>
       <Title className="text-base text-sauced-orange">New List</Title>
       <div className="flex items-center gap-3">
-        <input
-          ref={ref}
-          onChange={(e) => {
-            onEditTitle?.(e.target.value);
-          }}
-          value={title}
-          type="text"
-          placeholder="List Name"
-          className={clsx("text-3xl w-40 bg-transparent text-light-slate-12 focus:outline-none cursor-text")}
-        />
+        <div className="relative text-3xl w-max">
+          <input
+            ref={ref}
+            onChange={(e) => {
+              onEditTitle?.(e.target.value);
+            }}
+            onBlur={() => {
+              setFocused(false);
+            }}
+            onFocus={() => {
+              setFocused(true);
+            }}
+            value={title}
+            type="text"
+            placeholder="List Name"
+            className={clsx("text-3xl w-40 bg-transparent text-light-slate-12 focus:outline-none cursor-text")}
+          />
+          <span className={clsx("absolute left-0 w-max", focused && "hidden")}>
+            {title}
 
-        <button onClick={handleFocus} type="button">
-          <HiPencil className="text-xl" />
-        </button>
+            {title && title.length > 0 && (
+              <button onClick={handleFocus} type="button">
+                <HiPencil className="ml-2 text-xl" />
+              </button>
+            )}
+          </span>
+        </div>
+        {!focused && !title && (
+          <button onClick={handleFocus} type="button">
+            <HiPencil className="ml-2 text-xl" />
+          </button>
+        )}
       </div>
     </div>
   );
