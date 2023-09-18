@@ -11,7 +11,7 @@ const FilterChip = ({ className, items, onClear }: FilterChipProps) => {
   return (
     <div
       className={clsx(
-        "p-2.5 rounded-xl bg-sauced-light w-max text-sauced-orange max-w-[200px] flex items-center",
+        "p-2.5 rounded-xl bg-sauced-light w-max text-sauced-orange max-w-[12.5rem] flex items-center",
         className
       )}
     >

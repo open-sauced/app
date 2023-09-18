@@ -88,7 +88,7 @@ const HubContributorsHeader = ({
               { name: "50 per page", value: "50" },
             ]}
             className="!w-36 overflow-x-hidden"
-            onChange={function (limit: string): void {
+            onChange={(limit: string): void => {
               setLimit?.(Number(limit));
             }}
           />

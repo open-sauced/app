@@ -6,7 +6,6 @@ import Checkbox from "components/atoms/Checkbox/checkbox";
 
 interface ContributorListTableHeadersProps {
   selected?: boolean;
-
   handleOnSelectAllContributor?: (contributor: any) => void;
 }
 
@@ -27,8 +26,6 @@ const ContributorListTableHeaders = ({ selected, handleOnSelectAllContributor }:
         {handleOnSelectAllContributor && (
           <Checkbox
             checked={selected ? true : false}
-            // disabled={!user}
-            // title={!user ? "Connect to GitHub" : ""}
             onCheckedChange={handleOnSelectAllContributor}
             className={`${"border-orange-500 hover:bg-orange-600"}`}
           />
