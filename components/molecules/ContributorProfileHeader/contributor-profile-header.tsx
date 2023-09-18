@@ -185,7 +185,7 @@ const ContributorProfileHeader = ({
                 )}
               </div>
 
-              <PopoverContent align="end" className="flex flex-col gap-1 py-2 rounded-lg bg-white">
+              <PopoverContent align="end" className="flex flex-col gap-2 py-2 w-36 text-sm px-4 rounded-lg bg-white">
                 {user ? (
                   !isOwner && (
                     <>
