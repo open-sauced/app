@@ -461,9 +461,9 @@ const ContributorHighlightCard = ({
 
               <PopoverContent
                 align="end"
-                className="flex flex-col gap-4 w-56 text-sm font-normal py-4 bg-white rounded-lg"
+                className="flex flex-col gap-1 w-56 text-sm font-medium px-2 !z-40 py-4 bg-white rounded-lg"
               >
-                <button className="rounded-md">
+                <button className="rounded-md hover:text-sauced-orange hover:bg-orange-100 px-2 py-2">
                   <a
                     onClick={() => {
                       handleCaptureClickDetailsForAnalytics("linkedin");
@@ -477,14 +477,21 @@ const ContributorHighlightCard = ({
                     <span>Share to Linkedin</span>
                   </a>
                 </button>
-                <button onClick={() => handleCopyToClipboard(`${host}/feed/${id}`)} className="rounded-md">
+                <button
+                  onClick={() => handleCopyToClipboard(`${host}/feed/${id}`)}
+                  className="rounded-md hover:text-sauced-orange hover:bg-orange-100 px-2 py-2"
+                >
                   <div className="flex gap-2.5 py-1 items-center pl-3 pr-7 cursor-pointer">
                     <BsLink45Deg size={22} />
                     <span>Copy link</span>
                   </div>
                 </button>
                 {loggedInUser ? (
-                  <button className={`rounded-md ${loggedInUser?.user_metadata?.user_name === user && "hidden"}`}>
+                  <button
+                    className={`rounded-md hover:text-sauced-orange hover:bg-orange-100 px-2 py-2 ${
+                      loggedInUser?.user_metadata?.user_name === user && "hidden"
+                    }`}
+                  >
                     <div
                       onClick={isError ? follow : unFollow}
                       className="flex gap-2.5 py-1 items-center pl-3 pr-7 cursor-pointer"
@@ -523,7 +530,9 @@ const ContributorHighlightCard = ({
                 )}
 
                 <button
-                  className={`rounded-md ${loggedInUser && loggedInUser.user_metadata.user_name === user && "hidden"}`}
+                  className={`rounded-md hover:text-sauced-orange hover:bg-orange-100 px-2 py-2 ${
+                    loggedInUser && loggedInUser.user_metadata.user_name === user && "hidden"
+                  }`}
                 >
                   <a
                     href={`mailto:hello@opensauced.pizza?subject=${reportSubject}`}
