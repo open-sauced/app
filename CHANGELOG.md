@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.65.0-beta.8](https://github.com/open-sauced/insights/compare/v1.65.0-beta.7...v1.65.0-beta.8) (2023-09-19)
+
+
+### 🐛 Bug Fixes
+
+* unlock Scroll when the Dropdown Menu is opened  ([#1712](https://github.com/open-sauced/insights/issues/1712)) ([b74a4e8](https://github.com/open-sauced/insights/commit/b74a4e808f6e5bfd7efde734eb7615adb0f5a448))
+
 ## [1.65.0-beta.7](https://github.com/open-sauced/insights/compare/v1.65.0-beta.6...v1.65.0-beta.7) (2023-09-19)
 
 
