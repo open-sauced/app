@@ -80,6 +80,7 @@
     "@use-gesture/react": "^10.2.27",
     "@vercel/og": "^0.5.8",
     "clsx": "^1.2.1",
+    "cmdk": "^0.2.0",
     "cntl": "^1.0.0",
     "date-fns": "^2.29.3",
     "echarts": "^5.4.1",
