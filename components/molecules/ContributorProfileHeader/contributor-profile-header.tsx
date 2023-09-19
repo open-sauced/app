@@ -187,7 +187,7 @@ const ContributorProfileHeader = ({
 
               <PopoverContent
                 align="end"
-                className="flex flex-col gap-1 py-2 px-2 w-36 text-sm font-medium rounded-lg bg-white outline-none"
+                className="flex flex-col gap-1 py-2 px-2 !z-40 w-36 text-sm font-medium rounded-lg bg-white outline-none"
               >
                 {user ? (
                   !isOwner && (
