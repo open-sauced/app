@@ -185,30 +185,33 @@ const ContributorProfileHeader = ({
                 )}
               </div>
 
-              <PopoverContent align="end" className="flex flex-col gap-2 py-2 w-36 text-sm px-4 rounded-lg bg-white">
+              <PopoverContent
+                align="end"
+                className="flex flex-col gap-1 py-2 px-2 w-36 text-sm font-medium rounded-lg bg-white outline-none"
+              >
                 {user ? (
                   !isOwner && (
                     <>
                       <button
                         onClick={handleFollowClick}
-                        className="rounded-md flex items-center gap-1 !cursor-pointer [&>span>span:nth-child(1)]:hover:hidden [&>span>span:nth-child(1)]:focus:hidden [&>span>span:nth-child(2)]:hover:inline [&>span>span:nth-child(2)]:focus:inline"
+                        className="rounded-md flex gap-1 !cursor-pointer hover:text-sauced-orange hover:bg-orange-100 [&>span>span:nth-child(1)]:hover:hidden [&>span>span:nth-child(1)]:focus:hidden [&>span>span:nth-child(2)]:hover:inline [&>span>span:nth-child(2)]:focus:inline"
                       >
                         {/* `span` tag changes below must be in line with the styles on the parent */}
                         <span className="pl-3 pr-7">
                           {isFollowing ? (
-                            <>
-                              <span className="">Following</span>
-                              <span className="hidden">Unfollow</span>
-                            </>
+                            <div className="group relative">
+                              <span className="block group-hover:hidden py-2">Following</span>
+                              <span className="hidden group-hover:block transition-opacity py-2">Unfollow</span>
+                            </div>
                           ) : (
-                            "Follow"
+                            "Following"
                           )}
                         </span>
                       </button>
                       {isPremium && isRecievingCollaborations && (
                         <button
                           onClick={() => setIsDialogOpen(true)}
-                          className="flex items-center gap-1 pl-3 pr-7 rounded-md"
+                          className="flex items-center gap-1 pl-3 pr-7 py-2 rounded-md hover:text-sauced-orange hover:bg-orange-100"
                         >
                           Collaborate
                         </button>
