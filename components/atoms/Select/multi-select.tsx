@@ -53,13 +53,12 @@ const MultiSelect = ({
 
   return (
     <Command onKeyDown={handleKeyDown} className="overflow-visible bg-transparent w-96">
-      <div className="px-3 py-2 text-sm border rounded-md group border-input ring-offset-background ">
+      <div className="px-3 py-2 text-sm border rounded-md group">
         <div className="flex flex-wrap gap-1">
-          {selected.map((option) => {
-            return (
-              <div key={option.value}>
-                {option.label}
-                {/* <button
+          <div>
+            {selected[0].label}
+            {selected.length > 1 ? `, +${selected.length - 1}` : null}
+            {/* <button
                   className="ml-1 rounded-full outline-none ring-offset-background focus:ring-2 focus:ring-ring focus:ring-offset-2"
                   onKeyDown={(e) => {
                     if (e.key === "Enter") {
@@ -72,9 +71,8 @@ const MultiSelect = ({
                   }}
                   onClick={() => handleUnSelect(option)}
                 ></button> */}
-              </div>
-            );
-          })}
+          </div>
+
           {/* Avoid having the "Search" Icon */}
           <CommandPrimitive.Input
             ref={inputRef}
@@ -82,7 +80,7 @@ const MultiSelect = ({
             onValueChange={setInputValue}
             onBlur={() => setOpen(false)}
             onFocus={() => setOpen(true)}
-            placeholder="Select frameworks..."
+            placeholder={placeholder ?? "Search options..."}
             className="flex-1 ml-2 bg-transparent outline-none placeholder:text-muted-foreground"
           />
         </div>
@@ -90,7 +88,7 @@ const MultiSelect = ({
       <div className="relative mt-2">
         {open && options.length > 0 ? (
           <div className="absolute top-0 z-10 w-full border rounded-md shadow-md outline-none bg-popover text-popover-foreground animate-in">
-            <CommandGroup className="h-full overflow-auto">
+            <CommandGroup className="flex flex-col gap-2 overflow-auto h-max">
               {options.map((option) => {
                 return (
                   <CommandItem
@@ -103,7 +101,7 @@ const MultiSelect = ({
                       setInputValue("");
                       handleSelect(value);
                     }}
-                    className={"cursor-pointer"}
+                    className={"!cursor-pointer"}
                   >
                     {option.label}
                   </CommandItem>

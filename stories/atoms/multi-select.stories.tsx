@@ -8,7 +8,11 @@ export default {
 
 type Story = StoryObj<typeof MultiSelect>;
 
-let selectedOptions: OptionKeys[] = [{ label: "React", value: "react" }];
+let selectedOptions: OptionKeys[] = [
+  { label: "React", value: "react" },
+  { label: "Nerv", value: "nerv" },
+  { label: "AngularJS", value: "angularjs" },
+];
 
 export const Default: Story = {
   args: {
