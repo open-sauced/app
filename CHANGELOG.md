@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.65.0-beta.7](https://github.com/open-sauced/insights/compare/v1.65.0-beta.6...v1.65.0-beta.7) (2023-09-19)
+
+
+### 🐛 Bug Fixes
+
+* remove lists from insights hub nav ([#1711](https://github.com/open-sauced/insights/issues/1711)) ([0d03f44](https://github.com/open-sauced/insights/commit/0d03f44873fe9b8f1220e60aecf0af66d9d1287c))
+
 ## [1.65.0-beta.6](https://github.com/open-sauced/insights/compare/v1.65.0-beta.5...v1.65.0-beta.6) (2023-09-14)
 
 
