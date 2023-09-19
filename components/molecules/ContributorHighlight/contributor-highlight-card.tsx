@@ -497,7 +497,7 @@ const ContributorHighlightCard = ({
                       className="flex gap-2.5 py-1 items-center pl-3 pr-7 cursor-pointer"
                     >
                       <FaUserPlus size={22} />
-                      <span>
+                      <span className="truncate">
                         {!isError ? "Unfollow" : "Follow"} {user}
                       </span>
                     </div>
@@ -521,7 +521,7 @@ const ContributorHighlightCard = ({
                   >
                     <button
                       onClick={() => setOpenEdit(true)}
-                      className="flex w-full cursor-default gap-2.5 py-1  items-center pl-3 pr-7"
+                      className="flex w-full cursor-default gap-2.5 py-2 px-2  items-center pl-3 pr-7 hover:text-sauced-orange hover:bg-orange-100"
                     >
                       <FiEdit size={22} />
                       <span>Edit</span>
