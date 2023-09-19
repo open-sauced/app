@@ -439,7 +439,7 @@ const ContributorHighlightCard = ({
           {icon}
           <span className="text-sm text-light-slate-11">{getHighlightTypePreset(type).text}</span>
           <div className="flex items-center gap-3 ml-auto lg:gap-3">
-            <Popover>
+            <DropdownMenu modal={false}>
               <div className="flex items-center gap-3 w-max">
                 <Tooltip direction="top" content="share on twitter">
                   <a
@@ -454,16 +454,13 @@ const ContributorHighlightCard = ({
                     <BsTwitter className="text-lg text-light-orange-9 md:text-xl" />
                   </a>
                 </Tooltip>
-                <PopoverTrigger className="py-2 px-2 rounded-full data-[state=open]:bg-light-slate-7">
+                <DropdownMenuTrigger className="py-2 px-2 rounded-full data-[state=open]:bg-light-slate-7">
                   <TfiMoreAlt className={"fill-light-slate-11"} size={24} />
-                </PopoverTrigger>
+                </DropdownMenuTrigger>
               </div>
 
-              <PopoverContent
-                align="end"
-                className="flex flex-col gap-1 w-56 text-sm font-medium px-2 !z-40 py-4 bg-white rounded-lg"
-              >
-                <button className="rounded-md hover:text-sauced-orange hover:bg-orange-100 px-2 py-2">
+              <DropdownMenuContent align="end" className="flex flex-col gap-1 py-2 rounded-lg">
+                <DropdownMenuItem className="rounded-md">
                   <a
                     onClick={() => {
                       handleCaptureClickDetailsForAnalytics("linkedin");
@@ -476,34 +473,29 @@ const ContributorHighlightCard = ({
                     <FiLinkedin size={22} />
                     <span>Share to Linkedin</span>
                   </a>
-                </button>
-                <button
-                  onClick={() => handleCopyToClipboard(`${host}/feed/${id}`)}
-                  className="rounded-md hover:text-sauced-orange hover:bg-orange-100 px-2 py-2"
-                >
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => handleCopyToClipboard(`${host}/feed/${id}`)} className="rounded-md">
                   <div className="flex gap-2.5 py-1 items-center pl-3 pr-7 cursor-pointer">
                     <BsLink45Deg size={22} />
                     <span>Copy link</span>
                   </div>
-                </button>
+                </DropdownMenuItem>
                 {loggedInUser ? (
-                  <button
-                    className={`rounded-md hover:text-sauced-orange hover:bg-orange-100 px-2 py-2 ${
-                      loggedInUser?.user_metadata?.user_name === user && "hidden"
-                    }`}
+                  <DropdownMenuItem
+                    className={`rounded-md ${loggedInUser?.user_metadata?.user_name === user && "hidden"}`}
                   >
                     <div
                       onClick={isError ? follow : unFollow}
                       className="flex gap-2.5 py-1 items-center pl-3 pr-7 cursor-pointer"
                     >
                       <FaUserPlus size={22} />
-                      <span className="truncate">
+                      <span>
                         {!isError ? "Unfollow" : "Follow"} {user}
                       </span>
                     </div>
-                  </button>
+                  </DropdownMenuItem>
                 ) : (
-                  <button className="rounded-md">
+                  <DropdownMenuItem className="rounded-md">
                     <div
                       onClick={async () => signIn({ provider: "github" })}
                       className="flex gap-2.5 py-1  items-center pl-3 pr-7"
@@ -511,28 +503,26 @@ const ContributorHighlightCard = ({
                       <FaUserPlus size={22} />
                       <span>Follow {user}</span>
                     </div>
-                  </button>
+                  </DropdownMenuItem>
                 )}
                 {loggedInUser && (
-                  <button
+                  <DropdownMenuItem
                     className={`rounded-md ${
                       loggedInUser && loggedInUser.user_metadata.user_name !== user && "hidden"
                     }`}
                   >
                     <button
                       onClick={() => setOpenEdit(true)}
-                      className="flex w-full cursor-default gap-2.5 py-2 px-2  items-center pl-3 pr-7 hover:text-sauced-orange hover:bg-orange-100"
+                      className="flex w-full cursor-default gap-2.5 py-1  items-center pl-3 pr-7"
                     >
                       <FiEdit size={22} />
                       <span>Edit</span>
                     </button>
-                  </button>
+                  </DropdownMenuItem>
                 )}
 
-                <button
-                  className={`rounded-md hover:text-sauced-orange hover:bg-orange-100 px-2 py-2 ${
-                    loggedInUser && loggedInUser.user_metadata.user_name === user && "hidden"
-                  }`}
+                <DropdownMenuItem
+                  className={`rounded-md ${loggedInUser && loggedInUser.user_metadata.user_name === user && "hidden"}`}
                 >
                   <a
                     href={`mailto:hello@opensauced.pizza?subject=${reportSubject}`}
@@ -541,9 +531,9 @@ const ContributorHighlightCard = ({
                     <GrFlag size={22} />
                     <span>Report content</span>
                   </a>
-                </button>
-              </PopoverContent>
-            </Popover>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </div>
         <div className="flex items-center justify-between w-full">
