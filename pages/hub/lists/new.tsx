@@ -96,7 +96,6 @@ const NewListCreationPage: WithPageLayout = () => {
 
       if (res.ok) {
         const data = await res.json();
-        console.log(data);
         setListId(data.id);
         setIsSuccess(true);
       }
