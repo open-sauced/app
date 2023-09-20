@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
+import clsx from "clsx";
 import { FaSearch } from "react-icons/fa";
 import { HiOutlineExclamation } from "react-icons/hi";
 import Text from "components/atoms/Typography/text";
@@ -35,7 +36,7 @@ const SearchDialog = ({ setOpenSearch }: SearchDialogProps) => {
     return () => document.removeEventListener("keydown", handleCloseSearch);
   }, []);
 
-  const handleKeyboardCtrl = (e: KeyboardEvent) => {
+  const handleKeyboardCtrl: React.KeyboardEventHandler<HTMLInputElement> = (e) => {
     const resultsCount = searchResult?.data?.length || 0;
     if (resultsCount && e.key === "ArrowUp") {
       e.preventDefault();
@@ -152,17 +153,20 @@ const SearchResult = ({ result, cursor }: { result: DbUserSearch[]; cursor: numb
     <div className="w-full h-full">
       <ScrollArea className="w-full">
         {result.map((user: DbUserSearch, i: number) => (
-          <UserResult key={i} className={cursor === i && "_cursorActive bg-slate-100"} {...user} />
+          <UserResult key={i} active={cursor === i} {...user} />
         ))}
       </ScrollArea>
     </div>
   </div>
 );
 
-const UserResult = ({ login, full_name, ...props }: DbUserSearch) => (
+const UserResult = ({ login, full_name, active }: { login: string; full_name: string; active: boolean }) => (
   <Link
     href={`/user/${login}`}
-    className={`${props.className} w-full flex items-center py-2 p-4 gap-2 hover:bg-slate-100 cursor-pointer`}
+    className={clsx(
+      active && "_cursorActive bg-slate-100",
+      "w-full flex items-center py-2 p-4 gap-2 hover:bg-slate-100 cursor-pointer"
+    )}
   >
     <Avatar size="sm" className="!rounded-full flex-none" avatarURL={getAvatarByUsername(login)} />
     <div className="flex items-center gap-2 overflow-hidden">
