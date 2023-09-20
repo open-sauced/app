@@ -20,10 +20,12 @@ interface SearchDialogProps {
 const SearchDialog = ({ setOpenSearch }: SearchDialogProps) => {
   useLockBody();
   const router = useRouter();
+  const [cursor, setCursor] = useState(-1);
   const [searchTerm, setSearchTerm] = useState("");
+  const [isSearching, setIsSearching] = useState(false);
+  const [isSearchError, setIsSearchError] = useState(false);
   const [searchResult, setSearchResult] = useState<{ data: DbUserSearch[]; meta: {} }>();
   const debouncedSearchTerm = useDebounceTerm(searchTerm, 300);
-  const [cursor, setCursor] = useState(-1);
 
   useEffect(() => {
     document.addEventListener("keydown", handleCloseSearch);
@@ -59,9 +61,12 @@ const SearchDialog = ({ setOpenSearch }: SearchDialogProps) => {
   useEffect(() => {
     if (searchTerm.length >= 3) startSearch();
     async function startSearch() {
+      setIsSearching(true);
       const data = await searchUsers(debouncedSearchTerm);
       setSearchResult(data);
+      setIsSearchError(!data.data.length);
       cursor !== -1 && setCursor(-1);
+      setIsSearching(false);
     }
   }, [debouncedSearchTerm]);
 
@@ -76,12 +81,19 @@ const SearchDialog = ({ setOpenSearch }: SearchDialogProps) => {
         onMouseMove={() => cursor !== -1 && setCursor(-1)}
       >
         <div className="flex w-full h-full items-center border-b p-2 pl-3">
-          <FaSearch className="text-light-slate-9" fontSize={16} />
+          {isSearching ? (
+            <div className="flex-none w-4 h-4 rounded-full border-2 border-light-slate-9 border-b-light-slate-5 border-r-light-slate-5 animate-spin" />
+          ) : (
+            <FaSearch className="text-light-slate-9" fontSize={16} />
+          )}
           <input
             autoFocus
             className="w-full pl-2 text-sm font-semibold text-slate-700 focus:outline-none"
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={(e) => {
+              setSearchTerm(e.target.value);
+              isSearchError && setIsSearchError(false);
+            }}
             onKeyDown={handleKeyboardCtrl}
           />
           <Text keyboard className="text-gray-600 !border-b !px-1">
@@ -91,10 +103,12 @@ const SearchDialog = ({ setOpenSearch }: SearchDialogProps) => {
         <div className="w-full h-full flex items-center">
           {searchTerm.length < 3 ? (
             <SearchInfo />
-          ) : !!searchResult?.data?.length ? (
+          ) : !isSearchError && !isSearching && searchResult?.data && searchTerm.length >= 3 ? (
             <SearchResult cursor={cursor} result={searchResult?.data} />
+          ) : !isSearchError && isSearching ? (
+            <SearchLoading />
           ) : (
-            <SearchError />
+            isSearchError && !isSearching && <SearchError />
           )}
         </div>
       </div>
@@ -141,6 +155,16 @@ const SearchInfo = () => (
   </Text>
 );
 
+const SearchLoading = () => (
+  <div className="w-full flex items-center py-2 p-4 gap-2 animate-pulse">
+    <div className="w-6 h-6 rounded-full flex-none bg-light-slate-6" />
+    <div className="w-full flex items-center gap-2 overflow-hidden">
+      <div className="w-4/12 md:w-2/12 h-2.5 rounded-lg bg-light-slate-6" />
+      <div className="w-7/12 md:w-5/12 h-2.5 rounded-lg bg-light-slate-6" />
+    </div>
+  </div>
+);
+
 const SearchError = () => (
   <Text className="block w-full py-1 px-4 text-sauced-orange !font-normal leading-6">
     <HiOutlineExclamation className="text-sauced-orange inline-flex mr-2.5" fontSize={20} />
@@ -154,14 +178,14 @@ const SearchResult = ({ result, cursor }: { result: DbUserSearch[]; cursor: numb
     <div className="w-full h-full">
       <ScrollArea className="w-full">
         {result.map((user: DbUserSearch, i: number) => (
-          <UserResult key={i} active={cursor === i} {...user} />
+          <UserResultCard key={i} active={cursor === i} {...user} />
         ))}
       </ScrollArea>
     </div>
   </div>
 );
 
-const UserResult = ({ login, full_name, active }: { login: string; full_name: string; active: boolean }) => (
+const UserResultCard = ({ login, full_name, active }: { login: string; full_name: string; active: boolean }) => (
   <Link
     href={`/user/${login}`}
     className={clsx(
