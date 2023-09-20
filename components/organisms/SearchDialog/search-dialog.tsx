@@ -30,7 +30,7 @@ const SearchDialog = ({ setOpenSearch }: SearchDialogProps) => {
       }
     }
     return () => document.removeEventListener("keydown", handleCloseSearch);
-  }, [setOpenSearch]);
+  }, []);
 
   useEffect(() => {
     if (searchTerm.length >= 3) startSearch();
@@ -38,7 +38,7 @@ const SearchDialog = ({ setOpenSearch }: SearchDialogProps) => {
       const data = await searchUsers(debouncedSearchTerm);
       setSearchResult(data);
     }
-  }, [debouncedSearchTerm, searchTerm]);
+  }, [debouncedSearchTerm]);
 
   return (
     <div className="fixed left-0 top-0 z-[55] p-5 w-full h-full flex justify-center bg-white/30">
@@ -82,7 +82,7 @@ const SearchDialogTrigger = ({ setOpenSearch }: SearchDialogProps) => {
       }
     }
     return () => document.removeEventListener("keydown", handleOpenSearch);
-  }, [setOpenSearch]);
+  }, []);
 
   return (
     <>
