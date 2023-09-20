@@ -22,6 +22,17 @@ const SearchDialog = ({ setOpenSearch }: SearchDialogProps) => {
   const debouncedSearchTerm = useDebounceTerm(searchTerm, 300);
 
   useEffect(() => {
+    document.addEventListener("keydown", handleCloseSearch);
+    function handleCloseSearch(e: KeyboardEvent) {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        setOpenSearch(false);
+      }
+    }
+    return () => document.removeEventListener("keydown", handleCloseSearch);
+  }, [setOpenSearch]);
+
+  useEffect(() => {
     if (searchTerm.length >= 3) startSearch();
     async function startSearch() {
       const data = await searchUsers(debouncedSearchTerm);
