@@ -83,7 +83,6 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
   const { data, addMember, deleteMember, updateMember } = useInsightMembers(insight?.id || 0);
   const { data: recommendedRepos, isLoading } = useFetchInsightRecommendedRepositories();
 
-  console.log(recommendedRepos);
 
   const members =
     data &&
