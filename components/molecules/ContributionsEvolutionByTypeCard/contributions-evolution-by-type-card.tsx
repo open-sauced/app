@@ -178,7 +178,7 @@ export default function ContributionsEvolutionByType(props: Props) {
                   tickSize: 0,
                 }}
                 margin={{ top: 20, right: 40, bottom: 30, left: 40 }}
-                motionConfig="gentle"
+                motionConfig="stiff"
                 curve="monotoneX"
                 colors={(d) => d.color}
               />
