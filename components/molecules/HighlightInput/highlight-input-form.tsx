@@ -572,7 +572,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                   className="text-sm shadow-none h-10 flex-none"
                   value={highlightLink}
                   handleChange={(value) => setHighlightLink(value)}
-                  placeholder="Paste the URL to your Pull Request or Issue."
+                  placeholder="Paste the URL to your PR, Issue, or Dev.to blog post."
                 />
               </div>
             </div>
