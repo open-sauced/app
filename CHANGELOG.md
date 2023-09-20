@@ -5,6 +5,23 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.65.0-beta.10](https://github.com/open-sauced/insights/compare/v1.65.0-beta.9...v1.65.0-beta.10) (2023-09-20)
+
+
+### 🐛 Bug Fixes
+
+* now add repo button appears on mobile view ([#1719](https://github.com/open-sauced/insights/issues/1719)) ([22b0717](https://github.com/open-sauced/insights/commit/22b07174202565832f7b77cf6319fbe0b70eaafb))
+* opening someone's profile menu locks scrollbar and "shifts" header css ([#1704](https://github.com/open-sauced/insights/issues/1704)) ([6282c27](https://github.com/open-sauced/insights/commit/6282c27a3b7323c583dd1c7bab464fb2af9780b2))
+* Update placeholder text for Highlight creation ([#1721](https://github.com/open-sauced/insights/issues/1721)) ([3acd107](https://github.com/open-sauced/insights/commit/3acd1076315ad359d932ea5f6ff2efce75520fa7))
+
+## [1.65.0-beta.9](https://github.com/open-sauced/insights/compare/v1.65.0-beta.8...v1.65.0-beta.9) (2023-09-20)
+
+
+### 🐛 Bug Fixes
+
+* improved padding for add repo dialog ([d4ef016](https://github.com/open-sauced/insights/commit/d4ef0169f50395e495bf3940fabfe1672a7fcbb6))
+* improved padding for add repo dialog ([#1720](https://github.com/open-sauced/insights/issues/1720)) ([4d81cca](https://github.com/open-sauced/insights/commit/4d81ccaf9a048b36b822fe1b67ea175cc97cf72d))
+
 ## [1.65.0-beta.8](https://github.com/open-sauced/insights/compare/v1.65.0-beta.7...v1.65.0-beta.8) (2023-09-19)
 
 
