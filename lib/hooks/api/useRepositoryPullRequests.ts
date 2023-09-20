@@ -2,6 +2,7 @@ import useSWR, { Fetcher } from "swr";
 import { useRouter } from "next/router";
 
 import publicApiFetcher from "lib/utils/public-api-fetcher";
+import getFilterQuery from "lib/utils/get-filter-query";
 
 interface PaginatedResponse {
   readonly data: DbRepoPR[];
@@ -10,15 +11,23 @@ interface PaginatedResponse {
 
 const useRepositoryPullRequests = (fullName: string, limit = 10, range = 30) => {
   const router = useRouter();
-  const { filterName } = router.query;
+  const { filterName, selectedFilter } = router.query;
   const topic = filterName as string;
-  const query = new URLSearchParams();
+  const filterQuery = getFilterQuery(selectedFilter);
+  const query = new URLSearchParams(filterQuery);
 
   if (topic && Number.isNaN(Number(topic))) {
     query.set("topic", topic);
   }
 
-  query.set("repo", fullName);
+  if (!query.get("repo") && fullName) {
+    query.set("repo", fullName);
+  }
+
+  if (query.get("repo")) {
+    query.delete("topic");
+  }
+
   query.set("page", "1");
   query.set("limit", `${limit}`);
   query.set("range", `${range}`);

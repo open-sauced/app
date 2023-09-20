@@ -1,12 +1,12 @@
 {
   "name": "@open-sauced/insights",
-  "version": "1.61.0-beta.7",
+  "version": "1.65.0-beta.10",
   "lockfileVersion": 3,
   "requires": true,
   "packages": {
     "": {
       "name": "@open-sauced/insights",
-      "version": "1.61.0-beta.7",
+      "version": "1.65.0-beta.10",
       "hasInstallScript": true,
       "license": "Apache 2.0",
       "dependencies": {
@@ -67,6 +67,7 @@
         "rooks": "^7.4.4",
         "schema-dts": "^1.1.0",
         "stripe": "^11.8.0",
+        "swiper": "^10.2.0",
         "swr": "^2.0.3",
         "tailwindcss-radix": "^2.7.0",
         "zustand": "^4.3.2"
@@ -114,12 +115,12 @@
         "prettier": "^3.0.0",
         "storybook": "^7.2.0",
         "tailwindcss": "^3.2.4",
-        "typescript": "^4.9.5",
+        "typescript": "5.1.6",
         "typesync": "^0.10.0"
       },
       "engines": {
-        "node": ">= 16.7.0",
-        "npm": ">= 8.0.0"
+        "node": "^18.17.0 || >=20.5.0",
+        "npm": ">= 9.6.0"
       }
     },
     "node_modules/@adobe/css-tools": {
@@ -2622,6 +2623,20 @@
       },
       "engines": {
         "node": ">=8"
+      }
+    },
+    "node_modules/@commitlint/load/node_modules/typescript": {
+      "version": "4.9.5",
+      "resolved": "https://registry.npmjs.org/typescript/-/typescript-4.9.5.tgz",
+      "integrity": "sha512-1FXk9E2Hm+QzZQ7z+McJiHL4NW1F2EzMu9Nq9i3zAaGqibafqYwCVU6WyWAuyQRRzOlxou8xZSyXLEN8oKj24g==",
+      "dev": true,
+      "optional": true,
+      "bin": {
+        "tsc": "bin/tsc",
+        "tsserver": "bin/tsserver"
+      },
+      "engines": {
+        "node": ">=4.2.0"
       }
     },
     "node_modules/@commitlint/resolve-extends": {
@@ -8346,7 +8361,22 @@
         "@babel/runtime": "^7.13.10"
       }
     },
-    "node_modules/@react-spring/animated": {
+    "node_modules/@react-spring/web": {
+      "version": "9.7.3",
+      "resolved": "https://registry.npmjs.org/@react-spring/web/-/web-9.7.3.tgz",
+      "integrity": "sha512-BXt6BpS9aJL/QdVqEIX9YoUy8CE6TJrU0mNCqSoxdXlIeNcEBWOfIyE6B14ENNsyQKS3wOWkiJfco0tCr/9tUg==",
+      "dependencies": {
+        "@react-spring/animated": "~9.7.3",
+        "@react-spring/core": "~9.7.3",
+        "@react-spring/shared": "~9.7.3",
+        "@react-spring/types": "~9.7.3"
+      },
+      "peerDependencies": {
+        "react": "^16.8.0 || ^17.0.0 || ^18.0.0",
+        "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0"
+      }
+    },
+    "node_modules/@react-spring/web/node_modules/@react-spring/animated": {
       "version": "9.7.3",
       "resolved": "https://registry.npmjs.org/@react-spring/animated/-/animated-9.7.3.tgz",
       "integrity": "sha512-5CWeNJt9pNgyvuSzQH+uy2pvTg8Y4/OisoscZIR8/ZNLIOI+CatFBhGZpDGTF/OzdNFsAoGk3wiUYTwoJ0YIvw==",
@@ -8358,7 +8388,7 @@
         "react": "^16.8.0 || ^17.0.0 || ^18.0.0"
       }
     },
-    "node_modules/@react-spring/core": {
+    "node_modules/@react-spring/web/node_modules/@react-spring/core": {
       "version": "9.7.3",
       "resolved": "https://registry.npmjs.org/@react-spring/core/-/core-9.7.3.tgz",
       "integrity": "sha512-IqFdPVf3ZOC1Cx7+M0cXf4odNLxDC+n7IN3MDcVCTIOSBfqEcBebSv+vlY5AhM0zw05PDbjKrNmBpzv/AqpjnQ==",
@@ -8375,7 +8405,7 @@
         "react": "^16.8.0 || ^17.0.0 || ^18.0.0"
       }
     },
-    "node_modules/@react-spring/shared": {
+    "node_modules/@react-spring/web/node_modules/@react-spring/shared": {
       "version": "9.7.3",
       "resolved": "https://registry.npmjs.org/@react-spring/shared/-/shared-9.7.3.tgz",
       "integrity": "sha512-NEopD+9S5xYyQ0pGtioacLhL2luflh6HACSSDUZOwLHoxA5eku1UPuqcJqjwSD6luKjjLfiLOspxo43FUHKKSA==",
@@ -8386,25 +8416,10 @@
         "react": "^16.8.0 || ^17.0.0 || ^18.0.0"
       }
     },
-    "node_modules/@react-spring/types": {
+    "node_modules/@react-spring/web/node_modules/@react-spring/types": {
       "version": "9.7.3",
       "resolved": "https://registry.npmjs.org/@react-spring/types/-/types-9.7.3.tgz",
       "integrity": "sha512-Kpx/fQ/ZFX31OtlqVEFfgaD1ACzul4NksrvIgYfIFq9JpDHFwQkMVZ10tbo0FU/grje4rcL4EIrjekl3kYwgWw=="
-    },
-    "node_modules/@react-spring/web": {
-      "version": "9.7.3",
-      "resolved": "https://registry.npmjs.org/@react-spring/web/-/web-9.7.3.tgz",
-      "integrity": "sha512-BXt6BpS9aJL/QdVqEIX9YoUy8CE6TJrU0mNCqSoxdXlIeNcEBWOfIyE6B14ENNsyQKS3wOWkiJfco0tCr/9tUg==",
-      "dependencies": {
-        "@react-spring/animated": "~9.7.3",
-        "@react-spring/core": "~9.7.3",
-        "@react-spring/shared": "~9.7.3",
-        "@react-spring/types": "~9.7.3"
-      },
-      "peerDependencies": {
-        "react": "^16.8.0 || ^17.0.0 || ^18.0.0",
-        "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0"
-      }
     },
     "node_modules/@resvg/resvg-wasm": {
       "version": "2.4.1",
@@ -45446,6 +45461,24 @@
         "webpack": ">=2"
       }
     },
+    "node_modules/swiper": {
+      "version": "10.2.0",
+      "resolved": "https://registry.npmjs.org/swiper/-/swiper-10.2.0.tgz",
+      "integrity": "sha512-nktQsOtBInJjr3f5DicxC8eHYGcLXDVIGPSon0QoXRaO6NjKnATCbQ8SZsD3dN1Ph1RH4EhVPwSYCcuDRFWHGQ==",
+      "funding": [
+        {
+          "type": "patreon",
+          "url": "https://www.patreon.com/swiperjs"
+        },
+        {
+          "type": "open_collective",
+          "url": "http://opencollective.com/swiper"
+        }
+      ],
+      "engines": {
+        "node": ">= 4.7.0"
+      }
+    },
     "node_modules/swr": {
       "version": "2.0.3",
       "resolved": "https://registry.npmjs.org/swr/-/swr-2.0.3.tgz",
@@ -46365,16 +46398,16 @@
       }
     },
     "node_modules/typescript": {
-      "version": "4.9.5",
-      "resolved": "https://registry.npmjs.org/typescript/-/typescript-4.9.5.tgz",
-      "integrity": "sha512-1FXk9E2Hm+QzZQ7z+McJiHL4NW1F2EzMu9Nq9i3zAaGqibafqYwCVU6WyWAuyQRRzOlxou8xZSyXLEN8oKj24g==",
+      "version": "5.1.6",
+      "resolved": "https://registry.npmjs.org/typescript/-/typescript-5.1.6.tgz",
+      "integrity": "sha512-zaWCozRZ6DLEWAWFrVDz1H6FVXzUSfTy5FUMWsQlU8Ym5JP9eO4xkTIROFCQvhQf61z6O/G6ugw3SgAnvvm+HA==",
       "dev": true,
       "bin": {
         "tsc": "bin/tsc",
         "tsserver": "bin/tsserver"
       },
       "engines": {
-        "node": ">=4.2.0"
+        "node": ">=14.17"
       }
     },
     "node_modules/typesync": {

@@ -21,7 +21,7 @@ jobs:
       - name: "🔧 setup node"
         uses: actions/setup-node@v2.1.5
         with:
-          node-version: 16
+          node-version: 18
 
       - name: "🔧 install npm@latest"
         run: npm i -g npm@latest
@@ -30,7 +30,7 @@ jobs:
         uses: bahmutov/npm-install@v1
 
       - name: "📦 build Storybook"
-        run: npx build-storybook
+        run: npm run build-storybook
 
       - name: "🚀 deploy static"
         uses: peaceiris/actions-gh-pages@v3

@@ -1,15 +1,23 @@
-import { TooltipProvider } from "@radix-ui/react-tooltip";
-import { ComponentStory } from "@storybook/react";
+import { useState } from "react";
 import HighlightsFilterCard from "components/molecules/HighlightsFeedCard/highlights-filter-card";
+import type { Meta, StoryObj } from "@storybook/react";
 
-const StoryConfig = {
+const meta: Meta<typeof HighlightsFilterCard> = {
   title: "Design System/Molecules/HighlightsFilterCard",
+  component: HighlightsFilterCard,
 };
-export default StoryConfig;
+export default meta;
 
-const HighlightsFilterCardTemplate: ComponentStory<typeof HighlightsFilterCard> = () => (
-  <TooltipProvider>
-    {/* eslint-disable-next-line camelcase */}
+type Story = StoryObj<typeof HighlightsFilterCard>;
+
+const HighlightsFilterCardWithHooks = () => {
+  const [selectedFilter, setSelectedFilter] = useState("open-sauced/app");
+
+  function setSelected() {
+    setSelectedFilter((prev) => (prev ? "" : "open-sauced/app"));
+  }
+
+  return (
     <HighlightsFilterCard
       repos={[
         {
@@ -18,8 +26,12 @@ const HighlightsFilterCardTemplate: ComponentStory<typeof HighlightsFilterCard> 
           full_name: "open-sauced/app",
         },
       ]}
+      selectedFilter={selectedFilter}
+      setSelected={setSelected}
     />
-  </TooltipProvider>
-);
+  );
+};
 
-export const Default = HighlightsFilterCardTemplate.bind({});
+export const Default: Story = {
+  render: () => <HighlightsFilterCardWithHooks />,
+};
