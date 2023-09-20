@@ -2,7 +2,7 @@
   "name": "@open-sauced/insights",
   "description": "🍕The dashboard for open source discovery.",
   "keywords": [],
-  "version": "1.64.0",
+  "version": "1.65.0-beta.10",
   "author": "Brian Douglas <brian@opensauced.pizza>",
   "private": true,
   "license": "Apache 2.0",
@@ -102,6 +102,7 @@
     "rooks": "^7.4.4",
     "schema-dts": "^1.1.0",
     "stripe": "^11.8.0",
+    "swiper": "^10.2.0",
     "swr": "^2.0.3",
     "tailwindcss-radix": "^2.7.0",
     "zustand": "^4.3.2"
@@ -149,7 +150,7 @@
     "prettier": "^3.0.0",
     "storybook": "^7.2.0",
     "tailwindcss": "^3.2.4",
-    "typescript": "^4.9.5",
+    "typescript": "5.1.6",
     "typesync": "^0.10.0"
   },
   "lint-staged": {

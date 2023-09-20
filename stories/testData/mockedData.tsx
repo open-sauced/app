@@ -76,3 +76,19 @@ export const mockDbContributions: DbContribution[] = [
     recent_merged_prs: 20,
   },
 ];
+
+export const testLanguageList = [
+  {
+    languageName: "TypeScript",
+    percentageUsed: 50,
+  },
+  {
+    languageName: "JavaScript",
+    percentageUsed: 20,
+  },
+  {
+    languageName: "Rust",
+    percentageUsed: 15,
+  },
+  { languageName: "React", percentageUsed: 15 },
+];
