@@ -19,11 +19,11 @@ const TopNav: React.FC = () => {
 
   return (
     <header className="top-nav-container w-full fixed top-0 left-0 flex justify-between items-center z-50 py-0.5 bg-light-slate-3 border-b">
-      <div className="flex justify-between items-start sm:items-center mx-auto container px-2 md:px-16">
-        <div className="flex gap-3 md:gap-8 items-center flex-wrap">
+      <div className="container flex items-start justify-between px-2 mx-auto sm:items-center md:px-16">
+        <div className="flex flex-wrap items-center gap-3 md:gap-8">
           <HeaderLogo withBg={false} textIsBlack />
           <nav>
-            <ul className="flex flex-wrap gap-3 md:gap-8 mb-3 ml-2 sm:m-0 w-full sm:w-auto">
+            <ul className="flex flex-wrap w-full gap-3 mb-3 ml-2 md:gap-8 sm:m-0 sm:w-auto">
               <li>
                 {!!user && onboarded ? (
                   <Link
@@ -33,7 +33,9 @@ const TopNav: React.FC = () => {
                     Insights
                   </Link>
                 ) : (
-                  ""
+                  <Link className={`text-sm ${getActiveStyle(router.asPath === "/hub/insights")}`} href={"/start"}>
+                    Insights
+                  </Link>
                 )}
               </li>
               <li>

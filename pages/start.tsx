@@ -23,6 +23,7 @@ import Icon from "components/atoms/Icon/icon";
 import Button from "components/atoms/Button/button";
 
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
+import { setQueryParams } from "lib/utils/query-params";
 import useSession from "lib/hooks/useSession";
 import { captureAnayltics } from "lib/utils/analytics";
 
@@ -34,26 +35,31 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "c
 import { timezones } from "lib/utils/timezones";
 
 type handleLoginStep = () => void;
+type stepKeys = "1" | "2" | "3";
 
+interface QueryParams {
+  step: stepKeys;
+}
 interface LoginStep1Props {
-  handleLoginStep: handleLoginStep;
   user: User | null;
 }
 
-const LoginStep1: React.FC<LoginStep1Props> = ({ handleLoginStep, user }) => {
+const LoginStep1: React.FC<LoginStep1Props> = ({ user }) => {
   captureAnayltics("User Onboarding", "onboardingStep1", "visited");
 
   const router = useRouter();
   const { onboarded } = useSession();
   const { providerToken, signIn } = useSupabaseAuth();
 
+  console.log(onboarded);
+
   useEffect(() => {
     if (onboarded) {
       router.push(`/user/${user?.user_metadata.user_name}`);
     } else if (onboarded === false && user && providerToken) {
-      handleLoginStep();
+      setQueryParams({ step: "2" } satisfies QueryParams);
     }
-  }, [handleLoginStep, router, user, onboarded]);
+  }, [user, onboarded, providerToken]);
 
   const handleGitHubAuth = async () => {
     // Redirect user to GitHub to authenticate
@@ -107,14 +113,10 @@ const LoginStep1: React.FC<LoginStep1Props> = ({ handleLoginStep, user }) => {
 };
 
 interface LoginStep2Props {
-  handleLoginStep: handleLoginStep;
   handleUpdateInterests: (interests: string[]) => void;
 }
 
-const LoginStep2: React.FC<LoginStep2Props> = ({
-  handleLoginStep,
-  handleUpdateInterests: handleUpdateInterestsParent,
-}) => {
+const LoginStep2: React.FC<LoginStep2Props> = ({ handleUpdateInterests: handleUpdateInterestsParent }) => {
   const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
   const interestArray = getInterestOptions();
 
@@ -130,7 +132,7 @@ const LoginStep2: React.FC<LoginStep2Props> = ({
 
   const handleUpdateInterest = async () => {
     handleUpdateInterestsParent(selectedInterests);
-    handleLoginStep();
+    setQueryParams({ step: "3" } satisfies QueryParams);
   };
 
   return (
@@ -170,7 +172,6 @@ const LoginStep2: React.FC<LoginStep2Props> = ({
 };
 
 interface LoginStep3Props {
-  handleLoginStep: handleLoginStep;
   interests: string[];
   user: User | null;
 }
@@ -275,15 +276,26 @@ const Login: WithPageLayout = () => {
   type LoginSteps = number;
 
   const { user } = useSupabaseAuth();
+  const router = useRouter();
+  const {
+    query: { step },
+  } = router;
 
   const highlighted = "!text-light-slate-12";
 
-  const [currentLoginStep, setCurrentLoginStep] = useState<LoginSteps>(1);
+  const [currentLoginStep, setCurrentLoginStep] = useState<LoginSteps>(Number(step) || 1);
+
   const [interests, setInterests] = useState<string[]>([]);
 
-  const handleLoginStep = async () => {
-    setCurrentLoginStep((prevStep) => prevStep + 1);
-  };
+  console.log(currentLoginStep);
+
+  useEffect(() => {
+    if (!step) {
+      setQueryParams({ step: "1" } satisfies QueryParams);
+    } else {
+      setCurrentLoginStep(Number(step));
+    }
+  }, [step]);
 
   return (
     <Card className="flex flex-col lg:flex-row w-[870px] min-h-[480px] !p-0 rounded-none lg:rounded-lg !bg-inherit lg:!bg-light-slate-2 lg:shadow-login !border-0 lg:!border-[1px] lg:!border-orange-500">
@@ -347,14 +359,9 @@ const Login: WithPageLayout = () => {
           </div>
         </section>
         <section className="w-full lg:max-w-[50%] p-9 rounded-lg lg:rounded-r-lg bg-white">
-          {currentLoginStep === 1 && <LoginStep1 handleLoginStep={handleLoginStep} user={user} />}
-          {currentLoginStep === 2 && (
-            <LoginStep2
-              handleLoginStep={handleLoginStep}
-              handleUpdateInterests={(interests) => setInterests(interests)}
-            />
-          )}
-          {currentLoginStep >= 3 && <LoginStep3 handleLoginStep={handleLoginStep} interests={interests} user={user} />}
+          {currentLoginStep === 1 && <LoginStep1 user={user} />}
+          {currentLoginStep === 2 && <LoginStep2 handleUpdateInterests={(interests) => setInterests(interests)} />}
+          {currentLoginStep >= 3 && <LoginStep3 interests={interests} user={user} />}
         </section>
       </>
     </Card>
