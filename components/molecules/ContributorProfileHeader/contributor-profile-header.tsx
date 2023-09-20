@@ -157,7 +157,7 @@ const ContributorProfileHeader = ({
           <div className="flex flex-col items-center gap-3 translate-y-24 md:translate-y-0 md:flex-row">
             {/* Mobile dropdown menu */}
 
-            <DropdownMenu>
+            <DropdownMenu modal={false}>
               <div className="flex items-center md: gap-2 mb-10 md:gap-6 flex-wrap">
                 <Button className="sm:hidden" variant="primary" href={cardPageUrl(username!)}>
                   <FaIdCard className="" />
