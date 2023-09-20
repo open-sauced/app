@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { FaSearch } from "react-icons/fa";
 import { HiOutlineExclamation } from "react-icons/hi";
@@ -17,9 +18,11 @@ interface SearchDialogProps {
 
 const SearchDialog = ({ setOpenSearch }: SearchDialogProps) => {
   useLockBody();
+  const router = useRouter();
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResult, setSearchResult] = useState<{ data: DbUserSearch[]; meta: {} }>();
   const debouncedSearchTerm = useDebounceTerm(searchTerm, 300);
+  const [cursor, setCursor] = useState(-1);
 
   useEffect(() => {
     document.addEventListener("keydown", handleCloseSearch);
@@ -32,11 +35,32 @@ const SearchDialog = ({ setOpenSearch }: SearchDialogProps) => {
     return () => document.removeEventListener("keydown", handleCloseSearch);
   }, []);
 
+  const handleKeyboardCtrl = (e: KeyboardEvent) => {
+    const resultsCount = searchResult?.data?.length || 0;
+    if (resultsCount && e.key === "ArrowUp") {
+      e.preventDefault();
+      setCursor(cursor === 0 ? Math.min(resultsCount - 1, 9) : cursor - 1);
+    }
+    if (resultsCount && e.key === "ArrowDown") {
+      e.preventDefault();
+      setCursor(cursor === Math.min(resultsCount - 1, 9) ? 0 : cursor + 1);
+    }
+    if (resultsCount && e.key === "Enter") {
+      e.preventDefault();
+      if (document.querySelector("._cursorActive")) {
+        const user = document.querySelector("._cursorActive") as HTMLAnchorElement;
+        router.push(user.href);
+        setOpenSearch(false);
+      }
+    }
+  };
+
   useEffect(() => {
     if (searchTerm.length >= 3) startSearch();
     async function startSearch() {
       const data = await searchUsers(debouncedSearchTerm);
       setSearchResult(data);
+      cursor !== -1 && setCursor(-1);
     }
   }, [debouncedSearchTerm]);
 
@@ -46,13 +70,17 @@ const SearchDialog = ({ setOpenSearch }: SearchDialogProps) => {
         className="absolute w-full h-full left-0 top-0 z-[60] backdrop-blur-sm"
         onClick={() => setOpenSearch(false)}
       />
-      <div className="flex flex-col w-full max-w-2xl h-fit max-h-full bg-white shadow-xl border transition rounded-lg ring-light-slate-6 relative z-[65] overflow-hidden">
+      <div
+        className="flex flex-col w-full max-w-2xl h-fit max-h-full bg-white shadow-xl border transition rounded-lg ring-light-slate-6 relative z-[65] overflow-hidden"
+        onMouseMove={() => cursor !== -1 && setCursor(-1)}
+      >
         <div className="flex w-full h-full items-center border-b p-2 pl-3">
           <FaSearch className="text-light-slate-9" fontSize={16} />
           <input
             className="w-full pl-2 text-sm font-semibold text-slate-700 focus:outline-none"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
+            onKeyDown={handleKeyboardCtrl}
           />
           <Text keyboard className="text-gray-600 !border-b !px-1">
             ⌘K
@@ -62,7 +90,7 @@ const SearchDialog = ({ setOpenSearch }: SearchDialogProps) => {
           {searchTerm.length < 3 ? (
             <SearchInfo />
           ) : !!searchResult?.data?.length ? (
-            <SearchResult result={searchResult?.data} />
+            <SearchResult cursor={cursor} result={searchResult?.data} />
           ) : (
             <SearchError />
           )}
@@ -118,21 +146,24 @@ const SearchError = () => (
   </Text>
 );
 
-const SearchResult = ({ result }: { result: DbUserSearch[] }) => (
+const SearchResult = ({ result, cursor }: { result: DbUserSearch[]; cursor: number }) => (
   <div className="w-full py-1 overflow-hidden text-gray-600">
     <Text className="block w-full py-1 px-4">Users</Text>
     <div className="w-full h-full">
       <ScrollArea className="w-full">
         {result.map((user: DbUserSearch, i: number) => (
-          <UserResult key={i} {...user} />
+          <UserResult key={i} className={cursor === i && "_cursorActive bg-slate-100"} {...user} />
         ))}
       </ScrollArea>
     </div>
   </div>
 );
 
-const UserResult = ({ login, full_name }: DbUserSearch) => (
-  <Link href={`/user/${login}`} className="w-full flex items-center py-2 p-4 gap-2 hover:bg-slate-100 cursor-pointer">
+const UserResult = ({ login, full_name, ...props }: DbUserSearch) => (
+  <Link
+    href={`/user/${login}`}
+    className={`${props.className} w-full flex items-center py-2 p-4 gap-2 hover:bg-slate-100 cursor-pointer`}
+  >
     <Avatar size="sm" className="!rounded-full flex-none" avatarURL={getAvatarByUsername(login)} />
     <div className="flex items-center gap-2 overflow-hidden">
       <Text className="text-gray-900">@{login}</Text>
