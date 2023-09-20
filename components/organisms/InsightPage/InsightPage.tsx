@@ -283,7 +283,6 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
 
       if (response.ok) {
         const addedRepo = (await response.json()) as DbRepo;
-        console.log(addedRepo);
 
         setRepos((repos) => {
           return [...repos, addedRepo];
