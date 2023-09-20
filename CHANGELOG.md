@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.65.0-beta.9](https://github.com/open-sauced/insights/compare/v1.65.0-beta.8...v1.65.0-beta.9) (2023-09-20)
+
+
+### 🐛 Bug Fixes
+
+* improved padding for add repo dialog ([d4ef016](https://github.com/open-sauced/insights/commit/d4ef0169f50395e495bf3940fabfe1672a7fcbb6))
+* improved padding for add repo dialog ([#1720](https://github.com/open-sauced/insights/issues/1720)) ([4d81cca](https://github.com/open-sauced/insights/commit/4d81ccaf9a048b36b822fe1b67ea175cc97cf72d))
+
 ## [1.65.0-beta.8](https://github.com/open-sauced/insights/compare/v1.65.0-beta.7...v1.65.0-beta.8) (2023-09-19)
 
 
