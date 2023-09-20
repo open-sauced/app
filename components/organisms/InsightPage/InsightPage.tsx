@@ -42,7 +42,7 @@ const staticSuggestedRepos: RepoCardProfileProps[] = [
   {
     avatar: "https://avatars.githubusercontent.com/u/57568598?s=200&v=4",
     prCount: 8,
-    repoName: "insights",
+    repoName: "app",
     issueCount: 87,
     orgName: "open-sauced",
   },
@@ -81,7 +81,9 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
   }, [repoListData, router.query.selectedRepos, pageHref]);
 
   const { data, addMember, deleteMember, updateMember } = useInsightMembers(insight?.id || 0);
-  const { data: recommendedRepos } = useFetchInsightRecommendedRepositories();
+  const { data: recommendedRepos, isLoading } = useFetchInsightRecommendedRepositories();
+
+  console.log(recommendedRepos);
 
   const members =
     data &&
@@ -247,6 +249,11 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
 
     const actualRepo = recommendedRepos?.find((repo) => repo.full_name === repoToAdd);
 
+    if (!actualRepo) {
+      loadAndAddRepo(repoToAdd);
+      return;
+    }
+
     setRepos((repos) => {
       return [...repos, actualRepo as unknown as DbRepo];
     });
@@ -277,6 +284,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
 
       if (response.ok) {
         const addedRepo = (await response.json()) as DbRepo;
+        console.log(addedRepo);
 
         setRepos((repos) => {
           return [...repos, addedRepo];
@@ -425,6 +433,8 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
     updateSuggestionsDebounced();
   }, [repoSearchTerm]);
 
+  console.log(repos);
+
   return (
     <section className="flex flex-col justify-center w-full py-4 xl:flex-row xl:gap-20 xl:pl-28 ">
       <div className="flex flex-col gap-8">
@@ -478,6 +488,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
           <SuggestedRepositoriesList
             reposData={recommendedReposWithoutSelected}
             loadingData={addRepoLoading}
+            isLoading={isLoading}
             onAddRepo={(repo) => {
               addSuggestedRepo(repo);
             }}
