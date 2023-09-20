@@ -1,18 +1,22 @@
 import { FaPlus } from "react-icons/fa";
 
 import clsx from "clsx";
+import { FiGlobe } from "react-icons/fi";
 import Button from "components/atoms/Button/button";
 import Text from "components/atoms/Typography/text";
 
 import { useToast } from "lib/hooks/useToast";
 import ListNameHeader from "components/atoms/ListNameHeader/list-name-header";
 import LimitSelect from "components/atoms/Select/limit-select";
-import Search from "components/atoms/Search/search";
+// import Search from "components/atoms/Search/search";
+import ToggleSwitch from "components/atoms/ToggleSwitch/toggle-switch";
 import ComponentDateFilter from "../ComponentDateFilter/component-date-filter";
 
 interface ListHeaderProps {
   setLimit?: (limit: number) => void;
   setRangeFilter?: (range: number) => void;
+  isPublic: boolean;
+  handleToggleIsPublic: () => void;
   range?: number;
   selectedContributorsIds: number[];
   title?: string;
@@ -30,6 +34,8 @@ const HubContributorsHeader = ({
   onTitleChange,
   range,
   loading,
+  isPublic,
+  handleToggleIsPublic,
 }: ListHeaderProps): JSX.Element => {
   const { toast } = useToast();
 
@@ -47,6 +53,12 @@ const HubContributorsHeader = ({
         </div>
         <div className="flex flex-row items-center justify-center gap-6 header-info ">
           <div className="flex items-center gap-2">
+            <div className="flex items-center gap-10 py-1.5 px-4 rounded-md bg-white mr-3">
+              <span className="flex items-center gap-2 text-sm">
+                <FiGlobe /> Make Public
+              </span>
+              <ToggleSwitch size="base" checked={isPublic} name="isPublic" handleToggle={handleToggleIsPublic} />
+            </div>
             <span
               className={clsx(
                 "w-max min-w-[1.4rem] h-6  p-3 text-sm items-center flex place-content-center rounded-full",
@@ -75,7 +87,7 @@ const HubContributorsHeader = ({
         <div className="flex items-center gap-4"></div>
         <div className="flex items-center gap-4">
           <div className="w-58">
-            <Search placeholder="Search for usernames" className="max-w-full" name={"query"} />
+            {/* <Search placeholder="Search for usernames" className="max-w-full" name={"query"} /> */}
           </div>
           <ComponentDateFilter setRangeFilter={(range: number) => setRangeFilter?.(range)} defaultRange={range} />
           <LimitSelect

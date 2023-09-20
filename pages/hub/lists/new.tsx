@@ -36,6 +36,7 @@ const NewListCreationPage: WithPageLayout = () => {
   const [title, setTitle] = useState("");
   const [selectedContributors, setSelectedContributors] = useState<DbPRContributor[]>([]);
   const [range, setRange] = useState<number>(30);
+  const [isPublic, setIsPublic] = useState<boolean>(false);
   const { data, meta, isLoading, setLimit, setPage } = useFetchAllContributors();
 
   const contributors = data
@@ -110,7 +111,7 @@ const NewListCreationPage: WithPageLayout = () => {
   const handleOnListCreate = () => {
     const payload: CreateListPayload = {
       name: title,
-      is_public: true,
+      is_public: isPublic,
       contributors: selectedContributors.map((contributor) => contributor.user_id),
     };
 
@@ -134,6 +135,8 @@ const NewListCreationPage: WithPageLayout = () => {
       <div className="info-container container w-full min-h-[6.25rem]">
         <Header>
           <HubContributorsHeader
+            isPublic={isPublic}
+            handleToggleIsPublic={() => setIsPublic(!isPublic)}
             loading={createLoading}
             selectedContributorsIds={selectedContributors.map((contributor) => contributor.user_id)}
             setLimit={setLimit}
