@@ -17,6 +17,7 @@ const recommendations: Record<interestsType, string[]> = {
   golang: ["cli/cli"],
   vue: ["vuejs/vue"],
   kubernetes: ["kubernetes/kubernetes"],
+  hacktoberfest: ["open-sauced/app"],
 };
 
 export default recommendations;

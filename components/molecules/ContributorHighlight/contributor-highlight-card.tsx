@@ -13,7 +13,6 @@ import { BiGitPullRequest } from "react-icons/bi";
 import { VscIssues } from "react-icons/vsc";
 import clsx from "clsx";
 import { useDebounce } from "rooks";
-import Title from "components/atoms/Typography/title";
 
 import { Textarea } from "components/atoms/Textarea/text-area";
 import Button from "components/atoms/Button/button";
@@ -44,6 +43,7 @@ import { fetchGithubIssueInfo } from "lib/hooks/fetchGithubIssueInfo";
 import { isValidBlogUrl } from "lib/utils/dev-to";
 import { fetchDevToBlogInfo } from "lib/hooks/fetchDevToBlogInfo";
 import Search from "components/atoms/Search/search";
+import Title from "components/atoms/Typography/title";
 import GhOpenGraphImg from "../GhOpenGraphImg/gh-open-graph-img";
 import {
   Dialog,
@@ -238,7 +238,7 @@ const ContributorHighlightCard = ({
   const getHighlightTypePreset = (type: HighlightType): { text: string; icon?: React.ReactElement } => {
     switch (type) {
       case "pull_request":
-        return { text: "Pull request", icon: <BiGitPullRequest className="text-lg md:text-xl" /> };
+        return { text: "Pull request", icon: <BiGitPullRequest className="text-md md:text-lg" /> };
       case "blog_post":
         return {
           text: "Blog post",
@@ -435,20 +435,11 @@ const ContributorHighlightCard = ({
   return (
     <article className="flex flex-col  md:max-w-[40rem] flex-1 gap-3 lg:gap-6">
       <div>
-        <div className={clsx("flex items-center gap-1 text-light-slate-12", title && "mb-2")}>
+        <div className={clsx("flex items-center mb-4 gap-1 text-light-slate-11", title && "mb-2")}>
           {icon}
-          <span className="text-sm md:text-base text-light-slate-10">{getHighlightTypePreset(type).text}</span>
-        </div>
-        <div className="flex items-center justify-between w-full">
-          <div className="flex items-center justify-between gap-1 pr-2">
-            {title && (
-              <Title className="!text-sm  break-words lg:!text-xl !text-light-slate-12" level={4}>
-                {title}
-              </Title>
-            )}
-          </div>
+          <span className="text-sm text-light-slate-11">{getHighlightTypePreset(type).text}</span>
           <div className="flex items-center gap-3 ml-auto lg:gap-3">
-            <DropdownMenu>
+            <DropdownMenu modal={false}>
               <div className="flex items-center gap-3 w-max">
                 <Tooltip direction="top" content="share on twitter">
                   <a
@@ -464,7 +455,7 @@ const ContributorHighlightCard = ({
                   </a>
                 </Tooltip>
                 <DropdownMenuTrigger className="py-2 px-2 rounded-full data-[state=open]:bg-light-slate-7">
-                  <TfiMoreAlt size={24} />
+                  <TfiMoreAlt className={"fill-light-slate-11"} size={24} />
                 </DropdownMenuTrigger>
               </div>
 
@@ -545,10 +536,19 @@ const ContributorHighlightCard = ({
             </DropdownMenu>
           </div>
         </div>
+        <div className="flex items-center justify-between w-full">
+          <div className="flex items-center justify-between gap-1 pr-2">
+            {title && (
+              <Title className="!text-sm  break-words lg:!text-xl !text-light-slate-12" level={4}>
+                {title}
+              </Title>
+            )}
+          </div>
+        </div>
 
         {/* Highlight body section */}
         <div className="w-full ">
-          <p className="text-sm font-normal break-words text-light-slate-11 lg:text-base">{desc}</p>
+          <p className="text-sm font-normal break-words text-light-slate-12 lg:text-base">{desc}</p>
         </div>
         {/* Highlight Link section */}
 
@@ -631,18 +631,6 @@ const ContributorHighlightCard = ({
                   <MdError size={20} /> {errorMsg}
                 </p>
               )}
-              <fieldset className="flex flex-col w-full gap-1">
-                <label htmlFor="title">Title (optional)</label>
-                <input
-                  onChange={(e) => {
-                    setHighlight((prev) => ({ ...prev, title: e.target.value }));
-                    setError("");
-                  }}
-                  value={highlight.title}
-                  name="title"
-                  className="h-8 px-2 font-normal rounded-lg focus:border focus:outline-none "
-                />
-              </fieldset>
               <fieldset className="flex flex-col w-full gap-1">
                 <label htmlFor="description">Body</label>
                 <div className="bg-white rounded-lg focus-within:border">
