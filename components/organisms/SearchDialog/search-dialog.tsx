@@ -78,6 +78,7 @@ const SearchDialog = ({ setOpenSearch }: SearchDialogProps) => {
         <div className="flex w-full h-full items-center border-b p-2 pl-3">
           <FaSearch className="text-light-slate-9" fontSize={16} />
           <input
+            autoFocus
             className="w-full pl-2 text-sm font-semibold text-slate-700 focus:outline-none"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
