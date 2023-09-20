@@ -51,8 +51,6 @@ const LoginStep1: React.FC<LoginStep1Props> = ({ user }) => {
   const { onboarded } = useSession();
   const { providerToken, signIn } = useSupabaseAuth();
 
-  console.log(onboarded);
-
   useEffect(() => {
     if (onboarded) {
       router.push(`/user/${user?.user_metadata.user_name}`);
@@ -286,8 +284,6 @@ const Login: WithPageLayout = () => {
   const [currentLoginStep, setCurrentLoginStep] = useState<LoginSteps>(Number(step) || 1);
 
   const [interests, setInterests] = useState<string[]>([]);
-
-  console.log(currentLoginStep);
 
   useEffect(() => {
     if (!step) {
