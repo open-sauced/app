@@ -13,9 +13,7 @@ const ListNameHeader = ({ title, onEditTitle }: ListNameHeaderProps) => {
   const [focused, setFocused] = useState(false);
 
   const handleFocus = () => {
-    ref.current?.focus();
-    // select all text in the span... this is a hacky way to do it and not sure if it's the best way
-    document.execCommand("selectAll", false, undefined);
+    ref?.current?.focus();
   };
 
   return (
@@ -31,15 +29,20 @@ const ListNameHeader = ({ title, onEditTitle }: ListNameHeaderProps) => {
             onBlur={() => {
               setFocused(false);
             }}
-            onFocus={() => {
+            onFocus={(e) => {
               setFocused(true);
+              e.target.select();
             }}
+            autoFocus
             value={title}
             type="text"
             placeholder="List Name"
-            className={clsx("text-3xl w-40 bg-transparent text-light-slate-12 focus:outline-none cursor-text")}
+            className={clsx(
+              "text-3xl w-40 bg-transparent text-light-slate-12 focus:outline-none cursor-text",
+              !focused && "!text-white"
+            )}
           />
-          <span className={clsx("absolute left-0 w-max", focused && "hidden")}>
+          <span className={clsx("absolute left-0 w-max", focused && "invisible")}>
             {title}
 
             {title && title.length > 0 && (
