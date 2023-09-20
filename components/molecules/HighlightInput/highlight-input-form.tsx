@@ -722,6 +722,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
 
       <Dialog open={addTaggedRepoFormOpen} onOpenChange={setAddTaggedRepoFormOpen}>
         <DialogContent
+          className="p-2"
           style={{
             width: "33vw",
           }}
