@@ -17,7 +17,10 @@ import TopNav from "../components/organisms/TopNav/top-nav";
 const HubLayout = ({ children }: { children: React.ReactNode }) => {
   const { onboarded } = useSession();
   const { user } = useSupabaseAuth();
-  const navLinks = [{ name: "Insights", href: "/hub/insights" }];
+  const navLinks = [
+    { name: "Insights", href: "/hub/insights" },
+    { name: "Lists", href: "/hub/lists" },
+  ];
   const router = useRouter();
 
   useEffect(() => {
