@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import useStore from "lib/store";
+
+import { getFeatureAccess } from "lib/utils/feature-access";
 import useSupabaseAuth from "./useSupabaseAuth";
 
 const useSession = (getSession = false) => {
@@ -28,22 +30,24 @@ const useSession = (getSession = false) => {
     }
   };
 
-  const setStoreData = (isOnboarded: boolean, isWaitlisted: boolean, insightsRole: number) => {
+  const setStoreData = (isOnboarded: boolean, isWaitlisted: boolean, insightsRole: number, hasReports: boolean) => {
     store.setSession({
       onboarded: isOnboarded,
       waitlisted: isWaitlisted,
       insightRepoLimit: insightsRole >= 50 ? 50 : 10,
     });
 
-    store.setHasReports(insightsRole >= 50);
+    store.setHasReports(hasReports || insightsRole >= 50);
   };
 
   useEffect(() => {
     (async () => {
       if (sessionToken && getSession) {
         const data = await loadSession();
+        const { hasReports } = await getFeatureAccess();
+
         setSession(data);
-        setStoreData(data.is_onboarded, data.is_waitlisted, data.insights_role);
+        setStoreData(data.is_onboarded, data.is_waitlisted, data.insights_role, hasReports);
       }
     })();
   }, [sessionToken]);
