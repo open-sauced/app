@@ -49,6 +49,36 @@ interface DbRecommendedInsightsRepo {
   readonly default_branch: string;
 }
 
+interface DBListContributor {
+  readonly user_avatar_url: string;
+  readonly user_id: number;
+  readonly user_login: string;
+  readonly user_name: string;
+  readonly user_bio: string;
+  readonly user_url: string;
+  readonly user_company: string;
+  readonly user_location: string;
+  readonly user_twitter_username: string;
+  readonly user_github_sponsors_url: string;
+  readonly user_linkedin_url: string;
+  readonly user_discord_url: string;
+  readonly user_display_email: boolean;
+  readonly user_display_local_time: boolean;
+  readonly user_timezone: string;
+  readonly user_interests: string;
+  readonly user_first_opened_pr_at: string;
+  readonly user_is_open_sauced_member: boolean;
+  readonly user_is_onboarded: boolean;
+  readonly user_is_waitlisted: boolean;
+  readonly user_role: number;
+  readonly user_created_at: string;
+  readonly user_updated_at: string;
+  readonly user_languages: Object;
+  readonly user_public_gists: number;
+  readonly user_public_repos: number;
+  readonly user_receive_collaborations: boolean;
+}
+
 interface DbRepoPR {
   readonly title: string;
   readonly author_login: string;
@@ -73,6 +103,7 @@ interface DbRepoPR {
 interface DbPRContributor {
   readonly author_login: string;
   readonly updated_at: string;
+  readonly user_id: number;
 }
 
 interface DbFollowUser {
