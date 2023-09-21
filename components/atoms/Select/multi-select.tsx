@@ -72,7 +72,10 @@ const MultiSelect = ({
   return (
     <Popover open={open} onOpenChange={(value) => setOpen(value)}>
       <div className="max-w-xs min-w-[250px]">
-        <PopoverTrigger asChild className="p-1.5 border rounded-md  max-w-xs min-w-[250px]">
+        <PopoverTrigger
+          asChild
+          className="p-1.5 border rounded-md data-[state=open]:border-orange-500  max-w-xs min-w-[250px] "
+        >
           <button
             aria-controls="select-menu-list"
             role="combobox"
