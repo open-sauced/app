@@ -99,7 +99,7 @@ const MultiSelect = ({
               value={inputValue}
               onValueChange={setInputValue}
             />
-            <CommandGroup className="flex flex-col gap-2 !px-0 overflow-auto max-h-96">
+            <CommandGroup className="flex flex-col !px-0 overflow-scroll max-h-48">
               {open && dummyOptions.length > 0
                 ? dummyOptions.map((option) => (
                     <CommandItem
