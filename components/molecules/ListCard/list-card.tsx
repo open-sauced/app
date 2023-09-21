@@ -12,7 +12,7 @@ interface ListCardProps {
   list: DbUserList;
   handleOnDeleteClick: (listName: string, listId: string) => void;
 }
-const ListCard = ({ list }: ListCardProps) => {
+const ListCard = ({ list, handleOnDeleteClick }: ListCardProps) => {
   const { data: contributors, meta } = useFetchListContributors(list.id);
 
   const contributorsAvatar: Contributor[] = contributors?.map((contributor) => ({
