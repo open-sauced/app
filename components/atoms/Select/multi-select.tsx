@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 
 import { FiChevronDown } from "react-icons/fi";
 import { IoCheckmarkSharp } from "react-icons/io5";
+import { IoMdCloseCircle } from "react-icons/io";
 
 import { clsx } from "clsx";
 import { Popover, PopoverContent, PopoverTrigger } from "components/molecules/Popover/popover";
@@ -91,7 +92,19 @@ const MultiSelect = ({
               <span className="opacity-50">{placeholder ?? "Select Items"}</span>
             )}
 
-            <FiChevronDown className="w-5 h-5 ml-2 opacity-50 shrink-0" />
+            {dummySelected.length > 0 ? (
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  setDummySelected([]);
+                }}
+              >
+                <IoMdCloseCircle className="text-red-600" />
+              </button>
+            ) : (
+              <FiChevronDown className="ml-2 text-lg opacity-50 shrink-0" />
+            )}
           </button>
         </PopoverTrigger>
         <PopoverContent className="!w-full !min-w-[250px] p-0">
