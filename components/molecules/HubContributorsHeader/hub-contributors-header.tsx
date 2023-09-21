@@ -51,8 +51,8 @@ const HubContributorsHeader = ({
           />
           <Text className="text-light-slate-9">Select contributors to add to your list</Text>
         </div>
-        <div className="flex flex-row items-center justify-center gap-6 header-info ">
-          <div className="flex items-center gap-2">
+        <div className="flex flex-col items-center justify-center gap-6 md:flex-row header-info max-sm:mt-4">
+          <div className="flex items-center order-2 gap-2 md:flex-row md:order-1">
             <div className="flex items-center gap-10 py-1.5 px-4 rounded-md bg-white mr-3">
               <span className="flex items-center gap-2 text-sm">
                 <FiGlobe /> Make Public
@@ -73,7 +73,7 @@ const HubContributorsHeader = ({
             loading={loading}
             disabled={selectedContributorsIds.length === 0 || loading ? true : false}
             className={clsx(
-              "bg-sauced-orange !text-white",
+              "bg-sauced-orange !text-white max-md:self-end order-1 md:order-2",
               selectedContributorsIds.length === 0 && "!bg-slate-300 !text-slate-100"
             )}
             variant="text"
@@ -85,10 +85,10 @@ const HubContributorsHeader = ({
       </div>
       <div className="flex justify-between w-full">
         <div className="flex items-center gap-4"></div>
-        <div className="flex items-center gap-4">
-          <div className="w-58">
-            {/* <Search placeholder="Search for usernames" className="max-w-full" name={"query"} /> */}
-          </div>
+        <div className="flex items-center gap-2 md:gap-4">
+          {/* <div className="w-58">
+            <Search placeholder="Search for usernames" className="max-w-full" name={"query"} />
+          </div> */}
           <ComponentDateFilter setRangeFilter={(range: number) => setRangeFilter?.(range)} defaultRange={range} />
           <LimitSelect
             placeholder="10 per page"

@@ -13,8 +13,15 @@ const ContributorListTableHeaders = ({ selected, handleOnSelectAllContributor }:
   return (
     <div className="mt-4">
       {/* Mobile */}
-      <div className="flex justify-between gap-2 px-6 py-4 rounded-t-lg md:hidden bg-light-slate-3">
-        <div className="w-[58%]">
+      <div className="flex justify-between gap-2 px-2 py-4 rounded-t-lg md:hidden bg-light-slate-3">
+        {handleOnSelectAllContributor && (
+          <Checkbox
+            checked={selected ? true : false}
+            onCheckedChange={handleOnSelectAllContributor}
+            className={`${"border-orange-500 hover:bg-orange-600"}`}
+          />
+        )}
+        <div className="w-[50%]">
           <TableTitle>Contributor</TableTitle>
         </div>
         <div className="flex-1 w-[42%]">

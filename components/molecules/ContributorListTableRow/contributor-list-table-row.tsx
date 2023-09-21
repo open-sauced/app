@@ -70,9 +70,18 @@ const ContributorListTableRow = ({
   return (
     <>
       {/* Mobile version */}
-      <div className="px-5 py-2 overflow-hidden odd:bg-white md:hidden even:bg-light-slate-2">
+      <div className="px-2 py-2 overflow-hidden md:px-5 odd:bg-white md:hidden even:bg-light-slate-2">
         <div className="flex items-center gap-x-3 text-light-slate-12">
-          <div className="w-[66%]">
+          {handleOnSelectContributor && (
+            <Checkbox
+              checked={selected ? true : false}
+              disabled={!user}
+              title={!user ? "Connect to GitHub" : ""}
+              onCheckedChange={(state) => handleOnSelectContributor?.(state as boolean, contributor)}
+              className={`${user && "border-orange-500 hover:bg-orange-600"}`}
+            />
+          )}
+          <div className="w-[68%]">
             <DevProfile company={user?.company || getLastContributedRepo(data)} username={contributor.author_login} />
           </div>
           <div className="w-[34%] text-normal text-light-slate-11  h-full">
