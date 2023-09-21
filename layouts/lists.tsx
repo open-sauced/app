@@ -15,18 +15,19 @@ const ListPageLayout = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
   const { userId } = useSupabaseAuth();
   const { listId } = router.query;
-  const { data: list } = useList(listId as string);
-  const isLoading = false;
+  const { data: list, isLoading } = useList(listId as string);
   const paths = router.asPath.split("/");
   const selectedTab = paths[3] ?? "overview";
 
   const tabList = [
     { name: "Overview" },
     // { name: "Activity" },
-    // { name: "Contributors" }
+    { name: "Contributors" },
   ];
 
-  const isOwner = !!(userId && list && `${userId}` === `${list.user.id}`);
+  // TODO: list does not have a user property
+  const isOwner = true; //!!(userId && list && `${userId}` === `${list.user.id}`);
+  const { name, is_public, id } = list ?? {};
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -36,7 +37,7 @@ const ListPageLayout = ({ children }: { children: React.ReactNode }) => {
         <div className="info-container container w-full min-h-[100px]">
           <Header>
             {list ? (
-              <ListHeader list={list} listId={list.id} isOwner={isOwner} />
+              <ListHeader name={name} isPublic={is_public} listId={id} isOwner={isOwner} />
             ) : isLoading ? (
               <div className="flex justify-between w-full h-46">
                 <div className="flex items-center gap-3">
@@ -56,7 +57,7 @@ const ListPageLayout = ({ children }: { children: React.ReactNode }) => {
             )}
           </Header>
 
-          <TabsList tabList={tabList} selectedTab={selectedTab} pageId={`/lists/${list.id}`} />
+          <TabsList tabList={tabList} selectedTab={selectedTab} pageId={`/lists/${listId}`} />
         </div>
 
         <main className="flex flex-col items-center flex-1 w-full px-3 py-8 md:px-16 bg-light-slate-2">

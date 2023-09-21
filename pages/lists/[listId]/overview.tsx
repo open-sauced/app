@@ -1,7 +1,7 @@
 import ListPageLayout from "layouts/lists";
 
 const ListsOverview = () => {
-  return <div>Lists Overview</div>;
+  return <h2>Lists Overview</h2>;
 };
 
 ListsOverview.PageLayout = ListPageLayout;
