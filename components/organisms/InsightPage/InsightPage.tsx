@@ -83,7 +83,6 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
   const { data, addMember, deleteMember, updateMember } = useInsightMembers(insight?.id || 0);
   const { data: recommendedRepos, isLoading } = useFetchInsightRecommendedRepositories();
 
-
   const members =
     data &&
     data.map((member) => ({
@@ -430,7 +429,6 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
     if (!repoSearchTerm) return;
     updateSuggestionsDebounced();
   }, [repoSearchTerm]);
-
 
   return (
     <section className="flex flex-col justify-center w-full py-4 xl:flex-row xl:gap-20 xl:pl-28 ">
