@@ -91,7 +91,7 @@ const NewsletterForm = () => {
                 handleChange={(value) => handleChange(value)}
                 state={isValidEmail ? "valid" : "invalid"}
                 value={email}
-                className="w-full text-sm focus:outline-none"
+                className="w-44 text-sm focus:outline-none"
                 type="text"
                 name="email"
                 placeholder="Email"
