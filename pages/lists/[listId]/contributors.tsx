@@ -47,13 +47,15 @@ const useContributorsList = (listId: string) => {
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const { listId } = ctx.params as { listId: string };
-  const { data, error: contributorListError } = await fetchApiData({
-    context: ctx,
-    path: `lists/${listId}/contributors`,
-  });
-  const contributors = convertToContributors(data?.data);
+  const [{ data, error: contributorListError }, { data: list, error }] = await Promise.all([
+    await fetchApiData({
+      context: ctx,
+      path: `lists/${listId}/contributors`,
+    }),
+    await fetchApiData({ context: ctx, path: `lists/${listId}` }),
+  ]);
 
-  const { data: list, error } = await fetchApiData({ context: ctx, path: `lists/${listId}` });
+  const contributors = convertToContributors(data?.data);
 
   return {
     props: {
@@ -76,15 +78,14 @@ interface ContributorListPageProps {
 }
 
 const ContributorsListPage = ({ list, data, isLoading, isError }: ContributorListPageProps) => {
-  // TODO: listID will be used for client-side calls
   const [pageData, setPageData] = useState<ContributorListPageProps["data"]>(data);
 
   // TODO: use this when going through paged data
-  // const { data, isError, isLoading } = useContributorsList(listId);
+  // const { data, isError, isLoading } = useContributorsList(list.id);
   const { meta, data: contributors } = pageData;
   const [selectedContributors, setSelectedContributors] = useState<DbPRContributor[]>([]);
 
-  // TODO read from querystring or default to 1
+  // TODO: read from querystring or default to 1
   const [page, setPage] = useState(1);
 
   function handleOnSelectAllChecked(contributor: any): void {
