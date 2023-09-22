@@ -131,7 +131,7 @@ const ListsHub: WithPageLayout = () => {
             <span className="font-bold text-light-slate-12">This action cannot be undone</span>
           </Text>
           <Text>
-            Type <span className="font-bold text-light-red-10">DELETE</span> in all caps to confirm
+            Type <span className="font-bold text-light-red-10">{listNameToDelete}</span> in all caps to confirm
           </Text>
 
           <TextInput
@@ -139,7 +139,7 @@ const ListsHub: WithPageLayout = () => {
             value={text}
             onChange={(e) => {
               setText(e.target.value);
-              setDisabled(e.target.value !== "DELETE");
+              setDisabled(e.target.value !== listNameToDelete);
             }}
           />
 
