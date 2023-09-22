@@ -7,9 +7,15 @@ const meta: Meta = {
 
 export default meta;
 
-export const Default: StoryFn<typeof SearchDialog> = (args) => (
+export const Opened: StoryFn = () => (
   <>
-    <SearchDialog {...args} />
-    <SearchDialogTrigger {...args} />
+    <SearchDialog />
+    <SearchDialogTrigger />
+  </>
+);
+
+export const Closed: StoryFn = () => (
+  <>
+    <SearchDialogTrigger />
   </>
 );
