@@ -5,6 +5,26 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.66.0-beta.2](https://github.com/open-sauced/insights/compare/v1.66.0-beta.1...v1.66.0-beta.2) (2023-09-21)
+
+
+### 🐛 Bug Fixes
+
+* allow not onboarded users to interact with `insights` page ([#1722](https://github.com/open-sauced/insights/issues/1722)) ([b37ce4d](https://github.com/open-sauced/insights/commit/b37ce4d6c64c1a360d13273d25957290d9398db5))
+
+
+### 🍕 Features
+
+* add feature flag integration ([#1707](https://github.com/open-sauced/insights/issues/1707)) ([2bfcf4c](https://github.com/open-sauced/insights/commit/2bfcf4ccfe6ae5670ca6df4a57b0502e5975c2b3))
+
+## [1.66.0-beta.1](https://github.com/open-sauced/insights/compare/v1.65.0...v1.66.0-beta.1) (2023-09-21)
+
+
+### 🍕 Features
+
+* add new`MultiSelect`component to design system ([#1718](https://github.com/open-sauced/insights/issues/1718)) ([6405b43](https://github.com/open-sauced/insights/commit/6405b43e621ce9c154b3fc5831ab3e033e1438d7))
+* create list feature ([#1698](https://github.com/open-sauced/insights/issues/1698)) ([7adfe94](https://github.com/open-sauced/insights/commit/7adfe949a83c70e4c7f7d00c6f5f20928b8ce9c3))
+
 ## [1.65.0](https://github.com/open-sauced/insights/compare/v1.64.0...v1.65.0) (2023-09-20)
 
 

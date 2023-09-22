@@ -12,13 +12,11 @@ interface ListCardProps {
   list: DbUserList;
 }
 const ListCard = ({ list }: ListCardProps) => {
-  const { data: contributors } = useFetchListContributors(list.id);
+  const { data: contributors, meta } = useFetchListContributors(list.id);
 
   const contributorsAvatar: Contributor[] = contributors?.map((contributor) => ({
     host_login: contributor.login,
   }));
-
-  const dummyContributorsCount = contributors?.length ?? 0;
 
   return (
     <div>
@@ -37,7 +35,7 @@ const ListCard = ({ list }: ListCardProps) => {
             {/* Contributors section */}
             <div className="flex flex-col items-center flex-1 gap-1 mr-2">
               <span className="text-xs text-light-slate-11">Contributors</span>
-              <Text className="flex items-center text-2xl">{dummyContributorsCount}</Text>
+              <Text className="flex items-center text-2xl">{meta.itemCount}</Text>
             </div>
 
             <div className="flex items-center">

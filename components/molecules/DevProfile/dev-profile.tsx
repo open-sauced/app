@@ -19,7 +19,7 @@ const DevProfile = ({ username, company }: DevProfileProps) => {
       </div>
       {/* Desktop */}
       <div className="hidden rounded-full md:flex">
-        <Avatar className="" size={60} isCircle avatarURL={getAvatarByUsername(username)} />
+        <Avatar className="" size={45} isCircle avatarURL={getAvatarByUsername(username)} />
       </div>
       <div>
         <h1 className="text-light-slate-12">
