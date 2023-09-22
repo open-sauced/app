@@ -48,11 +48,11 @@ const useContributorsList = (listId: string) => {
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const { listId } = ctx.params as { listId: string };
   const [{ data, error: contributorListError }, { data: list, error }] = await Promise.all([
-    await fetchApiData({
+    (await fetchApiData)<ContributorList>({
       context: ctx,
       path: `lists/${listId}/contributors`,
     }),
-    await fetchApiData({ context: ctx, path: `lists/${listId}` }),
+    await fetchApiData<DBList>({ context: ctx, path: `lists/${listId}` }),
   ]);
 
   const contributors = convertToContributors(data?.data);
@@ -68,7 +68,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 };
 
 interface ContributorListPageProps {
-  list: any;
+  list: DBList;
   data: {
     meta: Meta;
     data: DbPRContributor[];

@@ -1,7 +1,7 @@
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { GetServerSidePropsContext } from "next";
 
-export async function fetchApiData({
+export async function fetchApiData<T>({
   baseUrl = process.env.NEXT_PUBLIC_API_URL,
   path,
   headers,
@@ -30,7 +30,7 @@ export async function fetchApiData({
     },
   });
 
-  const data = response.ok ? ((await response.json()) as ContributorList) : null;
+  const data = response.ok ? ((await response.json()) as T) : null;
   const { status, statusText } = response;
   const error = response.ok ? null : { status, statusText };
 
