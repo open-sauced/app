@@ -10,6 +10,8 @@ import { useMediaQuery } from "lib/hooks/useMediaQuery";
 import { calcDaysFromToday } from "lib/utils/date-utils";
 import { getAvatarByUsername } from "lib/utils/github";
 import useListContributions from "lib/hooks/useListContributions";
+// import useListStats from "lib/hooks/useListStats";
+import HighlightCard from "components/molecules/HighlightCard/highlight-card";
 
 type ContributorPrMap = { [contributor: string]: DbRepoPR };
 
@@ -17,6 +19,7 @@ const ListsOverview = (): JSX.Element => {
   const router = useRouter();
   const { listId } = router.query;
   const { data: prData, isError: prError } = useListContributions(listId as string);
+  // const { data: statsData } = useListStats(listId as string);
   const [showBots, setShowBots] = useState(false);
   const isMobile = useMediaQuery("(max-width:720px)");
 
@@ -69,48 +72,12 @@ const ListsOverview = (): JSX.Element => {
 
   return (
     <div className="flex flex-col w-full gap-4">
-      {/* <section className="flex flex-wrap items-center max-w-full gap-4 lg:flex-row lg:flex-nowrap">
-        <HighlightCard
-          label="Contributors"
-          icon="contributors"
-          metricIncreases={compare1.allPrsTotal - compare2.allPrsTotal >= 0}
-          increased={compare1.allPrsTotal - compare2.allPrsTotal >= 0}
-          numChanged={humanizeNumber(Math.abs(compare1.allPrsTotal - compare2.allPrsTotal), "abbreviation")}
-          value={humanizeNumber(contributorMeta.itemCount, "comma")}
-          contributors={contributorData.map((contributor) => ({ host_login: contributor.author_login }))}
-          isLoading={isLoading}
-        />
-        <HighlightCard
-          label="Spam"
-          icon="spam"
-          metricIncreases={compare1.spamTotal - compare2.spamTotal >= 0}
-          increased={compare1.spamTotal - compare2.spamTotal >= 0}
-          numChanged={humanizeNumber(Math.abs(compare1.spamTotal - compare2.spamTotal), "abbreviation")}
-          percentage={compare1.spamPercentage}
-          percentageLabel={`of ${humanizeNumber(compare1.allPrsTotal, "comma")}`}
-          isLoading={isLoading}
-        />
-        <HighlightCard
-          label="Accepted PRs"
-          icon="accepted-pr"
-          metricIncreases={compare1.acceptedTotal - compare2.acceptedTotal >= 0}
-          increased={compare1.acceptedTotal - compare2.acceptedTotal >= 0}
-          numChanged={humanizeNumber(Math.abs(compare1.acceptedTotal - compare2.acceptedTotal), "abbreviation")}
-          percentage={compare1.acceptedPercentage}
-          percentageLabel={`of ${humanizeNumber(compare1.allPrsTotal, "comma")}`}
-          isLoading={isLoading}
-        />
-        <HighlightCard
-          label="Unlabeled PRs"
-          icon="unlabeled-pr"
-          metricIncreases={compare1.unlabeledPrsTotal - compare2.unlabeledPrsTotal >= 0}
-          increased={compare1.unlabeledPrsTotal - compare2.unlabeledPrsTotal >= 0}
-          numChanged={humanizeNumber(Math.abs(compare1.unlabeledPrsTotal - compare2.unlabeledPrsTotal), "abbreviation")}
-          percentage={compare1.unlabeledPercentage}
-          percentageLabel={`of ${humanizeNumber(compare1.allPrsTotal, "comma")}`}
-          isLoading={isLoading}
-        />
-      </section> */}
+      <section className="flex flex-wrap items-center max-w-full gap-4 lg:flex-row lg:flex-nowrap">
+        <HighlightCard label="Commits" icon="contributors" metricIncreases={true} value={5} />
+        <HighlightCard label="Active Contributors" icon="spam" metricIncreases={true} value={10} />
+        <HighlightCard label="New Contributors" icon="accepted-pr" metricIncreases={true} value={15} />
+        <HighlightCard label="Alumni Contributors" icon="unlabeled-pr" metricIncreases={true} value={20} />
+      </section>
       <section className="flex flex-col max-w-full gap-4 mb-6 lg:flex-row">
         <div className="flex flex-col w-full">
           <Card className="w-full">
