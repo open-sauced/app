@@ -16,9 +16,10 @@ interface ListHeaderProps {
   listId: string;
   isPublic: boolean;
   isOwner: boolean;
+  numberOfContributors: number;
 }
 
-const ListHeader = ({ name, isPublic, listId, isOwner }: ListHeaderProps): JSX.Element => {
+const ListHeader = ({ name, isPublic, listId, isOwner, numberOfContributors }: ListHeaderProps): JSX.Element => {
   const { toast } = useToast();
   const posthog = usePostHog();
 
@@ -48,7 +49,7 @@ const ListHeader = ({ name, isPublic, listId, isOwner }: ListHeaderProps): JSX.E
             {<Badge isPublic={isPublic} />}
           </div>
           <div className="flex items-center gap-2 mt-4" id="contributorCount">
-            Contributors
+            {numberOfContributors} Contributors
           </div>
         </div>
       </div>

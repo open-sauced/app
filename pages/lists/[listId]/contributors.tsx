@@ -1,6 +1,7 @@
 import useSWR, { Fetcher } from "swr";
-import { useRouter } from "next/router";
 import { useState } from "react";
+import { GetServerSidePropsContext } from "next";
+import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import ListPageLayout from "layouts/lists";
 import publicApiFetcher from "lib/utils/public-api-fetcher";
 import ContributorTable from "components/organisms/ContributorsTable/contributors-table";
@@ -16,20 +17,25 @@ interface ContributorList {
   meta: Meta;
 }
 
-const useContributorsList = (listId: string) => {
-  const { data, error, mutate } = useSWR<ContributorList>(
-    `lists/${listId}/contributors`,
-    publicApiFetcher as Fetcher<ContributorList, Error>
-  );
-
-  const contributors: DbPRContributor[] = data
-    ? data.data?.map((contributor) => {
+function convertToContributors(rawContributors: ContributorList["data"] = []) {
+  const contributors = rawContributors
+    ? rawContributors.map((contributor) => {
         return {
           author_login: contributor.user_id,
           updated_at: contributor.created_at,
         };
       })
     : [];
+
+  return contributors;
+}
+
+const useContributorsList = (listId: string) => {
+  const { data, error, mutate } = useSWR<ContributorList>(
+    `lists/${listId}/contributors`,
+    publicApiFetcher as Fetcher<ContributorList, Error>
+  );
+  const contributors = convertToContributors(data?.data);
 
   return {
     data: data ? { data: contributors, meta: data.meta } : { data: [], meta: {} },
@@ -38,12 +44,54 @@ const useContributorsList = (listId: string) => {
     mutate,
   };
 };
-const ContributorsList = () => {
-  const router = useRouter();
-  const { listId } = router.query as { listId: string };
-  const { data, isError, isLoading } = useContributorsList(listId);
-  const { meta, data: contributors } = data as { meta: Meta; data: DbPRContributor[] };
+
+export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
+  // TODO: Wrap the whole fetch, Supabase token into a function for SSR
+  const supabase = createPagesServerClient(ctx);
+
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+  const listId = ctx.params!["listId"];
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/lists/${listId}/contributors`, {
+    headers: {
+      accept: "application/json",
+      Authorization: `Bearer ${session?.access_token}`,
+    },
+  });
+  const data = response.ok ? ((await response.json()) as ContributorList) : null;
+
+  const contributors = convertToContributors(data?.data);
+
+  return {
+    props: {
+      listId,
+      data: data ? { data: contributors, meta: data.meta } : { data: [], meta: {} },
+      isLoading: false,
+      isError: !response.ok,
+    },
+  };
+};
+
+interface ContributorListPageProps {
+  listId: string;
+  data: {
+    meta: Meta;
+    data: DbPRContributor[];
+  };
+  isLoading: boolean;
+  isError: boolean;
+}
+
+const ContributorsListPage = ({ listId, data, isLoading, isError }: ContributorListPageProps) => {
+  // TODO: listID will be used for client-side calls
+  const [pageData, setPageData] = useState<ContributorListPageProps["data"]>(data);
+
+  // TODO: use this when going through paged data
+  // const { data, isError, isLoading } = useContributorsList(listId);
+  const { meta, data: contributors } = pageData;
   const [selectedContributors, setSelectedContributors] = useState<DbPRContributor[]>([]);
+
   // TODO read from querystring or default to 1
   const [page, setPage] = useState(1);
 
@@ -55,53 +103,53 @@ const ContributorsList = () => {
     throw new Error("Function not implemented.");
   }
 
-  // TODO: Is this topic fine or can it be an empty string?
   return (
-    <div className="container flex flex-col gap-3">
-      <h2>List Contributors</h2>
-      {isError ? (
-        <div>error</div>
-      ) : (
-        <div className="lg:min-w-[1150px] px-16 py-8">
-          <ContributorListTableHeaders
-            selected={selectedContributors.length === meta.limit}
-            handleOnSelectAllContributor={handleOnSelectAllChecked}
-          />
-          <ContributorTable
-            loading={isLoading}
-            selectedContributors={selectedContributors}
-            topic={"*"}
-            handleSelectContributors={handleOnSelectChecked}
-            contributors={contributors as DbPRContributor[]}
-          ></ContributorTable>
-          <div className="flex items-center justify-between w-full py-1 md:py-4 md:mt-5">
-            <div>
-              <div className="">
-                <PaginationResults metaInfo={meta} total={meta.itemCount} entity={"contributors"} />
+    <ListPageLayout listId={listId} numberOfContributors={meta.itemCount}>
+      <div className="container flex flex-col gap-3">
+        <h2>List Contributors</h2>
+        {isError ? (
+          <div>error</div>
+        ) : (
+          <div className="lg:min-w-[1150px] px-16 py-8">
+            <ContributorListTableHeaders
+              selected={selectedContributors.length === meta.limit}
+              handleOnSelectAllContributor={handleOnSelectAllChecked}
+            />
+            <ContributorTable
+              loading={isLoading}
+              selectedContributors={selectedContributors}
+              topic={"*"}
+              handleSelectContributors={handleOnSelectChecked}
+              contributors={contributors as DbPRContributor[]}
+            ></ContributorTable>
+            <div className="flex items-center justify-between w-full py-1 md:py-4 md:mt-5">
+              <div>
+                <div className="">
+                  <PaginationResults metaInfo={meta} total={meta.itemCount} entity={"contributors"} />
+                </div>
               </div>
-            </div>
-            <div>
-              <div className="flex flex-col gap-4">
-                <Pagination
-                  pages={[]}
-                  hasNextPage={meta.hasNextPage}
-                  hasPreviousPage={meta.hasPreviousPage}
-                  totalPage={meta.pageCount}
-                  page={meta.page}
-                  onPageChange={function (page: number): void {
-                    setPage(page);
-                  }}
-                  divisor={true}
-                  goToPage
-                />
+              <div>
+                <div className="flex flex-col gap-4">
+                  <Pagination
+                    pages={[]}
+                    hasNextPage={meta.hasNextPage}
+                    hasPreviousPage={meta.hasPreviousPage}
+                    totalPage={meta.pageCount}
+                    page={meta.page}
+                    onPageChange={function (page: number): void {
+                      setPage(page);
+                    }}
+                    divisor={true}
+                    goToPage
+                  />
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      )}
-    </div>
+        )}
+      </div>
+    </ListPageLayout>
   );
 };
 
-ContributorsList.PageLayout = ListPageLayout;
-export default ContributorsList;
+export default ContributorsListPage;

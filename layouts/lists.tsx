@@ -11,16 +11,24 @@ import TabsList from "components/TabList/tab-list";
 import { useList } from "lib/hooks/useList";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 
-const ListPageLayout = ({ children }: { children: React.ReactNode }) => {
+const ListPageLayout = ({
+  children,
+  listId,
+  numberOfContributors,
+}: {
+  children: React.ReactNode;
+  listId: string;
+  numberOfContributors: number;
+}) => {
   const router = useRouter();
   const { userId } = useSupabaseAuth();
-  const { listId } = router.query;
   const { data: list, isLoading } = useList(listId as string);
   const paths = router.asPath.split("/");
   const selectedTab = paths[3] ?? "overview";
 
   const tabList = [
     { name: "Overview" },
+    // Uncomment once the activity page has been implemented
     // { name: "Activity" },
     { name: "Contributors" },
   ];
@@ -37,7 +45,13 @@ const ListPageLayout = ({ children }: { children: React.ReactNode }) => {
         <div className="info-container container w-full min-h-[100px]">
           <Header>
             {list ? (
-              <ListHeader name={name} isPublic={is_public} listId={id} isOwner={isOwner} />
+              <ListHeader
+                name={name}
+                numberOfContributors={numberOfContributors}
+                isPublic={is_public}
+                listId={id}
+                isOwner={isOwner}
+              />
             ) : isLoading ? (
               <div className="flex justify-between w-full h-46">
                 <div className="flex items-center gap-3">
