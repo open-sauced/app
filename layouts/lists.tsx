@@ -14,7 +14,7 @@ const ListPageLayout = ({
   isOwner = false,
 }: {
   children: React.ReactNode;
-  list: any;
+  list: DBList;
   numberOfContributors: number;
   isOwner: boolean;
 }) => {
@@ -29,7 +29,7 @@ const ListPageLayout = ({
     { name: "Contributors" },
   ];
 
-  const { name, is_public, id } = list ?? {};
+  const { name, is_public, id } = list;
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -43,7 +43,7 @@ const ListPageLayout = ({
                 name={name}
                 numberOfContributors={numberOfContributors}
                 isPublic={is_public}
-                listId={list.id}
+                listId={id}
                 isOwner={isOwner}
               />
             ) : (
@@ -51,7 +51,7 @@ const ListPageLayout = ({
             )}
           </Header>
 
-          <TabsList tabList={tabList} selectedTab={selectedTab} pageId={`/lists/${list.id}`} />
+          <TabsList tabList={tabList} selectedTab={selectedTab} pageId={`/lists/${id}`} />
         </div>
 
         <main className="flex flex-col items-center flex-1 w-full px-3 py-8 md:px-16 bg-light-slate-2">
