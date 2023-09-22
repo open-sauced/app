@@ -189,7 +189,14 @@ interface UserResultCardProps extends DbUserSearch {
 }
 
 const UserResultCard = ({ login, full_name, active }: UserResultCardProps) => {
+  const router = useRouter();
   const setOpenSearch = store((state) => state.setOpenSearch);
+
+  const handleClick: React.UIEventHandler<HTMLAnchorElement> = (e) => {
+    e.preventDefault();
+    router.push(e.currentTarget.href);
+    setOpenSearch(false);
+  };
 
   return (
     <Link
@@ -198,7 +205,7 @@ const UserResultCard = ({ login, full_name, active }: UserResultCardProps) => {
         active && "_cursorActive bg-slate-100",
         "w-full flex items-center py-2 p-4 gap-2 hover:bg-slate-100 cursor-pointer"
       )}
-      onClick={() => setTimeout(() => setOpenSearch(false), 300)}
+      onClick={handleClick}
     >
       <Avatar size="sm" className="!rounded-full flex-none" avatarURL={getAvatarByUsername(login)} />
       <div className="flex items-center gap-2 overflow-hidden">
