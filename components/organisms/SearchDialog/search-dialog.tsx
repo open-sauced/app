@@ -1,31 +1,28 @@
 import Link from "next/link";
+import clsx from "clsx";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
-import clsx from "clsx";
 import { FaSearch } from "react-icons/fa";
 import { HiOutlineExclamation } from "react-icons/hi";
+import store from "lib/store";
 import Text from "components/atoms/Typography/text";
 import Avatar from "components/atoms/Avatar/avatar";
 import { ScrollArea } from "components/atoms/ScrollArea/scroll-area";
 import useLockBody from "lib/hooks/useLockBody";
 import { getAvatarByUsername } from "lib/utils/github";
-
 import { searchUsers } from "lib/hooks/search-users";
 import useDebounceTerm from "lib/hooks/useDebounceTerm";
 
-interface SearchDialogProps {
-  setOpenSearch: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-const SearchDialog = ({ setOpenSearch }: SearchDialogProps) => {
+const SearchDialog = () => {
   useLockBody();
   const router = useRouter();
   const [cursor, setCursor] = useState(-1);
   const [searchTerm, setSearchTerm] = useState("");
   const [isSearching, setIsSearching] = useState(false);
   const [isSearchError, setIsSearchError] = useState(false);
-  const [searchResult, setSearchResult] = useState<{ data: DbUserSearch[]; meta: {} }>();
+  const setOpenSearch = store((state) => state.setOpenSearch);
   const debouncedSearchTerm = useDebounceTerm(searchTerm, 300);
+  const [searchResult, setSearchResult] = useState<{ data: DbUserSearch[]; meta: {} }>();
 
   useEffect(() => {
     document.addEventListener("keydown", handleCloseSearch);
@@ -116,7 +113,9 @@ const SearchDialog = ({ setOpenSearch }: SearchDialogProps) => {
   );
 };
 
-const SearchDialogTrigger = ({ setOpenSearch }: SearchDialogProps) => {
+const SearchDialogTrigger = () => {
+  const setOpenSearch = store((state) => state.setOpenSearch);
+
   useEffect(() => {
     document.addEventListener("keydown", handleOpenSearch);
     function handleOpenSearch(e: KeyboardEvent) {
@@ -185,20 +184,29 @@ const SearchResult = ({ result, cursor }: { result: DbUserSearch[]; cursor: numb
   </div>
 );
 
-const UserResultCard = ({ login, full_name, active }: { login: string; full_name: string; active: boolean }) => (
-  <Link
-    href={`/user/${login}`}
-    className={clsx(
-      active && "_cursorActive bg-slate-100",
-      "w-full flex items-center py-2 p-4 gap-2 hover:bg-slate-100 cursor-pointer"
-    )}
-  >
-    <Avatar size="sm" className="!rounded-full flex-none" avatarURL={getAvatarByUsername(login)} />
-    <div className="flex items-center gap-2 overflow-hidden">
-      <Text className="text-gray-900">@{login}</Text>
-      <Text className="!font-normal truncate">{full_name}</Text>
-    </div>
-  </Link>
-);
+interface UserResultCardProps extends DbUserSearch {
+  active: boolean;
+}
+
+const UserResultCard = ({ login, full_name, active }: UserResultCardProps) => {
+  const setOpenSearch = store((state) => state.setOpenSearch);
+
+  return (
+    <Link
+      href={`/user/${login}`}
+      className={clsx(
+        active && "_cursorActive bg-slate-100",
+        "w-full flex items-center py-2 p-4 gap-2 hover:bg-slate-100 cursor-pointer"
+      )}
+      onClick={() => setTimeout(() => setOpenSearch(false), 300)}
+    >
+      <Avatar size="sm" className="!rounded-full flex-none" avatarURL={getAvatarByUsername(login)} />
+      <div className="flex items-center gap-2 overflow-hidden">
+        <Text className="text-gray-900">@{login}</Text>
+        <Text className="!font-normal truncate">{full_name}</Text>
+      </div>
+    </Link>
+  );
+};
 
 export { SearchDialog as default, SearchDialogTrigger };

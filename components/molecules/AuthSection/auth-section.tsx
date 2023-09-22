@@ -7,6 +7,7 @@ import { IoNotifications } from "react-icons/io5";
 import { FiLogOut, FiSettings } from "react-icons/fi";
 import { BiLinkExternal } from "react-icons/bi";
 import { Divider } from "@supabase/ui";
+import store from "lib/store";
 
 import useSession from "lib/hooks/useSession";
 
@@ -28,11 +29,12 @@ const AuthSection: React.FC = ({}) => {
   const router = useRouter();
   const currentPath = router.asPath;
 
+  const openSearch = store((state) => state.openSearch);
+
   const { signIn, signOut, user } = useSupabaseAuth();
   const { onboarded, session } = useSession(true);
   const [userInfo, setUserInfo] = useState<DbUser | undefined>(undefined);
   const [host, setHost] = useState<string>("");
-  const [openSearch, setOpenSearch] = useState<boolean>(false);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -97,7 +99,7 @@ const AuthSection: React.FC = ({}) => {
     <>
       <div className="flex p-2 m-1 sm:py-0">
         <div className="flex items-center gap-2 lg:gap-3">
-          <SearchDialogTrigger setOpenSearch={setOpenSearch} />
+          <SearchDialogTrigger />
           {user ? (
             <>
               {onboarded === false ? (
@@ -134,13 +136,15 @@ const AuthSection: React.FC = ({}) => {
               onClick={async () =>
                 await signIn({ provider: "github", options: { redirectTo: `${host}/${currentPath}` } })
               }
+              className="flex items-center"
             >
-              Connect with GitHub <Icon IconImage={GitHubIcon} className="ml-2" />
+              Connect <span className="hidden sm:inline-block ml-1">with GitHub</span>
+              <Icon IconImage={GitHubIcon} className="ml-2" />
             </Button>
           )}
         </div>
       </div>
-      {openSearch && <SearchDialog setOpenSearch={setOpenSearch} />}
+      {openSearch && <SearchDialog />}
     </>
   );
 };
