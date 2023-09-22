@@ -87,6 +87,7 @@ const ContributorsListPage = ({ list, data, isLoading, isError }: ContributorLis
 
   // TODO: read from querystring or default to 1
   const [page, setPage] = useState(1);
+  const [isOwner, setIsOwner] = useState(false);
 
   function handleOnSelectAllChecked(contributor: any): void {
     throw new Error("Function not implemented.");
@@ -97,7 +98,7 @@ const ContributorsListPage = ({ list, data, isLoading, isError }: ContributorLis
   }
 
   return (
-    <ListPageLayout list={list} numberOfContributors={meta.itemCount} isOwner={true}>
+    <ListPageLayout list={list} numberOfContributors={meta.itemCount} isOwner={isOwner}>
       <div className="container flex flex-col gap-3">
         <h2>List Contributors</h2>
         {isError ? (
