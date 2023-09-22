@@ -1,28 +1,24 @@
 import React from "react";
 import { useRouter } from "next/router";
 
-import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 import Footer from "components/organisms/Footer/footer";
 import Header from "components/organisms/Header/header";
 import TopNav from "components/organisms/TopNav/top-nav";
 import ListHeader from "components/ListHeader/list-header";
 import TabsList from "components/TabList/tab-list";
 
-import { useList } from "lib/hooks/useList";
-import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
-
 const ListPageLayout = ({
   children,
-  listId,
+  list,
   numberOfContributors,
+  isOwner = false,
 }: {
   children: React.ReactNode;
-  listId: string;
+  list: any;
   numberOfContributors: number;
+  isOwner: boolean;
 }) => {
   const router = useRouter();
-  const { userId } = useSupabaseAuth();
-  const { data: list, isLoading } = useList(listId as string);
   const paths = router.asPath.split("/");
   const selectedTab = paths[3] ?? "overview";
 
@@ -33,8 +29,6 @@ const ListPageLayout = ({
     { name: "Contributors" },
   ];
 
-  // TODO: list does not have a user property
-  const isOwner = true; //!!(userId && list && `${userId}` === `${list.user.id}`);
   const { name, is_public, id } = list ?? {};
 
   return (
@@ -49,29 +43,15 @@ const ListPageLayout = ({
                 name={name}
                 numberOfContributors={numberOfContributors}
                 isPublic={is_public}
-                listId={id}
+                listId={list.id}
                 isOwner={isOwner}
               />
-            ) : isLoading ? (
-              <div className="flex justify-between w-full h-46">
-                <div className="flex items-center gap-3">
-                  <SkeletonWrapper radius={10} width={140} height={140} />
-                  <div className="flex flex-col gap-3">
-                    <SkeletonWrapper width={110} height={25} />
-                    <SkeletonWrapper width={200} height={25} />
-                    <SkeletonWrapper classNames="mt-3" width={150} height={30} />
-                  </div>
-                </div>
-                <div>
-                  <SkeletonWrapper classNames="mt-6" width={150} height={40} />
-                </div>
-              </div>
             ) : (
               <div>An error occurred</div>
             )}
           </Header>
 
-          <TabsList tabList={tabList} selectedTab={selectedTab} pageId={`/lists/${listId}`} />
+          <TabsList tabList={tabList} selectedTab={selectedTab} pageId={`/lists/${list.id}`} />
         </div>
 
         <main className="flex flex-col items-center flex-1 w-full px-3 py-8 md:px-16 bg-light-slate-2">

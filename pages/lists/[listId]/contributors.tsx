@@ -45,36 +45,57 @@ const useContributorsList = (listId: string) => {
   };
 };
 
-export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
-  // TODO: Wrap the whole fetch, Supabase token into a function for SSR
-  const supabase = createPagesServerClient(ctx);
+async function callApi({
+  baseUrl = process.env.NEXT_PUBLIC_API_URL,
+  path,
+  headers,
+  context,
+}: {
+  baseUrl?: string;
+  path: string;
+  headers?: HeadersInit;
+  context: GetServerSidePropsContext;
+}) {
+  const supabase = createPagesServerClient(context);
 
   const {
     data: { session },
   } = await supabase.auth.getSession();
-  const listId = ctx.params!["listId"];
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/lists/${listId}/contributors`, {
+
+  const response = await fetch(`${baseUrl}/${path}`, {
     headers: {
+      ...headers,
       accept: "application/json",
       Authorization: `Bearer ${session?.access_token}`,
     },
   });
-  const data = response.ok ? ((await response.json()) as ContributorList) : null;
 
+  const data = response.ok ? ((await response.json()) as ContributorList) : null;
+  const { status, statusText } = response;
+  const error = response.ok ? null : { status, statusText };
+
+  return { data, error };
+}
+
+export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
+  const { listId } = ctx.params as { listId: string };
+  const { data, error: contributorListError } = await callApi({ context: ctx, path: `lists/${listId}/contributors` });
   const contributors = convertToContributors(data?.data);
+
+  const { data: list, error } = await callApi({ context: ctx, path: `lists/${listId}` });
 
   return {
     props: {
-      listId,
+      list,
       data: data ? { data: contributors, meta: data.meta } : { data: [], meta: {} },
       isLoading: false,
-      isError: !response.ok,
+      isError: error || contributorListError,
     },
   };
 };
 
 interface ContributorListPageProps {
-  listId: string;
+  list: any;
   data: {
     meta: Meta;
     data: DbPRContributor[];
@@ -83,7 +104,7 @@ interface ContributorListPageProps {
   isError: boolean;
 }
 
-const ContributorsListPage = ({ listId, data, isLoading, isError }: ContributorListPageProps) => {
+const ContributorsListPage = ({ list, data, isLoading, isError }: ContributorListPageProps) => {
   // TODO: listID will be used for client-side calls
   const [pageData, setPageData] = useState<ContributorListPageProps["data"]>(data);
 
@@ -104,7 +125,7 @@ const ContributorsListPage = ({ listId, data, isLoading, isError }: ContributorL
   }
 
   return (
-    <ListPageLayout listId={listId} numberOfContributors={meta.itemCount}>
+    <ListPageLayout list={list} numberOfContributors={meta.itemCount} isOwner={true}>
       <div className="container flex flex-col gap-3">
         <h2>List Contributors</h2>
         {isError ? (
