@@ -45,7 +45,7 @@ const useContributorsList = (listId: string) => {
   };
 };
 
-async function callApi({
+async function fetchApiData({
   baseUrl = process.env.NEXT_PUBLIC_API_URL,
   path,
   headers,
@@ -62,11 +62,15 @@ async function callApi({
     data: { session },
   } = await supabase.auth.getSession();
 
+  if (!session) {
+    return { data: null, error: { status: 401, statusText: "Unauthorized" } };
+  }
+
   const response = await fetch(`${baseUrl}/${path}`, {
     headers: {
       ...headers,
       accept: "application/json",
-      Authorization: `Bearer ${session?.access_token}`,
+      Authorization: `Bearer ${session.access_token}`,
     },
   });
 
@@ -79,10 +83,13 @@ async function callApi({
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const { listId } = ctx.params as { listId: string };
-  const { data, error: contributorListError } = await callApi({ context: ctx, path: `lists/${listId}/contributors` });
+  const { data, error: contributorListError } = await fetchApiData({
+    context: ctx,
+    path: `lists/${listId}/contributors`,
+  });
   const contributors = convertToContributors(data?.data);
 
-  const { data: list, error } = await callApi({ context: ctx, path: `lists/${listId}` });
+  const { data: list, error } = await fetchApiData({ context: ctx, path: `lists/${listId}` });
 
   return {
     props: {
