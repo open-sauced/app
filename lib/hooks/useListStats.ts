@@ -4,27 +4,20 @@ import useSWR, { Fetcher } from "swr";
 import publicApiFetcher from "lib/utils/public-api-fetcher";
 
 interface PaginatedResponse {
-  readonly data: any[];
+  readonly data: DbListContributorStat[];
   readonly meta: Meta;
 }
 
-const useListStats = (listId: string, intialLimit = 1000, range = 30) => {
+const useListStats = (listId: string, contributorType = "all", intialLimit = 10) => {
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(intialLimit);
   const query = new URLSearchParams();
 
-  if (page) {
-    query.set("page", `${page}`);
-  }
-
-  if (limit) {
-    query.set("limit", `${limit}`);
-  }
-
+  query.set("page", `${page}`);
+  query.set("limit", `${limit}`);
   query.set("listId", listId);
-  query.set("range", `${range}`);
 
-  const baseEndpoint = `lists/${listId}/stats/most-active-contributors?contributorType=all`;
+  const baseEndpoint = `lists/${listId}/stats/most-active-contributors?contributorType=${contributorType}`;
   const endpointString = `${baseEndpoint}&${query.toString()}`;
 
   const { data, error, mutate } = useSWR<PaginatedResponse, Error>(

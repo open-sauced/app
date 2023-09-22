@@ -10,7 +10,7 @@ import { useMediaQuery } from "lib/hooks/useMediaQuery";
 import { calcDaysFromToday } from "lib/utils/date-utils";
 import { getAvatarByUsername } from "lib/utils/github";
 import useListContributions from "lib/hooks/useListContributions";
-// import useListStats from "lib/hooks/useListStats";
+import useListStats from "lib/hooks/useListStats";
 import HighlightCard from "components/molecules/HighlightCard/highlight-card";
 
 type ContributorPrMap = { [contributor: string]: DbRepoPR };
@@ -19,7 +19,10 @@ const ListsOverview = (): JSX.Element => {
   const router = useRouter();
   const { listId } = router.query;
   const { data: prData, isError: prError } = useListContributions(listId as string);
-  // const { data: statsData } = useListStats(listId as string);
+  const { data: allContributorStats, meta: allContributorMeta } = useListStats(listId as string, "all");
+  const { meta: newContributorMeta } = useListStats(listId as string, "new");
+  const { meta: alumniContributorMeta } = useListStats(listId as string, "alumni");
+  const allContributorCommits = allContributorStats?.reduce((acc, curr) => acc + curr.commits, 0) || 0;
   const [showBots, setShowBots] = useState(false);
   const isMobile = useMediaQuery("(max-width:720px)");
 
@@ -73,10 +76,31 @@ const ListsOverview = (): JSX.Element => {
   return (
     <div className="flex flex-col w-full gap-4">
       <section className="flex flex-wrap items-center max-w-full gap-4 lg:flex-row lg:flex-nowrap">
-        <HighlightCard label="Commits" icon="contributors" metricIncreases={true} value={5} />
-        <HighlightCard label="Active Contributors" icon="spam" metricIncreases={true} value={10} />
-        <HighlightCard label="New Contributors" icon="accepted-pr" metricIncreases={true} value={15} />
-        <HighlightCard label="Alumni Contributors" icon="unlabeled-pr" metricIncreases={true} value={20} />
+        <HighlightCard label="Commits" icon="contributors" metricIncreases={true} value={allContributorCommits} />
+        <HighlightCard
+          label="Active Contributors"
+          icon="spam"
+          metricIncreases={allContributorMeta.itemCount > 0}
+          increased={allContributorMeta.itemCount > 0}
+          numChanged={allContributorMeta.itemCount}
+          value={allContributorMeta.itemCount}
+        />
+        <HighlightCard
+          label="New Contributors"
+          icon="accepted-pr"
+          metricIncreases={newContributorMeta.itemCount > 0}
+          increased={newContributorMeta.itemCount > 0}
+          numChanged={newContributorMeta.itemCount}
+          value={newContributorMeta.itemCount}
+        />
+        <HighlightCard
+          label="Alumni Contributors"
+          icon="unlabeled-pr"
+          metricIncreases={alumniContributorMeta.itemCount > 0}
+          increased={alumniContributorMeta.itemCount > 0}
+          numChanged={alumniContributorMeta.itemCount}
+          value={alumniContributorMeta.itemCount}
+        />
       </section>
       <section className="flex flex-col max-w-full gap-4 mb-6 lg:flex-row">
         <div className="flex flex-col w-full">

@@ -336,3 +336,9 @@ interface DbUserList {
   readonly created_at: string;
   readonly updated_at: string;
 }
+
+interface DbListContributorStat {
+  login: string;
+  commits: number;
+  prsCreated: number;
+}
