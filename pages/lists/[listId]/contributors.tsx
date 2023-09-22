@@ -1,13 +1,13 @@
 import useSWR, { Fetcher } from "swr";
 import { useState } from "react";
 import { GetServerSidePropsContext } from "next";
-import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import ListPageLayout from "layouts/lists";
 import publicApiFetcher from "lib/utils/public-api-fetcher";
 import ContributorTable from "components/organisms/ContributorsTable/contributors-table";
 import PaginationResults from "components/molecules/PaginationResults/pagination-result";
 import ContributorListTableHeaders from "components/molecules/ContributorListTableHeader/contributor-list-table-header";
 import Pagination from "components/molecules/Pagination/pagination";
+import { fetchApiData } from "helpers/fetchApiData";
 
 interface ContributorList {
   data: {
@@ -44,42 +44,6 @@ const useContributorsList = (listId: string) => {
     mutate,
   };
 };
-
-async function fetchApiData({
-  baseUrl = process.env.NEXT_PUBLIC_API_URL,
-  path,
-  headers,
-  context,
-}: {
-  baseUrl?: string;
-  path: string;
-  headers?: HeadersInit;
-  context: GetServerSidePropsContext;
-}) {
-  const supabase = createPagesServerClient(context);
-
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
-
-  if (!session) {
-    return { data: null, error: { status: 401, statusText: "Unauthorized" } };
-  }
-
-  const response = await fetch(`${baseUrl}/${path}`, {
-    headers: {
-      ...headers,
-      accept: "application/json",
-      Authorization: `Bearer ${session.access_token}`,
-    },
-  });
-
-  const data = response.ok ? ((await response.json()) as ContributorList) : null;
-  const { status, statusText } = response;
-  const error = response.ok ? null : { status, statusText };
-
-  return { data, error };
-}
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const { listId } = ctx.params as { listId: string };
