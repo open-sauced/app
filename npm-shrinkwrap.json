@@ -1,12 +1,12 @@
 {
   "name": "@open-sauced/insights",
-  "version": "1.65.0",
+  "version": "1.66.0-beta.2",
   "lockfileVersion": 3,
   "requires": true,
   "packages": {
     "": {
       "name": "@open-sauced/insights",
-      "version": "1.65.0",
+      "version": "1.66.0-beta.2",
       "hasInstallScript": true,
       "license": "Apache 2.0",
       "dependencies": {
@@ -70,6 +70,7 @@
         "swiper": "^10.2.0",
         "swr": "^2.0.3",
         "tailwindcss-radix": "^2.7.0",
+        "tier": "^5.10.0",
         "zustand": "^4.3.2"
       },
       "devDependencies": {
@@ -45844,6 +45845,17 @@
       "dev": true,
       "dependencies": {
         "safe-buffer": "~5.1.0"
+      }
+    },
+    "node_modules/tier": {
+      "version": "5.10.0",
+      "resolved": "https://registry.npmjs.org/tier/-/tier-5.10.0.tgz",
+      "integrity": "sha512-fAYhII+42Y37/RQbt7UqMB5BUjllg/mDhrjLEk6PRCC2ud7ltiNXyoj5ev/F4HU6wPU0fMCMZs9F65Xrju8BfQ==",
+      "engines": {
+        "node": ">=12"
+      },
+      "optionalDependencies": {
+        "node-fetch": "^2.6.7"
       }
     },
     "node_modules/timers-browserify": {
