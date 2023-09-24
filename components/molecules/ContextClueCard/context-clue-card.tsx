@@ -1,6 +1,6 @@
 import React from "react";
 
-import Title from "components/atoms/Typography/title";
+import Title from "@components/atoms/Typography/title";
 
 interface ContextClueCardProps extends React.ComponentProps<"div"> {
   title: string;

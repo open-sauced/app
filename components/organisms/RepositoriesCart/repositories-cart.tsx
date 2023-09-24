@@ -3,13 +3,13 @@ import clsx from "clsx";
 
 import { BiPlus } from "react-icons/bi";
 
-import Title from "components/atoms/Typography/title";
-import Avatar from "components/atoms/Avatar/avatar";
-import CartIllustration from "components/atoms/CartIllustration/cart-illustration";
-import Text from "components/atoms/Typography/text";
+import Title from "@components/atoms/Typography/title";
+import Avatar from "@components/atoms/Avatar/avatar";
+import CartIllustration from "@components/atoms/CartIllustration/cart-illustration";
+import Text from "@components/atoms/Typography/text";
 
-import { RepositoryCartItemProps } from "components/molecules/ReposoitoryCartItem/repository-cart-item";
-import Button from "components/atoms/Button/button";
+import { RepositoryCartItemProps } from "@components/molecules/ReposoitoryCartItem/repository-cart-item";
+import Button from "@components/atoms/Button/button";
 
 interface RepositoriesCartProps {
   edit?: boolean;

@@ -1,10 +1,10 @@
 import Link from "next/link";
 import React from "react";
 
-import Avatar from "components/atoms/Avatar/avatar";
+import Avatar from "@components/atoms/Avatar/avatar";
 
-import { getAvatarByUsername } from "lib/utils/github";
-import { truncateString } from "lib/utils/truncate-string";
+import { getAvatarByUsername } from "@lib/utils/github";
+import { truncateString } from "@lib/utils/truncate-string";
 
 interface DevProfileProps {
   username: string;

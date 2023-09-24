@@ -1,5 +1,5 @@
 import { ComponentStory } from "@storybook/react";
-import NotificationCard from "components/atoms/NotificationsCard/notification-card";
+import NotificationCard from "@components/atoms/NotificationsCard/notification-card";
 
 const storyConfig = {
   title: "Design System/Atoms/NotificationCard",

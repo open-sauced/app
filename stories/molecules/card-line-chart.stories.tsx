@@ -1,5 +1,5 @@
 import { ComponentStory } from "@storybook/react";
-import CardLineChart from "components/molecules/CardLineChart/card-line-chart";
+import CardLineChart from "@components/molecules/CardLineChart/card-line-chart";
 
 const storyConfig = {
   title: "Design System/Molecules/Card Line Chart",

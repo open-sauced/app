@@ -2,11 +2,11 @@ import { useEffect } from "react";
 import { GetServerSidePropsContext } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 
-import Tool from "components/organisms/ToolsDisplay/tools-display";
+import Tool from "@components/organisms/ToolsDisplay/tools-display";
 
-import HubPageLayout from "layouts/hub-page";
+import HubPageLayout from "@layouts/hub-page";
 import { WithPageLayout } from "interfaces/with-page-layout";
-import changeCapitalization from "lib/utils/change-capitalization";
+import changeCapitalization from "@lib/utils/change-capitalization";
 
 interface InsightFilterPageProps {
   insight: DbUserInsight;

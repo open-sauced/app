@@ -2,7 +2,7 @@ import Link from "next/link";
 import React from "react";
 import { FaRegSmile, FaUserCircle } from "react-icons/fa";
 
-import { getNotificationURL } from "lib/utils/get-notification-url";
+import { getNotificationURL } from "@lib/utils/get-notification-url";
 
 interface NotificationCard {
   type: "highlight_reaction" | "follow" | "collaboration";

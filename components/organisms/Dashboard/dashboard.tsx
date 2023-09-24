@@ -1,18 +1,18 @@
 import { useState } from "react";
 
 /* eslint-disable camelcase */
-import Card from "components/atoms/Card/card";
-import NivoScatterPlot, { ScatterChartMetadata } from "components/molecules/NivoScatterChart/nivo-scatter-chart";
-import HighlightCard from "components/molecules/HighlightCard/highlight-card";
-import { ScatterChartDataItems } from "components/molecules/NivoScatterChart/nivo-scatter-chart";
+import Card from "@components/atoms/Card/card";
+import NivoScatterPlot, { ScatterChartMetadata } from "@components/molecules/NivoScatterChart/nivo-scatter-chart";
+import HighlightCard from "@components/molecules/HighlightCard/highlight-card";
+import { ScatterChartDataItems } from "@components/molecules/NivoScatterChart/nivo-scatter-chart";
 
-import humanizeNumber from "lib/utils/humanizeNumber";
-import { useMediaQuery } from "lib/hooks/useMediaQuery";
-import { getInsights, useInsights } from "lib/hooks/api/useInsights";
-import { calcDaysFromToday } from "lib/utils/date-utils";
-import usePullRequests from "lib/hooks/api/usePullRequests";
-import useContributors from "lib/hooks/api/useContributors";
-import { getAvatarByUsername } from "lib/utils/github";
+import humanizeNumber from "@lib/utils/humanizeNumber";
+import { useMediaQuery } from "@lib/hooks/useMediaQuery";
+import { getInsights, useInsights } from "@lib/hooks/api/useInsights";
+import { calcDaysFromToday } from "@lib/utils/date-utils";
+import usePullRequests from "@lib/hooks/api/usePullRequests";
+import useContributors from "@lib/hooks/api/useContributors";
+import { getAvatarByUsername } from "@lib/utils/github";
 
 type ContributorPrMap = { [contributor: string]: DbRepoPR };
 export type PrStatusFilter = "open" | "closed" | "all";

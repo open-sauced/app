@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import EChartWrapper from "components/atoms/EChartWrapper/echart-wrapper";
-import ToggleOption from "components/atoms/ToggleOption/toggle-option";
-import Text from "components/atoms/Typography/text";
-import Title from "components/atoms/Typography/title";
+import EChartWrapper from "@components/atoms/EChartWrapper/echart-wrapper";
+import ToggleOption from "@components/atoms/ToggleOption/toggle-option";
+import Text from "@components/atoms/Typography/text";
+import Title from "@components/atoms/Typography/title";
 
 interface DashboardScatterChartProps {
   title: string;

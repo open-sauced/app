@@ -1,17 +1,17 @@
 import { useState } from "react";
 
-import Card from "components/atoms/Card/card";
-import Text from "components/atoms/Typography/text";
-import CardHorizontalBarChart from "components/molecules/CardHorizontalBarChart/card-horizontal-bar-chart";
-import CardLineChart from "components/molecules/CardLineChart/card-line-chart";
-import CardProfile from "components/molecules/CardProfile/card-profile";
-import CardRepoList from "components/molecules/CardRepoList/card-repo-list";
-import PullRequestTable from "components/molecules/PullRequestTable/pull-request-table";
+import Card from "@components/atoms/Card/card";
+import Text from "@components/atoms/Typography/text";
+import CardHorizontalBarChart from "@components/molecules/CardHorizontalBarChart/card-horizontal-bar-chart";
+import CardLineChart from "@components/molecules/CardLineChart/card-line-chart";
+import CardProfile from "@components/molecules/CardProfile/card-profile";
+import CardRepoList from "@components/molecules/CardRepoList/card-repo-list";
+import PullRequestTable from "@components/molecules/PullRequestTable/pull-request-table";
 
-import { useContributorPullRequestsChart } from "lib/hooks/useContributorPullRequestsChart";
-import useContributorLanguages from "lib/hooks/api/useContributorLanguages";
-import { useFetchUser } from "lib/hooks/useFetchUser";
-import Badge from "components/atoms/Badge/badge";
+import { useContributorPullRequestsChart } from "@lib/hooks/useContributorPullRequestsChart";
+import useContributorLanguages from "@lib/hooks/api/useContributorLanguages";
+import { useFetchUser } from "@lib/hooks/useFetchUser";
+import Badge from "@components/atoms/Badge/badge";
 
 export interface ContributorObject {
   profile: {

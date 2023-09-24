@@ -1,4 +1,4 @@
-import Repositories from "components/organisms/Repositories/repositories";
+import Repositories from "@components/organisms/Repositories/repositories";
 
 const StoryConfig = {
   title: "Design System/organisms/Repositories",

@@ -1,5 +1,5 @@
 import { ComponentStory } from "@storybook/react";
-import ComponentDateFilter from "components/molecules/ComponentDateFilter/component-date-filter";
+import ComponentDateFilter from "@components/molecules/ComponentDateFilter/component-date-filter";
 
 const storyConfig = {
   title: "Design System/Molecules/ComponentDateFilter",

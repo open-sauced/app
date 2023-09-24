@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from "@storybook/react";
 
-import ProfileLanguageChart from "components/molecules/ProfileLanguageChart/profile-language-chart";
+import ProfileLanguageChart from "@components/molecules/ProfileLanguageChart/profile-language-chart";
 import { testLanguageList } from "stories/testData/mockedData";
 
 const storyConfig = {

@@ -1,5 +1,5 @@
 import { StoryObj, Meta } from "@storybook/react";
-import FilterChip from "components/atoms/FilterChip/filter-chip";
+import FilterChip from "@components/atoms/FilterChip/filter-chip";
 
 export default {
   title: "Design System/Atoms/FilterChip",

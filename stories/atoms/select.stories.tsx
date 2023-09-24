@@ -1,5 +1,5 @@
 import { ComponentStory } from "@storybook/react";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "components/atoms/Select/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@components/atoms/Select/select";
 
 const storyConfig = {
   title: "Design System/Atoms/Select",

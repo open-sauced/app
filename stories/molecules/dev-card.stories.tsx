@@ -1,5 +1,5 @@
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import DevCard from "components/molecules/DevCard/dev-card";
+import DevCard from "@components/molecules/DevCard/dev-card";
 
 const storyConfig = {
   title: "Design System/Molecules/DevCard",

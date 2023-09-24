@@ -1,5 +1,5 @@
 import { ComponentStory } from "@storybook/react";
-import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
+import SkeletonWrapper from "@components/atoms/SkeletonLoader/skeleton-wrapper";
 
 const storyConfig = {
   title: "Design System/Atoms/Skeleton Wrapper",

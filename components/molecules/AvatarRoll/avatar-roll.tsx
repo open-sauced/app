@@ -1,4 +1,4 @@
-import Avatar from "components/atoms/Avatar/avatar";
+import Avatar from "@components/atoms/Avatar/avatar";
 
 interface AvatarRollProps {
   avatarCount?: number;

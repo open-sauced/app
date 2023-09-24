@@ -1,10 +1,10 @@
 import { IconContext } from "react-icons";
 import { VscGitMerge, VscGitPullRequest, VscGitPullRequestClosed, VscGitPullRequestDraft } from "react-icons/vsc";
 
-import { calcDistanceFromToday } from "lib/utils/date-utils";
+import { calcDistanceFromToday } from "@lib/utils/date-utils";
 
-import Text from "components/atoms/Typography/text";
-import humanizeNumber from "lib/utils/humanizeNumber";
+import Text from "@components/atoms/Typography/text";
+import humanizeNumber from "@lib/utils/humanizeNumber";
 
 interface LatestPrTableRowProps {
   prName: string;

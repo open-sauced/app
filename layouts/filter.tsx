@@ -1,12 +1,12 @@
 import React from "react";
 
-import Footer from "components/organisms/Footer/footer";
-import Header from "components/organisms/Header/header";
-import Nav from "components/organisms/ToolList/nav";
-import TopNav from "components/organisms/TopNav/top-nav";
-import FilterHeader from "components/molecules/FilterHeader/filter-header";
+import Footer from "@components/organisms/Footer/footer";
+import Header from "@components/organisms/Header/header";
+import Nav from "@components/organisms/ToolList/nav";
+import TopNav from "@components/organisms/TopNav/top-nav";
+import FilterHeader from "@components/molecules/FilterHeader/filter-header";
 
-import useNav from "lib/hooks/useNav";
+import useNav from "@lib/hooks/useNav";
 
 const FilterLayout = ({ children }: { children: React.ReactNode }) => {
   const { toolList, selectedTool, filterName, selectedFilter, userOrg } = useNav();

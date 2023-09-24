@@ -1,8 +1,8 @@
 import React from "react";
 import clsx from "clsx";
-import Avatar from "components/atoms/Avatar/avatar";
-import { getAvatarByUsername } from "lib/utils/github";
-import Button from "components/atoms/Button/button";
+import Avatar from "@components/atoms/Avatar/avatar";
+import { getAvatarByUsername } from "@lib/utils/github";
+import Button from "@components/atoms/Button/button";
 
 export interface CollaborationRequestObject extends React.ComponentProps<"div"> {
   requestor: DbUser | undefined;

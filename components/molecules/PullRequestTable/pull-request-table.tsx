@@ -1,6 +1,6 @@
-import useContributorPullRequests from "lib/hooks/api/useContributorPullRequests";
+import useContributorPullRequests from "@lib/hooks/api/useContributorPullRequests";
 
-import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
+import SkeletonWrapper from "@components/atoms/SkeletonLoader/skeleton-wrapper";
 import LatestPrTableHeader from "../LatestPrTableHeader/latest-pr-table-header";
 import LatestPrTableRow from "../LatestPrTableRow/latest-pr-table-row";
 

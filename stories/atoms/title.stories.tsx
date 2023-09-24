@@ -1,5 +1,5 @@
+import Title from "@components/atoms/Typography/title";
 import type { Meta, StoryObj } from "@storybook/react";
-import Title from "../../components/atoms/Typography/title";
 
 const meta: Meta = {
   title: "Design System/Atoms/Typography/Title",

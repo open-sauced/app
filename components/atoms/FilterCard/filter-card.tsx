@@ -1,11 +1,11 @@
 import React from "react";
 import Image from "next/image";
+import hashIcon from "@img/icons/hash.svg";
+import orgIcon from "@img/icons/org.svg";
+import personIcon from "@img/icons/person.svg";
+import repoIcon from "@img/icons/repo.svg";
+import cancelIcon from "@img/x-circle.svg";
 import Text from "../Typography/text";
-import hashIcon from "../../../img/icons/hash.svg";
-import orgIcon from "../../../img/icons/org.svg";
-import personIcon from "../../../img/icons/person.svg";
-import repoIcon from "../../../img/icons/repo.svg";
-import cancelIcon from "../../../img/x-circle.svg";
 
 interface FilterCardProps {
   filterName: string;

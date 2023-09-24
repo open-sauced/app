@@ -1,10 +1,10 @@
 import { FC, useState } from "react";
 import clsx from "clsx";
-import Button from "components/atoms/Button/button";
-import TextInput from "components/atoms/TextInput/text-input";
-import Text from "components/atoms/Typography/text";
-import Title from "components/atoms/Typography/title";
-import { Dialog, DialogContent, DialogTitle } from "components/molecules/Dialog/dialog";
+import Button from "@components/atoms/Button/button";
+import TextInput from "@components/atoms/TextInput/text-input";
+import Text from "@components/atoms/Typography/text";
+import Title from "@components/atoms/Typography/title";
+import { Dialog, DialogContent, DialogTitle } from "@components/molecules/Dialog/dialog";
 
 interface ModalProps {
   open: boolean;

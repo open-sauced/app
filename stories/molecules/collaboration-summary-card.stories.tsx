@@ -1,6 +1,6 @@
 import { ComponentStory } from "@storybook/react";
 
-import CollaborationSummaryCard from "components/molecules/CollaborationSummaryCard/collaboration-summary-card";
+import CollaborationSummaryCard from "@components/molecules/CollaborationSummaryCard/collaboration-summary-card";
 
 const storyConfig = {
   title: "Design System/Molecules/Collaboration Summary card",

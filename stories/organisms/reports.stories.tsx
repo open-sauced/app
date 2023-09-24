@@ -1,4 +1,4 @@
-import Reports from "components/organisms/Reports/reports";
+import Reports from "@components/organisms/Reports/reports";
 
 const StoryConfig = {
   title: "Design System/Organisms/Reports",

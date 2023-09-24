@@ -1,6 +1,6 @@
 import React from "react";
-import Footer from "components/organisms/Footer/footer";
-import TopNav from "components/organisms/TopNav/top-nav";
+import Footer from "@components/organisms/Footer/footer";
+import TopNav from "@components/organisms/TopNav/top-nav";
 
 const HubContributorsPageLayout = ({ children }: { children: React.ReactNode }) => {
   return (

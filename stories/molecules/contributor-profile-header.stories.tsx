@@ -1,5 +1,5 @@
 import { ComponentStory } from "@storybook/react";
-import ContributorProfileHeader from "components/molecules/ContributorProfileHeader/contributor-profile-header";
+import ContributorProfileHeader from "@components/molecules/ContributorProfileHeader/contributor-profile-header";
 
 const storyConfig = {
   title: "Design System/Molecules/Contributor Profile Header",

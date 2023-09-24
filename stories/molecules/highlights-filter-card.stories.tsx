@@ -1,5 +1,5 @@
 import { useState } from "react";
-import HighlightsFilterCard from "components/molecules/HighlightsFeedCard/highlights-filter-card";
+import HighlightsFilterCard from "@components/molecules/HighlightsFeedCard/highlights-filter-card";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta: Meta<typeof HighlightsFilterCard> = {

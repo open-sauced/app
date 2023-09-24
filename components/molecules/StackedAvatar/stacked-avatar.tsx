@@ -1,9 +1,9 @@
 import { useRouter } from "next/router";
 
 import clsx from "clsx";
-import AvatarHoverCard from "components/atoms/Avatar/avatar-hover-card";
+import AvatarHoverCard from "@components/atoms/Avatar/avatar-hover-card";
 
-import useInsight from "lib/hooks/useInsight";
+import useInsight from "@lib/hooks/useInsight";
 
 export type Contributor = { host_login: string };
 

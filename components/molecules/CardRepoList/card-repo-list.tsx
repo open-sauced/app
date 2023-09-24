@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { StaticImageData } from "next/image";
 import { ImCross } from "react-icons/im";
-import Icon from "components/atoms/Icon/icon";
-import Tooltip from "components/atoms/Tooltip/tooltip";
+import Icon from "@components/atoms/Icon/icon";
+import Tooltip from "@components/atoms/Tooltip/tooltip";
 
 export interface RepoList {
   repoOwner: string;

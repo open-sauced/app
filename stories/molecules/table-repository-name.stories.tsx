@@ -1,5 +1,5 @@
 import { ComponentStory } from "@storybook/react";
-import TableRepositoryName from "components/molecules/TableRepositoryName/table-repository-name";
+import TableRepositoryName from "@components/molecules/TableRepositoryName/table-repository-name";
 
 const storyConfig = {
   title: "Design System/Molecules/Table Repository Name",

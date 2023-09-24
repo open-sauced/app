@@ -1,5 +1,5 @@
 import { StoryFn } from "@storybook/react";
-import TopContributorCard from "components/atoms/TopContributorCard/top-contributor-card";
+import TopContributorCard from "@components/atoms/TopContributorCard/top-contributor-card";
 
 const storyConfig = {
   title: "Design System/Atoms/TopContributorCard",

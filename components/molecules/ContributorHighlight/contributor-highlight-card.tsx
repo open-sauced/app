@@ -14,8 +14,8 @@ import { VscIssues } from "react-icons/vsc";
 import clsx from "clsx";
 import { useDebounce } from "rooks";
 
-import { Textarea } from "components/atoms/Textarea/text-area";
-import Button from "components/atoms/Button/button";
+import { Textarea } from "@components/atoms/Textarea/text-area";
+import Button from "@components/atoms/Button/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -23,7 +23,7 @@ import {
   DropdownMenuTrigger,
 } from "components/atoms/Dropdown/dropdown";
 
-import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
+import useSupabaseAuth from "@lib/hooks/useSupabaseAuth";
 import {
   generateRepoParts,
   getAvatarByUsername,
@@ -31,19 +31,19 @@ import {
   isValidIssueUrl,
   isValidPullRequestUrl,
 } from "lib/utils/github";
-import { fetchGithubPRInfo } from "lib/hooks/fetchGithubPRInfo";
-import { updateHighlights } from "lib/hooks/updateHighlight";
-import { deleteHighlight } from "lib/hooks/deleteHighlight";
-import { useToast } from "lib/hooks/useToast";
-import useHighlightReactions from "lib/hooks/useHighlightReactions";
-import useUserHighlightReactions from "lib/hooks/useUserHighlightReactions";
-import Tooltip from "components/atoms/Tooltip/tooltip";
-import useFollowUser from "lib/hooks/useFollowUser";
-import { fetchGithubIssueInfo } from "lib/hooks/fetchGithubIssueInfo";
-import { isValidBlogUrl } from "lib/utils/dev-to";
-import { fetchDevToBlogInfo } from "lib/hooks/fetchDevToBlogInfo";
-import Search from "components/atoms/Search/search";
-import Title from "components/atoms/Typography/title";
+import { fetchGithubPRInfo } from "@lib/hooks/fetchGithubPRInfo";
+import { updateHighlights } from "@lib/hooks/updateHighlight";
+import { deleteHighlight } from "@lib/hooks/deleteHighlight";
+import { useToast } from "@lib/hooks/useToast";
+import useHighlightReactions from "@lib/hooks/useHighlightReactions";
+import useUserHighlightReactions from "@lib/hooks/useUserHighlightReactions";
+import Tooltip from "@components/atoms/Tooltip/tooltip";
+import useFollowUser from "@lib/hooks/useFollowUser";
+import { fetchGithubIssueInfo } from "@lib/hooks/fetchGithubIssueInfo";
+import { isValidBlogUrl } from "@lib/utils/dev-to";
+import { fetchDevToBlogInfo } from "@lib/hooks/fetchDevToBlogInfo";
+import Search from "@components/atoms/Search/search";
+import Title from "@components/atoms/Typography/title";
 import GhOpenGraphImg from "../GhOpenGraphImg/gh-open-graph-img";
 import {
   Dialog,

@@ -3,13 +3,13 @@ import { FaEdit } from "react-icons/fa";
 import { FiCopy } from "react-icons/fi";
 import { usePostHog } from "posthog-js/react";
 
-import Button from "components/atoms/Button/button";
-import Title from "components/atoms/Typography/title";
-import Badge from "components/atoms/InsightBadge/insight-badge";
-import ContextThumbnail from "components/atoms/ContextThumbnail/context-thumbnail";
+import Button from "@components/atoms/Button/button";
+import Title from "@components/atoms/Typography/title";
+import Badge from "@components/atoms/InsightBadge/insight-badge";
+import ContextThumbnail from "@components/atoms/ContextThumbnail/context-thumbnail";
 
-import { truncateString } from "lib/utils/truncate-string";
-import { useToast } from "lib/hooks/useToast";
+import { truncateString } from "@lib/utils/truncate-string";
+import { useToast } from "@lib/hooks/useToast";
 
 interface ListHeaderProps {
   list?: DbUserList;

@@ -1,4 +1,4 @@
-import SuggestedRepositoriesList from "components/organisms/SuggestedRepoList/suggested-repo-list";
+import SuggestedRepositoriesList from "@components/organisms/SuggestedRepoList/suggested-repo-list";
 
 const storyConfig = {
   title: "Design System/Organisms/SuggestedRepositoriesList",

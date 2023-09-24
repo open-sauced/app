@@ -1,6 +1,6 @@
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import DevCardCarousel from "components/organisms/DevCardCarousel/dev-card-carousel";
-import { STUB_DEV_CARDS } from "components/organisms/DevCardCarousel/stubData";
+import DevCardCarousel from "@components/organisms/DevCardCarousel/dev-card-carousel";
+import { STUB_DEV_CARDS } from "@components/organisms/DevCardCarousel/stubData";
 
 const storyConfig = {
   title: "Design System/Organisms/DevCardCarousel",

@@ -1,4 +1,4 @@
-import ListPageLayout from "layouts/lists";
+import ListPageLayout from "@layouts/lists";
 
 const ListsOverview = () => {
   return <div>Lists Overview</div>;

@@ -1,4 +1,4 @@
-import humanizeNumber from "lib/utils/humanizeNumber";
+import humanizeNumber from "@lib/utils/humanizeNumber";
 
 interface PaginationResultsProps {
   metaInfo: Meta;

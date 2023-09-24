@@ -3,9 +3,9 @@ import Link from "next/link";
 import { MdOutlineArrowForwardIos } from "react-icons/md";
 import { FiPlus } from "react-icons/fi";
 import { RiDeleteBinLine } from "react-icons/ri";
-import Text from "components/atoms/Typography/text";
-import Tooltip from "components/atoms/Tooltip/tooltip";
-import { useFetchListContributors } from "lib/hooks/useList";
+import Text from "@components/atoms/Typography/text";
+import Tooltip from "@components/atoms/Tooltip/tooltip";
+import { useFetchListContributors } from "@lib/hooks/useList";
 import StackedAvatar, { Contributor } from "../StackedAvatar/stacked-avatar";
 
 interface ListCardProps {

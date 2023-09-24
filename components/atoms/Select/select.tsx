@@ -2,7 +2,7 @@ import * as React from "react";
 import * as SelectPrimitive from "@radix-ui/react-select";
 import clsx from "clsx";
 
-import { ScrollArea, ScrollViewport } from "components/atoms/ScrollArea/scroll-area";
+import { ScrollArea, ScrollViewport } from "@components/atoms/ScrollArea/scroll-area";
 
 const Select = SelectPrimitive.Root;
 

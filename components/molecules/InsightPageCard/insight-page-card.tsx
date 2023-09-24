@@ -3,13 +3,13 @@ import { LinkIcon } from "@primer/octicons-react";
 import { BsFillArrowUpCircleFill } from "react-icons/bs";
 import { User } from "@supabase/supabase-js";
 
-import Button from "components/atoms/Button/button";
-import Text from "components/atoms/Typography/text";
+import Button from "@components/atoms/Button/button";
+import Text from "@components/atoms/Typography/text";
 
-import { getRelativeDays } from "lib/utils/date-utils";
-import getRepoInsights from "lib/utils/get-repo-insights";
+import { getRelativeDays } from "@lib/utils/date-utils";
+import getRepoInsights from "@lib/utils/get-repo-insights";
 
-import useRepositories from "lib/hooks/api/useRepositories";
+import useRepositories from "@lib/hooks/api/useRepositories";
 import CardRepoList from "../CardRepoList/card-repo-list";
 import PieChart, { PieData } from "../PieChart/pie-chart";
 import StackedAvatar from "../StackedAvatar/stacked-avatar";

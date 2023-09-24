@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from "@storybook/react";
-import PullRequestSocialCard from "components/molecules/PullRequestSocialCard/pull-request-social-card";
+import PullRequestSocialCard from "@components/molecules/PullRequestSocialCard/pull-request-social-card";
 import { testLanguageList } from "stories/testData/mockedData";
 
 const StoryConfig: Meta<typeof PullRequestSocialCard> = {

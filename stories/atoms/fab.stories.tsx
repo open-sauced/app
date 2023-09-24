@@ -1,5 +1,5 @@
 import { Meta, StoryFn } from "@storybook/react";
-import Fab from "components/atoms/Fab/fab";
+import Fab from "@components/atoms/Fab/fab";
 
 const storyConfig = {
   title: "Design System/Atoms/Fab",

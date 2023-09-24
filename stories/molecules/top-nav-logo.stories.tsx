@@ -1,4 +1,4 @@
-import HeaderLogo from "../../components/molecules/HeaderLogo/header-logo";
+import HeaderLogo from "@components/molecules/HeaderLogo/header-logo";
 
 const storyConfig = {
   title: "Design System/Molecules/Top Nav Logo",

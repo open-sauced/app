@@ -1,6 +1,6 @@
 import { ComponentStory } from "@storybook/react";
-import PieChart from "components/molecules/PieChart/pie-chart";
-import { PieData } from "components/molecules/PieChart/pie-chart";
+import PieChart from "@components/molecules/PieChart/pie-chart";
+import { PieData } from "@components/molecules/PieChart/pie-chart";
 
 const StoryConfig = {
   title: "Design System/Molecules/PieChart",

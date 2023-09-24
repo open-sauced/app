@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import clsx from "clsx";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 
-import Checkbox from "components/atoms/Checkbox/checkbox";
+import Checkbox from "@components/atoms/Checkbox/checkbox";
 
 // This list might have to come in as props in future implementations
 const filterOptions: { name: string; value: string }[] = [

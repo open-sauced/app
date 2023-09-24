@@ -5,7 +5,7 @@ import { DialogProps } from "@radix-ui/react-dialog";
 import { Command as CommandPrimitive } from "cmdk";
 import { BiSearch } from "react-icons/bi";
 import clsx from "clsx";
-import { Dialog, DialogContent } from "components/molecules/Dialog/dialog";
+import { Dialog, DialogContent } from "@components/molecules/Dialog/dialog";
 
 const Command = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive>,

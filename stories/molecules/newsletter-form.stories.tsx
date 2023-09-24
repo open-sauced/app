@@ -1,5 +1,5 @@
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import NewsletterForm from "components/molecules/NewsletterForm/newsletter-form";
+import NewsletterForm from "@components/molecules/NewsletterForm/newsletter-form";
 
 const storyConfig = {
   title: "Design System/Molecules/NewsletterForm",

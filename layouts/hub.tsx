@@ -4,15 +4,15 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import clsx from "clsx";
 
-import useSession from "lib/hooks/useSession";
-import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
-import { supabase } from "lib/utils/supabase";
+import useSession from "@lib/hooks/useSession";
+import useSupabaseAuth from "@lib/hooks/useSupabaseAuth";
+import { supabase } from "@lib/utils/supabase";
 
-import Title from "components/atoms/Typography/title";
-import Search from "components/atoms/Search/search";
-import Button from "components/atoms/Button/button";
-import Footer from "../components/organisms/Footer/footer";
-import TopNav from "../components/organisms/TopNav/top-nav";
+import Title from "@components/atoms/Typography/title";
+import Search from "@components/atoms/Search/search";
+import Button from "@components/atoms/Button/button";
+import Footer from "@components/organisms/Footer/footer";
+import TopNav from "@components/organisms/TopNav/top-nav";
 
 const HubLayout = ({ children }: { children: React.ReactNode }) => {
   const { onboarded } = useSession();

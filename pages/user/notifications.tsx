@@ -4,18 +4,18 @@ import clsx from "clsx";
 import Link from "next/link";
 
 import formatDistanceToNowStrict from "date-fns/formatDistanceToNowStrict";
-import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
-import Title from "components/atoms/Typography/title";
-import Button from "components/atoms/Button/button";
-import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
-import PaginationResults from "components/molecules/PaginationResults/pagination-result";
-import Pagination from "components/molecules/Pagination/pagination";
-import DashContainer from "components/atoms/DashedContainer/DashContainer";
-import Avatar from "components/atoms/Avatar/avatar";
-import { getAvatarByUsername } from "lib/utils/github";
-import { getNotificationURL } from "lib/utils/get-notification-url";
-import changeCapitalization from "lib/utils/change-capitalization";
-import ProfileLayout from "layouts/profile";
+import useSupabaseAuth from "@lib/hooks/useSupabaseAuth";
+import Title from "@components/atoms/Typography/title";
+import Button from "@components/atoms/Button/button";
+import SkeletonWrapper from "@components/atoms/SkeletonLoader/skeleton-wrapper";
+import PaginationResults from "@components/molecules/PaginationResults/pagination-result";
+import Pagination from "@components/molecules/Pagination/pagination";
+import DashContainer from "@components/atoms/DashedContainer/DashContainer";
+import Avatar from "@components/atoms/Avatar/avatar";
+import { getAvatarByUsername } from "@lib/utils/github";
+import { getNotificationURL } from "@lib/utils/get-notification-url";
+import changeCapitalization from "@lib/utils/change-capitalization";
+import ProfileLayout from "@layouts/profile";
 import { WithPageLayout } from "interfaces/with-page-layout";
 
 interface NotificationResponse {

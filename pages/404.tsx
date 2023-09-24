@@ -1,17 +1,17 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { differenceInDays } from "date-fns";
-import FullHeightContainer from "components/atoms/FullHeightContainer/full-height-container";
-import HeaderLogo from "components/molecules/HeaderLogo/header-logo";
-import { useFetchTopContributors } from "lib/hooks/useFetchTopContributors";
-import DevCardWall from "components/organisms/DevCardWall/dev-card-wall";
-import { DevCardProps } from "components/molecules/DevCard/dev-card";
-import { fetchContributorPRs } from "lib/hooks/api/useContributorPullRequests";
-import { getRepoList } from "lib/hooks/useRepoList";
-import getContributorPullRequestVelocity from "lib/utils/get-contributor-pr-velocity";
-import getPercent from "lib/utils/get-percent";
-import { getAvatarByUsername } from "lib/utils/github";
-import BubbleBG from "../img/bubble-bg.svg";
+import FullHeightContainer from "@components/atoms/FullHeightContainer/full-height-container";
+import HeaderLogo from "@components/molecules/HeaderLogo/header-logo";
+import { useFetchTopContributors } from "@lib/hooks/useFetchTopContributors";
+import DevCardWall from "@components/organisms/DevCardWall/dev-card-wall";
+import { DevCardProps } from "@components/molecules/DevCard/dev-card";
+import { fetchContributorPRs } from "@lib/hooks/api/useContributorPullRequests";
+import { getRepoList } from "@lib/hooks/useRepoList";
+import getContributorPullRequestVelocity from "@lib/utils/get-contributor-pr-velocity";
+import getPercent from "@lib/utils/get-percent";
+import { getAvatarByUsername } from "@lib/utils/github";
+import BubbleBG from "@img/bubble-bg.svg";
 
 export default function Custom404() {
   const { data } = useFetchTopContributors({ limit: 20 });

@@ -3,15 +3,15 @@ import clsx from "clsx";
 import Link from "next/link";
 
 import { WithPageLayout } from "interfaces/with-page-layout";
-import HubLayout from "layouts/hub";
+import HubLayout from "@layouts/hub";
 
-import PaginationResults from "components/molecules/PaginationResults/pagination-result";
-import Pagination from "components/molecules/Pagination/pagination";
-import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
-import Title from "components/atoms/Typography/title";
-import ListCard from "components/molecules/ListCard/list-card";
+import PaginationResults from "@components/molecules/PaginationResults/pagination-result";
+import Pagination from "@components/molecules/Pagination/pagination";
+import SkeletonWrapper from "@components/atoms/SkeletonLoader/skeleton-wrapper";
+import Title from "@components/atoms/Typography/title";
+import ListCard from "@components/molecules/ListCard/list-card";
 
-import { useFetchAllLists } from "lib/hooks/useList";
+import { useFetchAllLists } from "@lib/hooks/useList";
 
 const ListsHub: WithPageLayout = () => {
   const { data, isLoading, meta, setPage } = useFetchAllLists();

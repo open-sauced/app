@@ -1,5 +1,5 @@
 import { ComponentStory } from "@storybook/react";
-import SuperativeSelector from "components/molecules/SuperlativeSelector/superlative-selector";
+import SuperativeSelector from "@components/molecules/SuperlativeSelector/superlative-selector";
 
 const storyConfig = {
   title: "Design System/Molecules/SuperativeSelector",

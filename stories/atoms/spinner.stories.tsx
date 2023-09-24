@@ -1,5 +1,5 @@
 import { ComponentStory } from "@storybook/react";
-import SpinLoader from "components/atoms/SpinLoader/spin-loader";
+import SpinLoader from "@components/atoms/SpinLoader/spin-loader";
 
 const storyConfig = {
   title: "Design System/Atoms/SpinLoader",

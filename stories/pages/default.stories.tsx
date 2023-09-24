@@ -1,6 +1,6 @@
 import { ComponentStory } from "@storybook/react";
-import Tool from "components/organisms/ToolsDisplay/tools-display";
-import FilterLayout from "layouts/filter";
+import Tool from "@components/organisms/ToolsDisplay/tools-display";
+import FilterLayout from "@layouts/filter";
 
 const storyConfig = {
   title: "Design System/Pages/Filter",

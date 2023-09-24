@@ -1,5 +1,5 @@
 import { ComponentStory } from "@storybook/react";
-import Button from "../../components/atoms/Button/button";
+import Button from "@components/atoms/Button/button";
 
 const storyConfig = {
   title: "Design System/Atoms/Button",

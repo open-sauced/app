@@ -4,18 +4,18 @@ import Head from "next/head";
 import { jsonLdScriptProps } from "react-schemaorg";
 import { Person } from "schema-dts";
 
-import ProfileLayout from "layouts/profile";
-import SEO from "layouts/SEO/SEO";
+import ProfileLayout from "@layouts/profile";
+import SEO from "@layouts/SEO/SEO";
 
 import { WithPageLayout } from "interfaces/with-page-layout";
 
-import useContributorPullRequests from "lib/hooks/api/useContributorPullRequests";
-import { useFetchUser } from "lib/hooks/useFetchUser";
-import useRepoList from "lib/hooks/useRepoList";
-import { getAvatarByUsername } from "lib/utils/github";
-import useContributorLanguages from "lib/hooks/api/useContributorLanguages";
-import getContributorPullRequestVelocity from "lib/utils/get-contributor-pr-velocity";
-import fetchSocialCard from "lib/utils/fetch-social-card";
+import useContributorPullRequests from "@lib/hooks/api/useContributorPullRequests";
+import { useFetchUser } from "@lib/hooks/useFetchUser";
+import useRepoList from "@lib/hooks/useRepoList";
+import { getAvatarByUsername } from "@lib/utils/github";
+import useContributorLanguages from "@lib/hooks/api/useContributorLanguages";
+import getContributorPullRequestVelocity from "@lib/utils/get-contributor-pr-velocity";
+import fetchSocialCard from "@lib/utils/fetch-social-card";
 
 // A quick fix to the hydration issue. Should be replaced with a real solution.
 // Slows down the page's initial client rendering as the component won't be loaded on the server.

@@ -1,5 +1,5 @@
 import { ComponentStory } from "@storybook/react";
-import FavoriteSelector from "components/atoms/FavoriteSelector/favorite-selector";
+import FavoriteSelector from "@components/atoms/FavoriteSelector/favorite-selector";
 
 const StoryConfig = {
   title: "Design System/Atoms/FavoriteSelector",

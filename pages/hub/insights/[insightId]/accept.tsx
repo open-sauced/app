@@ -1,16 +1,16 @@
 import { useRouter } from "next/router";
 
-import GitHubIcon from "img/icons/github-icon.svg";
+import GitHubIcon from "@img/icons/github-icon.svg";
 
-import HubLayout from "layouts/hub";
-import Button from "components/atoms/Button/button";
-import Title from "components/atoms/Typography/title";
-import Text from "components/atoms/Typography/text";
+import HubLayout from "@layouts/hub";
+import Button from "@components/atoms/Button/button";
+import Title from "@components/atoms/Typography/title";
+import Text from "@components/atoms/Typography/text";
 
-import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
-import useInsight from "lib/hooks/useInsight";
-import { useToast } from "lib/hooks/useToast";
-import Icon from "components/atoms/Icon/icon";
+import useSupabaseAuth from "@lib/hooks/useSupabaseAuth";
+import useInsight from "@lib/hooks/useInsight";
+import { useToast } from "@lib/hooks/useToast";
+import Icon from "@components/atoms/Icon/icon";
 
 const AcceptMemberInvitePage = () => {
   const { user, sessionToken, signIn } = useSupabaseAuth();

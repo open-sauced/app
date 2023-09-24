@@ -1,5 +1,5 @@
-import Login from "pages/start";
-import LoginLayout from "layouts/login";
+import Login from "@pages/start";
+import LoginLayout from "@layouts/login";
 
 const storyConfig = {
   title: "Design System/Pages/Login",

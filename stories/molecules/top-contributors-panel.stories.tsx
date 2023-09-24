@@ -1,5 +1,5 @@
 import { Meta, StoryFn } from "@storybook/react";
-import TopContributorsPanel from "components/molecules/TopContributorsPanel/top-contributors-panel";
+import TopContributorsPanel from "@components/molecules/TopContributorsPanel/top-contributors-panel";
 
 const storyConfig = {
   title: "Design System/Molecules/TopContributorsPanel",

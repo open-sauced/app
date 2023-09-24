@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { getAvatarByUsername } from "lib/utils/github";
-import useFollowUser from "lib/hooks/useFollowUser";
-import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
+import { getAvatarByUsername } from "@lib/utils/github";
+import useFollowUser from "@lib/hooks/useFollowUser";
+import useSupabaseAuth from "@lib/hooks/useSupabaseAuth";
 
 import Avatar from "../Avatar/avatar";
 import Button from "../Button/button";

@@ -1,5 +1,5 @@
 import { ComponentStory } from "@storybook/react";
-import InsightsPageListItem from "components/atoms/InsightsPageListItem/insights-page-list-item";
+import InsightsPageListItem from "@components/atoms/InsightsPageListItem/insights-page-list-item";
 
 const storyConfig = {
   title: "Design System/Atoms/InsightsPageListItem",

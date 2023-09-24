@@ -1,9 +1,9 @@
 import { User } from "@supabase/supabase-js";
 import clsx from "clsx";
 
-import TableTitle from "components/atoms/TableTitle/table-title";
-import Title from "components/atoms/Typography/title";
-import { classNames } from "components/organisms/RepositoriesTable/repositories-table";
+import TableTitle from "@components/atoms/TableTitle/table-title";
+import Title from "@components/atoms/Typography/title";
+import { classNames } from "@components/organisms/RepositoriesTable/repositories-table";
 import InsightTableRow from "../InsightTableRow/insight-table-row";
 
 interface InsightPageTableProps {

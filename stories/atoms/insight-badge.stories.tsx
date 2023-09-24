@@ -1,5 +1,5 @@
 import { ComponentStory } from "@storybook/react";
-import InsightsBadge from "components/atoms/InsightBadge/insight-badge";
+import InsightsBadge from "@components/atoms/InsightBadge/insight-badge";
 
 const storyConfig = {
   title: "Design System/Atoms/InsightsBadge",

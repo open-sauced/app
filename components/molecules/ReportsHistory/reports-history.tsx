@@ -1,5 +1,5 @@
-import Text from "components/atoms/Typography/text";
-import TableTitle from "components/atoms/TableTitle/table-title";
+import Text from "@components/atoms/Typography/text";
+import TableTitle from "@components/atoms/TableTitle/table-title";
 
 import { Report } from "interfaces/report-type";
 

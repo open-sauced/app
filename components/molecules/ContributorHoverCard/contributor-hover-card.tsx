@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 
-import { calcDistanceFromToday } from "lib/utils/date-utils";
-import Badge from "components/atoms/Badge/badge";
+import { calcDistanceFromToday } from "@lib/utils/date-utils";
+import Badge from "@components/atoms/Badge/badge";
 import CardProfile from "../CardProfile/card-profile";
 import CardRepoList, { RepoList } from "../CardRepoList/card-repo-list";
 import PullRequestTable from "../PullRequestTable/pull-request-table";

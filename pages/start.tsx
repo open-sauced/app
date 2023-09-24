@@ -3,36 +3,36 @@ import { useRouter } from "next/router";
 import { User } from "@supabase/supabase-js";
 
 import { RiArrowDownSLine, RiArrowUpSLine } from "react-icons/ri";
-import CompletedIcon from "img/icons/completed-icon.svg";
-import GitHubAuthActiveIcon from "img/icons/github-auth-active-icon.svg";
-import ChooseTimezoneIcon from "img/icons/choose-timezone.svg";
-import ChooseTimezoneActiveIcon from "img/icons/choose-timezone-active.svg";
-import ChooseInterestsIcon from "img/icons/choose-interests.svg";
-import ChooseInterestsActiveIcon from "img/icons/choose-interests-active.svg";
-import HighlightIcon from "img/icons/highlight-icon.svg";
-import GitHubIcon from "img/icons/github-icon.svg";
+import CompletedIcon from "@img/icons/completed-icon.svg";
+import GitHubAuthActiveIcon from "@img/icons/github-auth-active-icon.svg";
+import ChooseTimezoneIcon from "@img/icons/choose-timezone.svg";
+import ChooseTimezoneActiveIcon from "@img/icons/choose-timezone-active.svg";
+import ChooseInterestsIcon from "@img/icons/choose-interests.svg";
+import ChooseInterestsActiveIcon from "@img/icons/choose-interests-active.svg";
+import HighlightIcon from "@img/icons/highlight-icon.svg";
+import GitHubIcon from "@img/icons/github-icon.svg";
 
-import LoginLayout from "layouts/login";
+import LoginLayout from "@layouts/login";
 import { WithPageLayout } from "interfaces/with-page-layout";
 
-import Card from "components/atoms/Card/card";
-import ProgressPie from "components/atoms/ProgressPie/progress-pie";
-import Title from "components/atoms/Typography/title";
-import Text from "components/atoms/Typography/text";
-import Icon from "components/atoms/Icon/icon";
-import Button from "components/atoms/Button/button";
+import Card from "@components/atoms/Card/card";
+import ProgressPie from "@components/atoms/ProgressPie/progress-pie";
+import Title from "@components/atoms/Typography/title";
+import Text from "@components/atoms/Typography/text";
+import Icon from "@components/atoms/Icon/icon";
+import Button from "@components/atoms/Button/button";
 
-import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
-import { setQueryParams } from "lib/utils/query-params";
-import useSession from "lib/hooks/useSession";
-import { captureAnayltics } from "lib/utils/analytics";
+import useSupabaseAuth from "@lib/hooks/useSupabaseAuth";
+import { setQueryParams } from "@lib/utils/query-params";
+import useSession from "@lib/hooks/useSession";
+import { captureAnayltics } from "@lib/utils/analytics";
 
-import useStore from "lib/store";
-import { getInterestOptions } from "lib/utils/getInterestOptions";
-import LanguagePill from "components/atoms/LanguagePill/LanguagePill";
+import useStore from "@lib/store";
+import { getInterestOptions } from "@lib/utils/getInterestOptions";
+import LanguagePill from "@components/atoms/LanguagePill/LanguagePill";
 
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "components/atoms/Select/select";
-import { timezones } from "lib/utils/timezones";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@components/atoms/Select/select";
+import { timezones } from "@lib/utils/timezones";
 
 type handleLoginStep = () => void;
 type stepKeys = "1" | "2" | "3";

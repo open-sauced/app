@@ -1,5 +1,5 @@
 import { ComponentStory } from "@storybook/react";
-import LimitSelect from "components/atoms/Select/limit-select";
+import LimitSelect from "@components/atoms/Select/limit-select";
 
 const StoryConfig = {
   title: "Design System/Atoms/Limit Select",

@@ -1,8 +1,8 @@
 import { Serie } from "@nivo/line";
 
-import RepoRow from "components/molecules/RepoRow/repo-row";
+import RepoRow from "@components/molecules/RepoRow/repo-row";
 
-import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
+import SkeletonWrapper from "@components/atoms/SkeletonLoader/skeleton-wrapper";
 import type { StaticImageData } from "next/image";
 
 interface ContributorsRows {

@@ -1,5 +1,5 @@
 import { ComponentStory } from "@storybook/react";
-import ReportsHistory from "components/molecules/ReportsHistory/reports-history";
+import ReportsHistory from "@components/molecules/ReportsHistory/reports-history";
 import { Report } from "interfaces/report-type";
 
 const storyConfig = {

@@ -2,14 +2,14 @@ import { FaPlus } from "react-icons/fa";
 
 import clsx from "clsx";
 import { FiGlobe } from "react-icons/fi";
-import Button from "components/atoms/Button/button";
-import Text from "components/atoms/Typography/text";
+import Button from "@components/atoms/Button/button";
+import Text from "@components/atoms/Typography/text";
 
-import { useToast } from "lib/hooks/useToast";
-import ListNameHeader from "components/atoms/ListNameHeader/list-name-header";
-import LimitSelect from "components/atoms/Select/limit-select";
-// import Search from "components/atoms/Search/search";
-import ToggleSwitch from "components/atoms/ToggleSwitch/toggle-switch";
+import { useToast } from "@lib/hooks/useToast";
+import ListNameHeader from "@components/atoms/ListNameHeader/list-name-header";
+import LimitSelect from "@components/atoms/Select/limit-select";
+// import Search from '@components/atoms/Search/search';;
+import ToggleSwitch from "@components/atoms/ToggleSwitch/toggle-switch";
 import ComponentDateFilter from "../ComponentDateFilter/component-date-filter";
 
 interface ListHeaderProps {

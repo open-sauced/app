@@ -1,5 +1,5 @@
 import { Meta, StoryFn } from "@storybook/react";
-import FeaturedHighlightsPanel from "components/molecules/FeaturedHighlightsPanel/featured-highlights-panel";
+import FeaturedHighlightsPanel from "@components/molecules/FeaturedHighlightsPanel/featured-highlights-panel";
 
 const storyConfig = {
   title: "Design System/Molecules/FeaturedHighlightsPanel",

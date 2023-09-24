@@ -1,5 +1,5 @@
 import { ComponentStory } from "@storybook/react";
-import PaginationGotoPage from "components/molecules/PaginationGotoPage/pagination-goto-page";
+import PaginationGotoPage from "@components/molecules/PaginationGotoPage/pagination-goto-page";
 
 const storyConfig = {
   title: "Design System/Molecules/PaginationGotoPage",

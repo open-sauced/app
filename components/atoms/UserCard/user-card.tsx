@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React from "react";
 import Link from "next/link";
-import { getAvatarByUsername } from "lib/utils/github";
+import { getAvatarByUsername } from "@lib/utils/github";
 import { Spinner } from "../SpinLoader/spin-loader";
 
 export type MetaObj = {

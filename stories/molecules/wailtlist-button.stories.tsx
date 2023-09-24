@@ -1,5 +1,5 @@
 import { ComponentStory } from "@storybook/react";
-import WaitlistButton from "../../components/molecules/WaitlistButton/waitlist-button";
+import WaitlistButton from "@components/molecules/WaitlistButton/waitlist-button";
 
 const StoryConfig = {
   title: "Design System/Molecules/Waitlist Button",

@@ -1,5 +1,5 @@
 import { ComponentStory } from "@storybook/react";
-import RadioCheck from "components/atoms/RadioCheck/radio-check";
+import RadioCheck from "@components/atoms/RadioCheck/radio-check";
 
 const storyConfig = {
   title: "Design System/Atoms/Radio Check",

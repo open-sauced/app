@@ -1,8 +1,8 @@
 import React from "react";
-import Title from "components/atoms/Typography/title";
-import { RepoCardProfileProps } from "components/molecules/RepoCardProfile/repo-card-profile";
-import SuggestedRepository from "components/molecules/SuggestedRepo/suggested-repo";
-import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
+import Title from "@components/atoms/Typography/title";
+import { RepoCardProfileProps } from "@components/molecules/RepoCardProfile/repo-card-profile";
+import SuggestedRepository from "@components/molecules/SuggestedRepo/suggested-repo";
+import SkeletonWrapper from "@components/atoms/SkeletonLoader/skeleton-wrapper";
 
 interface SuggestedRepositoriesListProps {
   reposData: RepoCardProfileProps[];

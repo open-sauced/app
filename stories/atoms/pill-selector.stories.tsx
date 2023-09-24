@@ -1,5 +1,5 @@
 import { ComponentStory } from "@storybook/react";
-import PillSelector from "../../components/atoms/PillSelector/pill-selector";
+import PillSelector from "@components/atoms/PillSelector/pill-selector";
 
 const storyConfig = {
   title: "Design System/Atoms/PillSelector",

@@ -1,5 +1,5 @@
 import { ComponentStory } from "@storybook/react";
-import HighlightCard from "../../components/molecules/HighlightCard/highlight-card";
+import HighlightCard from "@components/molecules/HighlightCard/highlight-card";
 
 const storyConfig = {
   title: "Design System/Molecules/Highlight Card",

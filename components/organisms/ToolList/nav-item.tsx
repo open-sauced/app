@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-import humanizeNumber from "lib/utils/humanizeNumber";
+import humanizeNumber from "@lib/utils/humanizeNumber";
 
 interface NavItemProps {
   username?: string | string[] | undefined;

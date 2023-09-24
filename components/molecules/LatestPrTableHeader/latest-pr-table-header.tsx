@@ -3,8 +3,8 @@ import { GoDiff } from "react-icons/go";
 import { BsFileDiff } from "react-icons/bs";
 import { FaRegCheckCircle, FaRegCalendar } from "react-icons/fa";
 
-import Text from "components/atoms/Typography/text";
-import Tooltip from "components/atoms/Tooltip/tooltip";
+import Text from "@components/atoms/Typography/text";
+import Tooltip from "@components/atoms/Tooltip/tooltip";
 
 interface LatestPrTableHeaderProps {
   classNames?: string;

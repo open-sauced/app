@@ -1,5 +1,5 @@
 import { Meta, StoryFn } from "@storybook/react";
-import ListNameHeader from "components/atoms/ListNameHeader/list-name-header";
+import ListNameHeader from "@components/atoms/ListNameHeader/list-name-header";
 
 const meta: Meta<typeof ListNameHeader> = {
   title: "Design System/Atoms/ListNameHeader",

@@ -1,5 +1,5 @@
 import { ComponentStory } from "@storybook/react";
-import FavoriteRepoCard from "components/molecules/FavoriteRepoCard/favorite-repo-card";
+import FavoriteRepoCard from "@components/molecules/FavoriteRepoCard/favorite-repo-card";
 
 const storyConfig = {
   title: "Design System/Molecules/Favorite Repo Card",

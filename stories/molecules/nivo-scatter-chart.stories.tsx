@@ -1,5 +1,5 @@
 import { ComponentStory } from "@storybook/react";
-import NivoScatterPlot from "components/molecules/NivoScatterChart/nivo-scatter-chart";
+import NivoScatterPlot from "@components/molecules/NivoScatterChart/nivo-scatter-chart";
 
 const storyConfig = {
   title: "Design System/Molecules/ScatterChart",

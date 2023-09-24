@@ -1,5 +1,5 @@
 import { ComponentStory } from "@storybook/react";
-import ContextClueCard from "components/molecules/ContextClueCard/context-clue-card";
+import ContextClueCard from "@components/molecules/ContextClueCard/context-clue-card";
 
 const storyConfig = {
   title: "Design System/Molecules/ContextClueCard",

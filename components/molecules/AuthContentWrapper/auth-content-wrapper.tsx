@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import clsx from "clsx";
 
-import Button from "components/atoms/Button/button";
-import Icon from "components/atoms/Icon/icon";
+import Button from "@components/atoms/Button/button";
+import Icon from "@components/atoms/Icon/icon";
 
-import GitHubIcon from "img/icons/github-icon.svg";
+import GitHubIcon from "@img/icons/github-icon.svg";
 
-import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
+import useSupabaseAuth from "@lib/hooks/useSupabaseAuth";
 
 interface AuthContentWrapperProps {
   children: React.ReactNode;

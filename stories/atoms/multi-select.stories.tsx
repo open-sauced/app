@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from "@storybook/react";
-import MultiSelect, { OptionKeys } from "components/atoms/Select/multi-select";
+import MultiSelect, { OptionKeys } from "@components/atoms/Select/multi-select";
 
 export default {
   title: "Design System/Atoms/MultiSelect",

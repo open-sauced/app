@@ -1,18 +1,18 @@
 import { useRouter } from "next/router";
 
-import Text from "components/atoms/Typography/text";
-import Title from "components/atoms/Typography/title";
-import ContextThumbnail from "components/atoms/ContextThumbnail/context-thumbnail";
-import SuperativeSelector from "components/molecules/SuperlativeSelector/superlative-selector";
+import Text from "@components/atoms/Typography/text";
+import Title from "@components/atoms/Typography/title";
+import ContextThumbnail from "@components/atoms/ContextThumbnail/context-thumbnail";
+import SuperativeSelector from "@components/molecules/SuperlativeSelector/superlative-selector";
 
-import useFilterOptions from "lib/hooks/useFilterOptions";
-import { captureAnayltics } from "lib/utils/analytics";
-import useFilterPrefetch from "lib/hooks/useFilterPrefetch";
-import topicNameFormatting from "lib/utils/topic-name-formatting";
-import FilterCardSelect from "components/molecules/FilterCardSelect/filter-card-select";
-import getTopicThumbnail from "lib/utils/getTopicThumbnail";
-import { interestsType } from "lib/utils/getInterestOptions";
-import { getInterestOptions } from "lib/utils/getInterestOptions";
+import useFilterOptions from "@lib/hooks/useFilterOptions";
+import { captureAnayltics } from "@lib/utils/analytics";
+import useFilterPrefetch from "@lib/hooks/useFilterPrefetch";
+import topicNameFormatting from "@lib/utils/topic-name-formatting";
+import FilterCardSelect from "@components/molecules/FilterCardSelect/filter-card-select";
+import getTopicThumbnail from "@lib/utils/getTopicThumbnail";
+import { interestsType } from "@lib/utils/getInterestOptions";
+import { getInterestOptions } from "@lib/utils/getInterestOptions";
 
 const HeaderFilter = () => {
   const router = useRouter();

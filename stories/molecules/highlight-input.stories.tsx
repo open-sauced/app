@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from "@storybook/react";
-import HighlightInputForm from "components/molecules/HighlightInput/highlight-input-form";
+import HighlightInputForm from "@components/molecules/HighlightInput/highlight-input-form";
 
 const storyConfig = {
   title: "Design System/molecules/HighlightInputForm",

@@ -1,5 +1,5 @@
 import { ComponentStory } from "@storybook/react";
-import Search from "components/atoms/Search/search";
+import Search from "@components/atoms/Search/search";
 
 const StoryConfig = {
   title: "Design System/Atoms/Search",

@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { RiArrowLeftSLine, RiArrowRightSLine } from "react-icons/ri";
 
-import PaginationGotoPage from "components/molecules/PaginationGotoPage/pagination-goto-page";
-import humanizeNumber from "lib/utils/humanizeNumber";
+import PaginationGotoPage from "@components/molecules/PaginationGotoPage/pagination-goto-page";
+import humanizeNumber from "@lib/utils/humanizeNumber";
 
 interface PaginationProps {
   pages: number[];

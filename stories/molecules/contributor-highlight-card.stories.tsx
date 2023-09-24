@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from "@storybook/react";
-import ContributorHighlightCard from "components/molecules/ContributorHighlight/contributor-highlight-card";
+import ContributorHighlightCard from "@components/molecules/ContributorHighlight/contributor-highlight-card";
 
 export default {
   title: "Design System/Molecules/ContributorHighlightCard",

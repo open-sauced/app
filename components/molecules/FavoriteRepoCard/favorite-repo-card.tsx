@@ -1,6 +1,6 @@
 import Link from "next/link";
-import Avatar from "components/atoms/Avatar/avatar";
-import { truncateString } from "lib/utils/truncate-string";
+import Avatar from "@components/atoms/Avatar/avatar";
+import { truncateString } from "@lib/utils/truncate-string";
 import type { StaticImageData } from "next/image";
 
 export interface FavoriteRepoCardProps {

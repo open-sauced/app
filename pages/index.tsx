@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 
-import Loader from "components/templates/Loader/loader";
-import { supabase } from "lib/utils/supabase";
-import useSession from "lib/hooks/useSession";
+import Loader from "@components/templates/Loader/loader";
+import { supabase } from "@lib/utils/supabase";
+import useSession from "@lib/hooks/useSession";
 import { WithPageLayout } from "../interfaces/with-page-layout";
 
 const Home: WithPageLayout = () => {

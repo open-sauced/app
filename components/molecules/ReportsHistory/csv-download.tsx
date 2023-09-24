@@ -2,10 +2,10 @@ import { useState, useEffect, useRef } from "react";
 import { CSVLink } from "react-csv";
 import { useSWRConfig } from "swr";
 
-import Button from "components/atoms/Button/button";
+import Button from "@components/atoms/Button/button";
 
 import { Report } from "interfaces/report-type";
-import publicApiFetcher from "lib/utils/public-api-fetcher";
+import publicApiFetcher from "@lib/utils/public-api-fetcher";
 
 interface CSVDownloadProps {
   report: Report;

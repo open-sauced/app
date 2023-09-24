@@ -2,18 +2,18 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import clsx from "clsx";
 
-import TableTitle from "components/atoms/TableTitle/table-title";
-import Pagination from "components/molecules/Pagination/pagination";
-import PaginationResults from "components/molecules/PaginationResults/pagination-result";
-import TableHeader from "components/molecules/TableHeader/table-header";
+import TableTitle from "@components/atoms/TableTitle/table-title";
+import Pagination from "@components/molecules/Pagination/pagination";
+import PaginationResults from "@components/molecules/PaginationResults/pagination-result";
+import TableHeader from "@components/molecules/TableHeader/table-header";
 
-import useRepositories from "lib/hooks/api/useRepositories";
-import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
-import useStore from "lib/store";
+import useRepositories from "@lib/hooks/api/useRepositories";
+import useSupabaseAuth from "@lib/hooks/useSupabaseAuth";
+import useStore from "@lib/store";
 
-import Checkbox from "components/atoms/Checkbox/checkbox";
-import Button from "components/atoms/Button/button";
-import LimitSelect from "components/atoms/Select/limit-select";
+import Checkbox from "@components/atoms/Checkbox/checkbox";
+import Button from "@components/atoms/Button/button";
+import LimitSelect from "@components/atoms/Select/limit-select";
 import RepositoriesTable, { classNames, RepositoriesRows } from "../RepositoriesTable/repositories-table";
 import RepoNotIndexed from "./repository-not-indexed";
 

@@ -1,6 +1,6 @@
 import { ComponentStory } from "@storybook/react";
 
-import AvatarHoverCard from "components/atoms/Avatar/avatar-hover-card";
+import AvatarHoverCard from "@components/atoms/Avatar/avatar-hover-card";
 
 const storyConfig = {
   title: "Design System/Atoms/AvatarHoverCard",

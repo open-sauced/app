@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from "@storybook/react";
-import CardRepoList from "components/molecules/CardRepoList/card-repo-list";
-import TestRepoAvatar from "img/icons/test-repo-avatar.svg";
+import CardRepoList from "@components/molecules/CardRepoList/card-repo-list";
+import TestRepoAvatar from "@img/icons/test-repo-avatar.svg";
 
 const storyConfig = {
   title: "Design System/Molecules/Card Repo List",

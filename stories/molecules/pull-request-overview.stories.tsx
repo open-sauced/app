@@ -1,5 +1,5 @@
 import { ComponentStory } from "@storybook/react";
-import PullRequestOverview from "components/molecules/PullRequestOverview/pull-request-overview";
+import PullRequestOverview from "@components/molecules/PullRequestOverview/pull-request-overview";
 
 const storyConfig = {
   title: "Design System/Molecules/Pull Request Overview",

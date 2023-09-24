@@ -1,8 +1,8 @@
 import React from "react";
 import { isToday, isYesterday, formatDistanceToNowStrict } from "date-fns";
-import CollaborationCard from "components/molecules/CollaborationCard/collaboration-card";
-import { useUserCollaborations } from "lib/hooks/useUserCollaborations";
-import DashContainer from "components/atoms/DashedContainer/DashContainer";
+import CollaborationCard from "@components/molecules/CollaborationCard/collaboration-card";
+import { useUserCollaborations } from "@lib/hooks/useUserCollaborations";
+import DashContainer from "@components/atoms/DashedContainer/DashContainer";
 
 function formatPostDate(date: Date) {
   if (isToday(date)) {

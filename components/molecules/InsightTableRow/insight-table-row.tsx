@@ -3,14 +3,14 @@ import { User } from "@supabase/supabase-js";
 
 import clsx from "clsx";
 
-import Pill from "components/atoms/Pill/pill";
-import FavoriteSelector from "components/atoms/FavoriteSelector/favorite-selector";
-import { classNames } from "components/organisms/RepositoriesTable/repositories-table";
-import Button from "components/atoms/Button/button";
+import Pill from "@components/atoms/Pill/pill";
+import FavoriteSelector from "@components/atoms/FavoriteSelector/favorite-selector";
+import { classNames } from "@components/organisms/RepositoriesTable/repositories-table";
+import Button from "@components/atoms/Button/button";
 
-import useRepositories from "lib/hooks/api/useRepositories";
-import { getRelativeDays } from "lib/utils/date-utils";
-import getRepoInsights from "lib/utils/get-repo-insights";
+import useRepositories from "@lib/hooks/api/useRepositories";
+import { getRelativeDays } from "@lib/utils/date-utils";
+import getRepoInsights from "@lib/utils/get-repo-insights";
 import StackedAvatar from "../StackedAvatar/stacked-avatar";
 import PullRequestOverview from "../PullRequestOverview/pull-request-overview";
 import CardRepoList from "../CardRepoList/card-repo-list";

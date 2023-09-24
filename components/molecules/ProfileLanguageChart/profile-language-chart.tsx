@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 
+import colors from "@lib/utils/color.json";
 import { AllSimpleColors, LanguageObject } from "../CardHorizontalBarChart/card-horizontal-bar-chart";
-
-import colors from "../../../lib/utils/color.json";
 
 const languageToColor: AllSimpleColors = colors as AllSimpleColors;
 const NOTSUPPORTED = "#64748B";

@@ -1,5 +1,5 @@
 import { ComponentStory } from "@storybook/react";
-import TableTitle from "components/atoms/TableTitle/table-title";
+import TableTitle from "@components/atoms/TableTitle/table-title";
 
 const storyConfig = {
   title: "Design System/Atoms/TableTitle",

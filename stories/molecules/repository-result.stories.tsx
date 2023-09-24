@@ -1,4 +1,4 @@
-import RepositoryResult from "components/molecules/RepositoryResult/repository-result";
+import RepositoryResult from "@components/molecules/RepositoryResult/repository-result";
 
 const storyConfig = {
   title: "Design System/Molecules/RepositoryResult",

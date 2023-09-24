@@ -1,6 +1,6 @@
 import { ComponentStory } from "@storybook/react";
-import ContributorCard from "components/organisms/ContributorCard/contributor-card";
-import TestRepoAvatar from "img/icons/test-repo-avatar.svg";
+import ContributorCard from "@components/organisms/ContributorCard/contributor-card";
+import TestRepoAvatar from "@img/icons/test-repo-avatar.svg";
 
 const storyConfig = {
   title: "Design System/Organisms/Contributor Card",

@@ -1,6 +1,6 @@
 import React from "react";
-import { captureAnayltics } from "lib/utils/analytics";
-import useSession from "lib/hooks/useSession";
+import { captureAnayltics } from "@lib/utils/analytics";
+import useSession from "@lib/hooks/useSession";
 import Contributors from "../Contributors/contributors";
 import Dashboard from "../Dashboard/dashboard";
 import Reports from "../Reports/reports";

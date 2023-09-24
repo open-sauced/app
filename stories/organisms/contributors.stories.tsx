@@ -1,4 +1,4 @@
-import Contributors from "components/organisms/Contributors/contributors";
+import Contributors from "@components/organisms/Contributors/contributors";
 
 const StoryConfig = {
   title: "Design System/Organisms/Contributors",

@@ -1,6 +1,6 @@
 import React from "react";
 import { ComponentStory } from "@storybook/react";
-import ToggleGroup from "components/atoms/ToggleGroup/toggle-group";
+import ToggleGroup from "@components/atoms/ToggleGroup/toggle-group";
 
 const storyConfig = {
   title: "Design System/Atoms/ToggleGroup",

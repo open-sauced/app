@@ -1,5 +1,5 @@
 import { ComponentStory } from "@storybook/react";
-import Avatar from "../../components/atoms/Avatar/avatar";
+import Avatar from "@components/atoms/Avatar/avatar";
 
 const storyConfig = {
   title: "Design System/Atoms/Avatar",

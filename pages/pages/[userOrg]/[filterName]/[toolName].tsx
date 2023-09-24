@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 import { GetServerSidePropsContext } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 
-import Tool from "components/organisms/ToolsDisplay/tools-display";
+import Tool from "@components/organisms/ToolsDisplay/tools-display";
 
-import HubPageLayout from "layouts/hub-page";
+import HubPageLayout from "@layouts/hub-page";
 import { WithPageLayout } from "interfaces/with-page-layout";
-import changeCapitalization from "lib/utils/change-capitalization";
-import SEO from "layouts/SEO/SEO";
-import fetchSocialCard from "lib/utils/fetch-social-card";
+import changeCapitalization from "@lib/utils/change-capitalization";
+import SEO from "@layouts/SEO/SEO";
+import fetchSocialCard from "@lib/utils/fetch-social-card";
 
 interface InsightPageProps {
   insight: DbUserInsight;

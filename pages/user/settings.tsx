@@ -1,7 +1,7 @@
-import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
+import useSupabaseAuth from "@lib/hooks/useSupabaseAuth";
 
-import UserSettingsPage from "components/organisms/UserSettingsPage/user-settings-page";
-import ProfileLayout from "layouts/profile";
+import UserSettingsPage from "@components/organisms/UserSettingsPage/user-settings-page";
+import ProfileLayout from "@layouts/profile";
 import { WithPageLayout } from "interfaces/with-page-layout";
 
 const ProfileSettings: WithPageLayout = () => {

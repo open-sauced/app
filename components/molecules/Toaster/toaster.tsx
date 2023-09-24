@@ -8,11 +8,11 @@ import {
   ToastViewport,
 } from "components/atoms/Toast/toast";
 
-import successIcon from "img/icons/success.svg";
-import warningIcon from "img/icons/info.svg";
-import dangerIcon from "img/icons/error.svg";
+import successIcon from "@img/icons/success.svg";
+import warningIcon from "@img/icons/info.svg";
+import dangerIcon from "@img/icons/error.svg";
 
-import { useToast } from "lib/hooks/useToast";
+import { useToast } from "@lib/hooks/useToast";
 
 export function Toaster() {
   const { toasts } = useToast();

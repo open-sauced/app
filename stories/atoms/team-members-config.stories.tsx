@@ -1,5 +1,5 @@
 import { ComponentStory } from "@storybook/react";
-import TeamMembersConfig from "components/molecules/TeamMembersConfig/team-members-config";
+import TeamMembersConfig from "@components/molecules/TeamMembersConfig/team-members-config";
 
 const storyConfig = {
   title: "Design System/Molecules/Team Members Config",

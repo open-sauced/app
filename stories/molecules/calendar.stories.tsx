@@ -1,5 +1,5 @@
 import { ComponentStory } from "@storybook/react";
-import { Calendar } from "components/molecules/Calendar/calendar";
+import { Calendar } from "@components/molecules/Calendar/calendar";
 
 const storyConfig = {
   title: "Design System/Molecules/Calendar",

@@ -8,8 +8,8 @@ import { AiFillInstagram } from "react-icons/ai";
 import { AiFillYoutube } from "react-icons/ai";
 import { FaDiscord } from "react-icons/fa";
 import { FaDev } from "react-icons/fa";
-import Text from "components/atoms/Typography/text";
-import OpenSaucedLogo from "img/openSauced-icon.png";
+import Text from "@components/atoms/Typography/text";
+import OpenSaucedLogo from "@img/openSauced-icon.png";
 
 const footerContext = [
   {

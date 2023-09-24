@@ -1,15 +1,15 @@
 import React from "react";
 import { useRouter } from "next/router";
 
-import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
-import Footer from "components/organisms/Footer/footer";
-import Header from "components/organisms/Header/header";
-import TopNav from "components/organisms/TopNav/top-nav";
-import ListHeader from "components/ListHeader/list-header";
-import TabsList from "components/TabList/tab-list";
+import SkeletonWrapper from "@components/atoms/SkeletonLoader/skeleton-wrapper";
+import Footer from "@components/organisms/Footer/footer";
+import Header from "@components/organisms/Header/header";
+import TopNav from "@components/organisms/TopNav/top-nav";
+import ListHeader from "@components/ListHeader/list-header";
+import TabsList from "@components/TabList/tab-list";
 
-import { useList } from "lib/hooks/useList";
-import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
+import { useList } from "@lib/hooks/useList";
+import useSupabaseAuth from "@lib/hooks/useSupabaseAuth";
 
 const ListPageLayout = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();

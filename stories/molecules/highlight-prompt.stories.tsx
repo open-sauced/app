@@ -1,5 +1,5 @@
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import HighlightPrompt from "components/molecules/HighlightPrompt/highlight-prompt";
+import HighlightPrompt from "@components/molecules/HighlightPrompt/highlight-prompt";
 
 const storyConfig = {
   title: "Design System/Molecules/HighlightPrompt",

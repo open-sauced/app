@@ -3,25 +3,25 @@ import { useState, useEffect, useRef } from "react";
 import { RiArrowDownSLine, RiArrowUpSLine } from "react-icons/ri";
 import { User } from "@supabase/supabase-js";
 
-import Button from "components/atoms/Button/button";
-import Checkbox from "components/atoms/Checkbox/checkbox";
-import TextInput from "components/atoms/TextInput/text-input";
-import Title from "components/atoms/Typography/title";
-import Text from "components/atoms/Typography/text";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "components/atoms/Select/select";
-import LanguagePill from "components/atoms/LanguagePill/LanguagePill";
-import StripeCheckoutButton from "components/organisms/StripeCheckoutButton/stripe-checkout-button";
+import Button from "@components/atoms/Button/button";
+import Checkbox from "@components/atoms/Checkbox/checkbox";
+import TextInput from "@components/atoms/TextInput/text-input";
+import Title from "@components/atoms/Typography/title";
+import Text from "@components/atoms/Typography/text";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@components/atoms/Select/select";
+import LanguagePill from "@components/atoms/LanguagePill/LanguagePill";
+import StripeCheckoutButton from "@components/organisms/StripeCheckoutButton/stripe-checkout-button";
 
-import { updateUser, UpdateUserPayload } from "lib/hooks/update-user";
+import { updateUser, UpdateUserPayload } from "@lib/hooks/update-user";
 
-import useSession from "lib/hooks/useSession";
-import { validateEmail } from "lib/utils/validate-email";
-import { timezones } from "lib/utils/timezones";
-import { updateEmailPreferences } from "lib/hooks/updateEmailPreference";
-import { useFetchUser } from "lib/hooks/useFetchUser";
-import { getInterestOptions } from "lib/utils/getInterestOptions";
-import { useToast } from "lib/hooks/useToast";
-import { validateTwitterUsername } from "lib/utils/validate-twitter-username";
+import useSession from "@lib/hooks/useSession";
+import { validateEmail } from "@lib/utils/validate-email";
+import { timezones } from "@lib/utils/timezones";
+import { updateEmailPreferences } from "@lib/hooks/updateEmailPreference";
+import { useFetchUser } from "@lib/hooks/useFetchUser";
+import { getInterestOptions } from "@lib/utils/getInterestOptions";
+import { useToast } from "@lib/hooks/useToast";
+import { validateTwitterUsername } from "@lib/utils/validate-twitter-username";
 
 interface userSettingsPageProps {
   user: User | null;

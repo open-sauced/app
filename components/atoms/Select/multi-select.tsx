@@ -5,7 +5,7 @@ import { IoCheckmarkSharp } from "react-icons/io5";
 import { IoMdCloseCircle } from "react-icons/io";
 
 import { clsx } from "clsx";
-import { Popover, PopoverContent, PopoverTrigger } from "components/molecules/Popover/popover";
+import { Popover, PopoverContent, PopoverTrigger } from "@components/molecules/Popover/popover";
 import { Command, CommandGroup, CommandInput, CommandItem } from "../Cmd/command";
 
 export type OptionKeys = Record<"value" | "label", string>;

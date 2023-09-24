@@ -1,7 +1,7 @@
 import React from "react";
-import TopContributorCard from "components/atoms/TopContributorCard/top-contributor-card";
-import { useFetchTopContributors } from "lib/hooks/useFetchTopContributors";
-import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
+import TopContributorCard from "@components/atoms/TopContributorCard/top-contributor-card";
+import { useFetchTopContributors } from "@lib/hooks/useFetchTopContributors";
+import SkeletonWrapper from "@components/atoms/SkeletonLoader/skeleton-wrapper";
 
 interface TopContributorsPanelProps {
   loggedInUserLogin: string;

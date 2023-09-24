@@ -1,9 +1,9 @@
 import { ComponentStory } from "@storybook/react";
-import AuthContentWrapper from "components/molecules/AuthContentWrapper/auth-content-wrapper";
+import AuthContentWrapper from "@components/molecules/AuthContentWrapper/auth-content-wrapper";
 
-import Dashboard from "components/organisms/Dashboard/dashboard";
-import Repositories from "components/organisms/Repositories/repositories";
-import ReportsHistory from "components/molecules/ReportsHistory/reports-history";
+import Dashboard from "@components/organisms/Dashboard/dashboard";
+import Repositories from "@components/organisms/Repositories/repositories";
+import ReportsHistory from "@components/molecules/ReportsHistory/reports-history";
 
 import type { Report } from "interfaces/report-type";
 

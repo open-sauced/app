@@ -1,5 +1,5 @@
 import { ComponentStory } from "@storybook/react";
-import FilterCardSelect from "components/molecules/FilterCardSelect/filter-card-select";
+import FilterCardSelect from "@components/molecules/FilterCardSelect/filter-card-select";
 
 const storyConfig = {
   title: "Design System/Molecules/FilterCardSelect",

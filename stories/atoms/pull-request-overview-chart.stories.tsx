@@ -1,5 +1,5 @@
 import { ComponentStory } from "@storybook/react";
-import PullRequestOverviewChart from "components/atoms/PullRequestOverviewChart/pull-request-overview-chart";
+import PullRequestOverviewChart from "@components/atoms/PullRequestOverviewChart/pull-request-overview-chart";
 
 const storyConfig = {
   title: "Design System/Atoms/Pull Request Overview Chart",

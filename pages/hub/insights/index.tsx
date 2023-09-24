@@ -1,15 +1,15 @@
 import Link from "next/link";
 import clsx from "clsx";
 
-import InsightRow from "components/molecules/InsightRow/insight-row";
-import Pagination from "components/molecules/Pagination/pagination";
-import PaginationResults from "components/molecules/PaginationResults/pagination-result";
-import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
+import InsightRow from "@components/molecules/InsightRow/insight-row";
+import Pagination from "@components/molecules/Pagination/pagination";
+import PaginationResults from "@components/molecules/PaginationResults/pagination-result";
+import SkeletonWrapper from "@components/atoms/SkeletonLoader/skeleton-wrapper";
 
-import HubLayout from "layouts/hub";
+import HubLayout from "@layouts/hub";
 import { WithPageLayout } from "interfaces/with-page-layout";
-import useUserInsights from "lib/hooks/useUserInsights";
-import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
+import useUserInsights from "@lib/hooks/useUserInsights";
+import useSupabaseAuth from "@lib/hooks/useSupabaseAuth";
 
 const InsightsHub: WithPageLayout = () => {
   const { user } = useSupabaseAuth();

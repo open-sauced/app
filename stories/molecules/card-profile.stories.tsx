@@ -1,6 +1,6 @@
 import React from "react";
 import { ComponentStory } from "@storybook/react";
-import CardProfile from "components/molecules/CardProfile/card-profile";
+import CardProfile from "@components/molecules/CardProfile/card-profile";
 
 const storyConfig = {
   title: "Design System/Molecules/Card Profile",

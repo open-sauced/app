@@ -1,4 +1,4 @@
-import Dashboard from "components/organisms/Dashboard/dashboard";
+import Dashboard from "@components/organisms/Dashboard/dashboard";
 
 const StoryConfig = {
   title: "Design System/organisms/Dashboard",

@@ -4,22 +4,22 @@ import { useEffect, useState } from "react";
 import { useTransition, animated } from "@react-spring/web";
 import Image from "next/image";
 import cntl from "cntl";
-import Button from "components/atoms/Button/button";
-import HeaderLogo from "components/molecules/HeaderLogo/header-logo";
-import DevCardCarousel, { DevCardCarouselProps } from "components/organisms/DevCardCarousel/dev-card-carousel";
-import { getAvatarByUsername } from "lib/utils/github";
-import { fetchContributorPRs } from "lib/hooks/api/useContributorPullRequests";
-import getContributorPullRequestVelocity from "lib/utils/get-contributor-pr-velocity";
-import getPercent from "lib/utils/get-percent";
-import { getRepoList } from "lib/hooks/useRepoList";
-import { DevCardProps } from "components/molecules/DevCard/dev-card";
-import SEO from "layouts/SEO/SEO";
-import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
-import { cardImageUrl, linkedinCardShareUrl, twitterCardShareUrl } from "lib/utils/urls";
-import FullHeightContainer from "components/atoms/FullHeightContainer/full-height-container";
-import TwitterIcon from "../../../img/icons/social-twitter.svg";
-import LinkinIcon from "../../../img/icons/social-linkedin.svg";
-import BubbleBG from "../../../img/bubble-bg.svg";
+import Button from "@components/atoms/Button/button";
+import HeaderLogo from "@components/molecules/HeaderLogo/header-logo";
+import DevCardCarousel, { DevCardCarouselProps } from "@components/organisms/DevCardCarousel/dev-card-carousel";
+import { getAvatarByUsername } from "@lib/utils/github";
+import { fetchContributorPRs } from "@lib/hooks/api/useContributorPullRequests";
+import getContributorPullRequestVelocity from "@lib/utils/get-contributor-pr-velocity";
+import getPercent from "@lib/utils/get-percent";
+import { getRepoList } from "@lib/hooks/useRepoList";
+import { DevCardProps } from "@components/molecules/DevCard/dev-card";
+import SEO from "@layouts/SEO/SEO";
+import useSupabaseAuth from "@lib/hooks/useSupabaseAuth";
+import { cardImageUrl, linkedinCardShareUrl, twitterCardShareUrl } from "@lib/utils/urls";
+import FullHeightContainer from "@components/atoms/FullHeightContainer/full-height-container";
+import TwitterIcon from "@img/icons/social-twitter.svg";
+import LinkinIcon from "@img/icons/social-linkedin.svg";
+import BubbleBG from "@img/bubble-bg.svg";
 const ADDITIONAL_PROFILES_TO_LOAD = [
   "bdougie",
   "nickytonline",

@@ -1,5 +1,5 @@
 import React from "react";
-import LoginTopNav from "../components/organisms/LoginTopNav/login-top-nav";
+import LoginTopNav from "@components/organisms/LoginTopNav/login-top-nav";
 
 const LoginLayout = ({ children }: { children: React.ReactNode }) => {
   return (

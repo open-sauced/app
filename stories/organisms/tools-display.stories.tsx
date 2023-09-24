@@ -1,4 +1,4 @@
-import Tool from "../../components/organisms/ToolsDisplay/tools-display";
+import Tool from "@components/organisms/ToolsDisplay/tools-display";
 
 const storyConfig = {
   title: "Design System/Organisms/Tools Display",

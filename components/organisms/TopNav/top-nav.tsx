@@ -2,12 +2,12 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 
-import AuthSection from "components/molecules/AuthSection/auth-section";
-import HeaderLogo from "components/molecules/HeaderLogo/header-logo";
+import AuthSection from "@components/molecules/AuthSection/auth-section";
+import HeaderLogo from "@components/molecules/HeaderLogo/header-logo";
 
-import useSession from "lib/hooks/useSession";
-import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
-import { useFetchUser } from "lib/hooks/useFetchUser";
+import useSession from "@lib/hooks/useSession";
+import useSupabaseAuth from "@lib/hooks/useSupabaseAuth";
+import { useFetchUser } from "@lib/hooks/useFetchUser";
 
 const TopNav: React.FC = () => {
   const { user } = useSupabaseAuth();

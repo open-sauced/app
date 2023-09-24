@@ -3,9 +3,9 @@ import * as HoverCard from "@radix-ui/react-hover-card";
 import Link from "next/link";
 
 import Image from "next/image";
-import HoverCardWrapper from "components/molecules/HoverCardWrapper/hover-card-wrapper";
+import HoverCardWrapper from "@components/molecules/HoverCardWrapper/hover-card-wrapper";
 
-import { getAvatarByUsername } from "lib/utils/github";
+import { getAvatarByUsername } from "@lib/utils/github";
 
 declare interface AvatarProps {
   contributor: string;

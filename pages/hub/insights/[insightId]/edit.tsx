@@ -1,12 +1,12 @@
 import { useRouter } from "next/router";
 
-import InsightPage from "components/organisms/InsightPage/InsightPage";
-import HubLayout from "layouts/hub";
+import InsightPage from "@components/organisms/InsightPage/InsightPage";
+import HubLayout from "@layouts/hub";
 
 import { WithPageLayout } from "interfaces/with-page-layout";
-import useInsight from "lib/hooks/useInsight";
-import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
-import useRepositories from "lib/hooks/api/useRepositories";
+import useInsight from "@lib/hooks/useInsight";
+import useSupabaseAuth from "@lib/hooks/useSupabaseAuth";
+import useRepositories from "@lib/hooks/api/useRepositories";
 
 const EditInsightPage: WithPageLayout = () => {
   const { user } = useSupabaseAuth();

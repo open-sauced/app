@@ -1,6 +1,6 @@
 import React from "react";
-import Text from "components/atoms/Typography/text";
-import IconButton from "components/atoms/IconButton/icon-button";
+import Text from "@components/atoms/Typography/text";
+import IconButton from "@components/atoms/IconButton/icon-button";
 
 interface ComponentHeaderProps {
   title: string;

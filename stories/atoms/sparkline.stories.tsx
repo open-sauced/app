@@ -1,5 +1,5 @@
 import { ComponentStory } from "@storybook/react";
-import Sparkline from "../../components/atoms/Sparkline/sparkline";
+import Sparkline from "@components/atoms/Sparkline/sparkline";
 
 const storyConfig = {
   Sparkline: "Design System/Atoms/Sparkline",

@@ -14,10 +14,10 @@ import { BiGitMerge } from "react-icons/bi";
 import { VscIssues } from "react-icons/vsc";
 import { A11y, Pagination } from "swiper/modules";
 import Skeleton from "react-loading-skeleton";
-import Button from "components/atoms/Button/button";
-import Tooltip from "components/atoms/Tooltip/tooltip";
+import Button from "@components/atoms/Button/button";
+import Tooltip from "@components/atoms/Tooltip/tooltip";
 
-import { createHighlights } from "lib/hooks/createHighlights";
+import { createHighlights } from "@lib/hooks/createHighlights";
 import {
   getGithubIssueDetails,
   getGithubIssueComments,
@@ -28,22 +28,22 @@ import {
   generateRepoParts,
 } from "lib/utils/github";
 
-import { fetchGithubPRInfo } from "lib/hooks/fetchGithubPRInfo";
-import { useToast } from "lib/hooks/useToast";
-import TextInput from "components/atoms/TextInput/text-input";
-import { generatePrHighlightSummaryByCommitMsg } from "lib/utils/generate-pr-highlight-summary";
-import Fab from "components/atoms/Fab/fab";
-import { TypeWriterTextArea } from "components/atoms/TypeWriterTextArea/type-writer-text-area";
-import { fetchGithubIssueInfo } from "lib/hooks/fetchGithubIssueInfo";
-import generateIssueHighlightSummary from "lib/utils/generate-issue-highlight-summary";
-import { fetchDevToBlogInfo } from "lib/hooks/fetchDevToBlogInfo";
-import { getBlogDetails, isValidBlogUrl } from "lib/utils/dev-to";
-import generateBlogHighlightSummary from "lib/utils/generate-blog-highlight-summary";
-import Search from "components/atoms/Search/search";
-import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
+import { fetchGithubPRInfo } from "@lib/hooks/fetchGithubPRInfo";
+import { useToast } from "@lib/hooks/useToast";
+import TextInput from "@components/atoms/TextInput/text-input";
+import { generatePrHighlightSummaryByCommitMsg } from "@lib/utils/generate-pr-highlight-summary";
+import Fab from "@components/atoms/Fab/fab";
+import { TypeWriterTextArea } from "@components/atoms/TypeWriterTextArea/type-writer-text-area";
+import { fetchGithubIssueInfo } from "@lib/hooks/fetchGithubIssueInfo";
+import generateIssueHighlightSummary from "@lib/utils/generate-issue-highlight-summary";
+import { fetchDevToBlogInfo } from "@lib/hooks/fetchDevToBlogInfo";
+import { getBlogDetails, isValidBlogUrl } from "@lib/utils/dev-to";
+import generateBlogHighlightSummary from "@lib/utils/generate-blog-highlight-summary";
+import Search from "@components/atoms/Search/search";
+import useSupabaseAuth from "@lib/hooks/useSupabaseAuth";
+import GhOpenGraphImg from "../GhOpenGraphImg/gh-open-graph-img";
 import { Calendar } from "../Calendar/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "../Popover/popover";
-import GhOpenGraphImg from "../GhOpenGraphImg/gh-open-graph-img";
 import DevToSocialImg from "../DevToSocialImage/dev-to-social-img";
 import CardRepoList, { RepoList } from "../CardRepoList/card-repo-list";
 import {

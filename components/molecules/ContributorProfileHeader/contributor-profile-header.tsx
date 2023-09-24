@@ -8,11 +8,11 @@ import { SignInWithOAuthCredentials, User } from "@supabase/supabase-js";
 import { usePostHog } from "posthog-js/react";
 import { clsx } from "clsx";
 
-import Avatar from "components/atoms/Avatar/avatar";
-import RainbowBg from "img/rainbow-cover.png";
-import Button from "components/atoms/Button/button";
-import Text from "components/atoms/Typography/text";
-import { Textarea } from "components/atoms/Textarea/text-area";
+import Avatar from "@components/atoms/Avatar/avatar";
+import RainbowBg from "@img/rainbow-cover.png";
+import Button from "@components/atoms/Button/button";
+import Text from "@components/atoms/Typography/text";
+import { Textarea } from "@components/atoms/Textarea/text-area";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,9 +20,9 @@ import {
   DropdownMenuTrigger,
 } from "components/atoms/Dropdown/dropdown";
 
-import { useUserCollaborations } from "lib/hooks/useUserCollaborations";
-import { useToast } from "lib/hooks/useToast";
-import { cardPageUrl } from "lib/utils/urls";
+import { useUserCollaborations } from "@lib/hooks/useUserCollaborations";
+import { useToast } from "@lib/hooks/useToast";
+import { cardPageUrl } from "@lib/utils/urls";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../Dialog/dialog";
 
 interface ContributorProfileHeaderProps {

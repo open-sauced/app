@@ -1,21 +1,21 @@
 import { useUser } from "@supabase/auth-helpers-react";
 import { useState } from "react";
 
-import GitHubIcon from "img/icons/github-icon.svg";
+import GitHubIcon from "@img/icons/github-icon.svg";
 
-import Button from "components/atoms/Button/button";
-import Icon from "components/atoms/Icon/icon";
-import Title from "components/atoms/Typography/title";
-import Text from "components/atoms/Typography/text";
-import ReportsHistory from "components/molecules/ReportsHistory/reports-history";
-import SelectReportsFilter from "components/molecules/SelectReportsFilter/select-reports-filter";
-import StripeCheckoutButton from "components/organisms/StripeCheckoutButton/stripe-checkout-button";
+import Button from "@components/atoms/Button/button";
+import Icon from "@components/atoms/Icon/icon";
+import Title from "@components/atoms/Typography/title";
+import Text from "@components/atoms/Typography/text";
+import ReportsHistory from "@components/molecules/ReportsHistory/reports-history";
+import SelectReportsFilter from "@components/molecules/SelectReportsFilter/select-reports-filter";
+import StripeCheckoutButton from "@components/organisms/StripeCheckoutButton/stripe-checkout-button";
 
 import { Report } from "interfaces/report-type";
 
-import useFilterOptions from "lib/hooks/useFilterOptions";
-import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
-import getCurrentDate from "lib/utils/get-current-date";
+import useFilterOptions from "@lib/hooks/useFilterOptions";
+import useSupabaseAuth from "@lib/hooks/useSupabaseAuth";
+import getCurrentDate from "@lib/utils/get-current-date";
 
 const USERDEVICESTORAGENAME = "reportState";
 

@@ -3,15 +3,15 @@ import Link from "next/link";
 
 import formatDistanceToNowStrict from "date-fns/formatDistanceToNowStrict";
 
-import { useFetchFollowingHighlights } from "lib/hooks/useFetchFollowingHighlights";
-import { setQueryParams } from "lib/utils/query-params";
+import { useFetchFollowingHighlights } from "@lib/hooks/useFetchFollowingHighlights";
+import { setQueryParams } from "@lib/utils/query-params";
 
-import Avatar from "components/atoms/Avatar/avatar";
-import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
-import ContributorHighlightCard from "components/molecules/ContributorHighlight/contributor-highlight-card";
-import Pagination from "components/molecules/Pagination/pagination";
-import PaginationResults from "components/molecules/PaginationResults/pagination-result";
-import DashContainer from "components/atoms/DashedContainer/DashContainer";
+import Avatar from "@components/atoms/Avatar/avatar";
+import SkeletonWrapper from "@components/atoms/SkeletonLoader/skeleton-wrapper";
+import ContributorHighlightCard from "@components/molecules/ContributorHighlight/contributor-highlight-card";
+import Pagination from "@components/molecules/Pagination/pagination";
+import PaginationResults from "@components/molecules/PaginationResults/pagination-result";
+import DashContainer from "@components/atoms/DashedContainer/DashContainer";
 
 export interface HighlightWrapperProps {
   emojis: DbEmojis[];

@@ -3,10 +3,10 @@ import React from "react";
 
 import formatDistanceToNowStrict from "date-fns/formatDistanceToNowStrict";
 
-import Avatar from "components/atoms/Avatar/avatar";
-import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
-import ContributorHighlightCard from "components/molecules/ContributorHighlight/contributor-highlight-card";
-import DashContainer from "components/atoms/DashedContainer/DashContainer";
+import Avatar from "@components/atoms/Avatar/avatar";
+import SkeletonWrapper from "@components/atoms/SkeletonLoader/skeleton-wrapper";
+import ContributorHighlightCard from "@components/molecules/ContributorHighlight/contributor-highlight-card";
+import DashContainer from "@components/atoms/DashedContainer/DashContainer";
 
 interface HomeHighlightWrapperProps {
   mutate: () => void;

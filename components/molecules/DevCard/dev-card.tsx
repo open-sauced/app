@@ -7,13 +7,13 @@ import { GiftIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import clsx from "clsx";
 import Tilt from "react-parallax-tilt";
-import Button from "components/atoms/Button/button";
-import Pill, { PillProps } from "components/atoms/Pill/pill";
-import Icon from "components/atoms/Icon/icon";
-import CardSauceBGSVG from "img/card-sauce-bg.svg";
-import openSaucedImg from "img/openSauced-icon.png";
-import PRIcon from "img/icons/pr-icon.svg";
-import { getRelativeDays } from "lib/utils/date-utils";
+import Button from "@components/atoms/Button/button";
+import Pill, { PillProps } from "@components/atoms/Pill/pill";
+import Icon from "@components/atoms/Icon/icon";
+import CardSauceBGSVG from "@img/card-sauce-bg.svg";
+import openSaucedImg from "@img/openSauced-icon.png";
+import PRIcon from "@img/icons/pr-icon.svg";
+import { getRelativeDays } from "@lib/utils/date-utils";
 
 export interface DevCardProps {
   username: string;

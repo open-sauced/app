@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from "@storybook/react";
-import ContributorProfilePage from "components/organisms/ContributorProfilePage/contributor-profile-page";
+import ContributorProfilePage from "@components/organisms/ContributorProfilePage/contributor-profile-page";
 
 const storyConfig = {
   title: "Design System/Organisms/Contributor Profile Page",

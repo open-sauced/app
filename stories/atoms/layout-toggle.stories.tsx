@@ -1,5 +1,5 @@
 import { ComponentStory } from "@storybook/react";
-import LayoutToggle from "components/atoms/LayoutToggle/layout-toggle";
+import LayoutToggle from "@components/atoms/LayoutToggle/layout-toggle";
 
 const storyConfig = {
   title: "Design System/Atoms/LayoutToggle",

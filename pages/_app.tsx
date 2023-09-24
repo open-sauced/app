@@ -12,17 +12,17 @@ import { SWRConfig } from "swr";
 import Script from "next/script";
 import posthog from "posthog-js";
 import { PostHogProvider } from "posthog-js/react";
-import { TipProvider } from "components/atoms/Tooltip/tooltip";
+import { TipProvider } from "@components/atoms/Tooltip/tooltip";
 
-import publicApiFetcher from "lib/utils/public-api-fetcher";
-import { initiateAnalytics } from "lib/utils/analytics";
-import { supabase } from "lib/utils/supabase";
+import publicApiFetcher from "@lib/utils/public-api-fetcher";
+import { initiateAnalytics } from "@lib/utils/analytics";
+import { supabase } from "@lib/utils/supabase";
 
-import SEO from "layouts/SEO/SEO";
-import { Toaster } from "components/molecules/Toaster/toaster";
-import { useMediaQuery } from "lib/hooks/useMediaQuery";
-import useSession from "lib/hooks/useSession";
-import PrivateWrapper from "layouts/private-wrapper";
+import SEO from "@layouts/SEO/SEO";
+import { Toaster } from "@components/molecules/Toaster/toaster";
+import { useMediaQuery } from "@lib/hooks/useMediaQuery";
+import useSession from "@lib/hooks/useSession";
+import PrivateWrapper from "@layouts/private-wrapper";
 
 import type { AppProps } from "next/app";
 

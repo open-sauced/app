@@ -1,8 +1,8 @@
 import clsx from "clsx";
 import React from "react";
-import TableTitle from "components/atoms/TableTitle/table-title";
-import { classNames } from "components/organisms/RepositoriesTable/repositories-table";
-import Checkbox from "components/atoms/Checkbox/checkbox";
+import TableTitle from "@components/atoms/TableTitle/table-title";
+import { classNames } from "@components/organisms/RepositoriesTable/repositories-table";
+import Checkbox from "@components/atoms/Checkbox/checkbox";
 
 interface ContributorListTableHeadersProps {
   selected?: boolean;

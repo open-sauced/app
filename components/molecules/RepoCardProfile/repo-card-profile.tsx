@@ -1,7 +1,7 @@
 import { StaticImageData } from "next/image";
 import { BiGitPullRequest } from "react-icons/bi";
 import { VscIssues } from "react-icons/vsc";
-import Avatar from "components/atoms/Avatar/avatar";
+import Avatar from "@components/atoms/Avatar/avatar";
 
 export interface RepoCardProfileProps {
   avatar?: string | StaticImageData;

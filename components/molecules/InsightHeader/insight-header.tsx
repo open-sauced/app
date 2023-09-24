@@ -5,14 +5,14 @@ import { usePostHog } from "posthog-js/react";
 
 import { FiCopy } from "react-icons/fi";
 
-import getRepoInsights from "lib/utils/get-repo-insights";
-import Button from "components/atoms/Button/button";
-import Title from "components/atoms/Typography/title";
-import Badge from "components/atoms/InsightBadge/insight-badge";
-import ContextThumbnail from "components/atoms/ContextThumbnail/context-thumbnail";
-import { truncateString } from "lib/utils/truncate-string";
-import useRepositories from "lib/hooks/api/useRepositories";
-import { useToast } from "lib/hooks/useToast";
+import getRepoInsights from "@lib/utils/get-repo-insights";
+import Button from "@components/atoms/Button/button";
+import Title from "@components/atoms/Typography/title";
+import Badge from "@components/atoms/InsightBadge/insight-badge";
+import ContextThumbnail from "@components/atoms/ContextThumbnail/context-thumbnail";
+import { truncateString } from "@lib/utils/truncate-string";
+import useRepositories from "@lib/hooks/api/useRepositories";
+import { useToast } from "@lib/hooks/useToast";
 import CardRepoList from "../CardRepoList/card-repo-list";
 
 interface InsightHeaderProps {

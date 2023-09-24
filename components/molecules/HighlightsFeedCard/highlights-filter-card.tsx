@@ -1,5 +1,5 @@
-import Title from "components/atoms/Typography/title";
-import Icon from "components/atoms/Icon/icon";
+import Title from "@components/atoms/Typography/title";
+import Icon from "@components/atoms/Icon/icon";
 
 interface HighlightsFilterCardProps {
   repos: { repoName: string; repoIcon: string; full_name: string }[];

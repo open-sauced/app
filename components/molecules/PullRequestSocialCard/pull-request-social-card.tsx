@@ -2,8 +2,8 @@ import { IconContext } from "react-icons";
 import { VscGitPullRequest } from "react-icons/vsc";
 import { FaRegCommentAlt } from "react-icons/fa";
 
-import Text from "components/atoms/Typography/text";
-import Avatar from "components/atoms/Avatar/avatar";
+import Text from "@components/atoms/Typography/text";
+import Avatar from "@components/atoms/Avatar/avatar";
 import CardHorizontalBarChart, { LanguageObject } from "../CardHorizontalBarChart/card-horizontal-bar-chart";
 
 interface PullRequestSocialCardProps {

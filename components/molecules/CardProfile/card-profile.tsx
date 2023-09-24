@@ -1,13 +1,13 @@
 import { StaticImageData } from "next/image";
 import Link from "next/link";
 
-import Avatar from "components/atoms/Avatar/avatar";
-import Icon from "components/atoms/Icon/icon";
-import Text from "components/atoms/Typography/text";
+import Avatar from "@components/atoms/Avatar/avatar";
+import Icon from "@components/atoms/Icon/icon";
+import Text from "@components/atoms/Typography/text";
 
-import ForkIcon from "img/icons/fork-icon.svg";
-import FirstPRIcon from "img/icons/first-pr-icon.svg";
-import Tooltip from "components/atoms/Tooltip/tooltip";
+import ForkIcon from "@img/icons/fork-icon.svg";
+import FirstPRIcon from "@img/icons/first-pr-icon.svg";
+import Tooltip from "@components/atoms/Tooltip/tooltip";
 
 interface CardProfileProps {
   githubAvatar?: string | StaticImageData;

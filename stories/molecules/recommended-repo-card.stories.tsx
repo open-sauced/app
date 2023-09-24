@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from "@storybook/react";
-import RecommendedRepoCard from "components/molecules/RecommendedRepoCard/recommended-repo-card";
+import RecommendedRepoCard from "@components/molecules/RecommendedRepoCard/recommended-repo-card";
 
 const storyConfig = {
   title: "Design System/Molecules/Recommended Repo Card",

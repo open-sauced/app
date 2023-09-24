@@ -1,5 +1,5 @@
 import Image, { StaticImageData } from "next/image";
-import cachedImage from "lib/utils/cachedImages";
+import cachedImage from "@lib/utils/cachedImages";
 
 interface AvatarProps {
   className?: string;

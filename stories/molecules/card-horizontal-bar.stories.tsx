@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from "@storybook/react";
-import CardHorizontalBarChart from "components/molecules/CardHorizontalBarChart/card-horizontal-bar-chart";
+import CardHorizontalBarChart from "@components/molecules/CardHorizontalBarChart/card-horizontal-bar-chart";
 import { testLanguageList } from "stories/testData/mockedData";
 
 const storyConfig: Meta<typeof CardHorizontalBarChart> = {

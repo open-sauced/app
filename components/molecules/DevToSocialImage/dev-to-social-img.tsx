@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import InvalidImage from "img/icons/fallback-image-disabled-square.svg";
+import InvalidImage from "@img/icons/fallback-image-disabled-square.svg";
 interface DevToSocialImgProps {
   blogLink: string;
   className?: string;

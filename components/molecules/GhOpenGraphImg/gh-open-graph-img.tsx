@@ -1,5 +1,5 @@
-import { generateGhOgImage } from "lib/utils/github";
-import InvalidImage from "img/icons/fallback-image-disabled-square.svg";
+import { generateGhOgImage } from "@lib/utils/github";
+import InvalidImage from "@img/icons/fallback-image-disabled-square.svg";
 interface GhOpenGraphImgProps {
   githubLink: string;
   className?: string;

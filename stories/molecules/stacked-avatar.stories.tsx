@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from "@storybook/react";
-import StackedAvatar from "components/molecules/StackedAvatar/stacked-avatar";
+import StackedAvatar from "@components/molecules/StackedAvatar/stacked-avatar";
 import { mockDbContributions } from "../testData/mockedData";
 
 const storyConfig = {

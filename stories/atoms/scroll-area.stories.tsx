@@ -1,7 +1,7 @@
 import { ComponentStory } from "@storybook/react";
-import { ScrollArea } from "components/atoms/ScrollArea/scroll-area";
+import { ScrollArea } from "@components/atoms/ScrollArea/scroll-area";
 
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "components/atoms/Select/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@components/atoms/Select/select";
 
 const storyConfig = {
   title: "Design System/Atoms/ScrollArea",

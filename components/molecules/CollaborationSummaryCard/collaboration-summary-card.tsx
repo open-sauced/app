@@ -2,7 +2,7 @@ import { TbMessageCode } from "react-icons/tb";
 
 import React from "react";
 import { BiMessage } from "react-icons/bi";
-import Avatar from "components/atoms/Avatar/avatar";
+import Avatar from "@components/atoms/Avatar/avatar";
 import { CollaborationRequestObject } from "../CollaborationCard/collaboration-card";
 
 interface CollaborationSummaryCardProps {

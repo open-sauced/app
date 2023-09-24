@@ -6,12 +6,12 @@ import { BsDiscord } from "react-icons/bs";
 import { FiClock, FiGithub, FiLinkedin, FiTwitter } from "react-icons/fi";
 
 import clsx from "clsx";
-import LanguagePill from "components/atoms/LanguagePill/LanguagePill";
-import Title from "components/atoms/Typography/title";
-import Badge from "components/atoms/Badge/badge";
-import { getTimeByTimezone, getTimezone } from "lib/utils/timezones";
-import Tooltip from "components/atoms/Tooltip/tooltip";
-import { getFormattedDate } from "lib/utils/date-utils";
+import LanguagePill from "@components/atoms/LanguagePill/LanguagePill";
+import Title from "@components/atoms/Typography/title";
+import Badge from "@components/atoms/Badge/badge";
+import { getTimeByTimezone, getTimezone } from "@lib/utils/timezones";
+import Tooltip from "@components/atoms/Tooltip/tooltip";
+import { getFormattedDate } from "@lib/utils/date-utils";
 
 interface ContributorProfileInfoProps {
   githubName: string;

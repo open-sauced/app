@@ -4,12 +4,12 @@ import { BsPencilFill } from "react-icons/bs";
 import { MdOutlineArrowForwardIos } from "react-icons/md";
 import { User } from "@supabase/supabase-js";
 
-import { getRelativeDays } from "lib/utils/date-utils";
-import useRepositories from "lib/hooks/api/useRepositories";
-import getRepoInsights from "lib/utils/get-repo-insights";
-import Text from "components/atoms/Typography/text";
-import Pill from "components/atoms/Pill/pill";
-import getPercent from "../../../lib/utils/get-percent";
+import { getRelativeDays } from "@lib/utils/date-utils";
+import useRepositories from "@lib/hooks/api/useRepositories";
+import getRepoInsights from "@lib/utils/get-repo-insights";
+import Text from "@components/atoms/Typography/text";
+import Pill from "@components/atoms/Pill/pill";
+import getPercent from "@lib/utils/get-percent";
 
 import CardRepoList from "../CardRepoList/card-repo-list";
 

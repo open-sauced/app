@@ -1,5 +1,5 @@
 import { ComponentStory } from "@storybook/react";
-import ComponentHeader from "../../components/molecules/ComponentHeader/component-header";
+import ComponentHeader from "@components/molecules/ComponentHeader/component-header";
 
 const storyConfig = {
   title: "Design System/Molecules/Component Header",

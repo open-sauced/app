@@ -1,5 +1,5 @@
 import { ComponentStory } from "@storybook/react";
-import Loader from "components/templates/Loader/loader";
+import Loader from "@components/templates/Loader/loader";
 
 const StoryConfig = {
   title: "Design System/Template/Loader",

@@ -1,8 +1,8 @@
 import { useState } from "react";
-import Button from "components/atoms/Button/button";
-import Search from "components/atoms/Search/search";
-import { validateEmail } from "lib/utils/validate-email";
-import { useToast } from "lib/hooks/useToast";
+import Button from "@components/atoms/Button/button";
+import Search from "@components/atoms/Search/search";
+import { validateEmail } from "@lib/utils/validate-email";
+import { useToast } from "@lib/hooks/useToast";
 import TeamMemberRow from "../TeamMemberRow/team-member-row";
 
 interface TeamMembersConfigProps {

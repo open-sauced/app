@@ -1,16 +1,16 @@
 import React from "react";
 import { useRouter } from "next/router";
 
-import Footer from "components/organisms/Footer/footer";
-import Header from "components/organisms/Header/header";
-import Nav from "components/organisms/ToolList/nav";
-import TopNav from "components/organisms/TopNav/top-nav";
-import InsightHeader from "components/molecules/InsightHeader/insight-header";
+import Footer from "@components/organisms/Footer/footer";
+import Header from "@components/organisms/Header/header";
+import Nav from "@components/organisms/ToolList/nav";
+import TopNav from "@components/organisms/TopNav/top-nav";
+import InsightHeader from "@components/molecules/InsightHeader/insight-header";
 
-import useNav from "lib/hooks/useNav";
-import useInsight from "lib/hooks/useInsight";
-import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
-import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
+import useNav from "@lib/hooks/useNav";
+import useInsight from "@lib/hooks/useInsight";
+import useSupabaseAuth from "@lib/hooks/useSupabaseAuth";
+import SkeletonWrapper from "@components/atoms/SkeletonLoader/skeleton-wrapper";
 
 const HubPageLayout = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();

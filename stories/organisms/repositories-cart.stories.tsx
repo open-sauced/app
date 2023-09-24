@@ -1,6 +1,6 @@
 import { ComponentStory } from "@storybook/react";
-import RepositoriesCart from "components/organisms/RepositoriesCart/repositories-cart";
-import RepositoryCartItem from "components/molecules/ReposoitoryCartItem/repository-cart-item";
+import RepositoriesCart from "@components/organisms/RepositoriesCart/repositories-cart";
+import RepositoryCartItem from "@components/molecules/ReposoitoryCartItem/repository-cart-item";
 
 const storyConfig = {
   title: "Design System/Organisms/RepositoriesCart",

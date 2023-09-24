@@ -1,6 +1,6 @@
 import { Meta, StoryFn } from "@storybook/react";
-import { TipProvider } from "components/atoms/Tooltip/tooltip";
-import ListCard from "components/molecules/ListCard/list-card";
+import { TipProvider } from "@components/atoms/Tooltip/tooltip";
+import ListCard from "@components/molecules/ListCard/list-card";
 
 const storyConfig = {
   title: "Design System/Molecules/ListCard",

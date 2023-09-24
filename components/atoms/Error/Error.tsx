@@ -1,7 +1,7 @@
 import React from "react";
 import clsx from "clsx";
 import Text from "@supabase/ui/dist/cjs/components/Typography/Text";
-import ErrorIcon from "img/errorIcon.svg";
+import ErrorIcon from "@img/errorIcon.svg";
 import Icon from "../Icon/icon";
 
 interface ErrorProps {

@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
+import TypographyWrapper from "@components/atoms/Typography/wrapper";
 import type { Meta, StoryFn } from "@storybook/react";
-import TypographyWrapper from "../../components/atoms/Typography/wrapper";
 
 const meta: Meta<typeof TypographyWrapper> = {
   title: "Design System/Atoms/Typography/Wrapper",

@@ -8,20 +8,20 @@ import { FiLogOut, FiSettings } from "react-icons/fi";
 import { BiLinkExternal } from "react-icons/bi";
 import { Divider } from "@supabase/ui";
 
-import useSession from "lib/hooks/useSession";
+import useSession from "@lib/hooks/useSession";
 
-import PersonIcon from "img/icons/person-icon.svg";
+import PersonIcon from "@img/icons/person-icon.svg";
 
-import Avatar from "components/atoms/Avatar/avatar";
-import Button from "components/atoms/Button/button";
-import Text from "components/atoms/Typography/text";
-import GitHubIcon from "img/icons/github-icon.svg";
-import Icon from "components/atoms/Icon/icon";
+import Avatar from "@components/atoms/Avatar/avatar";
+import Button from "@components/atoms/Button/button";
+import Text from "@components/atoms/Typography/text";
+import GitHubIcon from "@img/icons/github-icon.svg";
+import Icon from "@components/atoms/Icon/icon";
+import useSupabaseAuth from "@lib/hooks/useSupabaseAuth";
+import userAvatar from "@img/ellipse-1.png";
+import downArrow from "@img/chevron-down.svg";
 import DropdownList from "../DropdownList/dropdown-list";
 import OnboardingButton from "../OnboardingButton/onboarding-button";
-import userAvatar from "../../../img/ellipse-1.png";
-import downArrow from "../../../img/chevron-down.svg";
-import useSupabaseAuth from "../../../lib/hooks/useSupabaseAuth";
 
 const AuthSection: React.FC = ({}) => {
   const router = useRouter();

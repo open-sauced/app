@@ -1,5 +1,5 @@
 import { ComponentStory } from "@storybook/react";
-import Pagination from "components/molecules/Pagination/pagination";
+import Pagination from "@components/molecules/Pagination/pagination";
 
 const StoryConfig = {
   title: "Design System/Molecules/Pagination",

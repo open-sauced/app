@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Pizza from "img/Sauce.svg";
+import Pizza from "@img/Sauce.svg";
 interface LoaderProps {
   theme: "dark" | "light";
 }

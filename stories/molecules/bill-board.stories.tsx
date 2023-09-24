@@ -1,5 +1,5 @@
 import { Meta, StoryFn } from "@storybook/react";
-import AnnouncementCard from "components/molecules/AnnouncementCard/announcement-card";
+import AnnouncementCard from "@components/molecules/AnnouncementCard/announcement-card";
 
 const storyConfig = {
   title: "design System/Molecules/BillBoard",
