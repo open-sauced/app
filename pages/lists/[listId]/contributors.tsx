@@ -1,6 +1,7 @@
 import useSWR, { Fetcher } from "swr";
 import { useState } from "react";
 import { GetServerSidePropsContext } from "next";
+import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import ListPageLayout from "layouts/lists";
 import publicApiFetcher from "lib/utils/public-api-fetcher";
 import ContributorTable from "components/organisms/ContributorsTable/contributors-table";
@@ -46,14 +47,29 @@ const useContributorsList = (listId: string) => {
 };
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
+  const supabase = createPagesServerClient(ctx);
+
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+  const bearerToken = session ? session.access_token : "";
+
   const { listId } = ctx.params as { listId: string };
   const [{ data, error: contributorListError }, { data: list, error }] = await Promise.all([
     (await fetchApiData)<ContributorList>({
-      context: ctx,
       path: `lists/${listId}/contributors`,
+      bearerToken,
     }),
-    await fetchApiData<DBList>({ context: ctx, path: `lists/${listId}` }),
+    await fetchApiData<DBList>({ path: `lists/${listId}`, bearerToken }),
   ]);
+
+  // TODO: error handling
+
+  if (error?.status === 404) {
+    return {
+      notFound: true,
+    };
+  }
 
   const contributors = convertToContributors(data?.data);
 
