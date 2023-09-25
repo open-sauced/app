@@ -86,20 +86,21 @@ const NewsletterForm = () => {
                 <input type="hidden" value="newsletter" name="form-name" />
               </label>
             </div>
-            <div className="flex items-center justify-between gap-1 ">
+            <div className="flex items-center justify-between gap-1 w-full">
               <TextInput
                 handleChange={(value) => handleChange(value)}
                 state={isValidEmail ? "valid" : "invalid"}
                 value={email}
-                className="w-full text-sm focus:outline-none"
+                className="text-sm focus:outline-none"
                 type="text"
                 name="email"
                 placeholder="Email"
+                style={{ width: "100%" }}
               />
               <Button
                 loading={loading}
                 className={clsx(
-                  "flex justify-center py-1 w-32  border-light-orange-7 text-light-orange-10",
+                  "flex flex-none justify-center py-1 border-light-orange-7 text-light-orange-10",
                   loading && "px-2"
                 )}
                 showLoadingText={false}
