@@ -1,12 +1,12 @@
 {
   "name": "@open-sauced/insights",
-  "version": "1.65.0",
+  "version": "1.66.0-beta.3",
   "lockfileVersion": 3,
   "requires": true,
   "packages": {
     "": {
       "name": "@open-sauced/insights",
-      "version": "1.65.0",
+      "version": "1.66.0-beta.3",
       "hasInstallScript": true,
       "license": "Apache 2.0",
       "dependencies": {
@@ -44,6 +44,7 @@
         "@use-gesture/react": "^10.2.27",
         "@vercel/og": "^0.5.8",
         "clsx": "^1.2.1",
+        "cmdk": "^0.2.0",
         "cntl": "^1.0.0",
         "date-fns": "^2.29.3",
         "echarts": "^5.4.1",
@@ -58,7 +59,7 @@
         "react-dom": "^18.2.0",
         "react-emoji-render": "^2.0.1",
         "react-hot-toast": "^2.4.0",
-        "react-icons": "^4.7.1",
+        "react-icons": "^4.11.0",
         "react-loading-skeleton": "^3.1.0",
         "react-parallax-tilt": "^1.7.151",
         "react-schemaorg": "^2.0.0",
@@ -69,6 +70,7 @@
         "swiper": "^10.2.0",
         "swr": "^2.0.3",
         "tailwindcss-radix": "^2.7.0",
+        "tier": "^5.10.0",
         "zustand": "^4.3.2"
       },
       "devDependencies": {
@@ -16658,6 +16660,45 @@
         "node": ">=6"
       }
     },
+    "node_modules/cmdk": {
+      "version": "0.2.0",
+      "resolved": "https://registry.npmjs.org/cmdk/-/cmdk-0.2.0.tgz",
+      "integrity": "sha512-JQpKvEOb86SnvMZbYaFKYhvzFntWBeSZdyii0rZPhKJj9uwJBxu4DaVYDrRN7r3mPop56oPhRw+JYWTKs66TYw==",
+      "dependencies": {
+        "@radix-ui/react-dialog": "1.0.0",
+        "command-score": "0.1.2"
+      },
+      "peerDependencies": {
+        "react": "^18.0.0",
+        "react-dom": "^18.0.0"
+      }
+    },
+    "node_modules/cmdk/node_modules/@radix-ui/react-dialog": {
+      "version": "1.0.0",
+      "resolved": "https://registry.npmjs.org/@radix-ui/react-dialog/-/react-dialog-1.0.0.tgz",
+      "integrity": "sha512-Yn9YU+QlHYLWwV1XfKiqnGVpWYWk6MeBVM6x/bcoyPvxgjQGoeT35482viLPctTMWoMw0PoHgqfSox7Ig+957Q==",
+      "dependencies": {
+        "@babel/runtime": "^7.13.10",
+        "@radix-ui/primitive": "1.0.0",
+        "@radix-ui/react-compose-refs": "1.0.0",
+        "@radix-ui/react-context": "1.0.0",
+        "@radix-ui/react-dismissable-layer": "1.0.0",
+        "@radix-ui/react-focus-guards": "1.0.0",
+        "@radix-ui/react-focus-scope": "1.0.0",
+        "@radix-ui/react-id": "1.0.0",
+        "@radix-ui/react-portal": "1.0.0",
+        "@radix-ui/react-presence": "1.0.0",
+        "@radix-ui/react-primitive": "1.0.0",
+        "@radix-ui/react-slot": "1.0.0",
+        "@radix-ui/react-use-controllable-state": "1.0.0",
+        "aria-hidden": "^1.1.1",
+        "react-remove-scroll": "2.5.4"
+      },
+      "peerDependencies": {
+        "react": "^16.8 || ^17.0 || ^18.0",
+        "react-dom": "^16.8 || ^17.0 || ^18.0"
+      }
+    },
     "node_modules/cntl": {
       "version": "1.0.0",
       "resolved": "https://registry.npmjs.org/cntl/-/cntl-1.0.0.tgz",
@@ -16711,6 +16752,11 @@
       "engines": {
         "node": ">= 0.8"
       }
+    },
+    "node_modules/command-score": {
+      "version": "0.1.2",
+      "resolved": "https://registry.npmjs.org/command-score/-/command-score-0.1.2.tgz",
+      "integrity": "sha512-VtDvQpIJBvBatnONUsPzXYFVKQQAhuf3XTNOAsdBxCNO/QCtUUd8LSgjn0GVarBkCad6aJCZfXgrjYbl/KRr7w=="
     },
     "node_modules/commander": {
       "version": "2.20.3",
@@ -43635,9 +43681,9 @@
       }
     },
     "node_modules/react-icons": {
-      "version": "4.7.1",
-      "resolved": "https://registry.npmjs.org/react-icons/-/react-icons-4.7.1.tgz",
-      "integrity": "sha512-yHd3oKGMgm7zxo3EA7H2n7vxSoiGmHk5t6Ou4bXsfcgWyhfDKMpyKfhHR6Bjnn63c+YXBLBPUql9H4wPJM6sXw==",
+      "version": "4.11.0",
+      "resolved": "https://registry.npmjs.org/react-icons/-/react-icons-4.11.0.tgz",
+      "integrity": "sha512-V+4khzYcE5EBk/BvcuYRq6V/osf11ODUM2J8hg2FDSswRrGvqiYUYPRy4OdrWaQOBj4NcpJfmHZLNaD+VH0TyA==",
       "peerDependencies": {
         "react": "*"
       }
@@ -45799,6 +45845,17 @@
       "dev": true,
       "dependencies": {
         "safe-buffer": "~5.1.0"
+      }
+    },
+    "node_modules/tier": {
+      "version": "5.10.0",
+      "resolved": "https://registry.npmjs.org/tier/-/tier-5.10.0.tgz",
+      "integrity": "sha512-fAYhII+42Y37/RQbt7UqMB5BUjllg/mDhrjLEk6PRCC2ud7ltiNXyoj5ev/F4HU6wPU0fMCMZs9F65Xrju8BfQ==",
+      "engines": {
+        "node": ">=12"
+      },
+      "optionalDependencies": {
+        "node-fetch": "^2.6.7"
       }
     },
     "node_modules/timers-browserify": {

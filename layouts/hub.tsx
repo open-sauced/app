@@ -28,7 +28,7 @@ const HubLayout = ({ children }: { children: React.ReactNode }) => {
       try {
         const currentUser = await supabase.auth.getSession();
 
-        if (!currentUser?.data?.session || onboarded === false) {
+        if (!currentUser?.data?.session) {
           await router.push("/feed");
         }
       } catch (e: unknown) {
@@ -50,45 +50,52 @@ const HubLayout = ({ children }: { children: React.ReactNode }) => {
       <TopNav />
       <div className="flex flex-col items-center pt-20 page-container grow md:pt-14">
         <main className="flex flex-col items-center flex-1 w-full px-3 py-8 md:px-2 bg-light-slate-2">
-          {user && onboarded ? (
-            <div className="container px-2 mx-auto md:px-16">
-              <div className="container flex flex-col w-full gap-4 py-2">
-                <Title className="-mb-6 text-base text-sauced-orange">Your pages</Title>
+          {user ? (
+            <>
+              <div className="container px-2 mx-auto md:px-16">
+                {router.pathname.split("/")[3] !== "new" ? (
+                  <div className="container flex flex-col w-full gap-4 py-2">
+                    <Title className="-mb-6 text-base text-sauced-orange">Your pages</Title>
 
-                <nav className="items-center justify-between block py-2 sm:flex ">
-                  <ul className="flex items-center gap-3">
-                    {navLinks.map((link, index) => (
-                      <li key={`hub-nav-${index}-${link.name}`}>
-                        <Link
-                          className={clsx("text-3xl leading-none font-medium mx-0", getActiveLinkClassNames(link.href))}
-                          href={link.href}
-                        >
-                          {link.name}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
+                    <nav className="items-center justify-between block py-2 sm:flex ">
+                      <ul className="flex items-center gap-3">
+                        {navLinks.map((link, index) => (
+                          <li key={`hub-nav-${index}-${link.name}`}>
+                            <Link
+                              className={clsx(
+                                "text-3xl leading-none font-medium mx-0",
+                                getActiveLinkClassNames(link.href)
+                              )}
+                              href={link.href}
+                            >
+                              {link.name}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
 
-                  <div className="flex items-center gap-3 mt-4">
-                    {/* Search box temporarily hidden */}
-                    <div className="hidden w-58">
-                      <Search placeholder="Search repositories" className="max-w-full" name={"query"} />
-                    </div>
-                    {router.pathname.split("/")[2] === "insights" ? (
-                      <Button href="/hub/insights/new" variant="primary">
-                        Add Insight Page
-                      </Button>
-                    ) : (
-                      <Button href="/hub/lists/new" variant="primary">
-                        Add List
-                      </Button>
-                    )}
+                      <div className="flex items-center gap-3 mt-4">
+                        {/* Search box temporarily hidden */}
+                        <div className="hidden w-58">
+                          <Search placeholder="Search repositories" className="max-w-full" name={"query"} />
+                        </div>
+                        {router.pathname.split("/")[2] === "insights" ? (
+                          <Button href="/hub/insights/new" variant="primary">
+                            Add Insight Page
+                          </Button>
+                        ) : (
+                          <Button href="/hub/lists/new" variant="primary">
+                            Add List
+                          </Button>
+                        )}
+                      </div>
+                    </nav>
                   </div>
-                </nav>
-              </div>
+                ) : null}
 
-              {children}
-            </div>
+                {children}
+              </div>
+            </>
           ) : (
             <></>
           )}

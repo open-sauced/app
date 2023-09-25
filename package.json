@@ -2,7 +2,7 @@
   "name": "@open-sauced/insights",
   "description": "🍕The dashboard for open source discovery.",
   "keywords": [],
-  "version": "1.65.0",
+  "version": "1.66.0-beta.3",
   "author": "Brian Douglas <brian@opensauced.pizza>",
   "private": true,
   "license": "Apache 2.0",
@@ -80,6 +80,7 @@
     "@use-gesture/react": "^10.2.27",
     "@vercel/og": "^0.5.8",
     "clsx": "^1.2.1",
+    "cmdk": "^0.2.0",
     "cntl": "^1.0.0",
     "date-fns": "^2.29.3",
     "echarts": "^5.4.1",
@@ -94,7 +95,7 @@
     "react-dom": "^18.2.0",
     "react-emoji-render": "^2.0.1",
     "react-hot-toast": "^2.4.0",
-    "react-icons": "^4.7.1",
+    "react-icons": "^4.11.0",
     "react-loading-skeleton": "^3.1.0",
     "react-parallax-tilt": "^1.7.151",
     "react-schemaorg": "^2.0.0",
@@ -105,6 +106,7 @@
     "swiper": "^10.2.0",
     "swr": "^2.0.3",
     "tailwindcss-radix": "^2.7.0",
+    "tier": "^5.10.0",
     "zustand": "^4.3.2"
   },
   "devDependencies": {
