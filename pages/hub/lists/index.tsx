@@ -127,8 +127,7 @@ const ListsHub: WithPageLayout = () => {
             Are you sure you want to delete <span className="font-bold text-light-slate-12">{listNameToDelete}</span>?
           </Text>
           <Text>
-            If you have data on this list that your team is using it would be difficult for your team to get access to
-            track your project.
+            If you have data on this list that your team is using, they will loose access
           </Text>
           <Text>
             <span className="font-bold text-light-slate-12">This action cannot be undone</span>
