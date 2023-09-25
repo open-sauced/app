@@ -104,13 +104,9 @@ const ContributorsListPage = ({ list, data, isLoading, isError }: ContributorLis
   const [page, setPage] = useState(1);
   const [isOwner, setIsOwner] = useState(false);
 
-  function handleOnSelectAllChecked(contributor: any): void {
-    throw new Error("Function not implemented.");
-  }
+  function handleOnSelectAllChecked(contributor: any): void {}
 
-  function handleOnSelectChecked(state: boolean, contributor: DbPRContributor): void {
-    throw new Error("Function not implemented.");
-  }
+  function handleOnSelectChecked(state: boolean, contributor: DbPRContributor): void {}
 
   return (
     <ListPageLayout list={list} numberOfContributors={meta.itemCount} isOwner={isOwner}>
