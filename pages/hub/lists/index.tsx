@@ -20,7 +20,7 @@ import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { useToast } from "lib/hooks/useToast";
 
 const ListsHub: WithPageLayout = () => {
-  const { data, isLoading, meta, setPage } = useFetchAllLists();
+  const { data, isLoading, meta, setPage, mutate } = useFetchAllLists();
   const { toast } = useToast();
   const { sessionToken } = useSupabaseAuth();
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
@@ -53,10 +53,12 @@ const ListsHub: WithPageLayout = () => {
 
       if (res.ok) {
         setIsDeleteOpen(false);
+        mutate();
         toast({ description: "List deleted successfully", variant: "success" });
       }
     } catch (err) {
       console.log(err);
+      toast({ description: "An error occurred while deleting the list", variant: "danger" });
     } finally {
       setDeleteLoading(false);
     }
