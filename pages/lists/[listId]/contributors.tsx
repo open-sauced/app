@@ -8,7 +8,7 @@ import ContributorTable from "components/organisms/ContributorsTable/contributor
 import PaginationResults from "components/molecules/PaginationResults/pagination-result";
 import ContributorListTableHeaders from "components/molecules/ContributorListTableHeader/contributor-list-table-header";
 import Pagination from "components/molecules/Pagination/pagination";
-import { fetchApiData } from "helpers/fetchApiData";
+import { fetchApiData, validateListPath } from "helpers/fetchApiData";
 import Error from "components/atoms/Error/Error";
 
 interface ContributorList {
@@ -60,8 +60,9 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     (await fetchApiData)<ContributorList>({
       path: `lists/${listId}/contributors`,
       bearerToken,
+      pathValidator: validateListPath,
     }),
-    await fetchApiData<DBList>({ path: `lists/${listId}`, bearerToken }),
+    await fetchApiData<DBList>({ path: `lists/${listId}`, bearerToken, pathValidator: validateListPath }),
   ]);
 
   if (error?.status === 404) {
