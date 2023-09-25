@@ -1,17 +1,16 @@
 export async function fetchApiData<T>({
-  baseUrl = process.env.NEXT_PUBLIC_API_URL,
   path,
   method = "GET",
   headers,
   bearerToken,
 }: {
-  baseUrl?: string;
   path: string;
   method?: "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
   headers?: HeadersInit;
   bearerToken: string;
 }) {
-  const response = await fetch(`${baseUrl}/${path}`, {
+  const apiUrl = new URL(path, process.env.NEXT_PUBLIC_API_URL);
+  const response = await fetch(apiUrl, {
     method,
     headers: {
       ...headers,
