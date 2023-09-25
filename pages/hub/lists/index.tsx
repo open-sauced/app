@@ -57,6 +57,7 @@ const ListsHub: WithPageLayout = () => {
         toast({ description: "List deleted successfully", variant: "success" });
       }
     } catch (err) {
+      setIsDeleteOpen(false);
       console.log(err);
       toast({ description: "An error occurred while deleting the list", variant: "danger" });
     } finally {
@@ -133,7 +134,7 @@ const ListsHub: WithPageLayout = () => {
             <span className="font-bold text-light-slate-12">This action cannot be undone</span>
           </Text>
           <Text>
-            Type <span className="font-bold text-light-red-10">{listNameToDelete}</span> in all caps to confirm
+            Type <span className="font-bold text-light-red-10">{listNameToDelete}</span> to confirm
           </Text>
 
           <TextInput

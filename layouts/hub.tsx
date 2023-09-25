@@ -19,7 +19,7 @@ const HubLayout = ({ children }: { children: React.ReactNode }) => {
   const { user } = useSupabaseAuth();
   const navLinks = [
     { name: "Insights", href: "/hub/insights" },
-    { name: "Lists", href: "/hub/lists" },
+    // { name: "Lists", href: "/hub/lists" },
   ];
   const router = useRouter();
 
