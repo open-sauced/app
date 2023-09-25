@@ -50,33 +50,33 @@ interface DbRecommendedInsightsRepo {
 }
 
 interface DBListContributor {
-  readonly user_avatar_url: string;
-  readonly user_id: number;
-  readonly user_login: string;
-  readonly user_name: string;
-  readonly user_bio: string;
-  readonly user_url: string;
-  readonly user_company: string;
-  readonly user_location: string;
-  readonly user_twitter_username: string;
-  readonly user_github_sponsors_url: string;
-  readonly user_linkedin_url: string;
-  readonly user_discord_url: string;
-  readonly user_display_email: boolean;
-  readonly user_display_local_time: boolean;
-  readonly user_timezone: string;
-  readonly user_interests: string;
-  readonly user_first_opened_pr_at: string;
-  readonly user_is_open_sauced_member: boolean;
-  readonly user_is_onboarded: boolean;
-  readonly user_is_waitlisted: boolean;
-  readonly user_role: number;
-  readonly user_created_at: string;
-  readonly user_updated_at: string;
-  readonly user_languages: Object;
-  readonly user_public_gists: number;
-  readonly user_public_repos: number;
-  readonly user_receive_collaborations: boolean;
+  readonly avatar_url: string;
+  readonly id: number;
+  readonly login: string;
+  readonly name: string;
+  readonly bio: string;
+  readonly url: string;
+  readonly company: string;
+  readonly location: string;
+  readonly twitter_username: string;
+  readonly github_sponsors_url: string;
+  readonly linkedin_url: string;
+  readonly discord_url: string;
+  readonly display_email: boolean;
+  readonly display_local_time: boolean;
+  readonly timezone: string;
+  readonly interests: string;
+  readonly first_opened_pr_at: string;
+  readonly is_open_sauced_member: boolean;
+  readonly is_onboarded: boolean;
+  readonly is_waitlisted: boolean;
+  readonly role: number;
+  readonly created_at: string;
+  readonly updated_at: string;
+  readonly languages: Object;
+  readonly public_gists: number;
+  readonly public_repos: number;
+  readonly receive_collaborations: boolean;
 }
 
 interface DbRepoPR {
