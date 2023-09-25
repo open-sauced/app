@@ -43,9 +43,9 @@ const NewListCreationPage: WithPageLayout = () => {
     ? data.length > 0 &&
       data.map((contributor) => {
         return {
-          author_login: contributor.user_login,
-          updated_at: contributor.user_updated_at,
-          user_id: contributor.user_id,
+          author_login: contributor.login,
+          updated_at: contributor.updated_at,
+          user_id: contributor.id,
         };
       })
     : [];
