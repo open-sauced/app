@@ -14,7 +14,7 @@ const ListPageLayout = ({
   isOwner = false,
 }: {
   children: React.ReactNode;
-  list: DBList;
+  list?: DBList;
   numberOfContributors: number;
   isOwner: boolean;
 }) => {
@@ -29,8 +29,6 @@ const ListPageLayout = ({
     { name: "Contributors" },
   ];
 
-  const { name, is_public, id } = list;
-
   return (
     <div className="flex flex-col min-h-screen">
       <TopNav />
@@ -38,20 +36,18 @@ const ListPageLayout = ({
       <div className="flex flex-col items-center pt-20 page-container grow bg-light-slate-3 md:pt-14">
         <div className="info-container container w-full min-h-[100px]">
           <Header>
-            {list ? (
+            {list && (
               <ListHeader
-                name={name}
+                name={list.name}
                 numberOfContributors={numberOfContributors}
-                isPublic={is_public}
-                listId={id}
+                isPublic={list.is_public}
+                listId={list.id}
                 isOwner={isOwner}
               />
-            ) : (
-              <div>An error occurred</div>
             )}
           </Header>
 
-          <TabsList tabList={tabList} selectedTab={selectedTab} pageId={`/lists/${id}`} />
+          {list && <TabsList tabList={tabList} selectedTab={selectedTab} pageId={`/lists/${list.id}`} />}
         </div>
 
         <main className="flex flex-col items-center flex-1 w-full px-3 py-8 md:px-16 bg-light-slate-2">

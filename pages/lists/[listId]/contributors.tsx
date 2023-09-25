@@ -9,6 +9,7 @@ import PaginationResults from "components/molecules/PaginationResults/pagination
 import ContributorListTableHeaders from "components/molecules/ContributorListTableHeader/contributor-list-table-header";
 import Pagination from "components/molecules/Pagination/pagination";
 import { fetchApiData } from "helpers/fetchApiData";
+import Error from "components/atoms/Error/Error";
 
 interface ContributorList {
   data: {
@@ -63,8 +64,6 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     await fetchApiData<DBList>({ path: `lists/${listId}`, bearerToken }),
   ]);
 
-  // TODO: error handling
-
   if (error?.status === 404) {
     return {
       notFound: true,
@@ -118,7 +117,7 @@ const ContributorsListPage = ({ list, data, isLoading, isError }: ContributorLis
       <div className="container flex flex-col gap-3">
         <h2>List Contributors</h2>
         {isError ? (
-          <div>error</div>
+          <Error errorMessage="Unable to load list of contributors" />
         ) : (
           <div className="lg:min-w-[1150px] px-16 py-8">
             <ContributorListTableHeaders
