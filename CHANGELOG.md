@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.66.0-beta.4](https://github.com/open-sauced/insights/compare/v1.66.0-beta.3...v1.66.0-beta.4) (2023-09-25)
+
+
+### 🐛 Bug Fixes
+
+* adjust button positioning for Firefox compatibility ([#1730](https://github.com/open-sauced/insights/issues/1730)) ([91389ba](https://github.com/open-sauced/insights/commit/91389baee556829ed17a175004cb83394c8854dc))
+
 ## [1.66.0-beta.3](https://github.com/open-sauced/insights/compare/v1.66.0-beta.2...v1.66.0-beta.3) (2023-09-22)
 
 
