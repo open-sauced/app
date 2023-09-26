@@ -160,23 +160,16 @@ const ContributorProfileHeader = ({
               {user ? (
                 !isOwner && (
                   <>
-                    <Button
-                      onClick={handleFollowClick}
-                      variant="primary"
-                      className="[&>span>span:nth-child(1)]:hover:hidden  [&>span>span:nth-child(2)]:hover:inline"
-                    >
-                      {/* `span` tag changes below must be in line with the styles on the parent */}
-                      <span className="py-[0.20rem] w-[6.5rem] text-center rounded-md">
-                        {isFollowing ? (
-                          <>
-                            <span className="hidden sm:inline">Following</span>
-                            <span className="sm:hidden">Unfollow</span>
-                          </>
-                        ) : (
-                          "Follow"
-                        )}
-                      </span>
-                    </Button>
+                    {isFollowing ? (
+                      <Button onClick={handleFollowClick} variant="primary" className="group w-[6.25rem] text-center">
+                        <span className="hidden sm:block group-hover:hidden">Following</span>
+                        <span className="block sm:hidden group-hover:block text-center">Unfollow</span>
+                      </Button>
+                    ) : (
+                      <Button variant="primary" className="w-[6.25rem]" onClick={handleFollowClick}>
+                        <HiUserAdd fontSize={20} className="mr-1" /> Follow
+                      </Button>
+                    )}
                   </>
                 )
               ) : (
@@ -191,7 +184,7 @@ const ContributorProfileHeader = ({
                     <HiUserAdd />
                   </Button>
                   <Button
-                    className="w-[6.75rem] hidden sm:inline-flex"
+                    className="w-[6.25rem] hidden sm:inline-flex"
                     variant="primary"
                     onClick={async () =>
                       handleSignIn({ provider: "github", options: { redirectTo: `${host}/${currentPath}` } })
