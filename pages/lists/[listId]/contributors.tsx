@@ -1,5 +1,5 @@
 import useSWR, { Fetcher } from "swr";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { GetServerSidePropsContext } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import ListPageLayout from "layouts/lists";
@@ -10,6 +10,7 @@ import ContributorListTableHeaders from "components/molecules/ContributorListTab
 import Pagination from "components/molecules/Pagination/pagination";
 import { fetchApiData, validateListPath } from "helpers/fetchApiData";
 import Error from "components/atoms/Error/Error";
+import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 
 interface ContributorList {
   data: DBListContributor[];
@@ -92,6 +93,7 @@ interface ContributorListPageProps {
 }
 
 const ContributorsListPage = ({ list, data, isLoading, isError }: ContributorListPageProps) => {
+  const { userId } = useSupabaseAuth();
   const [pageData, setPageData] = useState<ContributorListPageProps["data"]>(data);
 
   // TODO: use this when going through paged data
@@ -102,6 +104,10 @@ const ContributorsListPage = ({ list, data, isLoading, isError }: ContributorLis
   // TODO: read from querystring or default to 1
   const [page, setPage] = useState(1);
   const [isOwner, setIsOwner] = useState(false);
+
+  useEffect(() => {
+    setIsOwner(list?.user_id === userId);
+  }, [list?.user_id, userId]);
 
   function handleOnSelectAllChecked(contributor: any): void {}
 

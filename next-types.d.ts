@@ -345,6 +345,7 @@ interface DbUserSearch {
 
 interface DBList {
   id: string;
+  user_id: number;
   name: string;
   is_public: boolean;
   created_at: string;
