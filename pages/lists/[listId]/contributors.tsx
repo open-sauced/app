@@ -12,10 +12,7 @@ import { fetchApiData, validateListPath } from "helpers/fetchApiData";
 import Error from "components/atoms/Error/Error";
 
 interface ContributorList {
-  data: {
-    user_id: string;
-    created_at: string;
-  }[];
+  data: DBListContributor[];
   meta: Meta;
 }
 
@@ -23,8 +20,9 @@ function convertToContributors(rawContributors: ContributorList["data"] = []) {
   const contributors = rawContributors
     ? rawContributors.map((contributor) => {
         return {
-          author_login: contributor.user_id,
+          author_login: contributor.login,
           updated_at: contributor.created_at,
+          user_id: contributor.id,
         };
       })
     : [];
@@ -87,7 +85,7 @@ interface ContributorListPageProps {
   list: DBList;
   data: {
     meta: Meta;
-    data: DbPRContributor[];
+    data: DBListContributor[];
   };
   isLoading: boolean;
   isError: boolean;
