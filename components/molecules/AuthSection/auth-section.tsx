@@ -102,13 +102,11 @@ const AuthSection: React.FC = ({}) => {
           <SearchDialogTrigger />
           {user ? (
             <>
-              {onboarded === false ? (
+              {!onboarded && (
                 <>
                   <OnboardingButton />
                   <Divider type="vertical" className="!h-6 !bg-light-slate-6"></Divider>
                 </>
-              ) : (
-                ""
               )}
               <button className="relative cursor-pointer" onClick={() => router.push(`/user/notifications`)}>
                 {userInfo && userInfo.notification_count > 0 && (
