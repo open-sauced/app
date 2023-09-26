@@ -94,8 +94,8 @@ const HubContributorsHeader = ({
           </Button>
         </div>
       </div>
-      <div className="flex justify-between w-full">
-        <div className="flex items-center gap-4">
+      <div className="flex flex-col justify-between w-full gap-3 md:flex-row">
+        <div className="flex items-center gap-4 ">
           {/* <MultiSelect handleSelect={(option) => {}} options={timezoneOptions} selected={[]} placeholder="Timezone" /> */}
           <SingleSelect
             options={timezoneOptions}

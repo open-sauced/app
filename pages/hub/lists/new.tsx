@@ -157,7 +157,7 @@ const NewListCreationPage: WithPageLayout = () => {
           />
         </Header>
       </div>
-      <div className="lg:min-w-[1150px] px-16 py-8">
+      <div className="lg:min-w-[1150px] px-4 md:px-16 py-8">
         <ContributorListTableHeaders
           selected={selectedContributors.length === meta.limit}
           handleOnSelectAllContributor={handleOnSelectAllChecked}
