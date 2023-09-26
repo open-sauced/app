@@ -19,12 +19,12 @@ const TopNav: React.FC = () => (
       <AuthSection />
     </div>
     <div className="lg:hidden container mx-auto px-2 md:px-16">
-      <Nav />
+      <Nav name="Mobile" />
     </div>
   </header>
 );
 
-const Nav = ({ className }: { className?: string }) => {
+const Nav = ({ className, name }: { className?: string, name: "Main" | string }) => {
   const { user } = useSupabaseAuth();
   const { onboarded } = useSession();
 
@@ -33,7 +33,7 @@ const Nav = ({ className }: { className?: string }) => {
   const router = useRouter();
 
   return (
-    <nav className={className}>
+    <nav className={className} aria-label={name}>
       <ul className="flex gap-3 md:gap-8 mb-3 ml-2 sm:m-0 w-full sm:w-auto">
         {!!user && onboarded && (
           <li>
