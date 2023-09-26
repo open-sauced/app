@@ -195,7 +195,7 @@ const ContributorProfileHeader = ({
                 </>
               )}
 
-              <Button className="sm:hidden" variant="primary" href={cardPageUrl(username!)}>
+              <Button className="sm:hidden" variant="text" href={cardPageUrl(username!)}>
                 <FaIdCard className="" />
               </Button>
               <Button className="hidden sm:inline-flex text-black" variant="default" href={cardPageUrl(username!)}>
