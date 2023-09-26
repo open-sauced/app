@@ -1,5 +1,5 @@
 import React from "react";
-import { RiArrowDownSLine, RiArrowUpSLine } from "react-icons/ri";
+import { RiArrowDownSLine } from "react-icons/ri";
 
 import { truncateString } from "lib/utils/truncate-string";
 
@@ -18,9 +18,8 @@ const SingleSelect = ({ placeholder, value, onValueChange, options }: SingleSele
       <SelectTrigger
         className="bg-white min-w-[300px]"
         selectIcon={
-          <div className="relative pr-4">
-            <RiArrowUpSLine size={16} className="absolute -top-3" />
-            <RiArrowDownSLine size={16} className="absolute -bottom-3" />
+          <div className="flex items-center">
+            <RiArrowDownSLine size={20} className="" />
           </div>
         }
       >

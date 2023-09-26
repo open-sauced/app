@@ -2,19 +2,24 @@ import { FaPlus } from "react-icons/fa";
 
 import clsx from "clsx";
 import { FiGlobe } from "react-icons/fi";
-import Button from "components/atoms/Button/button";
-import Text from "components/atoms/Typography/text";
 
+import { timezones } from "lib/utils/timezones";
 import { useToast } from "lib/hooks/useToast";
+
 import ListNameHeader from "components/atoms/ListNameHeader/list-name-header";
 import LimitSelect from "components/atoms/Select/limit-select";
-// import Search from "components/atoms/Search/search";
+import SingleSelect from "components/atoms/Select/single-select";
 import ToggleSwitch from "components/atoms/ToggleSwitch/toggle-switch";
+import Button from "components/atoms/Button/button";
+import Text from "components/atoms/Typography/text";
 import ComponentDateFilter from "../ComponentDateFilter/component-date-filter";
+// import Search from "components/atoms/Search/search";
 
 interface ListHeaderProps {
   setLimit?: (limit: number) => void;
   setRangeFilter?: (range: number) => void;
+  timezone?: string;
+  setTimezoneFilter: (timezone: string) => void;
   isPublic: boolean;
   handleToggleIsPublic: () => void;
   range?: number;
@@ -36,8 +41,14 @@ const HubContributorsHeader = ({
   loading,
   isPublic,
   handleToggleIsPublic,
+  timezone,
+  setTimezoneFilter,
 }: ListHeaderProps): JSX.Element => {
   const { toast } = useToast();
+  const timezoneOptions = timezones.map((timezone) => ({
+    label: timezone.text,
+    value: timezone.value,
+  }));
 
   return (
     <div className="relative flex flex-col justify-between w-full gap-6 py-2">
@@ -84,7 +95,15 @@ const HubContributorsHeader = ({
         </div>
       </div>
       <div className="flex justify-between w-full">
-        <div className="flex items-center gap-4"></div>
+        <div className="flex items-center gap-4">
+          {/* <MultiSelect handleSelect={(option) => {}} options={timezoneOptions} selected={[]} placeholder="Timezone" /> */}
+          <SingleSelect
+            options={timezoneOptions}
+            value={timezone}
+            placeholder="Select time zone"
+            onValueChange={(value) => setTimezoneFilter(value)}
+          />
+        </div>
         <div className="flex items-center gap-2 md:gap-4">
           {/* <div className="w-58">
             <Search placeholder="Search for usernames" className="max-w-full" name={"query"} />
