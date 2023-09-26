@@ -10,8 +10,9 @@ import StackedAvatar, { Contributor } from "../StackedAvatar/stacked-avatar";
 
 interface ListCardProps {
   list: DbUserList;
+  handleOnDeleteClick: (listName: string, listId: string) => void;
 }
-const ListCard = ({ list }: ListCardProps) => {
+const ListCard = ({ list, handleOnDeleteClick }: ListCardProps) => {
   const { data: contributors, meta } = useFetchListContributors(list.id);
 
   const contributorsAvatar: Contributor[] = contributors?.map((contributor) => ({
@@ -53,8 +54,12 @@ const ListCard = ({ list }: ListCardProps) => {
             </div>
             <div className="justify-end flex-1 hidden md:flex">
               {/* Delete button */}
-              <button className="inline-block p-3 mr-2 border rounded-lg cursor-pointer bg-light-slate-1" type="button">
-                <RiDeleteBinLine title="Edit Insight Page" className="text-lg text-light-slate-10" />
+              <button
+                onClick={() => handleOnDeleteClick(list.name, list.id)}
+                className="inline-block p-3 mr-2 border rounded-lg cursor-pointer bg-light-slate-1"
+                type="button"
+              >
+                <RiDeleteBinLine title="Delete List" className="text-lg text-light-slate-10" />
               </button>
               <Link
                 className="inline-block p-3 mr-2 border rounded-lg cursor-pointer bg-light-slate-1"
