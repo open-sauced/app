@@ -7,6 +7,7 @@ import { IoNotifications } from "react-icons/io5";
 import { FiLogOut, FiSettings } from "react-icons/fi";
 import { BiLinkExternal } from "react-icons/bi";
 import { Divider } from "@supabase/ui";
+import store from "lib/store";
 
 import useSession from "lib/hooks/useSession";
 
@@ -17,6 +18,7 @@ import Button from "components/atoms/Button/button";
 import Text from "components/atoms/Typography/text";
 import GitHubIcon from "img/icons/github-icon.svg";
 import Icon from "components/atoms/Icon/icon";
+import SearchDialog, { SearchDialogTrigger } from "components/organisms/SearchDialog/search-dialog";
 import DropdownList from "../DropdownList/dropdown-list";
 import OnboardingButton from "../OnboardingButton/onboarding-button";
 import userAvatar from "../../../img/ellipse-1.png";
@@ -26,6 +28,8 @@ import useSupabaseAuth from "../../../lib/hooks/useSupabaseAuth";
 const AuthSection: React.FC = ({}) => {
   const router = useRouter();
   const currentPath = router.asPath;
+
+  const openSearch = store((state) => state.openSearch);
 
   const { signIn, signOut, user } = useSupabaseAuth();
   const { onboarded, session } = useSession(true);
@@ -92,50 +96,54 @@ const AuthSection: React.FC = ({}) => {
     ],
   };
   return (
-    <div className="flex p-2 m-1 sm:py-0">
-      <div className="flex items-center gap-2 lg:gap-3">
-        {user ? (
-          <>
-            {onboarded === false ? (
-              <>
-                <OnboardingButton />
-                <Divider type="vertical" className="!h-6 !bg-light-slate-6"></Divider>
-              </>
-            ) : (
-              ""
-            )}
-            <button className="relative cursor-pointer" onClick={() => router.push(`/user/notifications`)}>
-              {userInfo && userInfo.notification_count > 0 && (
-                <span className="absolute right-0 block w-2 h-2 bg-orange-300 rounded-full"></span>
+    <>
+      <div className="flex p-2 m-1 sm:py-0">
+        <div className="flex items-center gap-2 lg:gap-3">
+          <SearchDialogTrigger />
+          {user ? (
+            <>
+              {!onboarded && (
+                <>
+                  <OnboardingButton />
+                  <Divider type="vertical" className="!h-6 !bg-light-slate-6"></Divider>
+                </>
               )}
-              <IoNotifications className="text-xl text-light-slate-9" />
-            </button>
+              <button className="relative cursor-pointer" onClick={() => router.push(`/user/notifications`)}>
+                {userInfo && userInfo.notification_count > 0 && (
+                  <span className="absolute right-0 block w-2 h-2 bg-orange-300 rounded-full"></span>
+                )}
+                <IoNotifications className="text-xl text-light-slate-9" />
+              </button>
 
-            <DropdownList menuContent={authMenu.authed}>
-              <div className="flex justify-end min-w-[60px] gap-2">
-                <Avatar
-                  alt="User Avatar"
-                  avatarURL={user ? user.user_metadata.avatar_url : userAvatar}
-                  size={"base"}
-                  hasBorder={true}
-                  isCached={false}
-                />
-                <Image alt="Down Arrow" src={downArrow} />
-              </div>
-            </DropdownList>
-          </>
-        ) : (
-          <Button
-            variant="primary"
-            onClick={async () =>
-              await signIn({ provider: "github", options: { redirectTo: `${host}/${currentPath}` } })
-            }
-          >
-            Connect with GitHub <Icon IconImage={GitHubIcon} className="ml-2" />
-          </Button>
-        )}
+              <DropdownList className="-mb-1" menuContent={authMenu.authed}>
+                <div className="flex justify-end min-w-[60px] gap-2">
+                  <Avatar
+                    alt="User Avatar"
+                    avatarURL={user ? user.user_metadata.avatar_url : userAvatar}
+                    size={"base"}
+                    hasBorder={true}
+                    isCached={false}
+                  />
+                  <Image alt="Down Arrow" src={downArrow} />
+                </div>
+              </DropdownList>
+            </>
+          ) : (
+            <Button
+              variant="primary"
+              onClick={async () =>
+                await signIn({ provider: "github", options: { redirectTo: `${host}/${currentPath}` } })
+              }
+              className="flex items-center"
+            >
+              Connect <span className="hidden sm:inline-block ml-1">with GitHub</span>
+              <Icon IconImage={GitHubIcon} className="ml-2" />
+            </Button>
+          )}
+        </div>
       </div>
-    </div>
+      {openSearch && <SearchDialog />}
+    </>
   );
 };
 

@@ -328,6 +328,7 @@ interface DbListContibutor {
   readonly login: string;
   readonly created_at: string;
 }
+
 interface DbUserList {
   readonly id: string;
   readonly user: DbListOwner;
@@ -335,4 +336,9 @@ interface DbUserList {
   readonly is_public: boolean;
   readonly created_at: string;
   readonly updated_at: string;
+}
+
+interface DbUserSearch {
+  readonly login: string;
+  readonly full_name: string;
 }
