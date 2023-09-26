@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.66.0-beta.7](https://github.com/open-sauced/insights/compare/v1.66.0-beta.6...v1.66.0-beta.7) (2023-09-26)
+
+
+### 🍕 Features
+
+* add `delete` functionality to list feature ([#1732](https://github.com/open-sauced/insights/issues/1732)) ([8a3e1da](https://github.com/open-sauced/insights/commit/8a3e1da522711ecc300dd86e950b709f12634b2e))
+
 ## [1.66.0-beta.6](https://github.com/open-sauced/insights/compare/v1.66.0-beta.5...v1.66.0-beta.6) (2023-09-26)
 
 
