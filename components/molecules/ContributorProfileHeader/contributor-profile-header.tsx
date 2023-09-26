@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 
 import { TfiMoreAlt } from "react-icons/tfi";
-import { FiCopy } from "react-icons/fi";
+import { HiUserAdd } from "react-icons/hi";
 import { FaIdCard } from "react-icons/fa";
 import { SignInWithOAuthCredentials, User } from "@supabase/supabase-js";
 import { usePostHog } from "posthog-js/react";
@@ -156,28 +156,7 @@ const ContributorProfileHeader = ({
         </div>
         {isConnected && (
           <div className="flex flex-col items-center gap-3 translate-y-24 md:translate-y-0 md:flex-row">
-            <div className="hidden sm:flex items-center md: gap-2 mb-10 md:gap-6 flex-wrap">
-              <Button className="sm:hidden" variant="primary" href={cardPageUrl(username!)}>
-                <FaIdCard className="" />
-              </Button>
-              <Button className="hidden sm:inline-flex" variant="primary" href={cardPageUrl(username!)}>
-                <FaIdCard className="mt-1 mr-1" /> Get Card
-              </Button>
-
-              <Button
-                onClick={() => handleCopyToClipboard(`${host}/user/${user?.user_metadata.user_name}`)}
-                className="bg-white sm:hidden"
-                variant="text"
-              >
-                <FiCopy className="" />
-              </Button>
-              <Button
-                onClick={() => handleCopyToClipboard(`${host}/user/${user?.user_metadata.user_name}`)}
-                className="px-8 py-2 bg-white hidden sm:inline-flex"
-                variant="text"
-              >
-                <FiCopy className="mt-1 mr-1" /> Share
-              </Button>
+            <div className="flex justify-center items-center  gap-2 mb-10 md:gap-6 flex-wrap">
               {user ? (
                 !isOwner && (
                   <>
@@ -197,121 +176,73 @@ const ContributorProfileHeader = ({
                         )}
                       </span>
                     </div>
-                    {isPremium && isRecievingCollaborations && (
-                      <div className="rounded-md">
-                        <button onClick={() => setIsDialogOpen(true)} className="flex items-center gap-1 pl-3 pr-7">
-                          Collaborate
-                        </button>
-                      </div>
-                    )}
                   </>
                 )
               ) : (
                 <>
-                  <div className="rounded-md">
-                    <button
-                      onClick={async () =>
-                        handleSignIn({ provider: "github", options: { redirectTo: `${host}/${currentPath}` } })
-                      }
-                      className="w-[8rem] h-[2.375rem] rounded-md flex bg-white items-center justify-center cursor-pointer [&>span>span:nth-child(1)]:hover:hidden [&>span>span:nth-child(1)]:focus:hidden [&>span>span:nth-child(2)]:hover:inline [&>span>span:nth-child(2)]:focus:inline"
-                    >
-                      <span className="py-[0.20rem] w-[6.5rem] text-center rounded-md hover:bg-orange-100 hover:text-sauced-orange">
-                        Follow
-                      </span>
-                    </button>
-                  </div>
-                  {isRecievingCollaborations && (
-                    <div className="rounded-md">
-                      <button
-                        onClick={async () =>
-                          handleSignIn({ provider: "github", options: { redirectTo: `${host}/${currentPath}` } })
-                        }
-                        className="w-[8rem] h-[2.375rem] rounded-md flex bg-white items-center justify-center cursor-pointer [&>span>span:nth-child(1)]:hover:hidden [&>span>span:nth-child(1)]:focus:hidden [&>span>span:nth-child(2)]:hover:inline [&>span>span:nth-child(2)]:focus:inline"
-                      >
-                        <span className="py-[0.20rem] w-[6.5rem] text-center rounded-md hover:bg-orange-100 hover:text-sauced-orange">
-                          Collaborate
-                        </span>
-                      </button>
-                    </div>
-                  )}
+                  <Button
+                    className="sm:hidden"
+                    variant="primary"
+                    onClick={async () =>
+                      handleSignIn({ provider: "github", options: { redirectTo: `${host}/${currentPath}` } })
+                    }
+                  >
+                    <HiUserAdd />
+                  </Button>
+                  <Button
+                    className="w-[6.75rem] hidden sm:inline-flex"
+                    variant="primary"
+                    onClick={async () =>
+                      handleSignIn({ provider: "github", options: { redirectTo: `${host}/${currentPath}` } })
+                    }
+                  >
+                    <HiUserAdd fontSize={20} className="mr-1" /> Follow
+                  </Button>
                 </>
               )}
-            </div>
 
-            {/* Mobile dropdown menu */}
-            <DropdownMenu modal={false}>
-              <div className="flex items-center sm:hidden gap-2 mb-10 md:gap-6 flex-wrap">
-                <Button className="sm:hidden" variant="primary" href={cardPageUrl(username!)}>
-                  <FaIdCard className="" />
-                </Button>
-                <Button className="hidden sm:inline-flex" variant="primary" href={cardPageUrl(username!)}>
-                  <FaIdCard className="mt-1 mr-1" /> Get Card
-                </Button>
+              <Button className="sm:hidden" variant="primary" href={cardPageUrl(username!)}>
+                <FaIdCard className="" />
+              </Button>
+              <Button className="hidden sm:inline-flex text-black" variant="default" href={cardPageUrl(username!)}>
+                <FaIdCard className="mt-1 mr-1" /> Get Card
+              </Button>
+              <DropdownMenu modal={false}>
+                <div className="items-center gap-2 md:gap-6 flex-wrap">
+                  {!isOwner && (
+                    <DropdownMenuTrigger
+                      title="More options"
+                      className="p-2 mr-3 bg-white rounded-full cursor-pointer "
+                    >
+                      <TfiMoreAlt size={20} className="" />
+                    </DropdownMenuTrigger>
+                  )}
+                </div>
 
-                <Button
-                  onClick={() => handleCopyToClipboard(`${host}/user/${user?.user_metadata.user_name}`)}
-                  className="bg-white sm:hidden"
-                  variant="text"
-                >
-                  <FiCopy className="" />
-                </Button>
-                <Button
-                  onClick={() => handleCopyToClipboard(`${host}/user/${user?.user_metadata.user_name}`)}
-                  className="px-8 py-2 bg-white hidden sm:inline-flex"
-                  variant="text"
-                >
-                  <FiCopy className="mt-1 mr-1" /> Share
-                </Button>
-
-                {!isOwner && (
-                  <DropdownMenuTrigger title="More options" className="p-2 mr-3 bg-white rounded-full cursor-pointer ">
-                    <TfiMoreAlt size={20} className="" />
-                  </DropdownMenuTrigger>
-                )}
-              </div>
-
-              <DropdownMenuContent align="end" className="flex flex-col gap-1 py-2 rounded-lg">
-                {user ? (
-                  !isOwner && (
-                    <>
-                      <DropdownMenuItem
-                        onClick={handleFollowClick}
-                        className="rounded-md flex items-center gap-1 !cursor-pointer [&>span>span:nth-child(1)]:hover:hidden [&>span>span:nth-child(1)]:focus:hidden [&>span>span:nth-child(2)]:hover:inline [&>span>span:nth-child(2)]:focus:inline"
-                      >
-                        {/* `span` tag changes below must be in line with the styles on the parent */}
-                        <span className="pl-3 pr-7">
-                          {isFollowing ? (
-                            <>
-                              <span className="">Following</span>
-                              <span className="hidden">Unfollow</span>
-                            </>
-                          ) : (
-                            "Follow"
-                          )}
-                        </span>
-                      </DropdownMenuItem>
-                      {isPremium && isRecievingCollaborations && (
+                <DropdownMenuContent align="end" className="flex flex-col gap-1 py-2 rounded-lg">
+                  {user ? (
+                    !isOwner && (
+                      <>
                         <DropdownMenuItem className="rounded-md">
-                          <button onClick={() => setIsDialogOpen(true)} className="flex items-center gap-1 pl-3 pr-7">
-                            Collaborate
+                          <button
+                            onClick={() => handleCopyToClipboard(`${host}/user/${user?.user_metadata.user_name}`)}
+                            className="flex items-center gap-1 pl-3 pr-7"
+                          >
+                            Share
                           </button>
                         </DropdownMenuItem>
-                      )}
-                    </>
-                  )
-                ) : (
-                  <>
-                    <DropdownMenuItem className="rounded-md">
-                      <button
-                        onClick={async () =>
-                          handleSignIn({ provider: "github", options: { redirectTo: `${host}/${currentPath}` } })
-                        }
-                        className="flex items-center gap-1 pl-3 pr-7"
-                      >
-                        Follow
-                      </button>
-                    </DropdownMenuItem>
-                    {isRecievingCollaborations && (
+
+                        {isPremium && isRecievingCollaborations && (
+                          <DropdownMenuItem className="rounded-md">
+                            <button onClick={() => setIsDialogOpen(true)} className="flex items-center gap-1 pl-3 pr-7">
+                              Collaborate
+                            </button>
+                          </DropdownMenuItem>
+                        )}
+                      </>
+                    )
+                  ) : (
+                    <>
                       <DropdownMenuItem className="rounded-md">
                         <button
                           onClick={async () =>
@@ -319,14 +250,28 @@ const ContributorProfileHeader = ({
                           }
                           className="flex items-center gap-1 pl-3 pr-7"
                         >
-                          Collaborate
+                          Share
                         </button>
                       </DropdownMenuItem>
-                    )}
-                  </>
-                )}
-              </DropdownMenuContent>
-            </DropdownMenu>
+                      {isRecievingCollaborations && (
+                        <DropdownMenuItem className="rounded-md">
+                          <button
+                            onClick={async () =>
+                              handleSignIn({ provider: "github", options: { redirectTo: `${host}/${currentPath}` } })
+                            }
+                            className="flex items-center gap-1 pl-3 pr-7"
+                          >
+                            Collaborate
+                          </button>
+                        </DropdownMenuItem>
+                      )}
+                    </>
+                  )}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+
+            {/* Mobile dropdown menu */}
           </div>
         )}
       </div>
