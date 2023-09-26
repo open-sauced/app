@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.66.0-beta.5](https://github.com/open-sauced/insights/compare/v1.66.0-beta.4...v1.66.0-beta.5) (2023-09-25)
+
+
+### 🐛 Bug Fixes
+
+* update field mapping for contributor lists create ([#1745](https://github.com/open-sauced/insights/issues/1745)) ([71b704a](https://github.com/open-sauced/insights/commit/71b704ad80b4ba4ca064a49c913d0742ff036abc))
+
 ## [1.66.0-beta.4](https://github.com/open-sauced/insights/compare/v1.66.0-beta.3...v1.66.0-beta.4) (2023-09-25)
 
 
