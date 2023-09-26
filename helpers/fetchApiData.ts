@@ -1,6 +1,6 @@
 export function validateListPath(path: string) {
   const regex =
-    /^lists\/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}(\/(overview|activity|contributors))?$/;
+    /^lists\/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}(\/(overview|activity|contributors)\?limit=\d+)?$/;
 
   return regex.test(path);
 }

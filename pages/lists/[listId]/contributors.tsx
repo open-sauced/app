@@ -17,7 +17,7 @@ interface ContributorList {
   meta: Meta;
 }
 
-function convertToContributors(rawContributors: ContributorList["data"] = []) {
+function convertToContributors(rawContributors: ContributorList["data"] = []): DbPRContributor[] {
   const contributors = rawContributors
     ? rawContributors.map((contributor) => {
         return {
@@ -31,14 +31,34 @@ function convertToContributors(rawContributors: ContributorList["data"] = []) {
   return contributors;
 }
 
-const useContributorsList = (listId: string) => {
-  const { data, error, mutate } = useSWR<ContributorList>(
-    `lists/${listId}/contributors`,
-    publicApiFetcher as Fetcher<ContributorList, Error>
+const useContributorsList = ({
+  listId,
+  initialData,
+  initialPage = 1,
+  defaultLimit = 10,
+}: {
+  listId: string;
+  initialData?: {
+    data: DbPRContributor[];
+    meta: Meta;
+  };
+  initialPage?: number;
+  defaultLimit?: number;
+}) => {
+  const [page, setPage] = useState(initialPage);
+  const [limit, setLimit] = useState(defaultLimit);
+  const { data, error, mutate } = useSWR<any>(
+    `lists/${listId}/contributors?page=${page}&limit=${limit}`,
+    publicApiFetcher as Fetcher<ContributorList, Error>,
+    {
+      fallbackData: initialData,
+    }
   );
   const contributors = convertToContributors(data?.data);
 
   return {
+    setPage,
+    setLimit,
     data: data ? { data: contributors, meta: data.meta } : { data: [], meta: {} },
     isLoading: !error && !data,
     isError: !!error,
@@ -55,9 +75,10 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const bearerToken = session ? session.access_token : "";
 
   const { listId } = ctx.params as { listId: string };
+  const limit = 10; // Can pull this from the querystring in the future
   const [{ data, error: contributorListError }, { data: list, error }] = await Promise.all([
     fetchApiData<ContributorList>({
-      path: `lists/${listId}/contributors`,
+      path: `lists/${listId}/contributors?limit=${limit}`,
       bearerToken,
       pathValidator: validateListPath,
     }),
@@ -75,8 +96,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   return {
     props: {
       list,
-      data: data ? { data: contributors, meta: data.meta } : { data: [], meta: {} },
-      isLoading: false,
+      initialData: data ? { data: contributors, meta: data.meta } : { data: [], meta: {} },
       isError: error || contributorListError,
     },
   };
@@ -84,9 +104,9 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 
 interface ContributorListPageProps {
   list: DBList;
-  data: {
+  initialData: {
     meta: Meta;
-    data: DBListContributor[];
+    data: DbPRContributor[];
   };
   isLoading: boolean;
   isError: boolean;
@@ -104,18 +124,15 @@ function useIsOwner(listUserId: UserID, userId: UserID) {
   return isOwner;
 }
 
-const ContributorsListPage = ({ list, data, isLoading, isError }: ContributorListPageProps) => {
+const ContributorsListPage = ({ list, initialData, isError }: ContributorListPageProps) => {
   const { userId } = useSupabaseAuth();
-  const [pageData, setPageData] = useState<ContributorListPageProps["data"]>(data);
-
-  // TODO: use this when going through paged data
-  // const { data, isError, isLoading } = useContributorsList(list.id);
-  const { meta, data: contributors } = pageData;
   const [selectedContributors, setSelectedContributors] = useState<DbPRContributor[]>([]);
-
-  // TODO: read from querystring or default to 1
-  const [page, setPage] = useState(1);
   const isOwner = useIsOwner(list?.user_id, userId);
+  const {
+    isLoading,
+    setPage,
+    data: { data: contributors, meta },
+  } = useContributorsList({ listId: list.id, initialData });
 
   function handleOnSelectAllChecked(contributor: any): void {}
 
@@ -138,7 +155,7 @@ const ContributorsListPage = ({ list, data, isLoading, isError }: ContributorLis
               selectedContributors={selectedContributors}
               topic={"*"}
               handleSelectContributors={handleOnSelectChecked}
-              contributors={contributors as DbPRContributor[]}
+              contributors={contributors}
             ></ContributorTable>
             <div className="flex items-center justify-between w-full py-1 md:py-4 md:mt-5">
               <div>
