@@ -14,8 +14,4 @@ export const Opened: StoryFn = () => (
   </>
 );
 
-export const Closed: StoryFn = () => (
-  <>
-    <SearchDialogTrigger />
-  </>
-);
+export const Closed: StoryFn = () => <SearchDialogTrigger />;
