@@ -56,7 +56,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const {
     data: { session },
   } = await supabase.auth.getSession();
-  const insightId = ctx.params!["filterName"] as string;
+  const insightId = ctx.params!["pageId"] as string;
   const pageName = ctx.params!["toolName"] as string;
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/insights/${insightId}`);
   const insight = response.ok ? ((await response.json()) as DbUserInsight) : null;
