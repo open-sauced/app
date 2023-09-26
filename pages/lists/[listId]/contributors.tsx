@@ -92,6 +92,18 @@ interface ContributorListPageProps {
   isError: boolean;
 }
 
+type UserID = number | null | undefined;
+
+function useIsOwner(listUserId: UserID, userId: UserID) {
+  const [isOwner, setIsOwner] = useState(false);
+
+  useEffect(() => {
+    setIsOwner(listUserId === userId);
+  }, [listUserId, userId]);
+
+  return isOwner;
+}
+
 const ContributorsListPage = ({ list, data, isLoading, isError }: ContributorListPageProps) => {
   const { userId } = useSupabaseAuth();
   const [pageData, setPageData] = useState<ContributorListPageProps["data"]>(data);
@@ -103,11 +115,7 @@ const ContributorsListPage = ({ list, data, isLoading, isError }: ContributorLis
 
   // TODO: read from querystring or default to 1
   const [page, setPage] = useState(1);
-  const [isOwner, setIsOwner] = useState(false);
-
-  useEffect(() => {
-    setIsOwner(list?.user_id === userId);
-  }, [list?.user_id, userId]);
+  const isOwner = useIsOwner(list?.user_id, userId);
 
   function handleOnSelectAllChecked(contributor: any): void {}
 
