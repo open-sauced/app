@@ -160,22 +160,23 @@ const ContributorProfileHeader = ({
               {user ? (
                 !isOwner && (
                   <>
-                    <div
+                    <Button
                       onClick={handleFollowClick}
-                      className="w-[8rem] h-[2.375rem] rounded-md flex bg-white items-center justify-center cursor-pointer [&>span>span:nth-child(1)]:hover:hidden [&>span>span:nth-child(1)]:focus:hidden [&>span>span:nth-child(2)]:hover:inline [&>span>span:nth-child(2)]:focus:inline"
+                      variant="primary"
+                      className="[&>span>span:nth-child(1)]:hover:hidden  [&>span>span:nth-child(2)]:hover:inline"
                     >
                       {/* `span` tag changes below must be in line with the styles on the parent */}
-                      <span className="py-[0.20rem] w-[6.5rem] text-center rounded-md hover:bg-orange-100 hover:text-sauced-orange">
+                      <span className="py-[0.20rem] w-[6.5rem] text-center rounded-md">
                         {isFollowing ? (
                           <>
-                            <span className="">Following</span>
-                            <span className="hidden">Unfollow</span>
+                            <span className="hidden sm:inline">Following</span>
+                            <span className="sm:hidden">Unfollow</span>
                           </>
                         ) : (
                           "Follow"
                         )}
                       </span>
-                    </div>
+                    </Button>
                   </>
                 )
               ) : (
