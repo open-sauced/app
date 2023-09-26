@@ -103,12 +103,11 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 };
 
 interface ContributorListPageProps {
-  list: DBList;
+  list?: DBList;
   initialData: {
     meta: Meta;
     data: DbPRContributor[];
   };
-  isLoading: boolean;
   isError: boolean;
 }
 
@@ -132,11 +131,19 @@ const ContributorsListPage = ({ list, initialData, isError }: ContributorListPag
     isLoading,
     setPage,
     data: { data: contributors, meta },
-  } = useContributorsList({ listId: list.id, initialData });
+  } = useContributorsList({ listId: list?.id, initialData });
 
-  function handleOnSelectAllChecked(contributor: any): void {}
+  const handleOnSelectAllChecked = (checked: boolean) => {
+    setSelectedContributors(checked ? contributors : []);
+  };
 
-  function handleOnSelectChecked(state: boolean, contributor: DbPRContributor): void {}
+  function handleOnSelectChecked(checked: boolean, contributor: DbPRContributor) {
+    if (checked) {
+      setSelectedContributors((prev) => [...prev, contributor]);
+    } else {
+      setSelectedContributors((prev) => prev.filter((item) => item.user_id !== contributor.user_id));
+    }
+  }
 
   return (
     <ListPageLayout list={list} numberOfContributors={meta.itemCount} isOwner={isOwner}>
