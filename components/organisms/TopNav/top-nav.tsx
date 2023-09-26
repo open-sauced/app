@@ -24,7 +24,7 @@ const TopNav: React.FC = () => (
   </header>
 );
 
-const Nav = ({ className, name }: { className?: string, name: "Main" | string }) => {
+const Nav = ({ className, name }: { className?: string; name: "Main" | string }) => {
   const { user } = useSupabaseAuth();
   const { onboarded } = useSession();
 
