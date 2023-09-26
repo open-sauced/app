@@ -22,7 +22,7 @@ export async function fetchApiData<T>({
     return { data: null, error: { status: 400, statusText: "bad request" } };
   }
 
-  const apiUrl = new URL(path, process.env.NEXT_PUBLIC_API_URL);
+  const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/${path}`;
   const response = await fetch(apiUrl, {
     method,
     headers: {

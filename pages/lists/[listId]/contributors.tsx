@@ -57,12 +57,12 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 
   const { listId } = ctx.params as { listId: string };
   const [{ data, error: contributorListError }, { data: list, error }] = await Promise.all([
-    (await fetchApiData)<ContributorList>({
+    fetchApiData<ContributorList>({
       path: `lists/${listId}/contributors`,
       bearerToken,
       pathValidator: validateListPath,
     }),
-    await fetchApiData<DBList>({ path: `lists/${listId}`, bearerToken, pathValidator: validateListPath }),
+    fetchApiData<DBList>({ path: `lists/${listId}`, bearerToken, pathValidator: validateListPath }),
   ]);
 
   if (error?.status === 404) {
