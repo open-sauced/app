@@ -12,6 +12,7 @@ import useLockBody from "lib/hooks/useLockBody";
 import { getAvatarByUsername } from "lib/utils/github";
 import { searchUsers } from "lib/hooks/search-users";
 import useDebounceTerm from "lib/hooks/useDebounceTerm";
+import useOSDetection from "lib/hooks/useOSDetection";
 
 const SearchDialog = () => {
   useLockBody();
@@ -23,6 +24,7 @@ const SearchDialog = () => {
   const setOpenSearch = store((state) => state.setOpenSearch);
   const debouncedSearchTerm = useDebounceTerm(searchTerm, 300);
   const [searchResult, setSearchResult] = useState<{ data: DbUserSearch[]; meta: {} }>();
+  const isMac = useOSDetection();
 
   useEffect(() => {
     document.addEventListener("keydown", handleCloseSearch);
@@ -94,7 +96,7 @@ const SearchDialog = () => {
             onKeyDown={handleKeyboardCtrl}
           />
           <Text keyboard className="text-gray-600 !border-b !px-1">
-            ⌘K
+            {isMac ? "⌘K" : <span className="text-xs">CTRL+K</span>}
           </Text>
         </div>
         <div className="w-full h-full flex items-center">
@@ -115,6 +117,7 @@ const SearchDialog = () => {
 
 const SearchDialogTrigger = () => {
   const setOpenSearch = store((state) => state.setOpenSearch);
+  const isMac = useOSDetection();
 
   useEffect(() => {
     document.addEventListener("keydown", handleOpenSearch);
@@ -138,7 +141,7 @@ const SearchDialogTrigger = () => {
           <Text className="pl-2 text-sm font-semibold text-light-slate-9">Search for users</Text>
         </div>
         <Text keyboard className="text-gray-600 !border-b !px-1">
-          ⌘K
+          {isMac ? "⌘K" : <span className="text-xs">CTRL+K</span>}
         </Text>
       </div>
       <div className="flex sm:hidden p-1" onClick={() => setOpenSearch(true)}>
