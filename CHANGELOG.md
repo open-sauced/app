@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.66.0-beta.8](https://github.com/open-sauced/insights/compare/v1.66.0-beta.7...v1.66.0-beta.8) (2023-09-27)
+
+
+### 🐛 Bug Fixes
+
+* fixed a typo in 30 days label ([#1755](https://github.com/open-sauced/insights/issues/1755)) ([2293dc2](https://github.com/open-sauced/insights/commit/2293dc2ab85ed3d1c0780a5956289249576698ce))
+
 ## [1.66.0-beta.7](https://github.com/open-sauced/insights/compare/v1.66.0-beta.6...v1.66.0-beta.7) (2023-09-26)
 
 
