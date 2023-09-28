@@ -29,7 +29,7 @@ const SingleSelect = ({ placeholder, value, onValueChange, options, position }: 
 
       <SelectContent position={position ?? "item-aligned"} className="z-50 bg-white">
         {options.map((option, index) => (
-          <SelectItem key={`timezone_${index}`} value={option.value}>
+          <SelectItem title={option.label} key={`timezone_${index}`} value={option.value}>
             {truncateString(option.label, 30)}
           </SelectItem>
         ))}
