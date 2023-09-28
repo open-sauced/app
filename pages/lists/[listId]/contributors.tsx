@@ -125,25 +125,12 @@ function useIsOwner(listUserId: UserID, userId: UserID) {
 
 const ContributorsListPage = ({ list, initialData, isError }: ContributorListPageProps) => {
   const { userId } = useSupabaseAuth();
-  const [selectedContributors, setSelectedContributors] = useState<DbPRContributor[]>([]);
   const isOwner = useIsOwner(list?.user_id, userId);
   const {
     isLoading,
     setPage,
     data: { data: contributors, meta },
   } = useContributorsList({ listId: list?.id, initialData });
-
-  const handleOnSelectAllChecked = (checked: boolean) => {
-    setSelectedContributors(checked ? contributors : []);
-  };
-
-  function handleOnSelectChecked(checked: boolean, contributor: DbPRContributor) {
-    if (checked) {
-      setSelectedContributors((prev) => [...prev, contributor]);
-    } else {
-      setSelectedContributors((prev) => prev.filter((item) => item.user_id !== contributor.user_id));
-    }
-  }
 
   return (
     <ListPageLayout list={list} numberOfContributors={meta.itemCount} isOwner={isOwner}>
@@ -153,17 +140,8 @@ const ContributorsListPage = ({ list, initialData, isError }: ContributorListPag
           <Error errorMessage="Unable to load list of contributors" />
         ) : (
           <div className="lg:min-w-[1150px] px-16 py-8">
-            <ContributorListTableHeaders
-              selected={selectedContributors.length === meta.limit}
-              handleOnSelectAllContributor={handleOnSelectAllChecked}
-            />
-            <ContributorTable
-              loading={isLoading}
-              selectedContributors={selectedContributors}
-              topic={"*"}
-              handleSelectContributors={handleOnSelectChecked}
-              contributors={contributors}
-            ></ContributorTable>
+            <ContributorListTableHeaders />
+            <ContributorTable loading={isLoading} topic={"*"} contributors={contributors}></ContributorTable>
             <div className="flex items-center justify-between w-full py-1 md:py-4 md:mt-5">
               <div>
                 <div className="">
