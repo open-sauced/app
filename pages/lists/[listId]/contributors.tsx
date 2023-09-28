@@ -1,5 +1,5 @@
 import useSWR, { Fetcher } from "swr";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { GetServerSidePropsContext } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import ListPageLayout from "layouts/lists";
@@ -113,19 +113,10 @@ interface ContributorListPageProps {
 
 type UserID = number | null | undefined;
 
-function useIsOwner(listUserId: UserID, userId: UserID) {
-  const [isOwner, setIsOwner] = useState(false);
-
-  useEffect(() => {
-    setIsOwner(listUserId === userId);
-  }, [listUserId, userId]);
-
-  return isOwner;
-}
-
 const ContributorsListPage = ({ list, initialData, isError }: ContributorListPageProps) => {
   const { userId } = useSupabaseAuth();
-  const isOwner = useIsOwner(list?.user_id, userId);
+  // useIsOwner(list?.user_id, userId) once we're ready to implement this.
+  const isOwner = false;
   const {
     isLoading,
     setPage,
