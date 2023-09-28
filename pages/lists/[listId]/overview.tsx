@@ -109,6 +109,7 @@ const ListsOverview = (): JSX.Element => {
           metricIncreases={allContributorCommits > prevAllContributorCommits}
           increased={allContributorCommits > prevAllContributorCommits}
           value={allContributorCommits}
+          valueLabel="in the last 30d"
         />
         <HighlightCard
           label="Active Contributors"
