@@ -59,7 +59,7 @@ type UserID = number | null | undefined;
 
 const ContributorsListPage = ({ list, initialData, isError }: ContributorListPageProps) => {
   const { userId } = useSupabaseAuth();
-  // useIsOwner(list?.user_id, userId) once we're ready to implement this.
+  // create useIsOwner(list?.user_id, userId) once we're ready to implement this.
   const isOwner = false;
   const {
     isLoading,
