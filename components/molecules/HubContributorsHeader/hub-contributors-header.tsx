@@ -65,7 +65,7 @@ const HubContributorsHeader = ({
         <div className="flex flex-col items-center justify-center gap-6 md:flex-row header-info max-sm:mt-4">
           <div className="flex items-center order-2 gap-2 md:flex-row md:order-1">
             <div className="flex items-center gap-10 py-1.5 px-4 rounded-md bg-white mr-3">
-              <span className="flex items-center gap-2 text-sm">
+              <span className="flex items-center gap-2 text-sm shrink-0">
                 <FiGlobe /> Make Public
               </span>
               <ToggleSwitch size="base" checked={isPublic} name="isPublic" handleToggle={handleToggleIsPublic} />
@@ -94,20 +94,17 @@ const HubContributorsHeader = ({
           </Button>
         </div>
       </div>
-      <div className="flex flex-col justify-between w-full gap-3 md:flex-row">
+      <div className="flex flex-col justify-between w-full gap-2 md:flex-row">
         <div className="flex items-center gap-4 ">
-          {/* <MultiSelect handleSelect={(option) => {}} options={timezoneOptions} selected={[]} placeholder="Timezone" /> */}
           <SingleSelect
             options={timezoneOptions}
+            position="popper"
             value={timezone}
             placeholder="Select time zone"
             onValueChange={(value) => setTimezoneFilter(value)}
           />
         </div>
-        <div className="flex items-center gap-2 md:gap-4">
-          {/* <div className="w-58">
-            <Search placeholder="Search for usernames" className="max-w-full" name={"query"} />
-          </div> */}
+        <div className="flex flex-col gap-2 md:items-center md:gap-4 md:flex-row">
           <ComponentDateFilter setRangeFilter={(range: number) => setRangeFilter?.(range)} defaultRange={range} />
           <LimitSelect
             placeholder="10 per page"
