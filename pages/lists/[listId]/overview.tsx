@@ -19,10 +19,37 @@ const ListsOverview = (): JSX.Element => {
   const router = useRouter();
   const { listId } = router.query;
   const { data: prData, isError: prError } = useListContributions(listId as string);
-  const { data: allContributorStats, meta: allContributorMeta } = useListStats(listId as string, "all");
-  const { meta: newContributorMeta } = useListStats(listId as string, "new");
-  const { meta: alumniContributorMeta } = useListStats(listId as string, "alumni");
+
+  const {
+    data: prevAllContributorStats,
+    meta: prevAllContributorMeta,
+    isLoading: prevAllContributorStatsLoading,
+  } = useListStats(listId as string, "all", 30);
+  const {
+    data: allContributorStats,
+    meta: allContributorMeta,
+    isLoading: allContributorStatsLoading,
+  } = useListStats(listId as string, "all");
+
+  const { meta: prevNewContributorMeta, isLoading: prevNewContributorStatsLoading } = useListStats(
+    listId as string,
+    "new",
+    30
+  );
+  const { meta: newContributorMeta, isLoading: newContributorStatsLoading } = useListStats(listId as string, "new");
+
+  const { meta: prevAlumniContributorMeta, isLoading: prevAlumniContributorStatsLoading } = useListStats(
+    listId as string,
+    "alumni",
+    30
+  );
+  const { meta: alumniContributorMeta, isLoading: alumniContributorStatsLoading } = useListStats(
+    listId as string,
+    "alumni"
+  );
+
   const allContributorCommits = allContributorStats?.reduce((acc, curr) => acc + curr.commits, 0) || 0;
+  const prevAllContributorCommits = prevAllContributorStats?.reduce((acc, curr) => acc + curr.commits, 0) || 0;
   const [showBots, setShowBots] = useState(false);
   const isMobile = useMediaQuery("(max-width:720px)");
 
@@ -76,30 +103,39 @@ const ListsOverview = (): JSX.Element => {
   return (
     <div className="flex flex-col w-full gap-4">
       <section className="flex flex-wrap items-center max-w-full gap-4 lg:flex-row lg:flex-nowrap">
-        <HighlightCard label="Commits" icon="contributors" metricIncreases={true} value={allContributorCommits} />
+        <HighlightCard
+          label="Commits"
+          icon="contributors"
+          metricIncreases={allContributorCommits > prevAllContributorCommits}
+          increased={allContributorCommits > prevAllContributorCommits}
+          value={allContributorCommits}
+        />
         <HighlightCard
           label="Active Contributors"
           icon="spam"
-          metricIncreases={allContributorMeta.itemCount > 0}
-          increased={allContributorMeta.itemCount > 0}
-          numChanged={allContributorMeta.itemCount}
+          metricIncreases={allContributorMeta.itemCount > prevAllContributorMeta.itemCount}
+          increased={allContributorMeta.itemCount > prevAllContributorMeta.itemCount}
+          numChanged={allContributorMeta.itemCount - prevAllContributorMeta.itemCount}
           value={allContributorMeta.itemCount}
+          isLoading={prevAllContributorStatsLoading || allContributorStatsLoading}
         />
         <HighlightCard
           label="New Contributors"
           icon="accepted-pr"
-          metricIncreases={newContributorMeta.itemCount > 0}
-          increased={newContributorMeta.itemCount > 0}
-          numChanged={newContributorMeta.itemCount}
+          metricIncreases={newContributorMeta.itemCount > prevNewContributorMeta.itemCount}
+          increased={newContributorMeta.itemCount > prevNewContributorMeta.itemCount}
+          numChanged={newContributorMeta.itemCount - prevNewContributorMeta.itemCount}
           value={newContributorMeta.itemCount}
+          isLoading={prevNewContributorStatsLoading || newContributorStatsLoading}
         />
         <HighlightCard
           label="Alumni Contributors"
           icon="unlabeled-pr"
-          metricIncreases={alumniContributorMeta.itemCount > 0}
-          increased={alumniContributorMeta.itemCount > 0}
-          numChanged={alumniContributorMeta.itemCount}
+          metricIncreases={alumniContributorMeta.itemCount > prevAlumniContributorMeta.itemCount}
+          increased={alumniContributorMeta.itemCount > prevAlumniContributorMeta.itemCount}
+          numChanged={alumniContributorMeta.itemCount - prevAlumniContributorMeta.itemCount}
           value={alumniContributorMeta.itemCount}
+          isLoading={prevAlumniContributorStatsLoading || alumniContributorStatsLoading}
         />
       </section>
       <section className="flex flex-col max-w-full gap-4 mb-6 lg:flex-row">

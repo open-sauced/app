@@ -8,7 +8,7 @@ interface PaginatedResponse {
   readonly meta: Meta;
 }
 
-const useListStats = (listId: string, contributorType = "all", intialLimit = 10) => {
+const useListStats = (listId: string, contributorType = "all", startDays = 0, intialLimit = 10) => {
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(intialLimit);
   const query = new URLSearchParams();
@@ -16,6 +16,7 @@ const useListStats = (listId: string, contributorType = "all", intialLimit = 10)
   query.set("page", `${page}`);
   query.set("limit", `${limit}`);
   query.set("listId", listId);
+  query.set("prev_days_start_date", `${startDays}`);
 
   const baseEndpoint = `lists/${listId}/stats/most-active-contributors?contributorType=${contributorType}`;
   const endpointString = `${baseEndpoint}&${query.toString()}`;
