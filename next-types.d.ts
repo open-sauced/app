@@ -352,3 +352,8 @@ interface DBList {
   updated_at: string;
   deleted_at: string | null;
 }
+
+interface PagedData<T> {
+  data?: T[];
+  meta: Meta;
+}
