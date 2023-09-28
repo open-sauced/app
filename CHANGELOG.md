@@ -5,6 +5,27 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.66.0-beta.11](https://github.com/open-sauced/insights/compare/v1.66.0-beta.10...v1.66.0-beta.11) (2023-09-28)
+
+
+### 🐛 Bug Fixes
+
+* make date selector visible on highlight creation ([#1761](https://github.com/open-sauced/insights/issues/1761)) ([7b4014c](https://github.com/open-sauced/insights/commit/7b4014c642d52d033ba8d5f877742829c3fb5fc0))
+
+## [1.66.0-beta.10](https://github.com/open-sauced/insights/compare/v1.66.0-beta.9...v1.66.0-beta.10) (2023-09-28)
+
+
+### 🐛 Bug Fixes
+
+* adjust style to prevent shift ([#1754](https://github.com/open-sauced/insights/issues/1754)) ([9328ab8](https://github.com/open-sauced/insights/commit/9328ab8866efdf10d559d42c2f2268554fab7632))
+
+## [1.66.0-beta.9](https://github.com/open-sauced/insights/compare/v1.66.0-beta.8...v1.66.0-beta.9) (2023-09-28)
+
+
+### 🐛 Bug Fixes
+
+* Cherry-pick 🍒 Update X icon ([#1759](https://github.com/open-sauced/insights/issues/1759)) ([0a43e6a](https://github.com/open-sauced/insights/commit/0a43e6aaedb78d9b7b6eff84789d993d0a66c67d))
+
 ## [1.66.0-beta.8](https://github.com/open-sauced/insights/compare/v1.66.0-beta.7...v1.66.0-beta.8) (2023-09-27)
 
 
