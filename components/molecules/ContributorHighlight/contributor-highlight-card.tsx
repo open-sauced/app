@@ -653,7 +653,7 @@ const ContributorHighlightCard = ({
                             {date && <span className="text-xs">{format(date, "PPP")}</span>}
                           </button>
                         </PopoverTrigger>
-                        <PopoverContent className="w-auto p-0 bg-white">
+                        <PopoverContent className="w-auto p-0 bg-white pointer-events-auto">
                           <Calendar
                             // block user's from selecting a future date
                             toDate={new Date()}
