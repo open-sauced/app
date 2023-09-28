@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.66.0-beta.10](https://github.com/open-sauced/insights/compare/v1.66.0-beta.9...v1.66.0-beta.10) (2023-09-28)
+
+
+### 🐛 Bug Fixes
+
+* adjust style to prevent shift ([#1754](https://github.com/open-sauced/insights/issues/1754)) ([9328ab8](https://github.com/open-sauced/insights/commit/9328ab8866efdf10d559d42c2f2268554fab7632))
+
 ## [1.66.0-beta.9](https://github.com/open-sauced/insights/compare/v1.66.0-beta.8...v1.66.0-beta.9) (2023-09-28)
 
 
