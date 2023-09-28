@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { HiOutlineEmojiHappy } from "react-icons/hi";
 import { TfiMoreAlt } from "react-icons/tfi";
 import { FiEdit, FiLinkedin } from "react-icons/fi";
-import { BsCalendar2Event, BsLink45Deg, BsTagFill, BsTwitter } from "react-icons/bs";
+import { BsCalendar2Event, BsLink45Deg, BsTagFill } from "react-icons/bs";
+import { FaXTwitter } from "react-icons/fa6";
 import { GrFlag } from "react-icons/gr";
 import Emoji from "react-emoji-render";
 import { usePostHog } from "posthog-js/react";
@@ -451,7 +452,7 @@ const ContributorHighlightCard = ({
                     href={`https://twitter.com/intent/tweet?text=${twitterTweet}&url=${host}/feed/${id}`}
                     className="flex items-center p-3 transition rounded-full hover:bg-light-orange-5"
                   >
-                    <BsTwitter className="text-lg text-light-orange-9 md:text-xl" />
+                    <FaXTwitter className="text-lg text-light-orange-9 md:text-xl" />
                   </a>
                 </Tooltip>
                 <DropdownMenuTrigger className="py-2 px-2 rounded-full data-[state=open]:bg-light-slate-7">
@@ -652,7 +653,7 @@ const ContributorHighlightCard = ({
                             {date && <span className="text-xs">{format(date, "PPP")}</span>}
                           </button>
                         </PopoverTrigger>
-                        <PopoverContent className="w-auto p-0 bg-white">
+                        <PopoverContent className="w-auto p-0 bg-white pointer-events-auto">
                           <Calendar
                             // block user's from selecting a future date
                             toDate={new Date()}

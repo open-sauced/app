@@ -10,12 +10,15 @@ import { classNames } from "components/organisms/RepositoriesTable/repositories-
 import useContributorPullRequests from "lib/hooks/api/useContributorPullRequests";
 import useRepoList from "lib/hooks/useRepoList";
 import { useFetchUser } from "lib/hooks/useFetchUser";
+import Checkbox from "components/atoms/Checkbox/checkbox";
 import { getActivity } from "../RepoRow/repo-row";
 import DevProfile from "../DevProfile/dev-profile";
 
 interface ContributorListTableRow {
   contributor: DbPRContributor;
   topic: string;
+  selected?: boolean;
+  handleOnSelectContributor?: (state: boolean, contributor: DbPRContributor) => void;
 }
 
 function getLastContributionDate(contributions: DbRepoPR[]) {
@@ -39,7 +42,12 @@ function getLastContributedRepo(pullRequests: DbRepoPR[]) {
 
   return sortedPullRequests[0].full_name;
 }
-const ContributorListTableRow = ({ contributor, topic }: ContributorListTableRow) => {
+const ContributorListTableRow = ({
+  contributor,
+  topic,
+  selected,
+  handleOnSelectContributor,
+}: ContributorListTableRow) => {
   const [tableOpen, setTableOpen] = useState(false);
 
   const { data: user } = useFetchUser(contributor.author_login);
@@ -62,9 +70,18 @@ const ContributorListTableRow = ({ contributor, topic }: ContributorListTableRow
   return (
     <>
       {/* Mobile version */}
-      <div className="px-5 py-2 overflow-hidden odd:bg-white md:hidden even:bg-light-slate-2">
+      <div className="px-2 py-2 overflow-hidden md:px-5 odd:bg-white md:hidden even:bg-light-slate-2">
         <div className="flex items-center gap-x-3 text-light-slate-12">
-          <div className="w-[66%]">
+          {handleOnSelectContributor && (
+            <Checkbox
+              checked={selected ? true : false}
+              disabled={!user}
+              title={!user ? "Connect to GitHub" : ""}
+              onCheckedChange={(state) => handleOnSelectContributor?.(state as boolean, contributor)}
+              className={`${user && "border-orange-500 hover:bg-orange-600"}`}
+            />
+          )}
+          <div className="w-[68%]">
             <DevProfile company={user?.company || getLastContributedRepo(data)} username={contributor.author_login} />
           </div>
           <div className="w-[34%] text-normal text-light-slate-11  h-full">
@@ -121,26 +138,28 @@ const ContributorListTableRow = ({ contributor, topic }: ContributorListTableRow
       {/* Desktop Version */}
 
       <div className={`${classNames.row} !gap-6 text-light-slate-11`}>
-        {/* <Checkbox
-          checked={true}
-          onCheckedChange={() => console.log("yeah")}
-          disabled={!user}
-          title={!user ? "Connect to GitHub" : ""}
-          className={`${user && "border-orange-500 hover:bg-orange-600"}`}
-        /> */}
+        {handleOnSelectContributor && (
+          <Checkbox
+            checked={selected ? true : false}
+            disabled={!user}
+            title={!user ? "Connect to GitHub" : ""}
+            onCheckedChange={(state) => handleOnSelectContributor?.(state as boolean, contributor)}
+            className={`${user && "border-orange-500 hover:bg-orange-600"}`}
+          />
+        )}
 
         {/* Column: Contributors */}
-        <div className={clsx("flex-1 lg:min-w-[250px] overflow-hidden")}>
+        <div className={clsx("flex-1 lg:min-w-[12.5rem] overflow-hidden")}>
           <DevProfile company={user?.company || getLastContributedRepo(data)} username={contributor.author_login} />
         </div>
 
         {/* Column: Act */}
-        <div className={clsx("flex-1 flex lg:max-w-[100px] w-fit   justify-center")}>
+        <div className={clsx("flex-1 flex lg:max-w-[6.25rem] w-fit justify-center")}>
           {getActivity(totalPrs, false)}
         </div>
 
         {/* Column Repositories */}
-        <div className={clsx("flex-1 lg:max-w-[100px]  flex justify-center ")}>{repoList.length}</div>
+        <div className={clsx("flex-1 lg:max-w-[6.25rem]  flex justify-center ")}>{repoList.length}</div>
 
         {/* Column: Last Contribution */}
         <div className={clsx("flex-1 lg:max-w-[130px]  flex text-light-slate-11 justify-center ")}>
@@ -148,7 +167,7 @@ const ContributorListTableRow = ({ contributor, topic }: ContributorListTableRow
         </div>
 
         {/* Column: Language */}
-        <div className={clsx("flex-1 hidden lg:max-w-[120px]  justify-center lg:flex")}>
+        <div className={clsx("flex-1 hidden lg:max-w-[7.5rem]  justify-center lg:flex")}>
           {contributorLanguageList.length > 0 ? (
             <p>
               {contributorLanguageList[0]}
@@ -160,16 +179,16 @@ const ContributorListTableRow = ({ contributor, topic }: ContributorListTableRow
         </div>
 
         {/* Column: Time Zone */}
-        <div className={clsx("flex-1 hidden lg:max-w-[80px] text-light-slate-11 justify-center   lg:flex ")}>
+        <div className={clsx("flex-1 hidden lg:max-w-[5rem] text-light-slate-11 justify-center   lg:flex ")}>
           <div className="flex gap-x-3">{user && user.timezone ? <p>{user.timezone}</p> : "-"}</div>
         </div>
 
         {/* Column: Contributions */}
-        <div className={clsx("flex-1 hidden justify-center  lg:flex lg:max-w-[120px]")}>
+        <div className={clsx("flex-1 hidden justify-center  lg:flex lg:max-w-[7.5rem]")}>
           <p>{mergedPrs.length}</p>
         </div>
         {/* Column Last 30 Days */}
-        <div className={clsx("flex-1 lg:min-w-[150px] hidden lg:flex justify-center")}>
+        <div className={clsx("flex-1 lg:min-w-[9.37rem] hidden lg:flex justify-center")}>
           {last30days ? <Sparkline data={last30days} width="100%" height={54} /> : "-"}
         </div>
       </div>
