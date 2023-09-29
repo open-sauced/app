@@ -12,12 +12,14 @@ import { truncateString } from "lib/utils/truncate-string";
 import { useToast } from "lib/hooks/useToast";
 
 interface ListHeaderProps {
-  list?: DbUserList;
+  name: string;
   listId: string;
+  isPublic: boolean;
   isOwner: boolean;
+  numberOfContributors: number;
 }
 
-const ListHeader = ({ list, listId, isOwner }: ListHeaderProps): JSX.Element => {
+const ListHeader = ({ name, isPublic, listId, isOwner, numberOfContributors }: ListHeaderProps): JSX.Element => {
   const { toast } = useToast();
   const posthog = usePostHog();
 
@@ -42,11 +44,13 @@ const ListHeader = ({ list, listId, isOwner }: ListHeaderProps): JSX.Element => 
         <div className="flex flex-col justify-center p-2 header-info grow">
           <div className="flex gap-2">
             <Title level={1} className="!text-2xl font-semibold tracking-tight text-slate-900">
-              {(list && truncateString(list.name, 30)) || "Insights"}
+              {(name && truncateString(name, 30)) || "List"}
             </Title>
-            {list && <Badge isPublic={list?.is_public} />}
+            {<Badge isPublic={isPublic} />}
           </div>
-          <div className="flex items-center gap-2 mt-4">1000 Contributors</div>
+          <div className="flex items-center gap-2 mt-4" id="contributorCount">
+            {numberOfContributors} Contributors
+          </div>
         </div>
       </div>
       <div className="absolute right-0 flex flex-col gap-3 py-2 md:items-center md:flex-row md:static">
