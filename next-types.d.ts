@@ -342,3 +342,9 @@ interface DbUserSearch {
   readonly login: string;
   readonly full_name: string;
 }
+
+interface DbListContributorStat {
+  login: string;
+  commits: number;
+  prsCreated: number;
+}
