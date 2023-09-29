@@ -161,12 +161,16 @@ const ContributorProfileHeader = ({
                 !isOwner && (
                   <>
                     {isFollowing ? (
-                      <Button onClick={handleFollowClick} variant="primary" className="group w-[6.25rem] text-center">
-                        <span className="hidden sm:block group-hover:hidden">Following</span>
-                        <span className="block sm:hidden group-hover:block text-center">Unfollow</span>
+                      <Button
+                        onClick={handleFollowClick}
+                        variant="primary"
+                        className="group w-[6.25rem] justify-center items-center"
+                      >
+                        <span className="text-center hidden sm:block group-hover:hidden">Following</span>
+                        <span className="text-center block sm:hidden group-hover:block">Unfollow</span>
                       </Button>
                     ) : (
-                      <Button variant="primary" className="w-[6.25rem]" onClick={handleFollowClick}>
+                      <Button variant="primary" className="w-[6.25rem] text-center" onClick={handleFollowClick}>
                         <HiUserAdd fontSize={20} className="mr-1" /> Follow
                       </Button>
                     )}
