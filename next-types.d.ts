@@ -357,3 +357,9 @@ interface PagedData<T> {
   data?: T[];
   meta: Meta;
 }
+
+interface DbListContributorStat {
+  login: string;
+  commits: number;
+  prsCreated: number;
+}
