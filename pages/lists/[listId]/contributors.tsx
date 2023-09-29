@@ -64,7 +64,6 @@ const ContributorsListPage = ({ list, initialData, isError }: ContributorListPag
   return (
     <ListPageLayout list={list} numberOfContributors={meta.itemCount} isOwner={isOwner}>
       <div className="container flex flex-col gap-3">
-        <h2>List Contributors</h2>
         {isError ? (
           <Error errorMessage="Unable to load list of contributors" />
         ) : (
