@@ -38,7 +38,7 @@ const ContributorCardList = ({ contributors = [], topic, range }: ContributorCar
   });
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="grid w-full gap-3 grid-cols-automobile md:grid-cols-autodesktop">
       {contributorArray.map((contributor) => {
         return (
           <ContributorCard key={contributor.profile.githubName} contributor={contributor} topic={topic} range={range} />
