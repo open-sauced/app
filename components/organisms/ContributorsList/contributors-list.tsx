@@ -64,10 +64,12 @@ const ContributorsList = ({ contributors, isLoading, meta, setPage, setLimit }: 
         layout={layout}
         onLayoutToggle={setLayout}
       />
-      <ContributorListTableHeaders />
       <ClientOnly>
         {layout === "grid" ? (
-          <ContributorTable loading={isLoading} topic={"*"} contributors={contributors} />
+          <>
+            <ContributorListTableHeaders />
+            <ContributorTable loading={isLoading} topic={"*"} contributors={contributors} />
+          </>
         ) : (
           <ContributorCardList contributors={contributors} topic={"*"} range={range} />
         )}
