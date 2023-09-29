@@ -5,6 +5,10 @@ import PaginationResults from "components/molecules/PaginationResults/pagination
 import ContributorListTableHeaders from "components/molecules/ContributorListTableHeader/contributor-list-table-header";
 import Pagination from "components/molecules/Pagination/pagination";
 import TableHeader from "components/molecules/TableHeader/table-header";
+import { ToggleValue } from "components/atoms/LayoutToggle/layout-toggle";
+import { calcDistanceFromToday } from "lib/utils/date-utils";
+import { getAvatarByUsername } from "lib/utils/github";
+import ContributorCard from "../ContributorCard/contributor-card";
 
 interface ContributorsListProps {
   contributors: DbPRContributor[];
@@ -14,8 +18,39 @@ interface ContributorsListProps {
   setLimit: (limit: number) => void;
 }
 
+interface ContributorCardListProps {
+  contributors: DbPRContributor[];
+  topic: string;
+  range: number;
+}
+
+const ContributorCardList = ({ contributors = [], topic, range }: ContributorCardListProps) => {
+  const contributorArray = contributors.map((contributor) => {
+    const timeSinceFirstCommit = calcDistanceFromToday(new Date(/*contributor.first_commit_time*/));
+
+    return {
+      profile: {
+        githubAvatar: getAvatarByUsername(contributor.author_login),
+        githubName: contributor.author_login,
+        dateOfFirstPR: timeSinceFirstCommit,
+      },
+    };
+  });
+
+  return (
+    <div className="flex flex-col gap-2">
+      {contributorArray.map((contributor) => {
+        return (
+          <ContributorCard key={contributor.profile.githubName} contributor={contributor} topic={topic} range={range} />
+        );
+      })}
+    </div>
+  );
+};
+
 const ContributorsList = ({ contributors, isLoading, meta, setPage, setLimit }: ContributorsListProps) => {
-  const [range, setRange] = useState<number>(30);
+  const [range, setRange] = useState(30);
+  const [layout, setLayout] = useState<ToggleValue>("grid");
 
   return (
     <div className="lg:min-w-[1150px] px-16 py-8">
@@ -25,10 +60,16 @@ const ContributorsList = ({ contributors, isLoading, meta, setPage, setLimit }: 
         updateLimit={setLimit}
         range={range}
         setRangeFilter={setRange}
+        layout={layout}
+        onLayoutToggle={setLayout}
       />
       <ContributorListTableHeaders />
       <ClientOnly>
-        <ContributorTable loading={isLoading} topic={"*"} contributors={contributors} />
+        {layout === "grid" ? (
+          <ContributorTable loading={isLoading} topic={"*"} contributors={contributors} />
+        ) : (
+          <ContributorCardList contributors={contributors} topic={"*"} range={range} />
+        )}
       </ClientOnly>
       <div className="flex items-center justify-between w-full py-1 md:py-4 md:mt-5">
         <div>
