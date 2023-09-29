@@ -82,17 +82,17 @@ const icons: IconMap = {
   "active-contributors": {
     src: "",
     label: "Active Contributors",
-    color: "bg-green-200",
+    color: "bg-green-200 text-green-500",
   },
   "new-contributors": {
     src: "",
     label: "New Contributors",
-    color: "bg-sky-200",
+    color: "bg-blue-200 text-sky-500",
   },
   "alumni-contributors": {
     src: "",
     label: "Alumni Contributors",
-    color: "bg-amber-200",
+    color: "bg-amber-200 text-amber-500",
   },
 };
 
