@@ -1,6 +1,5 @@
 import { StaticImageData } from "next/image";
 import Avatar from "components/atoms/Avatar/avatar";
-import { truncateString } from "lib/utils/truncate-string";
 
 interface TableRepositoryNameProps {
   avatarURL?: string | StaticImageData;
@@ -27,9 +26,12 @@ const TableRepositoryName = ({ avatarURL, fullName }: TableRepositoryNameProps):
 
       {/* Text */}
       <div className="flex flex-col justify-center">
-        <div title={name} className="  text-base text-light-slate-12 tracking-tight">
+        <div
+          title={name}
+          className="  text-base text-light-slate-12 tracking-tight max-w-[85px] sm:max-w-[150px] md:max-w-[110px] whitespace-nowrap overflow-hidden overflow-ellipsis"
+        >
           <a href={`https://www.github.com/${handle}/${name}`} target="_blank" rel="noreferrer">
-            {name && name.length > 10 ? truncateString(name, 12) : name}
+            {name}
           </a>
         </div>
         <div className="  text-sm text-light-slate-11 truncate max-w-[85px] md:max-w-[110px]">
