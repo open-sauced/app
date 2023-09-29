@@ -55,6 +55,7 @@ const ContributorsList = ({ contributors, isLoading, meta, setPage, setLimit }: 
   return (
     <div className="lg:min-w-[1150px] px-16 py-8">
       <TableHeader
+        title="Contributors"
         metaInfo={meta}
         entity="contributors"
         updateLimit={setLimit}
