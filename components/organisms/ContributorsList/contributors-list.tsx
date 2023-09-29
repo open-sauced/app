@@ -26,13 +26,13 @@ interface ContributorCardListProps {
 
 const ContributorCardList = ({ contributors = [], topic, range }: ContributorCardListProps) => {
   const contributorArray = contributors.map((contributor) => {
-    const timeSinceFirstCommit = calcDistanceFromToday(new Date(/*contributor.first_commit_time*/));
+    const dateOfFirstPR = calcDistanceFromToday(new Date(contributor.updated_at));
 
     return {
       profile: {
         githubAvatar: getAvatarByUsername(contributor.author_login),
         githubName: contributor.author_login,
-        dateOfFirstPR: timeSinceFirstCommit,
+        dateOfFirstPR,
       },
     };
   });
