@@ -9,6 +9,48 @@ import { fetchApiData, validateListPath } from "helpers/fetchApiData";
 import Error from "components/atoms/Error/Error";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { convertToContributors, useContributorsList } from "lib/hooks/api/useContributorList";
+import ClientOnly from "components/atoms/ClientOnly/client-only";
+
+interface ContributorsListProps {
+  contributors: DbPRContributor[];
+  isLoading: boolean;
+  meta: Meta;
+  setPage: (page: number) => void;
+}
+
+const ContributorsList = ({ contributors, isLoading, meta, setPage }: ContributorsListProps) => {
+  return (
+    <div className="lg:min-w-[1150px] px-16 py-8">
+      <ContributorListTableHeaders />
+      <ClientOnly>
+        <ContributorTable loading={isLoading} topic={"*"} contributors={contributors} />
+      </ClientOnly>
+      <div className="flex items-center justify-between w-full py-1 md:py-4 md:mt-5">
+        <div>
+          <div className="">
+            <PaginationResults metaInfo={meta} total={meta.itemCount} entity={"contributors"} />
+          </div>
+        </div>
+        <div>
+          <div className="flex flex-col gap-4">
+            <Pagination
+              pages={[]}
+              hasNextPage={meta.hasNextPage}
+              hasPreviousPage={meta.hasPreviousPage}
+              totalPage={meta.pageCount}
+              page={meta.page}
+              onPageChange={function (page: number): void {
+                setPage(page);
+              }}
+              divisor={true}
+              goToPage
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const supabase = createPagesServerClient(ctx);
@@ -74,33 +116,7 @@ const ContributorsListPage = ({ list, initialData, isError }: ContributorListPag
         {isError ? (
           <Error errorMessage="Unable to load list of contributors" />
         ) : (
-          <div className="lg:min-w-[1150px] px-16 py-8">
-            <ContributorListTableHeaders />
-            <ContributorTable loading={isLoading} topic={"*"} contributors={contributors}></ContributorTable>
-            <div className="flex items-center justify-between w-full py-1 md:py-4 md:mt-5">
-              <div>
-                <div className="">
-                  <PaginationResults metaInfo={meta} total={meta.itemCount} entity={"contributors"} />
-                </div>
-              </div>
-              <div>
-                <div className="flex flex-col gap-4">
-                  <Pagination
-                    pages={[]}
-                    hasNextPage={meta.hasNextPage}
-                    hasPreviousPage={meta.hasPreviousPage}
-                    totalPage={meta.pageCount}
-                    page={meta.page}
-                    onPageChange={function (page: number): void {
-                      setPage(page);
-                    }}
-                    divisor={true}
-                    goToPage
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
+          <ContributorsList contributors={contributors} meta={meta} isLoading={isLoading} setPage={setPage} />
         )}
       </div>
     </ListPageLayout>
