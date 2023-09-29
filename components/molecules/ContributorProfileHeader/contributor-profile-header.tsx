@@ -1,18 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
+
 import { TfiMoreAlt } from "react-icons/tfi";
-import { FiCopy } from "react-icons/fi";
+import { HiUserAdd } from "react-icons/hi";
 import { FaIdCard } from "react-icons/fa";
 import { SignInWithOAuthCredentials, User } from "@supabase/supabase-js";
 import { usePostHog } from "posthog-js/react";
 import { clsx } from "clsx";
 
-import Avatar from "components/atoms/Avatar/avatar";
-import RainbowBg from "img/rainbow-cover.png";
-import Button from "components/atoms/Button/button";
-import Text from "components/atoms/Typography/text";
-import { Textarea } from "components/atoms/Textarea/text-area";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,6 +16,11 @@ import {
   DropdownMenuTrigger,
 } from "components/atoms/Dropdown/dropdown";
 
+import Avatar from "components/atoms/Avatar/avatar";
+import RainbowBg from "img/rainbow-cover.png";
+import Button from "components/atoms/Button/button";
+import Text from "components/atoms/Typography/text";
+import { Textarea } from "components/atoms/Textarea/text-area";
 import { useUserCollaborations } from "lib/hooks/useUserCollaborations";
 import { useToast } from "lib/hooks/useToast";
 import { cardPageUrl } from "lib/utils/urls";
@@ -155,81 +156,91 @@ const ContributorProfileHeader = ({
         </div>
         {isConnected && (
           <div className="flex flex-col items-center gap-3 translate-y-24 md:translate-y-0 md:flex-row">
-            {/* Mobile dropdown menu */}
-
-            <DropdownMenu modal={false}>
-              <div className="flex items-center md: gap-2 mb-10 md:gap-6 flex-wrap">
-                <Button className="sm:hidden" variant="primary" href={cardPageUrl(username!)}>
-                  <FaIdCard className="" />
-                </Button>
-                <Button className="hidden sm:inline-flex" variant="primary" href={cardPageUrl(username!)}>
-                  <FaIdCard className="mt-1 mr-1" /> Get Card
-                </Button>
-
-                <Button
-                  onClick={() => handleCopyToClipboard(`${host}/user/${user?.user_metadata.user_name}`)}
-                  className="bg-white sm:hidden"
-                  variant="text"
-                >
-                  <FiCopy className="" />
-                </Button>
-                <Button
-                  onClick={() => handleCopyToClipboard(`${host}/user/${user?.user_metadata.user_name}`)}
-                  className="px-8 py-2 bg-white hidden sm:inline-flex"
-                  variant="text"
-                >
-                  <FiCopy className="mt-1 mr-1" /> Share
-                </Button>
-
-                {!isOwner && (
-                  <DropdownMenuTrigger title="More options" className="p-2 mr-3 bg-white rounded-full cursor-pointer ">
-                    <TfiMoreAlt size={20} className="" />
-                  </DropdownMenuTrigger>
-                )}
-              </div>
-
-              <DropdownMenuContent align="end" className="flex flex-col gap-1 py-2 rounded-lg">
-                {user ? (
-                  !isOwner && (
-                    <>
-                      <DropdownMenuItem
+            <div className="flex justify-center items-center  gap-2 mb-10 md:gap-6 flex-wrap">
+              {user ? (
+                !isOwner && (
+                  <>
+                    {isFollowing ? (
+                      <Button
                         onClick={handleFollowClick}
-                        className="rounded-md flex items-center gap-1 !cursor-pointer [&>span>span:nth-child(1)]:hover:hidden [&>span>span:nth-child(1)]:focus:hidden [&>span>span:nth-child(2)]:hover:inline [&>span>span:nth-child(2)]:focus:inline"
+                        variant="primary"
+                        className="group w-[6.25rem] justify-center items-center"
                       >
-                        {/* `span` tag changes below must be in line with the styles on the parent */}
-                        <span className="pl-3 pr-7">
-                          {isFollowing ? (
-                            <>
-                              <span className="">Following</span>
-                              <span className="hidden">Unfollow</span>
-                            </>
-                          ) : (
-                            "Follow"
-                          )}
-                        </span>
-                      </DropdownMenuItem>
-                      {isPremium && isRecievingCollaborations && (
+                        <span className="text-center hidden sm:block group-hover:hidden">Following</span>
+                        <span className="text-center block sm:hidden group-hover:block">Unfollow</span>
+                      </Button>
+                    ) : (
+                      <Button variant="primary" className="w-[6.25rem] text-center" onClick={handleFollowClick}>
+                        <HiUserAdd fontSize={20} className="mr-1" /> Follow
+                      </Button>
+                    )}
+                  </>
+                )
+              ) : (
+                <>
+                  <Button
+                    className="sm:hidden"
+                    variant="primary"
+                    onClick={async () =>
+                      handleSignIn({ provider: "github", options: { redirectTo: `${host}/${currentPath}` } })
+                    }
+                  >
+                    <HiUserAdd />
+                  </Button>
+                  <Button
+                    className="w-[6.25rem] hidden sm:inline-flex"
+                    variant="primary"
+                    onClick={async () =>
+                      handleSignIn({ provider: "github", options: { redirectTo: `${host}/${currentPath}` } })
+                    }
+                  >
+                    <HiUserAdd fontSize={20} className="mr-1" /> Follow
+                  </Button>
+                </>
+              )}
+
+              <Button className="sm:hidden bg-white" variant="text" href={cardPageUrl(username!)}>
+                <FaIdCard className="" />
+              </Button>
+              <Button className="hidden sm:inline-flex text-black" variant="default" href={cardPageUrl(username!)}>
+                <FaIdCard className="mt-1 mr-1" /> Get Card
+              </Button>
+              <DropdownMenu modal={false}>
+                <div className="items-center gap-2 md:gap-6 flex-wrap">
+                  {!isOwner && (
+                    <DropdownMenuTrigger
+                      title="More options"
+                      className="p-2 mr-3 bg-white rounded-full cursor-pointer "
+                    >
+                      <TfiMoreAlt size={20} className="" />
+                    </DropdownMenuTrigger>
+                  )}
+                </div>
+
+                <DropdownMenuContent align="end" className="flex flex-col gap-1 py-2 rounded-lg">
+                  {user ? (
+                    !isOwner && (
+                      <>
                         <DropdownMenuItem className="rounded-md">
-                          <button onClick={() => setIsDialogOpen(true)} className="flex items-center gap-1 pl-3 pr-7">
-                            Collaborate
+                          <button
+                            onClick={() => handleCopyToClipboard(`${host}/user/${user?.user_metadata.user_name}`)}
+                            className="flex items-center gap-1 pl-3 pr-7"
+                          >
+                            Share
                           </button>
                         </DropdownMenuItem>
-                      )}
-                    </>
-                  )
-                ) : (
-                  <>
-                    <DropdownMenuItem className="rounded-md">
-                      <button
-                        onClick={async () =>
-                          handleSignIn({ provider: "github", options: { redirectTo: `${host}/${currentPath}` } })
-                        }
-                        className="flex items-center gap-1 pl-3 pr-7"
-                      >
-                        Follow
-                      </button>
-                    </DropdownMenuItem>
-                    {isRecievingCollaborations && (
+
+                        {isPremium && isRecievingCollaborations && (
+                          <DropdownMenuItem className="rounded-md">
+                            <button onClick={() => setIsDialogOpen(true)} className="flex items-center gap-1 pl-3 pr-7">
+                              Collaborate
+                            </button>
+                          </DropdownMenuItem>
+                        )}
+                      </>
+                    )
+                  ) : (
+                    <>
                       <DropdownMenuItem className="rounded-md">
                         <button
                           onClick={async () =>
@@ -237,14 +248,28 @@ const ContributorProfileHeader = ({
                           }
                           className="flex items-center gap-1 pl-3 pr-7"
                         >
-                          Collaborate
+                          Share
                         </button>
                       </DropdownMenuItem>
-                    )}
-                  </>
-                )}
-              </DropdownMenuContent>
-            </DropdownMenu>
+                      {isRecievingCollaborations && (
+                        <DropdownMenuItem className="rounded-md">
+                          <button
+                            onClick={async () =>
+                              handleSignIn({ provider: "github", options: { redirectTo: `${host}/${currentPath}` } })
+                            }
+                            className="flex items-center gap-1 pl-3 pr-7"
+                          >
+                            Collaborate
+                          </button>
+                        </DropdownMenuItem>
+                      )}
+                    </>
+                  )}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+
+            {/* Mobile dropdown menu */}
           </div>
         )}
       </div>
