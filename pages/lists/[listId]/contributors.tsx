@@ -57,6 +57,7 @@ const ContributorsListPage = ({ list, initialData, isError }: ContributorListPag
   const {
     isLoading,
     setPage,
+    setLimit,
     data: { data: contributors, meta },
   } = useContributorsList({ listId: list?.id, initialData });
 
@@ -67,7 +68,13 @@ const ContributorsListPage = ({ list, initialData, isError }: ContributorListPag
         {isError ? (
           <Error errorMessage="Unable to load list of contributors" />
         ) : (
-          <ContributorsList contributors={contributors} meta={meta} isLoading={isLoading} setPage={setPage} />
+          <ContributorsList
+            contributors={contributors}
+            meta={meta}
+            isLoading={isLoading}
+            setPage={setPage}
+            setLimit={setLimit}
+          />
         )}
       </div>
     </ListPageLayout>

@@ -1,19 +1,31 @@
+import { useState } from "react";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
 import ContributorTable from "components/organisms/ContributorsTable/contributors-table";
 import PaginationResults from "components/molecules/PaginationResults/pagination-result";
 import ContributorListTableHeaders from "components/molecules/ContributorListTableHeader/contributor-list-table-header";
 import Pagination from "components/molecules/Pagination/pagination";
+import TableHeader from "components/molecules/TableHeader/table-header";
 
 interface ContributorsListProps {
   contributors: DbPRContributor[];
   isLoading: boolean;
   meta: Meta;
   setPage: (page: number) => void;
+  setLimit: (limit: number) => void;
 }
 
-const ContributorsList = ({ contributors, isLoading, meta, setPage }: ContributorsListProps) => {
+const ContributorsList = ({ contributors, isLoading, meta, setPage, setLimit }: ContributorsListProps) => {
+  const [range, setRange] = useState<number>(30);
+
   return (
     <div className="lg:min-w-[1150px] px-16 py-8">
+      <TableHeader
+        metaInfo={meta}
+        entity="contributors"
+        updateLimit={setLimit}
+        range={range}
+        setRangeFilter={setRange}
+      />
       <ContributorListTableHeaders />
       <ClientOnly>
         <ContributorTable loading={isLoading} topic={"*"} contributors={contributors} />
