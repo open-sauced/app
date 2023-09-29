@@ -105,7 +105,7 @@ const ListsOverview = (): JSX.Element => {
       <section className="flex flex-wrap items-center max-w-full gap-4 lg:flex-row lg:flex-nowrap">
         <HighlightCard
           label="Commits"
-          icon="contributors"
+          icon="commits"
           metricIncreases={allContributorCommits > prevAllContributorCommits}
           increased={allContributorCommits > prevAllContributorCommits}
           value={allContributorCommits}
@@ -113,7 +113,7 @@ const ListsOverview = (): JSX.Element => {
         />
         <HighlightCard
           label="Active Contributors"
-          icon="spam"
+          icon="active-contributors"
           metricIncreases={allContributorMeta.itemCount > prevAllContributorMeta.itemCount}
           increased={allContributorMeta.itemCount > prevAllContributorMeta.itemCount}
           numChanged={allContributorMeta.itemCount - prevAllContributorMeta.itemCount}
@@ -122,7 +122,7 @@ const ListsOverview = (): JSX.Element => {
         />
         <HighlightCard
           label="New Contributors"
-          icon="accepted-pr"
+          icon="new-contributors"
           metricIncreases={newContributorMeta.itemCount > prevNewContributorMeta.itemCount}
           increased={newContributorMeta.itemCount > prevNewContributorMeta.itemCount}
           numChanged={newContributorMeta.itemCount - prevNewContributorMeta.itemCount}
@@ -131,7 +131,7 @@ const ListsOverview = (): JSX.Element => {
         />
         <HighlightCard
           label="Alumni Contributors"
-          icon="unlabeled-pr"
+          icon="alumni-contributors"
           metricIncreases={alumniContributorMeta.itemCount > prevAlumniContributorMeta.itemCount}
           increased={alumniContributorMeta.itemCount > prevAlumniContributorMeta.itemCount}
           numChanged={alumniContributorMeta.itemCount - prevAlumniContributorMeta.itemCount}
