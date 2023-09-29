@@ -1,5 +1,8 @@
 import React from "react";
 import Image from "next/image";
+import { GoCommit } from "react-icons/go";
+import { HiOutlineCheck, HiPlus } from "react-icons/hi";
+import { HiArrowPath } from "react-icons/hi2";
 import Card from "components/atoms/Card/card";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 import repoIcon from "../../../img/icons/icon-repo--blue.svg";
@@ -13,7 +16,16 @@ import StackedAvatar, { Contributor } from "../StackedAvatar/stacked-avatar";
 interface HighlightCardProps {
   className?: string;
   label?: string;
-  icon?: "participation" | "accepted-pr" | "unlabeled-pr" | "spam" | "contributors";
+  icon:
+    | "participation"
+    | "accepted-pr"
+    | "unlabeled-pr"
+    | "spam"
+    | "contributors"
+    | "commits"
+    | "new-contributors"
+    | "active-contributors"
+    | "alumni-contributors";
   metricIncreases: boolean;
   increased?: boolean;
   numChanged?: number | string;
@@ -25,10 +37,18 @@ interface HighlightCardProps {
   isLoading?: boolean;
 }
 
+type IconMap = {
+  [key: string]: {
+    src: string;
+    label: string;
+    color: string;
+  };
+};
+
 // TO-DO:
 // Replace these icons, or make them dynamic.
 // Maybe create an Icon component.
-const icons = {
+const icons: IconMap = {
   contributors: {
     src: personIcon.src,
     label: "Contributors",
@@ -54,6 +74,26 @@ const icons = {
     label: "Spam",
     color: "bg-orange-100",
   },
+  commits: {
+    src: "",
+    label: "Commits",
+    color: "bg-purple-200",
+  },
+  "active-contributors": {
+    src: "",
+    label: "Active Contributors",
+    color: "bg-green-200 text-green-500",
+  },
+  "new-contributors": {
+    src: "",
+    label: "New Contributors",
+    color: "bg-blue-200 text-sky-500",
+  },
+  "alumni-contributors": {
+    src: "",
+    label: "Alumni Contributors",
+    color: "bg-amber-200 text-amber-500",
+  },
 };
 
 const HighlightCard: React.FC<HighlightCardProps> = ({
@@ -70,6 +110,32 @@ const HighlightCard: React.FC<HighlightCardProps> = ({
   contributors = [],
   isLoading,
 }) => {
+  function getIcon(icon: string) {
+    switch (icon) {
+      case "commits": {
+        return <GoCommit width={16} height={16} />;
+      }
+
+      case "active-contributors": {
+        return <HiArrowPath width={16} height={16} />;
+      }
+
+      case "new-contributors": {
+        return <HiPlus width={16} height={16} />;
+      }
+
+      case "alumni-contributors": {
+        return <HiOutlineCheck width={16} height={16} />;
+      }
+
+      default: {
+        return (
+          <Image width={16} height={16} alt={icon ? icons[icon].label : "Icon"} src={icon ? icons[icon].src : "Icon"} />
+        );
+      }
+    }
+  }
+
   return (
     <Card className={`${className ? className : ""} flex flex-col w-full sm:max-w-[calc(50%-(1rem/2))] h-auto `}>
       <>
@@ -83,12 +149,7 @@ const HighlightCard: React.FC<HighlightCardProps> = ({
                 icon ? icons[icon].color : "bg-slate-100"
               } rounded-full`}
             >
-              <Image
-                width={16}
-                height={16}
-                alt={icon ? icons[icon].label : "Icon"}
-                src={icon ? icons[icon].src : "Icon"}
-              />
+              {getIcon(icon)}
             </div>
             {/* Label: Text */}
             <div className="text-sm text-slate-600   leading-none">{label ? label : "Label"}</div>

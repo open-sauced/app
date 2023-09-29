@@ -1,9 +1,83 @@
+import { GetServerSidePropsContext } from "next";
+import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import ListPageLayout from "layouts/lists";
+import { fetchApiData, validateListPath } from "helpers/fetchApiData";
+import Error from "components/atoms/Error/Error";
+import { convertToContributors, useContributorsList } from "lib/hooks/api/useContributorList";
+import ContributorsList from "components/organisms/ContributorsList/contributors-list";
 
-const ListContributors = () => {
-  return <div>List Contributors</div>;
+export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
+  const supabase = createPagesServerClient(ctx);
+
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+  const bearerToken = session ? session.access_token : "";
+
+  const { listId } = ctx.params as { listId: string };
+  const limit = 10; // Can pull this from the querystring in the future
+  const [{ data, error: contributorListError }, { data: list, error }] = await Promise.all([
+    fetchApiData<PagedData<DBListContributor>>({
+      path: `lists/${listId}/contributors?limit=${limit}`,
+      bearerToken,
+      pathValidator: validateListPath,
+    }),
+    fetchApiData<DBList>({ path: `lists/${listId}`, bearerToken, pathValidator: validateListPath }),
+  ]);
+
+  if (error?.status === 404) {
+    return {
+      notFound: true,
+    };
+  }
+
+  const contributors = convertToContributors(data?.data);
+
+  return {
+    props: {
+      list,
+      initialData: data ? { data: contributors, meta: data.meta } : { data: [], meta: {} },
+      isError: error || contributorListError,
+    },
+  };
 };
 
-ListContributors.PageLayout = ListPageLayout;
+interface ContributorListPageProps {
+  list?: DBList;
+  initialData: {
+    meta: Meta;
+    data: DbPRContributor[];
+  };
+  isError: boolean;
+}
 
-export default ListContributors;
+const ContributorsListPage = ({ list, initialData, isError }: ContributorListPageProps) => {
+  // create useIsOwner(list?.user_id, userId) once we're ready to implement this.
+  const isOwner = false;
+  const {
+    isLoading,
+    setPage,
+    setLimit,
+    data: { data: contributors, meta },
+  } = useContributorsList({ listId: list?.id, initialData });
+
+  return (
+    <ListPageLayout list={list} numberOfContributors={meta.itemCount} isOwner={isOwner}>
+      <div className="container flex flex-col gap-3">
+        {isError ? (
+          <Error errorMessage="Unable to load list of contributors" />
+        ) : (
+          <ContributorsList
+            contributors={contributors}
+            meta={meta}
+            isLoading={isLoading}
+            setPage={setPage}
+            setLimit={setLimit}
+          />
+        )}
+      </div>
+    </ListPageLayout>
+  );
+};
+
+export default ContributorsListPage;

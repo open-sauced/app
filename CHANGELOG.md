@@ -5,6 +5,20 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.67.0-beta.2](https://github.com/open-sauced/insights/compare/v1.67.0-beta.1...v1.67.0-beta.2) (2023-09-29)
+
+
+### 🍕 Features
+
+* added contributor page for lists ([#1734](https://github.com/open-sauced/insights/issues/1734)) ([762de40](https://github.com/open-sauced/insights/commit/762de402167665a9dce8f1bbf01071049b431e7d))
+
+## [1.67.0-beta.1](https://github.com/open-sauced/insights/compare/v1.66.0...v1.67.0-beta.1) (2023-09-29)
+
+
+### 🍕 Features
+
+* add overview page for a list ([#1736](https://github.com/open-sauced/insights/issues/1736)) ([6c6bfaa](https://github.com/open-sauced/insights/commit/6c6bfaa1ee1efc30be0e94b3d8650ddf1294b327))
+
 ## [1.66.0](https://github.com/open-sauced/insights/compare/v1.65.0...v1.66.0) (2023-09-28)
 
 
@@ -37,38 +51,33 @@
 
 ## [1.66.0-beta.10](https://github.com/open-sauced/insights/compare/v1.66.0-beta.9...v1.66.0-beta.10) (2023-09-28)
 
-
 ### 🐛 Bug Fixes
 
-* adjust style to prevent shift ([#1754](https://github.com/open-sauced/insights/issues/1754)) ([9328ab8](https://github.com/open-sauced/insights/commit/9328ab8866efdf10d559d42c2f2268554fab7632))
+- adjust style to prevent shift ([#1754](https://github.com/open-sauced/insights/issues/1754)) ([9328ab8](https://github.com/open-sauced/insights/commit/9328ab8866efdf10d559d42c2f2268554fab7632))
 
 ## [1.66.0-beta.9](https://github.com/open-sauced/insights/compare/v1.66.0-beta.8...v1.66.0-beta.9) (2023-09-28)
 
-
 ### 🐛 Bug Fixes
 
-* Cherry-pick 🍒 Update X icon ([#1759](https://github.com/open-sauced/insights/issues/1759)) ([0a43e6a](https://github.com/open-sauced/insights/commit/0a43e6aaedb78d9b7b6eff84789d993d0a66c67d))
+- Cherry-pick 🍒 Update X icon ([#1759](https://github.com/open-sauced/insights/issues/1759)) ([0a43e6a](https://github.com/open-sauced/insights/commit/0a43e6aaedb78d9b7b6eff84789d993d0a66c67d))
 
 ## [1.66.0-beta.8](https://github.com/open-sauced/insights/compare/v1.66.0-beta.7...v1.66.0-beta.8) (2023-09-27)
 
-
 ### 🐛 Bug Fixes
 
-* fixed a typo in 30 days label ([#1755](https://github.com/open-sauced/insights/issues/1755)) ([2293dc2](https://github.com/open-sauced/insights/commit/2293dc2ab85ed3d1c0780a5956289249576698ce))
+- fixed a typo in 30 days label ([#1755](https://github.com/open-sauced/insights/issues/1755)) ([2293dc2](https://github.com/open-sauced/insights/commit/2293dc2ab85ed3d1c0780a5956289249576698ce))
 
 ## [1.66.0-beta.7](https://github.com/open-sauced/insights/compare/v1.66.0-beta.6...v1.66.0-beta.7) (2023-09-26)
 
-
 ### 🍕 Features
 
-* add `delete` functionality to list feature ([#1732](https://github.com/open-sauced/insights/issues/1732)) ([8a3e1da](https://github.com/open-sauced/insights/commit/8a3e1da522711ecc300dd86e950b709f12634b2e))
+- add `delete` functionality to list feature ([#1732](https://github.com/open-sauced/insights/issues/1732)) ([8a3e1da](https://github.com/open-sauced/insights/commit/8a3e1da522711ecc300dd86e950b709f12634b2e))
 
 ## [1.66.0-beta.6](https://github.com/open-sauced/insights/compare/v1.66.0-beta.5...v1.66.0-beta.6) (2023-09-26)
 
-
 ### 🍕 Features
 
-* add User Search ([#1678](https://github.com/open-sauced/insights/issues/1678)) ([008bf88](https://github.com/open-sauced/insights/commit/008bf88142d2360ab3268863c788a9071638dd2f))
+- add User Search ([#1678](https://github.com/open-sauced/insights/issues/1678)) ([008bf88](https://github.com/open-sauced/insights/commit/008bf88142d2360ab3268863c788a9071638dd2f))
 
 ## [1.66.0-beta.5](https://github.com/open-sauced/insights/compare/v1.66.0-beta.4...v1.66.0-beta.5) (2023-09-25)
 
