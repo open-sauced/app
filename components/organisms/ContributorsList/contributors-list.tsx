@@ -53,7 +53,7 @@ const ContributorsList = ({ contributors, isLoading, meta, setPage, setLimit }: 
   const [layout, setLayout] = useState<ToggleValue>("grid");
 
   return (
-    <div className="lg:min-w-[1150px] px-16 py-8">
+    <>
       <TableHeader
         title="Contributors"
         metaInfo={meta}
@@ -97,7 +97,7 @@ const ContributorsList = ({ contributors, isLoading, meta, setPage, setLimit }: 
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
