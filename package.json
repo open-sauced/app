@@ -90,6 +90,7 @@
     "next": "^13.4.7",
     "nextjs-progressbar": "^0.0.16",
     "octokit": "^3.1.2",
+    "open-graph": "^0.2.6",
     "path-to-regexp": "^6.2.1",
     "posthog-js": "^1.83.0",
     "posthog-node": "^3.1.3",
