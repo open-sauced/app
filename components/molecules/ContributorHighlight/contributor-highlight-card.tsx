@@ -41,7 +41,7 @@ import useUserHighlightReactions from "lib/hooks/useUserHighlightReactions";
 import Tooltip from "components/atoms/Tooltip/tooltip";
 import useFollowUser from "lib/hooks/useFollowUser";
 import { fetchGithubIssueInfo } from "lib/hooks/fetchGithubIssueInfo";
-import { isValidBlogUrl } from "lib/utils/dev-to";
+import { isValidDevToBlogUrl } from "lib/utils/dev-to";
 import { fetchDevToBlogInfo } from "lib/hooks/fetchDevToBlogInfo";
 import Search from "components/atoms/Search/search";
 import Title from "components/atoms/Typography/title";
@@ -277,7 +277,7 @@ const ContributorHighlightCard = ({
         return { text: "Pull request", icon: <BiGitPullRequest className="text-md md:text-lg" /> };
       case "blog_post":
         return {
-          text: "Blog post",
+          text: "DevTo post",
           icon: (
             // Used svg as i could not find the exact icon in react-icons
             <svg
@@ -316,7 +316,7 @@ const ContributorHighlightCard = ({
       return;
     }
 
-    if (isValidPullRequestUrl(highlightLink) || isValidIssueUrl(highlightLink) || isValidBlogUrl(highlightLink)) {
+    if (isValidPullRequestUrl(highlightLink) || isValidIssueUrl(highlightLink) || isValidDevToBlogUrl(highlightLink)) {
       const { apiPaths } = generateRepoParts(highlight.highlightLink);
       const { repoName, orgName, issueId } = apiPaths;
       setLoading(true);
@@ -338,7 +338,7 @@ const ContributorHighlightCard = ({
 
       if (res.isError) {
         setLoading(false);
-        setError("A valid Pull request, Issue or dev.to Blog Link is required");
+        setError("A valid Pull request, Issue or dev.to DevTo Link is required");
         return;
       } else {
         const res = await updateHighlights(
