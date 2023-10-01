@@ -1,4 +1,4 @@
-export const getBlogDetails = async (blogLink: string) => {
+export const getDevToBlogDetails = async (blogLink: string) => {
   const trimmedUrl = blogLink.trim();
   const devToUrl = new URL(trimmedUrl.includes("https://") ? trimmedUrl : `https://${trimmedUrl}`);
   const { pathname } = devToUrl;
@@ -12,6 +12,6 @@ export const getBlogDetails = async (blogLink: string) => {
   };
 };
 
-export const isValidBlogUrl = (url: string): boolean => {
+export const isValidDevToBlogUrl = (url: string): boolean => {
   return url.match(/((https?:\/\/)?(www\.)?dev\.to\/[^\/]+\/[^\/]+)/) ? true : false;
 };

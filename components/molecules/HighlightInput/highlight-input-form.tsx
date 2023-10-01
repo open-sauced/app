@@ -37,8 +37,8 @@ import { TypeWriterTextArea } from "components/atoms/TypeWriterTextArea/type-wri
 import { fetchGithubIssueInfo } from "lib/hooks/fetchGithubIssueInfo";
 import generateIssueHighlightSummary from "lib/utils/generate-issue-highlight-summary";
 import { fetchDevToBlogInfo } from "lib/hooks/fetchDevToBlogInfo";
-import { getBlogDetails, isValidBlogUrl } from "lib/utils/dev-to";
-import generateBlogHighlightSummary from "lib/utils/generate-blog-highlight-summary";
+import { getDevToBlogDetails, isValidDevToBlogUrl } from "lib/utils/dev-to";
+import generateDevToBlogHighlightSummary from "lib/utils/generate-dev-to-blog-highlight-summary";
 import Search from "components/atoms/Search/search";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { Calendar } from "../Calendar/calendar";
@@ -345,7 +345,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
   const handleGenerateHighlightSummary = async () => {
     if (
       !highlightLink ||
-      (!isValidPullRequestUrl(highlightLink) && !isValidIssueUrl(highlightLink) && !isValidBlogUrl(highlightLink))
+      (!isValidPullRequestUrl(highlightLink) && !isValidIssueUrl(highlightLink) && !isValidDevToBlogUrl(highlightLink))
     ) {
       setError("Please provide a valid pull request, issue or dev.to blog link!");
       return;
@@ -362,8 +362,8 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
       const issueComments = await getGithubIssueComments(highlightLink);
       summary = await generateIssueHighlightSummary(issueTitle, issueBody, issueComments);
     } else {
-      const { title: blogTitle, markdown: blogMarkdown } = await getBlogDetails(highlightLink);
-      summary = await generateBlogHighlightSummary(blogTitle, blogMarkdown);
+      const { title: blogTitle, markdown: blogMarkdown } = await getDevToBlogDetails(highlightLink);
+      summary = await generateDevToBlogHighlightSummary(blogTitle, blogMarkdown);
     }
 
     setIsSummaryButtonDisabled(false);
@@ -389,7 +389,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
 
     const highlight = bodyText;
 
-    if (isValidPullRequestUrl(highlightLink) || isValidIssueUrl(highlightLink) || isValidBlogUrl(highlightLink)) {
+    if (isValidPullRequestUrl(highlightLink) || isValidIssueUrl(highlightLink) || isValidDevToBlogUrl(highlightLink)) {
       // generateApiPrUrl will return an object with repoName, orgName and issueId
       // it can work with both issue and pull request links
       const highlightType = isValidIssueUrl(highlightLink)
