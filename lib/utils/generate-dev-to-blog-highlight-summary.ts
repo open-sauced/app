@@ -1,7 +1,7 @@
 import { supabase } from "./supabase";
 
 const baseUrl = process.env.NEXT_PUBLIC_API_URL;
-const generateBlogHighlightSummary = async (blogTitle: string, blogMarkdown: string) => {
+const generateDevToBlogHighlightSummary = async (blogTitle: string, blogMarkdown: string) => {
   const sessionResponse = await supabase.auth.getSession();
   const sessionToken = sessionResponse?.data.session?.access_token;
   const payload = {
@@ -37,4 +37,4 @@ const generateBlogHighlightSummary = async (blogTitle: string, blogMarkdown: str
   }
 };
 
-export default generateBlogHighlightSummary;
+export default generateDevToBlogHighlightSummary;
