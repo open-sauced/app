@@ -23,11 +23,11 @@ const ContributorTable = ({
 
       {contributors &&
         contributors.length > 0 &&
-        contributors.map((contributor, i) => (
+        contributors.map((contributor) => (
           <ContributorListTableRow
             topic={topic}
             contributor={contributor}
-            key={i}
+            key={contributor.user_id}
             selected={!!selectedContributors?.find((selected) => selected.user_id === contributor.user_id)}
             handleOnSelectContributor={handleSelectContributors}
           />
