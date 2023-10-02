@@ -35,8 +35,8 @@ interface ScatterPlotProps {
   }[];
   isMobile?: boolean;
   repositories?: number[];
-  metadata: ScatterChartMetadata;
-  handleSetPrFilter: (state: PrStatusFilter) => void;
+  metadata?: ScatterChartMetadata;
+  handleSetPrFilter?: (state: PrStatusFilter) => void;
 }
 
 const NivoScatterPlot = ({
@@ -74,15 +74,15 @@ const NivoScatterPlot = ({
   const handleTogglePrFilter = (val: string) => {
     switch (val) {
       case "0":
-        handleSetPrFilter("all");
+        handleSetPrFilter?.("all");
         break;
 
       case "1":
-        handleSetPrFilter("open");
+        handleSetPrFilter?.("open");
         break;
 
       case "2":
-        handleSetPrFilter("closed");
+        handleSetPrFilter?.("closed");
         break;
     }
   };
@@ -121,26 +121,30 @@ const NivoScatterPlot = ({
         <Title level={4} className="!text-sm  !text-light-slate-12">
           {title}
         </Title>
-        <ToggleGroup handleChange={handleTogglePrFilter} className="hidden lg:flex">
-          <>
-            All PRs
-            <span className="ml-2 py-0.5 px-1.5 h-fit bg-slate-200 text-slate-500 border rounded-full text-xs font-semibold">
-              {humanizeNumber(metadata.allPrs, null)}
-            </span>
-          </>
-          <>
-            Open
-            <span className="ml-2 py-0.5 px-1.5 h-fit bg-slate-200 text-slate-500 border rounded-full text-xs font-semibold">
-              {humanizeNumber(metadata.openPrs, null)}
-            </span>
-          </>
-          <>
-            Closed
-            <span className="ml-2 py-0.5 px-1.5 h-fit bg-slate-200 text-slate-500 border rounded-full text-xs font-semibold">
-              {humanizeNumber(metadata.closedPrs, null)}
-            </span>
-          </>
-        </ToggleGroup>
+        {metadata ? (
+          <ToggleGroup handleChange={handleTogglePrFilter} className="hidden lg:flex">
+            <>
+              All PRs
+              <span className="ml-2 py-0.5 px-1.5 h-fit bg-slate-200 text-slate-500 border rounded-full text-xs font-semibold">
+                {humanizeNumber(metadata.allPrs, null)}
+              </span>
+            </>
+            <>
+              Open
+              <span className="ml-2 py-0.5 px-1.5 h-fit bg-slate-200 text-slate-500 border rounded-full text-xs font-semibold">
+                {humanizeNumber(metadata.openPrs, null)}
+              </span>
+            </>
+            <>
+              Closed
+              <span className="ml-2 py-0.5 px-1.5 h-fit bg-slate-200 text-slate-500 border rounded-full text-xs font-semibold">
+                {humanizeNumber(metadata.closedPrs, null)}
+              </span>
+            </>
+          </ToggleGroup>
+        ) : (
+          <></>
+        )}
         {/* replaced display flex to hidden on show/bots container */}
         <div className="flex gap-2 mt-3 md:mt-0">
           <div>

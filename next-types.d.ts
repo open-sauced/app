@@ -235,6 +235,7 @@ interface DbUser {
   readonly following_count: number;
   readonly highlights_count: number;
   readonly is_maintainer: boolean;
+  readonly coupon_code: string;
 }
 
 interface DbHighlight {
@@ -341,4 +342,25 @@ interface DbUserList {
 interface DbUserSearch {
   readonly login: string;
   readonly full_name: string;
+}
+
+interface DBList {
+  id: string;
+  user_id: number;
+  name: string;
+  is_public: boolean;
+  created_at: string;
+  updated_at: string;
+  deleted_at: string | null;
+}
+
+interface PagedData<T> {
+  data?: T[];
+  meta: Meta;
+}
+
+interface DbListContributorStat {
+  login: string;
+  commits: number;
+  prsCreated: number;
 }
