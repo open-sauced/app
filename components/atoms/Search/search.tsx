@@ -14,6 +14,7 @@ interface SearchProps {
   suggestions?: string[];
   onChange?: (value: string) => void;
   isLoading?: boolean;
+  style?: React.CSSProperties;
 }
 
 const suggestionsStyle = {
