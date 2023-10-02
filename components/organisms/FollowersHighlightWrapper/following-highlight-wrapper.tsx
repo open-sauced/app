@@ -58,7 +58,7 @@ const FollowingHighlightWrapper = ({ emojis, selectedFilter }: HighlightWrapperP
                   </span>
                 </Link>
               </div>
-              <div className="p-4 py-6 border bg-light-slate-1 md:px-6 lg:px-12 rounded-xl">
+              <div className="p-4 border bg-light-slate-1 md:px-6 lg:px-9 lg:py-5 sm:py-3 xs:py-2 rounded-xl">
                 <ContributorHighlightCard
                   emojis={emojis}
                   refreshCallBack={mutate}
