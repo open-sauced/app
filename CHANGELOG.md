@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.67.0-beta.6](https://github.com/open-sauced/insights/compare/v1.67.0-beta.5...v1.67.0-beta.6) (2023-10-02)
+
+
+### 🍕 Features
+
+* added hacktoberfest icon in user settings ([#1775](https://github.com/open-sauced/insights/issues/1775)) ([43e6b12](https://github.com/open-sauced/insights/commit/43e6b1249ad1b429b3e784d7a9fde5f8a83214cf))
+
 ## [1.67.0-beta.5](https://github.com/open-sauced/insights/compare/v1.67.0-beta.4...v1.67.0-beta.5) (2023-10-02)
 
 
