@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.67.0-beta.4](https://github.com/open-sauced/insights/compare/v1.67.0-beta.3...v1.67.0-beta.4) (2023-10-02)
+
+
+### 🍕 Features
+
+* change hacktoberfest to default topic ([#1773](https://github.com/open-sauced/insights/issues/1773)) ([95c3c74](https://github.com/open-sauced/insights/commit/95c3c742fa9b9d5ed0904a18b1ef191dc70f2db3))
+
 ## [1.67.0-beta.3](https://github.com/open-sauced/insights/compare/v1.67.0-beta.2...v1.67.0-beta.3) (2023-09-29)
 
 
