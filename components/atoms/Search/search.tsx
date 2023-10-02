@@ -32,6 +32,7 @@ const Search = ({
   suggestions,
   onChange,
   isLoading,
+  ...props
 }: SearchProps): JSX.Element => {
   const [search, setSearch] = useState(value);
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -77,6 +78,7 @@ const Search = ({
         type="search"
         id={name}
         onChange={handleChange}
+        {...props}
         onKeyUp={(e) => {
           if (e.code === "Enter") {
             handleOnSearch();

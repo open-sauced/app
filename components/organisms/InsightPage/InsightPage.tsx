@@ -460,6 +460,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
             isLoading={createLoading}
             placeholder="Repository URL or Full Name (ex: open-sauced/open-sauced)"
             className="!w-full text-md text-gra"
+            style={{ width: "100%" }}
             name={"query"}
             suggestions={suggestions}
             onChange={(value) => setRepoSearchTerm(value)}
