@@ -36,7 +36,7 @@ const CouponForm = ({ refreshUser }: CouponFormProps) => {
       setCode("");
       refreshUser?.();
     } else {
-      toast({ description: "Unable to apply the coupon!", variant: "danger" });
+      toast({ description: "Coupon not found!", variant: "danger" });
     }
 
     setUpdating(false);
