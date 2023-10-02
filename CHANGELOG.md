@@ -5,6 +5,22 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.67.0](https://github.com/open-sauced/insights/compare/v1.66.0...v1.67.0) (2023-10-02)
+
+
+### 🐛 Bug Fixes
+
+* made card view for lists contributors list uniform with rest of app ([#1772](https://github.com/open-sauced/insights/issues/1772)) ([5a64ab6](https://github.com/open-sauced/insights/commit/5a64ab620da935d5c79a56f157a590a3e137e7c5))
+
+
+### 🍕 Features
+
+* add overview page for a list ([#1736](https://github.com/open-sauced/insights/issues/1736)) ([6c6bfaa](https://github.com/open-sauced/insights/commit/6c6bfaa1ee1efc30be0e94b3d8650ddf1294b327))
+* added contributor page for lists ([#1734](https://github.com/open-sauced/insights/issues/1734)) ([762de40](https://github.com/open-sauced/insights/commit/762de402167665a9dce8f1bbf01071049b431e7d))
+* added hacktoberfest icon in user settings ([#1775](https://github.com/open-sauced/insights/issues/1775)) ([43e6b12](https://github.com/open-sauced/insights/commit/43e6b1249ad1b429b3e784d7a9fde5f8a83214cf))
+* change hacktoberfest to default topic ([#1773](https://github.com/open-sauced/insights/issues/1773)) ([95c3c74](https://github.com/open-sauced/insights/commit/95c3c742fa9b9d5ed0904a18b1ef191dc70f2db3))
+* improve visibility of the follow cta on user profiles ([#1739](https://github.com/open-sauced/insights/issues/1739)) ([11acadb](https://github.com/open-sauced/insights/commit/11acadb9ed53948aed279acd67f9a2bcb02c9477))
+
 ## [1.67.0-beta.6](https://github.com/open-sauced/insights/compare/v1.67.0-beta.5...v1.67.0-beta.6) (2023-10-02)
 
 
