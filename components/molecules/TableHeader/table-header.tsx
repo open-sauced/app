@@ -41,7 +41,7 @@ const TableHeader = ({
   onLayoutToggle,
 }: TableHeaderProps): JSX.Element => {
   const router = useRouter();
-  const { filterName } = router.query;
+  const { pageId } = router.query;
   const [searchTerm, setSearchTerm] = React.useState<string>("");
   const [suggestions, setSuggestions] = React.useState<string[]>([]);
   const [selected, setSelected] = React.useState<null | number>(null);
@@ -49,7 +49,7 @@ const TableHeader = ({
 
   const updateSuggestionsDebounced = useDebounce(async () => {
     const req = await fetch(
-      `https://api.github.com/search/repositories?q=${encodeURIComponent(`${searchTerm} topic:${filterName} in:name`)}`,
+      `https://api.github.com/search/repositories?q=${encodeURIComponent(`${searchTerm} topic:${pageId} in:name`)}`,
       {
         ...(providerToken
           ? {
