@@ -16,6 +16,7 @@ import JavaIcon from "/img/icons/interests/java.svg";
 import GolangIcon from "img/icons/interests/golang.svg";
 import VueIcon from "img/icons/interests/vuejs.svg";
 import KubernetesIcon from "img/icons/interests/kubernetes.svg";
+import HacktoberfestIcon from "img/icons/interests/hacktoberfest.svg";
 
 import topicNameFormatting from "lib/utils/topic-name-formatting";
 
@@ -37,6 +38,7 @@ interface LanguagePillProps {
     | "golang"
     | "vue"
     | "Kubernetes"
+    | "hacktoberfest"
     | string;
   classNames?: string;
   onClick?: () => void;
@@ -60,6 +62,7 @@ const LanguagePill = ({ topic, classNames, onClick }: LanguagePillProps) => {
       golang: GolangIcon,
       vue: VueIcon,
       kubernetes: KubernetesIcon,
+      hacktoberfest: HacktoberfestTcon,
     };
 
     return iconMap[name] || "";
