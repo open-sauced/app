@@ -38,7 +38,7 @@ const ContributorCardList = ({ contributors = [], topic, range }: ContributorCar
   });
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="grid w-full gap-3 grid-cols-automobile md:grid-cols-autodesktop">
       {contributorArray.map((contributor) => {
         return (
           <ContributorCard key={contributor.profile.githubName} contributor={contributor} topic={topic} range={range} />
@@ -53,7 +53,7 @@ const ContributorsList = ({ contributors, isLoading, meta, setPage, setLimit }: 
   const [layout, setLayout] = useState<ToggleValue>("grid");
 
   return (
-    <div className="lg:min-w-[1150px] px-16 py-8">
+    <>
       <TableHeader
         title="Contributors"
         metaInfo={meta}
@@ -64,10 +64,12 @@ const ContributorsList = ({ contributors, isLoading, meta, setPage, setLimit }: 
         layout={layout}
         onLayoutToggle={setLayout}
       />
-      <ContributorListTableHeaders />
       <ClientOnly>
         {layout === "grid" ? (
-          <ContributorTable loading={isLoading} topic={"*"} contributors={contributors} />
+          <>
+            <ContributorListTableHeaders />
+            <ContributorTable loading={isLoading} topic={"*"} contributors={contributors} />
+          </>
         ) : (
           <ContributorCardList contributors={contributors} topic={"*"} range={range} />
         )}
@@ -95,7 +97,7 @@ const ContributorsList = ({ contributors, isLoading, meta, setPage, setLimit }: 
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
