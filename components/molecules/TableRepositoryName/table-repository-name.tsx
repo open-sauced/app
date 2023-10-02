@@ -28,7 +28,7 @@ const TableRepositoryName = ({ avatarURL, fullName }: TableRepositoryNameProps):
       <div className="flex flex-col justify-center">
         <div
           title={name}
-          className="  text-base text-light-slate-12 tracking-tight max-w-[85px] sm:max-w-[150px] md:max-w-[110px] whitespace-nowrap overflow-hidden overflow-ellipsis"
+          className="  text-base text-light-slate-12 tracking-tight max-w-[5.5rem] sm:max-w-[9.3rem] md:max-w-[7rem] whitespace-nowrap overflow-hidden overflow-ellipsis"
         >
           <a href={`https://www.github.com/${handle}/${name}`} target="_blank" rel="noreferrer">
             {name}
