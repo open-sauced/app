@@ -5,6 +5,27 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.67.0-beta.6](https://github.com/open-sauced/insights/compare/v1.67.0-beta.5...v1.67.0-beta.6) (2023-10-02)
+
+
+### 🍕 Features
+
+* added hacktoberfest icon in user settings ([#1775](https://github.com/open-sauced/insights/issues/1775)) ([43e6b12](https://github.com/open-sauced/insights/commit/43e6b1249ad1b429b3e784d7a9fde5f8a83214cf))
+
+## [1.67.0-beta.5](https://github.com/open-sauced/insights/compare/v1.67.0-beta.4...v1.67.0-beta.5) (2023-10-02)
+
+
+### 🐛 Bug Fixes
+
+* made card view for lists contributors list uniform with rest of app ([#1772](https://github.com/open-sauced/insights/issues/1772)) ([5a64ab6](https://github.com/open-sauced/insights/commit/5a64ab620da935d5c79a56f157a590a3e137e7c5))
+
+## [1.67.0-beta.4](https://github.com/open-sauced/insights/compare/v1.67.0-beta.3...v1.67.0-beta.4) (2023-10-02)
+
+
+### 🍕 Features
+
+* change hacktoberfest to default topic ([#1773](https://github.com/open-sauced/insights/issues/1773)) ([95c3c74](https://github.com/open-sauced/insights/commit/95c3c742fa9b9d5ed0904a18b1ef191dc70f2db3))
+
 ## [1.67.0-beta.3](https://github.com/open-sauced/insights/compare/v1.67.0-beta.2...v1.67.0-beta.3) (2023-09-29)
 
 
