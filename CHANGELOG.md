@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.68.0-beta.1](https://github.com/open-sauced/insights/compare/v1.67.0...v1.68.0-beta.1) (2023-10-02)
+
+
+### 🍕 Features
+
+* add form to user settings to apply coupon code ([#1771](https://github.com/open-sauced/insights/issues/1771)) ([504d7e2](https://github.com/open-sauced/insights/commit/504d7e2499a6b2a9dd5beaa560dd9ca7aa6af4c8))
+
 ## [1.67.0](https://github.com/open-sauced/insights/compare/v1.66.0...v1.67.0) (2023-10-02)
 
 
