@@ -1,5 +1,6 @@
 import Image, { StaticImageData } from "next/image";
 
+import HacktoberfestIcon from "img/icons/interests/hacktoberfest.svg";
 import JavascriptIcon from "img/icons/interests/javascript.svg";
 import ReactIcon from "/img/icons/interests/react.svg";
 import PythonIcon from "/img/icons/interests/python.svg";
@@ -16,7 +17,6 @@ import JavaIcon from "/img/icons/interests/java.svg";
 import GolangIcon from "img/icons/interests/golang.svg";
 import VueIcon from "img/icons/interests/vuejs.svg";
 import KubernetesIcon from "img/icons/interests/kubernetes.svg";
-import HacktoberfestIcon from "img/icons/interests/hacktoberfest.svg";
 
 import topicNameFormatting from "lib/utils/topic-name-formatting";
 
@@ -62,7 +62,7 @@ const LanguagePill = ({ topic, classNames, onClick }: LanguagePillProps) => {
       golang: GolangIcon,
       vue: VueIcon,
       kubernetes: KubernetesIcon,
-      hacktoberfest: HacktoberfestTcon,
+      hacktoberfest: HacktoberfestIcon,
     };
 
     return iconMap[name] || "";
