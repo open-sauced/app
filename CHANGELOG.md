@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.68.0-beta.3](https://github.com/open-sauced/insights/compare/v1.68.0-beta.2...v1.68.0-beta.3) (2023-10-03)
+
+
+### 🍕 Features
+
+* add prototype contributor activity charts ([#1594](https://github.com/open-sauced/insights/issues/1594)) ([379db6d](https://github.com/open-sauced/insights/commit/379db6dbe6d852da52ef333c7fc313817647f477))
+
 ## [1.68.0-beta.2](https://github.com/open-sauced/insights/compare/v1.68.0-beta.1...v1.68.0-beta.2) (2023-10-03)
 
 
