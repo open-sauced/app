@@ -43,15 +43,12 @@ export const Default: Story = {
       { label: "Aurelia", value: "aurelia" },
     ],
     selected: selectedOptions,
-    handleSelect: (value) => {
-      const exists = selectedOptions.find((option) => option.value === value);
+    handleSelect: (selectedValue) => {
+      const exists = selectedOptions.find((option) => option.value === selectedValue.value);
 
       if (exists) {
         selectedOptions = selectedOptions.filter((option) => option.value !== exists.value);
       }
-    },
-    handleUnSelect: (value) => {
-      selectedOptions = selectedOptions.filter((option) => option.value !== value);
     },
   },
 };

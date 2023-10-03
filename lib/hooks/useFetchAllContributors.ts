@@ -10,33 +10,39 @@ interface PaginatedResponse {
   readonly meta: Meta;
 }
 
-const useFetchAllContributors = (initialLimit = 10) => {
+type queryObj = {
+  location?: string;
+  pr_velocity?: string;
+  timezone?: string;
+  initialLimit?: number;
+};
+
+const useFetchAllContributors = (query: queryObj) => {
   const { toast } = useToast();
   const router = useRouter();
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(initialLimit);
-  const { location, pr_velocity, timezone } = router.query;
+  const [limit, setLimit] = useState(query.initialLimit ?? 10);
 
-  const query = new URLSearchParams();
+  const urlQuery = new URLSearchParams();
 
   if (page) {
-    query.set("page", `${page}`);
+    urlQuery.set("page", `${page}`);
   }
-  if (location) {
-    query.set("location", `${location}`);
+  if (query.location) {
+    urlQuery.set("location", `${query.location}`);
   }
-  if (pr_velocity) {
-    query.set("pr_velocity", `${pr_velocity}`);
+  if (query.pr_velocity) {
+    urlQuery.set("pr_velocity", `${query.pr_velocity}`);
   }
-  if (timezone) {
-    query.set("timezone", `${timezone}`);
+  if (query.timezone) {
+    urlQuery.set("timezone", `${query.timezone}`);
   }
   if (limit) {
-    query.set("limit", `${limit}`);
+    urlQuery.set("limit", `${limit}`);
   }
 
   const baseEndpoint = "lists/contributors";
-  const endpointString = `${baseEndpoint}?${query}`;
+  const endpointString = `${baseEndpoint}?${urlQuery}`;
 
   const { data, error, mutate } = useSWR<PaginatedResponse, Error>(
     endpointString,
