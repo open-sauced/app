@@ -22,7 +22,7 @@ const ContributorTable = ({
       {loading && <SkeletonWrapper height={50} count={10} radius={4} classNames="px-6 mt-2" />}
 
       {contributors && contributors.length > 0 ? (
-        contributors.map((contributor, i) => (
+        contributors.map((contributor) => (
           <ContributorListTableRow
             topic={topic}
             contributor={contributor}

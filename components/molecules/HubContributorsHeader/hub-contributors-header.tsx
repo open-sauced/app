@@ -2,6 +2,7 @@ import { FaPlus } from "react-icons/fa";
 
 import clsx from "clsx";
 import { FiGlobe } from "react-icons/fi";
+import { BiFilterAlt } from "react-icons/bi";
 
 import { timezones } from "lib/utils/timezones";
 import { useToast } from "lib/hooks/useToast";
@@ -20,6 +21,7 @@ interface ListHeaderProps {
   setRangeFilter?: (range: number) => void;
   timezone?: string;
   setTimezoneFilter: (timezone: string) => void;
+  handleOpenFilterPanel?: () => void;
   isPublic: boolean;
   handleToggleIsPublic: () => void;
   range?: number;
@@ -28,6 +30,7 @@ interface ListHeaderProps {
   onAddToList?: () => void;
   onTitleChange?: (title: string) => void;
   loading?: boolean;
+  filterCount?: number;
 }
 
 const HubContributorsHeader = ({
@@ -43,6 +46,8 @@ const HubContributorsHeader = ({
   handleToggleIsPublic,
   timezone,
   setTimezoneFilter,
+  handleOpenFilterPanel,
+  filterCount,
 }: ListHeaderProps): JSX.Element => {
   const { toast } = useToast();
   const timezoneOptions = timezones.map((timezone) => ({
@@ -103,8 +108,25 @@ const HubContributorsHeader = ({
             placeholder="Select time zone"
             onValueChange={(value) => setTimezoneFilter(value)}
           />
+
+          <button
+            type="button"
+            onClick={handleOpenFilterPanel}
+            className="px-2 py-1.5 text-sm bg-white rounded-md shrink-0 flex items-center gap-2"
+          >
+            All filters{" "}
+            {filterCount && filterCount > 0 ? (
+              <span className="text-sauced-orange">{filterCount}</span>
+            ) : (
+              <BiFilterAlt className="text-lg text-black/80" />
+            )}
+          </button>
         </div>
-        <div className="flex flex-col gap-2 md:items-center md:gap-4 md:flex-row">
+
+        <div className="flex items-center gap-2 md:gap-4">
+          {/* <div className="w-58">
+            <Search placeholder="Search for usernames" className="max-w-full" name={"query"} />
+          </div> */}
           <ComponentDateFilter setRangeFilter={(range: number) => setRangeFilter?.(range)} defaultRange={range} />
           <LimitSelect
             placeholder="10 per page"

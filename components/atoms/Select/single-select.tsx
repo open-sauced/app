@@ -17,14 +17,14 @@ const SingleSelect = ({ placeholder, value, onValueChange, options, position }: 
   return (
     <Select value={value} onValueChange={(value) => onValueChange(value)}>
       <SelectTrigger
-        className="bg-white min-w-[200px] w-full"
+        className="bg-white min-w-[200px] w-full opacity-50 text-base"
         selectIcon={
           <div className="flex items-center">
             <RiArrowDownSLine size={20} className="" />
           </div>
         }
       >
-        <SelectValue className="w-10 truncate" placeholder={placeholder ?? "Select time zone"} />
+        <SelectValue className="w-10 capitalize truncate" placeholder={placeholder ?? "Select time zone"} />
       </SelectTrigger>
 
       <SelectContent position={position ?? "item-aligned"} className="z-50 bg-white">

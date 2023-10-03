@@ -24,6 +24,11 @@ body {
   width: 100%;
 }
 
+.popover-width {
+  width: var(--radix-popover-trigger-width);
+  max-height: var(--radix-popover-content-available-height);
+}
+
 .sbui-btn > span {
   display: flex;
   align-items: center;
