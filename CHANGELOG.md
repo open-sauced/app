@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.68.0-beta.5](https://github.com/open-sauced/insights/compare/v1.68.0-beta.4...v1.68.0-beta.5) (2023-10-03)
+
+
+### 🍕 Features
+
+* add timezone filters for list contributors ([#1747](https://github.com/open-sauced/insights/issues/1747)) ([674a588](https://github.com/open-sauced/insights/commit/674a58815886a836567bc6c3999ea9d0764e9a44))
+
 ## [1.68.0-beta.4](https://github.com/open-sauced/insights/compare/v1.68.0-beta.3...v1.68.0-beta.4) (2023-10-03)
 
 

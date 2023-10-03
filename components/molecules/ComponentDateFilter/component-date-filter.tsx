@@ -20,7 +20,7 @@ const ComponentDateFilter = ({ setRangeFilter, defaultRange }: ComponentDateFilt
   };
 
   return (
-    <div className="flex items-center text-sm bg-white rounded-lg">
+    <div className="flex items-center text-sm bg-white rounded-lg shrink-0 w-max">
       {dates.map((range, index) => (
         <div
           onClick={() => handleFilterClick(range)}
