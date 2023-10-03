@@ -86,7 +86,7 @@ const NewsletterForm = () => {
                 <input type="hidden" value="newsletter" name="form-name" />
               </label>
             </div>
-            <div className="flex items-center justify-between gap-1 ">
+            <div className="flex items-center lg:flex-wrap 2xl:flex-nowrap justify-between gap-1 ">
               <TextInput
                 handleChange={(value) => handleChange(value)}
                 state={isValidEmail ? "valid" : "invalid"}
