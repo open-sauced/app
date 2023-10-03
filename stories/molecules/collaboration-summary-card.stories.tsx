@@ -12,6 +12,11 @@ const CollaborationCardTemplate: ComponentStory<typeof CollaborationSummaryCard>
   <CollaborationSummaryCard {...args} />
 );
 
+const requestor = {
+  login: "jsmith123",
+  name: "Janice Smith",
+} as DbUser;
+
 export const CollaborationCardStory = CollaborationCardTemplate.bind({});
 
 CollaborationCardStory.args = {
@@ -19,7 +24,7 @@ CollaborationCardStory.args = {
     {
       outreachMessage:
         " Hello Nate, we’re currently working on a project and think that you would be a great fit for our team. Would yoube interested in joining us",
-      requestor: undefined,
+      requestor,
       requestId: "nsodijsoiofer",
       onAccept(id) {},
       onDecline(id) {},
@@ -27,7 +32,7 @@ CollaborationCardStory.args = {
     {
       outreachMessage:
         " Hello Nate, we’re currently working on a project and think that you would be a great fit for our team. Would yoube interested in joining us",
-      requestor: undefined,
+      requestor,
       requestId: "nsodijsoiofer",
       onAccept(id) {},
       onDecline(id) {},
@@ -35,7 +40,7 @@ CollaborationCardStory.args = {
     {
       outreachMessage:
         " Hello Nate, we’re currently working on a project and think that you would be a great fit for our team. Would yoube interested in joining us",
-      requestor: undefined,
+      requestor,
       requestId: "nsodijsoiofer",
       onAccept(id) {},
       onDecline(id) {},

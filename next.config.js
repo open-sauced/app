@@ -32,6 +32,11 @@ module.exports = {
         destination: "/user/:username?tab=requests",
         permanent: true,
       },
+      {
+        source: "/lists/:listId",
+        destination: "/lists/:listId/overview",
+        permanent: true,
+      },
     ];
   },
 };

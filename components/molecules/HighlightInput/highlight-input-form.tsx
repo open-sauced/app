@@ -296,7 +296,8 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
       }
       const { apiPaths } = generateRepoParts(highlightLink);
       const { repoName, orgName, issueId } = apiPaths;
-      const repoIcon = getAvatarByUsername(orgName, 60);
+      // default to the GitHub avatar if we can't find the avatar for the organization.
+      const repoIcon = getAvatarByUsername(orgName ?? "github", 60);
       if (taggedRepoList.some((repo) => repo.repoName === repoName)) return;
       const newRepo = { repoName, repoOwner: orgName, repoIcon } as RepoList;
       const newTaggedRepoList = [...taggedRepoList, newRepo];
@@ -554,7 +555,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                         {date && <span className="text-xs">{format(date, "PPP")}</span>}
                       </button>
                     </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0 bg-white">
+                    <PopoverContent className="w-auto p-0 bg-white pointer-events-auto">
                       <Calendar
                         // block user's from selecting a future date
                         toDate={new Date()}

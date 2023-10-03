@@ -5,121 +5,253 @@
 
 > All notable changes to this project will be documented in this file
 
-## [1.66.0-beta.5](https://github.com/open-sauced/insights/compare/v1.66.0-beta.4...v1.66.0-beta.5) (2023-09-25)
+## [1.68.0-beta.4](https://github.com/open-sauced/insights/compare/v1.68.0-beta.3...v1.68.0-beta.4) (2023-10-03)
+
+
+### 🍕 Features
+
+* add Treemap chart prototype ([#1569](https://github.com/open-sauced/insights/issues/1569)) ([f057de8](https://github.com/open-sauced/insights/commit/f057de8b59bbdcf7c6a8cecab859cdcd6ba1d121))
+
+## [1.68.0-beta.3](https://github.com/open-sauced/insights/compare/v1.68.0-beta.2...v1.68.0-beta.3) (2023-10-03)
+
+
+### 🍕 Features
+
+* add prototype contributor activity charts ([#1594](https://github.com/open-sauced/insights/issues/1594)) ([379db6d](https://github.com/open-sauced/insights/commit/379db6dbe6d852da52ef333c7fc313817647f477))
+
+## [1.68.0-beta.2](https://github.com/open-sauced/insights/compare/v1.68.0-beta.1...v1.68.0-beta.2) (2023-10-03)
 
 
 ### 🐛 Bug Fixes
 
-* update field mapping for contributor lists create ([#1745](https://github.com/open-sauced/insights/issues/1745)) ([71b704a](https://github.com/open-sauced/insights/commit/71b704ad80b4ba4ca064a49c913d0742ff036abc))
+* removed GitHub avatar when loading user profile avatars ([9b81371](https://github.com/open-sauced/insights/commit/9b81371bde8ce5a9838dec6d19a007aa964b072b))
+* removed GitHub avatar when loading user profile avatars ([#1781](https://github.com/open-sauced/insights/issues/1781)) ([49ba38f](https://github.com/open-sauced/insights/commit/49ba38f44bd2c1bc9af949d73ddb3a1cfde9f20f))
 
-## [1.66.0-beta.4](https://github.com/open-sauced/insights/compare/v1.66.0-beta.3...v1.66.0-beta.4) (2023-09-25)
+## [1.68.0-beta.1](https://github.com/open-sauced/insights/compare/v1.67.0...v1.68.0-beta.1) (2023-10-02)
+
+
+### 🍕 Features
+
+* add form to user settings to apply coupon code ([#1771](https://github.com/open-sauced/insights/issues/1771)) ([504d7e2](https://github.com/open-sauced/insights/commit/504d7e2499a6b2a9dd5beaa560dd9ca7aa6af4c8))
+
+## [1.67.0](https://github.com/open-sauced/insights/compare/v1.66.0...v1.67.0) (2023-10-02)
+
+
+### 🐛 Bug Fixes
+
+* made card view for lists contributors list uniform with rest of app ([#1772](https://github.com/open-sauced/insights/issues/1772)) ([5a64ab6](https://github.com/open-sauced/insights/commit/5a64ab620da935d5c79a56f157a590a3e137e7c5))
+
+
+### 🍕 Features
+
+* add overview page for a list ([#1736](https://github.com/open-sauced/insights/issues/1736)) ([6c6bfaa](https://github.com/open-sauced/insights/commit/6c6bfaa1ee1efc30be0e94b3d8650ddf1294b327))
+* added contributor page for lists ([#1734](https://github.com/open-sauced/insights/issues/1734)) ([762de40](https://github.com/open-sauced/insights/commit/762de402167665a9dce8f1bbf01071049b431e7d))
+* added hacktoberfest icon in user settings ([#1775](https://github.com/open-sauced/insights/issues/1775)) ([43e6b12](https://github.com/open-sauced/insights/commit/43e6b1249ad1b429b3e784d7a9fde5f8a83214cf))
+* change hacktoberfest to default topic ([#1773](https://github.com/open-sauced/insights/issues/1773)) ([95c3c74](https://github.com/open-sauced/insights/commit/95c3c742fa9b9d5ed0904a18b1ef191dc70f2db3))
+* improve visibility of the follow cta on user profiles ([#1739](https://github.com/open-sauced/insights/issues/1739)) ([11acadb](https://github.com/open-sauced/insights/commit/11acadb9ed53948aed279acd67f9a2bcb02c9477))
+
+## [1.67.0-beta.6](https://github.com/open-sauced/insights/compare/v1.67.0-beta.5...v1.67.0-beta.6) (2023-10-02)
+
+
+### 🍕 Features
+
+* added hacktoberfest icon in user settings ([#1775](https://github.com/open-sauced/insights/issues/1775)) ([43e6b12](https://github.com/open-sauced/insights/commit/43e6b1249ad1b429b3e784d7a9fde5f8a83214cf))
+
+## [1.67.0-beta.5](https://github.com/open-sauced/insights/compare/v1.67.0-beta.4...v1.67.0-beta.5) (2023-10-02)
+
+
+### 🐛 Bug Fixes
+
+* made card view for lists contributors list uniform with rest of app ([#1772](https://github.com/open-sauced/insights/issues/1772)) ([5a64ab6](https://github.com/open-sauced/insights/commit/5a64ab620da935d5c79a56f157a590a3e137e7c5))
+
+## [1.67.0-beta.4](https://github.com/open-sauced/insights/compare/v1.67.0-beta.3...v1.67.0-beta.4) (2023-10-02)
+
+
+### 🍕 Features
+
+* change hacktoberfest to default topic ([#1773](https://github.com/open-sauced/insights/issues/1773)) ([95c3c74](https://github.com/open-sauced/insights/commit/95c3c742fa9b9d5ed0904a18b1ef191dc70f2db3))
+
+## [1.67.0-beta.3](https://github.com/open-sauced/insights/compare/v1.67.0-beta.2...v1.67.0-beta.3) (2023-09-29)
+
+
+### 🍕 Features
+
+* improve visibility of the follow cta on user profiles ([#1739](https://github.com/open-sauced/insights/issues/1739)) ([11acadb](https://github.com/open-sauced/insights/commit/11acadb9ed53948aed279acd67f9a2bcb02c9477))
+
+## [1.67.0-beta.2](https://github.com/open-sauced/insights/compare/v1.67.0-beta.1...v1.67.0-beta.2) (2023-09-29)
+
+
+### 🍕 Features
+
+* added contributor page for lists ([#1734](https://github.com/open-sauced/insights/issues/1734)) ([762de40](https://github.com/open-sauced/insights/commit/762de402167665a9dce8f1bbf01071049b431e7d))
+
+## [1.67.0-beta.1](https://github.com/open-sauced/insights/compare/v1.66.0...v1.67.0-beta.1) (2023-09-29)
+
+
+### 🍕 Features
+
+* add overview page for a list ([#1736](https://github.com/open-sauced/insights/issues/1736)) ([6c6bfaa](https://github.com/open-sauced/insights/commit/6c6bfaa1ee1efc30be0e94b3d8650ddf1294b327))
+
+## [1.66.0](https://github.com/open-sauced/insights/compare/v1.65.0...v1.66.0) (2023-09-28)
+
+
+### 🍕 Features
+
+* add `delete` functionality to list feature ([#1732](https://github.com/open-sauced/insights/issues/1732)) ([8a3e1da](https://github.com/open-sauced/insights/commit/8a3e1da522711ecc300dd86e950b709f12634b2e))
+* add feature flag integration ([#1707](https://github.com/open-sauced/insights/issues/1707)) ([2bfcf4c](https://github.com/open-sauced/insights/commit/2bfcf4ccfe6ae5670ca6df4a57b0502e5975c2b3))
+* add new`MultiSelect`component to design system ([#1718](https://github.com/open-sauced/insights/issues/1718)) ([6405b43](https://github.com/open-sauced/insights/commit/6405b43e621ce9c154b3fc5831ab3e033e1438d7))
+* add User Search ([#1678](https://github.com/open-sauced/insights/issues/1678)) ([008bf88](https://github.com/open-sauced/insights/commit/008bf88142d2360ab3268863c788a9071638dd2f))
+* create list feature ([#1698](https://github.com/open-sauced/insights/issues/1698)) ([7adfe94](https://github.com/open-sauced/insights/commit/7adfe949a83c70e4c7f7d00c6f5f20928b8ce9c3))
 
 
 ### 🐛 Bug Fixes
 
 * adjust button positioning for Firefox compatibility ([#1730](https://github.com/open-sauced/insights/issues/1730)) ([91389ba](https://github.com/open-sauced/insights/commit/91389baee556829ed17a175004cb83394c8854dc))
+* adjust style to prevent shift ([#1754](https://github.com/open-sauced/insights/issues/1754)) ([9328ab8](https://github.com/open-sauced/insights/commit/9328ab8866efdf10d559d42c2f2268554fab7632))
+* allow not onboarded users to interact with `insights` page ([#1722](https://github.com/open-sauced/insights/issues/1722)) ([b37ce4d](https://github.com/open-sauced/insights/commit/b37ce4d6c64c1a360d13273d25957290d9398db5))
+* Cherry-pick 🍒 Update X icon ([#1759](https://github.com/open-sauced/insights/issues/1759)) ([0a43e6a](https://github.com/open-sauced/insights/commit/0a43e6aaedb78d9b7b6eff84789d993d0a66c67d))
+* fix search bar bug ([#1735](https://github.com/open-sauced/insights/issues/1735)) ([d16e93f](https://github.com/open-sauced/insights/commit/d16e93fc06585f0db735abce9394dd55fc1ce633))
+* fixed a typo in 30 days label ([#1755](https://github.com/open-sauced/insights/issues/1755)) ([2293dc2](https://github.com/open-sauced/insights/commit/2293dc2ab85ed3d1c0780a5956289249576698ce))
+* make date selector visible on highlight creation ([#1761](https://github.com/open-sauced/insights/issues/1761)) ([7b4014c](https://github.com/open-sauced/insights/commit/7b4014c642d52d033ba8d5f877742829c3fb5fc0))
+* update field mapping for contributor lists create ([#1745](https://github.com/open-sauced/insights/issues/1745)) ([71b704a](https://github.com/open-sauced/insights/commit/71b704ad80b4ba4ca064a49c913d0742ff036abc))
+
+## [1.66.0-beta.11](https://github.com/open-sauced/insights/compare/v1.66.0-beta.10...v1.66.0-beta.11) (2023-09-28)
+
+
+### 🐛 Bug Fixes
+
+* make date selector visible on highlight creation ([#1761](https://github.com/open-sauced/insights/issues/1761)) ([7b4014c](https://github.com/open-sauced/insights/commit/7b4014c642d52d033ba8d5f877742829c3fb5fc0))
+
+## [1.66.0-beta.10](https://github.com/open-sauced/insights/compare/v1.66.0-beta.9...v1.66.0-beta.10) (2023-09-28)
+
+### 🐛 Bug Fixes
+
+- adjust style to prevent shift ([#1754](https://github.com/open-sauced/insights/issues/1754)) ([9328ab8](https://github.com/open-sauced/insights/commit/9328ab8866efdf10d559d42c2f2268554fab7632))
+
+## [1.66.0-beta.9](https://github.com/open-sauced/insights/compare/v1.66.0-beta.8...v1.66.0-beta.9) (2023-09-28)
+
+### 🐛 Bug Fixes
+
+- Cherry-pick 🍒 Update X icon ([#1759](https://github.com/open-sauced/insights/issues/1759)) ([0a43e6a](https://github.com/open-sauced/insights/commit/0a43e6aaedb78d9b7b6eff84789d993d0a66c67d))
+
+## [1.66.0-beta.8](https://github.com/open-sauced/insights/compare/v1.66.0-beta.7...v1.66.0-beta.8) (2023-09-27)
+
+### 🐛 Bug Fixes
+
+- fixed a typo in 30 days label ([#1755](https://github.com/open-sauced/insights/issues/1755)) ([2293dc2](https://github.com/open-sauced/insights/commit/2293dc2ab85ed3d1c0780a5956289249576698ce))
+
+## [1.66.0-beta.7](https://github.com/open-sauced/insights/compare/v1.66.0-beta.6...v1.66.0-beta.7) (2023-09-26)
+
+### 🍕 Features
+
+- add `delete` functionality to list feature ([#1732](https://github.com/open-sauced/insights/issues/1732)) ([8a3e1da](https://github.com/open-sauced/insights/commit/8a3e1da522711ecc300dd86e950b709f12634b2e))
+
+## [1.66.0-beta.6](https://github.com/open-sauced/insights/compare/v1.66.0-beta.5...v1.66.0-beta.6) (2023-09-26)
+
+### 🍕 Features
+
+- add User Search ([#1678](https://github.com/open-sauced/insights/issues/1678)) ([008bf88](https://github.com/open-sauced/insights/commit/008bf88142d2360ab3268863c788a9071638dd2f))
+
+## [1.66.0-beta.5](https://github.com/open-sauced/insights/compare/v1.66.0-beta.4...v1.66.0-beta.5) (2023-09-25)
+
+### 🐛 Bug Fixes
+
+- update field mapping for contributor lists create ([#1745](https://github.com/open-sauced/insights/issues/1745)) ([71b704a](https://github.com/open-sauced/insights/commit/71b704ad80b4ba4ca064a49c913d0742ff036abc))
+
+## [1.66.0-beta.4](https://github.com/open-sauced/insights/compare/v1.66.0-beta.3...v1.66.0-beta.4) (2023-09-25)
+
+### 🐛 Bug Fixes
+
+- adjust button positioning for Firefox compatibility ([#1730](https://github.com/open-sauced/insights/issues/1730)) ([91389ba](https://github.com/open-sauced/insights/commit/91389baee556829ed17a175004cb83394c8854dc))
 
 ## [1.66.0-beta.3](https://github.com/open-sauced/insights/compare/v1.66.0-beta.2...v1.66.0-beta.3) (2023-09-22)
 
-
 ### 🐛 Bug Fixes
 
-* fix search bar bug ([#1735](https://github.com/open-sauced/insights/issues/1735)) ([d16e93f](https://github.com/open-sauced/insights/commit/d16e93fc06585f0db735abce9394dd55fc1ce633))
+- fix search bar bug ([#1735](https://github.com/open-sauced/insights/issues/1735)) ([d16e93f](https://github.com/open-sauced/insights/commit/d16e93fc06585f0db735abce9394dd55fc1ce633))
 
 ## [1.66.0-beta.2](https://github.com/open-sauced/insights/compare/v1.66.0-beta.1...v1.66.0-beta.2) (2023-09-21)
 
-
 ### 🐛 Bug Fixes
 
-* allow not onboarded users to interact with `insights` page ([#1722](https://github.com/open-sauced/insights/issues/1722)) ([b37ce4d](https://github.com/open-sauced/insights/commit/b37ce4d6c64c1a360d13273d25957290d9398db5))
-
+- allow not onboarded users to interact with `insights` page ([#1722](https://github.com/open-sauced/insights/issues/1722)) ([b37ce4d](https://github.com/open-sauced/insights/commit/b37ce4d6c64c1a360d13273d25957290d9398db5))
 
 ### 🍕 Features
 
-* add feature flag integration ([#1707](https://github.com/open-sauced/insights/issues/1707)) ([2bfcf4c](https://github.com/open-sauced/insights/commit/2bfcf4ccfe6ae5670ca6df4a57b0502e5975c2b3))
+- add feature flag integration ([#1707](https://github.com/open-sauced/insights/issues/1707)) ([2bfcf4c](https://github.com/open-sauced/insights/commit/2bfcf4ccfe6ae5670ca6df4a57b0502e5975c2b3))
 
 ## [1.66.0-beta.1](https://github.com/open-sauced/insights/compare/v1.65.0...v1.66.0-beta.1) (2023-09-21)
 
-
 ### 🍕 Features
 
-* add new`MultiSelect`component to design system ([#1718](https://github.com/open-sauced/insights/issues/1718)) ([6405b43](https://github.com/open-sauced/insights/commit/6405b43e621ce9c154b3fc5831ab3e033e1438d7))
-* create list feature ([#1698](https://github.com/open-sauced/insights/issues/1698)) ([7adfe94](https://github.com/open-sauced/insights/commit/7adfe949a83c70e4c7f7d00c6f5f20928b8ce9c3))
+- add new`MultiSelect`component to design system ([#1718](https://github.com/open-sauced/insights/issues/1718)) ([6405b43](https://github.com/open-sauced/insights/commit/6405b43e621ce9c154b3fc5831ab3e033e1438d7))
+- create list feature ([#1698](https://github.com/open-sauced/insights/issues/1698)) ([7adfe94](https://github.com/open-sauced/insights/commit/7adfe949a83c70e4c7f7d00c6f5f20928b8ce9c3))
 
 ## [1.65.0](https://github.com/open-sauced/insights/compare/v1.64.0...v1.65.0) (2023-09-20)
 
-
 ### 🍕 Features
 
-* add `hacktoberfest` topic to dashboard filters ([#1688](https://github.com/open-sauced/insights/issues/1688)) ([5c2beb0](https://github.com/open-sauced/insights/commit/5c2beb0b7a56027c67490c35ddd9cf5d522f2043))
-* add `ListCard` component to design system ([#1687](https://github.com/open-sauced/insights/issues/1687)) ([dd8df3e](https://github.com/open-sauced/insights/commit/dd8df3ece74c2375b1568174bbbe3d865658d6ff))
-* add feedback message to collab request form UI ([#1658](https://github.com/open-sauced/insights/issues/1658)) ([3ccb7aa](https://github.com/open-sauced/insights/commit/3ccb7aa6ad35c4f602e1b99d522c62f4acf6dc07))
-* new highlight creation popup (with highlight suggestions) ([#1646](https://github.com/open-sauced/insights/issues/1646)) ([fe3d35d](https://github.com/open-sauced/insights/commit/fe3d35dd55fe0d7941dc7d807b54699dd725ef33))
-* new insights tab layout for list feature  ([#1682](https://github.com/open-sauced/insights/issues/1682)) ([9269f1c](https://github.com/open-sauced/insights/commit/9269f1cc0d8d4f2504ca668545a8dea85085bd35))
-* Remove title input field from HighlightInputForm ([#1660](https://github.com/open-sauced/insights/issues/1660)) ([abea60b](https://github.com/open-sauced/insights/commit/abea60b0c77adc2ca953c83bd2faaab727e6b6ce))
-
+- add `hacktoberfest` topic to dashboard filters ([#1688](https://github.com/open-sauced/insights/issues/1688)) ([5c2beb0](https://github.com/open-sauced/insights/commit/5c2beb0b7a56027c67490c35ddd9cf5d522f2043))
+- add `ListCard` component to design system ([#1687](https://github.com/open-sauced/insights/issues/1687)) ([dd8df3e](https://github.com/open-sauced/insights/commit/dd8df3ece74c2375b1568174bbbe3d865658d6ff))
+- add feedback message to collab request form UI ([#1658](https://github.com/open-sauced/insights/issues/1658)) ([3ccb7aa](https://github.com/open-sauced/insights/commit/3ccb7aa6ad35c4f602e1b99d522c62f4acf6dc07))
+- new highlight creation popup (with highlight suggestions) ([#1646](https://github.com/open-sauced/insights/issues/1646)) ([fe3d35d](https://github.com/open-sauced/insights/commit/fe3d35dd55fe0d7941dc7d807b54699dd725ef33))
+- new insights tab layout for list feature ([#1682](https://github.com/open-sauced/insights/issues/1682)) ([9269f1c](https://github.com/open-sauced/insights/commit/9269f1cc0d8d4f2504ca668545a8dea85085bd35))
+- Remove title input field from HighlightInputForm ([#1660](https://github.com/open-sauced/insights/issues/1660)) ([abea60b](https://github.com/open-sauced/insights/commit/abea60b0c77adc2ca953c83bd2faaab727e6b6ce))
 
 ### 🐛 Bug Fixes
 
-* handle `401` error on collaboration feature ([#1694](https://github.com/open-sauced/insights/issues/1694)) ([756efdf](https://github.com/open-sauced/insights/commit/756efdf47b24852ec47efdaa7cfd9ab19599acef))
-* improved padding for add repo dialog ([d4ef016](https://github.com/open-sauced/insights/commit/d4ef0169f50395e495bf3940fabfe1672a7fcbb6))
-* improved padding for add repo dialog ([#1720](https://github.com/open-sauced/insights/issues/1720)) ([4d81cca](https://github.com/open-sauced/insights/commit/4d81ccaf9a048b36b822fe1b67ea175cc97cf72d))
-* new highlight responsiveness on mobile screens ([#1703](https://github.com/open-sauced/insights/issues/1703)) ([bedb9d5](https://github.com/open-sauced/insights/commit/bedb9d535d895ece14e031f44975c408362ae83a))
-* now add repo button appears on mobile view ([#1719](https://github.com/open-sauced/insights/issues/1719)) ([22b0717](https://github.com/open-sauced/insights/commit/22b07174202565832f7b77cf6319fbe0b70eaafb))
-* opening someone's profile menu locks scrollbar and "shifts" header css ([#1704](https://github.com/open-sauced/insights/issues/1704)) ([6282c27](https://github.com/open-sauced/insights/commit/6282c27a3b7323c583dd1c7bab464fb2af9780b2))
-* remove lists from insights hub nav ([#1711](https://github.com/open-sauced/insights/issues/1711)) ([0d03f44](https://github.com/open-sauced/insights/commit/0d03f44873fe9b8f1220e60aecf0af66d9d1287c))
-* unlock Scroll when the Dropdown Menu is opened  ([#1712](https://github.com/open-sauced/insights/issues/1712)) ([b74a4e8](https://github.com/open-sauced/insights/commit/b74a4e808f6e5bfd7efde734eb7615adb0f5a448))
-* Update placeholder text for Highlight creation ([#1721](https://github.com/open-sauced/insights/issues/1721)) ([3acd107](https://github.com/open-sauced/insights/commit/3acd1076315ad359d932ea5f6ff2efce75520fa7))
+- handle `401` error on collaboration feature ([#1694](https://github.com/open-sauced/insights/issues/1694)) ([756efdf](https://github.com/open-sauced/insights/commit/756efdf47b24852ec47efdaa7cfd9ab19599acef))
+- improved padding for add repo dialog ([d4ef016](https://github.com/open-sauced/insights/commit/d4ef0169f50395e495bf3940fabfe1672a7fcbb6))
+- improved padding for add repo dialog ([#1720](https://github.com/open-sauced/insights/issues/1720)) ([4d81cca](https://github.com/open-sauced/insights/commit/4d81ccaf9a048b36b822fe1b67ea175cc97cf72d))
+- new highlight responsiveness on mobile screens ([#1703](https://github.com/open-sauced/insights/issues/1703)) ([bedb9d5](https://github.com/open-sauced/insights/commit/bedb9d535d895ece14e031f44975c408362ae83a))
+- now add repo button appears on mobile view ([#1719](https://github.com/open-sauced/insights/issues/1719)) ([22b0717](https://github.com/open-sauced/insights/commit/22b07174202565832f7b77cf6319fbe0b70eaafb))
+- opening someone's profile menu locks scrollbar and "shifts" header css ([#1704](https://github.com/open-sauced/insights/issues/1704)) ([6282c27](https://github.com/open-sauced/insights/commit/6282c27a3b7323c583dd1c7bab464fb2af9780b2))
+- remove lists from insights hub nav ([#1711](https://github.com/open-sauced/insights/issues/1711)) ([0d03f44](https://github.com/open-sauced/insights/commit/0d03f44873fe9b8f1220e60aecf0af66d9d1287c))
+- unlock Scroll when the Dropdown Menu is opened ([#1712](https://github.com/open-sauced/insights/issues/1712)) ([b74a4e8](https://github.com/open-sauced/insights/commit/b74a4e808f6e5bfd7efde734eb7615adb0f5a448))
+- Update placeholder text for Highlight creation ([#1721](https://github.com/open-sauced/insights/issues/1721)) ([3acd107](https://github.com/open-sauced/insights/commit/3acd1076315ad359d932ea5f6ff2efce75520fa7))
 
 ## [1.65.0-beta.10](https://github.com/open-sauced/insights/compare/v1.65.0-beta.9...v1.65.0-beta.10) (2023-09-20)
 
-
 ### 🐛 Bug Fixes
 
-* now add repo button appears on mobile view ([#1719](https://github.com/open-sauced/insights/issues/1719)) ([22b0717](https://github.com/open-sauced/insights/commit/22b07174202565832f7b77cf6319fbe0b70eaafb))
-* opening someone's profile menu locks scrollbar and "shifts" header css ([#1704](https://github.com/open-sauced/insights/issues/1704)) ([6282c27](https://github.com/open-sauced/insights/commit/6282c27a3b7323c583dd1c7bab464fb2af9780b2))
-* Update placeholder text for Highlight creation ([#1721](https://github.com/open-sauced/insights/issues/1721)) ([3acd107](https://github.com/open-sauced/insights/commit/3acd1076315ad359d932ea5f6ff2efce75520fa7))
+- now add repo button appears on mobile view ([#1719](https://github.com/open-sauced/insights/issues/1719)) ([22b0717](https://github.com/open-sauced/insights/commit/22b07174202565832f7b77cf6319fbe0b70eaafb))
+- opening someone's profile menu locks scrollbar and "shifts" header css ([#1704](https://github.com/open-sauced/insights/issues/1704)) ([6282c27](https://github.com/open-sauced/insights/commit/6282c27a3b7323c583dd1c7bab464fb2af9780b2))
+- Update placeholder text for Highlight creation ([#1721](https://github.com/open-sauced/insights/issues/1721)) ([3acd107](https://github.com/open-sauced/insights/commit/3acd1076315ad359d932ea5f6ff2efce75520fa7))
 
 ## [1.65.0-beta.9](https://github.com/open-sauced/insights/compare/v1.65.0-beta.8...v1.65.0-beta.9) (2023-09-20)
 
-
 ### 🐛 Bug Fixes
 
-* improved padding for add repo dialog ([d4ef016](https://github.com/open-sauced/insights/commit/d4ef0169f50395e495bf3940fabfe1672a7fcbb6))
-* improved padding for add repo dialog ([#1720](https://github.com/open-sauced/insights/issues/1720)) ([4d81cca](https://github.com/open-sauced/insights/commit/4d81ccaf9a048b36b822fe1b67ea175cc97cf72d))
+- improved padding for add repo dialog ([d4ef016](https://github.com/open-sauced/insights/commit/d4ef0169f50395e495bf3940fabfe1672a7fcbb6))
+- improved padding for add repo dialog ([#1720](https://github.com/open-sauced/insights/issues/1720)) ([4d81cca](https://github.com/open-sauced/insights/commit/4d81ccaf9a048b36b822fe1b67ea175cc97cf72d))
 
 ## [1.65.0-beta.8](https://github.com/open-sauced/insights/compare/v1.65.0-beta.7...v1.65.0-beta.8) (2023-09-19)
 
-
 ### 🐛 Bug Fixes
 
-* unlock Scroll when the Dropdown Menu is opened  ([#1712](https://github.com/open-sauced/insights/issues/1712)) ([b74a4e8](https://github.com/open-sauced/insights/commit/b74a4e808f6e5bfd7efde734eb7615adb0f5a448))
+- unlock Scroll when the Dropdown Menu is opened ([#1712](https://github.com/open-sauced/insights/issues/1712)) ([b74a4e8](https://github.com/open-sauced/insights/commit/b74a4e808f6e5bfd7efde734eb7615adb0f5a448))
 
 ## [1.65.0-beta.7](https://github.com/open-sauced/insights/compare/v1.65.0-beta.6...v1.65.0-beta.7) (2023-09-19)
 
-
 ### 🐛 Bug Fixes
 
-* remove lists from insights hub nav ([#1711](https://github.com/open-sauced/insights/issues/1711)) ([0d03f44](https://github.com/open-sauced/insights/commit/0d03f44873fe9b8f1220e60aecf0af66d9d1287c))
+- remove lists from insights hub nav ([#1711](https://github.com/open-sauced/insights/issues/1711)) ([0d03f44](https://github.com/open-sauced/insights/commit/0d03f44873fe9b8f1220e60aecf0af66d9d1287c))
 
 ## [1.65.0-beta.6](https://github.com/open-sauced/insights/compare/v1.65.0-beta.5...v1.65.0-beta.6) (2023-09-14)
 
-
 ### 🍕 Features
 
-* new insights tab layout for list feature  ([#1682](https://github.com/open-sauced/insights/issues/1682)) ([9269f1c](https://github.com/open-sauced/insights/commit/9269f1cc0d8d4f2504ca668545a8dea85085bd35))
-
+- new insights tab layout for list feature ([#1682](https://github.com/open-sauced/insights/issues/1682)) ([9269f1c](https://github.com/open-sauced/insights/commit/9269f1cc0d8d4f2504ca668545a8dea85085bd35))
 
 ### 🐛 Bug Fixes
 
-* new highlight responsiveness on mobile screens ([#1703](https://github.com/open-sauced/insights/issues/1703)) ([bedb9d5](https://github.com/open-sauced/insights/commit/bedb9d535d895ece14e031f44975c408362ae83a))
+- new highlight responsiveness on mobile screens ([#1703](https://github.com/open-sauced/insights/issues/1703)) ([bedb9d5](https://github.com/open-sauced/insights/commit/bedb9d535d895ece14e031f44975c408362ae83a))
 
 ## [1.65.0-beta.5](https://github.com/open-sauced/insights/compare/v1.65.0-beta.4...v1.65.0-beta.5) (2023-09-14)
 
-
 ### 🍕 Features
 
-* Remove title input field from HighlightInputForm ([#1660](https://github.com/open-sauced/insights/issues/1660)) ([abea60b](https://github.com/open-sauced/insights/commit/abea60b0c77adc2ca953c83bd2faaab727e6b6ce))
+- Remove title input field from HighlightInputForm ([#1660](https://github.com/open-sauced/insights/issues/1660)) ([abea60b](https://github.com/open-sauced/insights/commit/abea60b0c77adc2ca953c83bd2faaab727e6b6ce))
 
 ## [1.65.0-beta.4](https://github.com/open-sauced/insights/compare/v1.65.0-beta.3...v1.65.0-beta.4) (2023-09-12)
 
