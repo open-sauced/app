@@ -65,11 +65,11 @@ const Search = ({
     <div
       className={`${
         className && className
-      } flex bg-white  py-1 w-max px-3 shadow-input border transition focus-within:ring focus-within:border-orange-500 focus-within:ring-orange-100 rounded-lg   ring-light-slate-6 items-center relative`}
+      } flex bg-white  py-1 w-60 px-3 shadow-input border transition focus-within:ring focus-within:border-orange-500 focus-within:ring-orange-100 rounded-lg   ring-light-slate-6 items-center relative`}
     >
       <FaSearch className="text-light-slate-9" fontSize={16} onClick={handleOnSearch} />
       <input
-        className="w-full pl-2 placeholder:text-sm focus:outline-none placeholder:text-slate-400"
+        className="w-max pl-2 placeholder:text-sm focus:outline-none placeholder:text-slate-400"
         autoFocus={autoFocus}
         placeholder={placeholder}
         name={name}

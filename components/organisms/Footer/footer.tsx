@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 
 // icons
-import { AiOutlineTwitter } from "react-icons/ai";
+import { FaXTwitter } from "react-icons/fa6";
 import { AiOutlineGithub } from "react-icons/ai";
 import { AiFillInstagram } from "react-icons/ai";
 import { AiFillYoutube } from "react-icons/ai";
@@ -31,7 +31,7 @@ const footerContext = [
     socials: [
       {
         url: "https://twitter.com/saucedopen",
-        icon: <AiOutlineTwitter className="text-2xl hover:text-light-slate-10 text-light-slate-9" />,
+        icon: <FaXTwitter className="text-2xl hover:text-light-slate-10  text-light-slate-9" />,
       },
       {
         url: "https://github.com/open-sauced",

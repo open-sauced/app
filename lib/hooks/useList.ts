@@ -69,23 +69,8 @@ const useFetchListContributors = (id: string, range = 30) => {
   };
 };
 
-const useList = (id: string) => {
-  const baseEndpoint = `lists/${id}`;
-  // const endpointString = `${baseEndpoint}`;
-
-  const data: DbUserList = {
-    id: "1",
-    name: "List Name",
-    user: {
-      id: 1,
-    },
-  } as DbUserList;
-  const error = false;
-  const mutate = () => {};
-  // const { data, error, mutate } = useSWR<DbUserList, Error>(
-  //   id ? endpointString : null,
-  //   publicApiFetcher as Fetcher<DbUserList, Error>
-  // );
+const useList = (listId: string) => {
+  const { data, error, mutate } = useSWR<any>(`lists/${listId}`, publicApiFetcher as Fetcher<any, Error>);
 
   return {
     data: data,

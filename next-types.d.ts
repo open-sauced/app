@@ -49,6 +49,36 @@ interface DbRecommendedInsightsRepo {
   readonly default_branch: string;
 }
 
+interface DBListContributor {
+  readonly avatar_url: string;
+  readonly id: number;
+  readonly login: string;
+  readonly name: string;
+  readonly bio: string;
+  readonly url: string;
+  readonly company: string;
+  readonly location: string;
+  readonly twitter_username: string;
+  readonly github_sponsors_url: string;
+  readonly linkedin_url: string;
+  readonly discord_url: string;
+  readonly display_email: boolean;
+  readonly display_local_time: boolean;
+  readonly timezone: string;
+  readonly interests: string;
+  readonly first_opened_pr_at: string;
+  readonly is_open_sauced_member: boolean;
+  readonly is_onboarded: boolean;
+  readonly is_waitlisted: boolean;
+  readonly role: number;
+  readonly created_at: string;
+  readonly updated_at: string;
+  readonly languages: Object;
+  readonly public_gists: number;
+  readonly public_repos: number;
+  readonly receive_collaborations: boolean;
+}
+
 interface DbRepoPR {
   readonly title: string;
   readonly author_login: string;
@@ -73,6 +103,7 @@ interface DbRepoPR {
 interface DbPRContributor {
   readonly author_login: string;
   readonly updated_at: string;
+  readonly user_id: number;
 }
 
 interface DbFollowUser {
@@ -204,6 +235,7 @@ interface DbUser {
   readonly following_count: number;
   readonly highlights_count: number;
   readonly is_maintainer: boolean;
+  readonly coupon_code: string;
 }
 
 interface DbHighlight {
@@ -297,6 +329,7 @@ interface DbListContibutor {
   readonly login: string;
   readonly created_at: string;
 }
+
 interface DbUserList {
   readonly id: string;
   readonly user: DbListOwner;
@@ -304,4 +337,30 @@ interface DbUserList {
   readonly is_public: boolean;
   readonly created_at: string;
   readonly updated_at: string;
+}
+
+interface DbUserSearch {
+  readonly login: string;
+  readonly full_name: string;
+}
+
+interface DBList {
+  id: string;
+  user_id: number;
+  name: string;
+  is_public: boolean;
+  created_at: string;
+  updated_at: string;
+  deleted_at: string | null;
+}
+
+interface PagedData<T> {
+  data?: T[];
+  meta: Meta;
+}
+
+interface DbListContributorStat {
+  login: string;
+  commits: number;
+  prsCreated: number;
 }

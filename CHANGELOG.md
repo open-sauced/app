@@ -5,7 +5,7 @@
 
 > All notable changes to this project will be documented in this file
 
-## [1.65.0-beta.10](https://github.com/open-sauced/insights/compare/v1.65.0-beta.9...v1.65.0-beta.10) (2023-09-20)
+## [1.68.0-beta.2](https://github.com/open-sauced/insights/compare/v1.68.0-beta.1...v1.68.0-beta.2) (2023-10-03)
 
 ### 🐛 Bug Fixes
 
