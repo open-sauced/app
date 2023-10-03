@@ -5,6 +5,21 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.68.0-beta.3](https://github.com/open-sauced/insights/compare/v1.68.0-beta.2...v1.68.0-beta.3) (2023-10-03)
+
+
+### 🍕 Features
+
+* add prototype contributor activity charts ([#1594](https://github.com/open-sauced/insights/issues/1594)) ([379db6d](https://github.com/open-sauced/insights/commit/379db6dbe6d852da52ef333c7fc313817647f477))
+
+## [1.68.0-beta.2](https://github.com/open-sauced/insights/compare/v1.68.0-beta.1...v1.68.0-beta.2) (2023-10-03)
+
+
+### 🐛 Bug Fixes
+
+* removed GitHub avatar when loading user profile avatars ([9b81371](https://github.com/open-sauced/insights/commit/9b81371bde8ce5a9838dec6d19a007aa964b072b))
+* removed GitHub avatar when loading user profile avatars ([#1781](https://github.com/open-sauced/insights/issues/1781)) ([49ba38f](https://github.com/open-sauced/insights/commit/49ba38f44bd2c1bc9af949d73ddb3a1cfde9f20f))
+
 ## [1.68.0-beta.1](https://github.com/open-sauced/insights/compare/v1.67.0...v1.68.0-beta.1) (2023-10-02)
 
 
