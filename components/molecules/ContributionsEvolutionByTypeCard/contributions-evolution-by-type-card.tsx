@@ -89,7 +89,6 @@ export default function ContributionsEvolutionByType(props: Props) {
       y: datum[type],
     })),
   }));
-  console.log(groupedData);
 
   return (
     <div>

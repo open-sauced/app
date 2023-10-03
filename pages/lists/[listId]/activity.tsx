@@ -8,7 +8,9 @@ import ListPageLayout from "layouts/lists";
 import ContributionsEvolutionByType, {
   ContributionEvolutionByTypeDatum,
 } from "components/molecules/ContributionsEvolutionByTypeCard/contributions-evolution-by-type-card";
-import { ContributionStat } from "components/molecules/ContributionsEvolution/contributions-evolution-card";
+import ContributionsEvolutionCard, {
+  ContributionStat,
+} from "components/molecules/ContributionsEvolution/contributions-evolution-card";
 import MostActiveContributorsCard, {
   ContributorStat,
 } from "components/molecules/MostActiveContributorsCard/most-active-contributors-card";
@@ -70,6 +72,7 @@ const ListActivityPage = ({ list, initialData, isError, chartData }: Contributor
   const [contributionsByType, setContributionsByType] = useState(chartData.contributionsByType);
   const [contributionStats, setContributionStats] = useState(chartData.contributionStats);
   const [contributorStats, setContributorStats] = useState(chartData.contributorStats);
+
   return (
     <ListPageLayout list={list} numberOfContributors={initialData.meta.itemCount} isOwner={isOwner}>
       {isError ? (
@@ -77,8 +80,8 @@ const ListActivityPage = ({ list, initialData, isError, chartData }: Contributor
       ) : (
         <div className="grid grid-cols-2 grid-rows-2 gap-4">
           <MostActiveContributorsCard data={contributorStats} />
-          {/* <ContributionsEvolutionCard data={contributionStats} /> */}
-          {/* <ContributionsEvolutionCard data={contributionStats} /> */}
+          <ContributionsEvolutionCard data={contributionStats} />
+          <ContributionsEvolutionCard data={contributionStats} />
           <ContributionsEvolutionByType data={contributionsByType} />
         </div>
       )}
