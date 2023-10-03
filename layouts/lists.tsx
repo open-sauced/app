@@ -22,12 +22,7 @@ const ListPageLayout = ({
   const paths = router.asPath.split("/");
   const selectedTab = paths[3] ?? "overview";
 
-  const tabList = [
-    { name: "Overview" },
-    // Uncomment once the activity page has been implemented
-    // { name: "Activity" },
-    { name: "Contributors" },
-  ];
+  const tabList = [{ name: "Overview" }, { name: "Activity" }, { name: "Contributors" }];
 
   return (
     <div className="flex flex-col min-h-screen">

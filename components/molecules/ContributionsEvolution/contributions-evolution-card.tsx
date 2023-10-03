@@ -45,7 +45,7 @@ const peopleFilters = {
   churned: "Churned Contributors",
 };
 
-interface ContributionStat extends BarDatum {
+export interface ContributionStat extends BarDatum {
   startTime: string;
   commits: number;
   prsCreated: number;

@@ -39,7 +39,7 @@ const colors = {
   comments: "hsla(245, 58%, 51%, 1)",
 } as const satisfies Record<Stat, string>;
 
-interface ContributorStat {
+export interface ContributorStat {
   login: string;
   totalContributions: number;
   contributions: Record<Stat, number>;
@@ -67,7 +67,19 @@ export default function MostActiveContributorsCard(props: Props) {
   const [currentPeopleFilter, setCurrentPeopleFilter] = useState<keyof typeof peopleFilters>("all"); // TODO: make this a prop
   const sortedData = props.data.sort((a, b) => b.totalContributions - a.totalContributions);
 
-  const topContributor = sortedData[0];
+  const [topContributor] = sortedData;
+
+  if (!topContributor) {
+    // TODO: Create a no data view for charts
+    return (
+      <div>
+        <Card className="grid place-content-stretch overflow-hidden">
+          <p>No Data</p>
+        </Card>
+      </div>
+    );
+  }
+
   const allContributions = sortedData.reduce((acc, curr) => acc + curr.totalContributions, 0);
   const maxContributions = topContributor.totalContributions;
   const topContributorPercent = ((maxContributions / allContributions) * 100).toFixed(2) + "%";
