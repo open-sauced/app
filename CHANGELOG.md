@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.68.0-beta.4](https://github.com/open-sauced/insights/compare/v1.68.0-beta.3...v1.68.0-beta.4) (2023-10-03)
+
+
+### 🍕 Features
+
+* add Treemap chart prototype ([#1569](https://github.com/open-sauced/insights/issues/1569)) ([f057de8](https://github.com/open-sauced/insights/commit/f057de8b59bbdcf7c6a8cecab859cdcd6ba1d121))
+
 ## [1.68.0-beta.3](https://github.com/open-sauced/insights/compare/v1.68.0-beta.2...v1.68.0-beta.3) (2023-10-03)
 
 
