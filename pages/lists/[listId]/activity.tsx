@@ -14,6 +14,7 @@ import ContributionsEvolutionCard, {
 import MostActiveContributorsCard, {
   ContributorStat,
 } from "components/molecules/MostActiveContributorsCard/most-active-contributors-card";
+import Card from "components/atoms/Card/card";
 interface ContributorListPageProps {
   list?: DBList;
   initialData: {
@@ -66,6 +67,14 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     },
   };
 };
+
+const NoData = () => (
+  <div>
+    <Card className="grid place-content-stretch overflow-hidden">
+      <p>No Data</p>
+    </Card>
+  </div>
+);
 
 const ListActivityPage = ({ list, initialData, isError, chartData }: ContributorListPageProps) => {
   const isOwner = false;

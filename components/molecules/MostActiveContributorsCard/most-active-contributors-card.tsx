@@ -68,18 +68,6 @@ export default function MostActiveContributorsCard(props: Props) {
   const sortedData = props.data.sort((a, b) => b.totalContributions - a.totalContributions);
 
   const [topContributor] = sortedData;
-
-  if (!topContributor) {
-    // TODO: Create a no data view for charts
-    return (
-      <div>
-        <Card className="grid place-content-stretch overflow-hidden">
-          <p>No Data</p>
-        </Card>
-      </div>
-    );
-  }
-
   const allContributions = sortedData.reduce((acc, curr) => acc + curr.totalContributions, 0);
   const maxContributions = topContributor.totalContributions;
   const topContributorPercent = ((maxContributions / allContributions) * 100).toFixed(2) + "%";
