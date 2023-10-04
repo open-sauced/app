@@ -20,21 +20,18 @@ const ComponentDateFilter = ({ setRangeFilter, defaultRange }: ComponentDateFilt
   };
 
   return (
-    <div className="flex text-sm gap-4 items-center">
-      <span>Date filter:</span>
-      <div className="flex items-center">
-        {dates.map((range, index) => (
-          <div
-            onClick={() => handleFilterClick(range)}
-            className={`px-2 py-1  rounded-lg cursor-pointer transition text-light-slate-9 ${
-              activeFilter === range && "border text-light-slate-12 border-light-orange-10"
-            }`}
-            key={index}
-          >
-            {rangeFormatter(range)}
-          </div>
-        ))}
-      </div>
+    <div className="flex items-center text-sm bg-white rounded-lg shrink-0 w-max">
+      {dates.map((range, index) => (
+        <div
+          onClick={() => handleFilterClick(range)}
+          className={`px-4 py-1.5 rounded-lg cursor-pointer transition text-light-slate-9 ${
+            activeFilter === range && "border text-light-slate-12 bg-light-slate-5"
+          }`}
+          key={index}
+        >
+          {rangeFormatter(range)}
+        </div>
+      ))}
     </div>
   );
 };

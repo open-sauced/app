@@ -10,15 +10,14 @@ import StackedAvatar, { Contributor } from "../StackedAvatar/stacked-avatar";
 
 interface ListCardProps {
   list: DbUserList;
+  handleOnDeleteClick: (listName: string, listId: string) => void;
 }
-const ListCard = ({ list }: ListCardProps) => {
-  const { data: contributors } = useFetchListContributors(list.id);
+const ListCard = ({ list, handleOnDeleteClick }: ListCardProps) => {
+  const { data: contributors, meta } = useFetchListContributors(list.id);
 
   const contributorsAvatar: Contributor[] = contributors?.map((contributor) => ({
     host_login: contributor.login,
   }));
-
-  const dummyContributorsCount = contributors?.length ?? 0;
 
   return (
     <div>
@@ -37,7 +36,7 @@ const ListCard = ({ list }: ListCardProps) => {
             {/* Contributors section */}
             <div className="flex flex-col items-center flex-1 gap-1 mr-2">
               <span className="text-xs text-light-slate-11">Contributors</span>
-              <Text className="flex items-center text-2xl">{dummyContributorsCount}</Text>
+              <Text className="flex items-center text-2xl">{meta.itemCount}</Text>
             </div>
 
             <div className="flex items-center">
@@ -55,8 +54,12 @@ const ListCard = ({ list }: ListCardProps) => {
             </div>
             <div className="justify-end flex-1 hidden md:flex">
               {/* Delete button */}
-              <button className="inline-block p-3 mr-2 border rounded-lg cursor-pointer bg-light-slate-1" type="button">
-                <RiDeleteBinLine title="Edit Insight Page" className="text-lg text-light-slate-10" />
+              <button
+                onClick={() => handleOnDeleteClick(list.name, list.id)}
+                className="inline-block p-3 mr-2 border rounded-lg cursor-pointer bg-light-slate-1"
+                type="button"
+              >
+                <RiDeleteBinLine title="Delete List" className="text-lg text-light-slate-10" />
               </button>
               <Link
                 className="inline-block p-3 mr-2 border rounded-lg cursor-pointer bg-light-slate-1"

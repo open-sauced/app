@@ -62,6 +62,34 @@ interface HighlightInputFormProps {
   refreshCallback?: Function;
 }
 
+interface AddRepoProps {
+  taggedRepos: RepoList[];
+  deleteTaggedRepo: (repoName: string) => void;
+  showAddRepoDialog: (add: boolean) => void;
+}
+
+function AddRepo({ taggedRepos, deleteTaggedRepo, showAddRepoDialog }: AddRepoProps) {
+  return (
+    <div className={`flex items-center justify-between w-full gap-1 px-2 py-1 text-sm bg-white border rounded-lg h-10`}>
+      <div className="flex w-full">
+        <CardRepoList repoList={taggedRepos} deletable={true} onDelete={(repoName) => deleteTaggedRepo(repoName)} />
+        <Tooltip content={"Add a repo"}>
+          <button
+            className="flex gap-1  p-1 pr-2 border-[1px] border-light-slate-6 rounded-lg text-light-slate-12 items-center cursor-pointer"
+            onClick={(e) => {
+              e.preventDefault();
+              showAddRepoDialog(true);
+            }}
+          >
+            <BsTagFill className="rounded-[4px] overflow-hidden text-light-slate-11" />
+            <span className={"max-w-[45px] md:max-w-[100px] truncate text-light-slate-11 text-xs"}>Add a repo</span>
+          </button>
+        </Tooltip>
+      </div>
+    </div>
+  );
+}
+
 const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.Element => {
   const { providerToken, user: loggedInUser } = useSupabaseAuth();
   const [isDivFocused, setIsDivFocused] = useState(false);
@@ -268,7 +296,8 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
       }
       const { apiPaths } = generateRepoParts(highlightLink);
       const { repoName, orgName, issueId } = apiPaths;
-      const repoIcon = getAvatarByUsername(orgName, 60);
+      // default to the GitHub avatar if we can't find the avatar for the organization.
+      const repoIcon = getAvatarByUsername(orgName ?? "github", 60);
       if (taggedRepoList.some((repo) => repo.repoName === repoName)) return;
       const newRepo = { repoName, repoOwner: orgName, repoIcon } as RepoList;
       const newTaggedRepoList = [...taggedRepoList, newRepo];
@@ -510,31 +539,11 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
               </p>
             </div>
 
-            <div
-              className={`flex items-center justify-between w-full gap-1 px-2 py-1 text-sm bg-white border rounded-lg h-10`}
-            >
-              <div className="flex w-full">
-                <CardRepoList
-                  repoList={taggedRepoList}
-                  deletable={true}
-                  onDelete={(repoName) => handleTaggedRepoDelete(repoName)}
-                />
-                <Tooltip content={"Add a repo"}>
-                  <button
-                    className="flex gap-1  p-1 pr-2 border-[1px] border-light-slate-6 rounded-lg text-light-slate-12 items-center cursor-pointer"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setAddTaggedRepoFormOpen(true);
-                    }}
-                  >
-                    <BsTagFill className="rounded-[4px] overflow-hidden text-light-slate-11" />
-                    <span className={"max-w-[45px] md:max-w-[100px] truncate text-light-slate-11 text-xs"}>
-                      Add a repo
-                    </span>
-                  </button>
-                </Tooltip>
-              </div>
-            </div>
+            <AddRepo
+              taggedRepos={taggedRepoList}
+              deleteTaggedRepo={handleTaggedRepoDelete}
+              showAddRepoDialog={setAddTaggedRepoFormOpen}
+            />
 
             <div className="flex">
               <div className="flex w-full gap-1 items-center">
@@ -546,7 +555,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                         {date && <span className="text-xs">{format(date, "PPP")}</span>}
                       </button>
                     </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0 bg-white">
+                    <PopoverContent className="w-auto p-0 bg-white pointer-events-auto">
                       <Calendar
                         // block user's from selecting a future date
                         toDate={new Date()}
@@ -572,7 +581,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                   className="text-sm shadow-none h-10 flex-none"
                   value={highlightLink}
                   handleChange={(value) => setHighlightLink(value)}
-                  placeholder="Paste the URL to your Pull Request or Issue."
+                  placeholder="Paste the URL to your PR, Issue, or Dev.to blog post."
                 />
               </div>
             </div>
@@ -714,6 +723,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
 
       <Dialog open={addTaggedRepoFormOpen} onOpenChange={setAddTaggedRepoFormOpen}>
         <DialogContent
+          className="p-2"
           style={{
             width: "33vw",
           }}
@@ -785,6 +795,12 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                 / <span>{charLimit}</span>
               </p>
             </div>
+
+            <AddRepo
+              taggedRepos={taggedRepoList}
+              deleteTaggedRepo={handleTaggedRepoDelete}
+              showAddRepoDialog={setAddTaggedRepoFormOpen}
+            />
 
             <div className="flex">
               <div className="flex w-full gap-1">

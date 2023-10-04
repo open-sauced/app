@@ -1,5 +1,11 @@
+const plugin = require("tailwindcss/plugin");
 module.exports = {
-  content: ["./pages/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}", "./layouts/**/*.{js,ts,jsx,tsx}"],
+  content: [
+    "./pages/**/*.{js,ts,jsx,tsx}",
+    "./components/**/*.{js,ts,jsx,tsx}",
+    "./layouts/**/*.{js,ts,jsx,tsx}",
+    "./stories/**/*.{js,ts,jsx,tsx}",
+  ],
   theme: {
     extend: {
       gridTemplateColumns: {
@@ -224,5 +230,21 @@ module.exports = {
       pattern: /font-(thin|extralight|light|normal|medium|semibold|bold|extrabold|black)/,
     },
   ],
-  plugins: [require("tailwindcss-radix")(), require("@tailwindcss/typography")],
+  plugins: [
+    require("tailwindcss-radix")(),
+    require("@tailwindcss/typography"), // firefox only modifier
+    plugin(({ addVariant, e, postcss }) => {
+      addVariant("firefox", ({ container, separator }) => {
+        const isFirefoxRule = postcss.atRule({
+          name: "supports",
+          params: "(-moz-appearance:none)",
+        });
+        isFirefoxRule.append(container.nodes);
+        container.append(isFirefoxRule);
+        isFirefoxRule.walkRules((rule) => {
+          rule.selector = `.${e(`firefox${separator}${rule.selector.slice(1).replaceAll("\\", "")}`)}`;
+        });
+      });
+    }),
+  ],
 };
