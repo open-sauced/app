@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import dynamic from "next/dynamic";
 import { UserGroupIcon } from "@heroicons/react/24/outline";
 
 import { useDebounce } from "rooks";
@@ -19,12 +20,15 @@ import useStore from "lib/store";
 import Error from "components/atoms/Error/Error";
 import Search from "components/atoms/Search/search";
 import { useToast } from "lib/hooks/useToast";
-import TeamMembersConfig, { TeamMemberData } from "components/molecules/TeamMembersConfig/team-members-config";
+import { TeamMemberData } from "components/molecules/TeamMembersConfig/team-members-config";
 import useInsightMembers from "lib/hooks/useInsightMembers";
 import { useFetchInsightRecommendedRepositories } from "lib/hooks/useFetchOrgRecommendations";
 import { RepoCardProfileProps } from "components/molecules/RepoCardProfile/repo-card-profile";
 import SuggestedRepositoriesList from "../SuggestedRepoList/suggested-repo-list";
-import DeleteInsightPageModal from "./DeleteInsightPageModal";
+
+// lazy import DeleteInsightPageModal and TeamMembersConfig component to optimize bundle size they don't load on initial render
+const DeleteInsightPageModal = dynamic(() => import("./DeleteInsightPageModal"));
+const TeamMembersConfig = dynamic(() => import("components/molecules/TeamMembersConfig/team-members-config"));
 
 enum RepoLookupError {
   Initial = 0,
