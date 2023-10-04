@@ -35,7 +35,7 @@ const GitHubImportDialog = ({ open, handleClose, handleImport }: GitHubImportDia
           </div>
           <div className="flex gap-3">
             <Button onClick={() => handleClose()} className="justify-center flex-1" variant="text">
-              Go Back to Pages
+              Go Back
             </Button>
             <Button onClick={() => handleImport()} className="justify-center flex-1" variant="primary">
               Import Following

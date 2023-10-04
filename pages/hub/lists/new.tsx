@@ -11,24 +11,91 @@ import TopNav from "components/organisms/TopNav/top-nav";
 import Footer from "components/organisms/Footer/footer";
 import InfoCard from "components/molecules/InfoCard/info-card";
 import GitHubImportDialog from "components/organisms/GitHubImportDialog/github-import-dialog";
+import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
+import { useToast } from "lib/hooks/useToast";
+
+interface CreateListPayload {
+  name: string;
+  is_public: boolean;
+  contributors: number[];
+}
 
 const CreateListPage = () => {
   const router = useRouter();
-  // Loading States
+  const { toast } = useToast();
+  const { sessionToken, providerToken } = useSupabaseAuth();
+
   const [name, setName] = useState("");
-  const [setIsNameValid] = useState(false);
   const [isPublic, setIsPublic] = useState(false);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // const validateName = (name: string) => {
-  //   if (!name || name.trim().length <= 3) return false;
-
-  //   return true;
-  // };
-
   const handleOnNameChange = (value: string) => {
     setName(value);
+  };
+
+  const createList = async (payload: CreateListPayload) => {
+    if (!payload.name) {
+      toast({
+        description: "List name is required",
+        variant: "danger",
+      });
+      return;
+    }
+
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/lists`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${sessionToken}`,
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        return data;
+      }
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  };
+
+  const handleGitHubImport = async () => {
+    if (!providerToken) {
+      toast({ description: "Unable to connect to GitHub! Try refreshing your auth session", variant: "warning" });
+      return;
+    }
+
+    const req = await fetch(`https://api.github.com/user/following?per_page=10`, {
+      headers: {
+        Authorization: `Bearer ${providerToken}`,
+        "Content-type": "application/json",
+      },
+    });
+
+    if (!req.ok) {
+      toast({ description: "Unable to connect to GitHub", variant: "warning" });
+      return;
+    }
+
+    const following: { id: number; login: string }[] = await req.json();
+
+    const response = await createList({
+      name,
+      contributors: following.map((user) => user.id),
+      is_public: isPublic,
+    });
+
+    if (response) {
+      toast({ description: "List created successfully", variant: "success" });
+
+      router.push(`/lists/${response.id}/overview`);
+    } else {
+      toast({ description: "An error occurred!", variant: "danger" });
+    }
   };
 
   return (
@@ -39,7 +106,7 @@ const CreateListPage = () => {
             Create New List
           </Title>
           <Text className="my-8">
-            A list is a collection of contributors that you and your team can get insights from.
+            A list is a collection of contributors that you and your team can get insights for.
           </Text>
         </div>
 
@@ -92,6 +159,15 @@ const CreateListPage = () => {
             description="Connect to your GitHub to create a list with all the Contributors you follow"
             avatarURL={""}
             handleClick={() => {
+              if (!name) {
+                toast({
+                  description: "List name is required",
+                  variant: "danger",
+                });
+
+                return;
+              }
+
               setIsModalOpen(true);
             }}
           />
@@ -101,12 +177,13 @@ const CreateListPage = () => {
       <div className="top-0 py-4 mt-5 lg:sticky md:mt-0 lg:py-0">
         <div className="flex flex-col justify-between pt-8 mt-8 border-t"></div>
       </div>
+
       <GitHubImportDialog
         open={isModalOpen}
         handleClose={() => {
           setIsModalOpen(false);
         }}
-        handleImport={async () => {}}
+        handleImport={handleGitHubImport}
       />
     </section>
   );
@@ -126,5 +203,4 @@ const AddListPage = () => {
   );
 };
 
-// AddListPage.PageLayout = HubLayout;
 export default AddListPage;
