@@ -14,7 +14,6 @@ import ContributionsEvolutionCard, {
 import MostActiveContributorsCard, {
   ContributorStat,
 } from "components/molecules/MostActiveContributorsCard/most-active-contributors-card";
-import Card from "components/atoms/Card/card";
 interface ContributorListPageProps {
   list?: DBList;
   initialData: {
@@ -77,19 +76,11 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   };
 };
 
-const NoData = () => (
-  <div>
-    <Card className="grid place-content-stretch overflow-hidden">
-      <p>No Data</p>
-    </Card>
-  </div>
-);
-
 const ListActivityPage = ({ list, initialData, isError, activityData }: ContributorListPageProps) => {
   const isOwner = false;
   const [contributionsByType, setContributionsByType] = useState(activityData.contributionsByType);
-  const [contributionStats, setContributionStats] = useState(activityData.contributionStats);
-  const [contributorStats, setContributorStats] = useState(activityData.contributorStats);
+  const [contributionStats, setContributionStats] = useState(activityData.contributionStats ?? []);
+  const [contributorStats, setContributorStats] = useState(activityData.contributorStats ?? []);
 
   return (
     <ListPageLayout list={list} numberOfContributors={initialData.meta.itemCount} isOwner={isOwner}>
@@ -97,7 +88,7 @@ const ListActivityPage = ({ list, initialData, isError, activityData }: Contribu
         <Error errorMessage="Unable to load list activity" />
       ) : (
         <div className="grid grid-cols-2 grid-rows-2 gap-4">
-          {contributorStats?.length ? <MostActiveContributorsCard data={contributorStats} /> : <NoData />}
+          <MostActiveContributorsCard data={contributorStats} />
           <ContributionsEvolutionCard data={contributionStats} />
           <ContributionsEvolutionCard data={contributionStats} />
           <ContributionsEvolutionByType data={contributionsByType} />
