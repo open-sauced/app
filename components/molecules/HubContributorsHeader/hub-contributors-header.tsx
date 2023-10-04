@@ -101,9 +101,11 @@ const HubContributorsHeader = ({
       </div>
       <div className="flex flex-col justify-between w-full gap-2 md:flex-row">
         <div className="flex items-center gap-4 ">
+          {/* <div></div> */}
           <SingleSelect
             options={timezoneOptions}
             position="popper"
+            className="opacity-100 text-light-slate-12"
             value={timezone}
             placeholder="Select time zone"
             onValueChange={(value) => setTimezoneFilter(value)}
@@ -112,11 +114,11 @@ const HubContributorsHeader = ({
           <button
             type="button"
             onClick={handleOpenFilterPanel}
-            className="px-2 py-1.5 text-sm bg-white rounded-md shrink-0 flex items-center gap-2"
+            className="px-2 py-1.5 text-sm bg-white border rounded-md shrink-0 flex items-center gap-2 "
           >
             All filters{" "}
             {filterCount && filterCount > 0 ? (
-              <span className="text-sauced-orange">{filterCount}</span>
+              <span className="px-1.5  text-white text-xs rounded-lg bg-sauced-orange">{filterCount}</span>
             ) : (
               <BiFilterAlt className="text-lg text-black/80" />
             )}

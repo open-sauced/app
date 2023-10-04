@@ -1,9 +1,10 @@
 import { useState } from "react";
-import useSWR, { Fetcher } from "swr";
+import useSWR, { Fetcher, SWRConfiguration } from "swr";
 import { useRouter } from "next/router";
 
 import publicApiFetcher from "lib/utils/public-api-fetcher";
 import { useToast } from "./useToast";
+import { convertToContributors } from "./api/useContributorList";
 
 interface PaginatedResponse {
   readonly data: DBListContributor[];
@@ -17,7 +18,7 @@ type queryObj = {
   initialLimit?: number;
 };
 
-const useFetchAllContributors = (query: queryObj) => {
+const useFetchAllContributors = (query: queryObj, config?: SWRConfiguration) => {
   const { toast } = useToast();
   const router = useRouter();
   const [page, setPage] = useState(1);
@@ -44,13 +45,16 @@ const useFetchAllContributors = (query: queryObj) => {
   const baseEndpoint = "lists/contributors";
   const endpointString = `${baseEndpoint}?${urlQuery}`;
 
-  const { data, error, mutate } = useSWR<PaginatedResponse, Error>(
+  const { data, error, mutate } = useSWR<any, Error>(
     endpointString,
-    publicApiFetcher as Fetcher<PaginatedResponse, Error>
+    publicApiFetcher as Fetcher<PaginatedResponse, Error>,
+    config
   );
 
+  const contributors = convertToContributors(data?.data);
+
   return {
-    data: data?.data ?? [],
+    data: data ? contributors : [],
     meta: data?.meta ?? { itemCount: 0, limit: 0, page: 0, hasNextPage: false, hasPreviousPage: false, pageCount: 0 },
     isLoading: !error && !data,
     isError: !!error,

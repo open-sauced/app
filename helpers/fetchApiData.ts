@@ -10,17 +10,17 @@ export async function fetchApiData<T>({
   method = "GET",
   headers,
   bearerToken,
-  pathValidator,
 }: {
   path: string;
   method?: "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
   headers?: HeadersInit;
   bearerToken: string;
-  pathValidator(path: string): boolean;
+  // pathValidator(path: string): boolean;
 }) {
-  if (!pathValidator(path)) {
-    return { data: null, error: { status: 400, statusText: "bad request" } };
-  }
+  // commenting this out so the function can be used in other cases where getServerSideProps is used
+  // if (!pathValidator(path)) {
+  //   return { data: null, error: { status: 400, statusText: "bad request" } };
+  // }
 
   const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/${path}`;
   const response = await fetch(apiUrl, {
