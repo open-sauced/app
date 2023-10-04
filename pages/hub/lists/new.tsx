@@ -36,8 +36,11 @@ const NewListCreationPage: WithPageLayout = () => {
   const [title, setTitle] = useState("");
   const [selectedContributors, setSelectedContributors] = useState<DbPRContributor[]>([]);
   const [range, setRange] = useState<number>(30);
+  const [timezone, setTimezone] = useState<string | undefined>(undefined);
   const [isPublic, setIsPublic] = useState<boolean>(false);
-  const { data, meta, isLoading, setLimit, setPage } = useFetchAllContributors();
+  const { data, meta, isLoading, setLimit, setPage } = useFetchAllContributors({
+    timezone: timezone,
+  });
 
   const contributors = data
     ? data.length > 0 &&
@@ -129,11 +132,16 @@ const NewListCreationPage: WithPageLayout = () => {
     }
   };
 
+  const handleSelectTimezone = (selected: string) => {
+    setTimezone(selected);
+  };
+
   return (
     <Dialog open={isOpen}>
       <div className="info-container container w-full min-h-[6.25rem]">
         <Header>
           <HubContributorsHeader
+            setTimezoneFilter={handleSelectTimezone}
             isPublic={isPublic}
             handleToggleIsPublic={() => setIsPublic(!isPublic)}
             loading={createLoading}
@@ -142,15 +150,16 @@ const NewListCreationPage: WithPageLayout = () => {
             setRangeFilter={(range) => {
               setRange(range);
             }}
+            timezone={timezone}
             title={title}
             onAddToList={handleOnListCreate}
             onTitleChange={(title) => setTitle(title)}
           />
         </Header>
       </div>
-      <div className="lg:min-w-[1150px] px-16 py-8">
+      <div className="lg:min-w-[1150px] px-4 md:px-16 py-8">
         <ContributorListTableHeaders
-          selected={selectedContributors.length === meta.limit}
+          selected={selectedContributors.length > 0 && selectedContributors.length === meta.limit}
           handleOnSelectAllContributor={handleOnSelectAllChecked}
         />
         <ContributorTable
