@@ -104,7 +104,9 @@ const AuthSection: React.FC = ({}) => {
             <>
               {!onboarded && (
                 <>
-                  <OnboardingButton />
+                  <OnboardingButton className="md:!hidden lg:!flex">
+                    <Text className={`text-sm !text-light-slate-12 `}>Complete the onboarding</Text>
+                  </OnboardingButton>
                   <Divider type="vertical" className="!h-6 !bg-light-slate-6"></Divider>
                 </>
               )}
