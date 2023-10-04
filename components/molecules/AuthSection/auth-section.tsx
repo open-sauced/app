@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import Link from "next/link";
-
 import { IoNotifications } from "react-icons/io5";
 import { FiLogOut, FiSettings } from "react-icons/fi";
 import { BiLinkExternal } from "react-icons/bi";

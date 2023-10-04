@@ -13,8 +13,6 @@ import Text from "components/atoms/Typography/text";
 const TopNav: React.FC = () => {
   const { user } = useSupabaseAuth();
   const { onboarded } = useSession();
-
-  // console.log(!user, !!onboarded);
   return (
     <header className="top-nav-container w-full fixed top-0 left-0 z-50 py-0.5 bg-light-slate-3 border-b">
       <div className="flex justify-between items-center mx-auto container px-2 md:px-16">
