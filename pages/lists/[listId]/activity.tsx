@@ -24,7 +24,7 @@ interface ContributorListPageProps {
   activityData: {
     contributionsByType: ContributionEvolutionByTypeDatum[];
     contributionStats: ContributionStat[];
-    contributorStats: ContributorStat[] | null;
+    contributorStats: ContributorStat[];
   };
 }
 
@@ -70,7 +70,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
       activityData: {
         contributionsByType: generateData(),
         contributionStats: generateContributionStats(),
-        contributorStats: mostActiveData,
+        contributorStats: mostActiveData ?? [],
       },
     },
   };
@@ -79,8 +79,8 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 const ListActivityPage = ({ list, initialData, isError, activityData }: ContributorListPageProps) => {
   const isOwner = false;
   const [contributionsByType, setContributionsByType] = useState(activityData.contributionsByType);
-  const [contributionStats, setContributionStats] = useState(activityData.contributionStats ?? []);
-  const [contributorStats, setContributorStats] = useState(activityData.contributorStats ?? []);
+  const [contributionStats, setContributionStats] = useState(activityData.contributionStats);
+  const [contributorStats, setContributorStats] = useState(activityData.contributorStats);
 
   return (
     <ListPageLayout list={list} numberOfContributors={initialData.meta.itemCount} isOwner={isOwner}>
