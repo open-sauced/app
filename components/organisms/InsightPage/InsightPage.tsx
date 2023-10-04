@@ -63,7 +63,7 @@ const staticSuggestedRepos: RepoCardProfileProps[] = [
 ];
 
 const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
-  const { sessionToken, providerToken } = useSupabaseAuth();
+  const { sessionToken, providerToken, user } = useSupabaseAuth();
   const { toast } = useToast();
   const router = useRouter();
   const pageHref = router.asPath;
@@ -202,10 +202,9 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
     });
     setCreateLoading(false);
     if (response.ok) {
+      const { id } = await response.json();
       toast({ description: "Page created successfully", variant: "success" });
-      setTimeout(() => {
-        router.push("/hub/insights");
-      }, 1000);
+      router.push(`/pages/${user?.user_metadata.user_name}/${id}/dashboard`);
     }
 
     setSubmitted(false);
