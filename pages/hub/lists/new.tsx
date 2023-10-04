@@ -6,11 +6,11 @@ import TextInput from "components/atoms/TextInput/text-input";
 import ToggleSwitch from "components/atoms/ToggleSwitch/toggle-switch";
 import Text from "components/atoms/Typography/text";
 import Title from "components/atoms/Typography/title";
-
 import TopNav from "components/organisms/TopNav/top-nav";
 import Footer from "components/organisms/Footer/footer";
 import InfoCard from "components/molecules/InfoCard/info-card";
 import GitHubImportDialog from "components/organisms/GitHubImportDialog/github-import-dialog";
+
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { useToast } from "lib/hooks/useToast";
 
@@ -63,7 +63,7 @@ const CreateListPage = () => {
     }
   };
 
-  const handleGitHubImport = async () => {
+  const handleGitHubImport = async (props: { follow: boolean }) => {
     if (!providerToken) {
       toast({ description: "Unable to connect to GitHub! Try refreshing your auth session", variant: "warning" });
       return;
@@ -90,7 +90,19 @@ const CreateListPage = () => {
     });
 
     if (response) {
-      toast({ description: "List created successfully", variant: "success" });
+      if (props.follow) {
+        const followRequests = following.map((user) =>
+          fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${user.login}/follow`, {
+            method: "PUT",
+            headers: {
+              Authorization: `Bearer ${sessionToken}`,
+            },
+          })
+        );
+
+        Promise.allSettled(followRequests);
+        toast({ description: "List created successfully", variant: "success" });
+      }
 
       router.push(`/lists/${response.id}/overview`);
     } else {
@@ -180,9 +192,7 @@ const CreateListPage = () => {
 
       <GitHubImportDialog
         open={isModalOpen}
-        handleClose={() => {
-          setIsModalOpen(false);
-        }}
+        handleClose={() => setIsModalOpen(false)}
         handleImport={handleGitHubImport}
       />
     </section>
