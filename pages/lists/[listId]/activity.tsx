@@ -22,10 +22,10 @@ interface ContributorListPageProps {
     data: DbPRContributor[];
   };
   isError: boolean;
-  chartData: {
+  activityData: {
     contributionsByType: ContributionEvolutionByTypeDatum[];
     contributionStats: ContributionStat[];
-    contributorStats: ContributorStat[];
+    contributorStats: ContributorStat[] | null;
   };
 }
 
@@ -39,13 +39,22 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 
   const { listId } = ctx.params as { listId: string };
   const limit = 10; // Can pull this from the querystring in the future
-  const [{ data, error: contributorListError }, { data: list, error }] = await Promise.all([
+  const [
+    { data, error: contributorListError },
+    { data: list, error },
+    { data: mostActiveData, data: mostActiveError },
+  ] = await Promise.all([
     fetchApiData<PagedData<DBListContributor>>({
       path: `lists/${listId}/contributors?limit=${limit}`,
       bearerToken,
       pathValidator: validateListPath,
     }),
     fetchApiData<DBList>({ path: `lists/${listId}`, bearerToken, pathValidator: validateListPath }),
+    fetchApiData<ContributorStat>({
+      path: `lists/${listId}/stats/most-active-contributors`,
+      bearerToken,
+      pathValidator: validateListPath,
+    }),
   ]);
 
   if (error?.status === 404) {
@@ -58,11 +67,11 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     props: {
       list,
       initialData: data ?? { data: [], meta: {} },
-      isError: error || contributorListError,
-      chartData: {
+      isError: error || contributorListError || mostActiveError,
+      activityData: {
         contributionsByType: generateData(),
         contributionStats: generateContributionStats(),
-        contributorStats: mostActiveData(),
+        contributorStats: mostActiveData,
       },
     },
   };
@@ -76,11 +85,11 @@ const NoData = () => (
   </div>
 );
 
-const ListActivityPage = ({ list, initialData, isError, chartData }: ContributorListPageProps) => {
+const ListActivityPage = ({ list, initialData, isError, activityData }: ContributorListPageProps) => {
   const isOwner = false;
-  const [contributionsByType, setContributionsByType] = useState(chartData.contributionsByType);
-  const [contributionStats, setContributionStats] = useState(chartData.contributionStats);
-  const [contributorStats, setContributorStats] = useState(chartData.contributorStats);
+  const [contributionsByType, setContributionsByType] = useState(activityData.contributionsByType);
+  const [contributionStats, setContributionStats] = useState(activityData.contributionStats);
+  const [contributorStats, setContributorStats] = useState(activityData.contributorStats);
 
   return (
     <ListPageLayout list={list} numberOfContributors={initialData.meta.itemCount} isOwner={isOwner}>
@@ -88,7 +97,7 @@ const ListActivityPage = ({ list, initialData, isError, chartData }: Contributor
         <Error errorMessage="Unable to load list activity" />
       ) : (
         <div className="grid grid-cols-2 grid-rows-2 gap-4">
-          <MostActiveContributorsCard data={contributorStats} />
+          {contributorStats?.length ? <MostActiveContributorsCard data={contributorStats} /> : <NoData />}
           <ContributionsEvolutionCard data={contributionStats} />
           <ContributionsEvolutionCard data={contributionStats} />
           <ContributionsEvolutionByType data={contributionsByType} />
@@ -160,75 +169,4 @@ function generateContributionStats() {
     issuesCreated: Math.floor(Math.random() * 500),
     comments: Math.floor(Math.random() * 500),
   }));
-}
-
-function mostActiveData() {
-  return [
-    "CBID2",
-    "OgDev-01",
-    "brandonroberts",
-    "deepakrudrapaul",
-    "bdougie",
-    "diivi",
-    "babblebey",
-    "BekahHW",
-    "dominicduffin1",
-    "adiati98",
-    "Anush008",
-    "a0m0rajab",
-    "NsdHSO",
-    "RitaDee",
-    "doaortu",
-    "danielglejzner",
-    "jpmcb",
-    "goetzrobin",
-    "nickytonline",
-    "hankadev",
-    "k1nho",
-    "KashishLakhara04",
-    "fmerian",
-    "davidgetahead",
-    "MartiinWalsh",
-    "Muyixone",
-    "zillBoy",
-    "Edlavio",
-    "kelvinyelyen",
-    "JacobMGEvans",
-    "0-vortex",
-    "takanome-dev",
-    "kevinctofel",
-    "Brian-Pob",
-    "jmslynn",
-    "Satyxm",
-    "sudojunior",
-    "ozgursar",
-    "droffilc1",
-    "UlisesGascon",
-    "MohitBansal321",
-    "shelleymcq",
-    "WebDevCode",
-    "bpirrocco",
-    "Ntshangase",
-    "mihrab34",
-    "code-briomar",
-    "Deadreyo",
-    "MaurerKrisztian",
-    "stephengade",
-  ].map((login) => {
-    const user = {
-      login,
-      contributions: {
-        commits: Math.floor(Math.random() * 500),
-        prsCreated: Math.floor(Math.random() * 500),
-        prsReviewed: Math.floor(Math.random() * 500),
-        issuesCreated: Math.floor(Math.random() * 500),
-        comments: Math.floor(Math.random() * 500),
-      },
-    };
-
-    return {
-      ...user,
-      totalContributions: Object.values(user.contributions).reduce((acc, curr) => acc + curr, 0),
-    };
-  });
 }
