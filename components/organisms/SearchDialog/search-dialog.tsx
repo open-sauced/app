@@ -1,18 +1,19 @@
+import { useEffect, useState } from "react";
+
+import { FaSearch } from "react-icons/fa";
+import { HiOutlineExclamation } from "react-icons/hi";
 import Link from "next/link";
 import clsx from "clsx";
 import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
-import { FaSearch } from "react-icons/fa";
-import { HiOutlineExclamation } from "react-icons/hi";
-import store from "lib/store";
-import Text from "components/atoms/Typography/text";
 import Avatar from "components/atoms/Avatar/avatar";
 import { ScrollArea } from "components/atoms/ScrollArea/scroll-area";
-import useLockBody from "lib/hooks/useLockBody";
+import Text from "components/atoms/Typography/text";
 import { getAvatarByUsername } from "lib/utils/github";
 import { searchUsers } from "lib/hooks/search-users";
+import store from "lib/store";
 import useDebounceTerm from "lib/hooks/useDebounceTerm";
-import useOSDetection from "lib/hooks/useOSDetection";
+import useIsMacOS from "lib/hooks/useIsMacOS";
+import useLockBody from "lib/hooks/useLockBody";
 
 const SearchDialog = () => {
   useLockBody();
@@ -24,7 +25,7 @@ const SearchDialog = () => {
   const setOpenSearch = store((state) => state.setOpenSearch);
   const debouncedSearchTerm = useDebounceTerm(searchTerm, 300);
   const [searchResult, setSearchResult] = useState<{ data: DbUserSearch[]; meta: {} }>();
-  const isMac = useOSDetection();
+  const isMac = useIsMacOS();
 
   useEffect(() => {
     document.addEventListener("keydown", handleCloseSearch);
@@ -96,7 +97,7 @@ const SearchDialog = () => {
             onKeyDown={handleKeyboardCtrl}
           />
           <Text keyboard className="text-gray-600 !border-b !px-1">
-            {isMac ? "⌘K" : <span className="text-xs">CTRL+K</span>}
+            {isMac ? "⌘K" : <span className="text-[12px] py-2 px-1">CTRL+K</span>}
           </Text>
         </div>
         <div className="w-full h-full flex items-center">
@@ -117,7 +118,7 @@ const SearchDialog = () => {
 
 const SearchDialogTrigger = () => {
   const setOpenSearch = store((state) => state.setOpenSearch);
-  const isMac = useOSDetection();
+  const isMac = useIsMacOS();
 
   useEffect(() => {
     document.addEventListener("keydown", handleOpenSearch);
@@ -133,7 +134,7 @@ const SearchDialogTrigger = () => {
   return (
     <>
       <div
-        className="hidden sm:flex justify-between p-1 pl-3 h-fit w-52 ml-auto bg-white border rounded-lg ring-light-slate-6 relative overflow-hidden"
+        className="hidden sm:flex justify-between p-1 pl-3 h-fit w-56 ml-auto bg-white border rounded-lg ring-light-slate-6 relative overflow-hidden"
         onClick={() => setOpenSearch(true)}
       >
         <div className="flex items-center">
@@ -141,7 +142,7 @@ const SearchDialogTrigger = () => {
           <Text className="pl-2 text-sm font-semibold text-light-slate-9">Search for users</Text>
         </div>
         <Text keyboard className="text-gray-600 !border-b !px-1">
-          {isMac ? "⌘K" : <span className="text-xs">CTRL+K</span>}
+          {isMac ? "⌘K" : <span className="text-[12px] px-1 py-2">CTRL+K</span>}
         </Text>
       </div>
       <div className="flex sm:hidden p-1" onClick={() => setOpenSearch(true)}>
