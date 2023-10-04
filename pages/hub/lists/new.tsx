@@ -3,7 +3,8 @@ import { FiCheckCircle, FiCopy } from "react-icons/fi";
 import { AiOutlineWarning } from "react-icons/ai";
 import { usePostHog } from "posthog-js/react";
 
-import { WithPageLayout } from "interfaces/with-page-layout";
+import { GetServerSidePropsContext } from "next";
+import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import HubContributorsPageLayout from "layouts/hub-contributors";
 import useFetchAllContributors from "lib/hooks/useFetchAllContributors";
 import { useToast } from "lib/hooks/useToast";
@@ -21,15 +22,27 @@ import Text from "components/atoms/Typography/text";
 import TextInput from "components/atoms/TextInput/text-input";
 import Button from "components/atoms/Button/button";
 import { PanelContent, PanelWrapper } from "components/molecules/FilterPanel/filter-panel";
-import MultiSelect from "components/atoms/Select/multi-select";
+// import MultiSelect from "components/atoms/Select/multi-select";
 import SingleSelect from "components/atoms/Select/single-select";
+import { fetchApiData } from "helpers/fetchApiData";
+import ClientOnly from "components/atoms/ClientOnly/client-only";
 
 interface CreateListPayload {
   name: string;
   is_public: boolean;
   contributors: number[];
 }
-const NewListCreationPage: WithPageLayout = () => {
+interface filterKeys {
+  pr_velocity?: number;
+  timezone?: string;
+}
+interface NewListCreationPageProps {
+  initialData: {
+    meta: Meta;
+    data: DbPRContributor[];
+  };
+}
+const NewListCreationPage = ({ initialData }: NewListCreationPageProps) => {
   const { toast } = useToast();
   const posthog = usePostHog();
 
@@ -38,9 +51,9 @@ const NewListCreationPage: WithPageLayout = () => {
   const [prVelocity, setPrVelocity] = useState<number | undefined>(undefined);
   const [range, setRange] = useState<number>(30);
   const [timezone, setTimezone] = useState<string | undefined>(undefined);
+  const [filterArray, setFilterArray] = useState<filterKeys[]>([]);
 
   const { sessionToken } = useSupabaseAuth();
-  const [isHydrated, setIsHydrated] = useState(false);
   const [createLoading, setCreateLoading] = useState(false);
   const [listId, setListId] = useState<string>("");
   const [isOpen, setIsOpen] = useState(false);
@@ -49,27 +62,14 @@ const NewListCreationPage: WithPageLayout = () => {
   const [selectedContributors, setSelectedContributors] = useState<DbPRContributor[]>([]);
   const [isPublic, setIsPublic] = useState<boolean>(false);
   const [filters, setFilters] = useState<{}>({});
-  const { data, meta, isLoading, setLimit, setPage } = useFetchAllContributors(filters);
+  const {
+    data: contributors,
+    meta,
+    isLoading,
+    setLimit,
+    setPage,
+  } = useFetchAllContributors(filters, { fallbackData: initialData, revalidateOnFocus: false });
   const [isFilterPanelOpen, setIsFilterPanelOpen] = useState(false);
-
-  const contributors = data
-    ? data.length > 0 &&
-      data.map((contributor) => {
-        return {
-          author_login: contributor.login,
-          updated_at: contributor.updated_at,
-          user_id: contributor.id,
-        };
-      })
-    : [];
-
-  useEffect(() => {
-    setIsHydrated(true);
-  }, []);
-
-  if (!isHydrated) {
-    return null;
-  }
 
   const handleOnSelectAllChecked = (state: boolean) => {
     if (state) {
@@ -88,12 +88,35 @@ const NewListCreationPage: WithPageLayout = () => {
   };
 
   const handleApplyFilters = () => {
-    const filters = {
-      pr_velocity: prVelocity,
-      range: range,
-      timezone: timezone,
-    };
-    setFilters(filters);
+    if (!prVelocity && !timezone) {
+      toast({
+        description: "Please select at least one filter",
+        variant: "danger",
+      });
+      return;
+    }
+
+    if (prVelocity) {
+      setFilterArray((prev) => [...prev, { pr_velocity: prVelocity } as filterKeys]);
+    }
+    if (timezone) {
+      setFilterArray((prev) => [...prev, { timezone: timezone } as filterKeys]);
+    }
+
+    const filtersObj = filterArray.reduce((acc, curr) => {
+      return { ...acc, ...curr };
+    }, {});
+
+    setFilters(filtersObj);
+    setIsFilterPanelOpen(false);
+  };
+
+  const handleClearFilters = () => {
+    setPrVelocity(undefined);
+    setRange(30);
+    setTimezone(undefined);
+    setFilters({});
+    setFilterArray([]);
     setIsFilterPanelOpen(false);
   };
   const handleCreateList = async (payload: CreateListPayload) => {
@@ -153,43 +176,56 @@ const NewListCreationPage: WithPageLayout = () => {
 
   const handleSelectTimezone = (selected: string) => {
     setTimezone(selected);
+    setFilterArray((prev) => [...prev, { timezone: selected } as filterKeys]);
   };
 
+  useEffect(() => {
+    const filtersObj = filterArray.reduce((acc, curr) => {
+      return { ...acc, ...curr };
+    }, {});
+
+    setFilters(filtersObj);
+  }, [filterArray]);
+
   return (
-    <>
+    <HubContributorsPageLayout>
       <div className="info-container container w-full min-h-[6.25rem]">
-        <Header>
-          <HubContributorsHeader
-            setTimezoneFilter={handleSelectTimezone}
-            isPublic={isPublic}
-            handleToggleIsPublic={() => setIsPublic(!isPublic)}
-            loading={createLoading}
-            selectedContributorsIds={selectedContributors.map((contributor) => contributor.user_id)}
-            setLimit={setLimit}
-            setRangeFilter={(range) => {
-              setRange(range);
-            }}
-            timezone={timezone}
-            filterCount={Object.keys(filters).length ?? 0}
-            handleOpenFilterPanel={() => setIsFilterPanelOpen(!isFilterPanelOpen)}
-            title={title}
-            onAddToList={handleOnListCreate}
-            onTitleChange={(title) => setTitle(title)}
-          />
-        </Header>
+        <ClientOnly>
+          <Header>
+            <HubContributorsHeader
+              setTimezoneFilter={handleSelectTimezone}
+              isPublic={isPublic}
+              handleToggleIsPublic={() => setIsPublic(!isPublic)}
+              loading={createLoading}
+              selectedContributorsIds={selectedContributors.map((contributor) => contributor.user_id)}
+              setLimit={setLimit}
+              setRangeFilter={(range) => {
+                setRange(range);
+              }}
+              timezone={timezone}
+              filterCount={Object.keys(filters).length ?? 0}
+              handleOpenFilterPanel={() => setIsFilterPanelOpen(!isFilterPanelOpen)}
+              title={title}
+              onAddToList={handleOnListCreate}
+              onTitleChange={(title) => setTitle(title)}
+            />
+          </Header>
+        </ClientOnly>
       </div>
       <div className="lg:min-w-[1150px] px-4 md:px-16 py-8">
         <ContributorListTableHeaders
           selected={selectedContributors.length > 0 && selectedContributors.length === meta.limit}
           handleOnSelectAllContributor={handleOnSelectAllChecked}
         />
-        <ContributorTable
-          loading={isLoading}
-          selectedContributors={selectedContributors}
-          topic={"*"}
-          handleSelectContributors={handleOnSelectChecked}
-          contributors={contributors as DbPRContributor[]}
-        ></ContributorTable>
+        <ClientOnly>
+          <ContributorTable
+            loading={isLoading}
+            selectedContributors={selectedContributors}
+            topic={"*"}
+            handleSelectContributors={handleOnSelectChecked}
+            contributors={contributors as DbPRContributor[]}
+          ></ContributorTable>
+        </ClientOnly>
         <div className="flex items-center justify-between w-full py-1 md:py-4 md:mt-5">
           <div>
             <div className="">
@@ -302,11 +338,18 @@ const NewListCreationPage: WithPageLayout = () => {
             {/* pr_velocity filter */}
             <div className="flex-1 space-y-2">
               <span>PR Velocity</span>
-              <TextInput placeholder="Enter PR velocity in number" type="number" />
+              <TextInput
+                onChange={(e) => {
+                  setPrVelocity(Number(e.target.value));
+                }}
+                value={prVelocity}
+                placeholder="Enter PR velocity in number"
+                type="number"
+              />
             </div>
 
             {/* Language filter */}
-            <div className="flex-1 space-y-2">
+            {/* <div className="flex-1 space-y-2">
               <span>Language</span>
               <MultiSelect
                 className="-translate-x-10"
@@ -318,25 +361,48 @@ const NewListCreationPage: WithPageLayout = () => {
                 handleSelect={(value) => {}}
                 selected={[]}
               />
-            </div>
+            </div> */}
           </div>
           <div className="fixed bottom-0 flex items-center w-full gap-20 px-4 pb-24 pr-8">
-            <button className="p-2 rounded-md text-sauced-orange hover:bg-orange-200/80">Clear filter</button>
+            <button onClick={handleClearFilters} className="p-2 rounded-md text-sauced-orange hover:bg-orange-200/80">
+              Clear filter
+            </button>
             <div className="flex items-center">
-              <Button variant="text" className="mr-2">
+              <Button onClick={() => setIsFilterPanelOpen(false)} variant="text" className="mr-2">
                 Cancel
               </Button>
-              <Button onClick={handleApplyFilters} variant="primary" className="">
+              <Button onClick={handleApplyFilters} variant="primary">
                 Apply
               </Button>
             </div>
           </div>
         </PanelContent>
       </PanelWrapper>
-    </>
+    </HubContributorsPageLayout>
   );
 };
 
-NewListCreationPage.PageLayout = HubContributorsPageLayout;
-
 export default NewListCreationPage;
+
+export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
+  const supabase = createPagesServerClient(ctx);
+
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+  const bearerToken = session ? session.access_token : "";
+
+  const { data, error } = await fetchApiData<PagedData<DBListContributor>>({ path: `lists/contributors`, bearerToken });
+
+  if (error?.status === 404) {
+    return {
+      notFound: true,
+    };
+  }
+
+  return {
+    props: {
+      initialData: data ? { data: data.data, meta: data.meta } : { data: [], meta: {} },
+    },
+  };
+};
