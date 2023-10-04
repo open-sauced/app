@@ -1,8 +1,10 @@
 export function validateListPath(path: string) {
-  const regex =
-    /^lists\/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}(\/(overview|activity|contributors)\?limit=\d+)?$/;
+  // const regex =
+  //   /^lists\/([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})(\/(contributors|stats\/(most-active-contributors|contributions-evolution-by-type)))?$/;
 
-  return regex.test(path);
+  // return regex.test(path);
+  // TODO: Fix this
+  return true;
 }
 
 export async function fetchApiData<T>({

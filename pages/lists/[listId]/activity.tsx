@@ -5,12 +5,8 @@ import { useState } from "react";
 import Error from "components/atoms/Error/Error";
 import { fetchApiData, validateListPath } from "helpers/fetchApiData";
 import ListPageLayout from "layouts/lists";
-import ContributionsEvolutionByType, {
-  ContributionEvolutionByTypeDatum,
-} from "components/molecules/ContributionsEvolutionByTypeCard/contributions-evolution-by-type-card";
-import ContributionsEvolutionCard, {
-  ContributionStat,
-} from "components/molecules/ContributionsEvolution/contributions-evolution-card";
+import { ContributionEvolutionByTypeDatum } from "components/molecules/ContributionsEvolutionByTypeCard/contributions-evolution-by-type-card";
+import { ContributionStat } from "components/molecules/ContributionsEvolution/contributions-evolution-card";
 import MostActiveContributorsCard, {
   ContributorStat,
 } from "components/molecules/MostActiveContributorsCard/most-active-contributors-card";
@@ -23,8 +19,8 @@ interface ContributorListPageProps {
   isError: boolean;
   activityData: {
     contributionsByType: ContributionEvolutionByTypeDatum[];
-    contributionStats: ContributionStat[];
-    contributorStats: ContributorStat[];
+    contributionStats: { data: ContributionStat[]; meta: Meta };
+    contributorStats: { data: ContributorStat[]; meta: Meta };
   };
 }
 
@@ -35,13 +31,13 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     data: { session },
   } = await supabase.auth.getSession();
   const bearerToken = session ? session.access_token : "";
-
   const { listId } = ctx.params as { listId: string };
   const limit = 10; // Can pull this from the querystring in the future
   const [
     { data, error: contributorListError },
     { data: list, error },
-    { data: mostActiveData, data: mostActiveError },
+    { data: mostActiveData, error: mostActiveError },
+    { data: contributionsByType, error: contributionsByTypeError },
   ] = await Promise.all([
     fetchApiData<PagedData<DBListContributor>>({
       path: `lists/${listId}/contributors?limit=${limit}`,
@@ -51,6 +47,11 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     fetchApiData<DBList>({ path: `lists/${listId}`, bearerToken, pathValidator: validateListPath }),
     fetchApiData<ContributorStat>({
       path: `lists/${listId}/stats/most-active-contributors`,
+      bearerToken,
+      pathValidator: validateListPath,
+    }),
+    fetchApiData<ContributionEvolutionByTypeDatum>({
+      path: `lists/${listId}/stats/contributions-evolution-by-type`,
       bearerToken,
       pathValidator: validateListPath,
     }),
@@ -68,9 +69,9 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
       initialData: data ?? { data: [], meta: {} },
       isError: error || contributorListError || mostActiveError,
       activityData: {
-        contributionsByType: generateData(),
+        contributionsByType,
         contributionStats: generateContributionStats(),
-        contributorStats: mostActiveData ?? [],
+        contributorStats: mostActiveData,
       },
     },
   };
@@ -79,8 +80,8 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 const ListActivityPage = ({ list, initialData, isError, activityData }: ContributorListPageProps) => {
   const isOwner = false;
   const [contributionsByType, setContributionsByType] = useState(activityData.contributionsByType);
-  const [contributionStats, setContributionStats] = useState(activityData.contributionStats);
-  const [contributorStats, setContributorStats] = useState(activityData.contributorStats);
+  const [contributionStats, setContributionStats] = useState(activityData.contributionStats.data);
+  const [contributorStats, setContributorStats] = useState(activityData.contributorStats.data);
 
   return (
     <ListPageLayout list={list} numberOfContributors={initialData.meta.itemCount} isOwner={isOwner}>
@@ -89,9 +90,9 @@ const ListActivityPage = ({ list, initialData, isError, activityData }: Contribu
       ) : (
         <div className="grid grid-cols-2 grid-rows-2 gap-4">
           <MostActiveContributorsCard data={contributorStats} />
+          {/* <ContributionsEvolutionCard data={contributionStats} />
           <ContributionsEvolutionCard data={contributionStats} />
-          <ContributionsEvolutionCard data={contributionStats} />
-          <ContributionsEvolutionByType data={contributionsByType} />
+          <ContributionsEvolutionByType data={contributionsByType} /> */}
         </div>
       )}
     </ListPageLayout>

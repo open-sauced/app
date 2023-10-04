@@ -20,29 +20,26 @@ import ChevronDownIcon from "img/chevron-down.svg";
 import SortArrowsIcon from "img/icons/sort-arrows.svg";
 import SVGIcon from "components/atoms/SVGIcon/svg-icon";
 
-const dataTypes = ["commits", "prsCreated", "prsReviewed", "issuesCreated", "comments"] as const;
-type Stat = (typeof dataTypes)[number];
+// omit totalContributions and login from ContributorStat
+type Stat = Omit<ContributorStat, "totalContributions" | "login">;
+type StatKeys = keyof Stat;
+type DataLabel = { title: string; color: string };
 
-const dataLabels = {
-  commits: "Commits",
-  prsCreated: "Created PR",
-  prsReviewed: "Reviewed PR",
-  issuesCreated: "Created Issues",
-  comments: "Commented",
-} as const satisfies Record<Stat, string>;
-
-const colors = {
-  commits: "hsla(217, 91%, 60%, 1)",
-  prsCreated: "hsla(173, 80%, 40%, 1)",
-  prsReviewed: "hsla(198, 93%, 60%, 1)",
-  issuesCreated: "hsla(258, 90%, 66%, 1)",
-  comments: "hsla(245, 58%, 51%, 1)",
-} as const satisfies Record<Stat, string>;
+const dataLabelsList = {
+  commits: { title: "Commits", color: "hsla(217, 91%, 60%, 1)" },
+  prsCreated: { title: "Created PR", color: "hsla(173, 80%, 40%, 1)" },
+  prsReviewed: { title: "Reviewed PR", color: "hsla(198, 93%, 60%, 1)" },
+  issuesCreated: { title: "Created Issues", color: "hsla(258, 90%, 66%, 1)" },
+  comments: { title: "Commented", color: "hsla(245, 58%, 51%, 1)" },
+} satisfies Record<StatKeys, DataLabel>;
 
 export interface ContributorStat {
   login: string;
-  totalContributions: number;
-  contributions: Record<Stat, number>;
+  commits: number;
+  prsCreated: number;
+  prsReviewed: number;
+  issuesCreated: number;
+  comments: number;
 }
 
 interface Props {
@@ -73,13 +70,41 @@ const MostActiveCard = ({ children }: { children: ReactNode }) => {
   );
 };
 
-export default function MostActiveContributorsCard(props: Props) {
+function getDataLabels(
+  contributor: ContributorStat,
+  labelList: Record<StatKeys, DataLabel>
+): Record<StatKeys, DataLabel> {
+  if (!contributor) {
+    return {} as Record<StatKeys, DataLabel>;
+  }
+  const labels = Object.keys(dataLabelsList).reduce<DataLabel>((acc, curr) => {
+    if (Object.keys(contributor).includes(curr)) {
+      acc[curr] = labelList[curr];
+    }
+
+    return acc;
+  }, {});
+
+  return labels;
+}
+
+function getTotalContributions(contributor: ContributorStat) {
+  return Object.values(contributor).reduce((acc, curr) => {
+    if (typeof curr === "number") {
+      return acc + curr;
+    }
+    return acc;
+  }, 0);
+}
+
+export default function MostActiveContributorsCard({ data }: Props) {
   const [currentDateFilter, setCurrentDateFilter] = useState<keyof typeof dateFilters>("last7days"); // TODO: make this a prop
   const [currentPeopleFilter, setCurrentPeopleFilter] = useState<keyof typeof peopleFilters>("all"); // TODO: make this a prop
-  const sortedData = props.data.sort((a, b) => b.totalContributions - a.totalContributions);
+  const sortedData = data.sort((a, b) => getTotalContributions(b) - getTotalContributions(a));
+  const [topContributor] = sortedData;
+  const dataLabels = getDataLabels(topContributor, dataLabelsList);
 
-  if (sortedData.length === 0) {
-    // TODO: Create a no data view for charts
+  if (data.length === 0) {
     return (
       <MostActiveCard>
         <p>No Data</p>
@@ -87,10 +112,11 @@ export default function MostActiveContributorsCard(props: Props) {
     );
   }
 
-  const [topContributor] = sortedData;
-  const allContributions = sortedData.reduce((acc, curr) => acc + curr.totalContributions, 0);
-  const maxContributions = topContributor.totalContributions;
-  const topContributorPercent = ((maxContributions / allContributions) * 100).toFixed(2) + "%";
+  const allContributions = sortedData.reduce((acc, curr) => acc + getTotalContributions(curr), 0);
+  const maxContributions = getTotalContributions(topContributor);
+  const topContributorPercent = `${
+    allContributions === 0 ? 0 : ((maxContributions / allContributions) * 100).toFixed(2)
+  }%`;
 
   return (
     <MostActiveCard>
@@ -172,16 +198,16 @@ export default function MostActiveContributorsCard(props: Props) {
           }}
         >
           {sortedData.map((user) => (
-            <GraphRow key={user.login} user={user} maxContributions={maxContributions} />
+            <GraphRow key={user.login} user={user} maxContributions={maxContributions} dataLabels={dataLabels} />
           ))}
         </div>
       </div>
       {/* key */}
       <div className="flex justify-center gap-4">
-        {dataTypes.map((type) => (
-          <div key={type} className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-sm" style={{ backgroundColor: colors[type] }}></div>
-            <div className="text-sm text-slate-900 capitalize">{dataLabels[type]}</div>
+        {Object.entries(dataLabels).map(([key, value]) => (
+          <div key={key} className="flex items-center gap-2">
+            <div className="w-3 h-3 rounded-sm" style={{ backgroundColor: value.color }}></div>
+            <div className="text-sm text-slate-900 capitalize">{value.title}</div>
           </div>
         ))}
       </div>
@@ -192,10 +218,12 @@ export default function MostActiveContributorsCard(props: Props) {
 function RowTooltip({
   contributor,
   highlightedStat,
+  dataLabels,
   children,
 }: {
   contributor: ContributorStat;
-  highlightedStat: keyof ContributorStat["contributions"];
+  highlightedStat: StatKeys;
+  dataLabels: Record<StatKeys, DataLabel>;
   children: React.ReactNode;
 }) {
   return (
@@ -205,14 +233,11 @@ function RowTooltip({
         <Tooltip.Content sideOffset={-10} align="center" collisionPadding={10} side={"bottom"} avoidCollisions>
           <div className={clsx("text-xs p-2 rounded shadow-lg bg-white font-light")}>
             <div className="text-black font-bold mb-1">{contributor.login}</div>
-            {Object.keys(contributor.contributions).map((key) => (
+            {Object.entries(dataLabels).map(([key, value]) => (
               <div key={key} className={clsx("flex items-center gap-2 font-bold", { "font-bold": true })}>
-                <div
-                  className="w-3 h-3 rounded-sm"
-                  style={{ backgroundColor: colors[key as keyof typeof colors] }}
-                ></div>
+                <div className="w-3 h-3 rounded-sm" style={{ backgroundColor: value.color }}></div>
                 <div className={clsx(key === highlightedStat ? "font-bold" : "font-light")}>
-                  {contributor.contributions[key as keyof typeof contributor.contributions]} {dataLabels[key as Stat]}
+                  {key} {value.title}
                 </div>
               </div>
             ))}
@@ -223,19 +248,36 @@ function RowTooltip({
   );
 }
 
-function GraphRow({ user, maxContributions }: { user: ContributorStat; maxContributions: number }) {
+function getWidthPercentage(stat: number, totalContributions: number) {
+  if (!stat || !totalContributions) {
+    return 0;
+  }
+
+  return (stat / totalContributions) * 100;
+}
+
+function GraphRow({
+  user,
+  maxContributions,
+  dataLabels,
+}: {
+  user: ContributorStat;
+  maxContributions: number;
+  dataLabels: Record<StatKeys, DataLabel>;
+}) {
+  const keys = Object.keys(dataLabels) as StatKeys[];
   const [isHovered, setIsHovered] = useState(false);
   const [springs] = useSprings(
-    dataTypes.length,
+    keys.length,
     (index: number) => ({
       from: {
         width: "0%",
       },
       to: {
-        width: `${(user.contributions[dataTypes[index]] / user.totalContributions) * 100}%`,
+        width: `${getWidthPercentage(user[keys[index]], user.totalContributions)}%`,
       },
     }),
-    [user.contributions, user.totalContributions, maxContributions]
+    [user.totalContributions]
   );
 
   // When hovered the tooltip should show for the the GraphRow
@@ -258,10 +300,10 @@ function GraphRow({ user, maxContributions }: { user: ContributorStat; maxContri
       <div className="flex items-stretch grid-cols-3">
         <div className="flex items-stretch" style={{ width: `${(user.totalContributions / maxContributions) * 100}%` }}>
           {springs.map((spring, index) => (
-            <RowTooltip key={dataTypes[index]} highlightedStat={dataTypes[index]} contributor={user}>
+            <RowTooltip key={keys[index]} highlightedStat={keys[index]} contributor={user} dataLabels={dataLabels}>
               <animated.div
                 style={{
-                  backgroundColor: colors[dataTypes[index]],
+                  backgroundColor: dataLabels[keys[index]].color,
                   ...spring,
                 }}
               >
