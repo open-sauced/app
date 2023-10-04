@@ -27,7 +27,7 @@ const GitHubImportDialog = ({ open, handleClose, handleImport }: GitHubImportDia
               </span>
             </span>
             <Title level={3} className="text-lg">
-              Imoprt your GitHub &quot;following&quot; list
+              Import your GitHub &quot;following&quot; list
             </Title>
             <Text className="leading-tight text-light-slate-9">
               We will import usernames of developers you are following on GitHub to create your new list.
