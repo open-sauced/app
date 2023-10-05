@@ -10,6 +10,7 @@ import { useFetchUser } from "lib/hooks/useFetchUser";
 import OnboardingButton from "components/molecules/OnboardingButton/onboarding-button";
 import Text from "components/atoms/Typography/text";
 
+
 const TopNav: React.FC = () => {
   const { user } = useSupabaseAuth();
   const { onboarded } = useSession();
@@ -51,7 +52,7 @@ const Nav = ({ className, name = "Main" }: { className?: string; name?: string }
   const { onboarded } = useSession();
 
   const { data: gitHubUser } = useFetchUser(user?.user_metadata.user_name);
-  const userInterest = gitHubUser?.interests.split(",")[0] || "javascript";
+  const userInterest = gitHubUser?.interests.split(",")[0] || "hacktoberfest";
   const router = useRouter();
 
   return (

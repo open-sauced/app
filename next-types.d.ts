@@ -235,6 +235,7 @@ interface DbUser {
   readonly following_count: number;
   readonly highlights_count: number;
   readonly is_maintainer: boolean;
+  readonly coupon_code: string;
 }
 
 interface DbHighlight {
