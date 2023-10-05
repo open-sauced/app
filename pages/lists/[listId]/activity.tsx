@@ -24,6 +24,15 @@ interface ContributorListPageProps {
   };
 }
 
+function getTotalContributions(contributor: ContributorStat) {
+  return Object.values(contributor).reduce((acc, curr) => {
+    if (typeof curr === "number") {
+      return acc + curr;
+    }
+    return acc;
+  }, 0);
+}
+
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const supabase = createPagesServerClient(ctx);
 
@@ -45,12 +54,12 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
       pathValidator: validateListPath,
     }),
     fetchApiData<DBList>({ path: `lists/${listId}`, bearerToken, pathValidator: validateListPath }),
-    fetchApiData<ContributorStat>({
+    fetchApiData<PagedData<ContributorStat>>({
       path: `lists/${listId}/stats/most-active-contributors`,
       bearerToken,
       pathValidator: validateListPath,
     }),
-    fetchApiData<ContributionEvolutionByTypeDatum>({
+    fetchApiData<PagedData<ContributionEvolutionByTypeDatum>>({
       path: `lists/${listId}/stats/contributions-evolution-by-type`,
       bearerToken,
       pathValidator: validateListPath,
@@ -71,7 +80,14 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
       activityData: {
         contributionsByType,
         contributionStats: generateContributionStats(),
-        contributorStats: mostActiveData,
+        // TODO: remove map once totalContribtions is part of a ContributorStat
+        contributorStats: {
+          data: mostActiveData?.data?.map((contributor) => ({
+            ...contributor,
+            totalContributions: getTotalContributions(contributor),
+          })),
+          meta: mostActiveData?.meta,
+        },
       },
     },
   };

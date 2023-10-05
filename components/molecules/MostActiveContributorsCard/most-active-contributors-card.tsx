@@ -40,6 +40,7 @@ export interface ContributorStat {
   prsReviewed: number;
   issuesCreated: number;
   comments: number;
+  totalContributions: number;
 }
 
 interface Props {
@@ -91,19 +92,10 @@ function getDataLabels(
   return labels;
 }
 
-function getTotalContributions(contributor: ContributorStat) {
-  return Object.values(contributor).reduce((acc, curr) => {
-    if (typeof curr === "number") {
-      return acc + curr;
-    }
-    return acc;
-  }, 0);
-}
-
 export default function MostActiveContributorsCard({ data }: Props) {
   const [currentDateFilter, setCurrentDateFilter] = useState<keyof typeof dateFilters>("last7days"); // TODO: make this a prop
   const [currentPeopleFilter, setCurrentPeopleFilter] = useState<keyof typeof peopleFilters>("all"); // TODO: make this a prop
-  const sortedData = data.sort((a, b) => getTotalContributions(b) - getTotalContributions(a));
+  const sortedData = data.sort((a, b) => b.totalContributions - a.totalContributions);
   const [topContributor] = sortedData;
   const dataLabels = getDataLabels(topContributor, dataLabelsList);
 
@@ -115,8 +107,8 @@ export default function MostActiveContributorsCard({ data }: Props) {
     );
   }
 
-  const allContributions = sortedData.reduce((acc, curr) => acc + getTotalContributions(curr), 0);
-  const maxContributions = getTotalContributions(topContributor);
+  const allContributions = sortedData.reduce((acc, curr) => acc + curr.totalContributions, 0);
+  const maxContributions = topContributor.totalContributions;
   const topContributorPercent = `${
     allContributions === 0 ? 0 : ((maxContributions / allContributions) * 100).toFixed(2)
   }%`;
@@ -275,10 +267,10 @@ function GraphRow({
         width: "0%",
       },
       to: {
-        width: `${getWidthPercentage(user[keys[index]], getTotalContributions(user))}%`,
+        width: `${getWidthPercentage(user[keys[index]], user.totalContributions)}%`,
       },
     }),
-    [getTotalContributions(user)]
+    [user.totalContributions]
   );
 
   // When hovered the tooltip should show for the the GraphRow
@@ -299,10 +291,7 @@ function GraphRow({
       />
       <div className="flex items-center text-sm text-slate-900 grid-cols-2">{user.login}</div>
       <div className="flex items-stretch grid-cols-3">
-        <div
-          className="flex items-stretch"
-          style={{ width: `${(getTotalContributions(user) / maxContributions) * 100}%` }}
-        >
+        <div className="flex items-stretch" style={{ width: `${(user.totalContributions / maxContributions) * 100}%` }}>
           {springs.map((spring, index) => (
             <RowTooltip key={keys[index]} highlightedStat={keys[index]} contributor={user} dataLabels={dataLabels}>
               <animated.div
