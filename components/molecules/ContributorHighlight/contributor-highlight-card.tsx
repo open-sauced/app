@@ -149,7 +149,8 @@ const ContributorHighlightCard = ({
     ) {
       const { apiPaths } = generateRepoParts(highlight.highlightLink);
       const { repoName, orgName, issueId } = apiPaths;
-      const repoIcon = getAvatarByUsername(orgName, 60);
+      // default to the GitHub avatar if we can't find the avatar for the organization.
+      const repoIcon = getAvatarByUsername(orgName ?? "github", 60);
       if (taggedRepoList.some((repo) => repo.repoName === repoName)) return;
       const newRepo = { repoName, repoOwner: orgName, repoIcon } as RepoList;
       const newTaggedRepoList = [...taggedRepoList, newRepo];
