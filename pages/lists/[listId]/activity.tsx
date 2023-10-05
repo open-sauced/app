@@ -20,10 +20,7 @@ import ChevronDownIcon from "img/chevron-down.svg";
 
 interface ContributorListPageProps {
   list?: DBList;
-  initialData: {
-    meta: Meta;
-    data: DbPRContributor[];
-  };
+  numberOfContributors: number;
   isError: boolean;
   activityData: {
     contributorStats: { data: ContributorStat[]; meta: Meta };
@@ -48,7 +45,6 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   } = await supabase.auth.getSession();
   const bearerToken = session ? session.access_token : "";
   const { listId } = ctx.params as { listId: string };
-  const limit = 10; // Can pull this from the querystring in the future
   const range = 30;
   const [
     { data, error: contributorListError },
@@ -56,7 +52,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     { data: mostActiveData, error: mostActiveError },
   ] = await Promise.all([
     fetchApiData<PagedData<DBListContributor>>({
-      path: `lists/${listId}/contributors?limit=${limit}`,
+      path: `lists/${listId}/contributors?limit=1`,
       bearerToken,
       pathValidator: validateListPath,
     }),
@@ -91,7 +87,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   return {
     props: {
       list,
-      initialData: data ?? { data: [], meta: {} },
+      numberOfContributors: data?.meta.itemCount,
       isError: error || contributorListError || mostActiveError,
       activityData: {
         contributorStats,
@@ -101,19 +97,13 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   };
 };
 
-const dateFilters = {
-  last7days: "Last 7 days",
-  last30days: "Last 30 days",
-  last3months: "Last 3 months",
-};
-
-const ListActivityPage = ({ list, initialData, isError, activityData }: ContributorListPageProps) => {
+const ListActivityPage = ({ list, numberOfContributors, isError, activityData }: ContributorListPageProps) => {
   const isOwner = false;
   const [contributorStats, setContributorStats] = useState(activityData.contributorStats.data);
   const [currentDateFilter, setCurrentDateFilter] = useState<keyof typeof dateFilters>("last7days");
 
   return (
-    <ListPageLayout list={list} numberOfContributors={initialData.meta.itemCount} isOwner={isOwner}>
+    <ListPageLayout list={list} numberOfContributors={numberOfContributors} isOwner={isOwner}>
       {isError ? (
         <Error errorMessage="Unable to load list activity" />
       ) : (
