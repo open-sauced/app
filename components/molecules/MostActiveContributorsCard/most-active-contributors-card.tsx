@@ -77,13 +77,16 @@ function getDataLabels(
   if (!contributor) {
     return {} as Record<StatKeys, DataLabel>;
   }
-  const labels = Object.keys(dataLabelsList).reduce<DataLabel>((acc, curr) => {
-    if (Object.keys(contributor).includes(curr)) {
-      acc[curr] = labelList[curr];
-    }
+  const labels = Object.keys(dataLabelsList).reduce<DataLabel>(
+    (acc: Record<StatKeys, DataLabel>, curr: StatKeys) => {
+      if (Object.keys(contributor).includes(curr)) {
+        acc[curr] = labelList[curr];
+      }
 
-    return acc;
-  }, {});
+      return acc;
+    },
+    {} as Record<StatKeys, DataLabel>
+  );
 
   return labels;
 }
@@ -169,15 +172,13 @@ export default function MostActiveContributorsCard({ data }: Props) {
           <DropdownMenuTrigger asChild>
             <Button variant="default" className="items-center gap-1 justify-self-end ml-auto">
               <SVGIcon IconImage={`${SortArrowsIcon.src}#icon`} className="w-4 h-4" />
-              {/* <Icon IconImage={SortArrowsIcon} className="w-4 h-4" /> */}
               Most Active
               <Icon IconImage={ChevronDownIcon} className="w-4 h-4" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="flex flex-col gap-2">
-            <DropdownMenuItem className="rounded-md">One</DropdownMenuItem>
-            <DropdownMenuItem className="rounded-md">Two</DropdownMenuItem>
-            <DropdownMenuItem className="rounded-md">Three</DropdownMenuItem>
+            <DropdownMenuItem className="rounded-md">Most Active</DropdownMenuItem>
+            <DropdownMenuItem className="rounded-md">Least Active</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
@@ -274,10 +275,10 @@ function GraphRow({
         width: "0%",
       },
       to: {
-        width: `${getWidthPercentage(user[keys[index]], user.totalContributions)}%`,
+        width: `${getWidthPercentage(user[keys[index]], getTotalContributions(user))}%`,
       },
     }),
-    [user.totalContributions]
+    [getTotalContributions(user)]
   );
 
   // When hovered the tooltip should show for the the GraphRow
@@ -298,7 +299,10 @@ function GraphRow({
       />
       <div className="flex items-center text-sm text-slate-900 grid-cols-2">{user.login}</div>
       <div className="flex items-stretch grid-cols-3">
-        <div className="flex items-stretch" style={{ width: `${(user.totalContributions / maxContributions) * 100}%` }}>
+        <div
+          className="flex items-stretch"
+          style={{ width: `${(getTotalContributions(user) / maxContributions) * 100}%` }}
+        >
           {springs.map((spring, index) => (
             <RowTooltip key={keys[index]} highlightedStat={keys[index]} contributor={user} dataLabels={dataLabels}>
               <animated.div
