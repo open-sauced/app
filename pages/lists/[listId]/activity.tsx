@@ -4,7 +4,6 @@ import { useState } from "react";
 import Error from "components/atoms/Error/Error";
 import { fetchApiData, validateListPath } from "helpers/fetchApiData";
 import ListPageLayout from "layouts/lists";
-import { ContributionEvolutionByTypeDatum } from "components/molecules/ContributionsEvolutionByTypeCard/contributions-evolution-by-type-card";
 import MostActiveContributorsCard, {
   ContributorStat,
 } from "components/molecules/MostActiveContributorsCard/most-active-contributors-card";
@@ -16,7 +15,6 @@ interface ContributorListPageProps {
   };
   isError: boolean;
   activityData: {
-    contributionsByType: ContributionEvolutionByTypeDatum[];
     contributorStats: { data: ContributorStat[]; meta: Meta };
     topContributor: ContributorStat;
   };
@@ -44,7 +42,6 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     { data, error: contributorListError },
     { data: list, error },
     { data: mostActiveData, error: mostActiveError },
-    { data: contributionsByType, error: contributionsByTypeError },
   ] = await Promise.all([
     fetchApiData<PagedData<DBListContributor>>({
       path: `lists/${listId}/contributors?limit=${limit}`,
@@ -54,11 +51,6 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     fetchApiData<DBList>({ path: `lists/${listId}`, bearerToken, pathValidator: validateListPath }),
     fetchApiData<PagedData<ContributorStat>>({
       path: `lists/${listId}/stats/most-active-contributors`,
-      bearerToken,
-      pathValidator: validateListPath,
-    }),
-    fetchApiData<PagedData<ContributionEvolutionByTypeDatum>>({
-      path: `lists/${listId}/stats/contributions-evolution-by-type`,
       bearerToken,
       pathValidator: validateListPath,
     }),
@@ -87,7 +79,6 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
       initialData: data ?? { data: [], meta: {} },
       isError: error || contributorListError || mostActiveError,
       activityData: {
-        contributionsByType,
         contributorStats,
         topContributor: contributorStats?.data?.length ? contributorStats.data[0] : null,
       },
@@ -97,7 +88,6 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 
 const ListActivityPage = ({ list, initialData, isError, activityData }: ContributorListPageProps) => {
   const isOwner = false;
-  // const [contributionsByType, setContributionsByType] = useState(activityData.contributionsByType);
   const [contributorStats, setContributorStats] = useState(activityData.contributorStats.data);
 
   return (
@@ -107,7 +97,6 @@ const ListActivityPage = ({ list, initialData, isError, activityData }: Contribu
       ) : (
         <div className="grid grid-cols-2 grid-rows-2 gap-4">
           <MostActiveContributorsCard data={contributorStats} topContributor={activityData.topContributor} />
-          {/* <ContributionsEvolutionByType data={contributionsByType} /> */}
         </div>
       )}
     </ListPageLayout>
