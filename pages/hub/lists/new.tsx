@@ -17,7 +17,7 @@ import { useToast } from "lib/hooks/useToast";
 interface CreateListPayload {
   name: string;
   is_public: boolean;
-  contributors: number[];
+  contributors: GhFollowing[];
 }
 
 interface GhFollowing {
@@ -112,7 +112,7 @@ const CreateListPage = () => {
 
     const response = await createList({
       name,
-      contributors: following.map((user) => user.id),
+      contributors: following.map((user) => ({ id: user.id, login: user.login })),
       is_public: isPublic,
     });
 

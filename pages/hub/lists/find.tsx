@@ -22,7 +22,7 @@ import Button from "components/atoms/Button/button";
 interface CreateListPayload {
   name: string;
   is_public: boolean;
-  contributors: number[];
+  contributors: { id: number; login: string }[];
 }
 const NewListCreationPage: WithPageLayout = () => {
   const { toast } = useToast();
@@ -114,7 +114,10 @@ const NewListCreationPage: WithPageLayout = () => {
     const payload: CreateListPayload = {
       name: title,
       is_public: isPublic,
-      contributors: selectedContributors.map((contributor) => contributor.user_id),
+      contributors: selectedContributors.map((contributor) => ({
+        id: contributor.user_id,
+        login: contributor.author_login,
+      })),
     };
 
     handleCreateList(payload);
