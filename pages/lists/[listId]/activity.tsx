@@ -7,16 +7,7 @@ import ListPageLayout from "layouts/lists";
 import MostActiveContributorsCard, {
   ContributorStat,
 } from "components/molecules/MostActiveContributorsCard/most-active-contributors-card";
-import Button from "components/atoms/Button/button";
-import Icon from "components/atoms/Icon/icon";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "components/atoms/Dropdown/dropdown";
-import CalendarIcon from "img/calendar.svg";
-import ChevronDownIcon from "img/chevron-down.svg";
+import ComponentDateFilter from "components/molecules/ComponentDateFilter/component-date-filter";
 
 interface ContributorListPageProps {
   list?: DBList;
@@ -109,26 +100,7 @@ const ListActivityPage = ({ list, numberOfContributors, isError, activityData }:
       ) : (
         <>
           <div className="mb-4">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="default" className="items-center gap-1">
-                  <Icon IconImage={CalendarIcon} className="w-4 h-4" />
-                  {dateFilters[currentDateFilter]}
-                  <Icon IconImage={ChevronDownIcon} className="w-4 h-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="flex flex-col gap-2">
-                {Object.entries(dateFilters).map(([key, value]) => (
-                  <DropdownMenuItem
-                    key={key}
-                    className="rounded-md !cursor-pointer"
-                    onClick={() => setCurrentDateFilter(key as keyof typeof dateFilters)}
-                  >
-                    {value}
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <ComponentDateFilter setRangeFilter={(range: number) => {}} />
           </div>
           <div className="grid grid-cols-2 grid-rows-2 gap-4">
             <MostActiveContributorsCard data={contributorStats} topContributor={activityData.topContributor} />
