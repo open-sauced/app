@@ -83,6 +83,11 @@ const CreateListPage = () => {
 
     const following: { id: number; login: string }[] = await req.json();
 
+    if (following.length === 0) {
+      toast({ description: "You are not following anyone on GitHub", variant: "danger" });
+      return;
+    }
+
     const response = await createList({
       name,
       contributors: following.map((user) => user.id),
