@@ -24,8 +24,8 @@ type DataLabel = { title: string; color: string };
 
 const dataLabelsList = {
   commits: { title: "Commits", color: "hsla(217, 91%, 60%, 1)" },
-  prs_created: { title: "Created PR", color: "hsla(173, 80%, 40%, 1)" },
-  prs_reviewed: { title: "Reviewed PR", color: "hsla(198, 93%, 60%, 1)" },
+  prs_created: { title: "Created PRs", color: "hsla(173, 80%, 40%, 1)" },
+  prs_reviewed: { title: "Reviewed PRs", color: "hsla(198, 93%, 60%, 1)" },
   issues_created: { title: "Created Issues", color: "hsla(258, 90%, 66%, 1)" },
   comments: { title: "Commented", color: "hsla(245, 58%, 51%, 1)" },
 } satisfies Record<StatKeys, DataLabel>;
