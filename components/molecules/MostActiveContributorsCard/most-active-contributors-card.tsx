@@ -78,10 +78,10 @@ function getDataLabels(
   if (!contributor) {
     return {} as Record<StatKeys, DataLabel>;
   }
-  const labels = Object.keys(dataLabelsList).reduce<DataLabel>(
-    (acc: Record<StatKeys, DataLabel>, curr: StatKeys) => {
+  const labels = Object.keys(dataLabelsList).reduce<Record<StatKeys, DataLabel>>(
+    (acc, curr) => {
       if (Object.keys(contributor).includes(curr)) {
-        acc[curr] = labelList[curr];
+        acc[curr as StatKeys] = labelList[curr as StatKeys];
       }
 
       return acc;
