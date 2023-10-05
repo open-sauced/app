@@ -21,8 +21,7 @@ import SortArrowsIcon from "img/icons/sort-arrows.svg";
 import SVGIcon from "components/atoms/SVGIcon/svg-icon";
 
 // omit total_contributions and login from ContributorStat
-type Stat = Omit<ContributorStat, "total_contributions" | "login">;
-type StatKeys = keyof Stat;
+type StatKeys = keyof Omit<ContributorStat, "total_contributions" | "login">;
 type DataLabel = { title: string; color: string };
 
 const dataLabelsList = {
