@@ -46,6 +46,7 @@ import { fetchDevToBlogInfo } from "lib/hooks/fetchDevToBlogInfo";
 import Search from "components/atoms/Search/search";
 import Title from "components/atoms/Typography/title";
 import GhOpenGraphImg from "../GhOpenGraphImg/gh-open-graph-img";
+import GenericBlogOpenGraphImg from "../GenericBlogOpenGraphImg/generic-blog-open-graph-img";
 import {
   Dialog,
   DialogContent,
@@ -242,7 +243,7 @@ const ContributorHighlightCard = ({
         return { text: "Pull request", icon: <BiGitPullRequest className="text-md md:text-lg" /> };
       case "blog_post":
         return {
-          text: "DevTo post",
+          text: highlightLink.includes("dev.to") ? "DevTo post" : "Blog post",
           icon: (
             // Used svg as i could not find the exact icon in react-icons
             <svg
@@ -563,8 +564,10 @@ const ContributorHighlightCard = ({
       {/* Generated OG card section */}
       {type === "pull_request" || type === "issue" ? (
         <GhOpenGraphImg githubLink={highlightLink} />
-      ) : (
+      ) : highlightLink.includes("dev.to") ? (
         <DevToSocialImg blogLink={highlightLink} />
+      ) : (
+        <GenericBlogOpenGraphImg blogLink={highlightLink} />
       )}
 
       <div className="flex flex-wrap items-center gap-1">
