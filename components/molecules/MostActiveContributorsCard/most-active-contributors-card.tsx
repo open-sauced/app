@@ -15,9 +15,7 @@ import {
 } from "components/atoms/Dropdown/dropdown";
 import { getAvatarByUsername } from "lib/utils/github";
 import PeopleIcon from "img/icons/people.svg";
-import CalendarIcon from "img/calendar.svg";
 import ChevronDownIcon from "img/chevron-down.svg";
-import SortArrowsIcon from "img/icons/sort-arrows.svg";
 import SVGIcon from "components/atoms/SVGIcon/svg-icon";
 
 // omit total_contributions and login from ContributorStat
@@ -46,12 +44,6 @@ interface Props {
   topContributor: ContributorStat;
   data: ContributorStat[];
 }
-
-const dateFilters = {
-  last7days: "Last 7 days",
-  last30days: "Last 30 days",
-  last3months: "Last 3 months",
-};
 
 const peopleFilters = {
   all: "All Contributors",
@@ -93,7 +85,6 @@ function getDataLabels(
 }
 
 export default function MostActiveContributorsCard({ data, topContributor }: Props) {
-  const [currentDateFilter, setCurrentDateFilter] = useState<keyof typeof dateFilters>("last7days"); // TODO: make this a prop
   const [currentPeopleFilter, setCurrentPeopleFilter] = useState<keyof typeof peopleFilters>("all"); // TODO: make this a prop
   // TODO: Remove sorting once it's implemented in the API endpoint.
   const dataLabels = getDataLabels(topContributor, dataLabelsList);
@@ -122,26 +113,6 @@ export default function MostActiveContributorsCard({ data, topContributor }: Pro
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="default" className="items-center gap-1">
-              <Icon IconImage={CalendarIcon} className="w-4 h-4" />
-              {dateFilters[currentDateFilter]}
-              <Icon IconImage={ChevronDownIcon} className="w-4 h-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="flex flex-col gap-2">
-            {Object.entries(dateFilters).map(([key, value]) => (
-              <DropdownMenuItem
-                key={key}
-                className="rounded-md !cursor-pointer"
-                onClick={() => setCurrentDateFilter(key as keyof typeof dateFilters)}
-              >
-                {value}
-              </DropdownMenuItem>
-            ))}
-          </DropdownMenuContent>
-        </DropdownMenu>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="default" className="items-center gap-1">
               <SVGIcon IconImage={`${PeopleIcon.src}#icon`} className="w-4 h-4" />
               {peopleFilters[currentPeopleFilter]}
               <Icon IconImage={ChevronDownIcon} className="w-4 h-4" />
@@ -157,19 +128,6 @@ export default function MostActiveContributorsCard({ data, topContributor }: Pro
                 {value}
               </DropdownMenuItem>
             ))}
-          </DropdownMenuContent>
-        </DropdownMenu>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="default" className="items-center gap-1 justify-self-end ml-auto">
-              <SVGIcon IconImage={`${SortArrowsIcon.src}#icon`} className="w-4 h-4" />
-              Most Active
-              <Icon IconImage={ChevronDownIcon} className="w-4 h-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="flex flex-col gap-2">
-            <DropdownMenuItem className="rounded-md">Most Active</DropdownMenuItem>
-            <DropdownMenuItem className="rounded-md">Least Active</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
