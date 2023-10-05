@@ -1,13 +1,15 @@
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { GetServerSidePropsContext } from "next";
-import { useState } from "react";
 import Error from "components/atoms/Error/Error";
 import { fetchApiData, validateListPath } from "helpers/fetchApiData";
 import ListPageLayout from "layouts/lists";
 import MostActiveContributorsCard, {
   ContributorStat,
 } from "components/molecules/MostActiveContributorsCard/most-active-contributors-card";
+
+import useMostActiveContributors, { getTotalContributions } from "lib/hooks/api/useMostActiveContributors";
 import ComponentDateFilter from "components/molecules/ComponentDateFilter/component-date-filter";
+import ClientOnly from "components/atoms/ClientOnly/client-only";
 
 interface ContributorListPageProps {
   list?: DBList;
@@ -17,15 +19,6 @@ interface ContributorListPageProps {
     contributorStats: { data: ContributorStat[]; meta: Meta };
     topContributor: ContributorStat;
   };
-}
-
-function getTotalContributions(contributor: ContributorStat) {
-  return Object.values(contributor).reduce((acc, curr) => {
-    if (typeof curr === "number") {
-      return acc + curr;
-    }
-    return acc;
-  }, 0);
 }
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
@@ -90,7 +83,14 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 
 const ListActivityPage = ({ list, numberOfContributors, isError, activityData }: ContributorListPageProps) => {
   const isOwner = false;
-  const [contributorStats, setContributorStats] = useState(activityData.contributorStats.data);
+  const {
+    data: contributorStats,
+    isLoading,
+    isError: isMostActiveError,
+    setRange,
+  } = useMostActiveContributors({ listId: list!.id, initData: activityData.contributorStats.data });
+
+  console.dir({ ssr: activityData.contributorStats.data, client: contributorStats });
 
   return (
     <ListPageLayout list={list} numberOfContributors={numberOfContributors} isOwner={isOwner}>
@@ -99,10 +99,13 @@ const ListActivityPage = ({ list, numberOfContributors, isError, activityData }:
       ) : (
         <>
           <div className="mb-4">
-            <ComponentDateFilter setRangeFilter={(range: number) => {}} />
+            <ComponentDateFilter setRangeFilter={setRange} />
           </div>
           <div className="lg:grid lg:grid-cols-2 lg:grid-rows-2 gap-4 flex flex-col">
-            <MostActiveContributorsCard data={contributorStats} topContributor={activityData.topContributor} />
+            <ClientOnly>
+              {/* TODO: Remove client only once server data is being used in the hook on initial load client-side */}
+              <MostActiveContributorsCard data={contributorStats} topContributor={activityData.topContributor} />
+            </ClientOnly>
           </div>
         </>
       )}
