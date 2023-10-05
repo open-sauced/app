@@ -20,6 +20,11 @@ interface CreateListPayload {
   contributors: number[];
 }
 
+interface GhFollowing {
+  id: number;
+  login: string;
+}
+
 const CreateListPage = () => {
   const router = useRouter();
   const { toast } = useToast();
@@ -32,6 +37,21 @@ const CreateListPage = () => {
 
   const handleOnNameChange = (value: string) => {
     setName(value);
+  };
+
+  // pick 10 unique random contributors from the GitHub following list
+  const getFollowingRandom = (arr: GhFollowing[], n: number): GhFollowing[] => {
+    const result = new Array(n);
+    let len = arr.length;
+    const taken = new Array(len);
+
+    while (n--) {
+      const x = Math.floor(Math.random() * len);
+      result[n] = arr[x in taken ? taken[x] : x];
+      taken[x] = --len in taken ? taken[len] : len;
+    }
+
+    return result;
   };
 
   const createList = async (payload: CreateListPayload) => {
@@ -81,12 +101,14 @@ const CreateListPage = () => {
       return;
     }
 
-    const following: { id: number; login: string }[] = await req.json();
+    const followingList: GhFollowing[] = await req.json();
 
-    if (following.length === 0) {
+    if (followingList.length === 0) {
       toast({ description: "You are not following anyone on GitHub", variant: "danger" });
       return;
     }
+
+    const following = getFollowingRandom(followingList, 10);
 
     const response = await createList({
       name,
