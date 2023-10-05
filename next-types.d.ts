@@ -77,6 +77,7 @@ interface DBListContributor {
   readonly public_gists: number;
   readonly public_repos: number;
   readonly receive_collaborations: boolean;
+  readonly username: string;
 }
 
 interface DbRepoPR {
@@ -102,6 +103,7 @@ interface DbRepoPR {
 
 interface DbPRContributor {
   readonly author_login: string;
+  readonly username: string;
   readonly updated_at: string;
   readonly user_id: number;
 }

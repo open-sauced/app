@@ -7,6 +7,7 @@ export function convertToContributors(rawContributors: DBListContributor[] = [])
     ? rawContributors.map((contributor) => {
         return {
           author_login: contributor.login,
+          username: contributor.username,
           updated_at: contributor.created_at,
           user_id: contributor.id,
         };
