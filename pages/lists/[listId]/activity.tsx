@@ -90,8 +90,6 @@ const ListActivityPage = ({ list, numberOfContributors, isError, activityData }:
     setRange,
   } = useMostActiveContributors({ listId: list!.id, initData: activityData.contributorStats.data });
 
-  console.dir({ ssr: activityData.contributorStats.data, client: contributorStats });
-
   return (
     <ListPageLayout list={list} numberOfContributors={numberOfContributors} isOwner={isOwner}>
       {isError ? (
