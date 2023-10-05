@@ -44,6 +44,7 @@ export interface ContributorStat {
 }
 
 interface Props {
+  topContributor: ContributorStat;
   data: ContributorStat[];
 }
 
@@ -92,11 +93,10 @@ function getDataLabels(
   return labels;
 }
 
-export default function MostActiveContributorsCard({ data }: Props) {
+export default function MostActiveContributorsCard({ data, topContributor }: Props) {
   const [currentDateFilter, setCurrentDateFilter] = useState<keyof typeof dateFilters>("last7days"); // TODO: make this a prop
   const [currentPeopleFilter, setCurrentPeopleFilter] = useState<keyof typeof peopleFilters>("all"); // TODO: make this a prop
-  const sortedData = data.sort((a, b) => b.totalContributions - a.totalContributions);
-  const [topContributor] = sortedData;
+  // TODO: Remove sorting once it's implemented in the API endpoint.
   const dataLabels = getDataLabels(topContributor, dataLabelsList);
 
   if (data.length === 0) {
@@ -107,7 +107,7 @@ export default function MostActiveContributorsCard({ data }: Props) {
     );
   }
 
-  const allContributions = sortedData.reduce((acc, curr) => acc + curr.totalContributions, 0);
+  const allContributions = data.reduce((acc, curr) => acc + curr.totalContributions, 0);
   const maxContributions = topContributor.totalContributions;
   const topContributorPercent = `${
     allContributions === 0 ? 0 : ((maxContributions / allContributions) * 100).toFixed(2)
@@ -190,7 +190,7 @@ export default function MostActiveContributorsCard({ data }: Props) {
             alignItems: "stretch",
           }}
         >
-          {sortedData.map((user) => (
+          {data.map((user) => (
             <GraphRow key={user.login} user={user} maxContributions={maxContributions} dataLabels={dataLabels} />
           ))}
         </div>

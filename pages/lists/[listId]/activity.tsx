@@ -18,6 +18,7 @@ interface ContributorListPageProps {
   activityData: {
     contributionsByType: ContributionEvolutionByTypeDatum[];
     contributorStats: { data: ContributorStat[]; meta: Meta };
+    topContributor: ContributorStat;
   };
 }
 
@@ -69,6 +70,17 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     };
   }
 
+  // TODO: remove map once totalContribtions is part of a ContributorStat
+  const contributorStats = {
+    data: mostActiveData?.data
+      ?.map((contributor) => ({
+        ...contributor,
+        totalContributions: getTotalContributions(contributor),
+      }))
+      .sort((a, b) => b.totalContributions - a.totalContributions),
+    meta: mostActiveData?.meta,
+  };
+
   return {
     props: {
       list,
@@ -76,14 +88,8 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
       isError: error || contributorListError || mostActiveError,
       activityData: {
         contributionsByType,
-        // TODO: remove map once totalContribtions is part of a ContributorStat
-        contributorStats: {
-          data: mostActiveData?.data?.map((contributor) => ({
-            ...contributor,
-            totalContributions: getTotalContributions(contributor),
-          })),
-          meta: mostActiveData?.meta,
-        },
+        contributorStats,
+        topContributor: contributorStats?.data?.length ? contributorStats.data[0] : null,
       },
     },
   };
@@ -100,7 +106,7 @@ const ListActivityPage = ({ list, initialData, isError, activityData }: Contribu
         <Error errorMessage="Unable to load list activity" />
       ) : (
         <div className="grid grid-cols-2 grid-rows-2 gap-4">
-          <MostActiveContributorsCard data={contributorStats} />
+          <MostActiveContributorsCard data={contributorStats} topContributor={activityData.topContributor} />
           {/* <ContributionsEvolutionByType data={contributionsByType} /> */}
         </div>
       )}
