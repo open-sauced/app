@@ -42,10 +42,12 @@ import { getDevToBlogDetails, isValidDevToBlogUrl } from "lib/utils/dev-to";
 import generateDevToBlogHighlightSummary from "lib/utils/generate-dev-to-blog-highlight-summary";
 import Search from "components/atoms/Search/search";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
+import { isValidUrl } from "lib/utils/urls";
 import { Calendar } from "../Calendar/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "../Popover/popover";
 import GhOpenGraphImg from "../GhOpenGraphImg/gh-open-graph-img";
 import DevToSocialImg from "../DevToSocialImage/dev-to-social-img";
+import GenericBlogOpenGraphImg from "../GenericBlogOpenGraphImg/generic-blog-open-graph-img";
 import CardRepoList, { RepoList } from "../CardRepoList/card-repo-list";
 import {
   Dialog,
@@ -415,7 +417,12 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
 
     const highlight = bodyText;
 
-    if (isValidPullRequestUrl(highlightLink) || isValidIssueUrl(highlightLink) || isValidDevToBlogUrl(highlightLink)) {
+    if (
+      isValidPullRequestUrl(highlightLink) ||
+      isValidIssueUrl(highlightLink) ||
+      isValidDevToBlogUrl(highlightLink) ||
+      isValidUrl(highlightLink)
+    ) {
       // generateApiPrUrl will return an object with repoName, orgName and issueId
       // it can work with both issue and pull request links
       const highlightType = isValidIssueUrl(highlightLink)
@@ -634,12 +641,18 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
               </div>
             </div>
 
-            {highlightLink && isDivFocused && highlightLink.includes("github") && (
+            {highlightLink && isDivFocused && highlightLink.includes("github.com") && (
               <GhOpenGraphImg githubLink={highlightLink} />
             )}
             {highlightLink && isDivFocused && highlightLink.includes("dev.to") && (
               <DevToSocialImg blogLink={highlightLink} />
             )}
+            {highlightLink &&
+              isDivFocused &&
+              !highlightLink.includes("github.com") &&
+              !highlightLink.includes("dev.to") && (
+                <GenericBlogOpenGraphImg className="max-sm:hidden lg:w-[33vw] md:w-[50vw]" blogLink={highlightLink} />
+              )}
 
             <Button
               loading={loading}
