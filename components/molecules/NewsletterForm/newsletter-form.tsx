@@ -101,7 +101,7 @@ const NewsletterForm = () => {
               <Button
                 loading={loading}
                 className={clsx(
-                  "flex justify-center py-1 px-2 sm:px-1 text-xs border-light-orange-7 text-light-orange-10",
+                  "flex justify-center py-1 w-24 px-2 sm:px-1 text-xs border-light-orange-7 text-light-orange-10",
                   loading && "px-2"
                 )}
                 showLoadingText={false}
