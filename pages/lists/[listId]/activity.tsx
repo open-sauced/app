@@ -91,7 +91,6 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 const ListActivityPage = ({ list, numberOfContributors, isError, activityData }: ContributorListPageProps) => {
   const isOwner = false;
   const [contributorStats, setContributorStats] = useState(activityData.contributorStats.data);
-  const [currentDateFilter, setCurrentDateFilter] = useState<keyof typeof dateFilters>("last7days");
 
   return (
     <ListPageLayout list={list} numberOfContributors={numberOfContributors} isOwner={isOwner}>
