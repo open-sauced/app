@@ -100,7 +100,7 @@ function generateData() {
 
     return {
       ...user,
-      totalContributions: Object.values(user.contributions).reduce((acc, curr) => acc + curr, 0),
+      total_contributions: Object.values(user.contributions).reduce((acc, curr) => acc + curr, 0),
     };
   });
 }

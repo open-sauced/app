@@ -75,9 +75,9 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     data: mostActiveData?.data
       ?.map((contributor) => ({
         ...contributor,
-        totalContributions: getTotalContributions(contributor),
+        total_contributions: getTotalContributions(contributor),
       }))
-      .sort((a, b) => b.totalContributions - a.totalContributions),
+      .sort((a, b) => b.total_contributions - a.total_contributions),
     meta: mostActiveData?.meta,
   };
 

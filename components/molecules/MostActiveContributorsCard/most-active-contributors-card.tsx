@@ -20,27 +20,27 @@ import ChevronDownIcon from "img/chevron-down.svg";
 import SortArrowsIcon from "img/icons/sort-arrows.svg";
 import SVGIcon from "components/atoms/SVGIcon/svg-icon";
 
-// omit totalContributions and login from ContributorStat
-type Stat = Omit<ContributorStat, "totalContributions" | "login">;
+// omit total_contributions and login from ContributorStat
+type Stat = Omit<ContributorStat, "total_contributions" | "login">;
 type StatKeys = keyof Stat;
 type DataLabel = { title: string; color: string };
 
 const dataLabelsList = {
   commits: { title: "Commits", color: "hsla(217, 91%, 60%, 1)" },
-  prsCreated: { title: "Created PR", color: "hsla(173, 80%, 40%, 1)" },
-  prsReviewed: { title: "Reviewed PR", color: "hsla(198, 93%, 60%, 1)" },
-  issuesCreated: { title: "Created Issues", color: "hsla(258, 90%, 66%, 1)" },
+  prs_created: { title: "Created PR", color: "hsla(173, 80%, 40%, 1)" },
+  prs_reviewed: { title: "Reviewed PR", color: "hsla(198, 93%, 60%, 1)" },
+  issues_created: { title: "Created Issues", color: "hsla(258, 90%, 66%, 1)" },
   comments: { title: "Commented", color: "hsla(245, 58%, 51%, 1)" },
 } satisfies Record<StatKeys, DataLabel>;
 
 export interface ContributorStat {
   login: string;
   commits: number;
-  prsCreated: number;
-  prsReviewed: number;
-  issuesCreated: number;
+  prs_created: number;
+  prs_reviewed: number;
+  issues_created: number;
   comments: number;
-  totalContributions: number;
+  total_contributions: number;
 }
 
 interface Props {
@@ -107,8 +107,8 @@ export default function MostActiveContributorsCard({ data, topContributor }: Pro
     );
   }
 
-  const allContributions = data.reduce((acc, curr) => acc + curr.totalContributions, 0);
-  const maxContributions = topContributor.totalContributions;
+  const allContributions = data.reduce((acc, curr) => acc + curr.total_contributions, 0);
+  const maxContributions = topContributor.total_contributions;
   const topContributorPercent = `${
     allContributions === 0 ? 0 : ((maxContributions / allContributions) * 100).toFixed(2)
   }%`;
@@ -241,12 +241,12 @@ function RowTooltip({
   );
 }
 
-function getWidthPercentage(stat: number, totalContributions: number) {
-  if (!stat || !totalContributions) {
+function getWidthPercentage(stat: number, total_contributions: number) {
+  if (!stat || !total_contributions) {
     return 0;
   }
 
-  return (stat / totalContributions) * 100;
+  return (stat / total_contributions) * 100;
 }
 
 function GraphRow({
@@ -267,10 +267,10 @@ function GraphRow({
         width: "0%",
       },
       to: {
-        width: `${getWidthPercentage(user[keys[index]], user.totalContributions)}%`,
+        width: `${getWidthPercentage(user[keys[index]], user.total_contributions)}%`,
       },
     }),
-    [user.totalContributions]
+    [user.total_contributions]
   );
 
   // When hovered the tooltip should show for the the GraphRow
@@ -291,7 +291,10 @@ function GraphRow({
       />
       <div className="flex items-center text-sm text-slate-900 grid-cols-2">{user.login}</div>
       <div className="flex items-stretch grid-cols-3">
-        <div className="flex items-stretch" style={{ width: `${(user.totalContributions / maxContributions) * 100}%` }}>
+        <div
+          className="flex items-stretch"
+          style={{ width: `${(user.total_contributions / maxContributions) * 100}%` }}
+        >
           {springs.map((spring, index) => (
             <RowTooltip key={keys[index]} highlightedStat={keys[index]} contributor={user} dataLabels={dataLabels}>
               <animated.div
