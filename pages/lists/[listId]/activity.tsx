@@ -8,8 +8,8 @@ import MostActiveContributorsCard, {
 } from "components/molecules/MostActiveContributorsCard/most-active-contributors-card";
 
 import useMostActiveContributors, { getTotalContributions } from "lib/hooks/api/useMostActiveContributors";
-import ComponentDateFilter from "components/molecules/ComponentDateFilter/component-date-filter";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
+import ComponentDateFilter from "components/molecules/ComponentDateFilter/component-date-filter";
 
 interface ContributorListPageProps {
   list?: DBList;
@@ -91,21 +91,25 @@ const ListActivityPage = ({ list, numberOfContributors, isError, activityData }:
   } = useMostActiveContributors({ listId: list!.id, initData: activityData.contributorStats.data });
 
   return (
-    <ListPageLayout list={list} numberOfContributors={numberOfContributors} isOwner={isOwner}>
+    <ListPageLayout
+      list={list}
+      numberOfContributors={numberOfContributors}
+      isOwner={isOwner}
+      rightSlot={
+        <div className="flex justify-end">
+          <ComponentDateFilter setRangeFilter={setRange} />
+        </div>
+      }
+    >
       {isError ? (
         <Error errorMessage="Unable to load list activity" />
       ) : (
-        <>
-          <div className="mb-4">
-            <ComponentDateFilter setRangeFilter={setRange} />
-          </div>
-          <div className="lg:grid lg:grid-cols-2 lg:grid-rows-2 gap-4 flex flex-col">
-            <ClientOnly>
-              {/* TODO: Remove client only once server data is being used in the hook on initial load client-side */}
-              <MostActiveContributorsCard data={contributorStats} topContributor={activityData.topContributor} />
-            </ClientOnly>
-          </div>
-        </>
+        <div className="lg:grid lg:grid-cols-2 lg:grid-rows-2 gap-4 flex flex-col">
+          <ClientOnly>
+            {/* TODO: Remove client only once server data is being used in the hook on initial load client-side */}
+            <MostActiveContributorsCard data={contributorStats} topContributor={activityData.topContributor} />
+          </ClientOnly>
+        </div>
       )}
     </ListPageLayout>
   );

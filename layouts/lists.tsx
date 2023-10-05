@@ -12,11 +12,13 @@ const ListPageLayout = ({
   list,
   numberOfContributors,
   isOwner = false,
+  rightSlot,
 }: {
   children: React.ReactNode;
   list?: DBList;
   numberOfContributors: number;
   isOwner: boolean;
+  rightSlot?: React.ReactNode;
 }) => {
   const router = useRouter();
   const paths = router.asPath.split("/");
@@ -42,7 +44,10 @@ const ListPageLayout = ({
             )}
           </Header>
 
-          {list && <TabsList tabList={tabList} selectedTab={selectedTab} pageId={`/lists/${list.id}`} />}
+          <div className="md:grid md:grid-cols-2 flex flex-col">
+            {list && <TabsList tabList={tabList} selectedTab={selectedTab} pageId={`/lists/${list.id}`} />}
+            {rightSlot && <div>{rightSlot}</div>}
+          </div>
         </div>
 
         <main className="flex flex-col items-center flex-1 w-full px-3 py-8 md:px-16 bg-light-slate-2">
