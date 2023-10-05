@@ -86,20 +86,22 @@ const NewsletterForm = () => {
                 <input type="hidden" value="newsletter" name="form-name" />
               </label>
             </div>
-            <div className="flex flex-wrap items-center justify-between gap-1 w-full">
-              <TextInput
-                handleChange={(value) => handleChange(value)}
-                state={isValidEmail ? "valid" : "invalid"}
-                value={email}
-                className="w-full self-start text-sm focus:outline-none"
-                type="text"
-                name="email"
-                placeholder="Email"
-              />
+            <div className="flex items-center justify-between gap-1 w-full">
+              <div className="flex-grow">
+                <TextInput
+                  handleChange={(value) => handleChange(value)}
+                  state={isValidEmail ? "valid" : "invalid"}
+                  value={email}
+                  className="w-full text-sm focus:outline-none"
+                  type="text"
+                  name="email"
+                  placeholder="Email"
+                />
+              </div>
               <Button
                 loading={loading}
                 className={clsx(
-                  "flex flex-none justify-center py-1 w-full  border-light-orange-7 text-light-orange-10",
+                  "flex justify-center py-1 px-2 sm:px-1 text-xs border-light-orange-7 text-light-orange-10",
                   loading && "px-2"
                 )}
                 showLoadingText={false}
@@ -109,6 +111,7 @@ const NewsletterForm = () => {
                 Subscribe
               </Button>
             </div>
+
             {errorMsg && (
               <p className="flex items-center gap-1 mt-2 text-xs font-light ">
                 <AiFillCloseCircle onClick={() => setErrorMsg("")} className="text-sm cursor-pointer" /> {errorMsg}
