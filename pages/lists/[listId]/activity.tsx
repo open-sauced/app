@@ -7,6 +7,17 @@ import ListPageLayout from "layouts/lists";
 import MostActiveContributorsCard, {
   ContributorStat,
 } from "components/molecules/MostActiveContributorsCard/most-active-contributors-card";
+import Button from "components/atoms/Button/button";
+import Icon from "components/atoms/Icon/icon";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "components/atoms/Dropdown/dropdown";
+import CalendarIcon from "img/calendar.svg";
+import ChevronDownIcon from "img/chevron-down.svg";
+
 interface ContributorListPageProps {
   list?: DBList;
   initialData: {
@@ -90,18 +101,49 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   };
 };
 
+const dateFilters = {
+  last7days: "Last 7 days",
+  last30days: "Last 30 days",
+  last3months: "Last 3 months",
+};
+
 const ListActivityPage = ({ list, initialData, isError, activityData }: ContributorListPageProps) => {
   const isOwner = false;
   const [contributorStats, setContributorStats] = useState(activityData.contributorStats.data);
+  const [currentDateFilter, setCurrentDateFilter] = useState<keyof typeof dateFilters>("last7days");
 
   return (
     <ListPageLayout list={list} numberOfContributors={initialData.meta.itemCount} isOwner={isOwner}>
       {isError ? (
         <Error errorMessage="Unable to load list activity" />
       ) : (
-        <div className="grid grid-cols-2 grid-rows-2 gap-4">
-          <MostActiveContributorsCard data={contributorStats} topContributor={activityData.topContributor} />
-        </div>
+        <>
+          <div className="mb-4">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="default" className="items-center gap-1">
+                  <Icon IconImage={CalendarIcon} className="w-4 h-4" />
+                  {dateFilters[currentDateFilter]}
+                  <Icon IconImage={ChevronDownIcon} className="w-4 h-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="flex flex-col gap-2">
+                {Object.entries(dateFilters).map(([key, value]) => (
+                  <DropdownMenuItem
+                    key={key}
+                    className="rounded-md !cursor-pointer"
+                    onClick={() => setCurrentDateFilter(key as keyof typeof dateFilters)}
+                  >
+                    {value}
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+          <div className="grid grid-cols-2 grid-rows-2 gap-4">
+            <MostActiveContributorsCard data={contributorStats} topContributor={activityData.topContributor} />
+          </div>
+        </>
       )}
     </ListPageLayout>
   );
