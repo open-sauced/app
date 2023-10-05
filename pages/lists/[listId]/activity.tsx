@@ -38,6 +38,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const bearerToken = session ? session.access_token : "";
   const { listId } = ctx.params as { listId: string };
   const limit = 10; // Can pull this from the querystring in the future
+  const range = 30;
   const [
     { data, error: contributorListError },
     { data: list, error },
@@ -52,7 +53,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     fetchApiData<PagedData<ContributorStat>>({
       // TODO: order by total contributions once it's part of the API
       // See https://github.com/open-sauced/api/issues/347
-      path: `lists/${listId}/stats/most-active-contributors?orderDirection=DESC&orderBy=commits&limit=20`,
+      path: `lists/${listId}/stats/most-active-contributors?range=${range}orderDirection=DESC&orderBy=commits&limit=20`,
       bearerToken,
       pathValidator: validateListPath,
     }),
