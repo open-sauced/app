@@ -50,6 +50,8 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     }),
     fetchApiData<DBList>({ path: `lists/${listId}`, bearerToken, pathValidator: validateListPath }),
     fetchApiData<PagedData<ContributorStat>>({
+      // TODO: order by total contributions once it's part of the API
+      // See https://github.com/open-sauced/api/issues/347
       path: `lists/${listId}/stats/most-active-contributors?orderDirection=DESC&orderBy=commits&limit=20`,
       bearerToken,
       pathValidator: validateListPath,
@@ -62,7 +64,8 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     };
   }
 
-  // TODO: remove map once totalContribtions is part of a ContributorStat
+  // TODO: remove map once total_contributions is part of the API endpoint payload
+  // See https://github.com/open-sauced/api/issues/347
   const contributorStats = {
     data: mostActiveData?.data
       ?.map((contributor) => ({
