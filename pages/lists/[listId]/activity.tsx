@@ -101,7 +101,7 @@ const ListActivityPage = ({ list, numberOfContributors, isError, activityData }:
           <div className="mb-4">
             <ComponentDateFilter setRangeFilter={(range: number) => {}} />
           </div>
-          <div className="grid grid-cols-2 grid-rows-2 gap-4">
+          <div className="lg:grid lg:grid-cols-2 lg:grid-rows-2 gap-4 flex flex-col">
             <MostActiveContributorsCard data={contributorStats} topContributor={activityData.topContributor} />
           </div>
         </>
