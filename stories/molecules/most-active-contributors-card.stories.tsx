@@ -29,7 +29,7 @@ export const Default = () => {
       <Button variant="outline" onClick={() => setData(generateData())} className="mb-2">
         Random Data
       </Button>
-      <MostActiveContributorsCard data={data} />
+      <MostActiveContributorsCard data={data} topContributor={data[0]} />
     </div>
   );
 };
