@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import { UserGroupIcon } from "@heroicons/react/24/outline";
 
+import { GetServerSidePropsContext } from "next";
+import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import TextInput from "components/atoms/TextInput/text-input";
 import ToggleSwitch from "components/atoms/ToggleSwitch/toggle-switch";
 import Text from "components/atoms/Typography/text";
@@ -13,6 +15,7 @@ import GitHubImportDialog from "components/organisms/GitHubImportDialog/github-i
 
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { useToast } from "lib/hooks/useToast";
+import { supabase } from "lib/utils/supabase";
 
 interface CreateListPayload {
   name: string;
@@ -38,6 +41,11 @@ const CreateListPage = () => {
   const handleOnNameChange = (value: string) => {
     setName(value);
   };
+
+  // useEffect(() => {
+
+  //     // .then(console.log, console.error);
+  // }, []);
 
   // pick 10 unique random contributors from the GitHub following list
   const getFollowingRandom = (arr: GhFollowing[], n: number): GhFollowing[] => {
@@ -84,14 +92,22 @@ const CreateListPage = () => {
   };
 
   const handleGitHubImport = async (props: { follow: boolean }) => {
+    let refreshedToken: string | null | undefined;
     if (!providerToken) {
+      await supabase.auth.refreshSession();
+      const session = await supabase.auth.getSession();
+      console.log(session);
+      refreshedToken = session.data.session?.provider_token;
+    }
+
+    if (!providerToken && !refreshedToken) {
       toast({ description: "Unable to connect to GitHub! Try refreshing your auth session", variant: "warning" });
       return;
     }
 
     const req = await fetch(`https://api.github.com/user/following?per_page=10`, {
       headers: {
-        Authorization: `Bearer ${providerToken}`,
+        Authorization: `Bearer ${providerToken || refreshedToken}`,
         "Content-type": "application/json",
       },
     });
@@ -238,6 +254,27 @@ const AddListPage = () => {
       <Footer />
     </div>
   );
+};
+
+export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
+  const supabase = createPagesServerClient(ctx);
+
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
 };
 
 export default AddListPage;
