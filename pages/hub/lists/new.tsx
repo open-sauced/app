@@ -136,7 +136,6 @@ const CreateListPage = () => {
       }
 
       router.push(`/lists/${response.id}/overview`);
-      setSubmitted(false);
     } else {
       toast({ description: "An error occurred!", variant: "danger" });
       setSubmitted(false);
