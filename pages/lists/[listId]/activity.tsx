@@ -41,7 +41,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     }),
     fetchApiData<DBList>({ path: `lists/${listId}`, bearerToken, pathValidator: validateListPath }),
     fetchApiData<PagedData<ContributorStat>>({
-      path: `lists/${listId}/stats/most-active-contributors?range=${range}&orderDirection=DESC&orderBy=total_contributions&limit=20&contributorType=all`,
+      path: `lists/${listId}/stats/most-active-contributors?range=${range}&orderDirection=DESC&orderBy=commits&limit=20&contributorType=all`,
       bearerToken,
       pathValidator: validateListPath,
     }),
