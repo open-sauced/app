@@ -95,12 +95,7 @@ const TableHeader = ({
         />
       </div>
       <div className="flex flex-col-reverse items-start gap-3 md:flex-row md:items-end ">
-        {range ? (
-          <ComponentDateFilter setRangeFilter={(range: number) => setRangeFilter?.(range)} defaultRange={range} />
-        ) : (
-          ""
-        )}
-
+        {setRangeFilter && range ? <ComponentDateFilter setRangeFilter={setRangeFilter} defaultRange={range} /> : null}
         {layout ? (
           <div className="hidden md:inline-flex">
             <LayoutToggle value={layout} onChange={onLayoutToggle} />

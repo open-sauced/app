@@ -16,6 +16,7 @@ interface ContributorsListProps {
   meta: Meta;
   setPage: (page: number) => void;
   setLimit: (limit: number) => void;
+  range: number;
 }
 
 interface ContributorCardListProps {
@@ -48,8 +49,7 @@ const ContributorCardList = ({ contributors = [], topic, range }: ContributorCar
   );
 };
 
-const ContributorsList = ({ contributors, isLoading, meta, setPage, setLimit }: ContributorsListProps) => {
-  const [range, setRange] = useState(30);
+const ContributorsList = ({ contributors, isLoading, meta, setPage, setLimit, range }: ContributorsListProps) => {
   const [layout, setLayout] = useState<ToggleValue>("grid");
 
   return (
@@ -59,8 +59,6 @@ const ContributorsList = ({ contributors, isLoading, meta, setPage, setLimit }: 
         metaInfo={meta}
         entity="contributors"
         updateLimit={setLimit}
-        range={range}
-        setRangeFilter={setRange}
         layout={layout}
         onLayoutToggle={setLayout}
       />
