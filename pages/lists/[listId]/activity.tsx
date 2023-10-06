@@ -9,7 +9,6 @@ import MostActiveContributorsCard, {
 
 import useMostActiveContributors, { getTotalContributions } from "lib/hooks/api/useMostActiveContributors";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
-import ComponentDateFilter from "components/molecules/ComponentDateFilter/component-date-filter";
 
 interface ContributorListPageProps {
   list?: DBList;
@@ -91,16 +90,7 @@ const ListActivityPage = ({ list, numberOfContributors, isError, activityData }:
   } = useMostActiveContributors({ listId: list!.id, initData: activityData.contributorStats.data });
 
   return (
-    <ListPageLayout
-      list={list}
-      numberOfContributors={numberOfContributors}
-      isOwner={isOwner}
-      rightSlot={
-        <div className="flex justify-end">
-          <ComponentDateFilter setRangeFilter={setRange} />
-        </div>
-      }
-    >
+    <ListPageLayout list={list} numberOfContributors={numberOfContributors} isOwner={isOwner} setRange={setRange}>
       {isError ? (
         <Error errorMessage="Unable to load list activity" />
       ) : (

@@ -6,19 +6,20 @@ import Header from "components/organisms/Header/header";
 import TopNav from "components/organisms/TopNav/top-nav";
 import ListHeader from "components/ListHeader/list-header";
 import TabsList from "components/TabList/tab-list";
+import ComponentDateFilter from "components/molecules/ComponentDateFilter/component-date-filter";
 
 const ListPageLayout = ({
   children,
   list,
   numberOfContributors,
   isOwner = false,
-  rightSlot,
+  setRange,
 }: {
   children: React.ReactNode;
   list?: DBList;
   numberOfContributors: number;
   isOwner: boolean;
-  rightSlot?: React.ReactNode;
+  setRange?: (range: number) => void;
 }) => {
   const router = useRouter();
   const paths = router.asPath.split("/");
@@ -46,7 +47,9 @@ const ListPageLayout = ({
 
           <div className="md:grid md:grid-cols-2 flex flex-col">
             {list && <TabsList tabList={tabList} selectedTab={selectedTab} pageId={`/lists/${list.id}`} />}
-            {rightSlot && <div>{rightSlot}</div>}
+            <div>
+              <div className="flex justify-end">{setRange && <ComponentDateFilter setRangeFilter={setRange} />}</div>
+            </div>
           </div>
         </div>
 
