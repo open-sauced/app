@@ -1,20 +1,19 @@
-import { FiGithub } from "react-icons/fi";
-import type { StaticImageData } from "next/image";
+import { FiGithub, FiGlobe } from "react-icons/fi";
 
 export interface FavoriteRepoCardProps {
-  avatarURL: string | StaticImageData;
+  icon: "github" | "globe";
   title: string;
   description: string;
   handleClick: () => void;
 }
 
-const InfoCard = ({ avatarURL, title, description, handleClick }: FavoriteRepoCardProps): JSX.Element => {
+const InfoCard = ({ icon, title, description, handleClick }: FavoriteRepoCardProps): JSX.Element => {
   return (
     <div className="p-3 bg-white border-2 rounded-xl cursor-pointer" onClick={handleClick}>
       <div className="flex items-center gap-2.5 h-10">
         {/* Avatar */}
-        <FiGithub />
-        {/* <Avatar className="shrink-0 min-w-10 min-h-10" size={40} avatarURL={avatarURL} isCircle={false} /> */}
+        {icon === "github" && <FiGithub size={24} className="text-orange-200" />}
+        {icon === "globe" && <FiGlobe size={24} className="text-orange-200" />}
 
         {/* Text */}
         <div className="flex flex-col justify-center">

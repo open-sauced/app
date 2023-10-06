@@ -194,7 +194,7 @@ const CreateListPage = () => {
           <InfoCard
             title="Explore Contributors"
             description="Use our explore tool to find Contributors and create your list"
-            avatarURL={""}
+            icon="globe"
             handleClick={() => {
               router.push("/hub/lists/find");
             }}
@@ -203,7 +203,7 @@ const CreateListPage = () => {
           <InfoCard
             title="Import your GitHub following"
             description="Connect to your GitHub to create a list with all the Contributors you follow"
-            avatarURL={""}
+            icon="github"
             handleClick={() => {
               if (!name) {
                 toast({
