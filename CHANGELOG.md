@@ -5,6 +5,26 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.68.0-beta.8](https://github.com/open-sauced/insights/compare/v1.68.0-beta.7...v1.68.0-beta.8) (2023-10-06)
+
+
+### 🧑‍💻 Code Refactoring
+
+* redirect user to newly created insight page after creation ([#1808](https://github.com/open-sauced/insights/issues/1808)) ([cf12456](https://github.com/open-sauced/insights/commit/cf1245625c0611a57ba6f0997ccb4ddb02a79ad0))
+
+
+### 🐛 Bug Fixes
+
+* now range filter works on list contributors page ([d711207](https://github.com/open-sauced/insights/commit/d7112074ec7996d86258c3d7b7814cf7fcc3b16a))
+* now range filter works on list contributors page grid view ([#1819](https://github.com/open-sauced/insights/issues/1819)) ([989ebba](https://github.com/open-sauced/insights/commit/989ebbaa97b7c8fa1498d329bd27c2c1e95df3b2))
+
+## [1.68.0-beta.7](https://github.com/open-sauced/insights/compare/v1.68.0-beta.6...v1.68.0-beta.7) (2023-10-06)
+
+
+### 🐛 Bug Fixes
+
+* hide weird top nav for edit insight page ([#1809](https://github.com/open-sauced/insights/issues/1809)) ([f3da2a1](https://github.com/open-sauced/insights/commit/f3da2a1512e36900d1c9edceb490d893323b1f49))
+
 ## [1.68.0-beta.6](https://github.com/open-sauced/insights/compare/v1.68.0-beta.5...v1.68.0-beta.6) (2023-10-04)
 
 
