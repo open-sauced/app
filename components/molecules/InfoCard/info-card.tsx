@@ -17,8 +17,8 @@ const InfoCard = ({ icon, title, description, handleClick }: FavoriteRepoCardPro
 
         {/* Text */}
         <div className="flex flex-col justify-center">
-          <div className="text-sm text-gray-700">{title}</div>
-          <div className="text-lg text-gray-500 tracking-tight -mt-0.5">{description}</div>
+          <div className="text-lg text-gray-700">{title}</div>
+          <div className="text-sm text-gray-400 tracking-tight -mt-0.5">{description}</div>
         </div>
       </div>
     </div>
