@@ -58,6 +58,8 @@ const ContributorsListPage = ({ list, initialData, isError }: ContributorListPag
     isLoading,
     setPage,
     setLimit,
+    setRange,
+    range,
     data: { data: contributors, meta },
   } = useContributorsList({ listId: list?.id, initialData });
 
@@ -72,6 +74,8 @@ const ContributorsListPage = ({ list, initialData, isError }: ContributorListPag
           isLoading={isLoading}
           setPage={setPage}
           setLimit={setLimit}
+          range={range}
+          setRange={setRange}
         />
       )}
     </ListPageLayout>
