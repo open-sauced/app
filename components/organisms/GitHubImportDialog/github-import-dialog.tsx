@@ -11,9 +11,10 @@ interface GitHubImportDialogProps {
   open: boolean;
   handleImport: (props: { follow: boolean }) => Promise<void>;
   handleClose: () => void;
+  loading: boolean;
 }
 
-const GitHubImportDialog = ({ open, handleClose, handleImport }: GitHubImportDialogProps) => {
+const GitHubImportDialog = ({ open, handleClose, handleImport, loading }: GitHubImportDialogProps) => {
   const [follow, setFollow] = useState(false);
 
   return (
@@ -46,7 +47,12 @@ const GitHubImportDialog = ({ open, handleClose, handleImport }: GitHubImportDia
             <Button onClick={() => handleClose()} className="justify-center flex-1" variant="text">
               Go Back
             </Button>
-            <Button onClick={() => handleImport({ follow })} className="justify-center flex-1" variant="primary">
+            <Button
+              onClick={() => handleImport({ follow })}
+              loading={loading}
+              className="justify-center flex-1"
+              variant="primary"
+            >
               Import Following
             </Button>
           </div>

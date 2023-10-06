@@ -15,7 +15,6 @@ import GitHubImportDialog from "components/organisms/GitHubImportDialog/github-i
 
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { useToast } from "lib/hooks/useToast";
-import { supabase } from "lib/utils/supabase";
 
 interface CreateListPayload {
   name: string;
@@ -37,6 +36,7 @@ const CreateListPage = () => {
   const [isPublic, setIsPublic] = useState(false);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
   const handleOnNameChange = (value: string) => {
     setName(value);
@@ -64,10 +64,6 @@ const CreateListPage = () => {
 
   const createList = async (payload: CreateListPayload) => {
     if (!payload.name) {
-      toast({
-        description: "List name is required",
-        variant: "danger",
-      });
       return;
     }
 
@@ -92,22 +88,14 @@ const CreateListPage = () => {
   };
 
   const handleGitHubImport = async (props: { follow: boolean }) => {
-    let refreshedToken: string | null | undefined;
     if (!providerToken) {
-      await supabase.auth.refreshSession();
-      const session = await supabase.auth.getSession();
-      console.log(session);
-      refreshedToken = session.data.session?.provider_token;
-    }
-
-    if (!providerToken && !refreshedToken) {
       toast({ description: "Unable to connect to GitHub! Try refreshing your auth session", variant: "warning" });
       return;
     }
-
+    setSubmitted(true);
     const req = await fetch(`https://api.github.com/user/following?per_page=10`, {
       headers: {
-        Authorization: `Bearer ${providerToken || refreshedToken}`,
+        Authorization: `Bearer ${providerToken}`,
         "Content-type": "application/json",
       },
     });
@@ -140,7 +128,7 @@ const CreateListPage = () => {
             headers: {
               Authorization: `Bearer ${sessionToken}`,
             },
-          })
+          }).catch(() => {})
         );
 
         Promise.allSettled(followRequests);
@@ -148,8 +136,10 @@ const CreateListPage = () => {
       }
 
       router.push(`/lists/${response.id}/overview`);
+      setSubmitted(false);
     } else {
       toast({ description: "An error occurred!", variant: "danger" });
+      setSubmitted(false);
     }
   };
 
@@ -237,6 +227,7 @@ const CreateListPage = () => {
         open={isModalOpen}
         handleClose={() => setIsModalOpen(false)}
         handleImport={handleGitHubImport}
+        loading={submitted}
       />
     </section>
   );
