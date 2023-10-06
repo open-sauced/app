@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.68.0-beta.7](https://github.com/open-sauced/insights/compare/v1.68.0-beta.6...v1.68.0-beta.7) (2023-10-06)
+
+
+### 🐛 Bug Fixes
+
+* hide weird top nav for edit insight page ([#1809](https://github.com/open-sauced/insights/issues/1809)) ([f3da2a1](https://github.com/open-sauced/insights/commit/f3da2a1512e36900d1c9edceb490d893323b1f49))
+
 ## [1.68.0-beta.6](https://github.com/open-sauced/insights/compare/v1.68.0-beta.5...v1.68.0-beta.6) (2023-10-04)
 
 
