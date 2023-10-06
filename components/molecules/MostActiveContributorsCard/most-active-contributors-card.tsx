@@ -158,6 +158,7 @@ export default function MostActiveContributorsCard({
               style={{
                 gridArea: "1 / 1",
                 gridTemplateColumns: "auto auto 1fr",
+                gridTemplateRows: "repeat(auto-fit, 32px)",
                 gridAutoFlow: "row",
                 alignItems: "stretch",
               }}
@@ -280,9 +281,7 @@ function GraphRow({
                   backgroundColor: dataLabels[keys[index]].color,
                   ...spring,
                 }}
-              >
-                {" "}
-              </animated.div>
+              />
             </RowTooltip>
           ))}
         </div>
