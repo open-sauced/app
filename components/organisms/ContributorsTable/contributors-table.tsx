@@ -9,7 +9,6 @@ export interface ContributorTableProps {
   selectedContributors?: DbPRContributor[];
   handleSelectContributors?: (state: boolean, contributor: DbPRContributor) => void;
   range?: number;
-  setRange?: (range: number) => void;
 }
 
 const ContributorTable = ({
@@ -19,7 +18,6 @@ const ContributorTable = ({
   selectedContributors,
   handleSelectContributors,
   range = 30,
-  setRange,
 }: ContributorTableProps) => {
   return (
     <div className="flex flex-col overflow-hidden border rounded-md">

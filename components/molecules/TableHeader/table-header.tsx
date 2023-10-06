@@ -75,7 +75,7 @@ const TableHeader = ({
   }, [searchTerm]);
 
   return (
-    <div className="flex flex-col flex-wrap w-full px-4 gap-y-2 md:flex-row md:justify-between md:items-end md:pb-4">
+    <div className="flex flex-col flex-wrap w-full pl-4 gap-y-2 md:flex-row md:justify-between md:items-end md:pb-4">
       <div className="flex items-center justify-between gap-x-4 md:justify-start">
         <Title className="!text-2xl !leading-none " level={1}>
           {title}
