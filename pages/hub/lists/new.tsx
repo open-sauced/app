@@ -79,7 +79,6 @@ const NewListCreationPage = ({ initialData, timezones }: NewListCreationPageProp
   const [isSuccess, setIsSuccess] = useState(false);
   const [title, setTitle] = useState("");
   const [selectedContributors, setSelectedContributors] = useState<DbPRContributor[]>([]);
-  const [range, setRange] = useState<number>(30);
   const [selectedTimezone, setSelectedTimezone] = useState<string | undefined>(undefined);
   const [isPublic, setIsPublic] = useState<boolean>(false);
   const { data, meta, isLoading, setLimit, setPage } = useFetchAllContributors(
@@ -200,9 +199,6 @@ const NewListCreationPage = ({ initialData, timezones }: NewListCreationPageProp
               loading={createLoading}
               selectedContributorsIds={selectedContributors.map((contributor) => contributor.user_id)}
               setLimit={setLimit}
-              setRangeFilter={(range) => {
-                setRange(range);
-              }}
               timezoneOptions={timezoneList}
               timezone={selectedTimezone}
               title={title}
