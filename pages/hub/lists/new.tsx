@@ -102,6 +102,7 @@ const CreateListPage = () => {
 
     if (!req.ok) {
       toast({ description: "Unable to connect to GitHub", variant: "warning" });
+      setSubmitted(false);
       return;
     }
 
@@ -109,6 +110,7 @@ const CreateListPage = () => {
 
     if (followingList.length === 0) {
       toast({ description: "You are not following anyone on GitHub", variant: "danger" });
+      setSubmitted(false);
       return;
     }
 
