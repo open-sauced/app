@@ -38,7 +38,7 @@ const useMostActiveContributors = ({
   query.set("limit", `${limit}`);
   query.set("range", `${range}`);
   // Change this to total_contributions once implemented
-  query.set("orderBy", "commits");
+  query.set("orderBy", "total_contributions");
   query.set("orderDirection", "DESC");
 
   const apiEndpoint = `lists/${listId}/stats/most-active-contributors?${query.toString()}`;
