@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.68.0-beta.9](https://github.com/open-sauced/insights/compare/v1.68.0-beta.8...v1.68.0-beta.9) (2023-10-06)
+
+
+### 🍕 Features
+
+* move range filter to list pages header ([#1817](https://github.com/open-sauced/insights/issues/1817)) ([0b82760](https://github.com/open-sauced/insights/commit/0b82760dfd20b14230f8f0b4496b75c3086db139))
+
 ## [1.68.0-beta.8](https://github.com/open-sauced/insights/compare/v1.68.0-beta.7...v1.68.0-beta.8) (2023-10-06)
 
 
