@@ -1,7 +1,9 @@
 import { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 import Button from "components/atoms/Button/button";
-import MostActiveContributorsCard from "components/molecules/MostActiveContributorsCard/most-active-contributors-card";
+import MostActiveContributorsCard, {
+  ContributorType,
+} from "components/molecules/MostActiveContributorsCard/most-active-contributors-card";
 
 const meta = {
   title: "Design System/Molecules/Most Active Contributors Card",
@@ -29,7 +31,13 @@ export const Default = () => {
       <Button variant="outline" onClick={() => setData(generateData())} className="mb-2">
         Random Data
       </Button>
-      <MostActiveContributorsCard data={data} topContributor={data[0]} />
+      <MostActiveContributorsCard
+        data={data}
+        topContributor={data[0]}
+        setContributorType={(type: ContributorType) => {}}
+        contributorType="all"
+        isLoading={false}
+      />
     </div>
   );
 };
