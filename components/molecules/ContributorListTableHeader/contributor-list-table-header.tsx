@@ -7,9 +7,14 @@ import Checkbox from "components/atoms/Checkbox/checkbox";
 interface ContributorListTableHeadersProps {
   selected?: boolean;
   handleOnSelectAllContributor?: (contributor: any) => void;
+  range: number;
 }
 
-const ContributorListTableHeaders = ({ selected, handleOnSelectAllContributor }: ContributorListTableHeadersProps) => {
+const ContributorListTableHeaders = ({
+  selected,
+  handleOnSelectAllContributor,
+  range,
+}: ContributorListTableHeadersProps) => {
   return (
     <div className="mt-4">
       {/* Mobile */}
@@ -60,7 +65,7 @@ const ContributorListTableHeaders = ({ selected, handleOnSelectAllContributor }:
           <TableTitle>Contributions</TableTitle>
         </div>
         <div className={clsx(classNames.cols.contributors, "hidden lg:flex justify-center")}>
-          <TableTitle>Last 30 Days</TableTitle>
+          <TableTitle>{`Last ${range} Days`}</TableTitle>
         </div>
       </div>
     </div>

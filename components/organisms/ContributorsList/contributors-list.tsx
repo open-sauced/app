@@ -65,8 +65,8 @@ const ContributorsList = ({ contributors, isLoading, meta, setPage, setLimit, ra
       <ClientOnly>
         {layout === "grid" ? (
           <>
-            <ContributorListTableHeaders />
-            <ContributorTable loading={isLoading} topic={"*"} contributors={contributors} />
+            <ContributorListTableHeaders range={range} />
+            <ContributorTable loading={isLoading} topic={"*"} contributors={contributors} range={range} />
           </>
         ) : (
           <ContributorCardList contributors={contributors} topic={"*"} range={range} />
