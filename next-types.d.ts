@@ -330,6 +330,7 @@ interface DbListContibutor {
   readonly user_id: string;
   readonly login: string;
   readonly created_at: string;
+  readonly username: string;
 }
 
 interface DbUserList {
