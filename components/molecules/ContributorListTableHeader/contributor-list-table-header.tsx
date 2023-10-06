@@ -7,13 +7,13 @@ import Checkbox from "components/atoms/Checkbox/checkbox";
 interface ContributorListTableHeadersProps {
   selected?: boolean;
   handleOnSelectAllContributor?: (contributor: any) => void;
-  range: number;
+  range?: number;
 }
 
 const ContributorListTableHeaders = ({
   selected,
   handleOnSelectAllContributor,
-  range,
+  range = 30,
 }: ContributorListTableHeadersProps) => {
   return (
     <div className="mt-4">
