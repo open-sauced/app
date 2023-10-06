@@ -47,6 +47,7 @@ interface Props {
   data: ContributorStat[];
   setContributorType: (type: ContributorType) => void;
   contributorType: ContributorType;
+  isLoading: boolean;
 }
 
 const peopleFilters: Record<ContributorType, string> = {
@@ -93,17 +94,10 @@ export default function MostActiveContributorsCard({
   topContributor,
   setContributorType,
   contributorType,
+  isLoading,
 }: Props) {
   // TODO: Remove sorting once it's implemented in the API endpoint.
   const dataLabels = getDataLabels(topContributor, dataLabelsList);
-
-  if (data.length === 0) {
-    return (
-      <MostActiveCard>
-        <p>No Data</p>
-      </MostActiveCard>
-    );
-  }
 
   const allContributions = data.reduce((acc, curr) => acc + curr.total_contributions, 0);
   const maxContributions = topContributor.total_contributions;
@@ -113,53 +107,61 @@ export default function MostActiveContributorsCard({
 
   return (
     <MostActiveCard>
-      <div className="text-sm font-medium text-slate-400 mb-4">
-        {topContributor.login} made {topContributorPercent} of all code contributions
-      </div>
-      {/* buttons */}
-      <div className="flex gap-1 mb-4">
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="default" className="items-center gap-1">
-              <SVGIcon IconImage={`${PeopleIcon.src}#icon`} className="w-4 h-4" />
-              {peopleFilters[contributorType]}
-              <Icon IconImage={ChevronDownIcon} className="w-4 h-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="flex flex-col gap-2">
-            {Object.entries(peopleFilters).map(([key, value]) => (
-              <DropdownMenuItem
-                key={key}
-                className="rounded-md !cursor-pointer"
-                onClick={() => setContributorType(key as keyof typeof peopleFilters)}
-              >
-                {value}
-              </DropdownMenuItem>
-            ))}
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </div>
-      {/* chart */}
-      <div className="relative grid place-content-stretch overflow-y-hidden mb-4">
-        {/* inset shadow */}
-        <div
-          className="absolute left-0 bottom-0 right-0 h-4 w-full z-10"
-          style={{ gridArea: "1 / 1", background: "linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.05))" }}
-        ></div>
-        <div
-          className="overflow-y-scroll overflow-x-hidden mb-3 pb-3 pr-3 grid gap-x-2 gap-y-3 max-w-full h-full"
-          style={{
-            gridArea: "1 / 1",
-            gridTemplateColumns: "auto auto 1fr",
-            gridAutoFlow: "row",
-            alignItems: "stretch",
-          }}
-        >
-          {data.map((user) => (
-            <GraphRow key={user.login} user={user} maxContributions={maxContributions} dataLabels={dataLabels} />
-          ))}
-        </div>
-      </div>
+      {" "}
+      {isLoading ? (
+        <p>Loading...</p>
+      ) : (
+        <>
+          <div className="text-sm font-medium text-slate-400 mb-4">
+            {topContributor.login} made {topContributorPercent} of all code contributions
+          </div>
+
+          {/* buttons */}
+          <div className="flex gap-1 mb-4">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="default" className="items-center gap-1">
+                  <SVGIcon IconImage={`${PeopleIcon.src}#icon`} className="w-4 h-4" />
+                  {peopleFilters[contributorType]}
+                  <Icon IconImage={ChevronDownIcon} className="w-4 h-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="flex flex-col gap-2">
+                {Object.entries(peopleFilters).map(([key, value]) => (
+                  <DropdownMenuItem
+                    key={key}
+                    className="rounded-md !cursor-pointer"
+                    onClick={() => setContributorType(key as keyof typeof peopleFilters)}
+                  >
+                    {value}
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+          {/* chart */}
+          <div className="relative grid place-content-stretch overflow-y-hidden mb-4">
+            {/* inset shadow */}
+            <div
+              className="absolute left-0 bottom-0 right-0 h-4 w-full z-10"
+              style={{ gridArea: "1 / 1", background: "linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.05))" }}
+            ></div>
+            <div
+              className="overflow-y-scroll overflow-x-hidden mb-3 pb-3 pr-3 grid gap-x-2 gap-y-3 max-w-full h-full"
+              style={{
+                gridArea: "1 / 1",
+                gridTemplateColumns: "auto auto 1fr",
+                gridAutoFlow: "row",
+                alignItems: "stretch",
+              }}
+            >
+              {data.map((user) => (
+                <GraphRow key={user.login} user={user} maxContributions={maxContributions} dataLabels={dataLabels} />
+              ))}
+            </div>
+          </div>
+        </>
+      )}
       {/* key */}
       <div className="flex justify-center gap-4">
         {Object.entries(dataLabels).map(([key, value]) => (

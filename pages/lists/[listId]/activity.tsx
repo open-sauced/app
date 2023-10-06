@@ -104,6 +104,7 @@ const ListActivityPage = ({ list, numberOfContributors, isError, activityData }:
               topContributor={activityData.topContributor}
               setContributorType={setContributorType}
               contributorType={contributorType}
+              isLoading={isLoading}
             />
           </ClientOnly>
         </div>
