@@ -4,10 +4,11 @@ import Image from "next/image";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "components/atoms/Select/select";
-import hashIcon from "../../../img/icons/hash.svg";
+// import hashIcon from "../../../img/icons/hash.svg";
 import orgIcon from "../../../img/icons/org.svg";
 import personIcon from "../../../img/icons/person.svg";
 import repoIcon from "../../../img/icons/repo.svg";
+import inverted from "../../../img/icons/inverted-triangle.svg";
 
 interface FilterCardSelectProps {
   selected: string;
@@ -18,7 +19,7 @@ interface FilterCardSelectProps {
 
 const icons = {
   topic: {
-    src: hashIcon.src,
+    src: inverted.src,
     alt: "Topic",
   },
   org: {
