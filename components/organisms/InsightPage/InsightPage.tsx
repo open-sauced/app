@@ -192,6 +192,11 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
   const handleCreateInsightPage = async () => {
     setSubmitted(true);
     setCreateLoading(true);
+
+    if (!sessionToken || !user) {
+      toast({ description: "You must be logged in to create a page", variant: "danger" });
+      return;
+    }
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/insights`, {
       method: "POST",
       headers: {
@@ -208,7 +213,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
     if (response.ok) {
       const { id } = await response.json();
       toast({ description: "Page created successfully", variant: "success" });
-      router.push(`/pages/${user?.user_metadata.user_name}/${id}/dashboard`);
+      router.push(`/pages/${user.user_metadata.user_name}/${id}/dashboard`);
     }
 
     setSubmitted(false);
