@@ -61,6 +61,7 @@ const ContributorsList = ({ contributors, isLoading, meta, setPage, setLimit, ra
         updateLimit={setLimit}
         layout={layout}
         onLayoutToggle={setLayout}
+        range={range}
       />
       <ClientOnly>
         {layout === "grid" ? (
