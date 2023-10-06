@@ -7,7 +7,7 @@ import MostActiveContributorsCard, {
   ContributorStat,
 } from "components/molecules/MostActiveContributorsCard/most-active-contributors-card";
 
-import useMostActiveContributors, { getTotalContributions } from "lib/hooks/api/useMostActiveContributors";
+import useMostActiveContributors from "lib/hooks/api/useMostActiveContributors";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
 
 interface ContributorListPageProps {
@@ -41,8 +41,6 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     }),
     fetchApiData<DBList>({ path: `lists/${listId}`, bearerToken, pathValidator: validateListPath }),
     fetchApiData<PagedData<ContributorStat>>({
-      // TODO: order by total contributions once it's part of the API
-      // See https://github.com/open-sauced/api/issues/347
       path: `lists/${listId}/stats/most-active-contributors?range=${range}&orderDirection=DESC&orderBy=commits&limit=20&contributorType=all`,
       bearerToken,
       pathValidator: validateListPath,
@@ -55,26 +53,14 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     };
   }
 
-  // TODO: remove map once total_contributions is part of the API endpoint payload
-  // See https://github.com/open-sauced/api/issues/347
-  const contributorStats = {
-    data: mostActiveData?.data
-      ?.map((contributor) => ({
-        ...contributor,
-        total_contributions: getTotalContributions(contributor),
-      }))
-      .sort((a, b) => b.total_contributions - a.total_contributions),
-    meta: mostActiveData?.meta,
-  };
-
   return {
     props: {
       list,
       numberOfContributors: data?.meta.itemCount,
       isError: error || contributorListError || mostActiveError,
       activityData: {
-        contributorStats,
-        topContributor: contributorStats?.data?.length ? contributorStats.data[0] : null,
+        contributorStats: mostActiveData,
+        topContributor: mostActiveData?.data?.length ? mostActiveData.data[0] : null,
       },
     },
   };
@@ -100,7 +86,8 @@ const ListActivityPage = ({ list, numberOfContributors, isError, activityData }:
           <ClientOnly>
             {/* TODO: Remove client only once server data is being used in the hook on initial load client-side */}
             <MostActiveContributorsCard
-              data={contributorStats}
+              data={contributorStats?.data ?? []}
+              totalContributions={contributorStats?.meta.allContributionsCount ?? 0}
               topContributor={activityData.topContributor}
               setContributorType={setContributorType}
               contributorType={contributorType}

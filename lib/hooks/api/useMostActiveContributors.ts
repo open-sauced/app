@@ -9,16 +9,7 @@ import {
 
 interface PaginatedResponse {
   readonly data: ContributorStat[];
-  readonly meta: Meta;
-}
-
-export function getTotalContributions(contributor: ContributorStat) {
-  return Object.values(contributor).reduce((acc, curr) => {
-    if (typeof curr === "number") {
-      return acc + curr;
-    }
-    return acc;
-  }, 0);
+  readonly meta: Meta & { allContributionsCount: number };
 }
 
 /**
@@ -58,13 +49,7 @@ const useMostActiveContributors = ({
   );
 
   return {
-    data:
-      data?.data
-        ?.map((contributor) => ({
-          ...contributor,
-          total_contributions: getTotalContributions(contributor),
-        }))
-        .sort((a, b) => b.total_contributions - a.total_contributions) ?? [],
+    data,
     isLoading: !error && !data,
     isError: !!error,
     setRange,

@@ -48,6 +48,7 @@ interface Props {
   setContributorType: (type: ContributorType) => void;
   contributorType: ContributorType;
   isLoading: boolean;
+  totalContributions: number;
 }
 
 const peopleFilters: Record<ContributorType, string> = {
@@ -103,14 +104,13 @@ export default function MostActiveContributorsCard({
   setContributorType,
   contributorType,
   isLoading,
+  totalContributions,
 }: Props) {
   // TODO: Remove sorting once it's implemented in the API endpoint.
   const dataLabels = getDataLabels(topContributor, dataLabelsList);
-
-  const allContributions = data.reduce((acc, curr) => acc + curr.total_contributions, 0);
   const maxContributions = topContributor.total_contributions;
   const topContributorPercent = `${
-    allContributions === 0 ? 0 : ((maxContributions / allContributions) * 100).toFixed(2)
+    totalContributions === 0 ? 0 : ((maxContributions / totalContributions) * 100).toFixed(2)
   }%`;
 
   return (

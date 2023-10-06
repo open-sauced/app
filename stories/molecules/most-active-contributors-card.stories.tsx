@@ -37,6 +37,7 @@ export const Default = () => {
         setContributorType={(type: ContributorType) => {}}
         contributorType="all"
         isLoading={false}
+        totalContributions={data.reduce((acc: number, curr: any) => acc + curr.total_contributions, 0)}
       />
     </div>
   );
