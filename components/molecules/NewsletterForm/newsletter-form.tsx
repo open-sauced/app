@@ -65,7 +65,7 @@ const NewsletterForm = () => {
           </div>
         </div>
       ) : (
-        <div className="flex flex-col w-full gap-3 p-6 pt-5 border rounded-lg bg-light-slate-1">
+        <div className="newsletter-wrap flex flex-col w-full gap-3 p-6 pt-5 border rounded-lg bg-light-slate-1">
           <div className="w-64 space-y-1">
             <h2 className="text-lg">Subscribe to our newsletter</h2>
             <p className="text-sm font-normal text-light-slate-11">
@@ -86,22 +86,20 @@ const NewsletterForm = () => {
                 <input type="hidden" value="newsletter" name="form-name" />
               </label>
             </div>
-            <div className="flex items-center justify-between gap-1 w-full">
-              <div className="flex-grow">
-                <TextInput
-                  handleChange={(value) => handleChange(value)}
-                  state={isValidEmail ? "valid" : "invalid"}
-                  value={email}
-                  className="w-full text-sm focus:outline-none"
-                  type="text"
-                  name="email"
-                  placeholder="Email"
-                />
-              </div>
+            <div className="form-wrap flex items-center justify-between gap-1 w-full">
+              <TextInput
+                handleChange={(value) => handleChange(value)}
+                state={isValidEmail ? "valid" : "invalid"}
+                value={email}
+                className="text-sm focus:outline-none"
+                type="text"
+                name="email"
+                placeholder="Email"
+              />
               <Button
                 loading={loading}
                 className={clsx(
-                  "flex justify-center py-1 w-24 px-2 sm:px-1 text-xs border-light-orange-7 text-light-orange-10",
+                  "flex flex-none justify-center py-1 border-light-orange-7 text-light-orange-10",
                   loading && "px-2"
                 )}
                 showLoadingText={false}
