@@ -40,16 +40,20 @@ export interface ContributorStat {
   total_contributions: number;
 }
 
+export type ContributorType = "all" | "active" | "new" | "alumni";
+
 interface Props {
   topContributor: ContributorStat;
   data: ContributorStat[];
+  setContributorType: (type: ContributorType) => void;
+  contributorType: ContributorType;
 }
 
-const peopleFilters = {
+const peopleFilters: Record<ContributorType, string> = {
   all: "All Contributors",
   active: "Active Contributors",
   new: "New Contributors",
-  churned: "Churned Contributors",
+  alumni: "Churned Contributors",
 };
 
 const MostActiveCard = ({ children }: { children: ReactNode }) => {
@@ -84,8 +88,12 @@ function getDataLabels(
   return labels;
 }
 
-export default function MostActiveContributorsCard({ data, topContributor }: Props) {
-  const [currentPeopleFilter, setCurrentPeopleFilter] = useState<keyof typeof peopleFilters>("all"); // TODO: make this a prop
+export default function MostActiveContributorsCard({
+  data,
+  topContributor,
+  setContributorType,
+  contributorType,
+}: Props) {
   // TODO: Remove sorting once it's implemented in the API endpoint.
   const dataLabels = getDataLabels(topContributor, dataLabelsList);
 
@@ -114,7 +122,7 @@ export default function MostActiveContributorsCard({ data, topContributor }: Pro
           <DropdownMenuTrigger asChild>
             <Button variant="default" className="items-center gap-1">
               <SVGIcon IconImage={`${PeopleIcon.src}#icon`} className="w-4 h-4" />
-              {peopleFilters[currentPeopleFilter]}
+              {peopleFilters[contributorType]}
               <Icon IconImage={ChevronDownIcon} className="w-4 h-4" />
             </Button>
           </DropdownMenuTrigger>
@@ -123,7 +131,7 @@ export default function MostActiveContributorsCard({ data, topContributor }: Pro
               <DropdownMenuItem
                 key={key}
                 className="rounded-md !cursor-pointer"
-                onClick={() => setCurrentPeopleFilter(key as keyof typeof peopleFilters)}
+                onClick={() => setContributorType(key as keyof typeof peopleFilters)}
               >
                 {value}
               </DropdownMenuItem>

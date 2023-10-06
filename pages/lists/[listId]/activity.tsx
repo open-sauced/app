@@ -43,7 +43,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     fetchApiData<PagedData<ContributorStat>>({
       // TODO: order by total contributions once it's part of the API
       // See https://github.com/open-sauced/api/issues/347
-      path: `lists/${listId}/stats/most-active-contributors?range=${range}&qorderDirection=DESC&orderBy=commits&limit=20`,
+      path: `lists/${listId}/stats/most-active-contributors?range=${range}&orderDirection=DESC&orderBy=commits&limit=20&contributorType=all`,
       bearerToken,
       pathValidator: validateListPath,
     }),
@@ -87,6 +87,8 @@ const ListActivityPage = ({ list, numberOfContributors, isError, activityData }:
     isLoading,
     isError: isMostActiveError,
     setRange,
+    setContributorType,
+    contributorType,
   } = useMostActiveContributors({ listId: list!.id, initData: activityData.contributorStats.data });
 
   return (
@@ -97,7 +99,12 @@ const ListActivityPage = ({ list, numberOfContributors, isError, activityData }:
         <div className="lg:grid lg:grid-cols-2 lg:grid-rows-2 gap-4 flex flex-col">
           <ClientOnly>
             {/* TODO: Remove client only once server data is being used in the hook on initial load client-side */}
-            <MostActiveContributorsCard data={contributorStats} topContributor={activityData.topContributor} />
+            <MostActiveContributorsCard
+              data={contributorStats}
+              topContributor={activityData.topContributor}
+              setContributorType={setContributorType}
+              contributorType={contributorType}
+            />
           </ClientOnly>
         </div>
       )}

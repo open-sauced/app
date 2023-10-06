@@ -2,7 +2,10 @@ import { useState } from "react";
 import useSWR, { Fetcher } from "swr";
 
 import publicApiFetcher from "lib/utils/public-api-fetcher";
-import { ContributorStat } from "components/molecules/MostActiveContributorsCard/most-active-contributors-card";
+import {
+  ContributorStat,
+  ContributorType,
+} from "components/molecules/MostActiveContributorsCard/most-active-contributors-card";
 
 interface PaginatedResponse {
   readonly data: ContributorStat[];
@@ -27,17 +30,20 @@ const useMostActiveContributors = ({
   initData,
   intialLimit = 20,
   initialRange = 30,
+  defaultContributorType = "all",
 }: {
   listId: string;
   initData?: ContributorStat[];
   intialLimit?: number;
   initialRange?: number;
+  defaultContributorType?: ContributorType;
 }) => {
-  const [page, setPage] = useState(1);
   const [range, setRange] = useState(initialRange);
   const [limit, setLimit] = useState(intialLimit);
+  const [contributorType, setContributorType] = useState<ContributorType>(defaultContributorType);
 
   const query = new URLSearchParams();
+  query.set("contributorType", `${contributorType}`);
   query.set("limit", `${limit}`);
   query.set("range", `${range}`);
   // Change this to total_contributions once implemented
@@ -62,6 +68,8 @@ const useMostActiveContributors = ({
     isLoading: !error && !data,
     isError: !!error,
     setRange,
+    contributorType,
+    setContributorType,
   };
 };
 
