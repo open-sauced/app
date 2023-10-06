@@ -3,7 +3,6 @@ import { FaPlus } from "react-icons/fa";
 import clsx from "clsx";
 import { FiGlobe } from "react-icons/fi";
 
-import { timezones } from "lib/utils/timezones";
 import { useToast } from "lib/hooks/useToast";
 
 import ListNameHeader from "components/atoms/ListNameHeader/list-name-header";
@@ -18,6 +17,7 @@ import ComponentDateFilter from "../ComponentDateFilter/component-date-filter";
 interface ListHeaderProps {
   setLimit?: (limit: number) => void;
   setRangeFilter?: (range: number) => void;
+  timezoneOptions: { label: string; value: string }[];
   timezone?: string;
   setTimezoneFilter: (timezone: string) => void;
   isPublic: boolean;
@@ -43,12 +43,9 @@ const HubContributorsHeader = ({
   handleToggleIsPublic,
   timezone,
   setTimezoneFilter,
+  timezoneOptions,
 }: ListHeaderProps): JSX.Element => {
   const { toast } = useToast();
-  const timezoneOptions = timezones.map((timezone) => ({
-    label: timezone.text,
-    value: timezone.value,
-  }));
 
   return (
     <div className="relative flex flex-col justify-between w-full gap-6 py-2">
