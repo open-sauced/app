@@ -60,7 +60,15 @@ const peopleFilters: Record<ContributorType, string> = {
 const MostActiveCard = ({ children }: { children: ReactNode }) => {
   return (
     <Card className="grid place-content-stretch overflow-hidden">
-      <div className="grid p-2" style={{ gridTemplateRows: "auto auto auto 1fr auto", maxHeight: "500px" }}>
+      <div
+        className="grid p-2 relative"
+        style={{
+          gridTemplateRows: "auto auto auto 1fr auto",
+          height: "500px",
+          minHeight: "500px",
+          maxHeight: "500px",
+        }}
+      >
         <div className="text-lg text-slate-900 mb-2">Most active contributors</div>
         {children}
       </div>
@@ -107,7 +115,6 @@ export default function MostActiveContributorsCard({
 
   return (
     <MostActiveCard>
-      {" "}
       {isLoading ? (
         <p>Loading...</p>
       ) : (
@@ -155,9 +162,13 @@ export default function MostActiveContributorsCard({
                 alignItems: "stretch",
               }}
             >
-              {data.map((user) => (
-                <GraphRow key={user.login} user={user} maxContributions={maxContributions} dataLabels={dataLabels} />
-              ))}
+              {data.length === 0 ? (
+                <p>No data</p>
+              ) : (
+                data.map((user) => (
+                  <GraphRow key={user.login} user={user} maxContributions={maxContributions} dataLabels={dataLabels} />
+                ))
+              )}
             </div>
           </div>
         </>
