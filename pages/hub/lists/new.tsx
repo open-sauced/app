@@ -268,4 +268,5 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   };
 };
 
+AddListPage.isPrivateRoute = true;
 export default AddListPage;
