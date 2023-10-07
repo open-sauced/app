@@ -1,6 +1,6 @@
 import { StaticImageData } from "next/image";
 import Avatar from "components/atoms/Avatar/avatar";
-
+import Tooltip from "components/atoms/Tooltip/tooltip";
 interface TableRepositoryNameProps {
   avatarURL?: string | StaticImageData;
   fullName: string;
@@ -25,15 +25,15 @@ const TableRepositoryName = ({ avatarURL, fullName }: TableRepositoryNameProps):
       </a>
 
       {/* Text */}
+
       <div className="flex flex-col justify-center">
-        <div
-          title={name}
-          className="  text-base text-light-slate-12 tracking-tight max-w-[85px] sm:max-w-[150px] md:max-w-[110px] whitespace-nowrap overflow-hidden overflow-ellipsis"
-        >
-          <a href={`https://www.github.com/${handle}/${name}`} target="_blank" rel="noreferrer">
-            {name}
-          </a>
-        </div>
+        <Tooltip content={name}>
+          <div className="  text-base text-light-slate-12 tracking-tight max-w-[85px] sm:max-w-[150px] md:max-w-[110px] whitespace-nowrap overflow-hidden overflow-ellipsis">
+            <a href={`https://www.github.com/${handle}/${name}`} target="_blank" rel="noreferrer">
+              {name}
+            </a>
+          </div>
+        </Tooltip>
         <div className="  text-sm text-light-slate-11 truncate max-w-[85px] md:max-w-[110px]">
           <a href={`https://www.github.com/${handle}`} target="_blank" rel="noreferrer">
             {handle ? `@${handle}` : "handle1234"}
