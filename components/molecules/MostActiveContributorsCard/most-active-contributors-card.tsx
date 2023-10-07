@@ -106,7 +106,6 @@ export default function MostActiveContributorsCard({
   isLoading,
   totalContributions,
 }: Props) {
-  // TODO: Remove sorting once it's implemented in the API endpoint.
   const dataLabels = getDataLabels(topContributor, dataLabelsList);
   const maxContributions = topContributor.total_contributions;
   const topContributorPercent = `${
