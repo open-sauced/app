@@ -1,7 +1,8 @@
 import { Meta, StoryObj } from "@storybook/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "components/atoms/Button/button";
 import MostActiveContributorsCard, {
+  ContributorStat,
   ContributorType,
 } from "components/molecules/MostActiveContributorsCard/most-active-contributors-card";
 
@@ -40,6 +41,62 @@ export const Default = () => {
         totalContributions={data.reduce((acc: number, curr: any) => acc + curr.total_contributions, 0)}
       />
     </div>
+  );
+};
+
+export const Loading = () => {
+  const data = generateData();
+
+  return (
+    <MostActiveContributorsCard
+      data={[]}
+      topContributor={data[0]}
+      setContributorType={(type: ContributorType) => {}}
+      contributorType="all"
+      isLoading={true}
+      totalContributions={data.reduce((acc: number, curr: any) => acc + curr.total_contributions, 0)}
+    />
+  );
+};
+
+export const LoadingToData = () => {
+  const [data, setData] = useState<any>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const initialData = generateData();
+  const topContributor = initialData[0];
+
+  useEffect(() => {
+    const timerId = setTimeout(() => {
+      setData(initialData);
+      setIsLoading(false);
+    }, 2000);
+
+    return () => clearTimeout(timerId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return (
+    <MostActiveContributorsCard
+      data={data}
+      topContributor={topContributor}
+      setContributorType={(type: ContributorType) => {}}
+      contributorType="all"
+      isLoading={isLoading}
+      totalContributions={Math.random() * 500}
+    />
+  );
+};
+
+export const NoData = () => {
+  return (
+    <MostActiveContributorsCard
+      data={[]}
+      topContributor={{ total_contributions: 0 } as ContributorStat}
+      setContributorType={(type: ContributorType) => {}}
+      contributorType="all"
+      isLoading={false}
+      totalContributions={Math.random() * 500}
+    />
   );
 };
 
@@ -98,18 +155,14 @@ function generateData() {
   ].map((login) => {
     const user = {
       login,
-      contributions: {
-        commits: Math.floor(Math.random() * 500),
-        prsCreated: Math.floor(Math.random() * 500),
-        prsReviewed: Math.floor(Math.random() * 500),
-        issuesCreated: Math.floor(Math.random() * 500),
-        comments: Math.floor(Math.random() * 500),
-      },
+      commits: Math.floor(Math.random() * 500),
+      prs_created: Math.floor(Math.random() * 500),
+      prs_reviewed: Math.floor(Math.random() * 500),
+      issues_created: Math.floor(Math.random() * 500),
+      comments: Math.floor(Math.random() * 500),
+      total_contributions: Math.random() * 500,
     };
 
-    return {
-      ...user,
-      total_contributions: Object.values(user.contributions).reduce((acc, curr) => acc + curr, 0),
-    };
+    return user;
   });
 }
