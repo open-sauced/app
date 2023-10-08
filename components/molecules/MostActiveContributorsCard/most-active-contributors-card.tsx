@@ -183,7 +183,7 @@ export default function MostActiveContributorsCard({
       </>
 
       {/* key */}
-      <div className="flex justify-center gap-4">
+      <div className="flex justify-center gap-4 flex-wrap">
         {Object.entries(dataLabelsList).map(([key, value]) => (
           <div
             key={key}
