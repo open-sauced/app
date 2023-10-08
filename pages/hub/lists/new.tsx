@@ -35,7 +35,7 @@ interface NewListCreationPageProps {
     meta: Meta;
     data: DbPRContributor[];
   };
-  timezones: { timezone: string }[];
+  timezoneOption: { timezone: string }[];
 }
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
@@ -63,12 +63,12 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   return {
     props: {
       initialData: data ? { data: data.data, meta: data.meta } : { data: [], meta: {} },
-      timezones: timezoneOptions ? timezoneOptions : timezones,
+      timezoneOption: timezoneOptions ? timezoneOptions : timezones,
     },
   };
 };
 
-const NewListCreationPage = ({ initialData, timezones }: NewListCreationPageProps) => {
+const NewListCreationPage = ({ initialData, timezoneOption }: NewListCreationPageProps) => {
   const { toast } = useToast();
   const posthog = usePostHog();
   const { sessionToken } = useSupabaseAuth();
@@ -91,8 +91,18 @@ const NewListCreationPage = ({ initialData, timezones }: NewListCreationPageProp
     }
   );
 
-  const timezoneList = timezones.map((item) => ({ label: item.timezone, value: item.timezone }));
+  // get all timezones from the api that exists in the dummy timezone list
 
+  const timezoneList = timezones
+    .filter((timezone) => {
+      return timezoneOption.some((timezoneOption) => timezoneOption.timezone === timezone.value);
+    })
+    .map((timezone) => {
+      return {
+        label: timezone.text,
+        value: timezone.value,
+      };
+    });
   const contributors = data
     ? data.length > 0 &&
       data.map((contributor) => {
