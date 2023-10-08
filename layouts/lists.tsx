@@ -48,7 +48,9 @@ const ListPageLayout = ({
           <div className="md:grid md:grid-cols-2 flex flex-col">
             {list && <TabsList tabList={tabList} selectedTab={selectedTab} pageId={`/lists/${list.id}`} />}
             <div>
-              <div className="flex justify-end">{setRange && <ComponentDateFilter setRangeFilter={setRange} />}</div>
+              <div className="flex justify-end p-4 md:p-0">
+                {setRange && <ComponentDateFilter setRangeFilter={setRange} />}
+              </div>
             </div>
           </div>
         </div>
