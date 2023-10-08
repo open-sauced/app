@@ -107,6 +107,7 @@ export default function MostActiveContributorsCard({
   totalContributions,
 }: Props) {
   const dataLabels = getDataLabels(topContributor, dataLabelsList);
+  const labels = Object.keys(dataLabels);
   const maxContributions = topContributor.total_contributions;
   const topContributorPercent = `${
     totalContributions === 0 ? 0 : ((maxContributions / totalContributions) * 100).toFixed(2)
@@ -183,9 +184,16 @@ export default function MostActiveContributorsCard({
 
       {/* key */}
       <div className="flex justify-center gap-4">
-        {Object.entries(dataLabels).map(([key, value]) => (
-          <div key={key} className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-sm" style={{ backgroundColor: value.color }}></div>
+        {Object.entries(dataLabelsList).map(([key, value]) => (
+          <div
+            key={key}
+            className="flex items-center gap-2"
+            {...(labels.includes(key) ? null : { title: "coming soon" })}
+          >
+            <div
+              className={`w-3 h-3 rounded-sm ${labels.includes(key) ? "" : "bg-slate-200"}`}
+              style={labels.includes(key) ? { backgroundColor: value.color } : {}}
+            ></div>
             <div className="text-sm text-slate-900 capitalize">{value.title}</div>
           </div>
         ))}
@@ -205,6 +213,7 @@ function RowTooltip({
   dataLabels: Record<StatKeys, DataLabel>;
   children: React.ReactNode;
 }) {
+  const labels = Object.keys(dataLabels);
   return (
     <Tooltip.Root>
       <Tooltip.Trigger asChild>{children}</Tooltip.Trigger>
@@ -212,9 +221,12 @@ function RowTooltip({
         <Tooltip.Content sideOffset={-10} align="center" collisionPadding={10} side={"bottom"} avoidCollisions>
           <div className={clsx("text-xs p-2 rounded shadow-lg bg-white font-light")}>
             <div className="text-black font-bold mb-1">{contributor.login}</div>
-            {Object.entries(dataLabels).map(([key, value]) => (
+            {Object.entries(dataLabelsList).map(([key, value]) => (
               <div key={key} className={clsx("flex items-center gap-2 font-bold", { "font-bold": true })}>
-                <div className="w-3 h-3 rounded-sm" style={{ backgroundColor: value.color }}></div>
+                <div
+                  className="w-3 h-3 rounded-sm"
+                  style={{ backgroundColor: labels.includes(key) ? value.color : "gray" }}
+                ></div>
                 <div className={clsx(key === highlightedStat ? "font-bold" : "font-light")}>
                   {key} {value.title}
                 </div>
