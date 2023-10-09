@@ -58,24 +58,25 @@ const ContributorsListPage = ({ list, initialData, isError }: ContributorListPag
     isLoading,
     setPage,
     setLimit,
+    setRange,
+    range,
     data: { data: contributors, meta },
   } = useContributorsList({ listId: list?.id, initialData });
 
   return (
-    <ListPageLayout list={list} numberOfContributors={meta.itemCount} isOwner={isOwner}>
-      <div className="container flex flex-col gap-3">
-        {isError ? (
-          <Error errorMessage="Unable to load list of contributors" />
-        ) : (
-          <ContributorsList
-            contributors={contributors}
-            meta={meta}
-            isLoading={isLoading}
-            setPage={setPage}
-            setLimit={setLimit}
-          />
-        )}
-      </div>
+    <ListPageLayout list={list} numberOfContributors={meta.itemCount} isOwner={isOwner} setRange={setRange}>
+      {isError ? (
+        <Error errorMessage="Unable to load list of contributors" />
+      ) : (
+        <ContributorsList
+          contributors={contributors}
+          meta={meta}
+          isLoading={isLoading}
+          setPage={setPage}
+          setLimit={setLimit}
+          range={range}
+        />
+      )}
     </ListPageLayout>
   );
 };

@@ -5,6 +5,126 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.68.0-beta.9](https://github.com/open-sauced/insights/compare/v1.68.0-beta.8...v1.68.0-beta.9) (2023-10-06)
+
+
+### 🍕 Features
+
+* move range filter to list pages header ([#1817](https://github.com/open-sauced/insights/issues/1817)) ([0b82760](https://github.com/open-sauced/insights/commit/0b82760dfd20b14230f8f0b4496b75c3086db139))
+
+## [1.68.0-beta.8](https://github.com/open-sauced/insights/compare/v1.68.0-beta.7...v1.68.0-beta.8) (2023-10-06)
+
+
+### 🧑‍💻 Code Refactoring
+
+* redirect user to newly created insight page after creation ([#1808](https://github.com/open-sauced/insights/issues/1808)) ([cf12456](https://github.com/open-sauced/insights/commit/cf1245625c0611a57ba6f0997ccb4ddb02a79ad0))
+
+
+### 🐛 Bug Fixes
+
+* now range filter works on list contributors page ([d711207](https://github.com/open-sauced/insights/commit/d7112074ec7996d86258c3d7b7814cf7fcc3b16a))
+* now range filter works on list contributors page grid view ([#1819](https://github.com/open-sauced/insights/issues/1819)) ([989ebba](https://github.com/open-sauced/insights/commit/989ebbaa97b7c8fa1498d329bd27c2c1e95df3b2))
+
+## [1.68.0-beta.7](https://github.com/open-sauced/insights/compare/v1.68.0-beta.6...v1.68.0-beta.7) (2023-10-06)
+
+
+### 🐛 Bug Fixes
+
+* hide weird top nav for edit insight page ([#1809](https://github.com/open-sauced/insights/issues/1809)) ([f3da2a1](https://github.com/open-sauced/insights/commit/f3da2a1512e36900d1c9edceb490d893323b1f49))
+
+## [1.68.0-beta.6](https://github.com/open-sauced/insights/compare/v1.68.0-beta.5...v1.68.0-beta.6) (2023-10-04)
+
+
+### 🎨 Styles
+
+* add w-full ([9b156d1](https://github.com/open-sauced/insights/commit/9b156d1c7e974924e8689be6dc2b8dd600443b64))
+* remove unused style prop ([1fe65c0](https://github.com/open-sauced/insights/commit/1fe65c039ba6cf4f23bbb225ed257b77d0a03d1d))
+
+
+### 🧑‍💻 Code Refactoring
+
+* remove unused props in Search component ([783b1c9](https://github.com/open-sauced/insights/commit/783b1c9d957f4998f7bbb73fb7548bcd57118eee))
+
+
+### 🐛 Bug Fixes
+
+* add style prop to SearchProps ([16fbc82](https://github.com/open-sauced/insights/commit/16fbc82f3c72dde7d54359c61cf15e3c9563ff96))
+* adjust style to fit urls ([55a6bbc](https://github.com/open-sauced/insights/commit/55a6bbcf799856477b80c0286507c0475867f4b3))
+* Improve the input's width to accommodate full URL ([#1789](https://github.com/open-sauced/insights/issues/1789)) ([e37df4f](https://github.com/open-sauced/insights/commit/e37df4f8c5b52246d7c48f7e7c2c94bf22c227e5))
+
+## [1.68.0-beta.5](https://github.com/open-sauced/insights/compare/v1.68.0-beta.4...v1.68.0-beta.5) (2023-10-03)
+
+
+### 🍕 Features
+
+* add timezone filters for list contributors ([#1747](https://github.com/open-sauced/insights/issues/1747)) ([674a588](https://github.com/open-sauced/insights/commit/674a58815886a836567bc6c3999ea9d0764e9a44))
+
+## [1.68.0-beta.4](https://github.com/open-sauced/insights/compare/v1.68.0-beta.3...v1.68.0-beta.4) (2023-10-03)
+
+
+### 🍕 Features
+
+* add Treemap chart prototype ([#1569](https://github.com/open-sauced/insights/issues/1569)) ([f057de8](https://github.com/open-sauced/insights/commit/f057de8b59bbdcf7c6a8cecab859cdcd6ba1d121))
+
+## [1.68.0-beta.3](https://github.com/open-sauced/insights/compare/v1.68.0-beta.2...v1.68.0-beta.3) (2023-10-03)
+
+
+### 🍕 Features
+
+* add prototype contributor activity charts ([#1594](https://github.com/open-sauced/insights/issues/1594)) ([379db6d](https://github.com/open-sauced/insights/commit/379db6dbe6d852da52ef333c7fc313817647f477))
+
+## [1.68.0-beta.2](https://github.com/open-sauced/insights/compare/v1.68.0-beta.1...v1.68.0-beta.2) (2023-10-03)
+
+
+### 🐛 Bug Fixes
+
+* removed GitHub avatar when loading user profile avatars ([9b81371](https://github.com/open-sauced/insights/commit/9b81371bde8ce5a9838dec6d19a007aa964b072b))
+* removed GitHub avatar when loading user profile avatars ([#1781](https://github.com/open-sauced/insights/issues/1781)) ([49ba38f](https://github.com/open-sauced/insights/commit/49ba38f44bd2c1bc9af949d73ddb3a1cfde9f20f))
+
+## [1.68.0-beta.1](https://github.com/open-sauced/insights/compare/v1.67.0...v1.68.0-beta.1) (2023-10-02)
+
+
+### 🍕 Features
+
+* add form to user settings to apply coupon code ([#1771](https://github.com/open-sauced/insights/issues/1771)) ([504d7e2](https://github.com/open-sauced/insights/commit/504d7e2499a6b2a9dd5beaa560dd9ca7aa6af4c8))
+
+## [1.67.0](https://github.com/open-sauced/insights/compare/v1.66.0...v1.67.0) (2023-10-02)
+
+
+### 🐛 Bug Fixes
+
+* made card view for lists contributors list uniform with rest of app ([#1772](https://github.com/open-sauced/insights/issues/1772)) ([5a64ab6](https://github.com/open-sauced/insights/commit/5a64ab620da935d5c79a56f157a590a3e137e7c5))
+
+
+### 🍕 Features
+
+* add overview page for a list ([#1736](https://github.com/open-sauced/insights/issues/1736)) ([6c6bfaa](https://github.com/open-sauced/insights/commit/6c6bfaa1ee1efc30be0e94b3d8650ddf1294b327))
+* added contributor page for lists ([#1734](https://github.com/open-sauced/insights/issues/1734)) ([762de40](https://github.com/open-sauced/insights/commit/762de402167665a9dce8f1bbf01071049b431e7d))
+* added hacktoberfest icon in user settings ([#1775](https://github.com/open-sauced/insights/issues/1775)) ([43e6b12](https://github.com/open-sauced/insights/commit/43e6b1249ad1b429b3e784d7a9fde5f8a83214cf))
+* change hacktoberfest to default topic ([#1773](https://github.com/open-sauced/insights/issues/1773)) ([95c3c74](https://github.com/open-sauced/insights/commit/95c3c742fa9b9d5ed0904a18b1ef191dc70f2db3))
+* improve visibility of the follow cta on user profiles ([#1739](https://github.com/open-sauced/insights/issues/1739)) ([11acadb](https://github.com/open-sauced/insights/commit/11acadb9ed53948aed279acd67f9a2bcb02c9477))
+
+## [1.67.0-beta.6](https://github.com/open-sauced/insights/compare/v1.67.0-beta.5...v1.67.0-beta.6) (2023-10-02)
+
+
+### 🍕 Features
+
+* added hacktoberfest icon in user settings ([#1775](https://github.com/open-sauced/insights/issues/1775)) ([43e6b12](https://github.com/open-sauced/insights/commit/43e6b1249ad1b429b3e784d7a9fde5f8a83214cf))
+
+## [1.67.0-beta.5](https://github.com/open-sauced/insights/compare/v1.67.0-beta.4...v1.67.0-beta.5) (2023-10-02)
+
+
+### 🐛 Bug Fixes
+
+* made card view for lists contributors list uniform with rest of app ([#1772](https://github.com/open-sauced/insights/issues/1772)) ([5a64ab6](https://github.com/open-sauced/insights/commit/5a64ab620da935d5c79a56f157a590a3e137e7c5))
+
+## [1.67.0-beta.4](https://github.com/open-sauced/insights/compare/v1.67.0-beta.3...v1.67.0-beta.4) (2023-10-02)
+
+
+### 🍕 Features
+
+* change hacktoberfest to default topic ([#1773](https://github.com/open-sauced/insights/issues/1773)) ([95c3c74](https://github.com/open-sauced/insights/commit/95c3c742fa9b9d5ed0904a18b1ef191dc70f2db3))
+
 ## [1.67.0-beta.3](https://github.com/open-sauced/insights/compare/v1.67.0-beta.2...v1.67.0-beta.3) (2023-09-29)
 
 

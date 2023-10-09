@@ -16,6 +16,7 @@ interface ContributorsListProps {
   meta: Meta;
   setPage: (page: number) => void;
   setLimit: (limit: number) => void;
+  range: number;
 }
 
 interface ContributorCardListProps {
@@ -38,7 +39,7 @@ const ContributorCardList = ({ contributors = [], topic, range }: ContributorCar
   });
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="grid w-full gap-3 grid-cols-automobile md:grid-cols-autodesktop">
       {contributorArray.map((contributor) => {
         return (
           <ContributorCard key={contributor.profile.githubName} contributor={contributor} topic={topic} range={range} />
@@ -48,26 +49,26 @@ const ContributorCardList = ({ contributors = [], topic, range }: ContributorCar
   );
 };
 
-const ContributorsList = ({ contributors, isLoading, meta, setPage, setLimit }: ContributorsListProps) => {
-  const [range, setRange] = useState(30);
+const ContributorsList = ({ contributors, isLoading, meta, setPage, setLimit, range }: ContributorsListProps) => {
   const [layout, setLayout] = useState<ToggleValue>("grid");
 
   return (
-    <div className="lg:min-w-[1150px] px-16 py-8">
+    <>
       <TableHeader
         title="Contributors"
         metaInfo={meta}
         entity="contributors"
         updateLimit={setLimit}
-        range={range}
-        setRangeFilter={setRange}
         layout={layout}
         onLayoutToggle={setLayout}
+        range={range}
       />
-      <ContributorListTableHeaders />
       <ClientOnly>
         {layout === "grid" ? (
-          <ContributorTable loading={isLoading} topic={"*"} contributors={contributors} />
+          <>
+            <ContributorListTableHeaders range={range} />
+            <ContributorTable loading={isLoading} topic={"*"} contributors={contributors} range={range} />
+          </>
         ) : (
           <ContributorCardList contributors={contributors} topic={"*"} range={range} />
         )}
@@ -95,7 +96,7 @@ const ContributorsList = ({ contributors, isLoading, meta, setPage, setLimit }: 
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
