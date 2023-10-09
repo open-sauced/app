@@ -60,8 +60,7 @@ const ConnectionRequestsWrapper = () => {
         <DashContainer className="flex-col gap-6 md:gap-8 text-light-slate-9">
           <p>No pending requests.</p>
           <p className="text-center md:px-16">
-            Sometimes you got to be a friend to make a friend. Considering requesting connections on sharing profile on
-            social channels like GitHub or Twitter
+            Sometimes you got to be a friend to make a friend. Considering inviting other developers to OpenSauced
           </p>
         </DashContainer>
       )}

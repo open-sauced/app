@@ -2,7 +2,7 @@ import { supabase } from "lib/utils/supabase";
 
 interface UpdateEmailProps {
   display_email?: boolean;
-  receive_connections?: boolean;
+  receive_collaboration?: boolean;
 }
 
 const baseUrl = process.env.NEXT_PUBLIC_API_URL;
