@@ -6,7 +6,7 @@ import { GetServerSidePropsContext } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 
 import useFetchAllContributors from "lib/hooks/useFetchAllContributors";
-import { fetchApiData } from "helpers/fetchApiData";
+import { fetchApiData, validateListPath } from "helpers/fetchApiData";
 import { timezones } from "lib/utils/timezones";
 import { useToast } from "lib/hooks/useToast";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
@@ -46,10 +46,15 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   } = await supabase.auth.getSession();
   const bearerToken = session ? session.access_token : "";
 
-  const fetchTimezone = fetchApiData<{ timezone: string }[]>({ path: `lists/timezones`, bearerToken });
+  const fetchTimezone = fetchApiData<{ timezone: string }[]>({
+    path: `lists/timezones`,
+    bearerToken,
+    pathValidator: validateListPath,
+  });
   const fetchContributors = fetchApiData<PagedData<DbPRContributor>>({
     path: `lists/contributors`,
     bearerToken,
+    pathValidator: validateListPath,
   });
 
   const [{ data: timezoneOptions }, { data, error }] = await Promise.all([fetchTimezone, fetchContributors]);
