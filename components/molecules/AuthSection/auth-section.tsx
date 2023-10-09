@@ -103,11 +103,11 @@ const AuthSection: React.FC = ({}) => {
           <SearchDialogTrigger />
           {user ? (
             <>
-              {onboarded && (
+              {!onboarded && (
                 <>
                   <div className="relative hidden lg:flex xl:hidden">
                     <Tooltip content="Complete the onboarding" direction="bottom">
-                      <OnboardingButton aria="onboarding" className="!flex !pr-1" />
+                      <OnboardingButton ariaLabel="Click to complete your onboarding" className="!flex !pr-1" />
                     </Tooltip>
                     {/* <OnboardingButton aria="onboarding" className="!flex !pr-1">
                       <Text className="text-sm !text-light-slate-12 hidden xl:block py-1 px-2">
