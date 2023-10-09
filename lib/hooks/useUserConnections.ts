@@ -3,25 +3,25 @@ import publicApiFetcher from "lib/utils/public-api-fetcher";
 import useSupabaseAuth from "./useSupabaseAuth";
 import { useToast } from "./useToast";
 
-interface UserCollaborationResponse {
-  data?: DbUserCollaboration[];
+interface UserConnectionResponse {
+  data?: DbUserConnection[];
   meta: Meta;
 }
 
-type collaborationRequestPayload = {
+type connectionsRequestPayload = {
   username: string;
   message: string;
 };
-const useUserCollaborations = () => {
+const useUserConnections = () => {
   const { sessionToken } = useSupabaseAuth();
   const { toast } = useToast();
-  const { data, error, mutate } = useSWR<UserCollaborationResponse, Error>(
-    "user/collaborations",
-    publicApiFetcher as Fetcher<UserCollaborationResponse, Error>
+  const { data, error, mutate } = useSWR<UserConnectionResponse, Error>(
+    "user/connections",
+    publicApiFetcher as Fetcher<UserConnectionResponse, Error>
   );
 
-  async function requestCollaboration(payload: collaborationRequestPayload) {
-    const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/collaborations`, {
+  async function requestConnection(payload: connectionsRequestPayload) {
+    const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/connections`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${sessionToken}`,
@@ -32,12 +32,12 @@ const useUserCollaborations = () => {
 
     if (req && req.ok) {
       const response = await req.json();
-      toast({ description: "Collaboration request Sent!", title: "Success", variant: "success" });
+      toast({ description: "Connections request Sent!", title: "Success", variant: "success" });
     } else {
       const response = await req?.json();
       if (response.statusCode === 401) {
         toast({
-          description: "You require upgraded access to use collaborations!",
+          description: "You require upgraded access to use connections!",
           title: "Not allowed",
           variant: "danger",
         });
@@ -49,8 +49,8 @@ const useUserCollaborations = () => {
     }
   }
 
-  async function updateCollaborationStatus(requestId: string) {
-    const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/collaborations/${requestId}`, {
+  async function updateConnectionStatus(requestId: string) {
+    const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/connections/${requestId}`, {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${sessionToken}`,
@@ -65,8 +65,8 @@ const useUserCollaborations = () => {
     }
   }
 
-  async function deleteCollaborationRequest(requestId: string) {
-    const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/collaborations/${requestId}`, {
+  async function deleteConnectionRequest(requestId: string) {
+    const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/connectionss/${requestId}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${sessionToken}`,
@@ -83,10 +83,10 @@ const useUserCollaborations = () => {
     data: data?.data ?? [],
     isLoading: !error && !data,
     isError: !!error,
-    requestCollaboration,
-    updateCollaborationStatus,
-    deleteCollaborationRequest,
+    requestConnection,
+    updateConnectionStatus,
+    deleteConnectionRequest,
   };
 };
 
-export { useUserCollaborations };
+export { useUserConnections };

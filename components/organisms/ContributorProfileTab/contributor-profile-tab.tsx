@@ -24,7 +24,7 @@ import PaginationResults from "components/molecules/PaginationResults/pagination
 import Pagination from "components/molecules/Pagination/pagination";
 import DashContainer from "components/atoms/DashedContainer/DashContainer";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
-import CollaborationRequestsWrapper from "../CollaborationRequestWrapper/collaboration-requests-wrapper";
+import ConnectionRequestsWrapper from "../ConnectionRequestWrapper/connection-requests-wrapper";
 import UserRepositoryRecommendations from "../UserRepositoryRecommendations/user-repository-recommendations";
 
 interface ContributorProfileTabProps {
@@ -64,7 +64,7 @@ const ContributorProfileTab = ({
   recentContributionCount,
   repoList,
 }: ContributorProfileTabProps): JSX.Element => {
-  const { login, interests: userInterests, receive_collaboration } = contributor || {};
+  const { login, interests: userInterests, receive_connections } = contributor || {};
   const { user } = useSupabaseAuth();
   const { user_name } = user?.user_metadata || {};
 
@@ -91,7 +91,7 @@ const ContributorProfileTab = ({
       !tab ||
       !Object.keys(tabs).includes(tab as string) ||
       (tab === "recommendations" && user_name !== login) ||
-      (tab === "requests" && !receive_collaboration) ||
+      (tab === "requests" && !receive_connections) ||
       (tab === "requests" && user_name !== login)
     ) {
       setQueryParams({ tab: currentTab } satisfies QueryParams);
@@ -109,7 +109,7 @@ const ContributorProfileTab = ({
       user && user_name !== login && tab === "requests" && "hidden",
       !user && tab === "recommendations" && "hidden",
       !user && tab === "requests" && "hidden",
-      !receive_collaboration && tab === "requests" && "hidden"
+      !receive_connections && tab === "requests" && "hidden"
     );
   };
 
@@ -310,9 +310,9 @@ const ContributorProfileTab = ({
 
       {user && user.user_metadata.user_name === login && (
         <>
-          {/* Collaboration requests tab details */}
+          {/* Connection requests tab details */}
           <TabsContent value={"requests" satisfies TabKey}>
-            <CollaborationRequestsWrapper />
+            <ConnectionRequestsWrapper />
           </TabsContent>
 
           {/* Recommendation tab details */}

@@ -30,7 +30,7 @@ interface userSettingsPageProps {
 
 type EmailPreferenceType = {
   display_email?: boolean;
-  receive_collaboration?: boolean;
+  receive_connections?: boolean;
 };
 const UserSettingsPage = ({ user }: userSettingsPageProps) => {
   const { data: insightsUser, mutate } = useFetchUser(user?.user_metadata.user_name, {
@@ -55,7 +55,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
     // eslint-disable-next-line camelcase
     display_email: false,
     // eslint-disable-next-line camelcase
-    receive_collaboration: false,
+    receive_connections: false,
   });
   const [selectedInterest, setSelectedInterest] = useState<string[]>([]);
   const formRef = useRef<HTMLFormElement>(null);
@@ -88,7 +88,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
         // eslint-disable-next-line camelcase
         display_email: insightsUser?.display_email,
         // eslint-disable-next-line camelcase
-        receive_collaboration: insightsUser?.receive_collaboration,
+        receive_connections: insightsUser?.receive_connections,
       });
       setSelectedInterest(insightsUser?.interests?.split(","));
       setDisplayLocalTime(insightsUser?.display_local_time);
@@ -359,11 +359,11 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
               <Checkbox
                 onCheckedChange={() =>
                   // eslint-disable-next-line camelcase
-                  setEmailPreference((prev) => ({ ...prev, receive_collaboration: !prev.receive_collaboration }))
+                  setEmailPreference((prev) => ({ ...prev, receive_connections: !prev.receive_connections }))
                 }
-                checked={emailPreference.receive_collaboration}
-                title="collaboration requests"
-                label="Receive collaboration requests"
+                checked={emailPreference.receive_connections}
+                title="connections requests"
+                label="Receive connections requests"
               />
             </div>
             <Button
