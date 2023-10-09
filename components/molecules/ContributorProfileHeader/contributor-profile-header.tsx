@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
+import { clsx } from "clsx";
+import { usePostHog } from "posthog-js/react";
 
 import { TfiMoreAlt } from "react-icons/tfi";
 import { HiUserAdd } from "react-icons/hi";
 import { FaIdCard } from "react-icons/fa";
 import { SignInWithOAuthCredentials, User } from "@supabase/supabase-js";
-import { usePostHog } from "posthog-js/react";
-import { clsx } from "clsx";
+
+import Link from "next/link";
+import PizzaGradient from "img/icons/pizza-gradient.svg";
 
 import {
   DropdownMenu,
@@ -132,7 +135,7 @@ const ContributorProfileHeader = ({
       )}
 
       <div className="container flex flex-row items-end justify-between gap-2 px-2 py-6 mx-auto md:px-16">
-        <div className="translate-y-[65px] hidden md:inline-flex">
+        <div className="translate-y-[65px] hidden md:inline-flex relative">
           <Avatar
             initialsClassName="text-[100px] -translate-y-2.5  leading-none"
             initials={githubName?.charAt(0)}
@@ -142,8 +145,17 @@ const ContributorProfileHeader = ({
             size={184}
             isCircle
           />
+
+          <Link
+            href={cardPageUrl(username!)}
+            className="absolute bottom-0 z-10 grid w-12 h-12 rounded-full shadow-md place-content-center border-conic-gradient right-4"
+          >
+            <div className="grid w-10 h-10 overflow-hidden rounded-full place-content-center bg-black/80">
+              <Image priority alt="user profile cover image" className="w-5 h-6 " src={PizzaGradient} />
+            </div>
+          </Link>
         </div>
-        <div className="translate-y-[110px] md:hidden ">
+        <div className="translate-y-[110px] md:hidden relative">
           <Avatar
             initialsClassName="text-[70px] -translate-y-1 leading-none"
             initials={githubName?.charAt(0)}
@@ -153,10 +165,18 @@ const ContributorProfileHeader = ({
             size={120}
             isCircle
           />
+          <Link
+            href={cardPageUrl(username!)}
+            className="absolute bottom-0 z-10 grid w-10 h-10 rounded-full shadow-md right-1 place-content-center border-conic-gradient"
+          >
+            <div className="grid w-8 h-8 overflow-hidden rounded-full place-content-center bg-black/80">
+              <Image priority alt="user profile cover image" className="w-4 h-5 " src={PizzaGradient} />
+            </div>
+          </Link>
         </div>
         {isConnected && (
           <div className="flex flex-col items-center gap-3 translate-y-24 md:translate-y-0 md:flex-row">
-            <div className="flex justify-center items-center  gap-2 mb-10 md:gap-6 flex-wrap">
+            <div className="flex flex-wrap items-center justify-center gap-2 mb-10 md:gap-6">
               {user ? (
                 !isOwner && (
                   <>
@@ -166,8 +186,8 @@ const ContributorProfileHeader = ({
                         variant="primary"
                         className="group w-[6.25rem] justify-center items-center"
                       >
-                        <span className="text-center hidden sm:block group-hover:hidden">Following</span>
-                        <span className="text-center block sm:hidden group-hover:block">Unfollow</span>
+                        <span className="hidden text-center sm:block group-hover:hidden">Following</span>
+                        <span className="block text-center sm:hidden group-hover:block">Unfollow</span>
                       </Button>
                     ) : (
                       <Button variant="primary" className="w-[6.25rem] text-center" onClick={handleFollowClick}>
@@ -199,14 +219,14 @@ const ContributorProfileHeader = ({
                 </>
               )}
 
-              <Button className="sm:hidden bg-white" variant="text" href={cardPageUrl(username!)}>
+              <Button className="bg-white sm:hidden" variant="text" href={cardPageUrl(username!)}>
                 <FaIdCard className="" />
               </Button>
-              <Button className="hidden sm:inline-flex text-black" variant="default" href={cardPageUrl(username!)}>
+              <Button className="hidden text-black sm:inline-flex" variant="default" href={cardPageUrl(username!)}>
                 <FaIdCard className="mt-1 mr-1" /> Get Card
               </Button>
               <DropdownMenu modal={false}>
-                <div className="items-center gap-2 md:gap-6 flex-wrap">
+                <div className="flex-wrap items-center gap-2 md:gap-6">
                   {!isOwner && (
                     <DropdownMenuTrigger
                       title="More options"
