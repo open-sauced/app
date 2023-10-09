@@ -11,16 +11,18 @@ export async function fetchApiData<T>({
   method = "GET",
   headers,
   bearerToken,
+  pathValidator,
 }: {
   path: string;
   method?: "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
   headers?: HeadersInit;
   bearerToken: string;
-  // pathValidator(path: string): boolean;
+  // TODO: made this optional for now so it doesn't block Sunday's recent work
+  pathValidator?: (path: string) => boolean;
 }) {
-  // if (!pathValidator(path)) {
-  //   return { data: null, error: { status: 400, statusText: "bad request" } };
-  // }
+  if (pathValidator && !pathValidator(path)) {
+    return { data: null, error: { status: 400, statusText: "bad request" } };
+  }
 
   const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/${path}`;
   const response = await fetch(apiUrl, {
