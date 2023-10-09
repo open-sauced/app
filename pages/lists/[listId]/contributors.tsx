@@ -1,7 +1,7 @@
 import { GetServerSidePropsContext } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import ListPageLayout from "layouts/lists";
-import { fetchApiData, validateListPath } from "helpers/fetchApiData";
+import { fetchApiData } from "helpers/fetchApiData";
 import Error from "components/atoms/Error/Error";
 import { convertToContributors, useContributorsList } from "lib/hooks/api/useContributorList";
 import ContributorsList from "components/organisms/ContributorsList/contributors-list";
@@ -20,9 +20,9 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     fetchApiData<PagedData<DBListContributor>>({
       path: `lists/${listId}/contributors?limit=${limit}`,
       bearerToken,
-      pathValidator: validateListPath,
+      // pathValidator: validateListPath,
     }),
-    fetchApiData<DBList>({ path: `lists/${listId}`, bearerToken, pathValidator: validateListPath }),
+    fetchApiData<DBList>({ path: `lists/${listId}`, bearerToken }),
   ]);
 
   if (error?.status === 404) {

@@ -2,17 +2,22 @@ import React, { useEffect, useState } from "react";
 import { FiCheckCircle, FiCopy } from "react-icons/fi";
 import { AiOutlineWarning } from "react-icons/ai";
 import { usePostHog } from "posthog-js/react";
-import ContributorListTableHeaders from "components/molecules/ContributorListTableHeader/contributor-list-table-header";
-import { WithPageLayout } from "interfaces/with-page-layout";
-import HubContributorsPageLayout from "layouts/hub-contributors";
+import { GetServerSidePropsContext } from "next";
+import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
+
 import useFetchAllContributors from "lib/hooks/useFetchAllContributors";
+import { fetchApiData } from "helpers/fetchApiData";
+import { timezones } from "lib/utils/timezones";
+import { useToast } from "lib/hooks/useToast";
+import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
+
+import ContributorListTableHeaders from "components/molecules/ContributorListTableHeader/contributor-list-table-header";
+import HubContributorsPageLayout from "layouts/hub-contributors";
 import ContributorTable from "components/organisms/ContributorsTable/contributors-table";
 import Header from "components/organisms/Header/header";
 import HubContributorsHeader from "components/molecules/HubContributorsHeader/hub-contributors-header";
 import Pagination from "components/molecules/Pagination/pagination";
 import PaginationResults from "components/molecules/PaginationResults/pagination-result";
-import { useToast } from "lib/hooks/useToast";
-import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { Dialog, DialogContent } from "components/molecules/Dialog/dialog";
 import Title from "components/atoms/Typography/title";
 import Text from "components/atoms/Typography/text";
@@ -24,7 +29,46 @@ interface CreateListPayload {
   is_public: boolean;
   contributors: { id: number; login: string }[];
 }
-const NewListCreationPage: WithPageLayout = () => {
+
+interface NewListCreationPageProps {
+  initialData: {
+    meta: Meta;
+    data: DbPRContributor[];
+  };
+  timezoneOption: { timezone: string }[];
+}
+
+export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
+  const supabase = createPagesServerClient(ctx);
+
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+  const bearerToken = session ? session.access_token : "";
+
+  const fetchTimezone = fetchApiData<{ timezone: string }[]>({ path: `lists/timezones`, bearerToken });
+  const fetchContributors = fetchApiData<PagedData<DbPRContributor>>({
+    path: `lists/contributors`,
+    bearerToken,
+  });
+
+  const [{ data: timezoneOptions }, { data, error }] = await Promise.all([fetchTimezone, fetchContributors]);
+
+  if (error?.status === 404) {
+    return {
+      notFound: true,
+    };
+  }
+
+  return {
+    props: {
+      initialData: data ? { data: data.data, meta: data.meta } : { data: [], meta: {} },
+      timezoneOption: timezoneOptions ? timezoneOptions : timezones,
+    },
+  };
+};
+
+const NewListCreationPage = ({ initialData, timezoneOption }: NewListCreationPageProps) => {
   const { toast } = useToast();
   const posthog = usePostHog();
   const { sessionToken } = useSupabaseAuth();
@@ -35,13 +79,30 @@ const NewListCreationPage: WithPageLayout = () => {
   const [isSuccess, setIsSuccess] = useState(false);
   const [title, setTitle] = useState("");
   const [selectedContributors, setSelectedContributors] = useState<DbPRContributor[]>([]);
-  const [range, setRange] = useState<number>(30);
-  const [timezone, setTimezone] = useState<string | undefined>(undefined);
+  const [selectedTimezone, setSelectedTimezone] = useState<string | undefined>(undefined);
   const [isPublic, setIsPublic] = useState<boolean>(false);
-  const { data, meta, isLoading, setLimit, setPage } = useFetchAllContributors({
-    timezone: timezone,
-  });
+  const { data, meta, isLoading, setLimit, setPage } = useFetchAllContributors(
+    {
+      timezone: selectedTimezone,
+    },
+    {
+      fallbackData: initialData,
+      revalidateOnFocus: false,
+    }
+  );
 
+  // get all timezones from the api that exists in the dummy timezone list
+
+  const timezoneList = timezones
+    .filter((timezone) => {
+      return timezoneOption.some((timezoneOption) => timezoneOption.timezone === timezone.value);
+    })
+    .map((timezone) => {
+      return {
+        label: timezone.text,
+        value: timezone.value,
+      };
+    });
   const contributors = data
     ? data.length > 0 &&
       data.map((contributor) => {
@@ -136,141 +197,139 @@ const NewListCreationPage: WithPageLayout = () => {
   };
 
   const handleSelectTimezone = (selected: string) => {
-    setTimezone(selected);
+    setSelectedTimezone(selected);
   };
 
   return (
-    <Dialog open={isOpen}>
-      <div className="info-container container w-full min-h-[6.25rem]">
-        <Header>
-          <HubContributorsHeader
-            setTimezoneFilter={handleSelectTimezone}
-            isPublic={isPublic}
-            handleToggleIsPublic={() => setIsPublic(!isPublic)}
-            loading={createLoading}
-            selectedContributorsIds={selectedContributors.map((contributor) => contributor.user_id)}
-            setLimit={setLimit}
-            setRangeFilter={(range) => {
-              setRange(range);
-            }}
-            timezone={timezone}
-            title={title}
-            onAddToList={handleOnListCreate}
-            onTitleChange={(title) => setTitle(title)}
+    <HubContributorsPageLayout>
+      <Dialog open={isOpen}>
+        <div className="info-container container w-full min-h-[6.25rem]">
+          <Header>
+            <HubContributorsHeader
+              setTimezoneFilter={handleSelectTimezone}
+              isPublic={isPublic}
+              handleToggleIsPublic={() => setIsPublic(!isPublic)}
+              loading={createLoading}
+              selectedContributorsIds={selectedContributors.map((contributor) => contributor.user_id)}
+              setLimit={setLimit}
+              timezoneOptions={timezoneList}
+              timezone={selectedTimezone}
+              title={title}
+              onAddToList={handleOnListCreate}
+              onTitleChange={(title) => setTitle(title)}
+            />
+          </Header>
+        </div>
+        <div className="lg:min-w-[1150px] px-4 md:px-16 py-8">
+          <ContributorListTableHeaders
+            selected={selectedContributors.length > 0 && selectedContributors.length === meta.limit}
+            handleOnSelectAllContributor={handleOnSelectAllChecked}
           />
-        </Header>
-      </div>
-      <div className="lg:min-w-[1150px] px-4 md:px-16 py-8">
-        <ContributorListTableHeaders
-          selected={selectedContributors.length > 0 && selectedContributors.length === meta.limit}
-          handleOnSelectAllContributor={handleOnSelectAllChecked}
-        />
-        <ContributorTable
-          loading={isLoading}
-          selectedContributors={selectedContributors}
-          topic={"*"}
-          handleSelectContributors={handleOnSelectChecked}
-          contributors={contributors as DbPRContributor[]}
-        ></ContributorTable>
-        <div className="flex items-center justify-between w-full py-1 md:py-4 md:mt-5">
-          <div>
-            <div className="">
-              <PaginationResults metaInfo={meta} total={meta.itemCount} entity={"contributors"} />
+          <ContributorTable
+            loading={isLoading}
+            selectedContributors={selectedContributors}
+            topic={"*"}
+            handleSelectContributors={handleOnSelectChecked}
+            contributors={contributors as DbPRContributor[]}
+          ></ContributorTable>
+          <div className="flex items-center justify-between w-full py-1 md:py-4 md:mt-5">
+            <div>
+              <div className="">
+                <PaginationResults metaInfo={meta} total={meta.itemCount} entity={"contributors"} />
+              </div>
             </div>
-          </div>
-          <div>
-            <div className="flex flex-col gap-4">
-              <Pagination
-                pages={[]}
-                hasNextPage={meta.hasNextPage}
-                hasPreviousPage={meta.hasPreviousPage}
-                totalPage={meta.pageCount}
-                page={meta.page}
-                onPageChange={function (page: number): void {
-                  setPage(page);
-                }}
-                divisor={true}
-                goToPage
-              />
+            <div>
+              <div className="flex flex-col gap-4">
+                <Pagination
+                  pages={[]}
+                  hasNextPage={meta.hasNextPage}
+                  hasPreviousPage={meta.hasPreviousPage}
+                  totalPage={meta.pageCount}
+                  page={meta.page}
+                  onPageChange={function (page: number): void {
+                    setPage(page);
+                  }}
+                  divisor={true}
+                  goToPage
+                />
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Success and error state dialog section */}
-      <DialogContent>
-        {isSuccess ? (
-          <div className="flex flex-col max-w-xs gap-6 w-max">
-            <div className="flex flex-col items-center gap-2">
-              <span className="flex items-center justify-center p-3 bg-green-100 rounded-full w-max">
-                <span className="flex items-center justify-center w-10 h-10 bg-green-300 rounded-full">
-                  <FiCheckCircle className="text-green-800" size={24} />
+        {/* Success and error state dialog section */}
+        <DialogContent>
+          {isSuccess ? (
+            <div className="flex flex-col max-w-xs gap-6 w-max">
+              <div className="flex flex-col items-center gap-2">
+                <span className="flex items-center justify-center p-3 bg-green-100 rounded-full w-max">
+                  <span className="flex items-center justify-center w-10 h-10 bg-green-300 rounded-full">
+                    <FiCheckCircle className="text-green-800" size={24} />
+                  </span>
                 </span>
-              </span>
-              <Title level={3} className="text-lg">
-                Your list has been created
-              </Title>
-              <Text className="leading-tight text-center text-light-slate-9">
-                You can now edit and track your new list in the pages tab, and get useful insights.
-              </Text>
+                <Title level={3} className="text-lg">
+                  Your list has been created
+                </Title>
+                <Text className="leading-tight text-center text-light-slate-9">
+                  You can now edit and track your new list in the pages tab, and get useful insights.
+                </Text>
+              </div>
+              <div className="">
+                <label>
+                  <span className="text-sm text-light-slate-10">Share list link</span>
+                  <div className="flex items-center gap-3 pr-3">
+                    <TextInput
+                      className="bg-white pointer-events-none"
+                      value={`${window.location.origin}/lists/${listId}`}
+                    />
+                    <button
+                      onClick={() => handleCopyToClipboard(`${window.location.origin}/lists/${listId}`)}
+                      type="button"
+                    >
+                      <FiCopy className="text-lg" />
+                    </button>
+                  </div>
+                </label>
+              </div>
+              <div className="flex gap-3">
+                <Button href="/hub/lists" className="justify-center flex-1" variant="text">
+                  Go Back to Pages
+                </Button>
+                <Button href={`/lists/${listId}/overview`} className="justify-center flex-1" variant="primary">
+                  Go to List Page
+                </Button>
+              </div>
             </div>
-            <div className="">
-              <label>
-                <span className="text-sm text-light-slate-10">Share list link</span>
-                <div className="flex items-center gap-3 pr-3">
-                  <TextInput
-                    className="bg-white pointer-events-none"
-                    value={`${window.location.origin}/lists/${listId}`}
-                  />
-                  <button
-                    onClick={() => handleCopyToClipboard(`${window.location.origin}/lists/${listId}`)}
-                    type="button"
-                  >
-                    <FiCopy className="text-lg" />
-                  </button>
-                </div>
-              </label>
-            </div>
-            <div className="flex gap-3">
-              <Button href="/hub/lists" className="justify-center flex-1" variant="text">
-                Go Back to Pages
-              </Button>
-              <Button href={`/lists/${listId}/overview`} className="justify-center flex-1" variant="primary">
-                Go to List Page
-              </Button>
-            </div>
-          </div>
-        ) : (
-          <div className="flex flex-col max-w-xs gap-6 w-max">
-            <div className="flex flex-col items-center gap-2">
-              <span className="flex items-center justify-center p-3 bg-red-100 rounded-full w-max">
-                <span className="flex items-center justify-center w-10 h-10 bg-red-300 rounded-full">
-                  <AiOutlineWarning className="text-red-800" size={24} />
+          ) : (
+            <div className="flex flex-col max-w-xs gap-6 w-max">
+              <div className="flex flex-col items-center gap-2">
+                <span className="flex items-center justify-center p-3 bg-red-100 rounded-full w-max">
+                  <span className="flex items-center justify-center w-10 h-10 bg-red-300 rounded-full">
+                    <AiOutlineWarning className="text-red-800" size={24} />
+                  </span>
                 </span>
-              </span>
-              <Title level={3} className="text-lg">
-                Something went wrong
-              </Title>
-              <Text className="leading-tight text-center text-light-slate-9">
-                We couldn’t create your list. Please, try again in a few minutes.
-              </Text>
-            </div>
+                <Title level={3} className="text-lg">
+                  Something went wrong
+                </Title>
+                <Text className="leading-tight text-center text-light-slate-9">
+                  We couldn’t create your list. Please, try again in a few minutes.
+                </Text>
+              </div>
 
-            <div className="flex gap-3">
-              <Button href="/hub/lists" className="justify-center flex-1" variant="text">
-                Go Back to Pages
-              </Button>
-              <Button href={`/hub/lists`} className="justify-center flex-1" variant="primary">
-                Go to List Page
-              </Button>
+              <div className="flex gap-3">
+                <Button href="/hub/lists" className="justify-center flex-1" variant="text">
+                  Go Back to Pages
+                </Button>
+                <Button href={`/hub/lists`} className="justify-center flex-1" variant="primary">
+                  Go to List Page
+                </Button>
+              </div>
             </div>
-          </div>
-        )}
-      </DialogContent>
-    </Dialog>
+          )}
+        </DialogContent>
+      </Dialog>
+    </HubContributorsPageLayout>
   );
 };
-
-NewListCreationPage.PageLayout = HubContributorsPageLayout;
 
 export default NewListCreationPage;

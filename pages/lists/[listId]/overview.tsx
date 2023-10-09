@@ -14,7 +14,7 @@ import { getAvatarByUsername } from "lib/utils/github";
 import useListContributions from "lib/hooks/useListContributions";
 import useListStats from "lib/hooks/useListStats";
 import HighlightCard from "components/molecules/HighlightCard/highlight-card";
-import { fetchApiData, validateListPath } from "helpers/fetchApiData";
+import { fetchApiData } from "helpers/fetchApiData";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
 
 type ContributorPrMap = { [contributor: string]: DbRepoPR };
@@ -38,9 +38,9 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     fetchApiData<PagedData<DBListContributor>>({
       path: `lists/${listId}/contributors?limit=${limit}`,
       bearerToken,
-      pathValidator: validateListPath,
+      // pathValidator: validateListPath,
     }),
-    fetchApiData<DBList>({ path: `lists/${listId}`, bearerToken, pathValidator: validateListPath }),
+    fetchApiData<DBList>({ path: `lists/${listId}`, bearerToken }),
   ]);
 
   if (error?.status === 404) {
