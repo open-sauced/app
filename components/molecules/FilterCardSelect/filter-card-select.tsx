@@ -46,7 +46,7 @@ const FilterCardSelect: React.FC<FilterCardSelectProps> = ({
       <SelectTrigger
         selectIcon={
           <Image
-            className="ml-3 "
+            className="ml-2"
             width={13}
             height={13}
             alt={icons[icon] ? icons[icon].alt : "Icons"}
