@@ -78,7 +78,13 @@ A production deployment is a complete build of the project, including the build 
 ```shell
 npm run build
 ```
+<a name="building-with-gitpod"></a>
 
+## Building with Gitpod | Codespaces 💣
+
+Need to make quick edits or only have access to virtual IDEs? Consider using [Gitpod.io](https://gitpod.io/#https://github.com/opensauced/app) or [Codespaces](https://codespaces.new/opensauced/app). They streamline the process by automatically installing required dependencies, making it effortless to contribute in just one click!:)
+
+---
 ## 🤝 Contributing
 
 _We can only take unsolicited contributions from OpenSauced Triage, Committers, and Maintainers **for now**. We suggest folks not on the team, to please open issues or take a look at the [Bugs](https://github.com/orgs/open-sauced/projects/6) or [Papercuts](https://github.com/open-sauced/insights/issues?q=is%3Aopen+is%3Aissue+milestone%3APapercuts). If you would like to find **good first issues**, please check out the companion project to this, [open-sauced/hot](https://github.com/open-sauced/hot/issues)._
