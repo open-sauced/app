@@ -30,7 +30,7 @@ const colors = {
   churned: "#f59e0b", // orange
 } as const satisfies Record<Stat, string>;
 
-interface ContributionEvolutionByTypeDatum {
+export interface ContributionEvolutionByTypeDatum {
   startTime: string;
   active: number;
   new: number;
@@ -89,7 +89,6 @@ export default function ContributionsEvolutionByType(props: Props) {
       y: datum[type],
     })),
   }));
-  console.log(groupedData);
 
   return (
     <div>
