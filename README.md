@@ -103,3 +103,8 @@ npx -y @open-sauced/conventional-commit
 
 Got Questions? Join the conversation in our [Discord](https://discord.gg/U2peSNf23P).  
 Find Open Sauced videos and release overviews on our [YouTube Channel](https://www.youtube.com/channel/UCklWxKrTti61ZCROE1e5-MQ).
+
+## License
+
+
+The source code license is Apache License, Version 2.0, as described in the [LICENSE](LICENSE) file.
