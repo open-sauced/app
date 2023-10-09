@@ -16,6 +16,7 @@ interface ContributorsListProps {
   meta: Meta;
   setPage: (page: number) => void;
   setLimit: (limit: number) => void;
+  range: number;
 }
 
 interface ContributorCardListProps {
@@ -48,8 +49,7 @@ const ContributorCardList = ({ contributors = [], topic, range }: ContributorCar
   );
 };
 
-const ContributorsList = ({ contributors, isLoading, meta, setPage, setLimit }: ContributorsListProps) => {
-  const [range, setRange] = useState(30);
+const ContributorsList = ({ contributors, isLoading, meta, setPage, setLimit, range }: ContributorsListProps) => {
   const [layout, setLayout] = useState<ToggleValue>("list");
 
   return (
@@ -59,16 +59,15 @@ const ContributorsList = ({ contributors, isLoading, meta, setPage, setLimit }: 
         metaInfo={meta}
         entity="contributors"
         updateLimit={setLimit}
-        range={range}
-        setRangeFilter={setRange}
         layout={layout}
         onLayoutToggle={setLayout}
+        range={range}
       />
       <ClientOnly>
         {layout !== "grid" ? (
           <>
-            <ContributorListTableHeaders />
-            <ContributorTable loading={isLoading} topic={"*"} contributors={contributors} />
+            <ContributorListTableHeaders range={range} />
+            <ContributorTable loading={isLoading} topic={"*"} contributors={contributors} range={range} />
           </>
         ) : (
           <ContributorCardList contributors={contributors} topic={"*"} range={range} />

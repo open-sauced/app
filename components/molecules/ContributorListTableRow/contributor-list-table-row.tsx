@@ -19,6 +19,7 @@ interface ContributorListTableRow {
   topic: string;
   selected?: boolean;
   handleOnSelectContributor?: (state: boolean, contributor: DbPRContributor) => void;
+  range: number;
 }
 
 function getLastContributionDate(contributions: DbRepoPR[]) {
@@ -47,14 +48,15 @@ const ContributorListTableRow = ({
   topic,
   selected,
   handleOnSelectContributor,
+  range,
 }: ContributorListTableRow) => {
   const [tableOpen, setTableOpen] = useState(false);
   const login = contributor.author_login || contributor.username;
-  const { data: user } = useFetchUser(login || "");
-  const { data } = useContributorPullRequests(login || "", topic, [], 30);
+  const { data: user } = useFetchUser(contributor.author_login);
+  const { data } = useContributorPullRequests(login, topic, [], range);
   const repoList = useRepoList(Array.from(new Set(data.map((prData) => prData.full_name))).join(","));
   const contributorLanguageList = user ? Object.keys(user.languages).map((language) => language) : [];
-  const days = getPullRequestsToDays(data);
+  const days = getPullRequestsToDays(data, range);
   const totalPrs = data.length;
   const last30days = [
     {
