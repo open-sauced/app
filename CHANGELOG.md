@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.68.0-beta.14](https://github.com/open-sauced/insights/compare/v1.68.0-beta.13...v1.68.0-beta.14) (2023-10-09)
+
+
+### 🐛 Bug Fixes
+
+* update GitHub API request for user following ([#1833](https://github.com/open-sauced/insights/issues/1833)) ([d62f557](https://github.com/open-sauced/insights/commit/d62f557919eb9b2e7f8710b0f36a9915bbe689ba))
+
 ## [1.68.0-beta.13](https://github.com/open-sauced/insights/compare/v1.68.0-beta.12...v1.68.0-beta.13) (2023-10-09)
 
 
