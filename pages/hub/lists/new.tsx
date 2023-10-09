@@ -30,7 +30,7 @@ interface GhFollowing {
 const CreateListPage = () => {
   const router = useRouter();
   const { toast } = useToast();
-  const { sessionToken, providerToken } = useSupabaseAuth();
+  const { sessionToken, providerToken, user } = useSupabaseAuth();
 
   const [name, setName] = useState("");
   const [isPublic, setIsPublic] = useState(false);
@@ -83,15 +83,16 @@ const CreateListPage = () => {
   };
 
   const handleGitHubImport = async (props: { follow: boolean }) => {
-    if (!providerToken) {
-      toast({ description: "Unable to connect to GitHub! Try refreshing your auth session", variant: "warning" });
+    if (!user) {
+      toast({ description: "Unable to connect to GitHub! Try logging out and re-connecting.", variant: "warning" });
       return;
     }
+
     setSubmitted(true);
-    const req = await fetch(`https://api.github.com/user/following?per_page=10`, {
+    const req = await fetch(`https://api.github.com/users/${user?.user_metadata.user_name}/following?per_page=30`, {
       headers: {
-        Authorization: `Bearer ${providerToken}`,
         "Content-type": "application/json",
+        ...(providerToken ? { Authorization: `Bearer ${providerToken}` } : {}),
       },
     });
 
