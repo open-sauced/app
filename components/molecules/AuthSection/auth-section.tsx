@@ -105,7 +105,7 @@ const AuthSection: React.FC = ({}) => {
             <>
               {onboarded && (
                 <>
-                  <div className="relative flex">
+                  <div className="relative hidden lg:flex xl:hidden">
                     <Tooltip content="Complete the onboarding" direction="bottom">
                       <OnboardingButton aria="onboarding" className="!flex !pr-1" />
                     </Tooltip>
@@ -121,7 +121,11 @@ const AuthSection: React.FC = ({}) => {
                       </Text>
                     </div> */}
                   </div>
-
+                  <OnboardingButton className="!hidden xl:!flex !pr-1">
+                    <Text className="text-sm !text-light-slate-12 hidden xl:block py-1 px-2">
+                      Complete the onboarding
+                    </Text>
+                  </OnboardingButton>
                   <Divider type="vertical" className="!h-6 !bg-light-slate-6"></Divider>
                 </>
                 // <>

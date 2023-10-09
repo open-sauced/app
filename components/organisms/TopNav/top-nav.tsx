@@ -25,7 +25,7 @@ const TopNav: React.FC = () => {
       <div className="lg:hidden container mx-auto px-2 md:px-16 flex justify-between items-center">
         <Nav name="Mobile" className="" />
         {user
-          ? !onboarded && (
+          ? onboarded && (
               <div className="relative">
                 <OnboardingButton aria="onboarding" className="!flex !pr-1 mb-1 mr-2">
                   <Text className="text-sm !text-light-slate-12 hidden sm:block py-1 px-2">
