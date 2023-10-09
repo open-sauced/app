@@ -42,11 +42,6 @@ const CreateListPage = () => {
     setName(value);
   };
 
-  // useEffect(() => {
-
-  //     // .then(console.log, console.error);
-  // }, []);
-
   // pick 10 unique random contributors from the GitHub following list
   const getFollowingRandom = (arr: GhFollowing[], n: number): GhFollowing[] => {
     const result = new Array(n);
