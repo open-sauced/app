@@ -150,7 +150,7 @@ const ContributorProfileHeader = ({
             className="absolute bottom-0 z-10 grid w-12 h-12 rounded-full shadow-md place-content-center border-conic-gradient right-4"
           >
             <div className="grid w-10 h-10 overflow-hidden rounded-full place-content-center bg-black/80">
-              <Image priority alt="user profile cover image" className="w-5 h-6 " src={PizzaGradient} />
+              <Image priority alt="user profile cover image" className="w-6 h-[1.7rem] " src={PizzaGradient} />
             </div>
           </Link>
         </div>
@@ -168,7 +168,7 @@ const ContributorProfileHeader = ({
             href={cardPageUrl(username!)}
             className="absolute bottom-0 z-10 grid rounded-full shadow-md w-11 h-11 right-1 place-content-center border-conic-gradient"
           >
-            <div className="grid w-[2.4em] h-[2.4em] overflow-hidden rounded-full place-content-center bg-black/80">
+            <div className="grid w-[2.5em] h-[2.5em] overflow-hidden rounded-full place-content-center bg-black/80">
               <Image priority alt="user profile cover image" className="w-5 h-5 " src={PizzaGradient} />
             </div>
           </Link>
