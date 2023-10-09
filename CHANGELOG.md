@@ -5,6 +5,58 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.68.0-beta.15](https://github.com/open-sauced/insights/compare/v1.68.0-beta.14...v1.68.0-beta.15) (2023-10-09)
+
+
+### 🐛 Bug Fixes
+
+* disable tier session check ([#1840](https://github.com/open-sauced/insights/issues/1840)) ([173227b](https://github.com/open-sauced/insights/commit/173227bd2e1f5f5bc7d9eea1af07b834fc0f7435))
+
+## [1.68.0-beta.14](https://github.com/open-sauced/insights/compare/v1.68.0-beta.13...v1.68.0-beta.14) (2023-10-09)
+
+
+### 🐛 Bug Fixes
+
+* update GitHub API request for user following ([#1833](https://github.com/open-sauced/insights/issues/1833)) ([d62f557](https://github.com/open-sauced/insights/commit/d62f557919eb9b2e7f8710b0f36a9915bbe689ba))
+
+## [1.68.0-beta.13](https://github.com/open-sauced/insights/compare/v1.68.0-beta.12...v1.68.0-beta.13) (2023-10-09)
+
+
+### 🐛 Bug Fixes
+
+* pass list name and public flag to contributor search ([#1832](https://github.com/open-sauced/insights/issues/1832)) ([d54ddab](https://github.com/open-sauced/insights/commit/d54ddabb7af3c0b395e8196f49ceb038beb8dc25))
+
+## [1.68.0-beta.12](https://github.com/open-sauced/insights/compare/v1.68.0-beta.11...v1.68.0-beta.12) (2023-10-09)
+
+
+### 🍕 Features
+
+* add new lists creation page ([#1798](https://github.com/open-sauced/insights/issues/1798)) ([7ebc99b](https://github.com/open-sauced/insights/commit/7ebc99b4bfbf8b128d87b433dfcd8e5265be43e5))
+
+## [1.68.0-beta.11](https://github.com/open-sauced/insights/compare/v1.68.0-beta.10...v1.68.0-beta.11) (2023-10-09)
+
+
+### 🍕 Features
+
+* implemented list activity page with most active contributors graph ([#1796](https://github.com/open-sauced/insights/issues/1796)) ([0c9b1e2](https://github.com/open-sauced/insights/commit/0c9b1e2cbe1f6749aad0015e06701dce6423401e))
+
+
+### 🐛 Bug Fixes
+
+* Fix re-rendering of Highlights "Repositories" table with duplicates ([#1811](https://github.com/open-sauced/insights/issues/1811)) ([f729457](https://github.com/open-sauced/insights/commit/f72945748f91929b3ea0fad0f4950704a3ae0435))
+
+## [1.68.0-beta.10](https://github.com/open-sauced/insights/compare/v1.68.0-beta.9...v1.68.0-beta.10) (2023-10-09)
+
+
+### 🧑‍💻 Code Refactoring
+
+* use api timezone options for contributors filter ([#1827](https://github.com/open-sauced/insights/issues/1827)) ([f7276e9](https://github.com/open-sauced/insights/commit/f7276e97c54f71ece8b5b60e6c76fa11ad1f96b3))
+
+
+### 🐛 Bug Fixes
+
+* show insight link for not onboarded users ([#1830](https://github.com/open-sauced/insights/issues/1830)) ([566b0d1](https://github.com/open-sauced/insights/commit/566b0d1f8946b3d19ed6a8ea38251891e435610d))
+
 ## [1.68.0-beta.9](https://github.com/open-sauced/insights/compare/v1.68.0-beta.8...v1.68.0-beta.9) (2023-10-06)
 
 

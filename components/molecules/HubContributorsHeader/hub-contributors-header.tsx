@@ -3,7 +3,6 @@ import { FaPlus } from "react-icons/fa";
 import clsx from "clsx";
 import { FiGlobe } from "react-icons/fi";
 
-import { timezones } from "lib/utils/timezones";
 import { useToast } from "lib/hooks/useToast";
 
 import ListNameHeader from "components/atoms/ListNameHeader/list-name-header";
@@ -12,17 +11,15 @@ import SingleSelect from "components/atoms/Select/single-select";
 import ToggleSwitch from "components/atoms/ToggleSwitch/toggle-switch";
 import Button from "components/atoms/Button/button";
 import Text from "components/atoms/Typography/text";
-import ComponentDateFilter from "../ComponentDateFilter/component-date-filter";
 // import Search from "components/atoms/Search/search";
 
 interface ListHeaderProps {
   setLimit?: (limit: number) => void;
-  setRangeFilter?: (range: number) => void;
+  timezoneOptions: { label: string; value: string }[];
   timezone?: string;
   setTimezoneFilter: (timezone: string) => void;
   isPublic: boolean;
   handleToggleIsPublic: () => void;
-  range?: number;
   selectedContributorsIds: number[];
   title?: string;
   onAddToList?: () => void;
@@ -32,23 +29,18 @@ interface ListHeaderProps {
 
 const HubContributorsHeader = ({
   setLimit,
-  setRangeFilter,
   selectedContributorsIds,
   title,
   onAddToList,
   onTitleChange,
-  range,
   loading,
   isPublic,
   handleToggleIsPublic,
   timezone,
   setTimezoneFilter,
+  timezoneOptions,
 }: ListHeaderProps): JSX.Element => {
   const { toast } = useToast();
-  const timezoneOptions = timezones.map((timezone) => ({
-    label: timezone.text,
-    value: timezone.value,
-  }));
 
   return (
     <div className="relative flex flex-col justify-between w-full gap-6 py-2">
@@ -105,7 +97,6 @@ const HubContributorsHeader = ({
           />
         </div>
         <div className="flex flex-col gap-2 md:items-center md:gap-4 md:flex-row">
-          <ComponentDateFilter setRangeFilter={(range: number) => setRangeFilter?.(range)} defaultRange={range} />
           <LimitSelect
             placeholder="10 per page"
             options={[

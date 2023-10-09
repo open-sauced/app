@@ -1,5 +1,5 @@
 import { useState } from "react";
-import useSWR, { Fetcher } from "swr";
+import useSWR, { Fetcher, SWRConfiguration } from "swr";
 import { useRouter } from "next/router";
 
 import publicApiFetcher from "lib/utils/public-api-fetcher";
@@ -17,7 +17,7 @@ type queryObj = {
   initialLimit?: number;
 };
 
-const useFetchAllContributors = (query: queryObj) => {
+const useFetchAllContributors = (query: queryObj, config?: SWRConfiguration) => {
   const { toast } = useToast();
   const router = useRouter();
   const [page, setPage] = useState(1);
@@ -46,7 +46,8 @@ const useFetchAllContributors = (query: queryObj) => {
 
   const { data, error, mutate } = useSWR<PaginatedResponse, Error>(
     endpointString,
-    publicApiFetcher as Fetcher<PaginatedResponse, Error>
+    publicApiFetcher as Fetcher<PaginatedResponse, Error>,
+    config
   );
 
   return {
