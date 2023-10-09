@@ -31,7 +31,6 @@ const useUserConnections = () => {
     });
 
     if (req && req.ok) {
-      const response = await req.json();
       toast({ description: "Connection request Sent!", title: "Success", variant: "success" });
     } else {
       const response = await req?.json();

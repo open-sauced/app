@@ -80,7 +80,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
       formRef.current!.linkedin_url.value = response.linkedin_url;
       formRef.current!.discord_url.value = response.discord_url;
     }
-  }, [user, session]);
+  }, [user, session, userInfo]);
 
   useEffect(() => {
     if (insightsUser) {
@@ -359,7 +359,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
               <Checkbox
                 onCheckedChange={() =>
                   // eslint-disable-next-line camelcase
-                  setEmailPreference((prev) => ({ ...prev, receive_collaboration: !prev.receive_collaboration }))
+                  setEmailPreference((prev) => ({ ...prev, receive_connections: !prev.receive_collaboration }))
                 }
                 checked={emailPreference.receive_collaboration}
                 title="connections requests"
