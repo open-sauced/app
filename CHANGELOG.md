@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.68.0-beta.12](https://github.com/open-sauced/insights/compare/v1.68.0-beta.11...v1.68.0-beta.12) (2023-10-09)
+
+
+### 🍕 Features
+
+* add new lists creation page ([#1798](https://github.com/open-sauced/insights/issues/1798)) ([7ebc99b](https://github.com/open-sauced/insights/commit/7ebc99b4bfbf8b128d87b433dfcd8e5265be43e5))
+
 ## [1.68.0-beta.11](https://github.com/open-sauced/insights/compare/v1.68.0-beta.10...v1.68.0-beta.11) (2023-10-09)
 
 
