@@ -18,6 +18,7 @@ import Text from "components/atoms/Typography/text";
 import GitHubIcon from "img/icons/github-icon.svg";
 import Icon from "components/atoms/Icon/icon";
 import SearchDialog, { SearchDialogTrigger } from "components/organisms/SearchDialog/search-dialog";
+import Tooltip from "components/atoms/Tooltip/tooltip";
 import DropdownList from "../DropdownList/dropdown-list";
 import OnboardingButton from "../OnboardingButton/onboarding-button";
 import userAvatar from "../../../img/ellipse-1.png";
@@ -35,6 +36,7 @@ const AuthSection: React.FC = ({}) => {
   const [userInfo, setUserInfo] = useState<DbUser | undefined>(undefined);
   const [host, setHost] = useState<string>("");
 
+  console.log(user, onboarded);
   useEffect(() => {
     if (typeof window !== "undefined") {
       setHost(window.location.origin as string);
@@ -101,13 +103,33 @@ const AuthSection: React.FC = ({}) => {
           <SearchDialogTrigger />
           {user ? (
             <>
-              {!onboarded && (
+              {onboarded && (
                 <>
-                  <OnboardingButton className="md:!hidden lg:!flex">
-                    <Text className={`text-sm !text-light-slate-12 `}>Complete the onboarding</Text>
-                  </OnboardingButton>
+                  <div className="relative flex">
+                    <Tooltip content="Complete the onboarding" direction="bottom">
+                      <OnboardingButton aria="onboarding" className="!flex !pr-1" />
+                    </Tooltip>
+                    {/* <OnboardingButton aria="onboarding" className="!flex !pr-1">
+                      <Text className="text-sm !text-light-slate-12 hidden xl:block py-1 px-2">
+                        Complete the onboarding
+                      </Text>
+                    </OnboardingButton> */}
+                    {/* <div id="onboarding" className="flex flex-col absolute right-[-0.5rem] bottom-[-115%]">
+                      <span className="border-x-transparent border-x-[7px] border-b-[7px] border-b-orange-500 h-0 w-0 self-end mr-[1.1rem]" />
+                      <Text className="text-sm py-1 font-medium px-2 w-max rounded shadow-lg bg-light-slate-2 !text-light-orange-9 outline-[1px] outline outline-orange-500">
+                        Complete the onboarding
+                      </Text>
+                    </div> */}
+                  </div>
+
                   <Divider type="vertical" className="!h-6 !bg-light-slate-6"></Divider>
                 </>
+                // <>
+                //   <OnboardingButton className="md:!hidden lg:!flex">
+                //     <Text className={`text-sm !text-light-slate-12 `}>Complete the onboarding</Text>
+                //   </OnboardingButton>
+                //   <Divider type="vertical" className="!h-6 !bg-light-slate-6"></Divider>
+                // </>
               )}
               <button className="relative cursor-pointer" onClick={() => router.push(`/user/notifications`)}>
                 {userInfo && userInfo.notification_count > 0 && (

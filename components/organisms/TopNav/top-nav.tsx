@@ -34,7 +34,7 @@ const TopNav: React.FC = () => {
                 </OnboardingButton>
                 <div id="onboarding" className="flex flex-col absolute right-0 sm:hidden">
                   <span className="border-x-transparent border-x-[7px] border-b-[7px] border-b-orange-500 h-0 w-0 self-end mr-[1.1rem]" />
-                  <Text className="text-sm py-1 font-medium px-2 w-max rounded after:w-0 after:h-0  shadow-lg  bg-light-slate-2 !text-light-orange-9 outline-[1px] outline outline-orange-500">
+                  <Text className="text-sm py-1 font-medium px-2 w-max rounded shadow-lg bg-light-slate-2 !text-light-orange-9 outline-[1px] outline outline-orange-500">
                     Complete the onboarding
                   </Text>
                 </div>
@@ -56,7 +56,7 @@ const Nav = ({ className, name = "Main" }: { className?: string; name?: string }
 
   return (
     <nav className={className} aria-label={name}>
-      <ul className="flex gap-3 md:gap-8 mb-3 ml-2 sm:m-0 w-full sm:w-auto">
+      <ul className="flex gap-3 md:gap-8 lg:gap-8 xl:gap-8 mb-3 ml-2 sm:m-0 w-full sm:w-auto">
         {!!user && onboarded && (
           <li>
             <Link className={`text-sm ${getActiveStyle(router.asPath === "/hub/insights")}`} href={"/hub/insights"}>
