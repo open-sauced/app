@@ -4,6 +4,7 @@ import { AiOutlineWarning } from "react-icons/ai";
 import { usePostHog } from "posthog-js/react";
 import { GetServerSidePropsContext } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
+import { useRouter } from "next/router";
 
 import useFetchAllContributors from "lib/hooks/useFetchAllContributors";
 import { fetchApiData, validateListPath } from "helpers/fetchApiData";
@@ -74,6 +75,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 };
 
 const NewListCreationPage = ({ initialData, timezoneOption }: NewListCreationPageProps) => {
+  const router = useRouter();
   const { toast } = useToast();
   const posthog = usePostHog();
   const { sessionToken } = useSupabaseAuth();
@@ -95,6 +97,16 @@ const NewListCreationPage = ({ initialData, timezoneOption }: NewListCreationPag
       revalidateOnFocus: false,
     }
   );
+
+  useEffect(() => {
+    if (!title && router.query.name) {
+      setTitle(router.query.name as string);
+    }
+
+    if (router.query.public === "true") {
+      setIsPublic(true);
+    }
+  }, [router.query]);
 
   // get all timezones from the api that exists in the dummy timezone list
 

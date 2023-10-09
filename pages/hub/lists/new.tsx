@@ -191,7 +191,7 @@ const CreateListPage = () => {
             description="Use our explore tool to find Contributors and create your list"
             icon="globe"
             handleClick={() => {
-              router.push("/hub/lists/find");
+              router.push(`/hub/lists/find?name=${name}&public=${isPublic}`);
             }}
           />
 
