@@ -359,7 +359,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
               <Checkbox
                 onCheckedChange={() =>
                   // eslint-disable-next-line camelcase
-                  setEmailPreference((prev) => ({ ...prev, receive_connections: !prev.receive_collaboration }))
+                  setEmailPreference((prev) => ({ ...prev, receive_collaboration: !prev.receive_collaboration }))
                 }
                 checked={emailPreference.receive_collaboration}
                 title="connections requests"
