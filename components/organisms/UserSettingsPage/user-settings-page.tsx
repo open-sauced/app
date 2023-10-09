@@ -362,8 +362,8 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
                   setEmailPreference((prev) => ({ ...prev, receive_collaboration: !prev.receive_collaboration }))
                 }
                 checked={emailPreference.receive_collaboration}
-                title="collaboration requests"
-                label="Receive collaboration requests"
+                title="connections requests"
+                label="Receive connections requests"
               />
             </div>
             <Button

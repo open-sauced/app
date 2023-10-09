@@ -21,7 +21,7 @@ import RainbowBg from "img/rainbow-cover.png";
 import Button from "components/atoms/Button/button";
 import Text from "components/atoms/Typography/text";
 import { Textarea } from "components/atoms/Textarea/text-area";
-import { useUserCollaborations } from "lib/hooks/useUserCollaborations";
+import { useUserConnections } from "lib/hooks/useUserConnections";
 import { useToast } from "lib/hooks/useToast";
 import { cardPageUrl } from "lib/utils/urls";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../Dialog/dialog";
@@ -37,7 +37,7 @@ interface ContributorProfileHeaderProps {
   username: string | undefined;
   handleSignIn: (params: SignInWithOAuthCredentials) => void;
   isOwner: boolean;
-  isRecievingCollaborations?: boolean;
+  isRecievingConnections?: boolean;
   isPremium?: boolean;
 }
 const ContributorProfileHeader = ({
@@ -51,14 +51,14 @@ const ContributorProfileHeader = ({
   user,
   handleSignIn,
   isOwner,
-  isRecievingCollaborations,
+  isRecievingConnections,
   isPremium,
 }: ContributorProfileHeaderProps) => {
   const router = useRouter();
   const currentPath = router.asPath;
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { requestCollaboration } = useUserCollaborations();
+  const { requestConnection } = useUserConnections();
   const [message, setMessage] = useState("");
   const [charCount, setCharCount] = useState(0);
   const [isCheckingCharLimit, setIsCheckingCharLimit] = useState<boolean>(false);
@@ -82,12 +82,12 @@ const ContributorProfileHeader = ({
     }
   };
 
-  const handleCollaborationRequest = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleConnectionRequest = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (message && username) {
       setLoading(true);
-      await requestCollaboration({ username, message });
+      await requestConnection({ username, message });
       setIsDialogOpen(false);
       setTimeout(() => {
         document.body.setAttribute("style", "pointer-events:auto !important");
@@ -230,7 +230,7 @@ const ContributorProfileHeader = ({
                           </button>
                         </DropdownMenuItem>
 
-                        {isPremium && isRecievingCollaborations && (
+                        {isPremium && isRecievingConnections && (
                           <DropdownMenuItem className="rounded-md">
                             <button onClick={() => setIsDialogOpen(true)} className="flex items-center gap-1 pl-3 pr-7">
                               Collaborate
@@ -251,7 +251,7 @@ const ContributorProfileHeader = ({
                           Share
                         </button>
                       </DropdownMenuItem>
-                      {isRecievingCollaborations && (
+                      {isRecievingConnections && (
                         <DropdownMenuItem className="rounded-md">
                           <button
                             onClick={async () =>
@@ -280,7 +280,7 @@ const ContributorProfileHeader = ({
             <DialogTitle className="!text-3xl text-left">Collaborate with {username}!</DialogTitle>
           </DialogHeader>
 
-          <form onSubmit={handleCollaborationRequest} className="flex flex-col w-full gap-2 px-4 md:gap-8 md:px-14 ">
+          <form onSubmit={handleConnectionRequest} className="flex flex-col w-full gap-2 px-4 md:gap-8 md:px-14 ">
             <div className="space-y-2">
               <label htmlFor="message">Send a message</label>
               <Textarea
