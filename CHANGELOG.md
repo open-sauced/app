@@ -5,6 +5,18 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.68.0-beta.11](https://github.com/open-sauced/insights/compare/v1.68.0-beta.10...v1.68.0-beta.11) (2023-10-09)
+
+
+### 🍕 Features
+
+* implemented list activity page with most active contributors graph ([#1796](https://github.com/open-sauced/insights/issues/1796)) ([0c9b1e2](https://github.com/open-sauced/insights/commit/0c9b1e2cbe1f6749aad0015e06701dce6423401e))
+
+
+### 🐛 Bug Fixes
+
+* Fix re-rendering of Highlights "Repositories" table with duplicates ([#1811](https://github.com/open-sauced/insights/issues/1811)) ([f729457](https://github.com/open-sauced/insights/commit/f72945748f91929b3ea0fad0f4950704a3ae0435))
+
 ## [1.68.0-beta.10](https://github.com/open-sauced/insights/compare/v1.68.0-beta.9...v1.68.0-beta.10) (2023-10-09)
 
 
