@@ -6,7 +6,6 @@ import { usePostHog } from "posthog-js/react";
 
 import { TfiMoreAlt } from "react-icons/tfi";
 import { HiUserAdd } from "react-icons/hi";
-import { FaIdCard } from "react-icons/fa";
 import { SignInWithOAuthCredentials, User } from "@supabase/supabase-js";
 
 import Link from "next/link";
@@ -219,12 +218,6 @@ const ContributorProfileHeader = ({
                 </>
               )}
 
-              <Button className="bg-white sm:hidden" variant="text" href={cardPageUrl(username!)}>
-                <FaIdCard className="" />
-              </Button>
-              <Button className="hidden text-black sm:inline-flex" variant="default" href={cardPageUrl(username!)}>
-                <FaIdCard className="mt-1 mr-1" /> Get Card
-              </Button>
               <DropdownMenu modal={false}>
                 <div className="flex-wrap items-center gap-2 md:gap-6">
                   {!isOwner && (
