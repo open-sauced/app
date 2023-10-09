@@ -55,10 +55,13 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
   const repoTofilterList = (repos: { full_name: string }[]): highlightReposType[] => {
     const filtersArray = repos.map(({ full_name }) => {
       const [orgName, repo] = full_name.split("/");
-      return { repoName: repo, repoIcon: `https://www.github.com/${orgName}.png?size=300`, full_name };
+      const repoFullName = `${orgName}/${repo}`;
+      return { repoName: repo, repoIcon: `https://www.github.com/${orgName}.png?size=300`, full_name: repoFullName };
     });
-
-    return filtersArray;
+    const jsonObject = filtersArray.map((arrayItem) => JSON.stringify(arrayItem));
+    const uniqueSet = new Set(jsonObject);
+    const uniqueFilteredArray = Array.from(uniqueSet).map((arrayItem) => JSON.parse(arrayItem));
+    return uniqueFilteredArray;
   };
 
   const router = useRouter();
