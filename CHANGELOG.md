@@ -5,6 +5,18 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.68.0-beta.10](https://github.com/open-sauced/insights/compare/v1.68.0-beta.9...v1.68.0-beta.10) (2023-10-09)
+
+
+### 🧑‍💻 Code Refactoring
+
+* use api timezone options for contributors filter ([#1827](https://github.com/open-sauced/insights/issues/1827)) ([f7276e9](https://github.com/open-sauced/insights/commit/f7276e97c54f71ece8b5b60e6c76fa11ad1f96b3))
+
+
+### 🐛 Bug Fixes
+
+* show insight link for not onboarded users ([#1830](https://github.com/open-sauced/insights/issues/1830)) ([566b0d1](https://github.com/open-sauced/insights/commit/566b0d1f8946b3d19ed6a8ea38251891e435610d))
+
 ## [1.68.0-beta.9](https://github.com/open-sauced/insights/compare/v1.68.0-beta.8...v1.68.0-beta.9) (2023-10-06)
 
 
