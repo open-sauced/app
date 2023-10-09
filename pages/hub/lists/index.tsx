@@ -85,7 +85,7 @@ const ListsHub: WithPageLayout = () => {
           ))
         ) : (
           <div className="flex flex-col items-center justify-center w-full gap-4 ">
-            <Title className="text-2xl">You currently have no list</Title>{" "}
+            <Title className="text-2xl">You currently have no lists</Title>{" "}
           </div>
         )}
 
