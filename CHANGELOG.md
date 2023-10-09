@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.68.0-beta.15](https://github.com/open-sauced/insights/compare/v1.68.0-beta.14...v1.68.0-beta.15) (2023-10-09)
+
+
+### 🐛 Bug Fixes
+
+* disable tier session check ([#1840](https://github.com/open-sauced/insights/issues/1840)) ([173227b](https://github.com/open-sauced/insights/commit/173227bd2e1f5f5bc7d9eea1af07b834fc0f7435))
+
 ## [1.68.0-beta.14](https://github.com/open-sauced/insights/compare/v1.68.0-beta.13...v1.68.0-beta.14) (2023-10-09)
 
 
