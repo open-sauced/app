@@ -3,6 +3,7 @@ import dynamic from "next/dynamic";
 import Card from "components/atoms/Card/card";
 import { SpecialNode } from "stories/molecules/treemap-prototype/special-node";
 import { ContributorNode } from "stories/molecules/treemap-prototype/contributor-node";
+import ClientOnly from "components/atoms/ClientOnly/client-only";
 
 interface ContributionsTreemapProps {
   data: any;
@@ -15,6 +16,7 @@ interface ContributionsTreemapProps {
 function BreadCrumb({ isActive, ...rest }: any) {
   const separatorStyle = useSpring(isActive ? { opacity: 1 } : { opacity: 0 });
   const textStyle = useSpring(isActive ? { opacity: 1, translateX: 0 } : { opacity: 0, translateX: 100 });
+
   return (
     <>
       <animated.div className={"px-1"} style={separatorStyle}>
@@ -41,20 +43,22 @@ export const ContributionsTreemap = ({ setLevel, level, data, color, onClick }: 
         </div>
         <div className="rounded-md overflow-hidden grid place-content-stretch">
           <div className="grid" style={{ gridArea: "1 / 1" }}>
-            <ResponsiveTreeMapHtml
-              data={data}
-              tile="squarify"
-              labelSkipSize={12}
-              innerPadding={4}
-              leavesOnly
-              orientLabel={false}
-              nodeComponent={level === 0 ? SpecialNode : ContributorNode}
-              colors={color}
-              nodeOpacity={1}
-              borderWidth={0}
-              onClick={onClick}
-              motionConfig={"default"}
-            />
+            <ClientOnly>
+              <ResponsiveTreeMapHtml
+                data={data}
+                tile="squarify"
+                labelSkipSize={12}
+                innerPadding={4}
+                leavesOnly
+                orientLabel={false}
+                nodeComponent={level === 0 ? SpecialNode : ContributorNode}
+                colors={color}
+                nodeOpacity={1}
+                borderWidth={0}
+                onClick={onClick}
+                motionConfig={"default"}
+              />
+            </ClientOnly>
           </div>
         </div>
       </div>
