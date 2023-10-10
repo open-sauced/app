@@ -87,11 +87,11 @@ const HubLayout = ({ children }: { children: React.ReactNode }) => {
                         </div>
                         {router.pathname.split("/")[2] === "insights" ? (
                           <Button href="/hub/insights/new" variant="primary">
-                            Add Insight Page
+                            New Insight
                           </Button>
                         ) : (
                           <Button href="/hub/lists/new" variant="primary">
-                            Add List
+                            New List
                           </Button>
                         )}
                       </div>
