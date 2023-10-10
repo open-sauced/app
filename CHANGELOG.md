@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.69.0-beta.2](https://github.com/open-sauced/insights/compare/v1.69.0-beta.1...v1.69.0-beta.2) (2023-10-10)
+
+
+### 🐛 Bug Fixes
+
+* Repos with long names get cut off ([#1769](https://github.com/open-sauced/insights/issues/1769)) ([cabf292](https://github.com/open-sauced/insights/commit/cabf2929f2d31cca95e8d3fe277d483276615118))
+
 ## [1.69.0-beta.1](https://github.com/open-sauced/insights/compare/v1.68.0...v1.69.0-beta.1) (2023-10-10)
 
 
