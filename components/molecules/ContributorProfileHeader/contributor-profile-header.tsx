@@ -24,7 +24,6 @@ import Text from "components/atoms/Typography/text";
 import { Textarea } from "components/atoms/Textarea/text-area";
 import { useUserConnections } from "lib/hooks/useUserConnections";
 import { useToast } from "lib/hooks/useToast";
-// import { cardPageUrl } from "lib/utils/urls";
 import { OptionKeys } from "components/atoms/Select/multi-select";
 import { addListContributor, useFetchAllLists } from "lib/hooks/useList";
 import { useFetchUser } from "lib/hooks/useFetchUser";
