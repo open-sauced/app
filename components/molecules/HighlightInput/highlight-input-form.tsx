@@ -502,7 +502,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
         }}
         open={isDivFocused}
       >
-        <DialogContent className="p-4 w-[33vw]" style={{ maxHeight: "80vh", overflow: "auto" }}>
+        <DialogContent className="p-4 w-auto " style={{ maxHeight: "85vh", overflow: "auto" }}>
           <DialogHeader>
             <DialogTitle>Post a highlight</DialogTitle>
           </DialogHeader>
@@ -587,10 +587,13 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
             </div>
 
             {highlightLink && isDivFocused && highlightLink.includes("github") && (
-              <GhOpenGraphImg className="max-sm:hidden lg:w-[33vw] md:w-[50vw]" githubLink={highlightLink} />
+              <GhOpenGraphImg
+                className="hidden sm:hidden md:block lg:w-[35vw] md:w-[45vw]"
+                githubLink={highlightLink}
+              />
             )}
             {highlightLink && isDivFocused && highlightLink.includes("dev.to") && (
-              <DevToSocialImg className="max-sm:hidden lg:w-[33vw] md:w-[50vw]" blogLink={highlightLink} />
+              <DevToSocialImg className="hidden sm:hidden lg:w-[33vw] md:w-[33vw]" blogLink={highlightLink} />
             )}
 
             <Button
@@ -723,10 +726,8 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
 
       <Dialog open={addTaggedRepoFormOpen} onOpenChange={setAddTaggedRepoFormOpen}>
         <DialogContent
-          className="p-2"
-          style={{
-            width: "33vw",
-          }}
+          className="p-2 w-auto"
+          // style={{}}
         >
           <DialogHeader>
             <DialogTitle>Add a repo</DialogTitle>
