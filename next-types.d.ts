@@ -76,7 +76,7 @@ interface DBListContributor {
   readonly languages: Object;
   readonly public_gists: number;
   readonly public_repos: number;
-  readonly receive_collaborations: boolean;
+  readonly receive_collaboration: boolean;
   readonly username: string;
 }
 
@@ -304,7 +304,7 @@ interface DbUserNotification {
   readonly from_user: DbUser;
 }
 
-interface DbUserCollaboration {
+interface DbUserConnection {
   readonly id: string;
   readonly user_id: number;
   readonly request_user_id: number;

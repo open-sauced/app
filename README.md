@@ -1,7 +1,7 @@
 <div align="center">
   <br>
   <img alt="Open Sauced" src="https://i.ibb.co/7jPXt0Z/logo1-92f1a87f.png" width="300px">
-  <h1>🍕 insights.opensauced.pizza 🍕</h1>
+  <h1>🍕 app.opensauced.pizza 🍕</h1>
   <strong>The site provides insights to Open Source projects.</strong>
 </div>
 <br>

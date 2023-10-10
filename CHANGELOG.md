@@ -5,6 +5,78 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.69.0-beta.3](https://github.com/open-sauced/insights/compare/v1.69.0-beta.2...v1.69.0-beta.3) (2023-10-10)
+
+
+### 🧑‍💻 Code Refactoring
+
+* Remove + icon from list contributors stacked avatar ([#1851](https://github.com/open-sauced/insights/issues/1851)) ([264f0dd](https://github.com/open-sauced/insights/commit/264f0ddd2fa1378407c65fdc859a9a04ae3f6a5e))
+
+## [1.69.0-beta.2](https://github.com/open-sauced/insights/compare/v1.69.0-beta.1...v1.69.0-beta.2) (2023-10-10)
+
+
+### 🐛 Bug Fixes
+
+* Repos with long names get cut off ([#1769](https://github.com/open-sauced/insights/issues/1769)) ([cabf292](https://github.com/open-sauced/insights/commit/cabf2929f2d31cca95e8d3fe277d483276615118))
+
+## [1.69.0-beta.1](https://github.com/open-sauced/insights/compare/v1.68.0...v1.69.0-beta.1) (2023-10-10)
+
+
+### 🍕 Features
+
+* add `Add to list` dropdown to user profile ([#1843](https://github.com/open-sauced/insights/issues/1843)) ([4d81040](https://github.com/open-sauced/insights/commit/4d81040d1968b75605eb4b42192f1cf982d090e1))
+
+## [1.68.0](https://github.com/open-sauced/insights/compare/v1.67.0...v1.68.0) (2023-10-10)
+
+
+### 🎨 Styles
+
+* add w-full ([9b156d1](https://github.com/open-sauced/insights/commit/9b156d1c7e974924e8689be6dc2b8dd600443b64))
+* remove unused style prop ([1fe65c0](https://github.com/open-sauced/insights/commit/1fe65c039ba6cf4f23bbb225ed257b77d0a03d1d))
+
+
+### 🍕 Features
+
+* add form to user settings to apply coupon code ([#1771](https://github.com/open-sauced/insights/issues/1771)) ([504d7e2](https://github.com/open-sauced/insights/commit/504d7e2499a6b2a9dd5beaa560dd9ca7aa6af4c8))
+* add new lists creation page ([#1798](https://github.com/open-sauced/insights/issues/1798)) ([7ebc99b](https://github.com/open-sauced/insights/commit/7ebc99b4bfbf8b128d87b433dfcd8e5265be43e5))
+* add prototype contributor activity charts ([#1594](https://github.com/open-sauced/insights/issues/1594)) ([379db6d](https://github.com/open-sauced/insights/commit/379db6dbe6d852da52ef333c7fc313817647f477))
+* add timezone filters for list contributors ([#1747](https://github.com/open-sauced/insights/issues/1747)) ([674a588](https://github.com/open-sauced/insights/commit/674a58815886a836567bc6c3999ea9d0764e9a44))
+* add Treemap chart prototype ([#1569](https://github.com/open-sauced/insights/issues/1569)) ([f057de8](https://github.com/open-sauced/insights/commit/f057de8b59bbdcf7c6a8cecab859cdcd6ba1d121))
+* implemented list activity page with most active contributors graph ([#1796](https://github.com/open-sauced/insights/issues/1796)) ([0c9b1e2](https://github.com/open-sauced/insights/commit/0c9b1e2cbe1f6749aad0015e06701dce6423401e))
+* move range filter to list pages header ([#1817](https://github.com/open-sauced/insights/issues/1817)) ([0b82760](https://github.com/open-sauced/insights/commit/0b82760dfd20b14230f8f0b4496b75c3086db139))
+
+
+### 🐛 Bug Fixes
+
+* add style prop to SearchProps ([16fbc82](https://github.com/open-sauced/insights/commit/16fbc82f3c72dde7d54359c61cf15e3c9563ff96))
+* adjust style to fit urls ([55a6bbc](https://github.com/open-sauced/insights/commit/55a6bbcf799856477b80c0286507c0475867f4b3))
+* disable tier session check ([#1840](https://github.com/open-sauced/insights/issues/1840)) ([173227b](https://github.com/open-sauced/insights/commit/173227bd2e1f5f5bc7d9eea1af07b834fc0f7435))
+* Fix re-rendering of Highlights "Repositories" table with duplicates ([#1811](https://github.com/open-sauced/insights/issues/1811)) ([f729457](https://github.com/open-sauced/insights/commit/f72945748f91929b3ea0fad0f4950704a3ae0435))
+* hide weird top nav for edit insight page ([#1809](https://github.com/open-sauced/insights/issues/1809)) ([f3da2a1](https://github.com/open-sauced/insights/commit/f3da2a1512e36900d1c9edceb490d893323b1f49))
+* Improve the input's width to accommodate full URL ([#1789](https://github.com/open-sauced/insights/issues/1789)) ([e37df4f](https://github.com/open-sauced/insights/commit/e37df4f8c5b52246d7c48f7e7c2c94bf22c227e5))
+* now range filter works on list contributors page ([d711207](https://github.com/open-sauced/insights/commit/d7112074ec7996d86258c3d7b7814cf7fcc3b16a))
+* now range filter works on list contributors page grid view ([#1819](https://github.com/open-sauced/insights/issues/1819)) ([989ebba](https://github.com/open-sauced/insights/commit/989ebbaa97b7c8fa1498d329bd27c2c1e95df3b2))
+* pass list name and public flag to contributor search ([#1832](https://github.com/open-sauced/insights/issues/1832)) ([d54ddab](https://github.com/open-sauced/insights/commit/d54ddabb7af3c0b395e8196f49ceb038beb8dc25))
+* removed GitHub avatar when loading user profile avatars ([9b81371](https://github.com/open-sauced/insights/commit/9b81371bde8ce5a9838dec6d19a007aa964b072b))
+* removed GitHub avatar when loading user profile avatars ([#1781](https://github.com/open-sauced/insights/issues/1781)) ([49ba38f](https://github.com/open-sauced/insights/commit/49ba38f44bd2c1bc9af949d73ddb3a1cfde9f20f))
+* show insight link for not onboarded users ([#1830](https://github.com/open-sauced/insights/issues/1830)) ([566b0d1](https://github.com/open-sauced/insights/commit/566b0d1f8946b3d19ed6a8ea38251891e435610d))
+* update GitHub API request for user following ([#1833](https://github.com/open-sauced/insights/issues/1833)) ([d62f557](https://github.com/open-sauced/insights/commit/d62f557919eb9b2e7f8710b0f36a9915bbe689ba))
+
+
+### 🧑‍💻 Code Refactoring
+
+* redirect user to newly created insight page after creation ([#1808](https://github.com/open-sauced/insights/issues/1808)) ([cf12456](https://github.com/open-sauced/insights/commit/cf1245625c0611a57ba6f0997ccb4ddb02a79ad0))
+* remove unused props in Search component ([783b1c9](https://github.com/open-sauced/insights/commit/783b1c9d957f4998f7bbb73fb7548bcd57118eee))
+* update all collaboration copy to connection ([#1831](https://github.com/open-sauced/insights/issues/1831)) ([c0bb683](https://github.com/open-sauced/insights/commit/c0bb68398f8cfa41cfb020010b81d91ff039e384))
+* use api timezone options for contributors filter ([#1827](https://github.com/open-sauced/insights/issues/1827)) ([f7276e9](https://github.com/open-sauced/insights/commit/f7276e97c54f71ece8b5b60e6c76fa11ad1f96b3))
+
+## [1.68.0-beta.16](https://github.com/open-sauced/insights/compare/v1.68.0-beta.15...v1.68.0-beta.16) (2023-10-10)
+
+
+### 🧑‍💻 Code Refactoring
+
+* update all collaboration copy to connection ([#1831](https://github.com/open-sauced/insights/issues/1831)) ([c0bb683](https://github.com/open-sauced/insights/commit/c0bb68398f8cfa41cfb020010b81d91ff039e384))
+
 ## [1.68.0-beta.15](https://github.com/open-sauced/insights/compare/v1.68.0-beta.14...v1.68.0-beta.15) (2023-10-09)
 
 
