@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import Image from "next/image";
 
@@ -364,6 +365,14 @@ const AddToListDropdown = ({ username }: { username: string }) => {
     <MultiSelect
       open={selectListOpen}
       setOpen={setSelectListOpen}
+      emptyState={
+        <div className="">
+          You have no lists. <br />
+          <Link className="text-sauced-orange" href="/hub/lists/new">
+            Create a list
+          </Link>
+        </div>
+      }
       className="w-10 px-4"
       placeholder="Add to list"
       options={listOptions}

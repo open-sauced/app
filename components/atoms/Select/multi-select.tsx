@@ -21,6 +21,7 @@ interface MultiSelectProps {
   inputPlaceholder?: string;
   className?: string;
   handleKeyDown?: (e: React.KeyboardEvent<HTMLDivElement>) => void;
+  emptyState?: React.ReactNode;
 }
 
 const MultiSelect = ({
@@ -34,6 +35,7 @@ const MultiSelect = ({
   setSelected,
   open,
   setOpen,
+  emptyState,
 }: MultiSelectProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [inputValue, setInputValue] = useState("");
@@ -114,6 +116,7 @@ const MultiSelect = ({
               </CommandGroup>
             </Command>
           )}
+          {options.length === 0 && emptyState ? emptyState : null}
         </PopoverContent>
       </div>
     </Popover>
