@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.68.0-beta.16](https://github.com/open-sauced/insights/compare/v1.68.0-beta.15...v1.68.0-beta.16) (2023-10-10)
+
+
+### 🧑‍💻 Code Refactoring
+
+* update all collaboration copy to connection ([#1831](https://github.com/open-sauced/insights/issues/1831)) ([c0bb683](https://github.com/open-sauced/insights/commit/c0bb68398f8cfa41cfb020010b81d91ff039e384))
+
 ## [1.68.0-beta.15](https://github.com/open-sauced/insights/compare/v1.68.0-beta.14...v1.68.0-beta.15) (2023-10-09)
 
 
