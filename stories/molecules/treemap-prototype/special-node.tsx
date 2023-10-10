@@ -14,27 +14,19 @@ const NonMemoizedSpecialNode = <Datum extends object>({
 
   return (
     <animated.div
-      data-testid={`node.${node.id}`}
-      id={node.path.replace(/[^\w]/gi, "-")}
+      className="absolute grid place-content-stretch overflow-hidden border-solid"
       style={{
-        boxSizing: "border-box",
-        position: "absolute",
         top: 0,
         left: 0,
         transform: htmlNodeTransform(animatedProps.x, animatedProps.y),
         width: animatedProps.width,
         height: animatedProps.height,
         borderWidth,
-        borderStyle: "solid",
         borderColor: node.borderColor,
-        overflow: "hidden",
-        display: "grid",
-        placeContent: "stretch",
       }}
     >
       <animated.div
         style={{
-          boxSizing: "border-box",
           opacity: node.opacity,
           width: animatedProps.width,
           height: animatedProps.height,

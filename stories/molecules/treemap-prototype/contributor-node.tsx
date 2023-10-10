@@ -17,25 +17,19 @@ const NonMemoizedContributorNode = <Datum extends { id: string; value?: number; 
 
   return (
     <animated.div
+      className="absolute grid overflow-hidden border-solid place-content-stretch"
       style={{
-        boxSizing: "border-box",
-        position: "absolute",
         top: 0,
         left: 0,
         transform: htmlNodeTransform(animatedProps.x, animatedProps.y),
         width: animatedProps.width,
         height: animatedProps.height,
         borderWidth,
-        borderStyle: "solid",
         borderColor: node.borderColor,
-        overflow: "hidden",
-        display: "grid",
-        placeContent: "stretch",
       }}
     >
       <animated.div
         style={{
-          boxSizing: "border-box",
           opacity: node.opacity,
           width: animatedProps.width,
           height: animatedProps.height,
@@ -49,7 +43,6 @@ const NonMemoizedContributorNode = <Datum extends { id: string; value?: number; 
       />
       {showLabel && (
         <animated.div
-          data-testid={`label.${node.id}`}
           className="grid p-3 text-white place-items-start pointer-events-none"
           style={{
             gridArea: "1 / 1",
