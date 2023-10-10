@@ -17,8 +17,6 @@ const NonMemoizedContributorNode = <Datum extends { id: string; value?: number; 
 
   return (
     <animated.div
-      data-testid={`node.${node.id}`}
-      id={node.path.replace(/[^\w]/gi, "-")}
       style={{
         boxSizing: "border-box",
         position: "absolute",

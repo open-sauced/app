@@ -3,12 +3,11 @@ import dynamic from "next/dynamic";
 import Card from "components/atoms/Card/card";
 import { SpecialNode } from "stories/molecules/treemap-prototype/special-node";
 import { ContributorNode } from "stories/molecules/treemap-prototype/contributor-node";
-import type { NodeMouseEventHandler } from "@nivo/treemap";
 
 interface ContributionsTreemapProps {
   data: any;
   color: string;
-  onClick: NodeMouseEventHandler<object>;
+  onClick: (event: Event) => void;
   level: number;
   setLevel: (level: number) => void;
 }
