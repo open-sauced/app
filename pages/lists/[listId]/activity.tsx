@@ -10,6 +10,7 @@ import MostActiveContributorsCard, {
 import useMostActiveContributors from "lib/hooks/api/useMostActiveContributors";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
 import { ContributionsTreemap } from "components/molecules/ContributionsTreemap/contributions-treemap";
+import { useContributorsByProject } from "lib/hooks/api/useContributorsByProject";
 import { useContributionsByProject } from "lib/hooks/api/useContributionsByProject";
 
 interface ContributorListPageProps {
@@ -50,7 +51,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
       pathValidator: validateListPath,
     }),
     fetchApiData<DbProjectContributions>({
-      path: `lists/${listId}/stats/contributions-by-project`,
+      path: `lists/${listId}/stats/contributions-by-project?range=${range}`,
       bearerToken,
       pathValidator: validateListPath,
     }),
@@ -79,6 +80,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 const ListActivityPage = ({ list, numberOfContributors, isError, activityData }: ContributorListPageProps) => {
   const [range, setRange] = useState(30);
   const isOwner = false;
+  const [level, setLevel] = useState(0);
   const {
     data: contributorStats,
     isLoading,
@@ -86,9 +88,14 @@ const ListActivityPage = ({ list, numberOfContributors, isError, activityData }:
     setContributorType,
     contributorType,
   } = useMostActiveContributors({ listId: list!.id, initData: activityData.contributorStats.data, range });
-  const [level, setLevel] = useState(0);
-  const [projectData, setProjectData] = useState<DbProjectContributions[]>(activityData.projectData);
-  const { setRepoId, error, data: projectContributionsByUser } = useContributionsByProject(list!.id, range);
+
+  const { setRepoId, error, data: projectContributionsByUser } = useContributorsByProject(list!.id, range);
+
+  const { data: projectData, error: projectDataError } = useContributionsByProject({
+    listId: list!.id,
+    range,
+    initialData: activityData.projectData,
+  });
 
   const onHandleClick = ({ id }: { id: string }) => {
     const repoId = Number(id.split(":")[1]);
@@ -99,7 +106,7 @@ const ListActivityPage = ({ list, numberOfContributors, isError, activityData }:
     id: "root",
     children:
       level === 0
-        ? projectData.map(({ org_id, project_id, repo_id, contributions }) => {
+        ? (projectData ?? []).map(({ org_id, project_id, repo_id, contributions }) => {
             return {
               id: `${org_id}/${project_id}:${repo_id}`,
               value: contributions,

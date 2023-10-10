@@ -1,17 +1,27 @@
 import useSWR, { Fetcher } from "swr";
-import { useState } from "react";
 import publicApiFetcher from "lib/utils/public-api-fetcher";
 
-export const useContributionsByProject = (listId: string, range: number) => {
-  const [repoId, setRepoId] = useState<number | null>(null);
-  const { data, error } = useSWR<DBProjectContributor>(
-    `lists/${listId}/stats/top-project-contributions-by-contributor?repoId=${repoId}&range=${range}`,
-    publicApiFetcher as Fetcher<DBProjectContributor, Error>
+export const useContributionsByProject = ({
+  listId,
+  range,
+  initialData,
+}: {
+  listId: string;
+  range: number;
+  initialData?: DbProjectContributions[];
+}) => {
+  const { data, error } = useSWR<DbProjectContributions[]>(
+    `lists/${listId}/stats/contributions-by-project?range=${range}`,
+    publicApiFetcher as Fetcher<DbProjectContributions[], Error>
+    // {
+    //   fallbackData: {
+    //     `lists/${listId}/stats/contributions-by-project?range=${range}`: initialData
+    // },
+    // }
   );
 
   return {
     data,
     error,
-    setRepoId,
   };
 };
