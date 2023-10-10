@@ -148,7 +148,7 @@ const ListActivityPage = ({ list, numberOfContributors, isError, activityData }:
     contributorType,
   } = useMostActiveContributors({ listId: list!.id, initData: activityData.contributorStats.data });
   const [level, setLevel] = useState(0);
-  const onHandleClick = (event: Event) => {
+  const onHandleClick = () => {
     setLevel(level + 1);
   };
   const data = level === 0 ? treeData : treeData2;

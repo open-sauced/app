@@ -4,11 +4,12 @@ import Card from "components/atoms/Card/card";
 import { SpecialNode } from "stories/molecules/treemap-prototype/special-node";
 import { ContributorNode } from "stories/molecules/treemap-prototype/contributor-node";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
+import type { NodeMouseEventHandler, NodeProps } from "@nivo/treemap";
 
 interface ContributionsTreemapProps {
   data: any;
   color: string;
-  onClick: (event: Event) => void;
+  onClick: NodeMouseEventHandler<object>;
   level: number;
   setLevel: (level: number) => void;
 }
@@ -51,7 +52,18 @@ export const ContributionsTreemap = ({ setLevel, level, data, color, onClick }: 
                 innerPadding={4}
                 leavesOnly
                 orientLabel={false}
-                nodeComponent={level === 0 ? SpecialNode : ContributorNode}
+                nodeComponent={
+                  level === 0
+                    ? SpecialNode
+                    : // TODO: Sort this out later
+                      (ContributorNode as <Datum extends object>({
+                        node,
+                        animatedProps,
+                        borderWidth,
+                        enableLabel,
+                        labelSkipSize,
+                      }: NodeProps<Datum>) => JSX.Element)
+                }
                 colors={color}
                 nodeOpacity={1}
                 borderWidth={0}
