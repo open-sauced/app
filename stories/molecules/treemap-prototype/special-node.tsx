@@ -1,6 +1,7 @@
 import { memo } from "react";
 import { animated } from "@react-spring/web";
-import { NodeProps, htmlNodeTransform } from "@nivo/treemap";
+import { htmlNodeTransform } from "lib/utils/nivo-utils";
+import type { NodeProps } from "@nivo/treemap";
 
 const NonMemoizedSpecialNode = <Datum extends object>({
   node,

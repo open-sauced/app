@@ -1,7 +1,8 @@
 import { memo } from "react";
 import { animated } from "@react-spring/web";
-import { NodeProps, htmlNodeTransform } from "@nivo/treemap";
 import { getAvatarByUsername } from "lib/utils/github";
+import { htmlNodeTransform } from "lib/utils/nivo-utils";
+import type { NodeProps } from "@nivo/treemap";
 
 const NonMemoizedContributorNode = <Datum extends { id: string; value?: number; color: string }>({
   node,
