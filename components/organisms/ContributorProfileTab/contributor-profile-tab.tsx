@@ -24,7 +24,7 @@ import PaginationResults from "components/molecules/PaginationResults/pagination
 import Pagination from "components/molecules/Pagination/pagination";
 import DashContainer from "components/atoms/DashedContainer/DashContainer";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
-import CollaborationRequestsWrapper from "../CollaborationRequestWrapper/collaboration-requests-wrapper";
+import ConnectionRequestsWrapper from "../ConnectionRequestWrapper/connection-requests-wrapper";
 import UserRepositoryRecommendations from "../UserRepositoryRecommendations/user-repository-recommendations";
 
 interface ContributorProfileTabProps {
@@ -40,7 +40,7 @@ interface ContributorProfileTabProps {
   repoList: RepoList[];
 }
 
-type TabKey = "highlights" | "contributions" | "requests" | "recommendations";
+type TabKey = "highlights" | "contributions" | "connections" | "recommendations";
 
 // Query Params type for this page
 interface QueryParams {
@@ -50,7 +50,7 @@ interface QueryParams {
 const tabs: Record<TabKey, string> = {
   highlights: "Highlights",
   contributions: "Contributions",
-  requests: "Requests",
+  connections: "Connections",
   recommendations: "Recommendations",
 };
 
@@ -91,8 +91,8 @@ const ContributorProfileTab = ({
       !tab ||
       !Object.keys(tabs).includes(tab as string) ||
       (tab === "recommendations" && user_name !== login) ||
-      (tab === "requests" && !receive_collaboration) ||
-      (tab === "requests" && user_name !== login)
+      (tab === "connections" && !receive_collaboration) ||
+      (tab === "connections" && user_name !== login)
     ) {
       setQueryParams({ tab: currentTab } satisfies QueryParams);
     }
@@ -106,10 +106,10 @@ const ContributorProfileTab = ({
       tab === "recommendations" &&
         "font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#EA4600] to-[#EB9B00]",
       user && user_name !== login && tab === "recommendations" && "hidden",
-      user && user_name !== login && tab === "requests" && "hidden",
+      user && user_name !== login && tab === "connections" && "hidden",
       !user && tab === "recommendations" && "hidden",
-      !user && tab === "requests" && "hidden",
-      !receive_collaboration && tab === "requests" && "hidden"
+      !user && tab === "connections" && "hidden",
+      !receive_collaboration && tab === "connections" && "hidden"
     );
   };
 
@@ -310,9 +310,9 @@ const ContributorProfileTab = ({
 
       {user && user.user_metadata.user_name === login && (
         <>
-          {/* Collaboration requests tab details */}
-          <TabsContent value={"requests" satisfies TabKey}>
-            <CollaborationRequestsWrapper />
+          {/* Connection requests tab details */}
+          <TabsContent value={"connections" satisfies TabKey}>
+            <ConnectionRequestsWrapper />
           </TabsContent>
 
           {/* Recommendation tab details */}
