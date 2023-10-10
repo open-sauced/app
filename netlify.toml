@@ -22,7 +22,7 @@ deno_import_map = "./netlify/edge-functions/deno.json"
   force = true
 
 [[redirects]]
-  from = "https://app.opensauced.pizza/*"
-  to = "https://insights.opensauced.pizza/:splat"
-  status = 307
+  from = "https://insights.opensauced.pizza/*"
+  to = "https://app.opensauced.pizza/:splat"
+  status = 301
   force = true
