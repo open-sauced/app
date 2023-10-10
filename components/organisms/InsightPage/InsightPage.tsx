@@ -457,7 +457,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
           </Title>
 
           <TextInput placeholder="Page Name (ex: My Team)" value={name} handleChange={handleOnNameChange} />
-          {/* <Text>insights.opensauced.pizza/pages/{username}/{`{pageId}`}/dashboard</Text> */}
+          {/* <Text>app.opensauced.pizza/pages/{username}/{`{pageId}`}/dashboard</Text> */}
         </div>
 
         <div className="flex flex-col gap-4 py-6 border-light-slate-8">
