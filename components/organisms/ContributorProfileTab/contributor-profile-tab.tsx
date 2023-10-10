@@ -98,7 +98,7 @@ const ContributorProfileTab = ({
     }
 
     // If the user is not the owner of the profile, block them from accessing the recommendations tab
-  }, [tab, currentTab]);
+  }, [tab, currentTab, user_name, login, receive_collaboration]);
 
   const getTabTriggerClassName = (tab: TabKey): string => {
     return clsx(

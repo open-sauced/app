@@ -77,7 +77,7 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
     }, 500);
 
     return () => clearInterval(interval);
-  }, [hostname, isMobile, router.asPath, router.isReady]);
+  }, [hostname, router.isReady]);
 
   useEffect(() => {
     updateSEO(Component.SEO || {});
@@ -103,7 +103,7 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
     return () => {
       router.events.off("routeChangeComplete", handleRouteChange);
     };
-  }, [router.events]);
+  }, []);
 
   function localStorageProvider() {
     if (typeof window !== "undefined") {
