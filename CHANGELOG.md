@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.69.0-beta.4](https://github.com/open-sauced/insights/compare/v1.69.0-beta.3...v1.69.0-beta.4) (2023-10-10)
+
+
+### 🍕 Features
+
+* upgrade posthog version to support posthog survey feedback ([#1857](https://github.com/open-sauced/insights/issues/1857)) ([ca44b27](https://github.com/open-sauced/insights/commit/ca44b27815d6ad2d68af1b07d998d3bf8282dced))
+
 ## [1.69.0-beta.3](https://github.com/open-sauced/insights/compare/v1.69.0-beta.2...v1.69.0-beta.3) (2023-10-10)
 
 
