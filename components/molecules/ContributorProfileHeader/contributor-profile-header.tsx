@@ -10,6 +10,9 @@ import { SignInWithOAuthCredentials, User } from "@supabase/supabase-js";
 
 import Link from "next/link";
 import PizzaGradient from "img/icons/pizza-gradient.svg";
+import { cardPageUrl } from "lib/utils/urls";
+import { useToast } from "lib/hooks/useToast";
+import { useUserCollaborations } from "lib/hooks/useUserCollaborations";
 
 import {
   DropdownMenu,
@@ -17,15 +20,12 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "components/atoms/Dropdown/dropdown";
-
 import Avatar from "components/atoms/Avatar/avatar";
+import Tooltip from "components/atoms/Tooltip/tooltip";
 import RainbowBg from "img/rainbow-cover.png";
 import Button from "components/atoms/Button/button";
 import Text from "components/atoms/Typography/text";
 import { Textarea } from "components/atoms/Textarea/text-area";
-import { useUserCollaborations } from "lib/hooks/useUserCollaborations";
-import { useToast } from "lib/hooks/useToast";
-import { cardPageUrl } from "lib/utils/urls";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../Dialog/dialog";
 
 interface ContributorProfileHeaderProps {
@@ -145,14 +145,16 @@ const ContributorProfileHeader = ({
             isCircle
           />
 
-          <Link
-            href={cardPageUrl(username!)}
-            className="absolute bottom-0 z-10 grid w-12 h-12 rounded-full shadow-md place-content-center border-conic-gradient right-4"
-          >
-            <div className="grid w-10 h-10 overflow-hidden rounded-full place-content-center bg-black/80">
-              <Image priority alt="user profile cover image" className="w-6 h-[1.7rem] " src={PizzaGradient} />
-            </div>
-          </Link>
+          <Tooltip content="Get dev card">
+            <Link
+              href={cardPageUrl(username!)}
+              className="absolute bottom-0 z-10 grid w-12 h-12 rounded-full shadow-md place-content-center border-conic-gradient right-4"
+            >
+              <div className="grid overflow-hidden rounded-full w-11 h-11 place-content-center bg-black/80">
+                <Image priority alt="user profile cover image" className="w-6 h-[1.7rem] " src={PizzaGradient} />
+              </div>
+            </Link>
+          </Tooltip>
         </div>
         <div className="translate-y-[110px] md:hidden relative">
           <Avatar
