@@ -51,7 +51,7 @@ const NonMemoizedSpecialNode = <Datum extends object>({
           }}
         >
           <div className="grid gap-2">
-            <div className="font-medium text-sm">{node.id}</div>
+            <div className="font-medium text-sm">{node.id.split(":"[0])}</div>
             <div className="font-normal text-xs" style={{ textOverflow: "ellipsis" }}>
               {node.label}
             </div>

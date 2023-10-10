@@ -7,79 +7,10 @@ import ListPageLayout from "layouts/lists";
 import MostActiveContributorsCard, {
   ContributorStat,
 } from "components/molecules/MostActiveContributorsCard/most-active-contributors-card";
-
 import useMostActiveContributors from "lib/hooks/api/useMostActiveContributors";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
 import { ContributionsTreemap } from "components/molecules/ContributionsTreemap/contributions-treemap";
-
-// begin test data
-const color = "hsla(21, 90%, 48%, 1)";
-const repos = [
-  {
-    id: "/insights",
-    value: 340,
-  },
-  {
-    id: "/hot",
-    value: 120,
-  },
-  {
-    id: "/ai",
-    value: 120,
-  },
-  {
-    id: "/pizza-cli",
-    value: 100,
-  },
-  {
-    id: "/super-secret-special-sauce",
-    value: 84,
-  },
-];
-const contributors = [
-  {
-    id: "foxyblocks",
-    value: 68,
-    color: color,
-  },
-  {
-    id: "codebytere",
-    value: 166,
-    color: color,
-  },
-  {
-    id: "miniak",
-    value: 163,
-    color: color,
-  },
-  {
-    id: "ckerr",
-    value: 115,
-    color: color,
-  },
-  {
-    id: "JeanMeche",
-    value: 84,
-    color: color,
-  },
-  {
-    id: "annacmc",
-    value: 90,
-    color: color,
-  },
-];
-
-const treeData = {
-  id: "root",
-  color: color,
-  children: repos,
-};
-const treeData2 = {
-  id: "root",
-  color: color,
-  children: contributors,
-};
-// end test data
+import { useContributionsByProject } from "lib/hooks/api/useContributionsByProject";
 
 interface ContributorListPageProps {
   list?: DBList;
@@ -88,6 +19,7 @@ interface ContributorListPageProps {
   activityData: {
     contributorStats: { data: ContributorStat[]; meta: Meta };
     topContributor: ContributorStat;
+    projectData: DbProjectContributions[];
   };
 }
 
@@ -104,6 +36,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     { data, error: contributorListError },
     { data: list, error },
     { data: mostActiveData, error: mostActiveError },
+    { data: projectData, error: projectError },
   ] = await Promise.all([
     fetchApiData<PagedData<DBListContributor>>({
       path: `lists/${listId}/contributors?limit=1`,
@@ -113,6 +46,11 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     fetchApiData<DBList>({ path: `lists/${listId}`, bearerToken, pathValidator: validateListPath }),
     fetchApiData<PagedData<ContributorStat>>({
       path: `lists/${listId}/stats/most-active-contributors?range=${range}&orderDirection=DESC&orderBy=total_contributions&limit=20&contributorType=all`,
+      bearerToken,
+      pathValidator: validateListPath,
+    }),
+    fetchApiData<DbProjectContributions>({
+      path: `lists/${listId}/stats/contributions-by-project`,
       bearerToken,
       pathValidator: validateListPath,
     }),
@@ -132,26 +70,48 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
       activityData: {
         contributorStats: mostActiveData,
         topContributor: mostActiveData?.data?.length ? mostActiveData.data[0] : null,
+        projectData: projectData ?? [],
       },
     },
   };
 };
 
 const ListActivityPage = ({ list, numberOfContributors, isError, activityData }: ContributorListPageProps) => {
+  const [range, setRange] = useState(30);
   const isOwner = false;
   const {
     data: contributorStats,
     isLoading,
     isError: isMostActiveError,
-    setRange,
     setContributorType,
     contributorType,
-  } = useMostActiveContributors({ listId: list!.id, initData: activityData.contributorStats.data });
+  } = useMostActiveContributors({ listId: list!.id, initData: activityData.contributorStats.data, range });
   const [level, setLevel] = useState(0);
-  const onHandleClick = () => {
+  const [projectData, setProjectData] = useState<DbProjectContributions[]>(activityData.projectData);
+  const { setRepoId, error, data: projectContributionsByUser } = useContributionsByProject(list!.id, range);
+
+  const onHandleClick = ({ id }: { id: string }) => {
+    const repoId = Number(id.split(":")[1]);
+    setRepoId(repoId);
     setLevel(level + 1);
   };
-  const data = level === 0 ? treeData : treeData2;
+  const treemapData = {
+    id: "root",
+    children:
+      level === 0
+        ? projectData.map(({ org_id, project_id, repo_id, contributions }) => {
+            return {
+              id: `${org_id}/${project_id}:${repo_id}`,
+              value: contributions,
+            };
+          })
+        : projectContributionsByUser?.map(({ login, commits, prs_created, prs_reviewed, issues_created, comments }) => {
+            return {
+              id: login,
+              value: commits + prs_created, // Coming soon + prs_reviewed + issues_created + comments,
+            };
+          }),
+  };
 
   return (
     <ListPageLayout list={list} numberOfContributors={numberOfContributors} isOwner={isOwner} setRange={setRange}>
@@ -170,7 +130,13 @@ const ListActivityPage = ({ list, numberOfContributors, isError, activityData }:
               isLoading={isLoading}
             />
           </ClientOnly>
-          <ContributionsTreemap setLevel={setLevel} level={level} onClick={onHandleClick} data={data} color={color} />
+          <ContributionsTreemap
+            setLevel={setLevel}
+            level={level}
+            onClick={onHandleClick}
+            data={treemapData}
+            color="hsla(21, 90%, 48%, 1)"
+          />
         </div>
       )}
     </ListPageLayout>
