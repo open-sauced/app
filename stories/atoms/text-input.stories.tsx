@@ -35,7 +35,7 @@ WithDescriptionText.args = {
   disabled: false,
   autoFocus: true,
   borderless: false,
-  descriptionText: "insights.opensauced.pizza/statelyai/slug",
+  descriptionText: "app.opensauced.pizza/statelyai/slug",
 };
 
 IsInvalid.args = {

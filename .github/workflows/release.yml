@@ -79,7 +79,7 @@ jobs:
   release:
     environment:
       name: ${{ needs.setup.outputs.DEPLOY_ENVIRONMENT }}
-      url: https://${{ needs.setup.outputs.DEPLOY_SUBDOMAIN }}insights.opensauced.pizza
+      url: https://${{ needs.setup.outputs.DEPLOY_SUBDOMAIN }}app.opensauced.pizza
     name: Semantic release
     needs:
       - setup
