@@ -450,7 +450,7 @@ const ContributorHighlightCard = ({
                     }}
                     target="_blank"
                     rel="noreferrer"
-                    href={`https://twitter.com/intent/tweet?text=${twitterTweet}& url=${host}/feed/${id}`}
+                    href={`https://twitter.com/intent/tweet?text=${twitterTweet}&url=${host}/feed/${id}`}
                     className="flex items-center p-3 transition rounded-full hover:bg-light-orange-5"
                   >
                     <FaXTwitter className="text-lg text-light-orange-9 md:text-xl" />
