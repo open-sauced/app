@@ -137,8 +137,8 @@ const TypographyTemplate: StoryFn<typeof TypographyWrapper> = (args) => (
     <h2>There are other elements we need to style</h2>
     <p>
       I almost forgot to mention links, like{" "}
-      <a href="https://insights.opensauced.pizza">this link to the OpenSauced Insights website</a>. We almost made them
-      blue but that&apos;s so yesterday, so we went with dark gray, feels edgier.
+      <a href="https://app.opensauced.pizza">this link to the OpenSauced Insights website</a>. We almost made them blue
+      but that&apos;s so yesterday, so we went with dark gray, feels edgier.
     </p>
     <p>We even included table styles, check it out:</p>
     <table>
