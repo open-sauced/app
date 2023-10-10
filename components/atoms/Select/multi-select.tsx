@@ -48,10 +48,10 @@ const MultiSelect = ({
 
   return (
     <Popover open={open} onOpenChange={(value) => setOpen(value)}>
-      <div className="min-w-[250px] max-w-[100px] ">
+      <div className="">
         <PopoverTrigger
           asChild
-          className="p-1.5 border rounded-md bg-white data-[state=open]:border-orange-500  min-w-[250px] "
+          className={clsx("p-1.5 border rounded-md bg-white data-[state=open]:border-orange-500  min-w-max", className)}
         >
           <button
             aria-controls="select-menu-list"
@@ -83,7 +83,7 @@ const MultiSelect = ({
             )}
           </button>
         </PopoverTrigger>
-        <PopoverContent className="!w-full !min-w-[250px] bg-white p-0 max-w-sm">
+        <PopoverContent className="!w-full bg-white p-0 max-w-sm">
           <Command loop onKeyDown={handleKeyDown} className="w-full px-0 bg-transparent">
             <CommandInput
               ref={inputRef}
@@ -102,12 +102,13 @@ const MultiSelect = ({
                       }}
                       onSelect={(value) => {
                         setInputValue("");
-                        toggleFramework(option);
+                        // toggleFramework(option);
+                        handleSelect(option);
                       }}
-                      onClick={() => toggleFramework(option)}
+                      onClick={() => handleSelect(option)}
                       className={clsx(
                         "!cursor-pointer flex justify-between items-center !px-1 rounded-md truncate break-words w-full",
-                        selected.some((s) => s.value === option.value) && "bg-gray-100"
+                        selected.some((s) => s.value === option.value) && ""
                       )}
                     >
                       {option.label}

@@ -4,7 +4,6 @@ import Image from "next/image";
 
 import { TfiMoreAlt } from "react-icons/tfi";
 import { HiUserAdd } from "react-icons/hi";
-import { FaIdCard } from "react-icons/fa";
 import { SignInWithOAuthCredentials, User } from "@supabase/supabase-js";
 import { usePostHog } from "posthog-js/react";
 import { clsx } from "clsx";
@@ -23,7 +22,9 @@ import Text from "components/atoms/Typography/text";
 import { Textarea } from "components/atoms/Textarea/text-area";
 import { useUserCollaborations } from "lib/hooks/useUserCollaborations";
 import { useToast } from "lib/hooks/useToast";
-import { cardPageUrl } from "lib/utils/urls";
+// import { cardPageUrl } from "lib/utils/urls";
+import MultiSelect, { OptionKeys } from "components/atoms/Select/multi-select";
+import { useFetchAllLists } from "lib/hooks/useList";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../Dialog/dialog";
 
 interface ContributorProfileHeaderProps {
@@ -62,6 +63,12 @@ const ContributorProfileHeader = ({
   const [message, setMessage] = useState("");
   const [charCount, setCharCount] = useState(0);
   const [isCheckingCharLimit, setIsCheckingCharLimit] = useState<boolean>(false);
+  const [selectedList, setSelectedListIds] = useState<OptionKeys[]>([]);
+  const { data, isLoading } = useFetchAllLists();
+
+  console.log(data);
+
+  const listOptions = data ? data.map((list) => ({ label: list.name, value: list.id })) : [];
 
   const posthog = usePostHog();
 
@@ -101,6 +108,15 @@ const ContributorProfileHeader = ({
     setMessage(value);
     setCharCount(value.length);
     isCheckingCharLimit && setIsCheckingCharLimit(false);
+  };
+
+  const handleSelectList = (value: OptionKeys) => {
+    const isOptionSelected = selectedList.some((s) => s.value === value.value);
+    if (isOptionSelected) {
+      setSelectedListIds((prev) => prev.filter((s) => s.value !== value.value));
+    } else {
+      setSelectedListIds((prev) => [...prev, value]);
+    }
   };
 
   const handleCopyToClipboard = async (content: string) => {
@@ -156,7 +172,7 @@ const ContributorProfileHeader = ({
         </div>
         {isConnected && (
           <div className="flex flex-col items-center gap-3 translate-y-24 md:translate-y-0 md:flex-row">
-            <div className="flex justify-center items-center  gap-2 mb-10 md:gap-6 flex-wrap">
+            <div className="flex flex-wrap items-center justify-center gap-2 mb-10 md:gap-6">
               {user ? (
                 !isOwner && (
                   <>
@@ -166,8 +182,8 @@ const ContributorProfileHeader = ({
                         variant="primary"
                         className="group w-[6.25rem] justify-center items-center"
                       >
-                        <span className="text-center hidden sm:block group-hover:hidden">Following</span>
-                        <span className="text-center block sm:hidden group-hover:block">Unfollow</span>
+                        <span className="hidden text-center sm:block group-hover:hidden">Following</span>
+                        <span className="block text-center sm:hidden group-hover:block">Unfollow</span>
                       </Button>
                     ) : (
                       <Button variant="primary" className="w-[6.25rem] text-center" onClick={handleFollowClick}>
@@ -199,14 +215,16 @@ const ContributorProfileHeader = ({
                 </>
               )}
 
-              <Button className="sm:hidden bg-white" variant="text" href={cardPageUrl(username!)}>
-                <FaIdCard className="" />
-              </Button>
-              <Button className="hidden sm:inline-flex text-black" variant="default" href={cardPageUrl(username!)}>
-                <FaIdCard className="mt-1 mr-1" /> Get Card
-              </Button>
+              <MultiSelect
+                className="w-10 px-4"
+                placeholder="Add to list"
+                options={listOptions}
+                selected={selectedList}
+                handleSelect={(option) => handleSelectList(option)}
+              />
+
               <DropdownMenu modal={false}>
-                <div className="items-center gap-2 md:gap-6 flex-wrap">
+                <div className="flex-wrap items-center gap-2 md:gap-6">
                   {!isOwner && (
                     <DropdownMenuTrigger
                       title="More options"
