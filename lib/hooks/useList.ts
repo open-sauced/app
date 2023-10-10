@@ -90,6 +90,12 @@ const addListContributor = async (listId: string, contributors: number[]) => {
         data,
         error: null,
       };
+    } else {
+      const error = await response.json();
+      return {
+        data: null,
+        error: { message: error.message, listId },
+      };
     }
   } catch (error: any) {
     console.log(error);
