@@ -313,7 +313,7 @@ interface DbUserConnection {
   readonly updated_at: string;
   readonly deleted_at: string;
   readonly request_emailed_at: string;
-  readonly collaborations_emailed_at: string;
+  readonly collaboration_emailed_at: string;
   readonly status: "pending" | "accept" | "reject";
   readonly message: string;
 }
