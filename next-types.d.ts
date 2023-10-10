@@ -373,3 +373,12 @@ interface DbProjectContributions {
   repo_id: number;
   contributions: number;
 }
+
+interface DBProjectContributor {
+  login: string;
+  commits: number;
+  prs_created: number;
+  prs_reviewed: number;
+  issues_created: number;
+  comments: number;
+}
