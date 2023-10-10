@@ -8,6 +8,7 @@ import { SignInWithOAuthCredentials, User } from "@supabase/supabase-js";
 import { usePostHog } from "posthog-js/react";
 import { clsx } from "clsx";
 
+import dynamic from "next/dynamic";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -23,9 +24,12 @@ import { Textarea } from "components/atoms/Textarea/text-area";
 import { useUserCollaborations } from "lib/hooks/useUserCollaborations";
 import { useToast } from "lib/hooks/useToast";
 // import { cardPageUrl } from "lib/utils/urls";
-import MultiSelect, { OptionKeys } from "components/atoms/Select/multi-select";
-import { useFetchAllLists } from "lib/hooks/useList";
+import { OptionKeys } from "components/atoms/Select/multi-select";
+import { addListContributor, useFetchAllLists } from "lib/hooks/useList";
+import { useFetchUser } from "lib/hooks/useFetchUser";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../Dialog/dialog";
+
+const MultiSelect = dynamic(() => import("components/atoms/Select/multi-select"), { ssr: false });
 
 interface ContributorProfileHeaderProps {
   avatarUrl?: string;
@@ -63,12 +67,6 @@ const ContributorProfileHeader = ({
   const [message, setMessage] = useState("");
   const [charCount, setCharCount] = useState(0);
   const [isCheckingCharLimit, setIsCheckingCharLimit] = useState<boolean>(false);
-  const [selectedList, setSelectedListIds] = useState<OptionKeys[]>([]);
-  const { data, isLoading } = useFetchAllLists();
-
-  console.log(data);
-
-  const listOptions = data ? data.map((list) => ({ label: list.name, value: list.id })) : [];
 
   const posthog = usePostHog();
 
@@ -108,15 +106,6 @@ const ContributorProfileHeader = ({
     setMessage(value);
     setCharCount(value.length);
     isCheckingCharLimit && setIsCheckingCharLimit(false);
-  };
-
-  const handleSelectList = (value: OptionKeys) => {
-    const isOptionSelected = selectedList.some((s) => s.value === value.value);
-    if (isOptionSelected) {
-      setSelectedListIds((prev) => prev.filter((s) => s.value !== value.value));
-    } else {
-      setSelectedListIds((prev) => [...prev, value]);
-    }
   };
 
   const handleCopyToClipboard = async (content: string) => {
@@ -215,13 +204,7 @@ const ContributorProfileHeader = ({
                 </>
               )}
 
-              <MultiSelect
-                className="w-10 px-4"
-                placeholder="Add to list"
-                options={listOptions}
-                selected={selectedList}
-                handleSelect={(option) => handleSelectList(option)}
-              />
+              {user && !isOwner && <AddToListDropdown username={username ?? ""} />}
 
               <DropdownMenu modal={false}>
                 <div className="flex-wrap items-center gap-2 md:gap-6">
@@ -342,6 +325,52 @@ const ContributorProfileHeader = ({
         </DialogContent>
       </Dialog>
     </div>
+  );
+};
+
+// Making this dropdown seperate to optimize for performance and not fetch certain data until the dropdown is rendered
+const AddToListDropdown = ({ username }: { username: string }) => {
+  const [selectListOpen, setSelectListOpen] = useState(false);
+  const [selectedList, setSelectedList] = useState<OptionKeys[]>([]);
+  const { data, isLoading } = useFetchAllLists();
+  const { data: contributor } = useFetchUser(username ?? "");
+
+  const listOptions = data ? data.map((list) => ({ label: list.name, value: list.id })) : [];
+
+  const handleSelectList = (value: OptionKeys) => {
+    const isOptionSelected = selectedList.some((s) => s.value === value.value);
+    if (isOptionSelected) {
+      setSelectedList((prev) => prev.filter((s) => s.value !== value.value));
+    } else {
+      setSelectedList((prev) => [...prev, value]);
+    }
+  };
+
+  const handleAddToList = async () => {
+    if (selectedList.length > 0 && contributor) {
+      const listIds = selectedList.map((list) => list.value);
+      await Promise.all(listIds.map((listIds) => addListContributor(listIds, [contributor.id])));
+    }
+  };
+
+  useEffect(() => {
+    if (!selectListOpen && selectedList.length > 0) {
+      handleAddToList();
+      setSelectedList([]);
+    }
+  }, [selectListOpen]);
+
+  return (
+    <MultiSelect
+      open={selectListOpen}
+      setOpen={setSelectListOpen}
+      className="w-10 px-4"
+      placeholder="Add to list"
+      options={listOptions}
+      selected={selectedList}
+      setSelected={setSelectedList}
+      handleSelect={(option) => handleSelectList(option)}
+    />
   );
 };
 
