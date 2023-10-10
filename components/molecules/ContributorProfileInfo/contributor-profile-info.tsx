@@ -154,7 +154,7 @@ const ContributorProfileInfo = ({
               {/* <span className="flex gap-2 items-center">
                 <HiOutlineMail className="text-light-slate-9" />
                 <Link className="w-max hover:text-orange-500 " href="#">
-                  Send a collaboration request
+                  Send a connections request
                 </Link>
               </span> */}
             </div>

@@ -3,20 +3,20 @@ import { TbMessageCode } from "react-icons/tb";
 import React from "react";
 import { BiMessage } from "react-icons/bi";
 import Avatar from "components/atoms/Avatar/avatar";
-import { CollaborationRequestObject } from "../CollaborationCard/collaboration-card";
+import { ConnectionRequestObject } from "../ConnectionCard/connection-card";
 
-interface CollaborationSummaryCardProps {
-  requests: CollaborationRequestObject[];
+interface ConnectionSummaryCardProps {
+  requests: ConnectionRequestObject[];
   connectionsCount?: number;
   messagesCount?: number;
 }
-const CollaborationSummaryCard = ({ requests, connectionsCount, messagesCount }: CollaborationSummaryCardProps) => {
+const ConnectionSummaryCard = ({ requests, connectionsCount, messagesCount }: ConnectionSummaryCardProps) => {
   return (
-    <div className="bg-white flex flex-col gap-4 rounded-2xl border-light-slate-6  p-4 border max-w-2xl">
-      <div className="flex justify-between text-sm items-center ">
-        <div className="flex gap-2 text-sm items-center">
+    <div className="flex flex-col max-w-2xl gap-4 p-4 bg-white border rounded-2xl border-light-slate-6">
+      <div className="flex items-center justify-between text-sm ">
+        <div className="flex items-center gap-2 text-sm">
           <div className="flex items-center">
-            Collaboration requests:{" "}
+            Connection requests:{" "}
             <span className="flex items-center gap-3 ml-3">
               {requests.map((i, index) => (
                 <Avatar
@@ -31,11 +31,11 @@ const CollaborationSummaryCard = ({ requests, connectionsCount, messagesCount }:
         </div>
         <div className="flex gap-2">
           <button className="px-2">Archive</button>
-          <button className="bg-light-orange-9 px-2 py-1 outline-none rounded-lg text-white">Expand</button>
+          <button className="px-2 py-1 text-white rounded-lg outline-none bg-light-orange-9">Expand</button>
         </div>
       </div>
       <div>{requests[0].outreachMessage}</div>
-      <div className="text-light-slate-10 gap-3 items-center flex">
+      <div className="flex items-center gap-3 text-light-slate-10">
         <div className="flex items-center gap-2">
           <TbMessageCode /> <span className="text-sm">{connectionsCount} connections</span>
         </div>
@@ -47,4 +47,4 @@ const CollaborationSummaryCard = ({ requests, connectionsCount, messagesCount }:
   );
 };
 
-export default CollaborationSummaryCard;
+export default ConnectionSummaryCard;
