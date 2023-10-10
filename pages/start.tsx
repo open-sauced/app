@@ -57,7 +57,7 @@ const LoginStep1: React.FC<LoginStep1Props> = ({ user }) => {
     } else if (onboarded === false && user && providerToken) {
       setQueryParams({ step: "2" } satisfies QueryParams);
     }
-  }, [user, onboarded, providerToken, router]);
+  }, [user, onboarded, providerToken]);
 
   const handleGitHubAuth = async () => {
     // Redirect user to GitHub to authenticate
