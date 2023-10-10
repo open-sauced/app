@@ -12,6 +12,7 @@ const NonMemoizedSpecialNode = <Datum extends object>({
 }: NodeProps<Datum>) => {
   const showLabel =
     enableLabel && node.isLeaf && (labelSkipSize === 0 || Math.min(node.width, node.height) > labelSkipSize);
+  const [fullRepoName] = node.id.split(":");
 
   return (
     <animated.div
@@ -41,7 +42,6 @@ const NonMemoizedSpecialNode = <Datum extends object>({
       />
       {showLabel && (
         <animated.div
-          data-testid={`label.${node.id}`}
           className="grid p-3 text-white place-items-start pointer-events-none"
           style={{
             gridArea: "1 / 1",
@@ -51,7 +51,7 @@ const NonMemoizedSpecialNode = <Datum extends object>({
           }}
         >
           <div className="grid gap-2">
-            <div className="font-medium text-sm">{node.id.split(":"[0])}</div>
+            <div className="font-medium text-sm">{fullRepoName}</div>
             <div className="font-normal text-xs" style={{ textOverflow: "ellipsis" }}>
               {node.label}
             </div>
