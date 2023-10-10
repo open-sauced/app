@@ -79,16 +79,24 @@ const addListContributor = async (listId: string, contributors: number[]) => {
       method: "POST",
       body: JSON.stringify({ contributors }),
       headers: {
-        accept: "application/json",
+        "Content-Type": "application/json",
         Authorization: `Bearer ${sessionToken}`,
       },
     });
 
     if (response.ok) {
-      return await response.json();
+      const data = await response.json();
+      return {
+        data,
+        error: null,
+      };
     }
-  } catch (error) {
+  } catch (error: any) {
     console.log(error);
+    return {
+      data: null,
+      error: { message: error.message, listId },
+    };
   }
 };
 

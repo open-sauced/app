@@ -77,7 +77,7 @@ const MultiSelect = ({
             )}
           </button>
         </PopoverTrigger>
-        <PopoverContent className="!w-full bg-white p-0 max-w-sm">
+        <PopoverContent align="end" className="!w-full bg-white p-0 max-w-sm">
           {options.length > 0 && (
             <Command loop onKeyDown={handleKeyDown} className="w-full px-0 bg-transparent">
               <CommandInput

@@ -333,8 +333,9 @@ const ContributorProfileHeader = ({
 const AddToListDropdown = ({ username }: { username: string }) => {
   const [selectListOpen, setSelectListOpen] = useState(false);
   const [selectedList, setSelectedList] = useState<OptionKeys[]>([]);
-  const { data, isLoading } = useFetchAllLists();
+  const { data } = useFetchAllLists();
   const { data: contributor } = useFetchUser(username ?? "");
+  const { toast } = useToast();
 
   const listOptions = data ? data.map((list) => ({ label: list.name, value: list.id })) : [];
 
@@ -350,7 +351,27 @@ const AddToListDropdown = ({ username }: { username: string }) => {
   const handleAddToList = async () => {
     if (selectedList.length > 0 && contributor) {
       const listIds = selectedList.map((list) => list.value);
-      await Promise.all(listIds.map((listIds) => addListContributor(listIds, [contributor.id])));
+      const response = Promise.all(listIds.map((listIds) => addListContributor(listIds, [contributor.id])));
+
+      response
+        .then((res) => {
+          toast({
+            description: `
+          You've added ${username} to ${selectedList.length} list${selectedList.length > 1 ? "s" : ""}!`,
+            variant: "success",
+          });
+        })
+        .catch((res) => {
+          const failedList = listOptions.filter((list) => res.some((r: any) => r.error?.list_id === list.value));
+          toast({
+            description: `
+          Failed to add ${username} to ${failedList[0].label} ${
+            failedList.length > 1 && `and ${failedList.length - 1} other lists`
+          } !
+          `,
+            variant: "danger",
+          });
+        });
     }
   };
 
