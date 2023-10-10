@@ -46,7 +46,7 @@ const AuthSection: React.FC = ({}) => {
     if (session && !userInfo) {
       setUserInfo(session);
     }
-  }, [session]);
+  }, [session, userInfo]);
 
   const authMenu = {
     authed: [

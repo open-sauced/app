@@ -6,7 +6,7 @@ const Hub = () => {
 
   useEffect(() => {
     router.push("/hub/insights");
-  }, []);
+  }, [router]);
 
   return <></>;
 };

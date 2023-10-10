@@ -33,7 +33,7 @@ const SearchDialog = () => {
       }
     }
     return () => document.removeEventListener("keydown", handleCloseSearch);
-  }, []);
+  }, [setOpenSearch]);
 
   const handleKeyboardCtrl: React.KeyboardEventHandler<HTMLInputElement> = (e) => {
     const resultsCount = searchResult?.data?.length || 0;
@@ -65,7 +65,7 @@ const SearchDialog = () => {
       cursor !== -1 && setCursor(-1);
       setIsSearching(false);
     }
-  }, [debouncedSearchTerm]);
+  }, [cursor, debouncedSearchTerm, searchTerm.length]);
 
   return (
     <div className="fixed left-0 top-0 z-[55] p-5 w-full h-full flex justify-center bg-white/30">
@@ -125,7 +125,7 @@ const SearchDialogTrigger = () => {
       }
     }
     return () => document.removeEventListener("keydown", handleOpenSearch);
-  }, []);
+  }, [setOpenSearch]);
 
   return (
     <>

@@ -155,7 +155,7 @@ const ContributorHighlightCard = ({
       const newTaggedRepoList = [...taggedRepoList, newRepo];
       setTaggedRepoList(newTaggedRepoList);
     }
-  }, [highlight.highlightLink]);
+  }, [highlight.highlightLink, taggedRepoList]);
 
   useEffect(() => {
     setDate(shipped_date ? new Date(shipped_date) : undefined);
@@ -427,7 +427,7 @@ const ContributorHighlightCard = ({
     setRepoTagSuggestions([]);
     if (!taggedRepoSearchTerm) return;
     updateSuggestionsDebounced();
-  }, [taggedRepoSearchTerm]);
+  }, [taggedRepoSearchTerm, updateSuggestionsDebounced]);
   useEffect(() => {
     if (window !== undefined) {
       setHost(window.location.origin as string);

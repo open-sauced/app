@@ -36,7 +36,7 @@ const useSupabaseAuth = (loadSession = false) => {
     return () => {
       listener?.unsubscribe();
     };
-  }, []);
+  }, [loadSession, store]);
 
   return {
     signIn: (data: SignInWithOAuthCredentials) => {

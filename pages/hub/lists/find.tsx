@@ -106,7 +106,7 @@ const NewListCreationPage = ({ initialData, timezoneOption }: NewListCreationPag
     if (router.query.public === "true") {
       setIsPublic(true);
     }
-  }, [router.query]);
+  }, [router.query, title]);
 
   // get all timezones from the api that exists in the dummy timezone list
 
