@@ -1,5 +1,6 @@
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { GetServerSidePropsContext } from "next";
+import { useState } from "react";
 import Error from "components/atoms/Error/Error";
 import { fetchApiData, validateListPath } from "helpers/fetchApiData";
 import ListPageLayout from "layouts/lists";
@@ -9,6 +10,76 @@ import MostActiveContributorsCard, {
 
 import useMostActiveContributors from "lib/hooks/api/useMostActiveContributors";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
+import { ContributionsTreemap } from "components/molecules/ContributionsTreemap/contributions-treemap";
+
+// begin test data
+const color = "hsla(21, 90%, 48%, 1)";
+const repos = [
+  {
+    id: "/insights",
+    value: 340,
+  },
+  {
+    id: "/hot",
+    value: 120,
+  },
+  {
+    id: "/ai",
+    value: 120,
+  },
+  {
+    id: "/pizza-cli",
+    value: 100,
+  },
+  {
+    id: "/super-secret-special-sauce",
+    value: 84,
+  },
+];
+const contributors = [
+  {
+    id: "foxyblocks",
+    value: 68,
+    color: color,
+  },
+  {
+    id: "codebytere",
+    value: 166,
+    color: color,
+  },
+  {
+    id: "miniak",
+    value: 163,
+    color: color,
+  },
+  {
+    id: "ckerr",
+    value: 115,
+    color: color,
+  },
+  {
+    id: "JeanMeche",
+    value: 84,
+    color: color,
+  },
+  {
+    id: "annacmc",
+    value: 90,
+    color: color,
+  },
+];
+
+const treeData = {
+  id: "root",
+  color: color,
+  children: repos,
+};
+const treeData2 = {
+  id: "root",
+  color: color,
+  children: contributors,
+};
+// end test data
 
 interface ContributorListPageProps {
   list?: DBList;
@@ -76,6 +147,11 @@ const ListActivityPage = ({ list, numberOfContributors, isError, activityData }:
     setContributorType,
     contributorType,
   } = useMostActiveContributors({ listId: list!.id, initData: activityData.contributorStats.data });
+  const [level, setLevel] = useState(0);
+  const onHandleClick = (event: Event) => {
+    setLevel(level + 1);
+  };
+  const data = level === 0 ? treeData : treeData2;
 
   return (
     <ListPageLayout list={list} numberOfContributors={numberOfContributors} isOwner={isOwner} setRange={setRange}>
@@ -94,6 +170,7 @@ const ListActivityPage = ({ list, numberOfContributors, isError, activityData }:
               isLoading={isLoading}
             />
           </ClientOnly>
+          <ContributionsTreemap setLevel={setLevel} level={level} onClick={onHandleClick} data={data} color={color} />
         </div>
       )}
     </ListPageLayout>
