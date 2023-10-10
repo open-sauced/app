@@ -1,89 +1,67 @@
-import React, { useEffect, useState } from "react";
-import { FiCheckCircle, FiCopy } from "react-icons/fi";
-import { AiOutlineWarning } from "react-icons/ai";
-import { usePostHog } from "posthog-js/react";
-import ContributorListTableHeaders from "components/molecules/ContributorListTableHeader/contributor-list-table-header";
-import { WithPageLayout } from "interfaces/with-page-layout";
-import HubContributorsPageLayout from "layouts/hub-contributors";
-import useFetchAllContributors from "lib/hooks/useFetchAllContributors";
-import ContributorTable from "components/organisms/ContributorsTable/contributors-table";
-import Header from "components/organisms/Header/header";
-import HubContributorsHeader from "components/molecules/HubContributorsHeader/hub-contributors-header";
-import Pagination from "components/molecules/Pagination/pagination";
-import PaginationResults from "components/molecules/PaginationResults/pagination-result";
-import { useToast } from "lib/hooks/useToast";
-import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
-import { Dialog, DialogContent } from "components/molecules/Dialog/dialog";
-import Title from "components/atoms/Typography/title";
-import Text from "components/atoms/Typography/text";
+import { useState } from "react";
+import { useRouter } from "next/router";
+import { UserGroupIcon } from "@heroicons/react/24/outline";
+
+import { GetServerSidePropsContext } from "next";
+import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import TextInput from "components/atoms/TextInput/text-input";
-import Button from "components/atoms/Button/button";
+import ToggleSwitch from "components/atoms/ToggleSwitch/toggle-switch";
+import Text from "components/atoms/Typography/text";
+import Title from "components/atoms/Typography/title";
+import TopNav from "components/organisms/TopNav/top-nav";
+import Footer from "components/organisms/Footer/footer";
+import InfoCard from "components/molecules/InfoCard/info-card";
+import GitHubImportDialog from "components/organisms/GitHubImportDialog/github-import-dialog";
+
+import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
+import { useToast } from "lib/hooks/useToast";
 
 interface CreateListPayload {
   name: string;
   is_public: boolean;
-  contributors: number[];
+  contributors: GhFollowing[];
 }
-const NewListCreationPage: WithPageLayout = () => {
+
+interface GhFollowing {
+  id: number;
+  login: string;
+}
+
+const CreateListPage = () => {
+  const router = useRouter();
   const { toast } = useToast();
-  const posthog = usePostHog();
-  const { sessionToken } = useSupabaseAuth();
-  const [isHydrated, setIsHydrated] = useState(false);
-  const [createLoading, setCreateLoading] = useState(false);
-  const [listId, setListId] = useState<string>("");
-  const [isOpen, setIsOpen] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [title, setTitle] = useState("");
-  const [selectedContributors, setSelectedContributors] = useState<DbPRContributor[]>([]);
-  const [range, setRange] = useState<number>(30);
-  const [isPublic, setIsPublic] = useState<boolean>(false);
-  const { data, meta, isLoading, setLimit, setPage } = useFetchAllContributors();
+  const { sessionToken, providerToken, user } = useSupabaseAuth();
 
-  const contributors = data
-    ? data.length > 0 &&
-      data.map((contributor) => {
-        return {
-          author_login: contributor.login,
-          updated_at: contributor.updated_at,
-          user_id: contributor.id,
-        };
-      })
-    : [];
+  const [name, setName] = useState("");
+  const [isPublic, setIsPublic] = useState(false);
 
-  useEffect(() => {
-    setIsHydrated(true);
-  }, []);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
-  if (!isHydrated) {
-    return null;
-  }
-
-  const handleOnSelectAllChecked = (state: boolean) => {
-    if (state) {
-      setSelectedContributors(contributors as DbPRContributor[]);
-    } else {
-      setSelectedContributors([]);
-    }
+  const handleOnNameChange = (value: string) => {
+    setName(value);
   };
 
-  const handleOnSelectChecked = (state: boolean, contributor: DbPRContributor) => {
-    if (state) {
-      setSelectedContributors((prev) => [...prev, contributor]);
-    } else {
-      setSelectedContributors(selectedContributors.filter((selected) => selected.user_id !== contributor.user_id));
+  // pick 10 unique random contributors from the GitHub following list
+  const getFollowingRandom = (arr: GhFollowing[], n: number): GhFollowing[] => {
+    const result = new Array(n);
+    let len = arr.length;
+    const taken = new Array(len);
+
+    while (n--) {
+      const x = Math.floor(Math.random() * len);
+      result[n] = arr[x in taken ? taken[x] : x];
+      taken[x] = --len in taken ? taken[len] : len;
     }
+
+    return result;
   };
 
-  const handleCreateList = async (payload: CreateListPayload) => {
+  const createList = async (payload: CreateListPayload) => {
     if (!payload.name) {
-      toast({
-        description: "List name is required",
-        variant: "danger",
-      });
       return;
     }
 
-    setCreateLoading(true);
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/lists`, {
         method: "POST",
@@ -96,169 +74,196 @@ const NewListCreationPage: WithPageLayout = () => {
 
       if (res.ok) {
         const data = await res.json();
-        setListId(data.id);
-        setIsSuccess(true);
+        return data;
       }
     } catch (error) {
       console.log(error);
-    } finally {
-      setCreateLoading(false);
-      setIsOpen(true);
+      return null;
     }
   };
 
-  const handleOnListCreate = () => {
-    const payload: CreateListPayload = {
-      name: title,
+  const handleGitHubImport = async (props: { follow: boolean }) => {
+    if (!user) {
+      toast({ description: "Unable to connect to GitHub! Try logging out and re-connecting.", variant: "warning" });
+      return;
+    }
+
+    setSubmitted(true);
+    const req = await fetch(`https://api.github.com/users/${user?.user_metadata.user_name}/following?per_page=30`, {
+      headers: {
+        "Content-type": "application/json",
+        ...(providerToken ? { Authorization: `Bearer ${providerToken}` } : {}),
+      },
+    });
+
+    if (!req.ok) {
+      toast({ description: "Unable to connect to GitHub", variant: "warning" });
+      setSubmitted(false);
+      return;
+    }
+
+    const followingList: GhFollowing[] = await req.json();
+
+    if (followingList.length === 0) {
+      toast({ description: "You are not following anyone on GitHub", variant: "danger" });
+      setSubmitted(false);
+      return;
+    }
+
+    const following = getFollowingRandom(followingList, 10);
+
+    const response = await createList({
+      name,
+      contributors: following.map((user) => ({ id: user.id, login: user.login })),
       is_public: isPublic,
-      contributors: selectedContributors.map((contributor) => contributor.user_id),
-    };
+    });
 
-    handleCreateList(payload);
-  };
+    if (response) {
+      if (props.follow) {
+        const followRequests = following.map((user) =>
+          fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${user.login}/follow`, {
+            method: "PUT",
+            headers: {
+              Authorization: `Bearer ${sessionToken}`,
+            },
+          }).catch(() => {})
+        );
 
-  const handleCopyToClipboard = async (content: string) => {
-    const url = new URL(content).toString();
-    posthog!.capture("clicked: List page link copied");
+        Promise.allSettled(followRequests);
+        toast({ description: "List created successfully", variant: "success" });
+      }
 
-    try {
-      await navigator.clipboard.writeText(url);
-      toast({ description: "Copied to clipboard", variant: "success" });
-    } catch (error) {
-      console.log(error);
+      router.push(`/lists/${response.id}/overview`);
+    } else {
+      toast({ description: "An error occurred!", variant: "danger" });
+      setSubmitted(false);
     }
   };
 
   return (
-    <Dialog open={isOpen}>
-      <div className="info-container container w-full min-h-[6.25rem]">
-        <Header>
-          <HubContributorsHeader
-            isPublic={isPublic}
-            handleToggleIsPublic={() => setIsPublic(!isPublic)}
-            loading={createLoading}
-            selectedContributorsIds={selectedContributors.map((contributor) => contributor.user_id)}
-            setLimit={setLimit}
-            setRangeFilter={(range) => {
-              setRange(range);
-            }}
-            title={title}
-            onAddToList={handleOnListCreate}
-            onTitleChange={(title) => setTitle(title)}
-          />
-        </Header>
-      </div>
-      <div className="lg:min-w-[1150px] px-16 py-8">
-        <ContributorListTableHeaders
-          selected={selectedContributors.length === meta.limit}
-          handleOnSelectAllContributor={handleOnSelectAllChecked}
-        />
-        <ContributorTable
-          loading={isLoading}
-          selectedContributors={selectedContributors}
-          topic={"*"}
-          handleSelectContributors={handleOnSelectChecked}
-          contributors={contributors as DbPRContributor[]}
-        ></ContributorTable>
-        <div className="flex items-center justify-between w-full py-1 md:py-4 md:mt-5">
-          <div>
-            <div className="">
-              <PaginationResults metaInfo={meta} total={meta.itemCount} entity={"contributors"} />
+    <section className="flex flex-col justify-center w-full py-4 xl:flex-row xl:gap-20 xl:pl-28 ">
+      <div className="flex flex-col gap-8">
+        <div className="pb-6 border-b border-light-slate-8">
+          <Title className="!text-2xl !leading-none mb-4" level={1}>
+            Create New List
+          </Title>
+          <Text className="my-8">
+            A list is a collection of contributors that you and your team can get insights for.
+          </Text>
+        </div>
+
+        <div className="pb-8 border-b border-light-slate-8">
+          <Title className="!text-1xl !leading-none mb-4" level={4}>
+            List Name
+          </Title>
+
+          <TextInput placeholder="Page Name (ex: My Team)" value={name} handleChange={handleOnNameChange} />
+        </div>
+
+        <div className="flex flex-col gap-4 py-6 border-light-slate-8">
+          <Title className="!text-1xl !leading-none mb-4 mt-8" level={4}>
+            Page Visibility
+          </Title>
+
+          <div className="flex justify-between">
+            <div className="flex items-center">
+              <UserGroupIcon className="w-6 h-6 text-light-slate-9" />
+              <Text className="pl-2">Make this list publicly visible</Text>
             </div>
-          </div>
-          <div>
-            <div className="flex flex-col gap-4">
-              <Pagination
-                pages={[]}
-                hasNextPage={meta.hasNextPage}
-                hasPreviousPage={meta.hasPreviousPage}
-                totalPage={meta.pageCount}
-                page={meta.page}
-                onPageChange={function (page: number): void {
-                  setPage(page);
-                }}
-                divisor={true}
-                goToPage
+
+            <div className="flex ml-2 !border-red-900 items-center">
+              <Text className="!text-orange-600 pr-2 hidden md:block">Make Public</Text>
+              <ToggleSwitch
+                name="isPublic"
+                checked={isPublic}
+                handleToggle={() => setIsPublic((isPublic) => !isPublic)}
               />
             </div>
           </div>
         </div>
+
+        <div className="flex flex-col gap-4 py-6 border-light-slate-8">
+          <Title className="!text-1xl !leading-none " level={4}>
+            Add Contributors
+          </Title>
+
+          <InfoCard
+            title="Explore Contributors"
+            description="Use our explore tool to find Contributors and create your list"
+            icon="globe"
+            handleClick={() => {
+              router.push(`/hub/lists/find?name=${name}&public=${isPublic}`);
+            }}
+          />
+
+          <InfoCard
+            title="Import your GitHub following"
+            description="Connect to your GitHub to create a list with all the Contributors you follow"
+            icon="github"
+            handleClick={() => {
+              if (!name) {
+                toast({
+                  description: "List name is required",
+                  variant: "danger",
+                });
+
+                return;
+              }
+
+              setIsModalOpen(true);
+            }}
+          />
+        </div>
       </div>
 
-      {/* Success and error state dialog section */}
-      <DialogContent>
-        {isSuccess ? (
-          <div className="flex flex-col max-w-xs gap-6 w-max">
-            <div className="flex flex-col items-center gap-2">
-              <span className="flex items-center justify-center p-3 bg-green-100 rounded-full w-max">
-                <span className="flex items-center justify-center w-10 h-10 bg-green-300 rounded-full">
-                  <FiCheckCircle className="text-green-800" size={24} />
-                </span>
-              </span>
-              <Title level={3} className="text-lg">
-                Your list has been created
-              </Title>
-              <Text className="leading-tight text-center text-light-slate-9">
-                You can now edit and track your new list in the pages tab, and get useful insights.
-              </Text>
-            </div>
-            <div className="">
-              <label>
-                <span className="text-sm text-light-slate-10">Share list link</span>
-                <div className="flex items-center gap-3 pr-3">
-                  <TextInput
-                    className="bg-white pointer-events-none"
-                    value={`${window.location.origin}/lists/${listId}`}
-                  />
-                  <button
-                    onClick={() => handleCopyToClipboard(`${window.location.origin}/lists/${listId}`)}
-                    type="button"
-                  >
-                    <FiCopy className="text-lg" />
-                  </button>
-                </div>
-              </label>
-            </div>
-            <div className="flex gap-3">
-              <Button href="/hub/lists" className="justify-center flex-1" variant="text">
-                Go Back to Pages
-              </Button>
-              <Button href={`/lists/${listId}/overview`} className="justify-center flex-1" variant="primary">
-                Go to List Page
-              </Button>
-            </div>
-          </div>
-        ) : (
-          <div className="flex flex-col max-w-xs gap-6 w-max">
-            <div className="flex flex-col items-center gap-2">
-              <span className="flex items-center justify-center p-3 bg-red-100 rounded-full w-max">
-                <span className="flex items-center justify-center w-10 h-10 bg-red-300 rounded-full">
-                  <AiOutlineWarning className="text-red-800" size={24} />
-                </span>
-              </span>
-              <Title level={3} className="text-lg">
-                Something went wrong
-              </Title>
-              <Text className="leading-tight text-center text-light-slate-9">
-                We couldn’t create your list. Please, try again in a few minutes.
-              </Text>
-            </div>
+      <div className="top-0 py-4 mt-5 lg:sticky md:mt-0 lg:py-0">
+        <div className="flex flex-col justify-between pt-8 mt-8 border-t"></div>
+      </div>
 
-            <div className="flex gap-3">
-              <Button href="/hub/lists" className="justify-center flex-1" variant="text">
-                Go Back to Pages
-              </Button>
-              <Button href={`/hub/lists`} className="justify-center flex-1" variant="primary">
-                Go to List Page
-              </Button>
-            </div>
-          </div>
-        )}
-      </DialogContent>
-    </Dialog>
+      <GitHubImportDialog
+        open={isModalOpen}
+        handleClose={() => setIsModalOpen(false)}
+        handleImport={handleGitHubImport}
+        loading={submitted}
+      />
+    </section>
   );
 };
 
-NewListCreationPage.PageLayout = HubContributorsPageLayout;
+const AddListPage = () => {
+  return (
+    <div className="flex flex-col min-h-screen">
+      <TopNav />
+      <div className="flex flex-col items-center pt-20 page-container grow md:pt-14">
+        <main className="flex flex-col items-center flex-1 w-full px-3 py-8 md:px-2 bg-light-slate-2">
+          <CreateListPage />
+        </main>
+      </div>
+      <Footer />
+    </div>
+  );
+};
 
-export default NewListCreationPage;
+export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
+  const supabase = createPagesServerClient(ctx);
+
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
+};
+
+AddListPage.isPrivateRoute = true;
+export default AddListPage;

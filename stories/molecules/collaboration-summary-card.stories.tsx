@@ -1,25 +1,30 @@
 import { ComponentStory } from "@storybook/react";
 
-import CollaborationSummaryCard from "components/molecules/CollaborationSummaryCard/collaboration-summary-card";
+import ConnectionSummaryCard from "components/molecules/ConnectionSummaryCard/connection-summary-card";
 
 const storyConfig = {
-  title: "Design System/Molecules/Collaboration Summary card",
+  title: "Design System/Molecules/Connection Summary card",
 };
 
 export default storyConfig;
 
-const CollaborationCardTemplate: ComponentStory<typeof CollaborationSummaryCard> = (args) => (
-  <CollaborationSummaryCard {...args} />
+const ConnectionCardTemplate: ComponentStory<typeof ConnectionSummaryCard> = (args) => (
+  <ConnectionSummaryCard {...args} />
 );
 
-export const CollaborationCardStory = CollaborationCardTemplate.bind({});
+const requestor = {
+  login: "jsmith123",
+  name: "Janice Smith",
+} as DbUser;
 
-CollaborationCardStory.args = {
+export const ConnectionCardStory = ConnectionCardTemplate.bind({});
+
+ConnectionCardStory.args = {
   requests: [
     {
       outreachMessage:
         " Hello Nate, we’re currently working on a project and think that you would be a great fit for our team. Would yoube interested in joining us",
-      requestor: undefined,
+      requestor,
       requestId: "nsodijsoiofer",
       onAccept(id) {},
       onDecline(id) {},
@@ -27,7 +32,7 @@ CollaborationCardStory.args = {
     {
       outreachMessage:
         " Hello Nate, we’re currently working on a project and think that you would be a great fit for our team. Would yoube interested in joining us",
-      requestor: undefined,
+      requestor,
       requestId: "nsodijsoiofer",
       onAccept(id) {},
       onDecline(id) {},
@@ -35,7 +40,7 @@ CollaborationCardStory.args = {
     {
       outreachMessage:
         " Hello Nate, we’re currently working on a project and think that you would be a great fit for our team. Would yoube interested in joining us",
-      requestor: undefined,
+      requestor,
       requestId: "nsodijsoiofer",
       onAccept(id) {},
       onDecline(id) {},

@@ -76,7 +76,8 @@ interface DBListContributor {
   readonly languages: Object;
   readonly public_gists: number;
   readonly public_repos: number;
-  readonly receive_collaborations: boolean;
+  readonly receive_collaboration: boolean;
+  readonly username: string;
 }
 
 interface DbRepoPR {
@@ -102,6 +103,7 @@ interface DbRepoPR {
 
 interface DbPRContributor {
   readonly author_login: string;
+  readonly username: string;
   readonly updated_at: string;
   readonly user_id: number;
 }
@@ -235,6 +237,7 @@ interface DbUser {
   readonly following_count: number;
   readonly highlights_count: number;
   readonly is_maintainer: boolean;
+  readonly coupon_code: string;
 }
 
 interface DbHighlight {
@@ -301,7 +304,7 @@ interface DbUserNotification {
   readonly from_user: DbUser;
 }
 
-interface DbUserCollaboration {
+interface DbUserConnection {
   readonly id: string;
   readonly user_id: number;
   readonly request_user_id: number;
@@ -327,6 +330,7 @@ interface DbListContibutor {
   readonly user_id: string;
   readonly login: string;
   readonly created_at: string;
+  readonly username: string;
 }
 
 interface DbUserList {

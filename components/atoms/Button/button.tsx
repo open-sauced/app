@@ -58,7 +58,7 @@ const Button = React.forwardRef<HTMLElement, ButtonsProps>(
             fill="currentColor"
           ></path>
         </svg>
-        {showLoadingText && <span>Loading...</span>}
+        {showLoadingText && <span className="text-white">Loading...</span>}
       </div>
     ) : (
       children

@@ -22,6 +22,7 @@ import { useFetchUser } from "lib/hooks/useFetchUser";
 import { getInterestOptions } from "lib/utils/getInterestOptions";
 import { useToast } from "lib/hooks/useToast";
 import { validateTwitterUsername } from "lib/utils/validate-twitter-username";
+import CouponForm from "./coupon-form";
 
 interface userSettingsPageProps {
   user: User | null;
@@ -59,6 +60,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
   const [selectedInterest, setSelectedInterest] = useState<string[]>([]);
   const formRef = useRef<HTMLFormElement>(null);
   const interestArray = getInterestOptions();
+  const [coupon, setCoupon] = useState("");
 
   useEffect(() => {
     const response = session;
@@ -68,6 +70,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
       formRef.current!.nameInput.value = response.name;
       setEmail(response.email);
       setDisplayLocalTime(response.display_local_time);
+      setCoupon(response.coupon_code);
       formRef.current!.bio.value = response.bio;
       formRef.current!.url.value = response.url;
       formRef.current!.twitter_username.value = response.twitter_username;
@@ -77,7 +80,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
       formRef.current!.linkedin_url.value = response.linkedin_url;
       formRef.current!.discord_url.value = response.discord_url;
     }
-  }, [user, session]);
+  }, [user, session, userInfo]);
 
   useEffect(() => {
     if (insightsUser) {
@@ -129,7 +132,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
     if (data) {
       toast({ description: "Updated successfully", variant: "success" });
     } else {
-      toast({ description: "An error occured!", variant: "danger" });
+      toast({ description: "An error occurred!", variant: "danger" });
     }
 
     setUpdating((prev) => ({ ...prev, emailPreferences: false }));
@@ -149,7 +152,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
       mutate();
       toast({ description: "Updated successfully", variant: "success" });
     } else {
-      toast({ description: "An error occured!", variant: "danger" });
+      toast({ description: "An error occurred!", variant: "danger" });
     }
   };
 
@@ -188,7 +191,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
       mutate();
       toast({ description: "Updated successfully", variant: "success" });
     } else {
-      toast({ description: "An error occured!", variant: "danger" });
+      toast({ description: "An error occurred!", variant: "danger" });
     }
   };
 
@@ -359,8 +362,8 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
                   setEmailPreference((prev) => ({ ...prev, receive_collaboration: !prev.receive_collaboration }))
                 }
                 checked={emailPreference.receive_collaboration}
-                title="collaboration requests"
-                label="Receive collaboration requests"
+                title="connections requests"
+                label="Receive connections requests"
               />
             </div>
             <Button
@@ -373,37 +376,44 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
               Update Preferences
             </Button>
           </div>
-          {!hasReports ? (
-            <div className="flex flex-col order-first gap-6 md:order-last">
-              <div className="flex flex-col gap-3">
-                <label className="text-2xl font-normal text-light-slate-11">Upgrade Access</label>
-                <div className="w-full sm:max-w-80">
-                  <Text>Upgrade to a subscription to gain access to generate custom reports!</Text>
-                </div>
-              </div>
-              <StripeCheckoutButton variant="primary" />
-            </div>
-          ) : (
+          {userInfo && (
             <div>
-              <div className="flex flex-col order-first gap-6 md:order-last">
-                <div className="flex flex-col gap-3">
-                  <label className="text-2xl font-normal text-light-slate-11">Manage Subscriptions</label>
-                  <div className="w-full md:w-96">
-                    <Text>
-                      You are currently subscribed to the Pro plan and currently have access to all premium features.
-                    </Text>
+              {!hasReports && !coupon ? (
+                <div className="flex flex-col order-first gap-6 md:order-last">
+                  <div className="flex flex-col gap-3">
+                    <label className="text-2xl font-normal text-light-slate-11">Upgrade Access</label>
+                    <div className="w-full sm:max-w-80">
+                      <Text>Upgrade to a subscription to gain access to generate custom reports!</Text>
+                    </div>
+                  </div>
+                  <StripeCheckoutButton variant="primary" />
+
+                  {!coupon && <CouponForm refreshUser={mutate} />}
+                </div>
+              ) : (
+                <div>
+                  <div className="flex flex-col order-first gap-6 md:order-last">
+                    <div className="flex flex-col gap-3">
+                      <label className="text-2xl font-normal text-light-slate-11">Manage Subscriptions</label>
+                      <div className="w-full md:w-96">
+                        <Text>
+                          You are currently subscribed to the Pro plan and currently have access to all premium
+                          features.
+                        </Text>
+                      </div>
+                    </div>
+                    <Button
+                      rel="noopener noreferrer"
+                      target="_blank"
+                      href={process.env.NEXT_PUBLIC_STRIPE_SUB_CANCEL_URL}
+                      className="w-max"
+                      variant="primary"
+                    >
+                      Cancel Subscription
+                    </Button>
                   </div>
                 </div>
-                <Button
-                  rel="noopener noreferrer"
-                  target="_blank"
-                  href={process.env.NEXT_PUBLIC_STRIPE_SUB_CANCEL_URL}
-                  className="w-max"
-                  variant="primary"
-                >
-                  Cancel Subscription
-                </Button>
-              </div>
+              )}
             </div>
           )}
         </div>

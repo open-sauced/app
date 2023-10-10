@@ -16,7 +16,7 @@ const ListCard = ({ list, handleOnDeleteClick }: ListCardProps) => {
   const { data: contributors, meta } = useFetchListContributors(list.id);
 
   const contributorsAvatar: Contributor[] = contributors?.map((contributor) => ({
-    host_login: contributor.login,
+    host_login: contributor.login || contributor.username,
   }));
 
   return (
