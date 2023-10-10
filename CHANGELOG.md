@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.69.0-beta.1](https://github.com/open-sauced/insights/compare/v1.68.0...v1.69.0-beta.1) (2023-10-10)
+
+
+### 🍕 Features
+
+* add `Add to list` dropdown to user profile ([#1843](https://github.com/open-sauced/insights/issues/1843)) ([4d81040](https://github.com/open-sauced/insights/commit/4d81040d1968b75605eb4b42192f1cf982d090e1))
+
 ## [1.68.0](https://github.com/open-sauced/insights/compare/v1.67.0...v1.68.0) (2023-10-10)
 
 
