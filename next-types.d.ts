@@ -367,3 +367,9 @@ interface DbListContributorStat {
   commits: number;
   prsCreated: number;
 }
+interface DbProjectContributions {
+  org_id: string;
+  project_id: string;
+  repo_id: number;
+  contributions: number;
+}
