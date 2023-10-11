@@ -1,6 +1,8 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+
 import { FiCalendar, FiEdit2 } from "react-icons/fi";
 import { format } from "date-fns";
+
 import { HiOutlineSparkles } from "react-icons/hi";
 import { RxPencil1 } from "react-icons/rx";
 import { IoClose } from "react-icons/io5";
@@ -109,33 +111,30 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
   const [loadingSuggestions, setLoadingSuggestions] = useState<boolean>(false);
   const generateSummary = useRef(false);
 
-  const fetchAllUserHighlights = useCallback(
-    async (page: number): Promise<DbHighlight[]> => {
-      const req = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/users/${loggedInUser?.user_metadata.user_name}/highlights?page=${page}`,
-        {
-          ...(providerToken
-            ? {
-                headers: {
-                  Authorization: `Bearer ${providerToken}`,
-                },
-              }
-            : {}),
-        }
-      );
-
-      if (req.ok) {
-        const res = await req.json();
-        if (res.meta.hasNextPage) {
-          const nextPage = await fetchAllUserHighlights(page + 1);
-          return [...res.data, ...nextPage];
-        }
-        return res.data;
+  const fetchAllUserHighlights = async (page: number): Promise<DbHighlight[]> => {
+    const req = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/users/${loggedInUser?.user_metadata.user_name}/highlights?page=${page}`,
+      {
+        ...(providerToken
+          ? {
+              headers: {
+                Authorization: `Bearer ${providerToken}`,
+              },
+            }
+          : {}),
       }
-      return [];
-    },
-    [loggedInUser, providerToken]
-  );
+    );
+
+    if (req.ok) {
+      const res = await req.json();
+      if (res.meta.hasNextPage) {
+        const nextPage = await fetchAllUserHighlights(page + 1);
+        return [...res.data, ...nextPage];
+      }
+      return res.data;
+    }
+    return [];
+  };
 
   const charLimit = 500;
 
@@ -285,11 +284,66 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
     };
     setLoadingSuggestions(true);
     fetchData();
-  }, [providerToken, loggedInUser, fetchAllUserHighlights]);
+  }, [providerToken, loggedInUser]);
 
   // when user updates the highlight link, check if its a github link
   // if its a github link, automatically tag the repo if its not already tagged
-  const handleGenerateHighlightSummary = useCallback(async () => {
+  useEffect(() => {
+    if (highlightLink && (isValidPullRequestUrl(highlightLink) || isValidIssueUrl(highlightLink))) {
+      if (generateSummary.current) {
+        generateSummary.current = false;
+        handleGenerateHighlightSummary();
+      }
+      const { apiPaths } = generateRepoParts(highlightLink);
+      const { repoName, orgName, issueId } = apiPaths;
+      // default to the GitHub avatar if we can't find the avatar for the organization.
+      const repoIcon = getAvatarByUsername(orgName ?? "github", 60);
+      if (taggedRepoList.some((repo) => repo.repoName === repoName)) return;
+      const newRepo = { repoName, repoOwner: orgName, repoIcon } as RepoList;
+      const newTaggedRepoList = [...taggedRepoList, newRepo];
+      setTaggedRepoList(newTaggedRepoList);
+    }
+  }, [highlightLink]);
+
+  const handleTaggedRepoAdd = async (repoFullName: string) => {
+    if (taggedRepoList.length >= 3) {
+      setError("You can only tag up to 3 repos!");
+      return;
+    }
+
+    if (taggedRepoList.some((repo) => `${repo.repoOwner}/${repo.repoName}` === repoFullName)) {
+      setError("Repo already tagged!");
+      return;
+    }
+
+    // fetch github api to check if the repo exists
+    const req = await fetch(`https://api.github.com/repos/${repoFullName}`, {
+      ...(providerToken
+        ? {
+            headers: {
+              Authorization: `Bearer ${providerToken}`,
+            },
+          }
+        : {}),
+    });
+
+    if (!req.ok) {
+      setError("Repo not found!");
+      return;
+    }
+
+    const [ownerName, repoName] = repoFullName.split("/");
+    const repoIcon = getAvatarByUsername(ownerName, 60);
+    const newTaggedRepoList = [...taggedRepoList, { repoName, repoOwner: ownerName, repoIcon }];
+    setTaggedRepoList(newTaggedRepoList);
+  };
+
+  const handleTaggedRepoDelete = (repoName: string) => {
+    const newTaggedRepoList = taggedRepoList.filter((repo) => repo.repoName !== repoName);
+    setTaggedRepoList(newTaggedRepoList);
+  };
+
+  const handleGenerateHighlightSummary = async () => {
     if (
       !highlightLink ||
       (!isValidPullRequestUrl(highlightLink) && !isValidIssueUrl(highlightLink) && !isValidBlogUrl(highlightLink))
@@ -328,61 +382,6 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
     } else {
       setError("An error occured!");
     }
-  }, [highlightLink, setIsSummaryButtonDisabled, setError, setBodyText, setIsTyping, setCharCount]);
-
-  useEffect(() => {
-    if (highlightLink && (isValidPullRequestUrl(highlightLink) || isValidIssueUrl(highlightLink))) {
-      if (generateSummary.current) {
-        generateSummary.current = false;
-        handleGenerateHighlightSummary();
-      }
-      const { apiPaths } = generateRepoParts(highlightLink);
-      const { repoName, orgName, issueId } = apiPaths;
-      // default to the GitHub avatar if we can't find the avatar for the organization.
-      const repoIcon = getAvatarByUsername(orgName ?? "github", 60);
-      if (taggedRepoList.some((repo) => repo.repoName === repoName)) return;
-      const newRepo = { repoName, repoOwner: orgName, repoIcon } as RepoList;
-      const newTaggedRepoList = [...taggedRepoList, newRepo];
-      setTaggedRepoList(newTaggedRepoList);
-    }
-  }, [handleGenerateHighlightSummary, highlightLink, taggedRepoList]);
-
-  const handleTaggedRepoAdd = async (repoFullName: string) => {
-    if (taggedRepoList.length >= 3) {
-      setError("You can only tag up to 3 repos!");
-      return;
-    }
-
-    if (taggedRepoList.some((repo) => `${repo.repoOwner}/${repo.repoName}` === repoFullName)) {
-      setError("Repo already tagged!");
-      return;
-    }
-
-    // fetch github api to check if the repo exists
-    const req = await fetch(`https://api.github.com/repos/${repoFullName}`, {
-      ...(providerToken
-        ? {
-            headers: {
-              Authorization: `Bearer ${providerToken}`,
-            },
-          }
-        : {}),
-    });
-
-    if (!req.ok) {
-      setError("Repo not found!");
-      return;
-    }
-
-    const [ownerName, repoName] = repoFullName.split("/");
-    const repoIcon = getAvatarByUsername(ownerName, 60);
-    const newTaggedRepoList = [...taggedRepoList, { repoName, repoOwner: ownerName, repoIcon }];
-    setTaggedRepoList(newTaggedRepoList);
-  };
-
-  const handleTaggedRepoDelete = (repoName: string) => {
-    const newTaggedRepoList = taggedRepoList.filter((repo) => repo.repoName !== repoName);
-    setTaggedRepoList(newTaggedRepoList);
   };
 
   // Handle submit highlights
@@ -479,7 +478,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
     setRepoTagSuggestions([]);
     if (!taggedRepoSearchTerm) return;
     updateSuggestionsDebounced();
-  }, [taggedRepoSearchTerm, updateSuggestionsDebounced]);
+  }, [taggedRepoSearchTerm]);
 
   return (
     <>

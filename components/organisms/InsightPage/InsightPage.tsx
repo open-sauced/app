@@ -151,7 +151,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
     if (insight) {
       setIsPublic(insight.is_public);
     }
-  }, [pageRepos, insight]);
+  }, [pageRepos, insight?.is_public]);
 
   const reposRemoved = repoHistory.map((repo) => {
     const [repoOwner, repoName] = repo.full_name.split("/");
@@ -436,7 +436,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
     setSuggestions([]);
     if (!repoSearchTerm) return;
     updateSuggestionsDebounced();
-  }, [repoSearchTerm, updateSuggestionsDebounced]);
+  }, [repoSearchTerm]);
 
   return (
     <section className="flex flex-col justify-center w-full py-4 xl:flex-row xl:gap-20 xl:pl-28 ">
@@ -457,7 +457,6 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
           </Title>
 
           <TextInput placeholder="Page Name (ex: My Team)" value={name} handleChange={handleOnNameChange} />
-          {/* <Text>insights.opensauced.pizza/pages/{username}/{`{pageId}`}/dashboard</Text> */}
         </div>
 
         <div className="flex flex-col gap-4 py-6 border-light-slate-8">

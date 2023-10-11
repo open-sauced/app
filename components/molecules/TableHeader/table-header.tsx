@@ -72,7 +72,7 @@ const TableHeader = ({
     setSuggestions([]);
     if (!searchTerm) return;
     updateSuggestionsDebounced();
-  }, [searchTerm, updateSuggestionsDebounced]);
+  }, [searchTerm]);
 
   return (
     <div className="flex flex-col flex-wrap w-full pl-4 gap-y-2 md:flex-row md:justify-between md:items-end md:pb-4">
