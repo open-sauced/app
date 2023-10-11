@@ -5,6 +5,20 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.69.0-beta.8](https://github.com/open-sauced/insights/compare/v1.69.0-beta.7...v1.69.0-beta.8) (2023-10-11)
+
+
+### 🍕 Features
+
+* add repos/contributors treemap to list activity page ([#1853](https://github.com/open-sauced/insights/issues/1853)) ([70a67f0](https://github.com/open-sauced/insights/commit/70a67f08f6ab649621ef2c6115ca43f99ccd44ad))
+* display featured insight pages to new contributors ([#1859](https://github.com/open-sauced/insights/issues/1859)) ([5344c59](https://github.com/open-sauced/insights/commit/5344c59538ae77b0d5f662fcd04e5dcc19807cc8))
+
+
+### 🐛 Bug Fixes
+
+* fixed API querystring param for repo_id for treemap API call ([0b914ba](https://github.com/open-sauced/insights/commit/0b914bab081344fc1d2fc8c67fdcc1bc8e2f09ce))
+* made dynamic treemap import ssr false ([9a94bf0](https://github.com/open-sauced/insights/commit/9a94bf08fda293eb1a5f63553e6c8b4f2ce0f223))
+
 ## [1.69.0-beta.7](https://github.com/open-sauced/insights/compare/v1.69.0-beta.6...v1.69.0-beta.7) (2023-10-11)
 
 
