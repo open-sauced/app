@@ -2,23 +2,25 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Image from "next/image";
+import { clsx } from "clsx";
+import { usePostHog } from "posthog-js/react";
 
 import { TfiMoreAlt } from "react-icons/tfi";
 import { HiUserAdd } from "react-icons/hi";
 import { SlUserFollowing } from "react-icons/sl";
 import { SignInWithOAuthCredentials, User } from "@supabase/supabase-js";
-import { usePostHog } from "posthog-js/react";
-import { clsx } from "clsx";
 
 import dynamic from "next/dynamic";
+import PizzaGradient from "img/icons/pizza-gradient.svg";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "components/atoms/Dropdown/dropdown";
-
 import Avatar from "components/atoms/Avatar/avatar";
+import Tooltip from "components/atoms/Tooltip/tooltip";
 import RainbowBg from "img/rainbow-cover.png";
 import Button from "components/atoms/Button/button";
 import Text from "components/atoms/Typography/text";
@@ -28,6 +30,7 @@ import { useToast } from "lib/hooks/useToast";
 import { OptionKeys } from "components/atoms/Select/multi-select";
 import { addListContributor, useFetchAllLists } from "lib/hooks/useList";
 import { useFetchUser } from "lib/hooks/useFetchUser";
+import { cardPageUrl } from "lib/utils/urls";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../Dialog/dialog";
 
 const MultiSelect = dynamic(() => import("components/atoms/Select/multi-select"), { ssr: false });
@@ -138,7 +141,7 @@ const ContributorProfileHeader = ({
       )}
 
       <div className="container flex flex-row items-end justify-between gap-2 px-2 py-6 mx-auto md:px-16">
-        <div className="translate-y-[65px] hidden md:inline-flex">
+        <div className="translate-y-[65px] hidden md:inline-flex relative">
           <Avatar
             initialsClassName="text-[100px] -translate-y-2.5  leading-none"
             initials={githubName?.charAt(0)}
@@ -148,8 +151,19 @@ const ContributorProfileHeader = ({
             size={184}
             isCircle
           />
+
+          <Tooltip content="Get dev card">
+            <Link
+              href={cardPageUrl(username!)}
+              className="absolute bottom-0 z-10 grid w-12 h-12 rounded-full shadow-md place-content-center border-conic-gradient right-4"
+            >
+              <div className="grid overflow-hidden rounded-full w-11 h-11 place-content-center bg-black/80">
+                <Image priority alt="user profile cover image" className="w-6 h-[1.7rem] " src={PizzaGradient} />
+              </div>
+            </Link>
+          </Tooltip>
         </div>
-        <div className="translate-y-[110px] md:hidden ">
+        <div className="translate-y-[110px] md:hidden relative">
           <Avatar
             initialsClassName="text-[70px] -translate-y-1 leading-none"
             initials={githubName?.charAt(0)}
@@ -159,6 +173,14 @@ const ContributorProfileHeader = ({
             size={120}
             isCircle
           />
+          <Link
+            href={cardPageUrl(username!)}
+            className="absolute bottom-0 z-10 grid rounded-full shadow-md w-11 h-11 right-1 place-content-center border-conic-gradient"
+          >
+            <div className="grid w-[2.5em] h-[2.5em] overflow-hidden rounded-full place-content-center bg-black/80">
+              <Image priority alt="user profile cover image" className="w-5 h-5 " src={PizzaGradient} />
+            </div>
+          </Link>
         </div>
         {isConnected && (
           <div className="flex flex-col items-center gap-3 translate-y-24 md:translate-y-0 md:flex-row">
