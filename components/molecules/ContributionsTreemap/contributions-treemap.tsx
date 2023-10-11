@@ -45,7 +45,7 @@ export const ContributionsTreemap = ({ setRepoId, repoId, data, color, onClick }
           <BreadCrumb isActive={repoId !== null}>Contributors</BreadCrumb>
         </div>
         <div className="rounded-md overflow-hidden grid place-content-stretch">
-          <div className="grid" style={{ gridArea: "1 / 1" }}>
+          <div className="grid" style={{ gridArea: "1 / 1", minHeight: "29rem" }}>
             <ClientOnly>
               <ResponsiveTreeMapHtml
                 data={data}
