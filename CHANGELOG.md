@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.69.0-beta.5](https://github.com/open-sauced/insights/compare/v1.69.0-beta.4...v1.69.0-beta.5) (2023-10-11)
+
+
+### 🍕 Features
+
+* add lists link to global top nav ([#1861](https://github.com/open-sauced/insights/issues/1861)) ([9dd61be](https://github.com/open-sauced/insights/commit/9dd61beaa131ddab744c6f62be5c6029400b61d9))
+
 ## [1.69.0-beta.4](https://github.com/open-sauced/insights/compare/v1.69.0-beta.3...v1.69.0-beta.4) (2023-10-10)
 
 
