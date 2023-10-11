@@ -1,19 +1,18 @@
-import { useEffect, useState } from "react";
-
-import { FaSearch } from "react-icons/fa";
-import { HiOutlineExclamation } from "react-icons/hi";
 import Link from "next/link";
 import clsx from "clsx";
 import { useRouter } from "next/router";
+import { useState, useEffect } from "react";
+import { FaSearch } from "react-icons/fa";
+import { HiOutlineExclamation } from "react-icons/hi";
+import store from "lib/store";
+import Text from "components/atoms/Typography/text";
 import Avatar from "components/atoms/Avatar/avatar";
 import { ScrollArea } from "components/atoms/ScrollArea/scroll-area";
-import Text from "components/atoms/Typography/text";
+import useLockBody from "lib/hooks/useLockBody";
 import { getAvatarByUsername } from "lib/utils/github";
 import { searchUsers } from "lib/hooks/search-users";
-import store from "lib/store";
 import useDebounceTerm from "lib/hooks/useDebounceTerm";
 import useIsMacOS from "lib/hooks/useIsMacOS";
-import useLockBody from "lib/hooks/useLockBody";
 
 const SearchDialog = () => {
   useLockBody();
