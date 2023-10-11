@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.69.0-beta.7](https://github.com/open-sauced/insights/compare/v1.69.0-beta.6...v1.69.0-beta.7) (2023-10-11)
+
+
+### 🍕 Features
+
+* add contributor search to list contributors ([#1862](https://github.com/open-sauced/insights/issues/1862)) ([8e99a1d](https://github.com/open-sauced/insights/commit/8e99a1df73092edb560357d62bfc700af522ea73))
+
 ## [1.69.0-beta.6](https://github.com/open-sauced/insights/compare/v1.69.0-beta.5...v1.69.0-beta.6) (2023-10-11)
 
 
