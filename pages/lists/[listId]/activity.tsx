@@ -1,6 +1,7 @@
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { GetServerSidePropsContext } from "next";
 import { useState } from "react";
+import { NodeMouseEventHandler } from "@nivo/treemap";
 import Error from "components/atoms/Error/Error";
 import { fetchApiData, validateListPath } from "helpers/fetchApiData";
 import ListPageLayout from "layouts/lists";
@@ -96,8 +97,9 @@ const ListActivityPage = ({ list, numberOfContributors, isError, activityData }:
     initialData: activityData.projectData,
   });
 
-  const onHandleClick = ({ data: { repoId } }: { data: { repoId: string } }) => {
-    setRepoId(Number(repoId));
+  const onHandleClick: NodeMouseEventHandler<object> = (node) => {
+    // @ts-ignore TODO: fix this
+    setRepoId(Number(node.data.repoId));
   };
   const treemapData = {
     id: "root",
