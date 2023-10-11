@@ -5,6 +5,32 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.70.0-beta.1](https://github.com/open-sauced/insights/compare/v1.69.1-beta.2...v1.70.0-beta.1) (2023-10-11)
+
+
+### 🍕 Features
+
+* add new "Get Card" CTA button to profile ([#1839](https://github.com/open-sauced/insights/issues/1839)) ([9f16f3b](https://github.com/open-sauced/insights/commit/9f16f3b63a1411635927d3a0b138a1500d0b5298))
+
+
+### 🐛 Bug Fixes
+
+* filter out orgs from GitHub list import ([#1866](https://github.com/open-sauced/insights/issues/1866)) ([90bf15a](https://github.com/open-sauced/insights/commit/90bf15a73f4385647eb233f80634f3ba92fdc77d))
+
+### [1.69.1-beta.2](https://github.com/open-sauced/insights/compare/v1.69.1-beta.1...v1.69.1-beta.2) (2023-10-11)
+
+
+### ✅ Tests
+
+* increase timeout for e2e tests ([#1867](https://github.com/open-sauced/insights/issues/1867)) ([2e0a175](https://github.com/open-sauced/insights/commit/2e0a175eff06688801ff958d68b4db1ffc8d22c0))
+
+### [1.69.1-beta.1](https://github.com/open-sauced/insights/compare/v1.69.0...v1.69.1-beta.1) (2023-10-11)
+
+
+### 🐛 Bug Fixes
+
+* mobile responsiveness for add to list dropdown ([fda8d3a](https://github.com/open-sauced/insights/commit/fda8d3a1427a92fde4ad3644373a4dc99d2091e1))
+
 ## [1.69.0](https://github.com/open-sauced/insights/compare/v1.68.0...v1.69.0) (2023-10-11)
 
 
