@@ -190,6 +190,7 @@ interface DbUserInsight {
   readonly name: string;
   readonly is_public: boolean;
   readonly is_favorite: boolean;
+  readonly is_featured: boolean;
   readonly short_code: string;
   readonly created_at: string;
   readonly updated_at: string;
@@ -231,6 +232,7 @@ interface DbUser {
   readonly linkedin_url: string;
   readonly discord_url: string;
   readonly notification_count: number;
+  readonly insights_count: number;
   readonly languages: { [lang]: number };
   readonly first_opened_pr_at: string;
   readonly followers_count: number;
