@@ -11,7 +11,7 @@ import { SlUserFollowing } from "react-icons/sl";
 import { SignInWithOAuthCredentials, User } from "@supabase/supabase-js";
 
 import dynamic from "next/dynamic";
-import PizzaGradient from "img/icons/pizza-white.svg";
+import PizzaGradient from "img/icons/pizza-gradient.svg";
 
 import {
   DropdownMenu,
