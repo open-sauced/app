@@ -5,7 +5,6 @@ import Image from "next/image";
 
 import { TfiMoreAlt } from "react-icons/tfi";
 import { HiUserAdd } from "react-icons/hi";
-import { SlUserFollowing } from "react-icons/sl";
 import { SignInWithOAuthCredentials, User } from "@supabase/supabase-js";
 import { usePostHog } from "posthog-js/react";
 import { clsx } from "clsx";
@@ -167,38 +166,18 @@ const ContributorProfileHeader = ({
                 !isOwner && (
                   <>
                     {isFollowing ? (
-                      <>
-                        <Button
-                          onClick={handleFollowClick}
-                          variant="primary"
-                          className="group w-[6.25rem] justify-center items-center hidden md:flex"
-                        >
-                          <span className="hidden text-center sm:block group-hover:hidden">Following</span>
-                          <span className="block text-center sm:hidden group-hover:block">Unfollow</span>
-                        </Button>
-                        <button
-                          className="p-2 text-white rounded-lg md:hidden bg-sauced-orange"
-                          onClick={handleFollowClick}
-                        >
-                          <SlUserFollowing className="text-xl" />
-                        </button>
-                      </>
+                      <Button
+                        onClick={handleFollowClick}
+                        variant="primary"
+                        className="group w-[6.25rem] justify-center items-center"
+                      >
+                        <span className="hidden text-center sm:block group-hover:hidden">Following</span>
+                        <span className="block text-center sm:hidden group-hover:block">Unfollow</span>
+                      </Button>
                     ) : (
-                      <>
-                        <Button
-                          variant="primary"
-                          className="w-[6.25rem] text-center hidden md:flex"
-                          onClick={handleFollowClick}
-                        >
-                          <HiUserAdd fontSize={20} className="mr-1" /> Follow
-                        </Button>
-                        <button
-                          onClick={handleFollowClick}
-                          className="p-2 text-white rounded-lg md:hidden bg-sauced-orange"
-                        >
-                          <HiUserAdd className="text-xl font-bold" />
-                        </button>
-                      </>
+                      <Button variant="primary" className="w-[6.25rem] text-center" onClick={handleFollowClick}>
+                        <HiUserAdd fontSize={20} className="mr-1" /> Follow
+                      </Button>
                     )}
                   </>
                 )
@@ -290,6 +269,8 @@ const ContributorProfileHeader = ({
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
+
+            {/* Mobile dropdown menu */}
           </div>
         )}
       </div>
@@ -412,7 +393,7 @@ const AddToListDropdown = ({ username }: { username: string }) => {
           </Link>
         </div>
       }
-      className="w-10 md:px-4 max-sm:text-sm"
+      className="w-10 px-4"
       placeholder="Add to list"
       options={listOptions}
       selected={selectedList}
