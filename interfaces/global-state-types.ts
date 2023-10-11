@@ -11,4 +11,5 @@ export interface GlobalStateInterface {
   userId?: number | null;
   hasReports?: boolean;
   openSearch?: boolean;
+  dismissFeaturedInsights?: boolean;
 }
