@@ -14,7 +14,7 @@ const NonMemoizedSpecialNode = <Datum extends object>({
   const showLabel =
     enableLabel && node.isLeaf && (labelSkipSize === 0 || Math.min(node.width, node.height) > labelSkipSize);
   const [fullRepoName] = node.id.split(":");
-  const color = stringToHSLAColor({ id: node.id });
+  node.color = stringToHSLAColor({ id: node.id });
 
   return (
     <animated.div
@@ -34,7 +34,7 @@ const NonMemoizedSpecialNode = <Datum extends object>({
           opacity: node.opacity,
           width: animatedProps.width,
           height: animatedProps.height,
-          background: color,
+          background: node.color,
           gridArea: "1 / 1",
         }}
         onMouseEnter={node.onMouseEnter}

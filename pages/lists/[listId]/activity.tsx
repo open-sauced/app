@@ -96,9 +96,8 @@ const ListActivityPage = ({ list, numberOfContributors, isError, activityData }:
     initialData: activityData.projectData,
   });
 
-  const onHandleClick = ({ id }: { id: string }) => {
-    const repoId = Number(id.split(":")[1]);
-    setRepoId(repoId);
+  const onHandleClick = ({ data: { repoId } }: { data: { repoId: string } }) => {
+    setRepoId(Number(repoId));
   };
   const treemapData = {
     id: "root",
@@ -106,8 +105,9 @@ const ListActivityPage = ({ list, numberOfContributors, isError, activityData }:
       repoId === null
         ? (projectData ?? []).map(({ org_id, project_id, repo_id, contributions }) => {
             return {
-              id: `${org_id}/${project_id}:${repo_id}`,
+              id: `${org_id}/${project_id}`,
               value: contributions,
+              repoId: `${repo_id}`,
             };
           })
         : projectContributionsByUser?.map(({ login, commits, prs_created, prs_reviewed, issues_created, comments }) => {
