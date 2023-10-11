@@ -80,7 +80,6 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 const ListActivityPage = ({ list, numberOfContributors, isError, activityData }: ContributorListPageProps) => {
   const [range, setRange] = useState(30);
   const isOwner = false;
-  const [level, setLevel] = useState(0);
   const {
     data: contributorStats,
     isLoading,
@@ -89,7 +88,7 @@ const ListActivityPage = ({ list, numberOfContributors, isError, activityData }:
     contributorType,
   } = useMostActiveContributors({ listId: list!.id, initData: activityData.contributorStats.data, range });
 
-  const { setRepoId, error, data: projectContributionsByUser } = useContributorsByProject(list!.id, range);
+  const { setRepoId, error, data: projectContributionsByUser, repoId } = useContributorsByProject(list!.id, range);
 
   const { data: projectData, error: projectDataError } = useContributionsByProject({
     listId: list!.id,
@@ -100,12 +99,11 @@ const ListActivityPage = ({ list, numberOfContributors, isError, activityData }:
   const onHandleClick = ({ id }: { id: string }) => {
     const repoId = Number(id.split(":")[1]);
     setRepoId(repoId);
-    setLevel(level + 1);
   };
   const treemapData = {
     id: "root",
     children:
-      level === 0
+      repoId === null
         ? (projectData ?? []).map(({ org_id, project_id, repo_id, contributions }) => {
             return {
               id: `${org_id}/${project_id}:${repo_id}`,
@@ -138,8 +136,8 @@ const ListActivityPage = ({ list, numberOfContributors, isError, activityData }:
             />
           </ClientOnly>
           <ContributionsTreemap
-            setLevel={setLevel}
-            level={level}
+            setRepoId={setRepoId}
+            repoId={repoId}
             onClick={onHandleClick}
             data={treemapData}
             color="hsla(21, 90%, 48%, 1)"

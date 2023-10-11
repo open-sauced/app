@@ -10,8 +10,8 @@ interface ContributionsTreemapProps {
   data: any;
   color: string;
   onClick: NodeMouseEventHandler<object>;
-  level: number;
-  setLevel: (level: number) => void;
+  repoId: number | null;
+  setRepoId: (repoId: number | null) => void;
 }
 
 function BreadCrumb({ isActive, ...rest }: any) {
@@ -30,17 +30,17 @@ function BreadCrumb({ isActive, ...rest }: any) {
 
 const ResponsiveTreeMapHtml = dynamic(() => import("@nivo/treemap").then((module) => module.ResponsiveTreeMapHtml));
 
-export const ContributionsTreemap = ({ setLevel, level, data, color, onClick }: ContributionsTreemapProps) => {
+export const ContributionsTreemap = ({ setRepoId, repoId, data, color, onClick }: ContributionsTreemapProps) => {
   return (
     <Card className="grid place-content-stretch">
       <div className="grid">
         {/* Label: Text */}
         <div className="text-lg text-slate-900 mb-2 flex">
-          <button className="cursor-pointer" onClick={() => setLevel(0)}>
+          <button className="cursor-pointer" onClick={() => setRepoId(null)}>
             Repos
           </button>
           <div> </div>
-          <BreadCrumb isActive={level > 0}>Contributors</BreadCrumb>
+          <BreadCrumb isActive={repoId !== null}>Contributors</BreadCrumb>
         </div>
         <div className="rounded-md overflow-hidden grid place-content-stretch">
           <div className="grid" style={{ gridArea: "1 / 1" }}>
@@ -53,7 +53,7 @@ export const ContributionsTreemap = ({ setLevel, level, data, color, onClick }: 
                 leavesOnly
                 orientLabel={false}
                 nodeComponent={
-                  level === 0
+                  repoId === null
                     ? SpecialNode
                     : // TODO: Sort this out later
                       (ContributorNode as <Datum extends object>({

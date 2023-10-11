@@ -13,5 +13,6 @@ export const useContributorsByProject = (listId: string, range: number) => {
     data,
     error,
     setRepoId,
+    repoId,
   };
 };
