@@ -28,7 +28,9 @@ function BreadCrumb({ isActive, ...rest }: any) {
   );
 }
 
-const ResponsiveTreeMapHtml = dynamic(() => import("@nivo/treemap").then((module) => module.ResponsiveTreeMapHtml));
+const ResponsiveTreeMapHtml = dynamic(() => import("@nivo/treemap").then((module) => module.ResponsiveTreeMapHtml), {
+  ssr: false,
+});
 
 export const ContributionsTreemap = ({ setRepoId, repoId, data, color, onClick }: ContributionsTreemapProps) => {
   return (
