@@ -1,7 +1,7 @@
 export function validateListPath(path: string) {
   // ()
   const regex =
-    /^lists\/([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\/(contributors|stats\/(most-active-contributors|contributions-evolution-by-type))))\/??/;
+    /^lists\/([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\/(contributors|stats\/(most-active-contributors|contributions-evolution-by-type|contributions-by-project))))\/??/;
 
   return regex.test(path);
 }

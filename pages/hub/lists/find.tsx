@@ -87,10 +87,12 @@ const NewListCreationPage = ({ initialData, timezoneOption }: NewListCreationPag
   const [title, setTitle] = useState("");
   const [selectedContributors, setSelectedContributors] = useState<DbPRContributor[]>([]);
   const [selectedTimezone, setSelectedTimezone] = useState<string | undefined>(undefined);
+  const [contributor, setContributor] = useState<string | undefined>(undefined);
   const [isPublic, setIsPublic] = useState<boolean>(false);
   const { data, meta, isLoading, setLimit, setPage } = useFetchAllContributors(
     {
       timezone: selectedTimezone,
+      contributor,
     },
     {
       fallbackData: initialData,
@@ -217,6 +219,12 @@ const NewListCreationPage = ({ initialData, timezoneOption }: NewListCreationPag
     setSelectedTimezone(selected);
   };
 
+  function onSearch(searchTerm: string | undefined) {
+    if (!searchTerm || searchTerm.length >= 3) {
+      setContributor(searchTerm);
+    }
+  }
+
   return (
     <HubContributorsPageLayout>
       <Dialog open={isOpen}>
@@ -234,10 +242,11 @@ const NewListCreationPage = ({ initialData, timezoneOption }: NewListCreationPag
               title={title}
               onAddToList={handleOnListCreate}
               onTitleChange={(title) => setTitle(title)}
+              onSearch={onSearch}
             />
           </Header>
         </div>
-        <div className="lg:min-w-[1150px] px-4 md:px-16 py-8">
+        <div className="lg:min-w-[1150px] px-4 md:px-16 pb-8">
           <ContributorListTableHeaders
             selected={selectedContributors.length > 0 && selectedContributors.length === meta.limit}
             handleOnSelectAllContributor={handleOnSelectAllChecked}

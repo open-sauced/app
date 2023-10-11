@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { clsx } from "clsx";
@@ -6,9 +7,10 @@ import { usePostHog } from "posthog-js/react";
 
 import { TfiMoreAlt } from "react-icons/tfi";
 import { HiUserAdd } from "react-icons/hi";
+import { SlUserFollowing } from "react-icons/sl";
 import { SignInWithOAuthCredentials, User } from "@supabase/supabase-js";
 
-import Link from "next/link";
+import dynamic from "next/dynamic";
 import PizzaGradient from "img/icons/pizza-white.svg";
 
 import {
@@ -25,8 +27,13 @@ import Text from "components/atoms/Typography/text";
 import { Textarea } from "components/atoms/Textarea/text-area";
 import { useUserConnections } from "lib/hooks/useUserConnections";
 import { useToast } from "lib/hooks/useToast";
+import { OptionKeys } from "components/atoms/Select/multi-select";
+import { addListContributor, useFetchAllLists } from "lib/hooks/useList";
+import { useFetchUser } from "lib/hooks/useFetchUser";
 import { cardPageUrl } from "lib/utils/urls";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../Dialog/dialog";
+
+const MultiSelect = dynamic(() => import("components/atoms/Select/multi-select"), { ssr: false });
 
 interface ContributorProfileHeaderProps {
   avatarUrl?: string;
@@ -182,18 +189,38 @@ const ContributorProfileHeader = ({
                 !isOwner && (
                   <>
                     {isFollowing ? (
-                      <Button
-                        onClick={handleFollowClick}
-                        variant="primary"
-                        className="group w-[6.25rem] justify-center items-center"
-                      >
-                        <span className="hidden text-center sm:block group-hover:hidden">Following</span>
-                        <span className="block text-center sm:hidden group-hover:block">Unfollow</span>
-                      </Button>
+                      <>
+                        <Button
+                          onClick={handleFollowClick}
+                          variant="primary"
+                          className="group w-[6.25rem] justify-center items-center hidden md:flex"
+                        >
+                          <span className="hidden text-center sm:block group-hover:hidden">Following</span>
+                          <span className="block text-center sm:hidden group-hover:block">Unfollow</span>
+                        </Button>
+                        <button
+                          className="p-2 text-white rounded-lg md:hidden bg-sauced-orange"
+                          onClick={handleFollowClick}
+                        >
+                          <SlUserFollowing className="text-xl" />
+                        </button>
+                      </>
                     ) : (
-                      <Button variant="primary" className="w-[6.25rem] text-center" onClick={handleFollowClick}>
-                        <HiUserAdd fontSize={20} className="mr-1" /> Follow
-                      </Button>
+                      <>
+                        <Button
+                          variant="primary"
+                          className="w-[6.25rem] text-center hidden md:flex"
+                          onClick={handleFollowClick}
+                        >
+                          <HiUserAdd fontSize={20} className="mr-1" /> Follow
+                        </Button>
+                        <button
+                          onClick={handleFollowClick}
+                          className="p-2 text-white rounded-lg md:hidden bg-sauced-orange"
+                        >
+                          <HiUserAdd className="text-xl font-bold" />
+                        </button>
+                      </>
                     )}
                   </>
                 )
@@ -219,6 +246,8 @@ const ContributorProfileHeader = ({
                   </Button>
                 </>
               )}
+
+              {user && !isOwner && <AddToListDropdown username={username ?? ""} />}
 
               <DropdownMenu modal={false}>
                 <div className="flex-wrap items-center gap-2 md:gap-6">
@@ -283,8 +312,6 @@ const ContributorProfileHeader = ({
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
-
-            {/* Mobile dropdown menu */}
           </div>
         )}
       </div>
@@ -339,6 +366,81 @@ const ContributorProfileHeader = ({
         </DialogContent>
       </Dialog>
     </div>
+  );
+};
+
+// Making this dropdown seperate to optimize for performance and not fetch certain data until the dropdown is rendered
+const AddToListDropdown = ({ username }: { username: string }) => {
+  const [selectListOpen, setSelectListOpen] = useState(false);
+  const [selectedList, setSelectedList] = useState<OptionKeys[]>([]);
+  const { data } = useFetchAllLists();
+  const { data: contributor } = useFetchUser(username ?? "");
+  const { toast } = useToast();
+
+  const listOptions = data ? data.map((list) => ({ label: list.name, value: list.id })) : [];
+
+  const handleSelectList = (value: OptionKeys) => {
+    const isOptionSelected = selectedList.some((s) => s.value === value.value);
+    if (isOptionSelected) {
+      setSelectedList((prev) => prev.filter((s) => s.value !== value.value));
+    } else {
+      setSelectedList((prev) => [...prev, value]);
+    }
+  };
+
+  const handleAddToList = async () => {
+    if (selectedList.length > 0 && contributor) {
+      const listIds = selectedList.map((list) => list.value);
+      const response = Promise.all(listIds.map((listIds) => addListContributor(listIds, [contributor.id])));
+
+      response
+        .then((res) => {
+          toast({
+            description: `
+          You've added ${username} to ${selectedList.length} list${selectedList.length > 1 ? "s" : ""}!`,
+            variant: "success",
+          });
+        })
+        .catch((res) => {
+          const failedList = listOptions.filter((list) => res.some((r: any) => r.error?.list_id === list.value));
+          toast({
+            description: `
+          Failed to add ${username} to ${failedList[0].label} ${
+            failedList.length > 1 && `and ${failedList.length - 1} other lists`
+          } !
+          `,
+            variant: "danger",
+          });
+        });
+    }
+  };
+
+  useEffect(() => {
+    if (!selectListOpen && selectedList.length > 0) {
+      handleAddToList();
+      setSelectedList([]);
+    }
+  }, [selectListOpen]);
+
+  return (
+    <MultiSelect
+      open={selectListOpen}
+      setOpen={setSelectListOpen}
+      emptyState={
+        <div className="">
+          You have no lists. <br />
+          <Link className="text-sauced-orange" href="/hub/lists/new">
+            Create a list
+          </Link>
+        </div>
+      }
+      className="w-10 md:px-4 max-sm:text-sm"
+      placeholder="Add to list"
+      options={listOptions}
+      selected={selectedList}
+      setSelected={setSelectedList}
+      handleSelect={(option) => handleSelectList(option)}
+    />
   );
 };
 
