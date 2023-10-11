@@ -1,6 +1,7 @@
 import { memo } from "react";
 import { animated } from "@react-spring/web";
 import { htmlNodeTransform } from "lib/utils/nivo-utils";
+import { stringToHSLAColor } from "lib/utils/color-utils";
 import type { NodeProps } from "@nivo/treemap";
 
 const NonMemoizedSpecialNode = <Datum extends object>({
@@ -13,6 +14,7 @@ const NonMemoizedSpecialNode = <Datum extends object>({
   const showLabel =
     enableLabel && node.isLeaf && (labelSkipSize === 0 || Math.min(node.width, node.height) > labelSkipSize);
   const [fullRepoName] = node.id.split(":");
+  const color = stringToHSLAColor({ id: node.id });
 
   return (
     <animated.div
@@ -32,7 +34,7 @@ const NonMemoizedSpecialNode = <Datum extends object>({
           opacity: node.opacity,
           width: animatedProps.width,
           height: animatedProps.height,
-          background: animatedProps.color,
+          background: color,
           gridArea: "1 / 1",
         }}
         onMouseEnter={node.onMouseEnter}
