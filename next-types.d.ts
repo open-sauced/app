@@ -76,7 +76,7 @@ interface DBListContributor {
   readonly languages: Object;
   readonly public_gists: number;
   readonly public_repos: number;
-  readonly receive_collaborations: boolean;
+  readonly receive_collaboration: boolean;
   readonly username: string;
 }
 
@@ -190,6 +190,7 @@ interface DbUserInsight {
   readonly name: string;
   readonly is_public: boolean;
   readonly is_favorite: boolean;
+  readonly is_featured: boolean;
   readonly short_code: string;
   readonly created_at: string;
   readonly updated_at: string;
@@ -231,6 +232,7 @@ interface DbUser {
   readonly linkedin_url: string;
   readonly discord_url: string;
   readonly notification_count: number;
+  readonly insights_count: number;
   readonly languages: { [lang]: number };
   readonly first_opened_pr_at: string;
   readonly followers_count: number;
@@ -304,7 +306,7 @@ interface DbUserNotification {
   readonly from_user: DbUser;
 }
 
-interface DbUserCollaboration {
+interface DbUserConnection {
   readonly id: string;
   readonly user_id: number;
   readonly request_user_id: number;
@@ -366,4 +368,19 @@ interface DbListContributorStat {
   login: string;
   commits: number;
   prsCreated: number;
+}
+interface DbProjectContributions {
+  org_id: string;
+  project_id: string;
+  repo_id: number;
+  contributions: number;
+}
+
+interface DBProjectContributor {
+  login: string;
+  commits: number;
+  prs_created: number;
+  prs_reviewed: number;
+  issues_created: number;
+  comments: number;
 }

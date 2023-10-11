@@ -19,12 +19,13 @@ import { useToast } from "lib/hooks/useToast";
 interface CreateListPayload {
   name: string;
   is_public: boolean;
-  contributors: GhFollowing[];
+  contributors: { id: number; login: string }[];
 }
 
 interface GhFollowing {
   id: number;
   login: string;
+  type: string;
 }
 
 const CreateListPage = () => {
@@ -110,7 +111,9 @@ const CreateListPage = () => {
       return;
     }
 
-    const following = getFollowingRandom(followingList, 10);
+    // Filter out orgs
+    const contributorFollowingList = followingList.filter((contributor) => contributor.type === "User");
+    const following = getFollowingRandom(contributorFollowingList, 10);
 
     const response = await createList({
       name,

@@ -77,7 +77,7 @@ describe("[lib] github methods", () => {
     });
   });
   it("Should return an object with isValidUrl set to false", () => {
-    const result = generateRepoParts("https://insights.opensauced.pizza/hub/insights/new");
+    const result = generateRepoParts("https://app.opensauced.pizza/hub/insights/new");
     expect(result.isValidUrl).toBeFalsy();
   });
   it("Should return an object with isValidUrl set to false", () => {

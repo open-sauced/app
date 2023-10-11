@@ -58,7 +58,6 @@ const Nav = ({ className, name = "Main" }: { className?: string; name?: string }
     <nav className={className} aria-label={name}>
       <ul className="flex gap-3 md:gap-8 mb-1 ml-2 sm:m-0 w-full sm:w-auto">
         {!!user && onboarded && (
-
           <li>
             <Link className={`text-sm ${getActiveStyle(router.asPath === "/hub/insights")}`} href={"/hub/insights"}>
               Insights
