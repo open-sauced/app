@@ -44,21 +44,21 @@ const InsightsHub: WithPageLayout = () => {
             </Text>
           </div>
           <div className="flex flex-start">
-            <div
+            <button
               onClick={() => {
                 toaster && toaster.dismiss();
               }}
             >
               <Text className="pr-2 cursor-pointer">Dismiss</Text>
-            </div>
-            <div
+            </button>
+            <button
               onClick={() => {
                 toaster && toaster.dismiss();
                 handleView();
               }}
             >
               <Text className="text-orange-500 cursor-pointer">Open Insight Page</Text>
-            </div>
+            </button>
           </div>
         </div>
       ),
