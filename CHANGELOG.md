@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.69.1-beta.2](https://github.com/open-sauced/insights/compare/v1.69.1-beta.1...v1.69.1-beta.2) (2023-10-11)
+
+
+### ✅ Tests
+
+* increase timeout for e2e tests ([#1867](https://github.com/open-sauced/insights/issues/1867)) ([2e0a175](https://github.com/open-sauced/insights/commit/2e0a175eff06688801ff958d68b4db1ffc8d22c0))
+
 ### [1.69.1-beta.1](https://github.com/open-sauced/insights/compare/v1.69.0...v1.69.1-beta.1) (2023-10-11)
 
 
