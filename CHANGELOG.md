@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.69.0-beta.6](https://github.com/open-sauced/insights/compare/v1.69.0-beta.5...v1.69.0-beta.6) (2023-10-11)
+
+
+### 🐛 Bug Fixes
+
+* show link to hub list page in nav ([#1858](https://github.com/open-sauced/insights/issues/1858)) ([099b1aa](https://github.com/open-sauced/insights/commit/099b1aa51036111cd8c751ca286202b06be76ec4))
+
 ## [1.69.0-beta.5](https://github.com/open-sauced/insights/compare/v1.69.0-beta.4...v1.69.0-beta.5) (2023-10-11)
 
 
