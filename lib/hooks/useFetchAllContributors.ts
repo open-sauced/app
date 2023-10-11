@@ -15,6 +15,7 @@ type queryObj = {
   pr_velocity?: string;
   timezone?: string;
   initialLimit?: number;
+  contributor?: string;
 };
 
 const useFetchAllContributors = (query: queryObj, config?: SWRConfiguration) => {
@@ -36,6 +37,9 @@ const useFetchAllContributors = (query: queryObj, config?: SWRConfiguration) => 
   }
   if (query.timezone) {
     urlQuery.set("timezone", `${query.timezone}`);
+  }
+  if (query.contributor) {
+    urlQuery.set("contributor", `${query.contributor}`);
   }
   if (limit) {
     urlQuery.set("limit", `${limit}`);
