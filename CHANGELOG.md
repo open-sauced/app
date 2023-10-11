@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.69.1-beta.1](https://github.com/open-sauced/insights/compare/v1.69.0...v1.69.1-beta.1) (2023-10-11)
+
+
+### 🐛 Bug Fixes
+
+* mobile responsiveness for add to list dropdown ([fda8d3a](https://github.com/open-sauced/insights/commit/fda8d3a1427a92fde4ad3644373a4dc99d2091e1))
+
 ## [1.69.0](https://github.com/open-sauced/insights/compare/v1.68.0...v1.69.0) (2023-10-11)
 
 
