@@ -20,16 +20,15 @@ const useMostActiveContributors = ({
   listId,
   initData,
   intialLimit = 20,
-  initialRange = 30,
+  range = 30,
   defaultContributorType = "all",
 }: {
   listId: string;
   initData?: ContributorStat[];
   intialLimit?: number;
-  initialRange?: number;
+  range?: number;
   defaultContributorType?: ContributorType;
 }) => {
-  const [range, setRange] = useState(initialRange);
   const [limit, setLimit] = useState(intialLimit);
   const [contributorType, setContributorType] = useState<ContributorType>(defaultContributorType);
 
@@ -44,7 +43,7 @@ const useMostActiveContributors = ({
   const apiEndpoint = `lists/${listId}/stats/most-active-contributors?${query.toString()}`;
 
   const { data, error, mutate } = useSWR<PaginatedResponse, Error>(
-    apiEndpoint,
+    listId ? apiEndpoint : null,
     publicApiFetcher as Fetcher<PaginatedResponse, Error>
   );
 
@@ -52,7 +51,6 @@ const useMostActiveContributors = ({
     data,
     isLoading: !error && !data,
     isError: !!error,
-    setRange,
     contributorType,
     setContributorType,
   };
