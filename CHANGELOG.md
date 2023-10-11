@@ -5,6 +5,69 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.69.0-beta.8](https://github.com/open-sauced/insights/compare/v1.69.0-beta.7...v1.69.0-beta.8) (2023-10-11)
+
+
+### 🍕 Features
+
+* add repos/contributors treemap to list activity page ([#1853](https://github.com/open-sauced/insights/issues/1853)) ([70a67f0](https://github.com/open-sauced/insights/commit/70a67f08f6ab649621ef2c6115ca43f99ccd44ad))
+* display featured insight pages to new contributors ([#1859](https://github.com/open-sauced/insights/issues/1859)) ([5344c59](https://github.com/open-sauced/insights/commit/5344c59538ae77b0d5f662fcd04e5dcc19807cc8))
+
+
+### 🐛 Bug Fixes
+
+* fixed API querystring param for repo_id for treemap API call ([0b914ba](https://github.com/open-sauced/insights/commit/0b914bab081344fc1d2fc8c67fdcc1bc8e2f09ce))
+* made dynamic treemap import ssr false ([9a94bf0](https://github.com/open-sauced/insights/commit/9a94bf08fda293eb1a5f63553e6c8b4f2ce0f223))
+
+## [1.69.0-beta.7](https://github.com/open-sauced/insights/compare/v1.69.0-beta.6...v1.69.0-beta.7) (2023-10-11)
+
+
+### 🍕 Features
+
+* add contributor search to list contributors ([#1862](https://github.com/open-sauced/insights/issues/1862)) ([8e99a1d](https://github.com/open-sauced/insights/commit/8e99a1df73092edb560357d62bfc700af522ea73))
+
+## [1.69.0-beta.6](https://github.com/open-sauced/insights/compare/v1.69.0-beta.5...v1.69.0-beta.6) (2023-10-11)
+
+
+### 🐛 Bug Fixes
+
+* show link to hub list page in nav ([#1858](https://github.com/open-sauced/insights/issues/1858)) ([099b1aa](https://github.com/open-sauced/insights/commit/099b1aa51036111cd8c751ca286202b06be76ec4))
+
+## [1.69.0-beta.5](https://github.com/open-sauced/insights/compare/v1.69.0-beta.4...v1.69.0-beta.5) (2023-10-11)
+
+
+### 🍕 Features
+
+* add lists link to global top nav ([#1861](https://github.com/open-sauced/insights/issues/1861)) ([9dd61be](https://github.com/open-sauced/insights/commit/9dd61beaa131ddab744c6f62be5c6029400b61d9))
+
+## [1.69.0-beta.4](https://github.com/open-sauced/insights/compare/v1.69.0-beta.3...v1.69.0-beta.4) (2023-10-10)
+
+
+### 🍕 Features
+
+* upgrade posthog version to support posthog survey feedback ([#1857](https://github.com/open-sauced/insights/issues/1857)) ([ca44b27](https://github.com/open-sauced/insights/commit/ca44b27815d6ad2d68af1b07d998d3bf8282dced))
+
+## [1.69.0-beta.3](https://github.com/open-sauced/insights/compare/v1.69.0-beta.2...v1.69.0-beta.3) (2023-10-10)
+
+
+### 🧑‍💻 Code Refactoring
+
+* Remove + icon from list contributors stacked avatar ([#1851](https://github.com/open-sauced/insights/issues/1851)) ([264f0dd](https://github.com/open-sauced/insights/commit/264f0ddd2fa1378407c65fdc859a9a04ae3f6a5e))
+
+## [1.69.0-beta.2](https://github.com/open-sauced/insights/compare/v1.69.0-beta.1...v1.69.0-beta.2) (2023-10-10)
+
+
+### 🐛 Bug Fixes
+
+* Repos with long names get cut off ([#1769](https://github.com/open-sauced/insights/issues/1769)) ([cabf292](https://github.com/open-sauced/insights/commit/cabf2929f2d31cca95e8d3fe277d483276615118))
+
+## [1.69.0-beta.1](https://github.com/open-sauced/insights/compare/v1.68.0...v1.69.0-beta.1) (2023-10-10)
+
+
+### 🍕 Features
+
+* add `Add to list` dropdown to user profile ([#1843](https://github.com/open-sauced/insights/issues/1843)) ([4d81040](https://github.com/open-sauced/insights/commit/4d81040d1968b75605eb4b42192f1cf982d090e1))
+
 ## [1.68.0](https://github.com/open-sauced/insights/compare/v1.67.0...v1.68.0) (2023-10-10)
 
 

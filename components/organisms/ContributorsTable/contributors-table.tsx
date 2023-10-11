@@ -35,8 +35,8 @@ const ContributorTable = ({
           />
         ))
       ) : (
-        <div className="grid w-full py-10 place-content-center text-light-slate-11">
-          No contributors found for the selected filters
+        <div className="grid w-full py-10 place-content-center text-orange-500">
+          Sorry! We couldn&apos;t find any contributors.
         </div>
       )}
     </div>
