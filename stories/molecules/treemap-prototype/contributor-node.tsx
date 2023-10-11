@@ -40,7 +40,6 @@ const NonMemoizedContributorNode = <Datum extends { id: string; value?: number; 
         onMouseEnter={node.onMouseEnter}
         onMouseMove={node.onMouseMove}
         onMouseLeave={node.onMouseLeave}
-        onClick={node.onClick}
       />
       {showLabel && (
         <animated.div
