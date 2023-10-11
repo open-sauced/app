@@ -5,7 +5,7 @@ import { FaRegSmile, FaUserCircle } from "react-icons/fa";
 import { getNotificationURL } from "lib/utils/get-notification-url";
 
 interface NotificationCard {
-  type: "highlight_reaction" | "follow" | "collaboration";
+  type: "highlight_reaction" | "follow" | "connections";
   message: string;
   id: string;
 }
@@ -14,7 +14,7 @@ const NotificationCard = ({ type, message, id }: NotificationCard) => {
   const Icons = {
     highlight_reaction: FaRegSmile,
     follow: FaUserCircle,
-    collaboration: FaUserCircle,
+    connections: FaUserCircle,
   };
 
   const Icon = Icons[type];

@@ -55,10 +55,13 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
   const repoTofilterList = (repos: { full_name: string }[]): highlightReposType[] => {
     const filtersArray = repos.map(({ full_name }) => {
       const [orgName, repo] = full_name.split("/");
-      return { repoName: repo, repoIcon: `https://www.github.com/${orgName}.png?size=300`, full_name };
+      const repoFullName = `${orgName}/${repo}`;
+      return { repoName: repo, repoIcon: `https://www.github.com/${orgName}.png?size=300`, full_name: repoFullName };
     });
-
-    return filtersArray;
+    const jsonObject = filtersArray.map((arrayItem) => JSON.stringify(arrayItem));
+    const uniqueSet = new Set(jsonObject);
+    const uniqueFilteredArray = Array.from(uniqueSet).map((arrayItem) => JSON.parse(arrayItem));
+    return uniqueFilteredArray;
   };
 
   const router = useRouter();
@@ -308,7 +311,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
           </TabsList>
 
           {user && (
-            <div className="lg:gap-x-3 px-1 pt-4 flex max-w-3xl">
+            <div className="flex max-w-3xl px-1 pt-4 lg:gap-x-3">
               <div className="hidden lg:inline-flex pt-[0.4rem]">
                 <Avatar
                   alt="user profile avatar"
@@ -324,7 +327,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
           <TabsContent value="home">
             <HomeHighlightsWrapper emojis={emojis} mutate={mutate} highlights={data} loading={isLoading} />
             {meta.pageCount > 1 && (
-              <div className="mt-10 max-w-3xl flex px-2 items-center justify-between">
+              <div className="flex items-center justify-between max-w-3xl px-2 mt-10">
                 <div className="flex items-center w-max gap-x-4">
                   <PaginationResults metaInfo={meta} total={meta.itemCount} entity={"highlights"} />
                 </div>
@@ -352,7 +355,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
             <FollowingHighlightWrapper selectedFilter={selectedRepo} emojis={emojis} />
           </TabsContent>
         </Tabs>
-        <div className="hidden w-1/3 xl:w-1/4 flex-none gap-6 mt-10 lg:flex flex-col sticky top-20">
+        <div className="sticky flex-col flex-none hidden w-1/3 gap-6 mt-10 xl:w-1/4 lg:flex top-20">
           {repoList && repoList.length > 0 && (
             <HighlightsFilterCard
               setSelected={(repo) => {

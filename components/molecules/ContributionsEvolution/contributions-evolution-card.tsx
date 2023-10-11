@@ -1,4 +1,4 @@
-import { BarDatum, ResponsiveBar } from "@nivo/bar";
+import dynamic from "next/dynamic";
 import { format } from "date-fns";
 import { useState } from "react";
 import Button from "components/atoms/Button/button";
@@ -14,6 +14,8 @@ import SVGIcon from "components/atoms/SVGIcon/svg-icon";
 import PeopleIcon from "img/icons/people.svg";
 import CalendarIcon from "img/calendar.svg";
 import ChevronDownIcon from "img/chevron-down.svg";
+import ClientOnly from "components/atoms/ClientOnly/client-only";
+import type { BarDatum } from "@nivo/bar";
 
 const dataTypes = ["commits", "prsCreated", "prsReviewed", "issuesCreated", "comments"] as const;
 const colors = {
@@ -45,7 +47,7 @@ const peopleFilters = {
   churned: "Churned Contributors",
 };
 
-interface ContributionStat extends BarDatum {
+export interface ContributionStat extends BarDatum {
   startTime: string;
   commits: number;
   prsCreated: number;
@@ -57,6 +59,9 @@ interface ContributionStat extends BarDatum {
 interface Props {
   data: ContributionStat[];
 }
+
+// Use dynamic() to import BarDatum & ResponsiveBar from @nivo/bar
+const ResponsiveBar = dynamic(() => import("@nivo/bar").then((module) => module.ResponsiveBar));
 
 export default function ContributionsEvolutionCard(props: Props) {
   const [currentDateFilter, setCurrentDateFilter] = useState<keyof typeof dateFilters>("last7days"); // TODO: make this a prop
@@ -127,21 +132,23 @@ export default function ContributionsEvolutionCard(props: Props) {
           {/* chart */}
           <div className="mb-3 grid " style={{ height: "auto" }}>
             <div>
-              <ResponsiveBar
-                data={formattedData}
-                keys={dataTypes as unknown as string[]}
-                indexBy={"startTime"}
-                axisBottom={{ tickSize: 0 }}
-                axisLeft={null}
-                enableLabel={false}
-                enableGridY={false}
-                labelFormat={""}
-                margin={{ top: 0, right: 40, bottom: 30, left: 40 }}
-                motionConfig="stiff"
-                padding={0.5}
-                colors={(d) => colors[d.id as keyof typeof colors]}
-                tooltipLabel={(d) => labels[d.id as keyof typeof labels]}
-              />
+              <ClientOnly>
+                <ResponsiveBar
+                  data={formattedData}
+                  keys={dataTypes as unknown as string[]}
+                  indexBy={"startTime"}
+                  axisBottom={{ tickSize: 0 }}
+                  axisLeft={null}
+                  enableLabel={false}
+                  enableGridY={false}
+                  labelFormat={""}
+                  margin={{ top: 0, right: 40, bottom: 30, left: 40 }}
+                  motionConfig="stiff"
+                  padding={0.5}
+                  colors={(d) => colors[d.id as keyof typeof colors]}
+                  tooltipLabel={(d) => labels[d.id as keyof typeof labels]}
+                />
+              </ClientOnly>
             </div>
           </div>
           {/* key */}

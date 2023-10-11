@@ -8,6 +8,7 @@ export interface ContributorTableProps {
   loading?: boolean;
   selectedContributors?: DbPRContributor[];
   handleSelectContributors?: (state: boolean, contributor: DbPRContributor) => void;
+  range?: number;
 }
 
 const ContributorTable = ({
@@ -16,6 +17,7 @@ const ContributorTable = ({
   loading,
   selectedContributors,
   handleSelectContributors,
+  range = 30,
 }: ContributorTableProps) => {
   return (
     <div className="flex flex-col overflow-hidden border rounded-md">
@@ -29,11 +31,12 @@ const ContributorTable = ({
             key={contributor.user_id}
             selected={!!selectedContributors?.find((selected) => selected.user_id === contributor.user_id)}
             handleOnSelectContributor={handleSelectContributors}
+            range={range}
           />
         ))
       ) : (
-        <div className="grid w-full py-10 place-content-center text-light-slate-11">
-          No contributors found for the selected filters
+        <div className="grid w-full py-10 place-content-center text-orange-500">
+          Sorry! We couldn&apos;t find any contributors.
         </div>
       )}
     </div>

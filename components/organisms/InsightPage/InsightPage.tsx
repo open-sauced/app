@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import dynamic from "next/dynamic";
 import { UserGroupIcon } from "@heroicons/react/24/outline";
 
 import { useDebounce } from "rooks";
@@ -19,12 +20,15 @@ import useStore from "lib/store";
 import Error from "components/atoms/Error/Error";
 import Search from "components/atoms/Search/search";
 import { useToast } from "lib/hooks/useToast";
-import TeamMembersConfig, { TeamMemberData } from "components/molecules/TeamMembersConfig/team-members-config";
+import { TeamMemberData } from "components/molecules/TeamMembersConfig/team-members-config";
 import useInsightMembers from "lib/hooks/useInsightMembers";
 import { useFetchInsightRecommendedRepositories } from "lib/hooks/useFetchOrgRecommendations";
 import { RepoCardProfileProps } from "components/molecules/RepoCardProfile/repo-card-profile";
 import SuggestedRepositoriesList from "../SuggestedRepoList/suggested-repo-list";
-import DeleteInsightPageModal from "./DeleteInsightPageModal";
+
+// lazy import DeleteInsightPageModal and TeamMembersConfig component to optimize bundle size they don't load on initial render
+const DeleteInsightPageModal = dynamic(() => import("./DeleteInsightPageModal"));
+const TeamMembersConfig = dynamic(() => import("components/molecules/TeamMembersConfig/team-members-config"));
 
 enum RepoLookupError {
   Initial = 0,
@@ -63,7 +67,7 @@ const staticSuggestedRepos: RepoCardProfileProps[] = [
 ];
 
 const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
-  const { sessionToken, providerToken } = useSupabaseAuth();
+  const { sessionToken, providerToken, user } = useSupabaseAuth();
   const { toast } = useToast();
   const router = useRouter();
   const pageHref = router.asPath;
@@ -188,6 +192,11 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
   const handleCreateInsightPage = async () => {
     setSubmitted(true);
     setCreateLoading(true);
+
+    if (!sessionToken || !user) {
+      toast({ description: "You must be logged in to create a page", variant: "danger" });
+      return;
+    }
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/insights`, {
       method: "POST",
       headers: {
@@ -202,10 +211,9 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
     });
     setCreateLoading(false);
     if (response.ok) {
+      const { id } = await response.json();
       toast({ description: "Page created successfully", variant: "success" });
-      setTimeout(() => {
-        router.push("/hub/insights");
-      }, 1000);
+      router.push(`/pages/${user.user_metadata.user_name}/${id}/dashboard`);
     }
 
     setSubmitted(false);
@@ -449,7 +457,6 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
           </Title>
 
           <TextInput placeholder="Page Name (ex: My Team)" value={name} handleChange={handleOnNameChange} />
-          {/* <Text>insights.opensauced.pizza/pages/{username}/{`{pageId}`}/dashboard</Text> */}
         </div>
 
         <div className="flex flex-col gap-4 py-6 border-light-slate-8">

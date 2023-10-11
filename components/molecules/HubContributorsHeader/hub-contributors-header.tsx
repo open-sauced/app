@@ -3,7 +3,7 @@ import { FaPlus } from "react-icons/fa";
 import clsx from "clsx";
 import { FiGlobe } from "react-icons/fi";
 
-import { timezones } from "lib/utils/timezones";
+import { useEffect, useState } from "react";
 import { useToast } from "lib/hooks/useToast";
 
 import ListNameHeader from "components/atoms/ListNameHeader/list-name-header";
@@ -12,43 +12,48 @@ import SingleSelect from "components/atoms/Select/single-select";
 import ToggleSwitch from "components/atoms/ToggleSwitch/toggle-switch";
 import Button from "components/atoms/Button/button";
 import Text from "components/atoms/Typography/text";
-import ComponentDateFilter from "../ComponentDateFilter/component-date-filter";
+import Search from "components/atoms/Search/search";
+import useDebounceTerm from "lib/hooks/useDebounceTerm";
 // import Search from "components/atoms/Search/search";
 
 interface ListHeaderProps {
   setLimit?: (limit: number) => void;
-  setRangeFilter?: (range: number) => void;
+  timezoneOptions: { label: string; value: string }[];
   timezone?: string;
   setTimezoneFilter: (timezone: string) => void;
   isPublic: boolean;
   handleToggleIsPublic: () => void;
-  range?: number;
   selectedContributorsIds: number[];
   title?: string;
   onAddToList?: () => void;
   onTitleChange?: (title: string) => void;
   loading?: boolean;
+  onSearch: (searchTerm: string | undefined) => void;
+  searchResults?: DbUser[];
 }
 
 const HubContributorsHeader = ({
   setLimit,
-  setRangeFilter,
   selectedContributorsIds,
   title,
   onAddToList,
   onTitleChange,
-  range,
   loading,
   isPublic,
   handleToggleIsPublic,
   timezone,
   setTimezoneFilter,
+  timezoneOptions,
+  onSearch,
 }: ListHeaderProps): JSX.Element => {
   const { toast } = useToast();
-  const timezoneOptions = timezones.map((timezone) => ({
-    label: timezone.text,
-    value: timezone.value,
-  }));
+
+  const [contributorSearch, setContributorSearch] = useState("");
+  const debouncedSearchTerm = useDebounceTerm(contributorSearch, 300);
+
+  useEffect(() => {
+    onSearch(contributorSearch);
+  }, [debouncedSearchTerm]);
 
   return (
     <div className="relative flex flex-col justify-between w-full gap-6 py-2">
@@ -94,7 +99,15 @@ const HubContributorsHeader = ({
           </Button>
         </div>
       </div>
-      <div className="flex flex-col justify-between w-full gap-2 md:flex-row">
+      <div className="flex flex-col w-full gap-2 md:flex-row">
+        <div className="flex w-full">
+          <Search
+            placeholder={`Search ${title}`}
+            className="!w-full text-sm py-1.5"
+            name={"contributors"}
+            onChange={(value) => setContributorSearch(value)}
+          />
+        </div>
         <div className="flex items-center gap-4 ">
           <SingleSelect
             options={timezoneOptions}
@@ -105,7 +118,6 @@ const HubContributorsHeader = ({
           />
         </div>
         <div className="flex flex-col gap-2 md:items-center md:gap-4 md:flex-row">
-          <ComponentDateFilter setRangeFilter={(range: number) => setRangeFilter?.(range)} defaultRange={range} />
           <LimitSelect
             placeholder="10 per page"
             options={[

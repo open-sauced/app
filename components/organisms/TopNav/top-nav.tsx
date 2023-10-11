@@ -35,12 +35,19 @@ const Nav = ({ className, name = "Main" }: { className?: string; name?: string }
   return (
     <nav className={className} aria-label={name}>
       <ul className="flex w-full gap-3 mb-3 ml-2 md:gap-8 sm:m-0 sm:w-auto">
-        {!!user && onboarded && (
-          <li>
-            <Link className={`text-sm ${getActiveStyle(router.asPath === "/hub/insights")}`} href={"/hub/insights"}>
-              Insights
-            </Link>
-          </li>
+        {!!user && (
+          <>
+            <li>
+              <Link className={`text-sm ${getActiveStyle(router.asPath === "/hub/insights")}`} href={"/hub/insights"}>
+                Insights
+              </Link>
+            </li>
+            <li>
+              <Link className={`text-sm ${getActiveStyle(router.asPath === "/hub/lists")}`} href={"/hub/lists"}>
+                Lists
+              </Link>
+            </li>
+          </>
         )}
         <li>
           <Link
