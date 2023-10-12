@@ -2,6 +2,7 @@ import useSWR, { Fetcher } from "swr";
 import { useState } from "react";
 
 import publicApiFetcher from "lib/utils/public-api-fetcher";
+import { supabase } from "lib/utils/supabase";
 
 interface PaginatedListResponse {
   data: DbUserList[];
@@ -69,23 +70,44 @@ const useFetchListContributors = (id: string, range = 30) => {
   };
 };
 
-const useList = (id: string) => {
-  const baseEndpoint = `lists/${id}`;
-  // const endpointString = `${baseEndpoint}`;
+const addListContributor = async (listId: string, contributors: number[]) => {
+  const sessionResponse = await supabase.auth.getSession();
+  const sessionToken = sessionResponse?.data.session?.access_token;
 
-  const data: DbUserList = {
-    id: "1",
-    name: "List Name",
-    user: {
-      id: 1,
-    },
-  } as DbUserList;
-  const error = false;
-  const mutate = () => {};
-  // const { data, error, mutate } = useSWR<DbUserList, Error>(
-  //   id ? endpointString : null,
-  //   publicApiFetcher as Fetcher<DbUserList, Error>
-  // );
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/lists/${listId}/contributors`, {
+      method: "POST",
+      body: JSON.stringify({ contributors }),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${sessionToken}`,
+      },
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      return {
+        data,
+        error: null,
+      };
+    } else {
+      const error = await response.json();
+      return {
+        data: null,
+        error: { message: error.message, listId },
+      };
+    }
+  } catch (error: any) {
+    console.log(error);
+    return {
+      data: null,
+      error: { message: error.message, listId },
+    };
+  }
+};
+
+const useList = (listId: string) => {
+  const { data, error, mutate } = useSWR<any>(`lists/${listId}`, publicApiFetcher as Fetcher<any, Error>);
 
   return {
     data: data,
@@ -95,4 +117,4 @@ const useList = (id: string) => {
   };
 };
 
-export { useList, useFetchAllLists, useFetchListContributors };
+export { useList, useFetchAllLists, useFetchListContributors, addListContributor };

@@ -76,7 +76,8 @@ interface DBListContributor {
   readonly languages: Object;
   readonly public_gists: number;
   readonly public_repos: number;
-  readonly receive_collaborations: boolean;
+  readonly receive_collaboration: boolean;
+  readonly username: string;
 }
 
 interface DbRepoPR {
@@ -102,6 +103,7 @@ interface DbRepoPR {
 
 interface DbPRContributor {
   readonly author_login: string;
+  readonly username: string;
   readonly updated_at: string;
   readonly user_id: number;
 }
@@ -188,6 +190,7 @@ interface DbUserInsight {
   readonly name: string;
   readonly is_public: boolean;
   readonly is_favorite: boolean;
+  readonly is_featured: boolean;
   readonly short_code: string;
   readonly created_at: string;
   readonly updated_at: string;
@@ -229,12 +232,14 @@ interface DbUser {
   readonly linkedin_url: string;
   readonly discord_url: string;
   readonly notification_count: number;
+  readonly insights_count: number;
   readonly languages: { [lang]: number };
   readonly first_opened_pr_at: string;
   readonly followers_count: number;
   readonly following_count: number;
   readonly highlights_count: number;
   readonly is_maintainer: boolean;
+  readonly coupon_code: string;
 }
 
 interface DbHighlight {
@@ -301,7 +306,7 @@ interface DbUserNotification {
   readonly from_user: DbUser;
 }
 
-interface DbUserCollaboration {
+interface DbUserConnection {
   readonly id: string;
   readonly user_id: number;
   readonly request_user_id: number;
@@ -327,6 +332,7 @@ interface DbListContibutor {
   readonly user_id: string;
   readonly login: string;
   readonly created_at: string;
+  readonly username: string;
 }
 
 interface DbUserList {
@@ -341,4 +347,40 @@ interface DbUserList {
 interface DbUserSearch {
   readonly login: string;
   readonly full_name: string;
+}
+
+interface DBList {
+  id: string;
+  user_id: number;
+  name: string;
+  is_public: boolean;
+  created_at: string;
+  updated_at: string;
+  deleted_at: string | null;
+}
+
+interface PagedData<T> {
+  data?: T[];
+  meta: Meta;
+}
+
+interface DbListContributorStat {
+  login: string;
+  commits: number;
+  prsCreated: number;
+}
+interface DbProjectContributions {
+  org_id: string;
+  project_id: string;
+  repo_id: number;
+  contributions: number;
+}
+
+interface DBProjectContributor {
+  login: string;
+  commits: number;
+  prs_created: number;
+  prs_reviewed: number;
+  issues_created: number;
+  comments: number;
 }

@@ -4,29 +4,28 @@ import Avatar from "components/atoms/Avatar/avatar";
 import { getAvatarByUsername } from "lib/utils/github";
 import Button from "components/atoms/Button/button";
 
-export interface CollaborationRequestObject extends React.ComponentProps<"div"> {
-  requestor: DbUser | undefined;
+export interface ConnectionRequestObject extends React.ComponentProps<"div"> {
+  requestor: DbUser;
   outreachMessage: string;
   requestId: string;
   onAccept: (id: string) => void;
   onDecline: (id: string) => void;
 }
 
-const CollaborationCard = ({
+const ConnectionCard = ({
   requestor,
   outreachMessage,
   className,
   requestId,
   onAccept,
   onDecline,
-}: CollaborationRequestObject) => {
+}: ConnectionRequestObject) => {
   return (
     <div className={clsx("flex flex-col w-full gap-4 p-4 bg-white border rounded-2xl border-light-slate-6", className)}>
       <div className="flex items-center justify-between text-sm ">
         <div className="flex items-center gap-2 text-sm">
-          <Avatar className="!rounded-none" size="sm" avatarURL={getAvatarByUsername(requestor?.login || "")} />
-
-          <div>{requestor?.name}</div>
+          <Avatar className="!rounded-none" size="sm" avatarURL={getAvatarByUsername(requestor.login)} />
+          <div>{requestor.name}</div>
         </div>
         <div className="flex gap-2">
           <button onClick={() => onDecline(requestId)} className="px-2">
@@ -46,4 +45,4 @@ const CollaborationCard = ({
   );
 };
 
-export default CollaborationCard;
+export default ConnectionCard;

@@ -19,9 +19,15 @@ const HubLayout = ({ children }: { children: React.ReactNode }) => {
   const { user } = useSupabaseAuth();
   const navLinks = [
     { name: "Insights", href: "/hub/insights" },
-    // { name: "Lists", href: "/hub/lists" },
+    { name: "Lists", href: "/hub/lists" },
   ];
   const router = useRouter();
+
+  const validatePath = (path: string) => {
+    const PATHREGEX = /^\/hub\/(insights|lists)(\/(new|[\d]+\/edit))?$/;
+
+    return PATHREGEX.test(path);
+  };
 
   useEffect(() => {
     async function getUser() {
@@ -53,7 +59,7 @@ const HubLayout = ({ children }: { children: React.ReactNode }) => {
           {user ? (
             <>
               <div className="container px-2 mx-auto md:px-16">
-                {router.pathname.split("/")[3] !== "new" ? (
+                {validatePath(router.pathname) ? (
                   <div className="container flex flex-col w-full gap-4 py-2">
                     <Title className="-mb-6 text-base text-sauced-orange">Your pages</Title>
 
@@ -81,11 +87,11 @@ const HubLayout = ({ children }: { children: React.ReactNode }) => {
                         </div>
                         {router.pathname.split("/")[2] === "insights" ? (
                           <Button href="/hub/insights/new" variant="primary">
-                            Add Insight Page
+                            New Insight
                           </Button>
                         ) : (
                           <Button href="/hub/lists/new" variant="primary">
-                            Add List
+                            New List
                           </Button>
                         )}
                       </div>

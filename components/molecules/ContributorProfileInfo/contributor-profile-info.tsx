@@ -3,8 +3,8 @@ import Link from "next/link";
 
 import { AiOutlineGift } from "react-icons/ai";
 import { BsDiscord } from "react-icons/bs";
-import { FiClock, FiGithub, FiLinkedin, FiTwitter } from "react-icons/fi";
-
+import { FiClock, FiGithub, FiLinkedin } from "react-icons/fi";
+import { FaXTwitter } from "react-icons/fa6";
 import clsx from "clsx";
 import LanguagePill from "components/atoms/LanguagePill/LanguagePill";
 import Title from "components/atoms/Typography/title";
@@ -107,7 +107,7 @@ const ContributorProfileInfo = ({
 
               {twitterUsername && (
                 <span className="flex gap-2 items-center">
-                  <FiTwitter className="text-light-slate-9" />
+                  <FaXTwitter className="text-light-slate-9" />
                   <Link
                     href={`https://twitter.com/${twitterUsername}`}
                     target="_blank"
@@ -154,7 +154,7 @@ const ContributorProfileInfo = ({
               {/* <span className="flex gap-2 items-center">
                 <HiOutlineMail className="text-light-slate-9" />
                 <Link className="w-max hover:text-orange-500 " href="#">
-                  Send a collaboration request
+                  Send a connections request
                 </Link>
               </span> */}
             </div>

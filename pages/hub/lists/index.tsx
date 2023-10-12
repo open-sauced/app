@@ -38,6 +38,7 @@ const ListsHub: WithPageLayout = () => {
 
   const handleOnClose = () => {
     setIsDeleteOpen(false);
+    setText("");
   };
 
   const handleOnConfirm = async () => {
@@ -62,6 +63,7 @@ const ListsHub: WithPageLayout = () => {
       toast({ description: "An error occurred while deleting the list", variant: "danger" });
     } finally {
       setDeleteLoading(false);
+      setText("");
     }
   };
 
@@ -85,7 +87,7 @@ const ListsHub: WithPageLayout = () => {
           ))
         ) : (
           <div className="flex flex-col items-center justify-center w-full gap-4 ">
-            <Title className="text-2xl">You currently have no list</Title>{" "}
+            <Title className="text-2xl">You currently have no lists</Title>{" "}
           </div>
         )}
 
