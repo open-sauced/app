@@ -7,7 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "c
 import orgIcon from "../../../img/icons/org.svg";
 import personIcon from "../../../img/icons/person.svg";
 import repoIcon from "../../../img/icons/repo.svg";
-import inverted from "../../../img/icons/inverted-triangle.svg";
+import inverted from "../../../img/icons/inverted-triangle.png";
 
 interface FilterCardSelectProps {
   selected: string;
