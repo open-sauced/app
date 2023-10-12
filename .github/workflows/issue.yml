@@ -1,0 +1,28 @@
+# This workflow posts an automated comment on every new issue
+# https://github.com/marketplace/actions/create-or-update-comment (https://github.com/peter-evans/create-or-update-comment)
+
+name: Automatic Comment
+on:
+  issues:
+    types: [opened]
+permissions:
+  contents: read
+
+jobs:
+  comment:
+    permissions:
+      issues: write  # for peter-evans/create-or-update-comment to create or update comment
+      pull-requests: write  # for peter-evans/create-or-update-comment to create or update comment
+    name: Comment
+    runs-on: ubuntu-latest
+    steps:
+      - name: Automatic Comment
+        uses: peter-evans/create-or-update-comment@v2
+        with:
+          issue-number: ${{ github.event.issue.number }}
+          body: |
+            Thanks for the issue, our team will look into it as soon as possible! If you would like to work on this issue, please wait for us to decide if it's ready. We will remove the "needs triage" label when it's ready to be worked on, and you can claim it then.
+
+            To claim an issue to work on, please leave a comment that says ".take". If you have any questions, please reach out to us on [Discord](https://discord.gg/U2peSNf23P) or follow up on the issue itself.
+
+            For full info on how to contribute, please check out our [contributors guide](https://docs.opensauced.pizza/contributing/introduction-to-contributing/).
