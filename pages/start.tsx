@@ -45,7 +45,11 @@ interface LoginStep1Props {
 }
 
 const LoginStep1: React.FC<LoginStep1Props> = ({ user }) => {
-  captureAnayltics("User Onboarding", "onboardingStep1", "visited");
+  captureAnayltics({
+    title: "User Onboarding",
+    property: "onboardingStep1",
+    value: "visited",
+  });
 
   const router = useRouter();
   const { onboarded } = useSession();
@@ -118,7 +122,11 @@ const LoginStep2: React.FC<LoginStep2Props> = ({ handleUpdateInterests: handleUp
   const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
   const interestArray = getInterestOptions();
 
-  captureAnayltics("User Onboarding", "onboardingStep2", "visited");
+  captureAnayltics({
+    title: "User Onboarding",
+    property: "onboardingStep2",
+    value: "visited",
+  });
 
   const handleSelectInterest = (interest: string) => {
     if (selectedInterests.length > 0 && selectedInterests.includes(interest)) {
@@ -175,7 +183,11 @@ interface LoginStep3Props {
 }
 
 const LoginStep3: React.FC<LoginStep3Props> = ({ interests, user }) => {
-  captureAnayltics("User Onboarding", "onboardingStep3", "visited");
+  captureAnayltics({
+    title: "User Onboarding",
+    property: "onboardingStep3",
+    value: "visited",
+  });
   const store = useStore();
   const router = useRouter();
   const { sessionToken } = useSupabaseAuth();

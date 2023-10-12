@@ -22,7 +22,7 @@ const HeaderFilter = () => {
   const { filterValues } = useFilterPrefetch();
   const { filterName, toolName, selectedFilter } = router.query;
   const filterBtnRouting = (filter: string) => {
-    captureAnayltics("Filters", "toolsFilter", `${filter} applied`);
+    captureAnayltics({ title: "Filters", property: "toolsFilter", value: `${filter} applied` });
     return router.push(`/${filterName}/${toolName}/filter/${filter.toLocaleLowerCase()}`);
   };
 

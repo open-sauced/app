@@ -13,7 +13,7 @@ interface ToolProps {
 
 const Tool = ({ tool, repositories }: ToolProps): JSX.Element => {
   const { hasReports, waitlisted } = useSession();
-  captureAnayltics("Tools Display", "tools", `${tool} selected`);
+  captureAnayltics({ title: "Tools Display", property: "tools", value: `${tool} selected` });
 
   switch (tool) {
     case "Dashboard":
