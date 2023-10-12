@@ -1,15 +1,15 @@
 import { ComponentStory } from "@storybook/react";
 
-import CollaborationSummaryCard from "components/molecules/CollaborationSummaryCard/collaboration-summary-card";
+import ConnectionSummaryCard from "components/molecules/ConnectionSummaryCard/connection-summary-card";
 
 const storyConfig = {
-  title: "Design System/Molecules/Collaboration Summary card",
+  title: "Design System/Molecules/Connection Summary card",
 };
 
 export default storyConfig;
 
-const CollaborationCardTemplate: ComponentStory<typeof CollaborationSummaryCard> = (args) => (
-  <CollaborationSummaryCard {...args} />
+const ConnectionCardTemplate: ComponentStory<typeof ConnectionSummaryCard> = (args) => (
+  <ConnectionSummaryCard {...args} />
 );
 
 const requestor = {
@@ -17,9 +17,9 @@ const requestor = {
   name: "Janice Smith",
 } as DbUser;
 
-export const CollaborationCardStory = CollaborationCardTemplate.bind({});
+export const ConnectionCardStory = ConnectionCardTemplate.bind({});
 
-CollaborationCardStory.args = {
+ConnectionCardStory.args = {
   requests: [
     {
       outreachMessage:

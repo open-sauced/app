@@ -83,7 +83,7 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
         </div>
       ) : (
         <div className="lg:min-w-[1150px]">
-          <ContributorListTableHeaders />
+          <ContributorListTableHeaders range={range} />
           <ContributorTable loading={isLoading} topic={topic} contributors={data}></ContributorTable>
         </div>
       )}

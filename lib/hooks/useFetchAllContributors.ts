@@ -1,5 +1,5 @@
 import { useState } from "react";
-import useSWR, { Fetcher } from "swr";
+import useSWR, { Fetcher, SWRConfiguration } from "swr";
 import { useRouter } from "next/router";
 
 import publicApiFetcher from "lib/utils/public-api-fetcher";
@@ -15,9 +15,10 @@ type queryObj = {
   pr_velocity?: string;
   timezone?: string;
   initialLimit?: number;
+  contributor?: string;
 };
 
-const useFetchAllContributors = (query: queryObj) => {
+const useFetchAllContributors = (query: queryObj, config?: SWRConfiguration) => {
   const { toast } = useToast();
   const router = useRouter();
   const [page, setPage] = useState(1);
@@ -37,6 +38,9 @@ const useFetchAllContributors = (query: queryObj) => {
   if (query.timezone) {
     urlQuery.set("timezone", `${query.timezone}`);
   }
+  if (query.contributor) {
+    urlQuery.set("contributor", `${query.contributor}`);
+  }
   if (limit) {
     urlQuery.set("limit", `${limit}`);
   }
@@ -46,7 +50,8 @@ const useFetchAllContributors = (query: queryObj) => {
 
   const { data, error, mutate } = useSWR<PaginatedResponse, Error>(
     endpointString,
-    publicApiFetcher as Fetcher<PaginatedResponse, Error>
+    publicApiFetcher as Fetcher<PaginatedResponse, Error>,
+    config
   );
 
   return {

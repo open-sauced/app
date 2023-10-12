@@ -7,6 +7,7 @@ export function convertToContributors(rawContributors: DBListContributor[] = [])
     ? rawContributors.map((contributor) => {
         return {
           author_login: contributor.login,
+          username: contributor.username,
           updated_at: contributor.created_at,
           user_id: contributor.id,
         };
@@ -21,6 +22,7 @@ export const useContributorsList = ({
   initialData,
   initialPage = 1,
   defaultLimit = 10,
+  defaultRange = 30,
 }: {
   listId: string | undefined;
   initialData?: {
@@ -29,11 +31,18 @@ export const useContributorsList = ({
   };
   initialPage?: number;
   defaultLimit?: number;
+  defaultRange?: number;
 }) => {
+  const [range, setRange] = useState(defaultRange); // [start, end
   const [page, setPage] = useState(initialPage);
   const [limit, setLimit] = useState(defaultLimit);
+  const query = new URLSearchParams();
+  query.append("page", page.toString());
+  query.append("limit", limit.toString());
+  query.append("range", range.toString());
+
   const { data, error, mutate } = useSWR<any>(
-    `lists/${listId}/contributors?page=${page}&limit=${limit}`,
+    listId ? `lists/${listId}/contributors?${query}` : null,
     publicApiFetcher as Fetcher<PagedData<DBListContributor>, Error>,
     {
       fallbackData: initialData,
@@ -44,6 +53,8 @@ export const useContributorsList = ({
   return {
     setPage,
     setLimit,
+    setRange,
+    range,
     data: data ? { data: contributors, meta: data.meta } : { data: [], meta: {} },
     isLoading: !error && !data,
     isError: !!error,
