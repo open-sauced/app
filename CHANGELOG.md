@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.71.0-beta.2](https://github.com/open-sauced/insights/compare/v1.71.0-beta.1...v1.71.0-beta.2) (2023-10-12)
+
+
+### 🐛 Bug Fixes
+
+* Fix CSS inconsistency in Contributor Highlights for "Home" and "Following" tabs for `/feed` route ([#1783](https://github.com/open-sauced/insights/issues/1783)) ([ad08c16](https://github.com/open-sauced/insights/commit/ad08c167be1b980280d8d9b34bbdd770b30298fc))
+* reset input state of delete list dialog box after closing the dialog and deleting the list ([#1877](https://github.com/open-sauced/insights/issues/1877)) ([397570d](https://github.com/open-sauced/insights/commit/397570d0c3c27be0d505f0c5820b48c74ac29bbf))
+
 ## [1.71.0-beta.1](https://github.com/open-sauced/insights/compare/v1.70.0...v1.71.0-beta.1) (2023-10-11)
 
 
