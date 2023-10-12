@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.71.0-beta.3](https://github.com/open-sauced/insights/compare/v1.71.0-beta.2...v1.71.0-beta.3) (2023-10-12)
+
+
+### 🐛 Bug Fixes
+
+* adjust style for newsletter form so that it adjusts for smaller screens ([#1782](https://github.com/open-sauced/insights/issues/1782)) ([9d97030](https://github.com/open-sauced/insights/commit/9d97030467422601cad6905007b16ef5f8b04ec9))
+
 ## [1.71.0-beta.2](https://github.com/open-sauced/insights/compare/v1.71.0-beta.1...v1.71.0-beta.2) (2023-10-12)
 
 
