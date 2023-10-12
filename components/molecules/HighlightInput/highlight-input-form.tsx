@@ -725,10 +725,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
       {/* Add Repo Popup Form */}
 
       <Dialog open={addTaggedRepoFormOpen} onOpenChange={setAddTaggedRepoFormOpen}>
-        <DialogContent
-          className="p-2 w-auto"
-          // style={{}}
-        >
+        <DialogContent className="p-2 w-auto">
           <DialogHeader>
             <DialogTitle>Add a repo</DialogTitle>
             <DialogDescription>Add a Repository to tag with this highlight.</DialogDescription>
