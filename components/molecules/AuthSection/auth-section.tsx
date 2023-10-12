@@ -102,7 +102,7 @@ const AuthSection: React.FC = ({}) => {
           <SearchDialogTrigger />
           {user ? (
             <>
-              {!onboarded && (
+              {onboarded !== undefined && !onboarded && (
                 <>
                   <OnboardingButton />
                   <Divider type="vertical" className="!h-6 !bg-light-slate-6"></Divider>
@@ -132,7 +132,7 @@ const AuthSection: React.FC = ({}) => {
             <Button
               variant="primary"
               onClick={async () =>
-                await signIn({ provider: "github", options: { redirectTo: `${host}/${currentPath}` } })
+                await signIn({ provider: "github", options: { redirectTo: `${host}${currentPath}` } })
               }
               className="flex items-center"
             >

@@ -230,7 +230,7 @@ const ContributorProfileHeader = ({
                     className="sm:hidden"
                     variant="primary"
                     onClick={async () =>
-                      handleSignIn({ provider: "github", options: { redirectTo: `${host}/${currentPath}` } })
+                      handleSignIn({ provider: "github", options: { redirectTo: `${host}${currentPath}` } })
                     }
                   >
                     <HiUserAdd />
@@ -239,7 +239,7 @@ const ContributorProfileHeader = ({
                     className="w-[6.25rem] hidden sm:inline-flex"
                     variant="primary"
                     onClick={async () =>
-                      handleSignIn({ provider: "github", options: { redirectTo: `${host}/${currentPath}` } })
+                      handleSignIn({ provider: "github", options: { redirectTo: `${host}${currentPath}` } })
                     }
                   >
                     <HiUserAdd fontSize={20} className="mr-1" /> Follow
@@ -288,7 +288,7 @@ const ContributorProfileHeader = ({
                       <DropdownMenuItem className="rounded-md">
                         <button
                           onClick={async () =>
-                            handleSignIn({ provider: "github", options: { redirectTo: `${host}/${currentPath}` } })
+                            handleSignIn({ provider: "github", options: { redirectTo: `${host}${currentPath}` } })
                           }
                           className="flex items-center gap-1 pl-3 pr-7"
                         >
@@ -299,7 +299,7 @@ const ContributorProfileHeader = ({
                         <DropdownMenuItem className="rounded-md">
                           <button
                             onClick={async () =>
-                              handleSignIn({ provider: "github", options: { redirectTo: `${host}/${currentPath}` } })
+                              handleSignIn({ provider: "github", options: { redirectTo: `${host}${currentPath}` } })
                             }
                             className="flex items-center gap-1 pl-3 pr-7"
                           >
