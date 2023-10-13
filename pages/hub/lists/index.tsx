@@ -38,6 +38,7 @@ const ListsHub: WithPageLayout = () => {
 
   const handleOnClose = () => {
     setIsDeleteOpen(false);
+    setText("");
   };
 
   const handleOnConfirm = async () => {
@@ -62,6 +63,7 @@ const ListsHub: WithPageLayout = () => {
       toast({ description: "An error occurred while deleting the list", variant: "danger" });
     } finally {
       setDeleteLoading(false);
+      setText("");
     }
   };
 
