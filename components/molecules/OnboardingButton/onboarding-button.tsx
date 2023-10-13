@@ -19,7 +19,7 @@ const OnboardingButton: React.FC<OnboardingButtonProps> = ({ className, children
       className={`${className} hidden items-center gap-2 border border-light-orange-8 py-1 px-1 pr-3 rounded-lg md:flex`}
     >
       <ProgressPie percentage={66} />
-      {children && children}
+      {children}
     </button>
   );
 };
