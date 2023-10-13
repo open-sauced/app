@@ -7,7 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "c
 import orgIcon from "../../../img/icons/org.svg";
 import personIcon from "../../../img/icons/person.svg";
 import repoIcon from "../../../img/icons/repo.svg";
-import inverted from "../../../img/icons/inverted-triangle.png";
+import chevronDown from "../../../img/chevron-down.svg";
 
 interface FilterCardSelectProps {
   selected: string;
@@ -18,7 +18,7 @@ interface FilterCardSelectProps {
 
 const icons = {
   topic: {
-    src: inverted.src,
+    src: chevronDown.src,
     alt: "Topic",
   },
   org: {
@@ -47,8 +47,8 @@ const FilterCardSelect: React.FC<FilterCardSelectProps> = ({
         selectIcon={
           <Image
             className="ml-2"
-            width={13}
-            height={13}
+            width={20}
+            height={20}
             alt={icons[icon] ? icons[icon].alt : "Icons"}
             src={icons[icon] ? icons[icon].src : icons.topic.src}
           />
