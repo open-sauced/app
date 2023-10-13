@@ -385,7 +385,9 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
   };
 
   // Handle submit highlights
-  const handlePostHighlight = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handlePostHighlight = async (
+    e: React.FormEvent<HTMLFormElement> | React.KeyboardEvent<HTMLTextAreaElement>
+  ) => {
     e.preventDefault();
 
     const highlight = bodyText;
