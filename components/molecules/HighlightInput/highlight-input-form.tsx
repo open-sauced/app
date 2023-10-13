@@ -520,6 +520,11 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                 }`}
                 defaultRow={4}
                 value={bodyText}
+                onKeyUp={(e) => {
+                  if (e.ctrlKey && e.key === "Enter") {
+                    handlePostHighlight(e);
+                  }
+                }}
                 placeholder={`Tell us about your highlight and add a link
               `}
                 typewrite={isTyping}
