@@ -1,4 +1,6 @@
 const plugin = require("tailwindcss/plugin");
+const defaultTheme = require("tailwindcss/defaultTheme");
+
 module.exports = {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx}",
@@ -7,15 +9,17 @@ module.exports = {
     "./stories/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
+    screens: {
+      xs: "425px",
+      // => @media (min-width: 425px) { ... }
+      ...defaultTheme.screens,
+    },
     extend: {
       gridTemplateColumns: {
         autodesktop: "repeat(auto-fit, minmax(410px, 1fr))",
         automobile: "repeat(auto-fit, minmax(300px, 1fr))",
       },
       screens: {
-        xs: "425px",
-        // => @media (min-width: 425px) { ... }
-
         "2xl": "1440px",
         // => @media (min-width: 1440px) { ... }
       },

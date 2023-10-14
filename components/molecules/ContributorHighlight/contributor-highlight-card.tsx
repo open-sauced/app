@@ -436,7 +436,7 @@ const ContributorHighlightCard = ({
   }, []);
 
   return (
-    <article className="flex flex-col  md:max-w-[40rem] flex-1 gap-3 lg:gap-6">
+    <article className="w-full flex flex-col flex-1 gap-3 md:max-w-[40rem] lg:gap-6 lg:max-w-[29rem] 2xl:max-w-[34rem]">
       <div>
         <div className={clsx("flex items-center mb-4 gap-1 text-light-slate-11", title && "mb-2")}>
           {icon}

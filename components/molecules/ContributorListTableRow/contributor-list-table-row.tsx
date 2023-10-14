@@ -19,6 +19,7 @@ interface ContributorListTableRow {
   topic: string;
   selected?: boolean;
   handleOnSelectContributor?: (state: boolean, contributor: DbPRContributor) => void;
+  range: number;
 }
 
 function getLastContributionDate(contributions: DbRepoPR[]) {
@@ -47,18 +48,19 @@ const ContributorListTableRow = ({
   topic,
   selected,
   handleOnSelectContributor,
+  range,
 }: ContributorListTableRow) => {
   const [tableOpen, setTableOpen] = useState(false);
-
+  const login = contributor.author_login || contributor.username;
   const { data: user } = useFetchUser(contributor.author_login);
-  const { data } = useContributorPullRequests(contributor.author_login, topic, [], 30);
+  const { data } = useContributorPullRequests(login, topic, [], range);
   const repoList = useRepoList(Array.from(new Set(data.map((prData) => prData.full_name))).join(","));
   const contributorLanguageList = user ? Object.keys(user.languages).map((language) => language) : [];
-  const days = getPullRequestsToDays(data);
+  const days = getPullRequestsToDays(data, range);
   const totalPrs = data.length;
   const last30days = [
     {
-      id: `last30-${contributor.author_login}`,
+      id: `last30-${login}`,
       color: "hsl(63, 70%, 50%)",
       data: days,
     },
@@ -82,7 +84,11 @@ const ContributorListTableRow = ({
             />
           )}
           <div className="w-[68%]">
-            <DevProfile company={user?.company || getLastContributedRepo(data)} username={contributor.author_login} />
+            <DevProfile
+              company={user?.company || getLastContributedRepo(data)}
+              username={login}
+              hasBorder={!contributor.author_login}
+            />
           </div>
           <div className="w-[34%] text-normal text-light-slate-11  h-full">
             <div className="flex gap-x-3">{<p>{getLastContributionDate(mergedPrs)}</p>}</div>
@@ -101,7 +107,7 @@ const ContributorListTableRow = ({
           <div className="px-2 py-3">{last30days && <Sparkline data={last30days} width="100%" height={54} />}</div>
 
           <div className="flex items-center justify-between py-3 border-b">
-            <div>Act</div>
+            <div>Activity</div>
             {getActivity(totalPrs, false)}
           </div>
           <div className="flex items-center justify-between py-3 border-b">
@@ -150,20 +156,26 @@ const ContributorListTableRow = ({
 
         {/* Column: Contributors */}
         <div className={clsx("flex-1 lg:min-w-[12.5rem] overflow-hidden")}>
-          <DevProfile company={user?.company || getLastContributedRepo(data)} username={contributor.author_login} />
+          <DevProfile
+            company={user?.company || getLastContributedRepo(data)}
+            username={login}
+            hasBorder={!contributor.author_login}
+          />
         </div>
 
         {/* Column: Act */}
         <div className={clsx("flex-1 flex lg:max-w-[6.25rem] w-fit justify-center")}>
-          {getActivity(totalPrs, false)}
+          {contributor.author_login ? getActivity(totalPrs, false) : "-"}
         </div>
 
         {/* Column Repositories */}
-        <div className={clsx("flex-1 lg:max-w-[6.25rem]  flex justify-center ")}>{repoList.length}</div>
+        <div className={clsx("flex-1 lg:max-w-[6.25rem]  flex justify-center ")}>
+          {contributor.author_login ? repoList.length : "-"}
+        </div>
 
         {/* Column: Last Contribution */}
         <div className={clsx("flex-1 lg:max-w-[130px]  flex text-light-slate-11 justify-center ")}>
-          <div className="flex">{<p>{getLastContributionDate(mergedPrs)}</p>}</div>
+          <div className="flex">{<p>{contributor.author_login ? getLastContributionDate(mergedPrs) : "-"}</p>}</div>
         </div>
 
         {/* Column: Language */}
@@ -180,16 +192,18 @@ const ContributorListTableRow = ({
 
         {/* Column: Time Zone */}
         <div className={clsx("flex-1 hidden lg:max-w-[5rem] text-light-slate-11 justify-center   lg:flex ")}>
-          <div className="flex gap-x-3">{user && user.timezone ? <p>{user.timezone}</p> : "-"}</div>
+          <div className="flex gap-x-3">
+            {contributor.author_login && user && user.timezone ? <p>{user.timezone}</p> : "-"}
+          </div>
         </div>
 
         {/* Column: Contributions */}
         <div className={clsx("flex-1 hidden justify-center  lg:flex lg:max-w-[7.5rem]")}>
-          <p>{mergedPrs.length}</p>
+          <p>{contributor.author_login ? mergedPrs.length : "-"}</p>
         </div>
         {/* Column Last 30 Days */}
         <div className={clsx("flex-1 lg:min-w-[9.37rem] hidden lg:flex justify-center")}>
-          {last30days ? <Sparkline data={last30days} width="100%" height={54} /> : "-"}
+          {contributor.author_login && last30days ? <Sparkline data={last30days} width="100%" height={54} /> : "-"}
         </div>
       </div>
     </>

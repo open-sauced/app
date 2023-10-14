@@ -64,7 +64,7 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
     const interval = setInterval(() => {
       chatButton = document.getElementById("sitegpt-chat-icon");
       if (chatButton) {
-        if (hostname !== "insights.opensauced.pizza") {
+        if (hostname !== "app.opensauced.pizza") {
           chatButton.style.display = "none";
         }
         if (router.asPath === "/feed" && isMobile) {

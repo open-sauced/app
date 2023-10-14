@@ -61,7 +61,7 @@ const TextInput = ({
             id={id || name || ""}
             placeholder={placeholder || ""}
             className={clsx(
-              "flex-1 focus:outline-none placeholder:font-normal placeholder-slate-400",
+              "w-full focus:outline-none placeholder:font-normal placeholder-slate-400",
               disabled && "bg-light-slate-3 cursor-not-allowed text-light-slate-9"
             )}
             disabled={disabled}
