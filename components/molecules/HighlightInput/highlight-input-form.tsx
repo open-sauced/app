@@ -369,11 +369,17 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
   };
 
   const handleGenerateHighlightSummary = async () => {
-    if (
-      !highlightLink ||
-      (!isValidPullRequestUrl(highlightLink) && !isValidIssueUrl(highlightLink) && !isValidDevToBlogUrl(highlightLink))
-    ) {
+    if (!highlightLink) {
       setError("Please provide a valid pull request, issue or dev.to blog link!");
+      return;
+    }
+
+    if (highlightLink && (!highlightLink.includes("github.com") || !highlightLink.includes("dev.to"))) {
+      toast({
+        description: "Auto-Summarize not supported for current link!",
+        title: "Oops!",
+        variant: "warning",
+      });
       return;
     }
 
