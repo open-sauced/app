@@ -51,6 +51,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
   const [timezone, setTimezone] = useState("");
   const [userInfo, setUserInfo] = useState<DbUser>();
   const [email, setEmail] = useState<string | undefined>("");
+  const [bio, setBio] = useState<string | undefined>("");
   const [emailPreference, setEmailPreference] = useState<EmailPreferenceType>({
     // eslint-disable-next-line camelcase
     display_email: false,
@@ -71,7 +72,8 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
       setEmail(response.email);
       setDisplayLocalTime(response.display_local_time);
       setCoupon(response.coupon_code);
-      formRef.current!.bio.value = response.bio;
+      //formRef.current!.bio.value = response.bio;
+      setBio(response.bio);
       formRef.current!.url.value = response.url;
       formRef.current!.twitter_username.value = response.twitter_username;
       formRef.current!.company.value = response.company;
@@ -162,7 +164,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
     const payload: UpdateUserPayload = {
       name: formRef.current!.nameInput.value,
       email,
-      bio: formRef.current!.bio.value,
+      bio: bio,
       // eslint-disable-next-line camelcase
       twitter_username: formRef.current!.twitter_username.value,
       company: formRef.current!.company.value,
@@ -223,11 +225,15 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
             <div className="flex flex-col gap-2">
               <label className="text-sm font-normal text-light-slate-11">Bio</label>
               <textarea
+                maxLength={255}
                 rows={4}
                 placeholder="Tell us about yourself."
                 className="px-3 py-2 rounded-lg bg-light-slate-4 disabled:cursor-not-allowed "
                 name="bio"
+                value={bio}
+                onChange={(e) => setBio(e.target.value)}
               ></textarea>
+              <div>{bio?.length}/255</div>
             </div>
             <TextInput
               className="font-medium bg-light-slate-4 text-light-slate-11"
