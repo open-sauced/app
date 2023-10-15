@@ -41,6 +41,7 @@ import useUserHighlightReactions from "lib/hooks/useUserHighlightReactions";
 import Tooltip from "components/atoms/Tooltip/tooltip";
 import useFollowUser from "lib/hooks/useFollowUser";
 import { fetchGithubIssueInfo } from "lib/hooks/fetchGithubIssueInfo";
+import { isValidUrl } from "lib/utils/urls";
 import { isValidDevToBlogUrl } from "lib/utils/dev-to";
 import { fetchDevToBlogInfo } from "lib/hooks/fetchDevToBlogInfo";
 import Search from "components/atoms/Search/search";
@@ -259,7 +260,7 @@ const ContributorHighlightCard = ({
 
   let repos: RepoList[] = [];
 
-  if (!taggedRepos || taggedRepos.length === 0) {
+  if (!taggedRepos || (taggedRepos.length === 0 && highlightLink.includes("github.com"))) {
     const { owner: repoOwner, repoName } = getOwnerAndRepoNameFromUrl(highlightLink);
     const repoIcon = getAvatarByUsername(repoOwner, 60);
 
@@ -317,7 +318,12 @@ const ContributorHighlightCard = ({
       return;
     }
 
-    if (isValidPullRequestUrl(highlightLink) || isValidIssueUrl(highlightLink) || isValidDevToBlogUrl(highlightLink)) {
+    if (
+      isValidPullRequestUrl(highlightLink) ||
+      isValidIssueUrl(highlightLink) ||
+      isValidDevToBlogUrl(highlightLink) ||
+      isValidUrl(highlightLink)
+    ) {
       const { apiPaths } = generateRepoParts(highlight.highlightLink);
       const { repoName, orgName, issueId } = apiPaths;
       setLoading(true);
