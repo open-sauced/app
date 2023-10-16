@@ -15,7 +15,6 @@ import rust from "img/topic-thumbnails/rust.svg";
 import vue from "img/topic-thumbnails/vue.svg";
 import kubernetes from "img/topic-thumbnails/kubernetes.svg";
 import hacktoberfest from "img/topic-thumbnails/hacktoberfest.svg";
-import clojure from "img/topic-thumbnails/clojure.svg";
 
 import contextThumbnailImage from "../../img/open-sourced-with-bg-icon.png";
 
@@ -39,7 +38,6 @@ const topicThumbnails: Record<interestsType, string> = {
   vue: vue,
   kubernetes: kubernetes,
   hacktoberfest: hacktoberfest,
-  clojure: clojure,
 };
 
 const getTopicThumbnail = (topic: keyof typeof topicThumbnails) => {
