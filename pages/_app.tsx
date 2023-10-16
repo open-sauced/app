@@ -26,6 +26,19 @@ import PrivateWrapper from "layouts/private-wrapper";
 
 import type { AppProps } from "next/app";
 
+// Clear any service workers present
+if (typeof window !== "undefined" && "serviceWorker" in navigator) {
+  navigator.serviceWorker.getRegistrations().then(function (registrations) {
+    for (let registration of registrations) {
+      if (registration.active) {
+        console.log(`Clearing service worker ${registration.scope}`);
+        registration.unregister();
+        document.location.reload();
+      }
+    }
+  });
+}
+
 // Check that PostHog is client-side (used to handle Next.js SSR)
 if (typeof window !== "undefined") {
   posthog.init(process.env.NEXT_PUBLIC_POSTHOG_ID || "", {
@@ -64,7 +77,7 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
     const interval = setInterval(() => {
       chatButton = document.getElementById("sitegpt-chat-icon");
       if (chatButton) {
-        if (hostname !== "insights.opensauced.pizza") {
+        if (hostname !== "app.opensauced.pizza") {
           chatButton.style.display = "none";
         }
         if (router.asPath === "/feed" && isMobile) {

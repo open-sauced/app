@@ -24,6 +24,17 @@ body {
   width: 100%;
 }
 
+.border-conic-gradient {
+  background-image: conic-gradient(
+    from 180deg at 50% 50%,
+    #ff6a06 0deg,
+    #ff6492 120.00000357627869deg,
+    #ffe22c 223.12500715255737deg,
+    #fc620d 360deg,
+    #ff7e33 360deg
+  );
+}
+
 .sbui-btn > span {
   display: flex;
   align-items: center;
@@ -82,6 +93,19 @@ div[role="dialog"]::-webkit-scrollbar-thumb {
   --swiper-pagination-bottom: -5px;
   --swiper-pagination-bullet-inactive-color: rgb(255, 159, 115);
   --swiper-pagination-bullet-size: 8px;
+}
+
+.newsletter-wrap {
+  container: newsletterWrap / inline-size;
+}
+
+@container newsletterWrap (max-width: 240px) {
+  .form-wrap {
+    flex-wrap: wrap;
+  }
+  .form-wrap button {
+    width: 100%;
+  }
 }
 
 .loading {
