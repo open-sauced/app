@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.71.0-beta.6](https://github.com/open-sauced/insights/compare/v1.71.0-beta.5...v1.71.0-beta.6) (2023-10-16)
+
+
+### 🍕 Features
+
+* show onboarding button on small screens ([#1803](https://github.com/open-sauced/insights/issues/1803)) ([faf54bd](https://github.com/open-sauced/insights/commit/faf54bd609aac61a76dc3767aa65b14ece25cac0))
+
 ## [1.71.0-beta.5](https://github.com/open-sauced/insights/compare/v1.71.0-beta.4...v1.71.0-beta.5) (2023-10-16)
 
 
