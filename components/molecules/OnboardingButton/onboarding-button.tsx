@@ -1,15 +1,25 @@
 import React from "react";
-import Link from "next/link";
-import Text from "components/atoms/Typography/text";
+import { useRouter } from "next/router";
 import ProgressPie from "components/atoms/ProgressPie/progress-pie";
 
-const OnboardingButton: React.FC = () => {
+interface OnboardingButtonProps {
+  className?: string;
+  children?: React.ReactNode;
+  aria?: string;
+  ariaLabel?: string;
+}
+
+const OnboardingButton: React.FC<OnboardingButtonProps> = ({ className, children, aria, ariaLabel }) => {
+  const router = useRouter();
   return (
-    <button className="hidden items-center gap-2 border border-light-orange-8 py-1 px-1 pr-3 rounded-lg md:flex">
+    <button
+      aria-labelledby={aria}
+      aria-label={ariaLabel}
+      onClick={() => router.push("/start")}
+      className={`${className} hidden items-center gap-2 border border-light-orange-8 py-1 px-1 pr-3 rounded-lg md:flex`}
+    >
       <ProgressPie percentage={66} />
-      <Text className="text-sm !text-light-slate-12  ">
-        <Link href="/start">Complete the onboarding</Link>
-      </Text>
+      {children}
     </button>
   );
 };

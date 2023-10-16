@@ -385,7 +385,9 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
   };
 
   // Handle submit highlights
-  const handlePostHighlight = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handlePostHighlight = async (
+    e: React.FormEvent<HTMLFormElement> | React.KeyboardEvent<HTMLTextAreaElement>
+  ) => {
     e.preventDefault();
 
     const highlight = bodyText;
@@ -520,6 +522,11 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                 }`}
                 defaultRow={4}
                 value={bodyText}
+                onKeyUp={(e) => {
+                  if (e.ctrlKey && e.key === "Enter") {
+                    handlePostHighlight(e);
+                  }
+                }}
                 placeholder={`Tell us about your highlight and add a link
               `}
                 typewrite={isTyping}
