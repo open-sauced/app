@@ -51,7 +51,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
   const [timezone, setTimezone] = useState("");
   const [userInfo, setUserInfo] = useState<DbUser>();
   const [email, setEmail] = useState<string | undefined>("");
-  const [bio, setBio] = useState<string | undefined>("");
+  const [bio, setBio] = useState("");
   const [emailPreference, setEmailPreference] = useState<EmailPreferenceType>({
     // eslint-disable-next-line camelcase
     display_email: false,
@@ -72,7 +72,6 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
       setEmail(response.email);
       setDisplayLocalTime(response.display_local_time);
       setCoupon(response.coupon_code);
-      //formRef.current!.bio.value = response.bio;
       setBio(response.bio);
       formRef.current!.url.value = response.url;
       formRef.current!.twitter_username.value = response.twitter_username;
@@ -164,7 +163,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
     const payload: UpdateUserPayload = {
       name: formRef.current!.nameInput.value,
       email,
-      bio: bio,
+      bio,
       // eslint-disable-next-line camelcase
       twitter_username: formRef.current!.twitter_username.value,
       company: formRef.current!.company.value,
@@ -233,7 +232,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
                 value={bio}
                 onChange={(e) => setBio(e.target.value)}
               ></textarea>
-              <div>{bio?.length}/255</div>
+              <p className="text-xs">{bio?.length}/255</p>
             </div>
             <TextInput
               className="font-medium bg-light-slate-4 text-light-slate-11"
