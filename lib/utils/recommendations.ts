@@ -18,6 +18,7 @@ const recommendations: Record<interestsType, string[]> = {
   vue: ["vuejs/vue"],
   kubernetes: ["kubernetes/kubernetes"],
   hacktoberfest: ["open-sauced/app"],
+  clojure: ["clojure/clojurescript"],
 };
 
 export default recommendations;

@@ -555,7 +555,12 @@ const ContributorHighlightCard = ({
         {/* Highlight Link section */}
 
         <div>
-          <a href={highlightLink} target="_blank" className="underline break-words cursor-pointer text-sauced-orange">
+          <a
+            href={highlightLink}
+            target="_blank"
+            rel="noreferrer"
+            className="underline break-words cursor-pointer text-sauced-orange"
+          >
             {highlightLink}
           </a>
         </div>
