@@ -7,7 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "c
 import orgIcon from "../../../img/icons/org.svg";
 import personIcon from "../../../img/icons/person.svg";
 import repoIcon from "../../../img/icons/repo.svg";
-import chevronDown from "../../../img/chevron-down.svg";
+import chevronDownIcon from "../../../img/chevron-down.svg";
 
 interface FilterCardSelectProps {
   selected: string;
@@ -18,7 +18,7 @@ interface FilterCardSelectProps {
 
 const icons = {
   topic: {
-    src: chevronDown.src,
+    src: chevronDownIcon.src,
     alt: "Topic",
   },
   org: {
