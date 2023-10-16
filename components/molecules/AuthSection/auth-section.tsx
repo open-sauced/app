@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import Link from "next/link";
-
 import { IoNotifications } from "react-icons/io5";
 import { FiLogOut, FiSettings } from "react-icons/fi";
 import { BiLinkExternal } from "react-icons/bi";
@@ -19,6 +18,7 @@ import Text from "components/atoms/Typography/text";
 import GitHubIcon from "img/icons/github-icon.svg";
 import Icon from "components/atoms/Icon/icon";
 import SearchDialog, { SearchDialogTrigger } from "components/organisms/SearchDialog/search-dialog";
+import Tooltip from "components/atoms/Tooltip/tooltip";
 import DropdownList from "../DropdownList/dropdown-list";
 import OnboardingButton from "../OnboardingButton/onboarding-button";
 import userAvatar from "../../../img/ellipse-1.png";
@@ -104,7 +104,16 @@ const AuthSection: React.FC = ({}) => {
             <>
               {!onboarded && (
                 <>
-                  <OnboardingButton />
+                  <div className="relative hidden lg:flex xl:hidden">
+                    <Tooltip content="Complete the onboarding" direction="bottom">
+                      <OnboardingButton ariaLabel="Complete your onboarding" className="!flex !pr-1" />
+                    </Tooltip>
+                  </div>
+                  <OnboardingButton className="!hidden xl:!flex !pr-1">
+                    <Text className="text-sm !text-light-slate-12 hidden xl:block py-1 px-2">
+                      Complete the onboarding
+                    </Text>
+                  </OnboardingButton>
                   <Divider type="vertical" className="!h-6 !bg-light-slate-6"></Divider>
                 </>
               )}
