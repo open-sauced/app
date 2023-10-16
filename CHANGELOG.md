@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.71.0-beta.7](https://github.com/open-sauced/insights/compare/v1.71.0-beta.6...v1.71.0-beta.7) (2023-10-16)
+
+
+### 🐛 Bug Fixes
+
+* Added isLoading condition to the title ([#1886](https://github.com/open-sauced/insights/issues/1886)) ([03cd66d](https://github.com/open-sauced/insights/commit/03cd66deee181c57048762523ca6300c2c36a9f7))
+* update redirect paths to remove navigation errors ([#1888](https://github.com/open-sauced/insights/issues/1888)) ([a2159d8](https://github.com/open-sauced/insights/commit/a2159d8d4dab9c4bcc1dc88b8d34b687d23b73e7))
+
 ## [1.71.0-beta.6](https://github.com/open-sauced/insights/compare/v1.71.0-beta.5...v1.71.0-beta.6) (2023-10-16)
 
 
