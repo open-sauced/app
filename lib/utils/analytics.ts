@@ -20,7 +20,7 @@ function initiateAnalytics() {
  * @param {string} value - The value of the event
  * @param {string} identifier - The unique identifier for entity associated to the analytic event, typically a user id
  */
-function captureAnayltics({ title, property, value, identifier }: AnalyticEvent) {
+function captureAnalytics({ title, property, value, identifier }: AnalyticEvent) {
   const analyticsObject: Record<string, string> = {};
 
   analyticsObject[property] = value;
@@ -28,4 +28,4 @@ function captureAnayltics({ title, property, value, identifier }: AnalyticEvent)
   posthog.capture(title, analyticsObject);
 }
 
-export { initiateAnalytics, captureAnayltics };
+export { initiateAnalytics, captureAnalytics };

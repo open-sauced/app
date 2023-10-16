@@ -1,5 +1,5 @@
 import React from "react";
-import { captureAnayltics } from "lib/utils/analytics";
+import { captureAnalytics } from "lib/utils/analytics";
 import useSession from "lib/hooks/useSession";
 import Contributors from "../Contributors/contributors";
 import Dashboard from "../Dashboard/dashboard";
@@ -13,7 +13,7 @@ interface ToolProps {
 
 const Tool = ({ tool, repositories }: ToolProps): JSX.Element => {
   const { hasReports, waitlisted } = useSession();
-  captureAnayltics({ title: "Tools Display", property: "tools", value: `${tool} selected` });
+  captureAnalytics({ title: "Tools Display", property: "tools", value: `${tool} selected` });
 
   switch (tool) {
     case "Dashboard":
