@@ -5,6 +5,34 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.71.0-beta.7](https://github.com/open-sauced/insights/compare/v1.71.0-beta.6...v1.71.0-beta.7) (2023-10-16)
+
+
+### 🐛 Bug Fixes
+
+* Added isLoading condition to the title ([#1886](https://github.com/open-sauced/insights/issues/1886)) ([03cd66d](https://github.com/open-sauced/insights/commit/03cd66deee181c57048762523ca6300c2c36a9f7))
+* update redirect paths to remove navigation errors ([#1888](https://github.com/open-sauced/insights/issues/1888)) ([a2159d8](https://github.com/open-sauced/insights/commit/a2159d8d4dab9c4bcc1dc88b8d34b687d23b73e7))
+
+## [1.71.0-beta.6](https://github.com/open-sauced/insights/compare/v1.71.0-beta.5...v1.71.0-beta.6) (2023-10-16)
+
+
+### 🍕 Features
+
+* show onboarding button on small screens ([#1803](https://github.com/open-sauced/insights/issues/1803)) ([faf54bd](https://github.com/open-sauced/insights/commit/faf54bd609aac61a76dc3767aa65b14ece25cac0))
+
+## [1.71.0-beta.5](https://github.com/open-sauced/insights/compare/v1.71.0-beta.4...v1.71.0-beta.5) (2023-10-16)
+
+
+### 🍕 Features
+
+* add keyboard binding for posting a highlight ([#1894](https://github.com/open-sauced/insights/issues/1894)) ([346adff](https://github.com/open-sauced/insights/commit/346adff07d85b2c155c969e468ffb62cbe84ecbe))
+
+
+### 🐛 Bug Fixes
+
+* add target for the highlight link ([#1897](https://github.com/open-sauced/insights/issues/1897)) ([d89d94b](https://github.com/open-sauced/insights/commit/d89d94bd28845693eaee30c980a41bb9a72e3d60))
+* attempt to clear any present service workers ([#1889](https://github.com/open-sauced/insights/issues/1889)) ([e641223](https://github.com/open-sauced/insights/commit/e641223467b3b71856aeb4282d9c87dfdd352ea8))
+
 ## [1.71.0-beta.4](https://github.com/open-sauced/insights/compare/v1.71.0-beta.3...v1.71.0-beta.4) (2023-10-16)
 
 
