@@ -5,6 +5,68 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.71.0-beta.8](https://github.com/open-sauced/insights/compare/v1.71.0-beta.7...v1.71.0-beta.8) (2023-10-16)
+
+
+### 🍕 Features
+
+* add clojure to dashboard interests ([7373865](https://github.com/open-sauced/insights/commit/7373865da90b601985cec8d76d91df5a77315beb))
+
+
+### ⏩ Reverts
+
+* clojure feature changes made directly to beta ([#1900](https://github.com/open-sauced/insights/issues/1900)) ([7564245](https://github.com/open-sauced/insights/commit/756424580c64510170e4ca9e44e90c19bfb9a91e))
+
+## [1.71.0-beta.7](https://github.com/open-sauced/insights/compare/v1.71.0-beta.6...v1.71.0-beta.7) (2023-10-16)
+
+
+### 🐛 Bug Fixes
+
+* Added isLoading condition to the title ([#1886](https://github.com/open-sauced/insights/issues/1886)) ([03cd66d](https://github.com/open-sauced/insights/commit/03cd66deee181c57048762523ca6300c2c36a9f7))
+* update redirect paths to remove navigation errors ([#1888](https://github.com/open-sauced/insights/issues/1888)) ([a2159d8](https://github.com/open-sauced/insights/commit/a2159d8d4dab9c4bcc1dc88b8d34b687d23b73e7))
+
+## [1.71.0-beta.6](https://github.com/open-sauced/insights/compare/v1.71.0-beta.5...v1.71.0-beta.6) (2023-10-16)
+
+
+### 🍕 Features
+
+* show onboarding button on small screens ([#1803](https://github.com/open-sauced/insights/issues/1803)) ([faf54bd](https://github.com/open-sauced/insights/commit/faf54bd609aac61a76dc3767aa65b14ece25cac0))
+
+## [1.71.0-beta.5](https://github.com/open-sauced/insights/compare/v1.71.0-beta.4...v1.71.0-beta.5) (2023-10-16)
+
+
+### 🍕 Features
+
+* add keyboard binding for posting a highlight ([#1894](https://github.com/open-sauced/insights/issues/1894)) ([346adff](https://github.com/open-sauced/insights/commit/346adff07d85b2c155c969e468ffb62cbe84ecbe))
+
+
+### 🐛 Bug Fixes
+
+* add target for the highlight link ([#1897](https://github.com/open-sauced/insights/issues/1897)) ([d89d94b](https://github.com/open-sauced/insights/commit/d89d94bd28845693eaee30c980a41bb9a72e3d60))
+* attempt to clear any present service workers ([#1889](https://github.com/open-sauced/insights/issues/1889)) ([e641223](https://github.com/open-sauced/insights/commit/e641223467b3b71856aeb4282d9c87dfdd352ea8))
+
+## [1.71.0-beta.4](https://github.com/open-sauced/insights/compare/v1.71.0-beta.3...v1.71.0-beta.4) (2023-10-16)
+
+
+### 🐛 Bug Fixes
+
+* Unnecesary X-Scrollbar in tablist ([#1881](https://github.com/open-sauced/insights/issues/1881)) ([9d72aeb](https://github.com/open-sauced/insights/commit/9d72aeb6fcbc37028fa4ace308b077724fb26417))
+
+## [1.71.0-beta.3](https://github.com/open-sauced/insights/compare/v1.71.0-beta.2...v1.71.0-beta.3) (2023-10-12)
+
+
+### 🐛 Bug Fixes
+
+* adjust style for newsletter form so that it adjusts for smaller screens ([#1782](https://github.com/open-sauced/insights/issues/1782)) ([9d97030](https://github.com/open-sauced/insights/commit/9d97030467422601cad6905007b16ef5f8b04ec9))
+
+## [1.71.0-beta.2](https://github.com/open-sauced/insights/compare/v1.71.0-beta.1...v1.71.0-beta.2) (2023-10-12)
+
+
+### 🐛 Bug Fixes
+
+* Fix CSS inconsistency in Contributor Highlights for "Home" and "Following" tabs for `/feed` route ([#1783](https://github.com/open-sauced/insights/issues/1783)) ([ad08c16](https://github.com/open-sauced/insights/commit/ad08c167be1b980280d8d9b34bbdd770b30298fc))
+* reset input state of delete list dialog box after closing the dialog and deleting the list ([#1877](https://github.com/open-sauced/insights/issues/1877)) ([397570d](https://github.com/open-sauced/insights/commit/397570d0c3c27be0d505f0c5820b48c74ac29bbf))
+
 ## [1.71.0-beta.1](https://github.com/open-sauced/insights/compare/v1.70.0...v1.71.0-beta.1) (2023-10-11)
 
 
