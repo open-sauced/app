@@ -24,6 +24,7 @@ import { TeamMemberData } from "components/molecules/TeamMembersConfig/team-memb
 import useInsightMembers from "lib/hooks/useInsightMembers";
 import { useFetchInsightRecommendedRepositories } from "lib/hooks/useFetchOrgRecommendations";
 import { RepoCardProfileProps } from "components/molecules/RepoCardProfile/repo-card-profile";
+import Tooltip from "components/atoms/Tooltip/tooltip";
 import SuggestedRepositoriesList from "../SuggestedRepoList/suggested-repo-list";
 
 // lazy import DeleteInsightPageModal and TeamMembersConfig component to optimize bundle size they don't load on initial render
@@ -438,6 +439,8 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
     updateSuggestionsDebounced();
   }, [repoSearchTerm]);
 
+  console.log(insightRepoLimit);
+
   return (
     <section className="flex flex-col justify-center w-full py-4 xl:flex-row xl:gap-20 xl:pl-28 ">
       <div className="flex flex-col gap-8">
@@ -473,18 +476,26 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
             onSearch={(search) => setRepoSearchTerm(search as string)}
           />
 
-          <div>
-            <Button
-              disabled={
-                repos.length === insightRepoLimit ||
-                (addRepoLoading.repoName === repoSearchTerm && addRepoLoading.isLoading)
+          <div className="w-max">
+            <Tooltip
+              content={
+                repos.length >= insightRepoLimit!
+                  ? `you can't add more than ${insightRepoLimit} repos`
+                  : "add repository"
               }
-              loading={addRepoLoading.repoName === repoSearchTerm && addRepoLoading.isLoading}
-              onClick={handleAddRepository}
-              variant="outline"
             >
-              Add Repository
-            </Button>
+              <Button
+                disabled={
+                  repos.length >= insightRepoLimit! ||
+                  (addRepoLoading.repoName === repoSearchTerm && addRepoLoading.isLoading)
+                }
+                loading={addRepoLoading.repoName === repoSearchTerm && addRepoLoading.isLoading}
+                onClick={handleAddRepository}
+                variant="outline"
+              >
+                Add Repository
+              </Button>
+            </Tooltip>
           </div>
 
           <SuggestedRepositoriesList
