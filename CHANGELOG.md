@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.71.0-beta.10](https://github.com/open-sauced/insights/compare/v1.71.0-beta.9...v1.71.0-beta.10) (2023-10-16)
+
+
+### 🐛 Bug Fixes
+
+* replace hash icon to arrow down for filter select ([#1825](https://github.com/open-sauced/insights/issues/1825)) ([ee13255](https://github.com/open-sauced/insights/commit/ee13255787c928fc76536129fabf51f9d7fd12b6))
+
 ## [1.71.0-beta.9](https://github.com/open-sauced/insights/compare/v1.71.0-beta.8...v1.71.0-beta.9) (2023-10-16)
 
 
