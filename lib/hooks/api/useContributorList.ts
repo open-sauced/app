@@ -7,6 +7,7 @@ export function convertToContributors(rawContributors: DBListContributor[] = [])
     ? rawContributors.map((contributor) => {
         return {
           author_login: contributor.login,
+          username: contributor.username,
           updated_at: contributor.created_at,
           user_id: contributor.id,
         };
@@ -41,7 +42,7 @@ export const useContributorsList = ({
   query.append("range", range.toString());
 
   const { data, error, mutate } = useSWR<any>(
-    `lists/${listId}/contributors?${query}`,
+    listId ? `lists/${listId}/contributors?${query}` : null,
     publicApiFetcher as Fetcher<PagedData<DBListContributor>, Error>,
     {
       fallbackData: initialData,

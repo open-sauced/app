@@ -1,10 +1,8 @@
 import React from "react";
 import Link from "next/link";
 import { MdOutlineArrowForwardIos } from "react-icons/md";
-import { FiPlus } from "react-icons/fi";
 import { RiDeleteBinLine } from "react-icons/ri";
 import Text from "components/atoms/Typography/text";
-import Tooltip from "components/atoms/Tooltip/tooltip";
 import { useFetchListContributors } from "lib/hooks/useList";
 import StackedAvatar, { Contributor } from "../StackedAvatar/stacked-avatar";
 
@@ -16,7 +14,7 @@ const ListCard = ({ list, handleOnDeleteClick }: ListCardProps) => {
   const { data: contributors, meta } = useFetchListContributors(list.id);
 
   const contributorsAvatar: Contributor[] = contributors?.map((contributor) => ({
-    host_login: contributor.login,
+    host_login: contributor.login || contributor.username,
   }));
 
   return (
@@ -41,16 +39,6 @@ const ListCard = ({ list, handleOnDeleteClick }: ListCardProps) => {
 
             <div className="flex items-center">
               <StackedAvatar contributors={contributorsAvatar} visibleQuantity={6} classNames="scale-125" />
-              <Tooltip content="Add more contributors">
-                <button
-                  className="z-50 w-8 h-8 overflow-hidden scale-110 bg-white border-2 border-white rounded-full"
-                  type="button"
-                >
-                  <span className="grid w-full h-full place-items-center bg-purple-200/50">
-                    <FiPlus className="p-0.5 text-purple-600" />
-                  </span>
-                </button>
-              </Tooltip>
             </div>
             <div className="justify-end flex-1 hidden md:flex">
               {/* Delete button */}

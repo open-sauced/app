@@ -1,7 +1,9 @@
 import { memo } from "react";
 import { animated } from "@react-spring/web";
-import { NodeProps, htmlNodeTransform } from "@nivo/treemap";
 import { getAvatarByUsername } from "lib/utils/github";
+import { htmlNodeTransform } from "lib/utils/nivo-utils";
+import { stringToHSLAColor } from "lib/utils/color-utils";
+import type { NodeProps } from "@nivo/treemap";
 
 const NonMemoizedContributorNode = <Datum extends { id: string; value?: number; color: string }>({
   node,
@@ -14,44 +16,35 @@ const NonMemoizedContributorNode = <Datum extends { id: string; value?: number; 
     enableLabel && node.isLeaf && (labelSkipSize === 0 || Math.min(node.width, node.height) > labelSkipSize);
 
   const avatarURL = getAvatarByUsername(node.id);
+  const color = stringToHSLAColor({ id: node.id });
 
   return (
     <animated.div
-      data-testid={`node.${node.id}`}
-      id={node.path.replace(/[^\w]/gi, "-")}
+      className="absolute grid overflow-hidden border-solid place-content-stretch"
       style={{
-        boxSizing: "border-box",
-        position: "absolute",
         top: 0,
         left: 0,
         transform: htmlNodeTransform(animatedProps.x, animatedProps.y),
         width: animatedProps.width,
         height: animatedProps.height,
         borderWidth,
-        borderStyle: "solid",
         borderColor: node.borderColor,
-        overflow: "hidden",
-        display: "grid",
-        placeContent: "stretch",
       }}
     >
       <animated.div
         style={{
-          boxSizing: "border-box",
           opacity: node.opacity,
           width: animatedProps.width,
           height: animatedProps.height,
-          background: animatedProps.color,
+          background: color,
           gridArea: "1 / 1",
         }}
         onMouseEnter={node.onMouseEnter}
         onMouseMove={node.onMouseMove}
         onMouseLeave={node.onMouseLeave}
-        onClick={node.onClick}
       />
       {showLabel && (
         <animated.div
-          data-testid={`label.${node.id}`}
           className="grid p-3 text-white place-items-start pointer-events-none"
           style={{
             gridArea: "1 / 1",

@@ -31,8 +31,8 @@ const ContributorCardList = ({ contributors = [], topic, range }: ContributorCar
 
     return {
       profile: {
-        githubAvatar: getAvatarByUsername(contributor.author_login),
-        githubName: contributor.author_login,
+        githubAvatar: getAvatarByUsername(contributor.author_login || contributor.username),
+        githubName: contributor.author_login || contributor.username,
         dateOfFirstPR,
       },
     };
@@ -50,7 +50,7 @@ const ContributorCardList = ({ contributors = [], topic, range }: ContributorCar
 };
 
 const ContributorsList = ({ contributors, isLoading, meta, setPage, setLimit, range }: ContributorsListProps) => {
-  const [layout, setLayout] = useState<ToggleValue>("grid");
+  const [layout, setLayout] = useState<ToggleValue>("list");
 
   return (
     <>
@@ -64,7 +64,7 @@ const ContributorsList = ({ contributors, isLoading, meta, setPage, setLimit, ra
         range={range}
       />
       <ClientOnly>
-        {layout === "grid" ? (
+        {layout !== "grid" ? (
           <>
             <ContributorListTableHeaders range={range} />
             <ContributorTable loading={isLoading} topic={"*"} contributors={contributors} range={range} />
