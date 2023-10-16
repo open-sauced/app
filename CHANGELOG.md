@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.71.0-beta.4](https://github.com/open-sauced/insights/compare/v1.71.0-beta.3...v1.71.0-beta.4) (2023-10-16)
+
+
+### 🐛 Bug Fixes
+
+* Unnecesary X-Scrollbar in tablist ([#1881](https://github.com/open-sauced/insights/issues/1881)) ([9d72aeb](https://github.com/open-sauced/insights/commit/9d72aeb6fcbc37028fa4ace308b077724fb26417))
+
 ## [1.71.0-beta.3](https://github.com/open-sauced/insights/compare/v1.71.0-beta.2...v1.71.0-beta.3) (2023-10-12)
 
 
