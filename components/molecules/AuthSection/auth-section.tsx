@@ -102,7 +102,7 @@ const AuthSection: React.FC = ({}) => {
           <SearchDialogTrigger />
           {user ? (
             <>
-              {!onboarded && (
+              {onboarded !== undefined && !onboarded && (
                 <>
                   <div className="relative hidden lg:flex xl:hidden">
                     <Tooltip content="Complete the onboarding" direction="bottom">
@@ -141,7 +141,7 @@ const AuthSection: React.FC = ({}) => {
             <Button
               variant="primary"
               onClick={async () =>
-                await signIn({ provider: "github", options: { redirectTo: `${host}/${currentPath}` } })
+                await signIn({ provider: "github", options: { redirectTo: `${host}${currentPath}` } })
               }
               className="flex items-center"
             >
