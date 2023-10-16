@@ -5,6 +5,18 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.71.0-beta.9](https://github.com/open-sauced/insights/compare/v1.71.0-beta.8...v1.71.0-beta.9) (2023-10-16)
+
+
+### 🍕 Features
+
+* add clojure to dashboard interests ([#1901](https://github.com/open-sauced/insights/issues/1901)) ([e628041](https://github.com/open-sauced/insights/commit/e628041886f2f67ff4b3772dc564473195b45094))
+
+
+### 🐛 Bug Fixes
+
+* add responsiveness to profile detail ([#1892](https://github.com/open-sauced/insights/issues/1892)) ([7466144](https://github.com/open-sauced/insights/commit/746614456d92965af67216581034645a5869a21e))
+
 ## [1.71.0-beta.8](https://github.com/open-sauced/insights/compare/v1.71.0-beta.7...v1.71.0-beta.8) (2023-10-16)
 
 
