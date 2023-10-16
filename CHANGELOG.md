@@ -5,6 +5,37 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.71.0-beta.10](https://github.com/open-sauced/insights/compare/v1.71.0-beta.9...v1.71.0-beta.10) (2023-10-16)
+
+
+### 🐛 Bug Fixes
+
+* replace hash icon to arrow down for filter select ([#1825](https://github.com/open-sauced/insights/issues/1825)) ([ee13255](https://github.com/open-sauced/insights/commit/ee13255787c928fc76536129fabf51f9d7fd12b6))
+
+## [1.71.0-beta.9](https://github.com/open-sauced/insights/compare/v1.71.0-beta.8...v1.71.0-beta.9) (2023-10-16)
+
+
+### 🍕 Features
+
+* add clojure to dashboard interests ([#1901](https://github.com/open-sauced/insights/issues/1901)) ([e628041](https://github.com/open-sauced/insights/commit/e628041886f2f67ff4b3772dc564473195b45094))
+
+
+### 🐛 Bug Fixes
+
+* add responsiveness to profile detail ([#1892](https://github.com/open-sauced/insights/issues/1892)) ([7466144](https://github.com/open-sauced/insights/commit/746614456d92965af67216581034645a5869a21e))
+
+## [1.71.0-beta.8](https://github.com/open-sauced/insights/compare/v1.71.0-beta.7...v1.71.0-beta.8) (2023-10-16)
+
+
+### 🍕 Features
+
+* add clojure to dashboard interests ([7373865](https://github.com/open-sauced/insights/commit/7373865da90b601985cec8d76d91df5a77315beb))
+
+
+### ⏩ Reverts
+
+* clojure feature changes made directly to beta ([#1900](https://github.com/open-sauced/insights/issues/1900)) ([7564245](https://github.com/open-sauced/insights/commit/756424580c64510170e4ca9e44e90c19bfb9a91e))
+
 ## [1.71.0-beta.7](https://github.com/open-sauced/insights/compare/v1.71.0-beta.6...v1.71.0-beta.7) (2023-10-16)
 
 
