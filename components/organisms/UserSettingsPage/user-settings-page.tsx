@@ -224,7 +224,6 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
             <div className="flex flex-col gap-2">
               <label className="text-sm font-normal text-light-slate-11">Bio</label>
               <textarea
-                maxLength={255}
                 rows={4}
                 placeholder="Tell us about yourself."
                 className="px-3 py-2 rounded-lg bg-light-slate-4 disabled:cursor-not-allowed "
@@ -232,7 +231,11 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
                 value={bio}
                 onChange={(e) => setBio(e.target.value)}
               ></textarea>
-              <p className="text-xs">{bio?.length}/255</p>
+              {bio?.length > 255 ? (
+                <p className="text-light-red-10 text-xs">Bio too long</p>
+              ) : (
+                <p className="text-xs">{bio?.length}/255</p>
+              )}
             </div>
             <TextInput
               className="font-medium bg-light-slate-4 text-light-slate-11"
