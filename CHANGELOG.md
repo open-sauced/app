@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.71.0-beta.15](https://github.com/open-sauced/insights/compare/v1.71.0-beta.14...v1.71.0-beta.15) (2023-10-17)
+
+
+### 🐛 Bug Fixes
+
+* decreased delay time of tooltips ([3aef3c0](https://github.com/open-sauced/insights/commit/3aef3c0f7a3808331613d7fc5a8077cb45a42667))
+* decreased delay time of tooltips ([#1923](https://github.com/open-sauced/insights/issues/1923)) ([fc50edf](https://github.com/open-sauced/insights/commit/fc50edf305530dc5b169543114058b6e79c9b771))
+
 ## [1.71.0-beta.14](https://github.com/open-sauced/insights/compare/v1.71.0-beta.13...v1.71.0-beta.14) (2023-10-17)
 
 
