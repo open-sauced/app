@@ -38,14 +38,14 @@ export const ContributionsTreemap = ({ setRepoId, repoId, data, color, onClick }
     <Card className="grid place-content-stretch">
       <div className="grid">
         {/* Label: Text */}
-        <div className="flex mb-2 text-lg text-slate-900">
+        <div className="text-lg text-slate-900 mb-2 flex">
           <button className="cursor-pointer" onClick={() => setRepoId(null)}>
             Repos
           </button>
           <div> </div>
           <BreadCrumb isActive={repoId !== null}>Contributors</BreadCrumb>
         </div>
-        <div className="grid overflow-hidden rounded-md place-content-stretch">
+        <div className="rounded-md overflow-hidden grid place-content-stretch">
           <div className="grid" style={{ gridArea: "1 / 1", minHeight: "29rem" }}>
             <ClientOnly>
               <ResponsiveTreeMapHtml
@@ -67,7 +67,7 @@ export const ContributionsTreemap = ({ setRepoId, repoId, data, color, onClick }
                         labelSkipSize,
                       }: NodeProps<Datum>) => JSX.Element)
                 }
-                colors={color as any}
+                colors={color}
                 nodeOpacity={1}
                 borderWidth={0}
                 onClick={onClick}
