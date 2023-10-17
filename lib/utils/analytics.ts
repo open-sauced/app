@@ -21,14 +21,18 @@ function initiateAnalytics() {
  */
 function useAnalytics() {
   const { user } = useSupabaseAuth();
-  const identifier = user?.user_metadata.sub ?? "anonymous";
 
   return {
     captureAnalytics({ title, property, value }: AnalyticEvent) {
       const analyticsObject: Record<string, string> = {};
 
       analyticsObject[property] = value;
-      posthog.identify(identifier);
+
+      // if a user is not logged in, Posthog will generate an anonymous ID
+      if (user) {
+        posthog.identify(user.user_metadata.sub);
+      }
+
       posthog.capture(title, analyticsObject);
     },
   };
