@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.71.0-beta.11](https://github.com/open-sauced/insights/compare/v1.71.0-beta.10...v1.71.0-beta.11) (2023-10-17)
+
+
+### 🐛 Bug Fixes
+
+* made active tab forecolor more prominent for hub navigation ([eeee241](https://github.com/open-sauced/insights/commit/eeee2411f9aa6f40517890e6576dc959b4098788))
+* made active tab forecolor more prominent for hub navigation ([#1921](https://github.com/open-sauced/insights/issues/1921)) ([fe997ed](https://github.com/open-sauced/insights/commit/fe997edd2fc781f4c2b5f7d63e2e749e3de9dbe9))
+
 ## [1.71.0-beta.10](https://github.com/open-sauced/insights/compare/v1.71.0-beta.9...v1.71.0-beta.10) (2023-10-16)
 
 
