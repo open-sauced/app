@@ -5,6 +5,19 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.71.0-beta.13](https://github.com/open-sauced/insights/compare/v1.71.0-beta.12...v1.71.0-beta.13) (2023-10-17)
+
+
+### 🐛 Bug Fixes
+
+* refactored parameters for captureAnalytics to an object ([a2af672](https://github.com/open-sauced/insights/commit/a2af672008ec43bc0ba58e7e90ce2dda91ae7913))
+
+
+### 🍕 Features
+
+* add identifier to analytics ([#1887](https://github.com/open-sauced/insights/issues/1887)) ([8169213](https://github.com/open-sauced/insights/commit/81692132ce0f906c914f95454e7281bd3c367a26))
+* implemented usage of posthog.identify(identifier) ([30a4bc0](https://github.com/open-sauced/insights/commit/30a4bc0f42b3c5a902be7f0e8f86e1944c77660f))
+
 ## [1.71.0-beta.12](https://github.com/open-sauced/insights/compare/v1.71.0-beta.11...v1.71.0-beta.12) (2023-10-17)
 
 
