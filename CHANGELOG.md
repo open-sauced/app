@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.71.0-beta.12](https://github.com/open-sauced/insights/compare/v1.71.0-beta.11...v1.71.0-beta.12) (2023-10-17)
+
+
+### 🐛 Bug Fixes
+
+* hide secondary header in create insights page ([#1925](https://github.com/open-sauced/insights/issues/1925)) ([a5245f7](https://github.com/open-sauced/insights/commit/a5245f758642635e359a0d60deff30aabd0ee3ad))
+
 ## [1.71.0-beta.11](https://github.com/open-sauced/insights/compare/v1.71.0-beta.10...v1.71.0-beta.11) (2023-10-17)
 
 
