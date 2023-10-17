@@ -1,5 +1,6 @@
 import posthog from "posthog-js";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
+import { useFetchUser } from "lib/hooks/useFetchUser";
 
 interface AnalyticEvent {
   title: string;
@@ -21,6 +22,7 @@ function initiateAnalytics() {
  */
 function useAnalytics() {
   const { user } = useSupabaseAuth();
+  const userInfo = useFetchUser(user?.user_metadata.user_name || "");
 
   return {
     captureAnalytics({ title, property, value }: AnalyticEvent) {
@@ -30,7 +32,16 @@ function useAnalytics() {
 
       // if a user is not logged in, Posthog will generate an anonymous ID
       if (user) {
-        posthog.identify(user.user_metadata.sub);
+        let userProperties = {};
+
+        if (userInfo?.data) {
+          const { company, coupon_code, is_open_sauced_member, is_onboarded, role } = userInfo?.data;
+
+          // A pro user is anyone with a role of 50 or higher
+          userProperties = { company, coupon_code, is_open_sauced_member, is_onboarded, is_pro_user: role >= 50 };
+        }
+
+        posthog.identify(user.user_metadata.sub, userProperties);
       }
 
       posthog.capture(title, analyticsObject);
