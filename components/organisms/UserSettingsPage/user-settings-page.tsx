@@ -232,9 +232,13 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
                 onChange={(e) => setBio(e.target.value)}
               ></textarea>
               {bio?.length > 255 ? (
-                <p aria-live="assertive" className="text-light-red-10 text-xs">Bio too long</p>
+                <p aria-live="assertive" className="text-light-red-10 text-xs">
+                  Bio too long
+                </p>
               ) : (
-                <p aria-live="polite" className="text-xs">{bio?.length}/255</p>
+                <p aria-live="polite" className="text-xs">
+                  {bio?.length}/255
+                </p>
               )}
             </div>
             <TextInput
