@@ -43,7 +43,7 @@ const NonMemoizedContributorNode = <Datum extends { id: string; value?: number; 
       />
       {showLabel && (
         <animated.div
-          className="grid p-3 text-white pointer-events-none place-items-start"
+          className="grid p-3 text-white place-items-start pointer-events-none"
           style={{
             gridArea: "1 / 1",
             transformOrigin: "center center",
