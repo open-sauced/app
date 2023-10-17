@@ -5,6 +5,42 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.71.0-beta.14](https://github.com/open-sauced/insights/compare/v1.71.0-beta.13...v1.71.0-beta.14) (2023-10-17)
+
+
+### 🐛 Bug Fixes
+
+* can't update user profile bio passed 256 chars ([00a77be](https://github.com/open-sauced/insights/commit/00a77bebd5121a45cdcb4d890e0a57c4f727d7ba))
+* can't update user profile bio passed 256 chars ([#1898](https://github.com/open-sauced/insights/issues/1898)) ([42c99c7](https://github.com/open-sauced/insights/commit/42c99c7fd63a8399846e8f8820a9e738d31ac693))
+
+## [1.71.0-beta.13](https://github.com/open-sauced/insights/compare/v1.71.0-beta.12...v1.71.0-beta.13) (2023-10-17)
+
+
+### 🐛 Bug Fixes
+
+* refactored parameters for captureAnalytics to an object ([a2af672](https://github.com/open-sauced/insights/commit/a2af672008ec43bc0ba58e7e90ce2dda91ae7913))
+
+
+### 🍕 Features
+
+* add identifier to analytics ([#1887](https://github.com/open-sauced/insights/issues/1887)) ([8169213](https://github.com/open-sauced/insights/commit/81692132ce0f906c914f95454e7281bd3c367a26))
+* implemented usage of posthog.identify(identifier) ([30a4bc0](https://github.com/open-sauced/insights/commit/30a4bc0f42b3c5a902be7f0e8f86e1944c77660f))
+
+## [1.71.0-beta.12](https://github.com/open-sauced/insights/compare/v1.71.0-beta.11...v1.71.0-beta.12) (2023-10-17)
+
+
+### 🐛 Bug Fixes
+
+* hide secondary header in create insights page ([#1925](https://github.com/open-sauced/insights/issues/1925)) ([a5245f7](https://github.com/open-sauced/insights/commit/a5245f758642635e359a0d60deff30aabd0ee3ad))
+
+## [1.71.0-beta.11](https://github.com/open-sauced/insights/compare/v1.71.0-beta.10...v1.71.0-beta.11) (2023-10-17)
+
+
+### 🐛 Bug Fixes
+
+* made active tab forecolor more prominent for hub navigation ([eeee241](https://github.com/open-sauced/insights/commit/eeee2411f9aa6f40517890e6576dc959b4098788))
+* made active tab forecolor more prominent for hub navigation ([#1921](https://github.com/open-sauced/insights/issues/1921)) ([fe997ed](https://github.com/open-sauced/insights/commit/fe997edd2fc781f4c2b5f7d63e2e749e3de9dbe9))
+
 ## [1.71.0-beta.10](https://github.com/open-sauced/insights/compare/v1.71.0-beta.9...v1.71.0-beta.10) (2023-10-16)
 
 
