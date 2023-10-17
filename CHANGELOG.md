@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.71.0-beta.14](https://github.com/open-sauced/insights/compare/v1.71.0-beta.13...v1.71.0-beta.14) (2023-10-17)
+
+
+### 🐛 Bug Fixes
+
+* can't update user profile bio passed 256 chars ([00a77be](https://github.com/open-sauced/insights/commit/00a77bebd5121a45cdcb4d890e0a57c4f727d7ba))
+* can't update user profile bio passed 256 chars ([#1898](https://github.com/open-sauced/insights/issues/1898)) ([42c99c7](https://github.com/open-sauced/insights/commit/42c99c7fd63a8399846e8f8820a9e738d31ac693))
+
 ## [1.71.0-beta.13](https://github.com/open-sauced/insights/compare/v1.71.0-beta.12...v1.71.0-beta.13) (2023-10-17)
 
 
