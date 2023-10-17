@@ -1,6 +1,5 @@
 import posthog from "posthog-js";
-import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
-import { useFetchUser } from "lib/hooks/useFetchUser";
+import { supabase } from "./supabase";
 
 interface AnalyticEvent {
   title: string;
@@ -20,33 +19,45 @@ function initiateAnalytics() {
  * @param {string} property - The property of the event
  * @param {string} value - The value of the event
  */
-function useAnalytics() {
-  const { user } = useSupabaseAuth();
-  const userInfo = useFetchUser(user?.user_metadata.user_name || "");
+async function captureAnalytics({ title, property, value }: AnalyticEvent) {
+  const analyticsObject: Record<string, string> = {};
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+  const user = session?.user;
 
-  return {
-    captureAnalytics({ title, property, value }: AnalyticEvent) {
-      const analyticsObject: Record<string, string> = {};
+  analyticsObject[property] = value;
 
-      analyticsObject[property] = value;
+  // if a user is not logged in, Posthog will generate an anonymous ID
+  if (user) {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/session`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${session?.access_token}`,
+      },
+    });
 
-      // if a user is not logged in, Posthog will generate an anonymous ID
-      if (user) {
-        let userProperties = {};
+    let data: DbUser | undefined;
 
-        if (userInfo?.data) {
-          const { company, coupon_code, is_open_sauced_member, is_onboarded, role } = userInfo?.data;
+    if (response.status === 200) {
+      data = await response.json();
+    }
 
-          // A pro user is anyone with a role of 50 or higher
-          userProperties = { company, coupon_code, is_open_sauced_member, is_onboarded, is_pro_user: role >= 50 };
-        }
+    let userProperties = {};
 
-        posthog.identify(user.user_metadata.sub, userProperties);
-      }
+    if (data) {
+      const { company, coupon_code, is_open_sauced_member, is_onboarded, role } = data;
 
-      posthog.capture(title, analyticsObject);
-    },
-  };
+      // A pro user is anyone with a role of 50 or higher
+      userProperties = { company, coupon_code, is_open_sauced_member, is_onboarded, is_pro_user: role >= 50 };
+    }
+
+    posthog.identify(user.id, userProperties);
+  }
+
+  posthog.capture(title, analyticsObject);
 }
 
-export { initiateAnalytics, useAnalytics };
+export { initiateAnalytics, captureAnalytics };

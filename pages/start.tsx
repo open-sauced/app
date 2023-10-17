@@ -25,7 +25,7 @@ import Button from "components/atoms/Button/button";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { setQueryParams } from "lib/utils/query-params";
 import useSession from "lib/hooks/useSession";
-import { useAnalytics } from "lib/utils/analytics";
+import { captureAnalytics } from "lib/utils/analytics";
 
 import useStore from "lib/store";
 import { getInterestOptions } from "lib/utils/getInterestOptions";
@@ -45,8 +45,6 @@ interface LoginStep1Props {
 }
 
 const LoginStep1: React.FC<LoginStep1Props> = ({ user }) => {
-  const { captureAnalytics } = useAnalytics();
-
   captureAnalytics({
     title: "User Onboarding",
     property: "onboardingStep1",
@@ -121,7 +119,6 @@ interface LoginStep2Props {
 }
 
 const LoginStep2: React.FC<LoginStep2Props> = ({ handleUpdateInterests: handleUpdateInterestsParent }) => {
-  const { captureAnalytics } = useAnalytics();
   const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
   const interestArray = getInterestOptions();
 
@@ -186,8 +183,6 @@ interface LoginStep3Props {
 }
 
 const LoginStep3: React.FC<LoginStep3Props> = ({ interests, user }) => {
-  const { captureAnalytics } = useAnalytics();
-
   captureAnalytics({
     title: "User Onboarding",
     property: "onboardingStep3",
