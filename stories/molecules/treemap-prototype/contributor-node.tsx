@@ -15,7 +15,6 @@ const NonMemoizedContributorNode = <Datum extends { id: string; value?: number; 
     enableLabel && node.isLeaf && (labelSkipSize === 0 || Math.min(node.width, node.height) > labelSkipSize);
 
   const avatarURL = getAvatarByUsername(node.id);
-  // const color = stringToHSLAColor({ id: node.id });
 
   return (
     <animated.div
