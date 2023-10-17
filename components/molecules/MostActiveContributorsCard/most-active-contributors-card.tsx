@@ -227,9 +227,7 @@ function RowTooltip({
                   className="w-3 h-3 rounded-sm"
                   style={{ backgroundColor: labels.includes(key) ? value.color : "gray" }}
                 ></div>
-                <div className={clsx(key === highlightedStat ? "font-bold" : "font-light")}>
-                  {key} {value.title}
-                </div>
+                <div className={clsx(key === highlightedStat ? "font-bold" : "font-light")}>{value.title}</div>
               </div>
             ))}
           </div>
