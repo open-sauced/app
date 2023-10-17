@@ -48,7 +48,7 @@ const HubLayout = ({ children }: { children: React.ReactNode }) => {
   }, [router, onboarded]);
 
   const getActiveLinkClassNames = (href: string) => {
-    return router.pathname === href ? "text-light-slate-11" : "text-slate-300";
+    return router.pathname === href ? "text-light-slate-12" : "text-slate-300";
   };
 
   return (
