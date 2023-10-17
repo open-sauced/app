@@ -125,7 +125,7 @@ const ListActivityPage = ({ list, numberOfContributors, isError, activityData }:
       {isError ? (
         <Error errorMessage="Unable to load list activity" />
       ) : (
-        <div className="lg:grid lg:grid-cols-2 lg:grid-rows-2 gap-4 flex flex-col">
+        <div className="flex flex-col gap-4 lg:grid lg:grid-cols-2 lg:grid-rows-2">
           <ClientOnly>
             {/* TODO: Remove client only once server data is being used in the hook on initial load client-side */}
             <MostActiveContributorsCard
@@ -142,7 +142,7 @@ const ListActivityPage = ({ list, numberOfContributors, isError, activityData }:
             repoId={repoId}
             onClick={onHandleClick}
             data={treemapData}
-            color="hsla(21, 90%, 48%, 1)"
+            color={{ scheme: "category10" }}
           />
         </div>
       )}

@@ -8,7 +8,8 @@ import type { NodeMouseEventHandler, NodeProps } from "@nivo/treemap";
 
 interface ContributionsTreemapProps {
   data: any;
-  color: string;
+  // loose typing this as i can't find the import for  OrdinalColorScaleConfig<ComputedNodeWithoutStyles<object>> | undefined
+  color: any;
   onClick: NodeMouseEventHandler<object>;
   repoId: number | null;
   setRepoId: (repoId: number | null) => void;
@@ -37,14 +38,14 @@ export const ContributionsTreemap = ({ setRepoId, repoId, data, color, onClick }
     <Card className="grid place-content-stretch">
       <div className="grid">
         {/* Label: Text */}
-        <div className="text-lg text-slate-900 mb-2 flex">
+        <div className="flex mb-2 text-lg text-slate-900">
           <button className="cursor-pointer" onClick={() => setRepoId(null)}>
             Repos
           </button>
           <div> </div>
           <BreadCrumb isActive={repoId !== null}>Contributors</BreadCrumb>
         </div>
-        <div className="rounded-md overflow-hidden grid place-content-stretch">
+        <div className="grid overflow-hidden rounded-md place-content-stretch">
           <div className="grid" style={{ gridArea: "1 / 1", minHeight: "29rem" }}>
             <ClientOnly>
               <ResponsiveTreeMapHtml
@@ -66,7 +67,7 @@ export const ContributionsTreemap = ({ setRepoId, repoId, data, color, onClick }
                         labelSkipSize,
                       }: NodeProps<Datum>) => JSX.Element)
                 }
-                colors={color}
+                colors={color as any}
                 nodeOpacity={1}
                 borderWidth={0}
                 onClick={onClick}
