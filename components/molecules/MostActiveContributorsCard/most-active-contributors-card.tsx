@@ -215,7 +215,7 @@ function RowTooltip({
 }) {
   const labels = Object.keys(dataLabels);
   return (
-    <Tooltip.Root>
+    <Tooltip.Root delayDuration={300}>
       <Tooltip.Trigger asChild>{children}</Tooltip.Trigger>
       <Tooltip.Portal>
         <Tooltip.Content sideOffset={-10} align="center" collisionPadding={10} side={"bottom"} avoidCollisions>
