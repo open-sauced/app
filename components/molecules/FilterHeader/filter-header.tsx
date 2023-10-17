@@ -6,7 +6,7 @@ import ContextThumbnail from "components/atoms/ContextThumbnail/context-thumbnai
 import SuperativeSelector from "components/molecules/SuperlativeSelector/superlative-selector";
 
 import useFilterOptions from "lib/hooks/useFilterOptions";
-import { captureAnayltics } from "lib/utils/analytics";
+import { useAnalytics } from "lib/utils/analytics";
 import useFilterPrefetch from "lib/hooks/useFilterPrefetch";
 import topicNameFormatting from "lib/utils/topic-name-formatting";
 import FilterCardSelect from "components/molecules/FilterCardSelect/filter-card-select";
@@ -16,13 +16,14 @@ import { getInterestOptions } from "lib/utils/getInterestOptions";
 
 const HeaderFilter = () => {
   const router = useRouter();
+  const { captureAnalytics } = useAnalytics();
   const filterOptions = useFilterOptions();
   const topicOptions = getInterestOptions();
 
   const { filterValues } = useFilterPrefetch();
   const { filterName, toolName, selectedFilter } = router.query;
   const filterBtnRouting = (filter: string) => {
-    captureAnayltics("Filters", "toolsFilter", `${filter} applied`);
+    captureAnalytics({ title: "Filters", property: "toolsFilter", value: `${filter} applied` });
     return router.push(`/${filterName}/${toolName}/filter/${filter.toLocaleLowerCase()}`);
   };
 

@@ -24,7 +24,7 @@ const HubLayout = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
 
   const validatePath = (path: string) => {
-    const PATHREGEX = /^\/hub\/(insights|lists)(\/(new|[\d]+\/edit))?$/;
+    const PATHREGEX = /^\/hub\/(insights|lists)?$/;
 
     return PATHREGEX.test(path);
   };
