@@ -126,7 +126,7 @@ const ListActivityPage = ({ list, numberOfContributors, isError, activityData }:
       {isError ? (
         <Error errorMessage="Unable to load list activity" />
       ) : (
-        <div className="flex flex-col gap-4 lg:grid lg:grid-cols-2 lg:grid-rows-2">
+        <div className="lg:grid lg:grid-cols-2 lg:grid-rows-2 gap-4 flex flex-col">
           <ClientOnly>
             {/* TODO: Remove client only once server data is being used in the hook on initial load client-side */}
             <MostActiveContributorsCard

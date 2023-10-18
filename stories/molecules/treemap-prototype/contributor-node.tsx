@@ -1,4 +1,5 @@
 import { memo } from "react";
+import Image from "next/image";
 import { animated } from "@react-spring/web";
 import { getAvatarByUsername } from "lib/utils/github";
 import { htmlNodeTransform } from "lib/utils/nivo-utils";
@@ -52,16 +53,15 @@ const NonMemoizedContributorNode = <Datum extends { id: string; value?: number; 
           }}
         >
           <div className="grid gap-x-2" style={{ gridTemplateColumns: "auto 1fr", gridTemplateRows: "auto auto" }}>
-            <picture>
-              <img
-                className="col-span-1 col-start-1 row-span-2"
-                src={avatarURL}
-                alt={`${node.id}'s avatar`}
-                width="42"
-                height="42"
-                style={{ display: "block", borderRadius: "50%", border: "solid 2px white", flexShrink: 0, flexGrow: 0 }}
-              />
-            </picture>
+            <Image
+              className="col-span-1 col-start-1 row-span-2"
+              src={avatarURL}
+              alt={`${node.id}'s avatar`}
+              width="42"
+              height="42"
+              style={{ display: "block", borderRadius: "50%", border: "solid 2px white", flexShrink: 0, flexGrow: 0 }}
+            />
+
             <div className="font-medium" style={{ gridColumnStart: "2", alignItems: "center", alignSelf: "center" }}>
               {node.id}
             </div>
