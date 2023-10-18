@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.71.0-beta.16](https://github.com/open-sauced/insights/compare/v1.71.0-beta.15...v1.71.0-beta.16) (2023-10-18)
+
+
+### 🐛 Bug Fixes
+
+* match graph tooltip color with graph nodes ([#1930](https://github.com/open-sauced/insights/issues/1930)) ([3f845d2](https://github.com/open-sauced/insights/commit/3f845d27aa62763c0436f5cd2dfde2b49c837184))
+
 ## [1.71.0-beta.15](https://github.com/open-sauced/insights/compare/v1.71.0-beta.14...v1.71.0-beta.15) (2023-10-17)
 
 
