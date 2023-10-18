@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.71.0-beta.18](https://github.com/open-sauced/insights/compare/v1.71.0-beta.17...v1.71.0-beta.18) (2023-10-18)
+
+
+### 🐛 Bug Fixes
+
+* now legend labels in most active graph tooltip render properly ([#1927](https://github.com/open-sauced/insights/issues/1927)) ([8a0ff79](https://github.com/open-sauced/insights/commit/8a0ff79b533ca871812fc38a1a72b2bbf9a40275))
+
 ## [1.71.0-beta.17](https://github.com/open-sauced/insights/compare/v1.71.0-beta.16...v1.71.0-beta.17) (2023-10-18)
 
 
