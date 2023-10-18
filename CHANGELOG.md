@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.71.0-beta.19](https://github.com/open-sauced/insights/compare/v1.71.0-beta.18...v1.71.0-beta.19) (2023-10-18)
+
+
+### 🐛 Bug Fixes
+
+* list header misalignment now properly aligned ([#1941](https://github.com/open-sauced/insights/issues/1941)) ([0224fa8](https://github.com/open-sauced/insights/commit/0224fa82e46f0e508b8b7bda49016fd9c59dac08))
+
 ## [1.71.0-beta.18](https://github.com/open-sauced/insights/compare/v1.71.0-beta.17...v1.71.0-beta.18) (2023-10-18)
 
 
