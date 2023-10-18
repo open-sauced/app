@@ -204,12 +204,10 @@ export default function MostActiveContributorsCard({
 
 function RowTooltip({
   contributor,
-  highlightedStat,
   dataLabels,
   children,
 }: {
   contributor: ContributorStat;
-  highlightedStat: StatKeys;
   dataLabels: Record<StatKeys, DataLabel>;
   children: React.ReactNode;
 }) {
@@ -221,17 +219,14 @@ function RowTooltip({
         <Tooltip.Content sideOffset={-10} align="center" collisionPadding={10} side={"bottom"} avoidCollisions>
           <div className={clsx("text-xs p-2 rounded shadow-lg bg-white font-light")}>
             <div className="text-black font-bold mb-1">{contributor.login}</div>
-            {Object.entries(dataLabelsList).map(([key, value]) => (
-              <div key={key} className={clsx("flex items-center gap-2 font-bold", { "font-bold": true })}>
-                <div
-                  className="w-3 h-3 rounded-sm"
-                  style={{ backgroundColor: labels.includes(key) ? value.color : "gray" }}
-                ></div>
-                <div className={clsx(key === highlightedStat ? "font-bold" : "font-light")}>
-                  {key} {value.title}
+            {Object.entries(dataLabelsList)
+              .filter(([key]) => labels.includes(key))
+              .map(([key, value]) => (
+                <div key={key} className="flex items-center gap-2 font-bold">
+                  <div className="w-3 h-3 rounded-sm" style={{ backgroundColor: value.color }}></div>
+                  <div className="font-light">{value.title}</div>
                 </div>
-              </div>
-            ))}
+              ))}
           </div>
         </Tooltip.Content>
       </Tooltip.Portal>
@@ -294,7 +289,7 @@ function GraphRow({
           style={{ width: `${(user.total_contributions / maxContributions) * 100}%` }}
         >
           {springs.map((spring, index) => (
-            <RowTooltip key={keys[index]} highlightedStat={keys[index]} contributor={user} dataLabels={dataLabels}>
+            <RowTooltip key={keys[index]} contributor={user} dataLabels={dataLabels}>
               <animated.div
                 style={{
                   backgroundColor: dataLabels[keys[index]].color,
