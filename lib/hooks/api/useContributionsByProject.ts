@@ -11,7 +11,7 @@ export const useContributionsByProject = ({
   initialData?: DbProjectContributions[];
 }) => {
   const { data, error } = useSWR<DbProjectContributions[]>(
-    `lists/${listId}/stats/contributions-by-project?range=${range}`,
+    listId ? `lists/${listId}/stats/contributions-by-project?range=${range}` : null,
     publicApiFetcher as Fetcher<DbProjectContributions[], Error>
     // {
     //   fallbackData: {

@@ -1,14 +1,15 @@
 import { useSpring, animated } from "@react-spring/web";
 import dynamic from "next/dynamic";
+import { Datum } from "@nivo/line";
 import Card from "components/atoms/Card/card";
 import { SpecialNode } from "stories/molecules/treemap-prototype/special-node";
 import { ContributorNode } from "stories/molecules/treemap-prototype/contributor-node";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
-import type { NodeMouseEventHandler, NodeProps } from "@nivo/treemap";
+import type { NodeMouseEventHandler, NodeProps, TreeMapCommonProps } from "@nivo/treemap";
 
 interface ContributionsTreemapProps {
   data: any;
-  color: string;
+  color: TreeMapCommonProps<Datum>["colors"];
   onClick: NodeMouseEventHandler<object>;
   repoId: number | null;
   setRepoId: (repoId: number | null) => void;
@@ -45,7 +46,7 @@ export const ContributionsTreemap = ({ setRepoId, repoId, data, color, onClick }
           <BreadCrumb isActive={repoId !== null}>Contributors</BreadCrumb>
         </div>
         <div className="rounded-md overflow-hidden grid place-content-stretch">
-          <div className="grid" style={{ gridArea: "1 / 1" }}>
+          <div className="grid" style={{ gridArea: "1 / 1", minHeight: "29rem" }}>
             <ClientOnly>
               <ResponsiveTreeMapHtml
                 data={data}

@@ -144,7 +144,7 @@ const CreateListPage = () => {
   };
 
   return (
-    <section className="flex flex-col justify-center w-full py-4 xl:flex-row xl:gap-20 xl:pl-28 ">
+    <section className="flex flex-col justify-center w-full py-4 xl:flex-row xl:gap-20 xl:pl-28">
       <div className="flex flex-col gap-8">
         <div className="pb-6 border-b border-light-slate-8">
           <Title className="!text-2xl !leading-none mb-4" level={1}>
@@ -239,7 +239,9 @@ const AddListPage = () => {
       <TopNav />
       <div className="flex flex-col items-center pt-20 page-container grow md:pt-14">
         <main className="flex flex-col items-center flex-1 w-full px-3 py-8 md:px-2 bg-light-slate-2">
-          <CreateListPage />
+          <div className="container px-2 mx-auto md:px-16">
+            <CreateListPage />
+          </div>
         </main>
       </div>
       <Footer />

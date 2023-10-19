@@ -43,7 +43,7 @@ const useMostActiveContributors = ({
   const apiEndpoint = `lists/${listId}/stats/most-active-contributors?${query.toString()}`;
 
   const { data, error, mutate } = useSWR<PaginatedResponse, Error>(
-    apiEndpoint,
+    listId ? apiEndpoint : null,
     publicApiFetcher as Fetcher<PaginatedResponse, Error>
   );
 
