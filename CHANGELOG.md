@@ -5,6 +5,16 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.71.1](https://github.com/open-sauced/insights/compare/v1.71.0...v1.71.1) (2023-10-19)
+
+
+### 🐛 Bug Fixes
+
+* add missing info for posthog ([#1958](https://github.com/open-sauced/insights/issues/1958)) ([eb073c0](https://github.com/open-sauced/insights/commit/eb073c0396af337eadcef9a4abab6d6534a02083))
+* added more info for Posthog analytics ([23f2316](https://github.com/open-sauced/insights/commit/23f2316e9c39b4ae893aa68398dfed84a4203b85))
+* remove typo error ([cbff543](https://github.com/open-sauced/insights/commit/cbff543fbee4145da56d09cab0ed75c94f804510))
+* remove typo error ([#1957](https://github.com/open-sauced/insights/issues/1957)) ([9179cd6](https://github.com/open-sauced/insights/commit/9179cd609bc8a462a3cd14f26dae8b768aecfbfe))
+
 ### [1.71.1-beta.2](https://github.com/open-sauced/insights/compare/v1.71.1-beta.1...v1.71.1-beta.2) (2023-10-19)
 
 
