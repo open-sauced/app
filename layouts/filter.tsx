@@ -12,6 +12,8 @@ import useFilterOptions from "lib/hooks/useFilterOptions";
 import { getInterestOptions } from "lib/utils/getInterestOptions";
 import useFilterPrefetch from "lib/hooks/useFilterPrefetch";
 import { captureAnalytics } from "lib/utils/analytics";
+import { useFetchUser } from "lib/hooks/useFetchUser";
+import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 
 const FilterLayout = ({ children }: { children: React.ReactNode }) => {
   const { toolList, selectedTool, filterName, selectedFilter, userOrg } = useNav();
@@ -20,9 +22,11 @@ const FilterLayout = ({ children }: { children: React.ReactNode }) => {
   const topicOptions = getInterestOptions();
   const { filterValues } = useFilterPrefetch();
   const { toolName } = router.query;
+  const { user } = useSupabaseAuth();
+  const { data: userInfo } = useFetchUser(user?.user_metadata.user_name);
 
   const filterBtnRouting = (filter: string) => {
-    captureAnalytics({ title: "Filters", property: "toolsFilter", value: `${filter} applied` });
+    captureAnalytics({ title: "Filters", property: "toolsFilter", value: `${filter} applied`, userInfo });
     return router.push(`/${filterName}/${toolName}/filter/${filter.toLocaleLowerCase()}`);
   };
 

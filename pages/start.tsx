@@ -33,6 +33,7 @@ import LanguagePill from "components/atoms/LanguagePill/LanguagePill";
 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "components/atoms/Select/select";
 import { timezones } from "lib/utils/timezones";
+import { useFetchUser } from "lib/hooks/useFetchUser";
 
 type handleLoginStep = () => void;
 type stepKeys = "1" | "2" | "3";
@@ -45,11 +46,20 @@ interface LoginStep1Props {
 }
 
 const LoginStep1: React.FC<LoginStep1Props> = ({ user }) => {
-  captureAnalytics({
-    title: "User Onboarding",
-    property: "onboardingStep1",
-    value: "visited",
-  });
+  const { data: userInfo, isLoading } = useFetchUser(user?.user_metadata.user_name);
+
+  useEffect(() => {
+    if (isLoading) {
+      return;
+    }
+
+    captureAnalytics({
+      title: "User Onboarding",
+      property: "onboardingStep1",
+      value: "visited",
+      userInfo,
+    });
+  }, [userInfo, isLoading]);
 
   const router = useRouter();
   const { onboarded } = useSession();
@@ -121,12 +131,21 @@ interface LoginStep2Props {
 const LoginStep2: React.FC<LoginStep2Props> = ({ handleUpdateInterests: handleUpdateInterestsParent }) => {
   const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
   const interestArray = getInterestOptions();
+  const { user } = useSupabaseAuth();
+  const { data: userInfo, isLoading } = useFetchUser(user?.user_metadata.user_name);
 
-  captureAnalytics({
-    title: "User Onboarding",
-    property: "onboardingStep2",
-    value: "visited",
-  });
+  useEffect(() => {
+    if (isLoading) {
+      return;
+    }
+
+    captureAnalytics({
+      title: "User Onboarding",
+      property: "onboardingStep2",
+      value: "visited",
+      userInfo,
+    });
+  }, [userInfo, isLoading]);
 
   const handleSelectInterest = (interest: string) => {
     if (selectedInterests.length > 0 && selectedInterests.includes(interest)) {
@@ -183,11 +202,21 @@ interface LoginStep3Props {
 }
 
 const LoginStep3: React.FC<LoginStep3Props> = ({ interests, user }) => {
-  captureAnalytics({
-    title: "User Onboarding",
-    property: "onboardingStep3",
-    value: "visited",
-  });
+  const { data: userInfo, isLoading } = useFetchUser(user?.user_metadata.user_name);
+
+  useEffect(() => {
+    if (isLoading) {
+      return;
+    }
+
+    captureAnalytics({
+      title: "User Onboarding",
+      property: "onboardingStep3",
+      value: "visited",
+      userInfo,
+    });
+  }, [userInfo, isLoading]);
+
   const store = useStore();
   const router = useRouter();
   const { sessionToken } = useSupabaseAuth();
