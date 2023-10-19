@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.71.0-beta.22](https://github.com/open-sauced/insights/compare/v1.71.0-beta.21...v1.71.0-beta.22) (2023-10-19)
+
+
+### 🐛 Bug Fixes
+
+* remove typo error ([cbff543](https://github.com/open-sauced/insights/commit/cbff543fbee4145da56d09cab0ed75c94f804510))
+* remove typo error ([#1957](https://github.com/open-sauced/insights/issues/1957)) ([9179cd6](https://github.com/open-sauced/insights/commit/9179cd609bc8a462a3cd14f26dae8b768aecfbfe))
+
 ## [1.71.0-beta.21](https://github.com/open-sauced/insights/compare/v1.71.0-beta.20...v1.71.0-beta.21) (2023-10-19)
 
 
