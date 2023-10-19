@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.71.0-beta.21](https://github.com/open-sauced/insights/compare/v1.71.0-beta.20...v1.71.0-beta.21) (2023-10-19)
+
+
+### 🐛 Bug Fixes
+
+* Fix horizontal padding /spacing on smaller screens for the Create New List form ([#1909](https://github.com/open-sauced/insights/issues/1909)) ([e92a3d9](https://github.com/open-sauced/insights/commit/e92a3d971615417348963e06db6517b53f16ef55))
+
 ## [1.71.0-beta.20](https://github.com/open-sauced/insights/compare/v1.71.0-beta.19...v1.71.0-beta.20) (2023-10-19)
 
 
