@@ -13,6 +13,8 @@ import FilterCardSelect from "components/molecules/FilterCardSelect/filter-card-
 import getTopicThumbnail from "lib/utils/getTopicThumbnail";
 import { interestsType } from "lib/utils/getInterestOptions";
 import { getInterestOptions } from "lib/utils/getInterestOptions";
+import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
+import { useFetchUser } from "lib/hooks/useFetchUser";
 
 const HeaderFilter = () => {
   const router = useRouter();
@@ -21,8 +23,11 @@ const HeaderFilter = () => {
 
   const { filterValues } = useFilterPrefetch();
   const { filterName, toolName, selectedFilter } = router.query;
+  const { user } = useSupabaseAuth();
+  const { data: userInfo } = useFetchUser(user?.user_metadata.user_name);
+
   const filterBtnRouting = (filter: string) => {
-    captureAnalytics({ title: "Filters", property: "toolsFilter", value: `${filter} applied` });
+    captureAnalytics({ title: "Filters", property: "toolsFilter", value: `${filter} applied`, userInfo });
     return router.push(`/${filterName}/${toolName}/filter/${filter.toLocaleLowerCase()}`);
   };
 
