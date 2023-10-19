@@ -1,35 +1,39 @@
+import { useRouter } from "next/router";
+
 import Text from "components/atoms/Typography/text";
 import Title from "components/atoms/Typography/title";
 import ContextThumbnail from "components/atoms/ContextThumbnail/context-thumbnail";
 import SuperativeSelector from "components/molecules/SuperlativeSelector/superlative-selector";
 
+import useFilterOptions from "lib/hooks/useFilterOptions";
+import { captureAnalytics } from "lib/utils/analytics";
+import useFilterPrefetch from "lib/hooks/useFilterPrefetch";
 import topicNameFormatting from "lib/utils/topic-name-formatting";
 import FilterCardSelect from "components/molecules/FilterCardSelect/filter-card-select";
 import getTopicThumbnail from "lib/utils/getTopicThumbnail";
 import { interestsType } from "lib/utils/getInterestOptions";
-import { FilterValues } from "lib/hooks/useFilterPrefetch";
+import { getInterestOptions } from "lib/utils/getInterestOptions";
 
-interface HeaderFilterProps {
-  onFilterRouting: (filter: string) => void;
-  onCancelFilterRouting: () => void;
-  onTopicRouting: (topic: string) => void;
-  filterName: string | string[] | undefined;
-  topicOptions: string[];
-  selectedFilter: string | string[] | undefined;
-  filterOptions: string[];
-  filterValues: FilterValues;
-}
+const HeaderFilter = () => {
+  const router = useRouter();
+  const filterOptions = useFilterOptions();
+  const topicOptions = getInterestOptions();
 
-const HeaderFilter = ({
-  onFilterRouting,
-  onCancelFilterRouting,
-  onTopicRouting,
-  filterName,
-  topicOptions,
-  selectedFilter,
-  filterOptions,
-  filterValues,
-}: HeaderFilterProps) => {
+  const { filterValues } = useFilterPrefetch();
+  const { filterName, toolName, selectedFilter } = router.query;
+  const filterBtnRouting = (filter: string) => {
+    captureAnalytics({ title: "Filters", property: "toolsFilter", value: `${filter} applied` });
+    return router.push(`/${filterName}/${toolName}/filter/${filter.toLocaleLowerCase()}`);
+  };
+
+  const cancelFilterRouting = () => {
+    return router.push(`/${filterName}/${toolName}`);
+  };
+
+  const topicRouting = (topic: string) => {
+    router.push(`/${topic}/${toolName}${selectedFilter ? `/filter/${selectedFilter}` : ""}`);
+  };
+
   return (
     <>
       <div className="header-image mr-2 p-2 min-w-[130px] ">
@@ -50,13 +54,13 @@ const HeaderFilter = ({
             selected={filterName as string}
             options={topicOptions as unknown as []}
             icon="topic"
-            handleFilterClick={onTopicRouting}
+            handleFilterClick={topicRouting}
           />
           <SuperativeSelector
             filterOptions={filterOptions}
             filterValues={filterValues}
-            handleFilterClick={onFilterRouting}
-            handleCancelClick={onCancelFilterRouting}
+            handleFilterClick={filterBtnRouting}
+            handleCancelClick={cancelFilterRouting}
             selected={Array.isArray(selectedFilter) ? selectedFilter.join("/") : selectedFilter}
           />
         </div>

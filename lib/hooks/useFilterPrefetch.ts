@@ -5,7 +5,7 @@ import getFilterKey from "lib/utils/get-filter-key";
 import publicApiFetcher from "lib/utils/public-api-fetcher";
 import useFilterOptions from "./useFilterOptions";
 
-export type FilterValues = { [name: string]: number | undefined };
+type FilterValues = { [name: string]: number | undefined };
 
 const useFilterPrefetch = () => {
   const router = useRouter();

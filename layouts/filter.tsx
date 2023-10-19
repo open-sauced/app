@@ -1,6 +1,5 @@
 import React from "react";
 
-import { useRouter } from "next/router";
 import Footer from "components/organisms/Footer/footer";
 import Header from "components/organisms/Header/header";
 import Nav from "components/organisms/ToolList/nav";
@@ -8,35 +7,9 @@ import TopNav from "components/organisms/TopNav/top-nav";
 import FilterHeader from "components/molecules/FilterHeader/filter-header";
 
 import useNav from "lib/hooks/useNav";
-import useFilterOptions from "lib/hooks/useFilterOptions";
-import { getInterestOptions } from "lib/utils/getInterestOptions";
-import useFilterPrefetch from "lib/hooks/useFilterPrefetch";
-import { captureAnalytics } from "lib/utils/analytics";
-import { useFetchUser } from "lib/hooks/useFetchUser";
-import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 
 const FilterLayout = ({ children }: { children: React.ReactNode }) => {
   const { toolList, selectedTool, filterName, selectedFilter, userOrg } = useNav();
-  const router = useRouter();
-  const filterOptions = useFilterOptions();
-  const topicOptions = getInterestOptions();
-  const { filterValues } = useFilterPrefetch();
-  const { toolName } = router.query;
-  const { user } = useSupabaseAuth();
-  const { data: userInfo } = useFetchUser(user?.user_metadata.user_name);
-
-  const filterBtnRouting = (filter: string) => {
-    captureAnalytics({ title: "Filters", property: "toolsFilter", value: `${filter} applied`, userInfo });
-    return router.push(`/${filterName}/${toolName}/filter/${filter.toLocaleLowerCase()}`);
-  };
-
-  const cancelFilterRouting = () => {
-    return router.push(`/${filterName}/${toolName}`);
-  };
-
-  const topicRouting = (topic: string) => {
-    router.push(`/${topic}/${toolName}${selectedFilter ? `/filter/${selectedFilter}` : ""}`);
-  };
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -44,16 +17,7 @@ const FilterLayout = ({ children }: { children: React.ReactNode }) => {
       <div className="page-container flex grow bg-light-slate-3 flex-col pt-28 sm:pt-20 md:pt-14 items-center">
         <div className="info-container container w-full min-h-[100px]">
           <Header>
-            <FilterHeader
-              onFilterRouting={filterBtnRouting}
-              onCancelFilterRouting={cancelFilterRouting}
-              onTopicRouting={topicRouting}
-              filterName={filterName}
-              topicOptions={topicOptions}
-              selectedFilter={selectedFilter}
-              filterOptions={filterOptions}
-              filterValues={filterValues}
-            />
+            <FilterHeader />
           </Header>
           <Nav
             toolList={toolList}
