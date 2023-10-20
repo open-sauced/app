@@ -580,7 +580,6 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                       <div
                         onClick={() => {
                           setCreatePopoverOpen(true);
-                          console.log("::::: ", createPopoverOpen);
                         }}
                         className="flex items-center gap-2 p-2 text-base rounded-full z-10 text-light-slate-9 bg-light-slate-3 cursor-pointer"
                       >
@@ -682,24 +681,20 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                             <div className="flex w-full gap-2">
                               {suggestion.type === "pull_request" && (
                                 <BiGitMerge
-                                  className={`
-        text-xl
-        ${suggestion.status_reason === "open" ? "text-green-600" : "text-purple-600"}
-        `}
+                                  className={`text-xl${
+                                    suggestion.status_reason === "open" ? "text-green-600" : "text-purple-600"
+                                  }`}
                                 />
                               )}
                               {suggestion.type === "issue" && (
                                 <VscIssues
-                                  className={`
-        text-xl
-        ${
-          suggestion.status === "open"
-            ? "text-green-600"
-            : suggestion.status_reason === "not_planned"
-            ? "text-red-600"
-            : "text-purple-600"
-        }
-      `}
+                                  className={`text-xl${
+                                    suggestion.status === "open"
+                                      ? "text-green-600"
+                                      : suggestion.status_reason === "not_planned"
+                                      ? "text-red-600"
+                                      : "text-purple-600"
+                                  }`}
                                 />
                               )}
                               <p
@@ -840,10 +835,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                 <Tooltip direction="top" content="Pick a date">
                   <Popover>
                     <PopoverTrigger asChild>
-                      <button
-                        // onClick={() => setPopoverOpen(true)}
-                        className="flex items-center gap-2 p-2 text-base rounded-full text-light-slate-9 bg-light-slate-3"
-                      >
+                      <button className="flex items-center gap-2 p-2 text-base rounded-full text-light-slate-9 bg-light-slate-3">
                         <FiCalendar className="text-light-slate-11" />
                       </button>
                     </PopoverTrigger>
