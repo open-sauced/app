@@ -9,7 +9,6 @@ import { useRouter } from "next/router";
 import { SessionContextProvider } from "@supabase/auth-helpers-react";
 import { SWRConfig } from "swr";
 
-import Script from "next/script";
 import posthog from "posthog-js";
 import { PostHogProvider } from "posthog-js/react";
 import { TipProvider } from "components/atoms/Tooltip/tooltip";
@@ -70,27 +69,6 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
   let hostname = "";
 
   if (typeof window !== "undefined") hostname = window.location.hostname;
-
-  useEffect(() => {
-    let chatButton = document.getElementById("sitegpt-chat-icon");
-
-    const interval = setInterval(() => {
-      chatButton = document.getElementById("sitegpt-chat-icon");
-      if (chatButton) {
-        if (hostname !== "app.opensauced.pizza") {
-          chatButton.style.display = "none";
-        }
-        if (router.asPath === "/feed" && isMobile) {
-          chatButton.style.display = "none";
-        } else {
-          chatButton.style.display = "block";
-        }
-        clearInterval(interval);
-      }
-    }, 500);
-
-    return () => clearInterval(interval);
-  }, [hostname, router.isReady]);
 
   useEffect(() => {
     updateSEO(Component.SEO || {});
@@ -178,11 +156,6 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
                   <Component {...pageProps} />
                 )}
               </TipProvider>
-              <Script id="siteGPT" type="text/javascript">
-                {
-                  'd=document;s=d.createElement("script");s.src="https://sitegpt.ai/widget/365440930125185604.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);'
-                }
-              </Script>
             </PrivateWrapper>
           </PostHogProvider>
         </SessionContextProvider>
