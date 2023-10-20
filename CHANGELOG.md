@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.71.2-beta.2](https://github.com/open-sauced/insights/compare/v1.71.2-beta.1...v1.71.2-beta.2) (2023-10-20)
+
+
+### 🐛 Bug Fixes
+
+* removed chatbot ([#1973](https://github.com/open-sauced/insights/issues/1973)) ([4c58e42](https://github.com/open-sauced/insights/commit/4c58e4222c3146ce2411bdcf5e688d3f36c40e28))
+
 ### [1.71.2-beta.1](https://github.com/open-sauced/insights/compare/v1.71.1...v1.71.2-beta.1) (2023-10-20)
 
 
