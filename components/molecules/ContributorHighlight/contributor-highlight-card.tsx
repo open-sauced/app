@@ -182,11 +182,6 @@ const ContributorHighlightCard = ({
     };
   }, [popoverOpen]);
 
-  useEffect(() => {
-    // This closes the popover when a date is selected
-    setPopoverOpen(false);
-  }, [date]);
-
   const getEmojiReactors = (reaction_users: string[]) => {
     if (!Array.isArray(reaction_users)) return "";
 
@@ -689,7 +684,10 @@ const ContributorHighlightCard = ({
                             toDate={new Date()}
                             mode="single"
                             selected={date}
-                            onSelect={setDate}
+                            onSelect={(date) => {
+                              setDate(date);
+                              setPopoverOpen(false);
+                            }}
                             className="border rounded-md"
                           />
                         </PopoverContent>

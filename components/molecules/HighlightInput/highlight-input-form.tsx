@@ -175,10 +175,6 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
     };
   }, []);
 
-  useEffect(() => {
-    setCreatePopoverOpen(false);
-  }, [date]);
-
   // get the user's latest pull requests and issues that don't yet have highlights associated with them
   // and suggest them to the user when they are creating a highlight.
   useEffect(() => {
@@ -593,7 +589,10 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                         toDate={new Date()}
                         mode="single"
                         selected={date}
-                        onSelect={setDate}
+                        onSelect={(date) => {
+                          setDate(date);
+                          setCreatePopoverOpen(false);
+                        }}
                         className="border rounded-md"
                       />
                     </PopoverContent>
