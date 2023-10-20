@@ -17,5 +17,5 @@ jobs:
         with:
           issueCurrentlyAssignedMessage: Thanks for being interested in this issue. It looks like this ticket is already assigned to a contributor.
           token: ${{ secrets.GITHUB_TOKEN }}
-          blockingLabels: needs triage,blocked,core team work,needs design,duplicate
+          blockingLabels: 👀 needs triage,blocked,core team work,needs design,duplicate
           blockingLabelsMessage: The issue you are trying to assign yourself is blocked until it can be triaged or by another label on the issue.
