@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.71.2-beta.3](https://github.com/open-sauced/insights/compare/v1.71.2-beta.2...v1.71.2-beta.3) (2023-10-20)
+
+
+### 🐛 Bug Fixes
+
+* added missing is_maintainer info for Posthog ([b9c0c1e](https://github.com/open-sauced/insights/commit/b9c0c1ee141d4d86a1327ff1b875ca90c1255e69))
+* added missing is_maintainer info for Posthog ([#1975](https://github.com/open-sauced/insights/issues/1975)) ([25d603b](https://github.com/open-sauced/insights/commit/25d603b28894c0637bef3d6718deb4835bc620ca))
+
 ### [1.71.2-beta.2](https://github.com/open-sauced/insights/compare/v1.71.2-beta.1...v1.71.2-beta.2) (2023-10-20)
 
 
