@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import { UserGroupIcon } from "@heroicons/react/24/outline";
 
 import { useDebounce } from "rooks";
+import Link from "next/link";
 import Button from "components/atoms/Button/button";
 import TextInput from "components/atoms/TextInput/text-input";
 import ToggleSwitch from "components/atoms/ToggleSwitch/toggle-switch";
@@ -13,7 +14,6 @@ import RepositoriesCart from "components/organisms/RepositoriesCart/repositories
 import RepositoryCartItem from "components/molecules/ReposoitoryCartItem/repository-cart-item";
 import RepoNotIndexed from "components/organisms/Repositories/repository-not-indexed";
 import useRepositories from "lib/hooks/api/useRepositories";
-import { getStripe } from "lib/utils/stripe-client";
 
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { generateRepoParts, getAvatarById, getAvatarByUsername } from "lib/utils/github";
@@ -434,30 +434,6 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
     }
   }, 250);
 
-  const handleUpgrade = async (event: any) => {
-    event.preventDefault();
-
-    try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/checkout/session`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${sessionToken}`,
-        },
-      });
-
-      if (response.ok) {
-        const { sessionId } = await response.json();
-
-        const stripe = await getStripe();
-        stripe?.redirectToCheckout({ sessionId });
-      } else {
-        // display error to user
-        console.error(response.statusText);
-      }
-    } catch (e) {
-      //
-    }
-  };
   useEffect(() => {
     setSuggestions([]);
     if (!repoSearchTerm) return;
@@ -517,12 +493,21 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
               <span className="text-sm">
                 Your insight pages are limited to
                 <strong className="text-sauced-orange"> {insightRepoLimit}</strong> repos,{" "}
-                <button type="button" onClick={handleUpgrade} className="underline text-sauced-orange">
+                <Link href={`/user/settings#upgrade`} className="underline text-sauced-orange">
                   upgrade
-                </button>{" "}
+                </Link>{" "}
                 to increase limit
               </span>
             ) : null}
+
+            <span className="text-sm">
+              Your insight pages are limited to
+              <strong className="text-sauced-orange"> {insightRepoLimit}</strong> repos,{" "}
+              <Link href={`/user/settings#upgrade`} className="underline text-sauced-orange">
+                upgrade
+              </Link>{" "}
+              to increase limit
+            </span>
           </div>
 
           <SuggestedRepositoriesList
