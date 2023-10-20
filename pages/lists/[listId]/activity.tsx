@@ -13,6 +13,7 @@ import ClientOnly from "components/atoms/ClientOnly/client-only";
 import { ContributionsTreemap } from "components/molecules/ContributionsTreemap/contributions-treemap";
 import { useContributorsByProject } from "lib/hooks/api/useContributorsByProject";
 import { useContributionsByProject } from "lib/hooks/api/useContributionsByProject";
+import { getGraphColorPalette } from "lib/utils/color-utils";
 
 interface ContributorListPageProps {
   list?: DBList;
@@ -142,7 +143,7 @@ const ListActivityPage = ({ list, numberOfContributors, isError, activityData }:
             repoId={repoId}
             onClick={onHandleClick}
             data={treemapData}
-            color="hsla(21, 90%, 48%, 1)"
+            color={getGraphColorPalette()}
           />
         </div>
       )}
