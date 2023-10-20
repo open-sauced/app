@@ -118,7 +118,6 @@ const AuthSection: React.FC = ({}) => {
                 </>
               )}
               <button
-                key="notifications"
                 className="relative cursor-pointer"
                 onClick={() => {
                   if (userInfo && userInfo.notification_count > 0) {
