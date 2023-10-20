@@ -1,10 +1,10 @@
 import posthog from "posthog-js";
-import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 
 interface AnalyticEvent {
   title: string;
   property: string;
   value: string;
+  userInfo: DbUser | undefined;
 }
 
 function initiateAnalytics() {
@@ -15,27 +15,29 @@ function initiateAnalytics() {
 /**
  * Captures an analytic event
  *
- * @param {string} title - The title of the event
- * @param {string} property - The property of the event
- * @param {string} value - The value of the event
+ * @param title - The title of the event
+ * @param property - The property of the event
+ * @param value - The value of the event
+ * @param userInfo - The user info for the currently logged in user. Undefined if no user is logged in.
+ *
  */
-function useAnalytics() {
-  const { user } = useSupabaseAuth();
+async function captureAnalytics({ title, property, value, userInfo }: AnalyticEvent) {
+  const analyticsObject: Record<string, string> = {};
 
-  return {
-    captureAnalytics({ title, property, value }: AnalyticEvent) {
-      const analyticsObject: Record<string, string> = {};
+  analyticsObject[property] = value;
 
-      analyticsObject[property] = value;
+  // if a user is not logged in, Posthog will generate an anonymous ID
+  if (userInfo) {
+    let userProperties = {};
 
-      // if a user is not logged in, Posthog will generate an anonymous ID
-      if (user) {
-        posthog.identify(user.user_metadata.sub);
-      }
+    const { company, coupon_code, is_open_sauced_member, is_onboarded, role } = userInfo;
 
-      posthog.capture(title, analyticsObject);
-    },
-  };
+    // A pro user is anyone with a role of 50 or higher
+    userProperties = { company, coupon_code, is_open_sauced_member, is_onboarded, is_pro_user: role >= 50 };
+    posthog.identify(`${userInfo.id}`, userProperties);
+  }
+
+  posthog.capture(title, analyticsObject);
 }
 
-export { initiateAnalytics, useAnalytics };
+export { initiateAnalytics, captureAnalytics };
