@@ -269,7 +269,7 @@ const LoginStep3: React.FC<LoginStep3Props> = ({ interests, user }) => {
           </div>
           <div className="mb-4 text-left ">
             <Text className="!text-sm">
-              Provide your timezone to help companies discover you and collaborate on open source projects.
+              Provide your timezone to help companies discover you and connect on open source projects.
             </Text>
           </div>
 
