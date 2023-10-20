@@ -92,7 +92,7 @@ function AddRepo({ taggedRepos, deleteTaggedRepo, showAddRepoDialog }: AddRepoPr
 
 const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.Element => {
   const { providerToken, user: loggedInUser } = useSupabaseAuth();
-  const [isDivFocused, setIsDivFocused] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
   const [isSummaryButtonDisabled, setIsSummaryButtonDisabled] = useState(false);
   const [isFormOpenMobile, setIsFormOpenMobile] = useState(false);
   const [addTaggedRepoFormOpen, setAddTaggedRepoFormOpen] = useState(false);
@@ -109,6 +109,8 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
   const [errorMsg, setError] = useState("");
   const [highlightSuggestions, setHighlightSuggestions] = useState<any[]>([]);
   const [loadingSuggestions, setLoadingSuggestions] = useState<boolean>(false);
+  const [createPopoverOpen, setCreatePopoverOpen] = useState(false);
+  const popoverContentRef = useRef<HTMLDivElement>(null);
   const generateSummary = useRef(false);
 
   const fetchAllUserHighlights = async (page: number): Promise<DbHighlight[]> => {
@@ -150,6 +152,12 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
     setBodyText(value);
   };
 
+  const handleClickOutsidePopoverContent = (e: MouseEvent) => {
+    if (popoverContentRef.current && !popoverContentRef.current.contains(e.target as Node)) {
+      setCreatePopoverOpen(false);
+    }
+  };
+
   useEffect(() => {
     // disable scroll when form is open
     if (isFormOpenMobile) {
@@ -158,6 +166,18 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
       document.body.style.overflow = "auto";
     }
   }, [isFormOpenMobile]);
+
+  useEffect(() => {
+    // This closes the popover when user clicks outside of it's content
+    document.addEventListener("mousedown", handleClickOutsidePopoverContent);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutsidePopoverContent);
+    };
+  }, []);
+
+  useEffect(() => {
+    setCreatePopoverOpen(false);
+  }, [date]);
 
   // get the user's latest pull requests and issues that don't yet have highlights associated with them
   // and suggest them to the user when they are creating a highlight.
@@ -441,7 +461,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
         setBodyText("");
         setHighlightLink("");
         setDate(undefined);
-        setIsDivFocused(false);
+        setDialogOpen(false);
         setIsFormOpenMobile(false);
         toast({ description: "Highlight Posted!", title: "Success", variant: "success" });
       }
@@ -493,22 +513,22 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
               type="text"
               placeholder={"Post a highlight to show your work!"}
               id="highlight-create-input"
-              onFocus={() => setIsDivFocused(true)}
+              onFocus={() => setDialogOpen(true)}
             />
           </div>
         </div>
       </div>
       <Dialog
         onOpenChange={() => {
-          setIsDivFocused(false);
+          setDialogOpen(false);
         }}
-        open={isDivFocused}
+        open={dialogOpen}
       >
         <DialogContent className="p-4 w-[33vw]" style={{ maxHeight: "80vh", overflow: "auto" }}>
           <DialogHeader>
             <DialogTitle>Post a highlight</DialogTitle>
           </DialogHeader>
-          <DialogCloseButton onClick={() => setIsDivFocused(false)} />
+          <DialogCloseButton onClick={() => setDialogOpen(false)} />
           <form onSubmit={handlePostHighlight} className="flex flex-col gap-4 font-normal">
             {errorMsg && (
               <p className="inline-flex items-center gap-2 px-2 py-1 text-red-500 bg-red-100 border border-red-500 rounded-md w-full text-sm">
@@ -518,7 +538,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
             <div className="flex flex-col gap-2 p-2 overflow-hidden text-sm bg-white border rounded-lg">
               <TypeWriterTextArea
                 className={`resize-y min-h-[80px] max-h-99 font-normal placeholder:text-slate-400 text-light-slate-12 placeholder:font-normal placeholder:text-sm transition focus:outline-none rounded-lg ${
-                  !isDivFocused ? "hidden" : ""
+                  !dialogOpen ? "hidden" : ""
                 }`}
                 defaultRow={4}
                 value={bodyText}
@@ -555,14 +575,20 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
             <div className="flex">
               <div className="flex w-full gap-1 items-center">
                 <Tooltip direction="top" content="Pick a date">
-                  <Popover>
+                  <Popover open={createPopoverOpen}>
                     <PopoverTrigger asChild>
-                      <button className="flex items-center gap-2 p-2 text-base rounded-full text-light-slate-9 bg-light-slate-3">
+                      <div
+                        onClick={() => {
+                          setCreatePopoverOpen(true);
+                          console.log("::::: ", createPopoverOpen);
+                        }}
+                        className="flex items-center gap-2 p-2 text-base rounded-full z-10 text-light-slate-9 bg-light-slate-3 cursor-pointer"
+                      >
                         <FiCalendar className="text-light-slate-11" />
                         {date && <span className="text-xs">{format(date, "PPP")}</span>}
-                      </button>
+                      </div>
                     </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0 bg-white pointer-events-auto">
+                    <PopoverContent ref={popoverContentRef} className="w-auto p-0 bg-white pointer-events-auto">
                       <Calendar
                         // block user's from selecting a future date
                         toDate={new Date()}
@@ -593,10 +619,10 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
               </div>
             </div>
 
-            {highlightLink && isDivFocused && highlightLink.includes("github") && (
+            {highlightLink && dialogOpen && highlightLink.includes("github") && (
               <GhOpenGraphImg className="max-sm:hidden lg:w-[33vw] md:w-[50vw]" githubLink={highlightLink} />
             )}
-            {highlightLink && isDivFocused && highlightLink.includes("dev.to") && (
+            {highlightLink && dialogOpen && highlightLink.includes("dev.to") && (
               <DevToSocialImg className="max-sm:hidden lg:w-[33vw] md:w-[50vw]" blogLink={highlightLink} />
             )}
 
@@ -814,11 +840,14 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                 <Tooltip direction="top" content="Pick a date">
                   <Popover>
                     <PopoverTrigger asChild>
-                      <button className="flex items-center gap-2 p-2 text-base rounded-full text-light-slate-9 bg-light-slate-3">
+                      <button
+                        // onClick={() => setPopoverOpen(true)}
+                        className="flex items-center gap-2 p-2 text-base rounded-full text-light-slate-9 bg-light-slate-3"
+                      >
                         <FiCalendar className="text-light-slate-11" />
                       </button>
                     </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0 bg-white">
+                    <PopoverContent ref={popoverContentRef} className="w-auto p-0 bg-white">
                       <Calendar
                         // block user's from selecting a future date
                         toDate={new Date()}
