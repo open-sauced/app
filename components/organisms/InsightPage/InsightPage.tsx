@@ -13,6 +13,7 @@ import RepositoriesCart from "components/organisms/RepositoriesCart/repositories
 import RepositoryCartItem from "components/molecules/ReposoitoryCartItem/repository-cart-item";
 import RepoNotIndexed from "components/organisms/Repositories/repository-not-indexed";
 import useRepositories from "lib/hooks/api/useRepositories";
+import { getStripe } from "lib/utils/stripe-client";
 
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { generateRepoParts, getAvatarById, getAvatarByUsername } from "lib/utils/github";
@@ -24,7 +25,6 @@ import { TeamMemberData } from "components/molecules/TeamMembersConfig/team-memb
 import useInsightMembers from "lib/hooks/useInsightMembers";
 import { useFetchInsightRecommendedRepositories } from "lib/hooks/useFetchOrgRecommendations";
 import { RepoCardProfileProps } from "components/molecules/RepoCardProfile/repo-card-profile";
-import Tooltip from "components/atoms/Tooltip/tooltip";
 import SuggestedRepositoriesList from "../SuggestedRepoList/suggested-repo-list";
 
 // lazy import DeleteInsightPageModal and TeamMembersConfig component to optimize bundle size they don't load on initial render
@@ -69,6 +69,7 @@ const staticSuggestedRepos: RepoCardProfileProps[] = [
 
 const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
   const { sessionToken, providerToken, user } = useSupabaseAuth();
+
   const { toast } = useToast();
   const router = useRouter();
   const pageHref = router.asPath;
@@ -433,13 +434,35 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
     }
   }, 250);
 
+  const handleUpgrade = async (event: any) => {
+    event.preventDefault();
+
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/checkout/session`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${sessionToken}`,
+        },
+      });
+
+      if (response.ok) {
+        const { sessionId } = await response.json();
+
+        const stripe = await getStripe();
+        stripe?.redirectToCheckout({ sessionId });
+      } else {
+        // display error to user
+        console.error(response.statusText);
+      }
+    } catch (e) {
+      //
+    }
+  };
   useEffect(() => {
     setSuggestions([]);
     if (!repoSearchTerm) return;
     updateSuggestionsDebounced();
   }, [repoSearchTerm]);
-
-  console.log(insightRepoLimit);
 
   return (
     <section className="flex flex-col justify-center w-full py-4 xl:flex-row xl:gap-20 xl:pl-28 ">
@@ -476,26 +499,30 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
             onSearch={(search) => setRepoSearchTerm(search as string)}
           />
 
-          <div className="w-max">
-            <Tooltip
-              content={
-                repos.length >= insightRepoLimit!
-                  ? `you can't add more than ${insightRepoLimit} repos`
-                  : "add repository"
+          <div className="w-full flex gap-3 md:items-center flex-col md:flex-row">
+            <Button
+              disabled={
+                repos.length >= insightRepoLimit! ||
+                (addRepoLoading.repoName === repoSearchTerm && addRepoLoading.isLoading)
               }
+              loading={addRepoLoading.repoName === repoSearchTerm && addRepoLoading.isLoading}
+              onClick={handleAddRepository}
+              variant="outline"
+              className="shrink-0 w-max"
             >
-              <Button
-                disabled={
-                  repos.length >= insightRepoLimit! ||
-                  (addRepoLoading.repoName === repoSearchTerm && addRepoLoading.isLoading)
-                }
-                loading={addRepoLoading.repoName === repoSearchTerm && addRepoLoading.isLoading}
-                onClick={handleAddRepository}
-                variant="outline"
-              >
-                Add Repository
-              </Button>
-            </Tooltip>
+              Add Repository
+            </Button>
+
+            {repos.length >= insightRepoLimit! && insightRepoLimit! < 50 ? (
+              <span className="text-sm">
+                Your insight pages are limited to
+                <strong className="text-sauced-orange"> {insightRepoLimit}</strong> repos,{" "}
+                <button type="button" onClick={handleUpgrade} className="underline text-sauced-orange">
+                  upgrade
+                </button>{" "}
+                to increase limit
+              </span>
+            ) : null}
           </div>
 
           <SuggestedRepositoriesList
