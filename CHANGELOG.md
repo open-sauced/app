@@ -5,6 +5,52 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.71.2-beta.4](https://github.com/open-sauced/insights/compare/v1.71.2-beta.3...v1.71.2-beta.4) (2023-10-20)
+
+
+### 🧑‍💻 Code Refactoring
+
+* remove key ([b84d4b1](https://github.com/open-sauced/insights/commit/b84d4b19e10001e7346b0eb669f2413cefa74759))
+
+
+### 🐛 Bug Fixes
+
+* add responsiveness to profile detail ([294abd0](https://github.com/open-sauced/insights/commit/294abd04211408d7006b398bf44467585cdae4db))
+* notification indicator ([#1955](https://github.com/open-sauced/insights/issues/1955)) ([fd78097](https://github.com/open-sauced/insights/commit/fd780974e24441affed9b6df50c58553159b61fe))
+* remove orange notification indicator on button click ([574f575](https://github.com/open-sauced/insights/commit/574f575a98eca6a1c7e0e4e44e8836042068a50f))
+
+### [1.71.2-beta.3](https://github.com/open-sauced/insights/compare/v1.71.2-beta.2...v1.71.2-beta.3) (2023-10-20)
+
+
+### 🐛 Bug Fixes
+
+* added missing is_maintainer info for Posthog ([b9c0c1e](https://github.com/open-sauced/insights/commit/b9c0c1ee141d4d86a1327ff1b875ca90c1255e69))
+* added missing is_maintainer info for Posthog ([#1975](https://github.com/open-sauced/insights/issues/1975)) ([25d603b](https://github.com/open-sauced/insights/commit/25d603b28894c0637bef3d6718deb4835bc620ca))
+
+### [1.71.2-beta.2](https://github.com/open-sauced/insights/compare/v1.71.2-beta.1...v1.71.2-beta.2) (2023-10-20)
+
+
+### 🐛 Bug Fixes
+
+* removed chatbot ([#1973](https://github.com/open-sauced/insights/issues/1973)) ([4c58e42](https://github.com/open-sauced/insights/commit/4c58e4222c3146ce2411bdcf5e688d3f36c40e28))
+
+### [1.71.2-beta.1](https://github.com/open-sauced/insights/compare/v1.71.1...v1.71.2-beta.1) (2023-10-20)
+
+
+### 🐛 Bug Fixes
+
+* renamed needs triage label as it was breaking our issue creation workflow ([#1968](https://github.com/open-sauced/insights/issues/1968)) ([0b0ac4b](https://github.com/open-sauced/insights/commit/0b0ac4b938efc724d08d54cb79c4a08931e935a4))
+
+### [1.71.1](https://github.com/open-sauced/insights/compare/v1.71.0...v1.71.1) (2023-10-19)
+
+
+### 🐛 Bug Fixes
+
+* add missing info for posthog ([#1958](https://github.com/open-sauced/insights/issues/1958)) ([eb073c0](https://github.com/open-sauced/insights/commit/eb073c0396af337eadcef9a4abab6d6534a02083))
+* added more info for Posthog analytics ([23f2316](https://github.com/open-sauced/insights/commit/23f2316e9c39b4ae893aa68398dfed84a4203b85))
+* remove typo error ([cbff543](https://github.com/open-sauced/insights/commit/cbff543fbee4145da56d09cab0ed75c94f804510))
+* remove typo error ([#1957](https://github.com/open-sauced/insights/issues/1957)) ([9179cd6](https://github.com/open-sauced/insights/commit/9179cd609bc8a462a3cd14f26dae8b768aecfbfe))
+
 ### [1.71.1-beta.2](https://github.com/open-sauced/insights/compare/v1.71.1-beta.1...v1.71.1-beta.2) (2023-10-19)
 
 
