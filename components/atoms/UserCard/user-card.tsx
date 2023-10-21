@@ -26,13 +26,15 @@ const UserCard = ({ username, name, meta, loading }: UserCardProps) => {
       ) : (
         <div className="flex flex-col items-center gap-6 px-9">
           <div className="flex flex-col items-center gap-2 -mt-10">
-            <Image
-              className="border border-white rounded-full "
-              width={100}
-              height={100}
-              src={avatarUrl}
-              alt={`${username}'s avatar image`}
-            />
+            <Link className="overflow-hidden" href={`/user/${username}`}>
+              <Image
+                className="border border-white rounded-full "
+                width={100}
+                height={100}
+                src={avatarUrl}
+                alt={`${username}'s avatar image`}
+              />
+            </Link>
             <div className="text-center">
               <h3 className="text-lg ">{name}</h3>
               <Link className="text-lg text-slate-700" href={`/user/${username}`}>{`@${username}`}</Link>
