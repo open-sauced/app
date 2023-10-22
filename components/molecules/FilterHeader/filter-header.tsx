@@ -6,13 +6,15 @@ import ContextThumbnail from "components/atoms/ContextThumbnail/context-thumbnai
 import SuperativeSelector from "components/molecules/SuperlativeSelector/superlative-selector";
 
 import useFilterOptions from "lib/hooks/useFilterOptions";
-import { captureAnayltics } from "lib/utils/analytics";
+import { captureAnalytics } from "lib/utils/analytics";
 import useFilterPrefetch from "lib/hooks/useFilterPrefetch";
 import topicNameFormatting from "lib/utils/topic-name-formatting";
 import FilterCardSelect from "components/molecules/FilterCardSelect/filter-card-select";
 import getTopicThumbnail from "lib/utils/getTopicThumbnail";
 import { interestsType } from "lib/utils/getInterestOptions";
 import { getInterestOptions } from "lib/utils/getInterestOptions";
+import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
+import { useFetchUser } from "lib/hooks/useFetchUser";
 
 const HeaderFilter = () => {
   const router = useRouter();
@@ -21,8 +23,11 @@ const HeaderFilter = () => {
 
   const { filterValues } = useFilterPrefetch();
   const { pageId, toolName, selectedFilter } = router.query;
+  const { user } = useSupabaseAuth();
+  const { data: userInfo } = useFetchUser(user?.user_metadata.user_name);
+
   const filterBtnRouting = (filter: string) => {
-    captureAnayltics("Filters", "toolsFilter", `${filter} applied`);
+    captureAnalytics({ title: "Filters", property: "toolsFilter", value: `${filter} applied`, userInfo });
     return router.push(`/${pageId}/${toolName}/filter/${filter.toLocaleLowerCase()}`);
   };
 

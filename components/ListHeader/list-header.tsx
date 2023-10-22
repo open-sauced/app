@@ -53,7 +53,7 @@ const ListHeader = ({ name, isPublic, listId, isOwner, numberOfContributors }: L
           </div>
         </div>
       </div>
-      <div className="absolute right-0 flex flex-col gap-3 py-2 md:items-center md:flex-row md:static">
+      <div className="absolute right-4 flex flex-col gap-3 py-2 md:items-center md:flex-row md:static">
         <Button onClick={() => handleCopyToClipboard()} className="px-6 py-2 bg-white " variant="text">
           <FiCopy className="mt-1 mr-2" /> Share
         </Button>
