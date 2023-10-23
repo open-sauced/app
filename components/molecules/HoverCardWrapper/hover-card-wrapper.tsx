@@ -11,8 +11,7 @@ interface HoverCardWrapperProps {
 }
 const HoverCardWrapper = ({ username, repositories }: HoverCardWrapperProps) => {
   const router = useRouter();
-  const { pageId } = router.query;
-  const topic = pageId as string;
+  const topic = router.query.pageId as string;
   const { data: contributor } = useFetchUser(username);
   const { repoList } = useContributorPullRequestsChart(username, "*", repositories);
 
