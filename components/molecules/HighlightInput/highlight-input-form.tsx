@@ -92,7 +92,7 @@ function AddRepo({ taggedRepos, deleteTaggedRepo, showAddRepoDialog }: AddRepoPr
 
 const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.Element => {
   const { providerToken, user: loggedInUser } = useSupabaseAuth();
-  const [dialogOpen, setDialogOpen] = useState(false);
+  const [isDivFocused, setIsDivFocused] = useState(false);
   const [isSummaryButtonDisabled, setIsSummaryButtonDisabled] = useState(false);
   const [isFormOpenMobile, setIsFormOpenMobile] = useState(false);
   const [addTaggedRepoFormOpen, setAddTaggedRepoFormOpen] = useState(false);
@@ -457,7 +457,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
         setBodyText("");
         setHighlightLink("");
         setDate(undefined);
-        setDialogOpen(false);
+        setIsDivFocused(false);
         setIsFormOpenMobile(false);
         toast({ description: "Highlight Posted!", title: "Success", variant: "success" });
       }
@@ -509,22 +509,22 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
               type="text"
               placeholder={"Post a highlight to show your work!"}
               id="highlight-create-input"
-              onFocus={() => setDialogOpen(true)}
+              onFocus={() => setIsDivFocused(true)}
             />
           </div>
         </div>
       </div>
       <Dialog
         onOpenChange={() => {
-          setDialogOpen(false);
+          setIsDivFocused(false);
         }}
-        open={dialogOpen}
+        open={isDivFocused}
       >
         <DialogContent className="p-4 w-[33vw]" style={{ maxHeight: "80vh", overflow: "auto" }}>
           <DialogHeader>
             <DialogTitle>Post a highlight</DialogTitle>
           </DialogHeader>
-          <DialogCloseButton onClick={() => setDialogOpen(false)} />
+          <DialogCloseButton onClick={() => setIsDivFocused(false)} />
           <form onSubmit={handlePostHighlight} className="flex flex-col gap-4 font-normal">
             {errorMsg && (
               <p className="inline-flex items-center gap-2 px-2 py-1 text-red-500 bg-red-100 border border-red-500 rounded-md w-full text-sm">
@@ -534,7 +534,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
             <div className="flex flex-col gap-2 p-2 overflow-hidden text-sm bg-white border rounded-lg">
               <TypeWriterTextArea
                 className={`resize-y min-h-[80px] max-h-99 font-normal placeholder:text-slate-400 text-light-slate-12 placeholder:font-normal placeholder:text-sm transition focus:outline-none rounded-lg ${
-                  !dialogOpen ? "hidden" : ""
+                  !isDivFocused ? "hidden" : ""
                 }`}
                 defaultRow={4}
                 value={bodyText}
@@ -617,10 +617,10 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
               </div>
             </div>
 
-            {highlightLink && dialogOpen && highlightLink.includes("github") && (
+            {highlightLink && isDivFocused && highlightLink.includes("github") && (
               <GhOpenGraphImg className="max-sm:hidden lg:w-[33vw] md:w-[50vw]" githubLink={highlightLink} />
             )}
-            {highlightLink && dialogOpen && highlightLink.includes("dev.to") && (
+            {highlightLink && isDivFocused && highlightLink.includes("dev.to") && (
               <DevToSocialImg className="max-sm:hidden lg:w-[33vw] md:w-[50vw]" blogLink={highlightLink} />
             )}
 
