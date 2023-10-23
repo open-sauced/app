@@ -12,7 +12,7 @@ const useFilterPrefetch = () => {
   const { mutate } = useSWRConfig();
   const filterOptions = useFilterOptions();
   const [filterValues, setFilterValues] = useState<FilterValues>({});
-  const { filterName: topic } = router.query;
+  const { pageId: topic } = router.query;
 
   useEffect(() => {
     if (topic) {

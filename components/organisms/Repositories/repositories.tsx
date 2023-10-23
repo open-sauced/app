@@ -24,9 +24,9 @@ interface RepositoriesProps {
 const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
   const { user, signIn } = useSupabaseAuth();
   const router = useRouter();
-  const { filterName, toolName, selectedFilter, userOrg } = router.query;
+  const { pageId, toolName, selectedFilter, userOrg } = router.query;
   const username = userOrg ? user?.user_metadata.user_name : undefined;
-  const topic = filterName as string;
+  const topic = pageId as string;
   const store = useStore();
   const range = useStore((state) => state.range);
   const {
