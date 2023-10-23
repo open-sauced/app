@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.72.0-beta.4](https://github.com/open-sauced/insights/compare/v1.72.0-beta.3...v1.72.0-beta.4) (2023-10-23)
+
+
+### 🐛 Bug Fixes
+
+* link user avatar on feeds page to their profile ([#1986](https://github.com/open-sauced/insights/issues/1986)) ([24ca123](https://github.com/open-sauced/insights/commit/24ca123ea4a318a2eebbfb21cc13cc63e86519a6))
+* popover display issue of safari ([#1962](https://github.com/open-sauced/insights/issues/1962)) ([afe5ab2](https://github.com/open-sauced/insights/commit/afe5ab207fd619b0a16f39ee7a88fde1cfa88669))
+
 ## [1.72.0-beta.3](https://github.com/open-sauced/insights/compare/v1.72.0-beta.2...v1.72.0-beta.3) (2023-10-23)
 
 
