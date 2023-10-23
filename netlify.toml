@@ -1,6 +1,10 @@
 [build.environment]
 NODE_VERSION = "18"
 
+[build]
+command = "npm run build"
+publish = ".next"
+
 [context.alpha]
 environment = { CHANNEL = "alpha" }
 
