@@ -120,8 +120,9 @@ const ContributorHighlightCard = ({
   const [tagRepoSearchLoading, setTagRepoSearchLoading] = useState<boolean>(false);
   const [addTaggedRepoFormOpen, setAddTaggedRepoFormOpen] = useState(false);
   const [host, setHost] = useState("");
+  const [dropdownOpen, setDropdownOpen] = useState(false);
   const { follow, unFollow, isError } = useFollowUser(
-    loggedInUser && loggedInUser?.user_metadata.username !== user ? user : ""
+    dropdownOpen && loggedInUser && loggedInUser?.user_metadata.user_name !== user ? user : ""
   );
 
   const [date, setDate] = useState<Date | undefined>(shipped_date ? new Date(shipped_date) : undefined);
@@ -441,7 +442,13 @@ const ContributorHighlightCard = ({
           {icon}
           <span className="text-sm text-light-slate-11">{getHighlightTypePreset(type).text}</span>
           <div className="flex items-center gap-3 ml-auto lg:gap-3">
-            <DropdownMenu modal={false}>
+            <DropdownMenu
+              open={dropdownOpen}
+              onOpenChange={(value) => {
+                setDropdownOpen(value);
+              }}
+              modal={false}
+            >
               <div className="flex items-center gap-3 w-max">
                 <Tooltip direction="top" content="share on twitter">
                   <a
