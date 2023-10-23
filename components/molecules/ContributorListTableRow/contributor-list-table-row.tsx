@@ -11,6 +11,7 @@ import useContributorPullRequests from "lib/hooks/api/useContributorPullRequests
 import useRepoList from "lib/hooks/useRepoList";
 import { useFetchUser } from "lib/hooks/useFetchUser";
 import Checkbox from "components/atoms/Checkbox/checkbox";
+import AvatarHoverCard from "components/atoms/Avatar/avatar-hover-card";
 import { getActivity } from "../RepoRow/repo-row";
 import DevProfile from "../DevProfile/dev-profile";
 
@@ -155,14 +156,7 @@ const ContributorListTableRow = ({
         )}
 
         {/* Column: Contributors */}
-        <div className={clsx("flex-1 lg:min-w-[12.5rem] overflow-hidden")}>
-          <DevProfile
-            company={user?.company || getLastContributedRepo(data)}
-            username={login}
-            hasBorder={!contributor.author_login}
-          />
-        </div>
-
+        <AvatarHoverCard contributor={contributor.username} repositories={[]} size="small" />
         {/* Column: Act */}
         <div className={clsx("flex-1 flex lg:max-w-[6.25rem] w-fit justify-center")}>
           {contributor.author_login ? getActivity(totalPrs, false) : "-"}
