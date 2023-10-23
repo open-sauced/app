@@ -499,15 +499,6 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
                 to increase limit
               </span>
             ) : null}
-
-            <span className="text-sm">
-              Your insight pages are limited to
-              <strong className="text-sauced-orange"> {insightRepoLimit}</strong> repos,{" "}
-              <Link href={`/user/settings#upgrade`} className="underline text-sauced-orange">
-                upgrade
-              </Link>{" "}
-              to increase limit
-            </span>
           </div>
 
           <SuggestedRepositoriesList
