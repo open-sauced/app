@@ -124,6 +124,8 @@ const ContributorHighlightCard = ({
   const { follow, unFollow, isError } = useFollowUser(
     dropdownOpen && loggedInUser && loggedInUser?.user_metadata.user_name !== user ? user : ""
   );
+  const [popoverOpen, setPopoverOpen] = useState(false);
+  const popoverContentRef = React.useRef<HTMLDivElement>(null);
 
   const [date, setDate] = useState<Date | undefined>(shipped_date ? new Date(shipped_date) : undefined);
 
@@ -166,6 +168,20 @@ const ContributorHighlightCard = ({
     const matches = sessionToken && userReaction.find((reaction) => reaction.emoji_id === id);
     return !matches ? false : true;
   };
+
+  const handleClickOutsidePopoverContent = (e: MouseEvent) => {
+    if (popoverContentRef.current && !popoverContentRef.current.contains(e.target as Node)) {
+      setPopoverOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    // This closes the popover when user clicks outside of it's content
+    document.addEventListener("mousedown", handleClickOutsidePopoverContent);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutsidePopoverContent);
+    };
+  }, [popoverOpen]);
 
   const getEmojiReactors = (reaction_users: string[]) => {
     if (!Array.isArray(reaction_users)) return "";
@@ -659,20 +675,26 @@ const ContributorHighlightCard = ({
                   ></Textarea>
                   <div className="flex items-center justify-between py-1 pl-3">
                     <Tooltip direction="top" content="Pick a date">
-                      <Popover>
+                      <Popover open={popoverOpen}>
                         <PopoverTrigger asChild>
-                          <button className="flex items-center gap-2 text-base text-light-slate-9">
+                          <button
+                            onClick={() => setPopoverOpen(!popoverOpen)}
+                            className="flex items-center gap-2 text-base text-light-slate-9"
+                          >
                             <BsCalendar2Event className="text-light-slate-9" />
                             {date && <span className="text-xs">{format(date, "PPP")}</span>}
                           </button>
                         </PopoverTrigger>
-                        <PopoverContent className="w-auto p-0 bg-white pointer-events-auto">
+                        <PopoverContent ref={popoverContentRef} className="w-auto p-0 bg-white pointer-events-auto">
                           <Calendar
                             // block user's from selecting a future date
                             toDate={new Date()}
                             mode="single"
                             selected={date}
-                            onSelect={setDate}
+                            onSelect={(date) => {
+                              setDate(date);
+                              setPopoverOpen(false);
+                            }}
                             className="border rounded-md"
                           />
                         </PopoverContent>
