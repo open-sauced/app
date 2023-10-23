@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.72.0-beta.2](https://github.com/open-sauced/insights/compare/v1.72.0-beta.1...v1.72.0-beta.2) (2023-10-23)
+
+
+### 🐛 Bug Fixes
+
+* add build command to Netlify `.toml` configuration ([#1961](https://github.com/open-sauced/insights/issues/1961)) ([973be2f](https://github.com/open-sauced/insights/commit/973be2f97ad2b1f5416765808548de56406a5788))
+* No more 404 errors in the browser console ([#1983](https://github.com/open-sauced/insights/issues/1983)) ([c6c73f7](https://github.com/open-sauced/insights/commit/c6c73f7ac4a8b9038d32c66c41ff01de7f52eec3))
+
 ## [1.72.0-beta.1](https://github.com/open-sauced/insights/compare/v1.71.2-beta.4...v1.72.0-beta.1) (2023-10-23)
 
 
