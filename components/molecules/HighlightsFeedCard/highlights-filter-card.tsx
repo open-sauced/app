@@ -17,7 +17,7 @@ const HighlightsFilterCard = ({ repos, setSelected, selectedFilter }: Highlights
         Repositories
       </Title>
       <p className="mb-2 text-sm font-normal text-light-slate-11">Click to filter the highlights</p>
-      <div className="flex flex-col gap-2 pt-4 border-t">
+      <div className="flex flex-wrap gap-2 pt-4 border-t">
         {repos.map(({ repoName, repoIcon, full_name }) => (
           <div
             onClick={() => handleClick(full_name)}

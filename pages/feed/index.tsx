@@ -202,7 +202,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
       >
         <div className={`xl:sticky ${user ? "top-16" : "top-8"} flex flex-none xl:w-1/5`}>
           <div className="flex flex-col w-full gap-6 mt-12 items-center">
-            <div className="gap-6 flex md:flex-col xs:flex-col sm:flex-row items-center w-full flex-wrap sm:flex-nowrap">
+            <div className="gap-6 flex md:flex-col xs:flex-col sm:flex-row items-center w-full flex-wrap sm:flex-nowrap justify-center">
               {user && (
                 <div className="w-full">
                   <UserCard
@@ -298,89 +298,91 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
             </DialogContent>
           </Dialog>
         )}
-        <Tabs onValueChange={onTabChange} defaultValue="home" className="w-full 2xl:max-w-[40rem] xl:max-w-[33rem]">
-          <TabsList className={clsx("justify-start  w-full border-b", !user && "hidden")}>
-            <TabsTrigger
-              className="data-[state=active]:border-sauced-orange data-[state=active]:border-b-2 text-lg"
-              value="home"
-            >
-              Home
-            </TabsTrigger>
-            <TabsTrigger
-              className="data-[state=active]:border-sauced-orange  data-[state=active]:border-b-2 text-lg"
-              value="following"
-            >
-              Following
-            </TabsTrigger>
-          </TabsList>
+        <div className="flex flex-col w-full gap-12 md:items-start lg:flex-row">
+          <Tabs onValueChange={onTabChange} defaultValue="home" className="w-full 2xl:max-w-[40rem] xl:max-w-[33rem]">
+            <TabsList className={clsx("justify-start  w-full border-b", !user && "hidden")}>
+              <TabsTrigger
+                className="data-[state=active]:border-sauced-orange data-[state=active]:border-b-2 text-lg"
+                value="home"
+              >
+                Home
+              </TabsTrigger>
+              <TabsTrigger
+                className="data-[state=active]:border-sauced-orange  data-[state=active]:border-b-2 text-lg"
+                value="following"
+              >
+                Following
+              </TabsTrigger>
+            </TabsList>
 
-          {user && (
-            <div className="flex max-w-3xl px-1 pt-4 lg:gap-x-3">
-              <div className="hidden lg:inline-flex pt-[0.4rem]">
-                <Avatar
-                  alt="user profile avatar"
-                  isCircle
-                  size="sm"
-                  avatarURL={`https://www.github.com/${user?.user_metadata.user_name}.png?size=300`}
-                />
-              </div>
-
-              <HighlightInputForm refreshCallback={mutate} />
-            </div>
-          )}
-          <TabsContent value="home">
-            <HomeHighlightsWrapper emojis={emojis} mutate={mutate} highlights={data} loading={isLoading} />
-            {meta.pageCount > 1 && (
-              <div className="flex items-center justify-between max-w-3xl px-2 mt-10">
-                <div className="flex items-center w-max gap-x-4">
-                  <PaginationResults metaInfo={meta} total={meta.itemCount} entity={"highlights"} />
+            {user && (
+              <div className="flex max-w-3xl px-1 pt-4 lg:gap-x-3">
+                <div className="hidden lg:inline-flex pt-[0.4rem]">
+                  <Avatar
+                    alt="user profile avatar"
+                    isCircle
+                    size="sm"
+                    avatarURL={`https://www.github.com/${user?.user_metadata.user_name}.png?size=300`}
+                  />
                 </div>
-                <Pagination
-                  pages={[]}
-                  totalPage={meta.pageCount}
-                  page={meta.page}
-                  pageSize={meta.itemCount}
-                  goToPage
-                  hasNextPage={meta.hasNextPage}
-                  hasPreviousPage={meta.hasPreviousPage}
-                  onPageChange={function (page: number): void {
-                    setPage(page);
-                    if (topRef.current) {
-                      topRef.current.scrollIntoView({
-                        behavior: "smooth",
-                      });
-                    }
-                  }}
-                />
+
+                <HighlightInputForm refreshCallback={mutate} />
               </div>
             )}
-          </TabsContent>
-          <TabsContent value="following">
-            <FollowingHighlightWrapper selectedFilter={selectedRepo} emojis={emojis} />
-          </TabsContent>
-        </Tabs>
-        <div className="sticky flex-col flex-none hidden w-1/3 gap-6 mt-10 xl:w-1/4 lg:flex top-20">
-          {repoList && repoList.length > 0 && (
-            <HighlightsFilterCard
-              setSelected={(repo) => {
-                if (!openSingleHighlight) {
-                  if (repo) {
-                    setQueryParams({ repo });
-                  } else {
-                    setQueryParams({}, ["repo"]);
+            <TabsContent value="home">
+              <HomeHighlightsWrapper emojis={emojis} mutate={mutate} highlights={data} loading={isLoading} />
+              {meta.pageCount > 1 && (
+                <div className="flex items-center justify-between max-w-3xl px-2 mt-10">
+                  <div className="flex items-center w-max gap-x-4">
+                    <PaginationResults metaInfo={meta} total={meta.itemCount} entity={"highlights"} />
+                  </div>
+                  <Pagination
+                    pages={[]}
+                    totalPage={meta.pageCount}
+                    page={meta.page}
+                    pageSize={meta.itemCount}
+                    goToPage
+                    hasNextPage={meta.hasNextPage}
+                    hasPreviousPage={meta.hasPreviousPage}
+                    onPageChange={function (page: number): void {
+                      setPage(page);
+                      if (topRef.current) {
+                        topRef.current.scrollIntoView({
+                          behavior: "smooth",
+                        });
+                      }
+                    }}
+                  />
+                </div>
+              )}
+            </TabsContent>
+            <TabsContent value="following">
+              <FollowingHighlightWrapper selectedFilter={selectedRepo} emojis={emojis} />
+            </TabsContent>
+          </Tabs>
+          <div className="lg:sticky flex-col flex-none lg:w-1/3 gap-6 lg:mt-10 xl:w-1/3 lg:flex top-20">
+            {repoList && repoList.length > 0 && (
+              <HighlightsFilterCard
+                setSelected={(repo) => {
+                  if (!openSingleHighlight) {
+                    if (repo) {
+                      setQueryParams({ repo });
+                    } else {
+                      setQueryParams({}, ["repo"]);
+                    }
+                    setPage(1);
                   }
-                  setPage(1);
-                }
-              }}
-              repos={repoList}
-              selectedFilter={selectedRepo}
-            />
-          )}
+                }}
+                repos={repoList}
+                selectedFilter={selectedRepo}
+              />
+            )}
 
-          {featuredHighlights && featuredHighlights.length > 0 && (
-            <FeaturedHighlightsPanel highlights={featuredHighlights} />
-          )}
-          <NewsletterForm />
+            {featuredHighlights && featuredHighlights.length > 0 && (
+              <FeaturedHighlightsPanel highlights={featuredHighlights} />
+            )}
+            <NewsletterForm />
+          </div>
         </div>
       </div>
     </>

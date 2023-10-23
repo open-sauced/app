@@ -940,7 +940,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
         </div>
       )}
 
-      <Fab className="md:hidden">
+      <Fab className="md:hidden z-10">
         <div
           onClick={() => setIsFormOpenMobile(true)}
           className="p-3 mb-10 -mr-4 text-white rounded-full shadow-lg bg-light-orange-10"
