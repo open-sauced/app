@@ -388,7 +388,6 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
               Update Preferences
             </Button>
           </div>
-          <div>Hello</div>
           {userInfo && (
             <div>
               {!hasReports && !coupon ? (
