@@ -35,6 +35,7 @@ import NewsletterForm from "components/molecules/NewsletterForm/newsletter-form"
 import UserCard, { MetaObj } from "components/atoms/UserCard/user-card";
 import FeaturedHighlightsPanel from "components/molecules/FeaturedHighlightsPanel/featured-highlights-panel";
 import AnnouncementCard from "components/molecules/AnnouncementCard/announcement-card";
+import { useMediaQuery } from "lib/hooks/useMediaQuery";
 
 type activeTabType = "home" | "following";
 type highlightReposType = { repoName: string; repoIcon: string; full_name: string };
@@ -77,6 +78,8 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
     : undefined;
 
   const { data: followersRepo } = useFetchFollowersHighlightRepos();
+
+  const isDesktop = useMediaQuery("(min-width: 1280px)");
 
   const { data, mutate, setPage, isLoading, meta } = useFetchAllHighlights(selectedRepo);
   const { data: emojis } = useFetchAllEmojis();
@@ -212,11 +215,13 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
                 />
               </div>
             )}
-            <TopContributorsPanel
-              loggedInUserLogin={loggedInUser?.login ?? ""}
-              loggedInUserId={loggedInUser?.id ?? undefined}
-              refreshLoggedInUser={refreshLoggedInUser}
-            />
+            {isDesktop && (
+              <TopContributorsPanel
+                loggedInUserLogin={loggedInUser?.login ?? ""}
+                loggedInUserId={loggedInUser?.id ?? undefined}
+                refreshLoggedInUser={refreshLoggedInUser}
+              />
+            )}
             <AnnouncementCard
               title="#100DaysOfOSS 🚀 "
               description={
