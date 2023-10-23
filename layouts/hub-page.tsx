@@ -15,8 +15,9 @@ import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 const HubPageLayout = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
   const { userId } = useSupabaseAuth();
-  const insightId = router.query.pageId as string;
-  const { data: insight, isLoading, isError } = useInsight(insightId);
+  const { pageId } = router.query;
+  const insightId = pageId as string;
+  const { data: insight, isLoading, isError } = useInsight(router.query.pageId as string);
   const repositories = insight?.repos.map((repo) => repo.repo_id);
 
   const { toolList, selectedTool, selectedFilter, userOrg } = useNav(repositories);
