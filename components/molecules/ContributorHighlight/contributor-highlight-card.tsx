@@ -444,10 +444,10 @@ const ContributorHighlightCard = ({
           <div className="flex items-center gap-3 ml-auto lg:gap-3">
             <DropdownMenu
               open={dropdownOpen}
-              onOpenChange={() => {
-                setDropdownOpen(!dropdownOpen);
+              onOpenChange={(value) => {
+                setDropdownOpen(value);
               }}
-              // modal={false}
+              modal={false}
             >
               <div className="flex items-center gap-3 w-max">
                 <Tooltip direction="top" content="share on twitter">
@@ -464,11 +464,7 @@ const ContributorHighlightCard = ({
                   </a>
                 </Tooltip>
                 <DropdownMenuTrigger className="py-2 px-2 rounded-full data-[state=open]:bg-light-slate-7">
-                  <TfiMoreAlt
-                    onClick={() => setDropdownOpen(!dropdownOpen)}
-                    className={"fill-light-slate-11"}
-                    size={24}
-                  />
+                  <TfiMoreAlt className={"fill-light-slate-11"} size={24} />
                 </DropdownMenuTrigger>
               </div>
 
