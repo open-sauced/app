@@ -30,10 +30,18 @@ async function captureAnalytics({ title, property, value, userInfo }: AnalyticEv
   if (userInfo) {
     let userProperties = {};
 
-    const { company, coupon_code, is_open_sauced_member, is_onboarded, role } = userInfo;
+    const { company, coupon_code, is_open_sauced_member, is_onboarded, role, is_maintainer } = userInfo;
 
     // A pro user is anyone with a role of 50 or higher
-    userProperties = { company, coupon_code, is_open_sauced_member, is_onboarded, is_pro_user: role >= 50 };
+    userProperties = {
+      company,
+      coupon_code,
+      is_open_sauced_member,
+      is_onboarded,
+      // TODO: this will need to change when we integrate the Tier work
+      is_pro_user: role >= 50,
+      is_maintainer,
+    };
     posthog.identify(`${userInfo.id}`, userProperties);
   }
 
