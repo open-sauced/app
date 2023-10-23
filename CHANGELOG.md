@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.72.0-beta.3](https://github.com/open-sauced/insights/compare/v1.72.0-beta.2...v1.72.0-beta.3) (2023-10-23)
+
+
+### 🧑‍💻 Code Refactoring
+
+* show tootip indication for disabled CTA when repo limit is reached ([#1915](https://github.com/open-sauced/insights/issues/1915)) ([4b675a0](https://github.com/open-sauced/insights/commit/4b675a0960e59d09a7482834acf90ba2857f5553))
+
 ## [1.72.0-beta.2](https://github.com/open-sauced/insights/compare/v1.72.0-beta.1...v1.72.0-beta.2) (2023-10-23)
 
 
