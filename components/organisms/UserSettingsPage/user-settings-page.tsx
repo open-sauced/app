@@ -32,6 +32,7 @@ type EmailPreferenceType = {
   display_email?: boolean;
   receive_collaboration?: boolean;
 };
+
 const UserSettingsPage = ({ user }: userSettingsPageProps) => {
   const { data: insightsUser, mutate } = useFetchUser(user?.user_metadata.user_name, {
     revalidateOnFocus: false,
@@ -389,44 +390,71 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
             </Button>
           </div>
           {userInfo && (
-            <div>
-              {!hasReports && !coupon ? (
-                <div className="flex flex-col order-first gap-6 md:order-last">
-                  <div className="flex flex-col gap-3">
-                    <label className="text-2xl font-normal text-light-slate-11">Upgrade Access</label>
-                    <div className="w-full sm:max-w-80">
-                      <Text>Upgrade to a subscription to gain access to generate custom reports!</Text>
-                    </div>
-                  </div>
-                  <StripeCheckoutButton variant="primary" />
-
-                  {!coupon && <CouponForm refreshUser={mutate} />}
-                </div>
-              ) : (
-                <div>
+            <>
+              <div>
+                {!hasReports && !coupon ? (
                   <div className="flex flex-col order-first gap-6 md:order-last">
                     <div className="flex flex-col gap-3">
-                      <label className="text-2xl font-normal text-light-slate-11">Manage Subscriptions</label>
-                      <div className="w-full md:w-96">
-                        <Text>
-                          You are currently subscribed to the Pro plan and currently have access to all premium
-                          features.
-                        </Text>
+                      <label className="text-2xl font-normal text-light-slate-11">Upgrade Access</label>
+                      <div className="w-full sm:max-w-80">
+                        <Text>Upgrade to a subscription to gain access to generate custom reports!</Text>
                       </div>
                     </div>
-                    <Button
-                      rel="noopener noreferrer"
-                      target="_blank"
-                      href={process.env.NEXT_PUBLIC_STRIPE_SUB_CANCEL_URL}
-                      className="w-max"
-                      variant="primary"
-                    >
-                      Cancel Subscription
-                    </Button>
+                    <StripeCheckoutButton variant="primary" />
+
+                    {!coupon && <CouponForm refreshUser={mutate} />}
+                  </div>
+                ) : (
+                  <div>
+                    <div className="flex flex-col order-first gap-6 md:order-last">
+                      <div className="flex flex-col gap-3">
+                        <label className="text-2xl font-normal text-light-slate-11">Manage Subscriptions</label>
+                        <div className="w-full md:w-96">
+                          <Text>
+                            You are currently subscribed to the Pro plan and currently have access to all premium
+                            features.
+                          </Text>
+                        </div>
+                      </div>
+                      <Button
+                        rel="noopener noreferrer"
+                        target="_blank"
+                        href={process.env.NEXT_PUBLIC_STRIPE_SUB_CANCEL_URL}
+                        className="w-max"
+                        variant="primary"
+                      >
+                        Cancel Subscription
+                      </Button>
+                    </div>
+                  </div>
+                )}
+              </div>
+              <form
+                name="delete-account"
+                action="/api/delete-account"
+                method="POST"
+                className="flex flex-col order-first gap-6 md:order-last"
+              >
+                <div className="flex flex-col gap-3">
+                  <label className="text-2xl font-normal text-light-slate-11">Delete Account</label>
+                  <div className="w-full md:w-96">
+                    <Text>
+                      Please note that account deletion is irreversible. Proceed only if you are certain about this
+                      action.
+                    </Text>
                   </div>
                 </div>
-              )}
-            </div>
+                <Button
+                  type="submit"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                  className="w-max border-dark-red-8 bg-dark-red-8 text-white hover:bg-white hover:text-dark-red-8"
+                  variant="primary"
+                >
+                  Delete Account
+                </Button>
+              </form>
+            </>
           )}
         </div>
       </div>
