@@ -63,8 +63,8 @@ const getInsights = (insights: DbInsight[], intervalDay = 0): Insight => {
 
 const useInsights = (repoIds: number[] = []) => {
   const router = useRouter();
-  const { filterName, selectedFilter } = router.query;
-  const topic = filterName as string;
+  const { pageId, selectedFilter } = router.query;
+  const topic = pageId as string;
   const filterQuery = getFilterQuery(selectedFilter);
   const query = new URLSearchParams(filterQuery);
 
