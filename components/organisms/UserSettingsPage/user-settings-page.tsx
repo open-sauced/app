@@ -310,8 +310,9 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
                       <RiArrowDownSLine size={16} className="absolute -bottom-3" />
                     </div>
                   }
+                  className=""
                 >
-                  <SelectValue placeholder="Select time zone" />
+                  <SelectValue className="truncate " placeholder="Select time zone" />
                 </SelectTrigger>
 
                 <SelectContent position="item-aligned" className="bg-white">
