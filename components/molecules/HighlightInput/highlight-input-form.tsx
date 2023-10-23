@@ -573,7 +573,8 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                 <Tooltip direction="top" content="Pick a date">
                   <Popover open={createPopoverOpen}>
                     <PopoverTrigger asChild>
-                      <div
+                      <button
+                        type="button"
                         onClick={() => {
                           setCreatePopoverOpen(true);
                         }}
@@ -581,7 +582,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                       >
                         <FiCalendar className="text-light-slate-11" />
                         {date && <span className="text-xs">{format(date, "PPP")}</span>}
-                      </div>
+                      </button>
                     </PopoverTrigger>
                     <PopoverContent ref={popoverContentRef} className="w-auto p-0 bg-white pointer-events-auto">
                       <Calendar
