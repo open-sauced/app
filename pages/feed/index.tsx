@@ -200,33 +200,37 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
         className="container flex flex-col justify-center w-full gap-12 px-2 pt-12 mt-5 md:mt-0 md:items-start md:px-16 md:flex-row"
         ref={topRef}
       >
-        <div className={`sticky ${user ? "top-16" : "top-8"} xl:flex hidden flex-none w-1/5`}>
-          <div className="flex flex-col w-full gap-6 mt-12">
-            {user && (
-              <div className="w-full">
-                <UserCard
-                  loading={loggedInUserLoading}
-                  username={loggedInUser?.login as string}
-                  meta={userMetaArray as MetaObj[]}
-                  name={loggedInUser?.name as string}
-                />
-              </div>
-            )}
-            <TopContributorsPanel
-              loggedInUserLogin={loggedInUser?.login ?? ""}
-              loggedInUserId={loggedInUser?.id ?? undefined}
-              refreshLoggedInUser={refreshLoggedInUser}
-            />
-            <AnnouncementCard
-              title="#100DaysOfOSS 🚀 "
-              description={
-                "Join us for 100 days of supporting, sharing knowledge, and exploring the open source ecosystem together."
-              }
-              bannerSrc={
-                "https://user-images.githubusercontent.com/5713670/254358937-8e9aa76d-4ed3-4616-a58a-2283796b10e1.png"
-              }
-              url={"https://dev.to/opensauced/100daysofoss-growing-skills-and-real-world-experience-3o5k"}
-            />
+        <div className={`xl:sticky ${user ? "top-16" : "top-8"} flex flex-none xl:w-1/5`}>
+          <div className="flex flex-col w-full gap-6 mt-12 items-center">
+            <div className="gap-6 flex md:flex-col xs:flex-col sm:flex-row items-center w-full flex-wrap sm:flex-nowrap">
+              {user && (
+                <div className="w-full">
+                  <UserCard
+                    loading={loggedInUserLoading}
+                    username={loggedInUser?.login as string}
+                    meta={userMetaArray as MetaObj[]}
+                    name={loggedInUser?.name as string}
+                  />
+                </div>
+              )}
+              <TopContributorsPanel
+                loggedInUserLogin={loggedInUser?.login ?? ""}
+                loggedInUserId={loggedInUser?.id ?? undefined}
+                refreshLoggedInUser={refreshLoggedInUser}
+              />
+            </div>
+            <div className="hidden md:block">
+              <AnnouncementCard
+                title="#100DaysOfOSS 🚀 "
+                description={
+                  "Join us for 100 days of supporting, sharing knowledge, and exploring the open source ecosystem together."
+                }
+                bannerSrc={
+                  "https://user-images.githubusercontent.com/5713670/254358937-8e9aa76d-4ed3-4616-a58a-2283796b10e1.png"
+                }
+                url={"https://dev.to/opensauced/100daysofoss-growing-skills-and-real-world-experience-3o5k"}
+              />
+            </div>
           </div>
         </div>
         {singleHighlight && (
