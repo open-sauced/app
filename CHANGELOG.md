@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.72.0-beta.5](https://github.com/open-sauced/insights/compare/v1.72.0-beta.4...v1.72.0-beta.5) (2023-10-23)
+
+
+### 🧑‍💻 Code Refactoring
+
+* Rename the [filterName] query to more accurate naming in `/pages` routes ([#1753](https://github.com/open-sauced/insights/issues/1753)) ([87bd6a3](https://github.com/open-sauced/insights/commit/87bd6a39045876ac07a7f87467233d578904eba1))
+
 ## [1.72.0-beta.4](https://github.com/open-sauced/insights/compare/v1.72.0-beta.3...v1.72.0-beta.4) (2023-10-23)
 
 
