@@ -489,16 +489,18 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
               Add Repository
             </Button>
 
-            {repos.length >= insightRepoLimit! && insightRepoLimit! < 50 ? (
-              <span className="text-sm">
-                Your insight pages are limited to
-                <strong className="text-sauced-orange"> {insightRepoLimit}</strong> repos,{" "}
-                <Link href={`/user/settings#upgrade`} className="underline text-sauced-orange">
-                  upgrade
-                </Link>{" "}
-                to increase limit
-              </span>
-            ) : null}
+            <span role="alert">
+              {repos.length >= insightRepoLimit! && insightRepoLimit! < 50 ? (
+                <p className="text-sm">
+                  Your insight pages are limited to
+                  <strong className="text-sauced-orange"> {insightRepoLimit}</strong> repos,{" "}
+                  <Link href={`/user/settings#upgrade`} className="underline text-sauced-orange">
+                    upgrade
+                  </Link>{" "}
+                  to increase the limit
+                </p>
+              ) : null}
+            </span>
           </div>
 
           <SuggestedRepositoriesList
