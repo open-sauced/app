@@ -109,6 +109,8 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
   const [errorMsg, setError] = useState("");
   const [highlightSuggestions, setHighlightSuggestions] = useState<any[]>([]);
   const [loadingSuggestions, setLoadingSuggestions] = useState<boolean>(false);
+  const [createPopoverOpen, setCreatePopoverOpen] = useState(false);
+  const popoverContentRef = useRef<HTMLDivElement>(null);
   const generateSummary = useRef(false);
 
   const fetchAllUserHighlights = async (page: number): Promise<DbHighlight[]> => {
@@ -150,6 +152,12 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
     setBodyText(value);
   };
 
+  const handleClickOutsidePopoverContent = (e: MouseEvent) => {
+    if (popoverContentRef.current && !popoverContentRef.current.contains(e.target as Node)) {
+      setCreatePopoverOpen(false);
+    }
+  };
+
   useEffect(() => {
     // disable scroll when form is open
     if (isFormOpenMobile) {
@@ -158,6 +166,14 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
       document.body.style.overflow = "auto";
     }
   }, [isFormOpenMobile]);
+
+  useEffect(() => {
+    // This closes the popover when user clicks outside of it's content
+    document.addEventListener("mousedown", handleClickOutsidePopoverContent);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutsidePopoverContent);
+    };
+  }, []);
 
   // get the user's latest pull requests and issues that don't yet have highlights associated with them
   // and suggest them to the user when they are creating a highlight.
@@ -555,20 +571,29 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
             <div className="flex">
               <div className="flex w-full gap-1 items-center">
                 <Tooltip direction="top" content="Pick a date">
-                  <Popover>
+                  <Popover open={createPopoverOpen}>
                     <PopoverTrigger asChild>
-                      <button className="flex items-center gap-2 p-2 text-base rounded-full text-light-slate-9 bg-light-slate-3">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setCreatePopoverOpen(true);
+                        }}
+                        className="flex items-center gap-2 p-2 text-base rounded-full z-10 text-light-slate-9 bg-light-slate-3 cursor-pointer"
+                      >
                         <FiCalendar className="text-light-slate-11" />
                         {date && <span className="text-xs">{format(date, "PPP")}</span>}
                       </button>
                     </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0 bg-white pointer-events-auto">
+                    <PopoverContent ref={popoverContentRef} className="w-auto p-0 bg-white pointer-events-auto">
                       <Calendar
                         // block user's from selecting a future date
                         toDate={new Date()}
                         mode="single"
                         selected={date}
-                        onSelect={setDate}
+                        onSelect={(date) => {
+                          setDate(date);
+                          setCreatePopoverOpen(false);
+                        }}
                         className="border rounded-md"
                       />
                     </PopoverContent>
@@ -656,24 +681,20 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                             <div className="flex w-full gap-2">
                               {suggestion.type === "pull_request" && (
                                 <BiGitMerge
-                                  className={`
-        text-xl
-        ${suggestion.status_reason === "open" ? "text-green-600" : "text-purple-600"}
-        `}
+                                  className={`text-xl${
+                                    suggestion.status_reason === "open" ? "text-green-600" : "text-purple-600"
+                                  }`}
                                 />
                               )}
                               {suggestion.type === "issue" && (
                                 <VscIssues
-                                  className={`
-        text-xl
-        ${
-          suggestion.status === "open"
-            ? "text-green-600"
-            : suggestion.status_reason === "not_planned"
-            ? "text-red-600"
-            : "text-purple-600"
-        }
-      `}
+                                  className={`text-xl${
+                                    suggestion.status === "open"
+                                      ? "text-green-600"
+                                      : suggestion.status_reason === "not_planned"
+                                      ? "text-red-600"
+                                      : "text-purple-600"
+                                  }`}
                                 />
                               )}
                               <p
@@ -818,7 +839,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                         <FiCalendar className="text-light-slate-11" />
                       </button>
                     </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0 bg-white">
+                    <PopoverContent ref={popoverContentRef} className="w-auto p-0 bg-white">
                       <Calendar
                         // block user's from selecting a future date
                         toDate={new Date()}

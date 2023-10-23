@@ -5,6 +5,37 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.72.0-beta.4](https://github.com/open-sauced/insights/compare/v1.72.0-beta.3...v1.72.0-beta.4) (2023-10-23)
+
+
+### 🐛 Bug Fixes
+
+* link user avatar on feeds page to their profile ([#1986](https://github.com/open-sauced/insights/issues/1986)) ([24ca123](https://github.com/open-sauced/insights/commit/24ca123ea4a318a2eebbfb21cc13cc63e86519a6))
+* popover display issue of safari ([#1962](https://github.com/open-sauced/insights/issues/1962)) ([afe5ab2](https://github.com/open-sauced/insights/commit/afe5ab207fd619b0a16f39ee7a88fde1cfa88669))
+
+## [1.72.0-beta.3](https://github.com/open-sauced/insights/compare/v1.72.0-beta.2...v1.72.0-beta.3) (2023-10-23)
+
+
+### 🧑‍💻 Code Refactoring
+
+* show tootip indication for disabled CTA when repo limit is reached ([#1915](https://github.com/open-sauced/insights/issues/1915)) ([4b675a0](https://github.com/open-sauced/insights/commit/4b675a0960e59d09a7482834acf90ba2857f5553))
+
+## [1.72.0-beta.2](https://github.com/open-sauced/insights/compare/v1.72.0-beta.1...v1.72.0-beta.2) (2023-10-23)
+
+
+### 🐛 Bug Fixes
+
+* add build command to Netlify `.toml` configuration ([#1961](https://github.com/open-sauced/insights/issues/1961)) ([973be2f](https://github.com/open-sauced/insights/commit/973be2f97ad2b1f5416765808548de56406a5788))
+* No more 404 errors in the browser console ([#1983](https://github.com/open-sauced/insights/issues/1983)) ([c6c73f7](https://github.com/open-sauced/insights/commit/c6c73f7ac4a8b9038d32c66c41ff01de7f52eec3))
+
+## [1.72.0-beta.1](https://github.com/open-sauced/insights/compare/v1.71.2-beta.4...v1.72.0-beta.1) (2023-10-23)
+
+
+### 🍕 Features
+
+* add hovercards to list contributors page ([01ca13c](https://github.com/open-sauced/insights/commit/01ca13ccbbb76157f3ca0fadda0bd1b936faf83c))
+* add hovercards to list contributors page ([#1980](https://github.com/open-sauced/insights/issues/1980)) ([7e5ab98](https://github.com/open-sauced/insights/commit/7e5ab98bba0418c41bbdad0fcf19afc5a9a36f9e))
+
 ### [1.71.2-beta.4](https://github.com/open-sauced/insights/compare/v1.71.2-beta.3...v1.71.2-beta.4) (2023-10-20)
 
 

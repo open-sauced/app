@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import { UserGroupIcon } from "@heroicons/react/24/outline";
 
 import { useDebounce } from "rooks";
+import Link from "next/link";
 import Button from "components/atoms/Button/button";
 import TextInput from "components/atoms/TextInput/text-input";
 import ToggleSwitch from "components/atoms/ToggleSwitch/toggle-switch";
@@ -68,6 +69,7 @@ const staticSuggestedRepos: RepoCardProfileProps[] = [
 
 const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
   const { sessionToken, providerToken, user } = useSupabaseAuth();
+
   const { toast } = useToast();
   const router = useRouter();
   const pageHref = router.asPath;
@@ -473,18 +475,32 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
             onSearch={(search) => setRepoSearchTerm(search as string)}
           />
 
-          <div>
+          <div className="w-full flex gap-3 md:items-center flex-col md:flex-row">
             <Button
               disabled={
-                repos.length === insightRepoLimit ||
+                repos.length >= insightRepoLimit! ||
                 (addRepoLoading.repoName === repoSearchTerm && addRepoLoading.isLoading)
               }
               loading={addRepoLoading.repoName === repoSearchTerm && addRepoLoading.isLoading}
               onClick={handleAddRepository}
               variant="outline"
+              className="shrink-0 w-max"
             >
               Add Repository
             </Button>
+
+            <span role="alert">
+              {repos.length >= insightRepoLimit! && insightRepoLimit! < 50 ? (
+                <p className="text-sm">
+                  Your insight pages are limited to
+                  <strong className="text-sauced-orange"> {insightRepoLimit}</strong> repos,{" "}
+                  <Link href={`/user/settings#upgrade`} className="underline text-sauced-orange">
+                    upgrade
+                  </Link>{" "}
+                  to increase the limit
+                </p>
+              ) : null}
+            </span>
           </div>
 
           <SuggestedRepositoriesList
