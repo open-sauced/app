@@ -16,9 +16,6 @@ body {
   content: "List Name";
   color: "#d1d5db" !important;
 }
-#sitegpt-chat-icon {
-  display: flex !important;
-}
 
 .login-step .sbui-btn-container {
   width: 100%;
@@ -93,6 +90,19 @@ div[role="dialog"]::-webkit-scrollbar-thumb {
   --swiper-pagination-bottom: -5px;
   --swiper-pagination-bullet-inactive-color: rgb(255, 159, 115);
   --swiper-pagination-bullet-size: 8px;
+}
+
+.newsletter-wrap {
+  container: newsletterWrap / inline-size;
+}
+
+@container newsletterWrap (max-width: 240px) {
+  .form-wrap {
+    flex-wrap: wrap;
+  }
+  .form-wrap button {
+    width: 100%;
+  }
 }
 
 .loading {

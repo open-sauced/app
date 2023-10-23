@@ -87,7 +87,7 @@ const ListsHub: WithPageLayout = () => {
           ))
         ) : (
           <div className="flex flex-col items-center justify-center w-full gap-4 ">
-            <Title className="text-2xl">You currently have no lists</Title>{" "}
+            {!isLoading && <Title className="text-2xl">You currently have no lists</Title>}
           </div>
         )}
 
@@ -128,7 +128,7 @@ const ListsHub: WithPageLayout = () => {
           <Text>
             Are you sure you want to delete <span className="font-bold text-light-slate-12">{listNameToDelete}</span>?
           </Text>
-          <Text>If you have data on this list that your team is using, they will loose access</Text>
+          <Text>If you have data on this list that your team is using, they will lose access</Text>
           <Text>
             <span className="font-bold text-light-slate-12">This action cannot be undone</span>
           </Text>

@@ -32,8 +32,8 @@ const ListPageLayout = ({
       <TopNav />
 
       <div className="flex flex-col items-center pt-20 page-container grow bg-light-slate-3 md:pt-14">
-        <div className="info-container container w-full min-h-[100px]">
-          <Header>
+        <div className="info-container md:px-16 container w-full min-h-[100px]">
+          <Header classNames="px-0 md:px-0">
             {list && (
               <ListHeader
                 name={list.name}
@@ -55,7 +55,7 @@ const ListPageLayout = ({
           </div>
         </div>
 
-        <main className="flex flex-col items-center flex-1 w-full px-3 py-8 md:px-16 bg-light-slate-2">
+        <main className="flex flex-col items-center flex-1 w-full py-8  bg-light-slate-2">
           <div className="container px-2 mx-auto md:px-16">{children}</div>
         </main>
       </div>

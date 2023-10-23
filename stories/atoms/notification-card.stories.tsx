@@ -26,6 +26,6 @@ Follows.args = {
 
 Connections.args = {
   type: "connections",
-  message: "bdougie invited you to collaborate",
+  message: "bdougie invited you to connect",
   id: "1s356g",
 };

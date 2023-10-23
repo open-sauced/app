@@ -230,7 +230,7 @@ const ContributorProfileHeader = ({
                     className="sm:hidden"
                     variant="primary"
                     onClick={async () =>
-                      handleSignIn({ provider: "github", options: { redirectTo: `${host}/${currentPath}` } })
+                      handleSignIn({ provider: "github", options: { redirectTo: `${host}${currentPath}` } })
                     }
                   >
                     <HiUserAdd />
@@ -239,7 +239,7 @@ const ContributorProfileHeader = ({
                     className="w-[6.25rem] hidden sm:inline-flex"
                     variant="primary"
                     onClick={async () =>
-                      handleSignIn({ provider: "github", options: { redirectTo: `${host}/${currentPath}` } })
+                      handleSignIn({ provider: "github", options: { redirectTo: `${host}${currentPath}` } })
                     }
                   >
                     <HiUserAdd fontSize={20} className="mr-1" /> Follow
@@ -277,7 +277,7 @@ const ContributorProfileHeader = ({
                         {isPremium && isRecievingConnections && (
                           <DropdownMenuItem className="rounded-md">
                             <button onClick={() => setIsDialogOpen(true)} className="flex items-center gap-1 pl-3 pr-7">
-                              Collaborate
+                              Connect
                             </button>
                           </DropdownMenuItem>
                         )}
@@ -288,7 +288,7 @@ const ContributorProfileHeader = ({
                       <DropdownMenuItem className="rounded-md">
                         <button
                           onClick={async () =>
-                            handleSignIn({ provider: "github", options: { redirectTo: `${host}/${currentPath}` } })
+                            handleSignIn({ provider: "github", options: { redirectTo: `${host}${currentPath}` } })
                           }
                           className="flex items-center gap-1 pl-3 pr-7"
                         >
@@ -299,11 +299,11 @@ const ContributorProfileHeader = ({
                         <DropdownMenuItem className="rounded-md">
                           <button
                             onClick={async () =>
-                              handleSignIn({ provider: "github", options: { redirectTo: `${host}/${currentPath}` } })
+                              handleSignIn({ provider: "github", options: { redirectTo: `${host}${currentPath}` } })
                             }
                             className="flex items-center gap-1 pl-3 pr-7"
                           >
-                            Collaborate
+                            Connect
                           </button>
                         </DropdownMenuItem>
                       )}
@@ -319,7 +319,7 @@ const ContributorProfileHeader = ({
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogContent className="w-full md:!w-2/3 px-4 py-8 md:space-y-4">
           <DialogHeader>
-            <DialogTitle className="!text-3xl text-left">Collaborate with {username}!</DialogTitle>
+            <DialogTitle className="!text-3xl text-left">Connect with {username}!</DialogTitle>
           </DialogHeader>
 
           <form onSubmit={handleConnectionRequest} className="flex flex-col w-full gap-2 px-4 md:gap-8 md:px-14 ">
