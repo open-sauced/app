@@ -31,6 +31,7 @@ import PaginationResults from "components/molecules/PaginationResults/pagination
 import Pagination from "components/molecules/Pagination/pagination";
 import DashContainer from "components/atoms/DashedContainer/DashContainer";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
+import { useToast } from "lib/hooks/useToast";
 import ConnectionRequestsWrapper from "../ConnectionRequestWrapper/connection-requests-wrapper";
 import UserRepositoryRecommendations from "../UserRepositoryRecommendations/user-repository-recommendations";
 
@@ -85,6 +86,7 @@ const ContributorProfileTab = ({
   const { user_name } = user?.user_metadata || {};
   const [showInviteJumbotron, setShowInviteJumbotron] = useState(!!is_open_sauced_member ? false : true);
   const [showSocialLinks, setShowSocialLinks] = useState(false);
+  const { toast } = useToast();
 
   const { data: highlights, isError, isLoading, mutate, meta, setPage } = useFetchUserHighlights(login || "");
   const { data: emojis } = useFetchAllEmojis();
@@ -133,10 +135,25 @@ const ContributorProfileTab = ({
 
   const emailBody = `Hey ${login}. I'm using OpenSauced to keep track of my contributions and discover new projects. Try connecting your GitHub to https://opensauced.pizza/`;
 
+  const handleCopyToClipboard = async (content: any) => {
+    const url = new URL(content, window.location.origin).toString();
+    try {
+      await navigator.clipboard.writeText(url);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const handleInviteClick = () => {
     const hasSocials = !!(twitter_username || display_email || linkedin_url);
 
     if (!hasSocials) {
+      handleCopyToClipboard(`${window.location.href}/user/${login}`).then(() => {
+        toast({
+          title: "Copied to clipboard",
+          description: "Share this link with your friend to invite them to OpenSauced!",
+          variant: "success",
+        });
+      });
     } else {
       setShowSocialLinks(true);
     }
