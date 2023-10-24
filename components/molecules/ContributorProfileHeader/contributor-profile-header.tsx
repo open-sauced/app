@@ -182,7 +182,7 @@ const ContributorProfileHeader = ({
             </div>
           </Link>
         </div>
-        {isConnected && (
+        {isConnected ? (
           <div className="flex flex-col items-center gap-3 translate-y-24 md:translate-y-0 md:flex-row">
             <div className="flex flex-wrap items-center justify-center gap-2 mb-10 md:gap-6">
               {user ? (
@@ -312,6 +312,10 @@ const ContributorProfileHeader = ({
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
+          </div>
+        ) : (
+          <div className="flex flex-wrap items-center justify-center">
+            {!isOwner && <Button variant="primary">Invite to opensauced</Button>}
           </div>
         )}
       </div>
