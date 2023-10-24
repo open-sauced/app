@@ -250,7 +250,7 @@ const ContributorProfileHeader = ({
               {user && !isOwner && <AddToListDropdown username={username ?? ""} />}
 
               <DropdownMenu modal={false}>
-                <div className="flex-wrap items-center gap-2 md:gap-6">
+                <div className="flex-wrap bg-red-300 items-center gap-2 md:gap-6">
                   {!isOwner && (
                     <DropdownMenuTrigger
                       title="More options"
