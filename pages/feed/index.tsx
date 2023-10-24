@@ -300,7 +300,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
         )}
         <div className="flex flex-col w-full gap-12 md:items-start lg:flex-row">
           <Tabs onValueChange={onTabChange} defaultValue="home" className="w-full 2xl:max-w-[40rem] xl:max-w-[33rem]">
-            <TabsList className={clsx("justify-start  w-full border-b", !user && "hidden")}>
+            <TabsList className={clsx("justify-start w-full border-b", !user && "hidden")}>
               <TabsTrigger
                 className="data-[state=active]:border-sauced-orange data-[state=active]:border-b-2 text-lg"
                 value="home"
