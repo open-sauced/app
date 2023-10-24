@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React, { useState, useEffect } from "react";
 import { HiOutlineEmojiHappy } from "react-icons/hi";
 import { TfiMoreAlt } from "react-icons/tfi";

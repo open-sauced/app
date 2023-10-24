@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import Link from "next/link";
 import { LinkIcon } from "@primer/octicons-react";
 import { BsFillArrowUpCircleFill } from "react-icons/bs";

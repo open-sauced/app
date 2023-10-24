@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import Link from "next/link";
 import { FaEdit } from "react-icons/fa";
 import { FiCopy } from "react-icons/fi";

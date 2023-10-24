@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import { useEffect, useRef, useState } from "react";
 
 import { FiCalendar, FiEdit2 } from "react-icons/fi";

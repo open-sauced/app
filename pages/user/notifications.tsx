@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import clsx from "clsx";

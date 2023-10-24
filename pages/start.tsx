@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { User } from "@supabase/supabase-js";

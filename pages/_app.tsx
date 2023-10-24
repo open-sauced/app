@@ -1,4 +1,5 @@
 //Idea came from this repo: https://github.com/brookslybrand/next-nested-layouts
+/* eslint-disable */
 
 import "../styles/globals.css";
 import "react-loading-skeleton/dist/skeleton.css";

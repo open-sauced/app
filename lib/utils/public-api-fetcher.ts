@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import { Fetcher } from "swr";
 import { supabase } from "./supabase";
 

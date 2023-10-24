@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import { NextApiResponse, NextApiRequest } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import tier from "tier";

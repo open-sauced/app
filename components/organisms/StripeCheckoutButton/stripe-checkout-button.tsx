@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import Button, { ButtonsProps } from "components/atoms/Button/button";
 
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";

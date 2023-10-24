@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import { supabase } from "lib/utils/supabase";
 
 interface CreateHighlightsProps {

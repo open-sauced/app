@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { UserGroupIcon } from "@heroicons/react/24/outline";

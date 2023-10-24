@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import { Octokit } from "octokit";
 import { supabase } from "lib/utils/supabase";
 

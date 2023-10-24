@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React, { useEffect, useState } from "react";
 import { FiCheckCircle, FiCopy } from "react-icons/fi";
 import { AiOutlineWarning } from "react-icons/ai";

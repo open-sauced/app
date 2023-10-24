@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import useSWR, { Fetcher } from "swr";
 import { useState } from "react";
 

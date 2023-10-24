@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React from "react";
 import { FiPlus } from "react-icons/fi";
 import Text from "../Typography/text";

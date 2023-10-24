@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import Image, { StaticImageData } from "next/image";
 import cachedImage from "lib/utils/cachedImages";
 

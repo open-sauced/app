@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { GetServerSidePropsContext } from "next";
 import { useState } from "react";

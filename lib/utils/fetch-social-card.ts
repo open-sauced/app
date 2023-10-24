@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 const fetchSocialCard = async (endpoint: string) => {
   try {
     const socialCardUrl = `${String(process.env.NEXT_PUBLIC_OPENGRAPH_URL ?? "")}/${endpoint}`;

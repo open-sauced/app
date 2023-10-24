@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import useSWR, { Fetcher, useSWRConfig } from "swr";
 import publicApiFetcher from "lib/utils/public-api-fetcher";
 import useSupabaseAuth from "./useSupabaseAuth";

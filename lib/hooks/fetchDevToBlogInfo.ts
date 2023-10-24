@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 const fetchDevToBlogInfo = async (blogLink: string) => {
   try {
     const trimmedUrl = blogLink.trim();

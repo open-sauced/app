@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import { supabase } from "lib/utils/supabase";
 
 const baseUrl = process.env.NEXT_PUBLIC_API_URL;

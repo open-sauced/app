@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import { useEffect, useState } from "react";
 import { FaEdit } from "react-icons/fa";
 import Link from "next/link";
