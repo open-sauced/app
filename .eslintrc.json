@@ -10,6 +10,8 @@
       {
         "groups": ["builtin", "external", "internal", "object", "type", "index", "parent", "sibling"]
       }
-    ]
+    ],
+    "no-console": "error",
+    "no-unused-vars": "error"
   }
 }
