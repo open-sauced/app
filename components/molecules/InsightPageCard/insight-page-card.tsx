@@ -10,6 +10,8 @@ import { getRelativeDays } from "lib/utils/date-utils";
 import getRepoInsights from "lib/utils/get-repo-insights";
 
 import useRepositories from "lib/hooks/api/useRepositories";
+import { handleCopyToClipboard } from "lib/utils/copy-to-clipboard";
+
 import CardRepoList from "../CardRepoList/card-repo-list";
 import PieChart, { PieData } from "../PieChart/pie-chart";
 import StackedAvatar from "../StackedAvatar/stacked-avatar";
@@ -51,16 +53,6 @@ const InsightPageCard = ({ insight, user }: InsightPageCardProps): JSX.Element =
       color: "hsla(205, 11%, 78%, 1)",
     },
   ];
-
-  // Function to handle copy to clipboard
-  const handleCopyToClipboard = async (content: any) => {
-    const url = new URL(content, window.location.origin).toString();
-    try {
-      await navigator.clipboard.writeText(url);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const averagePrOpened = repoData.length > 0 ? Math.round(((open || 0) / total) * 100) : 0;
 

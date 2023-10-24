@@ -23,6 +23,7 @@ import Button from "components/atoms/Button/button";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import useFetchAllEmojis from "lib/hooks/useFetchAllEmojis";
 import { setQueryParams } from "lib/utils/query-params";
+import { handleCopyToClipboard } from "lib/utils/copy-to-clipboard";
 
 import openSaucedImg from "img/openSauced-icon.png";
 
@@ -135,14 +136,6 @@ const ContributorProfileTab = ({
 
   const emailBody = `Hey ${login}. I'm using OpenSauced to keep track of my contributions and discover new projects. Try connecting your GitHub to https://opensauced.pizza/`;
 
-  const handleCopyToClipboard = async (content: any) => {
-    const url = new URL(content, window.location.origin).toString();
-    try {
-      await navigator.clipboard.writeText(url);
-    } catch (error) {
-      console.log(error);
-    }
-  };
   const handleInviteClick = () => {
     const hasSocials = !!(twitter_username || display_email || linkedin_url);
 
