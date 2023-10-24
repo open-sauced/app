@@ -6,6 +6,8 @@ import clsx from "clsx";
 import formatDistanceToNowStrict from "date-fns/formatDistanceToNowStrict";
 
 import { MdClose } from "react-icons/md";
+import { FaLinkedinIn, FaXTwitter } from "react-icons/fa6";
+import { TbMailFilled } from "react-icons/tb";
 import Avatar from "components/atoms/Avatar/avatar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "components/atoms/Tabs/tabs";
 import HighlightInputForm from "components/molecules/HighlightInput/highlight-input-form";
@@ -69,9 +71,20 @@ const ContributorProfileTab = ({
   recentContributionCount,
   repoList,
 }: ContributorProfileTabProps): JSX.Element => {
-  const { login, interests: userInterests, receive_collaboration } = contributor || {};
-  const { user } = useSupabaseAuth();
+  const {
+    login,
+    interests: userInterests,
+    receive_collaboration,
+    email,
+    twitter_username,
+    linkedin_url,
+    display_email,
+    is_open_sauced_member,
+  } = contributor || {};
+  const { user, signIn } = useSupabaseAuth();
   const { user_name } = user?.user_metadata || {};
+  const [showInviteJumbotron, setShowInviteJumbotron] = useState(!!is_open_sauced_member ? false : true);
+  const [showSocialLinks, setShowSocialLinks] = useState(false);
 
   const { data: highlights, isError, isLoading, mutate, meta, setPage } = useFetchUserHighlights(login || "");
   const { data: emojis } = useFetchAllEmojis();
@@ -116,6 +129,17 @@ const ContributorProfileTab = ({
       !user && tab === "connections" && "hidden",
       !receive_collaboration && tab === "connections" && "hidden"
     );
+  };
+
+  const emailBody = `Hey ${login}. I'm using OpenSauced to keep track of my contributions and discover new projects. Try connecting your GitHub to https://opensauced.pizza/`;
+
+  const handleInviteClick = () => {
+    const hasSocials = !!(twitter_username || display_email || linkedin_url);
+
+    if (!hasSocials) {
+    } else {
+      setShowSocialLinks(true);
+    }
   };
 
   const getEmptyHighlightPreset = (): JSX.Element => {
@@ -169,30 +193,99 @@ const ContributorProfileTab = ({
 
       {/* Highlights Tab details */}
 
-      <div className="bg-white relative p-6 my-10 rounded-xl flex items-center justify-between shadow-xl pr-14">
-        <MdClose role="button" className="absolute right-5 top-5 text-xl text-slate-600" />
-        <div className="flex-[2.5] ">
-          <div className="flex items-center gap-2">
-            <Image className="rounded" alt="Open Sauced Logo" width={30} height={30} src={openSaucedImg} />
-            <Title className="font-semibold text-lg" level={4}>
-              Do you know {login}?
-            </Title>
-          </div>
+      {showInviteJumbotron && (
+        <div className="bg-white relative p-6 my-10 rounded-xl flex items-center justify-between shadow-xl pr-14">
+          <MdClose
+            onClick={() => setShowInviteJumbotron(!showInviteJumbotron)}
+            role="button"
+            className="absolute right-5 top-5 text-xl text-slate-600"
+          />
+          <div className="flex-[2.5] ">
+            <div className="flex items-center gap-2">
+              <Image className="rounded" alt="Open Sauced Logo" width={30} height={30} src={openSaucedImg} />
+              <Title className="font-semibold text-lg" level={4}>
+                Do you know {login}?
+              </Title>
+            </div>
 
-          <p className="text-slate-500 text-sm mt-2">
-            Invite {login} to join OpenSauced to be able to access insights, interact with other developers and find new
-            open source opportunities!
-          </p>
+            <p className="text-slate-500 text-sm mt-2">
+              Invite {login} to join OpenSauced to be able to access insights, interact with other developers and find
+              new open source opportunities!
+            </p>
+          </div>
+          <div className="flex-1 flex items-end flex-col gap-2">
+            {!showSocialLinks && (
+              <Button onClick={handleInviteClick} className="w-40" variant="primary">
+                Invite to opensauced
+              </Button>
+            )}
+
+            {showSocialLinks && (
+              <div className="flex items-center gap-3">
+                {contributor?.twitter_username && (
+                  <a
+                    href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
+                      `Check out @saucedopen. The platform for open source contributors to find their next contribution. https://opensauced.pizza/blog/social-coding-is-back. @${contributor.twitter_username}`
+                    )}&hashtags=opensource,github`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-white bg-blue-400 rounded-full p-3"
+                  >
+                    <FaXTwitter className="text-lg" />
+                  </a>
+                )}
+                {contributor?.display_email && (
+                  <a
+                    href={`mailto:${email}?subject=${encodeURIComponent(
+                      "Invitation to join OpenSauced!"
+                    )}&body=${encodeURIComponent(emailBody)}`}
+                    className="text-white bg-red-400 rounded-full p-3"
+                  >
+                    <TbMailFilled className="text-lg" />
+                  </a>
+                )}
+                {contributor?.linkedin_url && (
+                  <a
+                    href={`https://www.linkedin.com/in/${linkedin_url}`}
+                    className="text-white bg-blue-600 rounded-full p-3"
+                  >
+                    <FaLinkedinIn className="text-lg" />
+                  </a>
+                )}
+                <a
+                  href={`mailto:${email}?subject=${encodeURIComponent(
+                    "Invitation to join OpenSauced!"
+                  )}&body=${encodeURIComponent(emailBody)}`}
+                  className="text-white bg-red-400 rounded-full p-3"
+                >
+                  <TbMailFilled className="text-lg" />
+                </a>
+                <a
+                  href={`https://www.linkedin.com/in/${linkedin_url}`}
+                  className="text-white bg-blue-600 rounded-full p-3"
+                >
+                  <FaLinkedinIn className="text-lg" />
+                </a>
+              </div>
+            )}
+
+            {!user && (
+              <Button
+                onClick={() =>
+                  signIn({
+                    provider: "github",
+                    options: { redirectTo: `${window.location.origin}/user/${login}` },
+                  })
+                }
+                className="w-40 flex justify-center"
+                variant="text"
+              >
+                This is me!
+              </Button>
+            )}
+          </div>
         </div>
-        <div className="flex-1 flex items-end flex-col gap-2">
-          <Button className="w-40" variant="primary">
-            Invite to opensauced
-          </Button>
-          <Button className="w-40 flex justify-center" variant="text">
-            This is me!
-          </Button>
-        </div>
-      </div>
+      )}
 
       <TabsContent value={"highlights" satisfies TabKey}>
         {(hasHighlights || inputVisible) && user_name === login && (
