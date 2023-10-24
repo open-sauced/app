@@ -302,7 +302,14 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
 
             <div id="upgrade" className="flex flex-col gap-2">
               <label>Time zone*</label>
-              <Select onValueChange={(value) => setTimezone(value)} value={timezone} required>
+              <Select
+                onValueChange={(value) => {
+                  const separatedValue = value ? value.split("_").at(0) || "" : "";
+                  setTimezone(separatedValue);
+                }}
+                value={timezone}
+                required
+              >
                 <SelectTrigger
                   selectIcon={
                     <div className="relative pr-4">
@@ -316,7 +323,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
 
                 <SelectContent position="item-aligned" className="bg-white">
                   {timezones.map((timezone, index) => (
-                    <SelectItem key={`timezone_${index}`} value={timezone.value}>
+                    <SelectItem key={`timezone_${index}`} value={`${timezone.value}_${index}`}>
                       {timezone.text}
                     </SelectItem>
                   ))}
