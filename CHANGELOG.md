@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.72.0-beta.6](https://github.com/open-sauced/insights/compare/v1.72.0-beta.5...v1.72.0-beta.6) (2023-10-24)
+
+
+### 🐛 Bug Fixes
+
+* add placeholder for 0 pending connection request ([#1989](https://github.com/open-sauced/insights/issues/1989)) ([70d6046](https://github.com/open-sauced/insights/commit/70d6046204b5d7e9890a2fc550e8540b658883a0))
+
 ## [1.72.0-beta.5](https://github.com/open-sauced/insights/compare/v1.72.0-beta.4...v1.72.0-beta.5) (2023-10-23)
 
 
