@@ -314,7 +314,7 @@ const ContributorProfileHeader = ({
             </div>
           </div>
         ) : (
-          <div className="flex flex-wrap items-center justify-center">
+          <div className="flex flex-wrap items-center justify-center max-md:translate-y-14">
             {!isOwner && <Button variant="primary">Invite to opensauced</Button>}
           </div>
         )}

@@ -194,13 +194,13 @@ const ContributorProfileTab = ({
       {/* Highlights Tab details */}
 
       {showInviteJumbotron && (
-        <div className="bg-white relative p-6 my-10 rounded-xl flex items-center justify-between shadow-xl pr-14">
+        <div className="bg-white relative p-6 my-10 rounded-xl gap-4 flex flex-col md:flex-row items-center justify-between shadow-xl md:pr-14">
           <MdClose
             onClick={() => setShowInviteJumbotron(!showInviteJumbotron)}
             role="button"
             className="absolute right-5 top-5 text-xl text-slate-600"
           />
-          <div className="flex-[2.5] ">
+          <div className="flex-1 md:flex-[2.5]">
             <div className="flex items-center gap-2">
               <Image className="rounded" alt="Open Sauced Logo" width={30} height={30} src={openSaucedImg} />
               <Title className="font-semibold text-lg" level={4}>
@@ -213,9 +213,13 @@ const ContributorProfileTab = ({
               new open source opportunities!
             </p>
           </div>
-          <div className="flex-1 flex items-end flex-col gap-2">
+          <div className="flex items-end flex-col gap-2 self-end flex-1 max-md:w-full">
             {!showSocialLinks && (
-              <Button onClick={handleInviteClick} className="w-40" variant="primary">
+              <Button
+                onClick={handleInviteClick}
+                className="max-md:w-full md:w-40 flex justify-center"
+                variant="primary"
+              >
                 Invite to opensauced
               </Button>
             )}
@@ -277,7 +281,7 @@ const ContributorProfileTab = ({
                     options: { redirectTo: `${window.location.origin}/user/${login}` },
                   })
                 }
-                className="w-40 flex justify-center"
+                className="max-md:w-full md:w-40 flex justify-center"
                 variant="text"
               >
                 This is me!
