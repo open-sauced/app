@@ -22,17 +22,17 @@ const HeaderFilter = () => {
   const topicOptions = getInterestOptions();
 
   const { filterValues } = useFilterPrefetch();
-  const { filterName, toolName, selectedFilter } = router.query;
+  const { pageId, toolName, selectedFilter } = router.query;
   const { user } = useSupabaseAuth();
   const { data: userInfo } = useFetchUser(user?.user_metadata.user_name);
 
   const filterBtnRouting = (filter: string) => {
     captureAnalytics({ title: "Filters", property: "toolsFilter", value: `${filter} applied`, userInfo });
-    return router.push(`/${filterName}/${toolName}/filter/${filter.toLocaleLowerCase()}`);
+    return router.push(`/${pageId}/${toolName}/filter/${filter.toLocaleLowerCase()}`);
   };
 
   const cancelFilterRouting = () => {
-    return router.push(`/${filterName}/${toolName}`);
+    return router.push(`/${pageId}/${toolName}`);
   };
 
   const topicRouting = (topic: string) => {
@@ -44,19 +44,19 @@ const HeaderFilter = () => {
       <div className="header-image mr-2 p-2 min-w-[130px] ">
         <ContextThumbnail
           size={120}
-          ContextThumbnailURL={getTopicThumbnail(filterName as interestsType)}
+          ContextThumbnailURL={getTopicThumbnail(pageId as interestsType)}
         ></ContextThumbnail>
       </div>
       <div className="header-info md:truncate flex flex-col grow justify-center p-2">
         <Title level={1} className="!text-3xl font-semibold tracking-tight text-slate-900">
-          {topicNameFormatting(filterName as string)}
+          {topicNameFormatting(pageId as string)}
         </Title>
         <Text className="mt-1 !text-base   text-slate-500">
-          {`Insights on GitHub repositories using the ${topicNameFormatting(filterName as string)} topic.`}
+          {`Insights on GitHub repositories using the ${topicNameFormatting(pageId as string)} topic.`}
         </Text>
         <div className="flex mt-4 items-center gap-2">
           <FilterCardSelect
-            selected={filterName as string}
+            selected={pageId as string}
             options={topicOptions as unknown as []}
             icon="topic"
             handleFilterClick={topicRouting}
