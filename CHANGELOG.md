@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.72.1-beta.1](https://github.com/open-sauced/insights/compare/v1.72.0...v1.72.1-beta.1) (2023-10-25)
+
+
+### 🐛 Bug Fixes
+
+* set border radius for modals in small screens ([#2004](https://github.com/open-sauced/insights/issues/2004)) ([738c714](https://github.com/open-sauced/insights/commit/738c714d6d988170c8ed86ebe9fdc2d4b4763694))
+
 ## [1.72.0](https://github.com/open-sauced/insights/compare/v1.71.1...v1.72.0) (2023-10-24)
 
 
