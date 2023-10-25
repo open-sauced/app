@@ -106,8 +106,8 @@ const ContributorProfileTab = ({
     setQueryParams({ tab: tabValue } satisfies QueryParams);
   }
 
-  // Setting the query param "tab" if none exists
   useEffect(() => {
+    // Setting the query param "tab" if none exists
     if (
       !tab ||
       !Object.keys(tabs).includes(tab as string) ||
@@ -117,8 +117,6 @@ const ContributorProfileTab = ({
     ) {
       setQueryParams({ tab: currentTab } satisfies QueryParams);
     }
-
-    // If the user is not the owner of the profile, block them from accessing the recommendations tab
   }, [tab, currentTab]);
 
   const getTabTriggerClassName = (tab: TabKey): string => {
@@ -269,7 +267,7 @@ const ContributorProfileTab = ({
               </div>
             )}
 
-            {!user && (
+            {!user && !showSocialLinks && (
               <Button
                 onClick={() =>
                   signIn({
