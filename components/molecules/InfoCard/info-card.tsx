@@ -10,7 +10,7 @@ export interface FavoriteRepoCardProps {
 const InfoCard = ({ icon, title, description, handleClick }: FavoriteRepoCardProps): JSX.Element => {
   return (
     <div className="p-3 bg-white border-2 rounded-xl cursor-pointer" onClick={handleClick}>
-      <div className="flex items-center gap-2.5 h-10">
+      <div className="flex items-center gap-2.5">
         {/* Avatar */}
         {icon === "github" && <FiGithub size={24} className="text-orange-200" />}
         {icon === "globe" && <FiGlobe size={24} className="text-orange-200" />}
