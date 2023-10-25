@@ -70,8 +70,8 @@ const GitHubTeamSyncDialog = ({ open, handleClose, handleImport, loading, userna
             <Text className="leading-tight text-light-slate-9">
               We will sync contributors from your team on GitHub to create your new list.
             </Text>
-            <div className="flex pt-2">
-              Organization
+            <label className="flex mt-4 gap-4 items-center">
+              <span>Organization</span>
               <SingleSelect
                 options={userOrgs.map((userOrg) => ({
                   label: userOrg.organization_user.login,
@@ -82,9 +82,9 @@ const GitHubTeamSyncDialog = ({ open, handleClose, handleImport, loading, userna
                 placeholder="Select an organization"
                 onValueChange={(value) => setSelectedOrg(value)}
               />
-            </div>
-            <div className="flex pt-2">
-              Team
+            </label>
+            <label className="flex gap-4 items-center">
+              <span>Team</span>
               <SingleSelect
                 options={teams.map((team) => ({ label: team.name, value: team.slug }))}
                 position="popper"
@@ -92,8 +92,8 @@ const GitHubTeamSyncDialog = ({ open, handleClose, handleImport, loading, userna
                 placeholder="Select a team"
                 onValueChange={(value) => setTeamSlug(value)}
               />
-            </div>
-            <div className="flex pt-2">
+            </label>
+            <label className="flex">
               <ToggleSwitch
                 name="followImported"
                 classNames="mr-2"
@@ -101,7 +101,7 @@ const GitHubTeamSyncDialog = ({ open, handleClose, handleImport, loading, userna
                 handleToggle={() => setFollow((toFollow) => !toFollow)}
               />
               <Text className="leading-tight text-light-slate-9">Follow everyone imported.</Text>
-            </div>
+            </label>
           </div>
           <div className="flex gap-3">
             <Button onClick={() => handleClose()} className="justify-center flex-1" variant="text">

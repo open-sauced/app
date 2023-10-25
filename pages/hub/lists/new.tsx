@@ -254,7 +254,7 @@ const CreateListPage = () => {
           />
 
           <InfoCard
-            title="Sync your GitHub team"
+            title="Sync your GitHub Team"
             description="Connect to your GitHub to create a list from a team in your organization"
             icon="github"
             handleClick={() => {
@@ -272,7 +272,7 @@ const CreateListPage = () => {
           />
 
           <InfoCard
-            title="Import your GitHub following"
+            title="Import your GitHub Following"
             description="Connect to your GitHub to create a list with all the Contributors you follow"
             icon="github"
             handleClick={() => {
