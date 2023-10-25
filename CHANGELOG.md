@@ -5,6 +5,37 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.72.0](https://github.com/open-sauced/insights/compare/v1.71.1...v1.72.0) (2023-10-24)
+
+
+### 🍕 Features
+
+* add hovercards to list contributors page ([01ca13c](https://github.com/open-sauced/insights/commit/01ca13ccbbb76157f3ca0fadda0bd1b936faf83c))
+* add hovercards to list contributors page ([#1980](https://github.com/open-sauced/insights/issues/1980)) ([7e5ab98](https://github.com/open-sauced/insights/commit/7e5ab98bba0418c41bbdad0fcf19afc5a9a36f9e))
+
+
+### 🧑‍💻 Code Refactoring
+
+* remove key ([b84d4b1](https://github.com/open-sauced/insights/commit/b84d4b19e10001e7346b0eb669f2413cefa74759))
+* Rename the [filterName] query to more accurate naming in `/pages` routes ([#1753](https://github.com/open-sauced/insights/issues/1753)) ([87bd6a3](https://github.com/open-sauced/insights/commit/87bd6a39045876ac07a7f87467233d578904eba1))
+* show tootip indication for disabled CTA when repo limit is reached ([#1915](https://github.com/open-sauced/insights/issues/1915)) ([4b675a0](https://github.com/open-sauced/insights/commit/4b675a0960e59d09a7482834acf90ba2857f5553))
+
+
+### 🐛 Bug Fixes
+
+* add build command to Netlify `.toml` configuration ([#1961](https://github.com/open-sauced/insights/issues/1961)) ([973be2f](https://github.com/open-sauced/insights/commit/973be2f97ad2b1f5416765808548de56406a5788))
+* add placeholder for 0 pending connection request ([#1989](https://github.com/open-sauced/insights/issues/1989)) ([70d6046](https://github.com/open-sauced/insights/commit/70d6046204b5d7e9890a2fc550e8540b658883a0))
+* add responsiveness to profile detail ([294abd0](https://github.com/open-sauced/insights/commit/294abd04211408d7006b398bf44467585cdae4db))
+* added missing is_maintainer info for Posthog ([b9c0c1e](https://github.com/open-sauced/insights/commit/b9c0c1ee141d4d86a1327ff1b875ca90c1255e69))
+* added missing is_maintainer info for Posthog ([#1975](https://github.com/open-sauced/insights/issues/1975)) ([25d603b](https://github.com/open-sauced/insights/commit/25d603b28894c0637bef3d6718deb4835bc620ca))
+* link user avatar on feeds page to their profile ([#1986](https://github.com/open-sauced/insights/issues/1986)) ([24ca123](https://github.com/open-sauced/insights/commit/24ca123ea4a318a2eebbfb21cc13cc63e86519a6))
+* No more 404 errors in the browser console ([#1983](https://github.com/open-sauced/insights/issues/1983)) ([c6c73f7](https://github.com/open-sauced/insights/commit/c6c73f7ac4a8b9038d32c66c41ff01de7f52eec3))
+* notification indicator ([#1955](https://github.com/open-sauced/insights/issues/1955)) ([fd78097](https://github.com/open-sauced/insights/commit/fd780974e24441affed9b6df50c58553159b61fe))
+* popover display issue of safari ([#1962](https://github.com/open-sauced/insights/issues/1962)) ([afe5ab2](https://github.com/open-sauced/insights/commit/afe5ab207fd619b0a16f39ee7a88fde1cfa88669))
+* remove orange notification indicator on button click ([574f575](https://github.com/open-sauced/insights/commit/574f575a98eca6a1c7e0e4e44e8836042068a50f))
+* removed chatbot ([#1973](https://github.com/open-sauced/insights/issues/1973)) ([4c58e42](https://github.com/open-sauced/insights/commit/4c58e4222c3146ce2411bdcf5e688d3f36c40e28))
+* renamed needs triage label as it was breaking our issue creation workflow ([#1968](https://github.com/open-sauced/insights/issues/1968)) ([0b0ac4b](https://github.com/open-sauced/insights/commit/0b0ac4b938efc724d08d54cb79c4a08931e935a4))
+
 ## [1.72.0-beta.6](https://github.com/open-sauced/insights/compare/v1.72.0-beta.5...v1.72.0-beta.6) (2023-10-24)
 
 
