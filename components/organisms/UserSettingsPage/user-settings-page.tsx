@@ -22,6 +22,7 @@ import { useFetchUser } from "lib/hooks/useFetchUser";
 import { getInterestOptions } from "lib/utils/getInterestOptions";
 import { useToast } from "lib/hooks/useToast";
 import { validateTwitterUsername } from "lib/utils/validate-twitter-username";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "components/molecules/Dialog/dialog";
 import CouponForm from "./coupon-form";
 
 interface userSettingsPageProps {
@@ -33,7 +34,50 @@ type EmailPreferenceType = {
   receive_collaboration?: boolean;
 };
 
+interface DeleteAccountModalProps {
+  open: boolean;
+  setOpen: (open: boolean) => void;
+  onDelete: () => void;
+}
+
+const DeleteAccountModal = ({ open, setOpen, onDelete }: DeleteAccountModalProps) => {
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogContent className="p-4">
+        <DialogHeader>
+          <DialogTitle className="!text-3xl text-left">Delete Account</DialogTitle>
+        </DialogHeader>
+        <div className="flex flex-col gap-4">
+          <Text>Are you sure you want to delete your account?</Text>
+          <div className="flex gap-4">
+            <Button
+              type="submit"
+              rel="noopener noreferrer"
+              target="_blank"
+              className="w-max border-dark-red-8 bg-dark-red-8 text-white hover:border-dark-red-7 hover:bg-dark-red-7"
+              variant="primary"
+              onClick={onDelete}
+            >
+              Delete
+            </Button>
+            <Button
+              variant="default"
+              onClick={() => {
+                setOpen(false);
+              }}
+            >
+              Cancel
+            </Button>
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+};
+
 const UserSettingsPage = ({ user }: userSettingsPageProps) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const deleteFormRef = useRef<HTMLFormElement>(null);
   const { data: insightsUser, mutate } = useFetchUser(user?.user_metadata.user_name, {
     revalidateOnFocus: false,
   });
@@ -434,6 +478,11 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
                 action="/api/delete-account"
                 method="POST"
                 className="flex flex-col order-first gap-6 md:order-last"
+                ref={deleteFormRef}
+                onSubmit={(e) => {
+                  setIsModalOpen(true);
+                  e.preventDefault();
+                }}
               >
                 <div className="flex flex-col gap-3">
                   <label className="text-2xl font-normal text-light-slate-11">Delete Account</label>
@@ -453,6 +502,14 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
                 >
                   Delete Account
                 </Button>
+                <DeleteAccountModal
+                  open={isModalOpen}
+                  setOpen={setIsModalOpen}
+                  onDelete={() => {
+                    setIsModalOpen(false);
+                    deleteFormRef.current?.submit();
+                  }}
+                />
               </form>
             </>
           )}
