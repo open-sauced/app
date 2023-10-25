@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.73.0-beta.2](https://github.com/open-sauced/insights/compare/v1.73.0-beta.1...v1.73.0-beta.2) (2023-10-25)
+
+
+### 🐛 Bug Fixes
+
+* background color in text-input ([#1998](https://github.com/open-sauced/insights/issues/1998)) ([1913462](https://github.com/open-sauced/insights/commit/1913462f16e4bc893742f51024ea496ca1e45fd7))
+* more menu overlap issue on safari ([#1999](https://github.com/open-sauced/insights/issues/1999)) ([66df010](https://github.com/open-sauced/insights/commit/66df010eaf1abf8afed252eec351213737d33899))
+
 ## [1.73.0-beta.1](https://github.com/open-sauced/insights/compare/v1.72.1-beta.1...v1.73.0-beta.1) (2023-10-25)
 
 
