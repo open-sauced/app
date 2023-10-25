@@ -9,7 +9,7 @@ interface CreateListPayload {
 }
 
 const TeamImport = () => {
-  const { providerToken, sessionToken, user } = useSupabaseAuth();
+  const { providerToken, sessionToken } = useSupabaseAuth();
   const [teams, setTeams] = useState<any[]>([]);
   const { toast } = useToast();
 
@@ -45,7 +45,6 @@ const TeamImport = () => {
         variant: "warning",
       });
     }
-    console.log("pt", providerToken);
 
     try {
       const response = await fetch(`https://api.github.com/orgs/${org}/teams`, {

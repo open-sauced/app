@@ -10,6 +10,7 @@ const useSupabaseAuth = (loadSession = false) => {
   const sessionToken = useStore((state) => state.sessionToken);
   const providerToken = useStore((state) => state.providerToken);
   const userId = useStore((state) => state.userId);
+  const username: string | null = useStore((state) => state.user?.user_metadata.user_name);
 
   useEffect(() => {
     async function getUserSession() {
@@ -49,6 +50,7 @@ const useSupabaseAuth = (loadSession = false) => {
     },
     signOut: () => supabase.auth.signOut(),
     user,
+    username,
     sessionToken,
     providerToken,
     userId,
