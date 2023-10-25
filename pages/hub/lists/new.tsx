@@ -15,7 +15,7 @@ import InfoCard from "components/molecules/InfoCard/info-card";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { useToast } from "lib/hooks/useToast";
 import GitHubImportDialog from "components/organisms/GitHubImportDialog/github-import-dialog";
-import GitHubTeamImportDialog from "components/organisms/GitHubTeamImportDialog/github-team-import-dialog";
+import GitHubTeamSyncDialog from "components/organisms/GitHubTeamSyncDialog/github-team-sync-dialog";
 import { fetchGithubOrgTeamMembers } from "lib/hooks/fetchGithubTeamMembers";
 
 interface CreateListPayload {
@@ -254,7 +254,7 @@ const CreateListPage = () => {
           />
 
           <InfoCard
-            title="Import your GitHub team"
+            title="Sync your GitHub team"
             description="Connect to your GitHub to create a list from a team in your organization"
             icon="github"
             handleClick={() => {
@@ -295,7 +295,7 @@ const CreateListPage = () => {
         <div className="flex flex-col justify-between pt-8 mt-8 border-t"></div>
       </div>
 
-      <GitHubTeamImportDialog
+      <GitHubTeamSyncDialog
         open={isTeamModalOpen}
         handleClose={() => setIsTeamModalOpen(false)}
         handleImport={handleGitHubTeamImport}

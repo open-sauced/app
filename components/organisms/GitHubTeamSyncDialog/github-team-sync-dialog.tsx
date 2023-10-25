@@ -12,7 +12,7 @@ import { useUserOrganizations } from "lib/hooks/useUserOrganizations";
 import { fetchGithubOrgTeams } from "lib/hooks/fetchGithubOrgTeams";
 import { useToast } from "lib/hooks/useToast";
 
-interface GitHubTeamImportDialogProps {
+interface GitHubTeamSyncDialogProps {
   username: string | null;
   open: boolean;
   handleImport: (props: { follow: boolean; organization: string; teamSlug: string }) => Promise<void>;
@@ -20,13 +20,7 @@ interface GitHubTeamImportDialogProps {
   loading: boolean;
 }
 
-const GitHubTeamImportDialog = ({
-  open,
-  handleClose,
-  handleImport,
-  loading,
-  username,
-}: GitHubTeamImportDialogProps) => {
+const GitHubTeamSyncDialog = ({ open, handleClose, handleImport, loading, username }: GitHubTeamSyncDialogProps) => {
   const [follow, setFollow] = useState(false);
   const [selectedOrg, setSelectedOrg] = useState("");
   const [teamSlug, setTeamSlug] = useState("");
@@ -43,7 +37,8 @@ const GitHubTeamImportDialog = ({
 
     if (response.isError) {
       toast({
-        description: "There was error loading teams. Check your organization permissions",
+        description:
+          "There was error loading teams. Check your organization permissions and try logging out and re-connecting.",
         variant: "warning",
       });
 
@@ -70,10 +65,10 @@ const GitHubTeamImportDialog = ({
               </span>
             </span>
             <Title level={3} className="text-lg">
-              Import a GitHub Team
+              Sync a GitHub Team
             </Title>
             <Text className="leading-tight text-light-slate-9">
-              We will import contributors from your team on GitHub to create your new list.
+              We will sync contributors from your team on GitHub to create your new list.
             </Text>
             <div className="flex pt-2">
               Organization
@@ -119,7 +114,7 @@ const GitHubTeamImportDialog = ({
               variant="primary"
               disabled={!teamSlug}
             >
-              Import Team
+              Sync Team
             </Button>
           </div>
         </div>
@@ -128,4 +123,4 @@ const GitHubTeamImportDialog = ({
   );
 };
 
-export default GitHubTeamImportDialog;
+export default GitHubTeamSyncDialog;
