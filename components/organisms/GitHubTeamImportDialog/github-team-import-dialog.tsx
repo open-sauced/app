@@ -38,14 +38,15 @@ const GitHubTeamImportDialog = ({
   async function loadTeams(org: string) {
     const response = await fetchGithubOrgTeams(org);
 
+    setTeams([]);
+    setTeamSlug("");
+
     if (response.isError) {
       toast({
         description: "There was error loading teams. Check your organization permissions",
         variant: "warning",
       });
 
-      setTeams([]);
-      setTeamSlug("");
       return;
     }
 
@@ -79,7 +80,7 @@ const GitHubTeamImportDialog = ({
               <SingleSelect
                 options={userOrgs.map((userOrg) => ({
                   label: userOrg.organization_user.login,
-                  value: `${userOrg.organization_user.id}`,
+                  value: `${userOrg.organization_user.login}`,
                 }))}
                 position="popper"
                 value={selectedOrg}
