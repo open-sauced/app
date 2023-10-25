@@ -455,7 +455,7 @@ const AddToListDropdown = ({ username }: { username: string }) => {
           </Link>
         </div>
       }
-      className="w-10 md:px-4 max-sm:text-sm"
+      className="md:px-4 max-sm:text-sm"
       placeholder="Add to list"
       options={listOptions}
       selected={selectedList}
