@@ -14,6 +14,7 @@ import InfoCard from "components/molecules/InfoCard/info-card";
 
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { useToast } from "lib/hooks/useToast";
+import GitHubImportDialog from "components/organisms/GitHubImportDialog/github-import-dialog";
 import GitHubTeamImportDialog from "components/organisms/GitHubTeamImportDialog/github-team-import-dialog";
 import { fetchGithubOrgTeamMembers } from "lib/hooks/fetchGithubTeamMembers";
 
@@ -38,6 +39,7 @@ const CreateListPage = () => {
   const [isPublic, setIsPublic] = useState(false);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isTeamModalOpen, setIsTeamModalOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
   const handleOnNameChange = (value: string) => {
@@ -251,9 +253,9 @@ const CreateListPage = () => {
             }}
           />
 
-          {/* <InfoCard
-            title="Import your GitHub following"
-            description="Connect to your GitHub to create a list with all the Contributors you follow"
+          <InfoCard
+            title="Import your GitHub team"
+            description="Connect to your GitHub to create a list from a team in your organization"
             icon="github"
             handleClick={() => {
               if (!name) {
@@ -265,13 +267,13 @@ const CreateListPage = () => {
                 return;
               }
 
-              setIsModalOpen(true);
+              setIsTeamModalOpen(true);
             }}
-          /> */}
+          />
 
           <InfoCard
-            title="Import your GitHub team"
-            description="Connect to your GitHub to create a list from a team in your organization"
+            title="Import your GitHub following"
+            description="Connect to your GitHub to create a list with all the Contributors you follow"
             icon="github"
             handleClick={() => {
               if (!name) {
@@ -293,19 +295,19 @@ const CreateListPage = () => {
         <div className="flex flex-col justify-between pt-8 mt-8 border-t"></div>
       </div>
 
-      {/* <GitHubImportDialog
+      <GitHubTeamImportDialog
+        open={isTeamModalOpen}
+        handleClose={() => setIsTeamModalOpen(false)}
+        handleImport={handleGitHubTeamImport}
+        loading={submitted}
+        username={username}
+      />
+
+      <GitHubImportDialog
         open={isModalOpen}
         handleClose={() => setIsModalOpen(false)}
         handleImport={handleGitHubImport}
         loading={submitted}
-      /> */}
-
-      <GitHubTeamImportDialog
-        open={isModalOpen}
-        handleClose={() => setIsModalOpen(false)}
-        handleImport={handleGitHubTeamImport}
-        loading={submitted}
-        username={username}
       />
     </section>
   );
