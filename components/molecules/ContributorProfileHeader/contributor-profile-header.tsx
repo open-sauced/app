@@ -31,6 +31,7 @@ import { OptionKeys } from "components/atoms/Select/multi-select";
 import { addListContributor, useFetchAllLists } from "lib/hooks/useList";
 import { useFetchUser } from "lib/hooks/useFetchUser";
 import { cardPageUrl } from "lib/utils/urls";
+import { copyToClipboard } from "lib/utils/copy-to-clipboard";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../Dialog/dialog";
 
 const MultiSelect = dynamic(() => import("components/atoms/Select/multi-select"), { ssr: false });
@@ -65,6 +66,7 @@ const ContributorProfileHeader = ({
 }: ContributorProfileHeaderProps) => {
   const router = useRouter();
   const currentPath = router.asPath;
+
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const { requestConnection } = useUserConnections();
@@ -315,7 +317,22 @@ const ContributorProfileHeader = ({
           </div>
         ) : (
           <div className="flex flex-wrap items-center justify-center max-md:translate-y-14">
-            {!isOwner && <Button variant="primary">Invite to opensauced</Button>}
+            {!isOwner && (
+              <Button
+                onClick={() => {
+                  copyToClipboard(`${new URL(currentPath, location.origin)}`).then(() => {
+                    toast({
+                      title: "Copied to clipboard",
+                      description: "Share this link with your friend to invite them to OpenSauced!",
+                      variant: "success",
+                    });
+                  });
+                }}
+                variant="primary"
+              >
+                Invite to opensauced
+              </Button>
+            )}
           </div>
         )}
       </div>
