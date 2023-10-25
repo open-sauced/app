@@ -5,6 +5,18 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.73.0-beta.1](https://github.com/open-sauced/insights/compare/v1.72.1-beta.1...v1.73.0-beta.1) (2023-10-25)
+
+
+### 🍕 Features
+
+*  implement improved UX for non-connected users profile ([#1992](https://github.com/open-sauced/insights/issues/1992)) ([f11160c](https://github.com/open-sauced/insights/commit/f11160c68a218dd92eba35d94dbb2af3dd4a9631))
+
+
+### 🧑‍💻 Code Refactoring
+
+* Improve UX on Create New List page - `/hub/lists/new` ([#1987](https://github.com/open-sauced/insights/issues/1987)) ([c0fcf7a](https://github.com/open-sauced/insights/commit/c0fcf7ac57d680ee0c2ad6a8145983dde2275355))
+
 ### [1.72.1-beta.1](https://github.com/open-sauced/insights/compare/v1.72.0...v1.72.1-beta.1) (2023-10-25)
 
 

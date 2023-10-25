@@ -1,9 +1,13 @@
 import Link from "next/link";
+import Image from "next/image";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import clsx from "clsx";
 import formatDistanceToNowStrict from "date-fns/formatDistanceToNowStrict";
 
+import { MdClose } from "react-icons/md";
+import { FaLinkedinIn, FaXTwitter } from "react-icons/fa6";
+import { TbMailFilled } from "react-icons/tb";
 import Avatar from "components/atoms/Avatar/avatar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "components/atoms/Tabs/tabs";
 import HighlightInputForm from "components/molecules/HighlightInput/highlight-input-form";
@@ -19,11 +23,16 @@ import Button from "components/atoms/Button/button";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import useFetchAllEmojis from "lib/hooks/useFetchAllEmojis";
 import { setQueryParams } from "lib/utils/query-params";
+import { copyToClipboard } from "lib/utils/copy-to-clipboard";
 
+import openSaucedImg from "img/openSauced-icon.png";
+
+import Title from "components/atoms/Typography/title";
 import PaginationResults from "components/molecules/PaginationResults/pagination-result";
 import Pagination from "components/molecules/Pagination/pagination";
 import DashContainer from "components/atoms/DashedContainer/DashContainer";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
+import { useToast } from "lib/hooks/useToast";
 import ConnectionRequestsWrapper from "../ConnectionRequestWrapper/connection-requests-wrapper";
 import UserRepositoryRecommendations from "../UserRepositoryRecommendations/user-repository-recommendations";
 
@@ -64,9 +73,21 @@ const ContributorProfileTab = ({
   recentContributionCount,
   repoList,
 }: ContributorProfileTabProps): JSX.Element => {
-  const { login, interests: userInterests, receive_collaboration } = contributor || {};
-  const { user } = useSupabaseAuth();
+  const {
+    login,
+    interests: userInterests,
+    receive_collaboration,
+    email,
+    twitter_username,
+    linkedin_url,
+    display_email,
+    is_open_sauced_member,
+  } = contributor || {};
+  const { user, signIn } = useSupabaseAuth();
   const { user_name } = user?.user_metadata || {};
+  const [showInviteJumbotron, setShowInviteJumbotron] = useState(!!is_open_sauced_member ? false : true);
+  const [showSocialLinks, setShowSocialLinks] = useState(false);
+  const { toast } = useToast();
 
   const { data: highlights, isError, isLoading, mutate, meta, setPage } = useFetchUserHighlights(login || "");
   const { data: emojis } = useFetchAllEmojis();
@@ -85,8 +106,8 @@ const ContributorProfileTab = ({
     setQueryParams({ tab: tabValue } satisfies QueryParams);
   }
 
-  // Setting the query param "tab" if none exists
   useEffect(() => {
+    // Setting the query param "tab" if none exists
     if (
       !tab ||
       !Object.keys(tabs).includes(tab as string) ||
@@ -96,8 +117,6 @@ const ContributorProfileTab = ({
     ) {
       setQueryParams({ tab: currentTab } satisfies QueryParams);
     }
-
-    // If the user is not the owner of the profile, block them from accessing the recommendations tab
   }, [tab, currentTab]);
 
   const getTabTriggerClassName = (tab: TabKey): string => {
@@ -111,6 +130,24 @@ const ContributorProfileTab = ({
       !user && tab === "connections" && "hidden",
       !receive_collaboration && tab === "connections" && "hidden"
     );
+  };
+
+  const emailBody = `Hey ${login}. I'm using OpenSauced to keep track of my contributions and discover new projects. Try connecting your GitHub to https://opensauced.pizza/`;
+
+  const handleInviteClick = () => {
+    const hasSocials = !!(twitter_username || display_email || linkedin_url);
+
+    if (!hasSocials) {
+      copyToClipboard(`${new URL(`/user/${login}`, location.origin)}`).then(() => {
+        toast({
+          title: "Copied to clipboard",
+          description: "Share this link with your friend to invite them to OpenSauced!",
+          variant: "success",
+        });
+      });
+    } else {
+      setShowSocialLinks(true);
+    }
   };
 
   const getEmptyHighlightPreset = (): JSX.Element => {
@@ -164,6 +201,90 @@ const ContributorProfileTab = ({
 
       {/* Highlights Tab details */}
 
+      {showInviteJumbotron && (
+        <div className="bg-white relative p-6 my-10 rounded-xl gap-4 flex flex-col md:flex-row items-center justify-between shadow-xl md:pr-14">
+          <MdClose
+            onClick={() => setShowInviteJumbotron(!showInviteJumbotron)}
+            role="button"
+            className="absolute right-5 top-5 text-xl text-slate-600"
+          />
+          <div className="flex-1 md:flex-[2.5]">
+            <div className="flex items-center gap-2">
+              <Image className="rounded" alt="Open Sauced Logo" width={30} height={30} src={openSaucedImg} />
+              <Title className="font-semibold text-lg" level={4}>
+                Do you know {login}?
+              </Title>
+            </div>
+
+            <p className="text-slate-500 text-sm mt-2">
+              Invite {login} to join OpenSauced to be able to access insights, interact with other developers and find
+              new open source opportunities!
+            </p>
+          </div>
+          <div className="flex items-end flex-col gap-2 self-end flex-1 max-md:w-full">
+            {!showSocialLinks && (
+              <Button
+                onClick={handleInviteClick}
+                className="max-md:w-full md:w-40 flex justify-center"
+                variant="primary"
+              >
+                Invite to opensauced
+              </Button>
+            )}
+
+            {showSocialLinks && (
+              <div className="flex items-center gap-3">
+                {twitter_username && (
+                  <a
+                    href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
+                      `Check out @saucedopen. The platform for open source contributors to find their next contribution. https://opensauced.pizza/blog/social-coding-is-back. @${twitter_username}`
+                    )}&hashtags=opensource,github`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-white bg-blue-400 rounded-full p-3"
+                  >
+                    <FaXTwitter className="text-lg" />
+                  </a>
+                )}
+                {!!display_email && (
+                  <a
+                    href={`mailto:${email}?subject=${encodeURIComponent(
+                      "Invitation to join OpenSauced!"
+                    )}&body=${encodeURIComponent(emailBody)}`}
+                    className="text-white bg-red-400 rounded-full p-3"
+                  >
+                    <TbMailFilled className="text-lg" />
+                  </a>
+                )}
+                {!!linkedin_url && (
+                  <a
+                    href={`https://www.linkedin.com/in/${linkedin_url}`}
+                    className="text-white bg-blue-600 rounded-full p-3"
+                  >
+                    <FaLinkedinIn className="text-lg" />
+                  </a>
+                )}
+              </div>
+            )}
+
+            {!user && !showSocialLinks && (
+              <Button
+                onClick={() =>
+                  signIn({
+                    provider: "github",
+                    options: { redirectTo: `${window.location.origin}/user/${login}` },
+                  })
+                }
+                className="max-md:w-full md:w-40 flex justify-center"
+                variant="text"
+              >
+                This is me!
+              </Button>
+            )}
+          </div>
+        </div>
+      )}
+
       <TabsContent value={"highlights" satisfies TabKey}>
         {(hasHighlights || inputVisible) && user_name === login && (
           <div className="lg:pl-20 lg:gap-x-4 pt-4 flex max-w-[48rem]">
@@ -179,8 +300,6 @@ const ContributorProfileTab = ({
           </div>
         )}
         <div className="flex flex-col gap-8 mt-8">
-          {/* <HightlightEmptyState /> */}
-
           {isError && <>An error occured</>}
           {isLoading && (
             <>
