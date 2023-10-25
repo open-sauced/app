@@ -27,7 +27,7 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
   const topic = router.query.pageId as string;
   const store = useStore();
   const range = useStore((state) => state.range);
-  const [layout, setLayout] = useState<ToggleValue>("grid");
+  const [layout, setLayout] = useState<ToggleValue>("list");
   const { data, meta, setPage, setLimit, isError, isLoading } = useContributors(10, repositories, range);
 
   const contributors = data.map((pr) => {
@@ -82,8 +82,13 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
         </div>
       ) : (
         <div className="lg:min-w-[1150px]">
-          <ContributorListTableHeaders range={range} />
-          <ContributorTable loading={isLoading} topic={topic} contributors={data}></ContributorTable>
+          <ContributorListTableHeaders handleOnSelectAllContributor={() => {}} range={range} />
+          <ContributorTable
+            handleSelectContributors={() => {}}
+            loading={isLoading}
+            topic={topic}
+            contributors={data}
+          ></ContributorTable>
         </div>
       )}
 
