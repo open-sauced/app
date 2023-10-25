@@ -23,7 +23,7 @@ import Button from "components/atoms/Button/button";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import useFetchAllEmojis from "lib/hooks/useFetchAllEmojis";
 import { setQueryParams } from "lib/utils/query-params";
-import { handleCopyToClipboard } from "lib/utils/copy-to-clipboard";
+import { copyToClipboard } from "lib/utils/copy-to-clipboard";
 
 import openSaucedImg from "img/openSauced-icon.png";
 
@@ -138,7 +138,7 @@ const ContributorProfileTab = ({
     const hasSocials = !!(twitter_username || display_email || linkedin_url);
 
     if (!hasSocials) {
-      handleCopyToClipboard(`${window.location.href}/user/${login}`).then(() => {
+      copyToClipboard(`${new URL(`/user/${login}`, location.origin)}`).then(() => {
         toast({
           title: "Copied to clipboard",
           description: "Share this link with your friend to invite them to OpenSauced!",

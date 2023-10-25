@@ -1,8 +1,7 @@
-export const handleCopyToClipboard = async (content: any) => {
-  const url = new URL(content, window.location.origin).toString();
+export const copyToClipboard = async (content: string) => {
   try {
-    await navigator.clipboard.writeText(url);
+    await navigator.clipboard.writeText(content);
   } catch (error) {
-    console.log(error);
+    console.log("This browser does not support the clipboard.", error);
   }
 };
