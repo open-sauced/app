@@ -15,12 +15,18 @@ import { useToast } from "lib/hooks/useToast";
 interface GitHubTeamSyncDialogProps {
   username: string | null;
   open: boolean;
-  handleImport: (props: { follow: boolean; organization: string; teamSlug: string }) => Promise<void>;
+  handleSync: (props: { follow: boolean; organization: string; teamSlug: string }) => Promise<void>;
   handleClose: () => void;
   loading: boolean;
 }
 
-const GitHubTeamSyncDialog = ({ open, handleClose, handleImport, loading, username }: GitHubTeamSyncDialogProps) => {
+const GitHubTeamSyncDialog = ({
+  open,
+  handleClose,
+  handleSync: handleImport,
+  loading,
+  username,
+}: GitHubTeamSyncDialogProps) => {
   const [follow, setFollow] = useState(false);
   const [selectedOrg, setSelectedOrg] = useState("");
   const [teamSlug, setTeamSlug] = useState("");

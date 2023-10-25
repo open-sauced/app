@@ -146,7 +146,7 @@ const CreateListPage = () => {
     }
   };
 
-  const handleGitHubTeamImport = async (props: { follow: boolean; organization: string; teamSlug: string }) => {
+  const handleGitHubTeamSync = async (props: { follow: boolean; organization: string; teamSlug: string }) => {
     if (!user || !providerToken) {
       toast({ description: "Unable to connect to GitHub! Try logging out and re-connecting.", variant: "warning" });
       return;
@@ -157,7 +157,7 @@ const CreateListPage = () => {
     const req = await fetchGithubOrgTeamMembers(organization, teamSlug);
 
     if (req.isError) {
-      toast({ description: "Unable to import team", variant: "warning" });
+      toast({ description: "Unable to sync team", variant: "warning" });
       setSubmitted(false);
       return;
     }
@@ -298,7 +298,7 @@ const CreateListPage = () => {
       <GitHubTeamSyncDialog
         open={isTeamModalOpen}
         handleClose={() => setIsTeamModalOpen(false)}
-        handleImport={handleGitHubTeamImport}
+        handleSync={handleGitHubTeamSync}
         loading={submitted}
         username={username}
       />
