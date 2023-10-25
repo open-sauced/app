@@ -45,7 +45,7 @@ const DeleteAccountModal = ({ open, setOpen, onDelete }: DeleteAccountModalProps
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="p-4">
         <DialogHeader>
-          <DialogTitle className="!text-3xl text-left">Delete Account</DialogTitle>
+          <DialogTitle className="text-left">Delete Account</DialogTitle>
         </DialogHeader>
         <div className="flex flex-col gap-4">
           <Text>Are you sure you want to delete your account?</Text>
