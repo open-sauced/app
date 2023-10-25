@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import React, { useState } from "react";
 import cancelIcon from "img/x-circle.svg";
 import Icon from "../Icon/icon";

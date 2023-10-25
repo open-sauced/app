@@ -1,5 +1,4 @@
 //Idea came from this repo: https://github.com/brookslybrand/next-nested-layouts
-/* eslint-disable */
 
 import "../styles/globals.css";
 import "react-loading-skeleton/dist/skeleton.css";
@@ -32,6 +31,7 @@ if (typeof window !== "undefined" && "serviceWorker" in navigator) {
   navigator.serviceWorker.getRegistrations().then(function (registrations) {
     for (let registration of registrations) {
       if (registration.active) {
+        // eslint-disable-next-line no-console
         console.log(`Clearing service worker ${registration.scope}`);
         registration.unregister();
         document.location.reload();
@@ -142,6 +142,7 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
       // We still use the map for write & read for performance.
       return map;
     } else {
+      // eslint-disable-next-line no-console
       console.log("You are on the server");
       // 👉️ can't use localStorage
 

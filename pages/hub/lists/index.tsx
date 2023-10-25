@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import React, { useState } from "react";
 import clsx from "clsx";
 import Link from "next/link";
@@ -61,6 +59,7 @@ const ListsHub: WithPageLayout = () => {
       }
     } catch (err) {
       setIsDeleteOpen(false);
+      // eslint-disable-next-line no-console
       console.log(err);
       toast({ description: "An error occurred while deleting the list", variant: "danger" });
     } finally {

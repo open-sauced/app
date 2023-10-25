@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import Link from "next/link";
 import { LinkIcon } from "@primer/octicons-react";
 import { BsFillArrowUpCircleFill } from "react-icons/bs";
@@ -60,6 +58,7 @@ const InsightPageCard = ({ insight, user }: InsightPageCardProps): JSX.Element =
     try {
       await navigator.clipboard.writeText(url);
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.log(error);
     }
   };

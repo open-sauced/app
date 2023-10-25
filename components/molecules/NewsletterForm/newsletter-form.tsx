@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { AiFillCloseCircle } from "react-icons/ai";

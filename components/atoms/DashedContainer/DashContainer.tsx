@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import React, { ComponentProps } from "react";
 import clsx from "clsx";
 

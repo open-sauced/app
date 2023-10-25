@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import React, { useRef, useState } from "react";
 import { HiPencil } from "react-icons/hi";
 import clsx from "clsx";

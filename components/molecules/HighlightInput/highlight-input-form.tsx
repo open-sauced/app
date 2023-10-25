@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import { useEffect, useRef, useState } from "react";
 
 import { FiCalendar, FiEdit2 } from "react-icons/fi";
@@ -281,6 +279,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
         setHighlightSuggestions(pages);
         setLoadingSuggestions(false);
       } catch (err) {
+        // eslint-disable-next-line no-console
         console.log(err);
       }
     };

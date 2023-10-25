@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { UserGroupIcon } from "@heroicons/react/24/outline";
@@ -80,6 +78,7 @@ const CreateListPage = () => {
         return data;
       }
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.log(error);
       return null;
     }
