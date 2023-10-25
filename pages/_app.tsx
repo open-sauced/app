@@ -121,6 +121,7 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
 
   function localStorageProvider() {
     if (typeof window !== "undefined") {
+      // eslint-disable-next-line no-console
       console.log("You are on the browser");
 
       // When initializing, we restore the data from `localStorage` into a map.
@@ -133,6 +134,7 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
           localStorage.setItem("app-cache", appCache);
         } catch (error) {
           if (error instanceof Error && error.name === "QuotaExceededError")
+          // eslint-disable-next-line no-console
             return console.warn("⚠ local storage limit exceeded ⚠");
 
           throw error;
