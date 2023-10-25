@@ -236,10 +236,10 @@ const ContributorProfileTab = ({
 
             {showSocialLinks && (
               <div className="flex items-center gap-3">
-                {contributor?.twitter_username && (
+                {twitter_username && (
                   <a
                     href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
-                      `Check out @saucedopen. The platform for open source contributors to find their next contribution. https://opensauced.pizza/blog/social-coding-is-back. @${contributor.twitter_username}`
+                      `Check out @saucedopen. The platform for open source contributors to find their next contribution. https://opensauced.pizza/blog/social-coding-is-back. @${twitter_username}`
                     )}&hashtags=opensource,github`}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -248,7 +248,7 @@ const ContributorProfileTab = ({
                     <FaXTwitter className="text-lg" />
                   </a>
                 )}
-                {contributor?.display_email && (
+                {!!display_email && (
                   <a
                     href={`mailto:${email}?subject=${encodeURIComponent(
                       "Invitation to join OpenSauced!"
@@ -258,7 +258,7 @@ const ContributorProfileTab = ({
                     <TbMailFilled className="text-lg" />
                   </a>
                 )}
-                {contributor?.linkedin_url && (
+                {!!linkedin_url && (
                   <a
                     href={`https://www.linkedin.com/in/${linkedin_url}`}
                     className="text-white bg-blue-600 rounded-full p-3"
@@ -266,20 +266,6 @@ const ContributorProfileTab = ({
                     <FaLinkedinIn className="text-lg" />
                   </a>
                 )}
-                <a
-                  href={`mailto:${email}?subject=${encodeURIComponent(
-                    "Invitation to join OpenSauced!"
-                  )}&body=${encodeURIComponent(emailBody)}`}
-                  className="text-white bg-red-400 rounded-full p-3"
-                >
-                  <TbMailFilled className="text-lg" />
-                </a>
-                <a
-                  href={`https://www.linkedin.com/in/${linkedin_url}`}
-                  className="text-white bg-blue-600 rounded-full p-3"
-                >
-                  <FaLinkedinIn className="text-lg" />
-                </a>
               </div>
             )}
 
