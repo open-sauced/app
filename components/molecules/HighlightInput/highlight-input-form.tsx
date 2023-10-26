@@ -445,8 +445,6 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
         return;
       } else {
         setLoading(true);
-        console.log("taggedReposList", taggedRepoList);
-        console.log("taggedRepoFullNames", taggedRepoFullNames);
         const res = await createHighlights({
           highlight,
           url: highlightLink,
