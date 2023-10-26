@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.73.0-beta.4](https://github.com/open-sauced/insights/compare/v1.73.0-beta.3...v1.73.0-beta.4) (2023-10-26)
+
+
+### 🐛 Bug Fixes
+
+* add logic to force the user to tag at least one repository to a highlight ([#2007](https://github.com/open-sauced/insights/issues/2007)) ([665fbf2](https://github.com/open-sauced/insights/commit/665fbf21cdac82aad6af17689a9eb23300f4f340))
+
 ## [1.73.0-beta.3](https://github.com/open-sauced/insights/compare/v1.73.0-beta.2...v1.73.0-beta.3) (2023-10-26)
 
 
