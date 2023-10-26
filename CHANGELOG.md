@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.73.0-beta.3](https://github.com/open-sauced/insights/compare/v1.73.0-beta.2...v1.73.0-beta.3) (2023-10-26)
+
+
+### 🐛 Bug Fixes
+
+* now the error message in highlight form will alert assistive tech ([#2008](https://github.com/open-sauced/insights/issues/2008)) ([a0d4b3b](https://github.com/open-sauced/insights/commit/a0d4b3b0d0e25182c8a6229513dca39f056a12a4))
+
 ## [1.73.0-beta.2](https://github.com/open-sauced/insights/compare/v1.73.0-beta.1...v1.73.0-beta.2) (2023-10-25)
 
 
