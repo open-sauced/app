@@ -19,8 +19,8 @@ const AvatarHoverCard = ({ contributor, repositories, size = "large" }: AvatarPr
 
   switch (size) {
     case "small":
-      width = 35;
-      height = 35;
+      width = 45;
+      height = 45;
       break;
     default:
       break;
