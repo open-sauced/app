@@ -117,7 +117,15 @@ const AuthSection: React.FC = ({}) => {
                   <Divider type="vertical" className="!h-6 !bg-light-slate-6"></Divider>
                 </>
               )}
-              <button className="relative cursor-pointer" onClick={() => router.push(`/user/notifications`)}>
+              <button
+                className="relative cursor-pointer"
+                onClick={() => {
+                  if (userInfo && userInfo.notification_count > 0) {
+                    setUserInfo({ ...userInfo, notification_count: 0 });
+                  }
+                  router.push(`/user/notifications`);
+                }}
+              >
                 {userInfo && userInfo.notification_count > 0 && (
                   <span className="absolute right-0 block w-2 h-2 bg-orange-300 rounded-full"></span>
                 )}

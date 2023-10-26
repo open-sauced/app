@@ -162,7 +162,6 @@ const ContributorListTableRow = ({
             hasBorder={!contributor.author_login}
           />
         </div>
-
         {/* Column: Act */}
         <div className={clsx("flex-1 flex lg:max-w-[6.25rem] w-fit justify-center")}>
           {contributor.author_login ? getActivity(totalPrs, false) : "-"}

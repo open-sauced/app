@@ -32,16 +32,27 @@ const ConnectionRequestsWrapper = () => {
     return;
   };
 
+  const hasPendingRequest = (): boolean => {
+    return !!data.find((request) => request.status === "pending");
+  };
+
   return (
     <div>
-      {data && data.length > 0 ? (
+      {(data && data.length === 0) || hasPendingRequest() === false ? (
+        <DashContainer className="flex-col gap-6 md:gap-8 text-light-slate-9">
+          <p>No pending requests.</p>
+          <p className="text-center md:px-16">
+            Sometimes you got to be a friend to make a friend. Considering inviting other developers to OpenSauced
+          </p>
+        </DashContainer>
+      ) : (
         data
           .slice()
           .filter((request) => request.status === "pending")
           .sort((a, b) => +new Date(b.created_at) - +new Date(a.created_at))
           .map((requests, i) => {
             return (
-              <div className="flex flex-col w-full " key={i}>
+              <div className="flex flex-col w-full" key={i}>
                 <div className="w-full mt-1 text-center md:text-left">
                   {getDateGroupHeader(new Date(requests.created_at), i)}
                 </div>
@@ -56,13 +67,6 @@ const ConnectionRequestsWrapper = () => {
               </div>
             );
           })
-      ) : (
-        <DashContainer className="flex-col gap-6 md:gap-8 text-light-slate-9">
-          <p>No pending requests.</p>
-          <p className="text-center md:px-16">
-            Sometimes you got to be a friend to make a friend. Considering inviting other developers to OpenSauced
-          </p>
-        </DashContainer>
       )}
     </div>
   );

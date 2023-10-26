@@ -145,27 +145,25 @@ const CreateListPage = () => {
   };
 
   return (
-    <section className="flex flex-col justify-center w-full py-4 xl:flex-row xl:gap-20 xl:pl-28">
-      <div className="flex flex-col gap-8">
-        <div className="pb-6 border-b border-light-slate-8">
-          <Title className="!text-2xl !leading-none mb-4" level={1}>
+    <section className="flex flex-col justify-center w-full py-4 xl:flex-row xl:gap-20">
+      <div className="flex flex-col">
+        <div className="flex flex-col gap-4 pb-6 border-b border-light-slate-8">
+          <Title className="text-2xl leading-none" level={1}>
             Create New List
           </Title>
-          <Text className="my-8">
-            A list is a collection of contributors that you and your team can get insights for.
-          </Text>
+          <Text>A list is a collection of contributors that you and your team can get insights for.</Text>
         </div>
 
-        <div className="pb-8 border-b border-light-slate-8">
-          <Title className="!text-1xl !leading-none mb-4" level={4}>
+        <div className="flex flex-col gap-4 pt-6 pb-16">
+          <Title className="text-1xl leading-none" level={4}>
             List Name
           </Title>
 
           <TextInput placeholder="Page Name (ex: My Team)" value={name} handleChange={handleOnNameChange} />
         </div>
 
-        <div className="flex flex-col gap-4 py-6 border-light-slate-8">
-          <Title className="!text-1xl !leading-none mb-4 mt-8" level={4}>
+        <div className="flex flex-col gap-4 pb-16">
+          <Title className="text-1xl leading-none" level={4}>
             Page Visibility
           </Title>
 
@@ -176,7 +174,7 @@ const CreateListPage = () => {
             </div>
 
             <div className="flex ml-2 !border-red-900 items-center">
-              <Text className="!text-orange-600 pr-2 hidden md:block">Make Public</Text>
+              <Text className="text-orange-600 pr-2 hidden md:block">Make Public</Text>
               <ToggleSwitch
                 name="isPublic"
                 checked={isPublic}
@@ -186,8 +184,8 @@ const CreateListPage = () => {
           </div>
         </div>
 
-        <div className="flex flex-col gap-4 py-6 border-light-slate-8">
-          <Title className="!text-1xl !leading-none " level={4}>
+        <div className="flex flex-col gap-4 pb-6">
+          <Title className="text-1xl leading-none" level={4}>
             Add Contributors
           </Title>
 
@@ -218,10 +216,6 @@ const CreateListPage = () => {
             }}
           />
         </div>
-      </div>
-
-      <div className="top-0 py-4 mt-5 lg:sticky md:mt-0 lg:py-0">
-        <div className="flex flex-col justify-between pt-8 mt-8 border-t"></div>
       </div>
 
       <GitHubImportDialog

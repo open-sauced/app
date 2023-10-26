@@ -16,9 +16,6 @@ body {
   content: "List Name";
   color: "#d1d5db" !important;
 }
-#sitegpt-chat-icon {
-  display: flex !important;
-}
 
 .login-step .sbui-btn-container {
   width: 100%;

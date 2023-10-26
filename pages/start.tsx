@@ -25,7 +25,7 @@ import Button from "components/atoms/Button/button";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { setQueryParams } from "lib/utils/query-params";
 import useSession from "lib/hooks/useSession";
-import { useAnalytics } from "lib/utils/analytics";
+import { captureAnalytics } from "lib/utils/analytics";
 
 import useStore from "lib/store";
 import { getInterestOptions } from "lib/utils/getInterestOptions";
@@ -33,6 +33,7 @@ import LanguagePill from "components/atoms/LanguagePill/LanguagePill";
 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "components/atoms/Select/select";
 import { timezones } from "lib/utils/timezones";
+import { useFetchUser } from "lib/hooks/useFetchUser";
 
 type handleLoginStep = () => void;
 type stepKeys = "1" | "2" | "3";
@@ -45,13 +46,20 @@ interface LoginStep1Props {
 }
 
 const LoginStep1: React.FC<LoginStep1Props> = ({ user }) => {
-  const { captureAnalytics } = useAnalytics();
+  const { data: userInfo, isLoading } = useFetchUser(user?.user_metadata.user_name);
 
-  captureAnalytics({
-    title: "User Onboarding",
-    property: "onboardingStep1",
-    value: "visited",
-  });
+  useEffect(() => {
+    if (isLoading) {
+      return;
+    }
+
+    captureAnalytics({
+      title: "User Onboarding",
+      property: "onboardingStep1",
+      value: "visited",
+      userInfo,
+    });
+  }, [userInfo, isLoading]);
 
   const router = useRouter();
   const { onboarded } = useSession();
@@ -121,15 +129,23 @@ interface LoginStep2Props {
 }
 
 const LoginStep2: React.FC<LoginStep2Props> = ({ handleUpdateInterests: handleUpdateInterestsParent }) => {
-  const { captureAnalytics } = useAnalytics();
   const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
   const interestArray = getInterestOptions();
+  const { user } = useSupabaseAuth();
+  const { data: userInfo, isLoading } = useFetchUser(user?.user_metadata.user_name);
 
-  captureAnalytics({
-    title: "User Onboarding",
-    property: "onboardingStep2",
-    value: "visited",
-  });
+  useEffect(() => {
+    if (isLoading) {
+      return;
+    }
+
+    captureAnalytics({
+      title: "User Onboarding",
+      property: "onboardingStep2",
+      value: "visited",
+      userInfo,
+    });
+  }, [userInfo, isLoading]);
 
   const handleSelectInterest = (interest: string) => {
     if (selectedInterests.length > 0 && selectedInterests.includes(interest)) {
@@ -186,13 +202,21 @@ interface LoginStep3Props {
 }
 
 const LoginStep3: React.FC<LoginStep3Props> = ({ interests, user }) => {
-  const { captureAnalytics } = useAnalytics();
+  const { data: userInfo, isLoading } = useFetchUser(user?.user_metadata.user_name);
 
-  captureAnalytics({
-    title: "User Onboarding",
-    property: "onboardingStep3",
-    value: "visited",
-  });
+  useEffect(() => {
+    if (isLoading) {
+      return;
+    }
+
+    captureAnalytics({
+      title: "User Onboarding",
+      property: "onboardingStep3",
+      value: "visited",
+      userInfo,
+    });
+  }, [userInfo, isLoading]);
+
   const store = useStore();
   const router = useRouter();
   const { sessionToken } = useSupabaseAuth();
@@ -247,7 +271,7 @@ const LoginStep3: React.FC<LoginStep3Props> = ({ interests, user }) => {
           </div>
           <div className="mb-4 text-left ">
             <Text className="!text-sm">
-              Provide your timezone to help companies discover you and collaborate on open source projects.
+              Provide your timezone to help companies discover you and connect on open source projects.
             </Text>
           </div>
 

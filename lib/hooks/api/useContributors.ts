@@ -22,8 +22,8 @@ const useContributors = (intialLimit = 10, repoIds: number[] = [], range = 30) =
   const router = useRouter();
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(intialLimit);
-  const { filterName, selectedFilter } = router.query;
-  const topic = filterName as string;
+  const { pageId, selectedFilter } = router.query;
+  const topic = pageId as string;
   const filterQuery = getFilterQuery(selectedFilter);
   const query = new URLSearchParams(filterQuery);
 
