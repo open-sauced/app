@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.73.0-beta.5](https://github.com/open-sauced/insights/compare/v1.73.0-beta.4...v1.73.0-beta.5) (2023-10-26)
+
+
+### 🐛 Bug Fixes
+
+* show contributors name and company in table ([#2012](https://github.com/open-sauced/insights/issues/2012)) ([79776a3](https://github.com/open-sauced/insights/commit/79776a3194366ade24bcc36f56e4f15d3623e185))
+
 ## [1.73.0-beta.4](https://github.com/open-sauced/insights/compare/v1.73.0-beta.3...v1.73.0-beta.4) (2023-10-26)
 
 
