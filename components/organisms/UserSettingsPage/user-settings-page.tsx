@@ -41,6 +41,9 @@ interface DeleteAccountModalProps {
 }
 
 const DeleteAccountModal = ({ open, setOpen, onDelete }: DeleteAccountModalProps) => {
+  const [confirmText, setConfirmText] = useState("");
+  const disabled = confirmText !== "DELETE";
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="p-4">
@@ -49,6 +52,14 @@ const DeleteAccountModal = ({ open, setOpen, onDelete }: DeleteAccountModalProps
         </DialogHeader>
         <div className="flex flex-col gap-4">
           <Text>Are you sure you want to delete your account?</Text>
+          <Text>
+            Type <span className="font-bold text-light-red-10">DELETE</span> in all caps to confirm
+          </Text>
+          <TextInput
+            onChange={(e) => {
+              setConfirmText(e.target.value);
+            }}
+          />
           <div className="flex gap-4">
             <Button
               type="submit"
@@ -56,7 +67,12 @@ const DeleteAccountModal = ({ open, setOpen, onDelete }: DeleteAccountModalProps
               target="_blank"
               className="w-max border-dark-red-8 bg-dark-red-8 text-white hover:border-dark-red-7 hover:bg-dark-red-7"
               variant="primary"
-              onClick={onDelete}
+              onClick={() => {
+                if (!disabled) {
+                  onDelete();
+                }
+              }}
+              disabled={disabled}
             >
               Delete
             </Button>
