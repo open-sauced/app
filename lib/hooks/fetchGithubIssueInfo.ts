@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import { Octokit } from "octokit";
 import { supabase } from "lib/utils/supabase";
 
@@ -25,6 +23,7 @@ const fetchGithubIssueInfo = async (orgName: string | null, repoName: string | n
       isError: null,
     };
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.log(e);
 
     return {

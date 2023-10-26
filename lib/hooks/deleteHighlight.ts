@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import { supabase } from "lib/utils/supabase";
 
 const baseUrl = process.env.NEXT_PUBLIC_API_URL;
@@ -27,6 +25,7 @@ const deleteHighlight = async (id: string) => {
       throw error;
     }
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.log(e);
     return false;
   }

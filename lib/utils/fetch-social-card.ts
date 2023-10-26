@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 const fetchSocialCard = async (endpoint: string) => {
   try {
     const socialCardUrl = `${String(process.env.NEXT_PUBLIC_OPENGRAPH_URL ?? "")}/${endpoint}`;
@@ -13,6 +11,7 @@ const fetchSocialCard = async (endpoint: string) => {
     return ogReq.headers.get("x-amz-meta-location");
   } catch (e) {
     // This is to prevent the page from crashing if the social card is not generated for some reasons.
+    // eslint-disable-next-line no-console
     console.error(e);
     return "";
   }

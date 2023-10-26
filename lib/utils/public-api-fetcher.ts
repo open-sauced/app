@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import { Fetcher } from "swr";
 import { supabase } from "./supabase";
 
@@ -21,6 +19,7 @@ const publicApiFetcher: Fetcher = async (apiUrl: string) => {
 
     error.message = `${res.status} ${res.statusText}`;
     error.stack = JSON.stringify(await res.json());
+    // eslint-disable-next-line no-console
     console.error(error);
 
     throw error;

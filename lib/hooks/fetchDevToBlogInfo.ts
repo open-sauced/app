@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 const fetchDevToBlogInfo = async (blogLink: string) => {
   try {
     const trimmedUrl = blogLink.trim();
@@ -17,6 +15,7 @@ const fetchDevToBlogInfo = async (blogLink: string) => {
       isError: null,
     };
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.log(e);
 
     return {

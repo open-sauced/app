@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import useSWR, { Fetcher } from "swr";
 import publicApiFetcher from "lib/utils/public-api-fetcher";
 import { HighlightReactionResponse } from "./useHighlightReactions";
@@ -18,6 +16,7 @@ const useUserHighlightReactions = (id: string) => {
       headers: {
         Authorization: `Bearer ${sessionToken}`,
       },
+      // eslint-disable-next-line no-console
     }).catch((err) => console.log(err));
     if (req && req.ok) {
       mutate();
@@ -30,6 +29,7 @@ const useUserHighlightReactions = (id: string) => {
       headers: {
         Authorization: `Bearer ${sessionToken}`,
       },
+      // eslint-disable-next-line no-console
     }).catch((err) => console.log(err));
     if (req && req.ok) {
       mutate();

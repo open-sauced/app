@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import useSWR, { Fetcher, useSWRConfig } from "swr";
 import publicApiFetcher from "lib/utils/public-api-fetcher";
 import useSupabaseAuth from "./useSupabaseAuth";
@@ -22,6 +20,7 @@ const useFollowUser = (username: string) => {
       headers: {
         Authorization: `Bearer ${sessionToken}`,
       },
+      // eslint-disable-next-line no-console
     }).catch((err) => console.log(err));
 
     if (req && req.ok) {
@@ -36,6 +35,7 @@ const useFollowUser = (username: string) => {
       headers: {
         Authorization: `Bearer ${sessionToken}`,
       },
+      // eslint-disable-next-line no-console
     }).catch((err) => console.log(err));
 
     if (req && req.ok) {

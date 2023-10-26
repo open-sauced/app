@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import useSWR, { Fetcher } from "swr";
 import publicApiFetcher from "lib/utils/public-api-fetcher";
 import { MemberAccess } from "components/molecules/TeamMembersConfig/team-members-config";
@@ -28,6 +26,7 @@ const useInsightMembers = (insightId: number) => {
     });
 
     if (!req.ok) {
+      // eslint-disable-next-line no-console
       console.log(req.status, req.statusText);
       return undefined;
     } else {
@@ -47,6 +46,7 @@ const useInsightMembers = (insightId: number) => {
     });
 
     if (!req.ok) {
+      // eslint-disable-next-line no-console
       console.log(req.status, req.statusText);
 
       return undefined;

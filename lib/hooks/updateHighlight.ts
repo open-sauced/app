@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import { supabase } from "lib/utils/supabase";
 
 interface CreateHighlightsProps {
@@ -31,6 +29,7 @@ const updateHighlights = async (data: CreateHighlightsProps, id: string) => {
     }
     return res.json();
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.log(e);
     return false;
   }

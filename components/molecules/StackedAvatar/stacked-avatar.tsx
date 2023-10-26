@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import { useRouter } from "next/router";
 
 import clsx from "clsx";

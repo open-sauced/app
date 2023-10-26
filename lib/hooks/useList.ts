@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import useSWR, { Fetcher } from "swr";
 import { useState } from "react";
 
@@ -100,6 +98,7 @@ const addListContributor = async (listId: string, contributors: number[]) => {
       };
     }
   } catch (error: any) {
+    // eslint-disable-next-line no-console
     console.log(error);
     return {
       data: null,

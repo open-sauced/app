@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import { supabase } from "./supabase";
 
 const baseUrl = process.env.NEXT_PUBLIC_API_URL;
@@ -32,6 +30,7 @@ export const generatePrHighlightSummaryByCommitMsg = async (commitMessages: stri
       return null;
     }
   } catch (err) {
+    // eslint-disable-next-line no-console
     console.log(err);
     return null;
   }
