@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.74.0-beta.1](https://github.com/open-sauced/insights/compare/v1.73.0...v1.74.0-beta.1) (2023-10-26)
+
+
+### 🍕 Features
+
+* add GitHub team import to new list page ([#2006](https://github.com/open-sauced/insights/issues/2006)) ([3113a74](https://github.com/open-sauced/insights/commit/3113a74b8d102ed71e39a34039389c54fa0909b1))
+
 ## [1.73.0](https://github.com/open-sauced/insights/compare/v1.72.0...v1.73.0) (2023-10-26)
 
 
