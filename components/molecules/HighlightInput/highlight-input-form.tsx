@@ -432,6 +432,12 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
 
       const taggedRepoFullNames = taggedRepoList.map((repo) => `${repo.repoOwner}/${repo.repoName}`);
 
+      // Check if the user has tagged at least one repo and ask them to tag at least one if they haven't
+      if (taggedRepoList.length < 1) {
+        setError("Please add at least one repository associated with your blog post");
+        return;
+      }
+
       if (res.isError) {
         setLoading(false);
 
