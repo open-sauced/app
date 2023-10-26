@@ -151,7 +151,7 @@ const AuthSection: React.FC = ({}) => {
               onClick={async () =>
                 await signIn({
                   provider: "github",
-                  options: { redirectTo: `${host}${currentPath}`, scopes: "read:org" },
+                  options: { redirectTo: `${host}${currentPath}` },
                 })
               }
               className="flex items-center"
