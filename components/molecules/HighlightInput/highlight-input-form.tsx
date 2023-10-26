@@ -432,6 +432,12 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
 
       const taggedRepoFullNames = taggedRepoList.map((repo) => `${repo.repoOwner}/${repo.repoName}`);
 
+      // Check if the user has tagged at least one repo and ask them to tag at least one if they haven't
+      if (taggedRepoList.length < 1) {
+        setError("Please add at least one repository associated with your blog post");
+        return;
+      }
+
       if (res.isError) {
         setLoading(false);
 
@@ -526,11 +532,13 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
           </DialogHeader>
           <DialogCloseButton onClick={() => setIsDivFocused(false)} />
           <form onSubmit={handlePostHighlight} className="flex flex-col gap-4 font-normal">
-            {errorMsg && (
-              <p className="inline-flex items-center gap-2 px-2 py-1 text-red-500 bg-red-100 border border-red-500 rounded-md w-full text-sm">
-                <MdError size={20} /> {errorMsg}
-              </p>
-            )}
+            <p role="alert">
+              {errorMsg && (
+                <span className="inline-flex items-center gap-2 px-2 py-1 text-red-500 bg-red-100 border border-red-500 rounded-md w-full text-sm">
+                  <MdError size={20} /> {errorMsg}
+                </span>
+              )}
+            </p>
             <div className="flex flex-col gap-2 p-2 overflow-hidden text-sm bg-white border rounded-lg">
               <TypeWriterTextArea
                 className={`resize-y min-h-[80px] max-h-99 font-normal placeholder:text-slate-400 text-light-slate-12 placeholder:font-normal placeholder:text-sm transition focus:outline-none rounded-lg ${
