@@ -42,7 +42,7 @@ const MultiSelect = ({
 
   return (
     <Popover open={open} onOpenChange={(value) => setOpen(value)}>
-      <div className="">
+      <div>
         <PopoverTrigger
           asChild
           className={clsx("p-1.5 border rounded-md bg-white data-[state=open]:border-orange-500  min-w-max", className)}

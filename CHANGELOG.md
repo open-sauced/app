@@ -5,6 +5,54 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.73.0-beta.5](https://github.com/open-sauced/insights/compare/v1.73.0-beta.4...v1.73.0-beta.5) (2023-10-26)
+
+
+### 🐛 Bug Fixes
+
+* show contributors name and company in table ([#2012](https://github.com/open-sauced/insights/issues/2012)) ([79776a3](https://github.com/open-sauced/insights/commit/79776a3194366ade24bcc36f56e4f15d3623e185))
+
+## [1.73.0-beta.4](https://github.com/open-sauced/insights/compare/v1.73.0-beta.3...v1.73.0-beta.4) (2023-10-26)
+
+
+### 🐛 Bug Fixes
+
+* add logic to force the user to tag at least one repository to a highlight ([#2007](https://github.com/open-sauced/insights/issues/2007)) ([665fbf2](https://github.com/open-sauced/insights/commit/665fbf21cdac82aad6af17689a9eb23300f4f340))
+
+## [1.73.0-beta.3](https://github.com/open-sauced/insights/compare/v1.73.0-beta.2...v1.73.0-beta.3) (2023-10-26)
+
+
+### 🐛 Bug Fixes
+
+* now the error message in highlight form will alert assistive tech ([#2008](https://github.com/open-sauced/insights/issues/2008)) ([a0d4b3b](https://github.com/open-sauced/insights/commit/a0d4b3b0d0e25182c8a6229513dca39f056a12a4))
+
+## [1.73.0-beta.2](https://github.com/open-sauced/insights/compare/v1.73.0-beta.1...v1.73.0-beta.2) (2023-10-25)
+
+
+### 🐛 Bug Fixes
+
+* background color in text-input ([#1998](https://github.com/open-sauced/insights/issues/1998)) ([1913462](https://github.com/open-sauced/insights/commit/1913462f16e4bc893742f51024ea496ca1e45fd7))
+* more menu overlap issue on safari ([#1999](https://github.com/open-sauced/insights/issues/1999)) ([66df010](https://github.com/open-sauced/insights/commit/66df010eaf1abf8afed252eec351213737d33899))
+
+## [1.73.0-beta.1](https://github.com/open-sauced/insights/compare/v1.72.1-beta.1...v1.73.0-beta.1) (2023-10-25)
+
+
+### 🍕 Features
+
+*  implement improved UX for non-connected users profile ([#1992](https://github.com/open-sauced/insights/issues/1992)) ([f11160c](https://github.com/open-sauced/insights/commit/f11160c68a218dd92eba35d94dbb2af3dd4a9631))
+
+
+### 🧑‍💻 Code Refactoring
+
+* Improve UX on Create New List page - `/hub/lists/new` ([#1987](https://github.com/open-sauced/insights/issues/1987)) ([c0fcf7a](https://github.com/open-sauced/insights/commit/c0fcf7ac57d680ee0c2ad6a8145983dde2275355))
+
+### [1.72.1-beta.1](https://github.com/open-sauced/insights/compare/v1.72.0...v1.72.1-beta.1) (2023-10-25)
+
+
+### 🐛 Bug Fixes
+
+* set border radius for modals in small screens ([#2004](https://github.com/open-sauced/insights/issues/2004)) ([738c714](https://github.com/open-sauced/insights/commit/738c714d6d988170c8ed86ebe9fdc2d4b4763694))
+
 ## [1.72.0](https://github.com/open-sauced/insights/compare/v1.71.1...v1.72.0) (2023-10-24)
 
 
