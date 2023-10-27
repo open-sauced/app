@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.74.0-beta.2](https://github.com/open-sauced/insights/compare/v1.74.0-beta.1...v1.74.0-beta.2) (2023-10-27)
+
+
+### 🐛 Bug Fixes
+
+* don't recommend discordapp & use user's full id ([c5cad45](https://github.com/open-sauced/insights/commit/c5cad45195288793098846c45f926b71db5e3c5f))
+* don't recommend discordapp as url & use user's full id ([#2014](https://github.com/open-sauced/insights/issues/2014)) ([58df997](https://github.com/open-sauced/insights/commit/58df997e6532c0492b91256b2fdfa04234cb4824))
+
 ## [1.74.0-beta.1](https://github.com/open-sauced/insights/compare/v1.73.0...v1.74.0-beta.1) (2023-10-26)
 
 
