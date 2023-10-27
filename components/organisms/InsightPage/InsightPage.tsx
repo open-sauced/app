@@ -38,6 +38,12 @@ enum RepoLookupError {
   Error = 4,
 }
 
+enum OrgLookupError {
+  Initial = 0,
+  Invalid = 1,
+  Error = 2,
+}
+
 interface InsightPageProps {
   edit?: boolean;
   insight?: DbUserInsight;
@@ -113,11 +119,13 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
   const [addRepoLoading, setAddRepoLoading] = useState({ repoName: "", isAddedFromCart: false, isLoading: false });
 
   const [name, setName] = useState(insight?.name || "");
+  const [organization, setOrganization] = useState("");
   const [isNameValid, setIsNameValid] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [repos, setRepos] = useState<DbRepo[]>([]);
   const [repoHistory, setRepoHistory] = useState<DbRepo[]>([]);
   const [addRepoError, setAddRepoError] = useState<RepoLookupError>(RepoLookupError.Initial);
+  const [syncOrganizationError, setSyncOrganizationError] = useState<OrgLookupError>(OrgLookupError.Initial);
   const [isPublic, setIsPublic] = useState(!!insight?.is_public);
   const insightRepoLimit = useStore((state) => state.insightRepoLimit);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -181,6 +189,10 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
   const handleOnNameChange = (value: string) => {
     setName(value);
     setIsNameValid(validateName(value));
+  };
+
+  const handleOnOrganizationChange = (value: string) => {
+    setOrganization(value);
   };
 
   const disableCreateButton = () => {
@@ -383,6 +395,18 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
     return <></>;
   };
 
+  const getOrganizationLookupError = (code: OrgLookupError) => {
+    if (code === OrgLookupError.Error) {
+      return <Error errorMessage="There was error retrieving this organization's public repositories." />;
+    }
+
+    if (code === OrgLookupError.Invalid) {
+      return <Error errorMessage="This organization entered is invalid." />;
+    }
+
+    return <></>;
+  };
+
   const handleDeleteInsightPage = async () => {
     setSubmitted(true);
     setDeleteLoading(true);
@@ -434,6 +458,49 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
     }
   }, 250);
 
+  const handleAddOrganizationRepositories = async () => {
+    setSyncOrganizationError(OrgLookupError.Initial);
+
+    const orgReposResponse = await fetch(
+      `https://api.github.com/orgs/${organization}/repos?type=public&sort=pushed&direction=desc`,
+      {
+        headers: providerToken
+          ? {
+              Authorization: `Bearer ${providerToken}`,
+            }
+          : {},
+      }
+    );
+
+    if (orgReposResponse.ok) {
+      const orgReposData = await orgReposResponse.json();
+
+      // create a stub repo to send to API
+      const orgRepos = orgReposData
+        .filter(
+          (orgRepo: { id: number; full_name: string }) => !repos.find((repo) => orgRepo.full_name === repo.full_name)
+        )
+        .slice(0, 10)
+        .map((orgRepo: { id: number; full_name: string }) => ({
+          id: orgRepo.id,
+          full_name: orgRepo.full_name,
+        })) as DbRepo[];
+
+      setRepos((repos) => {
+        return [...repos, ...orgRepos];
+      });
+
+      setSyncOrganizationError(OrgLookupError.Initial);
+      setOrganization("");
+    } else {
+      if (orgReposResponse.status === 404) {
+        setSyncOrganizationError(OrgLookupError.Invalid);
+      } else {
+        setSyncOrganizationError(OrgLookupError.Error);
+      }
+    }
+  };
+
   useEffect(() => {
     setSuggestions([]);
     if (!repoSearchTerm) return;
@@ -461,9 +528,35 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
           <TextInput placeholder="Page Name (ex: My Team)" value={name} handleChange={handleOnNameChange} />
         </div>
 
-        <div className="flex flex-col gap-4 py-6 border-light-slate-8">
+        <div className="flex flex-col gap-4 border-light-slate-8">
           <Title className="!text-1xl !leading-none " level={4}>
-            Add Repositories
+            Sync GitHub Organization
+          </Title>
+
+          <div className="w-full flex gap-3 md:items-center flex-col md:flex-row">
+            <TextInput
+              placeholder="Organization Name (ex: open-sauced)"
+              value={organization}
+              handleChange={handleOnOrganizationChange}
+            />
+          </div>
+          <div>
+            <Button
+              disabled={repos.length >= insightRepoLimit! || organization.trim().length < 3}
+              onClick={handleAddOrganizationRepositories}
+              variant="outline"
+              className="shrink-0 w-max"
+            >
+              Sync Organization
+            </Button>
+          </div>
+
+          <div>{getOrganizationLookupError(syncOrganizationError)}</div>
+        </div>
+
+        <div className="flex flex-col gap-4 border-light-slate-8">
+          <Title className="!text-1xl !leading-none " level={4}>
+            Add Repository
           </Title>
           <Search
             isLoading={createLoading}
@@ -503,14 +596,16 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
             </span>
           </div>
 
-          <SuggestedRepositoriesList
-            reposData={recommendedReposWithoutSelected}
-            loadingData={addRepoLoading}
-            isLoading={isLoading}
-            onAddRepo={(repo) => {
-              addSuggestedRepo(repo);
-            }}
-          />
+          <div className="py-4">
+            <SuggestedRepositoriesList
+              reposData={recommendedReposWithoutSelected}
+              loadingData={addRepoLoading}
+              isLoading={isLoading}
+              onAddRepo={(repo) => {
+                addSuggestedRepo(repo);
+              }}
+            />
+          </div>
         </div>
 
         <div>{getRepoLookupError(addRepoError)}</div>
