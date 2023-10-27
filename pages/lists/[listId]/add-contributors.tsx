@@ -103,7 +103,7 @@ const AddContributorsToList = ({ list, timezoneOption }: AddContributorsPageProp
   const { toast } = useToast();
 
   const addContributorsToList = async () => {
-    const { data, error } = await fetchApiData({
+    const { error } = await fetchApiData({
       path: `lists/${list.id}/contributors`,
       body: { contributors: selectedContributors.map(({ user_id }) => user_id) },
       method: "POST",
