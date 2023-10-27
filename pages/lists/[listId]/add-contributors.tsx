@@ -14,6 +14,8 @@ import Pagination from "components/molecules/Pagination/pagination";
 import PaginationResults from "components/molecules/PaginationResults/pagination-result";
 import AddContributorsHeader from "components/AddContributorsHeader/add-contributors-header";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
+import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
+import { useToast } from "lib/hooks/useToast";
 
 interface CreateListPayload {
   name: string;
@@ -97,6 +99,30 @@ const useContributorSearch = () => {
 const AddContributorsToList = ({ list, timezoneOption }: AddContributorsPageProps) => {
   const [selectedContributors, setSelectedContributors] = useState<DbPRContributor[]>([]);
   const { setContributorSearchTerm, timezone, setTimezone, data, meta, isLoading, setPage } = useContributorSearch();
+  const { sessionToken } = useSupabaseAuth();
+  const { toast } = useToast();
+
+  const addContributorsToList = async () => {
+    const { data, error } = await fetchApiData({
+      path: `lists/${list.id}/contributors`,
+      body: { contributors: selectedContributors.map(({ user_id }) => user_id) },
+      method: "POST",
+      bearerToken: sessionToken!,
+      pathValidator: validateListPath,
+    });
+
+    if (error) {
+      toast({
+        title: "Error",
+        description: "Unable to contributors",
+      });
+    } else {
+      toast({
+        title: "Success",
+        description: "Contributors added successfully",
+      });
+    }
+  };
 
   // get all timezones from the api that exists in the dummy timezone list
   const timezoneList = timezones
@@ -157,9 +183,7 @@ const AddContributorsToList = ({ list, timezoneOption }: AddContributorsPageProp
             selectedContributorsIds={selectedContributors.map(({ user_id }) => user_id)}
             timezoneOptions={timezoneList}
             timezone={timezone}
-            onAddToList={() => {
-              alert("todo");
-            }}
+            onAddToList={addContributorsToList}
             onSearch={onSearch}
           />
         </Header>
