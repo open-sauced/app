@@ -3,21 +3,17 @@ import { FaPlus } from "react-icons/fa";
 import clsx from "clsx";
 
 import { useEffect, useState } from "react";
-import { useToast } from "lib/hooks/useToast";
 
-import LimitSelect from "components/atoms/Select/limit-select";
 import SingleSelect from "components/atoms/Select/single-select";
 import Button from "components/atoms/Button/button";
 import Text from "components/atoms/Typography/text";
 import Search from "components/atoms/Search/search";
 import useDebounceTerm from "lib/hooks/useDebounceTerm";
-// import Search from "components/atoms/Search/search";
 
-interface ListHeaderProps {
+interface AddContributorsHeaderProps {
   timezoneOptions: { label: string; value: string }[];
   timezone?: string;
   setTimezoneFilter: (timezone: string) => void;
-  isPublic: boolean;
   selectedContributorsIds: number[];
   title?: string;
   onAddToList?: () => void;
@@ -26,7 +22,7 @@ interface ListHeaderProps {
   searchResults?: DbUser[];
 }
 
-const HubContributorsHeader = ({
+const AddContributorsHeader = ({
   selectedContributorsIds,
   title,
   onAddToList,
@@ -35,15 +31,13 @@ const HubContributorsHeader = ({
   setTimezoneFilter,
   timezoneOptions,
   onSearch,
-}: ListHeaderProps): JSX.Element => {
-  const { toast } = useToast();
-
+}: AddContributorsHeaderProps): JSX.Element => {
   const [contributorSearch, setContributorSearch] = useState("");
   const debouncedSearchTerm = useDebounceTerm(contributorSearch, 300);
 
   useEffect(() => {
-    onSearch(contributorSearch);
-  }, [debouncedSearchTerm]);
+    onSearch(debouncedSearchTerm);
+  }, [debouncedSearchTerm, onSearch]);
 
   return (
     <div className="relative flex flex-col justify-between w-full gap-6 py-2">
@@ -79,14 +73,15 @@ const HubContributorsHeader = ({
         </div>
       </div>
       <div className="flex flex-col w-full gap-2 md:flex-row">
-        <div className="flex w-full">
+        <label className="flex w-full">
+          <span className="sr-only">Search for new contributors</span>
           <Search
-            placeholder={`Search ${title}`}
+            placeholder="Search for new contributors"
             className="!w-full text-sm py-1.5"
             name={"contributors"}
             onChange={(value) => setContributorSearch(value)}
           />
-        </div>
+        </label>
         <div className="flex items-center gap-4 ">
           <SingleSelect
             options={timezoneOptions}
@@ -96,25 +91,9 @@ const HubContributorsHeader = ({
             onValueChange={(value) => setTimezoneFilter(value)}
           />
         </div>
-        <div className="flex flex-col gap-2 md:items-center md:gap-4 md:flex-row">
-          <LimitSelect
-            placeholder="10 per page"
-            options={[
-              { name: "10 per page", value: "10" },
-              { name: "20 per page", value: "20" },
-              { name: "30 per page", value: "30" },
-              { name: "40 per page", value: "40" },
-              { name: "50 per page", value: "50" },
-            ]}
-            className="!w-36 overflow-x-hidden"
-            onChange={(limit: string): void => {
-              setLimit?.(Number(limit));
-            }}
-          />
-        </div>
       </div>
     </div>
   );
 };
 
-export default HubContributorsHeader;
+export default AddContributorsHeader;

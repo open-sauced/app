@@ -1,14 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { usePostHog } from "posthog-js/react";
 import { GetServerSidePropsContext } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
-import { useRouter } from "next/router";
 
 import useFetchAllContributors from "lib/hooks/useFetchAllContributors";
 import { fetchApiData, validateListPath } from "helpers/fetchApiData";
 import { timezones } from "lib/utils/timezones";
-import { useToast } from "lib/hooks/useToast";
-import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 
 import ContributorListTableHeaders from "components/molecules/ContributorListTableHeader/contributor-list-table-header";
 import HubContributorsPageLayout from "layouts/hub-contributors";
@@ -25,8 +21,8 @@ interface CreateListPayload {
 }
 
 interface AddContributorsPageProps {
+  list: DbUserList;
   initialData: {
-    list: DbUserList;
     meta: Meta;
     data: DbPRContributor[];
   };
@@ -61,13 +57,10 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   });
 
   const [{ data: timezoneOptions }, { data, error }] = await Promise.all([fetchTimezone, fetchContributors]);
-  console.dir({
-    list,
-    data: session?.user_metadata,
-  });
 
   // Only the list owner should be allowed to add contributors
-  if (error?.status === 404 || list?.user_id !== session?.user.id) {
+  if (error?.status === 404) {
+    // || list?.user_id !== session?.user.id) {
     return {
       notFound: true,
     };
@@ -83,17 +76,11 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 };
 
 const AddContributorsToList = ({ list, initialData, timezoneOption }: AddContributorsPageProps) => {
-  const router = useRouter();
-  const { toast } = useToast();
-  const posthog = usePostHog();
-  const { sessionToken } = useSupabaseAuth();
   const [isHydrated, setIsHydrated] = useState(false);
   const [createLoading, setCreateLoading] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
   const [selectedContributors, setSelectedContributors] = useState<DbPRContributor[]>([]);
   const [selectedTimezone, setSelectedTimezone] = useState<string | undefined>(undefined);
   const [contributor, setContributor] = useState<string | undefined>(undefined);
-  const [isPublic, setIsPublic] = useState<boolean>(false);
   const { data, meta, isLoading, setLimit, setPage } = useFetchAllContributors(
     {
       timezone: selectedTimezone,
@@ -151,64 +138,6 @@ const AddContributorsToList = ({ list, initialData, timezoneOption }: AddContrib
     }
   };
 
-  const handleCreateList = async (payload: CreateListPayload) => {
-    if (!payload.name) {
-      toast({
-        description: "List name is required",
-        variant: "danger",
-      });
-      return;
-    }
-
-    setCreateLoading(true);
-    try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/lists`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${sessionToken}`,
-        },
-        body: JSON.stringify(payload),
-      });
-
-      if (res.ok) {
-        const data = await res.json();
-        setListId(data.id);
-        setIsSuccess(true);
-      }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setCreateLoading(false);
-      setIsOpen(true);
-    }
-  };
-
-  const handleOnListCreate = () => {
-    const payload: CreateListPayload = {
-      name: title,
-      is_public: isPublic,
-      contributors: selectedContributors.map((contributor) => ({
-        id: contributor.user_id,
-        login: contributor.author_login,
-      })),
-    };
-
-    handleCreateList(payload);
-  };
-
-  const handleCopyToClipboard = async (content: string) => {
-    const url = new URL(content).toString();
-    posthog!.capture("clicked: List page link copied");
-
-    try {
-      await navigator.clipboard.writeText(url);
-      toast({ description: "Copied to clipboard", variant: "success" });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const onSelectTimeZone = (selected: string) => {
     setSelectedTimezone(selected);
   };
@@ -226,12 +155,13 @@ const AddContributorsToList = ({ list, initialData, timezoneOption }: AddContrib
           <AddContributorsHeader
             title={list?.name}
             setTimezoneFilter={onSelectTimeZone}
-            isPublic={isPublic}
             loading={createLoading}
             selectedContributorsIds={selectedContributors.map((contributor) => contributor.user_id)}
             timezoneOptions={timezoneList}
             timezone={selectedTimezone}
-            onAddToList={handleOnListCreate}
+            onAddToList={() => {
+              alert("todo");
+            }}
             onSearch={onSearch}
           />
         </Header>
