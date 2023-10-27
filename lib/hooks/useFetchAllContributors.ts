@@ -18,7 +18,7 @@ type queryObj = {
   contributor?: string;
 };
 
-const useFetchAllContributors = (query: queryObj, config?: SWRConfiguration) => {
+const useFetchAllContributors = (query: queryObj, config?: SWRConfiguration, makeRequest = true) => {
   const { toast } = useToast();
   const router = useRouter();
   const [page, setPage] = useState(1);
@@ -49,7 +49,7 @@ const useFetchAllContributors = (query: queryObj, config?: SWRConfiguration) => 
   const endpointString = `${baseEndpoint}?${urlQuery}`;
 
   const { data, error, mutate } = useSWR<PaginatedResponse, Error>(
-    endpointString,
+    makeRequest ? endpointString : null,
     publicApiFetcher as Fetcher<PaginatedResponse, Error>,
     config
   );
@@ -57,7 +57,7 @@ const useFetchAllContributors = (query: queryObj, config?: SWRConfiguration) => 
   return {
     data: data?.data ?? [],
     meta: data?.meta ?? { itemCount: 0, limit: 0, page: 0, hasNextPage: false, hasPreviousPage: false, pageCount: 0 },
-    isLoading: !error && !data,
+    isLoading: !error && !data && makeRequest,
     isError: !!error,
     mutate,
     page,

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { GetServerSidePropsContext } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 
+import Image from "next/image";
 import useFetchAllContributors from "lib/hooks/useFetchAllContributors";
 import { fetchApiData, validateListPath } from "helpers/fetchApiData";
 import { timezones } from "lib/utils/timezones";
@@ -13,7 +14,6 @@ import Header from "components/organisms/Header/header";
 import Pagination from "components/molecules/Pagination/pagination";
 import PaginationResults from "components/molecules/PaginationResults/pagination-result";
 import AddContributorsHeader from "components/AddContributorsHeader/add-contributors-header";
-import ClientOnly from "components/atoms/ClientOnly/client-only";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { useToast } from "lib/hooks/useToast";
 
@@ -71,7 +71,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   };
 };
 
-const useContributorSearch = () => {
+const useContributorSearch = (makeRequest: boolean) => {
   const [contributorSearchTerm, setContributorSearchTerm] = useState<string | undefined>();
   const [timezone, setTimezone] = useState<string | undefined>();
 
@@ -82,7 +82,8 @@ const useContributorSearch = () => {
     },
     {
       revalidateOnFocus: false,
-    }
+    },
+    makeRequest
   );
 
   return {
@@ -96,9 +97,19 @@ const useContributorSearch = () => {
   };
 };
 
+const EmptyState = () => (
+  <div className="flex flex-col overflow-hidden border rounded-md">
+    <div className="grid place-content-center w-full bg-white">
+      <Image src="/assets/contributors-empty-state.png" alt="" width="640" height="636" className="object-contain" />
+    </div>
+  </div>
+);
+
 const AddContributorsToList = ({ list, timezoneOption }: AddContributorsPageProps) => {
   const [selectedContributors, setSelectedContributors] = useState<DbPRContributor[]>([]);
-  const { setContributorSearchTerm, timezone, setTimezone, data, meta, isLoading, setPage } = useContributorSearch();
+  const [makeRequest, setMakeRequest] = useState(false);
+  const { setContributorSearchTerm, timezone, setTimezone, data, meta, isLoading, setPage } =
+    useContributorSearch(makeRequest);
   const { sessionToken } = useSupabaseAuth();
   const { toast } = useToast();
 
@@ -121,6 +132,7 @@ const AddContributorsToList = ({ list, timezoneOption }: AddContributorsPageProp
         description: "Contributors added successfully",
         variant: "success",
       });
+      setSelectedContributors([]);
     }
   };
 
@@ -164,11 +176,15 @@ const AddContributorsToList = ({ list, timezoneOption }: AddContributorsPageProp
   };
 
   const onSelectTimeZone = (selected: string) => {
+    setMakeRequest(true);
     setTimezone(selected);
   };
 
   function onSearch(searchTerm: string | undefined) {
-    if (!searchTerm || searchTerm.length >= 3) {
+    if (!timezone && (!searchTerm || searchTerm.length < 3)) {
+      setMakeRequest(false);
+    } else {
+      setMakeRequest(true);
       setContributorSearchTerm(searchTerm);
     }
   }
@@ -193,7 +209,7 @@ const AddContributorsToList = ({ list, timezoneOption }: AddContributorsPageProp
           selected={selectedContributors.length > 0 && selectedContributors.length === meta.limit}
           handleOnSelectAllContributor={onAllChecked}
         />
-        <ClientOnly>
+        {data.length > 0 || isLoading ? (
           <ContributorTable
             loading={isLoading}
             selectedContributors={selectedContributors}
@@ -201,27 +217,25 @@ const AddContributorsToList = ({ list, timezoneOption }: AddContributorsPageProp
             handleSelectContributors={onChecked}
             contributors={contributors as DbPRContributor[]}
           />
-        </ClientOnly>
+        ) : (
+          <EmptyState />
+        )}
         <div className="flex items-center justify-between w-full py-1 md:py-4 md:mt-5">
-          <ClientOnly>
-            <PaginationResults metaInfo={meta} total={meta.itemCount} entity={"contributors"} />
-          </ClientOnly>
+          <PaginationResults metaInfo={meta} total={meta.itemCount} entity={"contributors"} />
           <div>
             <div className="flex flex-col gap-4">
-              <ClientOnly>
-                <Pagination
-                  pages={[]}
-                  hasNextPage={meta.hasNextPage}
-                  hasPreviousPage={meta.hasPreviousPage}
-                  totalPage={meta.pageCount}
-                  page={meta.page}
-                  onPageChange={function (page: number): void {
-                    setPage(page);
-                  }}
-                  divisor={true}
-                  goToPage
-                />
-              </ClientOnly>
+              <Pagination
+                pages={[]}
+                hasNextPage={meta.hasNextPage}
+                hasPreviousPage={meta.hasPreviousPage}
+                totalPage={meta.pageCount}
+                page={meta.page}
+                onPageChange={function (page: number): void {
+                  setPage(page);
+                }}
+                divisor={true}
+                goToPage
+              />
             </div>
           </div>
         </div>
