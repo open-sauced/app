@@ -15,9 +15,3 @@ const AccountDeletedPage = () => {
 };
 
 export default AccountDeletedPage;
-
-/**
- * Add intermediate modal, clarify what's gonna happen.
- * Hover state, subtle background color change.
- * Add survey for future.
- */
