@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { GetServerSidePropsContext } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 
@@ -44,23 +44,18 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     bearerToken,
     pathValidator: validateListPath,
   });
-  const fetchContributors = fetchApiData<PagedData<DbPRContributor>>({
-    path: `lists/contributors`,
-    bearerToken,
-    pathValidator: validateListPath,
-  });
 
-  const { data: list, error: listError } = await fetchApiData<DBList>({
-    path: `lists/${listId}`,
-    bearerToken,
-    pathValidator: validateListPath,
-  });
+  const [{ data: timezoneOptions }, { data: list, error: listError }] = await Promise.all([
+    fetchTimezone,
+    fetchApiData<DBList>({
+      path: `lists/${listId}`,
+      bearerToken,
+      pathValidator: validateListPath,
+    }),
+  ]);
 
-  const [{ data: timezoneOptions }, { data, error }] = await Promise.all([fetchTimezone, fetchContributors]);
-
-  // Only the list owner should be allowed to add contributors
-  if (error?.status === 404) {
-    // || list?.user_id !== session?.user.id) {
+  // TODO: Only the list owner should be allowed to add contributors
+  if (listError?.status === 404) {
     return {
       notFound: true,
     };
@@ -69,28 +64,39 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   return {
     props: {
       list,
-      initialData: data ? { data: data.data, meta: data.meta } : { data: [], meta: {} },
       timezoneOption: timezoneOptions ? timezoneOptions : timezones,
     },
   };
 };
 
-const AddContributorsToList = ({ list, initialData, timezoneOption }: AddContributorsPageProps) => {
-  const [isHydrated, setIsHydrated] = useState(false);
-  const [createLoading, setCreateLoading] = useState(false);
-  const [selectedContributors, setSelectedContributors] = useState<DbPRContributor[]>([]);
-  const [selectedTimezone, setSelectedTimezone] = useState<string | undefined>(undefined);
-  const [contributor, setContributor] = useState<string | undefined>(undefined);
-  const { data, meta, isLoading, setLimit, setPage } = useFetchAllContributors(
+const useContributorSearch = () => {
+  const [contributorSearchTerm, setContributorSearchTerm] = useState<string | undefined>();
+  const [timezone, setTimezone] = useState<string | undefined>();
+
+  const { data, meta, isLoading, setPage } = useFetchAllContributors(
     {
-      timezone: selectedTimezone,
-      contributor,
+      timezone,
+      contributor: contributorSearchTerm,
     },
     {
-      fallbackData: initialData,
       revalidateOnFocus: false,
     }
   );
+
+  return {
+    setContributorSearchTerm,
+    timezone,
+    setTimezone,
+    data,
+    meta,
+    isLoading,
+    setPage,
+  };
+};
+
+const AddContributorsToList = ({ list, timezoneOption }: AddContributorsPageProps) => {
+  const [selectedContributors, setSelectedContributors] = useState<DbPRContributor[]>([]);
+  const { setContributorSearchTerm, timezone, setTimezone, data, meta, isLoading, setPage } = useContributorSearch();
 
   // get all timezones from the api that exists in the dummy timezone list
   const timezoneList = timezones
@@ -103,34 +109,27 @@ const AddContributorsToList = ({ list, initialData, timezoneOption }: AddContrib
         value: timezone.value,
       };
     });
-  const contributors = data
-    ? data.length > 0 &&
-      data.map((contributor) => {
-        return {
-          author_login: contributor.login,
-          updated_at: contributor.updated_at,
-          user_id: contributor.id,
-        };
-      })
-    : [];
+  const contributors =
+    data?.length > 0
+      ? data.map((contributor) => {
+          return {
+            author_login: contributor.login,
+            username: contributor.login,
+            updated_at: contributor.updated_at,
+            user_id: contributor.id,
+          };
+        })
+      : [];
 
-  useEffect(() => {
-    setIsHydrated(true);
-  }, []);
-
-  if (!isHydrated) {
-    return null;
-  }
-
-  const handleOnSelectAllChecked = (state: boolean) => {
+  const onAllChecked = (state: boolean) => {
     if (state) {
-      setSelectedContributors(contributors as DbPRContributor[]);
+      setSelectedContributors(contributors);
     } else {
       setSelectedContributors([]);
     }
   };
 
-  const handleOnSelectChecked = (state: boolean, contributor: DbPRContributor) => {
+  const onChecked = (state: boolean, contributor: DbPRContributor) => {
     if (state) {
       setSelectedContributors((prev) => [...prev, contributor]);
     } else {
@@ -139,12 +138,12 @@ const AddContributorsToList = ({ list, initialData, timezoneOption }: AddContrib
   };
 
   const onSelectTimeZone = (selected: string) => {
-    setSelectedTimezone(selected);
+    setTimezone(selected);
   };
 
   function onSearch(searchTerm: string | undefined) {
     if (!searchTerm || searchTerm.length >= 3) {
-      setContributor(searchTerm);
+      setContributorSearchTerm(searchTerm);
     }
   }
 
@@ -153,12 +152,11 @@ const AddContributorsToList = ({ list, initialData, timezoneOption }: AddContrib
       <div className="info-container container w-full min-h-[6.25rem]">
         <Header>
           <AddContributorsHeader
-            title={list?.name}
+            title={list.name}
             setTimezoneFilter={onSelectTimeZone}
-            loading={createLoading}
-            selectedContributorsIds={selectedContributors.map((contributor) => contributor.user_id)}
+            selectedContributorsIds={selectedContributors.map(({ user_id }) => user_id)}
             timezoneOptions={timezoneList}
-            timezone={selectedTimezone}
+            timezone={timezone}
             onAddToList={() => {
               alert("todo");
             }}
@@ -169,15 +167,15 @@ const AddContributorsToList = ({ list, initialData, timezoneOption }: AddContrib
       <div className="lg:min-w-[1150px] px-4 md:px-16 pb-8">
         <ContributorListTableHeaders
           selected={selectedContributors.length > 0 && selectedContributors.length === meta.limit}
-          handleOnSelectAllContributor={handleOnSelectAllChecked}
+          handleOnSelectAllContributor={onAllChecked}
         />
         <ContributorTable
           loading={isLoading}
           selectedContributors={selectedContributors}
           topic={"*"}
-          handleSelectContributors={handleOnSelectChecked}
+          handleSelectContributors={onChecked}
           contributors={contributors as DbPRContributor[]}
-        ></ContributorTable>
+        />
         <div className="flex items-center justify-between w-full py-1 md:py-4 md:mt-5">
           <div>
             <div className="">
