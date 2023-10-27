@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
+import { fetchApiData } from "helpers/fetchApiData";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "POST") {
@@ -12,23 +13,33 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     req,
     res,
   });
-  const {
-    data: { user },
-  } = await supabaseServerClient.auth.getUser();
 
-  if (!user) {
-    res.status(401).json({
-      message: "Unauthorized",
-    });
-  } else {
-    try {
-      supabaseServerClient.auth.signOut();
+  try {
+    const {
+      data: { session },
+    } = await supabaseServerClient.auth.getSession();
 
-      res.redirect("/account-deleted");
-    } catch (error) {
-      res.status(500).json({
-        message: "Internal server error",
+    if (session) {
+      const { error } = await fetchApiData({
+        path: "/profile",
+        method: "DELETE",
+        bearerToken: session.access_token,
+        pathValidator: () => true,
+      });
+
+      if (error) {
+        throw error;
+      }
+    } else {
+      res.status(401).json({
+        message: "Unauthorized",
       });
     }
+
+    res.redirect("/account-deleted");
+  } catch (error) {
+    res.status(500).json({
+      message: "Internal server error",
+    });
   }
 }
