@@ -113,13 +113,13 @@ const AddContributorsToList = ({ list, timezoneOption }: AddContributorsPageProp
 
     if (error) {
       toast({
-        title: "Error",
-        description: "Unable to contributors",
+        description: "Unable to add new contributors",
+        variant: "danger",
       });
     } else {
       toast({
-        title: "Success",
         description: "Contributors added successfully",
+        variant: "success",
       });
     }
   };
