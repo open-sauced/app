@@ -13,6 +13,7 @@ import Header from "components/organisms/Header/header";
 import Pagination from "components/molecules/Pagination/pagination";
 import PaginationResults from "components/molecules/PaginationResults/pagination-result";
 import AddContributorsHeader from "components/AddContributorsHeader/add-contributors-header";
+import ClientOnly from "components/atoms/ClientOnly/client-only";
 
 interface CreateListPayload {
   name: string;
@@ -38,7 +39,6 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   } = await supabase.auth.getSession();
   const bearerToken = session ? session.access_token : "";
 
-  // TODO: Promise.all
   const fetchTimezone = fetchApiData<{ timezone: string }[]>({
     path: `lists/timezones`,
     bearerToken,
@@ -169,33 +169,35 @@ const AddContributorsToList = ({ list, timezoneOption }: AddContributorsPageProp
           selected={selectedContributors.length > 0 && selectedContributors.length === meta.limit}
           handleOnSelectAllContributor={onAllChecked}
         />
-        <ContributorTable
-          loading={isLoading}
-          selectedContributors={selectedContributors}
-          topic={"*"}
-          handleSelectContributors={onChecked}
-          contributors={contributors as DbPRContributor[]}
-        />
+        <ClientOnly>
+          <ContributorTable
+            loading={isLoading}
+            selectedContributors={selectedContributors}
+            topic={"*"}
+            handleSelectContributors={onChecked}
+            contributors={contributors as DbPRContributor[]}
+          />
+        </ClientOnly>
         <div className="flex items-center justify-between w-full py-1 md:py-4 md:mt-5">
-          <div>
-            <div className="">
-              <PaginationResults metaInfo={meta} total={meta.itemCount} entity={"contributors"} />
-            </div>
-          </div>
+          <ClientOnly>
+            <PaginationResults metaInfo={meta} total={meta.itemCount} entity={"contributors"} />
+          </ClientOnly>
           <div>
             <div className="flex flex-col gap-4">
-              <Pagination
-                pages={[]}
-                hasNextPage={meta.hasNextPage}
-                hasPreviousPage={meta.hasPreviousPage}
-                totalPage={meta.pageCount}
-                page={meta.page}
-                onPageChange={function (page: number): void {
-                  setPage(page);
-                }}
-                divisor={true}
-                goToPage
-              />
+              <ClientOnly>
+                <Pagination
+                  pages={[]}
+                  hasNextPage={meta.hasNextPage}
+                  hasPreviousPage={meta.hasPreviousPage}
+                  totalPage={meta.pageCount}
+                  page={meta.page}
+                  onPageChange={function (page: number): void {
+                    setPage(page);
+                  }}
+                  divisor={true}
+                  goToPage
+                />
+              </ClientOnly>
             </div>
           </div>
         </div>
