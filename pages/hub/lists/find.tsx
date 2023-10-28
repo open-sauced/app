@@ -76,6 +76,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 
 const NewListCreationPage = ({ initialData, timezoneOption }: NewListCreationPageProps) => {
   const router = useRouter();
+  const contributorIds = router.query.contributors as string;
   const { toast } = useToast();
   const posthog = usePostHog();
   const { sessionToken } = useSupabaseAuth();
@@ -100,6 +101,8 @@ const NewListCreationPage = ({ initialData, timezoneOption }: NewListCreationPag
     }
   );
 
+  console.log(JSON.parse(contributorIds));
+
   useEffect(() => {
     if (!title && router.query.name) {
       setTitle(router.query.name as string);
@@ -107,6 +110,12 @@ const NewListCreationPage = ({ initialData, timezoneOption }: NewListCreationPag
 
     if (router.query.public === "true") {
       setIsPublic(true);
+    }
+  }, [router.query]);
+
+  useEffect(() => {
+    if (contributorIds) {
+      setSelectedContributors(JSON.parse(contributorIds) as DbPRContributor[]);
     }
   }, [router.query]);
 
