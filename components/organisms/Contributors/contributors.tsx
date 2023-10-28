@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
-import useStore from "lib/store";
+import { LuFileText } from "react-icons/lu";
 
+import { FaCirclePlus } from "react-icons/fa6";
+import useStore from "lib/store";
 import Pagination from "components/molecules/Pagination/pagination";
 import PaginationResults from "components/molecules/PaginationResults/pagination-result";
 import TableHeader from "components/molecules/TableHeader/table-header";
@@ -15,6 +17,10 @@ import useContributors from "lib/hooks/api/useContributors";
 import { getAvatarByUsername } from "lib/utils/github";
 import { ToggleValue } from "components/atoms/LayoutToggle/layout-toggle";
 import ContributorListTableHeaders from "components/molecules/ContributorListTableHeader/contributor-list-table-header";
+import ClientOnly from "components/atoms/ClientOnly/client-only";
+import { Popover, PopoverContent, PopoverTrigger } from "components/molecules/Popover/popover";
+import Button from "components/atoms/Button/button";
+import { useFetchAllLists } from "lib/hooks/useList";
 import ContributorCard from "../ContributorCard/contributor-card";
 import ContributorTable from "../ContributorsTable/contributors-table";
 
@@ -28,6 +34,8 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
   const store = useStore();
   const range = useStore((state) => state.range);
   const [layout, setLayout] = useState<ToggleValue>("list");
+  const [selectedContributors, setSelectedContributors] = useState<DbPRContributor[]>([]);
+  const [popoverOpen, setPopoverOpen] = useState(false);
   const { data, meta, setPage, setLimit, isError, isLoading } = useContributors(10, repositories, range);
 
   const contributors = data.map((pr) => {
@@ -36,6 +44,16 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
       first_commit_time: pr.updated_at,
     };
   });
+
+  const onSelectContributor = (state: boolean, contributor: DbPRContributor) => {
+    if (state) {
+      setSelectedContributors((prev) => [...prev, contributor]);
+    } else {
+      setSelectedContributors(selectedContributors.filter((seleted) => seleted.user_id !== contributor.user_id));
+    }
+  };
+
+  const onSelectAllContributors = (state: boolean) => {};
 
   const contributorArray = isError
     ? []
@@ -50,6 +68,34 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
           },
         };
       });
+
+  const PopOverListContent = () => {
+    const { data } = useFetchAllLists();
+
+    return (
+      <PopoverContent align="end" className="bg-white !w-64 gap-4 flex flex-col">
+        {data && data.length > 0
+          ? data.map((list) => (
+              <button className="flex items-center gap-3 text-sm px-2 text-start" key={list.id}>
+                <LuFileText className="text-xl" /> <span className="w-full truncate">{list.name}</span>
+              </button>
+            ))
+          : null}
+
+        <button
+          className="w-full bg-orange-200 text-center p-1.5 rounded-lg text-sauced-orange flex items-center justify-center gap-2"
+          onClick={() =>
+            router.push({
+              pathname: "/hub/lists/find",
+              query: { contributors: JSON.stringify(selectedContributors) },
+            })
+          }
+        >
+          <FaCirclePlus className="text-lg" /> Create List
+        </button>
+      </PopoverContent>
+    );
+  };
 
   return (
     <>
@@ -83,12 +129,31 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
       ) : (
         <div className="lg:min-w-[1150px]">
           <ContributorListTableHeaders handleOnSelectAllContributor={() => {}} range={range} />
-          <ContributorTable
-            handleSelectContributors={() => {}}
-            loading={isLoading}
-            topic={topic}
-            contributors={data}
-          ></ContributorTable>
+          {selectedContributors.length > 0 && (
+            <div className="border px-4 py-2 flex justify-between items-center ">
+              <div className="text-slate-600">{selectedContributors.length} Contributors selected</div>
+              <Popover
+                open={popoverOpen}
+                onOpenChange={(value) => {
+                  setPopoverOpen(value);
+                }}
+              >
+                <PopoverTrigger>
+                  <Button variant="primary">Add to list</Button>
+                </PopoverTrigger>
+                {popoverOpen && <PopOverListContent />}
+              </Popover>
+            </div>
+          )}
+          <ClientOnly>
+            <ContributorTable
+              handleSelectContributors={onSelectContributor}
+              loading={isLoading}
+              topic={topic}
+              contributors={data}
+              selectedContributors={selectedContributors}
+            ></ContributorTable>
+          </ClientOnly>
         </div>
       )}
 

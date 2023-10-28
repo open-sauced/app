@@ -54,6 +54,7 @@ const ContributorListTableRow = ({
   const login = contributor.author_login || contributor.username;
   const { data: user } = useFetchUser(contributor.author_login);
   const { data } = useContributorPullRequests(login, topic, [], range);
+  const [fallbackContributor, setFallbackContributor] = useState<DbPRContributor>(contributor);
   const repoList = useRepoList(Array.from(new Set(data.map((prData) => prData.full_name))).join(","));
   const contributorLanguageList = user ? Object.keys(user.languages).map((language) => language) : [];
   const days = getPullRequestsToDays(data, range);
@@ -67,7 +68,11 @@ const ContributorListTableRow = ({
   ];
   const mergedPrs = data.filter((prData) => prData.merged);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    if (user && !contributor.user_id) {
+      setFallbackContributor((prev) => ({ ...prev, user_id: user.id }));
+    }
+  }, [contributor]);
 
   return (
     <>
@@ -79,7 +84,7 @@ const ContributorListTableRow = ({
               checked={selected ? true : false}
               disabled={!user}
               title={!user ? "Connect to GitHub" : ""}
-              onCheckedChange={(state) => handleOnSelectContributor?.(state as boolean, contributor)}
+              onCheckedChange={(state) => handleOnSelectContributor?.(state as boolean, fallbackContributor)}
               className={`${user && "border-orange-500 hover:bg-orange-600"}`}
             />
           )}
@@ -149,7 +154,7 @@ const ContributorListTableRow = ({
             checked={selected ? true : false}
             disabled={!user}
             title={!user ? "Connect to GitHub" : ""}
-            onCheckedChange={(state) => handleOnSelectContributor?.(state as boolean, contributor)}
+            onCheckedChange={(state) => handleOnSelectContributor?.(!!state, fallbackContributor)}
             className={`${user && "border-orange-500 hover:bg-orange-600"}`}
           />
         )}
