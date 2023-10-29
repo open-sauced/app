@@ -209,7 +209,7 @@ const AddContributorsToList = ({ list, timezoneOption }: AddContributorsPageProp
           selected={selectedContributors.length > 0 && selectedContributors.length === meta.limit}
           handleOnSelectAllContributor={onAllChecked}
         />
-        {data.length > 0 || isLoading ? (
+        {data.length > 0 || isLoading || (makeRequest && data.length === 0) ? (
           <ContributorTable
             loading={isLoading}
             selectedContributors={selectedContributors}
@@ -218,7 +218,7 @@ const AddContributorsToList = ({ list, timezoneOption }: AddContributorsPageProp
             contributors={contributors as DbPRContributor[]}
           />
         ) : (
-          <EmptyState />
+          !makeRequest && <EmptyState />
         )}
         <div className="flex items-center justify-between w-full py-1 md:py-4 md:mt-5">
           <PaginationResults metaInfo={meta} total={meta.itemCount} entity={"contributors"} />
