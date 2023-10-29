@@ -4,9 +4,10 @@ import clsx from "clsx";
 
 import { useEffect, useState } from "react";
 
+import Link from "next/link";
+import { MdOutlineArrowBackIos } from "react-icons/md";
 import SingleSelect from "components/atoms/Select/single-select";
 import Button from "components/atoms/Button/button";
-import Text from "components/atoms/Typography/text";
 import Search from "components/atoms/Search/search";
 import useDebounceTerm from "lib/hooks/useDebounceTerm";
 
@@ -15,7 +16,7 @@ interface AddContributorsHeaderProps {
   timezone?: string;
   setTimezoneFilter: (timezone: string) => void;
   selectedContributorsIds: number[];
-  title?: string;
+  list: DbUserList;
   onAddToList?: () => void;
   loading?: boolean;
   onSearch: (searchTerm: string | undefined) => void;
@@ -24,7 +25,7 @@ interface AddContributorsHeaderProps {
 
 const AddContributorsHeader = ({
   selectedContributorsIds,
-  title,
+  list,
   onAddToList,
   loading,
   timezone,
@@ -41,11 +42,16 @@ const AddContributorsHeader = ({
 
   return (
     <div className="relative flex flex-col justify-between w-full gap-6 py-2">
-      <div className="flex flex-col justify-between w-full md:flex-row">
-        <div className="header-image mr-2  min-w-[130px] gap-3 flex flex-col">
-          <h1>{title}</h1>
-          <Text className="text-light-slate-9">Select contributors to add to your list</Text>
-        </div>
+      <div className="flex flex-col justify-between items-center w-full md:flex-row">
+        <h1 className="text-2xl flex items-center">
+          <Link
+            className="inline-block p-3 mr-2 border rounded-lg cursor-pointer bg-light-slate-1"
+            href={`/lists/${list.id}/edit`}
+          >
+            <MdOutlineArrowBackIos title="Go To Insight Page" className="text-lg text-light-slate-10" />
+          </Link>
+          Add contributors to {list.name}
+        </h1>
         <div className="flex flex-col items-center justify-center gap-6 md:flex-row header-info max-sm:mt-4">
           <div className="flex items-center order-2 gap-2 md:flex-row md:order-1">
             <span

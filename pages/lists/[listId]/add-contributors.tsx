@@ -194,7 +194,7 @@ const AddContributorsToList = ({ list, timezoneOption }: AddContributorsPageProp
       <div className="info-container container w-full min-h-[6.25rem]">
         <Header>
           <AddContributorsHeader
-            title={list.name}
+            list={list}
             setTimezoneFilter={onSelectTimeZone}
             selectedContributorsIds={selectedContributors.map(({ user_id }) => user_id)}
             timezoneOptions={timezoneList}
