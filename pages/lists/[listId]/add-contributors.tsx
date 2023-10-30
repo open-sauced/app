@@ -191,7 +191,7 @@ const useContributorSearch = (makeRequest: boolean) => {
 const EmptyState = () => (
   <div className="flex flex-col overflow-hidden border rounded-md">
     <div className="grid place-content-center w-full bg-white">
-      <Image src="/assets/contributors-empty-state.png" alt="" width="640" height="636" className="object-contain" />
+      <Image src="/assets/contributors-empty-state.svg" alt="" width="507" height="504" className="object-contain" />
     </div>
   </div>
 );
