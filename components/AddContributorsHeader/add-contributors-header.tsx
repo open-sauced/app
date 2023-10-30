@@ -43,14 +43,14 @@ const AddContributorsHeader = ({
   return (
     <div className="relative flex flex-col justify-between w-full gap-6 py-2">
       <div className="flex flex-col justify-between items-center w-full md:flex-row">
-        <h1 className="text-2xl flex items-center">
+        <h1 className="self-start text-2xl flex items-center">
           <Link
             className="inline-block p-3 mr-2 border rounded-lg cursor-pointer bg-light-slate-1"
             href={`/lists/${list.id}/edit`}
           >
             <MdOutlineArrowBackIos title="Go To Insight Page" className="text-lg text-light-slate-10" />
           </Link>
-          Add contributors to {list.name}
+          Add contributors
         </h1>
         <div className="flex flex-col items-center justify-center gap-6 md:flex-row header-info max-sm:mt-4">
           <div className="flex items-center order-2 gap-2 md:flex-row md:order-1">
