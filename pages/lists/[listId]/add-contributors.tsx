@@ -28,12 +28,6 @@ export function isListId(listId: string) {
   return regex.test(listId);
 }
 
-interface CreateListPayload {
-  name: string;
-  is_public: boolean;
-  contributors: { id: number; login: string }[];
-}
-
 interface AddContributorsPageProps {
   list: DbUserList;
   initialData: {
