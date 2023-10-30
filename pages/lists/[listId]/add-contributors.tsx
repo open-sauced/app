@@ -40,6 +40,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     data: { session },
   } = await supabase.auth.getSession();
   const bearerToken = session ? session.access_token : "";
+  const userId = Number(session?.user.user_metadata.sub);
 
   const fetchTimezone = fetchApiData<{ timezone: string }[]>({
     path: `lists/timezones`,
@@ -56,8 +57,8 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     }),
   ]);
 
-  // TODO: Only the list owner should be allowed to add contributors
-  if (listError?.status === 404) {
+  // Only the list owner should be allowed to add contributors
+  if (listError?.status === 404 || (list && list.user_id !== userId)) {
     return {
       notFound: true,
     };
