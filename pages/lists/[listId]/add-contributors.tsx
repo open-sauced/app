@@ -21,6 +21,13 @@ import Title from "components/atoms/Typography/title";
 import Text from "components/atoms/Typography/text";
 import Button from "components/atoms/Button/button";
 
+// TODO: Move to a shared file
+export function isListId(listId: string) {
+  const regex = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
+
+  return regex.test(listId);
+}
+
 interface CreateListPayload {
   name: string;
   is_public: boolean;
@@ -52,12 +59,19 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     pathValidator: validateListPath,
   });
 
+  if (!isListId(listId)) {
+    return {
+      notFound: true,
+    };
+  }
+
   const [{ data: timezoneOptions }, { data: list, error: listError }] = await Promise.all([
     fetchTimezone,
     fetchApiData<DBList>({
       path: `lists/${listId}`,
       bearerToken,
-      pathValidator: validateListPath,
+      // TODO: remove this in another PR for cleaning up fetchApiData
+      pathValidator: () => true,
     }),
   ]);
 
