@@ -25,6 +25,7 @@ import { TeamMemberData } from "components/molecules/TeamMembersConfig/team-memb
 import useInsightMembers from "lib/hooks/useInsightMembers";
 import { useFetchInsightRecommendedRepositories } from "lib/hooks/useFetchOrgRecommendations";
 import { RepoCardProfileProps } from "components/molecules/RepoCardProfile/repo-card-profile";
+import { reportUsage } from "lib/utils/feature-access";
 import SuggestedRepositoriesList from "../SuggestedRepoList/suggested-repo-list";
 
 // lazy import DeleteInsightPageModal and TeamMembersConfig component to optimize bundle size they don't load on initial render
@@ -213,8 +214,9 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
     });
     setCreateLoading(false);
     if (response.ok) {
-      const { id } = await response.json();
       toast({ description: "Page created successfully", variant: "success" });
+      reportUsage("insights");
+      const { id } = await response.json();
       router.push(`/pages/${user.user_metadata.user_name}/${id}/dashboard`);
     }
 

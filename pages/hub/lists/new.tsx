@@ -17,6 +17,7 @@ import { useToast } from "lib/hooks/useToast";
 import GitHubImportDialog from "components/organisms/GitHubImportDialog/github-import-dialog";
 import GitHubTeamSyncDialog from "components/organisms/GitHubTeamSyncDialog/github-team-sync-dialog";
 import { fetchGithubOrgTeamMembers } from "lib/hooks/fetchGithubTeamMembers";
+import { reportUsage } from "lib/utils/feature-access";
 
 interface CreateListPayload {
   name: string;
@@ -192,6 +193,7 @@ const CreateListPage = () => {
         toast({ description: "List created successfully", variant: "success" });
       }
 
+      reportUsage("lists");
       router.push(`/lists/${response.id}/overview`);
     } else {
       toast({ description: "An error occurred!", variant: "danger" });
