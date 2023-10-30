@@ -19,13 +19,10 @@ export async function fetchApiData<T>({
   headers?: HeadersInit;
   body?: object;
   bearerToken: string;
-  pathValidator(path: string): boolean;
+  pathValidator?(path: string): boolean;
 }) {
-  if (!pathValidator(path)) {
-    //   return { data: null, error: { status: 400, statusText: "bad request" } };
-  }
-
-  const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/${path}`;
+  const baseUrl = new URL(process.env.NEXT_PUBLIC_API_URL!);
+  const apiUrl = new URL(`${baseUrl.pathname}/${path}`, baseUrl);
   const init: RequestInit = {
     method,
     headers: {
