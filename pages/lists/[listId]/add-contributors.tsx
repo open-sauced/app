@@ -80,18 +80,20 @@ interface ContributorsAddedModalProps {
   list: DbUserList;
   contributorCount: number;
   isOpen: boolean;
+  onClose: () => void;
 }
 
 interface ErrorModalProps {
   list: DbUserList;
   isOpen: boolean;
   onRetry: () => void;
+  onClose: () => void;
 }
 
-const ErrorModal = ({ list, isOpen, onRetry }: ErrorModalProps) => {
+const ErrorModal = ({ list, isOpen, onRetry, onClose }: ErrorModalProps) => {
   return (
     <Dialog open={isOpen}>
-      <DialogContent className="grid place-content-center">
+      <DialogContent onEscapeKeyDown={(event) => onClose()} className="grid place-content-center">
         <div className="flex flex-col max-w-xs gap-6 w-max p-4">
           <div className="flex flex-col items-center gap-2">
             <span className="flex items-center justify-center p-3 bg-red-100 rounded-full w-max">
@@ -120,10 +122,10 @@ const ErrorModal = ({ list, isOpen, onRetry }: ErrorModalProps) => {
   );
 };
 
-const ContributorsAddedModal = ({ list, contributorCount, isOpen }: ContributorsAddedModalProps) => {
+const ContributorsAddedModal = ({ list, contributorCount, isOpen, onClose }: ContributorsAddedModalProps) => {
   return (
     <Dialog open={isOpen}>
-      <DialogContent className="grid place-content-center">
+      <DialogContent onEscapeKeyDown={(event) => onClose()} className="grid place-content-center">
         <div className="flex flex-col max-w-xs gap-6 w-max p-4">
           <div className="flex flex-col items-center gap-2">
             <span className="flex items-center justify-center p-3 bg-green-100 rounded-full w-max">
@@ -313,7 +315,15 @@ const AddContributorsToList = ({ list, timezoneOption }: AddContributorsPageProp
         </div>
       </div>
       {contributorsAdded && (
-        <ContributorsAddedModal list={list} contributorCount={selectedContributors.length} isOpen={contributorsAdded} />
+        <ContributorsAddedModal
+          list={list}
+          contributorCount={selectedContributors.length}
+          isOpen={contributorsAdded}
+          onClose={() => {
+            setContributorsAdded(false);
+            setSelectedContributors([]);
+          }}
+        />
       )}
       {contributorsAddedError && (
         <ErrorModal
@@ -322,6 +332,9 @@ const AddContributorsToList = ({ list, timezoneOption }: AddContributorsPageProp
           onRetry={() => {
             setContributorsAddedError(false);
             addContributorsToList();
+          }}
+          onClose={() => {
+            setContributorsAddedError(false);
           }}
         />
       )}
