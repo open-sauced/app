@@ -91,7 +91,7 @@ interface ErrorModalProps {
 const ErrorModal = ({ list, isOpen, onRetry }: ErrorModalProps) => {
   return (
     <Dialog open={isOpen}>
-      <DialogContent>
+      <DialogContent className="grid place-content-center">
         <div className="flex flex-col max-w-xs gap-6 w-max p-4">
           <div className="flex flex-col items-center gap-2">
             <span className="flex items-center justify-center p-3 bg-red-100 rounded-full w-max">
