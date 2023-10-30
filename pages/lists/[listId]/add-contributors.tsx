@@ -3,7 +3,7 @@ import { GetServerSidePropsContext } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 
 import Image from "next/image";
-import { FiCheckCircle } from "react-icons/fi";
+import { FiAlertOctagon, FiCheckCircle } from "react-icons/fi";
 import useFetchAllContributors from "lib/hooks/useFetchAllContributors";
 import { fetchApiData, validateListPath } from "helpers/fetchApiData";
 import { timezones } from "lib/utils/timezones";
@@ -16,7 +16,6 @@ import Pagination from "components/molecules/Pagination/pagination";
 import PaginationResults from "components/molecules/PaginationResults/pagination-result";
 import AddContributorsHeader from "components/AddContributorsHeader/add-contributors-header";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
-import { useToast } from "lib/hooks/useToast";
 import { Dialog, DialogContent } from "components/molecules/Dialog/dialog";
 import Title from "components/atoms/Typography/title";
 import Text from "components/atoms/Typography/text";
@@ -81,10 +80,47 @@ interface ContributorsAddedModalProps {
   list: DbUserList;
   contributorCount: number;
   isOpen: boolean;
-  onClose: () => void;
 }
 
-const ContributorsAddedModal = ({ list, contributorCount, isOpen, onClose }: ContributorsAddedModalProps) => {
+interface ErrorModalProps {
+  list: DbUserList;
+  isOpen: boolean;
+  onRetry: () => void;
+}
+
+const ErrorModal = ({ list, isOpen, onRetry }: ErrorModalProps) => {
+  return (
+    <Dialog open={isOpen}>
+      <DialogContent>
+        <div className="flex flex-col max-w-xs gap-6 w-max p-4">
+          <div className="flex flex-col items-center gap-2">
+            <span className="flex items-center justify-center p-3 bg-red-100 rounded-full w-max">
+              <span className="flex items-center justify-center w-10 h-10 bg-red-300 rounded-full">
+                <FiAlertOctagon className="text-red-800" size={24} />
+              </span>
+            </span>
+            <Title level={3} className="text-lg">
+              Something went wrong
+            </Title>
+            <Text className="leading-tight text-center text-light-slate-9">
+              We couldn&apos;t add the new contributors to your list. Please try again.
+            </Text>
+          </div>
+          <div className="flex gap-3">
+            <Button href={`/lists/${list.id}/overview`} className="justify-center flex-1" variant="default">
+              Go Back to List
+            </Button>
+            <Button onClick={onRetry} className="justify-center flex-1" variant="primary">
+              Try again
+            </Button>
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+};
+
+const ContributorsAddedModal = ({ list, contributorCount, isOpen }: ContributorsAddedModalProps) => {
   return (
     <Dialog open={isOpen}>
       <DialogContent>
@@ -103,12 +139,7 @@ const ContributorsAddedModal = ({ list, contributorCount, isOpen, onClose }: Con
             </Text>
           </div>
           <div className="flex gap-3">
-            <Button
-              onClick={onClose}
-              href={`/lists/${list.id}/overview`}
-              className="justify-center flex-1"
-              variant="primary"
-            >
+            <Button href={`/lists/${list.id}/overview`} className="justify-center flex-1" variant="primary">
               Go to List
             </Button>
           </div>
@@ -158,8 +189,8 @@ const AddContributorsToList = ({ list, timezoneOption }: AddContributorsPageProp
   const { setContributorSearchTerm, timezone, setTimezone, data, meta, isLoading, setPage } =
     useContributorSearch(makeRequest);
   const { sessionToken } = useSupabaseAuth();
-  const { toast } = useToast();
   const [contributorsAdded, setContributorsAdded] = useState(false);
+  const [contributorsAddedError, setContributorsAddedError] = useState(false);
 
   const addContributorsToList = async () => {
     const { error } = await fetchApiData({
@@ -171,10 +202,7 @@ const AddContributorsToList = ({ list, timezoneOption }: AddContributorsPageProp
     });
 
     if (error) {
-      toast({
-        description: "Unable to add new contributors",
-        variant: "danger",
-      });
+      setContributorsAddedError(true);
     } else {
       setContributorsAdded(true);
     }
@@ -285,13 +313,15 @@ const AddContributorsToList = ({ list, timezoneOption }: AddContributorsPageProp
         </div>
       </div>
       {contributorsAdded && (
-        <ContributorsAddedModal
+        <ContributorsAddedModal list={list} contributorCount={selectedContributors.length} isOpen={contributorsAdded} />
+      )}
+      {contributorsAddedError && (
+        <ErrorModal
           list={list}
-          contributorCount={selectedContributors.length}
-          isOpen={contributorsAdded}
-          onClose={(_) => {
-            setContributorsAdded(false);
-            setSelectedContributors([]);
+          isOpen={true}
+          onRetry={() => {
+            setContributorsAddedError(false);
+            addContributorsToList();
           }}
         />
       )}
