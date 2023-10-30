@@ -3,6 +3,7 @@ import { GetServerSidePropsContext } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 
 import Image from "next/image";
+import { FiCheckCircle } from "react-icons/fi";
 import useFetchAllContributors from "lib/hooks/useFetchAllContributors";
 import { fetchApiData, validateListPath } from "helpers/fetchApiData";
 import { timezones } from "lib/utils/timezones";
@@ -16,6 +17,10 @@ import PaginationResults from "components/molecules/PaginationResults/pagination
 import AddContributorsHeader from "components/AddContributorsHeader/add-contributors-header";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { useToast } from "lib/hooks/useToast";
+import { Dialog, DialogContent } from "components/molecules/Dialog/dialog";
+import Title from "components/atoms/Typography/title";
+import Text from "components/atoms/Typography/text";
+import Button from "components/atoms/Button/button";
 
 interface CreateListPayload {
   name: string;
@@ -72,6 +77,47 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   };
 };
 
+interface ContributorsAddedModalProps {
+  list: DbUserList;
+  contributorCount: number;
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+const ContributorsAddedModal = ({ list, contributorCount, isOpen, onClose }: ContributorsAddedModalProps) => {
+  return (
+    <Dialog open={isOpen}>
+      <DialogContent>
+        <div className="flex flex-col max-w-xs gap-6 w-max p-4">
+          <div className="flex flex-col items-center gap-2">
+            <span className="flex items-center justify-center p-3 bg-green-100 rounded-full w-max">
+              <span className="flex items-center justify-center w-10 h-10 bg-green-300 rounded-full">
+                <FiCheckCircle className="text-green-800" size={24} />
+              </span>
+            </span>
+            <Title level={3} className="text-lg">
+              You&apos;ve added {contributorCount} new {contributorCount > 1 ? "contributors" : "contributor"}
+            </Title>
+            <Text className="leading-tight text-center text-light-slate-9">
+              You can now get insights into their activity from your list dashboard.
+            </Text>
+          </div>
+          <div className="flex gap-3">
+            <Button
+              onClick={onClose}
+              href={`/lists/${list.id}/overview`}
+              className="justify-center flex-1"
+              variant="primary"
+            >
+              Go to List
+            </Button>
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+};
+
 const useContributorSearch = (makeRequest: boolean) => {
   const [contributorSearchTerm, setContributorSearchTerm] = useState<string | undefined>();
   const [timezone, setTimezone] = useState<string | undefined>();
@@ -113,6 +159,7 @@ const AddContributorsToList = ({ list, timezoneOption }: AddContributorsPageProp
     useContributorSearch(makeRequest);
   const { sessionToken } = useSupabaseAuth();
   const { toast } = useToast();
+  const [contributorsAdded, setContributorsAdded] = useState(false);
 
   const addContributorsToList = async () => {
     const { error } = await fetchApiData({
@@ -129,11 +176,7 @@ const AddContributorsToList = ({ list, timezoneOption }: AddContributorsPageProp
         variant: "danger",
       });
     } else {
-      toast({
-        description: "Contributors added successfully",
-        variant: "success",
-      });
-      setSelectedContributors([]);
+      setContributorsAdded(true);
     }
   };
 
@@ -241,6 +284,17 @@ const AddContributorsToList = ({ list, timezoneOption }: AddContributorsPageProp
           </div>
         </div>
       </div>
+      {contributorsAdded && (
+        <ContributorsAddedModal
+          list={list}
+          contributorCount={selectedContributors.length}
+          isOpen={contributorsAdded}
+          onClose={(_) => {
+            setContributorsAdded(false);
+            setSelectedContributors([]);
+          }}
+        />
+      )}
     </HubContributorsPageLayout>
   );
 };
