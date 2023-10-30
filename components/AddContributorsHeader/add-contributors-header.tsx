@@ -50,7 +50,7 @@ const AddContributorsHeader = ({
           >
             <MdOutlineArrowBackIos title="Go To Insight Page" className="text-lg text-light-slate-10" />
           </Link>
-          Add contributors
+          {list.name}
         </h1>
         <div className="flex flex-col items-center justify-center gap-6 md:flex-row header-info max-sm:mt-4">
           <div className="flex items-center order-2 gap-2 md:flex-row md:order-1">
@@ -79,16 +79,16 @@ const AddContributorsHeader = ({
         </div>
       </div>
       <div className="flex flex-col w-full gap-2 md:flex-row">
-        <label className="flex w-full">
-          <span className="sr-only">Search for new contributors</span>
+        <label className="flex w-full flex-col gap-4">
+          Select contributors to add to your list
           <Search
             placeholder="Search for new contributors"
-            className="!w-full text-sm py-1.5"
+            className="self- !w-full text-sm py-1.5"
             name={"contributors"}
             onChange={(value) => setContributorSearch(value)}
           />
         </label>
-        <div className="flex items-center gap-4 ">
+        <div className="flex items-center gap-4 self-auto md:self-end">
           <SingleSelect
             options={timezoneOptions}
             position="popper"
