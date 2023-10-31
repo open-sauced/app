@@ -101,8 +101,6 @@ const NewListCreationPage = ({ initialData, timezoneOption }: NewListCreationPag
     }
   );
 
-  console.log(JSON.parse(contributorIds));
-
   useEffect(() => {
     if (!title && router.query.name) {
       setTitle(router.query.name as string);

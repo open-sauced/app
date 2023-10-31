@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import { LuFileText } from "react-icons/lu";
 
-import { FaCirclePlus } from "react-icons/fa6";
+import { IoCheckmarkSharp } from "react-icons/io5";
 import useStore from "lib/store";
 import Pagination from "components/molecules/Pagination/pagination";
 import PaginationResults from "components/molecules/PaginationResults/pagination-result";
@@ -20,7 +20,9 @@ import ContributorListTableHeaders from "components/molecules/ContributorListTab
 import ClientOnly from "components/atoms/ClientOnly/client-only";
 import { Popover, PopoverContent, PopoverTrigger } from "components/molecules/Popover/popover";
 import Button from "components/atoms/Button/button";
-import { useFetchAllLists } from "lib/hooks/useList";
+import { addListContributor, useFetchAllLists } from "lib/hooks/useList";
+import { Command, CommandGroup, CommandInput, CommandItem } from "components/atoms/Cmd/command";
+import { useToast } from "lib/hooks/useToast";
 import ContributorCard from "../ContributorCard/contributor-card";
 import ContributorTable from "../ContributorsTable/contributors-table";
 
@@ -31,6 +33,7 @@ interface ContributorProps {
 const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
   const router = useRouter();
   const topic = router.query.pageId as string;
+  const { toast } = useToast();
   const store = useStore();
   const range = useStore((state) => state.range);
   const [layout, setLayout] = useState<ToggleValue>("list");
@@ -53,7 +56,13 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
     }
   };
 
-  const onSelectAllContributors = (state: boolean) => {};
+  const onSelectAllContributors = (state: boolean) => {
+    if (state) {
+      setSelectedContributors(data);
+    } else {
+      setSelectedContributors([]);
+    }
+  };
 
   const contributorArray = isError
     ? []
@@ -71,28 +80,98 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
 
   const PopOverListContent = () => {
     const { data } = useFetchAllLists();
+    const [loading, setLoading] = useState(false);
+    const [selectedListIds, setSelectedListIds] = useState<string[]>([]);
+
+    const handleAddContributorsToList = async () => {
+      if (!selectedListIds.length) {
+        return;
+      }
+
+      setLoading(true);
+      const response = Promise.all(
+        selectedListIds.map((listIds) =>
+          addListContributor(
+            listIds,
+            selectedContributors.map((contributor) => contributor.user_id)
+          )
+        )
+      );
+      response
+        .then((res) => {
+          toast({
+            description: `Successfully added ${selectedContributors.length} contributors to ${selectedListIds.length} lists!`,
+            variant: "success",
+          });
+        })
+        .catch((res) => {
+          toast({
+            description: `
+            An error occurred while adding contributors to lists. Please try again later.
+          `,
+            variant: "danger",
+          });
+        })
+        .finally(() => {
+          setLoading(false);
+          setPopoverOpen(false);
+          setSelectedListIds([]);
+          setSelectedContributors([]);
+        });
+    };
 
     return (
       <PopoverContent align="end" className="bg-white !w-64 gap-4 flex flex-col">
-        {data && data.length > 0
-          ? data.map((list) => (
-              <button className="flex items-center gap-3 text-sm px-2 text-start" key={list.id}>
-                <LuFileText className="text-xl" /> <span className="w-full truncate">{list.name}</span>
-              </button>
-            ))
-          : null}
+        <Command loop className="w-full px-0 bg-transparent">
+          <CommandInput placeholder={"Search Lists"} />
+          <CommandGroup className="flex flex-col !px-0 overflow-scroll max-h-48">
+            {data && data.length > 0
+              ? data.map((list) => (
+                  <CommandItem key={list.id}>
+                    <button
+                      onClick={() => {
+                        if (selectedListIds.includes(list.id)) {
+                          setSelectedListIds(selectedListIds.filter((id) => id !== list.id));
+                        } else {
+                          setSelectedListIds([...selectedListIds, list.id]);
+                        }
+                      }}
+                      className="flex items-center gap-3 text-sm w-full  text-start"
+                    >
+                      <LuFileText className="text-xl shrink-0" /> <span className="w-full truncate">{list.name}</span>
+                      {selectedListIds.includes(list.id) ? (
+                        <IoCheckmarkSharp className="w-4 h-4 ml-2 text-sauced-orange shrink-0" />
+                      ) : null}
+                    </button>
+                  </CommandItem>
+                ))
+              : null}
+          </CommandGroup>
+        </Command>
 
-        <button
-          className="w-full bg-orange-200 text-center p-1.5 rounded-lg text-sauced-orange flex items-center justify-center gap-2"
-          onClick={() =>
-            router.push({
-              pathname: "/hub/lists/find",
-              query: { contributors: JSON.stringify(selectedContributors) },
-            })
-          }
-        >
-          <FaCirclePlus className="text-lg" /> Create List
-        </button>
+        <div className="flex items-center gap-4">
+          <Button
+            onClick={() => {
+              router.push({
+                pathname: "/hub/lists/find",
+                query: { contributors: JSON.stringify(selectedContributors) },
+              });
+            }}
+            variant="text"
+            className="py-1 flex-1"
+          >
+            New list
+          </Button>
+          <Button
+            loading={loading}
+            onClick={handleAddContributorsToList}
+            disabled={selectedListIds.length === 0}
+            variant="primary"
+            className="py-1 flex-1"
+          >
+            Add to list
+          </Button>
+        </div>
       </PopoverContent>
     );
   };
@@ -128,7 +207,7 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
         </div>
       ) : (
         <div className="lg:min-w-[1150px]">
-          <ContributorListTableHeaders handleOnSelectAllContributor={() => {}} range={range} />
+          <ContributorListTableHeaders handleOnSelectAllContributor={onSelectAllContributors} range={range} />
           {selectedContributors.length > 0 && (
             <div className="border px-4 py-2 flex justify-between items-center ">
               <div className="text-slate-600">{selectedContributors.length} Contributors selected</div>
