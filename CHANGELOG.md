@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.74.0-beta.5](https://github.com/open-sauced/insights/compare/v1.74.0-beta.4...v1.74.0-beta.5) (2023-10-31)
+
+
+### 🍕 Features
+
+* add GitHub Org Repositories sync to insight page creation ([#2023](https://github.com/open-sauced/insights/issues/2023)) ([e5f38ac](https://github.com/open-sauced/insights/commit/e5f38acba6345fa5e22ec39ac9a58d2c63254209))
+
 ## [1.74.0-beta.4](https://github.com/open-sauced/insights/compare/v1.74.0-beta.3...v1.74.0-beta.4) (2023-10-31)
 
 
