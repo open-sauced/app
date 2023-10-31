@@ -8,6 +8,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { SessionContextProvider } from "@supabase/auth-helpers-react";
 import { SWRConfig } from "swr";
+import NextNProgress from "nextjs-progressbar";
 
 import posthog from "posthog-js";
 import { PostHogProvider } from "posthog-js/react";
@@ -142,7 +143,7 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
           provider: localStorageProvider,
         }}
       >
-        {/* <Toaster position="top-center" /> */}
+        <NextNProgress color="#f97316" height={4} />
         <Toaster />
         <SessionContextProvider supabaseClient={supabaseClient} initialSession={pageProps.initialSession}>
           <PostHogProvider client={posthog}>

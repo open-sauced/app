@@ -88,6 +88,7 @@
     "echarts": "^5.4.1",
     "echarts-for-react": "^3.0.2",
     "next": "^13.4.7",
+    "nextjs-progressbar": "^0.0.16",
     "octokit": "^2.0.14",
     "path-to-regexp": "^6.2.1",
     "posthog-js": "^1.83.0",
