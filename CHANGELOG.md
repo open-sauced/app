@@ -5,6 +5,21 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.74.0-beta.3](https://github.com/open-sauced/insights/compare/v1.74.0-beta.2...v1.74.0-beta.3) (2023-10-30)
+
+
+### 🐛 Bug Fixes
+
+* remove build commands from netlify.toml ([#2018](https://github.com/open-sauced/insights/issues/2018)) ([138a125](https://github.com/open-sauced/insights/commit/138a125d3727ca85fe14caac472a939e2fec1586))
+
+## [1.74.0-beta.2](https://github.com/open-sauced/insights/compare/v1.74.0-beta.1...v1.74.0-beta.2) (2023-10-27)
+
+
+### 🐛 Bug Fixes
+
+* don't recommend discordapp & use user's full id ([c5cad45](https://github.com/open-sauced/insights/commit/c5cad45195288793098846c45f926b71db5e3c5f))
+* don't recommend discordapp as url & use user's full id ([#2014](https://github.com/open-sauced/insights/issues/2014)) ([58df997](https://github.com/open-sauced/insights/commit/58df997e6532c0492b91256b2fdfa04234cb4824))
+
 ## [1.74.0-beta.1](https://github.com/open-sauced/insights/compare/v1.73.0...v1.74.0-beta.1) (2023-10-26)
 
 

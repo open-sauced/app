@@ -325,7 +325,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
             />
             <TextInput
               className="font-medium bg-light-slate-4 text-light-slate-11"
-              placeholder="https://discordapp.com/users/832877193112762362"
+              placeholder="https://discord.com/users/832877193112762362"
               label="Discord URL"
               onChange={handleValidateDiscordUrl}
               name="discord_url"
