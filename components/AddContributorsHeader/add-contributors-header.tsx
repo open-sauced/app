@@ -80,7 +80,7 @@ const AddContributorsHeader = ({
       </div>
       <div className="flex flex-col w-full gap-2 md:flex-row">
         <label className="flex w-full flex-col gap-4">
-          Select contributors to add to your list
+          Search for contributors to add to your list
           <Search
             placeholder="Search for new contributors"
             className="self- !w-full text-sm py-1.5"
