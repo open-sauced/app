@@ -304,8 +304,8 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
               <label>Time zone*</label>
               <Select
                 onValueChange={(value) => {
-                  const separatedValue = value ? value.split("_").at(0) || "" : "";
-                  setTimezone(separatedValue);
+                  const noTrailingSpaceValue = value ? value.replace(/\s+$/, "") || "" : "";
+                  setTimezone(noTrailingSpaceValue);
                 }}
                 value={timezone}
                 required
@@ -323,7 +323,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
 
                 <SelectContent position="item-aligned" className="bg-white">
                   {timezones.map((timezone, index) => (
-                    <SelectItem key={`timezone_${index}`} value={`${timezone.value}_${index}`}>
+                    <SelectItem key={`timezone_${index}`} value={`${timezone.value}`}>
                       {timezone.text}
                     </SelectItem>
                   ))}
