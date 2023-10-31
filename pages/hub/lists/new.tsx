@@ -11,10 +11,12 @@ import Title from "components/atoms/Typography/title";
 import TopNav from "components/organisms/TopNav/top-nav";
 import Footer from "components/organisms/Footer/footer";
 import InfoCard from "components/molecules/InfoCard/info-card";
-import GitHubImportDialog from "components/organisms/GitHubImportDialog/github-import-dialog";
 
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { useToast } from "lib/hooks/useToast";
+import GitHubImportDialog from "components/organisms/GitHubImportDialog/github-import-dialog";
+import GitHubTeamSyncDialog from "components/organisms/GitHubTeamSyncDialog/github-team-sync-dialog";
+import { fetchGithubOrgTeamMembers } from "lib/hooks/fetchGithubTeamMembers";
 
 interface CreateListPayload {
   name: string;
@@ -31,12 +33,13 @@ interface GhFollowing {
 const CreateListPage = () => {
   const router = useRouter();
   const { toast } = useToast();
-  const { sessionToken, providerToken, user } = useSupabaseAuth();
+  const { sessionToken, providerToken, user, username } = useSupabaseAuth();
 
   const [name, setName] = useState("");
   const [isPublic, setIsPublic] = useState(false);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isTeamModalOpen, setIsTeamModalOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
   const handleOnNameChange = (value: string) => {
@@ -144,6 +147,59 @@ const CreateListPage = () => {
     }
   };
 
+  const handleGitHubTeamSync = async (props: { follow: boolean; organization: string; teamSlug: string }) => {
+    if (!user || !providerToken) {
+      toast({ description: "Unable to connect to GitHub! Try logging out and re-connecting.", variant: "warning" });
+      return;
+    }
+    const { organization, teamSlug } = props;
+
+    setSubmitted(true);
+    const req = await fetchGithubOrgTeamMembers(organization, teamSlug);
+
+    if (req.isError) {
+      toast({ description: "Unable to sync team", variant: "warning" });
+      setSubmitted(false);
+      return;
+    }
+
+    const teamList: GhOrgTeamMember[] = req.data;
+
+    if (teamList.length === 0) {
+      toast({ description: "The selected team is empty", variant: "danger" });
+      setSubmitted(false);
+      return;
+    }
+
+    const response = await createList({
+      name,
+      contributors: teamList.map((user) => ({ id: user.id, login: user.login })),
+      is_public: isPublic,
+    });
+
+    if (response) {
+      if (props.follow) {
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${user?.user_metadata.user_name}/follows`, {
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${sessionToken}`,
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify({
+            usernames: teamList.map((member) => member.login),
+          }),
+        }).catch(() => {});
+
+        toast({ description: "List created successfully", variant: "success" });
+      }
+
+      router.push(`/lists/${response.id}/overview`);
+    } else {
+      toast({ description: "An error occurred!", variant: "danger" });
+      setSubmitted(false);
+    }
+  };
+
   return (
     <section className="flex flex-col justify-center w-full py-4 xl:flex-row xl:gap-20">
       <div className="flex flex-col">
@@ -199,7 +255,25 @@ const CreateListPage = () => {
           />
 
           <InfoCard
-            title="Import your GitHub following"
+            title="Sync your GitHub Team"
+            description="Connect to your GitHub to create a list from a team in your organization"
+            icon="github"
+            handleClick={() => {
+              if (!name) {
+                toast({
+                  description: "List name is required",
+                  variant: "danger",
+                });
+
+                return;
+              }
+
+              setIsTeamModalOpen(true);
+            }}
+          />
+
+          <InfoCard
+            title="Import your GitHub Following"
             description="Connect to your GitHub to create a list with all the Contributors you follow"
             icon="github"
             handleClick={() => {
@@ -217,6 +291,18 @@ const CreateListPage = () => {
           />
         </div>
       </div>
+
+      <div className="top-0 py-4 mt-5 lg:sticky md:mt-0 lg:py-0">
+        <div className="flex flex-col justify-between pt-8 mt-8 border-t"></div>
+      </div>
+
+      <GitHubTeamSyncDialog
+        open={isTeamModalOpen}
+        handleClose={() => setIsTeamModalOpen(false)}
+        handleSync={handleGitHubTeamSync}
+        loading={submitted}
+        username={username}
+      />
 
       <GitHubImportDialog
         open={isModalOpen}

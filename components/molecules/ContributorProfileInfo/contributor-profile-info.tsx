@@ -44,7 +44,7 @@ const ContributorProfileInfo = ({
   isMaintainer,
 }: ContributorProfileInfoProps) => {
   const interestArray = interests?.split(",").filter(Boolean);
-  const discordUserId = discordUrl?.match(/\d{4}$/)?.[0];
+  const discordUserId = discordUrl?.match(/\d{17,}$/)?.[0];
 
   return (
     <div className="flex flex-col gap-6">
