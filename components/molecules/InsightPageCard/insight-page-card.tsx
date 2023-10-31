@@ -10,8 +10,6 @@ import { getRelativeDays } from "lib/utils/date-utils";
 import getRepoInsights from "lib/utils/get-repo-insights";
 
 import useRepositories from "lib/hooks/api/useRepositories";
-import { copyToClipboard } from "lib/utils/copy-to-clipboard";
-
 import CardRepoList from "../CardRepoList/card-repo-list";
 import PieChart, { PieData } from "../PieChart/pie-chart";
 import StackedAvatar from "../StackedAvatar/stacked-avatar";
@@ -119,11 +117,7 @@ const InsightPageCard = ({ insight, user }: InsightPageCardProps): JSX.Element =
       {/* Card footer */}
       <div className="flex mt-4 justify-between">
         <Button
-          onClick={() =>
-            copyToClipboard(
-              `${new URL(`/pages/${user?.user_metadata.user_name}/${insight.id}/dashboard`, location.origin)}`
-            )
-          }
+          onClick={() => handleCopyToClipboard(`/pages/${user?.user_metadata.user_name}/${insight.id}/dashboard`)}
           className="w-48"
           variant="outline"
         >
