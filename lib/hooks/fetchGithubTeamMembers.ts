@@ -31,6 +31,7 @@ const fetchGithubOrgTeamMembers = async (orgName: string, teamSlug: string) => {
       isError: null,
     };
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.log(e);
 
     return {
