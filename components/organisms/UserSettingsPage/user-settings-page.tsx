@@ -63,8 +63,6 @@ const DeleteAccountModal = ({ open, setOpen, onDelete }: DeleteAccountModalProps
           <div className="flex gap-4">
             <Button
               type="submit"
-              rel="noopener noreferrer"
-              target="_blank"
               className="w-max border-dark-red-8 bg-dark-red-8 text-white hover:border-dark-red-7 hover:bg-dark-red-7"
               variant="primary"
               onClick={() => {
