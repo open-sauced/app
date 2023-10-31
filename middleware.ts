@@ -12,6 +12,7 @@ const pathsToMatch = [
   "/feed/",
   "/user/notifications",
   "/user/settings",
+  "/account-deleted"
 ];
 
 export async function middleware(req: NextRequest) {
@@ -27,6 +28,14 @@ export async function middleware(req: NextRequest) {
   const {
     data: { session },
   } = await supabase.auth.getSession();
+
+  if (session?.user && req.nextUrl.pathname === "/account-deleted") {
+    // Delete the account from Supabase and log the user out.
+    await supabase.auth.admin.deleteUser(session.user.id);
+    await supabase.auth.signOut();
+
+    return res;
+  }
 
   // Check auth condition
   if (session?.user || req.nextUrl.searchParams.has("login")) {
