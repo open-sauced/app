@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.74.0-beta.4](https://github.com/open-sauced/insights/compare/v1.74.0-beta.3...v1.74.0-beta.4) (2023-10-31)
+
+
+### 🍕 Features
+
+* add account deletion flow ([#1990](https://github.com/open-sauced/insights/issues/1990)) ([daeb10e](https://github.com/open-sauced/insights/commit/daeb10e064af0d4d6d64e6e66492fc55f4af8e17))
+
 ## [1.74.0-beta.3](https://github.com/open-sauced/insights/compare/v1.74.0-beta.2...v1.74.0-beta.3) (2023-10-30)
 
 
