@@ -22,6 +22,7 @@ import { useFetchUser } from "lib/hooks/useFetchUser";
 import { getInterestOptions } from "lib/utils/getInterestOptions";
 import { useToast } from "lib/hooks/useToast";
 import { validateTwitterUsername } from "lib/utils/validate-twitter-username";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "components/molecules/Dialog/dialog";
 import CouponForm from "./coupon-form";
 
 interface userSettingsPageProps {
@@ -32,7 +33,65 @@ type EmailPreferenceType = {
   display_email?: boolean;
   receive_collaboration?: boolean;
 };
+
+interface DeleteAccountModalProps {
+  open: boolean;
+  setOpen: (open: boolean) => void;
+  onDelete: () => void;
+}
+
+const DeleteAccountModal = ({ open, setOpen, onDelete }: DeleteAccountModalProps) => {
+  const [confirmText, setConfirmText] = useState("");
+  const disabled = confirmText !== "DELETE";
+
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogContent className="p-4">
+        <DialogHeader>
+          <DialogTitle className="text-left">Delete Account</DialogTitle>
+        </DialogHeader>
+        <div className="flex flex-col gap-4">
+          <Text>Are you sure you want to delete your account?</Text>
+          <Text>
+            Type <span className="font-bold text-light-red-10">DELETE</span> in all caps to confirm
+          </Text>
+          <TextInput
+            onChange={(e) => {
+              setConfirmText(e.target.value);
+            }}
+          />
+          <div className="flex gap-4">
+            <Button
+              type="submit"
+              className="w-max border-dark-red-8 bg-dark-red-8 text-white hover:border-dark-red-7 hover:bg-dark-red-7"
+              variant="primary"
+              onClick={() => {
+                if (!disabled) {
+                  onDelete();
+                }
+              }}
+              disabled={disabled}
+            >
+              Delete
+            </Button>
+            <Button
+              variant="default"
+              onClick={() => {
+                setOpen(false);
+              }}
+            >
+              Cancel
+            </Button>
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+};
+
 const UserSettingsPage = ({ user }: userSettingsPageProps) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const deleteFormRef = useRef<HTMLFormElement>(null);
   const { data: insightsUser, mutate } = useFetchUser(user?.user_metadata.user_name, {
     revalidateOnFocus: false,
   });
@@ -264,7 +323,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
             />
             <TextInput
               className="font-medium bg-light-slate-4 text-light-slate-11"
-              placeholder="https://discordapp.com/users/832877193112762362"
+              placeholder="https://discord.com/users/832877193112762362"
               label="Discord URL"
               onChange={handleValidateDiscordUrl}
               name="discord_url"
@@ -300,7 +359,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
               </span>
             </div>
 
-            <div className="flex flex-col gap-2">
+            <div id="upgrade" className="flex flex-col gap-2">
               <label>Time zone*</label>
               <Select onValueChange={(value) => setTimezone(value)} value={timezone} required>
                 <SelectTrigger
@@ -390,44 +449,84 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
             </Button>
           </div>
           {userInfo && (
-            <div>
-              {!hasReports && !coupon ? (
-                <div className="flex flex-col order-first gap-6 md:order-last">
-                  <div className="flex flex-col gap-3">
-                    <label className="text-2xl font-normal text-light-slate-11">Upgrade Access</label>
-                    <div className="w-full sm:max-w-80">
-                      <Text>Upgrade to a subscription to gain access to generate custom reports!</Text>
-                    </div>
-                  </div>
-                  <StripeCheckoutButton variant="primary" />
-
-                  {!coupon && <CouponForm refreshUser={mutate} />}
-                </div>
-              ) : (
-                <div>
+            <>
+              <div>
+                {!hasReports && !coupon ? (
                   <div className="flex flex-col order-first gap-6 md:order-last">
                     <div className="flex flex-col gap-3">
-                      <label className="text-2xl font-normal text-light-slate-11">Manage Subscriptions</label>
-                      <div className="w-full md:w-96">
-                        <Text>
-                          You are currently subscribed to the Pro plan and currently have access to all premium
-                          features.
-                        </Text>
+                      <label className="text-2xl font-normal text-light-slate-11">Upgrade Access</label>
+                      <div className="w-full sm:max-w-80">
+                        <Text>Upgrade to a subscription to gain access to generate custom reports!</Text>
                       </div>
                     </div>
-                    <Button
-                      rel="noopener noreferrer"
-                      target="_blank"
-                      href={process.env.NEXT_PUBLIC_STRIPE_SUB_CANCEL_URL}
-                      className="w-max"
-                      variant="primary"
-                    >
-                      Cancel Subscription
-                    </Button>
+                    <StripeCheckoutButton variant="primary" />
+
+                    {!coupon && <CouponForm refreshUser={mutate} />}
+                  </div>
+                ) : (
+                  <div>
+                    <div className="flex flex-col order-first gap-6 md:order-last">
+                      <div className="flex flex-col gap-3">
+                        <label className="text-2xl font-normal text-light-slate-11">Manage Subscriptions</label>
+                        <div className="w-full md:w-96">
+                          <Text>
+                            You are currently subscribed to the Pro plan and currently have access to all premium
+                            features.
+                          </Text>
+                        </div>
+                      </div>
+                      <Button
+                        rel="noopener noreferrer"
+                        target="_blank"
+                        href={process.env.NEXT_PUBLIC_STRIPE_SUB_CANCEL_URL}
+                        className="w-max"
+                        variant="primary"
+                      >
+                        Cancel Subscription
+                      </Button>
+                    </div>
+                  </div>
+                )}
+              </div>
+              <form
+                name="delete-account"
+                action="/api/delete-account"
+                method="POST"
+                className="flex flex-col order-first gap-6 md:order-last"
+                ref={deleteFormRef}
+                onSubmit={(e) => {
+                  setIsModalOpen(true);
+                  e.preventDefault();
+                }}
+              >
+                <div className="flex flex-col gap-3">
+                  <label className="text-2xl font-normal text-light-slate-11">Delete Account</label>
+                  <div className="w-full md:w-96">
+                    <Text>
+                      Please note that account deletion is irreversible. Proceed only if you are certain about this
+                      action.
+                    </Text>
                   </div>
                 </div>
-              )}
-            </div>
+                <Button
+                  type="submit"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                  className="w-max border-dark-red-8 bg-dark-red-8 text-white hover:border-dark-red-7 hover:bg-dark-red-7"
+                  variant="primary"
+                >
+                  Delete Account
+                </Button>
+                <DeleteAccountModal
+                  open={isModalOpen}
+                  setOpen={setIsModalOpen}
+                  onDelete={() => {
+                    setIsModalOpen(false);
+                    deleteFormRef.current?.submit();
+                  }}
+                />
+              </form>
+            </>
           )}
         </div>
       </div>

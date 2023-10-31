@@ -31,6 +31,7 @@ import { OptionKeys } from "components/atoms/Select/multi-select";
 import { addListContributor, useFetchAllLists } from "lib/hooks/useList";
 import { useFetchUser } from "lib/hooks/useFetchUser";
 import { cardPageUrl } from "lib/utils/urls";
+import { copyToClipboard } from "lib/utils/copy-to-clipboard";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../Dialog/dialog";
 
 const MultiSelect = dynamic(() => import("components/atoms/Select/multi-select"), { ssr: false });
@@ -65,6 +66,7 @@ const ContributorProfileHeader = ({
 }: ContributorProfileHeaderProps) => {
   const router = useRouter();
   const currentPath = router.asPath;
+
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const { requestConnection } = useUserConnections();
@@ -122,6 +124,7 @@ const ContributorProfileHeader = ({
       await navigator.clipboard.writeText(url);
       toast({ description: "Copied to clipboard", variant: "success" });
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.log(error);
     }
   };
@@ -182,7 +185,7 @@ const ContributorProfileHeader = ({
             </div>
           </Link>
         </div>
-        {isConnected && (
+        {isConnected ? (
           <div className="flex flex-col items-center gap-3 translate-y-24 md:translate-y-0 md:flex-row">
             <div className="flex flex-wrap items-center justify-center gap-2 mb-10 md:gap-6">
               {user ? (
@@ -313,6 +316,25 @@ const ContributorProfileHeader = ({
               </DropdownMenu>
             </div>
           </div>
+        ) : (
+          <div className="flex flex-wrap items-center justify-center max-md:translate-y-14">
+            {!isOwner && (
+              <Button
+                onClick={() => {
+                  copyToClipboard(`${new URL(currentPath, location.origin)}`).then(() => {
+                    toast({
+                      title: "Copied to clipboard",
+                      description: "Share this link with your friend to invite them to OpenSauced!",
+                      variant: "success",
+                    });
+                  });
+                }}
+                variant="primary"
+              >
+                Invite to opensauced
+              </Button>
+            )}
+          </div>
         )}
       </div>
 
@@ -434,7 +456,7 @@ const AddToListDropdown = ({ username }: { username: string }) => {
           </Link>
         </div>
       }
-      className="w-10 md:px-4 max-sm:text-sm"
+      className="md:px-4 max-sm:text-sm"
       placeholder="Add to list"
       options={listOptions}
       selected={selectedList}

@@ -29,6 +29,7 @@ const Avatar = (props: AvatarProps): JSX.Element => {
         ? cachedImage(props.avatarURL as string, process.env.NEXT_PUBLIC_CLOUD_NAME)
         : props.avatarURL;
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error(error);
   }
 

@@ -1,25 +1,32 @@
 import { Octokit } from "octokit";
 import { supabase } from "lib/utils/supabase";
 
-interface GhPullInfoResponse {
-  data: GhPRInfoResponse;
+interface GhOrgTeamResponse {
+  data: GhOrgTeam[];
   status: number;
   headers: {};
 }
-const fetchGithubPRInfo = async (orgName: string | null, repoName: string | null, issueId: string | null) => {
+
+const fetchGithubOrgTeams = async (orgName: string | null) => {
   const sessionResponse = await supabase.auth.getSession();
   const sessionToken = sessionResponse?.data.session?.provider_token;
+
+  if (!sessionToken) {
+    return {
+      data: [],
+      isError: true,
+    };
+  }
+
   try {
     const octokit = new Octokit({ auth: sessionToken });
 
-    const response: GhPullInfoResponse = await octokit.request("GET /repos/{orgName}/{repoName}/pulls/{issueId}", {
+    const response: GhOrgTeamResponse = await octokit.request("GET /orgs/{orgName}/teams", {
       orgName,
-      repoName,
-      issueId,
     });
 
     return {
-      data: response.data ?? undefined,
+      data: response.data ?? [],
       isError: null,
     };
   } catch (e) {
@@ -27,10 +34,10 @@ const fetchGithubPRInfo = async (orgName: string | null, repoName: string | null
     console.log(e);
 
     return {
-      data: null,
+      data: [],
       isError: true,
     };
   }
 };
 
-export { fetchGithubPRInfo };
+export { fetchGithubOrgTeams };
