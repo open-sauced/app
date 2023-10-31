@@ -462,7 +462,7 @@ export const timezones = [
     utc: ["Europe/Isle_of_Man", "Europe/Guernsey", "Europe/Jersey", "Europe/London"],
   },
   {
-    value: "GMT Standard Time",
+    value: "GMT Standard Time ",
     abbr: "GDT",
     offset: 1,
     isdst: true,
