@@ -38,6 +38,7 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
   const range = useStore((state) => state.range);
   const [layout, setLayout] = useState<ToggleValue>("list");
   const [selectedContributors, setSelectedContributors] = useState<DbPRContributor[]>([]);
+  const [selectedListIds, setSelectedListIds] = useState<string[]>([]);
   const [popoverOpen, setPopoverOpen] = useState(false);
   const { data, meta, setPage, setLimit, isError, isLoading } = useContributors(10, repositories, range);
 
@@ -81,7 +82,6 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
   const PopOverListContent = () => {
     const { data } = useFetchAllLists();
     const [loading, setLoading] = useState(false);
-    const [selectedListIds, setSelectedListIds] = useState<string[]>([]);
 
     const handleAddContributorsToList = async () => {
       if (!selectedListIds.length) {
