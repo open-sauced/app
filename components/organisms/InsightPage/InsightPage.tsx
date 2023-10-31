@@ -32,7 +32,7 @@ import SuggestedRepositoriesList from "../SuggestedRepoList/suggested-repo-list"
 const DeleteInsightPageModal = dynamic(() => import("./DeleteInsightPageModal"));
 const TeamMembersConfig = dynamic(() => import("components/molecules/TeamMembersConfig/team-members-config"));
 
-enum RepoLookupError {
+const enum RepoLookupError {
   Initial = 0,
   NotIndexed = 1,
   Invalid = 3,
@@ -382,7 +382,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
       return <RepoNotIndexed />;
     }
 
-    return <></>;
+    return null;
   };
 
   const handleDeleteInsightPage = async () => {
