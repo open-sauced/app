@@ -31,14 +31,14 @@ import SuggestedRepositoriesList from "../SuggestedRepoList/suggested-repo-list"
 const DeleteInsightPageModal = dynamic(() => import("./DeleteInsightPageModal"));
 const TeamMembersConfig = dynamic(() => import("components/molecules/TeamMembersConfig/team-members-config"));
 
-enum RepoLookupError {
+const enum RepoLookupError {
   Initial = 0,
   NotIndexed = 1,
   Invalid = 3,
   Error = 4,
 }
 
-enum OrgLookupError {
+const enum OrgLookupError {
   Initial = 0,
   Invalid = 1,
   Error = 2,
@@ -392,7 +392,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
       return <RepoNotIndexed />;
     }
 
-    return <></>;
+    return null;
   };
 
   const getOrganizationLookupError = (code: OrgLookupError) => {
