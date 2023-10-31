@@ -112,7 +112,7 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
           localStorage.setItem("app-cache", appCache);
         } catch (error) {
           if (error instanceof Error && error.name === "QuotaExceededError")
-          // eslint-disable-next-line no-console
+            // eslint-disable-next-line no-console
             return console.warn("⚠ local storage limit exceeded ⚠");
 
           throw error;
