@@ -16,6 +16,7 @@ Default.args = {
   name: "test",
   checked: false,
   size: "base",
+  ariaLabel: "This is a toggle switch",
 };
 Small.args = {
   name: "test",
