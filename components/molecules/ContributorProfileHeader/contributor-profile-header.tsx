@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from "react";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import Image from "next/image";
+import { clsx } from "clsx";
+import { usePostHog } from "posthog-js/react";
 
 import { TfiMoreAlt } from "react-icons/tfi";
 import { HiUserAdd } from "react-icons/hi";
-import { FaIdCard } from "react-icons/fa";
+import { SlUserFollowing } from "react-icons/sl";
 import { SignInWithOAuthCredentials, User } from "@supabase/supabase-js";
-import { usePostHog } from "posthog-js/react";
-import { clsx } from "clsx";
+
+import dynamic from "next/dynamic";
+import PizzaGradient from "img/icons/pizza-gradient.svg";
 
 import {
   DropdownMenu,
@@ -15,16 +19,22 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "components/atoms/Dropdown/dropdown";
-
 import Avatar from "components/atoms/Avatar/avatar";
+import Tooltip from "components/atoms/Tooltip/tooltip";
 import RainbowBg from "img/rainbow-cover.png";
 import Button from "components/atoms/Button/button";
 import Text from "components/atoms/Typography/text";
 import { Textarea } from "components/atoms/Textarea/text-area";
-import { useUserCollaborations } from "lib/hooks/useUserCollaborations";
+import { useUserConnections } from "lib/hooks/useUserConnections";
 import { useToast } from "lib/hooks/useToast";
+import { OptionKeys } from "components/atoms/Select/multi-select";
+import { addListContributor, useFetchAllLists } from "lib/hooks/useList";
+import { useFetchUser } from "lib/hooks/useFetchUser";
 import { cardPageUrl } from "lib/utils/urls";
+import { copyToClipboard } from "lib/utils/copy-to-clipboard";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../Dialog/dialog";
+
+const MultiSelect = dynamic(() => import("components/atoms/Select/multi-select"), { ssr: false });
 
 interface ContributorProfileHeaderProps {
   avatarUrl?: string;
@@ -37,7 +47,7 @@ interface ContributorProfileHeaderProps {
   username: string | undefined;
   handleSignIn: (params: SignInWithOAuthCredentials) => void;
   isOwner: boolean;
-  isRecievingCollaborations?: boolean;
+  isRecievingConnections?: boolean;
   isPremium?: boolean;
 }
 const ContributorProfileHeader = ({
@@ -51,14 +61,15 @@ const ContributorProfileHeader = ({
   user,
   handleSignIn,
   isOwner,
-  isRecievingCollaborations,
+  isRecievingConnections,
   isPremium,
 }: ContributorProfileHeaderProps) => {
   const router = useRouter();
   const currentPath = router.asPath;
+
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { requestCollaboration } = useUserCollaborations();
+  const { requestConnection } = useUserConnections();
   const [message, setMessage] = useState("");
   const [charCount, setCharCount] = useState(0);
   const [isCheckingCharLimit, setIsCheckingCharLimit] = useState<boolean>(false);
@@ -82,12 +93,12 @@ const ContributorProfileHeader = ({
     }
   };
 
-  const handleCollaborationRequest = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleConnectionRequest = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (message && username) {
       setLoading(true);
-      await requestCollaboration({ username, message });
+      await requestConnection({ username, message });
       setIsDialogOpen(false);
       setTimeout(() => {
         document.body.setAttribute("style", "pointer-events:auto !important");
@@ -113,6 +124,7 @@ const ContributorProfileHeader = ({
       await navigator.clipboard.writeText(url);
       toast({ description: "Copied to clipboard", variant: "success" });
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.log(error);
     }
   };
@@ -132,7 +144,7 @@ const ContributorProfileHeader = ({
       )}
 
       <div className="container flex flex-row items-end justify-between gap-2 px-2 py-6 mx-auto md:px-16">
-        <div className="translate-y-[65px] hidden md:inline-flex">
+        <div className="translate-y-[65px] hidden md:inline-flex relative">
           <Avatar
             initialsClassName="text-[100px] -translate-y-2.5  leading-none"
             initials={githubName?.charAt(0)}
@@ -142,8 +154,19 @@ const ContributorProfileHeader = ({
             size={184}
             isCircle
           />
+
+          <Tooltip content="Get dev card">
+            <Link
+              href={cardPageUrl(username!)}
+              className="absolute bottom-0 z-10 grid w-12 h-12 rounded-full shadow-md place-content-center border-conic-gradient right-4"
+            >
+              <div className="grid overflow-hidden rounded-full w-11 h-11 place-content-center bg-black/80">
+                <Image priority alt="user profile cover image" className="w-6 h-[1.7rem] " src={PizzaGradient} />
+              </div>
+            </Link>
+          </Tooltip>
         </div>
-        <div className="translate-y-[110px] md:hidden ">
+        <div className="translate-y-[110px] md:hidden relative">
           <Avatar
             initialsClassName="text-[70px] -translate-y-1 leading-none"
             initials={githubName?.charAt(0)}
@@ -153,26 +176,54 @@ const ContributorProfileHeader = ({
             size={120}
             isCircle
           />
+          <Link
+            href={cardPageUrl(username!)}
+            className="absolute bottom-0 z-10 grid rounded-full shadow-md w-11 h-11 right-1 place-content-center border-conic-gradient"
+          >
+            <div className="grid w-[2.5em] h-[2.5em] overflow-hidden rounded-full place-content-center bg-black/80">
+              <Image priority alt="user profile cover image" className="w-5 h-5 " src={PizzaGradient} />
+            </div>
+          </Link>
         </div>
-        {isConnected && (
+        {isConnected ? (
           <div className="flex flex-col items-center gap-3 translate-y-24 md:translate-y-0 md:flex-row">
-            <div className="flex justify-center items-center  gap-2 mb-10 md:gap-6 flex-wrap">
+            <div className="flex flex-wrap items-center justify-center gap-2 mb-10 md:gap-6">
               {user ? (
                 !isOwner && (
                   <>
                     {isFollowing ? (
-                      <Button
-                        onClick={handleFollowClick}
-                        variant="primary"
-                        className="group w-[6.25rem] justify-center items-center"
-                      >
-                        <span className="text-center hidden sm:block group-hover:hidden">Following</span>
-                        <span className="text-center block sm:hidden group-hover:block">Unfollow</span>
-                      </Button>
+                      <>
+                        <Button
+                          onClick={handleFollowClick}
+                          variant="primary"
+                          className="group w-[6.25rem] justify-center items-center hidden md:flex"
+                        >
+                          <span className="hidden text-center sm:block group-hover:hidden">Following</span>
+                          <span className="block text-center sm:hidden group-hover:block">Unfollow</span>
+                        </Button>
+                        <button
+                          className="p-2 text-white rounded-lg md:hidden bg-sauced-orange"
+                          onClick={handleFollowClick}
+                        >
+                          <SlUserFollowing className="text-xl" />
+                        </button>
+                      </>
                     ) : (
-                      <Button variant="primary" className="w-[6.25rem] text-center" onClick={handleFollowClick}>
-                        <HiUserAdd fontSize={20} className="mr-1" /> Follow
-                      </Button>
+                      <>
+                        <Button
+                          variant="primary"
+                          className="w-[6.25rem] text-center hidden md:flex"
+                          onClick={handleFollowClick}
+                        >
+                          <HiUserAdd fontSize={20} className="mr-1" /> Follow
+                        </Button>
+                        <button
+                          onClick={handleFollowClick}
+                          className="p-2 text-white rounded-lg md:hidden bg-sauced-orange"
+                        >
+                          <HiUserAdd className="text-xl font-bold" />
+                        </button>
+                      </>
                     )}
                   </>
                 )
@@ -182,7 +233,7 @@ const ContributorProfileHeader = ({
                     className="sm:hidden"
                     variant="primary"
                     onClick={async () =>
-                      handleSignIn({ provider: "github", options: { redirectTo: `${host}/${currentPath}` } })
+                      handleSignIn({ provider: "github", options: { redirectTo: `${host}${currentPath}` } })
                     }
                   >
                     <HiUserAdd />
@@ -191,7 +242,7 @@ const ContributorProfileHeader = ({
                     className="w-[6.25rem] hidden sm:inline-flex"
                     variant="primary"
                     onClick={async () =>
-                      handleSignIn({ provider: "github", options: { redirectTo: `${host}/${currentPath}` } })
+                      handleSignIn({ provider: "github", options: { redirectTo: `${host}${currentPath}` } })
                     }
                   >
                     <HiUserAdd fontSize={20} className="mr-1" /> Follow
@@ -199,14 +250,10 @@ const ContributorProfileHeader = ({
                 </>
               )}
 
-              <Button className="sm:hidden bg-white" variant="text" href={cardPageUrl(username!)}>
-                <FaIdCard className="" />
-              </Button>
-              <Button className="hidden sm:inline-flex text-black" variant="default" href={cardPageUrl(username!)}>
-                <FaIdCard className="mt-1 mr-1" /> Get Card
-              </Button>
+              {user && !isOwner && <AddToListDropdown username={username ?? ""} />}
+
               <DropdownMenu modal={false}>
-                <div className="items-center gap-2 md:gap-6 flex-wrap">
+                <div className="flex-wrap items-center gap-2 md:gap-6">
                   {!isOwner && (
                     <DropdownMenuTrigger
                       title="More options"
@@ -230,10 +277,10 @@ const ContributorProfileHeader = ({
                           </button>
                         </DropdownMenuItem>
 
-                        {isPremium && isRecievingCollaborations && (
+                        {isPremium && isRecievingConnections && (
                           <DropdownMenuItem className="rounded-md">
                             <button onClick={() => setIsDialogOpen(true)} className="flex items-center gap-1 pl-3 pr-7">
-                              Collaborate
+                              Connect
                             </button>
                           </DropdownMenuItem>
                         )}
@@ -244,22 +291,22 @@ const ContributorProfileHeader = ({
                       <DropdownMenuItem className="rounded-md">
                         <button
                           onClick={async () =>
-                            handleSignIn({ provider: "github", options: { redirectTo: `${host}/${currentPath}` } })
+                            handleSignIn({ provider: "github", options: { redirectTo: `${host}${currentPath}` } })
                           }
                           className="flex items-center gap-1 pl-3 pr-7"
                         >
                           Share
                         </button>
                       </DropdownMenuItem>
-                      {isRecievingCollaborations && (
+                      {isRecievingConnections && (
                         <DropdownMenuItem className="rounded-md">
                           <button
                             onClick={async () =>
-                              handleSignIn({ provider: "github", options: { redirectTo: `${host}/${currentPath}` } })
+                              handleSignIn({ provider: "github", options: { redirectTo: `${host}${currentPath}` } })
                             }
                             className="flex items-center gap-1 pl-3 pr-7"
                           >
-                            Collaborate
+                            Connect
                           </button>
                         </DropdownMenuItem>
                       )}
@@ -268,8 +315,25 @@ const ContributorProfileHeader = ({
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
-
-            {/* Mobile dropdown menu */}
+          </div>
+        ) : (
+          <div className="flex flex-wrap items-center justify-center max-md:translate-y-14">
+            {!isOwner && (
+              <Button
+                onClick={() => {
+                  copyToClipboard(`${new URL(currentPath, location.origin)}`).then(() => {
+                    toast({
+                      title: "Copied to clipboard",
+                      description: "Share this link with your friend to invite them to OpenSauced!",
+                      variant: "success",
+                    });
+                  });
+                }}
+                variant="primary"
+              >
+                Invite to opensauced
+              </Button>
+            )}
           </div>
         )}
       </div>
@@ -277,10 +341,10 @@ const ContributorProfileHeader = ({
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogContent className="w-full md:!w-2/3 px-4 py-8 md:space-y-4">
           <DialogHeader>
-            <DialogTitle className="!text-3xl text-left">Collaborate with {username}!</DialogTitle>
+            <DialogTitle className="!text-3xl text-left">Connect with {username}!</DialogTitle>
           </DialogHeader>
 
-          <form onSubmit={handleCollaborationRequest} className="flex flex-col w-full gap-2 px-4 md:gap-8 md:px-14 ">
+          <form onSubmit={handleConnectionRequest} className="flex flex-col w-full gap-2 px-4 md:gap-8 md:px-14 ">
             <div className="space-y-2">
               <label htmlFor="message">Send a message</label>
               <Textarea
@@ -324,6 +388,81 @@ const ContributorProfileHeader = ({
         </DialogContent>
       </Dialog>
     </div>
+  );
+};
+
+// Making this dropdown seperate to optimize for performance and not fetch certain data until the dropdown is rendered
+const AddToListDropdown = ({ username }: { username: string }) => {
+  const [selectListOpen, setSelectListOpen] = useState(false);
+  const [selectedList, setSelectedList] = useState<OptionKeys[]>([]);
+  const { data } = useFetchAllLists();
+  const { data: contributor } = useFetchUser(username ?? "");
+  const { toast } = useToast();
+
+  const listOptions = data ? data.map((list) => ({ label: list.name, value: list.id })) : [];
+
+  const handleSelectList = (value: OptionKeys) => {
+    const isOptionSelected = selectedList.some((s) => s.value === value.value);
+    if (isOptionSelected) {
+      setSelectedList((prev) => prev.filter((s) => s.value !== value.value));
+    } else {
+      setSelectedList((prev) => [...prev, value]);
+    }
+  };
+
+  const handleAddToList = async () => {
+    if (selectedList.length > 0 && contributor) {
+      const listIds = selectedList.map((list) => list.value);
+      const response = Promise.all(listIds.map((listIds) => addListContributor(listIds, [contributor.id])));
+
+      response
+        .then((res) => {
+          toast({
+            description: `
+          You've added ${username} to ${selectedList.length} list${selectedList.length > 1 ? "s" : ""}!`,
+            variant: "success",
+          });
+        })
+        .catch((res) => {
+          const failedList = listOptions.filter((list) => res.some((r: any) => r.error?.list_id === list.value));
+          toast({
+            description: `
+          Failed to add ${username} to ${failedList[0].label} ${
+            failedList.length > 1 && `and ${failedList.length - 1} other lists`
+          } !
+          `,
+            variant: "danger",
+          });
+        });
+    }
+  };
+
+  useEffect(() => {
+    if (!selectListOpen && selectedList.length > 0) {
+      handleAddToList();
+      setSelectedList([]);
+    }
+  }, [selectListOpen]);
+
+  return (
+    <MultiSelect
+      open={selectListOpen}
+      setOpen={setSelectListOpen}
+      emptyState={
+        <div className="">
+          You have no lists. <br />
+          <Link className="text-sauced-orange" href="/hub/lists/new">
+            Create a list
+          </Link>
+        </div>
+      }
+      className="md:px-4 max-sm:text-sm"
+      placeholder="Add to list"
+      options={listOptions}
+      selected={selectedList}
+      setSelected={setSelectedList}
+      handleSelect={(option) => handleSelectList(option)}
+    />
   );
 };
 

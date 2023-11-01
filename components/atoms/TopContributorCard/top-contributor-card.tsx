@@ -32,6 +32,7 @@ const TopContributorCard = ({ login, refreshLoggedInUser }: TopContributorCardPr
       await unFollow();
       refreshLoggedInUser();
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.log(error);
     }
   };
@@ -57,7 +58,7 @@ const TopContributorCard = ({ login, refreshLoggedInUser }: TopContributorCardPr
           onClick={() =>
             sessionToken
               ? handleFollowContributor()
-              : signIn({ provider: "github", options: { redirectTo: `${host}/${currentPath}` } })
+              : signIn({ provider: "github", options: { redirectTo: `${host}${currentPath}` } })
           }
           className="!px-2 !py-1 [&>span:nth-child(1)]:hover:hidden [&>span:nth-child(1)]:focus-visible:hidden [&>span:nth-child(2)]:hover:inline [&>span:nth-child(2)]:focus-visible:inline"
           variant="primary"
@@ -71,7 +72,7 @@ const TopContributorCard = ({ login, refreshLoggedInUser }: TopContributorCardPr
           onClick={() =>
             sessionToken
               ? handleFollowContributor()
-              : signIn({ provider: "github", options: { redirectTo: `${host}/${currentPath}` } })
+              : signIn({ provider: "github", options: { redirectTo: `${host}${currentPath}` } })
           }
           className="!px-2 !py-1 border-light-orange-7 text-light-orange-10"
           variant="text"

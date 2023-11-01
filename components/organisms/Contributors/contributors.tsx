@@ -24,8 +24,7 @@ interface ContributorProps {
 
 const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
   const router = useRouter();
-  const { filterName } = router.query;
-  const topic = filterName as string;
+  const topic = router.query.pageId as string;
   const store = useStore();
   const range = useStore((state) => state.range);
   const [layout, setLayout] = useState<ToggleValue>("grid");
@@ -83,7 +82,7 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
         </div>
       ) : (
         <div className="lg:min-w-[1150px]">
-          <ContributorListTableHeaders />
+          <ContributorListTableHeaders range={range} />
           <ContributorTable loading={isLoading} topic={topic} contributors={data}></ContributorTable>
         </div>
       )}

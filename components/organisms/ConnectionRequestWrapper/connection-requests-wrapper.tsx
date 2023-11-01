@@ -1,7 +1,7 @@
 import React from "react";
 import { isToday, isYesterday, formatDistanceToNowStrict } from "date-fns";
-import CollaborationCard from "components/molecules/CollaborationCard/collaboration-card";
-import { useUserCollaborations } from "lib/hooks/useUserCollaborations";
+import ConnectionCard from "components/molecules/ConnectionCard/connection-card";
+import { useUserConnections } from "lib/hooks/useUserConnections";
 import DashContainer from "components/atoms/DashedContainer/DashContainer";
 
 function formatPostDate(date: Date) {
@@ -14,8 +14,8 @@ function formatPostDate(date: Date) {
   }
 }
 
-const CollaborationRequestsWrapper = () => {
-  const { data, updateCollaborationStatus, deleteCollaborationRequest } = useUserCollaborations();
+const ConnectionRequestsWrapper = () => {
+  const { data, updateConnectionStatus, deleteConnectionRequest } = useUserConnections();
   let currentDate: string;
 
   const getDateGroupHeader = (date: Date, index: number) => {
@@ -32,22 +32,33 @@ const CollaborationRequestsWrapper = () => {
     return;
   };
 
+  const hasPendingRequest = (): boolean => {
+    return !!data.find((request) => request.status === "pending");
+  };
+
   return (
     <div>
-      {data && data.length > 0 ? (
+      {(data && data.length === 0) || hasPendingRequest() === false ? (
+        <DashContainer className="flex-col gap-6 md:gap-8 text-light-slate-9">
+          <p>No pending requests.</p>
+          <p className="text-center md:px-16">
+            Sometimes you got to be a friend to make a friend. Considering inviting other developers to OpenSauced
+          </p>
+        </DashContainer>
+      ) : (
         data
           .slice()
           .filter((request) => request.status === "pending")
           .sort((a, b) => +new Date(b.created_at) - +new Date(a.created_at))
           .map((requests, i) => {
             return (
-              <div className="flex flex-col w-full " key={i}>
+              <div className="flex flex-col w-full" key={i}>
                 <div className="w-full mt-1 text-center md:text-left">
                   {getDateGroupHeader(new Date(requests.created_at), i)}
                 </div>
-                <CollaborationCard
-                  onDecline={deleteCollaborationRequest}
-                  onAccept={updateCollaborationStatus}
+                <ConnectionCard
+                  onDecline={deleteConnectionRequest}
+                  onAccept={updateConnectionStatus}
                   requestId={requests.id}
                   className="self-end w-full mt-1 md:w-5/6 md:mt-1"
                   outreachMessage={requests.message}
@@ -56,17 +67,9 @@ const CollaborationRequestsWrapper = () => {
               </div>
             );
           })
-      ) : (
-        <DashContainer className="flex-col gap-6 md:gap-8 text-light-slate-9">
-          <p>No pending requests.</p>
-          <p className="text-center md:px-16">
-            Sometimes you got to be a friend to make a friend. Considering requesting collaboration on sharing profile
-            on social channels like GitHub or Twitter
-          </p>
-        </DashContainer>
       )}
     </div>
   );
 };
 
-export default CollaborationRequestsWrapper;
+export default ConnectionRequestsWrapper;

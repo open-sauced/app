@@ -16,17 +16,20 @@ body {
   content: "List Name";
   color: "#d1d5db" !important;
 }
-#sitegpt-chat-icon {
-  display: flex !important;
-}
 
 .login-step .sbui-btn-container {
   width: 100%;
 }
 
-.popover-width {
-  width: var(--radix-popover-trigger-width);
-  max-height: var(--radix-popover-content-available-height);
+.border-conic-gradient {
+  background-image: conic-gradient(
+    from 180deg at 50% 50%,
+    #ff6a06 0deg,
+    #ff6492 120.00000357627869deg,
+    #ffe22c 223.12500715255737deg,
+    #fc620d 360deg,
+    #ff7e33 360deg
+  );
 }
 
 .sbui-btn > span {
@@ -87,4 +90,43 @@ div[role="dialog"]::-webkit-scrollbar-thumb {
   --swiper-pagination-bottom: -5px;
   --swiper-pagination-bullet-inactive-color: rgb(255, 159, 115);
   --swiper-pagination-bullet-size: 8px;
+}
+
+.newsletter-wrap {
+  container: newsletterWrap / inline-size;
+}
+
+@container newsletterWrap (max-width: 240px) {
+  .form-wrap {
+    flex-wrap: wrap;
+  }
+  .form-wrap button {
+    width: 100%;
+  }
+}
+
+.loading {
+  animation-duration: 1.25s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-name: placeHolderShimmer;
+  animation-timing-function: linear;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0.1) 10%,
+    rgba(0, 0, 0, 0.05) 25%,
+    rgba(255, 255, 255, 0.1) 40%
+  );
+  box-shadow: inset 0 0 0 200px rgba(0, 0, 0, 0.05);
+  background-size: 800px 104px;
+  position: relative;
+}
+
+@keyframes placeHolderShimmer {
+  0% {
+    background-position: -468px 0;
+  }
+  100% {
+    background-position: 468px 0;
+  }
 }

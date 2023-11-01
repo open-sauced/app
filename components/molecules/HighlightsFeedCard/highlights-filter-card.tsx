@@ -21,7 +21,7 @@ const HighlightsFilterCard = ({ repos, setSelected, selectedFilter }: Highlights
         {repos.map(({ repoName, repoIcon, full_name }) => (
           <div
             onClick={() => handleClick(full_name)}
-            key={(repoName + repoIcon) as string}
+            key={full_name as string}
             className={`${
               selectedFilter === full_name ? "border-orange-600 bg-orange-200" : ""
             } flex hover:border-orange-600 hover:bg-orange-200 cursor-pointer gap-1 w-max  p-1 pr-2 border-[1px] border-light-slate-6 rounded-lg text-light-slate-12`}

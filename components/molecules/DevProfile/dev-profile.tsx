@@ -5,21 +5,29 @@ import Avatar from "components/atoms/Avatar/avatar";
 
 import { getAvatarByUsername } from "lib/utils/github";
 import { truncateString } from "lib/utils/truncate-string";
+import AvatarHoverCard from "components/atoms/Avatar/avatar-hover-card";
 
 interface DevProfileProps {
   username: string;
   company: string;
+  hasBorder: boolean;
 }
-const DevProfile = ({ username, company }: DevProfileProps) => {
+const DevProfile = ({ username, company, hasBorder }: DevProfileProps) => {
   return (
     <Link href={`/user/${username}`} className="flex items-center gap-2 text-light-slate-11">
       {/* Mobile */}
       <div className="rounded-full md:hidden">
-        <Avatar className="" size={45} isCircle avatarURL={getAvatarByUsername(username)} />
+        <Avatar
+          className={hasBorder ? "ring-2 ring-orange-500" : ""}
+          size={45}
+          isCircle
+          hasBorder={hasBorder}
+          avatarURL={getAvatarByUsername(username)}
+        />
       </div>
       {/* Desktop */}
       <div className="hidden rounded-full md:flex">
-        <Avatar className="" size={45} isCircle avatarURL={getAvatarByUsername(username)} />
+        <AvatarHoverCard contributor={username} repositories={[]} size="small" />
       </div>
       <div>
         <h1 className="text-light-slate-12">

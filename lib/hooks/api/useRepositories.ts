@@ -14,8 +14,8 @@ const useRepositories = (repoIds: number[] = [], range = 30) => {
   const router = useRouter();
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
-  const { filterName, selectedFilter } = router.query;
-  const topic = filterName as string;
+  const { pageId, selectedFilter } = router.query;
+  const topic = pageId as string;
   const filterQuery = getFilterQuery(selectedFilter);
   const query = new URLSearchParams(filterQuery);
 

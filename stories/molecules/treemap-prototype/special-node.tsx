@@ -1,6 +1,7 @@
 import { memo } from "react";
 import { animated } from "@react-spring/web";
-import { NodeProps, htmlNodeTransform } from "@nivo/treemap";
+import { htmlNodeTransform } from "lib/utils/nivo-utils";
+import type { NodeProps } from "@nivo/treemap";
 
 const NonMemoizedSpecialNode = <Datum extends object>({
   node,
@@ -11,34 +12,27 @@ const NonMemoizedSpecialNode = <Datum extends object>({
 }: NodeProps<Datum>) => {
   const showLabel =
     enableLabel && node.isLeaf && (labelSkipSize === 0 || Math.min(node.width, node.height) > labelSkipSize);
+  const [fullRepoName] = node.id.split(":");
 
   return (
     <animated.div
-      data-testid={`node.${node.id}`}
-      id={node.path.replace(/[^\w]/gi, "-")}
+      className="absolute grid overflow-hidden border-solid cursor-pointer place-content-stretch"
       style={{
-        boxSizing: "border-box",
-        position: "absolute",
         top: 0,
         left: 0,
         transform: htmlNodeTransform(animatedProps.x, animatedProps.y),
         width: animatedProps.width,
         height: animatedProps.height,
         borderWidth,
-        borderStyle: "solid",
         borderColor: node.borderColor,
-        overflow: "hidden",
-        display: "grid",
-        placeContent: "stretch",
       }}
     >
       <animated.div
         style={{
-          boxSizing: "border-box",
           opacity: node.opacity,
           width: animatedProps.width,
           height: animatedProps.height,
-          background: animatedProps.color,
+          background: node.color,
           gridArea: "1 / 1",
         }}
         onMouseEnter={node.onMouseEnter}
@@ -48,8 +42,7 @@ const NonMemoizedSpecialNode = <Datum extends object>({
       />
       {showLabel && (
         <animated.div
-          data-testid={`label.${node.id}`}
-          className="grid p-3 text-white place-items-start pointer-events-none"
+          className="grid p-3 text-white pointer-events-none place-items-start"
           style={{
             gridArea: "1 / 1",
             transformOrigin: "center center",
@@ -58,8 +51,8 @@ const NonMemoizedSpecialNode = <Datum extends object>({
           }}
         >
           <div className="grid gap-2">
-            <div className="font-medium text-sm">{node.id}</div>
-            <div className="font-normal text-xs" style={{ textOverflow: "ellipsis" }}>
+            <div className="text-sm font-medium">{fullRepoName}</div>
+            <div className="text-xs font-normal" style={{ textOverflow: "ellipsis" }}>
               {node.label}
             </div>
           </div>

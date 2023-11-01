@@ -23,6 +23,7 @@ const fetchGithubPRInfo = async (orgName: string | null, repoName: string | null
       isError: null,
     };
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.log(e);
 
     return {

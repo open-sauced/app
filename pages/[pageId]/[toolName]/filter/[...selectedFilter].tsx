@@ -1,21 +1,22 @@
 import { useRouter } from "next/router";
+
 import { useEffect } from "react";
+import FilterLayout from "layouts/filter";
+import { WithPageLayout } from "interfaces/with-page-layout";
 import Tool from "components/organisms/ToolsDisplay/tools-display";
 import changeCapitalization from "lib/utils/change-capitalization";
-import FilterLayout from "../../layouts/filter";
-import { WithPageLayout } from "../../interfaces/with-page-layout";
 
-const Filter: WithPageLayout = () => {
+const SelectedFilter: WithPageLayout = () => {
   const router = useRouter();
 
-  const { filterName, toolName } = router.query;
+  const { toolName, pageId } = router.query;
 
-  const title = `Open Sauced Insights ${filterName ? ` - ${changeCapitalization(filterName!.toString(), true)}` : ""} ${
+  const title = `Open Sauced Insights ${pageId ? ` - ${changeCapitalization(pageId!.toString(), true)}` : ""} ${
     toolName ? ` / ${changeCapitalization(toolName.toString(), true)}` : ""
   }`;
 
   useEffect(() => {
-    Filter.updateSEO!({
+    SelectedFilter.updateSEO!({
       title: title,
     });
   }, [title]);
@@ -23,6 +24,6 @@ const Filter: WithPageLayout = () => {
   return <Tool tool={toolName ? changeCapitalization(toolName.toString(), true) : undefined} />;
 };
 
-Filter.PageLayout = FilterLayout;
+SelectedFilter.PageLayout = FilterLayout;
 
-export default Filter;
+export default SelectedFilter;

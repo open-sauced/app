@@ -35,6 +35,7 @@ import NewsletterForm from "components/molecules/NewsletterForm/newsletter-form"
 import UserCard, { MetaObj } from "components/atoms/UserCard/user-card";
 import FeaturedHighlightsPanel from "components/molecules/FeaturedHighlightsPanel/featured-highlights-panel";
 import AnnouncementCard from "components/molecules/AnnouncementCard/announcement-card";
+import { useMediaQuery } from "lib/hooks/useMediaQuery";
 
 type activeTabType = "home" | "following";
 type highlightReposType = { repoName: string; repoIcon: string; full_name: string };
@@ -55,10 +56,13 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
   const repoTofilterList = (repos: { full_name: string }[]): highlightReposType[] => {
     const filtersArray = repos.map(({ full_name }) => {
       const [orgName, repo] = full_name.split("/");
-      return { repoName: repo, repoIcon: `https://www.github.com/${orgName}.png?size=300`, full_name };
+      const repoFullName = `${orgName}/${repo}`;
+      return { repoName: repo, repoIcon: `https://www.github.com/${orgName}.png?size=300`, full_name: repoFullName };
     });
-
-    return filtersArray;
+    const jsonObject = filtersArray.map((arrayItem) => JSON.stringify(arrayItem));
+    const uniqueSet = new Set(jsonObject);
+    const uniqueFilteredArray = Array.from(uniqueSet).map((arrayItem) => JSON.parse(arrayItem));
+    return uniqueFilteredArray;
   };
 
   const router = useRouter();
@@ -74,6 +78,8 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
     : undefined;
 
   const { data: followersRepo } = useFetchFollowersHighlightRepos();
+
+  const isDesktop = useMediaQuery("(min-width: 1280px)");
 
   const { data, mutate, setPage, isLoading, meta } = useFetchAllHighlights(selectedRepo);
   const { data: emojis } = useFetchAllEmojis();
@@ -209,11 +215,13 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
                 />
               </div>
             )}
-            <TopContributorsPanel
-              loggedInUserLogin={loggedInUser?.login ?? ""}
-              loggedInUserId={loggedInUser?.id ?? undefined}
-              refreshLoggedInUser={refreshLoggedInUser}
-            />
+            {isDesktop && (
+              <TopContributorsPanel
+                loggedInUserLogin={loggedInUser?.login ?? ""}
+                loggedInUserId={loggedInUser?.id ?? undefined}
+                refreshLoggedInUser={refreshLoggedInUser}
+              />
+            )}
             <AnnouncementCard
               title="#100DaysOfOSS 🚀 "
               description={
@@ -291,7 +299,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
             </DialogContent>
           </Dialog>
         )}
-        <Tabs onValueChange={onTabChange} defaultValue="home" className="grow">
+        <Tabs onValueChange={onTabChange} defaultValue="home" className="w-full 2xl:max-w-[40rem] xl:max-w-[33rem]">
           <TabsList className={clsx("justify-start  w-full border-b", !user && "hidden")}>
             <TabsTrigger
               className="data-[state=active]:border-sauced-orange data-[state=active]:border-b-2 text-lg"
@@ -308,7 +316,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
           </TabsList>
 
           {user && (
-            <div className="lg:gap-x-3 px-1 pt-4 flex max-w-3xl">
+            <div className="flex max-w-3xl px-1 pt-4 lg:gap-x-3">
               <div className="hidden lg:inline-flex pt-[0.4rem]">
                 <Avatar
                   alt="user profile avatar"
@@ -324,7 +332,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
           <TabsContent value="home">
             <HomeHighlightsWrapper emojis={emojis} mutate={mutate} highlights={data} loading={isLoading} />
             {meta.pageCount > 1 && (
-              <div className="mt-10 max-w-3xl flex px-2 items-center justify-between">
+              <div className="flex items-center justify-between max-w-3xl px-2 mt-10">
                 <div className="flex items-center w-max gap-x-4">
                   <PaginationResults metaInfo={meta} total={meta.itemCount} entity={"highlights"} />
                 </div>
@@ -352,7 +360,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
             <FollowingHighlightWrapper selectedFilter={selectedRepo} emojis={emojis} />
           </TabsContent>
         </Tabs>
-        <div className="hidden w-1/3 xl:w-1/4 flex-none gap-6 mt-10 lg:flex flex-col sticky top-20">
+        <div className="sticky flex-col flex-none hidden w-1/3 gap-6 mt-10 xl:w-1/4 lg:flex top-20">
           {repoList && repoList.length > 0 && (
             <HighlightsFilterCard
               setSelected={(repo) => {

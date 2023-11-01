@@ -44,7 +44,7 @@ const ContributorProfileInfo = ({
   isMaintainer,
 }: ContributorProfileInfoProps) => {
   const interestArray = interests?.split(",").filter(Boolean);
-  const discordUserId = discordUrl?.match(/\d{4}$/)?.[0];
+  const discordUserId = discordUrl?.match(/\d{17,}$/)?.[0];
 
   return (
     <div className="flex flex-col gap-6">
@@ -154,7 +154,7 @@ const ContributorProfileInfo = ({
               {/* <span className="flex gap-2 items-center">
                 <HiOutlineMail className="text-light-slate-9" />
                 <Link className="w-max hover:text-orange-500 " href="#">
-                  Send a collaboration request
+                  Send a connections request
                 </Link>
               </span> */}
             </div>

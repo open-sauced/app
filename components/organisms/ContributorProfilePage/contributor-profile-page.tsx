@@ -104,7 +104,7 @@ const ContributorProfilePage = ({
           isPremium={user ? user.role >= 50 : false}
           handleSignIn={signIn}
           username={user?.login}
-          isRecievingCollaborations={user?.receive_collaboration}
+          isRecievingConnections={user?.receive_collaboration}
           user={loggedInUser}
           isFollowing={followError ? false : true}
           isConnected={iscConnected}
@@ -116,7 +116,7 @@ const ContributorProfilePage = ({
         />
       )}
       <div className="container flex flex-col justify-between w-full px-2 pt-24 mx-auto overflow-hidden md:px-16 lg:flex-row lg:gap-40">
-        <div className="flex flex-col gap-4 w-80 ">
+        <div className="flex flex-col lg:gap-4 md:gap-2 lg:w-80 md:w-full">
           {loading ? (
             <SkeletonWrapper height={210} radius={12} classNames="pb-16 lg:pb-0" />
           ) : (

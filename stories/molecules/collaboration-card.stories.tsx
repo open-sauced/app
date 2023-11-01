@@ -1,17 +1,17 @@
 import { ComponentStory } from "@storybook/react";
-import CollaborationCard from "components/molecules/CollaborationCard/collaboration-card";
+import ConnectionCard from "components/molecules/ConnectionCard/connection-card";
 
 const storyConfig = {
-  title: "Design System/Molecules/Collaboration Card",
+  title: "Design System/Molecules/Connection Card",
 };
 
 export default storyConfig;
 
-const CollaborationCardTemplate: ComponentStory<typeof CollaborationCard> = (args) => <CollaborationCard {...args} />;
+const ConnectionCardTemplate: ComponentStory<typeof ConnectionCard> = (args) => <ConnectionCard {...args} />;
 
-export const CollaborationCardStory = CollaborationCardTemplate.bind({});
+export const ConnectionCardStory = ConnectionCardTemplate.bind({});
 
-CollaborationCardStory.args = {
+ConnectionCardStory.args = {
   outreachMessage:
     " Hello Nate, we’re currently working on a project and think that you would be a great fit for our team. Would yoube interested in joining us",
   requestor: {

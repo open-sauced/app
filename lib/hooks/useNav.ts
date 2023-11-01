@@ -26,7 +26,7 @@ const useNav = (repositories: number[] = []) => {
     },
   ];
 
-  const { filterName, toolName: selectedTool, selectedFilter, userOrg } = router.query;
+  const { pageId, toolName: selectedTool, selectedFilter, userOrg } = router.query;
 
   const toolList = defaultTools;
 
@@ -34,7 +34,7 @@ const useNav = (repositories: number[] = []) => {
     toolList,
     selectedTool,
     selectedFilter,
-    filterName,
+    filterName: pageId,
     userOrg,
   };
 };

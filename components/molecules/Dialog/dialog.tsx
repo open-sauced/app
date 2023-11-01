@@ -54,7 +54,7 @@ const DialogContent = React.forwardRef<
       ref={ref}
       className={clsx(
         className,
-        "fixed z-50 grid w-full pb-3 gap-4 rounded-b-lg bg-light-slate-2 lg:p-6 animate-in data-[state=open]:fade-in-90 data-[state=open]:slide-in-from-bottom-10 md:w-max sm:rounded-lg sm:zoom-in-90 data-[state=open]:sm:slide-in-from-bottom-0"
+        "fixed z-50 grid w-full pb-3 gap-4 bg-light-slate-2 lg:p-6 animate-in data-[state=open]:fade-in-90 data-[state=open]:slide-in-from-bottom-10 md:w-max rounded-lg sm:zoom-in-90 data-[state=open]:sm:slide-in-from-bottom-0"
       )}
       {...props}
     >

@@ -41,7 +41,6 @@ const TableHeader = ({
   onLayoutToggle,
 }: TableHeaderProps): JSX.Element => {
   const router = useRouter();
-  const { filterName } = router.query;
   const [searchTerm, setSearchTerm] = React.useState<string>("");
   const [suggestions, setSuggestions] = React.useState<string[]>([]);
   const [selected, setSelected] = React.useState<null | number>(null);
@@ -49,7 +48,9 @@ const TableHeader = ({
 
   const updateSuggestionsDebounced = useDebounce(async () => {
     const req = await fetch(
-      `https://api.github.com/search/repositories?q=${encodeURIComponent(`${searchTerm} topic:${filterName} in:name`)}`,
+      `https://api.github.com/search/repositories?q=${encodeURIComponent(
+        `${searchTerm} topic:${router.query.pageId} in:name`
+      )}`,
       {
         ...(providerToken
           ? {
@@ -75,7 +76,7 @@ const TableHeader = ({
   }, [searchTerm]);
 
   return (
-    <div className="flex flex-col flex-wrap w-full px-4 gap-y-2 md:flex-row md:justify-between md:items-end md:pb-4">
+    <div className="flex flex-col flex-wrap w-full pl-4 gap-y-2 md:flex-row md:justify-between md:items-end md:pb-4">
       <div className="flex items-center justify-between gap-x-4 md:justify-start">
         <Title className="!text-2xl !leading-none " level={1}>
           {title}
@@ -95,12 +96,7 @@ const TableHeader = ({
         />
       </div>
       <div className="flex flex-col-reverse items-start gap-3 md:flex-row md:items-end ">
-        {range ? (
-          <ComponentDateFilter setRangeFilter={(range: number) => setRangeFilter?.(range)} defaultRange={range} />
-        ) : (
-          ""
-        )}
-
+        {setRangeFilter && range ? <ComponentDateFilter setRangeFilter={setRangeFilter} defaultRange={range} /> : null}
         {layout ? (
           <div className="hidden md:inline-flex">
             <LayoutToggle value={layout} onChange={onLayoutToggle} />

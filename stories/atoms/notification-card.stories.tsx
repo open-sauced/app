@@ -10,7 +10,7 @@ const NotificationCardTemplate: ComponentStory<typeof NotificationCard> = (args)
 
 export const Reations = NotificationCardTemplate.bind({});
 export const Follows = NotificationCardTemplate.bind({});
-export const Collaborations = NotificationCardTemplate.bind({});
+export const Connections = NotificationCardTemplate.bind({});
 
 Reations.args = {
   type: "highlight_reaction",
@@ -24,8 +24,8 @@ Follows.args = {
   id: "bdougie",
 };
 
-Collaborations.args = {
-  type: "collaboration",
-  message: "bdougie invited you to collaborate",
+Connections.args = {
+  type: "connections",
+  message: "bdougie invited you to connect",
   id: "1s356g",
 };

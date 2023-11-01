@@ -2,14 +2,14 @@
   "name": "@open-sauced/insights",
   "description": "🍕The dashboard for open source discovery.",
   "keywords": [],
-  "version": "1.68.0-beta.5",
+  "version": "1.74.0-beta.6",
   "author": "Brian Douglas <brian@opensauced.pizza>",
   "private": true,
   "license": "Apache 2.0",
   "files": [
     "build/**/*"
   ],
-  "homepage": "https://insights.opensauced.pizza",
+  "homepage": "https://app.opensauced.pizza",
   "bugs": {
     "url": "https://github.com/open-sauced/insights/issues"
   },
@@ -90,7 +90,7 @@
     "next": "^13.4.7",
     "octokit": "^2.0.14",
     "path-to-regexp": "^6.2.1",
-    "posthog-js": "^1.57.2",
+    "posthog-js": "^1.83.0",
     "react": "^18.2.0",
     "react-csv": "^2.2.2",
     "react-day-picker": "^8.7.1",

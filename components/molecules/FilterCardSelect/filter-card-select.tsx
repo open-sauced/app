@@ -4,10 +4,10 @@ import Image from "next/image";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "components/atoms/Select/select";
-import hashIcon from "../../../img/icons/hash.svg";
 import orgIcon from "../../../img/icons/org.svg";
 import personIcon from "../../../img/icons/person.svg";
 import repoIcon from "../../../img/icons/repo.svg";
+import chevronDownIcon from "../../../img/chevron-down.svg";
 
 interface FilterCardSelectProps {
   selected: string;
@@ -18,7 +18,7 @@ interface FilterCardSelectProps {
 
 const icons = {
   topic: {
-    src: hashIcon.src,
+    src: chevronDownIcon.src,
     alt: "Topic",
   },
   org: {
@@ -46,9 +46,9 @@ const FilterCardSelect: React.FC<FilterCardSelectProps> = ({
       <SelectTrigger
         selectIcon={
           <Image
-            className="ml-3 "
-            width={13}
-            height={13}
+            className="ml-2"
+            width={20}
+            height={20}
             alt={icons[icon] ? icons[icon].alt : "Icons"}
             src={icons[icon] ? icons[icon].src : icons.topic.src}
           />

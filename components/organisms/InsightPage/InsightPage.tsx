@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import dynamic from "next/dynamic";
 import { UserGroupIcon } from "@heroicons/react/24/outline";
 
 import { useDebounce } from "rooks";
+import Link from "next/link";
 import Button from "components/atoms/Button/button";
 import TextInput from "components/atoms/TextInput/text-input";
 import ToggleSwitch from "components/atoms/ToggleSwitch/toggle-switch";
@@ -19,18 +21,27 @@ import useStore from "lib/store";
 import Error from "components/atoms/Error/Error";
 import Search from "components/atoms/Search/search";
 import { useToast } from "lib/hooks/useToast";
-import TeamMembersConfig, { TeamMemberData } from "components/molecules/TeamMembersConfig/team-members-config";
+import { TeamMemberData } from "components/molecules/TeamMembersConfig/team-members-config";
 import useInsightMembers from "lib/hooks/useInsightMembers";
 import { useFetchInsightRecommendedRepositories } from "lib/hooks/useFetchOrgRecommendations";
 import { RepoCardProfileProps } from "components/molecules/RepoCardProfile/repo-card-profile";
 import SuggestedRepositoriesList from "../SuggestedRepoList/suggested-repo-list";
-import DeleteInsightPageModal from "./DeleteInsightPageModal";
 
-enum RepoLookupError {
+// lazy import DeleteInsightPageModal and TeamMembersConfig component to optimize bundle size they don't load on initial render
+const DeleteInsightPageModal = dynamic(() => import("./DeleteInsightPageModal"));
+const TeamMembersConfig = dynamic(() => import("components/molecules/TeamMembersConfig/team-members-config"));
+
+const enum RepoLookupError {
   Initial = 0,
   NotIndexed = 1,
   Invalid = 3,
   Error = 4,
+}
+
+const enum OrgLookupError {
+  Initial = 0,
+  Invalid = 1,
+  Error = 2,
 }
 
 interface InsightPageProps {
@@ -63,7 +74,8 @@ const staticSuggestedRepos: RepoCardProfileProps[] = [
 ];
 
 const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
-  const { sessionToken, providerToken } = useSupabaseAuth();
+  const { sessionToken, providerToken, user } = useSupabaseAuth();
+
   const { toast } = useToast();
   const router = useRouter();
   const pageHref = router.asPath;
@@ -107,11 +119,13 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
   const [addRepoLoading, setAddRepoLoading] = useState({ repoName: "", isAddedFromCart: false, isLoading: false });
 
   const [name, setName] = useState(insight?.name || "");
+  const [organization, setOrganization] = useState("");
   const [isNameValid, setIsNameValid] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [repos, setRepos] = useState<DbRepo[]>([]);
   const [repoHistory, setRepoHistory] = useState<DbRepo[]>([]);
   const [addRepoError, setAddRepoError] = useState<RepoLookupError>(RepoLookupError.Initial);
+  const [syncOrganizationError, setSyncOrganizationError] = useState<OrgLookupError>(OrgLookupError.Initial);
   const [isPublic, setIsPublic] = useState(!!insight?.is_public);
   const insightRepoLimit = useStore((state) => state.insightRepoLimit);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -177,6 +191,10 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
     setIsNameValid(validateName(value));
   };
 
+  const handleOnOrganizationChange = (value: string) => {
+    setOrganization(value);
+  };
+
   const disableCreateButton = () => {
     if ((insight?.name && validateName(name)) || (repos.length && validateName(name))) return false;
     if (submitted) return true;
@@ -188,6 +206,11 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
   const handleCreateInsightPage = async () => {
     setSubmitted(true);
     setCreateLoading(true);
+
+    if (!sessionToken || !user) {
+      toast({ description: "You must be logged in to create a page", variant: "danger" });
+      return;
+    }
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/insights`, {
       method: "POST",
       headers: {
@@ -202,10 +225,9 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
     });
     setCreateLoading(false);
     if (response.ok) {
+      const { id } = await response.json();
       toast({ description: "Page created successfully", variant: "success" });
-      setTimeout(() => {
-        router.push("/hub/insights");
-      }, 1000);
+      router.push(`/pages/${user.user_metadata.user_name}/${id}/dashboard`);
     }
 
     setSubmitted(false);
@@ -370,6 +392,18 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
       return <RepoNotIndexed />;
     }
 
+    return null;
+  };
+
+  const getOrganizationLookupError = (code: OrgLookupError) => {
+    if (code === OrgLookupError.Error) {
+      return <Error errorMessage="There was error retrieving this organization's public repositories." />;
+    }
+
+    if (code === OrgLookupError.Invalid) {
+      return <Error errorMessage="This organization entered is invalid." />;
+    }
+
     return <></>;
   };
 
@@ -424,6 +458,49 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
     }
   }, 250);
 
+  const handleAddOrganizationRepositories = async () => {
+    setSyncOrganizationError(OrgLookupError.Initial);
+
+    const orgReposResponse = await fetch(
+      `https://api.github.com/orgs/${organization}/repos?type=public&sort=pushed&direction=desc`,
+      {
+        headers: providerToken
+          ? {
+              Authorization: `Bearer ${providerToken}`,
+            }
+          : {},
+      }
+    );
+
+    if (orgReposResponse.ok) {
+      const orgReposData = await orgReposResponse.json();
+
+      // create a stub repo to send to API
+      const orgRepos = orgReposData
+        .filter(
+          (orgRepo: { id: number; full_name: string }) => !repos.find((repo) => orgRepo.full_name === repo.full_name)
+        )
+        .slice(0, 10)
+        .map((orgRepo: { id: number; full_name: string }) => ({
+          id: orgRepo.id,
+          full_name: orgRepo.full_name,
+        })) as DbRepo[];
+
+      setRepos((repos) => {
+        return [...repos, ...orgRepos];
+      });
+
+      setSyncOrganizationError(OrgLookupError.Initial);
+      setOrganization("");
+    } else {
+      if (orgReposResponse.status === 404) {
+        setSyncOrganizationError(OrgLookupError.Invalid);
+      } else {
+        setSyncOrganizationError(OrgLookupError.Error);
+      }
+    }
+  };
+
   useEffect(() => {
     setSuggestions([]);
     if (!repoSearchTerm) return;
@@ -449,12 +526,37 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
           </Title>
 
           <TextInput placeholder="Page Name (ex: My Team)" value={name} handleChange={handleOnNameChange} />
-          {/* <Text>insights.opensauced.pizza/pages/{username}/{`{pageId}`}/dashboard</Text> */}
         </div>
 
-        <div className="flex flex-col gap-4 py-6 border-light-slate-8">
+        <div className="flex flex-col gap-4 border-light-slate-8">
           <Title className="!text-1xl !leading-none " level={4}>
-            Add Repositories
+            Sync GitHub Organization
+          </Title>
+
+          <div className="w-full flex gap-3 md:items-center flex-col md:flex-row">
+            <TextInput
+              placeholder="Organization Name (ex: open-sauced)"
+              value={organization}
+              handleChange={handleOnOrganizationChange}
+            />
+          </div>
+          <div>
+            <Button
+              disabled={repos.length >= insightRepoLimit! || organization.trim().length < 3}
+              onClick={handleAddOrganizationRepositories}
+              variant="outline"
+              className="shrink-0 w-max"
+            >
+              Sync Organization
+            </Button>
+          </div>
+
+          <div>{getOrganizationLookupError(syncOrganizationError)}</div>
+        </div>
+
+        <div className="flex flex-col gap-4 border-light-slate-8">
+          <Title className="!text-1xl !leading-none " level={4}>
+            Add Repository
           </Title>
           <Search
             isLoading={createLoading}
@@ -466,28 +568,44 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
             onSearch={(search) => setRepoSearchTerm(search as string)}
           />
 
-          <div>
+          <div className="w-full flex gap-3 md:items-center flex-col md:flex-row">
             <Button
               disabled={
-                repos.length === insightRepoLimit ||
+                repos.length >= insightRepoLimit! ||
                 (addRepoLoading.repoName === repoSearchTerm && addRepoLoading.isLoading)
               }
               loading={addRepoLoading.repoName === repoSearchTerm && addRepoLoading.isLoading}
               onClick={handleAddRepository}
               variant="outline"
+              className="shrink-0 w-max"
             >
               Add Repository
             </Button>
+
+            <span role="alert">
+              {repos.length >= insightRepoLimit! && insightRepoLimit! < 50 ? (
+                <p className="text-sm">
+                  Your insight pages are limited to
+                  <strong className="text-sauced-orange"> {insightRepoLimit}</strong> repos,{" "}
+                  <Link href={`/user/settings#upgrade`} className="underline text-sauced-orange">
+                    upgrade
+                  </Link>{" "}
+                  to increase the limit
+                </p>
+              ) : null}
+            </span>
           </div>
 
-          <SuggestedRepositoriesList
-            reposData={recommendedReposWithoutSelected}
-            loadingData={addRepoLoading}
-            isLoading={isLoading}
-            onAddRepo={(repo) => {
-              addSuggestedRepo(repo);
-            }}
-          />
+          <div className="py-4">
+            <SuggestedRepositoriesList
+              reposData={recommendedReposWithoutSelected}
+              loadingData={addRepoLoading}
+              isLoading={isLoading}
+              onAddRepo={(repo) => {
+                addSuggestedRepo(repo);
+              }}
+            />
+          </div>
         </div>
 
         <div>{getRepoLookupError(addRepoError)}</div>
