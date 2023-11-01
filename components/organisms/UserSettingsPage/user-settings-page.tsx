@@ -491,7 +491,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
                 name="delete-account"
                 action="/api/delete-account"
                 method="POST"
-                className="flex flex-col order-first gap-6 md:order-last"
+                className="flex flex-col order-first gap-6 md:order-last p-6 rounded-2xl bg-light-slate-4"
                 ref={deleteFormRef}
                 onSubmit={(e) => {
                   setIsModalOpen(true);
