@@ -11,14 +11,14 @@ type ToggleSwitchProps = {
 
 const ToggleSwitch = (props: ToggleSwitchProps): JSX.Element => {
   const { name, checked = false, handleToggle, size = "base", classNames } = props;
-  let ariaProps;
+  let ariaProps: { "aria-label": string } | { "aria-labelledby": string };
 
   if ("ariaLabelledBy" in props) {
-    ariaProps = { "aria-labelledby": props.ariaLabelledBy };
+    ariaProps = { "aria-labelledby": props.ariaLabelledBy! };
   }
 
   if ("ariaLabel" in props) {
-    ariaProps = { "aria-label": props.ariaLabel };
+    ariaProps = { "aria-label": props.ariaLabel! };
   }
 
   return (
