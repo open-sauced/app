@@ -24,12 +24,21 @@ import Title from "components/atoms/Typography/title";
 import Text from "components/atoms/Typography/text";
 import TextInput from "components/atoms/TextInput/text-input";
 import Button from "components/atoms/Button/button";
+import { setQueryParams } from "lib/utils/query-params";
 
 interface CreateListPayload {
   name: string;
   is_public: boolean;
   contributors: { id: number; login: string }[];
 }
+
+export type QueryParams = {
+  limit: string;
+  page: string;
+  timezone: string;
+  name: string;
+  public: "true" | "false";
+};
 
 interface NewListCreationPageProps {
   initialData: {
@@ -42,6 +51,23 @@ interface NewListCreationPageProps {
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const supabase = createPagesServerClient(ctx);
 
+  const { limit, page, timezone } = ctx.query as QueryParams;
+
+  const query = new URLSearchParams();
+
+  if (limit) {
+    query.set("limit", limit);
+  }
+  if (page) {
+    query.set("page", page);
+  }
+  if (timezone) {
+    query.set("timezones", timezone);
+  }
+
+  const baseEndpoint = "lists/contributors";
+  const endpoint = `${baseEndpoint}?${query.toString()}`;
+
   const {
     data: { session },
   } = await supabase.auth.getSession();
@@ -53,7 +79,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     pathValidator: validateListPath,
   });
   const fetchContributors = fetchApiData<PagedData<DbPRContributor>>({
-    path: `lists/contributors`,
+    path: endpoint,
     bearerToken,
     pathValidator: validateListPath,
   });
@@ -76,6 +102,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 
 const NewListCreationPage = ({ initialData, timezoneOption }: NewListCreationPageProps) => {
   const router = useRouter();
+  const { timezone, name, page } = router.query as QueryParams;
   const { toast } = useToast();
   const posthog = usePostHog();
   const { sessionToken } = useSupabaseAuth();
@@ -86,12 +113,10 @@ const NewListCreationPage = ({ initialData, timezoneOption }: NewListCreationPag
   const [isSuccess, setIsSuccess] = useState(false);
   const [title, setTitle] = useState("");
   const [selectedContributors, setSelectedContributors] = useState<DbPRContributor[]>([]);
-  const [selectedTimezone, setSelectedTimezone] = useState<string | undefined>(undefined);
   const [contributor, setContributor] = useState<string | undefined>(undefined);
   const [isPublic, setIsPublic] = useState<boolean>(false);
-  const { data, meta, isLoading, setLimit, setPage } = useFetchAllContributors(
+  const { data, meta, isLoading } = useFetchAllContributors(
     {
-      timezone: selectedTimezone,
       contributor,
     },
     {
@@ -101,12 +126,20 @@ const NewListCreationPage = ({ initialData, timezoneOption }: NewListCreationPag
   );
 
   useEffect(() => {
-    if (!title && router.query.name) {
-      setTitle(router.query.name as string);
+    if (!title && name) {
+      setTitle(name as string);
     }
 
     if (router.query.public === "true") {
       setIsPublic(true);
+    }
+
+    if (!page) {
+      setQueryParams({ page: "1" } as QueryParams);
+    }
+
+    if (!router.query.limit) {
+      setQueryParams({ limit: "10" } as QueryParams);
     }
   }, [router.query]);
 
@@ -217,10 +250,6 @@ const NewListCreationPage = ({ initialData, timezoneOption }: NewListCreationPag
     }
   };
 
-  const handleSelectTimezone = (selected: string) => {
-    setSelectedTimezone(selected);
-  };
-
   function onSearch(searchTerm: string | undefined) {
     if (!searchTerm || searchTerm.length >= 3) {
       setContributor(searchTerm);
@@ -233,14 +262,11 @@ const NewListCreationPage = ({ initialData, timezoneOption }: NewListCreationPag
         <div className="info-container container w-full min-h-[6.25rem]">
           <Header>
             <HubContributorsHeader
-              setTimezoneFilter={handleSelectTimezone}
               isPublic={isPublic}
               handleToggleIsPublic={() => setIsPublic(!isPublic)}
               loading={createLoading}
               selectedContributorsIds={selectedContributors.map((contributor) => contributor.user_id)}
-              setLimit={setLimit}
               timezoneOptions={timezoneList}
-              timezone={selectedTimezone}
               title={title}
               onAddToList={handleOnListCreate}
               onTitleChange={(title) => setTitle(title)}
@@ -275,7 +301,7 @@ const NewListCreationPage = ({ initialData, timezoneOption }: NewListCreationPag
                   totalPage={meta.pageCount}
                   page={meta.page}
                   onPageChange={function (page: number): void {
-                    setPage(page);
+                    setQueryParams({ page: page.toString() } as QueryParams);
                   }}
                   divisor={true}
                   goToPage

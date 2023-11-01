@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import clsx from "clsx";
 import { RiArrowUpSLine, RiArrowDownSLine } from "react-icons/ri";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "components/atoms/Select/select";
@@ -9,13 +9,9 @@ interface LimitSelectProps {
   onChange?: (value: string) => void;
   options: { name: string; value: string }[];
   className?: string;
+  selected?: string;
 }
-const LimitSelect = ({ onChange, options, className, placeholder }: LimitSelectProps) => {
-  const [selected, setSelected] = useState<null | string>(null);
-  const handleSelected = (value: string) => {
-    setSelected(value);
-    onChange?.(value);
-  };
+const LimitSelect = ({ onChange, options, className, placeholder, selected }: LimitSelectProps) => {
   return (
     <div
       className={clsx(
@@ -25,7 +21,7 @@ const LimitSelect = ({ onChange, options, className, placeholder }: LimitSelectP
         className
       )}
     >
-      <Select onValueChange={handleSelected}>
+      <Select value={selected} onValueChange={onChange}>
         <SelectTrigger
           className={clsx(
             " radix-state-open:border-light-orange-9",

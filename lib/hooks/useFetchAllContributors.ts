@@ -1,4 +1,3 @@
-import { useState } from "react";
 import useSWR, { Fetcher, SWRConfiguration } from "swr";
 import { useRouter } from "next/router";
 
@@ -22,8 +21,7 @@ type queryObj = {
 const useFetchAllContributors = (query: queryObj, config?: SWRConfiguration) => {
   const { toast } = useToast();
   const router = useRouter();
-  const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(query.initialLimit ?? 10);
+  const { limit, page, timezone } = router.query;
 
   const urlQuery = new URLSearchParams();
 
@@ -36,8 +34,8 @@ const useFetchAllContributors = (query: queryObj, config?: SWRConfiguration) => 
   if (query.pr_velocity) {
     urlQuery.set("pr_velocity", `${query.pr_velocity}`);
   }
-  if (query.timezone) {
-    urlQuery.set("timezone", `${query.timezone}`);
+  if (timezone) {
+    urlQuery.set("timezone", `${timezone}`);
   }
   if (query.contributor) {
     urlQuery.set("contributor", `${query.contributor}`);
@@ -64,8 +62,6 @@ const useFetchAllContributors = (query: queryObj, config?: SWRConfiguration) => 
     isError: !!error,
     mutate,
     page,
-    setPage,
-    setLimit,
   };
 };
 
