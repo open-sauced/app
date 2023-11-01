@@ -21,6 +21,7 @@ const StackedAvatar = ({ contributors, visibleQuantity = 5, classNames }: Stacke
   const repositories = insight ? insight.repos.map((repo) => repo.repo_id) : [];
 
   if (isError) {
+    // eslint-disable-next-line no-console
     console.log("Error fetching insight", isError);
     return <div>-</div>;
   }

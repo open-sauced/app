@@ -248,10 +248,12 @@ const LoginStep3: React.FC<LoginStep3Props> = ({ interests, user }) => {
         router.push(`/user/${user?.user_metadata.user_name}`);
       } else {
         setLoading(false);
+        // eslint-disable-next-line no-console
         console.error("Error onboarding user");
       }
     } catch (e) {
       setLoading(false);
+      // eslint-disable-next-line no-console
       console.error(e);
     }
   };
