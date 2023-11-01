@@ -5,6 +5,21 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.74.0-beta.8](https://github.com/open-sauced/insights/compare/v1.74.0-beta.7...v1.74.0-beta.8) (2023-11-01)
+
+
+### 🐛 Bug Fixes
+
+* change avatar alignment with highlight input ([#2032](https://github.com/open-sauced/insights/issues/2032)) ([dc409c4](https://github.com/open-sauced/insights/commit/dc409c42c0d67e6528b5d8f22ace39728188d549))
+* change label style of bio to bold ([#2033](https://github.com/open-sauced/insights/issues/2033)) ([647fca3](https://github.com/open-sauced/insights/commit/647fca3401346f7d68c0fa9d057b30832412eb9e))
+
+## [1.74.0-beta.7](https://github.com/open-sauced/insights/compare/v1.74.0-beta.6...v1.74.0-beta.7) (2023-11-01)
+
+
+### 🍕 Features
+
+* add grey background for delete account ([#2030](https://github.com/open-sauced/insights/issues/2030)) ([ea10161](https://github.com/open-sauced/insights/commit/ea10161abcbf29a8498b426bddc58af3448af7f6))
+
 ## [1.74.0-beta.6](https://github.com/open-sauced/insights/compare/v1.74.0-beta.5...v1.74.0-beta.6) (2023-10-31)
 
 
