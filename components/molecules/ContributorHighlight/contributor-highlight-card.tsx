@@ -230,6 +230,7 @@ const ContributorHighlightCard = ({
       await navigator.clipboard.writeText(url);
       toast({ description: "Copied to clipboard", variant: "success" });
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.log(error);
     }
   };
@@ -366,6 +367,7 @@ const ContributorHighlightCard = ({
         document.body.setAttribute("style", "pointer-events:auto !important");
       }, 1);
     } else {
+      // eslint-disable-next-line no-console
       console.error(res);
       setAlertOpen(false);
       toast({ description: "An error occured!", variant: "danger" });
@@ -409,6 +411,7 @@ const ContributorHighlightCard = ({
       setTaggedRepoList(newTaggedRepoList);
       toast({ description: "Repo tag added!", title: "Success", variant: "success" });
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error(e);
       setError("An error occured!");
     }

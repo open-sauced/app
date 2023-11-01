@@ -2,8 +2,10 @@ import InsightPage from "components/organisms/InsightPage/InsightPage";
 import HubLayout from "layouts/hub";
 
 import { WithPageLayout } from "interfaces/with-page-layout";
+import useSession from "lib/hooks/useSession";
 
 const NewInsightPage: WithPageLayout = () => {
+  useSession(true);
   return <InsightPage />;
 };
 

@@ -31,6 +31,7 @@ const generateBlogHighlightSummary = async (blogTitle: string, blogMarkdown: str
       return null;
     }
   } catch (err) {
+    // eslint-disable-next-line no-console
     console.log(err);
     return null;
   }
