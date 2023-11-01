@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.74.0-beta.7](https://github.com/open-sauced/insights/compare/v1.74.0-beta.6...v1.74.0-beta.7) (2023-11-01)
+
+
+### 🍕 Features
+
+* add grey background for delete account ([#2030](https://github.com/open-sauced/insights/issues/2030)) ([ea10161](https://github.com/open-sauced/insights/commit/ea10161abcbf29a8498b426bddc58af3448af7f6))
+
 ## [1.74.0-beta.6](https://github.com/open-sauced/insights/compare/v1.74.0-beta.5...v1.74.0-beta.6) (2023-10-31)
 
 
