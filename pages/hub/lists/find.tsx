@@ -126,9 +126,9 @@ const NewListCreationPage = ({ initialData, timezoneOption }: NewListCreationPag
     ? data.length > 0 &&
       data.map((contributor) => {
         return {
-          author_login: contributor.login,
+          author_login: contributor.author_login,
           updated_at: contributor.updated_at,
-          user_id: contributor.id,
+          user_id: contributor.user_id,
         };
       })
     : [];
