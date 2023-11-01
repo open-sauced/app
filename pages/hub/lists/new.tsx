@@ -82,6 +82,7 @@ const CreateListPage = () => {
         return data;
       }
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.log(error);
       return null;
     }

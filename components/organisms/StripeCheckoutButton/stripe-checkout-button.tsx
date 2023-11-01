@@ -26,6 +26,7 @@ const StripeCheckoutButton = ({ children, ...props }: StripeCheckoutButtonProps)
         stripe?.redirectToCheckout({ sessionId });
       } else {
         // display error to user
+        // eslint-disable-next-line no-console
         console.error(response.statusText);
       }
     } catch (e) {

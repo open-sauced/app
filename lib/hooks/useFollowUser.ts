@@ -20,6 +20,7 @@ const useFollowUser = (username: string) => {
       headers: {
         Authorization: `Bearer ${sessionToken}`,
       },
+      // eslint-disable-next-line no-console
     }).catch((err) => console.log(err));
 
     if (req && req.ok) {
@@ -34,6 +35,7 @@ const useFollowUser = (username: string) => {
       headers: {
         Authorization: `Bearer ${sessionToken}`,
       },
+      // eslint-disable-next-line no-console
     }).catch((err) => console.log(err));
 
     if (req && req.ok) {

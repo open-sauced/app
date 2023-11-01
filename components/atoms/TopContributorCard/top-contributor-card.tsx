@@ -32,6 +32,7 @@ const TopContributorCard = ({ login, refreshLoggedInUser }: TopContributorCardPr
       await unFollow();
       refreshLoggedInUser();
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.log(error);
     }
   };

@@ -20,6 +20,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     res.json({ access: orgInfo.usage });
   } catch (e) {
+    // eslint-disable-next-line no-console
+    console.log(e);
     res.status(401).json({ error: "No Access" });
   }
 }
