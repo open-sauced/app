@@ -281,7 +281,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
 
             {/* Bio section */}
             <div className="flex flex-col gap-2">
-              <label className="text-sm font-normal text-light-slate-11">Bio</label>
+              <label className="text-sm font-medium text-light-slate-9">Bio</label>
               <textarea
                 rows={4}
                 placeholder="Tell us about yourself."
