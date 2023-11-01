@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.74.0-beta.9](https://github.com/open-sauced/insights/compare/v1.74.0-beta.8...v1.74.0-beta.9) (2023-11-01)
+
+
+### 🐛 Bug Fixes
+
+* chart tooltip cut in contributors card ([#2029](https://github.com/open-sauced/insights/issues/2029)) ([7c16863](https://github.com/open-sauced/insights/commit/7c1686371f47e0f332335055e4ebb7900503a353))
+
 ## [1.74.0-beta.8](https://github.com/open-sauced/insights/compare/v1.74.0-beta.7...v1.74.0-beta.8) (2023-11-01)
 
 
