@@ -31,6 +31,7 @@ if (typeof window !== "undefined" && "serviceWorker" in navigator) {
   navigator.serviceWorker.getRegistrations().then(function (registrations) {
     for (let registration of registrations) {
       if (registration.active) {
+        // eslint-disable-next-line no-console
         console.log(`Clearing service worker ${registration.scope}`);
         registration.unregister();
         document.location.reload();
@@ -99,6 +100,7 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
 
   function localStorageProvider() {
     if (typeof window !== "undefined") {
+      // eslint-disable-next-line no-console
       console.log("You are on the browser");
 
       // When initializing, we restore the data from `localStorage` into a map.
@@ -111,6 +113,7 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
           localStorage.setItem("app-cache", appCache);
         } catch (error) {
           if (error instanceof Error && error.name === "QuotaExceededError")
+            // eslint-disable-next-line no-console
             return console.warn("⚠ local storage limit exceeded ⚠");
 
           throw error;
@@ -120,6 +123,7 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
       // We still use the map for write & read for performance.
       return map;
     } else {
+      // eslint-disable-next-line no-console
       console.log("You are on the server");
       // 👉️ can't use localStorage
 

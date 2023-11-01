@@ -5,6 +5,29 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.74.0-beta.6](https://github.com/open-sauced/insights/compare/v1.74.0-beta.5...v1.74.0-beta.6) (2023-10-31)
+
+
+### 🐛 Bug Fixes
+
+* code standard errors ([e93bdca](https://github.com/open-sauced/insights/commit/e93bdca403367d83c59936f42b30e00cd19bc40c))
+* eslint issue by using `eslint-disable` ([#1993](https://github.com/open-sauced/insights/issues/1993)) ([bc285a2](https://github.com/open-sauced/insights/commit/bc285a23f211b5459e1e2c3aa11d8accc8e65861))
+* occurence eslint disable ([3d84665](https://github.com/open-sauced/insights/commit/3d8466523d77bd9a322bddfe851c4ae5dd3f0650))
+
+## [1.74.0-beta.5](https://github.com/open-sauced/insights/compare/v1.74.0-beta.4...v1.74.0-beta.5) (2023-10-31)
+
+
+### 🍕 Features
+
+* add GitHub Org Repositories sync to insight page creation ([#2023](https://github.com/open-sauced/insights/issues/2023)) ([e5f38ac](https://github.com/open-sauced/insights/commit/e5f38acba6345fa5e22ec39ac9a58d2c63254209))
+
+## [1.74.0-beta.4](https://github.com/open-sauced/insights/compare/v1.74.0-beta.3...v1.74.0-beta.4) (2023-10-31)
+
+
+### 🍕 Features
+
+* add account deletion flow ([#1990](https://github.com/open-sauced/insights/issues/1990)) ([daeb10e](https://github.com/open-sauced/insights/commit/daeb10e064af0d4d6d64e6e66492fc55f4af8e17))
+
 ## [1.74.0-beta.3](https://github.com/open-sauced/insights/compare/v1.74.0-beta.2...v1.74.0-beta.3) (2023-10-30)
 
 

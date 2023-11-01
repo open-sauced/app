@@ -26,6 +26,7 @@ const useInsightMembers = (insightId: number) => {
     });
 
     if (!req.ok) {
+      // eslint-disable-next-line no-console
       console.log(req.status, req.statusText);
       return undefined;
     } else {
@@ -45,6 +46,7 @@ const useInsightMembers = (insightId: number) => {
     });
 
     if (!req.ok) {
+      // eslint-disable-next-line no-console
       console.log(req.status, req.statusText);
 
       return undefined;

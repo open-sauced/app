@@ -114,6 +114,7 @@ export async function handleUserSSR({ params }: GetServerSidePropsContext<{ user
 
       return (await req.json()) as DbUser;
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error(e);
       return null;
     }
