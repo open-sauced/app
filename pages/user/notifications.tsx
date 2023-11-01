@@ -90,6 +90,7 @@ const Notifications: WithPageLayout = () => {
                 setFilter("all");
                 router.push(`/user/notifications?filter=all`);
               }}
+              aria-label="Show All Notifications"
             >
               All
             </Button>
@@ -100,6 +101,7 @@ const Notifications: WithPageLayout = () => {
                 setFilter("follow");
                 router.push(`/user/notifications?filter=follow`);
               }}
+              aria-label="Filter Notifications by Follows"
             >
               Follows
             </Button>
@@ -113,6 +115,7 @@ const Notifications: WithPageLayout = () => {
                 setFilter("highlight_reaction");
                 router.push(`/user/notifications?filter=highlight_reaction`);
               }}
+              aria-label="Filter Notifications by Reactions"
             >
               Reactions
             </Button>
