@@ -51,7 +51,7 @@ const ContributorCard = ({ className, contributor, topic, repositories, range }:
             {!!isMaintainer && <Badge text="maintainer" />}
           </div>
         </div>
-        <div className="h-[110px] overflow-hidden">
+        <div className="h-32">
           <CardLineChart lineChartOption={chart} />
         </div>
         <CardRepoList repoList={repoList} total={repoList.length} />
