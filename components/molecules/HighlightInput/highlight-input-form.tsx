@@ -865,7 +865,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                 />
               </div>
             </div>
-            <h1 className="text-md font-semibold text-slate-900 my-2">Highlight suggestions</h1>
+            <h2 className="text-md font-semibold text-slate-900 my-2">Highlight suggestions</h2>
             <Swiper
               spaceBetween={8}
               slidesPerView={1}
@@ -897,9 +897,9 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                             {suggestion.type === "pull_request" && (
                               <BiGitMerge
                                 className={`
-                      text-xl
-                      ${suggestion.status_reason === "open" ? "text-green-600" : "text-purple-600"}
-                      `}
+                                  text-xl
+                                  ${suggestion.status_reason === "open" ? "text-green-600" : "text-purple-600"}
+                                  `}
                               />
                             )}
                             {suggestion.type === "issue" && (
