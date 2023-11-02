@@ -53,7 +53,7 @@ const AddContributorsHeader = ({
           {list.name}
         </h1>
         <div className="flex flex-col items-center justify-center gap-6 md:flex-row header-info max-sm:mt-4">
-          <div className="flex items-center order-2 gap-2 md:flex-row md:order-1">
+          <div className="flex items-center order-2 gap-2">
             <span
               className={clsx(
                 "w-max min-w-[1.4rem] h-6  p-3 text-sm items-center flex place-content-center rounded-full",
@@ -62,7 +62,9 @@ const AddContributorsHeader = ({
             >
               {selectedContributorsIds.length}
             </span>
-            <p className="text-light-slate-9">Contributors Selected</p>
+            <p className="text-light-slate-9">
+              <span className="sr-only md:not-sr-only">Contributors</span> Selected
+            </p>
           </div>
           <Button
             loading={loading}
@@ -80,10 +82,10 @@ const AddContributorsHeader = ({
       </div>
       <div className="flex flex-col w-full gap-2 md:flex-row">
         <label className="flex w-full flex-col gap-4">
-          Search for contributors to add to your list
+          <span className="sr-only">Search for contributors to add to your list</span>
           <Search
-            placeholder="Search for new contributors"
-            className="self- !w-full text-sm py-1.5"
+            placeholder="Search for contributors to add to your list"
+            className="!w-full text-sm py-1.5"
             name={"contributors"}
             onChange={(value) => setContributorSearch(value)}
           />
