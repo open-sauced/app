@@ -1,13 +1,13 @@
-import { ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import ToggleSwitch from "components/atoms/ToggleSwitch/toggle-switch";
 
-const storyConfig = {
+const storyMeta = {
   title: "Design System/Atoms/ToggleSwitch",
-};
+} as Meta<typeof ToggleSwitch>;
 
-export default storyConfig;
+export default storyMeta;
 
-const ToggleSwitchTemplate: ComponentStory<typeof ToggleSwitch> = (args) => <ToggleSwitch {...args} />;
+const ToggleSwitchTemplate: StoryFn<typeof ToggleSwitch> = (args) => <ToggleSwitch {...args} />;
 export const Default = ToggleSwitchTemplate.bind({});
 export const Small = ToggleSwitchTemplate.bind({});
 export const Large = ToggleSwitchTemplate.bind({});
