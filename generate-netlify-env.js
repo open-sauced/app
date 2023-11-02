@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 const fs = require("fs");
 
 // check if script is running in netlify CI

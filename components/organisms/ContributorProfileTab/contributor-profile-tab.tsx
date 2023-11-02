@@ -287,10 +287,11 @@ const ContributorProfileTab = ({
 
       <TabsContent value={"highlights" satisfies TabKey}>
         {(hasHighlights || inputVisible) && user_name === login && (
-          <div className="max-w-[48rem] pt-4 lg:pl-20 flex lg:gap-x-4 items-center">
-            <div className="hidden lg:inline-flex">
+          <div className="flex max-w-3xl px-2 pt-4 lg:gap-x-3">
+            <div className="hidden lg:inline-flex pt-[0.4rem]">
               <Avatar
                 alt="user profile avatar"
+                isCircle
                 size="sm"
                 avatarURL={`https://www.github.com/${githubName}.png?size=300`}
               />

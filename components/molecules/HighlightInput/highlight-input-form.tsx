@@ -295,6 +295,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
         setHighlightSuggestions(pages);
         setLoadingSuggestions(false);
       } catch (err) {
+        // eslint-disable-next-line no-console
         console.log(err);
       }
     };
