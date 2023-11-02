@@ -10,6 +10,7 @@ import ToggleSwitch from "components/atoms/ToggleSwitch/toggle-switch";
 import Button from "components/atoms/Button/button";
 import TextInput from "components/atoms/TextInput/text-input";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
+import { useToast } from "lib/hooks/useToast";
 
 // TODO: put into shared utilities once https://github.com/open-sauced/app/pull/2016 is merged
 function isListId(listId: string) {
@@ -68,6 +69,7 @@ interface UpdateListPayload {
 export default function EditListPage({ list }: EditListPageProps) {
   const [isPublic, setIsPublic] = useState(list.is_public);
   const { sessionToken } = useSupabaseAuth();
+  const { toast } = useToast();
 
   async function updateList(payload: UpdateListPayload) {
     const { data, error } = await fetchApiData<DBList>({
@@ -98,9 +100,9 @@ export default function EditListPage({ list }: EditListPageProps) {
             const { data, error } = await updateList(listUpdates);
 
             if (!error) {
-              alert("List updated successfully!");
+              toast({ description: "List updated successfully!", variant: "success" });
             } else {
-              alert("Something went wrong. Please try again.");
+              toast({ description: "Error updating list. Please try again", variant: "danger" });
             }
           }}
           className="flex flex-col gap-4"
@@ -114,7 +116,10 @@ export default function EditListPage({ list }: EditListPageProps) {
           <p className="text-light-slate-11 pb-4 border-b border-solid border-light-slate-6">
             A list is a collection of contributors that you and your team can get insights for.
           </p>
-          <TextInput label="List Name" name="list_name" defaultValue={list.name} />
+          <label className="flex flex-col w-full text-light-slate-12 gap-4">
+            List Name
+            <TextInput name="list_name" defaultValue={list.name} />
+          </label>
           <div className="flex flex-col flex-wrap gap-4 pb-4 pt-4 border-t border-b border-solid border-light-slate-6">
             <Text className="text-light-slate-12">Page Visibility</Text>
             <div className="flex items-center">
