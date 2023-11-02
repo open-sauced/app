@@ -70,8 +70,7 @@ export default function EditListPage({ list }: EditListPageProps) {
   const { sessionToken } = useSupabaseAuth();
 
   async function updateList(payload: UpdateListPayload) {
-    debugger;
-    const response = await fetchApiData<DBList>({
+    const { data, error } = await fetchApiData<DBList>({
       path: `lists/${list.id}`,
       method: "PATCH",
       body: payload,
@@ -80,18 +79,14 @@ export default function EditListPage({ list }: EditListPageProps) {
       pathValidator: () => true,
     });
 
-    if (!response.error) {
-      alert("List updated successfully!");
-    } else {
-      alert(response.error.statusText);
-    }
+    return { data, error };
   }
 
   return (
     <HubContributorsPageLayout>
       <div className="grid place-content-center info-container container w-full min-h-[6.25rem] px-4 mt-10 mb-16">
         <form
-          onSubmit={(event) => {
+          onSubmit={async (event) => {
             event.preventDefault();
             const form = event.target as HTMLFormElement;
             const listUpdates = {
@@ -100,7 +95,13 @@ export default function EditListPage({ list }: EditListPageProps) {
               contributors: [],
             } satisfies UpdateListPayload;
 
-            updateList(listUpdates);
+            const { data, error } = await updateList(listUpdates);
+
+            if (!error) {
+              alert("List updated successfully!");
+            } else {
+              alert("Something went wrong. Please try again.");
+            }
           }}
           className="flex flex-col gap-4"
         >
