@@ -6,15 +6,11 @@ import { useEffect, useState } from "react";
 
 import Link from "next/link";
 import { MdOutlineArrowBackIos } from "react-icons/md";
-import SingleSelect from "components/atoms/Select/single-select";
 import Button from "components/atoms/Button/button";
 import Search from "components/atoms/Search/search";
 import useDebounceTerm from "lib/hooks/useDebounceTerm";
 
 interface AddContributorsHeaderProps {
-  timezoneOptions: { label: string; value: string }[];
-  timezone?: string;
-  setTimezoneFilter: (timezone: string) => void;
   selectedContributorsIds: number[];
   list: DbUserList;
   onAddToList?: () => void;
@@ -28,9 +24,6 @@ const AddContributorsHeader = ({
   list,
   onAddToList,
   loading,
-  timezone,
-  setTimezoneFilter,
-  timezoneOptions,
   onSearch,
 }: AddContributorsHeaderProps): JSX.Element => {
   const [contributorSearch, setContributorSearch] = useState("");
@@ -52,8 +45,8 @@ const AddContributorsHeader = ({
           </Link>
           {list.name}
         </h1>
-        <div className="flex flex-col items-center justify-center gap-6 md:flex-row header-info max-sm:mt-4">
-          <div className="flex items-center order-2 gap-2">
+        <div className="flex justify-between gap-4 header-info max-sm:mt-4 w-full md:w-fit ">
+          <div className="flex items-center gap-2">
             <span
               className={clsx(
                 "w-max min-w-[1.4rem] h-6  p-3 text-sm items-center flex place-content-center rounded-full",
@@ -70,7 +63,7 @@ const AddContributorsHeader = ({
             loading={loading}
             disabled={selectedContributorsIds.length === 0 || loading ? true : false}
             className={clsx(
-              "bg-sauced-orange !text-white max-md:self-end order-1 md:order-2",
+              "bg-sauced-orange !text-white max-md:self-end",
               selectedContributorsIds.length === 0 && "!bg-slate-300 !text-slate-100"
             )}
             variant="text"
@@ -90,15 +83,6 @@ const AddContributorsHeader = ({
             onChange={(value) => setContributorSearch(value)}
           />
         </label>
-        <div className="flex items-center gap-4 self-auto md:self-end">
-          <SingleSelect
-            options={timezoneOptions}
-            position="popper"
-            value={timezone}
-            placeholder="Select time zone"
-            onValueChange={(value) => setTimezoneFilter(value)}
-          />
-        </div>
       </div>
     </div>
   );
