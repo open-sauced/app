@@ -62,7 +62,7 @@ const AddContributorsHeader = ({
             >
               {selectedContributorsIds.length}
             </span>
-            <p className="text-light-slate-9">Contributors</p>
+            <p className="text-light-slate-9">Contributors Selected</p>
           </div>
           <Button
             loading={loading}
