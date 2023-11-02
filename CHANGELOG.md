@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.74.0-beta.11](https://github.com/open-sauced/insights/compare/v1.74.0-beta.10...v1.74.0-beta.11) (2023-11-02)
+
+
+### 🐛 Bug Fixes
+
+* dropdown flickery on single highlight card ([#2040](https://github.com/open-sauced/insights/issues/2040)) ([672ce2f](https://github.com/open-sauced/insights/commit/672ce2fa916ea7491fa6e9f6376468b420c262f3))
+* ToggleSwitch component has required label via aria-label or aria-labelledby ([#2035](https://github.com/open-sauced/insights/issues/2035)) ([0684081](https://github.com/open-sauced/insights/commit/0684081e4859179e558f40a60d8e88ea5896a346))
+
 ## [1.74.0-beta.10](https://github.com/open-sauced/insights/compare/v1.74.0-beta.9...v1.74.0-beta.10) (2023-11-02)
 
 
