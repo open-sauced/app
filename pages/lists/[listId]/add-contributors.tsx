@@ -6,7 +6,6 @@ import Image from "next/image";
 import { FiAlertOctagon, FiCheckCircle } from "react-icons/fi";
 import useFetchAllContributors from "lib/hooks/useFetchAllContributors";
 import { fetchApiData, validateListPath } from "helpers/fetchApiData";
-import { timezones } from "lib/utils/timezones";
 
 import ContributorListTableHeaders from "components/molecules/ContributorListTableHeader/contributor-list-table-header";
 import HubContributorsPageLayout from "layouts/hub-contributors";
@@ -47,27 +46,18 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const bearerToken = session ? session.access_token : "";
   const userId = Number(session?.user.user_metadata.sub);
 
-  const fetchTimezone = fetchApiData<{ timezone: string }[]>({
-    path: `lists/timezones`,
-    bearerToken,
-    pathValidator: validateListPath,
-  });
-
   if (!isListId(listId)) {
     return {
       notFound: true,
     };
   }
 
-  const [{ data: timezoneOptions }, { data: list, error: listError }] = await Promise.all([
-    fetchTimezone,
-    fetchApiData<DBList>({
-      path: `lists/${listId}`,
-      bearerToken,
-      // TODO: remove this in another PR for cleaning up fetchApiData
-      pathValidator: () => true,
-    }),
-  ]);
+  const { data: list, error: listError } = await fetchApiData<DBList>({
+    path: `lists/${listId}`,
+    bearerToken,
+    // TODO: remove this in another PR for cleaning up fetchApiData
+    pathValidator: () => true,
+  });
 
   // Only the list owner should be allowed to add contributors
   if (listError?.status === 404 || (list && list.user_id !== userId)) {
@@ -79,7 +69,6 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   return {
     props: {
       list,
-      timezoneOption: timezoneOptions ? timezoneOptions : timezones,
     },
   };
 };
@@ -164,11 +153,9 @@ const ContributorsAddedModal = ({ list, contributorCount, isOpen, onClose }: Con
 
 const useContributorSearch = (makeRequest: boolean) => {
   const [contributorSearchTerm, setContributorSearchTerm] = useState<string | undefined>();
-  const [timezone, setTimezone] = useState<string | undefined>();
 
   const { data, meta, isLoading, setPage } = useFetchAllContributors(
     {
-      timezone,
       contributor: contributorSearchTerm,
     },
     {
@@ -179,8 +166,6 @@ const useContributorSearch = (makeRequest: boolean) => {
 
   return {
     setContributorSearchTerm,
-    timezone,
-    setTimezone,
     data,
     meta,
     isLoading,
@@ -198,8 +183,7 @@ const EmptyState = () => (
 const AddContributorsToList = ({ list, timezoneOption }: AddContributorsPageProps) => {
   const [selectedContributors, setSelectedContributors] = useState<DbPRContributor[]>([]);
   const [makeRequest, setMakeRequest] = useState(false);
-  const { setContributorSearchTerm, timezone, setTimezone, data, meta, isLoading, setPage } =
-    useContributorSearch(makeRequest);
+  const { setContributorSearchTerm, data, meta, isLoading, setPage } = useContributorSearch(makeRequest);
   const { sessionToken } = useSupabaseAuth();
   const [contributorsAdded, setContributorsAdded] = useState(false);
   const [contributorsAddedError, setContributorsAddedError] = useState(false);
@@ -220,17 +204,6 @@ const AddContributorsToList = ({ list, timezoneOption }: AddContributorsPageProp
     }
   };
 
-  // get all timezones from the api that exists in the dummy timezone list
-  const timezoneList = timezones
-    .filter((timezone) => {
-      return timezoneOption.some((timezoneOption) => timezoneOption.timezone === timezone.value);
-    })
-    .map((timezone) => {
-      return {
-        label: timezone.text,
-        value: timezone.value,
-      };
-    });
   const contributors =
     data?.length > 0
       ? data.map((contributor) => {
@@ -259,13 +232,8 @@ const AddContributorsToList = ({ list, timezoneOption }: AddContributorsPageProp
     }
   };
 
-  const onSelectTimeZone = (selected: string) => {
-    setMakeRequest(true);
-    setTimezone(selected);
-  };
-
   function onSearch(searchTerm: string | undefined) {
-    if (!timezone && (!searchTerm || searchTerm.length < 3)) {
+    if (!searchTerm || searchTerm.length < 3) {
       setMakeRequest(false);
     } else {
       setMakeRequest(true);
@@ -279,10 +247,7 @@ const AddContributorsToList = ({ list, timezoneOption }: AddContributorsPageProp
         <Header classNames="md:!px-0">
           <AddContributorsHeader
             list={list}
-            setTimezoneFilter={onSelectTimeZone}
             selectedContributorsIds={selectedContributors.map(({ user_id }) => user_id)}
-            timezoneOptions={timezoneList}
-            timezone={timezone}
             onAddToList={addContributorsToList}
             onSearch={onSearch}
           />
