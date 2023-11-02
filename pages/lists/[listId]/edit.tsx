@@ -9,6 +9,7 @@ import Text from "components/atoms/Typography/text";
 import ToggleSwitch from "components/atoms/ToggleSwitch/toggle-switch";
 import Button from "components/atoms/Button/button";
 import TextInput from "components/atoms/TextInput/text-input";
+import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 
 // TODO: put into shared utilities once https://github.com/open-sauced/app/pull/2016 is merged
 function isListId(listId: string) {
@@ -58,11 +59,32 @@ interface EditListPageProps {
   list: DBList;
 }
 
+interface UpdateListPayload {
+  name: string;
+  is_public: boolean;
+  contributors: number[];
+}
+
 export default function EditListPage({ list }: EditListPageProps) {
   const [isPublic, setIsPublic] = useState(list.is_public);
+  const { sessionToken } = useSupabaseAuth();
 
-  function updateList(formData: Record<string, FormDataEntryValue>) {
-    alert("list updated");
+  async function updateList(payload: UpdateListPayload) {
+    debugger;
+    const response = await fetchApiData<DBList>({
+      path: `lists/${list.id}`,
+      method: "PATCH",
+      body: payload,
+      bearerToken: sessionToken!,
+      // TODO: remove this in another PR for cleaning up fetchApiData
+      pathValidator: () => true,
+    });
+
+    if (!response.error) {
+      alert("List updated successfully!");
+    } else {
+      alert(response.error.statusText);
+    }
   }
 
   return (
@@ -71,11 +93,14 @@ export default function EditListPage({ list }: EditListPageProps) {
         <form
           onSubmit={(event) => {
             event.preventDefault();
-            if (event.target instanceof HTMLFormElement) {
-              const formData = new FormData(event.target);
-              const data = Object.fromEntries(formData.entries());
-              updateList(data);
-            }
+            const form = event.target as HTMLFormElement;
+            const listUpdates = {
+              name: form["list_name"].value,
+              is_public: form["is_public"].checked,
+              contributors: [],
+            } satisfies UpdateListPayload;
+
+            updateList(listUpdates);
           }}
           className="flex flex-col gap-4"
         >
@@ -88,7 +113,7 @@ export default function EditListPage({ list }: EditListPageProps) {
           <p className="text-light-slate-11 pb-4 border-b border-solid border-light-slate-6">
             A list is a collection of contributors that you and your team can get insights for.
           </p>
-          <TextInput label="List Name" defaultValue={list.name} />
+          <TextInput label="List Name" name="list_name" defaultValue={list.name} />
           <div className="flex flex-col flex-wrap gap-4 pb-4 pt-4 border-t border-b border-solid border-light-slate-6">
             <Text className="text-light-slate-12">Page Visibility</Text>
             <div className="flex items-center">
@@ -101,7 +126,7 @@ export default function EditListPage({ list }: EditListPageProps) {
               <Text className="!text-orange-600 pr-2 hidden md:block">Make Public</Text>
               <ToggleSwitch
                 ariaLabelledBy="make-public-explainer"
-                name="isPublic"
+                name="is_public"
                 checked={isPublic}
                 handleToggle={() => setIsPublic((isPublic: boolean) => !isPublic)}
               />
