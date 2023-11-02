@@ -80,6 +80,8 @@ const Footer = (): JSX.Element => {
       case url.includes("dev.to"):
         platform = "Dev.to";
         break;
+      default:
+        platform = "Social Media";
     }
 
     return platform;
