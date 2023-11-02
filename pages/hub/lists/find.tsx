@@ -38,6 +38,7 @@ export type QueryParams = {
   timezone: string;
   name: string;
   public: "true" | "false";
+  pr_velocity: string;
 };
 
 interface NewListCreationPageProps {
@@ -51,7 +52,7 @@ interface NewListCreationPageProps {
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const supabase = createPagesServerClient(ctx);
 
-  const { limit, page, timezone } = ctx.query as QueryParams;
+  const { limit, page, timezone, pr_velocity } = ctx.query as QueryParams;
 
   const query = new URLSearchParams();
 
@@ -63,6 +64,9 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   }
   if (timezone) {
     query.set("timezones", timezone);
+  }
+  if (pr_velocity) {
+    query.set("pr_velocity", pr_velocity);
   }
 
   const baseEndpoint = "lists/contributors";

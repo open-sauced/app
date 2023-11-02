@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 // import { useToast } from "lib/hooks/useToast";
 
+import { Dialog, Content, Overlay, Portal } from "@radix-ui/react-dialog";
 import ListNameHeader from "components/atoms/ListNameHeader/list-name-header";
 import LimitSelect from "components/atoms/Select/limit-select";
 import SingleSelect from "components/atoms/Select/single-select";
@@ -18,7 +19,10 @@ import Search from "components/atoms/Search/search";
 import useDebounceTerm from "lib/hooks/useDebounceTerm";
 import { setQueryParams } from "lib/utils/query-params";
 import { QueryParams } from "pages/hub/lists/find";
-import { Dialog } from "../Dialog/dialog";
+import Title from "components/atoms/Typography/title";
+import TextInput from "components/atoms/TextInput/text-input";
+import { DialogTrigger } from "../Dialog/dialog";
+
 // import Search from "components/atoms/Search/search";
 
 interface ListHeaderProps {
@@ -50,18 +54,25 @@ const HubContributorsHeader = ({
   // const { toast } = useToast();
   const router = useRouter();
   const filterCount = router.asPath.split("?")[1]?.split("&").length;
-  const { limit, timezone } = router.query;
+  const { limit, timezone, pr_velocity } = router.query as QueryParams;
   const [filterOpen, setFilterOpen] = useState(false);
+  const [prVelocity, setPrVelocity] = useState(pr_velocity ?? "");
 
   const [contributorSearch, setContributorSearch] = useState("");
   const debouncedSearchTerm = useDebounceTerm(contributorSearch, 300);
 
   useEffect(() => {
+    if (prVelocity) {
+      setQueryParams({ pr_velocity: prVelocity } as QueryParams);
+      // console.log(prVelocity);
+    }
+  }, [prVelocity, router.query]);
+  useEffect(() => {
     onSearch(contributorSearch);
   }, [debouncedSearchTerm]);
 
   return (
-    <Dialog>
+    <Dialog open={filterOpen} onOpenChange={(value) => setFilterOpen(value)}>
       <div className="relative flex flex-col justify-between w-full gap-6 py-2">
         <div className="flex flex-col justify-between w-full md:flex-row">
           <div className="header-image mr-2  min-w-[130px] gap-3 flex flex-col">
@@ -113,7 +124,7 @@ const HubContributorsHeader = ({
               name={"contributors"}
               onChange={(value) => setContributorSearch(value)}
             />
-            <button
+            <DialogTrigger
               type="button"
               onClick={handleOpenFilterPanel}
               className="px-2 py-1.5 text-sm bg-white border rounded-md shrink-0 flex items-center gap-2 "
@@ -124,9 +135,18 @@ const HubContributorsHeader = ({
               ) : (
                 <BiFilterAlt className="text-lg text-black/80" />
               )}
-            </button>
+            </DialogTrigger>
           </div>
           <div className="flex flex-col gap-2 md:items-center md:gap-4 md:flex-row">
+            <TextInput
+              type="number"
+              value={pr_velocity}
+              placeholder="PR Velocity"
+              onChange={(e) => {
+                setPrVelocity(e.target.value);
+              }}
+              className="w-36"
+            />
             <SingleSelect
               options={timezoneOptions}
               position="popper"
@@ -155,6 +175,33 @@ const HubContributorsHeader = ({
           </div>
         </div>
       </div>
+      <Portal className="justify-end">
+        <div className="fixed inset-0 z-50 flex items-end justify-end">
+          <Content className="fixed z-50 px-2 md:px-6 py-10 shadow-lg grid w-full bg-white md:w-80 h-[calc(100%-(3.3rem))]">
+            <Overlay className="fixed inset-0 z-50 bg-black/5 backdrop-blur-xs transition-all duration-100 data-[state=closed]:animate-out data-[state=open]:fade-in data-[state=closed]:fade-out" />
+            <div className="flex gap-5 flex-col">
+              <Title level={2}>All Filters</Title>
+              <div className="flex flex-col gap-2">
+                <Title level={4}>Timezone</Title>
+                <SingleSelect
+                  options={timezoneOptions}
+                  position="popper"
+                  className="opacity-100 text-light-slate-12"
+                  value={timezone ? String(timezone) : undefined}
+                  placeholder="Select time zone"
+                  onValueChange={(value) => {
+                    setQueryParams({ timezone: value } as QueryParams);
+                  }}
+                />
+              </div>
+              <div className="flex flex-col gap-2">
+                <Title level={4}>PR Velocity</Title>
+                <TextInput value={""} onChange={() => {}} />
+              </div>
+            </div>
+          </Content>
+        </div>
+      </Portal>
     </Dialog>
   );
 };

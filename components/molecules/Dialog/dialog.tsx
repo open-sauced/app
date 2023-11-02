@@ -93,6 +93,7 @@ DialogFooter.displayName = "DialogFooter";
 export {
   Dialog,
   DialogTrigger,
+  DialogPortal,
   DialogContent,
   DialogHeader,
   DialogTitle,
