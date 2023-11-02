@@ -122,7 +122,7 @@ const ContributorHighlightCard = ({
   const [host, setHost] = useState("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const { follow, unFollow, isError } = useFollowUser(
-    dropdownOpen && loggedInUser && loggedInUser.user_metadata.user_name !== user ? user : ""
+    dropdownOpen && loggedInUser?.user_metadata.user_name !== user ? user : ""
   );
   const [popoverOpen, setPopoverOpen] = useState(false);
   const popoverContentRef = React.useRef<HTMLDivElement>(null);
