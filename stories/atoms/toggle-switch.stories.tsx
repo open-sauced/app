@@ -22,14 +22,17 @@ Small.args = {
   name: "test",
   checked: false,
   size: "sm",
+  ariaLabel: "This is a toggle switch",
 };
 Large.args = {
   name: "test",
   checked: false,
   size: "lg",
+  ariaLabel: "This is a toggle switch",
 };
 Custom.args = {
   name: "test",
   checked: false,
   classNames: "w-8 h-4",
+  ariaLabel: "This is a toggle switch",
 };
