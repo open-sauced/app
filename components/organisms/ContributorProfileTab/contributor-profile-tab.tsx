@@ -287,7 +287,7 @@ const ContributorProfileTab = ({
 
       <TabsContent value={"highlights" satisfies TabKey}>
         {(hasHighlights || inputVisible) && user_name === login && (
-          <div className="lg:pl-20 lg:gap-x-4 pt-4 flex max-w-[48rem]">
+          <div className="max-w-[48rem] pt-4 lg:pl-20 flex lg:gap-x-4 items-center">
             <div className="hidden lg:inline-flex">
               <Avatar
                 alt="user profile avatar"
