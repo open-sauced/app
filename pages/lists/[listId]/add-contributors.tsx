@@ -275,7 +275,7 @@ const AddContributorsToList = ({ list, timezoneOption }: AddContributorsPageProp
 
   return (
     <HubContributorsPageLayout>
-      <div className="info-container container w-full min-h-[6.25rem]">
+      <div className="info-container container w-full min-h-[6.25rem] px-4">
         <Header classNames="md:!px-0">
           <AddContributorsHeader
             list={list}
@@ -287,8 +287,6 @@ const AddContributorsToList = ({ list, timezoneOption }: AddContributorsPageProp
             onSearch={onSearch}
           />
         </Header>
-      </div>
-      <div className="px-4 md:px-16 pb-8">
         <ContributorListTableHeaders
           selected={selectedContributors.length > 0 && selectedContributors.length === meta.limit}
           handleOnSelectAllContributor={onAllChecked}
