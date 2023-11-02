@@ -281,7 +281,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
 
             {/* Bio section */}
             <div className="flex flex-col gap-2">
-              <label className="text-sm font-normal text-light-slate-11">Bio</label>
+              <label className="text-sm font-medium text-light-slate-9">Bio</label>
               <textarea
                 rows={4}
                 placeholder="Tell us about yourself."
@@ -491,7 +491,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
                 name="delete-account"
                 action="/api/delete-account"
                 method="POST"
-                className="flex flex-col order-first gap-6 md:order-last"
+                className="flex flex-col order-first gap-6 md:order-last p-6 rounded-2xl bg-light-slate-4"
                 ref={deleteFormRef}
                 onSubmit={(e) => {
                   setIsModalOpen(true);
