@@ -526,7 +526,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
         }}
         open={isDivFocused}
       >
-        <DialogContent className="p-4 w-[33vw]" style={{ maxHeight: "80vh", overflow: "auto" }}>
+        <DialogContent className="p-4 w-full md:w-[33rem] xs:w-[25rem] max-h-[80vh]">
           <DialogHeader>
             <DialogTitle>Post a highlight</DialogTitle>
           </DialogHeader>
@@ -539,7 +539,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                 </span>
               )}
             </p>
-            <div className="flex flex-col gap-2 p-2 overflow-hidden text-sm bg-white border rounded-lg">
+            <div className="flex flex-col gap-2 p-2 text-sm bg-white border rounded-lg">
               <TypeWriterTextArea
                 className={`resize-y min-h-[80px] max-h-99 font-normal placeholder:text-slate-400 text-light-slate-12 placeholder:font-normal placeholder:text-sm transition focus:outline-none rounded-lg ${
                   !isDivFocused ? "hidden" : ""
@@ -648,21 +648,14 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
             </h1>
 
             {loadingSuggestions ? (
-              <div className="lg:w-[33vw] md:w-[50vw]">
-                <Skeleton
-                  count={3}
-                  height={40}
-                  style={{
-                    margin: "0.5rem auto",
-                  }}
-                  className="w-full"
-                />
+              <div className="w-full">
+                <Skeleton count={3} height={40} className="w-full my-[0.5rem] mx-auto" />
               </div>
             ) : (
               <Swiper
                 spaceBetween={8}
                 slidesPerView={1}
-                className="lg:w-[33vw] md:w-[50vw]"
+                className="w-full"
                 modules={[Pagination, A11y]}
                 pagination={{
                   clickable: true,
@@ -758,15 +751,10 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
       {/* Add Repo Popup Form */}
 
       <Dialog open={addTaggedRepoFormOpen} onOpenChange={setAddTaggedRepoFormOpen}>
-        <DialogContent
-          className="p-2"
-          style={{
-            width: "33vw",
-          }}
-        >
+        <DialogContent className="w-full md:w-[30rem] xs:w-[25rem] p-4 flex flex-col gap-4">
           <DialogHeader>
             <DialogTitle>Add a repo</DialogTitle>
-            <DialogDescription>Add a Repository to tag with this highlight.</DialogDescription>
+            <DialogDescription className="mt-2">Add a Repository to tag with this highlight.</DialogDescription>
           </DialogHeader>
           <Search
             isLoading={tagRepoSearchLoading}
