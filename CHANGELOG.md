@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.74.0-beta.10](https://github.com/open-sauced/insights/compare/v1.74.0-beta.9...v1.74.0-beta.10) (2023-11-02)
+
+
+### 🐛 Bug Fixes
+
+* made notifications buttons more accessible ([#2034](https://github.com/open-sauced/insights/issues/2034)) ([50bcf9d](https://github.com/open-sauced/insights/commit/50bcf9de7f4004f766a7f934e2479b948384c0a9))
+
 ## [1.74.0-beta.9](https://github.com/open-sauced/insights/compare/v1.74.0-beta.8...v1.74.0-beta.9) (2023-11-01)
 
 
