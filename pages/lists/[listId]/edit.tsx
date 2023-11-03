@@ -191,7 +191,7 @@ export default function EditListPage({ list, initialContributors }: EditListPage
           </p>
           <label className="flex flex-col w-full text-light-slate-12 gap-4">
             List Name
-            <TextInput name="list_name" defaultValue={list.name} />
+            <TextInput name="list_name" defaultValue={list.name} required />
           </label>
           <div className="flex flex-col flex-wrap gap-4 pb-4 pt-4 border-t border-b border-solid border-light-slate-6">
             <label className="text-light-slate-12">Page Visibility</label>
