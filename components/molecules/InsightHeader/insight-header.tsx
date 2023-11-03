@@ -91,9 +91,9 @@ const InsightHeader = ({ insight, repositories, insightId, isOwner }: InsightHea
         <div className=" md:hidden mt-auto">
           <ComponentDateFilter
             setRangeFilter={(selectedRange) => {
-              setQueryParams({ range: selectedRange });
+              setQueryParams({ range: `${selectedRange}` });
             }}
-            defaultRange={String(range)}
+            defaultRange={Number(range)}
           />
         </div>
       </div>

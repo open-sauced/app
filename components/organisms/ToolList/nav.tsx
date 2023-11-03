@@ -57,9 +57,9 @@ const Nav: React.FC<NavProps> = ({ toolList, selectedTool = "dashboard", selecte
         <div className="ml-auto hidden md:block">
           <ComponentDateFilter
             setRangeFilter={(selectedRange) => {
-              setQueryParams({ range: selectedRange });
+              setQueryParams({ range: `${selectedRange}` });
             }}
-            defaultRange={String(range)}
+            defaultRange={Number(range)}
           />
         </div>
       ) : null}
