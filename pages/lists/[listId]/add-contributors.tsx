@@ -176,7 +176,7 @@ const useContributorSearch = (makeRequest: boolean) => {
 const EmptyState = () => (
   <div className="grid place-content-center w-full bg-white p-4 md:p-8">
     <Image src="/assets/contributors-empty-state.svg" alt="" width="300" height="298" className="object-contain" />
-    <p className="relative bottom-16 text-center">Search for contributors to add to your list</p>
+    <p className="relative bottom-16 text-center text-light-slate-10">Search for contributors to add to your list</p>
   </div>
 );
 
@@ -243,7 +243,7 @@ const AddContributorsToList = ({ list, timezoneOption }: AddContributorsPageProp
 
   return (
     <HubContributorsPageLayout>
-      <div className="info-container container w-full min-h-[6.25rem] px-4">
+      <div className="info-container container w-full min-h-[6.25rem] md:px-16">
         <Header classNames="md:!px-0">
           <AddContributorsHeader
             list={list}
