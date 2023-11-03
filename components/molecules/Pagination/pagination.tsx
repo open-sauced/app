@@ -14,6 +14,7 @@ interface PaginationProps {
   goToPage?: boolean;
   hasNextPage?: boolean;
   hasPreviousPage?: boolean;
+  showTotalPages?: boolean;
 }
 
 const Pagination = ({
@@ -26,6 +27,7 @@ const Pagination = ({
   hasPreviousPage = false,
   hasNextPage = true,
   onPageChange,
+  showTotalPages = true,
 }: PaginationProps): JSX.Element => {
   // This logics are meant for testing purpose
   const [selected, setSelected] = useState(page);
@@ -79,12 +81,16 @@ const Pagination = ({
             <RiArrowRightSLine className="text-2xl md:text-lg" />
           </button>
         </div>
-        <div
-          className={`${divisor && "md:border-r-2 border-r-light-slate-6"} text-sm text-light-slate-9    py-1 md:pr-4`}
-        >
-          Total {totalPage > 999 ? humanizeNumber(totalPage, null) : totalPage}
-          <span className="md:invisible lg:visible"> pages </span>
-        </div>
+        {showTotalPages && (
+          <div
+            className={`${
+              divisor && "md:border-r-2 border-r-light-slate-6"
+            } text-sm text-light-slate-9    py-1 md:pr-4`}
+          >
+            Total {totalPage > 999 ? humanizeNumber(totalPage, null) : totalPage}
+            <span className="md:invisible lg:visible"> pages </span>
+          </div>
+        )}
         {goToPage && (
           <div className="hidden md:block">
             <PaginationGotoPage totalPage={totalPage} page={page} setPage={handleSelected} name={""} />

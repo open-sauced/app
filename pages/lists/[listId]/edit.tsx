@@ -3,6 +3,8 @@ import { GetServerSidePropsContext } from "next";
 import { UserGroupIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
 import { FaUserPlus } from "react-icons/fa6";
+import Link from "next/link";
+import { MdOutlineArrowBackIos } from "react-icons/md";
 import { fetchApiData } from "helpers/fetchApiData";
 import HubContributorsPageLayout from "layouts/hub-contributors";
 import Text from "components/atoms/Typography/text";
@@ -11,6 +13,9 @@ import Button from "components/atoms/Button/button";
 import TextInput from "components/atoms/TextInput/text-input";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { useToast } from "lib/hooks/useToast";
+import Search from "components/atoms/Search/search";
+import useFetchAllContributors from "lib/hooks/useFetchAllContributors";
+import Pagination from "components/molecules/Pagination/pagination";
 
 // TODO: put into shared utilities once https://github.com/open-sauced/app/pull/2016 is merged
 function isListId(listId: string) {
@@ -35,12 +40,20 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     };
   }
 
-  const { data: list, error } = await fetchApiData<DBList>({
-    path: `lists/${listId}`,
-    bearerToken,
-    // TODO: remove this in another PR for cleaning up fetchApiData
-    pathValidator: () => true,
-  });
+  const [{ data: list, error }, { data: initialContributors, error: contributorsError }] = await Promise.all([
+    fetchApiData<DBList>({
+      path: `lists/${listId}`,
+      bearerToken,
+      // TODO: remove this in another PR for cleaning up fetchApiData
+      pathValidator: () => true,
+    }),
+    fetchApiData<DBListContributor>({
+      path: `lists/${listId}/contributors`,
+      bearerToken,
+      // TODO: remove this in another PR for cleaning up fetchApiData
+      pathValidator: () => true,
+    }),
+  ]);
 
   // Only the list owner should be allowed to add contributors
   if (error?.status === 404 || (list && list.user_id !== userId)) {
@@ -52,12 +65,14 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   return {
     props: {
       list,
+      initialContributors,
     },
   };
 };
 
 interface EditListPageProps {
   list: DBList;
+  initialContributors: PagedData<DBListContributor>;
 }
 
 interface UpdateListPayload {
@@ -66,11 +81,11 @@ interface UpdateListPayload {
   contributors: number[];
 }
 
-export default function EditListPage({ list }: EditListPageProps) {
+export default function EditListPage({ list, initialContributors }: EditListPageProps) {
   const [isPublic, setIsPublic] = useState(list.is_public);
   const { sessionToken } = useSupabaseAuth();
   const { toast } = useToast();
-
+  const { data: contributors, meta } = initialContributors;
   async function updateList(payload: UpdateListPayload) {
     const { data, error } = await fetchApiData<DBList>({
       path: `lists/${list.id}`,
@@ -83,6 +98,16 @@ export default function EditListPage({ list }: EditListPageProps) {
 
     return { data, error };
   }
+  const [contributorSearchTerm, setContributorSearchTerm] = useState("");
+  const a = useFetchAllContributors(
+    {
+      contributor: contributorSearchTerm,
+    },
+    {
+      revalidateOnFocus: false,
+    }
+  );
+  const [page, setPage] = useState(1);
 
   return (
     <HubContributorsPageLayout>
@@ -110,7 +135,16 @@ export default function EditListPage({ list }: EditListPageProps) {
           className="flex flex-col gap-4"
         >
           <div className="flex justify-between align-center items-center">
-            <h1 className="text-2xl text-light-slate-12">Edit List</h1>
+            <h1 className="flex items-center text-2xl text-light-slate-12">
+              {" "}
+              <Link
+                className="inline-block p-3 mr-2 border rounded-lg cursor-pointer bg-light-slate-1"
+                href={`/lists/${list.id}/overview`}
+              >
+                <MdOutlineArrowBackIos title="Go back to list overview" className="text-lg text-light-slate-10" />
+              </Link>{" "}
+              Edit List
+            </h1>
             <Button variant="primary" type="submit">
               Save changes
             </Button>
@@ -152,6 +186,41 @@ export default function EditListPage({ list }: EditListPageProps) {
             </Button>
           </div>
         </form>
+        <div className="flex justify-between flex-wrap mt-4 pb-4 gap-4">
+          <h2 className="text-light-slate-12">Remove Contributors</h2>
+          <div className="flex flex-col w-full gap-2 md:flex-row">
+            <label className="flex w-full flex-col gap-4">
+              <span className="sr-only">Search for contributors to add to your list</span>
+              <Search
+                placeholder="Search for contributors to add to your list"
+                className="!w-full text-sm py-1.5"
+                name={"contributors"}
+                onChange={(value) => setContributorSearchTerm(value)}
+              />
+            </label>
+          </div>
+          <ul className="w-full flex flex-col">
+            {contributors?.map((contributor) => (
+              <li key={contributor.id} className="flex justify-between items-center py-2">
+                {contributor.username}
+              </li>
+            ))}
+          </ul>
+
+          <div className="w-full flex place-content-center gap-4">
+            <Pagination
+              pages={new Array(meta.pageCount).fill(0).map((_, index) => index + 1)}
+              hasNextPage={meta.hasNextPage}
+              hasPreviousPage={meta.hasPreviousPage}
+              totalPage={meta.pageCount}
+              page={meta.page}
+              onPageChange={function (page: number): void {
+                setPage(page);
+              }}
+              showTotalPages={false}
+            />
+          </div>
+        </div>
       </div>
     </HubContributorsPageLayout>
   );
