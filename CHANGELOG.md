@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.74.0-beta.12](https://github.com/open-sauced/insights/compare/v1.74.0-beta.11...v1.74.0-beta.12) (2023-11-03)
+
+
+### 🍕 Features
+
+* add contributor's when editing a list ([#2016](https://github.com/open-sauced/insights/issues/2016)) ([1a0b4da](https://github.com/open-sauced/insights/commit/1a0b4da31ca21e22a6cd03756ebb86ff112ae8aa))
+
 ## [1.74.0-beta.11](https://github.com/open-sauced/insights/compare/v1.74.0-beta.10...v1.74.0-beta.11) (2023-11-02)
 
 
