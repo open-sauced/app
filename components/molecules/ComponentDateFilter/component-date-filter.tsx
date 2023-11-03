@@ -1,18 +1,18 @@
 import { useState } from "react";
 
 interface ComponentDateFilterProps {
-  setRangeFilter: (range: number) => void;
-  defaultRange?: number;
+  setRangeFilter: (range: string) => void;
+  defaultRange?: string;
 }
 
 const ComponentDateFilter = ({ setRangeFilter, defaultRange }: ComponentDateFilterProps) => {
-  const [activeFilter, setActiveFilter] = useState<number>(defaultRange || 30);
-  const dates = [7, 30, 90];
+  const [activeFilter, setActiveFilter] = useState<string>(defaultRange ?? "30");
+  const dates = ["7", "30", "90"];
 
-  const rangeFormatter = (value: number) => {
-    return value === 7 ? "7d" : value === 30 ? "30d" : "3m";
+  const rangeFormatter = (value: string) => {
+    return value === "7" ? "7d" : value === "30" ? "30d" : "3m";
   };
-  const handleFilterClick = (range: number) => {
+  const handleFilterClick = (range: string) => {
     setActiveFilter(range);
 
     // Logic to setDateFilter goes herein with the dates value
