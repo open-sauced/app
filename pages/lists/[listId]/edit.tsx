@@ -16,6 +16,7 @@ import { useToast } from "lib/hooks/useToast";
 import Search from "components/atoms/Search/search";
 import useFetchAllContributors from "lib/hooks/useFetchAllContributors";
 import Pagination from "components/molecules/Pagination/pagination";
+import { Avatar } from "components/atoms/Avatar/avatar-hover-card";
 
 // TODO: put into shared utilities once https://github.com/open-sauced/app/pull/2016 is merged
 function isListId(listId: string) {
@@ -48,7 +49,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
       pathValidator: () => true,
     }),
     fetchApiData<DBListContributor>({
-      path: `lists/${listId}/contributors`,
+      path: `lists/${listId}/contributors?limit=10`,
       bearerToken,
       // TODO: remove this in another PR for cleaning up fetchApiData
       pathValidator: () => true,
@@ -136,7 +137,6 @@ export default function EditListPage({ list, initialContributors }: EditListPage
         >
           <div className="flex justify-between align-center items-center">
             <h1 className="flex items-center text-2xl text-light-slate-12">
-              {" "}
               <Link
                 className="inline-block p-3 mr-2 border rounded-lg cursor-pointer bg-light-slate-1"
                 href={`/lists/${list.id}/overview`}
@@ -201,8 +201,17 @@ export default function EditListPage({ list, initialContributors }: EditListPage
           </div>
           <ul className="w-full flex flex-col">
             {contributors?.map((contributor) => (
-              <li key={contributor.id} className="flex justify-between items-center py-2">
-                {contributor.username}
+              <li
+                key={contributor.id}
+                className="flex justify-between items-center p-2 hover:bg-light-slate-6 focus-within:bg-light-slate-6 rounded-lg"
+              >
+                <div className="flex items-center gap-4">
+                  <Avatar size="xsmall" contributor={contributor.login} />
+                  <span className="text-light-slate-12">{contributor.login}</span>
+                </div>
+                <Button variant="default" className="border-0 bg-transparent !text-orange-600 hover:!bg-transparent">
+                  Remove from list
+                </Button>
               </li>
             ))}
           </ul>
