@@ -1,7 +1,7 @@
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { GetServerSidePropsContext } from "next";
 import { UserGroupIcon } from "@heroicons/react/24/solid";
-import { useState } from "react";
+import { ComponentProps, useState } from "react";
 import { FaUserPlus } from "react-icons/fa6";
 import Link from "next/link";
 import { MdOutlineArrowBackIos } from "react-icons/md";
@@ -48,7 +48,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
       // TODO: remove this in another PR for cleaning up fetchApiData
       pathValidator: () => true,
     }),
-    fetchApiData<DBListContributor>({
+    fetchApiData<DbListContibutor>({
       path: `lists/${listId}/contributors?limit=10`,
       bearerToken,
       // TODO: remove this in another PR for cleaning up fetchApiData
@@ -73,7 +73,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 
 interface EditListPageProps {
   list: DBList;
-  initialContributors: PagedData<DBListContributor>;
+  initialContributors: PagedData<DbListContibutor>;
 }
 
 interface UpdateListPayload {
@@ -81,6 +81,39 @@ interface UpdateListPayload {
   is_public: boolean;
   contributors: number[];
 }
+
+const ListContributors = ({
+  contributors,
+  onRemoveContributor,
+}: {
+  contributors: DbListContibutor[];
+  onRemoveContributor: ComponentProps<typeof Button>["onClick"];
+}) => {
+  return (
+    <ul aria-label={`Contributors you can remove from the list`} className="w-full flex flex-col">
+      {contributors?.map((contributor) => (
+        <li
+          key={contributor.id}
+          className="flex justify-between items-center p-2 hover:bg-light-slate-6 focus-within:bg-light-slate-6 rounded-lg"
+        >
+          <div className="flex items-center gap-4">
+            <Avatar size="xsmall" contributor={contributor.login} />
+            <span className="text-light-slate-12">{contributor.login}</span>
+          </div>
+          <Button
+            variant="default"
+            className="border-0 bg-transparent !text-orange-600 hover:!bg-transparent"
+            aria-label={`Remove contributor ${contributor.login} from the list`}
+            data-user-id={contributor.user_id}
+            onClick={onRemoveContributor}
+          >
+            Remove from list
+          </Button>
+        </li>
+      ))}
+    </ul>
+  );
+};
 
 export default function EditListPage({ list, initialContributors }: EditListPageProps) {
   const [isPublic, setIsPublic] = useState(list.is_public);
@@ -109,6 +142,10 @@ export default function EditListPage({ list, initialContributors }: EditListPage
     }
   );
   const [page, setPage] = useState(1);
+  async function onRemoveContributor(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+    const { userId } = (event.target as HTMLButtonElement).dataset;
+    alert(userId);
+  }
 
   return (
     <HubContributorsPageLayout>
@@ -199,23 +236,7 @@ export default function EditListPage({ list, initialContributors }: EditListPage
               />
             </label>
           </div>
-          <ul className="w-full flex flex-col">
-            {contributors?.map((contributor) => (
-              <li
-                key={contributor.id}
-                className="flex justify-between items-center p-2 hover:bg-light-slate-6 focus-within:bg-light-slate-6 rounded-lg"
-              >
-                <div className="flex items-center gap-4">
-                  <Avatar size="xsmall" contributor={contributor.login} />
-                  <span className="text-light-slate-12">{contributor.login}</span>
-                </div>
-                <Button variant="default" className="border-0 bg-transparent !text-orange-600 hover:!bg-transparent">
-                  Remove from list
-                </Button>
-              </li>
-            ))}
-          </ul>
-
+          <ListContributors contributors={contributors} onRemoveContributor={onRemoveContributor} />
           <div className="w-full flex place-content-center gap-4">
             <Pagination
               pages={new Array(meta.pageCount).fill(0).map((_, index) => index + 1)}
