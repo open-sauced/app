@@ -15,7 +15,6 @@ interface TableHeaderProps {
   entity: string;
   onSearch?: (search?: string) => void;
   updateLimit: Function;
-  setRangeFilter?: (range: number) => void;
   layout?: ToggleValue;
   onLayoutToggle?: (value: ToggleValue) => void;
 }
@@ -32,7 +31,6 @@ const TableHeader = ({
   const router = useRouter();
   const [searchTerm, setSearchTerm] = React.useState<string>("");
   const [suggestions, setSuggestions] = React.useState<string[]>([]);
-  const [selected, setSelected] = React.useState<null | number>(null);
   const { providerToken } = useSupabaseAuth();
 
   const updateSuggestionsDebounced = useDebounce(async () => {

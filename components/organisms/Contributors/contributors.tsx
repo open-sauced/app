@@ -11,6 +11,7 @@ import { calcDistanceFromToday } from "lib/utils/date-utils";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 import LimitSelect from "components/atoms/Select/limit-select";
 
+import ClientOnly from "components/atoms/ClientOnly/client-only";
 import useContributors from "lib/hooks/api/useContributors";
 import { getAvatarByUsername } from "lib/utils/github";
 import { ToggleValue } from "components/atoms/LayoutToggle/layout-toggle";
@@ -24,11 +25,11 @@ interface ContributorProps {
 
 const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
   const router = useRouter();
-  const topic = router.query.pageId as string;
+  const { pageId: topic } = router.query;
   const store = useStore();
-  const range = useStore((state) => state.range);
+
   const [layout, setLayout] = useState<ToggleValue>("grid");
-  const { data, meta, setPage, setLimit, isError, isLoading } = useContributors(10, repositories, range);
+  const { data, meta, setPage, setLimit, isError, isLoading } = useContributors(10, repositories);
 
   const contributors = data.map((pr) => {
     return {
@@ -58,32 +59,33 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
         updateLimit={setLimit}
         metaInfo={meta}
         entity="Contributors"
-        range={range}
-        setRangeFilter={store.updateRange}
         title="Contributors"
         layout={layout}
         onLayoutToggle={() => setLayout((prev) => (prev === "list" ? "grid" : "list"))}
       />
 
       {layout === "grid" ? (
-        <div className="grid w-full gap-3 grid-cols-automobile md:grid-cols-autodesktop">
-          {isLoading ? <SkeletonWrapper height={210} radius={12} count={9} /> : ""}
-          {isError ? <>An error occurred!..</> : ""}
-          {contributorArray.map((contributor, index) => (
-            <ContributorCard
-              key={index}
-              className=""
-              contributor={{ ...contributor }}
-              topic={topic}
-              repositories={repositories}
-              range={range}
-            />
-          ))}
-        </div>
+        <ClientOnly>
+          <div className="grid w-full gap-3 grid-cols-automobile md:grid-cols-autodesktop">
+            {isLoading ? <SkeletonWrapper height={210} radius={12} count={9} /> : ""}
+            {isError ? <>An error occurred!..</> : ""}
+            {contributorArray.map((contributor, index) => (
+              <ContributorCard
+                key={index}
+                className=""
+                contributor={{ ...contributor }}
+                topic={topic as string}
+                repositories={repositories}
+              />
+            ))}
+          </div>
+        </ClientOnly>
       ) : (
         <div className="lg:min-w-[1150px]">
-          <ContributorListTableHeaders range={range} />
-          <ContributorTable loading={isLoading} topic={topic} contributors={data}></ContributorTable>
+          <ContributorListTableHeaders />
+          <ClientOnly>
+            <ContributorTable loading={isLoading} topic={topic as string} contributors={data}></ContributorTable>
+          </ClientOnly>
         </div>
       )}
 
