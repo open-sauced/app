@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.74.0-beta.13](https://github.com/open-sauced/insights/compare/v1.74.0-beta.12...v1.74.0-beta.13) (2023-11-03)
+
+
+### 🐛 Bug Fixes
+
+* add check to allow team member access for private insight pages ([#2049](https://github.com/open-sauced/insights/issues/2049)) ([2e48b95](https://github.com/open-sauced/insights/commit/2e48b955aa6b371a7da080b17a17be9627af5c11))
+
 ## [1.74.0-beta.12](https://github.com/open-sauced/insights/compare/v1.74.0-beta.11...v1.74.0-beta.12) (2023-11-03)
 
 
