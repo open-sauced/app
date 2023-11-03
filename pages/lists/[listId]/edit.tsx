@@ -90,6 +90,8 @@ export default function EditListPage({ list }: EditListPageProps) {
         <form
           onSubmit={async (event) => {
             event.preventDefault();
+            // FormData was being funky because of the way our ToggleSwitch works
+            // so went this way instead.
             const form = event.target as HTMLFormElement;
             const listUpdates = {
               name: form["list_name"].value,
@@ -121,7 +123,7 @@ export default function EditListPage({ list }: EditListPageProps) {
             <TextInput name="list_name" defaultValue={list.name} />
           </label>
           <div className="flex flex-col flex-wrap gap-4 pb-4 pt-4 border-t border-b border-solid border-light-slate-6">
-            <Text className="text-light-slate-12">Page Visibility</Text>
+            <label className="text-light-slate-12">Page Visibility</label>
             <div className="flex items-center">
               <UserGroupIcon className="w-6 h-6 text-light-slate-9 mr-2" />
               <Text className="text-light-slate-11">
@@ -138,8 +140,8 @@ export default function EditListPage({ list }: EditListPageProps) {
               />
             </div>
           </div>
-          <div className="flex justify-between flex-wrap pb-4 border-b border-solid border-light-slate-6">
-            <p>Add Contributors</p>
+          <div className="flex justify-between items-center flex-wrap pb-4 border-b border-solid border-light-slate-6">
+            <h2 className="text-light-slate-12 ">Add Contributors</h2>
             <Button
               variant="outline"
               href={`/lists/${list.id}/add-contributors`}
