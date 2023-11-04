@@ -104,7 +104,8 @@ const ListContributors = ({
             variant="default"
             className="border-0 bg-transparent !text-orange-600 hover:!bg-transparent"
             aria-label={`Remove contributor ${contributor.login} from the list`}
-            data-user-id={contributor.user_id}
+            data-user-id={contributor.id}
+            data-user-name={contributor.login}
             onClick={onRemoveContributor}
           >
             Remove from list
@@ -143,8 +144,19 @@ export default function EditListPage({ list, initialContributors }: EditListPage
   );
   const [page, setPage] = useState(1);
   async function onRemoveContributor(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
-    const { userId } = (event.target as HTMLButtonElement).dataset;
-    alert(userId);
+    const { userId, userName } = (event.target as HTMLButtonElement).dataset;
+
+    const { error } = await fetchApiData<DBList>({
+      path: `lists/${list.id}/contributors/${userId}`,
+      method: "DELETE",
+      bearerToken: sessionToken!,
+    });
+
+    if (!error) {
+      toast({ description: `${userName} has been removed from your list`, variant: "success" });
+    } else {
+      toast({ description: `Error removing ${userName} from your list`, variant: "danger" });
+    }
   }
 
   return (
