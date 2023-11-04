@@ -281,15 +281,18 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
 
             {/* Bio section */}
             <div className="flex flex-col gap-2">
-              <label className="text-sm font-medium text-light-slate-9">Bio</label>
-              <textarea
-                rows={4}
-                placeholder="Tell us about yourself."
-                className="px-3 py-2 rounded-lg bg-light-slate-4 disabled:cursor-not-allowed "
-                name="bio"
-                value={bio}
-                onChange={(e) => setBio(e.target.value)}
-              ></textarea>
+              <label className="flex flex-col w-full text-sm font-medium text-light-slate-9">
+                Bio
+                <textarea
+                  rows={4}
+                  placeholder="Tell us about yourself."
+                  className="mt-2 px-3 py-2 rounded-lg bg-light-slate-4 disabled:cursor-not-allowed"
+                  name="bio"
+                  value={bio}
+                  onChange={(e) => setBio(e.target.value)}
+                ></textarea>
+              </label>
+
               {bio?.length > 255 ? (
                 <p aria-live="assertive" className="text-light-red-10 text-xs">
                   Bio too long
