@@ -235,33 +235,39 @@ export default function EditListPage({ list, initialContributors }: EditListPage
             </Button>
           </div>
         </form>
-        <div className="flex justify-between flex-wrap mt-4 pb-4 gap-4">
+        <div className="flex flex-col mt-4 pb-4 gap-4">
           <h2 className="text-light-slate-12">Remove Contributors</h2>
-          <div className="flex flex-col w-full gap-2 md:flex-row">
-            <label className="flex w-full flex-col gap-4">
-              <span className="sr-only">Search for contributors to add to your list</span>
-              <Search
-                placeholder="Search for contributors to add to your list"
-                className="!w-full text-sm py-1.5"
-                name={"contributors"}
-                onChange={(value) => setContributorSearchTerm(value)}
-              />
-            </label>
-          </div>
-          <ListContributors contributors={contributors} onRemoveContributor={onRemoveContributor} />
-          <div className="w-full flex place-content-center gap-4">
-            <Pagination
-              pages={new Array(meta.pageCount).fill(0).map((_, index) => index + 1)}
-              hasNextPage={meta.hasNextPage}
-              hasPreviousPage={meta.hasPreviousPage}
-              totalPage={meta.pageCount}
-              page={meta.page}
-              onPageChange={function (page: number): void {
-                setPage(page);
-              }}
-              showTotalPages={false}
-            />
-          </div>
+          {contributors && contributors.length > 0 ? (
+            <>
+              <div className="flex flex-col w-full gap-2 md:flex-row">
+                <label className="flex w-full flex-col gap-4">
+                  <span className="sr-only">Search for contributors to add to your list</span>
+                  <Search
+                    placeholder="Search for contributors to add to your list"
+                    className="!w-full text-sm py-1.5"
+                    name={"contributors"}
+                    onChange={(value) => setContributorSearchTerm(value)}
+                  />
+                </label>
+              </div>
+              <ListContributors contributors={contributors} onRemoveContributor={onRemoveContributor} />
+              <div className="w-full flex place-content-center gap-4">
+                <Pagination
+                  pages={new Array(meta.pageCount).fill(0).map((_, index) => index + 1)}
+                  hasNextPage={meta.hasNextPage}
+                  hasPreviousPage={meta.hasPreviousPage}
+                  totalPage={meta.pageCount}
+                  page={meta.page}
+                  onPageChange={function (page: number): void {
+                    setPage(page);
+                  }}
+                  showTotalPages={false}
+                />
+              </div>
+            </>
+          ) : (
+            <p className="text-light-slate-11">There are no contributors for this list.</p>
+          )}
         </div>
       </div>
     </HubContributorsPageLayout>
