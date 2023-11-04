@@ -423,7 +423,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
             </Button>
           </div>
           <div className="flex flex-col gap-6">
-            <div className="flex flex-col gap-3 ">
+            <div className="flex flex-col gap-3">
               <label className="text-2xl font-normal text-light-slate-11">Email Preferences</label>
               <Checkbox
                 // eslint-disable-next-line camelcase
@@ -445,7 +445,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
             <Button
               onClick={handleUpdateEmailPreference}
               variant="default"
-              className="px-4 py-2 w-max bg-light-slate-4 "
+              className="px-4 py-2 w-max bg-light-slate-4"
               disabled={updating.emailPreferences}
               loading={updating.emailPreferences}
             >
