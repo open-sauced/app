@@ -145,19 +145,41 @@ export default function EditListPage({ list, initialContributors }: EditListPage
   const [page, setPage] = useState(1);
   async function onRemoveContributor(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     const { userId, userName } = (event.target as HTMLButtonElement).dataset;
+    const undoId = setTimeout(async () => {
+      const { error } = await fetchApiData<DBList>({
+        path: `lists/${list.id}/contributors/${userId}`,
+        method: "DELETE",
+        bearerToken: sessionToken!,
+      });
 
-    const { error } = await fetchApiData<DBList>({
-      path: `lists/${list.id}/contributors/${userId}`,
-      method: "DELETE",
-      bearerToken: sessionToken!,
+      if (error) {
+        setRemovedContributorIds((prev) => prev.filter((id) => id !== userId));
+        toast({ description: `Error removing ${userName} from your list`, variant: "danger" });
+      }
+    }, 3000);
+
+    setRemovedContributorIds((prev) => [...prev, userId!]);
+
+    toast({
+      description: (
+        <div className="w-full flex justify-between gap-2">
+          <span>{`${userName} was removed from your list`}</span>
+          <button
+            onClick={() => {
+              setRemovedContributorIds((prev) => prev.filter((id) => removedContributorIds.includes(id)));
+              window.clearTimeout(undoId);
+            }}
+            className="border-0 bg-transparent outline-none text-orange-600"
+          >
+            Undo
+          </button>
+        </div>
+      ),
+      variant: "success",
     });
-
-    if (!error) {
-      toast({ description: `${userName} was removed from your list`, variant: "success" });
-    } else {
-      toast({ description: `Error removing ${userName} from your list`, variant: "danger" });
-    }
   }
+
+  const [removedContributorIds, setRemovedContributorIds] = useState<string[]>([]);
 
   return (
     <HubContributorsPageLayout>
@@ -250,7 +272,12 @@ export default function EditListPage({ list, initialContributors }: EditListPage
                   />
                 </label>
               </div>
-              <ListContributors contributors={contributors} onRemoveContributor={onRemoveContributor} />
+              <ListContributors
+                contributors={contributors.filter(({ id }) => {
+                  return !removedContributorIds.includes(id);
+                })}
+                onRemoveContributor={onRemoveContributor}
+              />
               <div className="w-full flex place-content-center gap-4">
                 <Pagination
                   pages={new Array(meta.pageCount).fill(0).map((_, index) => index + 1)}
