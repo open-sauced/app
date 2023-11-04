@@ -363,27 +363,29 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
             </div>
 
             <div id="upgrade" className="flex flex-col gap-2">
-              <label>Time zone*</label>
-              <Select onValueChange={(value) => setTimezone(value)} value={timezone} required>
-                <SelectTrigger
-                  selectIcon={
-                    <div className="relative pr-4">
-                      <RiArrowUpSLine size={16} className="absolute -top-3" />
-                      <RiArrowDownSLine size={16} className="absolute -bottom-3" />
-                    </div>
-                  }
-                >
-                  <SelectValue placeholder="Select time zone" />
-                </SelectTrigger>
+              <label className="flex flex-col w-full gap-2">
+                Time zone*
+                <Select onValueChange={(value) => setTimezone(value)} value={timezone} required>
+                  <SelectTrigger
+                    selectIcon={
+                      <div className="relative pr-4">
+                        <RiArrowUpSLine size={16} className="absolute -top-3" />
+                        <RiArrowDownSLine size={16} className="absolute -bottom-3" />
+                      </div>
+                    }
+                  >
+                    <SelectValue placeholder="Select time zone" />
+                  </SelectTrigger>
 
-                <SelectContent position="item-aligned" className="bg-white">
-                  {timezones.map((timezone, index) => (
-                    <SelectItem key={`timezone_${index}`} value={timezone.value}>
-                      {timezone.text}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+                  <SelectContent position="item-aligned" className="bg-white">
+                    {timezones.map((timezone, index) => (
+                      <SelectItem key={`timezone_${index}`} value={timezone.value}>
+                        {timezone.text}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </label>
             </div>
             <Button
               className="w-max"
