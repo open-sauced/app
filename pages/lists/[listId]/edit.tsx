@@ -90,11 +90,11 @@ const ListContributors = ({
   onRemoveContributor: ComponentProps<typeof Button>["onClick"];
 }) => {
   return (
-    <ul aria-label={`Contributors you can remove from the list`} className="w-full flex flex-col">
+    <ul aria-label={`Contributors you can remove from the list`} className="w-full flex flex-col gap-2">
       {contributors?.map((contributor) => (
         <li
           key={contributor.id}
-          className="flex justify-between items-center p-2 hover:bg-light-slate-6 focus-within:bg-light-slate-6 rounded-lg"
+          className="flex justify-between items-center px-1 hover:bg-light-slate-5 focus-within:bg-light-slate-5 rounded-lg focus-within:ring-orange-500 focus-within:ring-1"
         >
           <div className="flex items-center gap-4">
             <Avatar size="xsmall" contributor={contributor.login} />
@@ -102,7 +102,7 @@ const ListContributors = ({
           </div>
           <Button
             variant="default"
-            className="border-0 bg-transparent !text-orange-600 hover:!bg-transparent"
+            className="border-0 bg-transparent !text-orange-600 hover:!bg-transparent focus-within:!ring-0"
             aria-label={`Remove contributor ${contributor.login} from the list`}
             data-user-id={contributor.id}
             data-user-name={contributor.login}
@@ -153,7 +153,7 @@ export default function EditListPage({ list, initialContributors }: EditListPage
     });
 
     if (!error) {
-      toast({ description: `${userName} has been removed from your list`, variant: "success" });
+      toast({ description: `${userName} was removed from your list`, variant: "success" });
     } else {
       toast({ description: `Error removing ${userName} from your list`, variant: "danger" });
     }
