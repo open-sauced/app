@@ -119,7 +119,7 @@ export default function EditListPage({ list, initialContributors }: EditListPage
   const [isPublic, setIsPublic] = useState(list.is_public);
   const { sessionToken } = useSupabaseAuth();
   const { toast } = useToast();
-  const { data: contributors, meta } = initialContributors;
+  const { data: contributors = [], meta } = initialContributors;
   async function updateList(payload: UpdateListPayload) {
     const { data, error } = await fetchApiData<DBList>({
       path: `lists/${list.id}`,
