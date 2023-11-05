@@ -11,7 +11,7 @@ const useInsightMembers = (insightId: number) => {
   const { sessionToken } = useSupabaseAuth();
 
   const { data, error, mutate } = useSWR<PaginatedInsightMembers, Error>(
-    `user/insights/${insightId}/members`,
+    insightId ? `user/insights/${insightId}/members` : null,
     publicApiFetcher as Fetcher<PaginatedInsightMembers, Error>
   );
 
