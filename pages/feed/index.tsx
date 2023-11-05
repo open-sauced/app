@@ -101,10 +101,15 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
   useEffect(() => {
     const queryParams = new URLSearchParams(window.location.search);
     const newHighlight = queryParams.get("new");
+    const prURL = queryParams.get("prurl");
     const signInRequired = queryParams.get("signIn");
 
     if (newHighlight && signInRequired) {
-      signIn({ provider: "github", options: { redirectTo: `${window.location.origin}/feed?new=${newHighlight}` } });
+      let query = "";
+      for (const [key, value] of queryParams.entries()) {
+        query += `${key}=${value}&`;
+      }
+      signIn({ provider: "github", options: { redirectTo: `${window.location.origin}/feed?${query}` } });
     }
 
     // no need to create intervals for checking the highlight creation input if there is no new highlight
@@ -117,9 +122,12 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
     if (window.innerWidth > 768) {
       focusOnHighlighCreationInput = setInterval(() => {
         const highlightCreationInput = document.getElementById("highlight-create-input");
-        if (newHighlight && highlightCreationInput) {
+        const highlightUrlInput = document.getElementById("highlight-link-input");
+        if (newHighlight && highlightCreationInput && highlightUrlInput) {
+          highlightUrlInput.innerText = prURL as string;
           highlightCreationInput.click();
           highlightCreationInput.focus();
+
           clearInterval(focusOnHighlighCreationInput);
         }
       }, 1000);
@@ -127,7 +135,9 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
       // for mobile. No need to focus on input, just click on the button as it opens up a form anyway.
       focusOnHighlighCreationInput = setInterval(() => {
         const mobileHighlightCreateButton = document.getElementById("mobile-highlight-create-button");
-        if (newHighlight && mobileHighlightCreateButton) {
+        const highlightUrlInput = document.getElementById("highlight-link-input");
+        if (newHighlight && mobileHighlightCreateButton && highlightUrlInput) {
+          highlightUrlInput.innerText = prURL as string;
           mobileHighlightCreateButton.click();
           clearInterval(focusOnHighlighCreationInput);
         }

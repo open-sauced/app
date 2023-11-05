@@ -619,6 +619,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                   </button>
                 </Tooltip>
                 <TextInput
+                  id="highlight-link-input"
                   className="text-sm shadow-none h-10 flex-none"
                   value={highlightLink}
                   handleChange={(value) => setHighlightLink(value)}
