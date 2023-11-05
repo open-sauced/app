@@ -25,7 +25,7 @@ const HubPageLayout = ({ children }: { children: React.ReactNode }) => {
     if (!range) {
       setQueryParams({ range: "30" });
     }
-  }, [range]);
+  }, [range, router.isReady]);
 
   const { toolList, selectedTool, selectedFilter, userOrg } = useNav(repositories);
 
