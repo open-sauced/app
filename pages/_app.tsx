@@ -147,7 +147,7 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
           provider: localStorageProvider,
         }}
       >
-        <NextNProgress color="hsla(19, 100%, 50%, 1)" height={4} />
+        <NextNProgress options={{ showSpinner: false }} color="hsla(19, 100%, 50%, 1)" height={4} />
         <Toaster />
         <SessionContextProvider supabaseClient={supabaseClient} initialSession={pageProps.initialSession}>
           <PostHogProvider client={posthog}>
