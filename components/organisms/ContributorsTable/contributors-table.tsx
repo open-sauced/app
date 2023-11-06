@@ -23,7 +23,7 @@ const ContributorTable = ({
     <div className="flex flex-col overflow-hidden border rounded-md">
       {loading && <SkeletonWrapper height={50} count={10} radius={4} classNames="px-6 mt-2" />}
 
-      {contributors && contributors.length > 0 ? (
+      {!loading && contributors && contributors.length > 0 ? (
         contributors.map((contributor, i) => (
           <ContributorListTableRow
             topic={topic}

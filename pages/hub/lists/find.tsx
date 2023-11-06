@@ -190,6 +190,7 @@ const NewListCreationPage = ({ initialData, timezoneOption }: NewListCreationPag
         setIsSuccess(true);
       }
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.log(error);
     } finally {
       setCreateLoading(false);
@@ -218,6 +219,7 @@ const NewListCreationPage = ({ initialData, timezoneOption }: NewListCreationPag
       await navigator.clipboard.writeText(url);
       toast({ description: "Copied to clipboard", variant: "success" });
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.log(error);
     }
   };

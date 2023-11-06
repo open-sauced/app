@@ -81,6 +81,7 @@ const CreateListPage = () => {
         return data;
       }
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.log(error);
       return null;
     }
@@ -225,12 +226,15 @@ const CreateListPage = () => {
           <div className="flex justify-between">
             <div className="flex items-center">
               <UserGroupIcon className="w-6 h-6 text-light-slate-9" />
-              <Text className="pl-2">Make this list publicly visible</Text>
+              <Text className="pl-2">
+                <span id="make-public-explainer">Make this list publicly visible</span>
+              </Text>
             </div>
 
             <div className="flex ml-2 !border-red-900 items-center">
               <Text className="text-orange-600 pr-2 hidden md:block">Make Public</Text>
               <ToggleSwitch
+                ariaLabelledBy="make-public-explainer"
                 name="isPublic"
                 checked={isPublic}
                 handleToggle={() => setIsPublic((isPublic) => !isPublic)}
