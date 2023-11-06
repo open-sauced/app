@@ -118,16 +118,24 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
     }
 
     let focusOnHighlighCreationInput: NodeJS.Timeout;
+    let checkDialog: NodeJS.Timeout;
 
+    function fillHighlightUrlInput() {
+      checkDialog = setInterval(() => {
+        const highlightUrlInput = document.getElementById("highlight-link-input") as HTMLInputElement;
+        if (highlightUrlInput) {
+          highlightUrlInput.value = prURL as string;
+          clearInterval(checkDialog);
+        }
+      }, 1000);
+    }
     if (window.innerWidth > 768) {
       focusOnHighlighCreationInput = setInterval(() => {
         const highlightCreationInput = document.getElementById("highlight-create-input");
-        const highlightUrlInput = document.getElementById("highlight-link-input");
-        if (newHighlight && highlightCreationInput && highlightUrlInput) {
-          highlightUrlInput.innerText = prURL as string;
+        if (newHighlight && highlightCreationInput) {
           highlightCreationInput.click();
           highlightCreationInput.focus();
-
+          fillHighlightUrlInput();
           clearInterval(focusOnHighlighCreationInput);
         }
       }, 1000);
@@ -135,10 +143,9 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
       // for mobile. No need to focus on input, just click on the button as it opens up a form anyway.
       focusOnHighlighCreationInput = setInterval(() => {
         const mobileHighlightCreateButton = document.getElementById("mobile-highlight-create-button");
-        const highlightUrlInput = document.getElementById("highlight-link-input");
-        if (newHighlight && mobileHighlightCreateButton && highlightUrlInput) {
-          highlightUrlInput.innerText = prURL as string;
+        if (newHighlight && mobileHighlightCreateButton) {
           mobileHighlightCreateButton.click();
+          fillHighlightUrlInput();
           clearInterval(focusOnHighlighCreationInput);
         }
       }, 1000);
