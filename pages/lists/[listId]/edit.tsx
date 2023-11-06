@@ -14,9 +14,9 @@ import TextInput from "components/atoms/TextInput/text-input";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { useToast } from "lib/hooks/useToast";
 import Search from "components/atoms/Search/search";
-import useFetchAllContributors from "lib/hooks/useFetchAllContributors";
 import Pagination from "components/molecules/Pagination/pagination";
 import { Avatar } from "components/atoms/Avatar/avatar-hover-card";
+import useFetchAllListContributors from "lib/hooks/useFetchAllListContributors";
 
 // TODO: put into shared utilities once https://github.com/open-sauced/app/pull/2016 is merged
 function isListId(listId: string) {
@@ -48,7 +48,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
       // TODO: remove this in another PR for cleaning up fetchApiData
       pathValidator: () => true,
     }),
-    fetchApiData<DbListContibutor>({
+    fetchApiData<DbListContributor>({
       path: `lists/${listId}/contributors?limit=10`,
       bearerToken,
       // TODO: remove this in another PR for cleaning up fetchApiData
@@ -120,7 +120,6 @@ export default function EditListPage({ list, initialContributors }: EditListPage
   const [isPublic, setIsPublic] = useState(list.is_public);
   const { sessionToken } = useSupabaseAuth();
   const { toast } = useToast();
-  const { data: contributors = [], meta } = initialContributors;
   async function updateList(payload: UpdateListPayload) {
     const { data, error } = await fetchApiData<DBList>({
       path: `lists/${list.id}`,
@@ -134,15 +133,21 @@ export default function EditListPage({ list, initialContributors }: EditListPage
     return { data, error };
   }
   const [contributorSearchTerm, setContributorSearchTerm] = useState("");
-  const a = useFetchAllContributors(
+  const {
+    setPage,
+    meta,
+    data: contributors,
+  } = useFetchAllListContributors(
     {
+      listId: list.id,
       contributor: contributorSearchTerm,
     },
     {
+      fallbackData: initialContributors,
       revalidateOnFocus: false,
     }
   );
-  const [page, setPage] = useState(1);
+
   async function onRemoveContributor(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     const { userId, userName } = (event.target as HTMLButtonElement).dataset;
     const undoId = setTimeout(async () => {
@@ -259,19 +264,19 @@ export default function EditListPage({ list, initialContributors }: EditListPage
         </form>
         <div className="flex flex-col mt-4 pb-4 gap-4">
           <h2 className="text-light-slate-12">Remove Contributors</h2>
+          <div className="flex flex-col w-full gap-2 md:flex-row">
+            <label className="flex w-full flex-col gap-4">
+              <span className="sr-only">Search for contributors to add to your list</span>
+              <Search
+                placeholder="Search for contributors to add to your list"
+                className="!w-full text-sm py-1.5"
+                name={"contributors"}
+                onChange={(value) => setContributorSearchTerm(value)}
+              />
+            </label>
+          </div>
           {contributors && contributors.length > 0 ? (
             <>
-              <div className="flex flex-col w-full gap-2 md:flex-row">
-                <label className="flex w-full flex-col gap-4">
-                  <span className="sr-only">Search for contributors to add to your list</span>
-                  <Search
-                    placeholder="Search for contributors to add to your list"
-                    className="!w-full text-sm py-1.5"
-                    name={"contributors"}
-                    onChange={(value) => setContributorSearchTerm(value)}
-                  />
-                </label>
-              </div>
               <ListContributors
                 contributors={contributors.filter(({ id }) => {
                   return !removedContributorIds.includes(id);
@@ -293,7 +298,7 @@ export default function EditListPage({ list, initialContributors }: EditListPage
               </div>
             </>
           ) : (
-            <p className="text-light-slate-11">There are no contributors for this list.</p>
+            <p className="text-light-slate-11">No contributors to remove found.</p>
           )}
         </div>
       </div>
