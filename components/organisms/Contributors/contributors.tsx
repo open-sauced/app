@@ -24,8 +24,7 @@ interface ContributorProps {
 
 const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
   const router = useRouter();
-  const { filterName } = router.query;
-  const topic = filterName as string;
+  const topic = router.query.pageId as string;
   const store = useStore();
   const range = useStore((state) => state.range);
   const [layout, setLayout] = useState<ToggleValue>("grid");

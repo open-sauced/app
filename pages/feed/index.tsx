@@ -35,6 +35,7 @@ import NewsletterForm from "components/molecules/NewsletterForm/newsletter-form"
 import UserCard, { MetaObj } from "components/atoms/UserCard/user-card";
 import FeaturedHighlightsPanel from "components/molecules/FeaturedHighlightsPanel/featured-highlights-panel";
 import AnnouncementCard from "components/molecules/AnnouncementCard/announcement-card";
+import { useMediaQuery } from "lib/hooks/useMediaQuery";
 
 type activeTabType = "home" | "following";
 type highlightReposType = { repoName: string; repoIcon: string; full_name: string };
@@ -77,6 +78,8 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
     : undefined;
 
   const { data: followersRepo } = useFetchFollowersHighlightRepos();
+
+  const isDesktop = useMediaQuery("(min-width: 1280px)");
 
   const { data, mutate, setPage, isLoading, meta } = useFetchAllHighlights(selectedRepo);
   const { data: emojis } = useFetchAllEmojis();
@@ -212,11 +215,13 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
                 />
               </div>
             )}
-            <TopContributorsPanel
-              loggedInUserLogin={loggedInUser?.login ?? ""}
-              loggedInUserId={loggedInUser?.id ?? undefined}
-              refreshLoggedInUser={refreshLoggedInUser}
-            />
+            {isDesktop && (
+              <TopContributorsPanel
+                loggedInUserLogin={loggedInUser?.login ?? ""}
+                loggedInUserId={loggedInUser?.id ?? undefined}
+                refreshLoggedInUser={refreshLoggedInUser}
+              />
+            )}
             <AnnouncementCard
               title="#100DaysOfOSS 🚀 "
               description={
@@ -294,7 +299,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
             </DialogContent>
           </Dialog>
         )}
-        <Tabs onValueChange={onTabChange} defaultValue="home" className="grow">
+        <Tabs onValueChange={onTabChange} defaultValue="home" className="w-full 2xl:max-w-[40rem] xl:max-w-[33rem]">
           <TabsList className={clsx("justify-start  w-full border-b", !user && "hidden")}>
             <TabsTrigger
               className="data-[state=active]:border-sauced-orange data-[state=active]:border-b-2 text-lg"

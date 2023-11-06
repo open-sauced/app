@@ -369,3 +369,37 @@ interface DbListContributorStat {
   commits: number;
   prsCreated: number;
 }
+interface DbProjectContributions {
+  org_id: string;
+  project_id: string;
+  repo_id: number;
+  contributions: number;
+}
+
+interface DBProjectContributor {
+  login: string;
+  commits: number;
+  prs_created: number;
+  prs_reviewed: number;
+  issues_created: number;
+  comments: number;
+}
+
+interface DbUserOrganization {
+  id: number;
+  user_id: number;
+  organization_id: number;
+  user: DbUser;
+  organization_user: DbUser;
+}
+
+interface GhOrgTeam {
+  id: number;
+  name: string;
+  slug: string;
+}
+
+interface GhOrgTeamMember {
+  id: number;
+  login: string;
+}

@@ -42,7 +42,7 @@ export const useContributorsList = ({
   query.append("range", range.toString());
 
   const { data, error, mutate } = useSWR<any>(
-    `lists/${listId}/contributors?${query}`,
+    listId ? `lists/${listId}/contributors?${query}` : null,
     publicApiFetcher as Fetcher<PagedData<DBListContributor>, Error>,
     {
       fallbackData: initialData,

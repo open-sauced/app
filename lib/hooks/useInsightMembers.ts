@@ -11,7 +11,7 @@ const useInsightMembers = (insightId: number) => {
   const { sessionToken } = useSupabaseAuth();
 
   const { data, error, mutate } = useSWR<PaginatedInsightMembers, Error>(
-    `user/insights/${insightId}/members`,
+    insightId ? `user/insights/${insightId}/members` : null,
     publicApiFetcher as Fetcher<PaginatedInsightMembers, Error>
   );
 
@@ -26,6 +26,7 @@ const useInsightMembers = (insightId: number) => {
     });
 
     if (!req.ok) {
+      // eslint-disable-next-line no-console
       console.log(req.status, req.statusText);
       return undefined;
     } else {
@@ -45,6 +46,7 @@ const useInsightMembers = (insightId: number) => {
     });
 
     if (!req.ok) {
+      // eslint-disable-next-line no-console
       console.log(req.status, req.statusText);
 
       return undefined;

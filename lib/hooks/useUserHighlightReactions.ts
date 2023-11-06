@@ -16,6 +16,7 @@ const useUserHighlightReactions = (id: string) => {
       headers: {
         Authorization: `Bearer ${sessionToken}`,
       },
+      // eslint-disable-next-line no-console
     }).catch((err) => console.log(err));
     if (req && req.ok) {
       mutate();
@@ -28,6 +29,7 @@ const useUserHighlightReactions = (id: string) => {
       headers: {
         Authorization: `Bearer ${sessionToken}`,
       },
+      // eslint-disable-next-line no-console
     }).catch((err) => console.log(err));
     if (req && req.ok) {
       mutate();

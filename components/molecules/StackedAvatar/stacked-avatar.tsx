@@ -15,12 +15,13 @@ declare interface StackedAvatarProps {
 
 const StackedAvatar = ({ contributors, visibleQuantity = 5, classNames }: StackedAvatarProps) => {
   const router = useRouter();
-  const { filterName } = router.query;
-  const insightId = Number.isInteger(parseInt(filterName as string, 10)) ? (filterName as string) : "";
+  const { pageId } = router.query;
+  const insightId = Number.isInteger(parseInt(pageId as string, 10)) ? (pageId as string) : "";
   const { data: insight, isError } = useInsight(insightId);
   const repositories = insight ? insight.repos.map((repo) => repo.repo_id) : [];
 
   if (isError) {
+    // eslint-disable-next-line no-console
     console.log("Error fetching insight", isError);
     return <div>-</div>;
   }

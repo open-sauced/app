@@ -1,7 +1,9 @@
 import { memo } from "react";
+import Image from "next/image";
 import { animated } from "@react-spring/web";
-import { NodeProps, htmlNodeTransform } from "@nivo/treemap";
 import { getAvatarByUsername } from "lib/utils/github";
+import { htmlNodeTransform } from "lib/utils/nivo-utils";
+import type { NodeProps } from "@nivo/treemap";
 
 const NonMemoizedContributorNode = <Datum extends { id: string; value?: number; color: string }>({
   node,
@@ -17,41 +19,31 @@ const NonMemoizedContributorNode = <Datum extends { id: string; value?: number; 
 
   return (
     <animated.div
-      data-testid={`node.${node.id}`}
-      id={node.path.replace(/[^\w]/gi, "-")}
+      className="absolute grid overflow-hidden border-solid place-content-stretch"
       style={{
-        boxSizing: "border-box",
-        position: "absolute",
         top: 0,
         left: 0,
         transform: htmlNodeTransform(animatedProps.x, animatedProps.y),
         width: animatedProps.width,
         height: animatedProps.height,
         borderWidth,
-        borderStyle: "solid",
         borderColor: node.borderColor,
-        overflow: "hidden",
-        display: "grid",
-        placeContent: "stretch",
       }}
     >
       <animated.div
         style={{
-          boxSizing: "border-box",
           opacity: node.opacity,
           width: animatedProps.width,
           height: animatedProps.height,
-          background: animatedProps.color,
+          background: node.color,
           gridArea: "1 / 1",
         }}
         onMouseEnter={node.onMouseEnter}
         onMouseMove={node.onMouseMove}
         onMouseLeave={node.onMouseLeave}
-        onClick={node.onClick}
       />
       {showLabel && (
         <animated.div
-          data-testid={`label.${node.id}`}
           className="grid p-3 text-white place-items-start pointer-events-none"
           style={{
             gridArea: "1 / 1",
@@ -61,13 +53,15 @@ const NonMemoizedContributorNode = <Datum extends { id: string; value?: number; 
           }}
         >
           <div className="grid gap-x-2" style={{ gridTemplateColumns: "auto 1fr", gridTemplateRows: "auto auto" }}>
-            <img
-              className="col-start-1 col-span-1 row-span-2"
+            <Image
+              className="col-span-1 col-start-1 row-span-2"
               src={avatarURL}
+              alt={`${node.id}'s avatar`}
               width="42"
               height="42"
               style={{ display: "block", borderRadius: "50%", border: "solid 2px white", flexShrink: 0, flexGrow: 0 }}
             />
+
             <div className="font-medium" style={{ gridColumnStart: "2", alignItems: "center", alignSelf: "center" }}>
               {node.id}
             </div>

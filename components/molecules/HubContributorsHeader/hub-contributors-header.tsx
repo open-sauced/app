@@ -70,10 +70,16 @@ const HubContributorsHeader = ({
         <div className="flex flex-col items-center justify-center gap-6 md:flex-row header-info max-sm:mt-4">
           <div className="flex items-center order-2 gap-2 md:flex-row md:order-1">
             <div className="flex items-center gap-10 py-1.5 px-4 rounded-md bg-white mr-3">
-              <span className="flex items-center gap-2 text-sm shrink-0">
+              <span className="flex items-center gap-2 text-sm shrink-0" id="hub-make-public">
                 <FiGlobe /> Make Public
               </span>
-              <ToggleSwitch size="base" checked={isPublic} name="isPublic" handleToggle={handleToggleIsPublic} />
+              <ToggleSwitch
+                ariaLabelledBy="hub-make-public"
+                size="base"
+                checked={isPublic}
+                name="isPublic"
+                handleToggle={handleToggleIsPublic}
+              />
             </div>
             <span
               className={clsx(
@@ -95,7 +101,7 @@ const HubContributorsHeader = ({
             variant="text"
             onClick={onAddToList}
           >
-            Add to List <FaPlus className="ml-2 text-lg" />
+            Create List <FaPlus className="ml-2 text-lg" />
           </Button>
         </div>
       </div>
