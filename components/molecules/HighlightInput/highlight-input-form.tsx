@@ -500,6 +500,13 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
   }, 250);
 
   useEffect(() => {
+    const queryParams = new URLSearchParams(window.location.search);
+    const prURL = queryParams.get("prurl");
+
+    if (prURL) {
+      setHighlightLink(prURL as string);
+    }
+
     setRepoTagSuggestions([]);
     if (!taggedRepoSearchTerm) return;
     updateSuggestionsDebounced();

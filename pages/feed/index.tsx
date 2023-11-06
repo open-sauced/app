@@ -118,24 +118,13 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
     }
 
     let focusOnHighlighCreationInput: NodeJS.Timeout;
-    let checkDialog: NodeJS.Timeout;
 
-    function fillHighlightUrlInput() {
-      checkDialog = setInterval(() => {
-        const highlightUrlInput = document.getElementById("highlight-link-input") as HTMLInputElement;
-        if (highlightUrlInput) {
-          highlightUrlInput.value = prURL as string;
-          clearInterval(checkDialog);
-        }
-      }, 1000);
-    }
     if (window.innerWidth > 768) {
       focusOnHighlighCreationInput = setInterval(() => {
         const highlightCreationInput = document.getElementById("highlight-create-input");
         if (newHighlight && highlightCreationInput) {
           highlightCreationInput.click();
           highlightCreationInput.focus();
-          fillHighlightUrlInput();
           clearInterval(focusOnHighlighCreationInput);
         }
       }, 1000);
@@ -145,7 +134,6 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
         const mobileHighlightCreateButton = document.getElementById("mobile-highlight-create-button");
         if (newHighlight && mobileHighlightCreateButton) {
           mobileHighlightCreateButton.click();
-          fillHighlightUrlInput();
           clearInterval(focusOnHighlighCreationInput);
         }
       }, 1000);
