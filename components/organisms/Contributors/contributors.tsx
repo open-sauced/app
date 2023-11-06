@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
-import useStore from "lib/store";
 
 import Pagination from "components/molecules/Pagination/pagination";
 import PaginationResults from "components/molecules/PaginationResults/pagination-result";
@@ -25,8 +24,7 @@ interface ContributorProps {
 
 const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
   const router = useRouter();
-  const { pageId: topic } = router.query;
-  const store = useStore();
+  const topic = router.query.pageId as string;
 
   const [layout, setLayout] = useState<ToggleValue>("grid");
   const { data, meta, setPage, setLimit, isError, isLoading } = useContributors(10, repositories);
@@ -74,7 +72,7 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
                 key={index}
                 className=""
                 contributor={{ ...contributor }}
-                topic={topic as string}
+                topic={topic}
                 repositories={repositories}
               />
             ))}
@@ -84,7 +82,7 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
         <div className="lg:min-w-[1150px]">
           <ContributorListTableHeaders />
           <ClientOnly>
-            <ContributorTable loading={isLoading} topic={topic as string} contributors={data}></ContributorTable>
+            <ContributorTable loading={isLoading} topic={topic} contributors={data}></ContributorTable>
           </ClientOnly>
         </div>
       )}
