@@ -122,6 +122,14 @@ div[role="dialog"]::-webkit-scrollbar-thumb {
   position: relative;
 }
 
+.radix-select-trigger span {
+  flex: 1;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 @keyframes placeHolderShimmer {
   0% {
     background-position: -468px 0;

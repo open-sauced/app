@@ -371,10 +371,10 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
                   }
                   className=""
                 >
-                  <SelectValue className="truncate " placeholder="Select time zone" />
+                  <SelectValue className="" placeholder="Select time zone" />
                 </SelectTrigger>
 
-                <SelectContent position="item-aligned" className="bg-white">
+                <SelectContent position="item-aligned" className="bg-white flex-1">
                   {timezones.map((timezone, index) => (
                     <SelectItem key={`timezone_${index}`} value={timezone.value}>
                       {timezone.text}
