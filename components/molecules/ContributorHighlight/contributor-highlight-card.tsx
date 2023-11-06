@@ -600,14 +600,16 @@ const ContributorHighlightCard = ({
         <p className="text-sm font-normal break-words text-light-slate-12 lg:text-base">{desc}</p>
 
         {/* Highlight Link section */}
-        <a
-          href={highlightLink}
-          target="_blank"
-          rel="noreferrer"
-          className="inline-block w-[16rem] xs:w-[24rem] underline text-sauced-orange truncate cursor-pointer"
-        >
-          {highlightLink}
-        </a>
+        <div className="flex">
+          <a
+            href={highlightLink}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-block flex-1 w-[16rem] xs:w-[24rem] underline text-sauced-orange truncate cursor-pointer"
+          >
+            {highlightLink}
+          </a>
+        </div>
       </div>
 
       {/* Generated OG card section */}
