@@ -183,7 +183,7 @@ export default function EditListPage({ list, initialContributors }: EditListPage
 
   return (
     <HubContributorsPageLayout>
-      <div className="grid place-content-center info-container container w-full min-h-[6.25rem] px-4 mt-10 mb-16">
+      <div className="grid place-content-center info-container container w-full px-4 mt-10 mb-16 gap-8">
         <form
           onSubmit={async (event) => {
             event.preventDefault();
@@ -204,7 +204,7 @@ export default function EditListPage({ list, initialContributors }: EditListPage
               toast({ description: "Error updating list. Please try again", variant: "danger" });
             }
           }}
-          className="flex flex-col gap-4"
+          className="flex flex-col gap-8"
         >
           <div className="flex justify-between align-center items-center">
             <h1 className="flex items-center text-2xl text-light-slate-12">
