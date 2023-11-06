@@ -59,32 +59,22 @@ const footerContext = [
 
 const Footer = (): JSX.Element => {
   function getSocialMediaPlatformName(url: string) {
-    let platform = "Social Media";
-
     switch (true) {
       case url.includes("twitter.com"):
-        platform = "Twitter";
-        break;
+        return "Twitter";
       case url.includes("github.com"):
-        platform = "GitHub";
-        break;
+        return "GitHub";
       case url.includes("instagram.com"):
-        platform = "Instagram";
-        break;
+        return "Instagram";
       case url.includes("youtube.com"):
-        platform = "YouTube";
-        break;
+        return "YouTube";
       case url.includes("discord.com"):
-        platform = "Discord";
-        break;
+        return "Discord";
       case url.includes("dev.to"):
-        platform = "Dev.to";
-        break;
+        return "Dev.to";
       default:
-        platform = "Social Media";
+        return "Social Media";
     }
-
-    return platform;
   }
 
   return (
