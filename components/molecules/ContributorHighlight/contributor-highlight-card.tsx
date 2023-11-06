@@ -605,7 +605,7 @@ const ContributorHighlightCard = ({
             href={highlightLink}
             target="_blank"
             rel="noreferrer"
-            className="inline-block flex-1 w-[16rem] xs:w-[24rem] underline text-sauced-orange truncate cursor-pointer"
+            className="inline-block flex-1 underline text-sauced-orange truncate cursor-pointer"
           >
             {highlightLink}
           </a>
