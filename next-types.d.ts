@@ -326,7 +326,7 @@ interface DbListOwner {
   readonly name: string;
 }
 
-interface DbListContibutor {
+interface DbListContributor {
   readonly id: string;
   readonly list_id: string;
   readonly user_id: string;

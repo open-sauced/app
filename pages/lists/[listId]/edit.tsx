@@ -73,7 +73,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 
 interface EditListPageProps {
   list: DBList;
-  initialContributors: PagedData<DbListContibutor>;
+  initialContributors: PagedData<DbListContributor>;
 }
 
 interface UpdateListPayload {
@@ -86,7 +86,7 @@ const ListContributors = ({
   contributors,
   onRemoveContributor,
 }: {
-  contributors: DbListContibutor[];
+  contributors: DbListContributor[];
   onRemoveContributor: ComponentProps<typeof Button>["onClick"];
 }) => {
   return (
