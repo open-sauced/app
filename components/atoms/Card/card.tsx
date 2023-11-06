@@ -11,7 +11,7 @@ const Card: React.FC<CardProps> = ({ className, children, heading }) => {
     <article
       className={`${className ? className : ""} block ${
         heading ? "" : "p-3"
-      } bg-white border rounded-lg drop-shadow-md`}
+      } bg-white border rounded-lg drop-shadow-xs`}
     >
       {heading ? (
         <>
