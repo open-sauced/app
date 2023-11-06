@@ -5,6 +5,57 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.74.0-beta.13](https://github.com/open-sauced/insights/compare/v1.74.0-beta.12...v1.74.0-beta.13) (2023-11-03)
+
+
+### 🐛 Bug Fixes
+
+* add check to allow team member access for private insight pages ([#2049](https://github.com/open-sauced/insights/issues/2049)) ([2e48b95](https://github.com/open-sauced/insights/commit/2e48b955aa6b371a7da080b17a17be9627af5c11))
+
+## [1.74.0-beta.12](https://github.com/open-sauced/insights/compare/v1.74.0-beta.11...v1.74.0-beta.12) (2023-11-03)
+
+
+### 🍕 Features
+
+* add contributor's when editing a list ([#2016](https://github.com/open-sauced/insights/issues/2016)) ([1a0b4da](https://github.com/open-sauced/insights/commit/1a0b4da31ca21e22a6cd03756ebb86ff112ae8aa))
+
+## [1.74.0-beta.11](https://github.com/open-sauced/insights/compare/v1.74.0-beta.10...v1.74.0-beta.11) (2023-11-02)
+
+
+### 🐛 Bug Fixes
+
+* dropdown flickery on single highlight card ([#2040](https://github.com/open-sauced/insights/issues/2040)) ([672ce2f](https://github.com/open-sauced/insights/commit/672ce2fa916ea7491fa6e9f6376468b420c262f3))
+* ToggleSwitch component has required label via aria-label or aria-labelledby ([#2035](https://github.com/open-sauced/insights/issues/2035)) ([0684081](https://github.com/open-sauced/insights/commit/0684081e4859179e558f40a60d8e88ea5896a346))
+
+## [1.74.0-beta.10](https://github.com/open-sauced/insights/compare/v1.74.0-beta.9...v1.74.0-beta.10) (2023-11-02)
+
+
+### 🐛 Bug Fixes
+
+* made notifications buttons more accessible ([#2034](https://github.com/open-sauced/insights/issues/2034)) ([50bcf9d](https://github.com/open-sauced/insights/commit/50bcf9de7f4004f766a7f934e2479b948384c0a9))
+
+## [1.74.0-beta.9](https://github.com/open-sauced/insights/compare/v1.74.0-beta.8...v1.74.0-beta.9) (2023-11-01)
+
+
+### 🐛 Bug Fixes
+
+* chart tooltip cut in contributors card ([#2029](https://github.com/open-sauced/insights/issues/2029)) ([7c16863](https://github.com/open-sauced/insights/commit/7c1686371f47e0f332335055e4ebb7900503a353))
+
+## [1.74.0-beta.8](https://github.com/open-sauced/insights/compare/v1.74.0-beta.7...v1.74.0-beta.8) (2023-11-01)
+
+
+### 🐛 Bug Fixes
+
+* change avatar alignment with highlight input ([#2032](https://github.com/open-sauced/insights/issues/2032)) ([dc409c4](https://github.com/open-sauced/insights/commit/dc409c42c0d67e6528b5d8f22ace39728188d549))
+* change label style of bio to bold ([#2033](https://github.com/open-sauced/insights/issues/2033)) ([647fca3](https://github.com/open-sauced/insights/commit/647fca3401346f7d68c0fa9d057b30832412eb9e))
+
+## [1.74.0-beta.7](https://github.com/open-sauced/insights/compare/v1.74.0-beta.6...v1.74.0-beta.7) (2023-11-01)
+
+
+### 🍕 Features
+
+* add grey background for delete account ([#2030](https://github.com/open-sauced/insights/issues/2030)) ([ea10161](https://github.com/open-sauced/insights/commit/ea10161abcbf29a8498b426bddc58af3448af7f6))
+
 ## [1.74.0-beta.6](https://github.com/open-sauced/insights/compare/v1.74.0-beta.5...v1.74.0-beta.6) (2023-10-31)
 
 

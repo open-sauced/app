@@ -101,12 +101,15 @@ const GitHubTeamSyncDialog = ({
             </label>
             <label className="flex">
               <ToggleSwitch
+                ariaLabelledBy="import-users-explainer"
                 name="followImported"
                 classNames="mr-2"
                 checked={follow}
                 handleToggle={() => setFollow((toFollow) => !toFollow)}
               />
-              <Text className="leading-tight text-light-slate-9">Follow everyone imported.</Text>
+              <Text className="leading-tight text-light-slate-9">
+                <span id="import-users-explainer">Follow everyone imported.</span>
+              </Text>
             </label>
           </div>
           <div className="flex gap-3">

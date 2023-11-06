@@ -31,10 +31,13 @@ const GitHubImportDialog = ({ open, handleClose, handleImport, loading }: GitHub
               Import your GitHub &quot;following&quot; list
             </Title>
             <Text className="leading-tight text-light-slate-9">
-              We will import usernames of developers you are following on GitHub to create your new list.
+              <span id="import-users-explainer">
+                We will import usernames of developers you are following on GitHub to create your new list.
+              </span>
             </Text>
             <div className="flex pt-2">
               <ToggleSwitch
+                ariaLabelledBy="import-users-explainer"
                 name="followImported"
                 classNames="mr-2"
                 checked={follow}
