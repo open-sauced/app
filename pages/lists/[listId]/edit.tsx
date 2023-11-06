@@ -94,7 +94,7 @@ const ListContributors = ({
       {contributors?.map((contributor) => (
         <li
           key={contributor.id}
-          className="flex justify-between items-center px-1 hover:bg-light-slate-5 focus-within:bg-light-slate-5 rounded-lg focus-within:ring-orange-500 focus-within:ring-1"
+          className="flex justify-between items-center px-1 border-transparent hover:bg-light-slate-4 focus-within:bg-light-slate-4 hover:shadow-input border transition focus-within:ring focus-within:border-orange-500 focus-within:ring-orange-100 rounded-lg ring-light-slate-6"
         >
           <div className="flex items-center gap-4">
             <Avatar size="xsmall" contributor={contributor.login} />
@@ -169,7 +169,7 @@ export default function EditListPage({ list, initialContributors }: EditListPage
               setRemovedContributorIds((prev) => prev.filter((id) => removedContributorIds.includes(id)));
               window.clearTimeout(undoId);
             }}
-            className="border-0 bg-transparent outline-none text-orange-600"
+            className="border-0 outline-none text-orange-600 hover:bg-orange-100 hover:text-orange-700 focus-within:text-orange-800 focus-within:bg-orange-800 p-2 rounded-md"
           >
             Undo
           </button>
