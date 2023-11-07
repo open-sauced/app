@@ -6,7 +6,7 @@ import { HiArrowPath } from "react-icons/hi2";
 import Card from "components/atoms/Card/card";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 import repoIcon from "../../../img/icons/icon-repo--blue.svg";
-import prIcon from "../../../img/icons/icon-pr--green.svg";
+import mergedPrIcon from "../../../img/icons/icon-merged-pr--purple.svg";
 import personIcon from "../../../img/icons/person-icon.svg";
 import labelIcon from "../../../img/icons/icon-label--blue.svg";
 import thumbsIcon from "../../../img/icons/icon-thumbs-down--yellow.svg";
@@ -18,7 +18,7 @@ interface HighlightCardProps {
   label?: string;
   icon:
     | "participation"
-    | "accepted-pr"
+    | "merged-pr"
     | "unlabeled-pr"
     | "spam"
     | "contributors"
@@ -59,10 +59,10 @@ const icons: IconMap = {
     label: "Participation",
     color: "bg-blue-100",
   },
-  "accepted-pr": {
-    src: prIcon.src,
-    label: "Accepted PRs",
-    color: "bg-green-100",
+  "merged-pr": {
+    src: mergedPrIcon.src,
+    label: "Merged PRs",
+    color: "bg-purple-200",
   },
   "unlabeled-pr": {
     src: labelIcon.src,
@@ -146,7 +146,7 @@ const HighlightCard: React.FC<HighlightCardProps> = ({
             {/* Label: Icon */}
             <div
               className={`w-8 h-8 flex justify-center items-center ${
-                icon ? icons[icon].color : "bg-slate-100"
+                icon ? icons[icon]["color"] : "bg-slate-100"
               } rounded-full`}
             >
               {getIcon(icon)}
