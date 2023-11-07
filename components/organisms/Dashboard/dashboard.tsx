@@ -114,8 +114,8 @@ const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
           isLoading={isLoading}
         />
         <HighlightCard
-          label="Accepted PRs"
-          icon="accepted-pr"
+          label="Merged PRs"
+          icon="merged-pr"
           metricIncreases={compare1.acceptedTotal - compare2.acceptedTotal >= 0}
           increased={compare1.acceptedTotal - compare2.acceptedTotal >= 0}
           numChanged={humanizeNumber(Math.abs(compare1.acceptedTotal - compare2.acceptedTotal), "abbreviation")}
