@@ -174,10 +174,11 @@ export default function EditListPage({ list, initialContributors }: EditListPage
           <span>{`${userName} was removed from your list`}</span>
           <button
             onClick={() => {
+              event.stopPropagation();
               setRemovedContributorIds((prev) => prev.filter((id) => removedContributorIds.includes(id)));
               window.clearTimeout(undoId);
             }}
-            className="border-0 outline-none text-orange-600 hover:bg-orange-100 hover:text-orange-700 focus-within:text-orange-800 focus-within:bg-orange-800 p-2 rounded-md"
+            className="border-0 outline-none text-orange-600 hover:bg-orange-100 hover:text-orange-900 focus-within:text-orange-900 focus-within:bg-orange-200 p-2 rounded-md"
           >
             Undo
           </button>
