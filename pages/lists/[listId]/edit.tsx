@@ -90,7 +90,10 @@ const ListContributors = ({
   onRemoveContributor: ComponentProps<typeof Button>["onClick"];
 }) => {
   return (
-    <ul aria-label={`Contributors you can remove from the list`} className="w-full flex flex-col gap-2">
+    <ul
+      aria-label={`Contributors you can remove from the list`}
+      className="h-90 w-full flex flex-col gap-2 overflow-auto"
+    >
       {contributors?.map((contributor) => (
         <li
           key={contributor.id}
@@ -167,7 +170,7 @@ export default function EditListPage({ list, initialContributors }: EditListPage
 
     toast({
       description: (
-        <div className="w-full flex justify-between gap-2">
+        <div className="w-full flex justify-between gap-2 items">
           <span>{`${userName} was removed from your list`}</span>
           <button
             onClick={() => {
