@@ -33,7 +33,14 @@ export type ContributorSSRProps = {
 const Contributor: WithPageLayout<ContributorSSRProps> = ({ username, user, ogImage }) => {
   const { data: contributor, isError: contributorError } = useFetchUser(username);
 
-  const { data: contributorPRData, meta: contributorPRMeta } = useContributorPullRequests(username, "*", [], 100);
+  const { data: contributorPRData, meta: contributorPRMeta } = useContributorPullRequests(
+    username,
+    "*",
+    [],
+    30,
+    30,
+    true
+  );
   const isError = contributorError;
   const repoList = useRepoList(Array.from(new Set(contributorPRData.map((prData) => prData.full_name))).join(","));
   const mergedPrs = contributorPRData.filter((prData) => prData.merged);

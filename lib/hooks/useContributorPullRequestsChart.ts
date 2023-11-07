@@ -5,7 +5,13 @@ import { getAvatarByUsername } from "lib/utils/github";
 import getFormattedTooltipValue from "lib/utils/get-formatted-tooltip-value";
 import useContributorPullRequests from "./api/useContributorPullRequests";
 
-const useContributorPullRequestsChart = (contributor: string, topic: string, repoIds: number[] = [], range = 30) => {
+const useContributorPullRequestsChart = (
+  contributor: string,
+  topic: string,
+  repoIds: number[] = [],
+  range = 30,
+  mostRecent = false
+) => {
   const lineChart = {
     xAxis: {
       type: "category",
@@ -51,7 +57,7 @@ const useContributorPullRequestsChart = (contributor: string, topic: string, rep
   };
 
   const [chart, setChart] = useState(lineChart);
-  const { data, meta } = useContributorPullRequests(contributor, topic, repoIds, 100, range);
+  const { data, meta } = useContributorPullRequests(contributor, topic, repoIds, 30, range, mostRecent);
   const repoList: RepoList[] = Array.from(new Set(data.map((prData) => prData.full_name))).map((repo) => {
     const [repoOwner, repoName] = repo.split("/");
 
@@ -63,7 +69,7 @@ const useContributorPullRequestsChart = (contributor: string, topic: string, rep
   });
 
   useEffect(() => {
-    if (data && Array.isArray(data)) {
+    if (data && Array.isArray(data) && data.length > 0) {
       const graphData = getPullRequestsToDays(data);
 
       setChart((prevChart) => ({

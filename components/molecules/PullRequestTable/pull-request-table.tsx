@@ -30,7 +30,7 @@ const PullRequestTable = ({
   isHoverCard,
   range,
 }: CardTableProps): JSX.Element => {
-  const { data, isLoading } = useContributorPullRequests(contributor, topic, repositories, limit, range);
+  const { data, isLoading } = useContributorPullRequests(contributor, topic, repositories, limit, range, true);
 
   return data.length > 0 ? (
     <>

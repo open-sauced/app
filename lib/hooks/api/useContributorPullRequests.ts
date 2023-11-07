@@ -15,7 +15,8 @@ export function getContributorPRUrl(
   topic: string,
   repoIds: number[] = [],
   limit = 8,
-  range = 30
+  range = 30,
+  mostRecent = false
 ) {
   const filterQuery = getFilterQuery(filter);
   const query = new URLSearchParams(filterQuery);
@@ -30,6 +31,10 @@ export function getContributorPRUrl(
 
   if (repoIds?.length > 0) {
     query.set("repoIds", repoIds.join(","));
+  }
+
+  if (mostRecent) {
+    query.set("rangeType", "all");
   }
 
   query.set("range", `${range}`);
@@ -48,11 +53,12 @@ const useContributorPullRequests = (
   topic: string,
   repoIds: number[] = [],
   limit = 8,
-  range = 30
+  range = 30,
+  mostRecent = false
 ) => {
   const router = useRouter();
   const { selectedFilter } = router.query;
-  const endpointString = getContributorPRUrl(contributor, selectedFilter, topic, repoIds, limit, range);
+  const endpointString = getContributorPRUrl(contributor, selectedFilter, topic, repoIds, limit, range, mostRecent);
 
   const { data, error, mutate } = useSWR<PaginatedResponse, Error>(
     contributor ? endpointString : null,
