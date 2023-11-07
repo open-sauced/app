@@ -5,7 +5,7 @@
 @font-face {
   font-family: "Inter";
   font-display: fallback;
-  src: url("/assets/fonts/Inter-VariableFont_slnt,wght.ttf");
+  src: url("../public/assets/fonts/Inter-VariableFont_slnt,wght.ttf");
 }
 
 * {
