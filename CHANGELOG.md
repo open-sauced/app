@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.74.1-beta.2](https://github.com/open-sauced/insights/compare/v1.74.1-beta.1...v1.74.1-beta.2) (2023-11-07)
+
+
+### 🐛 Bug Fixes
+
+* make highlight card responsive ([#2043](https://github.com/open-sauced/insights/issues/2043)) ([1a904f2](https://github.com/open-sauced/insights/commit/1a904f2ec2d15c5bd2bbec551c637e8444ff5beb))
+
 ### [1.74.1-beta.1](https://github.com/open-sauced/insights/compare/v1.74.0...v1.74.1-beta.1) (2023-11-07)
 
 
