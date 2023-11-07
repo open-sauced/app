@@ -91,16 +91,18 @@ const ErrorModal = ({ list, isOpen, onRetry, onClose }: ErrorModalProps) => {
   return (
     <Dialog open={isOpen}>
       <DialogContent onEscapeKeyDown={(event) => onClose()} className="grid place-content-center">
-        <div className="flex flex-col max-w-xs gap-6 w-max p-4">
+        <div className="flex flex-col max-w-xs gap-6 w-full p-4">
           <div className="flex flex-col items-center gap-2">
             <span className="flex items-center justify-center p-3 bg-red-100 rounded-full w-max">
               <span className="flex items-center justify-center w-10 h-10 bg-red-300 rounded-full">
                 <FiAlertOctagon className="text-red-800" size={24} />
               </span>
             </span>
-            <Title level={3} className="text-lg">
-              Something went wrong
-            </Title>
+            <span className="w-full text-center">
+              <Title level={3} className="text-lg">
+                Something went wrong
+              </Title>
+            </span>
             <Text className="leading-tight text-center text-light-slate-9">
               We couldn&apos;t add the new contributors to your list. Please try again.
             </Text>
@@ -123,16 +125,18 @@ const ContributorsAddedModal = ({ list, contributorCount, isOpen, onClose }: Con
   return (
     <Dialog open={isOpen}>
       <DialogContent onEscapeKeyDown={(event) => onClose()} className="grid place-content-center">
-        <div className="flex flex-col max-w-xs gap-6 w-max p-4">
+        <div className="flex flex-col max-w-xs gap-6 w-full p-4">
           <div className="flex flex-col items-center gap-2">
             <span className="flex items-center justify-center p-3 bg-green-100 rounded-full w-max">
               <span className="flex items-center justify-center w-10 h-10 bg-green-300 rounded-full">
                 <FiCheckCircle className="text-green-800" size={24} />
               </span>
             </span>
-            <Title level={3} className="text-lg">
-              You&apos;ve added {contributorCount} new {contributorCount > 1 ? "contributors" : "contributor"}
-            </Title>
+            <span className="w-full text-center">
+              <Title level={3} className="text-lg">
+                You&apos;ve added {contributorCount} new {contributorCount > 1 ? "contributors" : "contributor"}
+              </Title>
+            </span>
             <Text className="leading-tight text-center text-light-slate-9">
               You can now get insights into their activity from your list dashboard.
             </Text>
