@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.74.0-beta.14](https://github.com/open-sauced/insights/compare/v1.74.0-beta.13...v1.74.0-beta.14) (2023-11-07)
+
+
+### 🐛 Bug Fixes
+
+* change accepted pr icon to merged pr icon ([#2057](https://github.com/open-sauced/insights/issues/2057)) ([d83f854](https://github.com/open-sauced/insights/commit/d83f8544485d6122aaa62d5150e09b024ec90f07))
+
 ## [1.74.0-beta.13](https://github.com/open-sauced/insights/compare/v1.74.0-beta.12...v1.74.0-beta.13) (2023-11-03)
 
 
