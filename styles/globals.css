@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "Inter";
+  font-display: fallback;
+  src: url("../public/assets/fonts/Inter-VariableFont_slnt,wght.ttf");
+}
+
 * {
   font-weight: 500;
 }

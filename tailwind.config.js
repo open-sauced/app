@@ -15,6 +15,9 @@ module.exports = {
       ...defaultTheme.screens,
     },
     extend: {
+      fontFamily: {
+        sans: ['"Inter"', ...defaultTheme.fontFamily.sans],
+      },
       gridTemplateColumns: {
         autodesktop: "repeat(auto-fit, minmax(410px, 1fr))",
         automobile: "repeat(auto-fit, minmax(300px, 1fr))",
