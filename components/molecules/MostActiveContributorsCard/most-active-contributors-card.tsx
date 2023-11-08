@@ -226,12 +226,12 @@ function RowTooltip({
                 const { percentage, stat } = userStats[key as StatKeys];
 
                 return (
-                  <div key={key} className="grid grid-cols-[1fr,1fr] gap-2 font-light">
+                  <div key={key} className="grid grid-cols-2 gap-2 font-light">
                     <div className="flex items-center gap-1">
                       <div className="w-3 h-3 rounded-sm" style={{ backgroundColor: value.color }}></div>
                       <div>{value.title}</div>
                     </div>
-                    <div className="grid grid-cols-[1fr,1fr] gap-1">
+                    <div className="grid grid-cols-2 gap-1">
                       <span>%{percentage}</span>
                       <span>{stat}</span>
                     </div>
