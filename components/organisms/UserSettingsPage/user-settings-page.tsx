@@ -281,15 +281,18 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
 
             {/* Bio section */}
             <div className="flex flex-col gap-2">
-              <label className="text-sm font-medium text-light-slate-9">Bio</label>
-              <textarea
-                rows={4}
-                placeholder="Tell us about yourself."
-                className="px-3 py-2 rounded-lg bg-light-slate-4 disabled:cursor-not-allowed "
-                name="bio"
-                value={bio}
-                onChange={(e) => setBio(e.target.value)}
-              ></textarea>
+              <label className="flex flex-col w-full text-sm font-medium text-light-slate-9">
+                Bio
+                <textarea
+                  rows={4}
+                  placeholder="Tell us about yourself."
+                  className="mt-2 px-3 py-2 rounded-lg bg-light-slate-4 disabled:cursor-not-allowed"
+                  name="bio"
+                  value={bio}
+                  onChange={(e) => setBio(e.target.value)}
+                ></textarea>
+              </label>
+
               {bio?.length > 255 ? (
                 <p aria-live="assertive" className="text-light-red-10 text-xs">
                   Bio too long
@@ -360,27 +363,29 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
             </div>
 
             <div id="upgrade" className="flex flex-col gap-2">
-              <label>Time zone*</label>
-              <Select onValueChange={(value) => setTimezone(value)} value={timezone} required>
-                <SelectTrigger
-                  selectIcon={
-                    <div className="relative pr-4">
-                      <RiArrowUpSLine size={16} className="absolute -top-3" />
-                      <RiArrowDownSLine size={16} className="absolute -bottom-3" />
-                    </div>
-                  }
-                >
-                  <SelectValue placeholder="Select time zone" />
-                </SelectTrigger>
+              <label className="flex flex-col w-full gap-2">
+                Time zone*
+                <Select onValueChange={(value) => setTimezone(value)} value={timezone} required>
+                  <SelectTrigger
+                    selectIcon={
+                      <div className="relative pr-4">
+                        <RiArrowUpSLine size={16} className="absolute -top-3" />
+                        <RiArrowDownSLine size={16} className="absolute -bottom-3" />
+                      </div>
+                    }
+                  >
+                    <SelectValue placeholder="Select time zone" />
+                  </SelectTrigger>
 
-                <SelectContent position="item-aligned" className="bg-white">
-                  {timezones.map((timezone, index) => (
-                    <SelectItem key={`timezone_${index}`} value={timezone.value}>
-                      {timezone.text}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+                  <SelectContent position="item-aligned" className="bg-white">
+                    {timezones.map((timezone, index) => (
+                      <SelectItem key={`timezone_${index}`} value={timezone.value}>
+                        {timezone.text}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </label>
             </div>
             <Button
               className="w-max"
@@ -418,7 +423,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
             </Button>
           </div>
           <div className="flex flex-col gap-6">
-            <div className="flex flex-col gap-3 ">
+            <div className="flex flex-col gap-3">
               <label className="text-2xl font-normal text-light-slate-11">Email Preferences</label>
               <Checkbox
                 // eslint-disable-next-line camelcase
@@ -440,7 +445,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
             <Button
               onClick={handleUpdateEmailPreference}
               variant="default"
-              className="px-4 py-2 w-max bg-light-slate-4 "
+              className="px-4 py-2 w-max bg-light-slate-4"
               disabled={updating.emailPreferences}
               loading={updating.emailPreferences}
             >
