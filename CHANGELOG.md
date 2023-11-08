@@ -5,6 +5,15 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.74.1-beta.5](https://github.com/open-sauced/insights/compare/v1.74.1-beta.4...v1.74.1-beta.5) (2023-11-08)
+
+
+### 🐛 Bug Fixes
+
+* added missing Inter font ([#2070](https://github.com/open-sauced/insights/issues/2070)) ([4f11635](https://github.com/open-sauced/insights/commit/4f11635d816f14b20c01df867dd16a1a4c2c9aeb))
+* fixed keyboard navigation for pagination ([#2073](https://github.com/open-sauced/insights/issues/2073)) ([e1f3804](https://github.com/open-sauced/insights/commit/e1f3804a7b9b24605e3fb78fd2a8eb6b9aa7f61d))
+* removed unnecessary CTAs for creating new lists/insights ([#2075](https://github.com/open-sauced/insights/issues/2075)) ([e1c5617](https://github.com/open-sauced/insights/commit/e1c5617ef377cec4cb0d40f94bf964cfb71fdd8b))
+
 ### [1.74.1-beta.4](https://github.com/open-sauced/insights/compare/v1.74.1-beta.3...v1.74.1-beta.4) (2023-11-07)
 
 
