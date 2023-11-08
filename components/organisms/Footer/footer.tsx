@@ -32,51 +32,38 @@ const footerContext = [
       {
         url: "https://twitter.com/saucedopen",
         icon: <FaXTwitter className="text-2xl hover:text-light-slate-10  text-light-slate-9" />,
+        label: "OpenSauced on Twitter",
       },
       {
         url: "https://github.com/open-sauced",
         icon: <AiOutlineGithub className="text-2xl hover:text-light-slate-10  text-light-slate-9" />,
+        label: "OpenSauced on GitHub",
       },
       {
         url: "https://www.instagram.com/opensauced/",
         icon: <AiFillInstagram className="text-2xl hover:text-light-slate-10  text-light-slate-9" />,
+        label: "OpenSauced on Instagram",
       },
       {
         url: "https://www.youtube.com/opensauced",
         icon: <AiFillYoutube className="text-2xl hover:text-light-slate-10  text-light-slate-9" />,
+        label: "OpenSauced on YouTube",
       },
       {
         url: "https://discord.com/invite/U2peSNf23P",
         icon: <FaDiscord className="text-2xl hover:text-light-slate-10  text-light-slate-9" />,
+        label: "OpenSauced on Discord",
       },
       {
         url: "https://dev.to/opensauced/",
         icon: <FaDev className="text-2xl hover:text-light-slate-10  text-light-slate-9" />,
+        label: "OpenSauced on Dev.to",
       },
     ],
   },
 ];
 
 const Footer = (): JSX.Element => {
-  function getSocialMediaPlatformName(url: string) {
-    switch (true) {
-      case url.includes("twitter.com"):
-        return "Twitter";
-      case url.includes("github.com"):
-        return "GitHub";
-      case url.includes("instagram.com"):
-        return "Instagram";
-      case url.includes("youtube.com"):
-        return "YouTube";
-      case url.includes("discord.com"):
-        return "Discord";
-      case url.includes("dev.to"):
-        return "Dev.to";
-      default:
-        return "Social Media";
-    }
-  }
-
   return (
     <footer className="h-24 w-full transition">
       <div className=" container mx-auto px-2 md:px-16  lg:border-t lg:py-8 lg:items-center lg:justify-between lg:gap-x-4 flex flex-col gap-y-4 lg:flex-row py-2 w-full">
@@ -139,14 +126,8 @@ const Footer = (): JSX.Element => {
               {footerContext[0].status?.text}
             </a>
           </div>
-          {footerContext[2].socials?.map(({ url, icon }, index) => (
-            <a
-              target="_blank"
-              href={url}
-              key={index}
-              rel="noopener noreferrer"
-              aria-label={`Visit our ${getSocialMediaPlatformName(url)} profile`}
-            >
+          {footerContext[2].socials?.map(({ url, icon, label }, index) => (
+            <a target="_blank" href={url} key={index} rel="noopener noreferrer" aria-label={label}>
               {icon}
             </a>
           ))}
