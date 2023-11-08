@@ -236,22 +236,24 @@ export default function EditListPage({ list, initialContributors }: EditListPage
             List Name
             <TextInput name="list_name" defaultValue={list.name} required />
           </label>
-          <div className="flex flex-col flex-wrap gap-4 pb-4 pt-4 border-t border-b border-solid border-light-slate-6">
+          <div className="flex flex-col flex-wrap gap-4 py-8 border-t border-b border-solid border-light-slate-6">
             <label className="text-light-slate-12">Page Visibility</label>
-            <div className="flex items-center">
-              <UserGroupIcon className="w-6 h-6 text-light-slate-9 mr-2" />
-              <Text className="text-light-slate-11">
-                <span id="make-public-explainer">Make this page publicly visible</span>
-              </Text>
-            </div>
-            <div className="flex ml-2 !border-red-900 items-center">
-              <Text className="!text-orange-600 pr-2 hidden md:block">Make Public</Text>
-              <ToggleSwitch
-                ariaLabelledBy="make-public-explainer"
-                name="is_public"
-                checked={isPublic}
-                handleToggle={() => setIsPublic((isPublic: boolean) => !isPublic)}
-              />
+            <div className="flex justify-between">
+              <div className="flex items-center">
+                <UserGroupIcon className="w-6 h-6 text-light-slate-9 mr-2" />
+                <Text className="text-light-slate-11">
+                  <span id="make-public-explainer">Make this page publicly visible</span>
+                </Text>
+              </div>
+              <div className="flex ml-2 !border-red-900 items-center">
+                <Text className="!text-orange-600 pr-2 hidden md:block">Make Public</Text>
+                <ToggleSwitch
+                  ariaLabelledBy="make-public-explainer"
+                  name="is_public"
+                  checked={isPublic}
+                  handleToggle={() => setIsPublic((isPublic: boolean) => !isPublic)}
+                />
+              </div>
             </div>
           </div>
           <div className="flex xs:items-center xs:justify-between xs:flex-row flex-wrap pb-8 border-b border-solid border-light-slate-6 flex-col justify-start">
