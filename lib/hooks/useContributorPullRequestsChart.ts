@@ -57,7 +57,7 @@ const useContributorPullRequestsChart = (
   };
 
   const [chart, setChart] = useState(lineChart);
-  const { data, meta } = useContributorPullRequests(contributor, topic, repoIds, 30, range, mostRecent);
+  const { data, meta } = useContributorPullRequests({ contributor, topic, repoIds, limit: 30, range, mostRecent });
   const repoList: RepoList[] = Array.from(new Set(data.map((prData) => prData.full_name))).map((repo) => {
     const [repoOwner, repoName] = repo.split("/");
 

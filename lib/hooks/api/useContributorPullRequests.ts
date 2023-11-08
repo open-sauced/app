@@ -48,14 +48,25 @@ export const fetchContributorPRs = async (...args: Parameters<typeof getContribu
   return (publicApiFetcher as Fetcher<PaginatedResponse, string>)(getContributorPRUrl(...args));
 };
 
+interface ContributorPullRequestOptions {
+  contributor: string;
+  topic: string;
+  repoIds?: number[];
+  limit?: number;
+  range?: number;
+  mostRecent?: boolean;
+}
+
 const useContributorPullRequests = (
-  contributor: string,
-  topic: string,
-  repoIds: number[] = [],
-  limit = 8,
-  range = 30,
-  mostRecent = false
+  options: ContributorPullRequestOptions = {
+    contributor: "",
+    topic: "",
+    limit: 8,
+    range: 30,
+    mostRecent: false,
+  }
 ) => {
+  const { contributor, topic, repoIds, limit, range, mostRecent } = options;
   const router = useRouter();
   const { selectedFilter } = router.query;
   const endpointString = getContributorPRUrl(contributor, selectedFilter, topic, repoIds, limit, range, mostRecent);

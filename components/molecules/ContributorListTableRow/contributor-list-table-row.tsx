@@ -53,7 +53,13 @@ const ContributorListTableRow = ({
   const [tableOpen, setTableOpen] = useState(false);
   const login = contributor.author_login || contributor.username;
   const { data: user } = useFetchUser(contributor.author_login);
-  const { data } = useContributorPullRequests(login, topic, [], 30, range, true);
+  const { data } = useContributorPullRequests({
+    contributor: login,
+    topic,
+    repoIds: [],
+    range,
+    mostRecent: true,
+  });
   const repoList = useRepoList(Array.from(new Set(data.map((prData) => prData.full_name))).join(","));
   const contributorLanguageList = user ? Object.keys(user.languages).map((language) => language) : [];
   const days = getPullRequestsToDays(data);
