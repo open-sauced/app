@@ -29,7 +29,6 @@ const Pagination = ({
   onPageChange,
   showTotalPages = true,
 }: PaginationProps): JSX.Element => {
-  // This logics are meant for testing purpose
   const [selected, setSelected] = useState(page);
 
   const handleSelected = (pageNumber: number) => {
@@ -58,17 +57,20 @@ const Pagination = ({
           {pages.map((page, index) => {
             return (
               index < pageSize && (
-                <div
+                <button
                   key={index}
-                  onClick={() => handleSelected(page)}
+                  onClick={() => {
+                    setSelected(page);
+                    handleSelected(page);
+                  }}
                   className={`${
                     // this check  will be updated from page to currentPage when the implemetation of logic is ready
                     selected === page &&
                     "border !text-light-slate-12 shadow-paginate border-light-orange-10 bg-light-orange-2 shadow-search"
-                  } cursor-pointer text-light-slate-11 transition   text-sm px-[13px]  py-[6px] rounded-lg `}
+                  } cursor-pointer text-light-slate-11 transition text-sm rounded-lg w-8 h-8 hover:bg-light-orange-2 hover:text-light-orange-10`}
                 >
                   {page}
-                </div>
+                </button>
               )
             );
           })}
