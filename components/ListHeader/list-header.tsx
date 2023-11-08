@@ -60,7 +60,7 @@ const ListHeader = ({ name, isPublic, listId, isOwner, numberOfContributors }: L
         </Button>
         {isOwner && (
           <Link href={`/lists/${listId}/edit`}>
-            <Button className="text-xs" variant="primary">
+            <Button variant="primary">
               <FaEdit className="mr-2" /> Edit List
             </Button>
           </Link>
