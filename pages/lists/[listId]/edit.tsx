@@ -290,6 +290,7 @@ export default function EditListPage({ list, initialContributors }: EditListPage
               <div className="w-full flex place-content-center gap-4">
                 <Pagination
                   pages={new Array(meta.pageCount).fill(0).map((_, index) => index + 1)}
+                  pageSize={5}
                   hasNextPage={meta.hasNextPage}
                   hasPreviousPage={meta.hasPreviousPage}
                   totalPage={meta.pageCount}

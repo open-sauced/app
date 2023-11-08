@@ -45,6 +45,14 @@ const Pagination = ({
     onPageChange(page - 1);
   };
 
+  const middlePages = Array.from({ length: Math.min(pages.length, pageSize) }, (_, index) =>
+    selected <= Math.floor(pageSize / 2)
+      ? index + 1
+      : selected >= pages.length - Math.floor(pageSize / 2)
+      ? pages.length - pageSize + index + 1
+      : selected - Math.floor(pageSize / 2) + index
+  ).filter((page) => page >= 1 && page <= pages.length);
+
   return (
     <>
       <div className="w-max flex gap-x-4 items-center">
@@ -63,24 +71,22 @@ const Pagination = ({
           >
             <RiArrowLeftSLine className="text-2xl md:text-lg" />
           </button>
-          {pages.map((page, index) => {
+          {middlePages.map((page) => {
             return (
-              index < pageSize && (
-                <button
-                  key={index}
-                  onClick={() => {
-                    setSelected(page);
-                    handleSelected(page);
-                  }}
-                  className={`${
-                    // this check  will be updated from page to currentPage when the implemetation of logic is ready
-                    selected === page &&
-                    "border !text-light-slate-12 shadow-paginate border-light-orange-10 bg-light-orange-2 shadow-search"
-                  } cursor-pointer text-light-slate-11 transition text-sm rounded-lg w-8 h-8 hover:bg-light-orange-2 hover:text-light-orange-10`}
-                >
-                  {page}
-                </button>
-              )
+              <button
+                key={page}
+                onClick={() => {
+                  setSelected(page);
+                  handleSelected(page);
+                }}
+                className={`${
+                  // this check  will be updated from page to currentPage when the implemetation of logic is ready
+                  selected === page &&
+                  "border !text-light-slate-12 shadow-paginate border-light-orange-10 bg-light-orange-2 shadow-search"
+                } cursor-pointer text-light-slate-11 transition text-sm rounded-lg w-8 h-8 hover:bg-light-orange-2 hover:text-light-orange-10`}
+              >
+                {page}
+              </button>
             );
           })}
 
