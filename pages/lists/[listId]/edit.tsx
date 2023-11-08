@@ -170,8 +170,11 @@ export default function EditListPage({ list, initialContributors }: EditListPage
 
     toast({
       description: (
-        <div className="w-full flex justify-between gap-2 items">
-          <span>{`${userName} was removed from your list`}</span>
+        <div className="w-full flex justify-between items-center gap-2 items">
+          <p>
+            <span className="font-semibold">{userName}</span>
+            <span> was removed from your list</span>
+          </p>
           <button
             onClick={() => {
               event.stopPropagation();
@@ -272,7 +275,7 @@ export default function EditListPage({ list, initialContributors }: EditListPage
           <h2 className="text-light-slate-12">Remove Contributors</h2>
           <div className="flex flex-col w-full gap-2 md:flex-row">
             <label className="flex w-full flex-col gap-4">
-              <span className="sr-only">Search for contributors to add to your list</span>
+              <span className="sr-only">Search you contributor list</span>
               <Search
                 placeholder="Search you contributor list"
                 className="!w-full text-sm py-1.5"
