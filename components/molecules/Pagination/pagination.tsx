@@ -99,7 +99,6 @@ const Pagination = ({
               }
 
               handleNext();
-              debugger;
               setSelected(selected === pages[pages.length] ? pages[pages.length] : selected + 1);
             }}
           >
