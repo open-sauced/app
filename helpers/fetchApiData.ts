@@ -8,6 +8,7 @@ export function validateListPath(path: string) {
 
 export async function fetchApiData<T>({
   path,
+  body,
   method = "GET",
   headers,
   bearerToken,
@@ -16,22 +17,27 @@ export async function fetchApiData<T>({
   path: string;
   method?: "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
   headers?: HeadersInit;
+  body?: object;
   bearerToken: string;
-  pathValidator(path: string): boolean;
+  pathValidator?(path: string): boolean;
 }) {
-  if (!pathValidator(path)) {
-    //   return { data: null, error: { status: 400, statusText: "bad request" } };
-  }
-
-  const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/${path}`;
-  const response = await fetch(apiUrl, {
+  const baseUrl = new URL(process.env.NEXT_PUBLIC_API_URL!);
+  const apiUrl = new URL(`${baseUrl.pathname}/${path}`, baseUrl);
+  const init: RequestInit = {
     method,
     headers: {
       ...headers,
       accept: "application/json",
+      "Content-Type": "application/json",
       Authorization: `Bearer ${bearerToken}`,
     },
-  });
+  };
+
+  if (body) {
+    init.body = JSON.stringify(body);
+  }
+
+  const response = await fetch(apiUrl, init);
 
   if (response.ok) {
     return { data: (await response.json()) as T, error: null };

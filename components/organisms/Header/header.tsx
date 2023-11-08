@@ -7,7 +7,7 @@ interface HeaderProps {
 }
 const Header = ({ children, classNames }: HeaderProps): JSX.Element => {
   return (
-    <section className={clsx("flex flex-col px-4 pt-6 header md:flex-row md:px-16 bg-light-slate-3", classNames)}>
+    <section className={clsx("flex flex-col pt-6 header md:flex-row md:px-16 bg-light-slate-2", classNames)}>
       {children}
     </section>
   );
