@@ -274,7 +274,7 @@ export default function EditListPage({ list, initialContributors }: EditListPage
             <label className="flex w-full flex-col gap-4">
               <span className="sr-only">Search for contributors to add to your list</span>
               <Search
-                placeholder="Search for contributors to add to your list"
+                placeholder="Search you contributor list"
                 className="!w-full text-sm py-1.5"
                 name={"contributors"}
                 onChange={(value) => setContributorSearchTerm(value)}
