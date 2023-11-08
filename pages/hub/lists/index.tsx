@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import clsx from "clsx";
-import Link from "next/link";
 
 import { WithPageLayout } from "interfaces/with-page-layout";
 import HubLayout from "layouts/hub";
@@ -93,12 +92,6 @@ const ListsHub: WithPageLayout = () => {
         )}
 
         {isLoading && <SkeletonWrapper count={3} classNames="w-full" height={95} radius={10} />}
-        <Link
-          href={"/hub/lists/new"}
-          className="w-full py-5 text-lg text-center border rounded-lg bg-light-slate-4 text-light-slate-11 md:py-8 lg:py-10 border-light-slate-7"
-        >
-          Create a new List
-        </Link>
       </section>
       <div
         className={clsx("py-1 md:py-4 flex w-full md:mt-5 justify-between items-center", {
