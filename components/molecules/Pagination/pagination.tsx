@@ -5,6 +5,8 @@ import PaginationGotoPage from "components/molecules/PaginationGotoPage/paginati
 import humanizeNumber from "lib/utils/humanizeNumber";
 
 interface PaginationProps {
+  // TODO: Passing in pages as a prop should be removed and lean on the meta data plus a new view
+  // for the paging component.
   pages: number[];
   totalPage: number; // represents the total number of pages available from the source
   page: number; // represents the current active page
@@ -49,10 +51,17 @@ const Pagination = ({
         <div className="flex items-center gap-x-4">
           <button
             className="text-light-slate-9 disabled:text-light-slate-7"
-            disabled={!hasPreviousPage ? true : false}
-            onClick={() => handlePrev()}
+            disabled={!hasPreviousPage}
+            onClick={() => {
+              if (!hasPreviousPage) {
+                return;
+              }
+
+              handlePrev();
+              setSelected(selected === 1 ? 1 : selected - 1);
+            }}
           >
-            <RiArrowLeftSLine onClick={() => handlePrev()} className="text-2xl md:text-lg" />
+            <RiArrowLeftSLine className="text-2xl md:text-lg" />
           </button>
           {pages.map((page, index) => {
             return (
@@ -78,7 +87,15 @@ const Pagination = ({
           <button
             className="text-light-slate-9 disabled:text-light-slate-7"
             disabled={!hasNextPage ? true : false}
-            onClick={() => handleNext()}
+            onClick={() => {
+              if (!hasNextPage) {
+                return;
+              }
+
+              handleNext();
+              debugger;
+              setSelected(selected === pages[pages.length] ? pages[pages.length] : selected + 1);
+            }}
           >
             <RiArrowRightSLine className="text-2xl md:text-lg" />
           </button>
