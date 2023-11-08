@@ -254,19 +254,19 @@ export default function EditListPage({ list, initialContributors }: EditListPage
               />
             </div>
           </div>
-          <div className="flex justify-between items-center flex-wrap pb-4 border-b border-solid border-light-slate-6">
+          <div className="flex xs:items-center xs:justify-between xs:flex-row flex-wrap pb-8 border-b border-solid border-light-slate-6 flex-col justify-start">
             <h2 className="text-light-slate-12 ">Add Contributors</h2>
             <Button
               variant="outline"
               href={`/lists/${list.id}/add-contributors`}
-              className="flex gap-2.5 py-1 items-center pl-3 pr-7 cursor-pointer"
+              className="flex gap-2.5 items-center cursor-pointer w-min mt-2 sm:mt-0"
             >
               <FaUserPlus size={22} />
               <span>Add new contributors</span>
             </Button>
           </div>
         </form>
-        <div className="flex flex-col mt-4 pb-4 gap-4">
+        <div className="flex flex-col pb-4 gap-4">
           <h2 className="text-light-slate-12">Remove Contributors</h2>
           <div className="flex flex-col w-full gap-2 md:flex-row">
             <label className="flex w-full flex-col gap-4">
