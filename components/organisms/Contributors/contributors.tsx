@@ -107,7 +107,7 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
         .catch((res) => {
           toast({
             description: `
-            An error occurred while adding contributors to lists. Please try again later.
+            An error occurred while adding contributors to lists. Please try again.
           `,
             variant: "danger",
           });
