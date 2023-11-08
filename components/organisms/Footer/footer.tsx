@@ -52,7 +52,7 @@ const footerContext = [
       {
         url: "https://discord.com/invite/U2peSNf23P",
         icon: <FaDiscord className="text-2xl hover:text-light-slate-10  text-light-slate-9" />,
-        label: "OpenSauced on Discord",
+        label: "OpenSauced Discord community",
       },
       {
         url: "https://dev.to/opensauced/",
