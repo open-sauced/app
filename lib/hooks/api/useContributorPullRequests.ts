@@ -35,9 +35,9 @@ export function getContributorPRUrl(
 
   if (mostRecent) {
     query.set("rangeType", "all");
+  } else {
+    query.set("range", `${range}`);
   }
-
-  query.set("range", `${range}`);
 
   const baseEndpoint = `users/${contributor}/prs`;
   const endpointString = `${baseEndpoint}?${query.toString()}`;
