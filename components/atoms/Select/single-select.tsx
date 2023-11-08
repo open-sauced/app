@@ -13,6 +13,7 @@ interface SingleSelectProps {
   inputPlaceholder?: string;
   options: { label: string; value: string }[];
   position?: "popper" | "item-aligned";
+  isSearchable?: boolean;
 }
 
 const SingleSelect = ({
@@ -22,6 +23,7 @@ const SingleSelect = ({
   options,
   position,
   inputPlaceholder,
+  isSearchable = false,
 }: SingleSelectProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [inputValue, setInputValue] = useState("");
@@ -39,30 +41,40 @@ const SingleSelect = ({
       </SelectTrigger>
 
       <SelectContent position={position ?? "item-aligned"} className="z-50 relative bg-white">
-        <Command loop onKeyDown={() => {}} className="w-full px-0 bg-transparent">
-          <CommandInput
-            ref={inputRef}
-            placeholder={inputPlaceholder ?? "Search Items"}
-            value={inputValue}
-            onValueChange={setInputValue}
-          />
-          <CommandGroup className="flex flex-col !px-0 overflow-scroll max-h-[25rem]">
+        {isSearchable ? (
+          <Command loop onKeyDown={() => {}} className="w-full px-0 bg-transparent">
+            <CommandInput
+              ref={inputRef}
+              placeholder={inputPlaceholder ?? "Search Items"}
+              value={inputValue}
+              onValueChange={setInputValue}
+            />
+            <CommandGroup className="flex flex-col !px-0 overflow-scroll max-h-[25rem]">
+              {options.map((option, index) => (
+                <CommandItem
+                  key={`timezone_${index}`}
+                  onMouseDown={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                  }}
+                  className="!px-3 rounded-md truncate"
+                >
+                  <SelectItem key={`timezone_${index}`} className="!px-0" title={option.label} value={option.value}>
+                    {truncateString(option.label, 30)}
+                  </SelectItem>
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          </Command>
+        ) : (
+          <>
             {options.map((option, index) => (
-              <CommandItem
-                key={`timezone_${index}`}
-                onMouseDown={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                }}
-                className="!px-3 rounded-md truncate"
-              >
-                <SelectItem key={`timezone_${index}`} className="!px-0" title={option.label} value={option.value}>
-                  {truncateString(option.label, 30)}
-                </SelectItem>
-              </CommandItem>
+              <SelectItem title={option.label} key={`timezone_${index}`} value={option.value}>
+                {truncateString(option.label, 30)}
+              </SelectItem>
             ))}
-          </CommandGroup>
-        </Command>
+          </>
+        )}
       </SelectContent>
     </Select>
   );
