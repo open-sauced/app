@@ -97,7 +97,7 @@ const ListContributors = ({
       {contributors?.map((contributor) => (
         <li
           key={contributor.id}
-          className="flex justify-between items-center px-1 border-transparent hover:bg-light-slate-4 focus-within:bg-light-slate-4 hover:shadow-input border transition focus-within:ring focus-within:border-orange-500 focus-within:ring-orange-100 rounded-lg ring-light-slate-6"
+          className="flex justify-between items-center px-2 border-transparent hover:bg-light-slate-4 focus-within:bg-light-slate-4 border transition focus-within:ring focus-within:border-orange-500 focus-within:ring-orange-100 rounded-md ring-light-slate-6"
         >
           <div className="flex items-center gap-4">
             <Avatar size="xsmall" contributor={contributor.login} />
@@ -105,7 +105,7 @@ const ListContributors = ({
           </div>
           <Button
             variant="default"
-            className="border-0 bg-transparent !text-orange-600 hover:!bg-transparent focus-within:!ring-0"
+            className="pr-0 border-0 bg-transparent !text-orange-600 hover:!bg-transparent focus-within:!ring-0 hover:brightness-75"
             aria-label={`Remove contributor ${contributor.login} from the list`}
             data-user-id={contributor.id}
             data-user-name={contributor.login}
