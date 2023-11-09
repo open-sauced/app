@@ -77,3 +77,7 @@ function generateData() {
 function randomValueCloseToValue(value: number) {
   return Math.max(value + Math.floor(Math.random() * 100 - 50), 0);
 }
+
+export const Loading = () => {
+  return <ContributionsEvolutionByType isLoading={true} />;
+};
