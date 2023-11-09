@@ -96,40 +96,47 @@ export default function ContributionsEvolutionByType({ data = [], isLoading }: C
           <div className="text-lg text-slate-900 mb-2">Contributions Evolution</div>
           <div className="text-sm font-medium text-slate-400 mb-4">This is going to be an auto-generated insight.</div>
           {/* chart */}
-          <div className="mb-3 grid " style={{ height: "auto" }}>
-            <div>
-              <ResponsiveLine
-                data={groupedData}
-                lineWidth={3}
-                enablePoints={false}
-                enableGridX={false}
-                enablePointLabel={false}
-                enableCrosshair={true}
-                enableSlices="x"
-                isInteractive={true}
-                useMesh={true}
-                xScale={{
-                  type: "time",
-                  format: "%Y-%m-%d",
-                  useUTC: false,
-                  precision: "day",
-                }}
-                xFormat="time:%Y-%m-%d"
-                yScale={{
-                  type: "linear",
-                }}
-                axisLeft={{ tickValues: 5, tickSize: 0 }}
-                axisBottom={{
-                  format: (value) => format(value, "MM/dd"),
-                  tickSize: 0,
-                }}
-                margin={{ top: 20, right: 40, bottom: 30, left: 40 }}
-                motionConfig="stiff"
-                curve="monotoneX"
-                colors={(d) => d.color}
-              />
-            </div>
+          <div className="sr-only" aria-live="polite">
+            {isLoading ? "Loading the contributions evolution graph" : "The contributions evolution graph has loaded"}
           </div>
+          {isLoading ? (
+            <div className="loading grid place-content-center" />
+          ) : (
+            <div className="mb-3 grid " style={{ height: "auto" }}>
+              <div>
+                <ResponsiveLine
+                  data={groupedData}
+                  lineWidth={3}
+                  enablePoints={false}
+                  enableGridX={false}
+                  enablePointLabel={false}
+                  enableCrosshair={true}
+                  enableSlices="x"
+                  isInteractive={true}
+                  useMesh={true}
+                  xScale={{
+                    type: "time",
+                    format: "%Y-%m-%d",
+                    useUTC: false,
+                    precision: "day",
+                  }}
+                  xFormat="time:%Y-%m-%d"
+                  yScale={{
+                    type: "linear",
+                  }}
+                  axisLeft={{ tickValues: 5, tickSize: 0 }}
+                  axisBottom={{
+                    format: (value) => format(value, "MM/dd"),
+                    tickSize: 0,
+                  }}
+                  margin={{ top: 20, right: 40, bottom: 30, left: 40 }}
+                  motionConfig="stiff"
+                  curve="monotoneX"
+                  colors={(d) => d.color}
+                />
+              </div>
+            </div>
+          )}
           {/* key */}
           <div className="flex justify-center gap-4">
             {dataTypes.map((type) => (
