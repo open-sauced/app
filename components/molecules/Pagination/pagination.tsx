@@ -45,6 +45,10 @@ const Pagination = ({
     onPageChange(page - 1);
   };
 
+  // Calculate the page numbers you see between the back and next arrows
+  // These numbers change as you navigate the paging.
+  // It might start off as 1,2,3,4,5 but as you move forward it becomes
+  // 2,3,4,5,6 and so on.
   const middlePages = Array.from({ length: Math.min(pages.length, pageSize) }, (_, index) =>
     selected <= Math.floor(pageSize / 2)
       ? index + 1
@@ -99,7 +103,6 @@ const Pagination = ({
               }
 
               handleNext();
-              debugger;
               setSelected(selected === pages[pages.length] ? pages[pages.length] : selected + 1);
             }}
           >

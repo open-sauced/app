@@ -140,6 +140,7 @@ export default function EditListPage({ list, initialContributors }: EditListPage
     setPage,
     meta,
     data: contributors,
+    isLoading,
   } = useFetchAllListContributors(
     {
       listId: list.id,
@@ -192,6 +193,19 @@ export default function EditListPage({ list, initialContributors }: EditListPage
   }
 
   const [removedContributorIds, setRemovedContributorIds] = useState<string[]>([]);
+
+  const GraphLoading = ({ rows = 10 }: { rows?: number }) => {
+    return (
+      <div className="grid grid-cols-[2rem,1fr] gap-2">
+        {new Array(rows).fill(0).map((_, index) => (
+          <>
+            <div className="loading rounded-full w-8 h-8" />
+            <div className="loading" />
+          </>
+        ))}
+      </div>
+    );
+  };
 
   return (
     <HubContributorsPageLayout>
@@ -284,32 +298,40 @@ export default function EditListPage({ list, initialContributors }: EditListPage
               />
             </label>
           </div>
-          {contributors && contributors.length > 0 ? (
-            <>
-              <ListContributors
-                contributors={contributors.filter(({ id }) => {
-                  return !removedContributorIds.includes(id);
-                })}
-                onRemoveContributor={onRemoveContributor}
-              />
-              <div className="w-full flex place-content-center gap-4">
-                <Pagination
-                  pages={new Array(meta.pageCount).fill(0).map((_, index) => index + 1)}
-                  pageSize={5}
-                  hasNextPage={meta.hasNextPage}
-                  hasPreviousPage={meta.hasPreviousPage}
-                  totalPage={meta.pageCount}
-                  page={meta.page}
-                  onPageChange={function (page: number): void {
-                    setPage(page);
-                  }}
-                  showTotalPages={false}
-                />
-              </div>
-            </>
-          ) : (
-            <p className="text-light-slate-11">No contributors to remove found.</p>
-          )}
+          <>
+            {isLoading ? (
+              <GraphLoading />
+            ) : (
+              <>
+                {contributors && contributors.length > 0 ? (
+                  <>
+                    <ListContributors
+                      contributors={contributors.filter(({ id }) => {
+                        return !removedContributorIds.includes(id);
+                      })}
+                      onRemoveContributor={onRemoveContributor}
+                    />
+                    <div className="w-full flex place-content-center gap-4">
+                      <Pagination
+                        pages={new Array(meta.pageCount).fill(0).map((_, index) => index + 1)}
+                        pageSize={5}
+                        hasNextPage={meta.hasNextPage}
+                        hasPreviousPage={meta.hasPreviousPage}
+                        totalPage={meta.pageCount}
+                        page={meta.page}
+                        onPageChange={function (page: number): void {
+                          setPage(page);
+                        }}
+                        showTotalPages={false}
+                      />
+                    </div>
+                  </>
+                ) : (
+                  <p className="text-light-slate-11">No contributors to remove found.</p>
+                )}
+              </>
+            )}
+          </>
         </div>
       </div>
     </HubContributorsPageLayout>
