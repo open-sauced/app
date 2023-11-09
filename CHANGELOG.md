@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.75.0-beta.4](https://github.com/open-sauced/insights/compare/v1.75.0-beta.3...v1.75.0-beta.4) (2023-11-09)
+
+
+### 🍕 Features
+
+* show most recent contributions for contributors instead of last 30 days ([#2068](https://github.com/open-sauced/insights/issues/2068)) ([cec0435](https://github.com/open-sauced/insights/commit/cec04356d6601f3f358d0cee3c025e9fdefc026b))
+
 ## [1.75.0-beta.3](https://github.com/open-sauced/insights/compare/v1.75.0-beta.2...v1.75.0-beta.3) (2023-11-09)
 
 
