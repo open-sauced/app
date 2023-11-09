@@ -57,6 +57,12 @@ const SingleSelect = ({
                     e.preventDefault();
                     e.stopPropagation();
                   }}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      onValueChange(option.value);
+                      setInputValue("");
+                    }
+                  }}
                   className="!px-3 rounded-md truncate"
                 >
                   <SelectItem key={`timezone_${index}`} className="!px-0" title={option.label} value={option.value}>
