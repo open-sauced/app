@@ -5,6 +5,25 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.74.1-beta.6](https://github.com/open-sauced/insights/compare/v1.74.1-beta.5...v1.74.1-beta.6) (2023-11-08)
+
+
+### 🧑‍💻 Code Refactoring
+
+* add a default fallback to switch ([e757841](https://github.com/open-sauced/insights/commit/e7578411f3165088f0823253ec08ab86c7751737))
+* fix a11y for timezone dropdown ([25c6b84](https://github.com/open-sauced/insights/commit/25c6b8432e3d990b08ae51292863028d18507137))
+* fix a11y with textarea ([f3edac6](https://github.com/open-sauced/insights/commit/f3edac60c11a7d64d2d36486879c990e2ec4376e))
+* remove getSocialMediaPlatformName(url) ([c412f7f](https://github.com/open-sauced/insights/commit/c412f7f87c41bb873cba51c590a975987faf37b7))
+* remove platform variable and 'break' statements from switch statement ([a690ad9](https://github.com/open-sauced/insights/commit/a690ad9617d27ad25af43f295ba6fd7168d4e4e8))
+* replace discord label ([b3ad2d5](https://github.com/open-sauced/insights/commit/b3ad2d543ea571955a6964279959c5a1a2a2aa9f))
+* use a switch statement for social media platform detection ([7a11d1e](https://github.com/open-sauced/insights/commit/7a11d1e6e60e2420970484abf70b760eb5ba7e2a))
+
+
+### 🐛 Bug Fixes
+
+* add accessibility features to footer component ([#2038](https://github.com/open-sauced/insights/issues/2038)) ([9e89214](https://github.com/open-sauced/insights/commit/9e8921418dd53a045f416bf2b16a937e308e1e70))
+* Fix Accessibility issues in user's settings page - `user/settings` ([#2050](https://github.com/open-sauced/insights/issues/2050)) ([11bfd19](https://github.com/open-sauced/insights/commit/11bfd19620d5e3a1588efef5460683c7e715e677))
+
 ### [1.74.1-beta.5](https://github.com/open-sauced/insights/compare/v1.74.1-beta.4...v1.74.1-beta.5) (2023-11-08)
 
 
