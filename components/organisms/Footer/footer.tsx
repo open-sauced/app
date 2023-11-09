@@ -32,26 +32,32 @@ const footerContext = [
       {
         url: "https://twitter.com/saucedopen",
         icon: <FaXTwitter className="text-2xl hover:text-light-slate-10  text-light-slate-9" />,
+        label: "OpenSauced on Twitter",
       },
       {
         url: "https://github.com/open-sauced",
         icon: <AiOutlineGithub className="text-2xl hover:text-light-slate-10  text-light-slate-9" />,
+        label: "OpenSauced on GitHub",
       },
       {
         url: "https://www.instagram.com/opensauced/",
         icon: <AiFillInstagram className="text-2xl hover:text-light-slate-10  text-light-slate-9" />,
+        label: "OpenSauced on Instagram",
       },
       {
         url: "https://www.youtube.com/opensauced",
         icon: <AiFillYoutube className="text-2xl hover:text-light-slate-10  text-light-slate-9" />,
+        label: "OpenSauced on YouTube",
       },
       {
         url: "https://discord.com/invite/U2peSNf23P",
         icon: <FaDiscord className="text-2xl hover:text-light-slate-10  text-light-slate-9" />,
+        label: "OpenSauced Discord community",
       },
       {
         url: "https://dev.to/opensauced/",
         icon: <FaDev className="text-2xl hover:text-light-slate-10  text-light-slate-9" />,
+        label: "OpenSauced on Dev.to",
       },
     ],
   },
@@ -63,7 +69,7 @@ const Footer = (): JSX.Element => {
       <div className=" container mx-auto px-2 md:px-16  lg:border-t lg:py-8 lg:items-center lg:justify-between lg:gap-x-4 flex flex-col gap-y-4 lg:flex-row py-2 w-full">
         <div className="text-center lg:text-left justify-center gap-1 flex items-center">
           <div className="w-6 h-6 relative !min-w-[24px] min-h-[24px]">
-            <Image fill={true} alt="brand logo" src={OpenSaucedLogo} />
+            <Image fill={true} alt="OpenSauced brand logo" src={OpenSaucedLogo} />
           </div>
           <span className="lg:hidden font-bold text-light-slate-12 ">OpenSauced</span>
           <Text className="hidden !text-light-slate-9 lg:inline-block">
@@ -76,6 +82,7 @@ const Footer = (): JSX.Element => {
             target="_blank"
             href={footerContext[1].hot?.url}
             rel="noopener noreferrer"
+            aria-label={`Visit ${footerContext[1].hot?.text} website`}
           >
             {footerContext[1].hot?.text}
           </a>
@@ -84,6 +91,7 @@ const Footer = (): JSX.Element => {
             target="_blank"
             href={footerContext[1].openSauced?.url}
             rel="noopener noreferrer"
+            aria-label={`Visit ${footerContext[1].openSauced?.text} website`}
           >
             {footerContext[1].openSauced?.text}
           </a>
@@ -95,6 +103,7 @@ const Footer = (): JSX.Element => {
               href={footerContext[0].terms?.url}
               target="_blank"
               rel="noreferrer"
+              aria-label={`Visit the ${footerContext[0].terms?.text} page`}
             >
               {footerContext[0].terms?.text}
             </a>
@@ -103,6 +112,7 @@ const Footer = (): JSX.Element => {
               href={footerContext[0].privacy?.url}
               target="_blank"
               rel="noreferrer"
+              aria-label={`Visit the ${footerContext[0].privacy?.text} page`}
             >
               {footerContext[0].privacy?.text}
             </a>
@@ -111,12 +121,13 @@ const Footer = (): JSX.Element => {
               href={footerContext[0].status?.url}
               target="_blank"
               rel="noreferrer"
+              aria-label={`Visit the ${footerContext[0].status?.text} page`}
             >
               {footerContext[0].status?.text}
             </a>
           </div>
-          {footerContext[2].socials?.map(({ url, icon }, index) => (
-            <a target="_blank" href={url} key={index} rel="noopener noreferrer">
+          {footerContext[2].socials?.map(({ url, icon, label }, index) => (
+            <a target="_blank" href={url} key={index} rel="noopener noreferrer" aria-label={label}>
               {icon}
             </a>
           ))}
@@ -126,13 +137,31 @@ const Footer = (): JSX.Element => {
             © {new Date().getFullYear()} <span className="hidden md:inline-block">Open sauced</span>
           </Text>
           <div className="flex items-center gap-x-3 text-light-slate-11 text-sm">
-            <a className="px-2" href={footerContext[0].terms?.url} target="_blank" rel="noreferrer">
+            <a
+              className="px-2"
+              href={footerContext[0].terms?.url}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={`Visit the ${footerContext[0].terms?.text} page`}
+            >
               {footerContext[0].terms?.text}
             </a>
-            <a className="px-2" href={footerContext[0].privacy?.url} target="_blank" rel="noreferrer">
+            <a
+              className="px-2"
+              href={footerContext[0].privacy?.url}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={`Visit the ${footerContext[0].privacy?.text} page`}
+            >
               {footerContext[0].privacy?.text}
             </a>
-            <a className="px-2" href={footerContext[0].status?.url} target="_blank" rel="noreferrer">
+            <a
+              className="px-2"
+              href={footerContext[0].status?.url}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={`Visit the ${footerContext[0].status?.text} page`}
+            >
               {footerContext[0].status?.text}
             </a>
           </div>

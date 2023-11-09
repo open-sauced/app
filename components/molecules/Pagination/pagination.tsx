@@ -56,7 +56,7 @@ const Pagination = ({
           {pages.map((page, index) => {
             return (
               index < pageSize && (
-                <div
+                <button
                   key={index}
                   onClick={() => handleSelected(page)}
                   className={`${
@@ -66,7 +66,7 @@ const Pagination = ({
                   } cursor-pointer text-light-slate-11 transition   text-sm px-[13px]  py-[6px] rounded-lg `}
                 >
                   {page}
-                </div>
+                </button>
               )
             );
           })}
