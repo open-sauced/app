@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.75.0-beta.8](https://github.com/open-sauced/insights/compare/v1.75.0-beta.7...v1.75.0-beta.8) (2023-11-09)
+
+
+### 🐛 Bug Fixes
+
+* new highlight dialog ui breaks now fixed ([#2087](https://github.com/open-sauced/insights/issues/2087)) ([ece155a](https://github.com/open-sauced/insights/commit/ece155adc2ac0176935251ecd7a630daa0516f57))
+
 ## [1.75.0-beta.7](https://github.com/open-sauced/insights/compare/v1.75.0-beta.6...v1.75.0-beta.7) (2023-11-09)
 
 
