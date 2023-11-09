@@ -16,13 +16,13 @@ interface ContributorsListProps {
   meta: Meta;
   setPage: (page: number) => void;
   setLimit: (limit: number) => void;
-  range: number;
+  range: string;
 }
 
 interface ContributorCardListProps {
   contributors: DbPRContributor[];
   topic: string;
-  range: number;
+  range: string;
 }
 
 const ContributorCardList = ({ contributors = [], topic, range }: ContributorCardListProps) => {
