@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import clsx from "clsx";
 
@@ -85,12 +84,6 @@ const InsightsHub: WithPageLayout = () => {
             return <InsightRow key={`insights_${insight.id}`} user={user} insight={insight} />;
           })
         )}
-        <Link
-          href={"/hub/insights/new"}
-          className="w-full py-5 text-lg text-center border rounded-lg bg-light-slate-4 text-light-slate-11 md:py-8 lg:py-10 border-light-slate-7"
-        >
-          Create a new Insights Page
-        </Link>
       </section>
 
       <div
