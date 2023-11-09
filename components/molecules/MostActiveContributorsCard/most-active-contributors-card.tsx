@@ -3,7 +3,6 @@ import { useGesture } from "@use-gesture/react";
 import Image from "next/image";
 import { ReactNode, useState } from "react";
 import * as RawTooltip from "@radix-ui/react-tooltip";
-import clsx from "clsx";
 import Button from "components/atoms/Button/button";
 import Card from "components/atoms/Card/card";
 import Icon from "components/atoms/Icon/icon";
