@@ -100,7 +100,7 @@ export default function ContributionsEvolutionByType({ data = [], isLoading }: C
             {isLoading ? "Loading the contributions evolution graph" : "The contributions evolution graph has loaded"}
           </div>
           {isLoading ? (
-            <div className="loading grid place-content-center" />
+            <div className="loading mb-4 rounded" />
           ) : (
             <div className="mb-3 grid" style={{ height: "auto" }}>
               <div>
