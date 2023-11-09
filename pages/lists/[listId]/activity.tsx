@@ -132,7 +132,7 @@ const ListActivityPage = ({ list, numberOfContributors, isError, activityData }:
             <MostActiveContributorsCard
               data={contributorStats?.data ?? []}
               totalContributions={contributorStats?.meta.allContributionsCount ?? 0}
-              topContributor={activityData.topContributor}
+              topContributor={contributorStats?.data?.length ? contributorStats.data[0] : undefined}
               setContributorType={setContributorType}
               contributorType={contributorType}
               isLoading={isLoading}
