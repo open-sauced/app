@@ -264,7 +264,7 @@ function getWidthPercentage(stat: number, total_contributions: number) {
   }
 
   // round to two decimal places
-  return Math.round((stat / total_contributions) * 10000) / 100;
+  return Math.round((stat / total_contributions) * 100);
 }
 
 function GraphRow({
@@ -292,7 +292,7 @@ function GraphRow({
   );
   const userStats = keys.reduce(
     (acc, key) => {
-      const percentage = Math.round(getWidthPercentage(user[key], user.total_contributions));
+      const percentage = getWidthPercentage(user[key], user.total_contributions);
 
       acc[key] = { percentage, stat: user[key] };
 
