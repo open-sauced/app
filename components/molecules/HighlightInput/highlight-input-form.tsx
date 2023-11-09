@@ -515,7 +515,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
               className="flex-1 font-normal placeholder:text-sm focus:outline-none"
               type="text"
               placeholder={"Post a highlight to show your work!"}
-              id="highlight-create-input"
+              id="highlight-create"
               onFocus={() => setIsDivFocused(true)}
             />
           </div>
@@ -964,7 +964,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
         <div
           onClick={() => setIsFormOpenMobile(true)}
           className="p-3 mb-10 -mr-4 text-white rounded-full shadow-lg bg-light-orange-10"
-          id="mobile-highlight-create-button"
+          id="mobile-highlight-create"
         >
           <RxPencil1 className="text-3xl" />
         </div>
