@@ -40,7 +40,11 @@ export async function fetchApiData<T>({
   const response = await fetch(apiUrl, init);
 
   if (response.ok) {
-    return { data: (await response.json()) as T, error: null };
+    if (method === "DELETE") {
+      return { data: null, error: null };
+    } else {
+      return { data: (await response.json()) as T, error: null };
+    }
   }
 
   const { status, statusText } = response;
