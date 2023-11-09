@@ -43,7 +43,7 @@ export interface ContributorStat {
 export type ContributorType = "all" | "active" | "new" | "alumni";
 
 interface Props {
-  topContributor: ContributorStat;
+  topContributor?: ContributorStat;
   data: ContributorStat[];
   setContributorType: (type: ContributorType) => void;
   contributorType: ContributorType;
@@ -106,9 +106,9 @@ export default function MostActiveContributorsCard({
   isLoading,
   totalContributions,
 }: Props) {
-  const dataLabels = getDataLabels(topContributor, dataLabelsList);
+  const dataLabels = getDataLabels(topContributor!, dataLabelsList);
   const labels = Object.keys(dataLabels);
-  const maxContributions = topContributor.total_contributions;
+  const maxContributions = topContributor?.total_contributions ?? 0;
   const topContributorPercent = `${
     totalContributions === 0 ? 0 : ((maxContributions / totalContributions) * 100).toFixed(2)
   }%`;
@@ -116,9 +116,11 @@ export default function MostActiveContributorsCard({
   return (
     <MostActiveCard>
       <>
-        <div className="text-sm font-medium text-slate-400 mb-4">
-          {topContributor.login} made {topContributorPercent} of all code contributions
-        </div>
+        {topContributor && (
+          <div className="text-sm font-medium text-slate-400 mb-4">
+            {topContributor.login} made {topContributorPercent} of all code contributions
+          </div>
+        )}
 
         {/* buttons */}
         <div className="flex gap-1 mb-4">
