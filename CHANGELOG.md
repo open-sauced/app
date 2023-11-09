@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.75.0-beta.9](https://github.com/open-sauced/insights/compare/v1.75.0-beta.8...v1.75.0-beta.9) (2023-11-09)
+
+
+### 🐛 Bug Fixes
+
+* upgrade Sentry package to latest version, add middleware to ignored transactions ([#2098](https://github.com/open-sauced/insights/issues/2098)) ([aca6526](https://github.com/open-sauced/insights/commit/aca6526e50cb067892dbbfc98321bd2387637dc2))
+
 ## [1.75.0-beta.8](https://github.com/open-sauced/insights/compare/v1.75.0-beta.7...v1.75.0-beta.8) (2023-11-09)
 
 
