@@ -33,7 +33,13 @@ const ContributorCard = ({ className, contributor, topic, repositories, range }:
   const { profile } = contributor;
 
   const [showPRs, setShowPRs] = useState(false);
-  const { chart, repoList, meta } = useContributorPullRequestsChart(profile.githubName, topic, repositories, range);
+  const { chart, repoList, meta } = useContributorPullRequestsChart(
+    profile.githubName,
+    topic,
+    repositories,
+    range,
+    true
+  );
   const languageList = useContributorLanguages(profile.githubName);
   const { data: user } = useFetchUser(profile.githubName, {
     revalidateOnFocus: false,

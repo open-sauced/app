@@ -5,6 +5,28 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.75.0-beta.4](https://github.com/open-sauced/insights/compare/v1.75.0-beta.3...v1.75.0-beta.4) (2023-11-09)
+
+
+### 🍕 Features
+
+* show most recent contributions for contributors instead of last 30 days ([#2068](https://github.com/open-sauced/insights/issues/2068)) ([cec0435](https://github.com/open-sauced/insights/commit/cec04356d6601f3f358d0cee3c025e9fdefc026b))
+
+## [1.75.0-beta.3](https://github.com/open-sauced/insights/compare/v1.75.0-beta.2...v1.75.0-beta.3) (2023-11-09)
+
+
+### 🍕 Features
+
+* implemented edit list page ([#2044](https://github.com/open-sauced/insights/issues/2044)) ([7ac402d](https://github.com/open-sauced/insights/commit/7ac402dc84bed81a5dd9b9d3445d1ac3df6b9cbc))
+
+## [1.75.0-beta.2](https://github.com/open-sauced/insights/compare/v1.75.0-beta.1...v1.75.0-beta.2) (2023-11-09)
+
+
+### 🐛 Bug Fixes
+
+* added tooltips on legend for most active contributors graph where data is not available yet ([d6e392c](https://github.com/open-sauced/insights/commit/d6e392ca0125a7ddf124edb29d2d9051d562d311))
+* added tooltips on legend for most active contributors graph where data is not available yet ([#2084](https://github.com/open-sauced/insights/issues/2084)) ([6e27449](https://github.com/open-sauced/insights/commit/6e274497060bf6fed4d517ffce055dbb1e462aa9))
+
 ## [1.75.0-beta.1](https://github.com/open-sauced/insights/compare/v1.74.1-beta.7...v1.75.0-beta.1) (2023-11-09)
 
 
