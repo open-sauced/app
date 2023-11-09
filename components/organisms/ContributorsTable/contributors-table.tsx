@@ -29,7 +29,7 @@ const ContributorTable = ({
             topic={topic}
             contributor={contributor}
             key={contributor.user_id}
-            selected={!!selectedContributors?.find((selected) => selected.user_id === contributor.user_id)}
+            selected={!!selectedContributors?.find((selected) => selected.author_login === contributor.author_login)}
             handleOnSelectContributor={handleSelectContributors}
             range={range}
           />
