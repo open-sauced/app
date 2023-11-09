@@ -10,7 +10,7 @@ interface PaginatedListResponse {
 }
 
 interface PaginatedListContributorsResponse {
-  data: DbListContibutor[];
+  data: DbListContributor[];
   meta: Meta;
 }
 

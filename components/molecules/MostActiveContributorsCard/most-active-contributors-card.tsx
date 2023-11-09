@@ -2,7 +2,8 @@ import { useSprings, animated } from "@react-spring/web";
 import { useGesture } from "@use-gesture/react";
 import Image from "next/image";
 import { ReactNode, useState } from "react";
-import * as Tooltip from "@radix-ui/react-tooltip";
+import * as RawTooltip from "@radix-ui/react-tooltip";
+import clsx from "clsx";
 import Button from "components/atoms/Button/button";
 import Card from "components/atoms/Card/card";
 import Icon from "components/atoms/Icon/icon";
@@ -16,6 +17,7 @@ import { getAvatarByUsername } from "lib/utils/github";
 import PeopleIcon from "img/icons/people.svg";
 import ChevronDownIcon from "img/chevron-down.svg";
 import SVGIcon from "components/atoms/SVGIcon/svg-icon";
+import Tooltip from "components/atoms/Tooltip/tooltip";
 
 // omit total_contributions and login from ContributorStat
 type StatKeys = keyof Omit<ContributorStat, "total_contributions" | "login">;
@@ -42,7 +44,7 @@ export interface ContributorStat {
 export type ContributorType = "all" | "active" | "new" | "alumni";
 
 interface Props {
-  topContributor: ContributorStat;
+  topContributor?: ContributorStat;
   data: ContributorStat[];
   setContributorType: (type: ContributorType) => void;
   contributorType: ContributorType;
@@ -55,6 +57,18 @@ const peopleFilters: Record<ContributorType, string> = {
   active: "Active Contributors",
   new: "New Contributors",
   alumni: "Churned Contributors",
+};
+
+const LegendItem = ({ color, title }: { color?: string; title: string }) => {
+  return (
+    <div className="flex items-center gap-2">
+      <div
+        className={`w-3 h-3 rounded-sm ${!color ? "bg-slate-200" : ""}`}
+        style={color ? { backgroundColor: color } : {}}
+      ></div>
+      <div className="text-sm text-slate-900 capitalize">{title}</div>
+    </div>
+  );
 };
 
 const MostActiveCard = ({ children }: { children: ReactNode }) => {
@@ -105,9 +119,9 @@ export default function MostActiveContributorsCard({
   isLoading,
   totalContributions,
 }: Props) {
-  const dataLabels = getDataLabels(topContributor, dataLabelsList);
+  const dataLabels = getDataLabels(topContributor!, dataLabelsList);
   const labels = Object.keys(dataLabels);
-  const maxContributions = topContributor.total_contributions;
+  const maxContributions = topContributor?.total_contributions ?? 0;
   const topContributorPercent = `${
     totalContributions === 0 ? 0 : ((maxContributions / totalContributions) * 100).toFixed(2)
   }%`;
@@ -115,9 +129,11 @@ export default function MostActiveContributorsCard({
   return (
     <MostActiveCard>
       <>
-        <div className="text-sm font-medium text-slate-400 mb-4">
-          {topContributor.login} made {topContributorPercent} of all code contributions
-        </div>
+        {topContributor && (
+          <div className="text-sm font-medium text-slate-400 mb-4">
+            {topContributor.login} made {topContributorPercent} of all code contributions
+          </div>
+        )}
 
         {/* buttons */}
         <div className="flex gap-1 mb-4">
@@ -183,19 +199,17 @@ export default function MostActiveContributorsCard({
 
       {/* key */}
       <div className="flex justify-center gap-4 flex-wrap">
-        {Object.entries(dataLabelsList).map(([key, value]) => (
-          <div
-            key={key}
-            className="flex items-center gap-2"
-            {...(labels.includes(key) ? null : { title: "coming soon" })}
-          >
-            <div
-              className={`w-3 h-3 rounded-sm ${labels.includes(key) ? "" : "bg-slate-200"}`}
-              style={labels.includes(key) ? { backgroundColor: value.color } : {}}
-            ></div>
-            <div className="text-sm text-slate-900 capitalize">{value.title}</div>
-          </div>
-        ))}
+        {Object.entries(dataLabelsList).map(([key, value]) => {
+          const isAvailable = labels.includes(key);
+
+          return isAvailable ? (
+            <LegendItem key={key} color={value.color} title={value.title} />
+          ) : (
+            <Tooltip direction="top" content="Coming soon">
+              <LegendItem key={key} title={value.title} />
+            </Tooltip>
+          );
+        })}
       </div>
     </MostActiveCard>
   );
@@ -214,11 +228,11 @@ function RowTooltip({
 }) {
   const labels = Object.keys(dataLabels);
   return (
-    <Tooltip.Root delayDuration={300}>
-      <Tooltip.Trigger asChild>{children}</Tooltip.Trigger>
-      <Tooltip.Portal>
-        <Tooltip.Content sideOffset={-10} align="center" collisionPadding={10} side={"bottom"} avoidCollisions>
-          <div className="text-xs p-2 rounded shadow-lg bg-white font-light w-max">
+    <RawTooltip.Root delayDuration={300}>
+      <RawTooltip.Trigger asChild>{children}</RawTooltip.Trigger>
+      <RawTooltip.Portal>
+        <RawTooltip.Content sideOffset={-10} align="center" collisionPadding={10} side={"bottom"} avoidCollisions>
+          <div className={clsx("text-xs p-2 rounded shadow-lg bg-white font-light")}>
             <div className="text-black font-bold mb-1">{contributor.login}</div>
             {Object.entries(dataLabelsList)
               .filter(([key]) => labels.includes(key))
@@ -239,9 +253,9 @@ function RowTooltip({
                 );
               })}
           </div>
-        </Tooltip.Content>
-      </Tooltip.Portal>
-    </Tooltip.Root>
+        </RawTooltip.Content>
+      </RawTooltip.Portal>
+    </RawTooltip.Root>
   );
 }
 
