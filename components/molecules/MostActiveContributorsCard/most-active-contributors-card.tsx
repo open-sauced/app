@@ -2,7 +2,7 @@ import { useSprings, animated } from "@react-spring/web";
 import { useGesture } from "@use-gesture/react";
 import Image from "next/image";
 import { ReactNode, useState } from "react";
-import * as Tooltip from "@radix-ui/react-tooltip";
+import * as RawTooltip from "@radix-ui/react-tooltip";
 import clsx from "clsx";
 import Button from "components/atoms/Button/button";
 import Card from "components/atoms/Card/card";
@@ -17,6 +17,7 @@ import { getAvatarByUsername } from "lib/utils/github";
 import PeopleIcon from "img/icons/people.svg";
 import ChevronDownIcon from "img/chevron-down.svg";
 import SVGIcon from "components/atoms/SVGIcon/svg-icon";
+import Tooltip from "components/atoms/Tooltip/tooltip";
 
 // omit total_contributions and login from ContributorStat
 type StatKeys = keyof Omit<ContributorStat, "total_contributions" | "login">;
@@ -56,6 +57,18 @@ const peopleFilters: Record<ContributorType, string> = {
   active: "Active Contributors",
   new: "New Contributors",
   alumni: "Churned Contributors",
+};
+
+const LegendItem = ({ color, title }: { color?: string; title: string }) => {
+  return (
+    <div className="flex items-center gap-2">
+      <div
+        className={`w-3 h-3 rounded-sm ${!color ? "bg-slate-200" : ""}`}
+        style={color ? { backgroundColor: color } : {}}
+      ></div>
+      <div className="text-sm text-slate-900 capitalize">{title}</div>
+    </div>
+  );
 };
 
 const MostActiveCard = ({ children }: { children: ReactNode }) => {
@@ -186,19 +199,17 @@ export default function MostActiveContributorsCard({
 
       {/* key */}
       <div className="flex justify-center gap-4 flex-wrap">
-        {Object.entries(dataLabelsList).map(([key, value]) => (
-          <div
-            key={key}
-            className="flex items-center gap-2"
-            {...(labels.includes(key) ? null : { title: "coming soon" })}
-          >
-            <div
-              className={`w-3 h-3 rounded-sm ${labels.includes(key) ? "" : "bg-slate-200"}`}
-              style={labels.includes(key) ? { backgroundColor: value.color } : {}}
-            ></div>
-            <div className="text-sm text-slate-900 capitalize">{value.title}</div>
-          </div>
-        ))}
+        {Object.entries(dataLabelsList).map(([key, value]) => {
+          const isAvailable = labels.includes(key);
+
+          return isAvailable ? (
+            <LegendItem key={key} color={value.color} title={value.title} />
+          ) : (
+            <Tooltip direction="top" content="Coming soon">
+              <LegendItem key={key} title={value.title} />
+            </Tooltip>
+          );
+        })}
       </div>
     </MostActiveCard>
   );
@@ -207,32 +218,44 @@ export default function MostActiveContributorsCard({
 function RowTooltip({
   contributor,
   dataLabels,
+  userStats,
   children,
 }: {
   contributor: ContributorStat;
   dataLabels: Record<StatKeys, DataLabel>;
+  userStats: Record<StatKeys, { percentage: number; stat: number }>;
   children: React.ReactNode;
 }) {
   const labels = Object.keys(dataLabels);
   return (
-    <Tooltip.Root delayDuration={300}>
-      <Tooltip.Trigger asChild>{children}</Tooltip.Trigger>
-      <Tooltip.Portal>
-        <Tooltip.Content sideOffset={-10} align="center" collisionPadding={10} side={"bottom"} avoidCollisions>
+    <RawTooltip.Root delayDuration={300}>
+      <RawTooltip.Trigger asChild>{children}</RawTooltip.Trigger>
+      <RawTooltip.Portal>
+        <RawTooltip.Content sideOffset={-10} align="center" collisionPadding={10} side={"bottom"} avoidCollisions>
           <div className={clsx("text-xs p-2 rounded shadow-lg bg-white font-light")}>
             <div className="text-black font-bold mb-1">{contributor.login}</div>
             {Object.entries(dataLabelsList)
               .filter(([key]) => labels.includes(key))
-              .map(([key, value]) => (
-                <div key={key} className="flex items-center gap-2 font-bold">
-                  <div className="w-3 h-3 rounded-sm" style={{ backgroundColor: value.color }}></div>
-                  <div className="font-light">{value.title}</div>
-                </div>
-              ))}
+              .map(([key, value]) => {
+                const { percentage, stat } = userStats[key as StatKeys];
+
+                return (
+                  <div key={key} className="grid grid-cols-2 gap-2 font-light">
+                    <div className="flex items-center gap-1">
+                      <div className="w-3 h-3 rounded-sm" style={{ backgroundColor: value.color }}></div>
+                      <div>{value.title}</div>
+                    </div>
+                    <div className="grid grid-cols-2 gap-1">
+                      <span>%{percentage}</span>
+                      <span>{stat}</span>
+                    </div>
+                  </div>
+                );
+              })}
           </div>
-        </Tooltip.Content>
-      </Tooltip.Portal>
-    </Tooltip.Root>
+        </RawTooltip.Content>
+      </RawTooltip.Portal>
+    </RawTooltip.Root>
   );
 }
 
@@ -241,7 +264,8 @@ function getWidthPercentage(stat: number, total_contributions: number) {
     return 0;
   }
 
-  return (stat / total_contributions) * 100;
+  // round to two decimal places
+  return Math.round((stat / total_contributions) * 10000) / 100;
 }
 
 function GraphRow({
@@ -267,6 +291,16 @@ function GraphRow({
     }),
     [user.total_contributions]
   );
+  const userStats = keys.reduce(
+    (acc, key) => {
+      const percentage = getWidthPercentage(user[key], user.total_contributions);
+
+      acc[key] = { percentage, stat: user[key] };
+
+      return acc;
+    },
+    {} as Record<StatKeys, { percentage: number; stat: number }>
+  );
 
   // When hovered the tooltip should show for the the GraphRow
   const hoverGesture = useGesture({
@@ -291,7 +325,7 @@ function GraphRow({
           style={{ width: `${(user.total_contributions / maxContributions) * 100}%` }}
         >
           {springs.map((spring, index) => (
-            <RowTooltip key={keys[index]} contributor={user} dataLabels={dataLabels}>
+            <RowTooltip key={keys[index]} userStats={userStats} contributor={user} dataLabels={dataLabels}>
               <animated.div
                 style={{
                   backgroundColor: dataLabels[keys[index]].color,
