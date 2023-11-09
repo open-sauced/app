@@ -218,10 +218,12 @@ export default function MostActiveContributorsCard({
 function RowTooltip({
   contributor,
   dataLabels,
+  userStats,
   children,
 }: {
   contributor: ContributorStat;
   dataLabels: Record<StatKeys, DataLabel>;
+  userStats: Record<StatKeys, { percentage: number; stat: number }>;
   children: React.ReactNode;
 }) {
   const labels = Object.keys(dataLabels);
@@ -234,12 +236,22 @@ function RowTooltip({
             <div className="text-black font-bold mb-1">{contributor.login}</div>
             {Object.entries(dataLabelsList)
               .filter(([key]) => labels.includes(key))
-              .map(([key, value]) => (
-                <div key={key} className="flex items-center gap-2 font-bold">
-                  <div className="w-3 h-3 rounded-sm" style={{ backgroundColor: value.color }}></div>
-                  <div className="font-light">{value.title}</div>
-                </div>
-              ))}
+              .map(([key, value]) => {
+                const { percentage, stat } = userStats[key as StatKeys];
+
+                return (
+                  <div key={key} className="grid grid-cols-2 gap-2 font-light">
+                    <div className="flex items-center gap-1">
+                      <div className="w-3 h-3 rounded-sm" style={{ backgroundColor: value.color }}></div>
+                      <div>{value.title}</div>
+                    </div>
+                    <div className="grid grid-cols-2 gap-1">
+                      <span>%{percentage}</span>
+                      <span>{stat}</span>
+                    </div>
+                  </div>
+                );
+              })}
           </div>
         </RawTooltip.Content>
       </RawTooltip.Portal>
@@ -252,7 +264,8 @@ function getWidthPercentage(stat: number, total_contributions: number) {
     return 0;
   }
 
-  return (stat / total_contributions) * 100;
+  // round to two decimal places
+  return Math.round((stat / total_contributions) * 10000) / 100;
 }
 
 function GraphRow({
@@ -278,6 +291,16 @@ function GraphRow({
     }),
     [user.total_contributions]
   );
+  const userStats = keys.reduce(
+    (acc, key) => {
+      const percentage = getWidthPercentage(user[key], user.total_contributions);
+
+      acc[key] = { percentage, stat: user[key] };
+
+      return acc;
+    },
+    {} as Record<StatKeys, { percentage: number; stat: number }>
+  );
 
   // When hovered the tooltip should show for the the GraphRow
   const hoverGesture = useGesture({
@@ -302,7 +325,7 @@ function GraphRow({
           style={{ width: `${(user.total_contributions / maxContributions) * 100}%` }}
         >
           {springs.map((spring, index) => (
-            <RowTooltip key={keys[index]} contributor={user} dataLabels={dataLabels}>
+            <RowTooltip key={keys[index]} userStats={userStats} contributor={user} dataLabels={dataLabels}>
               <animated.div
                 style={{
                   backgroundColor: dataLabels[keys[index]].color,
