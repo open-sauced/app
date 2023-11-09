@@ -7,7 +7,7 @@ import Checkbox from "components/atoms/Checkbox/checkbox";
 
 interface ContributorListTableHeadersProps {
   selected?: boolean;
-  handleOnSelectAllContributor?: (contributor: any) => void;
+  handleOnSelectAllContributor?: (checked: boolean) => void;
 }
 
 const ContributorListTableHeaders = ({ selected, handleOnSelectAllContributor }: ContributorListTableHeadersProps) => {
@@ -20,7 +20,6 @@ const ContributorListTableHeaders = ({ selected, handleOnSelectAllContributor }:
       <div className="flex justify-between gap-2 px-2 py-4 rounded-t-lg md:hidden bg-light-slate-3">
         {handleOnSelectAllContributor && (
           <Checkbox
-            checked={selected ? true : false}
             onCheckedChange={handleOnSelectAllContributor}
             className={`${"border-orange-500 hover:bg-orange-600"}`}
           />
@@ -36,7 +35,6 @@ const ContributorListTableHeaders = ({ selected, handleOnSelectAllContributor }:
       <div className="hidden gap-6 px-6 py-4 border rounded-t-lg md:flex bg-light-slate-3">
         {handleOnSelectAllContributor && (
           <Checkbox
-            checked={selected ? true : false}
             onCheckedChange={handleOnSelectAllContributor}
             className={`${"border-orange-500 hover:bg-orange-600"}`}
           />
