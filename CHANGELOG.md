@@ -5,6 +5,76 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.75.0-beta.6](https://github.com/open-sauced/insights/compare/v1.75.0-beta.5...v1.75.0-beta.6) (2023-11-09)
+
+
+### 🐛 Bug Fixes
+
+* styling details on chart tooltip ([#2091](https://github.com/open-sauced/insights/issues/2091)) ([f8b432a](https://github.com/open-sauced/insights/commit/f8b432aaee28fcd5575aa09c37c6daed383e265a))
+
+## [1.75.0-beta.5](https://github.com/open-sauced/insights/compare/v1.75.0-beta.4...v1.75.0-beta.5) (2023-11-09)
+
+
+### 🐛 Bug Fixes
+
+* stats appear in tooltips now for most active contributors graph ([7e0200f](https://github.com/open-sauced/insights/commit/7e0200fb1371d9e2c7ca5c13ed6e1f989fbcf1b3))
+* stats appear in tooltips now for most active contributors graph ([#2081](https://github.com/open-sauced/insights/issues/2081)) ([747e022](https://github.com/open-sauced/insights/commit/747e0225e05eab193a5c17103fc8cb2539dce7ec))
+
+## [1.75.0-beta.4](https://github.com/open-sauced/insights/compare/v1.75.0-beta.3...v1.75.0-beta.4) (2023-11-09)
+
+
+### 🍕 Features
+
+* show most recent contributions for contributors instead of last 30 days ([#2068](https://github.com/open-sauced/insights/issues/2068)) ([cec0435](https://github.com/open-sauced/insights/commit/cec04356d6601f3f358d0cee3c025e9fdefc026b))
+
+## [1.75.0-beta.3](https://github.com/open-sauced/insights/compare/v1.75.0-beta.2...v1.75.0-beta.3) (2023-11-09)
+
+
+### 🍕 Features
+
+* implemented edit list page ([#2044](https://github.com/open-sauced/insights/issues/2044)) ([7ac402d](https://github.com/open-sauced/insights/commit/7ac402dc84bed81a5dd9b9d3445d1ac3df6b9cbc))
+
+## [1.75.0-beta.2](https://github.com/open-sauced/insights/compare/v1.75.0-beta.1...v1.75.0-beta.2) (2023-11-09)
+
+
+### 🐛 Bug Fixes
+
+* added tooltips on legend for most active contributors graph where data is not available yet ([d6e392c](https://github.com/open-sauced/insights/commit/d6e392ca0125a7ddf124edb29d2d9051d562d311))
+* added tooltips on legend for most active contributors graph where data is not available yet ([#2084](https://github.com/open-sauced/insights/issues/2084)) ([6e27449](https://github.com/open-sauced/insights/commit/6e274497060bf6fed4d517ffce055dbb1e462aa9))
+
+## [1.75.0-beta.1](https://github.com/open-sauced/insights/compare/v1.74.1-beta.7...v1.75.0-beta.1) (2023-11-09)
+
+
+### 🍕 Features
+
+* implement list creation from insights contributors page ([#2005](https://github.com/open-sauced/insights/issues/2005)) ([06ffa5d](https://github.com/open-sauced/insights/commit/06ffa5d299910e37bfb1e025171da642f8981c25))
+
+### [1.74.1-beta.7](https://github.com/open-sauced/insights/compare/v1.74.1-beta.6...v1.74.1-beta.7) (2023-11-09)
+
+
+### 🐛 Bug Fixes
+
+* top contributor is now updated with filters in list graph ([#2080](https://github.com/open-sauced/insights/issues/2080)) ([597ef8f](https://github.com/open-sauced/insights/commit/597ef8f8e77eccbb533896fb9efd7d720c2eff56))
+
+### [1.74.1-beta.6](https://github.com/open-sauced/insights/compare/v1.74.1-beta.5...v1.74.1-beta.6) (2023-11-08)
+
+
+### 🧑‍💻 Code Refactoring
+
+* add a default fallback to switch ([e757841](https://github.com/open-sauced/insights/commit/e7578411f3165088f0823253ec08ab86c7751737))
+* fix a11y for timezone dropdown ([25c6b84](https://github.com/open-sauced/insights/commit/25c6b8432e3d990b08ae51292863028d18507137))
+* fix a11y with textarea ([f3edac6](https://github.com/open-sauced/insights/commit/f3edac60c11a7d64d2d36486879c990e2ec4376e))
+* remove getSocialMediaPlatformName(url) ([c412f7f](https://github.com/open-sauced/insights/commit/c412f7f87c41bb873cba51c590a975987faf37b7))
+* remove platform variable and 'break' statements from switch statement ([a690ad9](https://github.com/open-sauced/insights/commit/a690ad9617d27ad25af43f295ba6fd7168d4e4e8))
+* replace discord label ([b3ad2d5](https://github.com/open-sauced/insights/commit/b3ad2d543ea571955a6964279959c5a1a2a2aa9f))
+* use a switch statement for social media platform detection ([7a11d1e](https://github.com/open-sauced/insights/commit/7a11d1e6e60e2420970484abf70b760eb5ba7e2a))
+
+
+### 🐛 Bug Fixes
+
+* add accessibility features to footer component ([#2038](https://github.com/open-sauced/insights/issues/2038)) ([9e89214](https://github.com/open-sauced/insights/commit/9e8921418dd53a045f416bf2b16a937e308e1e70))
+* Fix Accessibility issues in user's settings page - `user/settings` ([#2050](https://github.com/open-sauced/insights/issues/2050)) ([11bfd19](https://github.com/open-sauced/insights/commit/11bfd19620d5e3a1588efef5460683c7e715e677))
+
 ### [1.74.1-beta.5](https://github.com/open-sauced/insights/compare/v1.74.1-beta.4...v1.74.1-beta.5) (2023-11-08)
 
 

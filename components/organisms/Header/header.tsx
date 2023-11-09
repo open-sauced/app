@@ -6,11 +6,7 @@ interface HeaderProps {
   classNames?: string;
 }
 const Header = ({ children, classNames }: HeaderProps): JSX.Element => {
-  return (
-    <section className={clsx("flex flex-col pt-6 header md:flex-row md:px-16 bg-light-slate-2", classNames)}>
-      {children}
-    </section>
-  );
+  return <section className={clsx("flex flex-col pt-6 header md:flex-row md:px-16", classNames)}>{children}</section>;
 };
 
 export default Header;

@@ -26,7 +26,7 @@ const ToggleSwitch = (props: ToggleSwitchProps): JSX.Element => {
       defaultChecked
       checked={checked}
       onClick={() => handleToggle()}
-      id={name}
+      name={name}
       {...ariaProps}
       className={clsx(
         classNames ?? classNames,
