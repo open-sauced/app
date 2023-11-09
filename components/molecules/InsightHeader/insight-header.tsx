@@ -74,7 +74,7 @@ const InsightHeader = ({ insight, repositories, insightId, isOwner }: InsightHea
         </Button>
         {isOwner && (
           <Link href={`/hub/insights/${insightId}/edit`}>
-            <Button className="text-xs" variant="primary">
+            <Button variant="primary">
               <FaEdit className="mr-2" /> Edit Page
             </Button>
           </Link>
