@@ -5,6 +5,28 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.75.0-beta.2](https://github.com/open-sauced/insights/compare/v1.75.0-beta.1...v1.75.0-beta.2) (2023-11-09)
+
+
+### 🐛 Bug Fixes
+
+* added tooltips on legend for most active contributors graph where data is not available yet ([d6e392c](https://github.com/open-sauced/insights/commit/d6e392ca0125a7ddf124edb29d2d9051d562d311))
+* added tooltips on legend for most active contributors graph where data is not available yet ([#2084](https://github.com/open-sauced/insights/issues/2084)) ([6e27449](https://github.com/open-sauced/insights/commit/6e274497060bf6fed4d517ffce055dbb1e462aa9))
+
+## [1.75.0-beta.1](https://github.com/open-sauced/insights/compare/v1.74.1-beta.7...v1.75.0-beta.1) (2023-11-09)
+
+
+### 🍕 Features
+
+* implement list creation from insights contributors page ([#2005](https://github.com/open-sauced/insights/issues/2005)) ([06ffa5d](https://github.com/open-sauced/insights/commit/06ffa5d299910e37bfb1e025171da642f8981c25))
+
+### [1.74.1-beta.7](https://github.com/open-sauced/insights/compare/v1.74.1-beta.6...v1.74.1-beta.7) (2023-11-09)
+
+
+### 🐛 Bug Fixes
+
+* top contributor is now updated with filters in list graph ([#2080](https://github.com/open-sauced/insights/issues/2080)) ([597ef8f](https://github.com/open-sauced/insights/commit/597ef8f8e77eccbb533896fb9efd7d720c2eff56))
+
 ### [1.74.1-beta.6](https://github.com/open-sauced/insights/compare/v1.74.1-beta.5...v1.74.1-beta.6) (2023-11-08)
 
 
