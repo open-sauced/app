@@ -55,6 +55,7 @@ function generateData() {
   let previousActive = Math.floor(Math.random() * 500);
   let previousNew = Math.floor(Math.random() * 500);
   let previousChurned = Math.floor(Math.random() * 500);
+
   return result.map((date) => {
     const newActive = randomValueCloseToValue(previousActive);
     const newNew = randomValueCloseToValue(previousNew);
@@ -65,10 +66,10 @@ function generateData() {
     previousChurned = newChurned;
 
     return {
-      startTime: date.toString(),
+      time_start: date.toString(),
       active: newActive,
       new: newNew,
-      churned: newChurned,
+      alumni: newChurned,
     };
   });
 }

@@ -14,6 +14,8 @@ import { ContributionsTreemap } from "components/molecules/ContributionsTreemap/
 import { useContributorsByProject } from "lib/hooks/api/useContributorsByProject";
 import { useContributionsByProject } from "lib/hooks/api/useContributionsByProject";
 import { getGraphColorPalette } from "lib/utils/color-utils";
+import ContributionsEvolutionByType from "components/molecules/ContributionsEvolutionByTypeCard/contributions-evolution-by-type-card";
+import useContributionsEvolutionByType from "lib/hooks/api/useContributionsByEvolutionType";
 
 interface ContributorListPageProps {
   list?: DBList;
@@ -121,6 +123,12 @@ const ListActivityPage = ({ list, numberOfContributors, isError, activityData }:
           }),
   };
 
+  const {
+    data: evolutionData,
+    isError: evolutionError,
+    isLoading: isLoadingEvolution,
+  } = useContributionsEvolutionByType({ listId: list!.id, range });
+
   return (
     <ListPageLayout list={list} numberOfContributors={numberOfContributors} isOwner={isOwner} setRange={setRange}>
       {isError ? (
@@ -145,6 +153,7 @@ const ListActivityPage = ({ list, numberOfContributors, isError, activityData }:
             data={treemapData}
             color={getGraphColorPalette()}
           />
+          <ContributionsEvolutionByType data={evolutionData} isLoading={isLoadingEvolution} />
         </div>
       )}
     </ListPageLayout>
