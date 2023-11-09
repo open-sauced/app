@@ -102,7 +102,7 @@ export default function ContributionsEvolutionByType({ data = [], isLoading }: C
           {isLoading ? (
             <div className="loading grid place-content-center" />
           ) : (
-            <div className="mb-3 grid " style={{ height: "auto" }}>
+            <div className="mb-3 grid" style={{ height: "auto" }}>
               <div>
                 <ResponsiveLine
                   data={groupedData}
