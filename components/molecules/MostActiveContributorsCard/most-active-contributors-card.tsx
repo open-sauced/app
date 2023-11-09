@@ -232,21 +232,21 @@ function RowTooltip({
       <RawTooltip.Trigger asChild>{children}</RawTooltip.Trigger>
       <RawTooltip.Portal>
         <RawTooltip.Content sideOffset={-10} align="center" collisionPadding={10} side={"bottom"} avoidCollisions>
-          <div className={clsx("text-xs p-2 rounded shadow-lg bg-white font-light")}>
-            <div className="text-black font-bold mb-1">{contributor.login}</div>
+          <div className="text-sm p-2.5 rounded shadow-lg bg-white font-light w-max">
+            <div className="text-black font-semibold mb-1.5 text-sm">{contributor.login}</div>
             {Object.entries(dataLabelsList)
               .filter(([key]) => labels.includes(key))
               .map(([key, value]) => {
                 const { percentage, stat } = userStats[key as StatKeys];
 
                 return (
-                  <div key={key} className="grid grid-cols-2 gap-2 font-light">
-                    <div className="flex items-center gap-1">
+                  <div key={key} className="grid grid-cols-2 gap-2 font-light mb-1">
+                    <div className="flex items-center gap-1 font text-light-slate-11">
                       <div className="w-3 h-3 rounded-sm" style={{ backgroundColor: value.color }}></div>
                       <div>{value.title}</div>
                     </div>
-                    <div className="grid grid-cols-2 gap-1">
-                      <span>%{percentage}</span>
+                    <div className="grid grid-cols-2 gap-1 text-right">
+                      <span>{percentage}%</span>
                       <span>{stat}</span>
                     </div>
                   </div>
@@ -293,7 +293,7 @@ function GraphRow({
   );
   const userStats = keys.reduce(
     (acc, key) => {
-      const percentage = getWidthPercentage(user[key], user.total_contributions);
+      const percentage = Math.round(getWidthPercentage(user[key], user.total_contributions));
 
       acc[key] = { percentage, stat: user[key] };
 
