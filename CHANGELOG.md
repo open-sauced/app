@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.75.0-beta.5](https://github.com/open-sauced/insights/compare/v1.75.0-beta.4...v1.75.0-beta.5) (2023-11-09)
+
+
+### 🐛 Bug Fixes
+
+* stats appear in tooltips now for most active contributors graph ([7e0200f](https://github.com/open-sauced/insights/commit/7e0200fb1371d9e2c7ca5c13ed6e1f989fbcf1b3))
+* stats appear in tooltips now for most active contributors graph ([#2081](https://github.com/open-sauced/insights/issues/2081)) ([747e022](https://github.com/open-sauced/insights/commit/747e0225e05eab193a5c17103fc8cb2539dce7ec))
+
 ## [1.75.0-beta.4](https://github.com/open-sauced/insights/compare/v1.75.0-beta.3...v1.75.0-beta.4) (2023-11-09)
 
 
