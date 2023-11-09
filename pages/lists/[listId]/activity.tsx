@@ -33,8 +33,8 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     data: { session },
   } = await supabase.auth.getSession();
   const bearerToken = session ? session.access_token : "";
-  const { listId } = ctx.params as { listId: string };
-  const range = 30;
+  const { listId, range: rawRange = "30" } = ctx.params as { listId: string; range: string };
+  const range = Number(rawRange);
   const [
     { data, error: contributorListError },
     { data: list, error },
