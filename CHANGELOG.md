@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.75.0-beta.6](https://github.com/open-sauced/insights/compare/v1.75.0-beta.5...v1.75.0-beta.6) (2023-11-09)
+
+
+### 🐛 Bug Fixes
+
+* styling details on chart tooltip ([#2091](https://github.com/open-sauced/insights/issues/2091)) ([f8b432a](https://github.com/open-sauced/insights/commit/f8b432aaee28fcd5575aa09c37c6daed383e265a))
+
 ## [1.75.0-beta.5](https://github.com/open-sauced/insights/compare/v1.75.0-beta.4...v1.75.0-beta.5) (2023-11-09)
 
 
