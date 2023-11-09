@@ -106,16 +106,15 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
     if (newHighlight && signInRequired) {
       signIn({ provider: "github", options: { redirectTo: `${window.location.origin}/feed?new=${newHighlight}` } });
     }
-
     // no need to create intervals for checking the highlight creation input if there is no new highlight
     if (!newHighlight) {
       return;
     }
 
     let isDesktop = window.innerWidth > 768;
-    const highlightSelector = `${isDesktop ? "" : "mobile-"}highlight-create`;
-    const highlightCreationInput = document.querySelector(highlightSelector) as HTMLInputElement;
+    const highlightSelector = `#${isDesktop ? "" : "mobile-"}highlight-create`;
     let focusOnHighlighCreationInput = setInterval(() => {
+      const highlightCreationInput = document.querySelector(highlightSelector) as HTMLInputElement;
       if (newHighlight && highlightCreationInput) {
         highlightCreationInput.click();
         isDesktop && highlightCreationInput.focus();
