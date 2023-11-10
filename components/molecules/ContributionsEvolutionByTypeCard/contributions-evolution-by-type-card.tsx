@@ -57,6 +57,7 @@ export default function ContributionsEvolutionByType({ data = [], isLoading }: C
    */
 
   const groupedData = useMemo(() => {
+    // Calculates the average at each point in time for each type of contributor
     const averageDataByType = dataTypes.map((type) => {
       const typeData = data.map((datum) => ({
         x: new Date(datum.time_start),
@@ -135,7 +136,7 @@ export default function ContributionsEvolutionByType({ data = [], isLoading }: C
                   }}
                   margin={{ top: 20, right: 40, bottom: 30, left: 40 }}
                   motionConfig="stiff"
-                  curve="monotoneX"
+                  curve="natural"
                   colors={(d) => d.color}
                 />
               </div>
