@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { ResponsiveLine } from "@nivo/line";
 import { format } from "date-fns";
 import Card from "components/atoms/Card/card";
@@ -32,22 +31,7 @@ interface ContributionsEvolutionByTypeProps {
   isLoading: boolean;
 }
 
-const dateFilters = {
-  last7days: "Last 7 days",
-  last30days: "Last 30 days",
-  last3months: "Last 3 months",
-};
-
-const peopleFilters = {
-  all: "All Contributors",
-  active: "Active Contributors",
-  new: "New Contributors",
-  churned: "Churned Contributors",
-};
-
 export default function ContributionsEvolutionByType({ data = [], isLoading }: ContributionsEvolutionByTypeProps) {
-  const [currentPeopleFilter, setCurrentPeopleFilter] = useState<keyof typeof peopleFilters>("all"); // TODO: make this a prop
-
   /*
    Group the data by kind of contributor 'active', 'new', 'churned'
    format it like so:
