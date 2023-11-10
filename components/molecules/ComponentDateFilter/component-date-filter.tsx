@@ -32,7 +32,10 @@ const ComponentDateFilter = ({ setRangeFilter, defaultRange }: ComponentDateFilt
         `}
           direction="top"
         >
-          <div
+          <span className="sr-only">
+            {rangeFormatter(range)} {rangeFormatter(range)}${range === 7 ? "from today" : "from the last commit"}
+          </span>
+          <button
             onClick={() => handleFilterClick(range)}
             className={`px-4 py-1.5 rounded-lg cursor-pointer transition text-light-slate-9 ${
               activeFilter === range && "border text-light-slate-12 bg-light-slate-5"
@@ -40,7 +43,7 @@ const ComponentDateFilter = ({ setRangeFilter, defaultRange }: ComponentDateFilt
             key={index}
           >
             {rangeFormatter(range)}
-          </div>
+          </button>
         </Tooltip>
       ))}
     </div>
