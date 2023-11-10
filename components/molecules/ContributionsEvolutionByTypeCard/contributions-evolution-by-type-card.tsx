@@ -1,5 +1,6 @@
 import { ResponsiveLine } from "@nivo/line";
 import { format } from "date-fns";
+import { useMemo } from "react";
 import Card from "components/atoms/Card/card";
 
 const dataTypes = ["active", "new", "alumni"] as const;
@@ -55,14 +56,33 @@ export default function ContributionsEvolutionByType({ data = [], isLoading }: C
    ]
    */
 
-  const groupedData = dataTypes.map((type) => ({
-    id: dataLabels[type],
-    color: colors[type],
-    data: data.map((datum) => ({
-      x: new Date(datum.time_start),
-      y: datum[type as keyof ContributionEvolutionByTypeDatum],
-    })),
-  }));
+  const groupedData = useMemo(() => {
+    const averageDataByType = dataTypes.map((type) => {
+      const typeData = data.map((datum) => ({
+        x: new Date(datum.time_start),
+        y: datum[type] as number,
+      }));
+
+      const averageDataPoints = [];
+
+      for (let i = 0; i < typeData.length; i++) {
+        const averageY = typeData.slice(0, i + 1).reduce((sum, dataPoint) => sum + dataPoint.y, 0) / (i + 1);
+
+        averageDataPoints.push({
+          x: typeData[i].x,
+          y: averageY,
+        });
+      }
+
+      return {
+        id: dataLabels[type],
+        color: colors[type],
+        data: averageDataPoints,
+      };
+    });
+
+    return averageDataByType;
+  }, [data]);
 
   return (
     <div>
