@@ -114,15 +114,15 @@ const ListsHub: WithPageLayout = () => {
       </div>
 
       <Dialog open={isDeleteOpen}>
-        <DialogContent className="px-2 max-w-[90%] lg:max-w-xl rounded-t-lg pt-2">
+        <DialogContent className="grid grid-cols-1 gap-4 p-4 max-w-[90%] lg:max-w-xl rounded-t-lg">
           <DialogTitle>
             <Title level={3}>Delete List</Title>
           </DialogTitle>
 
           <Text>
             Are you sure you want to delete <span className="font-bold text-light-slate-12">{listNameToDelete}</span>?
+            If you have data on this list that your team is using, they will lose access.
           </Text>
-          <Text>If you have data on this list that your team is using, they will lose access</Text>
           <Text>
             <span className="font-bold text-light-slate-12">This action cannot be undone</span>
           </Text>
