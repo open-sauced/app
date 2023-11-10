@@ -13,7 +13,6 @@ import { calcDistanceFromToday } from "lib/utils/date-utils";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 import LimitSelect from "components/atoms/Select/limit-select";
 
-import ClientOnly from "components/atoms/ClientOnly/client-only";
 import useContributors from "lib/hooks/api/useContributors";
 import { getAvatarByUsername } from "lib/utils/github";
 import { ToggleValue } from "components/atoms/LayoutToggle/layout-toggle";
@@ -23,6 +22,8 @@ import Button from "components/atoms/Button/button";
 import { addListContributor, useFetchAllLists } from "lib/hooks/useList";
 import { Command, CommandGroup, CommandInput, CommandItem } from "components/atoms/Cmd/command";
 import { useToast } from "lib/hooks/useToast";
+
+import ClientOnly from "components/atoms/ClientOnly/client-only";
 import ContributorCard from "../ContributorCard/contributor-card";
 import ContributorTable from "../ContributorsTable/contributors-table";
 
@@ -189,21 +190,19 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
       />
 
       {layout === "grid" ? (
-        <ClientOnly>
-          <div className="grid w-full gap-3 grid-cols-automobile md:grid-cols-autodesktop">
-            {isLoading ? <SkeletonWrapper height={210} radius={12} count={9} /> : ""}
-            {isError ? <>An error occurred!..</> : ""}
-            {contributorArray.map((contributor, index) => (
-              <ContributorCard
-                key={index}
-                className=""
-                contributor={{ ...contributor }}
-                topic={topic}
-                repositories={repositories}
-              />
-            ))}
-          </div>
-        </ClientOnly>
+        <div className="grid w-full gap-3 grid-cols-automobile md:grid-cols-autodesktop">
+          {isLoading ? <SkeletonWrapper height={210} radius={12} count={9} /> : ""}
+          {isError ? <>An error occurred!..</> : ""}
+          {contributorArray.map((contributor, index) => (
+            <ContributorCard
+              key={index}
+              className=""
+              contributor={{ ...contributor }}
+              topic={topic}
+              repositories={repositories}
+            />
+          ))}
+        </div>
       ) : (
         <div className="lg:min-w-[1150px]">
           <ContributorListTableHeaders handleOnSelectAllContributor={onSelectAllContributors} />
