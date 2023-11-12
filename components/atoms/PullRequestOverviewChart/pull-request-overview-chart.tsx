@@ -10,24 +10,29 @@ const PullRequestOverviewChartBar: React.FC<PullRequestOverviewChartBarProps & R
   type,
   ...event
 }) => {
+  const getBarColor = (type: string) => {
+    switch (type) {
+      case "open":
+        return "bg-light-grass-9";
+      case "merged":
+        return "bg-purple-600";
+      case "closed":
+        return "bg-light-red-9";
+      case "draft":
+        return "bg-light-slate-9";
+      default:
+        return "";
+    }
+  };
+
   return (
     <div
       {...event}
       className={`
-        ${
-          type === "open"
-            ? "bg-light-grass-9"
-            : type === "merged"
-            ? "bg-purple-600"
-            : type === "closed"
-            ? "bg-light-red-9"
-            : type === "draft"
-            ? "bg-light-slate-9"
-            : ""
-        }
-    ${percent === 0 && "hidden"}
+        ${getBarColor(type!)}
+        ${percent === 0 ? "hidden" : "block"}
         transition-all shrink-0 duration-500 ease-in-out rounded-full`}
-      style={{ width: `${percent}%` }}
+      style={{ width: `${Math.round(percent!)}%` }}
     ></div>
   );
 };
@@ -58,40 +63,40 @@ const PullRequestOverviewChart: React.FC<PullRequestOverviewChartProps> = ({
   return (
     <div className="w-full h-1.5 flex gap-0.5 bg-light-slate-2 rounded-full overflow-hidden">
       {/* Open */}
-      {open && open > 0 && (
+      {open && open > 0 ? (
         <PullRequestOverviewChartBar
           onMouseOver={() => setOverviewDetails({ type: "open", percent: open })}
           percent={getPercentage(open)}
           type="open"
         />
-      )}
+      ) : null}
 
       {/* Merged */}
-      {merged && merged > 0 && (
+      {merged && merged > 0 ? (
         <PullRequestOverviewChartBar
           onMouseOver={() => setOverviewDetails({ type: "merged", percent: merged })}
           percent={getPercentage(merged)}
           type="merged"
         />
-      )}
+      ) : null}
 
       {/* Closed */}
-      {closed && closed > 0 && (
+      {closed && closed > 0 ? (
         <PullRequestOverviewChartBar
           onMouseOver={() => setOverviewDetails({ type: "closed", percent: closed })}
           percent={getPercentage(closed)}
           type="closed"
         />
-      )}
+      ) : null}
 
       {/* Draft */}
-      {draft && draft > 0 && (
+      {draft && draft > 0 ? (
         <PullRequestOverviewChartBar
           onMouseOver={() => setOverviewDetails({ type: "draft", percent: draft })}
           percent={getPercentage(draft)}
           type="draft"
         />
-      )}
+      ) : null}
     </div>
   );
 };
