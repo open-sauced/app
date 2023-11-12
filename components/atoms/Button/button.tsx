@@ -35,7 +35,7 @@ const Button = React.forwardRef<HTMLElement, ButtonsProps>(
       props.variant === "outline" && styles.outline,
       props.variant === "link" && styles.link,
       disabled && "bg-light-orange-7 hover:bg-light-orange-7 border-none pointer-events-none",
-      "inline-flex text-sm font-semibold tracking-tight border py-2 px-4 rounded-md focus-visible:border-orange-500 focus:outline-none focus-visible:ring focus-visible:ring-orange-200 whitespace-nowrap",
+      "items-center inline-flex text-sm font-semibold tracking-tight border py-2 px-4 rounded-md focus-visible:border-orange-500 focus:outline-none focus-visible:ring focus-visible:ring-orange-200 whitespace-nowrap",
       className
     );
 

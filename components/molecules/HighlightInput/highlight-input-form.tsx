@@ -534,7 +534,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
         }}
         open={isDivFocused}
       >
-        <DialogContent className="p-4 w-full md:w-[33rem] xs:w-[25rem] max-h-[80vh]">
+        <DialogContent className="p-4 w-full md:w-[40rem] xs:w-96 max-h-[80vh] overflow-y-scroll">
           <DialogHeader>
             <DialogTitle>Post a highlight</DialogTitle>
           </DialogHeader>
@@ -636,10 +636,10 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
             </div>
 
             {highlightLink && isDivFocused && highlightLink.includes("github") && (
-              <GhOpenGraphImg className="max-sm:hidden lg:w-[33vw] md:w-[50vw]" githubLink={highlightLink} />
+              <GhOpenGraphImg githubLink={highlightLink} />
             )}
             {highlightLink && isDivFocused && highlightLink.includes("dev.to") && (
-              <DevToSocialImg className="max-sm:hidden lg:w-[33vw] md:w-[50vw]" blogLink={highlightLink} />
+              <DevToSocialImg blogLink={highlightLink} />
             )}
 
             <Button
