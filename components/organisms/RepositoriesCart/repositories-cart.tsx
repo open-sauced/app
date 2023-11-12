@@ -59,7 +59,7 @@ const RepositoriesCart = ({
       <Title className="!text-1xl !leading-none mb-4 xl:mt-10 font-medium" level={4}>
         Repositories Added
       </Title>
-      <div className="flex flex-col w-full gap-2 p-6 border rounded-lg  relative">
+      <div className="flex flex-col w-full gap-2 p-6 border rounded-lg">
         {/* Empty state of Cart */}
         <div className="max-h-80 overflow-scroll">
           {cartItems.length > 0 && hasItems ? (
