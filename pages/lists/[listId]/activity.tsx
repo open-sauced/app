@@ -28,6 +28,7 @@ interface ContributorListPageProps {
     topContributor: ContributorStat;
     projectData: DbProjectContributions[];
   };
+  isOwner: boolean;
 }
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
@@ -70,6 +71,8 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     };
   }
 
+  const userId = Number(session?.user.user_metadata.sub);
+
   return {
     props: {
       list,
@@ -80,14 +83,14 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
         topContributor: mostActiveData?.data?.length ? mostActiveData.data[0] : null,
         projectData: projectData ?? [],
       },
+      isOwner: list && list.user_id === userId,
     },
   };
 };
 
-const ListActivityPage = ({ list, numberOfContributors, isError, activityData }: ContributorListPageProps) => {
+const ListActivityPage = ({ list, numberOfContributors, isError, activityData, isOwner }: ContributorListPageProps) => {
   const router = useRouter();
   const range = router.query.range as string;
-  const isOwner = false;
   const {
     data: contributorStats,
     isLoading,
