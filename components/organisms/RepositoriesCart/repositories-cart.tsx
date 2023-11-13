@@ -61,7 +61,7 @@ const RepositoriesCart = ({
       </Title>
       <div className="flex flex-col w-full gap-2 p-6 border rounded-lg">
         {/* Empty state of Cart */}
-        <div className="max-h-80 overflow-scroll">
+        <div className="max-h-80 overflow-scroll flex flex-col gap-2">
           {cartItems.length > 0 && hasItems ? (
             cartItems.map((item, index) => (
               <div className="flex flex-col w-full" key={`${index}/${Math.random()}`}>
