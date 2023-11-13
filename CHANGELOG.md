@@ -5,6 +5,33 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.76.0-beta.5](https://github.com/open-sauced/insights/compare/v1.76.0-beta.4...v1.76.0-beta.5) (2023-11-13)
+
+
+### 🐛 Bug Fixes
+
+* added Edit List button to all list pages ([a6a38f4](https://github.com/open-sauced/insights/commit/a6a38f465de9085870dcea7c182e1ecf61c57b90))
+* added Edit List button to all list pages ([#2125](https://github.com/open-sauced/insights/issues/2125)) ([284fa4a](https://github.com/open-sauced/insights/commit/284fa4a01e48f6ccb95ada380e3172533d9c9a4a))
+
+## [1.76.0-beta.4](https://github.com/open-sauced/insights/compare/v1.76.0-beta.3...v1.76.0-beta.4) (2023-11-13)
+
+
+### 🐛 Bug Fixes
+
+* replace hardcoded px with tailwind class ([6346cb7](https://github.com/open-sauced/insights/commit/6346cb77fca782db7010541ecc36ecfc9ff8a347))
+
+
+### 🧑‍💻 Code Refactoring
+
+* Replace hardcoded px value with appropriate tailwind class in Dropdown component  ([#2113](https://github.com/open-sauced/insights/issues/2113)) ([abf3380](https://github.com/open-sauced/insights/commit/abf338088412a6bef403230e55cf7dab02161b21))
+
+## [1.76.0-beta.3](https://github.com/open-sauced/insights/compare/v1.76.0-beta.2...v1.76.0-beta.3) (2023-11-13)
+
+
+### 🍕 Features
+
+* implemented the Contributions by type of contributor graph for the list activity page ([#2101](https://github.com/open-sauced/insights/issues/2101)) ([0088c23](https://github.com/open-sauced/insights/commit/0088c23cd614a8c016cc0d1f4ad84adaf5198cef))
+
 ## [1.76.0-beta.2](https://github.com/open-sauced/insights/compare/v1.76.0-beta.1...v1.76.0-beta.2) (2023-11-13)
 
 
