@@ -59,8 +59,8 @@ const ListHeader = ({ name, isPublic, listId, isOwner, numberOfContributors }: L
           <FiCopy className="mt-1 mr-2" /> Share
         </Button>
         {isOwner && (
-          <Link href={`/hub/lists/${listId}/edit`}>
-            <Button className="text-xs" variant="primary">
+          <Link href={`/lists/${listId}/edit`}>
+            <Button variant="primary">
               <FaEdit className="mr-2" /> Edit List
             </Button>
           </Link>

@@ -209,9 +209,9 @@ const HighlightCard: React.FC<HighlightCardProps> = ({
                         ? "bg-green-500"
                         : percentage && percentage > 30
                         ? "bg-yellow-500"
-                        : "bg-red-500"
+                        : "bg-purple-500"
                       : percentage && percentage > 70
-                      ? "bg-red-500"
+                      ? "bg-purple-500"
                       : percentage && percentage > 30
                       ? "bg-yellow-500"
                       : "bg-green-500"
