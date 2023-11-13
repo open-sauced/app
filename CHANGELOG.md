@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.76.0-beta.3](https://github.com/open-sauced/insights/compare/v1.76.0-beta.2...v1.76.0-beta.3) (2023-11-13)
+
+
+### 🍕 Features
+
+* implemented the Contributions by type of contributor graph for the list activity page ([#2101](https://github.com/open-sauced/insights/issues/2101)) ([0088c23](https://github.com/open-sauced/insights/commit/0088c23cd614a8c016cc0d1f4ad84adaf5198cef))
+
 ## [1.76.0-beta.2](https://github.com/open-sauced/insights/compare/v1.76.0-beta.1...v1.76.0-beta.2) (2023-11-13)
 
 
