@@ -5,7 +5,6 @@ import formatDistanceToNowStrict from "date-fns/formatDistanceToNowStrict";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/solid";
 import Sparkline from "components/atoms/Sparkline/sparkline";
 import getPullRequestsToDays from "lib/utils/get-prs-to-days";
-import { truncateString } from "lib/utils/truncate-string";
 import { classNames } from "components/organisms/RepositoriesTable/repositories-table";
 
 import useContributorPullRequests from "lib/hooks/api/useContributorPullRequests";
@@ -95,8 +94,11 @@ const ContributorListTableRow = ({
           <div className="w-[34%] text-normal text-light-slate-11  h-full">
             <div className="flex flex-col gap-x-3">
               <p>{getLastContributionDate(mergedPrs)}</p>{" "}
-              <p className="text-sm font-normal truncate text-light-slate-9 md:hidden">
-                {truncateString(user?.company || getLastContributedRepo(data), 20)}
+              <p
+                className="text-sm font-normal truncate whitespace-nowrap overflow-hidden overflow-ellipsis text-light-slate-9 md:hidden"
+                title={user?.company || getLastContributedRepo(data)}
+              >
+                {user?.company || getLastContributedRepo(data)}
               </p>
             </div>
           </div>
@@ -179,8 +181,11 @@ const ContributorListTableRow = ({
         <div className={clsx("flex-1 lg:max-w-[130px]  flex text-light-slate-11 justify-center ")}>
           <div className="flex flex-col">
             <p>{contributor.author_login ? getLastContributionDate(mergedPrs) : "-"}</p>{" "}
-            <p className="hidden text-sm font-normal md:inline-flex text-light-slate-9">
-              {truncateString(user?.company || getLastContributedRepo(data), 20)}
+            <p
+              className="hidden whitespace-nowrap overflow-hidden overflow-ellipsis text-sm font-normal md:inline-flex text-light-slate-9"
+              title={user?.company || getLastContributedRepo(data)}
+            >
+              {user?.company || getLastContributedRepo(data)}
             </p>
           </div>
         </div>
