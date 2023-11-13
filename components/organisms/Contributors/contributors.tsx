@@ -17,12 +17,13 @@ import useContributors from "lib/hooks/api/useContributors";
 import { getAvatarByUsername } from "lib/utils/github";
 import { ToggleValue } from "components/atoms/LayoutToggle/layout-toggle";
 import ContributorListTableHeaders from "components/molecules/ContributorListTableHeader/contributor-list-table-header";
-import ClientOnly from "components/atoms/ClientOnly/client-only";
 import { Popover, PopoverContent, PopoverTrigger } from "components/molecules/Popover/popover";
 import Button from "components/atoms/Button/button";
 import { addListContributor, useFetchAllLists } from "lib/hooks/useList";
 import { Command, CommandGroup, CommandInput, CommandItem } from "components/atoms/Cmd/command";
 import { useToast } from "lib/hooks/useToast";
+
+import ClientOnly from "components/atoms/ClientOnly/client-only";
 import ContributorCard from "../ContributorCard/contributor-card";
 import ContributorTable from "../ContributorsTable/contributors-table";
 
@@ -33,14 +34,14 @@ interface ContributorProps {
 const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
   const router = useRouter();
   const topic = router.query.pageId as string;
+
+  const { data, meta, setPage, setLimit, isError, isLoading } = useContributors(10, repositories);
   const { toast } = useToast();
-  const store = useStore();
   const range = useStore((state) => state.range);
   const [layout, setLayout] = useState<ToggleValue>("list");
   const [selectedContributors, setSelectedContributors] = useState<DbPRContributor[]>([]);
   const [selectedListIds, setSelectedListIds] = useState<string[]>([]);
   const [popoverOpen, setPopoverOpen] = useState(false);
-  const { data, meta, setPage, setLimit, isError, isLoading } = useContributors(10, repositories, range);
 
   const contributors = data.map((pr) => {
     return {
@@ -183,8 +184,6 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
         updateLimit={setLimit}
         metaInfo={meta}
         entity="Contributors"
-        range={range}
-        setRangeFilter={store.updateRange}
         title="Contributors"
         layout={layout}
         onLayoutToggle={() => setLayout((prev) => (prev === "list" ? "grid" : "list"))}
@@ -201,13 +200,12 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
               contributor={{ ...contributor }}
               topic={topic}
               repositories={repositories}
-              range={range}
             />
           ))}
         </div>
       ) : (
         <div className="lg:min-w-[1150px]">
-          <ContributorListTableHeaders handleOnSelectAllContributor={onSelectAllContributors} range={range} />
+          <ContributorListTableHeaders handleOnSelectAllContributor={onSelectAllContributors} />
           {selectedContributors.length > 0 && (
             <div className="border px-4 py-2 flex justify-between items-center ">
               <div className="text-slate-600">{selectedContributors.length} Contributors selected</div>

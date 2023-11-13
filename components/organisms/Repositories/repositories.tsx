@@ -9,7 +9,6 @@ import TableHeader from "components/molecules/TableHeader/table-header";
 
 import useRepositories from "lib/hooks/api/useRepositories";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
-import useStore from "lib/store";
 
 import Checkbox from "components/atoms/Checkbox/checkbox";
 import Button from "components/atoms/Button/button";
@@ -27,8 +26,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
   const { pageId, toolName, selectedFilter, userOrg } = router.query;
   const username = userOrg ? user?.user_metadata.user_name : undefined;
   const topic = pageId as string;
-  const store = useStore();
-  const range = useStore((state) => state.range);
+
   const {
     data: repoListData,
     meta: repoMeta,
@@ -36,7 +34,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
     isLoading: repoListIsLoading,
     setPage,
     setLimit,
-  } = useRepositories(repositories, range);
+  } = useRepositories(repositories);
   const filteredRepoNotIndexed = selectedFilter && !repoListIsLoading && !repoListIsError && repoListData.length === 0;
   const [selectedRepos, setSelectedRepos] = useState<DbRepo[]>([]);
 
@@ -97,8 +95,6 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
         onSearch={(e) => handleOnSearch(e)}
         metaInfo={repoMeta}
         entity="repos"
-        range={range}
-        setRangeFilter={store.updateRange}
         title="Repositories"
       />
       <div className="flex flex-col w-full overflow-x-auto border rounded-lg">

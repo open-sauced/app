@@ -38,7 +38,7 @@ const Contributor: WithPageLayout<ContributorSSRProps> = ({ username, user, ogIm
     topic: "*",
     repoIds: [],
     limit: 30,
-    range: 30,
+    range: "30",
     mostRecent: true,
   });
   const isError = contributorError;
