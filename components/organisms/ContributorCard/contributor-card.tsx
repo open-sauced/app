@@ -26,7 +26,7 @@ interface ContributorCardProps {
   contributor: ContributorObject;
   topic: string;
   repositories?: number[];
-  range?: number;
+  range?: string;
 }
 
 const ContributorCard = ({ className, contributor, topic, repositories, range }: ContributorCardProps) => {
