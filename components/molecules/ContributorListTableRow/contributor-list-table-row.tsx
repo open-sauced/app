@@ -20,7 +20,7 @@ interface ContributorListTableRow {
   topic: string;
   selected?: boolean;
   handleOnSelectContributor?: (state: boolean, contributor: DbPRContributor) => void;
-  range: number;
+  range: string;
 }
 
 function getLastContributionDate(contributions: DbRepoPR[]) {

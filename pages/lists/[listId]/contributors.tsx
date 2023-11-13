@@ -1,10 +1,13 @@
 import { GetServerSidePropsContext } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 import ListPageLayout from "layouts/lists";
 import { fetchApiData, validateListPath } from "helpers/fetchApiData";
 import Error from "components/atoms/Error/Error";
 import { convertToContributors, useContributorsList } from "lib/hooks/api/useContributorList";
 import ContributorsList from "components/organisms/ContributorsList/contributors-list";
+import { setQueryParams } from "lib/utils/query-params";
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const supabase = createPagesServerClient(ctx);
@@ -54,17 +57,24 @@ interface ContributorListPageProps {
 const ContributorsListPage = ({ list, initialData, isError }: ContributorListPageProps) => {
   // create useIsOwner(list?.user_id, userId) once we're ready to implement this.
   const isOwner = false;
+  const router = useRouter();
+  const { range } = router.query;
+
+  useEffect(() => {
+    if (!range) {
+      setQueryParams({ range: "30" });
+    }
+  }, [range]);
   const {
     isLoading,
     setPage,
     setLimit,
     setRange,
-    range,
     data: { data: contributors, meta },
-  } = useContributorsList({ listId: list?.id, initialData });
+  } = useContributorsList({ listId: list?.id, initialData, defaultRange: range as string });
 
   return (
-    <ListPageLayout list={list} numberOfContributors={meta.itemCount} isOwner={isOwner} setRange={setRange}>
+    <ListPageLayout list={list} numberOfContributors={meta.itemCount} isOwner={isOwner}>
       {isError ? (
         <Error errorMessage="Unable to load list of contributors" />
       ) : (
@@ -74,7 +84,7 @@ const ContributorsListPage = ({ list, initialData, isError }: ContributorListPag
           isLoading={isLoading}
           setPage={setPage}
           setLimit={setLimit}
-          range={range}
+          range={range as string}
         />
       )}
     </ListPageLayout>
