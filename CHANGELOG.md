@@ -5,6 +5,45 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.76.0-beta.4](https://github.com/open-sauced/insights/compare/v1.76.0-beta.3...v1.76.0-beta.4) (2023-11-13)
+
+
+### 🐛 Bug Fixes
+
+* replace hardcoded px with tailwind class ([6346cb7](https://github.com/open-sauced/insights/commit/6346cb77fca782db7010541ecc36ecfc9ff8a347))
+
+
+### 🧑‍💻 Code Refactoring
+
+* Replace hardcoded px value with appropriate tailwind class in Dropdown component  ([#2113](https://github.com/open-sauced/insights/issues/2113)) ([abf3380](https://github.com/open-sauced/insights/commit/abf338088412a6bef403230e55cf7dab02161b21))
+
+## [1.76.0-beta.3](https://github.com/open-sauced/insights/compare/v1.76.0-beta.2...v1.76.0-beta.3) (2023-11-13)
+
+
+### 🍕 Features
+
+* implemented the Contributions by type of contributor graph for the list activity page ([#2101](https://github.com/open-sauced/insights/issues/2101)) ([0088c23](https://github.com/open-sauced/insights/commit/0088c23cd614a8c016cc0d1f4ad84adaf5198cef))
+
+## [1.76.0-beta.2](https://github.com/open-sauced/insights/compare/v1.76.0-beta.1...v1.76.0-beta.2) (2023-11-13)
+
+
+### 🍕 Features
+
+* move range filter to global header ([#2047](https://github.com/open-sauced/insights/issues/2047)) ([1037aef](https://github.com/open-sauced/insights/commit/1037aefc26cd9a972305973cff9d6f2acc114005))
+
+
+### 🐛 Bug Fixes
+
+* fixed styling of delete list modal ([#2106](https://github.com/open-sauced/insights/issues/2106)) ([d7d7048](https://github.com/open-sauced/insights/commit/d7d70487711f50a505f01f4f82e5f46a066193ec))
+* insights edit repo list limit ([#2119](https://github.com/open-sauced/insights/issues/2119)) ([c81e8bb](https://github.com/open-sauced/insights/commit/c81e8bbc8604fcf0838028883aa5eb4852234893))
+
+## [1.76.0-beta.1](https://github.com/open-sauced/insights/compare/v1.75.1-beta.1...v1.76.0-beta.1) (2023-11-13)
+
+
+### 🍕 Features
+
+* select component growth enabled ([#1762](https://github.com/open-sauced/insights/issues/1762)) ([3303054](https://github.com/open-sauced/insights/commit/33030548ed11a1410a56788eec05de98e46436a7))
+
 ### [1.75.1-beta.1](https://github.com/open-sauced/insights/compare/v1.75.0...v1.75.1-beta.1) (2023-11-10)
 
 

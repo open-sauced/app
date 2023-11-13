@@ -16,13 +16,13 @@ interface ContributorsListProps {
   meta: Meta;
   setPage: (page: number) => void;
   setLimit: (limit: number) => void;
-  range: number;
+  range: string;
 }
 
 interface ContributorCardListProps {
   contributors: DbPRContributor[];
   topic: string;
-  range: number;
+  range: string;
 }
 
 const ContributorCardList = ({ contributors = [], topic, range }: ContributorCardListProps) => {
@@ -61,12 +61,11 @@ const ContributorsList = ({ contributors, isLoading, meta, setPage, setLimit, ra
         updateLimit={setLimit}
         layout={layout}
         onLayoutToggle={setLayout}
-        range={range}
       />
       <ClientOnly>
         {layout !== "grid" ? (
           <>
-            <ContributorListTableHeaders range={range} />
+            <ContributorListTableHeaders />
             <ContributorTable loading={isLoading} topic={"*"} contributors={contributors} range={range} />
           </>
         ) : (

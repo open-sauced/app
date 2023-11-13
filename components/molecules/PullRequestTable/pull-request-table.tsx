@@ -19,7 +19,7 @@ interface CardTableProps {
   repositories?: number[];
   limit?: number;
   isHoverCard?: boolean;
-  range?: number;
+  range?: string;
 }
 
 const PullRequestTable = ({
