@@ -1,4 +1,9 @@
 import React from "react";
+import { useRouter } from "next/router";
+
+import { setQueryParams } from "lib/utils/query-params";
+
+import ComponentDateFilter from "components/molecules/ComponentDateFilter/component-date-filter";
 import NavItem from "./nav-item";
 
 type toolListArray = {
@@ -15,6 +20,9 @@ interface NavProps {
 }
 
 const Nav: React.FC<NavProps> = ({ toolList, selectedTool = "dashboard", selectedFilter, filterName, username }) => {
+  const router = useRouter();
+  const { range } = router.query;
+
   return (
     <nav
       role="tablist"
@@ -45,6 +53,16 @@ const Nav: React.FC<NavProps> = ({ toolList, selectedTool = "dashboard", selecte
           />
         </div>
       ))}
+      {range ? (
+        <div className="ml-auto hidden md:block">
+          <ComponentDateFilter
+            setRangeFilter={(selectedRange) => {
+              setQueryParams({ range: `${selectedRange}` });
+            }}
+            defaultRange={Number(range)}
+          />
+        </div>
+      ) : null}
     </nav>
   );
 };

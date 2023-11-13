@@ -74,7 +74,7 @@ const ContributorProfilePage = ({
   });
 
   const { user: loggedInUser, signIn } = useSupabaseAuth();
-  const { chart, repoList } = useContributorPullRequestsChart(githubName, "*", repositories, 30, true);
+  const { chart, repoList } = useContributorPullRequestsChart(githubName, "*", repositories, "30", true);
 
   const prsMergedPercentage = getPercent(prTotal, prMerged || 0);
   const { data: Follower, isError: followError, follow, unFollow } = useFollowUser(user?.login || "");
