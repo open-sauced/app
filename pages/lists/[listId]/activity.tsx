@@ -15,6 +15,8 @@ import { ContributionsTreemap } from "components/molecules/ContributionsTreemap/
 import { useContributorsByProject } from "lib/hooks/api/useContributorsByProject";
 import { useContributionsByProject } from "lib/hooks/api/useContributionsByProject";
 import { getGraphColorPalette } from "lib/utils/color-utils";
+import ContributionsEvolutionByType from "components/molecules/ContributionsEvolutionByTypeCard/contributions-evolution-by-type-card";
+import useContributionsEvolutionByType from "lib/hooks/api/useContributionsByEvolutionType";
 import { setQueryParams } from "lib/utils/query-params";
 
 interface ContributorListPageProps {
@@ -84,7 +86,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 
 const ListActivityPage = ({ list, numberOfContributors, isError, activityData }: ContributorListPageProps) => {
   const router = useRouter();
-  const { range } = router.query;
+  const range = router.query.range as string;
   const isOwner = false;
   const {
     data: contributorStats,
@@ -100,16 +102,11 @@ const ListActivityPage = ({ list, numberOfContributors, isError, activityData }:
     }
   }, [range]);
 
-  const {
-    setRepoId,
-    error,
-    data: projectContributionsByUser,
-    repoId,
-  } = useContributorsByProject(list!.id, range as string);
+  const { setRepoId, error, data: projectContributionsByUser, repoId } = useContributorsByProject(list!.id, range);
 
   const { data: projectData, error: projectDataError } = useContributionsByProject({
     listId: list!.id,
-    range: range as string,
+    range,
     initialData: activityData.projectData,
   });
 
@@ -136,12 +133,18 @@ const ListActivityPage = ({ list, numberOfContributors, isError, activityData }:
           }),
   };
 
+  const {
+    data: evolutionData,
+    isError: evolutionError,
+    isLoading: isLoadingEvolution,
+  } = useContributionsEvolutionByType({ listId: list!.id, range });
+
   return (
     <ListPageLayout list={list} numberOfContributors={numberOfContributors} isOwner={isOwner}>
       {isError ? (
         <Error errorMessage="Unable to load list activity" />
       ) : (
-        <div className="lg:grid lg:grid-cols-2 lg:grid-rows-2 gap-4 flex flex-col">
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
           <ClientOnly>
             {/* TODO: Remove client only once server data is being used in the hook on initial load client-side */}
             <MostActiveContributorsCard
@@ -160,6 +163,7 @@ const ListActivityPage = ({ list, numberOfContributors, isError, activityData }:
             data={treemapData}
             color={getGraphColorPalette()}
           />
+          <ContributionsEvolutionByType data={evolutionData} isLoading={isLoadingEvolution} />
         </div>
       )}
     </ListPageLayout>
