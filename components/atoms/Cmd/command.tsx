@@ -52,26 +52,6 @@ const CommandInput = React.forwardRef<
 
 CommandInput.displayName = CommandPrimitive.Input.displayName;
 
-const CommandList = React.forwardRef<
-  React.ElementRef<typeof CommandPrimitive.List>,
-  React.ComponentPropsWithoutRef<typeof CommandPrimitive.List>
->(({ className, ...props }, ref) => (
-  <CommandPrimitive.List
-    ref={ref}
-    className={clsx("max-h-72 overflow-y-auto overflow-x-hidden", className)}
-    {...props}
-  />
-));
-
-CommandList.displayName = CommandPrimitive.List.displayName;
-
-const CommandEmpty = React.forwardRef<
-  React.ElementRef<typeof CommandPrimitive.Empty>,
-  React.ComponentPropsWithoutRef<typeof CommandPrimitive.Empty>
->((props, ref) => <CommandPrimitive.Empty ref={ref} className="py-6 text-sm text-center" {...props} />);
-
-CommandEmpty.displayName = CommandPrimitive.Empty.displayName;
-
 const CommandGroup = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive.Group>,
   React.ComponentPropsWithoutRef<typeof CommandPrimitive.Group>
@@ -117,14 +97,4 @@ const CommandShortcut = ({ className, ...props }: React.HTMLAttributes<HTMLSpanE
 };
 CommandShortcut.displayName = "CommandShortcut";
 
-export {
-  Command,
-  CommandDialog,
-  CommandInput,
-  CommandList,
-  CommandEmpty,
-  CommandGroup,
-  CommandItem,
-  CommandShortcut,
-  CommandSeparator,
-};
+export { Command, CommandDialog, CommandInput, CommandGroup, CommandItem, CommandShortcut, CommandSeparator };
