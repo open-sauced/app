@@ -1,7 +1,8 @@
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { GetServerSidePropsContext } from "next";
-import { useState } from "react";
 import { NodeMouseEventHandler } from "@nivo/treemap";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 import Error from "components/atoms/Error/Error";
 import { fetchApiData, validateListPath } from "helpers/fetchApiData";
 import ListPageLayout from "layouts/lists";
@@ -16,6 +17,7 @@ import { useContributionsByProject } from "lib/hooks/api/useContributionsByProje
 import { getGraphColorPalette } from "lib/utils/color-utils";
 import ContributionsEvolutionByType from "components/molecules/ContributionsEvolutionByTypeCard/contributions-evolution-by-type-card";
 import useContributionsEvolutionByType from "lib/hooks/api/useContributionsByEvolutionType";
+import { setQueryParams } from "lib/utils/query-params";
 
 interface ContributorListPageProps {
   list?: DBList;
@@ -35,8 +37,9 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     data: { session },
   } = await supabase.auth.getSession();
   const bearerToken = session ? session.access_token : "";
-  const { listId } = ctx.params as { listId: string };
-  const range = 30;
+  const { listId, range: rawRange } = ctx.params as { listId: string; range: string };
+
+  const range = rawRange ? Number(rawRange) : "30";
   const [
     { data, error: contributorListError },
     { data: list, error },
@@ -82,7 +85,8 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 };
 
 const ListActivityPage = ({ list, numberOfContributors, isError, activityData }: ContributorListPageProps) => {
-  const [range, setRange] = useState(30);
+  const router = useRouter();
+  const range = router.query.range as string;
   const isOwner = false;
   const {
     data: contributorStats,
@@ -90,7 +94,13 @@ const ListActivityPage = ({ list, numberOfContributors, isError, activityData }:
     isError: isMostActiveError,
     setContributorType,
     contributorType,
-  } = useMostActiveContributors({ listId: list!.id, initData: activityData.contributorStats.data, range });
+  } = useMostActiveContributors({ listId: list!.id, initData: activityData.contributorStats.data });
+
+  useEffect(() => {
+    if (!range) {
+      setQueryParams({ range: "30" });
+    }
+  }, [range]);
 
   const { setRepoId, error, data: projectContributionsByUser, repoId } = useContributorsByProject(list!.id, range);
 
@@ -130,7 +140,7 @@ const ListActivityPage = ({ list, numberOfContributors, isError, activityData }:
   } = useContributionsEvolutionByType({ listId: list!.id, range });
 
   return (
-    <ListPageLayout list={list} numberOfContributors={numberOfContributors} isOwner={isOwner} setRange={setRange}>
+    <ListPageLayout list={list} numberOfContributors={numberOfContributors} isOwner={isOwner}>
       {isError ? (
         <Error errorMessage="Unable to load list activity" />
       ) : (

@@ -15,7 +15,7 @@ export function getContributorPRUrl(
   topic: string,
   repoIds: number[] = [],
   limit = 8,
-  range = 30,
+  range = "30",
   mostRecent = false
 ) {
   const filterQuery = getFilterQuery(filter);
@@ -53,7 +53,7 @@ interface ContributorPullRequestOptions {
   topic: string;
   repoIds?: number[];
   limit?: number;
-  range?: number;
+  range?: string;
   mostRecent?: boolean;
 }
 
@@ -62,7 +62,7 @@ const useContributorPullRequests = (
     contributor: "",
     topic: "",
     limit: 8,
-    range: 30,
+    range: "30",
     mostRecent: false,
   }
 ) => {

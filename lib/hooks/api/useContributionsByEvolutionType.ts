@@ -11,18 +11,18 @@ import { ContributionEvolutionByTypeDatum } from "components/molecules/Contribut
  */
 const useContributionsEvolutionByType = ({
   listId,
-  range = 30,
+  range = "30",
   defaultContributorType = "all",
 }: {
   listId: string;
-  range: number;
+  range: string;
   defaultContributorType?: ContributorType;
 }) => {
   const [contributorType, setContributorType] = useState<ContributorType>(defaultContributorType);
 
   const query = new URLSearchParams();
   query.set("contributorType", `${contributorType}`);
-  query.set("range", `${range}`);
+  query.set("range", range);
 
   const apiEndpoint = `lists/${listId}/stats/contributions-evolution-by-contributor-type?${query.toString()}`;
 

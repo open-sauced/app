@@ -1,13 +1,11 @@
 import { useRouter } from "next/router";
-import useStore from "lib/store";
 import useRepositories from "./api/useRepositories";
 import useContributors from "./api/useContributors";
 
 const useNav = (repositories: number[] = []) => {
   const router = useRouter();
-  const range = useStore((state) => state.range);
-  const { meta: repoMetaData } = useRepositories(repositories, range);
-  const { meta: conMetaData } = useContributors(10, repositories, range);
+  const { meta: repoMetaData } = useRepositories(repositories);
+  const { meta: conMetaData } = useContributors(10, repositories);
 
   const defaultTools = [
     {
