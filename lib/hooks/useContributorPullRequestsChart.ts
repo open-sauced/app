@@ -9,7 +9,7 @@ const useContributorPullRequestsChart = (
   contributor: string,
   topic: string,
   repoIds: number[] = [],
-  range = 30,
+  range = "30",
   mostRecent = false
 ) => {
   const lineChart = {

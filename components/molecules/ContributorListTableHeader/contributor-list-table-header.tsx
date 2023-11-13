@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import React from "react";
+import { useRouter } from "next/router";
 import TableTitle from "components/atoms/TableTitle/table-title";
 import { classNames } from "components/organisms/RepositoriesTable/repositories-table";
 import Checkbox from "components/atoms/Checkbox/checkbox";
@@ -7,14 +8,12 @@ import Checkbox from "components/atoms/Checkbox/checkbox";
 interface ContributorListTableHeadersProps {
   selected?: boolean;
   handleOnSelectAllContributor?: (checked: boolean) => void;
-  range?: number;
 }
 
-const ContributorListTableHeaders = ({
-  selected,
-  handleOnSelectAllContributor,
-  range = 30,
-}: ContributorListTableHeadersProps) => {
+const ContributorListTableHeaders = ({ selected, handleOnSelectAllContributor }: ContributorListTableHeadersProps) => {
+  const router = useRouter();
+  const { range } = router.query;
+
   return (
     <div className="mt-4">
       {/* Mobile */}

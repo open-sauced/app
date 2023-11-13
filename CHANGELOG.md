@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.76.0-beta.1](https://github.com/open-sauced/insights/compare/v1.75.1-beta.1...v1.76.0-beta.1) (2023-11-13)
+
+
+### 🍕 Features
+
+* select component growth enabled ([#1762](https://github.com/open-sauced/insights/issues/1762)) ([3303054](https://github.com/open-sauced/insights/commit/33030548ed11a1410a56788eec05de98e46436a7))
+
 ### [1.75.1-beta.1](https://github.com/open-sauced/insights/compare/v1.75.0...v1.75.1-beta.1) (2023-11-10)
 
 
