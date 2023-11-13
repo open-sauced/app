@@ -35,12 +35,14 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   }
 
   const contributors = convertToContributors(data?.data);
+  const userId = Number(session?.user.user_metadata.sub);
 
   return {
     props: {
       list,
       initialData: data ? { data: contributors, meta: data.meta } : { data: [], meta: {} },
       isError: error || contributorListError,
+      isOwner: list && list.user_id === userId,
     },
   };
 };
@@ -52,11 +54,10 @@ interface ContributorListPageProps {
     data: DbPRContributor[];
   };
   isError: boolean;
+  isOwner: boolean;
 }
 
-const ContributorsListPage = ({ list, initialData, isError }: ContributorListPageProps) => {
-  // create useIsOwner(list?.user_id, userId) once we're ready to implement this.
-  const isOwner = false;
+const ContributorsListPage = ({ list, initialData, isError, isOwner }: ContributorListPageProps) => {
   const router = useRouter();
   const { range } = router.query;
 
