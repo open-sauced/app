@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.76.0-beta.5](https://github.com/open-sauced/insights/compare/v1.76.0-beta.4...v1.76.0-beta.5) (2023-11-13)
+
+
+### 🐛 Bug Fixes
+
+* added Edit List button to all list pages ([a6a38f4](https://github.com/open-sauced/insights/commit/a6a38f465de9085870dcea7c182e1ecf61c57b90))
+* added Edit List button to all list pages ([#2125](https://github.com/open-sauced/insights/issues/2125)) ([284fa4a](https://github.com/open-sauced/insights/commit/284fa4a01e48f6ccb95ada380e3172533d9c9a4a))
+
 ## [1.76.0-beta.4](https://github.com/open-sauced/insights/compare/v1.76.0-beta.3...v1.76.0-beta.4) (2023-11-13)
 
 
