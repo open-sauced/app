@@ -5,6 +5,18 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.76.0-beta.4](https://github.com/open-sauced/insights/compare/v1.76.0-beta.3...v1.76.0-beta.4) (2023-11-13)
+
+
+### 🐛 Bug Fixes
+
+* replace hardcoded px with tailwind class ([6346cb7](https://github.com/open-sauced/insights/commit/6346cb77fca782db7010541ecc36ecfc9ff8a347))
+
+
+### 🧑‍💻 Code Refactoring
+
+* Replace hardcoded px value with appropriate tailwind class in Dropdown component  ([#2113](https://github.com/open-sauced/insights/issues/2113)) ([abf3380](https://github.com/open-sauced/insights/commit/abf338088412a6bef403230e55cf7dab02161b21))
+
 ## [1.76.0-beta.3](https://github.com/open-sauced/insights/compare/v1.76.0-beta.2...v1.76.0-beta.3) (2023-11-13)
 
 
