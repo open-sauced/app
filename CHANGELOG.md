@@ -5,6 +5,19 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.76.0-beta.6](https://github.com/open-sauced/insights/compare/v1.76.0-beta.5...v1.76.0-beta.6) (2023-11-13)
+
+
+### 🧑‍💻 Code Refactoring
+
+* remove unused components ([f71c662](https://github.com/open-sauced/insights/commit/f71c662279de4f63f000aee93f61aed89c93d307))
+
+
+### 🐛 Bug Fixes
+
+* Remove the unused components - `CommandEmpty` and `CommandLis`t from the codebase ([#2112](https://github.com/open-sauced/insights/issues/2112)) ([690738f](https://github.com/open-sauced/insights/commit/690738f5429dc6fa09121897e9a6a398a975f116))
+* replace hardcoded px with tailwind class ([6cd93ff](https://github.com/open-sauced/insights/commit/6cd93ffa737fb49c9bd651dd8b7a4b20bbe4a3d2))
+
 ## [1.76.0-beta.5](https://github.com/open-sauced/insights/compare/v1.76.0-beta.4...v1.76.0-beta.5) (2023-11-13)
 
 
