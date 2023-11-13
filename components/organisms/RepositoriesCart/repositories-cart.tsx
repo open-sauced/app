@@ -76,31 +76,31 @@ const RepositoriesCart = ({
               <Text className="mt-3 !text-base">You haven’t added repositories yet.</Text>
             </div>
           )}
-          {!!history && (
-            <div className={`${history.length > 0 && "border-1"} mt-2 py-1`}>
-              {history.length > 0 ? <Text>Add again:</Text> : ""}
-              {history.length > 0 &&
-                history.slice(0, 5).map(({ orgName, repoName, avatar }, index) => (
-                  <div key={`${index}/${orgName}/${repoName}`} className="flex items-center justify-between mt-2">
-                    <div className="flex items-center gap-3 ">
-                      <Avatar avatarURL={avatar} initials="" size="sm" className="" />
-                      <Text className="!text-sm !text-light-slate-11">
-                        {orgName} / <span className="text-light-slate-12">{repoName}</span>
-                      </Text>
-                    </div>
-                    <div className="flex items-center gap-2 text-sm text-light-slate-10">
-                      <button
-                        onClick={() => onAddToCart(`${orgName}/${repoName}`)}
-                        className="border text-xs flex items-center px-1.5 p-0.5 rounded-md"
-                      >
-                        Add <BiPlus className="text-lg" />
-                      </button>
-                    </div>
-                  </div>
-                ))}
-            </div>
-          )}
         </div>
+        {!!history && (
+          <div className={`${history.length > 0 && "border-1"} mt-2 py-1`}>
+            {history.length > 0 ? <Text>Add again:</Text> : ""}
+            {history.length > 0 &&
+              history.slice(0, 5).map(({ orgName, repoName, avatar }, index) => (
+                <div key={`${index}/${orgName}/${repoName}`} className="flex items-center justify-between mt-2">
+                  <div className="flex items-center gap-3 ">
+                    <Avatar avatarURL={avatar} initials="" size="sm" className="" />
+                    <Text className="!text-sm !text-light-slate-11">
+                      {orgName} / <span className="text-light-slate-12">{repoName}</span>
+                    </Text>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm text-light-slate-10">
+                    <button
+                      onClick={() => onAddToCart(`${orgName}/${repoName}`)}
+                      className="border text-xs flex items-center px-1.5 p-0.5 rounded-md"
+                    >
+                      Add <BiPlus className="text-lg" />
+                    </button>
+                  </div>
+                </div>
+              ))}
+          </div>
+        )}
 
         {hasItems && (
           <div className="w-full mt-1">
