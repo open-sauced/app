@@ -16,6 +16,9 @@ const useNav = (repositories: number[] = []) => {
       name: "Contributors",
       numOf: conMetaData.itemCount,
     },
+    {
+      name: "Activity",
+    },
   ];
 
   const { pageId, toolName: selectedTool, selectedFilter, userOrg } = router.query;
