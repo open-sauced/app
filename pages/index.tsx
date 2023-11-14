@@ -12,11 +12,7 @@ const Home: WithPageLayout = () => {
 
   useEffect(() => {
     function redirect(destination: string) {
-      let redir = setTimeout(() => {
-        router.push(destination).then(() => {
-          clearTimeout(redir);
-        });
-      }, 2000);
+      router.push(destination);
     }
 
     async function getAccess() {
