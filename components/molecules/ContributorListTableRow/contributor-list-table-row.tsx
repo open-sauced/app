@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import clsx from "clsx";
 import formatDistanceToNowStrict from "date-fns/formatDistanceToNowStrict";
 
@@ -19,7 +19,7 @@ interface ContributorListTableRow {
   topic: string;
   selected?: boolean;
   handleOnSelectContributor?: (state: boolean, contributor: DbPRContributor) => void;
-  range: number;
+  range: string;
 }
 
 function getLastContributionDate(contributions: DbRepoPR[]) {
@@ -53,10 +53,17 @@ const ContributorListTableRow = ({
   const [tableOpen, setTableOpen] = useState(false);
   const login = contributor.author_login || contributor.username;
   const { data: user } = useFetchUser(contributor.author_login);
-  const { data } = useContributorPullRequests(login, topic, [], range);
+  const { data } = useContributorPullRequests({
+    contributor: login,
+    topic,
+    repoIds: [],
+    range,
+    mostRecent: true,
+  });
+
   const repoList = useRepoList(Array.from(new Set(data.map((prData) => prData.full_name))).join(","));
   const contributorLanguageList = user ? Object.keys(user.languages).map((language) => language) : [];
-  const days = getPullRequestsToDays(data, range);
+  const days = getPullRequestsToDays(data);
   const totalPrs = data.length;
   const last30days = [
     {
@@ -66,8 +73,6 @@ const ContributorListTableRow = ({
     },
   ];
   const mergedPrs = data.filter((prData) => prData.merged);
-
-  useEffect(() => {}, []);
 
   return (
     <>
@@ -149,7 +154,7 @@ const ContributorListTableRow = ({
             checked={selected ? true : false}
             disabled={!user}
             title={!user ? "Connect to GitHub" : ""}
-            onCheckedChange={(state) => handleOnSelectContributor?.(state as boolean, contributor)}
+            onCheckedChange={(state) => handleOnSelectContributor?.(!!state, contributor)}
             className={`${user && "border-orange-500 hover:bg-orange-600"}`}
           />
         )}

@@ -8,7 +8,7 @@ export interface ContributorTableProps {
   loading?: boolean;
   selectedContributors?: DbPRContributor[];
   handleSelectContributors?: (state: boolean, contributor: DbPRContributor) => void;
-  range?: number;
+  range?: string;
 }
 
 const ContributorTable = ({
@@ -17,7 +17,7 @@ const ContributorTable = ({
   loading,
   selectedContributors,
   handleSelectContributors,
-  range = 30,
+  range = "30",
 }: ContributorTableProps) => {
   return (
     <div className="flex flex-col overflow-hidden border rounded-md">
@@ -29,7 +29,7 @@ const ContributorTable = ({
             topic={topic}
             contributor={contributor}
             key={contributor.user_id}
-            selected={!!selectedContributors?.find((selected) => selected.user_id === contributor.user_id)}
+            selected={!!selectedContributors?.find((selected) => selected.author_login === contributor.author_login)}
             handleOnSelectContributor={handleSelectContributors}
             range={range}
           />

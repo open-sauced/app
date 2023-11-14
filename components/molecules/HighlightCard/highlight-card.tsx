@@ -137,7 +137,9 @@ const HighlightCard: React.FC<HighlightCardProps> = ({
   }
 
   return (
-    <Card className={`${className ? className : ""} flex flex-col w-full sm:max-w-[calc(50%-(1rem/2))] h-auto `}>
+    <Card
+      className={`${className ? className : ""} flex flex-col w-full sm:max-w-[calc(50%-(1rem/2))] h-auto flex-grow`}
+    >
       <>
         {/* Top Information */}
         <div className="flex justify-between w-full p-1">
@@ -193,41 +195,37 @@ const HighlightCard: React.FC<HighlightCardProps> = ({
             </div>
 
             {/* Contributor Cards */}
-            {contributors && (
-              <div className="flex items-center justify-center mt-7 h-1">
+            {contributors && contributors.length > 0 ? (
+              <div className="flex items-center justify-center mt-2 h-auto">
                 <StackedAvatar contributors={contributors} visibleQuantity={5} />
               </div>
-            )}
-
-            {/* Progress Bar */}
-            <div
-              className={`flex items-center w-full rounded-full mt-7 ${
-                percentage && (percentage > 0 || percentage < 99) ? "gap-2" : ""
-              }`}
-            >
-              <div
-                className={`${
-                  metricIncreases
-                    ? percentage && percentage > 70
-                      ? "bg-green-500"
+            ) : (
+              <div className="flex items-center justify-center w-full mt-2 h-8">
+                {/* Progress Bar */}
+                <div
+                  className={`${
+                    metricIncreases
+                      ? percentage && percentage > 70
+                        ? "bg-green-500"
+                        : percentage && percentage > 30
+                        ? "bg-yellow-500"
+                        : "bg-purple-500"
+                      : percentage && percentage > 70
+                      ? "bg-purple-500"
                       : percentage && percentage > 30
                       ? "bg-yellow-500"
-                      : "bg-red-500"
-                    : percentage && percentage > 70
-                    ? "bg-red-500"
-                    : percentage && percentage > 30
-                    ? "bg-yellow-500"
-                    : "bg-green-500"
-                } h-3 rounded-full transition-all duration-500 ease-in-out`}
-                style={{ width: (percentage ? percentage : 0) + "%" }}
-              ></div>
+                      : "bg-green-500"
+                  } h-3  transition-all duration-500 ease-in-out rounded-l-full`}
+                  style={{ width: (percentage ? percentage : 0) + "%" }}
+                ></div>
 
-              <div
-                className={`${
-                  percentage !== undefined && "bg-gray-200"
-                } w-auto flex-auto h-3 rounded-full transition-all duration-500 ease-in-out`}
-              ></div>
-            </div>
+                <div
+                  className={`${percentage !== undefined && "bg-gray-200"} w-auto flex-auto h-3 ${
+                    percentage === 0 ? "rounded-full" : "rounded-r-full"
+                  } transition-all duration-500 ease-in-out`}
+                ></div>
+              </div>
+            )}
           </div>
         )}
       </>
