@@ -32,6 +32,7 @@ interface userSettingsPageProps {
 type EmailPreferenceType = {
   display_email?: boolean;
   receive_collaboration?: boolean;
+  receive_product_updates?: boolean;
 };
 
 interface DeleteAccountModalProps {
@@ -116,6 +117,8 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
     display_email: false,
     // eslint-disable-next-line camelcase
     receive_collaboration: false,
+    // eslint-disable-next-line camelcase
+    receive_product_updates: false,
   });
   const [selectedInterest, setSelectedInterest] = useState<string[]>([]);
   const formRef = useRef<HTMLFormElement>(null);
@@ -149,6 +152,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
         display_email: insightsUser?.display_email,
         // eslint-disable-next-line camelcase
         receive_collaboration: insightsUser?.receive_collaboration,
+        receive_product_updates: insightsUser?.receive_product_updates,
       });
       setSelectedInterest(insightsUser?.interests?.split(","));
       setDisplayLocalTime(insightsUser?.display_local_time);
@@ -440,6 +444,15 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
                 checked={emailPreference.receive_collaboration}
                 title="connections requests"
                 label="Receive connections requests"
+              />
+              <Checkbox
+                onCheckedChange={() =>
+                  // eslint-disable-next-line camelcase
+                  setEmailPreference((prev) => ({ ...prev, receive_product_updates: !prev.receive_product_updates }))
+                }
+                checked={emailPreference.receive_product_updates}
+                title="Receive Product Updates"
+                label="Receive product updates"
               />
             </div>
             <Button
