@@ -69,6 +69,7 @@ export async function middleware(req: NextRequest) {
     // Authentication successful, forward request to protected route.
     if (req.nextUrl.pathname === "/") {
       const data = await loadSession(req, session?.access_token);
+
       if (data.is_onboarded) {
         return NextResponse.redirect(new URL("/hub/insights", req.url));
       } else {
