@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.76.0-beta.10](https://github.com/open-sauced/insights/compare/v1.76.0-beta.9...v1.76.0-beta.10) (2023-11-14)
+
+
+### 🐛 Bug Fixes
+
+* added orange hearts ([#2139](https://github.com/open-sauced/insights/issues/2139)) ([2b8b2ed](https://github.com/open-sauced/insights/commit/2b8b2ed8621f2d767ef10d685884676ceee6530e))
+
 ## [1.76.0-beta.9](https://github.com/open-sauced/insights/compare/v1.76.0-beta.8...v1.76.0-beta.9) (2023-11-14)
 
 
