@@ -71,6 +71,15 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     };
   }
 
+  if (pageName === "repositories") {
+    const userOrg = ctx.params!["userOrg"] as string;
+    return {
+      redirect: {
+        destination: `/pages/${userOrg}/${insightId}/dashboard`,
+        permanent: false,
+      },
+    };
+  }
   const userId = session?.user?.user_metadata.sub as string;
   const isOwner = !!(userId && insight && `${userId}` === `${insight.user?.id}`);
   let isTeamMember = false;
