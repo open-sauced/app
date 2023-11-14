@@ -1,10 +1,8 @@
 import { useRouter } from "next/router";
-import useRepositories from "./api/useRepositories";
 import useContributors from "./api/useContributors";
 
 const useNav = (repositories: number[] = []) => {
   const router = useRouter();
-  const { meta: repoMetaData } = useRepositories(repositories);
   const { meta: conMetaData } = useContributors(10, repositories);
 
   const defaultTools = [
@@ -15,12 +13,11 @@ const useNav = (repositories: number[] = []) => {
       name: "Reports",
     },
     {
-      name: "Repositories",
-      numOf: repoMetaData.itemCount,
-    },
-    {
       name: "Contributors",
       numOf: conMetaData.itemCount,
+    },
+    {
+      name: "Activity",
     },
   ];
 

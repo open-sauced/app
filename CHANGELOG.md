@@ -5,6 +5,23 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.76.0-beta.8](https://github.com/open-sauced/insights/compare/v1.76.0-beta.7...v1.76.0-beta.8) (2023-11-14)
+
+
+### 🍕 Features
+
+* replace dashboard scatterplot chart with repositories table ([#2130](https://github.com/open-sauced/insights/issues/2130)) ([dedb2e4](https://github.com/open-sauced/insights/commit/dedb2e42eaac6434f8c662c47a1905d8afa2c30d))
+
+## [1.76.0-beta.7](https://github.com/open-sauced/insights/compare/v1.76.0-beta.6...v1.76.0-beta.7) (2023-11-14)
+
+
+### 🐛 Bug Fixes
+
+* removed two second timeout for initial page load ([e49b799](https://github.com/open-sauced/insights/commit/e49b7990395acc9534455f13aa054d58f65801cb))
+* removed two second timeout for initial page load ([#2136](https://github.com/open-sauced/insights/issues/2136)) ([d44248a](https://github.com/open-sauced/insights/commit/d44248a62a154f5cf63623602af5bc7604e82996))
+* styling updates to lists of insights/lists ([947e6a5](https://github.com/open-sauced/insights/commit/947e6a54fb79d06ef17dd63ba426181ab8a8a08b))
+* styling updates to lists of insights/lists ([#2131](https://github.com/open-sauced/insights/issues/2131)) ([34e7f92](https://github.com/open-sauced/insights/commit/34e7f92a6ce3f34610bf1df1f75d28aad46372db))
+
 ## [1.76.0-beta.6](https://github.com/open-sauced/insights/compare/v1.76.0-beta.5...v1.76.0-beta.6) (2023-11-13)
 
 
