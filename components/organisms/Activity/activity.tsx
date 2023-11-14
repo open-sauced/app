@@ -81,22 +81,20 @@ const Activity = ({ repositories }: { repositories: number[] | undefined }) => {
   }, 0);
 
   return (
-    <div>
-      <div className="flex flex-col w-full">
-        <Card className="w-full">
-          <NivoScatterPlot
-            title="Contributor Distribution"
-            showBots={showBots}
-            setShowBots={setShowBots}
-            data={[{ id: "Contributors", data: scatterChartData }]}
-            maxFilesModified={maxFilesModified}
-            isMobile={isMobile}
-            repositories={repositories}
-            metadata={metadata}
-            handleSetPrFilter={handleSetPrFilter}
-          />
-        </Card>
-      </div>
+    <div className="flex flex-col w-full">
+      <Card className="w-full">
+        <NivoScatterPlot
+          title="Contributor Distribution"
+          showBots={showBots}
+          setShowBots={setShowBots}
+          data={[{ id: "Contributors", data: scatterChartData }]}
+          maxFilesModified={maxFilesModified}
+          isMobile={isMobile}
+          repositories={repositories}
+          metadata={metadata}
+          handleSetPrFilter={handleSetPrFilter}
+        />
+      </Card>
     </div>
   );
 };
