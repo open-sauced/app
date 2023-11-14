@@ -5,6 +5,15 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.76.0-beta.9](https://github.com/open-sauced/insights/compare/v1.76.0-beta.8...v1.76.0-beta.9) (2023-11-14)
+
+
+### 🐛 Bug Fixes
+
+* Correct wording for alumni contributors  ([#2114](https://github.com/open-sauced/insights/issues/2114)) ([2f23896](https://github.com/open-sauced/insights/commit/2f23896e5aa3c22af6b456092a0308aeb7952b44))
+* now main index page handles redirects in middleware ([d7a69fd](https://github.com/open-sauced/insights/commit/d7a69fd8c648892d80a51112730226091b544b10))
+* now main index page handles redirects in middleware ([#2137](https://github.com/open-sauced/insights/issues/2137)) ([5b26fb2](https://github.com/open-sauced/insights/commit/5b26fb2373f4e16f713c3a5432d11d44fb1ef3e6))
+
 ## [1.76.0-beta.8](https://github.com/open-sauced/insights/compare/v1.76.0-beta.7...v1.76.0-beta.8) (2023-11-14)
 
 
