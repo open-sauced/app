@@ -64,10 +64,8 @@ const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
           isLoading={isLoading}
         />
       </section>
-      <section className="flex flex-col max-w-full gap-4 mb-6 lg:flex-row">
-        <div className="flex flex-col w-full mt-5">
-          <Repositories repositories={repositories} />
-        </div>
+      <section className="flex flex-col max-w-full gap-4 my-6">
+        <Repositories repositories={repositories} />
       </section>
     </div>
   );
