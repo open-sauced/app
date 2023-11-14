@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.76.0-beta.8](https://github.com/open-sauced/insights/compare/v1.76.0-beta.7...v1.76.0-beta.8) (2023-11-14)
+
+
+### 🍕 Features
+
+* replace dashboard scatterplot chart with repositories table ([#2130](https://github.com/open-sauced/insights/issues/2130)) ([dedb2e4](https://github.com/open-sauced/insights/commit/dedb2e42eaac6434f8c662c47a1905d8afa2c30d))
+
 ## [1.76.0-beta.7](https://github.com/open-sauced/insights/compare/v1.76.0-beta.6...v1.76.0-beta.7) (2023-11-14)
 
 
