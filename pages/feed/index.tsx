@@ -101,7 +101,6 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
   useEffect(() => {
     const queryParams = new URLSearchParams(window.location.search);
     const newHighlight = queryParams.get("new");
-    const prURL = queryParams.get("prurl");
     const signInRequired = queryParams.get("signIn");
 
     if (newHighlight && signInRequired) {
