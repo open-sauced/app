@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useRouter } from "next/router";
 import NivoScatterPlot, {
   ScatterChartDataItems,
   ScatterChartMetadata,
@@ -13,7 +14,9 @@ export type PrStatusFilter = "open" | "closed" | "all";
 type ContributorPrMap = { [contributor: string]: DbRepoPR };
 
 const Activity = ({ repositories }: { repositories: number[] | undefined }) => {
-  const { data: prData, isError: prError } = usePullRequests(undefined, repositories);
+  const router = useRouter();
+  const { range } = router.query;
+  const { data: prData, isError: prError } = usePullRequests(undefined, repositories, Number(range));
   const [showBots, setShowBots] = useState(false);
   const isMobile = useMediaQuery("(max-width:720px)");
   const [prStateFilter, setPrStateFilter] = useState<PrStatusFilter>("all");
