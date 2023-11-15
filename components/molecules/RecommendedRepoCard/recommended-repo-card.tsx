@@ -45,7 +45,7 @@ const RecommendedRepoCard = ({ fullName, className }: RecommendedRepoCardProps):
                   src={getAvatarByUsername(owner)}
                 />
               </picture>
-              <span className="text-sm font-medium text-light-slate-11">{owner}</span>
+              <span className="text-sm text-light-slate-11">{owner}</span>
             </a>
           </div>
 
@@ -59,7 +59,7 @@ const RecommendedRepoCard = ({ fullName, className }: RecommendedRepoCardProps):
               {name}
             </a>
 
-            <p title={data.description} className="w-5/6 text-sm font-medium text-gray-500">
+            <p title={data.description} className="w-5/6 text-sm text-gray-500">
               {truncateString(data.description, 100)}
             </p>
           </div>
