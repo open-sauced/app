@@ -10,7 +10,7 @@ const PullRequestOverviewChartBar: React.FC<PullRequestOverviewChartBarProps & R
   type,
   ...event
 }) => {
-  const getBarColor = (type: string) => {
+  const getBarColor = (type: string | undefined) => {
     switch (type) {
       case "open":
         return "bg-light-grass-9";
@@ -29,7 +29,7 @@ const PullRequestOverviewChartBar: React.FC<PullRequestOverviewChartBarProps & R
     <div
       {...event}
       className={`
-        ${getBarColor(type!)}
+        ${getBarColor(type)}
         ${percent === 0 ? "hidden" : "block"}
         transition-all shrink-0 duration-500 ease-in-out rounded-full`}
       style={{ width: `${percent}%` }}
