@@ -9,7 +9,7 @@
 }
 
 * {
-  font-weight: 500;
+  @apply font-medium;
 }
 
 body {
