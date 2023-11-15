@@ -6,7 +6,6 @@ import { User } from "@supabase/supabase-js";
 import Button from "components/atoms/Button/button";
 import Checkbox from "components/atoms/Checkbox/checkbox";
 import TextInput from "components/atoms/TextInput/text-input";
-import { Textarea } from "components/atoms/Textarea/text-area";
 import Title from "components/atoms/Typography/title";
 import Text from "components/atoms/Typography/text";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "components/atoms/Select/select";
@@ -167,10 +166,6 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
     }
   };
 
-  const handleBioChange = (value: string) => {
-    setBio(value);
-  };
-
   const handleTwitterUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.target.setCustomValidity(validateTwitterUsername(event.target.value).message);
     event.target.reportValidity();
@@ -265,7 +260,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
       <div className="flex flex-col gap-4 text-sm md:flex-row md:gap-42 lg:gap-48 text-light-slate-11">
         <div>
           <Title className="!text-2xl !text-light-slate-11" level={2}>
-            Public Profile
+            Public profile
           </Title>
           <form onSubmit={handleUpdateProfile} className="flex flex-col gap-6 mt-6" ref={formRef}>
             <TextInput
@@ -283,17 +278,31 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
               value={email}
               required
             />
-            <Textarea
-              name="bio"
-              label="Bio"
-              placeholder="Tell us about yourself"
-              value={bio}
-              className="font-medium bg-light-slate-4 text-light-slate-11"
-              rows={4}
-              maxChar={255}
-              warnMsg="Bio too long"
-              onChangeText={handleBioChange}
-            />
+
+            {/* Bio section */}
+            <div className="flex flex-col gap-2">
+              <label className="flex flex-col w-full text-sm font-medium text-light-slate-9">
+                Bio
+                <textarea
+                  rows={4}
+                  placeholder="Tell us about yourself."
+                  className="mt-2 px-3 py-2 rounded-lg bg-light-slate-4 disabled:cursor-not-allowed"
+                  name="bio"
+                  value={bio}
+                  onChange={(e) => setBio(e.target.value)}
+                ></textarea>
+              </label>
+
+              {bio?.length > 255 ? (
+                <p aria-live="assertive" className="text-light-red-10 text-xs">
+                  Bio too long
+                </p>
+              ) : (
+                <p aria-live="polite" className="text-xs">
+                  {bio?.length}/255
+                </p>
+              )}
+            </div>
             <TextInput
               className="font-medium bg-light-slate-4 text-light-slate-11"
               placeholder="https://opensauced.pizza"
@@ -348,9 +357,9 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
                 label="Display current local time on profile"
                 onCheckedChange={(state) => setDisplayLocalTime(state as boolean)}
               />
-              <p className="text-sm font-normal ml-7 text-light-slate-9">
+              <span className="text-sm font-normal ml-7 text-light-slate-9">
                 Other users will see the time difference from their local time.
-              </p>
+              </span>
             </div>
 
             <div id="upgrade" className="flex flex-col gap-2">
