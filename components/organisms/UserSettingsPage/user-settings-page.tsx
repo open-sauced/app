@@ -222,17 +222,13 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
       name: formRef.current!.nameInput.value,
       email,
       bio,
-      // eslint-disable-next-line camelcase
       twitter_username: formRef.current!.twitter_username.value,
       company: formRef.current!.company.value,
       location: formRef.current!.location.value,
-      // eslint-disable-next-line camelcase
       display_local_time: displayLocalTime,
       timezone,
-      // eslint-disable-next-line camelcase
       github_sponsors_url:
         formRef.current!.github_sponsors_url.value !== "" ? formRef.current!.github_sponsors_url.value : undefined,
-      // eslint-disable-next-line camelcase
       linkedin_url: formRef.current!.linkedin_url.value !== "" ? formRef.current!.linkedin_url.value : undefined,
       discord_url: formRef.current!.discord_url.value !== "" ? formRef.current!.discord_url.value : undefined,
     };
@@ -425,7 +421,6 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
             <div className="flex flex-col gap-3">
               <label className="text-2xl font-normal text-light-slate-11">Email Preferences</label>
               <Checkbox
-                // eslint-disable-next-line camelcase
                 onCheckedChange={() => setEmailPreference((prev) => ({ ...prev, display_email: !prev.display_email }))}
                 checked={emailPreference.display_email}
                 title="profile email"
@@ -433,7 +428,6 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
               />
               <Checkbox
                 onCheckedChange={() =>
-                  // eslint-disable-next-line camelcase
                   setEmailPreference((prev) => ({ ...prev, receive_collaboration: !prev.receive_collaboration }))
                 }
                 checked={emailPreference.receive_collaboration}
@@ -442,7 +436,6 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
               />
               <Checkbox
                 onCheckedChange={() =>
-                  // eslint-disable-next-line camelcase
                   setEmailPreference((prev) => ({ ...prev, receive_product_updates: !prev.receive_product_updates }))
                 }
                 checked={emailPreference.receive_product_updates}
