@@ -174,7 +174,7 @@ const HighlightCard: React.FC<HighlightCardProps> = ({
 
         {/* Main Information */}
         {isLoading ? (
-          <SkeletonWrapper height={79} count={2} />
+          <SkeletonWrapper height={62} count={2} />
         ) : (
           <div className="flex flex-col w-full px-6 pb-5 mt-2">
             {/* Main Number */}
