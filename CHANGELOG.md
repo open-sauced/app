@@ -5,6 +5,15 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.76.0-beta.12](https://github.com/open-sauced/insights/compare/v1.76.0-beta.11...v1.76.0-beta.12) (2023-11-15)
+
+
+### 🐛 Bug Fixes
+
+* h1-h6 base style using CSS from .tracking-tight ([#2142](https://github.com/open-sauced/insights/issues/2142)) ([4ad69a1](https://github.com/open-sauced/insights/commit/4ad69a1261dc5957b9a0bff9fe47b92214d5fb3d))
+* hover card now works as expected in all areas ([#2152](https://github.com/open-sauced/insights/issues/2152)) ([d88f71b](https://github.com/open-sauced/insights/commit/d88f71bef7068baca36dc2b865b06f8f47f1ac10))
+* remove unnecesarry console logs ([#2151](https://github.com/open-sauced/insights/issues/2151)) ([8955e02](https://github.com/open-sauced/insights/commit/8955e02b1859fcdd085c822f3c11eee3fa284749))
+
 ## [1.76.0-beta.11](https://github.com/open-sauced/insights/compare/v1.76.0-beta.10...v1.76.0-beta.11) (2023-11-15)
 
 
