@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.76.0-beta.11](https://github.com/open-sauced/insights/compare/v1.76.0-beta.10...v1.76.0-beta.11) (2023-11-15)
+
+
+### 🐛 Bug Fixes
+
+* pr overviews in repo table now accurate ([#2118](https://github.com/open-sauced/insights/issues/2118)) ([b562578](https://github.com/open-sauced/insights/commit/b5625784e50e41af3e70f131856f7f015c14569a))
+
 ## [1.76.0-beta.10](https://github.com/open-sauced/insights/compare/v1.76.0-beta.9...v1.76.0-beta.10) (2023-11-14)
 
 
