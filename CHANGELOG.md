@@ -5,6 +5,19 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.76.0-beta.14](https://github.com/open-sauced/insights/compare/v1.76.0-beta.13...v1.76.0-beta.14) (2023-11-15)
+
+
+### 🐛 Bug Fixes
+
+* removed font-medium classes as the base style for all elements is font-medium ([#2146](https://github.com/open-sauced/insights/issues/2146)) ([d06a1ca](https://github.com/open-sauced/insights/commit/d06a1caa9b32b8a4c35c5e3aa15ebbe43265a2f7))
+
+
+### 🍕 Features
+
+* add ability for user to toggle receiving email product updates ([#2133](https://github.com/open-sauced/insights/issues/2133)) ([8ba0d6f](https://github.com/open-sauced/insights/commit/8ba0d6fc2524223ee7a79fec15169ebbe1c29b73))
+* updating last contributed column for insights table ([#2115](https://github.com/open-sauced/insights/issues/2115)) ([846fdc4](https://github.com/open-sauced/insights/commit/846fdc49b6e56918371d2d99e8757a30f8dafac1))
+
 ## [1.76.0-beta.13](https://github.com/open-sauced/insights/compare/v1.76.0-beta.12...v1.76.0-beta.13) (2023-11-15)
 
 
