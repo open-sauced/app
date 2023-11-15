@@ -32,7 +32,7 @@ const PullRequestOverviewChartBar: React.FC<PullRequestOverviewChartBarProps & R
         ${getBarColor(type!)}
         ${percent === 0 ? "hidden" : "block"}
         transition-all shrink-0 duration-500 ease-in-out rounded-full`}
-      style={{ width: `${Math.round(percent!)}%` }}
+      style={{ width: `${percent}%` }}
     ></div>
   );
 };
