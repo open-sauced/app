@@ -104,7 +104,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
     const signInRequired = queryParams.get("signIn");
 
     if (newHighlight && signInRequired) {
-      signIn({ provider: "github", options: { redirectTo: `${window.location.origin}/feed?new=${newHighlight}` } });
+      signIn({ provider: "github", options: { redirectTo: `${window.location.origin}/feed?${queryParams}` } });
     }
 
     // no need to create intervals for checking the highlight creation input if there is no new highlight

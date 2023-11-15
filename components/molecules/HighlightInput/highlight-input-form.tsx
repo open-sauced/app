@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 
 import { FiCalendar, FiEdit2 } from "react-icons/fi";
@@ -112,6 +113,12 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
   const [createPopoverOpen, setCreatePopoverOpen] = useState(false);
   const popoverContentRef = useRef<HTMLDivElement>(null);
   const generateSummary = useRef(false);
+
+  const router = useRouter();
+  const { prurl } = router.query;
+  useEffect(() => {
+    if (prurl) setHighlightLink(prurl as string);
+  }, [prurl]);
 
   const fetchAllUserHighlights = async (page: number): Promise<DbHighlight[]> => {
     const req = await fetch(
@@ -619,6 +626,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                   </button>
                 </Tooltip>
                 <TextInput
+                  id="highlight-link-input"
                   className="text-sm shadow-none h-10 flex-none"
                   value={highlightLink}
                   handleChange={(value) => setHighlightLink(value)}
