@@ -44,7 +44,7 @@ const ListHeader = ({ name, isPublic, listId, isOwner, numberOfContributors }: L
         </div>
         <div className="flex flex-col justify-center p-2 header-info grow">
           <div className="flex gap-2">
-            <Title level={1} className="!text-2xl font-semibold tracking-tight text-slate-900">
+            <Title level={1} className="!text-2xl font-semibold text-slate-900">
               {(name && truncateString(name, 30)) || "List"}
             </Title>
             {<Badge isPublic={isPublic} />}

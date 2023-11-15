@@ -6,7 +6,7 @@ import { useFetchUser } from "lib/hooks/useFetchUser";
 import Contributors from "../Contributors/contributors";
 import Dashboard from "../Dashboard/dashboard";
 import Reports from "../Reports/reports";
-import Repositories from "../Repositories/repositories";
+import Activity from "../Activity/activity";
 
 interface ToolProps {
   tool?: string;
@@ -29,14 +29,13 @@ const Tool = ({ tool, repositories }: ToolProps): JSX.Element => {
   switch (tool) {
     case "Dashboard":
       return <Dashboard repositories={repositories} />;
-
-    case "Repositories":
-      return <Repositories repositories={repositories} />;
-
     case "Reports":
       return <Reports hasReports={hasReports} waitlisted={waitlisted} repositories={repositories} />;
     case "Contributors":
       return <Contributors repositories={repositories} />;
+
+    case "Activity":
+      return <Activity repositories={repositories} />;
     default:
       return <> {tool ? `${tool}` : ""}</>;
   }

@@ -61,7 +61,7 @@ const InsightHeader = ({ insight, repositories, insightId, isOwner }: InsightHea
         </div>
         <div className="flex flex-col justify-center p-2 header-info grow">
           <div className="flex gap-2">
-            <Title level={1} className="!text-2xl font-semibold tracking-tight text-slate-900">
+            <Title level={1} className="!text-2xl font-semibold text-slate-900">
               {(insight && truncateString(insight.name, 30)) || "Insights"}
             </Title>
             {insight && <Badge isPublic={insight?.is_public} />}
