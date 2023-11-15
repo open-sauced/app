@@ -597,17 +597,15 @@ const ContributorHighlightCard = ({
         </div>
 
         {/* Highlight body section */}
-        <div className="w-full ">
-          <p className="text-sm font-normal break-words text-light-slate-12 lg:text-base">{desc}</p>
-        </div>
-        {/* Highlight Link section */}
+        <p className="text-sm font-normal break-words text-light-slate-12 lg:text-base">{desc}</p>
 
-        <div>
+        {/* Highlight Link section */}
+        <div className="flex">
           <a
             href={highlightLink}
             target="_blank"
             rel="noreferrer"
-            className="underline break-words cursor-pointer text-sauced-orange"
+            className="flex-1 inline-block underline truncate cursor-pointer text-sauced-orange"
           >
             {highlightLink}
           </a>
@@ -634,7 +632,7 @@ const ContributorHighlightCard = ({
                 <DropdownMenuItem
                   onClick={async () => (sessionToken ? handleUpdateReaction(id) : signIn({ provider: "github" }))}
                   key={id}
-                  className="rounded-full !px-2 !cursor-pointer"
+                  className="rounded-full !px-2 !cursor-pointer text-orange-500"
                 >
                   <Emoji text={`:${name}:`} />
                 </DropdownMenuItem>
@@ -657,7 +655,7 @@ const ContributorHighlightCard = ({
                 onClick={async () => (sessionToken ? handleUpdateReaction(emoji_id) : signIn({ provider: "github" }))}
               >
                 <Emoji
-                  className="text-xs md:text-sm text-light-slate-10"
+                  className="text-xs text-orange-500 md:text-sm"
                   text={`:${getEmojiNameById(emoji_id)}: ${reaction_count}`}
                 />
               </div>

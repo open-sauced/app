@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import clsx from "clsx";
-import Link from "next/link";
 
 import { WithPageLayout } from "interfaces/with-page-layout";
 import HubLayout from "layouts/hub";
@@ -93,12 +92,6 @@ const ListsHub: WithPageLayout = () => {
         )}
 
         {isLoading && <SkeletonWrapper count={3} classNames="w-full" height={95} radius={10} />}
-        <Link
-          href={"/hub/lists/new"}
-          className="w-full py-5 text-lg text-center border rounded-lg bg-light-slate-4 text-light-slate-11 md:py-8 lg:py-10 border-light-slate-7"
-        >
-          Create a new List
-        </Link>
       </section>
       <div
         className={clsx("py-1 md:py-4 flex w-full md:mt-5 justify-between items-center", {
@@ -121,15 +114,15 @@ const ListsHub: WithPageLayout = () => {
       </div>
 
       <Dialog open={isDeleteOpen}>
-        <DialogContent className="px-2 max-w-[90%] lg:max-w-xl rounded-t-lg pt-2">
+        <DialogContent className="grid grid-cols-1 gap-4 p-4 max-w-[90%] lg:max-w-xl rounded-t-lg">
           <DialogTitle>
             <Title level={3}>Delete List</Title>
           </DialogTitle>
 
           <Text>
             Are you sure you want to delete <span className="font-bold text-light-slate-12">{listNameToDelete}</span>?
+            If you have data on this list that your team is using, they will lose access.
           </Text>
-          <Text>If you have data on this list that your team is using, they will lose access</Text>
           <Text>
             <span className="font-bold text-light-slate-12">This action cannot be undone</span>
           </Text>
