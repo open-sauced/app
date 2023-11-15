@@ -113,11 +113,8 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
   const [email, setEmail] = useState<string | undefined>("");
   const [bio, setBio] = useState("");
   const [emailPreference, setEmailPreference] = useState<EmailPreferenceType>({
-    // eslint-disable-next-line camelcase
     display_email: false,
-    // eslint-disable-next-line camelcase
     receive_collaboration: false,
-    // eslint-disable-next-line camelcase
     receive_product_updates: false,
   });
   const [selectedInterest, setSelectedInterest] = useState<string[]>([]);
@@ -148,9 +145,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
   useEffect(() => {
     if (insightsUser) {
       setEmailPreference({
-        // eslint-disable-next-line camelcase
         display_email: insightsUser?.display_email,
-        // eslint-disable-next-line camelcase
         receive_collaboration: insightsUser?.receive_collaboration,
         receive_product_updates: insightsUser?.receive_product_updates,
       });
