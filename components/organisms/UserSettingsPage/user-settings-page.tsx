@@ -283,14 +283,16 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
             <div className="flex flex-col gap-2">
               <label className="flex flex-col w-full text-sm font-medium text-light-slate-9">
                 Bio
-                <textarea
-                  rows={4}
-                  placeholder="Tell us about yourself."
-                  className="mt-2 px-3 py-2 rounded-lg bg-light-slate-4 disabled:cursor-not-allowed"
-                  name="bio"
-                  value={bio}
-                  onChange={(e) => setBio(e.target.value)}
-                ></textarea>
+                <div className="flex-1 px-2 text-light-slate-12 shadow-input border transition rounded-lg py-1 flex items-center bg-light-slate-4 disabled:cursor-not-allowed focus-within:border-light-orange-9">
+                  <textarea
+                    rows={4}
+                    placeholder="Tell us about yourself."
+                    name="bio"
+                    className="w-full focus:outline-none placeholder:font-normal placeholder-slate-400 bg-inherit"
+                    value={bio}
+                    onChange={(e) => setBio(e.target.value)}
+                  ></textarea>
+                </div>
               </label>
 
               {bio?.length > 255 ? (
