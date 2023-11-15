@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.76.0-beta.13](https://github.com/open-sauced/insights/compare/v1.76.0-beta.12...v1.76.0-beta.13) (2023-11-15)
+
+
+### 🍕 Features
+
+* add params handling for new PR ([#2062](https://github.com/open-sauced/insights/issues/2062)) ([b878429](https://github.com/open-sauced/insights/commit/b87842903223dee9e3007595c5a7fe91da247522))
+
 ## [1.76.0-beta.12](https://github.com/open-sauced/insights/compare/v1.76.0-beta.11...v1.76.0-beta.12) (2023-11-15)
 
 
