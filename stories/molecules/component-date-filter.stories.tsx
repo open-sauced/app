@@ -15,5 +15,5 @@ export const DateFilterStory = componentDateFilterTemplate.bind({});
 
 DateFilterStory.args = {
   defaultRange: 30,
-  setRangeFilter: () => console.log("i was click"),
+  setRangeFilter: () => {},
 };
