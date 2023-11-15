@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.76.0-beta.15](https://github.com/open-sauced/insights/compare/v1.76.0-beta.14...v1.76.0-beta.15) (2023-11-15)
+
+
+### 🐛 Bug Fixes
+
+* show last 30 days for contribution line graphs ([#2155](https://github.com/open-sauced/insights/issues/2155)) ([a1fee71](https://github.com/open-sauced/insights/commit/a1fee71ef1c127855bb1817e18688f8cc42e23c5))
+
 ## [1.76.0-beta.14](https://github.com/open-sauced/insights/compare/v1.76.0-beta.13...v1.76.0-beta.14) (2023-11-15)
 
 
