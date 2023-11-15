@@ -32,6 +32,7 @@ interface userSettingsPageProps {
 type EmailPreferenceType = {
   display_email?: boolean;
   receive_collaboration?: boolean;
+  receive_product_updates?: boolean;
 };
 
 interface DeleteAccountModalProps {
@@ -112,10 +113,9 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
   const [email, setEmail] = useState<string | undefined>("");
   const [bio, setBio] = useState("");
   const [emailPreference, setEmailPreference] = useState<EmailPreferenceType>({
-    // eslint-disable-next-line camelcase
     display_email: false,
-    // eslint-disable-next-line camelcase
     receive_collaboration: false,
+    receive_product_updates: false,
   });
   const [selectedInterest, setSelectedInterest] = useState<string[]>([]);
   const formRef = useRef<HTMLFormElement>(null);
@@ -145,10 +145,9 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
   useEffect(() => {
     if (insightsUser) {
       setEmailPreference({
-        // eslint-disable-next-line camelcase
         display_email: insightsUser?.display_email,
-        // eslint-disable-next-line camelcase
         receive_collaboration: insightsUser?.receive_collaboration,
+        receive_product_updates: insightsUser?.receive_product_updates,
       });
       setSelectedInterest(insightsUser?.interests?.split(","));
       setDisplayLocalTime(insightsUser?.display_local_time);
@@ -223,17 +222,13 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
       name: formRef.current!.nameInput.value,
       email,
       bio,
-      // eslint-disable-next-line camelcase
       twitter_username: formRef.current!.twitter_username.value,
       company: formRef.current!.company.value,
       location: formRef.current!.location.value,
-      // eslint-disable-next-line camelcase
       display_local_time: displayLocalTime,
       timezone,
-      // eslint-disable-next-line camelcase
       github_sponsors_url:
         formRef.current!.github_sponsors_url.value !== "" ? formRef.current!.github_sponsors_url.value : undefined,
-      // eslint-disable-next-line camelcase
       linkedin_url: formRef.current!.linkedin_url.value !== "" ? formRef.current!.linkedin_url.value : undefined,
       discord_url: formRef.current!.discord_url.value !== "" ? formRef.current!.discord_url.value : undefined,
     };
@@ -426,7 +421,6 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
             <div className="flex flex-col gap-3">
               <label className="text-2xl font-normal text-light-slate-11">Email Preferences</label>
               <Checkbox
-                // eslint-disable-next-line camelcase
                 onCheckedChange={() => setEmailPreference((prev) => ({ ...prev, display_email: !prev.display_email }))}
                 checked={emailPreference.display_email}
                 title="profile email"
@@ -434,12 +428,19 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
               />
               <Checkbox
                 onCheckedChange={() =>
-                  // eslint-disable-next-line camelcase
                   setEmailPreference((prev) => ({ ...prev, receive_collaboration: !prev.receive_collaboration }))
                 }
                 checked={emailPreference.receive_collaboration}
                 title="connections requests"
                 label="Receive connections requests"
+              />
+              <Checkbox
+                onCheckedChange={() =>
+                  setEmailPreference((prev) => ({ ...prev, receive_product_updates: !prev.receive_product_updates }))
+                }
+                checked={emailPreference.receive_product_updates}
+                title="Receive Product Updates"
+                label="Receive product updates"
               />
             </div>
             <Button
