@@ -85,7 +85,7 @@ export default function ContributionsEvolutionCard(props: Props) {
           }}
         >
           <div className="text-lg text-slate-900 mb-2">Contributions Evolution</div>
-          <div className="text-sm text-slate-400 mb-4">This is going to be an auto-generated insight.</div>
+          <div className="text-sm font-medium text-slate-400 mb-4">This is going to be an auto-generated insight.</div>
           {/* buttons */}
           <div className="flex gap-1 mb-4">
             <DropdownMenu>

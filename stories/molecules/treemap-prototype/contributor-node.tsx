@@ -62,7 +62,9 @@ const NonMemoizedContributorNode = <Datum extends { id: string; value?: number; 
               style={{ display: "block", borderRadius: "50%", border: "solid 2px white", flexShrink: 0, flexGrow: 0 }}
             />
 
-            <div style={{ gridColumnStart: "2", alignItems: "center", alignSelf: "center" }}>{node.id}</div>
+            <div className="font-medium" style={{ gridColumnStart: "2", alignItems: "center", alignSelf: "center" }}>
+              {node.id}
+            </div>
             <div
               className="font-normal"
               style={{ textOverflow: "ellipsis", gridColumnStart: "2", marginTop: "-0.5rem" }}

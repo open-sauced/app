@@ -373,7 +373,7 @@ const Login: WithPageLayout = () => {
             />
             <Text
               disabled={currentLoginStep !== 2}
-              className={`!text-[16px] !${currentLoginStep === 2 && highlighted}`}
+              className={`!text-[16px] !font-medium ${currentLoginStep === 2 && highlighted}`}
             >
               Choose your interests
             </Text>

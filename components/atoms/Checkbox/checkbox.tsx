@@ -29,7 +29,7 @@ const Checkbox = React.forwardRef<React.ElementRef<typeof CheckboxPrimitive.Root
         {label && (
           <label
             htmlFor={getId()}
-            className="ml-3 text-sm leading-none cursor-pointer text-light-slate-12 peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            className="ml-3 text-sm font-medium leading-none cursor-pointer text-light-slate-12 peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
           >
             {label}
           </label>

@@ -47,7 +47,7 @@ const CouponForm = ({ refreshUser }: CouponFormProps) => {
       <div className="flex flex-col gap-3 ">
         <label className="text-2xl font-normal text-light-slate-11">Add Coupon</label>
         <TextInput
-          className="bg-light-slate-4 text-light-slate-11 w-3/4"
+          className="font-medium bg-light-slate-4 text-light-slate-11 w-3/4"
           placeholder="Enter Coupon"
           label="Enter provided coupon code to upgrade your account"
           name="couponCode"

@@ -264,14 +264,14 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
           </Title>
           <form onSubmit={handleUpdateProfile} className="flex flex-col gap-6 mt-6" ref={formRef}>
             <TextInput
-              className="bg-light-slate-4 text-light-slate-11"
+              className="font-medium bg-light-slate-4 text-light-slate-11"
               label="Name*"
               placeholder="April O'Neil"
               required
               name="nameInput"
             />
             <TextInput
-              className="bg-light-slate-4 text-light-slate-11"
+              className="font-medium bg-light-slate-4 text-light-slate-11"
               placeholder="april@stockgen.com"
               handleChange={handleEmailChange}
               label="Email*"
@@ -281,7 +281,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
 
             {/* Bio section */}
             <div className="flex flex-col gap-2">
-              <label className="flex flex-col w-full text-sm text-light-slate-9">
+              <label className="flex flex-col w-full text-sm font-medium text-light-slate-9">
                 Bio
                 <textarea
                   rows={4}
@@ -304,28 +304,28 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
               )}
             </div>
             <TextInput
-              className="bg-light-slate-4 text-light-slate-11"
+              className="font-medium bg-light-slate-4 text-light-slate-11"
               placeholder="https://opensauced.pizza"
               label="URL"
               pattern="http[s]?://.*\..{2,}"
               name="url"
             />
             <TextInput
-              className="bg-light-slate-4 text-light-slate-11"
+              className="font-medium bg-light-slate-4 text-light-slate-11"
               placeholder="https://github.com/sponsors/open-sauced"
               label="GitHub Sponsors URL"
               pattern="http[s]?://.*\..{2,}"
               name="github_sponsors_url"
             />
             <TextInput
-              className="bg-light-slate-4 text-light-slate-11"
+              className="font-medium bg-light-slate-4 text-light-slate-11"
               placeholder="https://www.linkedin.com/in/brianldouglas"
               label="LinkedIn URL"
               pattern="http[s]?://.*\..{2,}"
               name="linkedin_url"
             />
             <TextInput
-              className="bg-light-slate-4 text-light-slate-11"
+              className="font-medium bg-light-slate-4 text-light-slate-11"
               placeholder="https://discord.com/users/832877193112762362"
               label="Discord URL"
               onChange={handleValidateDiscordUrl}
@@ -339,13 +339,13 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
               name="twitter_username"
             />
             <TextInput
-              className="bg-light-slate-4 text-light-slate-11"
+              className="font-medium bg-light-slate-4 text-light-slate-11"
               placeholder="OpenSauced"
               label="Company"
               name="company"
             />
             <TextInput
-              className="bg-light-slate-4 text-light-slate-11"
+              className="font-medium bg-light-slate-4 text-light-slate-11"
               placeholder="USA"
               label="Location"
               name="location"
