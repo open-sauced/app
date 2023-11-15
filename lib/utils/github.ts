@@ -101,8 +101,6 @@ const getPullRequestCommitMessageFromUrl = async (url: string): Promise<string[]
     },
   });
   const data = await response.json();
-  // eslint-disable-next-line no-console
-  console.log(sessionResponse);
 
   if (Array.isArray(data?.commits)) {
     return (data.commits as Commit[]).map((commit: Commit): string => commit.commit.message);

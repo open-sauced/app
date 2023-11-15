@@ -55,7 +55,7 @@ const peopleFilters: Record<ContributorType, string> = {
   all: "All Contributors",
   active: "Active Contributors",
   new: "New Contributors",
-  alumni: "Churned Contributors",
+  alumni: "Alumni Contributors",
 };
 
 const LegendItem = ({ color, title }: { color?: string; title: string }) => {
