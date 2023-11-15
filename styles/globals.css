@@ -9,7 +9,7 @@
 }
 
 * {
-  @apply font-medium;
+  @apply font-normal;
 }
 
 body {
