@@ -63,7 +63,7 @@ const ContributorListTableRow = ({
 
   const repoList = useRepoList(Array.from(new Set(data.map((prData) => prData.full_name))).join(","));
   const contributorLanguageList = user ? Object.keys(user.languages).map((language) => language) : [];
-  const days = getPullRequestsToDays(data);
+  const days = getPullRequestsToDays(data, Number(range || "30"));
   const totalPrs = data.length;
   const last30days = [
     {
