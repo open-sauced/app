@@ -95,7 +95,7 @@ const ContributorListTableRow = ({
             <div className="flex flex-col gap-x-3">
               <p>{getLastContributionDate(mergedPrs)}</p>{" "}
               <p
-                className="text-sm font-normal truncate whitespace-nowrap overflow-hidden overflow-ellipsis text-light-slate-9 md:hidden lg:max-w-[8.12rem]"
+                className="text-sm font-normal truncate text-light-slate-9 md:hidden lg:max-w-[8.12rem]"
                 title={user?.company || getLastContributedRepo(data)}
               >
                 {user?.company || getLastContributedRepo(data)}
