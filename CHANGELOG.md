@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.76.0-beta.16](https://github.com/open-sauced/insights/compare/v1.76.0-beta.15...v1.76.0-beta.16) (2023-11-16)
+
+
+### 🐛 Bug Fixes
+
+* add hovercard to most active contributors avatars in list ([#2157](https://github.com/open-sauced/insights/issues/2157)) ([e02d1db](https://github.com/open-sauced/insights/commit/e02d1dbc3fa077531be00f698fd722e87699457c))
+
 ## [1.76.0-beta.15](https://github.com/open-sauced/insights/compare/v1.76.0-beta.14...v1.76.0-beta.15) (2023-11-15)
 
 
