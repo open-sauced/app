@@ -77,14 +77,15 @@ export const MostUsedLanguagesGraph = ({ data, setContributorType, contributorTy
   const { data: languages = [], mainLanguage } = data;
   const lastItem = languages.length > 0 ? languages.length - 1 : 0;
 
-  // TODO: add loading view
   return (
-    <Card>
+    <Card className="p-5">
       <div className="flex flex-col gap-6">
-        <h2>Most used languages</h2>
-        <Text>
-          {mainLanguage} contributions have been growing on average {percentage}% MoM
-        </Text>
+        <div>
+          <h2 className="pb-1 font-medium text-lg tracking-tight">Most used languages</h2>
+          <Text>
+            {mainLanguage} contributions have been growing on average {percentage}% MoM
+          </Text>
+        </div>
         <div className="w-max">
           <ContributorTypeFilter setContributorType={setContributorType} contributorType={contributorType} />
         </div>
@@ -116,9 +117,6 @@ export const MostUsedLanguagesGraph = ({ data, setContributorType, contributorTy
                   <BsFillCircleFill size={10} style={{ fill: colors[index] }} />
                   {item.name}
                 </span>
-                {/* TODO: text-slate-100 doesn't pass colour contrast check.
-                 text-slate-600 passes contrast checks but need to check with design
-                 */}
                 <span className="text-slate-600">{item.value}%</span>
               </li>
             ))
