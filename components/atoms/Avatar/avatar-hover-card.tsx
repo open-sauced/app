@@ -48,7 +48,7 @@ const AvatarHoverCard = ({ contributor, repositories, size = "large" }: AvatarHo
   return (
     <HoverCard.Root>
       <Link href={`/user/${contributor}`} as={`/user/${contributor}`}>
-        <HoverCard.Trigger asChild>
+        <HoverCard.Trigger>
           <Avatar contributor={contributor} size={size} />
         </HoverCard.Trigger>
       </Link>

@@ -344,7 +344,7 @@ const Login: WithPageLayout = () => {
             <ProgressPie
               percentage={currentLoginStep === 1 ? 0 : currentLoginStep === 2 ? 33 : currentLoginStep === 3 ? 66 : 100}
             />
-            <Title className="!text-2xl !tracking-tight">Let‘s get started</Title>
+            <Title className="!text-2xl">Let‘s get started</Title>
           </div>
           <div className="mb-8">
             <Text className="!text-sm">
@@ -371,10 +371,7 @@ const Login: WithPageLayout = () => {
               }
               size={48}
             />
-            <Text
-              disabled={currentLoginStep !== 2}
-              className={`!text-[16px] !font-medium ${currentLoginStep === 2 && highlighted}`}
-            >
+            <Text disabled={currentLoginStep !== 2} className={`!text-[16px] ${currentLoginStep === 2 && highlighted}`}>
               Choose your interests
             </Text>
           </div>

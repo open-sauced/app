@@ -55,7 +55,7 @@ const peopleFilters: Record<ContributorType, string> = {
   all: "All Contributors",
   active: "Active Contributors",
   new: "New Contributors",
-  alumni: "Churned Contributors",
+  alumni: "Alumni Contributors",
 };
 
 const LegendItem = ({ color, title }: { color?: string; title: string }) => {
@@ -129,7 +129,7 @@ export default function MostActiveContributorsCard({
     <MostActiveCard>
       <>
         {topContributor && (
-          <div className="text-sm font-medium text-slate-400 mb-4">
+          <div className="text-sm text-slate-400 mb-4">
             {topContributor.login} made {topContributorPercent} of all code contributions
           </div>
         )}
