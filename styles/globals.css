@@ -2,13 +2,29 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "Inter";
+  font-display: fallback;
+  src: url("../public/assets/fonts/Inter-VariableFont_slnt,wght.ttf");
+}
+
 * {
-  font-weight: 500;
+  @apply font-normal;
 }
 
 body {
   background-color: #f8f9fa;
 }
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @apply tracking-tight;
+}
+
 .auto-grow-input:not(:empty) {
   color: black;
 }
@@ -120,6 +136,14 @@ div[role="dialog"]::-webkit-scrollbar-thumb {
   box-shadow: inset 0 0 0 200px rgba(0, 0, 0, 0.05);
   background-size: 800px 104px;
   position: relative;
+}
+
+.radix-select-trigger span {
+  flex: 1;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 @keyframes placeHolderShimmer {

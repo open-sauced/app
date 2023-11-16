@@ -16,7 +16,6 @@ import ContributorListTableHeaders from "components/molecules/ContributorListTab
 import HubContributorsPageLayout from "layouts/hub-contributors";
 import ContributorTable from "components/organisms/ContributorsTable/contributors-table";
 import Header from "components/organisms/Header/header";
-import HubContributorsHeader from "components/molecules/HubContributorsHeader/hub-contributors-header";
 import Pagination from "components/molecules/Pagination/pagination";
 import PaginationResults from "components/molecules/PaginationResults/pagination-result";
 import { Dialog, DialogContent } from "components/molecules/Dialog/dialog";
@@ -25,6 +24,7 @@ import Text from "components/atoms/Typography/text";
 import TextInput from "components/atoms/TextInput/text-input";
 import Button from "components/atoms/Button/button";
 import { setQueryParams } from "lib/utils/query-params";
+import HubContributorsHeader from "components/molecules/HubContributorsHeader/hub-contributors-header";
 
 interface CreateListPayload {
   name: string;
@@ -107,6 +107,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 const NewListCreationPage = ({ initialData, timezoneOption }: NewListCreationPageProps) => {
   const router = useRouter();
   const { timezone, name, page } = router.query as QueryParams;
+  const contributorIds = router.query.contributors as string;
   const { toast } = useToast();
   const posthog = usePostHog();
   const { sessionToken } = useSupabaseAuth();
@@ -144,6 +145,12 @@ const NewListCreationPage = ({ initialData, timezoneOption }: NewListCreationPag
 
     if (!router.query.limit) {
       setQueryParams({ limit: "10" } as QueryParams);
+    }
+  }, [router.query]);
+
+  useEffect(() => {
+    if (contributorIds) {
+      setSelectedContributors(JSON.parse(contributorIds) as DbPRContributor[]);
     }
   }, [router.query]);
 

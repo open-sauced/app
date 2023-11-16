@@ -42,10 +42,8 @@ const HubLayout = ({ children }: { children: React.ReactNode }) => {
       }
     }
 
-    getUser()
-      // eslint-disable-next-line no-console
-      .catch(console.error)
-      .then(() => {});
+    // eslint-disable-next-line no-console
+    getUser().catch(console.error);
   }, [router, onboarded]);
 
   const getActiveLinkClassNames = (href: string) => {
@@ -69,10 +67,7 @@ const HubLayout = ({ children }: { children: React.ReactNode }) => {
                         {navLinks.map((link, index) => (
                           <li key={`hub-nav-${index}-${link.name}`}>
                             <Link
-                              className={clsx(
-                                "text-3xl leading-none font-medium mx-0",
-                                getActiveLinkClassNames(link.href)
-                              )}
+                              className={clsx("text-3xl leading-none mx-0", getActiveLinkClassNames(link.href))}
                               href={link.href}
                             >
                               {link.name}

@@ -19,6 +19,7 @@ const getPullRequestsToDays = (pull_requests: DbRepoPR[], range = 30) => {
   }, {});
 
   const days: GraphData[] = [];
+
   for (let d = range; d >= 0; d--) {
     days.push({ x: d, y: graphDays[d] || 0 });
   }

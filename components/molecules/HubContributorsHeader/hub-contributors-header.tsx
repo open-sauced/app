@@ -90,7 +90,13 @@ const HubContributorsHeader = ({
                 <span className="flex items-center gap-2 text-sm shrink-0">
                   <FiGlobe /> Make Public
                 </span>
-                <ToggleSwitch size="base" checked={isPublic} name="isPublic" handleToggle={handleToggleIsPublic} />
+                <ToggleSwitch
+                  ariaLabelledBy="hub-make-public"
+                  size="base"
+                  checked={isPublic}
+                  name="isPublic"
+                  handleToggle={handleToggleIsPublic}
+                />
               </div>
               <span
                 className={clsx(

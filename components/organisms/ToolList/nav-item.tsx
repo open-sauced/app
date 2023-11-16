@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 import humanizeNumber from "lib/utils/humanizeNumber";
 
@@ -13,6 +14,8 @@ interface NavItemProps {
 
 const NavItem: React.FC<NavItemProps> = ({ username, filterName, tool, selectedFilter, selectedTool }) => {
   const [total, setTotal] = useState<number>();
+  const router = useRouter();
+  const { range } = router.query;
 
   useEffect(() => {
     setTotal(tool.numOf);
@@ -21,7 +24,11 @@ const NavItem: React.FC<NavItemProps> = ({ username, filterName, tool, selectedF
   return (
     <Link
       href={`/${username ? `pages/${username}/` : ""}${filterName}/${tool.name.toLowerCase()}${
-        selectedFilter ? `/filter/${Array.isArray(selectedFilter) ? selectedFilter.join("/") : selectedFilter}` : ""
+        selectedFilter
+          ? `/filter/${Array.isArray(selectedFilter) ? selectedFilter.join("/") : selectedFilter}?range=${
+              range ?? "30"
+            }`
+          : `?range=${range ?? "30"}`
       }`}
     >
       {/* Button component was here and needed to be removed to resolve issue #187. Button component had styling that will eventually need to be replaced. */}

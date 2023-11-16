@@ -9,11 +9,11 @@ import TableHeader from "components/molecules/TableHeader/table-header";
 
 import useRepositories from "lib/hooks/api/useRepositories";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
-import useStore from "lib/store";
 
 import Checkbox from "components/atoms/Checkbox/checkbox";
 import Button from "components/atoms/Button/button";
 import LimitSelect from "components/atoms/Select/limit-select";
+import { useMediaQuery } from "lib/hooks/useMediaQuery";
 import RepositoriesTable, { classNames, RepositoriesRows } from "../RepositoriesTable/repositories-table";
 import RepoNotIndexed from "./repository-not-indexed";
 
@@ -24,11 +24,12 @@ interface RepositoriesProps {
 const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
   const { user, signIn } = useSupabaseAuth();
   const router = useRouter();
-  const { pageId, toolName, selectedFilter, userOrg } = router.query;
+  const { pageId, toolName, selectedFilter, userOrg, range } = router.query;
   const username = userOrg ? user?.user_metadata.user_name : undefined;
   const topic = pageId as string;
-  const store = useStore();
-  const range = useStore((state) => state.range);
+
+  const isMobile = useMediaQuery("(max-width: 768px)");
+
   const {
     data: repoListData,
     meta: repoMeta,
@@ -36,7 +37,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
     isLoading: repoListIsLoading,
     setPage,
     setLimit,
-  } = useRepositories(repositories, range);
+  } = useRepositories(repositories, Number(range));
   const filteredRepoNotIndexed = selectedFilter && !repoListIsLoading && !repoListIsError && repoListData.length === 0;
   const [selectedRepos, setSelectedRepos] = useState<DbRepo[]>([]);
 
@@ -97,8 +98,6 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
         onSearch={(e) => handleOnSearch(e)}
         metaInfo={repoMeta}
         entity="repos"
-        range={range}
-        setRangeFilter={store.updateRange}
         title="Repositories"
       />
       <div className="flex flex-col w-full overflow-x-auto border rounded-lg">
@@ -186,7 +185,8 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
               <div>
                 <div className="flex items-center gap-4">
                   <Pagination
-                    pages={[]}
+                    pages={isMobile ? [] : new Array(repoMeta.pageCount).fill(0).map((_, index) => index + 1)}
+                    pageSize={5}
                     hasNextPage={repoMeta.hasNextPage}
                     hasPreviousPage={repoMeta.hasPreviousPage}
                     totalPage={repoMeta.pageCount}

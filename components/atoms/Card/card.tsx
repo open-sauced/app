@@ -9,9 +9,7 @@ interface CardProps {
 const Card: React.FC<CardProps> = ({ className, children, heading }) => {
   return (
     <article
-      className={`${className ? className : ""} block ${
-        heading ? "" : "p-3"
-      } bg-white border rounded-lg drop-shadow-md`}
+      className={`${className ? className : ""} block ${heading ? "" : "p-3"} bg-white border rounded-lg shadow-xs`}
     >
       {heading ? (
         <>

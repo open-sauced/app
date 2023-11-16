@@ -1,27 +1,33 @@
 import * as Switch from "@radix-ui/react-switch";
 import clsx from "clsx";
 
-interface ToggleSwitchProps {
+type ToggleSwitchProps = {
   name: string;
   checked: boolean;
   handleToggle: () => void;
   size?: "sm" | "lg" | "base";
   classNames?: string;
-}
+} & ({ ariaLabel: string; ariaLabelledBy?: never } | { ariaLabelledBy: string; ariaLabel?: never });
 
-const ToggleSwitch = ({
-  name,
-  checked = false,
-  handleToggle,
-  size = "base",
-  classNames,
-}: ToggleSwitchProps): JSX.Element => {
+const ToggleSwitch = (props: ToggleSwitchProps): JSX.Element => {
+  const { name, checked = false, handleToggle, size = "base", classNames } = props;
+  let ariaProps: { "aria-label": string } | { "aria-labelledby": string } | undefined;
+
+  if (props.ariaLabelledBy) {
+    ariaProps = { "aria-labelledby": props.ariaLabelledBy };
+  }
+
+  if (props.ariaLabel) {
+    ariaProps = { "aria-label": props.ariaLabel };
+  }
+
   return (
     <Switch.Root
       defaultChecked
       checked={checked}
       onClick={() => handleToggle()}
-      id={name}
+      name={name}
+      {...ariaProps}
       className={clsx(
         classNames ?? classNames,
         checked && "!bg-light-orange-10 justify-end",
