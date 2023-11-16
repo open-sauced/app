@@ -1,4 +1,4 @@
-import { MostUsedLanguagesGraph } from "components/Graphs/most-used-languages-graph";
+import { MostUsedLanguagesGraph } from "components/Graphs/MostUsedLanguagesGraph/most-used-languages-graph";
 import type { Meta, StoryObj } from "@storybook/react";
 
 type MetaData = Meta<typeof MostUsedLanguagesGraph>;

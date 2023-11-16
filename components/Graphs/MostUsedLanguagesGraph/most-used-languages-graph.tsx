@@ -1,18 +1,8 @@
 import { BsFillCircleFill } from "react-icons/bs";
 import Skeleton from "react-loading-skeleton";
-import Button from "components/atoms/Button/button";
 import Card from "components/atoms/Card/card";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "components/atoms/Dropdown/dropdown";
-import PeopleIcon from "img/icons/people.svg";
-import ChevronDownIcon from "img/chevron-down.svg";
-import SVGIcon from "components/atoms/SVGIcon/svg-icon";
-import Icon from "components/atoms/Icon/icon";
 import Text from "components/atoms/Typography/text";
+import { ContributorType, ContributorTypeFilter } from "../shared/contributor-type-filter";
 
 export interface MostUsedLanguagesGraphProps {
   data: {
@@ -26,46 +16,6 @@ export interface MostUsedLanguagesGraphProps {
   contributorType: ContributorType;
   isLoading?: boolean;
 }
-
-interface ContributorTypeFilterProps {
-  setContributorType: (type: ContributorType) => void;
-  contributorType: ContributorType;
-}
-
-export type ContributorType = "all" | "active" | "new" | "alumni";
-
-const peopleFilters: Record<ContributorType, string> = {
-  all: "All Contributors",
-  active: "Active Contributors",
-  new: "New Contributors",
-  alumni: "Alumni Contributors",
-};
-
-// TODO: Pull this out because it's used in more than one place now.
-const ContributorTypeFilter = ({ setContributorType, contributorType }: ContributorTypeFilterProps) => {
-  return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="default" className="items-center gap-1">
-          <SVGIcon IconImage={`${PeopleIcon.src}#icon`} className="w-4 h-4" />
-          {peopleFilters[contributorType]}
-          <Icon IconImage={ChevronDownIcon} className="w-4 h-4" />
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="flex flex-col gap-2">
-        {Object.entries(peopleFilters).map(([key, value]) => (
-          <DropdownMenuItem
-            key={key}
-            className="rounded-md !cursor-pointer"
-            onClick={() => setContributorType(key as keyof typeof peopleFilters)}
-          >
-            {value}
-          </DropdownMenuItem>
-        ))}
-      </DropdownMenuContent>
-    </DropdownMenu>
-  );
-};
 
 export const MostUsedLanguagesGraph = ({
   data,
