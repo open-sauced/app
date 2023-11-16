@@ -49,3 +49,15 @@ export const Default: Story = {
     },
   },
 };
+
+export const Loading: Story = {
+  args: {
+    isLoading: true,
+    data: generateData(),
+    contributorType: "all",
+    setContributorType(type) {
+      // eslint-disable-next-line no-console
+      console.log(type);
+    },
+  },
+};

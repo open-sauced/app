@@ -1,4 +1,5 @@
 import { BsFillCircleFill } from "react-icons/bs";
+import Skeleton from "react-loading-skeleton";
 import Button from "components/atoms/Button/button";
 import Card from "components/atoms/Card/card";
 import {
@@ -23,6 +24,7 @@ export interface MostUsedLanguagesGraphProps {
   };
   setContributorType: (type: ContributorType) => void;
   contributorType: ContributorType;
+  isLoading?: boolean;
 }
 
 interface ContributorTypeFilterProps {
@@ -65,7 +67,12 @@ const ContributorTypeFilter = ({ setContributorType, contributorType }: Contribu
   );
 };
 
-export const MostUsedLanguagesGraph = ({ data, setContributorType, contributorType }: MostUsedLanguagesGraphProps) => {
+export const MostUsedLanguagesGraph = ({
+  data,
+  setContributorType,
+  contributorType,
+  isLoading = false,
+}: MostUsedLanguagesGraphProps) => {
   const colors = [
     "hsl(53, 91%, 59%)",
     "hsl(204, 100%, 40%)",
@@ -91,39 +98,53 @@ export const MostUsedLanguagesGraph = ({ data, setContributorType, contributorTy
         </div>
 
         <div className="flex h-3 place-content-center">
-          {languages.length > 0 ? (
-            languages.map((item, index) => {
-              return (
-                <div
-                  key={item.name}
-                  className={`${index === 0 ? "rounded-l-lg" : ""} ${index === lastItem ? "rounded-r-lg" : ""}`}
-                  style={{ backgroundColor: colors[index], width: `${item.value}%` }}
-                />
-              );
-            })
+          {isLoading ? (
+            <div className="loading rounded-lg w-max" style={{ width: "100%" }}>
+              <span className="sr-only">loading most used languages graph</span>
+            </div>
           ) : (
-            <div className="rounded-lg bg-slate-100 w-full" />
+            <>
+              {languages.length > 0 ? (
+                languages.map((item, index) => {
+                  return (
+                    <div
+                      key={item.name}
+                      className={`${index === 0 ? "rounded-l-lg" : ""} ${index === lastItem ? "rounded-r-lg" : ""}`}
+                      style={{ backgroundColor: colors[index], width: `${item.value}%` }}
+                    />
+                  );
+                })
+              ) : (
+                <div className="rounded-lg bg-slate-100 w-full" />
+              )}
+            </>
           )}
         </div>
 
-        <ul className="grid grid-cols-1 content-center">
-          {languages.length > 0 ? (
-            languages.map((item, index) => (
-              <li
-                key={item.name}
-                className={`flex justify-between pt-4 pb-4 ${index === lastItem ? "" : "border-b-1 border-slate-100"}`}
-              >
-                <span className="flex gap-2 items-center font-medium text-slate-700">
-                  <BsFillCircleFill size={10} style={{ fill: colors[index] }} />
-                  {item.name}
-                </span>
-                <span className="text-slate-600">{item.value}%</span>
-              </li>
-            ))
-          ) : (
-            <p className="text-center">There is no language data</p>
-          )}
-        </ul>
+        {isLoading ? (
+          <Skeleton height={24} count={5} className="mt-4 mb-4" />
+        ) : (
+          <ul className="grid grid-cols-1 content-center">
+            {languages.length > 0 ? (
+              languages.map((item, index) => (
+                <li
+                  key={item.name}
+                  className={`flex justify-between pt-4 pb-4 ${
+                    index === lastItem ? "" : "border-b-1 border-slate-100"
+                  }`}
+                >
+                  <span className="flex gap-2 items-center font-medium text-slate-700">
+                    <BsFillCircleFill size={11} style={{ fill: colors[index] }} />
+                    {item.name}
+                  </span>
+                  <span className="text-slate-600">{item.value}%</span>
+                </li>
+              ))
+            ) : (
+              <p className="text-center">There is no language data</p>
+            )}
+          </ul>
+        )}
       </div>
     </Card>
   );
