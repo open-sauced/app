@@ -605,7 +605,7 @@ const ContributorHighlightCard = ({
             href={highlightLink}
             target="_blank"
             rel="noreferrer"
-            className="inline-block flex-1 underline text-sauced-orange truncate cursor-pointer"
+            className="flex-1 inline-block underline truncate cursor-pointer text-sauced-orange"
           >
             {highlightLink}
           </a>
@@ -632,7 +632,7 @@ const ContributorHighlightCard = ({
                 <DropdownMenuItem
                   onClick={async () => (sessionToken ? handleUpdateReaction(id) : signIn({ provider: "github" }))}
                   key={id}
-                  className="rounded-full !px-2 !cursor-pointer"
+                  className="rounded-full !px-2 !cursor-pointer text-orange-500"
                 >
                   <Emoji text={`:${name}:`} />
                 </DropdownMenuItem>
@@ -655,7 +655,7 @@ const ContributorHighlightCard = ({
                 onClick={async () => (sessionToken ? handleUpdateReaction(emoji_id) : signIn({ provider: "github" }))}
               >
                 <Emoji
-                  className="text-xs md:text-sm text-light-slate-10"
+                  className="text-xs text-orange-500 md:text-sm"
                   text={`:${getEmojiNameById(emoji_id)}: ${reaction_count}`}
                 />
               </div>

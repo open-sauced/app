@@ -1,6 +1,6 @@
 import { useSprings, animated } from "@react-spring/web";
 import { useGesture } from "@use-gesture/react";
-import Image from "next/image";
+
 import { ReactNode, useState } from "react";
 import * as RawTooltip from "@radix-ui/react-tooltip";
 import Button from "components/atoms/Button/button";
@@ -12,11 +12,11 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "components/atoms/Dropdown/dropdown";
-import { getAvatarByUsername } from "lib/utils/github";
 import PeopleIcon from "img/icons/people.svg";
 import ChevronDownIcon from "img/chevron-down.svg";
 import SVGIcon from "components/atoms/SVGIcon/svg-icon";
 import Tooltip from "components/atoms/Tooltip/tooltip";
+import AvatarHoverCard from "components/atoms/Avatar/avatar-hover-card";
 
 // omit total_contributions and login from ContributorStat
 type StatKeys = keyof Omit<ContributorStat, "total_contributions" | "login">;
@@ -55,7 +55,7 @@ const peopleFilters: Record<ContributorType, string> = {
   all: "All Contributors",
   active: "Active Contributors",
   new: "New Contributors",
-  alumni: "Churned Contributors",
+  alumni: "Alumni Contributors",
 };
 
 const LegendItem = ({ color, title }: { color?: string; title: string }) => {
@@ -129,7 +129,7 @@ export default function MostActiveContributorsCard({
     <MostActiveCard>
       <>
         {topContributor && (
-          <div className="text-sm font-medium text-slate-400 mb-4">
+          <div className="text-sm text-slate-400 mb-4">
             {topContributor.login} made {topContributorPercent} of all code contributions
           </div>
         )}
@@ -310,13 +310,7 @@ function GraphRow({
 
   return (
     <>
-      <Image
-        className="block w-8 h-8 rounded-full grid-cols-1"
-        src={getAvatarByUsername(user.login, 64)}
-        width={64}
-        height={64}
-        alt={user.login}
-      />
+      <AvatarHoverCard repositories={[]} contributor={user.login} size="medium" />
       <div className="flex items-center text-sm text-slate-900 grid-cols-2">{user.login}</div>
       <div className="flex items-stretch grid-cols-3">
         <div
