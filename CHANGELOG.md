@@ -5,6 +5,49 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.76.0-beta.15](https://github.com/open-sauced/insights/compare/v1.76.0-beta.14...v1.76.0-beta.15) (2023-11-15)
+
+
+### 🐛 Bug Fixes
+
+* show last 30 days for contribution line graphs ([#2155](https://github.com/open-sauced/insights/issues/2155)) ([a1fee71](https://github.com/open-sauced/insights/commit/a1fee71ef1c127855bb1817e18688f8cc42e23c5))
+
+## [1.76.0-beta.14](https://github.com/open-sauced/insights/compare/v1.76.0-beta.13...v1.76.0-beta.14) (2023-11-15)
+
+
+### 🐛 Bug Fixes
+
+* removed font-medium classes as the base style for all elements is font-medium ([#2146](https://github.com/open-sauced/insights/issues/2146)) ([d06a1ca](https://github.com/open-sauced/insights/commit/d06a1caa9b32b8a4c35c5e3aa15ebbe43265a2f7))
+
+
+### 🍕 Features
+
+* add ability for user to toggle receiving email product updates ([#2133](https://github.com/open-sauced/insights/issues/2133)) ([8ba0d6f](https://github.com/open-sauced/insights/commit/8ba0d6fc2524223ee7a79fec15169ebbe1c29b73))
+* updating last contributed column for insights table ([#2115](https://github.com/open-sauced/insights/issues/2115)) ([846fdc4](https://github.com/open-sauced/insights/commit/846fdc49b6e56918371d2d99e8757a30f8dafac1))
+
+## [1.76.0-beta.13](https://github.com/open-sauced/insights/compare/v1.76.0-beta.12...v1.76.0-beta.13) (2023-11-15)
+
+
+### 🍕 Features
+
+* add params handling for new PR ([#2062](https://github.com/open-sauced/insights/issues/2062)) ([b878429](https://github.com/open-sauced/insights/commit/b87842903223dee9e3007595c5a7fe91da247522))
+
+## [1.76.0-beta.12](https://github.com/open-sauced/insights/compare/v1.76.0-beta.11...v1.76.0-beta.12) (2023-11-15)
+
+
+### 🐛 Bug Fixes
+
+* h1-h6 base style using CSS from .tracking-tight ([#2142](https://github.com/open-sauced/insights/issues/2142)) ([4ad69a1](https://github.com/open-sauced/insights/commit/4ad69a1261dc5957b9a0bff9fe47b92214d5fb3d))
+* hover card now works as expected in all areas ([#2152](https://github.com/open-sauced/insights/issues/2152)) ([d88f71b](https://github.com/open-sauced/insights/commit/d88f71bef7068baca36dc2b865b06f8f47f1ac10))
+* remove unnecesarry console logs ([#2151](https://github.com/open-sauced/insights/issues/2151)) ([8955e02](https://github.com/open-sauced/insights/commit/8955e02b1859fcdd085c822f3c11eee3fa284749))
+
+## [1.76.0-beta.11](https://github.com/open-sauced/insights/compare/v1.76.0-beta.10...v1.76.0-beta.11) (2023-11-15)
+
+
+### 🐛 Bug Fixes
+
+* pr overviews in repo table now accurate ([#2118](https://github.com/open-sauced/insights/issues/2118)) ([b562578](https://github.com/open-sauced/insights/commit/b5625784e50e41af3e70f131856f7f015c14569a))
+
 ## [1.76.0-beta.10](https://github.com/open-sauced/insights/compare/v1.76.0-beta.9...v1.76.0-beta.10) (2023-11-14)
 
 

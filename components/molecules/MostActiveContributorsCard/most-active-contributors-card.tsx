@@ -129,7 +129,7 @@ export default function MostActiveContributorsCard({
     <MostActiveCard>
       <>
         {topContributor && (
-          <div className="text-sm font-medium text-slate-400 mb-4">
+          <div className="text-sm text-slate-400 mb-4">
             {topContributor.login} made {topContributorPercent} of all code contributions
           </div>
         )}

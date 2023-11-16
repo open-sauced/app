@@ -33,6 +33,7 @@ interface userSettingsPageProps {
 type EmailPreferenceType = {
   display_email?: boolean;
   receive_collaboration?: boolean;
+  receive_product_updates?: boolean;
 };
 
 interface DeleteAccountModalProps {
@@ -116,10 +117,9 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
   const [email, setEmail] = useState<string | undefined>("");
   const [bio, setBio] = useState("");
   const [emailPreference, setEmailPreference] = useState<EmailPreferenceType>({
-    // eslint-disable-next-line camelcase
     display_email: false,
-    // eslint-disable-next-line camelcase
     receive_collaboration: false,
+    receive_product_updates: false,
   });
   const [selectedInterest, setSelectedInterest] = useState<string[]>([]);
   const formRef = useRef<HTMLFormElement>(null);
@@ -149,10 +149,9 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
   useEffect(() => {
     if (insightsUser) {
       setEmailPreference({
-        // eslint-disable-next-line camelcase
         display_email: insightsUser?.display_email,
-        // eslint-disable-next-line camelcase
         receive_collaboration: insightsUser?.receive_collaboration,
+        receive_product_updates: insightsUser?.receive_product_updates,
       });
       setSelectedInterest(insightsUser?.interests?.split(","));
       setDisplayLocalTime(insightsUser?.display_local_time);
@@ -227,17 +226,13 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
       name: formRef.current!.nameInput.value,
       email,
       bio,
-      // eslint-disable-next-line camelcase
       twitter_username: formRef.current!.twitter_username.value,
       company: formRef.current!.company.value,
       location: formRef.current!.location.value,
-      // eslint-disable-next-line camelcase
       display_local_time: displayLocalTime,
       timezone,
-      // eslint-disable-next-line camelcase
       github_sponsors_url:
         formRef.current!.github_sponsors_url.value !== "" ? formRef.current!.github_sponsors_url.value : undefined,
-      // eslint-disable-next-line camelcase
       linkedin_url: formRef.current!.linkedin_url.value !== "" ? formRef.current!.linkedin_url.value : undefined,
       discord_url: formRef.current!.discord_url.value !== "" ? formRef.current!.discord_url.value : undefined,
     };
@@ -268,14 +263,14 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
           </Title>
           <form onSubmit={handleUpdateProfile} className="flex flex-col gap-6 mt-6" ref={formRef}>
             <TextInput
-              className="font-medium bg-light-slate-4 text-light-slate-11"
+              className="bg-light-slate-4 text-light-slate-11"
               label="Name*"
               placeholder="April O'Neil"
               required
               name="nameInput"
             />
             <TextInput
-              className="font-medium bg-light-slate-4 text-light-slate-11"
+              className="bg-light-slate-4 text-light-slate-11"
               placeholder="april@stockgen.com"
               handleChange={handleEmailChange}
               label="Email*"
@@ -285,7 +280,7 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
 
             {/* Bio section */}
             <div className="flex flex-col gap-2">
-              <label className="flex flex-col w-full text-sm font-medium text-light-slate-9">
+              <label className="flex flex-col w-full text-sm text-light-slate-9">
                 Bio
                 <textarea
                   rows={4}
@@ -308,28 +303,28 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
               )}
             </div>
             <TextInput
-              className="font-medium bg-light-slate-4 text-light-slate-11"
+              className="bg-light-slate-4 text-light-slate-11"
               placeholder="https://opensauced.pizza"
               label="URL"
               pattern="http[s]?://.*\..{2,}"
               name="url"
             />
             <TextInput
-              className="font-medium bg-light-slate-4 text-light-slate-11"
+              className="bg-light-slate-4 text-light-slate-11"
               placeholder="https://github.com/sponsors/open-sauced"
               label="GitHub Sponsors URL"
               pattern="http[s]?://.*\..{2,}"
               name="github_sponsors_url"
             />
             <TextInput
-              className="font-medium bg-light-slate-4 text-light-slate-11"
+              className="bg-light-slate-4 text-light-slate-11"
               placeholder="https://www.linkedin.com/in/brianldouglas"
               label="LinkedIn URL"
               pattern="http[s]?://.*\..{2,}"
               name="linkedin_url"
             />
             <TextInput
-              className="font-medium bg-light-slate-4 text-light-slate-11"
+              className="bg-light-slate-4 text-light-slate-11"
               placeholder="https://discord.com/users/832877193112762362"
               label="Discord URL"
               onChange={handleValidateDiscordUrl}
@@ -343,13 +338,13 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
               name="twitter_username"
             />
             <TextInput
-              className="font-medium bg-light-slate-4 text-light-slate-11"
+              className="bg-light-slate-4 text-light-slate-11"
               placeholder="OpenSauced"
               label="Company"
               name="company"
             />
             <TextInput
-              className="font-medium bg-light-slate-4 text-light-slate-11"
+              className="bg-light-slate-4 text-light-slate-11"
               placeholder="USA"
               label="Location"
               name="location"
@@ -430,7 +425,6 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
             <div className="flex flex-col gap-3">
               <label className="text-2xl font-normal text-light-slate-11">Email Preferences</label>
               <Checkbox
-                // eslint-disable-next-line camelcase
                 onCheckedChange={() => setEmailPreference((prev) => ({ ...prev, display_email: !prev.display_email }))}
                 checked={emailPreference.display_email}
                 title="profile email"
@@ -438,12 +432,19 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
               />
               <Checkbox
                 onCheckedChange={() =>
-                  // eslint-disable-next-line camelcase
                   setEmailPreference((prev) => ({ ...prev, receive_collaboration: !prev.receive_collaboration }))
                 }
                 checked={emailPreference.receive_collaboration}
                 title="connections requests"
                 label="Receive connections requests"
+              />
+              <Checkbox
+                onCheckedChange={() =>
+                  setEmailPreference((prev) => ({ ...prev, receive_product_updates: !prev.receive_product_updates }))
+                }
+                checked={emailPreference.receive_product_updates}
+                title="Receive Product Updates"
+                label="Receive product updates"
               />
             </div>
             <Button
