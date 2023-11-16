@@ -533,227 +533,229 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
           onEscapeKeyDown={() => {
             setIsDivFocused(false);
           }}
-          className="p-4 w-full md:w-[40rem] xs:w-96 max-h-[80vh] overflow-y-scroll"
+          className="p-4 w-full md:w-[40rem] xs:w-96"
         >
           <DialogHeader>
             <DialogTitle>Post a highlight</DialogTitle>
           </DialogHeader>
           <DialogCloseButton onClick={() => setIsDivFocused(false)} />
-          <form onSubmit={handlePostHighlight} className="flex flex-col gap-4 font-normal">
-            <p role="alert">
-              {errorMsg && (
-                <span className="inline-flex items-center gap-2 px-2 py-1 text-red-500 bg-red-100 border border-red-500 rounded-md w-full text-sm">
-                  <MdError size={20} /> {errorMsg}
-                </span>
-              )}
-            </p>
-            <div className="flex flex-col gap-2 p-2 text-sm bg-white border rounded-lg">
-              <TypeWriterTextArea
-                className={`resize-y min-h-[80px] max-h-99 font-normal placeholder:text-slate-400 text-light-slate-12 placeholder:font-normal placeholder:text-sm transition focus:outline-none rounded-lg ${
-                  !isDivFocused ? "hidden" : ""
-                }`}
-                defaultRow={4}
-                value={bodyText}
-                onKeyUp={(e) => {
-                  if (e.ctrlKey && e.key === "Enter") {
-                    handlePostHighlight(e);
-                  }
-                }}
-                placeholder={`Tell us about your highlight and add a link
+          <div className="max-h-[80vh] overflow-y-scroll">
+            <form onSubmit={handlePostHighlight} className="flex flex-col gap-4 font-normal">
+              <p role="alert">
+                {errorMsg && (
+                  <span className="inline-flex items-center gap-2 px-2 py-1 text-red-500 bg-red-100 border border-red-500 rounded-md w-full text-sm">
+                    <MdError size={20} /> {errorMsg}
+                  </span>
+                )}
+              </p>
+              <div className="flex flex-col gap-2 p-2 text-sm bg-white border rounded-lg">
+                <TypeWriterTextArea
+                  className={`resize-y min-h-[80px] max-h-99 font-normal placeholder:text-slate-400 text-light-slate-12 placeholder:font-normal placeholder:text-sm transition focus:outline-none rounded-lg ${
+                    !isDivFocused ? "hidden" : ""
+                  }`}
+                  defaultRow={4}
+                  value={bodyText}
+                  onKeyUp={(e) => {
+                    if (e.ctrlKey && e.key === "Enter") {
+                      handlePostHighlight(e);
+                    }
+                  }}
+                  placeholder={`Tell us about your highlight and add a link
               `}
-                typewrite={isTyping}
-                textContent={bodyText}
-                onChangeText={(value) => {
-                  handleTextAreaInputChange(value);
-                  setCharCount(value.length);
-                }}
-                ref={textAreaRef}
+                  typewrite={isTyping}
+                  textContent={bodyText}
+                  onChangeText={(value) => {
+                    handleTextAreaInputChange(value);
+                    setCharCount(value.length);
+                  }}
+                  ref={textAreaRef}
+                />
+
+                <p className="flex justify-end gap-1 text-xs text-light-slate-9">
+                  <span className={`${!validCharLimit() && "text-red-600"}`}>
+                    {!validCharLimit() ? `-${charCount - charLimit}` : charCount}
+                  </span>
+                  / <span>{charLimit}</span>
+                </p>
+              </div>
+
+              <AddRepo
+                taggedRepos={taggedRepoList}
+                deleteTaggedRepo={handleTaggedRepoDelete}
+                showAddRepoDialog={setAddTaggedRepoFormOpen}
               />
 
-              <p className="flex justify-end gap-1 text-xs text-light-slate-9">
-                <span className={`${!validCharLimit() && "text-red-600"}`}>
-                  {!validCharLimit() ? `-${charCount - charLimit}` : charCount}
-                </span>
-                / <span>{charLimit}</span>
-              </p>
-            </div>
-
-            <AddRepo
-              taggedRepos={taggedRepoList}
-              deleteTaggedRepo={handleTaggedRepoDelete}
-              showAddRepoDialog={setAddTaggedRepoFormOpen}
-            />
-
-            <div className="flex">
-              <div className="flex w-full gap-1 items-center">
-                <Tooltip direction="top" content="Pick a date">
-                  <Popover open={createPopoverOpen}>
-                    <PopoverTrigger asChild>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setCreatePopoverOpen(true);
-                        }}
-                        className="flex items-center gap-2 p-2 text-base rounded-full z-10 text-light-slate-9 bg-light-slate-3 cursor-pointer"
-                      >
-                        <FiCalendar className="text-light-slate-11" />
-                        {date && <span className="text-xs">{format(date, "PPP")}</span>}
-                      </button>
-                    </PopoverTrigger>
-                    <PopoverContent ref={popoverContentRef} className="w-auto p-0 bg-white pointer-events-auto">
-                      <Calendar
-                        // block user's from selecting a future date
-                        toDate={new Date()}
-                        mode="single"
-                        selected={date}
-                        onSelect={(date) => {
-                          setDate(date);
-                          setCreatePopoverOpen(false);
-                        }}
-                        className="border rounded-md"
-                      />
-                    </PopoverContent>
-                  </Popover>
-                </Tooltip>
-                <Tooltip className="text-xs" direction="top" content="Auto-Summarize">
-                  <button
-                    disabled={isSummaryButtonDisabled}
-                    type="button"
-                    onClick={handleGenerateHighlightSummary}
-                    className="p-2 rounded-full bg-light-slate-3 text-light-slate-11 disabled:cursor-not-allowed disabled:animate-pulse disabled:text-light-orange-9"
-                  >
-                    <HiOutlineSparkles className="text-base" />
-                  </button>
-                </Tooltip>
-                <TextInput
-                  id="highlight-link-input"
-                  className="text-sm shadow-none h-10 flex-none"
-                  value={highlightLink}
-                  handleChange={(value) => setHighlightLink(value)}
-                  placeholder="Paste the URL to your PR, Issue, or Dev.to blog post."
-                />
+              <div className="flex">
+                <div className="flex w-full gap-1 items-center">
+                  <Tooltip direction="top" content="Pick a date">
+                    <Popover open={createPopoverOpen}>
+                      <PopoverTrigger asChild>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setCreatePopoverOpen(true);
+                          }}
+                          className="flex items-center gap-2 p-2 text-base rounded-full z-10 text-light-slate-9 bg-light-slate-3 cursor-pointer"
+                        >
+                          <FiCalendar className="text-light-slate-11" />
+                          {date && <span className="text-xs">{format(date, "PPP")}</span>}
+                        </button>
+                      </PopoverTrigger>
+                      <PopoverContent ref={popoverContentRef} className="w-auto p-0 bg-white pointer-events-auto">
+                        <Calendar
+                          // block user's from selecting a future date
+                          toDate={new Date()}
+                          mode="single"
+                          selected={date}
+                          onSelect={(date) => {
+                            setDate(date);
+                            setCreatePopoverOpen(false);
+                          }}
+                          className="border rounded-md"
+                        />
+                      </PopoverContent>
+                    </Popover>
+                  </Tooltip>
+                  <Tooltip className="text-xs" direction="top" content="Auto-Summarize">
+                    <button
+                      disabled={isSummaryButtonDisabled}
+                      type="button"
+                      onClick={handleGenerateHighlightSummary}
+                      className="p-2 rounded-full bg-light-slate-3 text-light-slate-11 disabled:cursor-not-allowed disabled:animate-pulse disabled:text-light-orange-9"
+                    >
+                      <HiOutlineSparkles className="text-base" />
+                    </button>
+                  </Tooltip>
+                  <TextInput
+                    id="highlight-link-input"
+                    className="text-sm shadow-none h-10 flex-none"
+                    value={highlightLink}
+                    handleChange={(value) => setHighlightLink(value)}
+                    placeholder="Paste the URL to your PR, Issue, or Dev.to blog post."
+                  />
+                </div>
               </div>
-            </div>
 
-            {highlightLink && isDivFocused && highlightLink.includes("github") && (
-              <GhOpenGraphImg githubLink={highlightLink} />
-            )}
-            {highlightLink && isDivFocused && highlightLink.includes("dev.to") && (
-              <DevToSocialImg blogLink={highlightLink} />
-            )}
+              {highlightLink && isDivFocused && highlightLink.includes("github") && (
+                <GhOpenGraphImg githubLink={highlightLink} />
+              )}
+              {highlightLink && isDivFocused && highlightLink.includes("dev.to") && (
+                <DevToSocialImg blogLink={highlightLink} />
+              )}
 
-            <Button
-              loading={loading}
-              disabled={!bodyText || !validCharLimit()}
-              className="ml-auto max-sm:hidden "
-              variant="primary"
-            >
-              Post
-            </Button>
-
-            <h2 className="text-md font-semibold text-slate-900">
-              Highlight suggestions
-              <span className="text-sm font-semibold text-light-slate-9 ml-2">Based on your latest activity</span>
-            </h2>
-
-            {loadingSuggestions ? (
-              <div className="w-full">
-                <Skeleton count={3} height={40} className="w-full my-[0.5rem] mx-auto" />
-              </div>
-            ) : (
-              <Swiper
-                spaceBetween={8}
-                slidesPerView={1}
-                className="w-full"
-                modules={[Pagination, A11y]}
-                pagination={{
-                  clickable: true,
-                }}
-                a11y={{
-                  enabled: true,
-                }}
+              <Button
+                loading={loading}
+                disabled={!bodyText || !validCharLimit()}
+                className="ml-auto max-sm:hidden "
+                variant="primary"
               >
-                {highlightSuggestions?.map((suggestionPage) => (
-                  <SwiperSlide key={suggestionPage[0].url}>
-                    <div className="flex flex-col gap-2 overflow-hidden text-sm w-full">
-                      {suggestionPage.map(
-                        (suggestion: {
-                          url: string;
-                          type: string;
-                          status_reason: string;
-                          status: string;
-                          title: string;
-                        }) => (
-                          <div
-                            key={suggestion.url}
-                            className="flex items-center justify-between w-full gap-0.5 text-sm bg-white border rounded-lg p-2"
-                          >
-                            <div className="flex w-full gap-2 items-center">
-                              {suggestion.type === "pull_request" && (
-                                <BiGitMerge
-                                  className={`text-base xs:text-xl ${
-                                    suggestion.status_reason === "open" ? "text-green-600" : "text-purple-600"
-                                  }`}
-                                />
-                              )}
-                              {suggestion.type === "issue" && (
-                                <VscIssues
-                                  className={`text-base xs:text-xl ${
-                                    suggestion.status === "open"
-                                      ? "text-green-600"
-                                      : suggestion.status_reason === "not_planned"
-                                      ? "text-red-600"
-                                      : "text-purple-600"
-                                  }`}
-                                />
-                              )}
-                              <p
-                                className="text-light-slate-11 truncate max-w-[14rem] xs:max-w-[16rem] text-xs xs:text-sm cursor-pointer hover:text-orange-600 transition"
-                                onClick={() => {
-                                  window.open(suggestion.url, "_blank");
-                                }}
-                              >
-                                {suggestion.title}
-                              </p>
-                            </div>
-                            <Tooltip className="text-xs modal-tooltip" direction="top" content="Fill content">
-                              <button
-                                type="button"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  setHighlightLink(suggestion.url);
-                                }}
-                                disabled={isSummaryButtonDisabled}
-                                className="p-2 rounded-full hover:bg-light-slate-3 text-light-slate-11 transition"
-                              >
-                                <FiEdit2 className="text-base xs:text-xl" />
-                              </button>
-                            </Tooltip>
+                Post
+              </Button>
 
-                            <Tooltip className="text-xs modal-tooltip" direction="top" content="Add and Summarize">
-                              <button
-                                type="button"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  setHighlightLink(suggestion.url);
-                                  // setTitle(suggestion.title);
-                                  generateSummary.current = true;
-                                }}
-                                disabled={isSummaryButtonDisabled}
-                                className="p-2 rounded-full hover:bg-light-slate-3 text-light-slate-11 transition disabled:cursor-not-allowed disabled:animate-pulse disabled:text-light-orange-9"
-                              >
-                                <HiOutlineSparkles className="text-base xs:text-xl" />
-                              </button>
-                            </Tooltip>
-                          </div>
-                        )
-                      )}
-                    </div>
-                  </SwiperSlide>
-                ))}
-              </Swiper>
-            )}
-          </form>
+              <h2 className="text-md font-semibold text-slate-900">
+                Highlight suggestions
+                <span className="text-sm font-semibold text-light-slate-9 ml-2">Based on your latest activity</span>
+              </h2>
+
+              {loadingSuggestions ? (
+                <div className="w-full">
+                  <Skeleton count={3} height={40} className="w-full my-[0.5rem] mx-auto" />
+                </div>
+              ) : (
+                <Swiper
+                  spaceBetween={8}
+                  slidesPerView={1}
+                  className="w-full"
+                  modules={[Pagination, A11y]}
+                  pagination={{
+                    clickable: true,
+                  }}
+                  a11y={{
+                    enabled: true,
+                  }}
+                >
+                  {highlightSuggestions?.map((suggestionPage) => (
+                    <SwiperSlide key={suggestionPage[0].url}>
+                      <div className="flex flex-col gap-2 overflow-hidden text-sm w-full">
+                        {suggestionPage.map(
+                          (suggestion: {
+                            url: string;
+                            type: string;
+                            status_reason: string;
+                            status: string;
+                            title: string;
+                          }) => (
+                            <div
+                              key={suggestion.url}
+                              className="flex items-center justify-between w-full gap-0.5 text-sm bg-white border rounded-lg p-2"
+                            >
+                              <div className="flex w-full gap-2 items-center">
+                                {suggestion.type === "pull_request" && (
+                                  <BiGitMerge
+                                    className={`text-base xs:text-xl ${
+                                      suggestion.status_reason === "open" ? "text-green-600" : "text-purple-600"
+                                    }`}
+                                  />
+                                )}
+                                {suggestion.type === "issue" && (
+                                  <VscIssues
+                                    className={`text-base xs:text-xl ${
+                                      suggestion.status === "open"
+                                        ? "text-green-600"
+                                        : suggestion.status_reason === "not_planned"
+                                        ? "text-red-600"
+                                        : "text-purple-600"
+                                    }`}
+                                  />
+                                )}
+                                <p
+                                  className="text-light-slate-11 truncate max-w-[14rem] xs:max-w-[16rem] text-xs xs:text-sm cursor-pointer hover:text-orange-600 transition"
+                                  onClick={() => {
+                                    window.open(suggestion.url, "_blank");
+                                  }}
+                                >
+                                  {suggestion.title}
+                                </p>
+                              </div>
+                              <Tooltip className="text-xs modal-tooltip" direction="top" content="Fill content">
+                                <button
+                                  type="button"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    setHighlightLink(suggestion.url);
+                                  }}
+                                  disabled={isSummaryButtonDisabled}
+                                  className="p-2 rounded-full hover:bg-light-slate-3 text-light-slate-11 transition"
+                                >
+                                  <FiEdit2 className="text-base xs:text-xl" />
+                                </button>
+                              </Tooltip>
+
+                              <Tooltip className="text-xs modal-tooltip" direction="top" content="Add and Summarize">
+                                <button
+                                  type="button"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    setHighlightLink(suggestion.url);
+                                    // setTitle(suggestion.title);
+                                    generateSummary.current = true;
+                                  }}
+                                  disabled={isSummaryButtonDisabled}
+                                  className="p-2 rounded-full hover:bg-light-slate-3 text-light-slate-11 transition disabled:cursor-not-allowed disabled:animate-pulse disabled:text-light-orange-9"
+                                >
+                                  <HiOutlineSparkles className="text-base xs:text-xl" />
+                                </button>
+                              </Tooltip>
+                            </div>
+                          )
+                        )}
+                      </div>
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+              )}
+            </form>
+          </div>
         </DialogContent>
       </Dialog>
 
