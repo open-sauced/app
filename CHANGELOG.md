@@ -5,6 +5,52 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.76.0](https://github.com/open-sauced/insights/compare/v1.75.0...v1.76.0) (2023-11-16)
+
+
+### 🧑‍💻 Code Refactoring
+
+* remove unused components ([f71c662](https://github.com/open-sauced/insights/commit/f71c662279de4f63f000aee93f61aed89c93d307))
+* Replace hardcoded px value with appropriate tailwind class in Dropdown component  ([#2113](https://github.com/open-sauced/insights/issues/2113)) ([abf3380](https://github.com/open-sauced/insights/commit/abf338088412a6bef403230e55cf7dab02161b21))
+
+
+### 🍕 Features
+
+* add ability for user to toggle receiving email product updates ([#2133](https://github.com/open-sauced/insights/issues/2133)) ([8ba0d6f](https://github.com/open-sauced/insights/commit/8ba0d6fc2524223ee7a79fec15169ebbe1c29b73))
+* add params handling for new PR ([#2062](https://github.com/open-sauced/insights/issues/2062)) ([b878429](https://github.com/open-sauced/insights/commit/b87842903223dee9e3007595c5a7fe91da247522))
+* implemented the Contributions by type of contributor graph for the list activity page ([#2101](https://github.com/open-sauced/insights/issues/2101)) ([0088c23](https://github.com/open-sauced/insights/commit/0088c23cd614a8c016cc0d1f4ad84adaf5198cef))
+* move range filter to global header ([#2047](https://github.com/open-sauced/insights/issues/2047)) ([1037aef](https://github.com/open-sauced/insights/commit/1037aefc26cd9a972305973cff9d6f2acc114005))
+* replace dashboard scatterplot chart with repositories table ([#2130](https://github.com/open-sauced/insights/issues/2130)) ([dedb2e4](https://github.com/open-sauced/insights/commit/dedb2e42eaac6434f8c662c47a1905d8afa2c30d))
+* select component growth enabled ([#1762](https://github.com/open-sauced/insights/issues/1762)) ([3303054](https://github.com/open-sauced/insights/commit/33030548ed11a1410a56788eec05de98e46436a7))
+* updating last contributed column for insights table ([#2115](https://github.com/open-sauced/insights/issues/2115)) ([846fdc4](https://github.com/open-sauced/insights/commit/846fdc49b6e56918371d2d99e8757a30f8dafac1))
+
+
+### 🐛 Bug Fixes
+
+* add hovercard to most active contributors avatars in list ([#2157](https://github.com/open-sauced/insights/issues/2157)) ([e02d1db](https://github.com/open-sauced/insights/commit/e02d1dbc3fa077531be00f698fd722e87699457c))
+* added Edit List button to all list pages ([a6a38f4](https://github.com/open-sauced/insights/commit/a6a38f465de9085870dcea7c182e1ecf61c57b90))
+* added Edit List button to all list pages ([#2125](https://github.com/open-sauced/insights/issues/2125)) ([284fa4a](https://github.com/open-sauced/insights/commit/284fa4a01e48f6ccb95ada380e3172533d9c9a4a))
+* added orange hearts ([#2139](https://github.com/open-sauced/insights/issues/2139)) ([2b8b2ed](https://github.com/open-sauced/insights/commit/2b8b2ed8621f2d767ef10d685884676ceee6530e))
+* change red color to purple in merged pr bar ([#2108](https://github.com/open-sauced/insights/issues/2108)) ([dc28efc](https://github.com/open-sauced/insights/commit/dc28efcbb5d28c049fa698adfd59232744e73353))
+* Correct wording for alumni contributors  ([#2114](https://github.com/open-sauced/insights/issues/2114)) ([2f23896](https://github.com/open-sauced/insights/commit/2f23896e5aa3c22af6b456092a0308aeb7952b44))
+* fixed styling of delete list modal ([#2106](https://github.com/open-sauced/insights/issues/2106)) ([d7d7048](https://github.com/open-sauced/insights/commit/d7d70487711f50a505f01f4f82e5f46a066193ec))
+* h1-h6 base style using CSS from .tracking-tight ([#2142](https://github.com/open-sauced/insights/issues/2142)) ([4ad69a1](https://github.com/open-sauced/insights/commit/4ad69a1261dc5957b9a0bff9fe47b92214d5fb3d))
+* hover card now works as expected in all areas ([#2152](https://github.com/open-sauced/insights/issues/2152)) ([d88f71b](https://github.com/open-sauced/insights/commit/d88f71bef7068baca36dc2b865b06f8f47f1ac10))
+* insights edit repo list limit ([#2119](https://github.com/open-sauced/insights/issues/2119)) ([c81e8bb](https://github.com/open-sauced/insights/commit/c81e8bbc8604fcf0838028883aa5eb4852234893))
+* now main index page handles redirects in middleware ([d7a69fd](https://github.com/open-sauced/insights/commit/d7a69fd8c648892d80a51112730226091b544b10))
+* now main index page handles redirects in middleware ([#2137](https://github.com/open-sauced/insights/issues/2137)) ([5b26fb2](https://github.com/open-sauced/insights/commit/5b26fb2373f4e16f713c3a5432d11d44fb1ef3e6))
+* pr overviews in repo table now accurate ([#2118](https://github.com/open-sauced/insights/issues/2118)) ([b562578](https://github.com/open-sauced/insights/commit/b5625784e50e41af3e70f131856f7f015c14569a))
+* Remove the unused components - `CommandEmpty` and `CommandLis`t from the codebase ([#2112](https://github.com/open-sauced/insights/issues/2112)) ([690738f](https://github.com/open-sauced/insights/commit/690738f5429dc6fa09121897e9a6a398a975f116))
+* remove unnecesarry console logs ([#2151](https://github.com/open-sauced/insights/issues/2151)) ([8955e02](https://github.com/open-sauced/insights/commit/8955e02b1859fcdd085c822f3c11eee3fa284749))
+* removed font-medium classes as the base style for all elements is font-medium ([#2146](https://github.com/open-sauced/insights/issues/2146)) ([d06a1ca](https://github.com/open-sauced/insights/commit/d06a1caa9b32b8a4c35c5e3aa15ebbe43265a2f7))
+* removed two second timeout for initial page load ([e49b799](https://github.com/open-sauced/insights/commit/e49b7990395acc9534455f13aa054d58f65801cb))
+* removed two second timeout for initial page load ([#2136](https://github.com/open-sauced/insights/issues/2136)) ([d44248a](https://github.com/open-sauced/insights/commit/d44248a62a154f5cf63623602af5bc7604e82996))
+* replace hardcoded px with tailwind class ([6346cb7](https://github.com/open-sauced/insights/commit/6346cb77fca782db7010541ecc36ecfc9ff8a347))
+* replace hardcoded px with tailwind class ([6cd93ff](https://github.com/open-sauced/insights/commit/6cd93ffa737fb49c9bd651dd8b7a4b20bbe4a3d2))
+* show last 30 days for contribution line graphs ([#2155](https://github.com/open-sauced/insights/issues/2155)) ([a1fee71](https://github.com/open-sauced/insights/commit/a1fee71ef1c127855bb1817e18688f8cc42e23c5))
+* styling updates to lists of insights/lists ([947e6a5](https://github.com/open-sauced/insights/commit/947e6a54fb79d06ef17dd63ba426181ab8a8a08b))
+* styling updates to lists of insights/lists ([#2131](https://github.com/open-sauced/insights/issues/2131)) ([34e7f92](https://github.com/open-sauced/insights/commit/34e7f92a6ce3f34610bf1df1f75d28aad46372db))
+
 ## [1.76.0-beta.16](https://github.com/open-sauced/insights/compare/v1.76.0-beta.15...v1.76.0-beta.16) (2023-11-16)
 
 
