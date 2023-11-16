@@ -99,7 +99,7 @@ export default function ContributionsEvolutionByType({ data = [], isLoading }: C
           }}
         >
           <div className="text-lg text-slate-900 mb-2">Contributions Evolution</div>
-          <div className="text-sm font-medium text-slate-400 mb-4">This is going to be an auto-generated insight.</div>
+          <div className="text-sm text-slate-400 mb-4">This is going to be an auto-generated insight.</div>
           {/* chart */}
           <div className="sr-only" aria-live="polite">
             {isLoading ? "Loading the contributions evolution graph" : "The contributions evolution graph has loaded"}

@@ -62,7 +62,7 @@ const TeamMembersConfig = ({
 
   return (
     <div className={` ${className && className}`}>
-      <h2 className="text-lg font-medium tracking-wide">Add Team Members</h2>
+      <h2 className="text-lg tracking-wide">Add Team Members</h2>
       <div className="flex items-center gap-5 mt-3">
         <Search
           isLoading={loading}
