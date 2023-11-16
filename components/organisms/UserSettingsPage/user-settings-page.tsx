@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import clsx from "clsx";
 
 import { RiArrowDownSLine, RiArrowUpSLine } from "react-icons/ri";
 import { User } from "@supabase/supabase-js";
@@ -63,8 +64,11 @@ const DeleteAccountModal = ({ open, setOpen, onDelete }: DeleteAccountModalProps
           <div className="flex gap-4">
             <Button
               type="submit"
-              className="w-max border-dark-red-8 bg-dark-red-8 text-white hover:border-dark-red-7 hover:bg-dark-red-7"
-              variant="primary"
+              className={clsx(
+                "bg-light-red-6 border border-light-red-8 hover:bg-light-red-7 text-light-red-10",
+                disabled && "cursor-not-allowed !bg-light-red-4 hover:!none !border-light-red-5 !text-light-red-8"
+              )}
+              variant="default"
               onClick={() => {
                 if (!disabled) {
                   onDelete();
@@ -516,8 +520,8 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
                   type="submit"
                   rel="noopener noreferrer"
                   target="_blank"
-                  className="w-max border-dark-red-8 bg-dark-red-8 text-white hover:border-dark-red-7 hover:bg-dark-red-7"
-                  variant="primary"
+                  className="w-max border bg-light-red-6 border-light-red-8 hover:bg-light-red-7 text-light-red-10"
+                  variant="default"
                 >
                   Delete Account
                 </Button>
