@@ -33,6 +33,7 @@ export const MostUsedLanguagesGraph = ({
   const percentage = 10;
   const { data: languages = [], mainLanguage } = data;
   const lastItem = languages.length > 0 ? languages.length - 1 : 0;
+  const sortedLanguages = languages.sort((a, b) => b.value - a.value);
 
   return (
     <Card className="p-5">
@@ -54,8 +55,8 @@ export const MostUsedLanguagesGraph = ({
             </div>
           ) : (
             <>
-              {languages.length > 0 ? (
-                languages.map((item, index) => {
+              {sortedLanguages.length > 0 ? (
+                sortedLanguages.map((item, index) => {
                   return (
                     <div
                       key={item.name}
@@ -75,8 +76,8 @@ export const MostUsedLanguagesGraph = ({
           <Skeleton height={24} count={5} className="mt-4 mb-4" />
         ) : (
           <ul className="grid grid-cols-1 content-center">
-            {languages.length > 0 ? (
-              languages.map((item, index) => (
+            {sortedLanguages.length > 0 ? (
+              sortedLanguages.map((item, index) => (
                 <li
                   key={item.name}
                   className={`flex justify-between pt-4 pb-4 ${
