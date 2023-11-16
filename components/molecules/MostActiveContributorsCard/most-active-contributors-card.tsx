@@ -1,13 +1,13 @@
 import { useSprings, animated } from "@react-spring/web";
 import { useGesture } from "@use-gesture/react";
-import Image from "next/image";
+
 import { ReactNode, useState } from "react";
 import * as RawTooltip from "@radix-ui/react-tooltip";
 import Card from "components/atoms/Card/card";
 
-import { getAvatarByUsername } from "lib/utils/github";
 import Tooltip from "components/atoms/Tooltip/tooltip";
 import { ContributorType, ContributorTypeFilter } from "components/Graphs/shared/contributor-type-filter";
+import AvatarHoverCard from "components/atoms/Avatar/avatar-hover-card";
 
 // omit total_contributions and login from ContributorStat
 type StatKeys = keyof Omit<ContributorStat, "total_contributions" | "login">;
@@ -273,13 +273,7 @@ function GraphRow({
 
   return (
     <>
-      <Image
-        className="block w-8 h-8 rounded-full grid-cols-1"
-        src={getAvatarByUsername(user.login, 64)}
-        width={64}
-        height={64}
-        alt={user.login}
-      />
+      <AvatarHoverCard repositories={[]} contributor={user.login} size="medium" />
       <div className="flex items-center text-sm text-slate-900 grid-cols-2">{user.login}</div>
       <div className="flex items-stretch grid-cols-3">
         <div
