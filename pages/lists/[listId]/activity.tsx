@@ -166,7 +166,8 @@ const ListActivityPage = ({ list, numberOfContributors, isError, activityData, i
             data={treemapData}
             color={getGraphColorPalette()}
           />
-          <ContributionsEvolutionByType data={evolutionData} isLoading={isLoadingEvolution} />
+          {/* short-term "feature flag" */}
+          {false && <ContributionsEvolutionByType data={evolutionData} isLoading={isLoadingEvolution} />}
         </div>
       )}
     </ListPageLayout>
