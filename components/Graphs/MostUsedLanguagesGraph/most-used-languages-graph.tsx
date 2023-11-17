@@ -1,5 +1,6 @@
 import { BsFillCircleFill } from "react-icons/bs";
 import Skeleton from "react-loading-skeleton";
+import { useEffect, useRef, useState } from "react";
 import Card from "components/atoms/Card/card";
 import Text from "components/atoms/Typography/text";
 import { ContributorType, ContributorTypeFilter } from "../shared/contributor-type-filter";
@@ -34,6 +35,17 @@ export const MostUsedLanguagesGraph = ({
   const { data: languages = [], mainLanguage } = data;
   const lastItem = languages.length > 0 ? languages.length - 1 : 0;
   const sortedLanguages = languages.sort((a, b) => b.value - a.value);
+  const languagesRef = useRef<HTMLUListElement>(null);
+  const [language, setLanguage] = useState<string | null>();
+
+  useEffect(() => {
+    if (language) {
+      const languageElement = languagesRef.current?.querySelector(`[data-language="${language}"]`);
+      if (languageElement) {
+        languageElement.classList.add("font-semibold");
+      }
+    }
+  }, [language]);
 
   return (
     <Card className="p-5">
@@ -58,10 +70,21 @@ export const MostUsedLanguagesGraph = ({
               {sortedLanguages.length > 0 ? (
                 sortedLanguages.map((item, index) => {
                   return (
-                    <div
+                    <button
+                      aria-label={`${item.name} is ${item.value}% of the most used languages for contributors in your list`}
                       key={item.name}
-                      className={`${index === 0 ? "rounded-l-lg" : ""} ${index === lastItem ? "rounded-r-lg" : ""}`}
+                      className={`${index === 0 ? "rounded-l-lg" : ""} ${
+                        index === lastItem ? "rounded-r-lg" : ""
+                      } transform hover:scale-110 transition-transform hover:z-10`}
                       style={{ backgroundColor: colors[index], width: `${item.value}%` }}
+                      onMouseOver={(event) => {
+                        const selectedLanguage = event.currentTarget.getAttribute("aria-label");
+                        setLanguage(selectedLanguage);
+                      }}
+                      onFocus={(event) => {
+                        const selectedLanguage = event.currentTarget.getAttribute("aria-label");
+                        setLanguage(selectedLanguage);
+                      }}
                     />
                   );
                 })
@@ -75,16 +98,16 @@ export const MostUsedLanguagesGraph = ({
         {isLoading ? (
           <Skeleton height={24} count={5} className="mt-4 mb-4" />
         ) : (
-          <ul className="grid grid-cols-1 content-center">
+          <ul ref={languagesRef} className="grid grid-cols-1 content-center">
             {sortedLanguages.length > 0 ? (
               sortedLanguages.map((item, index) => (
                 <li
                   key={item.name}
                   className={`flex justify-between pt-4 pb-4 ${
                     index === lastItem ? "" : "border-b-1 border-slate-100"
-                  }`}
+                  } ${language === item.name ? "font-semibold" : ""}`}
                 >
-                  <span className="flex gap-2 items-center font-medium text-slate-700">
+                  <span className={`flex gap-2 items-center text-slate-700`}>
                     <BsFillCircleFill size={11} style={{ fill: colors[index] }} />
                     {item.name}
                   </span>
