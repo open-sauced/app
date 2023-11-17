@@ -73,13 +73,14 @@ export const MostUsedLanguagesGraph = ({
                     <button
                       aria-label={`${item.name} is ${item.value}% of the most used languages for contributors in your list`}
                       key={item.name}
+                      data-language={item.name}
                       className={`${index === 0 ? "rounded-l-lg" : ""} ${
                         index === lastItem ? "rounded-r-lg" : ""
                       } transform hover:scale-110 transition-transform hover:z-10`}
                       style={{ backgroundColor: colors[index], width: `${item.value}%` }}
                       onMouseOver={(event) => {
-                        const selectedLanguage = event.currentTarget.getAttribute("aria-label");
-                        setLanguage(selectedLanguage);
+                        const { language } = event.currentTarget.dataset;
+                        setLanguage(language);
                       }}
                       onFocus={(event) => {
                         const selectedLanguage = event.currentTarget.getAttribute("aria-label");
