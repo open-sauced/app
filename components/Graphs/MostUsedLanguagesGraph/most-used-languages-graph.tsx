@@ -2,7 +2,6 @@ import { BsFillCircleFill } from "react-icons/bs";
 import Skeleton from "react-loading-skeleton";
 import { useEffect, useRef, useState } from "react";
 import Card from "components/atoms/Card/card";
-import Text from "components/atoms/Typography/text";
 import { ContributorType, ContributorTypeFilter } from "../shared/contributor-type-filter";
 
 export interface MostUsedLanguagesGraphProps {
@@ -50,12 +49,7 @@ export const MostUsedLanguagesGraph = ({
   return (
     <Card className="p-5">
       <div className="flex flex-col gap-6">
-        <div>
-          <h2 className="pb-1 font-medium text-lg tracking-tight">Most used languages</h2>
-          <Text>
-            {mainLanguage} contributions have been growing on average {percentage}% MoM
-          </Text>
-        </div>
+        <h2 className="pb-1 font-medium text-lg tracking-tight">Most used languages</h2>
         <div className="w-max">
           <ContributorTypeFilter setContributorType={setContributorType} contributorType={contributorType} />
         </div>
@@ -82,14 +76,14 @@ export const MostUsedLanguagesGraph = ({
                         const { language } = event.currentTarget.dataset;
                         setLanguage(language);
                       }}
-                      onMouseOut={(event) => {
+                      onMouseOut={() => {
                         setLanguage(null);
                       }}
                       onFocus={(event) => {
                         const { language } = event.currentTarget.dataset;
                         setLanguage(language);
                       }}
-                      onBlur={(event) => {
+                      onBlur={() => {
                         setLanguage(null);
                       }}
                     />
