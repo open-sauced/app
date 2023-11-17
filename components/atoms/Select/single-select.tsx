@@ -2,7 +2,6 @@ import React from "react";
 import { RiArrowDownSLine } from "react-icons/ri";
 
 import clsx from "clsx";
-import { truncateString } from "lib/utils/truncate-string";
 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./select";
 
@@ -19,7 +18,7 @@ const SingleSelect = ({ placeholder, value, onValueChange, options, position, cl
   return (
     <Select value={value} onValueChange={(value) => onValueChange(value)}>
       <SelectTrigger
-        className={clsx("bg-white min-w-[200px] w-full opacity-50 text-base", className)}
+        className={clsx("bg-white w-full opacity-50 text-base flex-wrap", className)}
         selectIcon={
           <div className="flex items-center">
             <RiArrowDownSLine size={20} className="" />
@@ -29,10 +28,10 @@ const SingleSelect = ({ placeholder, value, onValueChange, options, position, cl
         <SelectValue className="w-10 capitalize truncate" placeholder={placeholder ?? "Select time zone"} />
       </SelectTrigger>
 
-      <SelectContent position={position ?? "item-aligned"} className="z-50 bg-white">
+      <SelectContent position={position ?? "item-aligned"} className="z-50 bg-white select-content">
         {options.map((option, index) => (
           <SelectItem title={option.label} key={`timezone_${index}`} value={option.value}>
-            {truncateString(option.label, 30)}
+            {option.label}
           </SelectItem>
         ))}
       </SelectContent>

@@ -19,6 +19,7 @@ import { Dialog, DialogContent } from "components/molecules/Dialog/dialog";
 import Title from "components/atoms/Typography/title";
 import Text from "components/atoms/Typography/text";
 import Button from "components/atoms/Button/button";
+import { setQueryParams } from "lib/utils/query-params";
 
 // TODO: Move to a shared file
 export function isListId(listId: string) {
@@ -158,7 +159,7 @@ const ContributorsAddedModal = ({ list, contributorCount, isOpen, onClose }: Con
 const useContributorSearch = (makeRequest: boolean) => {
   const [contributorSearchTerm, setContributorSearchTerm] = useState<string | undefined>();
 
-  const { data, meta, isLoading, setPage } = useFetchAllContributors(
+  const { data, meta, isLoading } = useFetchAllContributors(
     {
       contributor: contributorSearchTerm,
     },
@@ -173,7 +174,6 @@ const useContributorSearch = (makeRequest: boolean) => {
     data,
     meta,
     isLoading,
-    setPage,
   };
 };
 
@@ -187,7 +187,7 @@ const EmptyState = () => (
 const AddContributorsToList = ({ list, timezoneOption }: AddContributorsPageProps) => {
   const [selectedContributors, setSelectedContributors] = useState<DbPRContributor[]>([]);
   const [makeRequest, setMakeRequest] = useState(false);
-  const { setContributorSearchTerm, data, meta, isLoading, setPage } = useContributorSearch(makeRequest);
+  const { setContributorSearchTerm, data, meta, isLoading } = useContributorSearch(makeRequest);
   const { sessionToken } = useSupabaseAuth();
   const [contributorsAdded, setContributorsAdded] = useState(false);
   const [contributorsAddedError, setContributorsAddedError] = useState(false);
@@ -208,17 +208,7 @@ const AddContributorsToList = ({ list, timezoneOption }: AddContributorsPageProp
     }
   };
 
-  const contributors =
-    data?.length > 0
-      ? data.map((contributor) => {
-          return {
-            author_login: contributor.login,
-            username: contributor.login,
-            updated_at: contributor.updated_at,
-            user_id: contributor.id,
-          };
-        })
-      : [];
+  const contributors = data;
 
   const onAllChecked = (state: boolean) => {
     if (state) {
@@ -282,7 +272,7 @@ const AddContributorsToList = ({ list, timezoneOption }: AddContributorsPageProp
                 totalPage={meta.pageCount}
                 page={meta.page}
                 onPageChange={function (page: number): void {
-                  setPage(page);
+                  setQueryParams({ page: `${page}` });
                 }}
                 divisor={true}
                 goToPage

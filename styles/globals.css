@@ -146,6 +146,11 @@ div[role="dialog"]::-webkit-scrollbar-thumb {
   text-overflow: ellipsis;
 }
 
+.select-content {
+  width: var(--radix-select-trigger-width);
+  max-height: var(--radix-select-content-available-height);
+}
+
 @keyframes placeHolderShimmer {
   0% {
     background-position: -468px 0;

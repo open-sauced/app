@@ -21,6 +21,7 @@ import { setQueryParams } from "lib/utils/query-params";
 import { QueryParams } from "pages/hub/lists/find";
 import Title from "components/atoms/Typography/title";
 import TextInput from "components/atoms/TextInput/text-input";
+import FilterChip from "components/atoms/FilterChip/filter-chip";
 import { DialogTrigger } from "../Dialog/dialog";
 
 // import Search from "components/atoms/Search/search";
@@ -126,6 +127,7 @@ const HubContributorsHeader = ({
         </div>
         <div className="flex flex-col w-full gap-2 justify-between md:flex-row">
           <div className="flex items-center gap-4 ">
+            <FilterChip className="shrink-0 h-8" items={["hello"]} onClear={() => {}} />
             <Search
               placeholder={`Search ${title}`}
               className=" text-sm py-1.5"
@@ -145,7 +147,7 @@ const HubContributorsHeader = ({
             <SingleSelect
               options={timezoneOptions}
               position="popper"
-              className="opacity-100 text-light-slate-12"
+              className="opacity-100 text-light-slate-12 w-64"
               value={tz ? String(tz) : undefined}
               placeholder="Select time zone"
               onValueChange={(value) => {
@@ -173,15 +175,15 @@ const HubContributorsHeader = ({
       <Portal className="justify-end">
         <div className="fixed inset-0 z-50 flex items-end justify-end">
           <Overlay className="fixed inset-0 z-10 bg-black/10 backdrop-blur-xs transition-all duration-100 data-[state=closed]:animate-out data-[state=open]:fade-in data-[state=closed]:fade-out" />
-          <Content className="fixed z-50 px-2 md:px-6 py-10 shadow-lg grid w-full bg-white md:w-80 h-[calc(100%-(3.3rem))]">
-            <div className="flex gap-5 flex-col">
+          <Content className="fixed right-0 z-50 px-2 md:px-6 py-10 shadow-lg grid w-full bg-white md:w-80 overflow-hidden h-[calc(100%-(3.3rem))]">
+            <div className="flex gap-5 flex-col flex-wrap">
               <Title level={2}>All Filters</Title>
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-2 ">
                 <Title level={4}>Timezone</Title>
                 <SingleSelect
                   options={timezoneOptions}
                   position="popper"
-                  className="opacity-100 text-light-slate-12"
+                  className="opacity-100 text-light-slate-12 flex-1 w-0 min-w-[100%] "
                   value={tz ? String(tz) : undefined}
                   placeholder="Select time zone"
                   onValueChange={(value) => {
