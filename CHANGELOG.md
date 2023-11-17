@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.76.1-beta.1](https://github.com/open-sauced/insights/compare/v1.76.0...v1.76.1-beta.1) (2023-11-17)
+
+
+### 🐛 Bug Fixes
+
+* changed delete button color to match the ui ([#2159](https://github.com/open-sauced/insights/issues/2159)) ([6e7e3bd](https://github.com/open-sauced/insights/commit/6e7e3bd543186dc2027c6ab6e422cf4967f8275c))
+* Revert "fix: refactor TableRepositoryName prop naming ([#2102](https://github.com/open-sauced/insights/issues/2102))" ([#2169](https://github.com/open-sauced/insights/issues/2169)) ([5f49034](https://github.com/open-sauced/insights/commit/5f49034e78427dba2f9c091df8a09b2bd2526b2e))
+
 ## [1.76.0](https://github.com/open-sauced/insights/compare/v1.75.0...v1.76.0) (2023-11-16)
 
 
