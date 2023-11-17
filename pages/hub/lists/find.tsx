@@ -63,7 +63,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     query.set("page", page);
   }
   if (tz) {
-    query.set("timezones", tz);
+    query.set("timezone", tz);
   }
   if (pr_velocity) {
     query.set("pr_velocity", pr_velocity);
@@ -106,7 +106,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 
 const NewListCreationPage = ({ initialData, timezoneOption }: NewListCreationPageProps) => {
   const router = useRouter();
-  const { tz, name, page } = router.query as QueryParams;
+  const { tz, name, page, pr_velocity } = router.query as QueryParams;
   const contributorIds = router.query.contributors as string;
   const { toast } = useToast();
   const posthog = usePostHog();
@@ -123,6 +123,8 @@ const NewListCreationPage = ({ initialData, timezoneOption }: NewListCreationPag
   const { data, meta, isLoading } = useFetchAllContributors(
     {
       contributor,
+      tz,
+      pr_velocity,
     },
     {
       fallbackData: initialData,

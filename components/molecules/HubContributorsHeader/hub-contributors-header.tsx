@@ -47,7 +47,6 @@ const HubContributorsHeader = ({
   loading,
   isPublic,
   handleToggleIsPublic,
-  handleOpenFilterPanel,
   timezoneOptions,
   onSearch,
 }: ListHeaderProps): JSX.Element => {
@@ -133,11 +132,7 @@ const HubContributorsHeader = ({
               name={"contributors"}
               onChange={(value) => setContributorSearch(value)}
             />
-            <DialogTrigger
-              type="button"
-              onClick={handleOpenFilterPanel}
-              className="px-2 py-1.5 text-sm bg-white border rounded-md shrink-0 flex items-center gap-2 "
-            >
+            <DialogTrigger className="px-2 py-1.5 text-sm bg-white border rounded-md shrink-0 flex items-center gap-2 ">
               All filters
               {filterCount && filterCount > 0 ? (
                 <span className="px-1.5  text-white text-xs rounded-lg bg-sauced-orange">{filterCount}</span>
@@ -177,8 +172,8 @@ const HubContributorsHeader = ({
       </div>
       <Portal className="justify-end">
         <div className="fixed inset-0 z-50 flex items-end justify-end">
+          <Overlay className="fixed inset-0 z-10 bg-black/10 backdrop-blur-xs transition-all duration-100 data-[state=closed]:animate-out data-[state=open]:fade-in data-[state=closed]:fade-out" />
           <Content className="fixed z-50 px-2 md:px-6 py-10 shadow-lg grid w-full bg-white md:w-80 h-[calc(100%-(3.3rem))]">
-            <Overlay className="fixed inset-0 z-50 bg-black/5 backdrop-blur-xs transition-all duration-100 data-[state=closed]:animate-out data-[state=open]:fade-in data-[state=closed]:fade-out" />
             <div className="flex gap-5 flex-col">
               <Title level={2}>All Filters</Title>
               <div className="flex flex-col gap-2">

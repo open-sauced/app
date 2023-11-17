@@ -13,7 +13,7 @@ interface PaginatedResponse {
 type queryObj = {
   location?: string;
   pr_velocity?: string;
-  timezone?: string;
+  tz?: string;
   initialLimit?: number;
   contributor?: string;
 };
@@ -21,24 +21,25 @@ type queryObj = {
 const useFetchAllContributors = (query: queryObj, config?: SWRConfiguration, makeRequest = true) => {
   const { toast } = useToast();
   const router = useRouter();
-  const { limit, page, timezone } = router.query;
+  const { pr_velocity, location, tz, contributor } = query;
+  const { page, limit } = router.query;
 
   const urlQuery = new URLSearchParams();
 
   if (page) {
     urlQuery.set("page", `${page}`);
   }
-  if (query.location) {
-    urlQuery.set("location", `${query.location}`);
+  if (location) {
+    urlQuery.set("location", `${location}`);
   }
-  if (query.pr_velocity) {
-    urlQuery.set("pr_velocity", `${query.pr_velocity}`);
+  if (pr_velocity) {
+    urlQuery.set("pr_velocity", `${pr_velocity}`);
   }
-  if (timezone) {
-    urlQuery.set("timezone", `${timezone}`);
+  if (tz) {
+    urlQuery.set("timezone", `${tz}`);
   }
-  if (query.contributor) {
-    urlQuery.set("contributor", `${query.contributor}`);
+  if (contributor) {
+    urlQuery.set("contributor", `${contributor}`);
   }
   if (limit) {
     urlQuery.set("limit", `${limit}`);
