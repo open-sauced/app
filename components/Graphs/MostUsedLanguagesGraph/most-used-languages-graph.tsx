@@ -6,8 +6,7 @@ import { ContributorType, ContributorTypeFilter } from "../shared/contributor-ty
 
 export interface MostUsedLanguagesGraphProps {
   data: {
-    mainLanguage: string;
-    data: {
+    languages: {
       name: string;
       value: number;
     }[];
@@ -30,8 +29,7 @@ export const MostUsedLanguagesGraph = ({
     "hsl(267, 36%, 37%)",
     "hsl(17, 100%, 50%)",
   ];
-  const percentage = 10;
-  const { data: languages = [], mainLanguage } = data;
+  const { languages = [] } = data;
   const lastItem = languages.length > 0 ? languages.length - 1 : 0;
   const sortedLanguages = languages.sort((a, b) => b.value - a.value);
   const languagesRef = useRef<HTMLUListElement>(null);

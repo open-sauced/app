@@ -13,8 +13,7 @@ type Story = StoryObj<typeof MostUsedLanguagesGraph>;
 
 function generateData() {
   return {
-    mainLanguage: "TypeScript",
-    data: [
+    languages: [
       {
         name: "Python",
         value: 10,

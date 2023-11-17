@@ -20,6 +20,7 @@ import useContributionsEvolutionByType from "lib/hooks/api/useContributionsByEvo
 import { setQueryParams } from "lib/utils/query-params";
 import { FeatureFlagged } from "components/shared/feature-flagged";
 import { FeatureFlag, getAllFeatureFlags } from "lib/utils/server/feature-flags";
+import { MostUsedLanguagesGraph } from "components/Graphs/MostUsedLanguagesGraph/most-used-languages-graph";
 
 interface ContributorListPageProps {
   list?: DBList;
@@ -160,6 +161,31 @@ const ListActivityPage = ({
     isError: evolutionError,
     isLoading: isLoadingEvolution,
   } = useContributionsEvolutionByType({ listId: list!.id, range });
+  const languageData = {
+    languages: [
+      {
+        name: "Python",
+        value: 10,
+      },
+      {
+        name: "TypeScript",
+        value: 25,
+      },
+      {
+        name: "JavaScript",
+        value: 20,
+      },
+      {
+        name: "C++",
+        value: 15,
+      },
+      {
+        name: "Zig",
+        value: 30,
+      },
+    ],
+  };
+  const isLanguagesLoading = false;
 
   return (
     <ListPageLayout list={list} numberOfContributors={numberOfContributors} isOwner={isOwner}>
@@ -188,6 +214,12 @@ const ListActivityPage = ({
           <FeatureFlagged flag="contributions_evolution_by_type" featureFlags={featureFlags}>
             <ContributionsEvolutionByType data={evolutionData} isLoading={isLoadingEvolution} />
           </FeatureFlagged>
+          <MostUsedLanguagesGraph
+            contributorType={contributorType}
+            setContributorType={setContributorType}
+            data={languageData}
+            isLoading={isLanguagesLoading}
+          />
         </div>
       )}
     </ListPageLayout>
