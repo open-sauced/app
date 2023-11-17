@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.77.0-beta.2](https://github.com/open-sauced/insights/compare/v1.77.0-beta.1...v1.77.0-beta.2) (2023-11-17)
+
+
+### 🐛 Bug Fixes
+
+* use custom text-area component for bio ([#2103](https://github.com/open-sauced/insights/issues/2103)) ([3afe9d5](https://github.com/open-sauced/insights/commit/3afe9d5b300bfe1d91d6d2a3013d58583b4378b9))
+
 ## [1.77.0-beta.1](https://github.com/open-sauced/insights/compare/v1.76.1-beta.1...v1.77.0-beta.1) (2023-11-17)
 
 
