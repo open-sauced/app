@@ -4,8 +4,9 @@ import Tooltip from "components/atoms/Tooltip/tooltip";
 interface TableRepositoryNameProps {
   avatarURL?: string | StaticImageData;
   fullName: string;
+  isLoading?: boolean;
   topic?: string;
-  userPage?: string;
+  user?: string | string[];
 }
 
 const TableRepositoryName = ({ avatarURL, fullName }: TableRepositoryNameProps): JSX.Element => {
