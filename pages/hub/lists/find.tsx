@@ -35,7 +35,7 @@ interface CreateListPayload {
 export type QueryParams = {
   limit: string;
   page: string;
-  timezone: string;
+  tz: string;
   name: string;
   public: "true" | "false";
   pr_velocity: string;
@@ -52,7 +52,7 @@ interface NewListCreationPageProps {
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const supabase = createPagesServerClient(ctx);
 
-  const { limit, page, timezone, pr_velocity } = ctx.query as QueryParams;
+  const { limit, page, tz, pr_velocity } = ctx.query as QueryParams;
 
   const query = new URLSearchParams();
 
@@ -62,8 +62,8 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   if (page) {
     query.set("page", page);
   }
-  if (timezone) {
-    query.set("timezones", timezone);
+  if (tz) {
+    query.set("timezones", tz);
   }
   if (pr_velocity) {
     query.set("pr_velocity", pr_velocity);
@@ -106,7 +106,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 
 const NewListCreationPage = ({ initialData, timezoneOption }: NewListCreationPageProps) => {
   const router = useRouter();
-  const { timezone, name, page } = router.query as QueryParams;
+  const { tz, name, page } = router.query as QueryParams;
   const contributorIds = router.query.contributors as string;
   const { toast } = useToast();
   const posthog = usePostHog();

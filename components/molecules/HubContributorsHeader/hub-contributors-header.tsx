@@ -53,8 +53,11 @@ const HubContributorsHeader = ({
 }: ListHeaderProps): JSX.Element => {
   // const { toast } = useToast();
   const router = useRouter();
-  const filterCount = router.asPath.split("?")[1]?.split("&").length;
-  const { limit, timezone, pr_velocity } = router.query as QueryParams;
+  const filterCount = router.asPath
+    .split("?")[1]
+    ?.split("&")
+    .filter((filter) => filter.includes("tz") || filter.includes("pr_velocity")).length;
+  const { limit, tz, pr_velocity } = router.query as QueryParams;
   const [filterOpen, setFilterOpen] = useState(false);
   const [prVelocity, setPrVelocity] = useState(pr_velocity ?? "");
 
@@ -144,23 +147,14 @@ const HubContributorsHeader = ({
             </DialogTrigger>
           </div>
           <div className="flex flex-col gap-2 md:items-center md:gap-4 md:flex-row">
-            <TextInput
-              type="number"
-              value={pr_velocity}
-              placeholder="PR Velocity"
-              onChange={(e) => {
-                setPrVelocity(e.target.value);
-              }}
-              className="w-36"
-            />
             <SingleSelect
               options={timezoneOptions}
               position="popper"
               className="opacity-100 text-light-slate-12"
-              value={timezone ? String(timezone) : undefined}
+              value={tz ? String(tz) : undefined}
               placeholder="Select time zone"
               onValueChange={(value) => {
-                setQueryParams({ timezone: value } as QueryParams);
+                setQueryParams({ tz: value } as QueryParams);
               }}
             />
             <LimitSelect
@@ -193,10 +187,10 @@ const HubContributorsHeader = ({
                   options={timezoneOptions}
                   position="popper"
                   className="opacity-100 text-light-slate-12"
-                  value={timezone ? String(timezone) : undefined}
+                  value={tz ? String(tz) : undefined}
                   placeholder="Select time zone"
                   onValueChange={(value) => {
-                    setQueryParams({ timezone: value } as QueryParams);
+                    setQueryParams({ tz: value } as QueryParams);
                   }}
                 />
               </div>
