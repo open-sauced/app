@@ -5,6 +5,18 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.77.0-beta.1](https://github.com/open-sauced/insights/compare/v1.76.1-beta.1...v1.77.0-beta.1) (2023-11-17)
+
+
+### ⏩ Reverts
+
+* Revert "fix: refactor TableRepositoryName prop naming (#2102)" ([8dd5d71](https://github.com/open-sauced/insights/commit/8dd5d71e22251b967ff42201a8eb543c98d07a17)), closes [#2102](https://github.com/open-sauced/insights/issues/2102)
+
+
+### 🍕 Features
+
+* add most used languages graph ([#2158](https://github.com/open-sauced/insights/issues/2158)) ([c79381b](https://github.com/open-sauced/insights/commit/c79381bc2b588a7641f87ee0aeef89d7a1dc681f))
+
 ### [1.76.1-beta.1](https://github.com/open-sauced/insights/compare/v1.76.0...v1.76.1-beta.1) (2023-11-17)
 
 
