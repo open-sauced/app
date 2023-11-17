@@ -82,9 +82,17 @@ export const MostUsedLanguagesGraph = ({
                         const { language } = event.currentTarget.dataset;
                         setLanguage(language);
                       }}
+                      onMouseOut={(event) => {
+                        const { language } = event.currentTarget.dataset;
+                        setLanguage(null);
+                      }}
                       onFocus={(event) => {
                         const { language } = event.currentTarget.dataset;
                         setLanguage(language);
+                      }}
+                      onBlur={(event) => {
+                        const { language } = event.currentTarget.dataset;
+                        setLanguage(null);
                       }}
                     />
                   );
