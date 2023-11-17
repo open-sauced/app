@@ -83,8 +83,8 @@ export const MostUsedLanguagesGraph = ({
                         setLanguage(language);
                       }}
                       onFocus={(event) => {
-                        const selectedLanguage = event.currentTarget.getAttribute("aria-label");
-                        setLanguage(selectedLanguage);
+                        const { language } = event.currentTarget.dataset;
+                        setLanguage(language);
                       }}
                     />
                   );
