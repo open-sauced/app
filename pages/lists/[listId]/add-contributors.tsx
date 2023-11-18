@@ -184,7 +184,7 @@ const EmptyState = () => (
   </div>
 );
 
-const AddContributorsToList = ({ list, timezoneOption }: AddContributorsPageProps) => {
+const AddContributorsToList = ({ list }: AddContributorsPageProps) => {
   const [selectedContributors, setSelectedContributors] = useState<DbPRContributor[]>([]);
   const [makeRequest, setMakeRequest] = useState(false);
   const { setContributorSearchTerm, data, meta, isLoading } = useContributorSearch(makeRequest);
