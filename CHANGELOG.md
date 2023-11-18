@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.77.0-beta.3](https://github.com/open-sauced/insights/compare/v1.77.0-beta.2...v1.77.0-beta.3) (2023-11-18)
+
+
+### 🍕 Features
+
+* implemented feature flag support ([e4acf39](https://github.com/open-sauced/insights/commit/e4acf39aed6ac9caaad912c801a59830dc3dcd30))
+* implemented feature flag support ([#2180](https://github.com/open-sauced/insights/issues/2180)) ([a53dfb6](https://github.com/open-sauced/insights/commit/a53dfb663d1ed5f61ba4df27163cb9f0829b18bd))
+
 ## [1.77.0-beta.2](https://github.com/open-sauced/insights/compare/v1.77.0-beta.1...v1.77.0-beta.2) (2023-11-17)
 
 
