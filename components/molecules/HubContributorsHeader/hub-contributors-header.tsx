@@ -24,8 +24,6 @@ import TextInput from "components/atoms/TextInput/text-input";
 import FilterChip from "components/atoms/FilterChip/filter-chip";
 import { DialogTrigger } from "../Dialog/dialog";
 
-// import Search from "components/atoms/Search/search";
-
 interface ListHeaderProps {
   timezoneOptions: { label: string; value: string }[];
   handleOpenFilterPanel?: () => void;
@@ -51,7 +49,6 @@ const HubContributorsHeader = ({
   timezoneOptions,
   onSearch,
 }: ListHeaderProps): JSX.Element => {
-  // const { toast } = useToast();
   const router = useRouter();
   const filterCount = router.asPath
     .split("?")[1]
@@ -59,17 +56,10 @@ const HubContributorsHeader = ({
     .filter((filter) => filter.includes("tz") || filter.includes("pr_velocity")).length;
   const { limit, tz, pr_velocity } = router.query as QueryParams;
   const [filterOpen, setFilterOpen] = useState(false);
-  const [prVelocity, setPrVelocity] = useState(pr_velocity ?? "");
 
   const [contributorSearch, setContributorSearch] = useState("");
   const debouncedSearchTerm = useDebounceTerm(contributorSearch, 300);
 
-  useEffect(() => {
-    if (prVelocity) {
-      setQueryParams({ pr_velocity: prVelocity } as QueryParams);
-      // console.log(prVelocity);
-    }
-  }, [prVelocity, router.query]);
   useEffect(() => {
     onSearch(contributorSearch);
   }, [debouncedSearchTerm]);
@@ -193,7 +183,7 @@ const HubContributorsHeader = ({
               </div>
               <div className="flex flex-col gap-2">
                 <Title level={4}>PR Velocity</Title>
-                <TextInput value={""} onChange={() => {}} />
+                <TextInput defaultValue={pr_velocity ?? ""} />
               </div>
             </div>
           </Content>
