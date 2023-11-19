@@ -12,6 +12,7 @@ import go from "img/topic-thumbnails/go.svg";
 import ml from "img/topic-thumbnails/machine-learning.svg";
 import react from "img/topic-thumbnails/react.svg";
 import rust from "img/topic-thumbnails/rust.svg";
+import svelte from "img/topic-thumbnails/svelte.svg";
 import vue from "img/topic-thumbnails/vue.svg";
 import kubernetes from "img/topic-thumbnails/kubernetes.svg";
 import hacktoberfest from "img/topic-thumbnails/hacktoberfest.svg";
@@ -36,6 +37,7 @@ const topicThumbnails: Record<interestsType, string> = {
   ml: ml,
   golang: go,
   rust: rust,
+  svelte: svelte,
   vue: vue,
   kubernetes: kubernetes,
   hacktoberfest: hacktoberfest,
