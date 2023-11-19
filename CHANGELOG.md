@@ -5,6 +5,41 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.77.0-beta.3](https://github.com/open-sauced/insights/compare/v1.77.0-beta.2...v1.77.0-beta.3) (2023-11-18)
+
+
+### 🍕 Features
+
+* implemented feature flag support ([e4acf39](https://github.com/open-sauced/insights/commit/e4acf39aed6ac9caaad912c801a59830dc3dcd30))
+* implemented feature flag support ([#2180](https://github.com/open-sauced/insights/issues/2180)) ([a53dfb6](https://github.com/open-sauced/insights/commit/a53dfb663d1ed5f61ba4df27163cb9f0829b18bd))
+
+## [1.77.0-beta.2](https://github.com/open-sauced/insights/compare/v1.77.0-beta.1...v1.77.0-beta.2) (2023-11-17)
+
+
+### 🐛 Bug Fixes
+
+* use custom text-area component for bio ([#2103](https://github.com/open-sauced/insights/issues/2103)) ([3afe9d5](https://github.com/open-sauced/insights/commit/3afe9d5b300bfe1d91d6d2a3013d58583b4378b9))
+
+## [1.77.0-beta.1](https://github.com/open-sauced/insights/compare/v1.76.1-beta.1...v1.77.0-beta.1) (2023-11-17)
+
+
+### ⏩ Reverts
+
+* Revert "fix: refactor TableRepositoryName prop naming (#2102)" ([8dd5d71](https://github.com/open-sauced/insights/commit/8dd5d71e22251b967ff42201a8eb543c98d07a17)), closes [#2102](https://github.com/open-sauced/insights/issues/2102)
+
+
+### 🍕 Features
+
+* add most used languages graph ([#2158](https://github.com/open-sauced/insights/issues/2158)) ([c79381b](https://github.com/open-sauced/insights/commit/c79381bc2b588a7641f87ee0aeef89d7a1dc681f))
+
+### [1.76.1-beta.1](https://github.com/open-sauced/insights/compare/v1.76.0...v1.76.1-beta.1) (2023-11-17)
+
+
+### 🐛 Bug Fixes
+
+* changed delete button color to match the ui ([#2159](https://github.com/open-sauced/insights/issues/2159)) ([6e7e3bd](https://github.com/open-sauced/insights/commit/6e7e3bd543186dc2027c6ab6e422cf4967f8275c))
+* Revert "fix: refactor TableRepositoryName prop naming ([#2102](https://github.com/open-sauced/insights/issues/2102))" ([#2169](https://github.com/open-sauced/insights/issues/2169)) ([5f49034](https://github.com/open-sauced/insights/commit/5f49034e78427dba2f9c091df8a09b2bd2526b2e))
+
 ## [1.76.0](https://github.com/open-sauced/insights/compare/v1.75.0...v1.76.0) (2023-11-16)
 
 
