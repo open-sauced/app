@@ -15,7 +15,7 @@ const FilterChip = ({ className, items, onClear }: FilterChipProps) => {
         className
       )}
     >
-      <span className="max-w-[75%] truncate">{items[0]}</span>
+      <span className="max-w-[75%] truncate text-sm">{items[0]}</span>
       {items.length > 1 && <span className="text-sauced-orange"> ,+{items.length - 1}</span>}
       <MdClose onClick={onClear} className="ml-1 text-xl cursor-pointer" />
     </div>

@@ -18,7 +18,7 @@ const SingleSelect = ({ placeholder, value, onValueChange, options, position, cl
   return (
     <Select value={value} onValueChange={(value) => onValueChange(value)}>
       <SelectTrigger
-        className={clsx("bg-white w-full opacity-50 text-base flex-wrap", className)}
+        className={clsx("bg-white w-full opacity-50 text-sm flex-wrap", className)}
         selectIcon={
           <div className="flex items-center">
             <RiArrowDownSLine size={20} className="" />

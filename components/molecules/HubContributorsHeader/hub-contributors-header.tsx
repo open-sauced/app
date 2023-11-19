@@ -50,10 +50,10 @@ const HubContributorsHeader = ({
   onSearch,
 }: ListHeaderProps): JSX.Element => {
   const router = useRouter();
-  const filterCount = router.asPath
+  const filters = router.asPath
     .split("?")[1]
     ?.split("&")
-    .filter((filter) => filter.includes("tz") || filter.includes("pr_velocity")).length;
+    .filter((filter) => filter.includes("tz") || filter.includes("pr_velocity"));
   const { limit, tz, pr_velocity } = router.query as QueryParams;
   const [filterOpen, setFilterOpen] = useState(false);
 
@@ -117,7 +117,22 @@ const HubContributorsHeader = ({
         </div>
         <div className="flex flex-col w-full gap-2 justify-between md:flex-row">
           <div className="flex items-center gap-4 ">
-            <FilterChip className="shrink-0 h-8" items={["hello"]} onClear={() => {}} />
+            {filters ? (
+              <div className="flex gap-2">
+                {filters.map((filter) => (
+                  <FilterChip
+                    className="shrink-0 h-8"
+                    key={filter}
+                    items={[filter.split("=")[1] as string]}
+                    onClear={() => {
+                      const params = filter.split("=")[0];
+                      setQueryParams({}, [params]);
+                    }}
+                  />
+                ))}
+              </div>
+            ) : null}
+
             <Search
               placeholder={`Search ${title}`}
               className=" text-sm py-1.5"
@@ -126,8 +141,8 @@ const HubContributorsHeader = ({
             />
             <DialogTrigger className="px-2 py-1.5 text-sm bg-white border rounded-md shrink-0 flex items-center gap-2 ">
               All filters
-              {filterCount && filterCount > 0 ? (
-                <span className="px-1.5  text-white text-xs rounded-lg bg-sauced-orange">{filterCount}</span>
+              {filters && filters.length > 0 ? (
+                <span className="px-1.5  text-white text-xs rounded-lg bg-sauced-orange">{filters.length}</span>
               ) : (
                 <BiFilterAlt className="text-lg text-black/80" />
               )}
