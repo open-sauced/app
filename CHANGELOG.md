@@ -5,6 +5,36 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.77.0](https://github.com/open-sauced/insights/compare/v1.76.0...v1.77.0) (2023-11-20)
+
+
+### ⏩ Reverts
+
+* Revert "fix: refactor TableRepositoryName prop naming (#2102)" ([31c8c19](https://github.com/open-sauced/insights/commit/31c8c19eab51ab96683b6c3cec86334da42246ca)), closes [#2102](https://github.com/open-sauced/insights/issues/2102)
+* Revert "use custom text-area component for bio" ([97adc13](https://github.com/open-sauced/insights/commit/97adc1372ddec07a2c80d4bd95b81e2d5c5f3ed5))
+
+
+### 🍕 Features
+
+* add most used languages graph ([#2158](https://github.com/open-sauced/insights/issues/2158)) ([c79381b](https://github.com/open-sauced/insights/commit/c79381bc2b588a7641f87ee0aeef89d7a1dc681f))
+* implemented feature flag support ([e4acf39](https://github.com/open-sauced/insights/commit/e4acf39aed6ac9caaad912c801a59830dc3dcd30))
+* implemented feature flag support ([#2180](https://github.com/open-sauced/insights/issues/2180)) ([a53dfb6](https://github.com/open-sauced/insights/commit/a53dfb663d1ed5f61ba4df27163cb9f0829b18bd))
+* Svelte added to interests dropdown list ([#2168](https://github.com/open-sauced/insights/issues/2168)) ([88a778e](https://github.com/open-sauced/insights/commit/88a778e64f4a38b0991995055681d6b31bee5c6e))
+
+
+### 🧑‍💻 Code Refactoring
+
+* params create highlight logic ([#2096](https://github.com/open-sauced/insights/issues/2096)) ([8b697a6](https://github.com/open-sauced/insights/commit/8b697a685d1c7b41d402cab3501a46f3eb54a623))
+
+
+### 🐛 Bug Fixes
+
+* changed delete button color to match the ui ([#2159](https://github.com/open-sauced/insights/issues/2159)) ([6e7e3bd](https://github.com/open-sauced/insights/commit/6e7e3bd543186dc2027c6ab6e422cf4967f8275c))
+* feature flagged contributions evolution by contributor type graph ([#2187](https://github.com/open-sauced/insights/issues/2187)) ([98637b6](https://github.com/open-sauced/insights/commit/98637b67fcba8efb7ef56b20d78699e4c84aa90a))
+* fixed styling of insights delete page modal ([#2182](https://github.com/open-sauced/insights/issues/2182)) ([41b2e8a](https://github.com/open-sauced/insights/commit/41b2e8a15ac36349917dd4319a2a13b26a946b6b))
+* Revert "fix: refactor TableRepositoryName prop naming ([#2102](https://github.com/open-sauced/insights/issues/2102))" ([#2169](https://github.com/open-sauced/insights/issues/2169)) ([5f49034](https://github.com/open-sauced/insights/commit/5f49034e78427dba2f9c091df8a09b2bd2526b2e))
+* use custom text-area component for bio ([#2103](https://github.com/open-sauced/insights/issues/2103)) ([3afe9d5](https://github.com/open-sauced/insights/commit/3afe9d5b300bfe1d91d6d2a3013d58583b4378b9))
+
 ## [1.77.0-beta.7](https://github.com/open-sauced/insights/compare/v1.77.0-beta.6...v1.77.0-beta.7) (2023-11-20)
 
 
