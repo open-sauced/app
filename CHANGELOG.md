@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.77.0-beta.7](https://github.com/open-sauced/insights/compare/v1.77.0-beta.6...v1.77.0-beta.7) (2023-11-20)
+
+
+### 🐛 Bug Fixes
+
+* feature flagged contributions evolution by contributor type graph ([#2187](https://github.com/open-sauced/insights/issues/2187)) ([98637b6](https://github.com/open-sauced/insights/commit/98637b67fcba8efb7ef56b20d78699e4c84aa90a))
+
 ## [1.77.0-beta.6](https://github.com/open-sauced/insights/compare/v1.77.0-beta.5...v1.77.0-beta.6) (2023-11-20)
 
 
