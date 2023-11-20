@@ -147,7 +147,7 @@ const ListsOverview = ({ list, numberOfContributors, isOwner }: ListsOverviewPro
   }, 0);
 
   return (
-    <ListPageLayout list={list} numberOfContributors={numberOfContributors} isOwner={isOwner}>
+    <ListPageLayout list={list} numberOfContributors={numberOfContributors} isOwner={isOwner} showRangeFilter={false}>
       <div className="flex flex-col w-full gap-4">
         <ClientOnly>
           <section className="flex flex-wrap items-center max-w-full gap-4 lg:flex-row lg:flex-nowrap">

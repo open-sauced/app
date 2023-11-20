@@ -1,23 +1,13 @@
 import { useSprings, animated } from "@react-spring/web";
 import { useGesture } from "@use-gesture/react";
-import Image from "next/image";
+
 import { ReactNode, useState } from "react";
 import * as RawTooltip from "@radix-ui/react-tooltip";
-import clsx from "clsx";
-import Button from "components/atoms/Button/button";
 import Card from "components/atoms/Card/card";
-import Icon from "components/atoms/Icon/icon";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "components/atoms/Dropdown/dropdown";
-import { getAvatarByUsername } from "lib/utils/github";
-import PeopleIcon from "img/icons/people.svg";
-import ChevronDownIcon from "img/chevron-down.svg";
-import SVGIcon from "components/atoms/SVGIcon/svg-icon";
+
 import Tooltip from "components/atoms/Tooltip/tooltip";
+import { ContributorType, ContributorTypeFilter } from "components/Graphs/shared/contributor-type-filter";
+import AvatarHoverCard from "components/atoms/Avatar/avatar-hover-card";
 
 // omit total_contributions and login from ContributorStat
 type StatKeys = keyof Omit<ContributorStat, "total_contributions" | "login">;
@@ -41,8 +31,6 @@ export interface ContributorStat {
   total_contributions: number;
 }
 
-export type ContributorType = "all" | "active" | "new" | "alumni";
-
 interface Props {
   topContributor?: ContributorStat;
   data: ContributorStat[];
@@ -51,13 +39,6 @@ interface Props {
   isLoading: boolean;
   totalContributions: number;
 }
-
-const peopleFilters: Record<ContributorType, string> = {
-  all: "All Contributors",
-  active: "Active Contributors",
-  new: "New Contributors",
-  alumni: "Churned Contributors",
-};
 
 const LegendItem = ({ color, title }: { color?: string; title: string }) => {
   return (
@@ -130,33 +111,14 @@ export default function MostActiveContributorsCard({
     <MostActiveCard>
       <>
         {topContributor && (
-          <div className="text-sm font-medium text-slate-400 mb-4">
+          <div className="text-sm text-slate-400 mb-4">
             {topContributor.login} made {topContributorPercent} of all code contributions
           </div>
         )}
 
         {/* buttons */}
         <div className="flex gap-1 mb-4">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="default" className="items-center gap-1">
-                <SVGIcon IconImage={`${PeopleIcon.src}#icon`} className="w-4 h-4" />
-                {peopleFilters[contributorType]}
-                <Icon IconImage={ChevronDownIcon} className="w-4 h-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="flex flex-col gap-2">
-              {Object.entries(peopleFilters).map(([key, value]) => (
-                <DropdownMenuItem
-                  key={key}
-                  className="rounded-md !cursor-pointer"
-                  onClick={() => setContributorType(key as keyof typeof peopleFilters)}
-                >
-                  {value}
-                </DropdownMenuItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <ContributorTypeFilter contributorType={contributorType} setContributorType={setContributorType} />
         </div>
         {/* chart */}
         <div className="relative grid place-content-stretch overflow-y-hidden mb-4">
@@ -232,21 +194,21 @@ function RowTooltip({
       <RawTooltip.Trigger asChild>{children}</RawTooltip.Trigger>
       <RawTooltip.Portal>
         <RawTooltip.Content sideOffset={-10} align="center" collisionPadding={10} side={"bottom"} avoidCollisions>
-          <div className={clsx("text-xs p-2 rounded shadow-lg bg-white font-light")}>
-            <div className="text-black font-bold mb-1">{contributor.login}</div>
+          <div className="text-sm p-2.5 rounded shadow-lg bg-white font-light w-max">
+            <div className="text-black font-semibold mb-1.5 text-sm">{contributor.login}</div>
             {Object.entries(dataLabelsList)
               .filter(([key]) => labels.includes(key))
               .map(([key, value]) => {
                 const { percentage, stat } = userStats[key as StatKeys];
 
                 return (
-                  <div key={key} className="grid grid-cols-2 gap-2 font-light">
-                    <div className="flex items-center gap-1">
+                  <div key={key} className="grid grid-cols-2 gap-2 font-light mb-1">
+                    <div className="flex items-center gap-1 font text-light-slate-11">
                       <div className="w-3 h-3 rounded-sm" style={{ backgroundColor: value.color }}></div>
                       <div>{value.title}</div>
                     </div>
-                    <div className="grid grid-cols-2 gap-1">
-                      <span>%{percentage}</span>
+                    <div className="grid grid-cols-2 gap-1 text-right">
+                      <span>{percentage}%</span>
                       <span>{stat}</span>
                     </div>
                   </div>
@@ -265,7 +227,7 @@ function getWidthPercentage(stat: number, total_contributions: number) {
   }
 
   // round to two decimal places
-  return Math.round((stat / total_contributions) * 10000) / 100;
+  return Math.round((stat / total_contributions) * 100);
 }
 
 function GraphRow({
@@ -311,13 +273,7 @@ function GraphRow({
 
   return (
     <>
-      <Image
-        className="block w-8 h-8 rounded-full grid-cols-1"
-        src={getAvatarByUsername(user.login, 64)}
-        width={64}
-        height={64}
-        alt={user.login}
-      />
+      <AvatarHoverCard repositories={[]} contributor={user.login} size="medium" />
       <div className="flex items-center text-sm text-slate-900 grid-cols-2">{user.login}</div>
       <div className="flex items-stretch grid-cols-3">
         <div

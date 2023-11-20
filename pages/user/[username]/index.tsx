@@ -38,8 +38,8 @@ const Contributor: WithPageLayout<ContributorSSRProps> = ({ username, user, ogIm
     topic: "*",
     repoIds: [],
     limit: 30,
-    range: 30,
-    mostRecent: true,
+    range: "30",
+    mostRecent: false,
   });
   const isError = contributorError;
   const repoList = useRepoList(Array.from(new Set(contributorPRData.map((prData) => prData.full_name))).join(","));

@@ -4,7 +4,6 @@ import { User } from "@supabase/supabase-js";
 import { GlobalStateInterface } from "interfaces/global-state-types";
 
 const initialState: GlobalStateInterface = {
-  range: 30,
   insightRepoLimit: 10,
   user: null,
   sessionToken: null,
@@ -27,7 +26,6 @@ interface AppStore extends GlobalStateInterface {
     waitlisted: boolean;
     insightRepoLimit: number;
   }) => void;
-  updateRange: (range: number) => void;
   setUser: (user: User | null) => void;
   setSessionToken: (sessionToken?: string | null) => void;
   setProviderToken: (providerToken?: string | null) => void;
@@ -50,7 +48,6 @@ const store = create<AppStore>()((set) => ({
     waitlisted: boolean;
     insightRepoLimit: number;
   }) => set((state) => ({ ...state, onboarded, waitlisted, insightRepoLimit })),
-  updateRange: (range: number) => set((state) => ({ ...state, range })),
   setUser: (user: User | null) => set((state) => ({ ...state, user })),
   setSessionToken: (sessionToken?: string | null) => set((state) => ({ ...state, sessionToken })),
   setProviderToken: (providerToken?: string | null) => set((state) => ({ ...state, providerToken })),
