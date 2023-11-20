@@ -8,11 +8,8 @@
   src: url("../public/assets/fonts/Inter-VariableFont_slnt,wght.ttf");
 }
 
-* {
-  @apply font-normal;
-}
-
 body {
+  @apply font-normal;
   background-color: #f8f9fa;
 }
 

@@ -3,10 +3,8 @@ import useSWR, { Fetcher } from "swr";
 import { useRouter } from "next/router";
 
 import publicApiFetcher from "lib/utils/public-api-fetcher";
-import {
-  ContributorStat,
-  ContributorType,
-} from "components/molecules/MostActiveContributorsCard/most-active-contributors-card";
+import { ContributorStat } from "components/molecules/MostActiveContributorsCard/most-active-contributors-card";
+import { ContributorType } from "components/Graphs/shared/contributor-type-filter";
 
 interface PaginatedResponse {
   readonly data: ContributorStat[];
