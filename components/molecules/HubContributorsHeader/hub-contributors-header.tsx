@@ -22,6 +22,7 @@ import { QueryParams } from "pages/hub/lists/find";
 import Title from "components/atoms/Typography/title";
 import TextInput from "components/atoms/TextInput/text-input";
 import FilterChip from "components/atoms/FilterChip/filter-chip";
+import Tooltip from "components/atoms/Tooltip/tooltip";
 import { DialogTrigger } from "../Dialog/dialog";
 
 interface ListHeaderProps {
@@ -145,15 +146,16 @@ const HubContributorsHeader = ({
             {filters && filters.length ? (
               <div className="flex gap-2 order-0">
                 {filters.map((filter) => (
-                  <FilterChip
-                    className="shrink-0 h-8"
-                    key={filter}
-                    items={[filter.split("=")[1] as string]}
-                    onClear={() => {
-                      const params = filter.split("=")[0];
-                      setQueryParams({}, [params]);
-                    }}
-                  />
+                  <Tooltip direction="top" content={filter.split("=")[0]} key={filter}>
+                    <FilterChip
+                      className="shrink-0 h-8"
+                      items={[filter.split("=")[1] as string]}
+                      onClear={() => {
+                        const params = filter.split("=")[0];
+                        setQueryParams({}, [params]);
+                      }}
+                    />
+                  </Tooltip>
                 ))}
               </div>
             ) : null}
