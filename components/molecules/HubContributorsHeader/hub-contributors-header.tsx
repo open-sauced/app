@@ -91,7 +91,7 @@ const HubContributorsHeader = ({
 
   return (
     <Dialog open={filterOpen} onOpenChange={(value) => setFilterOpen(value)}>
-      <div className="relative flex flex-col justify-between w-full gap-6 py-2">
+      <div className="relative flex flex-col justify-between w-full gap-6 py-2 px-4 md:px-0">
         <div className="flex flex-col justify-between w-full md:flex-row">
           <div className="header-image mr-2  min-w-[130px] gap-3 flex flex-col">
             <ListNameHeader
@@ -141,7 +141,7 @@ const HubContributorsHeader = ({
           </div>
         </div>
         <div className="flex flex-col w-full gap-2 justify-between md:flex-row">
-          <div className="flex gap-4 flex-col items-start md:items-center ">
+          <div className="flex gap-4 flex-col items-start md:items-center md:flex-row">
             {filters && filters.length ? (
               <div className="flex gap-2 order-0">
                 {filters.map((filter) => (
@@ -173,7 +173,7 @@ const HubContributorsHeader = ({
               )}
             </DialogTrigger>
           </div>
-          <div className="flex flex-col gap-2 md:items-center md:gap-4 md:flex-row self-end">
+          <div className="flex flex-col gap-2 md:items-center md:gap-4 md:flex-row ">
             <SingleSelect
               options={timezoneOptions}
               position="popper"
@@ -205,7 +205,7 @@ const HubContributorsHeader = ({
       <Portal className="justify-end">
         <form onSubmit={handleApplyFilter} className="fixed inset-0 z-50 flex items-end justify-end">
           <Overlay className="fixed inset-0 z-10 bg-black/10 backdrop-blur-xs transition-all duration-100 data-[state=closed]:animate-out data-[state=open]:fade-in data-[state=closed]:fade-out" />
-          <Content className="fixed right-0 z-50 px-2 md:px-6 py-10 shadow-lg grid w-full bg-white md:w-80 overflow-hidden h-[calc(100%-(3.3rem))]">
+          <Content className="fixed right-0 z-50 px-2 md:px-6 py-10 shadow-lg grid w-4/5 bg-white md:w-80 overflow-hidden h-[calc(100%-(3.3rem))]">
             <div className="flex gap-5 flex-col flex-wrap">
               <Title level={2}>All Filters</Title>
               <div className="flex flex-col gap-2 ">
@@ -226,7 +226,7 @@ const HubContributorsHeader = ({
                 <TextInput fieldRef={prVelocityInputRef} name="pr_velocity" defaultValue={pr_velocity ?? ""} />
               </div>
             </div>
-            <div className="bottom-0 flex items-center justify-between fixed px-2 md:px-6 border-t py-6 md:w-80">
+            <div className="bottom-0 flex items-center justify-between fixed px-2 md:px-6 w-4/5 border-t py-6 md:w-80">
               <button className="text-sm text-sauced-orange p-1.5 hover:bg-orange-100 rounded-md">Save filter</button>
               <div className="flex items-center gap-2">
                 <Button onClick={handleCancelFilter} className="py-1.5" variant="text">
