@@ -4,7 +4,7 @@ import clsx from "clsx";
 import { FiGlobe } from "react-icons/fi";
 import { BiFilterAlt } from "react-icons/bi";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 // import { useToast } from "lib/hooks/useToast";
 
@@ -56,9 +56,34 @@ const HubContributorsHeader = ({
     .filter((filter) => filter.includes("tz") || filter.includes("pr_velocity"));
   const { limit, tz, pr_velocity } = router.query as QueryParams;
   const [filterOpen, setFilterOpen] = useState(false);
+  const [timezone, setTimezone] = useState("");
+  const prVelocityInputRef = useRef<HTMLInputElement>(null);
 
   const [contributorSearch, setContributorSearch] = useState("");
   const debouncedSearchTerm = useDebounceTerm(contributorSearch, 300);
+
+  const handleApplyFilter = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const prVelocity = prVelocityInputRef.current?.value;
+
+    let query = {};
+
+    if (timezone) {
+      query = { tz: timezone };
+    }
+
+    if (prVelocity) {
+      query = { ...query, pr_velocity: prVelocity };
+    }
+    setQueryParams(query as QueryParams);
+    setFilterOpen(false);
+  };
+
+  const handleCancelFilter = () => {
+    setTimezone("");
+    setFilterOpen(false);
+  };
 
   useEffect(() => {
     onSearch(contributorSearch);
@@ -78,7 +103,7 @@ const HubContributorsHeader = ({
             <Text className="text-light-slate-9">Select contributors to add to your list</Text>
           </div>
           <div className="flex flex-col items-center justify-center gap-6 md:flex-row header-info max-sm:mt-4">
-            <div className="flex items-center order-2 gap-2 md:flex-row md:order-1">
+            <div className="flex items-center order-2 gap-2 md:flex-row md:order-1 self-start">
               <div className="flex items-center gap-10 py-1.5 px-4 rounded-md bg-white mr-3">
                 <span className="flex items-center gap-2 text-sm shrink-0">
                   <FiGlobe /> Make Public
@@ -116,9 +141,9 @@ const HubContributorsHeader = ({
           </div>
         </div>
         <div className="flex flex-col w-full gap-2 justify-between md:flex-row">
-          <div className="flex items-center gap-4 ">
-            {filters ? (
-              <div className="flex gap-2">
+          <div className="flex gap-4 flex-col items-start md:items-center ">
+            {filters && filters.length ? (
+              <div className="flex gap-2 order-0">
                 {filters.map((filter) => (
                   <FilterChip
                     className="shrink-0 h-8"
@@ -135,7 +160,7 @@ const HubContributorsHeader = ({
 
             <Search
               placeholder={`Search ${title}`}
-              className=" text-sm py-1.5"
+              className=" text-sm py-1.5 order-2"
               name={"contributors"}
               onChange={(value) => setContributorSearch(value)}
             />
@@ -148,7 +173,7 @@ const HubContributorsHeader = ({
               )}
             </DialogTrigger>
           </div>
-          <div className="flex flex-col gap-2 md:items-center md:gap-4 md:flex-row">
+          <div className="flex flex-col gap-2 md:items-center md:gap-4 md:flex-row self-end">
             <SingleSelect
               options={timezoneOptions}
               position="popper"
@@ -178,7 +203,7 @@ const HubContributorsHeader = ({
         </div>
       </div>
       <Portal className="justify-end">
-        <div className="fixed inset-0 z-50 flex items-end justify-end">
+        <form onSubmit={handleApplyFilter} className="fixed inset-0 z-50 flex items-end justify-end">
           <Overlay className="fixed inset-0 z-10 bg-black/10 backdrop-blur-xs transition-all duration-100 data-[state=closed]:animate-out data-[state=open]:fade-in data-[state=closed]:fade-out" />
           <Content className="fixed right-0 z-50 px-2 md:px-6 py-10 shadow-lg grid w-full bg-white md:w-80 overflow-hidden h-[calc(100%-(3.3rem))]">
             <div className="flex gap-5 flex-col flex-wrap">
@@ -192,17 +217,28 @@ const HubContributorsHeader = ({
                   value={tz ? String(tz) : undefined}
                   placeholder="Select time zone"
                   onValueChange={(value) => {
-                    setQueryParams({ tz: value } as QueryParams);
+                    setTimezone(value);
                   }}
                 />
               </div>
               <div className="flex flex-col gap-2">
                 <Title level={4}>PR Velocity</Title>
-                <TextInput defaultValue={pr_velocity ?? ""} />
+                <TextInput fieldRef={prVelocityInputRef} name="pr_velocity" defaultValue={pr_velocity ?? ""} />
+              </div>
+            </div>
+            <div className="bottom-0 flex items-center justify-between fixed px-2 md:px-6 border-t py-6 md:w-80">
+              <button className="text-sm text-sauced-orange p-1.5 hover:bg-orange-100 rounded-md">Save filter</button>
+              <div className="flex items-center gap-2">
+                <Button onClick={handleCancelFilter} className="py-1.5" variant="text">
+                  Cancel
+                </Button>
+                <Button type="submit" className="py-1.5" variant="primary">
+                  Apply
+                </Button>
               </div>
             </div>
           </Content>
-        </div>
+        </form>
       </Portal>
     </Dialog>
   );
