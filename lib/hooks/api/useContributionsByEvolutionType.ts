@@ -2,8 +2,8 @@ import { useState } from "react";
 import useSWR, { Fetcher } from "swr";
 
 import publicApiFetcher from "lib/utils/public-api-fetcher";
-import { ContributorType } from "components/molecules/MostActiveContributorsCard/most-active-contributors-card";
 import { ContributionEvolutionByTypeDatum } from "components/molecules/ContributionsEvolutionByTypeCard/contributions-evolution-by-type-card";
+import { ContributorType } from "components/Graphs/shared/contributor-type-filter";
 
 /**
  * Fetch most active contributors from a list.

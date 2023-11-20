@@ -18,6 +18,8 @@ import { getGraphColorPalette } from "lib/utils/color-utils";
 import ContributionsEvolutionByType from "components/molecules/ContributionsEvolutionByTypeCard/contributions-evolution-by-type-card";
 import useContributionsEvolutionByType from "lib/hooks/api/useContributionsByEvolutionType";
 import { setQueryParams } from "lib/utils/query-params";
+import { FeatureFlagged } from "components/shared/feature-flagged";
+import { FeatureFlag, getAllFeatureFlags } from "lib/utils/server/feature-flags";
 
 interface ContributorListPageProps {
   list?: DBList;
@@ -29,6 +31,7 @@ interface ContributorListPageProps {
     projectData: DbProjectContributions[];
   };
   isOwner: boolean;
+  featureFlags: Record<FeatureFlag, boolean>;
 }
 
 export type ServerFilterParams = {
@@ -79,6 +82,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   }
 
   const userId = Number(session?.user.user_metadata.sub);
+  const featureFlags = await getAllFeatureFlags(userId);
 
   return {
     props: {
@@ -91,11 +95,19 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
         projectData: projectData ?? [],
       },
       isOwner: list && list.user_id === userId,
+      featureFlags,
     },
   };
 };
 
-const ListActivityPage = ({ list, numberOfContributors, isError, activityData, isOwner }: ContributorListPageProps) => {
+const ListActivityPage = ({
+  list,
+  numberOfContributors,
+  isError,
+  activityData,
+  isOwner,
+  featureFlags,
+}: ContributorListPageProps) => {
   const router = useRouter();
   const range = router.query.range as string;
   const {
@@ -173,7 +185,9 @@ const ListActivityPage = ({ list, numberOfContributors, isError, activityData, i
             data={treemapData}
             color={getGraphColorPalette()}
           />
-          <ContributionsEvolutionByType data={evolutionData} isLoading={isLoadingEvolution} />
+          <FeatureFlagged flag="contributions_evolution_by_type" featureFlags={featureFlags}>
+            <ContributionsEvolutionByType data={evolutionData} isLoading={isLoadingEvolution} />
+          </FeatureFlagged>
         </div>
       )}
     </ListPageLayout>

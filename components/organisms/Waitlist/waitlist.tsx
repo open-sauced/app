@@ -20,7 +20,7 @@ const WaitlistComponent = () => {
             </Text>
           </div>
           <div className="max-w-2xl mt-7 px-9 font-semibold">
-            <Title className="text-center tracking-tight leading-10 !text-light-slate-1" level={1}>
+            <Title className="text-center leading-10 !text-light-slate-1" level={1}>
               You and 32 others are on the Open Sauced waitlist.
             </Title>
           </div>
