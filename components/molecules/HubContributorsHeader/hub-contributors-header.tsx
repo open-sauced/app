@@ -103,7 +103,7 @@ const HubContributorsHeader = ({
             <Text className="text-light-slate-9">Select contributors to add to your list</Text>
           </div>
           <div className="flex flex-col items-center justify-center gap-6 md:flex-row header-info max-sm:mt-4">
-            <div className="flex items-center order-2 gap-2 md:flex-row md:order-1 self-start">
+            <div className="flex items-center order-2 gap-2 md:flex-row md:order-1 max-sm:self-start">
               <div className="flex items-center gap-10 py-1.5 px-4 rounded-md bg-white mr-3">
                 <span className="flex items-center gap-2 text-sm shrink-0">
                   <FiGlobe /> Make Public
