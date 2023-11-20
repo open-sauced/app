@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.77.0-beta.5](https://github.com/open-sauced/insights/compare/v1.77.0-beta.4...v1.77.0-beta.5) (2023-11-20)
+
+
+### 🍕 Features
+
+* Svelte added to interests dropdown list ([#2168](https://github.com/open-sauced/insights/issues/2168)) ([88a778e](https://github.com/open-sauced/insights/commit/88a778e64f4a38b0991995055681d6b31bee5c6e))
+
 ## [1.77.0-beta.4](https://github.com/open-sauced/insights/compare/v1.77.0-beta.3...v1.77.0-beta.4) (2023-11-20)
 
 
