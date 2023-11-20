@@ -205,7 +205,7 @@ const HubContributorsHeader = ({
       <Portal className="justify-end">
         <form onSubmit={handleApplyFilter} className="fixed inset-0 z-50 flex items-end justify-end">
           <Overlay className="fixed inset-0 z-10 bg-black/10 backdrop-blur-xs transition-all duration-100 data-[state=closed]:animate-out data-[state=open]:fade-in data-[state=closed]:fade-out" />
-          <Content className="fixed right-0 z-50 px-2 md:px-6 py-10 shadow-lg grid w-4/5 bg-white md:w-80 overflow-hidden h-[calc(100%-(3.3rem))]">
+          <Content className="fixed right-0 z-50 px-2 md:px-6 py-10 shadow-lg grid w-4/5 bg-white md:w-80 overflow-hidden h-screen md:h-[calc(100%-(3.3rem))]">
             <div className="flex gap-5 flex-col flex-wrap">
               <Title level={2}>All Filters</Title>
               <div className="flex flex-col gap-2 ">
