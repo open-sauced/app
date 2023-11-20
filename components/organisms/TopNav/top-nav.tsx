@@ -14,7 +14,7 @@ const TopNav: React.FC = () => {
   const { user } = useSupabaseAuth();
   const { onboarded } = useSession();
   return (
-    <header className="top-nav-container w-full fixed top-0 left-0 z-50 py-0.5 bg-light-slate-3 border-b">
+    <header className="top-nav-container w-full fixed top-0 left-0 z-50 py-0.5 bg-light-slate-2 border-b">
       <div className="flex justify-between items-center mx-auto container px-2 md:px-16">
         <div className="flex gap-3 md:gap-8 items-center">
           <HeaderLogo withBg={false} textIsBlack />
@@ -34,7 +34,7 @@ const TopNav: React.FC = () => {
                 </OnboardingButton>
                 <div id="onboarding" className="flex flex-col absolute right-0 sm:hidden">
                   <span className="border-x-transparent border-x-[7px] border-b-[7px] border-b-orange-500 h-0 w-0 self-end mr-[1.1rem]" />
-                  <Text className="text-sm py-1 font-medium px-2 w-max rounded shadow-lg bg-light-slate-2 !text-light-orange-9 outline-[1px] outline outline-orange-500">
+                  <Text className="text-sm py-1 px-2 w-max rounded shadow-lg bg-light-slate-2 !text-light-orange-9 outline-[1px] outline outline-orange-500">
                     Complete the onboarding
                   </Text>
                 </div>

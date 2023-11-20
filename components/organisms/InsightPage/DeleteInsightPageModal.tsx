@@ -44,17 +44,15 @@ const DeleteInsightPageModal: FC<ModalProps> = ({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="px-2 max-w-[90%] lg:max-w-2xl rounded-t-lg pt-2">
+      <DialogContent className="grid grid-cols-1 gap-4 p-4 max-w-[90%] lg:max-w-xl rounded-t-lg">
         <DialogTitle>
           <Title level={3}>Delete Page</Title>
         </DialogTitle>
 
         <Text>
-          Are you sure you want to delete <span className="font-bold text-light-slate-12">{`${pageName}`}</span>?
-        </Text>
-        <Text>
-          If you have data on this page that your team is using it would be difficult for your team to get access to
-          track your project.
+          Are you sure you want to delete <span className="font-bold text-light-slate-12">{`${pageName}`}</span>? If you
+          have data on this page that your team is using it would be difficult for your team to get access to track your
+          project.
         </Text>
         <Text>
           {" "}

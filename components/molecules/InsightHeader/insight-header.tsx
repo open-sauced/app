@@ -5,6 +5,7 @@ import { usePostHog } from "posthog-js/react";
 
 import { FiCopy } from "react-icons/fi";
 
+import { useRouter } from "next/router";
 import getRepoInsights from "lib/utils/get-repo-insights";
 import Button from "components/atoms/Button/button";
 import Title from "components/atoms/Typography/title";
@@ -13,7 +14,9 @@ import ContextThumbnail from "components/atoms/ContextThumbnail/context-thumbnai
 import { truncateString } from "lib/utils/truncate-string";
 import useRepositories from "lib/hooks/api/useRepositories";
 import { useToast } from "lib/hooks/useToast";
+import { setQueryParams } from "lib/utils/query-params";
 import CardRepoList from "../CardRepoList/card-repo-list";
+import ComponentDateFilter from "../ComponentDateFilter/component-date-filter";
 
 interface InsightHeaderProps {
   insight?: DbUserInsight;
@@ -23,6 +26,8 @@ interface InsightHeaderProps {
 }
 
 const InsightHeader = ({ insight, repositories, insightId, isOwner }: InsightHeaderProps): JSX.Element => {
+  const router = useRouter();
+  const { range } = router.query;
   const { data: repoData, meta: repoMeta } = useRepositories(repositories);
   const { repoList } = getRepoInsights(repoData);
   const [insightPageLink, setInsightPageLink] = useState("");
@@ -56,7 +61,7 @@ const InsightHeader = ({ insight, repositories, insightId, isOwner }: InsightHea
         </div>
         <div className="flex flex-col justify-center p-2 header-info grow">
           <div className="flex gap-2">
-            <Title level={1} className="!text-2xl font-semibold tracking-tight text-slate-900">
+            <Title level={1} className="!text-2xl font-semibold text-slate-900">
               {(insight && truncateString(insight.name, 30)) || "Insights"}
             </Title>
             {insight && <Badge isPublic={insight?.is_public} />}
@@ -68,17 +73,29 @@ const InsightHeader = ({ insight, repositories, insightId, isOwner }: InsightHea
           </div>
         </div>
       </div>
-      <div className="absolute right-0 flex flex-col gap-3 py-2 md:items-center md:flex-row md:static">
-        <Button onClick={() => handleCopyToClipboard(insightPageLink)} className="px-6 py-2 bg-white " variant="text">
+      <div className="absolute right-0 bottom-0 top-0 flex flex-col items-end gap-3 py-2 md:items-center md:flex-row md:static">
+        <Button
+          onClick={() => handleCopyToClipboard(insightPageLink)}
+          className="px-6 py-2 bg-white w-max"
+          variant="text"
+        >
           <FiCopy className="mt-1 mr-2" /> Share
         </Button>
         {isOwner && (
           <Link href={`/hub/insights/${insightId}/edit`}>
-            <Button className="text-xs" variant="primary">
+            <Button className="text-xs w-max" variant="primary">
               <FaEdit className="mr-2" /> Edit Page
             </Button>
           </Link>
         )}
+        <div className=" md:hidden mt-auto">
+          <ComponentDateFilter
+            setRangeFilter={(selectedRange) => {
+              setQueryParams({ range: `${selectedRange}` });
+            }}
+            defaultRange={Number(range)}
+          />
+        </div>
       </div>
     </div>
   );

@@ -1,10 +1,10 @@
-import { Meta, StoryObj } from "@storybook/react";
+import { Meta } from "@storybook/react";
 import { useEffect, useState } from "react";
 import Button from "components/atoms/Button/button";
 import MostActiveContributorsCard, {
   ContributorStat,
-  ContributorType,
 } from "components/molecules/MostActiveContributorsCard/most-active-contributors-card";
+import { ContributorType } from "components/Graphs/shared/contributor-type-filter";
 
 const meta = {
   title: "Design System/Molecules/Most Active Contributors Card",
@@ -21,8 +21,6 @@ const meta = {
 } satisfies Meta;
 
 export default meta;
-
-type Story = StoryObj;
 
 export const Default = () => {
   const [data, setData] = useState<any>(generateData());

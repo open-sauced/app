@@ -1,7 +1,8 @@
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { GetServerSidePropsContext } from "next";
-import { useState } from "react";
 import { NodeMouseEventHandler } from "@nivo/treemap";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 import Error from "components/atoms/Error/Error";
 import { fetchApiData, validateListPath } from "helpers/fetchApiData";
 import ListPageLayout from "layouts/lists";
@@ -14,6 +15,11 @@ import { ContributionsTreemap } from "components/molecules/ContributionsTreemap/
 import { useContributorsByProject } from "lib/hooks/api/useContributorsByProject";
 import { useContributionsByProject } from "lib/hooks/api/useContributionsByProject";
 import { getGraphColorPalette } from "lib/utils/color-utils";
+import ContributionsEvolutionByType from "components/molecules/ContributionsEvolutionByTypeCard/contributions-evolution-by-type-card";
+import useContributionsEvolutionByType from "lib/hooks/api/useContributionsByEvolutionType";
+import { setQueryParams } from "lib/utils/query-params";
+import { FeatureFlagged } from "components/shared/feature-flagged";
+import { FeatureFlag, getAllFeatureFlags } from "lib/utils/server/feature-flags";
 
 interface ContributorListPageProps {
   list?: DBList;
@@ -24,6 +30,8 @@ interface ContributorListPageProps {
     topContributor: ContributorStat;
     projectData: DbProjectContributions[];
   };
+  isOwner: boolean;
+  featureFlags: Record<FeatureFlag, boolean>;
 }
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
@@ -33,8 +41,9 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     data: { session },
   } = await supabase.auth.getSession();
   const bearerToken = session ? session.access_token : "";
-  const { listId } = ctx.params as { listId: string };
-  const range = 30;
+  const { listId, range: rawRange } = ctx.params as { listId: string; range: string };
+
+  const range = rawRange ? Number(rawRange) : "30";
   const [
     { data, error: contributorListError },
     { data: list, error },
@@ -65,6 +74,9 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     };
   }
 
+  const userId = Number(session?.user.user_metadata.sub);
+  const featureFlags = await getAllFeatureFlags(userId);
+
   return {
     props: {
       list,
@@ -75,20 +87,35 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
         topContributor: mostActiveData?.data?.length ? mostActiveData.data[0] : null,
         projectData: projectData ?? [],
       },
+      isOwner: list && list.user_id === userId,
+      featureFlags,
     },
   };
 };
 
-const ListActivityPage = ({ list, numberOfContributors, isError, activityData }: ContributorListPageProps) => {
-  const [range, setRange] = useState(30);
-  const isOwner = false;
+const ListActivityPage = ({
+  list,
+  numberOfContributors,
+  isError,
+  activityData,
+  isOwner,
+  featureFlags,
+}: ContributorListPageProps) => {
+  const router = useRouter();
+  const range = router.query.range as string;
   const {
     data: contributorStats,
     isLoading,
     isError: isMostActiveError,
     setContributorType,
     contributorType,
-  } = useMostActiveContributors({ listId: list!.id, initData: activityData.contributorStats.data, range });
+  } = useMostActiveContributors({ listId: list!.id, initData: activityData.contributorStats.data });
+
+  useEffect(() => {
+    if (!range) {
+      setQueryParams({ range: "30" });
+    }
+  }, [range]);
 
   const { setRepoId, error, data: projectContributionsByUser, repoId } = useContributorsByProject(list!.id, range);
 
@@ -121,18 +148,24 @@ const ListActivityPage = ({ list, numberOfContributors, isError, activityData }:
           }),
   };
 
+  const {
+    data: evolutionData,
+    isError: evolutionError,
+    isLoading: isLoadingEvolution,
+  } = useContributionsEvolutionByType({ listId: list!.id, range });
+
   return (
-    <ListPageLayout list={list} numberOfContributors={numberOfContributors} isOwner={isOwner} setRange={setRange}>
+    <ListPageLayout list={list} numberOfContributors={numberOfContributors} isOwner={isOwner}>
       {isError ? (
         <Error errorMessage="Unable to load list activity" />
       ) : (
-        <div className="lg:grid lg:grid-cols-2 lg:grid-rows-2 gap-4 flex flex-col">
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
           <ClientOnly>
             {/* TODO: Remove client only once server data is being used in the hook on initial load client-side */}
             <MostActiveContributorsCard
               data={contributorStats?.data ?? []}
               totalContributions={contributorStats?.meta.allContributionsCount ?? 0}
-              topContributor={activityData.topContributor}
+              topContributor={contributorStats?.data?.length ? contributorStats.data[0] : undefined}
               setContributorType={setContributorType}
               contributorType={contributorType}
               isLoading={isLoading}
@@ -145,6 +178,9 @@ const ListActivityPage = ({ list, numberOfContributors, isError, activityData }:
             data={treemapData}
             color={getGraphColorPalette()}
           />
+          <FeatureFlagged flag="contributions_evolution_by_type" featureFlags={featureFlags}>
+            <ContributionsEvolutionByType data={evolutionData} isLoading={isLoadingEvolution} />
+          </FeatureFlagged>
         </div>
       )}
     </ListPageLayout>

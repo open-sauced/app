@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 
 import { FiCalendar, FiEdit2 } from "react-icons/fi";
@@ -112,6 +113,12 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
   const [createPopoverOpen, setCreatePopoverOpen] = useState(false);
   const popoverContentRef = useRef<HTMLDivElement>(null);
   const generateSummary = useRef(false);
+
+  const router = useRouter();
+  const { prurl } = router.query;
+  useEffect(() => {
+    if (prurl) setHighlightLink(prurl as string);
+  }, [prurl]);
 
   const fetchAllUserHighlights = async (page: number): Promise<DbHighlight[]> => {
     const req = await fetch(
@@ -515,7 +522,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
               className="flex-1 font-normal placeholder:text-sm focus:outline-none"
               type="text"
               placeholder={"Post a highlight to show your work!"}
-              id="highlight-create-input"
+              id="highlight-create"
               onFocus={() => setIsDivFocused(true)}
             />
           </div>
@@ -527,7 +534,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
         }}
         open={isDivFocused}
       >
-        <DialogContent className="p-4 w-[33vw]" style={{ maxHeight: "80vh", overflow: "auto" }}>
+        <DialogContent className="p-4 w-full md:w-[40rem] xs:w-96 max-h-[80vh] overflow-y-scroll">
           <DialogHeader>
             <DialogTitle>Post a highlight</DialogTitle>
           </DialogHeader>
@@ -540,7 +547,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                 </span>
               )}
             </p>
-            <div className="flex flex-col gap-2 p-2 overflow-hidden text-sm bg-white border rounded-lg">
+            <div className="flex flex-col gap-2 p-2 text-sm bg-white border rounded-lg">
               <TypeWriterTextArea
                 className={`resize-y min-h-[80px] max-h-99 font-normal placeholder:text-slate-400 text-light-slate-12 placeholder:font-normal placeholder:text-sm transition focus:outline-none rounded-lg ${
                   !isDivFocused ? "hidden" : ""
@@ -619,6 +626,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                   </button>
                 </Tooltip>
                 <TextInput
+                  id="highlight-link-input"
                   className="text-sm shadow-none h-10 flex-none"
                   value={highlightLink}
                   handleChange={(value) => setHighlightLink(value)}
@@ -628,10 +636,10 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
             </div>
 
             {highlightLink && isDivFocused && highlightLink.includes("github") && (
-              <GhOpenGraphImg className="max-sm:hidden lg:w-[33vw] md:w-[50vw]" githubLink={highlightLink} />
+              <GhOpenGraphImg githubLink={highlightLink} />
             )}
             {highlightLink && isDivFocused && highlightLink.includes("dev.to") && (
-              <DevToSocialImg className="max-sm:hidden lg:w-[33vw] md:w-[50vw]" blogLink={highlightLink} />
+              <DevToSocialImg blogLink={highlightLink} />
             )}
 
             <Button
@@ -643,27 +651,20 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
               Post
             </Button>
 
-            <h1 className="text-md font-semibold text-slate-900">
+            <h2 className="text-md font-semibold text-slate-900">
               Highlight suggestions
               <span className="text-sm font-semibold text-light-slate-9 ml-2">Based on your latest activity</span>
-            </h1>
+            </h2>
 
             {loadingSuggestions ? (
-              <div className="lg:w-[33vw] md:w-[50vw]">
-                <Skeleton
-                  count={3}
-                  height={40}
-                  style={{
-                    margin: "0.5rem auto",
-                  }}
-                  className="w-full"
-                />
+              <div className="w-full">
+                <Skeleton count={3} height={40} className="w-full my-[0.5rem] mx-auto" />
               </div>
             ) : (
               <Swiper
                 spaceBetween={8}
                 slidesPerView={1}
-                className="lg:w-[33vw] md:w-[50vw]"
+                className="w-full"
                 modules={[Pagination, A11y]}
                 pagination={{
                   clickable: true,
@@ -687,17 +688,17 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                             key={suggestion.url}
                             className="flex items-center justify-between w-full gap-0.5 text-sm bg-white border rounded-lg p-2"
                           >
-                            <div className="flex w-full gap-2">
+                            <div className="flex w-full gap-2 items-center">
                               {suggestion.type === "pull_request" && (
                                 <BiGitMerge
-                                  className={`text-xl${
+                                  className={`text-base xs:text-xl ${
                                     suggestion.status_reason === "open" ? "text-green-600" : "text-purple-600"
                                   }`}
                                 />
                               )}
                               {suggestion.type === "issue" && (
                                 <VscIssues
-                                  className={`text-xl${
+                                  className={`text-base xs:text-xl ${
                                     suggestion.status === "open"
                                       ? "text-green-600"
                                       : suggestion.status_reason === "not_planned"
@@ -707,7 +708,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                                 />
                               )}
                               <p
-                                className="text-light-slate-11 truncate max-w-[16rem]                         cursor-pointer hover:text-orange-600 transition"
+                                className="text-light-slate-11 truncate max-w-[14rem] xs:max-w-[16rem] text-xs xs:text-sm cursor-pointer hover:text-orange-600 transition"
                                 onClick={() => {
                                   window.open(suggestion.url, "_blank");
                                 }}
@@ -725,7 +726,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                                 disabled={isSummaryButtonDisabled}
                                 className="p-2 rounded-full hover:bg-light-slate-3 text-light-slate-11 transition"
                               >
-                                <FiEdit2 className="text-xl" />
+                                <FiEdit2 className="text-base xs:text-xl" />
                               </button>
                             </Tooltip>
 
@@ -741,7 +742,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                                 disabled={isSummaryButtonDisabled}
                                 className="p-2 rounded-full hover:bg-light-slate-3 text-light-slate-11 transition disabled:cursor-not-allowed disabled:animate-pulse disabled:text-light-orange-9"
                               >
-                                <HiOutlineSparkles className="text-xl" />
+                                <HiOutlineSparkles className="text-base xs:text-xl" />
                               </button>
                             </Tooltip>
                           </div>
@@ -759,15 +760,10 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
       {/* Add Repo Popup Form */}
 
       <Dialog open={addTaggedRepoFormOpen} onOpenChange={setAddTaggedRepoFormOpen}>
-        <DialogContent
-          className="p-2"
-          style={{
-            width: "33vw",
-          }}
-        >
+        <DialogContent className="w-full md:w-[30rem] xs:w-[25rem] p-4 flex flex-col gap-4">
           <DialogHeader>
             <DialogTitle>Add a repo</DialogTitle>
-            <DialogDescription>Add a Repository to tag with this highlight.</DialogDescription>
+            <DialogDescription className="mt-2">Add a Repository to tag with this highlight.</DialogDescription>
           </DialogHeader>
           <Search
             isLoading={tagRepoSearchLoading}
@@ -878,7 +874,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                 />
               </div>
             </div>
-            <h1 className="text-md font-semibold text-slate-900 my-2">Highlight suggestions</h1>
+            <h2 className="text-md font-semibold text-slate-900 my-2">Highlight suggestions</h2>
             <Swiper
               spaceBetween={8}
               slidesPerView={1}
@@ -906,30 +902,32 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                           key={suggestion.url}
                           className="flex items-center justify-between w-full text-sm bg-white border rounded-lg p-2"
                         >
-                          <div className="flex w-full gap-2">
+                          <div className="flex w-full gap-2 items-center">
                             {suggestion.type === "pull_request" && (
                               <BiGitMerge
                                 className={`
-                      text-xl
-                      ${suggestion.status_reason === "open" ? "text-green-600" : "text-purple-600"}
-                      `}
+                                text-base xs:text-xl
+                                  ${suggestion.status_reason === "open" ? "text-green-600" : "text-purple-600"}
+                                  `}
                               />
                             )}
                             {suggestion.type === "issue" && (
                               <VscIssues
                                 className={`
-                      text-xl
-                      ${
-                        suggestion.status === "open"
-                          ? "text-green-600"
-                          : suggestion.status_reason === "not_planned"
-                          ? "text-red-600"
-                          : "text-purple-600"
-                      }
+                                text-base xs:text-xl
+                                  ${
+                                    suggestion.status === "open"
+                                      ? "text-green-600"
+                                      : suggestion.status_reason === "not_planned"
+                                      ? "text-red-600"
+                                      : "text-purple-600"
+                                  }
                     `}
                               />
                             )}
-                            <p className="text-light-slate-11 truncate max-w-[16rem]">{suggestion.title}</p>
+                            <p className="text-light-slate-11 truncate max-w-[14rem] xs:max-w-[16rem] text-xs xs:text-sm">
+                              {suggestion.title}
+                            </p>
                           </div>
                           <Tooltip className="text-xs modal-tooltip" direction="top" content="Fill content">
                             <button
@@ -941,7 +939,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                               disabled={isSummaryButtonDisabled}
                               className="p-2 rounded-full hover:bg-light-slate-3 text-light-slate-11 transition"
                             >
-                              <FiEdit2 className="text-xl" />
+                              <FiEdit2 className="text-base xs:text-xl" />
                             </button>
                           </Tooltip>
 
@@ -974,7 +972,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
         <div
           onClick={() => setIsFormOpenMobile(true)}
           className="p-3 mb-10 -mr-4 text-white rounded-full shadow-lg bg-light-orange-10"
-          id="mobile-highlight-create-button"
+          id="mobile-highlight-create"
         >
           <RxPencil1 className="text-3xl" />
         </div>

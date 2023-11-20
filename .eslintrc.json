@@ -11,6 +11,7 @@
         "groups": ["builtin", "external", "internal", "object", "type", "index", "parent", "sibling"]
       }
     ],
-    "no-console": "error"
+    "no-console": "error",
+    "no-debugger": "error"
   }
 }
