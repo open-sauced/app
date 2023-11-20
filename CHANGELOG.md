@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.77.0-beta.6](https://github.com/open-sauced/insights/compare/v1.77.0-beta.5...v1.77.0-beta.6) (2023-11-20)
+
+
+### 🧑‍💻 Code Refactoring
+
+* params create highlight logic ([#2096](https://github.com/open-sauced/insights/issues/2096)) ([8b697a6](https://github.com/open-sauced/insights/commit/8b697a685d1c7b41d402cab3501a46f3eb54a623))
+
 ## [1.77.0-beta.5](https://github.com/open-sauced/insights/compare/v1.77.0-beta.4...v1.77.0-beta.5) (2023-11-20)
 
 
