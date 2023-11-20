@@ -17,7 +17,7 @@ const EditInsightPage: WithPageLayout = () => {
   const { data: insight, isLoading: insightLoading, isError: insightError } = useInsight(id);
   const { isLoading: insightTeamMembersLoading, isError: insightTeamMembersError } = useInsightMembers(Number(id));
   const insightRepos = insight?.repos.map((repo) => repo.repo_id);
-  const { data: repos } = useRepositories(insightRepos, "30", "50");
+  const { data: repos } = useRepositories(insightRepos, 30, 50);
 
   if (insightLoading || insightTeamMembersLoading) {
     return <>Loading</>;

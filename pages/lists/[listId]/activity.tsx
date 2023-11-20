@@ -31,7 +31,7 @@ interface ContributorListPageProps {
   isOwner: boolean;
 }
 
-export type ServerFilterParams = {
+export type FilterParams = {
   listId: string;
   range?: string;
   limit?: string;
@@ -44,7 +44,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     data: { session },
   } = await supabase.auth.getSession();
   const bearerToken = session ? session.access_token : "";
-  const { listId, range: rawRange, limit: RawLimit } = ctx.params as ServerFilterParams;
+  const { listId, range: rawRange, limit: RawLimit } = ctx.params as FilterParams;
 
   const range = rawRange ? Number(rawRange) : "30";
   const limit = RawLimit ? Number(RawLimit) : "20";

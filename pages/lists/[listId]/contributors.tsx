@@ -8,7 +8,7 @@ import Error from "components/atoms/Error/Error";
 import { convertToContributors, useContributorsList } from "lib/hooks/api/useContributorList";
 import ContributorsList from "components/organisms/ContributorsList/contributors-list";
 import { setQueryParams } from "lib/utils/query-params";
-import { ServerFilterParams } from "./activity";
+import { FilterParams } from "./activity";
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const supabase = createPagesServerClient(ctx);
@@ -18,7 +18,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   } = await supabase.auth.getSession();
   const bearerToken = session ? session.access_token : "";
 
-  const { listId, limit: rawLimit, range } = ctx.params as ServerFilterParams;
+  const { listId, limit: rawLimit, range } = ctx.params as FilterParams;
   const limit = 10; // Can pull this from the querystring in the future
   const [{ data, error: contributorListError }, { data: list, error }] = await Promise.all([
     fetchApiData<PagedData<DBListContributor>>({
@@ -75,7 +75,7 @@ const ContributorsListPage = ({ list, initialData, isError, isOwner }: Contribut
     listId: list?.id,
     initialData,
     defaultRange: range as string,
-    defaultLimit: limit as string,
+    defaultLimit: Number(limit),
   });
 
   return (

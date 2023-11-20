@@ -21,7 +21,7 @@ export const useContributorsList = ({
   listId,
   initialData,
   initialPage = 1,
-  defaultLimit = "10",
+  defaultLimit = 10,
   defaultRange = "30",
 }: {
   listId: string | undefined;
@@ -30,14 +30,14 @@ export const useContributorsList = ({
     meta: Meta;
   };
   initialPage?: number;
-  defaultLimit?: string;
+  defaultLimit?: number;
   defaultRange?: string;
 }) => {
   const [page, setPage] = useState(initialPage);
 
   const query = new URLSearchParams();
   query.append("page", page.toString());
-  query.append("limit", defaultLimit ?? "10");
+  query.append("limit", `${defaultLimit}`);
   query.append("range", defaultRange ?? "30");
 
   const { data, error, mutate } = useSWR<any>(
