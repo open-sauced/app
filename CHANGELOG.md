@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.77.0-beta.4](https://github.com/open-sauced/insights/compare/v1.77.0-beta.3...v1.77.0-beta.4) (2023-11-20)
+
+
+### 🐛 Bug Fixes
+
+* fixed styling of insights delete page modal ([#2182](https://github.com/open-sauced/insights/issues/2182)) ([41b2e8a](https://github.com/open-sauced/insights/commit/41b2e8a15ac36349917dd4319a2a13b26a946b6b))
+
 ## [1.77.0-beta.3](https://github.com/open-sauced/insights/compare/v1.77.0-beta.2...v1.77.0-beta.3) (2023-11-18)
 
 
