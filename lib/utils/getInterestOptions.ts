@@ -13,6 +13,7 @@ const interests = [
   "react",
   "golang",
   "rust",
+  "svelte",
   "vue",
   "kubernetes",
   "hacktoberfest",
