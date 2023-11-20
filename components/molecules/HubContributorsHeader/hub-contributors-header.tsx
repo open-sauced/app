@@ -226,8 +226,7 @@ const HubContributorsHeader = ({
                 <TextInput fieldRef={prVelocityInputRef} name="pr_velocity" defaultValue={pr_velocity ?? ""} />
               </div>
             </div>
-            <div className="bottom-0 flex items-center justify-between fixed px-2 md:px-6 w-4/5 border-t py-6 md:w-80">
-              <button className="text-sm text-sauced-orange p-1.5 hover:bg-orange-100 rounded-md">Save filter</button>
+            <div className="bottom-0 flex items-center justify-end fixed px-2 md:px-6 w-4/5 border-t py-6 md:w-80">
               <div className="flex items-center gap-2">
                 <Button onClick={handleCancelFilter} className="py-1.5" variant="text">
                   Cancel
