@@ -5,6 +5,34 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.77.0-beta.7](https://github.com/open-sauced/insights/compare/v1.77.0-beta.6...v1.77.0-beta.7) (2023-11-20)
+
+
+### 🐛 Bug Fixes
+
+* feature flagged contributions evolution by contributor type graph ([#2187](https://github.com/open-sauced/insights/issues/2187)) ([98637b6](https://github.com/open-sauced/insights/commit/98637b67fcba8efb7ef56b20d78699e4c84aa90a))
+
+## [1.77.0-beta.6](https://github.com/open-sauced/insights/compare/v1.77.0-beta.5...v1.77.0-beta.6) (2023-11-20)
+
+
+### 🧑‍💻 Code Refactoring
+
+* params create highlight logic ([#2096](https://github.com/open-sauced/insights/issues/2096)) ([8b697a6](https://github.com/open-sauced/insights/commit/8b697a685d1c7b41d402cab3501a46f3eb54a623))
+
+## [1.77.0-beta.5](https://github.com/open-sauced/insights/compare/v1.77.0-beta.4...v1.77.0-beta.5) (2023-11-20)
+
+
+### 🍕 Features
+
+* Svelte added to interests dropdown list ([#2168](https://github.com/open-sauced/insights/issues/2168)) ([88a778e](https://github.com/open-sauced/insights/commit/88a778e64f4a38b0991995055681d6b31bee5c6e))
+
+## [1.77.0-beta.4](https://github.com/open-sauced/insights/compare/v1.77.0-beta.3...v1.77.0-beta.4) (2023-11-20)
+
+
+### 🐛 Bug Fixes
+
+* fixed styling of insights delete page modal ([#2182](https://github.com/open-sauced/insights/issues/2182)) ([41b2e8a](https://github.com/open-sauced/insights/commit/41b2e8a15ac36349917dd4319a2a13b26a946b6b))
+
 ## [1.77.0-beta.3](https://github.com/open-sauced/insights/compare/v1.77.0-beta.2...v1.77.0-beta.3) (2023-11-18)
 
 
