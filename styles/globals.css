@@ -8,13 +8,20 @@
   src: url("../public/assets/fonts/Inter-VariableFont_slnt,wght.ttf");
 }
 
-* {
-  font-weight: 500;
-}
-
 body {
+  @apply font-normal;
   background-color: #f8f9fa;
 }
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @apply tracking-tight;
+}
+
 .auto-grow-input:not(:empty) {
   color: black;
 }

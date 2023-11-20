@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import differenceInDays from "date-fns/differenceInDays";
 import getPullRequestsToDays from "lib/utils/get-prs-to-days";
 import { RepoList } from "components/molecules/CardRepoList/card-repo-list";
 import { getAvatarByUsername } from "lib/utils/github";
@@ -57,8 +58,17 @@ const useContributorPullRequestsChart = (
   };
 
   const [chart, setChart] = useState(lineChart);
-  const { data, meta } = useContributorPullRequests({ contributor, topic, repoIds, limit: 30, range, mostRecent });
-  const repoList: RepoList[] = Array.from(new Set(data.map((prData) => prData.full_name))).map((repo) => {
+  const { data, meta } = useContributorPullRequests({ contributor, topic, repoIds, limit: 100, range, mostRecent });
+  const repoList: RepoList[] = Array.from(
+    new Set(
+      data
+        .filter((prSince) => {
+          const daysSinceUpdated = differenceInDays(new Date(), new Date(prSince.updated_at));
+          return daysSinceUpdated <= Number(range);
+        })
+        .map((prData) => prData.full_name)
+    )
+  ).map((repo) => {
     const [repoOwner, repoName] = repo.split("/");
 
     return {
@@ -70,7 +80,7 @@ const useContributorPullRequestsChart = (
 
   useEffect(() => {
     if (data && Array.isArray(data) && data.length > 0) {
-      const graphData = getPullRequestsToDays(data);
+      const graphData = getPullRequestsToDays(data, Number(range || "30"));
 
       setChart((prevChart) => ({
         ...prevChart,

@@ -35,6 +35,7 @@ interface LanguagePillProps {
     | "csharp"
     | "php"
     | "java"
+    | "svelte"
     | "typescript"
     | "golang"
     | "vue"
