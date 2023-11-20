@@ -47,10 +47,10 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     data: { session },
   } = await supabase.auth.getSession();
   const bearerToken = session ? session.access_token : "";
-  const { listId, range: rawRange, limit: RawLimit } = ctx.params as FilterParams;
+  const { listId, range: rawRange, limit: rawLimit } = ctx.params as FilterParams;
 
   const range = rawRange ? Number(rawRange) : "30";
-  const limit = RawLimit ? Number(RawLimit) : "20";
+  const limit = rawLimit ? Number(rawLimit) : "20";
   const [
     { data, error: contributorListError },
     { data: list, error },
