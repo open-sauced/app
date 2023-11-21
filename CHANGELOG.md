@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.77.1-beta.1](https://github.com/open-sauced/insights/compare/v1.77.0...v1.77.1-beta.1) (2023-11-21)
+
+
+### 🐛 Bug Fixes
+
+* match skeleton high with container card ([#2150](https://github.com/open-sauced/insights/issues/2150)) ([4786117](https://github.com/open-sauced/insights/commit/4786117d34da2397539d1751d0c2ef1a841ce88b))
+* reset base font size in * selector in global.css ([#2184](https://github.com/open-sauced/insights/issues/2184)) ([6ae3751](https://github.com/open-sauced/insights/commit/6ae3751b383853673494bd3342b4f60d1b915b2e))
+
 ## [1.77.0](https://github.com/open-sauced/insights/compare/v1.76.0...v1.77.0) (2023-11-20)
 
 
