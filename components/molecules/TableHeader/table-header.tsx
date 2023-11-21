@@ -5,8 +5,9 @@ import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 
 import Search from "components/atoms/Search/search";
 import Title from "components/atoms/Typography/title";
-import LimitSelect from "components/atoms/Select/limit-select";
+import LimitSelect, { limitSelectMap } from "components/atoms/Select/limit-select";
 import LayoutToggle, { ToggleValue } from "components/atoms/LayoutToggle/layout-toggle";
+import { setQueryParams } from "lib/utils/query-params";
 import PaginationResult from "../PaginationResults/pagination-result";
 
 interface TableHeaderProps {
@@ -14,24 +15,17 @@ interface TableHeaderProps {
   metaInfo: Meta;
   entity: string;
   onSearch?: (search?: string) => void;
-  updateLimit: Function;
   layout?: ToggleValue;
   onLayoutToggle?: (value: ToggleValue) => void;
 }
 
-const TableHeader = ({
-  title,
-  metaInfo,
-  entity,
-  updateLimit,
-  onSearch,
-  layout,
-  onLayoutToggle,
-}: TableHeaderProps): JSX.Element => {
+const TableHeader = ({ title, metaInfo, entity, onSearch, layout, onLayoutToggle }: TableHeaderProps): JSX.Element => {
   const router = useRouter();
   const [searchTerm, setSearchTerm] = React.useState<string>("");
   const [suggestions, setSuggestions] = React.useState<string[]>([]);
   const { providerToken } = useSupabaseAuth();
+
+  const { limit } = router.query;
 
   const updateSuggestionsDebounced = useDebounce(async () => {
     const req = await fetch(
@@ -112,9 +106,10 @@ const TableHeader = ({
             { name: "40 per page", value: "40" },
             { name: "50 per page", value: "50" },
           ]}
+          defaultValue={limit as limitSelectMap}
           className="hidden ml-auto min-w-max md:inline-block"
           onChange={function (limit: string): void {
-            updateLimit(Number(limit));
+            setQueryParams({ limit: `${limit}` });
           }}
         />
       </div>
