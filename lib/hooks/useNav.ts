@@ -21,7 +21,19 @@ const useNav = (repositories: number[] = []) => {
     },
   ];
 
-  const { pageId, toolName: selectedTool, selectedFilter, userOrg } = router.query;
+  const { pageId, toolName, selectedFilter, userOrg } = router.query;
+
+  let selectedTool = toolName;
+
+  if (!toolName) {
+    if (userOrg) {
+      const url = new URL(router.asPath, "http://localhost:3000");
+      selectedTool = url.pathname.split("/").pop() as string;
+    } else {
+      const url = new URL(router.asPath, "http://localhost:3000");
+      selectedTool = url.pathname.split("/")[2];
+    }
+  }
 
   const toolList = defaultTools;
 

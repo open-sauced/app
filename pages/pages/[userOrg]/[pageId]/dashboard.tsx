@@ -2,30 +2,50 @@ import { useEffect } from "react";
 import { GetServerSidePropsContext } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 
-import Tool from "components/organisms/ToolsDisplay/tools-display";
-
+import Dashboard from "components/organisms/Dashboard/dashboard";
+import ClientOnly from "components/atoms/ClientOnly/client-only";
 import HubPageLayout from "layouts/hub-page";
-import { WithPageLayout } from "interfaces/with-page-layout";
-import changeCapitalization from "lib/utils/change-capitalization";
-import getInsightTeamMember from "lib/utils/get-insight-team-member";
 
-interface InsightFilterPageProps {
+import { WithPageLayout } from "interfaces/with-page-layout";
+import SEO from "layouts/SEO/SEO";
+import fetchSocialCard from "lib/utils/fetch-social-card";
+import getInsightTeamMember from "lib/utils/get-insight-team-member";
+import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
+import { useFetchUser } from "lib/hooks/useFetchUser";
+import { captureAnalytics } from "lib/utils/analytics";
+
+interface DashboardPageProps {
   insight: DbUserInsight;
-  pageName: string;
+  ogImage?: string;
 }
 
-const HubPage: WithPageLayout<InsightFilterPageProps> = ({ insight, pageName }: InsightFilterPageProps) => {
+const DashboardPage: WithPageLayout<DashboardPageProps> = ({ insight, ogImage }: DashboardPageProps) => {
   const repositories = insight.repos.map((repo) => repo.repo_id);
-
-  const title = `${insight.name} | Open Sauced Insights Hub`;
+  const { user } = useSupabaseAuth();
+  const { data: userInfo, isLoading } = useFetchUser(user?.user_metadata.user_name);
 
   useEffect(() => {
-    HubPage.updateSEO!({
-      title: title,
-    });
-  }, [title]);
+    if (isLoading) {
+      return;
+    }
 
-  return <Tool tool={changeCapitalization(pageName, true)} repositories={repositories} />;
+    captureAnalytics({ title: "Insights Display", property: "tools", value: `Dashboard selected`, userInfo });
+  }, [userInfo, isLoading]);
+
+  return (
+    <>
+      <SEO
+        title={`${insight.name} | Open Sauced Insights`}
+        description={`${insight.name} Insights on OpenSauced`}
+        image={ogImage}
+        twitterCard="summary_large_image"
+      />
+
+      <ClientOnly>
+        <Dashboard repositories={repositories} />
+      </ClientOnly>
+    </>
+  );
 };
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
@@ -36,7 +56,6 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   } = await supabase.auth.getSession();
   const bearerToken = session ? session.access_token : "";
   const insightId = ctx.params!["pageId"] as string;
-  const pageName = ctx.params!["toolName"] as string;
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/insights/${insightId}`);
   const insight = response.ok ? ((await response.json()) as DbUserInsight) : null;
 
@@ -49,7 +68,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   }
 
   const userId = session?.user?.user_metadata.sub as string;
-  const isOwner = userId && insight && `${userId}` === `${insight.user?.id}` ? true : false;
+  const isOwner = !!(userId && insight && `${userId}` === `${insight.user?.id}`);
   let isTeamMember = false;
 
   if (!insight.is_public && !isOwner) {
@@ -66,14 +85,17 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     };
   }
 
+  // Keeping this here so we are sure the page is not private before we fetch the social card.
+  const ogImage = await fetchSocialCard(`insights/${insightId}`);
+
   return {
     props: {
       insight,
-      pageName,
+      ogImage,
     },
   };
 };
 
-HubPage.PageLayout = HubPageLayout;
+DashboardPage.PageLayout = HubPageLayout;
 
-export default HubPage;
+export default DashboardPage;
