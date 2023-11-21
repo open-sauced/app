@@ -21,35 +21,17 @@ import HacktoberfestIcon from "img/icons/interests/hacktoberfest.svg";
 import CloJureIcon from "img/icons/interests/clojure.svg";
 
 import topicNameFormatting from "lib/utils/topic-name-formatting";
+import { InterestType } from "lib/utils/getInterestOptions";
 
 interface LanguagePillProps {
-  topic:
-    | "react"
-    | "javascript"
-    | "python"
-    | "ML"
-    | "AI"
-    | "rust"
-    | "ruby"
-    | "c"
-    | "cpp"
-    | "csharp"
-    | "php"
-    | "java"
-    | "svelte"
-    | "typescript"
-    | "golang"
-    | "vue"
-    | "Kubernetes"
-    | "hacktoberfest"
-    | "clojure"
-    | string;
+  topic: InterestType;
   classNames?: string;
   onClick?: () => void;
 }
+
 const LanguagePill = ({ topic, classNames, onClick }: LanguagePillProps) => {
-  const renderTopicIcon = (name: string) => {
-    const iconMap: { [name: string]: StaticImageData } = {
+  const renderTopicIcon = (name: InterestType) => {
+    const iconMap: Record<InterestType, StaticImageData> = {
       react: ReactIcon,
       rust: RustIcon,
       javascript: JavascriptIcon,
@@ -71,7 +53,7 @@ const LanguagePill = ({ topic, classNames, onClick }: LanguagePillProps) => {
       clojure: CloJureIcon,
     };
 
-    return iconMap[name] || "";
+    return iconMap[name];
   };
 
   return (

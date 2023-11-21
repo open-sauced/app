@@ -12,6 +12,7 @@ import Badge from "components/atoms/Badge/badge";
 import { getTimeByTimezone, getTimezone } from "lib/utils/timezones";
 import Tooltip from "components/atoms/Tooltip/tooltip";
 import { getFormattedDate } from "lib/utils/date-utils";
+import { InterestType } from "lib/utils/getInterestOptions";
 
 interface ContributorProfileInfoProps {
   githubName: string;
@@ -43,7 +44,7 @@ const ContributorProfileInfo = ({
   prFirstOpenedDate,
   isMaintainer,
 }: ContributorProfileInfoProps) => {
-  const interestArray = interests?.split(",").filter(Boolean);
+  const interestArray = interests?.split(",").filter(Boolean) as InterestType[];
   const discordUserId = discordUrl?.match(/\d{17,}$/)?.[0];
 
   return (
