@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 
 import { FiCalendar, FiEdit2 } from "react-icons/fi";
@@ -112,6 +113,12 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
   const [createPopoverOpen, setCreatePopoverOpen] = useState(false);
   const popoverContentRef = useRef<HTMLDivElement>(null);
   const generateSummary = useRef(false);
+
+  const router = useRouter();
+  const { prurl } = router.query;
+  useEffect(() => {
+    if (prurl) setHighlightLink(prurl as string);
+  }, [prurl]);
 
   const fetchAllUserHighlights = async (page: number): Promise<DbHighlight[]> => {
     const req = await fetch(
@@ -515,7 +522,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
               className="flex-1 font-normal placeholder:text-sm focus:outline-none"
               type="text"
               placeholder={"Post a highlight to show your work!"}
-              id="highlight-create-input"
+              id="highlight-create"
               onFocus={() => setIsDivFocused(true)}
             />
           </div>
@@ -619,6 +626,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                   </button>
                 </Tooltip>
                 <TextInput
+                  id="highlight-link-input"
                   className="text-sm shadow-none h-10 flex-none"
                   value={highlightLink}
                   handleChange={(value) => setHighlightLink(value)}
@@ -964,7 +972,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
         <div
           onClick={() => setIsFormOpenMobile(true)}
           className="p-3 mb-10 -mr-4 text-white rounded-full shadow-lg bg-light-orange-10"
-          id="mobile-highlight-create-button"
+          id="mobile-highlight-create"
         >
           <RxPencil1 className="text-3xl" />
         </div>

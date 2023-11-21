@@ -101,7 +101,8 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
   const prVelocityInDays = getRelativeDays(prVelocityCount || 0);
   const contributorData = getPullRequestsContributors(repositoryPullRequests);
 
-  const days = getPullRequestsToDays(repositoryPullRequests);
+  const days = getPullRequestsToDays(repositoryPullRequests, Number(range || "30"));
+
   const last30days = [
     {
       id: `last30-${repo.id}`,

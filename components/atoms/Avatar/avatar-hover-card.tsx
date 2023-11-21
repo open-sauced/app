@@ -9,7 +9,7 @@ import { getAvatarByUsername } from "lib/utils/github";
 
 declare interface AvatarProps {
   contributor: string;
-  size?: "xsmall" | "small" | "large";
+  size?: "xsmall" | "small" | "medium" | "large";
 }
 
 type AvatarHoverCard = AvatarProps & {
@@ -28,6 +28,11 @@ export const Avatar = ({ contributor, size = "large" }: AvatarProps): JSX.Elemen
     case "small":
       width = 45;
       height = 45;
+      break;
+
+    case "medium":
+      width = 35;
+      height = 35;
       break;
     default:
       break;
@@ -48,7 +53,7 @@ const AvatarHoverCard = ({ contributor, repositories, size = "large" }: AvatarHo
   return (
     <HoverCard.Root>
       <Link href={`/user/${contributor}`} as={`/user/${contributor}`}>
-        <HoverCard.Trigger asChild>
+        <HoverCard.Trigger>
           <Avatar contributor={contributor} size={size} />
         </HoverCard.Trigger>
       </Link>
