@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.77.1-beta.2](https://github.com/open-sauced/insights/compare/v1.77.1-beta.1...v1.77.1-beta.2) (2023-11-21)
+
+
+### 🐛 Bug Fixes
+
+* added missing svelte svg ([#2196](https://github.com/open-sauced/insights/issues/2196)) ([d27794c](https://github.com/open-sauced/insights/commit/d27794c5862ab0489663125fb95ad78d4f46e4f9))
+
 ### [1.77.1-beta.1](https://github.com/open-sauced/insights/compare/v1.77.0...v1.77.1-beta.1) (2023-11-21)
 
 
