@@ -21,7 +21,7 @@ import { setQueryParams } from "lib/utils/query-params";
 import { FeatureFlagged } from "components/shared/feature-flagged";
 import { FeatureFlag, getAllFeatureFlags } from "lib/utils/server/feature-flags";
 
-interface ContributorListPageProps {
+export interface ContributorListPageProps {
   list?: DBList;
   numberOfContributors: number;
   isError: boolean;
