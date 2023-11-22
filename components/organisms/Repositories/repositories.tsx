@@ -9,6 +9,7 @@ import TableHeader from "components/molecules/TableHeader/table-header";
 
 import useRepositories from "lib/hooks/api/useRepositories";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
+import { setQueryParams } from "lib/utils/query-params";
 
 import Checkbox from "components/atoms/Checkbox/checkbox";
 import Button from "components/atoms/Button/button";
@@ -24,7 +25,7 @@ interface RepositoriesProps {
 const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
   const { user, signIn } = useSupabaseAuth();
   const router = useRouter();
-  const { pageId, toolName, selectedFilter, userOrg, range } = router.query;
+  const { pageId, toolName, selectedFilter, userOrg, range, limit } = router.query;
   const username = userOrg ? user?.user_metadata.user_name : undefined;
   const topic = pageId as string;
 
@@ -36,8 +37,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
     isError: repoListIsError,
     isLoading: repoListIsLoading,
     setPage,
-    setLimit,
-  } = useRepositories(repositories, Number(range));
+  } = useRepositories(repositories, Number(range), Number(limit));
   const filteredRepoNotIndexed = selectedFilter && !repoListIsLoading && !repoListIsError && repoListData.length === 0;
   const [selectedRepos, setSelectedRepos] = useState<DbRepo[]>([]);
 
@@ -93,13 +93,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
 
   return (
     <div className="flex flex-col w-full gap-4">
-      <TableHeader
-        updateLimit={setLimit}
-        onSearch={(e) => handleOnSearch(e)}
-        metaInfo={repoMeta}
-        entity="repos"
-        title="Repositories"
-      />
+      <TableHeader onSearch={(e) => handleOnSearch(e)} metaInfo={repoMeta} entity="repos" title="Repositories" />
       <div className="flex flex-col w-full overflow-x-auto border rounded-lg">
         <div>
           <div className="flex justify-between gap-2 px-6 py-4 md:hidden bg-light-slate-3">
@@ -173,7 +167,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
               ]}
               className="!w-36 ml-auto md:hidden overflow-x-hidden"
               onChange={function (limit: string): void {
-                setLimit(Number(limit));
+                setQueryParams({ limit });
               }}
             />
             <div className="flex items-center justify-between w-full py-1 md:py-4 md:mt-5">

@@ -34,6 +34,12 @@ interface ContributorListPageProps {
   featureFlags: Record<FeatureFlag, boolean>;
 }
 
+export type FilterParams = {
+  listId: string;
+  range?: string;
+  limit?: string;
+};
+
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const supabase = createPagesServerClient(ctx);
 
@@ -41,9 +47,10 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     data: { session },
   } = await supabase.auth.getSession();
   const bearerToken = session ? session.access_token : "";
-  const { listId, range: rawRange } = ctx.params as { listId: string; range: string };
+  const { listId, range: rawRange, limit: rawLimit } = ctx.params as FilterParams;
 
   const range = rawRange ? Number(rawRange) : "30";
+  const limit = rawLimit ? Number(rawLimit) : "20";
   const [
     { data, error: contributorListError },
     { data: list, error },
@@ -57,7 +64,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     }),
     fetchApiData<DBList>({ path: `lists/${listId}`, bearerToken, pathValidator: validateListPath }),
     fetchApiData<PagedData<ContributorStat>>({
-      path: `lists/${listId}/stats/most-active-contributors?range=${range}&orderDirection=DESC&orderBy=total_contributions&limit=20&contributorType=all`,
+      path: `lists/${listId}/stats/most-active-contributors?range=${range}&orderDirection=DESC&orderBy=total_contributions&limit=${limit}&contributorType=all`,
       bearerToken,
       pathValidator: validateListPath,
     }),

@@ -33,13 +33,12 @@ export const useContributorsList = ({
   defaultLimit?: number;
   defaultRange?: string;
 }) => {
-  const [range, setRange] = useState(defaultRange); // [start, end
   const [page, setPage] = useState(initialPage);
-  const [limit, setLimit] = useState(defaultLimit);
+
   const query = new URLSearchParams();
   query.append("page", page.toString());
-  query.append("limit", limit.toString());
-  query.append("range", range);
+  query.append("limit", `${defaultLimit}`);
+  query.append("range", defaultRange ?? "30");
 
   const { data, error, mutate } = useSWR<any>(
     listId ? `lists/${listId}/contributors?${query}` : null,
@@ -52,9 +51,6 @@ export const useContributorsList = ({
 
   return {
     setPage,
-    setLimit,
-    setRange,
-    range,
     data: data ? { data: contributors, meta: data.meta } : { data: [], meta: {} },
     isLoading: !error && !data,
     isError: !!error,

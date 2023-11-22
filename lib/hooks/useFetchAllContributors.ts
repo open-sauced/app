@@ -1,5 +1,4 @@
 import useSWR, { Fetcher, SWRConfiguration } from "swr";
-import { useRouter } from "next/router";
 
 import publicApiFetcher from "lib/utils/public-api-fetcher";
 import { useToast } from "./useToast";
