@@ -22,6 +22,7 @@ import useRepositoryPullRequests from "lib/hooks/api/useRepositoryPullRequests";
 import getPullRequestsToDays from "lib/utils/get-prs-to-days";
 import getPullRequestsContributors from "lib/utils/get-pr-contributors";
 import useStore from "lib/store";
+import { TableCell, TableRow } from "components/Table/table";
 import TableRepositoryName from "../TableRepositoryName/table-repository-name";
 import PullRequestOverview from "../PullRequestOverview/pull-request-overview";
 import StackedAvatar from "../StackedAvatar/stacked-avatar";
@@ -119,12 +120,9 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
 
   return (
     <>
-      <div
-        key={`${ownerAvatar}/${name}`}
-        className="px-5 py-2 overflow-hidden odd:bg-white md:hidden even:bg-light-slate-2"
-      >
+      <div key={`${ownerAvatar}/${name}`} className="px-5 overflow-hidden odd:bg-white md:hidden even:bg-light-slate-2">
         {/* Row: Repository Name and Pr overview */}
-        <div className="flex items-center gap-x-3">
+        <TableRow className="bg-transparent">
           <Checkbox
             checked={selected ? true : false}
             onCheckedChange={handleSelectCheckbox}
@@ -153,7 +151,7 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
               {tableOpen ? <ChevronUpIcon className="" /> : <ChevronDownIcon />}
             </div>
           </div>
-        </div>
+        </TableRow>
 
         <div className={`${!tableOpen && "max-h-0"}   text-light-slate-11 text-sm transition`}>
           {/* Column: Last 30 Days */}
@@ -209,27 +207,30 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
           </div>
         </div>
       </div>
-      <div className={`${classNames.row} `}>
-        <Checkbox
-          checked={selected ? true : false}
-          onCheckedChange={handleSelectCheckbox}
-          className={`${user && "border-orange-500 hover:bg-orange-600"}`}
-        />
+      <TableRow className="px-5">
+        <div className={clsx(classNames.cols.checkbox, "mt-8")}>
+          <Checkbox
+            checked={selected ? true : false}
+            onCheckedChange={handleSelectCheckbox}
+            className={`${user && "border-orange-500 hover:bg-orange-600"}`}
+          />
+        </div>
+
         {/* Column: Repository Name */}
-        <div className={classNames.cols.repository}>
+        <TableCell className={classNames.cols.repository}>
           <TableRepositoryName
             topic={topic}
             avatarURL={ownerAvatar}
             fullName={fullName as string}
             user={userPage}
           ></TableRepositoryName>
-        </div>
+        </TableCell>
 
         {/* Column: Activity */}
-        <div className={classNames.cols.activity}>{getActivity(totalPrs, false)}</div>
+        <TableCell className={classNames.cols.activity}>{getActivity(totalPrs, false)}</TableCell>
 
         {/* Column: PR Overview */}
-        <div className={classNames.cols.prOverview}>
+        <TableCell className={classNames.cols.prOverview}>
           {repo.id ? (
             <PullRequestOverview
               open={openPrsCount}
@@ -240,16 +241,16 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
           ) : (
             "-"
           )}
-        </div>
+        </TableCell>
 
         {/* Column: PR Velocity */}
-        <div className={`${classNames.cols.prVelocity}`}>
+        <TableCell className={`${classNames.cols.prVelocity}`}>
           <div>{prVelocityInDays}</div>
           {repo.id ? <Pill color="purple" text={`${prsMergedPercentage}%`} /> : ""}
-        </div>
+        </TableCell>
 
         {/* Column: SPAM */}
-        <div className={`${classNames.cols.spam}`}>
+        <TableCell className={`${classNames.cols.spam}`}>
           {spamPrsCount && spamPrsCount > 0 ? (
             <>
               <div>
@@ -264,20 +265,20 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
           ) : (
             "-"
           )}
-        </div>
+        </TableCell>
 
         {/* Column: Contributors */}
-        <div className={clsx(classNames.cols.contributors, "hidden xl:flex")}>
+        <TableCell className={clsx(classNames.cols.contributors)}>
           {contributorData.length! > 0 ? <StackedAvatar contributors={contributorData} /> : "-"}
 
-          {contributorData.length! > 5 ? <div>&nbsp;{`+${contributorData.length - 5}`}</div> : ""}
-        </div>
+          {contributorData.length! > 5 ? <div>&nbsp;{`+${contributorData.length - 5}`}</div> : null}
+        </TableCell>
 
         {/* Column: Last 30 Days */}
-        <div className={clsx(classNames.cols.last30days, "hidden xl:flex")}>
+        <TableCell className={clsx(classNames.cols.last30days)}>
           {repo.id && last30days ? <Sparkline data={last30days} /> : "-"}
-        </div>
-      </div>
+        </TableCell>
+      </TableRow>
     </>
   );
 };

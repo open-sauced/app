@@ -3,6 +3,7 @@ import { Serie } from "@nivo/line";
 import RepoRow from "components/molecules/RepoRow/repo-row";
 
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
+import { TableBody } from "components/Table/table";
 import type { StaticImageData } from "next/image";
 
 interface ContributorsRows {
@@ -49,16 +50,16 @@ interface RepositoriesTableProps {
 }
 
 export const classNames = {
-  row: "hidden md:flex gap-4    items-center py-3 px-6 odd:bg-white even:bg-light-slate-2",
+  row: "px-6 odd:bg-white even:bg-light-slate-2",
   cols: {
-    checkbox: "w-9 mr-0.5",
-    repository: "w-[30%] lg:flex-1  lg:min-w-[200px] ",
-    activity: "flex-1 lg:min-w-[100px] flex ",
-    prOverview: "flex-1 lg:min-w-[170px] ",
-    prVelocity: "flex justify-center lg:min-w-[100px] items-center gap-3 flex-1",
-    spam: "flex items-center justify-center lg:min-w-[50px] lg:justify-start gap-3 flex-1 ",
-    contributors: "flex-1 lg:min-w-[200px] items-center",
-    last30days: "flex-1 lg:min-w-[150px]",
+    checkbox: "w-9 mr-0.5 block",
+    repository: "lg:min-w-[300px] bg-red-400",
+    activity: "lg:min-w-[8.5rem] bg-green-400 text-center",
+    prOverview: "lg:min-w-[10rem] bg-blue-400 text-center",
+    prVelocity: "lg:min-w-[9rem] bg-purple-400 text-center",
+    spam: "lg:min-w-[6rem] bg-orange-400 text-center",
+    contributors: "lg:min-w-[13rem] bg-yellow-400 text-center",
+    last30days: "lg:min-w-[11rem] bg-pink-400 text-center",
   },
 };
 
@@ -77,7 +78,7 @@ const RepositoriesTable = ({
     Array.isArray(repo) && !loading && !error && Array.isArray(listOfRepositories) && listOfRepositories.length === 0;
 
   return (
-    <section className="flex flex-col">
+    <TableBody className="w-full px-5">
       {loading && <SkeletonWrapper height={50} count={10} radius={4} classNames="px-6 mt-2" />}
       {error && <>An error has occured...</>}
 
@@ -107,7 +108,7 @@ const RepositoriesTable = ({
           handleOnSelectRepo={handleOnSelectRepo}
         />
       )}
-    </section>
+    </TableBody>
   );
 };
 

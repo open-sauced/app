@@ -5,7 +5,7 @@ import clsx from "clsx";
 import TableTitle from "components/atoms/TableTitle/table-title";
 import Pagination from "components/molecules/Pagination/pagination";
 import PaginationResults from "components/molecules/PaginationResults/pagination-result";
-import TableHeader from "components/molecules/TableHeader/table-header";
+// import TableHeader from "components/molecules/TableHeader/table-header";
 
 import useRepositories from "lib/hooks/api/useRepositories";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
@@ -15,6 +15,7 @@ import Checkbox from "components/atoms/Checkbox/checkbox";
 import Button from "components/atoms/Button/button";
 import LimitSelect from "components/atoms/Select/limit-select";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
+import { Table, TableHead, TableHeader, TableRow } from "components/Table/table";
 import RepositoriesTable, { classNames, RepositoriesRows } from "../RepositoriesTable/repositories-table";
 import RepoNotIndexed from "./repository-not-indexed";
 
@@ -93,110 +94,112 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
 
   return (
     <div className="flex flex-col w-full gap-4">
-      <TableHeader onSearch={(e) => handleOnSearch(e)} metaInfo={repoMeta} entity="repos" title="Repositories" />
-      <div className="flex flex-col w-full overflow-x-auto border rounded-lg">
-        <div>
-          <div className="flex justify-between gap-2 px-6 py-4 md:hidden bg-light-slate-3">
-            <div className="flex-1">
+      {/* <TableHeader onSearch={(e) => handleOnSearch(e)} metaInfo={repoMeta} entity="repos" title="Repositories" /> */}
+      <Table className="flex flex-col w-full overflow-x-auto border rounded-lg">
+        <TableHeader className="px-6 py-4 md:hidden bg-light-slate-3">
+          <TableRow>
+            <TableHead className="flex-1">
               <TableTitle> Repository </TableTitle>
-            </div>
-            <div className="flex-1">
+            </TableHead>
+            <TableHead className="flex-1">
               <TableTitle> Pr Overview </TableTitle>
-            </div>
-          </div>
-          <div className="hidden gap-2 px-6 py-4 md:flex bg-light-slate-3">
-            <div className={clsx(classNames.cols.checkbox)}>
+            </TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableHeader className="w-full px-5 bg-light-slate-3">
+          <TableRow>
+            <div className={clsx(classNames.cols.checkbox, "mt-4")}>
               <Checkbox
                 onCheckedChange={handleOnSelectAllChecked}
                 className={`${user && "border-orange-500 hover:bg-orange-600"}`}
               />
             </div>
-            <div className={clsx(classNames.cols.repository)}>
+            <TableHead className={classNames.cols.repository}>
               <TableTitle> Repository </TableTitle>
-            </div>
-            <div className={clsx(classNames.cols.activity)}>
+            </TableHead>
+            <TableHead className={classNames.cols.activity}>
               <TableTitle>Activity</TableTitle>
-            </div>
-            <div className={clsx(classNames.cols.prOverview)}>
+            </TableHead>
+            <TableHead className={classNames.cols.prOverview}>
               <TableTitle>PR Overview</TableTitle>
-            </div>
-            <div className={clsx(classNames.cols.prVelocity)}>
+            </TableHead>
+            <TableHead className={classNames.cols.prVelocity}>
               <TableTitle>PR Velocity</TableTitle>
-            </div>
-            <div className={clsx(classNames.cols.spam)}>
+            </TableHead>
+            <TableHead className={classNames.cols.spam}>
               <TableTitle>SPAM</TableTitle>
-            </div>
-            <div className={clsx(classNames.cols.contributors, "hidden xl:flex")}>
+            </TableHead>
+            <TableHead className={classNames.cols.contributors}>
               <TableTitle>Contributors</TableTitle>
-            </div>
-            <div className={clsx(classNames.cols.last30days, "hidden xl:flex")}>
+            </TableHead>
+            <TableHead className={classNames.cols.last30days}>
               <TableTitle>Last 30 Days</TableTitle>
-            </div>
+            </TableHead>
+          </TableRow>
+        </TableHeader>
+
+        {selectedRepos.length > 0 && (
+          <div className="flex justify-between p-3 px-6 items-center border-b-2 text-light-slate-11">
+            <div>{selectedRepos.length} Repositories selected</div>
+            <Button onClick={handleOnAddtoInsights} variant="primary">
+              Add to Insight Page
+            </Button>
           </div>
+        )}
 
-          {selectedRepos.length > 0 && (
-            <div className="flex justify-between p-3 px-6 items-center border-b-2 text-light-slate-11">
-              <div>{selectedRepos.length} Repositories selected</div>
-              <Button onClick={handleOnAddtoInsights} variant="primary">
-                Add to Insight Page
-              </Button>
-            </div>
-          )}
+        <RepositoriesTable
+          topic={topic}
+          error={repoListIsError}
+          loading={repoListIsLoading}
+          listOfRepositories={repoListData}
+          user={username}
+          repo={selectedFilter}
+          selectedRepos={selectedRepos}
+          handleOnSelectRepo={handleOnSelectRepo}
+        />
 
-          <RepositoriesTable
-            topic={topic}
-            error={repoListIsError}
-            loading={repoListIsLoading}
-            listOfRepositories={repoListData}
-            user={username}
-            repo={selectedFilter}
-            selectedRepos={selectedRepos}
-            handleOnSelectRepo={handleOnSelectRepo}
+        {/* Table Footer */}
+        <div className="flex flex-col w-full px-4 mt-5 gap-y-3 md:flex-row">
+          <LimitSelect
+            placeholder="10 per page"
+            options={[
+              { name: "10 per page", value: "10" },
+              { name: "20 per page", value: "20" },
+              { name: "30 per page", value: "30" },
+              { name: "40 per page", value: "40" },
+              { name: "50 per page", value: "50" },
+            ]}
+            className="!w-36 ml-auto md:hidden overflow-x-hidden"
+            onChange={function (limit: string): void {
+              setQueryParams({ limit });
+            }}
           />
-
-          {/* Table Footer */}
-          <div className="flex flex-col w-full px-4 mt-5 gap-y-3 md:flex-row">
-            <LimitSelect
-              placeholder="10 per page"
-              options={[
-                { name: "10 per page", value: "10" },
-                { name: "20 per page", value: "20" },
-                { name: "30 per page", value: "30" },
-                { name: "40 per page", value: "40" },
-                { name: "50 per page", value: "50" },
-              ]}
-              className="!w-36 ml-auto md:hidden overflow-x-hidden"
-              onChange={function (limit: string): void {
-                setQueryParams({ limit });
-              }}
-            />
-            <div className="flex items-center justify-between w-full py-1 md:py-4 md:mt-5">
-              <div>
-                <div className="">
-                  <PaginationResults metaInfo={repoMeta} total={repoMeta.itemCount} entity={"repos"} />
-                </div>
+          <div className="flex items-center justify-between w-full py-1 md:py-4 md:mt-5">
+            <div>
+              <div className="">
+                <PaginationResults metaInfo={repoMeta} total={repoMeta.itemCount} entity={"repos"} />
               </div>
-              <div>
-                <div className="flex items-center gap-4">
-                  <Pagination
-                    pages={isMobile ? [] : new Array(repoMeta.pageCount).fill(0).map((_, index) => index + 1)}
-                    pageSize={5}
-                    hasNextPage={repoMeta.hasNextPage}
-                    hasPreviousPage={repoMeta.hasPreviousPage}
-                    totalPage={repoMeta.pageCount}
-                    page={repoMeta.page}
-                    onPageChange={function (page: number): void {
-                      setPage(page);
-                    }}
-                    divisor={true}
-                    goToPage
-                  />
-                </div>
+            </div>
+            <div>
+              <div className="flex items-center gap-4">
+                <Pagination
+                  pages={isMobile ? [] : new Array(repoMeta.pageCount).fill(0).map((_, index) => index + 1)}
+                  pageSize={5}
+                  hasNextPage={repoMeta.hasNextPage}
+                  hasPreviousPage={repoMeta.hasPreviousPage}
+                  totalPage={repoMeta.pageCount}
+                  page={repoMeta.page}
+                  onPageChange={function (page: number): void {
+                    setPage(page);
+                  }}
+                  divisor={true}
+                  goToPage
+                />
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </Table>
 
       {filteredRepoNotIndexed && <RepoNotIndexed />}
     </div>
