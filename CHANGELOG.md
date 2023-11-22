@@ -5,6 +5,20 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.77.1](https://github.com/open-sauced/insights/compare/v1.77.0...v1.77.1) (2023-11-21)
+
+
+### 🐛 Bug Fixes
+
+* added missing svelte svg ([#2196](https://github.com/open-sauced/insights/issues/2196)) ([d27794c](https://github.com/open-sauced/insights/commit/d27794c5862ab0489663125fb95ad78d4f46e4f9))
+* match skeleton high with container card ([#2150](https://github.com/open-sauced/insights/issues/2150)) ([4786117](https://github.com/open-sauced/insights/commit/4786117d34da2397539d1751d0c2ef1a841ce88b))
+* reset base font size in * selector in global.css ([#2184](https://github.com/open-sauced/insights/issues/2184)) ([6ae3751](https://github.com/open-sauced/insights/commit/6ae3751b383853673494bd3342b4f60d1b915b2e))
+
+
+### 🧑‍💻 Code Refactoring
+
+* move limit query from state to urlParams ([#2153](https://github.com/open-sauced/insights/issues/2153)) ([0d2825d](https://github.com/open-sauced/insights/commit/0d2825d77639460be152e67cbb1eaa07d35703c2))
+
 ### [1.77.1-beta.3](https://github.com/open-sauced/insights/compare/v1.77.1-beta.2...v1.77.1-beta.3) (2023-11-21)
 
 
