@@ -39,6 +39,19 @@ input[type="checkbox"]:focus-visible,
   stroke-width: 5;
 }
 
+nav:focus-visible,
+a:focus-visible,
+button:focus-visible,
+div:focus-within:has(> input),
+input:focus-visible:not(div:focus-within > input),
+textarea:focus-visible {
+  @apply border-orange-500;
+  @apply ring;
+  @apply ring-orange-100;
+}
+
+/* TODO: Focus states for :invalid form elements */
+
 .auto-grow-input:not(:empty) {
   color: black;
 }
