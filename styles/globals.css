@@ -45,6 +45,7 @@ button:focus-visible,
 div:focus-within:has(> input),
 input:focus-visible:not(div:focus-within > input),
 textarea:focus-visible {
+  @apply outline-none;
   @apply border-orange-500;
   @apply ring;
   @apply ring-orange-100;
