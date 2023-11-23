@@ -106,33 +106,22 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
     if (newHighlight && signInRequired) {
       signIn({ provider: "github", options: { redirectTo: `${window.location.origin}/feed?${queryParams}` } });
     }
-
     // no need to create intervals for checking the highlight creation input if there is no new highlight
     if (!newHighlight) {
       return;
     }
 
-    let focusOnHighlighCreationInput: NodeJS.Timeout;
+    let isDesktop = window.innerWidth > 768;
+    const highlightSelector = `#${isDesktop ? "" : "mobile-"}highlight-create`;
+    let focusOnHighlighCreationInput = setInterval(() => {
+      const highlightCreationInput = document.querySelector(highlightSelector) as HTMLInputElement;
+      if (newHighlight && highlightCreationInput) {
+        highlightCreationInput.click();
+        isDesktop && highlightCreationInput.focus();
+        clearInterval(focusOnHighlighCreationInput);
+      }
+    }, 1000);
 
-    if (window.innerWidth > 768) {
-      focusOnHighlighCreationInput = setInterval(() => {
-        const highlightCreationInput = document.getElementById("highlight-create-input");
-        if (newHighlight && highlightCreationInput) {
-          highlightCreationInput.click();
-          highlightCreationInput.focus();
-          clearInterval(focusOnHighlighCreationInput);
-        }
-      }, 1000);
-    } else {
-      // for mobile. No need to focus on input, just click on the button as it opens up a form anyway.
-      focusOnHighlighCreationInput = setInterval(() => {
-        const mobileHighlightCreateButton = document.getElementById("mobile-highlight-create-button");
-        if (newHighlight && mobileHighlightCreateButton) {
-          mobileHighlightCreateButton.click();
-          clearInterval(focusOnHighlighCreationInput);
-        }
-      }, 1000);
-    }
     return () => {
       clearInterval(focusOnHighlighCreationInput);
     };

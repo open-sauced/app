@@ -8,6 +8,7 @@ import Error from "components/atoms/Error/Error";
 import { convertToContributors, useContributorsList } from "lib/hooks/api/useContributorList";
 import ContributorsList from "components/organisms/ContributorsList/contributors-list";
 import { setQueryParams } from "lib/utils/query-params";
+import { FilterParams } from "./activity";
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const supabase = createPagesServerClient(ctx);
@@ -17,7 +18,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   } = await supabase.auth.getSession();
   const bearerToken = session ? session.access_token : "";
 
-  const { listId } = ctx.params as { listId: string };
+  const { listId, limit: rawLimit, range } = ctx.params as FilterParams;
   const limit = 10; // Can pull this from the querystring in the future
   const [{ data, error: contributorListError }, { data: list, error }] = await Promise.all([
     fetchApiData<PagedData<DBListContributor>>({
@@ -59,7 +60,7 @@ interface ContributorListPageProps {
 
 const ContributorsListPage = ({ list, initialData, isError, isOwner }: ContributorListPageProps) => {
   const router = useRouter();
-  const { range } = router.query;
+  const { range, limit } = router.query;
 
   useEffect(() => {
     if (!range) {
@@ -69,10 +70,13 @@ const ContributorsListPage = ({ list, initialData, isError, isOwner }: Contribut
   const {
     isLoading,
     setPage,
-    setLimit,
-    setRange,
     data: { data: contributors, meta },
-  } = useContributorsList({ listId: list?.id, initialData, defaultRange: range as string });
+  } = useContributorsList({
+    listId: list?.id,
+    initialData,
+    defaultRange: range as string,
+    defaultLimit: Number(limit),
+  });
 
   return (
     <ListPageLayout list={list} numberOfContributors={meta.itemCount} isOwner={isOwner}>
@@ -84,7 +88,6 @@ const ContributorsListPage = ({ list, initialData, isError, isOwner }: Contribut
           meta={meta}
           isLoading={isLoading}
           setPage={setPage}
-          setLimit={setLimit}
           range={range as string}
         />
       )}

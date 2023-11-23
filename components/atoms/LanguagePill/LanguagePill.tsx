@@ -1,5 +1,6 @@
 import Image, { StaticImageData } from "next/image";
 
+import SvelteIcon from "img/icons/interests/svelte.svg";
 import JavascriptIcon from "img/icons/interests/javascript.svg";
 import ReactIcon from "/img/icons/interests/react.svg";
 import PythonIcon from "/img/icons/interests/python.svg";
@@ -35,6 +36,7 @@ interface LanguagePillProps {
     | "csharp"
     | "php"
     | "java"
+    | "svelte"
     | "typescript"
     | "golang"
     | "vue"
@@ -54,6 +56,7 @@ const LanguagePill = ({ topic, classNames, onClick }: LanguagePillProps) => {
       ai: AIIcon,
       ml: MLIcon,
       python: PythonIcon,
+      svelte: SvelteIcon,
       typescript: TypeScriptIcon,
       csharp: CsharpIcon,
       cpp: CppIcon,

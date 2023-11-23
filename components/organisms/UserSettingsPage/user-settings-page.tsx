@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import clsx from "clsx";
 
 import { RiArrowDownSLine, RiArrowUpSLine } from "react-icons/ri";
 import { User } from "@supabase/supabase-js";
@@ -64,8 +65,11 @@ const DeleteAccountModal = ({ open, setOpen, onDelete }: DeleteAccountModalProps
           <div className="flex gap-4">
             <Button
               type="submit"
-              className="w-max border-dark-red-8 bg-dark-red-8 text-white hover:border-dark-red-7 hover:bg-dark-red-7"
-              variant="primary"
+              className={clsx(
+                "bg-light-red-6 border border-light-red-8 hover:bg-light-red-7 text-light-red-10",
+                disabled && "cursor-not-allowed !bg-light-red-4 hover:!none !border-light-red-5 !text-light-red-8"
+              )}
+              variant="default"
               onClick={() => {
                 if (!disabled) {
                   onDelete();
@@ -278,14 +282,16 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
             <div className="flex flex-col gap-2">
               <label className="flex flex-col w-full text-sm text-light-slate-9">
                 Bio
-                <textarea
-                  rows={4}
-                  placeholder="Tell us about yourself."
-                  className="mt-2 px-3 py-2 rounded-lg bg-light-slate-4 disabled:cursor-not-allowed"
-                  name="bio"
-                  value={bio}
-                  onChange={(e) => setBio(e.target.value)}
-                ></textarea>
+                <div className="flex-1 px-2 text-light-slate-12 shadow-input border transition rounded-lg py-1 flex items-center bg-light-slate-4 disabled:cursor-not-allowed focus-within:border-light-orange-9">
+                  <textarea
+                    rows={4}
+                    placeholder="Tell us about yourself."
+                    name="bio"
+                    className="w-full focus:outline-none placeholder:font-normal placeholder-slate-400 bg-inherit"
+                    value={bio}
+                    onChange={(e) => setBio(e.target.value)}
+                  ></textarea>
+                </div>
               </label>
 
               {bio?.length > 255 ? (
@@ -517,8 +523,8 @@ const UserSettingsPage = ({ user }: userSettingsPageProps) => {
                   type="submit"
                   rel="noopener noreferrer"
                   target="_blank"
-                  className="w-max border-dark-red-8 bg-dark-red-8 text-white hover:border-dark-red-7 hover:bg-dark-red-7"
-                  variant="primary"
+                  className="w-max border bg-light-red-6 border-light-red-8 hover:bg-light-red-7 text-light-red-10"
+                  variant="default"
                 >
                   Delete Account
                 </Button>
