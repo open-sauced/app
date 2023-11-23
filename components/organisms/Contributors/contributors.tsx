@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import { LuFileText } from "react-icons/lu";
 
 import { IoCheckmarkSharp } from "react-icons/io5";
-import useStore from "lib/store";
 import Pagination from "components/molecules/Pagination/pagination";
 import PaginationResults from "components/molecules/PaginationResults/pagination-result";
 import TableHeader from "components/molecules/TableHeader/table-header";
@@ -37,7 +36,6 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
 
   const { data, meta, setPage, setLimit, isError, isLoading } = useContributors(10, repositories);
   const { toast } = useToast();
-  const range = useStore((state) => state.range);
   const [layout, setLayout] = useState<ToggleValue>("list");
   const [selectedContributors, setSelectedContributors] = useState<DbPRContributor[]>([]);
   const [selectedListIds, setSelectedListIds] = useState<string[]>([]);
@@ -181,7 +179,6 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
     <>
       {/* Table section */}
       <TableHeader
-        updateLimit={setLimit}
         metaInfo={meta}
         entity="Contributors"
         title="Contributors"

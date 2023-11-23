@@ -18,6 +18,8 @@ import { getGraphColorPalette } from "lib/utils/color-utils";
 import ContributionsEvolutionByType from "components/molecules/ContributionsEvolutionByTypeCard/contributions-evolution-by-type-card";
 import useContributionsEvolutionByType from "lib/hooks/api/useContributionsByEvolutionType";
 import { setQueryParams } from "lib/utils/query-params";
+import { FeatureFlagged } from "components/shared/feature-flagged";
+import { FeatureFlag, getAllFeatureFlags } from "lib/utils/server/feature-flags";
 
 interface ContributorListPageProps {
   list?: DBList;
@@ -29,7 +31,14 @@ interface ContributorListPageProps {
     projectData: DbProjectContributions[];
   };
   isOwner: boolean;
+  featureFlags: Record<FeatureFlag, boolean>;
 }
+
+export type FilterParams = {
+  listId: string;
+  range?: string;
+  limit?: string;
+};
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const supabase = createPagesServerClient(ctx);
@@ -38,9 +47,10 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     data: { session },
   } = await supabase.auth.getSession();
   const bearerToken = session ? session.access_token : "";
-  const { listId, range: rawRange } = ctx.params as { listId: string; range: string };
+  const { listId, range: rawRange, limit: rawLimit } = ctx.params as FilterParams;
 
   const range = rawRange ? Number(rawRange) : "30";
+  const limit = rawLimit ? Number(rawLimit) : "20";
   const [
     { data, error: contributorListError },
     { data: list, error },
@@ -54,7 +64,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     }),
     fetchApiData<DBList>({ path: `lists/${listId}`, bearerToken, pathValidator: validateListPath }),
     fetchApiData<PagedData<ContributorStat>>({
-      path: `lists/${listId}/stats/most-active-contributors?range=${range}&orderDirection=DESC&orderBy=total_contributions&limit=20&contributorType=all`,
+      path: `lists/${listId}/stats/most-active-contributors?range=${range}&orderDirection=DESC&orderBy=total_contributions&limit=${limit}&contributorType=all`,
       bearerToken,
       pathValidator: validateListPath,
     }),
@@ -72,6 +82,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   }
 
   const userId = Number(session?.user.user_metadata.sub);
+  const featureFlags = await getAllFeatureFlags(userId);
 
   return {
     props: {
@@ -84,11 +95,19 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
         projectData: projectData ?? [],
       },
       isOwner: list && list.user_id === userId,
+      featureFlags,
     },
   };
 };
 
-const ListActivityPage = ({ list, numberOfContributors, isError, activityData, isOwner }: ContributorListPageProps) => {
+const ListActivityPage = ({
+  list,
+  numberOfContributors,
+  isError,
+  activityData,
+  isOwner,
+  featureFlags,
+}: ContributorListPageProps) => {
   const router = useRouter();
   const range = router.query.range as string;
   const {
@@ -166,7 +185,9 @@ const ListActivityPage = ({ list, numberOfContributors, isError, activityData, i
             data={treemapData}
             color={getGraphColorPalette()}
           />
-          <ContributionsEvolutionByType data={evolutionData} isLoading={isLoadingEvolution} />
+          <FeatureFlagged flag="contributions_evolution_by_type" featureFlags={featureFlags}>
+            <ContributionsEvolutionByType data={evolutionData} isLoading={isLoadingEvolution} />
+          </FeatureFlagged>
         </div>
       )}
     </ListPageLayout>
