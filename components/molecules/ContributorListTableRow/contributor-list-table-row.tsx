@@ -44,28 +44,33 @@ function getLastContributedRepo(pullRequests: DbRepoPR[]) {
   return sortedPullRequests[0].full_name;
 }
 
-function getTopContributorLanguages(contributor: DbUser | undefined) {
+function getTopContributorLanguages(contributor: DbUser) {
   // some contributors will have empty language objects so we will pull their popular language from the interests field instead of defaulting to nothing
-  if (Object.keys(contributor?.languages || {}).length === 0) return [contributor?.interests];
-
-  return (
-    contributor &&
-    Object.entries(contributor?.languages)
-      .sort(({ 1: a }: any, { 1: b }: any) => b - a)
-      .slice(0, 2)
-      .map(([language]) => language)
-  );
+  const entries = Object.entries<string>(contributor.languages);
+  if (entries.length === 0) {
+    return [contributor.interests];
+  }
+  return entries
+    .sort(([, a], [, b]) => (a < b ? -1 : 1))
+    .slice(0, 2)
+    .map(([language]) => language);
 }
 
 function getLanguageAbbreviation(language: string) {
-  switch (language) {
-    case "JavaScript":
+  switch (language.toLowerCase()) {
     case "javascript":
       return "JS";
-    case "TypeScript":
     case "typescript":
       return "TS";
-    case "Makefile":
+    case "powershell":
+      return "Shell"; // Powershell is too long for our current table design
+    case "batchfile":
+      return "Batch"; // Batchfile is too long for our current table design
+    case "vim script": // Vim script is too long for our current table design
+      return "Vim";
+    case "dockerfile":
+      return "Docker"; // Dockerfile is too long for our current table design
+    case "makefile":
       return "Make"; // Makefile is too long for our current table design
     default:
       return language;
