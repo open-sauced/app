@@ -120,9 +120,13 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
 
   return (
     <>
-      <div key={`${ownerAvatar}/${name}`} className="px-5 overflow-hidden odd:bg-white md:hidden even:bg-light-slate-2">
+      <div
+        key={`${ownerAvatar}/${name}`}
+        className="px-5 max-md:py-4 overflow-hidden odd:bg-white md:hidden even:bg-light-slate-2"
+      >
         {/* Row: Repository Name and Pr overview */}
-        <TableRow className="bg-transparent">
+
+        <div className="flex flex-row gap-2 items-center">
           <Checkbox
             checked={selected ? true : false}
             onCheckedChange={handleSelectCheckbox}
@@ -143,15 +147,14 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
               "-"
             )}
           </div>
-          <div className="">
-            <div
-              onClick={() => setTableOpen(!tableOpen)}
-              className="items-center justify-between w-6 h-6 p-1 border rounded-md"
-            >
-              {tableOpen ? <ChevronUpIcon className="" /> : <ChevronDownIcon />}
-            </div>
+
+          <div
+            onClick={() => setTableOpen(!tableOpen)}
+            className="items-center justify-between w-6 h-6 p-1 border rounded-md"
+          >
+            {tableOpen ? <ChevronUpIcon className="" /> : <ChevronDownIcon />}
           </div>
-        </TableRow>
+        </div>
 
         <div className={`${!tableOpen && "max-h-0"}   text-light-slate-11 text-sm transition`}>
           {/* Column: Last 30 Days */}
@@ -207,7 +210,7 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
           </div>
         </div>
       </div>
-      <TableRow className="px-5">
+      <TableRow className="px-5 max-md:hidden">
         <div className={clsx(classNames.cols.checkbox, "mt-8")}>
           <Checkbox
             checked={selected ? true : false}
@@ -245,14 +248,16 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
 
         {/* Column: PR Velocity */}
         <TableCell className={`${classNames.cols.prVelocity}`}>
-          <div>{prVelocityInDays}</div>
-          {repo.id ? <Pill color="purple" text={`${prsMergedPercentage}%`} /> : ""}
+          <div className="flex items-center justify-center gap-2">
+            <div>{prVelocityInDays}</div>
+            {repo.id ? <Pill size="small" color="purple" text={`${prsMergedPercentage}%`} /> : null}
+          </div>
         </TableCell>
 
         {/* Column: SPAM */}
         <TableCell className={`${classNames.cols.spam}`}>
           {spamPrsCount && spamPrsCount > 0 ? (
-            <>
+            <div className="flex items-center gap-2 justify-center">
               <div>
                 {spamPrsCount || 0} PR{spamPrsCount === 1 ? "" : "s"}
               </div>
@@ -261,7 +266,7 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
                 size="small"
                 color={spamPrsPercentage > 10 ? "red" : "yellow"}
               />
-            </>
+            </div>
           ) : (
             "-"
           )}
@@ -269,9 +274,11 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
 
         {/* Column: Contributors */}
         <TableCell className={clsx(classNames.cols.contributors)}>
-          {contributorData.length! > 0 ? <StackedAvatar contributors={contributorData} /> : "-"}
+          <div className="mx-auto flex items-center justify-center">
+            {contributorData.length! > 0 ? <StackedAvatar contributors={contributorData} /> : "-"}
 
-          {contributorData.length! > 5 ? <div>&nbsp;{`+${contributorData.length - 5}`}</div> : null}
+            {contributorData.length! > 5 ? <div>&nbsp;{`+${contributorData.length - 5}`}</div> : null}
+          </div>
         </TableCell>
 
         {/* Column: Last 30 Days */}

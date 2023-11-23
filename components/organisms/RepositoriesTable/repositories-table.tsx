@@ -53,13 +53,13 @@ export const classNames = {
   row: "px-6 odd:bg-white even:bg-light-slate-2",
   cols: {
     checkbox: "w-9 mr-0.5 block",
-    repository: "lg:min-w-[300px] bg-red-400",
-    activity: "lg:min-w-[8.5rem] bg-green-400 text-center",
-    prOverview: "lg:min-w-[10rem] bg-blue-400 text-center",
-    prVelocity: "lg:min-w-[9rem] bg-purple-400 text-center",
-    spam: "lg:min-w-[6rem] bg-orange-400 text-center",
-    contributors: "lg:min-w-[13rem] bg-yellow-400 text-center",
-    last30days: "lg:min-w-[11rem] bg-pink-400 text-center",
+    repository: "md:min-w-[12rem] lg:min-w-[16rem]",
+    activity: "lg:min-w-[8.5rem] text-center",
+    prOverview: "lg:min-w-[10rem] text-center",
+    prVelocity: "lg:min-w-[9rem] text-center",
+    spam: "lg:min-w-[8rem] text-center max-lg:hidden",
+    contributors: "lg:min-w-[13rem] text-center max-lg:hidden",
+    last30days: "lg:min-w-[11rem] text-center max-lg:hidden",
   },
 };
 
@@ -78,7 +78,7 @@ const RepositoriesTable = ({
     Array.isArray(repo) && !loading && !error && Array.isArray(listOfRepositories) && listOfRepositories.length === 0;
 
   return (
-    <TableBody className="w-full px-5">
+    <TableBody className="w-full md:px-5">
       {loading && <SkeletonWrapper height={50} count={10} radius={4} classNames="px-6 mt-2" />}
       {error && <>An error has occured...</>}
 
