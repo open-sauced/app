@@ -51,7 +51,7 @@ function getTopContributorLanguages(contributor: DbUser | undefined) {
   return (
     contributor &&
     Object.entries(contributor?.languages)
-      .sort(({ 1: a }, { 1: b }) => b - a)
+      .sort(({ 1: a }: any, { 1: b }: any) => b - a)
       .slice(0, 2)
       .map(([language]) => language)
   );
