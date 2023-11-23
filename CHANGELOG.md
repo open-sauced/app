@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.77.2-beta.1](https://github.com/open-sauced/insights/compare/v1.77.1...v1.77.2-beta.1) (2023-11-23)
+
+
+### 🧑‍💻 Code Refactoring
+
+* fix tailwind anti-pattern ([5dcb958](https://github.com/open-sauced/insights/commit/5dcb958f475292ab66d06806adf420288069708e))
+* fix tailwind anti-pattern in feed footer ([#2088](https://github.com/open-sauced/insights/issues/2088)) ([1f10046](https://github.com/open-sauced/insights/commit/1f10046c626499d4f2ab0d264854ccf1a716a33e))
+
 ### [1.77.1](https://github.com/open-sauced/insights/compare/v1.77.0...v1.77.1) (2023-11-21)
 
 
