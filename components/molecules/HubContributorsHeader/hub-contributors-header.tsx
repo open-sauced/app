@@ -51,10 +51,7 @@ const HubContributorsHeader = ({
   onSearch,
 }: ListHeaderProps): JSX.Element => {
   const router = useRouter();
-  const filters = router.asPath
-    .split("?")[1]
-    ?.split("&")
-    .filter((filter) => filter.includes("tz") || filter.includes("pr_velocity"));
+  const filters = Object.entries(router.query).filter(([key]) => ["tz", "pr_velocity"].includes(key));
   const { limit, tz, pr_velocity } = router.query as QueryParams;
   const [filterOpen, setFilterOpen] = useState(false);
   const [timezone, setTimezone] = useState("");
@@ -145,18 +142,21 @@ const HubContributorsHeader = ({
           <div className="flex gap-4 flex-col items-start md:items-center md:flex-row">
             {filters && filters.length ? (
               <div className="flex gap-2 order-0">
-                {filters.map((filter) => (
-                  <Tooltip direction="top" content={filter.split("=")[0]} key={filter}>
-                    <FilterChip
-                      className="shrink-0 h-8"
-                      items={[filter.split("=")[1] as string]}
-                      onClear={() => {
-                        const params = filter.split("=")[0];
-                        setQueryParams({}, [params]);
-                      }}
-                    />
-                  </Tooltip>
-                ))}
+                {filters.map(([key, value]) => {
+                  const filterValue = value as string;
+                  return (
+                    <Tooltip direction="top" content={filterValue} key={key}>
+                      <FilterChip
+                        className="shrink-0 h-8"
+                        items={[filterValue]}
+                        onClear={() => {
+                          const params = key;
+                          setQueryParams({}, [params]);
+                        }}
+                      />
+                    </Tooltip>
+                  );
+                })}
               </div>
             ) : null}
 
