@@ -2,15 +2,11 @@ import { BsFillCircleFill } from "react-icons/bs";
 import Skeleton from "react-loading-skeleton";
 import { useEffect, useRef, useState } from "react";
 import Card from "components/atoms/Card/card";
+import { MostUsedLanguageStat } from "lib/hooks/api/useMostLanguages";
 import { ContributorType, ContributorTypeFilter } from "../shared/contributor-type-filter";
 
 export interface MostUsedLanguagesGraphProps {
-  data: {
-    languages: {
-      name: string;
-      value: number;
-    }[];
-  };
+  data: MostUsedLanguageStat[];
   setContributorType: (type: ContributorType) => void;
   contributorType: ContributorType;
   isLoading?: boolean;
@@ -29,11 +25,11 @@ export const MostUsedLanguagesGraph = ({
     "hsl(267, 36%, 37%)",
     "hsl(17, 100%, 50%)",
   ];
-  const { languages = [] } = data;
-  const lastItem = languages.length > 0 ? languages.length - 1 : 0;
-  const sortedLanguages = languages.sort((a, b) => b.value - a.value);
+  const lastItem = data.length > 0 ? data.length - 1 : 0;
+  const sortedLanguages = data.sort((a, b) => b.value - a.value);
   const languagesRef = useRef<HTMLUListElement>(null);
   const [language, setLanguage] = useState<string | null>();
+  const totalLinesOfCode = data.reduce((total, { value }) => total + value, 0);
 
   useEffect(() => {
     if (language) {
@@ -61,15 +57,16 @@ export const MostUsedLanguagesGraph = ({
             <>
               {sortedLanguages.length > 0 ? (
                 sortedLanguages.map((item, index) => {
+                  const percentage = Math.round((item.value / totalLinesOfCode) * 100);
                   return (
                     <button
-                      aria-label={`${item.name} is ${item.value}% of the most used languages for contributors in your list`}
+                      aria-label={`${item.name} is ${percentage}% of the most used languages for contributors in your list`}
                       key={item.name}
                       data-language={item.name}
                       className={`${index === 0 ? "rounded-l-lg" : ""} ${
                         index === lastItem ? "rounded-r-lg" : ""
                       } transform hover:scale-110 transition-transform hover:z-10`}
-                      style={{ backgroundColor: colors[index], width: `${item.value}%` }}
+                      style={{ backgroundColor: colors[index], width: `${percentage}%` }}
                       onMouseOver={(event) => {
                         const { language } = event.currentTarget.dataset;
                         setLanguage(language);
@@ -99,30 +96,34 @@ export const MostUsedLanguagesGraph = ({
         ) : (
           <ul ref={languagesRef} className="grid grid-cols-1 content-center">
             {sortedLanguages.length > 0 ? (
-              sortedLanguages.map((item, index) => (
-                <li
-                  key={item.name}
-                  className={`flex justify-between pt-4 pb-4 ${
-                    index === lastItem ? "" : "border-b-1 border-slate-100"
-                  }`}
-                >
-                  <span
-                    className={`flex gap-2 items-center ${language === item.name ? "text-black" : "text-slate-700"} ${
-                      language === item.name ? "font-semibold" : ""
+              sortedLanguages.map((item, index) => {
+                const percentage = Math.round((item.value / totalLinesOfCode) * 100);
+
+                return (
+                  <li
+                    key={item.name}
+                    className={`flex justify-between pt-4 pb-4 ${
+                      index === lastItem ? "" : "border-b-1 border-slate-100"
                     }`}
                   >
-                    <BsFillCircleFill size={11} style={{ fill: colors[index] }} />
-                    {item.name}
-                  </span>
-                  <span
-                    className={`${language === item.name ? "text-black" : "text-slate-600"} ${
-                      language === item.name ? "font-semibold" : ""
-                    }`}
-                  >
-                    {item.value}%
-                  </span>
-                </li>
-              ))
+                    <span
+                      className={`flex gap-2 items-center ${language === item.name ? "text-black" : "text-slate-700"} ${
+                        language === item.name ? "font-semibold" : ""
+                      }`}
+                    >
+                      <BsFillCircleFill size={11} style={{ fill: colors[index] }} />
+                      {item.name}
+                    </span>
+                    <span
+                      className={`${language === item.name ? "text-black" : "text-slate-600"} ${
+                        language === item.name ? "font-semibold" : ""
+                      }`}
+                    >
+                      {percentage}%
+                    </span>
+                  </li>
+                );
+              })
             ) : (
               <p className="text-center">There is no language data</p>
             )}

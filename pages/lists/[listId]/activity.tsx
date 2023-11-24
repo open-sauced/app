@@ -21,6 +21,7 @@ import { setQueryParams } from "lib/utils/query-params";
 import { FeatureFlagged } from "components/shared/feature-flagged";
 import { FeatureFlag, getAllFeatureFlags } from "lib/utils/server/feature-flags";
 import { MostUsedLanguagesGraph } from "components/Graphs/MostUsedLanguagesGraph/most-used-languages-graph";
+import useMostLanguages from "lib/hooks/api/useMostLanguages";
 
 interface ContributorListPageProps {
   list?: DBList;
@@ -161,31 +162,12 @@ const ListActivityPage = ({
     isError: evolutionError,
     isLoading: isLoadingEvolution,
   } = useContributionsEvolutionByType({ listId: list!.id, range });
-  const languageData = {
-    languages: [
-      {
-        name: "Python",
-        value: 10,
-      },
-      {
-        name: "TypeScript",
-        value: 25,
-      },
-      {
-        name: "JavaScript",
-        value: 20,
-      },
-      {
-        name: "C++",
-        value: 15,
-      },
-      {
-        name: "Zig",
-        value: 30,
-      },
-    ],
-  };
-  const isLanguagesLoading = false;
+  const {
+    data: languagesData,
+    isError: languageError,
+    isLoading: isLanguagesLoading,
+  } = useMostLanguages({ listId: list!.id });
+  const languages = languagesData?.data ?? [];
 
   return (
     <ListPageLayout list={list} numberOfContributors={numberOfContributors} isOwner={isOwner}>
@@ -217,7 +199,7 @@ const ListActivityPage = ({
           <MostUsedLanguagesGraph
             contributorType={contributorType}
             setContributorType={setContributorType}
-            data={languageData}
+            data={languages}
             isLoading={isLanguagesLoading}
           />
         </div>

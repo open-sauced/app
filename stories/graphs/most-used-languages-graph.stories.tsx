@@ -12,30 +12,28 @@ export default meta;
 type Story = StoryObj<typeof MostUsedLanguagesGraph>;
 
 function generateData() {
-  return {
-    languages: [
-      {
-        name: "Python",
-        value: 10,
-      },
-      {
-        name: "TypeScript",
-        value: 25,
-      },
-      {
-        name: "JavaScript",
-        value: 20,
-      },
-      {
-        name: "C++",
-        value: 15,
-      },
-      {
-        name: "Zig",
-        value: 30,
-      },
-    ],
-  };
+  return [
+    {
+      name: "Python",
+      value: 10000,
+    },
+    {
+      name: "TypeScript",
+      value: 250,
+    },
+    {
+      name: "JavaScript",
+      value: 2000,
+    },
+    {
+      name: "C++",
+      value: 1500,
+    },
+    {
+      name: "Zig",
+      value: 3000,
+    },
+  ];
 }
 
 export const Default: Story = {
