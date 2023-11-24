@@ -16,7 +16,7 @@ const FilterLayout = ({ children }: { children: React.ReactNode }) => {
   const { range } = router.query;
 
   useEffect(() => {
-    if (!range) {
+    if (router.isReady && !range) {
       setQueryParams({ range: "30" });
     }
   }, [range, router.isReady]);
