@@ -107,6 +107,7 @@ const ContributorListTableRow = ({
     },
   ];
   const mergedPrs = data.filter((prData) => prData.merged);
+  const [firstContributorLanguage, secondContributorLanguage] = contributorLanguageList;
 
   return (
     <>
@@ -170,8 +171,8 @@ const ContributorListTableRow = ({
             <div>Languages</div>
             {contributorLanguageList && (
               <p>
-                {contributorLanguageList[0] && getLanguageAbbreviation(contributorLanguageList[0])}
-                {contributorLanguageList[1] && `, ${getLanguageAbbreviation(contributorLanguageList[1])}`}
+                {firstContributorLanguage && getLanguageAbbreviation(contributorLanguageList[0])}
+                {secondContributorLanguage && `, ${getLanguageAbbreviation(contributorLanguageList[1])}`}
               </p>
             )}
           </div>
@@ -226,8 +227,8 @@ const ContributorListTableRow = ({
         <div className={clsx("flex-1 hidden lg:max-w-[7.5rem]  justify-center lg:flex")}>
           {contributorLanguageList && (
             <p>
-              {contributorLanguageList[0] && getLanguageAbbreviation(contributorLanguageList[0])}
-              {contributorLanguageList[1] && `, ${getLanguageAbbreviation(contributorLanguageList[1])}`}
+              {firstContributorLanguage && getLanguageAbbreviation(contributorLanguageList[0])}
+              {secondContributorLanguage && `, ${getLanguageAbbreviation(contributorLanguageList[1])}`}
             </p>
           )}
         </div>
