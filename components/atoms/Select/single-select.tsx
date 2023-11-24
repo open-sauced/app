@@ -30,7 +30,7 @@ const SingleSelect = ({
   return (
     <Select value={value} onValueChange={(value) => onValueChange(value)}>
       <SelectTrigger
-        className="bg-white min-w-[200px] w-full"
+        className="bg-white min-w-[200px] w-full border focus-within:border-orange-500 focus-within:ring-orange-100 focus-within:ring ring-light-slate-6"
         selectIcon={
           <div className="flex items-center">
             <RiArrowDownSLine size={20} className="" />
@@ -42,7 +42,7 @@ const SingleSelect = ({
 
       <SelectContent position={position ?? "item-aligned"} className="z-50 relative bg-white">
         {isSearchable ? (
-          <Command loop onKeyDown={() => {}} className="w-full px-0 bg-transparent">
+          <Command loop className="w-full px-0 bg-transparent">
             <CommandInput
               ref={inputRef}
               placeholder={inputPlaceholder ?? "Search Items"}
