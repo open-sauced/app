@@ -171,8 +171,8 @@ const ContributorListTableRow = ({
             <div>Languages</div>
             {contributorLanguageList && (
               <p>
-                {firstContributorLanguage && getLanguageAbbreviation(contributorLanguageList[0])}
-                {secondContributorLanguage && `, ${getLanguageAbbreviation(contributorLanguageList[1])}`}
+                {firstContributorLanguage && getLanguageAbbreviation(firstContributorLanguage)}
+                {secondContributorLanguage && `, ${getLanguageAbbreviation(secondContributorLanguage)}`}
               </p>
             )}
           </div>
@@ -227,8 +227,8 @@ const ContributorListTableRow = ({
         <div className={clsx("flex-1 hidden lg:max-w-[7.5rem]  justify-center lg:flex")}>
           {contributorLanguageList && (
             <p>
-              {firstContributorLanguage && getLanguageAbbreviation(contributorLanguageList[0])}
-              {secondContributorLanguage && `, ${getLanguageAbbreviation(contributorLanguageList[1])}`}
+              {firstContributorLanguage && getLanguageAbbreviation(firstContributorLanguage)}
+              {secondContributorLanguage && `, ${getLanguageAbbreviation(secondContributorLanguage)}`}
             </p>
           )}
         </div>
