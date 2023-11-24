@@ -33,8 +33,8 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
         pathValidator: validateListPath,
       }),
       fetchApiData<DBList>({ path: `lists/${listId}`, bearerToken, pathValidator: validateListPath }),
-      fetchApiData<PagedData<DBList>>({
-        path: `highlights/list?limit=10&page=1`,
+      fetchApiData<PagedData<DbHighlight>>({
+        path: `lists/${listId}/contributors/highlights`,
         bearerToken,
         pathValidator: validateListPath,
       }),
@@ -53,7 +53,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
       list,
       numberOfContributors: data?.meta.itemCount || 0,
       isOwner: list && list.user_id === userId,
-      highlights: highlights?.data,
+      highlights: highlights?.data || [],
     },
   };
 };
