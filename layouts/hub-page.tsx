@@ -22,7 +22,7 @@ const HubPageLayout = ({ children }: { children: React.ReactNode }) => {
   const repositories = insight?.repos.map((repo) => repo.repo_id);
 
   useEffect(() => {
-    if (!range) {
+    if (router.isReady && !range) {
       setQueryParams({ range: "30" });
     }
   }, [range, router.isReady]);
