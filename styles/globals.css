@@ -25,6 +25,14 @@ h6 {
   @apply tracking-tight;
 }
 
+input[type="checkbox"]:focus-visible,
+[role="checkbox"]:focus-visible {
+  @apply outline-none;
+  @apply ring;
+  @apply border-orange-500;
+  @apply ring-orange-100;
+}
+
 .auto-grow-input:not(:empty) {
   color: black;
 }
