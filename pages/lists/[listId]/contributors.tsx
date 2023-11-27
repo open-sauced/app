@@ -1,13 +1,12 @@
 import { GetServerSidePropsContext } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+
 import ListPageLayout from "layouts/lists";
 import { fetchApiData, validateListPath } from "helpers/fetchApiData";
 import Error from "components/atoms/Error/Error";
 import { convertToContributors, useContributorsList } from "lib/hooks/api/useContributorList";
 import ContributorsList from "components/organisms/ContributorsList/contributors-list";
-import { setQueryParams } from "lib/utils/query-params";
 import { FilterParams } from "./activity";
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
@@ -19,10 +18,11 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const bearerToken = session ? session.access_token : "";
 
   const { listId, limit: rawLimit, range } = ctx.params as FilterParams;
-  const limit = 10; // Can pull this from the querystring in the future
+
+  const limit = rawLimit ?? "10"; // Can pull this from the querystring in the future
   const [{ data, error: contributorListError }, { data: list, error }] = await Promise.all([
     fetchApiData<PagedData<DBListContributor>>({
-      path: `lists/${listId}/contributors?limit=${limit}`,
+      path: `lists/${listId}/contributors?limit=${limit}&range=${range ?? "30"}`,
       bearerToken,
       pathValidator: validateListPath,
     }),
@@ -62,11 +62,6 @@ const ContributorsListPage = ({ list, initialData, isError, isOwner }: Contribut
   const router = useRouter();
   const { range, limit } = router.query;
 
-  useEffect(() => {
-    if (!range) {
-      setQueryParams({ range: "30" });
-    }
-  }, [range]);
   const {
     isLoading,
     setPage,
@@ -74,8 +69,8 @@ const ContributorsListPage = ({ list, initialData, isError, isOwner }: Contribut
   } = useContributorsList({
     listId: list?.id,
     initialData,
-    defaultRange: range as string,
-    defaultLimit: Number(limit),
+    defaultRange: range ? (range as string) : "30",
+    defaultLimit: limit ? (limit as unknown as number) : 10,
   });
 
   return (
@@ -88,7 +83,7 @@ const ContributorsListPage = ({ list, initialData, isError, isOwner }: Contribut
           meta={meta}
           isLoading={isLoading}
           setPage={setPage}
-          range={range as string}
+          range={String(range) ?? "30"}
         />
       )}
     </ListPageLayout>
