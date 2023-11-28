@@ -174,7 +174,7 @@ const ListActivityPage = ({
       {isError ? (
         <Error errorMessage="Unable to load list activity" />
       ) : (
-        <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-4" style={{ gridAutoRows: "525px" }}>
           <ClientOnly>
             {/* TODO: Remove client only once server data is being used in the hook on initial load client-side */}
             <MostActiveContributorsCard
