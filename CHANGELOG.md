@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.78.0-beta.4](https://github.com/open-sauced/insights/compare/v1.78.0-beta.3...v1.78.0-beta.4) (2023-11-28)
+
+
+### 🐛 Bug Fixes
+
+* added global styles for checkbox focus state ([#2206](https://github.com/open-sauced/insights/issues/2206)) ([6999a95](https://github.com/open-sauced/insights/commit/6999a9592974c76800f03fddf37d52cae203610a))
+
 ## [1.78.0-beta.3](https://github.com/open-sauced/insights/compare/v1.78.0-beta.2...v1.78.0-beta.3) (2023-11-28)
 
 
