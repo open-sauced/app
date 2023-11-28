@@ -345,7 +345,7 @@ const ContributorHighlightCard = ({
 
       if (res.isError) {
         setLoading(false);
-        setError("A valid Pull request, Issue or dev.to DevTo Link is required");
+        setError("A valid Pull request, Issue or Blogpost Link is required");
         return;
       } else {
         const res = await updateHighlights(
