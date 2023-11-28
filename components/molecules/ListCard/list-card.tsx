@@ -4,6 +4,7 @@ import { MdOutlineArrowForwardIos } from "react-icons/md";
 import { RiDeleteBinLine } from "react-icons/ri";
 import Text from "components/atoms/Typography/text";
 import { useFetchListContributors } from "lib/hooks/useList";
+import Card from "components/atoms/Card/card";
 import StackedAvatar, { Contributor } from "../StackedAvatar/stacked-avatar";
 
 interface ListCardProps {
@@ -18,7 +19,7 @@ const ListCard = ({ list, handleOnDeleteClick }: ListCardProps) => {
   }));
 
   return (
-    <div>
+    <Card>
       <div className="flex flex-col items-start w-full gap-4 px-4 py-6 bg-white rounded-lg md:items-center md:justify-between md:flex-row lg:px-8 lg:gap-2">
         <div className="flex flex-col flex-1 gap-4 lg:gap-6">
           <div className="flex items-center gap-4 lg:items-center ">
@@ -59,7 +60,7 @@ const ListCard = ({ list, handleOnDeleteClick }: ListCardProps) => {
           </div>
         </div>
       </div>
-    </div>
+    </Card>
   );
 };
 

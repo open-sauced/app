@@ -11,10 +11,12 @@ import Title from "components/atoms/Typography/title";
 import TopNav from "components/organisms/TopNav/top-nav";
 import Footer from "components/organisms/Footer/footer";
 import InfoCard from "components/molecules/InfoCard/info-card";
-import GitHubImportDialog from "components/organisms/GitHubImportDialog/github-import-dialog";
 
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { useToast } from "lib/hooks/useToast";
+import GitHubImportDialog from "components/organisms/GitHubImportDialog/github-import-dialog";
+import GitHubTeamSyncDialog from "components/organisms/GitHubTeamSyncDialog/github-team-sync-dialog";
+import { fetchGithubOrgTeamMembers } from "lib/hooks/fetchGithubTeamMembers";
 
 interface CreateListPayload {
   name: string;
@@ -31,12 +33,13 @@ interface GhFollowing {
 const CreateListPage = () => {
   const router = useRouter();
   const { toast } = useToast();
-  const { sessionToken, providerToken, user } = useSupabaseAuth();
+  const { sessionToken, providerToken, user, username } = useSupabaseAuth();
 
   const [name, setName] = useState("");
   const [isPublic, setIsPublic] = useState(false);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isTeamModalOpen, setIsTeamModalOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
   const handleOnNameChange = (value: string) => {
@@ -78,6 +81,7 @@ const CreateListPage = () => {
         return data;
       }
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.log(error);
       return null;
     }
@@ -143,40 +147,94 @@ const CreateListPage = () => {
     }
   };
 
+  const handleGitHubTeamSync = async (props: { follow: boolean; organization: string; teamSlug: string }) => {
+    if (!user || !providerToken) {
+      toast({ description: "Unable to connect to GitHub! Try logging out and re-connecting.", variant: "warning" });
+      return;
+    }
+    const { organization, teamSlug } = props;
+
+    setSubmitted(true);
+    const req = await fetchGithubOrgTeamMembers(organization, teamSlug);
+
+    if (req.isError) {
+      toast({ description: "Unable to sync team", variant: "warning" });
+      setSubmitted(false);
+      return;
+    }
+
+    const teamList: GhOrgTeamMember[] = req.data;
+
+    if (teamList.length === 0) {
+      toast({ description: "The selected team is empty", variant: "danger" });
+      setSubmitted(false);
+      return;
+    }
+
+    const response = await createList({
+      name,
+      contributors: teamList.map((user) => ({ id: user.id, login: user.login })),
+      is_public: isPublic,
+    });
+
+    if (response) {
+      if (props.follow) {
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${user?.user_metadata.user_name}/follows`, {
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${sessionToken}`,
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify({
+            usernames: teamList.map((member) => member.login),
+          }),
+        }).catch(() => {});
+
+        toast({ description: "List created successfully", variant: "success" });
+      }
+
+      router.push(`/lists/${response.id}/overview`);
+    } else {
+      toast({ description: "An error occurred!", variant: "danger" });
+      setSubmitted(false);
+    }
+  };
+
   return (
-    <section className="flex flex-col justify-center w-full py-4 xl:flex-row xl:gap-20 xl:pl-28 ">
-      <div className="flex flex-col gap-8">
-        <div className="pb-6 border-b border-light-slate-8">
-          <Title className="!text-2xl !leading-none mb-4" level={1}>
+    <section className="flex flex-col justify-center w-full py-4 xl:flex-row xl:gap-20">
+      <div className="flex flex-col">
+        <div className="flex flex-col gap-4 pb-6 border-b border-light-slate-8">
+          <Title className="text-2xl leading-none" level={1}>
             Create New List
           </Title>
-          <Text className="my-8">
-            A list is a collection of contributors that you and your team can get insights for.
-          </Text>
+          <Text>A list is a collection of contributors that you and your team can get insights for.</Text>
         </div>
 
-        <div className="pb-8 border-b border-light-slate-8">
-          <Title className="!text-1xl !leading-none mb-4" level={4}>
+        <div className="flex flex-col gap-4 pt-6 pb-16">
+          <Title className="text-1xl leading-none" level={4}>
             List Name
           </Title>
 
           <TextInput placeholder="Page Name (ex: My Team)" value={name} handleChange={handleOnNameChange} />
         </div>
 
-        <div className="flex flex-col gap-4 py-6 border-light-slate-8">
-          <Title className="!text-1xl !leading-none mb-4 mt-8" level={4}>
+        <div className="flex flex-col gap-4 pb-16">
+          <Title className="text-1xl leading-none" level={4}>
             Page Visibility
           </Title>
 
           <div className="flex justify-between">
             <div className="flex items-center">
               <UserGroupIcon className="w-6 h-6 text-light-slate-9" />
-              <Text className="pl-2">Make this list publicly visible</Text>
+              <Text className="pl-2">
+                <span id="make-public-explainer">Make this list publicly visible</span>
+              </Text>
             </div>
 
             <div className="flex ml-2 !border-red-900 items-center">
-              <Text className="!text-orange-600 pr-2 hidden md:block">Make Public</Text>
+              <Text className="text-orange-600 pr-2 hidden md:block">Make Public</Text>
               <ToggleSwitch
+                ariaLabelledBy="make-public-explainer"
                 name="isPublic"
                 checked={isPublic}
                 handleToggle={() => setIsPublic((isPublic) => !isPublic)}
@@ -185,8 +243,8 @@ const CreateListPage = () => {
           </div>
         </div>
 
-        <div className="flex flex-col gap-4 py-6 border-light-slate-8">
-          <Title className="!text-1xl !leading-none " level={4}>
+        <div className="flex flex-col gap-4 pb-6">
+          <Title className="text-1xl leading-none" level={4}>
             Add Contributors
           </Title>
 
@@ -200,7 +258,25 @@ const CreateListPage = () => {
           />
 
           <InfoCard
-            title="Import your GitHub following"
+            title="Sync your GitHub Team"
+            description="Connect to your GitHub to create a list from a team in your organization"
+            icon="github"
+            handleClick={() => {
+              if (!name) {
+                toast({
+                  description: "List name is required",
+                  variant: "danger",
+                });
+
+                return;
+              }
+
+              setIsTeamModalOpen(true);
+            }}
+          />
+
+          <InfoCard
+            title="Import your GitHub Following"
             description="Connect to your GitHub to create a list with all the Contributors you follow"
             icon="github"
             handleClick={() => {
@@ -223,6 +299,14 @@ const CreateListPage = () => {
         <div className="flex flex-col justify-between pt-8 mt-8 border-t"></div>
       </div>
 
+      <GitHubTeamSyncDialog
+        open={isTeamModalOpen}
+        handleClose={() => setIsTeamModalOpen(false)}
+        handleSync={handleGitHubTeamSync}
+        loading={submitted}
+        username={username}
+      />
+
       <GitHubImportDialog
         open={isModalOpen}
         handleClose={() => setIsModalOpen(false)}
@@ -239,7 +323,9 @@ const AddListPage = () => {
       <TopNav />
       <div className="flex flex-col items-center pt-20 page-container grow md:pt-14">
         <main className="flex flex-col items-center flex-1 w-full px-3 py-8 md:px-2 bg-light-slate-2">
-          <CreateListPage />
+          <div className="container px-2 mx-auto md:px-16">
+            <CreateListPage />
+          </div>
         </main>
       </div>
       <Footer />

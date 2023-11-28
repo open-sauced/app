@@ -8,8 +8,8 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { SessionContextProvider } from "@supabase/auth-helpers-react";
 import { SWRConfig } from "swr";
+import NextNProgress from "nextjs-progressbar";
 
-import Script from "next/script";
 import posthog from "posthog-js";
 import { PostHogProvider } from "posthog-js/react";
 import { TipProvider } from "components/atoms/Tooltip/tooltip";
@@ -25,6 +25,20 @@ import useSession from "lib/hooks/useSession";
 import PrivateWrapper from "layouts/private-wrapper";
 
 import type { AppProps } from "next/app";
+
+// Clear any service workers present
+if (typeof window !== "undefined" && "serviceWorker" in navigator) {
+  navigator.serviceWorker.getRegistrations().then(function (registrations) {
+    for (let registration of registrations) {
+      if (registration.active) {
+        // eslint-disable-next-line no-console
+        console.log(`Clearing service worker ${registration.scope}`);
+        registration.unregister();
+        document.location.reload();
+      }
+    }
+  });
+}
 
 // Check that PostHog is client-side (used to handle Next.js SSR)
 if (typeof window !== "undefined") {
@@ -59,27 +73,6 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
   if (typeof window !== "undefined") hostname = window.location.hostname;
 
   useEffect(() => {
-    let chatButton = document.getElementById("sitegpt-chat-icon");
-
-    const interval = setInterval(() => {
-      chatButton = document.getElementById("sitegpt-chat-icon");
-      if (chatButton) {
-        if (hostname !== "app.opensauced.pizza") {
-          chatButton.style.display = "none";
-        }
-        if (router.asPath === "/feed" && isMobile) {
-          chatButton.style.display = "none";
-        } else {
-          chatButton.style.display = "block";
-        }
-        clearInterval(interval);
-      }
-    }, 500);
-
-    return () => clearInterval(interval);
-  }, [hostname, router.isReady]);
-
-  useEffect(() => {
     updateSEO(Component.SEO || {});
   }, [Component]);
 
@@ -107,6 +100,7 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
 
   function localStorageProvider() {
     if (typeof window !== "undefined") {
+      // eslint-disable-next-line no-console
       console.log("You are on the browser");
 
       // When initializing, we restore the data from `localStorage` into a map.
@@ -119,6 +113,7 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
           localStorage.setItem("app-cache", appCache);
         } catch (error) {
           if (error instanceof Error && error.name === "QuotaExceededError")
+            // eslint-disable-next-line no-console
             return console.warn("⚠ local storage limit exceeded ⚠");
 
           throw error;
@@ -128,6 +123,7 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
       // We still use the map for write & read for performance.
       return map;
     } else {
+      // eslint-disable-next-line no-console
       console.log("You are on the server");
       // 👉️ can't use localStorage
 
@@ -151,7 +147,7 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
           provider: localStorageProvider,
         }}
       >
-        {/* <Toaster position="top-center" /> */}
+        <NextNProgress options={{ showSpinner: false }} color="hsla(19, 100%, 50%, 1)" height={4} />
         <Toaster />
         <SessionContextProvider supabaseClient={supabaseClient} initialSession={pageProps.initialSession}>
           <PostHogProvider client={posthog}>
@@ -165,11 +161,6 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
                   <Component {...pageProps} />
                 )}
               </TipProvider>
-              <Script id="siteGPT" type="text/javascript">
-                {
-                  'd=document;s=d.createElement("script");s.src="https://sitegpt.ai/widget/365440930125185604.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);'
-                }
-              </Script>
             </PrivateWrapper>
           </PostHogProvider>
         </SessionContextProvider>

@@ -13,9 +13,11 @@ const interests = [
   "react",
   "golang",
   "rust",
+  "svelte",
   "vue",
   "kubernetes",
   "hacktoberfest",
+  "clojure",
 ] as const;
 export type interestsType = (typeof interests)[number];
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import clsx from "clsx";
 import formatDistanceToNowStrict from "date-fns/formatDistanceToNowStrict";
 
@@ -19,7 +19,7 @@ interface ContributorListTableRow {
   topic: string;
   selected?: boolean;
   handleOnSelectContributor?: (state: boolean, contributor: DbPRContributor) => void;
-  range: number;
+  range: string;
 }
 
 function getLastContributionDate(contributions: DbRepoPR[]) {
@@ -53,10 +53,17 @@ const ContributorListTableRow = ({
   const [tableOpen, setTableOpen] = useState(false);
   const login = contributor.author_login || contributor.username;
   const { data: user } = useFetchUser(contributor.author_login);
-  const { data } = useContributorPullRequests(login, topic, [], range);
+  const { data } = useContributorPullRequests({
+    contributor: login,
+    topic,
+    repoIds: [],
+    range,
+    mostRecent: true,
+  });
+
   const repoList = useRepoList(Array.from(new Set(data.map((prData) => prData.full_name))).join(","));
   const contributorLanguageList = user ? Object.keys(user.languages).map((language) => language) : [];
-  const days = getPullRequestsToDays(data, range);
+  const days = getPullRequestsToDays(data, Number(range || "30"));
   const totalPrs = data.length;
   const last30days = [
     {
@@ -66,8 +73,6 @@ const ContributorListTableRow = ({
     },
   ];
   const mergedPrs = data.filter((prData) => prData.merged);
-
-  useEffect(() => {}, []);
 
   return (
     <>
@@ -84,14 +89,18 @@ const ContributorListTableRow = ({
             />
           )}
           <div className="w-[68%]">
-            <DevProfile
-              company={user?.company || getLastContributedRepo(data)}
-              username={login}
-              hasBorder={!contributor.author_login}
-            />
+            <DevProfile username={login} hasBorder={!contributor.author_login} />
           </div>
           <div className="w-[34%] text-normal text-light-slate-11  h-full">
-            <div className="flex gap-x-3">{<p>{getLastContributionDate(mergedPrs)}</p>}</div>
+            <div className="flex flex-col gap-x-3">
+              <p>{getLastContributionDate(mergedPrs)}</p>{" "}
+              <p
+                className="text-sm font-normal truncate text-light-slate-9 md:hidden lg:max-w-[8.12rem]"
+                title={user?.company || getLastContributedRepo(data)}
+              >
+                {user?.company || getLastContributedRepo(data)}
+              </p>
+            </div>
           </div>
           <div className="">
             <div
@@ -149,20 +158,15 @@ const ContributorListTableRow = ({
             checked={selected ? true : false}
             disabled={!user}
             title={!user ? "Connect to GitHub" : ""}
-            onCheckedChange={(state) => handleOnSelectContributor?.(state as boolean, contributor)}
+            onCheckedChange={(state) => handleOnSelectContributor?.(!!state, contributor)}
             className={`${user && "border-orange-500 hover:bg-orange-600"}`}
           />
         )}
 
         {/* Column: Contributors */}
         <div className={clsx("flex-1 lg:min-w-[12.5rem] overflow-hidden")}>
-          <DevProfile
-            company={user?.company || getLastContributedRepo(data)}
-            username={login}
-            hasBorder={!contributor.author_login}
-          />
+          <DevProfile username={login} hasBorder={!contributor.author_login} />
         </div>
-
         {/* Column: Act */}
         <div className={clsx("flex-1 flex lg:max-w-[6.25rem] w-fit justify-center")}>
           {contributor.author_login ? getActivity(totalPrs, false) : "-"}
@@ -175,7 +179,15 @@ const ContributorListTableRow = ({
 
         {/* Column: Last Contribution */}
         <div className={clsx("flex-1 lg:max-w-[130px]  flex text-light-slate-11 justify-center ")}>
-          <div className="flex">{<p>{contributor.author_login ? getLastContributionDate(mergedPrs) : "-"}</p>}</div>
+          <div className="flex flex-col">
+            <p>{contributor.author_login ? getLastContributionDate(mergedPrs) : "-"}</p>{" "}
+            <p
+              className="hidden whitespace-nowrap overflow-hidden overflow-ellipsis text-sm font-normal md:inline-flex text-light-slate-9 lg:max-w-[8.12rem]"
+              title={user?.company || getLastContributedRepo(data)}
+            >
+              {user?.company || getLastContributedRepo(data)}
+            </p>
+          </div>
         </div>
 
         {/* Column: Language */}

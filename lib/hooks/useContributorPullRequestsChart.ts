@@ -1,11 +1,18 @@
 import { useEffect, useState } from "react";
+import differenceInDays from "date-fns/differenceInDays";
 import getPullRequestsToDays from "lib/utils/get-prs-to-days";
 import { RepoList } from "components/molecules/CardRepoList/card-repo-list";
 import { getAvatarByUsername } from "lib/utils/github";
 import getFormattedTooltipValue from "lib/utils/get-formatted-tooltip-value";
 import useContributorPullRequests from "./api/useContributorPullRequests";
 
-const useContributorPullRequestsChart = (contributor: string, topic: string, repoIds: number[] = [], range = 30) => {
+const useContributorPullRequestsChart = (
+  contributor: string,
+  topic: string,
+  repoIds: number[] = [],
+  range = "30",
+  mostRecent = false
+) => {
   const lineChart = {
     xAxis: {
       type: "category",
@@ -51,8 +58,17 @@ const useContributorPullRequestsChart = (contributor: string, topic: string, rep
   };
 
   const [chart, setChart] = useState(lineChart);
-  const { data, meta } = useContributorPullRequests(contributor, topic, repoIds, 100, range);
-  const repoList: RepoList[] = Array.from(new Set(data.map((prData) => prData.full_name))).map((repo) => {
+  const { data, meta } = useContributorPullRequests({ contributor, topic, repoIds, limit: 100, range, mostRecent });
+  const repoList: RepoList[] = Array.from(
+    new Set(
+      data
+        .filter((prSince) => {
+          const daysSinceUpdated = differenceInDays(new Date(), new Date(prSince.updated_at));
+          return daysSinceUpdated <= Number(range);
+        })
+        .map((prData) => prData.full_name)
+    )
+  ).map((repo) => {
     const [repoOwner, repoName] = repo.split("/");
 
     return {
@@ -63,8 +79,8 @@ const useContributorPullRequestsChart = (contributor: string, topic: string, rep
   });
 
   useEffect(() => {
-    if (data && Array.isArray(data)) {
-      const graphData = getPullRequestsToDays(data);
+    if (data && Array.isArray(data) && data.length > 0) {
+      const graphData = getPullRequestsToDays(data, Number(range || "30"));
 
       setChart((prevChart) => ({
         ...prevChart,

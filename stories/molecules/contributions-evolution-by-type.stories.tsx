@@ -30,7 +30,7 @@ export const Default = () => {
       <Button variant="outline" onClick={() => setData(generateData())} className="mb-2">
         Random Data
       </Button>
-      <ContributionsEvolutionByType data={data} />
+      <ContributionsEvolutionByType data={data} isLoading={false} />
     </div>
   );
 };
@@ -55,7 +55,9 @@ function generateData() {
   let previousActive = Math.floor(Math.random() * 500);
   let previousNew = Math.floor(Math.random() * 500);
   let previousChurned = Math.floor(Math.random() * 500);
+
   return result.map((date) => {
+    const endDate = subDays(date, 5);
     const newActive = randomValueCloseToValue(previousActive);
     const newNew = randomValueCloseToValue(previousNew);
     const newChurned = randomValueCloseToValue(previousChurned);
@@ -65,10 +67,12 @@ function generateData() {
     previousChurned = newChurned;
 
     return {
-      startTime: date.toString(),
+      time_start: date.toString(),
+      time_end: endDate.toString(),
       active: newActive,
       new: newNew,
-      churned: newChurned,
+      alumni: newChurned,
+      all: newActive + newNew + newChurned,
     };
   });
 }
@@ -76,3 +80,7 @@ function generateData() {
 function randomValueCloseToValue(value: number) {
   return Math.max(value + Math.floor(Math.random() * 100 - 50), 0);
 }
+
+export const Loading = () => {
+  return <ContributionsEvolutionByType isLoading={true} />;
+};

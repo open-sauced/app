@@ -31,8 +31,7 @@ const ContributorHoverCard = ({
   isMaintainer,
 }: ContributorHoverCardProps) => {
   const router = useRouter();
-  const { filterName } = router.query;
-  const topic = filterName as string;
+  const topic = router.query.pageId as string;
 
   const calculatedDateFromToday = dateOfFirstPr
     ? calcDistanceFromToday(new Date(parseInt(dateOfFirstPr).toString()))

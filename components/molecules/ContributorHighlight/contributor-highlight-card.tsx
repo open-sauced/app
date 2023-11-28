@@ -122,9 +122,13 @@ const ContributorHighlightCard = ({
   const [tagRepoSearchLoading, setTagRepoSearchLoading] = useState<boolean>(false);
   const [addTaggedRepoFormOpen, setAddTaggedRepoFormOpen] = useState(false);
   const [host, setHost] = useState("");
+  const [dropdownOpen, setDropdownOpen] = useState(false);
   const { follow, unFollow, isError } = useFollowUser(
-    loggedInUser && loggedInUser?.user_metadata.username !== user ? user : ""
+    dropdownOpen && loggedInUser?.user_metadata.user_name !== user ? user : ""
   );
+  const [popoverOpen, setPopoverOpen] = useState(false);
+  const popoverContentRef = React.useRef<HTMLDivElement>(null);
+  const dropdownRef = React.useRef<HTMLDivElement>(null);
 
   const [date, setDate] = useState<Date | undefined>(shipped_date ? new Date(shipped_date) : undefined);
 
@@ -167,6 +171,34 @@ const ContributorHighlightCard = ({
     const matches = sessionToken && userReaction.find((reaction) => reaction.emoji_id === id);
     return !matches ? false : true;
   };
+
+  const handleClickOutsidePopoverContent = (e: MouseEvent) => {
+    if (popoverContentRef.current && !popoverContentRef.current.contains(e.target as Node)) {
+      setPopoverOpen(false);
+    }
+  };
+
+  const handleClickOutsideDropdownContent = (e: MouseEvent) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+      setDropdownOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    // This closes the popover when user clicks outside of it's content
+    document.addEventListener("mousedown", handleClickOutsidePopoverContent);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutsidePopoverContent);
+    };
+  }, [popoverOpen]);
+
+  useEffect(() => {
+    // This closes the popover when user clicks outside of it's content
+    document.addEventListener("mousedown", handleClickOutsideDropdownContent);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutsideDropdownContent);
+    };
+  }, [dropdownOpen]);
 
   const getEmojiReactors = (reaction_users: string[]) => {
     if (!Array.isArray(reaction_users)) return "";
@@ -215,6 +247,7 @@ const ContributorHighlightCard = ({
       await navigator.clipboard.writeText(url);
       toast({ description: "Copied to clipboard", variant: "success" });
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.log(error);
     }
   };
@@ -356,6 +389,7 @@ const ContributorHighlightCard = ({
         document.body.setAttribute("style", "pointer-events:auto !important");
       }, 1);
     } else {
+      // eslint-disable-next-line no-console
       console.error(res);
       setAlertOpen(false);
       toast({ description: "An error occured!", variant: "danger" });
@@ -399,6 +433,7 @@ const ContributorHighlightCard = ({
       setTaggedRepoList(newTaggedRepoList);
       toast({ description: "Repo tag added!", title: "Success", variant: "success" });
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error(e);
       setError("An error occured!");
     }
@@ -435,6 +470,7 @@ const ContributorHighlightCard = ({
     if (!taggedRepoSearchTerm) return;
     updateSuggestionsDebounced();
   }, [taggedRepoSearchTerm]);
+
   useEffect(() => {
     if (window !== undefined) {
       setHost(window.location.origin as string);
@@ -448,7 +484,7 @@ const ContributorHighlightCard = ({
           {icon}
           <span className="text-sm text-light-slate-11">{getHighlightTypePreset(type).text}</span>
           <div className="flex items-center gap-3 ml-auto lg:gap-3">
-            <DropdownMenu modal={false}>
+            <DropdownMenu open={dropdownOpen} modal={false}>
               <div className="flex items-center gap-3 w-max">
                 <Tooltip direction="top" content="share on twitter">
                   <a
@@ -463,12 +499,15 @@ const ContributorHighlightCard = ({
                     <FaXTwitter className="text-lg text-light-orange-9 md:text-xl" />
                   </a>
                 </Tooltip>
-                <DropdownMenuTrigger className="py-2 px-2 rounded-full data-[state=open]:bg-light-slate-7">
+                <DropdownMenuTrigger
+                  onClick={() => setDropdownOpen(!dropdownOpen)}
+                  className="py-2 px-2 rounded-full data-[state=open]:bg-light-slate-7"
+                >
                   <TfiMoreAlt className={"fill-light-slate-11"} size={24} />
                 </DropdownMenuTrigger>
               </div>
 
-              <DropdownMenuContent align="end" className="flex flex-col gap-1 py-2 rounded-lg">
+              <DropdownMenuContent ref={dropdownRef} align="end" className="flex flex-col gap-1 py-2 rounded-lg">
                 <DropdownMenuItem className="rounded-md">
                   <a
                     onClick={() => {
@@ -483,7 +522,13 @@ const ContributorHighlightCard = ({
                     <span>Share to Linkedin</span>
                   </a>
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => handleCopyToClipboard(`${host}/feed/${id}`)} className="rounded-md">
+                <DropdownMenuItem
+                  onClick={() => {
+                    handleCopyToClipboard(`${host}/feed/${id}`);
+                    setDropdownOpen(false);
+                  }}
+                  className="rounded-md"
+                >
                   <div className="flex gap-2.5 py-1 items-center pl-3 pr-7 cursor-pointer">
                     <BsLink45Deg size={22} />
                     <span>Copy link</span>
@@ -521,7 +566,10 @@ const ContributorHighlightCard = ({
                     }`}
                   >
                     <button
-                      onClick={() => setOpenEdit(true)}
+                      onClick={() => {
+                        setOpenEdit(true);
+                        setDropdownOpen(false);
+                      }}
                       className="flex w-full cursor-default gap-2.5 py-1  items-center pl-3 pr-7"
                     >
                       <FiEdit size={22} />
@@ -556,13 +604,16 @@ const ContributorHighlightCard = ({
         </div>
 
         {/* Highlight body section */}
-        <div className="w-full ">
-          <p className="text-sm font-normal break-words text-light-slate-12 lg:text-base">{desc}</p>
-        </div>
-        {/* Highlight Link section */}
+        <p className="text-sm font-normal break-words text-light-slate-12 lg:text-base">{desc}</p>
 
-        <div>
-          <a href={highlightLink} className="underline break-words cursor-pointer text-sauced-orange">
+        {/* Highlight Link section */}
+        <div className="flex">
+          <a
+            href={highlightLink}
+            target="_blank"
+            rel="noreferrer"
+            className="flex-1 inline-block underline truncate cursor-pointer text-sauced-orange"
+          >
             {highlightLink}
           </a>
         </div>
@@ -590,7 +641,7 @@ const ContributorHighlightCard = ({
                 <DropdownMenuItem
                   onClick={async () => (sessionToken ? handleUpdateReaction(id) : signIn({ provider: "github" }))}
                   key={id}
-                  className="rounded-full !px-2 !cursor-pointer"
+                  className="rounded-full !px-2 !cursor-pointer text-orange-500"
                 >
                   <Emoji text={`:${name}:`} />
                 </DropdownMenuItem>
@@ -613,7 +664,7 @@ const ContributorHighlightCard = ({
                 onClick={async () => (sessionToken ? handleUpdateReaction(emoji_id) : signIn({ provider: "github" }))}
               >
                 <Emoji
-                  className="text-xs md:text-sm text-light-slate-10"
+                  className="text-xs text-orange-500 md:text-sm"
                   text={`:${getEmojiNameById(emoji_id)}: ${reaction_count}`}
                 />
               </div>
@@ -656,20 +707,26 @@ const ContributorHighlightCard = ({
                   ></Textarea>
                   <div className="flex items-center justify-between py-1 pl-3">
                     <Tooltip direction="top" content="Pick a date">
-                      <Popover>
+                      <Popover open={popoverOpen}>
                         <PopoverTrigger asChild>
-                          <button className="flex items-center gap-2 text-base text-light-slate-9">
+                          <button
+                            onClick={() => setPopoverOpen(!popoverOpen)}
+                            className="flex items-center gap-2 text-base text-light-slate-9"
+                          >
                             <BsCalendar2Event className="text-light-slate-9" />
                             {date && <span className="text-xs">{format(date, "PPP")}</span>}
                           </button>
                         </PopoverTrigger>
-                        <PopoverContent className="w-auto p-0 bg-white pointer-events-auto">
+                        <PopoverContent ref={popoverContentRef} className="w-auto p-0 bg-white pointer-events-auto">
                           <Calendar
                             // block user's from selecting a future date
                             toDate={new Date()}
                             mode="single"
                             selected={date}
-                            onSelect={setDate}
+                            onSelect={(date) => {
+                              setDate(date);
+                              setPopoverOpen(false);
+                            }}
                             className="border rounded-md"
                           />
                         </PopoverContent>

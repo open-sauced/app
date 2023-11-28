@@ -74,7 +74,7 @@ const ContributorProfilePage = ({
   });
 
   const { user: loggedInUser, signIn } = useSupabaseAuth();
-  const { chart, repoList } = useContributorPullRequestsChart(githubName, "*", repositories);
+  const { chart, repoList } = useContributorPullRequestsChart(githubName, "*", repositories, "30", true);
 
   const prsMergedPercentage = getPercent(prTotal, prMerged || 0);
   const { data: Follower, isError: followError, follow, unFollow } = useFollowUser(user?.login || "");
@@ -116,7 +116,7 @@ const ContributorProfilePage = ({
         />
       )}
       <div className="container flex flex-col justify-between w-full px-2 pt-24 mx-auto overflow-hidden md:px-16 lg:flex-row lg:gap-40">
-        <div className="flex flex-col gap-4 w-80 ">
+        <div className="flex flex-col lg:gap-4 md:gap-2 lg:w-80 md:w-full">
           {loading ? (
             <SkeletonWrapper height={210} radius={12} classNames="pb-16 lg:pb-0" />
           ) : (

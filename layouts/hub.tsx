@@ -24,7 +24,7 @@ const HubLayout = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
 
   const validatePath = (path: string) => {
-    const PATHREGEX = /^\/hub\/(insights|lists)(\/(new|[\d]+\/edit))?$/;
+    const PATHREGEX = /^\/hub\/(insights|lists)?$/;
 
     return PATHREGEX.test(path);
   };
@@ -42,13 +42,12 @@ const HubLayout = ({ children }: { children: React.ReactNode }) => {
       }
     }
 
-    getUser()
-      .catch(console.error)
-      .then(() => {});
+    // eslint-disable-next-line no-console
+    getUser().catch(console.error);
   }, [router, onboarded]);
 
   const getActiveLinkClassNames = (href: string) => {
-    return router.pathname === href ? "text-light-slate-11" : "text-slate-300";
+    return router.pathname === href ? "text-light-slate-12" : "text-slate-300";
   };
 
   return (
@@ -68,10 +67,7 @@ const HubLayout = ({ children }: { children: React.ReactNode }) => {
                         {navLinks.map((link, index) => (
                           <li key={`hub-nav-${index}-${link.name}`}>
                             <Link
-                              className={clsx(
-                                "text-3xl leading-none font-medium mx-0",
-                                getActiveLinkClassNames(link.href)
-                              )}
+                              className={clsx("text-3xl leading-none mx-0", getActiveLinkClassNames(link.href))}
                               href={link.href}
                             >
                               {link.name}

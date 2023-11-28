@@ -62,7 +62,8 @@ const TextInput = ({
             placeholder={placeholder || ""}
             className={clsx(
               "w-full focus:outline-none placeholder:font-normal placeholder-slate-400",
-              disabled && "bg-light-slate-3 cursor-not-allowed text-light-slate-9"
+              disabled && "bg-light-slate-3 cursor-not-allowed text-light-slate-9",
+              "bg-inherit"
             )}
             disabled={disabled}
             value={value}

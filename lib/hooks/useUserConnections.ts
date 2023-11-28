@@ -43,7 +43,7 @@ const useUserConnections = () => {
       } else {
         toast({ description: response.message, title: "Error", variant: "danger" });
       }
-
+      // eslint-disable-next-line no-console
       console.log(response.message);
     }
   }

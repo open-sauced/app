@@ -11,10 +11,9 @@ interface HoverCardWrapperProps {
 }
 const HoverCardWrapper = ({ username, repositories }: HoverCardWrapperProps) => {
   const router = useRouter();
-  const { filterName } = router.query;
-  const topic = filterName as string;
+  const topic = router.query.pageId as string;
   const { data: contributor } = useFetchUser(username);
-  const { repoList } = useContributorPullRequestsChart(username, "*", repositories);
+  const { repoList } = useContributorPullRequestsChart(username, "*", repositories, "30", true);
 
   const profile: ContributorsProfileType = {
     githubAvatar: getAvatarByUsername(username, 40),

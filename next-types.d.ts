@@ -240,6 +240,7 @@ interface DbUser {
   readonly highlights_count: number;
   readonly is_maintainer: boolean;
   readonly coupon_code: string;
+  readonly receive_product_updates: boolean;
 }
 
 interface DbHighlight {
@@ -326,7 +327,7 @@ interface DbListOwner {
   readonly name: string;
 }
 
-interface DbListContibutor {
+interface DbListContributor {
   readonly id: string;
   readonly list_id: string;
   readonly user_id: string;
@@ -383,4 +384,23 @@ interface DBProjectContributor {
   prs_reviewed: number;
   issues_created: number;
   comments: number;
+}
+
+interface DbUserOrganization {
+  id: number;
+  user_id: number;
+  organization_id: number;
+  user: DbUser;
+  organization_user: DbUser;
+}
+
+interface GhOrgTeam {
+  id: number;
+  name: string;
+  slug: string;
+}
+
+interface GhOrgTeamMember {
+  id: number;
+  login: string;
 }

@@ -25,6 +25,7 @@ const deleteHighlight = async (id: string) => {
       throw error;
     }
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.log(e);
     return false;
   }

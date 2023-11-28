@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
-import useStore from "lib/store";
+import { LuFileText } from "react-icons/lu";
 
+import { IoCheckmarkSharp } from "react-icons/io5";
+import useStore from "lib/store";
 import Pagination from "components/molecules/Pagination/pagination";
 import PaginationResults from "components/molecules/PaginationResults/pagination-result";
 import TableHeader from "components/molecules/TableHeader/table-header";
@@ -15,6 +17,13 @@ import useContributors from "lib/hooks/api/useContributors";
 import { getAvatarByUsername } from "lib/utils/github";
 import { ToggleValue } from "components/atoms/LayoutToggle/layout-toggle";
 import ContributorListTableHeaders from "components/molecules/ContributorListTableHeader/contributor-list-table-header";
+import { Popover, PopoverContent, PopoverTrigger } from "components/molecules/Popover/popover";
+import Button from "components/atoms/Button/button";
+import { addListContributor, useFetchAllLists } from "lib/hooks/useList";
+import { Command, CommandGroup, CommandInput, CommandItem } from "components/atoms/Cmd/command";
+import { useToast } from "lib/hooks/useToast";
+
+import ClientOnly from "components/atoms/ClientOnly/client-only";
 import ContributorCard from "../ContributorCard/contributor-card";
 import ContributorTable from "../ContributorsTable/contributors-table";
 
@@ -24,12 +33,15 @@ interface ContributorProps {
 
 const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
   const router = useRouter();
-  const { filterName } = router.query;
-  const topic = filterName as string;
-  const store = useStore();
+  const topic = router.query.pageId as string;
+
+  const { data, meta, setPage, setLimit, isError, isLoading } = useContributors(10, repositories);
+  const { toast } = useToast();
   const range = useStore((state) => state.range);
-  const [layout, setLayout] = useState<ToggleValue>("grid");
-  const { data, meta, setPage, setLimit, isError, isLoading } = useContributors(10, repositories, range);
+  const [layout, setLayout] = useState<ToggleValue>("list");
+  const [selectedContributors, setSelectedContributors] = useState<DbPRContributor[]>([]);
+  const [selectedListIds, setSelectedListIds] = useState<string[]>([]);
+  const [popoverOpen, setPopoverOpen] = useState(false);
 
   const contributors = data.map((pr) => {
     return {
@@ -37,6 +49,22 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
       first_commit_time: pr.updated_at,
     };
   });
+
+  const onSelectContributor = (state: boolean, contributor: DbPRContributor) => {
+    if (state) {
+      setSelectedContributors((prev) => [...prev, contributor]);
+    } else {
+      setSelectedContributors(selectedContributors.filter((seleted) => seleted.user_id !== contributor.user_id));
+    }
+  };
+
+  const onSelectAllContributors = (state: boolean) => {
+    if (state) {
+      setSelectedContributors(data);
+    } else {
+      setSelectedContributors([]);
+    }
+  };
 
   const contributorArray = isError
     ? []
@@ -52,6 +80,103 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
         };
       });
 
+  const PopOverListContent = () => {
+    const { data } = useFetchAllLists();
+    const [loading, setLoading] = useState(false);
+
+    const handleAddContributorsToList = async () => {
+      if (!selectedListIds.length) {
+        return;
+      }
+
+      setLoading(true);
+      const response = Promise.all(
+        selectedListIds.map((listIds) =>
+          addListContributor(
+            listIds,
+            selectedContributors.map((contributor) => contributor.user_id)
+          )
+        )
+      );
+      response
+        .then((res) => {
+          toast({
+            description: `Successfully added ${selectedContributors.length} contributors to ${selectedListIds.length} lists!`,
+            variant: "success",
+          });
+        })
+        .catch((res) => {
+          toast({
+            description: `
+            An error occurred while adding contributors to lists. Please try again.
+          `,
+            variant: "danger",
+          });
+        })
+        .finally(() => {
+          setLoading(false);
+          setPopoverOpen(false);
+          setSelectedListIds([]);
+          setSelectedContributors([]);
+        });
+    };
+
+    return (
+      <PopoverContent align="end" className="bg-white !w-64 gap-4 flex flex-col">
+        <Command loop className="w-full px-0 bg-transparent">
+          <CommandInput placeholder={"Search Lists"} />
+          <CommandGroup className="flex flex-col !px-0 overflow-scroll max-h-48">
+            {data && data.length > 0
+              ? data.map((list) => (
+                  <CommandItem key={list.id}>
+                    <button
+                      onClick={() => {
+                        if (selectedListIds.includes(list.id)) {
+                          setSelectedListIds(selectedListIds.filter((id) => id !== list.id));
+                        } else {
+                          setSelectedListIds([...selectedListIds, list.id]);
+                        }
+                      }}
+                      className="flex items-center gap-3 text-sm w-full  text-start"
+                    >
+                      <LuFileText className="text-xl shrink-0" /> <span className="w-full truncate">{list.name}</span>
+                      {selectedListIds.includes(list.id) ? (
+                        <IoCheckmarkSharp className="w-4 h-4 ml-2 text-sauced-orange shrink-0" />
+                      ) : null}
+                    </button>
+                  </CommandItem>
+                ))
+              : null}
+          </CommandGroup>
+        </Command>
+
+        <div className="flex items-center gap-4">
+          <Button
+            onClick={() => {
+              router.push({
+                pathname: "/hub/lists/find",
+                query: { contributors: JSON.stringify(selectedContributors) },
+              });
+            }}
+            variant="text"
+            className="py-1 flex-1"
+          >
+            New list
+          </Button>
+          <Button
+            loading={loading}
+            onClick={handleAddContributorsToList}
+            disabled={selectedListIds.length === 0}
+            variant="primary"
+            className="py-1 flex-1"
+          >
+            Add to list
+          </Button>
+        </div>
+      </PopoverContent>
+    );
+  };
+
   return (
     <>
       {/* Table section */}
@@ -59,8 +184,6 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
         updateLimit={setLimit}
         metaInfo={meta}
         entity="Contributors"
-        range={range}
-        setRangeFilter={store.updateRange}
         title="Contributors"
         layout={layout}
         onLayoutToggle={() => setLayout((prev) => (prev === "list" ? "grid" : "list"))}
@@ -77,14 +200,37 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
               contributor={{ ...contributor }}
               topic={topic}
               repositories={repositories}
-              range={range}
             />
           ))}
         </div>
       ) : (
         <div className="lg:min-w-[1150px]">
-          <ContributorListTableHeaders range={range} />
-          <ContributorTable loading={isLoading} topic={topic} contributors={data}></ContributorTable>
+          <ContributorListTableHeaders handleOnSelectAllContributor={onSelectAllContributors} />
+          {selectedContributors.length > 0 && (
+            <div className="border px-4 py-2 flex justify-between items-center ">
+              <div className="text-slate-600">{selectedContributors.length} Contributors selected</div>
+              <Popover
+                open={popoverOpen}
+                onOpenChange={(value) => {
+                  setPopoverOpen(value);
+                }}
+              >
+                <PopoverTrigger>
+                  <Button variant="primary">Add to list</Button>
+                </PopoverTrigger>
+                {popoverOpen && <PopOverListContent />}
+              </Popover>
+            </div>
+          )}
+          <ClientOnly>
+            <ContributorTable
+              handleSelectContributors={onSelectContributor}
+              loading={isLoading}
+              topic={topic}
+              contributors={data}
+              selectedContributors={selectedContributors}
+            ></ContributorTable>
+          </ClientOnly>
         </div>
       )}
 

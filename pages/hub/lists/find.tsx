@@ -76,6 +76,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 
 const NewListCreationPage = ({ initialData, timezoneOption }: NewListCreationPageProps) => {
   const router = useRouter();
+  const contributorIds = router.query.contributors as string;
   const { toast } = useToast();
   const posthog = usePostHog();
   const { sessionToken } = useSupabaseAuth();
@@ -107,6 +108,12 @@ const NewListCreationPage = ({ initialData, timezoneOption }: NewListCreationPag
 
     if (router.query.public === "true") {
       setIsPublic(true);
+    }
+  }, [router.query]);
+
+  useEffect(() => {
+    if (contributorIds) {
+      setSelectedContributors(JSON.parse(contributorIds) as DbPRContributor[]);
     }
   }, [router.query]);
 
@@ -183,6 +190,7 @@ const NewListCreationPage = ({ initialData, timezoneOption }: NewListCreationPag
         setIsSuccess(true);
       }
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.log(error);
     } finally {
       setCreateLoading(false);
@@ -211,6 +219,7 @@ const NewListCreationPage = ({ initialData, timezoneOption }: NewListCreationPag
       await navigator.clipboard.writeText(url);
       toast({ description: "Copied to clipboard", variant: "success" });
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.log(error);
     }
   };

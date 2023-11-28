@@ -1,7 +1,6 @@
 import { memo } from "react";
 import { animated } from "@react-spring/web";
 import { htmlNodeTransform } from "lib/utils/nivo-utils";
-import { stringToHSLAColor } from "lib/utils/color-utils";
 import type { NodeProps } from "@nivo/treemap";
 
 const NonMemoizedSpecialNode = <Datum extends object>({
@@ -14,11 +13,10 @@ const NonMemoizedSpecialNode = <Datum extends object>({
   const showLabel =
     enableLabel && node.isLeaf && (labelSkipSize === 0 || Math.min(node.width, node.height) > labelSkipSize);
   const [fullRepoName] = node.id.split(":");
-  node.color = stringToHSLAColor({ id: node.id });
 
   return (
     <animated.div
-      className="absolute grid place-content-stretch overflow-hidden border-solid"
+      className="absolute grid overflow-hidden border-solid cursor-pointer place-content-stretch"
       style={{
         top: 0,
         left: 0,
@@ -44,7 +42,7 @@ const NonMemoizedSpecialNode = <Datum extends object>({
       />
       {showLabel && (
         <animated.div
-          className="grid p-3 text-white place-items-start pointer-events-none"
+          className="grid p-3 text-white pointer-events-none place-items-start"
           style={{
             gridArea: "1 / 1",
             transformOrigin: "center center",
@@ -53,8 +51,8 @@ const NonMemoizedSpecialNode = <Datum extends object>({
           }}
         >
           <div className="grid gap-2">
-            <div className="font-medium text-sm">{fullRepoName}</div>
-            <div className="font-normal text-xs" style={{ textOverflow: "ellipsis" }}>
+            <div className="text-sm">{fullRepoName}</div>
+            <div className="text-xs font-normal" style={{ textOverflow: "ellipsis" }}>
               {node.label}
             </div>
           </div>

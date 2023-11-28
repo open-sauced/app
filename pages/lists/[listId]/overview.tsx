@@ -22,6 +22,7 @@ type ContributorPrMap = { [contributor: string]: DbRepoPR };
 interface ListsOverviewProps {
   list: DBList;
   numberOfContributors: number;
+  isOwner: boolean;
 }
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
@@ -49,15 +50,18 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     };
   }
 
+  const userId = Number(session?.user.user_metadata.sub);
+
   return {
     props: {
       list,
       numberOfContributors: data?.meta.itemCount || 0,
+      isOwner: list && list.user_id === userId,
     },
   };
 };
 
-const ListsOverview = ({ list, numberOfContributors }: ListsOverviewProps): JSX.Element => {
+const ListsOverview = ({ list, numberOfContributors, isOwner }: ListsOverviewProps): JSX.Element => {
   const router = useRouter();
   const { listId } = router.query;
   const { data: prData, isError: prError } = useListContributions(listId as string);
@@ -143,7 +147,7 @@ const ListsOverview = ({ list, numberOfContributors }: ListsOverviewProps): JSX.
   }, 0);
 
   return (
-    <ListPageLayout list={list} numberOfContributors={numberOfContributors} isOwner={false}>
+    <ListPageLayout list={list} numberOfContributors={numberOfContributors} isOwner={isOwner} showRangeFilter={false}>
       <div className="flex flex-col w-full gap-4">
         <ClientOnly>
           <section className="flex flex-wrap items-center max-w-full gap-4 lg:flex-row lg:flex-nowrap">

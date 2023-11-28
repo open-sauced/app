@@ -9,6 +9,7 @@ import { WithPageLayout } from "interfaces/with-page-layout";
 import changeCapitalization from "lib/utils/change-capitalization";
 import SEO from "layouts/SEO/SEO";
 import fetchSocialCard from "lib/utils/fetch-social-card";
+import getInsightTeamMember from "lib/utils/get-insight-team-member";
 
 interface InsightPageProps {
   insight: DbUserInsight;
@@ -56,7 +57,8 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const {
     data: { session },
   } = await supabase.auth.getSession();
-  const insightId = ctx.params!["filterName"] as string;
+  const bearerToken = session ? session.access_token : "";
+  const insightId = ctx.params!["pageId"] as string;
   const pageName = ctx.params!["toolName"] as string;
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/insights/${insightId}`);
   const insight = response.ok ? ((await response.json()) as DbUserInsight) : null;
@@ -69,10 +71,25 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     };
   }
 
+  if (pageName === "repositories") {
+    const userOrg = ctx.params!["userOrg"] as string;
+    return {
+      redirect: {
+        destination: `/pages/${userOrg}/${insightId}/dashboard`,
+        permanent: false,
+      },
+    };
+  }
   const userId = session?.user?.user_metadata.sub as string;
   const isOwner = !!(userId && insight && `${userId}` === `${insight.user?.id}`);
+  let isTeamMember = false;
 
-  if (insight && !insight.is_public && !isOwner) {
+  if (!insight.is_public && !isOwner) {
+    // check if user is insight page team member
+    isTeamMember = await getInsightTeamMember(Number(insightId), bearerToken, userId);
+  }
+
+  if (!insight.is_public && !isOwner && !isTeamMember) {
     return {
       redirect: {
         destination: "/",

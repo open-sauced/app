@@ -25,4 +25,6 @@ Sentry.init({
       blockAllMedia: true,
     }),
   ],
+
+  ignoreTransactions: ["middleware"],
 });

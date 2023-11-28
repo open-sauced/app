@@ -35,6 +35,7 @@ import NewsletterForm from "components/molecules/NewsletterForm/newsletter-form"
 import UserCard, { MetaObj } from "components/atoms/UserCard/user-card";
 import FeaturedHighlightsPanel from "components/molecules/FeaturedHighlightsPanel/featured-highlights-panel";
 import AnnouncementCard from "components/molecules/AnnouncementCard/announcement-card";
+import { useMediaQuery } from "lib/hooks/useMediaQuery";
 
 type activeTabType = "home" | "following";
 type highlightReposType = { repoName: string; repoIcon: string; full_name: string };
@@ -78,6 +79,8 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
 
   const { data: followersRepo } = useFetchFollowersHighlightRepos();
 
+  const isDesktop = useMediaQuery("(min-width: 1280px)");
+
   const { data, mutate, setPage, isLoading, meta } = useFetchAllHighlights(selectedRepo);
   const { data: emojis } = useFetchAllEmojis();
 
@@ -101,35 +104,24 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
     const signInRequired = queryParams.get("signIn");
 
     if (newHighlight && signInRequired) {
-      signIn({ provider: "github", options: { redirectTo: `${window.location.origin}/feed?new=${newHighlight}` } });
+      signIn({ provider: "github", options: { redirectTo: `${window.location.origin}/feed?${queryParams}` } });
     }
-
     // no need to create intervals for checking the highlight creation input if there is no new highlight
     if (!newHighlight) {
       return;
     }
 
-    let focusOnHighlighCreationInput: NodeJS.Timeout;
+    let isDesktop = window.innerWidth > 768;
+    const highlightSelector = `#${isDesktop ? "" : "mobile-"}highlight-create`;
+    let focusOnHighlighCreationInput = setInterval(() => {
+      const highlightCreationInput = document.querySelector(highlightSelector) as HTMLInputElement;
+      if (newHighlight && highlightCreationInput) {
+        highlightCreationInput.click();
+        isDesktop && highlightCreationInput.focus();
+        clearInterval(focusOnHighlighCreationInput);
+      }
+    }, 1000);
 
-    if (window.innerWidth > 768) {
-      focusOnHighlighCreationInput = setInterval(() => {
-        const highlightCreationInput = document.getElementById("highlight-create-input");
-        if (newHighlight && highlightCreationInput) {
-          highlightCreationInput.click();
-          highlightCreationInput.focus();
-          clearInterval(focusOnHighlighCreationInput);
-        }
-      }, 1000);
-    } else {
-      // for mobile. No need to focus on input, just click on the button as it opens up a form anyway.
-      focusOnHighlighCreationInput = setInterval(() => {
-        const mobileHighlightCreateButton = document.getElementById("mobile-highlight-create-button");
-        if (newHighlight && mobileHighlightCreateButton) {
-          mobileHighlightCreateButton.click();
-          clearInterval(focusOnHighlighCreationInput);
-        }
-      }, 1000);
-    }
     return () => {
       clearInterval(focusOnHighlighCreationInput);
     };
@@ -212,11 +204,13 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
                 />
               </div>
             )}
-            <TopContributorsPanel
-              loggedInUserLogin={loggedInUser?.login ?? ""}
-              loggedInUserId={loggedInUser?.id ?? undefined}
-              refreshLoggedInUser={refreshLoggedInUser}
-            />
+            {isDesktop && (
+              <TopContributorsPanel
+                loggedInUserLogin={loggedInUser?.login ?? ""}
+                loggedInUserId={loggedInUser?.id ?? undefined}
+                refreshLoggedInUser={refreshLoggedInUser}
+              />
+            )}
             <AnnouncementCard
               title="#100DaysOfOSS 🚀 "
               description={
@@ -243,10 +237,10 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
               }
             }}
           >
-            <DialogContent className="w-4/5 sm:max-h-screen">
+            <DialogContent className="sm:max-h-screen">
               <div className="flex flex-col gap-8 mx-auto mt-10">
-                <div className="flex flex-col gap-6 px-3 ">
-                  <div className="flex items-center gap-3 ">
+                <div className="flex flex-col gap-6 px-3">
+                  <div className="flex items-center gap-3">
                     <Link href={`/user/${singleHighlight.login}`} className="flex items-center gap-3">
                       <Avatar
                         alt="user profile avatar"

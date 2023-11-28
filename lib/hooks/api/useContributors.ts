@@ -18,12 +18,12 @@ interface PaginatedResponse {
  * @param range
  * @returns
  */
-const useContributors = (intialLimit = 10, repoIds: number[] = [], range = 30) => {
+const useContributors = (intialLimit = 10, repoIds: number[] = []) => {
   const router = useRouter();
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(intialLimit);
-  const { filterName, selectedFilter } = router.query;
-  const topic = filterName as string;
+  const { pageId, selectedFilter, range } = router.query;
+  const topic = pageId as string;
   const filterQuery = getFilterQuery(selectedFilter);
   const query = new URLSearchParams(filterQuery);
 
@@ -48,7 +48,7 @@ const useContributors = (intialLimit = 10, repoIds: number[] = [], range = 30) =
     query.delete("topic");
   }
 
-  query.set("range", `${range}`);
+  query.set("range", `${range ?? 30}`);
 
   const baseEndpoint = "contributors/search";
   const endpointString = `${baseEndpoint}?${query.toString()}`;

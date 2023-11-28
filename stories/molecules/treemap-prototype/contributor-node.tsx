@@ -1,8 +1,8 @@
 import { memo } from "react";
+import Image from "next/image";
 import { animated } from "@react-spring/web";
 import { getAvatarByUsername } from "lib/utils/github";
 import { htmlNodeTransform } from "lib/utils/nivo-utils";
-import { stringToHSLAColor } from "lib/utils/color-utils";
 import type { NodeProps } from "@nivo/treemap";
 
 const NonMemoizedContributorNode = <Datum extends { id: string; value?: number; color: string }>({
@@ -16,7 +16,6 @@ const NonMemoizedContributorNode = <Datum extends { id: string; value?: number; 
     enableLabel && node.isLeaf && (labelSkipSize === 0 || Math.min(node.width, node.height) > labelSkipSize);
 
   const avatarURL = getAvatarByUsername(node.id);
-  const color = stringToHSLAColor({ id: node.id });
 
   return (
     <animated.div
@@ -36,7 +35,7 @@ const NonMemoizedContributorNode = <Datum extends { id: string; value?: number; 
           opacity: node.opacity,
           width: animatedProps.width,
           height: animatedProps.height,
-          background: color,
+          background: node.color,
           gridArea: "1 / 1",
         }}
         onMouseEnter={node.onMouseEnter}
@@ -54,16 +53,16 @@ const NonMemoizedContributorNode = <Datum extends { id: string; value?: number; 
           }}
         >
           <div className="grid gap-x-2" style={{ gridTemplateColumns: "auto 1fr", gridTemplateRows: "auto auto" }}>
-            <img
-              className="col-start-1 col-span-1 row-span-2"
+            <Image
+              className="col-span-1 col-start-1 row-span-2"
               src={avatarURL}
+              alt={`${node.id}'s avatar`}
               width="42"
               height="42"
               style={{ display: "block", borderRadius: "50%", border: "solid 2px white", flexShrink: 0, flexGrow: 0 }}
             />
-            <div className="font-medium" style={{ gridColumnStart: "2", alignItems: "center", alignSelf: "center" }}>
-              {node.id}
-            </div>
+
+            <div style={{ gridColumnStart: "2", alignItems: "center", alignSelf: "center" }}>{node.id}</div>
             <div
               className="font-normal"
               style={{ textOverflow: "ellipsis", gridColumnStart: "2", marginTop: "-0.5rem" }}

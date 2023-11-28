@@ -1,27 +1,25 @@
 import clsx from "clsx";
 import React from "react";
+import { useRouter } from "next/router";
 import TableTitle from "components/atoms/TableTitle/table-title";
 import { classNames } from "components/organisms/RepositoriesTable/repositories-table";
 import Checkbox from "components/atoms/Checkbox/checkbox";
 
 interface ContributorListTableHeadersProps {
   selected?: boolean;
-  handleOnSelectAllContributor?: (contributor: any) => void;
-  range?: number;
+  handleOnSelectAllContributor?: (checked: boolean) => void;
 }
 
-const ContributorListTableHeaders = ({
-  selected,
-  handleOnSelectAllContributor,
-  range = 30,
-}: ContributorListTableHeadersProps) => {
+const ContributorListTableHeaders = ({ selected, handleOnSelectAllContributor }: ContributorListTableHeadersProps) => {
+  const router = useRouter();
+  const { range } = router.query;
+
   return (
     <div className="mt-4">
       {/* Mobile */}
       <div className="flex justify-between gap-2 px-2 py-4 rounded-t-lg md:hidden bg-light-slate-3">
         {handleOnSelectAllContributor && (
           <Checkbox
-            checked={selected ? true : false}
             onCheckedChange={handleOnSelectAllContributor}
             className={`${"border-orange-500 hover:bg-orange-600"}`}
           />
@@ -37,7 +35,6 @@ const ContributorListTableHeaders = ({
       <div className="hidden gap-6 px-6 py-4 border rounded-t-lg md:flex bg-light-slate-3">
         {handleOnSelectAllContributor && (
           <Checkbox
-            checked={selected ? true : false}
             onCheckedChange={handleOnSelectAllContributor}
             className={`${"border-orange-500 hover:bg-orange-600"}`}
           />

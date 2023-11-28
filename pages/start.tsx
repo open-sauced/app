@@ -25,7 +25,7 @@ import Button from "components/atoms/Button/button";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { setQueryParams } from "lib/utils/query-params";
 import useSession from "lib/hooks/useSession";
-import { captureAnayltics } from "lib/utils/analytics";
+import { captureAnalytics } from "lib/utils/analytics";
 
 import useStore from "lib/store";
 import { getInterestOptions } from "lib/utils/getInterestOptions";
@@ -33,6 +33,7 @@ import LanguagePill from "components/atoms/LanguagePill/LanguagePill";
 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "components/atoms/Select/select";
 import { timezones } from "lib/utils/timezones";
+import { useFetchUser } from "lib/hooks/useFetchUser";
 
 type handleLoginStep = () => void;
 type stepKeys = "1" | "2" | "3";
@@ -45,7 +46,20 @@ interface LoginStep1Props {
 }
 
 const LoginStep1: React.FC<LoginStep1Props> = ({ user }) => {
-  captureAnayltics("User Onboarding", "onboardingStep1", "visited");
+  const { data: userInfo, isLoading } = useFetchUser(user?.user_metadata.user_name);
+
+  useEffect(() => {
+    if (isLoading) {
+      return;
+    }
+
+    captureAnalytics({
+      title: "User Onboarding",
+      property: "onboardingStep1",
+      value: "visited",
+      userInfo,
+    });
+  }, [userInfo, isLoading]);
 
   const router = useRouter();
   const { onboarded } = useSession();
@@ -117,8 +131,21 @@ interface LoginStep2Props {
 const LoginStep2: React.FC<LoginStep2Props> = ({ handleUpdateInterests: handleUpdateInterestsParent }) => {
   const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
   const interestArray = getInterestOptions();
+  const { user } = useSupabaseAuth();
+  const { data: userInfo, isLoading } = useFetchUser(user?.user_metadata.user_name);
 
-  captureAnayltics("User Onboarding", "onboardingStep2", "visited");
+  useEffect(() => {
+    if (isLoading) {
+      return;
+    }
+
+    captureAnalytics({
+      title: "User Onboarding",
+      property: "onboardingStep2",
+      value: "visited",
+      userInfo,
+    });
+  }, [userInfo, isLoading]);
 
   const handleSelectInterest = (interest: string) => {
     if (selectedInterests.length > 0 && selectedInterests.includes(interest)) {
@@ -175,7 +202,21 @@ interface LoginStep3Props {
 }
 
 const LoginStep3: React.FC<LoginStep3Props> = ({ interests, user }) => {
-  captureAnayltics("User Onboarding", "onboardingStep3", "visited");
+  const { data: userInfo, isLoading } = useFetchUser(user?.user_metadata.user_name);
+
+  useEffect(() => {
+    if (isLoading) {
+      return;
+    }
+
+    captureAnalytics({
+      title: "User Onboarding",
+      property: "onboardingStep3",
+      value: "visited",
+      userInfo,
+    });
+  }, [userInfo, isLoading]);
+
   const store = useStore();
   const router = useRouter();
   const { sessionToken } = useSupabaseAuth();
@@ -207,10 +248,12 @@ const LoginStep3: React.FC<LoginStep3Props> = ({ interests, user }) => {
         router.push(`/user/${user?.user_metadata.user_name}`);
       } else {
         setLoading(false);
+        // eslint-disable-next-line no-console
         console.error("Error onboarding user");
       }
     } catch (e) {
       setLoading(false);
+      // eslint-disable-next-line no-console
       console.error(e);
     }
   };
@@ -228,7 +271,7 @@ const LoginStep3: React.FC<LoginStep3Props> = ({ interests, user }) => {
           </div>
           <div className="mb-4 text-left ">
             <Text className="!text-sm">
-              Provide your timezone to help companies discover you and collaborate on open source projects.
+              Provide your timezone to help companies discover you and connect on open source projects.
             </Text>
           </div>
 
@@ -301,7 +344,7 @@ const Login: WithPageLayout = () => {
             <ProgressPie
               percentage={currentLoginStep === 1 ? 0 : currentLoginStep === 2 ? 33 : currentLoginStep === 3 ? 66 : 100}
             />
-            <Title className="!text-2xl !tracking-tight">Let‘s get started</Title>
+            <Title className="!text-2xl">Let‘s get started</Title>
           </div>
           <div className="mb-8">
             <Text className="!text-sm">
@@ -328,10 +371,7 @@ const Login: WithPageLayout = () => {
               }
               size={48}
             />
-            <Text
-              disabled={currentLoginStep !== 2}
-              className={`!text-[16px] !font-medium ${currentLoginStep === 2 && highlighted}`}
-            >
+            <Text disabled={currentLoginStep !== 2} className={`!text-[16px] ${currentLoginStep === 2 && highlighted}`}>
               Choose your interests
             </Text>
           </div>

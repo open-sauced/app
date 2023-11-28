@@ -5,13 +5,13 @@ import Avatar from "components/atoms/Avatar/avatar";
 
 import { getAvatarByUsername } from "lib/utils/github";
 import { truncateString } from "lib/utils/truncate-string";
+import AvatarHoverCard from "components/atoms/Avatar/avatar-hover-card";
 
 interface DevProfileProps {
   username: string;
-  company: string;
   hasBorder: boolean;
 }
-const DevProfile = ({ username, company, hasBorder }: DevProfileProps) => {
+const DevProfile = ({ username, hasBorder }: DevProfileProps) => {
   return (
     <Link href={`/user/${username}`} className="flex items-center gap-2 text-light-slate-11">
       {/* Mobile */}
@@ -26,22 +26,12 @@ const DevProfile = ({ username, company, hasBorder }: DevProfileProps) => {
       </div>
       {/* Desktop */}
       <div className="hidden rounded-full md:flex">
-        <Avatar
-          className={hasBorder ? "ring-2 ring-orange-500" : ""}
-          size={45}
-          isCircle
-          hasBorder={hasBorder}
-          avatarURL={getAvatarByUsername(username)}
-        />
+        <AvatarHoverCard contributor={username} repositories={[]} size="small" />
       </div>
       <div>
         <h1 className="text-light-slate-12">
           {username && username.length > 10 ? truncateString(username, 11) : username}
         </h1>
-        {/* Mobile */}
-        <p className="text-sm font-normal truncate text-light-slate-9 md:hidden">{truncateString(company, 15)}</p>
-        {/* Desktop */}
-        <p className="hidden text-sm font-normal md:inline-flex text-light-slate-9">{truncateString(company, 20)}</p>
       </div>
     </Link>
   );

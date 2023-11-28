@@ -1,13 +1,9 @@
 import { useRouter } from "next/router";
-import useStore from "lib/store";
-import useRepositories from "./api/useRepositories";
 import useContributors from "./api/useContributors";
 
 const useNav = (repositories: number[] = []) => {
   const router = useRouter();
-  const range = useStore((state) => state.range);
-  const { meta: repoMetaData } = useRepositories(repositories, range);
-  const { meta: conMetaData } = useContributors(10, repositories, range);
+  const { meta: conMetaData } = useContributors(10, repositories);
 
   const defaultTools = [
     {
@@ -17,16 +13,15 @@ const useNav = (repositories: number[] = []) => {
       name: "Reports",
     },
     {
-      name: "Repositories",
-      numOf: repoMetaData.itemCount,
-    },
-    {
       name: "Contributors",
       numOf: conMetaData.itemCount,
     },
+    {
+      name: "Activity",
+    },
   ];
 
-  const { filterName, toolName: selectedTool, selectedFilter, userOrg } = router.query;
+  const { pageId, toolName: selectedTool, selectedFilter, userOrg } = router.query;
 
   const toolList = defaultTools;
 
@@ -34,7 +29,7 @@ const useNav = (repositories: number[] = []) => {
     toolList,
     selectedTool,
     selectedFilter,
-    filterName,
+    filterName: pageId,
     userOrg,
   };
 };

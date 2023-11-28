@@ -31,6 +31,7 @@ const ListHeader = ({ name, isPublic, listId, isOwner, numberOfContributors }: L
       await navigator.clipboard.writeText(url);
       toast({ description: "Copied to clipboard", variant: "success" });
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.log(error);
     }
   };
@@ -43,7 +44,7 @@ const ListHeader = ({ name, isPublic, listId, isOwner, numberOfContributors }: L
         </div>
         <div className="flex flex-col justify-center p-2 header-info grow">
           <div className="flex gap-2">
-            <Title level={1} className="!text-2xl font-semibold tracking-tight text-slate-900">
+            <Title level={1} className="!text-2xl font-semibold text-slate-900">
               {(name && truncateString(name, 30)) || "List"}
             </Title>
             {<Badge isPublic={isPublic} />}
@@ -53,13 +54,13 @@ const ListHeader = ({ name, isPublic, listId, isOwner, numberOfContributors }: L
           </div>
         </div>
       </div>
-      <div className="absolute right-0 flex flex-col gap-3 py-2 md:items-center md:flex-row md:static">
+      <div className="absolute right-4 flex flex-col gap-3 py-2 md:items-center md:flex-row md:static">
         <Button onClick={() => handleCopyToClipboard()} className="px-6 py-2 bg-white " variant="text">
           <FiCopy className="mt-1 mr-2" /> Share
         </Button>
         {isOwner && (
-          <Link href={`/hub/lists/${listId}/edit`}>
-            <Button className="text-xs" variant="primary">
+          <Link href={`/lists/${listId}/edit`}>
+            <Button variant="primary">
               <FaEdit className="mr-2" /> Edit List
             </Button>
           </Link>

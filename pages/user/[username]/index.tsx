@@ -33,7 +33,14 @@ export type ContributorSSRProps = {
 const Contributor: WithPageLayout<ContributorSSRProps> = ({ username, user, ogImage }) => {
   const { data: contributor, isError: contributorError } = useFetchUser(username);
 
-  const { data: contributorPRData, meta: contributorPRMeta } = useContributorPullRequests(username, "*", [], 100);
+  const { data: contributorPRData, meta: contributorPRMeta } = useContributorPullRequests({
+    contributor: username,
+    topic: "*",
+    repoIds: [],
+    limit: 30,
+    range: "30",
+    mostRecent: false,
+  });
   const isError = contributorError;
   const repoList = useRepoList(Array.from(new Set(contributorPRData.map((prData) => prData.full_name))).join(","));
   const mergedPrs = contributorPRData.filter((prData) => prData.merged);
@@ -114,6 +121,7 @@ export async function handleUserSSR({ params }: GetServerSidePropsContext<{ user
 
       return (await req.json()) as DbUser;
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error(e);
       return null;
     }

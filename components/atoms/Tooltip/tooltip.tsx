@@ -14,7 +14,7 @@ const Tooltip = ({ children, content, className, direction }: TooltipProps): JSX
   const { Portal, Root, Content, Trigger, Arrow } = TooltipPrimitive;
 
   return (
-    <Root>
+    <Root delayDuration={300}>
       <Trigger asChild>
         <div>{children}</div>
       </Trigger>
