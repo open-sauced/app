@@ -21,9 +21,11 @@ export interface MostUsedLanguageStat {
 const useMostLanguages = ({
   listId,
   contributorType = "all",
+  enabled,
 }: {
   listId: string;
   contributorType?: ContributorType;
+  enabled: boolean;
 }) => {
   const router = useRouter();
   const { range = 30 } = router.query;
@@ -34,7 +36,7 @@ const useMostLanguages = ({
   query.set("range", `${range}`);
   query.set("limit", `${limit}`);
 
-  const apiEndpoint = `lists/${listId}/stats/most-used-languages?${query.toString()}`;
+  const apiEndpoint = enabled ? `lists/${listId}/stats/most-used-languages?${query.toString()}` : null;
 
   const { data, error, mutate } = useSWR<PaginatedResponse, Error>(
     listId ? apiEndpoint : null,
@@ -43,7 +45,7 @@ const useMostLanguages = ({
 
   return {
     data,
-    isLoading: !error && !data,
+    isLoading: !error && !data && enabled,
     isError: !!error,
   };
 };

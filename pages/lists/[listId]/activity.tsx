@@ -166,7 +166,7 @@ const ListActivityPage = ({
     data: languagesData,
     isError: languageError,
     isLoading: isLanguagesLoading,
-  } = useMostLanguages({ listId: list!.id });
+  } = useMostLanguages({ listId: list!.id, enabled: featureFlags.most_used_languages_graph });
   const languages = languagesData?.data ?? [];
 
   return (
@@ -196,13 +196,15 @@ const ListActivityPage = ({
           <FeatureFlagged flag="contributions_evolution_by_type" featureFlags={featureFlags}>
             <ContributionsEvolutionByType data={evolutionData} isLoading={isLoadingEvolution} />
           </FeatureFlagged>
-          <MostUsedLanguagesGraph
-            contributorType={contributorType}
-            setContributorType={setContributorType}
-            data={languages}
-            isLoading={isLanguagesLoading}
-            hasError={true}
-          />
+          <FeatureFlagged flag="most_used_languages_graph" featureFlags={featureFlags}>
+            <MostUsedLanguagesGraph
+              contributorType={contributorType}
+              setContributorType={setContributorType}
+              data={languages}
+              isLoading={isLanguagesLoading}
+              hasError={languageError}
+            />
+          </FeatureFlagged>
         </div>
       )}
     </ListPageLayout>
