@@ -68,7 +68,7 @@ const Footer = (): JSX.Element => {
     <footer className="h-24 w-full transition">
       <div className=" container mx-auto px-2 md:px-16  lg:border-t lg:py-8 lg:items-center lg:justify-between lg:gap-x-4 flex flex-col gap-y-4 lg:flex-row py-2 w-full">
         <div className="text-center lg:text-left justify-center gap-1 flex items-center">
-          <div className="w-6 h-6 relative !min-w-[24px] min-h-[24px]">
+          <div className="w-6 h-6 relative !min-w-[24px] min-h-min">
             <Image fill={true} alt="OpenSauced brand logo" src={OpenSaucedLogo} />
           </div>
           <span className="lg:hidden font-bold text-light-slate-12 ">OpenSauced</span>

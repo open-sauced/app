@@ -8,8 +8,11 @@
   src: url("../public/assets/fonts/Inter-VariableFont_slnt,wght.ttf");
 }
 
-body {
+* {
   @apply font-normal;
+}
+
+body {
   background-color: #f8f9fa;
 }
 
@@ -20,6 +23,11 @@ h4,
 h5,
 h6 {
   @apply tracking-tight;
+}
+
+/* See https://github.com/open-sauced/app/issues/2210 */
+[role="checkbox"] > [data-state="checked"] > svg {
+  stroke-width: 5;
 }
 
 .auto-grow-input:not(:empty) {

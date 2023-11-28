@@ -70,13 +70,10 @@ const SearchDialog = () => {
   }, [debouncedSearchTerm]);
 
   return (
-    <div className="fixed left-0 top-0 z-[55] p-5 w-full h-full flex justify-center bg-white/30">
+    <div className="fixed left-0 top-0 z-auto p-5 w-full h-full flex justify-center bg-white/30">
+      <div className="absolute w-full h-full left-0 top-0 z-50 backdrop-blur-sm" onClick={() => setOpenSearch(false)} />
       <div
-        className="absolute w-full h-full left-0 top-0 z-[60] backdrop-blur-sm"
-        onClick={() => setOpenSearch(false)}
-      />
-      <div
-        className="flex flex-col w-full max-w-2xl h-fit max-h-full bg-white shadow-xl border transition rounded-lg ring-light-slate-6 relative z-[65] overflow-hidden"
+        className="flex flex-col w-full max-w-2xl h-fit max-h-full bg-white shadow-xl border transition rounded-lg ring-light-slate-6 relative z-50 overflow-hidden"
         onMouseMove={() => cursor !== -1 && setCursor(-1)}
       >
         <div className="flex w-full h-full items-center border-b p-2 pl-3">
@@ -96,7 +93,7 @@ const SearchDialog = () => {
             onKeyDown={handleKeyboardCtrl}
           />
           <Text keyboard className="text-gray-600 !border-b !px-1">
-            {isMac ? "⌘K" : <span className="text-[12px] py-2 px-1">CTRL+K</span>}
+            {isMac ? "⌘K" : <span className="text-xs py-2 px-1">CTRL+K</span>}
           </Text>
         </div>
         <div className="w-full h-full flex items-center">
@@ -141,7 +138,7 @@ const SearchDialogTrigger = () => {
           <Text className="pl-2 text-sm font-semibold text-light-slate-9">Search for users</Text>
         </div>
         <Text keyboard className="text-gray-600 !border-b !px-1">
-          {isMac ? "⌘K" : <span className="text-[12px] px-1 py-2">CTRL+K</span>}
+          {isMac ? "⌘K" : <span className="text-xs px-1 py-2">CTRL+K</span>}
         </Text>
       </div>
       <div className="flex sm:hidden p-1" onClick={() => setOpenSearch(true)}>

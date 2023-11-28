@@ -1,9 +1,7 @@
 import { useState } from "react";
 import useSWR, { Fetcher, SWRConfiguration } from "swr";
-import { useRouter } from "next/router";
 
 import publicApiFetcher from "lib/utils/public-api-fetcher";
-import { useToast } from "./useToast";
 
 interface PaginatedResponse {
   readonly data: DBListContributor[];
@@ -19,8 +17,6 @@ type queryObj = {
 };
 
 const useFetchAllContributors = (query: queryObj, config?: SWRConfiguration, makeRequest = true) => {
-  const { toast } = useToast();
-  const router = useRouter();
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(query.initialLimit ?? 10);
 
