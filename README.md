@@ -49,10 +49,12 @@ npm run dev
 
 ### ☁️️ Netlify Edge Functions
 
+**Note**: For seamless integration and optimal local development experience, it is recommended to have the `Netlify CLI` installed globally. Follow the [installation guide]( https://docs.netlify.com/cli/get-started/) to set up Netlify CLI on your machine.
+
 To start a local copy of the app on port `3000` with [Netlify Edge Functions](https://docs.netlify.com/edge-functions/overview/)):
 
 ```shell
-npm run dev:netlify
+netlify dev
 ```
 
 ### 🎨 Code linting
