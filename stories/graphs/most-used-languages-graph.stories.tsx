@@ -38,12 +38,14 @@ function generateData() {
 
 export const Default: Story = {
   args: {
+    isLoading: false,
     data: generateData(),
     contributorType: "all",
     setContributorType(type) {
       // eslint-disable-next-line no-console
       console.log(type);
     },
+    hasError: false,
   },
 };
 
@@ -56,5 +58,19 @@ export const Loading: Story = {
       // eslint-disable-next-line no-console
       console.log(type);
     },
+    hasError: false,
+  },
+};
+
+export const Error: Story = {
+  args: {
+    isLoading: false,
+    data: [],
+    contributorType: "all",
+    setContributorType(type) {
+      // eslint-disable-next-line no-console
+      console.log(type);
+    },
+    hasError: true,
   },
 };

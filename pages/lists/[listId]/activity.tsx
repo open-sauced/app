@@ -201,6 +201,7 @@ const ListActivityPage = ({
             setContributorType={setContributorType}
             data={languages}
             isLoading={isLanguagesLoading}
+            hasError={true}
           />
         </div>
       )}
