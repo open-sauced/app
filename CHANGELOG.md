@@ -5,6 +5,28 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.78.0-beta.2](https://github.com/open-sauced/insights/compare/v1.78.0-beta.1...v1.78.0-beta.2) (2023-11-28)
+
+
+### 🐛 Bug Fixes
+
+* improved type inference of interests and recommendations ([2ee0c68](https://github.com/open-sauced/insights/commit/2ee0c689723c4bb9ecb905e1cb97b7386dd8641d))
+* improved type inference of interests and recommendations ([#2192](https://github.com/open-sauced/insights/issues/2192)) ([ec29a79](https://github.com/open-sauced/insights/commit/ec29a79b2ecc05227c7699153779ba2fe1961fab))
+* made checkbox stroke thicker ([df53b8d](https://github.com/open-sauced/insights/commit/df53b8d10ac606a4aacf52fdf506bcbe1515a64f))
+* made checkbox stroke thicker ([#2212](https://github.com/open-sauced/insights/issues/2212)) ([1d7781a](https://github.com/open-sauced/insights/commit/1d7781a5b2b996bc6bacd5f6443f3ff4e45232db))
+
+## [1.78.0-beta.1](https://github.com/open-sauced/insights/compare/v1.77.2-beta.1...v1.78.0-beta.1) (2023-11-27)
+
+
+### 🍕 Features
+
+* updating contributor language column  ([#2183](https://github.com/open-sauced/insights/issues/2183)) ([660b861](https://github.com/open-sauced/insights/commit/660b861de581fa14370925f46c551fe1ddc8fb3f))
+
+
+### 🐛 Bug Fixes
+
+* fix broken URL when you are using Range filter ([#2204](https://github.com/open-sauced/insights/issues/2204)) ([fcf8080](https://github.com/open-sauced/insights/commit/fcf8080eb95896257ceb89cd0588b8fa598cc4f4))
+
 ### [1.77.2-beta.1](https://github.com/open-sauced/insights/compare/v1.77.1...v1.77.2-beta.1) (2023-11-23)
 
 

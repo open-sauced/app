@@ -22,7 +22,7 @@ const Checkbox = React.forwardRef<React.ElementRef<typeof CheckboxPrimitive.Root
           {...props}
           id={getId()}
         >
-          <CheckboxPrimitive.Indicator className={clsx("flex items-center justify-center text-white")}>
+          <CheckboxPrimitive.Indicator className={clsx("p-0.5 flex items-center justify-center text-white")}>
             <FiCheck className="w-full h-full" />
           </CheckboxPrimitive.Indicator>
         </CheckboxPrimitive.Root>
