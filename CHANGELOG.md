@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.78.0-beta.3](https://github.com/open-sauced/insights/compare/v1.78.0-beta.2...v1.78.0-beta.3) (2023-11-28)
+
+
+### 🐛 Bug Fixes
+
+* now list activity graphs only load data client-side ([#2215](https://github.com/open-sauced/insights/issues/2215)) ([5d1c906](https://github.com/open-sauced/insights/commit/5d1c90627d346f8ea975062e39bfb86f898b6967))
+
 ## [1.78.0-beta.2](https://github.com/open-sauced/insights/compare/v1.78.0-beta.1...v1.78.0-beta.2) (2023-11-28)
 
 
