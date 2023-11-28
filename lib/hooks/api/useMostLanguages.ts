@@ -1,4 +1,3 @@
-import { useState } from "react";
 import useSWR, { Fetcher } from "swr";
 import { useRouter } from "next/router";
 
@@ -21,20 +20,19 @@ export interface MostUsedLanguageStat {
  */
 const useMostLanguages = ({
   listId,
-  intialLimit = 20,
-  defaultContributorType = "all",
+  contributorType = "all",
 }: {
   listId: string;
-  intialLimit?: number;
-  defaultContributorType?: ContributorType;
+  contributorType?: ContributorType;
 }) => {
   const router = useRouter();
-  const { range = "30" } = router.query;
-  const [contributorType, setContributorType] = useState<ContributorType>(defaultContributorType);
+  const { range = 30 } = router.query;
+  const { limit = 20 } = router.query;
 
   const query = new URLSearchParams();
   query.set("contributorType", `${contributorType}`);
-  query.set("range", range as string);
+  query.set("range", `${range}`);
+  query.set("limit", `${limit}`);
 
   const apiEndpoint = `lists/${listId}/stats/most-used-languages?${query.toString()}`;
 
@@ -47,8 +45,6 @@ const useMostLanguages = ({
     data,
     isLoading: !error && !data,
     isError: !!error,
-    contributorType,
-    setContributorType,
   };
 };
 
