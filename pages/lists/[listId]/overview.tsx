@@ -66,16 +66,8 @@ const ListsOverview = ({ list, numberOfContributors, isOwner }: ListsOverviewPro
   const { listId } = router.query;
   const { data: prData, isError: prError } = useListContributions(listId as string);
 
-  const {
-    data: prevAllContributorStats,
-    meta: prevAllContributorMeta,
-    isLoading: prevAllContributorStatsLoading,
-  } = useListStats(listId as string, "all", 30);
-  const {
-    data: allContributorStats,
-    meta: allContributorMeta,
-    isLoading: allContributorStatsLoading,
-  } = useListStats(listId as string, "all");
+  const { data: prevAllContributorStats } = useListStats(listId as string, "all", 30);
+  const { data: allContributorStats } = useListStats(listId as string, "all");
 
   const { meta: prevNewContributorMeta, isLoading: prevNewContributorStatsLoading } = useListStats(
     listId as string,
@@ -83,6 +75,14 @@ const ListsOverview = ({ list, numberOfContributors, isOwner }: ListsOverviewPro
     30
   );
   const { meta: newContributorMeta, isLoading: newContributorStatsLoading } = useListStats(listId as string, "new");
+
+  const { meta: prevActiveContributorMeta, isLoading: prevActiveContributorLoading } = useListStats(
+    listId as string,
+    "active",
+    30
+  );
+
+  const { meta: activeContributorMeta, isLoading: activeContributorLoading } = useListStats(listId as string, "active");
 
   const { meta: prevAlumniContributorMeta, isLoading: prevAlumniContributorStatsLoading } = useListStats(
     listId as string,
@@ -162,11 +162,11 @@ const ListsOverview = ({ list, numberOfContributors, isOwner }: ListsOverviewPro
             <HighlightCard
               label="Active Contributors"
               icon="active-contributors"
-              metricIncreases={allContributorMeta.itemCount > prevAllContributorMeta.itemCount}
-              increased={allContributorMeta.itemCount > prevAllContributorMeta.itemCount}
-              numChanged={allContributorMeta.itemCount - prevAllContributorMeta.itemCount}
-              value={allContributorMeta.itemCount}
-              isLoading={prevAllContributorStatsLoading || allContributorStatsLoading}
+              metricIncreases={activeContributorMeta.itemCount > prevActiveContributorMeta.itemCount}
+              increased={activeContributorMeta.itemCount > prevActiveContributorMeta.itemCount}
+              numChanged={activeContributorMeta.itemCount - prevActiveContributorMeta.itemCount}
+              value={activeContributorMeta.itemCount}
+              isLoading={prevActiveContributorLoading || activeContributorLoading}
             />
             <HighlightCard
               label="New Contributors"
