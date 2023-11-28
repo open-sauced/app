@@ -5,6 +5,116 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.78.0-beta.3](https://github.com/open-sauced/insights/compare/v1.78.0-beta.2...v1.78.0-beta.3) (2023-11-28)
+
+
+### 🐛 Bug Fixes
+
+* now list activity graphs only load data client-side ([#2215](https://github.com/open-sauced/insights/issues/2215)) ([5d1c906](https://github.com/open-sauced/insights/commit/5d1c90627d346f8ea975062e39bfb86f898b6967))
+
+## [1.78.0-beta.2](https://github.com/open-sauced/insights/compare/v1.78.0-beta.1...v1.78.0-beta.2) (2023-11-28)
+
+
+### 🐛 Bug Fixes
+
+* improved type inference of interests and recommendations ([2ee0c68](https://github.com/open-sauced/insights/commit/2ee0c689723c4bb9ecb905e1cb97b7386dd8641d))
+* improved type inference of interests and recommendations ([#2192](https://github.com/open-sauced/insights/issues/2192)) ([ec29a79](https://github.com/open-sauced/insights/commit/ec29a79b2ecc05227c7699153779ba2fe1961fab))
+* made checkbox stroke thicker ([df53b8d](https://github.com/open-sauced/insights/commit/df53b8d10ac606a4aacf52fdf506bcbe1515a64f))
+* made checkbox stroke thicker ([#2212](https://github.com/open-sauced/insights/issues/2212)) ([1d7781a](https://github.com/open-sauced/insights/commit/1d7781a5b2b996bc6bacd5f6443f3ff4e45232db))
+
+## [1.78.0-beta.1](https://github.com/open-sauced/insights/compare/v1.77.2-beta.1...v1.78.0-beta.1) (2023-11-27)
+
+
+### 🍕 Features
+
+* updating contributor language column  ([#2183](https://github.com/open-sauced/insights/issues/2183)) ([660b861](https://github.com/open-sauced/insights/commit/660b861de581fa14370925f46c551fe1ddc8fb3f))
+
+
+### 🐛 Bug Fixes
+
+* fix broken URL when you are using Range filter ([#2204](https://github.com/open-sauced/insights/issues/2204)) ([fcf8080](https://github.com/open-sauced/insights/commit/fcf8080eb95896257ceb89cd0588b8fa598cc4f4))
+
+### [1.77.2-beta.1](https://github.com/open-sauced/insights/compare/v1.77.1...v1.77.2-beta.1) (2023-11-23)
+
+
+### 🧑‍💻 Code Refactoring
+
+* fix tailwind anti-pattern ([5dcb958](https://github.com/open-sauced/insights/commit/5dcb958f475292ab66d06806adf420288069708e))
+* fix tailwind anti-pattern in feed footer ([#2088](https://github.com/open-sauced/insights/issues/2088)) ([1f10046](https://github.com/open-sauced/insights/commit/1f10046c626499d4f2ab0d264854ccf1a716a33e))
+
+### [1.77.1](https://github.com/open-sauced/insights/compare/v1.77.0...v1.77.1) (2023-11-21)
+
+
+### 🐛 Bug Fixes
+
+* added missing svelte svg ([#2196](https://github.com/open-sauced/insights/issues/2196)) ([d27794c](https://github.com/open-sauced/insights/commit/d27794c5862ab0489663125fb95ad78d4f46e4f9))
+* match skeleton high with container card ([#2150](https://github.com/open-sauced/insights/issues/2150)) ([4786117](https://github.com/open-sauced/insights/commit/4786117d34da2397539d1751d0c2ef1a841ce88b))
+* reset base font size in * selector in global.css ([#2184](https://github.com/open-sauced/insights/issues/2184)) ([6ae3751](https://github.com/open-sauced/insights/commit/6ae3751b383853673494bd3342b4f60d1b915b2e))
+
+
+### 🧑‍💻 Code Refactoring
+
+* move limit query from state to urlParams ([#2153](https://github.com/open-sauced/insights/issues/2153)) ([0d2825d](https://github.com/open-sauced/insights/commit/0d2825d77639460be152e67cbb1eaa07d35703c2))
+
+### [1.77.1-beta.3](https://github.com/open-sauced/insights/compare/v1.77.1-beta.2...v1.77.1-beta.3) (2023-11-21)
+
+
+### 🧑‍💻 Code Refactoring
+
+* move limit query from state to urlParams ([#2153](https://github.com/open-sauced/insights/issues/2153)) ([0d2825d](https://github.com/open-sauced/insights/commit/0d2825d77639460be152e67cbb1eaa07d35703c2))
+
+### [1.77.1-beta.2](https://github.com/open-sauced/insights/compare/v1.77.1-beta.1...v1.77.1-beta.2) (2023-11-21)
+
+
+### 🐛 Bug Fixes
+
+* added missing svelte svg ([#2196](https://github.com/open-sauced/insights/issues/2196)) ([d27794c](https://github.com/open-sauced/insights/commit/d27794c5862ab0489663125fb95ad78d4f46e4f9))
+
+### [1.77.1-beta.1](https://github.com/open-sauced/insights/compare/v1.77.0...v1.77.1-beta.1) (2023-11-21)
+
+
+### 🐛 Bug Fixes
+
+* match skeleton high with container card ([#2150](https://github.com/open-sauced/insights/issues/2150)) ([4786117](https://github.com/open-sauced/insights/commit/4786117d34da2397539d1751d0c2ef1a841ce88b))
+* reset base font size in * selector in global.css ([#2184](https://github.com/open-sauced/insights/issues/2184)) ([6ae3751](https://github.com/open-sauced/insights/commit/6ae3751b383853673494bd3342b4f60d1b915b2e))
+
+## [1.77.0](https://github.com/open-sauced/insights/compare/v1.76.0...v1.77.0) (2023-11-20)
+
+
+### ⏩ Reverts
+
+* Revert "fix: refactor TableRepositoryName prop naming (#2102)" ([31c8c19](https://github.com/open-sauced/insights/commit/31c8c19eab51ab96683b6c3cec86334da42246ca)), closes [#2102](https://github.com/open-sauced/insights/issues/2102)
+* Revert "use custom text-area component for bio" ([97adc13](https://github.com/open-sauced/insights/commit/97adc1372ddec07a2c80d4bd95b81e2d5c5f3ed5))
+
+
+### 🍕 Features
+
+* add most used languages graph ([#2158](https://github.com/open-sauced/insights/issues/2158)) ([c79381b](https://github.com/open-sauced/insights/commit/c79381bc2b588a7641f87ee0aeef89d7a1dc681f))
+* implemented feature flag support ([e4acf39](https://github.com/open-sauced/insights/commit/e4acf39aed6ac9caaad912c801a59830dc3dcd30))
+* implemented feature flag support ([#2180](https://github.com/open-sauced/insights/issues/2180)) ([a53dfb6](https://github.com/open-sauced/insights/commit/a53dfb663d1ed5f61ba4df27163cb9f0829b18bd))
+* Svelte added to interests dropdown list ([#2168](https://github.com/open-sauced/insights/issues/2168)) ([88a778e](https://github.com/open-sauced/insights/commit/88a778e64f4a38b0991995055681d6b31bee5c6e))
+
+
+### 🧑‍💻 Code Refactoring
+
+* params create highlight logic ([#2096](https://github.com/open-sauced/insights/issues/2096)) ([8b697a6](https://github.com/open-sauced/insights/commit/8b697a685d1c7b41d402cab3501a46f3eb54a623))
+
+
+### 🐛 Bug Fixes
+
+* changed delete button color to match the ui ([#2159](https://github.com/open-sauced/insights/issues/2159)) ([6e7e3bd](https://github.com/open-sauced/insights/commit/6e7e3bd543186dc2027c6ab6e422cf4967f8275c))
+* feature flagged contributions evolution by contributor type graph ([#2187](https://github.com/open-sauced/insights/issues/2187)) ([98637b6](https://github.com/open-sauced/insights/commit/98637b67fcba8efb7ef56b20d78699e4c84aa90a))
+* fixed styling of insights delete page modal ([#2182](https://github.com/open-sauced/insights/issues/2182)) ([41b2e8a](https://github.com/open-sauced/insights/commit/41b2e8a15ac36349917dd4319a2a13b26a946b6b))
+* Revert "fix: refactor TableRepositoryName prop naming ([#2102](https://github.com/open-sauced/insights/issues/2102))" ([#2169](https://github.com/open-sauced/insights/issues/2169)) ([5f49034](https://github.com/open-sauced/insights/commit/5f49034e78427dba2f9c091df8a09b2bd2526b2e))
+* use custom text-area component for bio ([#2103](https://github.com/open-sauced/insights/issues/2103)) ([3afe9d5](https://github.com/open-sauced/insights/commit/3afe9d5b300bfe1d91d6d2a3013d58583b4378b9))
+
+## [1.77.0-beta.7](https://github.com/open-sauced/insights/compare/v1.77.0-beta.6...v1.77.0-beta.7) (2023-11-20)
+
+
+### 🐛 Bug Fixes
+
+* feature flagged contributions evolution by contributor type graph ([#2187](https://github.com/open-sauced/insights/issues/2187)) ([98637b6](https://github.com/open-sauced/insights/commit/98637b67fcba8efb7ef56b20d78699e4c84aa90a))
+
 ## [1.77.0-beta.6](https://github.com/open-sauced/insights/compare/v1.77.0-beta.5...v1.77.0-beta.6) (2023-11-20)
 
 
