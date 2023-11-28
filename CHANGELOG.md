@@ -5,6 +5,18 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.78.0-beta.1](https://github.com/open-sauced/insights/compare/v1.77.2-beta.1...v1.78.0-beta.1) (2023-11-27)
+
+
+### 🍕 Features
+
+* updating contributor language column  ([#2183](https://github.com/open-sauced/insights/issues/2183)) ([660b861](https://github.com/open-sauced/insights/commit/660b861de581fa14370925f46c551fe1ddc8fb3f))
+
+
+### 🐛 Bug Fixes
+
+* fix broken URL when you are using Range filter ([#2204](https://github.com/open-sauced/insights/issues/2204)) ([fcf8080](https://github.com/open-sauced/insights/commit/fcf8080eb95896257ceb89cd0588b8fa598cc4f4))
+
 ### [1.77.2-beta.1](https://github.com/open-sauced/insights/compare/v1.77.1...v1.77.2-beta.1) (2023-11-23)
 
 
