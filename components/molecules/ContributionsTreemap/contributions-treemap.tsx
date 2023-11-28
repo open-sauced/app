@@ -38,13 +38,13 @@ export const ContributionsTreemap = ({ setRepoId, repoId, data, color, onClick }
     <Card className="grid place-content-stretch">
       <div className="grid">
         {/* Label: Text */}
-        <div className="text-lg text-slate-900 mb-2 flex">
+        <h2 className="font-medium text-lg text-slate-900 mb-2 flex">
           <button className="cursor-pointer" onClick={() => setRepoId(null)}>
             Repos
           </button>
           <div> </div>
           <BreadCrumb isActive={repoId !== null}>Contributors</BreadCrumb>
-        </div>
+        </h2>
         <div className="rounded-md overflow-hidden grid place-content-stretch">
           <div className="grid" style={{ gridArea: "1 / 1", minHeight: "29rem" }}>
             <ClientOnly>

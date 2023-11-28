@@ -98,7 +98,7 @@ export default function ContributionsEvolutionByType({ data = [], isLoading }: C
             alignItems: "stretch",
           }}
         >
-          <div className="text-lg text-slate-900 mb-2">Contributions Evolution</div>
+          <h2 className="font-medium text-lg text-slate-900 mb-2">Contributions Evolution</h2>
           <div className="text-sm text-slate-400 mb-4">This is going to be an auto-generated insight.</div>
           {/* chart */}
           <div className="sr-only" aria-live="polite">
