@@ -9,7 +9,7 @@ import RecommendedRepoCard from "components/molecules/RecommendedRepoCard/recomm
 import useUserRepoRecommendations from "lib/hooks/useUserRepoRecommendations";
 import { updateUser } from "lib/hooks/update-user";
 import { useToast } from "lib/hooks/useToast";
-import { getInterestOptions, interestsType } from "lib/utils/getInterestOptions";
+import { getInterestOptions, InterestType } from "lib/utils/getInterestOptions";
 
 interface UserRepoRecommendationsProps {
   contributor?: DbUser;
@@ -53,7 +53,7 @@ const UserRepositoryRecommendations = ({ contributor, userInterests }: UserRepoR
 
   const getRepoFullNameByInterests = () => {
     const repoFullNames = interests.map((interest) => {
-      return userRecommendedRepos[interest as interestsType];
+      return userRecommendedRepos[interest as InterestType];
     });
 
     setRecommendedRepos(

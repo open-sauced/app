@@ -150,7 +150,7 @@ const Notifications: WithPageLayout = () => {
                 <div className="p-2 border bg-light-slate-2 rounded-lg flex items-center gap-4" key={notification.id}>
                   <Link href={`/user/${notification.from_user.login}`}>
                     <Avatar
-                      initialsClassName="text-[100px] leading-none"
+                      initialsClassName="text-8xl leading-none"
                       initials={notification.meta_id.charAt(0)}
                       hasBorder
                       avatarURL={getAvatarByUsername(notification.from_user.login, 300)}

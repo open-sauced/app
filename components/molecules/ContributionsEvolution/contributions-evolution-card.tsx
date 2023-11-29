@@ -84,7 +84,7 @@ export default function ContributionsEvolutionCard(props: Props) {
             alignItems: "stretch",
           }}
         >
-          <div className="text-lg text-slate-900 mb-2">Contributions Evolution</div>
+          <h2 className="font-medium text-lg text-slate-900 mb-2">Contributions Evolution</h2>
           <div className="text-sm text-slate-400 mb-4">This is going to be an auto-generated insight.</div>
           {/* buttons */}
           <div className="flex gap-1 mb-4">
