@@ -104,10 +104,7 @@ const InsightsHub: WithPageLayout = () => {
   }
 
   useEffect(() => {
-    if (
-      (session && session.insights_count === 0 && !dismissFeaturedInsights) ||
-      (!session && !dismissFeaturedInsights)
-    ) {
+    if (session && session.insights_count === 0 && !dismissFeaturedInsights) {
       openInsightToast();
     }
   }, [session, user]);
