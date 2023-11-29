@@ -31,7 +31,9 @@ const InsightRow = ({ insight, user }: InsightRowProps) => {
           <div className="flex items-center lg:items-center gap-4 ">
             <div className="w-4 h-4 bg-light-orange-10 rounded-full"></div>
             <div className="text-xl text-light-slate-12 flex justify-between">
-              <Link href={`/pages/${user?.user_metadata.user_name}/${insight.id}/dashboard`}>{insight.name}</Link>
+              <Link href={`/pages/${user ? user?.user_metadata.user_name : "anonymous"}/${insight.id}/dashboard`}>
+                {insight.name}
+              </Link>
             </div>
             <div className="rounded-2xl border px-2 text-light-slate-11">
               {!!insight.is_public ? "public" : "private"}
@@ -85,7 +87,7 @@ const InsightRow = ({ insight, user }: InsightRowProps) => {
                     </span>
                   </Link>
                 ))}
-              <Link href={`/pages/${user?.user_metadata.user_name}/${insight.id}/dashboard`}>
+              <Link href={`/pages/${user ? user?.user_metadata.user_name : "anonymous"}/${insight.id}/dashboard`}>
                 <span className=" bg-light-slate-1 inline-block rounded-lg p-2.5 border cursor-pointer">
                   <MdOutlineArrowForwardIos title="Go To Insight Page" className="text-light-slate-10 text-lg" />
                 </span>

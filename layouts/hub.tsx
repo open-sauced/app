@@ -43,7 +43,7 @@ const HubLayout = ({ children }: { children: React.ReactNode }) => {
     }
 
     // eslint-disable-next-line no-console
-    getUser().catch(console.error);
+    // getUser().catch(console.error);
   }, [router, onboarded]);
 
   const getActiveLinkClassNames = (href: string) => {
@@ -99,7 +99,9 @@ const HubLayout = ({ children }: { children: React.ReactNode }) => {
               </div>
             </>
           ) : (
-            <></>
+            <>
+              <div className="container px-2 mx-auto md:px-16">{children}</div>
+            </>
           )}
         </main>
       </div>
