@@ -5,6 +5,28 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.78.0-beta.7](https://github.com/open-sauced/insights/compare/v1.78.0-beta.6...v1.78.0-beta.7) (2023-11-29)
+
+
+### 🐛 Bug Fixes
+
+* cleaned up list activity graph title styling ([#2224](https://github.com/open-sauced/insights/issues/2224)) ([a38d9bd](https://github.com/open-sauced/insights/commit/a38d9bd4578b026fe01a1ff58848a17e922e03d6))
+
+## [1.78.0-beta.6](https://github.com/open-sauced/insights/compare/v1.78.0-beta.5...v1.78.0-beta.6) (2023-11-29)
+
+
+### 🐛 Bug Fixes
+
+* miscellaneous feed styling fixes ([28bfe26](https://github.com/open-sauced/insights/commit/28bfe26f189271e4e166b240a79e99d314df40e1))
+* miscellaneous feed styling fixes ([#2220](https://github.com/open-sauced/insights/issues/2220)) ([8399017](https://github.com/open-sauced/insights/commit/8399017223d18097d81e12cdf9dc262725987adf))
+
+## [1.78.0-beta.5](https://github.com/open-sauced/insights/compare/v1.78.0-beta.4...v1.78.0-beta.5) (2023-11-29)
+
+
+### 🐛 Bug Fixes
+
+* Remove Netlify CLI from dev dependencies ([#2207](https://github.com/open-sauced/insights/issues/2207)) ([54562c5](https://github.com/open-sauced/insights/commit/54562c532d2feb16519a319e487a14cd68950ce4))
+
 ## [1.78.0-beta.4](https://github.com/open-sauced/insights/compare/v1.78.0-beta.3...v1.78.0-beta.4) (2023-11-28)
 
 
