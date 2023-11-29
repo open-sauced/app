@@ -9,6 +9,7 @@ import InsightRow from "components/molecules/InsightRow/insight-row";
 import Pagination from "components/molecules/Pagination/pagination";
 import PaginationResults from "components/molecules/PaginationResults/pagination-result";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
+import GitHubIcon from "img/icons/github-icon.svg";
 
 import HubLayout from "layouts/hub";
 import { WithPageLayout } from "interfaces/with-page-layout";
@@ -23,6 +24,9 @@ import getPercent from "lib/utils/get-percent";
 import Pill from "components/atoms/Pill/pill";
 import { getRelativeDays } from "lib/utils/date-utils";
 import CardRepoList, { RepoList } from "components/molecules/CardRepoList/card-repo-list";
+import Button from "components/atoms/Button/button";
+import Icon from "components/atoms/Icon/icon";
+import Title from "components/atoms/Typography/title";
 
 const staticRepos: RepoList[] = [
   {
@@ -49,7 +53,7 @@ const staticRepos: RepoList[] = [
 
 const InsightsHub: WithPageLayout = () => {
   const router = useRouter();
-  const { user } = useSupabaseAuth();
+  const { user, signIn } = useSupabaseAuth();
   const store = useStore();
   const dismissFeaturedInsights = useStore((store) => store.dismissFeaturedInsights);
   const { toast } = useToast();
@@ -123,8 +127,17 @@ const InsightsHub: WithPageLayout = () => {
 
         {!user ? (
           <>
-            <div className="w-full">
-              <Card className="flex flex-col md:flex-row w-full rounded-lg px-4 lg:px-8 py-5 gap-4 lg:gap-2 bg-white items-center">
+            <div className="w-full px-8">
+              <div className="w-full md:w-2/3">
+                <Title level={4} className="text-2xl">
+                  Insights Hub
+                </Title>
+                <Text className="text-base ">
+                  Welcome to the Insights Hub, we&apos;ve included a featured Insight Page for you to test out. You can
+                  also create your own to get insights on repositories.
+                </Text>
+              </div>
+              <Card className="flex flex-col md:flex-row w-full rounded-lg px-4 lg:px-8 py-5 gap-4 lg:gap-2 bg-white items-center mt-4">
                 <>
                   <div className="flex w-full flex-1 flex-col gap-4 lg:gap-6">
                     <div className="flex items-center lg:items-center gap-4 ">
@@ -175,14 +188,6 @@ const InsightsHub: WithPageLayout = () => {
                         </div>
                       </div>
                       <div className="flex-1 hidden md:flex  justify-end">
-                        {/* {(user?.user_metadata.sub && Number(user?.user_metadata.sub) === Number(insight.user_id)) ||
-                          (!insight.is_featured && (
-                            <Link href={`/hub/insights/${insight.id}/edit`}>
-                              <span className=" bg-light-slate-1 inline-block rounded-lg p-2.5 border mr-2 cursor-pointer">
-                                <BsPencilFill title="Edit Insight Page" className="text-light-slate-10 text-lg" />
-                              </span>
-                            </Link>
-                          ))} */}
                         <Link href="/pages/anonymous/734/dashboard">
                           <span className=" bg-light-slate-1 inline-block rounded-lg p-2.5 border cursor-pointer">
                             <MdOutlineArrowForwardIos
@@ -196,16 +201,23 @@ const InsightsHub: WithPageLayout = () => {
                   </div>
                 </>
               </Card>
-              <div className="flex flex-col items-center justify-center w-full h-96 gap-4">
+              <div className="flex flex-col items-center justify-center w-full mt-10 gap-4">
                 <Text className="text-2xl font-bold text-center">Sign in to create your own Insights</Text>
-                <button
+                <Button
                   onClick={() => {
-                    router.push("/feed");
+                    signIn({
+                      provider: "github",
+                      options: {
+                        redirectTo: "/hub/insights",
+                      },
+                    });
                   }}
-                  className="w-48 px-4 py-2 text-lg font-bold text-center text-white bg-sauced-orange rounded-lg"
+                  variant="primary"
+                  className="px-8"
                 >
-                  Sign in
-                </button>
+                  Connect <span className="hidden sm:inline-block ml-1">with GitHub</span>
+                  <Icon IconImage={GitHubIcon} className="ml-2" />
+                </Button>
               </div>
             </div>
           </>
