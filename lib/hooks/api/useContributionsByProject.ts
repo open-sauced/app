@@ -7,7 +7,7 @@ export const useContributionsByProject = ({
   initialData,
 }: {
   listId: string;
-  range: string;
+  range: number;
   initialData?: DbProjectContributions[];
 }) => {
   const { data, error } = useSWR<DbProjectContributions[]>(

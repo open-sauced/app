@@ -62,7 +62,7 @@ const ContributorListTableHeaders = ({ selected, handleOnSelectAllContributor }:
           <TableTitle>Contributions</TableTitle>
         </div>
         <div className={clsx(classNames.cols.contributors, "hidden lg:flex justify-center")}>
-          <TableTitle>{`Last ${range} Days`}</TableTitle>
+          <TableTitle>{`Last ${range ?? 30} Days`}</TableTitle>
         </div>
       </div>
     </div>

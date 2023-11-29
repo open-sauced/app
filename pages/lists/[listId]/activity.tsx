@@ -86,11 +86,11 @@ const ListActivityPage = ({ list, numberOfContributors, isError, isOwner, featur
     error,
     data: projectContributionsByUser,
     repoId,
-  } = useContributorsByProject(list!.id, String(range) ?? "30");
+  } = useContributorsByProject(list!.id, Number(range ?? "30"));
 
   const { data: projectData, error: projectDataError } = useContributionsByProject({
     listId: list!.id,
-    range: String(range) ?? "30",
+    range: Number(range ?? "30"),
   });
 
   const onHandleClick: NodeMouseEventHandler<object> = (node) => {
@@ -120,7 +120,7 @@ const ListActivityPage = ({ list, numberOfContributors, isError, isOwner, featur
     data: evolutionData,
     isError: evolutionError,
     isLoading: isLoadingEvolution,
-  } = useContributionsEvolutionByType({ listId: list!.id, range });
+  } = useContributionsEvolutionByType({ listId: list!.id, range: Number(range ?? "30") });
 
   return (
     <ListPageLayout list={list} numberOfContributors={numberOfContributors} isOwner={isOwner}>
