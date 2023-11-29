@@ -158,7 +158,7 @@ const InsightsHub: WithPageLayout = () => {
                       </div>
                     </div>
                     <div className="w-full truncate">
-                      <CardRepoList limit={3} repoList={staticRepos} total={8} />
+                      <CardRepoList limit={3} repoList={staticRepos} total={10} />
                     </div>
                   </div>
                   <div className="flex-1 w-full">
