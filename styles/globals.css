@@ -25,6 +25,19 @@ h6 {
   @apply tracking-tight;
 }
 
+input[type="checkbox"]:focus-visible,
+[role="checkbox"]:focus-visible {
+  @apply outline-none;
+  @apply ring;
+  @apply border-orange-500;
+  @apply ring-orange-100;
+}
+
+/* See https://github.com/open-sauced/app/issues/2210 */
+[role="checkbox"] > [data-state="checked"] > svg {
+  stroke-width: 5;
+}
+
 .auto-grow-input:not(:empty) {
   color: black;
 }

@@ -20,9 +20,9 @@ import clojure from "img/topic-thumbnails/clojure.svg";
 
 import contextThumbnailImage from "../../img/open-sourced-with-bg-icon.png";
 
-import { interestsType } from "./getInterestOptions";
+import { InterestType } from "./getInterestOptions";
 
-const topicThumbnails: Record<interestsType, string> = {
+const topicThumbnails: Record<InterestType, string> = {
   javascript: javaScript,
   python: python,
   java: java,
