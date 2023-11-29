@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -6,7 +6,6 @@ import clsx from "clsx";
 
 import useSession from "lib/hooks/useSession";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
-import { supabase } from "lib/utils/supabase";
 
 import Title from "components/atoms/Typography/title";
 import Search from "components/atoms/Search/search";
@@ -28,23 +27,6 @@ const HubLayout = ({ children }: { children: React.ReactNode }) => {
 
     return PATHREGEX.test(path);
   };
-
-  useEffect(() => {
-    async function getUser() {
-      try {
-        const currentUser = await supabase.auth.getSession();
-
-        if (!currentUser?.data?.session) {
-          await router.push("/feed");
-        }
-      } catch (e: unknown) {
-        router.push("/feed");
-      }
-    }
-
-    // eslint-disable-next-line no-console
-    // getUser().catch(console.error);
-  }, [router, onboarded]);
 
   const getActiveLinkClassNames = (href: string) => {
     return router.pathname === href ? "text-light-slate-12" : "text-slate-300";

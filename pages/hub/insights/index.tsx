@@ -249,7 +249,6 @@ const InsightsHub: WithPageLayout = () => {
 };
 
 InsightsHub.PageLayout = HubLayout;
-InsightsHub.isPrivateRoute = false;
 InsightsHub.SEO = {
   title: "Insights Hub | Open Sauced Insights",
 };
