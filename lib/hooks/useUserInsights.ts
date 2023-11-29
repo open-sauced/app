@@ -1,6 +1,7 @@
 import { useState } from "react";
 import useSWR, { Fetcher } from "swr";
 import publicApiFetcher from "lib/utils/public-api-fetcher";
+import useSession from "./useSession";
 
 interface PaginatedInsightsResponse {
   readonly data: DbUserInsight[];
@@ -8,6 +9,7 @@ interface PaginatedInsightsResponse {
 }
 
 const useUserInsights = () => {
+  const { session } = useSession();
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
 
@@ -18,7 +20,7 @@ const useUserInsights = () => {
   const endpointString = `${baseEndpoint}?${pageQuery}${limitQuery}`;
 
   const { data, error, mutate } = useSWR<PaginatedInsightsResponse, Error>(
-    endpointString,
+    session ? endpointString : null,
     publicApiFetcher as Fetcher<PaginatedInsightsResponse, Error>
   );
 

@@ -112,20 +112,24 @@ const InsightsHub: WithPageLayout = () => {
   return (
     <>
       <section className="flex flex-col gap-4">
-        {isLoading ? (
-          <SkeletonWrapper count={3} classNames="w-full" height={95} radius={10} />
-        ) : isError ? (
-          "Error..."
-        ) : (
-          data.map((insight) => {
-            return <InsightRow key={`insights_${insight.id}`} user={user} insight={insight} />;
-          })
-        )}
+        {user ? (
+          <>
+            {isLoading ? (
+              <SkeletonWrapper count={3} classNames="w-full" height={95} radius={10} />
+            ) : isError ? (
+              "Error..."
+            ) : (
+              data.map((insight) => {
+                return <InsightRow key={`insights_${insight.id}`} user={user} insight={insight} />;
+              })
+            )}
+          </>
+        ) : null}
 
         {!user ? (
           <>
             <div className="w-full px-8">
-              <div className="w-full md:w-2/3">
+              <div className="w-full">
                 <Title level={4} className="text-2xl">
                   Insights Hub
                 </Title>
