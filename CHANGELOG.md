@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.78.0-beta.9](https://github.com/open-sauced/insights/compare/v1.78.0-beta.8...v1.78.0-beta.9) (2023-11-29)
+
+
+### 🐛 Bug Fixes
+
+* list activity and contirbutor page rerender issue ([#2214](https://github.com/open-sauced/insights/issues/2214)) ([86eae2c](https://github.com/open-sauced/insights/commit/86eae2c572321ec68c82665118e545e69321b4ed))
+
 ## [1.78.0-beta.8](https://github.com/open-sauced/insights/compare/v1.78.0-beta.7...v1.78.0-beta.8) (2023-11-29)
 
 
