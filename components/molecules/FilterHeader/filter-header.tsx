@@ -11,7 +11,7 @@ import useFilterPrefetch from "lib/hooks/useFilterPrefetch";
 import topicNameFormatting from "lib/utils/topic-name-formatting";
 import FilterCardSelect from "components/molecules/FilterCardSelect/filter-card-select";
 import getTopicThumbnail from "lib/utils/getTopicThumbnail";
-import { interestsType } from "lib/utils/getInterestOptions";
+import { InterestType } from "lib/utils/getInterestOptions";
 import { getInterestOptions } from "lib/utils/getInterestOptions";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { useFetchUser } from "lib/hooks/useFetchUser";
@@ -42,10 +42,7 @@ const HeaderFilter = () => {
   return (
     <>
       <div className="header-image mr-2 p-2 min-w-[130px] ">
-        <ContextThumbnail
-          size={120}
-          ContextThumbnailURL={getTopicThumbnail(pageId as interestsType)}
-        ></ContextThumbnail>
+        <ContextThumbnail size={120} ContextThumbnailURL={getTopicThumbnail(pageId as InterestType)}></ContextThumbnail>
       </div>
       <div className="header-info md:truncate flex flex-col grow justify-center p-2">
         <Title level={1} className="!text-3xl font-semibold text-slate-900">
