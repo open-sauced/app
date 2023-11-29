@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.78.0-beta.8](https://github.com/open-sauced/insights/compare/v1.78.0-beta.7...v1.78.0-beta.8) (2023-11-29)
+
+
+### 🐛 Bug Fixes
+
+* fixed based font size so it's on body now ([c0b00ca](https://github.com/open-sauced/insights/commit/c0b00caf4e7b3436a799bf27e521e6788ebe5e92))
+* fixed based font size so it's on body now ([#2219](https://github.com/open-sauced/insights/issues/2219)) ([8000aed](https://github.com/open-sauced/insights/commit/8000aed27ee4fa11358fbbb99f2a2a7cd09dd414))
+
 ## [1.78.0-beta.7](https://github.com/open-sauced/insights/compare/v1.78.0-beta.6...v1.78.0-beta.7) (2023-11-29)
 
 
