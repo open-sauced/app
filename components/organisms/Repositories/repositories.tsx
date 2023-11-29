@@ -130,7 +130,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
               <TableTitle>Contributors</TableTitle>
             </div>
             <div className={clsx(classNames.cols.last30days, "hidden xl:flex")}>
-              <TableTitle>Last 30 Days</TableTitle>
+              <TableTitle>Last {range ?? 30} Days</TableTitle>
             </div>
           </div>
 
