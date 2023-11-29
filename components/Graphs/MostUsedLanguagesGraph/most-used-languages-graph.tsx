@@ -112,23 +112,15 @@ export const MostUsedLanguagesGraph = ({
                   key={item.name}
                   className={`flex justify-between pt-4 pb-4 ${
                     index === lastItem ? "" : "border-b-1 border-slate-100"
-                  }`}
+                  } ${language === item.name ? "font-semibold" : ""}`}
                 >
                   <span
-                    className={`flex gap-2 items-center ${language === item.name ? "text-black" : "text-slate-700"} ${
-                      language === item.name ? "font-semibold" : ""
-                    }`}
+                    className={`flex gap-2 items-center ${language === item.name ? "text-black" : "text-slate-700"}`}
                   >
                     <BsFillCircleFill size={11} style={{ fill: colors[index] }} />
                     {item.name}
                   </span>
-                  <span
-                    className={`${language === item.name ? "text-black" : "text-slate-600"} ${
-                      language === item.name ? "font-semibold" : ""
-                    }`}
-                  >
-                    {item.value}%
-                  </span>
+                  <span className={`${language === item.name ? "text-black" : "text-slate-600"}`}>{item.value}%</span>
                 </li>
               ))
             ) : (
