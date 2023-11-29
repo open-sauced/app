@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.78.0-beta.7](https://github.com/open-sauced/insights/compare/v1.78.0-beta.6...v1.78.0-beta.7) (2023-11-29)
+
+
+### 🐛 Bug Fixes
+
+* cleaned up list activity graph title styling ([#2224](https://github.com/open-sauced/insights/issues/2224)) ([a38d9bd](https://github.com/open-sauced/insights/commit/a38d9bd4578b026fe01a1ff58848a17e922e03d6))
+
 ## [1.78.0-beta.6](https://github.com/open-sauced/insights/compare/v1.78.0-beta.5...v1.78.0-beta.6) (2023-11-29)
 
 
