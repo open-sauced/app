@@ -122,7 +122,7 @@ const InsightsHub: WithPageLayout = () => {
 
         {!user ? (
           <>
-            <div className="w-full ">
+            <div className="w-full">
               <Text className="text-base ">
                 Welcome to the Insights Hub, we&apos;ve included a featured Insight Page for you to test out. You can
                 also create your own to get insights on repositories.
