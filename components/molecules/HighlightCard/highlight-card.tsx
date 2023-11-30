@@ -35,6 +35,7 @@ interface HighlightCardProps {
   valueLabel?: string;
   contributors?: Contributor[];
   isLoading?: boolean;
+  zIndex?: number;
 }
 
 type IconMap = {
