@@ -5,6 +5,67 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.78.0](https://github.com/open-sauced/insights/compare/v1.77.1...v1.78.0) (2023-11-29)
+
+
+### 🧑‍💻 Code Refactoring
+
+* fix tailwind anti-pattern ([5dcb958](https://github.com/open-sauced/insights/commit/5dcb958f475292ab66d06806adf420288069708e))
+* fix tailwind anti-pattern in feed footer ([#2088](https://github.com/open-sauced/insights/issues/2088)) ([1f10046](https://github.com/open-sauced/insights/commit/1f10046c626499d4f2ab0d264854ccf1a716a33e))
+
+
+### 🍕 Features
+
+* updating contributor language column  ([#2183](https://github.com/open-sauced/insights/issues/2183)) ([660b861](https://github.com/open-sauced/insights/commit/660b861de581fa14370925f46c551fe1ddc8fb3f))
+
+
+### 🐛 Bug Fixes
+
+* added global styles for checkbox focus state ([#2206](https://github.com/open-sauced/insights/issues/2206)) ([6999a95](https://github.com/open-sauced/insights/commit/6999a9592974c76800f03fddf37d52cae203610a))
+* cleaned up list activity graph title styling ([#2224](https://github.com/open-sauced/insights/issues/2224)) ([a38d9bd](https://github.com/open-sauced/insights/commit/a38d9bd4578b026fe01a1ff58848a17e922e03d6))
+* fix broken URL when you are using Range filter ([#2204](https://github.com/open-sauced/insights/issues/2204)) ([fcf8080](https://github.com/open-sauced/insights/commit/fcf8080eb95896257ceb89cd0588b8fa598cc4f4))
+* fixed based font size so it's on body now ([c0b00ca](https://github.com/open-sauced/insights/commit/c0b00caf4e7b3436a799bf27e521e6788ebe5e92))
+* fixed based font size so it's on body now ([#2219](https://github.com/open-sauced/insights/issues/2219)) ([8000aed](https://github.com/open-sauced/insights/commit/8000aed27ee4fa11358fbbb99f2a2a7cd09dd414))
+* improved type inference of interests and recommendations ([2ee0c68](https://github.com/open-sauced/insights/commit/2ee0c689723c4bb9ecb905e1cb97b7386dd8641d))
+* improved type inference of interests and recommendations ([#2192](https://github.com/open-sauced/insights/issues/2192)) ([ec29a79](https://github.com/open-sauced/insights/commit/ec29a79b2ecc05227c7699153779ba2fe1961fab))
+* list activity and contirbutor page rerender issue ([#2214](https://github.com/open-sauced/insights/issues/2214)) ([86eae2c](https://github.com/open-sauced/insights/commit/86eae2c572321ec68c82665118e545e69321b4ed))
+* made checkbox stroke thicker ([df53b8d](https://github.com/open-sauced/insights/commit/df53b8d10ac606a4aacf52fdf506bcbe1515a64f))
+* made checkbox stroke thicker ([#2212](https://github.com/open-sauced/insights/issues/2212)) ([1d7781a](https://github.com/open-sauced/insights/commit/1d7781a5b2b996bc6bacd5f6443f3ff4e45232db))
+* miscellaneous feed styling fixes ([28bfe26](https://github.com/open-sauced/insights/commit/28bfe26f189271e4e166b240a79e99d314df40e1))
+* miscellaneous feed styling fixes ([#2220](https://github.com/open-sauced/insights/issues/2220)) ([8399017](https://github.com/open-sauced/insights/commit/8399017223d18097d81e12cdf9dc262725987adf))
+* now list activity graphs only load data client-side ([#2215](https://github.com/open-sauced/insights/issues/2215)) ([5d1c906](https://github.com/open-sauced/insights/commit/5d1c90627d346f8ea975062e39bfb86f898b6967))
+* Remove Netlify CLI from dev dependencies ([#2207](https://github.com/open-sauced/insights/issues/2207)) ([54562c5](https://github.com/open-sauced/insights/commit/54562c532d2feb16519a319e487a14cd68950ce4))
+
+## [1.78.0-beta.9](https://github.com/open-sauced/insights/compare/v1.78.0-beta.8...v1.78.0-beta.9) (2023-11-29)
+
+
+### 🐛 Bug Fixes
+
+* list activity and contirbutor page rerender issue ([#2214](https://github.com/open-sauced/insights/issues/2214)) ([86eae2c](https://github.com/open-sauced/insights/commit/86eae2c572321ec68c82665118e545e69321b4ed))
+
+## [1.78.0-beta.8](https://github.com/open-sauced/insights/compare/v1.78.0-beta.7...v1.78.0-beta.8) (2023-11-29)
+
+
+### 🐛 Bug Fixes
+
+* fixed based font size so it's on body now ([c0b00ca](https://github.com/open-sauced/insights/commit/c0b00caf4e7b3436a799bf27e521e6788ebe5e92))
+* fixed based font size so it's on body now ([#2219](https://github.com/open-sauced/insights/issues/2219)) ([8000aed](https://github.com/open-sauced/insights/commit/8000aed27ee4fa11358fbbb99f2a2a7cd09dd414))
+
+## [1.78.0-beta.7](https://github.com/open-sauced/insights/compare/v1.78.0-beta.6...v1.78.0-beta.7) (2023-11-29)
+
+
+### 🐛 Bug Fixes
+
+* cleaned up list activity graph title styling ([#2224](https://github.com/open-sauced/insights/issues/2224)) ([a38d9bd](https://github.com/open-sauced/insights/commit/a38d9bd4578b026fe01a1ff58848a17e922e03d6))
+
+## [1.78.0-beta.6](https://github.com/open-sauced/insights/compare/v1.78.0-beta.5...v1.78.0-beta.6) (2023-11-29)
+
+
+### 🐛 Bug Fixes
+
+* miscellaneous feed styling fixes ([28bfe26](https://github.com/open-sauced/insights/commit/28bfe26f189271e4e166b240a79e99d314df40e1))
+* miscellaneous feed styling fixes ([#2220](https://github.com/open-sauced/insights/issues/2220)) ([8399017](https://github.com/open-sauced/insights/commit/8399017223d18097d81e12cdf9dc262725987adf))
+
 ## [1.78.0-beta.5](https://github.com/open-sauced/insights/compare/v1.78.0-beta.4...v1.78.0-beta.5) (2023-11-29)
 
 
