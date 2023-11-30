@@ -2,7 +2,6 @@ import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { GetServerSidePropsContext } from "next";
 import { NodeMouseEventHandler } from "@nivo/treemap";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
 import Error from "components/atoms/Error/Error";
 import { fetchApiData, validateListPath } from "helpers/fetchApiData";
 import ListPageLayout from "layouts/lists";
@@ -14,7 +13,6 @@ import { useContributionsByProject } from "lib/hooks/api/useContributionsByProje
 import { getGraphColorPalette } from "lib/utils/color-utils";
 import ContributionsEvolutionByType from "components/molecules/ContributionsEvolutionByTypeCard/contributions-evolution-by-type-card";
 import useContributionsEvolutionByType from "lib/hooks/api/useContributionsByEvolutionType";
-import { setQueryParams } from "lib/utils/query-params";
 import { FeatureFlagged } from "components/shared/feature-flagged";
 import { FeatureFlag, getAllFeatureFlags } from "lib/utils/server/feature-flags";
 
@@ -41,8 +39,8 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const bearerToken = session ? session.access_token : "";
   const { listId, range: rawRange, limit: rawLimit } = ctx.params as FilterParams;
 
-  const range = rawRange ? Number(rawRange) : "30";
-  const limit = rawLimit ? Number(rawLimit) : "20";
+  const range = rawRange ? Number(rawRange) : 30;
+  const limit = rawLimit ? Number(rawLimit) : 20;
   const [{ data, error: contributorListError }, { data: list, error }] = await Promise.all([
     fetchApiData<PagedData<DBListContributor>>({
       path: `lists/${listId}/contributors?limit=1`,
@@ -83,17 +81,16 @@ const ListActivityPage = ({ list, numberOfContributors, isError, isOwner, featur
     contributorType,
   } = useMostActiveContributors({ listId: list!.id });
 
-  useEffect(() => {
-    if (!range) {
-      setQueryParams({ range: "30" });
-    }
-  }, [range]);
-
-  const { setRepoId, error, data: projectContributionsByUser, repoId } = useContributorsByProject(list!.id, range);
+  const {
+    setRepoId,
+    error,
+    data: projectContributionsByUser,
+    repoId,
+  } = useContributorsByProject(list!.id, Number(range ?? "30"));
 
   const { data: projectData, error: projectDataError } = useContributionsByProject({
     listId: list!.id,
-    range,
+    range: Number(range ?? "30"),
   });
 
   const onHandleClick: NodeMouseEventHandler<object> = (node) => {
@@ -123,7 +120,7 @@ const ListActivityPage = ({ list, numberOfContributors, isError, isOwner, featur
     data: evolutionData,
     isError: evolutionError,
     isLoading: isLoadingEvolution,
-  } = useContributionsEvolutionByType({ listId: list!.id, range });
+  } = useContributionsEvolutionByType({ listId: list!.id, range: Number(range ?? "30") });
 
   return (
     <ListPageLayout list={list} numberOfContributors={numberOfContributors} isOwner={isOwner}>
