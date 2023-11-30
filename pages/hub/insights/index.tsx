@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import clsx from "clsx";
 
 import Link from "next/link";
-import { BsPencilFill } from "react-icons/bs";
 import { MdOutlineArrowForwardIos } from "react-icons/md";
 import InsightRow from "components/molecules/InsightRow/insight-row";
 import Pagination from "components/molecules/Pagination/pagination";
@@ -147,16 +146,6 @@ const InsightsHub: WithPageLayout = () => {
                         <Link href={`/pages/anonymous/734/dashboard`}>Top 10 Javascript Repos</Link>
                       </div>
                       <div className="rounded-2xl border px-2 text-light-slate-11">public</div>
-                      <div className="flex-1 md:hidden">
-                        <span className=" bg-light-slate-1 inline-block rounded-lg p-2.5 border mr-2">
-                          <Link href={`/hub/insights/734/edit`}>
-                            <BsPencilFill
-                              title="Edit Insight Page"
-                              className="text-light-slate-10 text-md cursor-pointer w-4"
-                            />
-                          </Link>
-                        </span>
-                      </div>
                     </div>
                     <div className="w-full truncate">
                       <CardRepoList limit={3} repoList={staticRepos} total={10} />
