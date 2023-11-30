@@ -8,7 +8,6 @@ import InsightRow from "components/molecules/InsightRow/insight-row";
 import Pagination from "components/molecules/Pagination/pagination";
 import PaginationResults from "components/molecules/PaginationResults/pagination-result";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
-import GitHubIcon from "img/icons/github-icon.svg";
 
 import HubLayout from "layouts/hub";
 import { WithPageLayout } from "interfaces/with-page-layout";
@@ -23,9 +22,6 @@ import getPercent from "lib/utils/get-percent";
 import Pill from "components/atoms/Pill/pill";
 import { getRelativeDays } from "lib/utils/date-utils";
 import CardRepoList, { RepoList } from "components/molecules/CardRepoList/card-repo-list";
-import Button from "components/atoms/Button/button";
-import Icon from "components/atoms/Icon/icon";
-import Title from "components/atoms/Typography/title";
 
 const staticRepos: RepoList[] = [
   {
@@ -126,16 +122,12 @@ const InsightsHub: WithPageLayout = () => {
 
         {!user ? (
           <>
-            <div className="w-full px-8">
-              <div className="w-full">
-                <Title level={4} className="text-2xl">
-                  Insights Hub
-                </Title>
-                <Text className="text-base ">
-                  Welcome to the Insights Hub, we&apos;ve included a featured Insight Page for you to test out. You can
-                  also create your own to get insights on repositories.
-                </Text>
-              </div>
+            <div className="w-full ">
+              <Text className="text-base ">
+                Welcome to the Insights Hub, we&apos;ve included a featured Insight Page for you to test out. You can
+                also create your own to get insights on repositories.
+              </Text>
+
               <Card className="flex flex-col md:flex-row w-full rounded-lg px-4 lg:px-8 py-5 gap-4 lg:gap-2 bg-white items-center mt-4">
                 <>
                   <div className="flex w-full flex-1 flex-col gap-4 lg:gap-6">
@@ -190,24 +182,6 @@ const InsightsHub: WithPageLayout = () => {
                   </div>
                 </>
               </Card>
-              <div className="flex flex-col items-center justify-center w-full mt-10 gap-4">
-                <Text className="text-2xl font-bold text-center">Sign in to create your own Insights</Text>
-                <Button
-                  onClick={() => {
-                    signIn({
-                      provider: "github",
-                      options: {
-                        redirectTo: "/hub/insights",
-                      },
-                    });
-                  }}
-                  variant="primary"
-                  className="px-8"
-                >
-                  Connect <span className="hidden sm:inline-block ml-1">with GitHub</span>
-                  <Icon IconImage={GitHubIcon} className="ml-2" />
-                </Button>
-              </div>
             </div>
           </>
         ) : null}

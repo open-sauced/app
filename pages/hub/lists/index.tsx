@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import clsx from "clsx";
 
+import Link from "next/link";
+import { MdOutlineArrowForwardIos } from "react-icons/md";
 import { WithPageLayout } from "interfaces/with-page-layout";
 import HubLayout from "layouts/hub";
 
@@ -17,6 +19,38 @@ import { useToast } from "lib/hooks/useToast";
 
 import { useFetchAllLists } from "lib/hooks/useList";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
+import Card from "components/atoms/Card/card";
+import StackedAvatar from "components/molecules/StackedAvatar/stacked-avatar";
+
+const staticContributors = [
+  {
+    host_login: "brandonroberts",
+  },
+  {
+    host_login: "nickytonline",
+  },
+  {
+    host_login: "bbsmooth",
+  },
+  {
+    host_login: "lunaruan",
+  },
+  {
+    host_login: "bluwy",
+  },
+  {
+    host_login: "lasjorg",
+  },
+  {
+    host_login: "sukkaw",
+  },
+  {
+    host_login: "ogdev-01",
+  },
+  {
+    host_login: "0",
+  },
+];
 
 const ListsHub: WithPageLayout = () => {
   const { data, isLoading, meta, setPage, mutate } = useFetchAllLists();
@@ -29,6 +63,7 @@ const ListsHub: WithPageLayout = () => {
   const [listNameToDelete, setListNameToDelete] = useState("");
   const [listIdToDelete, setListIdToDelete] = useState("");
 
+  const testListId = process.env.NEXT_PUBLIC_LIST_PAGE_ID;
   const handleOnDelete = (name: string, id: string) => {
     setIsDeleteOpen(true);
     setListNameToDelete(name);
@@ -87,11 +122,57 @@ const ListsHub: WithPageLayout = () => {
           ))
         ) : (
           <div className="flex flex-col items-center justify-center w-full gap-4 ">
-            {!isLoading && <Title className="text-2xl">You currently have no lists</Title>}
+            {!isLoading && sessionToken ? <Title className="text-2xl">You currently have no lists</Title> : null}
           </div>
         )}
 
-        {isLoading && <SkeletonWrapper count={3} classNames="w-full" height={95} radius={10} />}
+        {isLoading && sessionToken ? <SkeletonWrapper count={3} classNames="w-full" height={95} radius={10} /> : null}
+
+        {!sessionToken ? (
+          <div className="w-full -mt-4 ">
+            <Text className="text-base">
+              Welcome to List Pages, we&apos;ve included a featured List Page for you to test out. You can also create
+              your own to get insights on contributors.
+            </Text>
+
+            <Card className="mt-4">
+              <div className="flex flex-col items-start w-full gap-4 px-4 py-6 bg-white rounded-lg md:items-center md:justify-between md:flex-row lg:px-8 lg:gap-2">
+                <div className="flex flex-col flex-1 gap-4 lg:gap-6">
+                  <div className="flex items-center gap-4 lg:items-center ">
+                    <div className="w-4 h-4 rounded-full bg-light-orange-10"></div>
+                    <div className="flex justify-between text-xl text-light-slate-12">
+                      <Link href={`/lists/${testListId}/overview`}>Top 10 Open Source Contributors</Link>
+                    </div>
+                    <div className="px-2 border rounded-2xl text-light-slate-11">public</div>
+                  </div>
+                </div>
+                <div className="">
+                  <div className="flex items-center justify-end w-full gap-8">
+                    {/* Contributors section */}
+                    <div className="flex flex-col items-center flex-1 gap-1 mr-2">
+                      <span className="text-xs text-light-slate-11">Contributors</span>
+                      <Text className="flex items-center text-2xl">10</Text>
+                    </div>
+
+                    <div className="flex items-center">
+                      <StackedAvatar contributors={staticContributors} visibleQuantity={6} classNames="scale-125" />
+                    </div>
+                    <div className="justify-end flex-1 hidden md:flex">
+                      {/* Delete button */}
+
+                      <Link
+                        className="inline-block p-3 mr-2 border rounded-lg cursor-pointer bg-light-slate-1"
+                        href={`/lists/${testListId}/overview`}
+                      >
+                        <MdOutlineArrowForwardIos title="Go To List Page" className="text-lg text-light-slate-10" />
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </Card>
+          </div>
+        ) : null}
       </section>
       <div
         className={clsx("py-1 md:py-4 flex w-full md:mt-5 justify-between items-center", {

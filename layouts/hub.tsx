@@ -4,18 +4,19 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import clsx from "clsx";
 
-import useSession from "lib/hooks/useSession";
+import Text from "components/atoms/Typography/text";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
+import GitHubIcon from "img/icons/github-icon.svg";
 
 import Title from "components/atoms/Typography/title";
 import Search from "components/atoms/Search/search";
 import Button from "components/atoms/Button/button";
+import Icon from "components/atoms/Icon/icon";
 import Footer from "../components/organisms/Footer/footer";
 import TopNav from "../components/organisms/TopNav/top-nav";
 
 const HubLayout = ({ children }: { children: React.ReactNode }) => {
-  const { onboarded } = useSession();
-  const { user } = useSupabaseAuth();
+  const { user, signIn } = useSupabaseAuth();
   const navLinks = [
     { name: "Insights", href: "/hub/insights" },
     { name: "Lists", href: "/hub/lists" },
@@ -82,7 +83,43 @@ const HubLayout = ({ children }: { children: React.ReactNode }) => {
             </>
           ) : (
             <>
+              {validatePath(router.pathname) ? (
+                <nav className="flex items-center w-full container px-2 mx-auto md:px-16  gap-4">
+                  <ul className="flex items-center gap-3">
+                    {navLinks.map((link, index) => (
+                      <li key={`hub-nav-${index}-${link.name}`}>
+                        <Link
+                          className={clsx("text-3xl leading-none mx-0", getActiveLinkClassNames(link.href))}
+                          href={link.href}
+                        >
+                          {link.name}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </nav>
+              ) : null}
               <div className="container px-2 mx-auto md:px-16">{children}</div>
+              <div className="flex flex-col items-center justify-center w-full mt-10 gap-4">
+                <Text className="text-2xl font-semibold text-center">
+                  Sign in to create your own {router.pathname.split("/")[2] === "insights" ? "Insight" : "List"} Pages
+                </Text>
+                <Button
+                  onClick={() => {
+                    signIn({
+                      provider: "github",
+                      options: {
+                        redirectTo: "/hub/insights",
+                      },
+                    });
+                  }}
+                  variant="primary"
+                  className="px-8"
+                >
+                  Connect <span className="hidden sm:inline-block ml-1">with GitHub</span>
+                  <Icon IconImage={GitHubIcon} className="ml-2" />
+                </Button>
+              </div>
             </>
           )}
         </main>
