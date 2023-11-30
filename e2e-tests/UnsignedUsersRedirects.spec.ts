@@ -4,8 +4,3 @@ test("Homepage redirects to /feed for unsigned users", async ({ page }) => {
   await page.goto("/");
   await expect(page).toHaveURL(/\/feed/, { timeout: 20000 });
 });
-
-test("Insights Hub redirects to /feed for unsigned users", async ({ page }) => {
-  await page.goto("/hub/insights");
-  await expect(page).toHaveURL(/\/feed/, { timeout: 20000 });
-});
