@@ -58,12 +58,11 @@ const InsightsHub: WithPageLayout = () => {
   const { toast } = useToast();
   const { session } = useSession(true);
   const { data, meta, isError, isLoading, setPage } = useUserInsights();
+  const testInsightsId = process.env.NEXT_PUBLIC_INSIGHTS_PAGE_ID;
 
   function handleView() {
     const insight = data.slice(0, 1).shift();
-    router.push(
-      `/pages/${user ? user.user_metadata.user_name : "anonymous"}/${insight ? insight!.id : "734"}/dashboard`
-    );
+    router.push(`/pages/${user?.user_metadata.user_name}/${insight!.id}/dashboard`);
   }
 
   function openInsightToast() {
@@ -143,7 +142,7 @@ const InsightsHub: WithPageLayout = () => {
                     <div className="flex items-center lg:items-center gap-4 ">
                       <div className="w-4 h-4 bg-light-orange-10 rounded-full"></div>
                       <div className="text-xl text-light-slate-12 flex justify-between">
-                        <Link href={`/pages/anonymous/734/dashboard`}>Top 10 Javascript Repos</Link>
+                        <Link href={`/pages/anonymous/${testInsightsId}/dashboard`}>Top 10 Javascript Repos</Link>
                       </div>
                       <div className="rounded-2xl border px-2 text-light-slate-11">public</div>
                     </div>
@@ -178,7 +177,7 @@ const InsightsHub: WithPageLayout = () => {
                         </div>
                       </div>
                       <div className="flex-1 hidden md:flex  justify-end">
-                        <Link href="/pages/anonymous/734/dashboard">
+                        <Link href={`/pages/anonymous/${testInsightsId}/dashboard`}>
                           <span className=" bg-light-slate-1 inline-block rounded-lg p-2.5 border cursor-pointer">
                             <MdOutlineArrowForwardIos
                               title="Go To Insight Page"
