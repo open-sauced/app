@@ -51,10 +51,12 @@ function getTopContributorLanguages(contributor: DbUser) {
     return contributor.interests.split(",").slice(0, 2);
   }
 
-  return entries
-    .sort(([, a], [, b]) => (a < b ? -1 : 1))
-    .slice(0, 2)
-    .map(([language]) => language);
+  return entries.length === 0
+    ? contributor.interests.split(",").slice(0, 2)
+    : entries
+        .sort(([, a], [, b]) => (a < b ? -1 : 1))
+        .slice(0, 2)
+        .map(([language]) => language);
 }
 
 function getLanguageAbbreviation(language: string) {
