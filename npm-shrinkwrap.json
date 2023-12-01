@@ -62,6 +62,7 @@
         "react-day-picker": "^8.7.1",
         "react-dom": "^18.2.0",
         "react-emoji-render": "^2.0.1",
+        "react-error-boundary": "^4.0.11",
         "react-hot-toast": "^2.4.0",
         "react-icons": "^4.11.0",
         "react-loading-skeleton": "^3.1.0",
@@ -27930,6 +27931,17 @@
       "peerDependencies": {
         "react": ">=0.14.0",
         "react-dom": ">=0.14.0"
+      }
+    },
+    "node_modules/react-error-boundary": {
+      "version": "4.0.11",
+      "resolved": "https://registry.npmjs.org/react-error-boundary/-/react-error-boundary-4.0.11.tgz",
+      "integrity": "sha512-U13ul67aP5DOSPNSCWQ/eO0AQEYzEFkVljULQIjMV0KlffTAhxuDoBKdO0pb/JZ8mDhMKFZ9NZi0BmLGUiNphw==",
+      "dependencies": {
+        "@babel/runtime": "^7.12.5"
+      },
+      "peerDependencies": {
+        "react": ">=16.13.1"
       }
     },
     "node_modules/react-hot-toast": {
