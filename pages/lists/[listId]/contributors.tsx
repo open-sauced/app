@@ -6,7 +6,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import ListPageLayout from "layouts/lists";
 import { fetchApiData, validateListPath } from "helpers/fetchApiData";
 import Error from "components/atoms/Error/Error";
-import { convertToContributors, useContributorsList } from "lib/hooks/api/useContributorList";
+import { useContributorsList } from "lib/hooks/api/useContributorList";
 import ContributorsList from "components/organisms/ContributorsList/contributors-list";
 import { FilterParams } from "./activity";
 
@@ -18,17 +18,13 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   } = await supabase.auth.getSession();
   const bearerToken = session ? session.access_token : "";
 
-  const { listId, limit: rawLimit, range } = ctx.params as FilterParams;
+  const { listId } = ctx.params as FilterParams;
 
-  const limit = rawLimit ?? "10"; // Can pull this from the querystring in the future
-  const [{ data, error: contributorListError }, { data: list, error }] = await Promise.all([
-    fetchApiData<PagedData<DBListContributor>>({
-      path: `lists/${listId}/contributors?limit=${limit}&range=${range ?? "30"}`,
-      bearerToken,
-      pathValidator: validateListPath,
-    }),
-    fetchApiData<DBList>({ path: `lists/${listId}`, bearerToken, pathValidator: validateListPath }),
-  ]);
+  const { data: list, error } = await fetchApiData<DBList>({
+    path: `lists/${listId}`,
+    bearerToken,
+    pathValidator: validateListPath,
+  });
 
   if (error?.status === 404) {
     return {
@@ -36,14 +32,12 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     };
   }
 
-  const contributors = convertToContributors(data?.data);
   const userId = Number(session?.user.user_metadata.sub);
 
   return {
     props: {
       list,
-      initialData: data ? { data: contributors, meta: data.meta } : { data: [], meta: {} },
-      isError: error || contributorListError,
+      isError: error,
       isOwner: list && list.user_id === userId,
     },
   };
@@ -51,15 +45,11 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 
 interface ContributorListPageProps {
   list?: DBList;
-  initialData: {
-    meta: Meta;
-    data: DbPRContributor[];
-  };
   isError: boolean;
   isOwner: boolean;
 }
 
-const ContributorsListPage = ({ list, initialData, isError, isOwner }: ContributorListPageProps) => {
+const ContributorsListPage = ({ list, isError, isOwner }: ContributorListPageProps) => {
   const router = useRouter();
   const { range, limit } = router.query;
 
@@ -69,7 +59,6 @@ const ContributorsListPage = ({ list, initialData, isError, isOwner }: Contribut
     data: { data: contributors, meta },
   } = useContributorsList({
     listId: list?.id,
-    initialData,
     defaultRange: range ? (range as string) : "30",
     defaultLimit: limit ? (limit as unknown as number) : 10,
   });
