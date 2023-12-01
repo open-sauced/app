@@ -64,7 +64,7 @@ const MostActiveCard = ({ children }: { children: ReactNode }) => {
           maxHeight: "500px",
         }}
       >
-        <div className="text-lg text-slate-900 mb-2">Most active contributors</div>
+        <div className="font-medium text-lg text-slate-900 mb-2">Most active contributors</div>
         {children}
       </div>
     </Card>
