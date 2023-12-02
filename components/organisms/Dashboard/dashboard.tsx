@@ -32,7 +32,6 @@ const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
           value={humanizeNumber(contributorMeta.itemCount, "comma")}
           contributors={contributorData.map((contributor) => ({ host_login: contributor.author_login }))}
           isLoading={isLoading}
-          zIndex={1}
         />
         <HighlightCard
           label="Spam"
@@ -43,7 +42,6 @@ const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
           percentage={compare1.spamPercentage}
           percentageLabel={`of ${humanizeNumber(compare1.allPrsTotal, "comma")}`}
           isLoading={isLoading}
-          zIndex={1}
         />
         <HighlightCard
           label="Merged PRs"
@@ -54,7 +52,6 @@ const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
           percentage={compare1.acceptedPercentage}
           percentageLabel={`of ${humanizeNumber(compare1.allPrsTotal, "comma")}`}
           isLoading={isLoading}
-          zIndex={1}
         />
         <HighlightCard
           label="Unlabeled PRs"
@@ -65,7 +62,6 @@ const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
           percentage={compare1.unlabeledPercentage}
           percentageLabel={`of ${humanizeNumber(compare1.allPrsTotal, "comma")}`}
           isLoading={isLoading}
-          zIndex={1}
         />
       </section>
       <section className="flex flex-col max-w-full gap-4 my-6">

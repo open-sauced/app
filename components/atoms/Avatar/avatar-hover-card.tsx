@@ -58,7 +58,7 @@ const AvatarHoverCard = ({ contributor, repositories, size = "large" }: AvatarHo
         </HoverCard.Trigger>
       </Link>
       <HoverCard.Portal>
-        <HoverCard.Content sideOffset={5} style={{ zIndex: 2 }}>
+        <HoverCard.Content sideOffset={5}>
           <HoverCardWrapper username={contributor} repositories={repositories} />
         </HoverCard.Content>
       </HoverCard.Portal>
