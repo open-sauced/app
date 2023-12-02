@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.78.1-beta.1](https://github.com/open-sauced/insights/compare/v1.78.0...v1.78.1-beta.1) (2023-12-01)
+
+
+### 🐛 Bug Fixes
+
+* fixed crash on list contributor grid when in card view changing page size ([#2241](https://github.com/open-sauced/insights/issues/2241)) ([f6bc793](https://github.com/open-sauced/insights/commit/f6bc7939ccdfe8603bdc06645f79d9687a68ebe1))
+
 ## [1.78.0](https://github.com/open-sauced/insights/compare/v1.77.1...v1.78.0) (2023-11-29)
 
 
