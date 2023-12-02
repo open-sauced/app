@@ -449,7 +449,7 @@ const AddToListDropdown = ({ username }: { username: string }) => {
       open={selectListOpen}
       setOpen={setSelectListOpen}
       emptyState={
-        <div className="">
+        <div className="mt-1 mr-2 px-6 py-2">
           You have no lists. <br />
           <Link className="text-sauced-orange" href="/hub/lists/new">
             Create a list
