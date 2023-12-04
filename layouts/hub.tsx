@@ -110,7 +110,7 @@ const HubLayout = ({ children }: { children: React.ReactNode }) => {
                     signIn({
                       provider: "github",
                       options: {
-                        redirectTo: pathname,
+                        redirectTo: pathname === "/hub/insights" ? "/hub/insights/new" : "/hub/lists/new",
                       },
                     });
                   }}
