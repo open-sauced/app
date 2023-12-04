@@ -7,17 +7,15 @@ export const useContributionsByProject = ({
   initialData,
 }: {
   listId: string;
-  range: string;
+  range: number;
   initialData?: DbProjectContributions[];
 }) => {
   const { data, error } = useSWR<DbProjectContributions[]>(
     listId ? `lists/${listId}/stats/contributions-by-project?range=${range}` : null,
-    publicApiFetcher as Fetcher<DbProjectContributions[], Error>
-    // {
-    //   fallbackData: {
-    //     `lists/${listId}/stats/contributions-by-project?range=${range}`: initialData
-    // },
-    // }
+    publicApiFetcher as Fetcher<DbProjectContributions[], Error>,
+    {
+      fallbackData: initialData,
+    }
   );
 
   return {

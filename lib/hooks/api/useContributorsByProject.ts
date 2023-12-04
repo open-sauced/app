@@ -2,10 +2,21 @@ import useSWR, { Fetcher } from "swr";
 import { useState } from "react";
 import publicApiFetcher from "lib/utils/public-api-fetcher";
 
-export const useContributorsByProject = (listId: string, range: string) => {
+export const useContributorsByProject = (listId: string, range = 30) => {
   const [repoId, setRepoId] = useState<number | null>(null);
+
+  const query = new URLSearchParams();
+
+  if (repoId) {
+    query.set("repo_id", `${repoId}`);
+  }
+  query.set("range", `${range}`);
+
+  const baseEndpoint = `lists/${listId}/stats/top-project-contributions-by-contributor`;
+
+  const endpointString = `${baseEndpoint}?${query.toString()}`;
   const { data, error } = useSWR<DBProjectContributor[]>(
-    listId ? `lists/${listId}/stats/top-project-contributions-by-contributor?repo_id=${repoId}&range=${range}` : null,
+    listId && repoId ? endpointString : null,
     publicApiFetcher as Fetcher<DBProjectContributor[], Error>
   );
 

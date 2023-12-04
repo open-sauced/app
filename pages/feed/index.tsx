@@ -104,35 +104,24 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
     const signInRequired = queryParams.get("signIn");
 
     if (newHighlight && signInRequired) {
-      signIn({ provider: "github", options: { redirectTo: `${window.location.origin}/feed?new=${newHighlight}` } });
+      signIn({ provider: "github", options: { redirectTo: `${window.location.origin}/feed?${queryParams}` } });
     }
-
     // no need to create intervals for checking the highlight creation input if there is no new highlight
     if (!newHighlight) {
       return;
     }
 
-    let focusOnHighlighCreationInput: NodeJS.Timeout;
+    let isDesktop = window.innerWidth > 768;
+    const highlightSelector = `#${isDesktop ? "" : "mobile-"}highlight-create`;
+    let focusOnHighlighCreationInput = setInterval(() => {
+      const highlightCreationInput = document.querySelector(highlightSelector) as HTMLInputElement;
+      if (newHighlight && highlightCreationInput) {
+        highlightCreationInput.click();
+        isDesktop && highlightCreationInput.focus();
+        clearInterval(focusOnHighlighCreationInput);
+      }
+    }, 1000);
 
-    if (window.innerWidth > 768) {
-      focusOnHighlighCreationInput = setInterval(() => {
-        const highlightCreationInput = document.getElementById("highlight-create-input");
-        if (newHighlight && highlightCreationInput) {
-          highlightCreationInput.click();
-          highlightCreationInput.focus();
-          clearInterval(focusOnHighlighCreationInput);
-        }
-      }, 1000);
-    } else {
-      // for mobile. No need to focus on input, just click on the button as it opens up a form anyway.
-      focusOnHighlighCreationInput = setInterval(() => {
-        const mobileHighlightCreateButton = document.getElementById("mobile-highlight-create-button");
-        if (newHighlight && mobileHighlightCreateButton) {
-          mobileHighlightCreateButton.click();
-          clearInterval(focusOnHighlighCreationInput);
-        }
-      }, 1000);
-    }
     return () => {
       clearInterval(focusOnHighlighCreationInput);
     };
@@ -200,7 +189,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
       />
 
       <div
-        className="container flex flex-col justify-center w-full gap-12 px-2 pt-12 mt-5 md:mt-0 md:items-start md:px-16 md:flex-row"
+        className="container flex flex-col justify-center w-full gap-12 px-2 pt-4 md:items-start md:px-16 md:flex-row"
         ref={topRef}
       >
         <div className={`sticky ${user ? "top-16" : "top-8"} xl:flex hidden flex-none w-1/5`}>
@@ -299,7 +288,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
             </DialogContent>
           </Dialog>
         )}
-        <Tabs onValueChange={onTabChange} defaultValue="home" className="w-full 2xl:max-w-[40rem] xl:max-w-[33rem]">
+        <Tabs onValueChange={onTabChange} defaultValue="home" className="w-full 2xl:max-w-2xl xl:max-w-lg">
           <TabsList className={clsx("justify-start  w-full border-b", !user && "hidden")}>
             <TabsTrigger
               className="data-[state=active]:border-sauced-orange data-[state=active]:border-b-2 text-lg"

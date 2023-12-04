@@ -1,6 +1,6 @@
-import { interestsType } from "./getInterestOptions";
+import { InterestType } from "./getInterestOptions";
 
-const recommendations: Record<interestsType, string[]> = {
+const recommendations: Record<InterestType, string[]> = {
   react: ["Skyscanner/backpack"],
   javascript: ["EddieHubCommunity/LinkFree"],
   python: ["randovania/randovania"],
@@ -19,6 +19,7 @@ const recommendations: Record<interestsType, string[]> = {
   kubernetes: ["kubernetes/kubernetes"],
   hacktoberfest: ["open-sauced/app"],
   clojure: ["clojure/clojurescript"],
+  svelte: ["sveltejs/svelte"],
 };
 
 export default recommendations;

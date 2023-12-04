@@ -16,20 +16,20 @@ const Checkbox = React.forwardRef<React.ElementRef<typeof CheckboxPrimitive.Root
         <CheckboxPrimitive.Root
           ref={ref}
           className={clsx(
-            "peer h-4 w-4 shrink-0 rounded cursor-pointer bg-white border border-light-slate-8 hover:border-orange-500 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:border-orange-500 data-[state=checked]:bg-orange-500",
+            "peer h-4 w-4 shrink-0 rounded cursor-pointer bg-white border border-light-slate-8 hover:border-orange-500 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:border-orange-500 data-[state=checked]:bg-orange-500",
             className
           )}
           {...props}
           id={getId()}
         >
-          <CheckboxPrimitive.Indicator className={clsx("flex items-center justify-center text-white")}>
+          <CheckboxPrimitive.Indicator className={clsx("p-0.5 flex items-center justify-center text-white")}>
             <FiCheck className="w-full h-full" />
           </CheckboxPrimitive.Indicator>
         </CheckboxPrimitive.Root>
         {label && (
           <label
             htmlFor={getId()}
-            className="ml-3 text-sm font-medium leading-none cursor-pointer text-light-slate-12 peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            className="ml-3 text-sm leading-none cursor-pointer text-light-slate-12 peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
           >
             {label}
           </label>

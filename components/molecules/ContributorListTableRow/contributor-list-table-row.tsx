@@ -43,6 +43,40 @@ function getLastContributedRepo(pullRequests: DbRepoPR[]) {
 
   return sortedPullRequests[0].full_name;
 }
+
+function getTopContributorLanguages(contributor: DbUser) {
+  // some contributors will have empty language objects so we will pull their popular language from the interests field instead of defaulting to nothing
+  const entries = Object.entries<string>(contributor.languages);
+  if (entries.length === 0) {
+    return [contributor.interests];
+  }
+  return entries
+    .sort(([, a], [, b]) => (a < b ? -1 : 1))
+    .slice(0, 2)
+    .map(([language]) => language);
+}
+
+function getLanguageAbbreviation(language: string) {
+  switch (language.toLowerCase()) {
+    case "javascript":
+      return "JS";
+    case "typescript":
+      return "TS";
+    case "powershell":
+      return "Shell"; // Powershell is too long for our current table design
+    case "batchfile":
+      return "Batch"; // Batchfile is too long for our current table design
+    case "vim script": // Vim script is too long for our current table design
+      return "Vim";
+    case "dockerfile":
+      return "Docker"; // Dockerfile is too long for our current table design
+    case "makefile":
+      return "Make"; // Makefile is too long for our current table design
+    default:
+      return language;
+  }
+}
+
 const ContributorListTableRow = ({
   contributor,
   topic,
@@ -62,8 +96,8 @@ const ContributorListTableRow = ({
   });
 
   const repoList = useRepoList(Array.from(new Set(data.map((prData) => prData.full_name))).join(","));
-  const contributorLanguageList = user ? Object.keys(user.languages).map((language) => language) : [];
-  const days = getPullRequestsToDays(data);
+  const contributorLanguageList = user ? getTopContributorLanguages(user) : [];
+  const days = getPullRequestsToDays(data, Number(range || "30"));
   const totalPrs = data.length;
   const last30days = [
     {
@@ -73,6 +107,7 @@ const ContributorListTableRow = ({
     },
   ];
   const mergedPrs = data.filter((prData) => prData.merged);
+  const [firstContributorLanguage, secondContributorLanguage] = contributorLanguageList;
 
   return (
     <>
@@ -89,14 +124,18 @@ const ContributorListTableRow = ({
             />
           )}
           <div className="w-[68%]">
-            <DevProfile
-              company={user?.company || getLastContributedRepo(data)}
-              username={login}
-              hasBorder={!contributor.author_login}
-            />
+            <DevProfile username={login} hasBorder={!contributor.author_login} />
           </div>
           <div className="w-[34%] text-normal text-light-slate-11  h-full">
-            <div className="flex gap-x-3">{<p>{getLastContributionDate(mergedPrs)}</p>}</div>
+            <div className="flex flex-col gap-x-3">
+              <p>{getLastContributionDate(mergedPrs)}</p>{" "}
+              <p
+                className="text-sm font-normal truncate text-light-slate-9 md:hidden lg:max-w-[8.12rem]"
+                title={user?.company || getLastContributedRepo(data)}
+              >
+                {user?.company || getLastContributedRepo(data)}
+              </p>
+            </div>
           </div>
           <div className="">
             <div
@@ -130,13 +169,11 @@ const ContributorListTableRow = ({
 
           <div className="flex items-center justify-between py-3 border-b">
             <div>Languages</div>
-            {contributorLanguageList.length > 0 ? (
+            {contributorLanguageList && (
               <p>
-                {contributorLanguageList[0]}
-                {contributorLanguageList.length > 1 ? `,+${contributorLanguageList.length - 1}` : ""}
+                {firstContributorLanguage && getLanguageAbbreviation(firstContributorLanguage)}
+                {secondContributorLanguage && `, ${getLanguageAbbreviation(secondContributorLanguage)}`}
               </p>
-            ) : (
-              "-"
             )}
           </div>
           <div className="flex items-center justify-between py-3 border-b">
@@ -161,11 +198,7 @@ const ContributorListTableRow = ({
 
         {/* Column: Contributors */}
         <div className={clsx("flex-1 lg:min-w-[12.5rem] overflow-hidden")}>
-          <DevProfile
-            company={user?.company || getLastContributedRepo(data)}
-            username={login}
-            hasBorder={!contributor.author_login}
-          />
+          <DevProfile username={login} hasBorder={!contributor.author_login} />
         </div>
         {/* Column: Act */}
         <div className={clsx("flex-1 flex lg:max-w-[6.25rem] w-fit justify-center")}>
@@ -179,18 +212,24 @@ const ContributorListTableRow = ({
 
         {/* Column: Last Contribution */}
         <div className={clsx("flex-1 lg:max-w-[130px]  flex text-light-slate-11 justify-center ")}>
-          <div className="flex">{<p>{contributor.author_login ? getLastContributionDate(mergedPrs) : "-"}</p>}</div>
+          <div className="flex flex-col">
+            <p>{contributor.author_login ? getLastContributionDate(mergedPrs) : "-"}</p>{" "}
+            <p
+              className="hidden whitespace-nowrap overflow-hidden overflow-ellipsis text-sm font-normal md:inline-flex text-light-slate-9 lg:max-w-[8.12rem]"
+              title={user?.company || getLastContributedRepo(data)}
+            >
+              {user?.company || getLastContributedRepo(data)}
+            </p>
+          </div>
         </div>
 
         {/* Column: Language */}
         <div className={clsx("flex-1 hidden lg:max-w-[7.5rem]  justify-center lg:flex")}>
-          {contributorLanguageList.length > 0 ? (
+          {contributorLanguageList && (
             <p>
-              {contributorLanguageList[0]}
-              {contributorLanguageList.length > 1 ? `,+${contributorLanguageList.length - 1}` : ""}
+              {firstContributorLanguage && getLanguageAbbreviation(firstContributorLanguage)}
+              {secondContributorLanguage && `, ${getLanguageAbbreviation(secondContributorLanguage)}`}
             </p>
-          ) : (
-            "-"
           )}
         </div>
 
