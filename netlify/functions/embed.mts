@@ -22,21 +22,19 @@ export const handler = async (event, context) => {
     // }, jwtToken);
 
     // Wait for any necessary elements or conditions.
-    // const graphHandle = await page.waitForSelector('article:has([data-ready="true"])')
-    // grab second article
-    const graphHandle = await page.waitForSelector('article')
-    // const graphHandle = await page.waitForSelector('article')
+    const graphHandle = await page.waitForSelector('article:has([data-ready="true"])')
+
 
     // wait until .loader selector is gone
     await page.waitForFunction(() => {
       return !document.querySelector('.loading')
     })
 
-    // await page.waitForFunction(() => {
-    //   // const images = Array.from(document.querySelectorAll('article:has([data-ready="true"]) img'));
-    //   const images = Array.from(document.querySelectorAll('article:nth-child(1) img'));
-    //   return images.every((i) => i.complete);
-    // });
+    await page.waitForFunction(() => {
+      const images = Array.from(document.querySelectorAll('article:has([data-ready="true"]) img'));
+
+      return images.every((i) => i.complete);
+    });
 
     // Capture a screenshot of the authenticated page.
     const screenshot = await graphHandle.screenshot();
