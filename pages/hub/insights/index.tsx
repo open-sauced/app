@@ -78,6 +78,7 @@ const InsightsHub: WithPageLayout<
     const toaster = toast({
       description: "Welcome to your Insights Hub!",
       variant: "success",
+      duration: 30000,
       action: (
         <div className="flex flex-col">
           <div className="flex align-middle">
