@@ -141,7 +141,9 @@ const InsightsHub: WithPageLayout<
 
         {!user && featuredInsights.length > 0
           ? featuredInsights.map((insight) => (
-              <InsightRow isEditable={false} key={`insights_${insight.id}`} user={user} insight={insight} />
+              <div className="mt-4" key={`insights_${insight.id}`}>
+                <InsightRow isEditable={false} user={user} insight={insight} />
+              </div>
             ))
           : null}
       </section>
