@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.79.0-beta.2](https://github.com/open-sauced/insights/compare/v1.79.0-beta.1...v1.79.0-beta.2) (2023-12-04)
+
+
+### 🐛 Bug Fixes
+
+* now the highlight input form closes only if you press ESC or click the close button ([e56ea73](https://github.com/open-sauced/insights/commit/e56ea73b032329ea3fd435a135bf2cb75768562e))
+* now the highlight input form closes only if you press ESC or click the close button ([#2257](https://github.com/open-sauced/insights/issues/2257)) ([1b94421](https://github.com/open-sauced/insights/commit/1b944216a2b8a401a8a924e559a67de3c039b34e))
+
 ## [1.79.0-beta.1](https://github.com/open-sauced/insights/compare/v1.78.1-beta.1...v1.79.0-beta.1) (2023-12-04)
 
 
