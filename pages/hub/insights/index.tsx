@@ -17,31 +17,7 @@ import useStore from "lib/store";
 import useSession from "lib/hooks/useSession";
 import { useToast } from "lib/hooks/useToast";
 import Text from "components/atoms/Typography/text";
-import { RepoList } from "components/molecules/CardRepoList/card-repo-list";
 import { fetchApiData } from "helpers/fetchApiData";
-
-const staticRepos: RepoList[] = [
-  {
-    repoOwner: "vercel",
-    repoName: "next.js",
-    repoIcon: "https://avatars.githubusercontent.com/u/14985020?s=200&v=4",
-  },
-  {
-    repoIcon: "https://avatars.githubusercontent.com/u/69631?s=200&v=4",
-    repoOwner: "facebook",
-    repoName: "react",
-  },
-  {
-    repoName: "freeCodeCamp",
-    repoOwner: "freeCodeCamp",
-    repoIcon: "https://avatars.githubusercontent.com/u/9892522?s=200&v=4",
-  },
-  {
-    repoName: "node",
-    repoOwner: "nodejs",
-    repoIcon: "https://avatars.githubusercontent.com/u/9950313?s=200&v=4",
-  },
-];
 
 interface InsightsHubProps {
   featuredInsights: DbUserInsight[];
