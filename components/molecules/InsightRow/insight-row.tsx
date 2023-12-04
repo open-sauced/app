@@ -4,6 +4,7 @@ import { BsPencilFill } from "react-icons/bs";
 import { MdOutlineArrowForwardIos } from "react-icons/md";
 import { User } from "@supabase/supabase-js";
 
+import clsx from "clsx";
 import { getRelativeDays } from "lib/utils/date-utils";
 import useRepositories from "lib/hooks/api/useRepositories";
 import getRepoInsights from "lib/utils/get-repo-insights";
@@ -17,9 +18,10 @@ import CardRepoList from "../CardRepoList/card-repo-list";
 interface InsightRowProps {
   insight: DbUserInsight;
   user: User | null;
+  isEditable?: boolean;
 }
 
-const InsightRow = ({ insight, user }: InsightRowProps) => {
+const InsightRow = ({ insight, user, isEditable = true }: InsightRowProps) => {
   const repoIds = insight.repos.map((repo) => repo.repo_id);
   const { data: repoData, meta: repoMeta } = useRepositories(repoIds);
   const { open, merged, velocity, total, repoList } = getRepoInsights(repoData);
@@ -35,16 +37,26 @@ const InsightRow = ({ insight, user }: InsightRowProps) => {
                 {insight.name}
               </Link>
             </div>
-            <div className="rounded-2xl border px-2 text-light-slate-11">
-              {!!insight.is_public ? "public" : "private"}
+            <div
+              className={clsx(
+                "rounded-2xl border px-2 text-light-slate-11",
+                !isEditable ? "text-sauced-orange bg-orange-200 border-orange-500" : ""
+              )}
+            >
+              {!isEditable ? "demo" : !!insight.is_public ? "public" : "private"}
             </div>
-            <div className="flex-1 md:hidden">
-              <span className=" bg-light-slate-1 inline-block rounded-lg p-2.5 border mr-2">
-                <Link href={`/hub/insights/${insight.id}/edit`}>
-                  <BsPencilFill title="Edit Insight Page" className="text-light-slate-10 text-md cursor-pointer w-4" />
-                </Link>
-              </span>
-            </div>
+            {isEditable ? (
+              <div className="flex-1 md:hidden">
+                <span className=" bg-light-slate-1 inline-block rounded-lg p-2.5 border mr-2">
+                  <Link href={`/hub/insights/${insight.id}/edit`}>
+                    <BsPencilFill
+                      title="Edit Insight Page"
+                      className="text-light-slate-10 text-md cursor-pointer w-4"
+                    />
+                  </Link>
+                </span>
+              </div>
+            ) : null}
           </div>
           <div className="w-full truncate">
             {insight.repos && insight.repos.length > 0 && (

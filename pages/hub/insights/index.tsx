@@ -2,8 +2,8 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import clsx from "clsx";
 
-import Link from "next/link";
-import { MdOutlineArrowForwardIos } from "react-icons/md";
+import { GetServerSidePropsContext } from "next";
+import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import InsightRow from "components/molecules/InsightRow/insight-row";
 import Pagination from "components/molecules/Pagination/pagination";
 import PaginationResults from "components/molecules/PaginationResults/pagination-result";
@@ -17,11 +17,8 @@ import useStore from "lib/store";
 import useSession from "lib/hooks/useSession";
 import { useToast } from "lib/hooks/useToast";
 import Text from "components/atoms/Typography/text";
-import Card from "components/atoms/Card/card";
-import getPercent from "lib/utils/get-percent";
-import Pill from "components/atoms/Pill/pill";
-import { getRelativeDays } from "lib/utils/date-utils";
-import CardRepoList, { RepoList } from "components/molecules/CardRepoList/card-repo-list";
+import { RepoList } from "components/molecules/CardRepoList/card-repo-list";
+import { fetchApiData } from "helpers/fetchApiData";
 
 const staticRepos: RepoList[] = [
   {
@@ -46,7 +43,48 @@ const staticRepos: RepoList[] = [
   },
 ];
 
-const InsightsHub: WithPageLayout = () => {
+interface InsightsHubProps {
+  featuredInsights: DbUserInsight[];
+}
+export async function getServerSideProps(ctx: GetServerSidePropsContext) {
+  const supabase = createPagesServerClient(ctx);
+
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+
+  if (!session) {
+    const { data, error } = await fetchApiData<PagedData<DbUserInsight>>({
+      path: "insights/featured",
+      bearerToken: "",
+      pathValidator: () => true,
+    });
+
+    if (error?.status === 404) {
+      return {
+        notFound: true,
+      };
+    }
+
+    return {
+      props: {
+        featuredInsights: data?.data ?? [],
+      },
+    };
+  }
+
+  return {
+    props: {
+      featuredInsights: [],
+    },
+  };
+}
+
+const InsightsHub: WithPageLayout<
+  InsightsHubProps & {
+    featuredInsights: DbUserInsight[];
+  }
+> = ({ featuredInsights }) => {
   const router = useRouter();
   const { user, signIn } = useSupabaseAuth();
   const store = useStore();
@@ -54,7 +92,6 @@ const InsightsHub: WithPageLayout = () => {
   const { toast } = useToast();
   const { session } = useSession(true);
   const { data, meta, isError, isLoading, setPage } = useUserInsights();
-  const testInsightsId = process.env.NEXT_PUBLIC_INSIGHTS_PAGE_ID;
 
   function handleView() {
     const insight = data.slice(0, 1).shift();
@@ -69,8 +106,9 @@ const InsightsHub: WithPageLayout = () => {
         <div className="flex flex-col">
           <div className="flex align-middle">
             <Text>
-              We&apos;ve included a featured Insight Page for you to test out. You can also create your own to get
-              insights on repositories.
+              {session
+                ? "We&apos;ve included a featured Insight Page for you to test out. You can also create your own to get insights on repositories."
+                : "Try out our Demo Insight page or sign up to create your own"}
             </Text>
           </div>
           <div className="flex flex-start">
@@ -81,14 +119,16 @@ const InsightsHub: WithPageLayout = () => {
             >
               <Text className="pr-2 cursor-pointer">Dismiss</Text>
             </button>
-            <button
-              onClick={() => {
-                toaster && toaster.dismiss();
-                handleView();
-              }}
-            >
-              <Text className="text-orange-500 cursor-pointer">Open Insight Page</Text>
-            </button>
+            {session ? (
+              <button
+                onClick={() => {
+                  toaster && toaster.dismiss();
+                  handleView();
+                }}
+              >
+                <Text className="text-orange-500 cursor-pointer">Open Insight Page</Text>
+              </button>
+            ) : null}
           </div>
         </div>
       ),
@@ -98,7 +138,10 @@ const InsightsHub: WithPageLayout = () => {
   }
 
   useEffect(() => {
-    if (session && session.insights_count === 0 && !dismissFeaturedInsights) {
+    if (
+      (session && session.insights_count === 0 && !dismissFeaturedInsights) ||
+      (!session && !dismissFeaturedInsights)
+    ) {
       openInsightToast();
     }
   }, [session, user]);
@@ -120,71 +163,11 @@ const InsightsHub: WithPageLayout = () => {
           </>
         ) : null}
 
-        {!user ? (
-          <>
-            <div className="w-full">
-              <Text className="text-base ">
-                Welcome to the Insights Hub, we&apos;ve included a featured Insight Page for you to test out. You can
-                also create your own to get insights on repositories.
-              </Text>
-
-              <Card className="flex flex-col md:flex-row w-full rounded-lg px-4 lg:px-8 py-5 gap-4 lg:gap-2 bg-white items-center mt-4">
-                <>
-                  <div className="flex w-full flex-1 flex-col gap-4 lg:gap-6">
-                    <div className="flex items-center lg:items-center gap-4 ">
-                      <div className="w-4 h-4 bg-light-orange-10 rounded-full"></div>
-                      <div className="text-xl text-light-slate-12 flex justify-between">
-                        <Link href={`/pages/anonymous/${testInsightsId}/dashboard`}>Top 10 Javascript Repos</Link>
-                      </div>
-                      <div className="rounded-2xl border px-2 text-light-slate-11">public</div>
-                    </div>
-                    <div className="w-full truncate">
-                      <CardRepoList limit={3} repoList={staticRepos} total={10} />
-                    </div>
-                  </div>
-                  <div className="flex-1 w-full">
-                    <div className="flex items-center gap-8 w-full">
-                      {/* Average Prs opened section */}
-                      <div className="flex flex-col gap-2 min-w-[120px] flex-1">
-                        <span className="text-xs text-light-slate-11">Avg PRs opened</span>
-                        <div
-                          className="flex text-light-grass-10 items-center  gap-6
-            "
-                        >
-                          <Text className="md:!text-lg lg:!text-2xl !text-black !leading-none">{`${50} PR${
-                            50 > 1 ? "s" : ""
-                          }`}</Text>
-                          <Pill color="green" text={`${getPercent(300, 23)}%`} />
-                        </div>
-                      </div>
-
-                      {/* Average Pr Velocity section */}
-                      <div className="flex-1 gap-2 flex flex-col  min-w-[150px]">
-                        <span className="text-xs text-light-slate-11">Avg PRs velocity</span>
-                        <div className="flex text-light-grass-10 items-center  gap-6">
-                          <Text className="md:!text-lg lg:!text-2xl !tracking-widest !text-black !leading-none">
-                            {getRelativeDays(Math.round(24 / 16))}
-                          </Text>
-                          <Pill color="purple" text={`${getPercent(300, 40)}%`} />
-                        </div>
-                      </div>
-                      <div className="flex-1 hidden md:flex  justify-end">
-                        <Link href={`/pages/anonymous/${testInsightsId}/dashboard`}>
-                          <span className=" bg-light-slate-1 inline-block rounded-lg p-2.5 border cursor-pointer">
-                            <MdOutlineArrowForwardIos
-                              title="Go To Insight Page"
-                              className="text-light-slate-10 text-lg"
-                            />
-                          </span>
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-                </>
-              </Card>
-            </div>
-          </>
-        ) : null}
+        {!user && featuredInsights.length > 0
+          ? featuredInsights.map((insight) => (
+              <InsightRow isEditable={false} key={`insights_${insight.id}`} user={user} insight={insight} />
+            ))
+          : null}
       </section>
 
       <div

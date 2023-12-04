@@ -74,7 +74,6 @@ const ListsHub: WithPageLayout<
   const [listNameToDelete, setListNameToDelete] = useState("");
   const [listIdToDelete, setListIdToDelete] = useState("");
 
-  const testListId = process.env.NEXT_PUBLIC_LIST_PAGE_ID;
   const handleOnDelete = (name: string, id: string) => {
     setIsDeleteOpen(true);
     setListNameToDelete(name);
