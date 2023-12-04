@@ -64,7 +64,7 @@ const MostActiveCard = ({ children }: { children: ReactNode }) => {
           maxHeight: "500px",
         }}
       >
-        <div className="font-medium text-lg text-slate-900 mb-2">Most active contributors</div>
+        <h2 className="font-medium text-lg text-slate-900 mb-2">Most active contributors</h2>
         {children}
       </div>
     </Card>
@@ -117,7 +117,7 @@ export default function MostActiveContributorsCard({
         )}
 
         {/* buttons */}
-        <div className="flex gap-1 mb-4">
+        <div data-ready={!isLoading} className="flex gap-1 mb-4">
           <ContributorTypeFilter contributorType={contributorType} setContributorType={setContributorType} />
         </div>
         {/* chart */}
