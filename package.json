@@ -28,7 +28,7 @@
     "prestart": "npx @open-sauced/check-engines",
     "push": "npx @open-sauced/conventional-commit",
     "dev": "next dev",
-    "prebuild": "node generate-netlify-env.js",
+    "prebuild": "node generate-netlify-env.js && npx playwright install --with-deps chromium",
     "build": "next build",
     "start": "next start",
     "test": "vitest run",
