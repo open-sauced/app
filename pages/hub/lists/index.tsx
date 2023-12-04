@@ -144,7 +144,7 @@ const ListsHub: WithPageLayout<
                 key={`featured_list_${i}`}
                 list={{
                   id: list.id,
-                  user: { login: "bdougie", id: 1, name: "crap" },
+                  user: { login: "bdougie", id: 1, name: "Brian Douglas" },
                   name: `Demo | ${list.name}`,
                   created_at: " ",
                   updated_at: "",
