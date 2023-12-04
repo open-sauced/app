@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.79.0-beta.1](https://github.com/open-sauced/insights/compare/v1.78.1-beta.1...v1.79.0-beta.1) (2023-12-04)
+
+
+### 🍕 Features
+
+* upgraded to Storybook 7.6.3 ([#2244](https://github.com/open-sauced/insights/issues/2244)) ([a2ae11a](https://github.com/open-sauced/insights/commit/a2ae11a5628c88c430e0403356889e4ca5ff218b))
+
 ### [1.78.1-beta.1](https://github.com/open-sauced/insights/compare/v1.78.0...v1.78.1-beta.1) (2023-12-01)
 
 
