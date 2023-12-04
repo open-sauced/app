@@ -11,7 +11,9 @@ export const handler = async (event, context) => {
     // const jwtToken = "your_jwt_token";
 
     // Navigate to the authenticated page.
-    await page.goto("http://localhost:3000/lists/23c2ca69-7667-4b6a-ad2e-d402999af310/activity");
+    // await page.goto("http://localhost:3000/lists/23c2ca69-7667-4b6a-ad2e-d402999af310/activity");
+    await page.goto("https://app.opensauced.pizza/lists/d2aa8036-e296-47a2-870b-b449c4fd86bb/activity?range=7")
+    // await page.goto("https://nickyt.co")
 
     // Set cookies and JWT token in the page context.
     // await page.setCookie(...cookies);
@@ -20,30 +22,35 @@ export const handler = async (event, context) => {
     // }, jwtToken);
 
     // Wait for any necessary elements or conditions.
-    const graphHandle = await page.waitForSelector('article:has([data-ready="true"])')
+    // const graphHandle = await page.waitForSelector('article:has([data-ready="true"])')
+    // grab second article
+    const graphHandle = await page.waitForSelector('article')
+    // const graphHandle = await page.waitForSelector('article')
 
+    // wait until .loader selector is gone
     await page.waitForFunction(() => {
-      const images = Array.from(document.querySelectorAll('article:has([data-ready="true"]) img'));
-      return images.every(img => img.complete);
-    });
+      return !document.querySelector('.loading')
+    })
+
+    // await page.waitForFunction(() => {
+    //   // const images = Array.from(document.querySelectorAll('article:has([data-ready="true"]) img'));
+    //   const images = Array.from(document.querySelectorAll('article:nth-child(1) img'));
+    //   return images.every((i) => i.complete);
+    // });
 
     // Capture a screenshot of the authenticated page.
     const screenshot = await graphHandle.screenshot();
+    // const screenshot = await page.screenshot()
 
     // Close the browser.
     await browser.close();
-
-    // Set the HTTP response headers for an image.
-    const responseHeaders = {
-      "Content-Type": "image/png", // Set the appropriate image content type.
-    };
 
     // Return the screenshot as the response body.
     return {
       statusCode: 200,
       body: screenshot.toString("base64"),
       headers: { "Content-Type": "image/png" },
-      isBase64Encoded: true, // Specify that the body is base64-encoded.
+      isBase64Encoded: true,
     };
   } catch (error) {
     return {
