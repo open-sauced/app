@@ -28,7 +28,7 @@
     "prestart": "npx @open-sauced/check-engines",
     "push": "npx @open-sauced/conventional-commit",
     "dev": "next dev",
-    "prebuild": "node generate-netlify-env.js && npx playwright install --with-deps chromium",
+    "prebuild": "node generate-netlify-env.js",
     "build": "next build",
     "start": "next start",
     "test": "vitest run",
@@ -42,7 +42,7 @@
     "build-storybook": "storybook build",
     "lint": "next lint",
     "format": "next lint -- --fix --dir .",
-    "prepare": "npx husky install"
+    "prepare": "npx husky install & npx playwright install chromium"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.8",
