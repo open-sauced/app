@@ -5,6 +5,7 @@ import { RiDeleteBinLine } from "react-icons/ri";
 import Text from "components/atoms/Typography/text";
 import { useFetchListContributors } from "lib/hooks/useList";
 import Card from "components/atoms/Card/card";
+import Pill from "components/atoms/Pill/pill";
 import StackedAvatar, { Contributor } from "../StackedAvatar/stacked-avatar";
 
 interface ListCardProps {
@@ -29,7 +30,7 @@ const ListCard = ({ list, handleOnDeleteClick }: ListCardProps) => {
                 <Link href={`/lists/${list.id}/overview`}>{list.name}</Link>
               </h4>
             </div>
-            <div className="px-2 border rounded-2xl text-light-slate-11">{!!list.is_public ? "public" : "private"}</div>
+            <Pill text={!!list.is_public ? "public" : "private"} />
           </div>
         </div>
         <div className="">

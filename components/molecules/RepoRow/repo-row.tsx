@@ -1,11 +1,7 @@
 import { useState } from "react";
-import {
-  ArrowTrendingDownIcon,
-  ArrowTrendingUpIcon,
-  ChevronDownIcon,
-  ChevronUpIcon,
-  MinusSmallIcon,
-} from "@heroicons/react/24/solid";
+import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/solid";
+import { GoDotFill } from "react-icons/go";
+
 import clsx from "clsx";
 
 import { RepositoriesRows } from "components/organisms/RepositoriesTable/repositories-table";
@@ -39,15 +35,15 @@ export const getActivity = (total?: number, loading?: boolean) => {
     return "-";
   }
 
-  if (total > 80) {
-    return <Pill icon={<ArrowTrendingUpIcon color="green" className="w-4 h-4" />} text="High" color="green" />;
+  if (total > 7) {
+    return <Pill icon={<GoDotFill className="w-4 h-4 fill-green-500" />} text="High" color="green" />;
   }
 
   if (total >= 5 && total <= 80) {
-    return <Pill icon={<MinusSmallIcon color="black" className="w-4 h-4" />} text="Medium" color="yellow" />;
+    return <Pill icon={<GoDotFill className="w-4 h-4 fill-amber-500" />} text="Med" color="yellow" />;
   }
 
-  return <Pill icon={<ArrowTrendingDownIcon color="red" className="w-4 h-4" />} text="Low" color="red" />;
+  return <Pill icon={<GoDotFill className="w-4 h-4 fill-red-500" />} text="Low" color="red" />;
 };
 
 const getTotalPrs = (

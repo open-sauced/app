@@ -211,7 +211,7 @@ const ContributorListTableRow = ({
         </div>
 
         {/* Column: Last Contribution */}
-        <div className={clsx("flex-1 lg:max-w-[130px]  flex text-light-slate-11 justify-center ")}>
+        <div className={clsx("flex-1 lg:max-w-[130px]  flex text-light-slate-11")}>
           <div className="flex flex-col">
             <p>{contributor.author_login ? getLastContributionDate(mergedPrs) : "-"}</p>{" "}
             <p

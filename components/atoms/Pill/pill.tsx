@@ -14,17 +14,18 @@ const Pill: React.FC<PillProps> = ({ className, text, color = "slate", size = "b
       className={`
         ${
           color === "green"
-            ? "bg-light-grass-4 "
+            ? "bg-light-grass-2 border-light-grass-6"
             : color === "yellow"
-            ? "bg-amber-200 "
+            ? "bg-yellow-50 border-amber-200"
             : color === "red"
-            ? "bg-light-red-4 "
+            ? "bg-red-50 border-red-200"
             : color === "purple"
-            ? "bg-purple-200"
-            : "bg-light-slate-4 "
+            ? "bg-purple-50 border-purple-200"
+            : "bg-slate-50 border-slate-200"
         }
         ${size === "small" ? "py-1 px-1.5  " : "py-1.5 px-2 "}
-        inline-flex items-center rounded-full gap-1 ${className}`}
+        ${icon ? "pr-3" : " "}
+        inline-flex items-center rounded-full gap-1 border-1 ${className}`}
     >
       {icon}
 
@@ -32,7 +33,7 @@ const Pill: React.FC<PillProps> = ({ className, text, color = "slate", size = "b
         className={`
         ${
           color === "green"
-            ? "text-light-grass-11"
+            ? "text-light-grass-10"
             : color === "yellow"
             ? "text-amber-700"
             : color === "red"
