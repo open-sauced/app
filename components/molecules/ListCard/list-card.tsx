@@ -25,7 +25,9 @@ const ListCard = ({ list, handleOnDeleteClick }: ListCardProps) => {
           <div className="flex items-center gap-4 lg:items-center ">
             <div className="w-4 h-4 rounded-full bg-light-orange-10"></div>
             <div className="flex justify-between text-xl text-light-slate-12">
-              <Link href={`/lists/${list.id}/overview`}>{list.name}</Link>
+              <h4>
+                <Link href={`/lists/${list.id}/overview`}>{list.name}</Link>
+              </h4>
             </div>
             <div className="px-2 border rounded-2xl text-light-slate-11">{!!list.is_public ? "public" : "private"}</div>
           </div>

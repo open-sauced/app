@@ -66,12 +66,14 @@ const HubLayout = ({ children }: { children: React.ReactNode }) => {
                       <ul className="flex items-center gap-3">
                         {navLinks.map((link, index) => (
                           <li key={`hub-nav-${index}-${link.name}`}>
-                            <Link
-                              className={clsx("text-3xl leading-none mx-0", getActiveLinkClassNames(link.href))}
-                              href={link.href}
-                            >
-                              {link.name}
-                            </Link>
+                            <h2>
+                              <Link
+                                className={clsx("text-3xl leading-none mx-0", getActiveLinkClassNames(link.href))}
+                                href={link.href}
+                              >
+                                {link.name}
+                              </Link>
+                            </h2>
                           </li>
                         ))}
                       </ul>

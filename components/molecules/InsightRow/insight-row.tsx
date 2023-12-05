@@ -31,7 +31,9 @@ const InsightRow = ({ insight, user }: InsightRowProps) => {
           <div className="flex items-center lg:items-center gap-4 ">
             <div className="w-4 h-4 bg-light-orange-10 rounded-full"></div>
             <div className="text-xl text-light-slate-12 flex justify-between">
-              <Link href={`/pages/${user?.user_metadata.user_name}/${insight.id}/dashboard`}>{insight.name}</Link>
+              <h4>
+                <Link href={`/pages/${user?.user_metadata.user_name}/${insight.id}/dashboard`}>{insight.name}</Link>
+              </h4>
             </div>
             <div className="rounded-2xl border px-2 text-light-slate-11">
               {!!insight.is_public ? "public" : "private"}
