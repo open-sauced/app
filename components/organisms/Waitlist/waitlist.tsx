@@ -29,7 +29,7 @@ const WaitlistComponent = () => {
           </div>
           <div className="flex mt-8 flex-col items-center">
             <Button
-              className="text-lg hover:border-dark-orange-9 focus-visible:ring-dark-orange-3 focus-visible:ring-2 hover:bg-dark-orange-3  bg-dark-orange-2 border-dark-orange-7 font-semibold"
+              className="text-lg hover:border-dark-orange-9 hover:bg-dark-orange-3  bg-dark-orange-2 border-dark-orange-7 font-semibold"
               variant="outline"
             >
               <FaGithub className="mr-2" /> Share on Twitter
