@@ -15,7 +15,7 @@ body {
 
 h1 {
   @apply text-4xl;
-  @apply font-extrabold;
+  @apply font-bold;
   @apply tracking-tight;
   @apply lg:text-5xl;
 }
