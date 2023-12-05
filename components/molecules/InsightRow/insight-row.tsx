@@ -34,7 +34,7 @@ const InsightRow = ({ insight, user, isEditable = true }: InsightRowProps) => {
             <div className="w-4 h-4 bg-light-orange-10 rounded-full"></div>
             <div className="text-xl text-light-slate-12 flex justify-between">
               <Link href={`/pages/${user ? user?.user_metadata.user_name : "anonymous"}/${insight.id}/dashboard`}>
-                {!isEditable ? `Demo | ${insight.name}` : insight.name}
+                {isEditable ? insight.name : `Demo | ${insight.name}`}
               </Link>
             </div>
             <div

@@ -138,21 +138,19 @@ const ListsHub: WithPageLayout<
 
         {isLoading && sessionToken ? <SkeletonWrapper count={3} classNames="w-full" height={95} radius={10} /> : null}
 
-        {!sessionToken && featuredLists.length > 0
-          ? featuredLists.map((list, i) => (
-              <ListCard
-                key={`featured_list_${i}`}
-                list={{
-                  id: list.id,
-                  user: { login: "bdougie", id: 1, name: "Brian Douglas" },
-                  name: `Demo | ${list.name}`,
-                  created_at: " ",
-                  updated_at: "",
-                  is_public: list.is_public,
-                }}
-              />
-            ))
-          : null}
+        {featuredLists.map((list, i) => (
+          <ListCard
+            key={`featured_list_${i}`}
+            list={{
+              id: list.id,
+              user: { login: "bdougie", id: 1, name: "Brian Douglas" },
+              name: `Demo | ${list.name}`,
+              created_at: " ",
+              updated_at: "",
+              is_public: list.is_public,
+            }}
+          />
+        ))}
       </section>
       <div
         className={clsx("py-1 md:py-4 flex w-full md:mt-5 justify-between items-center", {

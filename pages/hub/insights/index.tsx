@@ -116,7 +116,7 @@ const InsightsHub: WithPageLayout<
 
   useEffect(() => {
     if (
-      (session && session.insights_count === 0 && !dismissFeaturedInsights) ||
+      (session && session?.insights_count === 0 && !dismissFeaturedInsights) ||
       (!session && !dismissFeaturedInsights)
     ) {
       openInsightToast();
@@ -140,13 +140,11 @@ const InsightsHub: WithPageLayout<
           </>
         ) : null}
 
-        {!user && featuredInsights.length > 0
-          ? featuredInsights.map((insight) => (
-              <div className="mt-4" key={`insights_${insight.id}`}>
-                <InsightRow isEditable={false} user={user} insight={insight} />
-              </div>
-            ))
-          : null}
+        {featuredInsights.map((insight) => (
+          <div className="mt-4" key={`insights_${insight.id}`}>
+            <InsightRow isEditable={false} user={user} insight={insight} />
+          </div>
+        ))}
       </section>
 
       <div
