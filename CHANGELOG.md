@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.79.0-beta.3](https://github.com/open-sauced/insights/compare/v1.79.0-beta.2...v1.79.0-beta.3) (2023-12-05)
+
+
+### 🐛 Bug Fixes
+
+* now most used languages are truncated to a limit of two ([#2238](https://github.com/open-sauced/insights/issues/2238)) ([97ce66e](https://github.com/open-sauced/insights/commit/97ce66e352c4380368f864c24029c66d4096af95))
+
 ## [1.79.0-beta.2](https://github.com/open-sauced/insights/compare/v1.79.0-beta.1...v1.79.0-beta.2) (2023-12-04)
 
 
