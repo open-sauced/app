@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import clsx from "clsx";
 
-import { GetServerSidePropsContext } from "next";
-import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { WithPageLayout } from "interfaces/with-page-layout";
 import HubLayout from "layouts/hub";
 
@@ -19,54 +17,15 @@ import { useToast } from "lib/hooks/useToast";
 
 import { useFetchAllLists } from "lib/hooks/useList";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
-import { fetchApiData, validateListPath } from "helpers/fetchApiData";
+import useFetchFeaturedLists from "lib/hooks/useFetchFeaturedLists";
 
-interface ListsHubProps {
-  featuredLists: DbUserList[];
-}
-
-export async function getServerSideProps(ctx: GetServerSidePropsContext) {
-  const supabase = createPagesServerClient(ctx);
-
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
-
-  if (!session) {
-    const { data, error } = await fetchApiData<PagedData<DbUserList>>({
-      path: "lists/featured",
-      bearerToken: "",
-      pathValidator: validateListPath,
-    });
-
-    if (error?.status === 404) {
-      return {
-        notFound: true,
-      };
-    }
-
-    return {
-      props: {
-        featuredLists: data?.data || [],
-      },
-    };
-  }
-
-  return {
-    props: {
-      featuredLists: [],
-    },
-  };
-}
-
-const ListsHub: WithPageLayout<
-  ListsHubProps & {
-    featuredLists: DbUserList[];
-  }
-> = ({ featuredLists }) => {
-  const { data, isLoading, meta, setPage, mutate } = useFetchAllLists();
-  const { toast } = useToast();
+const ListsHub: WithPageLayout = () => {
   const { sessionToken } = useSupabaseAuth();
+  const { data, isLoading, meta, setPage, mutate } = useFetchAllLists(30, !!sessionToken);
+  const { data: featuredListsData, isLoading: featuredListsLoading } = useFetchFeaturedLists(
+    sessionToken ? false : true
+  );
+  const { toast } = useToast();
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [disabled, setDisabled] = useState(true);
   const [deleteLoading, setDeleteLoading] = useState(false);
@@ -136,9 +95,12 @@ const ListsHub: WithPageLayout<
           </div>
         )}
 
-        {isLoading && sessionToken ? <SkeletonWrapper count={3} classNames="w-full" height={95} radius={10} /> : null}
+        {sessionToken && isLoading ? <SkeletonWrapper count={3} classNames="w-full" height={95} radius={10} /> : null}
 
-        {featuredLists.map((list, i) => (
+        {!sessionToken && featuredListsLoading ? (
+          <SkeletonWrapper count={1} classNames="w-full" height={95} radius={10} />
+        ) : null}
+        {featuredListsData.map((list, i) => (
           <ListCard
             key={`featured_list_${i}`}
             list={{

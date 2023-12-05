@@ -40,7 +40,7 @@ const InsightRow = ({ insight, user, isEditable = true }: InsightRowProps) => {
             <div
               className={clsx(
                 "rounded-2xl border px-2 text-light-slate-11",
-                !isEditable ? "text-sauced-orange bg-orange-200 border-orange-500" : ""
+                !isEditable ? "text-orange-700 bg-orange-50 border-orange-600" : ""
               )}
             >
               {!isEditable ? "demo" : !!insight.is_public ? "public" : "private"}

@@ -2,8 +2,6 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import clsx from "clsx";
 
-import { GetServerSidePropsContext } from "next";
-import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import InsightRow from "components/molecules/InsightRow/insight-row";
 import Pagination from "components/molecules/Pagination/pagination";
 import PaginationResults from "components/molecules/PaginationResults/pagination-result";
@@ -17,57 +15,21 @@ import useStore from "lib/store";
 import useSession from "lib/hooks/useSession";
 import { useToast } from "lib/hooks/useToast";
 import Text from "components/atoms/Typography/text";
-import { fetchApiData } from "helpers/fetchApiData";
+import useFetchFeaturedInsights from "lib/hooks/useFetchFeaturedInsights";
 
-interface InsightsHubProps {
-  featuredInsights: DbUserInsight[];
-}
-export async function getServerSideProps(ctx: GetServerSidePropsContext) {
-  const supabase = createPagesServerClient(ctx);
-
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
-
-  if (!session) {
-    const { data, error } = await fetchApiData<PagedData<DbUserInsight>>({
-      path: "insights/featured",
-      bearerToken: "",
-      pathValidator: () => true,
-    });
-
-    if (error?.status === 404) {
-      return {
-        notFound: true,
-      };
-    }
-
-    return {
-      props: {
-        featuredInsights: data?.data ?? [],
-      },
-    };
-  }
-
-  return {
-    props: {
-      featuredInsights: [],
-    },
-  };
-}
-
-const InsightsHub: WithPageLayout<
-  InsightsHubProps & {
-    featuredInsights: DbUserInsight[];
-  }
-> = ({ featuredInsights }) => {
+const InsightsHub: WithPageLayout = () => {
   const router = useRouter();
-  const { user, signIn } = useSupabaseAuth();
+  const { user } = useSupabaseAuth();
   const store = useStore();
   const dismissFeaturedInsights = useStore((store) => store.dismissFeaturedInsights);
   const { toast } = useToast();
   const { session } = useSession(true);
-  const { data, meta, isError, isLoading, setPage } = useUserInsights();
+  const { data, meta, isError, isLoading, setPage } = useUserInsights(!!user);
+  const {
+    data: featuredInsightsData,
+    isError: featuredInsightsError,
+    isLoading: featuredInsightsLoading,
+  } = useFetchFeaturedInsights(user ? false : true);
 
   function handleView() {
     const insight = data.slice(0, 1).shift();
@@ -125,10 +87,10 @@ const InsightsHub: WithPageLayout<
 
   return (
     <>
-      <section className="flex flex-col gap-4">
+      <section className="flex flex-col gap-4 pt-4">
         {user ? (
           <>
-            {isLoading ? (
+            {session && isLoading ? (
               <SkeletonWrapper count={3} classNames="w-full" height={95} radius={10} />
             ) : isError ? (
               "Error..."
@@ -140,11 +102,15 @@ const InsightsHub: WithPageLayout<
           </>
         ) : null}
 
-        {featuredInsights.map((insight) => (
-          <div className="mt-4" key={`insights_${insight.id}`}>
-            <InsightRow isEditable={false} user={user} insight={insight} />
-          </div>
-        ))}
+        {!session && featuredInsightsLoading ? (
+          <SkeletonWrapper count={1} classNames="w-full" height={95} radius={10} />
+        ) : featuredInsightsError ? (
+          "Error..."
+        ) : (
+          featuredInsightsData.map((insight) => {
+            return <InsightRow key={`insights_${insight.id}`} user={user} insight={insight} isEditable={false} />;
+          })
+        )}
       </section>
 
       <div

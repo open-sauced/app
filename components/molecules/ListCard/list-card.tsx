@@ -31,7 +31,7 @@ const ListCard = ({ list, handleOnDeleteClick }: ListCardProps) => {
             <div
               className={clsx(
                 "px-2 border rounded-2xl text-light-slate-11",
-                !handleOnDeleteClick ? "text-sauced-orange bg-orange-200 border-orange-500" : ""
+                !handleOnDeleteClick ? "text-orange-700 bg-orange-50 border-orange-600" : ""
               )}
             >
               {handleOnDeleteClick ? (!!list.is_public ? "public" : "private") : "demo"}
