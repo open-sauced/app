@@ -10,6 +10,7 @@ import SingleSelect from "components/atoms/Select/single-select";
 import ContributorHighlightCard from "components/molecules/ContributorHighlight/contributor-highlight-card";
 import Avatar from "components/atoms/Avatar/avatar";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
+import useFetchAllEmojis from "lib/hooks/useFetchAllEmojis";
 import { ContributorListPageProps } from "./activity";
 
 interface HighlightsPageProps extends ContributorListPageProps {
@@ -58,7 +59,8 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   };
 };
 
-const highlights = ({ list, numberOfContributors, isOwner, highlights }: HighlightsPageProps) => {
+const Highlights = ({ list, numberOfContributors, isOwner, highlights }: HighlightsPageProps) => {
+  const { data: emojis } = useFetchAllEmojis();
   return (
     <ListPageLayout showRangeFilter={false} list={list} numberOfContributors={numberOfContributors} isOwner={isOwner}>
       <div className="container flex flex-col justify-start w-full gap-12 pt-12 mt-5 md:mt-0 md:items-start md:flex-row">
@@ -110,7 +112,7 @@ const highlights = ({ list, numberOfContributors, isOwner, highlights }: Highlig
                         id={id}
                         type={type}
                         taggedRepos={tagged_repos}
-                        emojis={[]}
+                        emojis={emojis}
                       />
                     </div>
                   </div>
@@ -123,4 +125,4 @@ const highlights = ({ list, numberOfContributors, isOwner, highlights }: Highlig
   );
 };
 
-export default highlights;
+export default Highlights;
