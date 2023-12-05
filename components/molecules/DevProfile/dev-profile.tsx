@@ -4,7 +4,6 @@ import React from "react";
 import Avatar from "components/atoms/Avatar/avatar";
 
 import { getAvatarByUsername } from "lib/utils/github";
-import { truncateString } from "lib/utils/truncate-string";
 import AvatarHoverCard from "components/atoms/Avatar/avatar-hover-card";
 
 interface DevProfileProps {
@@ -13,7 +12,7 @@ interface DevProfileProps {
 }
 const DevProfile = ({ username, hasBorder }: DevProfileProps) => {
   return (
-    <Link href={`/user/${username}`} className="flex items-center gap-2 text-light-slate-11">
+    <Link href={`/user/${username}`} className="flex items-center gap-2 text-light-slate-11 font-medium text-base">
       {/* Mobile */}
       <div className="rounded-full md:hidden">
         <Avatar
@@ -25,14 +24,12 @@ const DevProfile = ({ username, hasBorder }: DevProfileProps) => {
         />
       </div>
       {/* Desktop */}
-      <div className="hidden rounded-full md:flex">
+      <div className="hidden rounded-full md:flex shrink-0">
         <AvatarHoverCard contributor={username} repositories={[]} size="small" />
       </div>
-      <div>
-        <h1 className="text-light-slate-12">
-          {username && username.length > 10 ? truncateString(username, 11) : username}
-        </h1>
-      </div>
+      <p className="text-light-slate-12 text-ellipsis whitespace-nowrap grow-0 overflow-hidden" title={username}>
+        {username}
+      </p>
     </Link>
   );
 };
