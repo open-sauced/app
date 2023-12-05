@@ -42,9 +42,10 @@ input[type="checkbox"]:focus-visible,
 nav:focus-visible,
 a:focus-visible,
 button:focus-visible,
-div:focus-within:has(> input),
-input:focus-visible:not(div:focus-within > input),
-textarea:focus-visible {
+div:focus-within:has(> input:not([aria-hidden="true"]), > textarea),
+input:focus-visible:not(div:focus-within > input, [aria-hidden="true"]),
+textarea:focus-visible:not(div:focus-within > textarea),
+[role="checkbox"]:focus-visible {
   @apply outline-none;
   @apply border-orange-500;
   @apply ring;
