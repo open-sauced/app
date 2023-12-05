@@ -47,10 +47,8 @@ function getLastContributedRepo(pullRequests: DbRepoPR[]) {
 function getTopContributorLanguages(contributor: DbUser) {
   // some contributors will have empty language objects so we will pull their popular language from the interests field instead of defaulting to nothing
   const entries = Object.entries<string>(contributor.languages);
-  if (entries.length === 0) {
-    return [contributor.interests];
-  }
-  return entries
+
+  return (entries.length === 0 ? contributor.interests.split(",") : entries)
     .sort(([, a], [, b]) => (a < b ? -1 : 1))
     .slice(0, 2)
     .map(([language]) => language);
