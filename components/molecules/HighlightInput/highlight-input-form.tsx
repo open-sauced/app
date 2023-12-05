@@ -528,13 +528,13 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
           </div>
         </div>
       </div>
-      <Dialog
-        onOpenChange={() => {
-          setIsDivFocused(false);
-        }}
-        open={isDivFocused}
-      >
-        <DialogContent className="p-4 w-full md:w-[40rem] xs:w-96 max-h-[80vh] overflow-y-scroll">
+      <Dialog open={isDivFocused}>
+        <DialogContent
+          onEscapeKeyDown={() => {
+            setIsDivFocused(false);
+          }}
+          className="p-4 w-full md:w-[40rem] xs:w-96 max-h-[80vh] overflow-y-scroll"
+        >
           <DialogHeader>
             <DialogTitle>Post a highlight</DialogTitle>
           </DialogHeader>
