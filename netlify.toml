@@ -12,23 +12,26 @@ command = "next dev -p 3001"
 port = 3000
 targetPort = 3001
 
+[functions.render]
+external_node_modules = ["playwright-aws-lambda"]
+
 [functions]
 deno_import_map = "./netlify/edge-functions/deno.json"
 
 [[redirects]]
-  from = "https://insight.opensauced.pizza/*"
-  to = "https://insights.opensauced.pizza/:splat"
-  status = 301
-  force = true
+from = "https://insight.opensauced.pizza/*"
+to = "https://insights.opensauced.pizza/:splat"
+status = 301
+force = true
 
 [[redirects]]
-  from = "https://insights.opensauced.pizza/*"
-  to = "https://app.opensauced.pizza/:splat"
-  status = 301
-  force = true
+from = "https://insights.opensauced.pizza/*"
+to = "https://app.opensauced.pizza/:splat"
+status = 301
+force = true
 
 [[redirects]]
-  from = "https://beta.insights.opensauced.pizza/*"
-  to = "https://beta.app.opensauced.pizza/:splat"
-  status = 301
-  force = true
+from = "https://beta.insights.opensauced.pizza/*"
+to = "https://beta.app.opensauced.pizza/:splat"
+status = 301
+force = true
