@@ -13,7 +13,8 @@ port = 3000
 targetPort = 3001
 
 [functions.render]
-external_node_modules = ["playwright-aws-lambda"]
+# see https://github.com/alixaxel/chrome-aws-lambda/issues/270#issuecomment-1098349498
+external_node_modules = ["chrome-aws-lambda"]
 
 [functions]
 deno_import_map = "./netlify/edge-functions/deno.json"
