@@ -15,7 +15,7 @@ const FeaturedHighlightsPanel = ({ highlights }: FeaturedHighlightsPanelProps) =
 
   return (
     <div className="w-full p-6 pt-5 space-y-4 border rounded-lg bg-light-slate-1">
-      <h2 className="pb-2 text-lg border-b">Featured Highlights</h2>
+      <h3 className="pb-2 text-lg border-b">Featured Highlights</h3>
       <div className="flex flex-col gap-4 text-sm">
         {highlights.map(({ id, title }) => (
           <Link className="font-normal transition hover:text-light-orange-10" key={id} href={`${host}/feed/${id}`}>

@@ -1,4 +1,3 @@
-import Title from "components/atoms/Typography/title";
 import Icon from "components/atoms/Icon/icon";
 
 interface HighlightsFilterCardProps {
@@ -13,9 +12,7 @@ const HighlightsFilterCard = ({ repos, setSelected, selectedFilter }: Highlights
 
   return (
     <div className="py-4 px-6 pb-6 rounded-lg bg-light-slate-1  border w-full h-max">
-      <Title className="!text-lg" level={3}>
-        Repositories
-      </Title>
+      <h3 className="pb-2 text-lg">Repositories</h3>
       <p className="mb-2 text-sm font-normal text-light-slate-11">Click to filter the highlights</p>
       <div className="flex flex-col gap-2 pt-4 border-t">
         {repos.map(({ repoName, repoIcon, full_name }) => (
