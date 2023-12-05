@@ -55,7 +55,8 @@
         "nextjs-progressbar": "^0.0.16",
         "octokit": "^2.0.14",
         "path-to-regexp": "^6.2.1",
-        "playwright": "^1.40.1",
+        "playwright-aws-lambda": "^0.10.0",
+        "playwright-core": "^1.30.0",
         "posthog-js": "^1.83.0",
         "posthog-node": "^3.1.3",
         "react": "^18.2.0",
@@ -21666,6 +21667,214 @@
         "node": ">= 8"
       }
     },
+    "node_modules/lambdafs": {
+      "version": "2.1.1",
+      "resolved": "https://registry.npmjs.org/lambdafs/-/lambdafs-2.1.1.tgz",
+      "integrity": "sha512-x5k8JcoJWkWLvCVBzrl4pzvkEHSgSBqFjg3Dpsc4AcTMq7oUMym4cL/gRTZ6VM4mUMY+M0dIbQ+V1c1tsqqanQ==",
+      "bundleDependencies": [
+        "tar-fs"
+      ],
+      "dependencies": {
+        "tar-fs": "*"
+      },
+      "bin": {
+        "lambdafs": "bin/brotli.js"
+      },
+      "engines": {
+        "node": ">= 10.16"
+      }
+    },
+    "node_modules/lambdafs/node_modules/base64-js": {
+      "version": "1.5.1",
+      "funding": [
+        {
+          "type": "github",
+          "url": "https://github.com/sponsors/feross"
+        },
+        {
+          "type": "patreon",
+          "url": "https://www.patreon.com/feross"
+        },
+        {
+          "type": "consulting",
+          "url": "https://feross.org/support"
+        }
+      ],
+      "inBundle": true,
+      "license": "MIT"
+    },
+    "node_modules/lambdafs/node_modules/bl": {
+      "version": "4.1.0",
+      "inBundle": true,
+      "license": "MIT",
+      "dependencies": {
+        "buffer": "^5.5.0",
+        "inherits": "^2.0.4",
+        "readable-stream": "^3.4.0"
+      }
+    },
+    "node_modules/lambdafs/node_modules/bl/node_modules/readable-stream": {
+      "version": "3.6.0",
+      "inBundle": true,
+      "license": "MIT",
+      "dependencies": {
+        "inherits": "^2.0.3",
+        "string_decoder": "^1.1.1",
+        "util-deprecate": "^1.0.1"
+      },
+      "engines": {
+        "node": ">= 6"
+      }
+    },
+    "node_modules/lambdafs/node_modules/buffer": {
+      "version": "5.7.1",
+      "funding": [
+        {
+          "type": "github",
+          "url": "https://github.com/sponsors/feross"
+        },
+        {
+          "type": "patreon",
+          "url": "https://www.patreon.com/feross"
+        },
+        {
+          "type": "consulting",
+          "url": "https://feross.org/support"
+        }
+      ],
+      "inBundle": true,
+      "license": "MIT",
+      "dependencies": {
+        "base64-js": "^1.3.1",
+        "ieee754": "^1.1.13"
+      }
+    },
+    "node_modules/lambdafs/node_modules/chownr": {
+      "version": "1.1.4",
+      "inBundle": true,
+      "license": "ISC"
+    },
+    "node_modules/lambdafs/node_modules/end-of-stream": {
+      "version": "1.4.4",
+      "inBundle": true,
+      "license": "MIT",
+      "dependencies": {
+        "once": "^1.4.0"
+      }
+    },
+    "node_modules/lambdafs/node_modules/fs-constants": {
+      "version": "1.0.0",
+      "inBundle": true,
+      "license": "MIT"
+    },
+    "node_modules/lambdafs/node_modules/ieee754": {
+      "version": "1.2.1",
+      "funding": [
+        {
+          "type": "github",
+          "url": "https://github.com/sponsors/feross"
+        },
+        {
+          "type": "patreon",
+          "url": "https://www.patreon.com/feross"
+        },
+        {
+          "type": "consulting",
+          "url": "https://feross.org/support"
+        }
+      ],
+      "inBundle": true,
+      "license": "BSD-3-Clause"
+    },
+    "node_modules/lambdafs/node_modules/inherits": {
+      "version": "2.0.4",
+      "inBundle": true,
+      "license": "ISC"
+    },
+    "node_modules/lambdafs/node_modules/mkdirp-classic": {
+      "version": "0.5.3",
+      "inBundle": true,
+      "license": "MIT"
+    },
+    "node_modules/lambdafs/node_modules/once": {
+      "version": "1.4.0",
+      "inBundle": true,
+      "license": "ISC",
+      "dependencies": {
+        "wrappy": "1"
+      }
+    },
+    "node_modules/lambdafs/node_modules/pump": {
+      "version": "3.0.0",
+      "inBundle": true,
+      "license": "MIT",
+      "dependencies": {
+        "end-of-stream": "^1.1.0",
+        "once": "^1.3.1"
+      }
+    },
+    "node_modules/lambdafs/node_modules/string_decoder": {
+      "version": "1.1.1",
+      "inBundle": true,
+      "license": "MIT",
+      "dependencies": {
+        "safe-buffer": "~5.1.0"
+      }
+    },
+    "node_modules/lambdafs/node_modules/string_decoder/node_modules/safe-buffer": {
+      "version": "5.1.2",
+      "inBundle": true,
+      "license": "MIT"
+    },
+    "node_modules/lambdafs/node_modules/tar-fs": {
+      "version": "2.1.1",
+      "inBundle": true,
+      "license": "MIT",
+      "dependencies": {
+        "chownr": "^1.1.1",
+        "mkdirp-classic": "^0.5.2",
+        "pump": "^3.0.0",
+        "tar-stream": "^2.1.4"
+      }
+    },
+    "node_modules/lambdafs/node_modules/tar-stream": {
+      "version": "2.2.0",
+      "inBundle": true,
+      "license": "MIT",
+      "dependencies": {
+        "bl": "^4.0.3",
+        "end-of-stream": "^1.4.1",
+        "fs-constants": "^1.0.0",
+        "inherits": "^2.0.3",
+        "readable-stream": "^3.1.1"
+      },
+      "engines": {
+        "node": ">=6"
+      }
+    },
+    "node_modules/lambdafs/node_modules/tar-stream/node_modules/readable-stream": {
+      "version": "3.6.0",
+      "inBundle": true,
+      "license": "MIT",
+      "dependencies": {
+        "inherits": "^2.0.3",
+        "string_decoder": "^1.1.1",
+        "util-deprecate": "^1.0.1"
+      },
+      "engines": {
+        "node": ">= 6"
+      }
+    },
+    "node_modules/lambdafs/node_modules/util-deprecate": {
+      "version": "1.0.2",
+      "inBundle": true,
+      "license": "MIT"
+    },
+    "node_modules/lambdafs/node_modules/wrappy": {
+      "version": "1.0.2",
+      "inBundle": true,
+      "license": "ISC"
+    },
     "node_modules/language-subtag-registry": {
       "version": "0.3.22",
       "resolved": "https://registry.npmjs.org/language-subtag-registry/-/language-subtag-registry-0.3.22.tgz",
@@ -24061,28 +24270,24 @@
         "pathe": "^1.1.0"
       }
     },
-    "node_modules/playwright": {
-      "version": "1.40.1",
-      "resolved": "https://registry.npmjs.org/playwright/-/playwright-1.40.1.tgz",
-      "integrity": "sha512-2eHI7IioIpQ0bS1Ovg/HszsN/XKNwEG1kbzSDDmADpclKc7CyqkHw7Mg2JCz/bbCxg25QUPcjksoMW7JcIFQmw==",
+    "node_modules/playwright-aws-lambda": {
+      "version": "0.10.0",
+      "resolved": "https://registry.npmjs.org/playwright-aws-lambda/-/playwright-aws-lambda-0.10.0.tgz",
+      "integrity": "sha512-osGbx0Nwco6E9JZK/2Uq3lrQ5rmjLEQ9Iw0286wQZ93s+8Ok8IwOmzP765JGTRDvjd/5woE5qwICnhw9iPisOQ==",
       "dependencies": {
-        "playwright-core": "1.40.1"
-      },
-      "bin": {
-        "playwright": "cli.js"
+        "lambdafs": "^2.1.1"
       },
       "engines": {
-        "node": ">=16"
+        "node": ">= 8.0.0"
       },
-      "optionalDependencies": {
-        "fsevents": "2.3.2"
+      "peerDependencies": {
+        "playwright-core": "^1"
       }
     },
     "node_modules/playwright-core": {
       "version": "1.30.0",
       "resolved": "https://registry.npmjs.org/playwright-core/-/playwright-core-1.30.0.tgz",
       "integrity": "sha512-7AnRmTCf+GVYhHbLJsGUtskWTE33SwMZkybJ0v6rqR1boxq2x36U7p1vDRV7HO2IwTZgmycracLxPEJI49wu4g==",
-      "dev": true,
       "bin": {
         "playwright": "cli.js"
       },
@@ -24094,24 +24299,13 @@
       "version": "2.3.2",
       "resolved": "https://registry.npmjs.org/fsevents/-/fsevents-2.3.2.tgz",
       "integrity": "sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==",
+      "extraneous": true,
       "hasInstallScript": true,
-      "optional": true,
       "os": [
         "darwin"
       ],
       "engines": {
         "node": "^8.16.0 || ^10.6.0 || >=11.0.0"
-      }
-    },
-    "node_modules/playwright/node_modules/playwright-core": {
-      "version": "1.40.1",
-      "resolved": "https://registry.npmjs.org/playwright-core/-/playwright-core-1.40.1.tgz",
-      "integrity": "sha512-+hkOycxPiV534c4HhpfX6yrlawqVUzITRKwHAmYfmsVreltEl6fAZJ3DPfLMOODw0H3s1Itd6MDCWmP1fl/QvQ==",
-      "bin": {
-        "playwright-core": "cli.js"
-      },
-      "engines": {
-        "node": ">=16"
       }
     },
     "node_modules/pnp-webpack-plugin": {

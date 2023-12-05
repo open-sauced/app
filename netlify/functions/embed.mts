@@ -1,10 +1,11 @@
-import playwright from "playwright";
+import playwright from "playwright-aws-lambda";
 
 export const handler = async (event, context) => {
   let browser;
   try {
-    browser = await playwright.chromium.launch();
-    const page = await browser.newPage();
+    browser = await playwright.launchChromium();
+    const context = await browser.newContext();
+    const page = await context.newPage();
 
     // Obtain authentication credentials (cookies and JWT tokens) here.
     // const cookies = [{ name: "cookie_name", value: "cookie_value" }];
