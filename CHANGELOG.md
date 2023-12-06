@@ -5,6 +5,50 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.79.0](https://github.com/open-sauced/insights/compare/v1.78.0...v1.79.0) (2023-12-05)
+
+
+### 🍕 Features
+
+* upgraded to Storybook 7.6.3 ([#2244](https://github.com/open-sauced/insights/issues/2244)) ([a2ae11a](https://github.com/open-sauced/insights/commit/a2ae11a5628c88c430e0403356889e4ca5ff218b))
+
+
+### 🐛 Bug Fixes
+
+* fixed crash on list contributor grid when in card view changing page size ([#2241](https://github.com/open-sauced/insights/issues/2241)) ([f6bc793](https://github.com/open-sauced/insights/commit/f6bc7939ccdfe8603bdc06645f79d9687a68ebe1))
+* now most used languages are truncated to a limit of two ([#2238](https://github.com/open-sauced/insights/issues/2238)) ([97ce66e](https://github.com/open-sauced/insights/commit/97ce66e352c4380368f864c24029c66d4096af95))
+* now the highlight input form closes only if you press ESC or click the close button ([e56ea73](https://github.com/open-sauced/insights/commit/e56ea73b032329ea3fd435a135bf2cb75768562e))
+* now the highlight input form closes only if you press ESC or click the close button ([#2257](https://github.com/open-sauced/insights/issues/2257)) ([1b94421](https://github.com/open-sauced/insights/commit/1b944216a2b8a401a8a924e559a67de3c039b34e))
+
+## [1.79.0-beta.3](https://github.com/open-sauced/insights/compare/v1.79.0-beta.2...v1.79.0-beta.3) (2023-12-05)
+
+
+### 🐛 Bug Fixes
+
+* now most used languages are truncated to a limit of two ([#2238](https://github.com/open-sauced/insights/issues/2238)) ([97ce66e](https://github.com/open-sauced/insights/commit/97ce66e352c4380368f864c24029c66d4096af95))
+
+## [1.79.0-beta.2](https://github.com/open-sauced/insights/compare/v1.79.0-beta.1...v1.79.0-beta.2) (2023-12-04)
+
+
+### 🐛 Bug Fixes
+
+* now the highlight input form closes only if you press ESC or click the close button ([e56ea73](https://github.com/open-sauced/insights/commit/e56ea73b032329ea3fd435a135bf2cb75768562e))
+* now the highlight input form closes only if you press ESC or click the close button ([#2257](https://github.com/open-sauced/insights/issues/2257)) ([1b94421](https://github.com/open-sauced/insights/commit/1b944216a2b8a401a8a924e559a67de3c039b34e))
+
+## [1.79.0-beta.1](https://github.com/open-sauced/insights/compare/v1.78.1-beta.1...v1.79.0-beta.1) (2023-12-04)
+
+
+### 🍕 Features
+
+* upgraded to Storybook 7.6.3 ([#2244](https://github.com/open-sauced/insights/issues/2244)) ([a2ae11a](https://github.com/open-sauced/insights/commit/a2ae11a5628c88c430e0403356889e4ca5ff218b))
+
+### [1.78.1-beta.1](https://github.com/open-sauced/insights/compare/v1.78.0...v1.78.1-beta.1) (2023-12-01)
+
+
+### 🐛 Bug Fixes
+
+* fixed crash on list contributor grid when in card view changing page size ([#2241](https://github.com/open-sauced/insights/issues/2241)) ([f6bc793](https://github.com/open-sauced/insights/commit/f6bc7939ccdfe8603bdc06645f79d9687a68ebe1))
+
 ## [1.78.0](https://github.com/open-sauced/insights/compare/v1.77.1...v1.78.0) (2023-11-29)
 
 
