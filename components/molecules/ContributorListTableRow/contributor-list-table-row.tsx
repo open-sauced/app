@@ -52,8 +52,7 @@ function getTopContributorLanguages(contributor: DbUser) {
     return contributor.interests
       .split(",")
       .sort((a, b) => (a < b ? -1 : 1))
-      .slice(0, 2)
-      .map((language) => language.trim());
+      .slice(0, 2);
   }
 
   return entries
