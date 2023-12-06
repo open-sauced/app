@@ -189,7 +189,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
       />
 
       <div
-        className="container flex flex-col justify-center w-full gap-12 px-2 pt-12 mt-5 md:mt-0 md:items-start md:px-16 md:flex-row"
+        className="container flex flex-col justify-center w-full gap-12 px-2 pt-4 md:items-start md:px-16 md:flex-row"
         ref={topRef}
       >
         <div className={`sticky ${user ? "top-16" : "top-8"} xl:flex hidden flex-none w-1/5`}>
@@ -288,7 +288,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
             </DialogContent>
           </Dialog>
         )}
-        <Tabs onValueChange={onTabChange} defaultValue="home" className="w-full 2xl:max-w-[40rem] xl:max-w-[33rem]">
+        <Tabs onValueChange={onTabChange} defaultValue="home" className="w-full 2xl:max-w-2xl xl:max-w-lg">
           <TabsList className={clsx("justify-start  w-full border-b", !user && "hidden")}>
             <TabsTrigger
               className="data-[state=active]:border-sauced-orange data-[state=active]:border-b-2 text-lg"

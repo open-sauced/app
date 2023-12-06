@@ -47,7 +47,7 @@ const HomeHighlightsWrapper = ({ emojis, highlights, loading, mutate }: HomeHigh
                   </span>
                 </Link>
               </div>
-              <div className="w-full p-4 border bg-light-slate-1 md:px-6 lg:px-9 lg:py-5 lg:max-w-[33rem] sm:py-3 xs:py-2 rounded-xl">
+              <div className="w-full p-4 border bg-light-slate-1 md:px-6 lg:px-9 lg:py-5 sm:py-3 xs:py-2 rounded-xl">
                 <ContributorHighlightCard
                   emojis={emojis}
                   refreshCallBack={mutate}

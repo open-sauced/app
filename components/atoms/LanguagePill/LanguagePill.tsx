@@ -1,5 +1,6 @@
 import Image, { StaticImageData } from "next/image";
 
+import SvelteIcon from "img/icons/interests/svelte.svg";
 import JavascriptIcon from "img/icons/interests/javascript.svg";
 import ReactIcon from "/img/icons/interests/react.svg";
 import PythonIcon from "/img/icons/interests/python.svg";
@@ -20,41 +21,24 @@ import HacktoberfestIcon from "img/icons/interests/hacktoberfest.svg";
 import CloJureIcon from "img/icons/interests/clojure.svg";
 
 import topicNameFormatting from "lib/utils/topic-name-formatting";
+import { InterestType } from "lib/utils/getInterestOptions";
 
 interface LanguagePillProps {
-  topic:
-    | "react"
-    | "javascript"
-    | "python"
-    | "ML"
-    | "AI"
-    | "rust"
-    | "ruby"
-    | "c"
-    | "cpp"
-    | "csharp"
-    | "php"
-    | "java"
-    | "svelte"
-    | "typescript"
-    | "golang"
-    | "vue"
-    | "Kubernetes"
-    | "hacktoberfest"
-    | "clojure"
-    | string;
+  topic: InterestType;
   classNames?: string;
   onClick?: () => void;
 }
+
 const LanguagePill = ({ topic, classNames, onClick }: LanguagePillProps) => {
-  const renderTopicIcon = (name: string) => {
-    const iconMap: { [name: string]: StaticImageData } = {
+  const renderTopicIcon = (name: InterestType) => {
+    const iconMap: Record<InterestType, StaticImageData> = {
       react: ReactIcon,
       rust: RustIcon,
       javascript: JavascriptIcon,
       ai: AIIcon,
       ml: MLIcon,
       python: PythonIcon,
+      svelte: SvelteIcon,
       typescript: TypeScriptIcon,
       csharp: CsharpIcon,
       cpp: CppIcon,
@@ -69,7 +53,7 @@ const LanguagePill = ({ topic, classNames, onClick }: LanguagePillProps) => {
       clojure: CloJureIcon,
     };
 
-    return iconMap[name] || "";
+    return iconMap[name];
   };
 
   return (

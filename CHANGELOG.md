@@ -5,6 +5,198 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.79.0](https://github.com/open-sauced/insights/compare/v1.78.0...v1.79.0) (2023-12-05)
+
+
+### 🍕 Features
+
+* upgraded to Storybook 7.6.3 ([#2244](https://github.com/open-sauced/insights/issues/2244)) ([a2ae11a](https://github.com/open-sauced/insights/commit/a2ae11a5628c88c430e0403356889e4ca5ff218b))
+
+
+### 🐛 Bug Fixes
+
+* fixed crash on list contributor grid when in card view changing page size ([#2241](https://github.com/open-sauced/insights/issues/2241)) ([f6bc793](https://github.com/open-sauced/insights/commit/f6bc7939ccdfe8603bdc06645f79d9687a68ebe1))
+* now most used languages are truncated to a limit of two ([#2238](https://github.com/open-sauced/insights/issues/2238)) ([97ce66e](https://github.com/open-sauced/insights/commit/97ce66e352c4380368f864c24029c66d4096af95))
+* now the highlight input form closes only if you press ESC or click the close button ([e56ea73](https://github.com/open-sauced/insights/commit/e56ea73b032329ea3fd435a135bf2cb75768562e))
+* now the highlight input form closes only if you press ESC or click the close button ([#2257](https://github.com/open-sauced/insights/issues/2257)) ([1b94421](https://github.com/open-sauced/insights/commit/1b944216a2b8a401a8a924e559a67de3c039b34e))
+
+## [1.79.0-beta.3](https://github.com/open-sauced/insights/compare/v1.79.0-beta.2...v1.79.0-beta.3) (2023-12-05)
+
+
+### 🐛 Bug Fixes
+
+* now most used languages are truncated to a limit of two ([#2238](https://github.com/open-sauced/insights/issues/2238)) ([97ce66e](https://github.com/open-sauced/insights/commit/97ce66e352c4380368f864c24029c66d4096af95))
+
+## [1.79.0-beta.2](https://github.com/open-sauced/insights/compare/v1.79.0-beta.1...v1.79.0-beta.2) (2023-12-04)
+
+
+### 🐛 Bug Fixes
+
+* now the highlight input form closes only if you press ESC or click the close button ([e56ea73](https://github.com/open-sauced/insights/commit/e56ea73b032329ea3fd435a135bf2cb75768562e))
+* now the highlight input form closes only if you press ESC or click the close button ([#2257](https://github.com/open-sauced/insights/issues/2257)) ([1b94421](https://github.com/open-sauced/insights/commit/1b944216a2b8a401a8a924e559a67de3c039b34e))
+
+## [1.79.0-beta.1](https://github.com/open-sauced/insights/compare/v1.78.1-beta.1...v1.79.0-beta.1) (2023-12-04)
+
+
+### 🍕 Features
+
+* upgraded to Storybook 7.6.3 ([#2244](https://github.com/open-sauced/insights/issues/2244)) ([a2ae11a](https://github.com/open-sauced/insights/commit/a2ae11a5628c88c430e0403356889e4ca5ff218b))
+
+### [1.78.1-beta.1](https://github.com/open-sauced/insights/compare/v1.78.0...v1.78.1-beta.1) (2023-12-01)
+
+
+### 🐛 Bug Fixes
+
+* fixed crash on list contributor grid when in card view changing page size ([#2241](https://github.com/open-sauced/insights/issues/2241)) ([f6bc793](https://github.com/open-sauced/insights/commit/f6bc7939ccdfe8603bdc06645f79d9687a68ebe1))
+
+## [1.78.0](https://github.com/open-sauced/insights/compare/v1.77.1...v1.78.0) (2023-11-29)
+
+
+### 🧑‍💻 Code Refactoring
+
+* fix tailwind anti-pattern ([5dcb958](https://github.com/open-sauced/insights/commit/5dcb958f475292ab66d06806adf420288069708e))
+* fix tailwind anti-pattern in feed footer ([#2088](https://github.com/open-sauced/insights/issues/2088)) ([1f10046](https://github.com/open-sauced/insights/commit/1f10046c626499d4f2ab0d264854ccf1a716a33e))
+
+
+### 🍕 Features
+
+* updating contributor language column  ([#2183](https://github.com/open-sauced/insights/issues/2183)) ([660b861](https://github.com/open-sauced/insights/commit/660b861de581fa14370925f46c551fe1ddc8fb3f))
+
+
+### 🐛 Bug Fixes
+
+* added global styles for checkbox focus state ([#2206](https://github.com/open-sauced/insights/issues/2206)) ([6999a95](https://github.com/open-sauced/insights/commit/6999a9592974c76800f03fddf37d52cae203610a))
+* cleaned up list activity graph title styling ([#2224](https://github.com/open-sauced/insights/issues/2224)) ([a38d9bd](https://github.com/open-sauced/insights/commit/a38d9bd4578b026fe01a1ff58848a17e922e03d6))
+* fix broken URL when you are using Range filter ([#2204](https://github.com/open-sauced/insights/issues/2204)) ([fcf8080](https://github.com/open-sauced/insights/commit/fcf8080eb95896257ceb89cd0588b8fa598cc4f4))
+* fixed based font size so it's on body now ([c0b00ca](https://github.com/open-sauced/insights/commit/c0b00caf4e7b3436a799bf27e521e6788ebe5e92))
+* fixed based font size so it's on body now ([#2219](https://github.com/open-sauced/insights/issues/2219)) ([8000aed](https://github.com/open-sauced/insights/commit/8000aed27ee4fa11358fbbb99f2a2a7cd09dd414))
+* improved type inference of interests and recommendations ([2ee0c68](https://github.com/open-sauced/insights/commit/2ee0c689723c4bb9ecb905e1cb97b7386dd8641d))
+* improved type inference of interests and recommendations ([#2192](https://github.com/open-sauced/insights/issues/2192)) ([ec29a79](https://github.com/open-sauced/insights/commit/ec29a79b2ecc05227c7699153779ba2fe1961fab))
+* list activity and contirbutor page rerender issue ([#2214](https://github.com/open-sauced/insights/issues/2214)) ([86eae2c](https://github.com/open-sauced/insights/commit/86eae2c572321ec68c82665118e545e69321b4ed))
+* made checkbox stroke thicker ([df53b8d](https://github.com/open-sauced/insights/commit/df53b8d10ac606a4aacf52fdf506bcbe1515a64f))
+* made checkbox stroke thicker ([#2212](https://github.com/open-sauced/insights/issues/2212)) ([1d7781a](https://github.com/open-sauced/insights/commit/1d7781a5b2b996bc6bacd5f6443f3ff4e45232db))
+* miscellaneous feed styling fixes ([28bfe26](https://github.com/open-sauced/insights/commit/28bfe26f189271e4e166b240a79e99d314df40e1))
+* miscellaneous feed styling fixes ([#2220](https://github.com/open-sauced/insights/issues/2220)) ([8399017](https://github.com/open-sauced/insights/commit/8399017223d18097d81e12cdf9dc262725987adf))
+* now list activity graphs only load data client-side ([#2215](https://github.com/open-sauced/insights/issues/2215)) ([5d1c906](https://github.com/open-sauced/insights/commit/5d1c90627d346f8ea975062e39bfb86f898b6967))
+* Remove Netlify CLI from dev dependencies ([#2207](https://github.com/open-sauced/insights/issues/2207)) ([54562c5](https://github.com/open-sauced/insights/commit/54562c532d2feb16519a319e487a14cd68950ce4))
+
+## [1.78.0-beta.9](https://github.com/open-sauced/insights/compare/v1.78.0-beta.8...v1.78.0-beta.9) (2023-11-29)
+
+
+### 🐛 Bug Fixes
+
+* list activity and contirbutor page rerender issue ([#2214](https://github.com/open-sauced/insights/issues/2214)) ([86eae2c](https://github.com/open-sauced/insights/commit/86eae2c572321ec68c82665118e545e69321b4ed))
+
+## [1.78.0-beta.8](https://github.com/open-sauced/insights/compare/v1.78.0-beta.7...v1.78.0-beta.8) (2023-11-29)
+
+
+### 🐛 Bug Fixes
+
+* fixed based font size so it's on body now ([c0b00ca](https://github.com/open-sauced/insights/commit/c0b00caf4e7b3436a799bf27e521e6788ebe5e92))
+* fixed based font size so it's on body now ([#2219](https://github.com/open-sauced/insights/issues/2219)) ([8000aed](https://github.com/open-sauced/insights/commit/8000aed27ee4fa11358fbbb99f2a2a7cd09dd414))
+
+## [1.78.0-beta.7](https://github.com/open-sauced/insights/compare/v1.78.0-beta.6...v1.78.0-beta.7) (2023-11-29)
+
+
+### 🐛 Bug Fixes
+
+* cleaned up list activity graph title styling ([#2224](https://github.com/open-sauced/insights/issues/2224)) ([a38d9bd](https://github.com/open-sauced/insights/commit/a38d9bd4578b026fe01a1ff58848a17e922e03d6))
+
+## [1.78.0-beta.6](https://github.com/open-sauced/insights/compare/v1.78.0-beta.5...v1.78.0-beta.6) (2023-11-29)
+
+
+### 🐛 Bug Fixes
+
+* miscellaneous feed styling fixes ([28bfe26](https://github.com/open-sauced/insights/commit/28bfe26f189271e4e166b240a79e99d314df40e1))
+* miscellaneous feed styling fixes ([#2220](https://github.com/open-sauced/insights/issues/2220)) ([8399017](https://github.com/open-sauced/insights/commit/8399017223d18097d81e12cdf9dc262725987adf))
+
+## [1.78.0-beta.5](https://github.com/open-sauced/insights/compare/v1.78.0-beta.4...v1.78.0-beta.5) (2023-11-29)
+
+
+### 🐛 Bug Fixes
+
+* Remove Netlify CLI from dev dependencies ([#2207](https://github.com/open-sauced/insights/issues/2207)) ([54562c5](https://github.com/open-sauced/insights/commit/54562c532d2feb16519a319e487a14cd68950ce4))
+
+## [1.78.0-beta.4](https://github.com/open-sauced/insights/compare/v1.78.0-beta.3...v1.78.0-beta.4) (2023-11-28)
+
+
+### 🐛 Bug Fixes
+
+* added global styles for checkbox focus state ([#2206](https://github.com/open-sauced/insights/issues/2206)) ([6999a95](https://github.com/open-sauced/insights/commit/6999a9592974c76800f03fddf37d52cae203610a))
+
+## [1.78.0-beta.3](https://github.com/open-sauced/insights/compare/v1.78.0-beta.2...v1.78.0-beta.3) (2023-11-28)
+
+
+### 🐛 Bug Fixes
+
+* now list activity graphs only load data client-side ([#2215](https://github.com/open-sauced/insights/issues/2215)) ([5d1c906](https://github.com/open-sauced/insights/commit/5d1c90627d346f8ea975062e39bfb86f898b6967))
+
+## [1.78.0-beta.2](https://github.com/open-sauced/insights/compare/v1.78.0-beta.1...v1.78.0-beta.2) (2023-11-28)
+
+
+### 🐛 Bug Fixes
+
+* improved type inference of interests and recommendations ([2ee0c68](https://github.com/open-sauced/insights/commit/2ee0c689723c4bb9ecb905e1cb97b7386dd8641d))
+* improved type inference of interests and recommendations ([#2192](https://github.com/open-sauced/insights/issues/2192)) ([ec29a79](https://github.com/open-sauced/insights/commit/ec29a79b2ecc05227c7699153779ba2fe1961fab))
+* made checkbox stroke thicker ([df53b8d](https://github.com/open-sauced/insights/commit/df53b8d10ac606a4aacf52fdf506bcbe1515a64f))
+* made checkbox stroke thicker ([#2212](https://github.com/open-sauced/insights/issues/2212)) ([1d7781a](https://github.com/open-sauced/insights/commit/1d7781a5b2b996bc6bacd5f6443f3ff4e45232db))
+
+## [1.78.0-beta.1](https://github.com/open-sauced/insights/compare/v1.77.2-beta.1...v1.78.0-beta.1) (2023-11-27)
+
+
+### 🍕 Features
+
+* updating contributor language column  ([#2183](https://github.com/open-sauced/insights/issues/2183)) ([660b861](https://github.com/open-sauced/insights/commit/660b861de581fa14370925f46c551fe1ddc8fb3f))
+
+
+### 🐛 Bug Fixes
+
+* fix broken URL when you are using Range filter ([#2204](https://github.com/open-sauced/insights/issues/2204)) ([fcf8080](https://github.com/open-sauced/insights/commit/fcf8080eb95896257ceb89cd0588b8fa598cc4f4))
+
+### [1.77.2-beta.1](https://github.com/open-sauced/insights/compare/v1.77.1...v1.77.2-beta.1) (2023-11-23)
+
+
+### 🧑‍💻 Code Refactoring
+
+* fix tailwind anti-pattern ([5dcb958](https://github.com/open-sauced/insights/commit/5dcb958f475292ab66d06806adf420288069708e))
+* fix tailwind anti-pattern in feed footer ([#2088](https://github.com/open-sauced/insights/issues/2088)) ([1f10046](https://github.com/open-sauced/insights/commit/1f10046c626499d4f2ab0d264854ccf1a716a33e))
+
+### [1.77.1](https://github.com/open-sauced/insights/compare/v1.77.0...v1.77.1) (2023-11-21)
+
+
+### 🐛 Bug Fixes
+
+* added missing svelte svg ([#2196](https://github.com/open-sauced/insights/issues/2196)) ([d27794c](https://github.com/open-sauced/insights/commit/d27794c5862ab0489663125fb95ad78d4f46e4f9))
+* match skeleton high with container card ([#2150](https://github.com/open-sauced/insights/issues/2150)) ([4786117](https://github.com/open-sauced/insights/commit/4786117d34da2397539d1751d0c2ef1a841ce88b))
+* reset base font size in * selector in global.css ([#2184](https://github.com/open-sauced/insights/issues/2184)) ([6ae3751](https://github.com/open-sauced/insights/commit/6ae3751b383853673494bd3342b4f60d1b915b2e))
+
+
+### 🧑‍💻 Code Refactoring
+
+* move limit query from state to urlParams ([#2153](https://github.com/open-sauced/insights/issues/2153)) ([0d2825d](https://github.com/open-sauced/insights/commit/0d2825d77639460be152e67cbb1eaa07d35703c2))
+
+### [1.77.1-beta.3](https://github.com/open-sauced/insights/compare/v1.77.1-beta.2...v1.77.1-beta.3) (2023-11-21)
+
+
+### 🧑‍💻 Code Refactoring
+
+* move limit query from state to urlParams ([#2153](https://github.com/open-sauced/insights/issues/2153)) ([0d2825d](https://github.com/open-sauced/insights/commit/0d2825d77639460be152e67cbb1eaa07d35703c2))
+
+### [1.77.1-beta.2](https://github.com/open-sauced/insights/compare/v1.77.1-beta.1...v1.77.1-beta.2) (2023-11-21)
+
+
+### 🐛 Bug Fixes
+
+* added missing svelte svg ([#2196](https://github.com/open-sauced/insights/issues/2196)) ([d27794c](https://github.com/open-sauced/insights/commit/d27794c5862ab0489663125fb95ad78d4f46e4f9))
+
+### [1.77.1-beta.1](https://github.com/open-sauced/insights/compare/v1.77.0...v1.77.1-beta.1) (2023-11-21)
+
+
+### 🐛 Bug Fixes
+
+* match skeleton high with container card ([#2150](https://github.com/open-sauced/insights/issues/2150)) ([4786117](https://github.com/open-sauced/insights/commit/4786117d34da2397539d1751d0c2ef1a841ce88b))
+* reset base font size in * selector in global.css ([#2184](https://github.com/open-sauced/insights/issues/2184)) ([6ae3751](https://github.com/open-sauced/insights/commit/6ae3751b383853673494bd3342b4f60d1b915b2e))
+
 ## [1.77.0](https://github.com/open-sauced/insights/compare/v1.76.0...v1.77.0) (2023-11-20)
 
 

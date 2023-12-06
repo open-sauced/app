@@ -12,8 +12,11 @@ module.exports = {
       },
     },
   ],
-  framework: "@storybook/nextjs",
-  options: {},
+  framework: {
+    name: "@storybook/nextjs",
+    // set use SWC to true once we upgrade to Next.js 14
+    options: { builder: { useSWC: false } },
+  },
   docs: {
     autodocs: true,
   },

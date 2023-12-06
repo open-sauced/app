@@ -43,6 +43,38 @@ function getLastContributedRepo(pullRequests: DbRepoPR[]) {
 
   return sortedPullRequests[0].full_name;
 }
+
+function getTopContributorLanguages(contributor: DbUser) {
+  // some contributors will have empty language objects so we will pull their popular language from the interests field instead of defaulting to nothing
+  const entries = Object.entries<string>(contributor.languages);
+
+  return (entries.length === 0 ? contributor.interests.split(",") : entries)
+    .sort(([, a], [, b]) => (a < b ? -1 : 1))
+    .slice(0, 2)
+    .map(([language]) => language);
+}
+
+function getLanguageAbbreviation(language: string) {
+  switch (language.toLowerCase()) {
+    case "javascript":
+      return "JS";
+    case "typescript":
+      return "TS";
+    case "powershell":
+      return "Shell"; // Powershell is too long for our current table design
+    case "batchfile":
+      return "Batch"; // Batchfile is too long for our current table design
+    case "vim script": // Vim script is too long for our current table design
+      return "Vim";
+    case "dockerfile":
+      return "Docker"; // Dockerfile is too long for our current table design
+    case "makefile":
+      return "Make"; // Makefile is too long for our current table design
+    default:
+      return language;
+  }
+}
+
 const ContributorListTableRow = ({
   contributor,
   topic,
@@ -62,7 +94,7 @@ const ContributorListTableRow = ({
   });
 
   const repoList = useRepoList(Array.from(new Set(data.map((prData) => prData.full_name))).join(","));
-  const contributorLanguageList = user ? Object.keys(user.languages).map((language) => language) : [];
+  const contributorLanguageList = user ? getTopContributorLanguages(user) : [];
   const days = getPullRequestsToDays(data, Number(range || "30"));
   const totalPrs = data.length;
   const last30days = [
@@ -73,6 +105,7 @@ const ContributorListTableRow = ({
     },
   ];
   const mergedPrs = data.filter((prData) => prData.merged);
+  const [firstContributorLanguage, secondContributorLanguage] = contributorLanguageList;
 
   return (
     <>
@@ -134,13 +167,11 @@ const ContributorListTableRow = ({
 
           <div className="flex items-center justify-between py-3 border-b">
             <div>Languages</div>
-            {contributorLanguageList.length > 0 ? (
+            {contributorLanguageList && (
               <p>
-                {contributorLanguageList[0]}
-                {contributorLanguageList.length > 1 ? `,+${contributorLanguageList.length - 1}` : ""}
+                {firstContributorLanguage && getLanguageAbbreviation(firstContributorLanguage)}
+                {secondContributorLanguage && `, ${getLanguageAbbreviation(secondContributorLanguage)}`}
               </p>
-            ) : (
-              "-"
             )}
           </div>
           <div className="flex items-center justify-between py-3 border-b">
@@ -192,13 +223,11 @@ const ContributorListTableRow = ({
 
         {/* Column: Language */}
         <div className={clsx("flex-1 hidden lg:max-w-[7.5rem]  justify-center lg:flex")}>
-          {contributorLanguageList.length > 0 ? (
+          {contributorLanguageList && (
             <p>
-              {contributorLanguageList[0]}
-              {contributorLanguageList.length > 1 ? `,+${contributorLanguageList.length - 1}` : ""}
+              {firstContributorLanguage && getLanguageAbbreviation(firstContributorLanguage)}
+              {secondContributorLanguage && `, ${getLanguageAbbreviation(secondContributorLanguage)}`}
             </p>
-          ) : (
-            "-"
           )}
         </div>
 
