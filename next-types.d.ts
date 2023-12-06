@@ -190,6 +190,7 @@ interface DbUserInsight {
   readonly name: string;
   readonly is_public: boolean;
   readonly is_favorite: boolean;
+  readonly is_featured: boolean;
   readonly short_code: string;
   readonly created_at: string;
   readonly updated_at: string;
@@ -231,6 +232,7 @@ interface DbUser {
   readonly linkedin_url: string;
   readonly discord_url: string;
   readonly notification_count: number;
+  readonly insights_count: number;
   readonly languages: { [lang]: number };
   readonly first_opened_pr_at: string;
   readonly followers_count: number;
@@ -366,4 +368,19 @@ interface DbListContributorStat {
   login: string;
   commits: number;
   prsCreated: number;
+}
+interface DbProjectContributions {
+  org_id: string;
+  project_id: string;
+  repo_id: number;
+  contributions: number;
+}
+
+interface DBProjectContributor {
+  login: string;
+  commits: number;
+  prs_created: number;
+  prs_reviewed: number;
+  issues_created: number;
+  comments: number;
 }
