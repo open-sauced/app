@@ -14,7 +14,7 @@ interface PaginatedListContributorsResponse {
   meta: Meta;
 }
 
-const useFetchAllLists = (range = 30, fetch = true) => {
+const useFetchAllLists = (range = 30, shouldFetch = true) => {
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
 
@@ -28,7 +28,7 @@ const useFetchAllLists = (range = 30, fetch = true) => {
   const endpointString = `${baseEndpoint}`;
 
   const { data, error, mutate } = useSWR<PaginatedListResponse, Error>(
-    fetch ? endpointString : null,
+    shouldFetch ? endpointString : null,
     publicApiFetcher as Fetcher<PaginatedListResponse, Error>
   );
 

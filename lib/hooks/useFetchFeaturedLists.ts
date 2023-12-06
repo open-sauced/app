@@ -6,11 +6,11 @@ interface PaginatedListResponse {
   meta: Meta;
 }
 
-const useFetchFeaturedLists = (fetch = true) => {
+const useFetchFeaturedLists = (shouldFetch = true) => {
   const endpointString = "lists/featured";
 
   const { data, error, mutate } = useSWR<PaginatedListResponse, Error>(
-    fetch ? endpointString : null,
+    shouldFetch ? endpointString : null,
     publicApiFetcher as Fetcher<PaginatedListResponse, Error>
   );
 

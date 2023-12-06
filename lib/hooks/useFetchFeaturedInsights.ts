@@ -6,9 +6,9 @@ export interface PaginatedInsightsResponse {
   readonly meta: Meta;
 }
 
-const useFetchFeaturedInsights = (fetch = true) => {
+const useFetchFeaturedInsights = (shouldFetch = true) => {
   const { data, error, mutate } = useSWR<PaginatedInsightsResponse, Error>(
-    fetch ? "insights/featured" : null,
+    shouldFetch ? "insights/featured" : null,
     publicApiFetcher as Fetcher<PaginatedInsightsResponse, Error>
   );
 
