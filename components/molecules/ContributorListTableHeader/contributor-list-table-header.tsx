@@ -52,7 +52,7 @@ const ContributorListTableHeaders = ({ selected, handleOnSelectAllContributor }:
           <TableTitle>Last Contributed</TableTitle>
         </div>
         <div className={clsx(" flex flex-1 justify-center    max-w-[7.5rem]")}>
-          <TableTitle>Language</TableTitle>
+          <TableTitle>Most Used Languages</TableTitle>
         </div>
 
         <div className={clsx("flex-1 hidden  lg:flex justify-center lg:max-w-[5rem]")}>
@@ -62,7 +62,7 @@ const ContributorListTableHeaders = ({ selected, handleOnSelectAllContributor }:
           <TableTitle>Contributions</TableTitle>
         </div>
         <div className={clsx(classNames.cols.contributors, "hidden lg:flex justify-center")}>
-          <TableTitle>{`Last ${range} Days`}</TableTitle>
+          <TableTitle>{`Last ${range ?? 30} Days`}</TableTitle>
         </div>
       </div>
     </div>
