@@ -449,8 +449,8 @@ const AddToListDropdown = ({ username }: { username: string }) => {
       open={selectListOpen}
       setOpen={setSelectListOpen}
       emptyState={
-        <div className="">
-          You have no lists. <br />
+        <div className="grid gap-2 p-4">
+          <p>You have no lists</p>
           <Link className="text-sauced-orange" href="/hub/lists/new">
             Create a list
           </Link>
