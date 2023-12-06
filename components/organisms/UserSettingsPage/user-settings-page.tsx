@@ -26,7 +26,7 @@ import { validateTwitterUsername } from "lib/utils/validate-twitter-username";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "components/molecules/Dialog/dialog";
 import CouponForm from "./coupon-form";
 
-interface userSettingsPageProps {
+interface UserSettingsPageProps {
   user: User | null;
 }
 
@@ -94,7 +94,7 @@ const DeleteAccountModal = ({ open, setOpen, onDelete }: DeleteAccountModalProps
   );
 };
 
-const UserSettingsPage = ({ user }: userSettingsPageProps) => {
+const UserSettingsPage = ({ user }: UserSettingsPageProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const deleteFormRef = useRef<HTMLFormElement>(null);
   const { data: insightsUser, mutate } = useFetchUser(user?.user_metadata.user_name, {

@@ -8,7 +8,7 @@ interface UserConnectionResponse {
   meta: Meta;
 }
 
-type connectionsRequestPayload = {
+type ConnectionsRequestPayload = {
   username: string;
   message: string;
 };
@@ -20,7 +20,7 @@ const useUserConnections = () => {
     publicApiFetcher as Fetcher<UserConnectionResponse, Error>
   );
 
-  async function requestConnection(payload: connectionsRequestPayload) {
+  async function requestConnection(payload: ConnectionsRequestPayload) {
     const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/collaborations`, {
       method: "POST",
       headers: {
