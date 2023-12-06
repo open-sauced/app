@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.79.1-beta.3](https://github.com/open-sauced/insights/compare/v1.79.1-beta.2...v1.79.1-beta.3) (2023-12-06)
+
+
+### 🐛 Bug Fixes
+
+* Now all types are Pascal cased ([5e219c5](https://github.com/open-sauced/insights/commit/5e219c56fd655a3cd890f2a9c3d78f6721a4f779))
+* now all types are Pascal cased ([#2272](https://github.com/open-sauced/insights/issues/2272)) ([307e0e2](https://github.com/open-sauced/insights/commit/307e0e274c984bf96b6ba63ac6d25a025ea250ef))
+
 ### [1.79.1-beta.2](https://github.com/open-sauced/insights/compare/v1.79.1-beta.1...v1.79.1-beta.2) (2023-12-06)
 
 
