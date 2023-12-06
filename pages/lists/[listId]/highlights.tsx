@@ -81,7 +81,7 @@ const Highlights = ({ list, numberOfContributors, isOwner, highlights }: Highlig
             </div>
           </div>
         </div>
-        <div className="w-full 2xl:max-w-[40rem] xl:max-w-[33rem]">
+        <div className="w-full 2xl:max-w-[40rem] xl:max-w-[33rem] flex flex-col">
           <ClientOnly>
             {highlights && highlights.length > 0
               ? highlights.map(({ id, url, title, created_at, highlight, shipped_at, login, type, tagged_repos }) => (

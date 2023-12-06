@@ -107,6 +107,20 @@ const addListContributor = async (listId: string, contributors: number[]) => {
   }
 };
 
+const useFetchListContributorsHighlights = (listId: string, repo: string) => {
+  const { data, error, mutate } = useSWR<any>(
+    `lists/${listId}/contributors/highlights`,
+    publicApiFetcher as Fetcher<any, Error>
+  );
+
+  return {
+    data: data,
+    isLoading: !error && !data,
+    isError: !!error && Object.keys(error).length > 0,
+    mutate,
+  };
+};
+
 const useList = (listId: string) => {
   const { data, error, mutate } = useSWR<any>(`lists/${listId}`, publicApiFetcher as Fetcher<any, Error>);
 
