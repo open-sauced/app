@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.79.1-beta.1](https://github.com/open-sauced/insights/compare/v1.79.0...v1.79.1-beta.1) (2023-12-06)
+
+
+### 🐛 Bug Fixes
+
+* added form for mobile view of highlights form ([b977ff0](https://github.com/open-sauced/insights/commit/b977ff08e12eb9a9439c058a3bb7bbdfdfa59f02))
+* added missing form for mobile view of highlights form ([#2268](https://github.com/open-sauced/insights/issues/2268)) ([0ef7556](https://github.com/open-sauced/insights/commit/0ef7556cc05d35f9506fd3c33b48ddcc58f77762))
+
 ## [1.79.0](https://github.com/open-sauced/insights/compare/v1.78.0...v1.79.0) (2023-12-05)
 
 
