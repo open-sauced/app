@@ -5,6 +5,15 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.79.1-beta.2](https://github.com/open-sauced/insights/compare/v1.79.1-beta.1...v1.79.1-beta.2) (2023-12-06)
+
+
+### 🐛 Bug Fixes
+
+* add to list action menu needs better design when empty ([#2246](https://github.com/open-sauced/insights/issues/2246)) ([62b0f2b](https://github.com/open-sauced/insights/commit/62b0f2bf358ad5e12fd7e53bcbc21da60794bde8))
+* Dashboard Highlight card skeleton covers hovercard details ([#2237](https://github.com/open-sauced/insights/issues/2237)) ([2f01618](https://github.com/open-sauced/insights/commit/2f016188e4ac84e9543d7d5cd610ed7c999ada68))
+* now contributors without language get accurate interest fallback ([#2265](https://github.com/open-sauced/insights/issues/2265)) ([938c858](https://github.com/open-sauced/insights/commit/938c858b1bf7e75d5caf3bc59cca7764192974ec))
+
 ### [1.79.1-beta.1](https://github.com/open-sauced/insights/compare/v1.79.0...v1.79.1-beta.1) (2023-12-06)
 
 
