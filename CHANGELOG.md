@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.79.1-beta.4](https://github.com/open-sauced/insights/compare/v1.79.1-beta.3...v1.79.1-beta.4) (2023-12-07)
+
+
+### ✅ Tests
+
+* colocated tests ([#2275](https://github.com/open-sauced/insights/issues/2275)) ([8524c0d](https://github.com/open-sauced/insights/commit/8524c0d397f637a79983e6f604f480d5f7016b8a))
+
 ### [1.79.1-beta.3](https://github.com/open-sauced/insights/compare/v1.79.1-beta.2...v1.79.1-beta.3) (2023-12-06)
 
 
