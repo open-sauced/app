@@ -1,4 +1,4 @@
-import { truncateString } from "../../../lib/utils/truncate-string";
+import { truncateString } from "./truncate-string";
 
 describe("[lib] truncateString()", () => {
   test("string should truncate with length", () => {
