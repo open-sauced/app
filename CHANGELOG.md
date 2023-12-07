@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.79.1-beta.6](https://github.com/open-sauced/insights/compare/v1.79.1-beta.5...v1.79.1-beta.6) (2023-12-07)
+
+
+### 🐛 Bug Fixes
+
+* add correct path to FAQ link and update readme for contribs and community ([#2283](https://github.com/open-sauced/insights/issues/2283)) ([805dd66](https://github.com/open-sauced/insights/commit/805dd664a52e79f8dab6cf767c5d09b734ac7f71))
+* update url description in profile settings ([#2280](https://github.com/open-sauced/insights/issues/2280)) ([993338d](https://github.com/open-sauced/insights/commit/993338d875b96424bd9dcdfe69c8152c4b9e645a))
+
 ### [1.79.1-beta.5](https://github.com/open-sauced/insights/compare/v1.79.1-beta.4...v1.79.1-beta.5) (2023-12-07)
 
 
