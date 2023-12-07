@@ -164,3 +164,7 @@ div[role="dialog"]::-webkit-scrollbar-thumb {
     background-position: 468px 0;
   }
 }
+
+.react-loading-skeleton {
+  z-index: unset !important;
+}

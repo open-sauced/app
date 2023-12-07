@@ -1,14 +1,14 @@
 import { useState } from "react";
 import useSWR from "swr";
 
-type direction = "asc" | "desc";
+type Direction = "asc" | "desc";
 
 interface PaginatedResponse {
   data: DbRecommendedInsightsRepo[];
   meta: Meta;
 }
 
-const useFetchInsightRecommendedRepositories = (range = 30, orderDirection?: direction) => {
+const useFetchInsightRecommendedRepositories = (range = 30, orderDirection?: Direction) => {
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
   const query = new URLSearchParams();

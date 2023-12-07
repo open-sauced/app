@@ -5,6 +5,46 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.79.1-beta.3](https://github.com/open-sauced/insights/compare/v1.79.1-beta.2...v1.79.1-beta.3) (2023-12-06)
+
+
+### 🐛 Bug Fixes
+
+* Now all types are Pascal cased ([5e219c5](https://github.com/open-sauced/insights/commit/5e219c56fd655a3cd890f2a9c3d78f6721a4f779))
+* now all types are Pascal cased ([#2272](https://github.com/open-sauced/insights/issues/2272)) ([307e0e2](https://github.com/open-sauced/insights/commit/307e0e274c984bf96b6ba63ac6d25a025ea250ef))
+
+### [1.79.1-beta.2](https://github.com/open-sauced/insights/compare/v1.79.1-beta.1...v1.79.1-beta.2) (2023-12-06)
+
+
+### 🐛 Bug Fixes
+
+* add to list action menu needs better design when empty ([#2246](https://github.com/open-sauced/insights/issues/2246)) ([62b0f2b](https://github.com/open-sauced/insights/commit/62b0f2bf358ad5e12fd7e53bcbc21da60794bde8))
+* Dashboard Highlight card skeleton covers hovercard details ([#2237](https://github.com/open-sauced/insights/issues/2237)) ([2f01618](https://github.com/open-sauced/insights/commit/2f016188e4ac84e9543d7d5cd610ed7c999ada68))
+* now contributors without language get accurate interest fallback ([#2265](https://github.com/open-sauced/insights/issues/2265)) ([938c858](https://github.com/open-sauced/insights/commit/938c858b1bf7e75d5caf3bc59cca7764192974ec))
+
+### [1.79.1-beta.1](https://github.com/open-sauced/insights/compare/v1.79.0...v1.79.1-beta.1) (2023-12-06)
+
+
+### 🐛 Bug Fixes
+
+* added form for mobile view of highlights form ([b977ff0](https://github.com/open-sauced/insights/commit/b977ff08e12eb9a9439c058a3bb7bbdfdfa59f02))
+* added missing form for mobile view of highlights form ([#2268](https://github.com/open-sauced/insights/issues/2268)) ([0ef7556](https://github.com/open-sauced/insights/commit/0ef7556cc05d35f9506fd3c33b48ddcc58f77762))
+
+## [1.79.0](https://github.com/open-sauced/insights/compare/v1.78.0...v1.79.0) (2023-12-05)
+
+
+### 🍕 Features
+
+* upgraded to Storybook 7.6.3 ([#2244](https://github.com/open-sauced/insights/issues/2244)) ([a2ae11a](https://github.com/open-sauced/insights/commit/a2ae11a5628c88c430e0403356889e4ca5ff218b))
+
+
+### 🐛 Bug Fixes
+
+* fixed crash on list contributor grid when in card view changing page size ([#2241](https://github.com/open-sauced/insights/issues/2241)) ([f6bc793](https://github.com/open-sauced/insights/commit/f6bc7939ccdfe8603bdc06645f79d9687a68ebe1))
+* now most used languages are truncated to a limit of two ([#2238](https://github.com/open-sauced/insights/issues/2238)) ([97ce66e](https://github.com/open-sauced/insights/commit/97ce66e352c4380368f864c24029c66d4096af95))
+* now the highlight input form closes only if you press ESC or click the close button ([e56ea73](https://github.com/open-sauced/insights/commit/e56ea73b032329ea3fd435a135bf2cb75768562e))
+* now the highlight input form closes only if you press ESC or click the close button ([#2257](https://github.com/open-sauced/insights/issues/2257)) ([1b94421](https://github.com/open-sauced/insights/commit/1b944216a2b8a401a8a924e559a67de3c039b34e))
+
 ## [1.79.0-beta.3](https://github.com/open-sauced/insights/compare/v1.79.0-beta.2...v1.79.0-beta.3) (2023-12-05)
 
 
