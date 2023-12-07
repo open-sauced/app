@@ -37,8 +37,8 @@ import FeaturedHighlightsPanel from "components/molecules/FeaturedHighlightsPane
 import AnnouncementCard from "components/molecules/AnnouncementCard/announcement-card";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
 
-type activeTabType = "home" | "following";
-type highlightReposType = { repoName: string; repoIcon: string; full_name: string };
+type ActiveTabType = "home" | "following";
+type HighlightReposType = { repoName: string; repoIcon: string; full_name: string };
 
 interface HighlightSSRProps {
   highlight: DbHighlight | null;
@@ -53,7 +53,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
 
   const { data: featuredHighlights } = useFetchFeaturedHighlights();
 
-  const repoTofilterList = (repos: { full_name: string }[]): highlightReposType[] => {
+  const repoTofilterList = (repos: { full_name: string }[]): HighlightReposType[] => {
     const filtersArray = repos.map(({ full_name }) => {
       const [orgName, repo] = full_name.split("/");
       const repoFullName = `${orgName}/${repo}`;
@@ -68,8 +68,8 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
   const router = useRouter();
   const [openSingleHighlight, setOpenSingleHighlight] = useState(false);
   const selectedRepo = (router.query.repo as string) || "";
-  const [activeTab, setActiveTab] = useState<activeTabType>("home");
-  const [repoList, setRepoList] = useState<highlightReposType[]>(repoTofilterList(repos as highlightReposType[]));
+  const [activeTab, setActiveTab] = useState<ActiveTabType>("home");
+  const [repoList, setRepoList] = useState<HighlightReposType[]>(repoTofilterList(repos as HighlightReposType[]));
   const [hydrated, setHydrated] = useState(false);
   const topRef = useRef<HTMLDivElement>(null);
   const singleHighlight = props.highlight;
@@ -156,7 +156,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
     setQueryParams({}, ["repo"]);
 
     // Changing the active tab
-    setActiveTab(value as activeTabType);
+    setActiveTab(value as ActiveTabType);
   }
 
   const shouldAllowDialogCloseAction =

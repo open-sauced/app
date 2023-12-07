@@ -2,7 +2,7 @@ import { useState } from "react";
 import useSWR, { Fetcher } from "swr";
 import publicApiFetcher from "lib/utils/public-api-fetcher";
 
-interface useFetchUserHighlightsResponse {
+interface UseFetchUserHighlightsResponse {
   data: DbHighlight[];
   meta: Meta;
 }
@@ -14,9 +14,9 @@ const useFetchAllHighlights = (repo = "") => {
   const limitQuery = limit ? `&limit=${limit}` : "";
   const repoQuery = repo ? `&repo=${repo}` : "";
 
-  const { data, error, mutate } = useSWR<useFetchUserHighlightsResponse, Error>(
+  const { data, error, mutate } = useSWR<UseFetchUserHighlightsResponse, Error>(
     `highlights/list?${pageQuery}${limitQuery}${repoQuery}`,
-    publicApiFetcher as Fetcher<useFetchUserHighlightsResponse, Error>
+    publicApiFetcher as Fetcher<UseFetchUserHighlightsResponse, Error>
   );
 
   return {
