@@ -107,16 +107,46 @@ const addListContributor = async (listId: string, contributors: number[]) => {
   }
 };
 
-const useFetchListContributorsHighlights = (listId: string, repo: string) => {
-  const { data, error, mutate } = useSWR<any>(
-    `lists/${listId}/contributors/highlights`,
-    publicApiFetcher as Fetcher<any, Error>
+interface ListContributorsHighlightsProps {
+  listId: string;
+  repo?: string;
+  range?: number;
+  initialData?: PaginatedListContributorsHighlightsResponse;
+}
+
+export interface PaginatedListContributorsHighlightsResponse {
+  data: DbHighlight[];
+  meta: Meta;
+}
+const useFetchListContributorsHighlights = ({
+  listId,
+  repo,
+  initialData,
+  range = 30,
+}: ListContributorsHighlightsProps) => {
+  const query = new URLSearchParams();
+
+  if (repo) {
+    query.set("repo", repo);
+  }
+
+  query.set("range", `${range}`);
+
+  const endpointString = `lists/${listId}/contributors/highlights?${query.toString()}`;
+
+  const { data, error, mutate } = useSWR<PaginatedListContributorsHighlightsResponse, Error>(
+    listId ? endpointString : null,
+    publicApiFetcher as Fetcher<PaginatedListContributorsHighlightsResponse, Error>,
+    {
+      fallbackData: initialData,
+    }
   );
 
   return {
-    data: data,
+    data: data?.data ?? [],
     isLoading: !error && !data,
     isError: !!error && Object.keys(error).length > 0,
+    meta: data?.meta ?? { itemCount: 0, limit: 0, page: 0, hasNextPage: false, hasPreviousPage: false, pageCount: 0 },
     mutate,
   };
 };
@@ -132,4 +162,32 @@ const useList = (listId: string) => {
   };
 };
 
-export { useList, useFetchAllLists, useFetchListContributors, addListContributor };
+export type TaggedRepoObject = { full_name: string };
+interface PaginatedHighlightsRepoProps {
+  data: TaggedRepoObject[];
+  meta: Meta;
+}
+
+const useListHighlightsTaggedRepos = (listId: string) => {
+  const { data, error, mutate } = useSWR<PaginatedHighlightsRepoProps, Error>(
+    `lists/${listId}/contributors/highlights/tagged-repos?limit=50&page=1`,
+    publicApiFetcher as Fetcher<PaginatedHighlightsRepoProps, Error>
+  );
+
+  return {
+    data: data?.data ?? [],
+    isLoading: !error && !data,
+    meta: data?.meta ?? { itemCount: 0, limit: 0, page: 0, hasNextPage: false, hasPreviousPage: false, pageCount: 0 },
+    isError: !!error && Object.keys(error).length > 0,
+    mutate,
+  };
+};
+
+export {
+  useList,
+  useFetchAllLists,
+  useFetchListContributors,
+  addListContributor,
+  useFetchListContributorsHighlights,
+  useListHighlightsTaggedRepos,
+};
