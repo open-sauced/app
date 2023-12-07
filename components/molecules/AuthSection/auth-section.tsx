@@ -61,7 +61,7 @@ const AuthSection: React.FC = ({}) => {
         <Text className="group-hover:text-light-orange-10">{user?.user_metadata.user_name}</Text>
       </Link>,
       <Link
-        href={"https://docs.opensauced.pizza/community/faqs/"}
+        href={"https://docs.opensauced.pizza/welcome/faqs/"}
         key="faqs"
         className="flex items-center px-4 py-2 text-lg transition rounded-md cursor-pointer group gap-x-3 hover:bg-light-orange-3"
       >

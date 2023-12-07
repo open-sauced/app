@@ -1,4 +1,4 @@
-import humanizeNumber from "../../../lib/utils/humanizeNumber";
+import humanizeNumber from "./humanizeNumber";
 
 describe("Test: humanizeNumber()", () => {
   test("1000 should humanize with abbreviation", () => {

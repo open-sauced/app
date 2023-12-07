@@ -16,13 +16,13 @@ export interface UpdateUserPayload {
   discord_url?: string;
 }
 
-interface useUpdateUserProps {
+interface UseUpdateUserProps {
   data: UpdateUserPayload;
   params?: string;
 }
 
 const baseUrl = process.env.NEXT_PUBLIC_API_URL;
-const updateUser = async ({ data, params }: useUpdateUserProps) => {
+const updateUser = async ({ data, params }: UseUpdateUserProps) => {
   const sessionResponse = await supabase.auth.getSession();
   const sessionToken = sessionResponse?.data.session?.access_token;
   try {
