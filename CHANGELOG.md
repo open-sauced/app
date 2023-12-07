@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.79.1-beta.5](https://github.com/open-sauced/insights/compare/v1.79.1-beta.4...v1.79.1-beta.5) (2023-12-07)
+
+
+### 🧑‍💻 Code Refactoring
+
+* update range tooltip copy ([#2259](https://github.com/open-sauced/insights/issues/2259)) ([e5dd3c9](https://github.com/open-sauced/insights/commit/e5dd3c96a927ff7d4042f23cefc26cd995eda2ff))
+
 ### [1.79.1-beta.4](https://github.com/open-sauced/insights/compare/v1.79.1-beta.3...v1.79.1-beta.4) (2023-12-07)
 
 
