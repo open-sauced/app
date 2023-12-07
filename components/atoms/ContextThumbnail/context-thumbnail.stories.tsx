@@ -1,6 +1,6 @@
 import { ComponentStory } from "@storybook/react";
-import ContextThumbnail from "../../components/atoms/ContextThumbnail/context-thumbnail";
 import Thumbnail from "../../img/topic-thumbnails/hacktoberfest.svg";
+import ContextThumbnail from "./context-thumbnail";
 
 const storyConfig = {
   title: "Design System/Atoms/Context Thumbnail",

@@ -1,5 +1,5 @@
 import { ComponentStory } from "@storybook/react";
-import EChartWrapper from "../../components/atoms/EChartWrapper/echart-wrapper";
+import EChartWrapper from "./echart-wrapper";
 
 const storyConfig = {
   title: "Design System/Atoms/eChart Wrapper",

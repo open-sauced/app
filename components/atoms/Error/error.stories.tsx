@@ -1,5 +1,5 @@
 import { ComponentStory } from "@storybook/react";
-import Error from "../../components/atoms/Error/Error";
+import Error from "./Error";
 
 const storyConfig = {
   title: "Design System/Atoms/Error",

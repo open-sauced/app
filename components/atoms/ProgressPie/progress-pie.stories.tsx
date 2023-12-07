@@ -1,5 +1,5 @@
 import { ComponentStory } from "@storybook/react";
-import ProgressPie from "../../components/atoms/ProgressPie/progress-pie";
+import ProgressPie from "./progress-pie";
 
 const storyConfig = {
   title: "Design System/Atoms/ProgressPie",

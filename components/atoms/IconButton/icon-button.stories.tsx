@@ -1,5 +1,5 @@
 import { ComponentStory } from "@storybook/react";
-import IconButton from "../../components/atoms/IconButton/icon-button";
+import IconButton from "./icon-button";
 
 const storyConfig = {
   title: "Design System/Atoms/Icon Button",

@@ -1,5 +1,5 @@
 import { ComponentStory } from "@storybook/react";
-import Card from "../../components/atoms/Card/card";
+import Card from "./card";
 
 const storyConfig = {
   title: "Design System/Atoms/Card",

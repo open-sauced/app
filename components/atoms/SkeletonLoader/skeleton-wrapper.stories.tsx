@@ -12,7 +12,7 @@ export default storyConfig;
 const SkeletonTemplate: ComponentStory<typeof SkeletonWrapper> = (args) => <SkeletonWrapper {...args} />;
 
 export const Default = SkeletonTemplate.bind({});
-export const doubleWrappers = SkeletonTemplate.bind({});
+export const DoubleWrappers = SkeletonTemplate.bind({});
 export const tripleWrappers = SkeletonTemplate.bind({});
 
 Default.args = {
@@ -22,7 +22,7 @@ Default.args = {
   radius: 4,
 };
 
-doubleWrappers.args = {
+DoubleWrappers.args = {
   count: 2,
   height: 90,
   width: 300,

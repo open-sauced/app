@@ -11,6 +11,7 @@ const LayoutToggleTemplate: ComponentStory<typeof LayoutToggle> = (args) => <Lay
 export const Default = LayoutToggleTemplate.bind({});
 
 Default.args = {
+  // eslint-disable-next-line no-console
   onChange: (value) => console.log(value),
   value: "grid",
 };

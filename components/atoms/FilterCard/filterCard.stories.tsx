@@ -1,5 +1,5 @@
 import { ComponentStory } from "@storybook/react";
-import FilterCard from "../../components/atoms/FilterCard/filter-card";
+import FilterCard from "./filter-card";
 
 const storyConfig = {
   title: "Design System/Atoms/FilterCard",

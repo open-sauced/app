@@ -9,7 +9,7 @@ export default storyConfig;
 
 const BadgeTemplate: ComponentStory<typeof InsightsBadge> = (args) => <InsightsBadge {...args} />;
 
-export const isPublic = BadgeTemplate.bind({});
-isPublic.args = { isPublic: true };
-export const isPrivate = BadgeTemplate.bind({});
-isPrivate.args = { isPublic: false };
+export const IsPublic = BadgeTemplate.bind({});
+IsPublic.args = { isPublic: true };
+export const IsPrivate = BadgeTemplate.bind({});
+IsPrivate.args = { isPublic: false };
