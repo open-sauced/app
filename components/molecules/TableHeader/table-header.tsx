@@ -5,7 +5,7 @@ import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 
 import Search from "components/atoms/Search/search";
 import Title from "components/atoms/Typography/title";
-import LimitSelect, { limitSelectMap } from "components/atoms/Select/limit-select";
+import LimitSelect, { LimitSelectMap } from "components/atoms/Select/limit-select";
 import LayoutToggle, { ToggleValue } from "components/atoms/LayoutToggle/layout-toggle";
 import { setQueryParams } from "lib/utils/query-params";
 import PaginationResult from "../PaginationResults/pagination-result";
@@ -106,7 +106,7 @@ const TableHeader = ({ title, metaInfo, entity, onSearch, layout, onLayoutToggle
             { name: "40 per page", value: "40" },
             { name: "50 per page", value: "50" },
           ]}
-          defaultValue={limit as limitSelectMap}
+          defaultValue={limit as LimitSelectMap}
           className="hidden ml-auto min-w-max md:inline-block"
           onChange={function (limit: string): void {
             setQueryParams({ limit: `${limit}` });

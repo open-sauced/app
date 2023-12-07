@@ -6,13 +6,13 @@ import { setQueryParams } from "lib/utils/query-params";
 import ComponentDateFilter from "components/molecules/ComponentDateFilter/component-date-filter";
 import NavItem from "./nav-item";
 
-type toolListArray = {
+type ToolListArray = {
   name: string;
   numOf?: number;
 };
 
 interface NavProps {
-  toolList: toolListArray[];
+  toolList: ToolListArray[];
   selectedTool: string | string[] | undefined;
   filterName?: string | string[] | undefined;
   selectedFilter?: string | string[] | undefined;
