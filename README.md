@@ -49,7 +49,7 @@ npm run dev
 
 ### ☁️️ Netlify Edge Functions
 
-**Note**: For the best local development experience, it is recommended to have the `Netlify CLI` installed globally. Follow the [installation guide]( https://docs.netlify.com/cli/get-started/) to set up Netlify CLI on your machine.
+**Note**: For the best local development experience, it is recommended to have the `Netlify CLI` installed globally. Follow the [installation guide](https://docs.netlify.com/cli/get-started/) to set up Netlify CLI on your machine.
 
 To start a local copy of the app on port `3000` with [Netlify Edge Functions](https://docs.netlify.com/edge-functions/overview/)):
 
@@ -83,9 +83,9 @@ npm run build
 
 ## 🤝 Contributing
 
-_We can only take unsolicited contributions from OpenSauced Triage, Committers, and Maintainers **for now**. We suggest folks not on the team, to please open issues or take a look at the [Bugs](https://github.com/orgs/open-sauced/projects/6) or [Papercuts](https://github.com/open-sauced/insights/issues?q=is%3Aopen+is%3Aissue+milestone%3APapercuts). If you would like to find **good first issues**, please check out the companion project to this, [open-sauced/hot](https://github.com/open-sauced/hot/issues)._
+_We encourage contributors to open issues or take a look at the [Bugs](https://github.com/orgs/open-sauced/projects/6) or [Papercuts](https://github.com/open-sauced/insights/issues?q=is%3Aopen+is%3Aissue+milestone%3APapercuts). If you would like to find **good first issues**, please check out the companion project to this, [open-sauced/hot](https://github.com/open-sauced/hot/issues) or check out the `#good-first-issues` channel in our [Discord](https://discord.gg/opensauced)._
 
-We encourage you to contribute to OpenSauced! Please check out the [Contributing guide](https://docs.opensauced.pizza/contributing/introduction-to-contributing/) for guidelines about how to proceed.
+We encourage you to contribute to OpenSauced! Please check out the [Contributing guide](https://docs.opensauced.pizza/contributing/introduction-to-contributing/) for guidelines about how to self-assign an issue and how to get started.
 
 We have a commit utility called [@open-sauced/conventional-commit](https://github.com/open-sauced/conventional-commit) that helps you write your commits in a way that is easy to understand and process by others.
 
@@ -104,4 +104,4 @@ npx -y @open-sauced/conventional-commit
 ## 🍕 Community
 
 Got Questions? Join the conversation in our [Discord](https://discord.gg/U2peSNf23P).  
-Find Open Sauced videos and release overviews on our [YouTube Channel](https://www.youtube.com/channel/UCklWxKrTti61ZCROE1e5-MQ).
+Find Open Sauced videos and release overviews on our [YouTube Channel](https://www.youtube.com/channel/UCklWxKrTti61ZCROE1e5-MQ), and check out the resources on our [Dev.to org](https://dev.to/opensauced).
