@@ -140,7 +140,7 @@ const useFetchListContributorsHighlights = ({
 
   const endpointString = `lists/${listId}/contributors/highlights?${query.toString()}`;
 
-  const { data, error, mutate } = useSWR<PaginatedListContributorsHighlightsResponse, Error>(
+  const { data, error, mutate, isLoading } = useSWR<PaginatedListContributorsHighlightsResponse, Error>(
     listId ? endpointString : null,
     publicApiFetcher as Fetcher<PaginatedListContributorsHighlightsResponse, Error>,
     {
@@ -150,7 +150,7 @@ const useFetchListContributorsHighlights = ({
 
   return {
     data: data?.data ?? [],
-    isLoading: !error && !data,
+    isLoading: isLoading || (!error && !data),
     isError: !!error && Object.keys(error).length > 0,
     meta: data?.meta ?? { itemCount: 0, limit: 0, page: 0, hasNextPage: false, hasPreviousPage: false, pageCount: 0 },
     mutate,

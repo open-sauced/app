@@ -188,7 +188,7 @@ const Highlights = ({ list, numberOfContributors, isOwner, highlights }: Highlig
 
           {!isLoading && data && data.length === 0 ? (
             <DashContainer>
-              <p>You have not followed any user yet!</p>
+              <p>You have no highlights for this list.</p>
             </DashContainer>
           ) : null}
           <ClientOnly>
