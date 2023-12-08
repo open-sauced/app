@@ -133,7 +133,7 @@ const Highlights = ({ list, numberOfContributors, isOwner, highlights }: Highlig
             <Search
               value={contributor}
               onChange={(value) => {
-                setContributor(value);
+                onSearch(value);
               }}
               placeholder="Search contributors"
               className="!w-full"
