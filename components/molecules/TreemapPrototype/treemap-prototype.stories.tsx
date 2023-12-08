@@ -1,9 +1,9 @@
 import { ResponsiveTreeMapHtml, NodeMouseEventHandler } from "@nivo/treemap";
 import { useState } from "react";
 import { animated, useSpring } from "@react-spring/web";
-import { ContributorNode } from "stories/molecules/treemap-prototype/contributor-node";
+import { ContributorNode } from "components/molecules/TreemapPrototype/contributor-node";
 import Card from "components/atoms/Card/card";
-import { SpecialNode } from "stories/molecules/treemap-prototype/special-node";
+import { SpecialNode } from "components/molecules/TreemapPrototype/special-node";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta = {

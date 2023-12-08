@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import DevCardWall from "../../components/organisms/DevCardWall/dev-card-wall";
+import DevCardWall from "./dev-card-wall";
 
 const cards = Array.from({ length: 10 }, (_, i) => ({
   username: `test${i}`,

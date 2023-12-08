@@ -1,4 +1,4 @@
-import LoginTopNav from "../../components/organisms/LoginTopNav/login-top-nav";
+import LoginTopNav from "./login-top-nav";
 
 const storyConfig = {
   title: "Design System/Organisms/Login Top Nav",

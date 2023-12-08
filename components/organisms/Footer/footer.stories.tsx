@@ -1,4 +1,4 @@
-import Footer from "../../components/organisms/Footer/footer";
+import Footer from "./footer";
 
 const storyConfig = {
   title: "Design System/Organisms/Footer",

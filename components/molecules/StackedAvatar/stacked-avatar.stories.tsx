@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from "@storybook/react";
 import StackedAvatar from "components/molecules/StackedAvatar/stacked-avatar";
-import { mockDbContributions } from "../testData/mockedData";
+import { mockDbContributions } from "../../../.storybook/testData/mockedData";
 
 const storyConfig = {
   title: "Design System/Molecules/Stacked Avatar",

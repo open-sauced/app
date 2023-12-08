@@ -1,16 +1,15 @@
 import { Meta, StoryObj } from "@storybook/react";
+import { testLanguageList } from ".storybook/testData/mockedData";
+import CardHorizontalBarChart from "components/molecules/CardHorizontalBarChart/card-horizontal-bar-chart";
 
-import ProfileLanguageChart from "components/molecules/ProfileLanguageChart/profile-language-chart";
-import { testLanguageList } from "stories/testData/mockedData";
-
-const storyConfig = {
-  title: "Design System/Molecules/Profile language chart",
-  component: ProfileLanguageChart,
-} satisfies Meta<typeof ProfileLanguageChart>;
+const storyConfig: Meta<typeof CardHorizontalBarChart> = {
+  title: "Design System/Molecules/Card Horizontal Bar",
+  component: CardHorizontalBarChart,
+};
 
 export default storyConfig;
 
-type Story = StoryObj<typeof ProfileLanguageChart>;
+type Story = StoryObj<typeof CardHorizontalBarChart>;
 
 export const OneLanguage: Story = {
   args: {

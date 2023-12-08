@@ -1,5 +1,5 @@
 import { FilterOptions } from "interfaces/filter-object-types";
-import SelectReportsFilter from "../../components/molecules/SelectReportsFilter/select-reports-filter";
+import SelectReportsFilter from "./select-reports-filter";
 
 const storyConfig = {
   title: "Design System/Molecules/Select Reports Filter",

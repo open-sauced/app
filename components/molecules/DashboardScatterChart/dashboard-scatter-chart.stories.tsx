@@ -1,6 +1,6 @@
 import { ComponentStory } from "@storybook/react";
 import humanizeNumber from "lib/utils/humanizeNumber";
-import DashboardScatterChart from "../../components/molecules/DashboardScatterChart/dashboard-scatter-chart";
+import DashboardScatterChart from "./dashboard-scatter-chart";
 
 const storyConfig = {
   title: "Design System/Molecules/Dashboard Scatter Chart",

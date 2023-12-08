@@ -1,5 +1,5 @@
 import { ComponentStory } from "@storybook/react";
-import OnboardingButton from "../../components/molecules/OnboardingButton/onboarding-button";
+import OnboardingButton from "./onboarding-button";
 
 const StoryConfig = {
   title: "Design System/Molecules/Onboarding Button",
