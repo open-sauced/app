@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.79.2-beta.1](https://github.com/open-sauced/insights/compare/v1.79.1...v1.79.2-beta.1) (2023-12-08)
+
+
+### 🐛 Bug Fixes
+
+* show contributor url on profile page ([#2284](https://github.com/open-sauced/insights/issues/2284)) ([e87877c](https://github.com/open-sauced/insights/commit/e87877c0fd2be9d8b1bf918ef73f9f4258acb9de))
+
 ### [1.79.1](https://github.com/open-sauced/insights/compare/v1.79.0...v1.79.1) (2023-12-07)
 
 
