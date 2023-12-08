@@ -31,7 +31,8 @@
     "prebuild": "node generate-netlify-env.js",
     "build": "next build",
     "start": "next start",
-    "test": "vitest",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "test:playwright": "npx playwright",
     "pretest:e2e": "npm run test:e2e-install",
     "test:e2e-install": "npm run test:playwright -- install && npx playwright install-deps",
@@ -160,6 +161,7 @@
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": "eslint --cache --fix",
+    "*.{ts,tsx}": "vitest related --run",
     "*.{js,jsx,ts,tsx,css,md}": "prettier --write"
   }
 }
