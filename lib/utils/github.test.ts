@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, afterEach } from "vitest";
+import { describe, it, expect, vi, afterEach, beforeEach } from "vitest";
 import {
   getAvatarById,
   getAvatarByUsername,
@@ -10,6 +10,14 @@ import {
 } from "lib/utils/github";
 
 describe("[lib] github methods", () => {
+  beforeEach(() => {
+    vi.mock("@supabase/auth-helpers-nextjs", async () => {
+      return {
+        createPagesBrowserClient: vi.fn(),
+      };
+    });
+  });
+
   afterEach(() => {
     vi.restoreAllMocks();
   });
