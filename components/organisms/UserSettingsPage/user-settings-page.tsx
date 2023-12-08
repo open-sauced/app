@@ -307,7 +307,7 @@ const UserSettingsPage = ({ user }: UserSettingsPageProps) => {
             <TextInput
               className="bg-light-slate-4 text-light-slate-11"
               placeholder="https://opensauced.pizza"
-              label="URL"
+              label="URL (Personal website, portfolio, or any page that showcases your work or interests)"
               pattern="http[s]?://.*\..{2,}"
               name="url"
             />
