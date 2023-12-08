@@ -1,3 +1,4 @@
+import { describe, it, expect } from "vitest";
 import getContributorPullRequestVelocity from "lib/utils/get-contributor-pr-velocity";
 
 const data = [

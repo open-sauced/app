@@ -1,4 +1,5 @@
-import { validateEmail } from "lib/utils/validate-email";
+import { describe, it, expect } from "vitest";
+import { validateEmail } from "./validate-email";
 
 describe("[lib] validateEmail()", () => {
   it("Should return true if string is a valid email", () => {

@@ -1,3 +1,4 @@
+import { describe, it, expect } from "vitest";
 import { getNotificationURL } from "lib/utils/get-notification-url";
 
 describe("[lib] getNotificationURL()", () => {

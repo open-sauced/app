@@ -1,4 +1,5 @@
-import { getBlogDetails, isValidBlogUrl } from "lib/utils/dev-to";
+import { describe, it, expect } from "vitest";
+import { getBlogDetails, isValidBlogUrl } from "./dev-to";
 
 describe("[lib] dev-to methods", () => {
   it("Should return the title and markdown", async () => {

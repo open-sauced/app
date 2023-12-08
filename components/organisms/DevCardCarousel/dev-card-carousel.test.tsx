@@ -1,7 +1,4 @@
-/**
- * @jest-environment jsdom
- */
-
+import { describe, it, expect, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom";
@@ -15,7 +12,7 @@ describe("DevCardCarousel", () => {
 
   describe("when the user clicks on a card", () => {
     it("should trigger the onSelect", async () => {
-      const onSelect = jest.fn();
+      const onSelect = vi.fn();
       render(<DevCardCarousel cards={[...STUB_DEV_CARDS]} onSelect={onSelect} />);
       const thirdDevCard = screen.getByTitle(`Select @${STUB_DEV_CARDS[2].username}`);
       await userEvent.click(thirdDevCard);
@@ -26,7 +23,7 @@ describe("DevCardCarousel", () => {
   describe("when the user uses the arrow keys", () => {
     describe("when the user presses the right arrow key", () => {
       it("should select last card", async () => {
-        const onSelect = jest.fn();
+        const onSelect = vi.fn();
         render(<DevCardCarousel cards={[...STUB_DEV_CARDS]} onSelect={onSelect} />);
         await userEvent.keyboard("{arrowright}");
         expect(onSelect).toHaveBeenCalledWith(STUB_DEV_CARDS.slice(-1)[0].username);
@@ -34,7 +31,7 @@ describe("DevCardCarousel", () => {
     });
     describe("when the user presses the left arrow key", () => {
       it("should select the second card", async () => {
-        const onSelect = jest.fn();
+        const onSelect = vi.fn();
         render(<DevCardCarousel cards={[...STUB_DEV_CARDS]} onSelect={onSelect} />);
         await userEvent.keyboard("{arrowleft}");
         expect(onSelect).toHaveBeenCalledWith(STUB_DEV_CARDS[1].username);

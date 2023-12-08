@@ -1,3 +1,4 @@
+import { describe, it, expect, vi, afterEach } from "vitest";
 import {
   getAvatarById,
   getAvatarByUsername,
@@ -9,6 +10,10 @@ import {
 } from "lib/utils/github";
 
 describe("[lib] github methods", () => {
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
   it("Should return a valid avatar link", () => {
     const result = getAvatarById("Deadreyo", 460);
     expect(result).toEqual("https://avatars.githubusercontent.com/u/Deadreyo?size=460&v=4");

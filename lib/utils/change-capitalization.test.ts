@@ -1,3 +1,4 @@
+import { describe, it, expect } from "vitest";
 import changeCapitalization from "lib/utils/change-capitalization";
 
 describe("[lib] changeCapitalization()", () => {
