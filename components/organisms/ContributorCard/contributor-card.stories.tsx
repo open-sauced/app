@@ -11,6 +11,7 @@ const baseContributor = Object.freeze({
 });
 
 const meta: Meta<typeof ContributorCard> = {
+  title: "Design System/Organisms/Contributor Card",
   component: ContributorCard,
 };
 

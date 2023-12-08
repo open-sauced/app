@@ -1,5 +1,4 @@
 import { Meta, StoryObj } from "@storybook/react";
-import { testLanguageList } from ".storybook/testData/mockedData";
 import CardHorizontalBarChart from "components/molecules/CardHorizontalBarChart/card-horizontal-bar-chart";
 
 const storyConfig: Meta<typeof CardHorizontalBarChart> = {
@@ -24,7 +23,21 @@ export const OneLanguage: Story = {
 
 export const MultipleLanguages: Story = {
   args: {
-    languageList: testLanguageList,
+    languageList: [
+      {
+        languageName: "TypeScript",
+        percentageUsed: 50,
+      },
+      {
+        languageName: "JavaScript",
+        percentageUsed: 20,
+      },
+      {
+        languageName: "Rust",
+        percentageUsed: 15,
+      },
+      { languageName: "React", percentageUsed: 15 },
+    ],
   },
 };
 

@@ -2,7 +2,7 @@ import { ComponentStory } from "@storybook/react";
 import Sparkline from "./sparkline";
 
 const storyConfig = {
-  Sparkline: "Design System/Atoms/Sparkline",
+  title: "Design System/Atoms/Sparkline",
   component: "Sparkline",
 };
 
