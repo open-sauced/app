@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useRouter } from "next/router";
 
 import Footer from "components/organisms/Footer/footer";
@@ -11,7 +11,6 @@ import useNav from "lib/hooks/useNav";
 import useInsight from "lib/hooks/useInsight";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
-import { setQueryParams } from "lib/utils/query-params";
 
 const HubPageLayout = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
@@ -20,12 +19,6 @@ const HubPageLayout = ({ children }: { children: React.ReactNode }) => {
   const insightId = pageId as string;
   const { data: insight, isLoading, isError } = useInsight(insightId);
   const repositories = insight?.repos.map((repo) => repo.repo_id);
-
-  useEffect(() => {
-    if (router.isReady && !range) {
-      setQueryParams({ range: "30" });
-    }
-  }, [range, router.isReady]);
 
   const { toolList, selectedTool, selectedFilter, userOrg } = useNav(repositories);
 

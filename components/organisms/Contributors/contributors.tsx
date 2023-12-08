@@ -10,7 +10,7 @@ import TableHeader from "components/molecules/TableHeader/table-header";
 import { calcDistanceFromToday } from "lib/utils/date-utils";
 
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
-import LimitSelect, { limitSelectMap } from "components/atoms/Select/limit-select";
+import LimitSelect, { LimitSelectMap } from "components/atoms/Select/limit-select";
 
 import useContributors from "lib/hooks/api/useContributors";
 import { getAvatarByUsername } from "lib/utils/github";
@@ -246,7 +246,7 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
             { name: "50 per page", value: "50" },
           ]}
           className="!w-36 ml-auto md:hidden overflow-x-hidden"
-          defaultValue={String(limit ?? 10) as limitSelectMap}
+          defaultValue={String(limit ?? 10) as LimitSelectMap}
           onChange={function (limit: string): void {
             setQueryParams({ limit });
           }}
