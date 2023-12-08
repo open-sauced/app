@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { GetServerSidePropsContext } from "next";
 import { formatDistanceToNowStrict } from "date-fns";
@@ -17,7 +17,9 @@ import {
   useFetchListContributorsHighlights,
   useListHighlightsTaggedRepos,
 } from "lib/hooks/useList";
+import useDebounceTerm from "lib/hooks/useDebounceTerm";
 import { setQueryParams } from "lib/utils/query-params";
+
 import { RadioGroup, RadioGroupItem } from "components/atoms/Radio/radio-group";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 import DashContainer from "components/atoms/DashedContainer/DashContainer";
@@ -99,12 +101,26 @@ const Highlights = ({ list, numberOfContributors, isOwner, highlights }: Highlig
   const { data: emojis } = useFetchAllEmojis();
   const { data: taggedRepos } = useListHighlightsTaggedRepos(list?.id ?? "");
 
+  const [contributor, setContributor] = useState("");
+  const debouncedSearchTerm = useDebounceTerm(contributor, 300);
+
   const { data, isLoading, meta } = useFetchListContributorsHighlights({
     listId: list?.id ?? "",
     initialData: highlights,
     repo,
     range: range ? Number(range) : 30,
+    contributor,
   });
+
+  function onSearch(searchTerm: string) {
+    if (!searchTerm || searchTerm.length >= 3) {
+      setContributor(searchTerm);
+    }
+  }
+
+  useEffect(() => {
+    onSearch(contributor);
+  }, [debouncedSearchTerm]);
 
   return (
     <ListPageLayout showRangeFilter={false} list={list} numberOfContributors={numberOfContributors} isOwner={isOwner}>
@@ -114,11 +130,16 @@ const Highlights = ({ list, numberOfContributors, isOwner, highlights }: Highlig
       >
         <div className={`sticky top-14 xl:flex hidden flex-none w-1/5`}>
           <div className="w-full bg-white border shadow-sm rounded-lg px-5 py-6 flex flex-col gap-4">
-            <Search placeholder="Search contributors" className="!w-full" name="helo" />
-            <div>
-              <span className="text-sm text-light-slate-9">Sort by</span>
-              <SingleSelect placeholder="Latest" options={[]} onValueChange={() => {}} />
-            </div>
+            <Search
+              value={contributor}
+              onChange={(value) => {
+                setContributor(value);
+              }}
+              placeholder="Search contributors"
+              className="!w-full"
+              name="helo"
+            />
+
             {taggedRepos && taggedRepos.length > 0 ? (
               <div className="flex flex-col gap-2">
                 <span className="text-sm text-light-slate-9">Tagged Repositories</span>
