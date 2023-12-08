@@ -8,7 +8,7 @@ interface PaginatedResponse {
   readonly meta: Meta;
 }
 
-type queryObj = {
+type QueryObj = {
   listId: string;
   location?: string;
   pr_velocity?: string;
@@ -17,7 +17,7 @@ type queryObj = {
   contributor?: string;
 };
 
-const useFetchAllListContributors = (query: queryObj, config?: SWRConfiguration, makeRequest = true) => {
+const useFetchAllListContributors = (query: QueryObj, config?: SWRConfiguration, makeRequest = true) => {
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(query.initialLimit ?? 10);
 

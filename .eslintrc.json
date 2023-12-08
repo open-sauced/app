@@ -1,6 +1,6 @@
 {
-  "extends": ["next/core-web-vitals", "plugin:prettier/recommended", "plugin:storybook/recommended"],
-  "plugins": ["unused-imports"],
+  "extends": ["next/core-web-vitals", "plugin:storybook/recommended", "plugin:prettier/recommended"],
+  "plugins": ["unused-imports", "@typescript-eslint"],
   "rules": {
     "prettier/prettier": ["error", { "endOfLine": "auto" }],
     "jsx-quotes": "error",
@@ -12,6 +12,13 @@
       }
     ],
     "no-console": "error",
-    "no-debugger": "error"
+    "no-debugger": "error",
+    "@typescript-eslint/naming-convention": [
+      "error",
+      {
+        "selector": "typeLike",
+        "format": ["PascalCase"]
+      }
+    ]
   }
 }
