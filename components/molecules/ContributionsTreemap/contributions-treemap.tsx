@@ -40,7 +40,7 @@ export const ContributionsTreemap = ({ setRepoId, repoId, data, color, onClick }
         {/* Label: Text */}
         <h2 className="font-medium text-lg text-slate-900 mb-2 flex">
           <button
-            className="cursor-pointer underline decoration-orange-500 hover:decoration-light-slate-8"
+            className="cursor-pointer underline underline-offset-4 decoration-orange-500 hover:decoration-light-slate-8"
             onClick={() => setRepoId(null)}
           >
             Repos
