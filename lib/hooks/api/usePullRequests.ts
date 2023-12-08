@@ -2,11 +2,11 @@ import { useState } from "react";
 import useSWR, { Fetcher } from "swr";
 import { useRouter } from "next/router";
 
-import publicApiFetcher from "lib/utils/public-api-fetcher";
+import { v2PublicApiFetcher } from "lib/utils/public-api-fetcher";
 import getFilterQuery from "lib/utils/get-filter-query";
 
 interface PaginatedResponse {
-  readonly data: DbRepoPR[];
+  readonly data: DbRepoPREvents[];
   readonly meta: Meta;
 }
 
@@ -47,7 +47,7 @@ const usePullRequests = (intialLimit = 1000, repoIds: number[] = [], range = 30)
 
   const { data, error, mutate } = useSWR<PaginatedResponse, Error>(
     endpointString,
-    publicApiFetcher as Fetcher<PaginatedResponse, Error>
+    v2PublicApiFetcher as Fetcher<PaginatedResponse, Error>
   );
 
   return {

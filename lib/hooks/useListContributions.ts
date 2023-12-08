@@ -1,10 +1,10 @@
 import { useState } from "react";
 import useSWR, { Fetcher } from "swr";
 
-import publicApiFetcher from "lib/utils/public-api-fetcher";
+import { v2PublicApiFetcher } from "lib/utils/public-api-fetcher";
 
 interface PaginatedResponse {
-  readonly data: DbRepoPR[];
+  readonly data: DbRepoPREvents[];
   readonly meta: Meta;
 }
 
@@ -29,7 +29,7 @@ const useListContributions = (listId: string, intialLimit = 1000, range = 30) =>
 
   const { data, error, mutate } = useSWR<PaginatedResponse, Error>(
     listId ? endpointString : null,
-    publicApiFetcher as Fetcher<PaginatedResponse, Error>
+    v2PublicApiFetcher as Fetcher<PaginatedResponse, Error>
   );
 
   return {

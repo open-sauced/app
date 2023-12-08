@@ -1,6 +1,6 @@
 import useSWR, { Fetcher } from "swr";
 import { useState } from "react";
-import publicApiFetcher from "lib/utils/public-api-fetcher";
+import { publicApiFetcher } from "lib/utils/public-api-fetcher";
 
 export const useContributorsByProject = (listId: string, range = 30) => {
   const [repoId, setRepoId] = useState<number | null>(null);

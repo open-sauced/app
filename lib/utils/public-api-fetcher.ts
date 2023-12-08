@@ -1,9 +1,18 @@
 import { Fetcher } from "swr";
 import { supabase } from "./supabase";
 
-const baseUrl = process.env.NEXT_PUBLIC_API_URL;
+const v1BaseUrl = process.env.NEXT_PUBLIC_API_URL;
+const v2BaseUrl = process.env.NEXT_PUBLIC_V2_API_URL;
 
 const publicApiFetcher: Fetcher = async (apiUrl: string) => {
+  return await apiFetcher(v1BaseUrl, apiUrl);
+};
+
+const v2PublicApiFetcher: Fetcher = async (apiUrl: string) => {
+  return await apiFetcher(v2BaseUrl, apiUrl);
+};
+
+const apiFetcher = async (baseUrl: string | undefined, apiUrl: string) => {
   const sessionResponse = await supabase.auth.getSession();
   const sessionToken = sessionResponse?.data.session?.access_token;
 
@@ -28,4 +37,4 @@ const publicApiFetcher: Fetcher = async (apiUrl: string) => {
   return res.json();
 };
 
-export default publicApiFetcher;
+export { publicApiFetcher, v2PublicApiFetcher };

@@ -2,7 +2,7 @@ import { useState } from "react";
 import useSWR, { Fetcher } from "swr";
 import { useRouter } from "next/router";
 
-import publicApiFetcher from "lib/utils/public-api-fetcher";
+import { publicApiFetcher } from "lib/utils/public-api-fetcher";
 import { ContributorStat } from "components/molecules/MostActiveContributorsCard/most-active-contributors-card";
 import { ContributorType } from "components/Graphs/shared/contributor-type-filter";
 
