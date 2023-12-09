@@ -5,6 +5,8 @@ import Feed from "./index";
 export default Feed;
 
 export const getServerSideProps = async (context: HighlightSSRPropsContext) => {
+  context.res.setHeader("Cache-Control", "public, s-maxage=10, stale-while-revalidate=59");
+
   return await handleHighlightSSR(context);
 };
 

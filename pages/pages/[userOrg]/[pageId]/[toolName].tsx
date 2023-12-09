@@ -101,6 +101,11 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   // Keeping this here so we are sure the page is not private before we fetch the social card.
   const ogImage = await fetchSocialCard(`insights/${insightId}`);
 
+  // We want to cache public insights for everyone except the owner and team members
+  if (insight?.is_public && !isOwner && !isTeamMember) {
+    ctx.res.setHeader("Cache-Control", "public, s-maxage=10, stale-while-revalidate=59");
+  }
+
   return {
     props: {
       insight,

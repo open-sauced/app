@@ -66,6 +66,10 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     };
   }
 
+  if (insight.is_public && !isOwner && !isTeamMember) {
+    ctx.res.setHeader("Cache-Control", "public, s-maxage=10, stale-while-revalidate=59");
+  }
+
   return {
     props: {
       insight,

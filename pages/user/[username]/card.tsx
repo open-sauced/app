@@ -89,6 +89,8 @@ async function fetchRemainingCardData(
 }
 
 export const getServerSideProps: GetServerSideProps<CardProps, Params> = async (context) => {
+  context.res.setHeader("Cache-Control", "public, s-maxage=10, stale-while-revalidate=59");
+
   const username = context?.params?.username as string | undefined;
   if (!username) {
     return {

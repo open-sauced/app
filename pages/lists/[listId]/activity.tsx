@@ -59,6 +59,11 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const userId = Number(session?.user.user_metadata.sub);
   const featureFlags = await getAllFeatureFlags(userId);
 
+  // We want to cache public lists for everyone except the owner
+  if (list?.is_public && list.user_id !== userId) {
+    ctx.res.setHeader("Cache-Control", "public, s-maxage=10, stale-while-revalidate=59");
+  }
+
   return {
     props: {
       list,

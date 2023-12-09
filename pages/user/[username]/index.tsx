@@ -99,6 +99,8 @@ Contributor.PageLayout = ProfileLayout;
 export default Contributor;
 
 export const getServerSideProps = async (context: UserSSRPropsContext) => {
+  context.res.setHeader("Cache-Control", "public, s-maxage=10, stale-while-revalidate=59");
+
   return await handleUserSSR(context);
 };
 
