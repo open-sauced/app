@@ -74,29 +74,26 @@ const ContributorsList = ({ contributors, isLoading, meta, setPage, range }: Con
 
       <div className="flex items-center justify-between w-full py-1 md:py-4 md:mt-5">
         <div>
-          <div className="">
-            <ClientOnly>
-              <PaginationResults metaInfo={meta} total={meta.itemCount} entity={"contributors"} />
-            </ClientOnly>
-          </div>
+          <ClientOnly>
+            <PaginationResults metaInfo={meta} total={meta.itemCount} entity={"contributors"} />
+          </ClientOnly>
         </div>
-        <div>
-          <div className="flex flex-col gap-4">
-            <ClientOnly>
-              <Pagination
-                pages={[]}
-                hasNextPage={meta.hasNextPage}
-                hasPreviousPage={meta.hasPreviousPage}
-                totalPage={meta.pageCount}
-                page={meta.page}
-                onPageChange={function (page: number): void {
-                  setPage(page);
-                }}
-                divisor={true}
-                goToPage
-              />
-            </ClientOnly>
-          </div>
+
+        <div className="flex flex-col gap-4">
+          <ClientOnly>
+            <Pagination
+              pages={[]}
+              hasNextPage={meta.hasNextPage}
+              hasPreviousPage={meta.hasPreviousPage}
+              totalPage={meta.pageCount}
+              page={meta.page}
+              onPageChange={function (page: number): void {
+                setPage(page);
+              }}
+              divisor={true}
+              goToPage
+            />
+          </ClientOnly>
         </div>
       </div>
     </>
