@@ -80,7 +80,6 @@
       },
       "devDependencies": {
         "@babel/core": "^7.20.12",
-        "@netlify/esbuild": "0.14.39",
         "@open-sauced/check-engines": "^1.2.0",
         "@open-sauced/conventional-commit": "^1.0.1",
         "@playwright/test": "^1.30.0",
@@ -3172,57 +3171,6 @@
         "gunzip-maybe": "^1.4.2",
         "pump": "^3.0.0",
         "tar-fs": "^2.1.1"
-      }
-    },
-    "node_modules/@netlify/esbuild": {
-      "version": "0.14.39",
-      "resolved": "https://registry.npmjs.org/@netlify/esbuild/-/esbuild-0.14.39.tgz",
-      "integrity": "sha512-C3xpwdT2xw6SnSb+hLQoxjtikAKiz6BjQjzlIaysHDpGbmIcmUHZ/X+dyLtCqAvf15WNK5GSBZYOlpgcOE0WZA==",
-      "dev": true,
-      "hasInstallScript": true,
-      "bin": {
-        "esbuild": "bin/esbuild"
-      },
-      "engines": {
-        "node": ">=12"
-      },
-      "optionalDependencies": {
-        "@netlify/esbuild-android-64": "0.14.39",
-        "@netlify/esbuild-android-arm64": "0.14.39",
-        "@netlify/esbuild-darwin-64": "0.14.39",
-        "@netlify/esbuild-darwin-arm64": "0.14.39",
-        "@netlify/esbuild-freebsd-64": "0.14.39",
-        "@netlify/esbuild-freebsd-arm64": "0.14.39",
-        "@netlify/esbuild-linux-32": "0.14.39",
-        "@netlify/esbuild-linux-64": "0.14.39",
-        "@netlify/esbuild-linux-arm": "0.14.39",
-        "@netlify/esbuild-linux-arm64": "0.14.39",
-        "@netlify/esbuild-linux-mips64le": "0.14.39",
-        "@netlify/esbuild-linux-ppc64le": "0.14.39",
-        "@netlify/esbuild-linux-riscv64": "0.14.39",
-        "@netlify/esbuild-linux-s390x": "0.14.39",
-        "@netlify/esbuild-netbsd-64": "0.14.39",
-        "@netlify/esbuild-openbsd-64": "0.14.39",
-        "@netlify/esbuild-sunos-64": "0.14.39",
-        "@netlify/esbuild-windows-32": "0.14.39",
-        "@netlify/esbuild-windows-64": "0.14.39",
-        "@netlify/esbuild-windows-arm64": "0.14.39"
-      }
-    },
-    "node_modules/@netlify/esbuild-darwin-arm64": {
-      "version": "0.14.39",
-      "resolved": "https://registry.npmjs.org/@netlify/esbuild-darwin-arm64/-/esbuild-darwin-arm64-0.14.39.tgz",
-      "integrity": "sha512-b7rtnX/VtYwNbUCxs3eulrCWJ+u2YvqDcXiIV1ka+od+N0fTx+4RrVkVp1lha9L0wEJYK9J7UWZOMLMyd1ynRg==",
-      "cpu": [
-        "arm64"
-      ],
-      "dev": true,
-      "optional": true,
-      "os": [
-        "darwin"
-      ],
-      "engines": {
-        "node": ">=12"
       }
     },
     "node_modules/@next/env": {
