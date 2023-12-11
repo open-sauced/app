@@ -1,4 +1,3 @@
-import { describe, it, expect } from "vitest";
 import { truncateString } from "lib/utils/truncate-string";
 
 describe("[lib] truncateString()", () => {

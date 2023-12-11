@@ -1,4 +1,3 @@
-import { describe, it, expect } from "vitest";
 import { validateEmail } from "lib/utils/validate-email";
 
 describe("[lib] validateEmail()", () => {

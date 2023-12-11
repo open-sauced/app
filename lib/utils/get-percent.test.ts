@@ -1,4 +1,3 @@
-import { describe, it, expect } from "vitest";
 import getPercent from "lib/utils/get-percent";
 
 describe("[lib] getPercent()", () => {

@@ -1,4 +1,3 @@
-import { describe, it, expect } from "vitest";
 import uppercaseFirst from "lib/utils/uppercase-first";
 
 describe("[lib] uppercaseFirst()", () => {

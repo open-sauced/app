@@ -1,4 +1,3 @@
-import { describe, it, expect } from "vitest";
 import { validateTwitterUsername } from "lib/utils/validate-twitter-username";
 
 describe("[lib] validateTwitterUsername()", () => {

@@ -1,4 +1,3 @@
-import { describe, it, expect } from "vitest";
 import topicNameFormatting from "lib/utils/topic-name-formatting";
 
 describe("[lib] checkCamelCaseNaming()", () => {

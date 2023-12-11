@@ -1,4 +1,3 @@
-import { describe, it, expect } from "vitest";
 import humanizeNumber from "lib/utils/humanizeNumber";
 
 describe("Test: humanizeNumber()", () => {

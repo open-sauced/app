@@ -1,4 +1,3 @@
-import { describe, it, expect } from "vitest";
 import validateIsStringGitHubPAT from "lib/utils/validate-is-string-github-pat";
 
 describe("[lib] validateGitHubPAT()", () => {

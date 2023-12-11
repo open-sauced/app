@@ -1,4 +1,3 @@
-import { describe, it, expect, vi, afterEach, beforeEach } from "vitest";
 import {
   getAvatarById,
   getAvatarByUsername,

@@ -1,4 +1,3 @@
-import { describe, it, expect } from "vitest";
 import { getTopContributorLanguages } from "lib/utils/contributor-utils";
 
 describe("contributor utilities", () => {
