@@ -35,11 +35,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "c
 import { timezones } from "lib/utils/timezones";
 import { useFetchUser } from "lib/hooks/useFetchUser";
 
-type handleLoginStep = () => void;
-type stepKeys = "1" | "2" | "3";
+type StepKeys = "1" | "2" | "3";
 
 interface QueryParams {
-  step: stepKeys;
+  step: StepKeys;
 }
 interface LoginStep1Props {
   user: User | null;
