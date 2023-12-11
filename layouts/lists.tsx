@@ -8,6 +8,7 @@ import ListHeader from "components/ListHeader/list-header";
 import TabsList from "components/TabList/tab-list";
 import ComponentDateFilter from "components/molecules/ComponentDateFilter/component-date-filter";
 import { setQueryParams } from "lib/utils/query-params";
+import ClientOnly from "components/atoms/ClientOnly/client-only";
 
 const ListPageLayout = ({
   children,
@@ -35,30 +36,34 @@ const ListPageLayout = ({
 
       <div className="flex flex-col items-center pt-20 page-container grow md:pt-14">
         <div className="info-container md:px-16 container w-full min-h-[100px]">
-          <Header classNames="px-0 md:px-0">
-            {list && (
-              <ListHeader
-                name={list.name}
-                numberOfContributors={numberOfContributors}
-                isPublic={list.is_public}
-                listId={list.id}
-                isOwner={isOwner}
-              />
-            )}
-          </Header>
+          <ClientOnly>
+            <Header classNames="px-0 md:px-0">
+              {list && (
+                <ListHeader
+                  name={list.name}
+                  numberOfContributors={numberOfContributors}
+                  isPublic={list.is_public}
+                  listId={list.id}
+                  isOwner={isOwner}
+                />
+              )}
+            </Header>
+          </ClientOnly>
 
           <div className="md:grid md:grid-cols-2 flex flex-col">
-            {list && <TabsList tabList={tabList} selectedTab={selectedTab} pageId={`/lists/${list.id}`} />}
-            <div>
-              <div className="flex justify-end p-4 md:p-0">
-                {showRangeFilter && (
-                  <ComponentDateFilter
-                    defaultRange={Number(range ?? 30)}
-                    setRangeFilter={(range) => setQueryParams({ range: `${range}` })}
-                  />
-                )}
+            <ClientOnly>
+              {list && <TabsList tabList={tabList} selectedTab={selectedTab} pageId={`/lists/${list.id}`} />}
+              <div>
+                <div className="flex justify-end p-4 md:p-0">
+                  {showRangeFilter && (
+                    <ComponentDateFilter
+                      defaultRange={Number(range ?? 30)}
+                      setRangeFilter={(range) => setQueryParams({ range: `${range}` })}
+                    />
+                  )}
+                </div>
               </div>
-            </div>
+            </ClientOnly>
           </div>
         </div>
 
