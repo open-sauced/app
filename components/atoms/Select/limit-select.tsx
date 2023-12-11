@@ -6,17 +6,17 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "c
 interface LimitSelectProps {
   placeholder: string;
   error?: string;
-  defaultValue?: limitSelectMap;
+  defaultValue?: LimitSelectMap;
   onChange?: (value: string) => void;
   options: { name: string; value: string }[];
   className?: string;
 }
 
-export type limitSelectMap = "10" | "20" | "30" | "40" | "50";
+export type LimitSelectMap = "10" | "20" | "30" | "40" | "50";
 
 const LimitSelect = ({ onChange, options, className, placeholder, defaultValue }: LimitSelectProps) => {
-  const [selected, setSelected] = useState<null | limitSelectMap>(defaultValue ?? null);
-  const handleSelected = (value: limitSelectMap) => {
+  const [selected, setSelected] = useState<null | LimitSelectMap>(defaultValue ?? null);
+  const handleSelected = (value: LimitSelectMap) => {
     setSelected(value);
     onChange?.(value);
   };

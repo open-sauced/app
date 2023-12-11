@@ -1,7 +1,7 @@
 import useSWR, { Fetcher } from "swr";
 import publicApiFetcher from "lib/utils/public-api-fetcher";
 
-interface useFetchUserHighlightsResponse {
+interface UseFetchUserHighlightsResponse {
   data: DbHighlight;
 }
 const useFetchSingleHighlight = (id: number | undefined) => {
