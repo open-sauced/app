@@ -86,6 +86,7 @@ const ContributorProfilePage = ({
     name,
     twitter_username,
     timezone,
+    url,
     github_sponsors_url: githubSponsorsUrl,
     linkedin_url: linkedInUrl,
     discord_url: discordUrl,
@@ -129,6 +130,7 @@ const ContributorProfilePage = ({
                 isConnected={iscConnected}
                 timezone={timezone}
                 displayLocalTime={displayLocalTime}
+                url={url}
                 githubSponsorsUrl={githubSponsorsUrl}
                 linkedInUrl={linkedInUrl}
                 discordUrl={discordUrl}

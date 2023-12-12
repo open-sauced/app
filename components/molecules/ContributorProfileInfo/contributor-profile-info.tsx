@@ -4,7 +4,7 @@ import Link from "next/link";
 import { AiOutlineGift } from "react-icons/ai";
 import { BsDiscord } from "react-icons/bs";
 import { FiClock, FiGithub, FiLinkedin } from "react-icons/fi";
-import { FaXTwitter } from "react-icons/fa6";
+import { FaGlobe, FaXTwitter } from "react-icons/fa6";
 import clsx from "clsx";
 import LanguagePill from "components/atoms/LanguagePill/LanguagePill";
 import Title from "components/atoms/Typography/title";
@@ -23,6 +23,7 @@ interface ContributorProfileInfoProps {
   isConnected?: boolean;
   timezone?: string;
   displayLocalTime?: boolean;
+  url?: string;
   githubSponsorsUrl?: string;
   linkedInUrl?: string;
   discordUrl?: string;
@@ -38,6 +39,7 @@ const ContributorProfileInfo = ({
   isConnected,
   timezone,
   displayLocalTime,
+  url,
   githubSponsorsUrl,
   linkedInUrl,
   discordUrl,
@@ -91,6 +93,15 @@ const ContributorProfileInfo = ({
                 <span className="flex gap-2 items-center">
                   <FiClock className="text-light-slate-9" /> Local time:
                   <span> {getTimeByTimezone(timezone ? getTimezone(timezone) : 1)}</span>
+                </span>
+              )}
+
+              {url && (
+                <span className="flex gap-2 items-center">
+                  <FaGlobe className="text-light-slate-9" />
+                  <Link href={url} target="_blank" rel="noreferrer" className="w-max hover:text-orange-500 ">
+                    {url}
+                  </Link>
                 </span>
               )}
 

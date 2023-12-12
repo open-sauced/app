@@ -11,6 +11,7 @@ import useContributorPullRequests from "lib/hooks/api/useContributorPullRequests
 import useRepoList from "lib/hooks/useRepoList";
 import { useFetchUser } from "lib/hooks/useFetchUser";
 import Checkbox from "components/atoms/Checkbox/checkbox";
+import { getTopContributorLanguages } from "lib/utils/contributor-utils";
 import { getActivity } from "../RepoRow/repo-row";
 import DevProfile from "../DevProfile/dev-profile";
 
@@ -42,18 +43,6 @@ function getLastContributedRepo(pullRequests: DbRepoPR[]) {
   });
 
   return sortedPullRequests[0].full_name;
-}
-
-function getTopContributorLanguages(contributor: DbUser) {
-  // some contributors will have empty language objects so we will pull their popular language from the interests field instead of defaulting to nothing
-  const entries = Object.entries<string>(contributor.languages);
-  if (entries.length === 0) {
-    return [contributor.interests];
-  }
-  return entries
-    .sort(([, a], [, b]) => (a < b ? -1 : 1))
-    .slice(0, 2)
-    .map(([language]) => language);
 }
 
 function getLanguageAbbreviation(language: string) {
