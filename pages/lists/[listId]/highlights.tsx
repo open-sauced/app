@@ -95,7 +95,8 @@ const rangeFilterOptions: { label: string; value: string }[] = [
 const Highlights = ({ list, numberOfContributors, isOwner, highlights }: HighlightsPageProps) => {
   const router = useRouter();
   const repo = router.query.repo as string;
-  const range = router.query.range as string;
+
+  const { limit = 10, range = 30 } = router.query;
   const topRef = useRef<HTMLDivElement>(null);
 
   const { data: emojis } = useFetchAllEmojis();
@@ -108,8 +109,9 @@ const Highlights = ({ list, numberOfContributors, isOwner, highlights }: Highlig
     listId: list?.id ?? "",
     initialData: highlights,
     repo,
-    range: range ? Number(range) : 30,
+    range: range as number,
     contributor,
+    limit: limit as number,
   });
 
   function onSearch(searchTerm: string) {
@@ -162,7 +164,7 @@ const Highlights = ({ list, numberOfContributors, isOwner, highlights }: Highlig
                 onValueChange={(value) => {
                   setQueryParams({ range: value });
                 }}
-                defaultValue={range ?? "30"}
+                defaultValue={range as string}
               >
                 {rangeFilterOptions.map(({ label, value }) => (
                   <div key={value} className="flex items-center gap-2">

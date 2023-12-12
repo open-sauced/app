@@ -113,6 +113,7 @@ interface ListContributorsHighlightsProps {
   range?: number;
   initialData?: PaginatedListContributorsHighlightsResponse;
   contributor?: string;
+  limit?: number;
 }
 
 export interface PaginatedListContributorsHighlightsResponse {
@@ -125,6 +126,7 @@ const useFetchListContributorsHighlights = ({
   initialData,
   range = 30,
   contributor,
+  limit = 20,
 }: ListContributorsHighlightsProps) => {
   const query = new URLSearchParams();
 
@@ -133,6 +135,7 @@ const useFetchListContributorsHighlights = ({
   }
 
   query.set("range", `${range}`);
+  query.set("limit", `${limit}`);
 
   if (contributor) {
     query.set("contributor", contributor);
