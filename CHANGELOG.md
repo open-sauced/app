@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.79.2-beta.3](https://github.com/open-sauced/insights/compare/v1.79.2-beta.2...v1.79.2-beta.3) (2023-12-12)
+
+
+### 🐛 Bug Fixes
+
+* [#2252](https://github.com/open-sauced/insights/issues/2252) User list activity dropdown scrollbar causes CSS popping ([#2308](https://github.com/open-sauced/insights/issues/2308)) ([a2475e9](https://github.com/open-sauced/insights/commit/a2475e9acdeec55ef49cda0f7cd746fabcc4e3a3))
+* add default limit and range for repositories list ([#2306](https://github.com/open-sauced/insights/issues/2306)) ([6f892b4](https://github.com/open-sauced/insights/commit/6f892b43f74cbff62288aa53cf5724c8670fc626))
+
 ### [1.79.2-beta.2](https://github.com/open-sauced/insights/compare/v1.79.2-beta.1...v1.79.2-beta.2) (2023-12-11)
 
 
