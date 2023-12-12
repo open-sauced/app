@@ -28,7 +28,7 @@ const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
       <section className="flex flex-wrap items-center max-w-full gap-4 lg:flex-row lg:flex-nowrap">
         <HighlightCard
           label="Contributors"
-          tooltip="People who have made pull requests to the selected repositories over the last 30 days."
+          tooltip={`People who have made pull requests to the selected repositories over the last ${range} days.`}
           icon="contributors"
           metricIncreases={compare1.allPrsTotal - compare2.allPrsTotal >= 0}
           increased={compare1.allPrsTotal - compare2.allPrsTotal >= 0}
