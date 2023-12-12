@@ -2,8 +2,8 @@ import { useSpring, animated } from "@react-spring/web";
 import dynamic from "next/dynamic";
 import { Datum } from "@nivo/line";
 import Card from "components/atoms/Card/card";
-import { SpecialNode } from "stories/molecules/treemap-prototype/special-node";
-import { ContributorNode } from "stories/molecules/treemap-prototype/contributor-node";
+import { SpecialNode } from "components/molecules/TreemapPrototype/special-node";
+import { ContributorNode } from "components/molecules/TreemapPrototype/contributor-node";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
 import type { NodeMouseEventHandler, NodeProps, TreeMapCommonProps } from "@nivo/treemap";
 
