@@ -36,8 +36,8 @@ const ListPageLayout = ({
 
       <div className="flex flex-col items-center pt-20 page-container grow md:pt-14">
         <div className="info-container md:px-16 container w-full min-h-[100px]">
-          <ClientOnly>
-            <Header classNames="px-0 md:px-0">
+          <Header classNames="px-0 md:px-0">
+            <ClientOnly>
               {list && (
                 <ListHeader
                   name={list.name}
@@ -47,23 +47,21 @@ const ListPageLayout = ({
                   isOwner={isOwner}
                 />
               )}
-            </Header>
-          </ClientOnly>
+            </ClientOnly>
+          </Header>
 
           <div className="md:grid md:grid-cols-2 flex flex-col">
-            <ClientOnly>
-              {list && <TabsList tabList={tabList} selectedTab={selectedTab} pageId={`/lists/${list.id}`} />}
-              <div>
-                <div className="flex justify-end p-4 md:p-0">
-                  {showRangeFilter && (
-                    <ComponentDateFilter
-                      defaultRange={Number(range ?? 30)}
-                      setRangeFilter={(range) => setQueryParams({ range: `${range}` })}
-                    />
-                  )}
-                </div>
+            {list && <TabsList tabList={tabList} selectedTab={selectedTab} pageId={`/lists/${list.id}`} />}
+            <div>
+              <div className="flex justify-end p-4 md:p-0">
+                {showRangeFilter && (
+                  <ComponentDateFilter
+                    defaultRange={Number(range ?? 30)}
+                    setRangeFilter={(range) => setQueryParams({ range: `${range}` })}
+                  />
+                )}
               </div>
-            </ClientOnly>
+            </div>
           </div>
         </div>
 

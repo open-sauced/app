@@ -73,14 +73,12 @@ const ContributorsList = ({ contributors, isLoading, meta, setPage, range }: Con
       </ClientOnly>
 
       <div className="flex items-center justify-between w-full py-1 md:py-4 md:mt-5">
-        <div>
-          <ClientOnly>
+        <ClientOnly>
+          <div>
             <PaginationResults metaInfo={meta} total={meta.itemCount} entity={"contributors"} />
-          </ClientOnly>
-        </div>
+          </div>
 
-        <div className="flex flex-col gap-4">
-          <ClientOnly>
+          <div className="flex flex-col gap-4">
             <Pagination
               pages={[]}
               hasNextPage={meta.hasNextPage}
@@ -93,8 +91,8 @@ const ContributorsList = ({ contributors, isLoading, meta, setPage, range }: Con
               divisor={true}
               goToPage
             />
-          </ClientOnly>
-        </div>
+          </div>
+        </ClientOnly>
       </div>
     </>
   );
