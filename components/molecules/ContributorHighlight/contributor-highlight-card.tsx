@@ -620,7 +620,7 @@ const ContributorHighlightCard = ({
       )}
 
       <div className="flex flex-wrap items-center gap-1">
-        <DropdownMenu>
+        <DropdownMenu modal={false}>
           <DropdownMenuTrigger className="p-1   rounded-full data-[state=open]:bg-light-slate-7">
             <HiOutlineEmojiHappy className="w-5 h-5" />
           </DropdownMenuTrigger>
