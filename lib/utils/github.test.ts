@@ -9,6 +9,18 @@ import {
 } from "lib/utils/github";
 
 describe("[lib] github methods", () => {
+  beforeEach(() => {
+    vi.mock("@supabase/auth-helpers-nextjs", async () => {
+      return {
+        createPagesBrowserClient: vi.fn(),
+      };
+    });
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
   it("Should return a valid avatar link", () => {
     const result = getAvatarById("Deadreyo", 460);
     expect(result).toEqual("https://avatars.githubusercontent.com/u/Deadreyo?size=460&v=4");
