@@ -5,6 +5,21 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.79.2-beta.2](https://github.com/open-sauced/insights/compare/v1.79.2-beta.1...v1.79.2-beta.2) (2023-12-11)
+
+
+### 🐛 Bug Fixes
+
+* removed @netlify/esbuild as it's not used in the app or deployment ([6c6fd80](https://github.com/open-sauced/insights/commit/6c6fd80108ff32da8706f4265b32e6b4f5e95391))
+* removed @netlify/esbuild as it's not used in the app or deployment ([#2304](https://github.com/open-sauced/insights/issues/2304)) ([4cdca1a](https://github.com/open-sauced/insights/commit/4cdca1a1e9150d7971143f445f428201aa12322a))
+
+### [1.79.2-beta.1](https://github.com/open-sauced/insights/compare/v1.79.1...v1.79.2-beta.1) (2023-12-08)
+
+
+### 🐛 Bug Fixes
+
+* show contributor url on profile page ([#2284](https://github.com/open-sauced/insights/issues/2284)) ([e87877c](https://github.com/open-sauced/insights/commit/e87877c0fd2be9d8b1bf918ef73f9f4258acb9de))
+
 ### [1.79.1](https://github.com/open-sauced/insights/compare/v1.79.0...v1.79.1) (2023-12-07)
 
 
