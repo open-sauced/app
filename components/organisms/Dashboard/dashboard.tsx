@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import HighlightCard from "components/molecules/HighlightCard/highlight-card";
 
 import humanizeNumber from "lib/utils/humanizeNumber";
@@ -16,6 +17,8 @@ interface DashboardProps {
 const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
   const { data: insightsData, isLoading } = useInsights(repositories);
   const { data: contributorData, meta: contributorMeta } = useContributors(undefined, repositories);
+  const router = useRouter();
+  const { range = 30 } = router.query;
 
   const compare1 = getInsights(insightsData, 30);
   const compare2 = getInsights(insightsData, 60);
@@ -25,6 +28,7 @@ const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
       <section className="flex flex-wrap items-center max-w-full gap-4 lg:flex-row lg:flex-nowrap">
         <HighlightCard
           label="Contributors"
+          tooltip="People who have made pull requests to the selected repositories over the last 30 days."
           icon="contributors"
           metricIncreases={compare1.allPrsTotal - compare2.allPrsTotal >= 0}
           increased={compare1.allPrsTotal - compare2.allPrsTotal >= 0}
@@ -36,6 +40,7 @@ const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
         <HighlightCard
           label="Spam"
           icon="spam"
+          tooltip={`An issue or pull request labeled as spam on the selected repositories over the last ${range} days.`}
           metricIncreases={compare1.spamTotal - compare2.spamTotal >= 0}
           increased={compare1.spamTotal - compare2.spamTotal >= 0}
           numChanged={humanizeNumber(Math.abs(compare1.spamTotal - compare2.spamTotal), "abbreviation")}
@@ -46,6 +51,7 @@ const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
         <HighlightCard
           label="Merged PRs"
           icon="merged-pr"
+          tooltip={`Pull requests that have been successfully merged into the codebase in the last ${range} days.`}
           metricIncreases={compare1.acceptedTotal - compare2.acceptedTotal >= 0}
           increased={compare1.acceptedTotal - compare2.acceptedTotal >= 0}
           numChanged={humanizeNumber(Math.abs(compare1.acceptedTotal - compare2.acceptedTotal), "abbreviation")}
@@ -56,6 +62,7 @@ const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
         <HighlightCard
           label="Unlabeled PRs"
           icon="unlabeled-pr"
+          tooltip={`The number of open or closed PRs that have not been labeled in the last ${range} days.`}
           metricIncreases={compare1.unlabeledPrsTotal - compare2.unlabeledPrsTotal >= 0}
           increased={compare1.unlabeledPrsTotal - compare2.unlabeledPrsTotal >= 0}
           numChanged={humanizeNumber(Math.abs(compare1.unlabeledPrsTotal - compare2.unlabeledPrsTotal), "abbreviation")}
