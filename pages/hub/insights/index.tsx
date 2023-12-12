@@ -45,8 +45,8 @@ const InsightsHub: WithPageLayout = () => {
         <div className="flex flex-col">
           <div className="flex align-middle">
             <Text>
-              {session
-                ? "We&apos;ve included a featured Insight Page for you to test out. You can also create your own to get insights on repositories."
+              {user
+                ? "We've included a featured Insight Page for you to test out. You can also create your own to get insights on repositories."
                 : "Try out our Demo Insight page or sign up to create your own"}
             </Text>
           </div>
@@ -77,13 +77,10 @@ const InsightsHub: WithPageLayout = () => {
   }
 
   useEffect(() => {
-    if (
-      (session && session?.insights_count === 0 && !dismissFeaturedInsights) ||
-      (!session && !dismissFeaturedInsights)
-    ) {
+    if (!user || (session && session.insights_count === 0 && !dismissFeaturedInsights)) {
       openInsightToast();
     }
-  }, [session, user]);
+  }, [session, dismissFeaturedInsights]);
 
   return (
     <>
