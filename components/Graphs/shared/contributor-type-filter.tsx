@@ -26,7 +26,7 @@ const peopleFilters: Record<ContributorType, string> = {
 
 export const ContributorTypeFilter = ({ setContributorType, contributorType }: ContributorTypeFilterProps) => {
   return (
-    <DropdownMenu>
+    <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
         <Button variant="default" className="items-center gap-1">
           <SVGIcon IconImage={`${PeopleIcon.src}#icon`} className="w-4 h-4" />
