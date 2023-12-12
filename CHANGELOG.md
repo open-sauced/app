@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.79.2-beta.4](https://github.com/open-sauced/insights/compare/v1.79.2-beta.3...v1.79.2-beta.4) (2023-12-12)
+
+
+### 🐛 Bug Fixes
+
+* now site header no longer shifts when opening reactions on a highlight card ([#2316](https://github.com/open-sauced/insights/issues/2316)) ([8dee5a9](https://github.com/open-sauced/insights/commit/8dee5a9b2d29cdf3570e0d7d0777e5ba07e6071a))
+* Text for reactions on highlights pass all colour contrast checks now ([#2300](https://github.com/open-sauced/insights/issues/2300)) ([e39d846](https://github.com/open-sauced/insights/commit/e39d84653a3401f3ab126c77c84f1232c8485a26))
+
 ### [1.79.2-beta.3](https://github.com/open-sauced/insights/compare/v1.79.2-beta.2...v1.79.2-beta.3) (2023-12-12)
 
 
