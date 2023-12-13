@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.79.3-beta.1](https://github.com/open-sauced/insights/compare/v1.79.2...v1.79.3-beta.1) (2023-12-13)
+
+
+### 🐛 Bug Fixes
+
+* added focus styles for radio buttons and comboboxes ([dfc88ba](https://github.com/open-sauced/insights/commit/dfc88ba98b58a69d1ab650c2c2df74368be1cf30))
+* added focus styles for radio buttons and comboboxes ([#2319](https://github.com/open-sauced/insights/issues/2319)) ([0c168c7](https://github.com/open-sauced/insights/commit/0c168c778b5cb2e9fae3bb2d008ad32084c95fbf))
+
 ### [1.79.2](https://github.com/open-sauced/insights/compare/v1.79.1...v1.79.2) (2023-12-12)
 
 
