@@ -160,7 +160,7 @@ const HighlightCard: React.FC<HighlightCardProps> = ({
               {getIcon(icon)}
             </div>
             {/* Label: Text */}
-            <div className={clsx("text-sm text-slate-600 leading-none", tooltip && "cursor-pointer")}>
+            <div className={clsx("text-sm text-slate-600 leading-none")}>
               {tooltip ? (
                 <Tooltip className="w-44 py-3 text-center" content={tooltip}>
                   {label}
