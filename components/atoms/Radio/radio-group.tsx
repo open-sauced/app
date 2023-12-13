@@ -2,7 +2,6 @@ import * as React from "react";
 import clsx from "clsx";
 
 import { BsFillCheckCircleFill } from "react-icons/bs";
-// import { MdOutlineRadioButtonUnchecked } from "react-icons/md";
 
 import * as RadioGroupPrimitive from "@radix-ui/react-radio-group";
 
@@ -22,7 +21,7 @@ const RadioGroupItem = React.forwardRef<
     <RadioGroupPrimitive.Item
       ref={ref}
       className={clsx(
-        "aspect-square h-4 w-4 rounded-full border border-primary text-sauced-orange shadow focus:outline-none focus-visible:ring-1 focus-visible:ring-orange-200 disabled:cursor-not-allowed disabled:opacity-50",
+        "aspect-square h-4 w-4 rounded-full border border-primary text-sauced-orange shadow disabled:cursor-not-allowed disabled:opacity-50",
         className
       )}
       {...props}

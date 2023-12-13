@@ -107,7 +107,7 @@ const addListContributor = async (listId: string, contributors: number[]) => {
   }
 };
 
-interface ListContributorsHighlightsProps {
+interface ListContributorsHighlightsOptions {
   listId: string;
   repo?: string;
   range?: number;
@@ -127,7 +127,7 @@ const useFetchListContributorsHighlights = ({
   range = 30,
   contributor,
   limit = 20,
-}: ListContributorsHighlightsProps) => {
+}: ListContributorsHighlightsOptions) => {
   const query = new URLSearchParams();
 
   if (repo) {
@@ -141,7 +141,7 @@ const useFetchListContributorsHighlights = ({
     query.set("contributor", contributor);
   }
 
-  const endpointString = `lists/${listId}/contributors/highlights?${query.toString()}`;
+  const endpointString = `lists/${listId}/contributors/highlights?${query}`;
 
   const { data, error, mutate, isLoading } = useSWR<PaginatedListContributorsHighlightsResponse, Error>(
     listId ? endpointString : null,
