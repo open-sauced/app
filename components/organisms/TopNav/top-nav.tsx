@@ -12,7 +12,7 @@ import Text from "components/atoms/Typography/text";
 
 const TopNav: React.FC = () => {
   const { user } = useSupabaseAuth();
-  const { onboarded } = useSession();
+  const { onboarded,session } = useSession();
   return (
     <header className="top-nav-container w-full fixed top-0 left-0 z-50 py-0.5 bg-light-slate-2 border-b">
       <div className="flex justify-between items-center mx-auto container px-2 md:px-16">
@@ -25,7 +25,7 @@ const TopNav: React.FC = () => {
       <div className="lg:hidden container mx-auto px-2 md:px-16 flex justify-between items-center">
         <Nav name="Mobile" className="" />
         {user
-          ? !onboarded && (
+          ? session && !onboarded && (
               <div className="relative">
                 <OnboardingButton aria="onboarding" className="!flex !pr-1 mb-1 mr-2">
                   <Text className="text-sm !text-light-slate-12 hidden sm:block py-1 px-2">
