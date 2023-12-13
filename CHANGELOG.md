@@ -5,6 +5,105 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.79.3-beta.1](https://github.com/open-sauced/insights/compare/v1.79.2...v1.79.3-beta.1) (2023-12-13)
+
+
+### 🐛 Bug Fixes
+
+* added focus styles for radio buttons and comboboxes ([dfc88ba](https://github.com/open-sauced/insights/commit/dfc88ba98b58a69d1ab650c2c2df74368be1cf30))
+* added focus styles for radio buttons and comboboxes ([#2319](https://github.com/open-sauced/insights/issues/2319)) ([0c168c7](https://github.com/open-sauced/insights/commit/0c168c778b5cb2e9fae3bb2d008ad32084c95fbf))
+
+### [1.79.2](https://github.com/open-sauced/insights/compare/v1.79.1...v1.79.2) (2023-12-12)
+
+
+### 🐛 Bug Fixes
+
+* [#2252](https://github.com/open-sauced/insights/issues/2252) User list activity dropdown scrollbar causes CSS popping ([#2308](https://github.com/open-sauced/insights/issues/2308)) ([a2475e9](https://github.com/open-sauced/insights/commit/a2475e9acdeec55ef49cda0f7cd746fabcc4e3a3))
+* add default limit and range for repositories list ([#2306](https://github.com/open-sauced/insights/issues/2306)) ([6f892b4](https://github.com/open-sauced/insights/commit/6f892b43f74cbff62288aa53cf5724c8670fc626))
+* now site header no longer shifts when opening reactions on a highlight card ([#2316](https://github.com/open-sauced/insights/issues/2316)) ([8dee5a9](https://github.com/open-sauced/insights/commit/8dee5a9b2d29cdf3570e0d7d0777e5ba07e6071a))
+* removed @netlify/esbuild as it's not used in the app or deployment ([6c6fd80](https://github.com/open-sauced/insights/commit/6c6fd80108ff32da8706f4265b32e6b4f5e95391))
+* removed @netlify/esbuild as it's not used in the app or deployment ([#2304](https://github.com/open-sauced/insights/issues/2304)) ([4cdca1a](https://github.com/open-sauced/insights/commit/4cdca1a1e9150d7971143f445f428201aa12322a))
+* show contributor url on profile page ([#2284](https://github.com/open-sauced/insights/issues/2284)) ([e87877c](https://github.com/open-sauced/insights/commit/e87877c0fd2be9d8b1bf918ef73f9f4258acb9de))
+* Text for reactions on highlights pass all colour contrast checks now ([#2300](https://github.com/open-sauced/insights/issues/2300)) ([e39d846](https://github.com/open-sauced/insights/commit/e39d84653a3401f3ab126c77c84f1232c8485a26))
+
+### [1.79.2-beta.4](https://github.com/open-sauced/insights/compare/v1.79.2-beta.3...v1.79.2-beta.4) (2023-12-12)
+
+
+### 🐛 Bug Fixes
+
+* now site header no longer shifts when opening reactions on a highlight card ([#2316](https://github.com/open-sauced/insights/issues/2316)) ([8dee5a9](https://github.com/open-sauced/insights/commit/8dee5a9b2d29cdf3570e0d7d0777e5ba07e6071a))
+* Text for reactions on highlights pass all colour contrast checks now ([#2300](https://github.com/open-sauced/insights/issues/2300)) ([e39d846](https://github.com/open-sauced/insights/commit/e39d84653a3401f3ab126c77c84f1232c8485a26))
+
+### [1.79.2-beta.3](https://github.com/open-sauced/insights/compare/v1.79.2-beta.2...v1.79.2-beta.3) (2023-12-12)
+
+
+### 🐛 Bug Fixes
+
+* [#2252](https://github.com/open-sauced/insights/issues/2252) User list activity dropdown scrollbar causes CSS popping ([#2308](https://github.com/open-sauced/insights/issues/2308)) ([a2475e9](https://github.com/open-sauced/insights/commit/a2475e9acdeec55ef49cda0f7cd746fabcc4e3a3))
+* add default limit and range for repositories list ([#2306](https://github.com/open-sauced/insights/issues/2306)) ([6f892b4](https://github.com/open-sauced/insights/commit/6f892b43f74cbff62288aa53cf5724c8670fc626))
+
+### [1.79.2-beta.2](https://github.com/open-sauced/insights/compare/v1.79.2-beta.1...v1.79.2-beta.2) (2023-12-11)
+
+
+### 🐛 Bug Fixes
+
+* removed @netlify/esbuild as it's not used in the app or deployment ([6c6fd80](https://github.com/open-sauced/insights/commit/6c6fd80108ff32da8706f4265b32e6b4f5e95391))
+* removed @netlify/esbuild as it's not used in the app or deployment ([#2304](https://github.com/open-sauced/insights/issues/2304)) ([4cdca1a](https://github.com/open-sauced/insights/commit/4cdca1a1e9150d7971143f445f428201aa12322a))
+
+### [1.79.2-beta.1](https://github.com/open-sauced/insights/compare/v1.79.1...v1.79.2-beta.1) (2023-12-08)
+
+
+### 🐛 Bug Fixes
+
+* show contributor url on profile page ([#2284](https://github.com/open-sauced/insights/issues/2284)) ([e87877c](https://github.com/open-sauced/insights/commit/e87877c0fd2be9d8b1bf918ef73f9f4258acb9de))
+
+### [1.79.1](https://github.com/open-sauced/insights/compare/v1.79.0...v1.79.1) (2023-12-07)
+
+
+### ✅ Tests
+
+* colocated tests ([#2275](https://github.com/open-sauced/insights/issues/2275)) ([8524c0d](https://github.com/open-sauced/insights/commit/8524c0d397f637a79983e6f604f480d5f7016b8a))
+
+
+### 🧑‍💻 Code Refactoring
+
+* update range tooltip copy ([#2259](https://github.com/open-sauced/insights/issues/2259)) ([e5dd3c9](https://github.com/open-sauced/insights/commit/e5dd3c96a927ff7d4042f23cefc26cd995eda2ff))
+
+
+### 🐛 Bug Fixes
+
+* add correct path to FAQ link and update readme for contribs and community ([#2283](https://github.com/open-sauced/insights/issues/2283)) ([805dd66](https://github.com/open-sauced/insights/commit/805dd664a52e79f8dab6cf767c5d09b734ac7f71))
+* add to list action menu needs better design when empty ([#2246](https://github.com/open-sauced/insights/issues/2246)) ([62b0f2b](https://github.com/open-sauced/insights/commit/62b0f2bf358ad5e12fd7e53bcbc21da60794bde8))
+* added form for mobile view of highlights form ([b977ff0](https://github.com/open-sauced/insights/commit/b977ff08e12eb9a9439c058a3bb7bbdfdfa59f02))
+* added missing form for mobile view of highlights form ([#2268](https://github.com/open-sauced/insights/issues/2268)) ([0ef7556](https://github.com/open-sauced/insights/commit/0ef7556cc05d35f9506fd3c33b48ddcc58f77762))
+* Dashboard Highlight card skeleton covers hovercard details ([#2237](https://github.com/open-sauced/insights/issues/2237)) ([2f01618](https://github.com/open-sauced/insights/commit/2f016188e4ac84e9543d7d5cd610ed7c999ada68))
+* Now all types are Pascal cased ([5e219c5](https://github.com/open-sauced/insights/commit/5e219c56fd655a3cd890f2a9c3d78f6721a4f779))
+* now all types are Pascal cased ([#2272](https://github.com/open-sauced/insights/issues/2272)) ([307e0e2](https://github.com/open-sauced/insights/commit/307e0e274c984bf96b6ba63ac6d25a025ea250ef))
+* now contributors without language get accurate interest fallback ([#2265](https://github.com/open-sauced/insights/issues/2265)) ([938c858](https://github.com/open-sauced/insights/commit/938c858b1bf7e75d5caf3bc59cca7764192974ec))
+* update url description in profile settings ([#2280](https://github.com/open-sauced/insights/issues/2280)) ([993338d](https://github.com/open-sauced/insights/commit/993338d875b96424bd9dcdfe69c8152c4b9e645a))
+
+### [1.79.1-beta.6](https://github.com/open-sauced/insights/compare/v1.79.1-beta.5...v1.79.1-beta.6) (2023-12-07)
+
+
+### 🐛 Bug Fixes
+
+* add correct path to FAQ link and update readme for contribs and community ([#2283](https://github.com/open-sauced/insights/issues/2283)) ([805dd66](https://github.com/open-sauced/insights/commit/805dd664a52e79f8dab6cf767c5d09b734ac7f71))
+* update url description in profile settings ([#2280](https://github.com/open-sauced/insights/issues/2280)) ([993338d](https://github.com/open-sauced/insights/commit/993338d875b96424bd9dcdfe69c8152c4b9e645a))
+
+### [1.79.1-beta.5](https://github.com/open-sauced/insights/compare/v1.79.1-beta.4...v1.79.1-beta.5) (2023-12-07)
+
+
+### 🧑‍💻 Code Refactoring
+
+* update range tooltip copy ([#2259](https://github.com/open-sauced/insights/issues/2259)) ([e5dd3c9](https://github.com/open-sauced/insights/commit/e5dd3c96a927ff7d4042f23cefc26cd995eda2ff))
+
+### [1.79.1-beta.4](https://github.com/open-sauced/insights/compare/v1.79.1-beta.3...v1.79.1-beta.4) (2023-12-07)
+
+
+### ✅ Tests
+
+* colocated tests ([#2275](https://github.com/open-sauced/insights/issues/2275)) ([8524c0d](https://github.com/open-sauced/insights/commit/8524c0d397f637a79983e6f604f480d5f7016b8a))
+
 ### [1.79.1-beta.3](https://github.com/open-sauced/insights/compare/v1.79.1-beta.2...v1.79.1-beta.3) (2023-12-06)
 
 
