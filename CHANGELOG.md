@@ -5,6 +5,43 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.79.3-beta.1](https://github.com/open-sauced/insights/compare/v1.79.2...v1.79.3-beta.1) (2023-12-13)
+
+
+### 🐛 Bug Fixes
+
+* added focus styles for radio buttons and comboboxes ([dfc88ba](https://github.com/open-sauced/insights/commit/dfc88ba98b58a69d1ab650c2c2df74368be1cf30))
+* added focus styles for radio buttons and comboboxes ([#2319](https://github.com/open-sauced/insights/issues/2319)) ([0c168c7](https://github.com/open-sauced/insights/commit/0c168c778b5cb2e9fae3bb2d008ad32084c95fbf))
+
+### [1.79.2](https://github.com/open-sauced/insights/compare/v1.79.1...v1.79.2) (2023-12-12)
+
+
+### 🐛 Bug Fixes
+
+* [#2252](https://github.com/open-sauced/insights/issues/2252) User list activity dropdown scrollbar causes CSS popping ([#2308](https://github.com/open-sauced/insights/issues/2308)) ([a2475e9](https://github.com/open-sauced/insights/commit/a2475e9acdeec55ef49cda0f7cd746fabcc4e3a3))
+* add default limit and range for repositories list ([#2306](https://github.com/open-sauced/insights/issues/2306)) ([6f892b4](https://github.com/open-sauced/insights/commit/6f892b43f74cbff62288aa53cf5724c8670fc626))
+* now site header no longer shifts when opening reactions on a highlight card ([#2316](https://github.com/open-sauced/insights/issues/2316)) ([8dee5a9](https://github.com/open-sauced/insights/commit/8dee5a9b2d29cdf3570e0d7d0777e5ba07e6071a))
+* removed @netlify/esbuild as it's not used in the app or deployment ([6c6fd80](https://github.com/open-sauced/insights/commit/6c6fd80108ff32da8706f4265b32e6b4f5e95391))
+* removed @netlify/esbuild as it's not used in the app or deployment ([#2304](https://github.com/open-sauced/insights/issues/2304)) ([4cdca1a](https://github.com/open-sauced/insights/commit/4cdca1a1e9150d7971143f445f428201aa12322a))
+* show contributor url on profile page ([#2284](https://github.com/open-sauced/insights/issues/2284)) ([e87877c](https://github.com/open-sauced/insights/commit/e87877c0fd2be9d8b1bf918ef73f9f4258acb9de))
+* Text for reactions on highlights pass all colour contrast checks now ([#2300](https://github.com/open-sauced/insights/issues/2300)) ([e39d846](https://github.com/open-sauced/insights/commit/e39d84653a3401f3ab126c77c84f1232c8485a26))
+
+### [1.79.2-beta.4](https://github.com/open-sauced/insights/compare/v1.79.2-beta.3...v1.79.2-beta.4) (2023-12-12)
+
+
+### 🐛 Bug Fixes
+
+* now site header no longer shifts when opening reactions on a highlight card ([#2316](https://github.com/open-sauced/insights/issues/2316)) ([8dee5a9](https://github.com/open-sauced/insights/commit/8dee5a9b2d29cdf3570e0d7d0777e5ba07e6071a))
+* Text for reactions on highlights pass all colour contrast checks now ([#2300](https://github.com/open-sauced/insights/issues/2300)) ([e39d846](https://github.com/open-sauced/insights/commit/e39d84653a3401f3ab126c77c84f1232c8485a26))
+
+### [1.79.2-beta.3](https://github.com/open-sauced/insights/compare/v1.79.2-beta.2...v1.79.2-beta.3) (2023-12-12)
+
+
+### 🐛 Bug Fixes
+
+* [#2252](https://github.com/open-sauced/insights/issues/2252) User list activity dropdown scrollbar causes CSS popping ([#2308](https://github.com/open-sauced/insights/issues/2308)) ([a2475e9](https://github.com/open-sauced/insights/commit/a2475e9acdeec55ef49cda0f7cd746fabcc4e3a3))
+* add default limit and range for repositories list ([#2306](https://github.com/open-sauced/insights/issues/2306)) ([6f892b4](https://github.com/open-sauced/insights/commit/6f892b43f74cbff62288aa53cf5724c8670fc626))
+
 ### [1.79.2-beta.2](https://github.com/open-sauced/insights/compare/v1.79.2-beta.1...v1.79.2-beta.2) (2023-12-11)
 
 
