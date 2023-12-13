@@ -5,6 +5,21 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.80.0-beta.1](https://github.com/open-sauced/insights/compare/v1.79.3-beta.1...v1.80.0-beta.1) (2023-12-13)
+
+
+### 🐛 Bug Fixes
+
+* increase z-index of show latest pull request button ([d0b7722](https://github.com/open-sauced/insights/commit/d0b772226b4156560730b5d3c6b219c369c543b9))
+* now the add more button for adding more contributors to a list is the primary CTA ([09df01c](https://github.com/open-sauced/insights/commit/09df01cc35c3b2fd80037217401b525483dcb4c5))
+* now the add more button for adding more contributors to a list is the primary CTA ([#2334](https://github.com/open-sauced/insights/issues/2334)) ([ef070f2](https://github.com/open-sauced/insights/commit/ef070f2117fa06292ba8c2a9c99ead44c9b9f2f3))
+* pull request button shows PRs now on a contributor card ([#2277](https://github.com/open-sauced/insights/issues/2277)) ([a87bdff](https://github.com/open-sauced/insights/commit/a87bdff18c8aa0c2667046f47677a50739b7a9a2))
+
+
+### 🍕 Features
+
+* use GitHub API for user search box ([#2331](https://github.com/open-sauced/insights/issues/2331)) ([152b933](https://github.com/open-sauced/insights/commit/152b933e258de7fa9b1199284758504c854cc705))
+
 ### [1.79.3-beta.1](https://github.com/open-sauced/insights/compare/v1.79.2...v1.79.3-beta.1) (2023-12-13)
 
 
