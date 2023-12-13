@@ -58,7 +58,7 @@ const ContributorCard = ({ className, contributor, topic, repositories, range }:
           </div>
         </div>
         <div className="h-32">
-          <CardLineChart lineChartOption={chart} />
+          <CardLineChart lineChartOption={chart} height="140px" />
         </div>
         <CardRepoList repoList={repoList} total={repoList.length} />
 
