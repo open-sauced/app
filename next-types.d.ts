@@ -345,11 +345,6 @@ interface DbUserList {
   readonly updated_at: string;
 }
 
-interface DbUserSearch {
-  readonly login: string;
-  readonly full_name: string;
-}
-
 interface DBList {
   id: string;
   user_id: number;
