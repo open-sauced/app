@@ -13,17 +13,19 @@ import { getAvatarByUsername } from "lib/utils/github";
 import { searchUsers } from "lib/hooks/search-users";
 import useDebounceTerm from "lib/hooks/useDebounceTerm";
 import useIsMacOS from "lib/hooks/useIsMacOS";
+import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 
 const SearchDialog = () => {
   useLockBody();
   const router = useRouter();
+  const { providerToken } = useSupabaseAuth();
   const [cursor, setCursor] = useState(-1);
   const [searchTerm, setSearchTerm] = useState("");
   const [isSearching, setIsSearching] = useState(false);
   const [isSearchError, setIsSearchError] = useState(false);
   const setOpenSearch = store((state) => state.setOpenSearch);
   const debouncedSearchTerm = useDebounceTerm(searchTerm, 300);
-  const [searchResult, setSearchResult] = useState<{ data: DbUserSearch[]; meta: {} }>();
+  const [searchResult, setSearchResult] = useState<{ data: GhUser[] }>();
   const isMac = useIsMacOS();
 
   useEffect(() => {
@@ -61,9 +63,11 @@ const SearchDialog = () => {
     if (searchTerm.length >= 3) startSearch();
     async function startSearch() {
       setIsSearching(true);
-      const data = await searchUsers(debouncedSearchTerm);
-      setSearchResult(data);
-      setIsSearchError(!data.data.length);
+      const data = await searchUsers(debouncedSearchTerm, providerToken);
+      if (data) {
+        setSearchResult(data);
+        setIsSearchError(!data.data.length);
+      }
       cursor !== -1 && setCursor(-1);
       setIsSearching(false);
     }
@@ -171,12 +175,12 @@ const SearchError = () => (
   </Text>
 );
 
-const SearchResult = ({ result, cursor }: { result: DbUserSearch[]; cursor: number }) => (
+const SearchResult = ({ result, cursor }: { result: GhUser[]; cursor: number }) => (
   <div className="w-full py-1 overflow-hidden text-gray-600">
     <Text className="block w-full py-1 px-4">Users</Text>
     <div className="w-full h-full">
       <ScrollArea className="w-full">
-        {result.map((user: DbUserSearch, i: number) => (
+        {result.map((user: GhUser, i: number) => (
           <UserResultCard key={i} active={cursor === i} {...user} />
         ))}
       </ScrollArea>
@@ -184,11 +188,11 @@ const SearchResult = ({ result, cursor }: { result: DbUserSearch[]; cursor: numb
   </div>
 );
 
-interface UserResultCardProps extends DbUserSearch {
+interface UserResultCardProps extends GhUser {
   active: boolean;
 }
 
-const UserResultCard = ({ login, full_name, active }: UserResultCardProps) => {
+const UserResultCard = ({ login, active }: UserResultCardProps) => {
   const router = useRouter();
   const setOpenSearch = store((state) => state.setOpenSearch);
 
@@ -210,7 +214,7 @@ const UserResultCard = ({ login, full_name, active }: UserResultCardProps) => {
       <Avatar size="sm" className="!rounded-full flex-none" avatarURL={getAvatarByUsername(login)} />
       <div className="flex items-center gap-2 overflow-hidden">
         <Text className="text-gray-900">@{login}</Text>
-        <Text className="!font-normal truncate">{full_name}</Text>
+        <Text className="!font-normal truncate">{login}</Text>
       </div>
     </Link>
   );
