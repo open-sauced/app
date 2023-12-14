@@ -1,9 +1,21 @@
-const searchUsers = async (username: string) => {
+const searchUsers = async (username: string, providerToken?: string | null | undefined) => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/search?page=1&username=${username}&limit=10`);
+    const res = await fetch(
+      `https://api.github.com/search/users?q=${encodeURIComponent(username)}&sort=followers&per_page=10`,
+      {
+        ...(providerToken
+          ? {
+              headers: {
+                Authorization: `Bearer ${providerToken}`,
+              },
+            }
+          : {}),
+      }
+    );
 
     if (res.status === 200) {
-      return res.json();
+      const data = (await res.json()).items as GhUser[];
+      return { data };
     } else {
       return false;
     }

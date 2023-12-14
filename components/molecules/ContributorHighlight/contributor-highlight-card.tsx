@@ -620,7 +620,7 @@ const ContributorHighlightCard = ({
       )}
 
       <div className="flex flex-wrap items-center gap-1">
-        <DropdownMenu>
+        <DropdownMenu modal={false}>
           <DropdownMenuTrigger className="p-1   rounded-full data-[state=open]:bg-light-slate-7">
             <HiOutlineEmojiHappy className="w-5 h-5" />
           </DropdownMenuTrigger>
@@ -654,10 +654,10 @@ const ContributorHighlightCard = ({
                 }`}
                 onClick={async () => (sessionToken ? handleUpdateReaction(emoji_id) : signIn({ provider: "github" }))}
               >
-                <Emoji
-                  className="text-xs text-orange-500 md:text-sm"
-                  text={`:${getEmojiNameById(emoji_id)}: ${reaction_count}`}
-                />
+                <span className="flex gap-1 items-center p-1">
+                  <Emoji className="text-xs text-orange-500 md:text-sm" text={`:${getEmojiNameById(emoji_id)}:`} />
+                  <span>{reaction_count}</span>
+                </span>
               </div>
             </Tooltip>
           ))}
