@@ -10,11 +10,19 @@ Docs for ReactECharts: https://github.com/hustcc/echarts-for-react
 interface EChartWrapperProps {
   option: Object;
   className?: string;
+  height?: `${number}px`;
 }
 
-const EChartWrapper: React.FC<EChartWrapperProps> = ({ option, className }) => {
+const EChartWrapper: React.FC<EChartWrapperProps> = ({ option, className, height }) => {
   return (
-    <ReactECharts option={option} className={className || ""} notMerge={true} lazyUpdate={true} theme={"theme_name"} />
+    <ReactECharts
+      option={option}
+      className={className || ""}
+      notMerge={true}
+      lazyUpdate={true}
+      theme={"theme_name"}
+      style={{ height }}
+    />
   );
 };
 

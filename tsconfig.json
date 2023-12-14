@@ -20,7 +20,8 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "incremental": true
+    "incremental": true,
+    "types": ["vitest/globals"]
   },
   "include": ["next-env.d.ts", "next-types.d.ts", "**/*.ts", "**/*.tsx", "components/molecules/DevToSocialImage"],
   "exclude": ["node_modules", "netlify/edge-functions"]
