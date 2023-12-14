@@ -190,7 +190,7 @@ const Highlights = ({ list, numberOfContributors, isOwner, highlights }: Highlig
 
           {!isLoading && data && data.length === 0 ? (
             <DashContainer>
-              <p>You have no highlights for this list.</p>
+              <p> No highlights published in the past{`${range} days`}</p>
             </DashContainer>
           ) : null}
           <ClientOnly>
