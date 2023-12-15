@@ -269,7 +269,7 @@ const NewListCreationPage = ({ initialData, timezoneOption }: NewListCreationPag
           ></ContributorTable>
           <div className="flex items-center justify-between w-full py-1 md:py-4 md:mt-5">
             <div>
-              <div className="">
+              <div>
                 <PaginationResults metaInfo={meta} total={meta.itemCount} entity={"contributors"} />
               </div>
             </div>
@@ -309,7 +309,7 @@ const NewListCreationPage = ({ initialData, timezoneOption }: NewListCreationPag
                   You can now edit and track your new list in the pages tab, and get useful insights.
                 </Text>
               </div>
-              <div className="">
+              <div>
                 <label>
                   <span className="text-sm text-light-slate-10">Share list link</span>
                   <div className="flex items-center gap-3 pr-3">
