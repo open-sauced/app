@@ -82,7 +82,7 @@ const ContributorProfileInfo = ({
       {isConnected && (
         <>
           <div className="flex flex-col gap-2 border-b pb-6">
-            <Title className="!text-base " level={5}>
+            <Title className="!text-base" level={5}>
               About
             </Title>
             <p className={clsx(" text-sm", !bio && "")}>
@@ -98,7 +98,7 @@ const ContributorProfileInfo = ({
 
               {url && (
                 <span className="flex gap-2 items-center">
-                  <FaGlobe className="" />
+                  <FaGlobe />
                   <Link href={url} target="_blank" rel="noreferrer" className="w-max hover:text-orange-500 ">
                     {url}
                   </Link>
@@ -106,7 +106,7 @@ const ContributorProfileInfo = ({
               )}
 
               <span className="flex gap-2 items-center">
-                <FiGithub className="" />
+                <FiGithub />
                 <Link
                   href={`https://github.com/${githubName}`}
                   target="_blank"
@@ -119,7 +119,7 @@ const ContributorProfileInfo = ({
 
               {twitterUsername && (
                 <span className="flex gap-2 items-center">
-                  <FaXTwitter className="" />
+                  <FaXTwitter />
                   <Link
                     href={`https://twitter.com/${twitterUsername}`}
                     target="_blank"
@@ -133,7 +133,7 @@ const ContributorProfileInfo = ({
 
               {linkedInUrl && (
                 <span className="flex gap-2 items-center">
-                  <FiLinkedin className="" />
+                  <FiLinkedin />
                   <Link href={linkedInUrl} target="_blank" rel="noreferrer" className="w-max hover:text-orange-500 ">
                     {linkedInUrl?.replace(/^(http(s)?:\/\/)?([\w]+\.)?linkedin\.com\/(pub|in|profile|company)/, "in")}
                   </Link>
@@ -142,7 +142,7 @@ const ContributorProfileInfo = ({
 
               {discordUrl && (
                 <span className="flex gap-2 items-center">
-                  <BsDiscord className="" />
+                  <BsDiscord />
                   <Link href={discordUrl} target="_blank" rel="noreferrer" className="w-max hover:text-orange-500">
                     {`discord/#${discordUserId}`}
                   </Link>
@@ -151,7 +151,7 @@ const ContributorProfileInfo = ({
 
               {githubSponsorsUrl && (
                 <span className="flex gap-2 items-center">
-                  <FiGithub className="" />
+                  <FiGithub />
                   <Link
                     href={githubSponsorsUrl}
                     target="_blank"
@@ -164,7 +164,7 @@ const ContributorProfileInfo = ({
               )}
 
               {/* <span className="flex gap-2 items-center">
-                <HiOutlineMail className="" />
+                <HiOutlineMail />
                 <Link className="w-max hover:text-orange-500 " href="#">
                   Send a connections request
                 </Link>
@@ -173,7 +173,7 @@ const ContributorProfileInfo = ({
           </div>
           {interestArray && interestArray.length > 0 && (
             <div className="flex  flex-col gap-4 border-b pb-6">
-              <Title className="!text-base " level={5}>
+              <Title className="!text-base" level={5}>
                 Current Interests
               </Title>
               <div className="flex gap-1.5 flex-wrap">
