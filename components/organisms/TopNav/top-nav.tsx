@@ -23,7 +23,7 @@ const TopNav: React.FC = () => {
         <AuthSection />
       </div>
       <div className="lg:hidden container mx-auto px-2 md:px-16 flex justify-between items-center">
-        <Nav name="Mobile" className="" />
+        <Nav name="Mobile" />
         {user
           ? !onboarded && (
               <div className="relative">
