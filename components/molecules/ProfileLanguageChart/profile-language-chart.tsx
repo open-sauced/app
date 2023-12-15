@@ -43,7 +43,7 @@ const ProfileLanguageChart = ({ languageList }: ProfileLanguageChartProps) => {
           );
         })}
       </div>
-      <div className="flex flex-wrap mt-2 text-sm gap-x-4 gap-y-2 text-light-slate-10">
+      <div className="flex flex-wrap mt-2 text-sm gap-x-4 gap-y-2">
         {sortedLangArray.map(({ languageName, percentageUsed }, i) => {
           return (
             i < 5 && (
@@ -58,9 +58,7 @@ const ProfileLanguageChart = ({ languageList }: ProfileLanguageChartProps) => {
                 ></span>
                 <p>
                   {languageName}{" "}
-                  <span className="font-normal text-light-slate-8">{`${Number(
-                    (percentageUsed / percentage) * 100
-                  ).toFixed(1)}%`}</span>
+                  <span className="font-normal">{`${Number((percentageUsed / percentage) * 100).toFixed(1)}%`}</span>
                 </p>
               </div>
             )
