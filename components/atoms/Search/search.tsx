@@ -13,6 +13,7 @@ interface SearchProps {
   onSearch?: (search?: string) => void;
   suggestions?: string[];
   onChange?: (value: string) => void;
+  onSelect?: (value: string) => void;
   isLoading?: boolean;
 }
 
@@ -32,6 +33,7 @@ const Search = ({
   suggestions,
   onChange,
   isLoading,
+  onSelect,
 }: SearchProps): JSX.Element => {
   const [search, setSearch] = useState(value);
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -51,8 +53,14 @@ const Search = ({
   }, [value]);
 
   const handleOnSelect = (suggestion: string) => {
-    setSearch(suggestion);
-    onSearch?.(suggestion);
+    if (onSelect) {
+      onSelect(suggestion);
+      setSearch("");
+    } else {
+      setSearch(suggestion);
+      onSearch?.(suggestion);
+    }
+
     setShowSuggestions(false);
   };
 

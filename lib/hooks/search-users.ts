@@ -1,7 +1,7 @@
 const searchUsers = async (username: string, providerToken?: string | null | undefined) => {
   try {
     const res = await fetch(
-      `https://api.github.com/search/users?q=${encodeURIComponent(username)}&sort=followers&per_page=10`,
+      `https://api.github.com/search/users?q=${encodeURIComponent(username)} type:user&sort=followers&per_page=10`,
       {
         ...(providerToken
           ? {
