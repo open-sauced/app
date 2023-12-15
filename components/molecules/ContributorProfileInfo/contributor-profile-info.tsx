@@ -53,7 +53,7 @@ const ContributorProfileInfo = ({
     <div className="flex flex-col gap-6">
       <div className="pb-6 border-b">
         <div className="flex gap-2 items-center mb-2">
-          <Title className="!text-2xl " level={3}>
+          <Title className="!text-2xl" level={3}>
             {githubName}
           </Title>
           {isMaintainer && <Badge text="maintainer" />}
@@ -64,7 +64,7 @@ const ContributorProfileInfo = ({
               {displayLocalTime && (
                 <span className="flex  gap-2 items-center">
                   <Tooltip content="Time zone">
-                    <FiClock className="" />
+                    <FiClock />
                   </Tooltip>
                   {timezone ? `UTC${getTimezone(timezone)}` : "UTC+1"}
                 </span>
@@ -91,7 +91,7 @@ const ContributorProfileInfo = ({
             <div className="flex flex-col text-sm mt-2  gap-2">
               {displayLocalTime && (
                 <span className="flex gap-2 items-center">
-                  <FiClock className="" /> Local time:
+                  <FiClock /> Local time:
                   <span> {getTimeByTimezone(timezone ? getTimezone(timezone) : 1)}</span>
                 </span>
               )}
