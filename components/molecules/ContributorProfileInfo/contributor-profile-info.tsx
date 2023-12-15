@@ -62,14 +62,14 @@ const ContributorProfileInfo = ({
           {isConnected && (
             <>
               {displayLocalTime && (
-                <span className="flex  gap-2 items-center">
+                <span className="flex gap-2 items-center">
                   <Tooltip content="Time zone">
                     <FiClock />
                   </Tooltip>
                   {timezone ? `UTC${getTimezone(timezone)}` : "UTC+1"}
                 </span>
               )}
-              <span className="flex  gap-2 items-center">
+              <span className="flex gap-2 items-center">
                 <Tooltip content="First PR Opened Date">
                   <AiOutlineGift className="" />
                 </Tooltip>
