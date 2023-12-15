@@ -148,7 +148,6 @@ const ContributorProfileHeader = ({
           <Avatar
             initialsClassName="text-[100px] -translate-y-2.5  leading-none"
             initials={githubName?.charAt(0)}
-            className=""
             hasBorder
             avatarURL={isConnected ? avatarUrl : ""}
             size={184}
@@ -170,7 +169,6 @@ const ContributorProfileHeader = ({
           <Avatar
             initialsClassName="text-[70px] -translate-y-1 leading-none"
             initials={githubName?.charAt(0)}
-            className=""
             hasBorder
             avatarURL={isConnected ? avatarUrl : ""}
             size={120}
@@ -259,7 +257,7 @@ const ContributorProfileHeader = ({
                       title="More options"
                       className="p-2 mr-3 bg-white rounded-full cursor-pointer "
                     >
-                      <TfiMoreAlt size={20} className="" />
+                      <TfiMoreAlt size={20} />
                     </DropdownMenuTrigger>
                   )}
                 </div>
