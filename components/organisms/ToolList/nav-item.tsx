@@ -39,18 +39,9 @@ const NavItem: React.FC<NavItemProps> = ({ username, filterName, tool, selectedF
           selectedTool === tool.name.toLowerCase() ? "after:bg-orange-500" : "focus:after:bg-slate-400"
         } focus:bg-slate-100 focus:ring-slate-300 child:flex child:items-center`}
       >
-        <span
-          className={
-            "text-base whitespace-nowrap " +
-            (selectedTool === tool.name.toLowerCase() ? "text-slate-900" : "text-slate-500")
-          }
-        >
-          {tool.name}
-        </span>
+        <span className={"text-base whitespace-nowrap text-slate-900"}>{tool.name}</span>
         {total !== undefined && (
-          <div
-            className={"ml-2 py-0.5 px-1.5 h-fit bg-slate-200 text-slate-500 border rounded-full text-xs font-semibold"}
-          >
+          <div className={"ml-2 py-0.5 px-1.5 h-fit bg-slate-200 border rounded-full text-xs font-semibold"}>
             {humanizeNumber(total, null)}
           </div>
         )}
