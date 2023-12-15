@@ -90,6 +90,7 @@ const NewListCreationPage = ({ initialData, timezoneOption }: NewListCreationPag
   const [selectedTimezone, setSelectedTimezone] = useState<string | undefined>(undefined);
   const [contributor, setContributor] = useState<string | undefined>(undefined);
   const [isPublic, setIsPublic] = useState<boolean>(false);
+  const [isSelectAll, setIsSelectAll] = useState(false); // state to check if all contributors are selected
   const { data, meta, isLoading, setLimit, setPage } = useFetchAllContributors(
     {
       timezone: selectedTimezone,
@@ -100,7 +101,6 @@ const NewListCreationPage = ({ initialData, timezoneOption }: NewListCreationPag
       revalidateOnFocus: false,
     }
   );
-
   useEffect(() => {
     if (!title && router.query.name) {
       setTitle(router.query.name as string);
@@ -129,16 +129,28 @@ const NewListCreationPage = ({ initialData, timezoneOption }: NewListCreationPag
         value: timezone.value,
       };
     });
-  const contributors = data
-    ? data.length > 0 &&
-      data.map((contributor) => {
-        return {
-          author_login: contributor.login,
-          updated_at: contributor.updated_at,
-          user_id: contributor.id,
-        };
-      })
-    : [];
+  const contributors =
+    data?.length > 0
+      ? data.map((contributor) => {
+          return {
+            author_login: contributor.login,
+            updated_at: contributor.updated_at,
+            user_id: contributor.id,
+          };
+        })
+      : [];
+  // check if all contributors are selected or not
+  useEffect(() => {
+    if (
+      !!contributors.length &&
+      contributors.filter((contributor) => selectedContributors.every((c) => c.user_id !== contributor.user_id))
+        .length === 0
+    ) {
+      setIsSelectAll(true);
+    } else {
+      setIsSelectAll(false);
+    }
+  }, [contributors, selectedContributors]);
 
   useEffect(() => {
     setIsHydrated(true);
@@ -148,11 +160,22 @@ const NewListCreationPage = ({ initialData, timezoneOption }: NewListCreationPag
     return null;
   }
 
-  const handleOnSelectAllChecked = (state: boolean) => {
-    if (state) {
-      setSelectedContributors(contributors as DbPRContributor[]);
+  const handleOnSelectAllChecked = () => {
+    if (!isSelectAll) {
+      // add all contributors to the selected list that are not already selected
+      setSelectedContributors((prev) => {
+        const contributorsToInclude = contributors.filter((contributor) =>
+          prev.every((c) => c.user_id !== contributor.user_id)
+        );
+        return [...prev, ...contributorsToInclude] as DbPRContributor[];
+      });
+      setIsSelectAll(true);
     } else {
-      setSelectedContributors([]);
+      // remove all contributors from the selected list of that particular page
+      setSelectedContributors((prev) =>
+        prev.filter((contributor) => !contributors.some((c) => c.user_id === contributor.user_id))
+      );
+      setIsSelectAll(false);
     }
   };
 
@@ -233,7 +256,6 @@ const NewListCreationPage = ({ initialData, timezoneOption }: NewListCreationPag
       setContributor(searchTerm);
     }
   }
-
   return (
     <HubContributorsPageLayout>
       <Dialog open={isOpen}>
@@ -256,10 +278,7 @@ const NewListCreationPage = ({ initialData, timezoneOption }: NewListCreationPag
           </Header>
         </div>
         <div className="lg:min-w-[1150px] px-4 md:px-16 pb-8">
-          <ContributorListTableHeaders
-            selected={selectedContributors.length > 0 && selectedContributors.length === meta.limit}
-            handleOnSelectAllContributor={handleOnSelectAllChecked}
-          />
+          <ContributorListTableHeaders selected={isSelectAll} handleOnSelectAllContributor={handleOnSelectAllChecked} />
           <ContributorTable
             loading={isLoading}
             selectedContributors={selectedContributors}

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { LuFileText } from "react-icons/lu";
 
@@ -40,14 +40,21 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
   const [selectedContributors, setSelectedContributors] = useState<DbPRContributor[]>([]);
   const [selectedListIds, setSelectedListIds] = useState<string[]>([]);
   const [popoverOpen, setPopoverOpen] = useState(false);
-
+  const [isSelectAll, setIsSelectAll] = useState(false); // state to check if all contributors are selected
   const contributors = data.map((pr) => {
     return {
       host_login: pr.author_login,
       first_commit_time: pr.updated_at,
     };
   });
-
+  // check if all contributors are selected or not
+  useEffect(() => {
+    if (data.length && data.filter((contributor) => !selectedContributors.includes(contributor)).length === 0) {
+      setIsSelectAll(true);
+    } else {
+      setIsSelectAll(false);
+    }
+  }, [data, selectedContributors]);
   const onSelectContributor = (state: boolean, contributor: DbPRContributor) => {
     if (state) {
       setSelectedContributors((prev) => [...prev, contributor]);
@@ -56,11 +63,18 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
     }
   };
 
-  const onSelectAllContributors = (state: boolean) => {
-    if (state) {
-      setSelectedContributors(data);
+  const onSelectAllContributors = () => {
+    if (!isSelectAll) {
+      // add all contributors to selectedContributors that are not already selected
+      setSelectedContributors((prev) => {
+        const contributorsToInclude = data.filter((contributor) => !prev.includes(contributor));
+        return [...prev, ...contributorsToInclude];
+      });
+      setIsSelectAll(true);
     } else {
-      setSelectedContributors([]);
+      // remove all contributors of that page from selectedContributors
+      setSelectedContributors((prev) => prev.filter((contributor) => !data.includes(contributor)));
+      setIsSelectAll(false);
     }
   };
 
@@ -202,7 +216,7 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
         </div>
       ) : (
         <div className="lg:min-w-[1150px]">
-          <ContributorListTableHeaders handleOnSelectAllContributor={onSelectAllContributors} />
+          <ContributorListTableHeaders selected={isSelectAll} handleOnSelectAllContributor={onSelectAllContributors} />
           {selectedContributors.length > 0 && (
             <div className="border px-4 py-2 flex justify-between items-center ">
               <div className="text-slate-600">{selectedContributors.length} Contributors selected</div>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { GetServerSidePropsContext } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 
@@ -191,6 +191,7 @@ const AddContributorsToList = ({ list, timezoneOption }: AddContributorsPageProp
   const { sessionToken } = useSupabaseAuth();
   const [contributorsAdded, setContributorsAdded] = useState(false);
   const [contributorsAddedError, setContributorsAddedError] = useState(false);
+  const [isSelectAll, setIsSelectAll] = useState(false); // state to check if all contributors are selected
 
   const addContributorsToList = async () => {
     const { error } = await fetchApiData({
@@ -208,7 +209,7 @@ const AddContributorsToList = ({ list, timezoneOption }: AddContributorsPageProp
     }
   };
 
-  const contributors =
+  const contributors: DbPRContributor[] =
     data?.length > 0
       ? data.map((contributor) => {
           return {
@@ -219,12 +220,35 @@ const AddContributorsToList = ({ list, timezoneOption }: AddContributorsPageProp
           };
         })
       : [];
-
-  const onAllChecked = (state: boolean) => {
-    if (state) {
-      setSelectedContributors(contributors);
+  // check if all contributors are selected or not
+  useEffect(() => {
+    if (
+      !!contributors.length &&
+      contributors.filter((contributor) => selectedContributors.every((c) => c.user_id !== contributor.user_id))
+        .length === 0
+    ) {
+      setIsSelectAll(true);
     } else {
-      setSelectedContributors([]);
+      setIsSelectAll(false);
+    }
+  }, [contributors, selectedContributors]);
+
+  const onAllChecked = () => {
+    if (!isSelectAll) {
+      // add all contributors to the selected list that are not already selected
+      setSelectedContributors((prev) => {
+        const contributorsToInclude = contributors.filter((contributor) =>
+          prev.every((c) => c.user_id !== contributor.user_id)
+        );
+        return [...prev, ...contributorsToInclude] as DbPRContributor[];
+      });
+      setIsSelectAll(true);
+    } else {
+      // remove all contributors from the selected list of that particular page
+      setSelectedContributors((prev) =>
+        prev.filter((contributor) => !contributors.some((c) => c.user_id === contributor.user_id))
+      );
+      setIsSelectAll(false);
     }
   };
 
@@ -256,10 +280,7 @@ const AddContributorsToList = ({ list, timezoneOption }: AddContributorsPageProp
             onSearch={onSearch}
           />
         </Header>
-        <ContributorListTableHeaders
-          selected={selectedContributors.length > 0 && selectedContributors.length === meta.limit}
-          handleOnSelectAllContributor={onAllChecked}
-        />
+        <ContributorListTableHeaders selected={isSelectAll} handleOnSelectAllContributor={onAllChecked} />
         {data.length > 0 || isLoading || (makeRequest && data.length === 0) ? (
           <ContributorTable
             loading={isLoading}
