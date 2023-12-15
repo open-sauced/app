@@ -83,7 +83,7 @@ const Nav = ({ className, name = "Main" }: { className?: string; name?: string }
 };
 
 function getActiveStyle(isActive: boolean) {
-  return isActive ? "text-light-orange-10" : "text-light-slate-10";
+  return isActive ? "text-light-orange-10" : "";
 }
 
 export default TopNav;
