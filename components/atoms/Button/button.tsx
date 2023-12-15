@@ -2,7 +2,7 @@ import React, { ForwardedRef } from "react";
 import clsx from "clsx";
 
 export interface ButtonsProps extends React.ButtonHTMLAttributes<HTMLButtonElement | HTMLAnchorElement> {
-  variant: "primary" | "default" | "dark" | "outline" | "link" | "text";
+  variant: "primary" | "default" | "dark" | "outline" | "link" | "text" | "destructive";
   loading?: boolean;
   href?: string;
   rel?: string;
@@ -11,8 +11,8 @@ export interface ButtonsProps extends React.ButtonHTMLAttributes<HTMLButtonEleme
 }
 
 const Button = React.forwardRef<HTMLElement, ButtonsProps>(
-  ({ className, children, loading, disabled, showLoadingText = true, href, ...props }, ref) => {
-    const styles = {
+  ({ className, children, loading, disabled, variant, showLoadingText = true, href, ...props }, ref) => {
+    const styles: Record<ButtonsProps["variant"], string> = {
       primary: `bg-light-orange-9 text-light-orange-2 border-light-orange-9 hover:bg-light-orange-10 ${
         disabled ? "bg-light-orange-7 hover:bg-light-orange-7 border-none  pointer-events-none" : ""
       }`,
@@ -26,14 +26,12 @@ const Button = React.forwardRef<HTMLElement, ButtonsProps>(
         disabled ? "bg-light-orange-3 pointer-events-none text-light-orange-7 border-light-orange-5" : ""
       }`,
       link: `text-orange-600 hover:bg-orange-100 border-none ${disabled ? "text-orange-400 pointer-events-none" : ""}`,
+      destructive: "border-dark-red-8 bg-dark-red-8 text-white hover:border-dark-red-7 hover:bg-dark-red-7",
+      text: "",
     };
 
     const rootClass = clsx(
-      props.variant === "primary" && styles.primary,
-      props.variant === "default" && styles.default,
-      props.variant === "dark" && styles.dark,
-      props.variant === "outline" && styles.outline,
-      props.variant === "link" && styles.link,
+      styles[variant],
       disabled && "bg-light-orange-7 hover:bg-light-orange-7 border-none pointer-events-none",
       "items-center inline-flex text-sm font-semibold tracking-tight border py-2 px-4 rounded-md focus-visible:border-orange-500 focus:outline-none focus-visible:ring focus-visible:ring-orange-200 whitespace-nowrap",
       className
