@@ -194,7 +194,7 @@ const Notifications: WithPageLayout = () => {
               <Pagination
                 pages={[]}
                 totalPage={notificationsResponse?.meta?.pageCount ?? 0}
-                page={notificationsResponse?.meta?.page ?? 0}
+                currentPage={notificationsResponse?.meta?.page ?? 0}
                 pageSize={notificationsResponse?.meta?.itemCount ?? 0}
                 goToPage
                 hasNextPage={notificationsResponse?.meta?.hasNextPage ?? false}

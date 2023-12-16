@@ -104,7 +104,7 @@ const ListsHub: WithPageLayout = () => {
           hasNextPage={meta.hasNextPage}
           hasPreviousPage={meta.hasPreviousPage}
           totalPage={meta.pageCount}
-          page={meta.page}
+          currentPage={meta.page}
           onPageChange={function (page: number): void {
             setPage(page);
           }}

@@ -280,7 +280,7 @@ const NewListCreationPage = ({ initialData, timezoneOption }: NewListCreationPag
                   hasNextPage={meta.hasNextPage}
                   hasPreviousPage={meta.hasPreviousPage}
                   totalPage={meta.pageCount}
-                  page={meta.page}
+                  currentPage={meta.page}
                   onPageChange={function (page: number): void {
                     setPage(page);
                   }}

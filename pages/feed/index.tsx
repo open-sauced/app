@@ -328,7 +328,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
                 <Pagination
                   pages={[]}
                   totalPage={meta.pageCount}
-                  page={meta.page}
+                  currentPage={meta.page}
                   pageSize={meta.itemCount}
                   goToPage
                   hasNextPage={meta.hasNextPage}
