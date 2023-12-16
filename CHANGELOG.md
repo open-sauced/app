@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.80.0-beta.3](https://github.com/open-sauced/insights/compare/v1.80.0-beta.2...v1.80.0-beta.3) (2023-12-16)
+
+
+### 🐛 Bug Fixes
+
+* fixed colour contrast issues on user settings page ([578892b](https://github.com/open-sauced/insights/commit/578892b02001bd4c9f08465d49aad3f37a7c7b25))
+* fixed colour contrast issues on user settings page ([#2351](https://github.com/open-sauced/insights/issues/2351)) ([a27a9ea](https://github.com/open-sauced/insights/commit/a27a9ea6c9375b279a3f885753df88f4fc75bd4e))
+
 ## [1.80.0-beta.2](https://github.com/open-sauced/insights/compare/v1.80.0-beta.1...v1.80.0-beta.2) (2023-12-15)
 
 
