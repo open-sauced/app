@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { RiArrowLeftSLine, RiArrowRightSLine } from "react-icons/ri";
 
 import PaginationGotoPage from "components/molecules/PaginationGotoPage/pagination-goto-page";
@@ -31,8 +30,6 @@ const Pagination = ({
   onPageChange,
   showTotalPages = true,
 }: PaginationProps): JSX.Element => {
-  const [selected, setSelected] = useState(page);
-
   const handleSelected = (pageNumber: number) => {
     onPageChange(pageNumber);
   };
@@ -49,12 +46,13 @@ const Pagination = ({
   // These numbers change as you navigate the paging.
   // It might start off as 1,2,3,4,5 but as you move forward it becomes
   // 2,3,4,5,6 and so on.
+
   const middlePages = Array.from({ length: Math.min(pages.length, pageSize) }, (_, index) =>
-    selected <= Math.floor(pageSize / 2)
+    page <= Math.floor(pageSize / 2)
       ? index + 1
-      : selected >= pages.length - Math.floor(pageSize / 2)
+      : page >= pages.length - Math.floor(pageSize / 2)
       ? pages.length - pageSize + index + 1
-      : selected - Math.floor(pageSize / 2) + index
+      : page - Math.floor(pageSize / 2) + index
   ).filter((page) => page >= 1 && page <= pages.length);
 
   return (
@@ -70,26 +68,24 @@ const Pagination = ({
               }
 
               handlePrev();
-              setSelected(selected === 1 ? 1 : selected - 1);
             }}
           >
             <RiArrowLeftSLine className="text-2xl md:text-lg" />
           </button>
-          {middlePages.map((page) => {
+          {middlePages.map((pageNumber) => {
             return (
               <button
-                key={page}
+                key={pageNumber}
                 onClick={() => {
-                  setSelected(page);
-                  handleSelected(page);
+                  handleSelected(pageNumber);
                 }}
                 className={`${
-                  // this check  will be updated from page to currentPage when the implemetation of logic is ready
-                  selected === page &&
+                  // this check  will be updated from page to page when the implemetation of logic is ready
+                  pageNumber === page &&
                   "border !text-light-slate-12 shadow-paginate border-light-orange-10 bg-light-orange-2 shadow-search"
                 } cursor-pointer text-light-slate-11 transition text-sm rounded-lg w-8 h-8 hover:bg-light-orange-2 hover:text-light-orange-10`}
               >
-                {page}
+                {pageNumber}
               </button>
             );
           })}
@@ -103,7 +99,6 @@ const Pagination = ({
               }
 
               handleNext();
-              setSelected(selected === pages[pages.length] ? pages[pages.length] : selected + 1);
             }}
           >
             <RiArrowRightSLine className="text-2xl md:text-lg" />
