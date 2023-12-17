@@ -24,6 +24,7 @@ export const ButtonTypes: ComponentStory<typeof Button> = (args) => (
     <Button variant="primary">Primary Button</Button>
     <Button variant="outline">Outline Button</Button>
     <Button variant="link">Link Button</Button>
+    <Button variant="destructive">Destructive Button</Button>
   </div>
 );
 
@@ -41,6 +42,9 @@ Outline.args = { variant: "outline" };
 
 export const Link = ButtonTemplate.bind({});
 Link.args = { variant: "link" };
+
+export const Destructive = ButtonTemplate.bind({});
+Destructive.args = { variant: "destructive" };
 
 export const HasIcons: ComponentStory<typeof Button> = (args) => (
   <div className="flex flex-wrap gap-2">

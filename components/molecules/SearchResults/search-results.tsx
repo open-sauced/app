@@ -11,7 +11,7 @@ const SearchResults = ({ children, classNames, state = "closed" }: SearchResults
   return (
     <DropdownMenu.Root open={state === "open"}>
       <DropdownMenu.Trigger className="!hidden" />
-      <DropdownMenu.Portal className="">
+      <DropdownMenu.Portal>
         <DropdownMenu.Content asChild>
           <div className="min-w-[648px] w-full rounded-lg border overflow-hidden relative top-2">
             {childrenArray.map((item, index) => (
