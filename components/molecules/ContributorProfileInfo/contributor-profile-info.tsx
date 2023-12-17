@@ -6,13 +6,13 @@ import { BsDiscord } from "react-icons/bs";
 import { FiClock, FiGithub, FiLinkedin } from "react-icons/fi";
 import { FaGlobe, FaXTwitter } from "react-icons/fa6";
 import clsx from "clsx";
-import LanguagePill from "components/atoms/LanguagePill/LanguagePill";
 import Title from "components/atoms/Typography/title";
 import Badge from "components/atoms/Badge/badge";
 import { getTimeByTimezone, getTimezone } from "lib/utils/timezones";
 import Tooltip from "components/atoms/Tooltip/tooltip";
 import { getFormattedDate } from "lib/utils/date-utils";
 import { InterestType } from "lib/utils/getInterestOptions";
+import { LanguagePill } from "components/shared/LanguagePill/LanguagePill";
 
 interface ContributorProfileInfoProps {
   githubName: string;
@@ -179,7 +179,7 @@ const ContributorProfileInfo = ({
               <div className="flex gap-1.5 flex-wrap">
                 {interestArray.map((interest, index) => (
                   <Link href={`/${interest}/dashboard/filter/recent`} key={index}>
-                    <LanguagePill key={index} topic={interest} />
+                    <LanguagePill topic={interest} />
                   </Link>
                 ))}
               </div>
