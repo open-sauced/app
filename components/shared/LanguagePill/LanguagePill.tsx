@@ -55,7 +55,7 @@ interface LanguagePillProps {
 export const LanguagePill = ({ topic }: LanguagePillProps) => {
   return (
     <div className="flex items-center gap-1 text-xs rounded-3xl w-max py-2 px-4 bg-light-slate-6">
-      <Image src={renderTopicIcon(topic)} alt={topic} />
+      <Image src={renderTopicIcon(topic)} alt="" />
       <span className="font-normal capitalize">{topicNameFormatting(topic)}</span>
     </div>
   );

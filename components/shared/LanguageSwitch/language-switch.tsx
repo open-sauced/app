@@ -23,7 +23,7 @@ export const LanguageSwitch = ({ topic, checked, onClick }: LanguageSwitchProps)
     >
       <Thumb>
         <div className="flex items-center gap-1">
-          <Image src={renderTopicIcon(topic)} alt={topic} />
+          <Image src={renderTopicIcon(topic)} alt="" />
           <span className="font-normal capitalize">{topicNameFormatting(topic)}</span>
         </div>
       </Thumb>
