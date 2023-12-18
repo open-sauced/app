@@ -5,6 +5,32 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.80.0-beta.3](https://github.com/open-sauced/insights/compare/v1.80.0-beta.2...v1.80.0-beta.3) (2023-12-16)
+
+
+### 🐛 Bug Fixes
+
+* fixed colour contrast issues on user settings page ([578892b](https://github.com/open-sauced/insights/commit/578892b02001bd4c9f08465d49aad3f37a7c7b25))
+* fixed colour contrast issues on user settings page ([#2351](https://github.com/open-sauced/insights/issues/2351)) ([a27a9ea](https://github.com/open-sauced/insights/commit/a27a9ea6c9375b279a3f885753df88f4fc75bd4e))
+
+## [1.80.0-beta.2](https://github.com/open-sauced/insights/compare/v1.80.0-beta.1...v1.80.0-beta.2) (2023-12-15)
+
+
+### 🍕 Features
+
+* created a destructive button variant ([#2354](https://github.com/open-sauced/insights/issues/2354)) ([b1d491f](https://github.com/open-sauced/insights/commit/b1d491f97ad8237fd98c71d0e317ab0f0094d8cd))
+
+
+### 🐛 Bug Fixes
+
+* fixed colour contrast issues with contributor profile ([f656c6d](https://github.com/open-sauced/insights/commit/f656c6d2b9d5d15d16b681b2f00f3159b83f5857))
+* fixed colour contrast issues with contributor profile ([#2345](https://github.com/open-sauced/insights/issues/2345)) ([661e91f](https://github.com/open-sauced/insights/commit/661e91ff43c158718975ac5273dfc372a473b44e))
+* fixed colour contrast issues with top navigation ([#2347](https://github.com/open-sauced/insights/issues/2347)) ([e9d37b2](https://github.com/open-sauced/insights/commit/e9d37b2208deea6e238aa403a52ea99b314633cb))
+* Issue [#2332](https://github.com/open-sauced/insights/issues/2332) Removed the message "Sorry couldn't find contributors" while the contributor list is loading. ([#2339](https://github.com/open-sauced/insights/issues/2339)) ([a892701](https://github.com/open-sauced/insights/commit/a892701e43f05b3e8ab814ecb8a3c94a8fb5271b))
+* issue [#2332](https://github.com/open-sauced/insights/issues/2332) Removed the message while the contributor list is loading ([6ff8c20](https://github.com/open-sauced/insights/commit/6ff8c20e7de4cbaee378ef8f496aa4335e4b513e))
+* removed empty className props ([#2349](https://github.com/open-sauced/insights/issues/2349)) ([0f48c69](https://github.com/open-sauced/insights/commit/0f48c6935cfa5deba10e31ea58b7cadae0f79747))
+* set base style text colour ([ddcda5c](https://github.com/open-sauced/insights/commit/ddcda5cfd6d14733e0bd185212e1e3fd0753059d))
+
 ## [1.80.0-beta.1](https://github.com/open-sauced/insights/compare/v1.79.3-beta.1...v1.80.0-beta.1) (2023-12-13)
 
 

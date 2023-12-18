@@ -11,6 +11,7 @@
 body {
   @apply font-normal;
   background-color: #f8f9fa;
+  @apply text-light-slate-12;
 }
 
 h1,

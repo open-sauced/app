@@ -59,7 +59,7 @@ const LanguagePill = ({ topic, classNames, onClick }: LanguagePillProps) => {
   return (
     <div
       onClick={onClick}
-      className={`cursor-pointer text-xs text-light-slate-11 rounded-[1.875rem] w-max flex items-center gap-1 py-2 px-4 bg-light-slate-6 ${
+      className={`cursor-pointer text-xs rounded-[1.875rem] w-max flex items-center gap-1 py-2 px-4 bg-light-slate-6 ${
         classNames || ""
       }`}
     >

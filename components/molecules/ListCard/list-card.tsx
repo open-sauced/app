@@ -30,7 +30,7 @@ const ListCard = ({ list, handleOnDeleteClick }: ListCardProps) => {
             <div className="px-2 border rounded-2xl text-light-slate-11">{!!list.is_public ? "public" : "private"}</div>
           </div>
         </div>
-        <div className="">
+        <div>
           <div className="flex items-center justify-end w-full gap-8">
             {/* Contributors section */}
             <div className="flex flex-col items-center flex-1 gap-1 mr-2">

@@ -235,7 +235,7 @@ const NewListCreationPage = () => {
                   You can now edit and track your new list in the pages tab, and get useful insights.
                 </Text>
               </div>
-              <div className="">
+              <div>
                 <label>
                   <span className="text-sm text-light-slate-10">Share list link</span>
                   <div className="flex items-center gap-3 pr-3">
