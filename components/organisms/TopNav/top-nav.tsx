@@ -51,8 +51,10 @@ const Nav = ({ className, name = "Main" }: { className?: string; name?: string }
   const { onboarded } = useSession();
 
   const { data: gitHubUser } = useFetchUser(user?.user_metadata.user_name);
-  const userInterest = gitHubUser?.interests.split(",")[0] || "hacktoberfest";
+  const userInterest = gitHubUser?.interests.split(",")[0] ?? "hacktoberfest";
   const router = useRouter();
+
+  const explorePageUrlPattern = /^\/.*\/(dashboard|reports|contributors|activity).*/g;
 
   return (
     <nav className={className} aria-label={name}>
@@ -66,7 +68,7 @@ const Nav = ({ className, name = "Main" }: { className?: string; name?: string }
         )}
         <li>
           <Link
-            className={`text-sm ${getActiveStyle(router.asPath === `/${userInterest}/dashboard/filter/recent`)}`}
+            className={`text-sm ${getActiveStyle(explorePageUrlPattern.test(router.asPath))}`}
             href={`/${userInterest}/dashboard/filter/recent`}
           >
             Explore
