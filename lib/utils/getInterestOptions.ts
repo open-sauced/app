@@ -23,5 +23,8 @@ export type InterestType = (typeof interests)[number];
 
 export const getInterestOptions = () => {
   // returning mutable type array instead of `Read Only` type.
-  return [...interests];
+
+  const isOctober = new Date().getMonth() === 9;
+
+  return isOctober ? [...interests] : interests.filter((interest) => interest !== "hacktoberfest");
 };
