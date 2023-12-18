@@ -56,7 +56,7 @@ const SingleSelect = ({
         className="bg-white min-w-[200px] w-full border focus-within:border-orange-500 focus-within:ring-orange-100 focus-within:ring ring-light-slate-6"
         selectIcon={
           <div className="flex items-center">
-            <RiArrowDownSLine size={20} className="" />
+            <RiArrowDownSLine size={20} />
           </div>
         }
       >

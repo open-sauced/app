@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 
 import Button from "components/atoms/Button/button";
 import DashContainer from "components/atoms/DashedContainer/DashContainer";
-import LanguagePill from "components/atoms/LanguagePill/LanguagePill";
 import Title from "components/atoms/Typography/title";
 import RecommendedRepoCard from "components/molecules/RecommendedRepoCard/recommended-repo-card";
 
@@ -10,6 +9,7 @@ import useUserRepoRecommendations from "lib/hooks/useUserRepoRecommendations";
 import { updateUser } from "lib/hooks/update-user";
 import { useToast } from "lib/hooks/useToast";
 import { getInterestOptions, InterestType } from "lib/utils/getInterestOptions";
+import { LanguageSwitch } from "components/shared/LanguageSwitch/language-switch";
 
 interface UserRepoRecommendationsProps {
   contributor?: DbUser;
@@ -107,9 +107,9 @@ const UserRepositoryRecommendations = ({ contributor, userInterests }: UserRepoR
             {showInterests && (
               <div className="flex flex-wrap justify-center w-full gap-2 mt-6 md:max-w-sm">
                 {interests.map((topic, index) => (
-                  <LanguagePill
+                  <LanguageSwitch
+                    checked={selectedInterests.includes(topic)}
                     onClick={() => handleSelectInterest(topic)}
-                    classNames={`${(selectedInterests || []).includes(topic) && "bg-light-orange-10 text-white"}`}
                     topic={topic}
                     key={index}
                   />
