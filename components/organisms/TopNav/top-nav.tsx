@@ -51,7 +51,7 @@ const Nav = ({ className, name = "Main" }: { className?: string; name?: string }
   const { onboarded } = useSession();
 
   const { data: gitHubUser } = useFetchUser(user?.user_metadata.user_name);
-  const userInterest = gitHubUser?.interests.split(",")[0] || "javascript";
+  const userInterest = gitHubUser?.interests.split(",")[0] || "hacktoberfest";
   const router = useRouter();
 
   return (

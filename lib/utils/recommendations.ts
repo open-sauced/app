@@ -17,6 +17,7 @@ const recommendations: Record<InterestType, string[]> = {
   golang: ["cli/cli"],
   vue: ["vuejs/vue"],
   kubernetes: ["kubernetes/kubernetes"],
+  hacktoberfest: ["open-sauced/app"],
   clojure: ["clojure/clojurescript"],
   svelte: ["sveltejs/svelte"],
 };
