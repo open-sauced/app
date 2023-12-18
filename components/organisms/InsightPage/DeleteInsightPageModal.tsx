@@ -1,5 +1,4 @@
 import { FC, useState } from "react";
-import clsx from "clsx";
 import Button from "components/atoms/Button/button";
 import TextInput from "components/atoms/TextInput/text-input";
 import Text from "components/atoms/Typography/text";
@@ -65,16 +64,7 @@ const DeleteInsightPageModal: FC<ModalProps> = ({
         <TextInput disabled={isLoading} onChange={handleOnNameChange} value={input} />
 
         <div className="flex gap-3">
-          <Button
-            loading={isLoading}
-            disabled={disabled}
-            onClick={handleOnConfirm}
-            variant="default"
-            className={clsx(
-              "bg-light-red-6 border border-light-red-8 hover:bg-light-red-7 text-light-red-10",
-              disabled && "cursor-not-allowed !bg-light-red-4 hover:!none !border-light-red-5 !text-light-red-8"
-            )}
-          >
+          <Button loading={isLoading} disabled={disabled} onClick={handleOnConfirm} variant="destructive">
             Delete
           </Button>
           <Button
