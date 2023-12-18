@@ -193,13 +193,7 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
           {isLoading ? <SkeletonWrapper height={210} radius={12} count={9} /> : ""}
           {isError ? <>An error occurred!..</> : ""}
           {contributorArray.map((contributor, index) => (
-            <ContributorCard
-              key={index}
-              className=""
-              contributor={{ ...contributor }}
-              topic={topic}
-              repositories={repositories}
-            />
+            <ContributorCard key={index} contributor={{ ...contributor }} topic={topic} repositories={repositories} />
           ))}
         </div>
       ) : (
@@ -254,7 +248,7 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
 
         <div className="flex items-center justify-between w-full py-1 md:py-4 md:mt-5">
           <div>
-            <div className="">
+            <div>
               <PaginationResults metaInfo={meta} total={meta.itemCount} entity={"contributors"} />
             </div>
           </div>

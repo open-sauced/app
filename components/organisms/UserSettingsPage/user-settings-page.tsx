@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from "react";
-import clsx from "clsx";
 
 import { RiArrowDownSLine, RiArrowUpSLine } from "react-icons/ri";
 import { User } from "@supabase/supabase-js";
@@ -10,7 +9,6 @@ import TextInput from "components/atoms/TextInput/text-input";
 import Title from "components/atoms/Typography/title";
 import Text from "components/atoms/Typography/text";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "components/atoms/Select/select";
-import LanguagePill from "components/atoms/LanguagePill/LanguagePill";
 import StripeCheckoutButton from "components/organisms/StripeCheckoutButton/stripe-checkout-button";
 
 import { updateUser, UpdateUserPayload } from "lib/hooks/update-user";
@@ -24,6 +22,7 @@ import { getInterestOptions } from "lib/utils/getInterestOptions";
 import { useToast } from "lib/hooks/useToast";
 import { validateTwitterUsername } from "lib/utils/validate-twitter-username";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "components/molecules/Dialog/dialog";
+import { LanguageSwitch } from "components/shared/LanguageSwitch/language-switch";
 import CouponForm from "./coupon-form";
 
 interface UserSettingsPageProps {
@@ -63,20 +62,7 @@ const DeleteAccountModal = ({ open, setOpen, onDelete }: DeleteAccountModalProps
             }}
           />
           <div className="flex gap-4">
-            <Button
-              type="submit"
-              className={clsx(
-                "bg-light-red-6 border border-light-red-8 hover:bg-light-red-7 text-light-red-10",
-                disabled && "cursor-not-allowed !bg-light-red-4 hover:!none !border-light-red-5 !text-light-red-8"
-              )}
-              variant="default"
-              onClick={() => {
-                if (!disabled) {
-                  onDelete();
-                }
-              }}
-              disabled={disabled}
-            >
+            <Button type="submit" variant="destructive" onClick={onDelete} disabled={disabled}>
               Delete
             </Button>
             <Button
@@ -256,21 +242,21 @@ const UserSettingsPage = ({ user }: UserSettingsPageProps) => {
 
   return (
     <div className="container mx-auto md:px-16">
-      <div className="flex flex-col gap-4 text-sm md:flex-row md:gap-42 lg:gap-48 text-light-slate-11">
+      <div className="flex flex-col gap-4 text-sm md:flex-row md:gap-42 lg:gap-48">
         <div>
-          <Title className="!text-2xl !text-light-slate-11" level={2}>
+          <Title className="!text-2xl" level={2}>
             Public profile
           </Title>
           <form onSubmit={handleUpdateProfile} className="flex flex-col gap-6 mt-6" ref={formRef}>
             <TextInput
-              className="bg-light-slate-4 text-light-slate-11"
+              className="bg-light-slate-4"
               label="Name*"
               placeholder="April O'Neil"
               required
               name="nameInput"
             />
             <TextInput
-              className="bg-light-slate-4 text-light-slate-11"
+              className="bg-light-slate-4"
               placeholder="april@stockgen.com"
               handleChange={handleEmailChange}
               label="Email*"
@@ -280,9 +266,9 @@ const UserSettingsPage = ({ user }: UserSettingsPageProps) => {
 
             {/* Bio section */}
             <div className="flex flex-col gap-2">
-              <label className="flex flex-col w-full text-sm text-light-slate-9">
+              <label className="flex flex-col w-full text-sm">
                 Bio
-                <div className="flex-1 px-2 text-light-slate-12 shadow-input border transition rounded-lg py-1 flex items-center bg-light-slate-4 disabled:cursor-not-allowed focus-within:border-light-orange-9">
+                <div className="flex-1 px-2 shadow-input border transition rounded-lg py-1 flex items-center bg-light-slate-4 disabled:cursor-not-allowed focus-within:border-light-orange-9">
                   <textarea
                     rows={4}
                     placeholder="Tell us about yourself."
@@ -305,52 +291,42 @@ const UserSettingsPage = ({ user }: UserSettingsPageProps) => {
               )}
             </div>
             <TextInput
-              className="bg-light-slate-4 text-light-slate-11"
+              className="bg-light-slate-4"
               placeholder="https://opensauced.pizza"
               label="URL (Personal website, portfolio, or any page that showcases your work or interests)"
               pattern="http[s]?://.*\..{2,}"
               name="url"
             />
             <TextInput
-              className="bg-light-slate-4 text-light-slate-11"
+              className="bg-light-slate-4"
               placeholder="https://github.com/sponsors/open-sauced"
               label="GitHub Sponsors URL"
               pattern="http[s]?://.*\..{2,}"
               name="github_sponsors_url"
             />
             <TextInput
-              className="bg-light-slate-4 text-light-slate-11"
+              className="bg-light-slate-4"
               placeholder="https://www.linkedin.com/in/brianldouglas"
               label="LinkedIn URL"
               pattern="http[s]?://.*\..{2,}"
               name="linkedin_url"
             />
             <TextInput
-              className="bg-light-slate-4 text-light-slate-11"
+              className="bg-light-slate-4"
               placeholder="https://discord.com/users/832877193112762362"
               label="Discord URL"
               onChange={handleValidateDiscordUrl}
               name="discord_url"
             />
             <TextInput
-              className="bg-light-slate-4 text-light-slate-11"
+              className="bg-light-slate-4"
               placeholder="saucedopen"
               label="Twitter Username"
               onChange={handleTwitterUsernameChange}
               name="twitter_username"
             />
-            <TextInput
-              className="bg-light-slate-4 text-light-slate-11"
-              placeholder="OpenSauced"
-              label="Company"
-              name="company"
-            />
-            <TextInput
-              className="bg-light-slate-4 text-light-slate-11"
-              placeholder="USA"
-              label="Location"
-              name="location"
-            />
+            <TextInput className="bg-light-slate-4" placeholder="OpenSauced" label="Company" name="company" />
+            <TextInput className="bg-light-slate-4" placeholder="USA" label="Location" name="location" />
             <div>
               <Checkbox
                 checked={displayLocalTime}
@@ -358,7 +334,7 @@ const UserSettingsPage = ({ user }: UserSettingsPageProps) => {
                 label="Display current local time on profile"
                 onCheckedChange={(state) => setDisplayLocalTime(state as boolean)}
               />
-              <span className="text-sm font-normal ml-7 text-light-slate-9">
+              <span className="text-sm font-normal ml-7">
                 Other users will see the time difference from their local time.
               </span>
             </div>
@@ -400,14 +376,14 @@ const UserSettingsPage = ({ user }: UserSettingsPageProps) => {
         </div>
         <div className="flex flex-col-reverse gap-6 md:flex-col">
           <div className="flex flex-col gap-6">
-            <Title className="!text-2xl !font-normal !text-light-slate-11" level={2}>
+            <Title className="!text-2xl !font-normal" level={2}>
               Interests
             </Title>
             <div className="flex flex-wrap gap-3 w-72">
               {interestArray.map((topic, index) => (
-                <LanguagePill
+                <LanguageSwitch
+                  checked={selectedInterest.includes(topic)}
                   onClick={() => handleSelectInterest(topic)}
-                  classNames={`${(selectedInterest || []).includes(topic) && "bg-light-orange-10 !text-white"}`}
                   topic={topic}
                   key={index}
                 />
@@ -425,7 +401,7 @@ const UserSettingsPage = ({ user }: UserSettingsPageProps) => {
           </div>
           <div className="flex flex-col gap-6">
             <div className="flex flex-col gap-3">
-              <label className="text-2xl font-normal text-light-slate-11">Email Preferences</label>
+              <label className="text-2xl font-normal">Email Preferences</label>
               <Checkbox
                 onCheckedChange={() => setEmailPreference((prev) => ({ ...prev, display_email: !prev.display_email }))}
                 checked={emailPreference.display_email}
@@ -465,7 +441,7 @@ const UserSettingsPage = ({ user }: UserSettingsPageProps) => {
                 {!hasReports && !coupon ? (
                   <div className="flex flex-col order-first gap-6 md:order-last">
                     <div className="flex flex-col gap-3">
-                      <label className="text-2xl font-normal text-light-slate-11">Upgrade Access</label>
+                      <label className="text-2xl font-normal">Upgrade Access</label>
                       <div className="w-full sm:max-w-80">
                         <Text>Upgrade to a subscription to gain access to generate custom reports!</Text>
                       </div>
@@ -478,7 +454,7 @@ const UserSettingsPage = ({ user }: UserSettingsPageProps) => {
                   <div>
                     <div className="flex flex-col order-first gap-6 md:order-last">
                       <div className="flex flex-col gap-3">
-                        <label className="text-2xl font-normal text-light-slate-11">Manage Subscriptions</label>
+                        <label className="text-2xl font-normal">Manage Subscriptions</label>
                         <div className="w-full md:w-96">
                           <Text>
                             You are currently subscribed to the Pro plan and currently have access to all premium
@@ -511,7 +487,7 @@ const UserSettingsPage = ({ user }: UserSettingsPageProps) => {
                 }}
               >
                 <div className="flex flex-col gap-3">
-                  <label className="text-2xl font-normal text-light-slate-11">Delete Account</label>
+                  <label className="text-2xl font-normal">Delete Account</label>
                   <div className="w-full md:w-96">
                     <Text>
                       Please note that account deletion is irreversible. Proceed only if you are certain about this
@@ -519,13 +495,7 @@ const UserSettingsPage = ({ user }: UserSettingsPageProps) => {
                     </Text>
                   </div>
                 </div>
-                <Button
-                  type="submit"
-                  rel="noopener noreferrer"
-                  target="_blank"
-                  className="w-max border bg-light-red-6 border-light-red-8 hover:bg-light-red-7 text-light-red-10"
-                  variant="default"
-                >
+                <Button type="submit" rel="noopener noreferrer" target="_blank" variant="destructive" className="w-max">
                   Delete Account
                 </Button>
                 <DeleteAccountModal

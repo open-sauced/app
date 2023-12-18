@@ -20,7 +20,7 @@ const SingleSelect = ({ placeholder, value, onValueChange, options, position }: 
         className="bg-white min-w-[200px] w-full"
         selectIcon={
           <div className="flex items-center">
-            <RiArrowDownSLine size={20} className="" />
+            <RiArrowDownSLine size={20} />
           </div>
         }
       >

@@ -12,10 +12,10 @@ const Loader = ({ theme = "light" }: LoaderProps): JSX.Element => {
         } w-full flex justify-center items-center  h-screen`}
       >
         <div className="absolute flex justify-center items-center">
-          <Image className="" width={62} height={62} src={Pizza} alt="Pizza" priority />
+          <Image width={62} height={62} src={Pizza} alt="Pizza" priority />
         </div>
         <div className="blur-2xl animate-ping">
-          <Image className="" width={62} height={62} src={Pizza} alt="Pizza" priority />
+          <Image width={62} height={62} src={Pizza} alt="Pizza" priority />
         </div>
       </div>
     </main>

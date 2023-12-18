@@ -37,7 +37,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
     isError: repoListIsError,
     isLoading: repoListIsLoading,
     setPage,
-  } = useRepositories(repositories, Number(range), Number(limit));
+  } = useRepositories(repositories, Number(range ?? 30), Number(limit ?? 10));
   const filteredRepoNotIndexed = selectedFilter && !repoListIsLoading && !repoListIsError && repoListData.length === 0;
   const [selectedRepos, setSelectedRepos] = useState<DbRepo[]>([]);
 
@@ -172,7 +172,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
             />
             <div className="flex items-center justify-between w-full py-1 md:py-4 md:mt-5">
               <div>
-                <div className="">
+                <div>
                   <PaginationResults metaInfo={repoMeta} total={repoMeta.itemCount} entity={"repos"} />
                 </div>
               </div>
