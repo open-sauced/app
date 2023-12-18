@@ -172,7 +172,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
             />
             <div className="flex items-center justify-between w-full py-1 md:py-4 md:mt-5">
               <div>
-                <div className="">
+                <div>
                   <PaginationResults metaInfo={repoMeta} total={repoMeta.itemCount} entity={"repos"} />
                 </div>
               </div>
