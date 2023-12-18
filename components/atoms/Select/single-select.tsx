@@ -31,7 +31,7 @@ const SingleSelect = ({
 
   const filteredOptions = options.filter((option) => option.label.toLowerCase().includes(inputValue.toLowerCase()));
 
-  const getOptions = () => (isSearchable ? filteredOptions : options);
+  const items = isSearchable ? filteredOptions : options;
 
   useEffect(() => {
     if (isOpen && isSearchable) {
@@ -42,9 +42,7 @@ const SingleSelect = ({
   return (
     <Select
       value={value}
-      onValueChange={(value) => {
-        onValueChange(value);
-      }}
+      onValueChange={onValueChange}
       onOpenChange={(open) => {
         setIsOpen(open);
         if (!open) {
@@ -80,7 +78,7 @@ const SingleSelect = ({
               />
             </div>
           ) : null}
-          {getOptions().map((option, index) => (
+          {items.map((option, index) => (
             <SelectItem
               onKeyDown={(e) => {
                 if (e.key === "ArrowUp" && index === 0) {
@@ -96,7 +94,7 @@ const SingleSelect = ({
             </SelectItem>
           ))}
 
-          {getOptions().length === 0 && (
+          {items.length === 0 && (
             <SelectItem className="pl-3 text-center" value={""}>
               No results found
             </SelectItem>
