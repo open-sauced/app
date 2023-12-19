@@ -25,7 +25,7 @@ const baseProps: ComponentProps<typeof MenuItem> = {
 };
 
 export const Default: Story = {
-  args: { ...baseProps, icon: <UsersIcon className="w-5 h-5" /> },
+  args: { ...baseProps, icon: <UsersIcon className="w-5 h-5 text-slate-400" /> },
 };
 
 export const Repo: Story = {
@@ -34,4 +34,8 @@ export const Repo: Story = {
 
 export const List: Story = {
   args: { ...baseProps, type: "list" },
+};
+
+export const Active: Story = {
+  args: { ...baseProps, isActive: true, type: "list" },
 };
