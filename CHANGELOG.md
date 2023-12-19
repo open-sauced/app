@@ -5,6 +5,22 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.80.0-beta.4](https://github.com/open-sauced/insights/compare/v1.80.0-beta.3...v1.80.0-beta.4) (2023-12-18)
+
+
+### ✅ Tests
+
+* <SingleSelect /> Storybook story ([3d2008b](https://github.com/open-sauced/insights/commit/3d2008b76432ab1044f33b164949bc442c76054c))
+* <SingleSelect /> Storybook story ([#2340](https://github.com/open-sauced/insights/issues/2340)) ([1eae960](https://github.com/open-sauced/insights/commit/1eae9601839ac63915f46364c5a75b73fead6217))
+
+
+### 🐛 Bug Fixes
+
+* language interests are accessible now ([f244aab](https://github.com/open-sauced/insights/commit/f244aabd20dedf70f85948f7d39ade2e9c7fed4d))
+* language interests are accessible now via keyboard ([#2365](https://github.com/open-sauced/insights/issues/2365)) ([be84d90](https://github.com/open-sauced/insights/commit/be84d9086cf7bdbe620d2ba2a685a3637f9da2b0))
+* now destructive variant is used for destructive actions in the app ([aea90a5](https://github.com/open-sauced/insights/commit/aea90a59389cfffd19e82764ca484a9e4a41f8c5))
+* now destructive variant is used for destructive actions in the app ([#2356](https://github.com/open-sauced/insights/issues/2356)) ([2478e33](https://github.com/open-sauced/insights/commit/2478e33ae1c9259a6edd614db655d456b056a1b8))
+
 ## [1.80.0-beta.3](https://github.com/open-sauced/insights/compare/v1.80.0-beta.2...v1.80.0-beta.3) (2023-12-16)
 
 
