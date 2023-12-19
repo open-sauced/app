@@ -49,7 +49,7 @@ const ContributorHoverCard = ({
         />
         {isMaintainer && <Badge text="maintainer" />}
       </div>
-      <div className="">
+      <div>
         <PullRequestTable isHoverCard repositories={repositories} limit={5} contributor={githubName} topic={topic} />
       </div>
 

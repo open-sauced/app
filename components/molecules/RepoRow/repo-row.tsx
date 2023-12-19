@@ -145,12 +145,12 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
               "-"
             )}
           </div>
-          <div className="">
+          <div>
             <div
               onClick={() => setTableOpen(!tableOpen)}
               className="items-center justify-between w-6 h-6 p-1 border rounded-md"
             >
-              {tableOpen ? <ChevronUpIcon className="" /> : <ChevronDownIcon />}
+              {tableOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}
             </div>
           </div>
         </div>

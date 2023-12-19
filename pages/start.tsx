@@ -29,11 +29,11 @@ import { captureAnalytics } from "lib/utils/analytics";
 
 import useStore from "lib/store";
 import { getInterestOptions } from "lib/utils/getInterestOptions";
-import LanguagePill from "components/atoms/LanguagePill/LanguagePill";
 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "components/atoms/Select/select";
 import { timezones } from "lib/utils/timezones";
 import { useFetchUser } from "lib/hooks/useFetchUser";
+import { LanguageSwitch } from "components/shared/LanguageSwitch/language-switch";
 
 type StepKeys = "1" | "2" | "3";
 
@@ -178,9 +178,9 @@ const LoginStep2: React.FC<LoginStep2Props> = ({ handleUpdateInterests: handleUp
           </div>
           <div className="flex flex-wrap gap-3">
             {interestArray.map((topic, index) => (
-              <LanguagePill
+              <LanguageSwitch
+                checked={selectedInterests.includes(topic)}
                 onClick={() => handleSelectInterest(topic)}
-                classNames={`${(selectedInterests || []).includes(topic) && "!bg-light-orange-10 !text-white"}`}
                 topic={topic}
                 key={index}
               />
