@@ -184,7 +184,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
                     hasNextPage={repoMeta.hasNextPage}
                     hasPreviousPage={repoMeta.hasPreviousPage}
                     totalPage={repoMeta.pageCount}
-                    currentPage={repoMeta.page}
+                    page={repoMeta.page}
                     onPageChange={function (page: number): void {
                       setPage(page);
                     }}

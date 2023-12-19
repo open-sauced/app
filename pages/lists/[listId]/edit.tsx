@@ -318,7 +318,7 @@ export default function EditListPage({ list, initialContributors }: EditListPage
                         hasNextPage={meta.hasNextPage}
                         hasPreviousPage={meta.hasPreviousPage}
                         totalPage={meta.pageCount}
-                        currentPage={meta.page}
+                        page={meta.page}
                         onPageChange={function (page: number): void {
                           setPage(page);
                         }}

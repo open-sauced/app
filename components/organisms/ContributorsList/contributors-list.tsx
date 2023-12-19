@@ -83,7 +83,7 @@ const ContributorsList = ({ contributors, isLoading, meta, setPage, range }: Con
               hasNextPage={meta.hasNextPage}
               hasPreviousPage={meta.hasPreviousPage}
               totalPage={meta.pageCount}
-              currentPage={meta.page}
+              page={meta.page}
               onPageChange={function (page: number): void {
                 setPage(page);
               }}

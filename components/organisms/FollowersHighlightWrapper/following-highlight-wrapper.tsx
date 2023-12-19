@@ -89,7 +89,7 @@ const FollowingHighlightWrapper = ({ emojis, selectedFilter }: HighlightWrapperP
           <Pagination
             pages={[]}
             totalPage={meta.pageCount}
-            currentPage={meta.page}
+            page={meta.page}
             pageSize={meta.itemCount}
             goToPage
             hasNextPage={meta.hasNextPage}
