@@ -5,6 +5,19 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.80.0-beta.6](https://github.com/open-sauced/insights/compare/v1.80.0-beta.5...v1.80.0-beta.6) (2023-12-19)
+
+
+### 🐛 Bug Fixes
+
+* fix pagination logic ([#2361](https://github.com/open-sauced/insights/issues/2361)) ([4eff912](https://github.com/open-sauced/insights/commit/4eff91270b5965e29c183acdecd65dc4764b7b57))
+
+
+### 🍕 Features
+
+* add helper tooltip to dashboard highlight cards ([#2309](https://github.com/open-sauced/insights/issues/2309)) ([b6a4662](https://github.com/open-sauced/insights/commit/b6a46628adbbff6d9c0144a84f4621173bf06d03))
+* use GitHub API to search for contributors to add to a list ([#2344](https://github.com/open-sauced/insights/issues/2344)) ([e5ea086](https://github.com/open-sauced/insights/commit/e5ea08622eca38ad07ea3f1d8575d410ac2be059))
+
 ## [1.80.0-beta.5](https://github.com/open-sauced/insights/compare/v1.80.0-beta.4...v1.80.0-beta.5) (2023-12-19)
 
 
