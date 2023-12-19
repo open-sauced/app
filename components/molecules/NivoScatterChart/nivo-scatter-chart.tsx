@@ -150,7 +150,7 @@ const NivoScatterPlot = ({
           <div>
             <ToggleOption handleToggle={handleShowBots} checked={showBots} optionText="Show Bots"></ToggleOption>
           </div>
-          <div className="">
+          <div>
             <ToggleOption
               handleToggle={handleSetLogarithmic}
               optionText="Enhance"

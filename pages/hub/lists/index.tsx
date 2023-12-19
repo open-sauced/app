@@ -161,16 +161,7 @@ const ListsHub: WithPageLayout = () => {
           />
 
           <div className="flex gap-3">
-            <Button
-              loading={deleteLoading}
-              disabled={disabled}
-              onClick={handleOnConfirm}
-              variant="default"
-              className={clsx(
-                "bg-light-red-6 border border-light-red-8 hover:bg-light-red-7 text-light-red-10",
-                disabled && "cursor-not-allowed !bg-light-red-4 hover:!none !border-light-red-5 !text-light-red-8"
-              )}
-            >
+            <Button loading={deleteLoading} disabled={disabled} onClick={handleOnConfirm} variant="destructive">
               Delete
             </Button>
             <Button

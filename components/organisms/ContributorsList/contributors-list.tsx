@@ -72,7 +72,7 @@ const ContributorsList = ({ contributors, isLoading, meta, setPage, range }: Con
       </ClientOnly>
       <div className="flex items-center justify-between w-full py-1 md:py-4 md:mt-5">
         <div>
-          <div className="">
+          <div>
             <PaginationResults metaInfo={meta} total={meta.itemCount} entity={"contributors"} />
           </div>
         </div>

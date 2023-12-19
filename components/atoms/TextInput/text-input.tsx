@@ -44,13 +44,13 @@ const TextInput = ({
   return (
     <>
       <label className="flex flex-col w-full">
-        {label && <p className="mb-2 text-sm text-light-slate-9">{label}</p>}
+        {label && <p className="mb-2 text-sm">{label}</p>}
         <div
           className={clsx(
-            "flex-1 px-2 text-light-slate-12 bg-white shadow-input border transition rounded-lg py-1 flex items-center",
+            "flex-1 px-2 bg-white shadow-input border transition rounded-lg py-1 flex items-center",
             borderless && "!border-none",
             state === "invalid" ? "focus-within:border-light-red-10" : "focus-within:border-light-orange-9 ",
-            disabled && "bg-light-slate-3 text-light-slate-6",
+            disabled && "bg-light-slate-3",
             className
           )}
         >
@@ -62,7 +62,7 @@ const TextInput = ({
             placeholder={placeholder || ""}
             className={clsx(
               "w-full focus:outline-none placeholder:font-normal placeholder-slate-400",
-              disabled && "bg-light-slate-3 cursor-not-allowed text-light-slate-9",
+              disabled && "bg-light-slate-3 cursor-not-allowed",
               "bg-inherit"
             )}
             disabled={disabled}
@@ -77,10 +77,7 @@ const TextInput = ({
               ) : !!value ? (
                 <span title="Clear input" className="flex items-center ml-1" onClick={handleResetInput}>
                   <XCircleFillIcon
-                    className={clsx(
-                      state === "invalid" && errorMsg ? "text-light-red-11" : "text-light-slate-8",
-                      "cursor-pointer"
-                    )}
+                    className={clsx(state === "invalid" && errorMsg ? "text-light-red-11" : "", "cursor-pointer")}
                     size={12}
                   />
                 </span>
@@ -91,7 +88,7 @@ const TextInput = ({
           )}
         </div>
       </label>
-      {descriptionText ? <p className="mt-2 text-sm text-light-slate-9">{descriptionText}</p> : ""}
+      {descriptionText ? <p className="mt-2 text-sm">{descriptionText}</p> : ""}
       {state === "invalid" && errorMsg ? <p className="mt-3 text-sm text-light-red-11 ">{errorMsg}</p> : ""}
     </>
   );

@@ -38,7 +38,7 @@ const ListCard = ({ list, handleOnDeleteClick }: ListCardProps) => {
             </div>
           </div>
         </div>
-        <div className="">
+        <div>
           <div className="flex items-center justify-end w-full gap-8">
             {/* Contributors section */}
             <div className="flex flex-col items-center flex-1 gap-1 mr-2">
