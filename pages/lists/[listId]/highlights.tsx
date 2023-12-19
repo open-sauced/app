@@ -128,10 +128,10 @@ const Highlights = ({ list, numberOfContributors, isOwner, highlights }: Highlig
     <ListPageLayout showRangeFilter={false} list={list} numberOfContributors={numberOfContributors} isOwner={isOwner}>
       <div
         ref={topRef}
-        className="container flex flex-col justify-start w-full gap-12 pt-4 mt-5 md:mt-0 md:items-start md:flex-row"
+        className="container flex flex-col justify-center  w-full gap-12 pt-4 mt-5 md:mt-0 md:items-start md:justify-start md:flex-row"
       >
-        <div className={`sticky top-14 xl:flex hidden flex-none w-1/5`}>
-          <div className="w-full bg-white border shadow-sm rounded-lg px-5 py-6 flex flex-col gap-4">
+        <div className={`xl:sticky lg:top-14 xl:flex flex-none w-full  md:w-max  xl:w-1/5`}>
+          <div className="w-full min-w-max bg-white border shadow-sm rounded-lg px-5 py-6 flex flex-col gap-4">
             <Search
               value={contributor}
               onChange={(value) => {
@@ -196,7 +196,7 @@ const Highlights = ({ list, numberOfContributors, isOwner, highlights }: Highlig
           <ClientOnly>
             {data && data.length > 0
               ? data.map(({ id, url, title, created_at, highlight, shipped_at, login, type, tagged_repos }) => (
-                  <div key={id} className="flex flex-col gap-6 px-1">
+                  <div key={id} className="flex flex-col gap-6 px-1 w-full">
                     <div className="flex items-center gap-3">
                       <Link href={`/user/${login}`} className="flex items-center gap-3">
                         <Avatar
