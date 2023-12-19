@@ -5,6 +5,22 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.80.0-beta.5](https://github.com/open-sauced/insights/compare/v1.80.0-beta.4...v1.80.0-beta.5) (2023-12-19)
+
+
+### 🍕 Features
+
+* make single select component searchable ([#2061](https://github.com/open-sauced/insights/issues/2061)) ([69e605e](https://github.com/open-sauced/insights/commit/69e605ea0114637c7c4550e5beb1d45736fc12c6))
+
+
+### 🐛 Bug Fixes
+
+* fixed colour contrast issues with language switch selected state ([d3fe8df](https://github.com/open-sauced/insights/commit/d3fe8dfc97fc8162531e4ff96a6f6cc37d71b22d))
+* fixed colour contrast issues with language switch selected state ([#2370](https://github.com/open-sauced/insights/issues/2370)) ([aa5e7ad](https://github.com/open-sauced/insights/commit/aa5e7ad149568c2a08282392e5e10bbf0b2cf486))
+* fixed colour contrast issues with tool tabs ([4eaceb5](https://github.com/open-sauced/insights/commit/4eaceb51fc0d572e4d47bcdec42e464a595153cb))
+* fixed colour contrast issues with tool tabs ([#2357](https://github.com/open-sauced/insights/issues/2357)) ([e322352](https://github.com/open-sauced/insights/commit/e3223527993ab134ec67a85546f3933af91c0858))
+* quick fix for build error introduced in [#2371](https://github.com/open-sauced/insights/issues/2371) ([#2378](https://github.com/open-sauced/insights/issues/2378)) ([135568f](https://github.com/open-sauced/insights/commit/135568fe6c7cce6f5c39d2dcaaa80489976d0448))
+
 ## [1.80.0-beta.4](https://github.com/open-sauced/insights/compare/v1.80.0-beta.3...v1.80.0-beta.4) (2023-12-18)
 
 
