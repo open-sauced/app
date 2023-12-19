@@ -121,6 +121,7 @@ const HubContributorsHeader = ({
             value={timezone}
             placeholder="Select time zone"
             onValueChange={(value) => setTimezoneFilter(value)}
+            isSearchable
           />
         </div>
         <div className="flex flex-col gap-2 md:items-center md:gap-4 md:flex-row">

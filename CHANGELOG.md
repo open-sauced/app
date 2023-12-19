@@ -5,6 +5,100 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.80.0-beta.4](https://github.com/open-sauced/insights/compare/v1.80.0-beta.3...v1.80.0-beta.4) (2023-12-18)
+
+
+### ✅ Tests
+
+* <SingleSelect /> Storybook story ([3d2008b](https://github.com/open-sauced/insights/commit/3d2008b76432ab1044f33b164949bc442c76054c))
+* <SingleSelect /> Storybook story ([#2340](https://github.com/open-sauced/insights/issues/2340)) ([1eae960](https://github.com/open-sauced/insights/commit/1eae9601839ac63915f46364c5a75b73fead6217))
+
+
+### 🐛 Bug Fixes
+
+* language interests are accessible now ([f244aab](https://github.com/open-sauced/insights/commit/f244aabd20dedf70f85948f7d39ade2e9c7fed4d))
+* language interests are accessible now via keyboard ([#2365](https://github.com/open-sauced/insights/issues/2365)) ([be84d90](https://github.com/open-sauced/insights/commit/be84d9086cf7bdbe620d2ba2a685a3637f9da2b0))
+* now destructive variant is used for destructive actions in the app ([aea90a5](https://github.com/open-sauced/insights/commit/aea90a59389cfffd19e82764ca484a9e4a41f8c5))
+* now destructive variant is used for destructive actions in the app ([#2356](https://github.com/open-sauced/insights/issues/2356)) ([2478e33](https://github.com/open-sauced/insights/commit/2478e33ae1c9259a6edd614db655d456b056a1b8))
+
+## [1.80.0-beta.3](https://github.com/open-sauced/insights/compare/v1.80.0-beta.2...v1.80.0-beta.3) (2023-12-16)
+
+
+### 🐛 Bug Fixes
+
+* fixed colour contrast issues on user settings page ([578892b](https://github.com/open-sauced/insights/commit/578892b02001bd4c9f08465d49aad3f37a7c7b25))
+* fixed colour contrast issues on user settings page ([#2351](https://github.com/open-sauced/insights/issues/2351)) ([a27a9ea](https://github.com/open-sauced/insights/commit/a27a9ea6c9375b279a3f885753df88f4fc75bd4e))
+
+## [1.80.0-beta.2](https://github.com/open-sauced/insights/compare/v1.80.0-beta.1...v1.80.0-beta.2) (2023-12-15)
+
+
+### 🍕 Features
+
+* created a destructive button variant ([#2354](https://github.com/open-sauced/insights/issues/2354)) ([b1d491f](https://github.com/open-sauced/insights/commit/b1d491f97ad8237fd98c71d0e317ab0f0094d8cd))
+
+
+### 🐛 Bug Fixes
+
+* fixed colour contrast issues with contributor profile ([f656c6d](https://github.com/open-sauced/insights/commit/f656c6d2b9d5d15d16b681b2f00f3159b83f5857))
+* fixed colour contrast issues with contributor profile ([#2345](https://github.com/open-sauced/insights/issues/2345)) ([661e91f](https://github.com/open-sauced/insights/commit/661e91ff43c158718975ac5273dfc372a473b44e))
+* fixed colour contrast issues with top navigation ([#2347](https://github.com/open-sauced/insights/issues/2347)) ([e9d37b2](https://github.com/open-sauced/insights/commit/e9d37b2208deea6e238aa403a52ea99b314633cb))
+* Issue [#2332](https://github.com/open-sauced/insights/issues/2332) Removed the message "Sorry couldn't find contributors" while the contributor list is loading. ([#2339](https://github.com/open-sauced/insights/issues/2339)) ([a892701](https://github.com/open-sauced/insights/commit/a892701e43f05b3e8ab814ecb8a3c94a8fb5271b))
+* issue [#2332](https://github.com/open-sauced/insights/issues/2332) Removed the message while the contributor list is loading ([6ff8c20](https://github.com/open-sauced/insights/commit/6ff8c20e7de4cbaee378ef8f496aa4335e4b513e))
+* removed empty className props ([#2349](https://github.com/open-sauced/insights/issues/2349)) ([0f48c69](https://github.com/open-sauced/insights/commit/0f48c6935cfa5deba10e31ea58b7cadae0f79747))
+* set base style text colour ([ddcda5c](https://github.com/open-sauced/insights/commit/ddcda5cfd6d14733e0bd185212e1e3fd0753059d))
+
+## [1.80.0-beta.1](https://github.com/open-sauced/insights/compare/v1.79.3-beta.1...v1.80.0-beta.1) (2023-12-13)
+
+
+### 🐛 Bug Fixes
+
+* increase z-index of show latest pull request button ([d0b7722](https://github.com/open-sauced/insights/commit/d0b772226b4156560730b5d3c6b219c369c543b9))
+* now the add more button for adding more contributors to a list is the primary CTA ([09df01c](https://github.com/open-sauced/insights/commit/09df01cc35c3b2fd80037217401b525483dcb4c5))
+* now the add more button for adding more contributors to a list is the primary CTA ([#2334](https://github.com/open-sauced/insights/issues/2334)) ([ef070f2](https://github.com/open-sauced/insights/commit/ef070f2117fa06292ba8c2a9c99ead44c9b9f2f3))
+* pull request button shows PRs now on a contributor card ([#2277](https://github.com/open-sauced/insights/issues/2277)) ([a87bdff](https://github.com/open-sauced/insights/commit/a87bdff18c8aa0c2667046f47677a50739b7a9a2))
+
+
+### 🍕 Features
+
+* use GitHub API for user search box ([#2331](https://github.com/open-sauced/insights/issues/2331)) ([152b933](https://github.com/open-sauced/insights/commit/152b933e258de7fa9b1199284758504c854cc705))
+
+### [1.79.3-beta.1](https://github.com/open-sauced/insights/compare/v1.79.2...v1.79.3-beta.1) (2023-12-13)
+
+
+### 🐛 Bug Fixes
+
+* added focus styles for radio buttons and comboboxes ([dfc88ba](https://github.com/open-sauced/insights/commit/dfc88ba98b58a69d1ab650c2c2df74368be1cf30))
+* added focus styles for radio buttons and comboboxes ([#2319](https://github.com/open-sauced/insights/issues/2319)) ([0c168c7](https://github.com/open-sauced/insights/commit/0c168c778b5cb2e9fae3bb2d008ad32084c95fbf))
+
+### [1.79.2](https://github.com/open-sauced/insights/compare/v1.79.1...v1.79.2) (2023-12-12)
+
+
+### 🐛 Bug Fixes
+
+* [#2252](https://github.com/open-sauced/insights/issues/2252) User list activity dropdown scrollbar causes CSS popping ([#2308](https://github.com/open-sauced/insights/issues/2308)) ([a2475e9](https://github.com/open-sauced/insights/commit/a2475e9acdeec55ef49cda0f7cd746fabcc4e3a3))
+* add default limit and range for repositories list ([#2306](https://github.com/open-sauced/insights/issues/2306)) ([6f892b4](https://github.com/open-sauced/insights/commit/6f892b43f74cbff62288aa53cf5724c8670fc626))
+* now site header no longer shifts when opening reactions on a highlight card ([#2316](https://github.com/open-sauced/insights/issues/2316)) ([8dee5a9](https://github.com/open-sauced/insights/commit/8dee5a9b2d29cdf3570e0d7d0777e5ba07e6071a))
+* removed @netlify/esbuild as it's not used in the app or deployment ([6c6fd80](https://github.com/open-sauced/insights/commit/6c6fd80108ff32da8706f4265b32e6b4f5e95391))
+* removed @netlify/esbuild as it's not used in the app or deployment ([#2304](https://github.com/open-sauced/insights/issues/2304)) ([4cdca1a](https://github.com/open-sauced/insights/commit/4cdca1a1e9150d7971143f445f428201aa12322a))
+* show contributor url on profile page ([#2284](https://github.com/open-sauced/insights/issues/2284)) ([e87877c](https://github.com/open-sauced/insights/commit/e87877c0fd2be9d8b1bf918ef73f9f4258acb9de))
+* Text for reactions on highlights pass all colour contrast checks now ([#2300](https://github.com/open-sauced/insights/issues/2300)) ([e39d846](https://github.com/open-sauced/insights/commit/e39d84653a3401f3ab126c77c84f1232c8485a26))
+
+### [1.79.2-beta.4](https://github.com/open-sauced/insights/compare/v1.79.2-beta.3...v1.79.2-beta.4) (2023-12-12)
+
+
+### 🐛 Bug Fixes
+
+* now site header no longer shifts when opening reactions on a highlight card ([#2316](https://github.com/open-sauced/insights/issues/2316)) ([8dee5a9](https://github.com/open-sauced/insights/commit/8dee5a9b2d29cdf3570e0d7d0777e5ba07e6071a))
+* Text for reactions on highlights pass all colour contrast checks now ([#2300](https://github.com/open-sauced/insights/issues/2300)) ([e39d846](https://github.com/open-sauced/insights/commit/e39d84653a3401f3ab126c77c84f1232c8485a26))
+
+### [1.79.2-beta.3](https://github.com/open-sauced/insights/compare/v1.79.2-beta.2...v1.79.2-beta.3) (2023-12-12)
+
+
+### 🐛 Bug Fixes
+
+* [#2252](https://github.com/open-sauced/insights/issues/2252) User list activity dropdown scrollbar causes CSS popping ([#2308](https://github.com/open-sauced/insights/issues/2308)) ([a2475e9](https://github.com/open-sauced/insights/commit/a2475e9acdeec55ef49cda0f7cd746fabcc4e3a3))
+* add default limit and range for repositories list ([#2306](https://github.com/open-sauced/insights/issues/2306)) ([6f892b4](https://github.com/open-sauced/insights/commit/6f892b43f74cbff62288aa53cf5724c8670fc626))
+
 ### [1.79.2-beta.2](https://github.com/open-sauced/insights/compare/v1.79.2-beta.1...v1.79.2-beta.2) (2023-12-11)
 
 
