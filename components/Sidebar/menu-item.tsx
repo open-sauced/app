@@ -21,7 +21,7 @@ const MenuItem = ({ title, icon, type, href, isActive }: MenuItemProps) => {
   };
   return (
     <li className={clsx("list-none p-2 rounded-md", isActive ? "bg-slate-100" : "")}>
-      <Link href={href} className="flex gap-3 items-center ">
+      <Link href={href} className="flex gap-2 items-center ">
         {type && !icon ? getIcon(type) : icon}
         <span className="text-slate-700">{title}</span>
       </Link>
