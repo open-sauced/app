@@ -12,6 +12,9 @@ const meta: Meta<typeof SingleSelect> = {
       options: ["popper", "item-aligned"],
       control: { type: "radio" },
     },
+    isSearchable: {
+      control: { type: "boolean" },
+    },
   },
 };
 
@@ -43,4 +46,8 @@ export const Default: Story = {
 
 export const Empty: Story = {
   args: { ...baseProps, options: [] },
+};
+
+export const WithSearch: Story = {
+  args: { ...baseProps, isSearchable: true },
 };
