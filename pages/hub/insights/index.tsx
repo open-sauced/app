@@ -16,6 +16,7 @@ import useSession from "lib/hooks/useSession";
 import { useToast } from "lib/hooks/useToast";
 import Text from "components/atoms/Typography/text";
 import useFetchFeaturedInsights from "lib/hooks/useFetchFeaturedInsights";
+import ClientOnly from "components/atoms/ClientOnly/client-only";
 
 const InsightsHub: WithPageLayout = () => {
   const router = useRouter();
@@ -99,15 +100,17 @@ const InsightsHub: WithPageLayout = () => {
           </>
         ) : null}
 
-        {!session && featuredInsightsLoading ? (
-          <SkeletonWrapper count={1} classNames="w-full" height={95} radius={10} />
-        ) : featuredInsightsError ? (
-          "Error..."
-        ) : (
-          featuredInsightsData.map((insight) => {
-            return <InsightRow key={`insights_${insight.id}`} user={user} insight={insight} isEditable={false} />;
-          })
-        )}
+        <ClientOnly>
+          {!session && featuredInsightsLoading ? (
+            <SkeletonWrapper count={1} classNames="w-full" height={95} radius={10} />
+          ) : featuredInsightsError ? (
+            "Error..."
+          ) : (
+            featuredInsightsData.map((insight) => {
+              return <InsightRow key={`insights_${insight.id}`} user={user} insight={insight} isEditable={false} />;
+            })
+          )}
+        </ClientOnly>
       </section>
 
       <div
