@@ -26,7 +26,8 @@ h6 {
 input[type="checkbox"]:focus-visible,
 [role="checkbox"]:focus-visible,
 [role="radio"]:focus-visible,
-[role="combobox"]:focus-visible {
+[role="combobox"]:focus-visible,
+[role="switch"]:focus-visible {
   @apply outline-none;
   @apply ring;
   @apply border-orange-500;

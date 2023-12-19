@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from "react";
-import clsx from "clsx";
 
 import { RiArrowDownSLine, RiArrowUpSLine } from "react-icons/ri";
 import { User } from "@supabase/supabase-js";
@@ -10,7 +9,6 @@ import TextInput from "components/atoms/TextInput/text-input";
 import Title from "components/atoms/Typography/title";
 import Text from "components/atoms/Typography/text";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "components/atoms/Select/select";
-import LanguagePill from "components/atoms/LanguagePill/LanguagePill";
 import StripeCheckoutButton from "components/organisms/StripeCheckoutButton/stripe-checkout-button";
 
 import { updateUser, UpdateUserPayload } from "lib/hooks/update-user";
@@ -24,6 +22,7 @@ import { getInterestOptions } from "lib/utils/getInterestOptions";
 import { useToast } from "lib/hooks/useToast";
 import { validateTwitterUsername } from "lib/utils/validate-twitter-username";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "components/molecules/Dialog/dialog";
+import { LanguageSwitch } from "components/shared/LanguageSwitch/language-switch";
 import CouponForm from "./coupon-form";
 
 interface UserSettingsPageProps {
@@ -63,20 +62,7 @@ const DeleteAccountModal = ({ open, setOpen, onDelete }: DeleteAccountModalProps
             }}
           />
           <div className="flex gap-4">
-            <Button
-              type="submit"
-              className={clsx(
-                "bg-light-red-6 border border-light-red-8 hover:bg-light-red-7 text-light-red-10",
-                disabled && "cursor-not-allowed !bg-light-red-4 hover:!none !border-light-red-5 !text-light-red-8"
-              )}
-              variant="default"
-              onClick={() => {
-                if (!disabled) {
-                  onDelete();
-                }
-              }}
-              disabled={disabled}
-            >
+            <Button type="submit" variant="destructive" onClick={onDelete} disabled={disabled}>
               Delete
             </Button>
             <Button
@@ -395,9 +381,9 @@ const UserSettingsPage = ({ user }: UserSettingsPageProps) => {
             </Title>
             <div className="flex flex-wrap gap-3 w-72">
               {interestArray.map((topic, index) => (
-                <LanguagePill
+                <LanguageSwitch
+                  checked={selectedInterest.includes(topic)}
                   onClick={() => handleSelectInterest(topic)}
-                  classNames={`${(selectedInterest || []).includes(topic) && "bg-light-orange-10 !text-white"}`}
                   topic={topic}
                   key={index}
                 />
@@ -509,13 +495,7 @@ const UserSettingsPage = ({ user }: UserSettingsPageProps) => {
                     </Text>
                   </div>
                 </div>
-                <Button
-                  type="submit"
-                  rel="noopener noreferrer"
-                  target="_blank"
-                  className="w-max border bg-light-red-6 border-light-red-8 hover:bg-light-red-7 text-light-red-10"
-                  variant="default"
-                >
+                <Button type="submit" rel="noopener noreferrer" target="_blank" variant="destructive" className="w-max">
                   Delete Account
                 </Button>
                 <DeleteAccountModal
