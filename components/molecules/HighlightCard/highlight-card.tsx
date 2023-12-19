@@ -161,14 +161,14 @@ const HighlightCard: React.FC<HighlightCardProps> = ({
             </div>
             {/* Label: Text */}
             <div className={clsx("text-sm text-slate-600 leading-none")}>
-              {tooltip ? (
+              {tooltip && lable ? (
                 <Tooltip className="w-44 py-3 text-center" content={tooltip}>
                   {label}
                 </Tooltip>
               ) : label ? (
                 label
               ) : (
-                "Label"
+                ""
               )}
             </div>
           </div>
