@@ -4,6 +4,7 @@ import clsx from "clsx";
 import AvatarHoverCard from "components/atoms/Avatar/avatar-hover-card";
 
 import useInsight from "lib/hooks/useInsight";
+import { DATA_FALLBACK_VALUE } from "lib/utils/fallbackValues";
 
 export type Contributor = { host_login: string };
 
@@ -23,7 +24,7 @@ const StackedAvatar = ({ contributors, visibleQuantity = 5, classNames }: Stacke
   if (isError) {
     // eslint-disable-next-line no-console
     console.log("Error fetching insight", isError);
-    return <div>-</div>;
+    return <div>{DATA_FALLBACK_VALUE}</div>;
   }
 
   return (

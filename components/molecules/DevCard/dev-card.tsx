@@ -14,6 +14,7 @@ import CardSauceBGSVG from "img/card-sauce-bg.svg";
 import openSaucedImg from "img/openSauced-icon.png";
 import PRIcon from "img/icons/pr-icon.svg";
 import { getRelativeDays } from "lib/utils/date-utils";
+import { DATA_FALLBACK_VALUE } from "lib/utils/fallbackValues";
 
 export interface DevCardProps {
   username: string;
@@ -214,7 +215,7 @@ export default function DevCard(props: DevCardProps) {
                 {!props.isLoading ? (
                   <ActivityPill activity={activity} size="small" />
                 ) : (
-                  <div className="text-xs text-slate-300 font-extralight">-</div>
+                  <div className="text-xs text-slate-300 font-extralight">{DATA_FALLBACK_VALUE}</div>
                 )}
               </div>
               <Seperator />
@@ -222,7 +223,7 @@ export default function DevCard(props: DevCardProps) {
                 <div className="text-xs text-slate-300">PRs Velocity</div>
                 <div className="flex items-center ml-auto gap-1">
                   {!props.prVelocity || props.prMergePercentage == undefined ? (
-                    <div className="text-xs text-slate-300 font-extralight">-</div>
+                    <div className="text-xs text-slate-300 font-extralight">{DATA_FALLBACK_VALUE}</div>
                   ) : (
                     <>
                       <div className="text-xs text-slate-300 font-extralight">{getRelativeDays(props.prVelocity)}</div>

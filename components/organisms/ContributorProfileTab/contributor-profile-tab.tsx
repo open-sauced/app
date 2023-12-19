@@ -33,6 +33,7 @@ import Pagination from "components/molecules/Pagination/pagination";
 import DashContainer from "components/atoms/DashedContainer/DashContainer";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 import { useToast } from "lib/hooks/useToast";
+import { DATA_FALLBACK_VALUE } from "lib/utils/fallbackValues";
 import ConnectionRequestsWrapper from "../ConnectionRequestWrapper/connection-requests-wrapper";
 import UserRepositoryRecommendations from "../UserRepositoryRecommendations/user-repository-recommendations";
 
@@ -381,7 +382,7 @@ const ContributorProfileTab = ({
                     <Text className="!text-lg md:!text-xl lg:!text-2xl !text-black !leading-none">{openPrs} PRs</Text>
                   </div>
                 ) : (
-                  <div className="flex items-end justify-center mt-1"> - </div>
+                  <div className="flex items-end justify-center mt-1">{DATA_FALLBACK_VALUE}</div>
                 )}
               </div>
               <div>
@@ -395,7 +396,7 @@ const ContributorProfileTab = ({
                     <Pill color="purple" text={`${prsMergedPercentage}%`} />
                   </div>
                 ) : (
-                  <div className="flex items-end justify-center mt-1"> - </div>
+                  <div className="flex items-end justify-center mt-1">{DATA_FALLBACK_VALUE}</div>
                 )}
               </div>
               <div>
@@ -407,7 +408,7 @@ const ContributorProfileTab = ({
                     </Text>
                   </div>
                 ) : (
-                  <div className="flex items-end justify-center mt-1"> - </div>
+                  <div className="flex items-end justify-center mt-1">{DATA_FALLBACK_VALUE}</div>
                 )}
               </div>
             </div>
