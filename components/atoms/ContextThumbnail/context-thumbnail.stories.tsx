@@ -1,5 +1,5 @@
 import { ComponentStory } from "@storybook/react";
-import Thumbnail from "../../../img/topic-thumbnails/hacktoberfest.svg";
+import Thumbnail from "../../../img/topic-thumbnails/javascript.svg";
 import ContextThumbnail from "./context-thumbnail";
 
 const storyConfig = {
