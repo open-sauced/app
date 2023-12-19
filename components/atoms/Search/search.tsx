@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import clsx from "clsx";
+
 import { GrClose } from "react-icons/gr";
 import { FaSearch } from "react-icons/fa";
 import { Spinner } from "../SpinLoader/spin-loader";
@@ -35,6 +37,7 @@ const Search = ({
   isLoading,
   onSelect,
 }: SearchProps): JSX.Element => {
+  const [cursor, setCursor] = useState(-1);
   const [search, setSearch] = useState(value);
   const [showSuggestions, setShowSuggestions] = useState(false);
 
@@ -62,11 +65,35 @@ const Search = ({
     }
 
     setShowSuggestions(false);
+    setCursor(-1);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
     onChange?.(e.target.value);
+  };
+
+  const handleKeyboardCtrl: React.KeyboardEventHandler<HTMLInputElement> = (e) => {
+    const resultsCount = suggestions?.length || 0;
+
+    if (resultsCount && e.key === "ArrowUp") {
+      e.preventDefault();
+      setCursor(cursor === 0 ? Math.min(resultsCount - 1, 9) : cursor - 1);
+    }
+
+    if (resultsCount && e.key === "ArrowDown") {
+      e.preventDefault();
+      setCursor(cursor === Math.min(resultsCount - 1, 9) ? 0 : cursor + 1);
+    }
+
+    if (resultsCount && e.key === "Enter") {
+      e.preventDefault();
+      if (document.querySelector("._cursorActive")) {
+        const span = document.querySelector("._cursorActive span") as HTMLElement;
+        handleOnSelect(span.innerText);
+        setCursor(-1);
+      }
+    }
   };
 
   return (
@@ -90,6 +117,7 @@ const Search = ({
             handleOnSearch();
           }
         }}
+        onKeyDown={handleKeyboardCtrl}
         onFocus={() => setShowSuggestions(true)}
         onBlur={() => setTimeout(() => setShowSuggestions(false), 500)}
       />
@@ -98,7 +126,10 @@ const Search = ({
           <ScrollArea type="auto" className="h-60">
             {suggestions.map((suggestion, index) => (
               <div
-                className="px-4 py-2 overflow-hidden break-all text-light-slate-9 hover:bg-light-slate-2"
+                className={clsx(
+                  cursor === index && "_cursorActive bg-slate-100",
+                  "px-4 py-2 overflow-hidden break-all text-light-slate-9 hover:bg-light-slate-2"
+                )}
                 style={suggestionsStyle}
                 key={index}
                 onClick={() => handleOnSelect(suggestion)}

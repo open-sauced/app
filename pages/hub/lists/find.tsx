@@ -178,6 +178,26 @@ const NewListCreationPage = () => {
     }
   };
 
+  const handleKeyboardCtrl: React.KeyboardEventHandler<HTMLInputElement> = (e) => {
+    const resultsCount = searchResults?.length || 0;
+    if (resultsCount && e.key === "ArrowUp") {
+      e.preventDefault();
+      setCursor(cursor === 0 ? Math.min(resultsCount - 1, 9) : cursor - 1);
+    }
+    if (resultsCount && e.key === "ArrowDown") {
+      e.preventDefault();
+      setCursor(cursor === Math.min(resultsCount - 1, 9) ? 0 : cursor + 1);
+    }
+    if (resultsCount && e.key === "Enter") {
+      e.preventDefault();
+      if (document.querySelector("._cursorActive")) {
+        const user = document.querySelector("._cursorActive") as HTMLAnchorElement;
+        router.push(user.href);
+        setOpenSearch(false);
+      }
+    }
+  };
+
   if (!isHydrated) {
     return null;
   }
