@@ -158,11 +158,13 @@ const ContributorListTableRow = ({
 
           <div className="flex items-center justify-between py-3 border-b">
             <div>Languages</div>
-            {contributorLanguageList && (
-              <p>
+            {contributorLanguageList.length > 0 ? (
+              <div>
                 {firstContributorLanguage && getLanguageAbbreviation(firstContributorLanguage)}
                 {secondContributorLanguage && `, ${getLanguageAbbreviation(secondContributorLanguage)}`}
-              </p>
+              </div>
+            ) : (
+              <div>-</div>
             )}
           </div>
           <div className="flex items-center justify-between py-3 border-b">
