@@ -36,6 +36,7 @@ describe("contributor utilities", () => {
       is_maintainer: true,
       coupon_code: "DBUSER10",
       receive_product_updates: true,
+      interests: "Ultimate Frisbee, Hiking, Biking, C++",
     });
 
     it("should get the top two languages in alpabetical order", () => {
@@ -47,25 +48,14 @@ describe("contributor utilities", () => {
           rust: 4,
           go: 5,
         },
-        interests: "logo,c++,assembly",
       }) satisfies DbUser;
 
       expect(getTopContributorLanguages(user)).toEqual(["go", "javascript"]);
     });
 
-    it("should get the top two languages in alpabetical order as the top two interests when there are no languages", () => {
+    it("should get no languages when there are no languages", () => {
       const user = Object.assign({}, baseUser, {
         languages: {},
-        interests: "logo,c++,assembly",
-      }) satisfies DbUser;
-
-      expect(getTopContributorLanguages(user)).toEqual(["assembly", "c++"]);
-    });
-
-    it("should get no languages when there are no languages or interests", () => {
-      const user = Object.assign({}, baseUser, {
-        languages: {},
-        interests: "",
       }) satisfies DbUser;
 
       expect(getTopContributorLanguages(user)).toEqual([]);
