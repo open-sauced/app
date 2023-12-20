@@ -11,7 +11,7 @@ export interface ButtonsProps extends React.ButtonHTMLAttributes<HTMLButtonEleme
 }
 
 const Button = React.forwardRef<HTMLElement, ButtonsProps>(
-  ({ className, children, loading, disabled, variant, showLoadingText = true, href, ...props }, ref) => {
+  ({ className, children, loading, disabled, variant, showLoadingText = true, onClick, href, ...props }, ref) => {
     const styles: Record<ButtonsProps["variant"], string> = {
       primary: `bg-light-orange-9 text-light-orange-2 border-light-orange-9 hover:bg-light-orange-10 ${
         disabled ? "bg-light-orange-7 hover:bg-light-orange-7 border-none  pointer-events-none" : ""
@@ -32,7 +32,8 @@ const Button = React.forwardRef<HTMLElement, ButtonsProps>(
 
     const rootClass = clsx(
       styles[variant],
-      disabled && "bg-light-orange-7 hover:bg-light-orange-7 border-none pointer-events-none",
+      disabled && "cursor-not-allowed",
+      disabled && variant !== "destructive" && "bg-light-orange-7 hover:bg-light-orange-7 border-none",
       "items-center inline-flex text-sm font-semibold tracking-tight border py-2 px-4 rounded-md focus-visible:border-orange-500 focus:outline-none focus-visible:ring focus-visible:ring-orange-200 whitespace-nowrap",
       className
     );
@@ -71,7 +72,12 @@ const Button = React.forwardRef<HTMLElement, ButtonsProps>(
     }
 
     return (
-      <button className={rootClass} ref={ref as ForwardedRef<HTMLButtonElement>} {...props}>
+      <button
+        className={rootClass}
+        ref={ref as ForwardedRef<HTMLButtonElement>}
+        onClick={!disabled ? onClick : undefined}
+        {...props}
+      >
         {content}
       </button>
     );

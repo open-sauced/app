@@ -86,9 +86,14 @@ const ListActivityPage = ({ list, numberOfContributors, isError, isOwner, featur
     error,
     data: projectContributionsByUser,
     repoId,
+    isLoading: isLoadingProjectContributionsByUser,
   } = useContributorsByProject(list!.id, Number(range ?? "30"));
 
-  const { data: projectData, error: projectDataError } = useContributionsByProject({
+  const {
+    data: projectData,
+    error: projectDataError,
+    isLoading: isTreemapLoading,
+  } = useContributionsByProject({
     listId: list!.id,
     range: Number(range ?? "30"),
   });
@@ -142,6 +147,7 @@ const ListActivityPage = ({ list, numberOfContributors, isError, isOwner, featur
             onClick={onHandleClick}
             data={treemapData}
             color={getGraphColorPalette()}
+            isLoading={isLoadingProjectContributionsByUser || isTreemapLoading}
           />
           <FeatureFlagged flag="contributions_evolution_by_type" featureFlags={featureFlags}>
             <ContributionsEvolutionByType data={evolutionData} isLoading={isLoadingEvolution} />
