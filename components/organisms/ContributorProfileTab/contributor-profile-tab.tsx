@@ -33,7 +33,7 @@ import Pagination from "components/molecules/Pagination/pagination";
 import DashContainer from "components/atoms/DashedContainer/DashContainer";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 import { useToast } from "lib/hooks/useToast";
-import { DATA_FALLBACK_VALUE } from "lib/utils/fallbackValues";
+import { DATA_FALLBACK_VALUE } from "lib/utils/fallback-values";
 import ConnectionRequestsWrapper from "../ConnectionRequestWrapper/connection-requests-wrapper";
 import UserRepositoryRecommendations from "../UserRepositoryRecommendations/user-repository-recommendations";
 

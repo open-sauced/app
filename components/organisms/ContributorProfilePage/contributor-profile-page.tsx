@@ -15,7 +15,7 @@ import ContributorProfileInfo from "components/molecules/ContributorProfileInfo/
 import ProfileLanguageChart from "components/molecules/ProfileLanguageChart/profile-language-chart";
 import useFollowUser from "lib/hooks/useFollowUser";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
-import { DATA_FALLBACK_VALUE } from "lib/utils/fallbackValues";
+import { DATA_FALLBACK_VALUE } from "lib/utils/fallback-values";
 import ContributorProfileTab from "../ContributorProfileTab/contributor-profile-tab";
 import { ContributorObject } from "../ContributorCard/contributor-card";
 

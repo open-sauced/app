@@ -4,7 +4,7 @@ import clsx from "clsx";
 import AvatarHoverCard from "components/atoms/Avatar/avatar-hover-card";
 
 import useInsight from "lib/hooks/useInsight";
-import { DATA_FALLBACK_VALUE } from "lib/utils/fallbackValues";
+import { DATA_FALLBACK_VALUE } from "lib/utils/fallback-values";
 
 export type Contributor = { host_login: string };
 

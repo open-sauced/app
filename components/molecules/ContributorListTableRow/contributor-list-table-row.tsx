@@ -12,7 +12,7 @@ import useRepoList from "lib/hooks/useRepoList";
 import { useFetchUser } from "lib/hooks/useFetchUser";
 import Checkbox from "components/atoms/Checkbox/checkbox";
 import { getTopContributorLanguages } from "lib/utils/contributor-utils";
-import { DATA_FALLBACK_VALUE } from "lib/utils/fallbackValues";
+import { DATA_FALLBACK_VALUE } from "lib/utils/fallback-values";
 import { getActivity } from "../RepoRow/repo-row";
 import DevProfile from "../DevProfile/dev-profile";
 

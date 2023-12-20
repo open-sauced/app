@@ -14,7 +14,7 @@ import CardSauceBGSVG from "img/card-sauce-bg.svg";
 import openSaucedImg from "img/openSauced-icon.png";
 import PRIcon from "img/icons/pr-icon.svg";
 import { getRelativeDays } from "lib/utils/date-utils";
-import { DATA_FALLBACK_VALUE } from "lib/utils/fallbackValues";
+import { DATA_FALLBACK_VALUE } from "lib/utils/fallback-values";
 
 export interface DevCardProps {
   username: string;
