@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.81.0-beta.3](https://github.com/open-sauced/insights/compare/v1.81.0-beta.2...v1.81.0-beta.3) (2023-12-20)
+
+
+### 🐛 Bug Fixes
+
+* Hotfix to bust app-cache ([#2387](https://github.com/open-sauced/insights/issues/2387)) ([d1f35ed](https://github.com/open-sauced/insights/commit/d1f35ed48836c0a1d2be9bebc8935a7bb1d646ea))
+
 ## [1.81.0-beta.2](https://github.com/open-sauced/insights/compare/v1.81.0-beta.1...v1.81.0-beta.2) (2023-12-20)
 
 
