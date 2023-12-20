@@ -5,6 +5,19 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.81.0-beta.2](https://github.com/open-sauced/insights/compare/v1.81.0-beta.1...v1.81.0-beta.2) (2023-12-20)
+
+
+### 🐛 Bug Fixes
+
+* added contributions treemap loading view ([e47e3b6](https://github.com/open-sauced/insights/commit/e47e3b67c167bcb3d520423e10c0731864343aa1))
+* added contributions treemap loading view ([#2383](https://github.com/open-sauced/insights/issues/2383)) ([c6c94b3](https://github.com/open-sauced/insights/commit/c6c94b38d882cfdf105af0c776df5d7f64486751))
+
+
+### 🍕 Features
+
+* Make insight pages more agnostic and use new v1/insight API functionality ([#2368](https://github.com/open-sauced/insights/issues/2368)) ([5813beb](https://github.com/open-sauced/insights/commit/5813beb3cca54ef9c11cbc1062f7d0c7e627ae2b))
+
 ## [1.81.0-beta.1](https://github.com/open-sauced/insights/compare/v1.80.0...v1.81.0-beta.1) (2023-12-20)
 
 
