@@ -5,6 +5,25 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.81.0-beta.1](https://github.com/open-sauced/insights/compare/v1.80.0...v1.81.0-beta.1) (2023-12-20)
+
+
+### 🍕 Features
+
+* add helper tooltip to dashboard highlight cards ([#2309](https://github.com/open-sauced/insights/issues/2309)) ([9429233](https://github.com/open-sauced/insights/commit/942923313e522e31614ee94512417851b9f99ef9))
+
+
+### 🐛 Bug Fixes
+
+* added a constant for our fallback empty data value ([7ea28e1](https://github.com/open-sauced/insights/commit/7ea28e110ff8cc126859c555831e7caaab57c94f))
+* added a constant for our fallback empty data value ([#2374](https://github.com/open-sauced/insights/issues/2374)) ([48cf2c4](https://github.com/open-sauced/insights/commit/48cf2c401690c0ac56fb43859eeaaa7118a1ebc2))
+* fix pagination logic ([#2361](https://github.com/open-sauced/insights/issues/2361)) ([073fb85](https://github.com/open-sauced/insights/commit/073fb85aab6f8fc9a7d2f10bd6e343304398e11d))
+* now interests are not fallbacks for most used languages ([6fc1273](https://github.com/open-sauced/insights/commit/6fc12733e78a8d9c03fdf76aa3b564d7678a38b5))
+* now interests are not fallbacks for most used languages ([e2ff7fd](https://github.com/open-sauced/insights/commit/e2ff7fd33ff379936c1bffe6a61fb57be39b5bae))
+* now interests are not fallbacks for most used languages ([#2373](https://github.com/open-sauced/insights/issues/2373)) ([7e68217](https://github.com/open-sauced/insights/commit/7e68217646cd53e4025f07e00e55edf94ec20876))
+* now you can navigate back to the previous page from a user profile page ([9a4c538](https://github.com/open-sauced/insights/commit/9a4c538a7ff43dec90345750e1985346da547249))
+* now you can navigate back to the previous page from a user profile page ([#2382](https://github.com/open-sauced/insights/issues/2382)) ([7d15dca](https://github.com/open-sauced/insights/commit/7d15dcaf9bc8d7bc955c9340b22bbe20a9422e9c))
+
 ## [1.80.0](https://github.com/open-sauced/insights/compare/v1.79.2...v1.80.0) (2023-12-19)
 
 
