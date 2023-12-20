@@ -13,6 +13,7 @@ interface ContributionsTreemapProps {
   onClick: NodeMouseEventHandler<object>;
   repoId: number | null;
   setRepoId: (repoId: number | null) => void;
+  isLoading: boolean;
 }
 
 function BreadCrumb({ isActive, ...rest }: any) {
@@ -33,7 +34,14 @@ const ResponsiveTreeMapHtml = dynamic(() => import("@nivo/treemap").then((module
   ssr: false,
 });
 
-export const ContributionsTreemap = ({ setRepoId, repoId, data, color, onClick }: ContributionsTreemapProps) => {
+export const ContributionsTreemap = ({
+  setRepoId,
+  repoId,
+  data,
+  color,
+  onClick,
+  isLoading,
+}: ContributionsTreemapProps) => {
   return (
     <Card className="grid place-content-stretch">
       <div className="grid">
@@ -48,31 +56,35 @@ export const ContributionsTreemap = ({ setRepoId, repoId, data, color, onClick }
         <div className="rounded-md overflow-hidden grid place-content-stretch">
           <div className="grid" style={{ gridArea: "1 / 1", minHeight: "29rem" }}>
             <ClientOnly>
-              <ResponsiveTreeMapHtml
-                data={data}
-                tile="squarify"
-                labelSkipSize={12}
-                innerPadding={4}
-                leavesOnly
-                orientLabel={false}
-                nodeComponent={
-                  repoId === null
-                    ? SpecialNode
-                    : // TODO: Sort this out later
-                      (ContributorNode as <Datum extends object>({
-                        node,
-                        animatedProps,
-                        borderWidth,
-                        enableLabel,
-                        labelSkipSize,
-                      }: NodeProps<Datum>) => JSX.Element)
-                }
-                colors={color}
-                nodeOpacity={1}
-                borderWidth={0}
-                onClick={onClick}
-                motionConfig={"default"}
-              />
+              {isLoading ? (
+                <div className="react-loading-skeleton" />
+              ) : (
+                <ResponsiveTreeMapHtml
+                  data={data}
+                  tile="squarify"
+                  labelSkipSize={12}
+                  innerPadding={4}
+                  leavesOnly
+                  orientLabel={false}
+                  nodeComponent={
+                    repoId === null
+                      ? SpecialNode
+                      : // TODO: Sort this out later
+                        (ContributorNode as <Datum extends object>({
+                          node,
+                          animatedProps,
+                          borderWidth,
+                          enableLabel,
+                          labelSkipSize,
+                        }: NodeProps<Datum>) => JSX.Element)
+                  }
+                  colors={color}
+                  nodeOpacity={1}
+                  borderWidth={0}
+                  onClick={onClick}
+                  motionConfig={"default"}
+                />
+              )}
             </ClientOnly>
           </div>
         </div>
