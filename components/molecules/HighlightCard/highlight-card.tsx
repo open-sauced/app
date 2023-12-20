@@ -3,15 +3,19 @@ import Image from "next/image";
 import { GoCommit } from "react-icons/go";
 import { HiOutlineCheck, HiPlus } from "react-icons/hi";
 import { HiArrowPath } from "react-icons/hi2";
+import clsx from "clsx";
+
 import Card from "components/atoms/Card/card";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
+import Tooltip from "components/atoms/Tooltip/tooltip";
+import StackedAvatar, { Contributor } from "../StackedAvatar/stacked-avatar";
+
 import repoIcon from "../../../img/icons/icon-repo--blue.svg";
 import mergedPrIcon from "../../../img/icons/icon-merged-pr--purple.svg";
 import personIcon from "../../../img/icons/person-icon.svg";
 import labelIcon from "../../../img/icons/icon-label--blue.svg";
 import thumbsIcon from "../../../img/icons/icon-thumbs-down--yellow.svg";
 import metricArrow from "../../../img/icons/metric-arrow.svg";
-import StackedAvatar, { Contributor } from "../StackedAvatar/stacked-avatar";
 
 interface HighlightCardProps {
   className?: string;
@@ -35,6 +39,7 @@ interface HighlightCardProps {
   valueLabel?: string;
   contributors?: Contributor[];
   isLoading?: boolean;
+  tooltip?: string;
 }
 
 type IconMap = {
@@ -109,6 +114,7 @@ const HighlightCard: React.FC<HighlightCardProps> = ({
   valueLabel,
   contributors = [],
   isLoading,
+  tooltip,
 }) => {
   function getIcon(icon: string) {
     switch (icon) {
@@ -154,7 +160,17 @@ const HighlightCard: React.FC<HighlightCardProps> = ({
               {getIcon(icon)}
             </div>
             {/* Label: Text */}
-            <div className="text-sm text-slate-600   leading-none">{label ? label : "Label"}</div>
+            <div className={clsx("text-sm text-slate-600 leading-none")}>
+              {tooltip && label ? (
+                <Tooltip className="w-44 py-3 text-center" content={tooltip}>
+                  {label}
+                </Tooltip>
+              ) : label ? (
+                label
+              ) : (
+                ""
+              )}
+            </div>
           </div>
 
           {/* Last Updated Information */}
