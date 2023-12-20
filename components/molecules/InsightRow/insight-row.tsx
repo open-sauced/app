@@ -25,7 +25,7 @@ const InsightRow = ({ insight, user }: InsightRowProps) => {
   const { open, merged, velocity, total, repoList } = getRepoInsights(repoData);
   const avgOpenPrs = repoData.length > 0 ? Math.round(open / repoData.length) : 0;
 
-  const membership = insight.members.find((member) => member.user_id === Number(user?.id));
+  const membership = insight.members?.find((member) => member.user_id === Number(user?.id));
   const canEdit = membership && ["edit", "admin"].includes(membership.access);
 
   return (

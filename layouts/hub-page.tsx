@@ -29,7 +29,7 @@ const HubPageLayout = ({ children }: { children: React.ReactNode }) => {
 
   const { toolList, selectedTool, selectedFilter, userOrg } = useNav(repositories);
 
-  const membership = insight?.members.find((member) => member.user_id === Number(userId));
+  const membership = insight?.members?.find((member) => member.user_id === Number(userId));
   const canEdit = membership && ["edit", "admin"].includes(membership.access);
 
   return (
