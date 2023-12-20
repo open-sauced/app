@@ -10,7 +10,7 @@ interface MenuItemProps {
   href: string;
   isActive?: boolean;
 }
-const MenuItem = ({ title, icon, type, href, isActive }: MenuItemProps) => {
+const SidebarMenuItem = ({ title, icon, type, href, isActive }: MenuItemProps) => {
   const getIcon = (type: "repo" | "list") => {
     switch (type) {
       case "list":
@@ -19,9 +19,10 @@ const MenuItem = ({ title, icon, type, href, isActive }: MenuItemProps) => {
         return <ChartBarSquareIcon className="w-5 h-5 text-slate-400" />;
     }
   };
+
   return (
     <li className={clsx("list-none p-2 rounded-md", isActive ? "bg-slate-100" : "")}>
-      <Link href={href} className="flex gap-2 items-center ">
+      <Link href={href} className=" flex gap-2 items-center">
         {type && !icon ? getIcon(type) : icon}
         <span className="text-slate-700">{title}</span>
       </Link>
@@ -29,4 +30,4 @@ const MenuItem = ({ title, icon, type, href, isActive }: MenuItemProps) => {
   );
 };
 
-export default MenuItem;
+export default SidebarMenuItem;

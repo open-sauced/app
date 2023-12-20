@@ -2,11 +2,11 @@ import { ComponentProps } from "react";
 import { Meta, StoryObj } from "@storybook/react";
 
 import { UsersIcon } from "@heroicons/react/24/solid";
-import MenuItem from "./menu-item";
+import SidebarMenuItem from "./sidebar-menu-item";
 
-const meta: Meta<typeof MenuItem> = {
-  title: "Design System/Sidebar/MenuItem",
-  component: MenuItem,
+const meta: Meta<typeof SidebarMenuItem> = {
+  title: "Design System/Sidebar/SidebarMenuItem",
+  component: SidebarMenuItem,
   argTypes: {
     type: {
       options: ["repo", "list"],
@@ -17,9 +17,9 @@ const meta: Meta<typeof MenuItem> = {
 
 export default meta;
 
-type Story = StoryObj<typeof MenuItem>;
+type Story = StoryObj<typeof SidebarMenuItem>;
 
-const baseProps: ComponentProps<typeof MenuItem> = {
+const baseProps: ComponentProps<typeof SidebarMenuItem> = {
   title: "My New List",
   href: "/dashboard",
 };
