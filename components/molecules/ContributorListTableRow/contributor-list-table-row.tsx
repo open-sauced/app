@@ -12,6 +12,7 @@ import useRepoList from "lib/hooks/useRepoList";
 import { useFetchUser } from "lib/hooks/useFetchUser";
 import Checkbox from "components/atoms/Checkbox/checkbox";
 import { getTopContributorLanguages } from "lib/utils/contributor-utils";
+import { DATA_FALLBACK_VALUE } from "lib/utils/fallback-values";
 import { getActivity } from "../RepoRow/repo-row";
 import DevProfile from "../DevProfile/dev-profile";
 
@@ -164,7 +165,7 @@ const ContributorListTableRow = ({
                 {secondContributorLanguage && `, ${getLanguageAbbreviation(secondContributorLanguage)}`}
               </div>
             ) : (
-              <div>-</div>
+              <div>{DATA_FALLBACK_VALUE}</div>
             )}
           </div>
           <div className="flex items-center justify-between py-3 border-b">
