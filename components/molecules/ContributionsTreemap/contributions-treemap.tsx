@@ -5,6 +5,7 @@ import Card from "components/atoms/Card/card";
 import { SpecialNode } from "components/molecules/TreemapPrototype/special-node";
 import { ContributorNode } from "components/molecules/TreemapPrototype/contributor-node";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
+import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 import type { NodeMouseEventHandler, NodeProps, TreeMapCommonProps } from "@nivo/treemap";
 
 interface ContributionsTreemapProps {
@@ -57,7 +58,7 @@ export const ContributionsTreemap = ({
           <div className="grid" style={{ gridArea: "1 / 1", minHeight: "29rem" }}>
             <ClientOnly>
               {isLoading ? (
-                <div className="react-loading-skeleton" />
+                <SkeletonWrapper />
               ) : (
                 <ResponsiveTreeMapHtml
                   data={data}
