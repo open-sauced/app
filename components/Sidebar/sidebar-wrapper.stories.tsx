@@ -24,7 +24,7 @@ export const Default: Story = {
         </SidebarGroupWrapper>
 
         <ul>
-          <MenuHeader>Explore</MenuHeader>
+          <MenuHeader>Shared with you</MenuHeader>
           <SidebarMenuItem title="Javascript frameworks" href="/community" type="repo" />
           <SidebarMenuItem title="Staff Picks" href="/trending" type="repo" />
           <SidebarMenuItem title="Potential Hires" href="/trending" type="repo" />

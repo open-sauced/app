@@ -22,7 +22,7 @@ const SidebarMenuItem = ({ title, icon, type, href, isActive }: MenuItemProps) =
   };
 
   return (
-    <li className={clsx("list-none p-2 rounded-md", isActive ? "bg-slate-100" : "")}>
+    <li className={clsx("list-none py-2 px-3 rounded-md", isActive ? "bg-slate-100" : "")}>
       <Link href={href} className=" flex gap-2 items-center">
         {type && !icon ? getIcon(type) : icon}
         <span className={clsx("text-slate-700 font-medium", isActive && "text-slate-800")}>{title}</span>
