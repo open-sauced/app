@@ -45,7 +45,7 @@ export const Contributors: Story = {
     color: getGraphColorPalette(),
     onDrillDown: () => {},
     onDrillUp: () => {},
-    projectId: 83716883,
+    projectId: "hono",
     isLoading: false,
   },
 };
