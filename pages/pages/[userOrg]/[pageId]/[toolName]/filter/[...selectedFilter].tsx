@@ -7,7 +7,8 @@ import Tool from "components/organisms/ToolsDisplay/tools-display";
 import HubPageLayout from "layouts/hub-page";
 import { WithPageLayout } from "interfaces/with-page-layout";
 import changeCapitalization from "lib/utils/change-capitalization";
-import getInsightTeamMember from "lib/utils/get-insight-team-member";
+import getInsightTeamMemberAccess from "lib/utils/get-insight-team-member";
+import { MemberAccess } from "components/molecules/TeamMembersConfig/team-members-config";
 
 interface InsightFilterPageProps {
   insight: DbUserInsight;
@@ -49,15 +50,14 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   }
 
   const userId = session?.user?.user_metadata.sub as string;
-  const isOwner = userId && insight && `${userId}` === `${insight.user?.id}` ? true : false;
-  let isTeamMember = false;
+  let teamMemberAccess: MemberAccess | null = null;
 
-  if (!insight.is_public && !isOwner) {
+  if (!insight.is_public) {
     // check if user is insight page team member
-    isTeamMember = await getInsightTeamMember(Number(insightId), bearerToken, userId);
+    teamMemberAccess = await getInsightTeamMemberAccess(Number(insightId), bearerToken, userId);
   }
 
-  if (!insight.is_public && !isOwner && !isTeamMember) {
+  if (!insight.is_public && (!teamMemberAccess || teamMemberAccess === "pending")) {
     return {
       redirect: {
         destination: "/",

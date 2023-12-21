@@ -11,14 +11,13 @@ import ContributorListTableHeaders from "components/molecules/ContributorListTab
 import HubContributorsPageLayout from "layouts/hub-contributors";
 import ContributorTable from "components/organisms/ContributorsTable/contributors-table";
 import Header from "components/organisms/Header/header";
-import Pagination from "components/molecules/Pagination/pagination";
-import PaginationResults from "components/molecules/PaginationResults/pagination-result";
 import AddContributorsHeader from "components/AddContributorsHeader/add-contributors-header";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { Dialog, DialogContent } from "components/molecules/Dialog/dialog";
 import Title from "components/atoms/Typography/title";
 import Text from "components/atoms/Typography/text";
 import Button from "components/atoms/Button/button";
+import { searchUsers } from "lib/hooks/search-users";
 
 // TODO: Move to a shared file
 export function isListId(listId: string) {
@@ -186,11 +185,13 @@ const EmptyState = () => (
 
 const AddContributorsToList = ({ list, timezoneOption }: AddContributorsPageProps) => {
   const [selectedContributors, setSelectedContributors] = useState<DbPRContributor[]>([]);
-  const [makeRequest, setMakeRequest] = useState(false);
-  const { setContributorSearchTerm, data, meta, isLoading, setPage } = useContributorSearch(makeRequest);
-  const { sessionToken } = useSupabaseAuth();
+
+  const { sessionToken, providerToken } = useSupabaseAuth();
   const [contributorsAdded, setContributorsAdded] = useState(false);
   const [contributorsAddedError, setContributorsAddedError] = useState(false);
+  const [contributors, setContributors] = useState<DbPRContributor[]>([]);
+  const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [searchResults, setSearchResults] = useState<GhUser[]>([]);
   const [isSelectAll, setIsSelectAll] = useState(false); // state to check if all contributors are selected
 
   const addContributorsToList = async () => {
@@ -209,17 +210,17 @@ const AddContributorsToList = ({ list, timezoneOption }: AddContributorsPageProp
     }
   };
 
-  const contributors: DbPRContributor[] =
-    data?.length > 0
-      ? data.map((contributor) => {
-          return {
-            author_login: contributor.login,
-            username: contributor.login,
-            updated_at: contributor.updated_at,
-            user_id: contributor.id,
-          };
-        })
-      : [];
+  // const contributors: DbPRContributor[] =
+  //   data?.length > 0
+  //     ? data.map((contributor) => {
+  //         return {
+  //           author_login: contributor.login,
+  //           username: contributor.login,
+  //           updated_at: contributor.updated_at,
+  //           user_id: contributor.id,
+  //         };
+  //       })
+  //     : [];
   // check if all contributors are selected or not
   useEffect(() => {
     if (
@@ -260,14 +261,39 @@ const AddContributorsToList = ({ list, timezoneOption }: AddContributorsPageProp
     }
   };
 
-  function onSearch(searchTerm: string | undefined) {
-    if (!searchTerm || searchTerm.length < 3) {
-      setMakeRequest(false);
-    } else {
-      setMakeRequest(true);
-      setContributorSearchTerm(searchTerm);
+  async function onSearch(searchTerm: string | undefined) {
+    if (searchTerm && searchTerm.length >= 3) {
+      await updateSuggestions(searchTerm);
     }
   }
+
+  async function updateSuggestions(contributor: string) {
+    setSuggestions([]);
+
+    const response = await searchUsers(contributor, providerToken);
+
+    if (response) {
+      const suggestions = response.data.map((item) => item.login);
+      setSuggestions(suggestions);
+      setSearchResults(response.data);
+    }
+  }
+
+  const onSearchSelect = (username: string) => {
+    const contributorInfo = searchResults.find((item) => item.login === username);
+
+    if (contributorInfo) {
+      const contributor: DbPRContributor = {
+        user_id: contributorInfo.id,
+        author_login: contributorInfo.login,
+        username: contributorInfo.login,
+        updated_at: "",
+      };
+      onChecked(true, contributor);
+
+      setContributors((prev) => [...prev, contributor]);
+    }
+  };
 
   return (
     <HubContributorsPageLayout>
@@ -278,39 +304,21 @@ const AddContributorsToList = ({ list, timezoneOption }: AddContributorsPageProp
             selectedContributorsIds={selectedContributors.map(({ user_id }) => user_id)}
             onAddToList={addContributorsToList}
             onSearch={onSearch}
+            searchSuggestions={suggestions}
+            onSearchSelect={onSearchSelect}
           />
         </Header>
         <ContributorListTableHeaders selected={isSelectAll} handleOnSelectAllContributor={onAllChecked} />
-        {data.length > 0 || isLoading || (makeRequest && data.length === 0) ? (
+        {contributors.length > 0 ? (
           <ContributorTable
-            loading={isLoading}
             selectedContributors={selectedContributors}
             topic={"*"}
             handleSelectContributors={onChecked}
             contributors={contributors as DbPRContributor[]}
           />
         ) : (
-          !makeRequest && <EmptyState />
+          <EmptyState />
         )}
-        <div className="flex items-center justify-between w-full py-1 md:py-4 md:mt-5">
-          <PaginationResults metaInfo={meta} total={meta.itemCount} entity={"contributors"} />
-          <div>
-            <div className="flex flex-col gap-4">
-              <Pagination
-                pages={[]}
-                hasNextPage={meta.hasNextPage}
-                hasPreviousPage={meta.hasPreviousPage}
-                totalPage={meta.pageCount}
-                page={meta.page}
-                onPageChange={function (page: number): void {
-                  setPage(page);
-                }}
-                divisor={true}
-                goToPage
-              />
-            </div>
-          </div>
-        </div>
       </div>
       {contributorsAdded && (
         <ContributorsAddedModal
@@ -319,6 +327,7 @@ const AddContributorsToList = ({ list, timezoneOption }: AddContributorsPageProp
           isOpen={contributorsAdded}
           onClose={() => {
             setContributorsAdded(false);
+            setContributors([]);
             setSelectedContributors([]);
           }}
         />

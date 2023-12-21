@@ -2,13 +2,8 @@ import React, { useEffect, useState } from "react";
 import { FiCheckCircle, FiCopy } from "react-icons/fi";
 import { AiOutlineWarning } from "react-icons/ai";
 import { usePostHog } from "posthog-js/react";
-import { GetServerSidePropsContext } from "next";
-import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/router";
 
-import useFetchAllContributors from "lib/hooks/useFetchAllContributors";
-import { fetchApiData, validateListPath } from "helpers/fetchApiData";
-import { timezones } from "lib/utils/timezones";
 import { useToast } from "lib/hooks/useToast";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 
@@ -17,13 +12,12 @@ import HubContributorsPageLayout from "layouts/hub-contributors";
 import ContributorTable from "components/organisms/ContributorsTable/contributors-table";
 import Header from "components/organisms/Header/header";
 import HubContributorsHeader from "components/molecules/HubContributorsHeader/hub-contributors-header";
-import Pagination from "components/molecules/Pagination/pagination";
-import PaginationResults from "components/molecules/PaginationResults/pagination-result";
 import { Dialog, DialogContent } from "components/molecules/Dialog/dialog";
 import Title from "components/atoms/Typography/title";
 import Text from "components/atoms/Typography/text";
 import TextInput from "components/atoms/TextInput/text-input";
 import Button from "components/atoms/Button/button";
+import { searchUsers } from "lib/hooks/search-users";
 
 interface CreateListPayload {
   name: string;
@@ -31,55 +25,12 @@ interface CreateListPayload {
   contributors: { id: number; login: string }[];
 }
 
-interface NewListCreationPageProps {
-  initialData: {
-    meta: Meta;
-    data: DbPRContributor[];
-  };
-  timezoneOption: { timezone: string }[];
-}
-
-export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
-  const supabase = createPagesServerClient(ctx);
-
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
-  const bearerToken = session ? session.access_token : "";
-
-  const fetchTimezone = fetchApiData<{ timezone: string }[]>({
-    path: `lists/timezones`,
-    bearerToken,
-    pathValidator: validateListPath,
-  });
-  const fetchContributors = fetchApiData<PagedData<DbPRContributor>>({
-    path: `lists/contributors`,
-    bearerToken,
-    pathValidator: validateListPath,
-  });
-
-  const [{ data: timezoneOptions }, { data, error }] = await Promise.all([fetchTimezone, fetchContributors]);
-
-  if (error?.status === 404) {
-    return {
-      notFound: true,
-    };
-  }
-
-  return {
-    props: {
-      initialData: data ? { data: data.data, meta: data.meta } : { data: [], meta: {} },
-      timezoneOption: timezoneOptions ? timezoneOptions : timezones,
-    },
-  };
-};
-
-const NewListCreationPage = ({ initialData, timezoneOption }: NewListCreationPageProps) => {
+const NewListCreationPage = () => {
   const router = useRouter();
   const contributorIds = router.query.contributors as string;
   const { toast } = useToast();
   const posthog = usePostHog();
-  const { sessionToken } = useSupabaseAuth();
+  const { sessionToken, providerToken } = useSupabaseAuth();
   const [isHydrated, setIsHydrated] = useState(false);
   const [createLoading, setCreateLoading] = useState(false);
   const [listId, setListId] = useState<string>("");
@@ -88,19 +39,11 @@ const NewListCreationPage = ({ initialData, timezoneOption }: NewListCreationPag
   const [title, setTitle] = useState("");
   const [selectedContributors, setSelectedContributors] = useState<DbPRContributor[]>([]);
   const [selectedTimezone, setSelectedTimezone] = useState<string | undefined>(undefined);
-  const [contributor, setContributor] = useState<string | undefined>(undefined);
+  const [contributors, setContributors] = useState<DbPRContributor[]>([]);
   const [isPublic, setIsPublic] = useState<boolean>(false);
   const [isSelectAll, setIsSelectAll] = useState(false); // state to check if all contributors are selected
-  const { data, meta, isLoading, setLimit, setPage } = useFetchAllContributors(
-    {
-      timezone: selectedTimezone,
-      contributor,
-    },
-    {
-      fallbackData: initialData,
-      revalidateOnFocus: false,
-    }
-  );
+  const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [searchResults, setSearchResults] = useState<GhUser[]>([]);
   useEffect(() => {
     if (!title && router.query.name) {
       setTitle(router.query.name as string);
@@ -119,26 +62,26 @@ const NewListCreationPage = ({ initialData, timezoneOption }: NewListCreationPag
 
   // get all timezones from the api that exists in the dummy timezone list
 
-  const timezoneList = timezones
-    .filter((timezone) => {
-      return timezoneOption.some((timezoneOption) => timezoneOption.timezone === timezone.value);
-    })
-    .map((timezone) => {
-      return {
-        label: timezone.text,
-        value: timezone.value,
-      };
-    });
-  const contributors =
-    data?.length > 0
-      ? data.map((contributor) => {
-          return {
-            author_login: contributor.login,
-            updated_at: contributor.updated_at,
-            user_id: contributor.id,
-          };
-        })
-      : [];
+  // const timezoneList = timezones
+  //   .filter((timezone) => {
+  //     return timezoneOption.some((timezoneOption) => timezoneOption.timezone === timezone.value);
+  //   })
+  //   .map((timezone) => {
+  //     return {
+  //       label: timezone.text,
+  //       value: timezone.value,
+  //     };
+  //   });
+  // const contributors =
+  //   data?.length > 0
+  //     ? data.map((contributor) => {
+  //         return {
+  //           author_login: contributor.login,
+  //           updated_at: contributor.updated_at,
+  //           user_id: contributor.id,
+  //         };
+  //       })
+  //     : [];
   // check if all contributors are selected or not
   useEffect(() => {
     if (
@@ -155,10 +98,6 @@ const NewListCreationPage = ({ initialData, timezoneOption }: NewListCreationPag
   useEffect(() => {
     setIsHydrated(true);
   }, []);
-
-  if (!isHydrated) {
-    return null;
-  }
 
   const handleOnSelectAllChecked = () => {
     if (!isSelectAll) {
@@ -251,11 +190,44 @@ const NewListCreationPage = ({ initialData, timezoneOption }: NewListCreationPag
     setSelectedTimezone(selected);
   };
 
-  function onSearch(searchTerm: string | undefined) {
-    if (!searchTerm || searchTerm.length >= 3) {
-      setContributor(searchTerm);
+  async function onSearch(searchTerm: string | undefined) {
+    if (searchTerm && searchTerm.length >= 3) {
+      await updateSuggestions(searchTerm);
     }
   }
+
+  const updateSuggestions = async (contributor: string) => {
+    setSuggestions([]);
+
+    const response = await searchUsers(contributor, providerToken);
+
+    if (response) {
+      const suggestions = response.data.map((item) => item.login);
+      setSuggestions(suggestions);
+      setSearchResults(response.data);
+    }
+  };
+
+  const onSearchSelect = (username: string) => {
+    const contributorInfo = searchResults.find((item) => item.login === username);
+
+    if (contributorInfo) {
+      const contributor: DbPRContributor = {
+        user_id: contributorInfo.id,
+        author_login: contributorInfo.login,
+        username: contributorInfo.login,
+        updated_at: "",
+      };
+      handleOnSelectChecked(true, contributor);
+
+      setContributors((prev) => [...prev, contributor]);
+    }
+  };
+
+  if (!isHydrated) {
+    return null;
+  }
+
   return (
     <HubContributorsPageLayout>
       <Dialog open={isOpen}>
@@ -267,48 +239,26 @@ const NewListCreationPage = ({ initialData, timezoneOption }: NewListCreationPag
               handleToggleIsPublic={() => setIsPublic(!isPublic)}
               loading={createLoading}
               selectedContributorsIds={selectedContributors.map((contributor) => contributor.user_id)}
-              setLimit={setLimit}
-              timezoneOptions={timezoneList}
+              timezoneOptions={[]}
               timezone={selectedTimezone}
               title={title}
               onAddToList={handleOnListCreate}
               onTitleChange={(title) => setTitle(title)}
               onSearch={onSearch}
+              searchSuggestions={suggestions}
+              onSearchSelect={onSearchSelect}
             />
           </Header>
         </div>
         <div className="lg:min-w-[1150px] px-4 md:px-16 pb-8">
           <ContributorListTableHeaders selected={isSelectAll} handleOnSelectAllContributor={handleOnSelectAllChecked} />
           <ContributorTable
-            loading={isLoading}
             selectedContributors={selectedContributors}
             topic={"*"}
             handleSelectContributors={handleOnSelectChecked}
-            contributors={contributors as DbPRContributor[]}
+            contributors={contributors}
+            noContributorsMessage="Search for contributors to add to your list"
           ></ContributorTable>
-          <div className="flex items-center justify-between w-full py-1 md:py-4 md:mt-5">
-            <div>
-              <div className="">
-                <PaginationResults metaInfo={meta} total={meta.itemCount} entity={"contributors"} />
-              </div>
-            </div>
-            <div>
-              <div className="flex flex-col gap-4">
-                <Pagination
-                  pages={[]}
-                  hasNextPage={meta.hasNextPage}
-                  hasPreviousPage={meta.hasPreviousPage}
-                  totalPage={meta.pageCount}
-                  page={meta.page}
-                  onPageChange={function (page: number): void {
-                    setPage(page);
-                  }}
-                  divisor={true}
-                  goToPage
-                />
-              </div>
-            </div>
-          </div>
         </div>
 
         {/* Success and error state dialog section */}
@@ -328,7 +278,7 @@ const NewListCreationPage = ({ initialData, timezoneOption }: NewListCreationPag
                   You can now edit and track your new list in the pages tab, and get useful insights.
                 </Text>
               </div>
-              <div className="">
+              <div>
                 <label>
                   <span className="text-sm text-light-slate-10">Share list link</span>
                   <div className="flex items-center gap-3 pr-3">

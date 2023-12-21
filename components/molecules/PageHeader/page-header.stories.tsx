@@ -13,6 +13,6 @@ export const Default = PageHeaderTemplate.bind({});
 
 Default.args = {
   title: "Repositories",
-  leftComponent: <div className="">Left component</div>,
-  rightComponent: <div className="">Right component</div>,
+  leftComponent: <div>Left component</div>,
+  rightComponent: <div>Right component</div>,
 };

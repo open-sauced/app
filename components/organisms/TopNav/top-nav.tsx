@@ -23,7 +23,7 @@ const TopNav: React.FC = () => {
         <AuthSection />
       </div>
       <div className="lg:hidden container mx-auto px-2 md:px-16 flex justify-between items-center">
-        <Nav name="Mobile" className="" />
+        <Nav name="Mobile" />
         {user
           ? !onboarded && (
               <div className="relative">
@@ -51,7 +51,7 @@ const Nav = ({ className, name = "Main" }: { className?: string; name?: string }
   const { onboarded } = useSession();
 
   const { data: gitHubUser } = useFetchUser(user?.user_metadata.user_name);
-  const userInterest = gitHubUser?.interests.split(",")[0] || "hacktoberfest";
+  const userInterest = gitHubUser?.interests.split(",")[0] || "javascript";
   const router = useRouter();
 
   return (
@@ -83,7 +83,7 @@ const Nav = ({ className, name = "Main" }: { className?: string; name?: string }
 };
 
 function getActiveStyle(isActive: boolean) {
-  return isActive ? "text-light-orange-10" : "text-light-slate-10";
+  return isActive ? "text-light-orange-10" : "";
 }
 
 export default TopNav;
