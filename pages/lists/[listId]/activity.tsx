@@ -87,7 +87,7 @@ const getTreemapData = ({
   let children;
 
   switch (true) {
-    case orgId === null && repoId === null:
+    case orgId === null:
       children = Object.values(
         projectData.reduce((acc, { org_id, contributions }) => {
           if (!acc[org_id]) {
@@ -98,7 +98,7 @@ const getTreemapData = ({
         }, {} as any)
       );
       break;
-    case orgId !== null:
+    case orgId !== null && repoId === null:
       children = projectData
         .filter(({ org_id }) => org_id === orgId)
         .map(({ org_id, project_id, repo_id, contributions }) => {
