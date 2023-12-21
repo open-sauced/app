@@ -7,14 +7,11 @@ import { useEffect, useState } from "react";
 import { useToast } from "lib/hooks/useToast";
 
 import ListNameHeader from "components/atoms/ListNameHeader/list-name-header";
-import LimitSelect from "components/atoms/Select/limit-select";
-import SingleSelect from "components/atoms/Select/single-select";
 import ToggleSwitch from "components/atoms/ToggleSwitch/toggle-switch";
 import Button from "components/atoms/Button/button";
 import Text from "components/atoms/Typography/text";
 import Search from "components/atoms/Search/search";
 import useDebounceTerm from "lib/hooks/useDebounceTerm";
-// import Search from "components/atoms/Search/search";
 
 interface ListHeaderProps {
   setLimit?: (limit: number) => void;
@@ -29,11 +26,11 @@ interface ListHeaderProps {
   onTitleChange?: (title: string) => void;
   loading?: boolean;
   onSearch: (searchTerm: string | undefined) => void;
-  searchResults?: DbUser[];
+  searchSuggestions?: string[];
+  onSearchSelect?: (username: string) => void;
 }
 
 const HubContributorsHeader = ({
-  setLimit,
   selectedContributorsIds,
   title,
   onAddToList,
@@ -41,14 +38,13 @@ const HubContributorsHeader = ({
   loading,
   isPublic,
   handleToggleIsPublic,
-  timezone,
-  setTimezoneFilter,
-  timezoneOptions,
   onSearch,
+  onSearchSelect,
+  searchSuggestions,
 }: ListHeaderProps): JSX.Element => {
   const { toast } = useToast();
 
-  const [contributorSearch, setContributorSearch] = useState("");
+  const [contributorSearch, setContributorSearch] = useState<string>("");
   const debouncedSearchTerm = useDebounceTerm(contributorSearch, 300);
 
   useEffect(() => {
@@ -108,36 +104,13 @@ const HubContributorsHeader = ({
       <div className="flex flex-col w-full gap-2 md:flex-row">
         <div className="flex w-full">
           <Search
-            placeholder={`Search ${title}`}
+            placeholder={`Search for contributors to add to your list`}
             className="!w-full text-sm py-1.5"
             name={"contributors"}
             onChange={(value) => setContributorSearch(value)}
-          />
-        </div>
-        <div className="flex items-center gap-4 ">
-          <SingleSelect
-            options={timezoneOptions}
-            position="popper"
-            value={timezone}
-            placeholder="Select time zone"
-            onValueChange={(value) => setTimezoneFilter(value)}
-            isSearchable
-          />
-        </div>
-        <div className="flex flex-col gap-2 md:items-center md:gap-4 md:flex-row">
-          <LimitSelect
-            placeholder="10 per page"
-            options={[
-              { name: "10 per page", value: "10" },
-              { name: "20 per page", value: "20" },
-              { name: "30 per page", value: "30" },
-              { name: "40 per page", value: "40" },
-              { name: "50 per page", value: "50" },
-            ]}
-            className="!w-36 overflow-x-hidden"
-            onChange={(limit: string): void => {
-              setLimit?.(Number(limit));
-            }}
+            suggestions={searchSuggestions}
+            onSearch={onSearch}
+            onSelect={onSearchSelect}
           />
         </div>
       </div>
