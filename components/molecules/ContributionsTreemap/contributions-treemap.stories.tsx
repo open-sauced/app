@@ -23,7 +23,7 @@ export const Repositories: Story = {
     color: getGraphColorPalette(),
     onDrillDown: () => {},
     onDrillUp: () => {},
-    repoId: null,
+    projectId: null,
     isLoading: false,
   },
 };
@@ -45,7 +45,7 @@ export const Contributors: Story = {
     color: getGraphColorPalette(),
     onDrillDown: () => {},
     onDrillUp: () => {},
-    repoId: 83716883,
+    projectId: 83716883,
     isLoading: false,
   },
 };

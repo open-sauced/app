@@ -103,7 +103,7 @@ const getTreemapData = ({
         .filter(({ org_id }) => org_id === orgId)
         .map(({ org_id, project_id, repo_id, contributions }) => {
           return {
-            id: `${org_id}/${project_id}`,
+            id: project_id,
             value: contributions,
             repoId: `${repo_id}`,
           };
@@ -146,6 +146,7 @@ const ListActivityPage = ({ list, numberOfContributors, isError, isOwner, featur
     repoId,
     isLoading: isLoadingProjectContributionsByUser,
   } = useContributorsByProject(list!.id, Number(range ?? "30"));
+  const [projectId, setProjectId] = useState<string | null>(null);
 
   const {
     data: projectData = [],
@@ -156,18 +157,20 @@ const ListActivityPage = ({ list, numberOfContributors, isError, isOwner, featur
     range: Number(range ?? "30"),
   });
 
-  const onDrillDown: NodeMouseEventHandler<{ orgId: null; repoId: null }> = (node) => {
+  const onDrillDown: NodeMouseEventHandler<{ orgId: null; repoId: null; id: string | null }> = (node) => {
     if (orgId === null) {
       setOrgId(node.data.orgId);
       return;
     } else {
       setRepoId(Number(node.data.repoId));
+      setProjectId(node.data.id);
     }
   };
 
   const onDrillUp = () => {
     if (repoId !== null) {
       setRepoId(null);
+      setProjectId(null);
     } else {
       setOrgId(null);
     }
@@ -196,7 +199,7 @@ const ListActivityPage = ({ list, numberOfContributors, isError, isOwner, featur
             isLoading={isLoading}
           />
           <ContributionsTreemap
-            repoId={repoId}
+            projectId={projectId}
             orgId={orgId}
             onDrillDown={onDrillDown as NodeMouseEventHandler<object>}
             onDrillUp={onDrillUp}

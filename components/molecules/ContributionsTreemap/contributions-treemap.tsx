@@ -13,7 +13,7 @@ import type { NodeMouseEventHandler, NodeProps, TreeMapCommonProps } from "@nivo
 interface ContributionsTreemapProps {
   data: any;
   color: TreeMapCommonProps<Datum>["colors"];
-  repoId: number | null;
+  projectId: string | null;
   orgId: string | null;
   isLoading: boolean;
   onDrillDown: NodeMouseEventHandler<object>;
@@ -49,7 +49,7 @@ const ResponsiveTreeMapHtml = dynamic(() => import("@nivo/treemap").then((module
 });
 
 export const ContributionsTreemap = ({
-  repoId,
+  projectId,
   orgId,
   data,
   color,
@@ -65,13 +65,13 @@ export const ContributionsTreemap = ({
         <div className="flex gap-2 items-center justify-between">
           <div className="flex gap-2 mb-2">
             {orgId ? (
-              <BreadCrumb isActive={true} useSeparator={repoId !== null}>
+              <BreadCrumb isActive={true} useSeparator={projectId !== null}>
                 {orgId}
               </BreadCrumb>
             ) : null}
-            {repoId ? (
+            {projectId ? (
               <>
-                <BreadCrumb isActive={true}>{repoId}</BreadCrumb>
+                <BreadCrumb isActive={true}>{projectId}</BreadCrumb>
                 <BreadCrumb isActive={true} useSeparator={false}>
                   Contributors
                 </BreadCrumb>
@@ -99,7 +99,7 @@ export const ContributionsTreemap = ({
                   leavesOnly
                   orientLabel={false}
                   nodeComponent={
-                    repoId === null || orgId === null
+                    projectId === null || orgId === null
                       ? SpecialNode
                       : // TODO: Sort this out later
                         (ContributorNode as <Datum extends object>({
