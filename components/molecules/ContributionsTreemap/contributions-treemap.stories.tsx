@@ -21,10 +21,11 @@ export const Repositories: Story = {
       ],
     },
     color: getGraphColorPalette(),
-    onClick: () => {},
+    onDrilldown: () => {},
     repoId: null,
-    setRepoId: (repoId: number | null) => {},
     isLoading: false,
+    onShowOrgs: () => {},
+    onShowRepos: () => {},
   },
 };
 
@@ -43,10 +44,11 @@ export const Contributors: Story = {
       ],
     },
     color: getGraphColorPalette(),
-    onClick: () => {},
+    onDrilldown: () => {},
     repoId: 83716883,
-    setRepoId: (repoId: number | null) => {},
     isLoading: false,
+    onShowOrgs: () => {},
+    onShowRepos: () => {},
   },
 };
 
