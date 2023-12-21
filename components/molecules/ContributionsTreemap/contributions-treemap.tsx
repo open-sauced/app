@@ -51,9 +51,11 @@ export const ContributionsTreemap = ({
           <button className="cursor-pointer" onClick={() => setRepoId(null)}>
             Repos
           </button>
-          <div> </div>
+          <div></div>
+
           <BreadCrumb isActive={repoId !== null}>Contributors</BreadCrumb>
         </h2>
+        <div className="text-sm text-slate-400 mb-4">Based on the number of PRs</div>
         <div className="rounded-md overflow-hidden grid place-content-stretch">
           <div className="grid" style={{ gridArea: "1 / 1", minHeight: "29rem" }}>
             <ClientOnly>
