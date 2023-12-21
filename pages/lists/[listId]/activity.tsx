@@ -1,7 +1,8 @@
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
-import { ComponentProps, useState } from "react";
+import { useState } from "react";
+import { NodeMouseEventHandler } from "@nivo/treemap";
 import Error from "components/atoms/Error/Error";
 import { fetchApiData, validateListPath } from "helpers/fetchApiData";
 import ListPageLayout from "layouts/lists";
@@ -155,7 +156,7 @@ const ListActivityPage = ({ list, numberOfContributors, isError, isOwner, featur
     range: Number(range ?? "30"),
   });
 
-  const onDrilldown: ComponentProps<typeof ContributionsTreemap>["onDrilldown"] = (node) => {
+  const onDrilldown: NodeMouseEventHandler<{ orgId: null; repoId: null }> = (node) => {
     if (orgId === null) {
       setOrgId(node.data.orgId);
       return;

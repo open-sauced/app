@@ -10,13 +10,13 @@ import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 import Button from "components/atoms/Button/button";
 import type { NodeMouseEventHandler, NodeProps, TreeMapCommonProps } from "@nivo/treemap";
 
-interface ContributionsTreemapProps<T extends object = { orgId: string | null; repoId: string | null }> {
+interface ContributionsTreemapProps {
   data: any;
   color: TreeMapCommonProps<Datum>["colors"];
   repoId: number | null;
   orgId: string | null;
   isLoading: boolean;
-  onDrilldown: NodeMouseEventHandler<T>;
+  onDrilldown: NodeMouseEventHandler<object>;
   onShowOrgs: () => void;
   onShowRepos: () => void;
 }
@@ -64,32 +64,32 @@ export const ContributionsTreemap = ({
       <div className="grid">
         {/* Label: Text */}
         <h2 className="font-medium text-lg text-slate-900 mb-2 flex items-center justify-between">
-          <div>Contributions Drilldown</div>
-          <div className="flex gap-2">
-            <Button variant="outline" onClick={onShowOrgs}>
-              All Orgs/Users
-            </Button>
-            <Button disabled={repoId === null} variant="outline" onClick={onShowRepos}>
-              Org/User Repos
-            </Button>
+          <div>All Contributions</div>
+          <div aria-live="polite">
+            <div className="flex gap-2 items-center mb-2">
+              {orgId ? (
+                <BreadCrumb isActive={true} useSeparator={repoId !== null}>
+                  {orgId}
+                </BreadCrumb>
+              ) : null}
+              {repoId ? (
+                <>
+                  <BreadCrumb isActive={true}>{repoId}</BreadCrumb>
+                  <BreadCrumb isActive={true} useSeparator={false}>
+                    Contributors
+                  </BreadCrumb>
+                </>
+              ) : null}
+            </div>
           </div>
         </h2>
-        <div aria-live="assertive">
-          <div className="flex gap-2 items-center mb-2">
-            {orgId ? (
-              <BreadCrumb isActive={true} useSeparator={repoId !== null}>
-                {orgId}
-              </BreadCrumb>
-            ) : null}
-            {repoId ? (
-              <>
-                <BreadCrumb isActive={true}>{repoId}</BreadCrumb>
-                <BreadCrumb isActive={true} useSeparator={false}>
-                  Contributors
-                </BreadCrumb>
-              </>
-            ) : null}
-          </div>
+        <div className="flex gap-2 mb-2">
+          <Button variant="outline" onClick={onShowOrgs}>
+            All Owners
+          </Button>
+          <Button disabled={repoId === null} variant="outline" onClick={onShowRepos}>
+            {orgId} Repos
+          </Button>
         </div>
         <div className="rounded-md overflow-hidden grid place-content-stretch">
           <div className="grid" style={{ gridArea: "1 / 1", minHeight: "29rem" }}>
