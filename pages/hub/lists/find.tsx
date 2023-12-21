@@ -60,28 +60,6 @@ const NewListCreationPage = () => {
     }
   }, [router.query]);
 
-  // get all timezones from the api that exists in the dummy timezone list
-
-  // const timezoneList = timezones
-  //   .filter((timezone) => {
-  //     return timezoneOption.some((timezoneOption) => timezoneOption.timezone === timezone.value);
-  //   })
-  //   .map((timezone) => {
-  //     return {
-  //       label: timezone.text,
-  //       value: timezone.value,
-  //     };
-  //   });
-  // const contributors =
-  //   data?.length > 0
-  //     ? data.map((contributor) => {
-  //         return {
-  //           author_login: contributor.login,
-  //           updated_at: contributor.updated_at,
-  //           user_id: contributor.id,
-  //         };
-  //       })
-  //     : [];
   // check if all contributors are selected or not
   useEffect(() => {
     if (

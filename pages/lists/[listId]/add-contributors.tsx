@@ -210,17 +210,6 @@ const AddContributorsToList = ({ list, timezoneOption }: AddContributorsPageProp
     }
   };
 
-  // const contributors: DbPRContributor[] =
-  //   data?.length > 0
-  //     ? data.map((contributor) => {
-  //         return {
-  //           author_login: contributor.login,
-  //           username: contributor.login,
-  //           updated_at: contributor.updated_at,
-  //           user_id: contributor.id,
-  //         };
-  //       })
-  //     : [];
   // check if all contributors are selected or not
   useEffect(() => {
     if (

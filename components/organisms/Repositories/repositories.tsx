@@ -39,7 +39,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
   } = useRepositories(repositories, Number(range ?? 30), Number(limit ?? 10));
   const filteredRepoNotIndexed = selectedFilter && !repoListIsLoading && !repoListIsError && repoListData.length === 0;
   const [selectedRepos, setSelectedRepos] = useState<DbRepo[]>([]);
-  const [isSelectAll, setIsSelectAll] = useState(false); // state to check if all contributors are selected
+  const [isSelectAll, setIsSelectAll] = useState(false);
   const handleOnSelectAllChecked = () => {
     if (!isSelectAll) {
       setSelectedRepos((prev) => {
