@@ -16,7 +16,6 @@ import JavaIcon from "/img/icons/interests/java.svg";
 import GolangIcon from "img/icons/interests/golang.svg";
 import VueIcon from "img/icons/interests/vuejs.svg";
 import KubernetesIcon from "img/icons/interests/kubernetes.svg";
-import HacktoberfestIcon from "img/icons/interests/hacktoberfest.svg";
 import CloJureIcon from "img/icons/interests/clojure.svg";
 
 import topicNameFormatting from "lib/utils/topic-name-formatting";
@@ -41,7 +40,6 @@ export const renderTopicIcon = (name: InterestType) => {
     golang: GolangIcon,
     vue: VueIcon,
     kubernetes: KubernetesIcon,
-    hacktoberfest: HacktoberfestIcon,
     clojure: CloJureIcon,
   };
 

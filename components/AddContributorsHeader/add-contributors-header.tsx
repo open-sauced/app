@@ -16,7 +16,8 @@ interface AddContributorsHeaderProps {
   onAddToList?: () => void;
   loading?: boolean;
   onSearch: (searchTerm: string | undefined) => void;
-  searchResults?: DbUser[];
+  searchSuggestions?: string[];
+  onSearchSelect?: (username: string) => void;
 }
 
 const AddContributorsHeader = ({
@@ -25,13 +26,15 @@ const AddContributorsHeader = ({
   onAddToList,
   loading,
   onSearch,
+  searchSuggestions,
+  onSearchSelect,
 }: AddContributorsHeaderProps): JSX.Element => {
   const [contributorSearch, setContributorSearch] = useState("");
   const debouncedSearchTerm = useDebounceTerm(contributorSearch, 300);
 
   useEffect(() => {
     onSearch(debouncedSearchTerm);
-  }, [debouncedSearchTerm, onSearch]);
+  }, [debouncedSearchTerm]);
 
   return (
     <div className="relative flex flex-col justify-between w-full gap-6 py-2">
@@ -77,10 +80,13 @@ const AddContributorsHeader = ({
         <label className="flex w-full flex-col gap-4">
           <span className="sr-only">Search for contributors to add to your list</span>
           <Search
-            placeholder="Search for contributors to add to your list"
+            placeholder={`Search for contributors to add to your list`}
             className="!w-full text-sm py-1.5"
             name={"contributors"}
             onChange={(value) => setContributorSearch(value)}
+            suggestions={searchSuggestions}
+            onSearch={onSearch}
+            onSelect={onSearchSelect}
           />
         </label>
       </div>
