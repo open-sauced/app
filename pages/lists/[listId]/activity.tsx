@@ -1,7 +1,7 @@
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { GetServerSidePropsContext } from "next";
-import { NodeMouseEventHandler } from "@nivo/treemap";
 import { useRouter } from "next/router";
+import { ComponentProps, useState } from "react";
 import Error from "components/atoms/Error/Error";
 import { fetchApiData, validateListPath } from "helpers/fetchApiData";
 import ListPageLayout from "layouts/lists";
@@ -70,6 +70,63 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   };
 };
 
+// if no repoId is set,  want the id
+
+const getTreemapData = ({
+  orgId,
+  repoId,
+  projectData = [],
+  projectContributionsByUser = [],
+}: {
+  orgId: string | null;
+  repoId: number | null;
+  projectData: DbProjectContributions[];
+  projectContributionsByUser: DBProjectContributor[] | undefined;
+}) => {
+  let children;
+
+  switch (true) {
+    case orgId === null && repoId === null:
+      children = Object.values(
+        projectData.reduce((acc, { org_id, contributions }) => {
+          if (!acc[org_id]) {
+            acc[org_id] = { id: org_id, value: 0, orgId: org_id };
+          }
+          acc[org_id].value += contributions;
+          return acc;
+        }, {} as any)
+      );
+      break;
+    case orgId !== null:
+      children = projectData
+        .filter(({ org_id }) => org_id === orgId)
+        .map(({ org_id, project_id, repo_id, contributions }) => {
+          return {
+            id: `${org_id}/${project_id}`,
+            value: contributions,
+            repoId: `${repo_id}`,
+          };
+        });
+      break;
+
+    case repoId !== null:
+      children = projectContributionsByUser.map(
+        ({ login, commits, prs_created, prs_reviewed, issues_created, comments }) => {
+          return {
+            id: login,
+            value: commits + prs_created, // Coming soon + prs_reviewed + issues_created + comments,
+          };
+        }
+      );
+      break;
+  }
+
+  return {
+    id: "root",
+    children,
+  };
+};
+
 const ListActivityPage = ({ list, numberOfContributors, isError, isOwner, featureFlags }: ContributorListPageProps) => {
   const router = useRouter();
   const range = router.query.range as string;
@@ -80,7 +137,7 @@ const ListActivityPage = ({ list, numberOfContributors, isError, isOwner, featur
     setContributorType,
     contributorType,
   } = useMostActiveContributors({ listId: list!.id });
-
+  const [orgId, setOrgId] = useState<string | null>(null);
   const {
     setRepoId,
     error,
@@ -90,7 +147,7 @@ const ListActivityPage = ({ list, numberOfContributors, isError, isOwner, featur
   } = useContributorsByProject(list!.id, Number(range ?? "30"));
 
   const {
-    data: projectData,
+    data: projectData = [],
     error: projectDataError,
     isLoading: isTreemapLoading,
   } = useContributionsByProject({
@@ -98,28 +155,16 @@ const ListActivityPage = ({ list, numberOfContributors, isError, isOwner, featur
     range: Number(range ?? "30"),
   });
 
-  const onHandleClick: NodeMouseEventHandler<object> = (node) => {
-    // @ts-ignore TODO: fix this
-    setRepoId(Number(node.data.repoId));
+  const onDrilldown: ComponentProps<typeof ContributionsTreemap>["onDrilldown"] = (node) => {
+    if (orgId === null) {
+      setOrgId(node.data.orgId);
+      return;
+    } else {
+      setRepoId(Number(node.data.repoId));
+    }
   };
-  const treemapData = {
-    id: "root",
-    children:
-      repoId === null
-        ? (projectData ?? []).map(({ org_id, project_id, repo_id, contributions }) => {
-            return {
-              id: `${org_id}/${project_id}`,
-              value: contributions,
-              repoId: `${repo_id}`,
-            };
-          })
-        : projectContributionsByUser?.map(({ login, commits, prs_created, prs_reviewed, issues_created, comments }) => {
-            return {
-              id: login,
-              value: commits + prs_created, // Coming soon + prs_reviewed + issues_created + comments,
-            };
-          }),
-  };
+
+  const treemapData = getTreemapData({ orgId, repoId, projectData, projectContributionsByUser });
 
   const {
     data: evolutionData,
@@ -142,9 +187,14 @@ const ListActivityPage = ({ list, numberOfContributors, isError, isOwner, featur
             isLoading={isLoading}
           />
           <ContributionsTreemap
-            setRepoId={setRepoId}
             repoId={repoId}
-            onClick={onHandleClick}
+            orgId={orgId}
+            onDrilldown={onDrilldown}
+            onShowOrgs={() => {
+              setRepoId(null);
+              setOrgId(null);
+            }}
+            onShowRepos={() => setRepoId(null)}
             data={treemapData}
             color={getGraphColorPalette()}
             isLoading={isLoadingProjectContributionsByUser || isTreemapLoading}
