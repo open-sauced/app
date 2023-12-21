@@ -8,7 +8,7 @@ import { fetchApiData, validateListPath } from "helpers/fetchApiData";
 import ListPageLayout from "layouts/lists";
 import MostActiveContributorsCard from "components/molecules/MostActiveContributorsCard/most-active-contributors-card";
 import useMostActiveContributors from "lib/hooks/api/useMostActiveContributors";
-import { ContributionsTreemap } from "components/molecules/ContributionsTreemap/contributions-treemap";
+import { ContributionsTreemap } from "components/Graphs/ContributionsTreemap/contributions-treemap";
 import { useContributorsByProject } from "lib/hooks/api/useContributorsByProject";
 import { useContributionsByProject } from "lib/hooks/api/useContributionsByProject";
 import { getGraphColorPalette } from "lib/utils/color-utils";
