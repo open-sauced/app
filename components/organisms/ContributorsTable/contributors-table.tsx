@@ -9,6 +9,7 @@ export interface ContributorTableProps {
   selectedContributors?: DbPRContributor[];
   handleSelectContributors?: (state: boolean, contributor: DbPRContributor) => void;
   range?: string;
+  noContributorsMessage?: string;
 }
 
 const ContributorTable = ({
@@ -18,6 +19,7 @@ const ContributorTable = ({
   selectedContributors,
   handleSelectContributors,
   range = "30",
+  noContributorsMessage = "Sorry! We couldn&apos;t find any contributors.",
 }: ContributorTableProps) => {
   return (
     <div className="flex flex-col overflow-hidden border rounded-md">
@@ -39,9 +41,7 @@ const ContributorTable = ({
               />
             ))
           ) : (
-            <div className="grid w-full py-10 place-content-center text-orange-500">
-              Sorry! We couldn&apos;t find any contributors.
-            </div>
+            <div className="grid w-full py-10 place-content-center text-orange-500">{noContributorsMessage}</div>
           )}
         </>
       )}
