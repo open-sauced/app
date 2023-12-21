@@ -16,9 +16,8 @@ interface ContributionsTreemapProps {
   repoId: number | null;
   orgId: string | null;
   isLoading: boolean;
-  onDrilldown: NodeMouseEventHandler<object>;
-  onShowOrgs: () => void;
-  onShowRepos: () => void;
+  onDrillDown: NodeMouseEventHandler<object>;
+  onDrillUp: () => void;
 }
 
 function BreadCrumb({
@@ -55,41 +54,36 @@ export const ContributionsTreemap = ({
   data,
   color,
   isLoading,
-  onDrilldown,
-  onShowOrgs,
-  onShowRepos,
+  onDrillDown: onDrilldown,
+  onDrillUp,
 }: ContributionsTreemapProps) => {
   return (
     <Card className="grid place-content-stretch">
       <div className="grid">
         {/* Label: Text */}
-        <h2 className="font-medium text-lg text-slate-900 mb-2 flex items-center justify-between">
-          <div>All Contributions</div>
-          <div aria-live="polite">
-            <div className="flex gap-2 items-center">
-              {orgId ? (
-                <BreadCrumb isActive={true} useSeparator={repoId !== null}>
-                  {orgId}
+        <h2 className="font-medium text-lg text-slate-900 mb-2 flex items-center justify-between">All Contributions</h2>
+        <div className="flex gap-2 items-center justify-between">
+          <div className="flex gap-2 mb-2">
+            {orgId ? (
+              <BreadCrumb isActive={true} useSeparator={repoId !== null}>
+                {orgId}
+              </BreadCrumb>
+            ) : null}
+            {repoId ? (
+              <>
+                <BreadCrumb isActive={true}>{repoId}</BreadCrumb>
+                <BreadCrumb isActive={true} useSeparator={false}>
+                  Contributors
                 </BreadCrumb>
-              ) : null}
-              {repoId ? (
-                <>
-                  <BreadCrumb isActive={true}>{repoId}</BreadCrumb>
-                  <BreadCrumb isActive={true} useSeparator={false}>
-                    Contributors
-                  </BreadCrumb>
-                </>
-              ) : null}
-            </div>
+              </>
+            ) : null}
           </div>
-        </h2>
-        <div className="flex gap-2 mb-2">
-          <Button variant="outline" onClick={onShowOrgs}>
-            All Owners
-          </Button>
-          <Button disabled={repoId === null} variant="outline" onClick={onShowRepos}>
-            {orgId} Repos
-          </Button>
+          <div className="flex gap-2 mb-2">
+            <Button variant="outline" disabled={!orgId} onClick={orgId ? onDrillUp : undefined}>
+              <span className="sr-only">Drill up in the treemap of contributions</span>
+              <span className="not-sr-only">Back</span>
+            </Button>
+          </div>
         </div>
         <div className="rounded-md overflow-hidden grid place-content-stretch">
           <div className="grid" style={{ gridArea: "1 / 1", minHeight: "29rem" }}>

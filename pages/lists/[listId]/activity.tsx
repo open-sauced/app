@@ -156,12 +156,20 @@ const ListActivityPage = ({ list, numberOfContributors, isError, isOwner, featur
     range: Number(range ?? "30"),
   });
 
-  const onDrilldown: NodeMouseEventHandler<{ orgId: null; repoId: null }> = (node) => {
+  const onDrillDown: NodeMouseEventHandler<{ orgId: null; repoId: null }> = (node) => {
     if (orgId === null) {
       setOrgId(node.data.orgId);
       return;
     } else {
       setRepoId(Number(node.data.repoId));
+    }
+  };
+
+  const onDrillUp = () => {
+    if (repoId !== null) {
+      setRepoId(null);
+    } else {
+      setOrgId(null);
     }
   };
 
@@ -190,12 +198,8 @@ const ListActivityPage = ({ list, numberOfContributors, isError, isOwner, featur
           <ContributionsTreemap
             repoId={repoId}
             orgId={orgId}
-            onDrilldown={onDrilldown as NodeMouseEventHandler<object>}
-            onShowOrgs={() => {
-              setRepoId(null);
-              setOrgId(null);
-            }}
-            onShowRepos={() => setRepoId(null)}
+            onDrillDown={onDrillDown as NodeMouseEventHandler<object>}
+            onDrillUp={onDrillUp}
             data={treemapData}
             color={getGraphColorPalette()}
             isLoading={isLoadingProjectContributionsByUser || isTreemapLoading}
