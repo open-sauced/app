@@ -9,7 +9,6 @@ import { pathToRegexp } from "path-to-regexp";
 // prettier-ignore
 const pathsToMatch = [
   "/",
-  "/hub/insights/:path*",
   "/feed/",
   "/user/notifications",
   "/user/settings",

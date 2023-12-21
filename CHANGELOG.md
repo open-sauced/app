@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.81.0-beta.4](https://github.com/open-sauced/insights/compare/v1.81.0-beta.3...v1.81.0-beta.4) (2023-12-21)
+
+
+### 🐛 Bug Fixes
+
+* activity list contributions treemap nodes are keyboard navigable now ([60ac568](https://github.com/open-sauced/insights/commit/60ac56844210a213781577101809dcaca69b2a5e))
+* activity list contributions treemap nodes are keyboard navigable now ([#2388](https://github.com/open-sauced/insights/issues/2388)) ([bd2141c](https://github.com/open-sauced/insights/commit/bd2141c947de3c478917f8bc3d0bdabc10b50b94))
+
 ## [1.81.0-beta.3](https://github.com/open-sauced/insights/compare/v1.81.0-beta.2...v1.81.0-beta.3) (2023-12-20)
 
 
