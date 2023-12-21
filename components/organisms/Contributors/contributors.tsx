@@ -21,6 +21,7 @@ import Button from "components/atoms/Button/button";
 import { addListContributor, useFetchAllLists } from "lib/hooks/useList";
 import { Command, CommandGroup, CommandInput, CommandItem } from "components/atoms/Cmd/command";
 import { useToast } from "lib/hooks/useToast";
+import { useMediaQuery } from "lib/hooks/useMediaQuery";
 
 import ClientOnly from "components/atoms/ClientOnly/client-only";
 import ContributorCard from "../ContributorCard/contributor-card";
@@ -40,6 +41,8 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
   const [selectedContributors, setSelectedContributors] = useState<DbPRContributor[]>([]);
   const [selectedListIds, setSelectedListIds] = useState<string[]>([]);
   const [popoverOpen, setPopoverOpen] = useState(false);
+
+  const isMobile = useMediaQuery("(max-width: 768px)");
 
   const contributors = data.map((pr) => {
     return {
@@ -252,7 +255,8 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
           <div>
             <div className="flex flex-col gap-4">
               <Pagination
-                pages={[]}
+                pages={isMobile ? [] : new Array(meta.pageCount).fill(0).map((_, index) => index + 1)}
+                pageSize={5}
                 hasNextPage={meta.hasNextPage}
                 hasPreviousPage={meta.hasPreviousPage}
                 totalPage={meta.pageCount}
