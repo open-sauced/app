@@ -2,13 +2,13 @@ import { useSpring, animated } from "@react-spring/web";
 import dynamic from "next/dynamic";
 import { Datum } from "@nivo/line";
 import { ReactNode } from "react";
-import { SpecialNode } from "components/molecules/ContributionsTreemap/special-node";
-import { ContributorNode } from "components/molecules/ContributionsTreemap/contributor-node";
 import Card from "components/atoms/Card/card";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 import Button from "components/atoms/Button/button";
 import type { NodeMouseEventHandler, NodeProps, TreeMapCommonProps } from "@nivo/treemap";
+import { SpecialNode } from "./special-node";
+import { ContributorNode } from "./contributor-node";
 
 interface ContributionsTreemapProps {
   data: any;
