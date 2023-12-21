@@ -66,7 +66,7 @@ export const ContributionsTreemap = ({
         <h2 className="font-medium text-lg text-slate-900 mb-2 flex items-center justify-between">
           <div>All Contributions</div>
           <div aria-live="polite">
-            <div className="flex gap-2 items-center mb-2">
+            <div className="flex gap-2 items-center">
               {orgId ? (
                 <BreadCrumb isActive={true} useSeparator={repoId !== null}>
                   {orgId}
