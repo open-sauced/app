@@ -28,7 +28,6 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
   const { pageId, toolName, selectedFilter, userOrg, range, limit } = router.query;
   const username = userOrg ? user?.user_metadata.user_name : undefined;
   const topic = pageId as string;
-
   const isMobile = useMediaQuery("(max-width: 768px)");
 
   const {
@@ -40,12 +39,17 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
   } = useRepositories(repositories, Number(range ?? 30), Number(limit ?? 10));
   const filteredRepoNotIndexed = selectedFilter && !repoListIsLoading && !repoListIsError && repoListData.length === 0;
   const [selectedRepos, setSelectedRepos] = useState<DbRepo[]>([]);
-
-  const handleOnSelectAllChecked = (state: boolean) => {
-    if (state) {
-      setSelectedRepos(repoListData);
+  const [isSelectAll, setIsSelectAll] = useState(false); // state to check if all contributors are selected
+  const handleOnSelectAllChecked = () => {
+    if (!isSelectAll) {
+      setSelectedRepos((prev) => {
+        const reposToInclude = repoListData.filter((repo) => prev.every((r) => r.id !== repo.id));
+        return [...prev, ...reposToInclude];
+      });
+      setIsSelectAll(true);
     } else {
-      setSelectedRepos([]);
+      setSelectedRepos((prev) => prev.filter((repo) => !repoListData.some((r) => r.id === repo.id)));
+      setIsSelectAll(false);
     }
   };
 
@@ -86,7 +90,16 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
       return router.push(`/${topic}/${toolName}`);
     }
   };
-
+  useEffect(() => {
+    if (
+      repoListData.length &&
+      repoListData.filter((repo) => selectedRepos.every((r) => r.id !== repo.id)).length === 0
+    ) {
+      setIsSelectAll(true);
+    } else {
+      setIsSelectAll(false);
+    }
+  }, [repoListData, selectedRepos]);
   useEffect(() => {
     setPage(1);
   }, [selectedFilter, setPage]);
@@ -108,6 +121,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
             <div className={clsx(classNames.cols.checkbox)}>
               <Checkbox
                 onCheckedChange={handleOnSelectAllChecked}
+                checked={isSelectAll}
                 className={`${user && "border-orange-500 hover:bg-orange-600"}`}
               />
             </div>
