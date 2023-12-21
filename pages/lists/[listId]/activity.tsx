@@ -190,7 +190,7 @@ const ListActivityPage = ({ list, numberOfContributors, isError, isOwner, featur
           <ContributionsTreemap
             repoId={repoId}
             orgId={orgId}
-            onDrilldown={onDrilldown}
+            onDrilldown={onDrilldown as NodeMouseEventHandler<object>}
             onShowOrgs={() => {
               setRepoId(null);
               setOrgId(null);
