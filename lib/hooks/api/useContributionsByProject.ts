@@ -10,7 +10,7 @@ export const useContributionsByProject = ({
   range: number;
   initialData?: DbProjectContributions[];
 }) => {
-  const { data, error } = useSWR<DbProjectContributions[]>(
+  const { data, error, isLoading } = useSWR<DbProjectContributions[]>(
     listId ? `lists/${listId}/stats/contributions-by-project?range=${range}` : null,
     publicApiFetcher as Fetcher<DbProjectContributions[], Error>,
     {
@@ -21,5 +21,6 @@ export const useContributionsByProject = ({
   return {
     data,
     error,
+    isLoading,
   };
 };
