@@ -15,7 +15,7 @@ export const useContributorsByProject = (listId: string, range = 30) => {
   const baseEndpoint = `lists/${listId}/stats/top-project-contributions-by-contributor`;
 
   const endpointString = `${baseEndpoint}?${query.toString()}`;
-  const { data, error } = useSWR<DBProjectContributor[]>(
+  const { data, error, isLoading } = useSWR<DBProjectContributor[]>(
     listId && repoId ? endpointString : null,
     publicApiFetcher as Fetcher<DBProjectContributor[], Error>
   );
@@ -25,5 +25,6 @@ export const useContributorsByProject = (listId: string, range = 30) => {
     error,
     setRepoId,
     repoId,
+    isLoading,
   };
 };
