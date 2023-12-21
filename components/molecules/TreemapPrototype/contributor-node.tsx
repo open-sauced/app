@@ -18,7 +18,7 @@ const NonMemoizedContributorNode = <Datum extends { id: string; value?: number; 
   const avatarURL = getAvatarByUsername(node.id);
 
   return (
-    <animated.div
+    <animated.button
       className="absolute grid overflow-hidden border-solid place-content-stretch"
       style={{
         top: 0,
@@ -72,7 +72,7 @@ const NonMemoizedContributorNode = <Datum extends { id: string; value?: number; 
           </div>
         </animated.div>
       )}
-    </animated.div>
+    </animated.button>
   );
 };
 
