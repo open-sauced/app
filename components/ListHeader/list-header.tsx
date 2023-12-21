@@ -10,6 +10,7 @@ import ContextThumbnail from "components/atoms/ContextThumbnail/context-thumbnai
 
 import { truncateString } from "lib/utils/truncate-string";
 import { useToast } from "lib/hooks/useToast";
+import ClientOnly from "components/atoms/ClientOnly/client-only";
 
 interface ListHeaderProps {
   name: string;
@@ -50,7 +51,7 @@ const ListHeader = ({ name, isPublic, listId, isOwner, numberOfContributors }: L
             {<Badge isPublic={isPublic} />}
           </div>
           <div className="flex items-center gap-2 mt-4" id="contributorCount">
-            {numberOfContributors} Contributors
+            <ClientOnly>{numberOfContributors} Contributors </ClientOnly>
           </div>
         </div>
       </div>
