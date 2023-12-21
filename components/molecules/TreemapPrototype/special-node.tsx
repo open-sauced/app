@@ -16,7 +16,7 @@ const NonMemoizedSpecialNode = <Datum extends object>({
 
   return (
     <animated.button
-      className="absolute grid overflow-hidden border-solid cursor-pointer place-content-stretch"
+      className="absolute grid overflow-hidden border-solid place-content-stretch"
       style={{
         top: 0,
         left: 0,
@@ -50,10 +50,10 @@ const NonMemoizedSpecialNode = <Datum extends object>({
             placeItems: "flex-start",
           }}
         >
-          <div className="grid gap-2">
+          <div className="flex flex-col items-start">
             <div className="text-sm">{fullRepoName}</div>
-            <div className="text-xs font-normal" style={{ textOverflow: "ellipsis" }}>
-              {node.label}
+            <div className="text-xs whitespace-nowrap overflow-hidden overflow-ellipsis">
+              {node.label} contributions
             </div>
           </div>
         </animated.div>
