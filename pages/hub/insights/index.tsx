@@ -11,7 +11,8 @@ import HubLayout from "layouts/hub";
 import { WithPageLayout } from "interfaces/with-page-layout";
 import useUserInsights from "lib/hooks/useUserInsights";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
-import useStore from "lib/store";
+// import useStore from "lib/store";
+import { persistedStore } from "lib/store";
 import useSession from "lib/hooks/useSession";
 import { useToast } from "lib/hooks/useToast";
 import Text from "components/atoms/Typography/text";
@@ -21,8 +22,9 @@ import ClientOnly from "components/atoms/ClientOnly/client-only";
 const InsightsHub: WithPageLayout = () => {
   const router = useRouter();
   const { user } = useSupabaseAuth();
-  const store = useStore();
-  const dismissFeaturedInsights = useStore((store) => store.dismissFeaturedInsights);
+  const store = persistedStore();
+  const dismissFeaturedInsights = persistedStore((state) => state.dismissFeaturedInsights);
+
   const { toast } = useToast();
   const { session } = useSession(true);
   const { data, meta, isError, isLoading, setPage } = useUserInsights(!!user);
@@ -78,7 +80,10 @@ const InsightsHub: WithPageLayout = () => {
   }
 
   useEffect(() => {
-    if (!user || (session && session.insights_count === 0 && !dismissFeaturedInsights)) {
+    if (
+      (session && session.insights_count === 0 && !dismissFeaturedInsights) ||
+      (!session && !dismissFeaturedInsights)
+    ) {
       openInsightToast();
     }
   }, [session, dismissFeaturedInsights]);
