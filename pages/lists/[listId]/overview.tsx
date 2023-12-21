@@ -155,11 +155,10 @@ const ListsOverview = ({ list, numberOfContributors, isOwner, isError }: ListsOv
                     meta={meta}
                     isLoading={isLoading}
                     setPage={setPage}
-                    range={range ? String(range) : "30"}
+                    range={String(range ?? "30")}
                   />
                 </ErrorBoundary>
               )}
-              Hello boy
             </div>
           </section>
         </ClientOnly>
