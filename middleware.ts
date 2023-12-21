@@ -80,13 +80,6 @@ export async function middleware(req: NextRequest) {
     }
   }
 
-  const listContributorsPath = pathToRegexp("/lists/:listId/contributors");
-
-  if (listContributorsPath.test(req.nextUrl.pathname)) {
-    const listId = req.nextUrl.pathname.split("/")[2];
-    return NextResponse.redirect(new URL(`/lists/${listId}/`));
-  }
-
   // Auth condition not met, redirect to home page.
   const redirectUrl = req.nextUrl.clone();
   redirectUrl.pathname = "/feed";
