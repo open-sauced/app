@@ -1,5 +1,4 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
 
 import { User } from "@supabase/supabase-js";
 import { GlobalStateInterface } from "interfaces/global-state-types";
@@ -54,18 +53,5 @@ const store = create<AppStore>()((set) => ({
   setHasReports: (hasReports: boolean) => set((state) => ({ ...state, hasReports })),
   setOpenSearch: (openSearch: boolean) => set((state) => ({ ...state, openSearch: openSearch })),
 }));
-
-export const persistedStore = create<{
-  dismissFeaturedInsights: boolean;
-  setDismissFeaturedInsights: () => void;
-}>()(
-  persist(
-    (set) => ({
-      dismissFeaturedInsights: false,
-      setDismissFeaturedInsights: () => set((state) => ({ ...state, dismissFeaturedInsights: true })),
-    }),
-    { name: "dismissFeaturedInsights" }
-  )
-);
 
 export default store;
