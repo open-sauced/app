@@ -63,7 +63,7 @@ const SearchDialog = () => {
     if (searchTerm.length >= 3) startSearch();
     async function startSearch() {
       setIsSearching(true);
-      const data = await searchUsers(debouncedSearchTerm);
+      const data = await searchUsers(debouncedSearchTerm, providerToken);
       if (data) {
         setSearchResult(data);
         setIsSearchError(!data.data.length);
