@@ -23,7 +23,7 @@ const TopNav: React.FC = () => {
         <AuthSection />
       </div>
       <div className="lg:hidden container mx-auto px-2 md:px-16 flex justify-between items-center">
-        <Nav name="Mobile" className="" />
+        <Nav name="Mobile" />
         {user
           ? session &&
             !onboarded && (
@@ -52,19 +52,17 @@ const Nav = ({ className, name = "Main" }: { className?: string; name?: string }
   const { onboarded } = useSession();
 
   const { data: gitHubUser } = useFetchUser(user?.user_metadata.user_name);
-  const userInterest = gitHubUser?.interests.split(",")[0] || "hacktoberfest";
+  const userInterest = gitHubUser?.interests.split(",")[0] || "javascript";
   const router = useRouter();
 
   return (
     <nav className={className} aria-label={name}>
       <ul className="flex gap-3 md:gap-8 mb-1 ml-2 sm:m-0 w-full sm:w-auto">
-        {!!user && onboarded && (
-          <li>
-            <Link className={`text-sm ${getActiveStyle(router.asPath === "/hub/insights")}`} href={"/hub/insights"}>
-              Insights
-            </Link>
-          </li>
-        )}
+        <li>
+          <Link className={`text-sm ${getActiveStyle(router.asPath === "/hub/insights")}`} href={"/hub/insights"}>
+            Insights
+          </Link>
+        </li>
         <li>
           <Link
             className={`text-sm ${getActiveStyle(router.asPath === `/${userInterest}/dashboard/filter/recent`)}`}
@@ -84,7 +82,7 @@ const Nav = ({ className, name = "Main" }: { className?: string; name?: string }
 };
 
 function getActiveStyle(isActive: boolean) {
-  return isActive ? "text-light-orange-10" : "text-light-slate-10";
+  return isActive ? "text-light-orange-10" : "";
 }
 
 export default TopNav;

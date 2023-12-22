@@ -16,7 +16,6 @@ const interests = [
   "svelte",
   "vue",
   "kubernetes",
-  "hacktoberfest",
   "clojure",
 ] as const;
 export type InterestType = (typeof interests)[number];

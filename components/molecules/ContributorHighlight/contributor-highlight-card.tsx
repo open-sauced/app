@@ -840,7 +840,7 @@ const ContributorHighlightCard = ({
                   </AlertDialogFooter>
                 </AlertDialogContent>
               </AlertDialog>
-              <Button loading={loading} className="" variant="primary">
+              <Button loading={loading} variant="primary">
                 Save
               </Button>
             </div>

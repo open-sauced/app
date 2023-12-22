@@ -60,6 +60,7 @@ const ContributorsList = ({ contributors, isLoading, meta, setPage, range }: Con
         layout={layout}
         onLayoutToggle={setLayout}
       />
+
       <ClientOnly>
         {layout !== "grid" ? (
           <>
@@ -70,13 +71,13 @@ const ContributorsList = ({ contributors, isLoading, meta, setPage, range }: Con
           <ContributorCardList contributors={contributors} topic={"*"} range={range ?? 30} />
         )}
       </ClientOnly>
+
       <div className="flex items-center justify-between w-full py-1 md:py-4 md:mt-5">
-        <div>
-          <div className="">
+        <ClientOnly>
+          <div>
             <PaginationResults metaInfo={meta} total={meta.itemCount} entity={"contributors"} />
           </div>
-        </div>
-        <div>
+
           <div className="flex flex-col gap-4">
             <Pagination
               pages={[]}
@@ -91,7 +92,7 @@ const ContributorsList = ({ contributors, isLoading, meta, setPage, range }: Con
               goToPage
             />
           </div>
-        </div>
+        </ClientOnly>
       </div>
     </>
   );

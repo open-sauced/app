@@ -84,7 +84,7 @@ const RepositoriesCart = ({
               history.slice(0, 5).map(({ orgName, repoName, avatar }, index) => (
                 <div key={`${index}/${orgName}/${repoName}`} className="flex items-center justify-between mt-2">
                   <div className="flex items-center gap-3 ">
-                    <Avatar avatarURL={avatar} initials="" size="sm" className="" />
+                    <Avatar avatarURL={avatar} initials="" size="sm" />
                     <Text className="!text-sm !text-light-slate-11">
                       {orgName} / <span className="text-light-slate-12">{repoName}</span>
                     </Text>
