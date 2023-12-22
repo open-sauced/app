@@ -18,10 +18,10 @@ interface PaginatedResponse {
  * @param range
  * @returns
  */
-const useContributors = (intialLimit = 10, repoIds: number[] = []) => {
+const useContributors = (limit = 10, repoIds: number[] = []) => {
   const router = useRouter();
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(intialLimit);
+
   const { pageId, selectedFilter, range } = router.query;
   const topic = pageId as string;
   const filterQuery = getFilterQuery(selectedFilter);
@@ -66,7 +66,6 @@ const useContributors = (intialLimit = 10, repoIds: number[] = []) => {
     mutate,
     page,
     setPage,
-    setLimit,
   };
 };
 
