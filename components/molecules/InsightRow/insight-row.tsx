@@ -26,10 +26,6 @@ const InsightRow = ({ insight, user, isEditable = true }: InsightRowProps) => {
   const { data: repoData, meta: repoMeta } = useRepositories(repoIds);
   const { open, merged, velocity, total, repoList } = getRepoInsights(repoData);
   const avgOpenPrs = repoData.length > 0 ? Math.round(open / repoData.length) : 0;
-
-  const membership = insight.members?.find((member) => member.user_id === Number(user?.id));
-  const canEdit = membership && ["edit", "admin"].includes(membership.access);
-
   return (
     <Card className="flex flex-col md:flex-row w-full rounded-lg px-4 lg:px-8 py-5 gap-4 lg:gap-2 bg-white items-center">
       <>
@@ -95,7 +91,7 @@ const InsightRow = ({ insight, user, isEditable = true }: InsightRowProps) => {
               </div>
             </div>
             <div className="flex-1 hidden md:flex  justify-end">
-              {canEdit ||
+              {(user?.user_metadata.sub && Number(user?.user_metadata.sub) === Number(insight.user_id)) ||
                 (!insight.is_featured && (
                   <Link href={`/hub/insights/${insight.id}/edit`}>
                     <span className=" bg-light-slate-1 inline-block rounded-lg p-2.5 border mr-2 cursor-pointer">

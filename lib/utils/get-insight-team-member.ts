@@ -1,10 +1,4 @@
-import { MemberAccess } from "components/molecules/TeamMembersConfig/team-members-config";
-
-const getInsightTeamMemberAccess = async (
-  insightId: number,
-  bearerToken: string,
-  userId: string
-): Promise<MemberAccess | null> => {
+const isInsightTeamMember = async (insightId: number, bearerToken: string, userId: string) => {
   try {
     const teamMembersResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/insights/${insightId}/members`, {
       headers: {
@@ -15,19 +9,13 @@ const getInsightTeamMemberAccess = async (
 
     if (teamMembersResponse.ok) {
       const teamMembers: DbInsightMember[] = (await teamMembersResponse.json()).data;
-      const teamMember = teamMembers.find((teamMember) => teamMember.user_id === Number(userId));
-
-      if (!teamMember) {
-        return null;
-      }
-
-      return teamMember.access;
+      return !!teamMembers.find((teamMember) => teamMember.user_id === Number(userId));
     } else {
-      return null;
+      return false;
     }
   } catch (e: unknown) {
-    return null;
+    return false;
   }
 };
 
-export default getInsightTeamMemberAccess;
+export default isInsightTeamMember;

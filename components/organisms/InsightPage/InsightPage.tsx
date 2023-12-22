@@ -21,6 +21,7 @@ import useStore from "lib/store";
 import Error from "components/atoms/Error/Error";
 import Search from "components/atoms/Search/search";
 import { useToast } from "lib/hooks/useToast";
+import { TeamMemberData } from "components/molecules/TeamMembersConfig/team-members-config";
 import useInsightMembers from "lib/hooks/useInsightMembers";
 import { useFetchInsightRecommendedRepositories } from "lib/hooks/useFetchOrgRecommendations";
 import { RepoCardProfileProps } from "components/molecules/RepoCardProfile/repo-card-profile";
@@ -101,6 +102,16 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
       email: member.invitation_email,
       avatarUrl: !!member.user_id ? getAvatarById(String(member.user_id)) : "",
     }));
+
+  const insightOwner: TeamMemberData = {
+    insight_id: Number(insight?.id),
+    email: String(insight?.user.email),
+    id: String(insight?.user.id),
+
+    name: String(insight?.user.name || insight?.user.login),
+    avatarUrl: getAvatarByUsername(String(insight?.user.login)),
+    access: "owner",
+  };
 
   // Loading States
   const [deleteLoading, setDeleteLoading] = useState(false);
@@ -605,7 +616,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
               onUpdateMember={(id, access) => updateMember(id, access)}
               onDeleteMember={deleteMember}
               onAddMember={addMember}
-              members={[...members]}
+              members={[insightOwner, ...members]}
             />
           </div>
         )}

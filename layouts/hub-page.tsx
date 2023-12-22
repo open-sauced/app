@@ -21,8 +21,7 @@ const HubPageLayout = ({ children }: { children: React.ReactNode }) => {
 
   const { toolList, selectedTool, selectedFilter, userOrg } = useNav(repositories);
 
-  const membership = insight?.members?.find((member) => member.user_id === Number(userId));
-  const canEdit = membership && ["edit", "admin"].includes(membership.access);
+  let isOwner = !!(userId && insight && `${userId}` === `${insight.user.id}`);
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -31,7 +30,7 @@ const HubPageLayout = ({ children }: { children: React.ReactNode }) => {
         <div className="info-container container w-full min-h-[100px]">
           <Header>
             {insight ? (
-              <InsightHeader insight={insight} repositories={repositories} insightId={insightId} canEdit={canEdit} />
+              <InsightHeader insight={insight} repositories={repositories} insightId={insightId} isOwner={isOwner} />
             ) : isLoading ? (
               <div className="flex justify-between w-full h-46">
                 <div className="flex items-center gap-3">

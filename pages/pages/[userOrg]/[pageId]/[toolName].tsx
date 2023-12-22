@@ -9,8 +9,7 @@ import { WithPageLayout } from "interfaces/with-page-layout";
 import changeCapitalization from "lib/utils/change-capitalization";
 import SEO from "layouts/SEO/SEO";
 import fetchSocialCard from "lib/utils/fetch-social-card";
-import getInsightTeamMemberAccess from "lib/utils/get-insight-team-member";
-import { MemberAccess } from "components/molecules/TeamMembersConfig/team-members-config";
+import getInsightTeamMember from "lib/utils/get-insight-team-member";
 
 interface InsightPageProps {
   insight: DbUserInsight;
@@ -82,14 +81,15 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     };
   }
   const userId = session?.user?.user_metadata.sub as string;
-  let teamMemberAccess: MemberAccess | null = null;
+  const isOwner = !!(userId && insight && `${userId}` === `${insight.user?.id}`);
+  let isTeamMember = false;
 
-  if (!insight.is_public) {
+  if (!insight.is_public && !isOwner) {
     // check if user is insight page team member
-    teamMemberAccess = await getInsightTeamMemberAccess(Number(insightId), bearerToken, userId);
+    isTeamMember = await getInsightTeamMember(Number(insightId), bearerToken, userId);
   }
 
-  if (!insight.is_public && (!teamMemberAccess || teamMemberAccess === "pending")) {
+  if (!insight.is_public && !isOwner && !isTeamMember) {
     return {
       redirect: {
         destination: "/",
