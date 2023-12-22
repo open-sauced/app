@@ -54,7 +54,7 @@ const Nav = ({ className, name = "Main" }: { className?: string; name?: string }
   const userInterest = gitHubUser?.interests.split(",")[0] || "javascript";
   const router = useRouter();
 
-  const explorePageUrlPattern = /^\/.*\/(dashboard|reports|contributors|activity).*/g;
+  const explorePageUrlPattern = /^\/(?!lists\/.*\/activity).*\/(dashboard|reports|contributors|activity).*/g;
 
   return (
     <nav className={className} aria-label={name}>
