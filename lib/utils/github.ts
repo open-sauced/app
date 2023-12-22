@@ -19,13 +19,6 @@ const getProfileLink = (username: string | null) => `https://github.com/${userna
 
 const getRepoIssuesLink = (repoName: string | null) => `https://github.com/${(repoName && `${repoName}/issues`) || ""}`;
 
-const getFullNameByLogin = async (username: string): Promise<string> => {
-  const response = await fetch(`https://api.github.com/users/${username}`);
-  const data = await response.json();
-
-  return data.name;
-};
-
 const generateRepoParts = (
   url: string
 ): {
