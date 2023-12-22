@@ -37,6 +37,11 @@ module.exports = {
         destination: "/lists/:listId/overview",
         permanent: true,
       },
+      {
+        source: "/lists/:listId/contributors",
+        destination: "/lists/:listId/overview",
+        permanent: true,
+      },
     ];
   },
 };

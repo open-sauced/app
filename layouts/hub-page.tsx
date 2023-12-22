@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useRouter } from "next/router";
 
 import Footer from "components/organisms/Footer/footer";
@@ -11,8 +11,6 @@ import useNav from "lib/hooks/useNav";
 import useInsight from "lib/hooks/useInsight";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
-import { setQueryParams } from "lib/utils/query-params";
-
 const HubPageLayout = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
   const { userId } = useSupabaseAuth();
@@ -21,15 +19,10 @@ const HubPageLayout = ({ children }: { children: React.ReactNode }) => {
   const { data: insight, isLoading, isError } = useInsight(insightId);
   const repositories = insight?.repos.map((repo) => repo.repo_id);
 
-  useEffect(() => {
-    if (router.isReady && !range) {
-      setQueryParams({ range: "30" });
-    }
-  }, [range, router.isReady]);
-
   const { toolList, selectedTool, selectedFilter, userOrg } = useNav(repositories);
 
-  let isOwner = !!(userId && insight && `${userId}` === `${insight.user.id}`);
+  const membership = insight?.members?.find((member) => member.user_id === Number(userId));
+  const canEdit = membership && ["edit", "admin"].includes(membership.access);
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -38,7 +31,7 @@ const HubPageLayout = ({ children }: { children: React.ReactNode }) => {
         <div className="info-container container w-full min-h-[100px]">
           <Header>
             {insight ? (
-              <InsightHeader insight={insight} repositories={repositories} insightId={insightId} isOwner={isOwner} />
+              <InsightHeader insight={insight} repositories={repositories} insightId={insightId} canEdit={canEdit} />
             ) : isLoading ? (
               <div className="flex justify-between w-full h-46">
                 <div className="flex items-center gap-3">
