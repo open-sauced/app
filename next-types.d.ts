@@ -185,8 +185,6 @@ interface DbInsightMember {
 }
 interface DbUserInsight {
   readonly id: number;
-  readonly user_id: number;
-  readonly user: DbUser;
   readonly name: string;
   readonly is_public: boolean;
   readonly is_favorite: boolean;
@@ -195,6 +193,7 @@ interface DbUserInsight {
   readonly created_at: string;
   readonly updated_at: string;
   readonly repos: DbUserInsightRepo[];
+  readonly members: DbInsightMember[];
 }
 
 interface DbUserInsightRepo {
@@ -343,11 +342,6 @@ interface DbUserList {
   readonly is_public: boolean;
   readonly created_at: string;
   readonly updated_at: string;
-}
-
-interface DbUserSearch {
-  readonly login: string;
-  readonly full_name: string;
 }
 
 interface DBList {

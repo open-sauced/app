@@ -15,6 +15,7 @@ import ContributorProfileInfo from "components/molecules/ContributorProfileInfo/
 import ProfileLanguageChart from "components/molecules/ProfileLanguageChart/profile-language-chart";
 import useFollowUser from "lib/hooks/useFollowUser";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
+import { DATA_FALLBACK_VALUE } from "lib/utils/fallback-values";
 import ContributorProfileTab from "../ContributorProfileTab/contributor-profile-tab";
 import { ContributorObject } from "../ContributorCard/contributor-card";
 
@@ -86,6 +87,7 @@ const ContributorProfilePage = ({
     name,
     twitter_username,
     timezone,
+    url,
     github_sponsors_url: githubSponsorsUrl,
     linkedin_url: linkedInUrl,
     discord_url: discordUrl,
@@ -129,6 +131,7 @@ const ContributorProfilePage = ({
                 isConnected={iscConnected}
                 timezone={timezone}
                 displayLocalTime={displayLocalTime}
+                url={url}
                 githubSponsorsUrl={githubSponsorsUrl}
                 linkedInUrl={linkedInUrl}
                 discordUrl={discordUrl}
@@ -179,7 +182,7 @@ const ContributorProfilePage = ({
                             </Text>
                           </div>
                         ) : (
-                          <div className="flex items-end justify-center mt-1"> - </div>
+                          <div className="flex items-end justify-center mt-1">{DATA_FALLBACK_VALUE}</div>
                         )}
                       </div>
                       <div>
@@ -193,7 +196,7 @@ const ContributorProfilePage = ({
                             <Pill color="purple" text={`${prsMergedPercentage}%`} />
                           </div>
                         ) : (
-                          <div className="flex items-end justify-center mt-1"> - </div>
+                          <div className="flex items-end justify-center mt-1">{DATA_FALLBACK_VALUE}</div>
                         )}
                       </div>
                       <div>
@@ -205,7 +208,7 @@ const ContributorProfilePage = ({
                             </Text>
                           </div>
                         ) : (
-                          <div className="flex items-end justify-center mt-1"> - </div>
+                          <div className="flex items-end justify-center mt-1">{DATA_FALLBACK_VALUE}</div>
                         )}
                       </div>
                     </div>

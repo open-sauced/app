@@ -528,13 +528,13 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
           </div>
         </div>
       </div>
-      <Dialog
-        onOpenChange={() => {
-          setIsDivFocused(false);
-        }}
-        open={isDivFocused}
-      >
-        <DialogContent className="p-4 w-full md:w-[40rem] xs:w-96 max-h-[80vh] overflow-y-scroll">
+      <Dialog open={isDivFocused}>
+        <DialogContent
+          onEscapeKeyDown={() => {
+            setIsDivFocused(false);
+          }}
+          className="p-4 w-full md:w-[40rem] xs:w-96 max-h-[80vh] overflow-y-scroll"
+        >
           <DialogHeader>
             <DialogTitle>Post a highlight</DialogTitle>
           </DialogHeader>
@@ -795,7 +795,10 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
       {/* Mobile popup form */}
 
       {isFormOpenMobile && (
-        <div className="fixed left-0 right-0 z-30 h-screen py-4 transition bg-white top-24 md:hidden">
+        <form
+          onSubmit={handlePostHighlight}
+          className="fixed left-0 right-0 z-30 h-screen py-4 transition bg-white top-24 md:hidden"
+        >
           <div className="flex items-center justify-between w-full px-2">
             <button onClick={() => setIsFormOpenMobile(false)} type="button">
               <IoClose className="text-2xl text-light-slate-10" />
@@ -965,7 +968,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
               ))}
             </Swiper>
           </div>
-        </div>
+        </form>
       )}
 
       <Fab className="md:hidden">

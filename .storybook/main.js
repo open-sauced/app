@@ -1,5 +1,5 @@
 module.exports = {
-  stories: ["../stories/**/*.stories.mdx", "../stories/**/*.stories.@(js|jsx|ts|tsx)"],
+  stories: ["../components/**/*.stories.@(js|jsx|ts|tsx|mdx)"],
   addons: [
     "@storybook/addon-links",
     "@storybook/addon-essentials",
@@ -12,8 +12,11 @@ module.exports = {
       },
     },
   ],
-  framework: "@storybook/nextjs",
-  options: {},
+  framework: {
+    name: "@storybook/nextjs",
+    // set use SWC to true once we upgrade to Next.js 14
+    options: { builder: { useSWC: false } },
+  },
   docs: {
     autodocs: true,
   },

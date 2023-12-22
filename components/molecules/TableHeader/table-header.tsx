@@ -5,9 +5,10 @@ import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 
 import Search from "components/atoms/Search/search";
 import Title from "components/atoms/Typography/title";
-import LimitSelect, { limitSelectMap } from "components/atoms/Select/limit-select";
+import LimitSelect, { LimitSelectMap } from "components/atoms/Select/limit-select";
 import LayoutToggle, { ToggleValue } from "components/atoms/LayoutToggle/layout-toggle";
 import { setQueryParams } from "lib/utils/query-params";
+import ClientOnly from "components/atoms/ClientOnly/client-only";
 import PaginationResult from "../PaginationResults/pagination-result";
 
 interface TableHeaderProps {
@@ -69,12 +70,14 @@ const TableHeader = ({ title, metaInfo, entity, onSearch, layout, onLayoutToggle
         ) : (
           ""
         )}
-        <PaginationResult
-          total={metaInfo.itemCount}
-          className="hidden !translate-y-[2px]  md:inline-flex"
-          metaInfo={metaInfo}
-          entity={entity}
-        />
+        <ClientOnly>
+          <PaginationResult
+            total={metaInfo.itemCount}
+            className="hidden !translate-y-[2px]  md:inline-flex"
+            metaInfo={metaInfo}
+            entity={entity}
+          />
+        </ClientOnly>
       </div>
       <div className="flex flex-col-reverse items-start gap-3 md:flex-row md:items-end ">
         {layout ? (
@@ -106,7 +109,7 @@ const TableHeader = ({ title, metaInfo, entity, onSearch, layout, onLayoutToggle
             { name: "40 per page", value: "40" },
             { name: "50 per page", value: "50" },
           ]}
-          defaultValue={limit as limitSelectMap}
+          defaultValue={limit as LimitSelectMap}
           className="hidden ml-auto min-w-max md:inline-block"
           onChange={function (limit: string): void {
             setQueryParams({ limit: `${limit}` });

@@ -22,10 +22,10 @@ interface InsightHeaderProps {
   insight?: DbUserInsight;
   repositories?: number[];
   insightId: string;
-  isOwner: boolean;
+  canEdit: boolean | undefined;
 }
 
-const InsightHeader = ({ insight, repositories, insightId, isOwner }: InsightHeaderProps): JSX.Element => {
+const InsightHeader = ({ insight, repositories, insightId, canEdit }: InsightHeaderProps): JSX.Element => {
   const router = useRouter();
   const { range } = router.query;
   const { data: repoData, meta: repoMeta } = useRepositories(repositories);
@@ -81,7 +81,7 @@ const InsightHeader = ({ insight, repositories, insightId, isOwner }: InsightHea
         >
           <FiCopy className="mt-1 mr-2" /> Share
         </Button>
-        {isOwner && (
+        {canEdit && (
           <Link href={`/hub/insights/${insightId}/edit`}>
             <Button className="text-xs w-max" variant="primary">
               <FaEdit className="mr-2" /> Edit Page

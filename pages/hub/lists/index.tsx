@@ -17,11 +17,15 @@ import { useToast } from "lib/hooks/useToast";
 
 import { useFetchAllLists } from "lib/hooks/useList";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
+import useFetchFeaturedLists from "lib/hooks/useFetchFeaturedLists";
 
 const ListsHub: WithPageLayout = () => {
-  const { data, isLoading, meta, setPage, mutate } = useFetchAllLists();
-  const { toast } = useToast();
   const { sessionToken } = useSupabaseAuth();
+  const { data, isLoading, meta, setPage, mutate } = useFetchAllLists(30, !!sessionToken);
+  const { data: featuredListsData, isLoading: featuredListsLoading } = useFetchFeaturedLists(
+    sessionToken ? false : true
+  );
+  const { toast } = useToast();
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [disabled, setDisabled] = useState(true);
   const [deleteLoading, setDeleteLoading] = useState(false);
@@ -87,11 +91,28 @@ const ListsHub: WithPageLayout = () => {
           ))
         ) : (
           <div className="flex flex-col items-center justify-center w-full gap-4 ">
-            {!isLoading && <Title className="text-2xl">You currently have no lists</Title>}
+            {!isLoading && sessionToken ? <Title className="text-2xl">You currently have no lists</Title> : null}
           </div>
         )}
 
-        {isLoading && <SkeletonWrapper count={3} classNames="w-full" height={95} radius={10} />}
+        {sessionToken && isLoading ? <SkeletonWrapper count={3} classNames="w-full" height={95} radius={10} /> : null}
+
+        {!sessionToken && featuredListsLoading ? (
+          <SkeletonWrapper count={1} classNames="w-full" height={95} radius={10} />
+        ) : null}
+        {featuredListsData.map((list, i) => (
+          <ListCard
+            key={`featured_list_${i}`}
+            list={{
+              id: list.id,
+              user: { login: "bdougie", id: 1, name: "Brian Douglas" },
+              name: `Demo | ${list.name}`,
+              created_at: " ",
+              updated_at: "",
+              is_public: list.is_public,
+            }}
+          />
+        ))}
       </section>
       <div
         className={clsx("py-1 md:py-4 flex w-full md:mt-5 justify-between items-center", {
@@ -140,16 +161,7 @@ const ListsHub: WithPageLayout = () => {
           />
 
           <div className="flex gap-3">
-            <Button
-              loading={deleteLoading}
-              disabled={disabled}
-              onClick={handleOnConfirm}
-              variant="default"
-              className={clsx(
-                "bg-light-red-6 border border-light-red-8 hover:bg-light-red-7 text-light-red-10",
-                disabled && "cursor-not-allowed !bg-light-red-4 hover:!none !border-light-red-5 !text-light-red-8"
-              )}
-            >
+            <Button loading={deleteLoading} disabled={disabled} onClick={handleOnConfirm} variant="destructive">
               Delete
             </Button>
             <Button

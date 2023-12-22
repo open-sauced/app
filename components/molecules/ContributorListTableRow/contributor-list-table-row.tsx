@@ -11,6 +11,8 @@ import useContributorPullRequests from "lib/hooks/api/useContributorPullRequests
 import useRepoList from "lib/hooks/useRepoList";
 import { useFetchUser } from "lib/hooks/useFetchUser";
 import Checkbox from "components/atoms/Checkbox/checkbox";
+import { getTopContributorLanguages } from "lib/utils/contributor-utils";
+import { DATA_FALLBACK_VALUE } from "lib/utils/fallback-values";
 import { getActivity } from "../RepoRow/repo-row";
 import DevProfile from "../DevProfile/dev-profile";
 
@@ -42,18 +44,6 @@ function getLastContributedRepo(pullRequests: DbRepoPR[]) {
   });
 
   return sortedPullRequests[0].full_name;
-}
-
-function getTopContributorLanguages(contributor: DbUser) {
-  // some contributors will have empty language objects so we will pull their popular language from the interests field instead of defaulting to nothing
-  const entries = Object.entries<string>(contributor.languages);
-  if (entries.length === 0) {
-    return [contributor.interests];
-  }
-  return entries
-    .sort(([, a], [, b]) => (a < b ? -1 : 1))
-    .slice(0, 2)
-    .map(([language]) => language);
 }
 
 function getLanguageAbbreviation(language: string) {
@@ -97,7 +87,7 @@ const ContributorListTableRow = ({
 
   const repoList = useRepoList(Array.from(new Set(data.map((prData) => prData.full_name))).join(","));
   const contributorLanguageList = user ? getTopContributorLanguages(user) : [];
-  const days = getPullRequestsToDays(data, Number(range || "30"));
+  const days = getPullRequestsToDays(data, Number(range ?? 30));
   const totalPrs = data.length;
   const last30days = [
     {
@@ -137,12 +127,12 @@ const ContributorListTableRow = ({
               </p>
             </div>
           </div>
-          <div className="">
+          <div>
             <div
               onClick={() => setTableOpen(!tableOpen)}
               className="items-center justify-between w-6 h-6 p-1 border rounded-md "
             >
-              {tableOpen ? <ChevronUpIcon className="" /> : <ChevronDownIcon />}
+              {tableOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}
             </div>
           </div>
         </div>
@@ -169,11 +159,13 @@ const ContributorListTableRow = ({
 
           <div className="flex items-center justify-between py-3 border-b">
             <div>Languages</div>
-            {contributorLanguageList && (
-              <p>
+            {contributorLanguageList.length > 0 ? (
+              <div>
                 {firstContributorLanguage && getLanguageAbbreviation(firstContributorLanguage)}
                 {secondContributorLanguage && `, ${getLanguageAbbreviation(secondContributorLanguage)}`}
-              </p>
+              </div>
+            ) : (
+              <div>{DATA_FALLBACK_VALUE}</div>
             )}
           </div>
           <div className="flex items-center justify-between py-3 border-b">
