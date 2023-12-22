@@ -65,15 +65,6 @@ const ContributorProfileInfo = ({
         <div className="flex items-center text-sm gap-3">
           {isConnected && (
             <>
-              {/* {displayLocalTime && (
-                <span className="flex gap-2 items-center">
-                  <Tooltip content="Time zone">
-                    <FiClock />
-                  </Tooltip>
-                  {timezone ? `UTC${getTimezone(timezone)}` : "UTC+1"}
-                </span>
-              )} */}
-
               <div className="flex gap-2 items-center">
                 <div className="flex gap-1 items-center">
                   <span className="font-semibold text-light-slate-12 text-sm"> {followerCount} </span>
