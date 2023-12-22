@@ -5,6 +5,26 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.81.0-beta.5](https://github.com/open-sauced/insights/compare/v1.81.0-beta.4...v1.81.0-beta.5) (2023-12-22)
+
+
+### 🍕 Features
+
+* insights page are available to non logged in users ([#2226](https://github.com/open-sauced/insights/issues/2226)) ([23e19fa](https://github.com/open-sauced/insights/commit/23e19fa48dc0dd53bc8c962e8b532411ba549449))
+
+
+### 📝 Documentation
+
+* add sidebar component prototype to storybook ([#2377](https://github.com/open-sauced/insights/issues/2377)) ([9e15943](https://github.com/open-sauced/insights/commit/9e15943e77c75a86401b408648fa656f5f962825))
+
+
+### 🐛 Bug Fixes
+
+* now page limit dropdown filters works on repo table ([#2227](https://github.com/open-sauced/insights/issues/2227)) ([fdcc081](https://github.com/open-sauced/insights/commit/fdcc0814aad71834f2c5cc74e87549e7dbf1b1e5))
+* removed treemap prototype ([17cb4d8](https://github.com/open-sauced/insights/commit/17cb4d8783ce1e8ed1b95d790fa2a815262f3b1e))
+* removed treemap prototype ([#2392](https://github.com/open-sauced/insights/issues/2392)) ([04c7f29](https://github.com/open-sauced/insights/commit/04c7f2989f44a69add4e27fc8f6690b8f0292aa3))
+* Revert "fix: fixed releases breaking from SWC by turning it off ([#2394](https://github.com/open-sauced/insights/issues/2394))" ([#2397](https://github.com/open-sauced/insights/issues/2397)) ([0d2775d](https://github.com/open-sauced/insights/commit/0d2775d0a6738c087049e4530512599dc679ef46))
+
 ## [1.81.0-beta.4](https://github.com/open-sauced/insights/compare/v1.81.0-beta.3...v1.81.0-beta.4) (2023-12-21)
 
 
