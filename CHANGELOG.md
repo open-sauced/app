@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.81.0-beta.6](https://github.com/open-sauced/insights/compare/v1.81.0-beta.5...v1.81.0-beta.6) (2023-12-22)
+
+
+### 🍕 Features
+
+* now contributions treemap can resize ([#2401](https://github.com/open-sauced/insights/issues/2401)) ([d524fb0](https://github.com/open-sauced/insights/commit/d524fb0d94cf3c020afb9873e23f921d5d1c5c53))
+* replace contribution distribution chart with contributors table in list overview page ([#2385](https://github.com/open-sauced/insights/issues/2385)) ([a9db0dd](https://github.com/open-sauced/insights/commit/a9db0dd6253313b67ff80c8068a9f03cba5eef62))
+
 ## [1.81.0-beta.5](https://github.com/open-sauced/insights/compare/v1.81.0-beta.4...v1.81.0-beta.5) (2023-12-22)
 
 
