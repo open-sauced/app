@@ -25,7 +25,7 @@ interface RepositoriesProps {
 const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
   const { user, signIn } = useSupabaseAuth();
   const router = useRouter();
-  const { pageId, toolName, selectedFilter, userOrg, range, limit } = router.query;
+  const { pageId, toolName, selectedFilter, userOrg, range = 30, limit = 10 } = router.query;
   const username = userOrg ? user?.user_metadata.user_name : undefined;
   const topic = pageId as string;
 
@@ -130,7 +130,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
               <TableTitle>Contributors</TableTitle>
             </div>
             <div className={clsx(classNames.cols.last30days, "hidden xl:flex")}>
-              <TableTitle>Last 30 Days</TableTitle>
+              <TableTitle>Last {range} Days</TableTitle>
             </div>
           </div>
 
