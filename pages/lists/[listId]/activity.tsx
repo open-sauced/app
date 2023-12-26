@@ -2,6 +2,7 @@ import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { GetServerSidePropsContext } from "next";
 import { NodeMouseEventHandler } from "@nivo/treemap";
 import { useRouter } from "next/router";
+import { useRef } from "react";
 import Error from "components/atoms/Error/Error";
 import { fetchApiData, validateListPath } from "helpers/fetchApiData";
 import ListPageLayout from "layouts/lists";
@@ -15,6 +16,7 @@ import ContributionsEvolutionByType from "components/molecules/ContributionsEvol
 import useContributionsEvolutionByType from "lib/hooks/api/useContributionsByEvolutionType";
 import { FeatureFlagged } from "components/shared/feature-flagged";
 import { FeatureFlag, getAllFeatureFlags } from "lib/utils/server/feature-flags";
+import { OnToggleResizeEventType } from "components/Graphs/shared/graph-resizer";
 
 interface ContributorListPageProps {
   list?: DBList;
@@ -126,6 +128,28 @@ const ListActivityPage = ({ list, numberOfContributors, isError, isOwner, featur
     isError: evolutionError,
     isLoading: isLoadingEvolution,
   } = useContributionsEvolutionByType({ listId: list!.id, range: Number(range ?? "30") });
+  const treemapRef = useRef<HTMLSpanElement>(null);
+  const mostActiveRef = useRef<HTMLSpanElement>(null);
+  const graphResizerLookup = new Map();
+
+  if (treemapRef.current) {
+    graphResizerLookup.set(treemapRef.current, true);
+  }
+
+  if (mostActiveRef.current) {
+    graphResizerLookup.set(mostActiveRef.current, true);
+  }
+
+  const onToggleResize: OnToggleResizeEventType = (checked) => {
+    const treemap = treemapRef.current;
+
+    if (!treemap) {
+      return;
+    }
+
+    treemap.style.gridColumn = checked ? "1 / span 2" : "";
+    treemap.style.gridRow = checked ? "1 / span 2" : "";
+  };
 
   return (
     <ListPageLayout list={list} numberOfContributors={numberOfContributors} isOwner={isOwner}>
@@ -141,14 +165,17 @@ const ListActivityPage = ({ list, numberOfContributors, isError, isOwner, featur
             contributorType={contributorType}
             isLoading={isLoading}
           />
-          <ContributionsTreemap
-            setRepoId={setRepoId}
-            repoId={repoId}
-            onClick={onHandleClick}
-            data={treemapData}
-            color={getGraphColorPalette()}
-            isLoading={isLoadingProjectContributionsByUser || isTreemapLoading}
-          />
+          <span ref={treemapRef} className="relative">
+            <ContributionsTreemap
+              setRepoId={setRepoId}
+              repoId={repoId}
+              onClick={onHandleClick}
+              data={treemapData}
+              color={getGraphColorPalette()}
+              isLoading={isLoadingProjectContributionsByUser || isTreemapLoading}
+              onToggleResize={onToggleResize}
+            />
+          </span>
           <FeatureFlagged flag="contributions_evolution_by_type" featureFlags={featureFlags}>
             <ContributionsEvolutionByType data={evolutionData} isLoading={isLoadingEvolution} />
           </FeatureFlagged>
