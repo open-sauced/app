@@ -50,6 +50,7 @@ interface InsightPageProps {
 }
 const staticSuggestedRepos: RepoCardProfileProps[] = [
   {
+    id: 501028599,
     avatar: "https://avatars.githubusercontent.com/u/57568598?s=200&v=4",
     prCount: 8,
     repoName: "app",
@@ -57,6 +58,7 @@ const staticSuggestedRepos: RepoCardProfileProps[] = [
     orgName: "open-sauced",
   },
   {
+    id: 212613049,
     avatar: "https://avatars.githubusercontent.com/u/59704711?s=200&v=4",
     prCount: 26,
     repoName: "cli",
@@ -64,6 +66,7 @@ const staticSuggestedRepos: RepoCardProfileProps[] = [
     orgName: "cli",
   },
   {
+    id: 133442384,
     avatar: "https://avatars.githubusercontent.com/u/42048915?s=200&v=4",
     prCount: 100,
     repoName: "deno",
@@ -130,8 +133,10 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
             const totalPrs = (repo.open_prs_count || 0) + (repo.closed_prs_count || 0) + (repo.merged_prs_count || 0);
             const avatar = getAvatarByUsername(orgName, 60);
             const totalIssues = repo.issues || 0;
+            const id = repo.id;
 
             return {
+              id,
               orgName,
               repoName,
               totalPrs,
@@ -590,8 +595,12 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
               reposData={recommendedReposWithoutSelected}
               loadingData={addRepoLoading}
               isLoading={isLoading}
+              addedRepos={repos}
               onAddRepo={(repo) => {
                 addSuggestedRepo(repo);
+              }}
+              onRemoveRepo={(repoId) => {
+                handleRemoveRepository(repoId);
               }}
             />
           </div>

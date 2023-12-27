@@ -4,6 +4,7 @@ import { VscIssues } from "react-icons/vsc";
 import Avatar from "components/atoms/Avatar/avatar";
 
 export interface RepoCardProfileProps {
+  id: number;
   avatar?: string | StaticImageData;
   orgName: string;
   repoName: string;

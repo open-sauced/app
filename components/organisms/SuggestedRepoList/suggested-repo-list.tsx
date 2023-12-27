@@ -6,7 +6,9 @@ import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 
 interface SuggestedRepositoriesListProps {
   reposData: RepoCardProfileProps[];
+  addedRepos: DbRepo[];
   onAddRepo?: (repo: string) => void;
+  onRemoveRepo?: (repoId: number) => void;
   isLoading?: boolean;
   loadingData?: {
     repoName: string;
@@ -16,11 +18,19 @@ interface SuggestedRepositoriesListProps {
 }
 
 const SuggestedRepositoriesList = ({
+  addedRepos,
   reposData,
   onAddRepo,
+  onRemoveRepo,
   loadingData,
   isLoading,
 }: SuggestedRepositoriesListProps) => {
+  // Checks if repo is already added to the cart
+  const isRepoAdded = (suggestedRepoId: number) => {
+    const isAdded = addedRepos.find((repo) => repo.id === suggestedRepoId);
+    return isAdded !== undefined;
+  };
+
   return (
     <div>
       <Title className="!text-light-slate-11 !text-sm" level={4}>
@@ -35,7 +45,14 @@ const SuggestedRepositoriesList = ({
         ) : (
           <>
             {reposData.map((item, index) => (
-              <SuggestedRepository key={index} data={item} loadingData={loadingData} onAddRepo={onAddRepo} />
+              <SuggestedRepository
+                key={index}
+                data={item}
+                loadingData={loadingData}
+                onAddRepo={onAddRepo}
+                onRemoveRepo={onRemoveRepo}
+                isAdded={isRepoAdded(item.id)}
+              />
             ))}
           </>
         )}
