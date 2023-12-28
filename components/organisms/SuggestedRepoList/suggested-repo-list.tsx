@@ -44,16 +44,19 @@ const SuggestedRepositoriesList = ({
           </>
         ) : (
           <>
-            {reposData.map((item, index) => (
-              <SuggestedRepository
-                key={index}
-                data={item}
-                loadingData={loadingData}
-                onAddRepo={onAddRepo}
-                onRemoveRepo={onRemoveRepo}
-                isAdded={isRepoAdded(item.id)}
-              />
-            ))}
+            {reposData.map((item, index) => {
+              const isAdded = isRepoAdded(item.id);
+              return (
+                <SuggestedRepository
+                  key={index}
+                  data={item}
+                  loadingData={loadingData}
+                  onAddRepo={onAddRepo}
+                  onRemoveRepo={onRemoveRepo}
+                  isAdded={isAdded}
+                />
+              );
+            })}
           </>
         )}
       </div>
