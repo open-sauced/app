@@ -22,12 +22,16 @@ h5,
 h6 {
   @apply tracking-tight;
 }
-
+button:not([role]){
+  @apply border;
+  @apply border-transparent;
+}
 input[type="checkbox"]:focus-visible,
 [role="checkbox"]:focus-visible,
 [role="radio"]:focus-visible,
 [role="combobox"]:focus-visible,
-[role="switch"]:focus-visible {
+[role="switch"]:focus-visible,
+button:not([role]):focus-visible{
   @apply outline-none;
   @apply ring;
   @apply border-orange-500;
@@ -172,3 +176,4 @@ div[role="dialog"]::-webkit-scrollbar-thumb {
 .react-loading-skeleton {
   z-index: unset !important;
 }
+
