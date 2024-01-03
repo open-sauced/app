@@ -52,7 +52,7 @@ const RecommendedRepoCard = ({ fullName, className }: RecommendedRepoCardProps):
           <div className="flex flex-col gap-2 pb-3">
             <a
               className="text-xl font-semibold"
-              href={`https://app.opensauced.pizza/hot/repositories/filter/${fullName}`}
+              href={`https://app.opensauced.pizza/hot/dashboard/filter/${fullName}`}
               rel="noopener noreferrer"
               target="_blank"
             >
