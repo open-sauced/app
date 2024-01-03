@@ -17,7 +17,7 @@ import HighlightCard from "components/molecules/HighlightCard/highlight-card";
 import { fetchApiData, validateListPath } from "helpers/fetchApiData";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
 
-type ContributorPrMap = { [contributor: string]: DbRepoPR };
+type ContributorPrMap = { [contributor: string]: DbRepoPREvents };
 
 interface ListsOverviewProps {
   list: DBList;
@@ -102,11 +102,11 @@ const ListsOverview = ({ list, numberOfContributors, isOwner }: ListsOverviewPro
   let scatterChartData: ScatterChartDataItems[] = [];
 
   const uniqueContributors: ContributorPrMap = prData.reduce((prs, curr) => {
-    if (prs[curr.author_login]) {
-      prs[curr.author_login].linesCount += Math.abs(curr.additions - curr.deletions);
+    if (prs[curr.pr_author_login]) {
+      prs[curr.pr_author_login].linesCount += Math.abs(curr.pr_additions - curr.pr_deletions);
     } else {
-      prs[curr.author_login] = { ...curr };
-      prs[curr.author_login].linesCount = Math.abs(curr.additions - curr.deletions);
+      prs[curr.pr_author_login] = { ...curr };
+      prs[curr.pr_author_login].linesCount = Math.abs(curr.pr_additions - curr.pr_deletions);
     }
 
     return prs;
@@ -125,13 +125,13 @@ const ListsOverview = ({ list, numberOfContributors, isOwner }: ListsOverviewPro
   if (prError) {
     scatterChartData = [];
   } else {
-    scatterChartData = prs.map(({ updated_at, linesCount, author_login }) => {
-      const author_image = author_login.includes("[bot]") ? "octocat" : author_login;
+    scatterChartData = prs.map(({ pr_updated_at, linesCount, pr_author_login }) => {
+      const author_image = pr_author_login.includes("[bot]") ? "octocat" : pr_author_login;
 
       const data = {
-        x: calcDaysFromToday(new Date(updated_at)),
+        x: calcDaysFromToday(new Date(pr_updated_at)),
         y: linesCount,
-        contributor: author_login,
+        contributor: pr_author_login,
         image: getAvatarByUsername(author_image, 40),
       };
       return data;

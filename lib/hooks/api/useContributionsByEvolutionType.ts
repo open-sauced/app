@@ -1,7 +1,7 @@
 import { useState } from "react";
 import useSWR, { Fetcher } from "swr";
 
-import publicApiFetcher from "lib/utils/public-api-fetcher";
+import { publicApiFetcher } from "lib/utils/public-api-fetcher";
 import { ContributionEvolutionByTypeDatum } from "components/molecules/ContributionsEvolutionByTypeCard/contributions-evolution-by-type-card";
 import { ContributorType } from "components/Graphs/shared/contributor-type-filter";
 

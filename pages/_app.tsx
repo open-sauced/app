@@ -14,7 +14,7 @@ import posthog from "posthog-js";
 import { PostHogProvider } from "posthog-js/react";
 import { TipProvider } from "components/atoms/Tooltip/tooltip";
 
-import publicApiFetcher from "lib/utils/public-api-fetcher";
+import { publicApiFetcher } from "lib/utils/public-api-fetcher";
 import { initiateAnalytics } from "lib/utils/analytics";
 import { supabase } from "lib/utils/supabase";
 
