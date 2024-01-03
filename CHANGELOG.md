@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.81.0-beta.7](https://github.com/open-sauced/insights/compare/v1.81.0-beta.6...v1.81.0-beta.7) (2024-01-03)
+
+
+### 🐛 Bug Fixes
+
+* Added state for reactions dropdown on highlight cards. ([#2409](https://github.com/open-sauced/insights/issues/2409)) ([5f334f8](https://github.com/open-sauced/insights/commit/5f334f8fc9638b8d9c11a7957b8c31dcf69eedc2))
+
 ## [1.81.0-beta.6](https://github.com/open-sauced/insights/compare/v1.81.0-beta.5...v1.81.0-beta.6) (2023-12-22)
 
 
