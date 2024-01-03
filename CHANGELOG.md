@@ -5,6 +5,30 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.81.0-alpha.1](https://github.com/open-sauced/insights/compare/v1.80.0...v1.81.0-alpha.1) (2024-01-03)
+
+
+### 🐛 Bug Fixes
+
+* added a constant for our fallback empty data value ([7ea28e1](https://github.com/open-sauced/insights/commit/7ea28e110ff8cc126859c555831e7caaab57c94f))
+* added a constant for our fallback empty data value ([#2374](https://github.com/open-sauced/insights/issues/2374)) ([48cf2c4](https://github.com/open-sauced/insights/commit/48cf2c401690c0ac56fb43859eeaaa7118a1ebc2))
+* added contributions treemap loading view ([e47e3b6](https://github.com/open-sauced/insights/commit/e47e3b67c167bcb3d520423e10c0731864343aa1))
+* added contributions treemap loading view ([#2383](https://github.com/open-sauced/insights/issues/2383)) ([c6c94b3](https://github.com/open-sauced/insights/commit/c6c94b38d882cfdf105af0c776df5d7f64486751))
+* fix pagination logic ([#2361](https://github.com/open-sauced/insights/issues/2361)) ([073fb85](https://github.com/open-sauced/insights/commit/073fb85aab6f8fc9a7d2f10bd6e343304398e11d))
+* Hotfix to bust app-cache ([#2387](https://github.com/open-sauced/insights/issues/2387)) ([d1f35ed](https://github.com/open-sauced/insights/commit/d1f35ed48836c0a1d2be9bebc8935a7bb1d646ea))
+* now interests are not fallbacks for most used languages ([6fc1273](https://github.com/open-sauced/insights/commit/6fc12733e78a8d9c03fdf76aa3b564d7678a38b5))
+* now interests are not fallbacks for most used languages ([e2ff7fd](https://github.com/open-sauced/insights/commit/e2ff7fd33ff379936c1bffe6a61fb57be39b5bae))
+* now interests are not fallbacks for most used languages ([#2373](https://github.com/open-sauced/insights/issues/2373)) ([7e68217](https://github.com/open-sauced/insights/commit/7e68217646cd53e4025f07e00e55edf94ec20876))
+* now you can navigate back to the previous page from a user profile page ([9a4c538](https://github.com/open-sauced/insights/commit/9a4c538a7ff43dec90345750e1985346da547249))
+* now you can navigate back to the previous page from a user profile page ([#2382](https://github.com/open-sauced/insights/issues/2382)) ([7d15dca](https://github.com/open-sauced/insights/commit/7d15dcaf9bc8d7bc955c9340b22bbe20a9422e9c))
+
+
+### 🍕 Features
+
+* add helper tooltip to dashboard highlight cards ([#2309](https://github.com/open-sauced/insights/issues/2309)) ([9429233](https://github.com/open-sauced/insights/commit/942923313e522e31614ee94512417851b9f99ef9))
+* Introduce v2 API and user PR Timescale integration ([#2293](https://github.com/open-sauced/insights/issues/2293)) ([e80d2f2](https://github.com/open-sauced/insights/commit/e80d2f2e1dcf075f7f2dbc8d603ef0c59bdaf57a))
+* Make insight pages more agnostic and use new v1/insight API functionality ([#2368](https://github.com/open-sauced/insights/issues/2368)) ([5813beb](https://github.com/open-sauced/insights/commit/5813beb3cca54ef9c11cbc1062f7d0c7e627ae2b))
+
 ## [1.81.0-beta.3](https://github.com/open-sauced/insights/compare/v1.81.0-beta.2...v1.81.0-beta.3) (2023-12-20)
 
 
