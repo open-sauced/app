@@ -24,6 +24,7 @@ import { useMediaQuery } from "lib/hooks/useMediaQuery";
 import useSession from "lib/hooks/useSession";
 import PrivateWrapper from "layouts/private-wrapper";
 
+import AppSideBar from "components/Sidebar/app-sidebar";
 import type { AppProps } from "next/app";
 
 // Clear any service workers present
@@ -153,13 +154,17 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
           <PostHogProvider client={posthog}>
             <PrivateWrapper isPrivateRoute={Component.isPrivateRoute}>
               <TipProvider>
-                {Component.PageLayout ? (
-                  <Component.PageLayout>
+                <div className="flex flex-1">
+                  <AppSideBar />
+
+                  {Component.PageLayout ? (
+                    <Component.PageLayout>
+                      <Component {...pageProps} />
+                    </Component.PageLayout>
+                  ) : (
                     <Component {...pageProps} />
-                  </Component.PageLayout>
-                ) : (
-                  <Component {...pageProps} />
-                )}
+                  )}
+                </div>
               </TipProvider>
             </PrivateWrapper>
           </PostHogProvider>
