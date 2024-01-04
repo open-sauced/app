@@ -12,6 +12,7 @@ import useRepoList from "lib/hooks/useRepoList";
 import { useFetchUser } from "lib/hooks/useFetchUser";
 import Checkbox from "components/atoms/Checkbox/checkbox";
 import { getTopContributorLanguages } from "lib/utils/contributor-utils";
+import { DATA_FALLBACK_VALUE } from "lib/utils/fallback-values";
 import { getActivity } from "../RepoRow/repo-row";
 import DevProfile from "../DevProfile/dev-profile";
 
@@ -86,7 +87,7 @@ const ContributorListTableRow = ({
 
   const repoList = useRepoList(Array.from(new Set(data.map((prData) => prData.full_name))).join(","));
   const contributorLanguageList = user ? getTopContributorLanguages(user) : [];
-  const days = getPullRequestsToDays(data, Number(range || "30"));
+  const days = getPullRequestsToDays(data, Number(range ?? 30));
   const totalPrs = data.length;
   const last30days = [
     {
@@ -158,11 +159,13 @@ const ContributorListTableRow = ({
 
           <div className="flex items-center justify-between py-3 border-b">
             <div>Languages</div>
-            {contributorLanguageList && (
-              <p>
+            {contributorLanguageList.length > 0 ? (
+              <div>
                 {firstContributorLanguage && getLanguageAbbreviation(firstContributorLanguage)}
                 {secondContributorLanguage && `, ${getLanguageAbbreviation(secondContributorLanguage)}`}
-              </p>
+              </div>
+            ) : (
+              <div>{DATA_FALLBACK_VALUE}</div>
             )}
           </div>
           <div className="flex items-center justify-between py-3 border-b">
