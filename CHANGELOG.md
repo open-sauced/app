@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.81.0-beta.8](https://github.com/open-sauced/insights/compare/v1.81.0-beta.7...v1.81.0-beta.8) (2024-01-04)
+
+
+### 🍕 Features
+
+* contributions treemap filtered by owners now ([#2391](https://github.com/open-sauced/insights/issues/2391)) ([3944293](https://github.com/open-sauced/insights/commit/39442930dcc13773cd9e3fb5702060c25816c823))
+
 ## [1.81.0-beta.7](https://github.com/open-sauced/insights/compare/v1.81.0-beta.6...v1.81.0-beta.7) (2024-01-03)
 
 
