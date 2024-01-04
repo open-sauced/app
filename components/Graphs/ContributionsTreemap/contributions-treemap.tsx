@@ -1,34 +1,47 @@
 import { useSpring, animated } from "@react-spring/web";
 import dynamic from "next/dynamic";
 import { Datum } from "@nivo/line";
+import { ReactNode } from "react";
 import Card from "components/atoms/Card/card";
-import { SpecialNode } from "components/molecules/ContributionsTreemap/special-node";
-import { ContributorNode } from "components/molecules/ContributionsTreemap/contributor-node";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
+import Button from "components/atoms/Button/button";
 import { OnToggleResizeEventType, Resizer } from "components/Graphs/shared/graph-resizer";
 import type { NodeMouseEventHandler, NodeProps, TreeMapCommonProps } from "@nivo/treemap";
+import { SpecialNode } from "./special-node";
+import { ContributorNode } from "./contributor-node";
 
 interface ContributionsTreemapProps {
   data: any;
   color: TreeMapCommonProps<Datum>["colors"];
-  onClick: NodeMouseEventHandler<object>;
-  repoId: number | null;
-  setRepoId: (repoId: number | null) => void;
+  projectId: string | null;
+  orgId: string | null;
   isLoading: boolean;
+  onDrillDown: NodeMouseEventHandler<object>;
+  onDrillUp: () => void;
   onToggleResize: OnToggleResizeEventType;
 }
 
-function BreadCrumb({ isActive, ...rest }: any) {
+function BreadCrumb({
+  isActive,
+  useSeparator = true,
+  children,
+}: {
+  isActive: boolean;
+  useSeparator?: boolean;
+  children: ReactNode;
+}) {
   const separatorStyle = useSpring(isActive ? { opacity: 1 } : { opacity: 0 });
   const textStyle = useSpring(isActive ? { opacity: 1, translateX: 0 } : { opacity: 0, translateX: 100 });
 
   return (
     <>
-      <animated.div className={"px-1"} style={separatorStyle}>
-        {"/"}
-      </animated.div>
-      <animated.div style={textStyle} {...rest} />
+      <animated.div style={textStyle} {...{ children }} />
+      {useSeparator ? (
+        <animated.div className={"px-1"} style={separatorStyle}>
+          {"/"}
+        </animated.div>
+      ) : null}
     </>
   );
 }
@@ -38,12 +51,13 @@ const ResponsiveTreeMapHtml = dynamic(() => import("@nivo/treemap").then((module
 });
 
 export const ContributionsTreemap = ({
-  setRepoId,
-  repoId,
+  projectId,
+  orgId,
   data,
   color,
-  onClick,
   isLoading,
+  onDrillDown: onDrilldown,
+  onDrillUp,
   onToggleResize,
 }: ContributionsTreemapProps) => {
   return (
@@ -52,13 +66,32 @@ export const ContributionsTreemap = ({
         <Resizer onToggleResize={onToggleResize} />
         <div className="grid">
           {/* Label: Text */}
-          <h2 className="font-medium text-lg text-slate-900 mb-2 flex">
-            <button className="cursor-pointer" onClick={() => setRepoId(null)}>
-              Repos
-            </button>
-            <div> </div>
-            <BreadCrumb isActive={repoId !== null}>Contributors</BreadCrumb>
+          <h2 className="font-medium text-lg text-slate-900 mb-2 flex items-center justify-between">
+            All Contributions
           </h2>
+          <div className="flex gap-2 items-center justify-between">
+            <div className="flex gap-2 mb-2">
+              {orgId ? (
+                <BreadCrumb isActive={true} useSeparator={projectId !== null}>
+                  {orgId}
+                </BreadCrumb>
+              ) : null}
+              {projectId ? (
+                <>
+                  <BreadCrumb isActive={true}>{projectId}</BreadCrumb>
+                  <BreadCrumb isActive={true} useSeparator={false}>
+                    Contributors
+                  </BreadCrumb>
+                </>
+              ) : null}
+            </div>
+            <div className="flex gap-2 mb-2">
+              <Button variant="outline" disabled={!orgId} onClick={orgId ? onDrillUp : undefined}>
+                <span className="sr-only">Drill up in the treemap of contributions</span>
+                <span className="not-sr-only">Back</span>
+              </Button>
+            </div>
+          </div>
           <div className="rounded-md overflow-hidden grid place-content-stretch">
             <div className="grid" style={{ gridArea: "1 / 1", minHeight: "29rem" }}>
               <ClientOnly>
@@ -73,7 +106,7 @@ export const ContributionsTreemap = ({
                     leavesOnly
                     orientLabel={false}
                     nodeComponent={
-                      repoId === null
+                      projectId === null || orgId === null
                         ? SpecialNode
                         : // TODO: Sort this out later
                           (ContributorNode as <Datum extends object>({
@@ -87,7 +120,7 @@ export const ContributionsTreemap = ({
                     colors={color}
                     nodeOpacity={1}
                     borderWidth={0}
-                    onClick={onClick}
+                    onClick={onDrilldown}
                     motionConfig={"default"}
                   />
                 )}
