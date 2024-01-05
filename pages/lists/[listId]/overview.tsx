@@ -1,28 +1,22 @@
-import { useState } from "react";
 import { useRouter } from "next/router";
+import { ErrorBoundary } from "react-error-boundary";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { GetServerSidePropsContext } from "next";
 import ListPageLayout from "layouts/lists";
 
-import Card from "components/atoms/Card/card";
-import NivoScatterPlot from "components/molecules/NivoScatterChart/nivo-scatter-chart";
-import { ScatterChartDataItems } from "components/molecules/NivoScatterChart/nivo-scatter-chart";
-
-import { useMediaQuery } from "lib/hooks/useMediaQuery";
-import { calcDaysFromToday } from "lib/utils/date-utils";
-import { getAvatarByUsername } from "lib/utils/github";
-import useListContributions from "lib/hooks/useListContributions";
+import Error from "components/atoms/Error/Error";
 import useListStats from "lib/hooks/useListStats";
 import HighlightCard from "components/molecules/HighlightCard/highlight-card";
 import { fetchApiData, validateListPath } from "helpers/fetchApiData";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
-
-type ContributorPrMap = { [contributor: string]: DbRepoPR };
+import { useContributorsList } from "lib/hooks/api/useContributorList";
+import ContributorsList from "components/organisms/ContributorsList/contributors-list";
 
 interface ListsOverviewProps {
   list: DBList;
   numberOfContributors: number;
   isOwner: boolean;
+  isError: boolean;
 }
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
@@ -57,14 +51,24 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
       list,
       numberOfContributors: data?.meta.itemCount || 0,
       isOwner: list && list.user_id === userId,
+      isError: error || contributorListError,
     },
   };
 };
 
-const ListsOverview = ({ list, numberOfContributors, isOwner }: ListsOverviewProps): JSX.Element => {
+const ListsOverview = ({ list, numberOfContributors, isOwner, isError }: ListsOverviewProps): JSX.Element => {
   const router = useRouter();
-  const { listId } = router.query;
-  const { data: prData, isError: prError } = useListContributions(listId as string);
+  const { listId, range, limit } = router.query;
+
+  const {
+    isLoading,
+    setPage,
+    data: { data: contributors, meta },
+  } = useContributorsList({
+    listId: list?.id,
+    defaultRange: range ? (range as string) : "30",
+    defaultLimit: limit ? (limit as unknown as number) : 10,
+  });
 
   const {
     data: prevAllContributorStats,
@@ -96,55 +100,6 @@ const ListsOverview = ({ list, numberOfContributors, isOwner }: ListsOverviewPro
 
   const allContributorCommits = allContributorStats?.reduce((acc, curr) => acc + curr.commits, 0) || 0;
   const prevAllContributorCommits = prevAllContributorStats?.reduce((acc, curr) => acc + curr.commits, 0) || 0;
-  const [showBots, setShowBots] = useState(false);
-  const isMobile = useMediaQuery("(max-width:720px)");
-
-  let scatterChartData: ScatterChartDataItems[] = [];
-
-  const uniqueContributors: ContributorPrMap = prData.reduce((prs, curr) => {
-    if (prs[curr.author_login]) {
-      prs[curr.author_login].linesCount += Math.abs(curr.additions - curr.deletions);
-    } else {
-      prs[curr.author_login] = { ...curr };
-      prs[curr.author_login].linesCount = Math.abs(curr.additions - curr.deletions);
-    }
-
-    return prs;
-  }, {} as ContributorPrMap);
-
-  const prs = Object.keys(uniqueContributors)
-    .filter((key) => {
-      if (showBots) {
-        return true;
-      }
-
-      return !key.includes("[bot]");
-    })
-    .map((key) => uniqueContributors[key]);
-
-  if (prError) {
-    scatterChartData = [];
-  } else {
-    scatterChartData = prs.map(({ updated_at, linesCount, author_login }) => {
-      const author_image = author_login.includes("[bot]") ? "octocat" : author_login;
-
-      const data = {
-        x: calcDaysFromToday(new Date(updated_at)),
-        y: linesCount,
-        contributor: author_login,
-        image: getAvatarByUsername(author_image, 40),
-      };
-      return data;
-    });
-  }
-
-  const maxFilesModified = scatterChartData.reduce((max, curr) => {
-    const { y } = curr;
-    if (Number(y) > max) {
-      return y as number;
-    }
-    return max;
-  }, 0);
 
   return (
     <ListPageLayout list={list} numberOfContributors={numberOfContributors} isOwner={isOwner} showRangeFilter={false}>
@@ -189,16 +144,21 @@ const ListsOverview = ({ list, numberOfContributors, isOwner }: ListsOverviewPro
           </section>
           <section className="flex flex-col max-w-full gap-4 mb-6 lg:flex-row">
             <div className="flex flex-col w-full">
-              <Card className="w-full">
-                <NivoScatterPlot
-                  title="Contributor Distribution"
-                  showBots={showBots}
-                  setShowBots={setShowBots}
-                  data={[{ id: "Contributors", data: scatterChartData }]}
-                  maxFilesModified={maxFilesModified}
-                  isMobile={isMobile}
-                />
-              </Card>
+              {isError ? (
+                <Error errorMessage="Unable to load list of contributors" />
+              ) : (
+                <ErrorBoundary
+                  fallback={<div className="grid place-content-center">Error loading the list of contributors</div>}
+                >
+                  <ContributorsList
+                    contributors={contributors}
+                    meta={meta}
+                    isLoading={isLoading}
+                    setPage={setPage}
+                    range={String(range ?? "30")}
+                  />
+                </ErrorBoundary>
+              )}
             </div>
           </section>
         </ClientOnly>

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/router";
 import clsx from "clsx";
 import formatDistanceToNowStrict from "date-fns/formatDistanceToNowStrict";
@@ -94,31 +94,15 @@ const ContributorProfileTab = ({
   const { data: emojis } = useFetchAllEmojis();
 
   const router = useRouter();
-  const { tab } = router.query;
+  const { tab = "highlights" } = router.query as { tab: TabKey };
 
   const hasHighlights = highlights ? highlights.length > 0 : false;
   const [inputVisible, setInputVisible] = useState(false);
 
-  const currentTab = (
-    (Object.keys(tabs).includes(tab as string) && tab) || hasHighlights ? "highlights" : "contributions"
-  ) as TabKey;
   function onTabChange(value: string) {
     const tabValue = value as TabKey;
     setQueryParams({ tab: tabValue } satisfies QueryParams);
   }
-
-  useEffect(() => {
-    // Setting the query param "tab" if none exists
-    if (
-      !tab ||
-      !Object.keys(tabs).includes(tab as string) ||
-      (tab === "recommendations" && user_name !== login) ||
-      (tab === "connections" && !receive_collaboration) ||
-      (tab === "connections" && user_name !== login)
-    ) {
-      setQueryParams({ tab: currentTab } satisfies QueryParams);
-    }
-  }, [tab, currentTab]);
 
   const getTabTriggerClassName = (tab: TabKey): string => {
     return clsx(
@@ -191,7 +175,7 @@ const ContributorProfileTab = ({
   };
 
   return (
-    <Tabs value={String(router.query.tab)} onValueChange={onTabChange}>
+    <Tabs value={tab} onValueChange={onTabChange}>
       <TabsList className="justify-start w-full overflow-x-auto border-b">
         {(Object.keys(tabs) as TabKey[]).map((tab) => (
           <TabsTrigger key={tab} className={getTabTriggerClassName(tab)} value={tab}>
