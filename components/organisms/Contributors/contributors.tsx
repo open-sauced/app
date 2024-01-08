@@ -10,7 +10,7 @@ import TableHeader from "components/molecules/TableHeader/table-header";
 import { calcDistanceFromToday } from "lib/utils/date-utils";
 
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
-import LimitSelect from "components/atoms/Select/limit-select";
+import LimitSelect, { LimitSelectMap } from "components/atoms/Select/limit-select";
 
 import useContributors from "lib/hooks/api/useContributors";
 import { getAvatarByUsername } from "lib/utils/github";
@@ -24,6 +24,7 @@ import { useToast } from "lib/hooks/useToast";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
 
 import ClientOnly from "components/atoms/ClientOnly/client-only";
+import { setQueryParams } from "lib/utils/query-params";
 import ContributorCard from "../ContributorCard/contributor-card";
 import ContributorTable from "../ContributorsTable/contributors-table";
 
@@ -33,9 +34,10 @@ interface ContributorProps {
 
 const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
   const router = useRouter();
+  const limit = router.query.limit as string;
   const topic = router.query.pageId as string;
 
-  const { data, meta, setPage, setLimit, isError, isLoading } = useContributors(10, repositories);
+  const { data, meta, setPage, isError, isLoading } = useContributors(Number(limit ?? 10), repositories);
   const { toast } = useToast();
   const [layout, setLayout] = useState<ToggleValue>("list");
   const [selectedContributors, setSelectedContributors] = useState<DbPRContributor[]>([]);
@@ -241,8 +243,9 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
             { name: "50 per page", value: "50" },
           ]}
           className="!w-36 ml-auto md:hidden overflow-x-hidden"
+          defaultValue={String(limit ?? 10) as LimitSelectMap}
           onChange={function (limit: string): void {
-            setLimit(Number(limit));
+            setQueryParams({ limit });
           }}
         />
 
