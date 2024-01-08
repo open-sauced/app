@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { GetServerSidePropsContext } from "next";
 import { formatDistanceToNowStrict } from "date-fns";
@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import ListPageLayout from "layouts/lists";
 import { fetchApiData, validateListPath } from "helpers/fetchApiData";
 import Search from "components/atoms/Search/search";
-import SingleSelect from "components/atoms/Select/single-select";
+
 import ContributorHighlightCard from "components/molecules/ContributorHighlight/contributor-highlight-card";
 import Avatar from "components/atoms/Avatar/avatar";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
@@ -20,11 +20,13 @@ import {
 import useDebounceTerm from "lib/hooks/useDebounceTerm";
 import { setQueryParams } from "lib/utils/query-params";
 
-import { RadioGroup, RadioGroupItem } from "components/atoms/Radio/radio-group";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 import DashContainer from "components/atoms/DashedContainer/DashContainer";
 import PaginationResults from "components/molecules/PaginationResults/pagination-result";
 import Pagination from "components/molecules/Pagination/pagination";
+import { repoTofilterList } from "pages/feed";
+
+import Icon from "components/atoms/Icon/icon";
 import { ContributorListPageProps } from "./activity";
 
 interface HighlightsPageProps extends ContributorListPageProps {
@@ -101,6 +103,16 @@ const Highlights = ({ list, numberOfContributors, isOwner, highlights }: Highlig
 
   const { data: emojis } = useFetchAllEmojis();
   const { data: taggedRepos } = useListHighlightsTaggedRepos(list?.id ?? "");
+  const [selectedFilter, setSelectedFilter] = useState<string | null>(null);
+
+  const filterOptions = useMemo(() => {
+    return repoTofilterList(taggedRepos);
+  }, [taggedRepos]);
+
+  const handleRepoFilter = (name: string) => {
+    setSelectedFilter(selectedFilter === name ? "" : name);
+    setQueryParams({ repo: name });
+  };
 
   const [contributor, setContributor] = useState("");
   const debouncedSearchTerm = useDebounceTerm(contributor, 300);
@@ -145,37 +157,22 @@ const Highlights = ({ list, numberOfContributors, isOwner, highlights }: Highlig
             {taggedRepos && taggedRepos.length > 0 ? (
               <div className="flex flex-col gap-2">
                 <span className="text-sm text-light-slate-9">Tagged Repositories</span>
-                <SingleSelect
-                  placeholder="Select repository"
-                  options={taggedRepos.map((repo) => ({ label: repo.full_name, value: repo.full_name }))}
-                  onValueChange={(value) => {
-                    setQueryParams({ repo: value });
-                  }}
-                  value={repo ?? undefined}
-                  position="popper"
-                />
+                {filterOptions &&
+                  filterOptions.length > 0 &&
+                  filterOptions.map(({ full_name, repoIcon, repoName }) => (
+                    <div
+                      onClick={() => handleRepoFilter(full_name)}
+                      key={full_name as string}
+                      className={`${
+                        selectedFilter === full_name ? "border-orange-600 bg-orange-200" : ""
+                      } flex hover:border-orange-600 hover:bg-orange-200 cursor-pointer gap-1 w-max  p-1 pr-2 border-[1px] border-light-slate-6 rounded-lg text-light-slate-12`}
+                    >
+                      <Icon IconImage={repoIcon} className="rounded-[4px] overflow-hidden" />
+                      <span className="max-w-[45px] md:max-w-[100px] truncate text-xs ">{repoName}</span>
+                    </div>
+                  ))}
               </div>
             ) : null}
-
-            <div className="flex flex-col gap-2">
-              <span className="text-sm text-light-slate-9">Published</span>
-
-              <RadioGroup
-                onValueChange={(value) => {
-                  setQueryParams({ range: value });
-                }}
-                defaultValue={range as string}
-              >
-                {rangeFilterOptions.map(({ label, value }) => (
-                  <div key={value} className="flex items-center gap-2">
-                    <RadioGroupItem id={value} value={value}></RadioGroupItem>
-                    <label className="text-sm text-light-slate-12" htmlFor={value}>
-                      {label}
-                    </label>
-                  </div>
-                ))}
-              </RadioGroup>
-            </div>
           </div>
         </div>
         <div className="w-full 2xl:max-w-[40rem] xl:max-w-[33rem] flex flex-col gap-10">
