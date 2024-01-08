@@ -52,9 +52,7 @@ const DeleteListPageModal: FC<ModalProps> = ({
           Are you sure you want to delete <span className="font-bold text-light-slate-12">{listName}</span>? If you have
           data on this list that your team is using, they will lose access.
         </Text>
-        <Text>
-          <span className="font-bold text-light-slate-12">This action cannot be undone</span>
-        </Text>
+        <Text className="font-bold text-light-slate-12">This action cannot be undone</Text>
         <Text>
           Type <span className="font-bold text-light-red-10">{listName}</span> to confirm
         </Text>
