@@ -220,35 +220,31 @@ const Highlights = ({ list, numberOfContributors, isOwner, highlights }: Highlig
                 ))
               : null}
           </ClientOnly>
-        </div>
-        {meta.pageCount > 1 && (
-          <div className="flex items-center justify-between max-w-3xl px-2 mt-10">
-            <div className="flex items-center w-max gap-x-4">
-              <PaginationResults metaInfo={meta} total={meta.itemCount} entity={"highlights"} />
+          {meta.pageCount > 1 && (
+            <div className="flex items-center justify-between max-w-3xl mt-4 xl:pr-24">
+              <div className="flex items-center w-max gap-x-4">
+                <PaginationResults metaInfo={meta} total={meta.itemCount} entity={"highlights"} />
+              </div>
+              <Pagination
+                pages={[]}
+                totalPage={meta.pageCount}
+                page={meta.page}
+                pageSize={meta.itemCount}
+                goToPage
+                hasNextPage={meta.hasNextPage}
+                hasPreviousPage={meta.hasPreviousPage}
+                onPageChange={function (page: number): void {
+                  setQueryParams({ page: `${page}` });
+                  if (topRef.current) {
+                    topRef.current.scrollIntoView({
+                      behavior: "smooth",
+                    });
+                  }
+                }}
+              />
             </div>
-            <Pagination
-              pages={
-                meta.pageCount > 1
-                  ? new Array(meta.pageCount).fill(0).map((_, index) => index + 1)
-                  : new Array(1).fill(0).map((_, index) => index + 1)
-              }
-              totalPage={meta.pageCount}
-              page={meta.page}
-              pageSize={meta.itemCount}
-              goToPage
-              hasNextPage={meta.hasNextPage}
-              hasPreviousPage={meta.hasPreviousPage}
-              onPageChange={function (page: number): void {
-                setQueryParams({ page: `${page}` });
-                if (topRef.current) {
-                  topRef.current.scrollIntoView({
-                    behavior: "smooth",
-                  });
-                }
-              }}
-            />
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </ListPageLayout>
   );

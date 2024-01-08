@@ -179,7 +179,7 @@ interface PaginatedHighlightsRepoProps {
 
 const useListHighlightsTaggedRepos = (listId: string) => {
   const { data, error, mutate } = useSWR<PaginatedHighlightsRepoProps, Error>(
-    `lists/${listId}/contributors/highlights/tagged-repos?limit=50&page=1`,
+    `lists/${listId}/contributors/highlights/tagged-repos?limit=10&page=1`,
     publicApiFetcher as Fetcher<PaginatedHighlightsRepoProps, Error>
   );
 
