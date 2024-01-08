@@ -43,6 +43,14 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 
   const { listId, repo } = ctx.params as { listId: string; repo?: string };
   const limit = 10; // Can pull this from the querystring in the future
+
+  const query = new URLSearchParams();
+
+  if (repo) {
+    query.append("repo", repo);
+  }
+  query.append("limit", "10");
+
   const [{ data, error: contributorListError }, { data: list, error }, { data: highlights, error: highlightError }] =
     await Promise.all([
       fetchApiData<PagedData<DBListContributor>>({
@@ -52,7 +60,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
       }),
       fetchApiData<DBList>({ path: `lists/${listId}`, bearerToken, pathValidator: validateListPath }),
       fetchApiData<PagedData<DbHighlight>>({
-        path: `lists/${listId}/contributors/highlights?repo=${repo}`,
+        path: `lists/${listId}/contributors/highlights?${query}`,
         bearerToken,
         pathValidator: validateListPath,
       }),
@@ -78,21 +86,6 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     },
   };
 };
-
-const rangeFilterOptions: { label: string; value: string }[] = [
-  {
-    label: "Past week",
-    value: "7",
-  },
-  {
-    label: "Past 30 days",
-    value: "30",
-  },
-  {
-    label: "Past 3 months",
-    value: "90",
-  },
-];
 
 const Highlights = ({ list, numberOfContributors, isOwner, highlights }: HighlightsPageProps) => {
   const router = useRouter();
