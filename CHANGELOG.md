@@ -5,6 +5,21 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.82.0-beta.1](https://github.com/open-sauced/insights/compare/v1.81.0...v1.82.0-beta.1) (2024-01-08)
+
+
+### 🍕 Features
+
+* add follower and following counts to contributor profile ([#2386](https://github.com/open-sauced/insights/issues/2386)) ([cd9fde7](https://github.com/open-sauced/insights/commit/cd9fde7769c790589b04067cfd5f8193dcfe12cd))
+
+
+### 🐛 Bug Fixes
+
+* adjust logic for showing insights popup for unauthenticated users ([#2425](https://github.com/open-sauced/insights/issues/2425)) ([23b3179](https://github.com/open-sauced/insights/commit/23b31799789f4edad09699292a6f332fe7c405a1))
+* delete page button on insights edit page passes colour contrast checks now ([#2436](https://github.com/open-sauced/insights/issues/2436)) ([0b147e4](https://github.com/open-sauced/insights/commit/0b147e4ecad15a30293a19abca7131b457783499))
+* fixed recommended repository link ([#2413](https://github.com/open-sauced/insights/issues/2413)) ([e1fd024](https://github.com/open-sauced/insights/commit/e1fd024a67bac14e0ecd94f7a30ec8dcc340b315))
+* **insightpage.tsx:** using "destructive" button variant from the common component ([1e22e7c](https://github.com/open-sauced/insights/commit/1e22e7ca5f7d1489a8f78ba35307f6cdced7f590))
+
 ## [1.81.0](https://github.com/open-sauced/insights/compare/v1.80.0...v1.81.0) (2024-01-04)
 
 
