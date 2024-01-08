@@ -36,26 +36,15 @@ import UserCard, { MetaObj } from "components/atoms/UserCard/user-card";
 import FeaturedHighlightsPanel from "components/molecules/FeaturedHighlightsPanel/featured-highlights-panel";
 import AnnouncementCard from "components/molecules/AnnouncementCard/announcement-card";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
+import repoTofilterList, { HighlightReposType } from "lib/utils/repo-to-filter-list";
 
 type ActiveTabType = "home" | "following";
-type HighlightReposType = { repoName: string; repoIcon: string; full_name: string };
 
 interface HighlightSSRProps {
   highlight: DbHighlight | null;
   referer: string;
 }
 
-export const repoTofilterList = (repos: { full_name: string }[]): HighlightReposType[] => {
-  const filtersArray = repos.map(({ full_name }) => {
-    const [orgName, repo] = full_name.split("/");
-    const repoFullName = `${orgName}/${repo}`;
-    return { repoName: repo, repoIcon: `https://www.github.com/${orgName}.png?size=300`, full_name: repoFullName };
-  });
-  const jsonObject = filtersArray.map((arrayItem) => JSON.stringify(arrayItem));
-  const uniqueSet = new Set(jsonObject);
-  const uniqueFilteredArray = Array.from(uniqueSet).map((arrayItem) => JSON.parse(arrayItem));
-  return uniqueFilteredArray;
-};
 const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
   const { user, signIn } = useSupabaseAuth();
   const { data: repos } = useFetchHighlightRepos();

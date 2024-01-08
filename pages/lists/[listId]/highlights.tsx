@@ -24,9 +24,9 @@ import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 import DashContainer from "components/atoms/DashedContainer/DashContainer";
 import PaginationResults from "components/molecules/PaginationResults/pagination-result";
 import Pagination from "components/molecules/Pagination/pagination";
-import { repoTofilterList } from "pages/feed";
 
 import Icon from "components/atoms/Icon/icon";
+import repoTofilterList from "lib/utils/repo-to-filter-list";
 import { ContributorListPageProps } from "./activity";
 
 interface HighlightsPageProps extends ContributorListPageProps {
