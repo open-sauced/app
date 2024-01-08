@@ -390,12 +390,7 @@ export default function EditListPage({ list, initialContributors }: EditListPage
               </Title>
               <Text className="my-4">Once you delete a list, you&#39;re past the point of no return.</Text>
 
-              <div>
-                <Button
-                  onClick={() => handleOnDelete()}
-                  variant="default"
-                  className="border bg-light-red-6 border-light-red-8 hover:bg-light-red-7 text-light-red-10"
-                >
+                <Button onClick={() => handleOnDelete()} variant="destructive">
                   Delete list
                 </Button>
               </div>
