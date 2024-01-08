@@ -137,6 +137,8 @@ const ContributorProfilePage = ({
                 discordUrl={discordUrl}
                 prFirstOpenedDate={prFirstOpenedDate}
                 isMaintainer={isMaintainer}
+                followerCount={user?.followers_count}
+                followingCount={user?.following_count}
               />
 
               <div>
