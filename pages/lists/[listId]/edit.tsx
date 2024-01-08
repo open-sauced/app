@@ -216,7 +216,6 @@ export default function EditListPage({ list, initialContributors }: EditListPage
     );
   };
 
-  // Delete List
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
