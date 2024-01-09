@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.82.0-beta.3](https://github.com/open-sauced/insights/compare/v1.82.0-beta.2...v1.82.0-beta.3) (2024-01-09)
+
+
+### 🐛 Bug Fixes
+
+* contributors not found message in contributors table no longer displays &apos; ([#2430](https://github.com/open-sauced/insights/issues/2430)) ([34d0264](https://github.com/open-sauced/insights/commit/34d026436f800682ea80bf2f1177dee11896ad51))
+* now you can click on a contributor highlight OG image to go to the referenced url ([#2444](https://github.com/open-sauced/insights/issues/2444)) ([6f058be](https://github.com/open-sauced/insights/commit/6f058be8976ea95f565aff89114bfd214b7625d4))
+
 ## [1.82.0-beta.2](https://github.com/open-sauced/insights/compare/v1.82.0-beta.1...v1.82.0-beta.2) (2024-01-09)
 
 
