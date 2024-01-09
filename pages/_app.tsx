@@ -22,7 +22,6 @@ import SEO from "layouts/SEO/SEO";
 import { Toaster } from "components/molecules/Toaster/toaster";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
 import useSession from "lib/hooks/useSession";
-import PrivateWrapper from "layouts/private-wrapper";
 
 import AppSideBar from "components/Sidebar/app-sidebar";
 import type { AppProps } from "next/app";
@@ -57,7 +56,6 @@ type ComponentWithPageLayout = AppProps & {
     PageLayout?: React.ComponentType<any>;
     SEO?: SEOobject;
     updateSEO?: (SEO: SEOobject) => void;
-    isPrivateRoute?: boolean;
   };
 };
 
@@ -152,21 +150,19 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
         <Toaster />
         <SessionContextProvider supabaseClient={supabaseClient} initialSession={pageProps.initialSession}>
           <PostHogProvider client={posthog}>
-            <PrivateWrapper isPrivateRoute={Component.isPrivateRoute}>
-              <TipProvider>
-                <div className="flex flex-1">
-                  <AppSideBar />
+            <TipProvider>
+              <div className="flex flex-1">
+                <AppSideBar />
 
-                  {Component.PageLayout ? (
-                    <Component.PageLayout>
-                      <Component {...pageProps} />
-                    </Component.PageLayout>
-                  ) : (
+                {Component.PageLayout ? (
+                  <Component.PageLayout>
                     <Component {...pageProps} />
-                  )}
-                </div>
-              </TipProvider>
-            </PrivateWrapper>
+                  </Component.PageLayout>
+                ) : (
+                  <Component {...pageProps} />
+                )}
+              </div>
+            </TipProvider>
           </PostHogProvider>
         </SessionContextProvider>
       </SWRConfig>
