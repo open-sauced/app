@@ -210,5 +210,5 @@ const Notifications: WithPageLayout = () => {
 };
 
 Notifications.PageLayout = ProfileLayout;
-Notifications.isPrivateRoute = true;
+
 export default Notifications;

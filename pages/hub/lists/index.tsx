@@ -158,7 +158,6 @@ const ListsHub: WithPageLayout = () => {
 };
 
 ListsHub.PageLayout = HubLayout;
-ListsHub.isPrivateRoute = true;
 ListsHub.SEO = {
   title: "Lists Hub | Open Sauced Lists",
 };
