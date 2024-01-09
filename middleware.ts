@@ -45,7 +45,11 @@ const loadSession = async (request: NextRequest, sessionToken?: string) => {
 export async function middleware(req: NextRequest) {
   const res = NextResponse.next();
 
-  if (!pathsToMatch.some((matcher) => pathToRegexp(matcher).test(req.nextUrl.pathname))) {
+  if (
+    !pathsToMatch.some((matcher) => pathToRegexp(matcher).test(req.nextUrl.pathname)) ||
+    // if the path is hub/insights go to the page so logged out users can see demo insights
+    req.nextUrl.pathname === "/hub/insights"
+  ) {
     return res;
   }
 
