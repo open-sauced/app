@@ -27,8 +27,7 @@ const EditInsightPage: WithPageLayout = () => {
     return <>Error</>;
   }
 
-  // if the user is not the owner and they aren't part of the team
-  if (insight && Number(insight.user.id) !== Number(user?.user_metadata.sub) && insightTeamMembersError) {
+  if (insightTeamMembersError) {
     return <>Unauthorized</>;
   }
 

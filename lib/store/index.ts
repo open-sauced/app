@@ -11,7 +11,6 @@ const initialState: GlobalStateInterface = {
   userId: null,
   hasReports: false,
   openSearch: false,
-  dismissFeaturedInsights: false,
 };
 
 interface AppStore extends GlobalStateInterface {
@@ -32,7 +31,6 @@ interface AppStore extends GlobalStateInterface {
   setUserId: (userId?: number | null) => void;
   setHasReports: (hasReports: boolean) => void;
   setOpenSearch: (openSearch: boolean) => void;
-  setDismissFeaturedInsights: () => void;
 }
 
 const store = create<AppStore>()((set) => ({
@@ -54,7 +52,6 @@ const store = create<AppStore>()((set) => ({
   setUserId: (userId?: number | null) => set((state) => ({ ...state, userId })),
   setHasReports: (hasReports: boolean) => set((state) => ({ ...state, hasReports })),
   setOpenSearch: (openSearch: boolean) => set((state) => ({ ...state, openSearch: openSearch })),
-  setDismissFeaturedInsights: () => set((state) => ({ ...state, dismissFeaturedInsights: true })),
 }));
 
 export default store;

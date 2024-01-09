@@ -4,6 +4,7 @@ import { BsPencilFill } from "react-icons/bs";
 import { MdOutlineArrowForwardIos } from "react-icons/md";
 import { User } from "@supabase/supabase-js";
 
+import clsx from "clsx";
 import { getRelativeDays } from "lib/utils/date-utils";
 import useRepositories from "lib/hooks/api/useRepositories";
 import getRepoInsights from "lib/utils/get-repo-insights";
@@ -17,13 +18,18 @@ import CardRepoList from "../CardRepoList/card-repo-list";
 interface InsightRowProps {
   insight: DbUserInsight;
   user: User | null;
+  isEditable?: boolean;
 }
 
-const InsightRow = ({ insight, user }: InsightRowProps) => {
+const InsightRow = ({ insight, user, isEditable = true }: InsightRowProps) => {
   const repoIds = insight.repos.map((repo) => repo.repo_id);
   const { data: repoData, meta: repoMeta } = useRepositories(repoIds);
   const { open, merged, velocity, total, repoList } = getRepoInsights(repoData);
   const avgOpenPrs = repoData.length > 0 ? Math.round(open / repoData.length) : 0;
+
+  const membership = insight.members?.find((member) => member.user_id === Number(user?.id));
+  const canEdit = membership && ["edit", "admin"].includes(membership.access);
+
   return (
     <Card className="flex flex-col md:flex-row w-full rounded-lg px-4 lg:px-8 py-5 gap-4 lg:gap-2 bg-white items-center">
       <>
@@ -31,18 +37,30 @@ const InsightRow = ({ insight, user }: InsightRowProps) => {
           <div className="flex items-center lg:items-center gap-4 ">
             <div className="w-4 h-4 bg-light-orange-10 rounded-full"></div>
             <div className="text-xl text-light-slate-12 flex justify-between">
-              <Link href={`/pages/${user?.user_metadata.user_name}/${insight.id}/dashboard`}>{insight.name}</Link>
+              <Link href={`/pages/${user ? user?.user_metadata.user_name : "anonymous"}/${insight.id}/dashboard`}>
+                {isEditable ? insight.name : `Demo | ${insight.name}`}
+              </Link>
             </div>
-            <div className="rounded-2xl border px-2 text-light-slate-11">
-              {!!insight.is_public ? "public" : "private"}
+            <div
+              className={clsx(
+                "rounded-2xl border px-2 text-light-slate-11",
+                !isEditable ? "text-orange-700 bg-orange-50 border-orange-600" : ""
+              )}
+            >
+              {!isEditable ? "demo" : !!insight.is_public ? "public" : "private"}
             </div>
-            <div className="flex-1 md:hidden">
-              <span className=" bg-light-slate-1 inline-block rounded-lg p-2.5 border mr-2">
-                <Link href={`/hub/insights/${insight.id}/edit`}>
-                  <BsPencilFill title="Edit Insight Page" className="text-light-slate-10 text-md cursor-pointer w-4" />
-                </Link>
-              </span>
-            </div>
+            {isEditable ? (
+              <div className="flex-1 md:hidden">
+                <span className=" bg-light-slate-1 inline-block rounded-lg p-2.5 border mr-2">
+                  <Link href={`/hub/insights/${insight.id}/edit`}>
+                    <BsPencilFill
+                      title="Edit Insight Page"
+                      className="text-light-slate-10 text-md cursor-pointer w-4"
+                    />
+                  </Link>
+                </span>
+              </div>
+            ) : null}
           </div>
           <div className="w-full truncate">
             {insight.repos && insight.repos.length > 0 && (
@@ -77,7 +95,7 @@ const InsightRow = ({ insight, user }: InsightRowProps) => {
               </div>
             </div>
             <div className="flex-1 hidden md:flex  justify-end">
-              {(user?.user_metadata.sub && Number(user?.user_metadata.sub) === Number(insight.user_id)) ||
+              {canEdit ||
                 (!insight.is_featured && (
                   <Link href={`/hub/insights/${insight.id}/edit`}>
                     <span className=" bg-light-slate-1 inline-block rounded-lg p-2.5 border mr-2 cursor-pointer">
@@ -85,7 +103,7 @@ const InsightRow = ({ insight, user }: InsightRowProps) => {
                     </span>
                   </Link>
                 ))}
-              <Link href={`/pages/${user?.user_metadata.user_name}/${insight.id}/dashboard`}>
+              <Link href={`/pages/${user ? user?.user_metadata.user_name : "anonymous"}/${insight.id}/dashboard`}>
                 <span className=" bg-light-slate-1 inline-block rounded-lg p-2.5 border cursor-pointer">
                   <MdOutlineArrowForwardIos title="Go To Insight Page" className="text-light-slate-10 text-lg" />
                 </span>

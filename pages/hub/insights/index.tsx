@@ -11,19 +11,24 @@ import HubLayout from "layouts/hub";
 import { WithPageLayout } from "interfaces/with-page-layout";
 import useUserInsights from "lib/hooks/useUserInsights";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
-import useStore from "lib/store";
 import useSession from "lib/hooks/useSession";
 import { useToast } from "lib/hooks/useToast";
 import Text from "components/atoms/Typography/text";
+import useFetchFeaturedInsights from "lib/hooks/useFetchFeaturedInsights";
+import ClientOnly from "components/atoms/ClientOnly/client-only";
 
 const InsightsHub: WithPageLayout = () => {
   const router = useRouter();
   const { user } = useSupabaseAuth();
-  const store = useStore();
-  const dismissFeaturedInsights = useStore((store) => store.dismissFeaturedInsights);
+
   const { toast } = useToast();
   const { session } = useSession(true);
-  const { data, meta, isError, isLoading, setPage } = useUserInsights();
+  const { data, meta, isError, isLoading, setPage } = useUserInsights(!!user);
+  const {
+    data: featuredInsightsData,
+    isError: featuredInsightsError,
+    isLoading: featuredInsightsLoading,
+  } = useFetchFeaturedInsights(user ? false : true);
 
   function handleView() {
     const insight = data.slice(0, 1).shift();
@@ -34,12 +39,14 @@ const InsightsHub: WithPageLayout = () => {
     const toaster = toast({
       description: "Welcome to your Insights Hub!",
       variant: "success",
+      duration: 10000,
       action: (
         <div className="flex flex-col">
           <div className="flex align-middle">
             <Text>
-              We&apos;ve included a featured Insight Page for you to test out. You can also create your own to get
-              insights on repositories.
+              {user
+                ? "We've included a featured Insight Page for you to test out. You can also create your own to get insights on repositories."
+                : "Try out our Demo Insight page or sign up to create your own"}
             </Text>
           </div>
           <div className="flex flex-start">
@@ -50,40 +57,68 @@ const InsightsHub: WithPageLayout = () => {
             >
               <Text className="pr-2 cursor-pointer">Dismiss</Text>
             </button>
-            <button
-              onClick={() => {
-                toaster && toaster.dismiss();
-                handleView();
-              }}
-            >
-              <Text className="text-orange-500 cursor-pointer">Open Insight Page</Text>
-            </button>
+            {session ? (
+              <button
+                onClick={() => {
+                  toaster && toaster.dismiss();
+                  handleView();
+                }}
+              >
+                <Text className="text-orange-500 cursor-pointer">Open Insight Page</Text>
+              </button>
+            ) : null}
           </div>
         </div>
       ),
     });
 
-    store.setDismissFeaturedInsights();
+    localStorage.setItem("dismissFeaturedInsights", "true");
   }
 
   useEffect(() => {
-    if (session && session.insights_count === 0 && !dismissFeaturedInsights) {
+    // if the current user with insights logs out, set the flag
+    if (!localStorage.getItem("dismissFeaturedInsights") && data.length > 0) {
+      localStorage.setItem("dismissFeaturedInsights", "true");
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (
+      (session && session.insights_count === 0 && !localStorage.getItem("dismissFeaturedInsights")) ||
+      (featuredInsightsData.length === 1 && !localStorage.getItem("dismissFeaturedInsights"))
+    ) {
       openInsightToast();
     }
-  }, [session, user]);
+  }, [session, featuredInsightsData]);
 
   return (
     <>
-      <section className="flex flex-col gap-4">
-        {isLoading ? (
-          <SkeletonWrapper count={3} classNames="w-full" height={95} radius={10} />
-        ) : isError ? (
-          "Error..."
-        ) : (
-          data.map((insight) => {
-            return <InsightRow key={`insights_${insight.id}`} user={user} insight={insight} />;
-          })
-        )}
+      <section className="flex flex-col gap-4 pt-4">
+        {user ? (
+          <>
+            {session && isLoading ? (
+              <SkeletonWrapper count={3} classNames="w-full" height={95} radius={10} />
+            ) : isError ? (
+              "Error..."
+            ) : (
+              data.map((insight) => {
+                return <InsightRow key={`insights_${insight.id}`} user={user} insight={insight} />;
+              })
+            )}
+          </>
+        ) : null}
+
+        <ClientOnly>
+          {!session && featuredInsightsLoading ? (
+            <SkeletonWrapper count={1} classNames="w-full" height={95} radius={10} />
+          ) : featuredInsightsError ? (
+            "Error..."
+          ) : (
+            featuredInsightsData.map((insight) => {
+              return <InsightRow key={`insights_${insight.id}`} user={user} insight={insight} isEditable={false} />;
+            })
+          )}
+        </ClientOnly>
       </section>
 
       <div
