@@ -142,6 +142,7 @@ const Highlights = ({ list, numberOfContributors, isOwner, highlights }: Highlig
               onChange={(value) => {
                 onSearch(value);
               }}
+              isDisabled={data.length === 0}
               placeholder="Search contributors"
               className="!w-full"
               name="helo"

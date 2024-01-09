@@ -17,6 +17,7 @@ interface SearchProps {
   onChange?: (value: string) => void;
   onSelect?: (value: string) => void;
   isLoading?: boolean;
+  isDisabled?: boolean;
 }
 
 const suggestionsStyle = {
@@ -36,6 +37,7 @@ const Search = ({
   onChange,
   isLoading,
   onSelect,
+  isDisabled,
 }: SearchProps): JSX.Element => {
   const [cursor, setCursor] = useState(-1);
   const [search, setSearch] = useState(value);
@@ -117,6 +119,7 @@ const Search = ({
             handleOnSearch();
           }
         }}
+        disabled={isDisabled}
         onKeyDown={handleKeyboardCtrl}
         onFocus={() => setShowSuggestions(true)}
         onBlur={() => setTimeout(() => setShowSuggestions(false), 500)}
