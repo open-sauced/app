@@ -76,13 +76,20 @@ const InsightsHub: WithPageLayout = () => {
   }
 
   useEffect(() => {
+    // if the current user with insights logs out, set the flag
+    if (!localStorage.getItem("dismissFeaturedInsights") && data.length > 0) {
+      localStorage.setItem("dismissFeaturedInsights", "true");
+    }
+  }, [data]);
+
+  useEffect(() => {
     if (
       (session && session.insights_count === 0 && !localStorage.getItem("dismissFeaturedInsights")) ||
-      (!session && !localStorage.getItem("dismissFeaturedInsights"))
+      (featuredInsightsData.length === 1 && !localStorage.getItem("dismissFeaturedInsights"))
     ) {
       openInsightToast();
     }
-  }, [session]);
+  }, [session, featuredInsightsData]);
 
   return (
     <>
