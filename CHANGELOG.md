@@ -5,6 +5,15 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.82.0-beta.2](https://github.com/open-sauced/insights/compare/v1.82.0-beta.1...v1.82.0-beta.2) (2024-01-09)
+
+
+### 🐛 Bug Fixes
+
+* fixed regression where you couldn't view demo insights as a logged out user ([#2443](https://github.com/open-sauced/insights/issues/2443)) ([9335707](https://github.com/open-sauced/insights/commit/93357078238b8b630bbd55572f2c90d68c76529d))
+* removed <PrivateWrapper /> component because middleware handles this logic ([92205a5](https://github.com/open-sauced/insights/commit/92205a52b06257b8c5e74e1fd3e6cc5f3cc91072))
+* removed <PrivateWrapper /> component which contributed to page load slowness ([#2440](https://github.com/open-sauced/insights/issues/2440)) ([72d678e](https://github.com/open-sauced/insights/commit/72d678ed641f3782c23c49458dea33df004678c9))
+
 ## [1.82.0-beta.1](https://github.com/open-sauced/insights/compare/v1.81.0...v1.82.0-beta.1) (2024-01-08)
 
 
