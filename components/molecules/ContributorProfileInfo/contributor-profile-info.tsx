@@ -29,6 +29,8 @@ interface ContributorProfileInfoProps {
   discordUrl?: string;
   prFirstOpenedDate?: string;
   isMaintainer?: boolean;
+  followerCount?: number;
+  followingCount?: number;
 }
 
 const ContributorProfileInfo = ({
@@ -45,6 +47,8 @@ const ContributorProfileInfo = ({
   discordUrl,
   prFirstOpenedDate,
   isMaintainer,
+  followerCount,
+  followingCount,
 }: ContributorProfileInfoProps) => {
   const interestArray = interests?.split(",").filter(Boolean) as InterestType[];
   const discordUserId = discordUrl?.match(/\d{17,}$/)?.[0];
@@ -61,20 +65,16 @@ const ContributorProfileInfo = ({
         <div className="flex items-center text-sm gap-3">
           {isConnected && (
             <>
-              {displayLocalTime && (
-                <span className="flex gap-2 items-center">
-                  <Tooltip content="Time zone">
-                    <FiClock />
-                  </Tooltip>
-                  {timezone ? `UTC${getTimezone(timezone)}` : "UTC+1"}
-                </span>
-              )}
-              <span className="flex gap-2 items-center">
-                <Tooltip content="First PR Opened Date">
-                  <AiOutlineGift className="" />
-                </Tooltip>
-                {prFirstOpenedDate ? getFormattedDate(prFirstOpenedDate) : "June 2022"}
-              </span>
+              <div className="flex gap-2 items-center">
+                <div className="flex gap-1 items-center">
+                  <span className="font-semibold text-sm"> {followerCount} </span>
+                  <span className="font-normal text-light-slate-11 text-sm"> followers</span>
+                </div>
+                <div className="flex gap-1 items-center">
+                  <span className="font-semibold text-sm"> {followingCount} </span>
+                  <span className="font-normal text-light-slate-11 text-sm"> following</span>
+                </div>
+              </div>
             </>
           )}
         </div>
@@ -91,8 +91,11 @@ const ContributorProfileInfo = ({
             <div className="flex flex-col text-sm mt-2  gap-2">
               {displayLocalTime && (
                 <span className="flex gap-2 items-center">
-                  <FiClock /> Local time:
-                  <span> {getTimeByTimezone(timezone ? getTimezone(timezone) : 1)}</span>
+                  <FiClock />
+                  <span>
+                    {getTimeByTimezone(timezone ? getTimezone(timezone) : 1)}{" "}
+                    {timezone ? `(UTC${getTimezone(timezone)})` : "(UTC+1)"}
+                  </span>
                 </span>
               )}
 
@@ -104,6 +107,13 @@ const ContributorProfileInfo = ({
                   </Link>
                 </span>
               )}
+
+              <span className="flex gap-2 items-center">
+                <Tooltip content="First PR Opened Date">
+                  <AiOutlineGift className="" />
+                </Tooltip>
+                {prFirstOpenedDate ? getFormattedDate(prFirstOpenedDate) : "June 2022"}
+              </span>
 
               <span className="flex gap-2 items-center">
                 <FiGithub />

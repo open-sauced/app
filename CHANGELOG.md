@@ -5,6 +5,99 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.82.0-beta.3](https://github.com/open-sauced/insights/compare/v1.82.0-beta.2...v1.82.0-beta.3) (2024-01-09)
+
+
+### 🐛 Bug Fixes
+
+* contributors not found message in contributors table no longer displays &apos; ([#2430](https://github.com/open-sauced/insights/issues/2430)) ([34d0264](https://github.com/open-sauced/insights/commit/34d026436f800682ea80bf2f1177dee11896ad51))
+* now you can click on a contributor highlight OG image to go to the referenced url ([#2444](https://github.com/open-sauced/insights/issues/2444)) ([6f058be](https://github.com/open-sauced/insights/commit/6f058be8976ea95f565aff89114bfd214b7625d4))
+
+## [1.82.0-beta.2](https://github.com/open-sauced/insights/compare/v1.82.0-beta.1...v1.82.0-beta.2) (2024-01-09)
+
+
+### 🐛 Bug Fixes
+
+* fixed regression where you couldn't view demo insights as a logged out user ([#2443](https://github.com/open-sauced/insights/issues/2443)) ([9335707](https://github.com/open-sauced/insights/commit/93357078238b8b630bbd55572f2c90d68c76529d))
+* removed <PrivateWrapper /> component because middleware handles this logic ([92205a5](https://github.com/open-sauced/insights/commit/92205a52b06257b8c5e74e1fd3e6cc5f3cc91072))
+* removed <PrivateWrapper /> component which contributed to page load slowness ([#2440](https://github.com/open-sauced/insights/issues/2440)) ([72d678e](https://github.com/open-sauced/insights/commit/72d678ed641f3782c23c49458dea33df004678c9))
+
+## [1.82.0-beta.1](https://github.com/open-sauced/insights/compare/v1.81.0...v1.82.0-beta.1) (2024-01-08)
+
+
+### 🍕 Features
+
+* add follower and following counts to contributor profile ([#2386](https://github.com/open-sauced/insights/issues/2386)) ([cd9fde7](https://github.com/open-sauced/insights/commit/cd9fde7769c790589b04067cfd5f8193dcfe12cd))
+
+
+### 🐛 Bug Fixes
+
+* adjust logic for showing insights popup for unauthenticated users ([#2425](https://github.com/open-sauced/insights/issues/2425)) ([23b3179](https://github.com/open-sauced/insights/commit/23b31799789f4edad09699292a6f332fe7c405a1))
+* delete page button on insights edit page passes colour contrast checks now ([#2436](https://github.com/open-sauced/insights/issues/2436)) ([0b147e4](https://github.com/open-sauced/insights/commit/0b147e4ecad15a30293a19abca7131b457783499))
+* fixed recommended repository link ([#2413](https://github.com/open-sauced/insights/issues/2413)) ([e1fd024](https://github.com/open-sauced/insights/commit/e1fd024a67bac14e0ecd94f7a30ec8dcc340b315))
+* **insightpage.tsx:** using "destructive" button variant from the common component ([1e22e7c](https://github.com/open-sauced/insights/commit/1e22e7ca5f7d1489a8f78ba35307f6cdced7f590))
+
+## [1.81.0](https://github.com/open-sauced/insights/compare/v1.80.0...v1.81.0) (2024-01-04)
+
+
+### 📝 Documentation
+
+* add sidebar component prototype to storybook ([#2377](https://github.com/open-sauced/insights/issues/2377)) ([9e15943](https://github.com/open-sauced/insights/commit/9e15943e77c75a86401b408648fa656f5f962825))
+
+
+### 🐛 Bug Fixes
+
+* activity list contributions treemap nodes are keyboard navigable now ([60ac568](https://github.com/open-sauced/insights/commit/60ac56844210a213781577101809dcaca69b2a5e))
+* activity list contributions treemap nodes are keyboard navigable now ([#2388](https://github.com/open-sauced/insights/issues/2388)) ([bd2141c](https://github.com/open-sauced/insights/commit/bd2141c947de3c478917f8bc3d0bdabc10b50b94))
+* added a constant for our fallback empty data value ([7ea28e1](https://github.com/open-sauced/insights/commit/7ea28e110ff8cc126859c555831e7caaab57c94f))
+* added a constant for our fallback empty data value ([#2374](https://github.com/open-sauced/insights/issues/2374)) ([48cf2c4](https://github.com/open-sauced/insights/commit/48cf2c401690c0ac56fb43859eeaaa7118a1ebc2))
+* added contributions treemap loading view ([e47e3b6](https://github.com/open-sauced/insights/commit/e47e3b67c167bcb3d520423e10c0731864343aa1))
+* added contributions treemap loading view ([#2383](https://github.com/open-sauced/insights/issues/2383)) ([c6c94b3](https://github.com/open-sauced/insights/commit/c6c94b38d882cfdf105af0c776df5d7f64486751))
+* Added state for reactions dropdown on highlight cards. ([#2409](https://github.com/open-sauced/insights/issues/2409)) ([5f334f8](https://github.com/open-sauced/insights/commit/5f334f8fc9638b8d9c11a7957b8c31dcf69eedc2))
+* fix pagination logic ([#2361](https://github.com/open-sauced/insights/issues/2361)) ([073fb85](https://github.com/open-sauced/insights/commit/073fb85aab6f8fc9a7d2f10bd6e343304398e11d))
+* Hotfix to bust app-cache ([#2387](https://github.com/open-sauced/insights/issues/2387)) ([d1f35ed](https://github.com/open-sauced/insights/commit/d1f35ed48836c0a1d2be9bebc8935a7bb1d646ea))
+* now interests are not fallbacks for most used languages ([6fc1273](https://github.com/open-sauced/insights/commit/6fc12733e78a8d9c03fdf76aa3b564d7678a38b5))
+* now interests are not fallbacks for most used languages ([e2ff7fd](https://github.com/open-sauced/insights/commit/e2ff7fd33ff379936c1bffe6a61fb57be39b5bae))
+* now interests are not fallbacks for most used languages ([#2373](https://github.com/open-sauced/insights/issues/2373)) ([7e68217](https://github.com/open-sauced/insights/commit/7e68217646cd53e4025f07e00e55edf94ec20876))
+* now page limit dropdown filters works on repo table ([#2227](https://github.com/open-sauced/insights/issues/2227)) ([fdcc081](https://github.com/open-sauced/insights/commit/fdcc0814aad71834f2c5cc74e87549e7dbf1b1e5))
+* now you can navigate back to the previous page from a user profile page ([9a4c538](https://github.com/open-sauced/insights/commit/9a4c538a7ff43dec90345750e1985346da547249))
+* now you can navigate back to the previous page from a user profile page ([#2382](https://github.com/open-sauced/insights/issues/2382)) ([7d15dca](https://github.com/open-sauced/insights/commit/7d15dcaf9bc8d7bc955c9340b22bbe20a9422e9c))
+* removed treemap prototype ([17cb4d8](https://github.com/open-sauced/insights/commit/17cb4d8783ce1e8ed1b95d790fa2a815262f3b1e))
+* removed treemap prototype ([#2392](https://github.com/open-sauced/insights/issues/2392)) ([04c7f29](https://github.com/open-sauced/insights/commit/04c7f2989f44a69add4e27fc8f6690b8f0292aa3))
+* Revert "fix: fixed releases breaking from SWC by turning it off ([#2394](https://github.com/open-sauced/insights/issues/2394))" ([#2397](https://github.com/open-sauced/insights/issues/2397)) ([0d2775d](https://github.com/open-sauced/insights/commit/0d2775d0a6738c087049e4530512599dc679ef46))
+
+
+### 🍕 Features
+
+* add helper tooltip to dashboard highlight cards ([#2309](https://github.com/open-sauced/insights/issues/2309)) ([9429233](https://github.com/open-sauced/insights/commit/942923313e522e31614ee94512417851b9f99ef9))
+* contributions treemap filtered by owners now ([#2391](https://github.com/open-sauced/insights/issues/2391)) ([3944293](https://github.com/open-sauced/insights/commit/39442930dcc13773cd9e3fb5702060c25816c823))
+* insights page are available to non logged in users ([#2226](https://github.com/open-sauced/insights/issues/2226)) ([23e19fa](https://github.com/open-sauced/insights/commit/23e19fa48dc0dd53bc8c962e8b532411ba549449))
+* Make insight pages more agnostic and use new v1/insight API functionality ([#2368](https://github.com/open-sauced/insights/issues/2368)) ([5813beb](https://github.com/open-sauced/insights/commit/5813beb3cca54ef9c11cbc1062f7d0c7e627ae2b))
+* now contributions treemap can resize ([#2401](https://github.com/open-sauced/insights/issues/2401)) ([d524fb0](https://github.com/open-sauced/insights/commit/d524fb0d94cf3c020afb9873e23f921d5d1c5c53))
+* replace contribution distribution chart with contributors table in list overview page ([#2385](https://github.com/open-sauced/insights/issues/2385)) ([a9db0dd](https://github.com/open-sauced/insights/commit/a9db0dd6253313b67ff80c8068a9f03cba5eef62))
+
+## [1.81.0-beta.8](https://github.com/open-sauced/insights/compare/v1.81.0-beta.7...v1.81.0-beta.8) (2024-01-04)
+
+
+### 🍕 Features
+
+* contributions treemap filtered by owners now ([#2391](https://github.com/open-sauced/insights/issues/2391)) ([3944293](https://github.com/open-sauced/insights/commit/39442930dcc13773cd9e3fb5702060c25816c823))
+
+## [1.81.0-beta.7](https://github.com/open-sauced/insights/compare/v1.81.0-beta.6...v1.81.0-beta.7) (2024-01-03)
+
+
+### 🐛 Bug Fixes
+
+* Added state for reactions dropdown on highlight cards. ([#2409](https://github.com/open-sauced/insights/issues/2409)) ([5f334f8](https://github.com/open-sauced/insights/commit/5f334f8fc9638b8d9c11a7957b8c31dcf69eedc2))
+
+## [1.81.0-beta.6](https://github.com/open-sauced/insights/compare/v1.81.0-beta.5...v1.81.0-beta.6) (2023-12-22)
+
+
+### 🍕 Features
+
+* now contributions treemap can resize ([#2401](https://github.com/open-sauced/insights/issues/2401)) ([d524fb0](https://github.com/open-sauced/insights/commit/d524fb0d94cf3c020afb9873e23f921d5d1c5c53))
+* replace contribution distribution chart with contributors table in list overview page ([#2385](https://github.com/open-sauced/insights/issues/2385)) ([a9db0dd](https://github.com/open-sauced/insights/commit/a9db0dd6253313b67ff80c8068a9f03cba5eef62))
+
 ## [1.81.0-beta.5](https://github.com/open-sauced/insights/compare/v1.81.0-beta.4...v1.81.0-beta.5) (2023-12-22)
 
 

@@ -1,11 +1,9 @@
 import { memo } from "react";
-import Image from "next/image";
 import { animated } from "@react-spring/web";
-import { getAvatarByUsername } from "lib/utils/github";
 import { htmlNodeTransform } from "lib/utils/nivo-utils";
 import type { NodeProps } from "@nivo/treemap";
 
-const NonMemoizedContributorNode = <Datum extends { id: string; value?: number; color: string }>({
+const NonMemoizedSpecialNode = <Datum extends object>({
   node,
   animatedProps,
   borderWidth,
@@ -14,8 +12,7 @@ const NonMemoizedContributorNode = <Datum extends { id: string; value?: number; 
 }: NodeProps<Datum>) => {
   const showLabel =
     enableLabel && node.isLeaf && (labelSkipSize === 0 || Math.min(node.width, node.height) > labelSkipSize);
-
-  const avatarURL = getAvatarByUsername(node.id);
+  const [fullRepoName] = node.id.split(":");
 
   return (
     <animated.button
@@ -29,6 +26,7 @@ const NonMemoizedContributorNode = <Datum extends { id: string; value?: number; 
         borderWidth,
         borderColor: node.borderColor,
       }}
+      onClick={node.onClick}
     >
       <animated.div
         style={{
@@ -44,7 +42,7 @@ const NonMemoizedContributorNode = <Datum extends { id: string; value?: number; 
       />
       {showLabel && (
         <animated.div
-          className="grid p-3 text-white place-items-start pointer-events-none"
+          className="grid p-3 text-white pointer-events-none place-items-start"
           style={{
             gridArea: "1 / 1",
             transformOrigin: "center center",
@@ -52,22 +50,10 @@ const NonMemoizedContributorNode = <Datum extends { id: string; value?: number; 
             placeItems: "flex-start",
           }}
         >
-          <div className="grid gap-x-2" style={{ gridTemplateColumns: "auto 1fr", gridTemplateRows: "auto auto" }}>
-            <Image
-              className="col-span-1 col-start-1 row-span-2"
-              src={avatarURL}
-              alt={`${node.id}'s avatar`}
-              width="42"
-              height="42"
-              style={{ display: "block", borderRadius: "50%", border: "solid 2px white", flexShrink: 0, flexGrow: 0 }}
-            />
-
-            <div style={{ gridColumnStart: "2", alignItems: "center", alignSelf: "center" }}>{node.id}</div>
-            <div
-              className="font-normal"
-              style={{ textOverflow: "ellipsis", gridColumnStart: "2", marginTop: "-0.5rem" }}
-            >
-              {node.formattedValue} Contributions
+          <div className="flex flex-col items-start">
+            <div className="text-sm">{fullRepoName}</div>
+            <div className="text-xs whitespace-nowrap overflow-hidden overflow-ellipsis">
+              {node.label} contributions
             </div>
           </div>
         </animated.div>
@@ -76,4 +62,4 @@ const NonMemoizedContributorNode = <Datum extends { id: string; value?: number; 
   );
 };
 
-export const ContributorNode = memo(NonMemoizedContributorNode) as typeof NonMemoizedContributorNode;
+export const SpecialNode = memo(NonMemoizedSpecialNode) as typeof NonMemoizedSpecialNode;
