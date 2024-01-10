@@ -1,6 +1,6 @@
 import { PostHog } from "posthog-node";
 
-export type FeatureFlag = "contributions_evolution_by_type";
+export type FeatureFlag = "contributions_evolution_by_type" | "workspaces";
 
 export async function getAllFeatureFlags(userId: number) {
   const client = new PostHog(

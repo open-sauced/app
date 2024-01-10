@@ -9,6 +9,7 @@ import { pathToRegexp } from "path-to-regexp";
 // prettier-ignore
 const pathsToMatch = [
   "/",
+  "/hub/:path*",
   "/feed/",
   "/user/notifications",
   "/user/settings",
@@ -44,7 +45,12 @@ const loadSession = async (request: NextRequest, sessionToken?: string) => {
 export async function middleware(req: NextRequest) {
   const res = NextResponse.next();
 
-  if (!pathsToMatch.some((matcher) => pathToRegexp(matcher).test(req.nextUrl.pathname))) {
+  if (
+    !pathsToMatch.some((matcher) => pathToRegexp(matcher).test(req.nextUrl.pathname)) ||
+    // if the path is hub/insights or hub/lists go to the page so logged out users can see demo insights or demo lists
+    req.nextUrl.pathname === "/hub/insights" ||
+    req.nextUrl.pathname === "/hub/lists"
+  ) {
     return res;
   }
 

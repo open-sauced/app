@@ -5,6 +5,74 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.82.1-beta.1](https://github.com/open-sauced/insights/compare/v1.82.0...v1.82.1-beta.1) (2024-01-10)
+
+
+### 🐛 Bug Fixes
+
+* hydration error in insights page ([#2452](https://github.com/open-sauced/insights/issues/2452)) ([5174a1d](https://github.com/open-sauced/insights/commit/5174a1d590ae19157ba759aa83d4e576c4349dc9))
+* now explore link is actively styled when neccessary ([#2364](https://github.com/open-sauced/insights/issues/2364)) ([c111dfd](https://github.com/open-sauced/insights/commit/c111dfd2c0c08d4888bf290fbe788b52b0ba0257))
+
+## [1.82.0](https://github.com/open-sauced/insights/compare/v1.81.0...v1.82.0) (2024-01-09)
+
+
+### 🐛 Bug Fixes
+
+* adjust logic for showing insights popup for unauthenticated users ([#2425](https://github.com/open-sauced/insights/issues/2425)) ([23b3179](https://github.com/open-sauced/insights/commit/23b31799789f4edad09699292a6f332fe7c405a1))
+* contributors not found message in contributors table no longer displays &apos; ([#2430](https://github.com/open-sauced/insights/issues/2430)) ([34d0264](https://github.com/open-sauced/insights/commit/34d026436f800682ea80bf2f1177dee11896ad51))
+* delete page button on insights edit page passes colour contrast checks now ([#2436](https://github.com/open-sauced/insights/issues/2436)) ([0b147e4](https://github.com/open-sauced/insights/commit/0b147e4ecad15a30293a19abca7131b457783499))
+* fixed recommended repository link ([#2413](https://github.com/open-sauced/insights/issues/2413)) ([e1fd024](https://github.com/open-sauced/insights/commit/e1fd024a67bac14e0ecd94f7a30ec8dcc340b315))
+* fixed regression where you couldn't view demo insights as a logged out user ([#2443](https://github.com/open-sauced/insights/issues/2443)) ([9335707](https://github.com/open-sauced/insights/commit/93357078238b8b630bbd55572f2c90d68c76529d))
+* now you can click on a contributor highlight OG image to go to the referenced url ([#2444](https://github.com/open-sauced/insights/issues/2444)) ([6f058be](https://github.com/open-sauced/insights/commit/6f058be8976ea95f565aff89114bfd214b7625d4))
+* removed <PrivateWrapper /> component because middleware handles this logic ([92205a5](https://github.com/open-sauced/insights/commit/92205a52b06257b8c5e74e1fd3e6cc5f3cc91072))
+* removed <PrivateWrapper /> component which contributed to page load slowness ([#2440](https://github.com/open-sauced/insights/issues/2440)) ([72d678e](https://github.com/open-sauced/insights/commit/72d678ed641f3782c23c49458dea33df004678c9))
+* **insightpage.tsx:** using "destructive" button variant from the common component ([1e22e7c](https://github.com/open-sauced/insights/commit/1e22e7ca5f7d1489a8f78ba35307f6cdced7f590))
+
+
+### 🍕 Features
+
+* add follower and following counts to contributor profile ([#2386](https://github.com/open-sauced/insights/issues/2386)) ([cd9fde7](https://github.com/open-sauced/insights/commit/cd9fde7769c790589b04067cfd5f8193dcfe12cd))
+* added the worskpaces feature flag ([#2447](https://github.com/open-sauced/insights/issues/2447)) ([202f40a](https://github.com/open-sauced/insights/commit/202f40a927b4b69123fff5bfff62593bda78d8a6))
+
+## [1.82.0-beta.4](https://github.com/open-sauced/insights/compare/v1.82.0-beta.3...v1.82.0-beta.4) (2024-01-09)
+
+
+### 🍕 Features
+
+* added the worskpaces feature flag ([#2447](https://github.com/open-sauced/insights/issues/2447)) ([202f40a](https://github.com/open-sauced/insights/commit/202f40a927b4b69123fff5bfff62593bda78d8a6))
+
+## [1.82.0-beta.3](https://github.com/open-sauced/insights/compare/v1.82.0-beta.2...v1.82.0-beta.3) (2024-01-09)
+
+
+### 🐛 Bug Fixes
+
+* contributors not found message in contributors table no longer displays &apos; ([#2430](https://github.com/open-sauced/insights/issues/2430)) ([34d0264](https://github.com/open-sauced/insights/commit/34d026436f800682ea80bf2f1177dee11896ad51))
+* now you can click on a contributor highlight OG image to go to the referenced url ([#2444](https://github.com/open-sauced/insights/issues/2444)) ([6f058be](https://github.com/open-sauced/insights/commit/6f058be8976ea95f565aff89114bfd214b7625d4))
+
+## [1.82.0-beta.2](https://github.com/open-sauced/insights/compare/v1.82.0-beta.1...v1.82.0-beta.2) (2024-01-09)
+
+
+### 🐛 Bug Fixes
+
+* fixed regression where you couldn't view demo insights as a logged out user ([#2443](https://github.com/open-sauced/insights/issues/2443)) ([9335707](https://github.com/open-sauced/insights/commit/93357078238b8b630bbd55572f2c90d68c76529d))
+* removed <PrivateWrapper /> component because middleware handles this logic ([92205a5](https://github.com/open-sauced/insights/commit/92205a52b06257b8c5e74e1fd3e6cc5f3cc91072))
+* removed <PrivateWrapper /> component which contributed to page load slowness ([#2440](https://github.com/open-sauced/insights/issues/2440)) ([72d678e](https://github.com/open-sauced/insights/commit/72d678ed641f3782c23c49458dea33df004678c9))
+
+## [1.82.0-beta.1](https://github.com/open-sauced/insights/compare/v1.81.0...v1.82.0-beta.1) (2024-01-08)
+
+
+### 🍕 Features
+
+* add follower and following counts to contributor profile ([#2386](https://github.com/open-sauced/insights/issues/2386)) ([cd9fde7](https://github.com/open-sauced/insights/commit/cd9fde7769c790589b04067cfd5f8193dcfe12cd))
+
+
+### 🐛 Bug Fixes
+
+* adjust logic for showing insights popup for unauthenticated users ([#2425](https://github.com/open-sauced/insights/issues/2425)) ([23b3179](https://github.com/open-sauced/insights/commit/23b31799789f4edad09699292a6f332fe7c405a1))
+* delete page button on insights edit page passes colour contrast checks now ([#2436](https://github.com/open-sauced/insights/issues/2436)) ([0b147e4](https://github.com/open-sauced/insights/commit/0b147e4ecad15a30293a19abca7131b457783499))
+* fixed recommended repository link ([#2413](https://github.com/open-sauced/insights/issues/2413)) ([e1fd024](https://github.com/open-sauced/insights/commit/e1fd024a67bac14e0ecd94f7a30ec8dcc340b315))
+* **insightpage.tsx:** using "destructive" button variant from the common component ([1e22e7c](https://github.com/open-sauced/insights/commit/1e22e7ca5f7d1489a8f78ba35307f6cdced7f590))
+
 ## [1.81.0](https://github.com/open-sauced/insights/compare/v1.80.0...v1.81.0) (2024-01-04)
 
 
