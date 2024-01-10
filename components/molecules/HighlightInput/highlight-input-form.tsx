@@ -355,7 +355,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
       setError("Repo not found!");
       return;
     }
-
+    setError("");
     const [ownerName, repoName] = repoFullName.split("/");
     const repoIcon = getAvatarByUsername(ownerName, 60);
     const newTaggedRepoList = [...taggedRepoList, { repoName, repoOwner: ownerName, repoIcon }];
