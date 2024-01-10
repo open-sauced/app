@@ -25,7 +25,6 @@ import useSession from "lib/hooks/useSession";
 
 import AppSideBar from "components/Sidebar/app-sidebar";
 import { FeatureFlag } from "lib/utils/server/feature-flags";
-import { FeatureFlagged } from "components/shared/feature-flagged";
 import type { AppProps } from "next/app";
 
 // Clear any service workers present
@@ -58,8 +57,8 @@ type ComponentWithPageLayout = AppProps & {
     PageLayout?: React.ComponentType<any>;
     SEO?: SEOobject;
     updateSEO?: (SEO: SEOobject) => void;
-    featureFlags: Record<FeatureFlag, boolean>;
   };
+  pageProps: AppProps["pageProps"] & { featureFlags: Record<FeatureFlag, boolean> };
 };
 
 function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
@@ -154,19 +153,28 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
         <SessionContextProvider supabaseClient={supabaseClient} initialSession={pageProps.initialSession}>
           <PostHogProvider client={posthog}>
             <TipProvider>
-              <div className="flex flex-1">
-                <FeatureFlagged flag="workspaces" featureFlags={pageProps.featureFlags}>
+              {pageProps.featureFlags?.workspaces ? (
+                <div className="flex flex-1">
                   <AppSideBar />
-                </FeatureFlagged>
-
-                {Component.PageLayout ? (
-                  <Component.PageLayout>
+                  {Component.PageLayout ? (
+                    <Component.PageLayout>
+                      <Component {...pageProps} />
+                    </Component.PageLayout>
+                  ) : (
                     <Component {...pageProps} />
-                  </Component.PageLayout>
-                ) : (
-                  <Component {...pageProps} />
-                )}
-              </div>
+                  )}
+                </div>
+              ) : (
+                <>
+                  {Component.PageLayout ? (
+                    <Component.PageLayout>
+                      <Component {...pageProps} />
+                    </Component.PageLayout>
+                  ) : (
+                    <Component {...pageProps} />
+                  )}
+                </>
+              )}
             </TipProvider>
           </PostHogProvider>
         </SessionContextProvider>
