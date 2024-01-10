@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.82.0-beta.4](https://github.com/open-sauced/insights/compare/v1.82.0-beta.3...v1.82.0-beta.4) (2024-01-09)
+
+
+### 🍕 Features
+
+* added the worskpaces feature flag ([#2447](https://github.com/open-sauced/insights/issues/2447)) ([202f40a](https://github.com/open-sauced/insights/commit/202f40a927b4b69123fff5bfff62593bda78d8a6))
+
 ## [1.82.0-beta.3](https://github.com/open-sauced/insights/compare/v1.82.0-beta.2...v1.82.0-beta.3) (2024-01-09)
 
 
