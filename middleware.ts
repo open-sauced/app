@@ -13,7 +13,8 @@ const pathsToMatch = [
   "/feed/",
   "/user/notifications",
   "/user/settings",
-  "/account-deleted"
+  "/account-deleted",
+  "/workspaces/:path*",
 ];
 
 const NO_ONBOARDING_PAYLOAD = {
