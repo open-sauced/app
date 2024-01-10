@@ -172,3 +172,8 @@ div[role="dialog"]::-webkit-scrollbar-thumb {
 .react-loading-skeleton {
   z-index: unset !important;
 }
+
+/* For the mail icon */
+svg:has(> #Mail) {
+  stroke-width: 1;
+}

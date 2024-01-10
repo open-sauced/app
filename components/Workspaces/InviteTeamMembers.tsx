@@ -1,4 +1,4 @@
-import { FaMailBulk } from "react-icons/fa";
+import { CiMail } from "react-icons/ci";
 import Button from "components/atoms/Button/button";
 
 interface InviteTeamMembersProps {
@@ -21,8 +21,7 @@ export const InviteTeamMembers = ({ onInviteTeamMembers }: InviteTeamMembersProp
             onInviteTeamMembers();
           }}
         >
-          {/* TODO find right mail icon */}
-          <FaMailBulk size={22} />
+          <CiMail size={22} />
           <span>Send Invites</span>
         </Button>
       </div>
