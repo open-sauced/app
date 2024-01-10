@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+### [1.82.1-beta.1](https://github.com/open-sauced/insights/compare/v1.82.0...v1.82.1-beta.1) (2024-01-10)
+
+
+### 🐛 Bug Fixes
+
+* hydration error in insights page ([#2452](https://github.com/open-sauced/insights/issues/2452)) ([5174a1d](https://github.com/open-sauced/insights/commit/5174a1d590ae19157ba759aa83d4e576c4349dc9))
+* now explore link is actively styled when neccessary ([#2364](https://github.com/open-sauced/insights/issues/2364)) ([c111dfd](https://github.com/open-sauced/insights/commit/c111dfd2c0c08d4888bf290fbe788b52b0ba0257))
+
 ## [1.82.0](https://github.com/open-sauced/insights/compare/v1.81.0...v1.82.0) (2024-01-09)
 
 
