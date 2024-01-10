@@ -47,8 +47,7 @@ export async function middleware(req: NextRequest) {
 
   if (
     !pathsToMatch.some((matcher) => pathToRegexp(matcher).test(req.nextUrl.pathname)) ||
-    // if the path is hub/insights go to the page so logged out users can see demo insights
-    req.nextUrl.pathname === "/hub/insights" ||
+    // if the path is hub/insights or hub/lists go to the page so logged out users can see demo insights or demo lists    req.nextUrl.pathname === "/hub/insights" ||
     req.nextUrl.pathname === "/hub/lists"
   ) {
     return res;
