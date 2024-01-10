@@ -24,6 +24,8 @@ import { useMediaQuery } from "lib/hooks/useMediaQuery";
 import useSession from "lib/hooks/useSession";
 
 import AppSideBar from "components/Sidebar/app-sidebar";
+import { FeatureFlag } from "lib/utils/server/feature-flags";
+import { FeatureFlagged } from "components/shared/feature-flagged";
 import type { AppProps } from "next/app";
 
 // Clear any service workers present
@@ -56,6 +58,7 @@ type ComponentWithPageLayout = AppProps & {
     PageLayout?: React.ComponentType<any>;
     SEO?: SEOobject;
     updateSEO?: (SEO: SEOobject) => void;
+    featureFlags: Record<FeatureFlag, boolean>;
   };
 };
 
@@ -152,7 +155,9 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
           <PostHogProvider client={posthog}>
             <TipProvider>
               <div className="flex flex-1">
-                <AppSideBar />
+                <FeatureFlagged flag="workspaces" featureFlags={pageProps.featureFlags}>
+                  <AppSideBar />
+                </FeatureFlagged>
 
                 {Component.PageLayout ? (
                   <Component.PageLayout>
