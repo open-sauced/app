@@ -9,9 +9,9 @@ interface SidebarProps {
 
 const SidebarWrapper = ({ children }: SidebarProps) => {
   return (
-    <div className="bg-white relative w-full md:w-1/5 px-3 py-4 flex flex-col gap-8 min-h-[calc(100vh-40px)]">
-      {children}
-      <div className="absolute flex flex-col bottom-0">
+    <div className="bg-white flex flex-col gap-8 w-full max-w-xs px-3  min-h-[calc(100vh-150px)] max-h-screen justify-between">
+      <div className="grid gap-4 mt-4">{children}</div>
+      <div className="mb-4">
         <SidebarMenuItem title="Support" href="/logout" icon={<LifebuoyIcon className="w-5 h-5 text-slate-400" />} />
         <SidebarMenuItem
           title="Settings"

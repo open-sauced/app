@@ -1,0 +1,29 @@
+import Footer from "components/organisms/Footer/footer";
+import TopNav from "components/organisms/TopNav/top-nav";
+import { AppSideBar } from "components/shared/AppSidebar/AppSidebar";
+
+export const WorkspaceLayout = ({ children }: { children: React.ReactNode }) => {
+  return (
+    <div
+      className="grid grid-cols-[auto,1fr] grid-rows-[3.3rem,auto,1fr]"
+      style={{
+        gridTemplateAreas: `
+      "header header"
+      "sidebar main"
+      "footer footer"
+    `,
+      }}
+    >
+      <div className="border border-red-700" style={{ gridArea: "header" }}>
+        <TopNav />
+      </div>
+      <div className="top-0 sticky" style={{ gridArea: "sidebar" }}>
+        <AppSideBar />
+      </div>
+      <div style={{ gridArea: "main" }}>{children}</div>
+      <div className="bottom-0 sticky h-24" style={{ gridArea: "footer" }}>
+        <Footer />
+      </div>
+    </div>
+  );
+};
