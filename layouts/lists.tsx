@@ -47,7 +47,7 @@ const ListPageLayout = ({
             )}
           </Header>
 
-          <div className="md:grid md:grid-cols-2 flex flex-col">
+          <div className="md:grid md:grid-cols-2 flex flex-col border-b">
             {list && <TabsList tabList={tabList} selectedTab={selectedTab} pageId={`/lists/${list.id}`} />}
             <div>
               <div className="flex justify-end p-4 md:p-0">

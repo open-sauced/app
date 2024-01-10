@@ -106,7 +106,7 @@ const Search = ({
     >
       <FaSearch className="text-light-slate-9" fontSize={16} onClick={handleOnSearch} />
       <input
-        className="w-full pl-2 placeholder:text-sm focus:outline-none placeholder:text-slate-400"
+        className="w-full pl-2 placeholder:text-sm focus:outline-none placeholder:text-slate-400 disabled:cursor-not-allowed"
         autoFocus={autoFocus}
         placeholder={placeholder}
         name={name}

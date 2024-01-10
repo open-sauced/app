@@ -149,34 +149,38 @@ const Highlights = ({ list, numberOfContributors, isOwner, highlights }: Highlig
             />
 
             {taggedRepos && taggedRepos.length > 0 ? (
-              <div className="flex flex-col gap-2">
-                <span className="text-sm text-light-slate-9">Tagged Repositories</span>
-                {filterOptions &&
-                  filterOptions.length > 0 &&
-                  filterOptions.map(({ full_name, repoIcon, repoName }) => (
-                    <div
-                      onClick={() => handleRepoFilter(full_name)}
-                      key={full_name as string}
-                      className={`${
-                        selectedFilter === full_name ? "border-orange-600 bg-orange-200" : ""
-                      } flex hover:border-orange-600 hover:bg-orange-200 cursor-pointer gap-1 w-max  p-1 pr-2 border-[1px] border-light-slate-6 rounded-lg text-light-slate-12`}
-                    >
-                      <Icon IconImage={repoIcon} className="rounded-[4px] overflow-hidden" />
-                      <span className="max-w-[45px] md:max-w-[100px] truncate text-xs ">{repoName}</span>
-                    </div>
-                  ))}
-              </div>
+              <ClientOnly>
+                <div className="flex flex-col gap-2">
+                  <span className="text-sm text-light-slate-9">Tagged Repositories</span>
+                  {filterOptions &&
+                    filterOptions.length > 0 &&
+                    filterOptions.map(({ full_name, repoIcon, repoName }) => (
+                      <div
+                        onClick={() => handleRepoFilter(full_name)}
+                        key={full_name as string}
+                        className={`${
+                          selectedFilter === full_name ? "border-orange-600 bg-orange-200" : ""
+                        } flex hover:border-orange-600 hover:bg-orange-200 cursor-pointer gap-1 w-max  p-1 pr-2 border-[1px] border-light-slate-6 rounded-lg text-light-slate-12`}
+                      >
+                        <Icon IconImage={repoIcon} className="rounded-[4px] overflow-hidden" />
+                        <span className="max-w-[45px] md:max-w-[100px] truncate text-xs ">{repoName}</span>
+                      </div>
+                    ))}
+                </div>
+              </ClientOnly>
             ) : null}
           </div>
         </div>
         <div className="w-full 2xl:max-w-[40rem] xl:max-w-[33rem] flex flex-col gap-10">
           {isLoading ? (
-            <div className="flex flex-col gap-3">
-              <div className="flex gap-3">
-                <SkeletonWrapper radius={100} width={40} height={40} /> <SkeletonWrapper width={200} height={40} />
+            <ClientOnly>
+              <div className="flex flex-col gap-3">
+                <div className="flex gap-3">
+                  <SkeletonWrapper radius={100} width={40} height={40} /> <SkeletonWrapper width={200} height={40} />
+                </div>
+                <SkeletonWrapper height={300} />
               </div>
-              <SkeletonWrapper height={300} />
-            </div>
+            </ClientOnly>
           ) : null}
 
           {!isLoading && data && data.length === 0 ? (
@@ -184,11 +188,12 @@ const Highlights = ({ list, numberOfContributors, isOwner, highlights }: Highlig
               <p> No highlights published in the past {range} days</p>
             </DashContainer>
           ) : null}
-          <ClientOnly>
-            {data && data.length > 0
-              ? data.map(({ id, url, title, created_at, highlight, shipped_at, login, type, tagged_repos }) => (
-                  <div key={id} className="flex flex-col gap-6 px-1 w-full">
-                    <div className="flex items-center gap-3">
+
+          {data && data.length > 0
+            ? data.map(({ id, url, title, created_at, highlight, shipped_at, login, type, tagged_repos }) => (
+                <div key={id} className="flex flex-col gap-6 px-1 w-full">
+                  <div className="flex items-center gap-3">
+                    <ClientOnly>
                       <Link href={`/user/${login}`} className="flex items-center gap-3">
                         <Avatar
                           alt="user profile avatar"
@@ -203,8 +208,10 @@ const Highlights = ({ list, numberOfContributors, isOwner, highlights }: Highlig
                           {formatDistanceToNowStrict(new Date(created_at), { addSuffix: true })}
                         </span>
                       </Link>
-                    </div>
-                    <div className="w-full p-4 border bg-light-slate-1 md:px-6 lg:px-9 lg:py-5 lg:max-w-[33rem] sm:py-3 xs:py-2 rounded-xl">
+                    </ClientOnly>
+                  </div>
+                  <div className="w-full p-4 border bg-light-slate-1 md:px-6 lg:px-9 lg:py-5 lg:max-w-[33rem] sm:py-3 xs:py-2 rounded-xl">
+                    <ClientOnly>
                       <ContributorHighlightCard
                         title={title}
                         desc={highlight}
@@ -216,11 +223,12 @@ const Highlights = ({ list, numberOfContributors, isOwner, highlights }: Highlig
                         taggedRepos={tagged_repos}
                         emojis={emojis}
                       />
-                    </div>
+                    </ClientOnly>
                   </div>
-                ))
-              : null}
-          </ClientOnly>
+                </div>
+              ))
+            : null}
+
           {meta.pageCount > 1 && (
             <div className="flex items-center justify-between max-w-3xl mt-4 xl:pr-24">
               <div className="flex items-center w-max gap-x-4">
