@@ -5,6 +5,20 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.83.0-beta.2](https://github.com/open-sauced/insights/compare/v1.83.0-beta.1...v1.83.0-beta.2) (2024-01-11)
+
+
+### 🍕 Features
+
+* created the ButtonGroup and ButtonGroupItem components ([#2464](https://github.com/open-sauced/insights/issues/2464)) ([d74055b](https://github.com/open-sauced/insights/commit/d74055b6b3eefd5ec2c03488980fb811addabf5b))
+
+## [1.83.0-beta.1](https://github.com/open-sauced/insights/compare/v1.82.1-beta.2...v1.83.0-beta.1) (2024-01-11)
+
+
+### 🍕 Features
+
+* introduce application side nav ([#2416](https://github.com/open-sauced/insights/issues/2416)) ([df32dfd](https://github.com/open-sauced/insights/commit/df32dfdf7739515d7fc542293be897d975e5577d))
+
 ### [1.82.1-beta.2](https://github.com/open-sauced/insights/compare/v1.82.1-beta.1...v1.82.1-beta.2) (2024-01-11)
 
 
