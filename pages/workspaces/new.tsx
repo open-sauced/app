@@ -19,25 +19,24 @@ const NewWorkspace = () => {
 
   return (
     <WorkspaceLayout>
-      <h1 className="border-b bottom">Workspace Settings</h1>
-      <form className="flex flex-col pt-6 gap-6">
+      <h1 className="border-b bottom pb-4">Workspace Settings</h1>
+      <form
+        className="flex flex-col pt-6 gap-6"
+        onSubmit={(event) => {
+          event.preventDefault();
+          createWorkspace();
+        }}
+      >
         <label className="flex flex-col gap-4 w-max">
           <span>Workspace Name</span>
-          <TextInput placeholder="Workspace name" />
+          <TextInput placeholder="Workspace name" required />
         </label>
         <TrackedOrgRepos onAddOrgRepo={onAddOrgRepo} />
-        <InviteTeamMembers onInviteTeamMembers={onInviteTeamMembers} />
-        <Button
-          variant="primary"
-          className="flex gap-2.5 items-center cursor-pointer w-min mt-2 sm:mt-0 self-end"
-          onClick={(event) => {
-            event.preventDefault();
-            createWorkspace();
-          }}
-        >
+        <Button variant="primary" className="flex gap-2.5 items-center cursor-pointer w-min mt-2 sm:mt-0 self-end">
           Create Workspace
         </Button>
       </form>
+      <InviteTeamMembers onInviteTeamMembers={onInviteTeamMembers} />
     </WorkspaceLayout>
   );
 };
