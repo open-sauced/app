@@ -9,13 +9,17 @@ interface SidebarProps {
 
 const SidebarWrapper = ({ children }: SidebarProps) => {
   return (
-    <div className="bg-white relative w-full md:w-1/5 px-3 py-4 flex flex-col gap-8 min-h-[calc(100vh-40px)]">
+    <div className="bg-white relative w-full md:w-1/5 px-3 py-16 hidden sm:flex flex-col gap-8 min-h-[calc(100vh-40px)]">
       {children}
       <div className="absolute flex flex-col bottom-0">
-        <SidebarMenuItem title="Support" href="/logout" icon={<LifebuoyIcon className="w-5 h-5 text-slate-400" />} />
+        <SidebarMenuItem
+          title="Support"
+          href="https://docs.opensauced.pizza/welcome/faqs/"
+          icon={<LifebuoyIcon className="w-5 h-5 text-slate-400" />}
+        />
         <SidebarMenuItem
           title="Settings"
-          href="/settings"
+          href="/user/settings"
           icon={<Cog8ToothIcon className="w-5 h-5 text-slate-400" />}
         />
       </div>
