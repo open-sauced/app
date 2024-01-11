@@ -2,30 +2,28 @@ import React, { useState } from "react";
 import PullRequestOverviewChart from "../../atoms/PullRequestOverviewChart/pull-request-overview-chart";
 
 interface PullRequestOverviewProps {
-  className?: string;
   open?: number;
   merged?: number;
   closed?: number;
   draft?: number;
-  churn?: number;
-  churnDirection?: string;
-  prActiveCount?: number;
 }
+
+export type OverviewType = "open" | "merged" | "closed" | "draft" | "";
 interface OverviewDetails {
-  type: string;
+  type: OverviewType;
   percent: number | undefined;
 }
 
-const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({ open, merged, closed, draft, prActiveCount }) => {
+const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({ open, merged, closed, draft }) => {
   const totalPullRequests = Math.round(
     (!!open ? open : 0) + (!!merged ? merged : 0) + (!!closed ? closed : 0) + (!!draft ? draft : 0)
   );
 
-  // used this state to manage actively hovered pull request overview chart
   const [prOverviewDetails, setPrOverviewDetails] = useState<OverviewDetails>({
     type: "",
     percent: totalPullRequests,
   });
+
   return (
     <div className="flex flex-col gap-1">
       <div className="w-full flex justify-between gap-1">

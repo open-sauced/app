@@ -1,4 +1,5 @@
 import React, { Dispatch, SetStateAction } from "react";
+import { OverviewType } from "components/molecules/PullRequestOverview/pull-request-overview";
 
 interface PullRequestOverviewChartBarProps {
   percent?: number;
@@ -44,7 +45,7 @@ interface PullRequestOverviewChartProps {
   closed?: number;
   draft?: number;
   totalPullRequests?: number;
-  setOverviewDetails: Dispatch<SetStateAction<{ type: string; percent: number | undefined }>>;
+  setOverviewDetails: Dispatch<SetStateAction<{ type: OverviewType; percent: number | undefined }>>;
 }
 
 const PullRequestOverviewChart: React.FC<PullRequestOverviewChartProps> = ({
