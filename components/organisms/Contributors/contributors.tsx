@@ -24,6 +24,9 @@ import { useToast } from "lib/hooks/useToast";
 
 import ClientOnly from "components/atoms/ClientOnly/client-only";
 import { setQueryParams } from "lib/utils/query-params";
+import HighlightCard from "components/molecules/HighlightCard/highlight-card";
+import useInsightsContributors from "lib/hooks/api/useInsightsContributors";
+import getPercentageChange from "lib/utils/get-percentage-change";
 import ContributorCard from "../ContributorCard/contributor-card";
 import ContributorTable from "../ContributorsTable/contributors-table";
 
@@ -35,8 +38,22 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
   const router = useRouter();
   const limit = router.query.limit as string;
   const topic = router.query.pageId as string;
+  const { range = 30 } = router.query;
 
   const { data, meta, setPage, isError, isLoading } = useContributors(Number(limit ?? 10), repositories);
+
+  // New contributors
+  const { meta: currentNewContributorsMeta } = useInsightsContributors(10, repositories, "new");
+  const { meta: prevNewContributorMeta } = useInsightsContributors(10, repositories, "new", 30);
+
+  // Active contributors
+  const { meta: currentActiveContributorsMeta } = useInsightsContributors(10, repositories, "repeat");
+  const { meta: prevActiveContributorMeta } = useInsightsContributors(10, repositories, "repeat", 30);
+
+  // Alumni contributors
+  const { meta: currentAlumniContributorsMeta } = useInsightsContributors(10, repositories, "churn");
+  const { meta: prevAlumniContributorMeta } = useInsightsContributors(10, repositories, "churn", 30);
+
   const { toast } = useToast();
   const [layout, setLayout] = useState<ToggleValue>("list");
   const [selectedContributors, setSelectedContributors] = useState<DbPRContributor[]>([]);
@@ -178,7 +195,51 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
   };
 
   return (
-    <>
+    <div className="flex flex-col gap-6">
+      <section className="flex flex-wrap items-center max-w-full gap-4 lg:flex-row lg:flex-nowrap">
+        <HighlightCard
+          label="All Contributors"
+          icon={"contributors"}
+          tooltip="All Contributors"
+          value={meta?.itemCount}
+          valueLabel={`in the last ${range}d`}
+          isLoading={false}
+          metricIncreases={true}
+        />
+        <HighlightCard
+          label="Active Contributors"
+          valueLabel={`${currentActiveContributorsMeta.itemCount}`}
+          icon={"active-contributors"}
+          value={`${getPercentageChange(
+            prevActiveContributorMeta.itemCount,
+            currentActiveContributorsMeta.itemCount
+          )}%`}
+          isLoading={false}
+          metricIncreases={true}
+        />
+        <HighlightCard
+          label="New Contributors"
+          valueLabel={`${currentNewContributorsMeta.itemCount}`}
+          icon={"new-contributors"}
+          tooltip="All Contributors"
+          value={`${getPercentageChange(prevNewContributorMeta.itemCount, currentNewContributorsMeta.itemCount)}%`}
+          isLoading={false}
+          metricIncreases={currentNewContributorsMeta.itemCount > prevNewContributorMeta.itemCount}
+          increased={currentNewContributorsMeta.itemCount > prevNewContributorMeta.itemCount}
+        />
+        <HighlightCard
+          label="Alumni Contributors"
+          valueLabel={`${currentAlumniContributorsMeta.itemCount}`}
+          icon={"alumni-contributors"}
+          tooltip="All Contributors"
+          value={`${getPercentageChange(
+            prevAlumniContributorMeta.itemCount,
+            currentAlumniContributorsMeta.itemCount
+          )}%`}
+          isLoading={false}
+          metricIncreases={true}
+        />
+      </section>
       {/* Table section */}
       <TableHeader
         metaInfo={meta}
@@ -270,7 +331,7 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 export default Contributors;

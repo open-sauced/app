@@ -9,12 +9,12 @@ interface PaginatedResponse {
   readonly meta: Meta;
 }
 
-type Type = "new" | "recent" | "churn";
-const useInsightsContributors = (limit = 10, repoIds: number[] = [], type: Type = "recent") => {
+type Type = "new" | "recent" | "churn" | "repeat" | "";
+const useInsightsContributors = (limit = 10, repoIds: number[] = [], type: Type = "", prevStartDate: number = 0) => {
   const router = useRouter();
   const [page, setPage] = useState(1);
 
-  const { range } = router.query;
+  const { range = 30 } = router.query;
 
   const query = new URLSearchParams();
 
@@ -30,13 +30,14 @@ const useInsightsContributors = (limit = 10, repoIds: number[] = [], type: Type 
     query.set("repoIds", repoIds.join(","));
   }
 
-  query.set("range", `${range ?? 30}`);
+  query.set("range", `${range}`);
+  query.set("prev_days_start_date", `${prevStartDate}`);
 
   const baseEndpoint = `contributors/insights/${type}`;
   const endpointString = `${baseEndpoint}?${query.toString()}`;
 
   const { data, error, mutate } = useSWR<PaginatedResponse, Error>(
-    endpointString,
+    type ? endpointString : null,
     publicApiFetcher as Fetcher<PaginatedResponse, Error>
   );
 
