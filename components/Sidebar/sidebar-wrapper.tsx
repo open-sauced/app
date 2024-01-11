@@ -15,7 +15,7 @@ const SidebarWrapper = ({ children }: SidebarProps) => {
         <SidebarMenuItem title="Support" href="/logout" icon={<LifebuoyIcon className="w-5 h-5 text-slate-400" />} />
         <SidebarMenuItem
           title="Settings"
-          href="/settings"
+          href="/user/settings"
           icon={<Cog8ToothIcon className="w-5 h-5 text-slate-400" />}
         />
       </div>
