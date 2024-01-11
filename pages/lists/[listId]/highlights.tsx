@@ -133,16 +133,16 @@ const Highlights = ({ list, numberOfContributors, isOwner, highlights }: Highlig
     <ListPageLayout showRangeFilter={false} list={list} numberOfContributors={numberOfContributors} isOwner={isOwner}>
       <div
         ref={topRef}
-        className="container flex flex-col justify-center  w-full gap-12 pt-4 mt-5 md:mt-0 md:items-start md:justify-start md:flex-row"
+        className="flex flex-col justify-center w-full gap-x-10 pt-4 md:mt-0 md:items-start md:justify-start md:flex-row"
       >
         <div className="xl:sticky lg:top-14 xl:flex flex-none w-full md:w-max">
-          <div className="w-full min-w-max bg-white border shadow-sm rounded-lg px-5 py-6 flex flex-col gap-4">
+          <div className="w-full min-w-max border shadow-sm rounded-lg px-5 py-6 flex flex-col gap-4">
             <Search
               value={contributor}
               onChange={(value) => {
                 onSearch(value);
               }}
-              isDisabled={data.length === 0}
+              isDisabled={data.length === 0 && !contributor}
               placeholder="Search contributors"
               className="!w-full"
               name="helo"
@@ -171,7 +171,7 @@ const Highlights = ({ list, numberOfContributors, isOwner, highlights }: Highlig
             ) : null}
           </div>
         </div>
-        <div className="w-full 2xl:max-w-[40rem] xl:max-w-[33rem] flex flex-col gap-10">
+        <div className="w-full 2xl:max-w-[38rem] xl:max-w-[33rem] flex flex-col gap-10">
           {isLoading ? (
             <ClientOnly>
               <div className="flex flex-col gap-3">
@@ -184,7 +184,7 @@ const Highlights = ({ list, numberOfContributors, isOwner, highlights }: Highlig
           ) : null}
 
           {!isLoading && data && data.length === 0 ? (
-            <DashContainer>
+            <DashContainer className="lg:max-w-[33rem]">
               <p> No highlights published in the past {range} days</p>
             </DashContainer>
           ) : null}
