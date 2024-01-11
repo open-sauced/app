@@ -20,4 +20,16 @@ const meta: Meta<typeof ButtonGroup> = {
 
 export default meta;
 
-export const Default: Story = {};
+export const ThreeButtons: Story = {};
+
+export const TwoButtons: Story = {
+  args: {
+    label: "This is a button group",
+    children: [
+      <ButtonGroupItem key="1" variant="primary">
+        Organizations
+      </ButtonGroupItem>,
+      <ButtonGroupItem key="3">Contributors</ButtonGroupItem>,
+    ],
+  },
+};
