@@ -15,10 +15,9 @@ const variantStyles = {
   secondary: "bg-white",
 } satisfies Record<Exclude<ButtonGroupItemProps["variant"], undefined>, string>;
 
-export const ButtonGroupItem = ({ variant = "secondary", onClick, ...restOfProps }: ButtonGroupItemProps) => {
+export const ButtonGroupItem = ({ variant = "secondary", ...restOfProps }: ButtonGroupItemProps) => {
   return (
     <button
-      onClick={onClick}
       className={`p-1 px-2 border first:rounded-l first:border-r first:border-r-transparent last:rounded-r last:border-l-transparent ${variantStyles[variant]}`}
       {...restOfProps}
     />
