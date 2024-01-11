@@ -6,6 +6,7 @@ interface PullRequestOverviewProps {
   merged?: number;
   closed?: number;
   draft?: number;
+  churn?: number;
 }
 
 export type OverviewType = "open" | "merged" | "closed" | "draft" | "";
