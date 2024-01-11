@@ -1,8 +1,8 @@
-import { ButtonHTMLAttributes, DetailedHTMLProps, type ReactElement } from "react";
+import { ButtonHTMLAttributes, Children, DetailedHTMLProps, ReactNode, isValidElement } from "react";
 
 interface ButtonGroupProps {
   label: string;
-  children: ReactElement<typeof ButtonGroupItem>[];
+  children: ReactNode;
 }
 
 type ButtonGroupItemProps = DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> & {
@@ -25,6 +25,14 @@ export const ButtonGroupItem = ({ variant = "secondary", ...restOfProps }: Butto
 };
 
 export const ButtonGroup = ({ children, label }: ButtonGroupProps) => {
+  const invalidChild = Children.toArray(children).some((child) => {
+    return !isValidElement(child) || (isValidElement(child) && child.type !== ButtonGroupItem);
+  });
+
+  if (invalidChild) {
+    throw new Error("ButtonGroup children must be ButtonGroupItems");
+  }
+
   return (
     <div role="group" aria-label={label} className="flex items-center w-max">
       {children}
