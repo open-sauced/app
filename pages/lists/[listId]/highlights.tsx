@@ -171,7 +171,7 @@ const Highlights = ({ list, numberOfContributors, isOwner, highlights }: Highlig
             ) : null}
           </div>
         </div>
-        <div className="w-full 2xl:max-w-[38rem] xl:max-w-[33rem] flex flex-col gap-10">
+        <div className="w-full 2xl:max-w-[40rem] xl:max-w-[33rem] flex flex-col gap-10">
           {isLoading ? (
             <ClientOnly>
               <div className="flex flex-col gap-3">
