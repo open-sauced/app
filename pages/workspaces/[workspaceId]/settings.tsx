@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
-import InviteTeamMembers from "components/Workspaces/InviteTeamMembers";
-import TrackedOrgRepos from "components/Workspaces/TrackedOrgRepos";
+import { GetServerSidePropsContext } from "next";
+import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import Button from "components/atoms/Button/button";
 import TextInput from "components/atoms/TextInput/text-input";
@@ -30,12 +30,34 @@ async function saveWorkspace({
   return { data, error };
 }
 
-const WorkspacePage = () => {
+interface WorkspaceSettingsProps {
+  workspace: Workspace;
+}
+
+export const getServerSideProps = async (context: GetServerSidePropsContext) => {
+  const supabase = createPagesServerClient(context);
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+  const bearerToken = session ? session.access_token : "";
+  const workspaceId = context.params?.workspaceId as string;
+  const { data, error } = await fetchApiData<Workspace>({
+    path: `workspaces/${workspaceId}`,
+    bearerToken,
+    pathValidator: () => true,
+  });
+
+  if (error) {
+    return { notFound: true };
+  }
+
+  return { props: { workspace: data } };
+};
+
+const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
   const { sessionToken } = useSupabaseAuth();
   const { toast } = useToast();
   const router = useRouter();
-  const [, workspaceId] = router.asPath.split("/");
-  // const { data: workspace, error } = useWorkspace(workspaceId);
 
   function onAddOrgRepo() {
     alert("Add org repo");
@@ -57,7 +79,7 @@ const WorkspacePage = () => {
           const name = formData.get("name") as string;
           const description = formData.get("description") as string;
           const { data, error } = await saveWorkspace({
-            workspaceId,
+            workspaceId: workspace.id,
             name,
             description,
             sessionToken: sessionToken!,
@@ -67,26 +89,24 @@ const WorkspacePage = () => {
             toast({ description: `Error creating new workspace. Please try again`, variant: "danger" });
           } else {
             toast({ description: `Workspace created successfully`, variant: "success" });
-            router.push(`/workspaces/${data?.id}`);
+            router.push(`/workspaces/${workspace.id}`);
           }
         }}
       >
         <label className="flex flex-col gap-4 w-max">
           <span>Workspace Name</span>
-          <TextInput name="name" placeholder="Workspace name" required />
+          <TextInput name="name" defaultValue={workspace.name} placeholder="Workspace name" required />
         </label>
         <label className="flex flex-col gap-4 w-max">
           <span>Workspace Description</span>
-          <TextInput name="description" placeholder="Workspace description" />
+          <TextInput name="description" defaultValue={workspace.description} placeholder="Workspace description" />
         </label>
-        <TrackedOrgRepos onAddOrgRepo={onAddOrgRepo} />
         <Button variant="primary" className="flex gap-2.5 items-center cursor-pointer w-min mt-2 sm:mt-0 self-end">
           Save Workspace
         </Button>
       </form>
-      <InviteTeamMembers onInviteTeamMembers={onInviteTeamMembers} />
     </WorkspaceLayout>
   );
 };
 
-export default WorkspacePage;
+export default WorkspaceSettings;

@@ -1,6 +1,4 @@
 import { useRouter } from "next/router";
-import InviteTeamMembers from "components/Workspaces/InviteTeamMembers";
-import TrackedOrgRepos from "components/Workspaces/TrackedOrgRepos";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import Button from "components/atoms/Button/button";
 import TextInput from "components/atoms/TextInput/text-input";
@@ -66,7 +64,7 @@ const NewWorkspace = () => {
             toast({ description: `Error creating new workspace. Please try again`, variant: "danger" });
           } else {
             toast({ description: `Workspace created successfully`, variant: "success" });
-            router.push(`/workspaces/${data?.id}`);
+            router.push(`/workspaces/${data?.id}/settings`);
           }
         }}
       >
@@ -78,12 +76,10 @@ const NewWorkspace = () => {
           <span>Workspace Description</span>
           <TextInput name="description" placeholder="Workspace description" />
         </label>
-        <TrackedOrgRepos onAddOrgRepo={onAddOrgRepo} />
         <Button variant="primary" className="flex gap-2.5 items-center cursor-pointer w-min mt-2 sm:mt-0 self-end">
           Create Workspace
         </Button>
       </form>
-      <InviteTeamMembers onInviteTeamMembers={onInviteTeamMembers} />
     </WorkspaceLayout>
   );
 };
