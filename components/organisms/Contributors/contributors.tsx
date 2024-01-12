@@ -195,9 +195,11 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
         <div className="grid w-full gap-3 grid-cols-automobile md:grid-cols-autodesktop">
           {isLoading ? <SkeletonWrapper height={210} radius={12} count={9} /> : ""}
           {isError ? <>An error occurred!..</> : ""}
-          {contributorArray.map((contributor, index) => (
-            <ContributorCard key={index} contributor={{ ...contributor }} topic={topic} repositories={repositories} />
-          ))}
+          {!isLoading &&
+            !isError &&
+            contributorArray.map((contributor, index) => (
+              <ContributorCard key={index} contributor={{ ...contributor }} topic={topic} repositories={repositories} />
+            ))}
         </div>
       ) : (
         <div className="lg:min-w-[1150px]">
