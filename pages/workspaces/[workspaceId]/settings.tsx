@@ -1,12 +1,18 @@
 import { useRouter } from "next/router";
 import { GetServerSidePropsContext } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
+import { useState } from "react";
+import dynamic from "next/dynamic";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import Button from "components/atoms/Button/button";
 import TextInput from "components/atoms/TextInput/text-input";
 import { fetchApiData } from "helpers/fetchApiData";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { useToast } from "lib/hooks/useToast";
+import Title from "components/atoms/Typography/title";
+import Text from "components/atoms/Typography/text";
+
+const DeleteWorkspaceModal = dynamic(() => import("components/Workspaces/DeleteWorkspaceModal"), { ssr: false });
 
 async function saveWorkspace({
   workspaceId,
@@ -29,6 +35,17 @@ async function saveWorkspace({
 
   return { data, error };
 }
+
+const deleteWorkspace = async ({ workspaceId, sessionToken }: { workspaceId: string; sessionToken: string }) => {
+  const { data, error } = await fetchApiData<Workspace>({
+    path: `workspaces/${workspaceId}`,
+    method: "DELETE",
+    bearerToken: sessionToken,
+    pathValidator: () => true,
+  });
+
+  return { data, error };
+};
 
 interface WorkspaceSettingsProps {
   workspace: Workspace;
@@ -58,6 +75,7 @@ const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
   const { sessionToken } = useSupabaseAuth();
   const { toast } = useToast();
   const router = useRouter();
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   return (
     <WorkspaceLayout>
@@ -105,6 +123,38 @@ const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
           </Button>
         </div>
       </form>
+      <div className="flex flex-col gap-4 py-6">
+        <Title className="!text-1xl !leading-none py-6" level={4}>
+          Danger Zone
+        </Title>
+
+        <div className="flex flex-col p-6 rounded-2xl bg-light-slate-4">
+          <Title className="!text-1xl !leading-none !border-light-slate-8 border-b pb-4" level={4}>
+            Delete Workspace
+          </Title>
+          <Text className="my-4">Once you delete a workspace, you&#39;re past the point of no return.</Text>
+
+          <div>
+            <Button onClick={() => setIsDeleteModalOpen(true)} variant="destructive">
+              Delete workspace
+            </Button>
+          </div>
+        </div>
+      </div>
+      <DeleteWorkspaceModal
+        isOpen={isDeleteModalOpen}
+        onClose={() => setIsDeleteModalOpen(false)}
+        workspace={workspace}
+        onDelete={async () => {
+          const { error } = await deleteWorkspace({ workspaceId: workspace.id, sessionToken: sessionToken! });
+          if (error) {
+            toast({ description: `Workspace delete failed`, variant: "danger" });
+          } else {
+            toast({ description: `Workspace deleted successfully`, variant: "success" });
+            router.push("/workspaces/new");
+          }
+        }}
+      />
     </WorkspaceLayout>
   );
 };
