@@ -8,21 +8,21 @@ import { fetchApiData } from "helpers/fetchApiData";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { useToast } from "lib/hooks/useToast";
 
-async function createWorkspace({
+async function saveWorkspace({
+  workspaceId,
   name,
   description = "",
-  members = [],
   sessionToken,
 }: {
+  workspaceId: string;
   name: string;
   description?: string;
-  members?: any[];
   sessionToken: string;
 }) {
   const { data, error } = await fetchApiData<Workspace>({
-    path: "workspaces",
-    method: "POST",
-    body: { name, description, members },
+    path: `workspaces/${workspaceId}`,
+    method: "PATCH",
+    body: { name, description },
     bearerToken: sessionToken,
     pathValidator: () => true,
   });
@@ -30,10 +30,12 @@ async function createWorkspace({
   return { data, error };
 }
 
-const NewWorkspace = () => {
+const WorkspacePage = () => {
   const { sessionToken } = useSupabaseAuth();
   const { toast } = useToast();
   const router = useRouter();
+  const [, workspaceId] = router.asPath.split("/");
+  // const { data: workspace, error } = useWorkspace(workspaceId);
 
   function onAddOrgRepo() {
     alert("Add org repo");
@@ -54,11 +56,10 @@ const NewWorkspace = () => {
           const formData = new FormData(form);
           const name = formData.get("name") as string;
           const description = formData.get("description") as string;
-          // TODO: send members list
-          const { data, error } = await createWorkspace({
+          const { data, error } = await saveWorkspace({
+            workspaceId,
             name,
             description,
-            members: [],
             sessionToken: sessionToken!,
           });
 
@@ -80,7 +81,7 @@ const NewWorkspace = () => {
         </label>
         <TrackedOrgRepos onAddOrgRepo={onAddOrgRepo} />
         <Button variant="primary" className="flex gap-2.5 items-center cursor-pointer w-min mt-2 sm:mt-0 self-end">
-          Create Workspace
+          Save Workspace
         </Button>
       </form>
       <InviteTeamMembers onInviteTeamMembers={onInviteTeamMembers} />
@@ -88,4 +89,4 @@ const NewWorkspace = () => {
   );
 };
 
-export default NewWorkspace;
+export default WorkspacePage;

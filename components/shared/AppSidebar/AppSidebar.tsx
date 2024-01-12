@@ -1,3 +1,4 @@
+import { useState } from "react";
 import SidebarWrapper from "components/Sidebar/sidebar-wrapper";
 import SidebarGroupWrapper from "components/Sidebar/sidebar-group-wrapper";
 import SidebarMenuItem from "components/Sidebar/sidebar-menu-item";
@@ -6,11 +7,15 @@ import MenuHeader from "components/Sidebar/sidebar-menu-header";
 import useUserInsights from "lib/hooks/useUserInsights";
 import { useFetchAllLists } from "lib/hooks/useList";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
+import SingleSelect from "components/atoms/Select/single-select";
+import useWorkspaces from "lib/hooks/api/useWorkspaces";
 
 export const AppSideBar = () => {
   const { username } = useSupabaseAuth();
   const { data: repoInsights, isLoading: insightsLoading } = useUserInsights(!!username);
   const { data: lists, isLoading: listsLoading } = useFetchAllLists(30, !!username);
+  const { data: workspaces, isLoading: workspacesLoading } = useWorkspaces({ limit: 100 });
+  const [workspaceId, setWorkspaceId] = useState<string>(workspaces[0]?.id);
 
   const insights = [
     ...repoInsights.slice(0, 5).map((repoInsight) => ({
@@ -24,6 +29,19 @@ export const AppSideBar = () => {
 
   return (
     <SidebarWrapper>
+      <label className="flex flex-col gap-2 text-sm ml-2">
+        <span>Workspace</span>
+        <SingleSelect
+          options={workspaces.map(({ id, name }) => ({
+            label: name,
+            value: id,
+          }))}
+          position="popper"
+          value={workspaceId}
+          placeholder="Select a workspace"
+          onValueChange={(value) => setWorkspaceId(value)}
+        />
+      </label>
       <MenuHeader>Your Insights</MenuHeader>
       <SidebarGroupWrapper isLoading={insightsLoading || listsLoading}>
         {insights.map((insight) => {
