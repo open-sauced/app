@@ -113,6 +113,7 @@ const ListsOverview = ({ list, numberOfContributors, isOwner, isError }: ListsOv
               increased={allContributorCommits > prevAllContributorCommits}
               value={allContributorCommits}
               valueLabel="in the last 30d"
+              tooltip=""
             />
             <HighlightCard
               label="Active Contributors"
@@ -122,6 +123,7 @@ const ListsOverview = ({ list, numberOfContributors, isOwner, isError }: ListsOv
               numChanged={allContributorMeta.itemCount - prevAllContributorMeta.itemCount}
               value={allContributorMeta.itemCount}
               isLoading={prevAllContributorStatsLoading || allContributorStatsLoading}
+              tooltip={`A contributor who has been active in the last ${range ?? 30} days`}
             />
             <HighlightCard
               label="New Contributors"
@@ -131,6 +133,7 @@ const ListsOverview = ({ list, numberOfContributors, isOwner, isError }: ListsOv
               numChanged={newContributorMeta.itemCount - prevNewContributorMeta.itemCount}
               value={newContributorMeta.itemCount}
               isLoading={prevNewContributorStatsLoading || newContributorStatsLoading}
+              tooltip="A contributor who has recently made their first contribution to a project."
             />
             <HighlightCard
               label="Alumni Contributors"
@@ -140,6 +143,7 @@ const ListsOverview = ({ list, numberOfContributors, isOwner, isError }: ListsOv
               numChanged={alumniContributorMeta.itemCount - prevAlumniContributorMeta.itemCount}
               value={alumniContributorMeta.itemCount}
               isLoading={prevAlumniContributorStatsLoading || alumniContributorStatsLoading}
+              tooltip={`A contributor who has not been active on a project in the last ${range ?? 30} days.`}
             />
           </section>
           <section className="flex flex-col max-w-full gap-4 mb-6 lg:flex-row">

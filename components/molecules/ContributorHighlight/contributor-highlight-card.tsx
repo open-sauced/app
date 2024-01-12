@@ -614,11 +614,13 @@ const ContributorHighlightCard = ({
       </div>
 
       {/* Generated OG card section */}
-      {type === "pull_request" || type === "issue" ? (
-        <GhOpenGraphImg githubLink={highlightLink} />
-      ) : (
-        <DevToSocialImg blogLink={highlightLink} />
-      )}
+      <a href={highlightLink} target="_blank" rel="noreferrer" aria-hidden="true">
+        {type === "pull_request" || type === "issue" ? (
+          <GhOpenGraphImg githubLink={highlightLink} />
+        ) : (
+          <DevToSocialImg blogLink={highlightLink} />
+        )}
+      </a>
 
       <div className="flex flex-wrap items-center gap-1">
         <DropdownMenu modal={false} open={emojiDropdownOpen}>

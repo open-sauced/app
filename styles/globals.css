@@ -32,6 +32,7 @@ input[type="checkbox"]:focus-visible,
 [role="combobox"]:focus-visible,
 [role="switch"]:focus-visible,
 button:not([role]):focus-visible{
+button:not([role]):focus-visible {
   @apply outline-none;
   @apply ring;
   @apply border-orange-500;
