@@ -84,14 +84,21 @@ const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
           }
         }}
       >
-        <label className="flex flex-col gap-4 w-max">
-          <span>Workspace Name</span>
-          <TextInput name="name" defaultValue={workspace.name} placeholder="Workspace name" required />
-        </label>
-        <label className="flex flex-col gap-4 w-max">
-          <span>Workspace Description</span>
-          <TextInput name="description" defaultValue={workspace.description} placeholder="Workspace description" />
-        </label>
+        <TextInput
+          name="name"
+          label="Workspace Name"
+          defaultValue={workspace.id}
+          placeholder="Workspace name"
+          className="w-full md:w-max"
+          required
+        />
+        <TextInput
+          name="description"
+          label="Workspace Description"
+          defaultValue={workspace.description}
+          placeholder="Workspace description"
+          className="w-full md:w-3/3"
+        />
         <div className="bg-white sticky-bottom fixed bottom-0 right-0 self-end m-6">
           <Button variant="primary" className="flex gap-2.5 items-center cursor-pointer w-min mt-2 sm:mt-0 self-end">
             Update Workspace

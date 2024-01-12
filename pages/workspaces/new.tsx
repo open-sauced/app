@@ -68,14 +68,19 @@ const NewWorkspace = () => {
           }
         }}
       >
-        <label className="flex flex-col gap-4 w-max">
-          <span>Workspace Name</span>
-          <TextInput name="name" placeholder="Workspace name" required />
-        </label>
-        <label className="flex flex-col gap-4 w-max">
-          <span>Workspace Description</span>
-          <TextInput name="description" placeholder="Workspace description" />
-        </label>
+        <TextInput
+          name="name"
+          label="Workspace Name"
+          placeholder="Workspace name"
+          className="w-full md:w-max"
+          required
+        />
+        <TextInput
+          name="description"
+          label="Workspace Description"
+          placeholder="Workspace description"
+          className="w-full md:w-3/4"
+        />
         <div className="bg-white sticky-bottom fixed bottom-0 right-0 self-end m-6">
           <Button variant="primary" className="flex gap-2.5 items-center cursor-pointer w-min mt-2 sm:mt-0 self-end">
             Create Workspace
