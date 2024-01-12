@@ -76,9 +76,11 @@ const NewWorkspace = () => {
           <span>Workspace Description</span>
           <TextInput name="description" placeholder="Workspace description" />
         </label>
-        <Button variant="primary" className="flex gap-2.5 items-center cursor-pointer w-min mt-2 sm:mt-0 self-end">
-          Create Workspace
-        </Button>
+        <div className="bg-white sticky-bottom fixed bottom-0 right-0 self-end m-6">
+          <Button variant="primary" className="flex gap-2.5 items-center cursor-pointer w-min mt-2 sm:mt-0 self-end">
+            Create Workspace
+          </Button>
+        </div>
       </form>
     </WorkspaceLayout>
   );

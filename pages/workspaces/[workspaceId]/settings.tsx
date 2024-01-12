@@ -78,10 +78,9 @@ const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
           });
 
           if (error) {
-            toast({ description: `Error creating new workspace. Please try again`, variant: "danger" });
+            toast({ description: `Workspace update failed`, variant: "danger" });
           } else {
-            toast({ description: `Workspace created successfully`, variant: "success" });
-            router.push(`/workspaces/${workspace.id}`);
+            toast({ description: `Workspace updated successfully`, variant: "success" });
           }
         }}
       >
@@ -93,9 +92,11 @@ const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
           <span>Workspace Description</span>
           <TextInput name="description" defaultValue={workspace.description} placeholder="Workspace description" />
         </label>
-        <Button variant="primary" className="flex gap-2.5 items-center cursor-pointer w-min mt-2 sm:mt-0 self-end">
-          Save Workspace
-        </Button>
+        <div className="bg-white sticky-bottom fixed bottom-0 right-0 self-end m-6">
+          <Button variant="primary" className="flex gap-2.5 items-center cursor-pointer w-min mt-2 sm:mt-0 self-end">
+            Update Workspace
+          </Button>
+        </div>
       </form>
     </WorkspaceLayout>
   );
