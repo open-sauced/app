@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/router";
 import useWorkspaces from "lib/hooks/api/useWorkspaces";
 import SidebarWrapper from "components/Sidebar/sidebar-wrapper";
@@ -18,11 +18,7 @@ export const AppSideBar = () => {
   const { data: lists, isLoading: listsLoading } = useFetchAllLists(30, !!username);
   const { data: workspaces, isLoading: workspacesLoading } = useWorkspaces({ limit: 100 });
   const router = useRouter();
-  const [workspaceId, setWorkspaceId] = useState<string>("");
-
-  useEffect(() => {
-    setWorkspaceId(router.query.workspaceId as string);
-  }, []);
+  const [workspaceId, setWorkspaceId] = useState<string>(router.query.workspaceId as string);
 
   const insights = [
     ...repoInsights.slice(0, 5).map((repoInsight) => ({
@@ -37,7 +33,7 @@ export const AppSideBar = () => {
   return (
     <SidebarWrapper>
       <label className="flex flex-col gap-2 text-sm ml-2">
-        <span>Workspace</span>
+        <span className="sr-only">Workspace</span>
         <ClientOnly>
           <SingleSelect
             options={[
