@@ -1,15 +1,18 @@
 import { Fetcher } from "swr";
 import { supabase } from "./supabase";
 
-const v1BaseUrl = process.env.NEXT_PUBLIC_API_URL;
-const v2BaseUrl = process.env.NEXT_PUBLIC_V2_API_URL;
+const baseUrl = process.env.NEXT_PUBLIC_API_URL;
+
+// this is the experimental API url for API endpoints that have not yet been
+// cut into the public API or are in the "next" version of the API.
+const expBaseUrl = process.env.NEXT_PUBLIC_EXP_API_URL;
 
 const publicApiFetcher: Fetcher = async (apiUrl: string) => {
-  return await apiFetcher(v1BaseUrl, apiUrl);
+  return await apiFetcher(baseUrl, apiUrl);
 };
 
-const v2PublicApiFetcher: Fetcher = async (apiUrl: string) => {
-  return await apiFetcher(v2BaseUrl, apiUrl);
+const expPublicApiFetcher: Fetcher = async (apiUrl: string) => {
+  return await apiFetcher(expBaseUrl, apiUrl);
 };
 
 const apiFetcher = async (baseUrl: string | undefined, apiUrl: string) => {
@@ -37,4 +40,4 @@ const apiFetcher = async (baseUrl: string | undefined, apiUrl: string) => {
   return res.json();
 };
 
-export { publicApiFetcher, v2PublicApiFetcher };
+export { publicApiFetcher, expPublicApiFetcher };

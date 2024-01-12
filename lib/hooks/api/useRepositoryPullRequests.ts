@@ -1,7 +1,7 @@
 import useSWR, { Fetcher } from "swr";
 import { useRouter } from "next/router";
 
-import { v2PublicApiFetcher } from "lib/utils/public-api-fetcher";
+import { publicApiFetcher } from "lib/utils/public-api-fetcher";
 import getFilterQuery from "lib/utils/get-filter-query";
 
 interface PaginatedResponse {
@@ -37,7 +37,7 @@ const useRepositoryPullRequests = (fullName: string, limit = 10, range = 30) => 
 
   const { data, error } = useSWR<PaginatedResponse, Error>(
     fullName ? endpointString : null,
-    v2PublicApiFetcher as Fetcher<PaginatedResponse, Error>
+    publicApiFetcher as Fetcher<PaginatedResponse, Error>
   );
 
   return {
