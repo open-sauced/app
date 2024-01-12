@@ -87,7 +87,7 @@ const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
         <TextInput
           name="name"
           label="Workspace Name"
-          defaultValue={workspace.id}
+          defaultValue={workspace.name}
           placeholder="Workspace name"
           className="w-full md:w-max"
           required
