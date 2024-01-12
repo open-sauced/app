@@ -59,14 +59,6 @@ const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
   const { toast } = useToast();
   const router = useRouter();
 
-  function onAddOrgRepo() {
-    alert("Add org repo");
-  }
-
-  function onInviteTeamMembers() {
-    alert("Inviting team members");
-  }
-
   return (
     <WorkspaceLayout>
       <h1 className="border-b bottom pb-4">Workspace Settings</h1>
