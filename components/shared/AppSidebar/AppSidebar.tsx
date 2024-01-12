@@ -1,4 +1,5 @@
 import { useState } from "react";
+import useWorkspaces from "lib/hooks/api/useWorkspaces";
 import SidebarWrapper from "components/Sidebar/sidebar-wrapper";
 import SidebarGroupWrapper from "components/Sidebar/sidebar-group-wrapper";
 import SidebarMenuItem from "components/Sidebar/sidebar-menu-item";
@@ -8,7 +9,6 @@ import useUserInsights from "lib/hooks/useUserInsights";
 import { useFetchAllLists } from "lib/hooks/useList";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import SingleSelect from "components/atoms/Select/single-select";
-import useWorkspaces from "lib/hooks/api/useWorkspaces";
 
 export const AppSideBar = () => {
   const { username } = useSupabaseAuth();
