@@ -15,7 +15,7 @@ export const WorkspaceLayout = ({ children }: { children: React.ReactNode }) => 
       }}
     >
       <div className="border border-red-700" style={{ gridArea: "header" }}>
-        <TopNav />
+        <TopNav hideInsights={true} />
       </div>
       <div className="top-0 sticky" style={{ gridArea: "sidebar" }}>
         <AppSideBar />
