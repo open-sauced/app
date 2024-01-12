@@ -32,7 +32,7 @@ export const AppSideBar = () => {
 
   return (
     <SidebarWrapper>
-      <label className="flex flex-col gap-2 text-sm ml-2">
+      <label className="flex flex-col gap-2 text-sm ml-2 w-max">
         <span className="sr-only">Workspace</span>
         <ClientOnly>
           <SingleSelect
