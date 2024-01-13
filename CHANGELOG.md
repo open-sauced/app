@@ -5,6 +5,20 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.83.0-beta.5](https://github.com/open-sauced/insights/compare/v1.83.0-beta.4...v1.83.0-beta.5) (2024-01-12)
+
+
+### 🍕 Features
+
+* add explainer tooltip to list stats card ([#2453](https://github.com/open-sauced/insights/issues/2453)) ([ff69ba5](https://github.com/open-sauced/insights/commit/ff69ba5f6d6cf308e8c6b372bff38e2b4c588e67))
+
+## [1.83.0-beta.4](https://github.com/open-sauced/insights/compare/v1.83.0-beta.3...v1.83.0-beta.4) (2024-01-12)
+
+
+### 🐛 Bug Fixes
+
+* update highlights character limit function to better enforce limit rules ([#2462](https://github.com/open-sauced/insights/issues/2462)) ([051216a](https://github.com/open-sauced/insights/commit/051216a388432412659d0be734b28a29678e502a))
+
 ## [1.83.0-beta.3](https://github.com/open-sauced/insights/compare/v1.83.0-beta.2...v1.83.0-beta.3) (2024-01-11)
 
 
