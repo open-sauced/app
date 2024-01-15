@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import clsx from "clsx";
 import dynamic from "next/dynamic";
 
+import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
+import { GetServerSidePropsContext } from "next";
 import { WithPageLayout } from "interfaces/with-page-layout";
 import HubLayout from "layouts/hub";
 
@@ -15,6 +17,24 @@ import { useToast } from "lib/hooks/useToast";
 import { useFetchAllLists } from "lib/hooks/useList";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import useFetchFeaturedLists from "lib/hooks/useFetchFeaturedLists";
+import { getAllFeatureFlags } from "lib/utils/server/feature-flags";
+
+export const getServerSideProps = async (context: GetServerSidePropsContext) => {
+  const supabase = createPagesServerClient(context);
+
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+
+  const userId = Number(session?.user.user_metadata.sub);
+  const featureFlags = await getAllFeatureFlags(userId);
+
+  return {
+    props: {
+      featureFlags,
+    },
+  };
+};
 
 // lazy import DeleteListPageModal component to optimize bundle size they don't load on initial render
 const DeleteListPageModal = dynamic(() => import("components/organisms/ListPage/DeleteListPageModal"));
@@ -146,7 +166,6 @@ const ListsHub: WithPageLayout = () => {
 };
 
 ListsHub.PageLayout = HubLayout;
-ListsHub.isPrivateRoute = true;
 ListsHub.SEO = {
   title: "Lists Hub | Open Sauced Lists",
 };
