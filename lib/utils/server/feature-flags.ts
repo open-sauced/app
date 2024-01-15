@@ -1,17 +1,18 @@
-import { PostHog } from "posthog-node";
-
 export type FeatureFlag = "contributions_evolution_by_type" | "workspaces";
 
 export async function getAllFeatureFlags(userId: number) {
-  const client = new PostHog(
-    process.env.NEXT_PUBLIC_POSTHOG_ID as string,
+  const response = await fetch("https://app.posthog.com/decide?v=3", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      api_key: process.env.NEXT_PUBLIC_POSTHOG_ID,
+      distinct_id: userId,
+    }),
+  });
 
-    { host: "https://app.posthog.com" }
-  );
-
-  const featureFlags = await client.getAllFlags(`${userId}`);
-
-  await client.shutdownAsync();
+  const { featureFlags } = await response.json();
 
   return featureFlags;
 }
