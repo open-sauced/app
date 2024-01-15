@@ -328,6 +328,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
   }, [highlightLink]);
 
   const handleTaggedRepoAdd = async (repoFullName: string) => {
+    setError("");
     if (taggedRepoList.length >= 3) {
       setError("You can only tag up to 3 repos!");
       return;
@@ -353,7 +354,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
       setError("Repo not found!");
       return;
     }
-    setError("");
+
     const [ownerName, repoName] = repoFullName.split("/");
     const repoIcon = getAvatarByUsername(ownerName, 60);
     const newTaggedRepoList = [...taggedRepoList, { repoName, repoOwner: ownerName, repoIcon }];
