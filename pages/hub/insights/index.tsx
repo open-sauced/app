@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import clsx from "clsx";
 
+import { GetServerSidePropsContext } from "next";
+import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import InsightRow from "components/molecules/InsightRow/insight-row";
 import Pagination from "components/molecules/Pagination/pagination";
 import PaginationResults from "components/molecules/PaginationResults/pagination-result";
@@ -16,6 +18,24 @@ import { useToast } from "lib/hooks/useToast";
 import Text from "components/atoms/Typography/text";
 import useFetchFeaturedInsights from "lib/hooks/useFetchFeaturedInsights";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
+import { getAllFeatureFlags } from "lib/utils/server/feature-flags";
+
+export const getServerSideProps = async (context: GetServerSidePropsContext) => {
+  const supabase = createPagesServerClient(context);
+
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+
+  const userId = Number(session?.user.user_metadata.sub);
+  const featureFlags = await getAllFeatureFlags(userId);
+
+  return {
+    props: {
+      featureFlags,
+    },
+  };
+};
 
 const InsightsHub: WithPageLayout = () => {
   const router = useRouter();
@@ -76,13 +96,20 @@ const InsightsHub: WithPageLayout = () => {
   }
 
   useEffect(() => {
+    // if the current user with insights logs out, set the flag
+    if (!localStorage.getItem("dismissFeaturedInsights") && data.length > 0) {
+      localStorage.setItem("dismissFeaturedInsights", "true");
+    }
+  }, [data]);
+
+  useEffect(() => {
     if (
       (session && session.insights_count === 0 && !localStorage.getItem("dismissFeaturedInsights")) ||
-      (!session && !localStorage.getItem("dismissFeaturedInsights"))
+      (featuredInsightsData.length === 1 && !localStorage.getItem("dismissFeaturedInsights"))
     ) {
       openInsightToast();
     }
-  }, [session]);
+  }, [session, featuredInsightsData]);
 
   return (
     <>

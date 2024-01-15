@@ -7,9 +7,9 @@ export interface PaginatedInsightsResponse {
   readonly meta: Meta;
 }
 
-const useUserInsights = (fetch = true) => {
+const useUserInsights = (fetch = true, initialLimit = 10) => {
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(10);
+  const [limit, setLimit] = useState(initialLimit);
 
   const pageQuery = page ? `page=${page}` : "";
   const limitQuery = limit ? `&limit=${limit}` : "";

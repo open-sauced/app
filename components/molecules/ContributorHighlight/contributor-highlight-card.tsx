@@ -121,6 +121,7 @@ const ContributorHighlightCard = ({
   const [addTaggedRepoFormOpen, setAddTaggedRepoFormOpen] = useState(false);
   const [host, setHost] = useState("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [emojiDropdownOpen, setEmojiDropdownOpen] = useState(false);
   const { follow, unFollow, isError } = useFollowUser(
     dropdownOpen && loggedInUser?.user_metadata.user_name !== user ? user : ""
   );
@@ -613,19 +614,27 @@ const ContributorHighlightCard = ({
       </div>
 
       {/* Generated OG card section */}
-      {type === "pull_request" || type === "issue" ? (
-        <GhOpenGraphImg githubLink={highlightLink} />
-      ) : (
-        <DevToSocialImg blogLink={highlightLink} />
-      )}
+      <a href={highlightLink} target="_blank" rel="noreferrer" aria-hidden="true">
+        {type === "pull_request" || type === "issue" ? (
+          <GhOpenGraphImg githubLink={highlightLink} />
+        ) : (
+          <DevToSocialImg blogLink={highlightLink} />
+        )}
+      </a>
 
       <div className="flex flex-wrap items-center gap-1">
-        <DropdownMenu modal={false}>
-          <DropdownMenuTrigger className="p-1   rounded-full data-[state=open]:bg-light-slate-7">
+        <DropdownMenu modal={false} open={emojiDropdownOpen}>
+          <DropdownMenuTrigger
+            className="p-1 rounded-full data-[state=open]:bg-light-slate-7"
+            onClick={() => setEmojiDropdownOpen(!emojiDropdownOpen)}
+          >
             <HiOutlineEmojiHappy className="w-5 h-5" />
           </DropdownMenuTrigger>
-
-          <DropdownMenuContent className="flex flex-row gap-1 rounded-3xl" side="right">
+          <DropdownMenuContent
+            className="flex flex-row gap-1 rounded-3xl"
+            side="right"
+            onClick={() => setEmojiDropdownOpen(false)}
+          >
             {emojis &&
               emojis.length > 0 &&
               emojis.map(({ id, name }) => (

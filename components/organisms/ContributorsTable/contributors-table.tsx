@@ -19,7 +19,7 @@ const ContributorTable = ({
   selectedContributors,
   handleSelectContributors,
   range = "30",
-  noContributorsMessage = "Sorry! We couldn&apos;t find any contributors.",
+  noContributorsMessage = "Sorry! We couldn't find any contributors.",
 }: ContributorTableProps) => {
   return (
     <div className="flex flex-col overflow-hidden border rounded-md">
