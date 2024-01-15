@@ -22,7 +22,6 @@ import Pagination from "components/molecules/Pagination/pagination";
 import { Avatar } from "components/atoms/Avatar/avatar-hover-card";
 import useFetchAllListContributors from "lib/hooks/useFetchAllListContributors";
 
-// lazy import DeleteListPageModal component to optimize bundle size they don't load on initial render
 const DeleteListPageModal = dynamic(() => import("components/organisms/ListPage/DeleteListPageModal"));
 
 // TODO: put into shared utilities once https://github.com/open-sauced/app/pull/2016 is merged
@@ -232,26 +231,24 @@ export default function EditListPage({ list, initialContributors }: EditListPage
     setSubmitted(true);
     setDeleteLoading(true);
 
-    try {
-      const { error } = await fetchApiData({
-        path: "/lists/${list.id}",
-        method: "DELETE",
-        bearerToken: sessionToken,
-        pathValidator: () => true,
-      });
+    const { error } = await fetchApiData({
+      path: "lists/${list.id}",
+      method: "DELETE",
+      bearerToken: sessionToken as string,
+      pathValidator: () => true,
+    });
 
-      if (!error)
-        setIsDeleteModalOpen(false);
-        toast({ description: "List deleted successfully", variant: "success" });
-        router.push("/hub/lists");
-      }
-    } catch (err) {
+    if (!error) {
       setIsDeleteModalOpen(false);
-      // eslint-disable-next-line no-console
-      console.log(err);
-      toast({ description: "An error occurred while deleting the list", variant: "danger" });
-    } finally {
       setDeleteLoading(false);
+      toast({ description: "List deleted successfully", variant: "success" });
+      router.push("/hub/lists");
+    } else {
+      setIsDeleteModalOpen(false);
+      setDeleteLoading(false);
+      // eslint-disable-next-line no-console
+      console.log(error);
+      toast({ description: "An error occurred while deleting the list", variant: "danger" });
     }
   };
 
