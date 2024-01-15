@@ -233,14 +233,14 @@ export default function EditListPage({ list, initialContributors }: EditListPage
     setDeleteLoading(true);
 
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/lists/${list.id}`, {
+      const { error } = await fetchApiData({
+        path: "/lists/${list.id}",
         method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${sessionToken}`,
-        },
+        bearerToken: sessionToken,
+        pathValidator: () => true,
       });
 
-      if (res.ok) {
+      if (!error)
         setIsDeleteModalOpen(false);
         toast({ description: "List deleted successfully", variant: "success" });
         router.push("/hub/lists");
