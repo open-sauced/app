@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.83.0-beta.6](https://github.com/open-sauced/insights/compare/v1.83.0-beta.5...v1.83.0-beta.6) (2024-01-15)
+
+
+### 🐛 Bug Fixes
+
+* Now error is being removed when new request is ok ([#2456](https://github.com/open-sauced/insights/issues/2456)) ([8b5f88b](https://github.com/open-sauced/insights/commit/8b5f88baa97aa3d705720b0b71d00834c9a4bd07))
+
 ## [1.83.0-beta.5](https://github.com/open-sauced/insights/compare/v1.83.0-beta.4...v1.83.0-beta.5) (2024-01-12)
 
 
