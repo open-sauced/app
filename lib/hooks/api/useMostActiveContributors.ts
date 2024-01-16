@@ -2,7 +2,7 @@ import { useState } from "react";
 import useSWR, { Fetcher } from "swr";
 import { useRouter } from "next/router";
 
-import { v2PublicApiFetcher } from "lib/utils/public-api-fetcher";
+import { expPublicApiFetcher } from "lib/utils/public-api-fetcher";
 import { ContributorStat } from "components/molecules/MostActiveContributorsCard/most-active-contributors-card";
 import { ContributorType } from "components/Graphs/shared/contributor-type-filter";
 
@@ -44,7 +44,7 @@ const useMostActiveContributors = ({
 
   const { data, error, mutate } = useSWR<PaginatedResponse, Error>(
     listId ? apiEndpoint : null,
-    v2PublicApiFetcher as Fetcher<PaginatedResponse, Error>
+    expPublicApiFetcher as Fetcher<PaginatedResponse, Error>
   );
 
   return {
