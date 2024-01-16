@@ -23,8 +23,8 @@ import { Toaster } from "components/molecules/Toaster/toaster";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
 import useSession from "lib/hooks/useSession";
 
-import AppSideBar from "components/Sidebar/app-sidebar";
 import { FeatureFlag } from "lib/utils/server/feature-flags";
+import { AppSideBar } from "components/shared/AppSidebar/AppSidebar";
 import type { AppProps } from "next/app";
 
 // Clear any service workers present
