@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.81.0-alpha.2](https://github.com/open-sauced/insights/compare/v1.81.0-alpha.1...v1.81.0-alpha.2) (2024-01-16)
+
+
+### 🍕 Features
+
+* upgrade to V2 API endpoints ([#2470](https://github.com/open-sauced/insights/issues/2470)) ([7550baf](https://github.com/open-sauced/insights/commit/7550baf5c4938a55251b22d9169ee63bedb6f426))
+
 ## [1.81.0-alpha.1](https://github.com/open-sauced/insights/compare/v1.80.0...v1.81.0-alpha.1) (2024-01-03)
 
 
