@@ -232,7 +232,7 @@ export default function EditListPage({ list, initialContributors }: EditListPage
     setDeleteLoading(true);
 
     const { error } = await fetchApiData({
-      path: "lists/${list.id}",
+      path: "lists/" + list.id,
       method: "DELETE",
       bearerToken: sessionToken as string,
       pathValidator: () => true,
