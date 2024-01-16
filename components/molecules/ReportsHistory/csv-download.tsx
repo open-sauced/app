@@ -5,7 +5,7 @@ import { useSWRConfig } from "swr";
 import Button from "components/atoms/Button/button";
 
 import { Report } from "interfaces/report-type";
-import { v2PublicApiFetcher } from "lib/utils/public-api-fetcher";
+import { publicApiFetcher } from "lib/utils/public-api-fetcher";
 
 interface CSVDownloadProps {
   report: Report;
@@ -48,7 +48,7 @@ const CSVDownload = ({ report, repositories }: CSVDownloadProps) => {
     try {
       setGenerating(true);
       // @ts-ignore
-      const result: PaginatedResponse = await mutate(key, v2PublicApiFetcher(key));
+      const result: PaginatedResponse = await mutate(key, publicApiFetcher(key));
 
       setData(result.data);
     } catch (e) {

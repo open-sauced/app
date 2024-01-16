@@ -1,7 +1,7 @@
 import useSWR, { Fetcher } from "swr";
 import { useRouter } from "next/router";
 
-import { v2PublicApiFetcher } from "lib/utils/public-api-fetcher";
+import { publicApiFetcher } from "lib/utils/public-api-fetcher";
 import getFilterQuery from "lib/utils/get-filter-query";
 
 export interface PaginatedResponse {
@@ -45,7 +45,7 @@ export function getContributorPRUrl(
 }
 
 export const fetchContributorPRs = async (...args: Parameters<typeof getContributorPRUrl>) => {
-  return (v2PublicApiFetcher as Fetcher<PaginatedResponse, string>)(getContributorPRUrl(...args));
+  return (publicApiFetcher as Fetcher<PaginatedResponse, string>)(getContributorPRUrl(...args));
 };
 
 interface ContributorPullRequestOptions {
@@ -73,7 +73,7 @@ const useContributorPullRequests = (
 
   const { data, error, mutate } = useSWR<PaginatedResponse, Error>(
     contributor ? endpointString : null,
-    v2PublicApiFetcher as Fetcher<PaginatedResponse, Error>
+    publicApiFetcher as Fetcher<PaginatedResponse, Error>
   );
 
   return {
