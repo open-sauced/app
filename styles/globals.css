@@ -28,7 +28,7 @@ input[type="checkbox"]:focus-visible,
 [role="radio"]:focus-visible,
 [role="combobox"]:focus-visible,
 [role="switch"]:focus-visible,
-button:not([role]):focus-visible {
+button:not([role][class]):focus-visible {
   @apply outline-none;
   @apply ring;
   @apply border-orange-500;
@@ -172,4 +172,12 @@ div[role="dialog"]::-webkit-scrollbar-thumb {
 
 .react-loading-skeleton {
   z-index: unset !important;
+}
+
+/* For the tracked repo wizard button focus states */
+[data-tracked-repo-wizard] > button:focus-within > svg {
+  @apply text-green-600;
+}
+[data-tracked-repo-wizard] > button:focus-within > [data-button-title] {
+  @apply text-green-800;
 }
