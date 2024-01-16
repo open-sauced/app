@@ -115,7 +115,7 @@ const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
           label="Workspace Description"
           defaultValue={workspace.description}
           placeholder="Workspace description"
-          className="w-full md:w-3/3"
+          className="w-full md:w-3/4 max-w-lg"
         />
         <div className="bg-white sticky-bottom fixed bottom-0 right-0 self-end m-6">
           <Button variant="primary" className="flex gap-2.5 items-center cursor-pointer w-min mt-2 sm:mt-0 self-end">
