@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.83.0-beta.9](https://github.com/open-sauced/insights/compare/v1.83.0-beta.8...v1.83.0-beta.9) (2024-01-17)
+
+
+### 🍕 Features
+
+* created the step 1 component for the tracked repository wizard for workspaces ([#2481](https://github.com/open-sauced/insights/issues/2481)) ([ca0dc0f](https://github.com/open-sauced/insights/commit/ca0dc0feecd31931efbab91e042d37355085378f))
+
 ## [1.83.0-beta.8](https://github.com/open-sauced/insights/compare/v1.83.0-beta.7...v1.83.0-beta.8) (2024-01-17)
 
 
