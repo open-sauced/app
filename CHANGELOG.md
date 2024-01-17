@@ -5,6 +5,55 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.83.0-beta.9](https://github.com/open-sauced/insights/compare/v1.83.0-beta.8...v1.83.0-beta.9) (2024-01-17)
+
+
+### 🍕 Features
+
+* created the step 1 component for the tracked repository wizard for workspaces ([#2481](https://github.com/open-sauced/insights/issues/2481)) ([ca0dc0f](https://github.com/open-sauced/insights/commit/ca0dc0feecd31931efbab91e042d37355085378f))
+
+## [1.83.0-beta.8](https://github.com/open-sauced/insights/compare/v1.83.0-beta.7...v1.83.0-beta.8) (2024-01-17)
+
+
+### 🐛 Bug Fixes
+
+* use correct API endpoint for account deletion ([#2480](https://github.com/open-sauced/insights/issues/2480)) ([4cc0fa8](https://github.com/open-sauced/insights/commit/4cc0fa853411ad3791a5eae23077786a8d3480cd))
+
+## [1.83.0-beta.7](https://github.com/open-sauced/insights/compare/v1.83.0-beta.6...v1.83.0-beta.7) (2024-01-16)
+
+
+### 🍕 Features
+
+* created tracked repositories table component for workspace settings ([#2472](https://github.com/open-sauced/insights/issues/2472)) ([522d0fd](https://github.com/open-sauced/insights/commit/522d0fd42acdf071a2f527a388f250780399ec7b))
+
+
+### 🐛 Bug Fixes
+
+* added missing page numbers ([#2390](https://github.com/open-sauced/insights/issues/2390)) ([b6bba99](https://github.com/open-sauced/insights/commit/b6bba99290da48674575da12a8b8823d611cf07f))
+* app sidebar styling updates ([#2471](https://github.com/open-sauced/insights/issues/2471)) ([8746de1](https://github.com/open-sauced/insights/commit/8746de1684cfb66eb19f6554025276a389ccadee))
+* fixed the types for the <Card /> component ([#2479](https://github.com/open-sauced/insights/issues/2479)) ([da58129](https://github.com/open-sauced/insights/commit/da581296ca26ff74a71085522a279162820d7ca9))
+
+## [1.83.0-beta.6](https://github.com/open-sauced/insights/compare/v1.83.0-beta.5...v1.83.0-beta.6) (2024-01-15)
+
+
+### 🐛 Bug Fixes
+
+* Now error is being removed when new request is ok ([#2456](https://github.com/open-sauced/insights/issues/2456)) ([8b5f88b](https://github.com/open-sauced/insights/commit/8b5f88baa97aa3d705720b0b71d00834c9a4bd07))
+
+## [1.83.0-beta.5](https://github.com/open-sauced/insights/compare/v1.83.0-beta.4...v1.83.0-beta.5) (2024-01-12)
+
+
+### 🍕 Features
+
+* add explainer tooltip to list stats card ([#2453](https://github.com/open-sauced/insights/issues/2453)) ([ff69ba5](https://github.com/open-sauced/insights/commit/ff69ba5f6d6cf308e8c6b372bff38e2b4c588e67))
+
+## [1.83.0-beta.4](https://github.com/open-sauced/insights/compare/v1.83.0-beta.3...v1.83.0-beta.4) (2024-01-12)
+
+
+### 🐛 Bug Fixes
+
+* update highlights character limit function to better enforce limit rules ([#2462](https://github.com/open-sauced/insights/issues/2462)) ([051216a](https://github.com/open-sauced/insights/commit/051216a388432412659d0be734b28a29678e502a))
+
 ## [1.83.0-beta.3](https://github.com/open-sauced/insights/compare/v1.83.0-beta.2...v1.83.0-beta.3) (2024-01-11)
 
 
