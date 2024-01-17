@@ -5,6 +5,27 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.83.0-beta.8](https://github.com/open-sauced/insights/compare/v1.83.0-beta.7...v1.83.0-beta.8) (2024-01-17)
+
+
+### 🐛 Bug Fixes
+
+* use correct API endpoint for account deletion ([#2480](https://github.com/open-sauced/insights/issues/2480)) ([4cc0fa8](https://github.com/open-sauced/insights/commit/4cc0fa853411ad3791a5eae23077786a8d3480cd))
+
+## [1.83.0-beta.7](https://github.com/open-sauced/insights/compare/v1.83.0-beta.6...v1.83.0-beta.7) (2024-01-16)
+
+
+### 🍕 Features
+
+* created tracked repositories table component for workspace settings ([#2472](https://github.com/open-sauced/insights/issues/2472)) ([522d0fd](https://github.com/open-sauced/insights/commit/522d0fd42acdf071a2f527a388f250780399ec7b))
+
+
+### 🐛 Bug Fixes
+
+* added missing page numbers ([#2390](https://github.com/open-sauced/insights/issues/2390)) ([b6bba99](https://github.com/open-sauced/insights/commit/b6bba99290da48674575da12a8b8823d611cf07f))
+* app sidebar styling updates ([#2471](https://github.com/open-sauced/insights/issues/2471)) ([8746de1](https://github.com/open-sauced/insights/commit/8746de1684cfb66eb19f6554025276a389ccadee))
+* fixed the types for the <Card /> component ([#2479](https://github.com/open-sauced/insights/issues/2479)) ([da58129](https://github.com/open-sauced/insights/commit/da581296ca26ff74a71085522a279162820d7ca9))
+
 ## [1.83.0-beta.6](https://github.com/open-sauced/insights/compare/v1.83.0-beta.5...v1.83.0-beta.6) (2024-01-15)
 
 
