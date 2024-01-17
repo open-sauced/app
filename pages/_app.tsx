@@ -23,6 +23,8 @@ import { Toaster } from "components/molecules/Toaster/toaster";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
 import useSession from "lib/hooks/useSession";
 
+import { FeatureFlag } from "lib/utils/server/feature-flags";
+import { AppSideBar } from "components/shared/AppSidebar/AppSidebar";
 import type { AppProps } from "next/app";
 
 // Clear any service workers present
@@ -56,6 +58,7 @@ type ComponentWithPageLayout = AppProps & {
     SEO?: SEOobject;
     updateSEO?: (SEO: SEOobject) => void;
   };
+  pageProps: AppProps["pageProps"] & { featureFlags: Record<FeatureFlag, boolean> };
 };
 
 function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
@@ -150,12 +153,27 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
         <SessionContextProvider supabaseClient={supabaseClient} initialSession={pageProps.initialSession}>
           <PostHogProvider client={posthog}>
             <TipProvider>
-              {Component.PageLayout ? (
-                <Component.PageLayout>
-                  <Component {...pageProps} />
-                </Component.PageLayout>
+              {pageProps.featureFlags?.workspaces ? (
+                <div className="flex flex-1">
+                  <AppSideBar />
+                  {Component.PageLayout ? (
+                    <Component.PageLayout>
+                      <Component {...pageProps} />
+                    </Component.PageLayout>
+                  ) : (
+                    <Component {...pageProps} />
+                  )}
+                </div>
               ) : (
-                <Component {...pageProps} />
+                <>
+                  {Component.PageLayout ? (
+                    <Component.PageLayout>
+                      <Component {...pageProps} />
+                    </Component.PageLayout>
+                  ) : (
+                    <Component {...pageProps} />
+                  )}
+                </>
               )}
             </TipProvider>
           </PostHogProvider>

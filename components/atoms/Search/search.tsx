@@ -17,6 +17,7 @@ interface SearchProps {
   onChange?: (value: string) => void;
   onSelect?: (value: string) => void;
   isLoading?: boolean;
+  isDisabled?: boolean;
 }
 
 const suggestionsStyle = {
@@ -36,6 +37,7 @@ const Search = ({
   onChange,
   isLoading,
   onSelect,
+  isDisabled,
 }: SearchProps): JSX.Element => {
   const [cursor, setCursor] = useState(-1);
   const [search, setSearch] = useState(value);
@@ -104,7 +106,7 @@ const Search = ({
     >
       <FaSearch className="text-light-slate-9" fontSize={16} onClick={handleOnSearch} />
       <input
-        className="w-full pl-2 placeholder:text-sm focus:outline-none placeholder:text-slate-400"
+        className="w-full pl-2 placeholder:text-sm focus:outline-none placeholder:text-slate-400 disabled:cursor-not-allowed"
         autoFocus={autoFocus}
         placeholder={placeholder}
         name={name}
@@ -117,6 +119,7 @@ const Search = ({
             handleOnSearch();
           }
         }}
+        disabled={isDisabled}
         onKeyDown={handleKeyboardCtrl}
         onFocus={() => setShowSuggestions(true)}
         onBlur={() => setTimeout(() => setShowSuggestions(false), 500)}

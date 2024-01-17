@@ -54,6 +54,8 @@ const Nav = ({ className, name = "Main" }: { className?: string; name?: string }
   const userInterest = gitHubUser?.interests.split(",")[0] || "javascript";
   const router = useRouter();
 
+  const explorePageUrlPattern = /^\/(?!lists\/.*\/activity).*\/(dashboard|reports|contributors|activity).*/g;
+
   return (
     <nav className={className} aria-label={name}>
       <ul className="flex gap-3 md:gap-8 mb-1 ml-2 sm:m-0 w-full sm:w-auto">
@@ -64,7 +66,7 @@ const Nav = ({ className, name = "Main" }: { className?: string; name?: string }
         </li>
         <li>
           <Link
-            className={`text-sm ${getActiveStyle(router.asPath === `/${userInterest}/dashboard/filter/recent`)}`}
+            className={`text-sm ${getActiveStyle(explorePageUrlPattern.test(router.asPath))}`}
             href={`/${userInterest}/dashboard/filter/recent`}
           >
             Explore

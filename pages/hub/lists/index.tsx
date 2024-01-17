@@ -1,23 +1,43 @@
 import React, { useState } from "react";
 import clsx from "clsx";
+import dynamic from "next/dynamic";
 
+import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
+import { GetServerSidePropsContext } from "next";
 import { WithPageLayout } from "interfaces/with-page-layout";
 import HubLayout from "layouts/hub";
 
-import { Dialog, DialogContent, DialogTitle } from "components/molecules/Dialog/dialog";
 import PaginationResults from "components/molecules/PaginationResults/pagination-result";
 import Pagination from "components/molecules/Pagination/pagination";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 import Title from "components/atoms/Typography/title";
-import Text from "components/atoms/Typography/text";
-import TextInput from "components/atoms/TextInput/text-input";
 import ListCard from "components/molecules/ListCard/list-card";
-import Button from "components/atoms/Button/button";
 import { useToast } from "lib/hooks/useToast";
 
 import { useFetchAllLists } from "lib/hooks/useList";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import useFetchFeaturedLists from "lib/hooks/useFetchFeaturedLists";
+import { getAllFeatureFlags } from "lib/utils/server/feature-flags";
+
+export const getServerSideProps = async (context: GetServerSidePropsContext) => {
+  const supabase = createPagesServerClient(context);
+
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+
+  const userId = Number(session?.user.user_metadata.sub);
+  const featureFlags = await getAllFeatureFlags(userId);
+
+  return {
+    props: {
+      featureFlags,
+    },
+  };
+};
+
+// lazy import DeleteListPageModal component to optimize bundle size they don't load on initial render
+const DeleteListPageModal = dynamic(() => import("components/organisms/ListPage/DeleteListPageModal"));
 
 const ListsHub: WithPageLayout = () => {
   const { sessionToken } = useSupabaseAuth();
@@ -27,9 +47,8 @@ const ListsHub: WithPageLayout = () => {
   );
   const { toast } = useToast();
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
-  const [disabled, setDisabled] = useState(true);
+  const [submitted, setSubmitted] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
-  const [text, setText] = useState("");
   const [listNameToDelete, setListNameToDelete] = useState("");
   const [listIdToDelete, setListIdToDelete] = useState("");
 
@@ -41,10 +60,10 @@ const ListsHub: WithPageLayout = () => {
 
   const handleOnClose = () => {
     setIsDeleteOpen(false);
-    setText("");
   };
 
   const handleOnConfirm = async () => {
+    setSubmitted(true);
     setDeleteLoading(true);
 
     try {
@@ -67,7 +86,6 @@ const ListsHub: WithPageLayout = () => {
       toast({ description: "An error occurred while deleting the list", variant: "danger" });
     } finally {
       setDeleteLoading(false);
-      setText("");
     }
   };
 
@@ -134,46 +152,15 @@ const ListsHub: WithPageLayout = () => {
         />
       </div>
 
-      <Dialog open={isDeleteOpen}>
-        <DialogContent className="grid grid-cols-1 gap-4 p-4 max-w-[90%] lg:max-w-xl rounded-t-lg">
-          <DialogTitle>
-            <Title level={3}>Delete List</Title>
-          </DialogTitle>
-
-          <Text>
-            Are you sure you want to delete <span className="font-bold text-light-slate-12">{listNameToDelete}</span>?
-            If you have data on this list that your team is using, they will lose access.
-          </Text>
-          <Text>
-            <span className="font-bold text-light-slate-12">This action cannot be undone</span>
-          </Text>
-          <Text>
-            Type <span className="font-bold text-light-red-10">{listNameToDelete}</span> to confirm
-          </Text>
-
-          <TextInput
-            disabled={deleteLoading}
-            value={text}
-            onChange={(e) => {
-              setText(e.target.value);
-              setDisabled(e.target.value !== listNameToDelete);
-            }}
-          />
-
-          <div className="flex gap-3">
-            <Button loading={deleteLoading} disabled={disabled} onClick={handleOnConfirm} variant="destructive">
-              Delete
-            </Button>
-            <Button
-              onClick={handleOnClose}
-              variant="default"
-              className="bg-light-slate-6 text-light-slate-10 hover:bg-light-slate-7"
-            >
-              Cancel
-            </Button>
-          </div>
-        </DialogContent>
-      </Dialog>
+      <DeleteListPageModal
+        isLoading={deleteLoading}
+        open={isDeleteOpen}
+        setOpen={setIsDeleteOpen}
+        submitted={submitted}
+        listName={listNameToDelete}
+        onConfirm={handleOnConfirm}
+        onClose={handleOnClose}
+      />
     </>
   );
 };

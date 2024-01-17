@@ -21,7 +21,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     if (session) {
       const { error } = await fetchApiData({
-        path: "/profile",
+        path: "auth/profile",
         method: "DELETE",
         bearerToken: session.access_token,
         pathValidator: () => true,
