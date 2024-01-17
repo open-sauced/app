@@ -343,7 +343,6 @@ interface DbUserList {
   readonly created_at: string;
   readonly updated_at: string;
 }
-
 interface DBList {
   id: string;
   user_id: number;

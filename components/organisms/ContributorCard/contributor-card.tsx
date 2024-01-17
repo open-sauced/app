@@ -58,7 +58,7 @@ const ContributorCard = ({ className, contributor, topic, repositories, range }:
           </div>
         </div>
         <div className="h-32">
-          <CardLineChart lineChartOption={chart} height="140px" />
+          <CardLineChart lineChartOption={chart} />
         </div>
         <CardRepoList repoList={repoList} total={repoList.length} />
 
@@ -66,7 +66,7 @@ const ContributorCard = ({ className, contributor, topic, repositories, range }:
           <PullRequestTable contributor={profile.githubName} topic={topic} repositories={repositories} range={range} />
         ) : null}
 
-        <div className="flex justify-center w-full z-10">
+        <div className="flex justify-center w-full">
           <button
             onClick={() => setShowPRs((prevState) => !prevState)}
             className="w-full py-1 transition bg-white border rounded-lg border-light-slate-6 hover:bg-light-slate-1"

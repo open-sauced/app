@@ -27,7 +27,7 @@ const ListPageLayout = ({
   const paths = router.asPath.split("/");
   const selectedTab = paths[3] ?? "overview";
 
-  const tabList = [{ name: "Overview" }, { name: "Activity" }];
+  const tabList = [{ name: "Overview" }, { name: "Activity" }, { name: "Highlights" }];
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -47,7 +47,7 @@ const ListPageLayout = ({
             )}
           </Header>
 
-          <div className="md:grid md:grid-cols-2 flex flex-col">
+          <div className="md:grid md:grid-cols-2 flex flex-col border-b">
             {list && <TabsList tabList={tabList} selectedTab={selectedTab} pageId={`/lists/${list.id}`} />}
             <div>
               <div className="flex justify-end p-4 md:p-0">

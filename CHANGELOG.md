@@ -5,6 +5,28 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.83.0-beta.10](https://github.com/open-sauced/insights/compare/v1.83.0-beta.9...v1.83.0-beta.10) (2024-01-17)
+
+
+### 🍕 Features
+
+* add delete button to edit list page ([#2427](https://github.com/open-sauced/insights/issues/2427)) ([eb672af](https://github.com/open-sauced/insights/commit/eb672afe06692456eb04172c7847eb3f198e71a5))
+* add highlights to list pages ([#2194](https://github.com/open-sauced/insights/issues/2194)) ([cdd8303](https://github.com/open-sauced/insights/commit/cdd8303bc146d9a8b68c2a19df8ac35cd33a61f2))
+
+## [1.83.0-beta.9](https://github.com/open-sauced/insights/compare/v1.83.0-beta.8...v1.83.0-beta.9) (2024-01-17)
+
+
+### 🍕 Features
+
+* created the step 1 component for the tracked repository wizard for workspaces ([#2481](https://github.com/open-sauced/insights/issues/2481)) ([ca0dc0f](https://github.com/open-sauced/insights/commit/ca0dc0feecd31931efbab91e042d37355085378f))
+
+## [1.83.0-beta.8](https://github.com/open-sauced/insights/compare/v1.83.0-beta.7...v1.83.0-beta.8) (2024-01-17)
+
+
+### 🐛 Bug Fixes
+
+* use correct API endpoint for account deletion ([#2480](https://github.com/open-sauced/insights/issues/2480)) ([4cc0fa8](https://github.com/open-sauced/insights/commit/4cc0fa853411ad3791a5eae23077786a8d3480cd))
+
 ## [1.83.0-beta.7](https://github.com/open-sauced/insights/compare/v1.83.0-beta.6...v1.83.0-beta.7) (2024-01-16)
 
 
