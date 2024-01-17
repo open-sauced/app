@@ -59,6 +59,7 @@ export const TrackedRepoWizard = ({
             onClick={() => {
               onAddToTrackingList();
             }}
+            disabled={trackedReposCount === 0}
           >
             Add to tracking list
           </Button>
