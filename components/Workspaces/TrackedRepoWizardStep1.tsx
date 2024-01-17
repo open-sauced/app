@@ -1,6 +1,5 @@
 import { FaSearch } from "react-icons/fa";
-import { BiBarChartAlt2 } from "react-icons/bi";
-import { FaArrowLeft } from "react-icons/fa6";
+import { FaArrowLeft, FaGithub } from "react-icons/fa6";
 import Card from "components/atoms/Card/card";
 import Button from "components/atoms/Button/button";
 
@@ -32,7 +31,7 @@ export const TrackedRepoWizard = ({
               className="flex flex-col text-light-slate-12 p-8 border rounded-lg focus-visible:!border-green-800 focus-visible:!ring-green-100"
               onClick={onSearchRepos}
             >
-              <FaSearch className="text-purple-800 mb-2" />
+              <FaSearch size={20} className="text-purple-800 mb-2" />
               <span data-button-title className="font-semibold">
                 Search for repositories
               </span>
@@ -42,7 +41,7 @@ export const TrackedRepoWizard = ({
               className="flex flex-col text-light-slate-12 p-8 border rounded-lg focus-visible:!border-green-800 focus-visible:!ring-green-100"
               onClick={onImportOrg}
             >
-              <BiBarChartAlt2 className="text-purple-800 mb-2" />
+              <FaGithub size={20} className="text-purple-800 mb-2" />
               <span data-button-title className="font-semibold">
                 Import a Github Organization
               </span>
