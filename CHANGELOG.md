@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.83.0-beta.8](https://github.com/open-sauced/insights/compare/v1.83.0-beta.7...v1.83.0-beta.8) (2024-01-17)
+
+
+### 🐛 Bug Fixes
+
+* use correct API endpoint for account deletion ([#2480](https://github.com/open-sauced/insights/issues/2480)) ([4cc0fa8](https://github.com/open-sauced/insights/commit/4cc0fa853411ad3791a5eae23077786a8d3480cd))
+
 ## [1.83.0-beta.7](https://github.com/open-sauced/insights/compare/v1.83.0-beta.6...v1.83.0-beta.7) (2024-01-16)
 
 
