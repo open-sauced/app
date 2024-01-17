@@ -19,7 +19,7 @@ import { FeatureFlagged } from "components/shared/feature-flagged";
 import { FeatureFlag, getAllFeatureFlags } from "lib/utils/server/feature-flags";
 import { OnToggleResizeEventType } from "components/Graphs/shared/graph-resizer";
 
-interface ContributorListPageProps {
+export interface ContributorListPageProps {
   list?: DBList;
   numberOfContributors: number;
   isError: boolean;
