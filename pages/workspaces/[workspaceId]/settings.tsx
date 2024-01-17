@@ -11,6 +11,7 @@ import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { useToast } from "lib/hooks/useToast";
 import Title from "components/atoms/Typography/title";
 import Text from "components/atoms/Typography/text";
+import store from "lib/store";
 
 const DeleteWorkspaceModal = dynamic(() => import("components/Workspaces/DeleteWorkspaceModal"), { ssr: false });
 
@@ -77,6 +78,7 @@ const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
   const router = useRouter();
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [workspaceName, setWorkspaceName] = useState(workspace.name);
+  const { setWorkspaces, workspaces } = store(({ setWorkspaces, workspaces }) => ({ setWorkspaces, workspaces }));
 
   return (
     <WorkspaceLayout>
@@ -100,6 +102,7 @@ const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
             toast({ description: `Workspace update failed`, variant: "danger" });
           } else {
             setWorkspaceName(name);
+            data && setWorkspaces([...workspaces.filter((w) => w.id !== workspace.id), data]);
             toast({ description: `Workspace updated successfully`, variant: "success" });
           }
         }}

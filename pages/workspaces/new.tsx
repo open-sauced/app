@@ -5,6 +5,7 @@ import TextInput from "components/atoms/TextInput/text-input";
 import { fetchApiData } from "helpers/fetchApiData";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { useToast } from "lib/hooks/useToast";
+import store from "lib/store";
 
 async function createWorkspace({
   name,
@@ -32,6 +33,7 @@ const NewWorkspace = () => {
   const { sessionToken } = useSupabaseAuth();
   const { toast } = useToast();
   const router = useRouter();
+  const { setWorkspaces, workspaces } = store(({ setWorkspaces, workspaces }) => ({ setWorkspaces, workspaces }));
 
   function onAddOrgRepo() {
     alert("Add org repo");
@@ -64,6 +66,7 @@ const NewWorkspace = () => {
             toast({ description: `Error creating new workspace. Please try again`, variant: "danger" });
           } else {
             toast({ description: `Workspace created successfully`, variant: "success" });
+            data && setWorkspaces([...workspaces, data]);
             router.push(`/workspaces/${data?.id}/settings`);
           }
         }}

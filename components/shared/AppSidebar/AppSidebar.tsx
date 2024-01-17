@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { LifebuoyIcon, Cog8ToothIcon } from "@heroicons/react/24/outline";
 import { BiHomeAlt } from "react-icons/bi";
@@ -11,6 +11,7 @@ import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import SingleSelect from "components/atoms/Select/single-select";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
+import store from "lib/store";
 
 const SidebarLoader = () => {
   return (
@@ -44,9 +45,14 @@ export const AppSideBar = () => {
   const { username } = useSupabaseAuth();
   const { data: rawRepoInsights, isLoading: insightsLoading } = useUserInsights(!!username);
   const { data: lists, isLoading: listsLoading } = useFetchAllLists(30, !!username);
-  const { data: workspaces, isLoading: workspacesLoading } = useWorkspaces({ limit: 100 });
+  const { data: initialWorkspaces, isLoading: workspacesLoading } = useWorkspaces({ limit: 100 });
   const router = useRouter();
   const [workspaceId, setWorkspaceId] = useState<string>(router.query.workspaceId as string);
+  const { setWorkspaces, workspaces } = store(({ setWorkspaces, workspaces }) => ({ setWorkspaces, workspaces }));
+
+  useEffect(() => {
+    setWorkspaces(initialWorkspaces);
+  }, [setWorkspaces, initialWorkspaces]);
 
   const repoInsights = rawRepoInsights
     .slice(0, 5)
