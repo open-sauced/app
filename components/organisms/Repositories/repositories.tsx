@@ -80,12 +80,12 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
   };
 
   const handleOnSearch = (search?: string) => {
+    if (selectedFilter && !search) {
+      return router.push(`/${topic}/${toolName}`);
+    }
     if (search && /^[a-zA-Z0-9\-\.]+\/[a-zA-Z0-9\-\.]+$/.test(search)) {
       return router.push(`/${topic}/${toolName}/filter/${search}`);
     }
-    //else {
-    //return router.push(`/${topic}/${toolName}`);
-    //}
   };
 
   useEffect(() => {
