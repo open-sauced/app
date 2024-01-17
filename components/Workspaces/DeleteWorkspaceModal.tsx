@@ -9,10 +9,10 @@ interface DeleteWorkspaceModalProps {
   isOpen: boolean;
   onClose: () => void;
   onDelete: () => void;
-  workspace: Workspace;
+  workspaceName: string;
 }
 
-const DeleteWorkspaceModal = ({ isOpen, onClose, onDelete, workspace }: DeleteWorkspaceModalProps) => {
+const DeleteWorkspaceModal = ({ isOpen, onClose, onDelete, workspaceName }: DeleteWorkspaceModalProps) => {
   const isLoading = false;
   const [deleteWord, setDeleteWord] = useState<string | undefined>();
   const disabled = deleteWord !== "DELETE";
@@ -38,7 +38,7 @@ const DeleteWorkspaceModal = ({ isOpen, onClose, onDelete, workspace }: DeleteWo
         </DialogTitle>
 
         <Text>
-          Are you sure you want to delete <span className="font-bold text-light-slate-12">{`${workspace.name}`}</span>?
+          Are you sure you want to delete <span className="font-bold text-light-slate-12">{`${workspaceName}`}</span>?
           If you have data in this workspace that your team is using it will be lost.
         </Text>
         <Text>

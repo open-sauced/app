@@ -76,6 +76,7 @@ const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
   const { toast } = useToast();
   const router = useRouter();
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [workspaceName, setWorkspaceName] = useState(workspace.name);
 
   return (
     <WorkspaceLayout>
@@ -98,6 +99,7 @@ const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
           if (error) {
             toast({ description: `Workspace update failed`, variant: "danger" });
           } else {
+            setWorkspaceName(name);
             toast({ description: `Workspace updated successfully`, variant: "success" });
           }
         }}
@@ -144,7 +146,7 @@ const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
       <DeleteWorkspaceModal
         isOpen={isDeleteModalOpen}
         onClose={() => setIsDeleteModalOpen(false)}
-        workspace={workspace}
+        workspaceName={workspaceName}
         onDelete={async () => {
           const { error } = await deleteWorkspace({ workspaceId: workspace.id, sessionToken: sessionToken! });
           if (error) {
