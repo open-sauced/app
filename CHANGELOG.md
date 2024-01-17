@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.83.0-beta.10](https://github.com/open-sauced/insights/compare/v1.83.0-beta.9...v1.83.0-beta.10) (2024-01-17)
+
+
+### 🍕 Features
+
+* add delete button to edit list page ([#2427](https://github.com/open-sauced/insights/issues/2427)) ([eb672af](https://github.com/open-sauced/insights/commit/eb672afe06692456eb04172c7847eb3f198e71a5))
+* add highlights to list pages ([#2194](https://github.com/open-sauced/insights/issues/2194)) ([cdd8303](https://github.com/open-sauced/insights/commit/cdd8303bc146d9a8b68c2a19df8ac35cd33a61f2))
+
 ## [1.83.0-beta.9](https://github.com/open-sauced/insights/compare/v1.83.0-beta.8...v1.83.0-beta.9) (2024-01-17)
 
 
