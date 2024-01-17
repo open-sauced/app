@@ -2,7 +2,7 @@ import { FaSearch } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa6";
 import { TrackedRepoWizardLayout } from "./TrackedRepoWizardLayout";
 
-interface TrackedRepoWizardProps {
+interface PickReposOrOrgStepProps {
   onAddToTrackingList: () => void;
   onSearchRepos: () => void;
   onImportOrg: () => void;
@@ -10,13 +10,13 @@ interface TrackedRepoWizardProps {
   trackedReposCount: number;
 }
 
-export const TrackedRepoWizard = ({
+export const PickReposOrOrgStep = ({
   onAddToTrackingList,
   onSearchRepos,
   onImportOrg,
   onCancel,
   trackedReposCount,
-}: TrackedRepoWizardProps) => {
+}: PickReposOrOrgStepProps) => {
   return (
     <TrackedRepoWizardLayout
       onAddToTrackingList={onAddToTrackingList}

@@ -1,11 +1,11 @@
 import { Meta, StoryObj } from "@storybook/react";
-import { TrackedRepoWizard } from "./TrackedRepoWizardStep1";
+import { PickReposOrOrgStep } from "./PickReposOrOrgStep";
 
-type Story = StoryObj<typeof TrackedRepoWizard>;
+type Story = StoryObj<typeof PickReposOrOrgStep>;
 
-const meta: Meta<typeof TrackedRepoWizard> = {
-  title: "Components/Workspaces/TrackedRepoWizardStep1",
-  component: TrackedRepoWizard,
+const meta: Meta<typeof PickReposOrOrgStep> = {
+  title: "Components/Workspaces/TrackedRepoWizard/PickReposOrOrgStep",
+  component: PickReposOrOrgStep,
   args: {
     trackedReposCount: 0,
     onAddToTrackingList: () => {},
