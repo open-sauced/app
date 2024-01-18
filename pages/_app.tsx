@@ -24,7 +24,6 @@ import { useMediaQuery } from "lib/hooks/useMediaQuery";
 import useSession from "lib/hooks/useSession";
 
 import { FeatureFlag } from "lib/utils/server/feature-flags";
-import { AppSideBar } from "components/shared/AppSidebar/AppSidebar";
 import type { AppProps } from "next/app";
 
 // Clear any service workers present
@@ -153,27 +152,12 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
         <SessionContextProvider supabaseClient={supabaseClient} initialSession={pageProps.initialSession}>
           <PostHogProvider client={posthog}>
             <TipProvider>
-              {pageProps.featureFlags?.workspaces ? (
-                <div className="flex flex-1">
-                  <AppSideBar />
-                  {Component.PageLayout ? (
-                    <Component.PageLayout>
-                      <Component {...pageProps} />
-                    </Component.PageLayout>
-                  ) : (
-                    <Component {...pageProps} />
-                  )}
-                </div>
+              {Component.PageLayout ? (
+                <Component.PageLayout>
+                  <Component {...pageProps} />
+                </Component.PageLayout>
               ) : (
-                <>
-                  {Component.PageLayout ? (
-                    <Component.PageLayout>
-                      <Component {...pageProps} />
-                    </Component.PageLayout>
-                  ) : (
-                    <Component {...pageProps} />
-                  )}
-                </>
+                <Component {...pageProps} />
               )}
             </TipProvider>
           </PostHogProvider>
