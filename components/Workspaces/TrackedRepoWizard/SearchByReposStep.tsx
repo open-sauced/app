@@ -21,12 +21,14 @@ interface SearchByReposStepProps {
 
 const EmptyState = () => {
   return (
-    <div className="flex flex-col items-center justify-center p-24 gap-2 h-80 max-h-80 max-w-lg">
-      <FaSearch size={20} className="p-1 border rounded mb-2" />
-      <span className="font-semibold">No repositories added yet!</span>
-      <span className="text-center">
-        Use the search bar to find the repositories you want to track on your workspace.
-      </span>
+    <div className="grid place-content-center">
+      <div className="text-center flex flex-col items-center p-24 gap-2 max-w-lg">
+        <div className="p-3 border rounded-lg mb-2">
+          <FaSearch size={24} className="text-light-slate-9" />
+        </div>
+        <span className="font-semibold">No repositories added yet!</span>
+        <span>Use the search bar to find the repositories you want to track on your workspace.</span>
+      </div>
     </div>
   );
 };
