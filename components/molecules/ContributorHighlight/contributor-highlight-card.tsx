@@ -667,7 +667,12 @@ const ContributorHighlightCard = ({
                   <Emoji className="text-xs text-orange-500 md:text-sm" text={`:${getEmojiNameById(emoji_id)}:`} />
                   <span>{reaction_count}</span>
                 </span>
-              </button>
+        </button>
+                <Emoji
+                  className="text-xs text-orange-500 md:text-sm"
+                  text={`:${getEmojiNameById(emoji_id)}: ${reaction_count}`}
+                />
+              </div>
             </Tooltip>
           ))}
         <div className="ml-auto">

@@ -5,6 +5,77 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.83.0](https://github.com/open-sauced/insights/compare/v1.82.0...v1.83.0) (2024-01-17)
+
+
+### 🐛 Bug Fixes
+
+* **middleware:** added lists route to be accessible by logged out users ([#2459](https://github.com/open-sauced/insights/issues/2459)) ([72534b7](https://github.com/open-sauced/insights/commit/72534b76ad21cdb44f8bd916928caf06682a1078))
+* added missing page numbers ([#2390](https://github.com/open-sauced/insights/issues/2390)) ([b6bba99](https://github.com/open-sauced/insights/commit/b6bba99290da48674575da12a8b8823d611cf07f))
+* app sidebar styling updates ([#2471](https://github.com/open-sauced/insights/issues/2471)) ([8746de1](https://github.com/open-sauced/insights/commit/8746de1684cfb66eb19f6554025276a389ccadee))
+* fixed the types for the <Card /> component ([#2479](https://github.com/open-sauced/insights/issues/2479)) ([da58129](https://github.com/open-sauced/insights/commit/da581296ca26ff74a71085522a279162820d7ca9))
+* hydration error in insights page ([#2452](https://github.com/open-sauced/insights/issues/2452)) ([5174a1d](https://github.com/open-sauced/insights/commit/5174a1d590ae19157ba759aa83d4e576c4349dc9))
+* Now error is being removed when new request is ok ([#2456](https://github.com/open-sauced/insights/issues/2456)) ([8b5f88b](https://github.com/open-sauced/insights/commit/8b5f88baa97aa3d705720b0b71d00834c9a4bd07))
+* now explore link is actively styled when neccessary ([#2364](https://github.com/open-sauced/insights/issues/2364)) ([c111dfd](https://github.com/open-sauced/insights/commit/c111dfd2c0c08d4888bf290fbe788b52b0ba0257))
+* now feature flags can be used in middleware ([#2467](https://github.com/open-sauced/insights/issues/2467)) ([9cd0b9e](https://github.com/open-sauced/insights/commit/9cd0b9e8a46800ad2951c253c201308f751c455f))
+* Remove 100 from filter label ([#2460](https://github.com/open-sauced/insights/issues/2460)) ([1569c28](https://github.com/open-sauced/insights/commit/1569c2833a6d91b7c9e5255aa63d63b8fab6323d))
+* update highlights character limit function to better enforce limit rules ([#2462](https://github.com/open-sauced/insights/issues/2462)) ([051216a](https://github.com/open-sauced/insights/commit/051216a388432412659d0be734b28a29678e502a))
+* use correct API endpoint for account deletion ([#2480](https://github.com/open-sauced/insights/issues/2480)) ([4cc0fa8](https://github.com/open-sauced/insights/commit/4cc0fa853411ad3791a5eae23077786a8d3480cd))
+
+
+### 🍕 Features
+
+* add delete button to edit list page ([#2427](https://github.com/open-sauced/insights/issues/2427)) ([eb672af](https://github.com/open-sauced/insights/commit/eb672afe06692456eb04172c7847eb3f198e71a5))
+* add explainer tooltip to list stats card ([#2453](https://github.com/open-sauced/insights/issues/2453)) ([ff69ba5](https://github.com/open-sauced/insights/commit/ff69ba5f6d6cf308e8c6b372bff38e2b4c588e67))
+* add highlights to list pages ([#2194](https://github.com/open-sauced/insights/issues/2194)) ([cdd8303](https://github.com/open-sauced/insights/commit/cdd8303bc146d9a8b68c2a19df8ac35cd33a61f2))
+* created the ButtonGroup and ButtonGroupItem components ([#2464](https://github.com/open-sauced/insights/issues/2464)) ([d74055b](https://github.com/open-sauced/insights/commit/d74055b6b3eefd5ec2c03488980fb811addabf5b))
+* created the step 1 component for the tracked repository wizard for workspaces ([#2481](https://github.com/open-sauced/insights/issues/2481)) ([ca0dc0f](https://github.com/open-sauced/insights/commit/ca0dc0feecd31931efbab91e042d37355085378f))
+* created tracked repositories table component for workspace settings ([#2472](https://github.com/open-sauced/insights/issues/2472)) ([522d0fd](https://github.com/open-sauced/insights/commit/522d0fd42acdf071a2f527a388f250780399ec7b))
+* introduce application side nav ([#2416](https://github.com/open-sauced/insights/issues/2416)) ([df32dfd](https://github.com/open-sauced/insights/commit/df32dfdf7739515d7fc542293be897d975e5577d))
+
+## [1.83.0-beta.10](https://github.com/open-sauced/insights/compare/v1.83.0-beta.9...v1.83.0-beta.10) (2024-01-17)
+
+
+### 🍕 Features
+
+* add delete button to edit list page ([#2427](https://github.com/open-sauced/insights/issues/2427)) ([eb672af](https://github.com/open-sauced/insights/commit/eb672afe06692456eb04172c7847eb3f198e71a5))
+* add highlights to list pages ([#2194](https://github.com/open-sauced/insights/issues/2194)) ([cdd8303](https://github.com/open-sauced/insights/commit/cdd8303bc146d9a8b68c2a19df8ac35cd33a61f2))
+
+## [1.83.0-beta.9](https://github.com/open-sauced/insights/compare/v1.83.0-beta.8...v1.83.0-beta.9) (2024-01-17)
+
+
+### 🍕 Features
+
+* created the step 1 component for the tracked repository wizard for workspaces ([#2481](https://github.com/open-sauced/insights/issues/2481)) ([ca0dc0f](https://github.com/open-sauced/insights/commit/ca0dc0feecd31931efbab91e042d37355085378f))
+
+## [1.83.0-beta.8](https://github.com/open-sauced/insights/compare/v1.83.0-beta.7...v1.83.0-beta.8) (2024-01-17)
+
+
+### 🐛 Bug Fixes
+
+* use correct API endpoint for account deletion ([#2480](https://github.com/open-sauced/insights/issues/2480)) ([4cc0fa8](https://github.com/open-sauced/insights/commit/4cc0fa853411ad3791a5eae23077786a8d3480cd))
+
+## [1.83.0-beta.7](https://github.com/open-sauced/insights/compare/v1.83.0-beta.6...v1.83.0-beta.7) (2024-01-16)
+
+
+### 🍕 Features
+
+* created tracked repositories table component for workspace settings ([#2472](https://github.com/open-sauced/insights/issues/2472)) ([522d0fd](https://github.com/open-sauced/insights/commit/522d0fd42acdf071a2f527a388f250780399ec7b))
+
+
+### 🐛 Bug Fixes
+
+* added missing page numbers ([#2390](https://github.com/open-sauced/insights/issues/2390)) ([b6bba99](https://github.com/open-sauced/insights/commit/b6bba99290da48674575da12a8b8823d611cf07f))
+* app sidebar styling updates ([#2471](https://github.com/open-sauced/insights/issues/2471)) ([8746de1](https://github.com/open-sauced/insights/commit/8746de1684cfb66eb19f6554025276a389ccadee))
+* fixed the types for the <Card /> component ([#2479](https://github.com/open-sauced/insights/issues/2479)) ([da58129](https://github.com/open-sauced/insights/commit/da581296ca26ff74a71085522a279162820d7ca9))
+
+## [1.83.0-beta.6](https://github.com/open-sauced/insights/compare/v1.83.0-beta.5...v1.83.0-beta.6) (2024-01-15)
+
+
+### 🐛 Bug Fixes
+
+* Now error is being removed when new request is ok ([#2456](https://github.com/open-sauced/insights/issues/2456)) ([8b5f88b](https://github.com/open-sauced/insights/commit/8b5f88baa97aa3d705720b0b71d00834c9a4bd07))
+
 ## [1.83.0-beta.5](https://github.com/open-sauced/insights/compare/v1.83.0-beta.4...v1.83.0-beta.5) (2024-01-12)
 
 
