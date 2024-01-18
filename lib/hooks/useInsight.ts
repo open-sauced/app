@@ -1,7 +1,7 @@
 import useSWR, { Fetcher } from "swr";
 import publicApiFetcher from "lib/utils/public-api-fetcher";
 
-const useInsight = (id: string) => {
+const useInsight = (id: string | number) => {
   const baseEndpoint = `insights/${id}`;
   const endpointString = `${baseEndpoint}`;
 
