@@ -5,6 +5,15 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.84.0-beta.1](https://github.com/open-sauced/insights/compare/v1.83.0...v1.84.0-beta.1) (2024-01-18)
+
+
+### 🍕 Features
+
+* add search by repositories component for tracked repositories flow in workspaces ([#2490](https://github.com/open-sauced/insights/issues/2490)) ([af53422](https://github.com/open-sauced/insights/commit/af53422e15b149b18132e8f2ef5babcfe2c344ed))
+* flow for creating a new workspace ([#2461](https://github.com/open-sauced/insights/issues/2461)) ([0518614](https://github.com/open-sauced/insights/commit/0518614d9c7a0f1c577f589d5ee82d76fe657596))
+* search suggestions can be JSX or a string now ([#2489](https://github.com/open-sauced/insights/issues/2489)) ([16cb804](https://github.com/open-sauced/insights/commit/16cb804ee4cbae91e6e70d7c1a43371bd7438beb))
+
 ## [1.83.0](https://github.com/open-sauced/insights/compare/v1.82.0...v1.83.0) (2024-01-17)
 
 
