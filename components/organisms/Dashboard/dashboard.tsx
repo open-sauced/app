@@ -2,10 +2,11 @@ import { useRouter } from "next/router";
 import HighlightCard from "components/molecules/HighlightCard/highlight-card";
 
 import humanizeNumber from "lib/utils/humanizeNumber";
-import { getInsights, useInsights } from "lib/hooks/api/useInsights";
+import { getInsights } from "lib/hooks/api/useInsights";
 
 import useContributors from "lib/hooks/api/useContributors";
 
+import usePullRequestsHistogram from "lib/hooks/api/usePullRequestsHistogram";
 import Repositories from "../Repositories/repositories";
 
 export type PrStatusFilter = "open" | "closed" | "all";
@@ -15,13 +16,13 @@ interface DashboardProps {
 }
 
 const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
-  const { data: insightsData, isLoading } = useInsights(repositories);
+  const { data: insightsData, isLoading } = usePullRequestsHistogram(repositories);
   const { data: contributorData, meta: contributorMeta } = useContributors(undefined, repositories);
   const router = useRouter();
   const { range = 30 } = router.query;
 
-  const compare1 = getInsights(insightsData, 30);
-  const compare2 = getInsights(insightsData, 60);
+  const compare1 = getInsights(insightsData, 0);
+  const compare2 = getInsights(insightsData, 1);
 
   return (
     <div className="flex flex-col w-full gap-4">
