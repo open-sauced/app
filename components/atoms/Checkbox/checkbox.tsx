@@ -1,11 +1,11 @@
-import { ReactNode } from "react";
+import * as React from "react";
 import * as CheckboxPrimitive from "@radix-ui/react-checkbox";
 import { FiCheck } from "react-icons/fi";
 
 import clsx from "clsx";
 
 interface CheckboxProps extends React.ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root> {
-  label?: ReactNode;
+  label?: string;
 }
 
 const Checkbox = React.forwardRef<React.ElementRef<typeof CheckboxPrimitive.Root>, CheckboxProps>(
