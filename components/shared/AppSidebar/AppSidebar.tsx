@@ -97,7 +97,7 @@ export const AppSideBar = () => {
         </h2>
         <h3 className="uppercase text-gray-500 text-sm font-medium">Repo Insights</h3>
         <div className="w-full px-2 -mt-4">
-          {insightsLoading ? null : <InsightsList username={username} insights={repoInsights} type="list" />}
+          {insightsLoading ? null : <InsightsList username={username} insights={repoInsights} type="repo" />}
         </div>
         <h2 className="uppercase text-gray-500 text-sm font-medium">Contributor Insights</h2>
         <div className="w-full px-2 -mt-4">
