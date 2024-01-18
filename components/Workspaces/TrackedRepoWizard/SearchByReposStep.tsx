@@ -41,6 +41,10 @@ export const SearchByReposStep = ({
   repositories,
   suggestedRepos,
 }: SearchByReposStepProps) => {
+  // TODO: Implement these functions
+  const onFilterRepos = () => {};
+  const onSelectRepo = () => {};
+
   return (
     <TrackedRepoWizardLayout
       onAddToTrackingList={onAddToTrackingList}
@@ -70,7 +74,11 @@ export const SearchByReposStep = ({
             })}
           />
         </form>
-        {trackedReposCount === 0 ? <EmptyState /> : <SearchedReposTable repositories={repositories} />}
+        {trackedReposCount === 0 ? (
+          <EmptyState />
+        ) : (
+          <SearchedReposTable repositories={repositories} onFilter={onFilterRepos} onSelect={onSelectRepo} />
+        )}
       </div>
     </TrackedRepoWizardLayout>
   );

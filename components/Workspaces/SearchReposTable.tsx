@@ -13,6 +13,7 @@ interface SearchedReposTableProps {
     name: string;
   }[];
   onFilter: () => void;
+  onSelect: () => void;
 }
 
 const EmptyState = ({ onAddRepos }: { onAddRepos: () => void }) => {
@@ -33,7 +34,11 @@ const EmptyState = ({ onAddRepos }: { onAddRepos: () => void }) => {
   );
 };
 
-export const SearchedReposTable = ({ repositories = [] }: SearchedReposTableProps) => {
+export const SearchedReposTable = ({
+  repositories = [],
+  onFilter,
+  onSelect: onSelectRepo,
+}: SearchedReposTableProps) => {
   const [filteredRepositories, setFilteredRepositories] = useState(repositories);
 
   return (
@@ -55,6 +60,7 @@ export const SearchedReposTable = ({ repositories = [] }: SearchedReposTableProp
                       })
                     );
                   }}
+                  onSearch={onFilter}
                 />
               </form>
             </TableHead>
@@ -76,7 +82,7 @@ export const SearchedReposTable = ({ repositories = [] }: SearchedReposTableProp
                 <TableRow key={fullRepoName}>
                   <TableCell className="flex gap-2 items-center w-full">
                     <label className="flex items-center gap-2">
-                      <Checkbox />
+                      <Checkbox onChange={onSelectRepo} />
                       <Avatar contributor={repo.owner} size="xsmall" />
                       <span>{fullRepoName}</span>
                     </label>
