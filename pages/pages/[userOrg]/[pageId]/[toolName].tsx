@@ -11,15 +11,18 @@ import SEO from "layouts/SEO/SEO";
 import fetchSocialCard from "lib/utils/fetch-social-card";
 import getInsightTeamMemberAccess from "lib/utils/get-insight-team-member";
 import { MemberAccess } from "components/molecules/TeamMembersConfig/team-members-config";
+import useInsight from "lib/hooks/useInsight";
 
 interface InsightPageProps {
-  insight: DbUserInsight;
+  insightName: string;
+  insightId: number;
   pageName: string;
   ogImage?: string;
 }
 
-const HubPage: WithPageLayout<InsightPageProps> = ({ insight, pageName, ogImage }: InsightPageProps) => {
-  const repositories = insight.repos.map((repo) => repo.repo_id);
+const HubPage: WithPageLayout<InsightPageProps> = ({ insightName, insightId, pageName, ogImage }: InsightPageProps) => {
+  const { data: insight, isError, isLoading } = useInsight(insightId);
+  const repositories = insight ? insight.repos.map((repo) => repo.repo_id) : [];
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
@@ -30,8 +33,8 @@ const HubPage: WithPageLayout<InsightPageProps> = ({ insight, pageName, ogImage 
     return (
       <>
         <SEO
-          title={`${insight.name} | Open Sauced Insights `}
-          description={`${insight.name} Insights on OpenSauced`}
+          title={`${insightName} | Open Sauced Insights `}
+          description={`${insightName} Insights on OpenSauced`}
           image={ogImage}
           twitterCard="summary_large_image"
         />
@@ -42,8 +45,8 @@ const HubPage: WithPageLayout<InsightPageProps> = ({ insight, pageName, ogImage 
   return (
     <>
       <SEO
-        title={`${insight.name} | Open Sauced Insights`}
-        description={`${insight.name} Insights on OpenSauced`}
+        title={`${insightName} | Open Sauced Insights`}
+        description={`${insightName} Insights on OpenSauced`}
         image={ogImage}
         twitterCard="summary_large_image"
       />
@@ -103,7 +106,8 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 
   return {
     props: {
-      insight,
+      insightName: insight.name,
+      insightId: insight.id,
       pageName,
       ogImage,
     },
