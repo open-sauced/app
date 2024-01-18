@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.84.0-beta.2](https://github.com/open-sauced/insights/compare/v1.84.0-beta.1...v1.84.0-beta.2) (2024-01-18)
+
+
+### 🐛 Bug Fixes
+
+* fixed repo insights icon in app sidebar ([#2494](https://github.com/open-sauced/insights/issues/2494)) ([536153b](https://github.com/open-sauced/insights/commit/536153bf0f980dec2b5ca34874743433843f822b))
+
 ## [1.84.0-beta.1](https://github.com/open-sauced/insights/compare/v1.83.0...v1.84.0-beta.1) (2024-01-18)
 
 
