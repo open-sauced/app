@@ -39,7 +39,7 @@ const Search = ({
   autoFocus,
   className,
   onSearch,
-  suggestions,
+  suggestions = [],
   suggestionsLabel,
   onChange,
   isLoading,
@@ -137,7 +137,7 @@ const Search = ({
       {suggestions && suggestions.length > 0 && showSuggestions && (
         <div className="absolute left-0 z-10 w-full pb-1 space-y-1 bg-white border rounded-lg cursor-pointer shadow-input border-light-slate-6 top-full">
           <ScrollArea type="auto" className="h-60">
-            {suggestionsLabel ? <div className="pl-5 pt-4">{suggestionsLabel}</div> : null}
+            {suggestionsLabel && suggestions.length > 0 ? <div className="pl-5 pt-4">{suggestionsLabel}</div> : null}
             {suggestions.map((suggestion, index) => (
               <div
                 className={clsx(
