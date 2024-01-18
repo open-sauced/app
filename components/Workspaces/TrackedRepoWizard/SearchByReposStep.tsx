@@ -70,11 +70,7 @@ export const SearchByReposStep = ({
             })}
           />
         </form>
-        {trackedReposCount === 0 ? (
-          <EmptyState />
-        ) : (
-          <SearchedReposTable onFilter={() => {}} repositories={repositories} />
-        )}
+        {trackedReposCount === 0 ? <EmptyState /> : <SearchedReposTable repositories={repositories} />}
       </div>
     </TrackedRepoWizardLayout>
   );

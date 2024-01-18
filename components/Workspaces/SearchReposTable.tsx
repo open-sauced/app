@@ -1,5 +1,6 @@
 import { BiBarChartAlt2 } from "react-icons/bi";
 import { FaPlus } from "react-icons/fa6";
+import { useState } from "react";
 import Button from "components/atoms/Button/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "components/shared/Table";
 import { Avatar } from "components/atoms/Avatar/avatar-hover-card";
@@ -32,7 +33,9 @@ const EmptyState = ({ onAddRepos }: { onAddRepos: () => void }) => {
   );
 };
 
-export const SearchedReposTable = ({ repositories, onFilter }: SearchedReposTableProps) => {
+export const SearchedReposTable = ({ repositories = [] }: SearchedReposTableProps) => {
+  const [filteredRepositories, setFilteredRepositories] = useState(repositories);
+
   return (
     <div className="border border-light-slate-7 rounded-lg">
       <Table className="not-sr-only">
@@ -41,7 +44,18 @@ export const SearchedReposTable = ({ repositories, onFilter }: SearchedReposTabl
             <TableHead className="flex justify-between items-center">
               Selected repositories
               <form role="search">
-                <Search placeholder="Filter repositories" className="w-full" name="query" onSearch={() => {}} />
+                <Search
+                  placeholder="Filter repositories"
+                  className="w-full"
+                  name="query"
+                  onChange={(search) => {
+                    setFilteredRepositories(
+                      repositories.filter((repo) => {
+                        return `${repo.owner}/${repo.name}`.includes(search);
+                      })
+                    );
+                  }}
+                />
               </form>
             </TableHead>
           </TableRow>
@@ -55,7 +69,7 @@ export const SearchedReposTable = ({ repositories, onFilter }: SearchedReposTabl
             </TableRow>
           </TableHeader>
           <TableBody>
-            {repositories.map((repo) => {
+            {filteredRepositories.map((repo) => {
               const fullRepoName = `${repo.owner}/${repo.name}`;
 
               return (
