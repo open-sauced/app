@@ -26,11 +26,11 @@ button:not([role]){
   @apply border;
   @apply border-transparent;
 }
-input[type="checkbox"]:focus-visible,
-[role="checkbox"]:focus-visible,
-[role="radio"]:focus-visible,
-[role="combobox"]:focus-visible,
-[role="switch"]:focus-visible,
+input[type="checkbox"]:focus-visible;
+[role="checkbox"]:focus-visible;
+[role="radio"]:focus-visible;
+[role="combobox"]:focus-visible;
+[role="switch"]:focus-visible;
 button:not([role]):focus-visible{
 button:not([role]):focus-visible {
   @apply outline-none;
