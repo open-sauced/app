@@ -26,7 +26,14 @@ export const HasTrackedRepos: Story = {
       name: `awesome-pizza-project-${i}`,
     })),
     trackedReposCount: 4,
-    suggestedRepos: new Array(5).fill("").map((_, i) => ({
+  },
+};
+
+export const HasSuggestedRepos: Story = {
+  args: {
+    repositories: [],
+    trackedReposCount: 0,
+    suggestedRepos: new Array(3).fill("").map((_, i) => ({
       owner: "open-sauced",
       name: `awesome-pizza-project-${i}`,
     })),

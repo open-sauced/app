@@ -56,12 +56,15 @@ export const SearchByReposStep = ({
             suggestions={suggestedRepos.map((repo) => {
               const fullRepoName = `${repo.owner}/${repo.name}`;
 
-              return (
-                <div key={fullRepoName} className="flex items-center gap-2">
-                  <Avatar contributor={repo.owner} size="xsmall" />
-                  <span>{fullRepoName}</span>
-                </div>
-              );
+              return {
+                key: fullRepoName,
+                node: (
+                  <div key={fullRepoName} className="flex items-center gap-2">
+                    <Avatar contributor={repo.owner} size="xsmall" />
+                    <span>{fullRepoName}</span>
+                  </div>
+                ),
+              };
             })}
           />
         </form>
