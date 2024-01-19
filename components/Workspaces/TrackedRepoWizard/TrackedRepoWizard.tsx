@@ -20,14 +20,12 @@ export const TrackedReposWizard = ({ onAddToTrackingList, onCancel }: TrackedRep
   const [searchTerm, setSearchTerm] = useState<string | undefined>();
   // const { sessionToken } = useSupabaseAuth();
   const { data, isError, isLoading } = useSearchRepos(searchTerm, "" /* sessionToken */);
-  const [trackedReposCount, setTrackedReposCount] = useState(0);
 
   const onSelectRepo = (repo: string) => {
     setCurrentTrackedRepositories((currentTrackedRepositories) => [
       ...currentTrackedRepositories.filter((r) => r !== repo),
       repo,
     ]);
-    setTrackedReposCount((value) => value + 1);
   };
 
   let searchedRepos = data ?? [];
@@ -58,8 +56,6 @@ export const TrackedReposWizard = ({ onAddToTrackingList, onCancel }: TrackedRep
               setStep("pickRepos");
             }}
             onImportOrg={onImportOrg}
-            onCancel={onCancel}
-            trackedReposCount={trackedReposCount}
           />
         );
       case "pickRepos":
@@ -83,7 +79,7 @@ export const TrackedReposWizard = ({ onAddToTrackingList, onCancel }: TrackedRep
       onAddToTrackingList={() => {
         onAddToTrackingList(currentTrackedRepositories);
       }}
-      trackedReposCount={trackedReposCount}
+      trackedReposCount={currentTrackedRepositories.length}
       onCancel={() => {
         goBack();
       }}

@@ -4,16 +4,9 @@ import { FaGithub } from "react-icons/fa6";
 interface PickReposOrOrgStepProps {
   onSearchRepos: () => void;
   onImportOrg: () => void;
-  onCancel: () => void;
-  trackedReposCount: number;
 }
 
-export const PickReposOrOrgStep = ({
-  onSearchRepos,
-  onImportOrg,
-  onCancel,
-  trackedReposCount,
-}: PickReposOrOrgStepProps) => {
+export const PickReposOrOrgStep = ({ onSearchRepos, onImportOrg }: PickReposOrOrgStepProps) => {
   return (
     <>
       <div className="grid gap-6 md:grid-cols-2" data-tracked-repo-wizard>
