@@ -8,7 +8,6 @@ const meta: Meta<typeof PickReposOrOrgStep> = {
   component: PickReposOrOrgStep,
   args: {
     trackedReposCount: 0,
-    onAddToTrackingList: () => {},
     onSearchRepos: () => {},
     onImportOrg: () => {},
     onCancel: () => {},

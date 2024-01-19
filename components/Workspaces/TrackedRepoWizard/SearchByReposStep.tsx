@@ -38,7 +38,7 @@ export const SearchByReposStep = ({
   const onFilterRepos = (search: string) => {
     setFilteredRepositories(
       repositories.filter((repo) => {
-        return repo.full_name.includes(search);
+        return repo.includes(search);
       })
     );
   };

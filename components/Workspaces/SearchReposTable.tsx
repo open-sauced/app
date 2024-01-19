@@ -9,7 +9,7 @@ import Search from "components/atoms/Search/search";
 interface SearchedReposTableProps {
   repositories: string[];
   onFilter: (filterTerm: string) => void;
-  onSelect: () => void;
+  onSelect: (value: string) => void;
 }
 
 const EmptyState = ({ onAddRepos }: { onAddRepos: () => void }) => {
@@ -65,7 +65,13 @@ export const SearchedReposTable = ({ repositories = [], onFilter, onSelect }: Se
                 <TableRow key={repo}>
                   <TableCell className="flex gap-2 items-center w-full">
                     <label className="flex items-center gap-2">
-                      <Checkbox onChange={onSelect} checked />
+                      <Checkbox
+                        onChange={(event) => {
+                          onSelect("");
+                        }}
+                        // TODO: handle checked/unchecked
+                        checked
+                      />
                       <Avatar contributor={owner} size="xsmall" />
                       <span>{repo}</span>
                     </label>

@@ -23,10 +23,7 @@ export default meta;
 
 export const WithRepos: Story = {
   args: {
-    repositories: new Array(100).fill("").map((_, i) => ({
-      owner: "open-sauced",
-      name: `awesome-pizza-project-${i}`,
-    })),
+    repositories: new Array(100).fill("").map((_, i) => `open-sauced/awesome-pizza-project-${i}`),
   },
 };
 

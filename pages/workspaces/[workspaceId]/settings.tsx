@@ -98,7 +98,7 @@ const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
   const { setWorkspaces, workspaces } = store(({ setWorkspaces, workspaces }) => ({ setWorkspaces, workspaces }));
   const [trackedReposModalOpen, setTrackedReposModalOpen] = useState(false);
   const { data, error, revalidate: revalidateRepos, isLoading } = useGetWorkspaceRepositories(workspace.id);
-  const initialTrackedRepos: string[] = data?.data.map(({ repo }) => repo.full_name) ?? [];
+  const initialTrackedRepos: string[] = data?.data?.map(({ repo }) => repo.full_name) ?? [];
   const [trackedRepos, setTrackedRepos] = useState<string[]>(initialTrackedRepos);
 
   const TrackedReposModal = dynamic(() => import("components/Workspaces/TrackedReposModal"), {
