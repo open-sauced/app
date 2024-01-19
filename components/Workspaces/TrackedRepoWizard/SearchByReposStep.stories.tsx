@@ -8,6 +8,7 @@ const meta: Meta<typeof SearchByReposStep> = {
   component: SearchByReposStep,
   args: {
     repositories: [],
+    searchedRepos: [],
     suggestedRepos: [],
   },
 };
