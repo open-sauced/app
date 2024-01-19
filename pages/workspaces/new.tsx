@@ -118,7 +118,6 @@ const NewWorkspace = () => {
         onClose={() => {
           setTrackedReposModalOpen(false);
         }}
-        trackedReposCount={0}
         onAddToTrackingList={() => {}}
         onCancel={() => {}}
       />

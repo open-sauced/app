@@ -1,19 +1,15 @@
 import { FaSearch } from "react-icons/fa";
+import { useState } from "react";
 import Search from "components/atoms/Search/search";
 import { Avatar } from "components/atoms/Avatar/avatar-hover-card";
 import { SearchedReposTable } from "../SearchReposTable";
 
 interface SearchByReposStepProps {
   onSearch: (search?: string) => void;
-  trackedReposCount: number;
-  repositories: {
-    owner: string;
-    name: string;
-  }[];
-  suggestedRepos: {
-    owner: string;
-    name: string;
-  }[];
+  onSelectRepo: (value: string) => void;
+  repositories: GhRepo[];
+  suggestedRepos: GhRepo[];
+  searchedRepos: GhRepo[];
 }
 
 const EmptyState = () => {
@@ -32,13 +28,20 @@ const EmptyState = () => {
 
 export const SearchByReposStep = ({
   onSearch,
-  trackedReposCount,
+  onSelectRepo,
   repositories,
-  suggestedRepos,
+  searchedRepos,
+  suggestedRepos = [],
 }: SearchByReposStepProps) => {
-  // TODO: Implement these functions
-  const onFilterRepos = () => {};
-  const onSelectRepo = () => {};
+  const [filteredRepositories, setFilteredRepositories] = useState(repositories);
+
+  const onFilterRepos = (search: string) => {
+    setFilteredRepositories(
+      repositories.filter((repo) => {
+        return repo.full_name.includes(search);
+      })
+    );
+  };
 
   return (
     <div className="grid gap-6">
@@ -53,26 +56,29 @@ export const SearchByReposStep = ({
           className="w-full"
           name="query"
           onChange={onSearch}
-          suggestionsLabel="Suggested repositories"
-          suggestions={suggestedRepos.map((repo) => {
-            const fullRepoName = `${repo.owner}/${repo.name}`;
-
+          onSelect={onSelectRepo}
+          suggestionsLabel={suggestedRepos.length > 0 ? "Suggested repositories" : undefined}
+          suggestions={(suggestedRepos.length > 0 ? suggestedRepos : searchedRepos).map((repo) => {
             return {
-              key: fullRepoName,
+              key: repo.full_name,
               node: (
-                <div key={fullRepoName} className="flex items-center gap-2">
-                  <Avatar contributor={repo.owner} size="xsmall" />
-                  <span>{fullRepoName}</span>
+                <div key={repo.id} data-repo={JSON.stringify(repo)} className="flex items-center gap-2">
+                  <Avatar contributor={repo.owner.login} size="xsmall" />
+                  <span>{repo.full_name}</span>
                 </div>
               ),
             };
           })}
         />
       </form>
-      {trackedReposCount === 0 ? (
+      {repositories.length === 0 && filteredRepositories.length === 0 ? (
         <EmptyState />
       ) : (
-        <SearchedReposTable repositories={repositories} onFilter={onFilterRepos} onSelect={onSelectRepo} />
+        <SearchedReposTable
+          repositories={filteredRepositories.length > 0 ? filteredRepositories : repositories}
+          onFilter={onFilterRepos}
+          onSelect={onSelectRepo}
+        />
       )}
     </div>
   );

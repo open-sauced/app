@@ -1,6 +1,5 @@
 import { BiBarChartAlt2 } from "react-icons/bi";
 import { FaPlus } from "react-icons/fa6";
-import { useState } from "react";
 import Button from "components/atoms/Button/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "components/shared/Table";
 import { Avatar } from "components/atoms/Avatar/avatar-hover-card";
@@ -8,11 +7,8 @@ import Checkbox from "components/atoms/Checkbox/checkbox";
 import Search from "components/atoms/Search/search";
 
 interface SearchedReposTableProps {
-  repositories: {
-    owner: string;
-    name: string;
-  }[];
-  onFilter: () => void;
+  repositories: GhRepo[];
+  onFilter: (filterTerm: string) => void;
   onSelect: () => void;
 }
 
@@ -34,13 +30,7 @@ const EmptyState = ({ onAddRepos }: { onAddRepos: () => void }) => {
   );
 };
 
-export const SearchedReposTable = ({
-  repositories = [],
-  onFilter,
-  onSelect: onSelectRepo,
-}: SearchedReposTableProps) => {
-  const [filteredRepositories, setFilteredRepositories] = useState(repositories);
-
+export const SearchedReposTable = ({ repositories = [], onFilter, onSelect }: SearchedReposTableProps) => {
   return (
     <div className="border border-light-slate-7 rounded-lg">
       <Table className="not-sr-only">
@@ -48,20 +38,13 @@ export const SearchedReposTable = ({
           <TableRow className="bg-light-slate-3">
             <TableHead className="flex justify-between items-center">
               Selected repositories
-              <form role="search">
-                <Search
-                  placeholder="Filter repositories"
-                  className="w-full"
-                  name="query"
-                  onChange={(search) => {
-                    setFilteredRepositories(
-                      repositories.filter((repo) => {
-                        return `${repo.owner}/${repo.name}`.includes(search);
-                      })
-                    );
-                  }}
-                  onSearch={onFilter}
-                />
+              <form
+                role="search"
+                onSubmit={(event) => {
+                  event.preventDefault;
+                }}
+              >
+                <Search placeholder="Filter repositories" className="w-full" name="query" onChange={onFilter} />
               </form>
             </TableHead>
           </TableRow>
@@ -75,16 +58,14 @@ export const SearchedReposTable = ({
             </TableRow>
           </TableHeader>
           <TableBody>
-            {filteredRepositories.map((repo) => {
-              const fullRepoName = `${repo.owner}/${repo.name}`;
-
+            {repositories.map((repo) => {
               return (
-                <TableRow key={fullRepoName}>
+                <TableRow key={repo.full_name}>
                   <TableCell className="flex gap-2 items-center w-full">
                     <label className="flex items-center gap-2">
-                      <Checkbox onChange={onSelectRepo} />
-                      <Avatar contributor={repo.owner} size="xsmall" />
-                      <span>{fullRepoName}</span>
+                      <Checkbox onChange={onSelect} checked />
+                      <Avatar contributor={repo.owner.login} size="xsmall" />
+                      <span>{repo.full_name}</span>
                     </label>
                   </TableCell>
                 </TableRow>
