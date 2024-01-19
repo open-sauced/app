@@ -52,6 +52,8 @@ export const AppSideBar = () => {
 
   useEffect(() => {
     setWorkspaces(initialWorkspaces);
+    // eslint-disable-next-line no-console
+    console.log("reloading workspaces");
   }, [setWorkspaces, initialWorkspaces]);
 
   const repoInsights = rawRepoInsights
