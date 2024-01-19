@@ -36,7 +36,7 @@ export const SearchedReposTable = ({ repositories = [], onFilter, onSelect }: Se
       <Table className="not-sr-only">
         <TableHeader>
           <TableRow className="bg-light-slate-3">
-            <TableHead className="flex justify-between items-center">
+            <TableHead className="flex justify-between items-center gap-6">
               Selected repositories
               <form
                 role="search"
