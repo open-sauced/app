@@ -173,3 +173,16 @@ div[role="dialog"]::-webkit-scrollbar-thumb {
 .react-loading-skeleton {
   z-index: unset !important;
 }
+
+/* For the mail icon */
+svg:has(> #Mail) {
+  stroke-width: 1;
+}
+
+/* For the tracked repo wizard button focus states */
+[data-tracked-repo-wizard] > button:focus-within > svg {
+  @apply text-green-600;
+}
+[data-tracked-repo-wizard] > button:focus-within > [data-button-title] {
+  @apply text-green-800;
+}
