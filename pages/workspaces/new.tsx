@@ -9,7 +9,6 @@ import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { useToast } from "lib/hooks/useToast";
 import store from "lib/store";
 import { TrackedReposTable } from "components/Workspaces/TrackedReposTable";
-import { useSearchRepos } from "lib/hooks/useSearchRepos";
 
 async function createWorkspace({
   name,
@@ -38,15 +37,8 @@ const NewWorkspace = () => {
   const { toast } = useToast();
   const router = useRouter();
   const { setWorkspaces, workspaces } = store(({ setWorkspaces, workspaces }) => ({ setWorkspaces, workspaces }));
+  const trackedRepos: any[] = [];
   const [trackedReposModalOpen, setTrackedReposModalOpen] = useState(false);
-  const [searchedRepos, setSearchedRepos] = useState<GhRepo[]>([]);
-  const [searchTerm, setSearchTerm] = useState<string | undefined>();
-
-  const { data, isError, isLoading } = useSearchRepos(searchTerm, sessionToken);
-
-  function onSearchRepos(searchTerm?: string) {
-    setSearchTerm(searchTerm);
-  }
 
   function onAddOrgRepo() {
     alert("Add org repo");
@@ -114,7 +106,7 @@ const NewWorkspace = () => {
           </form>
         </div>
         <TrackedReposTable
-          repositories={searchedRepos}
+          repositories={trackedRepos}
           onAddRepos={() => {
             setTrackedReposModalOpen(true);
           }}
@@ -128,9 +120,6 @@ const NewWorkspace = () => {
         }}
         trackedReposCount={0}
         onAddToTrackingList={() => {}}
-        onSearchRepos={(searchTerm: string) => {
-          setSearchTerm(searchTerm);
-        }}
         onCancel={() => {}}
       />
     </WorkspaceLayout>

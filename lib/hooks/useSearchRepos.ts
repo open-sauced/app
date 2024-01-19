@@ -1,5 +1,5 @@
 const baseUrl = "https://api.github.com/search/repositories";
-const useSearchRepos = (searchTerm: string, providerToken?: string | null | undefined, limit = 100) => {
+const useSearchRepos = (searchTerm: string | undefined, providerToken?: string | null | undefined, limit = 100) => {
   return {
     data: [
       {

@@ -6,7 +6,6 @@ interface TrackedReposModalProps {
   onClose: () => void;
   trackedReposCount: number;
   onAddToTrackingList: () => void;
-  onSearchRepos: (searchTerm: string) => void;
   onCancel: () => void;
 }
 
@@ -15,11 +14,8 @@ const TrackedReposModal = ({
   onClose,
   trackedReposCount,
   onAddToTrackingList,
-  onSearchRepos,
   onCancel,
 }: TrackedReposModalProps) => {
-  const isLoading = false;
-
   const onCloseModal = () => {
     onClose();
   };
@@ -30,7 +26,6 @@ const TrackedReposModal = ({
         <TrackedReposWizard
           trackedReposCount={trackedReposCount}
           onAddToTrackingList={onAddToTrackingList}
-          onSearchRepos={onSearchRepos}
           onCancel={onCancel}
         />
       </DialogContent>
