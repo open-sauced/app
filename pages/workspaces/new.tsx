@@ -89,7 +89,7 @@ const NewWorkspace = () => {
                 toast({ description: `Error creating new workspace. Please try again`, variant: "danger" });
               } else {
                 toast({ description: `Workspace created successfully`, variant: "success" });
-                data && setWorkspaces([...workspaces, data]);
+                data && setWorkspaces([...workspaces, data.workspace]);
                 router.push(`/workspaces/${data?.workspace.id}/settings`);
               }
             }}
