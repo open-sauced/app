@@ -41,6 +41,9 @@ const InsightsList = ({
   );
 };
 
+// eslint-disable-next-line no-debugger
+debugger;
+
 export const AppSideBar = () => {
   const { username } = useSupabaseAuth();
   const { data: rawRepoInsights, isLoading: insightsLoading } = useUserInsights(!!username);
@@ -61,6 +64,9 @@ export const AppSideBar = () => {
   const contributorInsights = lists
     .slice(0, 5)
     .sort((a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime());
+
+  // eslint-disable-next-line no-console
+  console.log("rerendering sidebar", { workspaces, initialWorkspaces, rawRepoInsights, lists });
 
   return (
     <div className="fixed top-0 pt-12 bg-white flex flex-col gap-8 justify-between min-w-max min-h-full">
