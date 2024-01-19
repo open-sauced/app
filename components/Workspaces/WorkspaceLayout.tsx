@@ -2,6 +2,9 @@ import TopNav from "components/organisms/TopNav/top-nav";
 import { AppSideBar } from "components/shared/AppSidebar/AppSidebar";
 
 export const WorkspaceLayout = ({ children }: { children: React.ReactNode }) => {
+  // eslint-disable-next-line no-console
+  console.log("rerendering workspace layout");
+
   return (
     <div
       className="grid grid-cols-[20rem,1fr] grid-rows-[3.3rem,auto,1fr]"
