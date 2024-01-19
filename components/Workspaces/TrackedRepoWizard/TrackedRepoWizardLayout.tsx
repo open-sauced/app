@@ -16,7 +16,7 @@ export const TrackedRepoWizardLayout = ({
   children,
 }: TrackedRepoWizardLayoutProps) => {
   return (
-    <Card className="p-0 w-max max-w-3xl">
+    <Card className="p-0 max-w-3xl">
       <button className="flex gap-1 items-center ml-4 mt-4 border border-transparent" onClick={onCancel}>
         <FaArrowLeft /> back
       </button>
