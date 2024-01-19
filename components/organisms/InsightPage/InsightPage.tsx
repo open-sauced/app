@@ -80,7 +80,8 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
   const pageHref = router.asPath;
   const [reposIds, setReposIds] = useState<number[]>([]);
   const { data: repoListData } = useRepositories(reposIds);
-
+  const [insightRepoIds, setInsightRepoIds] = useState<number[]>([]);
+  const { data: apiRepoData } = useRepositories(insightRepoIds);
   useEffect(() => {
     const searchParams = new URLSearchParams(pageHref.substring(pageHref.indexOf("?")));
     if (router.query.selectedRepos) {
@@ -143,8 +144,14 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
       : staticSuggestedRepos;
 
   useEffect(() => {
+    if (insightRepoIds.length > 0) {
+      setRepos(apiRepoData);
+    }
+  }, [apiRepoData]);
+  useEffect(() => {
     if (pageRepos) {
       setRepos(pageRepos);
+      setInsightRepoIds(pageRepos.map((repo) => Number(repo.id)));
     }
 
     if (insight) {
@@ -266,6 +273,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
     setRepos((repos) => {
       return [...repos, actualRepo as unknown as DbRepo];
     });
+    setInsightRepoIds((prev) => [...prev, Number(actualRepo.id)]);
   };
 
   const loadAndAddRepo = async (repoToAdd: string, isAddedFromCart = false) => {
@@ -293,10 +301,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
 
       if (response.ok) {
         const addedRepo = (await response.json()) as DbRepo;
-
-        setRepos((repos) => {
-          return [...repos, addedRepo];
-        });
+        setInsightRepoIds((prev) => [...prev, Number(addedRepo.id)]);
         setAddRepoError(RepoLookupError.Initial);
         setRepoSearchTerm("");
       } else {
@@ -310,10 +315,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
             id: publicRepo.id,
             full_name: publicRepo.full_name,
           } as DbRepo;
-
-          setRepos((repos) => {
-            return [...repos, addedRepo];
-          });
+          setInsightRepoIds((prev) => [...prev, Number(addedRepo.id)]);
           setAddRepoError(RepoLookupError.Initial);
           setRepoSearchTerm("");
         } else {
@@ -355,7 +357,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
     setRepos((addedRepos) => {
       return addedRepos.filter((repo) => repo.id !== id);
     });
-
+    setInsightRepoIds((prev) => prev.filter((repoId) => repoId !== Number(id)));
     const repoRemoved = repos.find((repo) => repo.id === id);
 
     const repoAlreadyInHistory = repoHistory.find((repo) => repo.id === id);
@@ -478,7 +480,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
       setRepos((repos) => {
         return [...repos, ...orgRepos];
       });
-
+      setInsightRepoIds((prev) => [...prev, ...orgRepos.map((repo) => Number(repo.id))]);
       setSyncOrganizationError(OrgLookupError.Initial);
       setOrganization("");
     } else {
