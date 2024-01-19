@@ -242,8 +242,8 @@ const UserSettingsPage = ({ user }: UserSettingsPageProps) => {
 
   return (
     <div className="container mx-auto md:px-16">
-      <div className="flex flex-col gap-4 text-sm md:flex-row md:gap-42 lg:gap-48">
-        <div>
+      <div className="flex flex-col gap-4 text-sm md:flex-row  lg:gap-24 xl:gap-48">
+        <div className="flex-1">
           <Title className="!text-2xl" level={2}>
             Public profile
           </Title>
@@ -374,12 +374,12 @@ const UserSettingsPage = ({ user }: UserSettingsPageProps) => {
             </Button>
           </form>
         </div>
-        <div className="flex flex-col-reverse gap-6 md:flex-col">
+        <div className="flex-1 flex flex-col-reverse gap-6 md:flex-col">
           <div className="flex flex-col gap-6">
             <Title className="!text-2xl !font-normal" level={2}>
               Interests
             </Title>
-            <div className="flex flex-wrap gap-3 w-72">
+            <div className="flex flex-wrap gap-3 w-[65%]">
               {interestArray.map((topic, index) => (
                 <LanguageSwitch
                   checked={selectedInterest.includes(topic)}
@@ -442,7 +442,7 @@ const UserSettingsPage = ({ user }: UserSettingsPageProps) => {
                   <div className="flex flex-col order-first gap-6 md:order-last">
                     <div className="flex flex-col gap-3">
                       <label className="text-2xl font-normal">Upgrade Access</label>
-                      <div className="w-full sm:max-w-80">
+                      <div className="w-full">
                         <Text>Upgrade to a subscription to gain access to generate custom reports!</Text>
                       </div>
                     </div>
@@ -488,7 +488,7 @@ const UserSettingsPage = ({ user }: UserSettingsPageProps) => {
               >
                 <div className="flex flex-col gap-3">
                   <label className="text-2xl font-normal">Delete Account</label>
-                  <div className="w-full md:w-96">
+                  <div className="w-full">
                     <Text>
                       Please note that account deletion is irreversible. Proceed only if you are certain about this
                       action.
