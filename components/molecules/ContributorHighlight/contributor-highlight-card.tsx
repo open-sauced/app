@@ -663,12 +663,11 @@ const ContributorHighlightCard = ({
                 }`}
                 onClick={async () => (sessionToken ? handleUpdateReaction(emoji_id) : signIn({ provider: "github" }))}
               >
-        </button>
                 <Emoji
                   className="text-xs text-orange-500 md:text-sm"
                   text={`:${getEmojiNameById(emoji_id)}: ${reaction_count}`}
                 />
-              </div>
+              </button>
             </Tooltip>
           ))}
         <div className="ml-auto">
