@@ -19,7 +19,7 @@ export const useSearchRepos = (
   );
 
   return {
-    data: data,
+    data: data?.items.map((item) => item.full_name) ?? [],
     isLoading: !error && !data,
     isError: !!error,
     mutate,

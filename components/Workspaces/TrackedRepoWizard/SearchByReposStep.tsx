@@ -7,9 +7,9 @@ import { SearchedReposTable } from "../SearchReposTable";
 interface SearchByReposStepProps {
   onSearch: (search?: string) => void;
   onSelectRepo: (value: string) => void;
-  repositories: GhRepo[];
-  suggestedRepos: GhRepo[];
-  searchedRepos: GhRepo[];
+  repositories: string[];
+  suggestedRepos: string[];
+  searchedRepos: string[];
 }
 
 const EmptyState = () => {
@@ -59,12 +59,14 @@ export const SearchByReposStep = ({
           onSelect={onSelectRepo}
           suggestionsLabel={suggestedRepos.length > 0 ? "Suggested repositories" : undefined}
           suggestions={(suggestedRepos.length > 0 ? suggestedRepos : searchedRepos).map((repo) => {
+            const [owner] = repo.split("/");
+
             return {
-              key: repo.full_name,
+              key: repo,
               node: (
-                <div key={repo.id} data-repo={JSON.stringify(repo)} className="flex items-center gap-2">
-                  <Avatar contributor={repo.owner.login} size="xsmall" />
-                  <span>{repo.full_name}</span>
+                <div key={repo} className="flex items-center gap-2">
+                  <Avatar contributor={owner} size="xsmall" />
+                  <span>{repo}</span>
                 </div>
               ),
             };

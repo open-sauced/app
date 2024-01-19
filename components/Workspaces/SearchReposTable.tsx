@@ -7,7 +7,7 @@ import Checkbox from "components/atoms/Checkbox/checkbox";
 import Search from "components/atoms/Search/search";
 
 interface SearchedReposTableProps {
-  repositories: GhRepo[];
+  repositories: string[];
   onFilter: (filterTerm: string) => void;
   onSelect: () => void;
 }
@@ -59,13 +59,15 @@ export const SearchedReposTable = ({ repositories = [], onFilter, onSelect }: Se
           </TableHeader>
           <TableBody>
             {repositories.map((repo) => {
+              const [owner] = repo.split("/");
+
               return (
-                <TableRow key={repo.full_name}>
+                <TableRow key={repo}>
                   <TableCell className="flex gap-2 items-center w-full">
                     <label className="flex items-center gap-2">
                       <Checkbox onChange={onSelect} checked />
-                      <Avatar contributor={repo.owner.login} size="xsmall" />
-                      <span>{repo.full_name}</span>
+                      <Avatar contributor={owner} size="xsmall" />
+                      <span>{repo}</span>
                     </label>
                   </TableCell>
                 </TableRow>

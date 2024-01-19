@@ -2,7 +2,6 @@ import { FaSearch } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa6";
 
 interface PickReposOrOrgStepProps {
-  onAddToTrackingList: () => void;
   onSearchRepos: () => void;
   onImportOrg: () => void;
   onCancel: () => void;
@@ -10,7 +9,6 @@ interface PickReposOrOrgStepProps {
 }
 
 export const PickReposOrOrgStep = ({
-  onAddToTrackingList,
   onSearchRepos,
   onImportOrg,
   onCancel,

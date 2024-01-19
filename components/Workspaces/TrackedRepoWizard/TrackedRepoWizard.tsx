@@ -5,7 +5,7 @@ import { TrackedRepoWizardLayout } from "./TrackedRepoWizardLayout";
 import { SearchByReposStep } from "./SearchByReposStep";
 
 interface TrackedReposWizardProps {
-  onAddToTrackingList: () => void;
+  onAddToTrackingList: (repos: string[]) => void;
   onCancel: () => void;
 }
 
@@ -14,7 +14,7 @@ type TrackedReposStep = "pickReposOrOrg" | "pickRepos" | "pickOrg";
 export const TrackedReposWizard = ({ onAddToTrackingList, onCancel }: TrackedReposWizardProps) => {
   const [step, setStep] = useState<TrackedReposStep>("pickReposOrOrg");
   // TODO: probably makes more sense as an object so it's more performant.
-  const [currentTrackedRepositories, setCurrentTrackedRepositories] = useState<GhRepo[]>([]);
+  const [currentTrackedRepositories, setCurrentTrackedRepositories] = useState<string[]>([]);
   const suggestedRepos: any[] = [];
   const onImportOrg = () => {};
   const [searchTerm, setSearchTerm] = useState<string | undefined>();
@@ -22,18 +22,15 @@ export const TrackedReposWizard = ({ onAddToTrackingList, onCancel }: TrackedRep
   const { data, isError, isLoading } = useSearchRepos(searchTerm, "" /* sessionToken */);
   const [trackedReposCount, setTrackedReposCount] = useState(0);
 
-  const onSelectRepo = (value: string) => {
-    const repoIdElement = document.querySelector(`[data-suggestion="${value}"] > [data-repo]`) as HTMLElement;
-    const repo = repoIdElement?.dataset.repo ? (JSON.parse(repoIdElement?.dataset.repo) as GhRepo) : null;
-    repo &&
-      setCurrentTrackedRepositories((currentTrackedRepositories) => [
-        ...currentTrackedRepositories.filter((r) => r.id !== repo.id),
-        repo,
-      ]);
+  const onSelectRepo = (repo: string) => {
+    setCurrentTrackedRepositories((currentTrackedRepositories) => [
+      ...currentTrackedRepositories.filter((r) => r !== repo),
+      repo,
+    ]);
     setTrackedReposCount((value) => value + 1);
   };
 
-  let searchedRepos = data?.items || [];
+  let searchedRepos = data ?? [];
 
   function goBack() {
     switch (step) {
@@ -57,7 +54,6 @@ export const TrackedReposWizard = ({ onAddToTrackingList, onCancel }: TrackedRep
       case "pickReposOrOrg":
         return (
           <PickReposOrOrgStep
-            onAddToTrackingList={onAddToTrackingList}
             onSearchRepos={() => {
               setStep("pickRepos");
             }}
@@ -84,7 +80,9 @@ export const TrackedReposWizard = ({ onAddToTrackingList, onCancel }: TrackedRep
 
   return (
     <TrackedRepoWizardLayout
-      onAddToTrackingList={onAddToTrackingList}
+      onAddToTrackingList={() => {
+        onAddToTrackingList(currentTrackedRepositories);
+      }}
       trackedReposCount={trackedReposCount}
       onCancel={() => {
         goBack();

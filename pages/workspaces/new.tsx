@@ -15,13 +15,16 @@ async function createWorkspace({
   description = "",
   members = [],
   sessionToken,
+  repos = [],
 }: {
   name: string;
   description?: string;
   members?: any[];
   sessionToken: string;
+  repos: { full_name: string }[];
 }) {
-  const { data, error } = await fetchApiData<Workspace>({
+  // TODO: check if the workspace ID already exists in case the repos part doesn't work
+  const { data: workspace, error: workspaceError } = await fetchApiData<Workspace>({
     path: "workspaces",
     method: "POST",
     body: { name, description, members },
@@ -29,7 +32,23 @@ async function createWorkspace({
     pathValidator: () => true,
   });
 
-  return { data, error };
+  if (workspace) {
+    const { data: repoData, error: reposError } = await fetchApiData<any[]>({
+      path: `workspaces/${workspace.id}/repos`,
+      method: "POST",
+      body: { repos },
+      bearerToken: sessionToken,
+      pathValidator: () => true,
+    });
+
+    if (workspaceError || reposError) {
+      return { data: null, error: workspaceError ?? reposError };
+    }
+
+    return { data: { workspace, repos: repoData }, error: null };
+  } else {
+    return { data: null, error: workspaceError };
+  }
 }
 
 const NewWorkspace = () => {
@@ -37,16 +56,8 @@ const NewWorkspace = () => {
   const { toast } = useToast();
   const router = useRouter();
   const { setWorkspaces, workspaces } = store(({ setWorkspaces, workspaces }) => ({ setWorkspaces, workspaces }));
-  const trackedRepos: any[] = [];
   const [trackedReposModalOpen, setTrackedReposModalOpen] = useState(false);
-
-  function onAddOrgRepo() {
-    alert("Add org repo");
-  }
-
-  function onInviteTeamMembers() {
-    alert("Inviting team members");
-  }
+  const [trackedRepos, setTrackedRepos] = useState<string[]>([]);
 
   const TrackedReposModal = dynamic(() => import("components/Workspaces/TrackedReposModal"), {
     ssr: false,
@@ -71,6 +82,7 @@ const NewWorkspace = () => {
                 description,
                 members: [],
                 sessionToken: sessionToken!,
+                repos: trackedRepos.map((repo) => ({ full_name: repo })),
               });
 
               if (error) {
@@ -78,7 +90,7 @@ const NewWorkspace = () => {
               } else {
                 toast({ description: `Workspace created successfully`, variant: "success" });
                 data && setWorkspaces([...workspaces, data]);
-                router.push(`/workspaces/${data?.id}/settings`);
+                router.push(`/workspaces/${data?.workspace.id}/settings`);
               }
             }}
           >
@@ -118,8 +130,14 @@ const NewWorkspace = () => {
         onClose={() => {
           setTrackedReposModalOpen(false);
         }}
-        onAddToTrackingList={() => {}}
-        onCancel={() => {}}
+        onAddToTrackingList={(repos: string[]) => {
+          setTrackedReposModalOpen(false);
+          // TODO: Make this a map or object to be more efficient
+          setTrackedRepos((trackedRepos) => [...trackedRepos, ...repos]);
+        }}
+        onCancel={() => {
+          setTrackedReposModalOpen(false);
+        }}
       />
     </WorkspaceLayout>
   );

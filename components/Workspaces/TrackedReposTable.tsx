@@ -6,10 +6,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "c
 import { Avatar } from "components/atoms/Avatar/avatar-hover-card";
 
 interface TrackedReposTableProps {
-  repositories: {
-    owner: string;
-    name: string;
-  }[];
+  repositories: string[];
   onAddRepos: () => void;
   onRemoveTrackedRepo: () => void;
 }
@@ -71,13 +68,13 @@ export const TrackedReposTable = ({ repositories, onAddRepos, onRemoveTrackedRep
               </TableHeader>
               <TableBody>
                 {repositories.map((repo) => {
-                  const fullRepoName = `${repo.owner}/${repo.name}`;
+                  const [owner] = repo.split("/");
 
                   return (
-                    <TableRow key={fullRepoName}>
+                    <TableRow key={repo}>
                       <TableCell className="flex gap-2 items-center w-full">
-                        <Avatar contributor={repo.owner} size="xsmall" />
-                        <span>{fullRepoName}</span>
+                        <Avatar contributor={owner} size="xsmall" />
+                        <span>{repo}</span>
                       </TableCell>
                       <TableCell className="text-right">
                         <button onClick={onRemoveTrackedRepo}>
