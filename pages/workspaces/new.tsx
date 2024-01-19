@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
-import { useState } from "react";
+import { ComponentProps, useState } from "react";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import Button from "components/atoms/Button/button";
 import TextInput from "components/atoms/TextInput/text-input";
@@ -59,6 +59,30 @@ const NewWorkspace = () => {
   const [trackedReposModalOpen, setTrackedReposModalOpen] = useState(false);
   const [trackedRepos, setTrackedRepos] = useState<string[]>([]);
 
+  const onCreateWorkspace: ComponentProps<"form">["onSubmit"] = async (event) => {
+    event.preventDefault();
+    const form = event.target as HTMLFormElement;
+    const formData = new FormData(form);
+    const name = formData.get("name") as string;
+    const description = formData.get("description") as string;
+    // TODO: send members list
+    const { data, error } = await createWorkspace({
+      name,
+      description,
+      members: [],
+      sessionToken: sessionToken!,
+      repos: trackedRepos.map((repo) => ({ full_name: repo })),
+    });
+
+    if (error) {
+      toast({ description: `Error creating new workspace. Please try again`, variant: "danger" });
+    } else {
+      toast({ description: `Workspace created successfully`, variant: "success" });
+      data && setWorkspaces([...workspaces, data.workspace]);
+      router.push(`/workspaces/${data?.workspace.id}/settings`);
+    }
+  };
+
   const TrackedReposModal = dynamic(() => import("components/Workspaces/TrackedReposModal"), {
     ssr: false,
   });
@@ -68,32 +92,7 @@ const NewWorkspace = () => {
       <div className="grid gap-6">
         <div>
           <h1 className="border-b bottom pb-4">Workspace Settings</h1>
-          <form
-            className="flex flex-col pt-6 gap-6"
-            onSubmit={async (event) => {
-              event.preventDefault();
-              const form = event.target as HTMLFormElement;
-              const formData = new FormData(form);
-              const name = formData.get("name") as string;
-              const description = formData.get("description") as string;
-              // TODO: send members list
-              const { data, error } = await createWorkspace({
-                name,
-                description,
-                members: [],
-                sessionToken: sessionToken!,
-                repos: trackedRepos.map((repo) => ({ full_name: repo })),
-              });
-
-              if (error) {
-                toast({ description: `Error creating new workspace. Please try again`, variant: "danger" });
-              } else {
-                toast({ description: `Workspace created successfully`, variant: "success" });
-                data && setWorkspaces([...workspaces, data.workspace]);
-                router.push(`/workspaces/${data?.workspace.id}/settings`);
-              }
-            }}
-          >
+          <form className="flex flex-col pt-6 gap-6" onSubmit={onCreateWorkspace}>
             <TextInput
               name="name"
               label="Workspace Name"
@@ -122,7 +121,17 @@ const NewWorkspace = () => {
           onAddRepos={() => {
             setTrackedReposModalOpen(true);
           }}
-          onRemoveTrackedRepo={() => {}}
+          onRemoveTrackedRepo={(event) => {
+            const { repo } = event.currentTarget.dataset;
+
+            if (!repo) {
+              // eslint-disable-next-line no-console
+              console.error("The tracked repo to remove was not found");
+              return;
+            }
+
+            setTrackedRepos((repos) => repos.filter((r) => r !== repo));
+          }}
         />
       </div>
       <TrackedReposModal

@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { GetServerSidePropsContext } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
-import { useState } from "react";
+import { ComponentProps, useState } from "react";
 import dynamic from "next/dynamic";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import Button from "components/atoms/Button/button";
@@ -54,6 +54,26 @@ async function saveWorkspace({
   return { data: { workspace: data, repos: repoData }, error };
 }
 
+const deleteTrackedRepos = async ({
+  workspaceId,
+  sessionToken,
+  repos,
+}: {
+  workspaceId: string;
+  sessionToken: string;
+  repos: { full_name: string }[];
+}) => {
+  const { data, error } = await fetchApiData<any[]>({
+    path: `workspaces/${workspaceId}/repos`,
+    method: "DELETE",
+    body: { repos },
+    bearerToken: sessionToken,
+    pathValidator: () => true,
+  });
+
+  return { data, error };
+};
+
 const deleteWorkspace = async ({ workspaceId, sessionToken }: { workspaceId: string; sessionToken: string }) => {
   const { data, error } = await fetchApiData<Workspace>({
     path: `workspaces/${workspaceId}`,
@@ -100,43 +120,55 @@ const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
   const { data, error, revalidate: revalidateRepos, isLoading } = useGetWorkspaceRepositories(workspace.id);
   const initialTrackedRepos: string[] = data?.data?.map(({ repo }) => repo.full_name) ?? [];
   const [trackedRepos, setTrackedRepos] = useState<string[]>(initialTrackedRepos);
+  const [trackedReposPendingDeletion, setTrackedReposPendingDeletion] = useState<string[]>([]);
 
   const TrackedReposModal = dynamic(() => import("components/Workspaces/TrackedReposModal"), {
     ssr: false,
   });
 
+  const updateWorkspace: ComponentProps<"form">["onSubmit"] = async (event) => {
+    event.preventDefault();
+
+    const form = event.target as HTMLFormElement;
+    const formData = new FormData(form);
+    const name = formData.get("name") as string;
+    const description = formData.get("description") as string;
+
+    const workspaceUpdate = await saveWorkspace({
+      workspaceId: workspace.id,
+      name,
+      description,
+      sessionToken: sessionToken!,
+      repos: trackedRepos.map((repo) => ({ full_name: repo })),
+    });
+
+    const workspaceRepoDeletes = await deleteTrackedRepos({
+      workspaceId: workspace.id,
+      sessionToken: sessionToken!,
+      repos: trackedReposPendingDeletion.map((repo) => ({ full_name: repo })),
+    });
+
+    const [{ data, error }, { data: deletedRepos, error: reposDeleteError }] = await Promise.all([
+      workspaceUpdate,
+      workspaceRepoDeletes,
+    ]);
+
+    if (error || reposDeleteError) {
+      toast({ description: `Workspace update failed`, variant: "danger" });
+    } else {
+      revalidateRepos();
+      setWorkspaceName(name);
+      data.workspace && setWorkspaces([...workspaces.filter((w) => w.id !== workspace.id), data.workspace]);
+      toast({ description: `Workspace updated successfully`, variant: "success" });
+    }
+  };
+
   return (
     <WorkspaceLayout>
-      {" "}
       <div className="grid gap-6">
         <div>
           <h1 className="border-b bottom pb-4">Workspace Settings</h1>
-          <form
-            className="flex flex-col pt-6 gap-6"
-            onSubmit={async (event) => {
-              event.preventDefault();
-              const form = event.target as HTMLFormElement;
-              const formData = new FormData(form);
-              const name = formData.get("name") as string;
-              const description = formData.get("description") as string;
-              const { data, error } = await saveWorkspace({
-                workspaceId: workspace.id,
-                name,
-                description,
-                sessionToken: sessionToken!,
-                repos: trackedRepos.map((repo) => ({ full_name: repo })),
-              });
-
-              if (error) {
-                toast({ description: `Workspace update failed`, variant: "danger" });
-              } else {
-                setWorkspaceName(name);
-                data.workspace && setWorkspaces([...workspaces.filter((w) => w.id !== workspace.id), data.workspace]);
-                toast({ description: `Workspace updated successfully`, variant: "success" });
-                revalidateRepos();
-              }
-            }}
-          >
+          <form className="flex flex-col pt-6 gap-6" onSubmit={updateWorkspace}>
             <TextInput
               name="name"
               label="Workspace Name"
@@ -167,7 +199,18 @@ const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
           onAddRepos={() => {
             setTrackedReposModalOpen(true);
           }}
-          onRemoveTrackedRepo={() => {}}
+          onRemoveTrackedRepo={(event) => {
+            const { repo } = event.currentTarget.dataset;
+
+            if (!repo) {
+              // eslint-disable-next-line no-console
+              console.error("The tracked repo to remove was not found");
+              return;
+            }
+
+            setTrackedRepos((repos) => repos.filter((r) => r !== repo));
+            setTrackedReposPendingDeletion((repos) => [...repos, repo]);
+          }}
         />
         <div className="flex flex-col gap-4">
           <Title className="!text-1xl !leading-none py-6" level={4}>

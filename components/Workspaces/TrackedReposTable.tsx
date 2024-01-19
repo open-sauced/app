@@ -1,6 +1,7 @@
 import { BiBarChartAlt2 } from "react-icons/bi";
 import { FaPlus } from "react-icons/fa6";
 import { FaTrashAlt } from "react-icons/fa";
+import { ComponentProps } from "react";
 import Button from "components/atoms/Button/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "components/shared/Table";
 import { Avatar } from "components/atoms/Avatar/avatar-hover-card";
@@ -9,7 +10,7 @@ import ClientOnly from "components/atoms/ClientOnly/client-only";
 interface TrackedReposTableProps {
   repositories: string[];
   onAddRepos: () => void;
-  onRemoveTrackedRepo: () => void;
+  onRemoveTrackedRepo: ComponentProps<"button">["onClick"];
 }
 
 const EmptyState = ({ onAddRepos }: { onAddRepos: () => void }) => {
@@ -79,7 +80,7 @@ export const TrackedReposTable = ({ repositories, onAddRepos, onRemoveTrackedRep
                           <span>{repo}</span>
                         </TableCell>
                         <TableCell className="text-right">
-                          <button onClick={onRemoveTrackedRepo}>
+                          <button onClick={onRemoveTrackedRepo} data-repo={repo}>
                             <FaTrashAlt title="delete" className="text-light-slate-10" />
                           </button>
                         </TableCell>
