@@ -141,10 +141,10 @@ const ContributorsAddedModal = ({ list, contributorCount, isOpen, onClose }: Con
             </Text>
           </div>
           <div className="flex gap-3">
-            <Button onClick={onClose} className="justify-center flex-1" variant="primary">
+            <Button onClick={onClose} className="justify-center flex-1" variant="default">
               Add More
             </Button>
-            <Button href={`/lists/${list.id}/edit`} className="justify-center flex-1" variant="default">
+            <Button href={`/lists/${list.id}/edit`} className="justify-center flex-1" variant="primary">
               Done
             </Button>
           </div>

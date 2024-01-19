@@ -37,7 +37,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
     isError: repoListIsError,
     isLoading: repoListIsLoading,
     setPage,
-  } = useRepositories(repositories, Number(range ?? 30), Number(limit ?? 10));
+  } = useRepositories(repositories, Number(range), Number(limit));
   const filteredRepoNotIndexed = selectedFilter && !repoListIsLoading && !repoListIsError && repoListData.length === 0;
   const [selectedRepos, setSelectedRepos] = useState<DbRepo[]>([]);
 

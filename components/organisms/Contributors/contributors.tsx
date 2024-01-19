@@ -21,6 +21,7 @@ import Button from "components/atoms/Button/button";
 import { addListContributor, useFetchAllLists } from "lib/hooks/useList";
 import { Command, CommandGroup, CommandInput, CommandItem } from "components/atoms/Cmd/command";
 import { useToast } from "lib/hooks/useToast";
+import { useMediaQuery } from "lib/hooks/useMediaQuery";
 
 import ClientOnly from "components/atoms/ClientOnly/client-only";
 import { setQueryParams } from "lib/utils/query-params";
@@ -42,6 +43,8 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
   const [selectedContributors, setSelectedContributors] = useState<DbPRContributor[]>([]);
   const [selectedListIds, setSelectedListIds] = useState<string[]>([]);
   const [popoverOpen, setPopoverOpen] = useState(false);
+
+  const isMobile = useMediaQuery("(max-width: 768px)");
 
   const contributors = data.map((pr) => {
     return {
@@ -192,9 +195,11 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
         <div className="grid w-full gap-3 grid-cols-automobile md:grid-cols-autodesktop">
           {isLoading ? <SkeletonWrapper height={210} radius={12} count={9} /> : ""}
           {isError ? <>An error occurred!..</> : ""}
-          {contributorArray.map((contributor, index) => (
-            <ContributorCard key={index} contributor={{ ...contributor }} topic={topic} repositories={repositories} />
-          ))}
+          {!isLoading &&
+            !isError &&
+            contributorArray.map((contributor, index) => (
+              <ContributorCard key={index} contributor={{ ...contributor }} topic={topic} repositories={repositories} />
+            ))}
         </div>
       ) : (
         <div className="lg:min-w-[1150px]">
@@ -255,7 +260,8 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
           <div>
             <div className="flex flex-col gap-4">
               <Pagination
-                pages={[]}
+                pages={isMobile ? [] : new Array(meta.pageCount).fill(0).map((_, index) => index + 1)}
+                pageSize={5}
                 hasNextPage={meta.hasNextPage}
                 hasPreviousPage={meta.hasPreviousPage}
                 totalPage={meta.pageCount}
