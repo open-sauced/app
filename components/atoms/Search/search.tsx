@@ -150,7 +150,7 @@ const Search = ({
                 key={index}
                 data-suggestion={typeof suggestion === "string" ? suggestion : suggestion.key}
                 onClick={(event) => {
-                  const { suggestion } = (event.target as HTMLElement).dataset;
+                  const { suggestion } = (event.currentTarget as HTMLElement).dataset;
                   suggestion && handleOnSelect(suggestion);
                 }}
               >
