@@ -4,6 +4,7 @@ import { FaTrashAlt } from "react-icons/fa";
 import Button from "components/atoms/Button/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "components/shared/Table";
 import { Avatar } from "components/atoms/Avatar/avatar-hover-card";
+import ClientOnly from "components/atoms/ClientOnly/client-only";
 
 interface TrackedReposTableProps {
   repositories: string[];
@@ -55,41 +56,43 @@ export const TrackedReposTable = ({ repositories, onAddRepos, onRemoveTrackedRep
             </TableRow>
           </TableHeader>
         </Table>
-        {repositories.length > 0 ? (
-          <div className="overflow-y-scroll h-60">
-            <Table>
-              <TableHeader className="sr-only">
-                <TableRow className=" bg-light-slate-3">
-                  <TableHead>Name</TableHead>
-                  <TableHead className="w-4">
-                    <span className="sr-only">Delete</span>
-                  </TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {repositories.map((repo) => {
-                  const [owner] = repo.split("/");
+        <ClientOnly>
+          {repositories.length > 0 ? (
+            <div className="overflow-y-scroll h-60">
+              <Table>
+                <TableHeader className="sr-only">
+                  <TableRow className=" bg-light-slate-3">
+                    <TableHead>Name</TableHead>
+                    <TableHead className="w-4">
+                      <span className="sr-only">Delete</span>
+                    </TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {repositories.map((repo) => {
+                    const [owner] = repo.split("/");
 
-                  return (
-                    <TableRow key={repo}>
-                      <TableCell className="flex gap-2 items-center w-full">
-                        <Avatar contributor={owner} size="xsmall" />
-                        <span>{repo}</span>
-                      </TableCell>
-                      <TableCell className="text-right">
-                        <button onClick={onRemoveTrackedRepo}>
-                          <FaTrashAlt title="delete" className="text-light-slate-10" />
-                        </button>
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
-              </TableBody>
-            </Table>
-          </div>
-        ) : (
-          <EmptyState onAddRepos={onAddRepos} />
-        )}
+                    return (
+                      <TableRow key={repo}>
+                        <TableCell className="flex gap-2 items-center w-full">
+                          <Avatar contributor={owner} size="xsmall" />
+                          <span>{repo}</span>
+                        </TableCell>
+                        <TableCell className="text-right">
+                          <button onClick={onRemoveTrackedRepo}>
+                            <FaTrashAlt title="delete" className="text-light-slate-10" />
+                          </button>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
+                </TableBody>
+              </Table>
+            </div>
+          ) : (
+            <EmptyState onAddRepos={onAddRepos} />
+          )}
+        </ClientOnly>
       </div>
     </div>
   );
