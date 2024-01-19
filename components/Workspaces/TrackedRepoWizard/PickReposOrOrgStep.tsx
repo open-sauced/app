@@ -1,6 +1,5 @@
 import { FaSearch } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa6";
-import { TrackedRepoWizardLayout } from "./TrackedRepoWizardLayout";
 
 interface PickReposOrOrgStepProps {
   onAddToTrackingList: () => void;
@@ -18,11 +17,7 @@ export const PickReposOrOrgStep = ({
   trackedReposCount,
 }: PickReposOrOrgStepProps) => {
   return (
-    <TrackedRepoWizardLayout
-      onAddToTrackingList={onAddToTrackingList}
-      trackedReposCount={trackedReposCount}
-      onCancel={onCancel}
-    >
+    <>
       <div className="grid gap-6 md:grid-cols-2" data-tracked-repo-wizard>
         <button
           className="flex flex-col text-light-slate-12 p-8 border rounded-lg focus-visible:!border-green-800 focus-visible:!ring-green-100"
@@ -45,6 +40,6 @@ export const PickReposOrOrgStep = ({
           <span className="text-left">Search for organizations on Github and import any or all repositories.</span>
         </button>
       </div>
-    </TrackedRepoWizardLayout>
+    </>
   );
 };

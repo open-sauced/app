@@ -2,11 +2,8 @@ import { FaSearch } from "react-icons/fa";
 import Search from "components/atoms/Search/search";
 import { Avatar } from "components/atoms/Avatar/avatar-hover-card";
 import { SearchedReposTable } from "../SearchReposTable";
-import { TrackedRepoWizardLayout } from "./TrackedRepoWizardLayout";
 
 interface SearchByReposStepProps {
-  onAddToTrackingList: () => void;
-  onCancel: () => void;
   onSearch: (search?: string) => void;
   trackedReposCount: number;
   repositories: {
@@ -34,8 +31,6 @@ const EmptyState = () => {
 };
 
 export const SearchByReposStep = ({
-  onAddToTrackingList,
-  onCancel,
   onSearch,
   trackedReposCount,
   repositories,
@@ -46,40 +41,39 @@ export const SearchByReposStep = ({
   const onSelectRepo = () => {};
 
   return (
-    <TrackedRepoWizardLayout
-      onAddToTrackingList={onAddToTrackingList}
-      onCancel={onCancel}
-      trackedReposCount={trackedReposCount}
-    >
-      <div className="grid gap-6">
-        <form role="search">
-          <Search
-            placeholder="Search repositories"
-            className="w-full"
-            name="query"
-            onSearch={onSearch}
-            suggestionsLabel="Suggested repositories"
-            suggestions={suggestedRepos.map((repo) => {
-              const fullRepoName = `${repo.owner}/${repo.name}`;
+    <div className="grid gap-6">
+      <form
+        role="search"
+        onSubmit={(e) => {
+          e.preventDefault();
+        }}
+      >
+        <Search
+          placeholder="Search repositories"
+          className="w-full"
+          name="query"
+          onChange={onSearch}
+          suggestionsLabel="Suggested repositories"
+          suggestions={suggestedRepos.map((repo) => {
+            const fullRepoName = `${repo.owner}/${repo.name}`;
 
-              return {
-                key: fullRepoName,
-                node: (
-                  <div key={fullRepoName} className="flex items-center gap-2">
-                    <Avatar contributor={repo.owner} size="xsmall" />
-                    <span>{fullRepoName}</span>
-                  </div>
-                ),
-              };
-            })}
-          />
-        </form>
-        {trackedReposCount === 0 ? (
-          <EmptyState />
-        ) : (
-          <SearchedReposTable repositories={repositories} onFilter={onFilterRepos} onSelect={onSelectRepo} />
-        )}
-      </div>
-    </TrackedRepoWizardLayout>
+            return {
+              key: fullRepoName,
+              node: (
+                <div key={fullRepoName} className="flex items-center gap-2">
+                  <Avatar contributor={repo.owner} size="xsmall" />
+                  <span>{fullRepoName}</span>
+                </div>
+              ),
+            };
+          })}
+        />
+      </form>
+      {trackedReposCount === 0 ? (
+        <EmptyState />
+      ) : (
+        <SearchedReposTable repositories={repositories} onFilter={onFilterRepos} onSelect={onSelectRepo} />
+      )}
+    </div>
   );
 };

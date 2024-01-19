@@ -17,7 +17,12 @@ export const TrackedRepoWizardLayout = ({
 }: TrackedRepoWizardLayoutProps) => {
   return (
     <Card className="p-0 max-w-3xl">
-      <button className="flex gap-1 items-center ml-4 mt-4 border border-transparent" onClick={onCancel}>
+      <button
+        className="flex gap-1 items-center ml-4 mt-4 border border-transparent"
+        onClick={() => {
+          onCancel();
+        }}
+      >
         <FaArrowLeft /> back
       </button>
       <div className="flex flex-col justify-between gap-4">
