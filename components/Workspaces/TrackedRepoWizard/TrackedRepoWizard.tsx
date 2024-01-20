@@ -22,6 +22,7 @@ export const TrackedReposWizard = ({ onAddToTrackingList, onCancel }: TrackedRep
   const { data, isError, isLoading } = useSearchRepos(searchTerm, "" /* sessionToken */);
 
   const onSelectRepo = (repo: string) => {
+    setSearchTerm(undefined);
     setCurrentTrackedRepositories((currentTrackedRepositories) => [
       ...currentTrackedRepositories.filter((r) => r !== repo),
       repo,
