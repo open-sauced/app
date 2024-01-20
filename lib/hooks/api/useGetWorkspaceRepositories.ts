@@ -1,4 +1,4 @@
-import useSWR, { Fetcher, useSWRConfig } from "swr";
+import useSWR, { Fetcher } from "swr";
 import publicApiFetcher from "lib/utils/public-api-fetcher";
 
 type DbWorkspaceRepository = {
@@ -13,10 +13,9 @@ type DbWorkspaceRepository = {
 };
 
 export const useGetWorkspaceRepositories = (workspaceId: string) => {
-  const { mutate } = useSWRConfig();
   const endpoint = `workspaces/${workspaceId}/repos`;
 
-  const { data, error, isLoading } = useSWR<PagedData<DbWorkspaceRepository>, Error>(
+  const { data, error, isLoading, mutate } = useSWR<PagedData<DbWorkspaceRepository>, Error>(
     endpoint,
     publicApiFetcher as Fetcher<PagedData<DbWorkspaceRepository>, Error>
   );
@@ -24,9 +23,7 @@ export const useGetWorkspaceRepositories = (workspaceId: string) => {
   return {
     data,
     error,
-    revalidate() {
-      mutate(endpoint);
-    },
+    mutate,
     isLoading,
   };
 };

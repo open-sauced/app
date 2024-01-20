@@ -50,7 +50,7 @@ const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
   const [workspaceName, setWorkspaceName] = useState(workspace.name);
   const { setWorkspaces, workspaces } = store(({ setWorkspaces, workspaces }) => ({ setWorkspaces, workspaces }));
   const [trackedReposModalOpen, setTrackedReposModalOpen] = useState(false);
-  const { data, error, revalidate: revalidateRepos, isLoading } = useGetWorkspaceRepositories(workspace.id);
+  const { data, error, mutate: mutateTrackedRepos, isLoading } = useGetWorkspaceRepositories(workspace.id);
   const initialTrackedRepos: string[] = data?.data?.map(({ repo }) => repo.full_name) ?? [];
   const [trackedRepos, setTrackedRepos] = useState<string[]>(initialTrackedRepos);
   const [trackedReposPendingDeletion, setTrackedReposPendingDeletion] = useState<string[]>([]);
@@ -89,9 +89,10 @@ const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
     if (error || reposDeleteError) {
       toast({ description: `Workspace update failed`, variant: "danger" });
     } else {
-      revalidateRepos();
       setWorkspaceName(name);
       data.workspace && setWorkspaces([...workspaces.filter((w) => w.id !== workspace.id), data.workspace]);
+      await mutateTrackedRepos();
+
       toast({ description: `Workspace updated successfully`, variant: "success" });
     }
   };
