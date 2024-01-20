@@ -10,6 +10,7 @@ interface SkeletonWrapperProps {
 
 const SkeletonWrapper = ({ classNames, count = 1, width, height, radius }: SkeletonWrapperProps): JSX.Element => {
   const skeletonArray = Array(count).fill(true);
+
   return (
     <>
       {skeletonArray.map((_, index) => {
