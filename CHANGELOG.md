@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.84.0-beta.3](https://github.com/open-sauced/insights/compare/v1.84.0-beta.2...v1.84.0-beta.3) (2024-01-19)
+
+
+### 🍕 Features
+
+* fetch insight repos in parallel on insight pages ([#2496](https://github.com/open-sauced/insights/issues/2496)) ([6cb2f50](https://github.com/open-sauced/insights/commit/6cb2f50b593f5bfe82e1b3903402d647ff935a9e))
+
 ## [1.84.0-beta.2](https://github.com/open-sauced/insights/compare/v1.84.0-beta.1...v1.84.0-beta.2) (2024-01-18)
 
 
