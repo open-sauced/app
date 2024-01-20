@@ -28,3 +28,9 @@ export const WithRepos: Story = {
 };
 
 export const EmpytState: Story = {};
+
+export const Loading: Story = {
+  args: {
+    isLoading: true,
+  },
+};

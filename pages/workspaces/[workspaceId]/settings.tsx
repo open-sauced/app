@@ -129,6 +129,7 @@ const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
           </form>
         </div>
         <TrackedReposTable
+          isLoading={isLoading}
           repositories={trackedRepos}
           onAddRepos={() => {
             setTrackedReposModalOpen(true);

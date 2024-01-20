@@ -6,11 +6,13 @@ import Button from "components/atoms/Button/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "components/shared/Table";
 import { Avatar } from "components/atoms/Avatar/avatar-hover-card";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
+import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 
 interface TrackedReposTableProps {
   repositories: string[];
   onAddRepos: () => void;
   onRemoveTrackedRepo: ComponentProps<"button">["onClick"];
+  isLoading?: boolean;
 }
 
 const EmptyState = ({ onAddRepos }: { onAddRepos: () => void }) => {
@@ -31,7 +33,26 @@ const EmptyState = ({ onAddRepos }: { onAddRepos: () => void }) => {
   );
 };
 
-export const TrackedReposTable = ({ repositories, onAddRepos, onRemoveTrackedRepo }: TrackedReposTableProps) => {
+const LoadingState = () => {
+  return (
+    <>
+      {Array.from({ length: 5 }).map((_, index) => (
+        <TableRow key={index}>
+          <TableCell colSpan={2}>
+            <SkeletonWrapper key={index} height={22} />
+          </TableCell>
+        </TableRow>
+      ))}
+    </>
+  );
+};
+
+export const TrackedReposTable = ({
+  repositories,
+  onAddRepos,
+  onRemoveTrackedRepo,
+  isLoading = false,
+}: TrackedReposTableProps) => {
   return (
     <div className="grid gap-4">
       <div className="flex justify-between">
@@ -58,7 +79,7 @@ export const TrackedReposTable = ({ repositories, onAddRepos, onRemoveTrackedRep
           </TableHeader>
         </Table>
         <ClientOnly>
-          {repositories.length > 0 ? (
+          {repositories.length > 0 || isLoading ? (
             <div className="overflow-y-scroll h-60">
               <Table>
                 <TableHeader className="sr-only">
@@ -70,23 +91,29 @@ export const TrackedReposTable = ({ repositories, onAddRepos, onRemoveTrackedRep
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {repositories.map((repo) => {
-                    const [owner] = repo.split("/");
+                  {isLoading ? (
+                    <LoadingState />
+                  ) : (
+                    <>
+                      {repositories.map((repo) => {
+                        const [owner] = repo.split("/");
 
-                    return (
-                      <TableRow key={repo}>
-                        <TableCell className="flex gap-2 items-center w-full">
-                          <Avatar contributor={owner} size="xsmall" />
-                          <span>{repo}</span>
-                        </TableCell>
-                        <TableCell className="text-right">
-                          <button onClick={onRemoveTrackedRepo} data-repo={repo}>
-                            <FaTrashAlt title="delete" className="text-light-slate-10" />
-                          </button>
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })}
+                        return (
+                          <TableRow key={repo}>
+                            <TableCell className="flex gap-2 items-center w-full">
+                              <Avatar contributor={owner} size="xsmall" />
+                              <span>{repo}</span>
+                            </TableCell>
+                            <TableCell className="text-right">
+                              <button onClick={onRemoveTrackedRepo} data-repo={repo}>
+                                <FaTrashAlt title="delete" className="text-light-slate-10" />
+                              </button>
+                            </TableCell>
+                          </TableRow>
+                        );
+                      })}
+                    </>
+                  )}
                 </TableBody>
               </Table>
             </div>
