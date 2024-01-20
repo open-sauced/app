@@ -14,76 +14,9 @@ import Text from "components/atoms/Typography/text";
 import store from "lib/store";
 import { TrackedReposTable } from "components/Workspaces/TrackedReposTable";
 import { useGetWorkspaceRepositories } from "lib/hooks/api/useGetWorkspaceRepositories";
+import { deleteTrackedRepos, deleteWorkspace, saveWorkspace } from "lib/utils/workspace-utils";
 
 const DeleteWorkspaceModal = dynamic(() => import("components/Workspaces/DeleteWorkspaceModal"), { ssr: false });
-
-async function saveWorkspace({
-  workspaceId,
-  name,
-  description = "",
-  sessionToken,
-  repos,
-}: {
-  workspaceId: string;
-  name: string;
-  description?: string;
-  sessionToken: string;
-  repos: { full_name: string }[];
-}) {
-  const updateWorkspace = await fetchApiData<Workspace>({
-    path: `workspaces/${workspaceId}`,
-    method: "PATCH",
-    body: { name, description },
-    bearerToken: sessionToken,
-    pathValidator: () => true,
-  });
-
-  const updateWorkspaceRepos = await fetchApiData<any[]>({
-    path: `workspaces/${workspaceId}/repos`,
-    method: "POST",
-    body: { repos },
-    bearerToken: sessionToken,
-    pathValidator: () => true,
-  });
-
-  const [{ data, error }, { data: repoData, error: reposError }] = await Promise.all([
-    updateWorkspace,
-    updateWorkspaceRepos,
-  ]);
-
-  return { data: { workspace: data, repos: repoData }, error };
-}
-
-const deleteTrackedRepos = async ({
-  workspaceId,
-  sessionToken,
-  repos,
-}: {
-  workspaceId: string;
-  sessionToken: string;
-  repos: { full_name: string }[];
-}) => {
-  const { data, error } = await fetchApiData<any[]>({
-    path: `workspaces/${workspaceId}/repos`,
-    method: "DELETE",
-    body: { repos },
-    bearerToken: sessionToken,
-    pathValidator: () => true,
-  });
-
-  return { data, error };
-};
-
-const deleteWorkspace = async ({ workspaceId, sessionToken }: { workspaceId: string; sessionToken: string }) => {
-  const { data, error } = await fetchApiData<Workspace>({
-    path: `workspaces/${workspaceId}`,
-    method: "DELETE",
-    bearerToken: sessionToken,
-    pathValidator: () => true,
-  });
-
-  return { data, error };
-};
 
 interface WorkspaceSettingsProps {
   workspace: Workspace;
