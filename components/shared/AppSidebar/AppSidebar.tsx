@@ -9,7 +9,6 @@ import useUserInsights from "lib/hooks/useUserInsights";
 import { useFetchAllLists } from "lib/hooks/useList";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import SingleSelect from "components/atoms/Select/single-select";
-import ClientOnly from "components/atoms/ClientOnly/client-only";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 import store from "lib/store";
 
@@ -67,29 +66,27 @@ export const AppSideBar = () => {
       <div className="grid gap-4 mt-4 px-4">
         <label className="flex flex-col gap-2 w-max">
           <span className="sr-only">Workspace</span>
-          <ClientOnly>
-            <SingleSelect
-              options={[
-                { label: "Create new workspace...", value: "new" },
-                ...workspaces.map(({ id, name }) => ({
-                  label: name,
-                  value: id,
-                })),
-              ]}
-              position="popper"
-              value={workspaceId}
-              placeholder="Select a workspace"
-              onValueChange={(value) => {
-                if (value === "new") {
-                  router.push("/workspaces/new");
-                  return;
-                }
+          <SingleSelect
+            options={[
+              { label: "Create new workspace...", value: "new" },
+              ...workspaces.map(({ id, name }) => ({
+                label: name,
+                value: id,
+              })),
+            ]}
+            position="popper"
+            value={workspaceId}
+            placeholder="Select a workspace"
+            onValueChange={(value) => {
+              if (value === "new") {
+                router.push("/workspaces/new");
+                return;
+              }
 
-                setWorkspaceId(value);
-                window.location.href = `/workspaces/${value}/settings`;
-              }}
-            />
-          </ClientOnly>
+              setWorkspaceId(value);
+              window.location.href = `/workspaces/${value}/settings`;
+            }}
+          />
         </label>
         <h2 className="flex gap-1 items-center">
           <BiHomeAlt className="w-5 h-5 text-slate-400" />
