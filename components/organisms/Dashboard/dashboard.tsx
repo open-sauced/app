@@ -2,11 +2,10 @@ import { useRouter } from "next/router";
 import HighlightCard from "components/molecules/HighlightCard/highlight-card";
 
 import humanizeNumber from "lib/utils/humanizeNumber";
-import { getInsights } from "lib/hooks/api/useInsights";
 
 import useContributors from "lib/hooks/api/useContributors";
 
-import usePullRequestsHistogram from "lib/hooks/api/usePullRequestsHistogram";
+import { usePullRequestsHistogram, getInsights } from "lib/hooks/api/usePullRequestsHistogram";
 import Repositories from "../Repositories/repositories";
 
 export type PrStatusFilter = "open" | "closed" | "all";
