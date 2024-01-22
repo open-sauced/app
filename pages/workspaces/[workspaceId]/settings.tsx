@@ -51,8 +51,13 @@ const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
   const [trackedReposModalOpen, setTrackedReposModalOpen] = useState(false);
   const { data, error, mutate: mutateTrackedRepos, isLoading } = useGetWorkspaceRepositories(workspace.id);
   const initialTrackedRepos: string[] = data?.data?.map(({ repo }) => repo.full_name) ?? [];
-  const [trackedRepos, setTrackedRepos] = useState<string[]>(initialTrackedRepos);
+  const [trackedRepos, setTrackedRepos] = useState<string[]>([]);
   const [trackedReposPendingDeletion, setTrackedReposPendingDeletion] = useState<string[]>([]);
+
+  // initial tracked repos + newly selected tracked repos that are not pending deletion
+  const pendingTrackedRepos = trackedRepos.concat(
+    initialTrackedRepos.filter((repo) => !trackedReposPendingDeletion.includes(repo))
+  );
 
   const TrackedReposModal = dynamic(() => import("components/Workspaces/TrackedReposModal"), {
     ssr: false,
@@ -92,6 +97,9 @@ const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
       document.dispatchEvent(new CustomEvent(WORKSPACE_UPDATED_EVENT, { detail: data }));
       await mutateTrackedRepos();
 
+      setTrackedReposPendingDeletion([]);
+      setTrackedRepos([]);
+
       toast({ description: `Workspace updated successfully`, variant: "success" });
     }
   };
@@ -129,7 +137,7 @@ const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
         </div>
         <TrackedReposTable
           isLoading={isLoading}
-          repositories={trackedRepos}
+          repositories={pendingTrackedRepos}
           onAddRepos={() => {
             setTrackedReposModalOpen(true);
           }}
