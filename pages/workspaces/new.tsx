@@ -6,15 +6,14 @@ import Button from "components/atoms/Button/button";
 import TextInput from "components/atoms/TextInput/text-input";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { useToast } from "lib/hooks/useToast";
-import store from "lib/store";
 import { TrackedReposTable } from "components/Workspaces/TrackedReposTable";
 import { createWorkspace } from "lib/utils/workspace-utils";
+import { WORKSPACE_UPDATED_EVENT } from "components/shared/AppSidebar/AppSidebar";
 
 const NewWorkspace = () => {
   const { sessionToken } = useSupabaseAuth();
   const { toast } = useToast();
   const router = useRouter();
-  const { setWorkspaces, workspaces } = store(({ setWorkspaces, workspaces }) => ({ setWorkspaces, workspaces }));
   const [trackedReposModalOpen, setTrackedReposModalOpen] = useState(false);
   const [trackedRepos, setTrackedRepos] = useState<string[]>([]);
 
@@ -38,7 +37,7 @@ const NewWorkspace = () => {
       toast({ description: `Error creating new workspace. Please try again`, variant: "danger" });
     } else {
       toast({ description: `Workspace created successfully`, variant: "success" });
-      data && setWorkspaces([...workspaces, data.workspace]);
+      document.dispatchEvent(new CustomEvent(WORKSPACE_UPDATED_EVENT, { detail: data }));
       router.push(`/workspaces/${data?.workspace.id}/settings`);
     }
   };

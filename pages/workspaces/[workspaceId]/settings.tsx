@@ -11,10 +11,10 @@ import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { useToast } from "lib/hooks/useToast";
 import Title from "components/atoms/Typography/title";
 import Text from "components/atoms/Typography/text";
-import store from "lib/store";
 import { TrackedReposTable } from "components/Workspaces/TrackedReposTable";
 import { useGetWorkspaceRepositories } from "lib/hooks/api/useGetWorkspaceRepositories";
 import { deleteTrackedRepos, deleteWorkspace, saveWorkspace } from "lib/utils/workspace-utils";
+import { WORKSPACE_UPDATED_EVENT } from "components/shared/AppSidebar/AppSidebar";
 
 const DeleteWorkspaceModal = dynamic(() => import("components/Workspaces/DeleteWorkspaceModal"), { ssr: false });
 
@@ -48,7 +48,6 @@ const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
   const router = useRouter();
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [workspaceName, setWorkspaceName] = useState(workspace.name);
-  const { setWorkspaces, workspaces } = store(({ setWorkspaces, workspaces }) => ({ setWorkspaces, workspaces }));
   const [trackedReposModalOpen, setTrackedReposModalOpen] = useState(false);
   const { data, error, mutate: mutateTrackedRepos, isLoading } = useGetWorkspaceRepositories(workspace.id);
   const initialTrackedRepos: string[] = data?.data?.map(({ repo }) => repo.full_name) ?? [];
@@ -90,7 +89,7 @@ const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
       toast({ description: `Workspace update failed`, variant: "danger" });
     } else {
       setWorkspaceName(name);
-      data.workspace && setWorkspaces([...workspaces.filter((w) => w.id !== workspace.id), data.workspace]);
+      document.dispatchEvent(new CustomEvent(WORKSPACE_UPDATED_EVENT, { detail: data }));
       await mutateTrackedRepos();
 
       toast({ description: `Workspace updated successfully`, variant: "success" });
