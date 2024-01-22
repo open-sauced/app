@@ -1,5 +1,6 @@
 import { FaSearch } from "react-icons/fa";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { useEffectOnce } from "react-use";
 import Search from "components/atoms/Search/search";
 import { Avatar } from "components/atoms/Avatar/avatar-hover-card";
 import { SearchedReposTable } from "../SearchReposTable";
@@ -43,9 +44,16 @@ export const SearchByReposStep = ({
     );
   };
 
+  const formRef = useRef<HTMLFormElement>(null);
+
+  useEffectOnce(() => {
+    (formRef.current?.querySelector('[name="query"]') as HTMLInputElement)?.focus();
+  });
+
   return (
     <div className="grid gap-6">
       <form
+        ref={formRef}
         role="search"
         onSubmit={(e) => {
           e.preventDefault();
