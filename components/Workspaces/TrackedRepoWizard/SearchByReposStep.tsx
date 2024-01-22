@@ -58,7 +58,7 @@ export const SearchByReposStep = ({
   }, [searchedRepos]);
 
   return (
-    <div className="grid gap-6">
+    <div className="flex flex-col gap-4 h-96 max-h-96">
       <form
         ref={formRef}
         role="search"

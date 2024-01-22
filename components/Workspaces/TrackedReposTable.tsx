@@ -67,7 +67,7 @@ export const TrackedReposTable = ({
           Add repositories
         </Button>
       </div>
-      <div className="border border-light-slate-7 rounded">
+      <div className="border border-light-slate-7 rounded h-full">
         <Table className="not-sr-only">
           <TableHeader>
             <TableRow className=" bg-light-slate-3">

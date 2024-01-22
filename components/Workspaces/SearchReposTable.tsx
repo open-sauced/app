@@ -11,7 +11,7 @@ interface SearchedReposTableProps {
 
 export const SearchedReposTable = ({ repositories = [], onFilter, onSelect }: SearchedReposTableProps) => {
   return (
-    <div className="border border-light-slate-7 rounded-lg max-w-lg">
+    <div className="border border-light-slate-7 rounded-lg">
       <Table className="not-sr-only">
         <TableHeader>
           <TableRow className="bg-light-slate-3">
