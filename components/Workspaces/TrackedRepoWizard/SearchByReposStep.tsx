@@ -1,5 +1,5 @@
 import { FaSearch } from "react-icons/fa";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useEffectOnce } from "react-use";
 import Search from "components/atoms/Search/search";
 import { Avatar } from "components/atoms/Avatar/avatar-hover-card";
@@ -45,10 +45,17 @@ export const SearchByReposStep = ({
   };
 
   const formRef = useRef<HTMLFormElement>(null);
+  const [searchIsLoading, setSearchIsLoading] = useState(false);
 
   useEffectOnce(() => {
     (formRef.current?.querySelector('[name="query"]') as HTMLInputElement)?.focus();
   });
+
+  useEffect(() => {
+    if (searchedRepos.length > 0) {
+      setSearchIsLoading(false);
+    }
+  }, [searchedRepos]);
 
   return (
     <div className="grid gap-6">
@@ -62,8 +69,12 @@ export const SearchByReposStep = ({
         <Search
           placeholder="Search repositories"
           className="w-full"
+          isLoading={searchIsLoading}
           name="query"
-          onChange={onSearch}
+          onChange={(event) => {
+            setSearchIsLoading(true);
+            onSearch(event);
+          }}
           onSelect={onSelectRepo}
           suggestionsLabel={suggestedRepos.length > 0 ? "Suggested repositories" : undefined}
           suggestions={(suggestedRepos.length > 0 ? suggestedRepos : searchedRepos).map((repo) => {
