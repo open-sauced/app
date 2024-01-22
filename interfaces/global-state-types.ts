@@ -12,5 +12,4 @@ export interface GlobalStateInterface {
   hasReports?: boolean;
   openSearch?: boolean;
   dismissFeaturedInsights?: boolean;
-  workspaces: Workspace[];
 }
