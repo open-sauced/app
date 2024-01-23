@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/router";
 import { LifebuoyIcon, Cog8ToothIcon } from "@heroicons/react/24/outline";
 import { BiHomeAlt } from "react-icons/bi";
+import { useEffectOnce } from "react-use";
 import useWorkspaces from "lib/hooks/api/useWorkspaces";
 import SidebarMenuItem from "components/shared/AppSidebar/sidebar-menu-item";
 
@@ -11,7 +12,6 @@ import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import SingleSelect from "components/atoms/Select/single-select";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
-import store from "lib/store";
 
 const SidebarLoader = () => {
   return (
@@ -41,18 +41,15 @@ const InsightsList = ({
   );
 };
 
+export const WORKSPACE_UPDATED_EVENT = "workspaceUpdated";
+
 export const AppSideBar = () => {
   const { username } = useSupabaseAuth();
   const { data: rawRepoInsights, isLoading: insightsLoading } = useUserInsights(!!username);
   const { data: lists, isLoading: listsLoading } = useFetchAllLists(30, !!username);
-  const { data: initialWorkspaces, isLoading: workspacesLoading } = useWorkspaces({ limit: 100 });
+  const { data: workspaces, isLoading: workspacesLoading, mutate } = useWorkspaces({ limit: 100 });
   const router = useRouter();
   const [workspaceId, setWorkspaceId] = useState<string>(router.query.workspaceId as string);
-  const { setWorkspaces, workspaces } = store(({ setWorkspaces, workspaces }) => ({ setWorkspaces, workspaces }));
-
-  useEffect(() => {
-    setWorkspaces(initialWorkspaces);
-  }, [setWorkspaces, initialWorkspaces]);
 
   const repoInsights = rawRepoInsights
     .slice(0, 5)
@@ -61,6 +58,24 @@ export const AppSideBar = () => {
   const contributorInsights = lists
     .slice(0, 5)
     .sort((a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime());
+
+  interface GlobalEventHandlersEventMap {
+    workspaceUpdated: CustomEvent;
+  }
+
+  useEffectOnce(() => {
+    const mutateHandler = (event: Event) => {
+      // eslint-disable-next-line no-console
+      event instanceof CustomEvent && console.info(WORKSPACE_UPDATED_EVENT, event.detail);
+      mutate();
+    };
+
+    document.addEventListener(WORKSPACE_UPDATED_EVENT, mutateHandler);
+
+    return () => {
+      document.removeEventListener(WORKSPACE_UPDATED_EVENT, mutateHandler);
+    };
+  });
 
   return (
     <div className="fixed top-0 pt-12 bg-white flex flex-col gap-8 justify-between min-w-max min-h-full">
