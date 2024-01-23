@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.81.0-alpha.4](https://github.com/open-sauced/insights/compare/v1.81.0-alpha.3...v1.81.0-alpha.4) (2024-01-23)
+
+
+### 🍕 Features
+
+* v2 API - contrib evolution by type integration ([#2519](https://github.com/open-sauced/insights/issues/2519)) ([701bf19](https://github.com/open-sauced/insights/commit/701bf191c461b6db087062ab1884fa4f609c15fc))
+
 ## [1.81.0-alpha.3](https://github.com/open-sauced/insights/compare/v1.81.0-alpha.2...v1.81.0-alpha.3) (2024-01-23)
 
 
