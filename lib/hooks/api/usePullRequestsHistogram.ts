@@ -30,15 +30,13 @@ const getInsights = (insights: DbPullRequestGitHubEventsHistogram[], intervalDay
   }
 
   const spam =
-    (currentInsights.prs_count || 0) > 0 ? Math.round((currentInsights.spam_prs / currentInsights.prs_count) * 100) : 0;
+    currentInsights.prs_count > 0 ? Math.round((currentInsights.spam_prs / currentInsights.prs_count) * 100) : 0;
   const accepted =
-    (currentInsights.prs_count || 0) > 0
-      ? Math.round((currentInsights.accepted_prs / currentInsights.prs_count) * 100)
-      : 0;
+    currentInsights.prs_count > 0 ? Math.round((currentInsights.accepted_prs / currentInsights.prs_count) * 100) : 0;
   const unlabeledPrsTotal = currentInsights.prs_count - (currentInsights.spam_prs + currentInsights.accepted_prs);
   const unlabeled = Math.max(
     0,
-    (currentInsights.prs_count || 0) > 0 ? Math.round((unlabeledPrsTotal / currentInsights.prs_count) * 100) : 0
+    currentInsights.prs_count > 0 ? Math.round((unlabeledPrsTotal / currentInsights.prs_count) * 100) : 0
   );
 
   return {
