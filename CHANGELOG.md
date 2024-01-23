@@ -5,6 +5,18 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.81.0-alpha.3](https://github.com/open-sauced/insights/compare/v1.81.0-alpha.2...v1.81.0-alpha.3) (2024-01-23)
+
+
+### 🍕 Features
+
+* connect most active contributors graph to API v2 endpoint ([#2468](https://github.com/open-sauced/insights/issues/2468)) ([caa511c](https://github.com/open-sauced/insights/commit/caa511ccc079066e5a82731a44892f2b9b6945e2))
+
+
+### 🐛 Bug Fixes
+
+* v2 API - Use new "repos" data points in v2 API ([#2518](https://github.com/open-sauced/insights/issues/2518)) ([4ac8190](https://github.com/open-sauced/insights/commit/4ac819084aca576b9096e389cdad8bfa2fbcfc5b))
+
 ## [1.81.0-alpha.2](https://github.com/open-sauced/insights/compare/v1.81.0-alpha.1...v1.81.0-alpha.2) (2024-01-16)
 
 
