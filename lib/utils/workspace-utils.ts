@@ -13,7 +13,6 @@ export async function createWorkspace({
   sessionToken: string;
   repos: { full_name: string }[];
 }) {
-  // TODO: check if the workspace ID already exists in case the repos part doesn't work
   const { data: workspace, error: workspaceError } = await fetchApiData<Workspace>({
     path: "workspaces",
     method: "POST",
