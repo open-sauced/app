@@ -18,7 +18,6 @@ export const TrackedReposWizard = ({ onAddToTrackingList, onCancel }: TrackedRep
   const suggestedRepos: any[] = [];
   const onImportOrg = () => {};
   const [searchTerm, setSearchTerm] = useState<string | undefined>();
-  // const { sessionToken } = useSupabaseAuth();
   const { data, isError, isLoading } = useSearchRepos(searchTerm, "" /* sessionToken */);
 
   const onSelectRepo = (repo: string) => {
