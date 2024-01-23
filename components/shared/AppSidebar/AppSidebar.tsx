@@ -107,11 +107,11 @@ export const AppSideBar = () => {
           <BiHomeAlt className="w-5 h-5 text-slate-400" />
           Home
         </h2>
-        <h3 className="uppercase text-gray-500 text-sm font-medium">Repo Insights</h3>
+        <h3 className="uppercase text-gray-500 text-sm font-medium">Repository Insights</h3>
         <div className="w-full px-2 -mt-4">
           {insightsLoading ? null : <InsightsList username={username} insights={repoInsights} type="repo" />}
         </div>
-        <h2 className="uppercase text-gray-500 text-sm font-medium">Contributor Insights</h2>
+        <h3 className="uppercase text-gray-500 text-sm font-medium">Contributor Insights</h3>
         <div className="w-full px-2 -mt-4">
           {insightsLoading ? null : <InsightsList username={username} insights={contributorInsights} type="list" />}
         </div>
