@@ -54,9 +54,10 @@ const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
   const [trackedRepos, setTrackedRepos] = useState<string[]>([]);
   const [trackedReposPendingDeletion, setTrackedReposPendingDeletion] = useState<string[]>([]);
 
+  // TODO: Make this a map or object to be more efficient
   // initial tracked repos + newly selected tracked repos that are not pending deletion
-  const pendingTrackedRepos = trackedRepos.concat(
-    initialTrackedRepos.filter((repo) => !trackedReposPendingDeletion.includes(repo))
+  const pendingTrackedRepos = Array.from(
+    new Set(trackedRepos.concat(initialTrackedRepos.filter((repo) => !trackedReposPendingDeletion.includes(repo))))
   );
 
   const TrackedReposModal = dynamic(() => import("components/Workspaces/TrackedReposModal"), {
