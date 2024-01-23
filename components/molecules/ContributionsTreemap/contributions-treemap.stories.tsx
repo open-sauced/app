@@ -22,8 +22,8 @@ export const Repositories: Story = {
     },
     color: getGraphColorPalette(),
     onClick: () => {},
-    repoId: null,
-    setRepoId: (repoId: number | null) => {},
+    repoName: null,
+    setRepoName: (repoName: string | null) => {},
     isLoading: false,
   },
 };
@@ -44,8 +44,8 @@ export const Contributors: Story = {
     },
     color: getGraphColorPalette(),
     onClick: () => {},
-    repoId: 83716883,
-    setRepoId: (repoId: number | null) => {},
+    repoName: "open-sauced/app",
+    setRepoName: (repoName: string | null) => {},
     isLoading: false,
   },
 };

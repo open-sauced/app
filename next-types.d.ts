@@ -383,7 +383,11 @@ interface DBProjectContributor {
   prs_created: number;
   prs_reviewed: number;
   issues_created: number;
+  commit_comments: number;
+  issue_comments: number;
+  pr_review_comments: number;
   comments: number;
+  total_contributions: number;
 }
 
 interface DbUserOrganization {
