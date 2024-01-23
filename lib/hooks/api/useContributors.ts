@@ -44,7 +44,7 @@ const useContributors = (intialLimit = 10, repoIds: number[] = []) => {
     query.set("repoIds", repoIds.join(","));
   }
 
-  if (query.get("repo")) {
+  if (query.get("repos")) {
     query.delete("topic");
   }
 
