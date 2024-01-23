@@ -74,7 +74,6 @@ const usePullRequestsHistogram = (repoIds: number[] = [], range = 30) => {
 
   query.set("range", `${range}`);
   query.set("width", "30");
-  query.set("repo", "all");
 
   const baseEndpoint = "histogram/pull-requests";
   const endpointString = `${baseEndpoint}?${query.toString()}`;
