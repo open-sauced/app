@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.84.0-beta.5](https://github.com/open-sauced/insights/compare/v1.84.0-beta.4...v1.84.0-beta.5) (2024-01-24)
+
+
+### 🍕 Features
+
+* workspaces can manage tracked repositories now (search repos flow) ([#2502](https://github.com/open-sauced/insights/issues/2502)) ([f286586](https://github.com/open-sauced/insights/commit/f2865860cb27b05479808cc481ce0b92d18c50c0))
+
 ## [1.84.0-beta.4](https://github.com/open-sauced/insights/compare/v1.84.0-beta.3...v1.84.0-beta.4) (2024-01-24)
 
 
