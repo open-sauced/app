@@ -108,10 +108,10 @@ export const AppSideBar = () => {
         <h3 className="uppercase text-gray-500 text-sm font-medium">Shared with you</h3>
       </div>
       <ul className="list-none mb-4">
-        <SidebarMenuItem title="Support" href="/logout" icon={<LifebuoyIcon className="w-5 h-5 text-slate-400" />} />
+        <SidebarMenuItem title="Support" url="/logout" icon={<LifebuoyIcon className="w-5 h-5 text-slate-400" />} />
         <SidebarMenuItem
           title="Settings"
-          href="/user/settings"
+          url="/user/settings"
           icon={<Cog8ToothIcon className="w-5 h-5 text-slate-400" />}
         />
       </ul>

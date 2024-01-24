@@ -7,9 +7,10 @@ interface MenuItemProps {
   title: string;
   icon?: React.ReactNode;
   type?: "repo" | "list";
-  href: string;
+  url: string;
+  isActive?: boolean;
 }
-const SidebarMenuItem = ({ title, icon, type, href }: MenuItemProps) => {
+const SidebarMenuItem = ({ title, icon, type, url: href }: MenuItemProps) => {
   const getIcon = (type: "repo" | "list") => {
     switch (type) {
       case "list":

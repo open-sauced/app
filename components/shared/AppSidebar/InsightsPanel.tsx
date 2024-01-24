@@ -45,7 +45,7 @@ export const InsightsPanel = ({ title, username, insights, type, isLoading }: In
           <ul className="list-none w-full px-2 mt-1 [&_li]:border-l-2">
             {insights.map((insight) => {
               const url = type === "list" ? `/lists/${insight.id}` : `/pages/${username}/${insight.id}/dashboard`;
-              return <SidebarMenuItem key={insight.id} title={insight.name} href={url} type={type} />;
+              return <SidebarMenuItem key={insight.id} title={insight.name} url={url} type={type} />;
             })}
           </ul>
         )}
