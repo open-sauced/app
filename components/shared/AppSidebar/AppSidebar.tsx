@@ -3,39 +3,22 @@ import { useRouter } from "next/router";
 import { LifebuoyIcon, Cog8ToothIcon } from "@heroicons/react/24/outline";
 import { BiHomeAlt } from "react-icons/bi";
 import { useEffectOnce } from "react-use";
+
 import useWorkspaces from "lib/hooks/api/useWorkspaces";
-import SidebarMenuItem from "components/shared/AppSidebar/sidebar-menu-item";
 
 import useUserInsights from "lib/hooks/useUserInsights";
 import { useFetchAllLists } from "lib/hooks/useList";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import SingleSelect from "components/atoms/Select/single-select";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
+import { InsightsPanel } from "./InsightsPanel";
+import SidebarMenuItem from "./sidebar-menu-item";
 
 const SidebarLoader = () => {
   return (
     <>
       <SkeletonWrapper height={20} radius={5} count={2} classNames="w-48" />
       <SkeletonWrapper height={20} radius={5} count={1} classNames="w-28" />
-    </>
-  );
-};
-
-const InsightsList = ({
-  username,
-  insights,
-  type,
-}: {
-  username: string | null;
-  insights: DbUserList[] | DbUserInsight[];
-  type: "list" | "repo";
-}) => {
-  return (
-    <>
-      {insights.map((insight) => {
-        const url = type === "list" ? `/lists/${insight.id}` : `/pages/${username}/${insight.id}/dashboard`;
-        return <SidebarMenuItem key={insight.id} title={insight.name} href={url} type={type} />;
-      })}
     </>
   );
 };
@@ -107,25 +90,31 @@ export const AppSideBar = () => {
           <BiHomeAlt className="w-5 h-5 text-slate-400" />
           Home
         </h2>
-        <h3 className="uppercase text-gray-500 text-sm font-medium">Repository Insights</h3>
-        <div className="w-full px-2 -mt-4">
-          {insightsLoading ? null : <InsightsList username={username} insights={repoInsights} type="repo" />}
-        </div>
-        <h3 className="uppercase text-gray-500 text-sm font-medium">Contributor Insights</h3>
-        <div className="w-full px-2 -mt-4">
-          {insightsLoading ? null : <InsightsList username={username} insights={contributorInsights} type="list" />}
-        </div>
+        <InsightsPanel
+          title="Repository Insights"
+          username={username}
+          insights={repoInsights}
+          type="repo"
+          isLoading={insightsLoading}
+        />
+        <InsightsPanel
+          title="Contributor Insights"
+          username={username}
+          insights={contributorInsights}
+          type="list"
+          isLoading={insightsLoading}
+        />
 
         <h3 className="uppercase text-gray-500 text-sm font-medium">Shared with you</h3>
       </div>
-      <div className="mb-4">
+      <ul className="list-none mb-4">
         <SidebarMenuItem title="Support" href="/logout" icon={<LifebuoyIcon className="w-5 h-5 text-slate-400" />} />
         <SidebarMenuItem
           title="Settings"
           href="/user/settings"
           icon={<Cog8ToothIcon className="w-5 h-5 text-slate-400" />}
         />
-      </div>
+      </ul>
     </div>
   );
 };
