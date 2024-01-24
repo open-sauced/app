@@ -370,11 +370,17 @@ interface DbListContributorStat {
   commits: number;
   prsCreated: number;
 }
+
 interface DbProjectContributions {
-  org_id: string;
-  project_id: string;
-  repo_id: number;
-  contributions: number;
+  repo_name: string;
+  commits: number;
+  prs_created: number;
+  issues_created: number;
+  commit_comments: number;
+  issue_comments: number;
+  pr_review_comments: number;
+  comments: number;
+  total_contributions: number;
 }
 
 interface DBProjectContributor {

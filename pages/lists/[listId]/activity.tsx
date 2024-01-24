@@ -106,11 +106,10 @@ const ListActivityPage = ({ list, numberOfContributors, isError, isOwner, featur
     id: "root",
     children:
       repoName === null
-        ? (projectData ?? []).map(({ org_id, project_id, repo_id, contributions }) => {
+        ? (projectData ?? []).map(({ repo_name, total_contributions }) => {
             return {
-              id: `${org_id}/${project_id}`,
-              value: contributions,
-              repoId: `${repo_id}`,
+              id: repo_name,
+              value: total_contributions,
             };
           })
         : projectContributionsByUser?.map(({ login, commits, prs_created, prs_reviewed, issues_created, comments }) => {
