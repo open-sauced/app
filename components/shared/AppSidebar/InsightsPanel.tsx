@@ -17,18 +17,18 @@ export const InsightsPanel = ({ title, username, insights, type, isLoading }: In
   const [open, setOpen] = useState(true);
   return (
     <Collapsible.Root open={open} onOpenChange={setOpen} className="max-w-full overflow-x-hidden">
-      <h3 className="uppercase text-gray-500 text-sm font-medium flex gap-1 items-center">
-        <span>{title}</span>
-        <Collapsible.Trigger asChild>
-          <Root
-            defaultChecked
-            checked={open}
-            onClick={() => {
-              setOpen(!open);
-            }}
-            name={`${title}-toggle`}
-          >
-            <Thumb>
+      <Collapsible.Trigger asChild>
+        <Root
+          defaultChecked
+          checked={open}
+          onClick={() => {
+            setOpen(!open);
+          }}
+          name={`${title}-toggle`}
+        >
+          <Thumb>
+            <h3 className="uppercase text-gray-500 text-sm font-medium flex gap-1 items-center">
+              <span>{title}</span>
               <ClientOnly>
                 {open ? (
                   <FiChevronDown className="w-4 h-4" title={`close ${title} panel`} />
@@ -36,10 +36,10 @@ export const InsightsPanel = ({ title, username, insights, type, isLoading }: In
                   <FiChevronUp className="w-4 h-4" title={`open ${title} panel`} />
                 )}
               </ClientOnly>
-            </Thumb>
-          </Root>
-        </Collapsible.Trigger>
-      </h3>
+            </h3>
+          </Thumb>
+        </Root>
+      </Collapsible.Trigger>
       <Collapsible.Content>
         {isLoading ? null : (
           <ul className="list-none w-full px-2 mt-1 [&_li]:border-l-2">
