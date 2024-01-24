@@ -12,8 +12,8 @@ interface ContributionsTreemapProps {
   data: any;
   color: TreeMapCommonProps<Datum>["colors"];
   onClick: NodeMouseEventHandler<object>;
-  repoId: number | null;
-  setRepoId: (repoId: number | null) => void;
+  repoName: string | null;
+  setRepoName: (repoName: string | null) => void;
   isLoading: boolean;
 }
 
@@ -36,8 +36,8 @@ const ResponsiveTreeMapHtml = dynamic(() => import("@nivo/treemap").then((module
 });
 
 export const ContributionsTreemap = ({
-  setRepoId,
-  repoId,
+  setRepoName,
+  repoName,
   data,
   color,
   onClick,
@@ -48,11 +48,11 @@ export const ContributionsTreemap = ({
       <div className="grid">
         {/* Label: Text */}
         <h2 className="font-medium text-lg text-slate-900 mb-2 flex">
-          <button className="cursor-pointer" onClick={() => setRepoId(null)}>
+          <button className="cursor-pointer" onClick={() => setRepoName(null)}>
             Repos
           </button>
           <div> </div>
-          <BreadCrumb isActive={repoId !== null}>Contributors</BreadCrumb>
+          <BreadCrumb isActive={repoName !== null}>Contributors</BreadCrumb>
         </h2>
         <div className="rounded-md overflow-hidden grid place-content-stretch">
           <div className="grid" style={{ gridArea: "1 / 1", minHeight: "29rem" }}>
@@ -68,7 +68,7 @@ export const ContributionsTreemap = ({
                   leavesOnly
                   orientLabel={false}
                   nodeComponent={
-                    repoId === null
+                    repoName === null
                       ? SpecialNode
                       : // TODO: Sort this out later
                         (ContributorNode as <Datum extends object>({

@@ -82,10 +82,10 @@ const ListActivityPage = ({ list, numberOfContributors, isError, isOwner, featur
   } = useMostActiveContributors({ listId: list!.id });
 
   const {
-    setRepoId,
+    setRepoName,
     error,
     data: projectContributionsByUser,
-    repoId,
+    repoName,
     isLoading: isLoadingProjectContributionsByUser,
   } = useContributorsByProject(list!.id, Number(range ?? "30"));
 
@@ -100,17 +100,16 @@ const ListActivityPage = ({ list, numberOfContributors, isError, isOwner, featur
 
   const onHandleClick: NodeMouseEventHandler<object> = (node) => {
     // @ts-ignore TODO: fix this
-    setRepoId(Number(node.data.repoId));
+    setRepoName(Number(node.data.repoName));
   };
   const treemapData = {
     id: "root",
     children:
-      repoId === null
-        ? (projectData ?? []).map(({ org_id, project_id, repo_id, contributions }) => {
+      repoName === null
+        ? (projectData ?? []).map(({ repo_name, total_contributions }) => {
             return {
-              id: `${org_id}/${project_id}`,
-              value: contributions,
-              repoId: `${repo_id}`,
+              id: repo_name,
+              value: total_contributions,
             };
           })
         : projectContributionsByUser?.map(({ login, commits, prs_created, prs_reviewed, issues_created, comments }) => {
@@ -142,8 +141,8 @@ const ListActivityPage = ({ list, numberOfContributors, isError, isOwner, featur
             isLoading={isLoading}
           />
           <ContributionsTreemap
-            setRepoId={setRepoId}
-            repoId={repoId}
+            setRepoName={setRepoName}
+            repoName={repoName}
             onClick={onHandleClick}
             data={treemapData}
             color={getGraphColorPalette()}
