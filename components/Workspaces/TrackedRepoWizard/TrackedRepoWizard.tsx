@@ -5,7 +5,7 @@ import { TrackedRepoWizardLayout } from "./TrackedRepoWizardLayout";
 import { SearchByReposStep } from "./SearchByReposStep";
 
 interface TrackedReposWizardProps {
-  onAddToTrackingList: (repos: string[]) => void;
+  onAddToTrackingList: (repos: Set<string>) => void;
   onCancel: () => void;
 }
 
@@ -13,8 +13,7 @@ type TrackedReposStep = "pickReposOrOrg" | "pickRepos" | "pickOrg";
 
 export const TrackedReposWizard = ({ onAddToTrackingList, onCancel }: TrackedReposWizardProps) => {
   const [step, setStep] = useState<TrackedReposStep>("pickReposOrOrg");
-  // TODO: probably makes more sense as an object so it's more performant.
-  const [currentTrackedRepositories, setCurrentTrackedRepositories] = useState<string[]>([]);
+  const [currentTrackedRepositories, setCurrentTrackedRepositories] = useState<Set<string>>(new Set());
   const suggestedRepos: any[] = [];
   const onImportOrg = () => {};
   const [searchTerm, setSearchTerm] = useState<string | undefined>();
@@ -22,10 +21,12 @@ export const TrackedReposWizard = ({ onAddToTrackingList, onCancel }: TrackedRep
 
   const onSelectRepo = (repo: string) => {
     setSearchTerm(undefined);
-    setCurrentTrackedRepositories((currentTrackedRepositories) => [
-      ...currentTrackedRepositories.filter((r) => r !== repo),
-      repo,
-    ]);
+    setCurrentTrackedRepositories((currentTrackedRepositories) => {
+      const updates = new Set(currentTrackedRepositories);
+      updates.add(repo);
+
+      return updates;
+    });
   };
 
   let searchedRepos = data ?? [];
@@ -47,6 +48,8 @@ export const TrackedReposWizard = ({ onAddToTrackingList, onCancel }: TrackedRep
     }
   }
 
+  const repositories = Array.from(currentTrackedRepositories);
+
   const renderStep = (step: TrackedReposStep) => {
     switch (step) {
       case "pickReposOrOrg":
@@ -63,7 +66,7 @@ export const TrackedReposWizard = ({ onAddToTrackingList, onCancel }: TrackedRep
           <SearchByReposStep
             onSelectRepo={onSelectRepo}
             onSearch={onSearchRepos}
-            repositories={currentTrackedRepositories}
+            repositories={repositories}
             searchedRepos={searchedRepos}
             suggestedRepos={suggestedRepos}
           />
@@ -79,7 +82,7 @@ export const TrackedReposWizard = ({ onAddToTrackingList, onCancel }: TrackedRep
       onAddToTrackingList={() => {
         onAddToTrackingList(currentTrackedRepositories);
       }}
-      trackedReposCount={currentTrackedRepositories.length}
+      trackedReposCount={currentTrackedRepositories.size}
       onCancel={() => {
         goBack();
       }}

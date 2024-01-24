@@ -51,14 +51,17 @@ const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
   const [trackedReposModalOpen, setTrackedReposModalOpen] = useState(false);
   const { data, error, mutate: mutateTrackedRepos, isLoading } = useGetWorkspaceRepositories(workspace.id);
   const initialTrackedRepos: string[] = data?.data?.map(({ repo }) => repo.full_name) ?? [];
-  const [trackedRepos, setTrackedRepos] = useState<string[]>([]);
-  const [trackedReposPendingDeletion, setTrackedReposPendingDeletion] = useState<string[]>([]);
+  const [trackedRepos, setTrackedRepos] = useState<Set<string>>(new Set());
+  const [trackedReposPendingDeletion, setTrackedReposPendingDeletion] = useState<Set<string>>(new Set());
 
-  // TODO: Make this a map or object to be more efficient
   // initial tracked repos + newly selected tracked repos that are not pending deletion
-  const pendingTrackedRepos = Array.from(
-    new Set(trackedRepos.concat(initialTrackedRepos.filter((repo) => !trackedReposPendingDeletion.includes(repo))))
-  );
+  const pendingTrackedRepos = new Set([...trackedRepos, ...initialTrackedRepos]);
+
+  pendingTrackedRepos.forEach((repo) => {
+    if (trackedReposPendingDeletion.has(repo)) {
+      pendingTrackedRepos.delete(repo);
+    }
+  });
 
   const TrackedReposModal = dynamic(() => import("components/Workspaces/TrackedReposModal"), {
     ssr: false,
@@ -77,13 +80,13 @@ const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
       name,
       description,
       sessionToken: sessionToken!,
-      repos: trackedRepos.map((repo) => ({ full_name: repo })),
+      repos: Array.from(trackedRepos).map((repo) => ({ full_name: repo })),
     });
 
     const workspaceRepoDeletes = await deleteTrackedRepos({
       workspaceId: workspace.id,
       sessionToken: sessionToken!,
-      repos: trackedReposPendingDeletion.map((repo) => ({ full_name: repo })),
+      repos: Array.from(trackedReposPendingDeletion).map((repo) => ({ full_name: repo })),
     });
 
     const [{ data, error }, { data: deletedRepos, error: reposDeleteError }] = await Promise.all([
@@ -98,8 +101,8 @@ const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
       document.dispatchEvent(new CustomEvent(WORKSPACE_UPDATED_EVENT, { detail: data }));
       await mutateTrackedRepos();
 
-      setTrackedReposPendingDeletion([]);
-      setTrackedRepos([]);
+      setTrackedReposPendingDeletion(new Set());
+      setTrackedRepos(new Set());
 
       toast({ description: `Workspace updated successfully`, variant: "success" });
     }
@@ -151,8 +154,13 @@ const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
               return;
             }
 
-            setTrackedRepos((repos) => repos.filter((r) => r !== repo));
-            setTrackedReposPendingDeletion((repos) => [...repos, repo]);
+            setTrackedRepos((repos) => {
+              const updates = new Set([...repos]);
+              updates.delete(repo);
+
+              return updates;
+            });
+            setTrackedReposPendingDeletion((repos) => new Set([...repos, repo]));
           }}
         />
         <div className="flex flex-col gap-4">
@@ -178,10 +186,9 @@ const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
           onClose={() => {
             setTrackedReposModalOpen(false);
           }}
-          onAddToTrackingList={(repos: string[]) => {
+          onAddToTrackingList={(repos) => {
             setTrackedReposModalOpen(false);
-            // TODO: Make this a map or object to be more efficient
-            setTrackedRepos((trackedRepos) => [...trackedRepos, ...repos]);
+            setTrackedRepos((trackedRepos) => new Set([...trackedRepos, ...repos]));
           }}
           onCancel={() => {
             setTrackedReposModalOpen(false);

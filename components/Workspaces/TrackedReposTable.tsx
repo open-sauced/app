@@ -9,7 +9,7 @@ import ClientOnly from "components/atoms/ClientOnly/client-only";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 
 interface TrackedReposTableProps {
-  repositories: string[];
+  repositories: Set<string>;
   onAddRepos: () => void;
   onRemoveTrackedRepo: ComponentProps<"button">["onClick"];
   isLoading?: boolean;
@@ -79,7 +79,7 @@ export const TrackedReposTable = ({
           </TableHeader>
         </Table>
         <ClientOnly>
-          {repositories.length > 0 || isLoading ? (
+          {repositories.size > 0 || isLoading ? (
             <div className="overflow-y-scroll h-60">
               <Table>
                 <TableHeader className="sr-only">
@@ -95,7 +95,7 @@ export const TrackedReposTable = ({
                     <LoadingState />
                   ) : (
                     <>
-                      {repositories.map((repo) => {
+                      {[...repositories].map((repo) => {
                         const [owner] = repo.split("/");
 
                         return (

@@ -4,7 +4,7 @@ import { TrackedReposWizard } from "./TrackedRepoWizard/TrackedRepoWizard";
 interface TrackedReposModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onAddToTrackingList: (repos: string[]) => void;
+  onAddToTrackingList: (repos: Set<string>) => void;
   onCancel: () => void;
 }
 

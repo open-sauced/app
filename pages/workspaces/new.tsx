@@ -15,7 +15,7 @@ const NewWorkspace = () => {
   const { toast } = useToast();
   const router = useRouter();
   const [trackedReposModalOpen, setTrackedReposModalOpen] = useState(false);
-  const [trackedRepos, setTrackedRepos] = useState<string[]>([]);
+  const [trackedRepos, setTrackedRepos] = useState<Set<string>>(new Set());
 
   const onCreateWorkspace: ComponentProps<"form">["onSubmit"] = async (event) => {
     event.preventDefault();
@@ -30,7 +30,7 @@ const NewWorkspace = () => {
       // TODO: send members list
       members: [],
       sessionToken: sessionToken!,
-      repos: trackedRepos.map((repo) => ({ full_name: repo })),
+      repos: Array.from(trackedRepos).map((repo) => ({ full_name: repo })),
     });
 
     if (error) {
@@ -89,7 +89,12 @@ const NewWorkspace = () => {
               return;
             }
 
-            setTrackedRepos((repos) => repos.filter((r) => r !== repo));
+            setTrackedRepos((trackedRepos) => {
+              const updates = new Set([...trackedRepos]);
+              updates.delete(repo);
+
+              return updates;
+            });
           }}
         />
       </div>
@@ -98,10 +103,11 @@ const NewWorkspace = () => {
         onClose={() => {
           setTrackedReposModalOpen(false);
         }}
-        onAddToTrackingList={(repos: string[]) => {
+        onAddToTrackingList={(repos: Set<string>) => {
           setTrackedReposModalOpen(false);
-          // TODO: Make this a map or object to be more efficient
-          setTrackedRepos((trackedRepos) => [...trackedRepos, ...repos]);
+          setTrackedRepos((trackedRepos) => {
+            return new Set([...trackedRepos, ...repos]);
+          });
         }}
         onCancel={() => {
           setTrackedReposModalOpen(false);
