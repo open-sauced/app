@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.81.0-alpha.5](https://github.com/open-sauced/insights/compare/v1.81.0-alpha.4...v1.81.0-alpha.5) (2024-01-24)
+
+
+### 🍕 Features
+
+* update dashboard insights to use API v2 with histograms ([#2516](https://github.com/open-sauced/insights/issues/2516)) ([4c10270](https://github.com/open-sauced/insights/commit/4c102707a19631f66a5b3281376626b527a3f187))
+* V2 API top-project-contributions graph ([#2521](https://github.com/open-sauced/insights/issues/2521)) ([f8092ee](https://github.com/open-sauced/insights/commit/f8092ee9cb9dde84cddc1c340e63fc7f2365a9f1))
+
 ## [1.81.0-alpha.4](https://github.com/open-sauced/insights/compare/v1.81.0-alpha.3...v1.81.0-alpha.4) (2024-01-23)
 
 
