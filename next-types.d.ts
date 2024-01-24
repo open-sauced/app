@@ -414,3 +414,16 @@ interface GhOrgTeamMember {
   id: number;
   login: string;
 }
+
+interface DbPullRequestGitHubEventsHistogram {
+  bucket: string;
+  interval: number;
+  prs_count: number;
+  accepted_prs: number;
+  open_prs: number;
+  closed_prs: number;
+  draft_prs: number;
+  active_prs: number;
+  spam_prs: number;
+  pr_velocity: number;
+}

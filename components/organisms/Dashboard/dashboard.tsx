@@ -2,10 +2,10 @@ import { useRouter } from "next/router";
 import HighlightCard from "components/molecules/HighlightCard/highlight-card";
 
 import humanizeNumber from "lib/utils/humanizeNumber";
-import { getInsights, useInsights } from "lib/hooks/api/useInsights";
 
 import useContributors from "lib/hooks/api/useContributors";
 
+import { usePullRequestsHistogram, getInsights } from "lib/hooks/api/usePullRequestsHistogram";
 import Repositories from "../Repositories/repositories";
 
 export type PrStatusFilter = "open" | "closed" | "all";
@@ -15,13 +15,13 @@ interface DashboardProps {
 }
 
 const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
-  const { data: insightsData, isLoading } = useInsights(repositories);
+  const { data: insightsData, isLoading } = usePullRequestsHistogram(repositories);
   const { data: contributorData, meta: contributorMeta } = useContributors(undefined, repositories);
   const router = useRouter();
   const { range = 30 } = router.query;
 
-  const compare1 = getInsights(insightsData, 30);
-  const compare2 = getInsights(insightsData, 60);
+  const todaysInsights = getInsights(insightsData, 0);
+  const yesterdaysInsights = getInsights(insightsData, 1);
 
   return (
     <div className="flex flex-col w-full gap-4">
@@ -30,9 +30,12 @@ const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
           label="Contributors"
           tooltip={`People who have made pull requests to the selected repositories over the last ${range} days.`}
           icon="contributors"
-          metricIncreases={compare1.allPrsTotal - compare2.allPrsTotal >= 0}
-          increased={compare1.allPrsTotal - compare2.allPrsTotal >= 0}
-          numChanged={humanizeNumber(Math.abs(compare1.allPrsTotal - compare2.allPrsTotal), "abbreviation")}
+          metricIncreases={todaysInsights.allPrsTotal - yesterdaysInsights.allPrsTotal >= 0}
+          increased={todaysInsights.allPrsTotal - yesterdaysInsights.allPrsTotal >= 0}
+          numChanged={humanizeNumber(
+            Math.abs(todaysInsights.allPrsTotal - yesterdaysInsights.allPrsTotal),
+            "abbreviation"
+          )}
           value={humanizeNumber(contributorMeta.itemCount, "comma")}
           contributors={contributorData.map((contributor) => ({ host_login: contributor.author_login }))}
           isLoading={isLoading}
@@ -41,33 +44,39 @@ const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
           label="Spam"
           icon="spam"
           tooltip={`An issue or pull request labeled as spam on the selected repositories over the last ${range} days.`}
-          metricIncreases={compare1.spamTotal - compare2.spamTotal >= 0}
-          increased={compare1.spamTotal - compare2.spamTotal >= 0}
-          numChanged={humanizeNumber(Math.abs(compare1.spamTotal - compare2.spamTotal), "abbreviation")}
-          percentage={compare1.spamPercentage}
-          percentageLabel={`of ${humanizeNumber(compare1.allPrsTotal, "comma")}`}
+          metricIncreases={todaysInsights.spamTotal - yesterdaysInsights.spamTotal >= 0}
+          increased={todaysInsights.spamTotal - yesterdaysInsights.spamTotal >= 0}
+          numChanged={humanizeNumber(Math.abs(todaysInsights.spamTotal - yesterdaysInsights.spamTotal), "abbreviation")}
+          percentage={todaysInsights.spamPercentage}
+          percentageLabel={`of ${humanizeNumber(todaysInsights.allPrsTotal, "comma")}`}
           isLoading={isLoading}
         />
         <HighlightCard
           label="Merged PRs"
           icon="merged-pr"
           tooltip={`Pull requests that have been successfully merged into the codebase in the last ${range} days.`}
-          metricIncreases={compare1.acceptedTotal - compare2.acceptedTotal >= 0}
-          increased={compare1.acceptedTotal - compare2.acceptedTotal >= 0}
-          numChanged={humanizeNumber(Math.abs(compare1.acceptedTotal - compare2.acceptedTotal), "abbreviation")}
-          percentage={compare1.acceptedPercentage}
-          percentageLabel={`of ${humanizeNumber(compare1.allPrsTotal, "comma")}`}
+          metricIncreases={todaysInsights.acceptedTotal - yesterdaysInsights.acceptedTotal >= 0}
+          increased={todaysInsights.acceptedTotal - yesterdaysInsights.acceptedTotal >= 0}
+          numChanged={humanizeNumber(
+            Math.abs(todaysInsights.acceptedTotal - yesterdaysInsights.acceptedTotal),
+            "abbreviation"
+          )}
+          percentage={todaysInsights.acceptedPercentage}
+          percentageLabel={`of ${humanizeNumber(todaysInsights.allPrsTotal, "comma")}`}
           isLoading={isLoading}
         />
         <HighlightCard
           label="Unlabeled PRs"
           icon="unlabeled-pr"
           tooltip={`The number of open or closed PRs that have not been labeled in the last ${range} days.`}
-          metricIncreases={compare1.unlabeledPrsTotal - compare2.unlabeledPrsTotal >= 0}
-          increased={compare1.unlabeledPrsTotal - compare2.unlabeledPrsTotal >= 0}
-          numChanged={humanizeNumber(Math.abs(compare1.unlabeledPrsTotal - compare2.unlabeledPrsTotal), "abbreviation")}
-          percentage={compare1.unlabeledPercentage}
-          percentageLabel={`of ${humanizeNumber(compare1.allPrsTotal, "comma")}`}
+          metricIncreases={todaysInsights.unlabeledPrsTotal - yesterdaysInsights.unlabeledPrsTotal >= 0}
+          increased={todaysInsights.unlabeledPrsTotal - yesterdaysInsights.unlabeledPrsTotal >= 0}
+          numChanged={humanizeNumber(
+            Math.abs(todaysInsights.unlabeledPrsTotal - yesterdaysInsights.unlabeledPrsTotal),
+            "abbreviation"
+          )}
+          percentage={todaysInsights.unlabeledPercentage}
+          percentageLabel={`of ${humanizeNumber(todaysInsights.allPrsTotal, "comma")}`}
           isLoading={isLoading}
         />
       </section>
