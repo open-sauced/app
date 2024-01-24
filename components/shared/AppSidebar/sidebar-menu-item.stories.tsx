@@ -35,7 +35,3 @@ export const Repo: Story = {
 export const List: Story = {
   args: { ...baseProps, type: "list" },
 };
-
-export const Active: Story = {
-  args: { ...baseProps, isActive: true, type: "list" },
-};
