@@ -80,13 +80,13 @@ const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
       name,
       description,
       sessionToken: sessionToken!,
-      repos: Array.from(trackedRepos).map((repo) => ({ full_name: repo })),
+      repos: Array.from(trackedRepos, (repo) => ({ full_name: repo })),
     });
 
     const workspaceRepoDeletes = await deleteTrackedRepos({
       workspaceId: workspace.id,
       sessionToken: sessionToken!,
-      repos: Array.from(trackedReposPendingDeletion).map((repo) => ({ full_name: repo })),
+      repos: Array.from(trackedReposPendingDeletion, (repo) => ({ full_name: repo })),
     });
 
     const [{ data, error }, { data: deletedRepos, error: reposDeleteError }] = await Promise.all([

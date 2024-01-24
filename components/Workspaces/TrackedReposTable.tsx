@@ -36,7 +36,7 @@ const EmptyState = ({ onAddRepos }: { onAddRepos: () => void }) => {
 const LoadingState = () => {
   return (
     <>
-      {Array.from({ length: 5 }).map((_, index) => (
+      {Array.from({ length: 5 }, (_, index) => (
         <TableRow key={index}>
           <TableCell colSpan={2}>
             <SkeletonWrapper key={index} height={22} />

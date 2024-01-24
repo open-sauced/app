@@ -30,7 +30,7 @@ const NewWorkspace = () => {
       // TODO: send members list
       members: [],
       sessionToken: sessionToken!,
-      repos: Array.from(trackedRepos).map((repo) => ({ full_name: repo })),
+      repos: Array.from(trackedRepos, (repo) => ({ full_name: repo })),
     });
 
     if (error) {
