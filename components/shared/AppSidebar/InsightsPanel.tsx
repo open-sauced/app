@@ -16,7 +16,7 @@ interface InsightsPanelProps {
 export const InsightsPanel = ({ title, username, insights, type, isLoading }: InsightsPanelProps) => {
   const [open, setOpen] = useState(true);
   return (
-    <Collapsible.Root open={open} onOpenChange={setOpen}>
+    <Collapsible.Root open={open} onOpenChange={setOpen} className="max-w-full overflow-x-hidden">
       <h3 className="uppercase text-gray-500 text-sm font-medium flex gap-1 items-center">
         <span>{title}</span>
         <Collapsible.Trigger asChild>

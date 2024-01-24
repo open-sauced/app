@@ -20,10 +20,10 @@ const SidebarMenuItem = ({ title, icon, type, href }: MenuItemProps) => {
   };
 
   return (
-    <li className="py-2 px-3 whitespace-nowrap overflow-hidden overflow-ellipsis">
-      <Link href={href} className=" flex gap-2 items-center">
+    <li className="py-2 px-3">
+      <Link title={title} href={href} className="grid grid-cols-[1.25rem,1fr] gap-2 items-center">
         {type && !icon ? getIcon(type) : icon}
-        <span>{title}</span>
+        <span className="whitespace-nowrap overflow-hidden overflow-ellipsis">{title}</span>
       </Link>
     </li>
   );
