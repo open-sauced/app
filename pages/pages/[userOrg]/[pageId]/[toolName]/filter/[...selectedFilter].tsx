@@ -7,7 +7,9 @@ import Tool from "components/organisms/ToolsDisplay/tools-display";
 import HubPageLayout from "layouts/hub-page";
 import { WithPageLayout } from "interfaces/with-page-layout";
 import changeCapitalization from "lib/utils/change-capitalization";
-import getInsightTeamMember from "lib/utils/get-insight-team-member";
+import getInsightTeamMemberAccess from "lib/utils/get-insight-team-member";
+import { MemberAccess } from "components/molecules/TeamMembersConfig/team-members-config";
+import useInsightRepositories from "lib/hooks/useInsightRepositories";
 
 interface InsightFilterPageProps {
   insight: DbUserInsight;
@@ -15,7 +17,8 @@ interface InsightFilterPageProps {
 }
 
 const HubPage: WithPageLayout<InsightFilterPageProps> = ({ insight, pageName }: InsightFilterPageProps) => {
-  const repositories = insight.repos.map((repo) => repo.repo_id);
+  const { data: insightRepos } = useInsightRepositories(insight.id);
+  const repositories = insightRepos.map((repo) => repo.repo_id);
 
   const title = `${insight.name} | Open Sauced Insights Hub`;
 
@@ -37,7 +40,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const bearerToken = session ? session.access_token : "";
   const insightId = ctx.params!["pageId"] as string;
   const pageName = ctx.params!["toolName"] as string;
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/insights/${insightId}`);
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/insights/${insightId}?include=none`);
   const insight = response.ok ? ((await response.json()) as DbUserInsight) : null;
 
   if (!insight) {
@@ -49,15 +52,14 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   }
 
   const userId = session?.user?.user_metadata.sub as string;
-  const isOwner = userId && insight && `${userId}` === `${insight.user?.id}` ? true : false;
-  let isTeamMember = false;
+  let teamMemberAccess: MemberAccess | null = null;
 
-  if (!insight.is_public && !isOwner) {
+  if (!insight.is_public) {
     // check if user is insight page team member
-    isTeamMember = await getInsightTeamMember(Number(insightId), bearerToken, userId);
+    teamMemberAccess = await getInsightTeamMemberAccess(Number(insightId), bearerToken, userId);
   }
 
-  if (!insight.is_public && !isOwner && !isTeamMember) {
+  if (!insight.is_public && (!teamMemberAccess || teamMemberAccess === "pending")) {
     return {
       redirect: {
         destination: "/",

@@ -18,7 +18,7 @@ const NonMemoizedContributorNode = <Datum extends { id: string; value?: number; 
   const avatarURL = getAvatarByUsername(node.id);
 
   return (
-    <animated.div
+    <animated.button
       className="absolute grid overflow-hidden border-solid place-content-stretch"
       style={{
         top: 0,
@@ -52,7 +52,7 @@ const NonMemoizedContributorNode = <Datum extends { id: string; value?: number; 
             placeItems: "flex-start",
           }}
         >
-          <div className="grid gap-x-2" style={{ gridTemplateColumns: "auto 1fr", gridTemplateRows: "auto auto" }}>
+          <div className="flex items-center gap-2">
             <Image
               className="col-span-1 col-start-1 row-span-2"
               src={avatarURL}
@@ -62,17 +62,19 @@ const NonMemoizedContributorNode = <Datum extends { id: string; value?: number; 
               style={{ display: "block", borderRadius: "50%", border: "solid 2px white", flexShrink: 0, flexGrow: 0 }}
             />
 
-            <div style={{ gridColumnStart: "2", alignItems: "center", alignSelf: "center" }}>{node.id}</div>
-            <div
-              className="font-normal"
-              style={{ textOverflow: "ellipsis", gridColumnStart: "2", marginTop: "-0.5rem" }}
-            >
-              {node.formattedValue} Contributions
+            <div className="flex flex-col items-start gap-2">
+              <div>{node.id}</div>
+              <div
+                className="whitespace-nowrap overflow-hidden overflow-ellipsis"
+                style={{ gridColumnStart: "2", marginTop: "-0.5rem" }}
+              >
+                {node.formattedValue} Contributions
+              </div>
             </div>
           </div>
         </animated.div>
       )}
-    </animated.div>
+    </animated.button>
   );
 };
 

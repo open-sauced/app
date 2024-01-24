@@ -127,7 +127,7 @@ const Notifications: WithPageLayout = () => {
               {Array.from({ length: 8 }).map((_, index) => (
                 <div className="flex gap-2" key={index}>
                   <SkeletonWrapper width={50} height={50} />
-                  <div className="">
+                  <div>
                     <SkeletonWrapper height={20} width={500} classNames="mb-2" />
                     <SkeletonWrapper height={10} width={100} />
                   </div>
@@ -210,5 +210,5 @@ const Notifications: WithPageLayout = () => {
 };
 
 Notifications.PageLayout = ProfileLayout;
-Notifications.isPrivateRoute = true;
+
 export default Notifications;

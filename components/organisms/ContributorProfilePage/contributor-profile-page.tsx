@@ -15,6 +15,7 @@ import ContributorProfileInfo from "components/molecules/ContributorProfileInfo/
 import ProfileLanguageChart from "components/molecules/ProfileLanguageChart/profile-language-chart";
 import useFollowUser from "lib/hooks/useFollowUser";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
+import { DATA_FALLBACK_VALUE } from "lib/utils/fallback-values";
 import ContributorProfileTab from "../ContributorProfileTab/contributor-profile-tab";
 import { ContributorObject } from "../ContributorCard/contributor-card";
 
@@ -136,6 +137,8 @@ const ContributorProfilePage = ({
                 discordUrl={discordUrl}
                 prFirstOpenedDate={prFirstOpenedDate}
                 isMaintainer={isMaintainer}
+                followerCount={user?.followers_count}
+                followingCount={user?.following_count}
               />
 
               <div>
@@ -181,7 +184,7 @@ const ContributorProfilePage = ({
                             </Text>
                           </div>
                         ) : (
-                          <div className="flex items-end justify-center mt-1"> - </div>
+                          <div className="flex items-end justify-center mt-1">{DATA_FALLBACK_VALUE}</div>
                         )}
                       </div>
                       <div>
@@ -195,7 +198,7 @@ const ContributorProfilePage = ({
                             <Pill color="purple" text={`${prsMergedPercentage}%`} />
                           </div>
                         ) : (
-                          <div className="flex items-end justify-center mt-1"> - </div>
+                          <div className="flex items-end justify-center mt-1">{DATA_FALLBACK_VALUE}</div>
                         )}
                       </div>
                       <div>
@@ -207,7 +210,7 @@ const ContributorProfilePage = ({
                             </Text>
                           </div>
                         ) : (
-                          <div className="flex items-end justify-center mt-1"> - </div>
+                          <div className="flex items-end justify-center mt-1">{DATA_FALLBACK_VALUE}</div>
                         )}
                       </div>
                     </div>

@@ -9,6 +9,7 @@ export interface ContributorTableProps {
   selectedContributors?: DbPRContributor[];
   handleSelectContributors?: (state: boolean, contributor: DbPRContributor) => void;
   range?: string;
+  noContributorsMessage?: string;
 }
 
 const ContributorTable = ({
@@ -18,26 +19,31 @@ const ContributorTable = ({
   selectedContributors,
   handleSelectContributors,
   range = "30",
+  noContributorsMessage = "Sorry! We couldn't find any contributors.",
 }: ContributorTableProps) => {
   return (
     <div className="flex flex-col overflow-hidden border rounded-md">
-      {loading && <SkeletonWrapper height={50} count={10} radius={4} classNames="px-6 mt-2" />}
-
-      {!loading && contributors && contributors.length > 0 ? (
-        contributors.map((contributor, i) => (
-          <ContributorListTableRow
-            topic={topic}
-            contributor={contributor}
-            key={contributor.user_id}
-            selected={!!selectedContributors?.find((selected) => selected.author_login === contributor.author_login)}
-            handleOnSelectContributor={handleSelectContributors}
-            range={range}
-          />
-        ))
+      {loading ? (
+        <SkeletonWrapper height={50} count={10} radius={4} classNames="px-6 mt-2" />
       ) : (
-        <div className="grid w-full py-10 place-content-center text-orange-500">
-          Sorry! We couldn&apos;t find any contributors.
-        </div>
+        <>
+          {contributors && contributors.length > 0 ? (
+            contributors.map((contributor, i) => (
+              <ContributorListTableRow
+                topic={topic}
+                contributor={contributor}
+                key={contributor.user_id}
+                selected={
+                  !!selectedContributors?.find((selected) => selected.author_login === contributor.author_login)
+                }
+                handleOnSelectContributor={handleSelectContributors}
+                range={range}
+              />
+            ))
+          ) : (
+            <div className="grid w-full py-10 place-content-center text-orange-500">{noContributorsMessage}</div>
+          )}
+        </>
       )}
     </div>
   );

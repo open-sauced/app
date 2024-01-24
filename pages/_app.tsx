@@ -22,8 +22,8 @@ import SEO from "layouts/SEO/SEO";
 import { Toaster } from "components/molecules/Toaster/toaster";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
 import useSession from "lib/hooks/useSession";
-import PrivateWrapper from "layouts/private-wrapper";
 
+import { FeatureFlag } from "lib/utils/server/feature-flags";
 import type { AppProps } from "next/app";
 
 // Clear any service workers present
@@ -56,8 +56,8 @@ type ComponentWithPageLayout = AppProps & {
     PageLayout?: React.ComponentType<any>;
     SEO?: SEOobject;
     updateSEO?: (SEO: SEOobject) => void;
-    isPrivateRoute?: boolean;
   };
+  pageProps: AppProps["pageProps"] & { featureFlags: Record<FeatureFlag, boolean> };
 };
 
 function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
@@ -104,13 +104,13 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
       console.log("You are on the browser");
 
       // When initializing, we restore the data from `localStorage` into a map.
-      const map: Map<string, string> = new Map(JSON.parse(localStorage.getItem("app-cache") || "[]"));
+      const map: Map<string, string> = new Map(JSON.parse(localStorage.getItem("app-cache-blue") || "[]"));
 
       // Before unloading the app, we write back all the data into `localStorage`.
       window.addEventListener("beforeunload", () => {
         const appCache = JSON.stringify(Array.from(map.entries()));
         try {
-          localStorage.setItem("app-cache", appCache);
+          localStorage.setItem("app-cache-blue", appCache);
         } catch (error) {
           if (error instanceof Error && error.name === "QuotaExceededError")
             // eslint-disable-next-line no-console
@@ -151,17 +151,15 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
         <Toaster />
         <SessionContextProvider supabaseClient={supabaseClient} initialSession={pageProps.initialSession}>
           <PostHogProvider client={posthog}>
-            <PrivateWrapper isPrivateRoute={Component.isPrivateRoute}>
-              <TipProvider>
-                {Component.PageLayout ? (
-                  <Component.PageLayout>
-                    <Component {...pageProps} />
-                  </Component.PageLayout>
-                ) : (
+            <TipProvider>
+              {Component.PageLayout ? (
+                <Component.PageLayout>
                   <Component {...pageProps} />
-                )}
-              </TipProvider>
-            </PrivateWrapper>
+                </Component.PageLayout>
+              ) : (
+                <Component {...pageProps} />
+              )}
+            </TipProvider>
           </PostHogProvider>
         </SessionContextProvider>
       </SWRConfig>

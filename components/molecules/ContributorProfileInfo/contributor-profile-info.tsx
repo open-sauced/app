@@ -6,13 +6,13 @@ import { BsDiscord } from "react-icons/bs";
 import { FiClock, FiGithub, FiLinkedin } from "react-icons/fi";
 import { FaGlobe, FaXTwitter } from "react-icons/fa6";
 import clsx from "clsx";
-import LanguagePill from "components/atoms/LanguagePill/LanguagePill";
 import Title from "components/atoms/Typography/title";
 import Badge from "components/atoms/Badge/badge";
 import { getTimeByTimezone, getTimezone } from "lib/utils/timezones";
 import Tooltip from "components/atoms/Tooltip/tooltip";
 import { getFormattedDate } from "lib/utils/date-utils";
 import { InterestType } from "lib/utils/getInterestOptions";
+import { LanguagePill } from "components/shared/LanguagePill/LanguagePill";
 
 interface ContributorProfileInfoProps {
   githubName: string;
@@ -29,6 +29,8 @@ interface ContributorProfileInfoProps {
   discordUrl?: string;
   prFirstOpenedDate?: string;
   isMaintainer?: boolean;
+  followerCount?: number;
+  followingCount?: number;
 }
 
 const ContributorProfileInfo = ({
@@ -45,6 +47,8 @@ const ContributorProfileInfo = ({
   discordUrl,
   prFirstOpenedDate,
   isMaintainer,
+  followerCount,
+  followingCount,
 }: ContributorProfileInfoProps) => {
   const interestArray = interests?.split(",").filter(Boolean) as InterestType[];
   const discordUserId = discordUrl?.match(/\d{17,}$/)?.[0];
@@ -53,7 +57,7 @@ const ContributorProfileInfo = ({
     <div className="flex flex-col gap-6">
       <div className="pb-6 border-b">
         <div className="flex gap-2 items-center mb-2">
-          <Title className="!text-2xl !text-light-slate-12" level={3}>
+          <Title className="!text-2xl" level={3}>
             {githubName}
           </Title>
           {isMaintainer && <Badge text="maintainer" />}
@@ -61,20 +65,16 @@ const ContributorProfileInfo = ({
         <div className="flex items-center text-sm gap-3">
           {isConnected && (
             <>
-              {displayLocalTime && (
-                <span className="flex text-light-slate-10 gap-2 items-center">
-                  <Tooltip content="Time zone">
-                    <FiClock className="text-light-slate-9" />
-                  </Tooltip>
-                  {timezone ? `UTC${getTimezone(timezone)}` : "UTC+1"}
-                </span>
-              )}
-              <span className="flex text-light-slate-10 gap-2 items-center">
-                <Tooltip content="First PR Opened Date">
-                  <AiOutlineGift className="text-light-slate-9" />
-                </Tooltip>
-                {prFirstOpenedDate ? getFormattedDate(prFirstOpenedDate) : "June 2022"}
-              </span>
+              <div className="flex gap-2 items-center">
+                <div className="flex gap-1 items-center">
+                  <span className="font-semibold text-sm"> {followerCount} </span>
+                  <span className="font-normal text-light-slate-11 text-sm"> followers</span>
+                </div>
+                <div className="flex gap-1 items-center">
+                  <span className="font-semibold text-sm"> {followingCount} </span>
+                  <span className="font-normal text-light-slate-11 text-sm"> following</span>
+                </div>
+              </div>
             </>
           )}
         </div>
@@ -82,23 +82,26 @@ const ContributorProfileInfo = ({
       {isConnected && (
         <>
           <div className="flex flex-col gap-2 border-b pb-6">
-            <Title className="!text-base !text-light-slate-12" level={5}>
+            <Title className="!text-base" level={5}>
               About
             </Title>
-            <p className={clsx("text-light-slate-11 text-sm", !bio && "!text-light-slate-8")}>
+            <p className={clsx(" text-sm", !bio && "")}>
               {bio || githubName + " has connected their GitHub but has not added a bio."}
             </p>
-            <div className="flex flex-col text-sm mt-2 text-light-slate-9 gap-2">
+            <div className="flex flex-col text-sm mt-2  gap-2">
               {displayLocalTime && (
                 <span className="flex gap-2 items-center">
-                  <FiClock className="text-light-slate-9" /> Local time:
-                  <span> {getTimeByTimezone(timezone ? getTimezone(timezone) : 1)}</span>
+                  <FiClock />
+                  <span>
+                    {getTimeByTimezone(timezone ? getTimezone(timezone) : 1)}{" "}
+                    {timezone ? `(UTC${getTimezone(timezone)})` : "(UTC+1)"}
+                  </span>
                 </span>
               )}
 
               {url && (
                 <span className="flex gap-2 items-center">
-                  <FaGlobe className="text-light-slate-9" />
+                  <FaGlobe />
                   <Link href={url} target="_blank" rel="noreferrer" className="w-max hover:text-orange-500 ">
                     {url}
                   </Link>
@@ -106,7 +109,14 @@ const ContributorProfileInfo = ({
               )}
 
               <span className="flex gap-2 items-center">
-                <FiGithub className="text-light-slate-9" />
+                <Tooltip content="First PR Opened Date">
+                  <AiOutlineGift className="" />
+                </Tooltip>
+                {prFirstOpenedDate ? getFormattedDate(prFirstOpenedDate) : "June 2022"}
+              </span>
+
+              <span className="flex gap-2 items-center">
+                <FiGithub />
                 <Link
                   href={`https://github.com/${githubName}`}
                   target="_blank"
@@ -119,7 +129,7 @@ const ContributorProfileInfo = ({
 
               {twitterUsername && (
                 <span className="flex gap-2 items-center">
-                  <FaXTwitter className="text-light-slate-9" />
+                  <FaXTwitter />
                   <Link
                     href={`https://twitter.com/${twitterUsername}`}
                     target="_blank"
@@ -133,7 +143,7 @@ const ContributorProfileInfo = ({
 
               {linkedInUrl && (
                 <span className="flex gap-2 items-center">
-                  <FiLinkedin className="text-light-slate-9" />
+                  <FiLinkedin />
                   <Link href={linkedInUrl} target="_blank" rel="noreferrer" className="w-max hover:text-orange-500 ">
                     {linkedInUrl?.replace(/^(http(s)?:\/\/)?([\w]+\.)?linkedin\.com\/(pub|in|profile|company)/, "in")}
                   </Link>
@@ -142,7 +152,7 @@ const ContributorProfileInfo = ({
 
               {discordUrl && (
                 <span className="flex gap-2 items-center">
-                  <BsDiscord className="text-light-slate-9" />
+                  <BsDiscord />
                   <Link href={discordUrl} target="_blank" rel="noreferrer" className="w-max hover:text-orange-500">
                     {`discord/#${discordUserId}`}
                   </Link>
@@ -151,7 +161,7 @@ const ContributorProfileInfo = ({
 
               {githubSponsorsUrl && (
                 <span className="flex gap-2 items-center">
-                  <FiGithub className="text-light-slate-9" />
+                  <FiGithub />
                   <Link
                     href={githubSponsorsUrl}
                     target="_blank"
@@ -164,7 +174,7 @@ const ContributorProfileInfo = ({
               )}
 
               {/* <span className="flex gap-2 items-center">
-                <HiOutlineMail className="text-light-slate-9" />
+                <HiOutlineMail />
                 <Link className="w-max hover:text-orange-500 " href="#">
                   Send a connections request
                 </Link>
@@ -173,13 +183,13 @@ const ContributorProfileInfo = ({
           </div>
           {interestArray && interestArray.length > 0 && (
             <div className="flex  flex-col gap-4 border-b pb-6">
-              <Title className="!text-base !text-light-slate-12" level={5}>
+              <Title className="!text-base" level={5}>
                 Current Interests
               </Title>
               <div className="flex gap-1.5 flex-wrap">
                 {interestArray.map((interest, index) => (
-                  <Link href={`/${interest}/dashboard/filter/recent`} key={index}>
-                    <LanguagePill key={index} topic={interest} />
+                  <Link href={`/${interest}/dashboard/filter/recent`} key={index} className="rounded-3xl">
+                    <LanguagePill topic={interest} />
                   </Link>
                 ))}
               </div>

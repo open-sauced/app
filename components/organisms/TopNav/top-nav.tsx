@@ -10,7 +10,13 @@ import { useFetchUser } from "lib/hooks/useFetchUser";
 import OnboardingButton from "components/molecules/OnboardingButton/onboarding-button";
 import Text from "components/atoms/Typography/text";
 
-const TopNav: React.FC = () => {
+interface TopNavProps {
+  hideInsights?: boolean;
+}
+
+// TODO: hideInsights is temporary until we've moved everything to the workspace
+// view with the new sidebar
+const TopNav = ({ hideInsights = false }: TopNavProps) => {
   const { user } = useSupabaseAuth();
   const { onboarded } = useSession();
   return (
@@ -18,12 +24,12 @@ const TopNav: React.FC = () => {
       <div className="flex justify-between items-center mx-auto container px-2 md:px-16">
         <div className="flex gap-3 md:gap-8 items-center">
           <HeaderLogo withBg={false} textIsBlack />
-          <Nav className="hidden lg:flex" />
+          <Nav className="hidden lg:flex" hideInsights={hideInsights} />
         </div>
         <AuthSection />
       </div>
       <div className="lg:hidden container mx-auto px-2 md:px-16 flex justify-between items-center">
-        <Nav name="Mobile" className="" />
+        <Nav name="Mobile" hideInsights={hideInsights} />
         {user
           ? !onboarded && (
               <div className="relative">
@@ -46,18 +52,28 @@ const TopNav: React.FC = () => {
   );
 };
 
-const Nav = ({ className, name = "Main" }: { className?: string; name?: string }) => {
+const Nav = ({
+  className,
+  name = "Main",
+  hideInsights,
+}: {
+  className?: string;
+  name?: string;
+  hideInsights?: boolean;
+}) => {
   const { user } = useSupabaseAuth();
   const { onboarded } = useSession();
 
   const { data: gitHubUser } = useFetchUser(user?.user_metadata.user_name);
-  const userInterest = gitHubUser?.interests.split(",")[0] || "hacktoberfest";
+  const userInterest = gitHubUser?.interests.split(",")[0] || "javascript";
   const router = useRouter();
+
+  const explorePageUrlPattern = /^\/(?!lists\/.*\/activity).*\/(dashboard|reports|contributors|activity).*/g;
 
   return (
     <nav className={className} aria-label={name}>
       <ul className="flex gap-3 md:gap-8 mb-1 ml-2 sm:m-0 w-full sm:w-auto">
-        {!!user && onboarded && (
+        {hideInsights ? null : (
           <li>
             <Link className={`text-sm ${getActiveStyle(router.asPath === "/hub/insights")}`} href={"/hub/insights"}>
               Insights
@@ -66,7 +82,7 @@ const Nav = ({ className, name = "Main" }: { className?: string; name?: string }
         )}
         <li>
           <Link
-            className={`text-sm ${getActiveStyle(router.asPath === `/${userInterest}/dashboard/filter/recent`)}`}
+            className={`text-sm ${getActiveStyle(explorePageUrlPattern.test(router.asPath))}`}
             href={`/${userInterest}/dashboard/filter/recent`}
           >
             Explore
@@ -83,7 +99,7 @@ const Nav = ({ className, name = "Main" }: { className?: string; name?: string }
 };
 
 function getActiveStyle(isActive: boolean) {
-  return isActive ? "text-light-orange-10" : "text-light-slate-10";
+  return isActive ? "text-light-orange-10" : "";
 }
 
 export default TopNav;

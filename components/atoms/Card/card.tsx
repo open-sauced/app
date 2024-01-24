@@ -1,9 +1,9 @@
-import React from "react";
+import React, { ReactNode } from "react";
 
 interface CardProps {
   className?: string;
-  heading?: JSX.Element | string;
-  children: JSX.Element;
+  heading?: ReactNode;
+  children: ReactNode;
 }
 
 const Card: React.FC<CardProps> = ({ className, children, heading }) => {

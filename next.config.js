@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 module.exports = {
+  productionBrowserSourceMaps: true,
   reactStrictMode: true,
   images: {
     domains: [
@@ -34,6 +35,11 @@ module.exports = {
       },
       {
         source: "/lists/:listId",
+        destination: "/lists/:listId/overview",
+        permanent: true,
+      },
+      {
+        source: "/lists/:listId/contributors",
         destination: "/lists/:listId/overview",
         permanent: true,
       },

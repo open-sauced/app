@@ -11,6 +11,7 @@
 body {
   @apply font-normal;
   background-color: #f8f9fa;
+  @apply text-light-slate-12;
 }
 
 h1,
@@ -21,9 +22,17 @@ h5,
 h6 {
   @apply tracking-tight;
 }
+button:not([role]){
+  @apply border;
+  @apply border-transparent;
+}
 
-input[type="checkbox"]:focus-visible,
-[role="checkbox"]:focus-visible {
+input[type="checkbox"]:focus-visible;
+[role="checkbox"]:focus-visible;
+[role="radio"]:focus-visible;
+[role="combobox"]:focus-visible;
+[role="switch"]:focus-visible;
+button:not([role]):focus-visible {
   @apply outline-none;
   @apply ring;
   @apply border-orange-500;
@@ -167,4 +176,17 @@ div[role="dialog"]::-webkit-scrollbar-thumb {
 
 .react-loading-skeleton {
   z-index: unset !important;
+}
+
+/* For the mail icon */
+svg:has(> #Mail) {
+  stroke-width: 1;
+}
+
+/* For the tracked repo wizard button focus states */
+[data-tracked-repo-wizard] > button:focus-within > svg {
+  @apply text-green-600;
+}
+[data-tracked-repo-wizard] > button:focus-within > [data-button-title] {
+  @apply text-green-800;
 }
