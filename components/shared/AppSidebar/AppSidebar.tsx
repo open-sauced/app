@@ -86,10 +86,11 @@ export const AppSideBar = () => {
             }}
           />
         </label>
-        <h2 className="flex gap-1 items-center">
+        <h2 className="flex gap-1 items-center py-2 pr-3 hover:bg-slate-50 rounded-tr-md rounded-br-md transition-colors cursor-pointer">
           <BiHomeAlt className="w-5 h-5 text-slate-400" />
           Home
         </h2>
+        <h3 className="uppercase text-gray-500 text-xs font-medium flex gap-1 items-center tracking-wide">Insights</h3>
         <InsightsPanel
           title="Repository Insights"
           username={username}
@@ -105,14 +106,18 @@ export const AppSideBar = () => {
           isLoading={insightsLoading}
         />
 
-        <h3 className="uppercase text-gray-500 text-sm font-medium">Shared with you</h3>
+        <h3 className="uppercase text-gray-500 text-xs font-medium tracking-wide">Shared with you</h3>
       </div>
-      <ul className="list-none mb-4">
-        <SidebarMenuItem title="Support" url="/logout" icon={<LifebuoyIcon className="w-5 h-5 text-slate-400" />} />
+      <ul className="list-none mb-4 px-1">
+        <SidebarMenuItem
+          title="Support"
+          url=""
+          icon={<LifebuoyIcon className="w-5 h-5 text-slate-400 inline-flex mr-1" />}
+        />
         <SidebarMenuItem
           title="Settings"
           url="/user/settings"
-          icon={<Cog8ToothIcon className="w-5 h-5 text-slate-400" />}
+          icon={<Cog8ToothIcon className="w-5 h-5 text-slate-400 inline-flex mr-1" />}
         />
       </ul>
     </div>

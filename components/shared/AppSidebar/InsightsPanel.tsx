@@ -1,7 +1,9 @@
 import * as Collapsible from "@radix-ui/react-collapsible";
-import { FiChevronDown, FiChevronUp } from "react-icons/fi";
+import { FiChevronDown } from "react-icons/fi";
 import { Root, Thumb } from "@radix-ui/react-switch";
 import { useState } from "react";
+import { UsersIcon } from "@heroicons/react/24/solid";
+import { ChartBarSquareIcon } from "@heroicons/react/24/outline";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
 import SidebarMenuItem from "./sidebar-menu-item";
 
@@ -15,6 +17,14 @@ interface InsightsPanelProps {
 
 export const InsightsPanel = ({ title, username, insights, type, isLoading }: InsightsPanelProps) => {
   const [open, setOpen] = useState(true);
+  const getIcon = (type: "repo" | "list") => {
+    switch (type) {
+      case "list":
+        return <UsersIcon className="w-5 h-5 text-slate-400" />;
+      case "repo":
+        return <ChartBarSquareIcon className="w-5 h-5 text-slate-400" />;
+    }
+  };
   return (
     <Collapsible.Root open={open} onOpenChange={setOpen} className="max-w-full overflow-x-hidden">
       <Collapsible.Trigger asChild>
@@ -27,20 +37,20 @@ export const InsightsPanel = ({ title, username, insights, type, isLoading }: In
           name={`${title}-toggle`}
         >
           <Thumb>
-            <h3 className="uppercase text-gray-500 text-sm font-medium flex gap-1 items-center">
+            <h3 className="font-medium flex gap-1 items-center">
+              {getIcon(type)}
               <span>{title}</span>
               <ClientOnly>
-                {open ? (
-                  <FiChevronDown className="w-4 h-4" title={`close ${title} panel`} />
-                ) : (
-                  <FiChevronUp className="w-4 h-4" title={`open ${title} panel`} />
-                )}
+                <FiChevronDown
+                  className={"w-4 h-4 transition-all" + (open ? " rotate-180" : "")}
+                  title={`close ${title} panel`}
+                />
               </ClientOnly>
             </h3>
           </Thumb>
         </Root>
       </Collapsible.Trigger>
-      <Collapsible.Content>
+      <Collapsible.Content className="CollapsibleContent">
         {isLoading ? null : (
           <ul className="list-none w-full px-2 mt-1 [&_li]:border-l-2">
             {insights.map((insight) => {
