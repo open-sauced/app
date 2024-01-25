@@ -368,7 +368,13 @@ interface PagedData<T> {
 interface DbListContributorStat {
   login: string;
   commits: number;
-  prsCreated: number;
+  prs_created: number;
+  issues_created: number;
+  commit_comments: number;
+  issue_comments: number;
+  pr_review_comments: number;
+  comments: number;
+  total_contributions: number;
 }
 
 interface DbProjectContributions {
