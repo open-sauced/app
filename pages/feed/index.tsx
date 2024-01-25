@@ -71,7 +71,12 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
 
   const isDesktop = useMediaQuery("(min-width: 1280px)");
 
-  const { data, mutate, isLoading, meta } = useFetchAllHighlights(selectedRepo, +page);
+  const { data, mutate, isLoading, meta } = useFetchAllHighlights({
+    page: +page,
+    limit: +limit,
+    repo: selectedRepo,
+  });
+
   const { data: emojis } = useFetchAllEmojis();
 
   const {

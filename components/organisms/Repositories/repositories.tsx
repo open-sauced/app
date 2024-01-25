@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/router";
 import clsx from "clsx";
 
@@ -86,11 +86,6 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
       return router.push(`/${topic}/${toolName}/filter/${search}`);
     }
   };
-
-  useEffect(() => {
-    //  remove page from query params to reset to page 1
-    setQueryParams({}, ["page"]);
-  }, [selectedFilter]);
 
   return (
     <div className="flex flex-col w-full gap-4">

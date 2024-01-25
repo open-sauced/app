@@ -3,7 +3,10 @@ import useContributors from "./api/useContributors";
 
 const useNav = (repositories: number[] = []) => {
   const router = useRouter();
-  const { meta: conMetaData } = useContributors(10, repositories);
+  const { meta: conMetaData } = useContributors({
+    repoIds: repositories,
+    limit: 10,
+  });
 
   const defaultTools = [
     {
