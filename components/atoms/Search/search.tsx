@@ -144,7 +144,7 @@ const Search = ({
               <div
                 className={clsx(
                   cursor === index && "_cursorActive bg-slate-100",
-                  "px-4 py-2 overflow-hidden break-all hover:bg-light-slate-2"
+                  "px-4 py-2 hover:bg-light-slate-2 truncate tracking-tighter"
                 )}
                 style={suggestionsStyle}
                 key={index}
@@ -164,7 +164,7 @@ const Search = ({
       {search && (
         <>
           {isLoading ? (
-            <Spinner className="w-5 h-5 " />
+            <Spinner className="w-5 h-5" />
           ) : (
             <GrClose className="cursor-pointer text-light-slate-9" fontSize={16} onClick={handleEmpty} />
           )}
