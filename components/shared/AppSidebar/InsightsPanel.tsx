@@ -3,6 +3,7 @@ import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 import { Root, Thumb } from "@radix-ui/react-switch";
 import { useState } from "react";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
+import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 import SidebarMenuItem from "./sidebar-menu-item";
 
 interface InsightsPanelProps {
@@ -12,6 +13,20 @@ interface InsightsPanelProps {
   type: "repo" | "list";
   isLoading: boolean;
 }
+
+const Loading = () => {
+  return (
+    <ul className="list-none w-full px-2 mt-1 [&_li]:border-l-2">
+      {new Array(5).fill(0).map((_, i) => {
+        return (
+          <li key={i} className="p-2">
+            <SkeletonWrapper height={20} />
+          </li>
+        );
+      })}
+    </ul>
+  );
+};
 
 export const InsightsPanel = ({ title, username, insights, type, isLoading }: InsightsPanelProps) => {
   const [open, setOpen] = useState(true);
@@ -41,7 +56,9 @@ export const InsightsPanel = ({ title, username, insights, type, isLoading }: In
         </Root>
       </Collapsible.Trigger>
       <Collapsible.Content>
-        {isLoading ? null : (
+        {isLoading ? (
+          <Loading />
+        ) : (
           <ul className="list-none w-full px-2 mt-1 [&_li]:border-l-2">
             {insights.map((insight) => {
               const url = type === "list" ? `/lists/${insight.id}` : `/pages/${username}/${insight.id}/dashboard`;
