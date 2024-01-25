@@ -1,10 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import clsx from "clsx";
 
 import { GrClose } from "react-icons/gr";
 import { FaSearch } from "react-icons/fa";
 import { Spinner } from "../SpinLoader/spin-loader";
 import { ScrollArea } from "../ScrollArea/scroll-area";
+
+interface RichSearchSuggestion {
+  key: string;
+  node: ReactNode;
+}
 
 interface SearchProps {
   name: string;
@@ -13,7 +18,8 @@ interface SearchProps {
   autoFocus?: boolean;
   className?: string;
   onSearch?: (search?: string) => void;
-  suggestions?: string[];
+  suggestions?: string[] | RichSearchSuggestion[];
+  suggestionsLabel?: string;
   onChange?: (value: string) => void;
   onSelect?: (value: string) => void;
   isLoading?: boolean;
@@ -33,7 +39,8 @@ const Search = ({
   autoFocus,
   className,
   onSearch,
-  suggestions,
+  suggestions = [],
+  suggestionsLabel,
   onChange,
   isLoading,
   onSelect,
@@ -91,18 +98,23 @@ const Search = ({
     if (resultsCount && e.key === "Enter") {
       e.preventDefault();
       if (document.querySelector("._cursorActive")) {
-        const span = document.querySelector("._cursorActive span") as HTMLElement;
-        handleOnSelect(span.innerText);
-        setCursor(-1);
+        const { suggestion } = (document.querySelector("._cursorActive") as HTMLElement).dataset;
+
+        if (suggestion && suggestion.length > 0) {
+          handleOnSelect(suggestion);
+          setCursor(-1);
+        }
       }
     }
   };
 
+  // using min-w-[15rem] to take into account the width of the X icon when it gets rendered
+  // to avoid the search input from expanding when someone starts typing.
   return (
     <div
       className={`${
         className && className
-      } flex bg-white  py-1 w-60 px-3 shadow-input border transition focus-within:ring focus-within:border-orange-500 focus-within:ring-orange-100 rounded-lg   ring-light-slate-6 items-center relative`}
+      } flex bg-white py-1 px-3 shadow-input border transition focus-within:ring focus-within:border-orange-500 focus-within:ring-orange-100 rounded-lg   ring-light-slate-6 items-center relative min-w-[15rem]`}
     >
       <FaSearch className="text-light-slate-9" fontSize={16} onClick={handleOnSearch} />
       <input
@@ -127,17 +139,22 @@ const Search = ({
       {suggestions && suggestions.length > 0 && showSuggestions && (
         <div className="absolute left-0 z-10 w-full pb-1 space-y-1 bg-white border rounded-lg cursor-pointer shadow-input border-light-slate-6 top-full">
           <ScrollArea type="auto" className="h-60">
+            {suggestionsLabel && suggestions.length > 0 ? <div className="pl-5 pt-4">{suggestionsLabel}</div> : null}
             {suggestions.map((suggestion, index) => (
               <div
                 className={clsx(
                   cursor === index && "_cursorActive bg-slate-100",
-                  "px-4 py-2 overflow-hidden break-all text-light-slate-9 hover:bg-light-slate-2"
+                  "px-4 py-2 overflow-hidden break-all hover:bg-light-slate-2"
                 )}
                 style={suggestionsStyle}
                 key={index}
-                onClick={() => handleOnSelect(suggestion)}
+                data-suggestion={typeof suggestion === "string" ? suggestion : suggestion.key}
+                onClick={(event) => {
+                  const { suggestion } = (event.currentTarget as HTMLElement).dataset;
+                  suggestion && handleOnSelect(suggestion);
+                }}
               >
-                <span className="pl-5 text-sm ">{suggestion}</span>
+                {typeof suggestion === "string" ? <span className="pl-5 text-sm ">{suggestion}</span> : suggestion.node}
               </div>
             ))}
           </ScrollArea>

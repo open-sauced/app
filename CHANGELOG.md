@@ -5,6 +5,50 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.84.0-beta.5](https://github.com/open-sauced/insights/compare/v1.84.0-beta.4...v1.84.0-beta.5) (2024-01-24)
+
+
+### 🍕 Features
+
+* workspaces can manage tracked repositories now (search repos flow) ([#2502](https://github.com/open-sauced/insights/issues/2502)) ([f286586](https://github.com/open-sauced/insights/commit/f2865860cb27b05479808cc481ce0b92d18c50c0))
+
+## [1.84.0-beta.4](https://github.com/open-sauced/insights/compare/v1.84.0-beta.3...v1.84.0-beta.4) (2024-01-24)
+
+
+### 🍕 Features
+
+* new styling for "Add again" section in create/edit insight page ([#2501](https://github.com/open-sauced/insights/issues/2501)) ([45fbfda](https://github.com/open-sauced/insights/commit/45fbfdaa5ffa04fd956fd17fdadef0339d7ff1a5))
+
+
+### 🐛 Bug Fixes
+
+* make emoji pick more accessible ([#2412](https://github.com/open-sauced/insights/issues/2412)) ([743eed9](https://github.com/open-sauced/insights/commit/743eed91d6c293d4b101b0116c8e1c4178b349d8))
+* now the app sidebar no longer crashes the page ([#2506](https://github.com/open-sauced/insights/issues/2506)) ([13d2e28](https://github.com/open-sauced/insights/commit/13d2e2847523ad221737f029a2c1519be503af6a))
+* pressing enter when focused on search input routes the page ([#2403](https://github.com/open-sauced/insights/issues/2403)) ([0030b55](https://github.com/open-sauced/insights/commit/0030b5542ace7beebce3105625d8b77e003fe0fb))
+
+## [1.84.0-beta.3](https://github.com/open-sauced/insights/compare/v1.84.0-beta.2...v1.84.0-beta.3) (2024-01-19)
+
+
+### 🍕 Features
+
+* fetch insight repos in parallel on insight pages ([#2496](https://github.com/open-sauced/insights/issues/2496)) ([6cb2f50](https://github.com/open-sauced/insights/commit/6cb2f50b593f5bfe82e1b3903402d647ff935a9e))
+
+## [1.84.0-beta.2](https://github.com/open-sauced/insights/compare/v1.84.0-beta.1...v1.84.0-beta.2) (2024-01-18)
+
+
+### 🐛 Bug Fixes
+
+* fixed repo insights icon in app sidebar ([#2494](https://github.com/open-sauced/insights/issues/2494)) ([536153b](https://github.com/open-sauced/insights/commit/536153bf0f980dec2b5ca34874743433843f822b))
+
+## [1.84.0-beta.1](https://github.com/open-sauced/insights/compare/v1.83.0...v1.84.0-beta.1) (2024-01-18)
+
+
+### 🍕 Features
+
+* add search by repositories component for tracked repositories flow in workspaces ([#2490](https://github.com/open-sauced/insights/issues/2490)) ([af53422](https://github.com/open-sauced/insights/commit/af53422e15b149b18132e8f2ef5babcfe2c344ed))
+* flow for creating a new workspace ([#2461](https://github.com/open-sauced/insights/issues/2461)) ([0518614](https://github.com/open-sauced/insights/commit/0518614d9c7a0f1c577f589d5ee82d76fe657596))
+* search suggestions can be JSX or a string now ([#2489](https://github.com/open-sauced/insights/issues/2489)) ([16cb804](https://github.com/open-sauced/insights/commit/16cb804ee4cbae91e6e70d7c1a43371bd7438beb))
+
 ## [1.83.0](https://github.com/open-sauced/insights/compare/v1.82.0...v1.83.0) (2024-01-17)
 
 

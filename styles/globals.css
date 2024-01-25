@@ -22,12 +22,16 @@ h5,
 h6 {
   @apply tracking-tight;
 }
+button:not([role]){
+  @apply border;
+  @apply border-transparent;
+}
 
-input[type="checkbox"]:focus-visible,
-[role="checkbox"]:focus-visible,
-[role="radio"]:focus-visible,
-[role="combobox"]:focus-visible,
-[role="switch"]:focus-visible,
+input[type="checkbox"]:focus-visible;
+[role="checkbox"]:focus-visible;
+[role="radio"]:focus-visible;
+[role="combobox"]:focus-visible;
+[role="switch"]:focus-visible;
 button:not([role]):focus-visible {
   @apply outline-none;
   @apply ring;
@@ -172,6 +176,11 @@ div[role="dialog"]::-webkit-scrollbar-thumb {
 
 .react-loading-skeleton {
   z-index: unset !important;
+}
+
+/* For the mail icon */
+svg:has(> #Mail) {
+  stroke-width: 1;
 }
 
 /* For the tracked repo wizard button focus states */
