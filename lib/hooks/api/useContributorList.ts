@@ -1,6 +1,6 @@
 import useSWR, { Fetcher } from "swr";
 import { useState } from "react";
-import publicApiFetcher from "lib/utils/public-api-fetcher";
+import { publicApiFetcher } from "lib/utils/public-api-fetcher";
 
 export function convertToContributors(rawContributors: DBListContributor[] = []): DbPRContributor[] {
   const contributors = rawContributors
