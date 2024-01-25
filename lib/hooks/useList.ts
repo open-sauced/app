@@ -15,7 +15,7 @@ interface PaginatedListContributorsResponse {
 }
 
 interface ListFetchQuery extends Query {
-  shouldFetch: boolean;
+  shouldFetch?: boolean;
 }
 
 const useFetchAllLists = ({ shouldFetch = true, range = 30, limit = 10, page = 1 }: ListFetchQuery) => {

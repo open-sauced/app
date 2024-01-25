@@ -1,4 +1,3 @@
-import { useState } from "react";
 import useSWR, { Fetcher } from "swr";
 import { useRouter } from "next/router";
 
@@ -18,11 +17,15 @@ interface PaginatedResponse {
  * @param range
  * @returns
  */
-const useContributors = (limit = 10, repoIds: number[] = []) => {
-  const router = useRouter();
-  const [page, setPage] = useState(1);
 
-  const { pageId, selectedFilter, range } = router.query;
+interface ContributorsQuery extends Query {
+  repoIds?: number[];
+}
+
+const useContributors = ({ limit = 10, repoIds = [], range = 30, page = 1 }: ContributorsQuery) => {
+  const router = useRouter();
+
+  const { pageId, selectedFilter } = router.query;
   const topic = pageId as string;
   const filterQuery = getFilterQuery(selectedFilter);
   const query = new URLSearchParams(filterQuery);
@@ -48,7 +51,7 @@ const useContributors = (limit = 10, repoIds: number[] = []) => {
     query.delete("topic");
   }
 
-  query.set("range", `${range ?? 30}`);
+  query.set("range", `${range}`);
 
   const baseEndpoint = "contributors/search";
   const endpointString = `${baseEndpoint}?${query.toString()}`;
@@ -67,8 +70,6 @@ const useContributors = (limit = 10, repoIds: number[] = []) => {
     isLoading: isLoading || (!error && !data),
     isError: !!error,
     mutate,
-    page,
-    setPage,
   };
 };
 

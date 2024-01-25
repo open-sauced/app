@@ -34,10 +34,16 @@ interface ContributorProps {
 
 const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
   const router = useRouter();
-  const limit = router.query.limit as string;
+  const { range = 30, page = 1, limit = 10 } = router.query;
   const topic = router.query.pageId as string;
 
-  const { data, meta, setPage, isError, isLoading } = useContributors(Number(limit ?? 10), repositories);
+  const { data, meta, isError, isLoading } = useContributors({
+    repoIds: repositories,
+    page: +page,
+    limit: +limit,
+    range: +range,
+  });
+
   const { toast } = useToast();
   const [layout, setLayout] = useState<ToggleValue>("list");
   const [selectedContributors, setSelectedContributors] = useState<DbPRContributor[]>([]);
@@ -84,7 +90,7 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
       });
 
   const PopOverListContent = () => {
-    const { data } = useFetchAllLists();
+    const { data } = useFetchAllLists({ limit: +limit, page: +page, range: +range });
     const [loading, setLoading] = useState(false);
 
     const handleAddContributorsToList = async () => {
@@ -267,7 +273,7 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
                 totalPage={meta.pageCount}
                 page={meta.page}
                 onPageChange={function (page: number): void {
-                  setPage(page);
+                  setQueryParams({ page: `${page}` });
                 }}
                 divisor={true}
                 goToPage

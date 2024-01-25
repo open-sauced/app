@@ -15,10 +15,15 @@ interface DashboardProps {
 }
 
 const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
-  const { data: insightsData, isLoading } = useInsights(repositories);
-  const { data: contributorData, meta: contributorMeta } = useContributors(undefined, repositories);
   const router = useRouter();
-  const { range = 30 } = router.query;
+  const { range = 30, page = 1, limit = 10 } = router.query;
+  const { data: insightsData, isLoading } = useInsights(repositories);
+  const { data: contributorData, meta: contributorMeta } = useContributors({
+    repoIds: repositories,
+    page: +page,
+    limit: +limit,
+    range: +range,
+  });
 
   const compare1 = getInsights(insightsData, 30);
   const compare2 = getInsights(insightsData, 60);

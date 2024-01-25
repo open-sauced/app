@@ -15,8 +15,8 @@ type ContributorPrMap = { [contributor: string]: DbRepoPR };
 
 const Activity = ({ repositories }: { repositories: number[] | undefined }) => {
   const router = useRouter();
-  const { range } = router.query;
-  const { data: prData, isError: prError } = usePullRequests(undefined, repositories, Number(range));
+  const { range = 30 } = router.query;
+  const { data: prData, isError: prError } = usePullRequests({ repoIds: repositories, range: +range });
   const [showBots, setShowBots] = useState(false);
   const isMobile = useMediaQuery("(max-width:720px)");
   const [prStateFilter, setPrStateFilter] = useState<PrStatusFilter>("all");

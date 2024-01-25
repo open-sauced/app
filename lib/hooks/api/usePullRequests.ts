@@ -1,4 +1,3 @@
-import { useState } from "react";
 import useSWR, { Fetcher } from "swr";
 import { useRouter } from "next/router";
 
@@ -10,10 +9,13 @@ interface PaginatedResponse {
   readonly meta: Meta;
 }
 
-const usePullRequests = (intialLimit = 1000, repoIds: number[] = [], range = 30) => {
+interface PullRequestsQuery extends Query {
+  repoIds?: number[];
+}
+
+const usePullRequests = ({ limit = 1000, repoIds = [], page = 1, range = 30 }: PullRequestsQuery) => {
   const router = useRouter();
-  const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(intialLimit);
+
   const { pageId, selectedFilter } = router.query;
   const topic = pageId as string;
   const filterQuery = getFilterQuery(selectedFilter);
@@ -56,9 +58,6 @@ const usePullRequests = (intialLimit = 1000, repoIds: number[] = [], range = 30)
     isLoading: !error && !data,
     isError: !!error,
     mutate,
-    page,
-    setPage,
-    setLimit,
   };
 };
 

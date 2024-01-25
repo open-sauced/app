@@ -25,7 +25,7 @@ interface RepositoriesProps {
 const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
   const { user, signIn } = useSupabaseAuth();
   const router = useRouter();
-  const { pageId, toolName, selectedFilter, userOrg, range = 30, limit = 10 } = router.query;
+  const { pageId, toolName, selectedFilter, userOrg, range = 30, limit = 10, page = 1 } = router.query;
   const username = userOrg ? user?.user_metadata.user_name : undefined;
   const topic = pageId as string;
 
@@ -36,8 +36,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
     meta: repoMeta,
     isError: repoListIsError,
     isLoading: repoListIsLoading,
-    setPage,
-  } = useRepositories(repositories, Number(range), Number(limit));
+  } = useRepositories({ repoIds: repositories, range: +range, limit: +limit, page: +page });
   const filteredRepoNotIndexed = selectedFilter && !repoListIsLoading && !repoListIsError && repoListData.length === 0;
   const [selectedRepos, setSelectedRepos] = useState<DbRepo[]>([]);
 
@@ -89,8 +88,9 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
   };
 
   useEffect(() => {
-    setPage(1);
-  }, [selectedFilter, setPage]);
+    //  remove page from query params to reset to page 1
+    setQueryParams({}, ["page"]);
+  }, [selectedFilter]);
 
   return (
     <div className="flex flex-col w-full gap-4">
@@ -187,7 +187,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
                     totalPage={repoMeta.pageCount}
                     page={repoMeta.page}
                     onPageChange={function (page: number): void {
-                      setPage(page);
+                      setQueryParams({ page: `${page}` });
                     }}
                     divisor={true}
                     goToPage
