@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import publicApiFetcher from "lib/utils/public-api-fetcher";
 import getFilterQuery from "lib/utils/get-filter-query";
 
-interface PaginatedResponse {
+export interface PaginatedResponse {
   readonly data: DbRepo[];
   readonly meta: Meta;
 }
@@ -13,7 +13,7 @@ interface PaginatedResponse {
 const useRepositories = (repoIds: number[] = [], range = 30, limit = 10) => {
   const router = useRouter();
   const [page, setPage] = useState(1);
-
+  const [currentRepoIds, setCurrentRepoIds] = useState<number[]>(repoIds);
   const { pageId, selectedFilter } = router.query;
   const topic = pageId as string;
   const filterQuery = getFilterQuery(selectedFilter);
@@ -39,6 +39,10 @@ const useRepositories = (repoIds: number[] = [], range = 30, limit = 10) => {
     query.delete("topic");
     query.set("repoIds", repoIds.join(","));
   }
+  if (currentRepoIds?.length > 0) {
+    query.delete("topic");
+    query.set("repoIds", currentRepoIds.join(","));
+  }
 
   if (query.get("repo")) {
     query.delete("topic");
@@ -60,6 +64,7 @@ const useRepositories = (repoIds: number[] = [], range = 30, limit = 10) => {
     mutate,
     page,
     setPage,
+    setCurrentRepoIds,
   };
 };
 
