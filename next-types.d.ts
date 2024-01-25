@@ -277,6 +277,14 @@ interface GhUser {
   readonly repos_url: string;
 }
 
+interface GhRepo {
+  id: number;
+  name: string;
+  full_name: string;
+  private: boolean;
+  owner: GhUser;
+}
+
 interface GhPRInfoResponse {
   readonly head: { repo: { name: string; full_name: string }; user: { login: string; full_name: string } };
   readonly title: string;
