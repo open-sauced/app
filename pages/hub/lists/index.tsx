@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { GetServerSidePropsContext } from "next";
+import { useRouter } from "next/router";
 import { WithPageLayout } from "interfaces/with-page-layout";
 import HubLayout from "layouts/hub";
 
@@ -18,6 +19,7 @@ import { useFetchAllLists } from "lib/hooks/useList";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import useFetchFeaturedLists from "lib/hooks/useFetchFeaturedLists";
 import { getAllFeatureFlags } from "lib/utils/server/feature-flags";
+import { setQueryParams } from "lib/utils/query-params";
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const supabase = createPagesServerClient(context);
@@ -40,8 +42,15 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
 const DeleteListPageModal = dynamic(() => import("components/organisms/ListPage/DeleteListPageModal"));
 
 const ListsHub: WithPageLayout = () => {
+  const router = useRouter();
+
+  const { page = 1, limit = 10 } = router.query;
   const { sessionToken } = useSupabaseAuth();
-  const { data, isLoading, meta, setPage, mutate } = useFetchAllLists(30, !!sessionToken);
+  const { data, isLoading, meta, mutate } = useFetchAllLists({
+    shouldFetch: !!sessionToken,
+    page: +page,
+    limit: +limit,
+  });
   const { data: featuredListsData, isLoading: featuredListsLoading } = useFetchFeaturedLists(
     sessionToken ? false : true
   );
@@ -145,7 +154,7 @@ const ListsHub: WithPageLayout = () => {
           totalPage={meta.pageCount}
           page={meta.page}
           onPageChange={function (page: number): void {
-            setPage(page);
+            setQueryParams({ page: `${page}` });
           }}
           divisor={true}
           goToPage

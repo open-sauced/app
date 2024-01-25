@@ -14,10 +14,11 @@ interface PaginatedListContributorsResponse {
   meta: Meta;
 }
 
-const useFetchAllLists = (range = 30, shouldFetch = true) => {
-  const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(10);
+interface ListFetchQuery extends Query {
+  shouldFetch: boolean;
+}
 
+const useFetchAllLists = ({ shouldFetch = true, range = 30, limit = 10, page = 1 }: ListFetchQuery) => {
   const query = new URLSearchParams();
 
   query.set("page", `${page}`);
@@ -38,8 +39,6 @@ const useFetchAllLists = (range = 30, shouldFetch = true) => {
     isError: !!error,
     meta: data?.meta ?? { itemCount: 0, limit: 0, page: 0, hasNextPage: false, hasPreviousPage: false, pageCount: 0 },
     mutate,
-    setPage,
-    setLimit,
   };
 };
 

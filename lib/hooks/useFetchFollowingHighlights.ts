@@ -5,12 +5,11 @@ interface UseFetchUserHighlightsResponse {
   data: DbHighlight[];
   meta: Meta;
 }
-interface Query {
-  page?: number;
-  limit?: number;
+
+interface FollowingHighlightQuery extends Query {
   repo?: string;
 }
-const useFetchFollowingHighlights = ({ page = 1, limit = 10, repo = "" }: Query) => {
+const useFetchFollowingHighlights = ({ page = 1, limit = 10, repo = "" }: FollowingHighlightQuery) => {
   const query = new URLSearchParams();
 
   query.append("page", `${page}`);

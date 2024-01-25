@@ -19,6 +19,7 @@ import Text from "components/atoms/Typography/text";
 import useFetchFeaturedInsights from "lib/hooks/useFetchFeaturedInsights";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
 import { getAllFeatureFlags } from "lib/utils/server/feature-flags";
+import { setQueryParams } from "lib/utils/query-params";
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const supabase = createPagesServerClient(context);
@@ -41,9 +42,11 @@ const InsightsHub: WithPageLayout = () => {
   const router = useRouter();
   const { user } = useSupabaseAuth();
 
+  const { page = 1, limit = 10 } = router.query;
+
   const { toast } = useToast();
   const { session } = useSession(true);
-  const { data, meta, isError, isLoading, setPage } = useUserInsights(!!user);
+  const { data, meta, isError, isLoading } = useUserInsights({ fetch: !!user, page: +page, limit: +limit });
   const {
     data: featuredInsightsData,
     isError: featuredInsightsError,
@@ -154,7 +157,7 @@ const InsightsHub: WithPageLayout = () => {
           totalPage={meta.pageCount}
           page={meta.page}
           onPageChange={function (page: number): void {
-            setPage(page);
+            setQueryParams({ page: `${page}` });
           }}
           divisor={true}
           goToPage
