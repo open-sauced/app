@@ -36,7 +36,11 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
   });
 
   if (error) {
-    return { notFound: true };
+    if (error.status === 404) {
+      return { notFound: true };
+    }
+
+    throw new Error(`Error loading workspaces page with ID ${workspaceId}`);
   }
 
   return { props: { workspace: data } };
