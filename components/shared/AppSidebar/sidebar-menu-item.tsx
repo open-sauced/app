@@ -12,7 +12,8 @@ const SidebarMenuItem = ({ title, icon, type, url: href, isActive }: MenuItemPro
   return (
     <li
       className={
-        "py-2 px-3 hover:bg-slate-50 rounded-tr-md rounded-br-md transition-colors" + (isActive ? " bg-slate-100" : "")
+        "py-1 px-3 hover:bg-slate-100 rounded-tr-md rounded-br-md transition-colors text-sm" +
+        (isActive ? " bg-slate-100" : "")
       }
     >
       <Link title={title} href={href} className="items-center flex-auto flex-row align-middle block">

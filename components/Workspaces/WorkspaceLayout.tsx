@@ -4,7 +4,7 @@ import { AppSideBar } from "components/shared/AppSidebar/AppSidebar";
 export const WorkspaceLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div
-      className="grid grid-cols-[20rem,1fr] grid-rows-[3.3rem,auto,1fr]"
+      className="grid grid-cols-[18rem,1fr] grid-rows-[3.3rem,auto,1fr]"
       style={{
         gridTemplateAreas: `
       "header header"

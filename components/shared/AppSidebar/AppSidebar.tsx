@@ -12,7 +12,6 @@ import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import SingleSelect from "components/atoms/Select/single-select";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 import { InsightsPanel } from "./InsightsPanel";
-import SidebarMenuItem from "./sidebar-menu-item";
 
 const SidebarLoader = () => {
   return (
@@ -60,9 +59,9 @@ export const AppSideBar = () => {
   });
 
   return (
-    <div className="fixed top-0 pt-12 bg-white flex flex-col gap-8 justify-between max-w-xs w-80 h-full">
+    <div className="fixed top-0 pt-14 bg-white flex flex-col gap-8 justify-between max-w-xs w-72 h-full border-r border-slate-100">
       <div className="grid gap-4 mt-4 px-4">
-        <label className="flex flex-col gap-2 w-max">
+        <label className="flex flex-col gap-2 w-full mr-2">
           <span className="sr-only">Workspace</span>
           <SingleSelect
             options={[
@@ -86,39 +85,54 @@ export const AppSideBar = () => {
             }}
           />
         </label>
-        <h2 className="flex gap-1 items-center py-2 pr-3 hover:bg-slate-50 rounded-tr-md rounded-br-md transition-colors cursor-pointer">
+        <h2 className="text-sm font-medium flex gap-1 items-center py-2 px-2 hover:bg-slate-100 rounded-md transition-colors cursor-pointer">
           <BiHomeAlt className="w-5 h-5 text-slate-400" />
           Home
         </h2>
-        <h3 className="uppercase text-gray-500 text-xs font-medium flex gap-1 items-center tracking-wide">Insights</h3>
-        <InsightsPanel
-          title="Repository Insights"
-          username={username}
-          insights={repoInsights}
-          type="repo"
-          isLoading={insightsLoading}
-        />
-        <InsightsPanel
-          title="Contributor Insights"
-          username={username}
-          insights={contributorInsights}
-          type="list"
-          isLoading={insightsLoading}
-        />
+        <div className="grid gap-2 mb-6">
+          <h3 className="uppercase text-gray-500 text-xs font-medium flex gap-1 items-center tracking-wide px-2">
+            Insights
+          </h3>
+          <div className="grid gap-2">
+            <InsightsPanel
+              title="Repository Insights"
+              username={username}
+              insights={repoInsights}
+              type="repo"
+              isLoading={insightsLoading}
+            />
+            <InsightsPanel
+              title="Contributor Insights"
+              username={username}
+              insights={contributorInsights}
+              type="list"
+              isLoading={insightsLoading}
+            />
+          </div>
+        </div>
 
-        <h3 className="uppercase text-gray-500 text-xs font-medium tracking-wide">Shared with you</h3>
+        <h3 className="uppercase text-gray-500 text-xs font-medium tracking-wide px-2">Shared with you</h3>
       </div>
-      <ul className="list-none mb-4 px-1">
-        <SidebarMenuItem
+
+      <ul className="list-none mb-4 px-2">
+        <h2 className="text-sm font-medium flex gap-1 items-center py-2 px-2 hover:bg-slate-100 rounded-md transition-colors cursor-pointer">
+          <LifebuoyIcon className="w-5 h-5 text-slate-400 inline-flex mr-1 " />
+          Support
+        </h2>
+        <h2 className="text-sm font-medium flex gap-1 items-center py-2 px-2 hover:bg-slate-100 rounded-md transition-colors cursor-pointer">
+          <Cog8ToothIcon className="w-5 h-5 text-slate-400 inline-flex mr-1" />
+          Settings
+        </h2>
+        {/* <SidebarMenuItem
           title="Support"
           url=""
-          icon={<LifebuoyIcon className="w-5 h-5 text-slate-400 inline-flex mr-1" />}
+          icon={<LifebuoyIcon className="w-5 h-5 text-slate-400 inline-flex mr-1 " />}
         />
         <SidebarMenuItem
           title="Settings"
           url="/user/settings"
           icon={<Cog8ToothIcon className="w-5 h-5 text-slate-400 inline-flex mr-1" />}
-        />
+        /> */}
       </ul>
     </div>
   );
