@@ -25,7 +25,7 @@ interface RepositoriesProps {
 const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
   const { user, signIn } = useSupabaseAuth();
   const router = useRouter();
-  const { pageId, toolName, selectedFilter, userOrg, range, limit } = router.query;
+  const { pageId, toolName, selectedFilter, userOrg, range = 30, limit = 10 } = router.query;
   const username = userOrg ? user?.user_metadata.user_name : undefined;
   const topic = pageId as string;
 
@@ -37,7 +37,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
     isError: repoListIsError,
     isLoading: repoListIsLoading,
     setPage,
-  } = useRepositories(repositories, Number(range ?? 30), Number(limit ?? 10));
+  } = useRepositories(repositories, Number(range), Number(limit));
   const filteredRepoNotIndexed = selectedFilter && !repoListIsLoading && !repoListIsError && repoListData.length === 0;
   const [selectedRepos, setSelectedRepos] = useState<DbRepo[]>([]);
 
@@ -80,10 +80,11 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
   };
 
   const handleOnSearch = (search?: string) => {
+    if (selectedFilter && !search) {
+      return router.push(`/${topic}/${toolName}`);
+    }
     if (search && /^[a-zA-Z0-9\-\.]+\/[a-zA-Z0-9\-\.]+$/.test(search)) {
       return router.push(`/${topic}/${toolName}/filter/${search}`);
-    } else {
-      return router.push(`/${topic}/${toolName}`);
     }
   };
 
@@ -130,7 +131,7 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
               <TableTitle>Contributors</TableTitle>
             </div>
             <div className={clsx(classNames.cols.last30days, "hidden xl:flex")}>
-              <TableTitle>Last 30 Days</TableTitle>
+              <TableTitle>Last {range} Days</TableTitle>
             </div>
           </div>
 

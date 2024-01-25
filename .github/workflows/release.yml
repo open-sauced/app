@@ -87,7 +87,7 @@ jobs:
 
       - name: "🚀 release"
         id: semantic-release
-        uses: open-sauced/release@v1
+        uses: open-sauced/release@v2
         env:
           GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
           HUSKY: 0

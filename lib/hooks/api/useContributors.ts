@@ -18,10 +18,10 @@ interface PaginatedResponse {
  * @param range
  * @returns
  */
-const useContributors = (intialLimit = 10, repoIds: number[] = []) => {
+const useContributors = (limit = 10, repoIds: number[] = []) => {
   const router = useRouter();
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(intialLimit);
+
   const { pageId, selectedFilter, range } = router.query;
   const topic = pageId as string;
   const filterQuery = getFilterQuery(selectedFilter);
@@ -53,20 +53,22 @@ const useContributors = (intialLimit = 10, repoIds: number[] = []) => {
   const baseEndpoint = "contributors/search";
   const endpointString = `${baseEndpoint}?${query.toString()}`;
 
-  const { data, error, mutate } = useSWR<PaginatedResponse, Error>(
+  const { data, error, mutate, isLoading } = useSWR<PaginatedResponse, Error>(
     endpointString,
-    publicApiFetcher as Fetcher<PaginatedResponse, Error>
+    publicApiFetcher as Fetcher<PaginatedResponse, Error>,
+    {
+      keepPreviousData: true,
+    }
   );
 
   return {
     data: data?.data ?? [],
     meta: data?.meta ?? { itemCount: 0, limit: 0, page: 0, hasNextPage: false, hasPreviousPage: false, pageCount: 0 },
-    isLoading: !error && !data,
+    isLoading: isLoading || (!error && !data),
     isError: !!error,
     mutate,
     page,
     setPage,
-    setLimit,
   };
 };
 

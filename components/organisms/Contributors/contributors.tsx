@@ -10,7 +10,7 @@ import TableHeader from "components/molecules/TableHeader/table-header";
 import { calcDistanceFromToday } from "lib/utils/date-utils";
 
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
-import LimitSelect from "components/atoms/Select/limit-select";
+import LimitSelect, { LimitSelectMap } from "components/atoms/Select/limit-select";
 
 import useContributors from "lib/hooks/api/useContributors";
 import { getAvatarByUsername } from "lib/utils/github";
@@ -21,8 +21,10 @@ import Button from "components/atoms/Button/button";
 import { addListContributor, useFetchAllLists } from "lib/hooks/useList";
 import { Command, CommandGroup, CommandInput, CommandItem } from "components/atoms/Cmd/command";
 import { useToast } from "lib/hooks/useToast";
+import { useMediaQuery } from "lib/hooks/useMediaQuery";
 
 import ClientOnly from "components/atoms/ClientOnly/client-only";
+import { setQueryParams } from "lib/utils/query-params";
 import ContributorCard from "../ContributorCard/contributor-card";
 import ContributorTable from "../ContributorsTable/contributors-table";
 
@@ -32,14 +34,17 @@ interface ContributorProps {
 
 const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
   const router = useRouter();
+  const limit = router.query.limit as string;
   const topic = router.query.pageId as string;
 
-  const { data, meta, setPage, setLimit, isError, isLoading } = useContributors(10, repositories);
+  const { data, meta, setPage, isError, isLoading } = useContributors(Number(limit ?? 10), repositories);
   const { toast } = useToast();
   const [layout, setLayout] = useState<ToggleValue>("list");
   const [selectedContributors, setSelectedContributors] = useState<DbPRContributor[]>([]);
   const [selectedListIds, setSelectedListIds] = useState<string[]>([]);
   const [popoverOpen, setPopoverOpen] = useState(false);
+
+  const isMobile = useMediaQuery("(max-width: 768px)");
 
   const contributors = data.map((pr) => {
     return {
@@ -190,9 +195,11 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
         <div className="grid w-full gap-3 grid-cols-automobile md:grid-cols-autodesktop">
           {isLoading ? <SkeletonWrapper height={210} radius={12} count={9} /> : ""}
           {isError ? <>An error occurred!..</> : ""}
-          {contributorArray.map((contributor, index) => (
-            <ContributorCard key={index} contributor={{ ...contributor }} topic={topic} repositories={repositories} />
-          ))}
+          {!isLoading &&
+            !isError &&
+            contributorArray.map((contributor, index) => (
+              <ContributorCard key={index} contributor={{ ...contributor }} topic={topic} repositories={repositories} />
+            ))}
         </div>
       ) : (
         <div className="lg:min-w-[1150px]">
@@ -238,8 +245,9 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
             { name: "50 per page", value: "50" },
           ]}
           className="!w-36 ml-auto md:hidden overflow-x-hidden"
+          defaultValue={String(limit ?? 10) as LimitSelectMap}
           onChange={function (limit: string): void {
-            setLimit(Number(limit));
+            setQueryParams({ limit });
           }}
         />
 
@@ -252,7 +260,8 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
           <div>
             <div className="flex flex-col gap-4">
               <Pagination
-                pages={[]}
+                pages={isMobile ? [] : new Array(meta.pageCount).fill(0).map((_, index) => index + 1)}
+                pageSize={5}
                 hasNextPage={meta.hasNextPage}
                 hasPreviousPage={meta.hasPreviousPage}
                 totalPage={meta.pageCount}

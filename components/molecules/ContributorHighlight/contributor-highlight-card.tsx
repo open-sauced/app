@@ -121,6 +121,7 @@ const ContributorHighlightCard = ({
   const [addTaggedRepoFormOpen, setAddTaggedRepoFormOpen] = useState(false);
   const [host, setHost] = useState("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [emojiDropdownOpen, setEmojiDropdownOpen] = useState(false);
   const { follow, unFollow, isError } = useFollowUser(
     dropdownOpen && loggedInUser?.user_metadata.user_name !== user ? user : ""
   );
@@ -613,19 +614,27 @@ const ContributorHighlightCard = ({
       </div>
 
       {/* Generated OG card section */}
-      {type === "pull_request" || type === "issue" ? (
-        <GhOpenGraphImg githubLink={highlightLink} />
-      ) : (
-        <DevToSocialImg blogLink={highlightLink} />
-      )}
+      <a href={highlightLink} target="_blank" rel="noreferrer" aria-hidden="true">
+        {type === "pull_request" || type === "issue" ? (
+          <GhOpenGraphImg githubLink={highlightLink} />
+        ) : (
+          <DevToSocialImg blogLink={highlightLink} />
+        )}
+      </a>
 
       <div className="flex flex-wrap items-center gap-1">
-        <DropdownMenu modal={false}>
-          <DropdownMenuTrigger className="p-1   rounded-full data-[state=open]:bg-light-slate-7">
+        <DropdownMenu modal={false} open={emojiDropdownOpen}>
+          <DropdownMenuTrigger
+            className="p-1 rounded-full data-[state=open]:bg-light-slate-7"
+            onClick={() => setEmojiDropdownOpen(!emojiDropdownOpen)}
+          >
             <HiOutlineEmojiHappy className="w-5 h-5" />
           </DropdownMenuTrigger>
-
-          <DropdownMenuContent className="flex flex-row gap-1 rounded-3xl" side="right">
+          <DropdownMenuContent
+            className="flex flex-row gap-1 rounded-3xl"
+            side="right"
+            onClick={() => setEmojiDropdownOpen(false)}
+          >
             {emojis &&
               emojis.length > 0 &&
               emojis.map(({ id, name }) => (
@@ -648,17 +657,17 @@ const ContributorHighlightCard = ({
               direction="top"
               content={`${getEmojiReactors(reaction_users)} reacted with ${getEmojiNameById(emoji_id)} emoji`}
             >
-              <div
+              <button
                 className={`px-1 py-0 md:py-0.5 hover:bg-light-slate-6 transition  md:px-1.5 shrink-0 border flex items-center justify-center rounded-full cursor-pointer ${
                   isUserReaction(emoji_id) && "bg-light-slate-6"
                 }`}
                 onClick={async () => (sessionToken ? handleUpdateReaction(emoji_id) : signIn({ provider: "github" }))}
               >
-                <span className="flex gap-1 items-center p-1">
-                  <Emoji className="text-xs text-orange-500 md:text-sm" text={`:${getEmojiNameById(emoji_id)}:`} />
-                  <span>{reaction_count}</span>
-                </span>
-              </div>
+                <Emoji
+                  className="text-xs text-orange-500 md:text-sm"
+                  text={`:${getEmojiNameById(emoji_id)}: ${reaction_count}`}
+                />
+              </button>
             </Tooltip>
           ))}
         <div className="ml-auto">

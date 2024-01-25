@@ -22,8 +22,8 @@ import SEO from "layouts/SEO/SEO";
 import { Toaster } from "components/molecules/Toaster/toaster";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
 import useSession from "lib/hooks/useSession";
-import PrivateWrapper from "layouts/private-wrapper";
 
+import { FeatureFlag } from "lib/utils/server/feature-flags";
 import type { AppProps } from "next/app";
 
 // Clear any service workers present
@@ -56,8 +56,8 @@ type ComponentWithPageLayout = AppProps & {
     PageLayout?: React.ComponentType<any>;
     SEO?: SEOobject;
     updateSEO?: (SEO: SEOobject) => void;
-    isPrivateRoute?: boolean;
   };
+  pageProps: AppProps["pageProps"] & { featureFlags: Record<FeatureFlag, boolean> };
 };
 
 function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
@@ -151,17 +151,15 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
         <Toaster />
         <SessionContextProvider supabaseClient={supabaseClient} initialSession={pageProps.initialSession}>
           <PostHogProvider client={posthog}>
-            <PrivateWrapper isPrivateRoute={Component.isPrivateRoute}>
-              <TipProvider>
-                {Component.PageLayout ? (
-                  <Component.PageLayout>
-                    <Component {...pageProps} />
-                  </Component.PageLayout>
-                ) : (
+            <TipProvider>
+              {Component.PageLayout ? (
+                <Component.PageLayout>
                   <Component {...pageProps} />
-                )}
-              </TipProvider>
-            </PrivateWrapper>
+                </Component.PageLayout>
+              ) : (
+                <Component {...pageProps} />
+              )}
+            </TipProvider>
           </PostHogProvider>
         </SessionContextProvider>
       </SWRConfig>

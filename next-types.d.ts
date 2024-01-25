@@ -283,6 +283,14 @@ interface GhUser {
   readonly repos_url: string;
 }
 
+interface GhRepo {
+  id: number;
+  name: string;
+  full_name: string;
+  private: boolean;
+  owner: GhUser;
+}
+
 interface GhPRInfoResponse {
   readonly head: { repo: { name: string; full_name: string }; user: { login: string; full_name: string } };
   readonly title: string;
@@ -349,7 +357,6 @@ interface DbUserList {
   readonly created_at: string;
   readonly updated_at: string;
 }
-
 interface DBList {
   id: string;
   user_id: number;
@@ -432,4 +439,13 @@ interface DbPullRequestGitHubEventsHistogram {
   active_prs: number;
   spam_prs: number;
   pr_velocity: number;
+}
+
+interface Workspace {
+  id: string;
+  name: string;
+  description: string;
+  created_at: string | null;
+  updated_at: string | null;
+  deleted_at: string | null;
 }

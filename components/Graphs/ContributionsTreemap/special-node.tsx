@@ -15,8 +15,8 @@ const NonMemoizedSpecialNode = <Datum extends object>({
   const [fullRepoName] = node.id.split(":");
 
   return (
-    <animated.div
-      className="absolute grid overflow-hidden border-solid cursor-pointer place-content-stretch"
+    <animated.button
+      className="absolute grid overflow-hidden border-solid place-content-stretch"
       style={{
         top: 0,
         left: 0,
@@ -26,6 +26,7 @@ const NonMemoizedSpecialNode = <Datum extends object>({
         borderWidth,
         borderColor: node.borderColor,
       }}
+      onClick={node.onClick}
     >
       <animated.div
         style={{
@@ -38,7 +39,6 @@ const NonMemoizedSpecialNode = <Datum extends object>({
         onMouseEnter={node.onMouseEnter}
         onMouseMove={node.onMouseMove}
         onMouseLeave={node.onMouseLeave}
-        onClick={node.onClick}
       />
       {showLabel && (
         <animated.div
@@ -50,15 +50,15 @@ const NonMemoizedSpecialNode = <Datum extends object>({
             placeItems: "flex-start",
           }}
         >
-          <div className="grid gap-2">
+          <div className="flex flex-col items-start">
             <div className="text-sm">{fullRepoName}</div>
-            <div className="text-xs font-normal" style={{ textOverflow: "ellipsis" }}>
-              {node.label}
+            <div className="text-xs whitespace-nowrap overflow-hidden overflow-ellipsis">
+              {node.label} contributions
             </div>
           </div>
         </animated.div>
       )}
-    </animated.div>
+    </animated.button>
   );
 };
 

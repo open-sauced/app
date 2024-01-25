@@ -10,7 +10,6 @@ const NewInsightPage: WithPageLayout = () => {
 };
 
 NewInsightPage.PageLayout = HubLayout;
-NewInsightPage.isPrivateRoute = true;
 NewInsightPage.SEO = {
   title: "Create Insight Page | Open Sauced Insights",
   description:

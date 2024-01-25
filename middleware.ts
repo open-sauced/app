@@ -2,6 +2,7 @@ import { createMiddlewareClient } from "@supabase/auth-helpers-nextjs";
 import { NextResponse } from "next/server";
 import { NextRequest } from "next/server";
 import { pathToRegexp } from "path-to-regexp";
+import { getAllFeatureFlags } from "lib/utils/server/feature-flags";
 
 // HACK: this is to get around the fact that the normal next.js middleware is not always functioning
 // correctly.
@@ -9,11 +10,12 @@ import { pathToRegexp } from "path-to-regexp";
 // prettier-ignore
 const pathsToMatch = [
   "/",
-  "/hub/insights/:path*",
+  "/hub/:path*",
   "/feed/",
   "/user/notifications",
   "/user/settings",
-  "/account-deleted"
+  "/account-deleted",
+  "/workspaces/:path*",
 ];
 
 const NO_ONBOARDING_PAYLOAD = {
@@ -45,7 +47,12 @@ const loadSession = async (request: NextRequest, sessionToken?: string) => {
 export async function middleware(req: NextRequest) {
   const res = NextResponse.next();
 
-  if (!pathsToMatch.some((matcher) => pathToRegexp(matcher).test(req.nextUrl.pathname))) {
+  if (
+    !pathsToMatch.some((matcher) => pathToRegexp(matcher).test(req.nextUrl.pathname)) ||
+    // if the path is hub/insights or hub/lists go to the page so logged out users can see demo insights or demo lists
+    req.nextUrl.pathname === "/hub/insights" ||
+    req.nextUrl.pathname === "/hub/lists"
+  ) {
     return res;
   }
 
@@ -62,6 +69,18 @@ export async function middleware(req: NextRequest) {
     await supabase.auth.signOut();
 
     return res;
+  }
+
+  // TODO: remove this once we've rolled this out to everyone.
+  // For now, only allowed users with the workspaces feature flag can access the workspaces pages.
+  if (session?.user && req.nextUrl.pathname.startsWith("/workspaces")) {
+    const featureFlags = await getAllFeatureFlags(Number(session?.user.user_metadata.sub));
+
+    if (featureFlags.workspaces) {
+      return res;
+    } else {
+      return NextResponse.rewrite(new URL("/404", req.url));
+    }
   }
 
   // Check auth condition

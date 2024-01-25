@@ -623,11 +623,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
               <Text className="my-4">Once you delete a page, you&#39;re past the point of no return.</Text>
 
               <div>
-                <Button
-                  onClick={() => setIsModalOpen(true)}
-                  variant="default"
-                  className="border bg-light-red-6 border-light-red-8 hover:bg-light-red-7 text-light-red-10"
-                >
+                <Button onClick={() => setIsModalOpen(true)} variant="destructive">
                   Delete page
                 </Button>
               </div>

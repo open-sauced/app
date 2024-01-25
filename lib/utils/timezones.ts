@@ -1201,5 +1201,5 @@ export const getTimeByTimezone = (offset: number) => {
   const time = new Date(utc + 3600000 * offset);
 
   // The formatted time in the specified timezone
-  return format(time, "hh:mmaaa");
+  return format(time, "hh:mm a");
 };
