@@ -20,6 +20,12 @@ interface DbRepo {
   readonly description: string;
 }
 
+interface Query {
+  page?: number;
+  limit?: number;
+  range?: number;
+}
+
 interface DbRecommendedInsightsRepo {
   readonly id: string;
   readonly size: number;
