@@ -18,7 +18,7 @@ export const WorkspaceLayout = ({ children }: { children: React.ReactNode }) => 
       <div style={{ gridArea: "sidebar" }}>
         <AppSideBar />
       </div>
-      <div className="px-8 pt-8" style={{ gridArea: "main" }}>
+      <div className="px-8 pt-8 pb-20" style={{ gridArea: "main" }}>
         {children}
       </div>
     </div>
