@@ -21,7 +21,7 @@ type Story = StoryObj<typeof SidebarMenuItem>;
 
 const baseProps: ComponentProps<typeof SidebarMenuItem> = {
   title: "My New List",
-  href: "/dashboard",
+  url: "/dashboard",
 };
 
 export const Default: Story = {
@@ -36,6 +36,6 @@ export const List: Story = {
   args: { ...baseProps, type: "list" },
 };
 
-export const Active: Story = {
-  args: { ...baseProps, isActive: true, type: "list" },
+export const IsActive: Story = {
+  args: { ...baseProps, type: "list", isActive: true },
 };
