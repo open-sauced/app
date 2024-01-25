@@ -91,7 +91,7 @@ const Highlights = ({ list, numberOfContributors, isOwner, highlights }: Highlig
   const router = useRouter();
   const repo = router.query.repo as string;
 
-  const { limit = 10, range = 30 } = router.query;
+  const { limit = 10, range = 30, page = 1 } = router.query;
   const topRef = useRef<HTMLDivElement>(null);
 
   const { data: emojis } = useFetchAllEmojis();
@@ -114,9 +114,10 @@ const Highlights = ({ list, numberOfContributors, isOwner, highlights }: Highlig
     listId: list?.id ?? "",
     initialData: highlights,
     repo,
-    range: range as number,
+    range: +range,
     contributor,
-    limit: limit as number,
+    limit: +limit,
+    page: +page,
   });
 
   function onSearch(searchTerm: string) {
