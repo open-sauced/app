@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { LifebuoyIcon, Cog8ToothIcon } from "@heroicons/react/24/outline";
 import { BiHomeAlt } from "react-icons/bi";
 import { useEffectOnce } from "react-use";
+import Link from "next/link";
 
 import useWorkspaces from "lib/hooks/api/useWorkspaces";
 
@@ -113,27 +114,24 @@ export const AppSideBar = () => {
 
         <h3 className="uppercase text-gray-500 text-xs font-medium tracking-wide px-2">Shared with you</h3>
       </div>
-
-      <ul className="list-none mb-4 px-2">
-        <h2 className="text-sm font-medium flex gap-1 items-center py-2 px-2 hover:bg-slate-100 rounded-md transition-colors cursor-pointer">
+      <div className="list-none mb-4 px-2">
+        <Link
+          title=""
+          href=""
+          className="text-sm font-medium flex gap-1 items-center py-2 px-2 hover:bg-slate-100 rounded-md transition-colors cursor-pointer tracking-tight"
+        >
           <LifebuoyIcon className="w-5 h-5 text-slate-400 inline-flex mr-1 " />
-          Support
-        </h2>
-        <h2 className="text-sm font-medium flex gap-1 items-center py-2 px-2 hover:bg-slate-100 rounded-md transition-colors cursor-pointer">
+          <span className="whitespace-nowrap overflow-hidden overflow-ellipsis inline-flex">Support</span>
+        </Link>
+        <Link
+          title=""
+          href=""
+          className="text-sm font-medium flex gap-1 items-center py-2 px-2 hover:bg-slate-100 rounded-md transition-colors cursor-pointer tracking-tight"
+        >
           <Cog8ToothIcon className="w-5 h-5 text-slate-400 inline-flex mr-1" />
-          Settings
-        </h2>
-        {/* <SidebarMenuItem
-          title="Support"
-          url=""
-          icon={<LifebuoyIcon className="w-5 h-5 text-slate-400 inline-flex mr-1 " />}
-        />
-        <SidebarMenuItem
-          title="Settings"
-          url="/user/settings"
-          icon={<Cog8ToothIcon className="w-5 h-5 text-slate-400 inline-flex mr-1" />}
-        /> */}
-      </ul>
+          <span className="whitespace-nowrap overflow-hidden overflow-ellipsis inline-flex">Settings</span>
+        </Link>
+      </div>
     </div>
   );
 };

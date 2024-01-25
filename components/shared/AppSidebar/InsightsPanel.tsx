@@ -2,8 +2,7 @@ import * as Collapsible from "@radix-ui/react-collapsible";
 import { FiChevronDown } from "react-icons/fi";
 import { Root, Thumb } from "@radix-ui/react-switch";
 import { useState } from "react";
-import { UsersIcon } from "@heroicons/react/24/solid";
-import { ChartBarSquareIcon } from "@heroicons/react/24/outline";
+import { ChartBarSquareIcon, UsersIcon } from "@heroicons/react/24/outline";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
 import SidebarMenuItem from "./sidebar-menu-item";
 
