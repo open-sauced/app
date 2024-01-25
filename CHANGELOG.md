@@ -5,6 +5,21 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.84.0-beta.6](https://github.com/open-sauced/insights/compare/v1.84.0-beta.5...v1.84.0-beta.6) (2024-01-25)
+
+
+### 🐛 Bug Fixes
+
+* add missing skeleton loader for insights panel ([#2524](https://github.com/open-sauced/insights/issues/2524)) ([ef39332](https://github.com/open-sauced/insights/commit/ef39332994f7f0438da1d84fcfa1ae8dcdf98345))
+* navigate to updated list after save ([#2517](https://github.com/open-sauced/insights/issues/2517)) ([9bd9baa](https://github.com/open-sauced/insights/commit/9bd9baadefbabb5e73553e10bfa3db5dadba7b6f))
+* now if a workspace settings page has an error, the error page is shown ([#2523](https://github.com/open-sauced/insights/issues/2523)) ([5241261](https://github.com/open-sauced/insights/commit/5241261b0b994800c7cd57655ad76a6046a5093f))
+* now the workspace creation uses the updated endpoint ([#2522](https://github.com/open-sauced/insights/issues/2522)) ([0a6df82](https://github.com/open-sauced/insights/commit/0a6df82b6f9a9e06c24899bbbac4d96ffd0b9395))
+
+
+### 🤖 Build System
+
+* update release action to use open-sauced/release v2 ([#2529](https://github.com/open-sauced/insights/issues/2529)) ([f513032](https://github.com/open-sauced/insights/commit/f5130327ed6f17259092ff459080e9b3950e25db))
+
 ## [1.84.0-beta.5](https://github.com/open-sauced/insights/compare/v1.84.0-beta.4...v1.84.0-beta.5) (2024-01-24)
 
 
