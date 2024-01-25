@@ -40,10 +40,8 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     data: { session },
   } = await supabase.auth.getSession();
   const bearerToken = session ? session.access_token : "";
-  const { listId, range: rawRange, limit: rawLimit } = ctx.params as FilterParams;
+  const { listId } = ctx.params as FilterParams;
 
-  const range = rawRange ? Number(rawRange) : 30;
-  const limit = rawLimit ? Number(rawLimit) : 20;
   const [{ data, error: contributorListError }, { data: list, error }] = await Promise.all([
     fetchApiData<PagedData<DBListContributor>>({
       path: `lists/${listId}/contributors?limit=1`,
@@ -72,8 +70,6 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     },
   };
 };
-
-// if no repoId is set,  want the id
 
 const getTreemapData = ({
   orgId,
@@ -132,7 +128,8 @@ const getTreemapData = ({
 
 const ListActivityPage = ({ list, numberOfContributors, isError, isOwner, featureFlags }: ContributorListPageProps) => {
   const router = useRouter();
-  const range = router.query.range as string;
+  const { range = 30, limit = 20 } = router.query;
+
   const {
     data: contributorStats,
     isLoading,

@@ -1,5 +1,4 @@
 import useSWR, { Fetcher } from "swr";
-import { useState } from "react";
 import publicApiFetcher from "lib/utils/public-api-fetcher";
 
 export function convertToContributors(rawContributors: DBListContributor[] = []): DbPRContributor[] {
@@ -17,28 +16,19 @@ export function convertToContributors(rawContributors: DBListContributor[] = [])
   return contributors;
 }
 
-export const useContributorsList = ({
-  listId,
-  initialData,
-  initialPage = 1,
-  defaultLimit = 10,
-  defaultRange = "30",
-}: {
-  listId: string | undefined;
+interface ContributorsQuery extends Query {
+  listId?: string;
   initialData?: {
     data: DbPRContributor[];
     meta: Meta;
   };
-  initialPage?: number;
-  defaultLimit?: number;
-  defaultRange?: string;
-}) => {
-  const [page, setPage] = useState(initialPage);
+}
 
+export const useContributorsList = ({ listId, initialData, page = 1, limit = 10, range = 30 }: ContributorsQuery) => {
   const query = new URLSearchParams();
-  query.append("page", page.toString());
-  query.append("limit", `${defaultLimit}`);
-  query.append("range", defaultRange ?? "30");
+  query.append("page", `${page}`);
+  query.append("limit", `${limit}`);
+  query.append("range", `${range}`);
 
   const { data, error, mutate } = useSWR<any>(
     listId ? `lists/${listId}/contributors?${query}` : null,
@@ -50,7 +40,6 @@ export const useContributorsList = ({
   const contributors = convertToContributors(data?.data);
 
   return {
-    setPage,
     data: data ? { data: contributors, meta: data.meta } : { data: [], meta: {} },
     isLoading: !error && !data,
     isError: !!error,

@@ -11,6 +11,7 @@ import { fetchApiData, validateListPath } from "helpers/fetchApiData";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
 import { useContributorsList } from "lib/hooks/api/useContributorList";
 import ContributorsList from "components/organisms/ContributorsList/contributors-list";
+import { setQueryParams } from "lib/utils/query-params";
 
 interface ListsOverviewProps {
   list: DBList;
@@ -27,8 +28,8 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   } = await supabase.auth.getSession();
   const bearerToken = session ? session.access_token : "";
 
-  const { listId } = ctx.params as { listId: string };
-  const limit = 10; // Can pull this from the querystring in the future
+  const { listId, limit = 10 } = ctx.params as { listId: string; limit: string };
+
   const [{ data, error: contributorListError }, { data: list, error }] = await Promise.all([
     fetchApiData<PagedData<DBListContributor>>({
       path: `lists/${listId}/contributors?limit=${limit}`,
@@ -58,16 +59,16 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 
 const ListsOverview = ({ list, numberOfContributors, isOwner, isError }: ListsOverviewProps): JSX.Element => {
   const router = useRouter();
-  const { listId, range, limit } = router.query;
+  const { listId, range = 30, limit = 10, page = 1 } = router.query;
 
   const {
     isLoading,
-    setPage,
     data: { data: contributors, meta },
   } = useContributorsList({
     listId: list?.id,
-    defaultRange: range ? (range as string) : "30",
-    defaultLimit: limit ? (limit as unknown as number) : 10,
+    range: +range,
+    limit: +limit,
+    page: +page,
   });
 
   const {
@@ -158,8 +159,8 @@ const ListsOverview = ({ list, numberOfContributors, isOwner, isError }: ListsOv
                     contributors={contributors}
                     meta={meta}
                     isLoading={isLoading}
-                    setPage={setPage}
-                    range={String(range ?? "30")}
+                    setPage={(page) => setQueryParams({ page: `${page}` })}
+                    range={range as string}
                   />
                 </ErrorBoundary>
               )}
