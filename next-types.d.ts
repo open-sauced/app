@@ -277,6 +277,14 @@ interface GhUser {
   readonly repos_url: string;
 }
 
+interface GhRepo {
+  id: number;
+  name: string;
+  full_name: string;
+  private: boolean;
+  owner: GhUser;
+}
+
 interface GhPRInfoResponse {
   readonly head: { repo: { name: string; full_name: string }; user: { login: string; full_name: string } };
   readonly title: string;
@@ -396,4 +404,13 @@ interface GhOrgTeam {
 interface GhOrgTeamMember {
   id: number;
   login: string;
+}
+
+interface Workspace {
+  id: string;
+  name: string;
+  description: string;
+  created_at: string | null;
+  updated_at: string | null;
+  deleted_at: string | null;
 }
