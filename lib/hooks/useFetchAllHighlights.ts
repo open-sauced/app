@@ -6,8 +6,7 @@ interface UseFetchUserHighlightsResponse {
   data: DbHighlight[];
   meta: Meta;
 }
-const useFetchAllHighlights = (repo = "") => {
-  const [page, setPage] = useState(1);
+const useFetchAllHighlights = (repo = "", page = 1) => {
   const [limit, setLimit] = useState(10);
 
   const pageQuery = page ? `page=${page}` : "";
@@ -24,7 +23,6 @@ const useFetchAllHighlights = (repo = "") => {
     meta: data?.meta ?? { itemCount: 0, limit: 0, page: 0, hasNextPage: false, hasPreviousPage: false, pageCount: 0 },
     isLoading: !error && !data,
     isError: !!error,
-    setPage,
     mutate,
   };
 };

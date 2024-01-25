@@ -16,16 +16,18 @@ import DashContainer from "components/atoms/DashedContainer/DashContainer";
 export interface HighlightWrapperProps {
   emojis: DbEmojis[];
   selectedFilter: string;
+  page?: number;
+  limit?: number;
 }
-const FollowingHighlightWrapper = ({ emojis, selectedFilter }: HighlightWrapperProps) => {
-  const { data, isLoading, isError, mutate, meta, setPage } = useFetchFollowingHighlights(selectedFilter);
+const FollowingHighlightWrapper = ({ emojis, selectedFilter, limit, page }: HighlightWrapperProps) => {
+  const { data, isLoading, mutate, meta } = useFetchFollowingHighlights({ repo: selectedFilter, page, limit });
 
   useEffect(() => {
     if (selectedFilter) {
       setQueryParams({ repo: selectedFilter });
-      setPage(1);
+      setQueryParams({ page: "1" });
     }
-  }, [selectedFilter, setPage]);
+  }, [selectedFilter]);
 
   return (
     <div>
@@ -95,7 +97,9 @@ const FollowingHighlightWrapper = ({ emojis, selectedFilter }: HighlightWrapperP
             hasNextPage={meta.hasNextPage}
             hasPreviousPage={meta.hasPreviousPage}
             onPageChange={function (page: number): void {
-              setPage(page);
+              setQueryParams({
+                page: `${page}`,
+              });
             }}
           />
         </div>

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import useSWR, { Fetcher } from "swr";
 import publicApiFetcher from "lib/utils/public-api-fetcher";
 
@@ -6,16 +5,23 @@ interface UseFetchUserHighlightsResponse {
   data: DbHighlight[];
   meta: Meta;
 }
-const useFetchFollowingHighlights = (repo = "") => {
-  const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(10);
+interface Query {
+  page?: number;
+  limit?: number;
+  repo?: string;
+}
+const useFetchFollowingHighlights = ({ page = 1, limit = 10, repo = "" }: Query) => {
+  const query = new URLSearchParams();
 
-  const pageQuery = page ? `page=${page}` : "";
-  const limitQuery = limit ? `&limit=${limit}` : "";
-  const repoQuery = repo ? `&repo=${repo}` : "";
+  query.append("page", `${page}`);
+  query.append("limit", `${limit}`);
+
+  if (repo) {
+    query.append("repo", repo);
+  }
 
   const { data, error, mutate } = useSWR<UseFetchUserHighlightsResponse, Error>(
-    `user/highlights/following?${pageQuery}${limitQuery}${repoQuery}`,
+    `user/highlights/following?${query}`,
     publicApiFetcher as Fetcher<UseFetchUserHighlightsResponse, Error>
   );
 
@@ -24,7 +30,6 @@ const useFetchFollowingHighlights = (repo = "") => {
     meta: data?.meta ?? { itemCount: 0, limit: 0, page: 0, hasNextPage: false, hasPreviousPage: false, pageCount: 0 },
     isLoading: !error && !data,
     isError: !!error,
-    setPage,
     mutate,
   };
 };

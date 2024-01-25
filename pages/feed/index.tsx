@@ -46,6 +46,8 @@ interface HighlightSSRProps {
 }
 
 const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
+  const router = useRouter();
+
   const { user, signIn } = useSupabaseAuth();
   const { data: repos } = useFetchHighlightRepos();
 
@@ -53,7 +55,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
 
   const { data: featuredHighlights } = useFetchFeaturedHighlights();
 
-  const router = useRouter();
+  const { page = 1, limit = 10 } = router.query;
   const [openSingleHighlight, setOpenSingleHighlight] = useState(false);
   const selectedRepo = (router.query.repo as string) || "";
   const [activeTab, setActiveTab] = useState<ActiveTabType>("home");
@@ -69,7 +71,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
 
   const isDesktop = useMediaQuery("(min-width: 1280px)");
 
-  const { data, mutate, setPage, isLoading, meta } = useFetchAllHighlights(selectedRepo);
+  const { data, mutate, isLoading, meta } = useFetchAllHighlights(selectedRepo, +page);
   const { data: emojis } = useFetchAllEmojis();
 
   const {
@@ -142,6 +144,12 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
   function onTabChange(value: string) {
     // Resetting URL search param for repo
     setQueryParams({}, ["repo"]);
+
+    // Resetting URL search param for page
+    setQueryParams({}, ["page"]);
+
+    // Resetting URL search param for limit
+    setQueryParams({}, ["limit"]);
 
     // Changing the active tab
     setActiveTab(value as ActiveTabType);
@@ -322,7 +330,9 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
                   hasNextPage={meta.hasNextPage}
                   hasPreviousPage={meta.hasPreviousPage}
                   onPageChange={function (page: number): void {
-                    setPage(page);
+                    setQueryParams({
+                      page: `${page}`,
+                    });
                     if (topRef.current) {
                       topRef.current.scrollIntoView({
                         behavior: "smooth",
@@ -334,7 +344,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
             )}
           </TabsContent>
           <TabsContent value="following">
-            <FollowingHighlightWrapper selectedFilter={selectedRepo} emojis={emojis} />
+            <FollowingHighlightWrapper limit={+limit} page={+page} selectedFilter={selectedRepo} emojis={emojis} />
           </TabsContent>
         </Tabs>
         <div className="sticky flex-col flex-none hidden w-1/3 gap-6 mt-10 xl:w-1/4 lg:flex top-20">
@@ -347,7 +357,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
                   } else {
                     setQueryParams({}, ["repo"]);
                   }
-                  setPage(1);
+                  setQueryParams({ page: "1" });
                 }
               }}
               repos={repoList}
