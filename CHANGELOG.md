@@ -5,6 +5,25 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.85.0-beta.1](https://github.com/open-sauced/insights/compare/v1.84.0...v1.85.0-beta.1) (2024-01-25)
+
+
+### 🐛 Bug Fixes
+
+* v2 API - Use new "repos" data points in v2 API ([#2518](https://github.com/open-sauced/insights/issues/2518)) ([4ac8190](https://github.com/open-sauced/insights/commit/4ac819084aca576b9096e389cdad8bfa2fbcfc5b))
+
+
+### 🍕 Features
+
+* Adds missing data points on "most-active-contributors" API hook ([#2530](https://github.com/open-sauced/insights/issues/2530)) ([45634e5](https://github.com/open-sauced/insights/commit/45634e52e307d82b0f67000ce1b1ff7150237d9a))
+* connect most active contributors graph to API v2 endpoint ([#2468](https://github.com/open-sauced/insights/issues/2468)) ([caa511c](https://github.com/open-sauced/insights/commit/caa511ccc079066e5a82731a44892f2b9b6945e2))
+* fast forward `alpha` onto `beta` ([#2532](https://github.com/open-sauced/insights/issues/2532)) ([ebf7666](https://github.com/open-sauced/insights/commit/ebf7666538f5782e98bd82889b9f266205cd3ed4))
+* Introduce v2 API and user PR Timescale integration ([#2293](https://github.com/open-sauced/insights/issues/2293)) ([e80d2f2](https://github.com/open-sauced/insights/commit/e80d2f2e1dcf075f7f2dbc8d603ef0c59bdaf57a))
+* update dashboard insights to use API v2 with histograms ([#2516](https://github.com/open-sauced/insights/issues/2516)) ([4c10270](https://github.com/open-sauced/insights/commit/4c102707a19631f66a5b3281376626b527a3f187))
+* upgrade to V2 API endpoints ([#2470](https://github.com/open-sauced/insights/issues/2470)) ([7550baf](https://github.com/open-sauced/insights/commit/7550baf5c4938a55251b22d9169ee63bedb6f426))
+* v2 API - contrib evolution by type integration ([#2519](https://github.com/open-sauced/insights/issues/2519)) ([701bf19](https://github.com/open-sauced/insights/commit/701bf191c461b6db087062ab1884fa4f609c15fc))
+* V2 API top-project-contributions graph ([#2521](https://github.com/open-sauced/insights/issues/2521)) ([f8092ee](https://github.com/open-sauced/insights/commit/f8092ee9cb9dde84cddc1c340e63fc7f2365a9f1))
+
 ## [1.84.0](https://github.com/open-sauced/insights/compare/v1.83.0...v1.84.0) (2024-01-25)
 
 
