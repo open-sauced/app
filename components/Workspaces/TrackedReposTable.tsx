@@ -57,9 +57,7 @@ export const TrackedReposTable = ({
     <div className="grid gap-4">
       <div className="flex justify-between">
         <div>
-          <h2 className="flex gap-1 font-medium mb-2 text-md">
-            Repositories Tracked<span className="text-red-900">*</span>
-          </h2>
+          <h2 className="flex gap-1 font-medium mb-2 text-md">Repositories Tracked</h2>
           <p className="text-sm text-slate-600">Select the organizations or repositories you want to track</p>
         </div>
         <Button variant="primary" className="w-max h-max" onClick={onAddRepos}>

@@ -52,12 +52,14 @@ const NewWorkspace = () => {
         <h1 className="border-b bottom pb-4 text-xl font-medium">Workspace Settings</h1>
         <form className="flex flex-col gap-6 mb-2" onSubmit={onCreateWorkspace}>
           <div>
-            <h3 className="font-medium mb-2">Workspace Name</h3>
-            <TextInput name="name" placeholder="Workspace name" className="w-full text-sm" required />
+            <h3 className="font-medium mb-2">
+              Workspace Name <span className="text-red-600">*</span>
+            </h3>
+            <TextInput name="name" placeholder="Workspace name" className="!py-1.5 w-full text-sm" required />
           </div>
           <div>
             <h3 className="font-medium mb-2">Workspace Description</h3>
-            <TextInput name="description" placeholder="Workspace description" className="w-full text-sm" />
+            <TextInput name="description" placeholder="Workspace description" className="!py-1.5 w-full text-sm" />
           </div>
           <div className="bg-white sticky-bottom fixed bottom-0 right-0 self-end m-6">
             <Button variant="primary" className="flex gap-2.5 items-center cursor-pointer w-min mt-2 sm:mt-0 self-end">
