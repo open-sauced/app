@@ -52,7 +52,7 @@ const ResponsiveTreeMapHtml = dynamic(() => import("@nivo/treemap").then((module
 
 export const ContributionsTreemap = ({
   projectId,
-  orgName: orgName,
+  orgName,
   data,
   color,
   isLoading,
