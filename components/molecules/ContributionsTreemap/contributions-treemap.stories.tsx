@@ -5,7 +5,7 @@ import { ContributionsTreemap } from "./contributions-treemap";
 type Story = StoryObj<typeof ContributionsTreemap>;
 
 const meta: Meta<typeof ContributionsTreemap> = {
-  title: "Components/Graphs/ContributionsTreemap",
+  title: "components/molecules/ContributionsTreemap",
   component: ContributionsTreemap,
 };
 
