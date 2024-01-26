@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.85.0-beta.4](https://github.com/open-sauced/insights/compare/v1.85.0-beta.3...v1.85.0-beta.4) (2024-01-26)
+
+
+### 🐛 Bug Fixes
+
+* add a link to the workspace settings page in the app sidebar ([#2541](https://github.com/open-sauced/insights/issues/2541)) ([b598c0f](https://github.com/open-sauced/insights/commit/b598c0fe1f3a05045629cb5817cb38f80528de62))
+* Bust app cache for v2 API changes ([#2545](https://github.com/open-sauced/insights/issues/2545)) ([07b2f1d](https://github.com/open-sauced/insights/commit/07b2f1df3f97a9be7f58fadbcae8d8b1fb73bb47))
+
 ## [1.85.0-beta.3](https://github.com/open-sauced/insights/compare/v1.85.0-beta.2...v1.85.0-beta.3) (2024-01-26)
 
 
