@@ -1,7 +1,7 @@
 import useSWR, { Fetcher } from "swr";
 import { useState } from "react";
 
-import publicApiFetcher from "lib/utils/public-api-fetcher";
+import { publicApiFetcher } from "lib/utils/public-api-fetcher";
 import { supabase } from "lib/utils/supabase";
 
 interface PaginatedListResponse {

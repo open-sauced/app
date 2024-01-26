@@ -9,34 +9,22 @@ export async function createWorkspace({
 }: {
   name: string;
   description?: string;
-  members?: any[];
+  members: any[];
   sessionToken: string;
   repos: { full_name: string }[];
 }) {
-  const { data: workspace, error: workspaceError } = await fetchApiData<Workspace>({
+  const { data, error } = await fetchApiData<Workspace>({
     path: "workspaces",
     method: "POST",
-    body: { name, description, members },
+    body: { name, description, members, repos },
     bearerToken: sessionToken,
     pathValidator: () => true,
   });
 
-  if (workspace) {
-    const { data: repoData, error: reposError } = await fetchApiData<any[]>({
-      path: `workspaces/${workspace.id}/repos`,
-      method: "POST",
-      body: { repos },
-      bearerToken: sessionToken,
-      pathValidator: () => true,
-    });
-
-    if (workspaceError || reposError) {
-      return { data: null, error: workspaceError ?? reposError };
-    }
-
-    return { data: { workspace, repos: repoData }, error: null };
+  if (error) {
+    return { data: null, error };
   } else {
-    return { data: null, error: workspaceError };
+    return { data, error: null };
   }
 }
 
