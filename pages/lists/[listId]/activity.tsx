@@ -76,12 +76,12 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 // if no repoName is set,  want the id
 
 const getTreemapData = ({
-  orgId,
+  currentOrgName,
   repoName,
   projectData = [],
   projectContributionsByUser = [],
 }: {
-  orgId: string | null;
+  currentOrgName: string | null;
   repoName: string | null;
   projectData: DbProjectContributions[];
   projectContributionsByUser: DBProjectContributor[] | undefined;
@@ -89,25 +89,25 @@ const getTreemapData = ({
   let children;
 
   switch (true) {
-    case orgId === null:
+    case currentOrgName === null:
       children = Object.values(
         projectData.reduce((acc, { repo_name, total_contributions }) => {
-          const [org_id] = repo_name.split("/");
+          const [orgName] = repo_name.split("/");
 
-          if (!acc[org_id]) {
-            acc[org_id] = { id: org_id, value: 0, orgId: org_id };
+          if (!acc[orgName]) {
+            acc[orgName] = { id: orgName, value: 0, orgName };
           }
-          acc[org_id].value += total_contributions;
+          acc[orgName].value += total_contributions;
           return acc;
         }, {} as any)
       );
       break;
-    case orgId !== null && repoName === null:
+    case currentOrgName !== null && repoName === null:
       children = projectData
         .filter(({ repo_name }) => {
           const [org_id] = repo_name.split("/");
 
-          org_id === orgId;
+          return org_id === currentOrgName;
         })
         .map(({ repo_name, total_contributions }) => {
           return {
@@ -146,7 +146,7 @@ const ListActivityPage = ({ list, numberOfContributors, isError, isOwner, featur
     setContributorType,
     contributorType,
   } = useMostActiveContributors({ listId: list!.id });
-  const [orgId, setOrgId] = useState<string | null>(null);
+  const [currentOrgName, setCurrentOrgName] = useState<string | null>(null);
   const {
     setRepoName,
     error,
@@ -165,9 +165,9 @@ const ListActivityPage = ({ list, numberOfContributors, isError, isOwner, featur
     range: Number(range ?? "30"),
   });
 
-  const onDrillDown: NodeMouseEventHandler<{ orgId: null; repoName: null; id: string | null }> = (node) => {
-    if (orgId === null) {
-      setOrgId(node.data.orgId);
+  const onDrillDown: NodeMouseEventHandler<{ orgName: null; repoName: null; id: string | null }> = (node) => {
+    if (currentOrgName === null) {
+      setCurrentOrgName(node.data.orgName);
       return;
     } else {
       setRepoName(node.data.repoName);
@@ -180,11 +180,11 @@ const ListActivityPage = ({ list, numberOfContributors, isError, isOwner, featur
       setRepoName(null);
       setProjectId(null);
     } else {
-      setOrgId(null);
+      setCurrentOrgName(null);
     }
   };
 
-  const treemapData = getTreemapData({ orgId, repoName, projectData, projectContributionsByUser });
+  const treemapData = getTreemapData({ currentOrgName, repoName, projectData, projectContributionsByUser });
 
   const {
     data: evolutionData,
@@ -231,7 +231,7 @@ const ListActivityPage = ({ list, numberOfContributors, isError, isOwner, featur
           <span ref={treemapRef} className="relative">
             <ContributionsTreemap
               projectId={projectId}
-              orgId={orgId}
+              orgName={currentOrgName}
               onDrillDown={onDrillDown as NodeMouseEventHandler<object>}
               onDrillUp={onDrillUp}
               data={treemapData}
