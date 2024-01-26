@@ -63,10 +63,10 @@ const useContributorPullRequestsChart = (
     new Set(
       data
         .filter((prSince) => {
-          const daysSinceUpdated = differenceInDays(new Date(), new Date(prSince.updated_at));
+          const daysSinceUpdated = differenceInDays(new Date(), new Date(prSince.pr_updated_at));
           return daysSinceUpdated <= Number(range);
         })
-        .map((prData) => prData.full_name)
+        .map((prData) => prData.repo_name)
     )
   ).map((repo) => {
     const [repoOwner, repoName] = repo.split("/");

@@ -5,9 +5,9 @@ interface GraphData {
   y: number;
 }
 
-const getPullRequestsToDays = (pull_requests: DbRepoPR[], range = 30) => {
-  const graphDays = pull_requests.reduce((days: { [name: string]: number }, curr: DbRepoPR) => {
-    const day = differenceInDays(new Date(), new Date(curr.updated_at));
+const getPullRequestsToDays = (pull_requests: DbRepoPREvents[], range = 30) => {
+  const graphDays = pull_requests.reduce((days: { [name: string]: number }, curr: DbRepoPREvents) => {
+    const day = differenceInDays(new Date(), new Date(curr.pr_updated_at));
 
     if (days[day]) {
       days[day]++;
