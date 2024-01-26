@@ -40,11 +40,15 @@ export const SearchByReposStep = ({
 
   const onFilterRepos = (search: string) => {
     setFilteredRepositories((repositories) => {
-      return new Map(
-        [...repositories.entries()].filter(([repo]) => {
-          return repo.includes(search);
-        })
-      );
+      const updates = new Map(repositories);
+
+      for (const [repo] of updates) {
+        if (!repo.includes(search)) {
+          updates.delete(repo);
+        }
+      }
+
+      return updates;
     });
   };
 
