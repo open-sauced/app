@@ -19,7 +19,7 @@ export const TrackedReposWizard = ({ onAddToTrackingList, onCancel }: TrackedRep
   const [searchTerm, setSearchTerm] = useState<string | undefined>();
   const { data, isError, isLoading } = useSearchRepos(searchTerm, "" /* sessionToken */);
 
-  const onSelectRepo = (repo: string, isSelected = true) => {
+  const onToggleRepo = (repo: string, isSelected: boolean) => {
     setSearchTerm(undefined);
     setCurrentTrackedRepositories((currentTrackedRepositories) => {
       const updates = new Map(currentTrackedRepositories);
@@ -27,6 +27,10 @@ export const TrackedReposWizard = ({ onAddToTrackingList, onCancel }: TrackedRep
 
       return updates;
     });
+  };
+
+  const onSelectRepo = (repo: string) => {
+    onToggleRepo(repo, true);
   };
 
   let searchedRepos = data ?? [];
@@ -65,6 +69,7 @@ export const TrackedReposWizard = ({ onAddToTrackingList, onCancel }: TrackedRep
         return (
           <SearchByReposStep
             onSelectRepo={onSelectRepo}
+            onToggleRepo={onToggleRepo}
             onSearch={onSearchRepos}
             repositories={repositories}
             searchedRepos={searchedRepos}

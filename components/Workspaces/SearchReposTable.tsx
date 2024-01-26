@@ -7,10 +7,10 @@ import Search from "components/atoms/Search/search";
 interface SearchedReposTableProps {
   repositories: Map<string, boolean>;
   onFilter: (filterTerm: string) => void;
-  onSelect: (repo: string, checked: boolean) => void;
+  onToggleRepo: (repo: string, checked: boolean) => void;
 }
 
-export const SearchedReposTable = ({ repositories = new Map(), onFilter, onSelect }: SearchedReposTableProps) => {
+export const SearchedReposTable = ({ repositories = new Map(), onFilter, onToggleRepo }: SearchedReposTableProps) => {
   return (
     <div className="border border-light-slate-7 rounded-lg">
       <Table className="not-sr-only">
@@ -47,7 +47,7 @@ export const SearchedReposTable = ({ repositories = new Map(), onFilter, onSelec
                     <label className="flex items-center gap-2">
                       <Checkbox
                         onCheckedChange={(checked: CheckedState) => {
-                          onSelect(repo, !checked);
+                          onToggleRepo(repo, !!checked);
                         }}
                         checked={checked}
                       />

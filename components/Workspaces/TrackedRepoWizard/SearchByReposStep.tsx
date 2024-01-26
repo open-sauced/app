@@ -7,7 +7,8 @@ import { SearchedReposTable } from "../SearchReposTable";
 
 interface SearchByReposStepProps {
   onSearch: (search?: string) => void;
-  onSelectRepo: (repo: string, checked?: boolean) => void;
+  onSelectRepo: (repo: string) => void;
+  onToggleRepo: (repo: string, isSelected: boolean) => void;
   repositories: Map<string, boolean>;
   suggestedRepos: string[];
   searchedRepos: string[];
@@ -30,6 +31,7 @@ const EmptyState = () => {
 export const SearchByReposStep = ({
   onSearch,
   onSelectRepo,
+  onToggleRepo,
   repositories,
   searchedRepos,
   suggestedRepos = [],
@@ -101,7 +103,7 @@ export const SearchByReposStep = ({
         <SearchedReposTable
           repositories={filteredRepositories.size > 0 ? filteredRepositories : repositories}
           onFilter={onFilterRepos}
-          onSelect={onSelectRepo}
+          onToggleRepo={onToggleRepo}
         />
       )}
     </div>

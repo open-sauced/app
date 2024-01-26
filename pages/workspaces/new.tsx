@@ -106,7 +106,17 @@ const NewWorkspace = () => {
         onAddToTrackingList={(repos: Map<string, boolean>) => {
           setTrackedReposModalOpen(false);
           setTrackedRepos((trackedRepos) => {
-            return new Map([...trackedRepos, ...repos]);
+            const updates = new Map([...trackedRepos]);
+
+            for (const [repo, checked] of repos) {
+              if (checked) {
+                updates.set(repo, true);
+              } else {
+                updates.delete(repo);
+              }
+            }
+
+            return updates;
           });
         }}
         onCancel={() => {
