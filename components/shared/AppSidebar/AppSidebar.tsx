@@ -109,11 +109,13 @@ export const AppSideBar = () => {
       </div>
       <ul className="list-none mb-4">
         <SidebarMenuItem title="Support" url="/logout" icon={<LifebuoyIcon className="w-5 h-5 text-slate-400" />} />
-        <SidebarMenuItem
-          title="Settings"
-          url={`/workspaces/${workspaceId}/settings`}
-          icon={<Cog8ToothIcon className="w-5 h-5 text-slate-400" />}
-        />
+        {workspaceId ? (
+          <SidebarMenuItem
+            title="Settings"
+            url={`/workspaces/${workspaceId}/settings`}
+            icon={<Cog8ToothIcon className="w-5 h-5 text-slate-400" />}
+          />
+        ) : null}
       </ul>
     </div>
   );
