@@ -28,7 +28,7 @@ interface InsightHeaderProps {
 const InsightHeader = ({ insight, repositories, insightId, canEdit }: InsightHeaderProps): JSX.Element => {
   const router = useRouter();
   const { range } = router.query;
-  const { data: repoData, meta: repoMeta } = useRepositories(repositories);
+  const { data: repoData, meta: repoMeta } = useRepositories({ repoIds: repositories });
   const { repoList } = getRepoInsights(repoData);
   const [insightPageLink, setInsightPageLink] = useState("");
   const { toast } = useToast();

@@ -24,7 +24,7 @@ interface InsightPageCardProps {
 const InsightPageCard = ({ insight, user }: InsightPageCardProps): JSX.Element => {
   const members: any[] = [];
   const repoIds = insight.repos.map((repo) => repo.repo_id);
-  const { data: repoData } = useRepositories(repoIds);
+  const { data: repoData } = useRepositories({ repoIds });
   const { open, closed, merged, drafts, velocity, total, repoList } = getRepoInsights(repoData);
 
   const PieChartData: PieData[] = [

@@ -27,8 +27,8 @@ export const WORKSPACE_UPDATED_EVENT = "workspaceUpdated";
 
 export const AppSideBar = () => {
   const { username } = useSupabaseAuth();
-  const { data: rawRepoInsights, isLoading: insightsLoading } = useUserInsights(!!username);
-  const { data: lists, isLoading: listsLoading } = useFetchAllLists(30, !!username);
+  const { data: rawRepoInsights, isLoading: insightsLoading } = useUserInsights({ fetch: !!username });
+  const { data: lists, isLoading: listsLoading } = useFetchAllLists({ shouldFetch: !!username, range: 30 });
   const { data: workspaces, isLoading: workspacesLoading, mutate } = useWorkspaces({ limit: 100 });
   const router = useRouter();
   const [workspaceId, setWorkspaceId] = useState<string>(router.query.workspaceId as string);

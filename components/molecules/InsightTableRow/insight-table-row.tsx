@@ -23,7 +23,7 @@ interface InsightRepoRowProps {
 const InsightTableRow = ({ user, insight }: InsightRepoRowProps) => {
   const members: any[] = [];
   const repoIds = insight.repos.map((repo) => repo.repo_id);
-  const { data: repoData } = useRepositories(repoIds);
+  const { data: repoData } = useRepositories({ repoIds });
   const { open, closed, merged, drafts, churn, velocity, total, repoList } = getRepoInsights(repoData);
 
   return (

@@ -393,7 +393,7 @@ const ContributorProfileHeader = ({
 const AddToListDropdown = ({ username }: { username: string }) => {
   const [selectListOpen, setSelectListOpen] = useState(false);
   const [selectedList, setSelectedList] = useState<OptionKeys[]>([]);
-  const { data } = useFetchAllLists();
+  const { data } = useFetchAllLists({});
   const { data: contributor } = useFetchUser(username ?? "");
   const { toast } = useToast();
 

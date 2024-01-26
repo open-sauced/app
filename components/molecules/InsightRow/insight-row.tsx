@@ -23,7 +23,7 @@ interface InsightRowProps {
 
 const InsightRow = ({ insight, user, isEditable = true }: InsightRowProps) => {
   const repoIds = insight.repos.map((repo) => repo.repo_id);
-  const { data: repoData, meta: repoMeta } = useRepositories(repoIds);
+  const { data: repoData, meta: repoMeta } = useRepositories({ repoIds });
   const { open, merged, velocity, total, repoList } = getRepoInsights(repoData);
   const avgOpenPrs = repoData.length > 0 ? Math.round(open / repoData.length) : 0;
 
