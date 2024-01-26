@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { LifebuoyIcon, Cog8ToothIcon } from "@heroicons/react/24/outline";
 import { BiHomeAlt } from "react-icons/bi";
@@ -32,6 +32,12 @@ export const AppSideBar = () => {
   const { data: workspaces, isLoading: workspacesLoading, mutate } = useWorkspaces({ limit: 100 });
   const router = useRouter();
   const [workspaceId, setWorkspaceId] = useState<string>(router.query.workspaceId as string);
+
+  useEffect(() => {
+    if (router.query.workspaceId) {
+      setWorkspaceId(router.query.workspaceId as string);
+    }
+  }, [router.query.workspaceId]);
 
   const repoInsights = rawRepoInsights
     .slice(0, 5)
@@ -82,7 +88,7 @@ export const AppSideBar = () => {
               }
 
               setWorkspaceId(value);
-              window.location.href = `/workspaces/${value}/settings`;
+              window.location.href = `/workspaces/${value}/dashboard`;
             }}
           />
         </label>
