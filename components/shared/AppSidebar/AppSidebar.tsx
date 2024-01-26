@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { LifebuoyIcon, Cog8ToothIcon } from "@heroicons/react/24/outline";
 import { BiHomeAlt } from "react-icons/bi";
@@ -25,19 +24,16 @@ const SidebarLoader = () => {
 
 export const WORKSPACE_UPDATED_EVENT = "workspaceUpdated";
 
-export const AppSideBar = () => {
+interface AppSideBarProps {
+  workspaceId: string | null;
+}
+
+export const AppSideBar = ({ workspaceId }: AppSideBarProps) => {
   const { username } = useSupabaseAuth();
   const { data: rawRepoInsights, isLoading: insightsLoading } = useUserInsights(!!username);
   const { data: lists, isLoading: listsLoading } = useFetchAllLists(30, !!username);
   const { data: workspaces, isLoading: workspacesLoading, mutate } = useWorkspaces({ limit: 100 });
   const router = useRouter();
-  const [workspaceId, setWorkspaceId] = useState<string>(router.query.workspaceId as string);
-
-  useEffect(() => {
-    if (router.query.workspaceId) {
-      setWorkspaceId(router.query.workspaceId as string);
-    }
-  }, [router.query.workspaceId]);
 
   const repoInsights = rawRepoInsights
     .slice(0, 5)
@@ -79,7 +75,7 @@ export const AppSideBar = () => {
               })),
             ]}
             position="popper"
-            value={workspaceId}
+            value={workspaceId ?? "new"}
             placeholder="Select a workspace"
             onValueChange={(value) => {
               if (value === "new") {
@@ -87,7 +83,6 @@ export const AppSideBar = () => {
                 return;
               }
 
-              setWorkspaceId(value);
               window.location.href = `/workspaces/${value}/dashboard`;
             }}
           />

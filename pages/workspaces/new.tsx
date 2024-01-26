@@ -47,7 +47,7 @@ const NewWorkspace = () => {
   });
 
   return (
-    <WorkspaceLayout>
+    <WorkspaceLayout workspaceId={null}>
       <div className="grid gap-6">
         <div>
           <h1 className="border-b bottom pb-4">Workspace Settings</h1>
