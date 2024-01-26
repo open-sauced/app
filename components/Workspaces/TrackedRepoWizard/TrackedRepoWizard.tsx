@@ -82,12 +82,20 @@ export const TrackedReposWizard = ({ onAddToTrackingList, onCancel }: TrackedRep
     }
   };
 
+  const trackedRepos = new Map(currentTrackedRepositories);
+
+  trackedRepos.forEach((isSelected, repo, map) => {
+    if (!isSelected) {
+      map.delete(repo);
+    }
+  });
+
   return (
     <TrackedRepoWizardLayout
       onAddToTrackingList={() => {
         onAddToTrackingList(currentTrackedRepositories);
       }}
-      trackedReposCount={currentTrackedRepositories.size}
+      trackedReposCount={trackedRepos.size}
       onCancel={() => {
         goBack();
       }}
