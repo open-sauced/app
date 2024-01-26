@@ -83,7 +83,7 @@ export const AppSideBar = ({ workspaceId }: AppSideBarProps) => {
                 return;
               }
 
-              window.location.href = `/workspaces/${value}/dashboard`;
+              window.location.href = `/workspaces/${value}/repositories`;
             }}
           />
         </label>
