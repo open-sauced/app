@@ -15,7 +15,7 @@ interface ContributionsTreemapProps {
   data: any;
   color: TreeMapCommonProps<Datum>["colors"];
   projectId: string | null;
-  orgId: string | null;
+  orgName: string | null;
   isLoading: boolean;
   onDrillDown: NodeMouseEventHandler<object>;
   onDrillUp: () => void;
@@ -52,7 +52,7 @@ const ResponsiveTreeMapHtml = dynamic(() => import("@nivo/treemap").then((module
 
 export const ContributionsTreemap = ({
   projectId,
-  orgId,
+  orgName: orgName,
   data,
   color,
   isLoading,
@@ -71,9 +71,9 @@ export const ContributionsTreemap = ({
           </h2>
           <div className="flex gap-2 items-center justify-between">
             <div className="flex gap-2 mb-2">
-              {orgId ? (
+              {orgName ? (
                 <BreadCrumb isActive={true} useSeparator={projectId !== null}>
-                  {orgId}
+                  {orgName}
                 </BreadCrumb>
               ) : null}
               {projectId ? (
@@ -86,7 +86,7 @@ export const ContributionsTreemap = ({
               ) : null}
             </div>
             <div className="flex gap-2 mb-2">
-              <Button variant="outline" disabled={!orgId} onClick={orgId ? onDrillUp : undefined}>
+              <Button variant="outline" disabled={!orgName} onClick={orgName ? onDrillUp : undefined}>
                 <span className="sr-only">Drill up in the treemap of contributions</span>
                 <span className="not-sr-only">Back</span>
               </Button>
@@ -106,7 +106,7 @@ export const ContributionsTreemap = ({
                     leavesOnly
                     orientLabel={false}
                     nodeComponent={
-                      projectId === null || orgId === null
+                      projectId === null || orgName === null
                         ? SpecialNode
                         : // TODO: Sort this out later
                           (ContributorNode as <Datum extends object>({
