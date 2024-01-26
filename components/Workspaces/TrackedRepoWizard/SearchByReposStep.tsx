@@ -40,7 +40,6 @@ export const SearchByReposStep = ({
 
   const onFilterRepos = (search: string) => {
     setFilteredRepositories((repositories) => {
-      // TODO: improve this filter
       return new Map(
         [...repositories.entries()].filter(([repo]) => {
           return repo.includes(search);
