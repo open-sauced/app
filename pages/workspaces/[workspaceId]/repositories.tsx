@@ -4,6 +4,8 @@ import { SquareFillIcon } from "@primer/octicons-react";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import { fetchApiData } from "helpers/fetchApiData";
 import TabsList from "components/TabList/tab-list";
+import Repositories from "components/organisms/Repositories/repositories";
+import { useGetWorkspaceRepositories } from "lib/hooks/api/useGetWorkspaceRepositories";
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const supabase = createPagesServerClient(context);
@@ -36,6 +38,10 @@ interface WorkspaceDashboardProps {
 const tabList = [{ name: "Repositories" }, { name: "Contributors" }, { name: "Activity" }, { name: "Highlights" }];
 
 const WorkspaceDashboard = ({ workspace }: WorkspaceDashboardProps) => {
+  const { data, error: hasError, mutate: mutateTrackedRepos } = useGetWorkspaceRepositories(workspace.id);
+
+  const repositories = data?.data?.map((repo) => repo.repo_id) || [];
+
   return (
     <WorkspaceLayout workspaceId={workspace.id}>
       <h1 className="flex gap-2 items-center uppercase text-3xl font-semibold">
@@ -44,6 +50,17 @@ const WorkspaceDashboard = ({ workspace }: WorkspaceDashboardProps) => {
         <span>{workspace.name}</span>
       </h1>
       <TabsList tabList={tabList} selectedTab={"repositories"} pageId={`/workspaces/${workspace.id}`} />
+      <div className="mt-6">
+        <Repositories repositories={repositories} />
+        {/* <RepositoriesTable
+        user="asdf"
+        listOfRepositories={repositories}
+        selectedRepos={selectedRepos}
+        handleOnSelectRepo={() => {}}
+        loading={loading}
+        error={hasError}
+      /> */}
+      </div>
     </WorkspaceLayout>
   );
 };
