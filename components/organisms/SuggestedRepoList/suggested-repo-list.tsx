@@ -3,7 +3,7 @@ import Title from "components/atoms/Typography/title";
 import { RepoCardProfileProps } from "components/molecules/RepoCardProfile/repo-card-profile";
 import SuggestedRepository from "components/molecules/SuggestedRepo/suggested-repo";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
-
+import ClientOnly from "components/atoms/ClientOnly/client-only";
 interface SuggestedRepositoriesListProps {
   reposData: RepoCardProfileProps[];
   onAddRepo?: (repo: string) => void;
@@ -22,7 +22,7 @@ const SuggestedRepositoriesList = ({
   isLoading,
 }: SuggestedRepositoriesListProps) => {
   return (
-    <div>
+    <ClientOnly>
       <Title className="!text-light-slate-11 !text-sm" level={4}>
         Suggested Repositories:
       </Title>
@@ -40,7 +40,7 @@ const SuggestedRepositoriesList = ({
           </>
         )}
       </div>
-    </div>
+    </ClientOnly>
   );
 };
 
