@@ -5,6 +5,21 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.85.0-beta.3](https://github.com/open-sauced/insights/compare/v1.85.0-beta.2...v1.85.0-beta.3) (2024-01-26)
+
+
+### 🐛 Bug Fixes
+
+* fixed CSS regression in focus states ([#2537](https://github.com/open-sauced/insights/issues/2537)) ([9c536d0](https://github.com/open-sauced/insights/commit/9c536d0b87eb43aeb51dccfa3727c923017dbf09))
+* Uses beta default .env for API ([#2538](https://github.com/open-sauced/insights/issues/2538)) ([ae35f8e](https://github.com/open-sauced/insights/commit/ae35f8e6969af4cfcdc22e0328e6cd24d7c449cc))
+
+## [1.85.0-beta.2](https://github.com/open-sauced/insights/compare/v1.85.0-beta.1...v1.85.0-beta.2) (2024-01-26)
+
+
+### 🐛 Bug Fixes
+
+* now contribution treemap renders properly again ([#2536](https://github.com/open-sauced/insights/issues/2536)) ([f10b2d1](https://github.com/open-sauced/insights/commit/f10b2d1851c52007ab313bdedc069cbbd0314758))
+
 ## [1.85.0-beta.1](https://github.com/open-sauced/insights/compare/v1.84.0...v1.85.0-beta.1) (2024-01-25)
 
 
