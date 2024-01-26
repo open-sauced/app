@@ -7,8 +7,8 @@ import { SearchedReposTable } from "../SearchReposTable";
 
 interface SearchByReposStepProps {
   onSearch: (search?: string) => void;
-  onSelectRepo: (value: string) => void;
-  repositories: string[];
+  onSelectRepo: (repo: string, checked?: boolean) => void;
+  repositories: Map<string, boolean>;
   suggestedRepos: string[];
   searchedRepos: string[];
 }
@@ -34,14 +34,17 @@ export const SearchByReposStep = ({
   searchedRepos,
   suggestedRepos = [],
 }: SearchByReposStepProps) => {
-  const [filteredRepositories, setFilteredRepositories] = useState(repositories);
+  const [filteredRepositories, setFilteredRepositories] = useState<Map<string, boolean>>(repositories);
 
   const onFilterRepos = (search: string) => {
-    setFilteredRepositories(
-      repositories.filter((repo) => {
-        return repo.includes(search);
-      })
-    );
+    setFilteredRepositories((repositories) => {
+      // TODO: improve this filter
+      return new Map(
+        [...repositories.entries()].filter(([repo]) => {
+          return repo.includes(search);
+        })
+      );
+    });
   };
 
   const formRef = useRef<HTMLFormElement>(null);
@@ -92,11 +95,11 @@ export const SearchByReposStep = ({
           })}
         />
       </form>
-      {repositories.length === 0 && filteredRepositories.length === 0 ? (
+      {repositories.size === 0 && filteredRepositories.size === 0 ? (
         <EmptyState />
       ) : (
         <SearchedReposTable
-          repositories={filteredRepositories.length > 0 ? filteredRepositories : repositories}
+          repositories={filteredRepositories.size > 0 ? filteredRepositories : repositories}
           onFilter={onFilterRepos}
           onSelect={onSelectRepo}
         />
