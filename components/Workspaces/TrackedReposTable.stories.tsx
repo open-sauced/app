@@ -7,7 +7,7 @@ const meta: Meta<typeof TrackedReposTable> = {
   title: "Components/Workspaces/TrackedReposTable",
   component: TrackedReposTable,
   args: {
-    repositories: new Set(),
+    repositories: new Map(),
     onAddRepos: () => {
       // eslint-disable-next-line no-console
       console.log("add repos");
@@ -23,10 +23,10 @@ export default meta;
 
 export const WithRepos: Story = {
   args: {
-    repositories: new Set(
+    repositories: new Map(
       Array(100)
         .fill("")
-        .map((_, i) => `open-sauced/awesome-pizza-project-${i}`)
+        .map((_, i) => [`open-sauced/awesome-pizza-project-${i}`, true])
     ),
   },
 };
