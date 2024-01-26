@@ -57,7 +57,6 @@ function generateData() {
   let previousChurned = Math.floor(Math.random() * 500);
 
   return result.map((date) => {
-    const endDate = subDays(date, 5);
     const newActive = randomValueCloseToValue(previousActive);
     const newNew = randomValueCloseToValue(previousNew);
     const newChurned = randomValueCloseToValue(previousChurned);
@@ -67,8 +66,7 @@ function generateData() {
     previousChurned = newChurned;
 
     return {
-      time_start: date.toString(),
-      time_end: endDate.toString(),
+      bucket: date.toString(),
       active: newActive,
       new: newNew,
       alumni: newChurned,

@@ -1,5 +1,5 @@
 import useSWR, { Fetcher } from "swr";
-import publicApiFetcher from "lib/utils/public-api-fetcher";
+import { publicApiFetcher } from "lib/utils/public-api-fetcher";
 
 const useInsightRepositories = (id: number) => {
   const baseEndpoint = `insights/${id}/repos`;
