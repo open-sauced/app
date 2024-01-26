@@ -108,7 +108,7 @@ const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
       document.dispatchEvent(new CustomEvent(WORKSPACE_UPDATED_EVENT, { detail: data }));
       await mutateTrackedRepos();
 
-      setTrackedReposPendingDeletion(new Map());
+      setTrackedReposPendingDeletion(new Set());
       setTrackedRepos(new Map());
 
       toast({ description: `Workspace updated successfully`, variant: "success" });
