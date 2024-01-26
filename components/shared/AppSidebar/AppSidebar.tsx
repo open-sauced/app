@@ -111,7 +111,7 @@ export const AppSideBar = () => {
         <SidebarMenuItem title="Support" url="/logout" icon={<LifebuoyIcon className="w-5 h-5 text-slate-400" />} />
         <SidebarMenuItem
           title="Settings"
-          url="/user/settings"
+          url={`/workspaces/${workspaceId}/settings`}
           icon={<Cog8ToothIcon className="w-5 h-5 text-slate-400" />}
         />
       </ul>
