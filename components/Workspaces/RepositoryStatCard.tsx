@@ -63,7 +63,7 @@ const EmptyState = ({ type }: { type: CardType }) => {
         {headings.map((heading) => (
           <div key={heading} className="flex flex-col items-center justify-center">
             <div className="capitalize font-medium text-sm text-light-slate-11">{heading}</div>
-            <SkeletonWrapper width={40} height={24} />
+            <SkeletonWrapper width={40} height={28} />
           </div>
         ))}
       </div>
