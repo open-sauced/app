@@ -30,11 +30,11 @@ type CardType = RepositoryStatCardProps["type"];
 function getIcon(type: CardType) {
   switch (type) {
     case "pulls":
-      return <GitPullRequestIcon size={12} className="text-sauced-orange bg-orange-100 rounded-full p-0.5" />;
+      return <GitPullRequestIcon size={18} className="text-sauced-orange bg-orange-100 rounded-full p-0.5" />;
     case "issues":
-      return <IssueOpenedIcon size={12} className="text-blue-600 bg-blue-100 rounded-full p-0.5" />;
+      return <IssueOpenedIcon size={18} className="text-blue-600 bg-blue-100 rounded-full p-0.5" />;
     case "engagement":
-      return <HeartIcon size={12} className="text-pink-600 bg-pink-100 rounded-full p-0.5" />;
+      return <HeartIcon size={18} className="text-pink-600 bg-pink-100 rounded-full p-0.5" />;
   }
 }
 
@@ -55,7 +55,7 @@ const EmptyState = ({ type }: { type: CardType }) => {
 
   return (
     <div className="grid gap-4 p-2">
-      <div className="flex items-center gap-1 text-xs">
+      <div className="flex items-center gap-1.5 text-xs">
         {getIcon(type)}
         <span>{titles[type]}</span>
       </div>
@@ -78,7 +78,7 @@ export const RepositoryStatCard = ({ stats, type, isLoading }: RepositoryStatCar
         <EmptyState type={type} />
       ) : (
         <div className="grid gap-4 p-2">
-          <div className="flex items-center gap-1 text-xs">
+          <div className="flex items-center gap-1.5 text-xs">
             {getIcon(type)}
             <span>{titles[type]}</span>
           </div>
