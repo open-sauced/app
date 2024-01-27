@@ -38,69 +38,72 @@ function getIcon(type: CardType) {
   }
 }
 
-const EmptyState = ({ type }: { type: CardType }) => {
-  let headings;
-
+function getHeadings(type: CardType) {
   switch (type) {
     case "pulls":
-      headings = ["opened", "merged", "velocity"];
-      break;
+      return ["opened", "merged", "velocity"];
     case "issues":
-      headings = ["opened", "closed", "velocity"];
-      break;
+      return ["opened", "closed", "velocity"];
     case "engagement":
-      headings = ["stars", "forks", "health"];
-      break;
+      return ["stars", "forks", "health"];
+    default:
+      throw new Error("Invalid repository stat card type");
   }
+}
 
+const EmptyState = ({ type }: { type: CardType }) => {
   return (
-    <div className="grid gap-4 p-2">
-      <div className="flex items-center gap-1.5 text-xs">
+    <table className="grid gap-4 p-2">
+      <caption className="flex items-center gap-1.5 text-xs">
         {getIcon(type)}
-        <span>{titles[type]}</span>
-      </div>
-      <div className="grid grid-cols-3 items-center">
-        {headings.map((heading) => (
-          <div key={heading} className="flex flex-col items-center justify-center">
-            <div className="capitalize font-medium text-sm text-light-slate-11">{heading}</div>
-            <SkeletonWrapper width={40} height={28} />
-          </div>
+        <span aria-label={`Loading ${titles[type]} stats card`}>{titles[type]}</span>
+      </caption>
+      <tbody className="grid grid-cols-3 items center">
+        {getHeadings(type).map((stat) => (
+          <tr key={stat} className="flex flex-col">
+            <th className="capitalize font-medium text-sm text-light-slate-11 text-left">{stat}</th>
+            <td className="semi-bold text-2xl mt-1">
+              <SkeletonWrapper width={40} height={20} />
+            </td>
+          </tr>
         ))}
-      </div>
-    </div>
+      </tbody>
+    </table>
   );
 };
 
 export const RepositoryStatCard = ({ stats, type, isLoading }: RepositoryStatCardProps) => {
   return (
-    <Card className="w-80 max-w-xs">
+    <Card className="w-80 max-w-xs h-32 max-h-32">
       {isLoading ? (
         <EmptyState type={type} />
       ) : (
-        <div className="grid gap-4 p-2">
-          <div className="flex items-center gap-1.5 text-xs">
+        <table className="grid gap-4 p-2">
+          <caption className="flex items-center gap-1.5 text-xs">
             {getIcon(type)}
             <span>{titles[type]}</span>
-          </div>
-          <div className="grid grid-cols-3 items center">
+          </caption>
+          <tbody className="grid grid-cols-3 items center">
             {Object.entries(stats).map(([stat, value]) => (
-              <div key={stat} className="flex flex-col items-center justify-center">
-                <div className="capitalize font-medium text-sm text-light-slate-11">{stat}</div>
+              <tr key={stat} className="flex flex-col">
+                <th scope="row" className="capitalize font-medium text-sm text-light-slate-11 text-left">
+                  {stat}
+                </th>
                 {stat === "health" ? (
-                  <div className="text-black semi-bold text-2xl">
+                  <td className="text-black semi-bold text-2xl">
                     {value}
                     <span className="text-xs">/10</span>
-                  </div>
+                  </td>
                 ) : (
-                  <div className="semi-bold text-2xl">
+                  <td className="semi-bold text-2xl">
                     {value}
                     {stat === "velocity" ? "d" : ""}
-                  </div>
+                  </td>
                 )}
-              </div>
+              </tr>
             ))}
-          </div>
-        </div>
+          </tbody>
+        </table>
       )}
     </Card>
   );
