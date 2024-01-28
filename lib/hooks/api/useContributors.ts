@@ -2,7 +2,7 @@ import { useState } from "react";
 import useSWR, { Fetcher } from "swr";
 import { useRouter } from "next/router";
 
-import publicApiFetcher from "lib/utils/public-api-fetcher";
+import { publicApiFetcher } from "lib/utils/public-api-fetcher";
 import getFilterQuery from "lib/utils/get-filter-query";
 
 interface PaginatedResponse {
@@ -44,7 +44,7 @@ const useContributors = (limit = 10, repoIds: number[] = []) => {
     query.set("repoIds", repoIds.join(","));
   }
 
-  if (query.get("repo")) {
+  if (query.get("repos")) {
     query.delete("topic");
   }
 

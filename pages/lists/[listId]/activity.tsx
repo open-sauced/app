@@ -4,16 +4,16 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { NodeMouseEventHandler } from "@nivo/treemap";
 import { useRef } from "react";
+import ContributionsEvolutionByType from "components/molecules/ContributionsEvolutionByTypeCard/contributions-evolution-by-type-card";
+import { ContributionsTreemap } from "components/Graphs/ContributionsTreemap/contributions-treemap";
 import Error from "components/atoms/Error/Error";
 import { fetchApiData, validateListPath } from "helpers/fetchApiData";
 import ListPageLayout from "layouts/lists";
 import MostActiveContributorsCard from "components/molecules/MostActiveContributorsCard/most-active-contributors-card";
 import useMostActiveContributors from "lib/hooks/api/useMostActiveContributors";
-import { ContributionsTreemap } from "components/Graphs/ContributionsTreemap/contributions-treemap";
 import { useContributorsByProject } from "lib/hooks/api/useContributorsByProject";
 import { useContributionsByProject } from "lib/hooks/api/useContributionsByProject";
 import { getGraphColorPalette } from "lib/utils/color-utils";
-import ContributionsEvolutionByType from "components/molecules/ContributionsEvolutionByTypeCard/contributions-evolution-by-type-card";
 import useContributionsEvolutionByType from "lib/hooks/api/useContributionsByEvolutionType";
 import { FeatureFlagged } from "components/shared/feature-flagged";
 import { FeatureFlag, getAllFeatureFlags } from "lib/utils/server/feature-flags";
@@ -73,46 +73,52 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   };
 };
 
-// if no repoId is set,  want the id
+// if no repoName is set,  want the id
 
 const getTreemapData = ({
-  orgId,
-  repoId,
+  currentOrgName,
+  repoName,
   projectData = [],
   projectContributionsByUser = [],
 }: {
-  orgId: string | null;
-  repoId: number | null;
+  currentOrgName: string | null;
+  repoName: string | null;
   projectData: DbProjectContributions[];
   projectContributionsByUser: DBProjectContributor[] | undefined;
 }) => {
   let children;
 
   switch (true) {
-    case orgId === null:
+    case currentOrgName === null:
       children = Object.values(
-        projectData.reduce((acc, { org_id, contributions }) => {
-          if (!acc[org_id]) {
-            acc[org_id] = { id: org_id, value: 0, orgId: org_id };
+        projectData.reduce((acc, { repo_name, total_contributions }) => {
+          const [orgName] = repo_name.split("/");
+
+          if (!acc[orgName]) {
+            acc[orgName] = { id: orgName, value: 0, orgName };
           }
-          acc[org_id].value += contributions;
+          acc[orgName].value += total_contributions;
           return acc;
         }, {} as any)
       );
       break;
-    case orgId !== null && repoId === null:
+    case currentOrgName !== null && repoName === null:
       children = projectData
-        .filter(({ org_id }) => org_id === orgId)
-        .map(({ org_id, project_id, repo_id, contributions }) => {
+        .filter(({ repo_name }) => {
+          const [org_id] = repo_name.split("/");
+
+          return org_id === currentOrgName;
+        })
+        .map(({ repo_name, total_contributions }) => {
           return {
-            id: project_id,
-            value: contributions,
-            repoId: `${repo_id}`,
+            id: repo_name,
+            value: total_contributions,
+            repoName: `${repo_name}`,
           };
         });
       break;
 
-    case repoId !== null:
+    case repoName !== null:
       children = projectContributionsByUser.map(
         ({ login, commits, prs_created, prs_reviewed, issues_created, comments }) => {
           return {
@@ -140,12 +146,12 @@ const ListActivityPage = ({ list, numberOfContributors, isError, isOwner, featur
     setContributorType,
     contributorType,
   } = useMostActiveContributors({ listId: list!.id });
-  const [orgId, setOrgId] = useState<string | null>(null);
+  const [currentOrgName, setCurrentOrgName] = useState<string | null>(null);
   const {
-    setRepoId,
+    setRepoName,
     error,
     data: projectContributionsByUser,
-    repoId,
+    repoName,
     isLoading: isLoadingProjectContributionsByUser,
   } = useContributorsByProject(list!.id, Number(range ?? "30"));
   const [projectId, setProjectId] = useState<string | null>(null);
@@ -159,26 +165,26 @@ const ListActivityPage = ({ list, numberOfContributors, isError, isOwner, featur
     range: Number(range ?? "30"),
   });
 
-  const onDrillDown: NodeMouseEventHandler<{ orgId: null; repoId: null; id: string | null }> = (node) => {
-    if (orgId === null) {
-      setOrgId(node.data.orgId);
+  const onDrillDown: NodeMouseEventHandler<{ orgName: null; repoName: null; id: string | null }> = (node) => {
+    if (currentOrgName === null) {
+      setCurrentOrgName(node.data.orgName);
       return;
     } else {
-      setRepoId(Number(node.data.repoId));
+      setRepoName(node.data.repoName);
       setProjectId(node.data.id);
     }
   };
 
   const onDrillUp = () => {
-    if (repoId !== null) {
-      setRepoId(null);
+    if (repoName !== null) {
+      setRepoName(null);
       setProjectId(null);
     } else {
-      setOrgId(null);
+      setCurrentOrgName(null);
     }
   };
 
-  const treemapData = getTreemapData({ orgId, repoId, projectData, projectContributionsByUser });
+  const treemapData = getTreemapData({ currentOrgName, repoName, projectData, projectContributionsByUser });
 
   const {
     data: evolutionData,
@@ -225,7 +231,7 @@ const ListActivityPage = ({ list, numberOfContributors, isError, isOwner, featur
           <span ref={treemapRef} className="relative">
             <ContributionsTreemap
               projectId={projectId}
-              orgId={orgId}
+              orgName={currentOrgName}
               onDrillDown={onDrillDown as NodeMouseEventHandler<object>}
               onDrillUp={onDrillUp}
               data={treemapData}

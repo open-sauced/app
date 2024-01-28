@@ -15,7 +15,7 @@ const NewWorkspace = () => {
   const { toast } = useToast();
   const router = useRouter();
   const [trackedReposModalOpen, setTrackedReposModalOpen] = useState(false);
-  const [trackedRepos, setTrackedRepos] = useState<Set<string>>(new Set());
+  const [trackedRepos, setTrackedRepos] = useState<Map<string, boolean>>(new Map());
 
   const onCreateWorkspace: ComponentProps<"form">["onSubmit"] = async (event) => {
     event.preventDefault();
@@ -24,21 +24,21 @@ const NewWorkspace = () => {
     const name = formData.get("name") as string;
     const description = formData.get("description") as string;
 
-    const { data, error } = await createWorkspace({
+    const { data: workspace, error } = await createWorkspace({
       name,
       description,
       // TODO: send members list
       members: [],
       sessionToken: sessionToken!,
-      repos: Array.from(trackedRepos, (repo) => ({ full_name: repo })),
+      repos: Array.from(trackedRepos, ([repo]) => ({ full_name: repo })),
     });
 
-    if (error) {
+    if (error || !workspace) {
       toast({ description: `Error creating new workspace. Please try again`, variant: "danger" });
     } else {
       toast({ description: `Workspace created successfully`, variant: "success" });
-      document.dispatchEvent(new CustomEvent(WORKSPACE_UPDATED_EVENT, { detail: data }));
-      router.push(`/workspaces/${data?.workspace.id}/settings`);
+      document.dispatchEvent(new CustomEvent(WORKSPACE_UPDATED_EVENT, { detail: workspace }));
+      router.push(`/workspaces/${workspace.id}/settings`);
     }
   };
 
@@ -90,7 +90,7 @@ const NewWorkspace = () => {
             }
 
             setTrackedRepos((trackedRepos) => {
-              const updates = new Set([...trackedRepos]);
+              const updates = new Map([...trackedRepos]);
               updates.delete(repo);
 
               return updates;
@@ -103,10 +103,20 @@ const NewWorkspace = () => {
         onClose={() => {
           setTrackedReposModalOpen(false);
         }}
-        onAddToTrackingList={(repos: Set<string>) => {
+        onAddToTrackingList={(repos: Map<string, boolean>) => {
           setTrackedReposModalOpen(false);
           setTrackedRepos((trackedRepos) => {
-            return new Set([...trackedRepos, ...repos]);
+            const updates = new Map([...trackedRepos]);
+
+            for (const [repo, checked] of repos) {
+              if (checked) {
+                updates.set(repo, true);
+              } else {
+                updates.delete(repo);
+              }
+            }
+
+            return updates;
           });
         }}
         onCancel={() => {

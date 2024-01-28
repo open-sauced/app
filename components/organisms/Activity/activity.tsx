@@ -11,7 +11,7 @@ import { calcDaysFromToday } from "lib/utils/date-utils";
 import { getAvatarByUsername } from "lib/utils/github";
 
 export type PrStatusFilter = "open" | "closed" | "all";
-type ContributorPrMap = { [contributor: string]: DbRepoPR };
+type ContributorPrMap = { [contributor: string]: DbRepoPREvents };
 
 const Activity = ({ repositories }: { repositories: number[] | undefined }) => {
   const router = useRouter();
@@ -29,18 +29,19 @@ const Activity = ({ repositories }: { repositories: number[] | undefined }) => {
 
   let metadata: ScatterChartMetadata = {
     allPrs: prData.length,
-    openPrs: prData.filter((pr) => pr.state.toLowerCase() === "open").length,
-    closedPrs: prData.filter((pr) => pr.state.toLowerCase() === "closed" || pr.state.toLowerCase() === "merged").length,
+    openPrs: prData.filter((pr) => pr.pr_state.toLowerCase() === "open").length,
+    closedPrs: prData.filter((pr) => pr.pr_state.toLowerCase() === "closed" || pr.pr_state.toLowerCase() === "merged")
+      .length,
   };
 
   const uniqueContributors: ContributorPrMap = prData.reduce((prs, curr) => {
-    if (curr.state.toLowerCase() !== prStateFilter && prStateFilter !== "all") return prs;
+    if (curr.pr_state.toLowerCase() !== prStateFilter && prStateFilter !== "all") return prs;
 
-    if (prs[curr.author_login]) {
-      prs[curr.author_login].linesCount += Math.abs(curr.additions - curr.deletions);
+    if (prs[curr.pr_author_login]) {
+      prs[curr.pr_author_login].linesCount += Math.abs(curr.pr_additions - curr.pr_deletions);
     } else {
-      prs[curr.author_login] = { ...curr };
-      prs[curr.author_login].linesCount = Math.abs(curr.additions - curr.deletions);
+      prs[curr.pr_author_login] = { ...curr };
+      prs[curr.pr_author_login].linesCount = Math.abs(curr.pr_additions - curr.pr_deletions);
     }
 
     return prs;
@@ -59,13 +60,13 @@ const Activity = ({ repositories }: { repositories: number[] | undefined }) => {
   if (prError) {
     scatterChartData = [];
   } else {
-    scatterChartData = prs.map(({ updated_at, linesCount, author_login }) => {
-      const author_image = author_login.includes("[bot]") ? "octocat" : author_login;
+    scatterChartData = prs.map(({ pr_updated_at, linesCount, pr_author_login }) => {
+      const author_image = pr_author_login.includes("[bot]") ? "octocat" : pr_author_login;
 
       const data = {
-        x: calcDaysFromToday(new Date(updated_at)),
+        x: calcDaysFromToday(new Date(pr_updated_at)),
         y: linesCount,
-        contributor: author_login,
+        contributor: pr_author_login,
         image: getAvatarByUsername(author_image, 40),
       };
       return data;
