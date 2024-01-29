@@ -6,6 +6,7 @@ import { fetchApiData } from "helpers/fetchApiData";
 import TabsList from "components/TabList/tab-list";
 import Repositories from "components/organisms/Repositories/repositories";
 import { useGetWorkspaceRepositories } from "lib/hooks/api/useGetWorkspaceRepositories";
+import { RepositoryStatCard } from "components/Workspaces/RepositoryStatCard";
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const supabase = createPagesServerClient(context);
@@ -41,6 +42,22 @@ const WorkspaceDashboard = ({ workspace }: WorkspaceDashboardProps) => {
   const { data, error: hasError, mutate: mutateTrackedRepos } = useGetWorkspaceRepositories(workspace.id);
 
   const repositories = data?.data?.map((repo) => repo.repo_id) || [];
+  const pullStats = {
+    opened: 10,
+    merged: 5,
+    velocity: 2,
+  };
+  const issueStats = {
+    opened: 10,
+    closed: 5,
+    velocity: 2,
+  };
+  const engagementStats = {
+    stars: 4530,
+    forks: 87,
+    health: 7,
+  };
+  const isLoadingStats = false;
 
   return (
     <WorkspaceLayout workspaceId={workspace.id}>
@@ -50,16 +67,13 @@ const WorkspaceDashboard = ({ workspace }: WorkspaceDashboardProps) => {
         <span>{workspace.name}</span>
       </h1>
       <TabsList tabList={tabList} selectedTab={"repositories"} pageId={`/workspaces/${workspace.id}`} />
-      <div className="mt-6">
+      <div className="mt-6 grid gap-6">
+        <div className="flex flex-col lg:flex-row gap-6">
+          <RepositoryStatCard type="pulls" stats={pullStats} isLoading={isLoadingStats} />
+          <RepositoryStatCard type="issues" stats={issueStats} isLoading={isLoadingStats} />
+          <RepositoryStatCard type="engagement" stats={engagementStats} isLoading={isLoadingStats} />
+        </div>
         <Repositories repositories={repositories} />
-        {/* <RepositoriesTable
-        user="asdf"
-        listOfRepositories={repositories}
-        selectedRepos={selectedRepos}
-        handleOnSelectRepo={() => {}}
-        loading={loading}
-        error={hasError}
-      /> */}
       </div>
     </WorkspaceLayout>
   );
