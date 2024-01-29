@@ -55,13 +55,16 @@ const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
   const [trackedReposModalOpen, setTrackedReposModalOpen] = useState(false);
   const { data, error, mutate: mutateTrackedRepos, isLoading } = useGetWorkspaceRepositories(workspace.id);
   const initialTrackedRepos: string[] = data?.data?.map(({ repo }) => repo.full_name) ?? [];
-  const [trackedRepos, setTrackedRepos] = useState<Set<string>>(new Set());
+  const [trackedRepos, setTrackedRepos] = useState<Map<string, boolean>>(new Map());
   const [trackedReposPendingDeletion, setTrackedReposPendingDeletion] = useState<Set<string>>(new Set());
 
   // initial tracked repos + newly selected tracked repos that are not pending deletion
-  const pendingTrackedRepos = new Set([...trackedRepos, ...initialTrackedRepos]);
+  const pendingTrackedRepos = new Map([
+    ...initialTrackedRepos.map((repo) => [repo, true] as const),
+    ...trackedRepos.entries(),
+  ]);
 
-  pendingTrackedRepos.forEach((repo) => {
+  pendingTrackedRepos.forEach((isSelected, repo) => {
     if (trackedReposPendingDeletion.has(repo)) {
       pendingTrackedRepos.delete(repo);
     }
@@ -84,7 +87,7 @@ const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
       name,
       description,
       sessionToken: sessionToken!,
-      repos: Array.from(trackedRepos, (repo) => ({ full_name: repo })),
+      repos: Array.from(trackedRepos, ([repo]) => ({ full_name: repo })),
     });
 
     const workspaceRepoDeletes = await deleteTrackedRepos({
@@ -106,7 +109,7 @@ const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
       await mutateTrackedRepos();
 
       setTrackedReposPendingDeletion(new Set());
-      setTrackedRepos(new Set());
+      setTrackedRepos(new Map());
 
       toast({ description: `Workspace updated successfully`, variant: "success" });
     }
@@ -159,7 +162,7 @@ const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
             }
 
             setTrackedRepos((repos) => {
-              const updates = new Set([...repos]);
+              const updates = new Map([...repos]);
               updates.delete(repo);
 
               return updates;
@@ -192,7 +195,19 @@ const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
           }}
           onAddToTrackingList={(repos) => {
             setTrackedReposModalOpen(false);
-            setTrackedRepos((trackedRepos) => new Set([...trackedRepos, ...repos]));
+            setTrackedRepos((trackedRepos) => {
+              const updates = new Map(trackedRepos);
+
+              repos.forEach((isSelected, repo) => {
+                if (isSelected) {
+                  updates.set(repo, true);
+                } else {
+                  updates.delete(repo);
+                }
+              });
+
+              return updates;
+            });
           }}
           onCancel={() => {
             setTrackedReposModalOpen(false);
