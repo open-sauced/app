@@ -23,7 +23,7 @@ export const PullRequests: Story = {
 export const Issues: Story = {
   args: {
     type: "issues",
-    stats: { opened: 10, closed: 5, velocity: 2 },
+    stats: { opened: 10, closed: 5, velocity: 0.5 },
   },
 };
 

@@ -95,10 +95,7 @@ export const RepositoryStatCard = ({ stats, type, isLoading }: RepositoryStatCar
                     <span className="text-xs">/10</span>
                   </td>
                 ) : (
-                  <td className="semi-bold text-2xl">
-                    {value}
-                    {stat === "velocity" ? "d" : ""}
-                  </td>
+                  <td className="semi-bold text-2xl">{stat === "velocity" ? `${Math.round(value)}d` : value}</td>
                 )}
               </tr>
             ))}
