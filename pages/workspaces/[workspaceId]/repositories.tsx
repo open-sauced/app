@@ -3,10 +3,10 @@ import { GetServerSidePropsContext } from "next";
 import { SquareFillIcon } from "@primer/octicons-react";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import { fetchApiData } from "helpers/fetchApiData";
-import TabsList from "components/TabList/tab-list";
 import Repositories from "components/organisms/Repositories/repositories";
 import { useGetWorkspaceRepositories } from "lib/hooks/api/useGetWorkspaceRepositories";
 import { RepositoryStatCard } from "components/Workspaces/RepositoryStatCard";
+import { WorkspacesTabList } from "components/Workspaces/WorkspacesTabList";
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const supabase = createPagesServerClient(context);
@@ -36,8 +36,6 @@ interface WorkspaceDashboardProps {
   workspace: Workspace;
 }
 
-const tabList = [{ name: "Repositories" }, { name: "Contributors" }, { name: "Activity" }, { name: "Highlights" }];
-
 const WorkspaceDashboard = ({ workspace }: WorkspaceDashboardProps) => {
   const { data, error: hasError, mutate: mutateTrackedRepos } = useGetWorkspaceRepositories(workspace.id);
 
@@ -66,7 +64,7 @@ const WorkspaceDashboard = ({ workspace }: WorkspaceDashboardProps) => {
         <SquareFillIcon className="w-12 h-12 text-sauced-orange" />
         <span>{workspace.name}</span>
       </h1>
-      <TabsList tabList={tabList} selectedTab={"repositories"} pageId={`/workspaces/${workspace.id}`} />
+      <WorkspacesTabList workspaceId={workspace.id} selectedTab={"repositories"} />
       <div className="mt-6 grid gap-6">
         <div className="flex flex-col lg:flex-row gap-6">
           <RepositoryStatCard type="pulls" stats={pullStats} isLoading={isLoadingStats} />
