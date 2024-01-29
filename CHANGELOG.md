@@ -5,6 +5,19 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.85.0-beta.5](https://github.com/open-sauced/insights/compare/v1.85.0-beta.4...v1.85.0-beta.5) (2024-01-29)
+
+
+### 🐛 Bug Fixes
+
+* hydration issue for suggested repo list component ([#2535](https://github.com/open-sauced/insights/issues/2535)) ([31f8c37](https://github.com/open-sauced/insights/commit/31f8c37f29276acbf26f25e7c58701dbc71e0c5e))
+* now checkboxes in the search for tracked repositories flow add or remove as expected ([#2544](https://github.com/open-sauced/insights/issues/2544)) ([390c760](https://github.com/open-sauced/insights/commit/390c7609832c456a21d42feaa29ab65703ef6344))
+
+
+### 🍕 Features
+
+* created the repository stat card component ([#2546](https://github.com/open-sauced/insights/issues/2546)) ([bc35e83](https://github.com/open-sauced/insights/commit/bc35e839533ba8f789bda497b64f5b52c9f64961))
+
 ## [1.85.0-beta.4](https://github.com/open-sauced/insights/compare/v1.85.0-beta.3...v1.85.0-beta.4) (2024-01-26)
 
 
