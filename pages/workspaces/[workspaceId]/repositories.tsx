@@ -73,7 +73,7 @@ const WorkspaceDashboard = ({ workspace }: WorkspaceDashboardProps) => {
           <RepositoryStatCard type="issues" stats={issueStats} isLoading={isLoadingStats} />
           <RepositoryStatCard type="engagement" stats={engagementStats} isLoading={isLoadingStats} />
         </div>
-        <Repositories repositories={repositories} />
+        <Repositories repositories={repositories} showSearch={false} />
       </div>
     </WorkspaceLayout>
   );
