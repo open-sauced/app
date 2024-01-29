@@ -1,30 +1,25 @@
+import { useRef } from "react";
 import { FaSearch } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa6";
-import { TrackedRepoWizardLayout } from "./TrackedRepoWizardLayout";
+import { useEffectOnce } from "react-use";
 
 interface PickReposOrOrgStepProps {
-  onAddToTrackingList: () => void;
   onSearchRepos: () => void;
   onImportOrg: () => void;
-  onCancel: () => void;
-  trackedReposCount: number;
 }
 
-export const PickReposOrOrgStep = ({
-  onAddToTrackingList,
-  onSearchRepos,
-  onImportOrg,
-  onCancel,
-  trackedReposCount,
-}: PickReposOrOrgStepProps) => {
+export const PickReposOrOrgStep = ({ onSearchRepos, onImportOrg }: PickReposOrOrgStepProps) => {
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
+  useEffectOnce(() => {
+    buttonRef.current?.focus();
+  });
+
   return (
-    <TrackedRepoWizardLayout
-      onAddToTrackingList={onAddToTrackingList}
-      trackedReposCount={trackedReposCount}
-      onCancel={onCancel}
-    >
+    <>
       <div className="grid gap-6 md:grid-cols-2" data-tracked-repo-wizard>
         <button
+          ref={buttonRef}
           className="flex flex-col text-light-slate-12 p-8 border rounded-lg focus-visible:!border-green-800 focus-visible:!ring-green-100"
           onClick={onSearchRepos}
         >
@@ -35,8 +30,10 @@ export const PickReposOrOrgStep = ({
           <span className="text-left">Search for specific repositories to track on your workspace.</span>
         </button>
         <button
-          className="flex flex-col text-light-slate-12 p-8 border rounded-lg focus-visible:!border-green-800 focus-visible:!ring-green-100"
+          className="flex flex-col text-light-slate-12 p-8 border rounded-lg focus-visible:!border-green-800 focus-visible:!ring-green-100 cursor-not-allowed disabled:opacity-50"
+          title="coming soon"
           onClick={onImportOrg}
+          disabled
         >
           <FaGithub size={20} className="text-purple-800 mb-2" />
           <span data-button-title className="font-semibold">
@@ -45,6 +42,6 @@ export const PickReposOrOrgStep = ({
           <span className="text-left">Search for organizations on Github and import any or all repositories.</span>
         </button>
       </div>
-    </TrackedRepoWizardLayout>
+    </>
   );
 };

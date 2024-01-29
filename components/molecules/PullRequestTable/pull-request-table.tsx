@@ -47,18 +47,18 @@ const PullRequestTable = ({
           {data.map(
             (
               {
-                title: prName,
-                state: prStatus,
-                merged,
-                draft,
-                merged_at: prMergedTime,
-                created_at: prIssuedTime,
-                changed_files: noOfFilesChanged,
-                additions,
-                deletions,
-                number: prNumber,
-                full_name: fullName,
-                updated_at: prUpdatedTime,
+                pr_title: prName,
+                pr_state: prStatus,
+                pr_is_merged: merged,
+                pr_is_draft: draft,
+                pr_merged_at: prMergedTime,
+                pr_created_at: prIssuedTime,
+                pr_changed_files: noOfFilesChanged,
+                pr_additions: additions,
+                pr_deletions: deletions,
+                pr_number: prNumber,
+                repo_name: fullName,
+                pr_updated_at: prUpdatedTime,
               },
               index
             ) => {

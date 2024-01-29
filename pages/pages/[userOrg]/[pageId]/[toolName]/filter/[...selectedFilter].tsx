@@ -9,6 +9,7 @@ import { WithPageLayout } from "interfaces/with-page-layout";
 import changeCapitalization from "lib/utils/change-capitalization";
 import getInsightTeamMemberAccess from "lib/utils/get-insight-team-member";
 import { MemberAccess } from "components/molecules/TeamMembersConfig/team-members-config";
+import useInsightRepositories from "lib/hooks/useInsightRepositories";
 
 interface InsightFilterPageProps {
   insight: DbUserInsight;
@@ -16,7 +17,8 @@ interface InsightFilterPageProps {
 }
 
 const HubPage: WithPageLayout<InsightFilterPageProps> = ({ insight, pageName }: InsightFilterPageProps) => {
-  const repositories = insight.repos.map((repo) => repo.repo_id);
+  const { data: insightRepos } = useInsightRepositories(insight.id);
+  const repositories = insightRepos.map((repo) => repo.repo_id);
 
   const title = `${insight.name} | Open Sauced Insights Hub`;
 
@@ -38,7 +40,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const bearerToken = session ? session.access_token : "";
   const insightId = ctx.params!["pageId"] as string;
   const pageName = ctx.params!["toolName"] as string;
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/insights/${insightId}`);
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/insights/${insightId}?include=none`);
   const insight = response.ok ? ((await response.json()) as DbUserInsight) : null;
 
   if (!insight) {

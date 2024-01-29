@@ -272,6 +272,7 @@ export default function EditListPage({ list, initialContributors }: EditListPage
 
               if (!error) {
                 toast({ description: "List updated successfully!", variant: "success" });
+                router.push(`/lists/${list.id}/overview`);
               } else {
                 toast({ description: "Error updating list. Please try again", variant: "danger" });
               }

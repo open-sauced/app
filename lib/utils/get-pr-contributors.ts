@@ -1,11 +1,11 @@
-const getPullRequestsContributors = (repositoryPullRequests: DbRepoPR[]) => {
+const getPullRequestsContributors = (repositoryPullRequests: DbRepoPREvents[]) => {
   const uniqueContributors = Object.keys(
     repositoryPullRequests
-      .filter((pr) => !pr.author_login.includes("[bot]"))
+      .filter((pr) => !pr.pr_author_login.includes("[bot]"))
       .reduce((contributors, pull_request) => {
         return {
           ...contributors,
-          [pull_request.author_login]: true,
+          [pull_request.pr_author_login]: true,
         };
       }, {})
   );
