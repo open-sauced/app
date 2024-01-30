@@ -186,9 +186,9 @@ export const AppSideBar = () => {
               <Link
                 title="Read OpenSauced's Docs"
                 href="https://docs.opensauced.pizza/"
-                className="text-sm font-medium flex gap-1 items-center rounded-md transition-colors cursor-pointer tracking-tight p-1"
+                className="text-sm font-medium flex gap-1 items-center rounded-md transition-colors cursor-pointer tracking-tight p-1 group"
               >
-                <Cog8ToothIcon className="w-5 h-5 text-slate-400 inline-flex mr-1" />
+                <Cog8ToothIcon className="w-5 h-5 text-slate-400 inline-flex mr-1 group-hover:text-orange-500" />
                 <span className="whitespace-nowrap overflow-hidden overflow-ellipsis inline-flex">Read the docs</span>
               </Link>
             </DropdownMenuItem>
@@ -196,9 +196,9 @@ export const AppSideBar = () => {
               <Link
                 title="Give feedback"
                 href="https://github.com/orgs/open-sauced/discussions"
-                className="text-sm font-medium flex gap-1 items-center rounded-md transition-colors cursor-pointer tracking-tight p-1"
+                className="text-sm font-medium flex gap-1 items-center rounded-md transition-colors cursor-pointer tracking-tight p-1 group"
               >
-                <ChatBubbleLeftEllipsisIcon className="w-5 h-5 text-slate-400 inline-flex mr-1" />
+                <ChatBubbleLeftEllipsisIcon className="w-5 h-5 text-slate-400 inline-flex mr-1 group-hover:text-orange-500" />
                 <span className="whitespace-nowrap overflow-hidden overflow-ellipsis inline-flex">Give feedback</span>
               </Link>
             </DropdownMenuItem>
@@ -206,9 +206,9 @@ export const AppSideBar = () => {
               <Link
                 title="Report a bug on our Github repository"
                 href="https://github.com/open-sauced/app/issues/new?assignees=&labels=%F0%9F%91%80+needs+triage%2C%F0%9F%90%9B+bug&projects=&template=bug_report.yml&title=Bug%3A+"
-                className="text-sm font-medium flex gap-1 items-center rounded-md transition-colors cursor-pointer tracking-tight p-1"
+                className="text-sm font-medium flex gap-1 items-center rounded-md transition-colors cursor-pointer tracking-tight p-1 group"
               >
-                <ExclamationCircleIcon className="w-5 h-5 text-slate-400 inline-flex mr-1" />
+                <ExclamationCircleIcon className="w-5 h-5 text-slate-400 inline-flex mr-1 group-hover:text-orange-500" />
                 <span className="whitespace-nowrap overflow-hidden overflow-ellipsis inline-flex">Report a bug</span>
               </Link>
             </DropdownMenuItem>
@@ -216,9 +216,9 @@ export const AppSideBar = () => {
               <Link
                 title="Checkout our blog on dev.to"
                 href="https://dev.to/opensauced"
-                className="text-sm font-medium flex gap-1 items-center rounded-md transition-colors cursor-pointer tracking-tight p-1"
+                className="text-sm font-medium flex gap-1 items-center rounded-md transition-colors cursor-pointer tracking-tight p-1 group"
               >
-                <NewspaperIcon className="w-5 h-5 text-slate-400 inline-flex mr-1" />
+                <NewspaperIcon className="w-5 h-5 text-slate-400 inline-flex mr-1 group-hover:text-orange-500" />
                 <span className="whitespace-nowrap overflow-hidden overflow-ellipsis inline-flex">
                   Checkout our blog
                 </span>
@@ -228,9 +228,9 @@ export const AppSideBar = () => {
               <Link
                 title="Join our community on Discord"
                 href="https://discord.com/invite/opensauced"
-                className="text-sm font-medium flex gap-1 items-center transition-colors cursor-pointer tracking-tight p-1"
+                className="text-sm font-medium flex gap-1 items-center transition-colors cursor-pointer tracking-tight p-1 group"
               >
-                <UserGroupIcon className="w-5 h-5 text-slate-400 inline-flex mr-1" />
+                <UserGroupIcon className="w-5 h-5 text-slate-400 inline-flex mr-1 group-hover:text-orange-500" />
                 <span className="whitespace-nowrap overflow-hidden overflow-ellipsis inline-flex">
                   Join our community
                 </span>
