@@ -5,6 +5,18 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.85.0-beta.7](https://github.com/open-sauced/insights/compare/v1.85.0-beta.6...v1.85.0-beta.7) (2024-01-30)
+
+
+### 🍕 Features
+
+* created the day range picker component ([#2552](https://github.com/open-sauced/insights/issues/2552)) ([999629f](https://github.com/open-sauced/insights/commit/999629faf33177f4aeeb625141e0c5f974ed6f47))
+
+
+### 🐛 Bug Fixes
+
+* add Posthog events for user profile share and update ([#2556](https://github.com/open-sauced/insights/issues/2556)) ([61e811c](https://github.com/open-sauced/insights/commit/61e811c8dca4aee23cd0af73e202fb9f1af850a5))
+
 ## [1.85.0-beta.6](https://github.com/open-sauced/insights/compare/v1.85.0-beta.5...v1.85.0-beta.6) (2024-01-30)
 
 
