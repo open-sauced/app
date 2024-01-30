@@ -651,7 +651,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
               <GhOpenGraphImg githubLink={highlightLink} />
             )}
             {highlightLink && isDivFocused && highlightLink.includes("dev.to") && (
-              <DevToSocialImg blogLink={highlightLink} />
+              <DevToSocialImg className="max-sm:hidden lg:w-[33vw] md:w-[50vw]" blogLink={highlightLink} />
             )}
             {highlightLink &&
               isDivFocused &&
