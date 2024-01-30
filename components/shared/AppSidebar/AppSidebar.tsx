@@ -115,7 +115,7 @@ export const AppSideBar = () => {
                   <PlusIcon className="w-5 h-5 p-0.5 inline-flex stroke-[3px] hover:stroke-[3px] text-semibold group-hover:bg-orange-100 group-hover:text-orange-600 rounded-md mr-1" />
                 </div>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="flex flex-col gap-1 py-2 rounded-lg">
+              <DropdownMenuContent side="right" align="start" className="flex flex-col gap-1 py-2 rounded-lg shadow-xl">
                 <DropdownMenuItem className="rounded-md">
                   <Link
                     title="New Repository Insight"
@@ -124,7 +124,7 @@ export const AppSideBar = () => {
                   >
                     <ChartBarSquareIcon className="w-5 h-5 text-slate-400 inline-flex mr-1 group-hover:stroke-orange-500" />
                     <span className="whitespace-nowrap overflow-hidden overflow-ellipsis inline-flex">
-                      Repository Insight
+                      New Repository Insight
                     </span>
                   </Link>
                 </DropdownMenuItem>
@@ -136,7 +136,7 @@ export const AppSideBar = () => {
                   >
                     <UsersIcon className="w-5 h-5 text-slate-400 inline-flex mr-1 group-hover:stroke-orange-500" />
                     <span className="whitespace-nowrap overflow-hidden overflow-ellipsis inline-flex">
-                      Contributor Insight
+                      New Contributor Insight
                     </span>
                   </Link>
                 </DropdownMenuItem>
