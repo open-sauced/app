@@ -10,17 +10,14 @@ interface MenuItemProps {
 }
 const SidebarMenuItem = ({ title, icon, type, url: href, isActive }: MenuItemProps) => {
   return (
-    <li
-      className={
-        "py-1 px-3 hover:bg-slate-100 rounded-tr-md rounded-br-md transition-colors text-sm" +
-        (isActive ? " bg-slate-100" : "")
-      }
+    <Link
+      title={title}
+      href={href}
+      className="hover:bg-slate-100 text-sm font-medium flex gap-1 items-center rounded-md transition-colors cursor-pointer tracking-tight py-1 px-2 group"
     >
-      <Link title={title} href={href} className="items-center flex-auto flex-row align-middle block">
-        {icon}
-        <span className="whitespace-nowrap overflow-hidden overflow-ellipsis inline-flex">{title}</span>
-      </Link>
-    </li>
+      {icon}
+      <h3 className="py-1 text-slate-800">{title}</h3>
+    </Link>
   );
 };
 

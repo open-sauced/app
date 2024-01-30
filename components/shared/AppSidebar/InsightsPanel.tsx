@@ -23,20 +23,25 @@ export const InsightsPanel = ({ title, username, insights, type, isLoading }: In
   };
   return (
     <div>
-      <Link
-        title={"See all " + title}
-        href={type === "list" ? "/hub/lists" : "/hub/insights"}
-        className="hover:bg-slate-100 text-sm font-medium flex gap-1 items-center rounded-md transition-colors cursor-pointer tracking-tight p-1 group"
-      >
-        {getIcon(type)}
-        <h3 className="py-1 text-slate-800">{title}</h3>
-      </Link>
+      <SidebarMenuItem title={title} url={type === "list" ? "/hub/lists" : "/hub/insights"} icon={getIcon(type)} />
+
       <div className="overflow-hidden">
         {isLoading ? null : (
           <ul className="list-none w-full px-4 mt-1 [&_li]:border-l-2 text-slate-700 tracking-tight">
             {insights.slice(0, 3).map((insight) => {
               const url = type === "list" ? `/lists/${insight.id}` : `/pages/${username}/${insight.id}/dashboard`;
-              return <SidebarMenuItem key={insight.id} title={insight.name} url={url} type={type} />;
+              return (
+                <li
+                  className="py-1 px-3 hover:bg-slate-100 rounded-tr-md rounded-br-md transition-colors text-sm"
+                  key={insight.id}
+                >
+                  <Link title={title} href={url} className="items-center flex-auto flex-row align-middle block">
+                    <span className="whitespace-nowrap overflow-hidden overflow-ellipsis inline-flex">
+                      {insight.name}
+                    </span>
+                  </Link>
+                </li>
+              );
             })}
             {insights.length > 3 ? (
               <Link

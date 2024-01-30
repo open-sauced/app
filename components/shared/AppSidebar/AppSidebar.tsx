@@ -29,6 +29,7 @@ import {
   DropdownMenuTrigger,
 } from "components/atoms/Dropdown/dropdown";
 import { InsightsPanel } from "./InsightsPanel";
+import SidebarMenuItem from "./sidebar-menu-item";
 
 const SidebarLoader = () => {
   return (
@@ -77,8 +78,8 @@ export const AppSideBar = () => {
 
   return (
     <div className="fixed top-0 pt-14 bg-white flex flex-col gap-8 justify-between max-w-xs w-72 h-full border-r border-slate-200">
-      <div className="grid gap-4 mt-4 px-4">
-        <label className="flex flex-col gap-2 w-full mr-2">
+      <div className="grid gap-4 mt-4 pr-4 pl-2">
+        <label className="flex flex-col gap-2 ml-2">
           <span className="sr-only">Workspace</span>
           <SingleSelect
             options={[
@@ -102,10 +103,7 @@ export const AppSideBar = () => {
             }}
           />
         </label>
-        <h2 className="text-sm font-medium flex gap-1 items-center py-2 px-2 hover:bg-slate-100 rounded-md transition-colors cursor-pointer text-slate-800">
-          <BiHomeAlt className="w-5 h-5 text-slate-400" />
-          Home
-        </h2>
+        <SidebarMenuItem title="Home" url="" icon={<BiHomeAlt className="w-5 h-5 text-slate-400" />} />
         <div className="grid gap-1 mb-6">
           <div className="flex flex-row justify-between items-center ">
             <h3 className="uppercase text-gray-500 text-xs font-medium tracking-wide px-2">Insights</h3>
@@ -162,15 +160,11 @@ export const AppSideBar = () => {
         </div>
       </div>
       <div className="list-none mb-4 px-2">
-        <Link
-          title=""
-          href=""
-          className="text-sm font-medium flex gap-1 items-center py-2 px-2 hover:bg-slate-100 rounded-md transition-colors cursor-pointer tracking-tight text-slate-800"
-        >
-          <Cog8ToothIcon className="w-5 h-5 text-slate-400 inline-flex mr-1" />
-          <span className="whitespace-nowrap overflow-hidden overflow-ellipsis inline-flex">Settings</span>
-        </Link>
-
+        <SidebarMenuItem
+          title="Settings"
+          url="/settings"
+          icon={<Cog8ToothIcon className="w-5 h-5 text-slate-400 inline-flex mr-1" />}
+        />
         <DropdownMenu modal={false}>
           <DropdownMenuTrigger
             title="Support options"
