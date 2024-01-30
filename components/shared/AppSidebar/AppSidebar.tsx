@@ -64,7 +64,7 @@ export const AppSideBar = ({ workspaceId }: AppSideBarProps) => {
   return (
     <div className="fixed top-0 pt-12 bg-white flex flex-col gap-8 justify-between max-w-xs w-80 h-full">
       <div className="grid gap-4 mt-4 px-4">
-        <label className="flex flex-col gap-2 w-max">
+        <label className="flex flex-col gap-2 w-full">
           <span className="sr-only">Workspace</span>
           <SingleSelect
             options={[
