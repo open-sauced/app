@@ -2,6 +2,7 @@ import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { GetServerSidePropsContext } from "next";
 import { SquareFillIcon } from "@primer/octicons-react";
 import { useRouter } from "next/router";
+import { FaPlus } from "react-icons/fa6";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import { fetchApiData } from "helpers/fetchApiData";
 import Repositories from "components/organisms/Repositories/repositories";
@@ -10,6 +11,8 @@ import { RepositoryStatCard } from "components/Workspaces/RepositoryStatCard";
 import { WorkspacesTabList } from "components/Workspaces/WorkspacesTabList";
 import { useWorkspacesRepoStats } from "lib/hooks/api/useWorkspacesRepoStats";
 import { DayRangePicker } from "components/shared/DayRangePicker";
+import Card from "components/atoms/Card/card";
+import Button from "components/atoms/Button/button";
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const supabase = createPagesServerClient(context);
@@ -61,27 +64,45 @@ const WorkspaceDashboard = ({ workspace }: WorkspaceDashboardProps) => {
         </div>
       </div>
       <div className="mt-6 grid gap-6">
-        <div className="flex flex-col lg:flex-row gap-6">
-          <RepositoryStatCard
-            type="pulls"
-            stats={stats?.data?.pull_requests}
-            isLoading={isLoadingStats}
-            hasError={isStatsError}
-          />
-          <RepositoryStatCard
-            type="issues"
-            stats={stats?.data?.issues}
-            isLoading={isLoadingStats}
-            hasError={isStatsError}
-          />
-          <RepositoryStatCard
-            type="engagement"
-            stats={stats?.data?.repos}
-            isLoading={isLoadingStats}
-            hasError={isStatsError}
-          />
-        </div>
-        <Repositories repositories={repositories} showSearch={false} />
+        {repositories.length > 0 ? (
+          <>
+            <div className="flex flex-col lg:flex-row gap-6">
+              <RepositoryStatCard
+                type="pulls"
+                stats={stats?.data?.pull_requests}
+                isLoading={isLoadingStats}
+                hasError={isStatsError}
+              />
+              <RepositoryStatCard
+                type="issues"
+                stats={stats?.data?.issues}
+                isLoading={isLoadingStats}
+                hasError={isStatsError}
+              />
+              <RepositoryStatCard
+                type="engagement"
+                stats={stats?.data?.repos}
+                isLoading={isLoadingStats}
+                hasError={isStatsError}
+              />
+            </div>
+            <Repositories repositories={repositories} showSearch={false} />
+          </>
+        ) : (
+          <Card className="p-6 h-96 grid gap-6 place-content-center bg-transparent">
+            <p>You haven&apos;t tracked any repositories</p>
+            <Button
+              variant="primary"
+              className="w-max mx-auto"
+              onClick={() => {
+                router.push(`/workspaces/${workspace.id}/settings`);
+              }}
+            >
+              <FaPlus className="mr-2 text-lg" />
+              Add repositories
+            </Button>
+          </Card>
+        )}
       </div>
     </WorkspaceLayout>
   );
