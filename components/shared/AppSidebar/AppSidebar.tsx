@@ -114,11 +114,11 @@ export const AppSideBar = () => {
                 </div>
               </DropdownMenuTrigger>
               <DropdownMenuContent side="right" align="start" className="flex flex-col gap-1 py-2 rounded-lg shadow-xl">
-                <DropdownMenuItem className="rounded-md">
+                <DropdownMenuItem className="rounded-md group">
                   <Link
                     title="New Repository Insight"
                     href="/hub/insights/new"
-                    className="text-sm font-medium flex gap-1 items-center rounded-md transition-colors cursor-pointer tracking-tight p-1 group"
+                    className="text-sm font-medium flex gap-1 items-center rounded-md transition-colors cursor-pointer tracking-tight p-1"
                   >
                     <ChartBarSquareIcon className="w-5 h-5 text-slate-400 inline-flex mr-1 group-hover:stroke-orange-500" />
                     <span className="whitespace-nowrap overflow-hidden overflow-ellipsis inline-flex">
@@ -126,11 +126,11 @@ export const AppSideBar = () => {
                     </span>
                   </Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem className="rounded-md">
+                <DropdownMenuItem className="rounded-md group">
                   <Link
                     title="New Contributor Insight"
                     href="/hub/lists/new"
-                    className="text-sm font-medium flex gap-1 items-center rounded-md transition-colors cursor-pointer tracking-tight p-1 group"
+                    className="text-sm font-medium flex gap-1 items-center rounded-md transition-colors cursor-pointer tracking-tight p-1"
                   >
                     <UsersIcon className="w-5 h-5 text-slate-400 inline-flex mr-1 group-hover:stroke-orange-500" />
                     <span className="whitespace-nowrap overflow-hidden overflow-ellipsis inline-flex">
@@ -176,41 +176,41 @@ export const AppSideBar = () => {
             </span>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="flex flex-col gap-1 py-2 rounded-lg">
-            <DropdownMenuItem className="rounded-md">
+            <DropdownMenuItem className="rounded-md group">
               <Link
                 title="Read OpenSauced's Docs"
                 href="https://docs.opensauced.pizza/"
-                className="text-sm font-medium flex gap-1 items-center rounded-md transition-colors cursor-pointer tracking-tight p-1 group"
+                className="text-sm font-medium flex gap-1 items-center rounded-md transition-colors cursor-pointer tracking-tight p-1"
               >
                 <Cog8ToothIcon className="w-5 h-5 text-slate-400 inline-flex mr-1 group-hover:text-orange-500" />
                 <span className="whitespace-nowrap overflow-hidden overflow-ellipsis inline-flex">Read the docs</span>
               </Link>
             </DropdownMenuItem>
-            <DropdownMenuItem className="rounded-md">
+            <DropdownMenuItem className="rounded-md group">
               <Link
                 title="Give feedback"
                 href="https://github.com/orgs/open-sauced/discussions"
-                className="text-sm font-medium flex gap-1 items-center rounded-md transition-colors cursor-pointer tracking-tight p-1 group"
+                className="text-sm font-medium flex gap-1 items-center rounded-md transition-colors cursor-pointer tracking-tight p-1"
               >
                 <ChatBubbleLeftEllipsisIcon className="w-5 h-5 text-slate-400 inline-flex mr-1 group-hover:text-orange-500" />
                 <span className="whitespace-nowrap overflow-hidden overflow-ellipsis inline-flex">Give feedback</span>
               </Link>
             </DropdownMenuItem>
-            <DropdownMenuItem className="rounded-md">
+            <DropdownMenuItem className="rounded-md group">
               <Link
                 title="Report a bug on our Github repository"
                 href="https://github.com/open-sauced/app/issues/new?assignees=&labels=%F0%9F%91%80+needs+triage%2C%F0%9F%90%9B+bug&projects=&template=bug_report.yml&title=Bug%3A+"
-                className="text-sm font-medium flex gap-1 items-center rounded-md transition-colors cursor-pointer tracking-tight p-1 group"
+                className="text-sm font-medium flex gap-1 items-center rounded-md transition-colors cursor-pointer tracking-tight p-1"
               >
                 <ExclamationCircleIcon className="w-5 h-5 text-slate-400 inline-flex mr-1 group-hover:text-orange-500" />
                 <span className="whitespace-nowrap overflow-hidden overflow-ellipsis inline-flex">Report a bug</span>
               </Link>
             </DropdownMenuItem>
-            <DropdownMenuItem className="rounded-md">
+            <DropdownMenuItem className="rounded-md group">
               <Link
                 title="Checkout our blog on dev.to"
                 href="https://dev.to/opensauced"
-                className="text-sm font-medium flex gap-1 items-center rounded-md transition-colors cursor-pointer tracking-tight p-1 group"
+                className="text-sm font-medium flex gap-1 items-center rounded-md transition-colors cursor-pointer tracking-tight p-1"
               >
                 <NewspaperIcon className="w-5 h-5 text-slate-400 inline-flex mr-1 group-hover:text-orange-500" />
                 <span className="whitespace-nowrap overflow-hidden overflow-ellipsis inline-flex">
@@ -218,11 +218,11 @@ export const AppSideBar = () => {
                 </span>
               </Link>
             </DropdownMenuItem>
-            <DropdownMenuItem className="rounded-md">
+            <DropdownMenuItem className="rounded-md group">
               <Link
                 title="Join our community on Discord"
                 href="https://discord.com/invite/opensauced"
-                className="text-sm font-medium flex gap-1 items-center transition-colors cursor-pointer tracking-tight p-1 group"
+                className="text-sm font-medium flex gap-1 items-center transition-colors cursor-pointer tracking-tight p-1"
               >
                 <UserGroupIcon className="w-5 h-5 text-slate-400 inline-flex mr-1 group-hover:text-orange-500" />
                 <span className="whitespace-nowrap overflow-hidden overflow-ellipsis inline-flex">
