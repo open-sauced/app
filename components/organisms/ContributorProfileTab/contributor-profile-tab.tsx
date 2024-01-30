@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import clsx from "clsx";
 import formatDistanceToNowStrict from "date-fns/formatDistanceToNowStrict";
+import { usePostHog } from "posthog-js/react";
 
 import { MdClose } from "react-icons/md";
 import { FaLinkedinIn, FaXTwitter } from "react-icons/fa6";
@@ -89,6 +90,7 @@ const ContributorProfileTab = ({
   const [showInviteJumbotron, setShowInviteJumbotron] = useState(!!is_open_sauced_member ? false : true);
   const [showSocialLinks, setShowSocialLinks] = useState(false);
   const { toast } = useToast();
+  const posthog = usePostHog();
 
   const { data: highlights, isError, isLoading, mutate, meta, setPage } = useFetchUserHighlights(login || "");
   const { data: emojis } = useFetchAllEmojis();
@@ -123,6 +125,10 @@ const ContributorProfileTab = ({
     const hasSocials = !!(twitter_username || display_email || linkedin_url);
 
     if (!hasSocials) {
+      posthog!.capture("clicked: profile copied", {
+        profile: login,
+      });
+
       copyToClipboard(`${new URL(`/user/${login}`, location.origin)}`).then(() => {
         toast({
           title: "Copied to clipboard",

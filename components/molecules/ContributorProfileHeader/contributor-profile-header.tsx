@@ -31,7 +31,6 @@ import { OptionKeys } from "components/atoms/Select/multi-select";
 import { addListContributor, useFetchAllLists } from "lib/hooks/useList";
 import { useFetchUser } from "lib/hooks/useFetchUser";
 import { cardPageUrl } from "lib/utils/urls";
-import { copyToClipboard } from "lib/utils/copy-to-clipboard";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../Dialog/dialog";
 
 const MultiSelect = dynamic(() => import("components/atoms/Select/multi-select"), { ssr: false });
@@ -117,7 +116,7 @@ const ContributorProfileHeader = ({
   const handleCopyToClipboard = async (content: string) => {
     const url = new URL(content).toString();
     posthog!.capture("clicked: profile copied", {
-      profile: user?.user_metadata.user_name,
+      profile: githubName,
     });
 
     try {
@@ -268,7 +267,7 @@ const ContributorProfileHeader = ({
                       <>
                         <DropdownMenuItem className="rounded-md">
                           <button
-                            onClick={() => handleCopyToClipboard(`${host}/user/${user?.user_metadata.user_name}`)}
+                            onClick={() => handleCopyToClipboard(`${host}/user/${githubName}`)}
                             className="flex items-center gap-1 pl-3 pr-7"
                           >
                             Share
@@ -288,9 +287,10 @@ const ContributorProfileHeader = ({
                     <>
                       <DropdownMenuItem className="rounded-md">
                         <button
-                          onClick={async () =>
-                            handleSignIn({ provider: "github", options: { redirectTo: `${host}${currentPath}` } })
-                          }
+                          onClick={async () => {
+                            handleCopyToClipboard(`${host}/user/${githubName}`);
+                            handleSignIn({ provider: "github", options: { redirectTo: `${host}${currentPath}` } });
+                          }}
                           className="flex items-center gap-1 pl-3 pr-7"
                         >
                           Share
@@ -319,7 +319,7 @@ const ContributorProfileHeader = ({
             {!isOwner && (
               <Button
                 onClick={() => {
-                  copyToClipboard(`${new URL(currentPath, location.origin)}`).then(() => {
+                  handleCopyToClipboard(`${new URL(currentPath, location.origin)}`).then(() => {
                     toast({
                       title: "Copied to clipboard",
                       description: "Share this link with your friend to invite them to OpenSauced!",
