@@ -5,6 +5,15 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.85.0-beta.6](https://github.com/open-sauced/insights/compare/v1.85.0-beta.5...v1.85.0-beta.6) (2024-01-30)
+
+
+### 🐛 Bug Fixes
+
+* add topic, repo, repoIds checks for search endpoints ([#2551](https://github.com/open-sauced/insights/issues/2551)) ([781b2fa](https://github.com/open-sauced/insights/commit/781b2fa6c6dc7b3e2f232bc7cd00fc6938fa3bdb))
+* Adding new repos to insights on edit page will trigger another API call ([#2499](https://github.com/open-sauced/insights/issues/2499)) ([8b108dd](https://github.com/open-sauced/insights/commit/8b108dd7f4457eebaec11bb6631be3cceadb57d0))
+* return null for feature flags server props when feature flags are undefined ([#2549](https://github.com/open-sauced/insights/issues/2549)) ([7531ac4](https://github.com/open-sauced/insights/commit/7531ac4f6be15c29b0398ddd311043fe223d3ed7))
+
 ## [1.85.0-beta.5](https://github.com/open-sauced/insights/compare/v1.85.0-beta.4...v1.85.0-beta.5) (2024-01-29)
 
 
