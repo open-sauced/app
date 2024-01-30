@@ -50,7 +50,7 @@ export const InsightsPanel = ({ title, username, insights, type, isLoading }: In
           </Thumb>
         </Root>
       </Collapsible.Trigger>
-      <Collapsible.Content className="CollapsibleContent">
+      <Collapsible.Content className="overflow-hidden animate-collapse">
         {isLoading ? null : (
           <ul className="list-none w-full px-4 mt-1 [&_li]:border-l-2">
             {insights.map((insight) => {

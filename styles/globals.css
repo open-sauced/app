@@ -39,26 +39,11 @@ button:not([role]):focus-visible {
   @apply ring-orange-100;
 }
 
-.transition-colors {
-  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 0.15s;
-}
-
-.transition-all {
-  transition-property: all;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 0.15s;
-}
-
 /* collapsible component animation */
-.CollapsibleContent {
-  overflow: hidden;
-}
-.CollapsibleContent[data-state="open"] {
+.animate-collapse[data-state="open"] {
   animation: slideDown 150ms ease-out;
 }
-.CollapsibleContent[data-state="closed"] {
+.animate-collapse[data-state="closed"] {
   animation: slideUp 150ms ease-out;
 }
 
