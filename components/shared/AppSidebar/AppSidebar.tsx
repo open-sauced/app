@@ -111,8 +111,6 @@ export const AppSideBar = () => {
             />
           </div>
         </div>
-
-        <h3 className="uppercase text-gray-500 text-xs font-medium tracking-wide px-2">Shared with you</h3>
       </div>
       <div className="list-none mb-4 px-2">
         <Link

@@ -57,10 +57,13 @@ export const InsightsPanel = ({ title, username, insights, type, isLoading }: In
               const url = type === "list" ? `/lists/${insight.id}` : `/pages/${username}/${insight.id}/dashboard`;
               return <SidebarMenuItem key={insight.id} title={insight.name} url={url} type={type} />;
             })}
-            <Link className="text-xs text-slate-500 pl-3 pt-2 border-l-2 hover:text-orange-600" title="" href="">
+            <Link
+              className="text-xs text-slate-500 pl-3 pt-2 border-l-2 hover:text-orange-600"
+              title=""
+              href={type === "list" ? "/hub/lists" : "/hub/insights"}
+            >
               Show more
             </Link>
-            {/* this should link to the insights hub, but we don't have the route yet */}
           </ul>
         )}
       </Collapsible.Content>
