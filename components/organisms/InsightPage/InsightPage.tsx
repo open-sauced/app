@@ -14,7 +14,7 @@ import RepositoriesCart from "components/organisms/RepositoriesCart/repositories
 import RepositoryCartItem from "components/molecules/ReposoitoryCartItem/repository-cart-item";
 import RepoNotIndexed from "components/organisms/Repositories/repository-not-indexed";
 import useRepositories from "lib/hooks/api/useRepositories";
-import { PaginatedResponse } from "lib/hooks/api/useRepositories";
+
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { generateRepoParts, getAvatarById, getAvatarByUsername } from "lib/utils/github";
 import useStore from "lib/store";
@@ -47,9 +47,6 @@ interface InsightPageProps {
   edit?: boolean;
   insight?: DbUserInsight;
   pageRepos?: DbRepo[];
-  pageReposMeta: Meta;
-  mutate: (newData?: PaginatedResponse, shouldRevalidate?: boolean) => void;
-  setCurrentRepoIds: React.Dispatch<React.SetStateAction<number[]>>;
 }
 const staticSuggestedRepos: RepoCardProfileProps[] = [
   {
@@ -75,7 +72,7 @@ const staticSuggestedRepos: RepoCardProfileProps[] = [
   },
 ];
 
-const InsightPage = ({ edit, insight, pageRepos, pageReposMeta, mutate, setCurrentRepoIds }: InsightPageProps) => {
+const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
   const { sessionToken, providerToken, user } = useSupabaseAuth();
 
   const { toast } = useToast();
@@ -83,6 +80,7 @@ const InsightPage = ({ edit, insight, pageRepos, pageReposMeta, mutate, setCurre
   const pageHref = router.asPath;
   const [reposIds, setReposIds] = useState<number[]>([]);
   const { data: repoListData } = useRepositories(reposIds);
+
   useEffect(() => {
     const searchParams = new URLSearchParams(pageHref.substring(pageHref.indexOf("?")));
     if (router.query.selectedRepos) {
@@ -143,6 +141,7 @@ const InsightPage = ({ edit, insight, pageRepos, pageReposMeta, mutate, setCurre
           })
           .slice(0, 3)
       : staticSuggestedRepos;
+
   useEffect(() => {
     if (pageRepos) {
       setRepos(pageRepos);
@@ -264,9 +263,9 @@ const InsightPage = ({ edit, insight, pageRepos, pageReposMeta, mutate, setCurre
       return;
     }
 
-    const updatedRepoIds = [...repos.map((repo) => Number(repo.id)), Number(actualRepo.id)];
-    setCurrentRepoIds(updatedRepoIds);
-    mutate();
+    setRepos((repos) => {
+      return [...repos, actualRepo as unknown as DbRepo];
+    });
   };
 
   const loadAndAddRepo = async (repoToAdd: string, isAddedFromCart = false) => {
@@ -294,9 +293,10 @@ const InsightPage = ({ edit, insight, pageRepos, pageReposMeta, mutate, setCurre
 
       if (response.ok) {
         const addedRepo = (await response.json()) as DbRepo;
-        const updatedRepoIds = [...repos.map((repo) => Number(repo.id)), Number(addedRepo.id)];
-        setCurrentRepoIds(updatedRepoIds);
-        mutate();
+
+        setRepos((repos) => {
+          return [...repos, addedRepo];
+        });
         setAddRepoError(RepoLookupError.Initial);
         setRepoSearchTerm("");
       } else {
@@ -310,9 +310,10 @@ const InsightPage = ({ edit, insight, pageRepos, pageReposMeta, mutate, setCurre
             id: publicRepo.id,
             full_name: publicRepo.full_name,
           } as DbRepo;
-          const updatedRepoIds = [...repos.map((repo) => Number(repo.id)), Number(addedRepo.id)];
-          setCurrentRepoIds(updatedRepoIds);
-          mutate();
+
+          setRepos((repos) => {
+            return [...repos, addedRepo];
+          });
           setAddRepoError(RepoLookupError.Initial);
           setRepoSearchTerm("");
         } else {
@@ -349,14 +350,12 @@ const InsightPage = ({ edit, insight, pageRepos, pageReposMeta, mutate, setCurre
       });
     } catch (e) {}
   };
+
   const handleRemoveRepository = (id: string) => {
-    mutate(
-      {
-        data: repos?.filter((repo) => repo.id !== id),
-        meta: { ...pageReposMeta, itemCount: pageReposMeta.itemCount - 1 },
-      },
-      false
-    );
+    setRepos((addedRepos) => {
+      return addedRepos.filter((repo) => repo.id !== id);
+    });
+
     const repoRemoved = repos.find((repo) => repo.id === id);
 
     const repoAlreadyInHistory = repoHistory.find((repo) => repo.id === id);
@@ -479,9 +478,7 @@ const InsightPage = ({ edit, insight, pageRepos, pageReposMeta, mutate, setCurre
       setRepos((repos) => {
         return [...repos, ...orgRepos];
       });
-      const updatedRepoIds = [...repos.map((repo) => Number(repo.id)), ...orgRepos.map((repo) => Number(repo.id))];
-      setCurrentRepoIds(updatedRepoIds);
-      mutate();
+
       setSyncOrganizationError(OrgLookupError.Initial);
       setOrganization("");
     } else {
