@@ -53,7 +53,12 @@ const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [workspaceName, setWorkspaceName] = useState(workspace.name);
   const [trackedReposModalOpen, setTrackedReposModalOpen] = useState(false);
-  const { data, error, mutate: mutateTrackedRepos, isLoading } = useGetWorkspaceRepositories(workspace.id);
+  const {
+    data,
+    error,
+    mutate: mutateTrackedRepos,
+    isLoading,
+  } = useGetWorkspaceRepositories({ workspaceId: workspace.id });
   const initialTrackedRepos: string[] = data?.data?.map(({ repo }) => repo.full_name) ?? [];
   const [trackedRepos, setTrackedRepos] = useState<Map<string, boolean>>(new Map());
   const [trackedReposPendingDeletion, setTrackedReposPendingDeletion] = useState<Set<string>>(new Set());
