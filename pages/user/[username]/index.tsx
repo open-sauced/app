@@ -42,8 +42,8 @@ const Contributor: WithPageLayout<ContributorSSRProps> = ({ username, user, ogIm
     mostRecent: false,
   });
   const isError = contributorError;
-  const repoList = useRepoList(Array.from(new Set(contributorPRData.map((prData) => prData.full_name))).join(","));
-  const mergedPrs = contributorPRData.filter((prData) => prData.merged);
+  const repoList = useRepoList(Array.from(new Set(contributorPRData.map((prData) => prData.repo_name))).join(","));
+  const mergedPrs = contributorPRData.filter((prData) => prData.pr_is_merged);
   const contributorLanguageList = useContributorLanguages(username);
   const githubAvatar = getAvatarByUsername(username, 300);
   const prVelocity = getContributorPullRequestVelocity(contributorPRData);

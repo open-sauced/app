@@ -77,9 +77,9 @@ async function fetchRemainingCardData(
   const prs = data.length;
   const prVelocity = getContributorPullRequestVelocity(data);
   const prTotal = meta.itemCount;
-  const mergedPrs = data.filter((prData) => prData.merged);
+  const mergedPrs = data.filter((prData) => prData.pr_is_merged);
   const prMergePercentage = getPercent(prTotal, mergedPrs.length || 0);
-  const repos = getRepoList(Array.from(new Set(data.map((prData) => prData.full_name))).join(",")).length;
+  const repos = getRepoList(Array.from(new Set(data.map((prData) => prData.repo_name))).join(",")).length;
   return {
     prs,
     prVelocity,

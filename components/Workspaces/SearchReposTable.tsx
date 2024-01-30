@@ -1,15 +1,16 @@
+import { CheckedState } from "@radix-ui/react-checkbox";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "components/shared/Table";
 import { Avatar } from "components/atoms/Avatar/avatar-hover-card";
 import Checkbox from "components/atoms/Checkbox/checkbox";
 import Search from "components/atoms/Search/search";
 
 interface SearchedReposTableProps {
-  repositories: string[];
+  repositories: Map<string, boolean>;
   onFilter: (filterTerm: string) => void;
-  onSelect: (value: string) => void;
+  onToggleRepo: (repo: string, checked: boolean) => void;
 }
 
-export const SearchedReposTable = ({ repositories = [], onFilter, onSelect }: SearchedReposTableProps) => {
+export const SearchedReposTable = ({ repositories = new Map(), onFilter, onToggleRepo }: SearchedReposTableProps) => {
   return (
     <div className="border border-light-slate-7 rounded-lg">
       <Table className="not-sr-only">
@@ -37,7 +38,7 @@ export const SearchedReposTable = ({ repositories = [], onFilter, onSelect }: Se
             </TableRow>
           </TableHeader>
           <TableBody>
-            {repositories.map((repo) => {
+            {[...repositories.entries()].map(([repo, checked]) => {
               const [owner] = repo.split("/");
 
               return (
@@ -45,11 +46,10 @@ export const SearchedReposTable = ({ repositories = [], onFilter, onSelect }: Se
                   <TableCell className="flex gap-2 items-center w-full">
                     <label className="flex items-center gap-2">
                       <Checkbox
-                        onChange={(event) => {
-                          onSelect("");
+                        onCheckedChange={(checked: CheckedState) => {
+                          onToggleRepo(repo, !!checked);
                         }}
-                        // TODO: handle checked/unchecked
-                        checked
+                        checked={checked}
                       />
                       <Avatar contributor={owner} size="xsmall" />
                       <span>{repo}</span>
