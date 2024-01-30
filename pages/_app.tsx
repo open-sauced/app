@@ -104,13 +104,13 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
       console.log("You are on the browser");
 
       // When initializing, we restore the data from `localStorage` into a map.
-      const map: Map<string, string> = new Map(JSON.parse(localStorage.getItem("app-cache-blue") || "[]"));
+      const map: Map<string, string> = new Map(JSON.parse(localStorage.getItem("app-cache-green") || "[]"));
 
       // Before unloading the app, we write back all the data into `localStorage`.
       window.addEventListener("beforeunload", () => {
         const appCache = JSON.stringify(Array.from(map.entries()));
         try {
-          localStorage.setItem("app-cache-blue", appCache);
+          localStorage.setItem("app-cache-green", appCache);
         } catch (error) {
           if (error instanceof Error && error.name === "QuotaExceededError")
             // eslint-disable-next-line no-console

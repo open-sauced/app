@@ -21,7 +21,7 @@ const usePullRequests = ({ limit = 1000, repoIds = [], page = 1, range = 30 }: P
   const filterQuery = getFilterQuery(selectedFilter);
   const query = new URLSearchParams(filterQuery);
 
-  if (Number.isNaN(Number(topic))) {
+  if (Number.isNaN(Number(topic)) && topic !== undefined) {
     query.set("topic", topic);
   }
 
@@ -46,9 +46,10 @@ const usePullRequests = ({ limit = 1000, repoIds = [], page = 1, range = 30 }: P
 
   const baseEndpoint = "prs/search";
   const endpointString = `${baseEndpoint}?${query.toString()}`;
+  const makeRequest = query.get("topic") || query.get("repo") || repoIds?.length > 0;
 
   const { data, error, mutate } = useSWR<PaginatedResponse, Error>(
-    endpointString,
+    makeRequest ? endpointString : null,
     publicApiFetcher as Fetcher<PaginatedResponse, Error>
   );
 

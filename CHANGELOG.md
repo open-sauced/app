@@ -5,6 +5,51 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.85.0-beta.6](https://github.com/open-sauced/insights/compare/v1.85.0-beta.5...v1.85.0-beta.6) (2024-01-30)
+
+
+### 🐛 Bug Fixes
+
+* add topic, repo, repoIds checks for search endpoints ([#2551](https://github.com/open-sauced/insights/issues/2551)) ([781b2fa](https://github.com/open-sauced/insights/commit/781b2fa6c6dc7b3e2f232bc7cd00fc6938fa3bdb))
+* Adding new repos to insights on edit page will trigger another API call ([#2499](https://github.com/open-sauced/insights/issues/2499)) ([8b108dd](https://github.com/open-sauced/insights/commit/8b108dd7f4457eebaec11bb6631be3cceadb57d0))
+* return null for feature flags server props when feature flags are undefined ([#2549](https://github.com/open-sauced/insights/issues/2549)) ([7531ac4](https://github.com/open-sauced/insights/commit/7531ac4f6be15c29b0398ddd311043fe223d3ed7))
+
+## [1.85.0-beta.5](https://github.com/open-sauced/insights/compare/v1.85.0-beta.4...v1.85.0-beta.5) (2024-01-29)
+
+
+### 🐛 Bug Fixes
+
+* hydration issue for suggested repo list component ([#2535](https://github.com/open-sauced/insights/issues/2535)) ([31f8c37](https://github.com/open-sauced/insights/commit/31f8c37f29276acbf26f25e7c58701dbc71e0c5e))
+* now checkboxes in the search for tracked repositories flow add or remove as expected ([#2544](https://github.com/open-sauced/insights/issues/2544)) ([390c760](https://github.com/open-sauced/insights/commit/390c7609832c456a21d42feaa29ab65703ef6344))
+
+
+### 🍕 Features
+
+* created the repository stat card component ([#2546](https://github.com/open-sauced/insights/issues/2546)) ([bc35e83](https://github.com/open-sauced/insights/commit/bc35e839533ba8f789bda497b64f5b52c9f64961))
+
+## [1.85.0-beta.4](https://github.com/open-sauced/insights/compare/v1.85.0-beta.3...v1.85.0-beta.4) (2024-01-26)
+
+
+### 🐛 Bug Fixes
+
+* add a link to the workspace settings page in the app sidebar ([#2541](https://github.com/open-sauced/insights/issues/2541)) ([b598c0f](https://github.com/open-sauced/insights/commit/b598c0fe1f3a05045629cb5817cb38f80528de62))
+* Bust app cache for v2 API changes ([#2545](https://github.com/open-sauced/insights/issues/2545)) ([07b2f1d](https://github.com/open-sauced/insights/commit/07b2f1df3f97a9be7f58fadbcae8d8b1fb73bb47))
+
+## [1.85.0-beta.3](https://github.com/open-sauced/insights/compare/v1.85.0-beta.2...v1.85.0-beta.3) (2024-01-26)
+
+
+### 🐛 Bug Fixes
+
+* fixed CSS regression in focus states ([#2537](https://github.com/open-sauced/insights/issues/2537)) ([9c536d0](https://github.com/open-sauced/insights/commit/9c536d0b87eb43aeb51dccfa3727c923017dbf09))
+* Uses beta default .env for API ([#2538](https://github.com/open-sauced/insights/issues/2538)) ([ae35f8e](https://github.com/open-sauced/insights/commit/ae35f8e6969af4cfcdc22e0328e6cd24d7c449cc))
+
+## [1.85.0-beta.2](https://github.com/open-sauced/insights/compare/v1.85.0-beta.1...v1.85.0-beta.2) (2024-01-26)
+
+
+### 🐛 Bug Fixes
+
+* now contribution treemap renders properly again ([#2536](https://github.com/open-sauced/insights/issues/2536)) ([f10b2d1](https://github.com/open-sauced/insights/commit/f10b2d1851c52007ab313bdedc069cbbd0314758))
+
 ## [1.85.0-beta.1](https://github.com/open-sauced/insights/compare/v1.84.0...v1.85.0-beta.1) (2024-01-25)
 
 
