@@ -67,7 +67,7 @@ export const TrackedReposTable = ({
       </div>
       <div className="border border-light-slate-7 rounded h-full">
         <Table className="not-sr-only">
-          <TableHeader className="">
+          <TableHeader>
             <TableRow className=" bg-light-slate-3">
               <TableHead>Name</TableHead>
               <TableHead className="w-2">
