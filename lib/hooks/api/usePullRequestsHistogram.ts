@@ -57,7 +57,7 @@ const usePullRequestsHistogram = (repoIds: number[] = [], range = 30) => {
   const filterQuery = getFilterQuery(selectedFilter);
   const query = new URLSearchParams(filterQuery);
 
-  if (Number.isNaN(Number(topic))) {
+  if (Number.isNaN(Number(topic)) && topic !== undefined) {
     query.set("topic", topic);
   }
 
@@ -75,9 +75,10 @@ const usePullRequestsHistogram = (repoIds: number[] = [], range = 30) => {
 
   const baseEndpoint = "histogram/pull-requests";
   const endpointString = `${baseEndpoint}?${query.toString()}`;
+  const makeRequest = query.get("topic") || query.get("repo") || repoIds?.length > 0;
 
   const { data, error, mutate } = useSWR<DbPullRequestGitHubEventsHistogram[], Error>(
-    endpointString,
+    makeRequest ? endpointString : null,
     expPublicApiFetcher as Fetcher<DbPullRequestGitHubEventsHistogram[], Error>
   );
 
