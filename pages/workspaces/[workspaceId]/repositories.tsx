@@ -42,15 +42,10 @@ interface WorkspaceDashboardProps {
 const WorkspaceDashboard = ({ workspace }: WorkspaceDashboardProps) => {
   const router = useRouter();
   const range = router.query.range ? Number(router.query.range as string) : 30;
-  const {
-    data,
-    error: hasError,
-    mutate: mutateTrackedRepos,
-  } = useGetWorkspaceRepositories({ workspaceId: workspace.id, range });
+  const { data, error: hasError } = useGetWorkspaceRepositories({ workspaceId: workspace.id, range });
 
   const repositories = data?.data?.map((repo) => repo.repo_id) || [];
-  const { data: stats, isError: isStatsError, isLoading: isLoadingStats } = useWorkspacesRepoStats(workspace.id);
-  const { pull_requests, issues, repos } = stats.data;
+  const { data: stats, isError: isStatsError, isLoading: isLoadingStats } = useWorkspacesRepoStats(workspace.id, range);
 
   return (
     <WorkspaceLayout workspaceId={workspace.id}>
@@ -67,10 +62,24 @@ const WorkspaceDashboard = ({ workspace }: WorkspaceDashboardProps) => {
       </div>
       <div className="mt-6 grid gap-6">
         <div className="flex flex-col lg:flex-row gap-6">
-          {/* TODO: Error status for stats cards */}
-          <RepositoryStatCard type="pulls" stats={pull_requests} isLoading={isLoadingStats} hasError={isStatsError} />
-          <RepositoryStatCard type="issues" stats={issues} isLoading={isLoadingStats} hasError={isStatsError} />
-          <RepositoryStatCard type="engagement" stats={repos} isLoading={isLoadingStats} hasError={isStatsError} />
+          <RepositoryStatCard
+            type="pulls"
+            stats={stats?.data?.pull_requests}
+            isLoading={isLoadingStats}
+            hasError={isStatsError}
+          />
+          <RepositoryStatCard
+            type="issues"
+            stats={stats?.data?.issues}
+            isLoading={isLoadingStats}
+            hasError={isStatsError}
+          />
+          <RepositoryStatCard
+            type="engagement"
+            stats={stats?.data?.repos}
+            isLoading={isLoadingStats}
+            hasError={isStatsError}
+          />
         </div>
         <Repositories repositories={repositories} showSearch={false} />
       </div>

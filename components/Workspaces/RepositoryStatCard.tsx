@@ -8,15 +8,15 @@ type RepositoryStatCardProps = {
 } & (
   | {
       type: "pulls";
-      stats: { opened: number; merged: number; velocity: number };
+      stats: { opened: number; merged: number; velocity: number } | undefined;
     }
   | {
       type: "issues";
-      stats: { opened: number; closed: number; velocity: number };
+      stats: { opened: number; closed: number; velocity: number } | undefined;
     }
   | {
       type: "engagement";
-      stats: { stars: number; forks: number; health: number };
+      stats: { stars: number; forks: number; health: number } | undefined;
     }
 );
 
@@ -100,7 +100,7 @@ export const RepositoryStatCard = ({ stats, type, isLoading, hasError }: Reposit
                 </th>
                 {stat === "health" ? (
                   <td className="text-black semi-bold text-2xl">
-                    {value}
+                    {Math.round(value)}
                     <span className="text-xs">/10</span>
                   </td>
                 ) : (

@@ -1,34 +1,19 @@
-export const useWorkspacesRepoStats = (workspaceId: string) => {
-  const mockData = {
-    pull_requests: {
-      opened: 10,
-      merged: 5,
-      velocity: 2,
-    },
-    issues: {
-      opened: 10,
-      closed: 5,
-      velocity: 2,
-    },
-    repos: {
-      stars: 4530,
-      forks: 87,
-      health: 7,
-    },
-  } as const;
+import useSWR, { Fetcher } from "swr";
+import { publicApiFetcher } from "lib/utils/public-api-fetcher";
+export const useWorkspacesRepoStats = (workspaceId: string, range = 30) => {
+  const searchParams = new URLSearchParams({
+    range: range.toString(),
+  });
+  const endpointString = `workspaces/${workspaceId}/stats?${searchParams}`;
 
-  type WorkspacesReposStats = typeof mockData;
-
-  const endpointString = `workspaces${workspaceId}/stats`;
-
-  // const { data, error, mutate } = useSWR<WorkspacesReposStats, Error>(
-  //   endpointString,
-  //   publicApiFetcher as Fetcher<WorkspacesReposStats, Error>
-  // );
+  const { data, error, mutate } = useSWR<DbWorkspacesReposStats, Error>(
+    endpointString,
+    publicApiFetcher as Fetcher<DbWorkspacesReposStats, Error>
+  );
 
   return {
-    data: { data: mockData },
-    isLoading: false, // !error && !data,
-    isError: false, // !!error,
+    data: { data },
+    isLoading: !error && !data,
+    isError: !!error,
   };
 };
