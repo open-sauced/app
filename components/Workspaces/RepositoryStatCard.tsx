@@ -83,9 +83,11 @@ const EmptyState = ({ type, hasError }: { type: CardType; hasError: boolean }) =
 };
 
 export const RepositoryStatCard = ({ stats, type, isLoading, hasError }: RepositoryStatCardProps) => {
+  const loadEmptyState = isLoading || hasError || !stats;
+
   return (
     <Card className="w-80 max-w-xs h-32 max-h-32">
-      {isLoading || hasError ? (
+      {loadEmptyState ? (
         <EmptyState type={type} hasError={hasError} />
       ) : (
         <table className="grid gap-4 p-2">
