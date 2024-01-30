@@ -96,9 +96,11 @@ const getPullRequestCommitMessageFromUrl = async (url: string): Promise<string[]
   const apiUrl = `https://api.github.com/repos/${owner}/${repoName}/pulls/${pullRequestNumber}/commits`;
 
   const response = await fetch(apiUrl, {
-    headers: {
-      Authorization: `token ${githubToken}`,
-    },
+    headers: githubToken
+      ? {
+          Authorization: `Bearer ${githubToken}`,
+        }
+      : {},
   });
   const data = await response.json();
 
@@ -117,9 +119,11 @@ const getGithubIssueDetails = async (url: string): Promise<any> => {
   const apiUrl = `https://api.github.com/repos/${owner}/${repoName}/issues/${issueNumber}`;
 
   const response = await fetch(apiUrl, {
-    headers: {
-      Authorization: `token ${githubToken}`,
-    },
+    headers: githubToken
+      ? {
+          Authorization: `Bearer ${githubToken}`,
+        }
+      : {},
   });
   const data = await response.json();
 
