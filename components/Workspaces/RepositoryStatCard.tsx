@@ -1,6 +1,7 @@
 import { GitPullRequestIcon, HeartIcon, IssueOpenedIcon } from "@primer/octicons-react";
 import Card from "components/atoms/Card/card";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
+import humanizeNumber from "lib/utils/humanizeNumber";
 
 type RepositoryStatCardProps = {
   isLoading: boolean;
@@ -104,7 +105,9 @@ export const RepositoryStatCard = ({ stats, type, isLoading, hasError }: Reposit
                     <span className="text-xs">/10</span>
                   </td>
                 ) : (
-                  <td className="semi-bold text-2xl">{stat === "velocity" ? `${Math.round(value)}d` : value}</td>
+                  <td className="semi-bold text-2xl" title={`${value}`}>
+                    {stat === "velocity" ? `${Math.round(value)}d` : humanizeNumber(value, "abbreviation")}
+                  </td>
                 )}
               </tr>
             ))}
