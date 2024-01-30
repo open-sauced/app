@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import openSaucedImg from "../../../img/openSauced-icon.png";
+import openSaucedImg from "../../../img/logo-slice-gradient.svg";
 import openSaucedImgWithBg from "../../../img/open-sourced-with-bg-icon.png";
 
 interface HeaderLogoProps {
@@ -16,11 +16,10 @@ const HeaderLogo: React.FC<HeaderLogoProps> = ({ textIsBlack, withBg = false }) 
         <Image
           className="rounded"
           alt="Open Sauced Logo"
-          width={32}
-          height={32}
+          width={20}
           src={withBg ? openSaucedImgWithBg : openSaucedImg}
         />
-        <p className={`font-bold !text-base ${textIsBlack ? "!text-black" : "!text-white"}`}>OpenSauced</p>
+        <p className={`font-bold text-lg tracking-tight ${textIsBlack ? "!text-black" : "!text-white"}`}>OpenSauced</p>
       </div>
     </Link>
   );
