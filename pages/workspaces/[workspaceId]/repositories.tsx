@@ -67,6 +67,7 @@ const WorkspaceDashboard = ({ workspace }: WorkspaceDashboardProps) => {
       </div>
       <div className="mt-6 grid gap-6">
         <div className="flex flex-col lg:flex-row gap-6">
+          {/* TODO: Error status for stats cards */}
           <RepositoryStatCard type="pulls" stats={pull_requests} isLoading={isLoadingStats} />
           <RepositoryStatCard type="issues" stats={issues} isLoading={isLoadingStats} />
           <RepositoryStatCard type="engagement" stats={repos} isLoading={isLoadingStats} />
