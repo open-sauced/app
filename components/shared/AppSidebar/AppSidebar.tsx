@@ -73,7 +73,7 @@ export const AppSideBar = () => {
   });
 
   return (
-    <div className="fixed top-0 pt-14 bg-white flex flex-col gap-8 justify-between max-w-xs w-72 h-full border-r border-slate-100">
+    <div className="fixed top-0 pt-14 bg-white flex flex-col gap-8 justify-between max-w-xs w-72 h-full border-r border-slate-200">
       <div className="grid gap-4 mt-4 px-4">
         <label className="flex flex-col gap-2 w-full mr-2">
           <span className="sr-only">Workspace</span>
@@ -99,7 +99,7 @@ export const AppSideBar = () => {
             }}
           />
         </label>
-        <h2 className="text-sm font-medium flex gap-1 items-center py-2 px-2 hover:bg-slate-100 rounded-md transition-colors cursor-pointer">
+        <h2 className="text-sm font-medium flex gap-1 items-center py-2 px-2 hover:bg-slate-100 rounded-md transition-colors cursor-pointer text-slate-800">
           <BiHomeAlt className="w-5 h-5 text-slate-400" />
           Home
         </h2>
@@ -129,7 +129,7 @@ export const AppSideBar = () => {
         <Link
           title=""
           href=""
-          className="text-sm font-medium flex gap-1 items-center py-2 px-2 hover:bg-slate-100 rounded-md transition-colors cursor-pointer tracking-tight"
+          className="text-sm font-medium flex gap-1 items-center py-2 px-2 hover:bg-slate-100 rounded-md transition-colors cursor-pointer tracking-tight text-slate-800"
         >
           <Cog8ToothIcon className="w-5 h-5 text-slate-400 inline-flex mr-1" />
           <span className="whitespace-nowrap overflow-hidden overflow-ellipsis inline-flex">Settings</span>
@@ -141,14 +141,16 @@ export const AppSideBar = () => {
             className="w-full text-sm font-medium flex gap-1 items-center py-2 px-2 hover:bg-slate-100 rounded-md transition-colors cursor-pointer tracking-tight"
           >
             <LifebuoyIcon className="w-5 h-5 text-slate-400 inline-flex mr-1 " />
-            <span className="whitespace-nowrap overflow-hidden overflow-ellipsis inline-flex">Support</span>
+            <span className="whitespace-nowrap overflow-hidden overflow-ellipsis inline-flex text-slate-800">
+              Support
+            </span>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="flex flex-col gap-1 py-2 rounded-lg">
             <DropdownMenuItem className="rounded-md">
               <Link
                 title="Read OpenSauced's Docs"
                 href="https://docs.opensauced.pizza/"
-                className="text-sm font-medium flex gap-1 items-center py-2 px-2 rounded-md transition-colors cursor-pointer tracking-tight"
+                className="text-sm font-medium flex gap-1 items-center rounded-md transition-colors cursor-pointer tracking-tight p-1"
               >
                 <Cog8ToothIcon className="w-5 h-5 text-slate-400 inline-flex mr-1" />
                 <span className="whitespace-nowrap overflow-hidden overflow-ellipsis inline-flex">Read the docs</span>
@@ -158,7 +160,7 @@ export const AppSideBar = () => {
               <Link
                 title="Give feedback"
                 href="https://github.com/orgs/open-sauced/discussions"
-                className="text-sm font-medium flex gap-1 items-center py-2 px-2 rounded-md transition-colors cursor-pointer tracking-tight"
+                className="text-sm font-medium flex gap-1 items-center rounded-md transition-colors cursor-pointer tracking-tight p-1"
               >
                 <ChatBubbleLeftEllipsisIcon className="w-5 h-5 text-slate-400 inline-flex mr-1" />
                 <span className="whitespace-nowrap overflow-hidden overflow-ellipsis inline-flex">Give feedback</span>
@@ -168,7 +170,7 @@ export const AppSideBar = () => {
               <Link
                 title="Report a bug on our Github repository"
                 href="https://github.com/open-sauced/app/issues/new?assignees=&labels=%F0%9F%91%80+needs+triage%2C%F0%9F%90%9B+bug&projects=&template=bug_report.yml&title=Bug%3A+"
-                className="text-sm font-medium flex gap-1 items-center py-2 px-2 rounded-md transition-colors cursor-pointer tracking-tight"
+                className="text-sm font-medium flex gap-1 items-center rounded-md transition-colors cursor-pointer tracking-tight p-1"
               >
                 <ExclamationCircleIcon className="w-5 h-5 text-slate-400 inline-flex mr-1" />
                 <span className="whitespace-nowrap overflow-hidden overflow-ellipsis inline-flex">Report a bug</span>
@@ -178,7 +180,7 @@ export const AppSideBar = () => {
               <Link
                 title="Checkout our blog on dev.to"
                 href="https://dev.to/opensauced"
-                className="text-sm font-medium flex gap-1 items-center py-2 px-2 rounded-md transition-colors cursor-pointer tracking-tight"
+                className="text-sm font-medium flex gap-1 items-center rounded-md transition-colors cursor-pointer tracking-tight p-1"
               >
                 <NewspaperIcon className="w-5 h-5 text-slate-400 inline-flex mr-1" />
                 <span className="whitespace-nowrap overflow-hidden overflow-ellipsis inline-flex">
@@ -190,7 +192,7 @@ export const AppSideBar = () => {
               <Link
                 title="Join our community on Discord"
                 href="https://discord.com/invite/opensauced"
-                className="text-sm font-medium flex gap-1 items-center py-2 px-2 rounded-md transition-colors cursor-pointer tracking-tight"
+                className="text-sm font-medium flex gap-1 items-center transition-colors cursor-pointer tracking-tight p-1"
               >
                 <UserGroupIcon className="w-5 h-5 text-slate-400 inline-flex mr-1" />
                 <span className="whitespace-nowrap overflow-hidden overflow-ellipsis inline-flex">

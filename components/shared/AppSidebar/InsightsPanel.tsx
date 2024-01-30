@@ -37,7 +37,7 @@ export const InsightsPanel = ({ title, username, insights, type, isLoading }: In
           name={`${title}-toggle`}
         >
           <Thumb>
-            <h3 className="font-medium text-sm flex gap-1 items-center py-2 px-2 hover:bg-slate-100 rounded-md">
+            <h3 className="font-medium text-sm flex gap-1 items-center py-2 px-2 hover:bg-slate-100 rounded-md text-slate-800">
               {getIcon(type)}
               <span>{title}</span>
               <ClientOnly>
