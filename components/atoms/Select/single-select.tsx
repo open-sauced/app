@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { RiArrowDownSLine } from "react-icons/ri";
 import { BiSearch } from "react-icons/bi";
 
+import clsx from "clsx";
 import { truncateString } from "lib/utils/truncate-string";
 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./select";
@@ -14,6 +15,7 @@ interface SingleSelectProps {
   options: { label: string; value: string }[];
   position?: "popper" | "item-aligned";
   isSearchable?: boolean;
+  insetLabel?: string;
 }
 
 const SingleSelect = ({
@@ -24,6 +26,7 @@ const SingleSelect = ({
   position,
   inputPlaceholder,
   isSearchable = false,
+  insetLabel,
 }: SingleSelectProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [inputValue, setInputValue] = useState("");
@@ -51,7 +54,11 @@ const SingleSelect = ({
       }}
     >
       <SelectTrigger
-        className="bg-white min-w-[200px] w-full border focus-within:border-orange-500 focus-within:ring-orange-100 focus-within:ring ring-light-slate-6"
+        data-inset-label={insetLabel}
+        className={clsx(
+          `bg-white border`,
+          insetLabel && `before:content-[attr(data-inset-label)] before:mr-1 before:font-normal before:text-slate-500`
+        )}
         selectIcon={
           <div className="flex items-center">
             <RiArrowDownSLine size={20} />

@@ -657,7 +657,7 @@ const ContributorHighlightCard = ({
               direction="top"
               content={`${getEmojiReactors(reaction_users)} reacted with ${getEmojiNameById(emoji_id)} emoji`}
             >
-              <div
+              <button
                 className={`px-1 py-0 md:py-0.5 hover:bg-light-slate-6 transition  md:px-1.5 shrink-0 border flex items-center justify-center rounded-full cursor-pointer ${
                   isUserReaction(emoji_id) && "bg-light-slate-6"
                 }`}
@@ -667,7 +667,7 @@ const ContributorHighlightCard = ({
                   className="text-xs text-orange-500 md:text-sm"
                   text={`:${getEmojiNameById(emoji_id)}: ${reaction_count}`}
                 />
-              </div>
+              </button>
             </Tooltip>
           ))}
         <div className="ml-auto">

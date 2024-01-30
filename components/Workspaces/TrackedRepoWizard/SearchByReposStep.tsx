@@ -1,22 +1,17 @@
 import { FaSearch } from "react-icons/fa";
+import { useEffect, useRef, useState } from "react";
+import { useEffectOnce } from "react-use";
 import Search from "components/atoms/Search/search";
 import { Avatar } from "components/atoms/Avatar/avatar-hover-card";
 import { SearchedReposTable } from "../SearchReposTable";
-import { TrackedRepoWizardLayout } from "./TrackedRepoWizardLayout";
 
 interface SearchByReposStepProps {
-  onAddToTrackingList: () => void;
-  onCancel: () => void;
   onSearch: (search?: string) => void;
-  trackedReposCount: number;
-  repositories: {
-    owner: string;
-    name: string;
-  }[];
-  suggestedRepos: {
-    owner: string;
-    name: string;
-  }[];
+  onSelectRepo: (repo: string) => void;
+  onToggleRepo: (repo: string, isSelected: boolean) => void;
+  repositories: Map<string, boolean>;
+  suggestedRepos: string[];
+  searchedRepos: string[];
 }
 
 const EmptyState = () => {
@@ -34,52 +29,86 @@ const EmptyState = () => {
 };
 
 export const SearchByReposStep = ({
-  onAddToTrackingList,
-  onCancel,
   onSearch,
-  trackedReposCount,
+  onSelectRepo,
+  onToggleRepo,
   repositories,
-  suggestedRepos,
+  searchedRepos,
+  suggestedRepos = [],
 }: SearchByReposStepProps) => {
-  // TODO: Implement these functions
-  const onFilterRepos = () => {};
-  const onSelectRepo = () => {};
+  const [filteredRepositories, setFilteredRepositories] = useState<Map<string, boolean>>(repositories);
+
+  const onFilterRepos = (search: string) => {
+    setFilteredRepositories((repositories) => {
+      const updates = new Map(repositories);
+
+      for (const [repo] of updates) {
+        if (!repo.includes(search)) {
+          updates.delete(repo);
+        }
+      }
+
+      return updates;
+    });
+  };
+
+  const formRef = useRef<HTMLFormElement>(null);
+  const [searchIsLoading, setSearchIsLoading] = useState(false);
+
+  useEffectOnce(() => {
+    (formRef.current?.querySelector('[name="query"]') as HTMLInputElement)?.focus();
+  });
+
+  useEffect(() => {
+    if (searchedRepos.length > 0) {
+      setSearchIsLoading(false);
+    }
+  }, [searchedRepos]);
 
   return (
-    <TrackedRepoWizardLayout
-      onAddToTrackingList={onAddToTrackingList}
-      onCancel={onCancel}
-      trackedReposCount={trackedReposCount}
-    >
-      <div className="grid gap-6">
-        <form role="search">
-          <Search
-            placeholder="Search repositories"
-            className="w-full"
-            name="query"
-            onSearch={onSearch}
-            suggestionsLabel="Suggested repositories"
-            suggestions={suggestedRepos.map((repo) => {
-              const fullRepoName = `${repo.owner}/${repo.name}`;
+    <div className="flex flex-col gap-4 h-96 max-h-96">
+      <form
+        ref={formRef}
+        role="search"
+        onSubmit={(e) => {
+          e.preventDefault();
+        }}
+      >
+        <Search
+          placeholder="Search repositories"
+          className="w-full"
+          isLoading={searchIsLoading}
+          name="query"
+          onChange={(event) => {
+            setSearchIsLoading(true);
+            onSearch(event);
+          }}
+          onSelect={onSelectRepo}
+          suggestionsLabel={suggestedRepos.length > 0 ? "Suggested repositories" : undefined}
+          suggestions={(suggestedRepos.length > 0 ? suggestedRepos : searchedRepos).map((repo) => {
+            const [owner] = repo.split("/");
 
-              return {
-                key: fullRepoName,
-                node: (
-                  <div key={fullRepoName} className="flex items-center gap-2">
-                    <Avatar contributor={repo.owner} size="xsmall" />
-                    <span>{fullRepoName}</span>
-                  </div>
-                ),
-              };
-            })}
-          />
-        </form>
-        {trackedReposCount === 0 ? (
-          <EmptyState />
-        ) : (
-          <SearchedReposTable repositories={repositories} onFilter={onFilterRepos} onSelect={onSelectRepo} />
-        )}
-      </div>
-    </TrackedRepoWizardLayout>
+            return {
+              key: repo,
+              node: (
+                <div key={repo} className="flex items-center gap-2">
+                  <Avatar contributor={owner} size="xsmall" />
+                  <span>{repo}</span>
+                </div>
+              ),
+            };
+          })}
+        />
+      </form>
+      {repositories.size === 0 && filteredRepositories.size === 0 ? (
+        <EmptyState />
+      ) : (
+        <SearchedReposTable
+          repositories={filteredRepositories.size > 0 ? filteredRepositories : repositories}
+          onFilter={onFilterRepos}
+          onToggleRepo={onToggleRepo}
+        />
+      )}
+    </div>
   );
 };
