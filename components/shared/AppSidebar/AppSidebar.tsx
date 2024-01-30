@@ -7,6 +7,9 @@ import {
   ExclamationCircleIcon,
   NewspaperIcon,
   UserGroupIcon,
+  PlusIcon,
+  ChartBarSquareIcon,
+  UsersIcon,
 } from "@heroicons/react/24/outline";
 import { BiHomeAlt } from "react-icons/bi";
 import { useEffectOnce } from "react-use";
@@ -103,10 +106,43 @@ export const AppSideBar = () => {
           <BiHomeAlt className="w-5 h-5 text-slate-400" />
           Home
         </h2>
-        <div className="grid gap-2 mb-6">
-          <h3 className="uppercase text-gray-500 text-xs font-medium flex gap-1 items-center tracking-wide px-2">
-            Insights
-          </h3>
+        <div className="grid gap-1 mb-6">
+          <div className="flex flex-row justify-between items-center ">
+            <h3 className="uppercase text-gray-500 text-xs font-medium tracking-wide px-2">Insights</h3>
+            <DropdownMenu modal={false}>
+              <DropdownMenuTrigger title="Support options">
+                <div title="" className="text-slate-600 text-xs font-medium tracking-tight leading-none group">
+                  <PlusIcon className="w-5 h-5 p-0.5 inline-flex stroke-[3px] hover:stroke-[3px] text-semibold group-hover:bg-orange-100 group-hover:text-orange-600 rounded-md mr-1" />
+                </div>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="flex flex-col gap-1 py-2 rounded-lg">
+                <DropdownMenuItem className="rounded-md">
+                  <Link
+                    title="New Repository Insight"
+                    href="/hub/insights/new"
+                    className="text-sm font-medium flex gap-1 items-center rounded-md transition-colors cursor-pointer tracking-tight p-1 group"
+                  >
+                    <ChartBarSquareIcon className="w-5 h-5 text-slate-400 inline-flex mr-1 group-hover:stroke-orange-500" />
+                    <span className="whitespace-nowrap overflow-hidden overflow-ellipsis inline-flex">
+                      Repository Insight
+                    </span>
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem className="rounded-md">
+                  <Link
+                    title="New Contributor Insight"
+                    href="/hub/lists/new"
+                    className="text-sm font-medium flex gap-1 items-center rounded-md transition-colors cursor-pointer tracking-tight p-1 group"
+                  >
+                    <UsersIcon className="w-5 h-5 text-slate-400 inline-flex mr-1 group-hover:stroke-orange-500" />
+                    <span className="whitespace-nowrap overflow-hidden overflow-ellipsis inline-flex">
+                      Contributor Insight
+                    </span>
+                  </Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
           <div className="grid gap-2">
             <InsightsPanel
               title="Repository Insights"
@@ -137,7 +173,7 @@ export const AppSideBar = () => {
 
         <DropdownMenu modal={false}>
           <DropdownMenuTrigger
-            title="More options"
+            title="Support options"
             className="w-full text-sm font-medium flex gap-1 items-center py-2 px-2 hover:bg-slate-100 rounded-md transition-colors cursor-pointer tracking-tight"
           >
             <LifebuoyIcon className="w-5 h-5 text-slate-400 inline-flex mr-1 " />

@@ -52,7 +52,7 @@ export const InsightsPanel = ({ title, username, insights, type, isLoading }: In
       </Collapsible.Trigger>
       <Collapsible.Content className="overflow-hidden animate-collapse">
         {isLoading ? null : (
-          <ul className="list-none w-full px-4 mt-1 [&_li]:border-l-2">
+          <ul className="list-none w-full px-4 mt-1 [&_li]:border-l-2 text-slate-700 tracking-tight">
             {insights.map((insight) => {
               const url = type === "list" ? `/lists/${insight.id}` : `/pages/${username}/${insight.id}/dashboard`;
               return <SidebarMenuItem key={insight.id} title={insight.name} url={url} type={type} />;
