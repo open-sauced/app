@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.1.0-beta.1](https://github.com/open-sauced/insights/compare/v2.0.0...v2.1.0-beta.1) (2024-01-30)
+
+
+### 🍕 Features
+
+* add fallback to GitHub API repo search and use correct auth ([#2561](https://github.com/open-sauced/insights/issues/2561)) ([d6ef244](https://github.com/open-sauced/insights/commit/d6ef244f7d97e4e64c7bf78cf129faa1ca0a7dd7))
+
 ## [2.0.0](https://github.com/open-sauced/insights/compare/v1.84.0...v2.0.0) (2024-01-30)
 
 
