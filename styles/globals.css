@@ -39,6 +39,32 @@ button:not([role]):focus-visible {
   @apply ring-orange-100;
 }
 
+/* collapsible component animation */
+.animate-collapse[data-state="open"] {
+  animation: slideDown 150ms ease-out;
+}
+.animate-collapse[data-state="closed"] {
+  animation: slideUp 150ms ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--radix-collapsible-content-height);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    height: var(--radix-collapsible-content-height);
+  }
+  to {
+    height: 0;
+  }
+}
+
 /* See https://github.com/open-sauced/app/issues/2210 */
 [role="checkbox"] > [data-state="checked"] > svg {
   stroke-width: 5;
