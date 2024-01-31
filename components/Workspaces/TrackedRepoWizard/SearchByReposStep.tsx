@@ -7,8 +7,9 @@ import { SearchedReposTable } from "../SearchReposTable";
 
 interface SearchByReposStepProps {
   onSearch: (search?: string) => void;
-  onSelectRepo: (value: string) => void;
-  repositories: string[];
+  onSelectRepo: (repo: string) => void;
+  onToggleRepo: (repo: string, isSelected: boolean) => void;
+  repositories: Map<string, boolean>;
   suggestedRepos: string[];
   searchedRepos: string[];
 }
@@ -30,18 +31,25 @@ const EmptyState = () => {
 export const SearchByReposStep = ({
   onSearch,
   onSelectRepo,
+  onToggleRepo,
   repositories,
   searchedRepos,
   suggestedRepos = [],
 }: SearchByReposStepProps) => {
-  const [filteredRepositories, setFilteredRepositories] = useState(repositories);
+  const [filteredRepositories, setFilteredRepositories] = useState<Map<string, boolean>>(repositories);
 
   const onFilterRepos = (search: string) => {
-    setFilteredRepositories(
-      repositories.filter((repo) => {
-        return repo.includes(search);
-      })
-    );
+    setFilteredRepositories((repositories) => {
+      const updates = new Map(repositories);
+
+      for (const [repo] of updates) {
+        if (!repo.includes(search)) {
+          updates.delete(repo);
+        }
+      }
+
+      return updates;
+    });
   };
 
   const formRef = useRef<HTMLFormElement>(null);
@@ -92,13 +100,13 @@ export const SearchByReposStep = ({
           })}
         />
       </form>
-      {repositories.length === 0 && filteredRepositories.length === 0 ? (
+      {repositories.size === 0 && filteredRepositories.size === 0 ? (
         <EmptyState />
       ) : (
         <SearchedReposTable
-          repositories={filteredRepositories.length > 0 ? filteredRepositories : repositories}
+          repositories={filteredRepositories.size > 0 ? filteredRepositories : repositories}
           onFilter={onFilterRepos}
-          onSelect={onSelectRepo}
+          onToggleRepo={onToggleRepo}
         />
       )}
     </div>
