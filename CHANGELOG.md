@@ -5,6 +5,18 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.1.0-beta.2](https://github.com/open-sauced/insights/compare/v2.1.0-beta.1...v2.1.0-beta.2) (2024-01-31)
+
+
+### 🍕 Features
+
+* workspaces dashboard MVP ([#2554](https://github.com/open-sauced/insights/issues/2554)) ([56bc626](https://github.com/open-sauced/insights/commit/56bc62654bfc6376114faec8a497d90770a85ab1))
+
+
+### 🐛 Bug Fixes
+
+* Improved sidebar's UX and styling  ([#2533](https://github.com/open-sauced/insights/issues/2533)) ([87dd4e6](https://github.com/open-sauced/insights/commit/87dd4e6a4bb5943968ff7ced9f9eeafe443c56b1))
+
 ## [2.1.0-beta.1](https://github.com/open-sauced/insights/compare/v2.0.0...v2.1.0-beta.1) (2024-01-30)
 
 
