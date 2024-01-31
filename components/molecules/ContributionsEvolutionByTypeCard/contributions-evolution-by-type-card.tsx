@@ -19,8 +19,7 @@ const colors = {
 } as const satisfies Record<Stat, string>;
 
 export interface ContributionEvolutionByTypeDatum {
-  time_start: string;
-  time_end: string;
+  bucket: string;
   active: number;
   new: number;
   alumni: number;
@@ -60,7 +59,7 @@ export default function ContributionsEvolutionByType({ data = [], isLoading }: C
     // Calculates the average at each point in time for each type of contributor
     const averageDataByType = dataTypes.map((type) => {
       const typeData = data.map((datum) => ({
-        x: new Date(datum.time_start),
+        x: new Date(datum.bucket),
         y: datum[type] as number,
       }));
 

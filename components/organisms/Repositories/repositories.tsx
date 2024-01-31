@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { ComponentProps, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import clsx from "clsx";
 
@@ -20,9 +20,10 @@ import RepoNotIndexed from "./repository-not-indexed";
 
 interface RepositoriesProps {
   repositories?: number[];
+  showSearch?: boolean;
 }
 
-const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
+const Repositories = ({ repositories, showSearch = true }: RepositoriesProps): JSX.Element => {
   const { user, signIn } = useSupabaseAuth();
   const router = useRouter();
   const { pageId, toolName, selectedFilter, userOrg, range = 30, limit = 10 } = router.query;
@@ -92,9 +93,13 @@ const Repositories = ({ repositories }: RepositoriesProps): JSX.Element => {
     setPage(1);
   }, [selectedFilter, setPage]);
 
+  const onSearch: ComponentProps<typeof TableHeader>["onSearch"] = showSearch
+    ? (search) => handleOnSearch(search)
+    : undefined;
+
   return (
     <div className="flex flex-col w-full gap-4">
-      <TableHeader onSearch={(e) => handleOnSearch(e)} metaInfo={repoMeta} entity="repos" title="Repositories" />
+      <TableHeader onSearch={onSearch} metaInfo={repoMeta} entity="repos" title="Repositories" />
       <div className="flex flex-col w-full overflow-x-auto border rounded-lg">
         <div>
           <div className="flex justify-between gap-2 px-6 py-4 md:hidden bg-light-slate-3">

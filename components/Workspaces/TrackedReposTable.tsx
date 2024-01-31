@@ -9,13 +9,13 @@ import ClientOnly from "components/atoms/ClientOnly/client-only";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 
 interface TrackedReposTableProps {
-  repositories: Set<string>;
+  repositories: Map<string, boolean>;
   onAddRepos: () => void;
   onRemoveTrackedRepo: ComponentProps<"button">["onClick"];
   isLoading?: boolean;
 }
 
-const EmptyState = ({ onAddRepos }: { onAddRepos: () => void }) => {
+export const EmptyState = ({ onAddRepos }: { onAddRepos: () => void }) => {
   return (
     <div className="grid place-content-center gap-5 my-8">
       <BiBarChartAlt2 className="border rounded-lg p-2 w-11 h-11 mx-auto fill-slate-600 shadow-xs" />
@@ -93,7 +93,7 @@ export const TrackedReposTable = ({
                     <LoadingState />
                   ) : (
                     <>
-                      {[...repositories].map((repo) => {
+                      {[...repositories].map(([repo]) => {
                         const [owner] = repo.split("/");
 
                         return (

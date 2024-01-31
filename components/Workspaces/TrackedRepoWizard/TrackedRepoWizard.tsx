@@ -5,7 +5,7 @@ import { TrackedRepoWizardLayout } from "./TrackedRepoWizardLayout";
 import { SearchByReposStep } from "./SearchByReposStep";
 
 interface TrackedReposWizardProps {
-  onAddToTrackingList: (repos: Set<string>) => void;
+  onAddToTrackingList: (repos: Map<string, boolean>) => void;
   onCancel: () => void;
 }
 
@@ -13,20 +13,24 @@ type TrackedReposStep = "pickReposOrOrg" | "pickRepos" | "pickOrg";
 
 export const TrackedReposWizard = ({ onAddToTrackingList, onCancel }: TrackedReposWizardProps) => {
   const [step, setStep] = useState<TrackedReposStep>("pickReposOrOrg");
-  const [currentTrackedRepositories, setCurrentTrackedRepositories] = useState<Set<string>>(new Set());
+  const [currentTrackedRepositories, setCurrentTrackedRepositories] = useState<Map<string, boolean>>(new Map());
   const suggestedRepos: any[] = [];
   const onImportOrg = () => {};
   const [searchTerm, setSearchTerm] = useState<string | undefined>();
   const { data, isError, isLoading } = useSearchRepos(searchTerm, "" /* sessionToken */);
 
-  const onSelectRepo = (repo: string) => {
+  const onToggleRepo = (repo: string, isSelected: boolean) => {
     setSearchTerm(undefined);
     setCurrentTrackedRepositories((currentTrackedRepositories) => {
-      const updates = new Set(currentTrackedRepositories);
-      updates.add(repo);
+      const updates = new Map(currentTrackedRepositories);
+      updates.set(repo, isSelected);
 
       return updates;
     });
+  };
+
+  const onSelectRepo = (repo: string) => {
+    onToggleRepo(repo, true);
   };
 
   let searchedRepos = data ?? [];
@@ -48,7 +52,7 @@ export const TrackedReposWizard = ({ onAddToTrackingList, onCancel }: TrackedRep
     }
   }
 
-  const repositories = Array.from(currentTrackedRepositories);
+  const repositories = currentTrackedRepositories;
 
   const renderStep = (step: TrackedReposStep) => {
     switch (step) {
@@ -65,6 +69,7 @@ export const TrackedReposWizard = ({ onAddToTrackingList, onCancel }: TrackedRep
         return (
           <SearchByReposStep
             onSelectRepo={onSelectRepo}
+            onToggleRepo={onToggleRepo}
             onSearch={onSearchRepos}
             repositories={repositories}
             searchedRepos={searchedRepos}
@@ -77,12 +82,20 @@ export const TrackedReposWizard = ({ onAddToTrackingList, onCancel }: TrackedRep
     }
   };
 
+  const trackedRepos = new Map(currentTrackedRepositories);
+
+  trackedRepos.forEach((isSelected, repo, map) => {
+    if (!isSelected) {
+      map.delete(repo);
+    }
+  });
+
   return (
     <TrackedRepoWizardLayout
       onAddToTrackingList={() => {
         onAddToTrackingList(currentTrackedRepositories);
       }}
-      trackedReposCount={currentTrackedRepositories.size}
+      trackedReposCount={trackedRepos.size}
       onCancel={() => {
         goBack();
       }}
