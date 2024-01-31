@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useRouter } from "next/router";
 import { LifebuoyIcon, Cog8ToothIcon } from "@heroicons/react/24/outline";
 import { BiHomeAlt } from "react-icons/bi";
@@ -25,13 +24,16 @@ const SidebarLoader = () => {
 
 export const WORKSPACE_UPDATED_EVENT = "workspaceUpdated";
 
-export const AppSideBar = () => {
+interface AppSideBarProps {
+  workspaceId: string | null;
+}
+
+export const AppSideBar = ({ workspaceId }: AppSideBarProps) => {
   const { username } = useSupabaseAuth();
   const { data: rawRepoInsights, isLoading: insightsLoading } = useUserInsights(!!username);
   const { data: lists, isLoading: listsLoading } = useFetchAllLists(30, !!username);
   const { data: workspaces, isLoading: workspacesLoading, mutate } = useWorkspaces({ limit: 100 });
   const router = useRouter();
-  const [workspaceId, setWorkspaceId] = useState<string>(router.query.workspaceId as string);
 
   const repoInsights = rawRepoInsights
     .slice(0, 5)
@@ -62,7 +64,7 @@ export const AppSideBar = () => {
   return (
     <div className="fixed top-0 pt-12 bg-white flex flex-col gap-8 justify-between max-w-xs w-80 h-full">
       <div className="grid gap-4 mt-4 px-4">
-        <label className="flex flex-col gap-2 w-max">
+        <label className="flex flex-col gap-2 w-full">
           <span className="sr-only">Workspace</span>
           <SingleSelect
             options={[
@@ -73,7 +75,7 @@ export const AppSideBar = () => {
               })),
             ]}
             position="popper"
-            value={workspaceId}
+            value={workspaceId ?? "new"}
             placeholder="Select a workspace"
             onValueChange={(value) => {
               if (value === "new") {
@@ -81,8 +83,7 @@ export const AppSideBar = () => {
                 return;
               }
 
-              setWorkspaceId(value);
-              window.location.href = `/workspaces/${value}/settings`;
+              window.location.href = `/workspaces/${value}/repositories`;
             }}
           />
         </label>
