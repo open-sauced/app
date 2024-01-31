@@ -24,7 +24,7 @@ const NewWorkspace = () => {
     const name = formData.get("name") as string;
     const description = formData.get("description") as string;
 
-    const { data, error } = await createWorkspace({
+    const { data: workspace, error } = await createWorkspace({
       name,
       description,
       // TODO: send members list
@@ -33,12 +33,12 @@ const NewWorkspace = () => {
       repos: Array.from(trackedRepos, (repo) => ({ full_name: repo })),
     });
 
-    if (error) {
+    if (error || !workspace) {
       toast({ description: `Error creating new workspace. Please try again`, variant: "danger" });
     } else {
       toast({ description: `Workspace created successfully`, variant: "success" });
-      document.dispatchEvent(new CustomEvent(WORKSPACE_UPDATED_EVENT, { detail: data }));
-      router.push(`/workspaces/${data?.workspace.id}/settings`);
+      document.dispatchEvent(new CustomEvent(WORKSPACE_UPDATED_EVENT, { detail: workspace }));
+      router.push(`/workspaces/${workspace.id}/settings`);
     }
   };
 

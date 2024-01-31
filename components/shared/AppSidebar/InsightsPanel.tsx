@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ChartBarSquareIcon, UsersIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
+import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 import SidebarMenuItem from "./sidebar-menu-item";
 
 interface InsightsPanelProps {
@@ -10,6 +11,20 @@ interface InsightsPanelProps {
   type: "repo" | "list";
   isLoading: boolean;
 }
+
+const Loading = () => {
+  return (
+    <ul className="list-none w-full px-2 mt-1 [&_li]:border-l-2">
+      {new Array(5).fill(0).map((_, i) => {
+        return (
+          <li key={i} className="p-2">
+            <SkeletonWrapper height={20} />
+          </li>
+        );
+      })}
+    </ul>
+  );
+};
 
 export const InsightsPanel = ({ title, username, insights, type, isLoading }: InsightsPanelProps) => {
   const [open, setOpen] = useState(true);
