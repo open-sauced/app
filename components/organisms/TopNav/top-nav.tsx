@@ -23,7 +23,7 @@ const TopNav = ({ hideInsights = false }: TopNavProps) => {
     <header className="top-nav-container w-full fixed top-0 left-0 z-50 py-0.5 bg-light-slate-2 border-b px-2">
       <div className="flex justify-between items-center mx-auto px-2">
         <div className="flex gap-3 md:gap-8 items-center">
-          <HeaderLogo withBg={false} textIsBlack />
+          <HeaderLogo responsive={true} withBg={false} textIsBlack />
           <Nav className="hidden lg:flex" hideInsights={hideInsights} />
         </div>
         <AuthSection />
