@@ -75,21 +75,33 @@ const Nav = ({
       <ul className="flex gap-3 md:gap-8 mb-1 ml-2 sm:m-0 w-full sm:w-auto">
         {hideInsights ? null : (
           <li>
-            <Link className={`text-sm ${getActiveStyle(router.asPath === "/hub/insights")}`} href={"/hub/insights"}>
+            <Link
+              className={`font-medium text-sm hover:text-orange-500 transition-all ${getActiveStyle(
+                router.asPath === "/hub/insights"
+              )}`}
+              href={"/hub/insights"}
+            >
               Insights
             </Link>
           </li>
         )}
         <li>
           <Link
-            className={`text-sm ${getActiveStyle(explorePageUrlPattern.test(router.asPath))}`}
+            className={`tracking-tight font-medium text-slate-700 text-sm hover:text-orange-500 transition-all ${getActiveStyle(
+              explorePageUrlPattern.test(router.asPath)
+            )}`}
             href={`/${userInterest}/dashboard/filter/recent`}
           >
             Explore
           </Link>
         </li>
         <li>
-          <Link className={`text-sm ${getActiveStyle(router.pathname === "/feed")}`} href={"/feed"}>
+          <Link
+            className={`tracking-tight font-medium text-sm text-slate-700 hover:text-orange-500 transition-all ${getActiveStyle(
+              router.pathname === "/feed"
+            )}`}
+            href={"/feed"}
+          >
             Highlights
           </Link>
         </li>
@@ -99,7 +111,7 @@ const Nav = ({
 };
 
 function getActiveStyle(isActive: boolean) {
-  return isActive ? "text-light-orange-10" : "";
+  return isActive ? "text-orange-600" : "";
 }
 
 export default TopNav;
