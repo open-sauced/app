@@ -170,7 +170,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
   });
 
   const validateName = (name: string) => {
-    if (!name || name.trim().length <= 3) return false;
+    if (!name || name.trim().length <= 2) return false;
 
     return true;
   };
@@ -515,6 +515,9 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
           </Title>
 
           <TextInput placeholder="Page Name (ex: My Team)" value={name} handleChange={handleOnNameChange} />
+          {name.length > 0 && name.length <= 2 ? (
+            <p className="text-sauced-orange text-sm mt-1 ml-1">page name must be three or more characters</p>
+          ) : null}
         </div>
 
         <div className="flex flex-col gap-4 border-light-slate-8">
