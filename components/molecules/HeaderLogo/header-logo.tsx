@@ -7,7 +7,7 @@ import openSaucedImgWithBg from "../../../img/open-sourced-with-bg-icon.png";
 interface HeaderLogoProps {
   textIsBlack?: boolean;
   withBg: boolean;
-  responsive: boolean;
+  responsive?: boolean;
 }
 
 const HeaderLogo: React.FC<HeaderLogoProps> = ({ textIsBlack, withBg = false, responsive }) => {
