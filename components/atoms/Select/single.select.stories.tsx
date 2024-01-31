@@ -51,3 +51,7 @@ export const Empty: Story = {
 export const WithSearch: Story = {
   args: { ...baseProps, isSearchable: true },
 };
+
+export const WithInsetLabel: Story = {
+  args: { ...baseProps, insetLabel: "Inset label" },
+};

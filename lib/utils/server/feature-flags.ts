@@ -18,5 +18,9 @@ export async function getAllFeatureFlags(userId: number) {
   );
   const { featureFlags } = await response.json();
 
+  if (featureFlags === undefined) {
+    return null;
+  }
+
   return featureFlags;
 }

@@ -3,6 +3,8 @@ import { GetServerSidePropsContext } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { ComponentProps, useState } from "react";
 import dynamic from "next/dynamic";
+import { SquareFillIcon } from "@primer/octicons-react";
+import { useEffectOnce } from "react-use";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import Button from "components/atoms/Button/button";
 import TextInput from "components/atoms/TextInput/text-input";
@@ -15,6 +17,7 @@ import { TrackedReposTable } from "components/Workspaces/TrackedReposTable";
 import { useGetWorkspaceRepositories } from "lib/hooks/api/useGetWorkspaceRepositories";
 import { deleteTrackedRepos, deleteWorkspace, saveWorkspace } from "lib/utils/workspace-utils";
 import { WORKSPACE_UPDATED_EVENT } from "components/shared/AppSidebar/AppSidebar";
+import { WorkspacesTabList } from "components/Workspaces/WorkspacesTabList";
 
 const DeleteWorkspaceModal = dynamic(() => import("components/Workspaces/DeleteWorkspaceModal"), { ssr: false });
 
@@ -36,7 +39,11 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
   });
 
   if (error) {
-    return { notFound: true };
+    if (error.status === 404) {
+      return { notFound: true };
+    }
+
+    throw new Error(`Error loading workspaces page with ID ${workspaceId}`);
   }
 
   return { props: { workspace: data } };
@@ -49,15 +56,29 @@ const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [workspaceName, setWorkspaceName] = useState(workspace.name);
   const [trackedReposModalOpen, setTrackedReposModalOpen] = useState(false);
-  const { data, error, mutate: mutateTrackedRepos, isLoading } = useGetWorkspaceRepositories(workspace.id);
+  const {
+    data,
+    error,
+    mutate: mutateTrackedRepos,
+    isLoading,
+  } = useGetWorkspaceRepositories({ workspaceId: workspace.id });
   const initialTrackedRepos: string[] = data?.data?.map(({ repo }) => repo.full_name) ?? [];
-  const [trackedRepos, setTrackedRepos] = useState<Set<string>>(new Set());
+  const [trackedRepos, setTrackedRepos] = useState<Map<string, boolean>>(new Map());
   const [trackedReposPendingDeletion, setTrackedReposPendingDeletion] = useState<Set<string>>(new Set());
 
-  // initial tracked repos + newly selected tracked repos that are not pending deletion
-  const pendingTrackedRepos = new Set([...trackedRepos, ...initialTrackedRepos]);
+  useEffectOnce(() => {
+    if (window.location.hash === "#load-wizard") {
+      setTrackedReposModalOpen(true);
+    }
+  });
 
-  pendingTrackedRepos.forEach((repo) => {
+  // initial tracked repos + newly selected tracked repos that are not pending deletion
+  const pendingTrackedRepos = new Map([
+    ...initialTrackedRepos.map((repo) => [repo, true] as const),
+    ...trackedRepos.entries(),
+  ]);
+
+  pendingTrackedRepos.forEach((isSelected, repo) => {
     if (trackedReposPendingDeletion.has(repo)) {
       pendingTrackedRepos.delete(repo);
     }
@@ -80,7 +101,7 @@ const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
       name,
       description,
       sessionToken: sessionToken!,
-      repos: Array.from(trackedRepos, (repo) => ({ full_name: repo })),
+      repos: Array.from(trackedRepos, ([repo]) => ({ full_name: repo })),
     });
 
     const workspaceRepoDeletes = await deleteTrackedRepos({
@@ -102,17 +123,24 @@ const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
       await mutateTrackedRepos();
 
       setTrackedReposPendingDeletion(new Set());
-      setTrackedRepos(new Set());
+      setTrackedRepos(new Map());
 
       toast({ description: `Workspace updated successfully`, variant: "success" });
     }
   };
 
   return (
-    <WorkspaceLayout>
+    <WorkspaceLayout workspaceId={workspace.id}>
+      <h1 className="flex gap-2 items-center uppercase text-3xl font-semibold">
+        {/* putting a square icon here as a placeholder until we implement workspace logos */}
+        <SquareFillIcon className="w-12 h-12 text-sauced-orange" />
+        <span>{workspace.name}</span>
+      </h1>
       <div className="grid gap-6">
         <div>
-          <h1 className="border-b bottom pb-4">Workspace Settings</h1>
+          <div className="flex justify-between items-center">
+            <WorkspacesTabList workspaceId={workspace.id} selectedTab={"settings"} />
+          </div>
           <form className="flex flex-col pt-6 gap-6" onSubmit={updateWorkspace}>
             <TextInput
               name="name"
@@ -155,7 +183,7 @@ const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
             }
 
             setTrackedRepos((repos) => {
-              const updates = new Set([...repos]);
+              const updates = new Map([...repos]);
               updates.delete(repo);
 
               return updates;
@@ -188,7 +216,19 @@ const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
           }}
           onAddToTrackingList={(repos) => {
             setTrackedReposModalOpen(false);
-            setTrackedRepos((trackedRepos) => new Set([...trackedRepos, ...repos]));
+            setTrackedRepos((trackedRepos) => {
+              const updates = new Map(trackedRepos);
+
+              repos.forEach((isSelected, repo) => {
+                if (isSelected) {
+                  updates.set(repo, true);
+                } else {
+                  updates.delete(repo);
+                }
+              });
+
+              return updates;
+            });
           }}
           onCancel={() => {
             setTrackedReposModalOpen(false);
