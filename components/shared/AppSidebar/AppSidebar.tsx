@@ -9,6 +9,7 @@ import {
   PlusIcon,
   ChartBarSquareIcon,
   UsersIcon,
+  BookOpenIcon,
 } from "@heroicons/react/24/outline";
 import { BiHomeAlt } from "react-icons/bi";
 import { useEffectOnce } from "react-use";
@@ -109,7 +110,7 @@ export const AppSideBar = ({ workspaceId }: AppSideBarProps) => {
           <div className="flex flex-row justify-between items-center ">
             <h3 className="uppercase text-gray-500 text-xs font-medium tracking-wide px-2">Insights</h3>
             <DropdownMenu modal={false}>
-              <DropdownMenuTrigger title="Support options">
+              <DropdownMenuTrigger title="Select type of new insight">
                 <div title="" className="text-slate-600 text-xs font-medium tracking-tight leading-none group">
                   <PlusIcon className="w-5 h-5 p-0.5 inline-flex stroke-[3px] hover:stroke-[3px] text-semibold group-hover:bg-orange-100 group-hover:text-orange-600 rounded-md mr-1" />
                 </div>
@@ -173,22 +174,12 @@ export const AppSideBar = ({ workspaceId }: AppSideBarProps) => {
             title="Support options"
             className="w-full text-sm font-medium flex gap-1 items-center py-2 px-2 hover:bg-slate-100 rounded-md transition-colors cursor-pointer tracking-tight"
           >
-            <LifebuoyIcon className="w-5 h-5 text-slate-400 inline-flex mr-1 " />
+            <LifebuoyIcon className="w-5 h-5 text-slate-400 inline-flex" />
             <span className="whitespace-nowrap overflow-hidden overflow-ellipsis inline-flex text-slate-800">
               Support
             </span>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="flex flex-col gap-1 py-2 rounded-lg">
-            <DropdownMenuItem className="rounded-md group">
-              <Link
-                title="Read OpenSauced's Docs"
-                href="https://docs.opensauced.pizza/"
-                className="text-sm font-medium flex gap-1 items-center rounded-md transition-colors cursor-pointer tracking-tight p-1"
-              >
-                <Cog8ToothIcon className="w-5 h-5 text-slate-400 inline-flex mr-1 group-hover:text-orange-500" />
-                <span className="whitespace-nowrap overflow-hidden overflow-ellipsis inline-flex">Read the docs</span>
-              </Link>
-            </DropdownMenuItem>
             <DropdownMenuItem className="rounded-md group">
               <Link
                 title="Give feedback"
@@ -235,6 +226,11 @@ export const AppSideBar = ({ workspaceId }: AppSideBarProps) => {
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
+        <SidebarMenuItem
+          title="Read the docs"
+          url="https://docs.opensauced.pizza/"
+          icon={<BookOpenIcon className="w-5 h-5 text-slate-400" />}
+        />
       </div>
     </div>
   );
