@@ -95,7 +95,7 @@ const WorkspaceDashboard = ({ workspace }: WorkspaceDashboardProps) => {
               variant="primary"
               className="w-max mx-auto"
               onClick={() => {
-                router.push(`/workspaces/${workspace.id}/settings`);
+                router.push(`/workspaces/${workspace.id}/settings#load-wizard`);
               }}
             >
               <FaPlus className="mr-2 text-lg" />

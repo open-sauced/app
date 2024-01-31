@@ -4,6 +4,7 @@ import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { ComponentProps, useState } from "react";
 import dynamic from "next/dynamic";
 import { SquareFillIcon } from "@primer/octicons-react";
+import { useEffectOnce } from "react-use";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import Button from "components/atoms/Button/button";
 import TextInput from "components/atoms/TextInput/text-input";
@@ -64,6 +65,12 @@ const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
   const initialTrackedRepos: string[] = data?.data?.map(({ repo }) => repo.full_name) ?? [];
   const [trackedRepos, setTrackedRepos] = useState<Map<string, boolean>>(new Map());
   const [trackedReposPendingDeletion, setTrackedReposPendingDeletion] = useState<Set<string>>(new Set());
+
+  useEffectOnce(() => {
+    if (window.location.hash === "#load-wizard") {
+      setTrackedReposModalOpen(true);
+    }
+  });
 
   // initial tracked repos + newly selected tracked repos that are not pending deletion
   const pendingTrackedRepos = new Map([
