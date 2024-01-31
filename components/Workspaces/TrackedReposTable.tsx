@@ -15,7 +15,7 @@ interface TrackedReposTableProps {
   isLoading?: boolean;
 }
 
-const EmptyState = ({ onAddRepos }: { onAddRepos: () => void }) => {
+export const EmptyState = ({ onAddRepos }: { onAddRepos: () => void }) => {
   return (
     <div className="grid place-content-center gap-4 my-8">
       <BiBarChartAlt2 className="border rounded p-1 w-12 h-12 mx-auto" />
