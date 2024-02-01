@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.1.0-beta.4](https://github.com/open-sauced/insights/compare/v2.1.0-beta.3...v2.1.0-beta.4) (2024-02-01)
+
+
+### 🐛 Bug Fixes
+
+* disabled Sentry for local development ([#2566](https://github.com/open-sauced/insights/issues/2566)) ([984685d](https://github.com/open-sauced/insights/commit/984685da0b8d0201639c03ea86eec1745a68c907))
+
 ## [2.1.0-beta.3](https://github.com/open-sauced/insights/compare/v2.1.0-beta.2...v2.1.0-beta.3) (2024-02-01)
 
 
