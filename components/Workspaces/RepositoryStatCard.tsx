@@ -1,21 +1,23 @@
 import { GitPullRequestIcon, HeartIcon, IssueOpenedIcon } from "@primer/octicons-react";
 import Card from "components/atoms/Card/card";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
+import humanizeNumber from "lib/utils/humanizeNumber";
 
 type RepositoryStatCardProps = {
   isLoading: boolean;
+  hasError: boolean;
 } & (
   | {
       type: "pulls";
-      stats: { opened: number; merged: number; velocity: number };
+      stats: { opened: number; merged: number; velocity: number } | undefined;
     }
   | {
       type: "issues";
-      stats: { opened: number; closed: number; velocity: number };
+      stats: { opened: number; closed: number; velocity: number } | undefined;
     }
   | {
       type: "engagement";
-      stats: { stars: number; forks: number; health: number };
+      stats: { stars: number; forks: number; health: number } | undefined;
     }
 );
 
@@ -51,32 +53,42 @@ function getHeadings(type: CardType) {
   }
 }
 
-const EmptyState = ({ type }: { type: CardType }) => {
+const EmptyState = ({ type, hasError }: { type: CardType; hasError: boolean }) => {
   return (
     <table className="grid gap-4 p-2">
       <caption className="flex items-center gap-1.5 text-xs">
         {getIcon(type)}
         <span aria-label={`Loading ${titles[type]} stats card`}>{titles[type]}</span>
       </caption>
-      <tbody className="grid grid-cols-3 items center">
-        {getHeadings(type).map((stat) => (
-          <tr key={stat} className="flex flex-col">
-            <th className="capitalize font-medium text-sm text-light-slate-11 text-left">{stat}</th>
-            <td className="semi-bold text-2xl mt-1">
-              <SkeletonWrapper width={40} height={20} />
-            </td>
+      {hasError ? (
+        <tbody>
+          <tr>
+            <td className="text-xs text-dark-red-8">An error occurred</td>
           </tr>
-        ))}
-      </tbody>
+        </tbody>
+      ) : (
+        <tbody className="grid grid-cols-3 items center">
+          {getHeadings(type).map((stat) => (
+            <tr key={stat} className="flex flex-col">
+              <th className="capitalize font-medium text-sm text-light-slate-11 text-left">{stat}</th>
+              <td className="semi-bold text-2xl mt-1">
+                <SkeletonWrapper width={40} height={20} />
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      )}
     </table>
   );
 };
 
-export const RepositoryStatCard = ({ stats, type, isLoading }: RepositoryStatCardProps) => {
+export const RepositoryStatCard = ({ stats, type, isLoading, hasError }: RepositoryStatCardProps) => {
+  const loadEmptyState = isLoading || hasError || !stats;
+
   return (
     <Card className="w-80 max-w-xs h-32 max-h-32">
-      {isLoading ? (
-        <EmptyState type={type} />
+      {loadEmptyState ? (
+        <EmptyState type={type} hasError={hasError} />
       ) : (
         <table className="grid gap-4 p-2">
           <caption className="flex items-center gap-1.5 text-xs">
@@ -91,11 +103,13 @@ export const RepositoryStatCard = ({ stats, type, isLoading }: RepositoryStatCar
                 </th>
                 {stat === "health" ? (
                   <td className="text-black semi-bold text-2xl">
-                    {value}
+                    {Math.round(value)}
                     <span className="text-xs">/10</span>
                   </td>
                 ) : (
-                  <td className="semi-bold text-2xl">{stat === "velocity" ? `${Math.round(value)}d` : value}</td>
+                  <td className="semi-bold text-2xl" title={`${value}`}>
+                    {stat === "velocity" ? `${Math.round(value)}d` : humanizeNumber(value, "abbreviation")}
+                  </td>
                 )}
               </tr>
             ))}
