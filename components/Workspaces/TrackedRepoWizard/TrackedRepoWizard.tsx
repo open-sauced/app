@@ -17,7 +17,7 @@ export const TrackedReposWizard = ({ onAddToTrackingList, onCancel }: TrackedRep
   const suggestedRepos: any[] = [];
   const onImportOrg = () => {};
   const [searchTerm, setSearchTerm] = useState<string | undefined>();
-  const { data, isError, isLoading } = useSearchRepos(searchTerm, "" /* sessionToken */);
+  const { data, isError, isLoading } = useSearchRepos(searchTerm);
 
   const onToggleRepo = (repo: string, isSelected: boolean) => {
     setSearchTerm(undefined);
