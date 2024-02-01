@@ -8,6 +8,7 @@ const meta: Meta<typeof RepositoryStatCard> = {
   component: RepositoryStatCard,
   args: {
     isLoading: false,
+    hasError: false,
   },
 };
 
@@ -17,6 +18,13 @@ export const PullRequests: Story = {
   args: {
     type: "pulls",
     stats: { opened: 10, merged: 5, velocity: 2 },
+  },
+};
+
+export const Error: Story = {
+  args: {
+    type: "pulls",
+    hasError: true,
   },
 };
 
