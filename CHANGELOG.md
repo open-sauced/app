@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.1.0-beta.5](https://github.com/open-sauced/insights/compare/v2.1.0-beta.4...v2.1.0-beta.5) (2024-02-01)
+
+
+### 🐛 Bug Fixes
+
+* Improved top navigation styling to match new sidebar ([#2565](https://github.com/open-sauced/insights/issues/2565)) ([006c81a](https://github.com/open-sauced/insights/commit/006c81a29d214196ba9a48a014148d43d83ffc66))
+
 ## [2.1.0-beta.4](https://github.com/open-sauced/insights/compare/v2.1.0-beta.3...v2.1.0-beta.4) (2024-02-01)
 
 
