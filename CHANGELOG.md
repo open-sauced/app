@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.1.0-beta.3](https://github.com/open-sauced/insights/compare/v2.1.0-beta.2...v2.1.0-beta.3) (2024-02-01)
+
+
+### 🐛 Bug Fixes
+
+* tracked repositories search works as expected now ([#2562](https://github.com/open-sauced/insights/issues/2562)) ([4e76a64](https://github.com/open-sauced/insights/commit/4e76a6491666899f4f2d48af45c91cd9f381f137))
+
 ## [2.1.0-beta.2](https://github.com/open-sauced/insights/compare/v2.1.0-beta.1...v2.1.0-beta.2) (2024-01-31)
 
 
