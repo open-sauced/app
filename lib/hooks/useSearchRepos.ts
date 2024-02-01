@@ -67,7 +67,7 @@ const githubApiRepoFetcher: Fetcher = async (apiUrl: string) => {
 export const useSearchRepos = (searchTerm: string | undefined, minimuChars = 3, limit = 100) => {
   const debouncedSearchTerm = useDebounceTerm(searchTerm ?? "", 300);
   const query = new URLSearchParams();
-  query.set("q", debouncedSearchTerm ?? "");
+  query.set("q", debouncedSearchTerm);
   query.set("per_page", `${limit}`);
 
   const endpointString = `search/repositories?${query}`;
