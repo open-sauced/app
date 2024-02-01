@@ -1,5 +1,6 @@
 import useSWR, { Fetcher } from "swr";
 import { supabase } from "lib/utils/supabase";
+import useDebounceTerm from "./useDebounceTerm";
 
 const baseUrl = "https://api.github.com";
 
@@ -63,19 +64,16 @@ const githubApiRepoFetcher: Fetcher = async (apiUrl: string) => {
   return res.json();
 };
 
-export const useSearchRepos = (
-  searchTerm: string | undefined,
-  providerToken?: string | null | undefined,
-  limit = 100
-) => {
+export const useSearchRepos = (searchTerm: string | undefined, minimuChars = 3, limit = 100) => {
+  const debouncedSearchTerm = useDebounceTerm(searchTerm ?? "", 300);
   const query = new URLSearchParams();
-  query.set("q", searchTerm ?? "");
+  query.set("q", debouncedSearchTerm);
   query.set("per_page", `${limit}`);
 
   const endpointString = `search/repositories?${query}`;
 
   const { data, error, mutate } = useSWR<{ items: GhRepo[] }, Error>(
-    !searchTerm ? null : endpointString,
+    debouncedSearchTerm.length >= minimuChars ? endpointString : null,
     githubApiRepoFetcher as unknown as Fetcher<{ items: GhRepo[] }, Error>
   );
 
