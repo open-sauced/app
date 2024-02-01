@@ -5,7 +5,7 @@ import { useSWRConfig } from "swr";
 import Button from "components/atoms/Button/button";
 
 import { Report } from "interfaces/report-type";
-import publicApiFetcher from "lib/utils/public-api-fetcher";
+import { publicApiFetcher } from "lib/utils/public-api-fetcher";
 
 interface CSVDownloadProps {
   report: Report;
@@ -13,7 +13,7 @@ interface CSVDownloadProps {
 }
 
 interface PaginatedResponse {
-  readonly data: DbRepoPR[];
+  readonly data: DbRepoPREvents[];
   readonly meta: Meta;
 }
 

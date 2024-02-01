@@ -80,25 +80,31 @@ interface DBListContributor {
   readonly username: string;
 }
 
-interface DbRepoPR {
-  readonly title: string;
-  readonly author_login: string;
-  readonly state: string;
-  readonly created_at: string;
-  readonly closed_at: string;
-  readonly merged_at: string;
-  readonly updated_at: string;
-  readonly filesCount: number;
+interface DbRepoPREvents {
+  readonly event_id: number;
+  readonly pr_number: number;
+  readonly pr_state: string;
+  readonly pr_is_draft: bool;
+  readonly pr_is_merged: bool;
+  readonly pr_mergeable_state: string;
+  readonly pr_is_rebaseable: bool;
+  readonly pr_title: string;
+  readonly pr_head_label: string;
+  readonly pr_base_label: string;
+  readonly pr_head_ref: string;
+  readonly pr_base_ref: string;
+  readonly pr_author_login: string;
+  readonly pr_created_at: string;
+  readonly pr_closed_at: string;
+  readonly pr_merged_at: string;
+  readonly pr_updated_at: string;
+  readonly pr_comments: number;
+  readonly pr_additions: number;
+  readonly pr_deletions: number;
+  readonly pr_changed_files: number;
+  readonly repo_name: string;
+  readonly pr_commits: number;
   linesCount: number;
-  readonly merged: boolean;
-  readonly draft: boolean;
-  readonly full_name: string;
-  readonly number: number;
-  readonly additions: number;
-  readonly deletions: number;
-  readonly changed_files: number;
-  readonly repo_id: number;
-  readonly last_updated_at: string;
 }
 
 interface DbPRContributor {
@@ -277,6 +283,14 @@ interface GhUser {
   readonly repos_url: string;
 }
 
+interface GhRepo {
+  id: number;
+  name: string;
+  full_name: string;
+  private: boolean;
+  owner: GhUser;
+}
+
 interface GhPRInfoResponse {
   readonly head: { repo: { name: string; full_name: string }; user: { login: string; full_name: string } };
   readonly title: string;
@@ -361,13 +375,25 @@ interface PagedData<T> {
 interface DbListContributorStat {
   login: string;
   commits: number;
-  prsCreated: number;
+  prs_created: number;
+  issues_created: number;
+  commit_comments: number;
+  issue_comments: number;
+  pr_review_comments: number;
+  comments: number;
+  total_contributions: number;
 }
+
 interface DbProjectContributions {
-  org_id: string;
-  project_id: string;
-  repo_id: number;
-  contributions: number;
+  repo_name: string;
+  commits: number;
+  prs_created: number;
+  issues_created: number;
+  commit_comments: number;
+  issue_comments: number;
+  pr_review_comments: number;
+  comments: number;
+  total_contributions: number;
 }
 
 interface DBProjectContributor {
@@ -376,7 +402,11 @@ interface DBProjectContributor {
   prs_created: number;
   prs_reviewed: number;
   issues_created: number;
+  commit_comments: number;
+  issue_comments: number;
+  pr_review_comments: number;
   comments: number;
+  total_contributions: number;
 }
 
 interface DbUserOrganization {
@@ -396,6 +426,19 @@ interface GhOrgTeam {
 interface GhOrgTeamMember {
   id: number;
   login: string;
+}
+
+interface DbPullRequestGitHubEventsHistogram {
+  bucket: string;
+  interval: number;
+  prs_count: number;
+  accepted_prs: number;
+  open_prs: number;
+  closed_prs: number;
+  draft_prs: number;
+  active_prs: number;
+  spam_prs: number;
+  pr_velocity: number;
 }
 
 interface Workspace {

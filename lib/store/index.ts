@@ -11,7 +11,6 @@ const initialState: GlobalStateInterface = {
   userId: null,
   hasReports: false,
   openSearch: false,
-  workspaces: [],
 };
 
 interface AppStore extends GlobalStateInterface {
@@ -32,7 +31,6 @@ interface AppStore extends GlobalStateInterface {
   setUserId: (userId?: number | null) => void;
   setHasReports: (hasReports: boolean) => void;
   setOpenSearch: (openSearch: boolean) => void;
-  setWorkspaces: (workspaces: Workspace[]) => void;
 }
 
 const store = create<AppStore>()((set) => ({
@@ -54,7 +52,6 @@ const store = create<AppStore>()((set) => ({
   setUserId: (userId?: number | null) => set((state) => ({ ...state, userId })),
   setHasReports: (hasReports: boolean) => set((state) => ({ ...state, hasReports })),
   setOpenSearch: (openSearch: boolean) => set((state) => ({ ...state, openSearch: openSearch })),
-  setWorkspaces: (workspaces: Workspace[]) => set((state) => ({ ...state, workspaces })),
 }));
 
 export default store;

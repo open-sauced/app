@@ -22,6 +22,10 @@ h5,
 h6 {
   @apply tracking-tight;
 }
+button:not([role]) {
+  @apply border;
+  @apply border-transparent;
+}
 
 input[type="checkbox"]:focus-visible,
 [role="checkbox"]:focus-visible,
