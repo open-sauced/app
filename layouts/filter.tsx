@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import { useRouter } from "next/router";
+import React from "react";
 
 import Footer from "components/organisms/Footer/footer";
 import Header from "components/organisms/Header/header";
@@ -7,19 +6,10 @@ import Nav from "components/organisms/ToolList/nav";
 import TopNav from "components/organisms/TopNav/top-nav";
 import FilterHeader from "components/molecules/FilterHeader/filter-header";
 
-import { setQueryParams } from "lib/utils/query-params";
 import useNav from "lib/hooks/useNav";
 
 const FilterLayout = ({ children }: { children: React.ReactNode }) => {
   const { toolList, selectedTool, filterName, selectedFilter, userOrg } = useNav();
-  const router = useRouter();
-  const { range } = router.query;
-
-  useEffect(() => {
-    if (router.isReady && !range) {
-      setQueryParams({ range: "30" });
-    }
-  }, [range, router.isReady]);
 
   return (
     <div className="min-h-screen flex flex-col">
