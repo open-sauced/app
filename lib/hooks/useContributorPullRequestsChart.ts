@@ -94,7 +94,7 @@ const useContributorPullRequestsChart = (
         })),
       }));
     }
-  }, [data]);
+  }, [data, range]);
 
   return {
     chart,

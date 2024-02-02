@@ -144,6 +144,32 @@ const ContributorHighlightCard = ({
     }
   }, [openEdit]);
 
+  const updateSuggestionsDebounced = useDebounce(async () => {
+    setTagRepoSearchLoading(true);
+
+    const req = await fetch(
+      `https://api.github.com/search/repositories?q=${encodeURIComponent(
+        `${taggedRepoSearchTerm} in:name in:repo:owner/name sort:updated`
+      )}`,
+      {
+        ...(providerToken
+          ? {
+              headers: {
+                Authorization: `Bearer ${providerToken}`,
+              },
+            }
+          : {}),
+      }
+    );
+
+    setTagRepoSearchLoading(false);
+    if (req.ok) {
+      const res = await req.json();
+      const suggestions = res.items.map((item: any) => item.full_name);
+      setRepoTagSuggestions(suggestions);
+    }
+  }, 250);
+
   // when user updates the highlight link, check if its a github link
   // if its a github link, automatically tag the repo if its not already tagged
   useEffect(() => {
@@ -160,7 +186,7 @@ const ContributorHighlightCard = ({
       const newTaggedRepoList = [...taggedRepoList, newRepo];
       setTaggedRepoList(newTaggedRepoList);
     }
-  }, [highlight.highlightLink]);
+  }, [highlight.highlightLink, taggedRepoList, updateSuggestionsDebounced]);
 
   useEffect(() => {
     setDate(shipped_date ? new Date(shipped_date) : undefined);
@@ -433,37 +459,11 @@ const ContributorHighlightCard = ({
     }
   };
 
-  const updateSuggestionsDebounced = useDebounce(async () => {
-    setTagRepoSearchLoading(true);
-
-    const req = await fetch(
-      `https://api.github.com/search/repositories?q=${encodeURIComponent(
-        `${taggedRepoSearchTerm} in:name in:repo:owner/name sort:updated`
-      )}`,
-      {
-        ...(providerToken
-          ? {
-              headers: {
-                Authorization: `Bearer ${providerToken}`,
-              },
-            }
-          : {}),
-      }
-    );
-
-    setTagRepoSearchLoading(false);
-    if (req.ok) {
-      const res = await req.json();
-      const suggestions = res.items.map((item: any) => item.full_name);
-      setRepoTagSuggestions(suggestions);
-    }
-  }, 250);
-
   useEffect(() => {
     setRepoTagSuggestions([]);
     if (!taggedRepoSearchTerm) return;
     updateSuggestionsDebounced();
-  }, [taggedRepoSearchTerm]);
+  }, [taggedRepoSearchTerm, updateSuggestionsDebounced]);
 
   useEffect(() => {
     if (window !== undefined) {

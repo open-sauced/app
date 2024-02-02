@@ -34,7 +34,7 @@ const AddContributorsHeader = ({
 
   useEffect(() => {
     onSearch(debouncedSearchTerm);
-  }, [debouncedSearchTerm]);
+  }, [debouncedSearchTerm, onSearch]);
 
   return (
     <div className="relative flex flex-col justify-between w-full gap-6 py-2">

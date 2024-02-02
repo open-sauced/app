@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import clsx from "clsx";
 import Link from "next/link";
@@ -34,19 +34,22 @@ const Notifications: WithPageLayout = () => {
 
   const router = useRouter();
 
-  const fetchNotifications = async (page = 1) => {
-    if (!sessionToken) return;
-    setLoading(true);
-    const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/notifications?limit=10&page=${page}`, {
-      headers: {
-        accept: "application/json",
-        Authorization: `Bearer ${sessionToken}`,
-      },
-    });
-    const notifications = await req.json();
-    setNotificationsResponse(notifications);
-    setLoading(false);
-  };
+  const fetchNotifications = useCallback(
+    async (page = 1) => {
+      if (!sessionToken) return;
+      setLoading(true);
+      const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/notifications?limit=10&page=${page}`, {
+        headers: {
+          accept: "application/json",
+          Authorization: `Bearer ${sessionToken}`,
+        },
+      });
+      const notifications = await req.json();
+      setNotificationsResponse(notifications);
+      setLoading(false);
+    },
+    [sessionToken]
+  );
 
   const notifications = useMemo(() => {
     if (!notificationsResponse?.data) return [];
@@ -60,7 +63,7 @@ const Notifications: WithPageLayout = () => {
     if (sessionToken) {
       router.push(`/user/notifications?filter=all`);
     }
-  }, [sessionToken]);
+  }, [sessionToken, fetchNotifications, router]);
 
   const handlePageChange = (page: number) => {
     setPage(page);

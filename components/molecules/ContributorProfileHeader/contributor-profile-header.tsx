@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Image from "next/image";
@@ -397,7 +397,9 @@ const AddToListDropdown = ({ username }: { username: string }) => {
   const { data: contributor } = useFetchUser(username ?? "");
   const { toast } = useToast();
 
-  const listOptions = data ? data.map((list) => ({ label: list.name, value: list.id })) : [];
+  const listOptions = useMemo(() => {
+    return data ? data.map((list) => ({ label: list.name, value: list.id })) : [];
+  }, [data]);
 
   const handleSelectList = (value: OptionKeys) => {
     const isOptionSelected = selectedList.some((s) => s.value === value.value);
@@ -408,39 +410,38 @@ const AddToListDropdown = ({ username }: { username: string }) => {
     }
   };
 
-  const handleAddToList = async () => {
-    if (selectedList.length > 0 && contributor) {
-      const listIds = selectedList.map((list) => list.value);
-      const response = Promise.all(listIds.map((listIds) => addListContributor(listIds, [contributor.id])));
-
-      response
-        .then((res) => {
-          toast({
-            description: `
-          You've added ${username} to ${selectedList.length} list${selectedList.length > 1 ? "s" : ""}!`,
-            variant: "success",
-          });
-        })
-        .catch((res) => {
-          const failedList = listOptions.filter((list) => res.some((r: any) => r.error?.list_id === list.value));
-          toast({
-            description: `
-          Failed to add ${username} to ${failedList[0].label} ${
-            failedList.length > 1 && `and ${failedList.length - 1} other lists`
-          } !
-          `,
-            variant: "danger",
-          });
-        });
-    }
-  };
-
   useEffect(() => {
+    const handleAddToList = async () => {
+      if (selectedList.length > 0 && contributor) {
+        const listIds = selectedList.map((list) => list.value);
+        const response = Promise.all(listIds.map((listIds) => addListContributor(listIds, [contributor.id])));
+
+        response
+          .then((res) => {
+            toast({
+              description: `
+            You've added ${username} to ${selectedList.length} list${selectedList.length > 1 ? "s" : ""}!`,
+              variant: "success",
+            });
+          })
+          .catch((res) => {
+            const failedList = listOptions.filter((list) => res.some((r: any) => r.error?.list_id === list.value));
+            toast({
+              description: `
+            Failed to add ${username} to ${failedList[0].label} ${
+              failedList.length > 1 && `and ${failedList.length - 1} other lists`
+            } !
+            `,
+              variant: "danger",
+            });
+          });
+      }
+    };
     if (!selectListOpen && selectedList.length > 0) {
       handleAddToList();
       setSelectedList([]);
     }
-  }, [selectListOpen]);
+  }, [selectListOpen, selectedList.length, contributor, listOptions, selectedList, toast, username]);
 
   return (
     <MultiSelect

@@ -52,13 +52,13 @@ const NewListCreationPage = () => {
     if (router.query.public === "true") {
       setIsPublic(true);
     }
-  }, [router.query]);
+  }, [router.query, title]);
 
   useEffect(() => {
     if (contributorIds) {
       setSelectedContributors(JSON.parse(contributorIds) as DbPRContributor[]);
     }
-  }, [router.query]);
+  }, [router.query, contributorIds]);
 
   useEffect(() => {
     setIsHydrated(true);

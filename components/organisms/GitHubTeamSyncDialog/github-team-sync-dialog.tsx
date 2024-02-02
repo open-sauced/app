@@ -35,30 +35,29 @@ const GitHubTeamSyncDialog = ({
   const { data: userOrgs } = useUserOrganizations(username);
   const { toast } = useToast();
 
-  async function loadTeams(org: string) {
-    const response = await fetchGithubOrgTeams(org);
-
-    setTeams([]);
-    setTeamSlug("");
-
-    if (response.isError) {
-      toast({
-        description:
-          "There was error loading teams. Check your organization permissions and try logging out and re-connecting.",
-        variant: "warning",
-      });
-
-      return;
-    }
-
-    setTeams(response.data);
-  }
-
   useEffect(() => {
+    async function loadTeams(org: string) {
+      const response = await fetchGithubOrgTeams(org);
+
+      setTeams([]);
+      setTeamSlug("");
+
+      if (response.isError) {
+        toast({
+          description:
+            "There was error loading teams. Check your organization permissions and try logging out and re-connecting.",
+          variant: "warning",
+        });
+
+        return;
+      }
+
+      setTeams(response.data);
+    }
     if (selectedOrg) {
       loadTeams(selectedOrg);
     }
-  }, [selectedOrg]);
+  }, [selectedOrg, toast]);
 
   return (
     <Dialog open={open}>

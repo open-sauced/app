@@ -49,7 +49,7 @@ const HubContributorsHeader = ({
 
   useEffect(() => {
     onSearch(contributorSearch);
-  }, [debouncedSearchTerm]);
+  }, [debouncedSearchTerm, contributorSearch, onSearch]);
 
   return (
     <div className="relative flex flex-col justify-between w-full gap-6 py-2">

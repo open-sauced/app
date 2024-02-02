@@ -113,7 +113,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
     return () => {
       clearInterval(focusOnHighlighCreationInput);
     };
-  }, []);
+  }, [signIn]);
 
   useEffect(() => {
     if (activeTab === "home") {
@@ -121,13 +121,13 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
     } else if (activeTab === "following") {
       setRepoList(repoTofilterList(followersRepo));
     }
-  }, [activeTab, repos]);
+  }, [activeTab, repos, followersRepo]);
 
   useEffect(() => {
     if (singleHighlight && !openSingleHighlight) {
       setOpenSingleHighlight(true);
     }
-  }, [singleHighlight]);
+  }, [singleHighlight, openSingleHighlight]);
 
   useEffect(() => {
     setHydrated(true);

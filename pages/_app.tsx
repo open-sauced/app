@@ -96,7 +96,7 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
     return () => {
       router.events.off("routeChangeComplete", handleRouteChange);
     };
-  }, []);
+  }, [router.events]);
 
   function localStorageProvider() {
     if (typeof window !== "undefined") {

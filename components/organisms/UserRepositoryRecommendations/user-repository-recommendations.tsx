@@ -51,31 +51,30 @@ const UserRepositoryRecommendations = ({ contributor, userInterests }: UserRepoR
     }
   };
 
-  const getRepoFullNameByInterests = () => {
-    const repoFullNames = interests.map((interest) => {
-      return userRecommendedRepos[interest as InterestType];
-    });
-
-    setRecommendedRepos(
-      Array.from(
-        new Set([
-          ...repoFullNames
-            .flat()
-            .filter(Boolean)
-            .map((repo) => repo.full_name),
-        ])
-      )
-    );
-  };
-
   useEffect(() => {
+    const getRepoFullNameByInterests = () => {
+      const repoFullNames = interests.map((interest) => {
+        return userRecommendedRepos[interest as InterestType];
+      });
+
+      setRecommendedRepos(
+        Array.from(
+          new Set([
+            ...repoFullNames
+              .flat()
+              .filter(Boolean)
+              .map((repo) => repo.full_name),
+          ])
+        )
+      );
+    };
     if (userInterests && userInterests.length > 0) setSelectedInterests(userInterests.split(","));
     getRepoFullNameByInterests();
-  }, [userInterests, userRecommendedRepos]);
+  }, [userInterests, userRecommendedRepos, interests]);
 
   useEffect(() => {
     refreshUserRecommendedRepos();
-  }, [contributor]);
+  }, [contributor, refreshUserRecommendedRepos]);
 
   return (
     <>

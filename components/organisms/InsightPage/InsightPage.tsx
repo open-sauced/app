@@ -150,7 +150,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
     if (insight) {
       setIsPublic(insight.is_public);
     }
-  }, [pageRepos, insight?.is_public]);
+  }, [pageRepos, insight?.is_public, insight]);
 
   const reposRemoved = repoHistory.map((repo) => {
     const [repoOwner, repoName] = repo.full_name.split("/");
@@ -494,7 +494,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
     setSuggestions([]);
     if (!repoSearchTerm) return;
     updateSuggestionsDebounced();
-  }, [repoSearchTerm]);
+  }, [repoSearchTerm, updateSuggestionsDebounced]);
 
   return (
     <section className="flex flex-col justify-center w-full py-4 xl:flex-row xl:gap-20 xl:pl-28 ">

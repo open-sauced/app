@@ -127,7 +127,7 @@ const Highlights = ({ list, numberOfContributors, isOwner, highlights }: Highlig
 
   useEffect(() => {
     onSearch(contributor);
-  }, [debouncedSearchTerm]);
+  }, [debouncedSearchTerm, contributor]);
 
   return (
     <ListPageLayout showRangeFilter={false} list={list} numberOfContributors={numberOfContributors} isOwner={isOwner}>

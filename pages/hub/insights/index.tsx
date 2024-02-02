@@ -50,51 +50,6 @@ const InsightsHub: WithPageLayout = () => {
     isLoading: featuredInsightsLoading,
   } = useFetchFeaturedInsights(user ? false : true);
 
-  function handleView() {
-    const insight = data.slice(0, 1).shift();
-    router.push(`/pages/${user?.user_metadata.user_name}/${insight!.id}/dashboard`);
-  }
-
-  function openInsightToast() {
-    const toaster = toast({
-      description: "Welcome to your Insights Hub!",
-      variant: "success",
-      duration: 10000,
-      action: (
-        <div className="flex flex-col">
-          <div className="flex align-middle">
-            <Text>
-              {user
-                ? "We've included a featured Insight Page for you to test out. You can also create your own to get insights on repositories."
-                : "Try out our Demo Insight page or sign up to create your own"}
-            </Text>
-          </div>
-          <div className="flex flex-start">
-            <button
-              onClick={() => {
-                toaster && toaster.dismiss();
-              }}
-            >
-              <Text className="pr-2 cursor-pointer">Dismiss</Text>
-            </button>
-            {session ? (
-              <button
-                onClick={() => {
-                  toaster && toaster.dismiss();
-                  handleView();
-                }}
-              >
-                <Text className="text-orange-500 cursor-pointer">Open Insight Page</Text>
-              </button>
-            ) : null}
-          </div>
-        </div>
-      ),
-    });
-
-    localStorage.setItem("dismissFeaturedInsights", "true");
-  }
-
   useEffect(() => {
     // if the current user with insights logs out, set the flag
     if (!localStorage.getItem("dismissFeaturedInsights") && data.length > 0) {
@@ -103,13 +58,56 @@ const InsightsHub: WithPageLayout = () => {
   }, [data]);
 
   useEffect(() => {
+    function handleView() {
+      const insight = data.slice(0, 1).shift();
+      router.push(`/pages/${user?.user_metadata.user_name}/${insight!.id}/dashboard`);
+    }
+    function openInsightToast() {
+      const toaster = toast({
+        description: "Welcome to your Insights Hub!",
+        variant: "success",
+        duration: 10000,
+        action: (
+          <div className="flex flex-col">
+            <div className="flex align-middle">
+              <Text>
+                {user
+                  ? "We've included a featured Insight Page for you to test out. You can also create your own to get insights on repositories."
+                  : "Try out our Demo Insight page or sign up to create your own"}
+              </Text>
+            </div>
+            <div className="flex flex-start">
+              <button
+                onClick={() => {
+                  toaster && toaster.dismiss();
+                }}
+              >
+                <Text className="pr-2 cursor-pointer">Dismiss</Text>
+              </button>
+              {session ? (
+                <button
+                  onClick={() => {
+                    toaster && toaster.dismiss();
+                    handleView();
+                  }}
+                >
+                  <Text className="text-orange-500 cursor-pointer">Open Insight Page</Text>
+                </button>
+              ) : null}
+            </div>
+          </div>
+        ),
+      });
+
+      localStorage.setItem("dismissFeaturedInsights", "true");
+    }
     if (
       (session && session.insights_count === 0 && !localStorage.getItem("dismissFeaturedInsights")) ||
       (featuredInsightsData.length === 1 && !localStorage.getItem("dismissFeaturedInsights"))
     ) {
       openInsightToast();
     }
-  }, [session, featuredInsightsData]);
+  }, [session, featuredInsightsData, toast, user, data, router]);
 
   return (
     <>

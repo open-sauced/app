@@ -55,7 +55,7 @@ const TableHeader = ({ title, metaInfo, entity, onSearch, layout, onLayoutToggle
     setSuggestions([]);
     if (!searchTerm) return;
     updateSuggestionsDebounced();
-  }, [searchTerm]);
+  }, [searchTerm, updateSuggestionsDebounced]);
 
   return (
     <div className="flex flex-col flex-wrap w-full pl-4 md:pl-0 gap-y-2 md:flex-row md:justify-between md:items-center md:pb-4">

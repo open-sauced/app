@@ -13,7 +13,7 @@ const SkeletonTemplate: ComponentStory<typeof SkeletonWrapper> = (args) => <Skel
 
 export const Default = SkeletonTemplate.bind({});
 export const DoubleWrappers = SkeletonTemplate.bind({});
-export const tripleWrappers = SkeletonTemplate.bind({});
+export const TripleWrappers = SkeletonTemplate.bind({});
 
 Default.args = {
   count: 1,
@@ -29,7 +29,7 @@ DoubleWrappers.args = {
   radius: 4,
 };
 
-tripleWrappers.args = {
+TripleWrappers.args = {
   count: 3,
   height: 60,
   width: 300,
