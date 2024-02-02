@@ -5,6 +5,27 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.1.0-beta.5](https://github.com/open-sauced/insights/compare/v2.1.0-beta.4...v2.1.0-beta.5) (2024-02-01)
+
+
+### 🐛 Bug Fixes
+
+* Improved top navigation styling to match new sidebar ([#2565](https://github.com/open-sauced/insights/issues/2565)) ([006c81a](https://github.com/open-sauced/insights/commit/006c81a29d214196ba9a48a014148d43d83ffc66))
+
+## [2.1.0-beta.4](https://github.com/open-sauced/insights/compare/v2.1.0-beta.3...v2.1.0-beta.4) (2024-02-01)
+
+
+### 🐛 Bug Fixes
+
+* disabled Sentry for local development ([#2566](https://github.com/open-sauced/insights/issues/2566)) ([984685d](https://github.com/open-sauced/insights/commit/984685da0b8d0201639c03ea86eec1745a68c907))
+
+## [2.1.0-beta.3](https://github.com/open-sauced/insights/compare/v2.1.0-beta.2...v2.1.0-beta.3) (2024-02-01)
+
+
+### 🐛 Bug Fixes
+
+* tracked repositories search works as expected now ([#2562](https://github.com/open-sauced/insights/issues/2562)) ([4e76a64](https://github.com/open-sauced/insights/commit/4e76a6491666899f4f2d48af45c91cd9f381f137))
+
 ## [2.1.0-beta.2](https://github.com/open-sauced/insights/compare/v2.1.0-beta.1...v2.1.0-beta.2) (2024-01-31)
 
 

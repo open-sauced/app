@@ -139,7 +139,7 @@ const SearchDialogTrigger = () => {
       >
         <div className="flex items-center">
           <FaSearch className="text-light-slate-9" fontSize={16} />
-          <Text className="pl-2 text-sm font-semibold text-light-slate-9">Search for users</Text>
+          <Text className="pl-2 text-sm text-light-slate-9">Search for users</Text>
         </div>
         <Text keyboard className="text-gray-600 !border-b !px-1">
           {isMac ? "⌘K" : <span className="text-xs px-1 py-2">CTRL+K</span>}

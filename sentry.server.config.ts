@@ -5,6 +5,8 @@
 import * as Sentry from "@sentry/nextjs";
 
 Sentry.init({
+  enabled: process.env.NODE_ENV !== "development",
+
   // Adjust this value in production, or use tracesSampler for greater control
   tracesSampleRate: 0.25,
 
