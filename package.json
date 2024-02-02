@@ -111,7 +111,6 @@
     "swiper": "^10.2.0",
     "swr": "^2.0.3",
     "tailwindcss-radix": "^2.7.0",
-    "tier": "^5.10.0",
     "zustand": "^4.3.2"
   },
   "devDependencies": {
