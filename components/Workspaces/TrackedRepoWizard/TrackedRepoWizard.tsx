@@ -5,6 +5,7 @@ import { TrackedRepoWizardLayout } from "./TrackedRepoWizardLayout";
 import { SearchByReposStep } from "./SearchByReposStep";
 import { PasteReposStep } from "./PasteReposStep";
 import { FilterPastedReposStep } from "./FilterPastedReposStep";
+import { SearchReposByOrgStep } from "./SearchReposByOrg";
 
 interface TrackedReposWizardProps {
   onAddToTrackingList: (repos: Map<string, boolean>) => void;
@@ -17,7 +18,6 @@ export const TrackedReposWizard = ({ onAddToTrackingList, onCancel }: TrackedRep
   const [step, setStep] = useState<TrackedReposStep>("pickReposOrOrg");
   const [currentTrackedRepositories, setCurrentTrackedRepositories] = useState<Map<string, boolean>>(new Map());
   const suggestedRepos: any[] = [];
-  const onImportOrg = () => {};
   const [searchTerm, setSearchTerm] = useState<string | undefined>();
   const { data, isError, isLoading } = useSearchRepos(searchTerm);
 
@@ -90,7 +90,9 @@ export const TrackedReposWizard = ({ onAddToTrackingList, onCancel }: TrackedRep
             onPasteRepos={() => {
               setStep("pasteRepos");
             }}
-            onImportOrg={onImportOrg}
+            onImportOrg={() => {
+              setStep("pickOrg");
+            }}
           />
         );
 
@@ -117,6 +119,18 @@ export const TrackedReposWizard = ({ onAddToTrackingList, onCancel }: TrackedRep
           />
         );
       // TODO: other steps
+      case "pickOrg":
+        return (
+          <SearchReposByOrgStep
+            onSelectRepo={onSelectRepo}
+            onToggleRepo={onToggleRepo}
+            onSearch={onSearchRepos}
+            repositories={repositories}
+            searchedRepos={searchedRepos}
+            suggestedRepos={suggestedRepos}
+          />
+        );
+
       default:
         return null;
     }
