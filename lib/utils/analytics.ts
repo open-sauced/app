@@ -38,7 +38,6 @@ async function captureAnalytics({ title, property, value, userInfo }: AnalyticEv
       coupon_code,
       is_open_sauced_member,
       is_onboarded,
-      // TODO: this will need to change when we integrate the Tier work
       is_pro_user: role >= 50,
       is_maintainer,
     };
