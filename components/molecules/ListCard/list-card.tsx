@@ -3,6 +3,7 @@ import Link from "next/link";
 import { MdOutlineArrowForwardIos } from "react-icons/md";
 import { RiDeleteBinLine } from "react-icons/ri";
 import clsx from "clsx";
+import { BsPencilFill } from "react-icons/bs";
 import Text from "components/atoms/Typography/text";
 import { useFetchListContributors } from "lib/hooks/useList";
 import Card from "components/atoms/Card/card";
@@ -50,6 +51,11 @@ const ListCard = ({ list, handleOnDeleteClick }: ListCardProps) => {
               <StackedAvatar contributors={contributorsAvatar} visibleQuantity={6} classNames="scale-125" />
             </div>
             <div className="justify-end flex-1 hidden md:flex">
+              <Link href={`/lists/${list.id}/edit`}>
+                <span className=" bg-light-slate-1 inline-block rounded-lg p-2.5 border mr-2 cursor-pointer">
+                  <BsPencilFill title="Edit List Page" className="text-light-slate-10 text-lg" />
+                </span>
+              </Link>
               {/* Delete button */}
               {handleOnDeleteClick && (
                 <button
@@ -60,11 +66,10 @@ const ListCard = ({ list, handleOnDeleteClick }: ListCardProps) => {
                   <RiDeleteBinLine title="Delete List" className="text-lg text-light-slate-10" />
                 </button>
               )}
-              <Link
-                className="inline-block p-3 mr-2 border rounded-lg cursor-pointer bg-light-slate-1"
-                href={`/lists/${list.id}/overview`}
-              >
-                <MdOutlineArrowForwardIos title="Go To Insight Page" className="text-lg text-light-slate-10" />
+              <Link href={`/lists/${list.id}/overview`}>
+                <span className="bg-light-slate-1 inline-block rounded-lg p-2.5 border cursor-pointer">
+                  <MdOutlineArrowForwardIos title="Go To List Page" className="text-light-slate-10 text-lg" />
+                </span>
               </Link>
             </div>
           </div>

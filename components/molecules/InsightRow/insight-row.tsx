@@ -5,6 +5,7 @@ import { MdOutlineArrowForwardIos } from "react-icons/md";
 import { User } from "@supabase/supabase-js";
 
 import clsx from "clsx";
+import { RiDeleteBinLine } from "react-icons/ri";
 import { getRelativeDays } from "lib/utils/date-utils";
 import useRepositories from "lib/hooks/api/useRepositories";
 import getRepoInsights from "lib/utils/get-repo-insights";
@@ -103,6 +104,13 @@ const InsightRow = ({ insight, user, isEditable = true }: InsightRowProps) => {
                     </span>
                   </Link>
                 ))}
+              <button
+                // onClick={() => handleOnDeleteClick(insight.name, insight.id)}
+                className="inline-block p-3 mr-2 border rounded-lg cursor-pointer bg-light-slate-1"
+                type="button"
+              >
+                <RiDeleteBinLine title="Delete Insight" className="text-lg text-light-slate-10" />
+              </button>
               <Link href={`/pages/${user ? user?.user_metadata.user_name : "anonymous"}/${insight.id}/dashboard`}>
                 <span className=" bg-light-slate-1 inline-block rounded-lg p-2.5 border cursor-pointer">
                   <MdOutlineArrowForwardIos title="Go To Insight Page" className="text-light-slate-10 text-lg" />
