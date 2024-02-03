@@ -8,18 +8,22 @@ import { SearchedReposTable } from "../SearchReposTable";
 import { SearchRepoEmptyState } from "./SearchRepoEmptyState";
 
 interface SearchByReposStepProps {
+  organization: string | undefined;
   onSearch: (search?: string) => void;
   onSelectRepo: (repo: string) => void;
   onToggleRepo: (repo: string, isSelected: boolean) => void;
+  onToggleAllRepos: (checked: boolean) => void;
   repositories: Map<string, boolean>;
   suggestedRepos: string[];
   searchedRepos: string[];
 }
 
 export const SearchReposByOrgStep = ({
+  organization,
   onSearch,
   onSelectRepo,
   onToggleRepo,
+  onToggleAllRepos,
   repositories,
   searchedRepos,
   suggestedRepos = [],
@@ -71,35 +75,46 @@ export const SearchReposByOrgStep = ({
 
   return (
     <div className="flex flex-col gap-4 h-96 max-h-96">
-      <form
-        ref={formRef}
-        role="search"
-        onSubmit={(e) => {
-          e.preventDefault();
-        }}
-      >
-        <Search
-          placeholder="Search organizations"
-          className="w-full"
-          isLoading={searchIsLoading}
-          name="query"
-          onChange={(event) => {
-            setSearchIsLoading(true);
-            onSearch(event);
-          }}
-          onSelect={onSelectRepo}
-          suggestionsLabel={suggestedRepos.length > 0 ? "Suggested repositories" : undefined}
-          suggestions={suggestions}
-        />
-      </form>
-      {repositories.size === 0 && filteredRepositories.size === 0 ? (
-        <SearchRepoEmptyState type="by-org" />
+      {organization ? (
+        <>
+          <div className="flex items-center gap-2 font-semibold">
+            <Avatar contributor={organization} size="xsmall" />
+            <span>{organization}</span>
+          </div>
+          <p>Select the organization repositories that you want to track.</p>
+          <SearchedReposTable
+            type="by-org"
+            repositories={filteredRepositories.size > 0 ? filteredRepositories : repositories}
+            onFilter={onFilterRepos}
+            onToggleRepo={onToggleRepo}
+            onToggleAllRepos={onToggleAllRepos}
+          />
+        </>
       ) : (
-        <SearchedReposTable
-          repositories={filteredRepositories.size > 0 ? filteredRepositories : repositories}
-          onFilter={onFilterRepos}
-          onToggleRepo={onToggleRepo}
-        />
+        <>
+          <form
+            ref={formRef}
+            role="search"
+            onSubmit={(e) => {
+              e.preventDefault();
+            }}
+          >
+            <Search
+              placeholder="Search organizations"
+              className="w-full"
+              isLoading={searchIsLoading}
+              name="query"
+              onChange={(event) => {
+                setSearchIsLoading(true);
+                onSearch(event);
+              }}
+              onSelect={onSelectRepo}
+              suggestionsLabel={suggestedRepos.length > 0 ? "Suggested repositories" : undefined}
+              suggestions={suggestions}
+            />
+          </form>
+          <SearchRepoEmptyState type="by-org" />
+        </>
       )}
     </div>
   );

@@ -124,6 +124,7 @@ export const TrackedReposWizard = ({ onAddToTrackingList, onCancel }: TrackedRep
           <SearchReposByOrgStep
             onSelectRepo={onSelectRepo}
             onToggleRepo={onToggleRepo}
+            onToggleAllRepos={onToggleAllRepos}
             onSearch={onSearchRepos}
             repositories={repositories}
             searchedRepos={searchedRepos}
