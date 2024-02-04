@@ -1,7 +1,5 @@
 import Link from "next/link";
 import React from "react";
-import { UsersIcon } from "@heroicons/react/24/solid";
-import { ChartBarSquareIcon } from "@heroicons/react/24/outline";
 
 interface MenuItemProps {
   title: string;
@@ -10,23 +8,16 @@ interface MenuItemProps {
   url: string;
   isActive?: boolean;
 }
-const SidebarMenuItem = ({ title, icon, type, url: href }: MenuItemProps) => {
-  const getIcon = (type: "repo" | "list") => {
-    switch (type) {
-      case "list":
-        return <UsersIcon className="w-5 h-5 text-slate-400" />;
-      case "repo":
-        return <ChartBarSquareIcon className="w-5 h-5 text-slate-400" />;
-    }
-  };
-
+const SidebarMenuItem = ({ title, icon, type, url: href, isActive }: MenuItemProps) => {
   return (
-    <li className="py-2 px-3">
-      <Link title={title} href={href} className="grid grid-cols-[1.25rem,1fr] gap-2 items-center">
-        {type && !icon ? getIcon(type) : icon}
-        <span className="whitespace-nowrap overflow-hidden overflow-ellipsis">{title}</span>
-      </Link>
-    </li>
+    <Link
+      title={title}
+      href={href}
+      className="hover:bg-slate-100 text-sm font-medium flex gap-1 items-center rounded-md transition-colors cursor-pointer tracking-tight py-1 px-2 group"
+    >
+      {icon}
+      <h3 className="py-1 text-slate-800">{title}</h3>
+    </Link>
   );
 };
 
