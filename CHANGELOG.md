@@ -5,6 +5,19 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.1.0-beta.7](https://github.com/open-sauced/insights/compare/v2.1.0-beta.6...v2.1.0-beta.7) (2024-02-05)
+
+
+### 🍕 Features
+
+* connect contributor pull requests chart to histogram endpoint ([#2575](https://github.com/open-sauced/insights/issues/2575)) ([5d0298a](https://github.com/open-sauced/insights/commit/5d0298a711419ece46151524efb762060580206c))
+* now when you go to the app home page, if logged in, you're redirected to your last workspace ([#2584](https://github.com/open-sauced/insights/issues/2584)) ([1a88fb3](https://github.com/open-sauced/insights/commit/1a88fb3e1562e5301a46cef4ba9b30a84c90ffef))
+
+
+### 🐛 Bug Fixes
+
+* remove initial range queryParam for Explore page ([#2573](https://github.com/open-sauced/insights/issues/2573)) ([e540683](https://github.com/open-sauced/insights/commit/e54068359b1ad86ccb02677d56420e5898b29dbf))
+
 ## [2.1.0-beta.6](https://github.com/open-sauced/insights/compare/v2.1.0-beta.5...v2.1.0-beta.6) (2024-02-02)
 
 
