@@ -546,7 +546,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                 </span>
               )}
               {!hasValidCharCount && (
-                <span className="inline-flex items-center gap-2 px-2 py-1 mt-2 text-red-500 bg-red-100 border border-red-500 rounded-md w-full text-sm">
+                <span className="inline-flex items-center gap-2 px-2 py-1 mt-2 text-red-500 bg-white border border-red-500 rounded-md w-full text-sm">
                   <MdError size={20} /> Please revise your highlight to less than 500 characters
                 </span>
               )}
