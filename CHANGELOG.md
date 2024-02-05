@@ -5,6 +5,20 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.1.0-beta.6](https://github.com/open-sauced/insights/compare/v2.1.0-beta.5...v2.1.0-beta.6) (2024-02-02)
+
+
+### 🤖 Build System
+
+* update PostHog to 1.104.3 ([#2571](https://github.com/open-sauced/insights/issues/2571)) ([a7f5089](https://github.com/open-sauced/insights/commit/a7f5089f1147826412387d834ee5ed74e566cab8))
+
+
+### 🐛 Bug Fixes
+
+* added missing key prop to skeleton component ([#2504](https://github.com/open-sauced/insights/issues/2504)) ([7793e2a](https://github.com/open-sauced/insights/commit/7793e2aa526596767e017de1cf81436817af0aa5))
+* fixed filtering in search by repos in workspaces ([#2570](https://github.com/open-sauced/insights/issues/2570)) ([fc98bc0](https://github.com/open-sauced/insights/commit/fc98bc08fe71d480561aae76844996086010a6e6))
+* remove tier.run integration ([#2572](https://github.com/open-sauced/insights/issues/2572)) ([58cc1cd](https://github.com/open-sauced/insights/commit/58cc1cdac743823ae1e9ab64453d56a5f41bf496))
+
 ## [2.1.0-beta.5](https://github.com/open-sauced/insights/compare/v2.1.0-beta.4...v2.1.0-beta.5) (2024-02-01)
 
 
