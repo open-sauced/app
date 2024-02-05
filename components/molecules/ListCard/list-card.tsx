@@ -52,17 +52,19 @@ const ListCard = ({ list, handleOnDeleteClick }: ListCardProps) => {
             </div>
             <div className="justify-end flex-1 hidden md:flex">
               <Link href={`/lists/${list.id}/edit`}>
-                <span className=" bg-light-slate-1 inline-block rounded-lg p-2.5 border mr-2 cursor-pointer">
+                <span className=" bg-light-slate-1 inline-block rounded-lg p-2.5 border cursor-pointer">
                   <BsPencilFill title="Edit List Page" className="text-light-slate-10 text-lg" />
                 </span>
               </Link>
               {/* Delete button */}
               {handleOnDeleteClick && (
-                <div onClick={() => handleOnDeleteClick(list.name, list.id)}>
-                  <span className="bg-light-slate-1 inline-block rounded-lg p-2.5 border mr-2 cursor-pointer">
-                    <RiDeleteBinLine title="Delete Insight" className="text-lg text-light-slate-10" />
-                  </span>
-                </div>
+                <button
+                  onClick={() => handleOnDeleteClick(list.name, list.id)}
+                  className="p-2.5 mb-1.5 border !border-light-slate-4 rounded-lg cursor-pointer bg-light-slate-1"
+                  type="button"
+                >
+                  <RiDeleteBinLine title="Delete List" className="text-lg text-light-slate-10" />
+                </button>
               )}
               <Link href={`/lists/${list.id}/overview`}>
                 <span className="bg-light-slate-1 inline-block rounded-lg p-2.5 border cursor-pointer">

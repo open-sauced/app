@@ -96,24 +96,26 @@ const InsightRow = ({ insight, user, isEditable = true, handleOnDeleteClick }: I
                 <Pill color="purple" text={`${getPercent(total, merged)}%`} />
               </div>
             </div>
-            <div className="flex-1 hidden md:flex  justify-end">
+            <div className="flex-1 hidden md:flex justify-end items-center gap-2">
               {canEdit ||
                 (!insight.is_featured && (
                   <Link href={`/hub/insights/${insight.id}/edit`}>
-                    <span className="bg-light-slate-1 inline-block rounded-lg p-2.5 border mr-2 cursor-pointer">
+                    <span className="bg-light-slate-1 inline-block rounded-lg p-2.5 border cursor-pointer">
                       <BsPencilFill title="Edit Insight Page" className="text-light-slate-10 text-lg" />
                     </span>
                   </Link>
                 ))}
               {handleOnDeleteClick && (
-                <div onClick={() => handleOnDeleteClick(insight.name, insight.id)}>
-                  <span className="bg-light-slate-1 inline-block rounded-lg p-2.5 border mr-2 cursor-pointer">
-                    <RiDeleteBinLine title="Delete Insight" className="text-lg text-light-slate-10" />
-                  </span>
-                </div>
+                <button
+                  onClick={() => handleOnDeleteClick(insight.name, insight.id)}
+                  className="p-2.5 mb-1.5 border !border-light-slate-4 rounded-lg cursor-pointer bg-light-slate-1"
+                  type="button"
+                >
+                  <RiDeleteBinLine title="Delete Insight" className="text-lg text-light-slate-10" />
+                </button>
               )}
               <Link href={`/pages/${user ? user?.user_metadata.user_name : "anonymous"}/${insight.id}/dashboard`}>
-                <span className=" bg-light-slate-1 inline-block rounded-lg p-2.5 border cursor-pointer">
+                <span className="bg-light-slate-1 inline-block rounded-lg p-2.5 border cursor-pointer">
                   <MdOutlineArrowForwardIos title="Go To Insight Page" className="text-light-slate-10 text-lg" />
                 </span>
               </Link>
