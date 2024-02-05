@@ -77,7 +77,7 @@ const Nav = ({
           <li>
             <Link
               className={`font-medium text-sm hover:text-orange-500 transition-all ${getActiveStyle(
-                router.asPath === "/hub/insights"
+                router.asPath === "/hub/insights" || router.asPath.includes("/pages")
               )}`}
               href={"/hub/insights"}
             >
