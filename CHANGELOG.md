@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.1.0-beta.8](https://github.com/open-sauced/insights/compare/v2.1.0-beta.7...v2.1.0-beta.8) (2024-02-05)
+
+
+### 🤖 Build System
+
+* include optional dependencies when installing packages ([#2593](https://github.com/open-sauced/insights/issues/2593)) ([0d4e7ad](https://github.com/open-sauced/insights/commit/0d4e7ad65762cf6fbc0f78b69e45d45a28c4f3be))
+* update shrinkwrap with optional next dependencies, build app ([#2594](https://github.com/open-sauced/insights/issues/2594)) ([394a1c4](https://github.com/open-sauced/insights/commit/394a1c41e1ff4524e8d8865de2e051b34b154b94))
+
 ## [2.1.0-beta.7](https://github.com/open-sauced/insights/compare/v2.1.0-beta.6...v2.1.0-beta.7) (2024-02-05)
 
 
