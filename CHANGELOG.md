@@ -5,6 +5,41 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.1.0-beta.8](https://github.com/open-sauced/insights/compare/v2.1.0-beta.7...v2.1.0-beta.8) (2024-02-05)
+
+
+### 🤖 Build System
+
+* include optional dependencies when installing packages ([#2593](https://github.com/open-sauced/insights/issues/2593)) ([0d4e7ad](https://github.com/open-sauced/insights/commit/0d4e7ad65762cf6fbc0f78b69e45d45a28c4f3be))
+* update shrinkwrap with optional next dependencies, build app ([#2594](https://github.com/open-sauced/insights/issues/2594)) ([394a1c4](https://github.com/open-sauced/insights/commit/394a1c41e1ff4524e8d8865de2e051b34b154b94))
+
+## [2.1.0-beta.7](https://github.com/open-sauced/insights/compare/v2.1.0-beta.6...v2.1.0-beta.7) (2024-02-05)
+
+
+### 🍕 Features
+
+* connect contributor pull requests chart to histogram endpoint ([#2575](https://github.com/open-sauced/insights/issues/2575)) ([5d0298a](https://github.com/open-sauced/insights/commit/5d0298a711419ece46151524efb762060580206c))
+* now when you go to the app home page, if logged in, you're redirected to your last workspace ([#2584](https://github.com/open-sauced/insights/issues/2584)) ([1a88fb3](https://github.com/open-sauced/insights/commit/1a88fb3e1562e5301a46cef4ba9b30a84c90ffef))
+
+
+### 🐛 Bug Fixes
+
+* remove initial range queryParam for Explore page ([#2573](https://github.com/open-sauced/insights/issues/2573)) ([e540683](https://github.com/open-sauced/insights/commit/e54068359b1ad86ccb02677d56420e5898b29dbf))
+
+## [2.1.0-beta.6](https://github.com/open-sauced/insights/compare/v2.1.0-beta.5...v2.1.0-beta.6) (2024-02-02)
+
+
+### 🤖 Build System
+
+* update PostHog to 1.104.3 ([#2571](https://github.com/open-sauced/insights/issues/2571)) ([a7f5089](https://github.com/open-sauced/insights/commit/a7f5089f1147826412387d834ee5ed74e566cab8))
+
+
+### 🐛 Bug Fixes
+
+* added missing key prop to skeleton component ([#2504](https://github.com/open-sauced/insights/issues/2504)) ([7793e2a](https://github.com/open-sauced/insights/commit/7793e2aa526596767e017de1cf81436817af0aa5))
+* fixed filtering in search by repos in workspaces ([#2570](https://github.com/open-sauced/insights/issues/2570)) ([fc98bc0](https://github.com/open-sauced/insights/commit/fc98bc08fe71d480561aae76844996086010a6e6))
+* remove tier.run integration ([#2572](https://github.com/open-sauced/insights/issues/2572)) ([58cc1cd](https://github.com/open-sauced/insights/commit/58cc1cdac743823ae1e9ab64453d56a5f41bf496))
+
 ## [2.1.0-beta.5](https://github.com/open-sauced/insights/compare/v2.1.0-beta.4...v2.1.0-beta.5) (2024-02-01)
 
 

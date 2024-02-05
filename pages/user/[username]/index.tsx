@@ -37,7 +37,7 @@ const Contributor: WithPageLayout<ContributorSSRProps> = ({ username, user, ogIm
     contributor: username,
     topic: "*",
     repoIds: [],
-    limit: 30,
+    limit: 50,
     range: "30",
     mostRecent: false,
   });
@@ -85,7 +85,6 @@ const Contributor: WithPageLayout<ContributorSSRProps> = ({ username, user, ogIm
           githubName={username}
           githubAvatar={githubAvatar}
           prTotal={contributorPRMeta.itemCount}
-          openPrs={contributorPRData.length}
           recentContributionCount={repoList.length}
           prFirstOpenedDate={contributor?.first_opened_pr_at}
           prVelocity={prVelocity}
