@@ -50,7 +50,7 @@ const ListCard = ({ list, handleOnDeleteClick }: ListCardProps) => {
             <div className="flex items-center">
               <StackedAvatar contributors={contributorsAvatar} visibleQuantity={6} classNames="scale-125" />
             </div>
-            <div className="justify-end flex-1 hidden md:flex">
+            <div className="justify-end flex-1 hidden md:flex items-center gap-2">
               <Link href={`/lists/${list.id}/edit`}>
                 <span className=" bg-light-slate-1 inline-block rounded-lg p-2.5 border cursor-pointer">
                   <BsPencilFill title="Edit List Page" className="text-light-slate-10 text-lg" />
