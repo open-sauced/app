@@ -58,13 +58,11 @@ const ListCard = ({ list, handleOnDeleteClick }: ListCardProps) => {
               </Link>
               {/* Delete button */}
               {handleOnDeleteClick && (
-                <button
-                  onClick={() => handleOnDeleteClick(list.name, list.id)}
-                  className="inline-block p-3 mr-2 border rounded-lg cursor-pointer bg-light-slate-1"
-                  type="button"
-                >
-                  <RiDeleteBinLine title="Delete List" className="text-lg text-light-slate-10" />
-                </button>
+                <div onClick={() => handleOnDeleteClick(list.name, list.id)}>
+                  <span className="bg-light-slate-1 inline-block rounded-lg p-2.5 border mr-2 cursor-pointer">
+                    <RiDeleteBinLine title="Delete Insight" className="text-lg text-light-slate-10" />
+                  </span>
+                </div>
               )}
               <Link href={`/lists/${list.id}/overview`}>
                 <span className="bg-light-slate-1 inline-block rounded-lg p-2.5 border cursor-pointer">

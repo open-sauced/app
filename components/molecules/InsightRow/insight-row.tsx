@@ -20,9 +20,10 @@ interface InsightRowProps {
   insight: DbUserInsight;
   user: User | null;
   isEditable?: boolean;
+  handleOnDeleteClick?: (insightName: string, insightId: number) => void;
 }
 
-const InsightRow = ({ insight, user, isEditable = true }: InsightRowProps) => {
+const InsightRow = ({ insight, user, isEditable = true, handleOnDeleteClick }: InsightRowProps) => {
   const repoIds = insight.repos.map((repo) => repo.repo_id);
   const { data: repoData, meta: repoMeta } = useRepositories(repoIds);
   const { open, merged, velocity, total, repoList } = getRepoInsights(repoData);
@@ -99,18 +100,18 @@ const InsightRow = ({ insight, user, isEditable = true }: InsightRowProps) => {
               {canEdit ||
                 (!insight.is_featured && (
                   <Link href={`/hub/insights/${insight.id}/edit`}>
-                    <span className=" bg-light-slate-1 inline-block rounded-lg p-2.5 border mr-2 cursor-pointer">
+                    <span className="bg-light-slate-1 inline-block rounded-lg p-2.5 border mr-2 cursor-pointer">
                       <BsPencilFill title="Edit Insight Page" className="text-light-slate-10 text-lg" />
                     </span>
                   </Link>
                 ))}
-              <button
-                // onClick={() => handleOnDeleteClick(insight.name, insight.id)}
-                className="inline-block p-3 mr-2 border rounded-lg cursor-pointer bg-light-slate-1"
-                type="button"
-              >
-                <RiDeleteBinLine title="Delete Insight" className="text-lg text-light-slate-10" />
-              </button>
+              {handleOnDeleteClick && (
+                <div onClick={() => handleOnDeleteClick(insight.name, insight.id)}>
+                  <span className="bg-light-slate-1 inline-block rounded-lg p-2.5 border mr-2 cursor-pointer">
+                    <RiDeleteBinLine title="Delete Insight" className="text-lg text-light-slate-10" />
+                  </span>
+                </div>
+              )}
               <Link href={`/pages/${user ? user?.user_metadata.user_name : "anonymous"}/${insight.id}/dashboard`}>
                 <span className=" bg-light-slate-1 inline-block rounded-lg p-2.5 border cursor-pointer">
                   <MdOutlineArrowForwardIos title="Go To Insight Page" className="text-light-slate-10 text-lg" />
