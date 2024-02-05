@@ -500,9 +500,21 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
     <section className="flex flex-col justify-center w-full py-4 xl:flex-row xl:gap-20 xl:pl-28 ">
       <div className="flex flex-col gap-8">
         <div className="pb-6 border-b border-light-slate-8">
-          <Title className="!text-2xl !leading-none mb-4" level={1}>
-            {edit ? "Update" : "Create New"} Insight Page
-          </Title>
+          <div className="flex justify-between items-center">
+            <Title className="!text-2xl !leading-none mb-4" level={1}>
+              {edit ? "Update" : "Create New"} Insight Page
+            </Title>
+            <Button
+              variant="primary"
+              type="submit"
+              className="mb-4"
+              loading={createLoading}
+              disabled={disableCreateButton() || repos.length === 0}
+              onClick={edit ? handleUpdateInsightPage : handleCreateInsightPage}
+            >
+              {edit ? "Save Changes" : "Create Page"}
+            </Button>
+          </div>
           <Text className="my-8">
             An insight page is a dashboard containing selected repositories that you and your team can get insights
             from.
