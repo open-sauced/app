@@ -34,9 +34,3 @@ jobs:
 
       - name: "🚀 static app"
         run: npm run build
-
-      - name: "📂 production artifacts"
-        uses: actions/upload-artifact@v2
-        with:
-          name: build
-          path: .next
