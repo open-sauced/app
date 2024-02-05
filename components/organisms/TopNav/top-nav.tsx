@@ -76,7 +76,7 @@ const Nav = ({
         {hideInsights ? null : (
           <li>
             <Link
-              className={`font-medium text-sm hover:text-orange-500 transition-all ${getActiveStyle(
+              className={`font-medium text-sm text-slate-700 hover:text-orange-500 transition-all ${getActiveStyle(
                 router.asPath === "/hub/insights" || router.asPath.includes("/pages")
               )}`}
               href={"/hub/insights"}
@@ -111,7 +111,7 @@ const Nav = ({
 };
 
 function getActiveStyle(isActive: boolean) {
-  return isActive ? "text-orange-600" : "";
+  return isActive ? "!text-orange-600" : "";
 }
 
 export default TopNav;
