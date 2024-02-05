@@ -1,5 +1,6 @@
 import React from "react";
 
+import { useRouter } from "next/router";
 import { setQueryParams } from "lib/utils/query-params";
 
 import ComponentDateFilter from "components/molecules/ComponentDateFilter/component-date-filter";
@@ -19,6 +20,9 @@ interface NavProps {
 }
 
 const Nav: React.FC<NavProps> = ({ toolList, selectedTool = "dashboard", selectedFilter, filterName, username }) => {
+  const router = useRouter();
+  const { range = 30 } = router.query;
+
   return (
     <nav
       role="tablist"
@@ -54,6 +58,7 @@ const Nav: React.FC<NavProps> = ({ toolList, selectedTool = "dashboard", selecte
           setRangeFilter={(selectedRange) => {
             setQueryParams({ range: `${selectedRange}` });
           }}
+          defaultRange={Number(range)}
         />
       </div>
     </nav>
