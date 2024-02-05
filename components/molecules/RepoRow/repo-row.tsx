@@ -19,7 +19,7 @@ import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import getPercent from "lib/utils/get-percent";
 import { getAvatarByUsername } from "lib/utils/github";
 import useRepositoryPullRequests from "lib/hooks/api/useRepositoryPullRequests";
-import getPullRequestsToDays from "lib/utils/get-prs-to-days";
+import { getPullRequestsToDays } from "lib/utils/get-prs-to-days";
 import getPullRequestsContributors from "lib/utils/get-pr-contributors";
 import useStore from "lib/store";
 import TableRepositoryName from "../TableRepositoryName/table-repository-name";

@@ -15,7 +15,7 @@ interface DashboardProps {
 }
 
 const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
-  const { data: insightsData, isLoading } = usePullRequestsHistogram(repositories);
+  const { data: insightsData, isLoading } = usePullRequestsHistogram({ repoIds: repositories });
   const { data: contributorData, meta: contributorMeta } = useContributors(undefined, repositories);
   const router = useRouter();
   const { range = 30 } = router.query;
