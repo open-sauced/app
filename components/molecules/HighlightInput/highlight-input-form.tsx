@@ -541,12 +541,12 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
           <form onSubmit={handlePostHighlight} className="flex flex-col gap-4 font-normal">
             <p role="alert">
               {errorMsg && (
-                <span className="inline-flex items-center gap-2 px-2 py-1 text-red-500 bg-red-100 border border-red-500 rounded-md w-full text-sm">
+                <span className="inline-flex items-center gap-2 px-2 py-1 mt-2 text-red-500 bg-red-100 border border-red-500 rounded-md w-full text-sm">
                   <MdError size={20} /> {errorMsg}
                 </span>
               )}
               {!hasValidCharCount && (
-                <span className="inline-flex items-center gap-2 px-2 py-1 text-red-500 bg-red-100 border border-red-500 rounded-md w-full text-sm">
+                <span className="inline-flex items-center gap-2 px-2 py-1 mt-2 text-red-500 bg-red-100 border border-red-500 rounded-md w-full text-sm">
                   <MdError size={20} /> Please revise your highlight to less than 500 characters
                 </span>
               )}
