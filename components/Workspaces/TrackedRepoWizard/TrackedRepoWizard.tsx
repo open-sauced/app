@@ -33,6 +33,18 @@ export const TrackedReposWizard = ({ onAddToTrackingList, onCancel }: TrackedRep
     onToggleRepo(repo, true);
   };
 
+  const onToggleAllRepos = (checked: boolean) => {
+    setCurrentTrackedRepositories((currentTrackedRepositories) => {
+      const updates = new Map(currentTrackedRepositories);
+
+      for (const [repo] of updates) {
+        updates.set(repo, checked);
+      }
+
+      return updates;
+    });
+  };
+
   let searchedRepos = data ?? [];
 
   function goBack() {
@@ -70,6 +82,7 @@ export const TrackedReposWizard = ({ onAddToTrackingList, onCancel }: TrackedRep
           <SearchByReposStep
             onSelectRepo={onSelectRepo}
             onToggleRepo={onToggleRepo}
+            onToggleAllRepos={onToggleAllRepos}
             onSearch={onSearchRepos}
             repositories={repositories}
             searchedRepos={searchedRepos}
