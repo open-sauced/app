@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.1.0-beta.11](https://github.com/open-sauced/insights/compare/v2.1.0-beta.10...v2.1.0-beta.11) (2024-02-06)
+
+
+### 🐛 Bug Fixes
+
+* TopNav highlight if in Insight pages ([#2597](https://github.com/open-sauced/insights/issues/2597)) ([05433bf](https://github.com/open-sauced/insights/commit/05433bff9d37bd94c01c40704b7281d2a21633d3))
+
 ## [2.1.0-beta.10](https://github.com/open-sauced/insights/compare/v2.1.0-beta.9...v2.1.0-beta.10) (2024-02-06)
 
 
