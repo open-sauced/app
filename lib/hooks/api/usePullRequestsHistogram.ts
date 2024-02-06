@@ -55,7 +55,7 @@ const usePullRequestsHistogram = ({
   range = 30,
   width = 30,
   contributor = "",
-  direction = "asc",
+  direction = "ASC",
 }: {
   repoIds?: number[];
   range?: number;
