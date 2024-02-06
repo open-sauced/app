@@ -12,8 +12,9 @@ type DbWorkspaceRepository = {
   };
 };
 
-export const useGetWorkspaceRepositories = (workspaceId: string) => {
-  const endpoint = `workspaces/${workspaceId}/repos`;
+export const useGetWorkspaceRepositories = ({ workspaceId, range = 30 }: { workspaceId: string; range?: number }) => {
+  const searchParams = new URLSearchParams({ range: range.toString() });
+  const endpoint = `workspaces/${workspaceId}/repos?${searchParams}`;
 
   const { data, error, isLoading, mutate } = useSWR<PagedData<DbWorkspaceRepository>, Error>(
     endpoint,

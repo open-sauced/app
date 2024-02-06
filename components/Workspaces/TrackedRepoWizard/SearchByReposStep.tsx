@@ -9,6 +9,7 @@ interface SearchByReposStepProps {
   onSearch: (search?: string) => void;
   onSelectRepo: (repo: string) => void;
   onToggleRepo: (repo: string, isSelected: boolean) => void;
+  onToggleAllRepos: (checked: boolean) => void;
   repositories: Map<string, boolean>;
   suggestedRepos: string[];
   searchedRepos: string[];
@@ -32,24 +33,27 @@ export const SearchByReposStep = ({
   onSearch,
   onSelectRepo,
   onToggleRepo,
+  onToggleAllRepos,
   repositories,
   searchedRepos,
   suggestedRepos = [],
 }: SearchByReposStepProps) => {
-  const [filteredRepositories, setFilteredRepositories] = useState<Map<string, boolean>>(repositories);
+  const [filteredRepositories, setFilteredRepositories] = useState<Map<string, boolean>>(new Map());
+
+  useEffect(() => {
+    setFilteredRepositories(new Map(repositories));
+  }, [repositories]);
 
   const onFilterRepos = (search: string) => {
-    setFilteredRepositories((repositories) => {
-      const updates = new Map(repositories);
+    const updates = new Map();
 
-      for (const [repo] of updates) {
-        if (!repo.includes(search)) {
-          updates.delete(repo);
-        }
+    for (const [repo, selected] of repositories) {
+      if (repo.includes(search)) {
+        updates.set(repo, selected);
       }
+    }
 
-      return updates;
-    });
+    setFilteredRepositories(updates);
   };
 
   const formRef = useRef<HTMLFormElement>(null);
@@ -100,13 +104,15 @@ export const SearchByReposStep = ({
           })}
         />
       </form>
-      {repositories.size === 0 && filteredRepositories.size === 0 ? (
+      {repositories.size === 0 ? (
         <EmptyState />
       ) : (
         <SearchedReposTable
-          repositories={filteredRepositories.size > 0 ? filteredRepositories : repositories}
+          type="by-repos"
+          repositories={filteredRepositories}
           onFilter={onFilterRepos}
           onToggleRepo={onToggleRepo}
+          onToggleAllRepos={onToggleAllRepos}
         />
       )}
     </div>

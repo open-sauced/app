@@ -455,3 +455,21 @@ interface Workspace {
   updated_at: string | null;
   deleted_at: string | null;
 }
+
+interface DbWorkspacesReposStats {
+  pull_requests: {
+    opened: number;
+    merged: number;
+    velocity: number;
+  };
+  issues: {
+    opened: number;
+    closed: number;
+    velocity: number;
+  };
+  repos: {
+    stars: number;
+    forks: number;
+    health: number;
+  };
+}
