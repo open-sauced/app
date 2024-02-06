@@ -37,6 +37,13 @@ const ListCard = ({ list, handleOnDeleteClick }: ListCardProps) => {
             >
               {handleOnDeleteClick ? (!!list.is_public ? "public" : "private") : "demo"}
             </div>
+            <div className="flex-1 md:hidden">
+              <span className=" bg-light-slate-1 inline-block rounded-lg p-2.5 border mr-2">
+                <Link href={`/hub/insights/${list.id}/edit`}>
+                  <BsPencilFill title="Edit Insight Page" className="text-light-slate-10 text-md cursor-pointer w-4" />
+                </Link>
+              </span>
+            </div>
           </div>
         </div>
         <div>
