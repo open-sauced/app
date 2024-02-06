@@ -5,6 +5,20 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.1.0-beta.10](https://github.com/open-sauced/insights/compare/v2.1.0-beta.9...v2.1.0-beta.10) (2024-02-06)
+
+
+### 🐛 Bug Fixes
+
+* use correct route parameter for topic redirect ([#2601](https://github.com/open-sauced/insights/issues/2601)) ([29ca967](https://github.com/open-sauced/insights/commit/29ca967f3f69dffd2549c8edcd1c5780e6266549))
+
+## [2.1.0-beta.9](https://github.com/open-sauced/insights/compare/v2.1.0-beta.8...v2.1.0-beta.9) (2024-02-06)
+
+
+### 🍕 Features
+
+* now you can select/deselect searched tracked repositories ([#2591](https://github.com/open-sauced/insights/issues/2591)) ([857fe3e](https://github.com/open-sauced/insights/commit/857fe3ed04447cab76ca872167eda961745de706))
+
 ## [2.1.0-beta.8](https://github.com/open-sauced/insights/compare/v2.1.0-beta.7...v2.1.0-beta.8) (2024-02-05)
 
 
