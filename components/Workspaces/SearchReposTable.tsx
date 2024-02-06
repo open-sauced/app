@@ -5,20 +5,39 @@ import Checkbox from "components/atoms/Checkbox/checkbox";
 import Search from "components/atoms/Search/search";
 
 interface SearchedReposTableProps {
+  type: "by-repos" | "by-org";
   repositories: Map<string, boolean>;
   onFilter: (filterTerm: string) => void;
   onToggleRepo: (repo: string, checked: boolean) => void;
+  onToggleAllRepos: (checked: boolean) => void;
 }
 
-export const SearchedReposTable = ({ repositories = new Map(), onFilter, onToggleRepo }: SearchedReposTableProps) => {
+export const SearchedReposTable = ({
+  type,
+  repositories = new Map(),
+  onFilter,
+  onToggleRepo,
+  onToggleAllRepos,
+}: SearchedReposTableProps) => {
+  const allChecked = [...repositories.values()].every((checked) => checked);
+
   return (
     <div className="border border-light-slate-7 rounded-lg">
       <Table className="not-sr-only">
         <TableHeader>
           <TableRow className="bg-light-slate-3">
             <TableHead className="flex justify-between items-center gap-6">
-              Selected repositories
+              <div className="flex gap-2">
+                <Checkbox
+                  onCheckedChange={(checked: CheckedState) => {
+                    onToggleAllRepos(!!checked);
+                  }}
+                  checked={allChecked}
+                />
+                <span>{type === "by-repos" ? "Selected repositories" : "Selected organization repositories"}</span>
+              </div>
               <form
+                className="pr-2"
                 role="search"
                 onSubmit={(event) => {
                   event.preventDefault;
