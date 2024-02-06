@@ -5,6 +5,18 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.2.0-beta.1](https://github.com/open-sauced/insights/compare/v2.1.0...v2.2.0-beta.1) (2024-02-06)
+
+
+### 🐛 Bug Fixes
+
+* redirect to `/workspaces/new` if user has no workspaces ([#2607](https://github.com/open-sauced/insights/issues/2607)) ([547fdf5](https://github.com/open-sauced/insights/commit/547fdf5719f0eab14032a6db6accc5fb7c4786e8))
+
+
+### 🍕 Features
+
+* connect repository pull requests graph to v2 histogram endpoint ([#2602](https://github.com/open-sauced/insights/issues/2602)) ([1315991](https://github.com/open-sauced/insights/commit/1315991658552aeb2ebe5a64b88d496b3350ab89))
+
 ## [2.1.0](https://github.com/open-sauced/insights/compare/v2.0.0...v2.1.0) (2024-02-06)
 
 
