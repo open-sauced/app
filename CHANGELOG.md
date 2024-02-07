@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.2.0-beta.3](https://github.com/open-sauced/insights/compare/v2.2.0-beta.2...v2.2.0-beta.3) (2024-02-07)
+
+
+### 🐛 Bug Fixes
+
+* reduced the height of the chart wrapper that is making the button unclickable ([#2611](https://github.com/open-sauced/insights/issues/2611)) ([7fb4e40](https://github.com/open-sauced/insights/commit/7fb4e4042853c5ad7cb776ef1194a6b06a5acc0f))
+
 ## [2.2.0-beta.2](https://github.com/open-sauced/insights/compare/v2.2.0-beta.1...v2.2.0-beta.2) (2024-02-07)
 
 
