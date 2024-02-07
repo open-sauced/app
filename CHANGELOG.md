@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.2.0-beta.5](https://github.com/open-sauced/insights/compare/v2.2.0-beta.4...v2.2.0-beta.5) (2024-02-07)
+
+
+### 🍕 Features
+
+* add repositories to workspace in bulk ([#2608](https://github.com/open-sauced/insights/issues/2608)) ([e941f34](https://github.com/open-sauced/insights/commit/e941f342195ffed38d6ae12b6d76637e09f48976))
+
 ## [2.2.0-beta.4](https://github.com/open-sauced/insights/compare/v2.2.0-beta.3...v2.2.0-beta.4) (2024-02-07)
 
 
