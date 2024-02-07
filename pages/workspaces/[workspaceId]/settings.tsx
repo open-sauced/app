@@ -243,8 +243,10 @@ const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
             if (error) {
               toast({ description: `Workspace delete failed`, variant: "danger" });
             } else {
+              document.cookie = `workspaceId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/`;
+
               toast({ description: `Workspace deleted successfully`, variant: "success" });
-              router.push("/workspaces/new");
+              router.push("/");
             }
           }}
         />
