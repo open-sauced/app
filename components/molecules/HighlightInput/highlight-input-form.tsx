@@ -209,6 +209,8 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
 
         return issues;
       }
+
+      return [];
     };
 
     const fetchLatestMergedPullRequests = async () => {
@@ -237,6 +239,8 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
 
         return pullRequests;
       }
+
+      return [];
     };
 
     const fetchLatestOpenPullRequests = async () => {
@@ -265,6 +269,8 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
 
         return pullRequests;
       }
+
+      return [];
     };
 
     const removeAlreadyHighlightedSuggestions = async (newHighlightSuggestions: any[]) => {
