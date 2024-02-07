@@ -20,12 +20,11 @@ export const PasteReposStep = ({ onBulkAddRepos }: PasteReposStepProps) => {
 
   return (
     <div className="flex flex-col gap-4 h-96 max-h-96">
-      <p className="text-red-500">NOTE: repository names are case sensitive</p>
       <textarea
         value={pastedInput}
         onChange={(e) => setPastedInput(e.target.value)}
         placeholder="Paste repositories here line by line (e.g. open-sauced/app)"
-        className="p-4 border rounded-xl h-full"
+        className="p-4 border rounded-xl h-full outline-none focus-visible:ring focus-visible:border-orange-500 focus-visible:ring-orange-100"
       />
       <Button
         onClick={parseInput}
