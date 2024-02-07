@@ -5,7 +5,7 @@ import { TrackedRepoWizardLayout } from "./TrackedRepoWizardLayout";
 import { SearchByReposStep } from "./SearchByReposStep";
 import { PasteReposStep } from "./PasteReposStep";
 import { FilterPastedReposStep } from "./FilterPastedReposStep";
-import { SearchReposByOrgStep } from "./SearchReposByOrg";
+import { SearchReposByOrgStep } from "./SearchReposByOrgStep";
 
 interface TrackedReposWizardProps {
   onAddToTrackingList: (repos: Map<string, boolean>) => void;
