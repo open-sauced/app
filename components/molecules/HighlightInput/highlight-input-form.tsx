@@ -558,6 +558,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                     handlePostHighlight(e);
                   }
                 }}
+                maxLength={500}
                 placeholder={`Tell us about your highlight and add a link
               `}
                 typewrite={isTyping}
@@ -811,6 +812,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
               className="resize-y min-h-[80px] max-h-99 font-normal text-light-slate-11 mb-2 transition focus:outline-none rounded-lg "
               defaultRow={4}
               value={bodyText}
+              maxLength={500}
               placeholder={` Tell us about your highlight and add a link
             `}
               typewrite={isTyping}
