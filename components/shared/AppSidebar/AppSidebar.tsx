@@ -14,7 +14,6 @@ import {
 import { BiHomeAlt } from "react-icons/bi";
 import { useEffectOnce } from "react-use";
 import Link from "next/link";
-
 import useWorkspaces from "lib/hooks/api/useWorkspaces";
 
 import useUserInsights from "lib/hooks/useUserInsights";
