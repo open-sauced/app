@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.2.0-beta.2](https://github.com/open-sauced/insights/compare/v2.2.0-beta.1...v2.2.0-beta.2) (2024-02-07)
+
+
+### 🐛 Bug Fixes
+
+* Now you can't type more than 500 characters for a highlight summary ([#2614](https://github.com/open-sauced/insights/issues/2614)) ([ed3d1d9](https://github.com/open-sauced/insights/commit/ed3d1d983023a2d3a9a83a5670239b3fea73be71))
+
 ## [2.2.0-beta.1](https://github.com/open-sauced/insights/compare/v2.1.0...v2.2.0-beta.1) (2024-02-06)
 
 
