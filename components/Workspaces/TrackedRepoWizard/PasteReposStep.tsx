@@ -16,6 +16,7 @@ export const PasteReposStep = ({ onBulkAddRepos }: PasteReposStepProps) => {
 
   return (
     <div className="flex flex-col gap-4 h-96 max-h-96">
+      <p className="text-red-500">NOTE: repository names are case sensitive</p>
       <textarea
         value={pastedInput}
         onChange={(e) => setPastedInput(e.target.value)}
