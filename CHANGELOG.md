@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.2.0-beta.4](https://github.com/open-sauced/insights/compare/v2.2.0-beta.3...v2.2.0-beta.4) (2024-02-07)
+
+
+### 🐛 Bug Fixes
+
+* return empty arrays on error when fetching GitHub data ([#2616](https://github.com/open-sauced/insights/issues/2616)) ([5c9ad0b](https://github.com/open-sauced/insights/commit/5c9ad0b12a421e198340d46835aca5fa8dd6fd2f))
+
 ## [2.2.0-beta.3](https://github.com/open-sauced/insights/compare/v2.2.0-beta.2...v2.2.0-beta.3) (2024-02-07)
 
 
