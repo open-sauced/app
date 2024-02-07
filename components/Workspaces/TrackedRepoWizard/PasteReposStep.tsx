@@ -11,7 +11,7 @@ export const PasteReposStep = ({ onBulkAddRepos }: PasteReposStepProps) => {
   const parseInput = () => {
     // split each line into a trimmed string and filter out any empty lines
     const repos = pastedInput
-      .split("\n")
+      .split(pastedInput.includes(",") ? "," : "\n")
       .map((line) => line.trim())
       .filter((line) => line !== "");
 
