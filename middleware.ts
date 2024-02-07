@@ -59,7 +59,7 @@ async function getDefaultWorkspaceId(accessToken: string) {
     return undefined;
   }
 
-  return data?.data ? data.data[0].id : undefined;
+  return data?.data && data.data.length !== 0 ? data.data[0].id : undefined;
 }
 
 async function getWorkspaceUrl(cookies: RequestCookies, baseUrl: string, accessToken: string | undefined) {
