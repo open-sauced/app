@@ -58,7 +58,7 @@ const ContributorCard = ({ className, contributor, topic, repositories, range }:
           </div>
         </div>
         <div className="h-32">
-          <CardLineChart lineChartOption={chart} />
+          <CardLineChart lineChartOption={chart} className="!h-36" />
         </div>
         <CardRepoList repoList={repoList} total={repoList.length} />
 
@@ -69,7 +69,7 @@ const ContributorCard = ({ className, contributor, topic, repositories, range }:
         <div className="flex justify-center w-full">
           <button
             onClick={() => setShowPRs((prevState) => !prevState)}
-            className="w-full py-1 transition bg-white border rounded-lg border-light-slate-6 hover:bg-light-slate-1"
+            className="w-full py-1 transition bg-white border rounded-lg border-light-slate-6 hover:bg-light-slate-3"
           >
             <Text className="!text-sm !text-light-slate-11  ">{showPRs ? "Hide" : "Show"} latest pull requests</Text>
           </button>
