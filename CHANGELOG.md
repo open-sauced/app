@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.2.0-beta.6](https://github.com/open-sauced/insights/compare/v2.2.0-beta.5...v2.2.0-beta.6) (2024-02-08)
+
+
+### 🍕 Features
+
+* implement CSV bulk adding ([#2620](https://github.com/open-sauced/insights/issues/2620)) ([3b17e8f](https://github.com/open-sauced/insights/commit/3b17e8f1b3537604c3a64295c3485c1c81195121))
+* use unique contributors for pull requests activity chart ([#2617](https://github.com/open-sauced/insights/issues/2617)) ([0dbe0d5](https://github.com/open-sauced/insights/commit/0dbe0d5c8055d6184b1c9502079851446e1aef6f))
+
 ## [2.2.0-beta.5](https://github.com/open-sauced/insights/compare/v2.2.0-beta.4...v2.2.0-beta.5) (2024-02-07)
 
 
