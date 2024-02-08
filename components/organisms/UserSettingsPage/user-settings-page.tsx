@@ -281,7 +281,7 @@ const UserSettingsPage = ({ user }: UserSettingsPageProps) => {
                     name="bio"
                     className="w-full focus:outline-none placeholder:font-normal placeholder-slate-400 bg-inherit"
                     value={bio}
-                    maxLength = {255}
+                    maxLength={255}
                     onChange={(e) => setBio(e.target.value)}
                   ></textarea>
                 </div>
