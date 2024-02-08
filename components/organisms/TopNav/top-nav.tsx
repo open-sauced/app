@@ -68,7 +68,7 @@ const Nav = ({
   const userInterest = gitHubUser?.interests.split(",")[0] || "javascript";
   const router = useRouter();
 
-  const explorePageUrlPattern = /^\/(?!lists\/.*\/activity).*\/(dashboard|reports|contributors|activity).*/g;
+  const explorePageUrlPattern = /^\/(?!pages|lists\/.*\/activity).*\/(dashboard|reports|contributors|activity).*/g;
 
   return (
     <nav className={className} aria-label={name}>
@@ -76,8 +76,8 @@ const Nav = ({
         {hideInsights ? null : (
           <li>
             <Link
-              className={`font-medium text-sm hover:text-orange-500 transition-all ${getActiveStyle(
-                router.asPath === "/hub/insights"
+              className={`font-medium text-sm text-slate-700 hover:text-orange-500 transition-all ${getActiveStyle(
+                router.asPath === "/hub/insights" || router.asPath.includes("/pages")
               )}`}
               href={"/hub/insights"}
             >
@@ -111,7 +111,7 @@ const Nav = ({
 };
 
 function getActiveStyle(isActive: boolean) {
-  return isActive ? "text-orange-600" : "";
+  return isActive ? "!text-orange-600" : "";
 }
 
 export default TopNav;

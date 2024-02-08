@@ -9,6 +9,7 @@ interface SearchByReposStepProps {
   onSearch: (search?: string) => void;
   onSelectRepo: (repo: string) => void;
   onToggleRepo: (repo: string, isSelected: boolean) => void;
+  onToggleAllRepos: (checked: boolean) => void;
   repositories: Map<string, boolean>;
   suggestedRepos: string[];
   searchedRepos: string[];
@@ -32,6 +33,7 @@ export const SearchByReposStep = ({
   onSearch,
   onSelectRepo,
   onToggleRepo,
+  onToggleAllRepos,
   repositories,
   searchedRepos,
   suggestedRepos = [],
@@ -105,7 +107,13 @@ export const SearchByReposStep = ({
       {repositories.size === 0 ? (
         <EmptyState />
       ) : (
-        <SearchedReposTable repositories={filteredRepositories} onFilter={onFilterRepos} onToggleRepo={onToggleRepo} />
+        <SearchedReposTable
+          type="by-repos"
+          repositories={filteredRepositories}
+          onFilter={onFilterRepos}
+          onToggleRepo={onToggleRepo}
+          onToggleAllRepos={onToggleAllRepos}
+        />
       )}
     </div>
   );

@@ -2,7 +2,7 @@
   "name": "@open-sauced/insights",
   "description": "🍕The dashboard for open source discovery.",
   "keywords": [],
-  "version": "2.1.0-beta.5",
+  "version": "2.2.0-beta.6",
   "author": "Brian Douglas <brian@opensauced.pizza>",
   "private": true,
   "license": "Apache 2.0",
@@ -111,7 +111,6 @@
     "swiper": "^10.2.0",
     "swr": "^2.0.3",
     "tailwindcss-radix": "^2.7.0",
-    "tier": "^5.10.0",
     "zustand": "^4.3.2"
   },
   "devDependencies": {
