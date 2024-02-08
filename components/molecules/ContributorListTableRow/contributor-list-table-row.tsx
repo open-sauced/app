@@ -4,7 +4,7 @@ import formatDistanceToNowStrict from "date-fns/formatDistanceToNowStrict";
 
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/solid";
 import Sparkline from "components/atoms/Sparkline/sparkline";
-import getPullRequestsToDays from "lib/utils/get-prs-to-days";
+import { getPullRequestsToDays } from "lib/utils/get-prs-to-days";
 import { classNames } from "components/organisms/RepositoriesTable/repositories-table";
 
 import useContributorPullRequests from "lib/hooks/api/useContributorPullRequests";

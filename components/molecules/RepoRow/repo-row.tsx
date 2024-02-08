@@ -19,9 +19,10 @@ import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import getPercent from "lib/utils/get-percent";
 import { getAvatarByUsername } from "lib/utils/github";
 import useRepositoryPullRequests from "lib/hooks/api/useRepositoryPullRequests";
-import getPullRequestsToDays from "lib/utils/get-prs-to-days";
+import { getPullRequestsHistogramToDays } from "lib/utils/get-prs-to-days";
 import getPullRequestsContributors from "lib/utils/get-pr-contributors";
 import useStore from "lib/store";
+import { usePullRequestsHistogram } from "lib/hooks/api/usePullRequestsHistogram";
 import TableRepositoryName from "../TableRepositoryName/table-repository-name";
 import PullRequestOverview from "../PullRequestOverview/pull-request-overview";
 import StackedAvatar from "../StackedAvatar/stacked-avatar";
@@ -95,13 +96,18 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
   const { user } = useSupabaseAuth();
   const range = useStore((state) => state.range);
   const { data: repositoryPullRequests } = useRepositoryPullRequests(repo.full_name, 100, range);
+  const { data: repositoryPullRequestsHistogram } = usePullRequestsHistogram({
+    repoIds: [repo.id as unknown as number],
+    width: 1,
+    range: Number(range || "30"),
+  });
   const totalPrs = getTotalPrs(openPrsCount, mergedPrsCount, closedPrsCount, draftPrsCount);
   const prsMergedPercentage = getPercent(totalPrs, mergedPrsCount || 0);
   const spamPrsPercentage = getPrsSpam(totalPrs, spamPrsCount || 0);
   const prVelocityInDays = getRelativeDays(prVelocityCount || 0);
   const contributorData = getPullRequestsContributors(repositoryPullRequests);
 
-  const days = getPullRequestsToDays(repositoryPullRequests, Number(range || "30"));
+  const days = getPullRequestsHistogramToDays(repositoryPullRequestsHistogram, Number(range || "30"));
 
   const last30days = [
     {
