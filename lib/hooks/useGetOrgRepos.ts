@@ -34,24 +34,16 @@ const githubApiRepoFetcher: Fetcher = async (apiUrl: string) => {
   return res.json();
 };
 
-export const useGetOrgRepos = ({
-  organization,
-  limit,
-  archived = false,
-}: {
-  organization: string;
-  limit: number;
-  archived?: boolean;
-}) => {
+export const useGetOrgRepos = ({ organization, limit = 100 }: { organization: string | undefined; limit?: number }) => {
   // TODO: get private repos appearing in the list
   // See https://docs.github.com/en/rest/repos/repos for more information
   const query = new URLSearchParams();
   query.set("per_page", `${limit}`);
-  query.set("type", "all");
+  query.set("type", "public");
   query.set("sort", "full_name");
   query.set("direction", "asc");
 
-  const endpointString = `orgs/${organization}/repos?${query}`;
+  const endpointString = organization ? `orgs/${organization}/repos?${query}` : null;
 
   const { data, error, mutate } = useSWR<GhOrg[], Error>(
     endpointString,
