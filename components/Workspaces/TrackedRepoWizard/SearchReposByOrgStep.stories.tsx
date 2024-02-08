@@ -1,11 +1,11 @@
 import { Meta, StoryObj } from "@storybook/react";
-import { SearchReposByOrgStep } from "./SearchReposByOrgStep";
+import { SelectOrgReposStep } from "./SelectOrgReposStep";
 
-type Story = StoryObj<typeof SearchReposByOrgStep>;
+type Story = StoryObj<typeof SelectOrgReposStep>;
 
-const meta: Meta<typeof SearchReposByOrgStep> = {
+const meta: Meta<typeof SelectOrgReposStep> = {
   title: "Components/Workspaces/TrackedRepoWizard/SearchReposByOrgStep",
-  component: SearchReposByOrgStep,
+  component: SelectOrgReposStep,
   args: {
     repositories: new Map(),
     searchedRepos: [],

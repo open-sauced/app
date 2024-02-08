@@ -33,7 +33,6 @@ export const PickReposOrOrgStep = ({ onSearchRepos, onPasteRepos, onImportOrg }:
         </button>
 
         <button
-          ref={buttonRef}
           className="flex flex-col text-light-slate-12 p-8 border rounded-lg focus-visible:!border-green-800 focus-visible:!ring-green-100"
           onClick={onPasteRepos}
         >
