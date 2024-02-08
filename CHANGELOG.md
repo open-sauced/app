@@ -5,6 +5,27 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.2.0-beta.5](https://github.com/open-sauced/insights/compare/v2.2.0-beta.4...v2.2.0-beta.5) (2024-02-07)
+
+
+### 🍕 Features
+
+* add repositories to workspace in bulk ([#2608](https://github.com/open-sauced/insights/issues/2608)) ([e941f34](https://github.com/open-sauced/insights/commit/e941f342195ffed38d6ae12b6d76637e09f48976))
+
+## [2.2.0-beta.4](https://github.com/open-sauced/insights/compare/v2.2.0-beta.3...v2.2.0-beta.4) (2024-02-07)
+
+
+### 🐛 Bug Fixes
+
+* return empty arrays on error when fetching GitHub data ([#2616](https://github.com/open-sauced/insights/issues/2616)) ([5c9ad0b](https://github.com/open-sauced/insights/commit/5c9ad0b12a421e198340d46835aca5fa8dd6fd2f))
+
+## [2.2.0-beta.3](https://github.com/open-sauced/insights/compare/v2.2.0-beta.2...v2.2.0-beta.3) (2024-02-07)
+
+
+### 🐛 Bug Fixes
+
+* reduced the height of the chart wrapper that is making the button unclickable ([#2611](https://github.com/open-sauced/insights/issues/2611)) ([7fb4e40](https://github.com/open-sauced/insights/commit/7fb4e4042853c5ad7cb776ef1194a6b06a5acc0f))
+
 ## [2.2.0-beta.2](https://github.com/open-sauced/insights/compare/v2.2.0-beta.1...v2.2.0-beta.2) (2024-02-07)
 
 
