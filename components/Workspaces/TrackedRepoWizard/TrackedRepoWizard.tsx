@@ -3,13 +3,15 @@ import { useSearchRepos } from "lib/hooks/useSearchRepos";
 import { PickReposOrOrgStep } from "./PickReposOrOrgStep";
 import { TrackedRepoWizardLayout } from "./TrackedRepoWizardLayout";
 import { SearchByReposStep } from "./SearchByReposStep";
+import { PasteReposStep } from "./PasteReposStep";
+import { FilterPastedReposStep } from "./FilterPastedReposStep";
 
 interface TrackedReposWizardProps {
   onAddToTrackingList: (repos: Map<string, boolean>) => void;
   onCancel: () => void;
 }
 
-type TrackedReposStep = "pickReposOrOrg" | "pickRepos" | "pickOrg";
+type TrackedReposStep = "pickReposOrOrg" | "pickRepos" | "pasteRepos" | "pickOrg" | "filterPastedRepos";
 
 export const TrackedReposWizard = ({ onAddToTrackingList, onCancel }: TrackedReposWizardProps) => {
   const [step, setStep] = useState<TrackedReposStep>("pickReposOrOrg");
@@ -45,12 +47,23 @@ export const TrackedReposWizard = ({ onAddToTrackingList, onCancel }: TrackedRep
     });
   };
 
+  const onBulkAddRepos = (repos: string[]) => {
+    for (const repo of repos) {
+      onToggleRepo(repo, true);
+    }
+    setStep("filterPastedRepos");
+  };
+
   let searchedRepos = data ?? [];
 
   function goBack() {
     switch (step) {
       case "pickReposOrOrg":
         onCancel();
+        break;
+      case "filterPastedRepos":
+        setStep("pasteRepos");
+        break;
       default:
         setStep("pickReposOrOrg");
     }
@@ -74,9 +87,13 @@ export const TrackedReposWizard = ({ onAddToTrackingList, onCancel }: TrackedRep
             onSearchRepos={() => {
               setStep("pickRepos");
             }}
+            onPasteRepos={() => {
+              setStep("pasteRepos");
+            }}
             onImportOrg={onImportOrg}
           />
         );
+
       case "pickRepos":
         return (
           <SearchByReposStep
@@ -87,6 +104,16 @@ export const TrackedReposWizard = ({ onAddToTrackingList, onCancel }: TrackedRep
             repositories={repositories}
             searchedRepos={searchedRepos}
             suggestedRepos={suggestedRepos}
+          />
+        );
+      case "pasteRepos":
+        return <PasteReposStep onBulkAddRepos={onBulkAddRepos} />;
+      case "filterPastedRepos":
+        return (
+          <FilterPastedReposStep
+            onToggleRepo={onToggleRepo}
+            onToggleAllRepos={onToggleAllRepos}
+            repositories={repositories}
           />
         );
       // TODO: other steps
