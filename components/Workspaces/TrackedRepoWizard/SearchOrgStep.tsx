@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { useEffectOnce } from "react-use";
 import { Avatar } from "components/atoms/Avatar/avatar-hover-card";
 import Search from "components/atoms/Search/search";
@@ -6,12 +6,11 @@ import Search from "components/atoms/Search/search";
 interface SearchOrgStepProps {
   onSelectOrg: (org: string) => void;
   onSearch: (search: string) => void;
-  orgs: string[];
+  orgs: Set<string>;
 }
 
 export const SearchOrgStep = ({ onSelectOrg, onSearch, orgs }: SearchOrgStepProps) => {
   const formRef = useRef<HTMLFormElement>(null);
-  const [searchIsLoading, setSearchIsLoading] = useState(false);
 
   useEffectOnce(() => {
     (formRef.current?.querySelector('[name="query"]') as HTMLInputElement)?.focus();
@@ -27,16 +26,14 @@ export const SearchOrgStep = ({ onSelectOrg, onSearch, orgs }: SearchOrgStepProp
         }}
       >
         <Search
-          placeholder="Search repositories"
+          placeholder="Search your organizations"
           className="w-full"
-          isLoading={searchIsLoading}
           name="query"
           onChange={(event) => {
-            setSearchIsLoading(true);
             onSearch(event);
           }}
           onSelect={onSelectOrg}
-          suggestions={orgs.map((repo) => {
+          suggestions={[...orgs].map((repo) => {
             const [owner] = repo.split("/");
 
             return {

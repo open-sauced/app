@@ -1,11 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSearchRepos } from "lib/hooks/useSearchRepos";
+import { useUserOrganizations } from "lib/hooks/useUserOrganizations";
+import { useGetOrgRepos } from "lib/hooks/useGetOrgRepos";
 import { PickReposOrOrgStep } from "./PickReposOrOrgStep";
 import { TrackedRepoWizardLayout } from "./TrackedRepoWizardLayout";
 import { SearchByReposStep } from "./SearchByReposStep";
 import { PasteReposStep } from "./PasteReposStep";
 import { FilterPastedReposStep } from "./FilterPastedReposStep";
 import { SelectOrgReposStep } from "./SelectOrgReposStep";
+import { SearchOrgStep } from "./SearchOrgStep";
 
 interface TrackedReposWizardProps {
   onAddToTrackingList: (repos: Map<string, boolean>) => void;
@@ -22,11 +25,42 @@ type TrackedReposStep =
 
 export const TrackedReposWizard = ({ onAddToTrackingList, onCancel }: TrackedReposWizardProps) => {
   const [step, setStep] = useState<TrackedReposStep>("pickReposOrOrg");
-  const [organization, setOrganization] = useState<string>("open-sauced");
+  const [organization, setOrganization] = useState<string | undefined>();
   const [currentTrackedRepositories, setCurrentTrackedRepositories] = useState<Map<string, boolean>>(new Map());
   const suggestedRepos: any[] = [];
   const [searchTerm, setSearchTerm] = useState<string | undefined>();
+  const [orgSearchTerm, setOrgSearchTerm] = useState<string | undefined>();
+  const [filteredOrgs, setFilteredOrgs] = useState<Set<string>>(new Set());
   const { data, isError, isLoading } = useSearchRepos(searchTerm);
+  // TODO: get actual username
+  const { data: rawUserOrgs, isError: orgsError, isLoading: orgsLoading } = useUserOrganizations("nickytonline");
+  const orgs = rawUserOrgs.map((org) => org.organization_user.login);
+  const {
+    data: rawOrgRepos,
+    isError: isOrgReposError,
+    isLoading: isLoadingOrgRepos,
+  } = useGetOrgRepos({ organization });
+
+  useEffect(() => {
+    if (rawOrgRepos) {
+      setCurrentTrackedRepositories((currentTrackedRepositories) => {
+        const updates = new Map(currentTrackedRepositories);
+        for (const repo of rawOrgRepos) {
+          if (!updates.has(repo)) {
+            updates.set(repo, true);
+          }
+        }
+        return updates;
+      });
+    }
+  }, [rawOrgRepos]);
+
+  useEffect(() => {
+    if (orgs) {
+      const orgRepos = new Set(orgs.filter((repo) => !orgSearchTerm || repo.includes(orgSearchTerm)));
+      setFilteredOrgs(orgRepos);
+    }
+  }, [orgs, orgSearchTerm]);
 
   const onToggleRepo = (repo: string, isSelected: boolean) => {
     setSearchTerm(undefined);
@@ -70,6 +104,9 @@ export const TrackedReposWizard = ({ onAddToTrackingList, onCancel }: TrackedRep
         break;
       case "filterPastedRepos":
         setStep("pasteRepos");
+        break;
+      case "pickOrgRepos":
+        setStep("pickOrg");
         break;
       default:
         setStep("pickReposOrOrg");
@@ -127,8 +164,18 @@ export const TrackedReposWizard = ({ onAddToTrackingList, onCancel }: TrackedRep
           />
         );
       case "pickOrg":
-        setStep("pickOrgRepos");
-        break;
+        return (
+          <SearchOrgStep
+            onSelectOrg={(org) => {
+              setOrganization(org);
+              setStep("pickOrgRepos");
+            }}
+            onSearch={(searchTerm) => {
+              setOrgSearchTerm(searchTerm);
+            }}
+            orgs={filteredOrgs}
+          />
+        );
       case "pickOrgRepos":
         return (
           <SelectOrgReposStep
