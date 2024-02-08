@@ -15,7 +15,7 @@ type ContributorPrMap = { [contributor: string]: DbRepoPREvents };
 
 const Activity = ({ repositories }: { repositories: number[] | undefined }) => {
   const router = useRouter();
-  const { range } = router.query;
+  const { range = 30 } = router.query;
   const { data: prData, isError: prError } = usePullRequests(undefined, repositories, Number(range));
   const [showBots, setShowBots] = useState(false);
   const isMobile = useMediaQuery("(max-width:720px)");
@@ -30,8 +30,7 @@ const Activity = ({ repositories }: { repositories: number[] | undefined }) => {
   let metadata: ScatterChartMetadata = {
     allPrs: prData.length,
     openPrs: prData.filter((pr) => pr.pr_state.toLowerCase() === "open").length,
-    closedPrs: prData.filter((pr) => pr.pr_state.toLowerCase() === "closed" || pr.pr_state.toLowerCase() === "merged")
-      .length,
+    closedPrs: prData.filter((pr) => pr.pr_state.toLowerCase() === "closed" || pr.pr_is_merged).length,
   };
 
   const uniqueContributors: ContributorPrMap = prData.reduce((prs, curr) => {
