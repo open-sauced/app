@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.2.0-beta.7](https://github.com/open-sauced/insights/compare/v2.2.0-beta.6...v2.2.0-beta.7) (2024-02-08)
+
+
+### 🐛 Bug Fixes
+
+* now a click outside the tracked repositories modal closes the modal ([#2623](https://github.com/open-sauced/insights/issues/2623)) ([8d9ad05](https://github.com/open-sauced/insights/commit/8d9ad052a2405d94d87399e34b3f1aff414d7945))
+
 ## [2.2.0-beta.6](https://github.com/open-sauced/insights/compare/v2.2.0-beta.5...v2.2.0-beta.6) (2024-02-08)
 
 
