@@ -151,8 +151,6 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
 
   const { toast } = useToast();
 
-  const hasValidCharCount = charCount <= charLimit;
-
   const handleTextAreaInputChange = (value: string) => {
     setBodyText(value);
   };
@@ -570,10 +568,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
               />
 
               <p className="flex justify-end gap-1 text-xs text-light-slate-9">
-                <span className={`${!hasValidCharCount && "text-red-600"}`}>
-                  {!hasValidCharCount ? `-${charCount - charLimit}` : charCount}
-                </span>
-                / <span>{charLimit}</span>
+                <span>{charCount}</span>/ <span>{charLimit}</span>
               </p>
             </div>
 
@@ -641,12 +636,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
               <DevToSocialImg blogLink={highlightLink} />
             )}
 
-            <Button
-              loading={loading}
-              disabled={!bodyText || !hasValidCharCount}
-              className="ml-auto max-sm:hidden "
-              variant="primary"
-            >
+            <Button loading={loading} disabled={!bodyText} className="ml-auto max-sm:hidden " variant="primary">
               Post
             </Button>
 
@@ -802,7 +792,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
             <button onClick={() => setIsFormOpenMobile(false)} type="button">
               <IoClose className="text-2xl text-light-slate-10" />
             </button>
-            <Button loading={loading} disabled={!bodyText || !hasValidCharCount} className="py-0.5 " variant="primary">
+            <Button loading={loading} disabled={!bodyText} className="py-0.5 " variant="primary">
               Post
             </Button>
           </div>
@@ -824,10 +814,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
             <div className="flex items-center justify-between w-full">
               {date && <span className="text-xs text-light-slate-9">{format(date, "PPP")}</span>}
               <p className="flex justify-end gap-1 pb-2 ml-auto text-xs text-light-slate-9">
-                <span className={`${!hasValidCharCount && "text-red-600"}`}>
-                  {!hasValidCharCount ? `-${charCount - charLimit}` : charCount}
-                </span>
-                / <span>{charLimit}</span>
+                <span>{charCount}</span>/ <span>{charLimit}</span>
               </p>
             </div>
 
