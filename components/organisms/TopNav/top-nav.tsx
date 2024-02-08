@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
-import { TbLayoutSidebarLeftExpandFilled, TbLayoutSidebarLeftCollapseFilled } from "react-icons/tb";
 import AuthSection from "components/molecules/AuthSection/auth-section";
 import HeaderLogo from "components/molecules/HeaderLogo/header-logo";
 
@@ -13,41 +12,17 @@ import Text from "components/atoms/Typography/text";
 
 interface TopNavProps {
   hideInsights?: boolean;
-  showSidebarButton?: boolean;
-  showingSidebar?: boolean;
-  sidebarToggle?: (showing: boolean) => void;
 }
 
 // TODO: hideInsights is temporary until we've moved everything to the workspace
 // view with the new sidebar
-const TopNav = ({
-  hideInsights = false,
-  showingSidebar = false,
-  showSidebarButton = false,
-  sidebarToggle,
-}: TopNavProps) => {
+const TopNav = ({ hideInsights = false }: TopNavProps) => {
   const { user } = useSupabaseAuth();
   const { onboarded } = useSession();
   return (
     <header className="top-nav-container w-full fixed top-0 left-0 z-50 py-0.5 bg-light-slate-2 border-b px-2">
       <div className="flex justify-between items-center mx-auto px-2">
         <div className="flex gap-3 md:gap-8 items-center">
-          {showSidebarButton &&
-            (showingSidebar ? (
-              <button
-                onClick={() => sidebarToggle && sidebarToggle(false)}
-                className="w-fit hover:bg-slate-100 text-sm font-medium flex gap-1 items-center rounded-md transition-colors cursor-pointer tracking-tight p-2"
-              >
-                <TbLayoutSidebarLeftCollapseFilled className="w-5 h-5 text-slate-400" />
-              </button>
-            ) : (
-              <button
-                onClick={() => sidebarToggle && sidebarToggle(true)}
-                className="w-fit hover:bg-slate-100 text-sm font-medium flex gap-1 items-center rounded-md transition-colors cursor-pointer tracking-tight p-2"
-              >
-                <TbLayoutSidebarLeftExpandFilled className="w-5 h-5 text-slate-400" />
-              </button>
-            ))}
           <HeaderLogo responsive={true} withBg={false} textIsBlack />
           <Nav className="hidden lg:flex" hideInsights={hideInsights} />
         </div>

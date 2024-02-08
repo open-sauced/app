@@ -14,6 +14,7 @@ import {
 import { BiHomeAlt } from "react-icons/bi";
 import { useEffectOnce } from "react-use";
 import Link from "next/link";
+import { LuArrowLeftToLine } from "react-icons/lu";
 import useWorkspaces from "lib/hooks/api/useWorkspaces";
 
 import useUserInsights from "lib/hooks/useUserInsights";
@@ -43,9 +44,10 @@ export const WORKSPACE_UPDATED_EVENT = "workspaceUpdated";
 
 interface AppSideBarProps {
   workspaceId: string | null;
+  hideSidebar: () => void;
 }
 
-export const AppSideBar = ({ workspaceId }: AppSideBarProps) => {
+export const AppSideBar = ({ workspaceId, hideSidebar }: AppSideBarProps) => {
   const { username } = useSupabaseAuth();
   const { data: rawRepoInsights, isLoading: insightsLoading } = useUserInsights(!!username);
   const { data: lists, isLoading: listsLoading } = useFetchAllLists(30, !!username);
@@ -81,29 +83,34 @@ export const AppSideBar = ({ workspaceId }: AppSideBarProps) => {
   return (
     <div className="fixed top-0 pt-14 bg-white flex flex-col gap-8 justify-between max-w-xs w-72 h-full border-r border-slate-200">
       <div className="grid gap-4 mt-4 pr-4 pl-2">
-        <label className="flex flex-col gap-2 ml-2">
-          <span className="sr-only">Workspace</span>
-          <SingleSelect
-            options={[
-              { label: "Create new workspace...", value: "new" },
-              ...workspaces.map(({ id, name }) => ({
-                label: name,
-                value: id,
-              })),
-            ]}
-            position="popper"
-            value={workspaceId ?? "new"}
-            placeholder="Select a workspace"
-            onValueChange={(value) => {
-              if (value === "new") {
-                router.push("/workspaces/new");
-                return;
-              }
+        <div className="flex gap-4">
+          <label className="flex flex-col w-full gap-2 ml-2">
+            <span className="sr-only">Workspace</span>
+            <SingleSelect
+              options={[
+                { label: "Create new workspace...", value: "new" },
+                ...workspaces.map(({ id, name }) => ({
+                  label: name,
+                  value: id,
+                })),
+              ]}
+              position="popper"
+              value={workspaceId ?? "new"}
+              placeholder="Select a workspace"
+              onValueChange={(value) => {
+                if (value === "new") {
+                  router.push("/workspaces/new");
+                  return;
+                }
 
-              window.location.href = `/workspaces/${value}/repositories`;
-            }}
-          />
-        </label>
+                window.location.href = `/workspaces/${value}/repositories`;
+              }}
+            />
+          </label>
+          <button onClick={hideSidebar} className="hover:bg-slate-50 p-2 rounded-md">
+            <LuArrowLeftToLine className="w-4 h-4 text-gray-500" />
+          </button>
+        </div>
         <SidebarMenuItem title="Home" url="" icon={<BiHomeAlt className="w-5 h-5 text-slate-400" />} />
         <div className="grid gap-1 mb-6">
           <div className="flex flex-row justify-between items-center ">
