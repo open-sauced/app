@@ -41,6 +41,7 @@ const usePullRequests = (intialLimit = 1000, repoIds: number[] = [], range = 30)
   }
 
   query.set("range", `${range}`);
+  query.set("distinctAuthors", "true");
 
   const baseEndpoint = "prs/search";
   const endpointString = `${baseEndpoint}?${query.toString()}`;
