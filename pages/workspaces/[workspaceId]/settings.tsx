@@ -20,7 +20,6 @@ import { WORKSPACE_UPDATED_EVENT } from "components/shared/AppSidebar/AppSidebar
 import { WorkspacesTabList } from "components/Workspaces/WorkspacesTabList";
 import { useGetWorkspaceContributors } from "lib/hooks/api/useGetWorkspaceContributors";
 import { TrackedContributorsTable } from "components/Workspaces/TrackedContributorsTable";
-import TrackedContributorsModal from "components/Workspaces/TrackedContributorsModal";
 
 const DeleteWorkspaceModal = dynamic(() => import("components/Workspaces/DeleteWorkspaceModal"), { ssr: false });
 
@@ -77,8 +76,8 @@ const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
     mutate: mutateTrackedContributors,
     isLoading: isContributorsLoading,
   } = useGetWorkspaceContributors({ workspaceId: workspace.id });
-  const initialTrackedContributors: string[] =
-    contributorData?.data?.map(({ contributor }) => contributor.author_login) ?? [];
+
+  const initialTrackedContributors: string[] = contributorData?.data?.map(({ contributor }) => contributor.login) ?? [];
   const [trackedContributors, setTrackedContributors] = useState<Map<string, boolean>>(new Map());
   const [trackedContributorsPendingDeletion, setTrackedContributorsPendingDeletion] = useState<Set<string>>(new Set());
 
@@ -112,6 +111,10 @@ const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
   });
 
   const TrackedReposModal = dynamic(() => import("components/Workspaces/TrackedReposModal"), {
+    ssr: false,
+  });
+
+  const TrackedContributorsModal = dynamic(() => import("components/Workspaces/TrackedContributorsModal"), {
     ssr: false,
   });
 
@@ -221,7 +224,7 @@ const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
 
         <TrackedContributorsTable
           isLoading={isContributorsLoading}
-          contributors={trackedContributors}
+          contributors={pendingTrackedContributors}
           onAddContributors={() => {
             setTrackedContributorsModalOpen(true);
           }}

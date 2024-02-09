@@ -6,8 +6,7 @@ type DbWorkspaceContributor = {
   contributor_id: number;
   workspace_id: string;
   contributor: {
-    author_login: string;
-    user_id: number;
+    login: string;
   };
 };
 
