@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useSearchRepos } from "lib/hooks/useSearchRepos";
 import { useUserOrganizations } from "lib/hooks/useUserOrganizations";
 import { useGetOrgRepos } from "lib/hooks/useGetOrgRepos";
+import useStore from "../../../lib/store";
 import { PickReposOrOrgStep } from "./PickReposOrOrgStep";
 import { TrackedRepoWizardLayout } from "./TrackedRepoWizardLayout";
 import { SearchByReposStep } from "./SearchByReposStep";
@@ -32,8 +33,8 @@ export const TrackedReposWizard = ({ onAddToTrackingList, onCancel }: TrackedRep
   const [orgSearchTerm, setOrgSearchTerm] = useState<string | undefined>();
   const [filteredOrgs, setFilteredOrgs] = useState<Set<string>>(new Set());
   const { data, isError, isLoading } = useSearchRepos(searchTerm);
-  // TODO: get actual username
-  const { data: rawUserOrgs, isError: orgsError, isLoading: orgsLoading } = useUserOrganizations("nickytonline");
+  const username: string | null = useStore((state) => state.user?.user_metadata.user_name);
+  const { data: rawUserOrgs, isError: orgsError, isLoading: orgsLoading } = useUserOrganizations(username);
   const {
     data: rawOrgRepos,
     isError: isOrgReposError,
