@@ -5,9 +5,9 @@ interface GraphData {
   y: number;
 }
 
-const getPullRequestsToDays = (pull_requests: DbRepoPR[], range = 30) => {
-  const graphDays = pull_requests.reduce((days: { [name: string]: number }, curr: DbRepoPR) => {
-    const day = differenceInDays(new Date(), new Date(curr.updated_at));
+const getPullRequestsToDays = (pull_requests: DbRepoPREvents[], range = 30) => {
+  const graphDays = pull_requests.reduce((days: { [name: string]: number }, curr: DbRepoPREvents) => {
+    const day = differenceInDays(new Date(), new Date(curr.pr_updated_at));
 
     if (days[day]) {
       days[day]++;
@@ -27,4 +27,29 @@ const getPullRequestsToDays = (pull_requests: DbRepoPR[], range = 30) => {
   return days;
 };
 
-export default getPullRequestsToDays;
+const getPullRequestsHistogramToDays = (pull_requests: DbPullRequestGitHubEventsHistogram[], range = 30) => {
+  const graphDays = pull_requests.reduce(
+    (days: { [name: string]: number }, curr: DbPullRequestGitHubEventsHistogram) => {
+      const day = differenceInDays(new Date(), new Date(curr.bucket));
+
+      if (days[day]) {
+        days[day] += curr.prs_count;
+      } else {
+        days[day] = curr.prs_count;
+      }
+
+      return days;
+    },
+    {}
+  );
+
+  const days: GraphData[] = [];
+
+  for (let d = range; d >= 0; d--) {
+    days.push({ x: d, y: graphDays[d] || 0 });
+  }
+
+  return days;
+};
+
+export { getPullRequestsToDays, getPullRequestsHistogramToDays };

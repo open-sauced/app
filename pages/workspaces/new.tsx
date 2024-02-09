@@ -15,7 +15,7 @@ const NewWorkspace = () => {
   const { toast } = useToast();
   const router = useRouter();
   const [trackedReposModalOpen, setTrackedReposModalOpen] = useState(false);
-  const [trackedRepos, setTrackedRepos] = useState<Set<string>>(new Set());
+  const [trackedRepos, setTrackedRepos] = useState<Map<string, boolean>>(new Map());
 
   const onCreateWorkspace: ComponentProps<"form">["onSubmit"] = async (event) => {
     event.preventDefault();
@@ -30,7 +30,7 @@ const NewWorkspace = () => {
       // TODO: send members list
       members: [],
       sessionToken: sessionToken!,
-      repos: Array.from(trackedRepos, (repo) => ({ full_name: repo })),
+      repos: Array.from(trackedRepos, ([repo]) => ({ full_name: repo })),
     });
 
     if (error || !workspace) {
@@ -38,7 +38,7 @@ const NewWorkspace = () => {
     } else {
       toast({ description: `Workspace created successfully`, variant: "success" });
       document.dispatchEvent(new CustomEvent(WORKSPACE_UPDATED_EVENT, { detail: workspace }));
-      router.push(`/workspaces/${workspace.id}/settings`);
+      router.push(`/workspaces/${workspace.id}/repositories`);
     }
   };
 
@@ -47,34 +47,27 @@ const NewWorkspace = () => {
   });
 
   return (
-    <WorkspaceLayout>
-      <div className="grid gap-6">
-        <div>
-          <h1 className="border-b bottom pb-4">Workspace Settings</h1>
-          <form className="flex flex-col pt-6 gap-6" onSubmit={onCreateWorkspace}>
-            <TextInput
-              name="name"
-              label="Workspace Name"
-              placeholder="Workspace name"
-              className="w-full md:w-max"
-              required
-            />
-            <TextInput
-              name="description"
-              label="Workspace Description"
-              placeholder="Workspace description"
-              className="w-full md:w-3/4 max-w-lg"
-            />
-            <div className="bg-white sticky-bottom fixed bottom-0 right-0 self-end m-6">
-              <Button
-                variant="primary"
-                className="flex gap-2.5 items-center cursor-pointer w-min mt-2 sm:mt-0 self-end"
-              >
-                Create Workspace
-              </Button>
-            </div>
-          </form>
-        </div>
+    <WorkspaceLayout workspaceId={null}>
+      <div className="grid gap-6 max-w-4xl">
+        <h1 className="border-b bottom pb-4 text-xl font-medium">Workspace Settings</h1>
+        <form className="flex flex-col gap-6 mb-2" onSubmit={onCreateWorkspace}>
+          <div>
+            <h3 className="font-medium mb-2">
+              Workspace Name <span className="text-red-600">*</span>
+            </h3>
+            <TextInput name="name" placeholder="Workspace name" className="!py-1.5 w-full text-sm" required />
+          </div>
+          <div>
+            <h3 className="font-medium mb-2">Workspace Description</h3>
+            <TextInput name="description" placeholder="Workspace description" className="!py-1.5 w-full text-sm" />
+          </div>
+          <div className="bg-white sticky-bottom fixed bottom-0 right-0 self-end m-6">
+            <Button variant="primary" className="flex gap-2.5 items-center cursor-pointer w-min mt-2 sm:mt-0 self-end">
+              Create Workspace
+            </Button>
+          </div>
+        </form>
+
         <TrackedReposTable
           repositories={trackedRepos}
           onAddRepos={() => {
@@ -90,7 +83,7 @@ const NewWorkspace = () => {
             }
 
             setTrackedRepos((trackedRepos) => {
-              const updates = new Set([...trackedRepos]);
+              const updates = new Map([...trackedRepos]);
               updates.delete(repo);
 
               return updates;
@@ -103,10 +96,20 @@ const NewWorkspace = () => {
         onClose={() => {
           setTrackedReposModalOpen(false);
         }}
-        onAddToTrackingList={(repos: Set<string>) => {
+        onAddToTrackingList={(repos: Map<string, boolean>) => {
           setTrackedReposModalOpen(false);
           setTrackedRepos((trackedRepos) => {
-            return new Set([...trackedRepos, ...repos]);
+            const updates = new Map([...trackedRepos]);
+
+            for (const [repo, checked] of repos) {
+              if (checked) {
+                updates.set(repo, true);
+              } else {
+                updates.delete(repo);
+              }
+            }
+
+            return updates;
           });
         }}
         onCancel={() => {

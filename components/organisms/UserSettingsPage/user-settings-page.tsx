@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { RiArrowDownSLine, RiArrowUpSLine } from "react-icons/ri";
 import { User } from "@supabase/supabase-js";
 
+import { usePostHog } from "posthog-js/react";
 import Button from "components/atoms/Button/button";
 import Checkbox from "components/atoms/Checkbox/checkbox";
 import TextInput from "components/atoms/TextInput/text-input";
@@ -90,6 +91,7 @@ const UserSettingsPage = ({ user }: UserSettingsPageProps) => {
   const { hasReports, session } = useSession(true);
 
   const { toast } = useToast();
+  const posthog = usePostHog();
 
   const [updating, setUpdating] = useState({
     profile: false,
@@ -225,6 +227,10 @@ const UserSettingsPage = ({ user }: UserSettingsPageProps) => {
     if (formRef.current?.url.value) {
       payload.url = formRef.current!.url.value;
     }
+
+    posthog.capture("Updated user profile", {
+      profile: user?.user_metadata.user_name,
+    });
 
     const data = await updateUser({
       data: payload,

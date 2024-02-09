@@ -1,23 +1,43 @@
+import { CheckedState } from "@radix-ui/react-checkbox";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "components/shared/Table";
 import { Avatar } from "components/atoms/Avatar/avatar-hover-card";
 import Checkbox from "components/atoms/Checkbox/checkbox";
 import Search from "components/atoms/Search/search";
 
 interface SearchedReposTableProps {
-  repositories: string[];
+  type: "by-repos" | "by-org";
+  repositories: Map<string, boolean>;
   onFilter: (filterTerm: string) => void;
-  onSelect: (value: string) => void;
+  onToggleRepo: (repo: string, checked: boolean) => void;
+  onToggleAllRepos: (checked: boolean) => void;
 }
 
-export const SearchedReposTable = ({ repositories = [], onFilter, onSelect }: SearchedReposTableProps) => {
+export const SearchedReposTable = ({
+  type,
+  repositories = new Map(),
+  onFilter,
+  onToggleRepo,
+  onToggleAllRepos,
+}: SearchedReposTableProps) => {
+  const allChecked = [...repositories.values()].every((checked) => checked);
+
   return (
     <div className="border border-light-slate-7 rounded-lg">
       <Table className="not-sr-only">
         <TableHeader>
           <TableRow className="bg-light-slate-3">
             <TableHead className="flex justify-between items-center gap-6">
-              Selected repositories
+              <div className="flex gap-2">
+                <Checkbox
+                  onCheckedChange={(checked: CheckedState) => {
+                    onToggleAllRepos(!!checked);
+                  }}
+                  checked={allChecked}
+                />
+                <span>{type === "by-repos" ? "Selected repositories" : "Selected organization repositories"}</span>
+              </div>
               <form
+                className="pr-2"
                 role="search"
                 onSubmit={(event) => {
                   event.preventDefault;
@@ -37,7 +57,7 @@ export const SearchedReposTable = ({ repositories = [], onFilter, onSelect }: Se
             </TableRow>
           </TableHeader>
           <TableBody>
-            {repositories.map((repo) => {
+            {[...repositories.entries()].map(([repo, checked]) => {
               const [owner] = repo.split("/");
 
               return (
@@ -45,11 +65,10 @@ export const SearchedReposTable = ({ repositories = [], onFilter, onSelect }: Se
                   <TableCell className="flex gap-2 items-center w-full">
                     <label className="flex items-center gap-2">
                       <Checkbox
-                        onChange={(event) => {
-                          onSelect("");
+                        onCheckedChange={(checked: CheckedState) => {
+                          onToggleRepo(repo, !!checked);
                         }}
-                        // TODO: handle checked/unchecked
-                        checked
+                        checked={checked}
                       />
                       <Avatar contributor={owner} size="xsmall" />
                       <span>{repo}</span>

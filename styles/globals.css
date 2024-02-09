@@ -22,21 +22,47 @@ h5,
 h6 {
   @apply tracking-tight;
 }
-button:not([role]){
+button:not([role]) {
   @apply border;
   @apply border-transparent;
 }
 
-input[type="checkbox"]:focus-visible;
-[role="checkbox"]:focus-visible;
-[role="radio"]:focus-visible;
-[role="combobox"]:focus-visible;
-[role="switch"]:focus-visible;
+input[type="checkbox"]:focus-visible,
+[role="checkbox"]:focus-visible,
+[role="radio"]:focus-visible,
+[role="combobox"]:focus-visible,
+[role="switch"]:focus-visible,
 button:not([role]):focus-visible {
   @apply outline-none;
   @apply ring;
   @apply border-orange-500;
   @apply ring-orange-100;
+}
+
+/* collapsible component animation */
+.animate-collapse[data-state="open"] {
+  animation: slideDown 150ms ease-out;
+}
+.animate-collapse[data-state="closed"] {
+  animation: slideUp 150ms ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--radix-collapsible-content-height);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    height: var(--radix-collapsible-content-height);
+  }
+  to {
+    height: 0;
+  }
 }
 
 /* See https://github.com/open-sauced/app/issues/2210 */

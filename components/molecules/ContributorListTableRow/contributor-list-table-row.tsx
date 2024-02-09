@@ -4,7 +4,7 @@ import formatDistanceToNowStrict from "date-fns/formatDistanceToNowStrict";
 
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/solid";
 import Sparkline from "components/atoms/Sparkline/sparkline";
-import getPullRequestsToDays from "lib/utils/get-prs-to-days";
+import { getPullRequestsToDays } from "lib/utils/get-prs-to-days";
 import { classNames } from "components/organisms/RepositoriesTable/repositories-table";
 
 import useContributorPullRequests from "lib/hooks/api/useContributorPullRequests";
@@ -24,26 +24,26 @@ interface ContributorListTableRow {
   range: string;
 }
 
-function getLastContributionDate(contributions: DbRepoPR[]) {
+function getLastContributionDate(contributions: DbRepoPREvents[]) {
   if (contributions.length === 0) {
     return "-";
   }
   const sortedContributions = contributions.sort((a, b) => {
-    return +new Date(b.merged_at) - +new Date(a.merged_at);
+    return +new Date(b.pr_merged_at) - +new Date(a.pr_merged_at);
   });
 
-  return formatDistanceToNowStrict(new Date(sortedContributions[0]?.merged_at), { addSuffix: true });
+  return formatDistanceToNowStrict(new Date(sortedContributions[0]?.pr_merged_at), { addSuffix: true });
 }
 
-function getLastContributedRepo(pullRequests: DbRepoPR[]) {
+function getLastContributedRepo(pullRequests: DbRepoPREvents[]) {
   if (pullRequests.length === 0) {
     return "-";
   }
   const sortedPullRequests = pullRequests.sort((a, b) => {
-    return +new Date(b.last_updated_at) - +new Date(a.last_updated_at);
+    return +new Date(b.pr_updated_at) - +new Date(a.pr_updated_at);
   });
 
-  return sortedPullRequests[0].full_name;
+  return sortedPullRequests[0].repo_name;
 }
 
 function getLanguageAbbreviation(language: string) {
@@ -85,7 +85,7 @@ const ContributorListTableRow = ({
     mostRecent: true,
   });
 
-  const repoList = useRepoList(Array.from(new Set(data.map((prData) => prData.full_name))).join(","));
+  const repoList = useRepoList(Array.from(new Set(data.map((prData) => prData.repo_name))).join(","));
   const contributorLanguageList = user ? getTopContributorLanguages(user) : [];
   const days = getPullRequestsToDays(data, Number(range ?? 30));
   const totalPrs = data.length;
@@ -96,7 +96,7 @@ const ContributorListTableRow = ({
       data: days,
     },
   ];
-  const mergedPrs = data.filter((prData) => prData.merged);
+  const mergedPrs = data.filter((prData) => prData.pr_is_merged);
   const [firstContributorLanguage, secondContributorLanguage] = contributorLanguageList;
 
   return (

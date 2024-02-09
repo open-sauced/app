@@ -7,8 +7,10 @@ import { SearchedReposTable } from "../SearchReposTable";
 
 interface SearchByReposStepProps {
   onSearch: (search?: string) => void;
-  onSelectRepo: (value: string) => void;
-  repositories: string[];
+  onSelectRepo: (repo: string) => void;
+  onToggleRepo: (repo: string, isSelected: boolean) => void;
+  onToggleAllRepos: (checked: boolean) => void;
+  repositories: Map<string, boolean>;
   suggestedRepos: string[];
   searchedRepos: string[];
 }
@@ -30,18 +32,28 @@ const EmptyState = () => {
 export const SearchByReposStep = ({
   onSearch,
   onSelectRepo,
+  onToggleRepo,
+  onToggleAllRepos,
   repositories,
   searchedRepos,
   suggestedRepos = [],
 }: SearchByReposStepProps) => {
-  const [filteredRepositories, setFilteredRepositories] = useState(repositories);
+  const [filteredRepositories, setFilteredRepositories] = useState<Map<string, boolean>>(new Map());
+
+  useEffect(() => {
+    setFilteredRepositories(new Map(repositories));
+  }, [repositories]);
 
   const onFilterRepos = (search: string) => {
-    setFilteredRepositories(
-      repositories.filter((repo) => {
-        return repo.includes(search);
-      })
-    );
+    const updates = new Map();
+
+    for (const [repo, selected] of repositories) {
+      if (repo.includes(search)) {
+        updates.set(repo, selected);
+      }
+    }
+
+    setFilteredRepositories(updates);
   };
 
   const formRef = useRef<HTMLFormElement>(null);
@@ -92,13 +104,15 @@ export const SearchByReposStep = ({
           })}
         />
       </form>
-      {repositories.length === 0 && filteredRepositories.length === 0 ? (
+      {repositories.size === 0 ? (
         <EmptyState />
       ) : (
         <SearchedReposTable
-          repositories={filteredRepositories.length > 0 ? filteredRepositories : repositories}
+          type="by-repos"
+          repositories={filteredRepositories}
           onFilter={onFilterRepos}
-          onSelect={onSelectRepo}
+          onToggleRepo={onToggleRepo}
+          onToggleAllRepos={onToggleAllRepos}
         />
       )}
     </div>

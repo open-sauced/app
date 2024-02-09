@@ -4,7 +4,7 @@ import { TrackedReposWizard } from "./TrackedRepoWizard/TrackedRepoWizard";
 interface TrackedReposModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onAddToTrackingList: (repos: Set<string>) => void;
+  onAddToTrackingList: (repos: Map<string, boolean>) => void;
   onCancel: () => void;
 }
 
@@ -15,7 +15,7 @@ const TrackedReposModal = ({ isOpen, onClose, onAddToTrackingList, onCancel }: T
 
   return (
     <Dialog open={isOpen}>
-      <DialogContent autoStyle={false} onEscapeKeyDown={onCloseModal}>
+      <DialogContent autoStyle={false} onEscapeKeyDown={onCloseModal} onPointerDownOutside={onCloseModal}>
         <TrackedReposWizard onAddToTrackingList={onAddToTrackingList} onCancel={onCancel} />
       </DialogContent>
     </Dialog>
