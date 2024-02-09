@@ -1,8 +1,9 @@
 import { useState } from "react";
+import { useSearchContributors } from "lib/hooks/useSearchContributors";
 import { TrackedContributorsWizardLayout } from "./TrackedContributorsWizardLayout";
 
-// !TODO: useSearchContributors
 import { PickOptionStep } from "./PickOptionStep";
+import { SearchByContributorsStep } from "./SearchByContributorsStep";
 
 interface TrackedContributorsWizardProps {
   onAddToTrackingList: (repos: Map<string, boolean>) => void;
@@ -25,8 +26,7 @@ export const TrackedContributorsWizard = ({ onAddToTrackingList, onCancel }: Tra
 
   const [searchTerm, setSearchTerm] = useState<string | undefined>();
 
-  // !TODO: useSearchContributors
-  //const { data, isError, isLoading } = useSearchContributors(searchTerm);
+  const { data, isError, isLoading } = useSearchContributors(searchTerm);
 
   const onToggleContributor = (contributor: string, isSelected: boolean) => {
     setSearchTerm(undefined);
@@ -62,7 +62,7 @@ export const TrackedContributorsWizard = ({ onAddToTrackingList, onCancel }: Tra
     setStep("filterPastedContributors");
   };
 
-  // let searchedContributors = data ?? [];
+  let searchedContributors = data ?? [];
 
   function goBack() {
     switch (step) {
@@ -98,7 +98,6 @@ export const TrackedContributorsWizard = ({ onAddToTrackingList, onCancel }: Tra
           />
         );
 
-      /*
       case "pickContributors":
         return (
           <SearchByContributorsStep
@@ -111,7 +110,6 @@ export const TrackedContributorsWizard = ({ onAddToTrackingList, onCancel }: Tra
             suggestedContributors={suggestedContributors}
           />
         );
-      */
 
       // TODO: other steps
 
