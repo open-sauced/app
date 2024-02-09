@@ -34,7 +34,6 @@ export const TrackedReposWizard = ({ onAddToTrackingList, onCancel }: TrackedRep
   const { data, isError, isLoading } = useSearchRepos(searchTerm);
   // TODO: get actual username
   const { data: rawUserOrgs, isError: orgsError, isLoading: orgsLoading } = useUserOrganizations("nickytonline");
-  const orgs = rawUserOrgs.map((org) => org.organization_user.login);
   const {
     data: rawOrgRepos,
     isError: isOrgReposError,
@@ -56,11 +55,12 @@ export const TrackedReposWizard = ({ onAddToTrackingList, onCancel }: TrackedRep
   }, [rawOrgRepos]);
 
   useEffect(() => {
-    if (orgs) {
+    if (rawUserOrgs) {
+      const orgs = rawUserOrgs.map((org) => org.organization_user.login);
       const orgRepos = new Set(orgs.filter((repo) => !orgSearchTerm || repo.includes(orgSearchTerm)));
       setFilteredOrgs(orgRepos);
     }
-  }, [orgs, orgSearchTerm]);
+  }, [rawUserOrgs, orgSearchTerm]);
 
   const onToggleRepo = (repo: string, isSelected: boolean) => {
     setSearchTerm(undefined);
