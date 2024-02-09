@@ -631,7 +631,10 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                   id="highlight-link-input"
                   className="text-sm shadow-none h-10 flex-none"
                   value={highlightLink}
-                  handleChange={(value) => setHighlightLink(value)}
+                  handleChange={(value) => {
+                    setHighlightLink(value);
+                    checkIfHighlightLinkIsValid(value);
+                  }}
                   placeholder="Paste the URL to your PR, Issue, or Dev.to blog post."
                 />
               </div>
@@ -866,7 +869,10 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                 <TextInput
                   className="text-xs"
                   value={highlightLink}
-                  handleChange={(value) => setHighlightLink(value)}
+                  handleChange={(value) => {
+                    setHighlightLink(value);
+                    checkIfHighlightLinkIsValid(value);
+                  }}
                   placeholder="Paste your PR URL and get it auto-summarized!"
                 />
               </div>
