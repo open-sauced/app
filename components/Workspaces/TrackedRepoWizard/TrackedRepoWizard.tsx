@@ -41,6 +41,10 @@ export const TrackedReposWizard = ({ onAddToTrackingList, onCancel }: TrackedRep
   } = useGetOrgRepos({ organization });
 
   useEffect(() => {
+    if (isOrgReposError || isLoadingOrgRepos) {
+      return;
+    }
+
     if (rawOrgRepos) {
       setCurrentTrackedRepositories((currentTrackedRepositories) => {
         const updates = new Map(currentTrackedRepositories);
@@ -52,7 +56,11 @@ export const TrackedReposWizard = ({ onAddToTrackingList, onCancel }: TrackedRep
         return updates;
       });
     }
-  }, [rawOrgRepos]);
+    // It's a weird scenario. If the organization has changed, rawOrgRepos will be set
+    // passing it as a dependency will cause an infinite loop though as the reference to it
+    // keeps changing. This is a workaround to avoid that.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [organization, isOrgReposError, isLoadingOrgRepos]);
 
   useEffect(() => {
     if (rawUserOrgs) {
