@@ -15,7 +15,7 @@ const TrackedReposModal = ({ isOpen, onClose, onAddToTrackingList, onCancel }: T
 
   return (
     <Dialog open={isOpen}>
-      <DialogContent autoStyle={false} onEscapeKeyDown={onCloseModal}>
+      <DialogContent autoStyle={false} onEscapeKeyDown={onCloseModal} onPointerDownOutside={onCloseModal}>
         <TrackedReposWizard onAddToTrackingList={onAddToTrackingList} onCancel={onCancel} />
       </DialogContent>
     </Dialog>

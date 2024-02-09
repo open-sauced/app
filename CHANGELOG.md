@@ -5,6 +5,27 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.2.1-beta.1](https://github.com/open-sauced/insights/compare/v2.2.0...v2.2.1-beta.1) (2024-02-09)
+
+
+### 🐛 Bug Fixes
+
+* now a new workspace (uncreated) won't store a workspaceId cookie ([#2626](https://github.com/open-sauced/insights/issues/2626)) ([5bfd1a3](https://github.com/open-sauced/insights/commit/5bfd1a39f1061873f08ecd2df21ed0c120c8e109))
+
+## [2.2.0-beta.7](https://github.com/open-sauced/insights/compare/v2.2.0-beta.6...v2.2.0-beta.7) (2024-02-08)
+
+
+### 🐛 Bug Fixes
+
+* now a click outside the tracked repositories modal closes the modal ([#2623](https://github.com/open-sauced/insights/issues/2623)) ([8d9ad05](https://github.com/open-sauced/insights/commit/8d9ad052a2405d94d87399e34b3f1aff414d7945))
+<<<<<<< HEAD
+=======
+* Now you can't type more than 500 characters for a highlight summary ([#2614](https://github.com/open-sauced/insights/issues/2614)) ([ed3d1d9](https://github.com/open-sauced/insights/commit/ed3d1d983023a2d3a9a83a5670239b3fea73be71))
+* redirect to `/workspaces/new` if user has no workspaces ([#2607](https://github.com/open-sauced/insights/issues/2607)) ([547fdf5](https://github.com/open-sauced/insights/commit/547fdf5719f0eab14032a6db6accc5fb7c4786e8))
+* reduced the height of the chart wrapper that is making the button unclickable ([#2611](https://github.com/open-sauced/insights/issues/2611)) ([7fb4e40](https://github.com/open-sauced/insights/commit/7fb4e4042853c5ad7cb776ef1194a6b06a5acc0f))
+* return empty arrays on error when fetching GitHub data ([#2616](https://github.com/open-sauced/insights/issues/2616)) ([5c9ad0b](https://github.com/open-sauced/insights/commit/5c9ad0b12a421e198340d46835aca5fa8dd6fd2f))
+>>>>>>> main
+
 ## [2.2.0-beta.6](https://github.com/open-sauced/insights/compare/v2.2.0-beta.5...v2.2.0-beta.6) (2024-02-08)
 
 
