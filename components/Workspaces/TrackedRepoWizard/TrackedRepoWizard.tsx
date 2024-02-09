@@ -107,6 +107,7 @@ export const TrackedReposWizard = ({ onAddToTrackingList, onCancel }: TrackedRep
         break;
       case "pickOrgRepos":
         setStep("pickOrg");
+        setOrgSearchTerm(undefined);
         break;
       default:
         setStep("pickReposOrOrg");
@@ -180,6 +181,7 @@ export const TrackedReposWizard = ({ onAddToTrackingList, onCancel }: TrackedRep
         return (
           <SelectOrgReposStep
             repositories={repositories}
+            // @ts-expect-error - once you get to this point, organization is guaranteed to be defined
             organization={organization}
             onToggleRepo={onToggleRepo}
             onToggleAllRepos={onToggleAllRepos}
