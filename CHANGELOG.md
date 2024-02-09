@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.2.1-beta.1](https://github.com/open-sauced/insights/compare/v2.2.0...v2.2.1-beta.1) (2024-02-09)
+
+
+### 🐛 Bug Fixes
+
+* now a new workspace (uncreated) won't store a workspaceId cookie ([#2626](https://github.com/open-sauced/insights/issues/2626)) ([5bfd1a3](https://github.com/open-sauced/insights/commit/5bfd1a39f1061873f08ecd2df21ed0c120c8e109))
+
 ## [2.2.0-beta.7](https://github.com/open-sauced/insights/compare/v2.2.0-beta.6...v2.2.0-beta.7) (2024-02-08)
 
 
