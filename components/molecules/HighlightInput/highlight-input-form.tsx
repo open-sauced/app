@@ -111,6 +111,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
   const [highlightSuggestions, setHighlightSuggestions] = useState<any[]>([]);
   const [loadingSuggestions, setLoadingSuggestions] = useState<boolean>(false);
   const [createPopoverOpen, setCreatePopoverOpen] = useState(false);
+  const [isHighlightURLValid, setIsHighlightURLValid] = useState(false);
   const popoverContentRef = useRef<HTMLDivElement>(null);
   const generateSummary = useRef(false);
 
@@ -161,6 +162,13 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
     }
   };
 
+  const checkIfHighlightLinkIsValid = (link: string) => {
+    if (isValidPullRequestUrl(link) || isValidIssueUrl(link) || isValidBlogUrl(link)) {
+      setIsHighlightURLValid(true);
+    } else {
+      setIsHighlightURLValid(false);
+    }
+  };
   useEffect(() => {
     // disable scroll when form is open
     if (isFormOpenMobile) {
