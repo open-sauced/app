@@ -41,7 +41,8 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "lint": "next lint",
-    "format": "next lint -- --fix --dir .",
+    "lint:fix": "next lint -- --fix --dir .",
+    "format": "prettier --write .",
     "prepare": "npx husky install"
   },
   "dependencies": {
@@ -141,8 +142,6 @@
     "autoprefixer": "^10.4.13",
     "eslint": "^8.33.0",
     "eslint-config-next": "^13.5.6",
-    "eslint-config-prettier": "^8.8.0",
-    "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-storybook": "^0.6.15",
     "eslint-plugin-unused-imports": "^2.0.0",
     "husky": "^8.0.3",
