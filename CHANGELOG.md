@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.2.1-beta.2](https://github.com/open-sauced/insights/compare/v2.2.1-beta.1...v2.2.1-beta.2) (2024-02-09)
+
+
+### 🐛 Bug Fixes
+
+* smaller screen tweaks for workspaces tracked repositories modal ([#2628](https://github.com/open-sauced/insights/issues/2628)) ([ebda69f](https://github.com/open-sauced/insights/commit/ebda69f6b21ecdae840b47c02021162da8b185a1))
+* update pr overview count when hovering over each bar ([#2631](https://github.com/open-sauced/insights/issues/2631)) ([b8a6da3](https://github.com/open-sauced/insights/commit/b8a6da3064061e890fa47ccb848e12235d48b061))
+
 ## [2.2.1-beta.1](https://github.com/open-sauced/insights/compare/v2.2.0...v2.2.1-beta.1) (2024-02-09)
 
 
