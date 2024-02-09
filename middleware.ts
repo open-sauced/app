@@ -117,7 +117,10 @@ export async function middleware(req: NextRequest) {
 
     if (featureFlags.workspaces) {
       const [, , workspaceId] = req.nextUrl.pathname.split("/");
-      res.cookies.set("workspaceId", workspaceId);
+
+      if (workspaceId !== "new") {
+        res.cookies.set("workspaceId", workspaceId);
+      }
 
       return res;
     } else {
