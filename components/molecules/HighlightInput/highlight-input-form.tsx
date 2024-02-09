@@ -318,6 +318,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
   // if its a github link, automatically tag the repo if its not already tagged
   useEffect(() => {
     if (highlightLink && (isValidPullRequestUrl(highlightLink) || isValidIssueUrl(highlightLink))) {
+      setIsHighlightURLValid(true);
       if (generateSummary.current) {
         generateSummary.current = false;
         handleGenerateHighlightSummary();
@@ -380,6 +381,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
       setError("Please provide a valid pull request, issue or dev.to blog link!");
       return;
     }
+    setIsHighlightURLValid(true);
 
     setIsSummaryButtonDisabled(true);
 
@@ -422,6 +424,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
     const highlight = bodyText;
 
     if (isValidPullRequestUrl(highlightLink) || isValidIssueUrl(highlightLink) || isValidBlogUrl(highlightLink)) {
+      setIsHighlightURLValid(true);
       // generateApiPrUrl will return an object with repoName, orgName and issueId
       // it can work with both issue and pull request links
       const highlightType = isValidIssueUrl(highlightLink)
