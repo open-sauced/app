@@ -650,7 +650,12 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
               <DevToSocialImg blogLink={highlightLink} />
             )}
 
-            <Button loading={loading} disabled={!bodyText} className="ml-auto max-sm:hidden " variant="primary">
+            <Button
+              loading={loading}
+              disabled={!bodyText || !isHighlightURLValid || !highlightLink}
+              className="ml-auto max-sm:hidden "
+              variant="primary"
+            >
               Post
             </Button>
 
@@ -806,7 +811,12 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
             <button onClick={() => setIsFormOpenMobile(false)} type="button">
               <IoClose className="text-2xl text-light-slate-10" />
             </button>
-            <Button loading={loading} disabled={!bodyText} className="py-0.5 " variant="primary">
+            <Button
+              loading={loading}
+              disabled={!bodyText || !isHighlightURLValid || !highlightLink}
+              className="py-0.5 "
+              variant="primary"
+            >
               Post
             </Button>
           </div>
