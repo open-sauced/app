@@ -654,7 +654,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
 
             <Button
               loading={loading}
-              disabled={!bodyText || !isHighlightURLValid || !highlightLink}
+              disabled={!bodyText || !isHighlightURLValid}
               className="ml-auto max-sm:hidden "
               variant="primary"
             >
@@ -815,7 +815,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
             </button>
             <Button
               loading={loading}
-              disabled={!bodyText || !isHighlightURLValid || !highlightLink}
+              disabled={!bodyText || !isHighlightURLValid}
               className="py-0.5 "
               variant="primary"
             >
