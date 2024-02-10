@@ -165,8 +165,10 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
   const checkIfHighlightLinkIsValid = (link: string) => {
     if (isValidPullRequestUrl(link) || isValidIssueUrl(link) || isValidBlogUrl(link)) {
       setIsHighlightURLValid(true);
+      setError("");
     } else {
       setIsHighlightURLValid(false);
+      setError("Please provide a valid pull request, issue or dev.to blog link!");
     }
   };
   useEffect(() => {
@@ -632,7 +634,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                 </Tooltip>
                 <TextInput
                   id="highlight-link-input"
-                  className="text-sm shadow-none h-10 flex-none"
+                  className={`text-sm shadow-none h-10 flex-none ${!isHighlightURLValid && "border-red-500"}`}
                   value={highlightLink}
                   handleChange={(value) => {
                     setHighlightLink(value);
