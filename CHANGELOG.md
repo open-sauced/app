@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.3.0-beta.2](https://github.com/open-sauced/insights/compare/v2.3.0-beta.1...v2.3.0-beta.2) (2024-02-12)
+
+
+### 🐛 Bug Fixes
+
+* got rid of eslint error for next.js config ([#2633](https://github.com/open-sauced/insights/issues/2633)) ([0237c7d](https://github.com/open-sauced/insights/commit/0237c7dcdd1a21a2c007fe2c3e672460d68ec973))
+
 ## [2.3.0-beta.1](https://github.com/open-sauced/insights/compare/v2.2.1-beta.3...v2.3.0-beta.1) (2024-02-12)
 
 
