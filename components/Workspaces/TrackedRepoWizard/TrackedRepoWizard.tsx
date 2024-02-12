@@ -194,6 +194,8 @@ export const TrackedReposWizard = ({ onAddToTrackingList, onCancel }: TrackedRep
             organization={organization}
             onToggleRepo={onToggleRepo}
             onToggleAllRepos={onToggleAllRepos}
+            isLoading={isLoadingOrgRepos}
+            hasError={isOrgReposError}
           />
         );
 

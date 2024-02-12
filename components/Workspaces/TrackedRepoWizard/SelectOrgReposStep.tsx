@@ -7,6 +7,41 @@ interface SearchByReposStepProps {
   repositories: Map<string, boolean>;
   onToggleRepo: (repo: string, isSelected: boolean) => void;
   onToggleAllRepos: (checked: boolean) => void;
+  isLoading: boolean;
+  hasError: boolean;
+}
+
+function getMesssage({
+  repositories,
+  isLoading,
+  hasError,
+}: {
+  repositories: Map<string, boolean>;
+  isLoading: boolean;
+  hasError: boolean;
+}) {
+  switch (true) {
+    case isLoading:
+      return "Loading repositories...";
+
+    case hasError:
+      return "Error loading repositories";
+
+    case repositories.size === 0:
+      return "No repositories found for this organization";
+
+    case repositories.size > 0:
+      return "No repositories found using this search term";
+
+    default:
+      throw new Error("Invalid state. Unable to generate message for the <SelectOrgReposStep /> component.", {
+        cause: {
+          repositories,
+          isLoading,
+          hasError,
+        },
+      });
+  }
 }
 
 export const SelectOrgReposStep = ({
@@ -14,6 +49,8 @@ export const SelectOrgReposStep = ({
   repositories,
   onToggleRepo,
   onToggleAllRepos,
+  isLoading,
+  hasError,
 }: SearchByReposStepProps) => {
   const [filteredRepositories, setFilteredRepositories] = useState<Map<string, boolean>>(repositories);
 
@@ -33,10 +70,7 @@ export const SelectOrgReposStep = ({
     setFilteredRepositories(updates);
   };
 
-  const message =
-    repositories.size === 0
-      ? "No repositories found for this organization"
-      : "No repositories found using this search term";
+  const message = getMesssage({ repositories, isLoading, hasError });
 
   return (
     <div className="flex flex-col gap-4 h-96 max-h-96">
