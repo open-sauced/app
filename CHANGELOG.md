@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.2.1](https://github.com/open-sauced/insights/compare/v2.2.0...v2.2.1) (2024-02-12)
+
+
+### 🐛 Bug Fixes
+
+* now if Posthog is down, we return null for feature flags or a user ([#2640](https://github.com/open-sauced/insights/issues/2640)) ([389a220](https://github.com/open-sauced/insights/commit/389a220fdb542e7d60b4bbac6795bc82326a473c))
+
 ## [2.2.0](https://github.com/open-sauced/insights/compare/v2.1.0...v2.2.0) (2024-02-08)
 
 
