@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.3.0-beta.1](https://github.com/open-sauced/insights/compare/v2.2.1-beta.3...v2.3.0-beta.1) (2024-02-12)
+
+
+### 🍕 Features
+
+* tracking repositories by first selecting an org ([#2630](https://github.com/open-sauced/insights/issues/2630)) ([af94c6e](https://github.com/open-sauced/insights/commit/af94c6ec4e11853f736c125e393ed7aa868e041d))
+
 ## [2.2.1-beta.3](https://github.com/open-sauced/insights/compare/v2.2.1-beta.2...v2.2.1-beta.3) (2024-02-12)
 
 
