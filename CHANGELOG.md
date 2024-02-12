@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.2.1-beta.3](https://github.com/open-sauced/insights/compare/v2.2.1-beta.2...v2.2.1-beta.3) (2024-02-12)
+
+
+### 🐛 Bug Fixes
+
+* fixed hydration error in workspaces tracked repos dashboard ([#2637](https://github.com/open-sauced/insights/issues/2637)) ([8f076e3](https://github.com/open-sauced/insights/commit/8f076e3f467b50b497040fd5ec89f625172fe80a))
+
 ## [2.2.1-beta.2](https://github.com/open-sauced/insights/compare/v2.2.1-beta.1...v2.2.1-beta.2) (2024-02-09)
 
 
