@@ -313,6 +313,7 @@ const AddContributorsToList = ({ list, workspaceId, timezoneOption }: AddContrib
             list={list}
             contributorCount={selectedContributors.length}
             isOpen={contributorsAdded}
+            workspaceId={workspaceId}
             onClose={() => {
               setContributorsAdded(false);
               setContributors([]);
