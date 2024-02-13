@@ -12,6 +12,7 @@ import { useWorkspacesRepoStats } from "lib/hooks/api/useWorkspacesRepoStats";
 import { DayRangePicker } from "components/shared/DayRangePicker";
 import { EmptyState } from "components/Workspaces/TrackedReposTable";
 import Card from "components/atoms/Card/card";
+import ClientOnly from "components/atoms/ClientOnly/client-only";
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const supabase = createPagesServerClient(context);
@@ -63,35 +64,37 @@ const WorkspaceDashboard = ({ workspace }: WorkspaceDashboardProps) => {
         </div>
       </div>
       <div className="mt-6 grid gap-6">
-        {repositories.length > 0 ? (
-          <>
-            <div className="flex flex-col lg:flex-row gap-6">
-              <RepositoryStatCard
-                type="pulls"
-                stats={stats?.data?.pull_requests}
-                isLoading={isLoadingStats}
-                hasError={isStatsError}
-              />
-              <RepositoryStatCard
-                type="issues"
-                stats={stats?.data?.issues}
-                isLoading={isLoadingStats}
-                hasError={isStatsError}
-              />
-              <RepositoryStatCard
-                type="engagement"
-                stats={stats?.data?.repos}
-                isLoading={isLoadingStats}
-                hasError={isStatsError}
-              />
-            </div>
-            <Repositories repositories={repositories} showSearch={false} />
-          </>
-        ) : (
-          <Card className="bg-transparent">
-            <EmptyState onAddRepos={() => router.push(`/workspaces/${workspace.id}/settings#load-wizard`)} />
-          </Card>
-        )}
+        <ClientOnly>
+          {repositories.length > 0 ? (
+            <>
+              <div className="flex flex-col lg:flex-row gap-6">
+                <RepositoryStatCard
+                  type="pulls"
+                  stats={stats?.data?.pull_requests}
+                  isLoading={isLoadingStats}
+                  hasError={isStatsError}
+                />
+                <RepositoryStatCard
+                  type="issues"
+                  stats={stats?.data?.issues}
+                  isLoading={isLoadingStats}
+                  hasError={isStatsError}
+                />
+                <RepositoryStatCard
+                  type="engagement"
+                  stats={stats?.data?.repos}
+                  isLoading={isLoadingStats}
+                  hasError={isStatsError}
+                />
+              </div>
+              <Repositories repositories={repositories} showSearch={false} />
+            </>
+          ) : (
+            <Card className="bg-transparent">
+              <EmptyState onAddRepos={() => router.push(`/workspaces/${workspace.id}/settings#load-wizard`)} />
+            </Card>
+          )}
+        </ClientOnly>
       </div>
     </WorkspaceLayout>
   );

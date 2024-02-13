@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import type { Meta, StoryFn } from "@storybook/react";
 import TypographyWrapper from "./wrapper";
 
