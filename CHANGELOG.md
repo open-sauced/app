@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.3.0-beta.4](https://github.com/open-sauced/insights/compare/v2.3.0-beta.3...v2.3.0-beta.4) (2024-02-13)
+
+
+### 🐛 Bug Fixes
+
+* now only the allowed repo stat properties are loaded into stat cards ([#2639](https://github.com/open-sauced/insights/issues/2639)) ([0deb656](https://github.com/open-sauced/insights/commit/0deb656d9b0ead327bcc385567279a253a38c8e4))
+
 ## [2.3.0-beta.3](https://github.com/open-sauced/insights/compare/v2.3.0-beta.2...v2.3.0-beta.3) (2024-02-13)
 
 
