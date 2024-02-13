@@ -163,6 +163,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
   };
 
   const checkIfHighlightLinkIsValid = (link: string) => {
+    if (!link) return setError("");
     if (isValidPullRequestUrl(link) || isValidIssueUrl(link) || isValidBlogUrl(link)) {
       setIsHighlightURLValid(true);
       setError("");
