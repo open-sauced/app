@@ -1,5 +1,6 @@
 import { fetchApiData } from "helpers/fetchApiData";
 
+// TODO: decide if user can add contributors on creation
 export async function createWorkspace({
   name,
   description = "",
