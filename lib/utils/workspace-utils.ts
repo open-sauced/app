@@ -94,6 +94,26 @@ export async function deleteTrackedRepos({
   return { data, error };
 }
 
+export async function deleteTrackedContributors({
+  workspaceId,
+  sessionToken,
+  contributors,
+}: {
+  workspaceId: string;
+  sessionToken: string;
+  contributors: { login: string }[];
+}) {
+  const { data, error } = await fetchApiData<any[]>({
+    path: `workspaces/${workspaceId}/contributors`,
+    method: "DELETE",
+    body: { contributors },
+    bearerToken: sessionToken,
+    pathValidator: () => true,
+  });
+
+  return { data, error };
+}
+
 export async function deleteWorkspace({ workspaceId, sessionToken }: { workspaceId: string; sessionToken: string }) {
   const { data, error } = await fetchApiData<Workspace>({
     path: `workspaces/${workspaceId}`,

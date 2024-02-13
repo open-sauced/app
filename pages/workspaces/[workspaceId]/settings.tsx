@@ -15,7 +15,12 @@ import Title from "components/atoms/Typography/title";
 import Text from "components/atoms/Typography/text";
 import { TrackedReposTable } from "components/Workspaces/TrackedReposTable";
 import { useGetWorkspaceRepositories } from "lib/hooks/api/useGetWorkspaceRepositories";
-import { deleteTrackedRepos, deleteWorkspace, saveWorkspace } from "lib/utils/workspace-utils";
+import {
+  deleteTrackedContributors,
+  deleteTrackedRepos,
+  deleteWorkspace,
+  saveWorkspace,
+} from "lib/utils/workspace-utils";
 import { WORKSPACE_UPDATED_EVENT } from "components/shared/AppSidebar/AppSidebar";
 import { WorkspacesTabList } from "components/Workspaces/WorkspacesTabList";
 import { useGetWorkspaceContributors } from "lib/hooks/api/useGetWorkspaceContributors";
@@ -44,7 +49,6 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
     if (error.status === 404) {
       return { notFound: true };
     }
-
     throw new Error(`Error loading workspaces page with ID ${workspaceId}`);
   }
 
@@ -141,12 +145,19 @@ const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
       repos: Array.from(trackedReposPendingDeletion, (repo) => ({ full_name: repo })),
     });
 
-    const [{ data, error }, { data: deletedRepos, error: reposDeleteError }] = await Promise.all([
-      workspaceUpdate,
-      workspaceRepoDeletes,
-    ]);
+    const workspaceContributorDeletes = await deleteTrackedContributors({
+      workspaceId: workspace.id,
+      sessionToken: sessionToken!,
+      contributors: Array.from(trackedContributorsPendingDeletion, (contributor) => ({ login: contributor })),
+    });
 
-    if (error || reposDeleteError) {
+    const [
+      { data, error },
+      { data: deletedRepos, error: reposDeleteError },
+      { data: deletedContributors, error: contributorsDeleteError },
+    ] = await Promise.all([workspaceUpdate, workspaceRepoDeletes, workspaceContributorDeletes]);
+
+    if (error || reposDeleteError || contributorsDeleteError) {
       toast({ description: `Workspace update failed`, variant: "danger" });
     } else {
       setWorkspaceName(name);
