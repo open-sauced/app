@@ -27,4 +27,29 @@ const getPullRequestsToDays = (pull_requests: DbRepoPREvents[], range = 30) => {
   return days;
 };
 
-export default getPullRequestsToDays;
+const getPullRequestsHistogramToDays = (pull_requests: DbPullRequestGitHubEventsHistogram[], range = 30) => {
+  const graphDays = pull_requests.reduce(
+    (days: { [name: string]: number }, curr: DbPullRequestGitHubEventsHistogram) => {
+      const day = differenceInDays(new Date(), new Date(curr.bucket));
+
+      if (days[day]) {
+        days[day] += curr.prs_count;
+      } else {
+        days[day] = curr.prs_count;
+      }
+
+      return days;
+    },
+    {}
+  );
+
+  const days: GraphData[] = [];
+
+  for (let d = range; d >= 0; d--) {
+    days.push({ x: d, y: graphDays[d] || 0 });
+  }
+
+  return days;
+};
+
+export { getPullRequestsToDays, getPullRequestsHistogramToDays };

@@ -1,37 +1,25 @@
-import { FaSearch } from "react-icons/fa";
 import { useEffect, useRef, useState } from "react";
 import { useEffectOnce } from "react-use";
 import Search from "components/atoms/Search/search";
 import { Avatar } from "components/atoms/Avatar/avatar-hover-card";
 import { SearchedReposTable } from "../SearchReposTable";
+import { SearchRepoEmptyState } from "./SearchRepoEmptyState";
 
 interface SearchByReposStepProps {
   onSearch: (search?: string) => void;
   onSelectRepo: (repo: string) => void;
   onToggleRepo: (repo: string, isSelected: boolean) => void;
+  onToggleAllRepos: (checked: boolean) => void;
   repositories: Map<string, boolean>;
   suggestedRepos: string[];
   searchedRepos: string[];
 }
 
-const EmptyState = () => {
-  return (
-    <div className="grid place-content-center">
-      <div className="text-center flex flex-col items-center p-24 gap-2 max-w-lg">
-        <div className="p-3 border rounded-lg mb-2">
-          <FaSearch size={24} className="text-light-slate-9" />
-        </div>
-        <span className="font-semibold">No repositories added yet!</span>
-        <span>Use the search bar to find the repositories you want to track on your workspace.</span>
-      </div>
-    </div>
-  );
-};
-
 export const SearchByReposStep = ({
   onSearch,
   onSelectRepo,
   onToggleRepo,
+  onToggleAllRepos,
   repositories,
   searchedRepos,
   suggestedRepos = [],
@@ -103,9 +91,15 @@ export const SearchByReposStep = ({
         />
       </form>
       {repositories.size === 0 ? (
-        <EmptyState />
+        <SearchRepoEmptyState type="by-repos" />
       ) : (
-        <SearchedReposTable repositories={filteredRepositories} onFilter={onFilterRepos} onToggleRepo={onToggleRepo} />
+        <SearchedReposTable
+          type="by-repos"
+          repositories={filteredRepositories}
+          onFilter={onFilterRepos}
+          onToggleRepo={onToggleRepo}
+          onToggleAllRepos={onToggleAllRepos}
+        />
       )}
     </div>
   );

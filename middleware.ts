@@ -2,7 +2,9 @@ import { createMiddlewareClient } from "@supabase/auth-helpers-nextjs";
 import { NextResponse } from "next/server";
 import { NextRequest } from "next/server";
 import { pathToRegexp } from "path-to-regexp";
+import { RequestCookies } from "next/dist/compiled/@edge-runtime/cookies";
 import { getAllFeatureFlags } from "lib/utils/server/feature-flags";
+import { fetchApiData } from "helpers/fetchApiData";
 
 // HACK: this is to get around the fact that the normal next.js middleware is not always functioning
 // correctly.
@@ -44,6 +46,43 @@ const loadSession = async (request: NextRequest, sessionToken?: string) => {
   }
 };
 
+async function getDefaultWorkspaceId(accessToken: string) {
+  const searchParams = new URLSearchParams({ limit: "1" });
+
+  const { data, error } = await fetchApiData<PagedData<Workspace>>({
+    path: `workspaces?${searchParams}`,
+    bearerToken: accessToken,
+    pathValidator: () => true,
+  });
+
+  if (error) {
+    return undefined;
+  }
+
+  return data?.data && data.data.length !== 0 ? data.data[0].id : undefined;
+}
+
+async function getWorkspaceUrl(cookies: RequestCookies, baseUrl: string, accessToken: string | undefined) {
+  if (cookies.has("workspaceId")) {
+    const workspaceId = cookies.get("workspaceId")?.value;
+
+    return new URL(`/workspaces/${workspaceId}/repositories`, baseUrl);
+  } else {
+    // Set the workspaceId cookie to the first workspace the user has access to.
+    // Longterm this will get set to their personal workspace by default.
+    const workspaceId = accessToken ? await getDefaultWorkspaceId(accessToken) : undefined;
+
+    if (workspaceId) {
+      cookies.set("workspaceId", workspaceId);
+      return new URL(`/workspaces/${workspaceId}/repositories`, baseUrl);
+    } else {
+      // you should never end up here once personal workspaces are available
+      // TODO: Remove this else once personal workspaces are available
+      return new URL("/workspaces/new", baseUrl);
+    }
+  }
+}
+
 export async function middleware(req: NextRequest) {
   const res = NextResponse.next();
 
@@ -77,6 +116,12 @@ export async function middleware(req: NextRequest) {
     const featureFlags = await getAllFeatureFlags(Number(session?.user.user_metadata.sub));
 
     if (featureFlags.workspaces) {
+      const [, , workspaceId] = req.nextUrl.pathname.split("/");
+
+      if (workspaceId !== "new") {
+        res.cookies.set("workspaceId", workspaceId);
+      }
+
       return res;
     } else {
       return NextResponse.rewrite(new URL("/404", req.url));
@@ -90,7 +135,15 @@ export async function middleware(req: NextRequest) {
       const data = await loadSession(req, session?.access_token);
 
       if (data.is_onboarded) {
-        return NextResponse.redirect(new URL("/hub/insights", req.url));
+        const featureFlags = await getAllFeatureFlags(Number(session?.user.user_metadata.sub));
+
+        if (featureFlags.workspaces) {
+          const workspaceUrl = await getWorkspaceUrl(req.cookies, req.url, session?.access_token);
+
+          return NextResponse.redirect(`${workspaceUrl}`);
+        } else {
+          return NextResponse.redirect(new URL("/hub/insights", req.url));
+        }
       } else {
         return NextResponse.redirect(new URL("/feed", req.url));
       }

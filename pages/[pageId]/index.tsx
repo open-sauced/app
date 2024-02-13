@@ -5,7 +5,7 @@ import Loader from "components/templates/Loader/loader";
 const Filter: React.FC = () => {
   const router = useRouter();
 
-  const { filterName: topic } = router.query;
+  const { pageId: topic } = router.query;
 
   useEffect(() => {
     if (topic) {
