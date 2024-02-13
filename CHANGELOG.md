@@ -5,6 +5,15 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.3.0-beta.3](https://github.com/open-sauced/insights/compare/v2.3.0-beta.2...v2.3.0-beta.3) (2024-02-13)
+
+
+### 🐛 Bug Fixes
+
+* add custom topic to filter select box ([#2638](https://github.com/open-sauced/insights/issues/2638)) ([63fceb1](https://github.com/open-sauced/insights/commit/63fceb1d572b8166a59a180a4ac2d486d5d9b7ba))
+* make a valid highlight link required to post a highlight ([#2587](https://github.com/open-sauced/insights/issues/2587)) ([bbcde1f](https://github.com/open-sauced/insights/commit/bbcde1fce09a75910e33d8b7afa04f708f8a3605))
+* now if Posthog is down, we return null for feature flags or a user ([#2640](https://github.com/open-sauced/insights/issues/2640)) ([#2641](https://github.com/open-sauced/insights/issues/2641)) ([4a889e5](https://github.com/open-sauced/insights/commit/4a889e5d8ca05c854c163df6507f5681d75c916b))
+
 ## [2.3.0-beta.2](https://github.com/open-sauced/insights/compare/v2.3.0-beta.1...v2.3.0-beta.2) (2024-02-12)
 
 
