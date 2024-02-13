@@ -206,14 +206,16 @@ const CreateListPage = ({ workspace }: { workspace: Workspace }) => {
       <div className="flex flex-col">
         <div className="flex flex-col gap-4 pb-6 border-b border-light-slate-8">
           <Title className="text-2xl leading-none" level={1}>
-            Create New List
+            Create New Contributor Insight
           </Title>
-          <Text>A list is a collection of contributors that you and your team can get insights for.</Text>
+          <Text>
+            A contributor insight is a collection of contributors that you and your team can get insights for.
+          </Text>
         </div>
 
         <div className="flex flex-col gap-4 pt-6 pb-16">
           <Title className="text-1xl leading-none" level={4}>
-            List Name
+            Insight Name
           </Title>
 
           <TextInput placeholder="Page Name (ex: My Team)" value={name} handleChange={handleOnNameChange} />

@@ -4,7 +4,6 @@ import dynamic from "next/dynamic";
 
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { GetServerSidePropsContext } from "next";
-import HubLayout from "layouts/hub";
 
 import PaginationResults from "components/molecules/PaginationResults/pagination-result";
 import Pagination from "components/molecules/Pagination/pagination";
@@ -189,8 +188,7 @@ const ListsHub = ({ workspace }: { workspace: Workspace }) => {
   );
 };
 
-ListsHub.PageLayout = HubLayout;
 ListsHub.SEO = {
-  title: "Lists Hub | Open Sauced Lists",
+  title: "Open Sauced Contributor Insights",
 };
 export default ListsHub;
