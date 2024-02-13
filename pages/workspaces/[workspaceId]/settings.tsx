@@ -132,6 +132,7 @@ const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
       description,
       sessionToken: sessionToken!,
       repos: Array.from(trackedRepos, ([repo]) => ({ full_name: repo })),
+      contributors: Array.from(trackedContributors, ([contributor]) => ({ login: contributor })),
     });
 
     const workspaceRepoDeletes = await deleteTrackedRepos({
@@ -151,9 +152,13 @@ const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
       setWorkspaceName(name);
       document.dispatchEvent(new CustomEvent(WORKSPACE_UPDATED_EVENT, { detail: data }));
       await mutateTrackedRepos();
+      await mutateTrackedContributors();
 
       setTrackedReposPendingDeletion(new Set());
       setTrackedRepos(new Map());
+
+      setTrackedContributorsPendingDeletion(new Set());
+      setTrackedContributors(new Map());
 
       toast({ description: `Workspace updated successfully`, variant: "success" });
     }
