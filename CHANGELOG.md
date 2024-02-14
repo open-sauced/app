@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.3.0-beta.5](https://github.com/open-sauced/insights/compare/v2.3.0-beta.4...v2.3.0-beta.5) (2024-02-14)
+
+
+### 🐛 Bug Fixes
+
+* send array of id and login when adding list contributors ([#2649](https://github.com/open-sauced/insights/issues/2649)) ([e45bd04](https://github.com/open-sauced/insights/commit/e45bd04e751cf9953d92e56410c2f86cba006175))
+
 ## [2.3.0-beta.4](https://github.com/open-sauced/insights/compare/v2.3.0-beta.3...v2.3.0-beta.4) (2024-02-13)
 
 
