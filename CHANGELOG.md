@@ -5,6 +5,29 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.3.0-beta.5](https://github.com/open-sauced/insights/compare/v2.3.0-beta.4...v2.3.0-beta.5) (2024-02-14)
+
+
+### 🐛 Bug Fixes
+
+* send array of id and login when adding list contributors ([#2649](https://github.com/open-sauced/insights/issues/2649)) ([e45bd04](https://github.com/open-sauced/insights/commit/e45bd04e751cf9953d92e56410c2f86cba006175))
+
+## [2.3.0-beta.4](https://github.com/open-sauced/insights/compare/v2.3.0-beta.3...v2.3.0-beta.4) (2024-02-13)
+
+
+### 🐛 Bug Fixes
+
+* now only the allowed repo stat properties are loaded into stat cards ([#2639](https://github.com/open-sauced/insights/issues/2639)) ([0deb656](https://github.com/open-sauced/insights/commit/0deb656d9b0ead327bcc385567279a253a38c8e4))
+
+## [2.3.0-beta.3](https://github.com/open-sauced/insights/compare/v2.3.0-beta.2...v2.3.0-beta.3) (2024-02-13)
+
+
+### 🐛 Bug Fixes
+
+* add custom topic to filter select box ([#2638](https://github.com/open-sauced/insights/issues/2638)) ([63fceb1](https://github.com/open-sauced/insights/commit/63fceb1d572b8166a59a180a4ac2d486d5d9b7ba))
+* make a valid highlight link required to post a highlight ([#2587](https://github.com/open-sauced/insights/issues/2587)) ([bbcde1f](https://github.com/open-sauced/insights/commit/bbcde1fce09a75910e33d8b7afa04f708f8a3605))
+* now if Posthog is down, we return null for feature flags or a user ([#2640](https://github.com/open-sauced/insights/issues/2640)) ([#2641](https://github.com/open-sauced/insights/issues/2641)) ([4a889e5](https://github.com/open-sauced/insights/commit/4a889e5d8ca05c854c163df6507f5681d75c916b))
+
 ## [2.3.0-beta.2](https://github.com/open-sauced/insights/compare/v2.3.0-beta.1...v2.3.0-beta.2) (2024-02-12)
 
 
