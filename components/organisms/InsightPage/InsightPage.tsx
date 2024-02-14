@@ -47,6 +47,7 @@ interface InsightPageProps {
   edit?: boolean;
   insight?: DbUserInsight;
   pageRepos?: DbRepo[];
+  workspaceId?: string;
 }
 const staticSuggestedRepos: RepoCardProfileProps[] = [
   {
@@ -72,7 +73,7 @@ const staticSuggestedRepos: RepoCardProfileProps[] = [
   },
 ];
 
-const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
+const InsightPage = ({ edit, insight, pageRepos, workspaceId }: InsightPageProps) => {
   const { sessionToken, providerToken, user } = useSupabaseAuth();
 
   const { toast } = useToast();
@@ -241,7 +242,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
     setCreateLoading(false);
     if (response && response.ok) {
       toast({ description: "Page updated successfully", variant: "success" });
-      router.push("/hub/insights");
+      router.push(workspaceId ? `/workspaces/${workspaceId}/repository-insights` : "/hub/insights");
     } else {
       toast({ description: "An error occurred!", variant: "danger" });
     }
@@ -411,7 +412,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
     if (response.ok) {
       toast({ description: "Page deleted successfully!", variant: "success" });
       setIsModalOpen(false);
-      router.push("/hub/insights");
+      router.push(workspaceId ? `/workspaces/${workspaceId}/repository-insights` : "/hub/insights");
     }
 
     setSubmitted(false);
