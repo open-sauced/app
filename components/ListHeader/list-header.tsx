@@ -15,12 +15,20 @@ import ClientOnly from "components/atoms/ClientOnly/client-only";
 interface ListHeaderProps {
   name: string;
   listId: string;
+  workspaceId?: string;
   isPublic: boolean;
   isOwner: boolean;
   numberOfContributors: number;
 }
 
-const ListHeader = ({ name, isPublic, listId, isOwner, numberOfContributors }: ListHeaderProps): JSX.Element => {
+const ListHeader = ({
+  name,
+  isPublic,
+  listId,
+  workspaceId,
+  isOwner,
+  numberOfContributors,
+}: ListHeaderProps): JSX.Element => {
   const { toast } = useToast();
   const posthog = usePostHog();
 
@@ -60,7 +68,11 @@ const ListHeader = ({ name, isPublic, listId, isOwner, numberOfContributors }: L
           <FiCopy className="mt-1 mr-2" /> Share
         </Button>
         {isOwner && (
-          <Link href={`/lists/${listId}/edit`}>
+          <Link
+            href={
+              workspaceId ? `/workspaces/${workspaceId}/contributor-insights/${listId}/edit` : `/lists/${listId}/edit`
+            }
+          >
             <Button variant="primary">
               <FaEdit className="mr-2" /> Edit List
             </Button>
