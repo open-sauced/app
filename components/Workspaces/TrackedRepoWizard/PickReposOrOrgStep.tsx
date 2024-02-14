@@ -33,7 +33,6 @@ export const PickReposOrOrgStep = ({ onSearchRepos, onPasteRepos, onImportOrg }:
         </button>
 
         <button
-          ref={buttonRef}
           className="flex flex-col text-light-slate-12 p-8 border rounded-lg focus-visible:!border-green-800 focus-visible:!ring-green-100"
           onClick={onPasteRepos}
         >
@@ -45,10 +44,9 @@ export const PickReposOrOrgStep = ({ onSearchRepos, onPasteRepos, onImportOrg }:
         </button>
 
         <button
-          className="flex flex-col text-light-slate-12 p-8 border rounded-lg focus-visible:!border-green-800 focus-visible:!ring-green-100 cursor-not-allowed disabled:opacity-50"
+          className="flex flex-col text-light-slate-12 p-8 border rounded-lg focus-visible:!border-green-800 focus-visible:!ring-green-100"
           title="coming soon"
           onClick={onImportOrg}
-          disabled
         >
           <FaGithub size={20} className="text-purple-800 mb-2" />
           <span data-button-title className="font-semibold">

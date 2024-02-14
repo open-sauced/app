@@ -196,7 +196,9 @@ const AddContributorsToList = ({ list, timezoneOption }: AddContributorsPageProp
   const addContributorsToList = async () => {
     const { error } = await fetchApiData({
       path: `lists/${list.id}/contributors`,
-      body: { contributors: selectedContributors.map(({ user_id }) => user_id) },
+      body: {
+        contributors: selectedContributors.map(({ user_id, author_login }) => ({ id: user_id, login: author_login })),
+      },
       method: "POST",
       bearerToken: sessionToken!,
       pathValidator: validateListPath,

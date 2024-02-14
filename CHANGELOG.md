@@ -5,6 +5,101 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.3.0-beta.7](https://github.com/open-sauced/insights/compare/v2.3.0-beta.6...v2.3.0-beta.7) (2024-02-14)
+
+
+### 🐛 Bug Fixes
+
+* now if an error occurs loading a workspace page, the workspaceId cookie is deleted ([#2646](https://github.com/open-sauced/insights/issues/2646)) ([4ab70fc](https://github.com/open-sauced/insights/commit/4ab70fcd09252f57872d8f978f38f4f6bcffdc73))
+
+## [2.3.0-beta.6](https://github.com/open-sauced/insights/compare/v2.3.0-beta.5...v2.3.0-beta.6) (2024-02-14)
+
+
+### 🐛 Bug Fixes
+
+* now more than 100 repos for an org are loaded for potential tracking ([#2650](https://github.com/open-sauced/insights/issues/2650)) ([0bc8232](https://github.com/open-sauced/insights/commit/0bc8232b6f3e3798324e6ef3948c7433b7de55ea))
+
+## [2.3.0-beta.5](https://github.com/open-sauced/insights/compare/v2.3.0-beta.4...v2.3.0-beta.5) (2024-02-14)
+
+
+### 🐛 Bug Fixes
+
+* send array of id and login when adding list contributors ([#2649](https://github.com/open-sauced/insights/issues/2649)) ([e45bd04](https://github.com/open-sauced/insights/commit/e45bd04e751cf9953d92e56410c2f86cba006175))
+
+## [2.3.0-beta.4](https://github.com/open-sauced/insights/compare/v2.3.0-beta.3...v2.3.0-beta.4) (2024-02-13)
+
+
+### 🐛 Bug Fixes
+
+* now only the allowed repo stat properties are loaded into stat cards ([#2639](https://github.com/open-sauced/insights/issues/2639)) ([0deb656](https://github.com/open-sauced/insights/commit/0deb656d9b0ead327bcc385567279a253a38c8e4))
+
+## [2.3.0-beta.3](https://github.com/open-sauced/insights/compare/v2.3.0-beta.2...v2.3.0-beta.3) (2024-02-13)
+
+
+### 🐛 Bug Fixes
+
+* add custom topic to filter select box ([#2638](https://github.com/open-sauced/insights/issues/2638)) ([63fceb1](https://github.com/open-sauced/insights/commit/63fceb1d572b8166a59a180a4ac2d486d5d9b7ba))
+* make a valid highlight link required to post a highlight ([#2587](https://github.com/open-sauced/insights/issues/2587)) ([bbcde1f](https://github.com/open-sauced/insights/commit/bbcde1fce09a75910e33d8b7afa04f708f8a3605))
+* now if Posthog is down, we return null for feature flags or a user ([#2640](https://github.com/open-sauced/insights/issues/2640)) ([#2641](https://github.com/open-sauced/insights/issues/2641)) ([4a889e5](https://github.com/open-sauced/insights/commit/4a889e5d8ca05c854c163df6507f5681d75c916b))
+
+## [2.3.0-beta.2](https://github.com/open-sauced/insights/compare/v2.3.0-beta.1...v2.3.0-beta.2) (2024-02-12)
+
+
+### 🐛 Bug Fixes
+
+* got rid of eslint error for next.js config ([#2633](https://github.com/open-sauced/insights/issues/2633)) ([0237c7d](https://github.com/open-sauced/insights/commit/0237c7dcdd1a21a2c007fe2c3e672460d68ec973))
+
+## [2.3.0-beta.1](https://github.com/open-sauced/insights/compare/v2.2.1-beta.3...v2.3.0-beta.1) (2024-02-12)
+
+
+### 🍕 Features
+
+* tracking repositories by first selecting an org ([#2630](https://github.com/open-sauced/insights/issues/2630)) ([af94c6e](https://github.com/open-sauced/insights/commit/af94c6ec4e11853f736c125e393ed7aa868e041d))
+
+## [2.2.1-beta.3](https://github.com/open-sauced/insights/compare/v2.2.1-beta.2...v2.2.1-beta.3) (2024-02-12)
+
+
+### 🐛 Bug Fixes
+
+* fixed hydration error in workspaces tracked repos dashboard ([#2637](https://github.com/open-sauced/insights/issues/2637)) ([8f076e3](https://github.com/open-sauced/insights/commit/8f076e3f467b50b497040fd5ec89f625172fe80a))
+
+## [2.2.1-beta.2](https://github.com/open-sauced/insights/compare/v2.2.1-beta.1...v2.2.1-beta.2) (2024-02-09)
+
+
+### 🐛 Bug Fixes
+
+* smaller screen tweaks for workspaces tracked repositories modal ([#2628](https://github.com/open-sauced/insights/issues/2628)) ([ebda69f](https://github.com/open-sauced/insights/commit/ebda69f6b21ecdae840b47c02021162da8b185a1))
+* update pr overview count when hovering over each bar ([#2631](https://github.com/open-sauced/insights/issues/2631)) ([b8a6da3](https://github.com/open-sauced/insights/commit/b8a6da3064061e890fa47ccb848e12235d48b061))
+
+## [2.2.1-beta.1](https://github.com/open-sauced/insights/compare/v2.2.0...v2.2.1-beta.1) (2024-02-09)
+
+
+### 🐛 Bug Fixes
+
+* now a new workspace (uncreated) won't store a workspaceId cookie ([#2626](https://github.com/open-sauced/insights/issues/2626)) ([5bfd1a3](https://github.com/open-sauced/insights/commit/5bfd1a39f1061873f08ecd2df21ed0c120c8e109))
+
+## [2.2.0-beta.7](https://github.com/open-sauced/insights/compare/v2.2.0-beta.6...v2.2.0-beta.7) (2024-02-08)
+
+
+### 🐛 Bug Fixes
+
+* now a click outside the tracked repositories modal closes the modal ([#2623](https://github.com/open-sauced/insights/issues/2623)) ([8d9ad05](https://github.com/open-sauced/insights/commit/8d9ad052a2405d94d87399e34b3f1aff414d7945))
+<<<<<<< HEAD
+=======
+* Now you can't type more than 500 characters for a highlight summary ([#2614](https://github.com/open-sauced/insights/issues/2614)) ([ed3d1d9](https://github.com/open-sauced/insights/commit/ed3d1d983023a2d3a9a83a5670239b3fea73be71))
+* redirect to `/workspaces/new` if user has no workspaces ([#2607](https://github.com/open-sauced/insights/issues/2607)) ([547fdf5](https://github.com/open-sauced/insights/commit/547fdf5719f0eab14032a6db6accc5fb7c4786e8))
+* reduced the height of the chart wrapper that is making the button unclickable ([#2611](https://github.com/open-sauced/insights/issues/2611)) ([7fb4e40](https://github.com/open-sauced/insights/commit/7fb4e4042853c5ad7cb776ef1194a6b06a5acc0f))
+* return empty arrays on error when fetching GitHub data ([#2616](https://github.com/open-sauced/insights/issues/2616)) ([5c9ad0b](https://github.com/open-sauced/insights/commit/5c9ad0b12a421e198340d46835aca5fa8dd6fd2f))
+>>>>>>> main
+
+## [2.2.0-beta.6](https://github.com/open-sauced/insights/compare/v2.2.0-beta.5...v2.2.0-beta.6) (2024-02-08)
+
+
+### 🍕 Features
+
+* implement CSV bulk adding ([#2620](https://github.com/open-sauced/insights/issues/2620)) ([3b17e8f](https://github.com/open-sauced/insights/commit/3b17e8f1b3537604c3a64295c3485c1c81195121))
+* use unique contributors for pull requests activity chart ([#2617](https://github.com/open-sauced/insights/issues/2617)) ([0dbe0d5](https://github.com/open-sauced/insights/commit/0dbe0d5c8055d6184b1c9502079851446e1aef6f))
+
 ## [2.2.0-beta.5](https://github.com/open-sauced/insights/compare/v2.2.0-beta.4...v2.2.0-beta.5) (2024-02-07)
 
 

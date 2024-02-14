@@ -113,6 +113,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
   const [highlightSuggestions, setHighlightSuggestions] = useState<any[]>([]);
   const [loadingSuggestions, setLoadingSuggestions] = useState<boolean>(false);
   const [createPopoverOpen, setCreatePopoverOpen] = useState(false);
+  const [isHighlightURLValid, setIsHighlightURLValid] = useState(false);
   const popoverContentRef = useRef<HTMLDivElement>(null);
   const generateSummary = useRef(false);
 
@@ -153,8 +154,6 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
 
   const { toast } = useToast();
 
-  const hasValidCharCount = charCount <= charLimit;
-
   const handleTextAreaInputChange = (value: string) => {
     setBodyText(value);
   };
@@ -165,6 +164,16 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
     }
   };
 
+  const checkIfHighlightLinkIsValid = (link: string) => {
+    if (!link) return setError("");
+    if (isValidPullRequestUrl(link) || isValidIssueUrl(link) || isValidBlogUrl(link)) {
+      setIsHighlightURLValid(true);
+      setError("");
+    } else {
+      setIsHighlightURLValid(false);
+      setError("Please provide a valid pull request, issue or dev.to blog link!");
+    }
+  };
   useEffect(() => {
     // disable scroll when form is open
     if (isFormOpenMobile) {
@@ -320,6 +329,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
   // if its a github link, automatically tag the repo if its not already tagged
   useEffect(() => {
     if (highlightLink && (isValidPullRequestUrl(highlightLink) || isValidIssueUrl(highlightLink))) {
+      setIsHighlightURLValid(true);
       if (generateSummary.current) {
         generateSummary.current = false;
         handleGenerateHighlightSummary();
@@ -379,6 +389,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
       setError("Please provide a valid pull request, issue or dev.to blog link!");
       return;
     }
+    setIsHighlightURLValid(true);
 
     if (highlightLink && (!highlightLink.includes("github.com") || !highlightLink.includes("dev.to"))) {
       toast({
@@ -428,13 +439,14 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
     e.preventDefault();
 
     const highlight = bodyText;
-
+    
     if (
       isValidPullRequestUrl(highlightLink) ||
       isValidIssueUrl(highlightLink) ||
       isValidDevToBlogUrl(highlightLink) ||
       isValidUrl(highlightLink)
     ) {
+      setIsHighlightURLValid(true);
       // generateApiPrUrl will return an object with repoName, orgName and issueId
       // it can work with both issue and pull request links
       const highlightType = isValidIssueUrl(highlightLink)
@@ -560,7 +572,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
           <form onSubmit={handlePostHighlight} className="flex flex-col gap-4 font-normal">
             <p role="alert">
               {errorMsg && (
-                <span className="inline-flex items-center gap-2 px-2 py-1 text-red-500 bg-red-100 border border-red-500 rounded-md w-full text-sm">
+                <span className="inline-flex items-center gap-2 px-2 py-1 mt-2 text-red-500 bg-white border border-red-500 rounded-md w-full text-sm">
                   <MdError size={20} /> {errorMsg}
                 </span>
               )}
@@ -590,10 +602,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
               />
 
               <p className="flex justify-end gap-1 text-xs text-light-slate-9">
-                <span className={`${!hasValidCharCount && "text-red-600"}`}>
-                  {!hasValidCharCount ? `-${charCount - charLimit}` : charCount}
-                </span>
-                / <span>{charLimit}</span>
+                <span>{charCount}</span>/ <span>{charLimit}</span>
               </p>
             </div>
 
@@ -646,9 +655,12 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                 </Tooltip>
                 <TextInput
                   id="highlight-link-input"
-                  className="text-sm shadow-none h-10 flex-none"
+                  className={`text-sm shadow-none h-10 flex-none ${!isHighlightURLValid && "border-red-500"}`}
                   value={highlightLink}
-                  handleChange={(value) => setHighlightLink(value)}
+                  handleChange={(value) => {
+                    setHighlightLink(value);
+                    checkIfHighlightLinkIsValid(value);
+                  }}
                   placeholder="Paste the URL to your PR, Issue, or Dev.to blog post."
                 />
               </div>
@@ -669,7 +681,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
 
             <Button
               loading={loading}
-              disabled={!bodyText || !hasValidCharCount}
+              disabled={!bodyText || !isHighlightURLValid || !highlightLink}
               className="ml-auto max-sm:hidden "
               variant="primary"
             >
@@ -828,7 +840,12 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
             <button onClick={() => setIsFormOpenMobile(false)} type="button">
               <IoClose className="text-2xl text-light-slate-10" />
             </button>
-            <Button loading={loading} disabled={!bodyText || !hasValidCharCount} className="py-0.5 " variant="primary">
+            <Button
+              loading={loading}
+              disabled={!bodyText || !isHighlightURLValid || !highlightLink}
+              className="py-0.5 "
+              variant="primary"
+            >
               Post
             </Button>
           </div>
@@ -851,10 +868,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
             <div className="flex items-center justify-between w-full">
               {date && <span className="text-xs text-light-slate-9">{format(date, "PPP")}</span>}
               <p className="flex justify-end gap-1 pb-2 ml-auto text-xs text-light-slate-9">
-                <span className={`${!hasValidCharCount && "text-red-600"}`}>
-                  {!hasValidCharCount ? `-${charCount - charLimit}` : charCount}
-                </span>
-                / <span>{charLimit}</span>
+                <span>{charCount}</span>/ <span>{charLimit}</span>
               </p>
             </div>
 
@@ -898,7 +912,10 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                 <TextInput
                   className="text-xs"
                   value={highlightLink}
-                  handleChange={(value) => setHighlightLink(value)}
+                  handleChange={(value) => {
+                    setHighlightLink(value);
+                    checkIfHighlightLinkIsValid(value);
+                  }}
                   placeholder="Paste your PR URL and get it auto-summarized!"
                 />
               </div>
