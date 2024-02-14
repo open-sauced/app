@@ -11,8 +11,9 @@ import StackedAvatar, { Contributor } from "../StackedAvatar/stacked-avatar";
 interface ListCardProps {
   list: DbUserList;
   handleOnDeleteClick?: (listName: string, listId: string) => void;
+  workspaceId?: string;
 }
-const ListCard = ({ list, handleOnDeleteClick }: ListCardProps) => {
+const ListCard = ({ list, handleOnDeleteClick, workspaceId }: ListCardProps) => {
   const { data: contributors, meta } = useFetchListContributors(list.id);
 
   const contributorsAvatar: Contributor[] = contributors?.map((contributor) => ({
@@ -26,7 +27,15 @@ const ListCard = ({ list, handleOnDeleteClick }: ListCardProps) => {
           <div className="flex items-center gap-4 lg:items-center ">
             <div className="w-4 h-4 rounded-full bg-light-orange-10"></div>
             <div className="flex justify-between text-xl text-light-slate-12">
-              <Link href={`/lists/${list.id}/overview`}>{list.name}</Link>
+              <Link
+                href={
+                  workspaceId
+                    ? `/workspaces/${workspaceId}/contributor-insights/${list.id}/overview`
+                    : `/lists/${list.id}/overview`
+                }
+              >
+                {list.name}
+              </Link>
             </div>
             <div
               className={clsx(
@@ -62,7 +71,11 @@ const ListCard = ({ list, handleOnDeleteClick }: ListCardProps) => {
               )}
               <Link
                 className="inline-block p-3 mr-2 border rounded-lg cursor-pointer bg-light-slate-1"
-                href={`/lists/${list.id}/overview`}
+                href={
+                  workspaceId
+                    ? `/workspaces/${workspaceId}/contributor-insights/${list.id}/overview`
+                    : `/lists/${list.id}/overview`
+                }
               >
                 <MdOutlineArrowForwardIos title="Go To Insight Page" className="text-lg text-light-slate-10" />
               </Link>
