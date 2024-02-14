@@ -2,11 +2,11 @@ import { useRef } from "react";
 import { FaSearch } from "react-icons/fa";
 import { useEffectOnce } from "react-use";
 
-interface PickOptionStepProps {
+interface PickContributorStepProps {
   onSearchContributors: () => void;
 }
 
-export const PickOptionStep = ({ onSearchContributors }: PickOptionStepProps) => {
+export const PickContributorStep = ({ onSearchContributors }: PickContributorStepProps) => {
   const buttonRef = useRef<HTMLButtonElement>(null);
 
   useEffectOnce(() => {

@@ -2,11 +2,11 @@ import { useState } from "react";
 import { useSearchContributors } from "lib/hooks/useSearchContributors";
 import { TrackedContributorsWizardLayout } from "./TrackedContributorsWizardLayout";
 
-import { PickOptionStep } from "./PickOptionStep";
+import { PickContributorStep } from "./PickContributorStep";
 import { SearchByContributorsStep } from "./SearchByContributorsStep";
 
 interface TrackedContributorsWizardProps {
-  onAddToTrackingList: (repos: Map<string, boolean>) => void;
+  onAddToTrackingList: (contributors: Map<string, boolean>) => void;
   onCancel: () => void;
 }
 
@@ -91,7 +91,7 @@ export const TrackedContributorsWizard = ({ onAddToTrackingList, onCancel }: Tra
     switch (step) {
       case "pickOption":
         return (
-          <PickOptionStep
+          <PickContributorStep
             onSearchContributors={() => {
               setStep("pickContributors");
             }}

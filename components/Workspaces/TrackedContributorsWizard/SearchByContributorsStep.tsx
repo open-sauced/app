@@ -22,8 +22,8 @@ const EmptyState = () => {
         <div className="p-3 border rounded-lg mb-2">
           <FaSearch size={24} className="text-light-slate-9" />
         </div>
-        <span className="font-semibold">No repositories added yet!</span>
-        <span>Use the search bar to find the repositories you want to track on your workspace.</span>
+        <span className="font-semibold">No contributors added yet!</span>
+        <span>Use the search bar to find the contributors you want to track on your workspace.</span>
       </div>
     </div>
   );
@@ -80,7 +80,7 @@ export const SearchByContributorsStep = ({
         }}
       >
         <Search
-          placeholder="Search repositories"
+          placeholder="Search contributors"
           className="w-full"
           isLoading={searchIsLoading}
           name="query"
@@ -89,7 +89,7 @@ export const SearchByContributorsStep = ({
             onSearch(event);
           }}
           onSelect={onSelectContributor}
-          suggestionsLabel={suggestedContributors.length > 0 ? "Suggested repositories" : undefined}
+          suggestionsLabel={suggestedContributors.length > 0 ? "Suggested contributors" : undefined}
           suggestions={(suggestedContributors.length > 0 ? suggestedContributors : searchedContributors).map(
             (contributor) => {
               const [owner] = contributor.split("/");

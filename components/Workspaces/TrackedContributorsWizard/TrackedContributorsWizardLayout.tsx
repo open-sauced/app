@@ -29,12 +29,12 @@ export const TrackedContributorsWizardLayout = ({
         </button>
         <div className="flex flex-col justify-between gap-4">
           <div className="px-4 pt-2">
-            <h2 className="font-semibold mb-4">Add repositories to track</h2>
+            <h2 className="font-semibold mb-4">Add contributors to track</h2>
             {children}
           </div>
           <div className="flex gap-4 items-center justify-end border-t-1 p-4">
             <span>
-              <span className="font-semibold">{trackedContributorsCount}</span> Selected repositories
+              <span className="font-semibold">{trackedContributorsCount}</span> Selected contributors
             </span>
             <Button
               variant="primary"
