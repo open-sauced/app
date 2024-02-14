@@ -15,9 +15,16 @@ import Title from "components/atoms/Typography/title";
 import Text from "components/atoms/Typography/text";
 import { TrackedReposTable } from "components/Workspaces/TrackedReposTable";
 import { useGetWorkspaceRepositories } from "lib/hooks/api/useGetWorkspaceRepositories";
-import { deleteTrackedRepos, deleteWorkspace, saveWorkspace } from "lib/utils/workspace-utils";
+import {
+  deleteTrackedContributors,
+  deleteTrackedRepos,
+  deleteWorkspace,
+  saveWorkspace,
+} from "lib/utils/workspace-utils";
 import { WORKSPACE_UPDATED_EVENT } from "components/shared/AppSidebar/AppSidebar";
 import { WorkspacesTabList } from "components/Workspaces/WorkspacesTabList";
+import { useGetWorkspaceContributors } from "lib/hooks/api/useGetWorkspaceContributors";
+import { TrackedContributorsTable } from "components/Workspaces/TrackedContributorsTable";
 import { deleteCookie } from "lib/utils/server/cookies";
 
 const DeleteWorkspaceModal = dynamic(() => import("components/Workspaces/DeleteWorkspaceModal"), { ssr: false });
@@ -45,7 +52,6 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
     if (error.status === 404) {
       return { notFound: true };
     }
-
     throw new Error(`Error loading workspaces page with ID ${workspaceId}`);
   }
 
@@ -58,6 +64,7 @@ const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
   const router = useRouter();
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [workspaceName, setWorkspaceName] = useState(workspace.name);
+
   const [trackedReposModalOpen, setTrackedReposModalOpen] = useState(false);
   const {
     data,
@@ -68,6 +75,18 @@ const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
   const initialTrackedRepos: string[] = data?.data?.map(({ repo }) => repo.full_name) ?? [];
   const [trackedRepos, setTrackedRepos] = useState<Map<string, boolean>>(new Map());
   const [trackedReposPendingDeletion, setTrackedReposPendingDeletion] = useState<Set<string>>(new Set());
+
+  const [trackedContributorsModalOpen, setTrackedContributorsModalOpen] = useState(false);
+  const {
+    data: contributorData,
+    error: contributorError,
+    mutate: mutateTrackedContributors,
+    isLoading: isContributorsLoading,
+  } = useGetWorkspaceContributors({ workspaceId: workspace.id });
+
+  const initialTrackedContributors: string[] = contributorData?.data?.map(({ contributor }) => contributor.login) ?? [];
+  const [trackedContributors, setTrackedContributors] = useState<Map<string, boolean>>(new Map());
+  const [trackedContributorsPendingDeletion, setTrackedContributorsPendingDeletion] = useState<Set<string>>(new Set());
 
   useEffectOnce(() => {
     if (window.location.hash === "#load-wizard") {
@@ -87,7 +106,22 @@ const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
     }
   });
 
+  const pendingTrackedContributors = new Map([
+    ...initialTrackedContributors.map((contributor) => [contributor, true] as const),
+    ...trackedContributors.entries(),
+  ]);
+
+  pendingTrackedContributors.forEach((isSelected, contributor) => {
+    if (trackedContributorsPendingDeletion.has(contributor)) {
+      pendingTrackedContributors.delete(contributor);
+    }
+  });
+
   const TrackedReposModal = dynamic(() => import("components/Workspaces/TrackedReposModal"), {
+    ssr: false,
+  });
+
+  const TrackedContributorsModal = dynamic(() => import("components/Workspaces/TrackedContributorsModal"), {
     ssr: false,
   });
 
@@ -105,6 +139,7 @@ const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
       description,
       sessionToken: sessionToken!,
       repos: Array.from(trackedRepos, ([repo]) => ({ full_name: repo })),
+      contributors: Array.from(trackedContributors, ([contributor]) => ({ login: contributor })),
     });
 
     const workspaceRepoDeletes = await deleteTrackedRepos({
@@ -113,20 +148,31 @@ const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
       repos: Array.from(trackedReposPendingDeletion, (repo) => ({ full_name: repo })),
     });
 
-    const [{ data, error }, { data: deletedRepos, error: reposDeleteError }] = await Promise.all([
-      workspaceUpdate,
-      workspaceRepoDeletes,
-    ]);
+    const workspaceContributorDeletes = await deleteTrackedContributors({
+      workspaceId: workspace.id,
+      sessionToken: sessionToken!,
+      contributors: Array.from(trackedContributorsPendingDeletion, (contributor) => ({ login: contributor })),
+    });
 
-    if (error || reposDeleteError) {
+    const [
+      { data, error },
+      { data: deletedRepos, error: reposDeleteError },
+      { data: deletedContributors, error: contributorsDeleteError },
+    ] = await Promise.all([workspaceUpdate, workspaceRepoDeletes, workspaceContributorDeletes]);
+
+    if (error || reposDeleteError || contributorsDeleteError) {
       toast({ description: `Workspace update failed`, variant: "danger" });
     } else {
       setWorkspaceName(name);
       document.dispatchEvent(new CustomEvent(WORKSPACE_UPDATED_EVENT, { detail: data }));
       await mutateTrackedRepos();
+      await mutateTrackedContributors();
 
       setTrackedReposPendingDeletion(new Set());
       setTrackedRepos(new Map());
+
+      setTrackedContributorsPendingDeletion(new Set());
+      setTrackedContributors(new Map());
 
       toast({ description: `Workspace updated successfully`, variant: "success" });
     }
@@ -194,6 +240,32 @@ const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
             setTrackedReposPendingDeletion((repos) => new Set([...repos, repo]));
           }}
         />
+
+        <TrackedContributorsTable
+          isLoading={isContributorsLoading}
+          contributors={pendingTrackedContributors}
+          onAddContributors={() => {
+            setTrackedContributorsModalOpen(true);
+          }}
+          onRemoveTrackedContributor={(event) => {
+            const { contributor } = event.currentTarget.dataset;
+
+            if (!contributor) {
+              // eslint-disable-next-line no-console
+              console.error("The tracked contributor to remove was not found");
+              return;
+            }
+
+            setTrackedContributors((contributors) => {
+              const updates = new Map([...contributors]);
+              updates.delete(contributor);
+
+              return updates;
+            });
+            setTrackedContributorsPendingDeletion((contributors) => new Set([...contributors, contributor]));
+          }}
+        />
+
         <div className="flex flex-col gap-4">
           <Title className="!text-1xl !leading-none py-6" level={4}>
             Danger Zone
@@ -237,6 +309,33 @@ const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
             setTrackedReposModalOpen(false);
           }}
         />
+
+        <TrackedContributorsModal
+          isOpen={trackedContributorsModalOpen}
+          onClose={() => {
+            setTrackedContributorsModalOpen(false);
+          }}
+          onAddToTrackingList={(contributors) => {
+            setTrackedContributorsModalOpen(false);
+            setTrackedContributors((trackedContributors) => {
+              const updates = new Map(trackedContributors);
+
+              contributors.forEach((isSelected, contributor) => {
+                if (isSelected) {
+                  updates.set(contributor, true);
+                } else {
+                  updates.delete(contributor);
+                }
+              });
+
+              return updates;
+            });
+          }}
+          onCancel={() => {
+            setTrackedContributorsModalOpen(false);
+          }}
+        />
+
         <DeleteWorkspaceModal
           isOpen={isDeleteModalOpen}
           onClose={() => setIsDeleteModalOpen(false)}
