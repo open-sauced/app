@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.3.0-beta.9](https://github.com/open-sauced/insights/compare/v2.3.0-beta.8...v2.3.0-beta.9) (2024-02-14)
+
+
+### 🍕 Features
+
+* track contributors in workspaces ([#2629](https://github.com/open-sauced/insights/issues/2629)) ([cf8c2ba](https://github.com/open-sauced/insights/commit/cf8c2ba5194c223718f407f24912485b0c4280b7))
+
 ## [2.3.0-beta.8](https://github.com/open-sauced/insights/compare/v2.3.0-beta.7...v2.3.0-beta.8) (2024-02-14)
 
 
