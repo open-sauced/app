@@ -30,7 +30,7 @@ export const WorkspaceLayout = ({ workspaceId, children }: WorkspaceLayoutProps)
         {!showingSidebar && (
           <button
             onClick={() => setShowingSidebar(true)}
-            className="absolute z-50 border-8 border-solid border-black inset-x-0 top-4 w-fit bg-white rounded-r-md shadow-lg p-2"
+            className="fixed z-50 border-8 border-solid border-black inset-x-0 top-16 w-fit bg-white rounded-r-md shadow-lg p-2"
           >
             <LuArrowRightToLine className="w-4 h-4 text-gray-500" />
           </button>
