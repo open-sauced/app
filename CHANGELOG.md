@@ -5,6 +5,20 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.3.0-beta.7](https://github.com/open-sauced/insights/compare/v2.3.0-beta.6...v2.3.0-beta.7) (2024-02-14)
+
+
+### 🐛 Bug Fixes
+
+* now if an error occurs loading a workspace page, the workspaceId cookie is deleted ([#2646](https://github.com/open-sauced/insights/issues/2646)) ([4ab70fc](https://github.com/open-sauced/insights/commit/4ab70fcd09252f57872d8f978f38f4f6bcffdc73))
+
+## [2.3.0-beta.6](https://github.com/open-sauced/insights/compare/v2.3.0-beta.5...v2.3.0-beta.6) (2024-02-14)
+
+
+### 🐛 Bug Fixes
+
+* now more than 100 repos for an org are loaded for potential tracking ([#2650](https://github.com/open-sauced/insights/issues/2650)) ([0bc8232](https://github.com/open-sauced/insights/commit/0bc8232b6f3e3798324e6ef3948c7433b7de55ea))
+
 ## [2.3.0-beta.5](https://github.com/open-sauced/insights/compare/v2.3.0-beta.4...v2.3.0-beta.5) (2024-02-14)
 
 
