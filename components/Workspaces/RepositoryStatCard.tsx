@@ -40,7 +40,7 @@ function getIcon(type: CardType) {
   }
 }
 
-function getHeadings(type: CardType) {
+function getStatPropertiesByType(type: CardType) {
   switch (type) {
     case "pulls":
       return ["opened", "merged", "velocity"];
@@ -68,7 +68,7 @@ const EmptyState = ({ type, hasError }: { type: CardType; hasError: boolean }) =
         </tbody>
       ) : (
         <tbody className="grid grid-cols-3 items center">
-          {getHeadings(type).map((stat) => (
+          {getStatPropertiesByType(type).map((stat) => (
             <tr key={stat} className="flex flex-col">
               <th className="capitalize font-medium text-sm text-light-slate-11 text-left">{stat}</th>
               <td className="semi-bold text-2xl mt-1">
@@ -96,23 +96,27 @@ export const RepositoryStatCard = ({ stats, type, isLoading, hasError }: Reposit
             <span>{titles[type]}</span>
           </caption>
           <tbody className="grid grid-cols-3 items center">
-            {Object.entries(stats).map(([stat, value]) => (
-              <tr key={stat} className="flex flex-col">
-                <th scope="row" className="capitalize font-medium text-sm text-light-slate-11 text-left">
-                  {stat}
-                </th>
-                {stat === "health" ? (
-                  <td className="text-black semi-bold text-2xl">
-                    {Math.round(value)}
-                    <span className="text-xs">/10</span>
-                  </td>
-                ) : (
-                  <td className="semi-bold text-2xl" title={`${value}`}>
-                    {stat === "velocity" ? `${Math.round(value)}d` : humanizeNumber(value, "abbreviation")}
-                  </td>
-                )}
-              </tr>
-            ))}
+            {Object.entries(stats)
+              .filter(([stat]) => getStatPropertiesByType(type).includes(stat))
+              .map(([stat, value]) => {
+                return (
+                  <tr key={stat} className="flex flex-col">
+                    <th scope="row" className="capitalize font-medium text-sm text-light-slate-11 text-left">
+                      {stat}
+                    </th>
+                    {stat === "health" ? (
+                      <td className="text-black semi-bold text-2xl">
+                        {Math.round(value)}
+                        <span className="text-xs">/10</span>
+                      </td>
+                    ) : (
+                      <td className="semi-bold text-2xl" title={`${value}`}>
+                        {stat === "velocity" ? `${Math.round(value)}d` : humanizeNumber(value, "abbreviation")}
+                      </td>
+                    )}
+                  </tr>
+                );
+              })}
           </tbody>
         </table>
       )}

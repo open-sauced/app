@@ -111,7 +111,11 @@ export const AppSideBar = ({ workspaceId, hideSidebar }: AppSideBarProps) => {
             <LuArrowLeftToLine className="w-4 h-4 text-gray-500" />
           </button>
         </div>
-        <SidebarMenuItem title="Home" url="" icon={<BiHomeAlt className="w-5 h-5 text-slate-400" />} />
+        <SidebarMenuItem
+          title="Home"
+          url={`/workspaces/${workspaceId}/repositories`}
+          icon={<BiHomeAlt className="w-5 h-5 text-slate-400" />}
+        />
         <div className="grid gap-1 mb-6">
           <div className="flex flex-row justify-between items-center ">
             <h3 className="uppercase text-gray-500 text-xs font-medium tracking-wide px-2">Insights</h3>
@@ -137,7 +141,7 @@ export const AppSideBar = ({ workspaceId, hideSidebar }: AppSideBarProps) => {
                 <DropdownMenuItem className="rounded-md group">
                   <Link
                     title="New Contributor Insight"
-                    href="/hub/lists/new"
+                    href={`/workspaces/${workspaceId}/contributor-insights/new`}
                     className="text-sm font-medium flex gap-1 items-center rounded-md transition-colors cursor-pointer tracking-tight p-1"
                   >
                     <UsersIcon className="w-5 h-5 text-slate-400 inline-flex mr-1 group-hover:stroke-orange-500" />
@@ -163,6 +167,7 @@ export const AppSideBar = ({ workspaceId, hideSidebar }: AppSideBarProps) => {
               insights={contributorInsights}
               type="list"
               isLoading={insightsLoading}
+              workspaceId={workspaceId}
             />
           </div>
         </div>
