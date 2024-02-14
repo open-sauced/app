@@ -52,7 +52,7 @@ const githubApiRepoFetcher: Fetcher = async (apiUrl: string) => {
       )
     );
 
-    // add the initial request's reponse to the start of the array of page data responses
+    // add the initial request's reponse to the start of the array of paged data responses
     responses.unshift(res);
 
     const data = await Promise.all(responses.map((response) => response.json()));
