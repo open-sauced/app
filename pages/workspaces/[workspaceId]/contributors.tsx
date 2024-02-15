@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { SquareFillIcon } from "@primer/octicons-react";
 import { GetServerSidePropsContext } from "next";
@@ -13,12 +14,14 @@ import { useFetchUser } from "lib/hooks/useFetchUser";
 import DevProfile from "components/molecules/DevProfile/dev-profile";
 import { getTopContributorLanguages } from "lib/utils/contributor-utils";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
+import { getPullRequestsToDays } from "lib/utils/get-prs-to-days";
+import Sparkline from "components/atoms/Sparkline/sparkline";
 
 type Contributor = {
   id: number;
   login: string;
 };
-        
+
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const supabase = createPagesServerClient(context);
   const {
@@ -51,6 +54,11 @@ export default function WorkspaceContributorsPage({ workspace }: WorkspaceContri
   const router = useRouter();
   const range = router.query.range ? Number(router.query.range as string) : 30;
   const { data, error: hasError } = useGetWorkspaceContributors({ workspaceId: workspace.id, range });
+  const contributors = data?.data
+    ? Array.from(data?.data, (info) => {
+        return { id: info.id, login: info.contributor.login };
+      })
+    : [];
 
   return (
     <WorkspaceLayout workspaceId={workspace.id}>
@@ -72,15 +80,27 @@ export default function WorkspaceContributorsPage({ workspace }: WorkspaceContri
 
 // COMPOSABLES
 function ContributorTable({ contributors }: { contributors: Contributor[] }) {
-  // TODO: change to table? or grid cols?
-  // TODO: implement table headers
+  const [range, setRange] = useState<7 | 30 | 90>(30);
+
   return (
-    <section className="m-4 border p-4 rounded-lg">
-      <ol className="grid grid-cols-1 gap-6">
+    <section className="w-full table table-fixed border-2 border-separate rounded-lg overflow-hidden">
+      <thead className="table-header-group">
+        <tr className="table-row text-slate-500">
+          <th className="table-cell bg-slate-100 pl-8 py-4 text-start font-normal">Name</th>
+          <th className="table-cell bg-slate-100 py-4 text-start font-normal">Last Contribution</th>
+          <th className="table-cell bg-slate-100 py-4 text-start font-normal">Activity</th>
+          <th className="table-cell bg-slate-100 py-4 text-start font-normal">Languages</th>
+          <th className="table-cell bg-slate-100 py-4 text-start font-normal">Timezone</th>
+          <th className="table-cell bg-slate-100 pr-8 py-4 text-start font-normal">Contributions</th>
+          <th className="table-cell bg-slate-100 pr-8 py-4 text-start font-normal">Last {range} Days</th>
+        </tr>
+      </thead>
+
+      <tbody className="table-row-group">
         {contributors.map((contributor) => (
           <ContributorRow key={contributor.login} contributor={contributor} />
         ))}
-      </ol>
+      </tbody>
     </section>
   );
 }
@@ -98,31 +118,32 @@ function ContributorRow({ contributor }: { contributor: Contributor }) {
   const mergedPrs = pullRequests.filter((pr) => pr.pr_is_merged);
   const contributorLanguageList = user ? getTopContributorLanguages(user) : [];
 
-  // TODO: determine how to render histogram data
-  /*
   const days = getPullRequestsToDays(pullRequests, Number(30)); // TODO: change range with filters
-  const histogramData = usePullRequestsHistogram({ contributor: contributor.login });
-  console.log({ days, histogramData });
-  */
+  const last30days = [
+    {
+      id: `last30-${contributor.login}`,
+      color: "hsl(19, 100%, 50%)",
+      data: days,
+    },
+  ];
 
-  // TODO: change to <td>? align with table headers
   return (
-    <li key={contributor.login} className="flex justify-between gap-8 items-center h-fit">
+    <tr key={contributor.login} className="table-row items-start">
       {/* Avatar & Name */}
-      <section className="flex gap-4">
+      <td className="table-cell pl-8 py-4">
         <DevProfile username={contributor.login} hasBorder={false} />
-      </section>
+      </td>
 
       {/* Last Contributed */}
-      <section>
+      <td className="table-cell py-4">
         <p>{getLastContributionDate(mergedPrs)}</p>
-      </section>
+      </td>
 
       {/* Activity */}
-      <section>{getActivity(pullRequests.length)}</section>
+      <td className="table-cell py-4">{getActivity(pullRequests.length)}</td>
 
       {/* Languages */}
-      <section>
+      <td className="table-cell py-4">
         {contributorLanguageList.length > 0 ? (
           <p className="flex gap-2">
             <span>{getLanguageAbbreviation(contributorLanguageList[0])}</span>
@@ -134,21 +155,23 @@ function ContributorRow({ contributor }: { contributor: Contributor }) {
         ) : (
           <p>-</p>
         )}
-      </section>
+      </td>
 
       {/* Timezone */}
-      <section>
+      <td className="table-cell py-4">
         <div className="flex gap-x-3">{user && user.timezone ? <p>{user.timezone}</p> : "-"}</div>
-      </section>
+      </td>
 
       {/* Contributions */}
-      <section>
+      <td className="table-cell py-4">
         <p>{mergedPrs.length}</p>
-      </section>
+      </td>
 
       {/* Last 30 Days (Histogram) */}
-      <section></section>
-    </li>
+      <td className="table-cell pr-8 py-4">
+        {last30days ? <Sparkline data={last30days} width="100%" height={54} /> : "-"}
+      </td>
+    </tr>
   );
 }
 
