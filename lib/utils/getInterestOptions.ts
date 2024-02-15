@@ -17,6 +17,8 @@ const interests = [
   "vue",
   "kubernetes",
   "clojure",
+  "kotlin",
+  "android",
 ] as const;
 export type InterestType = (typeof interests)[number];
 

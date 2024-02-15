@@ -5,6 +5,32 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.3.0-beta.13](https://github.com/open-sauced/insights/compare/v2.3.0-beta.12...v2.3.0-beta.13) (2024-02-15)
+
+
+### 🍕 Features
+
+* bulk add contributors to workspaces ([#2667](https://github.com/open-sauced/insights/issues/2667)) ([abd42f1](https://github.com/open-sauced/insights/commit/abd42f1154e6f42c68c85f774ac64bbc838a1a12))
+
+## [2.3.0-beta.12](https://github.com/open-sauced/insights/compare/v2.3.0-beta.11...v2.3.0-beta.12) (2024-02-15)
+
+
+### 🍕 Features
+
+* Add new topics (Android/Kotlin) ([#2661](https://github.com/open-sauced/insights/issues/2661)) ([51cafa2](https://github.com/open-sauced/insights/commit/51cafa2c9acaae816777745bc2cd58bf7a18c9ef))
+
+## [2.3.0-beta.11](https://github.com/open-sauced/insights/compare/v2.3.0-beta.10...v2.3.0-beta.11) (2024-02-15)
+
+
+### 🐛 Bug Fixes
+
+* removed non-implemented workspace pages ([#2660](https://github.com/open-sauced/insights/issues/2660)) ([7dca6bb](https://github.com/open-sauced/insights/commit/7dca6bba57cf3b4c8b3254c58e17d400d3837fb3))
+
+
+### 🍕 Features
+
+* now personal workspace is the default workspace ([#2659](https://github.com/open-sauced/insights/issues/2659)) ([174bf64](https://github.com/open-sauced/insights/commit/174bf64b5bc2a473960f90c6f1b3d0d86e9ca3f5))
+
 ## [2.3.0-beta.10](https://github.com/open-sauced/insights/compare/v2.3.0-beta.9...v2.3.0-beta.10) (2024-02-15)
 
 
