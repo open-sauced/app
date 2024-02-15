@@ -5,6 +5,32 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.3.0-beta.11](https://github.com/open-sauced/insights/compare/v2.3.0-beta.10...v2.3.0-beta.11) (2024-02-15)
+
+
+### 🐛 Bug Fixes
+
+* removed non-implemented workspace pages ([#2660](https://github.com/open-sauced/insights/issues/2660)) ([7dca6bb](https://github.com/open-sauced/insights/commit/7dca6bba57cf3b4c8b3254c58e17d400d3837fb3))
+
+
+### 🍕 Features
+
+* now personal workspace is the default workspace ([#2659](https://github.com/open-sauced/insights/issues/2659)) ([174bf64](https://github.com/open-sauced/insights/commit/174bf64b5bc2a473960f90c6f1b3d0d86e9ca3f5))
+
+## [2.3.0-beta.10](https://github.com/open-sauced/insights/compare/v2.3.0-beta.9...v2.3.0-beta.10) (2024-02-15)
+
+
+### 🍕 Features
+
+* make app sidebar collapsible ([#2619](https://github.com/open-sauced/insights/issues/2619)) ([1e9a1f7](https://github.com/open-sauced/insights/commit/1e9a1f7fc76f4d684c8afd931c10bff72eb00091))
+
+## [2.3.0-beta.9](https://github.com/open-sauced/insights/compare/v2.3.0-beta.8...v2.3.0-beta.9) (2024-02-14)
+
+
+### 🍕 Features
+
+* track contributors in workspaces ([#2629](https://github.com/open-sauced/insights/issues/2629)) ([cf8c2ba](https://github.com/open-sauced/insights/commit/cf8c2ba5194c223718f407f24912485b0c4280b7))
+
 ## [2.3.0-beta.8](https://github.com/open-sauced/insights/compare/v2.3.0-beta.7...v2.3.0-beta.8) (2024-02-14)
 
 
