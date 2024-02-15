@@ -166,7 +166,12 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
 
   const checkIfHighlightLinkIsValid = (link: string) => {
     if (!link) return setError("");
-    if (isValidPullRequestUrl(link) || isValidIssueUrl(link) || isValidBlogUrl(link)) {
+    if (
+      isValidPullRequestUrl(highlightLink) ||
+      isValidIssueUrl(highlightLink) ||
+      isValidDevToBlogUrl(highlightLink) ||
+      isValidUrl(highlightLink)
+    ) {
       setIsHighlightURLValid(true);
       setError("");
     } else {
@@ -174,6 +179,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
       setError("Please provide a valid pull request, issue or dev.to blog link!");
     }
   };
+
   useEffect(() => {
     // disable scroll when form is open
     if (isFormOpenMobile) {
@@ -439,7 +445,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
     e.preventDefault();
 
     const highlight = bodyText;
-    
+
     if (
       isValidPullRequestUrl(highlightLink) ||
       isValidIssueUrl(highlightLink) ||
