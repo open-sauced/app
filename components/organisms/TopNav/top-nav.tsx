@@ -59,16 +59,18 @@ const Nav = ({ className, name = "Main" }: { className?: string; name?: string }
   return (
     <nav className={className} aria-label={name}>
       <ul className="flex gap-3 md:gap-8 mb-1 ml-2 sm:m-0 w-full sm:w-auto">
-        <li>
-          <Link
-            className={`font-medium text-sm text-slate-700 hover:text-orange-500 transition-all ${getActiveStyle(
-              router.asPath.startsWith("/workspaces/") || router.asPath.includes("/pages")
-            )}`}
-            href={"/"}
-          >
-            Workspace
-          </Link>
-        </li>
+        {user ? (
+          <li>
+            <Link
+              className={`font-medium text-sm text-slate-700 hover:text-orange-500 transition-all ${getActiveStyle(
+                router.asPath.startsWith("/workspaces/") || router.asPath.includes("/pages")
+              )}`}
+              href={"/"}
+            >
+              Workspace
+            </Link>
+          </li>
+        ) : null}
         <li>
           <Link
             className={`tracking-tight font-medium text-slate-700 text-sm hover:text-orange-500 transition-all ${getActiveStyle(
