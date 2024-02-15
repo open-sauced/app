@@ -5,6 +5,18 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.3.1](https://github.com/open-sauced/insights/compare/v2.3.0...v2.3.1) (2024-02-15)
+
+
+### ⏩ Reverts
+
+* Revert "feat: now personal workspace is the default workspace (#2659)" ([4114171](https://github.com/open-sauced/insights/commit/4114171a96a4d36c8ad477cf474e4272188e99f6)), closes [#2659](https://github.com/open-sauced/insights/issues/2659)
+
+
+### 🐛 Bug Fixes
+
+* hotfix Revert 2659 nickytonline/personal workspace middleware ([#2673](https://github.com/open-sauced/insights/issues/2673)) ([8926fcc](https://github.com/open-sauced/insights/commit/8926fcce7a1c845a766ef708a802ed8df991c77a))
+
 ## [2.3.0](https://github.com/open-sauced/insights/compare/v2.2.1...v2.3.0) (2024-02-15)
 
 
