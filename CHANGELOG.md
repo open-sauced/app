@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.3.0-beta.12](https://github.com/open-sauced/insights/compare/v2.3.0-beta.11...v2.3.0-beta.12) (2024-02-15)
+
+
+### 🍕 Features
+
+* Add new topics (Android/Kotlin) ([#2661](https://github.com/open-sauced/insights/issues/2661)) ([51cafa2](https://github.com/open-sauced/insights/commit/51cafa2c9acaae816777745bc2cd58bf7a18c9ef))
+
 ## [2.3.0-beta.11](https://github.com/open-sauced/insights/compare/v2.3.0-beta.10...v2.3.0-beta.11) (2024-02-15)
 
 
