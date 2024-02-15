@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.3.0-beta.10](https://github.com/open-sauced/insights/compare/v2.3.0-beta.9...v2.3.0-beta.10) (2024-02-15)
+
+
+### 🍕 Features
+
+* make app sidebar collapsible ([#2619](https://github.com/open-sauced/insights/issues/2619)) ([1e9a1f7](https://github.com/open-sauced/insights/commit/1e9a1f7fc76f4d684c8afd931c10bff72eb00091))
+
 ## [2.3.0-beta.9](https://github.com/open-sauced/insights/compare/v2.3.0-beta.8...v2.3.0-beta.9) (2024-02-14)
 
 
