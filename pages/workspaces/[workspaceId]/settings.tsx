@@ -16,6 +16,7 @@ import Text from "components/atoms/Typography/text";
 import { TrackedReposTable } from "components/Workspaces/TrackedReposTable";
 import { useGetWorkspaceRepositories } from "lib/hooks/api/useGetWorkspaceRepositories";
 import {
+  WORKSPACE_ID_COOKIE_NAME,
   deleteTrackedContributors,
   deleteTrackedRepos,
   deleteWorkspace,
@@ -47,7 +48,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
   });
 
   if (error) {
-    deleteCookie(context.res, "workspaceId");
+    deleteCookie(context.res, WORKSPACE_ID_COOKIE_NAME);
 
     if (error.status === 404) {
       return { notFound: true };
