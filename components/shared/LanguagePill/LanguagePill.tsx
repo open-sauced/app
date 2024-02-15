@@ -44,7 +44,7 @@ export const renderTopicIcon = (name: InterestType) => {
     kubernetes: KubernetesIcon,
     clojure: CloJureIcon,
     kotlin: KotlinIcon,
-    android: AndroidIcon
+    android: AndroidIcon,
   };
 
   return iconMap[name];

@@ -43,7 +43,7 @@ const topicThumbnails: Record<InterestType, string> = {
   kubernetes: kubernetes,
   clojure: clojure,
   kotlin: kotlin,
-  android: android
+  android: android,
 };
 
 const getTopicThumbnail = (topic: keyof typeof topicThumbnails) => {
