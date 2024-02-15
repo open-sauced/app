@@ -16,11 +16,10 @@ export async function createWorkspace({
   repos: { full_name: string }[];
   contributors: { login: string }[];
 }) {
-  // TODO: refactor to include initial contributors
   const { data, error } = await fetchApiData<Workspace>({
     path: "workspaces",
     method: "POST",
-    body: { name, description, members, repos },
+    body: { name, description, members, repos, contributors },
     bearerToken: sessionToken,
     pathValidator: () => true,
   });

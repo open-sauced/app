@@ -36,6 +36,7 @@ const NewWorkspace = () => {
       members: [],
       sessionToken: sessionToken!,
       repos: Array.from(trackedRepos, ([repo]) => ({ full_name: repo })),
+      contributors: Array.from(trackedContributors, ([contributor]) => ({ login: contributor })),
     });
 
     if (error || !workspace) {
