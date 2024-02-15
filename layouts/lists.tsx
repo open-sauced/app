@@ -15,9 +15,11 @@ const ListPageLayout = ({
   numberOfContributors,
   isOwner = false,
   showRangeFilter = true,
+  workspaceId,
 }: {
   children: React.ReactNode;
   list?: DBList;
+  workspaceId?: string;
   numberOfContributors: number;
   isOwner: boolean;
   showRangeFilter?: boolean;
@@ -42,13 +44,22 @@ const ListPageLayout = ({
                 numberOfContributors={numberOfContributors}
                 isPublic={list.is_public}
                 listId={list.id}
+                workspaceId={workspaceId}
                 isOwner={isOwner}
               />
             )}
           </Header>
 
           <div className="md:grid md:grid-cols-2 flex flex-col border-b">
-            {list && <TabsList tabList={tabList} selectedTab={selectedTab} pageId={`/lists/${list.id}`} />}
+            {list && (
+              <TabsList
+                tabList={tabList}
+                selectedTab={selectedTab}
+                pageId={
+                  workspaceId ? `/workspaces/${workspaceId}/contributor-insights/${list.id}` : `/lists/${list.id}`
+                }
+              />
+            )}
             <div>
               <div className="flex justify-end p-4 md:p-0">
                 {showRangeFilter && (

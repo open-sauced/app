@@ -5,6 +5,309 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.3.0-beta.13](https://github.com/open-sauced/insights/compare/v2.3.0-beta.12...v2.3.0-beta.13) (2024-02-15)
+
+
+### 🍕 Features
+
+* bulk add contributors to workspaces ([#2667](https://github.com/open-sauced/insights/issues/2667)) ([abd42f1](https://github.com/open-sauced/insights/commit/abd42f1154e6f42c68c85f774ac64bbc838a1a12))
+
+## [2.3.0-beta.12](https://github.com/open-sauced/insights/compare/v2.3.0-beta.11...v2.3.0-beta.12) (2024-02-15)
+
+
+### 🍕 Features
+
+* Add new topics (Android/Kotlin) ([#2661](https://github.com/open-sauced/insights/issues/2661)) ([51cafa2](https://github.com/open-sauced/insights/commit/51cafa2c9acaae816777745bc2cd58bf7a18c9ef))
+
+## [2.3.0-beta.11](https://github.com/open-sauced/insights/compare/v2.3.0-beta.10...v2.3.0-beta.11) (2024-02-15)
+
+
+### 🐛 Bug Fixes
+
+* removed non-implemented workspace pages ([#2660](https://github.com/open-sauced/insights/issues/2660)) ([7dca6bb](https://github.com/open-sauced/insights/commit/7dca6bba57cf3b4c8b3254c58e17d400d3837fb3))
+
+
+### 🍕 Features
+
+* now personal workspace is the default workspace ([#2659](https://github.com/open-sauced/insights/issues/2659)) ([174bf64](https://github.com/open-sauced/insights/commit/174bf64b5bc2a473960f90c6f1b3d0d86e9ca3f5))
+
+## [2.3.0-beta.10](https://github.com/open-sauced/insights/compare/v2.3.0-beta.9...v2.3.0-beta.10) (2024-02-15)
+
+
+### 🍕 Features
+
+* make app sidebar collapsible ([#2619](https://github.com/open-sauced/insights/issues/2619)) ([1e9a1f7](https://github.com/open-sauced/insights/commit/1e9a1f7fc76f4d684c8afd931c10bff72eb00091))
+
+## [2.3.0-beta.9](https://github.com/open-sauced/insights/compare/v2.3.0-beta.8...v2.3.0-beta.9) (2024-02-14)
+
+
+### 🍕 Features
+
+* track contributors in workspaces ([#2629](https://github.com/open-sauced/insights/issues/2629)) ([cf8c2ba](https://github.com/open-sauced/insights/commit/cf8c2ba5194c223718f407f24912485b0c4280b7))
+
+## [2.3.0-beta.8](https://github.com/open-sauced/insights/compare/v2.3.0-beta.7...v2.3.0-beta.8) (2024-02-14)
+
+
+### 🍕 Features
+
+* add contributor insights to workspaces ([#2648](https://github.com/open-sauced/insights/issues/2648)) ([e9c5da8](https://github.com/open-sauced/insights/commit/e9c5da85807cddda8dfde9f3f2a982bba4c41b61))
+
+## [2.3.0-beta.7](https://github.com/open-sauced/insights/compare/v2.3.0-beta.6...v2.3.0-beta.7) (2024-02-14)
+
+
+### 🐛 Bug Fixes
+
+* now if an error occurs loading a workspace page, the workspaceId cookie is deleted ([#2646](https://github.com/open-sauced/insights/issues/2646)) ([4ab70fc](https://github.com/open-sauced/insights/commit/4ab70fcd09252f57872d8f978f38f4f6bcffdc73))
+
+## [2.3.0-beta.6](https://github.com/open-sauced/insights/compare/v2.3.0-beta.5...v2.3.0-beta.6) (2024-02-14)
+
+
+### 🐛 Bug Fixes
+
+* now more than 100 repos for an org are loaded for potential tracking ([#2650](https://github.com/open-sauced/insights/issues/2650)) ([0bc8232](https://github.com/open-sauced/insights/commit/0bc8232b6f3e3798324e6ef3948c7433b7de55ea))
+
+## [2.3.0-beta.5](https://github.com/open-sauced/insights/compare/v2.3.0-beta.4...v2.3.0-beta.5) (2024-02-14)
+
+
+### 🐛 Bug Fixes
+
+* send array of id and login when adding list contributors ([#2649](https://github.com/open-sauced/insights/issues/2649)) ([e45bd04](https://github.com/open-sauced/insights/commit/e45bd04e751cf9953d92e56410c2f86cba006175))
+
+## [2.3.0-beta.4](https://github.com/open-sauced/insights/compare/v2.3.0-beta.3...v2.3.0-beta.4) (2024-02-13)
+
+
+### 🐛 Bug Fixes
+
+* now only the allowed repo stat properties are loaded into stat cards ([#2639](https://github.com/open-sauced/insights/issues/2639)) ([0deb656](https://github.com/open-sauced/insights/commit/0deb656d9b0ead327bcc385567279a253a38c8e4))
+
+## [2.3.0-beta.3](https://github.com/open-sauced/insights/compare/v2.3.0-beta.2...v2.3.0-beta.3) (2024-02-13)
+
+
+### 🐛 Bug Fixes
+
+* add custom topic to filter select box ([#2638](https://github.com/open-sauced/insights/issues/2638)) ([63fceb1](https://github.com/open-sauced/insights/commit/63fceb1d572b8166a59a180a4ac2d486d5d9b7ba))
+* make a valid highlight link required to post a highlight ([#2587](https://github.com/open-sauced/insights/issues/2587)) ([bbcde1f](https://github.com/open-sauced/insights/commit/bbcde1fce09a75910e33d8b7afa04f708f8a3605))
+* now if Posthog is down, we return null for feature flags or a user ([#2640](https://github.com/open-sauced/insights/issues/2640)) ([#2641](https://github.com/open-sauced/insights/issues/2641)) ([4a889e5](https://github.com/open-sauced/insights/commit/4a889e5d8ca05c854c163df6507f5681d75c916b))
+
+## [2.3.0-beta.2](https://github.com/open-sauced/insights/compare/v2.3.0-beta.1...v2.3.0-beta.2) (2024-02-12)
+
+
+### 🐛 Bug Fixes
+
+* got rid of eslint error for next.js config ([#2633](https://github.com/open-sauced/insights/issues/2633)) ([0237c7d](https://github.com/open-sauced/insights/commit/0237c7dcdd1a21a2c007fe2c3e672460d68ec973))
+
+## [2.3.0-beta.1](https://github.com/open-sauced/insights/compare/v2.2.1-beta.3...v2.3.0-beta.1) (2024-02-12)
+
+
+### 🍕 Features
+
+* tracking repositories by first selecting an org ([#2630](https://github.com/open-sauced/insights/issues/2630)) ([af94c6e](https://github.com/open-sauced/insights/commit/af94c6ec4e11853f736c125e393ed7aa868e041d))
+
+## [2.2.1-beta.3](https://github.com/open-sauced/insights/compare/v2.2.1-beta.2...v2.2.1-beta.3) (2024-02-12)
+
+
+### 🐛 Bug Fixes
+
+* fixed hydration error in workspaces tracked repos dashboard ([#2637](https://github.com/open-sauced/insights/issues/2637)) ([8f076e3](https://github.com/open-sauced/insights/commit/8f076e3f467b50b497040fd5ec89f625172fe80a))
+
+## [2.2.1-beta.2](https://github.com/open-sauced/insights/compare/v2.2.1-beta.1...v2.2.1-beta.2) (2024-02-09)
+
+
+### 🐛 Bug Fixes
+
+* smaller screen tweaks for workspaces tracked repositories modal ([#2628](https://github.com/open-sauced/insights/issues/2628)) ([ebda69f](https://github.com/open-sauced/insights/commit/ebda69f6b21ecdae840b47c02021162da8b185a1))
+* update pr overview count when hovering over each bar ([#2631](https://github.com/open-sauced/insights/issues/2631)) ([b8a6da3](https://github.com/open-sauced/insights/commit/b8a6da3064061e890fa47ccb848e12235d48b061))
+
+## [2.2.1-beta.1](https://github.com/open-sauced/insights/compare/v2.2.0...v2.2.1-beta.1) (2024-02-09)
+
+
+### 🐛 Bug Fixes
+
+* now a new workspace (uncreated) won't store a workspaceId cookie ([#2626](https://github.com/open-sauced/insights/issues/2626)) ([5bfd1a3](https://github.com/open-sauced/insights/commit/5bfd1a39f1061873f08ecd2df21ed0c120c8e109))
+
+## [2.2.0-beta.7](https://github.com/open-sauced/insights/compare/v2.2.0-beta.6...v2.2.0-beta.7) (2024-02-08)
+
+
+### 🐛 Bug Fixes
+
+* now a click outside the tracked repositories modal closes the modal ([#2623](https://github.com/open-sauced/insights/issues/2623)) ([8d9ad05](https://github.com/open-sauced/insights/commit/8d9ad052a2405d94d87399e34b3f1aff414d7945))
+<<<<<<< HEAD
+=======
+* Now you can't type more than 500 characters for a highlight summary ([#2614](https://github.com/open-sauced/insights/issues/2614)) ([ed3d1d9](https://github.com/open-sauced/insights/commit/ed3d1d983023a2d3a9a83a5670239b3fea73be71))
+* redirect to `/workspaces/new` if user has no workspaces ([#2607](https://github.com/open-sauced/insights/issues/2607)) ([547fdf5](https://github.com/open-sauced/insights/commit/547fdf5719f0eab14032a6db6accc5fb7c4786e8))
+* reduced the height of the chart wrapper that is making the button unclickable ([#2611](https://github.com/open-sauced/insights/issues/2611)) ([7fb4e40](https://github.com/open-sauced/insights/commit/7fb4e4042853c5ad7cb776ef1194a6b06a5acc0f))
+* return empty arrays on error when fetching GitHub data ([#2616](https://github.com/open-sauced/insights/issues/2616)) ([5c9ad0b](https://github.com/open-sauced/insights/commit/5c9ad0b12a421e198340d46835aca5fa8dd6fd2f))
+>>>>>>> main
+
+## [2.2.0-beta.6](https://github.com/open-sauced/insights/compare/v2.2.0-beta.5...v2.2.0-beta.6) (2024-02-08)
+
+
+### 🍕 Features
+
+* implement CSV bulk adding ([#2620](https://github.com/open-sauced/insights/issues/2620)) ([3b17e8f](https://github.com/open-sauced/insights/commit/3b17e8f1b3537604c3a64295c3485c1c81195121))
+* use unique contributors for pull requests activity chart ([#2617](https://github.com/open-sauced/insights/issues/2617)) ([0dbe0d5](https://github.com/open-sauced/insights/commit/0dbe0d5c8055d6184b1c9502079851446e1aef6f))
+
+## [2.2.0-beta.5](https://github.com/open-sauced/insights/compare/v2.2.0-beta.4...v2.2.0-beta.5) (2024-02-07)
+
+
+### 🍕 Features
+
+* add repositories to workspace in bulk ([#2608](https://github.com/open-sauced/insights/issues/2608)) ([e941f34](https://github.com/open-sauced/insights/commit/e941f342195ffed38d6ae12b6d76637e09f48976))
+
+## [2.2.0-beta.4](https://github.com/open-sauced/insights/compare/v2.2.0-beta.3...v2.2.0-beta.4) (2024-02-07)
+
+
+### 🐛 Bug Fixes
+
+* return empty arrays on error when fetching GitHub data ([#2616](https://github.com/open-sauced/insights/issues/2616)) ([5c9ad0b](https://github.com/open-sauced/insights/commit/5c9ad0b12a421e198340d46835aca5fa8dd6fd2f))
+
+## [2.2.0-beta.3](https://github.com/open-sauced/insights/compare/v2.2.0-beta.2...v2.2.0-beta.3) (2024-02-07)
+
+
+### 🐛 Bug Fixes
+
+* reduced the height of the chart wrapper that is making the button unclickable ([#2611](https://github.com/open-sauced/insights/issues/2611)) ([7fb4e40](https://github.com/open-sauced/insights/commit/7fb4e4042853c5ad7cb776ef1194a6b06a5acc0f))
+
+## [2.2.0-beta.2](https://github.com/open-sauced/insights/compare/v2.2.0-beta.1...v2.2.0-beta.2) (2024-02-07)
+
+
+### 🐛 Bug Fixes
+
+* Now you can't type more than 500 characters for a highlight summary ([#2614](https://github.com/open-sauced/insights/issues/2614)) ([ed3d1d9](https://github.com/open-sauced/insights/commit/ed3d1d983023a2d3a9a83a5670239b3fea73be71))
+
+## [2.2.0-beta.1](https://github.com/open-sauced/insights/compare/v2.1.0...v2.2.0-beta.1) (2024-02-06)
+
+
+### 🐛 Bug Fixes
+
+* redirect to `/workspaces/new` if user has no workspaces ([#2607](https://github.com/open-sauced/insights/issues/2607)) ([547fdf5](https://github.com/open-sauced/insights/commit/547fdf5719f0eab14032a6db6accc5fb7c4786e8))
+
+
+### 🍕 Features
+
+* connect repository pull requests graph to v2 histogram endpoint ([#2602](https://github.com/open-sauced/insights/issues/2602)) ([1315991](https://github.com/open-sauced/insights/commit/1315991658552aeb2ebe5a64b88d496b3350ab89))
+
+## [2.1.0](https://github.com/open-sauced/insights/compare/v2.0.0...v2.1.0) (2024-02-06)
+
+
+### 🤖 Build System
+
+* include optional dependencies when installing packages ([#2593](https://github.com/open-sauced/insights/issues/2593)) ([0d4e7ad](https://github.com/open-sauced/insights/commit/0d4e7ad65762cf6fbc0f78b69e45d45a28c4f3be))
+* update PostHog to 1.104.3 ([#2571](https://github.com/open-sauced/insights/issues/2571)) ([a7f5089](https://github.com/open-sauced/insights/commit/a7f5089f1147826412387d834ee5ed74e566cab8))
+* update shrinkwrap with optional next dependencies, build app ([#2594](https://github.com/open-sauced/insights/issues/2594)) ([394a1c4](https://github.com/open-sauced/insights/commit/394a1c41e1ff4524e8d8865de2e051b34b154b94))
+
+
+### 🍕 Features
+
+* add fallback to GitHub API repo search and use correct auth ([#2561](https://github.com/open-sauced/insights/issues/2561)) ([d6ef244](https://github.com/open-sauced/insights/commit/d6ef244f7d97e4e64c7bf78cf129faa1ca0a7dd7))
+* connect contributor pull requests chart to histogram endpoint ([#2575](https://github.com/open-sauced/insights/issues/2575)) ([5d0298a](https://github.com/open-sauced/insights/commit/5d0298a711419ece46151524efb762060580206c))
+* now when you go to the app home page, if logged in, you're redirected to your last workspace ([#2584](https://github.com/open-sauced/insights/issues/2584)) ([1a88fb3](https://github.com/open-sauced/insights/commit/1a88fb3e1562e5301a46cef4ba9b30a84c90ffef))
+* now you can select/deselect searched tracked repositories ([#2591](https://github.com/open-sauced/insights/issues/2591)) ([857fe3e](https://github.com/open-sauced/insights/commit/857fe3ed04447cab76ca872167eda961745de706))
+* workspaces dashboard MVP ([#2554](https://github.com/open-sauced/insights/issues/2554)) ([56bc626](https://github.com/open-sauced/insights/commit/56bc62654bfc6376114faec8a497d90770a85ab1))
+
+
+### 🐛 Bug Fixes
+
+* added missing key prop to skeleton component ([#2504](https://github.com/open-sauced/insights/issues/2504)) ([7793e2a](https://github.com/open-sauced/insights/commit/7793e2aa526596767e017de1cf81436817af0aa5))
+* disabled Sentry for local development ([#2566](https://github.com/open-sauced/insights/issues/2566)) ([984685d](https://github.com/open-sauced/insights/commit/984685da0b8d0201639c03ea86eec1745a68c907))
+* fixed filtering in search by repos in workspaces ([#2570](https://github.com/open-sauced/insights/issues/2570)) ([fc98bc0](https://github.com/open-sauced/insights/commit/fc98bc08fe71d480561aae76844996086010a6e6))
+* Improved sidebar's UX and styling  ([#2533](https://github.com/open-sauced/insights/issues/2533)) ([87dd4e6](https://github.com/open-sauced/insights/commit/87dd4e6a4bb5943968ff7ced9f9eeafe443c56b1))
+* Improved top navigation styling to match new sidebar ([#2565](https://github.com/open-sauced/insights/issues/2565)) ([006c81a](https://github.com/open-sauced/insights/commit/006c81a29d214196ba9a48a014148d43d83ffc66))
+* remove initial range queryParam for Explore page ([#2573](https://github.com/open-sauced/insights/issues/2573)) ([e540683](https://github.com/open-sauced/insights/commit/e54068359b1ad86ccb02677d56420e5898b29dbf))
+* remove tier.run integration ([#2572](https://github.com/open-sauced/insights/issues/2572)) ([58cc1cd](https://github.com/open-sauced/insights/commit/58cc1cdac743823ae1e9ab64453d56a5f41bf496))
+* TopNav highlight if in Insight pages ([#2597](https://github.com/open-sauced/insights/issues/2597)) ([05433bf](https://github.com/open-sauced/insights/commit/05433bff9d37bd94c01c40704b7281d2a21633d3))
+* tracked repositories search works as expected now ([#2562](https://github.com/open-sauced/insights/issues/2562)) ([4e76a64](https://github.com/open-sauced/insights/commit/4e76a6491666899f4f2d48af45c91cd9f381f137))
+* use correct route parameter for topic redirect ([#2601](https://github.com/open-sauced/insights/issues/2601)) ([29ca967](https://github.com/open-sauced/insights/commit/29ca967f3f69dffd2549c8edcd1c5780e6266549))
+
+## [2.1.0-beta.11](https://github.com/open-sauced/insights/compare/v2.1.0-beta.10...v2.1.0-beta.11) (2024-02-06)
+
+
+### 🐛 Bug Fixes
+
+* TopNav highlight if in Insight pages ([#2597](https://github.com/open-sauced/insights/issues/2597)) ([05433bf](https://github.com/open-sauced/insights/commit/05433bff9d37bd94c01c40704b7281d2a21633d3))
+
+## [2.1.0-beta.10](https://github.com/open-sauced/insights/compare/v2.1.0-beta.9...v2.1.0-beta.10) (2024-02-06)
+
+
+### 🐛 Bug Fixes
+
+* use correct route parameter for topic redirect ([#2601](https://github.com/open-sauced/insights/issues/2601)) ([29ca967](https://github.com/open-sauced/insights/commit/29ca967f3f69dffd2549c8edcd1c5780e6266549))
+
+## [2.1.0-beta.9](https://github.com/open-sauced/insights/compare/v2.1.0-beta.8...v2.1.0-beta.9) (2024-02-06)
+
+
+### 🍕 Features
+
+* now you can select/deselect searched tracked repositories ([#2591](https://github.com/open-sauced/insights/issues/2591)) ([857fe3e](https://github.com/open-sauced/insights/commit/857fe3ed04447cab76ca872167eda961745de706))
+
+## [2.1.0-beta.8](https://github.com/open-sauced/insights/compare/v2.1.0-beta.7...v2.1.0-beta.8) (2024-02-05)
+
+
+### 🤖 Build System
+
+* include optional dependencies when installing packages ([#2593](https://github.com/open-sauced/insights/issues/2593)) ([0d4e7ad](https://github.com/open-sauced/insights/commit/0d4e7ad65762cf6fbc0f78b69e45d45a28c4f3be))
+* update shrinkwrap with optional next dependencies, build app ([#2594](https://github.com/open-sauced/insights/issues/2594)) ([394a1c4](https://github.com/open-sauced/insights/commit/394a1c41e1ff4524e8d8865de2e051b34b154b94))
+
+## [2.1.0-beta.7](https://github.com/open-sauced/insights/compare/v2.1.0-beta.6...v2.1.0-beta.7) (2024-02-05)
+
+
+### 🍕 Features
+
+* connect contributor pull requests chart to histogram endpoint ([#2575](https://github.com/open-sauced/insights/issues/2575)) ([5d0298a](https://github.com/open-sauced/insights/commit/5d0298a711419ece46151524efb762060580206c))
+* now when you go to the app home page, if logged in, you're redirected to your last workspace ([#2584](https://github.com/open-sauced/insights/issues/2584)) ([1a88fb3](https://github.com/open-sauced/insights/commit/1a88fb3e1562e5301a46cef4ba9b30a84c90ffef))
+
+
+### 🐛 Bug Fixes
+
+* remove initial range queryParam for Explore page ([#2573](https://github.com/open-sauced/insights/issues/2573)) ([e540683](https://github.com/open-sauced/insights/commit/e54068359b1ad86ccb02677d56420e5898b29dbf))
+
+## [2.1.0-beta.6](https://github.com/open-sauced/insights/compare/v2.1.0-beta.5...v2.1.0-beta.6) (2024-02-02)
+
+
+### 🤖 Build System
+
+* update PostHog to 1.104.3 ([#2571](https://github.com/open-sauced/insights/issues/2571)) ([a7f5089](https://github.com/open-sauced/insights/commit/a7f5089f1147826412387d834ee5ed74e566cab8))
+
+
+### 🐛 Bug Fixes
+
+* added missing key prop to skeleton component ([#2504](https://github.com/open-sauced/insights/issues/2504)) ([7793e2a](https://github.com/open-sauced/insights/commit/7793e2aa526596767e017de1cf81436817af0aa5))
+* fixed filtering in search by repos in workspaces ([#2570](https://github.com/open-sauced/insights/issues/2570)) ([fc98bc0](https://github.com/open-sauced/insights/commit/fc98bc08fe71d480561aae76844996086010a6e6))
+* remove tier.run integration ([#2572](https://github.com/open-sauced/insights/issues/2572)) ([58cc1cd](https://github.com/open-sauced/insights/commit/58cc1cdac743823ae1e9ab64453d56a5f41bf496))
+
+## [2.1.0-beta.5](https://github.com/open-sauced/insights/compare/v2.1.0-beta.4...v2.1.0-beta.5) (2024-02-01)
+
+
+### 🐛 Bug Fixes
+
+* Improved top navigation styling to match new sidebar ([#2565](https://github.com/open-sauced/insights/issues/2565)) ([006c81a](https://github.com/open-sauced/insights/commit/006c81a29d214196ba9a48a014148d43d83ffc66))
+
+## [2.1.0-beta.4](https://github.com/open-sauced/insights/compare/v2.1.0-beta.3...v2.1.0-beta.4) (2024-02-01)
+
+
+### 🐛 Bug Fixes
+
+* disabled Sentry for local development ([#2566](https://github.com/open-sauced/insights/issues/2566)) ([984685d](https://github.com/open-sauced/insights/commit/984685da0b8d0201639c03ea86eec1745a68c907))
+
+## [2.1.0-beta.3](https://github.com/open-sauced/insights/compare/v2.1.0-beta.2...v2.1.0-beta.3) (2024-02-01)
+
+
+### 🐛 Bug Fixes
+
+* tracked repositories search works as expected now ([#2562](https://github.com/open-sauced/insights/issues/2562)) ([4e76a64](https://github.com/open-sauced/insights/commit/4e76a6491666899f4f2d48af45c91cd9f381f137))
+
+## [2.1.0-beta.2](https://github.com/open-sauced/insights/compare/v2.1.0-beta.1...v2.1.0-beta.2) (2024-01-31)
+
+
+### 🍕 Features
+
+* workspaces dashboard MVP ([#2554](https://github.com/open-sauced/insights/issues/2554)) ([56bc626](https://github.com/open-sauced/insights/commit/56bc62654bfc6376114faec8a497d90770a85ab1))
+
+
+### 🐛 Bug Fixes
+
+* Improved sidebar's UX and styling  ([#2533](https://github.com/open-sauced/insights/issues/2533)) ([87dd4e6](https://github.com/open-sauced/insights/commit/87dd4e6a4bb5943968ff7ced9f9eeafe443c56b1))
+
 ## [2.1.0-beta.1](https://github.com/open-sauced/insights/compare/v2.0.0...v2.1.0-beta.1) (2024-01-30)
 
 

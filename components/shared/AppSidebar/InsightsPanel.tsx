@@ -1,8 +1,6 @@
-import * as Collapsible from "@radix-ui/react-collapsible";
-import { FiChevronDown, FiChevronUp } from "react-icons/fi";
-import { Root, Thumb } from "@radix-ui/react-switch";
 import { useState } from "react";
-import ClientOnly from "components/atoms/ClientOnly/client-only";
+import { ChartBarSquareIcon, UsersIcon } from "@heroicons/react/24/outline";
+import Link from "next/link";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 import SidebarMenuItem from "./sidebar-menu-item";
 
@@ -12,6 +10,7 @@ interface InsightsPanelProps {
   insights: DbUserList[] | DbUserInsight[];
   type: "repo" | "list";
   isLoading: boolean;
+  workspaceId?: string | null;
 }
 
 const Loading = () => {
@@ -28,45 +27,73 @@ const Loading = () => {
   );
 };
 
-export const InsightsPanel = ({ title, username, insights, type, isLoading }: InsightsPanelProps) => {
+export const InsightsPanel = ({ title, username, insights, type, isLoading, workspaceId }: InsightsPanelProps) => {
   const [open, setOpen] = useState(true);
+  const getIcon = (type: "repo" | "list") => {
+    switch (type) {
+      case "list":
+        return <UsersIcon className="w-5 h-5 text-slate-400" />;
+      case "repo":
+        return <ChartBarSquareIcon className="w-5 h-5 text-slate-400" />;
+    }
+  };
   return (
-    <Collapsible.Root open={open} onOpenChange={setOpen} className="max-w-full overflow-x-hidden">
-      <Collapsible.Trigger asChild>
-        <Root
-          defaultChecked
-          checked={open}
-          onClick={() => {
-            setOpen(!open);
-          }}
-          name={`${title}-toggle`}
-        >
-          <Thumb>
-            <h3 className="uppercase text-gray-500 text-sm font-medium flex gap-1 items-center">
-              <span>{title}</span>
-              <ClientOnly>
-                {open ? (
-                  <FiChevronDown className="w-4 h-4" title={`close ${title} panel`} />
-                ) : (
-                  <FiChevronUp className="w-4 h-4" title={`open ${title} panel`} />
-                )}
-              </ClientOnly>
-            </h3>
-          </Thumb>
-        </Root>
-      </Collapsible.Trigger>
-      <Collapsible.Content>
-        {isLoading ? (
-          <Loading />
-        ) : (
-          <ul className="list-none w-full px-2 mt-1 [&_li]:border-l-2">
-            {insights.map((insight) => {
-              const url = type === "list" ? `/lists/${insight.id}` : `/pages/${username}/${insight.id}/dashboard`;
-              return <SidebarMenuItem key={insight.id} title={insight.name} url={url} type={type} />;
+    <div>
+      <SidebarMenuItem
+        title={title}
+        url={
+          type === "list"
+            ? workspaceId
+              ? `/workspaces/${workspaceId}/contributor-insights`
+              : "/hub/lists"
+            : "/hub/insights"
+        }
+        icon={getIcon(type)}
+      />
+
+      <div className="overflow-hidden">
+        {isLoading ? null : (
+          <ul className="list-none w-full px-4 mt-1 [&_li]:border-l-2 text-slate-700 tracking-tight">
+            {insights.slice(0, 3).map((insight) => {
+              const url =
+                type === "list"
+                  ? workspaceId
+                    ? `/workspaces/${workspaceId}/contributor-insights/${insight.id}/overview`
+                    : `/lists/${insight.id}`
+                  : `/pages/${username}/${insight.id}/dashboard`;
+              return (
+                <li
+                  className="py-1 px-3 hover:bg-slate-100 rounded-tr-md rounded-br-md transition-colors text-sm"
+                  key={insight.id}
+                >
+                  <Link title={title} href={url} className="items-center flex-auto flex-row align-middle block">
+                    <span className="whitespace-nowrap overflow-hidden overflow-ellipsis inline-flex">
+                      {insight.name}
+                    </span>
+                  </Link>
+                </li>
+              );
             })}
+            {insights.length > 3 ? (
+              <Link
+                className="text-xs text-slate-500 pl-3 pt-2 border-l-2 hover:text-orange-600"
+                title=""
+                href={
+                  type === "list"
+                    ? workspaceId
+                      ? `/workspaces/${workspaceId}/contributor-insights`
+                      : "/hub/lists"
+                    : "/hub/insights"
+                }
+              >
+                Show all
+              </Link>
+            ) : (
+              ""
+            )}
           </ul>
         )}
-      </Collapsible.Content>
-    </Collapsible.Root>
+      </div>
+    </div>
   );
 };

@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import { NextRequest } from "next/server";
 import { pathToRegexp } from "path-to-regexp";
 import { getAllFeatureFlags } from "lib/utils/server/feature-flags";
+import { WORKSPACE_ID_COOKIE_NAME, getWorkspaceUrl } from "lib/utils/workspace-utils";
 
 // HACK: this is to get around the fact that the normal next.js middleware is not always functioning
 // correctly.
@@ -77,6 +78,12 @@ export async function middleware(req: NextRequest) {
     const featureFlags = await getAllFeatureFlags(Number(session?.user.user_metadata.sub));
 
     if (featureFlags.workspaces) {
+      const [, , workspaceId] = req.nextUrl.pathname.split("/");
+
+      if (workspaceId !== "new") {
+        res.cookies.set(WORKSPACE_ID_COOKIE_NAME, workspaceId);
+      }
+
       return res;
     } else {
       return NextResponse.rewrite(new URL("/404", req.url));
@@ -90,7 +97,15 @@ export async function middleware(req: NextRequest) {
       const data = await loadSession(req, session?.access_token);
 
       if (data.is_onboarded) {
-        return NextResponse.redirect(new URL("/hub/insights", req.url));
+        const featureFlags = await getAllFeatureFlags(Number(session?.user.user_metadata.sub));
+
+        if (featureFlags.workspaces) {
+          const workspaceUrl = getWorkspaceUrl(req.cookies, req.url, data.personal_workspace_id);
+
+          return NextResponse.redirect(`${workspaceUrl}`);
+        } else {
+          return NextResponse.redirect(new URL("/hub/insights", req.url));
+        }
       } else {
         return NextResponse.redirect(new URL("/feed", req.url));
       }

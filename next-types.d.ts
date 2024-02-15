@@ -291,6 +291,13 @@ interface GhRepo {
   owner: GhUser;
 }
 
+interface GhOrg {
+  id: number;
+  name: string;
+  full_name: string;
+  private: boolean;
+}
+
 interface GhPRInfoResponse {
   readonly head: { repo: { name: string; full_name: string }; user: { login: string; full_name: string } };
   readonly title: string;
@@ -448,4 +455,22 @@ interface Workspace {
   created_at: string | null;
   updated_at: string | null;
   deleted_at: string | null;
+}
+
+interface DbWorkspacesReposStats {
+  pull_requests: {
+    opened: number;
+    merged: number;
+    velocity: number;
+  };
+  issues: {
+    opened: number;
+    closed: number;
+    velocity: number;
+  };
+  repos: {
+    stars: number;
+    forks: number;
+    health: number;
+  };
 }

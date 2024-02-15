@@ -43,6 +43,11 @@ module.exports = {
         destination: "/lists/:listId/overview",
         permanent: true,
       },
+      {
+        source: "/workspaces/:workspaceId/contributor-insights/:listId",
+        destination: "/workspaces/:workspaceId/contributor-insights/:listId/overview",
+        permanent: true,
+      },
     ];
   },
 };
