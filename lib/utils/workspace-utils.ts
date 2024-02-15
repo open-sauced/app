@@ -1,3 +1,4 @@
+import { RequestCookies } from "next/dist/compiled/@edge-runtime/cookies";
 import { fetchApiData } from "helpers/fetchApiData";
 
 // TODO: decide if user can add contributors on creation
@@ -123,4 +124,17 @@ export async function deleteWorkspace({ workspaceId, sessionToken }: { workspace
   });
 
   return { data, error };
+}
+
+export const WORKSPACE_ID_COOKIE_NAME = "workspace-id";
+
+export function getWorkspaceUrl(cookies: RequestCookies, baseUrl: string, personalWorkspaceId: string) {
+  if (!cookies.has(WORKSPACE_ID_COOKIE_NAME)) {
+    cookies.set(WORKSPACE_ID_COOKIE_NAME, personalWorkspaceId);
+  }
+
+  // @ts-expect-error the cookie value will be defined
+  const workspaceId = cookies.get(WORKSPACE_ID_COOKIE_NAME).value;
+
+  return new URL(`/workspaces/${workspaceId}/repositories`, baseUrl);
 }

@@ -4,6 +4,8 @@ import { TrackedContributorsWizardLayout } from "./TrackedContributorsWizardLayo
 
 import { PickContributorStep } from "./PickContributorStep";
 import { SearchByContributorsStep } from "./SearchByContributorsStep";
+import { PasteContributorsStep } from "./PasteContributorsStep";
+import { FilterPastedContributorsStep } from "./FilterPastedContributorsStep";
 
 interface TrackedContributorsWizardProps {
   onAddToTrackingList: (contributors: Map<string, boolean>) => void;
@@ -95,6 +97,9 @@ export const TrackedContributorsWizard = ({ onAddToTrackingList, onCancel }: Tra
             onSearchContributors={() => {
               setStep("pickContributors");
             }}
+            onPasteContributors={() => {
+              setStep("pasteContributors");
+            }}
           />
         );
 
@@ -108,6 +113,18 @@ export const TrackedContributorsWizard = ({ onAddToTrackingList, onCancel }: Tra
             contributors={contributors}
             searchedContributors={searchedContributors}
             suggestedContributors={suggestedContributors}
+          />
+        );
+
+      case "pasteContributors":
+        return <PasteContributorsStep onBulkAddContributors={onBulkAddContributors} />;
+
+      case "filterPastedContributors":
+        return (
+          <FilterPastedContributorsStep
+            contributors={trackedContributors}
+            onToggleContributor={onToggleContributor}
+            onToggleAllContributors={onToggleAllContributors}
           />
         );
 
