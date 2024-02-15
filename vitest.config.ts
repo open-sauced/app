@@ -9,6 +9,7 @@ export default defineConfig({
     alias: {
       components: fileURLToPath(new URL("./components", import.meta.url)),
       lib: fileURLToPath(new URL("./lib", import.meta.url)),
+      helpers: fileURLToPath(new URL("./helpers", import.meta.url)),
       img: fileURLToPath(new URL("./img", import.meta.url)),
     },
   },

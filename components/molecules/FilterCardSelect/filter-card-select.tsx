@@ -41,6 +41,8 @@ const FilterCardSelect: React.FC<FilterCardSelectProps> = ({
   options,
   handleFilterClick,
 }) => {
+  const customTopic = !options.includes(filterName);
+
   return (
     <Select onValueChange={(value) => handleFilterClick(value)} value={filterName}>
       <SelectTrigger
@@ -58,6 +60,16 @@ const FilterCardSelect: React.FC<FilterCardSelectProps> = ({
         <SelectValue placeholder="select topic" />
       </SelectTrigger>
       <SelectContent className="bg-white">
+        {customTopic && (
+          <SelectItem
+            className="w-48 text-base"
+            itemIndicatorIcon={<BsFillCheckCircleFill className="!text-base text-light-orange-10" />}
+            key={options.length + 1}
+            value={filterName}
+          >
+            {filterName}
+          </SelectItem>
+        )}
         {options.map((option, index) => (
           <SelectItem
             className="w-48 text-base"

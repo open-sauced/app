@@ -16,6 +16,8 @@ import svelte from "img/topic-thumbnails/svelte.svg";
 import vue from "img/topic-thumbnails/vue.svg";
 import kubernetes from "img/topic-thumbnails/kubernetes.svg";
 import clojure from "img/topic-thumbnails/clojure.svg";
+import kotlin from "img/topic-thumbnails/kotlin.svg";
+import android from "img/topic-thumbnails/android.svg";
 
 import contextThumbnailImage from "../../img/open-sourced-with-bg-icon.png";
 
@@ -40,6 +42,8 @@ const topicThumbnails: Record<InterestType, string> = {
   vue: vue,
   kubernetes: kubernetes,
   clojure: clojure,
+  kotlin: kotlin,
+  android: android,
 };
 
 const getTopicThumbnail = (topic: keyof typeof topicThumbnails) => {

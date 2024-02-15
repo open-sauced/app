@@ -17,6 +17,8 @@ import GolangIcon from "img/icons/interests/golang.svg";
 import VueIcon from "img/icons/interests/vuejs.svg";
 import KubernetesIcon from "img/icons/interests/kubernetes.svg";
 import CloJureIcon from "img/icons/interests/clojure.svg";
+import KotlinIcon from "img/icons/interests/kotlin.svg";
+import AndroidIcon from "img/icons/interests/android.svg";
 
 import topicNameFormatting from "lib/utils/topic-name-formatting";
 import { InterestType } from "lib/utils/getInterestOptions";
@@ -41,6 +43,8 @@ export const renderTopicIcon = (name: InterestType) => {
     vue: VueIcon,
     kubernetes: KubernetesIcon,
     clojure: CloJureIcon,
+    kotlin: KotlinIcon,
+    android: AndroidIcon,
   };
 
   return iconMap[name];

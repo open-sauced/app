@@ -19,6 +19,8 @@ const recommendations: Record<InterestType, string[]> = {
   kubernetes: ["kubernetes/kubernetes"],
   clojure: ["clojure/clojurescript"],
   svelte: ["sveltejs/svelte"],
+  android: ["android/architecture-samples"],
+  kotlin: ["Kotlin/kotlinx.coroutines"],
 };
 
 export default recommendations;
