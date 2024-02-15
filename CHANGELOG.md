@@ -5,6 +5,27 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.3.0-beta.10](https://github.com/open-sauced/insights/compare/v2.3.0-beta.9...v2.3.0-beta.10) (2024-02-15)
+
+
+### 🍕 Features
+
+* make app sidebar collapsible ([#2619](https://github.com/open-sauced/insights/issues/2619)) ([1e9a1f7](https://github.com/open-sauced/insights/commit/1e9a1f7fc76f4d684c8afd931c10bff72eb00091))
+
+## [2.3.0-beta.9](https://github.com/open-sauced/insights/compare/v2.3.0-beta.8...v2.3.0-beta.9) (2024-02-14)
+
+
+### 🍕 Features
+
+* track contributors in workspaces ([#2629](https://github.com/open-sauced/insights/issues/2629)) ([cf8c2ba](https://github.com/open-sauced/insights/commit/cf8c2ba5194c223718f407f24912485b0c4280b7))
+
+## [2.3.0-beta.8](https://github.com/open-sauced/insights/compare/v2.3.0-beta.7...v2.3.0-beta.8) (2024-02-14)
+
+
+### 🍕 Features
+
+* add contributor insights to workspaces ([#2648](https://github.com/open-sauced/insights/issues/2648)) ([e9c5da8](https://github.com/open-sauced/insights/commit/e9c5da85807cddda8dfde9f3f2a982bba4c41b61))
+
 ## [2.3.0-beta.7](https://github.com/open-sauced/insights/compare/v2.3.0-beta.6...v2.3.0-beta.7) (2024-02-14)
 
 

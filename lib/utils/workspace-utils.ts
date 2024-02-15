@@ -1,5 +1,6 @@
 import { fetchApiData } from "helpers/fetchApiData";
 
+// TODO: decide if user can add contributors on creation
 export async function createWorkspace({
   name,
   description = "",
@@ -34,12 +35,14 @@ export async function saveWorkspace({
   description = "",
   sessionToken,
   repos,
+  contributors,
 }: {
   workspaceId: string;
   name: string;
   description?: string;
   sessionToken: string;
   repos: { full_name: string }[];
+  contributors: { login: string }[];
 }) {
   const updateWorkspace = await fetchApiData<Workspace>({
     path: `workspaces/${workspaceId}`,
@@ -57,12 +60,18 @@ export async function saveWorkspace({
     pathValidator: () => true,
   });
 
-  const [{ data, error }, { data: repoData, error: reposError }] = await Promise.all([
-    updateWorkspace,
-    updateWorkspaceRepos,
-  ]);
+  const updateWorkspaceContributors = await fetchApiData<any[]>({
+    path: `workspaces/${workspaceId}/contributors`,
+    method: "POST",
+    body: { contributors },
+    bearerToken: sessionToken,
+    pathValidator: () => true,
+  });
 
-  return { data: { workspace: data, repos: repoData }, error };
+  const [{ data, error }, { data: repoData, error: reposError }, { data: contributorsData, error: contributorsError }] =
+    await Promise.all([updateWorkspace, updateWorkspaceRepos, updateWorkspaceContributors]);
+
+  return { data: { workspace: data, repos: repoData, contributors: contributorsData }, error };
 }
 
 export async function deleteTrackedRepos({
@@ -78,6 +87,26 @@ export async function deleteTrackedRepos({
     path: `workspaces/${workspaceId}/repos`,
     method: "DELETE",
     body: { repos },
+    bearerToken: sessionToken,
+    pathValidator: () => true,
+  });
+
+  return { data, error };
+}
+
+export async function deleteTrackedContributors({
+  workspaceId,
+  sessionToken,
+  contributors,
+}: {
+  workspaceId: string;
+  sessionToken: string;
+  contributors: { login: string }[];
+}) {
+  const { data, error } = await fetchApiData<any[]>({
+    path: `workspaces/${workspaceId}/contributors`,
+    method: "DELETE",
+    body: { contributors },
     bearerToken: sessionToken,
     pathValidator: () => true,
   });
