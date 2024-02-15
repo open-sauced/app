@@ -4,8 +4,8 @@ import { publicApiFetcher } from "lib/utils/public-api-fetcher";
 type DbWorkspaceContributor = {
   id: number;
   contributor_id: number;
+  workspace_id: string;
   contributor: {
-    id: number;
     login: string;
   };
 };

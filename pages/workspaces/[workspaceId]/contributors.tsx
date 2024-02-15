@@ -18,7 +18,7 @@ type Contributor = {
   id: number;
   login: string;
 };
-
+        
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const supabase = createPagesServerClient(context);
   const {
@@ -43,15 +43,14 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
   return { props: { workspace: data } };
 };
 
-interface WorkspaceDashboardProps {
+interface WorkspaceContributorsPageProps {
   workspace: Workspace;
 }
 
-export default function WorkspaceContributors({ workspace }: WorkspaceDashboardProps) {
+export default function WorkspaceContributorsPage({ workspace }: WorkspaceContributorsPageProps) {
   const router = useRouter();
   const range = router.query.range ? Number(router.query.range as string) : 30;
-  const { data, error, mutate, isLoading } = useGetWorkspaceContributors({ workspaceId: workspace.id });
-  const contributors = data?.data ? Array.from(data.data, ({ contributor }) => contributor) : [];
+  const { data, error: hasError } = useGetWorkspaceContributors({ workspaceId: workspace.id, range });
 
   return (
     <WorkspaceLayout workspaceId={workspace.id}>
