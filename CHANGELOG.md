@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.4.0-beta.10](https://github.com/open-sauced/insights/compare/v2.4.0-beta.9...v2.4.0-beta.10) (2024-02-16)
+
+
+### 🐛 Bug Fixes
+
+* update size for Angular logo on user settings page ([#2696](https://github.com/open-sauced/insights/issues/2696)) ([ebf31c8](https://github.com/open-sauced/insights/commit/ebf31c80494883515f1ea87161ec8eaff76d5233))
+
 ## [2.4.0-beta.9](https://github.com/open-sauced/insights/compare/v2.4.0-beta.8...v2.4.0-beta.9) (2024-02-16)
 
 
