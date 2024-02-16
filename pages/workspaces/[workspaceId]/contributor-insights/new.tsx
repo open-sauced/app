@@ -350,7 +350,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   });
 
   if (error) {
-    if (error.status === 404) {
+    if (error.status === 404 || error.status === 401) {
       return { notFound: true };
     }
 
