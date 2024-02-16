@@ -3,6 +3,7 @@ const interests = [
   "python",
   "java",
   "typescript",
+  "angular",
   "csharp",
   "cpp",
   "php",

@@ -2,6 +2,7 @@ import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { GetServerSidePropsContext } from "next";
 import { SquareFillIcon } from "@primer/octicons-react";
 import { useRouter } from "next/router";
+import { useState } from "react";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import { fetchApiData } from "helpers/fetchApiData";
 import { WorkspacesTabList } from "components/Workspaces/WorkspacesTabList";
@@ -10,6 +11,7 @@ import { useGetWorkspaceContributors } from "lib/hooks/api/useGetWorkspaceContri
 import ClientOnly from "components/atoms/ClientOnly/client-only";
 import { deleteCookie } from "lib/utils/server/cookies";
 import { WORKSPACE_ID_COOKIE_NAME } from "lib/utils/workspace-utils";
+import ContributorsList from "components/organisms/ContributorsList/contributors-list";
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const supabase = createPagesServerClient(context);
@@ -44,7 +46,25 @@ interface WorkspaceContributorsPageProps {
 export default function WorkspaceContributorsPage({ workspace }: WorkspaceContributorsPageProps) {
   const router = useRouter();
   const range = router.query.range ? Number(router.query.range as string) : 30;
-  const { data, error: hasError } = useGetWorkspaceContributors({ workspaceId: workspace.id, range });
+  const [page, setPage] = useState(1);
+
+  const { data, error: hasError } = useGetWorkspaceContributors({
+    workspaceId: workspace.id,
+    range,
+    page,
+  });
+  const contributors = data?.data
+    ? Array.from(data.data, (info) => {
+        return {
+          author_login: info.contributor.login,
+          username: info.contributor.username,
+          updated_at: info.contributor.updated_at,
+          user_id: info.contributor_id,
+        };
+      })
+    : [];
+
+  const isLoading = !data && !hasError;
 
   return (
     <WorkspaceLayout workspaceId={workspace.id}>
@@ -56,17 +76,22 @@ export default function WorkspaceContributorsPage({ workspace }: WorkspaceContri
       <div className="flex justify-between items-center">
         <WorkspacesTabList workspaceId={workspace.id} selectedTab={"contributors"} />
         <div>
-          <DayRangePicker />
+          <DayRangePicker onDayRangeChanged={(value) => setPage(Number(value))} />
         </div>
       </div>
-      <ClientOnly>
-        <section className="flex flex-col gap-8 p-8">
-          <h1 className="text-xl">
-            Contributor List <span className="pl-4 text-red-400">INFO AND DESIGN TEMPORARY</span>
-          </h1>
-          {data && data.data?.map(({ contributor }) => <p key={contributor.login}>{contributor.login}</p>)}
-        </section>
-      </ClientOnly>
+      <main className="py-8">
+        <ClientOnly>
+          {data && (
+            <ContributorsList
+              isLoading={isLoading}
+              contributors={contributors}
+              range={`${range}`}
+              meta={data.meta}
+              setPage={setPage}
+            />
+          )}
+        </ClientOnly>
+      </main>
     </WorkspaceLayout>
   );
 }

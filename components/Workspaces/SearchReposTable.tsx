@@ -52,8 +52,8 @@ export const SearchedReposTable = ({
                     onToggleAllRepos(!!checked);
                   }}
                   checked={allChecked}
+                  label={type === "by-repos" ? "Selected repositories" : "Selected organization repositories"}
                 />
-                <span>{type === "by-repos" ? "Selected repositories" : "Selected organization repositories"}</span>
               </div>
               <form
                 className="pr-2"
