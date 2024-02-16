@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.4.0-beta.7](https://github.com/open-sauced/insights/compare/v2.4.0-beta.6...v2.4.0-beta.7) (2024-02-16)
+
+
+### 🐛 Bug Fixes
+
+* wrap new contributor insight page in layout and fix redirect ([#2689](https://github.com/open-sauced/insights/issues/2689)) ([80d2de1](https://github.com/open-sauced/insights/commit/80d2de121857021d767d077620672b8727d31f74))
+
 ## [2.4.0-beta.6](https://github.com/open-sauced/insights/compare/v2.4.0-beta.5...v2.4.0-beta.6) (2024-02-16)
 
 
