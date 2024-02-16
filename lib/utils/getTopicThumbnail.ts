@@ -1,6 +1,7 @@
 import javaScript from "img/topic-thumbnails/javascript.svg";
 import python from "img/topic-thumbnails/python.svg";
 import typeScript from "img/topic-thumbnails/typescript.svg";
+import angular from "img/topic-thumbnails/angukar-new.svg";
 import java from "img/topic-thumbnails/java.svg";
 import cSharp from "img/topic-thumbnails/csharp.svg";
 import cpp from "img/topic-thumbnails/cpp.svg";
@@ -28,6 +29,7 @@ const topicThumbnails: Record<InterestType, string> = {
   python: python,
   java: java,
   typescript: typeScript,
+  angular: angular,
   csharp: cSharp,
   cpp: cpp,
   php: php,
