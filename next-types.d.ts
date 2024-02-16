@@ -474,3 +474,10 @@ interface DbWorkspacesReposStats {
     health: number;
   };
 }
+
+interface TrackedRepository {
+  created_at: string;
+  deleted_at: string | null;
+  id: string;
+  repo: DbRepo;
+}
