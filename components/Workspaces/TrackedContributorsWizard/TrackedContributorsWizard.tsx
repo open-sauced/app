@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { ComponentProps, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useSearchContributors } from "lib/hooks/useSearchContributors";
 import { useGetTrackedRepositories } from "lib/hooks/api/useGetTrackedRepositories";
+import { SearchedContributorsTable } from "../SearchedContributorsTable";
 import { TrackedContributorsWizardLayout } from "./TrackedContributorsWizardLayout";
 
 import { PickContributorStep } from "./PickContributorStep";
@@ -15,7 +16,7 @@ interface TrackedContributorsWizardProps {
   onCancel: () => void;
 }
 
-type TrackedContributorsStep =
+export type TrackedContributorsStep =
   | "pickOption"
   | "pickContributors"
   | "pasteContributors"
@@ -29,6 +30,7 @@ export const TrackedContributorsWizard = ({ onAddToTrackingList, onCancel }: Tra
   const suggestedContributors: any[] = [];
   const [repoSearchTerm, setRepoSearchTerm] = useState<string | undefined>();
   const [repositoriesForContributors, setRepositoriesForContributors] = useState<Map<string, boolean>>(new Map());
+  const [contributorsFromRepos, setContributorsFromRepos] = useState<Map<string, boolean>>(new Map());
   const router = useRouter();
   const workspaceId = router.query.workspaceId as string;
   const {
@@ -120,6 +122,29 @@ export const TrackedContributorsWizard = ({ onAddToTrackingList, onCancel }: Tra
     setStep("filterPastedContributors");
   };
 
+  const onFilterContributorsFromRepos = (filterTerm: string) => {};
+
+  const onToggleRepoContributor = (contributor: string, isSelected: boolean) => {
+    setContributorsFromRepos((currentContributors) => {
+      const updates = new Map(currentContributors);
+      updates.set(contributor, isSelected);
+
+      return updates;
+    });
+  };
+
+  const onToggleAllReposContributors = (checked: boolean) => {
+    setContributorsFromRepos((currentContributors) => {
+      const updates = new Map(currentContributors);
+
+      for (const [contributor] of updates) {
+        updates.set(contributor, checked);
+      }
+
+      return updates;
+    });
+  };
+
   let searchedContributors = data ?? [];
 
   function goBack() {
@@ -151,6 +176,13 @@ export const TrackedContributorsWizard = ({ onAddToTrackingList, onCancel }: Tra
   }
 
   const contributors = currentTrackedContributors;
+  let stepData: ComponentProps<typeof TrackedContributorsWizardLayout>["stepData"] =
+    step === "pickRepos"
+      ? {
+          step,
+          repositoriesCount: [...repositoriesForContributors.values()].filter(Boolean).length,
+        }
+      : undefined;
 
   const renderStep = (step: TrackedContributorsStep) => {
     switch (step) {
@@ -209,8 +241,17 @@ export const TrackedContributorsWizard = ({ onAddToTrackingList, onCancel }: Tra
             repositories={repositoriesForContributors}
           />
         );
+
       case "reposContributors":
-        return <p>contributors</p>;
+        return (
+          <SearchedContributorsTable
+            type="by-contributors"
+            contributors={contributorsFromRepos}
+            onFilter={onFilterContributorsFromRepos}
+            onToggleContributor={onToggleRepoContributor}
+            onToggleAllContributors={onToggleAllReposContributors}
+          />
+        );
 
       default:
         return null;
@@ -224,11 +265,6 @@ export const TrackedContributorsWizard = ({ onAddToTrackingList, onCancel }: Tra
       map.delete(contributor);
     }
   });
-
-  const stepData = {
-    step,
-    repositoriesCount: [...repositoriesForContributors.values()].filter(Boolean).length,
-  };
 
   return (
     <TrackedContributorsWizardLayout
