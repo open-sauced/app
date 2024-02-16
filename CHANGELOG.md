@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.4.0-beta.4](https://github.com/open-sauced/insights/compare/v2.4.0-beta.3...v2.4.0-beta.4) (2024-02-16)
+
+
+### 🐛 Bug Fixes
+
+* now disabled button that becomes enabled no longer causes a content layout shift ([#2609](https://github.com/open-sauced/insights/issues/2609)) ([e39f638](https://github.com/open-sauced/insights/commit/e39f638740b7869bd566ea9a3d8e69d66b00b4a5))
+
 ## [2.4.0-beta.3](https://github.com/open-sauced/insights/compare/v2.4.0-beta.2...v2.4.0-beta.3) (2024-02-16)
 
 
