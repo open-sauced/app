@@ -1,13 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import { useSearchContributors } from "lib/hooks/useSearchContributors";
-import { useSearchRepos } from "lib/hooks/useSearchRepos";
-import { SearchByReposStep } from "../TrackedRepoWizard/SearchByReposStep";
+import { useGetTrackedRepositories } from "lib/hooks/api/useGetTrackedRepositories";
 import { TrackedContributorsWizardLayout } from "./TrackedContributorsWizardLayout";
 
 import { PickContributorStep } from "./PickContributorStep";
 import { SearchByContributorsStep } from "./SearchByContributorsStep";
 import { PasteContributorsStep } from "./PasteContributorsStep";
 import { FilterPastedContributorsStep } from "./FilterPastedContributorsStep";
+import { TrackedRepositoriesContributorsStep } from "./TrackedRepositoriesContributorsStep";
 
 interface TrackedContributorsWizardProps {
   onAddToTrackingList: (contributors: Map<string, boolean>) => void;
@@ -27,12 +28,26 @@ export const TrackedContributorsWizard = ({ onAddToTrackingList, onCancel }: Tra
   const suggestedContributors: any[] = [];
   const [repoSearchTerm, setRepoSearchTerm] = useState<string | undefined>();
   const [repositoriesForContributors, setRepositoriesForContributors] = useState<Map<string, boolean>>(new Map());
-  const { data: repositories, isError: isRepoError, isLoading: IsRepoLoading } = useSearchRepos(repoSearchTerm);
+  const router = useRouter();
+  const workspaceId = router.query.workspaceId as string;
+  const {
+    data: rawRepositories,
+    isError: isRepoError,
+    isLoading: IsRepoLoading,
+    // TODO: a search term will help with returning everything
+  } = useGetTrackedRepositories({ workspaceId, limit: 6000 });
 
-  let searchedRepos = repositories ?? [];
+  useEffect(() => {
+    const repositories =
+      rawRepositories
+        ?.filter(({ repo }) => !repoSearchTerm || repo.full_name.includes(repoSearchTerm))
+        .map(({ repo }) => repo.full_name) ?? [];
+    const updates = new Map(repositories.map((repo) => [repo, false]));
+
+    setRepositoriesForContributors(updates);
+  }, [rawRepositories, repoSearchTerm]);
 
   const onToggleRepo = (repo: string, isSelected: boolean) => {
-    setRepoSearchTerm(undefined);
     setRepositoriesForContributors((currentTrackedRepositories) => {
       const updates = new Map(currentTrackedRepositories);
       updates.set(repo, isSelected);
@@ -46,6 +61,7 @@ export const TrackedContributorsWizard = ({ onAddToTrackingList, onCancel }: Tra
   };
 
   const onToggleAllRepos = (checked: boolean) => {
+    setRepoSearchTerm(undefined);
     setRepositoriesForContributors((currentRepositories) => {
       const updates = new Map(currentRepositories);
 
@@ -113,6 +129,9 @@ export const TrackedContributorsWizard = ({ onAddToTrackingList, onCancel }: Tra
       case "filterPastedContributors":
         setStep("pasteContributors");
         break;
+      case "pickContributors":
+        setStep("pickRepo");
+        break;
       default:
         setStep("pickOption");
     }
@@ -172,14 +191,14 @@ export const TrackedContributorsWizard = ({ onAddToTrackingList, onCancel }: Tra
 
       case "pickRepo":
         return (
-          <SearchByReposStep
+          <TrackedRepositoriesContributorsStep
             onSelectRepo={onSelectRepo}
             onToggleRepo={onToggleRepo}
             onToggleAllRepos={onToggleAllRepos}
-            onSearch={onSearchRepos}
+            onSelectContributor={onSelectContributor}
+            onToggleContributor={onToggleContributor}
+            onToggleAllContributors={onToggleAllContributors}
             repositories={repositoriesForContributors}
-            searchedRepos={searchedRepos}
-            suggestedRepos={[]}
           />
         );
 
@@ -196,11 +215,17 @@ export const TrackedContributorsWizard = ({ onAddToTrackingList, onCancel }: Tra
     }
   });
 
+  const stepData = {
+    step,
+    repositoriesCount: [...repositoriesForContributors.values()].filter(Boolean).length,
+  };
+
   return (
     <TrackedContributorsWizardLayout
       onAddToTrackingList={() => {
         onAddToTrackingList(currentTrackedContributors);
       }}
+      stepData={stepData}
       trackedContributorsCount={trackedContributors.size}
       onCancel={() => {
         goBack();

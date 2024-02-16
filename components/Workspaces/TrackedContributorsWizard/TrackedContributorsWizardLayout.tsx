@@ -6,6 +6,10 @@ interface TrackedContributorsWizardLayoutProps {
   onCancel: () => void;
   trackedContributorsCount: number;
   onAddToTrackingList: () => void;
+  stepData?: {
+    step: "pickRepo";
+    repositoriesCount: number;
+  };
   children: React.ReactNode;
 }
 
@@ -13,6 +17,7 @@ export const TrackedContributorsWizardLayout = ({
   trackedContributorsCount,
   onAddToTrackingList,
   onCancel,
+  stepData,
   children,
 }: TrackedContributorsWizardLayoutProps) => {
   return (
@@ -32,9 +37,17 @@ export const TrackedContributorsWizardLayout = ({
             <h2 className="font-semibold mb-4">Add contributors to track</h2>
             {children}
           </div>
-          <div className="flex gap-4 items-center justify-end border-t-1 p-4">
+          <div className="flex gap-4 items-center justify-end border-t-1 p-4" aria-live="assertive">
             <span>
-              <span className="font-semibold">{trackedContributorsCount}</span> Selected contributors
+              {stepData?.step === "pickRepo" ? (
+                <>
+                  <span className="font-semibold">{stepData.repositoriesCount}</span> Selected repositories
+                </>
+              ) : (
+                <>
+                  <span className="font-semibold">{trackedContributorsCount}</span> Selected contributors
+                </>
+              )}
             </span>
             <Button
               variant="primary"

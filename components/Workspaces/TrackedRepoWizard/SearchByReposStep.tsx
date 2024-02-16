@@ -6,13 +6,13 @@ import { SearchedReposTable } from "../SearchReposTable";
 import { SearchRepoEmptyState } from "./SearchRepoEmptyState";
 
 interface SearchByReposStepProps {
-  onSearch: (search?: string) => void;
+  onSearch?: (search?: string) => void;
   onSelectRepo: (repo: string) => void;
   onToggleRepo: (repo: string, isSelected: boolean) => void;
   onToggleAllRepos: (checked: boolean) => void;
   repositories: Map<string, boolean>;
-  suggestedRepos: string[];
-  searchedRepos: string[];
+  suggestedRepos?: string[];
+  searchedRepos?: string[];
 }
 
 export const SearchByReposStep = ({
@@ -21,7 +21,7 @@ export const SearchByReposStep = ({
   onToggleRepo,
   onToggleAllRepos,
   repositories,
-  searchedRepos,
+  searchedRepos = [],
   suggestedRepos = [],
 }: SearchByReposStepProps) => {
   const [filteredRepositories, setFilteredRepositories] = useState<Map<string, boolean>>(new Map());
@@ -57,39 +57,41 @@ export const SearchByReposStep = ({
 
   return (
     <div className="flex flex-col gap-4 h-96 max-h-96">
-      <form
-        ref={formRef}
-        role="search"
-        onSubmit={(e) => {
-          e.preventDefault();
-        }}
-      >
-        <Search
-          placeholder="Search repositories"
-          className="w-full"
-          isLoading={searchIsLoading}
-          name="query"
-          onChange={(event) => {
-            setSearchIsLoading(true);
-            onSearch(event);
+      {onSearch ? (
+        <form
+          ref={formRef}
+          role="search"
+          onSubmit={(e) => {
+            e.preventDefault();
           }}
-          onSelect={onSelectRepo}
-          suggestionsLabel={suggestedRepos.length > 0 ? "Suggested repositories" : undefined}
-          suggestions={(suggestedRepos.length > 0 ? suggestedRepos : searchedRepos).map((repo) => {
-            const [owner] = repo.split("/");
+        >
+          <Search
+            placeholder="Search repositories"
+            className="w-full"
+            isLoading={searchIsLoading}
+            name="query"
+            onChange={(event) => {
+              setSearchIsLoading(true);
+              onSearch(event);
+            }}
+            onSelect={onSelectRepo}
+            suggestionsLabel={suggestedRepos.length > 0 ? "Suggested repositories" : undefined}
+            suggestions={(suggestedRepos.length > 0 ? suggestedRepos : searchedRepos).map((repo) => {
+              const [owner] = repo.split("/");
 
-            return {
-              key: repo,
-              node: (
-                <div key={repo} className="flex items-center gap-2">
-                  <Avatar contributor={owner} size="xsmall" />
-                  <span>{repo}</span>
-                </div>
-              ),
-            };
-          })}
-        />
-      </form>
+              return {
+                key: repo,
+                node: (
+                  <div key={repo} className="flex items-center gap-2">
+                    <Avatar contributor={owner} size="xsmall" />
+                    <span>{repo}</span>
+                  </div>
+                ),
+              };
+            })}
+          />
+        </form>
+      ) : null}
       {repositories.size === 0 ? (
         <SearchRepoEmptyState type="by-repos" />
       ) : (
