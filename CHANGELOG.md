@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.4.0-beta.6](https://github.com/open-sauced/insights/compare/v2.4.0-beta.5...v2.4.0-beta.6) (2024-02-16)
+
+
+### 🐛 Bug Fixes
+
+* now select repositories checkbox has label associated to it ([#2686](https://github.com/open-sauced/insights/issues/2686)) ([f3abcf7](https://github.com/open-sauced/insights/commit/f3abcf770a1f240551938da046fdaaeddb7ae1b3))
+
 ## [2.4.0-beta.5](https://github.com/open-sauced/insights/compare/v2.4.0-beta.4...v2.4.0-beta.5) (2024-02-16)
 
 
