@@ -1,3 +1,4 @@
+import { FaEdit } from "react-icons/fa";
 import { useRouter } from "next/router";
 import { GetServerSidePropsContext } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
@@ -93,6 +94,8 @@ const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
   useEffectOnce(() => {
     if (window.location.hash === "#load-wizard") {
       setTrackedReposModalOpen(true);
+    } else if (window.location.hash === "#load-contributors-wizard") {
+      setTrackedContributorsModalOpen(true);
     }
   });
 
@@ -182,15 +185,24 @@ const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
 
   return (
     <WorkspaceLayout workspaceId={workspace.id}>
-      <h1 className="flex gap-2 items-center uppercase text-3xl font-semibold">
-        {/* putting a square icon here as a placeholder until we implement workspace logos */}
-        <SquareFillIcon className="w-12 h-12 text-sauced-orange" />
-        <span>{workspace.name}</span>
-      </h1>
+      <section className="w-full flex justify-between items-center">
+        <h1 className="flex gap-2 items-center uppercase text-3xl font-semibold">
+          {/* putting a square icon here as a placeholder until we implement workspace logos */}
+          <SquareFillIcon className="w-12 h-12 text-sauced-orange" />
+          <span>{workspace.name}</span>
+        </h1>
+
+        <div className="flex gap-4 w-fit">
+          <Button variant="primary" href={`/workspaces/${workspace.id}/settings`} className="gap-2 items-center">
+            <FaEdit />
+            Edit
+          </Button>
+        </div>
+      </section>
       <div className="grid gap-6">
         <div>
           <div className="flex justify-between items-center">
-            <WorkspacesTabList workspaceId={workspace.id} selectedTab={"settings"} />
+            <WorkspacesTabList workspaceId={workspace.id} selectedTab={""} />
           </div>
           <form className="flex flex-col pt-6 gap-6" onSubmit={updateWorkspace}>
             <TextInput
