@@ -1,7 +1,7 @@
+import angular from "img/topic-thumbnails/angular-new.svg";
 import javaScript from "img/topic-thumbnails/javascript.svg";
 import python from "img/topic-thumbnails/python.svg";
 import typeScript from "img/topic-thumbnails/typescript.svg";
-import angular from "img/topic-thumbnails/angular-new.svg";
 import java from "img/topic-thumbnails/java.svg";
 import cSharp from "img/topic-thumbnails/csharp.svg";
 import cpp from "img/topic-thumbnails/cpp.svg";
@@ -25,11 +25,11 @@ import contextThumbnailImage from "../../img/open-sourced-with-bg-icon.png";
 import { InterestType } from "./getInterestOptions";
 
 const topicThumbnails: Record<InterestType, string> = {
+  angular: angular,
   javascript: javaScript,
   python: python,
   java: java,
   typescript: typeScript,
-  angular: angular,
   csharp: cSharp,
   cpp: cpp,
   php: php,
