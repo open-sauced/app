@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useSearchContributors } from "lib/hooks/useSearchContributors";
+import { useSearchRepos } from "lib/hooks/useSearchRepos";
+import { SearchByReposStep } from "../TrackedRepoWizard/SearchByReposStep";
 import { TrackedContributorsWizardLayout } from "./TrackedContributorsWizardLayout";
 
 import { PickContributorStep } from "./PickContributorStep";
@@ -16,15 +18,52 @@ type TrackedContributorsStep =
   | "pickOption"
   | "pickContributors"
   | "pasteContributors"
-  | "pickOrg"
+  | "pickRepo"
   | "filterPastedContributors";
 
 export const TrackedContributorsWizard = ({ onAddToTrackingList, onCancel }: TrackedContributorsWizardProps) => {
   const [step, setStep] = useState<TrackedContributorsStep>("pickOption");
   const [currentTrackedContributors, setCurrentTrackedContributors] = useState<Map<string, boolean>>(new Map());
   const suggestedContributors: any[] = [];
+  const [repoSearchTerm, setRepoSearchTerm] = useState<string | undefined>();
+  const [repositoriesForContributors, setRepositoriesForContributors] = useState<Map<string, boolean>>(new Map());
+  const { data: repositories, isError: isRepoError, isLoading: IsRepoLoading } = useSearchRepos(repoSearchTerm);
 
-  const onImportOrg = () => {};
+  let searchedRepos = repositories ?? [];
+
+  const onToggleRepo = (repo: string, isSelected: boolean) => {
+    setRepoSearchTerm(undefined);
+    setRepositoriesForContributors((currentTrackedRepositories) => {
+      const updates = new Map(currentTrackedRepositories);
+      updates.set(repo, isSelected);
+
+      return updates;
+    });
+  };
+
+  const onSelectRepo = (repo: string) => {
+    onToggleRepo(repo, true);
+  };
+
+  const onToggleAllRepos = (checked: boolean) => {
+    setRepositoriesForContributors((currentRepositories) => {
+      const updates = new Map(currentRepositories);
+
+      for (const [repo] of updates) {
+        updates.set(repo, checked);
+      }
+
+      return updates;
+    });
+  };
+
+  const onSearchRepos = (searchTerm?: string) => {
+    if (searchTerm && searchTerm.length > 2) {
+      setRepoSearchTerm(searchTerm);
+    } else {
+      setRepoSearchTerm(undefined);
+    }
+  };
 
   const [searchTerm, setSearchTerm] = useState<string | undefined>();
 
@@ -100,6 +139,9 @@ export const TrackedContributorsWizard = ({ onAddToTrackingList, onCancel }: Tra
             onPasteContributors={() => {
               setStep("pasteContributors");
             }}
+            onSearchContributorsByRepo={() => {
+              setStep("pickRepo");
+            }}
           />
         );
 
@@ -128,7 +170,18 @@ export const TrackedContributorsWizard = ({ onAddToTrackingList, onCancel }: Tra
           />
         );
 
-      // TODO: other steps
+      case "pickRepo":
+        return (
+          <SearchByReposStep
+            onSelectRepo={onSelectRepo}
+            onToggleRepo={onToggleRepo}
+            onToggleAllRepos={onToggleAllRepos}
+            onSearch={onSearchRepos}
+            repositories={repositoriesForContributors}
+            searchedRepos={searchedRepos}
+            suggestedRepos={[]}
+          />
+        );
 
       default:
         return null;
