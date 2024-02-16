@@ -9,6 +9,7 @@ interface TrackedRepositoriesContributorsStepProps {
   onSelectContributor: (contributor: string) => void;
   onToggleContributor: (contributor: string, isSelected: boolean) => void;
   onToggleAllContributors: (checked: boolean) => void;
+  onNext: () => void;
   repositories: Map<string, boolean>;
 }
 export const TrackedRepositoriesContributorsStep = ({
@@ -18,39 +19,25 @@ export const TrackedRepositoriesContributorsStep = ({
   onSelectContributor,
   onToggleContributor,
   onToggleAllContributors,
+  onNext,
   repositories,
 }: TrackedRepositoriesContributorsStepProps) => {
   const [step, setStep] = useState("repositories");
   const disabled = !Array.from(repositories.values()).some((isSelected) => isSelected);
 
-  switch (step) {
-    case "repositories":
-      return (
-        <>
-          <SearchByReposStep
-            onSelectRepo={onSelectRepo}
-            onToggleRepo={onToggleRepo}
-            onToggleAllRepos={onToggleAllRepos}
-            repositories={repositories}
-          />
-          <div className="flex justify-end">
-            <Button
-              disabled={disabled}
-              onClick={() => {
-                setStep("contributors");
-              }}
-              variant="primary"
-            >
-              Next
-            </Button>
-          </div>
-        </>
-      );
-
-    case "contributors":
-      return <p>contributors</p>;
-
-    default:
-      throw new Error("Invalid step");
-  }
+  return (
+    <>
+      <SearchByReposStep
+        onSelectRepo={onSelectRepo}
+        onToggleRepo={onToggleRepo}
+        onToggleAllRepos={onToggleAllRepos}
+        repositories={repositories}
+      />
+      <div className="flex justify-end">
+        <Button disabled={disabled} onClick={onNext} variant="primary">
+          Next
+        </Button>
+      </div>
+    </>
+  );
 };

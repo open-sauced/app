@@ -19,8 +19,9 @@ type TrackedContributorsStep =
   | "pickOption"
   | "pickContributors"
   | "pasteContributors"
-  | "pickRepo"
-  | "filterPastedContributors";
+  | "pickRepos"
+  | "filterPastedContributors"
+  | "reposContributors";
 
 export const TrackedContributorsWizard = ({ onAddToTrackingList, onCancel }: TrackedContributorsWizardProps) => {
   const [step, setStep] = useState<TrackedContributorsStep>("pickOption");
@@ -130,10 +131,14 @@ export const TrackedContributorsWizard = ({ onAddToTrackingList, onCancel }: Tra
         setStep("pasteContributors");
         break;
       case "pickContributors":
-        setStep("pickRepo");
+        setStep("pickOption");
+        break;
+      case "reposContributors":
+        setStep("pickRepos");
         break;
       default:
         setStep("pickOption");
+        break;
     }
   }
 
@@ -159,7 +164,7 @@ export const TrackedContributorsWizard = ({ onAddToTrackingList, onCancel }: Tra
               setStep("pasteContributors");
             }}
             onSearchContributorsByRepo={() => {
-              setStep("pickRepo");
+              setStep("pickRepos");
             }}
           />
         );
@@ -189,9 +194,12 @@ export const TrackedContributorsWizard = ({ onAddToTrackingList, onCancel }: Tra
           />
         );
 
-      case "pickRepo":
+      case "pickRepos":
         return (
           <TrackedRepositoriesContributorsStep
+            onNext={() => {
+              setStep("reposContributors");
+            }}
             onSelectRepo={onSelectRepo}
             onToggleRepo={onToggleRepo}
             onToggleAllRepos={onToggleAllRepos}
@@ -201,6 +209,8 @@ export const TrackedContributorsWizard = ({ onAddToTrackingList, onCancel }: Tra
             repositories={repositoriesForContributors}
           />
         );
+      case "reposContributors":
+        return <p>contributors</p>;
 
       default:
         return null;
