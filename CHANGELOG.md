@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.4.0-beta.11](https://github.com/open-sauced/insights/compare/v2.4.0-beta.10...v2.4.0-beta.11) (2024-02-16)
+
+
+### 🐛 Bug Fixes
+
+* make workspace sidebar state persistent between route changes ([#2698](https://github.com/open-sauced/insights/issues/2698)) ([6a37e6d](https://github.com/open-sauced/insights/commit/6a37e6d5483aa9001370a60604b8864c22f30561))
+
 ## [2.4.0-beta.10](https://github.com/open-sauced/insights/compare/v2.4.0-beta.9...v2.4.0-beta.10) (2024-02-16)
 
 
