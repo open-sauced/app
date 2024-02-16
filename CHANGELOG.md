@@ -5,6 +5,41 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.4.0-beta.8](https://github.com/open-sauced/insights/compare/v2.4.0-beta.7...v2.4.0-beta.8) (2024-02-16)
+
+
+### 🍕 Features
+
+* add Angular as a topic ([#2687](https://github.com/open-sauced/insights/issues/2687)) ([95f4ea2](https://github.com/open-sauced/insights/commit/95f4ea237096c75f34afc04011e66ed4a60636c5))
+
+## [2.4.0-beta.7](https://github.com/open-sauced/insights/compare/v2.4.0-beta.6...v2.4.0-beta.7) (2024-02-16)
+
+
+### 🐛 Bug Fixes
+
+* wrap new contributor insight page in layout and fix redirect ([#2689](https://github.com/open-sauced/insights/issues/2689)) ([80d2de1](https://github.com/open-sauced/insights/commit/80d2de121857021d767d077620672b8727d31f74))
+
+## [2.4.0-beta.6](https://github.com/open-sauced/insights/compare/v2.4.0-beta.5...v2.4.0-beta.6) (2024-02-16)
+
+
+### 🐛 Bug Fixes
+
+* now select repositories checkbox has label associated to it ([#2686](https://github.com/open-sauced/insights/issues/2686)) ([f3abcf7](https://github.com/open-sauced/insights/commit/f3abcf770a1f240551938da046fdaaeddb7ae1b3))
+
+## [2.4.0-beta.5](https://github.com/open-sauced/insights/compare/v2.4.0-beta.4...v2.4.0-beta.5) (2024-02-16)
+
+
+### 🍕 Features
+
+* Implement workspace contributor page ([#2676](https://github.com/open-sauced/insights/issues/2676)) ([47806a6](https://github.com/open-sauced/insights/commit/47806a63887fb7d0e355dadb1f928f1b4d41191b))
+
+## [2.4.0-beta.4](https://github.com/open-sauced/insights/compare/v2.4.0-beta.3...v2.4.0-beta.4) (2024-02-16)
+
+
+### 🐛 Bug Fixes
+
+* now disabled button that becomes enabled no longer causes a content layout shift ([#2609](https://github.com/open-sauced/insights/issues/2609)) ([e39f638](https://github.com/open-sauced/insights/commit/e39f638740b7869bd566ea9a3d8e69d66b00b4a5))
+
 ## [2.4.0-beta.3](https://github.com/open-sauced/insights/compare/v2.4.0-beta.2...v2.4.0-beta.3) (2024-02-16)
 
 
