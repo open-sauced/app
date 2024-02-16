@@ -18,6 +18,8 @@ import GitHubImportDialog from "components/organisms/GitHubImportDialog/github-i
 import GitHubTeamSyncDialog from "components/organisms/GitHubTeamSyncDialog/github-team-sync-dialog";
 import { fetchGithubOrgTeamMembers } from "lib/hooks/fetchGithubTeamMembers";
 import { fetchApiData } from "helpers/fetchApiData";
+import { deleteCookie } from "lib/utils/server/cookies";
+import { WORKSPACE_ID_COOKIE_NAME } from "lib/utils/workspace-utils";
 
 interface CreateListPayload {
   name: string;
@@ -350,6 +352,8 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   });
 
   if (error) {
+    deleteCookie(ctx.res, WORKSPACE_ID_COOKIE_NAME);
+
     if (error.status === 404 || error.status === 401) {
       return { notFound: true };
     }

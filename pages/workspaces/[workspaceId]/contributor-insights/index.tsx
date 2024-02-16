@@ -18,6 +18,8 @@ import useFetchFeaturedLists from "lib/hooks/useFetchFeaturedLists";
 import { getAllFeatureFlags } from "lib/utils/server/feature-flags";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import { fetchApiData } from "helpers/fetchApiData";
+import { WORKSPACE_ID_COOKIE_NAME } from "lib/utils/workspace-utils";
+import { deleteCookie } from "lib/utils/server/cookies";
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const supabase = createPagesServerClient(context);
@@ -33,6 +35,8 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
   });
 
   if (error) {
+    deleteCookie(context.res, WORKSPACE_ID_COOKIE_NAME);
+
     if (error.status === 404 || error.status === 401) {
       return { notFound: true };
     }
