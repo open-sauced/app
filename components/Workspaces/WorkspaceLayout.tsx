@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useLocalStorage } from "react-use";
 import { LuArrowRightToLine } from "react-icons/lu";
 import TopNav from "components/organisms/TopNav/top-nav";
 import { AppSideBar } from "components/shared/AppSidebar/AppSidebar";
@@ -9,7 +9,7 @@ interface WorkspaceLayoutProps {
 }
 
 export const WorkspaceLayout = ({ workspaceId, children }: WorkspaceLayoutProps) => {
-  const [showingSidebar, setShowingSidebar] = useState(true);
+  const [showingSidebar, setShowingSidebar] = useLocalStorage("showingSidebar", true);
   return (
     <div
       className="grid grid-cols-[18rem,1fr] grid-rows-[3.3rem,auto,1fr]"
