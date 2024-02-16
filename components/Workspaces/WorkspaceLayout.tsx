@@ -21,7 +21,7 @@ export const WorkspaceLayout = ({ workspaceId, children }: WorkspaceLayoutProps)
       }}
     >
       <div style={{ gridArea: "header" }}>
-        <TopNav hideInsights={true} />
+        <TopNav />
       </div>
       <div style={{ gridArea: "sidebar" }} className="transition-all duration-150">
         <AppSideBar workspaceId={workspaceId} hideSidebar={() => setShowingSidebar(false)} />
