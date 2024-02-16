@@ -9,6 +9,8 @@ import { WorkspacesTabList } from "components/Workspaces/WorkspacesTabList";
 import { DayRangePicker } from "components/shared/DayRangePicker";
 import { useGetWorkspaceContributors } from "lib/hooks/api/useGetWorkspaceContributors";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
+import { deleteCookie } from "lib/utils/server/cookies";
+import { WORKSPACE_ID_COOKIE_NAME } from "lib/utils/workspace-utils";
 import ContributorsList from "components/organisms/ContributorsList/contributors-list";
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
@@ -25,7 +27,9 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
   });
 
   if (error) {
-    if (error.status === 404) {
+    deleteCookie(context.res, WORKSPACE_ID_COOKIE_NAME);
+
+    if (error.status === 404 || error.status === 401) {
       return { notFound: true };
     }
 

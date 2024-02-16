@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.4.0-beta.9](https://github.com/open-sauced/insights/compare/v2.4.0-beta.8...v2.4.0-beta.9) (2024-02-16)
+
+
+### 🐛 Bug Fixes
+
+* now workspace pages that crash when you don't have access to them give a page not found instead ([#2694](https://github.com/open-sauced/insights/issues/2694)) ([1fc0642](https://github.com/open-sauced/insights/commit/1fc0642c1a18db0a34b5366d7f101b8fa893cace))
+
 ## [2.4.0-beta.8](https://github.com/open-sauced/insights/compare/v2.4.0-beta.7...v2.4.0-beta.8) (2024-02-16)
 
 
