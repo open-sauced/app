@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.4.0-beta.3](https://github.com/open-sauced/insights/compare/v2.4.0-beta.2...v2.4.0-beta.3) (2024-02-16)
+
+
+### 🍕 Features
+
+* added link for workspace in top nav ([#2674](https://github.com/open-sauced/insights/issues/2674)) ([72c8b6d](https://github.com/open-sauced/insights/commit/72c8b6d9afbf68e28c8282d36905a167b0c45b2a))
+
 ## [2.4.0-beta.2](https://github.com/open-sauced/insights/compare/v2.4.0-beta.1...v2.4.0-beta.2) (2024-02-15)
 
 
