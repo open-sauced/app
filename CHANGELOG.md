@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.4.0-beta.8](https://github.com/open-sauced/insights/compare/v2.4.0-beta.7...v2.4.0-beta.8) (2024-02-16)
+
+
+### 🍕 Features
+
+* add Angular as a topic ([#2687](https://github.com/open-sauced/insights/issues/2687)) ([95f4ea2](https://github.com/open-sauced/insights/commit/95f4ea237096c75f34afc04011e66ed4a60636c5))
+
 ## [2.4.0-beta.7](https://github.com/open-sauced/insights/compare/v2.4.0-beta.6...v2.4.0-beta.7) (2024-02-16)
 
 
