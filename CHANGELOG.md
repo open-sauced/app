@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.4.0-beta.5](https://github.com/open-sauced/insights/compare/v2.4.0-beta.4...v2.4.0-beta.5) (2024-02-16)
+
+
+### 🍕 Features
+
+* Implement workspace contributor page ([#2676](https://github.com/open-sauced/insights/issues/2676)) ([47806a6](https://github.com/open-sauced/insights/commit/47806a63887fb7d0e355dadb1f928f1b4d41191b))
+
 ## [2.4.0-beta.4](https://github.com/open-sauced/insights/compare/v2.4.0-beta.3...v2.4.0-beta.4) (2024-02-16)
 
 
