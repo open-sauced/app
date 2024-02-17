@@ -71,8 +71,6 @@ export async function middleware(req: NextRequest) {
     return res;
   }
 
-  // TODO: remove this once we've rolled this out to everyone.
-  // For now, only allowed users with the workspaces feature flag can access the workspaces pages.
   if (session?.user && req.nextUrl.pathname.startsWith("/workspaces")) {
     const [, , workspaceId] = req.nextUrl.pathname.split("/");
 
