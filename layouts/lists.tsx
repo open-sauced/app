@@ -55,9 +55,7 @@ const ListPageLayout = ({
               <TabsList
                 tabList={tabList}
                 selectedTab={selectedTab}
-                pageId={
-                  workspaceId ? `/workspaces/${workspaceId}/contributor-insights/${list.id}` : `/lists/${list.id}`
-                }
+                pageId={`/workspaces/${workspaceId}/contributor-insights/${list.id}`}
               />
             )}
             <div>

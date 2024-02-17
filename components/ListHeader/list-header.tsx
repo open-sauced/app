@@ -68,11 +68,7 @@ const ListHeader = ({
           <FiCopy className="mt-1 mr-2" /> Share
         </Button>
         {isOwner && (
-          <Link
-            href={
-              workspaceId ? `/workspaces/${workspaceId}/contributor-insights/${listId}/edit` : `/lists/${listId}/edit`
-            }
-          >
+          <Link href={`/workspaces/${workspaceId}/contributor-insights/${listId}/edit`}>
             <Button variant="primary">
               <FaEdit className="mr-2" /> Edit List
             </Button>

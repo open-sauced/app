@@ -44,9 +44,7 @@ const AddContributorsHeader = ({
         <h1 className="self-start text-2xl flex items-center">
           <Link
             className="inline-block p-3 mr-2 border rounded-lg cursor-pointer bg-light-slate-1"
-            href={
-              workspaceId ? `/workspaces/${workspaceId}/contributor-insights/${list.id}/edit` : `/lists/${list.id}/edit`
-            }
+            href={`/workspaces/${workspaceId}/contributor-insights/${list.id}/edit`}
           >
             <MdOutlineArrowBackIos title="Go To Insight Page" className="text-lg text-light-slate-10" />
           </Link>

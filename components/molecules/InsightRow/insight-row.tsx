@@ -30,8 +30,8 @@ const InsightRow = ({ insight, user, isEditable = true, workspaceId }: InsightRo
 
   const membership = insight.members?.find((member) => member.user_id === Number(user?.id));
   const canEdit = membership && ["edit", "admin"].includes(membership.access);
-  const publicLinkPrefix = workspaceId ? `/workspaces/${workspaceId}/repository-insights` : "/pages";
-  const editLinkPrefix = workspaceId ? `/workspaces/${workspaceId}/repository-insights` : "/hub/insights";
+  const publicLinkPrefix = `/workspaces/${workspaceId}/repository-insights`;
+  const editLinkPrefix = `/workspaces/${workspaceId}/repository-insights`;
 
   return (
     <Card className="flex flex-col md:flex-row w-full rounded-lg px-4 lg:px-8 py-5 gap-4 lg:gap-2 bg-white items-center">
@@ -40,11 +40,7 @@ const InsightRow = ({ insight, user, isEditable = true, workspaceId }: InsightRo
           <div className="flex items-center lg:items-center gap-4 ">
             <div className="w-4 h-4 bg-light-orange-10 rounded-full"></div>
             <div className="text-xl text-light-slate-12 flex justify-between">
-              <Link
-                href={`${publicLinkPrefix}${
-                  !workspaceId ? `/${user ? user?.user_metadata.user_name : "anonymous"}` : ""
-                }/${insight.id}/dashboard`}
-              >
+              <Link href={`${publicLinkPrefix}/${insight.id}/dashboard`}>
                 {isEditable ? insight.name : `Demo | ${insight.name}`}
               </Link>
             </div>
@@ -110,11 +106,7 @@ const InsightRow = ({ insight, user, isEditable = true, workspaceId }: InsightRo
                     </span>
                   </Link>
                 ))}
-              <Link
-                href={`${publicLinkPrefix}${
-                  !workspaceId ? `/${user ? user?.user_metadata.user_name : "anonymous"}` : ""
-                }/${insight.id}/dashboard`}
-              >
+              <Link href={`${publicLinkPrefix}/${insight.id}/dashboard`}>
                 <span className=" bg-light-slate-1 inline-block rounded-lg p-2.5 border cursor-pointer">
                   <MdOutlineArrowForwardIos title="Go To Insight Page" className="text-light-slate-10 text-lg" />
                 </span>
