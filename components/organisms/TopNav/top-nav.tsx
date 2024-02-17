@@ -30,23 +30,19 @@ const TopNav = ({ hideInsights = false }: TopNavProps) => {
       </div>
       <div className="lg:hidden container mx-auto px-2 md:px-16 flex justify-between items-center">
         <Nav name="Mobile" hideInsights={hideInsights} />
-        {user
-          ? !onboarded && (
-              <div className="relative">
-                <OnboardingButton aria="onboarding" className="!flex !pr-1 mb-1 mr-2">
-                  <Text className="text-sm !text-light-slate-12 hidden sm:block py-1 px-2">
-                    Complete the onboarding
-                  </Text>
-                </OnboardingButton>
-                <div id="onboarding" className="flex flex-col absolute right-0 sm:hidden">
-                  <span className="border-x-transparent border-x-[7px] border-b-[7px] border-b-orange-500 h-0 w-0 self-end mr-[1.1rem]" />
-                  <Text className="text-sm py-1 px-2 w-max rounded shadow-lg bg-light-slate-2 !text-light-orange-9 outline-[1px] outline outline-orange-500">
-                    Complete the onboarding
-                  </Text>
-                </div>
-              </div>
-            )
-          : null}
+        {user && onboarded === false && (
+          <div className="relative">
+            <OnboardingButton aria="onboarding" className="!flex !pr-1 mb-1 mr-2">
+              <Text className="text-sm !text-light-slate-12 hidden sm:block py-1 px-2">Complete the onboarding</Text>
+            </OnboardingButton>
+            <div id="onboarding" className="flex flex-col absolute right-0 sm:hidden">
+              <span className="border-x-transparent border-x-[7px] border-b-[7px] border-b-orange-500 h-0 w-0 self-end mr-[1.1rem]" />
+              <Text className="text-sm py-1 px-2 w-max rounded shadow-lg bg-light-slate-2 !text-light-orange-9 outline-[1px] outline outline-orange-500">
+                Complete the onboarding
+              </Text>
+            </div>
+          </div>
+        )}
       </div>
     </header>
   );
