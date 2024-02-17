@@ -33,10 +33,8 @@ export const SearchedContributorsTable = ({
                     onToggleAllContributors(!!checked);
                   }}
                   checked={allChecked}
+                  label={type === "by-contributors" ? "Selected contributors" : "Selected organization contributors"}
                 />
-                <span>
-                  {type === "by-contributors" ? "Selected contributors" : "Selected organization contributors"}
-                </span>
               </div>
               <form
                 className="pr-2"
