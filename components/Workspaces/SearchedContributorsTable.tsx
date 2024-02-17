@@ -58,8 +58,6 @@ export const SearchedContributorsTable = ({
           </TableHeader>
           <TableBody>
             {[...contributors.entries()].map(([contributor, checked]) => {
-              const [owner] = contributor.split("/");
-
               return (
                 <TableRow key={contributor}>
                   <TableCell className="flex gap-2 items-center w-full">
@@ -70,7 +68,7 @@ export const SearchedContributorsTable = ({
                         }}
                         checked={checked}
                       />
-                      <Avatar contributor={owner} size="xsmall" />
+                      <Avatar contributor={contributor} size="xsmall" />
                       <span>{contributor}</span>
                     </label>
                   </TableCell>

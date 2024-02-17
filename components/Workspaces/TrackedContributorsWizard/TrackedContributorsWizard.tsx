@@ -2,6 +2,7 @@ import { ComponentProps, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useSearchContributors } from "lib/hooks/useSearchContributors";
 import { useGetTrackedRepositories } from "lib/hooks/api/useGetTrackedRepositories";
+import { useGetRepoContributors } from "lib/hooks/api/useGetRepositoryContributors";
 import { SearchedContributorsTable } from "../SearchedContributorsTable";
 import { TrackedContributorsWizardLayout } from "./TrackedContributorsWizardLayout";
 
@@ -22,7 +23,7 @@ export type TrackedContributorsStep =
   | "pasteContributors"
   | "pickRepos"
   | "filterPastedContributors"
-  | "reposContributors";
+  | "pickReposContributors";
 
 export const TrackedContributorsWizard = ({ onAddToTrackingList, onCancel }: TrackedContributorsWizardProps) => {
   const [step, setStep] = useState<TrackedContributorsStep>("pickOption");
@@ -39,6 +40,18 @@ export const TrackedContributorsWizard = ({ onAddToTrackingList, onCancel }: Tra
     isLoading: IsRepoLoading,
     // TODO: a search term will help with returning everything
   } = useGetTrackedRepositories({ workspaceId, limit: 6000 });
+  const {
+    data: rawContributorsFromRepos,
+    isError: isContributorsFromReposError,
+    isLoading: isContributorsFromReposLoading,
+  } = useGetRepoContributors({
+    repositories: Array.from(repositoriesForContributors.keys()),
+    limit: 1000,
+    range: 90,
+  });
+  const contributorsFromReposData = new Map<string, boolean>(
+    rawContributorsFromRepos?.map((contributor) => [contributor, true])
+  );
 
   useEffect(() => {
     const repositories =
@@ -158,7 +171,7 @@ export const TrackedContributorsWizard = ({ onAddToTrackingList, onCancel }: Tra
       case "pickContributors":
         setStep("pickOption");
         break;
-      case "reposContributors":
+      case "pickReposContributors":
         setStep("pickRepos");
         break;
       default:
@@ -230,7 +243,7 @@ export const TrackedContributorsWizard = ({ onAddToTrackingList, onCancel }: Tra
         return (
           <TrackedRepositoriesContributorsStep
             onNext={() => {
-              setStep("reposContributors");
+              setStep("pickReposContributors");
             }}
             onSelectRepo={onSelectRepo}
             onToggleRepo={onToggleRepo}
@@ -242,11 +255,11 @@ export const TrackedContributorsWizard = ({ onAddToTrackingList, onCancel }: Tra
           />
         );
 
-      case "reposContributors":
+      case "pickReposContributors":
         return (
           <SearchedContributorsTable
             type="by-contributors"
-            contributors={contributorsFromRepos}
+            contributors={contributorsFromReposData}
             onFilter={onFilterContributorsFromRepos}
             onToggleContributor={onToggleRepoContributor}
             onToggleAllContributors={onToggleAllReposContributors}
