@@ -7,11 +7,29 @@ type DbWorkspaceContributor = {
   workspace_id: string;
   contributor: {
     login: string;
+    username: string;
+    updated_at: string;
   };
 };
 
-export const useGetWorkspaceContributors = ({ workspaceId, range = 30 }: { workspaceId: string; range?: number }) => {
-  const searchParams = new URLSearchParams({ range: range.toString() });
+type UseGetWorkspaceContributorsProps = {
+  workspaceId: string;
+  range?: number;
+  page?: number;
+  limit?: number;
+};
+
+export const useGetWorkspaceContributors = ({
+  workspaceId,
+  range = 30,
+  page = 1,
+  limit = 10,
+}: UseGetWorkspaceContributorsProps) => {
+  const searchParams = new URLSearchParams({
+    range: range.toString(),
+    page: page.toString(),
+    limit: limit.toString(),
+  });
   const endpoint = `workspaces/${workspaceId}/contributors?${searchParams}`;
 
   const { data, error, isLoading, mutate } = useSWR<PagedData<DbWorkspaceContributor>, Error>(

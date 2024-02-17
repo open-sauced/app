@@ -10,13 +10,7 @@ import { useFetchUser } from "lib/hooks/useFetchUser";
 import OnboardingButton from "components/molecules/OnboardingButton/onboarding-button";
 import Text from "components/atoms/Typography/text";
 
-interface TopNavProps {
-  hideInsights?: boolean;
-}
-
-// TODO: hideInsights is temporary until we've moved everything to the workspace
-// view with the new sidebar
-const TopNav = ({ hideInsights = false }: TopNavProps) => {
+const TopNav = () => {
   const { user } = useSupabaseAuth();
   const { onboarded } = useSession();
   return (
@@ -24,12 +18,12 @@ const TopNav = ({ hideInsights = false }: TopNavProps) => {
       <div className="flex justify-between items-center mx-auto px-2">
         <div className="flex gap-3 md:gap-8 items-center">
           <HeaderLogo responsive={true} withBg={false} textIsBlack />
-          <Nav className="hidden lg:flex" hideInsights={hideInsights} />
+          <Nav className="hidden lg:flex" />
         </div>
         <AuthSection />
       </div>
       <div className="lg:hidden container mx-auto px-2 md:px-16 flex justify-between items-center">
-        <Nav name="Mobile" hideInsights={hideInsights} />
+        <Nav name="Mobile" />
         {user && onboarded === false && (
           <div className="relative">
             <OnboardingButton aria="onboarding" className="!flex !pr-1 mb-1 mr-2">
@@ -48,15 +42,7 @@ const TopNav = ({ hideInsights = false }: TopNavProps) => {
   );
 };
 
-const Nav = ({
-  className,
-  name = "Main",
-  hideInsights,
-}: {
-  className?: string;
-  name?: string;
-  hideInsights?: boolean;
-}) => {
+const Nav = ({ className, name = "Main" }: { className?: string; name?: string }) => {
   const { user } = useSupabaseAuth();
   const { onboarded } = useSession();
 
@@ -69,18 +55,18 @@ const Nav = ({
   return (
     <nav className={className} aria-label={name}>
       <ul className="flex gap-3 md:gap-8 mb-1 ml-2 sm:m-0 w-full sm:w-auto">
-        {hideInsights ? null : (
+        {user ? (
           <li>
             <Link
               className={`font-medium text-sm text-slate-700 hover:text-orange-500 transition-all ${getActiveStyle(
-                router.asPath === "/hub/insights" || router.asPath.includes("/pages")
+                router.asPath.startsWith("/workspaces/") || router.asPath.includes("/pages")
               )}`}
-              href={"/hub/insights"}
+              href={"/"}
             >
-              Insights
+              Workspace
             </Link>
           </li>
-        )}
+        ) : null}
         <li>
           <Link
             className={`tracking-tight font-medium text-slate-700 text-sm hover:text-orange-500 transition-all ${getActiveStyle(
