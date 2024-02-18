@@ -1,3 +1,4 @@
+import angular from "img/topic-thumbnails/angular-new.svg";
 import javaScript from "img/topic-thumbnails/javascript.svg";
 import python from "img/topic-thumbnails/python.svg";
 import typeScript from "img/topic-thumbnails/typescript.svg";
@@ -24,6 +25,7 @@ import contextThumbnailImage from "../../img/open-sourced-with-bg-icon.png";
 import { InterestType } from "./getInterestOptions";
 
 const topicThumbnails: Record<InterestType, string> = {
+  angular: angular,
   javascript: javaScript,
   python: python,
   java: java,

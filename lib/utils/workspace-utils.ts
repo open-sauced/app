@@ -1,24 +1,25 @@
 import { RequestCookies } from "next/dist/compiled/@edge-runtime/cookies";
 import { fetchApiData } from "helpers/fetchApiData";
 
-// TODO: decide if user can add contributors on creation
 export async function createWorkspace({
   name,
   description = "",
   members = [],
   sessionToken,
   repos = [],
+  contributors = [],
 }: {
   name: string;
   description?: string;
   members: any[];
   sessionToken: string;
   repos: { full_name: string }[];
+  contributors: { login: string }[];
 }) {
   const { data, error } = await fetchApiData<Workspace>({
     path: "workspaces",
     method: "POST",
-    body: { name, description, members, repos },
+    body: { name, description, members, repos, contributors },
     bearerToken: sessionToken,
     pathValidator: () => true,
   });

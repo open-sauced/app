@@ -129,7 +129,7 @@ export const AppSideBar = ({ workspaceId, hideSidebar }: AppSideBarProps) => {
                 <DropdownMenuItem className="rounded-md group">
                   <Link
                     title="New Repository Insight"
-                    href="/hub/insights/new"
+                    href={`/workspaces/${workspaceId}/repository-insights/new`}
                     className="text-sm font-medium flex gap-1 items-center rounded-md transition-colors cursor-pointer tracking-tight p-1"
                   >
                     <ChartBarSquareIcon className="w-5 h-5 text-slate-400 inline-flex mr-1 group-hover:stroke-orange-500" />
@@ -160,6 +160,7 @@ export const AppSideBar = ({ workspaceId, hideSidebar }: AppSideBarProps) => {
               insights={repoInsights}
               type="repo"
               isLoading={insightsLoading}
+              workspaceId={workspaceId}
             />
             <InsightsPanel
               title="Contributor Insights"

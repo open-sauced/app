@@ -46,6 +46,8 @@ export const InsightsPanel = ({ title, username, insights, type, isLoading, work
             ? workspaceId
               ? `/workspaces/${workspaceId}/contributor-insights`
               : "/hub/lists"
+            : workspaceId
+            ? `/workspaces/${workspaceId}/repository-insights`
             : "/hub/insights"
         }
         icon={getIcon(type)}
@@ -60,6 +62,8 @@ export const InsightsPanel = ({ title, username, insights, type, isLoading, work
                   ? workspaceId
                     ? `/workspaces/${workspaceId}/contributor-insights/${insight.id}/overview`
                     : `/lists/${insight.id}`
+                  : workspaceId
+                  ? `/workspaces/${workspaceId}/repository-insights/${insight.id}/overview`
                   : `/pages/${username}/${insight.id}/dashboard`;
               return (
                 <li
@@ -83,6 +87,8 @@ export const InsightsPanel = ({ title, username, insights, type, isLoading, work
                     ? workspaceId
                       ? `/workspaces/${workspaceId}/contributor-insights`
                       : "/hub/lists"
+                    : workspaceId
+                    ? `/workspaces/${workspaceId}/repository-insights`
                     : "/hub/insights"
                 }
               >
