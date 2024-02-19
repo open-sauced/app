@@ -2,12 +2,8 @@
   "compilerOptions": {
     "target": "ESNext",
     "useDefineForClassFields": true,
-    "lib": [
-      "DOM",
-      "DOM.Iterable",
-      "ESNext"
-    ],
-    "allowJs": false,
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
@@ -23,6 +19,13 @@
     "incremental": true,
     "types": ["vitest/globals"]
   },
-  "include": ["next-env.d.ts", "next-types.d.ts", "**/*.ts", "**/*.tsx", "components/molecules/DevToSocialImage"],
+  "include": [
+    "next-env.d.ts",
+    "next-types.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "components/molecules/DevToSocialImage",
+    "next.config.js"
+  ],
   "exclude": ["node_modules", "netlify/edge-functions"]
 }

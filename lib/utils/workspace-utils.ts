@@ -1,3 +1,4 @@
+import { RequestCookies } from "next/dist/compiled/@edge-runtime/cookies";
 import { fetchApiData } from "helpers/fetchApiData";
 
 export async function createWorkspace({
@@ -6,17 +7,19 @@ export async function createWorkspace({
   members = [],
   sessionToken,
   repos = [],
+  contributors = [],
 }: {
   name: string;
   description?: string;
   members: any[];
   sessionToken: string;
   repos: { full_name: string }[];
+  contributors: { login: string }[];
 }) {
   const { data, error } = await fetchApiData<Workspace>({
     path: "workspaces",
     method: "POST",
-    body: { name, description, members, repos },
+    body: { name, description, members, repos, contributors },
     bearerToken: sessionToken,
     pathValidator: () => true,
   });
@@ -34,12 +37,14 @@ export async function saveWorkspace({
   description = "",
   sessionToken,
   repos,
+  contributors,
 }: {
   workspaceId: string;
   name: string;
   description?: string;
   sessionToken: string;
   repos: { full_name: string }[];
+  contributors: { login: string }[];
 }) {
   const updateWorkspace = await fetchApiData<Workspace>({
     path: `workspaces/${workspaceId}`,
@@ -57,12 +62,18 @@ export async function saveWorkspace({
     pathValidator: () => true,
   });
 
-  const [{ data, error }, { data: repoData, error: reposError }] = await Promise.all([
-    updateWorkspace,
-    updateWorkspaceRepos,
-  ]);
+  const updateWorkspaceContributors = await fetchApiData<any[]>({
+    path: `workspaces/${workspaceId}/contributors`,
+    method: "POST",
+    body: { contributors },
+    bearerToken: sessionToken,
+    pathValidator: () => true,
+  });
 
-  return { data: { workspace: data, repos: repoData }, error };
+  const [{ data, error }, { data: repoData, error: reposError }, { data: contributorsData, error: contributorsError }] =
+    await Promise.all([updateWorkspace, updateWorkspaceRepos, updateWorkspaceContributors]);
+
+  return { data: { workspace: data, repos: repoData, contributors: contributorsData }, error };
 }
 
 export async function deleteTrackedRepos({
@@ -85,6 +96,26 @@ export async function deleteTrackedRepos({
   return { data, error };
 }
 
+export async function deleteTrackedContributors({
+  workspaceId,
+  sessionToken,
+  contributors,
+}: {
+  workspaceId: string;
+  sessionToken: string;
+  contributors: { login: string }[];
+}) {
+  const { data, error } = await fetchApiData<any[]>({
+    path: `workspaces/${workspaceId}/contributors`,
+    method: "DELETE",
+    body: { contributors },
+    bearerToken: sessionToken,
+    pathValidator: () => true,
+  });
+
+  return { data, error };
+}
+
 export async function deleteWorkspace({ workspaceId, sessionToken }: { workspaceId: string; sessionToken: string }) {
   const { data, error } = await fetchApiData<Workspace>({
     path: `workspaces/${workspaceId}`,
@@ -94,4 +125,17 @@ export async function deleteWorkspace({ workspaceId, sessionToken }: { workspace
   });
 
   return { data, error };
+}
+
+export const WORKSPACE_ID_COOKIE_NAME = "workspace-id";
+
+export function getWorkspaceUrl(cookies: RequestCookies, baseUrl: string, personalWorkspaceId: string) {
+  if (!cookies.has(WORKSPACE_ID_COOKIE_NAME)) {
+    cookies.set(WORKSPACE_ID_COOKIE_NAME, personalWorkspaceId);
+  }
+
+  // @ts-expect-error the cookie value will be defined
+  const workspaceId = cookies.get(WORKSPACE_ID_COOKIE_NAME).value;
+
+  return new URL(`/workspaces/${workspaceId}/repositories`, baseUrl);
 }
