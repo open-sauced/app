@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.4.0-beta.13](https://github.com/open-sauced/insights/compare/v2.4.0-beta.12...v2.4.0-beta.13) (2024-02-19)
+
+
+### 🍕 Features
+
+* Add edit buttons on workspace pages ([#2699](https://github.com/open-sauced/insights/issues/2699)) ([eb34b37](https://github.com/open-sauced/insights/commit/eb34b373cdb2c7568cd302b38add615bb663ce72))
+
 ## [2.4.0-beta.12](https://github.com/open-sauced/insights/compare/v2.4.0-beta.11...v2.4.0-beta.12) (2024-02-19)
 
 
