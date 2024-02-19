@@ -33,6 +33,7 @@ const DeleteWorkspaceModal = dynamic(() => import("components/Workspaces/DeleteW
 
 interface WorkspaceSettingsProps {
   workspace: Workspace;
+  canDeleteWorkspace: boolean;
 }
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
@@ -42,26 +43,35 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
   } = await supabase.auth.getSession();
   const bearerToken = session ? session.access_token : "";
   const workspaceId = context.params?.workspaceId as string;
-  const { data, error } = await fetchApiData<Workspace>({
-    path: `workspaces/${workspaceId}`,
-    bearerToken,
-    pathValidator: () => true,
-  });
+  const [{ data, error }, { data: sessionData, error: sessionError }] = await Promise.all([
+    fetchApiData<Workspace>({
+      path: `workspaces/${workspaceId}`,
+      bearerToken,
+      pathValidator: () => true,
+    }),
+    fetchApiData<any>({
+      path: "auth/session",
+      bearerToken,
+      pathValidator: () => true,
+    }),
+  ]);
 
-  if (error) {
+  if (error || sessionError) {
     deleteCookie(context.res, WORKSPACE_ID_COOKIE_NAME);
 
-    if (error.status === 404 || error.status === 401) {
+    if ((error && (error.status === 404 || error.status === 401)) || sessionError) {
       return { notFound: true };
     }
 
     throw new Error(`Error loading workspaces page with ID ${workspaceId}`);
   }
 
-  return { props: { workspace: data } };
+  return {
+    props: { workspace: data, canDeleteWorkspace: workspaceId !== sessionData.personal_workspace_id },
+  };
 };
 
-const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
+const WorkspaceSettings = ({ workspace, canDeleteWorkspace }: WorkspaceSettingsProps) => {
   const { sessionToken } = useSupabaseAuth();
   const { toast } = useToast();
   const router = useRouter();
@@ -280,24 +290,26 @@ const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
           }}
         />
 
-        <div className="flex flex-col gap-4">
-          <Title className="!text-1xl !leading-none py-6" level={4}>
-            Danger Zone
-          </Title>
-
-          <div className="flex flex-col p-6 rounded-2xl bg-light-slate-4">
-            <Title className="!text-1xl !leading-none !border-light-slate-8 border-b pb-4" level={4}>
-              Delete Workspace
+        {canDeleteWorkspace ? (
+          <div className="flex flex-col gap-4">
+            <Title className="!text-1xl !leading-none py-6" level={4}>
+              Danger Zone
             </Title>
-            <Text className="my-4">Once you delete a workspace, you&#39;re past the point of no return.</Text>
 
-            <div>
-              <Button onClick={() => setIsDeleteModalOpen(true)} variant="destructive">
-                Delete workspace
-              </Button>
+            <div className="flex flex-col p-6 rounded-2xl bg-light-slate-4">
+              <Title className="!text-1xl !leading-none !border-light-slate-8 border-b pb-4" level={4}>
+                Delete Workspace
+              </Title>
+              <Text className="my-4">Once you delete a workspace, you&#39;re past the point of no return.</Text>
+
+              <div>
+                <Button onClick={() => setIsDeleteModalOpen(true)} variant="destructive">
+                  Delete workspace
+                </Button>
+              </div>
             </div>
           </div>
-        </div>
+        ) : null}
         <TrackedReposModal
           isOpen={trackedReposModalOpen}
           onClose={() => {
@@ -350,20 +362,22 @@ const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
           }}
         />
 
-        <DeleteWorkspaceModal
-          isOpen={isDeleteModalOpen}
-          onClose={() => setIsDeleteModalOpen(false)}
-          workspaceName={workspaceName}
-          onDelete={async () => {
-            const { error } = await deleteWorkspace({ workspaceId: workspace.id, sessionToken: sessionToken! });
-            if (error) {
-              toast({ description: `Workspace delete failed`, variant: "danger" });
-            } else {
-              toast({ description: `Workspace deleted successfully`, variant: "success" });
-              router.push("/workspaces/new");
-            }
-          }}
-        />
+        {canDeleteWorkspace ? (
+          <DeleteWorkspaceModal
+            isOpen={isDeleteModalOpen}
+            onClose={() => setIsDeleteModalOpen(false)}
+            workspaceName={workspaceName}
+            onDelete={async () => {
+              const { error } = await deleteWorkspace({ workspaceId: workspace.id, sessionToken: sessionToken! });
+              if (error) {
+                toast({ description: `Workspace delete failed`, variant: "danger" });
+              } else {
+                toast({ description: `Workspace deleted successfully`, variant: "success" });
+                router.push("/workspaces/new");
+              }
+            }}
+          />
+        ) : null}
       </div>
     </WorkspaceLayout>
   );
