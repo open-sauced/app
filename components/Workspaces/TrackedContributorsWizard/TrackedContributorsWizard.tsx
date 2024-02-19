@@ -183,6 +183,7 @@ export const TrackedContributorsWizard = ({ onAddToTrackingList, onCancel }: Tra
             onSearchContributorsByRepo={() => {
               setStep("pickRepos");
             }}
+            isSearchByTrackedReposEnabled={rawRepositories?.length > 0}
           />
         );
 

@@ -1,4 +1,5 @@
 import { PlusCircleIcon } from "@heroicons/react/24/solid";
+import clsx from "clsx";
 import { useRef } from "react";
 import { FaSearch } from "react-icons/fa";
 import { FaRegPaste } from "react-icons/fa6";
@@ -8,12 +9,14 @@ interface PickContributorStepProps {
   onSearchContributors: () => void;
   onPasteContributors: () => void;
   onSearchContributorsByRepo: () => void;
+  isSearchByTrackedReposEnabled?: boolean;
 }
 
 export const PickContributorStep = ({
   onSearchContributors,
   onPasteContributors,
   onSearchContributorsByRepo,
+  isSearchByTrackedReposEnabled = true,
 }: PickContributorStepProps) => {
   const buttonRef = useRef<HTMLButtonElement>(null);
 
@@ -48,8 +51,15 @@ export const PickContributorStep = ({
         </button>
 
         <button
-          className="flex flex-col text-light-slate-12 p-8 border rounded-lg focus-visible:!border-green-800 focus-visible:!ring-green-100"
-          onClick={onSearchContributorsByRepo}
+          className={clsx(
+            "flex flex-col text-light-slate-12 p-8 border rounded-lg focus-visible:!border-green-800 focus-visible:!ring-green-100",
+            !isSearchByTrackedReposEnabled && "opacity-50"
+          )}
+          onClick={isSearchByTrackedReposEnabled ? onSearchContributorsByRepo : undefined}
+          disabled={!isSearchByTrackedReposEnabled}
+          {...(isSearchByTrackedReposEnabled
+            ? {}
+            : { "aria-disabled": true, title: "You need to track at least one repository to use this feature" })}
         >
           <PlusCircleIcon width={24} height={24} className="text-purple-800 mb-2" />
           <span data-button-title className="font-semibold">
