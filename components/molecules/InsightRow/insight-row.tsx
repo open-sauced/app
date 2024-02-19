@@ -19,7 +19,7 @@ interface InsightRowProps {
   insight: DbUserInsight;
   user: User | null;
   isEditable?: boolean;
-  workspaceId?: string;
+  workspaceId: string;
 }
 
 const InsightRow = ({ insight, user, isEditable = true, workspaceId }: InsightRowProps) => {

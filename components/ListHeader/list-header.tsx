@@ -15,7 +15,7 @@ import ClientOnly from "components/atoms/ClientOnly/client-only";
 interface ListHeaderProps {
   name: string;
   listId: string;
-  workspaceId?: string;
+  workspaceId: string;
   isPublic: boolean;
   isOwner: boolean;
   numberOfContributors: number;

@@ -11,7 +11,7 @@ import StackedAvatar, { Contributor } from "../StackedAvatar/stacked-avatar";
 interface ListCardProps {
   list: DbUserList;
   handleOnDeleteClick?: (listName: string, listId: string) => void;
-  workspaceId?: string;
+  workspaceId: string;
 }
 const ListCard = ({ list, handleOnDeleteClick, workspaceId }: ListCardProps) => {
   const { data: contributors, meta } = useFetchListContributors(list.id);

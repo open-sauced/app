@@ -77,7 +77,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 
 interface ContributorsAddedModalProps {
   list: DbUserList;
-  workspaceId?: string;
+  workspaceId: string;
   contributorCount: number;
   isOpen: boolean;
   onClose: () => void;
@@ -85,7 +85,7 @@ interface ContributorsAddedModalProps {
 
 interface ErrorModalProps {
   list: DbUserList;
-  workspaceId?: string;
+  workspaceId: string;
   isOpen: boolean;
   onRetry: () => void;
   onClose: () => void;

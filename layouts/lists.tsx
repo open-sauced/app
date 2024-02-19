@@ -19,7 +19,7 @@ const ListPageLayout = ({
 }: {
   children: React.ReactNode;
   list?: DBList;
-  workspaceId?: string;
+  workspaceId: string;
   numberOfContributors: number;
   isOwner: boolean;
   showRangeFilter?: boolean;

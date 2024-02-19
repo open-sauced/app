@@ -13,7 +13,7 @@ import useDebounceTerm from "lib/hooks/useDebounceTerm";
 interface AddContributorsHeaderProps {
   selectedContributorsIds: number[];
   list: DbUserList;
-  workspaceId?: string;
+  workspaceId: string;
   onAddToList?: () => void;
   loading?: boolean;
   onSearch: (searchTerm: string | undefined) => void;
