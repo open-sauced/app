@@ -59,7 +59,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
   if (error || sessionError) {
     deleteCookie(context.res, WORKSPACE_ID_COOKIE_NAME);
 
-    if ((error && (error.status === 404 || error.status === 401)) || sessionError) {
+    if (error && (error.status === 404 || error.status === 401)) {
       return { notFound: true };
     }
 
