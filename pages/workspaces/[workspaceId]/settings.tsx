@@ -63,7 +63,9 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
       return { notFound: true };
     }
 
-    throw new Error(`Error loading workspaces page with ID ${workspaceId}`);
+    throw new Error(`Error loading workspaces page with ID ${workspaceId}`, {
+      cause: error || sessionError,
+    });
   }
 
   return {
