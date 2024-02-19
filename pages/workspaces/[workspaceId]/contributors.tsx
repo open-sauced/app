@@ -4,7 +4,6 @@ import { SquareFillIcon } from "@primer/octicons-react";
 import { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
 import { formatDistanceToNowStrict } from "date-fns";
-import { useState } from "react";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import { fetchApiData } from "helpers/fetchApiData";
 import { WorkspacesTabList } from "components/Workspaces/WorkspacesTabList";
@@ -17,15 +16,14 @@ import { getTopContributorLanguages } from "lib/utils/contributor-utils";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
 import { getPullRequestsToDays } from "lib/utils/get-prs-to-days";
 import Sparkline from "components/atoms/Sparkline/sparkline";
+import { deleteCookie } from "lib/utils/server/cookies";
+import { EmptyState } from "components/Workspaces/TrackedContributorsTable";
+import { WORKSPACE_ID_COOKIE_NAME } from "lib/utils/workspace-utils";
 
 type Contributor = {
   id: number;
   login: string;
 };
-
-import { deleteCookie } from "lib/utils/server/cookies";
-import { WORKSPACE_ID_COOKIE_NAME } from "lib/utils/workspace-utils";
-import ContributorsList from "components/organisms/ContributorsList/contributors-list";
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const supabase = createPagesServerClient(context);
@@ -59,14 +57,15 @@ interface WorkspaceContributorsPageProps {
 
 export default function WorkspaceContributorsPage({ workspace }: WorkspaceContributorsPageProps) {
   const router = useRouter();
-  const range = router.query.range ? Number(router.query.range as string) : 30;
+  const [page, setPage] = useState(1);
+  const [range, setRange] = useState<number>(router.query.range ? Number(router.query.range as string) : 30);
+
   const { data, error: hasError } = useGetWorkspaceContributors({ workspaceId: workspace.id, range });
   const contributors = data?.data
     ? Array.from(data?.data, (info) => {
         return { id: info.id, login: info.contributor.login };
       })
     : [];
-  const [page, setPage] = useState(1);
 
   return (
     <WorkspaceLayout workspaceId={workspace.id}>
@@ -81,17 +80,25 @@ export default function WorkspaceContributorsPage({ workspace }: WorkspaceContri
           <DayRangePicker onDayRangeChanged={(value) => setPage(Number(value))} />
         </div>
       </div>
-      <ClientOnly>{contributors ? <ContributorTable contributors={contributors} /> : <p>Loading...</p>}</ClientOnly>
+      <main className="p-4">
+        <ClientOnly>
+          {contributors ? (
+            <ContributorTable contributors={contributors} range={range} />
+          ) : (
+            <EmptyState
+              onAddContributors={() => router.push(`/workspaces/${workspace.id}/settings#load-contributors-wizard`)}
+            />
+          )}
+        </ClientOnly>
+      </main>
     </WorkspaceLayout>
   );
 }
 
 // COMPOSABLES
-function ContributorTable({ contributors }: { contributors: Contributor[] }) {
-  const [range, setRange] = useState<7 | 30 | 90>(30);
-
+function ContributorTable({ contributors, range }: { contributors: Contributor[]; range: number }) {
   return (
-    <section className="w-full table table-fixed border-2 border-separate rounded-lg overflow-hidden">
+    <section className="w-full text-sm table table-fixed border-2 border-separate rounded-lg overflow-hidden">
       <thead className="table-header-group">
         <tr className="table-row text-slate-500">
           <th className="table-cell bg-slate-100 pl-8 py-4 text-start font-normal">Name</th>
@@ -138,20 +145,20 @@ function ContributorRow({ contributor }: { contributor: Contributor }) {
   return (
     <tr key={contributor.login} className="table-row items-start">
       {/* Avatar & Name */}
-      <td className="table-cell pl-8 py-4">
+      <td className="table-cell pl-8 py-2">
         <DevProfile username={contributor.login} hasBorder={false} />
       </td>
 
       {/* Last Contributed */}
-      <td className="table-cell py-4">
+      <td className="table-cell py-2">
         <p>{getLastContributionDate(mergedPrs)}</p>
       </td>
 
       {/* Activity */}
-      <td className="table-cell py-4">{getActivity(pullRequests.length)}</td>
+      <td className="table-cell py-2">{getActivity(pullRequests.length)}</td>
 
       {/* Languages */}
-      <td className="table-cell py-4">
+      <td className="table-cell py-2">
         {contributorLanguageList.length > 0 ? (
           <p className="flex gap-2">
             <span>{getLanguageAbbreviation(contributorLanguageList[0])}</span>
@@ -166,18 +173,18 @@ function ContributorRow({ contributor }: { contributor: Contributor }) {
       </td>
 
       {/* Timezone */}
-      <td className="table-cell py-4">
+      <td className="table-cell py-2">
         <div className="flex gap-x-3">{user && user.timezone ? <p>{user.timezone}</p> : "-"}</div>
       </td>
 
       {/* Contributions */}
-      <td className="table-cell py-4">
+      <td className="table-cell py-2">
         <p>{mergedPrs.length}</p>
       </td>
 
       {/* Last 30 Days (Histogram) */}
-      <td className="table-cell pr-8 py-4">
-        {last30days ? <Sparkline data={last30days} width="100%" height={54} /> : "-"}
+      <td className="table-cell pr-8 py-2">
+        {last30days ? <Sparkline data={last30days} width="100%" height={52} /> : "-"}
       </td>
     </tr>
   );
