@@ -2,6 +2,7 @@ import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { GetServerSidePropsContext } from "next";
 import { SquareFillIcon } from "@primer/octicons-react";
 import { useRouter } from "next/router";
+import { FaEdit } from "react-icons/fa";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import { fetchApiData } from "helpers/fetchApiData";
 import Repositories from "components/organisms/Repositories/repositories";
@@ -15,6 +16,7 @@ import Card from "components/atoms/Card/card";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
 import { deleteCookie } from "lib/utils/server/cookies";
 import { WORKSPACE_ID_COOKIE_NAME } from "lib/utils/workspace-utils";
+import Button from "components/atoms/Button/button";
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const supabase = createPagesServerClient(context);
@@ -56,14 +58,26 @@ const WorkspaceDashboard = ({ workspace }: WorkspaceDashboardProps) => {
 
   return (
     <WorkspaceLayout workspaceId={workspace.id}>
-      <h1 className="flex gap-2 items-center uppercase text-3xl font-semibold">
-        {/* putting a square icon here as a placeholder until we implement workspace logos */}
-        <SquareFillIcon className="w-12 h-12 text-sauced-orange" />
-        <span>{workspace.name}</span>
-      </h1>
+      <section className="w-full flex justify-between items-center">
+        <h1 className="flex gap-2 items-center uppercase text-3xl font-semibold">
+          {/* putting a square icon here as a placeholder until we implement workspace logos */}
+          <SquareFillIcon className="w-12 h-12 text-sauced-orange" />
+          <span>{workspace.name}</span>
+        </h1>
+
+        <div className="flex gap-4 w-fit">
+          <Button variant="primary" href={`/workspaces/${workspace.id}/settings`} className="gap-2 items-center">
+            <FaEdit />
+            Edit
+          </Button>
+        </div>
+      </section>
       <div className="flex justify-between items-center">
         <WorkspacesTabList workspaceId={workspace.id} selectedTab={"repositories"} />
-        <div>
+        <div className="flex items-center gap-4">
+          <Button variant="outline" onClick={() => router.push(`/workspaces/${workspace.id}/settings#load-wizard`)}>
+            Add repositories
+          </Button>
           <DayRangePicker />
         </div>
       </div>
