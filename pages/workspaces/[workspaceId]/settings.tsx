@@ -49,7 +49,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
       bearerToken,
       pathValidator: () => true,
     }),
-    fetchApiData<any>({
+    fetchApiData<DbUser>({
       path: "auth/session",
       bearerToken,
       pathValidator: () => true,
@@ -67,7 +67,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
   }
 
   return {
-    props: { workspace: data, canDeleteWorkspace: workspaceId !== sessionData.personal_workspace_id },
+    props: { workspace: data, canDeleteWorkspace: sessionData && workspaceId !== sessionData.personal_workspace_id },
   };
 };
 
