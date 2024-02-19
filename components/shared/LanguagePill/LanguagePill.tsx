@@ -11,6 +11,7 @@ import CsharpIcon from "/img/icons/interests/c-sharp.svg";
 import CIcon from "/img/icons/interests/c.svg";
 import CppIcon from "/img/icons/interests/c-plus.svg";
 import TypeScriptIcon from "/img/icons/interests/typescript.svg";
+import AngularIcon from "/img/icons/interests/angular-new.svg";
 import RubyIcon from "/img/icons/interests/ruby.svg";
 import JavaIcon from "/img/icons/interests/java.svg";
 import GolangIcon from "img/icons/interests/golang.svg";
@@ -33,6 +34,7 @@ export const renderTopicIcon = (name: InterestType) => {
     python: PythonIcon,
     svelte: SvelteIcon,
     typescript: TypeScriptIcon,
+    angular: AngularIcon,
     csharp: CsharpIcon,
     cpp: CppIcon,
     php: PhpIcon,
@@ -44,7 +46,7 @@ export const renderTopicIcon = (name: InterestType) => {
     kubernetes: KubernetesIcon,
     clojure: CloJureIcon,
     kotlin: KotlinIcon,
-    android: AndroidIcon
+    android: AndroidIcon,
   };
 
   return iconMap[name];
