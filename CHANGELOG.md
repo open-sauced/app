@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.4.0-beta.14](https://github.com/open-sauced/insights/compare/v2.4.0-beta.13...v2.4.0-beta.14) (2024-02-19)
+
+
+### 🍕 Features
+
+* now a user is unable to delete their personal workspace ([#2709](https://github.com/open-sauced/insights/issues/2709)) ([adc4d6f](https://github.com/open-sauced/insights/commit/adc4d6f4346b3a7cf01270aaf1f45de737ba28f4))
+
 ## [2.4.0-beta.13](https://github.com/open-sauced/insights/compare/v2.4.0-beta.12...v2.4.0-beta.13) (2024-02-19)
 
 
