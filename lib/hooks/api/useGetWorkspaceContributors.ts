@@ -2,7 +2,7 @@ import useSWR, { Fetcher } from "swr";
 import { publicApiFetcher } from "lib/utils/public-api-fetcher";
 
 type DbWorkspaceContributor = {
-  id: string;
+  id: number;
   contributor_id: number;
   workspace_id: string;
   contributor: {
@@ -16,6 +16,7 @@ type UseGetWorkspaceContributorsProps = {
   workspaceId: string;
   range?: number;
   page?: number;
+  orderDirection?: string;
   limit?: number;
 };
 
@@ -23,11 +24,13 @@ export const useGetWorkspaceContributors = ({
   workspaceId,
   range = 30,
   page = 1,
+  orderDirection = "ASC",
   limit = 10,
 }: UseGetWorkspaceContributorsProps) => {
   const searchParams = new URLSearchParams({
     range: range.toString(),
     page: page.toString(),
+    orderDirection,
     limit: limit.toString(),
   });
   const endpoint = `workspaces/${workspaceId}/contributors?${searchParams}`;
