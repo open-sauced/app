@@ -5,6 +5,27 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.4.0-beta.14](https://github.com/open-sauced/insights/compare/v2.4.0-beta.13...v2.4.0-beta.14) (2024-02-19)
+
+
+### 🍕 Features
+
+* now a user is unable to delete their personal workspace ([#2709](https://github.com/open-sauced/insights/issues/2709)) ([adc4d6f](https://github.com/open-sauced/insights/commit/adc4d6f4346b3a7cf01270aaf1f45de737ba28f4))
+
+## [2.4.0-beta.13](https://github.com/open-sauced/insights/compare/v2.4.0-beta.12...v2.4.0-beta.13) (2024-02-19)
+
+
+### 🍕 Features
+
+* Add edit buttons on workspace pages ([#2699](https://github.com/open-sauced/insights/issues/2699)) ([eb34b37](https://github.com/open-sauced/insights/commit/eb34b373cdb2c7568cd302b38add615bb663ce72))
+
+## [2.4.0-beta.12](https://github.com/open-sauced/insights/compare/v2.4.0-beta.11...v2.4.0-beta.12) (2024-02-19)
+
+
+### 🐛 Bug Fixes
+
+* now select all checkbox in contributors search table has a label ([#2701](https://github.com/open-sauced/insights/issues/2701)) ([f6a0a25](https://github.com/open-sauced/insights/commit/f6a0a259f300721b30c0c1bddf6d44568c2280df))
+
 ## [2.4.0-beta.11](https://github.com/open-sauced/insights/compare/v2.4.0-beta.10...v2.4.0-beta.11) (2024-02-16)
 
 

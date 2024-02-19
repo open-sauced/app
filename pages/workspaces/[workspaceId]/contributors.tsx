@@ -3,6 +3,7 @@ import { GetServerSidePropsContext } from "next";
 import { SquareFillIcon } from "@primer/octicons-react";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { FaEdit } from "react-icons/fa";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import { fetchApiData } from "helpers/fetchApiData";
 import { WorkspacesTabList } from "components/Workspaces/WorkspacesTabList";
@@ -12,6 +13,9 @@ import ClientOnly from "components/atoms/ClientOnly/client-only";
 import { deleteCookie } from "lib/utils/server/cookies";
 import { WORKSPACE_ID_COOKIE_NAME } from "lib/utils/workspace-utils";
 import ContributorsList from "components/organisms/ContributorsList/contributors-list";
+import Button from "components/atoms/Button/button";
+import Card from "components/atoms/Card/card";
+import { EmptyState } from "components/Workspaces/TrackedContributorsTable";
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const supabase = createPagesServerClient(context);
@@ -68,20 +72,35 @@ export default function WorkspaceContributorsPage({ workspace }: WorkspaceContri
 
   return (
     <WorkspaceLayout workspaceId={workspace.id}>
-      <h1 className="flex gap-2 items-center uppercase text-3xl font-semibold">
-        {/* putting a square icon here as a placeholder until we implement workspace logos */}
-        <SquareFillIcon className="w-12 h-12 text-sauced-orange" />
-        <span>{workspace.name}</span>
-      </h1>
+      <section className="w-full flex justify-between items-center">
+        <h1 className="flex gap-2 items-center uppercase text-3xl font-semibold">
+          {/* putting a square icon here as a placeholder until we implement workspace logos */}
+          <SquareFillIcon className="w-12 h-12 text-sauced-orange" />
+          <span>{workspace.name}</span>
+        </h1>
+
+        <div className="flex gap-4 w-fit">
+          <Button variant="primary" href={`/workspaces/${workspace.id}/settings`} className="gap-2 items-center">
+            <FaEdit />
+            Edit
+          </Button>
+        </div>
+      </section>
       <div className="flex justify-between items-center">
         <WorkspacesTabList workspaceId={workspace.id} selectedTab={"contributors"} />
-        <div>
+        <div className="flex items-center gap-4">
+          <Button
+            variant="outline"
+            onClick={() => router.push(`/workspaces/${workspace.id}/settings#load-contributors-wizard`)}
+          >
+            Add contributors
+          </Button>
           <DayRangePicker onDayRangeChanged={(value) => setPage(Number(value))} />
         </div>
       </div>
       <main className="py-8">
         <ClientOnly>
-          {data && (
+          {data && contributors.length > 0 ? (
             <ContributorsList
               isLoading={isLoading}
               contributors={contributors}
@@ -89,6 +108,12 @@ export default function WorkspaceContributorsPage({ workspace }: WorkspaceContri
               meta={data.meta}
               setPage={setPage}
             />
+          ) : (
+            <Card className="bg-transparent">
+              <EmptyState
+                onAddContributors={() => router.push(`/workspaces/${workspace.id}/settings#load-contributors-wizard`)}
+              />
+            </Card>
           )}
         </ClientOnly>
       </main>
