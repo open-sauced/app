@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.4.0-beta.12](https://github.com/open-sauced/insights/compare/v2.4.0-beta.11...v2.4.0-beta.12) (2024-02-19)
+
+
+### 🐛 Bug Fixes
+
+* now select all checkbox in contributors search table has a label ([#2701](https://github.com/open-sauced/insights/issues/2701)) ([f6a0a25](https://github.com/open-sauced/insights/commit/f6a0a259f300721b30c0c1bddf6d44568c2280df))
+
 ## [2.4.0-beta.11](https://github.com/open-sauced/insights/compare/v2.4.0-beta.10...v2.4.0-beta.11) (2024-02-16)
 
 
