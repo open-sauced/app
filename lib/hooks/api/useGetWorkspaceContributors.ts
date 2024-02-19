@@ -7,6 +7,8 @@ type DbWorkspaceContributor = {
   workspace_id: string;
   contributor: {
     login: string;
+    username: string;
+    updated_at: string;
   };
 };
 
@@ -15,6 +17,7 @@ type UseGetWorkspaceContributorsProps = {
   range?: number;
   page?: number;
   orderDirection?: string;
+  limit?: number;
 };
 
 export const useGetWorkspaceContributors = ({
@@ -22,11 +25,13 @@ export const useGetWorkspaceContributors = ({
   range = 30,
   page = 1,
   orderDirection = "ASC",
+  limit = 10,
 }: UseGetWorkspaceContributorsProps) => {
   const searchParams = new URLSearchParams({
     range: range.toString(),
     page: page.toString(),
     orderDirection,
+    limit: limit.toString(),
   });
   const endpoint = `workspaces/${workspaceId}/contributors?${searchParams}`;
 

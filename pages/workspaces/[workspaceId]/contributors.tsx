@@ -4,6 +4,7 @@ import { SquareFillIcon } from "@primer/octicons-react";
 import { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
 import { formatDistanceToNowStrict } from "date-fns";
+import { useState } from "react";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import { fetchApiData } from "helpers/fetchApiData";
 import { WorkspacesTabList } from "components/Workspaces/WorkspacesTabList";
@@ -22,6 +23,10 @@ type Contributor = {
   login: string;
 };
 
+import { deleteCookie } from "lib/utils/server/cookies";
+import { WORKSPACE_ID_COOKIE_NAME } from "lib/utils/workspace-utils";
+import ContributorsList from "components/organisms/ContributorsList/contributors-list";
+
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const supabase = createPagesServerClient(context);
   const {
@@ -36,7 +41,9 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
   });
 
   if (error) {
-    if (error.status === 404) {
+    deleteCookie(context.res, WORKSPACE_ID_COOKIE_NAME);
+
+    if (error.status === 404 || error.status === 401) {
       return { notFound: true };
     }
 
@@ -59,6 +66,7 @@ export default function WorkspaceContributorsPage({ workspace }: WorkspaceContri
         return { id: info.id, login: info.contributor.login };
       })
     : [];
+  const [page, setPage] = useState(1);
 
   return (
     <WorkspaceLayout workspaceId={workspace.id}>
@@ -70,7 +78,7 @@ export default function WorkspaceContributorsPage({ workspace }: WorkspaceContri
       <div className="flex justify-between items-center">
         <WorkspacesTabList workspaceId={workspace.id} selectedTab={"contributors"} />
         <div>
-          <DayRangePicker />
+          <DayRangePicker onDayRangeChanged={(value) => setPage(Number(value))} />
         </div>
       </div>
       <ClientOnly>{contributors ? <ContributorTable contributors={contributors} /> : <p>Loading...</p>}</ClientOnly>

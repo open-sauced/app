@@ -18,6 +18,9 @@ import GitHubImportDialog from "components/organisms/GitHubImportDialog/github-i
 import GitHubTeamSyncDialog from "components/organisms/GitHubTeamSyncDialog/github-team-sync-dialog";
 import { fetchGithubOrgTeamMembers } from "lib/hooks/fetchGithubTeamMembers";
 import { fetchApiData } from "helpers/fetchApiData";
+import { deleteCookie } from "lib/utils/server/cookies";
+import { WORKSPACE_ID_COOKIE_NAME } from "lib/utils/workspace-utils";
+import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 
 interface CreateListPayload {
   name: string;
@@ -322,17 +325,19 @@ const CreateListPage = ({ workspace }: { workspace: Workspace }) => {
 
 const AddListPage = ({ workspace }: { workspace: Workspace }) => {
   return (
-    <div className="flex flex-col min-h-screen">
-      <TopNav />
-      <div className="flex flex-col items-center pt-20 page-container grow md:pt-14">
-        <main className="flex flex-col items-center flex-1 w-full px-3 py-8 md:px-2 bg-light-slate-2">
-          <div className="container px-2 mx-auto md:px-16">
-            <CreateListPage workspace={workspace} />
-          </div>
-        </main>
+    <WorkspaceLayout workspaceId={workspace.id}>
+      <div className="flex flex-col min-h-screen">
+        <TopNav />
+        <div className="flex flex-col items-center pt-20 page-container grow md:pt-14">
+          <main className="flex flex-col items-center flex-1 w-full px-3 py-8 md:px-2 bg-light-slate-2">
+            <div className="container px-2 mx-auto md:px-16">
+              <CreateListPage workspace={workspace} />
+            </div>
+          </main>
+        </div>
+        <Footer />
       </div>
-      <Footer />
-    </div>
+    </WorkspaceLayout>
   );
 };
 
@@ -350,7 +355,9 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   });
 
   if (error) {
-    if (error.status === 404) {
+    deleteCookie(ctx.res, WORKSPACE_ID_COOKIE_NAME);
+
+    if (error.status === 404 || error.status === 401) {
       return { notFound: true };
     }
 
