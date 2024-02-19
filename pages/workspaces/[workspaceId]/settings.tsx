@@ -68,8 +68,20 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
     });
   }
 
+  // if finding the current user as an owner comes up undefined
+  if (
+    !data?.members.find(
+      (member: WorkspaceMember) => member.user_id === Number(sessionData?.id) && member.role === "owner"
+    )
+  ) {
+    return { notFound: true };
+  }
+
   return {
-    props: { workspace: data, canDeleteWorkspace: sessionData && workspaceId !== sessionData.personal_workspace_id },
+    props: {
+      workspace: data,
+      canDeleteWorkspace: sessionData && workspaceId !== sessionData.personal_workspace_id,
+    },
   };
 };
 
