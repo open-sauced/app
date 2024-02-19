@@ -3,17 +3,16 @@ import { useRouter } from "next/router";
 import { useSearchContributors } from "lib/hooks/useSearchContributors";
 import { useGetTrackedRepositories } from "lib/hooks/api/useGetTrackedRepositories";
 import { useGetRepoContributors } from "lib/hooks/api/useGetRepositoryContributors";
-import { SearchedContributorsTable } from "../SearchedContributorsTable";
+import { SearchByReposStep } from "../TrackedRepoWizard/SearchByReposStep";
 import { TrackedContributorsWizardLayout } from "./TrackedContributorsWizardLayout";
 
 import { PickContributorStep } from "./PickContributorStep";
 import { SearchByContributorsStep } from "./SearchByContributorsStep";
 import { PasteContributorsStep } from "./PasteContributorsStep";
 import { FilterPastedContributorsStep } from "./FilterPastedContributorsStep";
-import { TrackedRepositoriesContributorsStep } from "./TrackedRepositoriesContributorsStep";
 
 interface TrackedContributorsWizardProps {
-  onAddToTrackingList: (contributors: Map<string, boolean>) => void;
+  onAddToTrackingList: (options: { data: Map<string, boolean>; type: "repositories" | "contributors" }) => void;
   onCancel: () => void;
 }
 
@@ -22,8 +21,7 @@ export type TrackedContributorsStep =
   | "pickContributors"
   | "pasteContributors"
   | "pickRepos"
-  | "filterPastedContributors"
-  | "pickReposContributors";
+  | "filterPastedContributors";
 
 export const TrackedContributorsWizard = ({ onAddToTrackingList, onCancel }: TrackedContributorsWizardProps) => {
   const [step, setStep] = useState<TrackedContributorsStep>("pickOption");
@@ -135,29 +133,6 @@ export const TrackedContributorsWizard = ({ onAddToTrackingList, onCancel }: Tra
     setStep("filterPastedContributors");
   };
 
-  const onFilterContributorsFromRepos = (filterTerm: string) => {};
-
-  const onToggleRepoContributor = (contributor: string, isSelected: boolean) => {
-    setContributorsFromRepos((currentContributors) => {
-      const updates = new Map(currentContributors);
-      updates.set(contributor, isSelected);
-
-      return updates;
-    });
-  };
-
-  const onToggleAllReposContributors = (checked: boolean) => {
-    setContributorsFromRepos((currentContributors) => {
-      const updates = new Map(currentContributors);
-
-      for (const [contributor] of updates) {
-        updates.set(contributor, checked);
-      }
-
-      return updates;
-    });
-  };
-
   let searchedContributors = data ?? [];
 
   function goBack() {
@@ -170,9 +145,6 @@ export const TrackedContributorsWizard = ({ onAddToTrackingList, onCancel }: Tra
         break;
       case "pickContributors":
         setStep("pickOption");
-        break;
-      case "pickReposContributors":
-        setStep("pickRepos");
         break;
       default:
         setStep("pickOption");
@@ -241,28 +213,11 @@ export const TrackedContributorsWizard = ({ onAddToTrackingList, onCancel }: Tra
 
       case "pickRepos":
         return (
-          <TrackedRepositoriesContributorsStep
-            onNext={() => {
-              setStep("pickReposContributors");
-            }}
+          <SearchByReposStep
             onSelectRepo={onSelectRepo}
             onToggleRepo={onToggleRepo}
             onToggleAllRepos={onToggleAllRepos}
-            onSelectContributor={onSelectContributor}
-            onToggleContributor={onToggleContributor}
-            onToggleAllContributors={onToggleAllContributors}
             repositories={repositoriesForContributors}
-          />
-        );
-
-      case "pickReposContributors":
-        return (
-          <SearchedContributorsTable
-            type="by-contributors"
-            contributors={contributorsFromReposData}
-            onFilter={onFilterContributorsFromRepos}
-            onToggleContributor={onToggleRepoContributor}
-            onToggleAllContributors={onToggleAllReposContributors}
           />
         );
 
@@ -282,8 +237,16 @@ export const TrackedContributorsWizard = ({ onAddToTrackingList, onCancel }: Tra
   return (
     <TrackedContributorsWizardLayout
       onAddToTrackingList={() => {
-        onAddToTrackingList(currentTrackedContributors);
+        if (step === "pickRepos") {
+          onAddToTrackingList({ data: repositoriesForContributors, type: "repositories" });
+        } else {
+          onAddToTrackingList({ data: currentTrackedContributors, type: "contributors" });
+        }
       }}
+      enableAddToTrackingList={
+        (step === "pickRepos" && [...repositoriesForContributors.values()].some((v) => v)) ||
+        currentTrackedContributors.size > 0
+      }
       stepData={stepData}
       trackedContributorsCount={trackedContributors.size}
       onCancel={() => {

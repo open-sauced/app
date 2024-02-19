@@ -152,21 +152,29 @@ const NewWorkspace = () => {
 
       <TrackedContributorsModal
         isOpen={trackedContributorsModalOpen}
-        onAddToTrackingList={(contributors: Map<string, boolean>) => {
+        onAddToTrackingList={({ data, type }) => {
           setTrackedContributorsModalOpen(false);
-          setTrackedContributors((trackedContributors) => {
-            const updates = new Map([...trackedContributors]);
 
-            for (const [contributor, checked] of contributors) {
-              if (checked) {
-                updates.set(contributor, true);
-              } else {
-                updates.delete(contributor);
-              }
-            }
+          switch (type) {
+            case "contributors":
+              setTrackedContributors((trackedContributors) => {
+                const updates = new Map([...trackedContributors]);
 
-            return updates;
-          });
+                for (const [contributor, checked] of data) {
+                  if (checked) {
+                    updates.set(contributor, true);
+                  } else {
+                    updates.delete(contributor);
+                  }
+                }
+
+                return updates;
+              });
+              break;
+
+            default:
+              throw new Error(`Invalid tracked contributors type: ${type}`);
+          }
         }}
         onClose={() => {
           setTrackedContributorsModalOpen(false);

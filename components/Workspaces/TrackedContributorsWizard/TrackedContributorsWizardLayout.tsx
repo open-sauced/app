@@ -10,6 +10,7 @@ interface TrackedContributorsWizardLayoutProps {
     step: "pickRepos";
     repositoriesCount: number;
   };
+  enableAddToTrackingList: boolean;
   children: React.ReactNode;
 }
 
@@ -18,6 +19,7 @@ export const TrackedContributorsWizardLayout = ({
   onAddToTrackingList,
   onCancel,
   stepData,
+  enableAddToTrackingList,
   children,
 }: TrackedContributorsWizardLayoutProps) => {
   return (
@@ -34,7 +36,11 @@ export const TrackedContributorsWizardLayout = ({
         </button>
         <div className="flex flex-col justify-between gap-4">
           <div className="px-4 pt-2">
-            <h2 className="font-semibold mb-4">Add contributors to track</h2>
+            <h2 className="font-semibold mb-4">
+              {stepData?.step === "pickRepos"
+                ? "Add contributors from tracked repositories"
+                : "Add contributors to track"}
+            </h2>
             {children}
           </div>
           <div className="flex gap-4 items-center justify-end border-t-1 p-4" aria-live="assertive">
@@ -54,7 +60,7 @@ export const TrackedContributorsWizardLayout = ({
               onClick={() => {
                 onAddToTrackingList();
               }}
-              disabled={trackedContributorsCount === 0}
+              disabled={!enableAddToTrackingList}
             >
               Add to tracking list
             </Button>

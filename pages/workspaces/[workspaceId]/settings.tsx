@@ -317,21 +317,32 @@ const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
           onClose={() => {
             setTrackedContributorsModalOpen(false);
           }}
-          onAddToTrackingList={(contributors) => {
+          onAddToTrackingList={({ data, type }) => {
             setTrackedContributorsModalOpen(false);
-            setTrackedContributors((trackedContributors) => {
-              const updates = new Map(trackedContributors);
 
-              contributors.forEach((isSelected, contributor) => {
-                if (isSelected) {
-                  updates.set(contributor, true);
-                } else {
-                  updates.delete(contributor);
-                }
-              });
+            switch (type) {
+              case "contributors":
+                setTrackedContributors((trackedContributors) => {
+                  const updates = new Map([...trackedContributors]);
 
-              return updates;
-            });
+                  for (const [contributor, checked] of data) {
+                    if (checked) {
+                      updates.set(contributor, true);
+                    } else {
+                      updates.delete(contributor);
+                    }
+                  }
+
+                  return updates;
+                });
+                break;
+              case "repositories":
+                // TODO: implement this
+                break;
+
+              default:
+                throw new Error(`Invalid tracked contributors type: ${type}`);
+            }
           }}
           onCancel={() => {
             setTrackedContributorsModalOpen(false);

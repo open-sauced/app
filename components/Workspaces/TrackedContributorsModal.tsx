@@ -4,7 +4,7 @@ import { TrackedContributorsWizard } from "./TrackedContributorsWizard/TrackedCo
 interface TrackedContributorsModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onAddToTrackingList: (contributors: Map<string, boolean>) => void;
+  onAddToTrackingList: (options: { data: Map<string, boolean>; type: "repositories" | "contributors" }) => void;
   onCancel: () => void;
 }
 
