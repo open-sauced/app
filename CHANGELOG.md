@@ -5,6 +5,55 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.4.0-beta.15](https://github.com/open-sauced/insights/compare/v2.4.0-beta.14...v2.4.0-beta.15) (2024-02-20)
+
+
+### 🐛 Bug Fixes
+
+* removed feature flag check for workspaces in middleware ([#2702](https://github.com/open-sauced/insights/issues/2702)) ([99d4c8a](https://github.com/open-sauced/insights/commit/99d4c8ac68bb9b136e34bb498e065ec5ab40fffa))
+
+## [2.4.0-beta.14](https://github.com/open-sauced/insights/compare/v2.4.0-beta.13...v2.4.0-beta.14) (2024-02-19)
+
+
+### 🍕 Features
+
+* now a user is unable to delete their personal workspace ([#2709](https://github.com/open-sauced/insights/issues/2709)) ([adc4d6f](https://github.com/open-sauced/insights/commit/adc4d6f4346b3a7cf01270aaf1f45de737ba28f4))
+
+## [2.4.0-beta.13](https://github.com/open-sauced/insights/compare/v2.4.0-beta.12...v2.4.0-beta.13) (2024-02-19)
+
+
+### 🍕 Features
+
+* Add edit buttons on workspace pages ([#2699](https://github.com/open-sauced/insights/issues/2699)) ([eb34b37](https://github.com/open-sauced/insights/commit/eb34b373cdb2c7568cd302b38add615bb663ce72))
+
+## [2.4.0-beta.12](https://github.com/open-sauced/insights/compare/v2.4.0-beta.11...v2.4.0-beta.12) (2024-02-19)
+
+
+### 🐛 Bug Fixes
+
+* now select all checkbox in contributors search table has a label ([#2701](https://github.com/open-sauced/insights/issues/2701)) ([f6a0a25](https://github.com/open-sauced/insights/commit/f6a0a259f300721b30c0c1bddf6d44568c2280df))
+
+## [2.4.0-beta.11](https://github.com/open-sauced/insights/compare/v2.4.0-beta.10...v2.4.0-beta.11) (2024-02-16)
+
+
+### 🐛 Bug Fixes
+
+* make workspace sidebar state persistent between route changes ([#2698](https://github.com/open-sauced/insights/issues/2698)) ([6a37e6d](https://github.com/open-sauced/insights/commit/6a37e6d5483aa9001370a60604b8864c22f30561))
+
+## [2.4.0-beta.10](https://github.com/open-sauced/insights/compare/v2.4.0-beta.9...v2.4.0-beta.10) (2024-02-16)
+
+
+### 🐛 Bug Fixes
+
+* update size for Angular logo on user settings page ([#2696](https://github.com/open-sauced/insights/issues/2696)) ([ebf31c8](https://github.com/open-sauced/insights/commit/ebf31c80494883515f1ea87161ec8eaff76d5233))
+
+## [2.4.0-beta.9](https://github.com/open-sauced/insights/compare/v2.4.0-beta.8...v2.4.0-beta.9) (2024-02-16)
+
+
+### 🐛 Bug Fixes
+
+* now workspace pages that crash when you don't have access to them give a page not found instead ([#2694](https://github.com/open-sauced/insights/issues/2694)) ([1fc0642](https://github.com/open-sauced/insights/commit/1fc0642c1a18db0a34b5366d7f101b8fa893cace))
+
 ## [2.4.0-beta.8](https://github.com/open-sauced/insights/compare/v2.4.0-beta.7...v2.4.0-beta.8) (2024-02-16)
 
 
