@@ -200,6 +200,7 @@ interface DbUserInsight {
   readonly updated_at: string;
   readonly repos: DbUserInsightRepo[];
   readonly members: DbInsightMember[];
+  readonly workspaces?: Workspace;
 }
 
 interface DbUserInsightRepo {
@@ -364,6 +365,7 @@ interface DbUserList {
   readonly is_public: boolean;
   readonly created_at: string;
   readonly updated_at: string;
+  readonly workspaces?: Workspace;
 }
 interface DBList {
   id: string;

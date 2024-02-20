@@ -43,6 +43,41 @@ module.exports = {
         destination: "/lists/:listId/overview",
         permanent: true,
       },
+      {
+        source: "/hub/lists/find",
+        destination: "/",
+        permanent: true,
+      },
+      {
+        source: "/hub/lists/new",
+        destination: "/",
+        permanent: true,
+      },
+      {
+        source: "/hub/lists",
+        destination: "/",
+        permanent: true,
+      },
+      {
+        source: "/hub/insights/:insightId/accept",
+        destination: "/",
+        permanent: true,
+      },
+      {
+        source: "/hub/insights/:insightId/edit",
+        destination: "/",
+        permanent: true,
+      },
+      {
+        source: "/hub/insights/new",
+        destination: "/",
+        permanent: true,
+      },
+      {
+        source: "/hub/insights",
+        destination: "/",
+        permanent: true,
+      },
     ];
   },
 };
