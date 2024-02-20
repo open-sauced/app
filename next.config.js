@@ -43,6 +43,11 @@ module.exports = {
         destination: "/lists/:listId/overview",
         permanent: true,
       },
+      {
+        source: "/workspaces",
+        destination: "/",
+        permanent: true,
+      },
     ];
   },
 };
