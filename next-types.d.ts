@@ -456,6 +456,13 @@ interface Workspace {
   created_at: string | null;
   updated_at: string | null;
   deleted_at: string | null;
+  members: WorkspaceMember[];
+}
+
+interface WorkspaceMember {
+  id: string;
+  user_id: number;
+  role: string;
 }
 
 interface DbWorkspacesReposStats {
