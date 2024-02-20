@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.4.0-beta.16](https://github.com/open-sauced/insights/compare/v2.4.0-beta.15...v2.4.0-beta.16) (2024-02-20)
+
+
+### 🍕 Features
+
+* add repository insight view pages to workspaces ([#2685](https://github.com/open-sauced/insights/issues/2685)) ([8e714b2](https://github.com/open-sauced/insights/commit/8e714b2d3b85430d67ae13d7864edae946cc63ca))
+
 ## [2.4.0-beta.15](https://github.com/open-sauced/insights/compare/v2.4.0-beta.14...v2.4.0-beta.15) (2024-02-20)
 
 
