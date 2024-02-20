@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.4.0-beta.18](https://github.com/open-sauced/insights/compare/v2.4.0-beta.17...v2.4.0-beta.18) (2024-02-20)
+
+
+### 🐛 Bug Fixes
+
+* use redirectFrom to navigate after logging in from top menu ([#2695](https://github.com/open-sauced/insights/issues/2695)) ([7985153](https://github.com/open-sauced/insights/commit/7985153ce4e10e9961cc03aa7ef56bd3597ccb4c))
+
 ## [2.4.0-beta.17](https://github.com/open-sauced/insights/compare/v2.4.0-beta.16...v2.4.0-beta.17) (2024-02-20)
 
 
