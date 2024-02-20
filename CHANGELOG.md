@@ -5,6 +5,41 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.4.0-beta.20](https://github.com/open-sauced/insights/compare/v2.4.0-beta.19...v2.4.0-beta.20) (2024-02-20)
+
+
+### 🐛 Bug Fixes
+
+* replaced health with activity ratio ([#2721](https://github.com/open-sauced/insights/issues/2721)) ([4c792f5](https://github.com/open-sauced/insights/commit/4c792f578516df9856a8e352d0d9596ecdd02a44))
+
+## [2.4.0-beta.19](https://github.com/open-sauced/insights/compare/v2.4.0-beta.18...v2.4.0-beta.19) (2024-02-20)
+
+
+### 🐛 Bug Fixes
+
+* prevent onboard button from flashing on mobile screens ([#2705](https://github.com/open-sauced/insights/issues/2705)) ([e95b7ab](https://github.com/open-sauced/insights/commit/e95b7ab4f7cc3858152f2bee64eb3b4b117048a4))
+
+## [2.4.0-beta.18](https://github.com/open-sauced/insights/compare/v2.4.0-beta.17...v2.4.0-beta.18) (2024-02-20)
+
+
+### 🐛 Bug Fixes
+
+* use redirectFrom to navigate after logging in from top menu ([#2695](https://github.com/open-sauced/insights/issues/2695)) ([7985153](https://github.com/open-sauced/insights/commit/7985153ce4e10e9961cc03aa7ef56bd3597ccb4c))
+
+## [2.4.0-beta.17](https://github.com/open-sauced/insights/compare/v2.4.0-beta.16...v2.4.0-beta.17) (2024-02-20)
+
+
+### 🍕 Features
+
+* 404 on workspace settings page if not an owner ([#2712](https://github.com/open-sauced/insights/issues/2712)) ([f9927a8](https://github.com/open-sauced/insights/commit/f9927a8acfc9c6756bbbf8a1865a4877bfad22cb))
+
+## [2.4.0-beta.16](https://github.com/open-sauced/insights/compare/v2.4.0-beta.15...v2.4.0-beta.16) (2024-02-20)
+
+
+### 🍕 Features
+
+* add repository insight view pages to workspaces ([#2685](https://github.com/open-sauced/insights/issues/2685)) ([8e714b2](https://github.com/open-sauced/insights/commit/8e714b2d3b85430d67ae13d7864edae946cc63ca))
+
 ## [2.4.0-beta.15](https://github.com/open-sauced/insights/compare/v2.4.0-beta.14...v2.4.0-beta.15) (2024-02-20)
 
 

@@ -68,8 +68,15 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
     });
   }
 
+  if (!data?.members.find((member) => member.user_id === Number(sessionData?.id) && member.role === "owner")) {
+    return { notFound: true };
+  }
+
   return {
-    props: { workspace: data, canDeleteWorkspace: sessionData && workspaceId !== sessionData.personal_workspace_id },
+    props: {
+      workspace: data,
+      canDeleteWorkspace: sessionData && workspaceId !== sessionData.personal_workspace_id,
+    },
   };
 };
 
