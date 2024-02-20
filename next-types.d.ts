@@ -246,6 +246,7 @@ interface DbUser {
   readonly is_maintainer: boolean;
   readonly coupon_code: string;
   readonly receive_product_updates: boolean;
+  readonly personal_workspace_id: string;
 }
 
 interface DbHighlight {
