@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.4.0-beta.17](https://github.com/open-sauced/insights/compare/v2.4.0-beta.16...v2.4.0-beta.17) (2024-02-20)
+
+
+### 🍕 Features
+
+* 404 on workspace settings page if not an owner ([#2712](https://github.com/open-sauced/insights/issues/2712)) ([f9927a8](https://github.com/open-sauced/insights/commit/f9927a8acfc9c6756bbbf8a1865a4877bfad22cb))
+
 ## [2.4.0-beta.16](https://github.com/open-sauced/insights/compare/v2.4.0-beta.15...v2.4.0-beta.16) (2024-02-20)
 
 
