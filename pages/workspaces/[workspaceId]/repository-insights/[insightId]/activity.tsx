@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { GetServerSidePropsContext } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 
@@ -10,6 +10,7 @@ import useInsightRepositories from "lib/hooks/useInsightRepositories";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import HubPageLayout from "layouts/hub-page";
 import Activity from "components/organisms/Activity/activity";
+import { useHasMounted } from "lib/hooks/useHasMounted";
 
 interface InsightPageProps {
   insight: DbUserInsight;
@@ -22,20 +23,16 @@ const HubPage = ({ insight, ogImage, workspaceId }: InsightPageProps) => {
   const repositories = insightRepos.map((repo) => repo.repo_id);
   const [hydrated, setHydrated] = useState(false);
 
-  useEffect(() => {
-    setHydrated(true);
-  }, []);
+  const hasMounted = useHasMounted();
 
-  if (!hydrated) {
+  if (!hasMounted) {
     return (
-      <>
-        <SEO
-          title={`${insight.name} | Open Sauced Insights `}
-          description={`${insight.name} Insights on OpenSauced`}
-          image={ogImage}
-          twitterCard="summary_large_image"
-        />
-      </>
+      <SEO
+        title={`${insight.name} | Open Sauced Insights `}
+        description={`${insight.name} Insights on OpenSauced`}
+        image={ogImage}
+        twitterCard="summary_large_image"
+      />
     );
   }
 
