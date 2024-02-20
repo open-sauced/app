@@ -56,6 +56,10 @@ export async function middleware(req: NextRequest) {
     return res;
   }
 
+  if (/^\/workspaces\/[^[\/]+$/.test(req.nextUrl.pathname)) {
+    return NextResponse.redirect(new URL(`${req.nextUrl.pathname}/repositories`, req.url));
+  }
+
   // Create authenticated Supabase Client.
   const supabase = createMiddlewareClient({ req, res });
   // Check if we have a session
