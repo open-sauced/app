@@ -12,23 +12,25 @@ import useInsight from "lib/hooks/useInsight";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
-const HubPageLayout = ({ children }: { children: React.ReactNode }) => {
+
+const HubPageLayout = ({ page = "dashboard", children }: { page?: string; children: React.ReactNode }) => {
   const router = useRouter();
   const { userId } = useSupabaseAuth();
-  const { pageId, range } = router.query;
-  const insightId = pageId as string;
-  const { data: insight, isLoading, isError } = useInsight(insightId);
+  const { pageId, insightId } = router.query;
+  const workspaceId = router.query.workspaceId as string;
+  const id = (pageId || insightId) as string;
+  const { data: insight, isLoading, isError } = useInsight(id);
   const repositories = insight?.repos.map((repo) => repo.repo_id);
 
-  const { toolList, selectedTool, selectedFilter, userOrg } = useNav(repositories);
+  const { toolList, selectedTool = page, selectedFilter, userOrg } = useNav(repositories);
 
   const membership = insight?.members?.find((member) => member.user_id === Number(userId));
   const canEdit = membership && ["edit", "admin"].includes(membership.access);
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className={workspaceId && "flex flex-col min-h-screen"}>
       <TopNav />
-      <div className="flex flex-col items-center pt-20 page-container grow md:pt-14">
+      <div className={workspaceId && "flex flex-col items-center pt-20 page-container grow md:pt-14"}>
         <div className="info-container container w-full min-h-[100px]">
           <Header>
             <ClientOnly>
@@ -53,7 +55,13 @@ const HubPageLayout = ({ children }: { children: React.ReactNode }) => {
 
             {insight && (
               <ClientOnly>
-                <InsightHeader insight={insight} repositories={repositories} insightId={insightId} canEdit={canEdit} />
+                <InsightHeader
+                  insight={insight}
+                  repositories={repositories}
+                  insightId={id}
+                  canEdit={canEdit}
+                  workspaceId={workspaceId}
+                />
               </ClientOnly>
             )}
           </Header>
@@ -64,6 +72,7 @@ const HubPageLayout = ({ children }: { children: React.ReactNode }) => {
             filterName={pageId}
             selectedFilter={selectedFilter}
             username={userOrg}
+            workspaceId={workspaceId}
           />
         </div>
 
