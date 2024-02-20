@@ -13,6 +13,7 @@ import useSession from "lib/hooks/useSession";
 import { getAllFeatureFlags } from "lib/utils/server/feature-flags";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import { useWorkspacesRepositoryInsights } from "lib/hooks/api/useWorkspaceRepositoryInsights";
+import Title from "components/atoms/Typography/title";
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const supabase = createPagesServerClient(context);
@@ -33,7 +34,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
 
 const RepositoryInsights = () => {
   const router = useRouter();
-  const { user } = useSupabaseAuth();
+  const { user, sessionToken } = useSupabaseAuth();
   const workspaceId = router.query.workspaceId as string;
 
   const { session } = useSession(true);
@@ -52,7 +53,7 @@ const RepositoryInsights = () => {
                 <SkeletonWrapper count={3} classNames="w-full" height={95} radius={10} />
               ) : isError ? (
                 "Error..."
-              ) : (
+              ) : data && data.length > 0 ? (
                 data.map((insight) => {
                   return (
                     <WorkspaceRepositoryInsightRow
@@ -63,6 +64,12 @@ const RepositoryInsights = () => {
                     />
                   );
                 })
+              ) : (
+                <div className="flex flex-col items-center justify-center w-full gap-4 ">
+                  {!isLoading && sessionToken ? (
+                    <Title className="text-2xl">You currently have no repository insights</Title>
+                  ) : null}
+                </div>
               )}
             </>
           ) : null}
