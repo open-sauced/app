@@ -12,14 +12,13 @@ import Title from "components/atoms/Typography/title";
 import ListCard from "components/molecules/ListCard/list-card";
 import { useToast } from "lib/hooks/useToast";
 
-import { useFetchAllLists } from "lib/hooks/useList";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
-import useFetchFeaturedLists from "lib/hooks/useFetchFeaturedLists";
 import { getAllFeatureFlags } from "lib/utils/server/feature-flags";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import { fetchApiData } from "helpers/fetchApiData";
 import { WORKSPACE_ID_COOKIE_NAME } from "lib/utils/workspace-utils";
 import { deleteCookie } from "lib/utils/server/cookies";
+import { useWorkspacesContributorInsights } from "lib/hooks/api/useWorkspaceContributorInsights";
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const supabase = createPagesServerClient(context);
@@ -60,10 +59,7 @@ const DeleteListPageModal = dynamic(() => import("components/organisms/ListPage/
 
 const ListsHub = ({ workspace }: { workspace: Workspace }) => {
   const { sessionToken } = useSupabaseAuth();
-  const { data, isLoading, meta, setPage, mutate } = useFetchAllLists(30, !!sessionToken);
-  const { data: featuredListsData, isLoading: featuredListsLoading } = useFetchFeaturedLists(
-    sessionToken ? false : true
-  );
+  const { data, isLoading, meta, setPage, mutate } = useWorkspacesContributorInsights({ workspaceId: workspace.id });
   const { toast } = useToast();
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -134,29 +130,13 @@ const ListsHub = ({ workspace }: { workspace: Workspace }) => {
             ))
           ) : (
             <div className="flex flex-col items-center justify-center w-full gap-4 ">
-              {!isLoading && sessionToken ? <Title className="text-2xl">You currently have no lists</Title> : null}
+              {!isLoading && sessionToken ? (
+                <Title className="text-2xl">You currently have no contributor insights</Title>
+              ) : null}
             </div>
           )}
 
           {sessionToken && isLoading ? <SkeletonWrapper count={3} classNames="w-full" height={95} radius={10} /> : null}
-
-          {!sessionToken && featuredListsLoading ? (
-            <SkeletonWrapper count={1} classNames="w-full" height={95} radius={10} />
-          ) : null}
-          {featuredListsData.map((list, i) => (
-            <ListCard
-              key={`featured_list_${i}`}
-              list={{
-                id: list.id,
-                user: { login: "bdougie", id: 1, name: "Brian Douglas" },
-                name: `Demo | ${list.name}`,
-                created_at: " ",
-                updated_at: "",
-                is_public: list.is_public,
-              }}
-              workspaceId={workspace.id}
-            />
-          ))}
         </section>
         <div
           className={clsx("py-1 md:py-4 flex w-full md:mt-5 justify-between items-center", {
