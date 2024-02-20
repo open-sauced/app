@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.4.0-beta.20](https://github.com/open-sauced/insights/compare/v2.4.0-beta.19...v2.4.0-beta.20) (2024-02-20)
+
+
+### 🐛 Bug Fixes
+
+* replaced health with activity ratio ([#2721](https://github.com/open-sauced/insights/issues/2721)) ([4c792f5](https://github.com/open-sauced/insights/commit/4c792f578516df9856a8e352d0d9596ecdd02a44))
+
 ## [2.4.0-beta.19](https://github.com/open-sauced/insights/compare/v2.4.0-beta.18...v2.4.0-beta.19) (2024-02-20)
 
 
