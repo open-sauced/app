@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { GetServerSidePropsContext } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 
@@ -21,7 +20,6 @@ interface InsightPageProps {
 const HubPage = ({ insight, ogImage, workspaceId }: InsightPageProps) => {
   const { data: insightRepos } = useInsightRepositories(insight.id);
   const repositories = insightRepos.map((repo) => repo.repo_id);
-  const [hydrated, setHydrated] = useState(false);
 
   const hasMounted = useHasMounted();
 
