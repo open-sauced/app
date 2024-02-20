@@ -28,6 +28,7 @@ import useSupabaseAuth from "../../../lib/hooks/useSupabaseAuth";
 const AuthSection: React.FC = ({}) => {
   const router = useRouter();
   const currentPath = router.asPath;
+  const { redirectedFrom } = router.query as { redirectedFrom?: string };
 
   const openSearch = store((state) => state.openSearch);
 
@@ -41,6 +42,12 @@ const AuthSection: React.FC = ({}) => {
       setHost(window.location.origin as string);
     }
   }, []);
+
+  useEffect(() => {
+    if (redirectedFrom && session) {
+      router.replace(`${decodeURIComponent(redirectedFrom)}`);
+    }
+  }, [redirectedFrom, session]);
 
   useEffect(() => {
     if (session && !userInfo) {
@@ -148,12 +155,14 @@ const AuthSection: React.FC = ({}) => {
           ) : (
             <Button
               variant="primary"
-              onClick={async () =>
-                await signIn({
+              onClick={async () => {
+                signIn({
                   provider: "github",
-                  options: { redirectTo: `${host}${currentPath}` },
-                })
-              }
+                  options: {
+                    redirectTo: `${host}${redirectedFrom ? decodeURIComponent(redirectedFrom) : currentPath}`,
+                  },
+                });
+              }}
               className="flex items-center"
             >
               Connect <span className="hidden sm:inline-block ml-1">with GitHub</span>
