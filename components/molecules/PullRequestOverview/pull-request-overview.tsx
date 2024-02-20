@@ -34,13 +34,13 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
     percent: number | undefined;
   }
 
-  const [prOverviewDetails, setPrOverviewDetails] = useState<OverviewDetails>({ type: "closed", percent: closed });
+  const [prOverviewDetails, setPrOverviewDetails] = useState<OverviewDetails>({ type: "open", percent: open });
   return (
     <div className="flex flex-col gap-1">
       <div className="w-full flex justify-between gap-1">
         {/* Total Number of Pull Requests */}
         <div className="  text-base text-light-slate-11 tracking-tight">
-          {totalPullRequests} {`PR${totalPullRequests === 1 ? "" : "s"}`}
+          {prOverviewDetails.percent} {`PR${prOverviewDetails.percent === 1 ? "" : "s"}`}
         </div>
 
         {/* Churn Number compared with previous date (default: last 30 days vs. previous 30 days range) */}

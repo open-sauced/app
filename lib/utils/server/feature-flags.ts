@@ -1,3 +1,5 @@
+import * as Sentry from "@sentry/nextjs";
+
 export type FeatureFlag = "contributions_evolution_by_type" | "workspaces";
 
 export async function getAllFeatureFlags(userId: number) {
@@ -16,6 +18,14 @@ export async function getAllFeatureFlags(userId: number) {
     "https://app.posthog.com/decide?v=3", // or eu
     requestOptions
   );
+
+  if (response.status !== 200) {
+    Sentry.captureException(new Error("Posthog is having issues", { cause: response }));
+
+    // Not ideal, but we don't want to block the user if Posthog is down
+    return null;
+  }
+
   const { featureFlags } = await response.json();
 
   if (featureFlags === undefined) {

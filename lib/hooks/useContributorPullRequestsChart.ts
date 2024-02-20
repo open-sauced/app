@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import differenceInDays from "date-fns/differenceInDays";
-import getPullRequestsToDays from "lib/utils/get-prs-to-days";
 import { RepoList } from "components/molecules/CardRepoList/card-repo-list";
 import { getAvatarByUsername } from "lib/utils/github";
 import getFormattedTooltipValue from "lib/utils/get-formatted-tooltip-value";
+import { getPullRequestsHistogramToDays } from "lib/utils/get-prs-to-days";
 import useContributorPullRequests from "./api/useContributorPullRequests";
+import { usePullRequestsHistogram } from "./api/usePullRequestsHistogram";
 
 const useContributorPullRequestsChart = (
   contributor: string,
@@ -59,16 +59,7 @@ const useContributorPullRequestsChart = (
 
   const [chart, setChart] = useState(lineChart);
   const { data, meta } = useContributorPullRequests({ contributor, topic, repoIds, limit: 100, range, mostRecent });
-  const repoList: RepoList[] = Array.from(
-    new Set(
-      data
-        .filter((prSince) => {
-          const daysSinceUpdated = differenceInDays(new Date(), new Date(prSince.pr_updated_at));
-          return daysSinceUpdated <= Number(range);
-        })
-        .map((prData) => prData.repo_name)
-    )
-  ).map((repo) => {
+  const repoList: RepoList[] = Array.from(new Set(data.map((prData) => prData.repo_name))).map((repo) => {
     const [repoOwner, repoName] = repo.split("/");
 
     return {
@@ -78,9 +69,25 @@ const useContributorPullRequestsChart = (
     };
   });
 
+  const { data: histogramData } = usePullRequestsHistogram({
+    repoIds,
+    range: Number(range),
+    width: 1,
+    contributor,
+    direction: "ASC",
+  });
+
+  const chartData = getPullRequestsHistogramToDays(histogramData, Number(range));
+  const totalPrs = chartData.reduce((total, curr) => total + curr.y, 0);
+
   useEffect(() => {
-    if (data && Array.isArray(data) && data.length > 0) {
-      const graphData = getPullRequestsToDays(data, Number(range || "30"));
+    if (chartData && Array.isArray(chartData) && chartData.length > 0) {
+      const graphData = chartData.map((day) => {
+        return {
+          x: day.x,
+          y: day.y,
+        };
+      });
 
       setChart((prevChart) => ({
         ...prevChart,
@@ -94,13 +101,14 @@ const useContributorPullRequestsChart = (
         })),
       }));
     }
-  }, [data]);
+  }, [chartData]);
 
   return {
     chart,
     data,
     meta,
     repoList,
+    totalPrs,
   };
 };
 

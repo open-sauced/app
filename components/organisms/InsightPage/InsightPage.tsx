@@ -47,6 +47,7 @@ interface InsightPageProps {
   edit?: boolean;
   insight?: DbUserInsight;
   pageRepos?: DbRepo[];
+  workspaceId?: string;
 }
 const staticSuggestedRepos: RepoCardProfileProps[] = [
   {
@@ -72,7 +73,7 @@ const staticSuggestedRepos: RepoCardProfileProps[] = [
   },
 ];
 
-const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
+const InsightPage = ({ edit, insight, pageRepos, workspaceId }: InsightPageProps) => {
   const { sessionToken, providerToken, user } = useSupabaseAuth();
 
   const { toast } = useToast();
@@ -200,22 +201,26 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
       toast({ description: "You must be logged in to create a page", variant: "danger" });
       return;
     }
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/insights`, {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-        Authorization: `Bearer ${sessionToken}`,
-      },
-      body: JSON.stringify({
-        name,
-        repos: repos.map((repo) => ({ id: repo.id, fullName: repo.full_name })),
-        is_public: isPublic,
-      }),
-    });
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/${workspaceId ? `workspaces/${workspaceId}` : user}/insights`,
+      {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${sessionToken}`,
+        },
+        body: JSON.stringify({
+          name,
+          repos: repos.map((repo) => ({ id: repo.id, fullName: repo.full_name })),
+          is_public: isPublic,
+        }),
+      }
+    );
     setCreateLoading(false);
     if (response.ok) {
       const { id } = await response.json();
       toast({ description: "Page created successfully", variant: "success" });
+      // TODO: redirect to workspaces page
       router.push(`/pages/${user.user_metadata.user_name}/${id}/dashboard`);
     }
 
@@ -241,7 +246,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
     setCreateLoading(false);
     if (response && response.ok) {
       toast({ description: "Page updated successfully", variant: "success" });
-      router.push("/hub/insights");
+      router.push(workspaceId ? `/workspaces/${workspaceId}/repository-insights` : "/hub/insights");
     } else {
       toast({ description: "An error occurred!", variant: "danger" });
     }
@@ -411,7 +416,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
     if (response.ok) {
       toast({ description: "Page deleted successfully!", variant: "success" });
       setIsModalOpen(false);
-      router.push("/hub/insights");
+      router.push(workspaceId ? `/workspaces/${workspaceId}/repository-insights` : "/hub/insights");
     }
 
     setSubmitted(false);
@@ -501,7 +506,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
       <div className="flex flex-col gap-8">
         <div className="pb-6 border-b border-light-slate-8">
           <Title className="!text-2xl !leading-none mb-4" level={1}>
-            {edit ? "Update" : "Create New"} Insight Page
+            {edit ? "Update" : "Create New"} {workspaceId ? "Repository Insight" : "Insight Page"}
           </Title>
           <Text className="my-8">
             An insight page is a dashboard containing selected repositories that you and your team can get insights

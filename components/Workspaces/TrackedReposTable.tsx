@@ -17,11 +17,11 @@ interface TrackedReposTableProps {
 
 export const EmptyState = ({ onAddRepos }: { onAddRepos: () => void }) => {
   return (
-    <div className="grid place-content-center gap-4 my-8">
-      <BiBarChartAlt2 className="border rounded p-1 w-12 h-12 mx-auto" />
+    <div className="grid place-content-center gap-5 my-8">
+      <BiBarChartAlt2 className="border rounded-lg p-2 w-11 h-11 mx-auto fill-slate-600 shadow-xs" />
       <div className="grid w-max max-w-sm mx-auto">
-        <span className="text-center text-lg font-semibold mb-2">Add repositories to track</span>
-        <p className="text-sm text-center">
+        <span className="text-center font-medium mb-2">Add repositories to track</span>
+        <p className="text-sm text-slate-600 text-center">
           Search and select the repositories you want to track and get insights on your entire Github ecosystem
         </p>
       </div>
@@ -57,8 +57,8 @@ export const TrackedReposTable = ({
     <div className="grid gap-4">
       <div className="flex justify-between">
         <div>
-          <h2 className="flex gap-1 semi-bold text-lg mb-2">Repositories Tracked</h2>
-          <p className="text-sm">Select the organizations or repositories you want to track</p>
+          <h2 className="flex gap-1 font-medium mb-2 text-md">Repositories Tracked</h2>
+          <p className="text-sm text-slate-600">Select the organizations or repositories you want to track</p>
         </div>
         <Button variant="primary" className="w-max h-max" onClick={onAddRepos}>
           <FaPlus className="mr-2 text-lg" />

@@ -9,13 +9,18 @@ import { useToast } from "lib/hooks/useToast";
 import { TrackedReposTable } from "components/Workspaces/TrackedReposTable";
 import { createWorkspace } from "lib/utils/workspace-utils";
 import { WORKSPACE_UPDATED_EVENT } from "components/shared/AppSidebar/AppSidebar";
+import { TrackedContributorsTable } from "components/Workspaces/TrackedContributorsTable";
 
 const NewWorkspace = () => {
   const { sessionToken } = useSupabaseAuth();
   const { toast } = useToast();
   const router = useRouter();
+
   const [trackedReposModalOpen, setTrackedReposModalOpen] = useState(false);
   const [trackedRepos, setTrackedRepos] = useState<Map<string, boolean>>(new Map());
+
+  const [trackedContributors, setTrackedContributors] = useState<Map<string, boolean>>(new Map());
+  const [trackedContributorsModalOpen, setTrackedContributorsModalOpen] = useState(false);
 
   const onCreateWorkspace: ComponentProps<"form">["onSubmit"] = async (event) => {
     event.preventDefault();
@@ -31,6 +36,7 @@ const NewWorkspace = () => {
       members: [],
       sessionToken: sessionToken!,
       repos: Array.from(trackedRepos, ([repo]) => ({ full_name: repo })),
+      contributors: Array.from(trackedContributors, ([contributor]) => ({ login: contributor })),
     });
 
     if (error || !workspace) {
@@ -46,35 +52,32 @@ const NewWorkspace = () => {
     ssr: false,
   });
 
+  const TrackedContributorsModal = dynamic(() => import("components/Workspaces/TrackedContributorsModal"), {
+    ssr: false,
+  });
+
   return (
     <WorkspaceLayout workspaceId={null}>
-      <div className="grid gap-6">
-        <div>
-          <h1 className="border-b bottom pb-4">Workspace Settings</h1>
-          <form className="flex flex-col pt-6 gap-6" onSubmit={onCreateWorkspace}>
-            <TextInput
-              name="name"
-              label="Workspace Name"
-              placeholder="Workspace name"
-              className="w-full md:w-max"
-              required
-            />
-            <TextInput
-              name="description"
-              label="Workspace Description"
-              placeholder="Workspace description"
-              className="w-full md:w-3/4 max-w-lg"
-            />
-            <div className="bg-white sticky-bottom fixed bottom-0 right-0 self-end m-6">
-              <Button
-                variant="primary"
-                className="flex gap-2.5 items-center cursor-pointer w-min mt-2 sm:mt-0 self-end"
-              >
-                Create Workspace
-              </Button>
-            </div>
-          </form>
-        </div>
+      <div className="grid gap-6 max-w-4xl">
+        <h1 className="border-b bottom pb-4 text-xl font-medium">Workspace Settings</h1>
+        <form className="flex flex-col gap-6 mb-2" onSubmit={onCreateWorkspace}>
+          <div>
+            <h3 className="font-medium mb-2">
+              Workspace Name <span className="text-red-600">*</span>
+            </h3>
+            <TextInput name="name" placeholder="Workspace name" className="!py-1.5 w-full text-sm" required />
+          </div>
+          <div>
+            <h3 className="font-medium mb-2">Workspace Description</h3>
+            <TextInput name="description" placeholder="Workspace description" className="!py-1.5 w-full text-sm" />
+          </div>
+          <div className="bg-white sticky-bottom fixed bottom-0 right-0 self-end m-6">
+            <Button variant="primary" className="flex gap-2.5 items-center cursor-pointer w-min mt-2 sm:mt-0 self-end">
+              Create Workspace
+            </Button>
+          </div>
+        </form>
+
         <TrackedReposTable
           repositories={trackedRepos}
           onAddRepos={() => {
@@ -92,6 +95,29 @@ const NewWorkspace = () => {
             setTrackedRepos((trackedRepos) => {
               const updates = new Map([...trackedRepos]);
               updates.delete(repo);
+
+              return updates;
+            });
+          }}
+        />
+
+        <TrackedContributorsTable
+          contributors={trackedContributors}
+          onAddContributors={() => {
+            setTrackedContributorsModalOpen(true);
+          }}
+          onRemoveTrackedContributor={(event) => {
+            const { contributor } = event.currentTarget.dataset;
+
+            if (!contributor) {
+              // eslint-disable-next-line no-console
+              console.error("The tracked contributor to remove was not found");
+              return;
+            }
+
+            setTrackedContributors((trackedContributors) => {
+              const updates = new Map([...trackedContributors]);
+              updates.delete(contributor);
 
               return updates;
             });
@@ -121,6 +147,32 @@ const NewWorkspace = () => {
         }}
         onCancel={() => {
           setTrackedReposModalOpen(false);
+        }}
+      />
+
+      <TrackedContributorsModal
+        isOpen={trackedContributorsModalOpen}
+        onAddToTrackingList={(contributors: Map<string, boolean>) => {
+          setTrackedContributorsModalOpen(false);
+          setTrackedContributors((trackedContributors) => {
+            const updates = new Map([...trackedContributors]);
+
+            for (const [contributor, checked] of contributors) {
+              if (checked) {
+                updates.set(contributor, true);
+              } else {
+                updates.delete(contributor);
+              }
+            }
+
+            return updates;
+          });
+        }}
+        onClose={() => {
+          setTrackedContributorsModalOpen(false);
+        }}
+        onCancel={() => {
+          setTrackedContributorsModalOpen(false);
         }}
       />
     </WorkspaceLayout>

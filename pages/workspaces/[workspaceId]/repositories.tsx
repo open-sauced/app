@@ -2,6 +2,7 @@ import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { GetServerSidePropsContext } from "next";
 import { SquareFillIcon } from "@primer/octicons-react";
 import { useRouter } from "next/router";
+import { FaEdit } from "react-icons/fa";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import { fetchApiData } from "helpers/fetchApiData";
 import Repositories from "components/organisms/Repositories/repositories";
@@ -12,6 +13,10 @@ import { useWorkspacesRepoStats } from "lib/hooks/api/useWorkspacesRepoStats";
 import { DayRangePicker } from "components/shared/DayRangePicker";
 import { EmptyState } from "components/Workspaces/TrackedReposTable";
 import Card from "components/atoms/Card/card";
+import ClientOnly from "components/atoms/ClientOnly/client-only";
+import { deleteCookie } from "lib/utils/server/cookies";
+import { WORKSPACE_ID_COOKIE_NAME } from "lib/utils/workspace-utils";
+import Button from "components/atoms/Button/button";
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const supabase = createPagesServerClient(context);
@@ -27,7 +32,9 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
   });
 
   if (error) {
-    if (error.status === 404) {
+    deleteCookie(context.res, WORKSPACE_ID_COOKIE_NAME);
+
+    if (error.status === 404 || error.status === 401) {
       return { notFound: true };
     }
 
@@ -51,47 +58,61 @@ const WorkspaceDashboard = ({ workspace }: WorkspaceDashboardProps) => {
 
   return (
     <WorkspaceLayout workspaceId={workspace.id}>
-      <h1 className="flex gap-2 items-center uppercase text-3xl font-semibold">
-        {/* putting a square icon here as a placeholder until we implement workspace logos */}
-        <SquareFillIcon className="w-12 h-12 text-sauced-orange" />
-        <span>{workspace.name}</span>
-      </h1>
+      <section className="w-full flex justify-between items-center">
+        <h1 className="flex gap-2 items-center uppercase text-3xl font-semibold">
+          {/* putting a square icon here as a placeholder until we implement workspace logos */}
+          <SquareFillIcon className="w-12 h-12 text-sauced-orange" />
+          <span>{workspace.name}</span>
+        </h1>
+
+        <div className="flex gap-4 w-fit">
+          <Button variant="primary" href={`/workspaces/${workspace.id}/settings`} className="gap-2 items-center">
+            <FaEdit />
+            Edit
+          </Button>
+        </div>
+      </section>
       <div className="flex justify-between items-center">
         <WorkspacesTabList workspaceId={workspace.id} selectedTab={"repositories"} />
-        <div>
+        <div className="flex items-center gap-4">
+          <Button variant="outline" onClick={() => router.push(`/workspaces/${workspace.id}/settings#load-wizard`)}>
+            Add repositories
+          </Button>
           <DayRangePicker />
         </div>
       </div>
       <div className="mt-6 grid gap-6">
-        {repositories.length > 0 ? (
-          <>
-            <div className="flex flex-col lg:flex-row gap-6">
-              <RepositoryStatCard
-                type="pulls"
-                stats={stats?.data?.pull_requests}
-                isLoading={isLoadingStats}
-                hasError={isStatsError}
-              />
-              <RepositoryStatCard
-                type="issues"
-                stats={stats?.data?.issues}
-                isLoading={isLoadingStats}
-                hasError={isStatsError}
-              />
-              <RepositoryStatCard
-                type="engagement"
-                stats={stats?.data?.repos}
-                isLoading={isLoadingStats}
-                hasError={isStatsError}
-              />
-            </div>
-            <Repositories repositories={repositories} showSearch={false} />
-          </>
-        ) : (
-          <Card className="bg-transparent">
-            <EmptyState onAddRepos={() => router.push(`/workspaces/${workspace.id}/settings#load-wizard`)} />
-          </Card>
-        )}
+        <ClientOnly>
+          {repositories.length > 0 ? (
+            <>
+              <div className="flex flex-col lg:flex-row gap-6">
+                <RepositoryStatCard
+                  type="pulls"
+                  stats={stats?.data?.pull_requests}
+                  isLoading={isLoadingStats}
+                  hasError={isStatsError}
+                />
+                <RepositoryStatCard
+                  type="issues"
+                  stats={stats?.data?.issues}
+                  isLoading={isLoadingStats}
+                  hasError={isStatsError}
+                />
+                <RepositoryStatCard
+                  type="engagement"
+                  stats={stats?.data?.repos}
+                  isLoading={isLoadingStats}
+                  hasError={isStatsError}
+                />
+              </div>
+              <Repositories repositories={repositories} showSearch={false} />
+            </>
+          ) : (
+            <Card className="bg-transparent">
+              <EmptyState onAddRepos={() => router.push(`/workspaces/${workspace.id}/settings#load-wizard`)} />
+            </Card>
+          )}
+        </ClientOnly>
       </div>
     </WorkspaceLayout>
   );

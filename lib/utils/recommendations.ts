@@ -14,11 +14,14 @@ const recommendations: Record<InterestType, string[]> = {
   php: ["laravel/framework"],
   java: ["thingsboard/thingsboard"],
   typescript: ["sequelize/sequelize"],
+  angular: ["angular/angular"],
   golang: ["cli/cli"],
   vue: ["vuejs/vue"],
   kubernetes: ["kubernetes/kubernetes"],
   clojure: ["clojure/clojurescript"],
   svelte: ["sveltejs/svelte"],
+  android: ["android/architecture-samples"],
+  kotlin: ["Kotlin/kotlinx.coroutines"],
 };
 
 export default recommendations;

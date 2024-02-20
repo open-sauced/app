@@ -1,55 +1,45 @@
-import { FaSearch } from "react-icons/fa";
 import { useEffect, useRef, useState } from "react";
 import { useEffectOnce } from "react-use";
 import Search from "components/atoms/Search/search";
 import { Avatar } from "components/atoms/Avatar/avatar-hover-card";
 import { SearchedReposTable } from "../SearchReposTable";
+import { SearchRepoEmptyState } from "./SearchRepoEmptyState";
 
 interface SearchByReposStepProps {
   onSearch: (search?: string) => void;
   onSelectRepo: (repo: string) => void;
   onToggleRepo: (repo: string, isSelected: boolean) => void;
+  onToggleAllRepos: (checked: boolean) => void;
   repositories: Map<string, boolean>;
   suggestedRepos: string[];
   searchedRepos: string[];
 }
 
-const EmptyState = () => {
-  return (
-    <div className="grid place-content-center">
-      <div className="text-center flex flex-col items-center p-24 gap-2 max-w-lg">
-        <div className="p-3 border rounded-lg mb-2">
-          <FaSearch size={24} className="text-light-slate-9" />
-        </div>
-        <span className="font-semibold">No repositories added yet!</span>
-        <span>Use the search bar to find the repositories you want to track on your workspace.</span>
-      </div>
-    </div>
-  );
-};
-
 export const SearchByReposStep = ({
   onSearch,
   onSelectRepo,
   onToggleRepo,
+  onToggleAllRepos,
   repositories,
   searchedRepos,
   suggestedRepos = [],
 }: SearchByReposStepProps) => {
-  const [filteredRepositories, setFilteredRepositories] = useState<Map<string, boolean>>(repositories);
+  const [filteredRepositories, setFilteredRepositories] = useState<Map<string, boolean>>(new Map());
+
+  useEffect(() => {
+    setFilteredRepositories(new Map(repositories));
+  }, [repositories]);
 
   const onFilterRepos = (search: string) => {
-    setFilteredRepositories((repositories) => {
-      const updates = new Map(repositories);
+    const updates = new Map();
 
-      for (const [repo] of updates) {
-        if (!repo.includes(search)) {
-          updates.delete(repo);
-        }
+    for (const [repo, selected] of repositories) {
+      if (repo.includes(search)) {
+        updates.set(repo, selected);
       }
+    }
 
-      return updates;
-    });
+    setFilteredRepositories(updates);
   };
 
   const formRef = useRef<HTMLFormElement>(null);
@@ -100,13 +90,15 @@ export const SearchByReposStep = ({
           })}
         />
       </form>
-      {repositories.size === 0 && filteredRepositories.size === 0 ? (
-        <EmptyState />
+      {repositories.size === 0 ? (
+        <SearchRepoEmptyState type="by-repos" />
       ) : (
         <SearchedReposTable
-          repositories={filteredRepositories.size > 0 ? filteredRepositories : repositories}
+          type="by-repos"
+          repositories={filteredRepositories}
           onFilter={onFilterRepos}
           onToggleRepo={onToggleRepo}
+          onToggleAllRepos={onToggleAllRepos}
         />
       )}
     </div>

@@ -2,7 +2,7 @@
   "name": "@open-sauced/insights",
   "description": "🍕The dashboard for open source discovery.",
   "keywords": [],
-  "version": "2.1.0-beta.1",
+  "version": "2.4.0-beta.15",
   "author": "Brian Douglas <brian@opensauced.pizza>",
   "private": true,
   "license": "Apache 2.0",
@@ -41,7 +41,8 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "lint": "next lint",
-    "format": "next lint -- --fix --dir .",
+    "lint:fix": "next lint -- --fix --dir .",
+    "format": "prettier --write .",
     "prepare": "npx husky install"
   },
   "dependencies": {
@@ -91,8 +92,8 @@
     "nextjs-progressbar": "^0.0.16",
     "octokit": "^3.1.2",
     "path-to-regexp": "^6.2.1",
-    "posthog-js": "^1.83.0",
-    "posthog-node": "^3.1.3",
+    "posthog-js": "^1.104.0",
+    "posthog-node": "^3.6.0",
     "react": "^18.2.0",
     "react-csv": "^2.2.2",
     "react-day-picker": "^8.7.1",
@@ -111,7 +112,6 @@
     "swiper": "^10.2.0",
     "swr": "^2.0.3",
     "tailwindcss-radix": "^2.7.0",
-    "tier": "^5.10.0",
     "zustand": "^4.3.2"
   },
   "devDependencies": {
@@ -142,8 +142,6 @@
     "autoprefixer": "^10.4.13",
     "eslint": "^8.33.0",
     "eslint-config-next": "^13.5.6",
-    "eslint-config-prettier": "^8.8.0",
-    "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-storybook": "^0.6.15",
     "eslint-plugin-unused-imports": "^2.0.0",
     "husky": "^8.0.3",

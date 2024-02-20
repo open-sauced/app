@@ -97,7 +97,7 @@ const HubContributorsHeader = ({
             variant="text"
             onClick={onAddToList}
           >
-            Create List <FaPlus className="ml-2 text-lg" />
+            Create Contributor Insight <FaPlus className="ml-2 text-lg" />
           </Button>
         </div>
       </div>

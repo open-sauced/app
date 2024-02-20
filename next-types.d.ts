@@ -246,6 +246,7 @@ interface DbUser {
   readonly is_maintainer: boolean;
   readonly coupon_code: string;
   readonly receive_product_updates: boolean;
+  readonly personal_workspace_id: string;
 }
 
 interface DbHighlight {
@@ -289,6 +290,13 @@ interface GhRepo {
   full_name: string;
   private: boolean;
   owner: GhUser;
+}
+
+interface GhOrg {
+  id: number;
+  name: string;
+  full_name: string;
+  private: boolean;
 }
 
 interface GhPRInfoResponse {

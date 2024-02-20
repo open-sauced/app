@@ -41,7 +41,7 @@ import UserRepositoryRecommendations from "../UserRepositoryRecommendations/user
 interface ContributorProfileTabProps {
   contributor?: DbUser;
   prTotal: number;
-  openPrs: number;
+  totalPrs: number;
   prVelocity?: number;
   prMerged: number;
   recentContributionCount: number;
@@ -67,7 +67,7 @@ const tabs: Record<TabKey, string> = {
 
 const ContributorProfileTab = ({
   contributor,
-  openPrs,
+  totalPrs,
   prVelocity,
   prsMergedPercentage,
   chart,
@@ -367,9 +367,9 @@ const ContributorProfileTab = ({
             <div className="flex flex-col justify-between gap-2 lg:flex-row md:gap-12 lg:gap-16">
               <div>
                 <span className="text-xs text-light-slate-11">PRs opened</span>
-                {openPrs ? (
+                {totalPrs ? (
                   <div className="flex mt-1 lg:justify-center md:pr-8">
-                    <Text className="!text-lg md:!text-xl lg:!text-2xl !text-black !leading-none">{openPrs} PRs</Text>
+                    <Text className="!text-lg md:!text-xl lg:!text-2xl !text-black !leading-none">{totalPrs} PRs</Text>
                   </div>
                 ) : (
                   <div className="flex items-end justify-center mt-1">{DATA_FALLBACK_VALUE}</div>
