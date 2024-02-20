@@ -17,7 +17,7 @@ type RepositoryStatCardProps = {
     }
   | {
       type: "engagement";
-      stats: { stars: number; forks: number; health: number } | undefined;
+      stats: { stars: number; forks: number; activity_ratio: number } | undefined;
     }
 );
 
@@ -47,7 +47,7 @@ function getStatPropertiesByType(type: CardType) {
     case "issues":
       return ["opened", "closed", "velocity"];
     case "engagement":
-      return ["stars", "forks", "health"];
+      return ["stars", "forks", "activity_ratio"];
     default:
       throw new Error("Invalid repository stat card type");
   }
@@ -102,9 +102,9 @@ export const RepositoryStatCard = ({ stats, type, isLoading, hasError }: Reposit
                 return (
                   <tr key={stat} className="flex flex-col">
                     <th scope="row" className="capitalize font-medium text-sm text-light-slate-11 text-left">
-                      {stat}
+                      {stat.replace("_", " ")}
                     </th>
-                    {stat === "health" ? (
+                    {stat === "activity_ratio" ? (
                       <td className="text-black semi-bold text-2xl">
                         {Math.round(value)}
                         <span className="text-xs">/10</span>
