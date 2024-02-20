@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.4.0-beta.19](https://github.com/open-sauced/insights/compare/v2.4.0-beta.18...v2.4.0-beta.19) (2024-02-20)
+
+
+### 🐛 Bug Fixes
+
+* prevent onboard button from flashing on mobile screens ([#2705](https://github.com/open-sauced/insights/issues/2705)) ([e95b7ab](https://github.com/open-sauced/insights/commit/e95b7ab4f7cc3858152f2bee64eb3b4b117048a4))
+
 ## [2.4.0-beta.18](https://github.com/open-sauced/insights/compare/v2.4.0-beta.17...v2.4.0-beta.18) (2024-02-20)
 
 
