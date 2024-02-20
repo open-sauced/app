@@ -479,6 +479,6 @@ interface DbWorkspacesReposStats {
   repos: {
     stars: number;
     forks: number;
-    health: number;
+    activity_ratio: number;
   };
 }
