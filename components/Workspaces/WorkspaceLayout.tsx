@@ -11,22 +11,18 @@ interface WorkspaceLayoutProps {
 export const WorkspaceLayout = ({ workspaceId, children }: WorkspaceLayoutProps) => {
   const [showingSidebar, setShowingSidebar] = useLocalStorage("showingSidebar", true);
   return (
-    <div
-      className="grid grid-cols-[18rem,1fr] grid-rows-[3.3rem,auto,1fr]"
-      style={{
-        gridTemplateAreas: `
-      "header header"
-      "${showingSidebar ? "sidebar" : "main"} main"
-    `,
-      }}
-    >
-      <div style={{ gridArea: "header" }}>
+    <div className="grid  grid-rows-[3.3rem,auto,1fr]">
+      <div>
         <TopNav />
       </div>
-      <div style={{ gridArea: "sidebar" }} className="transition-all duration-150">
-        <AppSideBar workspaceId={workspaceId} hideSidebar={() => setShowingSidebar(false)} />
-      </div>
-      <div className="relative px-8 pt-8 pb-20" style={{ gridArea: "main" }}>
+      <div className="relative px-8 pt-8 pb-20">
+        <span
+          className={`fixed top-0 left-0 h-full w-72 bg-white shadow-lg transform  transition-transform duration-300 ease-in-out border-r ${
+            showingSidebar ? "" : "-translate-x-full"
+          }`}
+        >
+          <AppSideBar workspaceId={workspaceId} hideSidebar={() => setShowingSidebar(false)} />
+        </span>
         {!showingSidebar && (
           <button
             onClick={() => setShowingSidebar(true)}
