@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.4.0-beta.23](https://github.com/open-sauced/insights/compare/v2.4.0-beta.22...v2.4.0-beta.23) (2024-02-21)
+
+
+### 🍕 Features
+
+* add redirects for existing insight and list pages ([#2734](https://github.com/open-sauced/insights/issues/2734)) ([230d33e](https://github.com/open-sauced/insights/commit/230d33ea77ed357aaffe31b349a031c444e29ec7))
+
 ## [2.4.0-beta.22](https://github.com/open-sauced/insights/compare/v2.4.0-beta.21...v2.4.0-beta.22) (2024-02-21)
 
 
