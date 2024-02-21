@@ -12,7 +12,7 @@ export const WorkspaceHeader = ({ workspace }: WorkspaceHeaderProps) => {
       <h1 className="flex gap-2 items-center uppercase text-3xl font-semibold w-max max-w-sxs md:max-w-sm lg:max-w-2xl xl:max-w-4xl">
         {/* putting a square icon here as a placeholder until we implement workspace logos */}
         <SquareFillIcon className="w-12 h-12 text-sauced-orange" />
-        <span title={workspace.name} className="whitespace-nowrap overflow-hidden text-ellipsis">
+        <span title={workspace.name} className="truncate">
           {workspace.name}
         </span>
       </h1>
