@@ -17,9 +17,6 @@ import Link from "next/link";
 import { LuArrowLeftToLine } from "react-icons/lu";
 import useWorkspaces from "lib/hooks/api/useWorkspaces";
 
-import useUserInsights from "lib/hooks/useUserInsights";
-import { useFetchAllLists } from "lib/hooks/useList";
-import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import SingleSelect from "components/atoms/Select/single-select";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 import {
@@ -28,6 +25,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "components/atoms/Dropdown/dropdown";
+import { useWorkspacesRepositoryInsights } from "lib/hooks/api/useWorkspaceRepositoryInsights";
+import { useWorkspacesContributorInsights } from "lib/hooks/api/useWorkspaceContributorInsights";
 import { InsightsPanel } from "./InsightsPanel";
 import SidebarMenuItem from "./sidebar-menu-item";
 
@@ -48,9 +47,10 @@ interface AppSideBarProps {
 }
 
 export const AppSideBar = ({ workspaceId, hideSidebar }: AppSideBarProps) => {
-  const { username } = useSupabaseAuth();
-  const { data: rawRepoInsights, isLoading: insightsLoading } = useUserInsights(!!username);
-  const { data: lists, isLoading: listsLoading } = useFetchAllLists(30, !!username);
+  const { data: rawRepoInsights, isLoading: repoInsightsLoading } = useWorkspacesRepositoryInsights({ workspaceId });
+  const { data: rawContributorInsights, isLoading: contributorInsightsLoading } = useWorkspacesContributorInsights({
+    workspaceId,
+  });
   const { data: workspaces, isLoading: workspacesLoading, mutate } = useWorkspaces({ limit: 100 });
   const router = useRouter();
 
@@ -58,7 +58,7 @@ export const AppSideBar = ({ workspaceId, hideSidebar }: AppSideBarProps) => {
     .slice(0, 5)
     .sort((a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime());
 
-  const contributorInsights = lists
+  const contributorInsights = rawContributorInsights
     .slice(0, 5)
     .sort((a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime());
 
@@ -83,8 +83,8 @@ export const AppSideBar = ({ workspaceId, hideSidebar }: AppSideBarProps) => {
   return (
     <div className="fixed top-0 pt-14 bg-white flex flex-col gap-8 justify-between max-w-xs w-72 h-full border-r border-slate-200">
       <div className="grid gap-4 mt-4 pr-4 pl-2">
-        <div className="flex gap-4">
-          <label className="flex flex-col w-full gap-2 ml-2">
+        <div className="flex gap-2">
+          <label className="workspace-drop-down flex flex-col w-full gap-2 ml-2">
             <span className="sr-only">Workspace</span>
             <SingleSelect
               options={[
@@ -156,18 +156,16 @@ export const AppSideBar = ({ workspaceId, hideSidebar }: AppSideBarProps) => {
           <div className="grid gap-2">
             <InsightsPanel
               title="Repository Insights"
-              username={username}
               insights={repoInsights}
               type="repo"
-              isLoading={insightsLoading}
+              isLoading={repoInsightsLoading}
               workspaceId={workspaceId}
             />
             <InsightsPanel
               title="Contributor Insights"
-              username={username}
               insights={contributorInsights}
               type="list"
-              isLoading={insightsLoading}
+              isLoading={contributorInsightsLoading}
               workspaceId={workspaceId}
             />
           </div>

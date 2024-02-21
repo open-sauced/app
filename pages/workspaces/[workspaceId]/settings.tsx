@@ -4,7 +4,6 @@ import { GetServerSidePropsContext } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { ComponentProps, useState } from "react";
 import dynamic from "next/dynamic";
-import { SquareFillIcon } from "@primer/octicons-react";
 import { useEffectOnce } from "react-use";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import Button from "components/atoms/Button/button";
@@ -29,6 +28,8 @@ import { useGetWorkspaceContributors } from "lib/hooks/api/useGetWorkspaceContri
 import { TrackedContributorsTable } from "components/Workspaces/TrackedContributorsTable";
 import { deleteCookie } from "lib/utils/server/cookies";
 import Card from "components/atoms/Card/card";
+import { WorkspaceHeader } from "components/Workspaces/WorkspaceHeader";
+
 
 const DeleteWorkspaceModal = dynamic(() => import("components/Workspaces/DeleteWorkspaceModal"), { ssr: false });
 
@@ -205,20 +206,7 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace }: WorkspaceSettingsP
 
   return (
     <WorkspaceLayout workspaceId={workspace.id}>
-      <section className="w-full flex justify-between items-center">
-        <h1 className="flex gap-2 items-center uppercase text-3xl font-semibold">
-          {/* putting a square icon here as a placeholder until we implement workspace logos */}
-          <SquareFillIcon className="w-12 h-12 text-sauced-orange" />
-          <span>{workspace.name}</span>
-        </h1>
-
-        <div className="flex gap-4 w-fit">
-          <Button variant="primary" href={`/workspaces/${workspace.id}/settings`} className="gap-2 items-center">
-            <FaEdit />
-            Edit
-          </Button>
-        </div>
-      </section>
+      <WorkspaceHeader workspace={workspace} />
       <div className="grid gap-6">
         <div>
           <div className="flex justify-between items-center">
