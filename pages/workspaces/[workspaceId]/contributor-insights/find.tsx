@@ -93,7 +93,7 @@ const NewListCreationPage = () => {
 
     setCreateLoading(true);
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/lists`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/workspaces/${workspaceId}/userLists`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
