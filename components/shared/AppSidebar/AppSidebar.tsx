@@ -83,8 +83,8 @@ export const AppSideBar = ({ workspaceId, hideSidebar }: AppSideBarProps) => {
   return (
     <div className="fixed top-0 pt-14 bg-white flex flex-col gap-8 justify-between max-w-xs w-72 h-full border-r border-slate-200">
       <div className="grid gap-4 mt-4 pr-4 pl-2">
-        <div className="flex gap-4">
-          <label className="flex flex-col w-full gap-2 ml-2">
+        <div className="flex gap-2">
+          <label className="workspace-drop-down flex flex-col w-full gap-2 ml-2">
             <span className="sr-only">Workspace</span>
             <SingleSelect
               options={[
