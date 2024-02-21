@@ -1,4 +1,4 @@
-import { FaEdit, FaRegCheckCircle } from "react-icons/fa";
+import { FaRegCheckCircle } from "react-icons/fa";
 import { useRouter } from "next/router";
 import { GetServerSidePropsContext } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
@@ -29,7 +29,6 @@ import { TrackedContributorsTable } from "components/Workspaces/TrackedContribut
 import { deleteCookie } from "lib/utils/server/cookies";
 import Card from "components/atoms/Card/card";
 import { WorkspaceHeader } from "components/Workspaces/WorkspaceHeader";
-
 
 const DeleteWorkspaceModal = dynamic(() => import("components/Workspaces/DeleteWorkspaceModal"), { ssr: false });
 
@@ -289,20 +288,20 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace }: WorkspaceSettingsP
         />
 
         {/* TODO: only show if workspace doesn't have a payee */}
-        <Card className="flex flex-col gap-4 px-6 py-8">
-          <h2 className="text-lg font-semibold">Upgrade your workspace</h2>
+        <Card className="flex flex-col gap-4 px-6 pt-5 pb-6">
+          <h2 className="text-md font-medium">Upgrade your workspace</h2>
           <div className="flex gap-4">
             <FaRegCheckCircle className="text-light-grass-8 w-6 h-6" />
             <div className="flex flex-col gap-2">
-              <h3 className="font-semibold">Make your workspace private</h3>
-              <p className="text-slate-500">
+              <h3 className="text-sm font-medium">Make your workspace private</h3>
+              <p className="text-sm text-slate-500">
                 Free workspaces can only be public, but with a pro workspace you can choose whether your workspace to be
                 puclic or private!
               </p>
             </div>
           </div>
           {/* TODO: point to stripe checkout */}
-          <Button variant="primary" className="w-fit">
+          <Button variant="primary" className="w-fit mt-2">
             Upgrade Workspace
           </Button>
         </Card>
@@ -327,6 +326,7 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace }: WorkspaceSettingsP
             </div>
           </div>
         ) : null}
+
         <TrackedReposModal
           isOpen={trackedReposModalOpen}
           onClose={() => {
