@@ -15,14 +15,12 @@ export const WorkspaceLayout = ({ workspaceId, children }: WorkspaceLayoutProps)
       <div>
         <TopNav />
       </div>
-      <div className="relative px-8 pt-8 pb-20">
-        <span
-          className={`fixed top-0 left-0 h-full w-72 bg-white shadow-lg transform  transition-transform duration-300 ease-in-out border-r ${
-            showingSidebar ? "" : "-translate-x-full"
-          }`}
-        >
-          <AppSideBar workspaceId={workspaceId} hideSidebar={() => setShowingSidebar(false)} />
-        </span>
+      <div className="relative px-8 pb-20">
+        <AppSideBar
+          workspaceId={workspaceId}
+          hideSidebar={() => setShowingSidebar(false)}
+          sidebarCollapsed={showingSidebar}
+        />
         {!showingSidebar && (
           <button
             onClick={() => setShowingSidebar(true)}

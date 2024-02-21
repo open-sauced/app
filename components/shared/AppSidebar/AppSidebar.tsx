@@ -44,9 +44,10 @@ export const WORKSPACE_UPDATED_EVENT = "workspaceUpdated";
 interface AppSideBarProps {
   workspaceId: string | null;
   hideSidebar: () => void;
+  sidebarCollapsed?: boolean;
 }
 
-export const AppSideBar = ({ workspaceId, hideSidebar }: AppSideBarProps) => {
+export const AppSideBar = ({ workspaceId, hideSidebar, sidebarCollapsed }: AppSideBarProps) => {
   const { data: rawRepoInsights, isLoading: repoInsightsLoading } = useWorkspacesRepositoryInsights({ workspaceId });
   const { data: rawContributorInsights, isLoading: contributorInsightsLoading } = useWorkspacesContributorInsights({
     workspaceId,
@@ -81,7 +82,12 @@ export const AppSideBar = ({ workspaceId, hideSidebar }: AppSideBarProps) => {
   });
 
   return (
-    <div className="fixed left-0 top-0 pt-14 bg-white flex flex-col gap-8 justify-between max-w-xs h-full border-r border-slate-200">
+    // TODO: get rid of the z-index. There is grid content like the avatars and paged data text that bleed through the sidebar atm.
+    <div
+      className={`fixed left-0 h-full w-72 bg-white shadow-lg transform  transition-transform duration-300 ease-in-out border-r ${
+        sidebarCollapsed ? "" : "-translate-x-full"
+      } bg-white flex flex-col gap-8 justify-between max-w-xs h-full border-r border-slate-200 z-50`}
+    >
       <div className="grid gap-4 mt-4 pr-4 pl-2">
         <div className="flex gap-2">
           <label className="workspace-drop-down flex flex-col w-full gap-2 ml-2">
