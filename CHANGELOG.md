@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.4.0-beta.21](https://github.com/open-sauced/insights/compare/v2.4.0-beta.20...v2.4.0-beta.21) (2024-02-21)
+
+
+### 🍕 Features
+
+* only list contributor and repository insights to the workspace ([#2718](https://github.com/open-sauced/insights/issues/2718)) ([e80648a](https://github.com/open-sauced/insights/commit/e80648afd6cdca1738835c4427585669f877d72a))
+
 ## [2.4.0-beta.20](https://github.com/open-sauced/insights/compare/v2.4.0-beta.19...v2.4.0-beta.20) (2024-02-20)
 
 
