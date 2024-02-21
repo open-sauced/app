@@ -5,6 +5,7 @@ import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { ComponentProps, useState } from "react";
 import dynamic from "next/dynamic";
 import { useEffectOnce } from "react-use";
+import { loadStripe } from "@stripe/stripe-js";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import Button from "components/atoms/Button/button";
 import TextInput from "components/atoms/TextInput/text-input";
@@ -205,12 +206,15 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace }: WorkspaceSettingsP
   };
 
   const upgradeThisWorkspace = async () => {
-    const { data, error } = await upgradeWorkspace({ workspaceId: workspace.id, bearerToken: sessionToken! });
+    const { data, error } = await upgradeWorkspace({ workspaceId: workspace.id, sessionToken: sessionToken! });
     if (error) {
       toast({ description: "There's been an error", variant: "danger" });
     }
 
-    router.push(`https://checkout.stripe.com/c/pay/${data?.sessionId}`);
+    if (data) {
+      const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string);
+      stripe?.redirectToCheckout({ sessionId: data.sessionId as string });
+    }
   };
 
   return (
