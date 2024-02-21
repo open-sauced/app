@@ -76,6 +76,17 @@ export async function saveWorkspace({
   return { data: { workspace: data, repos: repoData, contributors: contributorsData }, error };
 }
 
+export async function upgradeWorkspace({ workspaceId, bearerToken }: { workspaceId: string; bearerToken: string }) {
+  const { data, error } = await fetchApiData<{ sessionId: string }>({
+    path: `auth/checkout/workspaces/${workspaceId}/session`,
+    method: "POST",
+    bearerToken,
+    pathValidator: () => true,
+  });
+
+  return { data, error };
+}
+
 export async function deleteTrackedRepos({
   workspaceId,
   sessionToken,

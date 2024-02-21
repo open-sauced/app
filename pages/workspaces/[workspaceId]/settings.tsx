@@ -21,6 +21,7 @@ import {
   deleteTrackedRepos,
   deleteWorkspace,
   saveWorkspace,
+  upgradeWorkspace,
 } from "lib/utils/workspace-utils";
 import { WORKSPACE_UPDATED_EVENT } from "components/shared/AppSidebar/AppSidebar";
 import { WorkspacesTabList } from "components/Workspaces/WorkspacesTabList";
@@ -203,6 +204,15 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace }: WorkspaceSettingsP
     }
   };
 
+  const upgradeThisWorkspace = async () => {
+    const { data, error } = await upgradeWorkspace({ workspaceId: workspace.id, bearerToken: sessionToken! });
+    if (error) {
+      toast({ description: "There's been an error", variant: "danger" });
+    }
+
+    router.push(`https://checkout.stripe.com/c/pay/${data?.sessionId}`);
+  };
+
   return (
     <WorkspaceLayout workspaceId={workspace.id}>
       <WorkspaceHeader workspace={workspace} />
@@ -300,8 +310,7 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace }: WorkspaceSettingsP
               </p>
             </div>
           </div>
-          {/* TODO: point to stripe checkout */}
-          <Button variant="primary" className="w-fit mt-2">
+          <Button variant="primary" className="w-fit mt-2" onClick={upgradeThisWorkspace}>
             Upgrade Workspace
           </Button>
         </Card>
