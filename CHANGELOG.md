@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.4.0-beta.22](https://github.com/open-sauced/insights/compare/v2.4.0-beta.21...v2.4.0-beta.22) (2024-02-21)
+
+
+### 🐛 Bug Fixes
+
+* long workspace names no longer spill off the page ([#2729](https://github.com/open-sauced/insights/issues/2729)) ([845b29b](https://github.com/open-sauced/insights/commit/845b29bfe9ad95e17d10b7f7efda3455db728565))
+* now the workspaces dropdown doesn't bleed out from the application sidebar ([#2731](https://github.com/open-sauced/insights/issues/2731)) ([5e99f59](https://github.com/open-sauced/insights/commit/5e99f5956ffaf9c2558b0f61f2f612490bfdbe45))
+
 ## [2.4.0-beta.21](https://github.com/open-sauced/insights/compare/v2.4.0-beta.20...v2.4.0-beta.21) (2024-02-21)
 
 
