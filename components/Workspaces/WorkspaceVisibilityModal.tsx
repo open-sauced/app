@@ -33,12 +33,11 @@ const WorkspaceVisibilityModal = ({
           <div style={{ minWidth: "712px" }}>
             <div className="flex flex-col justify-between gap-4 p-8">
               <DialogTitle>
-                <Title level={3}>Delete Workspace</Title>
+                <Title level={3}>Make Workspace {initialIsPublic ? "Private" : "Public"}</Title>
               </DialogTitle>
               <Text>
                 When set to public, anybody can read your tracked repositories, contributors, and insights in the
-                workspace. Setting this to private is a paid feature and will only allow members to access this
-                workspace.
+                workspace. Setting this to private will only allow members to access this workspace.
               </Text>
 
               <Text className="font-bold text-light-red-10">

@@ -360,7 +360,15 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace }: WorkspaceSettingsP
 
         <div className="flex flex-col py-8 gap-4">
           <h2 className="!font-medium">Change Workspace Visibility</h2>
-          <p className="text-sm text-slate-600">This workspace is set to {isPublic ? "public" : "private"}.</p>
+          <p className="text-sm text-slate-600">
+            This workspace is set to {isPublic ? "public" : "private"}.{" "}
+            {!workspace.payee_user_id && (
+              <span>
+                Setting this to private is a <span className="font-bold">paid</span> feature. Upgrade your Workspace to
+                unlock this feature.
+              </span>
+            )}
+          </p>
 
           <Button
             onClick={() => setIsWorkspaceVisibilityModalOpen(true)}
@@ -441,7 +449,6 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace }: WorkspaceSettingsP
           isOpen={isWorkspaceVisibilityModalOpen}
           workspaceName={workspaceName}
           initialIsPublic={isPublic}
-          // TODO: implement updating 'is_public' on workspace after confirming
           confirmChoice={() => {
             changeVisibility();
             setIsWorkspaceVisibilityModalOpen(false);
