@@ -2,6 +2,7 @@ import { useLocalStorage } from "react-use";
 import { LuArrowRightToLine } from "react-icons/lu";
 import TopNav from "components/organisms/TopNav/top-nav";
 import { AppSideBar } from "components/shared/AppSidebar/AppSidebar";
+import { useMediaQuery } from "lib/hooks/useMediaQuery";
 
 interface WorkspaceLayoutProps {
   workspaceId: string | null;
@@ -9,7 +10,9 @@ interface WorkspaceLayoutProps {
 }
 
 export const WorkspaceLayout = ({ workspaceId, children }: WorkspaceLayoutProps) => {
-  const [showingSidebar, setShowingSidebar] = useLocalStorage("showingSidebar", true);
+  const isLargeScreen = useMediaQuery("(min-width: 1024px)");
+  const [showingSidebar, setShowingSidebar] = useLocalStorage("showingSidebar", isLargeScreen);
+
   return (
     <div className="grid  grid-rows-[3.3rem,auto,1fr]">
       <div>
