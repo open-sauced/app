@@ -29,6 +29,7 @@ import SuggestedRepositoriesList from "../SuggestedRepoList/suggested-repo-list"
 // lazy import DeleteInsightPageModal and TeamMembersConfig component to optimize bundle size they don't load on initial render
 const DeleteInsightPageModal = dynamic(() => import("./DeleteInsightPageModal"));
 const TeamMembersConfig = dynamic(() => import("components/molecules/TeamMembersConfig/team-members-config"));
+const InsightUpgradeModal = dynamic(() => import("components/Workspaces/InsightUpgradeModal"));
 
 const enum RepoLookupError {
   Initial = 0,
@@ -119,6 +120,7 @@ const InsightPage = ({ edit, insight, pageRepos, workspaceId }: InsightPageProps
   const [isPublic, setIsPublic] = useState(!!insight?.is_public);
   const insightRepoLimit = useStore((state) => state.insightRepoLimit);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isInsightUpgradeModalOpen, setIsInsightUpgradeModalOpen] = useState(false);
   const [repoSearchTerm, setRepoSearchTerm] = useState<string>("");
   const [suggestions, setSuggestions] = useState<string[]>([]);
 
@@ -695,6 +697,13 @@ const InsightPage = ({ edit, insight, pageRepos, workspaceId }: InsightPageProps
           </div>
         </div>
       </div>
+
+      <InsightUpgradeModal
+        overLimit={repos.length}
+        isOpen={isInsightUpgradeModalOpen}
+        onClose={() => setIsInsightUpgradeModalOpen(false)}
+        variant="repositories"
+      />
 
       <DeleteInsightPageModal
         isLoading={deleteLoading}

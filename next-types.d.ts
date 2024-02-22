@@ -492,6 +492,8 @@ interface Workspace {
   created_at: string | null;
   updated_at: string | null;
   deleted_at: string | null;
+  payee_user_id: string | null;
+  is_public: boolean;
   members: WorkspaceMember[];
 }
 
