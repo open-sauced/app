@@ -1,5 +1,7 @@
 import { useLocalStorage } from "react-use";
 import { LuArrowRightToLine } from "react-icons/lu";
+import { useOutsideClick } from "rooks";
+import { useRef } from "react";
 import TopNav from "components/organisms/TopNav/top-nav";
 import { AppSideBar } from "components/shared/AppSidebar/AppSidebar";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
@@ -12,6 +14,9 @@ interface WorkspaceLayoutProps {
 export const WorkspaceLayout = ({ workspaceId, children }: WorkspaceLayoutProps) => {
   const isLargeScreen = useMediaQuery("(min-width: 1024px)");
   const [showingSidebar, setShowingSidebar] = useLocalStorage("showingSidebar", isLargeScreen);
+  const hideSidebar = () => setShowingSidebar(false);
+  const sidebarRef = useRef(null);
+  useOutsideClick(sidebarRef, hideSidebar);
 
   return (
     <div className="grid  grid-rows-[3.3rem,auto,1fr]">
@@ -19,11 +24,9 @@ export const WorkspaceLayout = ({ workspaceId, children }: WorkspaceLayoutProps)
         <TopNav />
       </div>
       <div className="relative px-8 pb-20">
-        <AppSideBar
-          workspaceId={workspaceId}
-          hideSidebar={() => setShowingSidebar(false)}
-          sidebarCollapsed={showingSidebar}
-        />
+        <span ref={sidebarRef}>
+          <AppSideBar workspaceId={workspaceId} hideSidebar={hideSidebar} sidebarCollapsed={showingSidebar} />
+        </span>
         {!showingSidebar && (
           <button
             onClick={() => setShowingSidebar(true)}
