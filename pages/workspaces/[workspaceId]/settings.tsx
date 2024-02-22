@@ -27,6 +27,8 @@ import { useGetWorkspaceContributors } from "lib/hooks/api/useGetWorkspaceContri
 import { TrackedContributorsTable } from "components/Workspaces/TrackedContributorsTable";
 import { deleteCookie } from "lib/utils/server/cookies";
 import { WorkspaceHeader } from "components/Workspaces/WorkspaceHeader";
+import WorkspaceMembersConfig from "components/molecules/WorkspaceMembersConfig/workspace-members-config";
+import { useWorkspaceMembers } from "lib/hooks/api/useWorkspaceMembers";
 
 const DeleteWorkspaceModal = dynamic(() => import("components/Workspaces/DeleteWorkspaceModal"), { ssr: false });
 
@@ -108,6 +110,12 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace }: WorkspaceSettingsP
   const initialTrackedContributors: string[] = contributorData?.data?.map(({ contributor }) => contributor.login) ?? [];
   const [trackedContributors, setTrackedContributors] = useState<Map<string, boolean>>(new Map());
   const [trackedContributorsPendingDeletion, setTrackedContributorsPendingDeletion] = useState<Set<string>>(new Set());
+  const {
+    data: workspaceMembers,
+    addMember,
+    updateMember,
+    deleteMember,
+  } = useWorkspaceMembers({ workspaceId: workspace.id });
 
   useEffectOnce(() => {
     if (window.location.hash === "#load-wizard") {
@@ -283,6 +291,13 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace }: WorkspaceSettingsP
             });
             setTrackedContributorsPendingDeletion((contributors) => new Set([...contributors, contributor]));
           }}
+        />
+
+        <WorkspaceMembersConfig
+          onAddMember={async (username) => await addMember(workspace.id, sessionToken, username)}
+          onUpdateMember={async (memberId, role) => await updateMember(workspace.id, sessionToken, memberId, role)}
+          onDeleteMember={async (memberId) => await deleteMember(workspace.id, sessionToken, memberId)}
+          members={workspaceMembers}
         />
 
         {canDeleteWorkspace ? (

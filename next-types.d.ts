@@ -501,6 +501,7 @@ interface WorkspaceMember {
   id: string;
   user_id: number;
   role: string;
+  member: DbUser;
 }
 
 interface DbWorkspacesReposStats {
