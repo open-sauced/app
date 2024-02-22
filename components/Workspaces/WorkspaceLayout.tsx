@@ -1,7 +1,10 @@
 import { useLocalStorage } from "react-use";
 import { LuArrowRightToLine } from "react-icons/lu";
+import { useOutsideClick } from "rooks";
+import { useRef } from "react";
 import TopNav from "components/organisms/TopNav/top-nav";
 import { AppSideBar } from "components/shared/AppSidebar/AppSidebar";
+import { useMediaQuery } from "lib/hooks/useMediaQuery";
 
 interface WorkspaceLayoutProps {
   workspaceId: string | null;
@@ -9,24 +12,21 @@ interface WorkspaceLayoutProps {
 }
 
 export const WorkspaceLayout = ({ workspaceId, children }: WorkspaceLayoutProps) => {
-  const [showingSidebar, setShowingSidebar] = useLocalStorage("showingSidebar", true);
+  const isLargeScreen = useMediaQuery("(min-width: 1024px)");
+  const [showingSidebar, setShowingSidebar] = useLocalStorage("showingSidebar", isLargeScreen);
+  const hideSidebar = () => setShowingSidebar(false);
+  const sidebarRef = useRef(null);
+  useOutsideClick(sidebarRef, hideSidebar);
+
   return (
-    <div
-      className="grid grid-cols-[18rem,1fr] grid-rows-[3.3rem,auto,1fr]"
-      style={{
-        gridTemplateAreas: `
-      "header header"
-      "${showingSidebar ? "sidebar" : "main"} main"
-    `,
-      }}
-    >
-      <div style={{ gridArea: "header" }}>
+    <div className="grid  grid-rows-[3.3rem,auto,1fr]">
+      <div>
         <TopNav />
       </div>
-      <div style={{ gridArea: "sidebar" }} className="transition-all duration-150">
-        <AppSideBar workspaceId={workspaceId} hideSidebar={() => setShowingSidebar(false)} />
-      </div>
-      <div className="relative px-8 pt-8 pb-20" style={{ gridArea: "main" }}>
+      <div className="relative px-8 pb-20">
+        <span ref={sidebarRef}>
+          <AppSideBar workspaceId={workspaceId} hideSidebar={hideSidebar} sidebarCollapsed={showingSidebar} />
+        </span>
         {!showingSidebar && (
           <button
             onClick={() => setShowingSidebar(true)}
