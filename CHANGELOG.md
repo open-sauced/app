@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.4.0-beta.24](https://github.com/open-sauced/insights/compare/v2.4.0-beta.23...v2.4.0-beta.24) (2024-02-22)
+
+
+### 🐛 Bug Fixes
+
+* remove managing members from repository insights ([#2737](https://github.com/open-sauced/insights/issues/2737)) ([d900da4](https://github.com/open-sauced/insights/commit/d900da4c054b0f348e86720d6c901a131e33f42b))
+
 ## [2.4.0-beta.23](https://github.com/open-sauced/insights/compare/v2.4.0-beta.22...v2.4.0-beta.23) (2024-02-21)
 
 
