@@ -5,7 +5,6 @@ import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { ComponentProps, useState } from "react";
 import dynamic from "next/dynamic";
 import { useEffectOnce } from "react-use";
-import { loadStripe } from "@stripe/stripe-js";
 import { IoDiamond } from "react-icons/io5";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import Button from "components/atoms/Button/button";
@@ -32,6 +31,7 @@ import { TrackedContributorsTable } from "components/Workspaces/TrackedContribut
 import { deleteCookie } from "lib/utils/server/cookies";
 import Card from "components/atoms/Card/card";
 import { WorkspaceHeader } from "components/Workspaces/WorkspaceHeader";
+import { getStripe } from "lib/utils/stripe-client";
 
 const DeleteWorkspaceModal = dynamic(() => import("components/Workspaces/DeleteWorkspaceModal"), { ssr: false });
 
@@ -213,7 +213,7 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace }: WorkspaceSettingsP
     }
 
     if (data) {
-      const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string);
+      const stripe = await getStripe();
       stripe?.redirectToCheckout({ sessionId: data.sessionId as string });
     }
   };
