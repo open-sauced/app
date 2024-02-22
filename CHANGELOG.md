@@ -5,6 +5,78 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.4.0-beta.26](https://github.com/open-sauced/insights/compare/v2.4.0-beta.25...v2.4.0-beta.26) (2024-02-22)
+
+
+### 🍕 Features
+
+* add upgrade section in workspace settings ([#2726](https://github.com/open-sauced/insights/issues/2726)) ([1504a5d](https://github.com/open-sauced/insights/commit/1504a5d01ad8d3912c650e1d401130a8a6e7549f))
+
+## [2.4.0-beta.25](https://github.com/open-sauced/insights/compare/v2.4.0-beta.24...v2.4.0-beta.25) (2024-02-22)
+
+
+### 🐛 Bug Fixes
+
+* now the day range is applied to repositories in the repository dashboard ([#2744](https://github.com/open-sauced/insights/issues/2744)) ([50981e6](https://github.com/open-sauced/insights/commit/50981e63ccbe3ac16ef51314fa9f4fe5c3afd419))
+* workspaces sidebar opens over content now ([#2738](https://github.com/open-sauced/insights/issues/2738)) ([b7d72dc](https://github.com/open-sauced/insights/commit/b7d72dce0810ae8f5e6ff13608913f1a3882692b))
+
+## [2.4.0-beta.24](https://github.com/open-sauced/insights/compare/v2.4.0-beta.23...v2.4.0-beta.24) (2024-02-22)
+
+
+### 🐛 Bug Fixes
+
+* remove managing members from repository insights ([#2737](https://github.com/open-sauced/insights/issues/2737)) ([d900da4](https://github.com/open-sauced/insights/commit/d900da4c054b0f348e86720d6c901a131e33f42b))
+
+## [2.4.0-beta.23](https://github.com/open-sauced/insights/compare/v2.4.0-beta.22...v2.4.0-beta.23) (2024-02-21)
+
+
+### 🍕 Features
+
+* add redirects for existing insight and list pages ([#2734](https://github.com/open-sauced/insights/issues/2734)) ([230d33e](https://github.com/open-sauced/insights/commit/230d33ea77ed357aaffe31b349a031c444e29ec7))
+
+## [2.4.0-beta.22](https://github.com/open-sauced/insights/compare/v2.4.0-beta.21...v2.4.0-beta.22) (2024-02-21)
+
+
+### 🐛 Bug Fixes
+
+* long workspace names no longer spill off the page ([#2729](https://github.com/open-sauced/insights/issues/2729)) ([845b29b](https://github.com/open-sauced/insights/commit/845b29bfe9ad95e17d10b7f7efda3455db728565))
+* now the workspaces dropdown doesn't bleed out from the application sidebar ([#2731](https://github.com/open-sauced/insights/issues/2731)) ([5e99f59](https://github.com/open-sauced/insights/commit/5e99f5956ffaf9c2558b0f61f2f612490bfdbe45))
+
+## [2.4.0-beta.21](https://github.com/open-sauced/insights/compare/v2.4.0-beta.20...v2.4.0-beta.21) (2024-02-21)
+
+
+### 🍕 Features
+
+* only list contributor and repository insights to the workspace ([#2718](https://github.com/open-sauced/insights/issues/2718)) ([e80648a](https://github.com/open-sauced/insights/commit/e80648afd6cdca1738835c4427585669f877d72a))
+
+## [2.4.0-beta.20](https://github.com/open-sauced/insights/compare/v2.4.0-beta.19...v2.4.0-beta.20) (2024-02-20)
+
+
+### 🐛 Bug Fixes
+
+* replaced health with activity ratio ([#2721](https://github.com/open-sauced/insights/issues/2721)) ([4c792f5](https://github.com/open-sauced/insights/commit/4c792f578516df9856a8e352d0d9596ecdd02a44))
+
+## [2.4.0-beta.19](https://github.com/open-sauced/insights/compare/v2.4.0-beta.18...v2.4.0-beta.19) (2024-02-20)
+
+
+### 🐛 Bug Fixes
+
+* prevent onboard button from flashing on mobile screens ([#2705](https://github.com/open-sauced/insights/issues/2705)) ([e95b7ab](https://github.com/open-sauced/insights/commit/e95b7ab4f7cc3858152f2bee64eb3b4b117048a4))
+
+## [2.4.0-beta.18](https://github.com/open-sauced/insights/compare/v2.4.0-beta.17...v2.4.0-beta.18) (2024-02-20)
+
+
+### 🐛 Bug Fixes
+
+* use redirectFrom to navigate after logging in from top menu ([#2695](https://github.com/open-sauced/insights/issues/2695)) ([7985153](https://github.com/open-sauced/insights/commit/7985153ce4e10e9961cc03aa7ef56bd3597ccb4c))
+
+## [2.4.0-beta.17](https://github.com/open-sauced/insights/compare/v2.4.0-beta.16...v2.4.0-beta.17) (2024-02-20)
+
+
+### 🍕 Features
+
+* 404 on workspace settings page if not an owner ([#2712](https://github.com/open-sauced/insights/issues/2712)) ([f9927a8](https://github.com/open-sauced/insights/commit/f9927a8acfc9c6756bbbf8a1865a4877bfad22cb))
+
 ## [2.4.0-beta.16](https://github.com/open-sauced/insights/compare/v2.4.0-beta.15...v2.4.0-beta.16) (2024-02-20)
 
 

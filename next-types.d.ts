@@ -189,6 +189,19 @@ interface DbInsightMember {
   readonly invitation_emailed_at: string;
   readonly invitation_email: string;
 }
+
+type WorkspaceMemberRole = "owner" | "editor" | "viewer";
+
+interface DbWorkspaceMember {
+  readonly id: string;
+  readonly user_id: number;
+  readonly workspace_id: string;
+  readonly role: WorkspaceMemberRole;
+  readonly created_at: string;
+  readonly updated_at: string;
+  readonly deleted_at: string;
+}
+
 interface DbUserInsight {
   readonly id: number;
   readonly name: string;
@@ -200,6 +213,18 @@ interface DbUserInsight {
   readonly updated_at: string;
   readonly repos: DbUserInsightRepo[];
   readonly members: DbInsightMember[];
+  readonly workspaces?: Workspace;
+}
+
+interface DbWorkspaceRepositoryInsight {
+  readonly id: number;
+  readonly name: string;
+  readonly is_public: boolean;
+  readonly is_favorite: boolean;
+  readonly is_featured: boolean;
+  readonly short_code: string;
+  readonly created_at: string;
+  readonly updated_at: string;
 }
 
 interface DbUserInsightRepo {
@@ -364,7 +389,20 @@ interface DbUserList {
   readonly is_public: boolean;
   readonly created_at: string;
   readonly updated_at: string;
+  readonly workspaces?: Workspace;
 }
+
+interface DbWorkspaceContributorInsight {
+  readonly id: string;
+  readonly user_id: number;
+  readonly created_at: string;
+  readonly updated_at: string;
+  readonly deleted_at: string;
+  readonly name: string;
+  readonly is_public: boolean;
+  readonly is_featured: boolean;
+}
+
 interface DBList {
   id: string;
   user_id: number;
@@ -456,6 +494,15 @@ interface Workspace {
   created_at: string | null;
   updated_at: string | null;
   deleted_at: string | null;
+  is_public: boolean;
+  payee_user_id: string | null;
+  members: WorkspaceMember[];
+}
+
+interface WorkspaceMember {
+  id: string;
+  user_id: number;
+  role: string;
 }
 
 interface DbWorkspacesReposStats {
@@ -472,6 +519,6 @@ interface DbWorkspacesReposStats {
   repos: {
     stars: number;
     forks: number;
-    health: number;
+    activity_ratio: number;
   };
 }

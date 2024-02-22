@@ -76,6 +76,17 @@ export async function saveWorkspace({
   return { data: { workspace: data, repos: repoData, contributors: contributorsData }, error };
 }
 
+export async function upgradeWorkspace({ workspaceId, sessionToken }: { workspaceId: string; sessionToken: string }) {
+  const { data, error } = await fetchApiData<{ sessionId: string }>({
+    path: `auth/checkout/workspaces/${workspaceId}/session`,
+    method: "POST",
+    body: {},
+    bearerToken: sessionToken,
+  });
+
+  return { data, error };
+}
+
 export async function deleteTrackedRepos({
   workspaceId,
   sessionToken,
@@ -138,4 +149,26 @@ export function getWorkspaceUrl(cookies: RequestCookies, baseUrl: string, person
   const workspaceId = cookies.get(WORKSPACE_ID_COOKIE_NAME).value;
 
   return new URL(`/workspaces/${workspaceId}/repositories`, baseUrl);
+}
+
+export async function getInsightWithWorkspace({ insightId }: { insightId: number }) {
+  const { data, error } = await fetchApiData<DbUserInsight>({
+    path: `insights/${insightId}`,
+    method: "GET",
+    bearerToken: "",
+    pathValidator: () => true,
+  });
+
+  return { data, error };
+}
+
+export async function getListWithWorkspace({ listId }: { listId: string }) {
+  const { data, error } = await fetchApiData<DbUserList>({
+    path: `lists/${listId}`,
+    method: "GET",
+    bearerToken: "",
+    pathValidator: () => true,
+  });
+
+  return { data, error };
 }
