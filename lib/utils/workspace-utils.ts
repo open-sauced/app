@@ -80,6 +80,7 @@ export async function upgradeWorkspace({ workspaceId, sessionToken }: { workspac
   const { data, error } = await fetchApiData<{ sessionId: string }>({
     path: `auth/checkout/workspaces/${workspaceId}/session`,
     method: "POST",
+    body: {},
     bearerToken: sessionToken,
   });
 
