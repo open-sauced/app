@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.4.0-beta.25](https://github.com/open-sauced/insights/compare/v2.4.0-beta.24...v2.4.0-beta.25) (2024-02-22)
+
+
+### 🐛 Bug Fixes
+
+* now the day range is applied to repositories in the repository dashboard ([#2744](https://github.com/open-sauced/insights/issues/2744)) ([50981e6](https://github.com/open-sauced/insights/commit/50981e63ccbe3ac16ef51314fa9f4fe5c3afd419))
+* workspaces sidebar opens over content now ([#2738](https://github.com/open-sauced/insights/issues/2738)) ([b7d72dc](https://github.com/open-sauced/insights/commit/b7d72dce0810ae8f5e6ff13608913f1a3882692b))
+
 ## [2.4.0-beta.24](https://github.com/open-sauced/insights/compare/v2.4.0-beta.23...v2.4.0-beta.24) (2024-02-22)
 
 
