@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.4.0-beta.26](https://github.com/open-sauced/insights/compare/v2.4.0-beta.25...v2.4.0-beta.26) (2024-02-22)
+
+
+### 🍕 Features
+
+* add upgrade section in workspace settings ([#2726](https://github.com/open-sauced/insights/issues/2726)) ([1504a5d](https://github.com/open-sauced/insights/commit/1504a5d01ad8d3912c650e1d401130a8a6e7549f))
+
 ## [2.4.0-beta.25](https://github.com/open-sauced/insights/compare/v2.4.0-beta.24...v2.4.0-beta.25) (2024-02-22)
 
 
