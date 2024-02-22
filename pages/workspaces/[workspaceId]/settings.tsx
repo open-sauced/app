@@ -18,6 +18,7 @@ import { TrackedReposTable } from "components/Workspaces/TrackedReposTable";
 import { useGetWorkspaceRepositories } from "lib/hooks/api/useGetWorkspaceRepositories";
 import {
   WORKSPACE_ID_COOKIE_NAME,
+  changeWorkspaceVisibility,
   deleteTrackedContributors,
   deleteTrackedRepos,
   deleteWorkspace,
@@ -33,7 +34,6 @@ import WorkspaceVisibilityModal from "components/Workspaces/WorkspaceVisibilityM
 import Card from "components/atoms/Card/card";
 import { WorkspaceHeader } from "components/Workspaces/WorkspaceHeader";
 import { getStripe } from "lib/utils/stripe-client";
-
 
 const DeleteWorkspaceModal = dynamic(() => import("components/Workspaces/DeleteWorkspaceModal"), { ssr: false });
 
@@ -93,8 +93,7 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace }: WorkspaceSettingsP
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [workspaceName, setWorkspaceName] = useState(workspace.name);
 
-  // TODO: get initial state from workspace
-  const [isPublic, setIsPublic] = useState(true);
+  const [isPublic, setIsPublic] = useState(workspace.is_public);
   const [isWorkspaceVisibilityModalOpen, setIsWorkspaceVisibilityModalOpen] = useState(false);
 
   const [trackedReposModalOpen, setTrackedReposModalOpen] = useState(false);
@@ -224,6 +223,24 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace }: WorkspaceSettingsP
     }
   };
 
+  const changeVisibility = async () => {
+    const { data, error } = await changeWorkspaceVisibility({
+      workspaceId: workspace.id,
+      sessionToken: sessionToken!,
+      name: workspaceName,
+      description: workspace.description,
+      isPublic: !isPublic,
+    });
+
+    if (data) {
+      toast({ description: "Workspace updated successfully", variant: "success" });
+      setIsPublic(!isPublic);
+    }
+    if (error) {
+      toast({ description: "There's been an error", variant: "danger" });
+    }
+  };
+
   return (
     <WorkspaceLayout workspaceId={workspace.id}>
       <WorkspaceHeader workspace={workspace} />
@@ -307,7 +324,7 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace }: WorkspaceSettingsP
             setTrackedContributorsPendingDeletion((contributors) => new Set([...contributors, contributor]));
           }}
         />
-        
+
         {workspace.payee_user_id ? (
           <section className="flex flex-col gap-4">
             <div className="flex gap-4 items-center">
@@ -340,31 +357,34 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace }: WorkspaceSettingsP
             </Button>
           </Card>
         )}
+
+        <div className="flex flex-col py-8 gap-4">
+          <h2 className="!font-medium">Change Workspace Visibility</h2>
+          <p className="text-sm text-slate-600">This workspace is set to {isPublic ? "public" : "private"}.</p>
+
+          <Button
+            onClick={() => setIsWorkspaceVisibilityModalOpen(true)}
+            disabled={!workspace.payee_user_id}
+            variant={workspace.payee_user_id ? "primary" : "dark"}
+            className="w-fit"
+          >
+            Set to {isPublic ? "private" : "public"}
+          </Button>
+        </div>
+
+        {canDeleteWorkspace && (
           <div className="flex flex-col p-6 rounded-2xl bg-light-slate-4">
             <Title className="!text-1xl !leading-none !border-light-slate-8 border-b pb-4" level={4}>
-              Change Workspace Visibility
-            <Text className="my-4">This workspace is set to {isPublic ? "public" : "private"}.</Text>
+              Delete Workspace
+            </Title>
+            <Text className="my-4">Once you delete a workspace, you&apos;re past the point of no return.</Text>
 
-            <Button onClick={() => setIsWorkspaceVisibilityModalOpen(true)} variant="destructive" className="w-fit">
-              Set to {isPublic ? "private" : "public"}
+            <Button onClick={() => setIsDeleteModalOpen(true)} variant="destructive" className="w-fit">
+              Delete workspace
             </Button>
           </div>
+        )}
 
-          {canDeleteWorkspace ? (
-            <div className="flex flex-col p-6 rounded-2xl bg-light-slate-4">
-              <Title className="!text-1xl !leading-none !border-light-slate-8 border-b pb-4" level={4}>
-                Delete Workspace
-              </Title>
-              <Text className="my-4">Once you delete a workspace, you&#39;re past the point of no return.</Text>
-
-              <div>
-                <Button onClick={() => setIsDeleteModalOpen(true)} variant="destructive">
-                  Delete workspace
-                </Button>
-              </div>
-            </div>
-          </div>
-        ) : null}
         <TrackedReposModal
           isOpen={trackedReposModalOpen}
           onClose={() => {
@@ -417,14 +437,13 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace }: WorkspaceSettingsP
           }}
         />
 
-        {/* TODO: 'canChangeVisibility' auth check */}
         <WorkspaceVisibilityModal
           isOpen={isWorkspaceVisibilityModalOpen}
           workspaceName={workspaceName}
           initialIsPublic={isPublic}
           // TODO: implement updating 'is_public' on workspace after confirming
           confirmChoice={() => {
-            setIsPublic(!isPublic);
+            changeVisibility();
             setIsWorkspaceVisibilityModalOpen(false);
           }}
           onClose={() => setIsWorkspaceVisibilityModalOpen(false)}
