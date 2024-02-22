@@ -150,3 +150,25 @@ export function getWorkspaceUrl(cookies: RequestCookies, baseUrl: string, person
 
   return new URL(`/workspaces/${workspaceId}/repositories`, baseUrl);
 }
+
+export async function getInsightWithWorkspace({ insightId }: { insightId: number }) {
+  const { data, error } = await fetchApiData<DbUserInsight>({
+    path: `insights/${insightId}`,
+    method: "GET",
+    bearerToken: "",
+    pathValidator: () => true,
+  });
+
+  return { data, error };
+}
+
+export async function getListWithWorkspace({ listId }: { listId: string }) {
+  const { data, error } = await fetchApiData<DbUserList>({
+    path: `lists/${listId}`,
+    method: "GET",
+    bearerToken: "",
+    pathValidator: () => true,
+  });
+
+  return { data, error };
+}
