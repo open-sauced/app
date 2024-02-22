@@ -1,9 +1,11 @@
+import { FaRegCheckCircle } from "react-icons/fa";
 import { useRouter } from "next/router";
 import { GetServerSidePropsContext } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { ComponentProps, useState } from "react";
 import dynamic from "next/dynamic";
 import { useEffectOnce } from "react-use";
+import { IoDiamond } from "react-icons/io5";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import Button from "components/atoms/Button/button";
 import TextInput from "components/atoms/TextInput/text-input";
@@ -20,13 +22,16 @@ import {
   deleteTrackedRepos,
   deleteWorkspace,
   saveWorkspace,
+  upgradeWorkspace,
 } from "lib/utils/workspace-utils";
 import { WORKSPACE_UPDATED_EVENT } from "components/shared/AppSidebar/AppSidebar";
 import { WorkspacesTabList } from "components/Workspaces/WorkspacesTabList";
 import { useGetWorkspaceContributors } from "lib/hooks/api/useGetWorkspaceContributors";
 import { TrackedContributorsTable } from "components/Workspaces/TrackedContributorsTable";
 import { deleteCookie } from "lib/utils/server/cookies";
+import Card from "components/atoms/Card/card";
 import { WorkspaceHeader } from "components/Workspaces/WorkspaceHeader";
+import { getStripe } from "lib/utils/stripe-client";
 
 const DeleteWorkspaceModal = dynamic(() => import("components/Workspaces/DeleteWorkspaceModal"), { ssr: false });
 
@@ -201,6 +206,18 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace }: WorkspaceSettingsP
     }
   };
 
+  const upgradeThisWorkspace = async () => {
+    const { data, error } = await upgradeWorkspace({ workspaceId: workspace.id, sessionToken: sessionToken! });
+    if (error) {
+      toast({ description: "There's been an error", variant: "danger" });
+    }
+
+    if (data) {
+      const stripe = await getStripe();
+      stripe?.redirectToCheckout({ sessionId: data.sessionId as string });
+    }
+  };
+
   return (
     <WorkspaceLayout workspaceId={workspace.id}>
       <WorkspaceHeader workspace={workspace} />
@@ -285,6 +302,39 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace }: WorkspaceSettingsP
           }}
         />
 
+        {workspace.payee_user_id ? (
+          <section className="flex flex-col gap-4">
+            <div className="flex gap-4 items-center">
+              <h3 className="font-medium">Manage Subscription</h3>
+              <div className="flex gap-2 items-center text-white px-3 py-2 bg-gradient-to-l from-gradient-orange-one to-gradient-orange-two rounded-full">
+                <p className="text-sm font-medium">PRO</p>
+                <IoDiamond />
+              </div>
+            </div>
+            <p className="text-sm text-slate-600">This Workspace is currently subscribed to the PRO Workspace plan.</p>
+            <Button href={process.env.NEXT_PUBLIC_STRIPE_SUB_CANCEL_URL} variant="primary" className="w-fit">
+              Manage Subscription
+            </Button>
+          </section>
+        ) : (
+          <Card className="flex flex-col gap-4 px-6 pt-5 pb-6">
+            <h2 className="text-md font-medium">Upgrade your workspace</h2>
+            <div className="flex gap-4">
+              <FaRegCheckCircle className="text-light-grass-8 w-6 h-6" />
+              <div className="flex flex-col gap-2">
+                <h3 className="text-sm font-medium">Make your workspace private</h3>
+                <p className="text-sm text-slate-500">
+                  Free workspaces can only be public, but with a pro workspace you can choose whether your workspace to
+                  be puclic or private!
+                </p>
+              </div>
+            </div>
+            <Button variant="primary" className="w-fit mt-2" onClick={upgradeThisWorkspace}>
+              Upgrade Workspace
+            </Button>
+          </Card>
+        )}
+
         {canDeleteWorkspace ? (
           <div className="flex flex-col gap-4">
             <Title className="!text-1xl !leading-none py-6" level={4}>
@@ -305,6 +355,7 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace }: WorkspaceSettingsP
             </div>
           </div>
         ) : null}
+
         <TrackedReposModal
           isOpen={trackedReposModalOpen}
           onClose={() => {
