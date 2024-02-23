@@ -54,7 +54,7 @@ const ContributorCard = ({ className, contributor, topic, repositories, range }:
         <div className="h-32">
           <CardLineChart
             contributor={contributor.profile.githubName}
-            repoIds={repositories || []}
+            repoIds={repositories}
             range={Number(range ?? 30)}
             className="max-h-36"
           />

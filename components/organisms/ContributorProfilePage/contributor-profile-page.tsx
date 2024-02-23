@@ -225,7 +225,7 @@ const ContributorProfilePage = ({
                       </div>
                     </div>
                     <div className="h-32 mt-10">
-                      <CardLineChart repoIds={repositories || []} contributor={githubName} className="!h-32" />
+                      <CardLineChart repoIds={repositories} contributor={githubName} className="!h-32" />
                     </div>
                     <div>
                       <CardRepoList limit={7} repoList={repoList} total={repoList.length} />

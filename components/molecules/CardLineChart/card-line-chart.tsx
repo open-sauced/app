@@ -7,11 +7,11 @@ import getFormattedTooltipValue from "lib/utils/get-formatted-tooltip-value";
 interface CardLineChartProps {
   className?: string;
   contributor: string;
-  repoIds: number[];
+  repoIds?: number[];
   range?: number;
 }
 
-const CardLineChart: React.FC<CardLineChartProps> = ({ className, contributor, repoIds, range = 30 }) => {
+const CardLineChart: React.FC<CardLineChartProps> = ({ className, contributor, repoIds = [], range = 30 }) => {
   const lineChart = {
     xAxis: {
       type: "category",
