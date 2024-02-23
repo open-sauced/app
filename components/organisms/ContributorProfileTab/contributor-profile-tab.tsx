@@ -46,7 +46,6 @@ interface ContributorProfileTabProps {
   prMerged: number;
   recentContributionCount: number;
   prsMergedPercentage: number;
-  chart: Object;
   githubName: string;
   repoList: RepoList[];
 }
@@ -70,7 +69,6 @@ const ContributorProfileTab = ({
   totalPrs,
   prVelocity,
   prsMergedPercentage,
-  chart,
   githubName,
   recentContributionCount,
   repoList,
@@ -403,7 +401,7 @@ const ContributorProfileTab = ({
               </div>
             </div>
             <div className="mt-2 h-36">
-              <CardLineChart lineChartOption={chart} className="!h-36" />
+              <CardLineChart contributor={githubName} repoIds={[]} className="!h-36" />
             </div>
             <div>
               <CardRepoList limit={7} repoList={repoList} />
