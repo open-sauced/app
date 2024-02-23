@@ -5,6 +5,18 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.4.0-beta.30](https://github.com/open-sauced/app/compare/v2.4.0-beta.29...v2.4.0-beta.30) (2024-02-23)
+
+
+### 🐛 Bug Fixes
+
+* move data fetching into card line chart to prevent rendering loop on contributor profile ([#2750](https://github.com/open-sauced/app/issues/2750)) ([d2516a8](https://github.com/open-sauced/app/commit/d2516a8fcaa76376e70d2c82f9031f512fcd7299))
+
+
+### 🍕 Features
+
+* add workspace member management to the workspace settings ([#2741](https://github.com/open-sauced/app/issues/2741)) ([908fbe6](https://github.com/open-sauced/app/commit/908fbe646f5dc280da339f6ca48afa719353b750))
+
 ## [2.4.0-beta.29](https://github.com/open-sauced/insights/compare/v2.4.0-beta.28...v2.4.0-beta.29) (2024-02-23)
 
 
