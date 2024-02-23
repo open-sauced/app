@@ -5,6 +5,28 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.4.0-beta.27](https://github.com/open-sauced/insights/compare/v2.4.0-beta.26...v2.4.0-beta.27) (2024-02-23)
+
+
+### 🐛 Bug Fixes
+
+* now sidebar no longer collapses when using the workspaces dropdown ([#2746](https://github.com/open-sauced/insights/issues/2746)) ([76a358e](https://github.com/open-sauced/insights/commit/76a358e96a5a4857a2ced2be308b6aa058a543a2))
+
+## [2.4.0-beta.26](https://github.com/open-sauced/insights/compare/v2.4.0-beta.25...v2.4.0-beta.26) (2024-02-22)
+
+
+### 🍕 Features
+
+* add upgrade section in workspace settings ([#2726](https://github.com/open-sauced/insights/issues/2726)) ([1504a5d](https://github.com/open-sauced/insights/commit/1504a5d01ad8d3912c650e1d401130a8a6e7549f))
+
+## [2.4.0-beta.25](https://github.com/open-sauced/insights/compare/v2.4.0-beta.24...v2.4.0-beta.25) (2024-02-22)
+
+
+### 🐛 Bug Fixes
+
+* now the day range is applied to repositories in the repository dashboard ([#2744](https://github.com/open-sauced/insights/issues/2744)) ([50981e6](https://github.com/open-sauced/insights/commit/50981e63ccbe3ac16ef51314fa9f4fe5c3afd419))
+* workspaces sidebar opens over content now ([#2738](https://github.com/open-sauced/insights/issues/2738)) ([b7d72dc](https://github.com/open-sauced/insights/commit/b7d72dce0810ae8f5e6ff13608913f1a3882692b))
+
 ## [2.4.0-beta.24](https://github.com/open-sauced/insights/compare/v2.4.0-beta.23...v2.4.0-beta.24) (2024-02-22)
 
 
