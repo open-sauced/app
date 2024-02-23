@@ -32,6 +32,9 @@ import { deleteCookie } from "lib/utils/server/cookies";
 import Card from "components/atoms/Card/card";
 import { WorkspaceHeader } from "components/Workspaces/WorkspaceHeader";
 import { getStripe } from "lib/utils/stripe-client";
+import WorkspaceMembersConfig from "components/molecules/WorkspaceMembersConfig/workspace-members-config";
+import { useWorkspaceMembers } from "lib/hooks/api/useWorkspaceMembers";
+import ClientOnly from "components/atoms/ClientOnly/client-only";
 
 const DeleteWorkspaceModal = dynamic(() => import("components/Workspaces/DeleteWorkspaceModal"), { ssr: false });
 
@@ -113,6 +116,12 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace }: WorkspaceSettingsP
   const initialTrackedContributors: string[] = contributorData?.data?.map(({ contributor }) => contributor.login) ?? [];
   const [trackedContributors, setTrackedContributors] = useState<Map<string, boolean>>(new Map());
   const [trackedContributorsPendingDeletion, setTrackedContributorsPendingDeletion] = useState<Set<string>>(new Set());
+  const {
+    data: workspaceMembers,
+    addMember,
+    updateMember,
+    deleteMember,
+  } = useWorkspaceMembers({ workspaceId: workspace.id });
 
   useEffectOnce(() => {
     if (window.location.hash === "#load-wizard") {
@@ -301,6 +310,15 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace }: WorkspaceSettingsP
             setTrackedContributorsPendingDeletion((contributors) => new Set([...contributors, contributor]));
           }}
         />
+
+        <ClientOnly>
+          <WorkspaceMembersConfig
+            onAddMember={async (username) => await addMember(workspace.id, sessionToken, username)}
+            onUpdateMember={async (memberId, role) => await updateMember(workspace.id, sessionToken, memberId, role)}
+            onDeleteMember={async (memberId) => await deleteMember(workspace.id, sessionToken, memberId)}
+            members={workspaceMembers}
+          />
+        </ClientOnly>
 
         {workspace.payee_user_id ? (
           <section className="flex flex-col gap-4">
