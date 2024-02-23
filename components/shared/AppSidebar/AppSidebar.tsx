@@ -131,7 +131,11 @@ export const AppSideBar = ({ workspaceId, hideSidebar, sidebarCollapsed }: AppSi
                   <PlusIcon className="w-5 h-5 p-0.5 inline-flex stroke-[3px] hover:stroke-[3px] text-semibold group-hover:bg-orange-100 group-hover:text-orange-600 rounded-md mr-1" />
                 </div>
               </DropdownMenuTrigger>
-              <DropdownMenuContent side="right" align="start" className="flex flex-col gap-1 py-2 rounded-lg shadow-xl">
+              <DropdownMenuContent
+                side="right"
+                align="start"
+                className="sidebar-new-insights-menu flex flex-col gap-1 py-2 rounded-lg shadow-xl"
+              >
                 <DropdownMenuItem className="rounded-md group">
                   <Link
                     title="New Repository Insight"
