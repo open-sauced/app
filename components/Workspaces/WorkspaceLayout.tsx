@@ -24,7 +24,8 @@ export const WorkspaceLayout = ({ workspaceId, children }: WorkspaceLayoutProps)
         // for some reason opening the workspaces dropdown has the event.target as the html element
         // so checking to avoid closing the sidebar when the dropdown is used
         event.target.tagName !== "HTML" &&
-        !sidebarRef.current?.contains(event.target)
+        !sidebarRef.current?.contains(event.target) &&
+        !event.target.closest(".sidebar-new-insights-menu")
       ) {
         hideSidebar();
       }
