@@ -54,16 +54,18 @@ const WorkspaceMembersConfig = ({
       <div>
         <h2 className="flex gap-1 font-medium mb-2 text-md">Workspace Members</h2>
       </div>
-      <div className="flex items-center gap-5 mt-3">
-        <Search
-          isLoading={loading}
-          value={username}
-          onChange={(value) => handleChange(value)}
-          placeholder="Enter username"
-          name="search"
-          className="flex-1 text-base"
-        />
-        <Button onClick={handleAddMember} disabled={!validInput} variant="primary" className="flex items-center h-7">
+      <div className="flex justify-between">
+        <div className="w-1/2 max-w-md">
+          <Search
+            isLoading={loading}
+            value={username}
+            onChange={(value) => handleChange(value)}
+            placeholder="Enter username"
+            name="search"
+            className="flex-1 text-base"
+          />
+        </div>
+        <Button onClick={handleAddMember} disabled={!validInput} variant="primary" className="w-max h-max">
           Add Member
         </Button>
       </div>
