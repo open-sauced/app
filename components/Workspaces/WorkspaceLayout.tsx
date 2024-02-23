@@ -15,8 +15,22 @@ export const WorkspaceLayout = ({ workspaceId, children }: WorkspaceLayoutProps)
   const isLargeScreen = useMediaQuery("(min-width: 1024px)");
   const [showingSidebar, setShowingSidebar] = useLocalStorage("showingSidebar", isLargeScreen);
   const hideSidebar = () => setShowingSidebar(false);
-  const sidebarRef = useRef(null);
-  useOutsideClick(sidebarRef, hideSidebar);
+  const sidebarRef = useRef<HTMLSpanElement | null>(null);
+  useOutsideClick(
+    sidebarRef,
+    (event) => {
+      if (
+        event.target instanceof HTMLElement &&
+        // for some reason opening the workspaces dropdown has the event.target as the html element
+        // so checking to avoid closing the sidebar when the dropdown is used
+        event.target.tagName !== "HTML" &&
+        !sidebarRef.current?.contains(event.target)
+      ) {
+        hideSidebar();
+      }
+    },
+    Boolean(sidebarRef.current)
+  );
 
   return (
     <div className="grid  grid-rows-[3.3rem,auto,1fr]">
