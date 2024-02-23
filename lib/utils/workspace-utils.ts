@@ -87,6 +87,30 @@ export async function upgradeWorkspace({ workspaceId, sessionToken }: { workspac
   return { data, error };
 }
 
+export async function changeWorkspaceVisibility({
+  workspaceId,
+  sessionToken,
+  name,
+  description,
+  isPublic,
+}: {
+  workspaceId: string;
+  sessionToken: string;
+  name: string;
+  description: string;
+  isPublic: boolean;
+}) {
+  const { data, error } = await fetchApiData<Workspace>({
+    path: `workspaces/${workspaceId}`,
+    method: "PATCH",
+    body: { name, description, is_public: `${isPublic}` },
+    bearerToken: sessionToken,
+    pathValidator: () => true,
+  });
+
+  return { data, error };
+}
+
 export async function deleteTrackedRepos({
   workspaceId,
   sessionToken,
