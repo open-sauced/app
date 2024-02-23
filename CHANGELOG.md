@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.4.0-beta.29](https://github.com/open-sauced/insights/compare/v2.4.0-beta.28...v2.4.0-beta.29) (2024-02-23)
+
+
+### 🐛 Bug Fixes
+
+* now router.push is used to switch between workspaces ([#2748](https://github.com/open-sauced/insights/issues/2748)) ([d836b1a](https://github.com/open-sauced/insights/commit/d836b1a81740305f96da9b97b676c823b96aeffc))
+* small screen tweaks for repository stats cards ([#2747](https://github.com/open-sauced/insights/issues/2747)) ([8e59f5a](https://github.com/open-sauced/insights/commit/8e59f5a7168f4b768ea7f3f8f47db58d93968a9f))
+
 ## [2.4.0-beta.28](https://github.com/open-sauced/insights/compare/v2.4.0-beta.27...v2.4.0-beta.28) (2024-02-23)
 
 
