@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.4.0-beta.31](https://github.com/open-sauced/app/compare/v2.4.0-beta.30...v2.4.0-beta.31) (2024-02-23)
+
+
+### 🍕 Features
+
+* toggle workspace visibility in settings ([#2720](https://github.com/open-sauced/app/issues/2720)) ([a66f3c8](https://github.com/open-sauced/app/commit/a66f3c893fbc58aece7d880a1902eb1be3007a39))
+
 ## [2.4.0-beta.30](https://github.com/open-sauced/app/compare/v2.4.0-beta.29...v2.4.0-beta.30) (2024-02-23)
 
 
