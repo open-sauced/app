@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.4.0-beta.27](https://github.com/open-sauced/insights/compare/v2.4.0-beta.26...v2.4.0-beta.27) (2024-02-23)
+
+
+### 🐛 Bug Fixes
+
+* now sidebar no longer collapses when using the workspaces dropdown ([#2746](https://github.com/open-sauced/insights/issues/2746)) ([76a358e](https://github.com/open-sauced/insights/commit/76a358e96a5a4857a2ced2be308b6aa058a543a2))
+
 ## [2.4.0-beta.26](https://github.com/open-sauced/insights/compare/v2.4.0-beta.25...v2.4.0-beta.26) (2024-02-22)
 
 
