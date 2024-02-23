@@ -109,7 +109,7 @@ export const AppSideBar = ({ workspaceId, hideSidebar, sidebarCollapsed }: AppSi
                   return;
                 }
 
-                window.location.href = `/workspaces/${value}/repositories`;
+                router.push(`/workspaces/${value}/repositories`);
               }}
             />
           </label>
