@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.4.0-beta.28](https://github.com/open-sauced/insights/compare/v2.4.0-beta.27...v2.4.0-beta.28) (2024-02-23)
+
+
+### 🐛 Bug Fixes
+
+* fixed hydration error caused by <AppSidebar /> component ([#2749](https://github.com/open-sauced/insights/issues/2749)) ([1bdbc90](https://github.com/open-sauced/insights/commit/1bdbc90bb056b20f79fdaa71a2d2cefe3ff46262))
+
 ## [2.4.0-beta.27](https://github.com/open-sauced/insights/compare/v2.4.0-beta.26...v2.4.0-beta.27) (2024-02-23)
 
 
