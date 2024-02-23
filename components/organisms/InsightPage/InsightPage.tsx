@@ -16,12 +16,11 @@ import RepoNotIndexed from "components/organisms/Repositories/repository-not-ind
 import useRepositories from "lib/hooks/api/useRepositories";
 
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
-import { generateRepoParts, getAvatarById, getAvatarByUsername } from "lib/utils/github";
+import { generateRepoParts, getAvatarByUsername } from "lib/utils/github";
 import useStore from "lib/store";
 import Error from "components/atoms/Error/Error";
 import Search from "components/atoms/Search/search";
 import { useToast } from "lib/hooks/useToast";
-import useInsightMembers from "lib/hooks/useInsightMembers";
 import { useFetchInsightRecommendedRepositories } from "lib/hooks/useFetchOrgRecommendations";
 import { RepoCardProfileProps } from "components/molecules/RepoCardProfile/repo-card-profile";
 import SuggestedRepositoriesList from "../SuggestedRepoList/suggested-repo-list";
@@ -30,6 +29,7 @@ import SuggestedRepositoriesList from "../SuggestedRepoList/suggested-repo-list"
 const DeleteInsightPageModal = dynamic(() => import("./DeleteInsightPageModal"));
 const TeamMembersConfig = dynamic(() => import("components/molecules/TeamMembersConfig/team-members-config"));
 const InsightUpgradeModal = dynamic(() => import("components/Workspaces/InsightUpgradeModal"));
+
 
 const enum RepoLookupError {
   Initial = 0,
@@ -93,16 +93,7 @@ const InsightPage = ({ edit, insight, pageRepos, workspaceId }: InsightPageProps
     }
   }, [repoListData, router.query.selectedRepos, pageHref]);
 
-  const { data, addMember, deleteMember, updateMember } = useInsightMembers(insight?.id || 0);
   const { data: recommendedRepos, isLoading } = useFetchInsightRecommendedRepositories();
-
-  const members =
-    data &&
-    data.map((member) => ({
-      ...member,
-      email: member.invitation_email,
-      avatarUrl: !!member.user_id ? getAvatarById(String(member.user_id)) : "",
-    }));
 
   // Loading States
   const [deleteLoading, setDeleteLoading] = useState(false);
@@ -605,17 +596,6 @@ const InsightPage = ({ edit, insight, pageRepos, workspaceId }: InsightPageProps
         </div>
 
         <div>{getRepoLookupError(addRepoError)}</div>
-
-        {edit && (
-          <div className="pt-12 mt-12 border-t border-light-slate-8">
-            <TeamMembersConfig
-              onUpdateMember={(id, access) => updateMember(id, access)}
-              onDeleteMember={deleteMember}
-              onAddMember={addMember}
-              members={[...members]}
-            />
-          </div>
-        )}
 
         {edit && (
           <div className="flex flex-col gap-4 py-6 border-t border-b border-light-slate-8">

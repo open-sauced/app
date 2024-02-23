@@ -2,7 +2,12 @@ import { createMiddlewareClient } from "@supabase/auth-helpers-nextjs";
 import { NextResponse } from "next/server";
 import { NextRequest } from "next/server";
 import { pathToRegexp } from "path-to-regexp";
-import { WORKSPACE_ID_COOKIE_NAME, getWorkspaceUrl } from "lib/utils/workspace-utils";
+import {
+  WORKSPACE_ID_COOKIE_NAME,
+  getInsightWithWorkspace,
+  getListWithWorkspace,
+  getWorkspaceUrl,
+} from "lib/utils/workspace-utils";
 
 // HACK: this is to get around the fact that the normal next.js middleware is not always functioning
 // correctly.
@@ -16,6 +21,8 @@ const pathsToMatch = [
   "/user/settings",
   "/account-deleted",
   "/workspaces/:path*",
+  "/lists/:path*",
+  "/pages/:path*",
 ];
 
 const NO_ONBOARDING_PAYLOAD = {
@@ -47,12 +54,7 @@ const loadSession = async (request: NextRequest, sessionToken?: string) => {
 export async function middleware(req: NextRequest) {
   const res = NextResponse.next();
 
-  if (
-    !pathsToMatch.some((matcher) => pathToRegexp(matcher).test(req.nextUrl.pathname)) ||
-    // if the path is hub/insights or hub/lists go to the page so logged out users can see demo insights or demo lists
-    req.nextUrl.pathname === "/hub/insights" ||
-    req.nextUrl.pathname === "/hub/lists"
-  ) {
+  if (!pathsToMatch.some((matcher) => pathToRegexp(matcher).test(req.nextUrl.pathname))) {
     return res;
   }
 
@@ -79,6 +81,31 @@ export async function middleware(req: NextRequest) {
     }
 
     return res;
+  }
+
+  if (req.nextUrl.pathname.startsWith("/lists")) {
+    // lists/{id}/(activity/highlights/overview)
+    const [, , listId, ...rest] = req.nextUrl.pathname.split("/");
+    const list = await getListWithWorkspace({ listId: listId });
+
+    if (list && list.data) {
+      return NextResponse.redirect(
+        new URL(`/workspaces/${list.data.workspaces?.id}/contributor-insights/${listId}/${rest.join("/")}`, req.url)
+      );
+    }
+  } else if (req.nextUrl.pathname.startsWith("/pages")) {
+    // pages/{username}/{insightId}/(dashboard/contributors/activity/reports)
+    const [, , _username, insightId, ...rest] = req.nextUrl.pathname.split("/");
+    const insight = await getInsightWithWorkspace({ insightId: Number(insightId) });
+
+    if (insight && insight.data) {
+      return NextResponse.redirect(
+        new URL(
+          `/workspaces/${insight.data.workspaces?.id}/repository-insights/${insightId}/${rest.join("/")}`,
+          req.url
+        )
+      );
+    }
   }
 
   // Check auth condition

@@ -213,6 +213,7 @@ interface DbUserInsight {
   readonly updated_at: string;
   readonly repos: DbUserInsightRepo[];
   readonly members: DbInsightMember[];
+  readonly workspaces?: Workspace;
 }
 
 interface DbWorkspaceRepositoryInsight {
@@ -388,6 +389,7 @@ interface DbUserList {
   readonly is_public: boolean;
   readonly created_at: string;
   readonly updated_at: string;
+  readonly workspaces?: Workspace;
 }
 
 interface DbWorkspaceContributorInsight {
@@ -492,8 +494,8 @@ interface Workspace {
   created_at: string | null;
   updated_at: string | null;
   deleted_at: string | null;
-  payee_user_id: string | null;
   is_public: boolean;
+  payee_user_id: string | null;
   members: WorkspaceMember[];
 }
 
@@ -501,6 +503,7 @@ interface WorkspaceMember {
   id: string;
   user_id: number;
   role: string;
+  member: DbUser;
 }
 
 interface DbWorkspacesReposStats {
