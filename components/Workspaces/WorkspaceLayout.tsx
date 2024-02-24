@@ -35,11 +35,15 @@ export const WorkspaceLayout = ({ workspaceId, children }: WorkspaceLayoutProps)
   );
 
   return (
-    <div className="grid  grid-rows-[3.3rem,auto,1fr]">
+    <div
+      className="grid"
+      style={{
+        "--top-nav-height": "3.3rem",
+        gridTemplateRows: "var(--top-nav-height) auto 1fr",
+      }}
+    >
       <div>
         <TopNav />
-      </div>
-      <div className="relative px-8 pb-20">
         <ClientOnly>
           <span ref={sidebarRef}>
             <AppSideBar workspaceId={workspaceId} hideSidebar={hideSidebar} sidebarCollapsed={showingSidebar} />
@@ -53,8 +57,8 @@ export const WorkspaceLayout = ({ workspaceId, children }: WorkspaceLayoutProps)
             </button>
           )}
         </ClientOnly>
-        {children}
       </div>
+      <div>{children}</div>
     </div>
   );
 };
