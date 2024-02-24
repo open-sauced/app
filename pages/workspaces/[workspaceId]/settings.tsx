@@ -28,7 +28,6 @@ import {
 import { WORKSPACE_UPDATED_EVENT } from "components/shared/AppSidebar/AppSidebar";
 import { WorkspacesTabList } from "components/Workspaces/WorkspacesTabList";
 import { useGetWorkspaceContributors } from "lib/hooks/api/useGetWorkspaceContributors";
-import { TrackedContributorsTable } from "components/Workspaces/TrackedContributorsTable";
 import { deleteCookie } from "lib/utils/server/cookies";
 import WorkspaceVisibilityModal from "components/Workspaces/WorkspaceVisibilityModal";
 import Card from "components/atoms/Card/card";
@@ -306,31 +305,6 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace }: WorkspaceSettingsP
               return updates;
             });
             setTrackedReposPendingDeletion((repos) => new Set([...repos, repo]));
-          }}
-        />
-
-        <TrackedContributorsTable
-          isLoading={isContributorsLoading}
-          contributors={pendingTrackedContributors}
-          onAddContributors={() => {
-            setTrackedContributorsModalOpen(true);
-          }}
-          onRemoveTrackedContributor={(event) => {
-            const { contributor } = event.currentTarget.dataset;
-
-            if (!contributor) {
-              // eslint-disable-next-line no-console
-              console.error("The tracked contributor to remove was not found");
-              return;
-            }
-
-            setTrackedContributors((contributors) => {
-              const updates = new Map([...contributors]);
-              updates.delete(contributor);
-
-              return updates;
-            });
-            setTrackedContributorsPendingDeletion((contributors) => new Set([...contributors, contributor]));
           }}
         />
 
