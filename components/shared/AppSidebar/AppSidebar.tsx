@@ -84,9 +84,13 @@ export const AppSideBar = ({ workspaceId, hideSidebar, sidebarCollapsed }: AppSi
   return (
     // TODO: get rid of the z-index. There is grid content like the avatars and paged data text that bleed through the sidebar atm.
     <div
-      className={`fixed left-0 h-full w-72 bg-white shadow-lg transform  transition-transform duration-300 ease-in-out border-r ${
+      className={`fixed left-0 w-72 bg-white shadow-lg transform  transition-transform duration-300 ease-in-out border-r ${
         sidebarCollapsed ? "" : "-translate-x-full"
-      } bg-white flex flex-col gap-8 justify-between max-w-xs h-full border-r border-slate-200 z-50`}
+      } bg-white flex flex-col gap-8 justify-between max-w-xs  border-r border-slate-200 z-50`}
+      style={{
+        top: "var(--top-nav-height)",
+        height: "calc(100vh - var(--top-nav-height))",
+      }}
     >
       <div className="grid gap-4 mt-4 pr-4 pl-2">
         <div className="flex gap-2">
@@ -122,7 +126,7 @@ export const AppSideBar = ({ workspaceId, hideSidebar, sidebarCollapsed }: AppSi
           url={`/workspaces/${workspaceId}/repositories`}
           icon={<BiHomeAlt className="w-5 h-5 text-slate-400" />}
         />
-        <div className="grid gap-1 mb-6">
+        <div className="grid gap-1">
           <div className="flex flex-row justify-between items-center ">
             <h3 className="uppercase text-gray-500 text-xs font-medium tracking-wide px-2">Insights</h3>
             <DropdownMenu modal={false}>
@@ -181,7 +185,7 @@ export const AppSideBar = ({ workspaceId, hideSidebar, sidebarCollapsed }: AppSi
           </div>
         </div>
       </div>
-      <div className="list-none mb-4 px-2">
+      <div className="px-2 mb-2">
         {workspaceId ? (
           <SidebarMenuItem
             title="Settings"
