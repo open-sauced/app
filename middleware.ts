@@ -121,6 +121,12 @@ export async function middleware(req: NextRequest) {
       } else {
         return NextResponse.redirect(new URL("/feed", req.url));
       }
+    } else if (session?.user && req.nextUrl.pathname === "/hub/insights/new") {
+      const data = await loadSession(req, session?.access_token);
+
+      return NextResponse.redirect(
+        new URL(`/workspaces/${data.personal_workspace_id}/repository-insights/new`, req.url)
+      );
     } else {
       return res;
     }
