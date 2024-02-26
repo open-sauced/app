@@ -5,6 +5,35 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.4.0-beta.34](https://github.com/open-sauced/app/compare/v2.4.0-beta.33...v2.4.0-beta.34) (2024-02-26)
+
+
+### 🐛 Bug Fixes
+
+* now top navigation is no longer squished or resized vertically ([#2760](https://github.com/open-sauced/app/issues/2760)) ([93c73cc](https://github.com/open-sauced/app/commit/93c73ccc6a55cc8bcbc800682ea961519f15738f))
+
+## [2.4.0-beta.33](https://github.com/open-sauced/app/compare/v2.4.0-beta.32...v2.4.0-beta.33) (2024-02-26)
+
+
+### 🐛 Bug Fixes
+
+* sidebar style tweaks ([#2758](https://github.com/open-sauced/app/issues/2758)) ([f4682db](https://github.com/open-sauced/app/commit/f4682db222d1b25ea2a7c8c531f6a13b055543f7))
+
+## [2.4.0-beta.32](https://github.com/open-sauced/app/compare/v2.4.0-beta.31...v2.4.0-beta.32) (2024-02-26)
+
+
+### 🐛 Bug Fixes
+
+* remove tracked contributors from workspace dashboard and settings ([#2755](https://github.com/open-sauced/app/issues/2755)) ([6dd4fad](https://github.com/open-sauced/app/commit/6dd4fad1ca099af47ce486de9ed90c28a3608a59))
+* working `addContributorsToList` for contributors insight ([#2756](https://github.com/open-sauced/app/issues/2756)) ([a03801a](https://github.com/open-sauced/app/commit/a03801a4aac4eaa62be5729eabad73fe7badd07b))
+
+## [2.4.0-beta.31](https://github.com/open-sauced/app/compare/v2.4.0-beta.30...v2.4.0-beta.31) (2024-02-23)
+
+
+### 🍕 Features
+
+* toggle workspace visibility in settings ([#2720](https://github.com/open-sauced/app/issues/2720)) ([a66f3c8](https://github.com/open-sauced/app/commit/a66f3c893fbc58aece7d880a1902eb1be3007a39))
+
 ## [2.4.0-beta.30](https://github.com/open-sauced/app/compare/v2.4.0-beta.29...v2.4.0-beta.30) (2024-02-23)
 
 
