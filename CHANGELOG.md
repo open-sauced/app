@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.4.0-beta.32](https://github.com/open-sauced/app/compare/v2.4.0-beta.31...v2.4.0-beta.32) (2024-02-26)
+
+
+### 🐛 Bug Fixes
+
+* remove tracked contributors from workspace dashboard and settings ([#2755](https://github.com/open-sauced/app/issues/2755)) ([6dd4fad](https://github.com/open-sauced/app/commit/6dd4fad1ca099af47ce486de9ed90c28a3608a59))
+* working `addContributorsToList` for contributors insight ([#2756](https://github.com/open-sauced/app/issues/2756)) ([a03801a](https://github.com/open-sauced/app/commit/a03801a4aac4eaa62be5729eabad73fe7badd07b))
+
 ## [2.4.0-beta.31](https://github.com/open-sauced/app/compare/v2.4.0-beta.30...v2.4.0-beta.31) (2024-02-23)
 
 
