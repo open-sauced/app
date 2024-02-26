@@ -1,5 +1,13 @@
 // User defined type definitions. Please add type definitions for global types here
 
+// Thanks Chance Strickland!
+// https://www.linkedin.com/feed/update/urn:li:activity:7163544802427437056/
+declare module React {
+  export interface CSSProperties extends CSS.Properties<string | number> {
+    [key: `--${string}`]: string | number;
+  }
+}
+
 interface DbRepo {
   readonly id: string;
   readonly host_id: string;
