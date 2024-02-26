@@ -42,7 +42,7 @@ const NewListCreationPage = () => {
   const [selectedContributors, setSelectedContributors] = useState<DbPRContributor[]>([]);
   const [selectedTimezone, setSelectedTimezone] = useState<string | undefined>(undefined);
   const [contributors, setContributors] = useState<DbPRContributor[]>([]);
-  const [isPublic, setIsPublic] = useState<boolean>(false);
+  const [isPublic, setIsPublic] = useState<boolean>(true);
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [searchResults, setSearchResults] = useState<GhUser[]>([]);
 

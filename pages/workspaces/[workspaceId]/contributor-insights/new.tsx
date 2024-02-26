@@ -1,11 +1,9 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
-import { UserGroupIcon } from "@heroicons/react/24/outline";
 
 import { GetServerSidePropsContext } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import TextInput from "components/atoms/TextInput/text-input";
-import ToggleSwitch from "components/atoms/ToggleSwitch/toggle-switch";
 import Text from "components/atoms/Typography/text";
 import Title from "components/atoms/Typography/title";
 import TopNav from "components/organisms/TopNav/top-nav";
@@ -40,7 +38,6 @@ const CreateListPage = ({ workspace }: { workspace: Workspace }) => {
   const { sessionToken, providerToken, user, username } = useSupabaseAuth();
 
   const [name, setName] = useState("");
-  const [isPublic, setIsPublic] = useState(false);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isTeamModalOpen, setIsTeamModalOpen] = useState(false);
@@ -126,7 +123,7 @@ const CreateListPage = ({ workspace }: { workspace: Workspace }) => {
     const response = await createList({
       name,
       contributors: following.map((user) => ({ id: user.id, login: user.login })),
-      is_public: isPublic,
+      is_public: true,
     });
 
     if (response) {
@@ -178,7 +175,7 @@ const CreateListPage = ({ workspace }: { workspace: Workspace }) => {
     const response = await createList({
       name,
       contributors: teamList.map((user) => ({ id: user.id, login: user.login })),
-      is_public: isPublic,
+      is_public: true,
     });
 
     if (response) {
@@ -224,31 +221,6 @@ const CreateListPage = ({ workspace }: { workspace: Workspace }) => {
           <TextInput placeholder="Page Name (ex: My Team)" value={name} handleChange={handleOnNameChange} />
         </div>
 
-        <div className="flex flex-col gap-4 pb-16">
-          <Title className="text-1xl leading-none" level={4}>
-            Page Visibility
-          </Title>
-
-          <div className="flex justify-between">
-            <div className="flex items-center">
-              <UserGroupIcon className="w-6 h-6 text-light-slate-9" />
-              <Text className="pl-2">
-                <span id="make-public-explainer">Make this list publicly visible</span>
-              </Text>
-            </div>
-
-            <div className="flex ml-2 !border-red-900 items-center">
-              <Text className="text-orange-600 pr-2 hidden md:block">Make Public</Text>
-              <ToggleSwitch
-                ariaLabelledBy="make-public-explainer"
-                name="isPublic"
-                checked={isPublic}
-                handleToggle={() => setIsPublic((isPublic) => !isPublic)}
-              />
-            </div>
-          </div>
-        </div>
-
         <div className="flex flex-col gap-4 pb-6">
           <Title className="text-1xl leading-none" level={4}>
             Add Contributors
@@ -259,7 +231,7 @@ const CreateListPage = ({ workspace }: { workspace: Workspace }) => {
             description="Use our explore tool to find Contributors and create your list"
             icon="globe"
             handleClick={() => {
-              router.push(`/workspaces/${workspace.id}/contributor-insights/find?name=${name}&public=${isPublic}`);
+              router.push(`/workspaces/${workspace.id}/contributor-insights/find?name=${name}`);
             }}
           />
 
