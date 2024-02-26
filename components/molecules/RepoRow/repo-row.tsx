@@ -96,7 +96,12 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
   const { user } = useSupabaseAuth();
   const router = useRouter();
   const { range = 30 } = router.query;
-  const { data: repositoryPullRequests } = useRepositoryPullRequests(repo.full_name, 100, Number(range));
+  const { data: repositoryPullRequests, meta: repositoryPullReqMeta } = useRepositoryPullRequests({
+    fullName: repo.full_name,
+    limit: 100,
+    range: Number(range),
+    distinctAuthors: true,
+  });
   const { data: repositoryPullRequestsHistogram } = usePullRequestsHistogram({
     repoIds: [repo.id as unknown as number],
     width: 1,
@@ -207,7 +212,7 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
             <div>Contributors</div>
             <div className="flex items-center text-base">
               {contributorData.length! > 0 ? <StackedAvatar contributors={contributorData} /> : "-"}
-              {contributorData.length! >= 5 ? <div>&nbsp;{`+${contributorData.length - 5}`}</div> : ""}
+              {contributorData.length! >= 5 ? <div>&nbsp;{`+${repositoryPullReqMeta.itemCount - 5}`}</div> : ""}
             </div>
           </div>
 
@@ -277,7 +282,7 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
         <div className={clsx(classNames.cols.contributors, "hidden xl:flex")}>
           {contributorData.length! > 0 ? <StackedAvatar contributors={contributorData} /> : "-"}
 
-          {contributorData.length! > 5 ? <div>&nbsp;{`+${contributorData.length - 5}`}</div> : ""}
+          {contributorData.length! > 5 ? <div>&nbsp;{`+${repositoryPullReqMeta.itemCount - 5}`}</div> : ""}
         </div>
 
         {/* Column: Last 30 Days */}
