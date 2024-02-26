@@ -104,7 +104,7 @@ const NewListCreationPage = () => {
 
       if (res.ok) {
         const data = await res.json();
-        setListId(data.id);
+        setListId(data.user_list_id);
         setIsSuccess(true);
       }
     } catch (error) {
