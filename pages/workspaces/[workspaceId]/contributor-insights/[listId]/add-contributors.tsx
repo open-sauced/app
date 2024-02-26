@@ -215,7 +215,11 @@ const AddContributorsToList = ({ list, workspaceId, timezoneOption }: AddContrib
   const addContributorsToList = async () => {
     const { error } = await fetchApiData({
       path: `lists/${list.id}/contributors`,
-      body: { contributors: selectedContributors.map(({ user_id }) => user_id) },
+      body: {
+        contributors: selectedContributors.map((c) => {
+          return { id: c.user_id };
+        }),
+      },
       method: "POST",
       bearerToken: sessionToken!,
       pathValidator: validateListPath,
