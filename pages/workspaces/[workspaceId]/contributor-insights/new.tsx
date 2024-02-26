@@ -144,7 +144,7 @@ const CreateListPage = ({ workspace }: { workspace: Workspace }) => {
         toast({ description: "List created successfully", variant: "success" });
       }
 
-      router.push(`/workspaces/${workspace.id}/contributor-insights/${response.id}/overview`);
+      router.push(`/workspaces/${workspace.id}/contributor-insights/${response.user_list_id}/overview`);
     } else {
       toast({ description: "An error occurred!", variant: "danger" });
       setSubmitted(false);
@@ -197,7 +197,7 @@ const CreateListPage = ({ workspace }: { workspace: Workspace }) => {
         toast({ description: "List created successfully", variant: "success" });
       }
 
-      router.push(`/workspaces/${workspace.id}/contributor-insights/${response.id}/overview`);
+      router.push(`/workspaces/${workspace.id}/contributor-insights/${response.user_list_id}/overview`);
     } else {
       toast({ description: "An error occurred!", variant: "danger" });
       setSubmitted(false);
