@@ -66,7 +66,7 @@ export default function InsightUpgradeModal({
 
                 <Button
                   variant="default"
-                  className="flex w-full py-3 justify-center !border !border-orange-600 text-orange-600"
+                  className="flex w-full py-3 justify-center !border !border-orange-600 !text-orange-600"
                 >
                   Your Plan
                 </Button>
