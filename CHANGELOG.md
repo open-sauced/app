@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.4.0-beta.36](https://github.com/open-sauced/app/compare/v2.4.0-beta.35...v2.4.0-beta.36) (2024-02-26)
+
+
+### 🐛 Bug Fixes
+
+* redirect /hub/insights/new to new repository insight page after login ([#2767](https://github.com/open-sauced/app/issues/2767)) ([7183814](https://github.com/open-sauced/app/commit/718381432c16cbcabcd404355ae8738ad11c8dc7))
+
 ## [2.4.0-beta.35](https://github.com/open-sauced/app/compare/v2.4.0-beta.34...v2.4.0-beta.35) (2024-02-26)
 
 
