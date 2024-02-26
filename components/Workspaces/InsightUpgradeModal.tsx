@@ -5,13 +5,20 @@ import Button from "components/atoms/Button/button";
 import Card from "components/atoms/Card/card";
 
 type InsightUpgradeModalProps = {
+  workspaceId: string;
   overLimit: number;
   variant: "repositories" | "contributors";
   isOpen: boolean;
   onClose: () => void;
 };
 
-export default function InsightUpgradeModal({ overLimit, variant, isOpen, onClose }: InsightUpgradeModalProps) {
+export default function InsightUpgradeModal({
+  workspaceId,
+  overLimit,
+  variant,
+  isOpen,
+  onClose,
+}: InsightUpgradeModalProps) {
   return (
     <Dialog open={isOpen}>
       <DialogContent autoStyle={false} onEscapeKeyDown={onClose} onPointerDownOutside={onClose}>
@@ -58,7 +65,7 @@ export default function InsightUpgradeModal({ overLimit, variant, isOpen, onClos
                 </ul>
 
                 <Button
-                  variant="text"
+                  variant="default"
                   className="flex w-full py-3 justify-center !border !border-orange-600 text-orange-600"
                 >
                   Your Plan
@@ -83,14 +90,18 @@ export default function InsightUpgradeModal({ overLimit, variant, isOpen, onClos
                 <ul className="flex flex-col gap-3">
                   <ChecklistItem color="green">Private or public Workspaces, you choose!</ChecklistItem>
                   <ChecklistItem color="green">
-                    Up to <span className="font-bold">1000</span> contributors per insight page
+                    Up to <span className="font-bold">100</span> contributors per insight page
                   </ChecklistItem>
                   <ChecklistItem color="green">
-                    Up to <span className="font-bold">10,000</span> repositories per insight page
+                    Up to <span className="font-bold">1,000</span> repositories per insight page
                   </ChecklistItem>
                 </ul>
 
-                <Button variant="primary" className="py-3 flex justify-center">
+                <Button
+                  href={`/workspaces/${workspaceId}/settings#upgrade`}
+                  variant="primary"
+                  className="py-3 flex justify-center"
+                >
                   Upgrade
                 </Button>
               </Card>

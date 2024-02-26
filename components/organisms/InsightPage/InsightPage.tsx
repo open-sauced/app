@@ -82,7 +82,7 @@ const InsightPage = ({ edit, insight, pageRepos, workspaceId }: InsightPageProps
   const pageHref = router.asPath;
   const [reposIds, setReposIds] = useState<number[]>([]);
   const { data: repoListData } = useRepositories(reposIds);
-  const isWorkspaceUpgraded = useIsWorkspaceUpgraded({ workspaceId: workspaceId! });
+  const { data: isWorkspaceUpgraded } = useIsWorkspaceUpgraded({ workspaceId: workspaceId! });
 
   useEffect(() => {
     const searchParams = new URLSearchParams(pageHref.substring(pageHref.indexOf("?")));
@@ -627,7 +627,7 @@ const InsightPage = ({ edit, insight, pageRepos, workspaceId }: InsightPageProps
           hasItems={repos.length > 0}
           handleCreatePage={handleCreateInsightPage}
           handleUpdatePage={() => {
-            if (!isWorkspaceUpgraded && repos.length > 10) {
+            if (!isWorkspaceUpgraded && repos.length > 100) {
               setIsInsightUpgradeModalOpen(true);
             } else {
               handleUpdateInsightPage();
@@ -686,6 +686,7 @@ const InsightPage = ({ edit, insight, pageRepos, workspaceId }: InsightPageProps
       </div>
 
       <InsightUpgradeModal
+        workspaceId={workspaceId!}
         overLimit={repos.length}
         isOpen={isInsightUpgradeModalOpen}
         onClose={() => setIsInsightUpgradeModalOpen(false)}

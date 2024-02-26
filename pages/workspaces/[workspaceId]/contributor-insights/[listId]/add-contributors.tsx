@@ -19,6 +19,8 @@ import Text from "components/atoms/Typography/text";
 import Button from "components/atoms/Button/button";
 import { searchUsers } from "lib/hooks/search-users";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
+import InsightUpgradeModal from "components/Workspaces/InsightUpgradeModal";
+import { useIsWorkspaceUpgraded } from "lib/hooks/api/useIsWorkspaceUpgraded";
 
 // TODO: Move to a shared file
 export function isListId(listId: string) {
@@ -30,10 +32,7 @@ export function isListId(listId: string) {
 interface AddContributorsPageProps {
   list: DbUserList;
   workspaceId: string;
-  initialData: {
-    meta: Meta;
-    data: DbPRContributor[];
-  };
+  initialCount: number;
   timezoneOption: { timezone: string }[];
 }
 
@@ -67,10 +66,17 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     };
   }
 
+  const { data: initialData, error: initialError } = await fetchApiData<any>({
+    path: `lists/${listId}/contributors`,
+    bearerToken,
+    pathValidator: () => true,
+  });
+
   return {
     props: {
       list,
       workspaceId,
+      initialCount: initialData.meta.itemCount,
     },
   };
 };
@@ -202,7 +208,7 @@ const EmptyState = () => (
   </div>
 );
 
-const AddContributorsToList = ({ list, workspaceId, timezoneOption }: AddContributorsPageProps) => {
+const AddContributorsToList = ({ list, initialCount, workspaceId, timezoneOption }: AddContributorsPageProps) => {
   const [selectedContributors, setSelectedContributors] = useState<DbPRContributor[]>([]);
 
   const { sessionToken, providerToken } = useSupabaseAuth();
@@ -211,8 +217,15 @@ const AddContributorsToList = ({ list, workspaceId, timezoneOption }: AddContrib
   const [contributors, setContributors] = useState<DbPRContributor[]>([]);
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [searchResults, setSearchResults] = useState<GhUser[]>([]);
+  const [isInsightUpgradeModalOpen, setIsInsightUpgradeModalOpen] = useState(false);
+  const { data: isWorkspaceUpgraded } = useIsWorkspaceUpgraded({ workspaceId: workspaceId! });
 
   const addContributorsToList = async () => {
+    if (!isWorkspaceUpgraded && initialCount + selectedContributors.length > 10) {
+      setIsInsightUpgradeModalOpen(true);
+      return;
+    }
+
     const { error } = await fetchApiData({
       path: `lists/${list.id}/contributors`,
       body: {
@@ -339,6 +352,14 @@ const AddContributorsToList = ({ list, workspaceId, timezoneOption }: AddContrib
             }}
           />
         )}
+
+        <InsightUpgradeModal
+          workspaceId={workspaceId}
+          overLimit={initialCount + selectedContributors.length}
+          isOpen={isInsightUpgradeModalOpen}
+          onClose={() => setIsInsightUpgradeModalOpen(false)}
+          variant="contributors"
+        />
       </HubContributorsPageLayout>
     </WorkspaceLayout>
   );
