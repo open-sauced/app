@@ -7,19 +7,19 @@ export async function createWorkspace({
   members = [],
   sessionToken,
   repos = [],
-  contributors = [],
 }: {
   name: string;
   description?: string;
   members: any[];
   sessionToken: string;
   repos: { full_name: string }[];
-  contributors: { login: string }[];
 }) {
   const { data, error } = await fetchApiData<Workspace>({
     path: "workspaces",
     method: "POST",
-    body: { name, description, members, repos, contributors },
+    // We're not tracking contributors at the moment, but for the time
+    // being, I'm leaving the API call as is and passing an empty array
+    body: { name, description, members, repos, contributors: [] },
     bearerToken: sessionToken,
     pathValidator: () => true,
   });
