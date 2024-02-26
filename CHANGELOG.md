@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.4.0-beta.34](https://github.com/open-sauced/app/compare/v2.4.0-beta.33...v2.4.0-beta.34) (2024-02-26)
+
+
+### 🐛 Bug Fixes
+
+* now top navigation is no longer squished or resized vertically ([#2760](https://github.com/open-sauced/app/issues/2760)) ([93c73cc](https://github.com/open-sauced/app/commit/93c73ccc6a55cc8bcbc800682ea961519f15738f))
+
 ## [2.4.0-beta.33](https://github.com/open-sauced/app/compare/v2.4.0-beta.32...v2.4.0-beta.33) (2024-02-26)
 
 
