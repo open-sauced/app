@@ -69,11 +69,6 @@ module.exports = {
         permanent: true,
       },
       {
-        source: "/hub/insights/new",
-        destination: "/",
-        permanent: true,
-      },
-      {
         source: "/hub/insights",
         destination: "/",
         permanent: true,
