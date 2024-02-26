@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.4.0-beta.35](https://github.com/open-sauced/app/compare/v2.4.0-beta.34...v2.4.0-beta.35) (2024-02-26)
+
+
+### 🍕 Features
+
+* Unifies insight contributors card and contributors column ([#2766](https://github.com/open-sauced/app/issues/2766)) ([584a60d](https://github.com/open-sauced/app/commit/584a60dd914e7c6d751169f6ec4353baf7f0fb1e))
+
 ## [2.4.0-beta.34](https://github.com/open-sauced/app/compare/v2.4.0-beta.33...v2.4.0-beta.34) (2024-02-26)
 
 
