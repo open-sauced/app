@@ -268,6 +268,18 @@ export const AppSideBar = ({ workspaceId, hideSidebar, sidebarCollapsed }: AppSi
                     </span>
                   </Link>
                 </DropdownMenuItem>
+                <DropdownMenuItem className="rounded-md group">
+                  <Link
+                    title="Read the docs"
+                    href="https://docs.opensauced.pizza/"
+                    className="text-sm font-medium flex gap-1 items-center transition-colors cursor-pointer tracking-tight p-1"
+                  >
+                    <BookOpenIcon className="w-5 h-5 text-slate-400 inline-flex mr-1 group-hover:text-orange-500" />
+                    <span className="whitespace-nowrap overflow-hidden overflow-ellipsis inline-flex">
+                      Read the docs
+                    </span>
+                  </Link>
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </li>
@@ -275,11 +287,6 @@ export const AppSideBar = ({ workspaceId, hideSidebar, sidebarCollapsed }: AppSi
             title="Settings"
             url={`/user/settings`}
             icon={<Cog8ToothIcon className="w-5 h-5 text-slate-400" />}
-          />
-          <SidebarMenuItem
-            title="Read the docs"
-            url="https://docs.opensauced.pizza/"
-            icon={<BookOpenIcon className="w-5 h-5 text-slate-400" />}
           />
         </ul>
       </nav>
