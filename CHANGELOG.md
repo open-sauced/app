@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.4.0-beta.37](https://github.com/open-sauced/app/compare/v2.4.0-beta.36...v2.4.0-beta.37) (2024-02-26)
+
+
+### 🐛 Bug Fixes
+
+* use user_list_id from newly created workspace contributor insight ([#2772](https://github.com/open-sauced/app/issues/2772)) ([47ca153](https://github.com/open-sauced/app/commit/47ca153e07d638c71325517b2063a47c360901f9))
+
 ## [2.4.0-beta.36](https://github.com/open-sauced/app/compare/v2.4.0-beta.35...v2.4.0-beta.36) (2024-02-26)
 
 
