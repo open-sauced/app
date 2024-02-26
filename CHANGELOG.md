@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.4.0-beta.33](https://github.com/open-sauced/app/compare/v2.4.0-beta.32...v2.4.0-beta.33) (2024-02-26)
+
+
+### 🐛 Bug Fixes
+
+* sidebar style tweaks ([#2758](https://github.com/open-sauced/app/issues/2758)) ([f4682db](https://github.com/open-sauced/app/commit/f4682db222d1b25ea2a7c8c531f6a13b055543f7))
+
 ## [2.4.0-beta.32](https://github.com/open-sauced/app/compare/v2.4.0-beta.31...v2.4.0-beta.32) (2024-02-26)
 
 
