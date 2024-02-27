@@ -113,14 +113,9 @@ export async function middleware(req: NextRequest) {
     // Authentication successful, forward request to protected route.
     if (req.nextUrl.pathname === "/") {
       const data = await loadSession(req, session?.access_token);
+      const workspaceUrl = getWorkspaceUrl(req.cookies, req.url, data.personal_workspace_id);
 
-      if (data.is_onboarded) {
-        const workspaceUrl = getWorkspaceUrl(req.cookies, req.url, data.personal_workspace_id);
-
-        return NextResponse.redirect(`${workspaceUrl}`);
-      } else {
-        return NextResponse.redirect(new URL("/feed", req.url));
-      }
+      return NextResponse.redirect(`${workspaceUrl}`);
     } else if (session?.user && req.nextUrl.pathname === "/hub/insights/new") {
       const data = await loadSession(req, session?.access_token);
 
