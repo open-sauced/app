@@ -9,7 +9,7 @@ import ClientOnly from "components/atoms/ClientOnly/client-only";
 import Footer from "components/organisms/Footer/footer";
 
 interface WorkspaceLayoutProps {
-  workspaceId: string | null;
+  workspaceId: string;
   children: React.ReactNode;
 }
 
