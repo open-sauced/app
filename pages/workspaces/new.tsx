@@ -9,7 +9,6 @@ import { useToast } from "lib/hooks/useToast";
 import { TrackedReposTable } from "components/Workspaces/TrackedReposTable";
 import { createWorkspace } from "lib/utils/workspace-utils";
 import { WORKSPACE_UPDATED_EVENT } from "components/shared/AppSidebar/AppSidebar";
-import { TrackedContributorsTable } from "components/Workspaces/TrackedContributorsTable";
 
 const NewWorkspace = () => {
   const { sessionToken } = useSupabaseAuth();
@@ -18,9 +17,6 @@ const NewWorkspace = () => {
 
   const [trackedReposModalOpen, setTrackedReposModalOpen] = useState(false);
   const [trackedRepos, setTrackedRepos] = useState<Map<string, boolean>>(new Map());
-
-  const [trackedContributors, setTrackedContributors] = useState<Map<string, boolean>>(new Map());
-  const [trackedContributorsModalOpen, setTrackedContributorsModalOpen] = useState(false);
 
   const onCreateWorkspace: ComponentProps<"form">["onSubmit"] = async (event) => {
     event.preventDefault();
@@ -36,7 +32,7 @@ const NewWorkspace = () => {
       members: [],
       sessionToken: sessionToken!,
       repos: Array.from(trackedRepos, ([repo]) => ({ full_name: repo })),
-      contributors: Array.from(trackedContributors, ([contributor]) => ({ login: contributor })),
+      contributors: [],
     });
 
     if (error || !workspace) {
@@ -49,10 +45,6 @@ const NewWorkspace = () => {
   };
 
   const TrackedReposModal = dynamic(() => import("components/Workspaces/TrackedReposModal"), {
-    ssr: false,
-  });
-
-  const TrackedContributorsModal = dynamic(() => import("components/Workspaces/TrackedContributorsModal"), {
     ssr: false,
   });
 
@@ -100,29 +92,6 @@ const NewWorkspace = () => {
             });
           }}
         />
-
-        <TrackedContributorsTable
-          contributors={trackedContributors}
-          onAddContributors={() => {
-            setTrackedContributorsModalOpen(true);
-          }}
-          onRemoveTrackedContributor={(event) => {
-            const { contributor } = event.currentTarget.dataset;
-
-            if (!contributor) {
-              // eslint-disable-next-line no-console
-              console.error("The tracked contributor to remove was not found");
-              return;
-            }
-
-            setTrackedContributors((trackedContributors) => {
-              const updates = new Map([...trackedContributors]);
-              updates.delete(contributor);
-
-              return updates;
-            });
-          }}
-        />
       </div>
       <TrackedReposModal
         isOpen={trackedReposModalOpen}
@@ -147,32 +116,6 @@ const NewWorkspace = () => {
         }}
         onCancel={() => {
           setTrackedReposModalOpen(false);
-        }}
-      />
-
-      <TrackedContributorsModal
-        isOpen={trackedContributorsModalOpen}
-        onAddToTrackingList={(contributors: Map<string, boolean>) => {
-          setTrackedContributorsModalOpen(false);
-          setTrackedContributors((trackedContributors) => {
-            const updates = new Map([...trackedContributors]);
-
-            for (const [contributor, checked] of contributors) {
-              if (checked) {
-                updates.set(contributor, true);
-              } else {
-                updates.delete(contributor);
-              }
-            }
-
-            return updates;
-          });
-        }}
-        onClose={() => {
-          setTrackedContributorsModalOpen(false);
-        }}
-        onCancel={() => {
-          setTrackedContributorsModalOpen(false);
         }}
       />
     </WorkspaceLayout>
