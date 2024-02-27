@@ -6,8 +6,8 @@ import Card from "components/atoms/Card/card";
 
 type InsightUpgradeModalProps = {
   workspaceId: string;
-  overLimit: number;
-  variant: "repositories" | "contributors";
+  overLimit?: number;
+  variant: "repositories" | "contributors" | "workspace";
   isOpen: boolean;
   onClose: () => void;
 };
@@ -26,19 +26,30 @@ export default function InsightUpgradeModal({
           <div className="min-w-[712px] flex flex-col gap-8">
             <DialogCloseButton onClick={onClose} />
             <section className="flex flex-col gap-2">
-              <DialogTitle className="text-xl">This Insight page is over the free Workspace limit</DialogTitle>
-              <p className="text-sm text-slate-500">
-                Your Insight page has{" "}
-                <span className="font-bold">
-                  {overLimit} {variant}
-                </span>{" "}
-                but the free Workspace only allows for{" "}
-                <span className="font-bold">
-                  {variant === "repositories" ? 100 : 10} {variant}
-                </span>{" "}
-                tracked. Don&apos;t worry, your insights won&apos;t be deleted, but if you want to continue using
-                OpenSauced you should upgrade your Workspace to a PRO Workspace.
-              </p>
+              <DialogTitle className="text-xl">
+                {variant !== "workspace"
+                  ? "This Insight page is over the free Workspace limit"
+                  : "Upgrade to a PRO Workspace"}
+              </DialogTitle>
+              {variant !== "workspace" ? (
+                <p className="text-sm text-slate-500">
+                  Your Insight page has{" "}
+                  <span className="font-bold">
+                    {overLimit} {variant}
+                  </span>{" "}
+                  but the free Workspace only allows for{" "}
+                  <span className="font-bold">
+                    {variant === "repositories" ? 100 : 10} {variant}
+                  </span>{" "}
+                  tracked. Don&apos;t worry, your insights won&apos;t be deleted, but if you want to continue using
+                  OpenSauced you should upgrade your Workspace to a PRO Workspace.
+                </p>
+              ) : (
+                <p className="text-sm text-slate-500">
+                  Settings like making a workspace private is a PRO feature. If you want to continue using OpenSauced
+                  with all the features unlocked, you should upgrade to a PRO Workspace.
+                </p>
+              )}
             </section>
 
             <section className="flex gap-8 justify-between w-full">
@@ -98,7 +109,10 @@ export default function InsightUpgradeModal({
                 </ul>
 
                 <Button
-                  href={`/workspaces/${workspaceId}/settings#upgrade`}
+                  onClick={() => {
+                    if (variant === "workspace") onClose();
+                  }}
+                  href={variant !== "workspace" ? `/workspaces/${workspaceId}/settings#upgrade` : ""}
                   variant="primary"
                   className="py-3 flex justify-center"
                 >
