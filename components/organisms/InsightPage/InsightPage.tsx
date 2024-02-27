@@ -1,13 +1,11 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
-import { UserGroupIcon } from "@heroicons/react/24/outline";
 
 import { useDebounce } from "rooks";
 import Link from "next/link";
 import Button from "components/atoms/Button/button";
 import TextInput from "components/atoms/TextInput/text-input";
-import ToggleSwitch from "components/atoms/ToggleSwitch/toggle-switch";
 import Text from "components/atoms/Typography/text";
 import Title from "components/atoms/Typography/title";
 import RepositoriesCart from "components/organisms/RepositoriesCart/repositories-cart";
@@ -109,7 +107,6 @@ const InsightPage = ({ edit, insight, pageRepos, workspaceId }: InsightPageProps
   const [repoHistory, setRepoHistory] = useState<DbRepo[]>([]);
   const [addRepoError, setAddRepoError] = useState<RepoLookupError>(RepoLookupError.Initial);
   const [syncOrganizationError, setSyncOrganizationError] = useState<OrgLookupError>(OrgLookupError.Initial);
-  const [isPublic, setIsPublic] = useState(!!insight?.is_public);
   const insightRepoLimit = useStore((state) => state.insightRepoLimit);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isInsightUpgradeModalOpen, setIsInsightUpgradeModalOpen] = useState(false);
@@ -140,10 +137,6 @@ const InsightPage = ({ edit, insight, pageRepos, workspaceId }: InsightPageProps
   useEffect(() => {
     if (pageRepos) {
       setRepos(pageRepos);
-    }
-
-    if (insight) {
-      setIsPublic(insight.is_public);
     }
   }, [pageRepos, insight?.is_public]);
 
@@ -206,7 +199,7 @@ const InsightPage = ({ edit, insight, pageRepos, workspaceId }: InsightPageProps
         body: JSON.stringify({
           name,
           repos: repos.map((repo) => ({ id: repo.id, fullName: repo.full_name })),
-          is_public: isPublic,
+          is_public: true,
         }),
       }
     );
@@ -214,8 +207,7 @@ const InsightPage = ({ edit, insight, pageRepos, workspaceId }: InsightPageProps
     if (response.ok) {
       const { id } = await response.json();
       toast({ description: "Page created successfully", variant: "success" });
-      // TODO: redirect to workspaces page
-      router.push(`/pages/${user.user_metadata.user_name}/${id}/dashboard`);
+      router.push(`/workspaces/${workspaceId}/repository-insights/${id}/dashboard`);
     }
 
     setSubmitted(false);
@@ -234,7 +226,7 @@ const InsightPage = ({ edit, insight, pageRepos, workspaceId }: InsightPageProps
         name,
         repos: repos.map((repo) => ({ id: repo.id, fullName: repo.full_name })),
         // eslint-disable-next-line
-        is_public: isPublic,
+        is_public: true,
       }),
     });
     setCreateLoading(false);
@@ -659,30 +651,6 @@ const InsightPage = ({ edit, insight, pageRepos, workspaceId }: InsightPageProps
             );
           })}
         </RepositoriesCart>
-        <div className="flex flex-col justify-between pt-8 mt-8 border-t">
-          <Title className="!text-1xl !leading-none mb-4 mt-8" level={4}>
-            Page Visibility
-          </Title>
-
-          <div className="flex justify-between">
-            <div className="flex items-center">
-              <UserGroupIcon className="w-6 h-6 text-light-slate-9" />
-              <Text className="pl-2">
-                <span id="make-public-explainer">Make this page publicly visible</span>
-              </Text>
-            </div>
-
-            <div className="flex ml-2 !border-red-900 items-center">
-              <Text className="!text-orange-600 pr-2 hidden md:block">Make Public</Text>
-              <ToggleSwitch
-                ariaLabelledBy="make-public-explainer"
-                name="isPublic"
-                checked={isPublic}
-                handleToggle={() => setIsPublic((isPublic) => !isPublic)}
-              />
-            </div>
-          </div>
-        </div>
       </div>
 
       <InsightUpgradeModal
