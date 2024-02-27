@@ -8,8 +8,8 @@ interface WorkspaceHeaderProps {
 
 export const WorkspaceHeader = ({ workspace }: WorkspaceHeaderProps) => {
   return (
-    <section className="w-full grid grid-cols-[1fr,auto] gap-2">
-      <h1 className="flex gap-2 items-center uppercase text-3xl font-semibold w-max max-w-sxs md:max-w-sm lg:max-w-2xl xl:max-w-4xl">
+    <section className="w-full grid lg:grid-cols-[1fr,auto] gap-2">
+      <h1 className="flex gap-2 items-center uppercase text-2xl md:text-3xl font-semibold w-max max-w-[20ch] sm:max-w-[35ch] lg:max-w-2xl xl:max-w-4xl">
         {/* putting a square icon here as a placeholder until we implement workspace logos */}
         <SquareFillIcon className="w-12 h-12 text-sauced-orange" />
         <span title={workspace.name} className="truncate">
@@ -19,7 +19,7 @@ export const WorkspaceHeader = ({ workspace }: WorkspaceHeaderProps) => {
       <Button
         variant="primary"
         href={`/workspaces/${workspace.id}/settings`}
-        className="my-auto gap-2 items-center shrink-0"
+        className="my-auto gap-2 items-center shrink-0 place-self-end"
       >
         <FaEdit />
         Edit
