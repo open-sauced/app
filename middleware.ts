@@ -73,7 +73,7 @@ export async function middleware(req: NextRequest) {
     return res;
   }
 
-  if (session?.user && req.nextUrl.pathname.startsWith("/workspaces")) {
+  if (req.nextUrl.pathname.startsWith("/workspaces")) {
     const [, , workspaceId] = req.nextUrl.pathname.split("/");
 
     if (workspaceId !== "new") {
