@@ -59,7 +59,7 @@ const RepositoryInsights = () => {
                     <WorkspaceRepositoryInsightRow
                       key={`insights_${insight.id}`}
                       user={user}
-                      insight={insight}
+                      workspaceInsight={insight}
                       workspaceId={workspaceId}
                     />
                   );

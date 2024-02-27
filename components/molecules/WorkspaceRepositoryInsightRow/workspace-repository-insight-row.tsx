@@ -11,28 +11,28 @@ import getRepoInsights from "lib/utils/get-repo-insights";
 import Text from "components/atoms/Typography/text";
 import Pill from "components/atoms/Pill/pill";
 import Card from "components/atoms/Card/card";
-import useInsightRepositories from "lib/hooks/useInsightRepositories";
+import useWorkspaceRepositoryInsight from "lib/hooks/api/useWorkspaceRepositoryInsight";
 import { useWorkspaceMembers } from "lib/hooks/api/useWorkspaceMembers";
 import getPercent from "lib/utils/get-percent";
 
 import CardRepoList from "../CardRepoList/card-repo-list";
 
 interface WorkspaceRepositoryInsightRowProps {
-  insight: DbWorkspaceRepositoryInsight;
+  workspaceInsight: DbWorkspaceRepositoryInsight;
   user: User | null;
   isEditable?: boolean;
   workspaceId: string | null;
 }
 
 const WorkspaceRepositoryInsightRow = ({
-  insight,
+  workspaceInsight,
   user,
   isEditable = true,
   workspaceId,
 }: WorkspaceRepositoryInsightRowProps) => {
-  const { data: insightRepos } = useInsightRepositories(insight.id);
+  const { data: insight } = useWorkspaceRepositoryInsight({ insightId: workspaceInsight.id, workspaceId });
   const { data: workspaceMembers } = useWorkspaceMembers({ workspaceId });
-  const repoIds = insightRepos.map((repo) => repo.repo_id);
+  const repoIds = insight?.repos.map((repo) => repo.repo_id);
   const { data: repoData, meta: repoMeta } = useRepositories(repoIds);
   const { open, merged, velocity, total, repoList } = getRepoInsights(repoData);
   const avgOpenPrs = repoData.length > 0 ? Math.round(open / repoData.length) : 0;
@@ -52,9 +52,9 @@ const WorkspaceRepositoryInsightRow = ({
               <Link
                 href={`${publicLinkPrefix}${
                   !workspaceId ? `/${user ? user?.user_metadata.user_name : "anonymous"}` : ""
-                }/${insight.id}/dashboard`}
+                }/${insight?.id}/dashboard`}
               >
-                {isEditable ? insight.name : `Demo | ${insight.name}`}
+                {isEditable ? insight?.name : `Demo | ${insight?.name}`}
               </Link>
             </div>
             <div
@@ -63,12 +63,12 @@ const WorkspaceRepositoryInsightRow = ({
                 !isEditable ? "text-orange-700 bg-orange-50 border-orange-600" : ""
               )}
             >
-              {!isEditable ? "demo" : !!insight.is_public ? "public" : "private"}
+              {!isEditable ? "demo" : !!insight?.is_public ? "public" : "private"}
             </div>
             {isEditable ? (
               <div className="flex-1 md:hidden">
                 <span className=" bg-light-slate-1 inline-block rounded-lg p-2.5 border mr-2">
-                  <Link href={`${editLinkPrefix}/${insight.id}/edit`}>
+                  <Link href={`${editLinkPrefix}/${insight?.id}/edit`}>
                     <BsPencilFill
                       title="Edit Insight Page"
                       className="text-light-slate-10 text-md cursor-pointer w-4"
@@ -79,7 +79,7 @@ const WorkspaceRepositoryInsightRow = ({
             ) : null}
           </div>
           <div className="w-full truncate">
-            {insightRepos && insightRepos.length > 0 && (
+            {insight?.repos && insight?.repos.length > 0 && (
               <CardRepoList limit={3} repoList={repoList} total={repoMeta.itemCount} />
             )}
           </div>
@@ -112,7 +112,7 @@ const WorkspaceRepositoryInsightRow = ({
             </div>
             <div className="flex-1 hidden md:flex  justify-end">
               {canEdit || (
-                <Link href={`${editLinkPrefix}/${insight.id}/edit`}>
+                <Link href={`${editLinkPrefix}/${insight?.id}/edit`}>
                   <span className=" bg-light-slate-1 inline-block rounded-lg p-2.5 border mr-2 cursor-pointer">
                     <BsPencilFill title="Edit Insight Page" className="text-light-slate-10 text-lg" />
                   </span>
@@ -121,7 +121,7 @@ const WorkspaceRepositoryInsightRow = ({
               <Link
                 href={`${publicLinkPrefix}${
                   !workspaceId ? `/${user ? user?.user_metadata.user_name : "anonymous"}` : ""
-                }/${insight.id}/dashboard`}
+                }/${insight?.id}/dashboard`}
               >
                 <span className=" bg-light-slate-1 inline-block rounded-lg p-2.5 border cursor-pointer">
                   <MdOutlineArrowForwardIos title="Go To Insight Page" className="text-light-slate-10 text-lg" />

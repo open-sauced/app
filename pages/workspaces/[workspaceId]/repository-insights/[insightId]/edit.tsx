@@ -3,23 +3,24 @@ import { useRouter } from "next/router";
 import InsightPage from "components/organisms/InsightPage/InsightPage";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 
-import useInsight from "lib/hooks/useInsight";
 import useRepositories from "lib/hooks/api/useRepositories";
 import useInsightMembers from "lib/hooks/useInsightMembers";
-import useInsightRepositories from "lib/hooks/useInsightRepositories";
+import useWorkspaceRepositoryInsight from "lib/hooks/api/useWorkspaceRepositoryInsight";
 
 const EditInsightPage = () => {
   const router = useRouter();
   const { insightId, workspaceId } = router.query as { insightId: string; workspaceId: string };
   const id = insightId as string;
-  const { data: insight, isLoading: insightLoading, isError: insightError } = useInsight(id);
+  const {
+    data: insight,
+    isLoading: insightLoading,
+    isError: insightError,
+  } = useWorkspaceRepositoryInsight({ insightId: Number(id), workspaceId });
+
+  // TODO: editing still relies on insight member page membership.
+  // in the future, this will be hoisted up to the workspace level
   const { isLoading: insightTeamMembersLoading, isError: insightTeamMembersError } = useInsightMembers(Number(id));
-  const { data: insightRepos } = useInsightRepositories(Number(id));
-  const { data: repos } = useRepositories(
-    insightRepos.map((ir) => ir.repo_id),
-    30,
-    50
-  );
+  const { data: repos } = useRepositories(insight?.repos.map((ir) => ir.repo_id), 30, 50);
 
   if (insightLoading || insightTeamMembersLoading) {
     return <>Loading</>;
