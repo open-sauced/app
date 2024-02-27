@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.4.0-beta.46](https://github.com/open-sauced/app/compare/v2.4.0-beta.45...v2.4.0-beta.46) (2024-02-27)
+
+
+### 🐛 Bug Fixes
+
+* now workspace top nav link works as expected ([#2788](https://github.com/open-sauced/app/issues/2788)) ([7c51cc8](https://github.com/open-sauced/app/commit/7c51cc895951eb40de0b1dac77c93217f7051e06))
+* only show workspace edit button for workspace owner ([#2786](https://github.com/open-sauced/app/issues/2786)) ([0cb865d](https://github.com/open-sauced/app/commit/0cb865d639d7f785f7c3acccbfe846dfc5f8b059))
+
 ## [2.4.0-beta.45](https://github.com/open-sauced/app/compare/v2.4.0-beta.44...v2.4.0-beta.45) (2024-02-27)
 
 
