@@ -9,7 +9,6 @@ import { useRouter } from "next/router";
 import getRepoInsights from "lib/utils/get-repo-insights";
 import Button from "components/atoms/Button/button";
 import Title from "components/atoms/Typography/title";
-import Badge from "components/atoms/InsightBadge/insight-badge";
 import ContextThumbnail from "components/atoms/ContextThumbnail/context-thumbnail";
 import { truncateString } from "lib/utils/truncate-string";
 import useRepositories from "lib/hooks/api/useRepositories";
@@ -65,7 +64,6 @@ const InsightHeader = ({ insight, repositories, insightId, canEdit, workspaceId 
             <Title level={1} className="!text-2xl font-semibold text-slate-900">
               {(insight && truncateString(insight.name, 30)) || "Insights"}
             </Title>
-            {insight && <Badge isPublic={insight?.is_public} />}
           </div>
           <div className="flex items-center gap-2 mt-4">
             {insight && insight.repos && insight.repos.length > 0 && (
