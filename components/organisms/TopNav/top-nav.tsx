@@ -47,14 +47,14 @@ const Nav = ({ className }: { className?: string }) => {
       <ul className="flex gap-3 md:gap-8 mb-1 ml-2 sm:m-0 w-full sm:w-auto">
         {user ? (
           <li>
-            <a
+            <Link
               className={`font-medium text-sm text-slate-700 hover:text-orange-500 transition-all ${getActiveStyle(
                 router.asPath.startsWith("/workspaces/") || router.asPath.includes("/pages")
               )}`}
               href={"/"}
             >
               Workspace
-            </a>
+            </Link>
           </li>
         ) : null}
         <li className="hidden lg:inline">
