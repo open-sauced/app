@@ -1,3 +1,4 @@
+import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import { GetServerSidePropsContext } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
@@ -8,6 +9,9 @@ import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import HubPageLayout from "layouts/hub-page";
 import Dashboard from "components/organisms/Dashboard/dashboard";
 import { fetchApiData } from "helpers/fetchApiData";
+import { useIsWorkspaceUpgraded } from "lib/hooks/api/useIsWorkspaceUpgraded";
+
+const InsightUpgradeModal = dynamic(() => import("components/Workspaces/InsightUpgradeModal"));
 
 interface InsightPageProps {
   insight: DbUserInsight;
@@ -18,6 +22,10 @@ interface InsightPageProps {
 const HubPage = ({ insight, ogImage, workspaceId }: InsightPageProps) => {
   const repositories = insight.repos.map((repo) => repo.repo_id);
   const [hydrated, setHydrated] = useState(false);
+
+  const { data: isWorkspaceUpgraded } = useIsWorkspaceUpgraded({ workspaceId });
+  const showNudgeBanner = !isWorkspaceUpgraded && repositories.length > 100;
+  const [isInsightUpgradeModalOpen, setIsInsightUpgradeModalOpen] = useState(false);
 
   useEffect(() => {
     setHydrated(true);
@@ -45,9 +53,25 @@ const HubPage = ({ insight, ogImage, workspaceId }: InsightPageProps) => {
         twitterCard="summary_large_image"
       />
       <WorkspaceLayout workspaceId={workspaceId}>
+        {showNudgeBanner && (
+          <button
+            onClick={() => setIsInsightUpgradeModalOpen(true)}
+            className="w-full py-2 text-white text-center bg-light-orange-10"
+          >
+            This insight page is past the free limit.{" "}
+            <span className="font-semibold underline">Upgrade to a PRO Workspace.</span>
+          </button>
+        )}
         <HubPageLayout page="dashboard">
           <Dashboard repositories={repositories} />
         </HubPageLayout>
+        <InsightUpgradeModal
+          workspaceId={workspaceId}
+          overLimit={repositories.length}
+          isOpen={isInsightUpgradeModalOpen}
+          onClose={() => setIsInsightUpgradeModalOpen(false)}
+          variant="repositories"
+        />
       </WorkspaceLayout>
     </>
   );
