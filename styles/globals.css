@@ -216,3 +216,7 @@ svg:has(> #Mail) {
 [data-tracked-repo-wizard] > button:focus-within > [data-button-title] {
   @apply text-green-800;
 }
+
+.workspace-drop-down > [role="combobox"] {
+  max-width: 14rem;
+}

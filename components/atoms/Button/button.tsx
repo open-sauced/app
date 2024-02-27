@@ -14,7 +14,7 @@ const Button = React.forwardRef<HTMLElement, ButtonsProps>(
   ({ className, children, loading, disabled, variant, showLoadingText = true, onClick, href, ...props }, ref) => {
     const styles: Record<ButtonsProps["variant"], string> = {
       primary: `bg-light-orange-9 text-light-orange-2 border-light-orange-9 hover:bg-light-orange-10 ${
-        disabled ? "bg-light-orange-7 hover:bg-light-orange-7 border-none  pointer-events-none" : ""
+        disabled ? "bg-light-orange-7 hover:bg-light-orange-7 pointer-events-none" : ""
       }`,
       default: `bg-white border-light-slate-8 text-light-slate-11 hover:bg-light-slate-2 ${
         disabled ? "bg-light-slate-4 text-light-slate-9 pointer-events-none" : ""
@@ -33,7 +33,7 @@ const Button = React.forwardRef<HTMLElement, ButtonsProps>(
     const rootClass = clsx(
       styles[variant],
       disabled && "cursor-not-allowed",
-      disabled && variant !== "destructive" && "bg-light-orange-7 hover:bg-light-orange-7 border-none",
+      disabled && variant !== "destructive" && "bg-light-orange-7 hover:bg-light-orange-7",
       "items-center inline-flex text-sm font-semibold tracking-tight border py-2 px-4 rounded-md focus-visible:border-orange-500 focus:outline-none focus-visible:ring focus-visible:ring-orange-200 whitespace-nowrap",
       className
     );

@@ -1,11 +1,9 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
-import { UserGroupIcon } from "@heroicons/react/24/outline";
 
 import { GetServerSidePropsContext } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import TextInput from "components/atoms/TextInput/text-input";
-import ToggleSwitch from "components/atoms/ToggleSwitch/toggle-switch";
 import Text from "components/atoms/Typography/text";
 import Title from "components/atoms/Typography/title";
 import TopNav from "components/organisms/TopNav/top-nav";
@@ -18,6 +16,9 @@ import GitHubImportDialog from "components/organisms/GitHubImportDialog/github-i
 import GitHubTeamSyncDialog from "components/organisms/GitHubTeamSyncDialog/github-team-sync-dialog";
 import { fetchGithubOrgTeamMembers } from "lib/hooks/fetchGithubTeamMembers";
 import { fetchApiData } from "helpers/fetchApiData";
+import { deleteCookie } from "lib/utils/server/cookies";
+import { WORKSPACE_ID_COOKIE_NAME } from "lib/utils/workspace-utils";
+import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 
 interface CreateListPayload {
   name: string;
@@ -37,7 +38,6 @@ const CreateListPage = ({ workspace }: { workspace: Workspace }) => {
   const { sessionToken, providerToken, user, username } = useSupabaseAuth();
 
   const [name, setName] = useState("");
-  const [isPublic, setIsPublic] = useState(false);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isTeamModalOpen, setIsTeamModalOpen] = useState(false);
@@ -68,7 +68,7 @@ const CreateListPage = ({ workspace }: { workspace: Workspace }) => {
     }
 
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/lists`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/workspaces/${workspace.id}/userLists`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -123,7 +123,7 @@ const CreateListPage = ({ workspace }: { workspace: Workspace }) => {
     const response = await createList({
       name,
       contributors: following.map((user) => ({ id: user.id, login: user.login })),
-      is_public: isPublic,
+      is_public: true,
     });
 
     if (response) {
@@ -141,7 +141,7 @@ const CreateListPage = ({ workspace }: { workspace: Workspace }) => {
         toast({ description: "List created successfully", variant: "success" });
       }
 
-      router.push(`/workspaces/${workspace.id}/contributor-insights/${response.id}/overview`);
+      router.push(`/workspaces/${workspace.id}/contributor-insights/${response.user_list_id}/overview`);
     } else {
       toast({ description: "An error occurred!", variant: "danger" });
       setSubmitted(false);
@@ -175,7 +175,7 @@ const CreateListPage = ({ workspace }: { workspace: Workspace }) => {
     const response = await createList({
       name,
       contributors: teamList.map((user) => ({ id: user.id, login: user.login })),
-      is_public: isPublic,
+      is_public: true,
     });
 
     if (response) {
@@ -194,7 +194,7 @@ const CreateListPage = ({ workspace }: { workspace: Workspace }) => {
         toast({ description: "List created successfully", variant: "success" });
       }
 
-      router.push(`/workspaces/${workspace.id}/contributor-insights/${response.id}/overview`);
+      router.push(`/workspaces/${workspace.id}/contributor-insights/${response.user_list_id}/overview`);
     } else {
       toast({ description: "An error occurred!", variant: "danger" });
       setSubmitted(false);
@@ -221,31 +221,6 @@ const CreateListPage = ({ workspace }: { workspace: Workspace }) => {
           <TextInput placeholder="Page Name (ex: My Team)" value={name} handleChange={handleOnNameChange} />
         </div>
 
-        <div className="flex flex-col gap-4 pb-16">
-          <Title className="text-1xl leading-none" level={4}>
-            Page Visibility
-          </Title>
-
-          <div className="flex justify-between">
-            <div className="flex items-center">
-              <UserGroupIcon className="w-6 h-6 text-light-slate-9" />
-              <Text className="pl-2">
-                <span id="make-public-explainer">Make this list publicly visible</span>
-              </Text>
-            </div>
-
-            <div className="flex ml-2 !border-red-900 items-center">
-              <Text className="text-orange-600 pr-2 hidden md:block">Make Public</Text>
-              <ToggleSwitch
-                ariaLabelledBy="make-public-explainer"
-                name="isPublic"
-                checked={isPublic}
-                handleToggle={() => setIsPublic((isPublic) => !isPublic)}
-              />
-            </div>
-          </div>
-        </div>
-
         <div className="flex flex-col gap-4 pb-6">
           <Title className="text-1xl leading-none" level={4}>
             Add Contributors
@@ -256,7 +231,7 @@ const CreateListPage = ({ workspace }: { workspace: Workspace }) => {
             description="Use our explore tool to find Contributors and create your list"
             icon="globe"
             handleClick={() => {
-              router.push(`/workspaces/${workspace.id}/contributor-insights/find?name=${name}&public=${isPublic}`);
+              router.push(`/workspaces/${workspace.id}/contributor-insights/find?name=${name}`);
             }}
           />
 
@@ -322,17 +297,19 @@ const CreateListPage = ({ workspace }: { workspace: Workspace }) => {
 
 const AddListPage = ({ workspace }: { workspace: Workspace }) => {
   return (
-    <div className="flex flex-col min-h-screen">
-      <TopNav />
-      <div className="flex flex-col items-center pt-20 page-container grow md:pt-14">
-        <main className="flex flex-col items-center flex-1 w-full px-3 py-8 md:px-2 bg-light-slate-2">
-          <div className="container px-2 mx-auto md:px-16">
-            <CreateListPage workspace={workspace} />
-          </div>
-        </main>
+    <WorkspaceLayout workspaceId={workspace.id}>
+      <div className="flex flex-col min-h-screen">
+        <TopNav />
+        <div className="flex flex-col items-center pt-20 page-container grow md:pt-14">
+          <main className="flex flex-col items-center flex-1 w-full px-3 py-8 md:px-2 bg-light-slate-2">
+            <div className="container px-2 mx-auto md:px-16">
+              <CreateListPage workspace={workspace} />
+            </div>
+          </main>
+        </div>
+        <Footer />
       </div>
-      <Footer />
-    </div>
+    </WorkspaceLayout>
   );
 };
 
@@ -350,7 +327,9 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   });
 
   if (error) {
-    if (error.status === 404) {
+    deleteCookie(ctx.res, WORKSPACE_ID_COOKIE_NAME);
+
+    if (error.status === 404 || error.status === 401) {
       return { notFound: true };
     }
 

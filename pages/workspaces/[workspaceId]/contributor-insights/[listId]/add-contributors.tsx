@@ -30,10 +30,7 @@ export function isListId(listId: string) {
 interface AddContributorsPageProps {
   list: DbUserList;
   workspaceId: string;
-  initialData: {
-    meta: Meta;
-    data: DbPRContributor[];
-  };
+  initialCount: number;
   timezoneOption: { timezone: string }[];
 }
 
@@ -67,10 +64,17 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     };
   }
 
+  const { data: initialData, error: initialError } = await fetchApiData<any>({
+    path: `lists/${listId}/contributors`,
+    bearerToken,
+    pathValidator: () => true,
+  });
+
   return {
     props: {
       list,
       workspaceId,
+      initialCount: initialData.meta.itemCount,
     },
   };
 };
@@ -202,7 +206,7 @@ const EmptyState = () => (
   </div>
 );
 
-const AddContributorsToList = ({ list, workspaceId, timezoneOption }: AddContributorsPageProps) => {
+const AddContributorsToList = ({ list, initialCount, workspaceId, timezoneOption }: AddContributorsPageProps) => {
   const [selectedContributors, setSelectedContributors] = useState<DbPRContributor[]>([]);
 
   const { sessionToken, providerToken } = useSupabaseAuth();
@@ -215,7 +219,11 @@ const AddContributorsToList = ({ list, workspaceId, timezoneOption }: AddContrib
   const addContributorsToList = async () => {
     const { error } = await fetchApiData({
       path: `lists/${list.id}/contributors`,
-      body: { contributors: selectedContributors.map(({ user_id }) => user_id) },
+      body: {
+        contributors: selectedContributors.map((c) => {
+          return { id: c.user_id };
+        }),
+      },
       method: "POST",
       bearerToken: sessionToken!,
       pathValidator: validateListPath,

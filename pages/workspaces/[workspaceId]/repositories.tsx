@@ -1,6 +1,5 @@
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { GetServerSidePropsContext } from "next";
-import { SquareFillIcon } from "@primer/octicons-react";
 import { useRouter } from "next/router";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import { fetchApiData } from "helpers/fetchApiData";
@@ -14,6 +13,8 @@ import { EmptyState } from "components/Workspaces/TrackedReposTable";
 import Card from "components/atoms/Card/card";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
 import { deleteCookie } from "lib/utils/server/cookies";
+import Button from "components/atoms/Button/button";
+import { WorkspaceHeader } from "components/Workspaces/WorkspaceHeader";
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const supabase = createPagesServerClient(context);
@@ -31,7 +32,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
   if (error) {
     deleteCookie(context.res, "workspaceId");
 
-    if (error.status === 404) {
+    if (error.status === 404 || error.status === 401) {
       return { notFound: true };
     }
 
@@ -55,14 +56,13 @@ const WorkspaceDashboard = ({ workspace }: WorkspaceDashboardProps) => {
 
   return (
     <WorkspaceLayout workspaceId={workspace.id}>
-      <h1 className="flex gap-2 items-center uppercase text-3xl font-semibold">
-        {/* putting a square icon here as a placeholder until we implement workspace logos */}
-        <SquareFillIcon className="w-12 h-12 text-sauced-orange" />
-        <span>{workspace.name}</span>
-      </h1>
-      <div className="flex justify-between items-center">
+      <WorkspaceHeader workspace={workspace} />
+      <div className="grid sm:flex gap-4 pt-3">
         <WorkspacesTabList workspaceId={workspace.id} selectedTab={"repositories"} />
-        <div>
+        <div className="flex justify-end items-center gap-4">
+          <Button variant="outline" onClick={() => router.push(`/workspaces/${workspace.id}/settings#load-wizard`)}>
+            Add repositories
+          </Button>
           <DayRangePicker />
         </div>
       </div>

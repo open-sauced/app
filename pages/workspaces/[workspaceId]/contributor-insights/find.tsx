@@ -18,6 +18,7 @@ import Text from "components/atoms/Typography/text";
 import TextInput from "components/atoms/TextInput/text-input";
 import Button from "components/atoms/Button/button";
 import { searchUsers } from "lib/hooks/search-users";
+import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 
 interface CreateListPayload {
   name: string;
@@ -41,7 +42,7 @@ const NewListCreationPage = () => {
   const [selectedContributors, setSelectedContributors] = useState<DbPRContributor[]>([]);
   const [selectedTimezone, setSelectedTimezone] = useState<string | undefined>(undefined);
   const [contributors, setContributors] = useState<DbPRContributor[]>([]);
-  const [isPublic, setIsPublic] = useState<boolean>(false);
+  const [isPublic, setIsPublic] = useState<boolean>(true);
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [searchResults, setSearchResults] = useState<GhUser[]>([]);
 
@@ -92,7 +93,7 @@ const NewListCreationPage = () => {
 
     setCreateLoading(true);
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/lists`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/workspaces/${workspaceId}/userLists`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -103,7 +104,7 @@ const NewListCreationPage = () => {
 
       if (res.ok) {
         const data = await res.json();
-        setListId(data.id);
+        setListId(data.user_list_id);
         setIsSuccess(true);
       }
     } catch (error) {
@@ -184,133 +185,135 @@ const NewListCreationPage = () => {
   }
 
   return (
-    <HubContributorsPageLayout>
-      <Dialog open={isOpen}>
-        <div className="info-container container w-full min-h-[6.25rem]">
-          <Header>
-            <HubContributorsHeader
-              setTimezoneFilter={handleSelectTimezone}
-              isPublic={isPublic}
-              handleToggleIsPublic={() => setIsPublic(!isPublic)}
-              loading={createLoading}
-              selectedContributorsIds={selectedContributors.map((contributor) => contributor.user_id)}
-              timezoneOptions={[]}
-              timezone={selectedTimezone}
-              title={title}
-              onAddToList={handleOnListCreate}
-              onTitleChange={(title) => setTitle(title)}
-              onSearch={onSearch}
-              searchSuggestions={suggestions}
-              onSearchSelect={onSearchSelect}
+    <WorkspaceLayout workspaceId={workspaceId}>
+      <HubContributorsPageLayout>
+        <Dialog open={isOpen}>
+          <div className="info-container container w-full min-h-[6.25rem]">
+            <Header>
+              <HubContributorsHeader
+                setTimezoneFilter={handleSelectTimezone}
+                isPublic={isPublic}
+                handleToggleIsPublic={() => setIsPublic(!isPublic)}
+                loading={createLoading}
+                selectedContributorsIds={selectedContributors.map((contributor) => contributor.user_id)}
+                timezoneOptions={[]}
+                timezone={selectedTimezone}
+                title={title}
+                onAddToList={handleOnListCreate}
+                onTitleChange={(title) => setTitle(title)}
+                onSearch={onSearch}
+                searchSuggestions={suggestions}
+                onSearchSelect={onSearchSelect}
+              />
+            </Header>
+          </div>
+          <div className="lg:min-w-[1150px] px-4 md:px-16 pb-8">
+            <ContributorListTableHeaders
+              selected={selectedContributors.length > 0 && selectedContributors.length === contributors.length}
+              handleOnSelectAllContributor={handleOnSelectAllChecked}
             />
-          </Header>
-        </div>
-        <div className="lg:min-w-[1150px] px-4 md:px-16 pb-8">
-          <ContributorListTableHeaders
-            selected={selectedContributors.length > 0 && selectedContributors.length === contributors.length}
-            handleOnSelectAllContributor={handleOnSelectAllChecked}
-          />
-          <ContributorTable
-            selectedContributors={selectedContributors}
-            topic={"*"}
-            handleSelectContributors={handleOnSelectChecked}
-            contributors={contributors}
-            noContributorsMessage="Search for contributors to add to your list"
-          ></ContributorTable>
-        </div>
+            <ContributorTable
+              selectedContributors={selectedContributors}
+              topic={"*"}
+              handleSelectContributors={handleOnSelectChecked}
+              contributors={contributors}
+              noContributorsMessage="Search for contributors to add to your list"
+            ></ContributorTable>
+          </div>
 
-        {/* Success and error state dialog section */}
-        <DialogContent>
-          {isSuccess ? (
-            <div className="flex flex-col max-w-xs gap-6 w-max">
-              <div className="flex flex-col items-center gap-2">
-                <span className="flex items-center justify-center p-3 bg-green-100 rounded-full w-max">
-                  <span className="flex items-center justify-center w-10 h-10 bg-green-300 rounded-full">
-                    <FiCheckCircle className="text-green-800" size={24} />
+          {/* Success and error state dialog section */}
+          <DialogContent>
+            {isSuccess ? (
+              <div className="flex flex-col max-w-xs gap-6 w-max">
+                <div className="flex flex-col items-center gap-2">
+                  <span className="flex items-center justify-center p-3 bg-green-100 rounded-full w-max">
+                    <span className="flex items-center justify-center w-10 h-10 bg-green-300 rounded-full">
+                      <FiCheckCircle className="text-green-800" size={24} />
+                    </span>
                   </span>
-                </span>
-                <Title level={3} className="text-lg">
-                  Your list has been created
-                </Title>
-                <Text className="leading-tight text-center text-light-slate-9">
-                  You can now edit and track your new list in the pages tab, and get useful insights.
-                </Text>
+                  <Title level={3} className="text-lg">
+                    Your insight has been created
+                  </Title>
+                  <Text className="leading-tight text-center text-light-slate-9">
+                    You can now edit and track your new insight in the workspace, and get useful metrics.
+                  </Text>
+                </div>
+                <div>
+                  <label>
+                    <span className="text-sm text-light-slate-10">Share link</span>
+                    <div className="flex items-center gap-3 pr-3">
+                      <TextInput
+                        className="bg-white pointer-events-none"
+                        value={`${window.location.origin}/workspaces/${workspaceId}/contributor-insights/${listId}`}
+                      />
+                      <button
+                        onClick={() =>
+                          handleCopyToClipboard(
+                            `${window.location.origin}/workspaces/${workspaceId}/contributor-insights/${listId}`
+                          )
+                        }
+                        type="button"
+                      >
+                        <FiCopy className="text-lg" />
+                      </button>
+                    </div>
+                  </label>
+                </div>
+                <div className="flex gap-3">
+                  <Button
+                    href={`/workspaces/${workspaceId}/contributor-insights`}
+                    className="justify-center flex-1"
+                    variant="text"
+                  >
+                    Go Back to Pages
+                  </Button>
+                  <Button
+                    href={`/workspaces/${workspaceId}/contributor-insights/${listId}/overview`}
+                    className="justify-center flex-1"
+                    variant="primary"
+                  >
+                    Go to Insight
+                  </Button>
+                </div>
               </div>
-              <div>
-                <label>
-                  <span className="text-sm text-light-slate-10">Share list link</span>
-                  <div className="flex items-center gap-3 pr-3">
-                    <TextInput
-                      className="bg-white pointer-events-none"
-                      value={`${window.location.origin}/workspaces/${workspaceId}/contributor-insights/${listId}`}
-                    />
-                    <button
-                      onClick={() =>
-                        handleCopyToClipboard(
-                          `${window.location.origin}/workspaces/${workspaceId}/contributor-insights/${listId}`
-                        )
-                      }
-                      type="button"
-                    >
-                      <FiCopy className="text-lg" />
-                    </button>
-                  </div>
-                </label>
-              </div>
-              <div className="flex gap-3">
-                <Button
-                  href={`/workspaces/${workspaceId}/contributor-insights`}
-                  className="justify-center flex-1"
-                  variant="text"
-                >
-                  Go Back to Pages
-                </Button>
-                <Button
-                  href={`/workspaces/${workspaceId}/contributor-insights/${listId}/overview`}
-                  className="justify-center flex-1"
-                  variant="primary"
-                >
-                  Go to List Page
-                </Button>
-              </div>
-            </div>
-          ) : (
-            <div className="flex flex-col max-w-xs gap-6 w-max">
-              <div className="flex flex-col items-center gap-2">
-                <span className="flex items-center justify-center p-3 bg-red-100 rounded-full w-max">
-                  <span className="flex items-center justify-center w-10 h-10 bg-red-300 rounded-full">
-                    <AiOutlineWarning className="text-red-800" size={24} />
+            ) : (
+              <div className="flex flex-col max-w-xs gap-6 w-max">
+                <div className="flex flex-col items-center gap-2">
+                  <span className="flex items-center justify-center p-3 bg-red-100 rounded-full w-max">
+                    <span className="flex items-center justify-center w-10 h-10 bg-red-300 rounded-full">
+                      <AiOutlineWarning className="text-red-800" size={24} />
+                    </span>
                   </span>
-                </span>
-                <Title level={3} className="text-lg">
-                  Something went wrong
-                </Title>
-                <Text className="leading-tight text-center text-light-slate-9">
-                  We couldn&apos;t create your list. Please, try again in a few minutes.
-                </Text>
-              </div>
+                  <Title level={3} className="text-lg">
+                    Something went wrong
+                  </Title>
+                  <Text className="leading-tight text-center text-light-slate-9">
+                    We couldn&apos;t create your list. Please, try again in a few minutes.
+                  </Text>
+                </div>
 
-              <div className="flex gap-3">
-                <Button
-                  href={`/workspaces/${workspaceId}/contributor-insights`}
-                  className="justify-center flex-1"
-                  variant="text"
-                >
-                  Go Back to Pages
-                </Button>
-                <Button
-                  href={`/workspaces/${workspaceId}/contributor-insights`}
-                  className="justify-center flex-1"
-                  variant="primary"
-                >
-                  Go to List Page
-                </Button>
+                <div className="flex gap-3">
+                  <Button
+                    href={`/workspaces/${workspaceId}/contributor-insights`}
+                    className="justify-center flex-1"
+                    variant="text"
+                  >
+                    Go Back to Pages
+                  </Button>
+                  <Button
+                    href={`/workspaces/${workspaceId}/contributor-insights`}
+                    className="justify-center flex-1"
+                    variant="primary"
+                  >
+                    Go to List Page
+                  </Button>
+                </div>
               </div>
-            </div>
-          )}
-        </DialogContent>
-      </Dialog>
-    </HubContributorsPageLayout>
+            )}
+          </DialogContent>
+        </Dialog>
+      </HubContributorsPageLayout>
+    </WorkspaceLayout>
   );
 };
 

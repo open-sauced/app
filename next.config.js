@@ -44,8 +44,33 @@ module.exports = {
         permanent: true,
       },
       {
-        source: "/workspaces/:workspaceId/contributor-insights/:listId",
-        destination: "/workspaces/:workspaceId/contributor-insights/:listId/overview",
+        source: "/hub/lists/find",
+        destination: "/",
+        permanent: true,
+      },
+      {
+        source: "/hub/lists/new",
+        destination: "/",
+        permanent: true,
+      },
+      {
+        source: "/hub/lists",
+        destination: "/",
+        permanent: true,
+      },
+      {
+        source: "/hub/insights/:insightId/accept",
+        destination: "/",
+        permanent: true,
+      },
+      {
+        source: "/hub/insights/:insightId/edit",
+        destination: "/",
+        permanent: true,
+      },
+      {
+        source: "/hub/insights",
+        destination: "/",
         permanent: true,
       },
     ];
