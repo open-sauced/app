@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.4.0-beta.42](https://github.com/open-sauced/app/compare/v2.4.0-beta.41...v2.4.0-beta.42) (2024-02-27)
+
+
+### 🐛 Bug Fixes
+
+* remove visibility indicators from contributor/repository insights ([#2779](https://github.com/open-sauced/app/issues/2779)) ([b3a3011](https://github.com/open-sauced/app/commit/b3a301184a539516709f13290cf30881284008fb))
+
 ## [2.4.0-beta.41](https://github.com/open-sauced/app/compare/v2.4.0-beta.40...v2.4.0-beta.41) (2024-02-27)
 
 
