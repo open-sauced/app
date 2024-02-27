@@ -37,12 +37,14 @@ export async function saveWorkspace({
   description = "",
   sessionToken,
   repos,
+  contributors,
 }: {
   workspaceId: string;
   name: string;
   description?: string;
   sessionToken: string;
   repos: { full_name: string }[];
+  contributors: { login: string }[];
 }) {
   const updateWorkspace = await fetchApiData<Workspace>({
     path: `workspaces/${workspaceId}`,
@@ -60,12 +62,18 @@ export async function saveWorkspace({
     pathValidator: () => true,
   });
 
-  const [{ data, error }, { data: repoData, error: reposError }] = await Promise.all([
-    updateWorkspace,
-    updateWorkspaceRepos,
-  ]);
+  const updateWorkspaceContributors = await fetchApiData<any[]>({
+    path: `workspaces/${workspaceId}/contributors`,
+    method: "POST",
+    body: { contributors },
+    bearerToken: sessionToken,
+    pathValidator: () => true,
+  });
 
-  return { data: { workspace: data, repos: repoData }, error };
+  const [{ data, error }, { data: repoData, error: reposError }, { data: contributorsData, error: contributorsError }] =
+    await Promise.all([updateWorkspace, updateWorkspaceRepos, updateWorkspaceContributors]);
+
+  return { data: { workspace: data, repos: repoData, contributors: contributorsData }, error };
 }
 
 export async function upgradeWorkspace({ workspaceId, sessionToken }: { workspaceId: string; sessionToken: string }) {
