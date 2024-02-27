@@ -6,9 +6,10 @@ import TopNav from "components/organisms/TopNav/top-nav";
 import { AppSideBar } from "components/shared/AppSidebar/AppSidebar";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
+import Footer from "components/organisms/Footer/footer";
 
 interface WorkspaceLayoutProps {
-  workspaceId: string | null;
+  workspaceId: string;
   children: React.ReactNode;
 }
 
@@ -40,6 +41,7 @@ export const WorkspaceLayout = ({ workspaceId, children }: WorkspaceLayoutProps)
       style={{
         "--top-nav-height": "3.3rem",
         gridTemplateRows: "var(--top-nav-height) auto 1fr",
+        minHeight: "calc(100vh - var(--top-nav-height))",
       }}
     >
       <div>
@@ -58,7 +60,12 @@ export const WorkspaceLayout = ({ workspaceId, children }: WorkspaceLayoutProps)
           )}
         </ClientOnly>
       </div>
-      <div>{children}</div>
+      <div className="flex flex-col items-center grow pt-8 md:pt-14 lg:pt-20">
+        <div className="px-1 sm:px-2 md:px-4 xl:px-16 container w-full min-h-[100px]">{children}</div>
+      </div>
+      <div className="flex self-end pt-2">
+        <Footer />
+      </div>
     </div>
   );
 };

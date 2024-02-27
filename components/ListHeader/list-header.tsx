@@ -5,7 +5,6 @@ import { usePostHog } from "posthog-js/react";
 
 import Button from "components/atoms/Button/button";
 import Title from "components/atoms/Typography/title";
-import Badge from "components/atoms/InsightBadge/insight-badge";
 import ContextThumbnail from "components/atoms/ContextThumbnail/context-thumbnail";
 
 import { truncateString } from "lib/utils/truncate-string";
@@ -56,7 +55,6 @@ const ListHeader = ({
             <Title level={1} className="!text-2xl font-semibold text-slate-900">
               {(name && truncateString(name, 30)) || "List"}
             </Title>
-            {<Badge isPublic={isPublic} />}
           </div>
           <div className="flex items-center gap-2 mt-4" id="contributorCount">
             <ClientOnly>{numberOfContributors} Contributors </ClientOnly>

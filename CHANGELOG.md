@@ -5,6 +5,41 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.4.0-beta.43](https://github.com/open-sauced/app/compare/v2.4.0-beta.42...v2.4.0-beta.43) (2024-02-27)
+
+
+### 🐛 Bug Fixes
+
+* fixes the workspace ID being null issue ([#2783](https://github.com/open-sauced/app/issues/2783)) ([5f7323e](https://github.com/open-sauced/app/commit/5f7323e2bc720930e7a37f9ee6f3b619a18718cc))
+
+## [2.4.0-beta.42](https://github.com/open-sauced/app/compare/v2.4.0-beta.41...v2.4.0-beta.42) (2024-02-27)
+
+
+### 🐛 Bug Fixes
+
+* remove visibility indicators from contributor/repository insights ([#2779](https://github.com/open-sauced/app/issues/2779)) ([b3a3011](https://github.com/open-sauced/app/commit/b3a301184a539516709f13290cf30881284008fb))
+
+## [2.4.0-beta.41](https://github.com/open-sauced/app/compare/v2.4.0-beta.40...v2.4.0-beta.41) (2024-02-27)
+
+
+### 🍕 Features
+
+* Use insight repos already on insights ([#2776](https://github.com/open-sauced/app/issues/2776)) ([53b20bc](https://github.com/open-sauced/app/commit/53b20bc277c30fc18a5748a53eae119d4c5e04af))
+
+## [2.4.0-beta.40](https://github.com/open-sauced/app/compare/v2.4.0-beta.39...v2.4.0-beta.40) (2024-02-27)
+
+
+### 🍕 Features
+
+* remove tracking contributors from new workspace page ([#2775](https://github.com/open-sauced/app/issues/2775)) ([87ed261](https://github.com/open-sauced/app/commit/87ed2615c8779c4369b402730fc06c3008df162d))
+
+## [2.4.0-beta.39](https://github.com/open-sauced/app/compare/v2.4.0-beta.38...v2.4.0-beta.39) (2024-02-27)
+
+
+### 🐛 Bug Fixes
+
+* smaller screen fixes for workspaces ([#2778](https://github.com/open-sauced/app/issues/2778)) ([787272a](https://github.com/open-sauced/app/commit/787272abe5e7e7d282be3c91a990096aa2405ebd))
+
 ## [2.4.0-beta.38](https://github.com/open-sauced/app/compare/v2.4.0-beta.37...v2.4.0-beta.38) (2024-02-27)
 
 
