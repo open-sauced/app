@@ -1,3 +1,5 @@
+import { useState } from "react";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { ErrorBoundary } from "react-error-boundary";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
@@ -12,6 +14,9 @@ import ClientOnly from "components/atoms/ClientOnly/client-only";
 import { useContributorsList } from "lib/hooks/api/useContributorList";
 import ContributorsList from "components/organisms/ContributorsList/contributors-list";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
+import { useIsWorkspaceUpgraded } from "lib/hooks/api/useIsWorkspaceUpgraded";
+
+const InsightUpgradeModal = dynamic(() => import("components/Workspaces/InsightUpgradeModal"));
 
 interface ListsOverviewProps {
   list: DBList;
@@ -110,8 +115,21 @@ const ListsOverview = ({
   const allContributorCommits = allContributorStats?.reduce((acc, curr) => acc + curr.commits, 0) || 0;
   const prevAllContributorCommits = prevAllContributorStats?.reduce((acc, curr) => acc + curr.commits, 0) || 0;
 
+  const { data: isWorkspaceUpgraded } = useIsWorkspaceUpgraded({ workspaceId });
+  const showNudgeBanner = !isWorkspaceUpgraded && numberOfContributors > 10;
+  const [isInsightUpgradeModalOpen, setIsInsightUpgradeModalOpen] = useState(false);
+
   return (
     <WorkspaceLayout workspaceId={workspaceId}>
+      {showNudgeBanner && (
+        <button
+          onClick={() => setIsInsightUpgradeModalOpen(true)}
+          className="w-full h-fit py-2 text-center bg-light-orange-10 text-white"
+        >
+          This insight page is past the free limit.{" "}
+          <span className="font-semibold underline">Upgrade to a PRO Workspace!</span>
+        </button>
+      )}
       <ListPageLayout
         list={list}
         workspaceId={workspaceId}
@@ -184,6 +202,14 @@ const ListsOverview = ({
           </ClientOnly>
         </div>
       </ListPageLayout>
+
+      <InsightUpgradeModal
+        workspaceId={workspaceId}
+        overLimit={numberOfContributors}
+        isOpen={isInsightUpgradeModalOpen}
+        onClose={() => setIsInsightUpgradeModalOpen(false)}
+        variant="contributors"
+      />
     </WorkspaceLayout>
   );
 };

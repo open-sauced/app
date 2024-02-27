@@ -21,13 +21,11 @@ import Search from "components/atoms/Search/search";
 import { useToast } from "lib/hooks/useToast";
 import { useFetchInsightRecommendedRepositories } from "lib/hooks/useFetchOrgRecommendations";
 import { RepoCardProfileProps } from "components/molecules/RepoCardProfile/repo-card-profile";
-import { useIsWorkspaceUpgraded } from "lib/hooks/api/useIsWorkspaceUpgraded";
 import SuggestedRepositoriesList from "../SuggestedRepoList/suggested-repo-list";
 
 // lazy import DeleteInsightPageModal and TeamMembersConfig component to optimize bundle size they don't load on initial render
 const DeleteInsightPageModal = dynamic(() => import("./DeleteInsightPageModal"));
 const TeamMembersConfig = dynamic(() => import("components/molecules/TeamMembersConfig/team-members-config"));
-const InsightUpgradeModal = dynamic(() => import("components/Workspaces/InsightUpgradeModal"));
 
 const enum RepoLookupError {
   Initial = 0,
@@ -80,7 +78,6 @@ const InsightPage = ({ edit, insight, pageRepos, workspaceId }: InsightPageProps
   const pageHref = router.asPath;
   const [reposIds, setReposIds] = useState<number[]>([]);
   const { data: repoListData } = useRepositories(reposIds);
-  const { data: isWorkspaceUpgraded } = useIsWorkspaceUpgraded({ workspaceId: workspaceId! });
 
   useEffect(() => {
     const searchParams = new URLSearchParams(pageHref.substring(pageHref.indexOf("?")));
@@ -109,7 +106,6 @@ const InsightPage = ({ edit, insight, pageRepos, workspaceId }: InsightPageProps
   const [syncOrganizationError, setSyncOrganizationError] = useState<OrgLookupError>(OrgLookupError.Initial);
   const insightRepoLimit = useStore((state) => state.insightRepoLimit);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isInsightUpgradeModalOpen, setIsInsightUpgradeModalOpen] = useState(false);
   const [repoSearchTerm, setRepoSearchTerm] = useState<string>("");
   const [suggestions, setSuggestions] = useState<string[]>([]);
 
@@ -232,7 +228,6 @@ const InsightPage = ({ edit, insight, pageRepos, workspaceId }: InsightPageProps
     setCreateLoading(false);
     if (response && response.ok) {
       toast({ description: "Page updated successfully", variant: "success" });
-      router.push(workspaceId ? `/workspaces/${workspaceId}/repository-insights` : "/hub/insights");
     } else {
       toast({ description: "An error occurred!", variant: "danger" });
     }
@@ -618,13 +613,7 @@ const InsightPage = ({ edit, insight, pageRepos, workspaceId }: InsightPageProps
           edit={edit}
           hasItems={repos.length > 0}
           handleCreatePage={handleCreateInsightPage}
-          handleUpdatePage={() => {
-            if (!isWorkspaceUpgraded && repos.length > 100) {
-              setIsInsightUpgradeModalOpen(true);
-            } else {
-              handleUpdateInsightPage();
-            }
-          }}
+          handleUpdatePage={handleUpdateInsightPage}
           handleAddToCart={handleReAddRepository}
           history={reposRemoved.filter(
             (repo) => !repos.find((r) => r.full_name === `${repo.orgName}/${repo.repoName}`)
@@ -652,14 +641,6 @@ const InsightPage = ({ edit, insight, pageRepos, workspaceId }: InsightPageProps
           })}
         </RepositoriesCart>
       </div>
-
-      <InsightUpgradeModal
-        workspaceId={workspaceId!}
-        overLimit={repos.length}
-        isOpen={isInsightUpgradeModalOpen}
-        onClose={() => setIsInsightUpgradeModalOpen(false)}
-        variant="repositories"
-      />
 
       <DeleteInsightPageModal
         isLoading={deleteLoading}
