@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.4.0-beta.39](https://github.com/open-sauced/app/compare/v2.4.0-beta.38...v2.4.0-beta.39) (2024-02-27)
+
+
+### 🐛 Bug Fixes
+
+* smaller screen fixes for workspaces ([#2778](https://github.com/open-sauced/app/issues/2778)) ([787272a](https://github.com/open-sauced/app/commit/787272abe5e7e7d282be3c91a990096aa2405ebd))
+
 ## [2.4.0-beta.38](https://github.com/open-sauced/app/compare/v2.4.0-beta.37...v2.4.0-beta.38) (2024-02-27)
 
 
