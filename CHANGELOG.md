@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.4.0-beta.41](https://github.com/open-sauced/app/compare/v2.4.0-beta.40...v2.4.0-beta.41) (2024-02-27)
+
+
+### 🍕 Features
+
+* Use insight repos already on insights ([#2776](https://github.com/open-sauced/app/issues/2776)) ([53b20bc](https://github.com/open-sauced/app/commit/53b20bc277c30fc18a5748a53eae119d4c5e04af))
+
 ## [2.4.0-beta.40](https://github.com/open-sauced/app/compare/v2.4.0-beta.39...v2.4.0-beta.40) (2024-02-27)
 
 
