@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.4.0-beta.44](https://github.com/open-sauced/app/compare/v2.4.0-beta.43...v2.4.0-beta.44) (2024-02-27)
+
+
+### 🐛 Bug Fixes
+
+* now unauthenticated users can access public workspaces ([#2785](https://github.com/open-sauced/app/issues/2785)) ([71b9487](https://github.com/open-sauced/app/commit/71b9487e03fcba265d1d288ced7f1a9a2bcd4c0e))
+
 ## [2.4.0-beta.43](https://github.com/open-sauced/app/compare/v2.4.0-beta.42...v2.4.0-beta.43) (2024-02-27)
 
 
