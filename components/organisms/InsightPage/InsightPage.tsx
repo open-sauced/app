@@ -21,13 +21,11 @@ import Search from "components/atoms/Search/search";
 import { useToast } from "lib/hooks/useToast";
 import { useFetchInsightRecommendedRepositories } from "lib/hooks/useFetchOrgRecommendations";
 import { RepoCardProfileProps } from "components/molecules/RepoCardProfile/repo-card-profile";
-import { useIsWorkspaceUpgraded } from "lib/hooks/api/useIsWorkspaceUpgraded";
 import SuggestedRepositoriesList from "../SuggestedRepoList/suggested-repo-list";
 
 // lazy import DeleteInsightPageModal and TeamMembersConfig component to optimize bundle size they don't load on initial render
 const DeleteInsightPageModal = dynamic(() => import("./DeleteInsightPageModal"));
 const TeamMembersConfig = dynamic(() => import("components/molecules/TeamMembersConfig/team-members-config"));
-const InsightUpgradeModal = dynamic(() => import("components/Workspaces/InsightUpgradeModal"));
 
 const enum RepoLookupError {
   Initial = 0,
@@ -80,7 +78,6 @@ const InsightPage = ({ edit, insight, pageRepos, workspaceId }: InsightPageProps
   const pageHref = router.asPath;
   const [reposIds, setReposIds] = useState<number[]>([]);
   const { data: repoListData } = useRepositories(reposIds);
-  const { data: isWorkspaceUpgraded } = useIsWorkspaceUpgraded({ workspaceId: workspaceId! });
 
   useEffect(() => {
     const searchParams = new URLSearchParams(pageHref.substring(pageHref.indexOf("?")));
@@ -618,13 +615,7 @@ const InsightPage = ({ edit, insight, pageRepos, workspaceId }: InsightPageProps
           edit={edit}
           hasItems={repos.length > 0}
           handleCreatePage={handleCreateInsightPage}
-          handleUpdatePage={() => {
-            if (!isWorkspaceUpgraded && repos.length > 100) {
-              setIsInsightUpgradeModalOpen(true);
-            } else {
-              handleUpdateInsightPage();
-            }
-          }}
+          handleUpdatePage={handleUpdateInsightPage}
           handleAddToCart={handleReAddRepository}
           history={reposRemoved.filter(
             (repo) => !repos.find((r) => r.full_name === `${repo.orgName}/${repo.repoName}`)
@@ -652,14 +643,6 @@ const InsightPage = ({ edit, insight, pageRepos, workspaceId }: InsightPageProps
           })}
         </RepositoriesCart>
       </div>
-
-      <InsightUpgradeModal
-        workspaceId={workspaceId!}
-        overLimit={repos.length}
-        isOpen={isInsightUpgradeModalOpen}
-        onClose={() => setIsInsightUpgradeModalOpen(false)}
-        variant="repositories"
-      />
 
       <DeleteInsightPageModal
         isLoading={deleteLoading}
