@@ -49,7 +49,7 @@ const NewWorkspace = () => {
   });
 
   return (
-    <WorkspaceLayout workspaceId={null}>
+    <WorkspaceLayout workspaceId="new">
       <div className="grid gap-6 max-w-4xl">
         <h1 className="border-b bottom pb-4 text-xl font-medium">Workspace Settings</h1>
         <form className="flex flex-col gap-6 mb-2" onSubmit={onCreateWorkspace}>
