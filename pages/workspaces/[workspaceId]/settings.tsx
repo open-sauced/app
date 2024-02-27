@@ -19,7 +19,6 @@ import { useGetWorkspaceRepositories } from "lib/hooks/api/useGetWorkspaceReposi
 import {
   WORKSPACE_ID_COOKIE_NAME,
   changeWorkspaceVisibility,
-  deleteTrackedContributors,
   deleteTrackedRepos,
   deleteWorkspace,
   saveWorkspace,
@@ -27,7 +26,6 @@ import {
 } from "lib/utils/workspace-utils";
 import { WORKSPACE_UPDATED_EVENT } from "components/shared/AppSidebar/AppSidebar";
 import { WorkspacesTabList } from "components/Workspaces/WorkspacesTabList";
-import { useGetWorkspaceContributors } from "lib/hooks/api/useGetWorkspaceContributors";
 import { deleteCookie } from "lib/utils/server/cookies";
 import WorkspaceVisibilityModal from "components/Workspaces/WorkspaceVisibilityModal";
 import Card from "components/atoms/Card/card";
@@ -109,17 +107,6 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace }: WorkspaceSettingsP
   const [trackedRepos, setTrackedRepos] = useState<Map<string, boolean>>(new Map());
   const [trackedReposPendingDeletion, setTrackedReposPendingDeletion] = useState<Set<string>>(new Set());
 
-  const [trackedContributorsModalOpen, setTrackedContributorsModalOpen] = useState(false);
-  const {
-    data: contributorData,
-    error: contributorError,
-    mutate: mutateTrackedContributors,
-    isLoading: isContributorsLoading,
-  } = useGetWorkspaceContributors({ workspaceId: workspace.id });
-
-  const initialTrackedContributors: string[] = contributorData?.data?.map(({ contributor }) => contributor.login) ?? [];
-  const [trackedContributors, setTrackedContributors] = useState<Map<string, boolean>>(new Map());
-  const [trackedContributorsPendingDeletion, setTrackedContributorsPendingDeletion] = useState<Set<string>>(new Set());
   const {
     data: workspaceMembers,
     addMember,
@@ -130,8 +117,6 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace }: WorkspaceSettingsP
   useEffectOnce(() => {
     if (window.location.hash === "#load-wizard") {
       setTrackedReposModalOpen(true);
-    } else if (window.location.hash === "#load-contributors-wizard") {
-      setTrackedContributorsModalOpen(true);
     }
   });
 
@@ -147,22 +132,7 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace }: WorkspaceSettingsP
     }
   });
 
-  const pendingTrackedContributors = new Map([
-    ...initialTrackedContributors.map((contributor) => [contributor, true] as const),
-    ...trackedContributors.entries(),
-  ]);
-
-  pendingTrackedContributors.forEach((isSelected, contributor) => {
-    if (trackedContributorsPendingDeletion.has(contributor)) {
-      pendingTrackedContributors.delete(contributor);
-    }
-  });
-
   const TrackedReposModal = dynamic(() => import("components/Workspaces/TrackedReposModal"), {
-    ssr: false,
-  });
-
-  const TrackedContributorsModal = dynamic(() => import("components/Workspaces/TrackedContributorsModal"), {
     ssr: false,
   });
 
@@ -180,7 +150,7 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace }: WorkspaceSettingsP
       description,
       sessionToken: sessionToken!,
       repos: Array.from(trackedRepos, ([repo]) => ({ full_name: repo })),
-      contributors: Array.from(trackedContributors, ([contributor]) => ({ login: contributor })),
+      contributors: [],
     });
 
     const workspaceRepoDeletes = await deleteTrackedRepos({
@@ -189,31 +159,20 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace }: WorkspaceSettingsP
       repos: Array.from(trackedReposPendingDeletion, (repo) => ({ full_name: repo })),
     });
 
-    const workspaceContributorDeletes = await deleteTrackedContributors({
-      workspaceId: workspace.id,
-      sessionToken: sessionToken!,
-      contributors: Array.from(trackedContributorsPendingDeletion, (contributor) => ({ login: contributor })),
-    });
+    const [{ data, error }, { data: deletedRepos, error: reposDeleteError }] = await Promise.all([
+      workspaceUpdate,
+      workspaceRepoDeletes,
+    ]);
 
-    const [
-      { data, error },
-      { data: deletedRepos, error: reposDeleteError },
-      { data: deletedContributors, error: contributorsDeleteError },
-    ] = await Promise.all([workspaceUpdate, workspaceRepoDeletes, workspaceContributorDeletes]);
-
-    if (error || reposDeleteError || contributorsDeleteError) {
+    if (error || reposDeleteError) {
       toast({ description: `Workspace update failed`, variant: "danger" });
     } else {
       setWorkspaceName(name);
       document.dispatchEvent(new CustomEvent(WORKSPACE_UPDATED_EVENT, { detail: data }));
       await mutateTrackedRepos();
-      await mutateTrackedContributors();
 
       setTrackedReposPendingDeletion(new Set());
       setTrackedRepos(new Map());
-
-      setTrackedContributorsPendingDeletion(new Set());
-      setTrackedContributors(new Map());
 
       toast({ description: `Workspace updated successfully`, variant: "success" });
     }
@@ -408,32 +367,6 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace }: WorkspaceSettingsP
           }}
           onCancel={() => {
             setTrackedReposModalOpen(false);
-          }}
-        />
-
-        <TrackedContributorsModal
-          isOpen={trackedContributorsModalOpen}
-          onClose={() => {
-            setTrackedContributorsModalOpen(false);
-          }}
-          onAddToTrackingList={(contributors) => {
-            setTrackedContributorsModalOpen(false);
-            setTrackedContributors((trackedContributors) => {
-              const updates = new Map(trackedContributors);
-
-              contributors.forEach((isSelected, contributor) => {
-                if (isSelected) {
-                  updates.set(contributor, true);
-                } else {
-                  updates.delete(contributor);
-                }
-              });
-
-              return updates;
-            });
-          }}
-          onCancel={() => {
-            setTrackedContributorsModalOpen(false);
           }}
         />
 
