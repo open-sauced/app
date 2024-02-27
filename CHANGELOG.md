@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.4.0-beta.45](https://github.com/open-sauced/app/compare/v2.4.0-beta.44...v2.4.0-beta.45) (2024-02-27)
+
+
+### 🍕 Features
+
+* add paid upgrade modal on reaching insight limits ([#2735](https://github.com/open-sauced/app/issues/2735)) ([5bb081e](https://github.com/open-sauced/app/commit/5bb081ea3b77154481b49e5cb5a700609af0e7c1))
+
 ## [2.4.0-beta.44](https://github.com/open-sauced/app/compare/v2.4.0-beta.43...v2.4.0-beta.44) (2024-02-27)
 
 
