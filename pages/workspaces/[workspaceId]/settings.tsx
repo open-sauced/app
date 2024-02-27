@@ -293,7 +293,7 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace }: WorkspaceSettingsP
         ) : (
           <Card className="flex flex-col gap-4 px-6 pt-5 pb-6">
             <h2 className="text-md font-medium">Upgrade your workspace</h2>
-            <div className="flex gap-4">
+            <div id="upgrade" className="flex gap-4">
               <FaRegCheckCircle className="text-light-grass-8 w-6 h-6" />
               <div className="flex flex-col gap-2">
                 <h3 className="text-sm font-medium">Make your workspace private</h3>
