@@ -4,7 +4,6 @@ import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 
 import Image from "next/image";
 import { FiAlertOctagon, FiCheckCircle } from "react-icons/fi";
-import { useRouter } from "next/router";
 import useFetchAllContributors from "lib/hooks/useFetchAllContributors";
 import { fetchApiData, validateListPath } from "helpers/fetchApiData";
 
@@ -20,6 +19,8 @@ import Text from "components/atoms/Typography/text";
 import Button from "components/atoms/Button/button";
 import { searchUsers } from "lib/hooks/search-users";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
+import InsightUpgradeModal from "components/Workspaces/InsightUpgradeModal";
+import { useIsWorkspaceUpgraded } from "lib/hooks/api/useIsWorkspaceUpgraded";
 
 // TODO: Move to a shared file
 export function isListId(listId: string) {
@@ -208,7 +209,6 @@ const EmptyState = () => (
 );
 
 const AddContributorsToList = ({ list, initialCount, workspaceId, timezoneOption }: AddContributorsPageProps) => {
-  const router = useRouter();
   const [selectedContributors, setSelectedContributors] = useState<DbPRContributor[]>([]);
 
   const { sessionToken, providerToken } = useSupabaseAuth();
@@ -217,8 +217,15 @@ const AddContributorsToList = ({ list, initialCount, workspaceId, timezoneOption
   const [contributors, setContributors] = useState<DbPRContributor[]>([]);
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [searchResults, setSearchResults] = useState<GhUser[]>([]);
+  const [isInsightUpgradeModalOpen, setIsInsightUpgradeModalOpen] = useState(false);
+  const { data: isWorkspaceUpgraded } = useIsWorkspaceUpgraded({ workspaceId: workspaceId! });
 
   const addContributorsToList = async () => {
+    if (!isWorkspaceUpgraded && initialCount + selectedContributors.length > 10) {
+      setIsInsightUpgradeModalOpen(true);
+      return;
+    }
+
     const { error } = await fetchApiData({
       path: `lists/${list.id}/contributors`,
       body: {
@@ -345,6 +352,14 @@ const AddContributorsToList = ({ list, initialCount, workspaceId, timezoneOption
             }}
           />
         )}
+
+        <InsightUpgradeModal
+          workspaceId={workspaceId}
+          overLimit={initialCount + selectedContributors.length}
+          isOpen={isInsightUpgradeModalOpen}
+          onClose={() => setIsInsightUpgradeModalOpen(false)}
+          variant="contributors"
+        />
       </HubContributorsPageLayout>
     </WorkspaceLayout>
   );
