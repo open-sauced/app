@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.4.0-beta.43](https://github.com/open-sauced/app/compare/v2.4.0-beta.42...v2.4.0-beta.43) (2024-02-27)
+
+
+### 🐛 Bug Fixes
+
+* fixes the workspace ID being null issue ([#2783](https://github.com/open-sauced/app/issues/2783)) ([5f7323e](https://github.com/open-sauced/app/commit/5f7323e2bc720930e7a37f9ee6f3b619a18718cc))
+
 ## [2.4.0-beta.42](https://github.com/open-sauced/app/compare/v2.4.0-beta.41...v2.4.0-beta.42) (2024-02-27)
 
 
