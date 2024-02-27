@@ -14,6 +14,7 @@ const recommendations: Record<InterestType, string[]> = {
   php: ["laravel/framework"],
   java: ["thingsboard/thingsboard"],
   typescript: ["sequelize/sequelize"],
+  angular: ["angular/angular"],
   golang: ["cli/cli"],
   vue: ["vuejs/vue"],
   kubernetes: ["kubernetes/kubernetes"],

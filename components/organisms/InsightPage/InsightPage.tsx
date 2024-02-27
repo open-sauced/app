@@ -1,13 +1,11 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
-import { UserGroupIcon } from "@heroicons/react/24/outline";
 
 import { useDebounce } from "rooks";
 import Link from "next/link";
 import Button from "components/atoms/Button/button";
 import TextInput from "components/atoms/TextInput/text-input";
-import ToggleSwitch from "components/atoms/ToggleSwitch/toggle-switch";
 import Text from "components/atoms/Typography/text";
 import Title from "components/atoms/Typography/title";
 import RepositoriesCart from "components/organisms/RepositoriesCart/repositories-cart";
@@ -16,12 +14,11 @@ import RepoNotIndexed from "components/organisms/Repositories/repository-not-ind
 import useRepositories from "lib/hooks/api/useRepositories";
 
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
-import { generateRepoParts, getAvatarById, getAvatarByUsername } from "lib/utils/github";
+import { generateRepoParts, getAvatarByUsername } from "lib/utils/github";
 import useStore from "lib/store";
 import Error from "components/atoms/Error/Error";
 import Search from "components/atoms/Search/search";
 import { useToast } from "lib/hooks/useToast";
-import useInsightMembers from "lib/hooks/useInsightMembers";
 import { useFetchInsightRecommendedRepositories } from "lib/hooks/useFetchOrgRecommendations";
 import { RepoCardProfileProps } from "components/molecules/RepoCardProfile/repo-card-profile";
 import SuggestedRepositoriesList from "../SuggestedRepoList/suggested-repo-list";
@@ -47,6 +44,7 @@ interface InsightPageProps {
   edit?: boolean;
   insight?: DbUserInsight;
   pageRepos?: DbRepo[];
+  workspaceId?: string;
 }
 const staticSuggestedRepos: RepoCardProfileProps[] = [
   {
@@ -72,7 +70,7 @@ const staticSuggestedRepos: RepoCardProfileProps[] = [
   },
 ];
 
-const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
+const InsightPage = ({ edit, insight, pageRepos, workspaceId }: InsightPageProps) => {
   const { sessionToken, providerToken, user } = useSupabaseAuth();
 
   const { toast } = useToast();
@@ -91,16 +89,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
     }
   }, [repoListData, router.query.selectedRepos, pageHref]);
 
-  const { data, addMember, deleteMember, updateMember } = useInsightMembers(insight?.id || 0);
   const { data: recommendedRepos, isLoading } = useFetchInsightRecommendedRepositories();
-
-  const members =
-    data &&
-    data.map((member) => ({
-      ...member,
-      email: member.invitation_email,
-      avatarUrl: !!member.user_id ? getAvatarById(String(member.user_id)) : "",
-    }));
 
   // Loading States
   const [deleteLoading, setDeleteLoading] = useState(false);
@@ -115,9 +104,9 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
   const [repoHistory, setRepoHistory] = useState<DbRepo[]>([]);
   const [addRepoError, setAddRepoError] = useState<RepoLookupError>(RepoLookupError.Initial);
   const [syncOrganizationError, setSyncOrganizationError] = useState<OrgLookupError>(OrgLookupError.Initial);
-  const [isPublic, setIsPublic] = useState(!!insight?.is_public);
   const insightRepoLimit = useStore((state) => state.insightRepoLimit);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isInsightUpgradeModalOpen, setIsInsightUpgradeModalOpen] = useState(false);
   const [repoSearchTerm, setRepoSearchTerm] = useState<string>("");
   const [suggestions, setSuggestions] = useState<string[]>([]);
 
@@ -145,10 +134,6 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
   useEffect(() => {
     if (pageRepos) {
       setRepos(pageRepos);
-    }
-
-    if (insight) {
-      setIsPublic(insight.is_public);
     }
   }, [pageRepos, insight?.is_public]);
 
@@ -200,23 +185,26 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
       toast({ description: "You must be logged in to create a page", variant: "danger" });
       return;
     }
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/insights`, {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-        Authorization: `Bearer ${sessionToken}`,
-      },
-      body: JSON.stringify({
-        name,
-        repos: repos.map((repo) => ({ id: repo.id, fullName: repo.full_name })),
-        is_public: isPublic,
-      }),
-    });
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/${workspaceId ? `workspaces/${workspaceId}` : user}/insights`,
+      {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${sessionToken}`,
+        },
+        body: JSON.stringify({
+          name,
+          repos: repos.map((repo) => ({ id: repo.id, fullName: repo.full_name })),
+          is_public: true,
+        }),
+      }
+    );
     setCreateLoading(false);
     if (response.ok) {
       const { id } = await response.json();
       toast({ description: "Page created successfully", variant: "success" });
-      router.push(`/pages/${user.user_metadata.user_name}/${id}/dashboard`);
+      router.push(`/workspaces/${workspaceId}/repository-insights/${id}/dashboard`);
     }
 
     setSubmitted(false);
@@ -235,13 +223,13 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
         name,
         repos: repos.map((repo) => ({ id: repo.id, fullName: repo.full_name })),
         // eslint-disable-next-line
-        is_public: isPublic,
+        is_public: true,
       }),
     });
     setCreateLoading(false);
     if (response && response.ok) {
       toast({ description: "Page updated successfully", variant: "success" });
-      router.push("/hub/insights");
+      router.push(workspaceId ? `/workspaces/${workspaceId}/repository-insights` : "/hub/insights");
     } else {
       toast({ description: "An error occurred!", variant: "danger" });
     }
@@ -411,7 +399,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
     if (response.ok) {
       toast({ description: "Page deleted successfully!", variant: "success" });
       setIsModalOpen(false);
-      router.push("/hub/insights");
+      router.push(workspaceId ? `/workspaces/${workspaceId}/repository-insights` : "/hub/insights");
     }
 
     setSubmitted(false);
@@ -501,7 +489,7 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
       <div className="flex flex-col gap-8">
         <div className="pb-6 border-b border-light-slate-8">
           <Title className="!text-2xl !leading-none mb-4" level={1}>
-            {edit ? "Update" : "Create New"} Insight Page
+            {edit ? "Update" : "Create New"} {workspaceId ? "Repository Insight" : "Insight Page"}
           </Title>
           <Text className="my-8">
             An insight page is a dashboard containing selected repositories that you and your team can get insights
@@ -600,17 +588,6 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
         <div>{getRepoLookupError(addRepoError)}</div>
 
         {edit && (
-          <div className="pt-12 mt-12 border-t border-light-slate-8">
-            <TeamMembersConfig
-              onUpdateMember={(id, access) => updateMember(id, access)}
-              onDeleteMember={deleteMember}
-              onAddMember={addMember}
-              members={[...members]}
-            />
-          </div>
-        )}
-
-        {edit && (
           <div className="flex flex-col gap-4 py-6 border-t border-b border-light-slate-8">
             <Title className="!text-1xl !leading-none py-6" level={4}>
               Danger Zone
@@ -665,30 +642,6 @@ const InsightPage = ({ edit, insight, pageRepos }: InsightPageProps) => {
             );
           })}
         </RepositoriesCart>
-        <div className="flex flex-col justify-between pt-8 mt-8 border-t">
-          <Title className="!text-1xl !leading-none mb-4 mt-8" level={4}>
-            Page Visibility
-          </Title>
-
-          <div className="flex justify-between">
-            <div className="flex items-center">
-              <UserGroupIcon className="w-6 h-6 text-light-slate-9" />
-              <Text className="pl-2">
-                <span id="make-public-explainer">Make this page publicly visible</span>
-              </Text>
-            </div>
-
-            <div className="flex ml-2 !border-red-900 items-center">
-              <Text className="!text-orange-600 pr-2 hidden md:block">Make Public</Text>
-              <ToggleSwitch
-                ariaLabelledBy="make-public-explainer"
-                name="isPublic"
-                checked={isPublic}
-                handleToggle={() => setIsPublic((isPublic) => !isPublic)}
-              />
-            </div>
-          </div>
-        </div>
       </div>
 
       <DeleteInsightPageModal

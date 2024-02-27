@@ -52,7 +52,7 @@ export const classNames = {
   row: "hidden md:flex gap-4    items-center py-3 px-6 odd:bg-white even:bg-light-slate-2",
   cols: {
     checkbox: "w-9 mr-0.5",
-    repository: "w-[30%] lg:flex-1  lg:min-w-[200px] ",
+    repository: "lg:w-[30%] lg:flex-1  lg:min-w-[200px] ",
     activity: "flex-1 lg:min-w-[100px] flex ",
     prOverview: "flex-1 lg:min-w-[170px] ",
     prVelocity: "flex justify-center lg:min-w-[100px] items-center gap-3 flex-1",

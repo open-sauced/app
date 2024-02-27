@@ -16,6 +16,8 @@ import ProfileLanguageChart from "components/molecules/ProfileLanguageChart/prof
 import useFollowUser from "lib/hooks/useFollowUser";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { DATA_FALLBACK_VALUE } from "lib/utils/fallback-values";
+import { usePullRequestsHistogram } from "lib/hooks/api/usePullRequestsHistogram";
+import { getPullRequestsHistogramToDays } from "lib/utils/get-prs-to-days";
 import ContributorProfileTab from "../ContributorProfileTab/contributor-profile-tab";
 import { ContributorObject } from "../ContributorCard/contributor-card";
 
@@ -73,7 +75,7 @@ const ContributorProfilePage = ({
   });
 
   const { user: loggedInUser, signIn } = useSupabaseAuth();
-  const { chart, repoList, totalPrs } = useContributorPullRequestsChart(githubName, "*", repositories, "30", true);
+  const { repoList } = useContributorPullRequestsChart(githubName, "*", repositories, "30", true);
 
   const prsMergedPercentage = getPercent(prTotal, prMerged || 0);
   const { data: Follower, isError: followError, follow, unFollow } = useFollowUser(user?.login || "");
@@ -93,6 +95,17 @@ const ContributorProfilePage = ({
     is_maintainer: isMaintainer,
   } = user || {};
 
+  const { data: histogramData } = usePullRequestsHistogram({
+    repoIds: repositories,
+    range: 30,
+    width: 1,
+    contributor: githubName,
+    direction: "ASC",
+  });
+
+  const chartData = getPullRequestsHistogramToDays(histogramData, 30);
+
+  const totalPrs = chartData.reduce((total, curr) => total + curr.y, 0);
   const iscConnected = !!user?.is_open_sauced_member;
 
   return (
@@ -156,7 +169,6 @@ const ContributorProfilePage = ({
                   repoList={repoList}
                   recentContributionCount={recentContributionCount}
                   prVelocity={prVelocity}
-                  chart={chart}
                   totalPrs={totalPrs}
                   githubName={githubName}
                   prMerged={prMerged}
@@ -213,7 +225,7 @@ const ContributorProfilePage = ({
                       </div>
                     </div>
                     <div className="h-32 mt-10">
-                      <CardLineChart lineChartOption={chart} className="!h-32" />
+                      <CardLineChart repoIds={repositories} contributor={githubName} className="!h-32" />
                     </div>
                     <div>
                       <CardRepoList limit={7} repoList={repoList} total={repoList.length} />
