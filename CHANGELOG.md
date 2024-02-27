@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.4.0-beta.40](https://github.com/open-sauced/app/compare/v2.4.0-beta.39...v2.4.0-beta.40) (2024-02-27)
+
+
+### 🍕 Features
+
+* remove tracking contributors from new workspace page ([#2775](https://github.com/open-sauced/app/issues/2775)) ([87ed261](https://github.com/open-sauced/app/commit/87ed2615c8779c4369b402730fc06c3008df162d))
+
 ## [2.4.0-beta.39](https://github.com/open-sauced/app/compare/v2.4.0-beta.38...v2.4.0-beta.39) (2024-02-27)
 
 
