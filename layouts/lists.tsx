@@ -45,7 +45,7 @@ const ListPageLayout = ({
           )}
         </Header>
 
-        <div className="md:grid md:grid-cols-2 flex flex-col border-b">
+        <div className="md:grid md:grid-cols-2 flex flex-col border-b pt-3">
           {list && (
             <TabsList
               tabList={tabList}
