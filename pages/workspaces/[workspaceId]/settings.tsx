@@ -6,7 +6,6 @@ import { ComponentProps, useState } from "react";
 import dynamic from "next/dynamic";
 import { useEffectOnce } from "react-use";
 import { IoDiamond } from "react-icons/io5";
-import { useGetWorkspaceContributors } from "lib/hooks/api/useGetWorkspaceContributors";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import Button from "components/atoms/Button/button";
 import TextInput from "components/atoms/TextInput/text-input";
@@ -28,6 +27,7 @@ import {
 } from "lib/utils/workspace-utils";
 import { WORKSPACE_UPDATED_EVENT } from "components/shared/AppSidebar/AppSidebar";
 import { WorkspacesTabList } from "components/Workspaces/WorkspacesTabList";
+import { useGetWorkspaceContributors } from "lib/hooks/api/useGetWorkspaceContributors";
 import { deleteCookie } from "lib/utils/server/cookies";
 import WorkspaceVisibilityModal from "components/Workspaces/WorkspaceVisibilityModal";
 import Card from "components/atoms/Card/card";
@@ -109,6 +109,7 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace }: WorkspaceSettingsP
   const [trackedRepos, setTrackedRepos] = useState<Map<string, boolean>>(new Map());
   const [trackedReposPendingDeletion, setTrackedReposPendingDeletion] = useState<Set<string>>(new Set());
 
+  const [trackedContributorsModalOpen, setTrackedContributorsModalOpen] = useState(false);
   const {
     data: contributorData,
     error: contributorError,
