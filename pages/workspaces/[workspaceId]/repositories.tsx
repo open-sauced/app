@@ -58,7 +58,7 @@ const WorkspaceDashboard = ({ workspace }: WorkspaceDashboardProps) => {
   return (
     <WorkspaceLayout workspaceId={workspace.id}>
       <WorkspaceHeader workspace={workspace} />
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col sm:flex-row justify-between items-center">
         <WorkspacesTabList workspaceId={workspace.id} selectedTab={"repositories"} />
         <div className="flex items-center gap-4">
           <Button variant="outline" onClick={() => router.push(`/workspaces/${workspace.id}/settings#load-wizard`)}>

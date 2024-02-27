@@ -61,7 +61,7 @@ export const WorkspaceLayout = ({ workspaceId, children }: WorkspaceLayoutProps)
         </ClientOnly>
       </div>
       <div className="flex flex-col items-center grow pt-8 md:pt-14 lg:pt-20">
-        <div className="px-1 md:px-8 lg:px-16 container w-full min-h-[100px]">{children}</div>
+        <div className="px-1 sm:px-2 md:px-4 xl:px-16 container w-full min-h-[100px]">{children}</div>
       </div>
       <div className="flex self-end pt-2">
         <Footer />
