@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.4.0-beta.49](https://github.com/open-sauced/app/compare/v2.4.0-beta.48...v2.4.0-beta.49) (2024-02-28)
+
+
+### 🐛 Bug Fixes
+
+* now the complete the onboarding tooltip only appears on screens smaller than 1024px ([#2800](https://github.com/open-sauced/app/issues/2800)) ([86e9d5b](https://github.com/open-sauced/app/commit/86e9d5b24fd7459be85f92b3be0a766dae8817bb))
+* remove duplicate layout on contributor insight edit page ([#2805](https://github.com/open-sauced/app/issues/2805)) ([7e563f9](https://github.com/open-sauced/app/commit/7e563f96fbe097486e76138888e5df8783c1d59c))
+
 ## [2.4.0-beta.48](https://github.com/open-sauced/app/compare/v2.4.0-beta.47...v2.4.0-beta.48) (2024-02-28)
 
 
