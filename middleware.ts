@@ -54,7 +54,10 @@ const loadSession = async (request: NextRequest, sessionToken?: string) => {
 export async function middleware(req: NextRequest) {
   const res = NextResponse.next();
 
-  if (!pathsToMatch.some((matcher) => pathToRegexp(matcher).test(req.nextUrl.pathname))) {
+  if (
+    !pathsToMatch.some((matcher) => pathToRegexp(matcher).test(req.nextUrl.pathname)) &&
+    !req.nextUrl.searchParams.has("redirectedFrom")
+  ) {
     return res;
   }
 
@@ -106,6 +109,12 @@ export async function middleware(req: NextRequest) {
         )
       );
     }
+  }
+
+  if (session?.user && req.nextUrl.searchParams.has("redirectedFrom")) {
+    const redirectUrl = req.nextUrl.searchParams.get("redirectedFrom") ?? "/";
+
+    return NextResponse.redirect(new URL(redirectUrl, req.url));
   }
 
   // Check auth condition
