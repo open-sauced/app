@@ -24,7 +24,7 @@ const HubPage = ({ insight, isOwner, ogImage, workspaceId }: InsightPageProps) =
 
   const { hasReports } = useSession(true); // to check if the user is a PRO account
   const { data: isWorkspaceUpgraded } = useIsWorkspaceUpgraded({ workspaceId });
-  const showBanner = isOwner && !hasReports && !isWorkspaceUpgraded && repositories.length > 0;
+  const showBanner = isOwner && !hasReports && !isWorkspaceUpgraded && repositories.length > 100;
 
   useEffect(() => {
     setHydrated(true);
