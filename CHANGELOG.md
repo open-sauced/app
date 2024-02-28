@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.4.0-beta.51](https://github.com/open-sauced/app/compare/v2.4.0-beta.50...v2.4.0-beta.51) (2024-02-28)
+
+
+### 🐛 Bug Fixes
+
+* Rework workspace visibility flow ([#2796](https://github.com/open-sauced/app/issues/2796)) ([856d269](https://github.com/open-sauced/app/commit/856d2692ae8249e8a69d6558548a13da064ac5db))
+
 ## [2.4.0-beta.50](https://github.com/open-sauced/app/compare/v2.4.0-beta.49...v2.4.0-beta.50) (2024-02-28)
 
 
