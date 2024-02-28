@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.4.0-beta.50](https://github.com/open-sauced/app/compare/v2.4.0-beta.49...v2.4.0-beta.50) (2024-02-28)
+
+
+### 🐛 Bug Fixes
+
+* use workspace_id field when redirecting legacy insights and lists ([#2808](https://github.com/open-sauced/app/issues/2808)) ([1fd078d](https://github.com/open-sauced/app/commit/1fd078dc48582583b03bc60b270df381e3d2dd6a))
+
 ## [2.4.0-beta.49](https://github.com/open-sauced/app/compare/v2.4.0-beta.48...v2.4.0-beta.49) (2024-02-28)
 
 
