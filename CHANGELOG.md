@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.4.0-beta.48](https://github.com/open-sauced/app/compare/v2.4.0-beta.47...v2.4.0-beta.48) (2024-02-28)
+
+
+### 🐛 Bug Fixes
+
+* removed unused feature flags in contributor insights page ([#2798](https://github.com/open-sauced/app/issues/2798)) ([0143738](https://github.com/open-sauced/app/commit/014373873db86b8ea640e85bdb7d57eced336b47))
+
 ## [2.4.0-beta.47](https://github.com/open-sauced/app/compare/v2.4.0-beta.46...v2.4.0-beta.47) (2024-02-28)
 
 
