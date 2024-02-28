@@ -22,7 +22,7 @@ export const EmptyState = ({ onAddRepos }: { onAddRepos: () => void }) => {
       <div className="grid w-max max-w-sm mx-auto">
         <span className="text-center font-medium mb-2">Add repositories to track</span>
         <p className="text-sm text-slate-600 text-center">
-          Search and select the repositories you want to track and get insights on your entire Github ecosystem
+          Search and select the repositories you want to track and get insights on your entire GitHub ecosystem
         </p>
       </div>
       <Button variant="primary" className="w-max mx-auto" onClick={onAddRepos}>
