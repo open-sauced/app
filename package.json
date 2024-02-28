@@ -89,6 +89,7 @@
     "echarts": "^5.4.1",
     "echarts-for-react": "^3.0.2",
     "next": "^13.4.7",
+    "next-themes": "^0.2.1",
     "nextjs-progressbar": "^0.0.16",
     "octokit": "^3.1.2",
     "path-to-regexp": "^6.2.1",

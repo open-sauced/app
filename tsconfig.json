@@ -25,6 +25,7 @@
     "**/*.ts",
     "**/*.tsx",
     "components/molecules/DevToSocialImage",
+    "tailwind.config.js",
     "next.config.js"
   ],
   "exclude": ["node_modules", "netlify/edge-functions"]

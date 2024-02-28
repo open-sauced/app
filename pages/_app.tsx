@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import { SessionContextProvider } from "@supabase/auth-helpers-react";
 import { SWRConfig } from "swr";
 import NextNProgress from "nextjs-progressbar";
+import { ThemeProvider } from "next-themes";
 
 import posthog from "posthog-js";
 import { PostHogProvider } from "posthog-js/react";
@@ -132,7 +133,7 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
   }
 
   return (
-    <>
+    <main suppressHydrationWarning>
       <Head>
         <link rel="icon" href="/favicon.ico" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -147,23 +148,25 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
           provider: localStorageProvider,
         }}
       >
-        <NextNProgress options={{ showSpinner: false }} color="hsla(19, 100%, 50%, 1)" height={4} />
-        <Toaster />
-        <SessionContextProvider supabaseClient={supabaseClient} initialSession={pageProps.initialSession}>
-          <PostHogProvider client={posthog}>
-            <TipProvider>
-              {Component.PageLayout ? (
-                <Component.PageLayout>
+        <ThemeProvider attribute="class">
+          <NextNProgress options={{ showSpinner: false }} color="hsla(19, 100%, 50%, 1)" height={4} />
+          <Toaster />
+          <SessionContextProvider supabaseClient={supabaseClient} initialSession={pageProps.initialSession}>
+            <PostHogProvider client={posthog}>
+              <TipProvider>
+                {Component.PageLayout ? (
+                  <Component.PageLayout>
+                    <Component {...pageProps} />
+                  </Component.PageLayout>
+                ) : (
                   <Component {...pageProps} />
-                </Component.PageLayout>
-              ) : (
-                <Component {...pageProps} />
-              )}
-            </TipProvider>
-          </PostHogProvider>
-        </SessionContextProvider>
+                )}
+              </TipProvider>
+            </PostHogProvider>
+          </SessionContextProvider>
+        </ThemeProvider>
       </SWRConfig>
-    </>
+    </main>
   );
 }
 

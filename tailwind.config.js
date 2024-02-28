@@ -2,6 +2,7 @@ const plugin = require("tailwindcss/plugin");
 const defaultTheme = require("tailwindcss/defaultTheme");
 
 module.exports = {
+  darkMode: "class",
   content: [
     "./pages/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
@@ -35,6 +36,8 @@ module.exports = {
         99: "56rem",
       },
       colors: {
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
         sauced: {
           orange: "hsla(19, 100%, 50%, 1)",
           light: "hsl(24, 100%, 95%)",

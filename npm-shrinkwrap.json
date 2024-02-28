@@ -1,11 +1,11 @@
 {
-  "name": "@open-sauced/insights",
+  "name": "@open-sauced/app",
   "version": "2.4.0-beta.51",
   "lockfileVersion": 3,
   "requires": true,
   "packages": {
     "": {
-      "name": "@open-sauced/insights",
+      "name": "@open-sauced/app",
       "version": "2.4.0-beta.51",
       "hasInstallScript": true,
       "license": "Apache 2.0",
@@ -53,6 +53,7 @@
         "echarts": "^5.4.1",
         "echarts-for-react": "^3.0.2",
         "next": "^13.4.7",
+        "next-themes": "^0.2.1",
         "nextjs-progressbar": "^0.0.16",
         "octokit": "^3.1.2",
         "path-to-regexp": "^6.2.1",
@@ -23297,6 +23298,16 @@
         "sass": {
           "optional": true
         }
+      }
+    },
+    "node_modules/next-themes": {
+      "version": "0.2.1",
+      "resolved": "https://registry.npmjs.org/next-themes/-/next-themes-0.2.1.tgz",
+      "integrity": "sha512-B+AKNfYNIzh0vqQQKqQItTS8evEouKD7H5Hj3kmuPERwddR2TxvDSFZuTj6T7Jfn1oyeUyJMydPl1Bkxkh0W7A==",
+      "peerDependencies": {
+        "next": "*",
+        "react": "*",
+        "react-dom": "*"
       }
     },
     "node_modules/next-tick": {
