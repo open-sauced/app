@@ -1,4 +1,3 @@
-import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import { GetServerSidePropsContext } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
@@ -9,9 +8,8 @@ import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import HubPageLayout from "layouts/hub-page";
 import Dashboard from "components/organisms/Dashboard/dashboard";
 import { fetchApiData } from "helpers/fetchApiData";
+import useSession from "lib/hooks/useSession";
 import { useIsWorkspaceUpgraded } from "lib/hooks/api/useIsWorkspaceUpgraded";
-
-const InsightUpgradeModal = dynamic(() => import("components/Workspaces/InsightUpgradeModal"));
 
 interface InsightPageProps {
   insight: DbUserInsight;
@@ -24,9 +22,9 @@ const HubPage = ({ insight, isOwner, ogImage, workspaceId }: InsightPageProps) =
   const repositories = insight.repos.map((repo) => repo.repo_id);
   const [hydrated, setHydrated] = useState(false);
 
+  const { hasReports } = useSession(true); // to check if the user is a PRO account
   const { data: isWorkspaceUpgraded } = useIsWorkspaceUpgraded({ workspaceId });
-  const showNudgeBanner = isOwner && !isWorkspaceUpgraded && repositories.length > 100;
-  const [isInsightUpgradeModalOpen, setIsInsightUpgradeModalOpen] = useState(false);
+  const showBanner = isOwner && !hasReports && !isWorkspaceUpgraded && repositories.length > 0;
 
   useEffect(() => {
     setHydrated(true);
@@ -53,26 +51,17 @@ const HubPage = ({ insight, isOwner, ogImage, workspaceId }: InsightPageProps) =
         image={ogImage}
         twitterCard="summary_large_image"
       />
-      <WorkspaceLayout workspaceId={workspaceId}>
-        {showNudgeBanner && (
-          <button
-            onClick={() => setIsInsightUpgradeModalOpen(true)}
-            className="w-full py-2 text-white text-center bg-light-orange-10"
-          >
-            This insight page is past the free limit.{" "}
-            <span className="font-semibold underline">Upgrade to a PRO Workspace.</span>
-          </button>
-        )}
+      <WorkspaceLayout
+        workspaceId={workspaceId}
+        bannerProps={{
+          overLimit: repositories.length,
+          showBanner,
+          variant: "repositories",
+        }}
+      >
         <HubPageLayout page="dashboard">
           <Dashboard repositories={repositories} />
         </HubPageLayout>
-        <InsightUpgradeModal
-          workspaceId={workspaceId}
-          overLimit={repositories.length}
-          isOpen={isInsightUpgradeModalOpen}
-          onClose={() => setIsInsightUpgradeModalOpen(false)}
-          variant="repositories"
-        />
       </WorkspaceLayout>
     </>
   );

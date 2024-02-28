@@ -1,5 +1,3 @@
-import dynamic from "next/dynamic";
-import { useState } from "react";
 import { useRouter } from "next/router";
 import { ErrorBoundary } from "react-error-boundary";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
@@ -15,8 +13,7 @@ import { useContributorsList } from "lib/hooks/api/useContributorList";
 import ContributorsList from "components/organisms/ContributorsList/contributors-list";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import { useIsWorkspaceUpgraded } from "lib/hooks/api/useIsWorkspaceUpgraded";
-
-const InsightUpgradeModal = dynamic(() => import("components/Workspaces/InsightUpgradeModal"));
+import useSession from "lib/hooks/useSession";
 
 interface ListsOverviewProps {
   list: DBList;
@@ -115,21 +112,19 @@ const ListsOverview = ({
   const allContributorCommits = allContributorStats?.reduce((acc, curr) => acc + curr.commits, 0) || 0;
   const prevAllContributorCommits = prevAllContributorStats?.reduce((acc, curr) => acc + curr.commits, 0) || 0;
 
+  const { hasReports } = useSession(true); // to check if the user is a PRO account
   const { data: isWorkspaceUpgraded } = useIsWorkspaceUpgraded({ workspaceId });
-  const showNudgeBanner = isOwner && !isWorkspaceUpgraded && numberOfContributors > 10;
-  const [isInsightUpgradeModalOpen, setIsInsightUpgradeModalOpen] = useState(false);
+  const showBanner = isOwner && !hasReports && !isWorkspaceUpgraded && numberOfContributors > 10;
 
   return (
-    <WorkspaceLayout workspaceId={workspaceId}>
-      {showNudgeBanner && (
-        <button
-          onClick={() => setIsInsightUpgradeModalOpen(true)}
-          className="w-full py-2 text-white text-center bg-light-orange-10"
-        >
-          This insight page is past the free limit.{" "}
-          <span className="font-semibold underline">Upgrade to a PRO Workspace.</span>
-        </button>
-      )}
+    <WorkspaceLayout
+      workspaceId={workspaceId}
+      bannerProps={{
+        overLimit: numberOfContributors,
+        showBanner,
+        variant: "contributors",
+      }}
+    >
       <ListPageLayout
         list={list}
         workspaceId={workspaceId}
@@ -202,14 +197,6 @@ const ListsOverview = ({
           </ClientOnly>
         </div>
       </ListPageLayout>
-
-      <InsightUpgradeModal
-        workspaceId={workspaceId}
-        overLimit={numberOfContributors}
-        isOpen={isInsightUpgradeModalOpen}
-        onClose={() => setIsInsightUpgradeModalOpen(false)}
-        variant="contributors"
-      />
     </WorkspaceLayout>
   );
 };
