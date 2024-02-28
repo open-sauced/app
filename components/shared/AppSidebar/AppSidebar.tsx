@@ -236,7 +236,7 @@ export const AppSideBar = ({ workspaceId, hideSidebar, sidebarCollapsed }: AppSi
                 </DropdownMenuItem>
                 <DropdownMenuItem className="rounded-md group">
                   <Link
-                    title="Report a bug on our Github repository"
+                    title="Report a bug on our GitHub repository"
                     href="https://github.com/open-sauced/app/issues/new?assignees=&labels=%F0%9F%91%80+needs+triage%2C%F0%9F%90%9B+bug&projects=&template=bug_report.yml&title=Bug%3A+"
                     className="text-sm font-medium flex gap-1 items-center rounded-md transition-colors cursor-pointer tracking-tight p-1"
                   >

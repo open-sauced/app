@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.4.0-beta.47](https://github.com/open-sauced/app/compare/v2.4.0-beta.46...v2.4.0-beta.47) (2024-02-28)
+
+
+### 🐛 Bug Fixes
+
+* Corrects copy for Github -> GitHub ([#2797](https://github.com/open-sauced/app/issues/2797)) ([9f40019](https://github.com/open-sauced/app/commit/9f4001985bbf2c991099c0c53a83e84dd129be34))
+
 ## [2.4.0](https://github.com/open-sauced/app/compare/v2.3.1...v2.4.0) (2024-02-27)
 
 
