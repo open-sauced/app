@@ -15,7 +15,6 @@ import { useContributorsList } from "lib/hooks/api/useContributorList";
 import ContributorsList from "components/organisms/ContributorsList/contributors-list";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import { useIsWorkspaceUpgraded } from "lib/hooks/api/useIsWorkspaceUpgraded";
-import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 
 const InsightUpgradeModal = dynamic(() => import("components/Workspaces/InsightUpgradeModal"));
 
@@ -116,9 +115,8 @@ const ListsOverview = ({
   const allContributorCommits = allContributorStats?.reduce((acc, curr) => acc + curr.commits, 0) || 0;
   const prevAllContributorCommits = prevAllContributorStats?.reduce((acc, curr) => acc + curr.commits, 0) || 0;
 
-  const { sessionToken } = useSupabaseAuth();
   const { data: isWorkspaceUpgraded } = useIsWorkspaceUpgraded({ workspaceId });
-  const showNudgeBanner = sessionToken && isOwner && !isWorkspaceUpgraded && numberOfContributors > 10;
+  const showNudgeBanner = !isWorkspaceUpgraded && numberOfContributors > 10;
   const [isInsightUpgradeModalOpen, setIsInsightUpgradeModalOpen] = useState(false);
 
   return (
