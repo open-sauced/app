@@ -116,7 +116,7 @@ const ListsOverview = ({
   const prevAllContributorCommits = prevAllContributorStats?.reduce((acc, curr) => acc + curr.commits, 0) || 0;
 
   const { data: isWorkspaceUpgraded } = useIsWorkspaceUpgraded({ workspaceId });
-  const showNudgeBanner = !isWorkspaceUpgraded && numberOfContributors > 10;
+  const showNudgeBanner = isOwner && !isWorkspaceUpgraded && numberOfContributors > 10;
   const [isInsightUpgradeModalOpen, setIsInsightUpgradeModalOpen] = useState(false);
 
   return (

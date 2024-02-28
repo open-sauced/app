@@ -15,16 +15,17 @@ const InsightUpgradeModal = dynamic(() => import("components/Workspaces/InsightU
 
 interface InsightPageProps {
   insight: DbUserInsight;
+  isOwner: boolean;
   ogImage?: string;
   workspaceId: string;
 }
 
-const HubPage = ({ insight, ogImage, workspaceId }: InsightPageProps) => {
+const HubPage = ({ insight, isOwner, ogImage, workspaceId }: InsightPageProps) => {
   const repositories = insight.repos.map((repo) => repo.repo_id);
   const [hydrated, setHydrated] = useState(false);
 
   const { data: isWorkspaceUpgraded } = useIsWorkspaceUpgraded({ workspaceId });
-  const showNudgeBanner = !isWorkspaceUpgraded && repositories.length > 100;
+  const showNudgeBanner = isOwner && !isWorkspaceUpgraded && repositories.length > 100;
   const [isInsightUpgradeModalOpen, setIsInsightUpgradeModalOpen] = useState(false);
 
   useEffect(() => {
@@ -105,9 +106,13 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   // Keeping this here so we are sure the page is not private before we fetch the social card.
   const ogImage = await fetchSocialCard(`insights/${insightId}`);
 
+  const insightOwner = insight.members.find((m) => m.access === "admin");
+  const isOwner = Number.parseInt(session?.user.user_metadata.provider_id) === insightOwner?.user_id;
+
   return {
     props: {
       insight,
+      isOwner,
       workspaceId,
       ogImage,
     },
