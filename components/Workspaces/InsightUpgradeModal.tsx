@@ -41,13 +41,13 @@ export default function InsightUpgradeModal({
                   <span className="font-bold">
                     {variant === "repositories" ? 100 : 10} {variant}
                   </span>{" "}
-                  tracked. Don&apos;t worry, your insights won&apos;t be deleted, but if you want to continue using
-                  OpenSauced you should upgrade your Workspace to a PRO Workspace.
+                  tracked. Don&apos;t worry, your insights won&apos;t be deleted. If you want to continue using
+                  OpenSauced you should upgrade your Workspace to a PRO Account.
                 </p>
               ) : (
                 <p className="text-sm text-slate-500">
-                  Settings like making a workspace private is a PRO feature. If you want to continue using OpenSauced
-                  with all the features unlocked, you should upgrade to a PRO Workspace.
+                  Setting your workspace to private is a PRO feature. Upgrade your Workspace and get exclusive access to
+                  your work for you and your team!
                 </p>
               )}
             </section>
