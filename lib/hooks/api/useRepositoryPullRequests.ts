@@ -9,7 +9,17 @@ interface PaginatedResponse {
   readonly meta: Meta;
 }
 
-const useRepositoryPullRequests = (fullName: string, limit = 10, range = 30) => {
+const useRepositoryPullRequests = ({
+  fullName,
+  limit = 10,
+  range = 30,
+  distinctAuthors = false,
+}: {
+  fullName: string;
+  limit?: number;
+  range?: number;
+  distinctAuthors?: boolean;
+}) => {
   const router = useRouter();
   const { pageId, selectedFilter } = router.query;
   const topic = pageId as string;
@@ -31,6 +41,7 @@ const useRepositoryPullRequests = (fullName: string, limit = 10, range = 30) => 
   query.set("page", "1");
   query.set("limit", `${limit}`);
   query.set("range", `${range}`);
+  query.set("distinctAuthors", `${distinctAuthors}`);
 
   const baseEndpoint = "prs/search";
   const endpointString = `${baseEndpoint}?${query.toString()}`;

@@ -5,145 +5,86 @@
 
 > All notable changes to this project will be documented in this file
 
-## [2.4.0-beta.20](https://github.com/open-sauced/insights/compare/v2.4.0-beta.19...v2.4.0-beta.20) (2024-02-20)
+## [2.4.0-beta.47](https://github.com/open-sauced/app/compare/v2.4.0-beta.46...v2.4.0-beta.47) (2024-02-28)
 
 
 ### 🐛 Bug Fixes
 
-* replaced health with activity ratio ([#2721](https://github.com/open-sauced/insights/issues/2721)) ([4c792f5](https://github.com/open-sauced/insights/commit/4c792f578516df9856a8e352d0d9596ecdd02a44))
+* Corrects copy for Github -> GitHub ([#2797](https://github.com/open-sauced/app/issues/2797)) ([9f40019](https://github.com/open-sauced/app/commit/9f4001985bbf2c991099c0c53a83e84dd129be34))
 
-## [2.4.0-beta.19](https://github.com/open-sauced/insights/compare/v2.4.0-beta.18...v2.4.0-beta.19) (2024-02-20)
-
-
-### 🐛 Bug Fixes
-
-* prevent onboard button from flashing on mobile screens ([#2705](https://github.com/open-sauced/insights/issues/2705)) ([e95b7ab](https://github.com/open-sauced/insights/commit/e95b7ab4f7cc3858152f2bee64eb3b4b117048a4))
-
-## [2.4.0-beta.18](https://github.com/open-sauced/insights/compare/v2.4.0-beta.17...v2.4.0-beta.18) (2024-02-20)
-
-
-### 🐛 Bug Fixes
-
-* use redirectFrom to navigate after logging in from top menu ([#2695](https://github.com/open-sauced/insights/issues/2695)) ([7985153](https://github.com/open-sauced/insights/commit/7985153ce4e10e9961cc03aa7ef56bd3597ccb4c))
-
-## [2.4.0-beta.17](https://github.com/open-sauced/insights/compare/v2.4.0-beta.16...v2.4.0-beta.17) (2024-02-20)
+## [2.4.0](https://github.com/open-sauced/app/compare/v2.3.1...v2.4.0) (2024-02-27)
 
 
 ### 🍕 Features
 
-* 404 on workspace settings page if not an owner ([#2712](https://github.com/open-sauced/insights/issues/2712)) ([f9927a8](https://github.com/open-sauced/insights/commit/f9927a8acfc9c6756bbbf8a1865a4877bfad22cb))
-
-## [2.4.0-beta.16](https://github.com/open-sauced/insights/compare/v2.4.0-beta.15...v2.4.0-beta.16) (2024-02-20)
-
-
-### 🍕 Features
-
-* add repository insight view pages to workspaces ([#2685](https://github.com/open-sauced/insights/issues/2685)) ([8e714b2](https://github.com/open-sauced/insights/commit/8e714b2d3b85430d67ae13d7864edae946cc63ca))
-
-## [2.4.0-beta.15](https://github.com/open-sauced/insights/compare/v2.4.0-beta.14...v2.4.0-beta.15) (2024-02-20)
-
-
-### 🐛 Bug Fixes
-
-* removed feature flag check for workspaces in middleware ([#2702](https://github.com/open-sauced/insights/issues/2702)) ([99d4c8a](https://github.com/open-sauced/insights/commit/99d4c8ac68bb9b136e34bb498e065ec5ab40fffa))
-
-## [2.4.0-beta.14](https://github.com/open-sauced/insights/compare/v2.4.0-beta.13...v2.4.0-beta.14) (2024-02-19)
-
-
-### 🍕 Features
-
-* now a user is unable to delete their personal workspace ([#2709](https://github.com/open-sauced/insights/issues/2709)) ([adc4d6f](https://github.com/open-sauced/insights/commit/adc4d6f4346b3a7cf01270aaf1f45de737ba28f4))
-
-## [2.4.0-beta.13](https://github.com/open-sauced/insights/compare/v2.4.0-beta.12...v2.4.0-beta.13) (2024-02-19)
-
-
-### 🍕 Features
-
-* Add edit buttons on workspace pages ([#2699](https://github.com/open-sauced/insights/issues/2699)) ([eb34b37](https://github.com/open-sauced/insights/commit/eb34b373cdb2c7568cd302b38add615bb663ce72))
-
-## [2.4.0-beta.12](https://github.com/open-sauced/insights/compare/v2.4.0-beta.11...v2.4.0-beta.12) (2024-02-19)
+* 404 on workspace settings page if not an owner ([#2712](https://github.com/open-sauced/app/issues/2712)) ([f9927a8](https://github.com/open-sauced/app/commit/f9927a8acfc9c6756bbbf8a1865a4877bfad22cb))
+* add Angular as a topic ([#2687](https://github.com/open-sauced/app/issues/2687)) ([95f4ea2](https://github.com/open-sauced/app/commit/95f4ea237096c75f34afc04011e66ed4a60636c5))
+* Add edit buttons on workspace pages ([#2699](https://github.com/open-sauced/app/issues/2699)) ([eb34b37](https://github.com/open-sauced/app/commit/eb34b373cdb2c7568cd302b38add615bb663ce72))
+* add paid upgrade modal on reaching insight limits ([#2735](https://github.com/open-sauced/app/issues/2735)) ([5bb081e](https://github.com/open-sauced/app/commit/5bb081ea3b77154481b49e5cb5a700609af0e7c1))
+* add redirects for existing insight and list pages ([#2734](https://github.com/open-sauced/app/issues/2734)) ([230d33e](https://github.com/open-sauced/app/commit/230d33ea77ed357aaffe31b349a031c444e29ec7))
+* add repository insight creation to workspaces ([#2665](https://github.com/open-sauced/app/issues/2665)) ([c264746](https://github.com/open-sauced/app/commit/c2647460b7dd42b5b6625b8a2c52c6c27dc488a7))
+* add repository insight view pages to workspaces ([#2685](https://github.com/open-sauced/app/issues/2685)) ([8e714b2](https://github.com/open-sauced/app/commit/8e714b2d3b85430d67ae13d7864edae946cc63ca))
+* add upgrade section in workspace settings ([#2726](https://github.com/open-sauced/app/issues/2726)) ([1504a5d](https://github.com/open-sauced/app/commit/1504a5d01ad8d3912c650e1d401130a8a6e7549f))
+* add workspace member management to the workspace settings ([#2741](https://github.com/open-sauced/app/issues/2741)) ([908fbe6](https://github.com/open-sauced/app/commit/908fbe646f5dc280da339f6ca48afa719353b750))
+* added link for workspace in top nav ([#2674](https://github.com/open-sauced/app/issues/2674)) ([72c8b6d](https://github.com/open-sauced/app/commit/72c8b6d9afbf68e28c8282d36905a167b0c45b2a))
+* allow adding contributors on workspace creation ([#2658](https://github.com/open-sauced/app/issues/2658)) ([7c07276](https://github.com/open-sauced/app/commit/7c0727668b4b67cfb3cbb3ae71ff87f30defdbb2))
+* Implement workspace contributor page ([#2676](https://github.com/open-sauced/app/issues/2676)) ([47806a6](https://github.com/open-sauced/app/commit/47806a63887fb7d0e355dadb1f928f1b4d41191b))
+* now a user is unable to delete their personal workspace ([#2709](https://github.com/open-sauced/app/issues/2709)) ([adc4d6f](https://github.com/open-sauced/app/commit/adc4d6f4346b3a7cf01270aaf1f45de737ba28f4))
+* only list contributor and repository insights to the workspace ([#2718](https://github.com/open-sauced/app/issues/2718)) ([e80648a](https://github.com/open-sauced/app/commit/e80648afd6cdca1738835c4427585669f877d72a))
+* remove tracking contributors from new workspace page ([#2775](https://github.com/open-sauced/app/issues/2775)) ([87ed261](https://github.com/open-sauced/app/commit/87ed2615c8779c4369b402730fc06c3008df162d))
+* toggle workspace visibility in settings ([#2720](https://github.com/open-sauced/app/issues/2720)) ([a66f3c8](https://github.com/open-sauced/app/commit/a66f3c893fbc58aece7d880a1902eb1be3007a39))
+* Unifies insight contributors card and contributors column ([#2766](https://github.com/open-sauced/app/issues/2766)) ([584a60d](https://github.com/open-sauced/app/commit/584a60dd914e7c6d751169f6ec4353baf7f0fb1e))
+* Use insight repos already on insights ([#2776](https://github.com/open-sauced/app/issues/2776)) ([53b20bc](https://github.com/open-sauced/app/commit/53b20bc277c30fc18a5748a53eae119d4c5e04af))
 
 
 ### 🐛 Bug Fixes
 
-* now select all checkbox in contributors search table has a label ([#2701](https://github.com/open-sauced/insights/issues/2701)) ([f6a0a25](https://github.com/open-sauced/insights/commit/f6a0a259f300721b30c0c1bddf6d44568c2280df))
+* fixed hydration error caused by <AppSidebar /> component ([#2749](https://github.com/open-sauced/app/issues/2749)) ([1bdbc90](https://github.com/open-sauced/app/commit/1bdbc90bb056b20f79fdaa71a2d2cefe3ff46262))
+* fixes the workspace ID being null issue ([#2783](https://github.com/open-sauced/app/issues/2783)) ([5f7323e](https://github.com/open-sauced/app/commit/5f7323e2bc720930e7a37f9ee6f3b619a18718cc))
+* long workspace names no longer spill off the page ([#2729](https://github.com/open-sauced/app/issues/2729)) ([845b29b](https://github.com/open-sauced/app/commit/845b29bfe9ad95e17d10b7f7efda3455db728565))
+* make workspace sidebar state persistent between route changes ([#2698](https://github.com/open-sauced/app/issues/2698)) ([6a37e6d](https://github.com/open-sauced/app/commit/6a37e6d5483aa9001370a60604b8864c22f30561))
+* move data fetching into card line chart to prevent rendering loop on contributor profile ([#2750](https://github.com/open-sauced/app/issues/2750)) ([d2516a8](https://github.com/open-sauced/app/commit/d2516a8fcaa76376e70d2c82f9031f512fcd7299))
+* now disabled button that becomes enabled no longer causes a content layout shift ([#2609](https://github.com/open-sauced/app/issues/2609)) ([e39f638](https://github.com/open-sauced/app/commit/e39f638740b7869bd566ea9a3d8e69d66b00b4a5))
+* now router.push is used to switch between workspaces ([#2748](https://github.com/open-sauced/app/issues/2748)) ([d836b1a](https://github.com/open-sauced/app/commit/d836b1a81740305f96da9b97b676c823b96aeffc))
+* now select all checkbox in contributors search table has a label ([#2701](https://github.com/open-sauced/app/issues/2701)) ([f6a0a25](https://github.com/open-sauced/app/commit/f6a0a259f300721b30c0c1bddf6d44568c2280df))
+* now select repositories checkbox has label associated to it ([#2686](https://github.com/open-sauced/app/issues/2686)) ([f3abcf7](https://github.com/open-sauced/app/commit/f3abcf770a1f240551938da046fdaaeddb7ae1b3))
+* now sidebar no longer collapses when using the workspaces dropdown ([#2746](https://github.com/open-sauced/app/issues/2746)) ([76a358e](https://github.com/open-sauced/app/commit/76a358e96a5a4857a2ced2be308b6aa058a543a2))
+* now the day range is applied to repositories in the repository dashboard ([#2744](https://github.com/open-sauced/app/issues/2744)) ([50981e6](https://github.com/open-sauced/app/commit/50981e63ccbe3ac16ef51314fa9f4fe5c3afd419))
+* now the workspaces dropdown doesn't bleed out from the application sidebar ([#2731](https://github.com/open-sauced/app/issues/2731)) ([5e99f59](https://github.com/open-sauced/app/commit/5e99f5956ffaf9c2558b0f61f2f612490bfdbe45))
+* now top navigation is no longer squished or resized vertically ([#2760](https://github.com/open-sauced/app/issues/2760)) ([93c73cc](https://github.com/open-sauced/app/commit/93c73ccc6a55cc8bcbc800682ea961519f15738f))
+* now unauthenticated users can access public workspaces ([#2785](https://github.com/open-sauced/app/issues/2785)) ([71b9487](https://github.com/open-sauced/app/commit/71b9487e03fcba265d1d288ced7f1a9a2bcd4c0e))
+* now workspace pages that crash when you don't have access to them give a page not found instead ([#2694](https://github.com/open-sauced/app/issues/2694)) ([1fc0642](https://github.com/open-sauced/app/commit/1fc0642c1a18db0a34b5366d7f101b8fa893cace))
+* now workspace top nav link works as expected ([#2788](https://github.com/open-sauced/app/issues/2788)) ([7c51cc8](https://github.com/open-sauced/app/commit/7c51cc895951eb40de0b1dac77c93217f7051e06))
+* only show workspace edit button for workspace owner ([#2786](https://github.com/open-sauced/app/issues/2786)) ([0cb865d](https://github.com/open-sauced/app/commit/0cb865d639d7f785f7c3acccbfe846dfc5f8b059))
+* prevent onboard button from flashing on mobile screens ([#2705](https://github.com/open-sauced/app/issues/2705)) ([e95b7ab](https://github.com/open-sauced/app/commit/e95b7ab4f7cc3858152f2bee64eb3b4b117048a4))
+* redirect /hub/insights/new to new repository insight page after login ([#2767](https://github.com/open-sauced/app/issues/2767)) ([7183814](https://github.com/open-sauced/app/commit/718381432c16cbcabcd404355ae8738ad11c8dc7))
+* remove managing members from repository insights ([#2737](https://github.com/open-sauced/app/issues/2737)) ([d900da4](https://github.com/open-sauced/app/commit/d900da4c054b0f348e86720d6c901a131e33f42b))
+* remove tracked contributors from workspace dashboard and settings ([#2755](https://github.com/open-sauced/app/issues/2755)) ([6dd4fad](https://github.com/open-sauced/app/commit/6dd4fad1ca099af47ce486de9ed90c28a3608a59))
+* remove visibility indicators from contributor/repository insights ([#2779](https://github.com/open-sauced/app/issues/2779)) ([b3a3011](https://github.com/open-sauced/app/commit/b3a301184a539516709f13290cf30881284008fb))
+* remove visibility toggle from contributor/repository insight creation ([#2774](https://github.com/open-sauced/app/issues/2774)) ([7f52cb9](https://github.com/open-sauced/app/commit/7f52cb946e6d2bcb58a948fa36f67a163d728cf5))
+* removed feature flag check for workspaces in middleware ([#2702](https://github.com/open-sauced/app/issues/2702)) ([99d4c8a](https://github.com/open-sauced/app/commit/99d4c8ac68bb9b136e34bb498e065ec5ab40fffa))
+* replaced health with activity ratio ([#2721](https://github.com/open-sauced/app/issues/2721)) ([4c792f5](https://github.com/open-sauced/app/commit/4c792f578516df9856a8e352d0d9596ecdd02a44))
+* sidebar style tweaks ([#2758](https://github.com/open-sauced/app/issues/2758)) ([f4682db](https://github.com/open-sauced/app/commit/f4682db222d1b25ea2a7c8c531f6a13b055543f7))
+* small screen tweaks for repository stats cards ([#2747](https://github.com/open-sauced/app/issues/2747)) ([8e59f5a](https://github.com/open-sauced/app/commit/8e59f5a7168f4b768ea7f3f8f47db58d93968a9f))
+* smaller screen fixes for workspaces ([#2778](https://github.com/open-sauced/app/issues/2778)) ([787272a](https://github.com/open-sauced/app/commit/787272abe5e7e7d282be3c91a990096aa2405ebd))
+* update size for Angular logo on user settings page ([#2696](https://github.com/open-sauced/app/issues/2696)) ([ebf31c8](https://github.com/open-sauced/app/commit/ebf31c80494883515f1ea87161ec8eaff76d5233))
+* use redirectFrom to navigate after logging in from top menu ([#2695](https://github.com/open-sauced/app/issues/2695)) ([7985153](https://github.com/open-sauced/app/commit/7985153ce4e10e9961cc03aa7ef56bd3597ccb4c))
+* use user_list_id from newly created workspace contributor insight ([#2772](https://github.com/open-sauced/app/issues/2772)) ([47ca153](https://github.com/open-sauced/app/commit/47ca153e07d638c71325517b2063a47c360901f9))
+* working `addContributorsToList` for contributors insight ([#2756](https://github.com/open-sauced/app/issues/2756)) ([a03801a](https://github.com/open-sauced/app/commit/a03801a4aac4eaa62be5729eabad73fe7badd07b))
+* workspaces sidebar opens over content now ([#2738](https://github.com/open-sauced/app/issues/2738)) ([b7d72dc](https://github.com/open-sauced/app/commit/b7d72dce0810ae8f5e6ff13608913f1a3882692b))
+* wrap new contributor insight page in layout and fix redirect ([#2689](https://github.com/open-sauced/app/issues/2689)) ([80d2de1](https://github.com/open-sauced/app/commit/80d2de121857021d767d077620672b8727d31f74))
 
-## [2.4.0-beta.11](https://github.com/open-sauced/insights/compare/v2.4.0-beta.10...v2.4.0-beta.11) (2024-02-16)
-
-
-### 🐛 Bug Fixes
-
-* make workspace sidebar state persistent between route changes ([#2698](https://github.com/open-sauced/insights/issues/2698)) ([6a37e6d](https://github.com/open-sauced/insights/commit/6a37e6d5483aa9001370a60604b8864c22f30561))
-
-## [2.4.0-beta.10](https://github.com/open-sauced/insights/compare/v2.4.0-beta.9...v2.4.0-beta.10) (2024-02-16)
-
-
-### 🐛 Bug Fixes
-
-* update size for Angular logo on user settings page ([#2696](https://github.com/open-sauced/insights/issues/2696)) ([ebf31c8](https://github.com/open-sauced/insights/commit/ebf31c80494883515f1ea87161ec8eaff76d5233))
-
-## [2.4.0-beta.9](https://github.com/open-sauced/insights/compare/v2.4.0-beta.8...v2.4.0-beta.9) (2024-02-16)
-
-
-### 🐛 Bug Fixes
-
-* now workspace pages that crash when you don't have access to them give a page not found instead ([#2694](https://github.com/open-sauced/insights/issues/2694)) ([1fc0642](https://github.com/open-sauced/insights/commit/1fc0642c1a18db0a34b5366d7f101b8fa893cace))
-
-## [2.4.0-beta.8](https://github.com/open-sauced/insights/compare/v2.4.0-beta.7...v2.4.0-beta.8) (2024-02-16)
-
-
-### 🍕 Features
-
-* add Angular as a topic ([#2687](https://github.com/open-sauced/insights/issues/2687)) ([95f4ea2](https://github.com/open-sauced/insights/commit/95f4ea237096c75f34afc04011e66ed4a60636c5))
-
-## [2.4.0-beta.7](https://github.com/open-sauced/insights/compare/v2.4.0-beta.6...v2.4.0-beta.7) (2024-02-16)
-
-
-### 🐛 Bug Fixes
-
-* wrap new contributor insight page in layout and fix redirect ([#2689](https://github.com/open-sauced/insights/issues/2689)) ([80d2de1](https://github.com/open-sauced/insights/commit/80d2de121857021d767d077620672b8727d31f74))
-
-## [2.4.0-beta.6](https://github.com/open-sauced/insights/compare/v2.4.0-beta.5...v2.4.0-beta.6) (2024-02-16)
+## [2.3.1](https://github.com/open-sauced/insights/compare/v2.3.0...v2.3.1) (2024-02-15)
 
 
-### 🐛 Bug Fixes
+### ⏩ Reverts
 
-* now select repositories checkbox has label associated to it ([#2686](https://github.com/open-sauced/insights/issues/2686)) ([f3abcf7](https://github.com/open-sauced/insights/commit/f3abcf770a1f240551938da046fdaaeddb7ae1b3))
-
-## [2.4.0-beta.5](https://github.com/open-sauced/insights/compare/v2.4.0-beta.4...v2.4.0-beta.5) (2024-02-16)
-
-
-### 🍕 Features
-
-* Implement workspace contributor page ([#2676](https://github.com/open-sauced/insights/issues/2676)) ([47806a6](https://github.com/open-sauced/insights/commit/47806a63887fb7d0e355dadb1f928f1b4d41191b))
-
-## [2.4.0-beta.4](https://github.com/open-sauced/insights/compare/v2.4.0-beta.3...v2.4.0-beta.4) (2024-02-16)
+* Revert "feat: now personal workspace is the default workspace (#2659)" ([4114171](https://github.com/open-sauced/insights/commit/4114171a96a4d36c8ad477cf474e4272188e99f6)), closes [#2659](https://github.com/open-sauced/insights/issues/2659)
 
 
 ### 🐛 Bug Fixes
 
-* now disabled button that becomes enabled no longer causes a content layout shift ([#2609](https://github.com/open-sauced/insights/issues/2609)) ([e39f638](https://github.com/open-sauced/insights/commit/e39f638740b7869bd566ea9a3d8e69d66b00b4a5))
-
-## [2.4.0-beta.3](https://github.com/open-sauced/insights/compare/v2.4.0-beta.2...v2.4.0-beta.3) (2024-02-16)
-
-
-### 🍕 Features
-
-* added link for workspace in top nav ([#2674](https://github.com/open-sauced/insights/issues/2674)) ([72c8b6d](https://github.com/open-sauced/insights/commit/72c8b6d9afbf68e28c8282d36905a167b0c45b2a))
-
-## [2.4.0-beta.2](https://github.com/open-sauced/insights/compare/v2.4.0-beta.1...v2.4.0-beta.2) (2024-02-15)
-
-
-### 🍕 Features
-
-* add repository insight creation to workspaces ([#2665](https://github.com/open-sauced/insights/issues/2665)) ([c264746](https://github.com/open-sauced/insights/commit/c2647460b7dd42b5b6625b8a2c52c6c27dc488a7))
-
-## [2.4.0-beta.1](https://github.com/open-sauced/insights/compare/v2.3.0...v2.4.0-beta.1) (2024-02-15)
-
-
-### 🍕 Features
-
-* allow adding contributors on workspace creation ([#2658](https://github.com/open-sauced/insights/issues/2658)) ([7c07276](https://github.com/open-sauced/insights/commit/7c0727668b4b67cfb3cbb3ae71ff87f30defdbb2))
+* hotfix Revert 2659 nickytonline/personal workspace middleware ([#2673](https://github.com/open-sauced/insights/issues/2673)) ([8926fcc](https://github.com/open-sauced/insights/commit/8926fcce7a1c845a766ef708a802ed8df991c77a))
 
 ## [2.3.0](https://github.com/open-sauced/insights/compare/v2.2.1...v2.3.0) (2024-02-15)
 
@@ -301,13 +242,10 @@
 ### 🐛 Bug Fixes
 
 * now a click outside the tracked repositories modal closes the modal ([#2623](https://github.com/open-sauced/insights/issues/2623)) ([8d9ad05](https://github.com/open-sauced/insights/commit/8d9ad052a2405d94d87399e34b3f1aff414d7945))
-<<<<<<< HEAD
-=======
 * Now you can't type more than 500 characters for a highlight summary ([#2614](https://github.com/open-sauced/insights/issues/2614)) ([ed3d1d9](https://github.com/open-sauced/insights/commit/ed3d1d983023a2d3a9a83a5670239b3fea73be71))
 * redirect to `/workspaces/new` if user has no workspaces ([#2607](https://github.com/open-sauced/insights/issues/2607)) ([547fdf5](https://github.com/open-sauced/insights/commit/547fdf5719f0eab14032a6db6accc5fb7c4786e8))
 * reduced the height of the chart wrapper that is making the button unclickable ([#2611](https://github.com/open-sauced/insights/issues/2611)) ([7fb4e40](https://github.com/open-sauced/insights/commit/7fb4e4042853c5ad7cb776ef1194a6b06a5acc0f))
 * return empty arrays on error when fetching GitHub data ([#2616](https://github.com/open-sauced/insights/issues/2616)) ([5c9ad0b](https://github.com/open-sauced/insights/commit/5c9ad0b12a421e198340d46835aca5fa8dd6fd2f))
->>>>>>> main
 
 ## [2.2.0-beta.6](https://github.com/open-sauced/insights/compare/v2.2.0-beta.5...v2.2.0-beta.6) (2024-02-08)
 

@@ -6,8 +6,7 @@ import SidebarMenuItem from "./sidebar-menu-item";
 
 interface InsightsPanelProps {
   title: string;
-  username: string | null;
-  insights: DbUserList[] | DbUserInsight[];
+  insights: DbWorkspaceRepositoryInsight[] | DbWorkspaceContributorInsight[];
   type: "repo" | "list";
   isLoading: boolean;
   workspaceId?: string | null;
@@ -27,7 +26,7 @@ const Loading = () => {
   );
 };
 
-export const InsightsPanel = ({ title, username, insights, type, isLoading, workspaceId }: InsightsPanelProps) => {
+export const InsightsPanel = ({ title, insights, type, isLoading, workspaceId }: InsightsPanelProps) => {
   const [open, setOpen] = useState(true);
   const getIcon = (type: "repo" | "list") => {
     switch (type) {
@@ -43,12 +42,8 @@ export const InsightsPanel = ({ title, username, insights, type, isLoading, work
         title={title}
         url={
           type === "list"
-            ? workspaceId
-              ? `/workspaces/${workspaceId}/contributor-insights`
-              : "/hub/lists"
-            : workspaceId
-            ? `/workspaces/${workspaceId}/repository-insights`
-            : "/hub/insights"
+            ? `/workspaces/${workspaceId}/contributor-insights`
+            : `/workspaces/${workspaceId}/repository-insights`
         }
         icon={getIcon(type)}
       />
@@ -59,12 +54,8 @@ export const InsightsPanel = ({ title, username, insights, type, isLoading, work
             {insights.slice(0, 3).map((insight) => {
               const url =
                 type === "list"
-                  ? workspaceId
-                    ? `/workspaces/${workspaceId}/contributor-insights/${insight.id}/overview`
-                    : `/lists/${insight.id}`
-                  : workspaceId
-                  ? `/workspaces/${workspaceId}/repository-insights/${insight.id}/dashboard`
-                  : `/pages/${username}/${insight.id}/dashboard`;
+                  ? `/workspaces/${workspaceId}/contributor-insights/${insight.id}/overview`
+                  : `/workspaces/${workspaceId}/repository-insights/${insight.id}/dashboard`;
               return (
                 <li
                   className="py-1 px-3 hover:bg-slate-100 rounded-tr-md rounded-br-md transition-colors text-sm"
@@ -79,24 +70,20 @@ export const InsightsPanel = ({ title, username, insights, type, isLoading, work
               );
             })}
             {insights.length > 3 ? (
-              <Link
-                className="text-xs text-slate-500 pl-3 pt-2 border-l-2 hover:text-orange-600"
-                title=""
-                href={
-                  type === "list"
-                    ? workspaceId
+              <li className="py-1 px-3 hover:bg-slate-100 rounded-tr-md rounded-br-md transition-colors text-sm">
+                <Link
+                  className="text-xs text-slate-500 pl-3 pt-2 border-l-2 hover:text-orange-600"
+                  title=""
+                  href={
+                    type === "list"
                       ? `/workspaces/${workspaceId}/contributor-insights`
-                      : "/hub/lists"
-                    : workspaceId
-                    ? `/workspaces/${workspaceId}/repository-insights`
-                    : "/hub/insights"
-                }
-              >
-                Show all
-              </Link>
-            ) : (
-              ""
-            )}
+                      : `/workspaces/${workspaceId}/repository-insights`
+                  }
+                >
+                  Show all
+                </Link>
+              </li>
+            ) : null}
           </ul>
         )}
       </div>
