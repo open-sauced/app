@@ -5,7 +5,6 @@ import { usePostHog } from "posthog-js/react";
 
 import Button from "components/atoms/Button/button";
 import Title from "components/atoms/Typography/title";
-import Badge from "components/atoms/InsightBadge/insight-badge";
 import ContextThumbnail from "components/atoms/ContextThumbnail/context-thumbnail";
 
 import { truncateString } from "lib/utils/truncate-string";
@@ -15,12 +14,20 @@ import ClientOnly from "components/atoms/ClientOnly/client-only";
 interface ListHeaderProps {
   name: string;
   listId: string;
+  workspaceId?: string;
   isPublic: boolean;
   isOwner: boolean;
   numberOfContributors: number;
 }
 
-const ListHeader = ({ name, isPublic, listId, isOwner, numberOfContributors }: ListHeaderProps): JSX.Element => {
+const ListHeader = ({
+  name,
+  isPublic,
+  listId,
+  workspaceId,
+  isOwner,
+  numberOfContributors,
+}: ListHeaderProps): JSX.Element => {
   const { toast } = useToast();
   const posthog = usePostHog();
 
@@ -48,7 +55,6 @@ const ListHeader = ({ name, isPublic, listId, isOwner, numberOfContributors }: L
             <Title level={1} className="!text-2xl font-semibold text-slate-900">
               {(name && truncateString(name, 30)) || "List"}
             </Title>
-            {<Badge isPublic={isPublic} />}
           </div>
           <div className="flex items-center gap-2 mt-4" id="contributorCount">
             <ClientOnly>{numberOfContributors} Contributors </ClientOnly>
@@ -60,7 +66,11 @@ const ListHeader = ({ name, isPublic, listId, isOwner, numberOfContributors }: L
           <FiCopy className="mt-1 mr-2" /> Share
         </Button>
         {isOwner && (
-          <Link href={`/lists/${listId}/edit`}>
+          <Link
+            href={
+              workspaceId ? `/workspaces/${workspaceId}/contributor-insights/${listId}/edit` : `/lists/${listId}/edit`
+            }
+          >
             <Button variant="primary">
               <FaEdit className="mr-2" /> Edit List
             </Button>

@@ -16,6 +16,8 @@ import ProfileLanguageChart from "components/molecules/ProfileLanguageChart/prof
 import useFollowUser from "lib/hooks/useFollowUser";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { DATA_FALLBACK_VALUE } from "lib/utils/fallback-values";
+import { usePullRequestsHistogram } from "lib/hooks/api/usePullRequestsHistogram";
+import { getPullRequestsHistogramToDays } from "lib/utils/get-prs-to-days";
 import ContributorProfileTab from "../ContributorProfileTab/contributor-profile-tab";
 import { ContributorObject } from "../ContributorCard/contributor-card";
 
@@ -44,7 +46,6 @@ interface ContributorProfilePageProps {
   prFirstOpenedDate?: string;
   user?: DbUser;
   prTotal: number;
-  openPrs: number;
   prReviews?: number;
   prVelocity?: number;
   prMerged: number;
@@ -58,7 +59,6 @@ const ContributorProfilePage = ({
   githubAvatar,
   githubName,
   langList,
-  openPrs,
   prTotal,
   loading,
   prMerged,
@@ -75,7 +75,7 @@ const ContributorProfilePage = ({
   });
 
   const { user: loggedInUser, signIn } = useSupabaseAuth();
-  const { chart, repoList } = useContributorPullRequestsChart(githubName, "*", repositories, "30", true);
+  const { repoList } = useContributorPullRequestsChart(githubName, "*", repositories, "30", true);
 
   const prsMergedPercentage = getPercent(prTotal, prMerged || 0);
   const { data: Follower, isError: followError, follow, unFollow } = useFollowUser(user?.login || "");
@@ -95,6 +95,17 @@ const ContributorProfilePage = ({
     is_maintainer: isMaintainer,
   } = user || {};
 
+  const { data: histogramData } = usePullRequestsHistogram({
+    repoIds: repositories,
+    range: 30,
+    width: 1,
+    contributor: githubName,
+    direction: "ASC",
+  });
+
+  const chartData = getPullRequestsHistogramToDays(histogramData, 30);
+
+  const totalPrs = chartData.reduce((total, curr) => total + curr.y, 0);
   const iscConnected = !!user?.is_open_sauced_member;
 
   return (
@@ -158,8 +169,7 @@ const ContributorProfilePage = ({
                   repoList={repoList}
                   recentContributionCount={recentContributionCount}
                   prVelocity={prVelocity}
-                  chart={chart}
-                  openPrs={openPrs}
+                  totalPrs={totalPrs}
                   githubName={githubName}
                   prMerged={prMerged}
                   contributor={user}
@@ -177,10 +187,10 @@ const ContributorProfilePage = ({
                     <div className="flex flex-col justify-between gap-2 lg:flex-row md:gap-12 lg:gap-16">
                       <div>
                         <span className="text-xs text-light-slate-11">PRs opened</span>
-                        {openPrs >= 0 ? (
+                        {totalPrs >= 0 ? (
                           <div className="flex mt-1 lg:justify-center md:pr-8">
                             <Text className="!text-lg md:!text-xl lg:!text-2xl !text-black !leading-none">
-                              {openPrs} PRs
+                              {totalPrs} PRs
                             </Text>
                           </div>
                         ) : (
@@ -215,7 +225,7 @@ const ContributorProfilePage = ({
                       </div>
                     </div>
                     <div className="h-32 mt-10">
-                      <CardLineChart lineChartOption={chart} className="!h-32" />
+                      <CardLineChart repoIds={repositories} contributor={githubName} className="!h-32" />
                     </div>
                     <div>
                       <CardRepoList limit={7} repoList={repoList} total={repoList.length} />

@@ -1,12 +1,12 @@
 {
   "name": "@open-sauced/insights",
-  "version": "2.1.0-beta.6",
+  "version": "2.4.0-beta.47",
   "lockfileVersion": 3,
   "requires": true,
   "packages": {
     "": {
       "name": "@open-sauced/insights",
-      "version": "2.1.0-beta.6",
+      "version": "2.4.0-beta.47",
       "hasInstallScript": true,
       "license": "Apache 2.0",
       "dependencies": {
@@ -106,8 +106,6 @@
         "autoprefixer": "^10.4.13",
         "eslint": "^8.33.0",
         "eslint-config-next": "^13.5.6",
-        "eslint-config-prettier": "^8.8.0",
-        "eslint-plugin-prettier": "^5.0.0",
         "eslint-plugin-storybook": "^0.6.15",
         "eslint-plugin-unused-imports": "^2.0.0",
         "husky": "^8.0.3",
@@ -3531,6 +3529,126 @@
       "optional": true,
       "os": [
         "darwin"
+      ],
+      "engines": {
+        "node": ">= 10"
+      }
+    },
+    "node_modules/@next/swc-darwin-x64": {
+      "version": "13.4.7",
+      "resolved": "https://registry.npmjs.org/@next/swc-darwin-x64/-/swc-darwin-x64-13.4.7.tgz",
+      "integrity": "sha512-gO2bw+2Ymmga+QYujjvDz9955xvYGrWofmxTq7m70b9pDPvl7aDFABJOZ2a8SRCuSNB5mXU8eTOmVVwyp/nAew==",
+      "cpu": [
+        "x64"
+      ],
+      "optional": true,
+      "os": [
+        "darwin"
+      ],
+      "engines": {
+        "node": ">= 10"
+      }
+    },
+    "node_modules/@next/swc-linux-arm64-gnu": {
+      "version": "13.4.7",
+      "resolved": "https://registry.npmjs.org/@next/swc-linux-arm64-gnu/-/swc-linux-arm64-gnu-13.4.7.tgz",
+      "integrity": "sha512-6cqp3vf1eHxjIDhEOc7Mh/s8z1cwc/l5B6ZNkOofmZVyu1zsbEM5Hmx64s12Rd9AYgGoiCz4OJ4M/oRnkE16/Q==",
+      "cpu": [
+        "arm64"
+      ],
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "engines": {
+        "node": ">= 10"
+      }
+    },
+    "node_modules/@next/swc-linux-arm64-musl": {
+      "version": "13.4.7",
+      "resolved": "https://registry.npmjs.org/@next/swc-linux-arm64-musl/-/swc-linux-arm64-musl-13.4.7.tgz",
+      "integrity": "sha512-T1kD2FWOEy5WPidOn1si0rYmWORNch4a/NR52Ghyp4q7KyxOCuiOfZzyhVC5tsLIBDH3+cNdB5DkD9afpNDaOw==",
+      "cpu": [
+        "arm64"
+      ],
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "engines": {
+        "node": ">= 10"
+      }
+    },
+    "node_modules/@next/swc-linux-x64-gnu": {
+      "version": "13.4.7",
+      "resolved": "https://registry.npmjs.org/@next/swc-linux-x64-gnu/-/swc-linux-x64-gnu-13.4.7.tgz",
+      "integrity": "sha512-zaEC+iEiAHNdhl6fuwl0H0shnTzQoAoJiDYBUze8QTntE/GNPfTYpYboxF5LRYIjBwETUatvE0T64W6SKDipvg==",
+      "cpu": [
+        "x64"
+      ],
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "engines": {
+        "node": ">= 10"
+      }
+    },
+    "node_modules/@next/swc-linux-x64-musl": {
+      "version": "13.4.7",
+      "resolved": "https://registry.npmjs.org/@next/swc-linux-x64-musl/-/swc-linux-x64-musl-13.4.7.tgz",
+      "integrity": "sha512-X6r12F8d8SKAtYJqLZBBMIwEqcTRvUdVm+xIq+l6pJqlgT2tNsLLf2i5Cl88xSsIytBICGsCNNHd+siD2fbWBA==",
+      "cpu": [
+        "x64"
+      ],
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "engines": {
+        "node": ">= 10"
+      }
+    },
+    "node_modules/@next/swc-win32-arm64-msvc": {
+      "version": "13.4.7",
+      "resolved": "https://registry.npmjs.org/@next/swc-win32-arm64-msvc/-/swc-win32-arm64-msvc-13.4.7.tgz",
+      "integrity": "sha512-NPnmnV+vEIxnu6SUvjnuaWRglZzw4ox5n/MQTxeUhb5iwVWFedolPFebMNwgrWu4AELwvTdGtWjqof53AiWHcw==",
+      "cpu": [
+        "arm64"
+      ],
+      "optional": true,
+      "os": [
+        "win32"
+      ],
+      "engines": {
+        "node": ">= 10"
+      }
+    },
+    "node_modules/@next/swc-win32-ia32-msvc": {
+      "version": "13.4.7",
+      "resolved": "https://registry.npmjs.org/@next/swc-win32-ia32-msvc/-/swc-win32-ia32-msvc-13.4.7.tgz",
+      "integrity": "sha512-6Hxijm6/a8XqLQpOOf/XuwWRhcuc/g4rBB2oxjgCMuV9Xlr2bLs5+lXyh8w9YbAUMYR3iC9mgOlXbHa79elmXw==",
+      "cpu": [
+        "ia32"
+      ],
+      "optional": true,
+      "os": [
+        "win32"
+      ],
+      "engines": {
+        "node": ">= 10"
+      }
+    },
+    "node_modules/@next/swc-win32-x64-msvc": {
+      "version": "13.4.7",
+      "resolved": "https://registry.npmjs.org/@next/swc-win32-x64-msvc/-/swc-win32-x64-msvc-13.4.7.tgz",
+      "integrity": "sha512-sW9Yt36Db1nXJL+mTr2Wo0y+VkPWeYhygvcHj1FF0srVtV+VoDjxleKtny21QHaG05zdeZnw2fCtf2+dEqgwqA==",
+      "cpu": [
+        "x64"
+      ],
+      "optional": true,
+      "os": [
+        "win32"
       ],
       "engines": {
         "node": ">= 10"
@@ -18070,18 +18188,6 @@
         }
       }
     },
-    "node_modules/eslint-config-prettier": {
-      "version": "8.8.0",
-      "resolved": "https://registry.npmjs.org/eslint-config-prettier/-/eslint-config-prettier-8.8.0.tgz",
-      "integrity": "sha512-wLbQiFre3tdGgpDv67NQKnJuTlcUVYHas3k+DZCc2U2BadthoEY4B7hLPvAxaqdyOGCzuLfii2fqGph10va7oA==",
-      "dev": true,
-      "bin": {
-        "eslint-config-prettier": "bin/cli.js"
-      },
-      "peerDependencies": {
-        "eslint": ">=7.0.0"
-      }
-    },
     "node_modules/eslint-import-resolver-node": {
       "version": "0.3.9",
       "resolved": "https://registry.npmjs.org/eslint-import-resolver-node/-/eslint-import-resolver-node-0.3.9.tgz",
@@ -18312,35 +18418,6 @@
       "resolved": "https://registry.npmjs.org/emoji-regex/-/emoji-regex-9.2.2.tgz",
       "integrity": "sha512-L18DaJsXSUk2+42pv8mLs5jJT2hqFkFE4j21wOmgbUqsZ2hL72NsUU785g9RXgo3s0ZNgVl42TiHp3ZtOv/Vyg==",
       "dev": true
-    },
-    "node_modules/eslint-plugin-prettier": {
-      "version": "5.0.0",
-      "resolved": "https://registry.npmjs.org/eslint-plugin-prettier/-/eslint-plugin-prettier-5.0.0.tgz",
-      "integrity": "sha512-AgaZCVuYDXHUGxj/ZGu1u8H8CYgDY3iG6w5kUFw4AzMVXzB7VvbKgYR4nATIN+OvUrghMbiDLeimVjVY5ilq3w==",
-      "dev": true,
-      "dependencies": {
-        "prettier-linter-helpers": "^1.0.0",
-        "synckit": "^0.8.5"
-      },
-      "engines": {
-        "node": "^14.18.0 || >=16.0.0"
-      },
-      "funding": {
-        "url": "https://opencollective.com/prettier"
-      },
-      "peerDependencies": {
-        "@types/eslint": ">=8.0.0",
-        "eslint": ">=8.0.0",
-        "prettier": ">=3.0.0"
-      },
-      "peerDependenciesMeta": {
-        "@types/eslint": {
-          "optional": true
-        },
-        "eslint-config-prettier": {
-          "optional": true
-        }
-      }
     },
     "node_modules/eslint-plugin-react": {
       "version": "7.33.2",
@@ -18978,12 +19055,6 @@
       "version": "3.1.3",
       "resolved": "https://registry.npmjs.org/fast-deep-equal/-/fast-deep-equal-3.1.3.tgz",
       "integrity": "sha512-f3qQ9oQy9j2AhBe/H9VC91wLmKBCCU/gDOnKNAYG5hswO7BLKj09Hc5HYNz9cGI++xlpDCIgDaitVs03ATR84Q=="
-    },
-    "node_modules/fast-diff": {
-      "version": "1.3.0",
-      "resolved": "https://registry.npmjs.org/fast-diff/-/fast-diff-1.3.0.tgz",
-      "integrity": "sha512-VxPP4NqbUjj6MaAOafWeUn2cXWLcCtljklUtZf0Ind4XQ+QPtmA0b18zZy0jIQx+ExRVCR/ZQpBmik5lXshNsw==",
-      "dev": true
     },
     "node_modules/fast-fifo": {
       "version": "1.3.2",
@@ -24701,18 +24772,6 @@
       },
       "funding": {
         "url": "https://github.com/prettier/prettier?sponsor=1"
-      }
-    },
-    "node_modules/prettier-linter-helpers": {
-      "version": "1.0.0",
-      "resolved": "https://registry.npmjs.org/prettier-linter-helpers/-/prettier-linter-helpers-1.0.0.tgz",
-      "integrity": "sha512-GbK2cP9nraSSUF9N2XwUwqfzlAFlMNYYl+ShE/V+H8a9uNl/oUqB1w2EL54Jh0OlyRSd8RfWYJ3coVS4TROP2w==",
-      "dev": true,
-      "dependencies": {
-        "fast-diff": "^1.1.2"
-      },
-      "engines": {
-        "node": ">=6.0.0"
       }
     },
     "node_modules/pretty-error": {

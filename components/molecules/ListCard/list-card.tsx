@@ -12,8 +12,9 @@ import StackedAvatar, { Contributor } from "../StackedAvatar/stacked-avatar";
 interface ListCardProps {
   list: DbUserList;
   handleOnDeleteClick?: (listName: string, listId: string) => void;
+  workspaceId?: string;
 }
-const ListCard = ({ list, handleOnDeleteClick }: ListCardProps) => {
+const ListCard = ({ list, handleOnDeleteClick, workspaceId }: ListCardProps) => {
   const { data: contributors, meta } = useFetchListContributors(list.id);
 
   const contributorsAvatar: Contributor[] = contributors?.map((contributor) => ({
@@ -27,7 +28,15 @@ const ListCard = ({ list, handleOnDeleteClick }: ListCardProps) => {
           <div className="flex items-center gap-4 lg:items-center ">
             <div className="w-4 h-4 rounded-full bg-light-orange-10"></div>
             <div className="flex justify-between text-xl text-light-slate-12">
-              <Link href={`/lists/${list.id}/overview`}>{list.name}</Link>
+              <Link
+                href={
+                  workspaceId
+                    ? `/workspaces/${workspaceId}/contributor-insights/${list.id}/overview`
+                    : `/lists/${list.id}/overview`
+                }
+              >
+                {list.name}
+              </Link>
             </div>
             <div
               className={clsx(

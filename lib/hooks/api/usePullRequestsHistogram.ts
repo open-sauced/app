@@ -50,7 +50,19 @@ const getInsights = (insights: DbPullRequestGitHubEventsHistogram[], intervalDay
   };
 };
 
-const usePullRequestsHistogram = (repoIds: number[] = [], range = 30) => {
+const usePullRequestsHistogram = ({
+  repoIds = [],
+  range = 30,
+  width = 30,
+  contributor = "",
+  direction = "ASC",
+}: {
+  repoIds?: number[];
+  range?: number;
+  width?: number;
+  contributor?: string;
+  direction?: string;
+}) => {
   const router = useRouter();
   const { pageId, selectedFilter } = router.query;
   const topic = pageId as string;
@@ -70,12 +82,20 @@ const usePullRequestsHistogram = (repoIds: number[] = [], range = 30) => {
     query.delete("topic");
   }
 
+  if (contributor) {
+    query.set("contributor", contributor);
+  }
+
+  if (direction) {
+    query.set("orderDirection", direction);
+  }
+
   query.set("range", `${range}`);
-  query.set("width", "30");
+  query.set("width", `${width}`);
 
   const baseEndpoint = "histogram/pull-requests";
   const endpointString = `${baseEndpoint}?${query.toString()}`;
-  const makeRequest = query.get("topic") || query.get("repo") || repoIds?.length > 0;
+  const makeRequest = query.get("topic") || query.get("repo") || query.get("contributor") || repoIds?.length > 0;
 
   const { data, error, mutate } = useSWR<DbPullRequestGitHubEventsHistogram[], Error>(
     makeRequest ? endpointString : null,
