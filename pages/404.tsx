@@ -50,7 +50,7 @@ export default function Custom404() {
             href="/start"
             className="hidden md:flex items-center text-sm text-white border border-light-orange-8 py-2 px-3 rounded-lg hover:opacity-80"
           >
-            Signup with Github
+            Signup with GitHub
           </Link>
         </div>
         <main className="grid md:grid-cols-2 place-content-center py-6">
