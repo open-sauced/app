@@ -90,7 +90,10 @@ export async function middleware(req: NextRequest) {
 
     if (list && list.data) {
       return NextResponse.redirect(
-        new URL(`/workspaces/${list.data.workspaces?.id}/contributor-insights/${listId}/${rest.join("/")}`, req.url)
+        new URL(
+          `/workspaces/${list.data.workspaces?.workspace_id}/contributor-insights/${listId}/${rest.join("/")}`,
+          req.url
+        )
       );
     }
   } else if (req.nextUrl.pathname.startsWith("/pages")) {
@@ -101,7 +104,7 @@ export async function middleware(req: NextRequest) {
     if (insight && insight.data) {
       return NextResponse.redirect(
         new URL(
-          `/workspaces/${insight.data.workspaces?.id}/repository-insights/${insightId}/${rest.join("/")}`,
+          `/workspaces/${insight.data.workspaces?.workspace_id}/repository-insights/${insightId}/${rest.join("/")}`,
           req.url
         )
       );
