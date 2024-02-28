@@ -210,6 +210,8 @@ interface DbWorkspaceMember {
   readonly deleted_at: string;
 }
 
+type DbUserInsightWorkspace = Workspace & { workspace_id: string };
+
 interface DbUserInsight {
   readonly id: number;
   readonly name: string;
@@ -221,7 +223,7 @@ interface DbUserInsight {
   readonly updated_at: string;
   readonly repos: DbUserInsightRepo[];
   readonly members: DbInsightMember[];
-  readonly workspaces?: Workspace;
+  readonly workspaces?: DbUserInsightWorkspace;
 }
 
 interface DbWorkspaceRepositoryInsight {
@@ -390,6 +392,8 @@ interface DbListContributor {
   readonly username: string;
 }
 
+type UserListWorkspace = Workspace & { workspace_id: string };
+
 interface DbUserList {
   readonly id: string;
   readonly user: DbListOwner;
@@ -397,7 +401,7 @@ interface DbUserList {
   readonly is_public: boolean;
   readonly created_at: string;
   readonly updated_at: string;
-  readonly workspaces?: Workspace;
+  readonly workspaces?: UserListWorkspace;
 }
 
 interface DbWorkspaceContributorInsight {
