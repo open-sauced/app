@@ -13,7 +13,6 @@ import ListCard from "components/molecules/ListCard/list-card";
 import { useToast } from "lib/hooks/useToast";
 
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
-import { getAllFeatureFlags } from "lib/utils/server/feature-flags";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import { fetchApiData } from "helpers/fetchApiData";
 import { WORKSPACE_ID_COOKIE_NAME } from "lib/utils/workspace-utils";
@@ -43,13 +42,9 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
     throw new Error(`Error loading workspaces page with ID ${workspaceId}`);
   }
 
-  const userId = Number(session?.user.user_metadata.sub);
-  const featureFlags = await getAllFeatureFlags(userId);
-
   return {
     props: {
       workspace: data,
-      featureFlags,
     },
   };
 };
