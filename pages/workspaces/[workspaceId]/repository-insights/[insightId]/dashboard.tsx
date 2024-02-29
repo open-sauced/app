@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { GetServerSidePropsContext } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 
+import dynamic from "next/dynamic";
 import SEO from "layouts/SEO/SEO";
 import fetchSocialCard from "lib/utils/fetch-social-card";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
@@ -10,6 +11,9 @@ import Dashboard from "components/organisms/Dashboard/dashboard";
 import { fetchApiData } from "helpers/fetchApiData";
 import useSession from "lib/hooks/useSession";
 import { useIsWorkspaceUpgraded } from "lib/hooks/api/useIsWorkspaceUpgraded";
+import WorkspaceBanner from "components/Workspaces/WorkspaceBanner";
+
+const InsightUpgradeModal = dynamic(() => import("components/Workspaces/InsightUpgradeModal"));
 
 interface InsightPageProps {
   insight: DbUserInsight;
@@ -25,6 +29,7 @@ const HubPage = ({ insight, isOwner, ogImage, workspaceId }: InsightPageProps) =
   const { hasReports } = useSession(true); // to check if the user is a PRO account
   const { data: isWorkspaceUpgraded } = useIsWorkspaceUpgraded({ workspaceId });
   const showBanner = isOwner && !hasReports && !isWorkspaceUpgraded && repositories.length > 100;
+  const [isInsightUpgradeModalOpen, setIsInsightUpgradeModalOpen] = useState(false);
 
   useEffect(() => {
     setHydrated(true);
@@ -53,15 +58,18 @@ const HubPage = ({ insight, isOwner, ogImage, workspaceId }: InsightPageProps) =
       />
       <WorkspaceLayout
         workspaceId={workspaceId}
-        bannerProps={{
-          overLimit: repositories.length,
-          showBanner,
-          variant: "repositories",
-        }}
+        banner={showBanner ? <WorkspaceBanner openModal={() => setIsInsightUpgradeModalOpen(true)} /> : null}
       >
         <HubPageLayout page="dashboard">
           <Dashboard repositories={repositories} />
         </HubPageLayout>
+        <InsightUpgradeModal
+          workspaceId={workspaceId}
+          variant="repositories"
+          isOpen={isInsightUpgradeModalOpen}
+          onClose={() => setIsInsightUpgradeModalOpen(false)}
+          overLimit={repositories.length}
+        />
       </WorkspaceLayout>
     </>
   );

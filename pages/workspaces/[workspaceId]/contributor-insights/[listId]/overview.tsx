@@ -1,3 +1,5 @@
+import dynamic from "next/dynamic";
+import { useState } from "react";
 import { useRouter } from "next/router";
 import { ErrorBoundary } from "react-error-boundary";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
@@ -14,6 +16,9 @@ import ContributorsList from "components/organisms/ContributorsList/contributors
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import { useIsWorkspaceUpgraded } from "lib/hooks/api/useIsWorkspaceUpgraded";
 import useSession from "lib/hooks/useSession";
+import WorkspaceBanner from "components/Workspaces/WorkspaceBanner";
+
+const InsightUpgradeModal = dynamic(() => import("components/Workspaces/InsightUpgradeModal"));
 
 interface ListsOverviewProps {
   list: DBList;
@@ -115,15 +120,12 @@ const ListsOverview = ({
   const { hasReports } = useSession(true); // to check if the user is a PRO account
   const { data: isWorkspaceUpgraded } = useIsWorkspaceUpgraded({ workspaceId });
   const showBanner = isOwner && !hasReports && !isWorkspaceUpgraded && numberOfContributors > 10;
+  const [isInsightUpgradeModalOpen, setIsInsightUpgradeModalOpen] = useState(false);
 
   return (
     <WorkspaceLayout
       workspaceId={workspaceId}
-      bannerProps={{
-        overLimit: numberOfContributors,
-        showBanner,
-        variant: "contributors",
-      }}
+      banner={showBanner && WorkspaceBanner({ openModal: () => setIsInsightUpgradeModalOpen(true) })}
     >
       <ListPageLayout
         list={list}
@@ -197,6 +199,14 @@ const ListsOverview = ({
           </ClientOnly>
         </div>
       </ListPageLayout>
+
+      <InsightUpgradeModal
+        workspaceId={workspaceId}
+        variant="contributors"
+        isOpen={isInsightUpgradeModalOpen}
+        onClose={() => setIsInsightUpgradeModalOpen(false)}
+        overLimit={numberOfContributors}
+      />
     </WorkspaceLayout>
   );
 };
