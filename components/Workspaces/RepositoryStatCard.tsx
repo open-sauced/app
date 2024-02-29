@@ -92,7 +92,9 @@ const EmptyState = ({ type, hasError }: { type: CardType; hasError: boolean }) =
         <tbody className="grid grid-cols-3 items center">
           {getStatPropertiesByType(type).map((stat) => (
             <tr key={stat} className="flex flex-col">
-              <th className="capitalize font-medium text-sm text-light-slate-11 text-left">{stat}</th>
+              <th className="capitalize font-medium text-sm text-light-slate-11 dark:text-dark-slate-11 text-left">
+                {stat}
+              </th>
               <td className="semi-bold text-2xl mt-1">
                 <SkeletonWrapper width={40} height={20} />
               </td>
@@ -123,7 +125,10 @@ export const RepositoryStatCard = ({ stats, type, isLoading, hasError }: Reposit
               .map(([stat, value]) => {
                 return (
                   <tr key={stat} className="flex flex-col">
-                    <th scope="row" className="capitalize font-medium text-lg lg:text-sm text-light-slate-11 text-left">
+                    <th
+                      scope="row"
+                      className="capitalize font-medium text-lg lg:text-sm text-light-slate-11 dark:text-dark-slate-11 text-left"
+                    >
                       {stat.replace("_", " ")}
                     </th>
                     {stat === "activity_ratio" ? (

@@ -144,7 +144,9 @@ const HighlightCard: React.FC<HighlightCardProps> = ({
 
   return (
     <Card
-      className={`${className ? className : ""} flex flex-col w-full sm:max-w-[calc(50%-(1rem/2))] h-auto flex-grow`}
+      className={`${
+        className ? className : ""
+      } flex flex-col w-full sm:max-w-[calc(50%-(1rem/2))] h-auto flex-grow bg-light-slate-2 dark:bg-dark-slate-2`}
     >
       <>
         {/* Top Information */}
@@ -162,7 +164,7 @@ const HighlightCard: React.FC<HighlightCardProps> = ({
             {/* Label: Text */}
             <div className={clsx("text-sm text-slate-600 leading-none")}>
               {tooltip && label ? (
-                <Tooltip className="w-44 py-3 text-center" content={tooltip}>
+                <Tooltip className="py-3 text-center w-44" content={tooltip}>
                   {label}
                 </Tooltip>
               ) : label ? (
@@ -176,7 +178,7 @@ const HighlightCard: React.FC<HighlightCardProps> = ({
           {/* Last Updated Information */}
           <div className="flex items-center gap-1">
             {/* Last Updated: Number */}
-            <div className="text-sm text-slate-600   leading-none">{numChanged ? numChanged : 0}</div>
+            <div className="text-sm leading-none text-slate-600">{numChanged ? numChanged : 0}</div>
             {/* Last Updated: Icon */}
             <Image
               width={14}
@@ -212,11 +214,11 @@ const HighlightCard: React.FC<HighlightCardProps> = ({
 
             {/* Contributor Cards */}
             {contributors && contributors.length > 0 ? (
-              <div className="flex items-center justify-center mt-2 h-auto">
+              <div className="flex items-center justify-center h-auto mt-2">
                 <StackedAvatar contributors={contributors} visibleQuantity={5} />
               </div>
             ) : (
-              <div className="flex items-center justify-center w-full mt-2 h-8">
+              <div className="flex items-center justify-center w-full h-8 mt-2">
                 {/* Progress Bar */}
                 <div
                   className={`${

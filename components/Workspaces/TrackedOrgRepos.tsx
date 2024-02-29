@@ -11,7 +11,7 @@ export const TrackedOrgRepos = ({ onAddOrgRepo }: TrackedOrgReposProps) => {
       <div className="flex justify-between items-center gap-6 w-full">
         <div>
           <h2>Organizations and Repositories Tracked</h2>
-          <p className="prose prose-sm">Select the organizations or repositories you want to track</p>
+          <p className="prose prose-sm ">Select the organizations or repositories you want to track</p>
         </div>
         <Button
           variant="primary"

@@ -68,11 +68,11 @@ const ContributorProfileInfo = ({
               <div className="flex gap-2 items-center">
                 <div className="flex gap-1 items-center">
                   <span className="font-semibold text-sm"> {followerCount} </span>
-                  <span className="font-normal text-light-slate-11 text-sm"> followers</span>
+                  <span className="font-normal text-light-slate-11 dark:text-dark-slate-11 text-sm"> followers</span>
                 </div>
                 <div className="flex gap-1 items-center">
                   <span className="font-semibold text-sm"> {followingCount} </span>
-                  <span className="font-normal text-light-slate-11 text-sm"> following</span>
+                  <span className="font-normal text-light-slate-11 dark:text-dark-slate-11 text-sm"> following</span>
                 </div>
               </div>
             </>

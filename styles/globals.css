@@ -8,10 +8,22 @@
   src: url("../public/assets/fonts/Inter-VariableFont_slnt,wght.ttf");
 }
 
+@layer base {
+  :root {
+    --background: 24 70% 99%;
+    --foreground: 0 22% 7%;
+  }
+
+  .dark {
+    --background: 0 22% 7%;
+    --foreground: 24 70% 99%;
+  }
+}
+
 body {
-  @apply font-normal bg-[#f8f9fa] text-light-slate-12 dark:bg-[#160E0E] dark:text-slate-300;
+  @apply font-normal bg-background text-foreground;
   /* background-color: #f8f9fa; */
-  /* @apply text-light-slate-12; */
+  /* @apply text-light-slate-12 dark:text-dark-slate-12; */
 }
 
 h1,

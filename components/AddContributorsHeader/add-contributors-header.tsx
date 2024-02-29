@@ -43,7 +43,7 @@ const AddContributorsHeader = ({
       <div className="flex flex-col justify-between items-center w-full md:flex-row">
         <h1 className="self-start text-2xl flex items-center">
           <Link
-            className="inline-block p-3 mr-2 border rounded-lg cursor-pointer bg-light-slate-1"
+            className="inline-block p-3 mr-2 border rounded-lg cursor-pointer bg-light-slate-1 dark:bg-dark-slate-1"
             href={
               workspaceId ? `/workspaces/${workspaceId}/contributor-insights/${list.id}/edit` : `/lists/${list.id}/edit`
             }

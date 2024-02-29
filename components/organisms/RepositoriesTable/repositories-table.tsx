@@ -49,7 +49,7 @@ interface RepositoriesTableProps {
 }
 
 export const classNames = {
-  row: "hidden md:flex gap-4    items-center py-3 px-6 odd:bg-white even:bg-light-slate-2",
+  row: "hidden md:flex gap-4    items-center py-3 px-6 odd:bg-background even:bg-light-slate-2 dark:bg-dark-slate-2",
   cols: {
     checkbox: "w-9 mr-0.5",
     repository: "lg:w-[30%] lg:flex-1  lg:min-w-[200px] ",

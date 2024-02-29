@@ -154,7 +154,7 @@ export default function DevCard(props: DevCardProps) {
               "absolute",
               "top-1/2",
               "left-1/2",
-              "bg-white",
+              "bg-background",
               "border-white",
               "border-2",
               "block",

@@ -17,7 +17,7 @@ export const LanguageSwitch = ({ topic, checked, onClick }: LanguageSwitchProps)
       checked={checked}
       onClick={onClick}
       name={`language-pill-${topic}`}
-      className={`cursor-pointer w-max py-2 px-4 bg-light-slate-6 text-xs rounded-3xl border ${
+      className={`cursor-pointer w-max py-2 px-4 bg-light-slate-6 dark:bg-dark-slate-6 text-xs rounded-3xl border ${
         checked ? "bg-light-orange-8" : ""
       }`}
     >

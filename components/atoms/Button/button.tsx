@@ -16,8 +16,8 @@ const Button = React.forwardRef<HTMLElement, ButtonsProps>(
       primary: `bg-light-orange-9 text-light-orange-2 border-light-orange-9 hover:bg-light-orange-10 ${
         disabled ? "bg-light-orange-7 hover:bg-light-orange-7 pointer-events-none" : ""
       }`,
-      default: `bg-white border-light-slate-8 text-light-slate-11 hover:bg-light-slate-2 ${
-        disabled ? "bg-light-slate-4 text-light-slate-9 pointer-events-none" : ""
+      default: `bg-background border-light-slate-8 text-light-slate-11 dark:text-dark-slate-11 hover:bg-light-slate-2 dark:bg-dark-slate-2 ${
+        disabled ? "bg-light-slate-4 text-light-slate-9 dark:text-dark-slate-9 pointer-events-none" : ""
       }`,
       dark: `bg-dark-slate-6 border-dark-slate-8 text-light-orange-2 hover:bg-dark-slate-8 ${
         disabled ? "bg-dark-slate-4 text-dark-slate-9 pointer-events-none" : ""

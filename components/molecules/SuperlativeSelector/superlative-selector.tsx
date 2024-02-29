@@ -53,7 +53,7 @@ const SuperativeSelector: React.FC<SuperlativeSelectorProps> = ({
         {selected ? (
           <div className="flex" onClick={toggleFilter}>
             <span className="inline-block text-dark-slate-10">Filtered by:</span>
-            <div className="block truncate pr-4 ml-1 text-light-slate-12">
+            <div className="block truncate pr-4 ml-1 text-light-slate-12 dark:text-dark-slate-12">
               {filterDescription}
 
               <Icon
@@ -71,7 +71,7 @@ const SuperativeSelector: React.FC<SuperlativeSelectorProps> = ({
         )}
       </ContextFilterButton>
       {isOpen && (
-        <div className="absolute transform -translate-x-1/3 md:translate-x-0 space-y-1 mt-1 shadow-superlative z-10 w-72 bg-white rounded-lg px-1.5 py-2">
+        <div className="absolute transform -translate-x-1/3 md:translate-x-0 space-y-1 mt-1 shadow-superlative z-10 w-72 bg-background rounded-lg px-1.5 py-2">
           {filterOptions.length > 0 &&
             filterOptions.map((option, index) => {
               const filterKey = getFilterKey(option);

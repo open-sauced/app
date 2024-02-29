@@ -133,7 +133,7 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
     <>
       <div
         key={`${ownerAvatar}/${name}`}
-        className="px-5 py-2 overflow-hidden odd:bg-white md:hidden even:bg-light-slate-2"
+        className="px-5 py-2 overflow-hidden odd:bg-background md:hidden even:bg-light-slate-2 dark:bg-dark-slate-2"
       >
         {/* Row: Repository Name and Pr overview */}
         <div className="flex items-center gap-x-3">
@@ -167,7 +167,7 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
           </div>
         </div>
 
-        <div className={`${!tableOpen && "max-h-0"}   text-light-slate-11 text-sm transition`}>
+        <div className={`${!tableOpen && "max-h-0"}   text-light-slate-11 dark:text-dark-slate-11 text-sm transition`}>
           {/* Column: Last 30 Days */}
           <div className="py-3">{last30days && <Sparkline data={last30days} width="100%" height={54} />}</div>
           {/* Row: Activity */}

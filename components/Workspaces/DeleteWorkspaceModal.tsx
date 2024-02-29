@@ -38,11 +38,12 @@ const DeleteWorkspaceModal = ({ isOpen, onClose, onDelete, workspaceName }: Dele
         </DialogTitle>
 
         <Text>
-          Are you sure you want to delete <span className="font-bold text-light-slate-12">{`${workspaceName}`}</span>?
-          If you have data in this workspace that your team is using it will be lost.
+          Are you sure you want to delete{" "}
+          <span className="font-bold text-light-slate-12 dark:text-dark-slate-12">{`${workspaceName}`}</span>? If you
+          have data in this workspace that your team is using it will be lost.
         </Text>
         <Text>
-          <span className="font-bold text-light-slate-12">This action cannot be undone</span>
+          <span className="font-bold text-light-slate-12 dark:text-dark-slate-12">This action cannot be undone</span>
         </Text>
         <Text>
           Type <span className="font-bold text-light-red-10">DELETE</span> in all caps to confirm

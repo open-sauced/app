@@ -61,7 +61,7 @@ const InsightHeader = ({ insight, repositories, insightId, canEdit, workspaceId 
         </div>
         <div className="flex flex-col justify-center p-2 header-info grow">
           <div className="flex gap-2">
-            <Title level={1} className="!text-2xl font-semibold text-slate-900">
+            <Title level={1} className="!text-2xl font-semibold text-foreground/90">
               {(insight && truncateString(insight.name, 30)) || "Insights"}
             </Title>
           </div>
@@ -75,7 +75,7 @@ const InsightHeader = ({ insight, repositories, insightId, canEdit, workspaceId 
       <div className="absolute right-0 bottom-0 top-0 flex flex-col items-end gap-3 py-2 md:items-center md:flex-row md:static">
         <Button
           onClick={() => handleCopyToClipboard(insightPageLink)}
-          className="px-6 py-2 bg-white w-max"
+          className="px-6 py-2 bg-background w-max"
           variant="text"
         >
           <FiCopy className="mt-1 mr-2" /> Share

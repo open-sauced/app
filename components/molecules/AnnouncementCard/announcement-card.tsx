@@ -9,7 +9,7 @@ interface AnnouncementCardProps {
 }
 const AnnouncementCard = ({ title, description, bannerSrc, url }: AnnouncementCardProps) => {
   return (
-    <div className="overflow-hidden border max-w-xs w-full rounded-lg bg-light-slate-1">
+    <div className="overflow-hidden border max-w-xs w-full rounded-lg bg-light-slate-1 dark:bg-dark-slate-1">
       <div className="w-full">
         <AspectRatio.Root ratio={1.85 / 1}>
           <picture>
@@ -19,7 +19,7 @@ const AnnouncementCard = ({ title, description, bannerSrc, url }: AnnouncementCa
       </div>
       <div className="flex flex-col gap-3 p-6">
         <h1 className="text-lg">{title}</h1>
-        <p className="text-sm font-normal text-light-slate-11 pb-2">{description}</p>
+        <p className="text-sm font-normal text-light-slate-11 dark:text-dark-slate-11 pb-2">{description}</p>
         <a
           href={url}
           target="_blank"

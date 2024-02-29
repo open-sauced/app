@@ -10,7 +10,7 @@ export const InviteTeamMembers = ({ onInviteTeamMembers }: InviteTeamMembersProp
     <form className="grid grid-cols-1 gap-6 w-full">
       <div>
         <h2>Invite members</h2>
-        <p className="prose prose-sm">Add and remove workspace members, or change their roles.</p>
+        <p className="prose prose-sm ">Add and remove workspace members, or change their roles.</p>
       </div>
       <Button
         variant="primary"

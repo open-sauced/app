@@ -21,7 +21,12 @@ const ConnectionCard = ({
   onDecline,
 }: ConnectionRequestObject) => {
   return (
-    <div className={clsx("flex flex-col w-full gap-4 p-4 bg-white border rounded-2xl border-light-slate-6", className)}>
+    <div
+      className={clsx(
+        "flex flex-col w-full gap-4 p-4 bg-background border rounded-2xl border-light-slate-6",
+        className
+      )}
+    >
       <div className="flex items-center justify-between text-sm ">
         <div className="flex items-center gap-2 text-sm">
           <Avatar className="!rounded-none" size="sm" avatarURL={getAvatarByUsername(requestor.login)} />

@@ -55,11 +55,11 @@ const FilterCardSelect: React.FC<FilterCardSelectProps> = ({
             src={icons[icon] ? icons[icon].src : icons.topic.src}
           />
         }
-        className="text-base rounded-lg cursor-pointer h-[1.95rem] w-max border-slate-300 hover:bg-slate-50 focus:ring-1 bg-slate-100 focus:ring-slate-300"
+        className="text-base rounded-lg cursor-pointer h-[1.95rem] w-max border-slate-300 hover:bg-slate-50 focus:ring-1 bg-light-slate-1 dark:bg-dark-slate-1 focus:ring-slate-300"
       >
         <SelectValue placeholder="select topic" />
       </SelectTrigger>
-      <SelectContent className="bg-white">
+      <SelectContent className="bg-background">
         {customTopic && (
           <SelectItem
             className="w-48 text-base"

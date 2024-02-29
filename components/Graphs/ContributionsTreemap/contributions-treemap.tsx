@@ -66,7 +66,7 @@ export const ContributionsTreemap = ({
         <Resizer onToggleResize={onToggleResize} />
         <div className="grid">
           {/* Label: Text */}
-          <h2 className="font-medium text-lg text-slate-900 mb-2 flex items-center justify-between">
+          <h2 className="font-medium text-lg text-foreground/90 mb-2 flex items-center justify-between">
             All Contributions
           </h2>
           <div className="flex gap-2 items-center justify-between">

@@ -281,9 +281,9 @@ export default function EditListPage({ list, workspaceId, initialContributors }:
           className="flex flex-col gap-8"
         >
           <div className="flex justify-between align-center items-center">
-            <h1 className="flex items-center text-2xl text-light-slate-12">
+            <h1 className="flex items-center text-2xl text-light-slate-12 dark:text-dark-slate-12">
               <Link
-                className="inline-block p-3 mr-2 border rounded-lg cursor-pointer bg-light-slate-1"
+                className="inline-block p-3 mr-2 border rounded-lg cursor-pointer bg-light-slate-1 dark:bg-dark-slate-1"
                 href={`/workspaces/${workspaceId}/contributor-insights/${list.id}/overview`}
               >
                 <MdOutlineArrowBackIos title="Go back to list overview" className="text-lg text-light-slate-10" />
@@ -297,7 +297,7 @@ export default function EditListPage({ list, workspaceId, initialContributors }:
           <p className="text-light-slate-11 pb-4 border-b border-solid border-light-slate-6">
             A list is a collection of contributors that you and your team can get insights for.
           </p>
-          <label className="flex flex-col w-full text-light-slate-12 gap-4">
+          <label className="flex flex-col w-full text-light-slate-12 dark:text-dark-slate-12 gap-4">
             List Name
             <TextInput name="list_name" defaultValue={list.name} required />
           </label>
@@ -305,7 +305,7 @@ export default function EditListPage({ list, workspaceId, initialContributors }:
             <label className="text-light-slate-12">Page Visibility</label>
             <div className="flex justify-between">
               <div className="flex items-center">
-                <UserGroupIcon className="w-6 h-6 text-light-slate-9 mr-2" />
+                <UserGroupIcon className="w-6 h-6 text-light-slate-9 dark:text-dark-slate-9 mr-2" />
                 <Text className="text-light-slate-11">
                   <span id="make-public-explainer">Make this page publicly visible</span>
                 </Text>

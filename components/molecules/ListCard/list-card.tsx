@@ -22,11 +22,11 @@ const ListCard = ({ list, handleOnDeleteClick, workspaceId }: ListCardProps) => 
 
   return (
     <Card>
-      <div className="flex flex-col items-start w-full gap-4 px-4 py-6 bg-white rounded-lg md:items-center md:justify-between md:flex-row lg:px-8 lg:gap-2">
+      <div className="flex flex-col items-start w-full gap-4 px-4 py-6 bg-background rounded-lg md:items-center md:justify-between md:flex-row lg:px-8 lg:gap-2">
         <div className="flex flex-col flex-1 gap-4 lg:gap-6">
           <div className="flex items-center gap-4 lg:items-center ">
             <div className="w-4 h-4 rounded-full bg-light-orange-10"></div>
-            <div className="flex justify-between text-xl text-light-slate-12">
+            <div className="flex justify-between text-xl text-light-slate-12 dark:text-dark-slate-12">
               <Link
                 href={
                   workspaceId
@@ -39,7 +39,7 @@ const ListCard = ({ list, handleOnDeleteClick, workspaceId }: ListCardProps) => 
             </div>
             <div
               className={clsx(
-                "px-2 border rounded-2xl text-light-slate-11",
+                "px-2 border rounded-2xl text-light-slate-11 dark:text-dark-slate-11",
                 !handleOnDeleteClick ? "text-orange-700 bg-orange-50 border-orange-600" : ""
               )}
             >
@@ -51,7 +51,7 @@ const ListCard = ({ list, handleOnDeleteClick, workspaceId }: ListCardProps) => 
           <div className="flex items-center justify-end w-full gap-8">
             {/* Contributors section */}
             <div className="flex flex-col items-center flex-1 gap-1 mr-2">
-              <span className="text-xs text-light-slate-11">Contributors</span>
+              <span className="text-xs text-light-slate-11 dark:text-dark-slate-11">Contributors</span>
               <Text className="flex items-center text-2xl">{meta.itemCount}</Text>
             </div>
 
@@ -63,14 +63,14 @@ const ListCard = ({ list, handleOnDeleteClick, workspaceId }: ListCardProps) => 
               {handleOnDeleteClick && (
                 <button
                   onClick={() => handleOnDeleteClick(list.name, list.id)}
-                  className="inline-block p-3 mr-2 border rounded-lg cursor-pointer bg-light-slate-1"
+                  className="inline-block p-3 mr-2 border rounded-lg cursor-pointer bg-light-slate-1 dark:bg-dark-slate-1"
                   type="button"
                 >
                   <RiDeleteBinLine title="Delete List" className="text-lg text-light-slate-10" />
                 </button>
               )}
               <Link
-                className="inline-block p-3 mr-2 border rounded-lg cursor-pointer bg-light-slate-1"
+                className="inline-block p-3 mr-2 border rounded-lg cursor-pointer bg-light-slate-1 dark:bg-dark-slate-1"
                 href={
                   workspaceId
                     ? `/workspaces/${workspaceId}/contributor-insights/${list.id}/overview`

@@ -28,13 +28,13 @@ const TableRepositoryName = ({ avatarURL, fullName }: TableRepositoryNameProps):
 
       <div className="flex flex-col justify-center">
         <Tooltip content={name}>
-          <div className="  text-base text-light-slate-12 tracking-tight max-w-[5.5rem] sm:max-w-[9.3rem] md:max-w-[7rem] whitespace-nowrap overflow-hidden overflow-ellipsis">
+          <div className="  text-base text-light-slate-12 dark:text-dark-slate-12 tracking-tight max-w-[5.5rem] sm:max-w-[9.3rem] md:max-w-[7rem] whitespace-nowrap overflow-hidden overflow-ellipsis">
             <a href={`https://www.github.com/${handle}/${name}`} target="_blank" rel="noreferrer">
               {name}
             </a>
           </div>
         </Tooltip>
-        <div className="  text-sm text-light-slate-11 truncate max-w-[85px] md:max-w-[110px]">
+        <div className="  text-sm text-light-slate-11 dark:text-dark-slate-11 truncate max-w-[85px] md:max-w-[110px]">
           <a href={`https://www.github.com/${handle}`} target="_blank" rel="noreferrer">
             {handle ? `@${handle}` : "handle1234"}
           </a>

@@ -37,7 +37,7 @@ const SearchDialog = () => {
       }
     }
     return () => document.removeEventListener("keydown", handleCloseSearch);
-  }, []);
+  }, [setOpenSearch]);
 
   const handleKeyboardCtrl: React.KeyboardEventHandler<HTMLInputElement> = (e) => {
     const resultsCount = searchResult?.data?.length || 0;
@@ -71,24 +71,24 @@ const SearchDialog = () => {
       cursor !== -1 && setCursor(-1);
       setIsSearching(false);
     }
-  }, [debouncedSearchTerm]);
+  }, [cursor, debouncedSearchTerm, providerToken, searchTerm.length]);
 
   return (
-    <div className="fixed left-0 top-0 z-auto p-5 w-full h-full flex justify-center bg-white/30">
-      <div className="absolute w-full h-full left-0 top-0 z-50 backdrop-blur-sm" onClick={() => setOpenSearch(false)} />
+    <div className="fixed top-0 left-0 z-50 flex justify-center w-full h-full p-5 bg-background/70">
+      <div className="absolute top-0 left-0 z-50 w-full h-full backdrop-blur-sm" onClick={() => setOpenSearch(false)} />
       <div
-        className="flex flex-col w-full max-w-2xl h-fit max-h-full bg-white shadow-xl border transition rounded-lg ring-light-slate-6 relative z-50 overflow-hidden"
+        className="relative z-50 flex flex-col w-full max-w-2xl max-h-full overflow-hidden transition border rounded-lg shadow-xl h-fit bg-background ring-light-slate-6"
         onMouseMove={() => cursor !== -1 && setCursor(-1)}
       >
-        <div className="flex w-full h-full items-center border-b p-2 pl-3">
+        <div className="flex items-center w-full h-full p-2 pl-3 border-b">
           {isSearching ? (
-            <div className="flex-none w-4 h-4 rounded-full border-2 border-light-slate-9 border-b-light-slate-5 border-r-light-slate-5 animate-spin" />
+            <div className="flex-none w-4 h-4 border-2 rounded-full border-light-slate-9 border-b-light-slate-5 border-r-light-slate-5 animate-spin" />
           ) : (
             <FaSearch className="text-light-slate-9" fontSize={16} />
           )}
           <input
             autoFocus
-            className="w-full pl-2 text-sm font-semibold text-slate-700 focus:outline-none"
+            className="w-full pl-2 text-sm font-semibold bg-transparent focus:outline-none"
             value={searchTerm}
             onChange={(e) => {
               setSearchTerm(e.target.value);
@@ -97,10 +97,10 @@ const SearchDialog = () => {
             onKeyDown={handleKeyboardCtrl}
           />
           <Text keyboard className="text-gray-600 !border-b !px-1">
-            {isMac ? "⌘K" : <span className="text-xs py-2 px-1">CTRL+K</span>}
+            {isMac ? "⌘K" : <span className="px-1 py-2 text-xs">CTRL+K</span>}
           </Text>
         </div>
-        <div className="w-full h-full flex items-center">
+        <div className="flex items-center w-full h-full">
           {searchTerm.length < 3 ? (
             <SearchInfo />
           ) : !isSearchError && !isSearching && searchResult?.data && searchTerm.length >= 3 ? (
@@ -129,24 +129,24 @@ const SearchDialogTrigger = () => {
       }
     }
     return () => document.removeEventListener("keydown", handleOpenSearch);
-  }, []);
+  }, [setOpenSearch]);
 
   return (
     <>
       <div
-        className="hidden sm:flex justify-between p-1 pl-3 h-fit w-56 ml-auto bg-white border rounded-lg ring-light-slate-6 relative overflow-hidden"
+        className="relative justify-between hidden w-56 p-1 pl-3 ml-auto overflow-hidden border rounded-lg sm:flex h-fit bg-background ring-light-slate-6"
         onClick={() => setOpenSearch(true)}
       >
         <div className="flex items-center">
           <FaSearch className="text-light-slate-9" fontSize={16} />
-          <Text className="pl-2 text-sm text-light-slate-9">Search for users</Text>
+          <Text className="pl-2 text-sm text-light-slate-9 dark:text-dark-slate-9">Search for users</Text>
         </div>
         <Text keyboard className="text-gray-600 !border-b !px-1">
-          {isMac ? "⌘K" : <span className="text-xs px-1 py-2">CTRL+K</span>}
+          {isMac ? "⌘K" : <span className="px-1 py-2 text-xs">CTRL+K</span>}
         </Text>
       </div>
-      <div className="flex sm:hidden p-1" onClick={() => setOpenSearch(true)}>
-        <FaSearch className="text-light-slate-9 cursor-pointer" fontSize={16} />
+      <div className="flex p-1 sm:hidden" onClick={() => setOpenSearch(true)}>
+        <FaSearch className="cursor-pointer text-light-slate-9 dark:text-dark-slate-9" fontSize={16} />
       </div>
     </>
   );
@@ -159,11 +159,11 @@ const SearchInfo = () => (
 );
 
 const SearchLoading = () => (
-  <div className="w-full flex items-center py-2 p-4 gap-2 animate-pulse">
-    <div className="w-6 h-6 rounded-full flex-none bg-light-slate-6" />
-    <div className="w-full flex items-center gap-2 overflow-hidden">
-      <div className="w-4/12 md:w-2/12 h-2.5 rounded-lg bg-light-slate-6" />
-      <div className="w-7/12 md:w-5/12 h-2.5 rounded-lg bg-light-slate-6" />
+  <div className="flex items-center w-full gap-2 p-4 py-2 animate-pulse">
+    <div className="flex-none w-6 h-6 rounded-full bg-light-slate-6 dark:bg-dark-slate-6" />
+    <div className="flex items-center w-full gap-2 overflow-hidden">
+      <div className="w-4/12 md:w-2/12 h-2.5 rounded-lg bg-light-slate-6 dark:bg-dark-slate-6" />
+      <div className="w-7/12 md:w-5/12 h-2.5 rounded-lg bg-light-slate-6 dark:bg-dark-slate-6" />
     </div>
   </div>
 );
@@ -177,7 +177,7 @@ const SearchError = () => (
 
 const SearchResult = ({ result, cursor }: { result: GhUser[]; cursor: number }) => (
   <div className="w-full py-1 overflow-hidden text-gray-600">
-    <Text className="block w-full py-1 px-4">Users</Text>
+    <Text className="block w-full px-4 py-1">Users</Text>
     <div className="w-full h-full">
       <ScrollArea className="w-full">
         {result.map((user: GhUser, i: number) => (
@@ -206,14 +206,14 @@ const UserResultCard = ({ login, active }: UserResultCardProps) => {
     <Link
       href={`/user/${login}`}
       className={clsx(
-        active && "_cursorActive bg-slate-100",
+        active && "_cursorActive bg-light-slate-1 dark:bg-dark-slate-1",
         "w-full flex items-center py-2 p-4 gap-2 hover:bg-slate-100 cursor-pointer"
       )}
       onClick={handleClick}
     >
       <Avatar size="sm" className="!rounded-full flex-none" avatarURL={getAvatarByUsername(login)} />
       <div className="flex items-center gap-2 overflow-hidden">
-        <Text className="text-gray-900">@{login}</Text>
+        <Text className="text-light-slate-9 dark:text-dark-slate-9">@{login}</Text>
         <Text className="!font-normal truncate">{login}</Text>
       </div>
     </Link>

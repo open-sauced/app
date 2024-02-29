@@ -9,9 +9,9 @@ interface TypographyWrapperProps {
 
 const TypographyWrapper: React.FC<TypographyWrapperProps> = ({ children, className, size = "sm", ...props }) => {
   return (
-    <span className={clsx("prose", `prose-${size}`, className)} {...props}>
+    <div className={clsx("prose", `prose-${size}`, "dark:prose-invert", className)} {...props}>
       {children}
-    </span>
+    </div>
   );
 };
 

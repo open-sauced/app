@@ -125,7 +125,7 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
     };
 
     return (
-      <PopoverContent align="end" className="bg-white !w-64 gap-4 flex flex-col">
+      <PopoverContent align="end" className="bg-background !w-64 gap-4 flex flex-col">
         <Command loop className="w-full px-0 bg-transparent">
           <CommandInput placeholder={"Search Lists"} />
           <CommandGroup className="flex flex-col !px-0 overflow-scroll max-h-48">

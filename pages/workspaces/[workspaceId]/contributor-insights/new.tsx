@@ -301,7 +301,7 @@ const AddListPage = ({ workspace }: { workspace: Workspace }) => {
       <div className="flex flex-col min-h-screen">
         <TopNav />
         <div className="flex flex-col items-center pt-20 page-container grow md:pt-14">
-          <main className="flex flex-col items-center flex-1 w-full px-3 py-8 md:px-2 bg-light-slate-2">
+          <main className="flex flex-col items-center flex-1 w-full px-3 py-8 md:px-2">
             <div className="container px-2 mx-auto md:px-16">
               <CreateListPage workspace={workspace} />
             </div>

@@ -8,7 +8,7 @@ const Loader = ({ theme = "light" }: LoaderProps): JSX.Element => {
     <main className="flex absolute w-screen h-screen flex-1 flex-col items-center justify-center text-center">
       <div
         className={`${
-          theme === "dark" ? "bg-[#160E0E]" : "bg-white"
+          theme === "dark" ? "bg-[#160E0E]" : "bg-background"
         } w-full flex justify-center items-center  h-screen`}
       >
         <div className="absolute flex justify-center items-center">

@@ -44,7 +44,7 @@ const InsightPageTable = ({ user, insights }: InsightPageTableProps) => {
       {/* Table section */}
 
       <div className="flex flex-col mt-6 border rounded-lg">
-        <div className="md:flex py-4 px-6 bg-light-slate-3 gap-10 lg:min-w-[1280px]">
+        <div className="md:flex py-4 px-6 bg-light-slate-3 dark:bg-dark-slate-3 gap-10 lg:min-w-[1280px]">
           <div className={clsx("flex-1 min-w-[140px] max-w-[150px] ")}>
             <TableTitle>Insight page</TableTitle>
           </div>

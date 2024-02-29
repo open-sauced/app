@@ -68,7 +68,7 @@ export const TrackedReposTable = ({
       <div className="border border-light-slate-7 rounded h-full">
         <Table className="not-sr-only">
           <TableHeader>
-            <TableRow className=" bg-light-slate-3">
+            <TableRow className=" bg-light-slate-3 dark:bg-dark-slate-3">
               <TableHead>Name</TableHead>
               <TableHead className="w-2">
                 <span className="sr-only">Delete</span>
@@ -81,7 +81,7 @@ export const TrackedReposTable = ({
             <div className="overflow-y-scroll h-60">
               <Table>
                 <TableHeader className="sr-only">
-                  <TableRow className=" bg-light-slate-3">
+                  <TableRow className=" bg-light-slate-3 dark:bg-dark-slate-3">
                     <TableHead>Name</TableHead>
                     <TableHead className="w-4">
                       <span className="sr-only">Delete</span>

@@ -20,10 +20,10 @@ const TopNav = () => {
   const { onboarded } = useSession();
 
   return (
-    <header className="top-nav-container w-full fixed top-0 left-0 z-50 py-0.5 bg-background !text-foreground border-b px-2">
+    <header className="top-nav-container w-full fixed top-0 left-0 z-50 py-0.5 bg-background text-foreground border-b px-2">
       <div className="flex items-center justify-between gap-2 px-2 mx-auto">
         <div className="flex items-center gap-3 md:gap-8">
-          <HeaderLogo responsive={true} withBg={false} textIsBlack={theme === "light"} />
+          <HeaderLogo responsive={true} withBg={false} textIsBlack={theme === "light" || !theme} />
           <Nav className="flex flex-1" />
           {user && onboarded === false && (
             <div className="relative lg:hidden">
@@ -33,9 +33,9 @@ const TopNav = () => {
             </div>
           )}
         </div>
-        <div className="flex items-center ml-auto">
-          <ThemeToggle />
+        <div className="flex items-center gap-3 ml-auto md:gap-8">
           <AuthSection />
+          <ThemeToggle />
         </div>
       </div>
     </header>

@@ -33,7 +33,7 @@ const CardProfile = ({
             <Text className="!text-base !text-black  ">{githubName}</Text>
           </div>
           <div className="flex gap-2 text-xs">
-            <div className="flex items-center gap-1 text-xs text-light-slate-11">
+            <div className="flex items-center gap-1 text-xs text-light-slate-11 dark:text-dark-slate-11">
               {totalPRs !== undefined && (
                 <>
                   <Tooltip content="PRs merged">
@@ -44,7 +44,7 @@ const CardProfile = ({
                 </>
               )}
             </div>
-            <div className="flex items-center gap-1 text-light-slate-11">
+            <div className="flex items-center gap-1 text-light-slate-11 dark:text-dark-slate-11">
               <Tooltip content="First commit date">
                 <Icon size={12} alt="First commit date" IconImage={FirstPRIcon} /> {dateOfFirstPR}
               </Tooltip>

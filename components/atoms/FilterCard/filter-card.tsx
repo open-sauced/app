@@ -67,7 +67,7 @@ const FilterCard: React.FC<FilterCardProps> = ({ filterName, bgColor, icon, isRe
               : icons.topic.src
           }
         />
-        <Text className="!text-sm font-semibold tracking-tight !text-slate-900">{filterName}</Text>
+        <Text className="!text-sm font-semibold tracking-tight !text-foreground/90">{filterName}</Text>
         {isRemovable ? <Image alt="Cancel Icon" src={cancelIcon} /> : false}
       </div>
     </div>

@@ -53,12 +53,12 @@ const FollowingHighlightWrapper = ({ emojis, selectedFilter }: HighlightWrapperP
                   <strong>{login}</strong>
                 </Link>
                 <Link href={`/feed/${id}`}>
-                  <span className="text-xs font-normal text-light-slate-11">
+                  <span className="text-xs font-normal text-light-slate-11 dark:text-dark-slate-11">
                     {formatDistanceToNowStrict(new Date(created_at), { addSuffix: true })}
                   </span>
                 </Link>
               </div>
-              <div className="w-full p-4 border bg-light-slate-1 md:px-6 lg:px-9 lg:py-5 sm:py-3 xs:py-2 rounded-xl">
+              <div className="w-full p-4 border bg-light-slate-1 dark:bg-dark-slate-1 md:px-6 lg:px-9 lg:py-5 sm:py-3 xs:py-2 rounded-xl">
                 <ContributorHighlightCard
                   emojis={emojis}
                   refreshCallBack={mutate}

@@ -13,7 +13,7 @@ interface DevProfileProps {
 }
 const DevProfile = ({ username, hasBorder }: DevProfileProps) => {
   return (
-    <Link href={`/user/${username}`} className="flex items-center gap-2 text-light-slate-11">
+    <Link href={`/user/${username}`} className="flex items-center gap-2 text-light-slate-11 dark:text-dark-slate-11">
       {/* Mobile */}
       <div className="rounded-full md:hidden">
         <Avatar

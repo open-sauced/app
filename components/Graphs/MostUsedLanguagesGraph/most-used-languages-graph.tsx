@@ -51,7 +51,7 @@ export const MostUsedLanguagesGraph = ({
     <Card className="p-5">
       <div className="flex flex-col gap-6">
         <div>
-          <h2 className="pb-1 font-medium text-lg text-slate-900">Most used languages</h2>
+          <h2 className="pb-1 font-medium text-lg text-foreground/90">Most used languages</h2>
           <Text>
             {mainLanguage} contributions have been growing on average {percentage}% MoM
           </Text>
@@ -96,7 +96,7 @@ export const MostUsedLanguagesGraph = ({
                   );
                 })
               ) : (
-                <div className="rounded-lg bg-slate-100 w-full" />
+                <div className="rounded-lg bg-light-slate-1 dark:bg-dark-slate-1 w-full" />
               )}
             </>
           )}

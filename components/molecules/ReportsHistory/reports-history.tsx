@@ -12,7 +12,7 @@ interface ReportsHistoryProps {
 
 const ReportsHistory = ({ reportList, repositories }: ReportsHistoryProps): JSX.Element => {
   const tableStyles = {
-    text: "text-sm text-slate-900 tracking-tight",
+    text: "text-sm text-foreground/90 tracking-tight",
     col1: "flex-[1] text-center",
     col2: "flex-[1] text-center",
     col3: "flex-[1] text-center",
@@ -20,8 +20,8 @@ const ReportsHistory = ({ reportList, repositories }: ReportsHistoryProps): JSX.
   };
 
   return (
-    <div className="flex flex-col overflow-hidden bg-white border rounded-lg">
-      <div className="flex justify-between px-3 py-3 rounded-t-lg md:px-6 bg-light-slate-3">
+    <div className="flex flex-col overflow-hidden bg-background border rounded-lg">
+      <div className="flex justify-between px-3 py-3 rounded-t-lg md:px-6 bg-light-slate-3 dark:bg-dark-slate-3">
         <div className={tableStyles.col1}>
           <TableTitle>Report Name</TableTitle>
         </div>
@@ -42,7 +42,7 @@ const ReportsHistory = ({ reportList, repositories }: ReportsHistoryProps): JSX.
             const { reportDate, reportName, reportFormat } = report;
 
             return (
-              <div className="flex items-center px-3 py-3 md:px-6 odd:bg-white even:bg-slate-50" key={index}>
+              <div className="flex items-center px-3 py-3 md:px-6 odd:bg-background even:bg-slate-50" key={index}>
                 <div className={`${tableStyles.col1} ${tableStyles.text}`}>{reportName}</div>
                 <div className={`${tableStyles.col2} ${tableStyles.text}`}>{reportDate}</div>
                 <div className={`${tableStyles.col3} ${tableStyles.text}`}>{reportFormat}</div>

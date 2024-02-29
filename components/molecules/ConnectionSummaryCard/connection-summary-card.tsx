@@ -12,7 +12,7 @@ interface ConnectionSummaryCardProps {
 }
 const ConnectionSummaryCard = ({ requests, connectionsCount, messagesCount }: ConnectionSummaryCardProps) => {
   return (
-    <div className="flex flex-col max-w-2xl gap-4 p-4 bg-white border rounded-2xl border-light-slate-6">
+    <div className="flex flex-col max-w-2xl gap-4 p-4 bg-background border rounded-2xl border-light-slate-6">
       <div className="flex items-center justify-between text-sm ">
         <div className="flex items-center gap-2 text-sm">
           <div className="flex items-center">

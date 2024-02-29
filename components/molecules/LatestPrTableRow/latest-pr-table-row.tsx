@@ -57,22 +57,38 @@ const LatestPrTableRow = ({
           </IconContext.Provider>
         )}
         <Text title="updated date">{calcDistanceFromToday(new Date(prUpdatedTime))}</Text>
-        <Text title={prName} className="!text-light-slate-12 !w-32 md:!w-72 !truncate">
+        <Text title={prName} className="text-light-slate-12 dark:text-dark-slate-12 !w-32 md:!w-72 !truncate">
           <a href={`https://github.com/${repoFullName}/pull/${prNumber}`} target="_blank" rel="noreferrer">
             {prName}
           </a>
         </Text>
       </div>
-      <div className={`${isHoverCard && "ml-auto"} justify-end w-[calc(10%-4px)] text-sm text-light-slate-11`}>
+      <div
+        className={`${
+          isHoverCard && "ml-auto"
+        } justify-end w-[calc(10%-4px)] text-sm text-light-slate-11 dark:text-dark-slate-11`}
+      >
         {calcDistanceFromToday(new Date(prIssuedTime))}
       </div>
-      <div className={`${isHoverCard ? "hidden" : "flex"} justify-end w-[calc(10%-4px)] text-sm text-light-slate-11`}>
+      <div
+        className={`${
+          isHoverCard ? "hidden" : "flex"
+        } justify-end w-[calc(10%-4px)] text-sm text-light-slate-11 dark:text-dark-slate-11`}
+      >
         {merged ? calcDistanceFromToday(new Date(prMergedTime)) : "-"}
       </div>
-      <div className={`${isHoverCard ? "hidden" : "flex"} justify-end w-[calc(10%-4px)] text-sm text-light-slate-11`}>
+      <div
+        className={`${
+          isHoverCard ? "hidden" : "flex"
+        } justify-end w-[calc(10%-4px)] text-sm text-light-slate-11 dark:text-dark-slate-11`}
+      >
         {noOfFilesChanged >= 1000 ? humanizeNumber(noOfFilesChanged, "abbreviation") : noOfFilesChanged}
       </div>
-      <div className={`${isHoverCard ? "hidden" : "flex"} justify-end w-[calc(10%-4px)] text-sm text-light-slate-11`}>
+      <div
+        className={`${
+          isHoverCard ? "hidden" : "flex"
+        } justify-end w-[calc(10%-4px)] text-sm text-light-slate-11 dark:text-dark-slate-11`}
+      >
         {noOfLinesChanged >= 1000 ? humanizeNumber(noOfLinesChanged, "abbreviation") : noOfLinesChanged}
       </div>
     </div>

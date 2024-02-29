@@ -135,7 +135,7 @@ const ContributorProfileHeader = ({
   }, [user]);
 
   return (
-    <div className="w-full relative  bg-light-slate-6 h-[216px]">
+    <div className="w-full relative  bg-light-slate-6 dark:bg-dark-slate-6 h-[216px]">
       {isConnected && (
         <div className="absolute w-full h-full">
           <Image priority alt="user profile cover image" fill={true} className="object-cover" src={RainbowBg} />
@@ -254,7 +254,7 @@ const ContributorProfileHeader = ({
                   {!isOwner && (
                     <DropdownMenuTrigger
                       title="More options"
-                      className="p-2 mr-3 bg-white rounded-full cursor-pointer "
+                      className="p-2 mr-3 bg-background rounded-full cursor-pointer "
                     >
                       <TfiMoreAlt size={20} />
                     </DropdownMenuTrigger>
@@ -349,7 +349,7 @@ const ContributorProfileHeader = ({
                 defaultRow={1}
                 value={message}
                 className={clsx(
-                  "w-full px-2 mb-2 transition text-light-slate-11 focus:outline-none border",
+                  "w-full px-2 mb-2 transition text-light-slate-11 dark:text-dark-slate-11 focus:outline-none border",
                   isCheckingCharLimit && !isValidCharLimit() && "border-red-500"
                 )}
                 name="message"
@@ -364,7 +364,7 @@ const ContributorProfileHeader = ({
                     {charCount > charLimit.max && "500 Characters Max."}
                   </Text>
                 )}
-                <p className="flex justify-end gap-1 ml-auto text-xs text-light-slate-9">
+                <p className="flex justify-end gap-1 ml-auto text-xs text-light-slate-9 dark:text-dark-slate-9">
                   <span className={`${!isValidCharLimit() && "text-red-600"}`}>
                     {!isValidCharLimit() && charCount > charLimit.max ? `-${charCount - charLimit.max}` : charCount}
                   </span>

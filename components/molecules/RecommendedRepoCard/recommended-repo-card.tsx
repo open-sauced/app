@@ -22,7 +22,7 @@ const RecommendedRepoCard = ({ fullName, className }: RecommendedRepoCardProps):
   const contributorData = getPullRequestsContributors(repositoryPullRequests);
 
   return (
-    <div className={clsx("relative w-full flex flex-col gap-2 p-4  bg-white border rounded-2xl ", className)}>
+    <div className={clsx("relative w-full flex flex-col gap-2 p-4  bg-background border rounded-2xl ", className)}>
       {isLoading && (
         <div className="flex items-center justify-center w-full h-36">
           <Spinner />
@@ -45,7 +45,7 @@ const RecommendedRepoCard = ({ fullName, className }: RecommendedRepoCardProps):
                   src={getAvatarByUsername(owner)}
                 />
               </picture>
-              <span className="text-sm text-light-slate-11">{owner}</span>
+              <span className="text-sm text-light-slate-11 dark:text-dark-slate-11">{owner}</span>
             </a>
           </div>
 

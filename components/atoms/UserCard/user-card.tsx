@@ -18,7 +18,7 @@ const UserCard = ({ username, name, meta, loading }: UserCardProps) => {
   const avatarUrl = getAvatarByUsername(username);
 
   return (
-    <div className="pb-6 border bg-light-slate-1 w-full rounded-lg border-zinc-200">
+    <div className="pb-6 border bg-light-slate-1 dark:bg-dark-slate-1 w-full rounded-lg border-zinc-200">
       {loading ? (
         <div className="flex items-center justify-center h-32 w-72">
           <Spinner className="mt-6 " />
@@ -43,7 +43,7 @@ const UserCard = ({ username, name, meta, loading }: UserCardProps) => {
           <div className="flex items-center gap-5 text-base text-center ">
             {meta.map(({ name, count }, i) => (
               <div key={i.toLocaleString()}>
-                <p className="text-xs text-center text-light-slate-9">{name}</p>
+                <p className="text-xs text-center text-light-slate-9 dark:text-dark-slate-9">{name}</p>
                 {count > 0 ? count : "-"}
               </div>
             ))}

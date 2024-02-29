@@ -35,7 +35,7 @@ const ToggleSwitch = (props: ToggleSwitchProps): JSX.Element => {
         size === "lg" ? "w-14 h-[30px]" : size === "base" ? "w-10 h-5" : size === "sm" ? "w-7 h-4" : ""
       )}
     >
-      <Switch.Thumb className={clsx("bg-white block rounded-2xl  h-full w-1/2")} />
+      <Switch.Thumb className={clsx("bg-background block rounded-2xl  h-full w-1/2")} />
     </Switch.Root>
   );
 };

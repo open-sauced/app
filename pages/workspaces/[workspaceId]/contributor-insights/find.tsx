@@ -234,7 +234,7 @@ const NewListCreationPage = () => {
                   <Title level={3} className="text-lg">
                     Your insight has been created
                   </Title>
-                  <Text className="leading-tight text-center text-light-slate-9">
+                  <Text className="leading-tight text-center text-light-slate-9 dark:text-dark-slate-9">
                     You can now edit and track your new insight in the workspace, and get useful metrics.
                   </Text>
                 </div>
@@ -243,7 +243,7 @@ const NewListCreationPage = () => {
                     <span className="text-sm text-light-slate-10">Share link</span>
                     <div className="flex items-center gap-3 pr-3">
                       <TextInput
-                        className="bg-white pointer-events-none"
+                        className="bg-background pointer-events-none"
                         value={`${window.location.origin}/workspaces/${workspaceId}/contributor-insights/${listId}`}
                       />
                       <button
@@ -287,7 +287,7 @@ const NewListCreationPage = () => {
                   <Title level={3} className="text-lg">
                     Something went wrong
                   </Title>
-                  <Text className="leading-tight text-center text-light-slate-9">
+                  <Text className="leading-tight text-center text-light-slate-9 dark:text-dark-slate-9">
                     We couldn&apos;t create your list. Please, try again in a few minutes.
                   </Text>
                 </div>

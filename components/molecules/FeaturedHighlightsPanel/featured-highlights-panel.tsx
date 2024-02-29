@@ -14,7 +14,7 @@ const FeaturedHighlightsPanel = ({ highlights }: FeaturedHighlightsPanelProps) =
   }, []);
 
   return (
-    <div className="w-full p-6 pt-5 space-y-4 border rounded-lg bg-light-slate-1">
+    <div className="w-full p-6 pt-5 space-y-4 border rounded-lg bg-light-slate-1 dark:bg-dark-slate-1">
       <h2 className="pb-2 text-lg border-b">Featured Highlights</h2>
       <div className="flex flex-col gap-4 text-sm">
         {highlights.map(({ id, title }) => (

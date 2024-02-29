@@ -41,7 +41,7 @@ const ContributorFilterDropdown = () => {
     <div ref={ref} className="flex flex-col px-3 border rounded-lg shadow w-max">
       <div
         onClick={() => setOpen((prev) => !prev)}
-        className="flex items-center justify-between text-sm font-normal cursor-pointer text-light-slate-9 w-44 "
+        className="flex items-center justify-between text-sm font-normal cursor-pointer text-light-slate-9 dark:text-dark-slate-9 w-44 "
       >
         {open ? <span>Filter: Show/Hide</span> : <span>Filter list:</span>}
 
@@ -53,7 +53,7 @@ const ContributorFilterDropdown = () => {
 
       <div
         className={clsx(
-          " z-50 space-y-1.5 overflow-hidden transition-all text-light-slate-12",
+          " z-50 space-y-1.5 overflow-hidden transition-all text-light-slate-12 dark:text-dark-slate-12",
           open ? "h-auto pb-2" : "h-0"
         )}
       >

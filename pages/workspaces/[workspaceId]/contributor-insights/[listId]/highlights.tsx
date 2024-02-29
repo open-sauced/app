@@ -160,7 +160,7 @@ const Highlights = ({ list, workspaceId, numberOfContributors, isOwner, highligh
               {taggedRepos && taggedRepos.length > 0 ? (
                 <ClientOnly>
                   <div className="flex flex-col gap-2">
-                    <span className="text-sm text-light-slate-9">Tagged Repositories</span>
+                    <span className="text-sm text-light-slate-9 dark:text-dark-slate-9">Tagged Repositories</span>
                     {filterOptions &&
                       filterOptions.length > 0 &&
                       filterOptions.map(({ full_name, repoIcon, repoName }) => (
@@ -169,7 +169,7 @@ const Highlights = ({ list, workspaceId, numberOfContributors, isOwner, highligh
                           key={full_name as string}
                           className={`${
                             selectedFilter === full_name ? "border-orange-600 bg-orange-200" : ""
-                          } flex hover:border-orange-600 hover:bg-orange-200 cursor-pointer gap-1 w-max  p-1 pr-2 border-[1px] border-light-slate-6 rounded-lg text-light-slate-12`}
+                          } flex hover:border-orange-600 hover:bg-orange-200 cursor-pointer gap-1 w-max  p-1 pr-2 border-[1px] border-light-slate-6 rounded-lg text-light-slate-12 dark:text-dark-slate-12`}
                         >
                           <Icon IconImage={repoIcon} className="rounded-[4px] overflow-hidden" />
                           <span className="max-w-[45px] md:max-w-[100px] truncate text-xs ">{repoName}</span>
@@ -213,13 +213,13 @@ const Highlights = ({ list, workspaceId, numberOfContributors, isOwner, highligh
                           <strong>{login}</strong>
                         </Link>
                         <Link href={`/feed/${id}`}>
-                          <span className="text-xs font-normal text-light-slate-11">
+                          <span className="text-xs font-normal text-light-slate-11 dark:text-dark-slate-11">
                             {formatDistanceToNowStrict(new Date(created_at), { addSuffix: true })}
                           </span>
                         </Link>
                       </ClientOnly>
                     </div>
-                    <div className="w-full p-4 border bg-light-slate-1 md:px-6 lg:px-9 lg:py-5 lg:max-w-[33rem] sm:py-3 xs:py-2 rounded-xl">
+                    <div className="w-full p-4 border bg-light-slate-1 dark:bg-dark-slate-1 md:px-6 lg:px-9 lg:py-5 lg:max-w-[33rem] sm:py-3 xs:py-2 rounded-xl">
                       <ClientOnly>
                         <ContributorHighlightCard
                           title={title}

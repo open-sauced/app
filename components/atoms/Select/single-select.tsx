@@ -56,7 +56,7 @@ const SingleSelect = ({
       <SelectTrigger
         data-inset-label={insetLabel}
         className={clsx(
-          `bg-white border`,
+          `bg-background border`,
           insetLabel && `before:content-[attr(data-inset-label)] before:mr-1 before:font-normal before:text-slate-500`
         )}
         selectIcon={
@@ -68,7 +68,7 @@ const SingleSelect = ({
         <SelectValue className="w-10 truncate" placeholder={placeholder ?? "Select time zone"} />
       </SelectTrigger>
 
-      <SelectContent position={position ?? "item-aligned"} className="z-50 relative bg-white">
+      <SelectContent position={position ?? "item-aligned"} className="z-50 relative bg-background">
         <>
           {isSearchable ? (
             <div className="flex items-center px-3 py-1.5">

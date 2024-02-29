@@ -12,7 +12,7 @@ type ButtonGroupItemProps = DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonEle
 // TODO: get the proper bg colors.
 const variantStyles = {
   primary: "bg-light-slate-5",
-  secondary: "bg-white",
+  secondary: "bg-background",
 } satisfies Record<Exclude<ButtonGroupItemProps["variant"], undefined>, string>;
 
 export const ButtonGroupItem = ({ variant = "secondary", ...restOfProps }: ButtonGroupItemProps) => {

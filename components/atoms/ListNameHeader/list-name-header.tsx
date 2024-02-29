@@ -38,7 +38,7 @@ const ListNameHeader = ({ title, onEditTitle }: ListNameHeaderProps) => {
             type="text"
             placeholder="Contributor Insight Name"
             className={clsx(
-              "text-3xl w-40 bg-transparent text-light-slate-12 focus:outline-none cursor-text",
+              "text-3xl w-40 bg-transparent text-light-slate-12 dark:text-dark-slate-12 focus:outline-none cursor-text",
               !focused && "!text-white"
             )}
           />

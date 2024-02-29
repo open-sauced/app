@@ -66,14 +66,14 @@ const GitHubTeamSyncDialog = ({
         <div className="flex flex-col max-w-xs gap-6 w-max">
           <div className="flex flex-col gap-2">
             <span className="flex items-center justify-center p-2 bg-black rounded-full w-max">
-              <span className="flex items-center justify-center w-10 h-10 bg-white rounded-full">
+              <span className="flex items-center justify-center w-10 h-10 bg-background rounded-full">
                 <FiGithub size={24} className="text-blue-12" />
               </span>
             </span>
             <Title level={3} className="text-lg">
               Sync a GitHub Team
             </Title>
-            <Text className="leading-tight text-light-slate-9">
+            <Text className="leading-tight text-light-slate-9 dark:text-dark-slate-9">
               We will sync contributors from your team on GitHub to create your new list.
             </Text>
             <label className="flex mt-4 gap-4 items-center">
@@ -107,7 +107,7 @@ const GitHubTeamSyncDialog = ({
                 checked={follow}
                 handleToggle={() => setFollow((toFollow) => !toFollow)}
               />
-              <Text className="leading-tight text-light-slate-9">
+              <Text className="leading-tight text-light-slate-9 dark:text-dark-slate-9">
                 <span id="import-users-explainer">Follow everyone imported.</span>
               </Text>
             </label>

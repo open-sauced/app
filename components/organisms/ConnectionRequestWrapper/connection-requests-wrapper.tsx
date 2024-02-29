@@ -39,7 +39,7 @@ const ConnectionRequestsWrapper = () => {
   return (
     <div>
       {(data && data.length === 0) || hasPendingRequest() === false ? (
-        <DashContainer className="flex-col gap-6 md:gap-8 text-light-slate-9">
+        <DashContainer className="flex-col gap-6 md:gap-8 text-light-slate-9 dark:text-dark-slate-9">
           <p>No pending requests.</p>
           <p className="text-center md:px-16">
             Sometimes you got to be a friend to make a friend. Considering inviting other developers to OpenSauced

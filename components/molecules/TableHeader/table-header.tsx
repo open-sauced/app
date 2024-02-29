@@ -55,12 +55,12 @@ const TableHeader = ({ title, metaInfo, entity, onSearch, layout, onLayoutToggle
     setSuggestions([]);
     if (!searchTerm) return;
     updateSuggestionsDebounced();
-  }, [searchTerm]);
+  }, [searchTerm, updateSuggestionsDebounced]);
 
   return (
     <div className="flex flex-col flex-wrap w-full pl-4 md:pl-0 gap-y-2 md:flex-row md:justify-between md:items-center md:pb-4">
       <div className="flex items-center justify-between gap-x-4 md:justify-start">
-        <Title className="!text-2xl !leading-none " level={1}>
+        <Title className="!text-2xl !leading-none text-foreground" level={1}>
           {title}
         </Title>
         {layout ? (

@@ -100,7 +100,9 @@ const LoginStep1: React.FC<LoginStep1Props> = ({ user }) => {
                 <Icon IconImage={HighlightIcon} />
               </div>
               <div className="mt-0">
-                <Text className="!text-base !text-light-slate-12">We will not have access to your private repos.</Text>
+                <Text className="!text-base text-light-slate-12 dark:text-dark-slate-12 dark:!text-dark-slate-12">
+                  We will not have access to your private repos.
+                </Text>
               </div>
             </div>
             <div className="flex items-start gap-2">
@@ -108,7 +110,9 @@ const LoginStep1: React.FC<LoginStep1Props> = ({ user }) => {
                 <Icon IconImage={HighlightIcon} />
               </div>
               <div className="mt-0">
-                <Text className="!text-base !text-light-slate-12">We will not spam you with emails.</Text>
+                <Text className="!text-base text-light-slate-12 dark:text-dark-slate-12 dark:!text-dark-slate-12">
+                  We will not spam you with emails.
+                </Text>
               </div>
             </div>
           </div>
@@ -288,7 +292,7 @@ const LoginStep3: React.FC<LoginStep3Props> = ({ interests, user }) => {
                 <SelectValue placeholder="Select time zone" />
               </SelectTrigger>
 
-              <SelectContent position="item-aligned" className="bg-white">
+              <SelectContent position="item-aligned" className="bg-background">
                 {timezones.map((timezone, index) => (
                   <SelectItem key={index} value={timezone.value}>
                     {timezone.text}
@@ -321,7 +325,7 @@ const Login: WithPageLayout = () => {
     query: { step },
   } = router;
 
-  const highlighted = "!text-light-slate-12";
+  const highlighted = "text-light-slate-12 dark:text-dark-slate-12";
 
   const [currentLoginStep, setCurrentLoginStep] = useState<LoginSteps>(Number(step) || 1);
 
@@ -336,7 +340,7 @@ const Login: WithPageLayout = () => {
   }, [step]);
 
   return (
-    <Card className="flex flex-col lg:flex-row w-[870px] min-h-[480px] !p-0 rounded-none lg:rounded-lg !bg-inherit lg:!bg-light-slate-2 lg:shadow-login !border-0 lg:!border-[1px] lg:!border-orange-500">
+    <Card className="flex flex-col lg:flex-row w-[870px] min-h-[480px] !p-0 rounded-none lg:rounded-lg !bg-inherit lg:!bg-light-slate-2 dark:bg-dark-slate-2 lg:shadow-login !border-0 lg:!border-[1px] lg:!border-orange-500">
       <>
         <section className="w-full max-w-50%  p-6 lg:p-9">
           <div className="flex items-center gap-2 mb-6">
@@ -393,7 +397,7 @@ const Login: WithPageLayout = () => {
             </Text>
           </div>
         </section>
-        <section className="w-full lg:max-w-[50%] p-9 rounded-lg lg:rounded-r-lg bg-white">
+        <section className="w-full lg:max-w-[50%] p-9 rounded-lg lg:rounded-r-lg bg-background">
           {currentLoginStep === 1 && <LoginStep1 user={user} />}
           {currentLoginStep === 2 && <LoginStep2 handleUpdateInterests={(interests) => setInterests(interests)} />}
           {currentLoginStep >= 3 && <LoginStep3 interests={interests} user={user} />}

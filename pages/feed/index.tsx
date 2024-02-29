@@ -237,7 +237,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
                       />
                       <strong>{singleHighlight.login}</strong>
                     </Link>
-                    <span className="text-xs font-normal text-light-slate-11">
+                    <span className="text-xs font-normal text-light-slate-11 dark:text-dark-slate-11">
                       {formatDistanceToNowStrict(new Date(singleHighlight.created_at), {
                         addSuffix: true,
                       })}
@@ -256,7 +256,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
                     )}
                   </div>
 
-                  <div className="w-full px-2 py-6 border bg-light-slate-1 md:px-6 lg:px-12 rounded-xl">
+                  <div className="w-full px-2 py-6 border bg-light-slate-1 dark:bg-dark-slate-1 md:px-6 lg:px-12 rounded-xl">
                     <ContributorHighlightCard
                       emojis={emojis}
                       title={singleHighlight.title}

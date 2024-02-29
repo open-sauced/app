@@ -45,7 +45,7 @@ const HeaderFilter = () => {
         <ContextThumbnail size={120} ContextThumbnailURL={getTopicThumbnail(pageId as InterestType)}></ContextThumbnail>
       </div>
       <div className="header-info md:truncate flex flex-col grow justify-center p-2">
-        <Title level={1} className="!text-3xl font-semibold text-slate-900">
+        <Title level={1} className="!text-3xl font-semibold text-foreground/90">
           {topicNameFormatting(pageId as string)}
         </Title>
         <Text className="mt-1 !text-base   text-slate-500">

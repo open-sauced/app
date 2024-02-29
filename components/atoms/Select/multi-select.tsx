@@ -45,7 +45,10 @@ const MultiSelect = ({
       <div>
         <PopoverTrigger
           asChild
-          className={clsx("p-1.5 border rounded-md bg-white data-[state=open]:border-orange-500  min-w-max", className)}
+          className={clsx(
+            "p-1.5 border rounded-md bg-background data-[state=open]:border-orange-500  min-w-max",
+            className
+          )}
         >
           <button
             aria-controls="select-menu-list"
@@ -77,7 +80,7 @@ const MultiSelect = ({
             )}
           </button>
         </PopoverTrigger>
-        <PopoverContent align="end" className="!w-full bg-white p-0 max-w-sm">
+        <PopoverContent align="end" className="!w-full bg-background p-0 max-w-sm">
           {options.length > 0 && (
             <Command loop onKeyDown={handleKeyDown} className="w-full px-0 bg-transparent">
               <CommandInput

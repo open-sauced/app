@@ -28,7 +28,7 @@ const TabListItem: React.FC<TabListItemProps> = ({ tab, pageLink, selectedTab })
         <span
           className={
             "text-base whitespace-nowrap " +
-            (selectedTab === tab.name.toLowerCase() ? "text-slate-900" : "text-slate-500")
+            (selectedTab === tab.name.toLowerCase() ? "text-foreground/90" : "text-slate-500")
           }
         >
           {tab.name}

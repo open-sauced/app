@@ -55,7 +55,7 @@ const DialogContent = React.forwardRef<
       className={clsx(
         "fixed z-50",
         autoStyle &&
-          "w-full pb-3 gap-4 bg-light-slate-2 lg:p-6 animate-in data-[state=open]:fade-in-90 data-[state=open]:slide-in-from-bottom-10 md:w-max rounded-lg sm:zoom-in-90 data-[state=open]:sm:slide-in-from-bottom-0",
+          "w-full pb-3 gap-4 lg:p-6 animate-in data-[state=open]:fade-in-90 data-[state=open]:slide-in-from-bottom-10 md:w-max rounded-lg sm:zoom-in-90 data-[state=open]:sm:slide-in-from-bottom-0",
         className
       )}
       {...props}
@@ -75,7 +75,7 @@ const DialogTitle = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Title>,
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Title>
 >(({ className, ...props }, ref) => (
-  <DialogPrimitive.Title ref={ref} className={clsx("text-lg font-semibold text-slate-900", className)} {...props} />
+  <DialogPrimitive.Title ref={ref} className={clsx("text-lg font-semibold text-foreground/90", className)} {...props} />
 ));
 
 const DialogDescription = React.forwardRef<

@@ -200,7 +200,7 @@ export default function DevCardWall({ isLoading = false, cards, initialCardIndex
     const { x, y } = coordinatesForIndex(height)(i);
     return (
       <animated.div
-        className={"grid absolute rounded-3xl bg-white"}
+        className={"grid absolute rounded-3xl bg-background"}
         key={i}
         style={{
           width: `${cellWidth}px`,

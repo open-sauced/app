@@ -22,13 +22,14 @@ const ComponentDateFilter = ({ setRangeFilter, defaultRange }: ComponentDateFilt
   };
 
   return (
-    <div className="flex items-center text-sm bg-white rounded-lg shrink-0 w-max">
+    <div className="flex items-center text-sm bg-background rounded-lg shrink-0 w-max">
       {dates.map((range, index) => (
         <Tooltip key={index} content={`${rangeFormatter(range)} from today`} direction="top">
           <button
             onClick={() => handleFilterClick(range)}
-            className={`px-4 py-1.5 rounded-lg cursor-pointer transition text-light-slate-9 ${
-              activeFilter === range && "border text-light-slate-12 bg-light-slate-5"
+            className={`px-4 py-1.5 rounded-lg cursor-pointer transition text-light-slate-9 dark:text-dark-slate-9 ${
+              activeFilter === range &&
+              "border text-light-slate-12 dark:text-dark-slate-12 bg-light-slate-5 dark:bg-dark-slate-5"
             }`}
             key={index}
           >

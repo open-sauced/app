@@ -13,7 +13,7 @@ export interface FavoriteRepoCardProps {
 
 const FavoriteRepoCard = ({ avatarURL, name, owner, topic, userPage }: FavoriteRepoCardProps): JSX.Element => {
   return (
-    <div className="p-3 bg-white border-2 rounded-xl">
+    <div className="p-3 bg-background border-2 rounded-xl">
       <div className="flex items-center gap-2.5 h-10">
         {/* Avatar */}
         <a href={`https://www.github.com/${owner}/${name}`} target="_blank" rel="noreferrer" className="h-10">
@@ -22,12 +22,12 @@ const FavoriteRepoCard = ({ avatarURL, name, owner, topic, userPage }: FavoriteR
 
         {/* Text */}
         <div className="flex flex-col justify-center">
-          <div className="  text-sm text-light-slate-11 truncate max-w-[85px] md:max-w-[110px]">
+          <div className="  text-sm text-light-slate-11 dark:text-dark-slate-11 truncate max-w-[85px] md:max-w-[110px]">
             <Link href={`/${userPage ? `pages/${userPage}/` : ""}${topic}/repositories/filter/${owner}/${name}`}>
               {owner}
             </Link>
           </div>
-          <div title={name} className="text-lg text-light-slate-12 tracking-tight -mt-0.5">
+          <div title={name} className="text-lg text-light-slate-12 dark:text-dark-slate-12 tracking-tight -mt-0.5">
             <Link href={`/${userPage ? `pages/${userPage}/` : ""}${topic}/repositories/filter/${owner}/${name}`}>
               {name.length > 10 ? truncateString(name, 12) : name}
             </Link>

@@ -52,7 +52,7 @@ export const SearchedContributorsTable = ({
       <div className="overflow-y-scroll h-60">
         <Table>
           <TableHeader className="sr-only">
-            <TableRow className=" bg-light-slate-3">
+            <TableRow className=" bg-light-slate-3 dark:bg-dark-slate-3">
               <TableHead>Selected contributors</TableHead>
             </TableRow>
           </TableHeader>

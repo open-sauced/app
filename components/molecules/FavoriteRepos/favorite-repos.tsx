@@ -8,7 +8,7 @@ interface FavoriteReposProps {
 const FavoriteRepos = ({ repos }: FavoriteReposProps) => {
   return (
     <div>
-      <span className="text-xl text-light-slate-12">Favorite Repositories</span>
+      <span className="text-xl text-light-slate-12 dark:text-dark-slate-12">Favorite Repositories</span>
       <div className="flex gap-4 mt-2">
         {repos.map((repo) => (
           <FavoriteRepoCard

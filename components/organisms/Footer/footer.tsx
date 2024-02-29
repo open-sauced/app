@@ -31,32 +31,38 @@ const footerContext = [
     socials: [
       {
         url: "https://twitter.com/saucedopen",
-        icon: <FaXTwitter className="text-2xl hover:text-light-slate-10  text-light-slate-9" />,
+        icon: <FaXTwitter className="text-2xl hover:text-light-slate-10  text-light-slate-9 dark:text-dark-slate-9" />,
         label: "OpenSauced on Twitter",
       },
       {
         url: "https://github.com/open-sauced",
-        icon: <AiOutlineGithub className="text-2xl hover:text-light-slate-10  text-light-slate-9" />,
+        icon: (
+          <AiOutlineGithub className="text-2xl hover:text-light-slate-10  text-light-slate-9 dark:text-dark-slate-9" />
+        ),
         label: "OpenSauced on GitHub",
       },
       {
         url: "https://www.instagram.com/opensauced/",
-        icon: <AiFillInstagram className="text-2xl hover:text-light-slate-10  text-light-slate-9" />,
+        icon: (
+          <AiFillInstagram className="text-2xl hover:text-light-slate-10  text-light-slate-9 dark:text-dark-slate-9" />
+        ),
         label: "OpenSauced on Instagram",
       },
       {
         url: "https://www.youtube.com/opensauced",
-        icon: <AiFillYoutube className="text-2xl hover:text-light-slate-10  text-light-slate-9" />,
+        icon: (
+          <AiFillYoutube className="text-2xl hover:text-light-slate-10  text-light-slate-9 dark:text-dark-slate-9" />
+        ),
         label: "OpenSauced on YouTube",
       },
       {
         url: "https://discord.com/invite/U2peSNf23P",
-        icon: <FaDiscord className="text-2xl hover:text-light-slate-10  text-light-slate-9" />,
+        icon: <FaDiscord className="text-2xl hover:text-light-slate-10  text-light-slate-9 dark:text-dark-slate-9" />,
         label: "OpenSauced Discord community",
       },
       {
         url: "https://dev.to/opensauced/",
-        icon: <FaDev className="text-2xl hover:text-light-slate-10  text-light-slate-9" />,
+        icon: <FaDev className="text-2xl hover:text-light-slate-10  text-light-slate-9 dark:text-dark-slate-9" />,
         label: "OpenSauced on Dev.to",
       },
     ],
@@ -71,12 +77,12 @@ const Footer = (): JSX.Element => {
           <div className="w-6 h-6 relative !min-w-[24px] min-h-min">
             <Image fill={true} alt="OpenSauced brand logo" src={OpenSaucedLogo} />
           </div>
-          <span className="lg:hidden font-bold text-light-slate-12 ">OpenSauced</span>
+          <span className="lg:hidden font-bold text-light-slate-12 dark:text-dark-slate-12 ">OpenSauced</span>
           <Text className="hidden !text-light-slate-9 lg:inline-block">
             © {new Date().getFullYear()} <span className="hidden lg:inline-block">OpenSauced</span>
           </Text>
         </div>
-        <div className="flex lg:mr-auto lg:text-sm text-light-slate-11 justify-center gap-x-4">
+        <div className="flex lg:mr-auto lg:text-sm text-light-slate-11 dark:text-dark-slate-11 justify-center gap-x-4">
           <a
             className="px-2 hover:text-light-slate-12 "
             target="_blank"
@@ -97,7 +103,7 @@ const Footer = (): JSX.Element => {
           </a>
         </div>
         <div className="flex justify-center gap-x-4 ">
-          <div className=" hidden lg:flex items-center border-r pr-4   gap-x-4 text-light-slate-11 text-sm">
+          <div className=" hidden lg:flex items-center border-r pr-4   gap-x-4 text-light-slate-11 dark:text-dark-slate-11 text-sm">
             <a
               className="px-2 hover:text-light-slate-12"
               href={footerContext[0].terms?.url}
@@ -136,7 +142,7 @@ const Footer = (): JSX.Element => {
           <Text className="text-light-slate-9">
             © {new Date().getFullYear()} <span className="hidden md:inline-block">Open sauced</span>
           </Text>
-          <div className="flex items-center gap-x-3 text-light-slate-11 text-sm">
+          <div className="flex items-center gap-x-3 text-light-slate-11 dark:text-dark-slate-11 text-sm">
             <a
               className="px-2"
               href={footerContext[0].terms?.url}

@@ -191,7 +191,7 @@ const ContributorProfileTab = ({
       {/* Highlights Tab details */}
 
       {showInviteJumbotron && (
-        <div className="bg-white relative p-6 my-10 rounded-xl gap-4 flex flex-col md:flex-row items-center justify-between shadow-xl md:pr-14">
+        <div className="bg-background relative p-6 my-10 rounded-xl gap-4 flex flex-col md:flex-row items-center justify-between shadow-xl md:pr-14">
           <MdClose
             onClick={() => setShowInviteJumbotron(!showInviteJumbotron)}
             role="button"
@@ -361,10 +361,10 @@ const ContributorProfileTab = ({
 
       <TabsContent value={"contributions" satisfies TabKey}>
         <div className="mt-4">
-          <div className="p-4 mt-4 bg-white border rounded-2xl md:p-6">
+          <div className="p-4 mt-4 bg-background border rounded-2xl md:p-6">
             <div className="flex flex-col justify-between gap-2 lg:flex-row md:gap-12 lg:gap-16">
               <div>
-                <span className="text-xs text-light-slate-11">PRs opened</span>
+                <span className="text-xs text-light-slate-11 dark:text-dark-slate-11">PRs opened</span>
                 {totalPrs ? (
                   <div className="flex mt-1 lg:justify-center md:pr-8">
                     <Text className="!text-lg md:!text-xl lg:!text-2xl !text-black !leading-none">{totalPrs} PRs</Text>
@@ -374,7 +374,7 @@ const ContributorProfileTab = ({
                 )}
               </div>
               <div>
-                <span className="text-xs text-light-slate-11">Avg PR velocity</span>
+                <span className="text-xs text-light-slate-11 dark:text-dark-slate-11">Avg PR velocity</span>
                 {prVelocity ? (
                   <div className="flex items-center gap-2 lg:justify-center">
                     <Text className="!text-lg md:!text-xl lg:!text-2xl !text-black !leading-none">
@@ -388,7 +388,7 @@ const ContributorProfileTab = ({
                 )}
               </div>
               <div>
-                <span className="text-xs text-light-slate-11">Contributed Repos</span>
+                <span className="text-xs text-light-slate-11 dark:text-dark-slate-11">Contributed Repos</span>
                 {recentContributionCount ? (
                   <div className="flex mt-1 lg:justify-center">
                     <Text className="!text-lg md:!text-xl lg:!text-2xl !text-black !leading-none">
@@ -410,7 +410,7 @@ const ContributorProfileTab = ({
             <div className="mt-6">
               <PullRequestTable limit={15} contributor={githubName} topic={"*"} repositories={undefined} />
             </div>
-            <div className="mt-8 text-sm text-light-slate-9">
+            <div className="mt-8 text-sm text-light-slate-9 dark:text-dark-slate-9">
               <p>The data for these contributions is from publicly available open source projects on GitHub.</p>
             </div>
           </div>

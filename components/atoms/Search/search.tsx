@@ -114,11 +114,11 @@ const Search = ({
     <div
       className={`${
         className && className
-      } flex bg-white py-1 px-3 shadow-input border transition focus-within:ring focus-within:border-orange-500 focus-within:ring-orange-100 rounded-lg   ring-light-slate-6 items-center relative min-w-[15rem]`}
+      } flex bg-background py-1 px-3 shadow-input border transition focus-within:ring focus-within:border-orange-500 focus-within:ring-orange-100 rounded-lg   ring-light-slate-6 items-center relative min-w-[15rem]`}
     >
       <FaSearch className="text-light-slate-9" fontSize={16} onClick={handleOnSearch} />
       <input
-        className="w-full pl-2 placeholder:text-sm focus:outline-none placeholder:text-slate-400 disabled:cursor-not-allowed"
+        className="w-full pl-2 bg-transparent placeholder:text-sm focus:outline-none placeholder:text-slate-400 disabled:cursor-not-allowed"
         autoFocus={autoFocus}
         placeholder={placeholder}
         name={name}
@@ -137,14 +137,14 @@ const Search = ({
         onBlur={() => setTimeout(() => setShowSuggestions(false), 500)}
       />
       {suggestions && suggestions.length > 0 && showSuggestions && (
-        <div className="absolute left-0 z-10 w-full pb-1 space-y-1 bg-white border rounded-lg cursor-pointer shadow-input border-light-slate-6 top-full">
+        <div className="absolute left-0 z-10 w-full pb-1 space-y-1 border rounded-lg cursor-pointer bg-background shadow-input border-light-slate-6 top-full">
           <ScrollArea type="auto" className="h-60">
-            {suggestionsLabel && suggestions.length > 0 ? <div className="pl-5 pt-4">{suggestionsLabel}</div> : null}
+            {suggestionsLabel && suggestions.length > 0 ? <div className="pt-4 pl-5">{suggestionsLabel}</div> : null}
             {suggestions.map((suggestion, index) => (
               <div
                 className={clsx(
-                  cursor === index && "_cursorActive bg-slate-100",
-                  "px-4 py-2 overflow-hidden break-all hover:bg-light-slate-2"
+                  cursor === index && "_cursorActive bg-light-slate-1 dark:bg-dark-slate-1",
+                  "px-4 py-2 overflow-hidden break-all hover:bg-light-slate-2 dark:hover:bg-dark-slate-2"
                 )}
                 style={suggestionsStyle}
                 key={index}
@@ -166,7 +166,11 @@ const Search = ({
           {isLoading ? (
             <Spinner className="w-5 h-5 " />
           ) : (
-            <GrClose className="cursor-pointer text-light-slate-9" fontSize={16} onClick={handleEmpty} />
+            <GrClose
+              className="cursor-pointer text-light-slate-9 dark:text-dark-slate-9"
+              fontSize={16}
+              onClick={handleEmpty}
+            />
           )}
         </>
       )}

@@ -102,7 +102,7 @@ const Repositories = ({ repositories, showSearch = true }: RepositoriesProps): J
       <TableHeader onSearch={onSearch} metaInfo={repoMeta} entity="repos" title="Repositories" />
       <div className="flex flex-col w-full overflow-x-auto border rounded-lg">
         <div>
-          <div className="flex justify-between gap-2 px-6 py-4 md:hidden bg-light-slate-3">
+          <div className="flex justify-between gap-2 px-6 py-4 md:hidden bg-light-slate-3 dark:bg-dark-slate-3">
             <div className="flex-1">
               <TableTitle> Repository </TableTitle>
             </div>
@@ -110,7 +110,7 @@ const Repositories = ({ repositories, showSearch = true }: RepositoriesProps): J
               <TableTitle> Pr Overview </TableTitle>
             </div>
           </div>
-          <div className="hidden gap-2 px-6 py-4 md:flex bg-light-slate-3">
+          <div className="hidden gap-2 px-6 py-4 md:flex bg-light-slate-3 dark:bg-dark-slate-3">
             <div className={clsx(classNames.cols.checkbox)}>
               <Checkbox
                 onCheckedChange={handleOnSelectAllChecked}
@@ -141,7 +141,7 @@ const Repositories = ({ repositories, showSearch = true }: RepositoriesProps): J
           </div>
 
           {selectedRepos.length > 0 && (
-            <div className="flex justify-between p-3 px-6 items-center border-b-2 text-light-slate-11">
+            <div className="flex items-center justify-between p-3 px-6 border-b-2 text-light-slate-11 dark:text-dark-slate-11">
               <div>{selectedRepos.length} Repositories selected</div>
               <Button onClick={handleOnAddtoInsights} variant="primary">
                 Add to Insight Page

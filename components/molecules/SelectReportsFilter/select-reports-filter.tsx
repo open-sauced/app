@@ -33,7 +33,7 @@ const SelectReportsFilter = ({ filterList, callback }: SelectReportsFilterProps)
                 : "Select a Filter"}
             </SelectValue>
           </SelectTrigger>
-          <SelectContent className="bg-white">
+          <SelectContent className="bg-background">
             {filterList?.map(({ filterName, filterValue }, index) => (
               <SelectItem key={index} value={filterValue}>
                 {filterName}

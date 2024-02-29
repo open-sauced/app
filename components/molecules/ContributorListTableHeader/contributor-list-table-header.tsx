@@ -17,7 +17,7 @@ const ContributorListTableHeaders = ({ selected, handleOnSelectAllContributor }:
   return (
     <div className="mt-4">
       {/* Mobile */}
-      <div className="flex justify-between gap-2 px-2 py-4 rounded-t-lg md:hidden bg-light-slate-3">
+      <div className="flex justify-between gap-2 px-2 py-4 rounded-t-lg md:hidden bg-light-slate-3 dark:bg-dark-slate-3">
         {handleOnSelectAllContributor && (
           <Checkbox
             onCheckedChange={handleOnSelectAllContributor}
@@ -32,7 +32,7 @@ const ContributorListTableHeaders = ({ selected, handleOnSelectAllContributor }:
         </div>
       </div>
       {/* Desktop */}
-      <div className="hidden gap-6 px-6 py-4 border rounded-t-lg md:flex bg-light-slate-3">
+      <div className="hidden gap-6 px-6 py-4 border rounded-t-lg md:flex bg-light-slate-3 dark:bg-dark-slate-3">
         {handleOnSelectAllContributor && (
           <Checkbox
             onCheckedChange={handleOnSelectAllContributor}

@@ -12,8 +12,8 @@ const ToggleGroupItem = ({ checked, value, children }: ToggleGroupItemProps) => 
     <GroupToggle.Item
       value={value}
       className={clsx(
-        "text-sm text-light-slate-11 px-4 py-2 m-0.5 rounded-md font-semibold",
-        checked && "bg-light-slate-1 text-light-slate-12"
+        "text-sm text-light-slate-11 dark:text-dark-slate-11 px-4 py-2 m-0.5 rounded-md font-semibold",
+        checked && "bg-light-slate-1 text-light-slate-12 dark:text-dark-slate-12"
       )}
     >
       {children}

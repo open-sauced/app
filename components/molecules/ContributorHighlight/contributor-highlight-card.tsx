@@ -474,9 +474,13 @@ const ContributorHighlightCard = ({
   return (
     <article className="w-full flex flex-col flex-1 gap-3 md:max-w-[40rem] lg:gap-6 lg:max-w-[29rem] 2xl:max-w-[34rem]">
       <div>
-        <div className={clsx("flex items-center mb-4 gap-1 text-light-slate-11", title && "mb-2")}>
+        <div
+          className={clsx("flex items-center mb-4 gap-1 text-light-slate-11 dark:text-dark-slate-11", title && "mb-2")}
+        >
           {icon}
-          <span className="text-sm text-light-slate-11">{getHighlightTypePreset(type).text}</span>
+          <span className="text-sm text-light-slate-11 dark:text-dark-slate-11">
+            {getHighlightTypePreset(type).text}
+          </span>
           <div className="flex items-center gap-3 ml-auto lg:gap-3">
             <DropdownMenu open={dropdownOpen} modal={false}>
               <div className="flex items-center gap-3 w-max">
@@ -590,7 +594,10 @@ const ContributorHighlightCard = ({
         <div className="flex items-center justify-between w-full">
           <div className="flex items-center justify-between gap-1 pr-2">
             {title && (
-              <Title className="!text-sm  break-words lg:!text-xl !text-light-slate-12" level={4}>
+              <Title
+                className="!text-sm  break-words lg:!text-xl !text-light-slate-12 dark:!text-dark-slate-12"
+                level={4}
+              >
                 {title}
               </Title>
             )}
@@ -598,7 +605,9 @@ const ContributorHighlightCard = ({
         </div>
 
         {/* Highlight body section */}
-        <p className="text-sm font-normal break-words text-light-slate-12 lg:text-base">{desc}</p>
+        <p className="text-sm font-normal break-words text-light-slate-12 dark:text-dark-slate-12 lg:text-base">
+          {desc}
+        </p>
 
         {/* Highlight Link section */}
         <div className="flex">
@@ -695,7 +704,7 @@ const ContributorHighlightCard = ({
               )}
               <fieldset className="flex flex-col w-full gap-1">
                 <label htmlFor="description">Body</label>
-                <div className="bg-white rounded-lg focus-within:border">
+                <div className="bg-background rounded-lg focus-within:border">
                   <Textarea
                     value={highlight.desc}
                     onChange={(e) => {
@@ -703,7 +712,7 @@ const ContributorHighlightCard = ({
                       setError("");
                       setWordCount(e.target.value.length);
                     }}
-                    className="px-2 mb-2 font-normal transition rounded-lg resize-y min-h-[90px]  max-h-96 h-28 text-light-slate-11 focus:outline-none"
+                    className="px-2 mb-2 font-normal transition rounded-lg resize-y min-h-[90px]  max-h-96 h-28 text-light-slate-11 dark:text-dark-slate-11 focus:outline-none"
                   ></Textarea>
                   <div className="flex items-center justify-between py-1 pl-3">
                     <Tooltip direction="top" content="Pick a date">
@@ -711,13 +720,16 @@ const ContributorHighlightCard = ({
                         <PopoverTrigger asChild>
                           <button
                             onClick={() => setPopoverOpen(!popoverOpen)}
-                            className="flex items-center gap-2 text-base text-light-slate-9"
+                            className="flex items-center gap-2 text-base text-light-slate-9 dark:text-dark-slate-9"
                           >
                             <BsCalendar2Event className="text-light-slate-9" />
                             {date && <span className="text-xs">{format(date, "PPP")}</span>}
                           </button>
                         </PopoverTrigger>
-                        <PopoverContent ref={popoverContentRef} className="w-auto p-0 bg-white pointer-events-auto">
+                        <PopoverContent
+                          ref={popoverContentRef}
+                          className="w-auto p-0 bg-background pointer-events-auto"
+                        >
                           <Calendar
                             // block user's from selecting a future date
                             toDate={new Date()}
@@ -732,7 +744,7 @@ const ContributorHighlightCard = ({
                         </PopoverContent>
                       </Popover>
                     </Tooltip>
-                    <p className="flex justify-end gap-1 px-2 text-xs text-light-slate-9">
+                    <p className="flex justify-end gap-1 px-2 text-xs text-light-slate-9 dark:text-dark-slate-9">
                       <span className={`${wordCount > wordLimit && "text-red-600"}`}>
                         {wordCount > wordLimit ? `-${wordCount - wordLimit}` : wordCount}
                       </span>
@@ -755,7 +767,9 @@ const ContributorHighlightCard = ({
               </fieldset>
 
               <label htmlFor="title">Tagged Repos</label>
-              <div className={`flex items-center justify-between w-full gap-1 p-1 text-sm bg-white  rounded-lg mb-4`}>
+              <div
+                className={`flex items-center justify-between w-full gap-1 p-1 text-sm bg-background  rounded-lg mb-4`}
+              >
                 <div className="flex w-full gap-1">
                   <CardRepoList
                     repoList={taggedRepoList}
@@ -770,7 +784,7 @@ const ContributorHighlightCard = ({
                             e.preventDefault();
                             setAddTaggedRepoFormOpen(true);
                           }}
-                          className="flex gap-1  p-1 pr-2 border-[1px] border-light-slate-6 rounded-lg text-light-slate-12 items-center cursor-pointer"
+                          className="flex gap-1  p-1 pr-2 border-[1px] border-light-slate-6 rounded-lg text-light-slate-12 dark:text-dark-slate-12 items-center cursor-pointer"
                         >
                           <BsTagFill className="rounded-[4px] overflow-hidden" />
                           <span className={"max-w-[45px] md:max-w-[100px] truncate"}>Add a repo</span>

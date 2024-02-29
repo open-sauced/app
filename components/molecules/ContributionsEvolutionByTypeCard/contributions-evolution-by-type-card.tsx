@@ -97,7 +97,7 @@ export default function ContributionsEvolutionByType({ data = [], isLoading }: C
             alignItems: "stretch",
           }}
         >
-          <h2 className="font-medium text-lg text-slate-900 mb-2">Contributions Evolution</h2>
+          <h2 className="font-medium text-lg text-foreground/90 mb-2">Contributions Evolution</h2>
           <div className="text-sm text-slate-400 mb-4">This is going to be an auto-generated insight.</div>
           {/* chart */}
           <div className="sr-only" aria-live="polite">
@@ -146,7 +146,7 @@ export default function ContributionsEvolutionByType({ data = [], isLoading }: C
             {dataTypes.map((type) => (
               <div key={type} className="flex items-center gap-2">
                 <div className="w-3 h-3 rounded-sm" style={{ backgroundColor: colors[type] }}></div>
-                <div className="text-sm text-slate-900 capitalize">{type}</div>
+                <div className="text-sm text-foreground/90 capitalize">{type}</div>
               </div>
             ))}
           </div>

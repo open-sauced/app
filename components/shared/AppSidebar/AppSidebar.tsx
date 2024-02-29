@@ -91,9 +91,9 @@ export const AppSideBar = ({ workspaceId, hideSidebar, sidebarCollapsed }: AppSi
   return (
     // TODO: get rid of the z-index. There is grid content like the avatars and paged data text that bleed through the sidebar atm.
     <div
-      className={`fixed left-0 w-72 bg-white shadow-lg transform  transition-transform duration-300 ease-in-out border-r ${
+      className={`fixed left-0 w-72 bg-background shadow-lg transform  transition-transform duration-300 ease-in-out border-r ${
         sidebarCollapsed ? "" : "-translate-x-full"
-      } bg-white flex flex-col gap-8 justify-between max-w-xs  border-r border-slate-200 z-50`}
+      } bg-background flex flex-col gap-8 justify-between max-w-xs  border-r border-slate-200 z-50`}
       style={{
         "--top-nav-height": "3.3rem",
         top: "var(--top-nav-height)",

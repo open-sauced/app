@@ -8,7 +8,7 @@ interface ContextClueCardProps extends React.ComponentProps<"div"> {
 }
 const ContextClueCard = ({ title, desc }: ContextClueCardProps) => {
   return (
-    <div className="bg-white relative border overflow-hidden inline-flex w-full flex-col gap-3 md:gap-8 border-light-slate-6 p-6 rounded-lg">
+    <div className="bg-background relative border overflow-hidden inline-flex w-full flex-col gap-3 md:gap-8 border-light-slate-6 p-6 rounded-lg">
       <div className="absolute h-2 bg-orange-500 right-0 left-0 top-0"></div>
       <Title className="!text-3xl md:!text-5xl" level={1}>
         {title}

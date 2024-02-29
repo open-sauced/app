@@ -8,7 +8,7 @@ const HubContributorsPageLayout = ({ children }: { children: React.ReactNode }) 
       <TopNav />
 
       <div className="flex flex-col items-center pt-20 page-container grow md:pt-14">
-        <main className="flex flex-col items-center flex-1 w-full bg-light-slate-3">
+        <main className="flex flex-col items-center flex-1 w-full bg-light-slate-3 dark:bg-dark-slate-3">
           <div className="container w-full mx-auto">{children}</div>
         </main>
       </div>

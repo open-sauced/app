@@ -57,7 +57,7 @@ const InsightPageCard = ({ insight, user }: InsightPageCardProps): JSX.Element =
   const averagePrOpened = repoData.length > 0 ? Math.round(((open || 0) / total) * 100) : 0;
 
   return (
-    <div className=" w-[428px] py-[15px] px-[14px] rounded-lg flex flex-col gap-y-3 gap-x-2 bg-white border">
+    <div className=" w-[428px] py-[15px] px-[14px] rounded-lg flex flex-col gap-y-3 gap-x-2 bg-background border">
       {/* Card header */}
       <div className="flex items-center justify-between">
         <div>{insight.name}</div>
@@ -75,7 +75,7 @@ const InsightPageCard = ({ insight, user }: InsightPageCardProps): JSX.Element =
         </div>
         <div className="flex gap-2 flex-1 flex-col">
           <div className="flex flex-col">
-            <span className="text-xs text-light-slate-11">Avg PRs opened</span>
+            <span className="text-xs text-light-slate-11 dark:text-dark-slate-11">Avg PRs opened</span>
             <div
               className="flex text-light-grass-10 justify-between items-end pr-8 mt-1
             "
@@ -88,7 +88,7 @@ const InsightPageCard = ({ insight, user }: InsightPageCardProps): JSX.Element =
             </div>
           </div>
           <div>
-            <span className="text-xs text-light-slate-11">Avg PRs velocity</span>
+            <span className="text-xs text-light-slate-11 dark:text-dark-slate-11">Avg PRs velocity</span>
             <div className="flex text-green-9 justify-between items-end pr-8 mt-1">
               <Text className="!text-xl !text-black !leading-none">
                 {repoData.length > 0 ? getRelativeDays(Math.round(velocity / repoData.length)) : "-"}

@@ -179,14 +179,14 @@ const ContributorProfilePage = ({
               ) : (
                 <>
                   <div>
-                    <Title className="!text-light-slate-12 !text-xl" level={4}>
+                    <Title className="text-light-slate-12 dark:text-dark-slate-12 !text-xl" level={4}>
                       Contribution Insights
                     </Title>
                   </div>
-                  <div className="p-4 mt-4 bg-white border rounded-2xl md:p-6">
+                  <div className="p-4 mt-4 bg-background border rounded-2xl md:p-6">
                     <div className="flex flex-col justify-between gap-2 lg:flex-row md:gap-12 lg:gap-16">
                       <div>
-                        <span className="text-xs text-light-slate-11">PRs opened</span>
+                        <span className="text-xs text-light-slate-11 dark:text-dark-slate-11">PRs opened</span>
                         {totalPrs >= 0 ? (
                           <div className="flex mt-1 lg:justify-center md:pr-8">
                             <Text className="!text-lg md:!text-xl lg:!text-2xl !text-black !leading-none">
@@ -198,7 +198,7 @@ const ContributorProfilePage = ({
                         )}
                       </div>
                       <div>
-                        <span className="text-xs text-light-slate-11">Avg PRs velocity</span>
+                        <span className="text-xs text-light-slate-11 dark:text-dark-slate-11">Avg PRs velocity</span>
                         {prVelocity ? (
                           <div className="flex items-center gap-2 lg:justify-center">
                             <Text className="!text-lg md:!text-xl lg:!text-2xl !text-black !leading-none">
@@ -212,7 +212,7 @@ const ContributorProfilePage = ({
                         )}
                       </div>
                       <div>
-                        <span className="text-xs text-light-slate-11">Contributed Repos</span>
+                        <span className="text-xs text-light-slate-11 dark:text-dark-slate-11">Contributed Repos</span>
                         {recentContributionCount >= 0 ? (
                           <div className="flex mt-1 lg:justify-center">
                             <Text className="!text-lg md:!text-xl lg:!text-2xl !text-black !leading-none">
@@ -234,7 +234,7 @@ const ContributorProfilePage = ({
                     <div className="mt-6">
                       <PullRequestTable limit={15} contributor={githubName} topic={"*"} repositories={undefined} />
                     </div>
-                    <div className="mt-8 text-sm text-light-slate-9">
+                    <div className="mt-8 text-sm text-light-slate-9 dark:text-dark-slate-9">
                       <p>The data for these contributions is from publicly available open source projects on GitHub.</p>
                     </div>
                   </div>

@@ -47,7 +47,7 @@ const LegendItem = ({ color, title }: { color?: string; title: string }) => {
         className={`w-3 h-3 rounded-sm ${!color ? "bg-slate-200" : ""}`}
         style={color ? { backgroundColor: color } : {}}
       ></div>
-      <div className="text-sm text-slate-900 capitalize">{title}</div>
+      <div className="text-sm text-foreground/90 capitalize">{title}</div>
     </div>
   );
 };
@@ -64,7 +64,7 @@ const MostActiveCard = ({ children }: { children: ReactNode }) => {
           maxHeight: "500px",
         }}
       >
-        <div className="font-medium text-lg text-slate-900 mb-2">Most active contributors</div>
+        <div className="font-medium text-lg text-foreground/90 mb-2">Most active contributors</div>
         {children}
       </div>
     </Card>
@@ -194,7 +194,7 @@ function RowTooltip({
       <RawTooltip.Trigger asChild>{children}</RawTooltip.Trigger>
       <RawTooltip.Portal>
         <RawTooltip.Content sideOffset={-10} align="center" collisionPadding={10} side={"bottom"} avoidCollisions>
-          <div className="text-sm p-2.5 rounded shadow-lg bg-white font-light w-max">
+          <div className="text-sm p-2.5 rounded shadow-lg bg-background font-light w-max">
             <div className="text-black font-semibold mb-1.5 text-sm">{contributor.login}</div>
             {Object.entries(dataLabelsList)
               .filter(([key]) => labels.includes(key))
@@ -203,7 +203,7 @@ function RowTooltip({
 
                 return (
                   <div key={key} className="grid grid-cols-2 gap-2 font-light mb-1">
-                    <div className="flex items-center gap-1 font text-light-slate-11">
+                    <div className="flex items-center gap-1 font text-light-slate-11 dark:text-dark-slate-11">
                       <div className="w-3 h-3 rounded-sm" style={{ backgroundColor: value.color }}></div>
                       <div>{value.title}</div>
                     </div>
@@ -274,7 +274,7 @@ function GraphRow({
   return (
     <>
       <AvatarHoverCard repositories={[]} contributor={user.login} size="medium" />
-      <div className="flex items-center text-sm text-slate-900 grid-cols-2">{user.login}</div>
+      <div className="flex items-center text-sm text-foreground/90 grid-cols-2">{user.login}</div>
       <div className="flex items-stretch grid-cols-3">
         <div
           className="flex items-stretch"

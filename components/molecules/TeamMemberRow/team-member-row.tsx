@@ -59,7 +59,7 @@ const TeamMemberRow = ({ className, name, avatarUrl, access, email, onDelete, on
             <SelectTrigger className="text-base border-none " selectIcon={<AiOutlineCaretDown className="ml-3" />}>
               <SelectValue placeholder="select a role" />
             </SelectTrigger>
-            <SelectContent className="bg-white">
+            <SelectContent className="bg-background">
               {filterOptions.map((option, i) => (
                 <SelectItem className="cursor-pointer" itemIndicatorIcon={<BsCheck2 />} value={option.value} key={i}>
                   {option.name}

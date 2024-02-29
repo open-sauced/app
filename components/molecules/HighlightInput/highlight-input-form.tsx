@@ -71,19 +71,25 @@ interface AddRepoProps {
 
 function AddRepo({ taggedRepos, deleteTaggedRepo, showAddRepoDialog }: AddRepoProps) {
   return (
-    <div className={`flex items-center justify-between w-full gap-1 px-2 py-1 text-sm bg-white border rounded-lg h-10`}>
+    <div
+      className={`flex items-center justify-between w-full gap-1 px-2 py-1 text-sm bg-background border rounded-lg h-10`}
+    >
       <div className="flex w-full">
         <CardRepoList repoList={taggedRepos} deletable={true} onDelete={(repoName) => deleteTaggedRepo(repoName)} />
         <Tooltip content={"Add a repo"}>
           <button
-            className="flex gap-1  p-1 pr-2 border-[1px] border-light-slate-6 rounded-lg text-light-slate-12 items-center cursor-pointer"
+            className="flex gap-1  p-1 pr-2 border-[1px] border-light-slate-6 rounded-lg text-light-slate-12 dark:text-dark-slate-12 items-center cursor-pointer"
             onClick={(e) => {
               e.preventDefault();
               showAddRepoDialog(true);
             }}
           >
-            <BsTagFill className="rounded-[4px] overflow-hidden text-light-slate-11" />
-            <span className={"max-w-[45px] md:max-w-[100px] truncate text-light-slate-11 text-xs"}>Add a repo</span>
+            <BsTagFill className="rounded-[4px] overflow-hidden text-light-slate-11 dark:text-dark-slate-11" />
+            <span
+              className={"max-w-[45px] md:max-w-[100px] truncate text-light-slate-11 dark:text-dark-slate-11 text-xs"}
+            >
+              Add a repo
+            </span>
           </button>
         </Tooltip>
       </div>
@@ -532,7 +538,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
   return (
     <>
       <div className="flex flex-col flex-1 gap-4 max-sm:hidden">
-        <div className="flex flex-col gap-2 p-2 overflow-hidden text-sm bg-white border rounded-lg">
+        <div className="flex flex-col gap-2 p-2 overflow-hidden text-sm bg-background border rounded-lg">
           <div className="flex pr-2">
             <input
               maxLength={50}
@@ -559,14 +565,14 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
           <form onSubmit={handlePostHighlight} className="flex flex-col gap-4 font-normal">
             <p role="alert">
               {errorMsg && (
-                <span className="inline-flex items-center gap-2 px-2 py-1 mt-2 text-red-500 bg-white border border-red-500 rounded-md w-full text-sm">
+                <span className="inline-flex items-center gap-2 px-2 py-1 mt-2 text-red-500 bg-background border border-red-500 rounded-md w-full text-sm">
                   <MdError size={20} /> {errorMsg}
                 </span>
               )}
             </p>
-            <div className="flex flex-col gap-2 p-2 text-sm bg-white border rounded-lg">
+            <div className="flex flex-col gap-2 p-2 text-sm bg-background border rounded-lg">
               <TypeWriterTextArea
-                className={`resize-y min-h-[80px] max-h-99 font-normal placeholder:text-slate-400 text-light-slate-12 placeholder:font-normal placeholder:text-sm transition focus:outline-none rounded-lg ${
+                className={`resize-y min-h-[80px] max-h-99 font-normal placeholder:text-slate-400 text-light-slate-12 dark:text-dark-slate-12 placeholder:font-normal placeholder:text-sm transition focus:outline-none rounded-lg ${
                   !isDivFocused ? "hidden" : ""
                 }`}
                 defaultRow={4}
@@ -588,7 +594,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                 ref={textAreaRef}
               />
 
-              <p className="flex justify-end gap-1 text-xs text-light-slate-9">
+              <p className="flex justify-end gap-1 text-xs text-light-slate-9 dark:text-dark-slate-9">
                 <span>{charCount}</span>/ <span>{charLimit}</span>
               </p>
             </div>
@@ -609,13 +615,13 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                         onClick={() => {
                           setCreatePopoverOpen(true);
                         }}
-                        className="flex items-center gap-2 p-2 text-base rounded-full z-10 text-light-slate-9 bg-light-slate-3 cursor-pointer"
+                        className="flex items-center gap-2 p-2 text-base rounded-full z-10 text-light-slate-9 dark:text-dark-slate-9 bg-light-slate-3 dark:bg-dark-slate-3 cursor-pointer"
                       >
                         <FiCalendar className="text-light-slate-11" />
                         {date && <span className="text-xs">{format(date, "PPP")}</span>}
                       </button>
                     </PopoverTrigger>
-                    <PopoverContent ref={popoverContentRef} className="w-auto p-0 bg-white pointer-events-auto">
+                    <PopoverContent ref={popoverContentRef} className="w-auto p-0 bg-background pointer-events-auto">
                       <Calendar
                         // block user's from selecting a future date
                         toDate={new Date()}
@@ -635,7 +641,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                     disabled={isSummaryButtonDisabled}
                     type="button"
                     onClick={handleGenerateHighlightSummary}
-                    className="p-2 rounded-full bg-light-slate-3 text-light-slate-11 disabled:cursor-not-allowed disabled:animate-pulse disabled:text-light-orange-9"
+                    className="p-2 rounded-full bg-light-slate-3 dark:bg-dark-slate-3 text-light-slate-11 dark:text-dark-slate-11 disabled:cursor-not-allowed disabled:animate-pulse disabled:text-light-orange-9"
                   >
                     <HiOutlineSparkles className="text-base" />
                   </button>
@@ -669,9 +675,11 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
               Post
             </Button>
 
-            <h2 className="text-md font-semibold text-slate-900">
+            <h2 className="text-md font-semibold text-foreground/90">
               Highlight suggestions
-              <span className="text-sm font-semibold text-light-slate-9 ml-2">Based on your latest activity</span>
+              <span className="text-sm font-semibold text-light-slate-9 dark:text-dark-slate-9 ml-2">
+                Based on your latest activity
+              </span>
             </h2>
 
             {loadingSuggestions ? (
@@ -704,7 +712,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                         }) => (
                           <div
                             key={suggestion.url}
-                            className="flex items-center justify-between w-full gap-0.5 text-sm bg-white border rounded-lg p-2"
+                            className="flex items-center justify-between w-full gap-0.5 text-sm bg-background border rounded-lg p-2"
                           >
                             <div className="flex w-full gap-2 items-center">
                               {suggestion.type === "pull_request" && (
@@ -742,7 +750,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                                   setHighlightLink(suggestion.url);
                                 }}
                                 disabled={isSummaryButtonDisabled}
-                                className="p-2 rounded-full hover:bg-light-slate-3 text-light-slate-11 transition"
+                                className="p-2 rounded-full hover:bg-light-slate-3 text-light-slate-11 dark:text-dark-slate-11 transition"
                               >
                                 <FiEdit2 className="text-base xs:text-xl" />
                               </button>
@@ -758,7 +766,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                                   generateSummary.current = true;
                                 }}
                                 disabled={isSummaryButtonDisabled}
-                                className="p-2 rounded-full hover:bg-light-slate-3 text-light-slate-11 transition disabled:cursor-not-allowed disabled:animate-pulse disabled:text-light-orange-9"
+                                className="p-2 rounded-full hover:bg-light-slate-3 text-light-slate-11 dark:text-dark-slate-11 transition disabled:cursor-not-allowed disabled:animate-pulse disabled:text-light-orange-9"
                               >
                                 <HiOutlineSparkles className="text-base xs:text-xl" />
                               </button>
@@ -815,7 +823,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
       {isFormOpenMobile && (
         <form
           onSubmit={handlePostHighlight}
-          className="fixed left-0 right-0 z-30 h-screen py-4 transition bg-white top-24 md:hidden"
+          className="fixed left-0 right-0 z-30 h-screen py-4 transition bg-background top-24 md:hidden"
         >
           <div className="flex items-center justify-between w-full px-2">
             <button onClick={() => setIsFormOpenMobile(false)} type="button">
@@ -830,9 +838,9 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
               Post
             </Button>
           </div>
-          <div className="flex flex-col gap-2 p-2 overflow-hidden text-sm bg-white ">
+          <div className="flex flex-col gap-2 p-2 overflow-hidden text-sm bg-background ">
             <TypeWriterTextArea
-              className="resize-y min-h-[80px] max-h-99 font-normal text-light-slate-11 mb-2 transition focus:outline-none rounded-lg "
+              className="resize-y min-h-[80px] max-h-99 font-normal text-light-slate-11 dark:text-dark-slate-11 mb-2 transition focus:outline-none rounded-lg "
               defaultRow={4}
               value={bodyText}
               maxLength={500}
@@ -847,8 +855,8 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
               ref={textAreaRef}
             />
             <div className="flex items-center justify-between w-full">
-              {date && <span className="text-xs text-light-slate-9">{format(date, "PPP")}</span>}
-              <p className="flex justify-end gap-1 pb-2 ml-auto text-xs text-light-slate-9">
+              {date && <span className="text-xs text-light-slate-9 dark:text-dark-slate-9">{format(date, "PPP")}</span>}
+              <p className="flex justify-end gap-1 pb-2 ml-auto text-xs text-light-slate-9 dark:text-dark-slate-9">
                 <span>{charCount}</span>/ <span>{charLimit}</span>
               </p>
             </div>
@@ -864,11 +872,11 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                 <Tooltip direction="top" content="Pick a date">
                   <Popover>
                     <PopoverTrigger asChild>
-                      <button className="flex items-center gap-2 p-2 text-base rounded-full text-light-slate-9 bg-light-slate-3">
+                      <button className="flex items-center gap-2 p-2 text-base rounded-full text-light-slate-9 dark:text-dark-slate-9 bg-light-slate-3 dark:bg-dark-slate-3">
                         <FiCalendar className="text-light-slate-11" />
                       </button>
                     </PopoverTrigger>
-                    <PopoverContent ref={popoverContentRef} className="w-auto p-0 bg-white">
+                    <PopoverContent ref={popoverContentRef} className="w-auto p-0 bg-background">
                       <Calendar
                         // block user's from selecting a future date
                         toDate={new Date()}
@@ -885,7 +893,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                     disabled={isSummaryButtonDisabled}
                     type="button"
                     onClick={handleGenerateHighlightSummary}
-                    className="p-2 rounded-full bg-light-slate-3 text-light-slate-11 disabled:cursor-not-allowed disabled:animate-pulse disabled:text-light-orange-9"
+                    className="p-2 rounded-full bg-light-slate-3 dark:bg-dark-slate-3 text-light-slate-11 dark:text-dark-slate-11 disabled:cursor-not-allowed disabled:animate-pulse disabled:text-light-orange-9"
                   >
                     <HiOutlineSparkles className="text-base" />
                   </button>
@@ -901,7 +909,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                 />
               </div>
             </div>
-            <h2 className="text-md font-semibold text-slate-900 my-2">Highlight suggestions</h2>
+            <h2 className="text-md font-semibold text-foreground/90 my-2">Highlight suggestions</h2>
             <Swiper
               spaceBetween={8}
               slidesPerView={1}
@@ -927,7 +935,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                       }) => (
                         <div
                           key={suggestion.url}
-                          className="flex items-center justify-between w-full text-sm bg-white border rounded-lg p-2"
+                          className="flex items-center justify-between w-full text-sm bg-background border rounded-lg p-2"
                         >
                           <div className="flex w-full gap-2 items-center">
                             {suggestion.type === "pull_request" && (
@@ -964,7 +972,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                                 setHighlightLink(suggestion.url);
                               }}
                               disabled={isSummaryButtonDisabled}
-                              className="p-2 rounded-full hover:bg-light-slate-3 text-light-slate-11 transition"
+                              className="p-2 rounded-full hover:bg-light-slate-3 text-light-slate-11 dark:text-dark-slate-11 transition"
                             >
                               <FiEdit2 className="text-base xs:text-xl" />
                             </button>
@@ -979,7 +987,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                                 generateSummary.current = true;
                               }}
                               disabled={isSummaryButtonDisabled}
-                              className="p-2 rounded-full hover:bg-light-slate-3 text-light-slate-11 transition disabled:cursor-not-allowed disabled:animate-pulse disabled:text-light-orange-9"
+                              className="p-2 rounded-full hover:bg-light-slate-3 text-light-slate-11 dark:text-dark-slate-11 transition disabled:cursor-not-allowed disabled:animate-pulse disabled:text-light-orange-9"
                             >
                               <HiOutlineSparkles className="text-base" />
                             </button>

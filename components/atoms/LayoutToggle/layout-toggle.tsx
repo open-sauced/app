@@ -15,7 +15,7 @@ const LayoutToggle = ({ value, onChange }: LayoutToggleProps) => {
   };
 
   return (
-    <div className="flex h-8 border rounded-lg shadow-xs w-28 p-[1px] text-light-slate-9">
+    <div className="flex h-8 border rounded-lg shadow-xs w-28 p-[1px] text-light-slate-9 dark:text-dark-slate-9">
       <div
         onClick={() => handleToggle("list")}
         role="toggle"

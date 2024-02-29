@@ -102,8 +102,8 @@ const ContributorListTableRow = ({
   return (
     <>
       {/* Mobile version */}
-      <div className="px-2 py-2 overflow-hidden md:px-5 odd:bg-white md:hidden even:bg-light-slate-2">
-        <div className="flex items-center gap-x-3 text-light-slate-12">
+      <div className="px-2 py-2 overflow-hidden md:px-5 odd:bg-background md:hidden even:bg-light-slate-2 dark:bg-dark-slate-2">
+        <div className="flex items-center gap-x-3 text-light-slate-12 dark:text-dark-slate-12">
           {handleOnSelectContributor && (
             <Checkbox
               checked={selected ? true : false}
@@ -116,11 +116,11 @@ const ContributorListTableRow = ({
           <div className="w-[68%]">
             <DevProfile username={login} hasBorder={!contributor.author_login} />
           </div>
-          <div className="w-[34%] text-normal text-light-slate-11  h-full">
+          <div className="w-[34%] text-normal text-light-slate-11 dark:text-dark-slate-11  h-full">
             <div className="flex flex-col gap-x-3">
               <p>{getLastContributionDate(mergedPrs)}</p>{" "}
               <p
-                className="text-sm font-normal truncate text-light-slate-9 md:hidden lg:max-w-[8.12rem]"
+                className="text-sm font-normal truncate text-light-slate-9 dark:text-dark-slate-9 md:hidden lg:max-w-[8.12rem]"
                 title={user?.company || getLastContributedRepo(data)}
               >
                 {user?.company || getLastContributedRepo(data)}
@@ -137,7 +137,7 @@ const ContributorListTableRow = ({
           </div>
         </div>
 
-        <div className={`${!tableOpen && "max-h-0"}   text-light-slate-11 text-sm transition`}>
+        <div className={`${!tableOpen && "max-h-0"}   text-light-slate-11 dark:text-dark-slate-11 text-sm transition`}>
           <div className="px-2 py-3">{last30days && <Sparkline data={last30days} width="100%" height={54} />}</div>
 
           <div className="flex items-center justify-between py-3 border-b">
@@ -177,7 +177,7 @@ const ContributorListTableRow = ({
 
       {/* Desktop Version */}
 
-      <div className={`${classNames.row} !gap-6 text-light-slate-11`}>
+      <div className={`${classNames.row} !gap-6 text-light-slate-11 dark:text-dark-slate-11`}>
         {handleOnSelectContributor && (
           <Checkbox
             checked={selected ? true : false}
@@ -203,11 +203,13 @@ const ContributorListTableRow = ({
         </div>
 
         {/* Column: Last Contribution */}
-        <div className={clsx("flex-1 lg:max-w-[130px]  flex text-light-slate-11 justify-center ")}>
+        <div
+          className={clsx("flex-1 lg:max-w-[130px]  flex text-light-slate-11 dark:text-dark-slate-11 justify-center ")}
+        >
           <div className="flex flex-col">
             <p>{contributor.author_login ? getLastContributionDate(mergedPrs) : "-"}</p>{" "}
             <p
-              className="hidden whitespace-nowrap overflow-hidden overflow-ellipsis text-sm font-normal md:inline-flex text-light-slate-9 lg:max-w-[8.12rem]"
+              className="hidden whitespace-nowrap overflow-hidden overflow-ellipsis text-sm font-normal md:inline-flex text-light-slate-9 dark:text-dark-slate-9 lg:max-w-[8.12rem]"
               title={user?.company || getLastContributedRepo(data)}
             >
               {user?.company || getLastContributedRepo(data)}
@@ -226,7 +228,11 @@ const ContributorListTableRow = ({
         </div>
 
         {/* Column: Time Zone */}
-        <div className={clsx("flex-1 hidden lg:max-w-[5rem] text-light-slate-11 justify-center   lg:flex ")}>
+        <div
+          className={clsx(
+            "flex-1 hidden lg:max-w-[5rem] text-light-slate-11 dark:text-dark-slate-11 justify-center   lg:flex "
+          )}
+        >
           <div className="flex gap-x-3">
             {contributor.author_login && user && user.timezone ? <p>{user.timezone}</p> : "-"}
           </div>

@@ -32,7 +32,7 @@ const CardRepoList = ({
   const sanitizedRepoList = [...new Map(repoList.map((item) => [item["repoName"], item])).values()];
 
   return (
-    <div className="flex gap-1 items-center max-w[175px] truncate flex-wrap text-xs text-light-slate-9">
+    <div className="flex gap-1 items-center max-w[175px] truncate flex-wrap text-xs text-light-slate-9 dark:text-dark-slate-9">
       {repoList.length > 0 ? (
         <>
           {sanitizedRepoList
@@ -42,7 +42,7 @@ const CardRepoList = ({
                 <div key={`repo_${index}`}>
                   {repoName && repoIcon ? (
                     <Tooltip content={repoName}>
-                      <div className="flex gap-1  p-1 pr-2 border-[1px] border-light-slate-6 rounded-lg text-light-slate-12">
+                      <div className="flex gap-1  p-1 pr-2 border-[1px] border-light-slate-6 rounded-lg text-light-slate-12 dark:text-dark-slate-12">
                         <Icon IconImage={repoIcon} className="rounded-[4px] overflow-hidden" />
                         <span className={`max-w-[45px] md:max-w-[100px] truncate ${fontSizeClassName}`}>
                           <Link href={`https://github.com/${repoOwner}/${repoName}`} target="_blank" rel="noreferrer">
@@ -51,13 +51,13 @@ const CardRepoList = ({
                         </span>
                         {deletable ? (
                           <button
-                            className="flex items-center justify-center w-4 h-4 rounded-full bg-light-slate-6 hover:bg-light-slate-5 transition-colors duration-300 p-1"
+                            className="flex items-center justify-center w-4 h-4 rounded-full bg-light-slate-6 dark:bg-dark-slate-6 hover:bg-light-slate-5 transition-colors duration-300 p-1"
                             onClick={(e) => {
                               e.preventDefault();
                               onDelete(repoName);
                             }}
                           >
-                            <ImCross className="w-3 h-3 text-light-slate-12" />
+                            <ImCross className="w-3 h-3 text-light-slate-12 dark:text-dark-slate-12" />
                           </button>
                         ) : (
                           ""

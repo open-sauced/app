@@ -13,7 +13,7 @@ interface LatestPrTableHeaderProps {
 
 const LatestPrTableHeader = ({ classNames, isHoverCard }: LatestPrTableHeaderProps) => {
   return (
-    <div className="flex gap-2 items-center bg-light-slate-3 rounded-md px-2 py-1 ">
+    <div className="flex gap-2 items-center bg-light-slate-3 dark:bg-dark-slate-3 rounded-md px-2 py-1 ">
       <div className="w-3/5">
         <Text className=" ">Latest PRs</Text>
       </div>

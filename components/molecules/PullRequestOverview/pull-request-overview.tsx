@@ -39,7 +39,7 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
     <div className="flex flex-col gap-1">
       <div className="w-full flex justify-between gap-1">
         {/* Total Number of Pull Requests */}
-        <div className="  text-base text-light-slate-11 tracking-tight">
+        <div className="  text-base text-light-slate-11 dark:text-dark-slate-11 tracking-tight">
           {prOverviewDetails.percent} {`PR${prOverviewDetails.percent === 1 ? "" : "s"}`}
         </div>
 

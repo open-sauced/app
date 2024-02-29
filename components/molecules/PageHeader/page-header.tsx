@@ -8,11 +8,11 @@ interface PageHeaderProps {
 
 const PageHeader = ({ title, rightComponent, leftComponent }: PageHeaderProps): JSX.Element => {
   return (
-    <div className="w-full flex md:flex-row flex-col  bg-light-orange-2  gap-x-3 items-start  md:items-end  pt-6 pb-4">
+    <div className="flex flex-col items-start w-full pt-6 pb-4 md:flex-row bg-light-orange-2 dark:bg-dark-orange-2 gap-x-3 md:items-end">
       <Title className="md:!text-2xl !text-xl" level={1}>
         {title}
       </Title>
-      <div className="flex md:flex-row flex-col w-full md:justify-between items-start md:items-center">
+      <div className="flex flex-col items-start w-full md:flex-row md:justify-between md:items-center">
         <div>{leftComponent}</div>
         <div>{rightComponent}</div>
       </div>

@@ -79,7 +79,7 @@ const Notifications: WithPageLayout = () => {
         ref={topRef}
       >
         <div className="flex flex-col gap-4 w-80">
-          <Title className="!text-2xl !text-light-slate-12" level={3}>
+          <Title className="!text-2xl !text-light-slate-12 dark:!text-dark-slate-12" level={3}>
             Notifications
           </Title>
           <aside className="flex flex-col gap-2">
@@ -147,7 +147,7 @@ const Notifications: WithPageLayout = () => {
           ) : (
             <div className="flex flex-col gap-2 mb-10">
               {notifications?.map((notification) => (
-                <div className="p-2 border bg-light-slate-2 rounded-lg flex items-center gap-4" key={notification.id}>
+                <div className="p-2 border rounded-lg flex items-center gap-4" key={notification.id}>
                   <Link href={`/user/${notification.from_user.login}`}>
                     <Avatar
                       initialsClassName="text-8xl leading-none"
@@ -164,7 +164,7 @@ const Notifications: WithPageLayout = () => {
                         <span className="font-bold">{notification.from_user.login}</span>
                         <span>{notification.message.replace(notification.from_user.login, " ")}</span>
                       </p>
-                      <span className="text-xs font-normal text-light-slate-11">
+                      <span className="text-xs font-normal text-light-slate-11 dark:text-dark-slate-11">
                         {formatDistanceToNowStrict(new Date(notification.notified_at), { addSuffix: true })}
                       </span>
                     </Link>

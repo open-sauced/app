@@ -117,7 +117,7 @@ const AuthSection: React.FC = ({}) => {
                     </Tooltip>
                   </div>
                   <OnboardingButton className="!hidden xl:!flex !pr-1">
-                    <Text className="text-sm !text-light-slate-12 hidden xl:block py-1 px-2">
+                    <Text className="text-sm !text-light-slate-12 dark:!text-dark-slate-12 hidden xl:block py-1 px-2">
                       Complete the onboarding
                     </Text>
                   </OnboardingButton>
@@ -136,7 +136,7 @@ const AuthSection: React.FC = ({}) => {
                 {userInfo && userInfo.notification_count > 0 && (
                   <span className="absolute right-0 block w-2 h-2 bg-orange-300 rounded-full"></span>
                 )}
-                <IoNotifications className="text-xl text-light-slate-9" />
+                <IoNotifications className="text-xl text-light-slate-9 dark:text-dark-slate-9" />
               </button>
 
               <DropdownList className="-mb-1" menuContent={authMenu.authed}>

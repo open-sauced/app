@@ -72,7 +72,7 @@ const HubPageLayout = ({ page = "dashboard", children }: { page?: string; childr
         />
       </div>
 
-      <main className="flex flex-col items-center flex-1 w-full py-8  bg-light-slate-2">
+      <main className="flex flex-col items-center flex-1 w-full py-8 ">
         <div className="container px-2 mx-auto md:px-16">{children}</div>
       </main>
     </>

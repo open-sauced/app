@@ -82,7 +82,7 @@ const NewWorkspace = () => {
             <h3 className="font-medium mb-2">Workspace Description</h3>
             <TextInput name="description" placeholder="Workspace description" className="!py-1.5 w-full text-sm" />
           </div>
-          <div className="bg-white sticky-bottom fixed bottom-0 right-0 self-end m-6">
+          <div className="bg-background sticky-bottom fixed bottom-0 right-0 self-end m-6">
             <Button variant="primary" className="flex gap-2.5 items-center cursor-pointer w-min mt-2 sm:mt-0 self-end">
               Create Workspace
             </Button>

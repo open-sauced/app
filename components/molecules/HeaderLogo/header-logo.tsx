@@ -13,7 +13,7 @@ interface HeaderLogoProps {
 const HeaderLogo: React.FC<HeaderLogoProps> = ({ textIsBlack, withBg = false, responsive }) => {
   return (
     <Link href="/">
-      <div className="flex items-center py-2 gap-2 cursor-pointer">
+      <div className="flex items-center gap-2 py-2 cursor-pointer">
         <Image
           className="rounded"
           alt="Open Sauced Logo"

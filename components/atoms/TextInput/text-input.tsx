@@ -47,7 +47,7 @@ const TextInput = ({
         {label && <p className="mb-2 text-sm">{label}</p>}
         <div
           className={clsx(
-            "flex-1 px-2 bg-white shadow-input border transition rounded-lg py-1 flex items-center",
+            "flex-1 px-2 bg-background shadow-input border transition rounded-lg py-1 flex items-center",
             borderless && "!border-none",
             state === "invalid" ? "focus-within:border-light-red-10" : "focus-within:border-light-orange-9 ",
             disabled && "bg-light-slate-3",

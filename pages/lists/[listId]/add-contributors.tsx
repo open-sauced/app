@@ -102,7 +102,7 @@ const ErrorModal = ({ list, isOpen, onRetry, onClose }: ErrorModalProps) => {
                 Something went wrong
               </Title>
             </span>
-            <Text className="leading-tight text-center text-light-slate-9">
+            <Text className="leading-tight text-center text-light-slate-9 dark:text-dark-slate-9">
               We couldn&apos;t add the new contributors to your list. Please try again.
             </Text>
           </div>
@@ -136,7 +136,7 @@ const ContributorsAddedModal = ({ list, contributorCount, isOpen, onClose }: Con
                 You&apos;ve added {contributorCount} new {contributorCount > 1 ? "contributors" : "contributor"}
               </Title>
             </span>
-            <Text className="leading-tight text-center text-light-slate-9">
+            <Text className="leading-tight text-center text-light-slate-9 dark:text-dark-slate-9">
               You can now get insights into their activity from your list dashboard.
             </Text>
           </div>
@@ -177,7 +177,7 @@ const useContributorSearch = (makeRequest: boolean) => {
 };
 
 const EmptyState = () => (
-  <div className="grid place-content-center w-full bg-white p-4 md:p-8">
+  <div className="grid place-content-center w-full bg-background p-4 md:p-8">
     <Image src="/assets/contributors-empty-state.svg" alt="" width="300" height="298" className="object-contain" />
     <p className="relative bottom-16 text-center text-light-slate-10">Search for contributors to add to your list</p>
   </div>

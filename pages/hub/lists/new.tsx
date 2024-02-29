@@ -225,7 +225,7 @@ const CreateListPage = () => {
 
           <div className="flex justify-between">
             <div className="flex items-center">
-              <UserGroupIcon className="w-6 h-6 text-light-slate-9" />
+              <UserGroupIcon className="w-6 h-6 text-light-slate-9 dark:text-dark-slate-9" />
               <Text className="pl-2">
                 <span id="make-public-explainer">Make this list publicly visible</span>
               </Text>
@@ -322,7 +322,7 @@ const AddListPage = () => {
     <div className="flex flex-col min-h-screen">
       <TopNav />
       <div className="flex flex-col items-center pt-20 page-container grow md:pt-14">
-        <main className="flex flex-col items-center flex-1 w-full px-3 py-8 md:px-2 bg-light-slate-2">
+        <main className="flex flex-col items-center flex-1 w-full px-3 py-8 md:px-2">
           <div className="container px-2 mx-auto md:px-16">
             <CreateListPage />
           </div>

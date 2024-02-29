@@ -7,7 +7,11 @@ interface TableTitleProps {
 
 const TableTitle: React.FC<TableTitleProps> = ({ className, children }) => {
   return (
-    <div className={`${className ? className : ""} font-semibold tracking-wide text-xs text-light-slate-11 uppercase`}>
+    <div
+      className={`${
+        className ? className : ""
+      } font-semibold tracking-wide text-xs text-light-slate-11 dark:text-dark-slate-11 uppercase`}
+    >
       {children}
     </div>
   );

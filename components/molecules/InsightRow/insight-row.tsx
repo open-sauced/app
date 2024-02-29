@@ -34,12 +34,12 @@ const InsightRow = ({ insight, user, isEditable = true, workspaceId }: InsightRo
   const editLinkPrefix = workspaceId ? `/workspaces/${workspaceId}/repository-insights` : "/hub/insights";
 
   return (
-    <Card className="flex flex-col md:flex-row w-full rounded-lg px-4 lg:px-8 py-5 gap-4 lg:gap-2 bg-white items-center">
+    <Card className="flex flex-col md:flex-row w-full rounded-lg px-4 lg:px-8 py-5 gap-4 lg:gap-2 bg-background items-center">
       <>
         <div className="flex w-full flex-1 flex-col gap-4 lg:gap-6">
           <div className="flex items-center lg:items-center gap-4 ">
             <div className="w-4 h-4 bg-light-orange-10 rounded-full"></div>
-            <div className="text-xl text-light-slate-12 flex justify-between">
+            <div className="text-xl text-light-slate-12 dark:text-dark-slate-12 flex justify-between">
               <Link
                 href={`${publicLinkPrefix}${
                   !workspaceId ? `/${user ? user?.user_metadata.user_name : "anonymous"}` : ""
@@ -50,7 +50,7 @@ const InsightRow = ({ insight, user, isEditable = true, workspaceId }: InsightRo
             </div>
             <div
               className={clsx(
-                "rounded-2xl border px-2 text-light-slate-11",
+                "rounded-2xl border px-2 text-light-slate-11 dark:text-dark-slate-11",
                 !isEditable ? "text-orange-700 bg-orange-50 border-orange-600" : ""
               )}
             >
@@ -58,7 +58,7 @@ const InsightRow = ({ insight, user, isEditable = true, workspaceId }: InsightRo
             </div>
             {isEditable ? (
               <div className="flex-1 md:hidden">
-                <span className=" bg-light-slate-1 inline-block rounded-lg p-2.5 border mr-2">
+                <span className=" bg-light-slate-1 dark:bg-dark-slate-1 inline-block rounded-lg p-2.5 border mr-2">
                   <Link href={`${editLinkPrefix}/${insight.id}/edit`}>
                     <BsPencilFill
                       title="Edit Insight Page"
@@ -79,7 +79,7 @@ const InsightRow = ({ insight, user, isEditable = true, workspaceId }: InsightRo
           <div className="flex items-center gap-8 w-full">
             {/* Average Prs opened section */}
             <div className="flex flex-col gap-2 min-w-[120px] flex-1">
-              <span className="text-xs text-light-slate-11">Avg PRs opened</span>
+              <span className="text-xs text-light-slate-11 dark:text-dark-slate-11">Avg PRs opened</span>
               <div
                 className="flex text-light-grass-10 items-center  gap-6
             "
@@ -93,7 +93,7 @@ const InsightRow = ({ insight, user, isEditable = true, workspaceId }: InsightRo
 
             {/* Average Pr Velocity section */}
             <div className="flex-1 gap-2 flex flex-col  min-w-[150px]">
-              <span className="text-xs text-light-slate-11">Avg PRs velocity</span>
+              <span className="text-xs text-light-slate-11 dark:text-dark-slate-11">Avg PRs velocity</span>
               <div className="flex text-light-grass-10 items-center  gap-6">
                 <Text className="md:!text-lg lg:!text-2xl !tracking-widest !text-black !leading-none">
                   {repoData.length > 0 ? getRelativeDays(Math.round(velocity / repoData.length)) : "-"}
@@ -105,7 +105,7 @@ const InsightRow = ({ insight, user, isEditable = true, workspaceId }: InsightRo
               {canEdit ||
                 (!insight.is_featured && (
                   <Link href={`${editLinkPrefix}/${insight.id}/edit`}>
-                    <span className=" bg-light-slate-1 inline-block rounded-lg p-2.5 border mr-2 cursor-pointer">
+                    <span className=" bg-light-slate-1 dark:bg-dark-slate-1 inline-block rounded-lg p-2.5 border mr-2 cursor-pointer">
                       <BsPencilFill title="Edit Insight Page" className="text-light-slate-10 text-lg" />
                     </span>
                   </Link>
@@ -115,7 +115,7 @@ const InsightRow = ({ insight, user, isEditable = true, workspaceId }: InsightRo
                   !workspaceId ? `/${user ? user?.user_metadata.user_name : "anonymous"}` : ""
                 }/${insight.id}/dashboard`}
               >
-                <span className=" bg-light-slate-1 inline-block rounded-lg p-2.5 border cursor-pointer">
+                <span className=" bg-light-slate-1 dark:bg-dark-slate-1 inline-block rounded-lg p-2.5 border cursor-pointer">
                   <MdOutlineArrowForwardIos title="Go To Insight Page" className="text-light-slate-10 text-lg" />
                 </span>
               </Link>

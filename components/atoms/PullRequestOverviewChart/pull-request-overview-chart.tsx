@@ -61,7 +61,7 @@ const PullRequestOverviewChart: React.FC<PullRequestOverviewChartProps> = ({
   };
 
   return (
-    <div className="w-full h-1.5 flex gap-0.5 bg-light-slate-2 rounded-full overflow-hidden">
+    <div className="w-full h-1.5 flex gap-0.5 rounded-full overflow-hidden">
       {/* Open */}
       {open && open > 0 ? (
         <PullRequestOverviewChartBar

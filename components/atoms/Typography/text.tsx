@@ -54,7 +54,7 @@ const Text: React.FC<TextProps> = ({
     <TypographyWrapper
       className={clsx(
         className,
-        disabled && "cursor-not-allowed select-none text-light-slate-11/50",
+        disabled && "cursor-not-allowed select-none text-light-slate-11 dark:text-dark-slate-11/50",
         keyboard && "bg-light-slate-4/50 rounded px-2 border border-b-2 border-light-slate-8/50",
         underline && "underline",
         strikethrough && "line-through",

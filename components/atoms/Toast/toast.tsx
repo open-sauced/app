@@ -28,7 +28,10 @@ const Toast = React.forwardRef<
   return (
     <ToastPrimitives.Root
       ref={ref}
-      className={clsx(className, "bg-light-slate-2 rounded-lg border border-light-slate-6 p-2 text-center")}
+      className={clsx(
+        className,
+        "bg-light-slate-2 dark:bg-dark-slate-2 rounded-lg border border-light-slate-6 p-2 text-center"
+      )}
       {...props}
     />
   );
@@ -57,7 +60,7 @@ const ToastClose = React.forwardRef<
   <ToastPrimitives.Close
     ref={ref}
     className={clsx(
-      "rounded-full p-1 z-50 bg-slate-100 text-slate-500 transition-opacity hover:bg-slate-200  hover:text-slate-900 focus:opacity-100 focus:outline-none focus:ring-2  group-[.destructive]:text-red-300 group-[.destructive]:hover:text-red-50 group-[.destructive]:focus:ring-red-400 group-[.destructive]:focus:ring-offset-red-600 ",
+      "rounded-full p-1 z-50 bg-light-slate-1 dark:bg-dark-slate-1 text-slate-500 transition-opacity hover:bg-slate-200  hover:text-foreground/90 focus:opacity-100 focus:outline-none focus:ring-2  group-[.destructive]:text-red-300 group-[.destructive]:hover:text-red-50 group-[.destructive]:focus:ring-red-400 group-[.destructive]:focus:ring-offset-red-600 ",
       className
     )}
     toast-close=""
