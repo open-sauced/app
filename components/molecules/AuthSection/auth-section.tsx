@@ -44,6 +44,12 @@ const AuthSection: React.FC = ({}) => {
   }, []);
 
   useEffect(() => {
+    if (redirectedFrom && session) {
+      router.replace(`${decodeURIComponent(redirectedFrom)}`);
+    }
+  }, [redirectedFrom, session]);
+
+  useEffect(() => {
     if (session && !userInfo) {
       setUserInfo(session);
     }
