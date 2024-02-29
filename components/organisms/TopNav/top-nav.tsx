@@ -54,7 +54,7 @@ const Nav = ({ className }: { className?: string }) => {
               className={`font-medium text-sm text-slate-700 hover:text-orange-500 transition-all ${getActiveStyle(
                 router.asPath.startsWith("/workspaces/") || router.asPath.includes("/pages")
               )}`}
-              href={"/"}
+              href={"/workspaces"}
             >
               Workspace
             </Link>
