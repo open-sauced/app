@@ -121,7 +121,7 @@ export const AppSideBar = ({ workspaceId, hideSidebar, sidebarCollapsed }: AppSi
                   return;
                 }
 
-                router.push(`/workspaces/${value}/repositories`);
+                router.push(`/workspaces/${value}`);
               }}
             />
           </label>
@@ -133,7 +133,7 @@ export const AppSideBar = ({ workspaceId, hideSidebar, sidebarCollapsed }: AppSi
           <ul className="grid gap-1 mb-6">
             <SidebarMenuItem
               title="Home"
-              url={`/workspaces/${workspaceId}/repositories`}
+              url={`/workspaces/${workspaceId}`}
               icon={<BiHomeAlt className="w-5 h-5 text-slate-400" />}
             />
             <li className="flex flex-row justify-between items-center ">
