@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.4.0-beta.53](https://github.com/open-sauced/app/compare/v2.4.0-beta.52...v2.4.0-beta.53) (2024-02-29)
+
+
+### 🐛 Bug Fixes
+
+* now the workspaces homepage is /workspaces/some-workspace-id ([#2821](https://github.com/open-sauced/app/issues/2821)) ([bd5d5c7](https://github.com/open-sauced/app/commit/bd5d5c74a45d44b47f14fd4623f674b80a37b01e))
+
 ## [2.4.0-beta.52](https://github.com/open-sauced/app/compare/v2.4.0-beta.51...v2.4.0-beta.52) (2024-02-29)
 
 
