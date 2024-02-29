@@ -65,6 +65,13 @@ export async function middleware(req: NextRequest) {
     data: { session },
   } = await supabase.auth.getSession();
 
+  if (session?.user && req.nextUrl.pathname === "/workspaces") {
+    const data = await loadSession(req, session?.access_token);
+    const workspaceUrl = getWorkspaceUrl(req.cookies, req.url, data.personal_workspace_id);
+
+    return NextResponse.redirect(`${workspaceUrl}`);
+  }
+
   if (session?.user && req.nextUrl.pathname === "/account-deleted") {
     // Delete the account from Supabase and log the user out.
     await supabase.auth.admin.deleteUser(session.user.id);

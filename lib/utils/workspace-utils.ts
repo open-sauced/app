@@ -172,7 +172,7 @@ export function getWorkspaceUrl(cookies: RequestCookies, baseUrl: string, person
   // @ts-expect-error the cookie value will be defined
   const workspaceId = cookies.get(WORKSPACE_ID_COOKIE_NAME).value;
 
-  return new URL(`/workspaces/${workspaceId}/repositories`, baseUrl);
+  return new URL(`/workspaces/${workspaceId}`, baseUrl);
 }
 
 export async function getInsightWithWorkspace({ insightId }: { insightId: number }) {
