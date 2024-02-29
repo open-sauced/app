@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.4.0-beta.55](https://github.com/open-sauced/app/compare/v2.4.0-beta.54...v2.4.0-beta.55) (2024-02-29)
+
+
+### 🐛 Bug Fixes
+
+* now the workspace creation redirects to the new workspace homepage ([#2830](https://github.com/open-sauced/app/issues/2830)) ([e1bbe84](https://github.com/open-sauced/app/commit/e1bbe849e00d5f4fb87bffbbf022558c1c169566))
+* use pr histogram for contributor pull request activity line chart ([#2831](https://github.com/open-sauced/app/issues/2831)) ([7e93b9d](https://github.com/open-sauced/app/commit/7e93b9dd0b5a4b4b68f47953c7bd3d9d5e19af58))
+
 ## [2.4.0-beta.54](https://github.com/open-sauced/app/compare/v2.4.0-beta.53...v2.4.0-beta.54) (2024-02-29)
 
 
