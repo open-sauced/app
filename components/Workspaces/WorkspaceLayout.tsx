@@ -10,10 +10,11 @@ import Footer from "components/organisms/Footer/footer";
 
 interface WorkspaceLayoutProps {
   workspaceId: string;
+  banner?: React.ReactNode;
   children: React.ReactNode;
 }
 
-export const WorkspaceLayout = ({ workspaceId, children }: WorkspaceLayoutProps) => {
+export const WorkspaceLayout = ({ workspaceId, banner, children }: WorkspaceLayoutProps) => {
   const isLargeScreen = useMediaQuery("(min-width: 1024px)");
   const [showingSidebar, setShowingSidebar] = useLocalStorage("showingSidebar", isLargeScreen);
   const hideSidebar = () => setShowingSidebar(false);
@@ -60,7 +61,8 @@ export const WorkspaceLayout = ({ workspaceId, children }: WorkspaceLayoutProps)
           )}
         </ClientOnly>
       </div>
-      <div className="flex flex-col items-center grow pt-8 md:pt-14 lg:pt-20">
+      <div className="relative flex flex-col items-center grow pt-8 md:pt-14 lg:pt-20">
+        {banner}
         <div className="px-1 sm:px-2 md:px-4 xl:px-16 container w-full min-h-[100px]">{children}</div>
       </div>
       <div className="flex self-end pt-2">

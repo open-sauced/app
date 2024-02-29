@@ -9,10 +9,13 @@ import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { useFetchUser } from "lib/hooks/useFetchUser";
 import OnboardingButton from "components/molecules/OnboardingButton/onboarding-button";
 import Tooltip from "components/atoms/Tooltip/tooltip";
+import { useMediaQuery } from "lib/hooks/useMediaQuery";
 
 const TopNav = () => {
+  const isLargeScreen = useMediaQuery("(min-width: 1024px)");
   const { user } = useSupabaseAuth();
   const { onboarded } = useSession();
+
   return (
     <header className="top-nav-container w-full fixed top-0 left-0 z-50 py-0.5 bg-light-slate-2 border-b px-2">
       <div className="flex gap-2 justify-between items-center mx-auto px-2">
@@ -21,7 +24,7 @@ const TopNav = () => {
           <Nav className="flex" />
           {user && onboarded === false && (
             <div className="relative lg:hidden">
-              <Tooltip content="Complete the onboarding" defaultOpen={true}>
+              <Tooltip content="Complete the onboarding" defaultOpen={!isLargeScreen}>
                 <OnboardingButton ariaLabel="Complete the onboarding" />
               </Tooltip>
             </div>
@@ -51,7 +54,7 @@ const Nav = ({ className }: { className?: string }) => {
               className={`font-medium text-sm text-slate-700 hover:text-orange-500 transition-all ${getActiveStyle(
                 router.asPath.startsWith("/workspaces/") || router.asPath.includes("/pages")
               )}`}
-              href={"/"}
+              href={"/workspaces"}
             >
               Workspace
             </Link>

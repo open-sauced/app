@@ -82,6 +82,13 @@ export async function middleware(req: NextRequest) {
     data: { session },
   } = await supabase.auth.getSession();
 
+  if (session?.user && req.nextUrl.pathname === "/workspaces") {
+    const data = await loadSession(req, session?.access_token);
+    const workspaceUrl = getWorkspaceUrl(req.cookies, req.url, data.personal_workspace_id);
+
+    return NextResponse.redirect(`${workspaceUrl}`);
+  }
+
   if (session?.user && req.nextUrl.pathname === "/account-deleted") {
     // Delete the account from Supabase and log the user out.
     await supabase.auth.admin.deleteUser(session.user.id);
@@ -107,7 +114,10 @@ export async function middleware(req: NextRequest) {
 
     if (list && list.data) {
       return NextResponse.redirect(
-        new URL(`/workspaces/${list.data.workspaces?.id}/contributor-insights/${listId}/${rest.join("/")}`, req.url)
+        new URL(
+          `/workspaces/${list.data.workspaces?.workspace_id}/contributor-insights/${listId}/${rest.join("/")}`,
+          req.url
+        )
       );
     }
   } else if (req.nextUrl.pathname.startsWith("/pages")) {
@@ -118,7 +128,7 @@ export async function middleware(req: NextRequest) {
     if (insight && insight.data) {
       return NextResponse.redirect(
         new URL(
-          `/workspaces/${insight.data.workspaces?.id}/repository-insights/${insightId}/${rest.join("/")}`,
+          `/workspaces/${insight.data.workspaces?.workspace_id}/repository-insights/${insightId}/${rest.join("/")}`,
           req.url
         )
       );

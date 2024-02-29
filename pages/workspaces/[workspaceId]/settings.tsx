@@ -36,6 +36,7 @@ import { useWorkspaceMembers } from "lib/hooks/api/useWorkspaceMembers";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
 
 const DeleteWorkspaceModal = dynamic(() => import("components/Workspaces/DeleteWorkspaceModal"), { ssr: false });
+const InsightUpgradeModal = dynamic(() => import("components/Workspaces/InsightUpgradeModal"));
 
 interface WorkspaceSettingsProps {
   workspace: Workspace;
@@ -95,6 +96,7 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace }: WorkspaceSettingsP
 
   const [isPublic, setIsPublic] = useState(workspace.is_public);
   const [isWorkspaceVisibilityModalOpen, setIsWorkspaceVisibilityModalOpen] = useState(false);
+  const [isWorkspaceUpgradeModalOpen, setIsWorkspaceUpgradeModalOpen] = useState(false);
 
   const [trackedReposModalOpen, setTrackedReposModalOpen] = useState(false);
   const {
@@ -276,6 +278,33 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace }: WorkspaceSettingsP
           />
         </ClientOnly>
 
+        <div className="flex flex-col py-8 gap-4">
+          <h2 className="!font-medium">Change Workspace Visibility</h2>
+          <p className="text-sm text-slate-600">
+            This workspace is set to {isPublic ? "public" : "private"}.{" "}
+            {!workspace.payee_user_id && (
+              <span>
+                Setting this to private is a <span className="font-bold">paid</span> feature. Upgrade your Workspace to
+                unlock this feature.
+              </span>
+            )}
+          </p>
+
+          <Button
+            onClick={() => {
+              if (workspace.payee_user_id) {
+                setIsWorkspaceVisibilityModalOpen(true);
+              } else {
+                setIsWorkspaceUpgradeModalOpen(true);
+              }
+            }}
+            variant="primary"
+            className="w-fit"
+          >
+            Set to {isPublic ? "private" : "public"}
+          </Button>
+        </div>
+
         {workspace.payee_user_id ? (
           <section className="flex flex-col gap-4">
             <div className="flex gap-4 items-center">
@@ -308,28 +337,6 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace }: WorkspaceSettingsP
             </Button>
           </Card>
         )}
-
-        <div className="flex flex-col py-8 gap-4">
-          <h2 className="!font-medium">Change Workspace Visibility</h2>
-          <p className="text-sm text-slate-600">
-            This workspace is set to {isPublic ? "public" : "private"}.{" "}
-            {!workspace.payee_user_id && (
-              <span>
-                Setting this to private is a <span className="font-bold">paid</span> feature. Upgrade your Workspace to
-                unlock this feature.
-              </span>
-            )}
-          </p>
-
-          <Button
-            onClick={() => setIsWorkspaceVisibilityModalOpen(true)}
-            disabled={!workspace.payee_user_id}
-            variant={workspace.payee_user_id ? "primary" : "dark"}
-            className="w-fit"
-          >
-            Set to {isPublic ? "private" : "public"}
-          </Button>
-        </div>
 
         {canDeleteWorkspace && (
           <div className="flex flex-col p-6 rounded-2xl bg-light-slate-4">
@@ -398,6 +405,13 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace }: WorkspaceSettingsP
             }}
           />
         ) : null}
+
+        <InsightUpgradeModal
+          variant="workspace"
+          workspaceId={workspace.id}
+          isOpen={isWorkspaceUpgradeModalOpen}
+          onClose={() => setIsWorkspaceUpgradeModalOpen(false)}
+        />
       </div>
     </WorkspaceLayout>
   );
