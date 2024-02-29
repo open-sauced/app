@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.4.0-beta.52](https://github.com/open-sauced/app/compare/v2.4.0-beta.51...v2.4.0-beta.52) (2024-02-29)
+
+
+### 🐛 Bug Fixes
+
+* top navigation workspace link works as expected now ([#2804](https://github.com/open-sauced/app/issues/2804)) ([4528b61](https://github.com/open-sauced/app/commit/4528b6172d59d7cd3ef277192d3be5d72500c97b))
+
 ## [2.4.0-beta.51](https://github.com/open-sauced/app/compare/v2.4.0-beta.50...v2.4.0-beta.51) (2024-02-28)
 
 
