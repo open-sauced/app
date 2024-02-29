@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.4.0-beta.54](https://github.com/open-sauced/app/compare/v2.4.0-beta.53...v2.4.0-beta.54) (2024-02-29)
+
+
+### 🐛 Bug Fixes
+
+* show upgrade banner only when needed ([#2809](https://github.com/open-sauced/app/issues/2809)) ([316ebd2](https://github.com/open-sauced/app/commit/316ebd2cbdefde39939a855d59e7318b5c913d57))
+
 ## [2.4.0-beta.53](https://github.com/open-sauced/app/compare/v2.4.0-beta.52...v2.4.0-beta.53) (2024-02-29)
 
 

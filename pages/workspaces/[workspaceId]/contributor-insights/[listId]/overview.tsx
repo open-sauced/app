@@ -15,6 +15,8 @@ import { useContributorsList } from "lib/hooks/api/useContributorList";
 import ContributorsList from "components/organisms/ContributorsList/contributors-list";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import { useIsWorkspaceUpgraded } from "lib/hooks/api/useIsWorkspaceUpgraded";
+import useSession from "lib/hooks/useSession";
+import WorkspaceBanner from "components/Workspaces/WorkspaceBanner";
 
 const InsightUpgradeModal = dynamic(() => import("components/Workspaces/InsightUpgradeModal"));
 
@@ -115,21 +117,16 @@ const ListsOverview = ({
   const allContributorCommits = allContributorStats?.reduce((acc, curr) => acc + curr.commits, 0) || 0;
   const prevAllContributorCommits = prevAllContributorStats?.reduce((acc, curr) => acc + curr.commits, 0) || 0;
 
+  const { hasReports } = useSession(true); // to check if the user is a PRO account
   const { data: isWorkspaceUpgraded } = useIsWorkspaceUpgraded({ workspaceId });
-  const showNudgeBanner = !isWorkspaceUpgraded && numberOfContributors > 10;
+  const showBanner = isOwner && !hasReports && !isWorkspaceUpgraded && numberOfContributors > 10;
   const [isInsightUpgradeModalOpen, setIsInsightUpgradeModalOpen] = useState(false);
 
   return (
-    <WorkspaceLayout workspaceId={workspaceId}>
-      {showNudgeBanner && (
-        <button
-          onClick={() => setIsInsightUpgradeModalOpen(true)}
-          className="w-full py-2 text-white text-center bg-light-orange-10"
-        >
-          This insight page is past the free limit.{" "}
-          <span className="font-semibold underline">Upgrade to a PRO Workspace.</span>
-        </button>
-      )}
+    <WorkspaceLayout
+      workspaceId={workspaceId}
+      banner={showBanner && WorkspaceBanner({ openModal: () => setIsInsightUpgradeModalOpen(true) })}
+    >
       <ListPageLayout
         list={list}
         workspaceId={workspaceId}
@@ -205,10 +202,10 @@ const ListsOverview = ({
 
       <InsightUpgradeModal
         workspaceId={workspaceId}
-        overLimit={numberOfContributors}
+        variant="contributors"
         isOpen={isInsightUpgradeModalOpen}
         onClose={() => setIsInsightUpgradeModalOpen(false)}
-        variant="contributors"
+        overLimit={numberOfContributors}
       />
     </WorkspaceLayout>
   );
