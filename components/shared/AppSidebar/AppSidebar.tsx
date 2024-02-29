@@ -121,7 +121,7 @@ export const AppSideBar = ({ workspaceId, hideSidebar, sidebarCollapsed }: AppSi
                   return;
                 }
 
-                router.push(`/workspaces/${value}/repositories`);
+                router.push(`/workspaces/${value}`);
               }}
             />
           </label>
@@ -133,7 +133,7 @@ export const AppSideBar = ({ workspaceId, hideSidebar, sidebarCollapsed }: AppSi
           <ul className="grid gap-1 mb-6">
             <SidebarMenuItem
               title="Home"
-              url={`/workspaces/${workspaceId}/repositories`}
+              url={`/workspaces/${workspaceId}`}
               icon={<BiHomeAlt className="w-5 h-5 text-slate-400" />}
             />
             <li className="flex flex-row justify-between items-center ">
@@ -236,7 +236,7 @@ export const AppSideBar = ({ workspaceId, hideSidebar, sidebarCollapsed }: AppSi
                 </DropdownMenuItem>
                 <DropdownMenuItem className="rounded-md group">
                   <Link
-                    title="Report a bug on our Github repository"
+                    title="Report a bug on our GitHub repository"
                     href="https://github.com/open-sauced/app/issues/new?assignees=&labels=%F0%9F%91%80+needs+triage%2C%F0%9F%90%9B+bug&projects=&template=bug_report.yml&title=Bug%3A+"
                     className="text-sm font-medium flex gap-1 items-center rounded-md transition-colors cursor-pointer tracking-tight p-1"
                   >

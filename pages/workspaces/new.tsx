@@ -59,7 +59,7 @@ const NewWorkspace = () => {
     } else {
       toast({ description: `Workspace created successfully`, variant: "success" });
       document.dispatchEvent(new CustomEvent(WORKSPACE_UPDATED_EVENT, { detail: workspace }));
-      router.push(`/workspaces/${workspace.id}/repositories`);
+      router.push(`/workspaces/${workspace.id}`);
     }
   };
 

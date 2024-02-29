@@ -84,6 +84,8 @@ const usePullRequestsHistogram = ({
 
   if (contributor) {
     query.set("contributor", contributor);
+    query.delete("topic");
+    query.delete("filter");
   }
 
   if (direction) {
