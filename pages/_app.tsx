@@ -24,6 +24,7 @@ import { useMediaQuery } from "lib/hooks/useMediaQuery";
 import useSession from "lib/hooks/useSession";
 
 import { FeatureFlag } from "lib/utils/server/feature-flags";
+import { APP_CACHE_KEY } from "lib/utils/caching";
 import type { AppProps } from "next/app";
 
 // Clear any service workers present
@@ -104,13 +105,13 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
       console.log("You are on the browser");
 
       // When initializing, we restore the data from `localStorage` into a map.
-      const map: Map<string, string> = new Map(JSON.parse(localStorage.getItem("app-cache-green") || "[]"));
+      const map: Map<string, string> = new Map(JSON.parse(localStorage.getItem(APP_CACHE_KEY) || "[]"));
 
       // Before unloading the app, we write back all the data into `localStorage`.
       window.addEventListener("beforeunload", () => {
         const appCache = JSON.stringify(Array.from(map.entries()));
         try {
-          localStorage.setItem("app-cache-green", appCache);
+          localStorage.setItem(APP_CACHE_KEY, appCache);
         } catch (error) {
           if (error instanceof Error && error.name === "QuotaExceededError")
             // eslint-disable-next-line no-console

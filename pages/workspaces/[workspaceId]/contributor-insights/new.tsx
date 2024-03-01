@@ -16,8 +16,8 @@ import GitHubImportDialog from "components/organisms/GitHubImportDialog/github-i
 import GitHubTeamSyncDialog from "components/organisms/GitHubTeamSyncDialog/github-team-sync-dialog";
 import { fetchGithubOrgTeamMembers } from "lib/hooks/fetchGithubTeamMembers";
 import { fetchApiData } from "helpers/fetchApiData";
-import { deleteCookie } from "lib/utils/server/cookies";
-import { WORKSPACE_ID_COOKIE_NAME } from "lib/utils/workspace-utils";
+import { deleteCookie, setCookie } from "lib/utils/server/cookies";
+import { WORKSPACE_ID_COOKIE_NAME } from "lib/utils/caching";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 
 interface CreateListPayload {
@@ -313,13 +313,13 @@ const AddListPage = ({ workspace }: { workspace: Workspace }) => {
   );
 };
 
-export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
-  const supabase = createPagesServerClient(ctx);
+export const getServerSideProps = async (context: GetServerSidePropsContext) => {
+  const supabase = createPagesServerClient(context);
   const {
     data: { session },
   } = await supabase.auth.getSession();
   const bearerToken = session ? session.access_token : "";
-  const workspaceId = ctx.params?.workspaceId as string;
+  const workspaceId = context.params?.workspaceId as string;
   const { data, error } = await fetchApiData<Workspace>({
     path: `workspaces/${workspaceId}`,
     bearerToken,
@@ -327,7 +327,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   });
 
   if (error) {
-    deleteCookie(ctx.res, WORKSPACE_ID_COOKIE_NAME);
+    deleteCookie({ response: context.res, name: WORKSPACE_ID_COOKIE_NAME });
 
     if (error.status === 404 || error.status === 401) {
       return { notFound: true };
@@ -335,6 +335,8 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 
     throw new Error(`Error loading workspaces page with ID ${workspaceId}`);
   }
+
+  setCookie({ response: context.res, name: WORKSPACE_ID_COOKIE_NAME, value: workspaceId });
 
   if (!session) {
     return {

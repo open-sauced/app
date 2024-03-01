@@ -2,12 +2,7 @@ import { createMiddlewareClient } from "@supabase/auth-helpers-nextjs";
 import { NextResponse } from "next/server";
 import { NextRequest } from "next/server";
 import { pathToRegexp } from "path-to-regexp";
-import {
-  WORKSPACE_ID_COOKIE_NAME,
-  getInsightWithWorkspace,
-  getListWithWorkspace,
-  getWorkspaceUrl,
-} from "lib/utils/workspace-utils";
+import { getInsightWithWorkspace, getListWithWorkspace, getWorkspaceUrl } from "lib/utils/workspace-utils";
 
 // HACK: this is to get around the fact that the normal next.js middleware is not always functioning
 // correctly.
@@ -76,16 +71,6 @@ export async function middleware(req: NextRequest) {
     // Delete the account from Supabase and log the user out.
     await supabase.auth.admin.deleteUser(session.user.id);
     await supabase.auth.signOut();
-
-    return res;
-  }
-
-  if (req.nextUrl.pathname.startsWith("/workspaces")) {
-    const [, , workspaceId] = req.nextUrl.pathname.split("/");
-
-    if (workspaceId !== "new") {
-      res.cookies.set(WORKSPACE_ID_COOKIE_NAME, workspaceId);
-    }
 
     return res;
   }
