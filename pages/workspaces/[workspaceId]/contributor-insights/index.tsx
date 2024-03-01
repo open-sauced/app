@@ -18,6 +18,7 @@ import { fetchApiData } from "helpers/fetchApiData";
 import { WORKSPACE_ID_COOKIE_NAME } from "lib/utils/workspace-utils";
 import { deleteCookie } from "lib/utils/server/cookies";
 import { useWorkspacesContributorInsights } from "lib/hooks/api/useWorkspaceContributorInsights";
+import Button from "components/atoms/Button/button";
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const supabase = createPagesServerClient(context);
@@ -127,7 +128,12 @@ const ListsHub = ({ workspace }: { workspace: Workspace }) => {
           ) : (
             <div className="flex flex-col items-center justify-center w-full gap-4 ">
               {!isLoading && sessionToken ? (
-                <Title className="text-2xl">You currently have no contributor insights</Title>
+                <>
+                  <Title className="text-2xl">You currently have no repository insights</Title>
+                  <Button variant="primary" href={`/workspaces/${workspace.id}/contributor-insights/new`}>
+                    Create a new contributor insight
+                  </Button>
+                </>
               ) : null}
             </div>
           )}

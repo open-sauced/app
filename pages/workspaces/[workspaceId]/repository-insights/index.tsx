@@ -14,6 +14,7 @@ import { getAllFeatureFlags } from "lib/utils/server/feature-flags";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import { useWorkspacesRepositoryInsights } from "lib/hooks/api/useWorkspaceRepositoryInsights";
 import Title from "components/atoms/Typography/title";
+import Button from "components/atoms/Button/button";
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const supabase = createPagesServerClient(context);
@@ -66,7 +67,12 @@ const RepositoryInsights = () => {
             ) : (
               <div className="flex flex-col items-center justify-center w-full gap-4 ">
                 {!isLoading && sessionToken ? (
-                  <Title className="text-2xl">You currently have no repository insights</Title>
+                  <>
+                    <Title className="text-2xl">You currently have no repository insights</Title>
+                    <Button variant="primary" href={`/workspaces/${workspaceId}/repository-insights/new`}>
+                      Create a new repository insight
+                    </Button>
+                  </>
                 ) : null}
               </div>
             )}
