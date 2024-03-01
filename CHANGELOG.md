@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.4.1-beta.4](https://github.com/open-sauced/app/compare/v2.4.1-beta.3...v2.4.1-beta.4) (2024-03-01)
+
+
+### 🐛 Bug Fixes
+
+* now the sidebar uses dvh for dynamic resizing of the browser ([#2847](https://github.com/open-sauced/app/issues/2847)) ([7ff6014](https://github.com/open-sauced/app/commit/7ff60142589fb006514ea7bbed7d6b9b9c6dd6c8))
+
 ## [2.4.1-beta.3](https://github.com/open-sauced/app/compare/v2.4.1-beta.2...v2.4.1-beta.3) (2024-03-01)
 
 
