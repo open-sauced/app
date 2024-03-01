@@ -15,9 +15,9 @@ import { useToast } from "lib/hooks/useToast";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import { fetchApiData } from "helpers/fetchApiData";
-import { WORKSPACE_ID_COOKIE_NAME } from "lib/utils/workspace-utils";
-import { deleteCookie } from "lib/utils/server/cookies";
+import { deleteCookie, setCookie } from "lib/utils/server/cookies";
 import { useWorkspacesContributorInsights } from "lib/hooks/api/useWorkspaceContributorInsights";
+import { WORKSPACE_ID_COOKIE_NAME } from "lib/utils/caching";
 import Button from "components/atoms/Button/button";
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
@@ -34,7 +34,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
   });
 
   if (error) {
-    deleteCookie(context.res, WORKSPACE_ID_COOKIE_NAME);
+    deleteCookie({ response: context.res, name: WORKSPACE_ID_COOKIE_NAME });
 
     if (error.status === 404 || error.status === 401) {
       return { notFound: true };
@@ -42,6 +42,8 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
 
     throw new Error(`Error loading workspaces page with ID ${workspaceId}`);
   }
+
+  setCookie({ response: context.res, name: WORKSPACE_ID_COOKIE_NAME, value: workspaceId });
 
   return {
     props: {
