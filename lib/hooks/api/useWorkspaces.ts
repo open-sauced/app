@@ -8,7 +8,7 @@ interface PaginatedResponse {
   readonly meta: Meta;
 }
 
-const useWorkspaces = ({ limit = 100 }: { limit?: number }) => {
+const useWorkspaces = ({ load = false, limit = 100 }: { load?: boolean; limit?: number }) => {
   const [page, setPage] = useState(1);
   const query = new URLSearchParams();
   query.append("page", `${page}`);
@@ -18,7 +18,7 @@ const useWorkspaces = ({ limit = 100 }: { limit?: number }) => {
   const endpointString = `${baseEndpoint}?${query}`;
 
   const { data, error, mutate } = useSWR<PaginatedResponse, Error>(
-    endpointString,
+    load ? endpointString : null,
     publicApiFetcher as Fetcher<PaginatedResponse, Error>
   );
 
