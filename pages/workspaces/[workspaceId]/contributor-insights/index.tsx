@@ -53,7 +53,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
 const DeleteListPageModal = dynamic(() => import("components/organisms/ListPage/DeleteListPageModal"));
 
 const ListsHub = ({ workspace }: { workspace: Workspace }) => {
-  const { sessionToken } = useSupabaseAuth();
+  const { sessionToken, user } = useSupabaseAuth();
   const { data, isLoading, meta, setPage, mutate } = useWorkspacesContributorInsights({ workspaceId: workspace.id });
   const { toast } = useToast();
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
@@ -121,6 +121,7 @@ const ListsHub = ({ workspace }: { workspace: Workspace }) => {
                   is_public: is_public,
                 }}
                 workspaceId={workspace.id}
+                user={user}
               />
             ))
           ) : (
