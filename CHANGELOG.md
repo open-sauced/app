@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.4.1-beta.2](https://github.com/open-sauced/app/compare/v2.4.1-beta.1...v2.4.1-beta.2) (2024-03-01)
+
+
+### 🐛 Bug Fixes
+
+* hide UI elements for public workspaces and insights when not logged in ([#2840](https://github.com/open-sauced/app/issues/2840)) ([d214398](https://github.com/open-sauced/app/commit/d214398b3daef83932f7b31494063d788ff84352))
+
 ## [2.4.1-beta.1](https://github.com/open-sauced/app/compare/v2.4.0...v2.4.1-beta.1) (2024-03-01)
 
 
