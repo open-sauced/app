@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.4.1-beta.6](https://github.com/open-sauced/app/compare/v2.4.1-beta.5...v2.4.1-beta.6) (2024-03-01)
+
+
+### 🐛 Bug Fixes
+
+* now the workspace ID cookie is set only when a valid workspace page is loaded ([#2835](https://github.com/open-sauced/app/issues/2835)) ([5b5b791](https://github.com/open-sauced/app/commit/5b5b791f4dee82fcd4e9702595aefba46e79eb35))
+
 ## [2.4.1-beta.5](https://github.com/open-sauced/app/compare/v2.4.1-beta.4...v2.4.1-beta.5) (2024-03-01)
 
 
