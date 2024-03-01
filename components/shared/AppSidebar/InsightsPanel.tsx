@@ -72,7 +72,7 @@ export const InsightsPanel = ({ title, insights, type, isLoading, workspaceId }:
             {insights.length > 3 ? (
               <li className="py-1 px-3 hover:bg-slate-100 rounded-tr-md rounded-br-md transition-colors text-sm">
                 <Link
-                  className="text-xs text-slate-500 pl-3 pt-2 border-l-2 hover:text-orange-600"
+                  className="text-xs text-slate-500 pt-2 hover:text-orange-600"
                   title=""
                   href={
                     type === "list"
