@@ -47,32 +47,30 @@ const RepositoryInsights = () => {
           <div className="text-3xl leading-none mx-0">Repository Insights</div>
         </nav>
         <section className="flex flex-col gap-4 pt-4">
-          {user ? (
-            <>
-              {session && isLoading ? (
-                <SkeletonWrapper count={3} classNames="w-full" height={95} radius={10} />
-              ) : isError ? (
-                "Error..."
-              ) : data && data.length > 0 ? (
-                data.map((insight) => {
-                  return (
-                    <WorkspaceRepositoryInsightRow
-                      key={`insights_${insight.id}`}
-                      user={user}
-                      workspaceInsight={insight}
-                      workspaceId={workspaceId}
-                    />
-                  );
-                })
-              ) : (
-                <div className="flex flex-col items-center justify-center w-full gap-4 ">
-                  {!isLoading && sessionToken ? (
-                    <Title className="text-2xl">You currently have no repository insights</Title>
-                  ) : null}
-                </div>
-              )}
-            </>
-          ) : null}
+          <>
+            {session && isLoading ? (
+              <SkeletonWrapper count={3} classNames="w-full" height={95} radius={10} />
+            ) : isError ? (
+              "Error..."
+            ) : data && data.length > 0 ? (
+              data.map((insight) => {
+                return (
+                  <WorkspaceRepositoryInsightRow
+                    key={`insights_${insight.id}`}
+                    user={user}
+                    workspaceInsight={insight}
+                    workspaceId={workspaceId}
+                  />
+                );
+              })
+            ) : (
+              <div className="flex flex-col items-center justify-center w-full gap-4 ">
+                {!isLoading && sessionToken ? (
+                  <Title className="text-2xl">You currently have no repository insights</Title>
+                ) : null}
+              </div>
+            )}
+          </>
         </section>
 
         <div

@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { MdOutlineArrowForwardIos } from "react-icons/md";
 import { RiDeleteBinLine } from "react-icons/ri";
-import clsx from "clsx";
+import { User } from "@supabase/supabase-js";
 import Text from "components/atoms/Typography/text";
 import { useFetchListContributors } from "lib/hooks/useList";
 import Card from "components/atoms/Card/card";
@@ -12,8 +12,9 @@ interface ListCardProps {
   list: DbUserList;
   handleOnDeleteClick?: (listName: string, listId: string) => void;
   workspaceId?: string;
+  user: User | null;
 }
-const ListCard = ({ list, handleOnDeleteClick, workspaceId }: ListCardProps) => {
+const ListCard = ({ list, handleOnDeleteClick, workspaceId, user }: ListCardProps) => {
   const { data: contributors, meta } = useFetchListContributors(list.id);
 
   const contributorsAvatar: Contributor[] = contributors?.map((contributor) => ({
@@ -37,14 +38,6 @@ const ListCard = ({ list, handleOnDeleteClick, workspaceId }: ListCardProps) => 
                 {list.name}
               </Link>
             </div>
-            <div
-              className={clsx(
-                "px-2 border rounded-2xl text-light-slate-11",
-                !handleOnDeleteClick ? "text-orange-700 bg-orange-50 border-orange-600" : ""
-              )}
-            >
-              {handleOnDeleteClick ? (!!list.is_public ? "public" : "private") : "demo"}
-            </div>
           </div>
         </div>
         <div>
@@ -60,7 +53,7 @@ const ListCard = ({ list, handleOnDeleteClick, workspaceId }: ListCardProps) => 
             </div>
             <div className="justify-end flex-1 hidden md:flex">
               {/* Delete button */}
-              {handleOnDeleteClick && (
+              {handleOnDeleteClick && !!user && (
                 <button
                   onClick={() => handleOnDeleteClick(list.name, list.id)}
                   className="inline-block p-3 mr-2 border rounded-lg cursor-pointer bg-light-slate-1"
