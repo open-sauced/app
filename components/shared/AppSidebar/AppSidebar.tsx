@@ -98,7 +98,7 @@ export const AppSideBar = ({ workspaceId, hideSidebar, sidebarCollapsed }: AppSi
       style={{
         "--top-nav-height": "3.3rem",
         top: "var(--top-nav-height)",
-        height: "calc(100vh - var(--top-nav-height))",
+        height: "calc(100dvh - var(--top-nav-height))",
       }}
     >
       <nav aria-label="sidebar navigation" className="grid gap-4 mt-4 pr-4 pl-2">
