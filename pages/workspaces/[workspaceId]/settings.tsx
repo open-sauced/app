@@ -31,7 +31,7 @@ import WorkspaceVisibilityModal from "components/Workspaces/WorkspaceVisibilityM
 import Card from "components/atoms/Card/card";
 import { WorkspaceHeader } from "components/Workspaces/WorkspaceHeader";
 import { getStripe } from "lib/utils/stripe-client";
-import WorkspaceMembersConfig from "components/molecules/WorkspaceMembersConfig/workspace-members-config";
+import WorkspaceMembersConfig from "components/Workspaces/WorkspaceMembersConfig/workspace-members-config";
 import { useWorkspaceMembers } from "lib/hooks/api/useWorkspaceMembers";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
 

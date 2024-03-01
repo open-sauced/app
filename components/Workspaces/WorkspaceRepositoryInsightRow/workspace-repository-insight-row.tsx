@@ -13,8 +13,7 @@ import Card from "components/atoms/Card/card";
 import useWorkspaceRepositoryInsight from "lib/hooks/api/useWorkspaceRepositoryInsight";
 import { useWorkspaceMembers } from "lib/hooks/api/useWorkspaceMembers";
 import getPercent from "lib/utils/get-percent";
-
-import CardRepoList from "../CardRepoList/card-repo-list";
+import CardRepoList from "components/molecules/CardRepoList/card-repo-list";
 
 interface WorkspaceRepositoryInsightRowProps {
   workspaceInsight: DbWorkspaceRepositoryInsight;
