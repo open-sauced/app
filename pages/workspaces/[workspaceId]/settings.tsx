@@ -34,6 +34,7 @@ import { getStripe } from "lib/utils/stripe-client";
 import WorkspaceMembersConfig from "components/molecules/WorkspaceMembersConfig/workspace-members-config";
 import { useWorkspaceMembers } from "lib/hooks/api/useWorkspaceMembers";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
+import useSession from "lib/hooks/useSession";
 
 const DeleteWorkspaceModal = dynamic(() => import("components/Workspaces/DeleteWorkspaceModal"), { ssr: false });
 const InsightUpgradeModal = dynamic(() => import("components/Workspaces/InsightUpgradeModal"));
@@ -88,6 +89,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
 };
 
 const WorkspaceSettings = ({ workspace, canDeleteWorkspace }: WorkspaceSettingsProps) => {
+  const { hasReports } = useSession(true); // to check if the user is a PRO account
   const { sessionToken } = useSupabaseAuth();
   const { toast } = useToast();
   const router = useRouter();
@@ -282,17 +284,18 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace }: WorkspaceSettingsP
           <h2 className="!font-medium">Change Workspace Visibility</h2>
           <p className="text-sm text-slate-600">
             This workspace is set to {isPublic ? "public" : "private"}.{" "}
-            {!workspace.payee_user_id && (
-              <span>
-                Setting this to private is a <span className="font-bold">paid</span> feature. Upgrade your Workspace to
-                unlock this feature.
-              </span>
-            )}
+            {!workspace.payee_user_id ||
+              (!hasReports && (
+                <span>
+                  Setting this to private is a <span className="font-bold">paid</span> feature. Upgrade your Workspace
+                  to unlock this feature.
+                </span>
+              ))}
           </p>
 
           <Button
             onClick={() => {
-              if (workspace.payee_user_id) {
+              if (workspace.payee_user_id || hasReports) {
                 setIsWorkspaceVisibilityModalOpen(true);
               } else {
                 setIsWorkspaceUpgradeModalOpen(true);
