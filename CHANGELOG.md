@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.4.1-beta.3](https://github.com/open-sauced/app/compare/v2.4.1-beta.2...v2.4.1-beta.3) (2024-03-01)
+
+
+### 🐛 Bug Fixes
+
+* add CTA for empty workspace insights page ([#2845](https://github.com/open-sauced/app/issues/2845)) ([c1589cd](https://github.com/open-sauced/app/commit/c1589cdca9afacf58af7e7551014a2c96aad8b4e))
+
 ## [2.4.1-beta.2](https://github.com/open-sauced/app/compare/v2.4.1-beta.1...v2.4.1-beta.2) (2024-03-01)
 
 
