@@ -12,8 +12,8 @@ import { DayRangePicker } from "components/shared/DayRangePicker";
 import { EmptyState } from "components/Workspaces/TrackedReposTable";
 import Card from "components/atoms/Card/card";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
-import { deleteCookie } from "lib/utils/server/cookies";
-import { WORKSPACE_ID_COOKIE_NAME } from "lib/utils/workspace-utils";
+import { deleteCookie, setCookie } from "lib/utils/server/cookies";
+import { WORKSPACE_ID_COOKIE_NAME } from "lib/utils/caching";
 import Button from "components/atoms/Button/button";
 import { WorkspaceHeader } from "components/Workspaces/WorkspaceHeader";
 
@@ -31,7 +31,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
   });
 
   if (error) {
-    deleteCookie(context.res, WORKSPACE_ID_COOKIE_NAME);
+    deleteCookie({ response: context.res, name: WORKSPACE_ID_COOKIE_NAME });
 
     if (error.status === 404 || error.status === 401) {
       return { notFound: true };
@@ -39,6 +39,8 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
 
     throw new Error(`Error loading workspaces page with ID ${workspaceId}`);
   }
+
+  setCookie({ response: context.res, name: WORKSPACE_ID_COOKIE_NAME, value: workspaceId });
 
   return { props: { workspace: data } };
 };

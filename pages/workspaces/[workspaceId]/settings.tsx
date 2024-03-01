@@ -17,7 +17,6 @@ import Text from "components/atoms/Typography/text";
 import { TrackedReposTable } from "components/Workspaces/TrackedReposTable";
 import { useGetWorkspaceRepositories } from "lib/hooks/api/useGetWorkspaceRepositories";
 import {
-  WORKSPACE_ID_COOKIE_NAME,
   changeWorkspaceVisibility,
   deleteTrackedRepos,
   deleteWorkspace,
@@ -26,7 +25,7 @@ import {
 } from "lib/utils/workspace-utils";
 import { WORKSPACE_UPDATED_EVENT } from "components/shared/AppSidebar/AppSidebar";
 import { WorkspacesTabList } from "components/Workspaces/WorkspacesTabList";
-import { deleteCookie } from "lib/utils/server/cookies";
+import { deleteCookie, setCookie } from "lib/utils/server/cookies";
 import WorkspaceVisibilityModal from "components/Workspaces/WorkspaceVisibilityModal";
 import Card from "components/atoms/Card/card";
 import { WorkspaceHeader } from "components/Workspaces/WorkspaceHeader";
@@ -34,6 +33,7 @@ import { getStripe } from "lib/utils/stripe-client";
 import WorkspaceMembersConfig from "components/Workspaces/WorkspaceMembersConfig/workspace-members-config";
 import { useWorkspaceMembers } from "lib/hooks/api/useWorkspaceMembers";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
+import { WORKSPACE_ID_COOKIE_NAME } from "lib/utils/caching";
 
 const DeleteWorkspaceModal = dynamic(() => import("components/Workspaces/DeleteWorkspaceModal"), { ssr: false });
 const InsightUpgradeModal = dynamic(() => import("components/Workspaces/InsightUpgradeModal"));
@@ -64,7 +64,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
   ]);
 
   if (error || sessionError) {
-    deleteCookie(context.res, WORKSPACE_ID_COOKIE_NAME);
+    deleteCookie({ response: context.res, name: WORKSPACE_ID_COOKIE_NAME });
 
     if (error && (error.status === 404 || error.status === 401)) {
       return { notFound: true };
@@ -78,6 +78,8 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
   if (!data?.members.find((member) => member.user_id === Number(sessionData?.id) && member.role === "owner")) {
     return { notFound: true };
   }
+
+  setCookie({ response: context.res, name: WORKSPACE_ID_COOKIE_NAME, value: workspaceId });
 
   return {
     props: {

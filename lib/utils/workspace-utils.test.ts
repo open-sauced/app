@@ -1,6 +1,7 @@
 import { randomUUID } from "crypto";
 import { RequestCookies } from "next/dist/compiled/@edge-runtime/cookies";
-import { WORKSPACE_ID_COOKIE_NAME, getWorkspaceUrl } from "./workspace-utils";
+import { getWorkspaceUrl } from "./workspace-utils";
+import { WORKSPACE_ID_COOKIE_NAME } from "./caching";
 
 describe("[lib/utils] getWorkspaceUrl()", () => {
   const baseUrl = "http://localhost:3000";
