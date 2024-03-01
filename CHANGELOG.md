@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.4.1-beta.5](https://github.com/open-sauced/app/compare/v2.4.1-beta.4...v2.4.1-beta.5) (2024-03-01)
+
+
+### 🐛 Bug Fixes
+
+* **insightspanel:** fixed border for Show All link in InsightsPanel ([#2841](https://github.com/open-sauced/app/issues/2841)) ([159750e](https://github.com/open-sauced/app/commit/159750ec36433eb0af80870356f18c510cb7bf13))
+
 ## [2.4.1-beta.4](https://github.com/open-sauced/app/compare/v2.4.1-beta.3...v2.4.1-beta.4) (2024-03-01)
 
 
