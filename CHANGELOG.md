@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.4.1-beta.7](https://github.com/open-sauced/app/compare/v2.4.1-beta.6...v2.4.1-beta.7) (2024-03-04)
+
+
+### 🐛 Bug Fixes
+
+* brings in workspace components to the Workspaces components folder ([#2856](https://github.com/open-sauced/app/issues/2856)) ([c9fbe00](https://github.com/open-sauced/app/commit/c9fbe00535ecb677d83c86c5384993f690124115))
+
 ## [2.4.1-beta.6](https://github.com/open-sauced/app/compare/v2.4.1-beta.5...v2.4.1-beta.6) (2024-03-01)
 
 
