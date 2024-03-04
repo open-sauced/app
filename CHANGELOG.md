@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.4.1-beta.8](https://github.com/open-sauced/app/compare/v2.4.1-beta.7...v2.4.1-beta.8) (2024-03-04)
+
+
+### 🐛 Bug Fixes
+
+* use insight_id when redirecting after creating an insight ([#2866](https://github.com/open-sauced/app/issues/2866)) ([89ee84e](https://github.com/open-sauced/app/commit/89ee84e4ac8ca4489a8814c4dae1b5b5c3f9fba6))
+
 ## [2.4.1-beta.7](https://github.com/open-sauced/app/compare/v2.4.1-beta.6...v2.4.1-beta.7) (2024-03-04)
 
 
