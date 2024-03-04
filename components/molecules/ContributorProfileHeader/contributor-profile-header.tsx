@@ -411,7 +411,7 @@ const AddToListDropdown = ({ username }: { username: string }) => {
   const handleAddToList = async () => {
     if (selectedList.length > 0 && contributor) {
       const listIds = selectedList.map((list) => list.value);
-      const response = Promise.all(listIds.map((listIds) => addListContributor(listIds, [contributor.id])));
+      const response = Promise.all(listIds.map((listIds) => addListContributor(listIds, [{ id: contributor.id }])));
 
       response
         .then((res) => {
