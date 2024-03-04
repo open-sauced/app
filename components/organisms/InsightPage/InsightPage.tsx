@@ -202,9 +202,9 @@ const InsightPage = ({ edit, insight, pageRepos, workspaceId }: InsightPageProps
     );
     setCreateLoading(false);
     if (response.ok) {
-      const { id } = await response.json();
+      const { insight_id } = await response.json();
       toast({ description: "Page created successfully", variant: "success" });
-      router.push(`/workspaces/${workspaceId}/repository-insights/${id}/dashboard`);
+      router.push(`/workspaces/${workspaceId}/repository-insights/${insight_id}/dashboard`);
     }
 
     setSubmitted(false);
@@ -229,7 +229,7 @@ const InsightPage = ({ edit, insight, pageRepos, workspaceId }: InsightPageProps
     setCreateLoading(false);
     if (response && response.ok) {
       toast({ description: "Page updated successfully", variant: "success" });
-      router.push(workspaceId ? `/workspaces/${workspaceId}/repository-insights` : "/hub/insights");
+      router.push(`/workspaces/${workspaceId}/repository-insights/${insight?.id}/dashboard`);
     } else {
       toast({ description: "An error occurred!", variant: "danger" });
     }
@@ -399,7 +399,7 @@ const InsightPage = ({ edit, insight, pageRepos, workspaceId }: InsightPageProps
     if (response.ok) {
       toast({ description: "Page deleted successfully!", variant: "success" });
       setIsModalOpen(false);
-      router.push(workspaceId ? `/workspaces/${workspaceId}/repository-insights` : "/hub/insights");
+      router.push(`/workspaces/${workspaceId}/repository-insights`);
     }
 
     setSubmitted(false);
