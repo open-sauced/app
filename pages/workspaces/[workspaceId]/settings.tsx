@@ -236,10 +236,10 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace }: WorkspaceSettingsP
               placeholder="Workspace description"
               className="w-full md:w-3/4 max-w-lg"
             />
-            <div className="bg-white sticky-bottom fixed bottom-0 right-0 self-end m-6">
+            <div className="bg-white sticky-bottom fixed rounded-lg bottom-4 right-0 self-end m-6">
               <Button
                 variant="primary"
-                className="flex gap-2.5 items-center cursor-pointer w-min mt-2 sm:mt-0 self-end"
+                className="z-50 flex gap-2.5 items-center cursor-pointer w-min sm:mt-0 self-end"
               >
                 Update Workspace
               </Button>
@@ -277,6 +277,7 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace }: WorkspaceSettingsP
             onUpdateMember={async (memberId, role) => await updateMember(workspace.id, sessionToken, memberId, role)}
             onDeleteMember={async (memberId) => await deleteMember(workspace.id, sessionToken, memberId)}
             members={workspaceMembers}
+            className="-z-10"
           />
         </ClientOnly>
 
