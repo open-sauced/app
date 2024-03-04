@@ -6,7 +6,7 @@ import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import Pagination from "components/molecules/Pagination/pagination";
 import PaginationResults from "components/molecules/PaginationResults/pagination-result";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
-import WorkspaceRepositoryInsightRow from "components/molecules/WorkspaceRepositoryInsightRow/workspace-repository-insight-row";
+import WorkspaceRepositoryInsightRow from "components/Workspaces/WorkspaceRepositoryInsightRow/workspace-repository-insight-row";
 
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import useSession from "lib/hooks/useSession";
