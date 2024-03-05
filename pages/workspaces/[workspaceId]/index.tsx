@@ -1,6 +1,8 @@
+import dynamic from "next/dynamic";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
+import { useLocalStorage } from "react-use";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import { fetchApiData } from "helpers/fetchApiData";
 import Repositories from "components/organisms/Repositories/repositories";
@@ -12,9 +14,12 @@ import { DayRangePicker } from "components/shared/DayRangePicker";
 import { EmptyState } from "components/Workspaces/TrackedReposTable";
 import Card from "components/atoms/Card/card";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
-import { deleteCookie } from "lib/utils/server/cookies";
+import { deleteCookie, setCookie } from "lib/utils/server/cookies";
+import { WORKSPACE_ID_COOKIE_NAME } from "lib/utils/caching";
 import Button from "components/atoms/Button/button";
 import { WorkspaceHeader } from "components/Workspaces/WorkspaceHeader";
+
+const WorkspaceWelcomeModal = dynamic(() => import("components/Workspaces/WorkspaceWelcomeModal"));
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const supabase = createPagesServerClient(context);
@@ -30,7 +35,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
   });
 
   if (error) {
-    deleteCookie(context.res, "workspaceId");
+    deleteCookie({ response: context.res, name: WORKSPACE_ID_COOKIE_NAME });
 
     if (error.status === 404 || error.status === 401) {
       return { notFound: true };
@@ -38,6 +43,8 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
 
     throw new Error(`Error loading workspaces page with ID ${workspaceId}`);
   }
+
+  setCookie({ response: context.res, name: WORKSPACE_ID_COOKIE_NAME, value: workspaceId });
 
   return { props: { workspace: data } };
 };
@@ -47,6 +54,8 @@ interface WorkspaceDashboardProps {
 }
 
 const WorkspaceDashboard = ({ workspace }: WorkspaceDashboardProps) => {
+  const [showWelcome, setShowWelcome] = useLocalStorage("show-welcome", true);
+
   const router = useRouter();
   const range = router.query.range ? Number(router.query.range as string) : 30;
   const { data, error: hasError } = useGetWorkspaceRepositories({ workspaceId: workspace.id, range });
@@ -99,6 +108,13 @@ const WorkspaceDashboard = ({ workspace }: WorkspaceDashboardProps) => {
           )}
         </ClientOnly>
       </div>
+
+      <WorkspaceWelcomeModal
+        isOpen={showWelcome!}
+        onClose={() => {
+          setShowWelcome(false);
+        }}
+      />
     </WorkspaceLayout>
   );
 };

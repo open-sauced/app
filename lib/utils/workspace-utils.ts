@@ -1,5 +1,6 @@
 import { RequestCookies } from "next/dist/compiled/@edge-runtime/cookies";
 import { fetchApiData } from "helpers/fetchApiData";
+import { WORKSPACE_ID_COOKIE_NAME } from "./caching";
 
 export async function createWorkspace({
   name,
@@ -161,8 +162,6 @@ export async function deleteWorkspace({ workspaceId, sessionToken }: { workspace
 
   return { data, error };
 }
-
-export const WORKSPACE_ID_COOKIE_NAME = "workspace-id";
 
 export function getWorkspaceUrl(cookies: RequestCookies, baseUrl: string, personalWorkspaceId: string) {
   if (!cookies.has(WORKSPACE_ID_COOKIE_NAME)) {

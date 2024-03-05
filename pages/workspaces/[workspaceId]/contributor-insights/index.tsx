@@ -15,9 +15,10 @@ import { useToast } from "lib/hooks/useToast";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import { fetchApiData } from "helpers/fetchApiData";
-import { WORKSPACE_ID_COOKIE_NAME } from "lib/utils/workspace-utils";
-import { deleteCookie } from "lib/utils/server/cookies";
+import { deleteCookie, setCookie } from "lib/utils/server/cookies";
 import { useWorkspacesContributorInsights } from "lib/hooks/api/useWorkspaceContributorInsights";
+import { WORKSPACE_ID_COOKIE_NAME } from "lib/utils/caching";
+import Button from "components/atoms/Button/button";
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const supabase = createPagesServerClient(context);
@@ -33,7 +34,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
   });
 
   if (error) {
-    deleteCookie(context.res, WORKSPACE_ID_COOKIE_NAME);
+    deleteCookie({ response: context.res, name: WORKSPACE_ID_COOKIE_NAME });
 
     if (error.status === 404 || error.status === 401) {
       return { notFound: true };
@@ -41,6 +42,8 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
 
     throw new Error(`Error loading workspaces page with ID ${workspaceId}`);
   }
+
+  setCookie({ response: context.res, name: WORKSPACE_ID_COOKIE_NAME, value: workspaceId });
 
   return {
     props: {
@@ -53,7 +56,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
 const DeleteListPageModal = dynamic(() => import("components/organisms/ListPage/DeleteListPageModal"));
 
 const ListsHub = ({ workspace }: { workspace: Workspace }) => {
-  const { sessionToken } = useSupabaseAuth();
+  const { sessionToken, user } = useSupabaseAuth();
   const { data, isLoading, meta, setPage, mutate } = useWorkspacesContributorInsights({ workspaceId: workspace.id });
   const { toast } = useToast();
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
@@ -121,12 +124,18 @@ const ListsHub = ({ workspace }: { workspace: Workspace }) => {
                   is_public: is_public,
                 }}
                 workspaceId={workspace.id}
+                user={user}
               />
             ))
           ) : (
             <div className="flex flex-col items-center justify-center w-full gap-4 ">
               {!isLoading && sessionToken ? (
-                <Title className="text-2xl">You currently have no contributor insights</Title>
+                <>
+                  <Title className="text-2xl">You currently have no repository insights</Title>
+                  <Button variant="primary" href={`/workspaces/${workspace.id}/contributor-insights/new`}>
+                    Create a new contributor insight
+                  </Button>
+                </>
               ) : null}
             </div>
           )}

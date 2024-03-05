@@ -5,6 +5,104 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.5.0-beta.3](https://github.com/open-sauced/app/compare/v2.5.0-beta.2...v2.5.0-beta.3) (2024-03-05)
+
+
+### 🍕 Features
+
+* Welcome modal for new Workspace users ([#2868](https://github.com/open-sauced/app/issues/2868)) ([7094adf](https://github.com/open-sauced/app/commit/7094adf7fe42b12111f010342be968acf278df95))
+
+
+### 🐛 Bug Fixes
+
+* remove topic and filter from histogram requests for specific repos ([#2876](https://github.com/open-sauced/app/issues/2876)) ([7ca34d3](https://github.com/open-sauced/app/commit/7ca34d36a29a30e64dd6d55f717f8d5421def103))
+
+## [2.5.0-beta.2](https://github.com/open-sauced/app/compare/v2.5.0-beta.1...v2.5.0-beta.2) (2024-03-05)
+
+
+### 🐛 Bug Fixes
+
+* z-index changes for `Update Workspace` button in settings ([#2864](https://github.com/open-sauced/app/issues/2864)) ([d2cbb3e](https://github.com/open-sauced/app/commit/d2cbb3eb4a273092312e48a7b1c530f6efeb2b04))
+
+## [2.5.0-beta.1](https://github.com/open-sauced/app/compare/v2.4.1-beta.8...v2.5.0-beta.1) (2024-03-05)
+
+
+### 🍕 Features
+
+* add section to user settings to verify developer pack ([#2820](https://github.com/open-sauced/app/issues/2820)) ([a53d642](https://github.com/open-sauced/app/commit/a53d64232d377bb852671b81d771dcd8242c27d0))
+* CTA for empty insight sections in sidebar ([#2860](https://github.com/open-sauced/app/issues/2860)) ([7696f5a](https://github.com/open-sauced/app/commit/7696f5a9e4200988e1c22cf403f4eb0a056b1bd2))
+
+
+### 🐛 Bug Fixes
+
+* update data format when adding contributors to a contributor insight ([#2867](https://github.com/open-sauced/app/issues/2867)) ([b7b49d8](https://github.com/open-sauced/app/commit/b7b49d8c44bfbba8239d083896bd14a19f018632))
+
+## [2.4.1-beta.8](https://github.com/open-sauced/app/compare/v2.4.1-beta.7...v2.4.1-beta.8) (2024-03-04)
+
+
+### 🐛 Bug Fixes
+
+* use insight_id when redirecting after creating an insight ([#2866](https://github.com/open-sauced/app/issues/2866)) ([89ee84e](https://github.com/open-sauced/app/commit/89ee84e4ac8ca4489a8814c4dae1b5b5c3f9fba6))
+
+## [2.4.1-beta.7](https://github.com/open-sauced/app/compare/v2.4.1-beta.6...v2.4.1-beta.7) (2024-03-04)
+
+
+### 🐛 Bug Fixes
+
+* brings in workspace components to the Workspaces components folder ([#2856](https://github.com/open-sauced/app/issues/2856)) ([c9fbe00](https://github.com/open-sauced/app/commit/c9fbe00535ecb677d83c86c5384993f690124115))
+
+## [2.4.1-beta.6](https://github.com/open-sauced/app/compare/v2.4.1-beta.5...v2.4.1-beta.6) (2024-03-01)
+
+
+### 🐛 Bug Fixes
+
+* now the workspace ID cookie is set only when a valid workspace page is loaded ([#2835](https://github.com/open-sauced/app/issues/2835)) ([5b5b791](https://github.com/open-sauced/app/commit/5b5b791f4dee82fcd4e9702595aefba46e79eb35))
+
+## [2.4.1-beta.5](https://github.com/open-sauced/app/compare/v2.4.1-beta.4...v2.4.1-beta.5) (2024-03-01)
+
+
+### 🐛 Bug Fixes
+
+* **insightspanel:** fixed border for Show All link in InsightsPanel ([#2841](https://github.com/open-sauced/app/issues/2841)) ([159750e](https://github.com/open-sauced/app/commit/159750ec36433eb0af80870356f18c510cb7bf13))
+
+## [2.4.1-beta.4](https://github.com/open-sauced/app/compare/v2.4.1-beta.3...v2.4.1-beta.4) (2024-03-01)
+
+
+### 🐛 Bug Fixes
+
+* now the sidebar uses dvh for dynamic resizing of the browser ([#2847](https://github.com/open-sauced/app/issues/2847)) ([7ff6014](https://github.com/open-sauced/app/commit/7ff60142589fb006514ea7bbed7d6b9b9c6dd6c8))
+
+## [2.4.1-beta.3](https://github.com/open-sauced/app/compare/v2.4.1-beta.2...v2.4.1-beta.3) (2024-03-01)
+
+
+### 🐛 Bug Fixes
+
+* add CTA for empty workspace insights page ([#2845](https://github.com/open-sauced/app/issues/2845)) ([c1589cd](https://github.com/open-sauced/app/commit/c1589cdca9afacf58af7e7551014a2c96aad8b4e))
+
+## [2.4.1-beta.2](https://github.com/open-sauced/app/compare/v2.4.1-beta.1...v2.4.1-beta.2) (2024-03-01)
+
+
+### 🐛 Bug Fixes
+
+* hide UI elements for public workspaces and insights when not logged in ([#2840](https://github.com/open-sauced/app/issues/2840)) ([d214398](https://github.com/open-sauced/app/commit/d214398b3daef83932f7b31494063d788ff84352))
+
+## [2.4.1-beta.1](https://github.com/open-sauced/app/compare/v2.4.0...v2.4.1-beta.1) (2024-03-01)
+
+
+### 🐛 Bug Fixes
+
+* Corrects copy for Github -> GitHub ([#2797](https://github.com/open-sauced/app/issues/2797)) ([9f40019](https://github.com/open-sauced/app/commit/9f4001985bbf2c991099c0c53a83e84dd129be34))
+* now the complete the onboarding tooltip only appears on screens smaller than 1024px ([#2800](https://github.com/open-sauced/app/issues/2800)) ([86e9d5b](https://github.com/open-sauced/app/commit/86e9d5b24fd7459be85f92b3be0a766dae8817bb))
+* now the workspace creation redirects to the new workspace homepage ([#2830](https://github.com/open-sauced/app/issues/2830)) ([e1bbe84](https://github.com/open-sauced/app/commit/e1bbe849e00d5f4fb87bffbbf022558c1c169566))
+* now the workspaces homepage is /workspaces/some-workspace-id ([#2821](https://github.com/open-sauced/app/issues/2821)) ([bd5d5c7](https://github.com/open-sauced/app/commit/bd5d5c74a45d44b47f14fd4623f674b80a37b01e))
+* remove duplicate layout on contributor insight edit page ([#2805](https://github.com/open-sauced/app/issues/2805)) ([7e563f9](https://github.com/open-sauced/app/commit/7e563f96fbe097486e76138888e5df8783c1d59c))
+* removed unused feature flags in contributor insights page ([#2798](https://github.com/open-sauced/app/issues/2798)) ([0143738](https://github.com/open-sauced/app/commit/014373873db86b8ea640e85bdb7d57eced336b47))
+* Rework workspace visibility flow ([#2796](https://github.com/open-sauced/app/issues/2796)) ([856d269](https://github.com/open-sauced/app/commit/856d2692ae8249e8a69d6558548a13da064ac5db))
+* show upgrade banner only when needed ([#2809](https://github.com/open-sauced/app/issues/2809)) ([316ebd2](https://github.com/open-sauced/app/commit/316ebd2cbdefde39939a855d59e7318b5c913d57))
+* top navigation workspace link works as expected now ([#2804](https://github.com/open-sauced/app/issues/2804)) ([4528b61](https://github.com/open-sauced/app/commit/4528b6172d59d7cd3ef277192d3be5d72500c97b))
+* use pr histogram for contributor pull request activity line chart ([#2831](https://github.com/open-sauced/app/issues/2831)) ([7e93b9d](https://github.com/open-sauced/app/commit/7e93b9dd0b5a4b4b68f47953c7bd3d9d5e19af58))
+* use workspace_id field when redirecting legacy insights and lists ([#2808](https://github.com/open-sauced/app/issues/2808)) ([1fd078d](https://github.com/open-sauced/app/commit/1fd078dc48582583b03bc60b270df381e3d2dd6a))
+
 ## [2.4.0-beta.55](https://github.com/open-sauced/app/compare/v2.4.0-beta.54...v2.4.0-beta.55) (2024-02-29)
 
 

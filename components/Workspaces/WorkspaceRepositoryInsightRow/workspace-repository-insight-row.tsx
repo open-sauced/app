@@ -4,7 +4,6 @@ import { BsPencilFill } from "react-icons/bs";
 import { MdOutlineArrowForwardIos } from "react-icons/md";
 import { User } from "@supabase/supabase-js";
 
-import clsx from "clsx";
 import { getRelativeDays } from "lib/utils/date-utils";
 import useRepositories from "lib/hooks/api/useRepositories";
 import getRepoInsights from "lib/utils/get-repo-insights";
@@ -14,8 +13,7 @@ import Card from "components/atoms/Card/card";
 import useWorkspaceRepositoryInsight from "lib/hooks/api/useWorkspaceRepositoryInsight";
 import { useWorkspaceMembers } from "lib/hooks/api/useWorkspaceMembers";
 import getPercent from "lib/utils/get-percent";
-
-import CardRepoList from "../CardRepoList/card-repo-list";
+import CardRepoList from "components/molecules/CardRepoList/card-repo-list";
 
 interface WorkspaceRepositoryInsightRowProps {
   workspaceInsight: DbWorkspaceRepositoryInsight;
@@ -37,7 +35,7 @@ const WorkspaceRepositoryInsightRow = ({
   const { open, merged, velocity, total, repoList } = getRepoInsights(repoData);
   const avgOpenPrs = repoData.length > 0 ? Math.round(open / repoData.length) : 0;
 
-  const membership = workspaceMembers?.find((member) => member.user_id === Number(user?.id));
+  const membership = workspaceMembers?.find((member) => Number(member.user_id) === Number(user?.user_metadata.sub));
   const canEdit = membership && ["owner", "editor"].includes(membership.role);
   const publicLinkPrefix = `/workspaces/${workspaceId}/repository-insights`;
   const editLinkPrefix = `/workspaces/${workspaceId}/repository-insights`;
@@ -57,15 +55,7 @@ const WorkspaceRepositoryInsightRow = ({
                 {isEditable ? insight?.name : `Demo | ${insight?.name}`}
               </Link>
             </div>
-            <div
-              className={clsx(
-                "rounded-2xl border px-2 text-light-slate-11",
-                !isEditable ? "text-orange-700 bg-orange-50 border-orange-600" : ""
-              )}
-            >
-              {!isEditable ? "demo" : !!insight?.is_public ? "public" : "private"}
-            </div>
-            {isEditable ? (
+            {canEdit ? (
               <div className="flex-1 md:hidden">
                 <span className=" bg-light-slate-1 inline-block rounded-lg p-2.5 border mr-2">
                   <Link href={`${editLinkPrefix}/${insight?.id}/edit`}>
@@ -111,7 +101,7 @@ const WorkspaceRepositoryInsightRow = ({
               </div>
             </div>
             <div className="flex-1 hidden md:flex  justify-end">
-              {canEdit || (
+              {canEdit && (
                 <Link href={`${editLinkPrefix}/${insight?.id}/edit`}>
                   <span className=" bg-light-slate-1 inline-block rounded-lg p-2.5 border mr-2 cursor-pointer">
                     <BsPencilFill title="Edit Insight Page" className="text-light-slate-10 text-lg" />
