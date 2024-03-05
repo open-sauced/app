@@ -97,7 +97,7 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
         selectedListIds.map((listIds) =>
           addListContributor(
             listIds,
-            selectedContributors.map((contributor) => contributor.user_id)
+            selectedContributors.map((contributor) => ({ id: contributor.user_id }))
           )
         )
       );
