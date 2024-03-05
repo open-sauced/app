@@ -38,15 +38,12 @@ export default function WorkspaceWelcomeModal({ isOpen, onClose }: WorkspaceWelc
                 href="https://docs.opensauced.pizza/features/workspaces"
                 className="w-fit flex gap-4"
                 variant="primary"
+                target="_blank"
               >
                 Learn more about Workspaces
                 <RiExternalLinkLine className="w-4 h-4" />
               </Button>
-              <Button
-                className="bg-light-slate-6 text-light-slate-10 hover:bg-light-slate-7"
-                variant="default"
-                onClick={onClose}
-              >
+              <Button variant="outline" onClick={onClose}>
                 Continue
               </Button>
             </div>
