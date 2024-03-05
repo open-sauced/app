@@ -24,7 +24,9 @@ import { useToast } from "lib/hooks/useToast";
 import { validateTwitterUsername } from "lib/utils/validate-twitter-username";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "components/molecules/Dialog/dialog";
 import { LanguageSwitch } from "components/shared/LanguageSwitch/language-switch";
+import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import CouponForm from "./coupon-form";
+import DeveloperPackForm from "./developer-pack-form";
 
 interface UserSettingsPageProps {
   user: User | null;
@@ -89,6 +91,7 @@ const UserSettingsPage = ({ user }: UserSettingsPageProps) => {
   });
 
   const { hasReports, session } = useSession(true);
+  const { providerToken } = useSupabaseAuth();
 
   const { toast } = useToast();
   const posthog = usePostHog();
@@ -453,6 +456,20 @@ const UserSettingsPage = ({ user }: UserSettingsPageProps) => {
                       </div>
                     </div>
                     <StripeCheckoutButton variant="primary" />
+
+                    <div className="flex flex-col gap-3">
+                      <label className="text-2xl font-normal">Developer Pack</label>
+                      <div className="w-full sm:max-w-80">
+                        <Text>Verify your developer pack eligibilty to get an upgrade!</Text>
+                      </div>
+                    </div>
+                    <DeveloperPackForm
+                      providerToken={providerToken}
+                      refreshUser={() => {
+                        mutate();
+                        setCoupon("verified");
+                      }}
+                    />
 
                     {!coupon && <CouponForm refreshUser={mutate} />}
                   </div>
