@@ -14,6 +14,7 @@ const ListPageLayout = ({
   isOwner = false,
   showRangeFilter = true,
   workspaceId,
+  owners,
 }: {
   children: React.ReactNode;
   list?: DBList;
@@ -21,6 +22,7 @@ const ListPageLayout = ({
   numberOfContributors: number;
   isOwner: boolean;
   showRangeFilter?: boolean;
+  owners?: string[];
 }) => {
   const router = useRouter();
   const { range } = router.query;
@@ -41,6 +43,7 @@ const ListPageLayout = ({
               listId={list.id}
               workspaceId={workspaceId}
               isOwner={isOwner}
+              owners={owners}
             />
           )}
         </Header>
