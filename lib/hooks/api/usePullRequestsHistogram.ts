@@ -76,10 +76,12 @@ const usePullRequestsHistogram = ({
   if (repoIds?.length > 0) {
     query.delete("topic");
     query.set("repoIds", repoIds.join(","));
+    query.delete("filter");
   }
 
   if (query.get("repo")) {
     query.delete("topic");
+    query.delete("filter");
   }
 
   if (contributor) {
