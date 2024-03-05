@@ -5,6 +5,18 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.5.0-beta.3](https://github.com/open-sauced/app/compare/v2.5.0-beta.2...v2.5.0-beta.3) (2024-03-05)
+
+
+### 🍕 Features
+
+* Welcome modal for new Workspace users ([#2868](https://github.com/open-sauced/app/issues/2868)) ([7094adf](https://github.com/open-sauced/app/commit/7094adf7fe42b12111f010342be968acf278df95))
+
+
+### 🐛 Bug Fixes
+
+* remove topic and filter from histogram requests for specific repos ([#2876](https://github.com/open-sauced/app/issues/2876)) ([7ca34d3](https://github.com/open-sauced/app/commit/7ca34d36a29a30e64dd6d55f717f8d5421def103))
+
 ## [2.5.0-beta.2](https://github.com/open-sauced/app/compare/v2.5.0-beta.1...v2.5.0-beta.2) (2024-03-05)
 
 
