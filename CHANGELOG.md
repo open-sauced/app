@@ -5,6 +5,19 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.5.0-beta.1](https://github.com/open-sauced/app/compare/v2.4.1-beta.8...v2.5.0-beta.1) (2024-03-05)
+
+
+### 🍕 Features
+
+* add section to user settings to verify developer pack ([#2820](https://github.com/open-sauced/app/issues/2820)) ([a53d642](https://github.com/open-sauced/app/commit/a53d64232d377bb852671b81d771dcd8242c27d0))
+* CTA for empty insight sections in sidebar ([#2860](https://github.com/open-sauced/app/issues/2860)) ([7696f5a](https://github.com/open-sauced/app/commit/7696f5a9e4200988e1c22cf403f4eb0a056b1bd2))
+
+
+### 🐛 Bug Fixes
+
+* update data format when adding contributors to a contributor insight ([#2867](https://github.com/open-sauced/app/issues/2867)) ([b7b49d8](https://github.com/open-sauced/app/commit/b7b49d8c44bfbba8239d083896bd14a19f018632))
+
 ## [2.4.1-beta.8](https://github.com/open-sauced/app/compare/v2.4.1-beta.7...v2.4.1-beta.8) (2024-03-04)
 
 
