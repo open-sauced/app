@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.5.0-beta.2](https://github.com/open-sauced/app/compare/v2.5.0-beta.1...v2.5.0-beta.2) (2024-03-05)
+
+
+### 🐛 Bug Fixes
+
+* z-index changes for `Update Workspace` button in settings ([#2864](https://github.com/open-sauced/app/issues/2864)) ([d2cbb3e](https://github.com/open-sauced/app/commit/d2cbb3eb4a273092312e48a7b1c530f6efeb2b04))
+
 ## [2.5.0-beta.1](https://github.com/open-sauced/app/compare/v2.4.1-beta.8...v2.5.0-beta.1) (2024-03-05)
 
 
