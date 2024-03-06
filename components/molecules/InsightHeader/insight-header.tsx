@@ -14,6 +14,7 @@ import { truncateString } from "lib/utils/truncate-string";
 import useRepositories from "lib/hooks/api/useRepositories";
 import { useToast } from "lib/hooks/useToast";
 import { setQueryParams } from "lib/utils/query-params";
+import StackedOwners from "components/Workspaces/StackedOwners";
 import CardRepoList from "../CardRepoList/card-repo-list";
 import ComponentDateFilter from "../ComponentDateFilter/component-date-filter";
 
@@ -23,9 +24,17 @@ interface InsightHeaderProps {
   insightId: string;
   canEdit: boolean | undefined;
   workspaceId?: string;
+  owners?: string[];
 }
 
-const InsightHeader = ({ insight, repositories, insightId, canEdit, workspaceId }: InsightHeaderProps): JSX.Element => {
+const InsightHeader = ({
+  insight,
+  repositories,
+  insightId,
+  canEdit,
+  workspaceId,
+  owners,
+}: InsightHeaderProps): JSX.Element => {
   const router = useRouter();
   const { range } = router.query;
   const { data: repoData, meta: repoMeta } = useRepositories(repositories);
@@ -66,6 +75,11 @@ const InsightHeader = ({ insight, repositories, insightId, canEdit, workspaceId 
             </Title>
           </div>
           <div className="flex items-center gap-2 mt-4">
+            {owners && (
+              <div className="flex gap-2 items-center">
+                <StackedOwners owners={owners} /> |
+              </div>
+            )}
             {insight && insight.repos && insight.repos.length > 0 && (
               <CardRepoList limit={2} repoList={repoList} total={repoMeta.itemCount} />
             )}
