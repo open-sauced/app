@@ -70,15 +70,16 @@ const WorkspaceDashboard = ({ workspace }: WorkspaceDashboardProps) => {
       })
     : [];
 
-  let repoIds = repositories?.data?.map((repo) => repo.repo_id) || [];
+  const [repoIds, setRepoIds] = useState(repositories?.data?.map((repo) => repo.repo_id) || []);
   let { data: stats, isError: isStatsError, isLoading: isLoadingStats } = useWorkspacesRepoStats(workspace.id, range);
 
   useEffect(() => {
-    repoIds =
+    setRepoIds(
       filteredRepositories.length > 0
         ? filteredRepositories.map((repo) => Number.parseInt(repo.value))
-        : repositories?.data?.map((repo) => repo.repo_id) || [];
-  }, [filteredRepositories]);
+        : repositories?.data?.map((repo) => repo.repo_id) || []
+    );
+  }, [repositories, filteredRepositories]);
 
   return (
     <WorkspaceLayout workspaceId={workspace.id}>
