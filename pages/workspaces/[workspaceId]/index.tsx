@@ -3,6 +3,7 @@ import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
 import { useLocalStorage } from "react-use";
+import { useState } from "react";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import { fetchApiData } from "helpers/fetchApiData";
 import Repositories from "components/organisms/Repositories/repositories";
@@ -18,6 +19,7 @@ import { deleteCookie, setCookie } from "lib/utils/server/cookies";
 import { WORKSPACE_ID_COOKIE_NAME } from "lib/utils/caching";
 import Button from "components/atoms/Button/button";
 import { WorkspaceHeader } from "components/Workspaces/WorkspaceHeader";
+import TrackedRepositoryFilter from "components/Workspaces/TrackedRepositoryFilter";
 
 const WorkspaceWelcomeModal = dynamic(() => import("components/Workspaces/WorkspaceWelcomeModal"));
 
@@ -60,6 +62,8 @@ const WorkspaceDashboard = ({ workspace }: WorkspaceDashboardProps) => {
   const range = router.query.range ? Number(router.query.range as string) : 30;
   const { data, error: hasError } = useGetWorkspaceRepositories({ workspaceId: workspace.id, range });
 
+  const [repositoryFilters, setRepositoryFilters] = useState([]);
+
   const repositories = data?.data?.map((repo) => repo.repo_id) || [];
   const { data: stats, isError: isStatsError, isLoading: isLoadingStats } = useWorkspacesRepoStats(workspace.id, range);
 
@@ -73,6 +77,7 @@ const WorkspaceDashboard = ({ workspace }: WorkspaceDashboardProps) => {
             Add repositories
           </Button>
           <DayRangePicker />
+          <TrackedRepositoryFilter />
         </div>
       </div>
       <div className="mt-6 grid gap-6">
