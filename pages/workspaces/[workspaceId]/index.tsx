@@ -3,7 +3,7 @@ import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
 import { useLocalStorage } from "react-use";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import { fetchApiData } from "helpers/fetchApiData";
 import Repositories from "components/organisms/Repositories/repositories";
@@ -20,6 +20,7 @@ import { WORKSPACE_ID_COOKIE_NAME } from "lib/utils/caching";
 import Button from "components/atoms/Button/button";
 import { WorkspaceHeader } from "components/Workspaces/WorkspaceHeader";
 import TrackedRepositoryFilter from "components/Workspaces/TrackedRepositoryFilter";
+import { OptionKeys } from "components/atoms/Select/multi-select";
 
 const WorkspaceWelcomeModal = dynamic(() => import("components/Workspaces/WorkspaceWelcomeModal"));
 
@@ -60,12 +61,24 @@ const WorkspaceDashboard = ({ workspace }: WorkspaceDashboardProps) => {
 
   const router = useRouter();
   const range = router.query.range ? Number(router.query.range as string) : 30;
-  const { data, error: hasError } = useGetWorkspaceRepositories({ workspaceId: workspace.id, range });
+  const { data: repositories, error: hasError } = useGetWorkspaceRepositories({ workspaceId: workspace.id, range });
 
-  const [repositoryFilters, setRepositoryFilters] = useState([]);
+  const [filteredRepositories, setFilteredRepositories] = useState<OptionKeys[]>([]);
+  const filterOptions = repositories
+    ? Array.from(repositories?.data!, (repo) => {
+        return { label: repo.repo.full_name, value: `${repo.repo_id}` };
+      })
+    : [];
 
-  const repositories = data?.data?.map((repo) => repo.repo_id) || [];
-  const { data: stats, isError: isStatsError, isLoading: isLoadingStats } = useWorkspacesRepoStats(workspace.id, range);
+  let repoIds = repositories?.data?.map((repo) => repo.repo_id) || [];
+  let { data: stats, isError: isStatsError, isLoading: isLoadingStats } = useWorkspacesRepoStats(workspace.id, range);
+
+  useEffect(() => {
+    repoIds =
+      filteredRepositories.length > 0
+        ? filteredRepositories.map((repo) => Number.parseInt(repo.value))
+        : repositories?.data?.map((repo) => repo.repo_id) || [];
+  }, [filteredRepositories]);
 
   return (
     <WorkspaceLayout workspaceId={workspace.id}>
@@ -77,12 +90,15 @@ const WorkspaceDashboard = ({ workspace }: WorkspaceDashboardProps) => {
             Add repositories
           </Button>
           <DayRangePicker />
-          <TrackedRepositoryFilter />
+          <TrackedRepositoryFilter
+            options={filterOptions}
+            handleSelect={(selected: OptionKeys[]) => setFilteredRepositories(selected)}
+          />
         </div>
       </div>
       <div className="mt-6 grid gap-6">
         <ClientOnly>
-          {repositories.length > 0 ? (
+          {repoIds.length > 0 ? (
             <>
               <div className="flex flex-col lg:flex-row gap-6">
                 <RepositoryStatCard
@@ -104,7 +120,7 @@ const WorkspaceDashboard = ({ workspace }: WorkspaceDashboardProps) => {
                   hasError={isStatsError}
                 />
               </div>
-              <Repositories repositories={repositories} showSearch={false} />
+              <Repositories repositories={repoIds} showSearch={false} />
             </>
           ) : (
             <Card className="bg-transparent">
