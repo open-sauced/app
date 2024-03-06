@@ -54,7 +54,7 @@ export const TrackedReposTable = ({
   isLoading = false,
 }: TrackedReposTableProps) => {
   return (
-    <div className="-z-10 grid gap-4">
+    <div className="grid gap-4">
       <div className="flex justify-between">
         <div>
           <h2 className="flex gap-1 font-medium mb-2 text-md">Repositories Tracked</h2>
