@@ -1,8 +1,8 @@
 {
-  "name": "@open-sauced/insights",
+  "name": "@open-sauced/app",
   "description": "🍕The dashboard for open source discovery.",
   "keywords": [],
-  "version": "2.4.0-beta.12",
+  "version": "2.5.1-beta.1",
   "author": "Brian Douglas <brian@opensauced.pizza>",
   "private": true,
   "license": "Apache 2.0",
@@ -11,11 +11,11 @@
   ],
   "homepage": "https://app.opensauced.pizza",
   "bugs": {
-    "url": "https://github.com/open-sauced/insights/issues"
+    "url": "https://github.com/open-sauced/app/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/open-sauced/insights.git"
+    "url": "git+ssh://git@github.com/open-sauced/app.git"
   },
   "engines": {
     "node": "^18.17.0 || >=20.5.0",

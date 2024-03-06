@@ -1,3 +1,5 @@
+import dynamic from "next/dynamic";
+import { useState } from "react";
 import { useRouter } from "next/router";
 import { ErrorBoundary } from "react-error-boundary";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
@@ -12,6 +14,11 @@ import ClientOnly from "components/atoms/ClientOnly/client-only";
 import { useContributorsList } from "lib/hooks/api/useContributorList";
 import ContributorsList from "components/organisms/ContributorsList/contributors-list";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
+import { useIsWorkspaceUpgraded } from "lib/hooks/api/useIsWorkspaceUpgraded";
+import useSession from "lib/hooks/useSession";
+import WorkspaceBanner from "components/Workspaces/WorkspaceBanner";
+
+const InsightUpgradeModal = dynamic(() => import("components/Workspaces/InsightUpgradeModal"));
 
 interface ListsOverviewProps {
   list: DBList;
@@ -110,8 +117,16 @@ const ListsOverview = ({
   const allContributorCommits = allContributorStats?.reduce((acc, curr) => acc + curr.commits, 0) || 0;
   const prevAllContributorCommits = prevAllContributorStats?.reduce((acc, curr) => acc + curr.commits, 0) || 0;
 
+  const { hasReports } = useSession(true); // to check if the user is a PRO account
+  const { data: isWorkspaceUpgraded } = useIsWorkspaceUpgraded({ workspaceId });
+  const showBanner = isOwner && !hasReports && !isWorkspaceUpgraded && numberOfContributors > 10;
+  const [isInsightUpgradeModalOpen, setIsInsightUpgradeModalOpen] = useState(false);
+
   return (
-    <WorkspaceLayout workspaceId={workspaceId}>
+    <WorkspaceLayout
+      workspaceId={workspaceId}
+      banner={showBanner && WorkspaceBanner({ openModal: () => setIsInsightUpgradeModalOpen(true) })}
+    >
       <ListPageLayout
         list={list}
         workspaceId={workspaceId}
@@ -184,6 +199,14 @@ const ListsOverview = ({
           </ClientOnly>
         </div>
       </ListPageLayout>
+
+      <InsightUpgradeModal
+        workspaceId={workspaceId}
+        variant="contributors"
+        isOpen={isInsightUpgradeModalOpen}
+        onClose={() => setIsInsightUpgradeModalOpen(false)}
+        overLimit={numberOfContributors}
+      />
     </WorkspaceLayout>
   );
 };

@@ -2,8 +2,7 @@ import { createMiddlewareClient } from "@supabase/auth-helpers-nextjs";
 import { NextResponse } from "next/server";
 import { NextRequest } from "next/server";
 import { pathToRegexp } from "path-to-regexp";
-import { getAllFeatureFlags } from "lib/utils/server/feature-flags";
-import { WORKSPACE_ID_COOKIE_NAME, getWorkspaceUrl } from "lib/utils/workspace-utils";
+import { getInsightWithWorkspace, getListWithWorkspace, getWorkspaceUrl } from "lib/utils/workspace-utils";
 
 // HACK: this is to get around the fact that the normal next.js middleware is not always functioning
 // correctly.
@@ -17,6 +16,8 @@ const pathsToMatch = [
   "/user/settings",
   "/account-deleted",
   "/workspaces/:path*",
+  "/lists/:path*",
+  "/pages/:path*",
 ];
 
 const NO_ONBOARDING_PAYLOAD = {
@@ -48,12 +49,7 @@ const loadSession = async (request: NextRequest, sessionToken?: string) => {
 export async function middleware(req: NextRequest) {
   const res = NextResponse.next();
 
-  if (
-    !pathsToMatch.some((matcher) => pathToRegexp(matcher).test(req.nextUrl.pathname)) ||
-    // if the path is hub/insights or hub/lists go to the page so logged out users can see demo insights or demo lists
-    req.nextUrl.pathname === "/hub/insights" ||
-    req.nextUrl.pathname === "/hub/lists"
-  ) {
+  if (!pathsToMatch.some((matcher) => pathToRegexp(matcher).test(req.nextUrl.pathname))) {
     return res;
   }
 
@@ -64,6 +60,13 @@ export async function middleware(req: NextRequest) {
     data: { session },
   } = await supabase.auth.getSession();
 
+  if (session?.user && req.nextUrl.pathname === "/workspaces") {
+    const data = await loadSession(req, session?.access_token);
+    const workspaceUrl = getWorkspaceUrl(req.cookies, req.url, data.personal_workspace_id);
+
+    return NextResponse.redirect(`${workspaceUrl}`);
+  }
+
   if (session?.user && req.nextUrl.pathname === "/account-deleted") {
     // Delete the account from Supabase and log the user out.
     await supabase.auth.admin.deleteUser(session.user.id);
@@ -72,21 +75,31 @@ export async function middleware(req: NextRequest) {
     return res;
   }
 
-  // TODO: remove this once we've rolled this out to everyone.
-  // For now, only allowed users with the workspaces feature flag can access the workspaces pages.
-  if (session?.user && req.nextUrl.pathname.startsWith("/workspaces")) {
-    const featureFlags = await getAllFeatureFlags(Number(session?.user.user_metadata.sub));
+  if (req.nextUrl.pathname.startsWith("/lists")) {
+    // lists/{id}/(activity/highlights/overview)
+    const [, , listId, ...rest] = req.nextUrl.pathname.split("/");
+    const list = await getListWithWorkspace({ listId: listId });
 
-    if (featureFlags.workspaces) {
-      const [, , workspaceId] = req.nextUrl.pathname.split("/");
+    if (list && list.data) {
+      return NextResponse.redirect(
+        new URL(
+          `/workspaces/${list.data.workspaces?.workspace_id}/contributor-insights/${listId}/${rest.join("/")}`,
+          req.url
+        )
+      );
+    }
+  } else if (req.nextUrl.pathname.startsWith("/pages")) {
+    // pages/{username}/{insightId}/(dashboard/contributors/activity/reports)
+    const [, , _username, insightId, ...rest] = req.nextUrl.pathname.split("/");
+    const insight = await getInsightWithWorkspace({ insightId: Number(insightId) });
 
-      if (workspaceId !== "new") {
-        res.cookies.set(WORKSPACE_ID_COOKIE_NAME, workspaceId);
-      }
-
-      return res;
-    } else {
-      return NextResponse.rewrite(new URL("/404", req.url));
+    if (insight && insight.data) {
+      return NextResponse.redirect(
+        new URL(
+          `/workspaces/${insight.data.workspaces?.workspace_id}/repository-insights/${insightId}/${rest.join("/")}`,
+          req.url
+        )
+      );
     }
   }
 
@@ -95,20 +108,15 @@ export async function middleware(req: NextRequest) {
     // Authentication successful, forward request to protected route.
     if (req.nextUrl.pathname === "/") {
       const data = await loadSession(req, session?.access_token);
+      const workspaceUrl = getWorkspaceUrl(req.cookies, req.url, data.personal_workspace_id);
 
-      if (data.is_onboarded) {
-        const featureFlags = await getAllFeatureFlags(Number(session?.user.user_metadata.sub));
+      return NextResponse.redirect(`${workspaceUrl}`);
+    } else if (session?.user && req.nextUrl.pathname === "/hub/insights/new") {
+      const data = await loadSession(req, session?.access_token);
 
-        if (featureFlags.workspaces) {
-          const workspaceUrl = getWorkspaceUrl(req.cookies, req.url, data.personal_workspace_id);
-
-          return NextResponse.redirect(`${workspaceUrl}`);
-        } else {
-          return NextResponse.redirect(new URL("/hub/insights", req.url));
-        }
-      } else {
-        return NextResponse.redirect(new URL("/feed", req.url));
-      }
+      return NextResponse.redirect(
+        new URL(`/workspaces/${data.personal_workspace_id}/repository-insights/new`, req.url)
+      );
     } else {
       return res;
     }
