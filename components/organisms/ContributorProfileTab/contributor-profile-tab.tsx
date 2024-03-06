@@ -199,7 +199,7 @@ const ContributorProfileTab = ({
           />
           <div className="flex-1 md:flex-[2.5]">
             <div className="flex items-center gap-2">
-              <Image className="rounded" alt="Open Sauced Logo" width={30} height={30} src={openSaucedImg} />
+              <Image className="rounded" alt="OpenSauced Logo" width={30} height={30} src={openSaucedImg} />
               <Title className="font-semibold text-lg" level={4}>
                 Do you know {login}?
               </Title>
