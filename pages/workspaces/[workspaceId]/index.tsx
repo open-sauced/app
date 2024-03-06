@@ -1,6 +1,8 @@
+import dynamic from "next/dynamic";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
+import { useLocalStorage } from "react-use";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import { fetchApiData } from "helpers/fetchApiData";
 import Repositories from "components/organisms/Repositories/repositories";
@@ -16,6 +18,8 @@ import { deleteCookie, setCookie } from "lib/utils/server/cookies";
 import { WORKSPACE_ID_COOKIE_NAME } from "lib/utils/caching";
 import Button from "components/atoms/Button/button";
 import { WorkspaceHeader } from "components/Workspaces/WorkspaceHeader";
+
+const WorkspaceWelcomeModal = dynamic(() => import("components/Workspaces/WorkspaceWelcomeModal"));
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const supabase = createPagesServerClient(context);
@@ -50,6 +54,8 @@ interface WorkspaceDashboardProps {
 }
 
 const WorkspaceDashboard = ({ workspace }: WorkspaceDashboardProps) => {
+  const [showWelcome, setShowWelcome] = useLocalStorage("show-welcome", true);
+
   const router = useRouter();
   const range = router.query.range ? Number(router.query.range as string) : 30;
   const { data, error: hasError } = useGetWorkspaceRepositories({ workspaceId: workspace.id, range });
@@ -102,6 +108,13 @@ const WorkspaceDashboard = ({ workspace }: WorkspaceDashboardProps) => {
           )}
         </ClientOnly>
       </div>
+
+      <WorkspaceWelcomeModal
+        isOpen={showWelcome!}
+        onClose={() => {
+          setShowWelcome(false);
+        }}
+      />
     </WorkspaceLayout>
   );
 };

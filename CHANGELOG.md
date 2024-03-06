@@ -5,6 +5,45 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.5.0-beta.3](https://github.com/open-sauced/app/compare/v2.5.0-beta.2...v2.5.0-beta.3) (2024-03-05)
+
+
+### 🍕 Features
+
+* Welcome modal for new Workspace users ([#2868](https://github.com/open-sauced/app/issues/2868)) ([7094adf](https://github.com/open-sauced/app/commit/7094adf7fe42b12111f010342be968acf278df95))
+
+
+### 🐛 Bug Fixes
+
+* remove topic and filter from histogram requests for specific repos ([#2876](https://github.com/open-sauced/app/issues/2876)) ([7ca34d3](https://github.com/open-sauced/app/commit/7ca34d36a29a30e64dd6d55f717f8d5421def103))
+
+## [2.5.0-beta.2](https://github.com/open-sauced/app/compare/v2.5.0-beta.1...v2.5.0-beta.2) (2024-03-05)
+
+
+### 🐛 Bug Fixes
+
+* z-index changes for `Update Workspace` button in settings ([#2864](https://github.com/open-sauced/app/issues/2864)) ([d2cbb3e](https://github.com/open-sauced/app/commit/d2cbb3eb4a273092312e48a7b1c530f6efeb2b04))
+
+## [2.5.0-beta.1](https://github.com/open-sauced/app/compare/v2.4.1-beta.8...v2.5.0-beta.1) (2024-03-05)
+
+
+### 🍕 Features
+
+* add section to user settings to verify developer pack ([#2820](https://github.com/open-sauced/app/issues/2820)) ([a53d642](https://github.com/open-sauced/app/commit/a53d64232d377bb852671b81d771dcd8242c27d0))
+* CTA for empty insight sections in sidebar ([#2860](https://github.com/open-sauced/app/issues/2860)) ([7696f5a](https://github.com/open-sauced/app/commit/7696f5a9e4200988e1c22cf403f4eb0a056b1bd2))
+
+
+### 🐛 Bug Fixes
+
+* update data format when adding contributors to a contributor insight ([#2867](https://github.com/open-sauced/app/issues/2867)) ([b7b49d8](https://github.com/open-sauced/app/commit/b7b49d8c44bfbba8239d083896bd14a19f018632))
+
+## [2.4.1-beta.8](https://github.com/open-sauced/app/compare/v2.4.1-beta.7...v2.4.1-beta.8) (2024-03-04)
+
+
+### 🐛 Bug Fixes
+
+* use insight_id when redirecting after creating an insight ([#2866](https://github.com/open-sauced/app/issues/2866)) ([89ee84e](https://github.com/open-sauced/app/commit/89ee84e4ac8ca4489a8814c4dae1b5b5c3f9fba6))
+
 ## [2.4.1-beta.7](https://github.com/open-sauced/app/compare/v2.4.1-beta.6...v2.4.1-beta.7) (2024-03-04)
 
 
