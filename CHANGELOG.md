@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.5.1](https://github.com/open-sauced/app/compare/v2.5.0...v2.5.1) (2024-03-06)
+
+
+### 🐛 Bug Fixes
+
+* remove z-index from tracked repositories table ([#2884](https://github.com/open-sauced/app/issues/2884)) ([266a846](https://github.com/open-sauced/app/commit/266a846361094370b7211f41163eaa9c81725a00))
+
 ## [2.5.1-beta.1](https://github.com/open-sauced/app/compare/v2.5.0...v2.5.1-beta.1) (2024-03-06)
 
 
