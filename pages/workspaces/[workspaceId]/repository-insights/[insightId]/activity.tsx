@@ -23,7 +23,7 @@ const HubPage = ({ insight, ogImage, workspaceId }: InsightPageProps) => {
   if (!hasMounted) {
     return (
       <SEO
-        title={`${insight.name} | Open Sauced Insights `}
+        title={`${insight.name} | OpenSauced Insights `}
         description={`${insight.name} Insights on OpenSauced`}
         image={ogImage}
         twitterCard="summary_large_image"
@@ -34,7 +34,7 @@ const HubPage = ({ insight, ogImage, workspaceId }: InsightPageProps) => {
   return (
     <>
       <SEO
-        title={`${insight.name} | Open Sauced Insights`}
+        title={`${insight.name} | OpenSauced Insights`}
         description={`${insight.name} Insights on OpenSauced`}
         image={ogImage}
         twitterCard="summary_large_image"

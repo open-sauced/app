@@ -123,7 +123,7 @@ export default function DevCard(props: DevCardProps) {
               }}
             >
               <div className=" absolute left-[10px] top-[10px] flex items-center gap-1 cursor-pointer">
-                <Image className="rounded" alt="Open Sauced Logo" width={13} height={13} src={openSaucedImg} />
+                <Image className="rounded" alt="OpenSauced Logo" width={13} height={13} src={openSaucedImg} />
                 <p className={"font-semibold text-white"} style={{ fontSize: "8px" }}>
                   OpenSauced
                 </p>
@@ -245,7 +245,7 @@ export default function DevCard(props: DevCardProps) {
                 </Link>
               )}
               <div className="flex justify-center mt-2">
-                <Image className="rounded" alt="Open Sauced Logo" width={13} height={13} src={openSaucedImg} />
+                <Image className="rounded" alt="OpenSauced Logo" width={13} height={13} src={openSaucedImg} />
                 <p className={"font-semibold text-white ml-1"} style={{ fontSize: "8px" }}>
                   OpenSauced
                 </p>
