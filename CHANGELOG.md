@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.5.2-beta.1](https://github.com/open-sauced/app/compare/v2.5.1...v2.5.2-beta.1) (2024-03-07)
+
+
+### 🐛 Bug Fixes
+
+* typo on modal and create consistency with OpenSauced spacing ([#2892](https://github.com/open-sauced/app/issues/2892)) ([c536347](https://github.com/open-sauced/app/commit/c536347c0cb99ed3625e3804ad9e2796ef4cec0a))
+
 ## [2.5.1](https://github.com/open-sauced/app/compare/v2.5.0...v2.5.1) (2024-03-06)
 
 
