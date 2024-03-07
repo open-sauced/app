@@ -277,7 +277,7 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace }: WorkspaceSettingsP
             onUpdateMember={async (memberId, role) => await updateMember(workspace.id, sessionToken, memberId, role)}
             onDeleteMember={async (memberId) => await deleteMember(workspace.id, sessionToken, memberId)}
             members={workspaceMembers}
-            className="-z-10"
+            className="z-10"
           />
         </ClientOnly>
 
