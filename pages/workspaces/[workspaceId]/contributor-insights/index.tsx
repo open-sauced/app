@@ -177,6 +177,6 @@ const ListsHub = ({ workspace }: { workspace: Workspace }) => {
 };
 
 ListsHub.SEO = {
-  title: "Open Sauced Contributor Insights",
+  title: "OpenSauced Contributor Insights",
 };
 export default ListsHub;
