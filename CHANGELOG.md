@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.5.2-beta.2](https://github.com/open-sauced/app/compare/v2.5.2-beta.1...v2.5.2-beta.2) (2024-03-07)
+
+
+### 🐛 Bug Fixes
+
+* Clear input after adding a repository to insight page ([#2497](https://github.com/open-sauced/app/issues/2497)) ([743836c](https://github.com/open-sauced/app/commit/743836c1695b7652eb6e4dee5a664f74e0aabcdd))
+
 ## [2.5.2-beta.1](https://github.com/open-sauced/app/compare/v2.5.1...v2.5.2-beta.1) (2024-03-07)
 
 
