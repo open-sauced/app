@@ -9,7 +9,6 @@ const initialState: GlobalStateInterface = {
   sessionToken: null,
   providerToken: null,
   userId: null,
-  hasReports: false,
   openSearch: false,
 };
 
@@ -29,7 +28,6 @@ interface AppStore extends GlobalStateInterface {
   setSessionToken: (sessionToken?: string | null) => void;
   setProviderToken: (providerToken?: string | null) => void;
   setUserId: (userId?: number | null) => void;
-  setHasReports: (hasReports: boolean) => void;
   setOpenSearch: (openSearch: boolean) => void;
 }
 
@@ -50,7 +48,6 @@ const store = create<AppStore>()((set) => ({
   setSessionToken: (sessionToken?: string | null) => set((state) => ({ ...state, sessionToken })),
   setProviderToken: (providerToken?: string | null) => set((state) => ({ ...state, providerToken })),
   setUserId: (userId?: number | null) => set((state) => ({ ...state, userId })),
-  setHasReports: (hasReports: boolean) => set((state) => ({ ...state, hasReports })),
   setOpenSearch: (openSearch: boolean) => set((state) => ({ ...state, openSearch: openSearch })),
 }));
 
