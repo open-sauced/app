@@ -77,16 +77,17 @@ const MultiSelect = ({
             )}
           </button>
         </PopoverTrigger>
-        <PopoverContent align="end" className="!w-full bg-white p-0 max-w-sm">
+        <PopoverContent align="end" className="!w-full bg-white p-0 max-w-sm h-fit">
           {options.length > 0 && (
-            <Command loop onKeyDown={handleKeyDown} className="w-full px-0 bg-transparent">
+            <Command loop onKeyDown={handleKeyDown} className="w-full px-0 pt-1 bg-transparent">
               <CommandInput
                 ref={inputRef}
                 placeholder={inputPlaceholder ?? "Search Items"}
                 value={inputValue}
                 onValueChange={setInputValue}
+                className="px-2 focus:ring-0"
               />
-              <CommandGroup className="flex flex-col !px-0 overflow-scroll max-h-48">
+              <CommandGroup className="flex flex-col !px-0 !py-0 overflow-x-hidden overflow-y-scroll max-h-52">
                 {open && options.length > 0
                   ? options.map((option) => (
                       <CommandItem
@@ -102,7 +103,7 @@ const MultiSelect = ({
                         }}
                         onClick={() => handleSelect(option)}
                         className={clsx(
-                          "!cursor-pointer flex justify-between items-center !px-1 rounded-md truncate break-words w-full",
+                          "!cursor-pointer flex justify-between items-center !px-3 rounded-md truncate break-words w-full",
                           selected.some((s) => s.value === option.value) && ""
                         )}
                       >
