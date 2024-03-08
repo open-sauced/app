@@ -185,21 +185,18 @@ const InsightPage = ({ edit, insight, pageRepos, workspaceId }: InsightPageProps
       toast({ description: "You must be logged in to create a page", variant: "danger" });
       return;
     }
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/${workspaceId ? `workspaces/${workspaceId}` : user}/insights`,
-      {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-          Authorization: `Bearer ${sessionToken}`,
-        },
-        body: JSON.stringify({
-          name,
-          repos: repos.map((repo) => ({ id: repo.id, fullName: repo.full_name })),
-          is_public: true,
-        }),
-      }
-    );
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/workspaces/${workspaceId}/insights`, {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Bearer ${sessionToken}`,
+      },
+      body: JSON.stringify({
+        name,
+        repos: repos.map((repo) => ({ id: repo.id, fullName: repo.full_name })),
+        is_public: true,
+      }),
+    });
     setCreateLoading(false);
     if (response.ok) {
       const { insight_id } = await response.json();
@@ -213,19 +210,22 @@ const InsightPage = ({ edit, insight, pageRepos, workspaceId }: InsightPageProps
   const handleUpdateInsightPage = async () => {
     setSubmitted(true);
     setCreateLoading(true);
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/insights/${insight?.id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-type": "application/json",
-        Authorization: `Bearer ${sessionToken}`,
-      },
-      body: JSON.stringify({
-        name,
-        repos: repos.map((repo) => ({ id: repo.id, fullName: repo.full_name })),
-        // eslint-disable-next-line
-        is_public: true,
-      }),
-    });
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/workspaces/${workspaceId}/insights/${insight?.id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${sessionToken}`,
+        },
+        body: JSON.stringify({
+          name,
+          repos: repos.map((repo) => ({ id: repo.id, fullName: repo.full_name })),
+          // eslint-disable-next-line
+          is_public: true,
+        }),
+      }
+    );
     setCreateLoading(false);
     if (response && response.ok) {
       toast({ description: "Page updated successfully", variant: "success" });
@@ -387,13 +387,16 @@ const InsightPage = ({ edit, insight, pageRepos, workspaceId }: InsightPageProps
   const handleDeleteInsightPage = async () => {
     setSubmitted(true);
     setDeleteLoading(true);
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/insights/${insight?.id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-type": "application/json",
-        Authorization: `Bearer ${sessionToken}`,
-      },
-    });
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/workspaces/${workspaceId}/insights/${insight?.id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${sessionToken}`,
+        },
+      }
+    );
 
     setDeleteLoading(false);
     if (response.ok) {
