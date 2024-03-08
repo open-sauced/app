@@ -5,6 +5,18 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.6.0-beta.3](https://github.com/open-sauced/app/compare/v2.6.0-beta.2...v2.6.0-beta.3) (2024-03-08)
+
+
+### 🐛 Bug Fixes
+
+* add path to tab list array for separate title/URL combinations ([#2898](https://github.com/open-sauced/app/issues/2898)) ([328a1a7](https://github.com/open-sauced/app/commit/328a1a7d304972565b84374754a9521126b47161))
+
+
+### 🍕 Features
+
+* remove upgrade access button from user settings ([#2896](https://github.com/open-sauced/app/issues/2896)) ([bf4d594](https://github.com/open-sauced/app/commit/bf4d594ad81f5695685fadb35cb87e4a29224ef8))
+
 ## [2.6.0-beta.2](https://github.com/open-sauced/app/compare/v2.6.0-beta.1...v2.6.0-beta.2) (2024-03-08)
 
 
