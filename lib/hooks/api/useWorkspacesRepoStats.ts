@@ -5,8 +5,10 @@ export const useWorkspacesRepoStats = (workspaceId: string, range = 30, repos?: 
     range: range.toString(),
   });
 
-  if (repos) {
-    repos.map((repo) => searchParams.append("repos", repo));
+  if (repos!.length > 0) {
+    // needed to turn the "repos" search param into an array
+    searchParams.append("repos", "");
+    repos!.map((repo) => searchParams.append("repos", repo));
   }
 
   const endpointString = `workspaces/${workspaceId}/stats?${searchParams}`;
