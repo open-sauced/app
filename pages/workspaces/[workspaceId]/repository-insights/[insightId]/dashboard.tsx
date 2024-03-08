@@ -9,7 +9,6 @@ import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import HubPageLayout from "layouts/hub-page";
 import Dashboard from "components/organisms/Dashboard/dashboard";
 import { fetchApiData } from "helpers/fetchApiData";
-import useSession from "lib/hooks/useSession";
 import { useIsWorkspaceUpgraded } from "lib/hooks/api/useIsWorkspaceUpgraded";
 import WorkspaceBanner from "components/Workspaces/WorkspaceBanner";
 
@@ -27,9 +26,8 @@ const HubPage = ({ insight, isOwner, ogImage, workspaceId, owners }: InsightPage
   const repositories = insight.repos.map((repo) => repo.repo_id);
   const [hydrated, setHydrated] = useState(false);
 
-  const { hasReports } = useSession(true); // to check if the user is a PRO account
   const { data: isWorkspaceUpgraded } = useIsWorkspaceUpgraded({ workspaceId });
-  const showBanner = isOwner && !hasReports && !isWorkspaceUpgraded && repositories.length > 100;
+  const showBanner = isOwner && !isWorkspaceUpgraded && repositories.length > 100;
   const [isInsightUpgradeModalOpen, setIsInsightUpgradeModalOpen] = useState(false);
 
   useEffect(() => {
@@ -104,31 +102,34 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   // Keeping this here so we are sure the page is not private before we fetch the social card.
   const ogImage = await fetchSocialCard(`insights/${insightId}`);
 
-  const insightOwner = insight.members.find((m) => m.access === "admin");
-  const isOwner = Number.parseInt(session?.user.user_metadata.provider_id) === insightOwner?.user_id;
-
-  const { data: workspaceMembers } = await fetchApiData<any>({
+  const { data: workspaceMembers } = await fetchApiData<{ data?: WorkspaceMember[] }>({
     path: `workspaces/${workspaceId}/members`,
     bearerToken,
     pathValidator: () => true,
   });
 
+  const userId = Number(session?.user.user_metadata.sub);
+
   const owners: string[] = Array.from(
-    workspaceMembers!.data,
+    workspaceMembers?.data || [],
     (member: { role: string; member: Record<string, any> }) => {
       if (member.role === "owner") {
         return member.member.login;
       }
     }
+  ).filter(Boolean);
+
+  const isOwner = (workspaceMembers?.data || []).filter(
+    (member) => member.role === "owner" && member.user_id === userId
   );
 
   return {
     props: {
       insight,
-      isOwner,
       workspaceId,
       ogImage,
       owners,
+      isOwner,
     },
   };
 };

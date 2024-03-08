@@ -47,7 +47,11 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
         pathValidator: validateListPath,
       }),
       fetchApiData<DBList>({ path: `lists/${listId}`, bearerToken, pathValidator: validateListPath }),
-      fetchApiData<any>({ path: `workspaces/${workspaceId}/members`, bearerToken, pathValidator: () => true }),
+      fetchApiData<{ data?: WorkspaceMember[] }>({
+        path: `workspaces/${workspaceId}/members`,
+        bearerToken,
+        pathValidator: () => true,
+      }),
     ]);
 
   if (error?.status === 404) {
@@ -58,17 +62,22 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 
   const userId = Number(session?.user.user_metadata.sub);
 
-  const owners = Array.from(workspaceData.data, (member: { role: string; member: Record<string, any> }) => {
-    if (member.role === "owner") {
-      return member.member.login;
+  const owners: string[] = Array.from(
+    workspaceData?.data || [],
+    (member: { role: string; member: Record<string, any> }) => {
+      if (member.role === "owner") {
+        return member.member.login;
+      }
     }
-  });
+  ).filter(Boolean);
+
+  const isOwner = (workspaceData?.data || []).filter((member) => member.role === "owner" && member.user_id === userId);
 
   return {
     props: {
       list,
       numberOfContributors: data?.meta.itemCount || 0,
-      isOwner: list && list.user_id === userId,
+      isOwner,
       isError: error || contributorListError,
       workspaceId,
       owners,
