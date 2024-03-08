@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.6.0-beta.1](https://github.com/open-sauced/app/compare/v2.5.2-beta.3...v2.6.0-beta.1) (2024-03-08)
+
+
+### 🍕 Features
+
+* show owners of insight pages ([#2879](https://github.com/open-sauced/app/issues/2879)) ([f014435](https://github.com/open-sauced/app/commit/f014435bfd71d8853f05c39a262ec98fd4163999))
+
 ## [2.5.2-beta.3](https://github.com/open-sauced/app/compare/v2.5.2-beta.2...v2.5.2-beta.3) (2024-03-08)
 
 
