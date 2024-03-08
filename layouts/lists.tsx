@@ -29,7 +29,11 @@ const ListPageLayout = ({
   const paths = router.asPath.split("/");
   const selectedTab = paths[3] ?? "overview";
 
-  const tabList = [{ name: "Overview" }, { name: "Activity" }, { name: "Highlights" }];
+  const tabList = [
+    { name: "Overview", path: "overview" },
+    { name: "Activity", path: "activity" },
+    { name: "Highlights", path: "highlights" },
+  ];
 
   return (
     <>
