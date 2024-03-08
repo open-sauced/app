@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.6.0-beta.2](https://github.com/open-sauced/app/compare/v2.6.0-beta.1...v2.6.0-beta.2) (2024-03-08)
+
+
+### 🍕 Features
+
+* filter tracked repositories in workspace ([#2889](https://github.com/open-sauced/app/issues/2889)) ([5fcb469](https://github.com/open-sauced/app/commit/5fcb46999d50bd1333d53c459f6b3366b2801155))
+
 ## [2.6.0-beta.1](https://github.com/open-sauced/app/compare/v2.5.2-beta.3...v2.6.0-beta.1) (2024-03-08)
 
 
