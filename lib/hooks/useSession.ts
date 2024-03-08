@@ -33,7 +33,6 @@ const useSession = (getSession = false) => {
     store.setSession({
       onboarded: isOnboarded,
       waitlisted: isWaitlisted,
-      insightRepoLimit: insightsRole >= 50 ? 50 : 10,
     });
   };
 

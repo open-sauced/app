@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 
 import { useDebounce } from "rooks";
-import Link from "next/link";
 import Button from "components/atoms/Button/button";
 import TextInput from "components/atoms/TextInput/text-input";
 import Text from "components/atoms/Typography/text";
@@ -15,7 +14,6 @@ import useRepositories from "lib/hooks/api/useRepositories";
 
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { generateRepoParts, getAvatarByUsername } from "lib/utils/github";
-import useStore from "lib/store";
 import Error from "components/atoms/Error/Error";
 import Search from "components/atoms/Search/search";
 import { useToast } from "lib/hooks/useToast";
@@ -104,9 +102,7 @@ const InsightPage = ({ edit, insight, pageRepos, workspaceId }: InsightPageProps
   const [repoHistory, setRepoHistory] = useState<DbRepo[]>([]);
   const [addRepoError, setAddRepoError] = useState<RepoLookupError>(RepoLookupError.Initial);
   const [syncOrganizationError, setSyncOrganizationError] = useState<OrgLookupError>(OrgLookupError.Initial);
-  const insightRepoLimit = useStore((state) => state.insightRepoLimit);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isInsightUpgradeModalOpen, setIsInsightUpgradeModalOpen] = useState(false);
   const [repoSearchTerm, setRepoSearchTerm] = useState<string>("");
   const [suggestions, setSuggestions] = useState<string[]>([]);
 
@@ -519,7 +515,7 @@ const InsightPage = ({ edit, insight, pageRepos, workspaceId }: InsightPageProps
           </div>
           <div>
             <Button
-              disabled={repos.length >= insightRepoLimit! || organization.trim().length < 3}
+              disabled={organization.trim().length < 3}
               onClick={handleAddOrganizationRepositories}
               variant="outline"
               className="shrink-0 w-max"
@@ -547,10 +543,7 @@ const InsightPage = ({ edit, insight, pageRepos, workspaceId }: InsightPageProps
 
           <div className="w-full flex gap-3 md:items-center flex-col md:flex-row">
             <Button
-              disabled={
-                repos.length >= insightRepoLimit! ||
-                (addRepoLoading.repoName === repoSearchTerm && addRepoLoading.isLoading)
-              }
+              disabled={addRepoLoading.repoName === repoSearchTerm && addRepoLoading.isLoading}
               loading={addRepoLoading.repoName === repoSearchTerm && addRepoLoading.isLoading}
               onClick={handleAddRepository}
               variant="outline"
@@ -558,19 +551,6 @@ const InsightPage = ({ edit, insight, pageRepos, workspaceId }: InsightPageProps
             >
               Add Repository
             </Button>
-
-            <span role="alert">
-              {repos.length >= insightRepoLimit! && insightRepoLimit! < 50 ? (
-                <p className="text-sm">
-                  Your insight pages are limited to
-                  <strong className="text-sauced-orange"> {insightRepoLimit}</strong> repos,{" "}
-                  <Link href={`/user/settings#upgrade`} className="underline text-sauced-orange">
-                    upgrade
-                  </Link>{" "}
-                  to increase the limit
-                </p>
-              ) : null}
-            </span>
           </div>
 
           <div className="py-4">
