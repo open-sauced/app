@@ -540,6 +540,7 @@ const InsightPage = ({ edit, insight, pageRepos, workspaceId }: InsightPageProps
             placeholder="Repository URL or Full Name (ex: open-sauced/open-sauced)"
             className="!w-full text-md text-gra"
             name={"query"}
+            value={repoSearchTerm}
             suggestions={suggestions}
             onChange={(value) => setRepoSearchTerm(value)}
             onSearch={(search) => setRepoSearchTerm(search as string)}

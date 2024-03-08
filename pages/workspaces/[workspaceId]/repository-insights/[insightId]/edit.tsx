@@ -42,7 +42,7 @@ const EditInsightPage = () => {
 };
 
 EditInsightPage.SEO = {
-  title: "Edit Insight Page | Open Sauced Insights",
+  title: "Edit Insight Page | OpenSauced Insights",
   noindex: true,
 };
 

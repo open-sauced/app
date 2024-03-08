@@ -26,6 +26,7 @@ interface ListsOverviewProps {
   isOwner: boolean;
   isError: boolean;
   workspaceId: string;
+  owners: string[];
 }
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
@@ -38,14 +39,16 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 
   const { listId, workspaceId = null } = ctx.params as { listId: string; workspaceId?: string };
   const limit = 10; // Can pull this from the querystring in the future
-  const [{ data, error: contributorListError }, { data: list, error }] = await Promise.all([
-    fetchApiData<PagedData<DBListContributor>>({
-      path: `lists/${listId}/contributors?limit=${limit}`,
-      bearerToken,
-      pathValidator: validateListPath,
-    }),
-    fetchApiData<DBList>({ path: `lists/${listId}`, bearerToken, pathValidator: validateListPath }),
-  ]);
+  const [{ data, error: contributorListError }, { data: list, error }, { data: workspaceData, error: workspaceError }] =
+    await Promise.all([
+      fetchApiData<PagedData<DBListContributor>>({
+        path: `lists/${listId}/contributors?limit=${limit}`,
+        bearerToken,
+        pathValidator: validateListPath,
+      }),
+      fetchApiData<DBList>({ path: `lists/${listId}`, bearerToken, pathValidator: validateListPath }),
+      fetchApiData<any>({ path: `workspaces/${workspaceId}/members`, bearerToken, pathValidator: () => true }),
+    ]);
 
   if (error?.status === 404) {
     return {
@@ -55,6 +58,12 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 
   const userId = Number(session?.user.user_metadata.sub);
 
+  const owners = Array.from(workspaceData.data, (member: { role: string; member: Record<string, any> }) => {
+    if (member.role === "owner") {
+      return member.member.login;
+    }
+  });
+
   return {
     props: {
       list,
@@ -62,6 +71,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
       isOwner: list && list.user_id === userId,
       isError: error || contributorListError,
       workspaceId,
+      owners,
     },
   };
 };
@@ -72,6 +82,7 @@ const ListsOverview = ({
   isOwner,
   isError,
   workspaceId,
+  owners,
 }: ListsOverviewProps): JSX.Element => {
   const router = useRouter();
   const { listId, range, limit } = router.query;
@@ -133,6 +144,7 @@ const ListsOverview = ({
         numberOfContributors={numberOfContributors}
         isOwner={isOwner}
         showRangeFilter={false}
+        owners={owners}
       >
         <div className="flex flex-col w-full gap-4">
           <ClientOnly>

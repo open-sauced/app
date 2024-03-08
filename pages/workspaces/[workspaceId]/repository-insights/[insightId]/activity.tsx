@@ -13,9 +13,10 @@ interface InsightPageProps {
   insight: DbUserInsight;
   ogImage?: string;
   workspaceId: string;
+  owners: string[];
 }
 
-const HubPage = ({ insight, ogImage, workspaceId }: InsightPageProps) => {
+const HubPage = ({ insight, ogImage, workspaceId, owners }: InsightPageProps) => {
   const repositories = insight.repos.map((repo) => repo.repo_id);
 
   const hasMounted = useHasMounted();
@@ -23,7 +24,7 @@ const HubPage = ({ insight, ogImage, workspaceId }: InsightPageProps) => {
   if (!hasMounted) {
     return (
       <SEO
-        title={`${insight.name} | Open Sauced Insights `}
+        title={`${insight.name} | OpenSauced Insights `}
         description={`${insight.name} Insights on OpenSauced`}
         image={ogImage}
         twitterCard="summary_large_image"
@@ -34,13 +35,13 @@ const HubPage = ({ insight, ogImage, workspaceId }: InsightPageProps) => {
   return (
     <>
       <SEO
-        title={`${insight.name} | Open Sauced Insights`}
+        title={`${insight.name} | OpenSauced Insights`}
         description={`${insight.name} Insights on OpenSauced`}
         image={ogImage}
         twitterCard="summary_large_image"
       />
       <WorkspaceLayout workspaceId={workspaceId}>
-        <HubPageLayout page="activity">
+        <HubPageLayout page="activity" owners={owners}>
           <Activity repositories={repositories} />
         </HubPageLayout>
       </WorkspaceLayout>
@@ -76,11 +77,27 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   // Keeping this here so we are sure the page is not private before we fetch the social card.
   const ogImage = await fetchSocialCard(`insights/${insightId}`);
 
+  const { data: workspaceMembers } = await fetchApiData<any>({
+    path: `workspaces/${workspaceId}/members`,
+    bearerToken,
+    pathValidator: () => true,
+  });
+
+  const owners: string[] = Array.from(
+    workspaceMembers!.data,
+    (member: { role: string; member: Record<string, any> }) => {
+      if (member.role === "owner") {
+        return member.member.login;
+      }
+    }
+  );
+
   return {
     props: {
       insight,
       workspaceId,
       ogImage,
+      owners,
     },
   };
 };

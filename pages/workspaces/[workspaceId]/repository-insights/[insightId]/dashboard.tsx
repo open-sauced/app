@@ -20,9 +20,10 @@ interface InsightPageProps {
   isOwner: boolean;
   ogImage?: string;
   workspaceId: string;
+  owners: string[];
 }
 
-const HubPage = ({ insight, isOwner, ogImage, workspaceId }: InsightPageProps) => {
+const HubPage = ({ insight, isOwner, ogImage, workspaceId, owners }: InsightPageProps) => {
   const repositories = insight.repos.map((repo) => repo.repo_id);
   const [hydrated, setHydrated] = useState(false);
 
@@ -39,7 +40,7 @@ const HubPage = ({ insight, isOwner, ogImage, workspaceId }: InsightPageProps) =
     return (
       <>
         <SEO
-          title={`${insight.name} | Open Sauced Insights `}
+          title={`${insight.name} | OpenSauced Insights `}
           description={`${insight.name} Insights on OpenSauced`}
           image={ogImage}
           twitterCard="summary_large_image"
@@ -51,7 +52,7 @@ const HubPage = ({ insight, isOwner, ogImage, workspaceId }: InsightPageProps) =
   return (
     <>
       <SEO
-        title={`${insight.name} | Open Sauced Insights`}
+        title={`${insight.name} | OpenSauced Insights`}
         description={`${insight.name} Insights on OpenSauced`}
         image={ogImage}
         twitterCard="summary_large_image"
@@ -60,7 +61,7 @@ const HubPage = ({ insight, isOwner, ogImage, workspaceId }: InsightPageProps) =
         workspaceId={workspaceId}
         banner={showBanner ? <WorkspaceBanner openModal={() => setIsInsightUpgradeModalOpen(true)} /> : null}
       >
-        <HubPageLayout page="dashboard">
+        <HubPageLayout page="dashboard" owners={owners}>
           <Dashboard repositories={repositories} />
         </HubPageLayout>
         <InsightUpgradeModal
@@ -106,12 +107,28 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const insightOwner = insight.members.find((m) => m.access === "admin");
   const isOwner = Number.parseInt(session?.user.user_metadata.provider_id) === insightOwner?.user_id;
 
+  const { data: workspaceMembers } = await fetchApiData<any>({
+    path: `workspaces/${workspaceId}/members`,
+    bearerToken,
+    pathValidator: () => true,
+  });
+
+  const owners: string[] = Array.from(
+    workspaceMembers!.data,
+    (member: { role: string; member: Record<string, any> }) => {
+      if (member.role === "owner") {
+        return member.member.login;
+      }
+    }
+  );
+
   return {
     props: {
       insight,
       isOwner,
       workspaceId,
       ogImage,
+      owners,
     },
   };
 };

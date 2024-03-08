@@ -11,7 +11,15 @@ import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
 
-const HubPageLayout = ({ page = "dashboard", children }: { page?: string; children: React.ReactNode }) => {
+const HubPageLayout = ({
+  page = "dashboard",
+  owners,
+  children,
+}: {
+  page?: string;
+  owners?: string[];
+  children: React.ReactNode;
+}) => {
   const router = useRouter();
   const { userId } = useSupabaseAuth();
   const { pageId, insightId } = router.query;
@@ -57,6 +65,7 @@ const HubPageLayout = ({ page = "dashboard", children }: { page?: string; childr
                 insightId={id}
                 canEdit={canEdit}
                 workspaceId={workspaceId}
+                owners={owners}
               />
             </ClientOnly>
           )}

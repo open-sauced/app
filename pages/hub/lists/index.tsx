@@ -169,6 +169,6 @@ const ListsHub: WithPageLayout = () => {
 
 ListsHub.PageLayout = HubLayout;
 ListsHub.SEO = {
-  title: "Lists Hub | Open Sauced Lists",
+  title: "Lists Hub | OpenSauced Lists",
 };
 export default ListsHub;

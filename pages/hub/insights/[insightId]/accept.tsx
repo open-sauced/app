@@ -78,7 +78,7 @@ const AcceptMemberInvitePage = () => {
 
 AcceptMemberInvitePage.PageLayout = HubLayout;
 AcceptMemberInvitePage.SEO = {
-  title: "Accept Insight Member Invitation | Open Sauced Insights",
+  title: "Accept Insight Member Invitation | OpenSauced Insights",
   noindex: true,
 };
 

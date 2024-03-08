@@ -277,7 +277,7 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace }: WorkspaceSettingsP
             onUpdateMember={async (memberId, role) => await updateMember(workspace.id, sessionToken, memberId, role)}
             onDeleteMember={async (memberId) => await deleteMember(workspace.id, sessionToken, memberId)}
             members={workspaceMembers}
-            className="-z-10"
+            className="z-10"
           />
         </ClientOnly>
 
@@ -330,8 +330,8 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace }: WorkspaceSettingsP
               <div className="flex flex-col gap-2">
                 <h3 className="text-sm font-medium">Make your workspace private</h3>
                 <p className="text-sm text-slate-500">
-                  Free workspaces can only be public, but with a pro workspace you can choose whether your workspace to
-                  be puclic or private!
+                  While our free workspaces are exclusively public, upgrading to a Pro workspace gives you the power to
+                  choose between public or private settings for your projects.
                 </p>
               </div>
             </div>

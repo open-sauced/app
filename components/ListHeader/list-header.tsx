@@ -10,6 +10,7 @@ import ContextThumbnail from "components/atoms/ContextThumbnail/context-thumbnai
 import { truncateString } from "lib/utils/truncate-string";
 import { useToast } from "lib/hooks/useToast";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
+import StackedOwners from "components/Workspaces/StackedOwners";
 
 interface ListHeaderProps {
   name: string;
@@ -18,6 +19,7 @@ interface ListHeaderProps {
   isPublic: boolean;
   isOwner: boolean;
   numberOfContributors: number;
+  owners?: string[];
 }
 
 const ListHeader = ({
@@ -27,6 +29,7 @@ const ListHeader = ({
   workspaceId,
   isOwner,
   numberOfContributors,
+  owners,
 }: ListHeaderProps): JSX.Element => {
   const { toast } = useToast();
   const posthog = usePostHog();
@@ -57,7 +60,14 @@ const ListHeader = ({
             </Title>
           </div>
           <div className="flex items-center gap-2 mt-4" id="contributorCount">
-            <ClientOnly>{numberOfContributors} Contributors </ClientOnly>
+            <ClientOnly>
+              {owners && (
+                <div className="flex gap-2 items-center">
+                  <StackedOwners owners={owners} /> |
+                </div>
+              )}
+              <p>{numberOfContributors} Contributors</p>
+            </ClientOnly>
           </div>
         </div>
       </div>

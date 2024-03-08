@@ -5,6 +5,35 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.6.0-beta.1](https://github.com/open-sauced/app/compare/v2.5.2-beta.3...v2.6.0-beta.1) (2024-03-08)
+
+
+### 🍕 Features
+
+* show owners of insight pages ([#2879](https://github.com/open-sauced/app/issues/2879)) ([f014435](https://github.com/open-sauced/app/commit/f014435bfd71d8853f05c39a262ec98fd4163999))
+
+## [2.5.2-beta.3](https://github.com/open-sauced/app/compare/v2.5.2-beta.2...v2.5.2-beta.3) (2024-03-08)
+
+
+### 🐛 Bug Fixes
+
+* increase z-index for workspace members config ([#2897](https://github.com/open-sauced/app/issues/2897)) ([90b50a2](https://github.com/open-sauced/app/commit/90b50a290a29192e84bb8ca649df89fdfa669aad))
+* short circuit workspace paths through the middleware ([#2900](https://github.com/open-sauced/app/issues/2900)) ([e376191](https://github.com/open-sauced/app/commit/e37619144ee2160b52ed8335af1cc8a84833fdc3))
+
+## [2.5.2-beta.2](https://github.com/open-sauced/app/compare/v2.5.2-beta.1...v2.5.2-beta.2) (2024-03-07)
+
+
+### 🐛 Bug Fixes
+
+* Clear input after adding a repository to insight page ([#2497](https://github.com/open-sauced/app/issues/2497)) ([743836c](https://github.com/open-sauced/app/commit/743836c1695b7652eb6e4dee5a664f74e0aabcdd))
+
+## [2.5.2-beta.1](https://github.com/open-sauced/app/compare/v2.5.1...v2.5.2-beta.1) (2024-03-07)
+
+
+### 🐛 Bug Fixes
+
+* typo on modal and create consistency with OpenSauced spacing ([#2892](https://github.com/open-sauced/app/issues/2892)) ([c536347](https://github.com/open-sauced/app/commit/c536347c0cb99ed3625e3804ad9e2796ef4cec0a))
+
 ## [2.5.1](https://github.com/open-sauced/app/compare/v2.5.0...v2.5.1) (2024-03-06)
 
 

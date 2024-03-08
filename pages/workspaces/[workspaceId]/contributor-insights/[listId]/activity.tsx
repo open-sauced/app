@@ -27,6 +27,7 @@ export interface ContributorListPageProps {
   isError: boolean;
   isOwner: boolean;
   featureFlags: Record<FeatureFlag, boolean>;
+  owners: string[];
 }
 
 export type FilterParams = {
@@ -47,13 +48,14 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 
   const range = rawRange ? Number(rawRange) : 30;
   const limit = rawLimit ? Number(rawLimit) : 20;
-  const [{ data, error: contributorListError }, { data: list, error }] = await Promise.all([
+  const [{ data, error: contributorListError }, { data: list, error }, { data: workspaceMembers }] = await Promise.all([
     fetchApiData<PagedData<DBListContributor>>({
       path: `lists/${listId}/contributors?limit=1`,
       bearerToken,
       pathValidator: validateListPath,
     }),
     fetchApiData<DBList>({ path: `lists/${listId}`, bearerToken, pathValidator: validateListPath }),
+    fetchApiData<any>({ path: `workspaces/${workspaceId}/members`, bearerToken, pathValidator: () => true }),
   ]);
 
   if (error?.status === 404 || error?.status === 401) {
@@ -65,6 +67,12 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const userId = Number(session?.user.user_metadata.sub);
   const featureFlags = await getAllFeatureFlags(userId);
 
+  const owners = Array.from(workspaceMembers.data, (member: { role: string; member: Record<string, any> }) => {
+    if (member.role === "owner") {
+      return member.member.login;
+    }
+  });
+
   return {
     props: {
       list,
@@ -73,6 +81,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
       isError: error || contributorListError,
       isOwner: list && list.user_id === userId,
       featureFlags,
+      owners,
     },
   };
 };
@@ -147,6 +156,7 @@ const ListActivityPage = ({
   isError,
   isOwner,
   featureFlags,
+  owners,
 }: ContributorListPageProps) => {
   const router = useRouter();
   const range = router.query.range as string;
@@ -232,6 +242,7 @@ const ListActivityPage = ({
         workspaceId={workspaceId}
         numberOfContributors={numberOfContributors}
         isOwner={isOwner}
+        owners={owners}
       >
         {isError ? (
           <Error errorMessage="Unable to load list activity" />
