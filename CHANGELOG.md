@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.5.2-beta.3](https://github.com/open-sauced/app/compare/v2.5.2-beta.2...v2.5.2-beta.3) (2024-03-08)
+
+
+### 🐛 Bug Fixes
+
+* increase z-index for workspace members config ([#2897](https://github.com/open-sauced/app/issues/2897)) ([90b50a2](https://github.com/open-sauced/app/commit/90b50a290a29192e84bb8ca649df89fdfa669aad))
+* short circuit workspace paths through the middleware ([#2900](https://github.com/open-sauced/app/issues/2900)) ([e376191](https://github.com/open-sauced/app/commit/e37619144ee2160b52ed8335af1cc8a84833fdc3))
+
 ## [2.5.2-beta.2](https://github.com/open-sauced/app/compare/v2.5.2-beta.1...v2.5.2-beta.2) (2024-03-07)
 
 
