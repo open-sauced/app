@@ -52,20 +52,25 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   }
   query.append("limit", "10");
 
-  const [{ data, error: contributorListError }, { data: list, error }, { data: highlights, error: highlightError }] =
-    await Promise.all([
-      fetchApiData<PagedData<DBListContributor>>({
-        path: `lists/${listId}/contributors?limit=${limit}`,
-        bearerToken,
-        pathValidator: validateListPath,
-      }),
-      fetchApiData<DBList>({ path: `lists/${listId}`, bearerToken, pathValidator: validateListPath }),
-      fetchApiData<PagedData<DbHighlight>>({
-        path: `lists/${listId}/contributors/highlights?${query}`,
-        bearerToken,
-        pathValidator: validateListPath,
-      }),
-    ]);
+  const [
+    { data, error: contributorListError },
+    { data: list, error },
+    { data: highlights, error: highlightError },
+    { data: workspaceMembers },
+  ] = await Promise.all([
+    fetchApiData<PagedData<DBListContributor>>({
+      path: `lists/${listId}/contributors?limit=${limit}`,
+      bearerToken,
+      pathValidator: validateListPath,
+    }),
+    fetchApiData<DBList>({ path: `lists/${listId}`, bearerToken, pathValidator: validateListPath }),
+    fetchApiData<PagedData<DbHighlight>>({
+      path: `lists/${listId}/contributors/highlights?${query}`,
+      bearerToken,
+      pathValidator: validateListPath,
+    }),
+    fetchApiData<any>({ path: `workspaces/${workspaceId}/members`, bearerToken, pathValidator: () => true }),
+  ]);
 
   if (error?.status === 404) {
     return {
@@ -74,6 +79,11 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   }
 
   const userId = Number(session?.user.user_metadata.sub);
+  const owners = Array.from(workspaceMembers.data, (member: { role: string; member: Record<string, any> }) => {
+    if (member.role === "owner") {
+      return member.member.login;
+    }
+  });
 
   return {
     props: {
@@ -85,11 +95,12 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
         data: highlights?.data || [],
         meta: highlights?.meta || {},
       },
+      owners,
     },
   };
 };
 
-const Highlights = ({ list, workspaceId, numberOfContributors, isOwner, highlights }: HighlightsPageProps) => {
+const Highlights = ({ list, workspaceId, numberOfContributors, isOwner, highlights, owners }: HighlightsPageProps) => {
   const router = useRouter();
   const repo = router.query.repo as string;
 
@@ -139,6 +150,7 @@ const Highlights = ({ list, workspaceId, numberOfContributors, isOwner, highligh
         workspaceId={workspaceId}
         numberOfContributors={numberOfContributors}
         isOwner={isOwner}
+        owners={owners}
       >
         <div
           ref={topRef}
