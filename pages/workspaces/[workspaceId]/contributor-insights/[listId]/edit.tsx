@@ -49,13 +49,13 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 
   const [{ data: list, error }, { data: initialContributors, error: contributorsError }] = await Promise.all([
     fetchApiData<DBList>({
-      path: `lists/${listId}`,
+      path: `workspaces/${workspaceId}/userLists/${listId}`,
       bearerToken,
       // TODO: remove this in another PR for cleaning up fetchApiData
       pathValidator: () => true,
     }),
     fetchApiData<DbListContributor>({
-      path: `lists/${listId}/contributors?limit=10`,
+      path: `workspaces/${workspaceId}/userLists/${listId}/contributors?limit=10`,
       bearerToken,
       // TODO: remove this in another PR for cleaning up fetchApiData
       pathValidator: () => true,
@@ -135,7 +135,7 @@ export default function EditListPage({ list, workspaceId, initialContributors }:
   const { toast } = useToast();
   async function updateList(payload: UpdateListPayload) {
     const { data, error } = await fetchApiData<DBList>({
-      path: `lists/${list.id}`,
+      path: `workspaces/${workspaceId}/userLists/${list.id}`,
       method: "PATCH",
       body: payload,
       bearerToken: sessionToken!,
@@ -166,7 +166,7 @@ export default function EditListPage({ list, workspaceId, initialContributors }:
     const { userId, userName } = (event.target as HTMLButtonElement).dataset;
     const undoId = setTimeout(async () => {
       const { error } = await fetchApiData<DBList>({
-        path: `lists/${list.id}/contributors/${userId}`,
+        path: `workspaces/${workspaceId}/userLists/${list.id}/contributors/${userId}`,
         method: "DELETE",
         bearerToken: sessionToken!,
       });
@@ -234,7 +234,7 @@ export default function EditListPage({ list, workspaceId, initialContributors }:
     setDeleteLoading(true);
 
     const { error } = await fetchApiData({
-      path: "lists/" + list.id,
+      path: `workspaces/${workspaceId}/userLists/${list.id}`,
       method: "DELETE",
       bearerToken: sessionToken as string,
       pathValidator: () => true,

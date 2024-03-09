@@ -34,7 +34,7 @@ export type FilterParams = {
   listId: string;
   range?: string;
   limit?: string;
-  workspaceId: string | null;
+  workspaceId: string;
 };
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
@@ -44,17 +44,21 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     data: { session },
   } = await supabase.auth.getSession();
   const bearerToken = session ? session.access_token : "";
-  const { listId, range: rawRange, limit: rawLimit, workspaceId = null } = ctx.params as FilterParams;
+  const { listId, range: rawRange, limit: rawLimit, workspaceId } = ctx.params as FilterParams;
 
   const range = rawRange ? Number(rawRange) : 30;
   const limit = rawLimit ? Number(rawLimit) : 20;
   const [{ data, error: contributorListError }, { data: list, error }, { data: workspaceMembers }] = await Promise.all([
     fetchApiData<PagedData<DBListContributor>>({
-      path: `lists/${listId}/contributors?limit=1`,
+      path: `workspaces/${workspaceId}/userLists/${listId}/contributors?limit=1`,
       bearerToken,
       pathValidator: validateListPath,
     }),
-    fetchApiData<DBList>({ path: `lists/${listId}`, bearerToken, pathValidator: validateListPath }),
+    fetchApiData<DBList>({
+      path: `workspaces/${workspaceId}/userLists/${listId}`,
+      bearerToken,
+      pathValidator: validateListPath,
+    }),
     fetchApiData<any>({ path: `workspaces/${workspaceId}/members`, bearerToken, pathValidator: () => true }),
   ]);
 
