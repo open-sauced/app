@@ -8,6 +8,7 @@ import {
 } from "@heroicons/react/24/solid";
 import clsx from "clsx";
 
+import { useRouter } from "next/router";
 import { RepositoriesRows } from "components/organisms/RepositoriesTable/repositories-table";
 import Pill from "components/atoms/Pill/pill";
 import Sparkline from "components/atoms/Sparkline/sparkline";
@@ -21,7 +22,6 @@ import { getAvatarByUsername } from "lib/utils/github";
 import useRepositoryPullRequests from "lib/hooks/api/useRepositoryPullRequests";
 import { getPullRequestsHistogramToDays } from "lib/utils/get-prs-to-days";
 import getPullRequestsContributors from "lib/utils/get-pr-contributors";
-import useStore from "lib/store";
 import { usePullRequestsHistogram } from "lib/hooks/api/usePullRequestsHistogram";
 import TableRepositoryName from "../TableRepositoryName/table-repository-name";
 import PullRequestOverview from "../PullRequestOverview/pull-request-overview";
@@ -94,8 +94,14 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
   const ownerAvatar = getAvatarByUsername(fullName.split("/")[0]);
 
   const { user } = useSupabaseAuth();
-  const range = useStore((state) => state.range);
-  const { data: repositoryPullRequests } = useRepositoryPullRequests(repo.full_name, 100, range);
+  const router = useRouter();
+  const { range = 30 } = router.query;
+  const { data: repositoryPullRequests, meta: repositoryPullReqMeta } = useRepositoryPullRequests({
+    fullName: repo.full_name,
+    limit: 100,
+    range: Number(range),
+    distinctAuthors: true,
+  });
   const { data: repositoryPullRequestsHistogram } = usePullRequestsHistogram({
     repoIds: [repo.id as unknown as number],
     width: 1,
@@ -206,7 +212,7 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
             <div>Contributors</div>
             <div className="flex items-center text-base">
               {contributorData.length! > 0 ? <StackedAvatar contributors={contributorData} /> : "-"}
-              {contributorData.length! >= 5 ? <div>&nbsp;{`+${contributorData.length - 5}`}</div> : ""}
+              {contributorData.length! >= 5 ? <div>&nbsp;{`+${repositoryPullReqMeta.itemCount - 5}`}</div> : ""}
             </div>
           </div>
 
@@ -276,7 +282,7 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
         <div className={clsx(classNames.cols.contributors, "hidden xl:flex")}>
           {contributorData.length! > 0 ? <StackedAvatar contributors={contributorData} /> : "-"}
 
-          {contributorData.length! > 5 ? <div>&nbsp;{`+${contributorData.length - 5}`}</div> : ""}
+          {contributorData.length! > 5 ? <div>&nbsp;{`+${repositoryPullReqMeta.itemCount - 5}`}</div> : ""}
         </div>
 
         {/* Column: Last 30 Days */}

@@ -10,9 +10,6 @@ const useNav = (repositories: number[] = []) => {
       name: "Dashboard",
     },
     {
-      name: "Reports",
-    },
-    {
       name: "Contributors",
       numOf: conMetaData.itemCount,
     },

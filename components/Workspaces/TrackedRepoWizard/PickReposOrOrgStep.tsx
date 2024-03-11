@@ -50,9 +50,9 @@ export const PickReposOrOrgStep = ({ onSearchRepos, onPasteRepos, onImportOrg }:
         >
           <FaGithub size={20} className="text-purple-800 mb-2" />
           <span data-button-title className="font-semibold">
-            Import a Github Organization
+            Import a GitHub Organization
           </span>
-          <span className="text-left">Search for organizations on Github and import any or all repositories.</span>
+          <span className="text-left">Search for organizations on GitHub and import any or all repositories.</span>
         </button>
       </div>
     </>

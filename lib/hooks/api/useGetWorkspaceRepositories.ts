@@ -1,7 +1,7 @@
 import useSWR, { Fetcher } from "swr";
 import { publicApiFetcher } from "lib/utils/public-api-fetcher";
 
-type DbWorkspaceRepository = {
+export type DbWorkspaceRepository = {
   id: string;
   repo_id: number;
   workspace_id: string;
