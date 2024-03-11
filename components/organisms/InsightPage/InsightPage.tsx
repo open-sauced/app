@@ -697,14 +697,16 @@ const InsightPage = ({ edit, insight, pageRepos, workspaceId }: InsightPageProps
         </RepositoriesCart>
       </div>
 
-      <TransferInsightModal
-        isOpen={isTransferModalOpen}
-        onClose={() => setIsTransferModalOpen(false)}
-        handleTransfer={transferWorkspace}
-        insightName={insight!.name}
-        currentWorkspaceName={options.find((opt) => opt.value === workspaceId)?.label || ""}
-        destinationWorkspaceName={options.find((opt) => opt.value === selectedWorkspace)?.label || ""}
-      />
+      {workspaceId && (
+        <TransferInsightModal
+          isOpen={isTransferModalOpen}
+          onClose={() => setIsTransferModalOpen(false)}
+          handleTransfer={transferWorkspace}
+          insightName={insight!.name}
+          currentWorkspaceName={options.find((opt) => opt.value === workspaceId)?.label || ""}
+          destinationWorkspaceName={options.find((opt) => opt.value === selectedWorkspace)?.label || ""}
+        />
+      )}
 
       <DeleteInsightPageModal
         isLoading={deleteLoading}
