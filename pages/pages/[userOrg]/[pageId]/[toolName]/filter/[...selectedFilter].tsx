@@ -20,7 +20,7 @@ const HubPage: WithPageLayout<InsightFilterPageProps> = ({ insight, pageName }: 
   const { data: insightRepos } = useInsightRepositories(insight.id);
   const repositories = insightRepos.map((repo) => repo.repo_id);
 
-  const title = `${insight.name} | Open Sauced Insights Hub`;
+  const title = `${insight.name} | OpenSauced Insights Hub`;
 
   useEffect(() => {
     HubPage.updateSEO!({

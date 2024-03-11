@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 
 import { useDebounce } from "rooks";
-import Link from "next/link";
 import Button from "components/atoms/Button/button";
 import TextInput from "components/atoms/TextInput/text-input";
 import Text from "components/atoms/Typography/text";
@@ -15,7 +14,6 @@ import useRepositories from "lib/hooks/api/useRepositories";
 
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { generateRepoParts, getAvatarByUsername } from "lib/utils/github";
-import useStore from "lib/store";
 import Error from "components/atoms/Error/Error";
 import Search from "components/atoms/Search/search";
 import { useToast } from "lib/hooks/useToast";
@@ -25,7 +23,6 @@ import SuggestedRepositoriesList from "../SuggestedRepoList/suggested-repo-list"
 
 // lazy import DeleteInsightPageModal and TeamMembersConfig component to optimize bundle size they don't load on initial render
 const DeleteInsightPageModal = dynamic(() => import("./DeleteInsightPageModal"));
-const TeamMembersConfig = dynamic(() => import("components/molecules/TeamMembersConfig/team-members-config"));
 
 const enum RepoLookupError {
   Initial = 0,
@@ -104,9 +101,7 @@ const InsightPage = ({ edit, insight, pageRepos, workspaceId }: InsightPageProps
   const [repoHistory, setRepoHistory] = useState<DbRepo[]>([]);
   const [addRepoError, setAddRepoError] = useState<RepoLookupError>(RepoLookupError.Initial);
   const [syncOrganizationError, setSyncOrganizationError] = useState<OrgLookupError>(OrgLookupError.Initial);
-  const insightRepoLimit = useStore((state) => state.insightRepoLimit);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isInsightUpgradeModalOpen, setIsInsightUpgradeModalOpen] = useState(false);
   const [repoSearchTerm, setRepoSearchTerm] = useState<string>("");
   const [suggestions, setSuggestions] = useState<string[]>([]);
 
@@ -213,19 +208,22 @@ const InsightPage = ({ edit, insight, pageRepos, workspaceId }: InsightPageProps
   const handleUpdateInsightPage = async () => {
     setSubmitted(true);
     setCreateLoading(true);
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/insights/${insight?.id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-type": "application/json",
-        Authorization: `Bearer ${sessionToken}`,
-      },
-      body: JSON.stringify({
-        name,
-        repos: repos.map((repo) => ({ id: repo.id, fullName: repo.full_name })),
-        // eslint-disable-next-line
-        is_public: true,
-      }),
-    });
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/workspaces/${workspaceId}/insights/${insight?.id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${sessionToken}`,
+        },
+        body: JSON.stringify({
+          name,
+          repos: repos.map((repo) => ({ id: repo.id, fullName: repo.full_name })),
+          // eslint-disable-next-line
+          is_public: true,
+        }),
+      }
+    );
     setCreateLoading(false);
     if (response && response.ok) {
       toast({ description: "Page updated successfully", variant: "success" });
@@ -519,7 +517,7 @@ const InsightPage = ({ edit, insight, pageRepos, workspaceId }: InsightPageProps
           </div>
           <div>
             <Button
-              disabled={repos.length >= insightRepoLimit! || organization.trim().length < 3}
+              disabled={organization.trim().length < 3}
               onClick={handleAddOrganizationRepositories}
               variant="outline"
               className="shrink-0 w-max"
@@ -540,6 +538,7 @@ const InsightPage = ({ edit, insight, pageRepos, workspaceId }: InsightPageProps
             placeholder="Repository URL or Full Name (ex: open-sauced/open-sauced)"
             className="!w-full text-md text-gra"
             name={"query"}
+            value={repoSearchTerm}
             suggestions={suggestions}
             onChange={(value) => setRepoSearchTerm(value)}
             onSearch={(search) => setRepoSearchTerm(search as string)}
@@ -547,10 +546,7 @@ const InsightPage = ({ edit, insight, pageRepos, workspaceId }: InsightPageProps
 
           <div className="w-full flex gap-3 md:items-center flex-col md:flex-row">
             <Button
-              disabled={
-                repos.length >= insightRepoLimit! ||
-                (addRepoLoading.repoName === repoSearchTerm && addRepoLoading.isLoading)
-              }
+              disabled={addRepoLoading.repoName === repoSearchTerm && addRepoLoading.isLoading}
               loading={addRepoLoading.repoName === repoSearchTerm && addRepoLoading.isLoading}
               onClick={handleAddRepository}
               variant="outline"
@@ -558,19 +554,6 @@ const InsightPage = ({ edit, insight, pageRepos, workspaceId }: InsightPageProps
             >
               Add Repository
             </Button>
-
-            <span role="alert">
-              {repos.length >= insightRepoLimit! && insightRepoLimit! < 50 ? (
-                <p className="text-sm">
-                  Your insight pages are limited to
-                  <strong className="text-sauced-orange"> {insightRepoLimit}</strong> repos,{" "}
-                  <Link href={`/user/settings#upgrade`} className="underline text-sauced-orange">
-                    upgrade
-                  </Link>{" "}
-                  to increase the limit
-                </p>
-              ) : null}
-            </span>
           </div>
 
           <div className="py-4">

@@ -10,7 +10,6 @@ import TextInput from "components/atoms/TextInput/text-input";
 import Title from "components/atoms/Typography/title";
 import Text from "components/atoms/Typography/text";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "components/atoms/Select/select";
-import StripeCheckoutButton from "components/organisms/StripeCheckoutButton/stripe-checkout-button";
 
 import { updateUser, UpdateUserPayload } from "lib/hooks/update-user";
 
@@ -90,7 +89,7 @@ const UserSettingsPage = ({ user }: UserSettingsPageProps) => {
     revalidateOnFocus: false,
   });
 
-  const { hasReports, session } = useSession(true);
+  const { session } = useSession(true);
   const { providerToken } = useSupabaseAuth();
 
   const { toast } = useToast();
@@ -447,16 +446,8 @@ const UserSettingsPage = ({ user }: UserSettingsPageProps) => {
           {userInfo && (
             <>
               <div>
-                {!hasReports && !coupon ? (
+                {!coupon ? (
                   <div className="flex flex-col order-first gap-6 md:order-last">
-                    <div className="flex flex-col gap-3">
-                      <label className="text-2xl font-normal">Upgrade Access</label>
-                      <div className="w-full sm:max-w-80">
-                        <Text>Upgrade to a subscription to gain access to generate custom reports!</Text>
-                      </div>
-                    </div>
-                    <StripeCheckoutButton variant="primary" />
-
                     <div className="flex flex-col gap-3">
                       <label className="text-2xl font-normal">Developer Pack</label>
                       <div className="w-full sm:max-w-80">
@@ -473,30 +464,7 @@ const UserSettingsPage = ({ user }: UserSettingsPageProps) => {
 
                     {!coupon && <CouponForm refreshUser={mutate} />}
                   </div>
-                ) : (
-                  <div>
-                    <div className="flex flex-col order-first gap-6 md:order-last">
-                      <div className="flex flex-col gap-3">
-                        <label className="text-2xl font-normal">Manage Subscriptions</label>
-                        <div className="w-full md:w-96">
-                          <Text>
-                            You are currently subscribed to the Pro plan and currently have access to all premium
-                            features.
-                          </Text>
-                        </div>
-                      </div>
-                      <Button
-                        rel="noopener noreferrer"
-                        target="_blank"
-                        href={process.env.NEXT_PUBLIC_STRIPE_SUB_CANCEL_URL}
-                        className="w-max"
-                        variant="primary"
-                      >
-                        Cancel Subscription
-                      </Button>
-                    </div>
-                  </div>
-                )}
+                ) : null}
               </div>
               <form
                 name="delete-account"

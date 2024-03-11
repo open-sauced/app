@@ -15,7 +15,6 @@ import { useContributorsList } from "lib/hooks/api/useContributorList";
 import ContributorsList from "components/organisms/ContributorsList/contributors-list";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import { useIsWorkspaceUpgraded } from "lib/hooks/api/useIsWorkspaceUpgraded";
-import useSession from "lib/hooks/useSession";
 import WorkspaceBanner from "components/Workspaces/WorkspaceBanner";
 
 const InsightUpgradeModal = dynamic(() => import("components/Workspaces/InsightUpgradeModal"));
@@ -26,6 +25,7 @@ interface ListsOverviewProps {
   isOwner: boolean;
   isError: boolean;
   workspaceId: string;
+  owners: string[];
 }
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
@@ -38,14 +38,24 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 
   const { listId, workspaceId = null } = ctx.params as { listId: string; workspaceId?: string };
   const limit = 10; // Can pull this from the querystring in the future
-  const [{ data, error: contributorListError }, { data: list, error }] = await Promise.all([
-    fetchApiData<PagedData<DBListContributor>>({
-      path: `lists/${listId}/contributors?limit=${limit}`,
-      bearerToken,
-      pathValidator: validateListPath,
-    }),
-    fetchApiData<DBList>({ path: `lists/${listId}`, bearerToken, pathValidator: validateListPath }),
-  ]);
+  const [{ data, error: contributorListError }, { data: list, error }, { data: workspaceData, error: workspaceError }] =
+    await Promise.all([
+      fetchApiData<PagedData<DBListContributor>>({
+        path: `workspaces/${workspaceId}/userLists/${listId}/contributors?limit=${limit}`,
+        bearerToken,
+        pathValidator: validateListPath,
+      }),
+      fetchApiData<DBList>({
+        path: `workspaces/${workspaceId}/userLists/${listId}`,
+        bearerToken,
+        pathValidator: validateListPath,
+      }),
+      fetchApiData<{ data?: WorkspaceMember[] }>({
+        path: `workspaces/${workspaceId}/members`,
+        bearerToken,
+        pathValidator: () => true,
+      }),
+    ]);
 
   if (error?.status === 404) {
     return {
@@ -55,13 +65,25 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 
   const userId = Number(session?.user.user_metadata.sub);
 
+  const owners: string[] = Array.from(
+    workspaceData?.data || [],
+    (member: { role: string; member: Record<string, any> }) => {
+      if (member.role === "owner") {
+        return member.member.login;
+      }
+    }
+  ).filter(Boolean);
+
+  const isOwner = (workspaceData?.data || []).filter((member) => member.role === "owner" && member.user_id === userId);
+
   return {
     props: {
       list,
       numberOfContributors: data?.meta.itemCount || 0,
-      isOwner: list && list.user_id === userId,
+      isOwner,
       isError: error || contributorListError,
       workspaceId,
+      owners,
     },
   };
 };
@@ -72,6 +94,7 @@ const ListsOverview = ({
   isOwner,
   isError,
   workspaceId,
+  owners,
 }: ListsOverviewProps): JSX.Element => {
   const router = useRouter();
   const { listId, range, limit } = router.query;
@@ -117,9 +140,8 @@ const ListsOverview = ({
   const allContributorCommits = allContributorStats?.reduce((acc, curr) => acc + curr.commits, 0) || 0;
   const prevAllContributorCommits = prevAllContributorStats?.reduce((acc, curr) => acc + curr.commits, 0) || 0;
 
-  const { hasReports } = useSession(true); // to check if the user is a PRO account
   const { data: isWorkspaceUpgraded } = useIsWorkspaceUpgraded({ workspaceId });
-  const showBanner = isOwner && !hasReports && !isWorkspaceUpgraded && numberOfContributors > 10;
+  const showBanner = isOwner && !isWorkspaceUpgraded && numberOfContributors > 10;
   const [isInsightUpgradeModalOpen, setIsInsightUpgradeModalOpen] = useState(false);
 
   return (
@@ -133,6 +155,7 @@ const ListsOverview = ({
         numberOfContributors={numberOfContributors}
         isOwner={isOwner}
         showRangeFilter={false}
+        owners={owners}
       >
         <div className="flex flex-col w-full gap-4">
           <ClientOnly>

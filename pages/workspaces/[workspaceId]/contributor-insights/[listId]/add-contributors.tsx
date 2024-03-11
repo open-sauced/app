@@ -51,21 +51,37 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   }
 
   const { data: list, error: listError } = await fetchApiData<DBList>({
-    path: `lists/${listId}`,
+    path: `workspaces/${workspaceId}/userLists/${listId}`,
     bearerToken,
     // TODO: remove this in another PR for cleaning up fetchApiData
     pathValidator: () => true,
   });
 
   // Only the list owner should be allowed to add contributors
-  if (listError?.status === 404 || (list && list.user_id !== userId)) {
+  if (listError?.status === 404) {
+    return {
+      notFound: true,
+    };
+  }
+
+  const { data: workspaceMembers } = await fetchApiData<{ data?: WorkspaceMember[] }>({
+    path: `workspaces/${workspaceId}/members`,
+    bearerToken,
+    pathValidator: () => true,
+  });
+
+  const canEdit = !!workspaceMembers?.data?.find(
+    (member) => ["owner", "editor"].includes(member.role) && member.user_id === userId
+  );
+
+  if (!canEdit) {
     return {
       notFound: true,
     };
   }
 
   const { data: initialData, error: initialError } = await fetchApiData<any>({
-    path: `lists/${listId}/contributors`,
+    path: `workspaces/${workspaceId}/userLists/${listId}/contributors`,
     bearerToken,
     pathValidator: () => true,
   });
@@ -218,7 +234,7 @@ const AddContributorsToList = ({ list, initialCount, workspaceId, timezoneOption
 
   const addContributorsToList = async () => {
     const { error } = await fetchApiData({
-      path: `lists/${list.id}/contributors`,
+      path: `workspaces/${workspaceId}/userLists/${list.id}/contributors`,
       body: {
         contributors: selectedContributors.map((c) => {
           return { id: c.user_id };

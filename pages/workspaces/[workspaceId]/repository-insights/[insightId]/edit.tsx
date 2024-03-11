@@ -1,38 +1,14 @@
-import { useRouter } from "next/router";
+import { GetServerSidePropsContext } from "next";
 
+import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import InsightPage from "components/organisms/InsightPage/InsightPage";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 
 import useRepositories from "lib/hooks/api/useRepositories";
-import useInsightMembers from "lib/hooks/useInsightMembers";
-import useWorkspaceRepositoryInsight from "lib/hooks/api/useWorkspaceRepositoryInsight";
+import { fetchApiData } from "helpers/fetchApiData";
 
-const EditInsightPage = () => {
-  const router = useRouter();
-  const { insightId, workspaceId } = router.query as { insightId: string; workspaceId: string };
-  const id = insightId as string;
-  const {
-    data: insight,
-    isLoading: insightLoading,
-    isError: insightError,
-  } = useWorkspaceRepositoryInsight({ insightId: Number(id), workspaceId });
-
-  // TODO: editing still relies on insight member page membership.
-  // in the future, this will be hoisted up to the workspace level
-  const { isLoading: insightTeamMembersLoading, isError: insightTeamMembersError } = useInsightMembers(Number(id));
-  const { data: repos } = useRepositories(insight?.repos.map((ir) => ir.repo_id), 30, 50);
-
-  if (insightLoading || insightTeamMembersLoading) {
-    return <>Loading</>;
-  }
-
-  if (insightError) {
-    return <>Error</>;
-  }
-
-  if (insightTeamMembersError) {
-    return <>Unauthorized</>;
-  }
+const EditInsightPage = ({ insight, workspaceId }: { insight: DbUserInsight; workspaceId: string }) => {
+  const { data: repos } = useRepositories(insight?.repos.map((ir) => ir.repo_id), 30, 100);
 
   return (
     <WorkspaceLayout workspaceId={workspaceId}>
@@ -41,8 +17,56 @@ const EditInsightPage = () => {
   );
 };
 
+export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
+  const supabase = createPagesServerClient(ctx);
+
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+  const bearerToken = session ? session.access_token : "";
+  const workspaceId = ctx.params!["workspaceId"] as string;
+  const insightId = ctx.params!["insightId"] as string;
+
+  const { data: insight } = await fetchApiData<DbUserInsight>({
+    path: `workspaces/${workspaceId}/insights/${insightId}`,
+    bearerToken,
+  });
+
+  // workspace team member access is handled by API: 404 if the workspace insight
+  // is not accessible by user
+  if (!insight) {
+    return {
+      notFound: true,
+    };
+  }
+
+  const { data: workspaceMembers } = await fetchApiData<{ data?: WorkspaceMember[] }>({
+    path: `workspaces/${workspaceId}/members`,
+    bearerToken,
+    pathValidator: () => true,
+  });
+
+  const userId = Number(session?.user.user_metadata.sub);
+  const canEdit = !!workspaceMembers?.data?.find(
+    (member) => ["owner", "editor"].includes(member.role) && member.user_id === userId
+  );
+
+  if (!canEdit) {
+    return {
+      notFound: true,
+    };
+  }
+
+  return {
+    props: {
+      insight,
+      workspaceId,
+    },
+  };
+};
+
 EditInsightPage.SEO = {
-  title: "Edit Insight Page | Open Sauced Insights",
+  title: "Edit Insight Page | OpenSauced Insights",
   noindex: true,
 };
 

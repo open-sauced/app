@@ -80,12 +80,15 @@ const ListsHub = ({ workspace }: { workspace: Workspace }) => {
     setDeleteLoading(true);
 
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/lists/${listIdToDelete}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${sessionToken}`,
-        },
-      });
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/workspaces/${workspace.id}/userLists/${listIdToDelete}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${sessionToken}`,
+          },
+        }
+      );
 
       if (res.ok) {
         setIsDeleteOpen(false);
@@ -177,6 +180,6 @@ const ListsHub = ({ workspace }: { workspace: Workspace }) => {
 };
 
 ListsHub.SEO = {
-  title: "Open Sauced Contributor Insights",
+  title: "OpenSauced Contributor Insights",
 };
 export default ListsHub;

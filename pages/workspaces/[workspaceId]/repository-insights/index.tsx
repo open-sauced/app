@@ -104,7 +104,7 @@ const RepositoryInsights = () => {
 };
 
 RepositoryInsights.SEO = {
-  title: "Repository Insights | Open Sauced Insights",
+  title: "Repository Insights | OpenSauced Insights",
 };
 
 export default RepositoryInsights;

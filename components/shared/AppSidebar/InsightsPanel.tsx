@@ -49,7 +49,7 @@ export const InsightsPanel = ({ title, insights, type, isLoading, workspaceId }:
         icon={getIcon(type)}
       />
 
-      <div className="overflow-hidden">
+      <div className="overflow-hidden text-ellipsis">
         {isLoading ? null : (
           <ul className="list-none w-full px-4 mt-1 [&_li]:border-l-2 text-slate-700 tracking-tight">
             {insights.length > 0 ? (

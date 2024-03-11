@@ -10,20 +10,30 @@ import useInsight from "lib/hooks/useInsight";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
+import { useWorkspaceMembers } from "lib/hooks/api/useWorkspaceMembers";
 
-const HubPageLayout = ({ page = "dashboard", children }: { page?: string; children: React.ReactNode }) => {
+const HubPageLayout = ({
+  page = "dashboard",
+  owners,
+  children,
+}: {
+  page?: string;
+  owners?: string[];
+  children: React.ReactNode;
+}) => {
   const router = useRouter();
   const { userId } = useSupabaseAuth();
   const { pageId, insightId } = router.query;
   const workspaceId = router.query.workspaceId as string;
   const id = (pageId || insightId) as string;
   const { data: insight, isLoading, isError } = useInsight(id);
+  const { data: workspaceMembers } = useWorkspaceMembers({ workspaceId });
   const repositories = insight?.repos.map((repo) => repo.repo_id);
 
   const { toolList, selectedTool = page, selectedFilter, userOrg } = useNav(repositories);
 
-  const membership = insight?.members?.find((member) => member.user_id === Number(userId));
-  const canEdit = membership && ["edit", "admin"].includes(membership.access);
+  const membership = workspaceMembers?.find((member) => member.user_id === Number(userId));
+  const canEdit = membership && ["owner", "editor"].includes(membership.role);
 
   return (
     <>
@@ -57,6 +67,7 @@ const HubPageLayout = ({ page = "dashboard", children }: { page?: string; childr
                 insightId={id}
                 canEdit={canEdit}
                 workspaceId={workspaceId}
+                owners={owners}
               />
             </ClientOnly>
           )}

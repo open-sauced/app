@@ -17,7 +17,7 @@ const NewInsightPage = () => {
 };
 
 NewInsightPage.SEO = {
-  title: "Create Repository Insight | Open Sauced Insights",
+  title: "Create Repository Insight | OpenSauced Insights",
   description:
     "A repository insight page is a dashboard containing selected repositories that you and your team can get insights from.",
 };
