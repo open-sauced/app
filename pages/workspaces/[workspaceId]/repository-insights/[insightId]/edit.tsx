@@ -71,11 +71,15 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     pathValidator: () => true,
   });
 
+  const workspaces = workspaceData?.data.filter((workspace) =>
+    workspace.members.find((member) => ["owner", "editor"].includes(member.role) && member.user_id === userId)
+  );
+
   return {
     props: {
       insight,
       workspaceId,
-      workspaces: workspaceData!.data,
+      workspaces,
     },
   };
 };

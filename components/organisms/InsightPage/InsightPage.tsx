@@ -20,6 +20,7 @@ import { useToast } from "lib/hooks/useToast";
 import { useFetchInsightRecommendedRepositories } from "lib/hooks/useFetchOrgRecommendations";
 import { RepoCardProfileProps } from "components/molecules/RepoCardProfile/repo-card-profile";
 import SingleSelect from "components/atoms/Select/single-select";
+import { fetchApiData } from "helpers/fetchApiData";
 import SuggestedRepositoriesList from "../SuggestedRepoList/suggested-repo-list";
 
 // lazy import DeleteInsightPageModal and TeamMembersConfig component to optimize bundle size they don't load on initial render
@@ -485,7 +486,22 @@ const InsightPage = ({ edit, insight, pageRepos, workspaceId, workspaces }: Insi
 
   const transferWorkspace = async () => {
     const selectedOption = options.find((opt) => opt.value === selectedWorkspace);
+    const response = await fetchApiData({
+      method: "POST",
+      path: `workspaces/${workspaceId!}/insights/${selectedWorkspace}`,
+      body: {
+        id: insight?.id,
+      },
+      bearerToken: sessionToken!,
+      pathValidator: () => true,
+    });
+    if (response.error) {
+      toast({ description: "An error has occurred. Try again.", variant: "success" });
+      return;
+    }
+
     toast({ description: `Moved insight to ${selectedOption?.label}`, variant: "success" });
+    router.push(`/workspaces/${selectedWorkspace}/repository-insights/${insight?.id}/dashboard`);
   };
 
   useEffect(() => {
