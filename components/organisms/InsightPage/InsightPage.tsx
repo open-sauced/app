@@ -44,7 +44,7 @@ interface InsightPageProps {
   insight?: DbUserInsight;
   pageRepos?: DbRepo[];
   workspaceId?: string;
-  workspaces: Workspace[];
+  workspaces?: Workspace[];
 }
 const staticSuggestedRepos: RepoCardProfileProps[] = [
   {
