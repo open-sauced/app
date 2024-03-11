@@ -182,7 +182,7 @@ export const AppSideBar = ({ workspaceId, hideSidebar, sidebarCollapsed }: AppSi
                 </DropdownMenu>
               </li>
             )}
-            <li className="grid gap-2">
+            <li className="grid gap-2 overflow-hidden">
               <InsightsPanel
                 title="Repository Insights"
                 insights={repoInsights}

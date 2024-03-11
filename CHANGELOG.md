@@ -5,6 +5,27 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.6.0-beta.9](https://github.com/open-sauced/app/compare/v2.6.0-beta.8...v2.6.0-beta.9) (2024-03-11)
+
+
+### 🐛 Bug Fixes
+
+* metrics cards now span full width (and look nicer) ([#2914](https://github.com/open-sauced/app/issues/2914)) ([4ac448d](https://github.com/open-sauced/app/commit/4ac448d30088e2522b86b5c22d2149860ef6dcde))
+
+## [2.6.0-beta.8](https://github.com/open-sauced/app/compare/v2.6.0-beta.7...v2.6.0-beta.8) (2024-03-11)
+
+
+### 🐛 Bug Fixes
+
+* prevent overflow when insights have long titles ([#2910](https://github.com/open-sauced/app/issues/2910)) ([7003f28](https://github.com/open-sauced/app/commit/7003f289f71981553c14d548667b1fdb044ecbaf))
+
+## [2.6.0-beta.7](https://github.com/open-sauced/app/compare/v2.6.0-beta.6...v2.6.0-beta.7) (2024-03-11)
+
+
+### 🐛 Bug Fixes
+
+* use workspace members for checking contributor insight edit access ([#2907](https://github.com/open-sauced/app/issues/2907)) ([d8c982b](https://github.com/open-sauced/app/commit/d8c982b097658bab2d59b418ab99e2b7ef654bc3))
+
 ## [2.6.0-beta.6](https://github.com/open-sauced/app/compare/v2.6.0-beta.5...v2.6.0-beta.6) (2024-03-11)
 
 
