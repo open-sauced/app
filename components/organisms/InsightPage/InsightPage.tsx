@@ -23,7 +23,6 @@ import SuggestedRepositoriesList from "../SuggestedRepoList/suggested-repo-list"
 
 // lazy import DeleteInsightPageModal and TeamMembersConfig component to optimize bundle size they don't load on initial render
 const DeleteInsightPageModal = dynamic(() => import("./DeleteInsightPageModal"));
-const TeamMembersConfig = dynamic(() => import("components/molecules/TeamMembersConfig/team-members-config"));
 
 const enum RepoLookupError {
   Initial = 0,
