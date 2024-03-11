@@ -26,6 +26,7 @@ import SuggestedRepositoriesList from "../SuggestedRepoList/suggested-repo-list"
 
 // lazy import DeleteInsightPageModal and TeamMembersConfig component to optimize bundle size they don't load on initial render
 const DeleteInsightPageModal = dynamic(() => import("./DeleteInsightPageModal"));
+const TransferInsightModal = dynamic(() => import("components/Workspaces/TransferInsightModal"));
 
 const enum RepoLookupError {
   Initial = 0,
@@ -111,6 +112,7 @@ const InsightPage = ({ edit, insight, pageRepos, workspaceId }: InsightPageProps
   const { data: workspacesData, isLoading: workspacesLoading } = useGetUserWorkspaces();
   const [options, setOptions] = useState<{ label: string; value: string }[]>([]);
   const [selectedWorkspace, setSelectedWorkspace] = useState<string>(workspaceId!);
+  const [isTransferModalOpen, setIsTransferModalOpen] = useState(false);
 
   useEffect(() => {
     if (workspaceId && !workspacesLoading) {
@@ -634,7 +636,7 @@ const InsightPage = ({ edit, insight, pageRepos, workspaceId }: InsightPageProps
                   }}
                 />
                 <Button
-                  onClick={transferWorkspace}
+                  onClick={() => setIsTransferModalOpen(true)}
                   disabled={selectedWorkspace === workspaceId}
                   variant="primary"
                   className="w-fit"
@@ -694,6 +696,15 @@ const InsightPage = ({ edit, insight, pageRepos, workspaceId }: InsightPageProps
           })}
         </RepositoriesCart>
       </div>
+
+      <TransferInsightModal
+        isOpen={isTransferModalOpen}
+        onClose={() => setIsTransferModalOpen(false)}
+        handleTransfer={transferWorkspace}
+        insightName={insight!.name}
+        currentWorkspaceName={options.find((opt) => opt.value === workspaceId)?.label || ""}
+        destinationWorkspaceName={options.find((opt) => opt.value === selectedWorkspace)?.label || ""}
+      />
 
       <DeleteInsightPageModal
         isLoading={deleteLoading}
