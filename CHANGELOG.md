@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.6.0-beta.9](https://github.com/open-sauced/app/compare/v2.6.0-beta.8...v2.6.0-beta.9) (2024-03-11)
+
+
+### 🐛 Bug Fixes
+
+* metrics cards now span full width (and look nicer) ([#2914](https://github.com/open-sauced/app/issues/2914)) ([4ac448d](https://github.com/open-sauced/app/commit/4ac448d30088e2522b86b5c22d2149860ef6dcde))
+
 ## [2.6.0-beta.8](https://github.com/open-sauced/app/compare/v2.6.0-beta.7...v2.6.0-beta.8) (2024-03-11)
 
 
