@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.6.0-beta.8](https://github.com/open-sauced/app/compare/v2.6.0-beta.7...v2.6.0-beta.8) (2024-03-11)
+
+
+### 🐛 Bug Fixes
+
+* prevent overflow when insights have long titles ([#2910](https://github.com/open-sauced/app/issues/2910)) ([7003f28](https://github.com/open-sauced/app/commit/7003f289f71981553c14d548667b1fdb044ecbaf))
+
 ## [2.6.0-beta.7](https://github.com/open-sauced/app/compare/v2.6.0-beta.6...v2.6.0-beta.7) (2024-03-11)
 
 
