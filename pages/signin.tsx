@@ -1,16 +1,19 @@
-import { WithPageLayout } from "../interfaces/with-page-layout";
+import { useEffect } from "react";
+import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 
-const SignIn: WithPageLayout = () => {
-  return <main className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center">...Loading</main>;
+const SignInPage = () => {
+  const { signIn } = useSupabaseAuth();
+
+  useEffect(() => {
+    signIn({
+      provider: "github",
+      options: {
+        redirectTo: `/`,
+      },
+    });
+  }, []);
+
+  return <></>;
 };
 
-export const getServerSideProps = async () => {
-  return {
-    redirect: {
-      destination: "/",
-      permanent: false,
-    },
-  };
-};
-
-export default SignIn;
+export default SignInPage;

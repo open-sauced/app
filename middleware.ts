@@ -72,6 +72,10 @@ export async function middleware(req: NextRequest) {
     return res;
   }
 
+  if (!session?.user && req.nextUrl.pathname === "/hub/insights/new") {
+    return NextResponse.redirect(new URL(`/signin`, req.url));
+  }
+
   if (session?.user && req.nextUrl.pathname === "/account-deleted") {
     // Delete the account from Supabase and log the user out.
     await supabase.auth.admin.deleteUser(session.user.id);
