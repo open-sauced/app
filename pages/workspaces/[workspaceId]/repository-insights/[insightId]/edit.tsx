@@ -7,12 +7,20 @@ import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import useRepositories from "lib/hooks/api/useRepositories";
 import { fetchApiData } from "helpers/fetchApiData";
 
-const EditInsightPage = ({ insight, workspaceId }: { insight: DbUserInsight; workspaceId: string }) => {
+const EditInsightPage = ({
+  insight,
+  workspaceId,
+  workspaces,
+}: {
+  insight: DbUserInsight;
+  workspaceId: string;
+  workspaces: Workspace[];
+}) => {
   const { data: repos } = useRepositories(insight?.repos.map((ir) => ir.repo_id), 30, 100);
 
   return (
     <WorkspaceLayout workspaceId={workspaceId}>
-      <InsightPage edit={true} insight={insight} pageRepos={repos} workspaceId={workspaceId} />
+      <InsightPage edit={true} insight={insight} pageRepos={repos} workspaceId={workspaceId} workspaces={workspaces} />
     </WorkspaceLayout>
   );
 };
@@ -57,10 +65,17 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     };
   }
 
+  const { data: workspaceData } = await fetchApiData<{ data: Workspace[] }>({
+    path: "workspaces",
+    bearerToken,
+    pathValidator: () => true,
+  });
+
   return {
     props: {
       insight,
       workspaceId,
+      workspaces: workspaceData!.data,
     },
   };
 };

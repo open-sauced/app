@@ -19,6 +19,7 @@ import Search from "components/atoms/Search/search";
 import { useToast } from "lib/hooks/useToast";
 import { useFetchInsightRecommendedRepositories } from "lib/hooks/useFetchOrgRecommendations";
 import { RepoCardProfileProps } from "components/molecules/RepoCardProfile/repo-card-profile";
+import SingleSelect from "components/atoms/Select/single-select";
 import SuggestedRepositoriesList from "../SuggestedRepoList/suggested-repo-list";
 
 // lazy import DeleteInsightPageModal and TeamMembersConfig component to optimize bundle size they don't load on initial render
@@ -42,6 +43,7 @@ interface InsightPageProps {
   insight?: DbUserInsight;
   pageRepos?: DbRepo[];
   workspaceId?: string;
+  workspaces: Workspace[];
 }
 const staticSuggestedRepos: RepoCardProfileProps[] = [
   {
@@ -67,7 +69,7 @@ const staticSuggestedRepos: RepoCardProfileProps[] = [
   },
 ];
 
-const InsightPage = ({ edit, insight, pageRepos, workspaceId }: InsightPageProps) => {
+const InsightPage = ({ edit, insight, pageRepos, workspaceId, workspaces }: InsightPageProps) => {
   const { sessionToken, providerToken, user } = useSupabaseAuth();
 
   const { toast } = useToast();
@@ -104,6 +106,11 @@ const InsightPage = ({ edit, insight, pageRepos, workspaceId }: InsightPageProps
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [repoSearchTerm, setRepoSearchTerm] = useState<string>("");
   const [suggestions, setSuggestions] = useState<string[]>([]);
+
+  const options = Array.from(workspaces, (workspace: Workspace) => {
+    return { label: workspace.name, value: workspace.id };
+  });
+  const [selectedWorkspace, setSelectedWorkspace] = useState<string>(workspaceId!);
 
   const recommendedReposWithoutSelected =
     recommendedRepos && recommendedRepos.length > 0
@@ -476,6 +483,11 @@ const InsightPage = ({ edit, insight, pageRepos, workspaceId }: InsightPageProps
     }
   };
 
+  const transferWorkspace = async () => {
+    const selectedOption = options.find((opt) => opt.value === selectedWorkspace);
+    toast({ description: `Moved insight to ${selectedOption?.label}`, variant: "success" });
+  };
+
   useEffect(() => {
     setSuggestions([]);
     if (!repoSearchTerm) return;
@@ -571,10 +583,33 @@ const InsightPage = ({ edit, insight, pageRepos, workspaceId }: InsightPageProps
         <div>{getRepoLookupError(addRepoError)}</div>
 
         {edit && (
-          <div className="flex flex-col gap-4 py-6 border-t border-b border-light-slate-8">
-            <Title className="!text-1xl !leading-none py-6" level={4}>
+          <div className="flex flex-col gap-8 py-8 border-t border-b border-light-slate-8">
+            <Title className="!text-1xl !leading-none" level={4}>
               Danger Zone
             </Title>
+
+            <section className="flex flex-col gap-4">
+              <div className="flex flex-col gap-2">
+                <Title level={4}>Transfer to other Workspace</Title>
+                <Text>Move this insight to another workspace where you are an owner or editor.</Text>
+              </div>
+              <SingleSelect
+                isSearchable
+                placeholder={options.find((opt) => opt.value === workspaceId)?.label}
+                options={options}
+                onValueChange={(value: string) => {
+                  setSelectedWorkspace(value);
+                }}
+              />
+              <Button
+                onClick={transferWorkspace}
+                disabled={selectedWorkspace === workspaceId}
+                variant="primary"
+                className="w-fit"
+              >
+                Transfer
+              </Button>
+            </section>
 
             <div className="flex flex-col p-6 rounded-2xl bg-light-slate-4">
               <Title className="!text-1xl !leading-none !border-light-slate-8 border-b pb-4" level={4}>
