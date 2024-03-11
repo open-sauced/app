@@ -5,6 +5,29 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.6.0](https://github.com/open-sauced/app/compare/v2.5.1...v2.6.0) (2024-03-11)
+
+
+### 🍕 Features
+
+* filter tracked repositories in workspace ([#2889](https://github.com/open-sauced/app/issues/2889)) ([5fcb469](https://github.com/open-sauced/app/commit/5fcb46999d50bd1333d53c459f6b3366b2801155))
+* remove upgrade access button from user settings ([#2896](https://github.com/open-sauced/app/issues/2896)) ([bf4d594](https://github.com/open-sauced/app/commit/bf4d594ad81f5695685fadb35cb87e4a29224ef8))
+* show owners of insight pages ([#2879](https://github.com/open-sauced/app/issues/2879)) ([f014435](https://github.com/open-sauced/app/commit/f014435bfd71d8853f05c39a262ec98fd4163999))
+* Use new workspace API workspace access control endpoints ([#2903](https://github.com/open-sauced/app/issues/2903)) ([b2f552d](https://github.com/open-sauced/app/commit/b2f552d7f8eb167be0e78e3ddd82e55563a48be3))
+
+
+### 🐛 Bug Fixes
+
+* add path to tab list array for separate title/URL combinations ([#2898](https://github.com/open-sauced/app/issues/2898)) ([328a1a7](https://github.com/open-sauced/app/commit/328a1a7d304972565b84374754a9521126b47161))
+* Clear input after adding a repository to insight page ([#2497](https://github.com/open-sauced/app/issues/2497)) ([743836c](https://github.com/open-sauced/app/commit/743836c1695b7652eb6e4dee5a664f74e0aabcdd))
+* display edit button on repository insights for workspace members ([#2901](https://github.com/open-sauced/app/issues/2901)) ([c3e5bf9](https://github.com/open-sauced/app/commit/c3e5bf956aa1e2c44d7f62ecb69c07ca2b630f93))
+* increase z-index for workspace members config ([#2897](https://github.com/open-sauced/app/issues/2897)) ([90b50a2](https://github.com/open-sauced/app/commit/90b50a290a29192e84bb8ca649df89fdfa669aad))
+* prevent overflow when insights have long titles ([#2910](https://github.com/open-sauced/app/issues/2910)) ([7003f28](https://github.com/open-sauced/app/commit/7003f289f71981553c14d548667b1fdb044ecbaf))
+* short circuit workspace paths through the middleware ([#2900](https://github.com/open-sauced/app/issues/2900)) ([e376191](https://github.com/open-sauced/app/commit/e37619144ee2160b52ed8335af1cc8a84833fdc3))
+* typo on modal and create consistency with OpenSauced spacing ([#2892](https://github.com/open-sauced/app/issues/2892)) ([c536347](https://github.com/open-sauced/app/commit/c536347c0cb99ed3625e3804ad9e2796ef4cec0a))
+* use workspace members for checking contributor insight edit access ([#2907](https://github.com/open-sauced/app/issues/2907)) ([d8c982b](https://github.com/open-sauced/app/commit/d8c982b097658bab2d59b418ab99e2b7ef654bc3))
+* use workspace members for checking repository insight edit access ([#2905](https://github.com/open-sauced/app/issues/2905)) ([d17d6e9](https://github.com/open-sauced/app/commit/d17d6e93201db5c0ee4c4d5d1e4bc2eb4807434c))
+
 ## [2.6.0-beta.8](https://github.com/open-sauced/app/compare/v2.6.0-beta.7...v2.6.0-beta.8) (2024-03-11)
 
 
