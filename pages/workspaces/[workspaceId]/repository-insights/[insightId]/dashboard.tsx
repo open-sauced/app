@@ -102,31 +102,34 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   // Keeping this here so we are sure the page is not private before we fetch the social card.
   const ogImage = await fetchSocialCard(`insights/${insightId}`);
 
-  const insightOwner = insight.members.find((m) => m.access === "admin");
-  const isOwner = Number.parseInt(session?.user.user_metadata.provider_id) === insightOwner?.user_id;
-
-  const { data: workspaceMembers } = await fetchApiData<any>({
+  const { data: workspaceMembers } = await fetchApiData<{ data?: WorkspaceMember[] }>({
     path: `workspaces/${workspaceId}/members`,
     bearerToken,
     pathValidator: () => true,
   });
 
+  const userId = Number(session?.user.user_metadata.sub);
+
   const owners: string[] = Array.from(
-    workspaceMembers!.data,
+    workspaceMembers?.data || [],
     (member: { role: string; member: Record<string, any> }) => {
       if (member.role === "owner") {
         return member.member.login;
       }
     }
+  ).filter(Boolean);
+
+  const isOwner = (workspaceMembers?.data || []).filter(
+    (member) => member.role === "owner" && member.user_id === userId
   );
 
   return {
     props: {
       insight,
-      isOwner,
       workspaceId,
       ogImage,
       owners,
+      isOwner,
     },
   };
 };
