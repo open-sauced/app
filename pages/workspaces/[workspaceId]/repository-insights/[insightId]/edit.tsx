@@ -7,20 +7,12 @@ import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import useRepositories from "lib/hooks/api/useRepositories";
 import { fetchApiData } from "helpers/fetchApiData";
 
-const EditInsightPage = ({
-  insight,
-  workspaceId,
-  workspaces,
-}: {
-  insight: DbUserInsight;
-  workspaceId: string;
-  workspaces: Workspace[];
-}) => {
+const EditInsightPage = ({ insight, workspaceId }: { insight: DbUserInsight; workspaceId: string }) => {
   const { data: repos } = useRepositories(insight?.repos.map((ir) => ir.repo_id), 30, 100);
 
   return (
     <WorkspaceLayout workspaceId={workspaceId}>
-      <InsightPage edit={true} insight={insight} pageRepos={repos} workspaceId={workspaceId} workspaces={workspaces} />
+      <InsightPage edit={true} insight={insight} pageRepos={repos} workspaceId={workspaceId} />
     </WorkspaceLayout>
   );
 };
@@ -65,21 +57,10 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     };
   }
 
-  const { data: workspaceData } = await fetchApiData<{ data: Workspace[] }>({
-    path: "workspaces",
-    bearerToken,
-    pathValidator: () => true,
-  });
-
-  const workspaces = workspaceData?.data.filter((workspace) =>
-    workspace.members.find((member) => ["owner", "editor"].includes(member.role) && member.user_id === userId)
-  );
-
   return {
     props: {
       insight,
       workspaceId,
-      workspaces,
     },
   };
 };

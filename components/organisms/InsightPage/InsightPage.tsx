@@ -21,6 +21,7 @@ import { useFetchInsightRecommendedRepositories } from "lib/hooks/useFetchOrgRec
 import { RepoCardProfileProps } from "components/molecules/RepoCardProfile/repo-card-profile";
 import SingleSelect from "components/atoms/Select/single-select";
 import { fetchApiData } from "helpers/fetchApiData";
+import { useGetUserWorkspaces } from "lib/hooks/api/useGetUserWorkspaces";
 import SuggestedRepositoriesList from "../SuggestedRepoList/suggested-repo-list";
 
 // lazy import DeleteInsightPageModal and TeamMembersConfig component to optimize bundle size they don't load on initial render
@@ -44,7 +45,6 @@ interface InsightPageProps {
   insight?: DbUserInsight;
   pageRepos?: DbRepo[];
   workspaceId?: string;
-  workspaces?: Workspace[];
 }
 const staticSuggestedRepos: RepoCardProfileProps[] = [
   {
@@ -70,7 +70,7 @@ const staticSuggestedRepos: RepoCardProfileProps[] = [
   },
 ];
 
-const InsightPage = ({ edit, insight, pageRepos, workspaceId, workspaces }: InsightPageProps) => {
+const InsightPage = ({ edit, insight, pageRepos, workspaceId }: InsightPageProps) => {
   const { sessionToken, providerToken, user } = useSupabaseAuth();
 
   const { toast } = useToast();
@@ -108,10 +108,25 @@ const InsightPage = ({ edit, insight, pageRepos, workspaceId, workspaces }: Insi
   const [repoSearchTerm, setRepoSearchTerm] = useState<string>("");
   const [suggestions, setSuggestions] = useState<string[]>([]);
 
-  const options = Array.from(workspaces, (workspace: Workspace) => {
-    return { label: workspace.name, value: workspace.id };
-  });
+  const { data: workspacesData, isLoading: workspacesLoading } = useGetUserWorkspaces();
+  const [options, setOptions] = useState<{ label: string; value: string }[]>([]);
   const [selectedWorkspace, setSelectedWorkspace] = useState<string>(workspaceId!);
+
+  useEffect(() => {
+    if (workspaceId && !workspacesLoading) {
+      const filteredWorkspaces = workspacesData?.data?.filter((workspace) =>
+        workspace.members.find(
+          (member) => member.user_id === Number(user?.user_metadata.sub) && ["owner", "editor"].includes(member.role)
+        )
+      );
+
+      setOptions(
+        Array.from(filteredWorkspaces!, (workspace) => {
+          return { label: workspace.name, value: workspace.id };
+        })
+      );
+    }
+  }, [workspacesData]);
 
   const recommendedReposWithoutSelected =
     recommendedRepos && recommendedRepos.length > 0
@@ -604,28 +619,30 @@ const InsightPage = ({ edit, insight, pageRepos, workspaceId, workspaces }: Insi
               Danger Zone
             </Title>
 
-            <section className="flex flex-col gap-4">
-              <div className="flex flex-col gap-2">
-                <Title level={4}>Transfer to other Workspace</Title>
-                <Text>Move this insight to another workspace where you are an owner or editor.</Text>
-              </div>
-              <SingleSelect
-                isSearchable
-                placeholder={options.find((opt) => opt.value === workspaceId)?.label}
-                options={options}
-                onValueChange={(value: string) => {
-                  setSelectedWorkspace(value);
-                }}
-              />
-              <Button
-                onClick={transferWorkspace}
-                disabled={selectedWorkspace === workspaceId}
-                variant="primary"
-                className="w-fit"
-              >
-                Transfer
-              </Button>
-            </section>
+            {workspaceId && (
+              <section className="flex flex-col gap-4">
+                <div className="flex flex-col gap-2">
+                  <Title level={4}>Transfer to other Workspace</Title>
+                  <Text>Move this insight to another workspace where you are an owner or editor.</Text>
+                </div>
+                <SingleSelect
+                  isSearchable
+                  placeholder={options.find((opt) => opt.value === workspaceId)?.label}
+                  options={options}
+                  onValueChange={(value: string) => {
+                    setSelectedWorkspace(value);
+                  }}
+                />
+                <Button
+                  onClick={transferWorkspace}
+                  disabled={selectedWorkspace === workspaceId}
+                  variant="primary"
+                  className="w-fit"
+                >
+                  Transfer
+                </Button>
+              </section>
+            )}
 
             <div className="flex flex-col p-6 rounded-2xl bg-light-slate-4">
               <Title className="!text-1xl !leading-none !border-light-slate-8 border-b pb-4" level={4}>
