@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.6.0-beta.5](https://github.com/open-sauced/app/compare/v2.6.0-beta.4...v2.6.0-beta.5) (2024-03-11)
+
+
+### 🍕 Features
+
+* Use new workspace API workspace access control endpoints ([#2903](https://github.com/open-sauced/app/issues/2903)) ([b2f552d](https://github.com/open-sauced/app/commit/b2f552d7f8eb167be0e78e3ddd82e55563a48be3))
+
 ## [2.6.0-beta.4](https://github.com/open-sauced/app/compare/v2.6.0-beta.3...v2.6.0-beta.4) (2024-03-11)
 
 
