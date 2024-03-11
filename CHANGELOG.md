@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.6.0-beta.4](https://github.com/open-sauced/app/compare/v2.6.0-beta.3...v2.6.0-beta.4) (2024-03-11)
+
+
+### 🐛 Bug Fixes
+
+* display edit button on repository insights for workspace members ([#2901](https://github.com/open-sauced/app/issues/2901)) ([c3e5bf9](https://github.com/open-sauced/app/commit/c3e5bf956aa1e2c44d7f62ecb69c07ca2b630f93))
+
 ## [2.6.0-beta.3](https://github.com/open-sauced/app/compare/v2.6.0-beta.2...v2.6.0-beta.3) (2024-03-08)
 
 
