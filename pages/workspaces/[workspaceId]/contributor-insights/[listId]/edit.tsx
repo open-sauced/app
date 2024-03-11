@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { GetServerSidePropsContext } from "next";
-import { UserGroupIcon } from "@heroicons/react/24/solid";
 import { ComponentProps, useState } from "react";
 import { FaUserPlus } from "react-icons/fa6";
 import Link from "next/link";
@@ -11,7 +10,6 @@ import { MdOutlineArrowBackIos } from "react-icons/md";
 import { fetchApiData } from "helpers/fetchApiData";
 import Title from "components/atoms/Typography/title";
 import Text from "components/atoms/Typography/text";
-import ToggleSwitch from "components/atoms/ToggleSwitch/toggle-switch";
 import Button from "components/atoms/Button/button";
 import TextInput from "components/atoms/TextInput/text-input";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
@@ -146,7 +144,6 @@ const ListContributors = ({
 export default function EditListPage({ list, workspaceId, initialContributors }: EditListPageProps) {
   const router = useRouter();
 
-  const [isPublic, setIsPublic] = useState(list.is_public);
   const { sessionToken } = useSupabaseAuth();
   const { toast } = useToast();
   async function updateList(payload: UpdateListPayload) {
@@ -304,39 +301,19 @@ export default function EditListPage({ list, workspaceId, initialContributors }:
               >
                 <MdOutlineArrowBackIos title="Go back to list overview" className="text-lg text-light-slate-10" />
               </Link>{" "}
-              Edit List
+              Edit Contributor Insight
             </h1>
             <Button variant="primary" type="submit">
               Save changes
             </Button>
           </div>
           <p className="text-light-slate-11 pb-4 border-b border-solid border-light-slate-6">
-            A list is a collection of contributors that you and your team can get insights for.
+            A contributor insight is a collection of contributors that you and your team can get insights for.
           </p>
           <label className="flex flex-col w-full text-light-slate-12 gap-4">
-            List Name
+            Name
             <TextInput name="list_name" defaultValue={list.name} required />
           </label>
-          <div className="flex flex-col flex-wrap gap-4 py-8 border-t border-b border-solid border-light-slate-6">
-            <label className="text-light-slate-12">Page Visibility</label>
-            <div className="flex justify-between">
-              <div className="flex items-center">
-                <UserGroupIcon className="w-6 h-6 text-light-slate-9 mr-2" />
-                <Text className="text-light-slate-11">
-                  <span id="make-public-explainer">Make this page publicly visible</span>
-                </Text>
-              </div>
-              <div className="flex ml-2 !border-red-900 items-center">
-                <Text className="!text-orange-600 pr-2 hidden md:block">Make Public</Text>
-                <ToggleSwitch
-                  ariaLabelledBy="make-public-explainer"
-                  name="is_public"
-                  checked={isPublic}
-                  handleToggle={() => setIsPublic((isPublic: boolean) => !isPublic)}
-                />
-              </div>
-            </div>
-          </div>
           <div className="flex xs:items-center xs:justify-between xs:flex-row flex-wrap pb-8 border-b border-solid border-light-slate-6 flex-col justify-start">
             <h2 className="text-light-slate-12 ">Add Contributors</h2>
             <Button
