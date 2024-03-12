@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.7.1-beta.1](https://github.com/open-sauced/app/compare/v2.7.0...v2.7.1-beta.1) (2024-03-12)
+
+
+### 🐛 Bug Fixes
+
+* capture PostHog event for workspace upgrade banner shown and modal clicked ([#2927](https://github.com/open-sauced/app/issues/2927)) ([05d168f](https://github.com/open-sauced/app/commit/05d168f22efcedfa255ec456bb58459b4a020a80))
+
 ## [2.7.0](https://github.com/open-sauced/app/compare/v2.6.0...v2.7.0) (2024-03-12)
 
 
