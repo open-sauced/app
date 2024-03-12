@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.7.0-beta.1](https://github.com/open-sauced/app/compare/v2.6.1-beta.2...v2.7.0-beta.1) (2024-03-12)
+
+
+### 🍕 Features
+
+* transfer repository insights to other workspace ([#2912](https://github.com/open-sauced/app/issues/2912)) ([23302e3](https://github.com/open-sauced/app/commit/23302e30837223e86f02542c1f2b5a790fd4b62e))
+
 ## [2.6.1-beta.2](https://github.com/open-sauced/app/compare/v2.6.1-beta.1...v2.6.1-beta.2) (2024-03-12)
 
 
