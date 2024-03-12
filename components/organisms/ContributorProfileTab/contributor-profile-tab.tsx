@@ -46,7 +46,6 @@ interface ContributorProfileTabProps {
   prMerged: number;
   recentContributionCount: number;
   prsMergedPercentage: number;
-  chart: Object;
   githubName: string;
   repoList: RepoList[];
 }
@@ -70,7 +69,6 @@ const ContributorProfileTab = ({
   totalPrs,
   prVelocity,
   prsMergedPercentage,
-  chart,
   githubName,
   recentContributionCount,
   repoList,
@@ -201,7 +199,7 @@ const ContributorProfileTab = ({
           />
           <div className="flex-1 md:flex-[2.5]">
             <div className="flex items-center gap-2">
-              <Image className="rounded" alt="Open Sauced Logo" width={30} height={30} src={openSaucedImg} />
+              <Image className="rounded" alt="OpenSauced Logo" width={30} height={30} src={openSaucedImg} />
               <Title className="font-semibold text-lg" level={4}>
                 Do you know {login}?
               </Title>
@@ -403,7 +401,7 @@ const ContributorProfileTab = ({
               </div>
             </div>
             <div className="mt-2 h-36">
-              <CardLineChart lineChartOption={chart} className="!h-36" />
+              <CardLineChart contributor={githubName} className="!h-36" />
             </div>
             <div>
               <CardRepoList limit={7} repoList={repoList} />

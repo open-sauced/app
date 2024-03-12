@@ -38,7 +38,7 @@ export const Issues: Story = {
 export const Engagement: Story = {
   args: {
     type: "engagement",
-    stats: { stars: 10, forks: 5, health: 2 },
+    stats: { stars: 10, forks: 5, activity_ratio: 2 },
   },
 };
 

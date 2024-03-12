@@ -1,11 +1,9 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
-import { UserGroupIcon } from "@heroicons/react/24/outline";
 
 import { GetServerSidePropsContext } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import TextInput from "components/atoms/TextInput/text-input";
-import ToggleSwitch from "components/atoms/ToggleSwitch/toggle-switch";
 import Text from "components/atoms/Typography/text";
 import Title from "components/atoms/Typography/title";
 import TopNav from "components/organisms/TopNav/top-nav";
@@ -18,8 +16,8 @@ import GitHubImportDialog from "components/organisms/GitHubImportDialog/github-i
 import GitHubTeamSyncDialog from "components/organisms/GitHubTeamSyncDialog/github-team-sync-dialog";
 import { fetchGithubOrgTeamMembers } from "lib/hooks/fetchGithubTeamMembers";
 import { fetchApiData } from "helpers/fetchApiData";
-import { deleteCookie } from "lib/utils/server/cookies";
-import { WORKSPACE_ID_COOKIE_NAME } from "lib/utils/workspace-utils";
+import { deleteCookie, setCookie } from "lib/utils/server/cookies";
+import { WORKSPACE_ID_COOKIE_NAME } from "lib/utils/caching";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 
 interface CreateListPayload {
@@ -40,7 +38,6 @@ const CreateListPage = ({ workspace }: { workspace: Workspace }) => {
   const { sessionToken, providerToken, user, username } = useSupabaseAuth();
 
   const [name, setName] = useState("");
-  const [isPublic, setIsPublic] = useState(false);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isTeamModalOpen, setIsTeamModalOpen] = useState(false);
@@ -71,7 +68,7 @@ const CreateListPage = ({ workspace }: { workspace: Workspace }) => {
     }
 
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/lists`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/workspaces/${workspace.id}/userLists`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -126,7 +123,7 @@ const CreateListPage = ({ workspace }: { workspace: Workspace }) => {
     const response = await createList({
       name,
       contributors: following.map((user) => ({ id: user.id, login: user.login })),
-      is_public: isPublic,
+      is_public: true,
     });
 
     if (response) {
@@ -144,7 +141,7 @@ const CreateListPage = ({ workspace }: { workspace: Workspace }) => {
         toast({ description: "List created successfully", variant: "success" });
       }
 
-      router.push(`/workspaces/${workspace.id}/contributor-insights/${response.id}/overview`);
+      router.push(`/workspaces/${workspace.id}/contributor-insights/${response.user_list_id}/overview`);
     } else {
       toast({ description: "An error occurred!", variant: "danger" });
       setSubmitted(false);
@@ -178,7 +175,7 @@ const CreateListPage = ({ workspace }: { workspace: Workspace }) => {
     const response = await createList({
       name,
       contributors: teamList.map((user) => ({ id: user.id, login: user.login })),
-      is_public: isPublic,
+      is_public: true,
     });
 
     if (response) {
@@ -197,7 +194,7 @@ const CreateListPage = ({ workspace }: { workspace: Workspace }) => {
         toast({ description: "List created successfully", variant: "success" });
       }
 
-      router.push(`/workspaces/${workspace.id}/contributor-insights/${response.id}/overview`);
+      router.push(`/workspaces/${workspace.id}/contributor-insights/${response.user_list_id}/overview`);
     } else {
       toast({ description: "An error occurred!", variant: "danger" });
       setSubmitted(false);
@@ -224,31 +221,6 @@ const CreateListPage = ({ workspace }: { workspace: Workspace }) => {
           <TextInput placeholder="Page Name (ex: My Team)" value={name} handleChange={handleOnNameChange} />
         </div>
 
-        <div className="flex flex-col gap-4 pb-16">
-          <Title className="text-1xl leading-none" level={4}>
-            Page Visibility
-          </Title>
-
-          <div className="flex justify-between">
-            <div className="flex items-center">
-              <UserGroupIcon className="w-6 h-6 text-light-slate-9" />
-              <Text className="pl-2">
-                <span id="make-public-explainer">Make this list publicly visible</span>
-              </Text>
-            </div>
-
-            <div className="flex ml-2 !border-red-900 items-center">
-              <Text className="text-orange-600 pr-2 hidden md:block">Make Public</Text>
-              <ToggleSwitch
-                ariaLabelledBy="make-public-explainer"
-                name="isPublic"
-                checked={isPublic}
-                handleToggle={() => setIsPublic((isPublic) => !isPublic)}
-              />
-            </div>
-          </div>
-        </div>
-
         <div className="flex flex-col gap-4 pb-6">
           <Title className="text-1xl leading-none" level={4}>
             Add Contributors
@@ -259,7 +231,7 @@ const CreateListPage = ({ workspace }: { workspace: Workspace }) => {
             description="Use our explore tool to find Contributors and create your list"
             icon="globe"
             handleClick={() => {
-              router.push(`/workspaces/${workspace.id}/contributor-insights/find?name=${name}&public=${isPublic}`);
+              router.push(`/workspaces/${workspace.id}/contributor-insights/find?name=${name}`);
             }}
           />
 
@@ -341,13 +313,13 @@ const AddListPage = ({ workspace }: { workspace: Workspace }) => {
   );
 };
 
-export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
-  const supabase = createPagesServerClient(ctx);
+export const getServerSideProps = async (context: GetServerSidePropsContext) => {
+  const supabase = createPagesServerClient(context);
   const {
     data: { session },
   } = await supabase.auth.getSession();
   const bearerToken = session ? session.access_token : "";
-  const workspaceId = ctx.params?.workspaceId as string;
+  const workspaceId = context.params?.workspaceId as string;
   const { data, error } = await fetchApiData<Workspace>({
     path: `workspaces/${workspaceId}`,
     bearerToken,
@@ -355,7 +327,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   });
 
   if (error) {
-    deleteCookie(ctx.res, WORKSPACE_ID_COOKIE_NAME);
+    deleteCookie({ response: context.res, name: WORKSPACE_ID_COOKIE_NAME });
 
     if (error.status === 404 || error.status === 401) {
       return { notFound: true };
@@ -363,6 +335,8 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 
     throw new Error(`Error loading workspaces page with ID ${workspaceId}`);
   }
+
+  setCookie({ response: context.res, name: WORKSPACE_ID_COOKIE_NAME, value: workspaceId });
 
   if (!session) {
     return {

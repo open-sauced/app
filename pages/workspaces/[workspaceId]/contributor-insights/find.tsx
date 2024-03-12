@@ -42,7 +42,7 @@ const NewListCreationPage = () => {
   const [selectedContributors, setSelectedContributors] = useState<DbPRContributor[]>([]);
   const [selectedTimezone, setSelectedTimezone] = useState<string | undefined>(undefined);
   const [contributors, setContributors] = useState<DbPRContributor[]>([]);
-  const [isPublic, setIsPublic] = useState<boolean>(false);
+  const [isPublic, setIsPublic] = useState<boolean>(true);
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [searchResults, setSearchResults] = useState<GhUser[]>([]);
 
@@ -93,7 +93,7 @@ const NewListCreationPage = () => {
 
     setCreateLoading(true);
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/lists`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/workspaces/${workspaceId}/userLists`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -104,7 +104,7 @@ const NewListCreationPage = () => {
 
       if (res.ok) {
         const data = await res.json();
-        setListId(data.id);
+        setListId(data.user_list_id);
         setIsSuccess(true);
       }
     } catch (error) {

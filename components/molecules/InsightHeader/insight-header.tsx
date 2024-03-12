@@ -9,12 +9,12 @@ import { useRouter } from "next/router";
 import getRepoInsights from "lib/utils/get-repo-insights";
 import Button from "components/atoms/Button/button";
 import Title from "components/atoms/Typography/title";
-import Badge from "components/atoms/InsightBadge/insight-badge";
 import ContextThumbnail from "components/atoms/ContextThumbnail/context-thumbnail";
 import { truncateString } from "lib/utils/truncate-string";
 import useRepositories from "lib/hooks/api/useRepositories";
 import { useToast } from "lib/hooks/useToast";
 import { setQueryParams } from "lib/utils/query-params";
+import StackedOwners from "components/Workspaces/StackedOwners";
 import CardRepoList from "../CardRepoList/card-repo-list";
 import ComponentDateFilter from "../ComponentDateFilter/component-date-filter";
 
@@ -23,9 +23,18 @@ interface InsightHeaderProps {
   repositories?: number[];
   insightId: string;
   canEdit: boolean | undefined;
+  workspaceId?: string;
+  owners?: string[];
 }
 
-const InsightHeader = ({ insight, repositories, insightId, canEdit }: InsightHeaderProps): JSX.Element => {
+const InsightHeader = ({
+  insight,
+  repositories,
+  insightId,
+  canEdit,
+  workspaceId,
+  owners,
+}: InsightHeaderProps): JSX.Element => {
   const router = useRouter();
   const { range } = router.query;
   const { data: repoData, meta: repoMeta } = useRepositories(repositories);
@@ -64,9 +73,13 @@ const InsightHeader = ({ insight, repositories, insightId, canEdit }: InsightHea
             <Title level={1} className="!text-2xl font-semibold text-slate-900">
               {(insight && truncateString(insight.name, 30)) || "Insights"}
             </Title>
-            {insight && <Badge isPublic={insight?.is_public} />}
           </div>
           <div className="flex items-center gap-2 mt-4">
+            {owners && (
+              <div className="flex gap-2 items-center">
+                <StackedOwners owners={owners} /> |
+              </div>
+            )}
             {insight && insight.repos && insight.repos.length > 0 && (
               <CardRepoList limit={2} repoList={repoList} total={repoMeta.itemCount} />
             )}
@@ -82,7 +95,7 @@ const InsightHeader = ({ insight, repositories, insightId, canEdit }: InsightHea
           <FiCopy className="mt-1 mr-2" /> Share
         </Button>
         {canEdit && (
-          <Link href={`/hub/insights/${insightId}/edit`}>
+          <Link href={`/workspaces/${workspaceId}/repository-insights/${insightId}/edit`}>
             <Button className="text-xs w-max" variant="primary">
               <FaEdit className="mr-2" /> Edit Page
             </Button>

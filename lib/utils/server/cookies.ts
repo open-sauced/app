@@ -1,5 +1,35 @@
 import { GetServerSidePropsContext } from "next";
 
-export function deleteCookie(res: GetServerSidePropsContext["res"], name: string) {
-  res.setHeader("Set-Cookie", `${name}=; Max-Age=0; Path=/; HttpOnly; SameSite=Lax; Secure`);
+type Response = GetServerSidePropsContext["res"];
+type SameSite = "Lax" | "Strict" | "None";
+
+export function deleteCookie({
+  response,
+  name,
+  sameSite = "Lax",
+}: {
+  response: Response;
+  name: string;
+  sameSite?: SameSite;
+}) {
+  setCookie({ response, name, value: "", maxAge: 0, sameSite });
+}
+
+export function setCookie({
+  response,
+  name,
+  value,
+  maxAge = 31536000,
+  sameSite = "Lax",
+}: {
+  response: Response;
+  name: string;
+  value: string;
+  maxAge?: number;
+  sameSite?: SameSite;
+}) {
+  response.setHeader(
+    "Set-Cookie",
+    `${name}=${value}; Max-Age=${maxAge}; Path=/; HttpOnly; SameSite=${sameSite}; Secure`
+  );
 }

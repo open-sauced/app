@@ -347,7 +347,7 @@ const Login: WithPageLayout = () => {
           </div>
           <div className="mb-8">
             <Text className="!text-sm">
-              Open Sauced is a platform to provide insights on open source contributions.{" "}
+              OpenSauced is a platform to provide insights on open source contributions.{" "}
             </Text>
           </div>
           <div className="items-center hidden gap-2 mb-8 lg:flex">
