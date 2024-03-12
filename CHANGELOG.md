@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.7.0-beta.2](https://github.com/open-sauced/app/compare/v2.7.0-beta.1...v2.7.0-beta.2) (2024-03-12)
+
+
+### 🐛 Bug Fixes
+
+* transfer hitting undefined ([#2922](https://github.com/open-sauced/app/issues/2922)) ([4db168b](https://github.com/open-sauced/app/commit/4db168b8984ae89c055336b7e6d3f7434bd80edf))
+
 ## [2.7.0-beta.1](https://github.com/open-sauced/app/compare/v2.6.1-beta.2...v2.7.0-beta.1) (2024-03-12)
 
 
