@@ -12,7 +12,14 @@ export const PasteReposStep = ({ onBulkAddRepos }: PasteReposStepProps) => {
     // split each line into a trimmed string and filter out any empty lines
     const repos = pastedInput
       .split(pastedInput.includes(",") ? "," : "\n")
-      .map((line) => line.trim())
+      .map((line) => {
+        line.trim();
+        if (line.includes("github.com")) {
+          const { repo } = /https:\/\/github.com\/(?<repo>[^\/]+\/[^\/]+)/gm.exec(line)?.groups || { repo: "" };
+          return repo;
+        }
+        return line;
+      })
       .filter((line) => line !== "");
 
     onBulkAddRepos(repos);
