@@ -23,6 +23,7 @@ import { useGetUserWorkspaces } from "lib/hooks/api/useGetUserWorkspaces";
 import SingleSelect from "components/atoms/Select/single-select";
 
 const DeleteListPageModal = dynamic(() => import("components/organisms/ListPage/DeleteListPageModal"));
+const TransferInsightModal = dynamic(() => import("components/Workspaces/TransferInsightModal"));
 
 // TODO: put into shared utilities once https://github.com/open-sauced/app/pull/2016 is merged
 function isListId(listId: string) {
@@ -238,6 +239,7 @@ export default function EditListPage({ list, workspaceId, initialContributors }:
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [options, setOptions] = useState<{ label: string; value: string }[]>([]);
   const [selectedWorkspace, setSelectedWorkspace] = useState<string>(workspaceId);
+  const [isTransferModalOpen, setIsTransferModalOpen] = useState(false);
 
   useEffect(() => {
     if (!isWorkspacesDataLoading) {
@@ -288,7 +290,25 @@ export default function EditListPage({ list, workspaceId, initialContributors }:
     }
   };
 
-  const transferWorkspace = async () => {};
+  const transferWorkspace = async () => {
+    const selectedOption = options.find((opt) => opt.value === selectedWorkspace);
+    const response = await fetchApiData({
+      method: "POST",
+      path: `workspaces/${workspaceId!}/userLists/${selectedWorkspace}`,
+      body: {
+        id: list?.id,
+      },
+      bearerToken: sessionToken!,
+      pathValidator: () => true,
+    });
+    if (response.error) {
+      toast({ description: "An error has occurred. Try again.", variant: "danger" });
+      return;
+    }
+
+    toast({ description: `Moved insight to ${selectedOption?.label}`, variant: "success" });
+    router.push(`/workspaces/${selectedWorkspace}/contributor-insights/${list?.id}/overview`);
+  };
 
   return (
     <WorkspaceLayout workspaceId={workspaceId}>
@@ -412,7 +432,12 @@ export default function EditListPage({ list, workspaceId, initialContributors }:
                 setSelectedWorkspace(value);
               }}
             />
-            <Button onClick={transferWorkspace} variant="primary">
+            <Button
+              onClick={() => setIsTransferModalOpen(true)}
+              disabled={selectedWorkspace === workspaceId}
+              variant="primary"
+              className="w-fit"
+            >
               Transfer
             </Button>
           </section>
@@ -428,6 +453,16 @@ export default function EditListPage({ list, workspaceId, initialContributors }:
           </div>
         </div>
       </div>
+
+      <TransferInsightModal
+        isOpen={isTransferModalOpen}
+        onClose={() => setIsTransferModalOpen(false)}
+        handleTransfer={transferWorkspace}
+        insightName={list.name}
+        currentWorkspaceName={options.find((opt) => opt.value === workspaceId)?.label || ""}
+        destinationWorkspaceName={options.find((opt) => opt.value === selectedWorkspace)?.label || ""}
+      />
+
       <DeleteListPageModal
         isLoading={deleteLoading}
         open={isDeleteModalOpen}
