@@ -14,7 +14,7 @@ export const PasteReposStep = ({ onBulkAddRepos }: PasteReposStepProps) => {
       .split(pastedInput.includes(",") ? "," : "\n")
       .map((line) => {
         line.trim();
-        if (line.includes("github.com")) {
+        if (line.startsWith("https://github.com")) {
           const { repo } = /https:\/\/github.com\/(?<repo>[^\/]+\/[^\/]+)/gm.exec(line)?.groups || { repo: "" };
           return repo;
         }
