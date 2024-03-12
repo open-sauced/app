@@ -24,7 +24,7 @@ export default function InsightUpgradeModal({
   const posthog = usePostHog();
 
   useEffectOnce(() => {
-    posthog.capture("clicked: Upgrade Insight Modal", { workspaceId });
+    posthog.capture("clicked: Upgrade Workspace Modal", { workspaceId });
   });
 
   return (
