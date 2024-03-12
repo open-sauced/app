@@ -19,10 +19,14 @@ import Search from "components/atoms/Search/search";
 import { useToast } from "lib/hooks/useToast";
 import { useFetchInsightRecommendedRepositories } from "lib/hooks/useFetchOrgRecommendations";
 import { RepoCardProfileProps } from "components/molecules/RepoCardProfile/repo-card-profile";
+import SingleSelect from "components/atoms/Select/single-select";
+import { fetchApiData } from "helpers/fetchApiData";
+import { useGetUserWorkspaces } from "lib/hooks/api/useGetUserWorkspaces";
 import SuggestedRepositoriesList from "../SuggestedRepoList/suggested-repo-list";
 
 // lazy import DeleteInsightPageModal and TeamMembersConfig component to optimize bundle size they don't load on initial render
 const DeleteInsightPageModal = dynamic(() => import("./DeleteInsightPageModal"));
+const TransferInsightModal = dynamic(() => import("components/Workspaces/TransferInsightModal"));
 
 const enum RepoLookupError {
   Initial = 0,
@@ -104,6 +108,27 @@ const InsightPage = ({ edit, insight, pageRepos, workspaceId }: InsightPageProps
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [repoSearchTerm, setRepoSearchTerm] = useState<string>("");
   const [suggestions, setSuggestions] = useState<string[]>([]);
+
+  const { data: workspacesData, isLoading: workspacesLoading } = useGetUserWorkspaces();
+  const [options, setOptions] = useState<{ label: string; value: string }[]>([]);
+  const [selectedWorkspace, setSelectedWorkspace] = useState<string>(workspaceId!);
+  const [isTransferModalOpen, setIsTransferModalOpen] = useState(false);
+
+  useEffect(() => {
+    if (workspaceId && !workspacesLoading) {
+      const filteredWorkspaces = workspacesData?.data?.filter((workspace) =>
+        workspace.members.find(
+          (member) => member.user_id === Number(user?.user_metadata.sub) && ["owner", "editor"].includes(member.role)
+        )
+      );
+
+      setOptions(
+        Array.from(filteredWorkspaces!, (workspace) => {
+          return { label: workspace.name, value: workspace.id };
+        })
+      );
+    }
+  }, [workspacesData]);
 
   const recommendedReposWithoutSelected =
     recommendedRepos && recommendedRepos.length > 0
@@ -476,6 +501,26 @@ const InsightPage = ({ edit, insight, pageRepos, workspaceId }: InsightPageProps
     }
   };
 
+  const transferWorkspace = async () => {
+    const selectedOption = options.find((opt) => opt.value === selectedWorkspace);
+    const response = await fetchApiData({
+      method: "POST",
+      path: `workspaces/${workspaceId!}/insights/${selectedWorkspace}`,
+      body: {
+        id: insight?.id,
+      },
+      bearerToken: sessionToken!,
+      pathValidator: () => true,
+    });
+    if (response.error) {
+      toast({ description: "An error has occurred. Try again.", variant: "success" });
+      return;
+    }
+
+    toast({ description: `Moved insight to ${selectedOption?.label}`, variant: "success" });
+    router.push(`/workspaces/${selectedWorkspace}/repository-insights/${insight?.id}/dashboard`);
+  };
+
   useEffect(() => {
     setSuggestions([]);
     if (!repoSearchTerm) return;
@@ -571,10 +616,35 @@ const InsightPage = ({ edit, insight, pageRepos, workspaceId }: InsightPageProps
         <div>{getRepoLookupError(addRepoError)}</div>
 
         {edit && (
-          <div className="flex flex-col gap-4 py-6 border-t border-b border-light-slate-8">
-            <Title className="!text-1xl !leading-none py-6" level={4}>
+          <div className="flex flex-col gap-8 py-8 border-t border-b border-light-slate-8">
+            <Title className="!text-1xl !leading-none" level={4}>
               Danger Zone
             </Title>
+
+            {workspaceId && (
+              <section className="flex flex-col gap-4">
+                <div className="flex flex-col gap-2">
+                  <Title level={4}>Transfer to other Workspace</Title>
+                  <Text>Move this insight to another workspace where you are an owner or editor.</Text>
+                </div>
+                <SingleSelect
+                  isSearchable
+                  placeholder={options.find((opt) => opt.value === workspaceId)?.label}
+                  options={options}
+                  onValueChange={(value: string) => {
+                    setSelectedWorkspace(value);
+                  }}
+                />
+                <Button
+                  onClick={() => setIsTransferModalOpen(true)}
+                  disabled={selectedWorkspace === workspaceId}
+                  variant="primary"
+                  className="w-fit"
+                >
+                  Transfer
+                </Button>
+              </section>
+            )}
 
             <div className="flex flex-col p-6 rounded-2xl bg-light-slate-4">
               <Title className="!text-1xl !leading-none !border-light-slate-8 border-b pb-4" level={4}>
@@ -626,6 +696,17 @@ const InsightPage = ({ edit, insight, pageRepos, workspaceId }: InsightPageProps
           })}
         </RepositoriesCart>
       </div>
+
+      {workspaceId && (
+        <TransferInsightModal
+          isOpen={isTransferModalOpen}
+          onClose={() => setIsTransferModalOpen(false)}
+          handleTransfer={transferWorkspace}
+          insightName={insight?.name || ""}
+          currentWorkspaceName={options.find((opt) => opt.value === workspaceId)?.label || ""}
+          destinationWorkspaceName={options.find((opt) => opt.value === selectedWorkspace)?.label || ""}
+        />
+      )}
 
       <DeleteInsightPageModal
         isLoading={deleteLoading}

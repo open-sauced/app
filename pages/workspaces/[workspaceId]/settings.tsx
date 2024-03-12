@@ -178,6 +178,7 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace }: WorkspaceSettingsP
       setTrackedReposPendingDeletion(new Set());
       setTrackedRepos(new Map());
 
+      router.push(`/workspaces/${workspace.id}`);
       toast({ description: `Workspace updated successfully`, variant: "success" });
     }
   };

@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { GetServerSidePropsContext } from "next";
-import { ComponentProps, useState } from "react";
+import { ComponentProps, useEffect, useState } from "react";
 import { FaUserPlus } from "react-icons/fa6";
 import Link from "next/link";
 import { MdOutlineArrowBackIos } from "react-icons/md";
@@ -19,8 +19,11 @@ import Pagination from "components/molecules/Pagination/pagination";
 import { Avatar } from "components/atoms/Avatar/avatar-hover-card";
 import useFetchAllListContributors from "lib/hooks/useFetchAllListContributors";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
+import { useGetUserWorkspaces } from "lib/hooks/api/useGetUserWorkspaces";
+import SingleSelect from "components/atoms/Select/single-select";
 
 const DeleteListPageModal = dynamic(() => import("components/organisms/ListPage/DeleteListPageModal"));
+const TransferInsightModal = dynamic(() => import("components/Workspaces/TransferInsightModal"));
 
 // TODO: put into shared utilities once https://github.com/open-sauced/app/pull/2016 is merged
 function isListId(listId: string) {
@@ -144,7 +147,7 @@ const ListContributors = ({
 export default function EditListPage({ list, workspaceId, initialContributors }: EditListPageProps) {
   const router = useRouter();
 
-  const { sessionToken } = useSupabaseAuth();
+  const { sessionToken, user } = useSupabaseAuth();
   const { toast } = useToast();
   async function updateList(payload: UpdateListPayload) {
     const { data, error } = await fetchApiData<DBList>({
@@ -230,9 +233,29 @@ export default function EditListPage({ list, workspaceId, initialContributors }:
     );
   };
 
+  const { data: workspacesData, isLoading: isWorkspacesDataLoading } = useGetUserWorkspaces();
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
+  const [options, setOptions] = useState<{ label: string; value: string }[]>([]);
+  const [selectedWorkspace, setSelectedWorkspace] = useState<string>(workspaceId);
+  const [isTransferModalOpen, setIsTransferModalOpen] = useState(false);
+
+  useEffect(() => {
+    if (!isWorkspacesDataLoading) {
+      const filteredWorkspaces = workspacesData?.data?.filter((workspace) =>
+        workspace.members.find(
+          (member) => member.user_id === Number(user?.user_metadata.sub) && ["owner", "editor"].includes(member.role)
+        )
+      );
+
+      setOptions(
+        Array.from(filteredWorkspaces!, (workspace) => {
+          return { label: workspace.name, value: workspace.id };
+        })
+      );
+    }
+  }, [workspacesData]);
 
   const handleOnDelete = () => {
     setIsDeleteModalOpen(true);
@@ -265,6 +288,26 @@ export default function EditListPage({ list, workspaceId, initialContributors }:
       console.log(error);
       toast({ description: "An error occurred while deleting the list", variant: "danger" });
     }
+  };
+
+  const transferWorkspace = async () => {
+    const selectedOption = options.find((opt) => opt.value === selectedWorkspace);
+    const response = await fetchApiData({
+      method: "POST",
+      path: `workspaces/${workspaceId!}/userLists/${selectedWorkspace}`,
+      body: {
+        id: list?.id,
+      },
+      bearerToken: sessionToken!,
+      pathValidator: () => true,
+    });
+    if (response.error) {
+      toast({ description: "An error has occurred. Try again.", variant: "danger" });
+      return;
+    }
+
+    toast({ description: `Moved insight to ${selectedOption?.label}`, variant: "success" });
+    router.push(`/workspaces/${selectedWorkspace}/contributor-insights/${list?.id}/overview`);
   };
 
   return (
@@ -376,6 +419,28 @@ export default function EditListPage({ list, workspaceId, initialContributors }:
         </div>
         <div className="flex flex-col gap-4 py-6 border-t border-b border-light-slate-8">
           <label className="text-light-slate-12">Danger Zone</label>
+          <section className="flex flex-col gap-4">
+            <div className="flex flex-col gap-2">
+              <Title level={4}>Transfer to other Workspace</Title>
+              <Text>Move this insight to another workspace where you are an owner or editor.</Text>
+            </div>
+            <SingleSelect
+              isSearchable
+              options={options}
+              placeholder={options.find((opt) => opt.value === workspaceId)?.label}
+              onValueChange={(value: string) => {
+                setSelectedWorkspace(value);
+              }}
+            />
+            <Button
+              onClick={() => setIsTransferModalOpen(true)}
+              disabled={selectedWorkspace === workspaceId}
+              variant="primary"
+              className="w-fit"
+            >
+              Transfer
+            </Button>
+          </section>
           <div className="flex flex-col p-6 rounded-2xl bg-light-slate-4">
             <Title className="!text-1xl !leading-none !border-light-slate-8 border-b pb-4" level={4}>
               Delete List
@@ -388,6 +453,16 @@ export default function EditListPage({ list, workspaceId, initialContributors }:
           </div>
         </div>
       </div>
+
+      <TransferInsightModal
+        isOpen={isTransferModalOpen}
+        onClose={() => setIsTransferModalOpen(false)}
+        handleTransfer={transferWorkspace}
+        insightName={list.name}
+        currentWorkspaceName={options.find((opt) => opt.value === workspaceId)?.label || ""}
+        destinationWorkspaceName={options.find((opt) => opt.value === selectedWorkspace)?.label || ""}
+      />
+
       <DeleteListPageModal
         isLoading={deleteLoading}
         open={isDeleteModalOpen}
