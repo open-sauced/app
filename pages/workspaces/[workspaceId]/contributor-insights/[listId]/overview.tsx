@@ -41,11 +41,15 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const [{ data, error: contributorListError }, { data: list, error }, { data: workspaceData, error: workspaceError }] =
     await Promise.all([
       fetchApiData<PagedData<DBListContributor>>({
-        path: `lists/${listId}/contributors?limit=${limit}`,
+        path: `workspaces/${workspaceId}/userLists/${listId}/contributors?limit=${limit}`,
         bearerToken,
         pathValidator: validateListPath,
       }),
-      fetchApiData<DBList>({ path: `lists/${listId}`, bearerToken, pathValidator: validateListPath }),
+      fetchApiData<DBList>({
+        path: `workspaces/${workspaceId}/userLists/${listId}`,
+        bearerToken,
+        pathValidator: validateListPath,
+      }),
       fetchApiData<{ data?: WorkspaceMember[] }>({
         path: `workspaces/${workspaceId}/members`,
         bearerToken,

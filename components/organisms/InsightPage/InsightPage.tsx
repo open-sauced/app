@@ -23,7 +23,6 @@ import SuggestedRepositoriesList from "../SuggestedRepoList/suggested-repo-list"
 
 // lazy import DeleteInsightPageModal and TeamMembersConfig component to optimize bundle size they don't load on initial render
 const DeleteInsightPageModal = dynamic(() => import("./DeleteInsightPageModal"));
-const TeamMembersConfig = dynamic(() => import("components/molecules/TeamMembersConfig/team-members-config"));
 
 const enum RepoLookupError {
   Initial = 0,
@@ -209,19 +208,22 @@ const InsightPage = ({ edit, insight, pageRepos, workspaceId }: InsightPageProps
   const handleUpdateInsightPage = async () => {
     setSubmitted(true);
     setCreateLoading(true);
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/insights/${insight?.id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-type": "application/json",
-        Authorization: `Bearer ${sessionToken}`,
-      },
-      body: JSON.stringify({
-        name,
-        repos: repos.map((repo) => ({ id: repo.id, fullName: repo.full_name })),
-        // eslint-disable-next-line
-        is_public: true,
-      }),
-    });
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/workspaces/${workspaceId}/insights/${insight?.id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${sessionToken}`,
+        },
+        body: JSON.stringify({
+          name,
+          repos: repos.map((repo) => ({ id: repo.id, fullName: repo.full_name })),
+          // eslint-disable-next-line
+          is_public: true,
+        }),
+      }
+    );
     setCreateLoading(false);
     if (response && response.ok) {
       toast({ description: "Page updated successfully", variant: "success" });
