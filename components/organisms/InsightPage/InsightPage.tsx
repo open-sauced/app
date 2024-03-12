@@ -702,7 +702,7 @@ const InsightPage = ({ edit, insight, pageRepos, workspaceId }: InsightPageProps
           isOpen={isTransferModalOpen}
           onClose={() => setIsTransferModalOpen(false)}
           handleTransfer={transferWorkspace}
-          insightName={insight!.name}
+          insightName={insight?.name || ""}
           currentWorkspaceName={options.find((opt) => opt.value === workspaceId)?.label || ""}
           destinationWorkspaceName={options.find((opt) => opt.value === selectedWorkspace)?.label || ""}
         />
