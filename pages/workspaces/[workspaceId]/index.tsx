@@ -21,6 +21,7 @@ import Button from "components/atoms/Button/button";
 import { WorkspaceHeader } from "components/Workspaces/WorkspaceHeader";
 import TrackedRepositoryFilter from "components/Workspaces/TrackedRepositoryFilter";
 import { OptionKeys } from "components/atoms/Select/multi-select";
+import MetricCard from "components/Graphs/KPI/MetricCard";
 
 const WorkspaceWelcomeModal = dynamic(() => import("components/Workspaces/WorkspaceWelcomeModal"));
 
@@ -91,6 +92,7 @@ const WorkspaceDashboard = ({ workspace }: WorkspaceDashboardProps) => {
 
   return (
     <WorkspaceLayout workspaceId={workspace.id}>
+      <MetricCard variant="line" repoId={501028599} />
       <WorkspaceHeader workspace={workspace} />
       <div className="grid sm:flex gap-4 pt-3">
         <WorkspacesTabList workspaceId={workspace.id} selectedTab={"repositories"} />
