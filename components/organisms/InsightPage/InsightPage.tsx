@@ -616,8 +616,8 @@ const InsightPage = ({ edit, insight, pageRepos, workspaceId }: InsightPageProps
         <div>{getRepoLookupError(addRepoError)}</div>
 
         {edit && (
-          <div className="flex flex-col gap-8 py-8 border-t border-b border-light-slate-8">
-            <Title className="!text-1xl !leading-none" level={4}>
+          <div className="flex flex-col gap-8 py-8 border border-dark-red-8 px-4 rounded-xl">
+            <Title className="!text-2xl !leading-none !text-dark-red-8" level={4}>
               Danger Zone
             </Title>
 
