@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.7.1-beta.2](https://github.com/open-sauced/app/compare/v2.7.1-beta.1...v2.7.1-beta.2) (2024-03-13)
+
+
+### 🐛 Bug Fixes
+
+* updated npm-shrinkwrap.json with new package name ([#2936](https://github.com/open-sauced/app/issues/2936)) ([afcfdc2](https://github.com/open-sauced/app/commit/afcfdc29dcb3c7205e23fb265c003a6e9842075d))
+
 ## [2.7.1-beta.1](https://github.com/open-sauced/app/compare/v2.7.0...v2.7.1-beta.1) (2024-03-12)
 
 
