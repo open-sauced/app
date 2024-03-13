@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.8.0-beta.1](https://github.com/open-sauced/app/compare/v2.7.1-beta.2...v2.8.0-beta.1) (2024-03-13)
+
+
+### 🍕 Features
+
+* allow URLs when pasting repos ([#2933](https://github.com/open-sauced/app/issues/2933)) ([ede987f](https://github.com/open-sauced/app/commit/ede987f8dee905c3adcbb8a778e35a6d9c665e36))
+
 ## [2.7.1-beta.2](https://github.com/open-sauced/app/compare/v2.7.1-beta.1...v2.7.1-beta.2) (2024-03-13)
 
 
