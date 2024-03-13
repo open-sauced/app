@@ -72,7 +72,7 @@ export async function middleware(req: NextRequest) {
     return res;
   }
 
-  if (!session?.user && req.nextUrl.pathname === "/hub/insights/new") {
+  if (!session?.user && !req.nextUrl.searchParams.has("auth") && req.nextUrl.pathname === "/hub/insights/new") {
     return NextResponse.redirect(new URL(`/signin`, req.url));
   }
 

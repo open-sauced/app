@@ -1,19 +1,24 @@
-import { useEffect } from "react";
+import { useEffectOnce } from "react-use";
+
+import LoginLayout from "layouts/login";
+import { WithPageLayout } from "interfaces/with-page-layout";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 
-const SignInPage = () => {
+const SignInPage: WithPageLayout = () => {
   const { signIn } = useSupabaseAuth();
 
-  useEffect(() => {
+  useEffectOnce(() => {
     signIn({
       provider: "github",
       options: {
-        redirectTo: `/`,
+        redirectTo: `${window.location.origin}/hub/insights/new?auth=true`,
       },
     });
-  }, []);
+  });
 
-  return <></>;
+  return <div>Logging In...</div>;
 };
+
+SignInPage.PageLayout = LoginLayout;
 
 export default SignInPage;
