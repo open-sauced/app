@@ -46,6 +46,9 @@ const RepositoryInsights = () => {
       <div>
         <nav className="items-center justify-between block py-4 sm:flex ">
           <div className="text-3xl leading-none mx-0">Repository Insights</div>
+          <Button href={`/workspaces/${workspaceId}/repository-insights/new`} variant="primary">
+            Create Insight
+          </Button>
         </nav>
         <section className="flex flex-col gap-4 pt-4">
           <>
