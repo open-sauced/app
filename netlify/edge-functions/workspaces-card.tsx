@@ -29,11 +29,9 @@ export default async function handler(req: Request) {
   const workspaceName = searchParams.get("wname");
   const workspaceId = searchParams.get("wid");
   const range = searchParams.get("range");
-  console.dir({ workspaceName, baseApiUrl });
 
   const response = await fetch(new URL(`${baseApiUrl}/workspaces/${workspaceId}/stats?range=${range}`, baseApiUrl));
   const repoStats = (await response.json()) as Record<string, Record<string, number>>;
-  console.dir(repoStats);
 
   if (!workspaceName) {
     return new Response("A workspace name must be specified", { status: 404 });
@@ -113,8 +111,6 @@ export default async function handler(req: Request) {
                   {Object.entries(value)
                     .filter(([k]) => k !== "health")
                     .map(([k, v]) => {
-                      console.log("url", `${new URL(getActivityRatio(Math.round(v)), req.url)}`);
-
                       return (
                         <li key={k} style={{ display: "flex", gap: "0.25rem", alignItems: "center" }}>
                           <span>{(k === "repos" ? "repositories" : k).replace("_", " ")}:</span>
