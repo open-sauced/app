@@ -1,8 +1,18 @@
+import { usePostHog } from "posthog-js/react";
+import { useEffectOnce } from "react-use";
+
 type WorkspaceBannerProps = {
+  workspaceId: string;
   openModal: () => void;
 };
 
-export default function WorkspaceBanner({ openModal }: WorkspaceBannerProps) {
+export default function WorkspaceBanner({ workspaceId, openModal }: WorkspaceBannerProps) {
+  const posthog = usePostHog();
+
+  useEffectOnce(() => {
+    posthog.capture("shown: Upgrade Workspace Banner", { workspaceId });
+  });
+
   return (
     <button
       onClick={openModal}
