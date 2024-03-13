@@ -9,20 +9,20 @@ export const PasteReposStep = ({ onBulkAddRepos }: PasteReposStepProps) => {
   const [pastedInput, setPastedInput] = useState("");
 
   const parseInput = () => {
-    // split each line into a trimmed string and filter out any empty lines
     const repos = pastedInput
-      .split(pastedInput.includes(",") ? "," : "\n")
+      .split(/[,\n ]/g) // split by either comma, new line, or space
       .map((line) => {
-        line.trim();
-        if (line.startsWith("https://github.com")) {
-          const { repo } = /https:\/\/github.com\/(?<repo>[^\/]+\/[^\/]+)/gm.exec(line)?.groups || { repo: "" };
-          return repo;
-        }
-        return line;
-      })
-      .filter((line) => line !== "");
+        line.trim(); // trim to remove whitespace
 
-    onBulkAddRepos(repos);
+        // only take the 'org/repo' from URL, otherwise use the current line
+        const { repo } = /[https:\/\/]?github.com\/(?<repo>[^\/]+\/[^\/]+)/gm.exec(line)?.groups || { repo: line };
+
+        // return the line
+        return repo;
+      })
+      .filter((line) => line !== ""); // remove any empty lines
+
+    return repos;
   };
 
   return (
@@ -34,7 +34,7 @@ export const PasteReposStep = ({ onBulkAddRepos }: PasteReposStepProps) => {
         className="p-4 border rounded-xl h-full outline-none focus-visible:ring focus-visible:border-orange-500 focus-visible:ring-orange-100"
       />
       <Button
-        onClick={parseInput}
+        onClick={() => onBulkAddRepos(parseInput())}
         variant="primary"
         disabled={pastedInput.trim().length === 0}
         className="w-fit self-end"
