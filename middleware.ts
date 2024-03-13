@@ -73,7 +73,9 @@ export async function middleware(req: NextRequest) {
   }
 
   if (!session?.user && !req.nextUrl.searchParams.has("auth") && req.nextUrl.pathname === "/hub/insights/new") {
-    return NextResponse.redirect(new URL(`/signin`, req.url));
+    return NextResponse.redirect(
+      new URL(`/signin?redirectedFrom=${encodeURIComponent(req.nextUrl.pathname)}`, req.url)
+    );
   }
 
   if (session?.user && req.nextUrl.pathname === "/account-deleted") {
