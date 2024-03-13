@@ -8,6 +8,9 @@ import {
   ArrowTrendingDownIcon,
 } from "https://esm.sh/@heroicons/react@2.0.14/24/solid";
 
+const baseApiUrl = Deno.env.get("NEXT_PUBLIC_API_URL");
+console.log({ baseApiUrl });
+
 interface PillProps {
   children: React.ReactNode;
   color?: "slate" | "green" | "yellow" | "red" | "purple";
@@ -78,13 +81,13 @@ const getPillChart = (total?: number): React.ReactNode => {
 export default async function handler(req: Request) {
   const { searchParams } = new URL(req.url);
   const workspaceName = searchParams.get("wname");
-  const repositoryStats = searchParams.get("repositoryStats");
+  const workspaceId = searchParams.get("wid");
+  const range = searchParams.get("range");
+  console.dir({ workspaceName, baseApiUrl });
 
-  console.log(repositoryStats, workspaceName);
-
-  if (!repositoryStats) {
-    return new Response("A repositoryStats must be specified", { status: 404 });
-  }
+  const response = await fetch(new URL(`${baseApiUrl}/workspaces/${workspaceId}/stats?range=${range}`, baseApiUrl));
+  const repoStats = (await response.json()) as Record<string, Record<string, number>>;
+  console.dir(repoStats);
 
   if (!workspaceName) {
     return new Response("A workspace name must be specified", { status: 404 });
@@ -99,8 +102,6 @@ export default async function handler(req: Request) {
     interBlackFont,
     logoImg,
   ]);
-
-  const repoStats = JSON.parse(repositoryStats) as Record<string, Record<string, number>>;
 
   return new ImageResponse(
     (

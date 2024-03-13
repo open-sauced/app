@@ -1,10 +1,11 @@
 import SEO from "layouts/SEO/SEO";
 
-function getWorkspaceOgImage(workspace: Workspace, repositoryStats: DbWorkspacesReposStats) {
+function getWorkspaceOgImage(workspace: Workspace, range = 30) {
   const searchParams = new URLSearchParams({
     wname: workspace.name,
+    wid: workspace.id,
     description: workspace.description ?? "",
-    repositoryStats: JSON.stringify(repositoryStats),
+    range: `${range}`,
   });
 
   return `/og-images/workspace?${searchParams}`;
@@ -12,11 +13,11 @@ function getWorkspaceOgImage(workspace: Workspace, repositoryStats: DbWorkspaces
 
 interface WorkspaceOgImageProps {
   workspace: Workspace;
-  repositoryStats: DbWorkspacesReposStats;
+  range: number;
 }
 
-export const WorkspaceOgImage = ({ workspace, repositoryStats }: WorkspaceOgImageProps) => {
-  const ogImage = getWorkspaceOgImage(workspace, repositoryStats);
+export const WorkspaceOgImage = ({ workspace, range }: WorkspaceOgImageProps) => {
+  const ogImage = getWorkspaceOgImage(workspace, range);
   return (
     <SEO
       title={`Workspaces | ${workspace.name}`}

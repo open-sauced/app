@@ -92,7 +92,7 @@ const WorkspaceDashboard = ({ workspace }: WorkspaceDashboardProps) => {
 
   return (
     <>
-      {stats?.data ? <WorkspaceOgImage workspace={workspace} repositoryStats={stats.data} /> : null}
+      <WorkspaceOgImage workspace={workspace} range={range} />
       <WorkspaceLayout workspaceId={workspace.id}>
         <WorkspaceHeader workspace={workspace} />
         <div className="grid sm:flex gap-4 pt-3">
