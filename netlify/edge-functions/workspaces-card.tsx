@@ -1,81 +1,27 @@
 import React from "react";
 import { ImageResponse } from "og_edge";
 import type { Config } from "https://edge.netlify.com";
-// import { Pill } from "components/Pill.tsx";
-import {
-  ArrowTrendingUpIcon,
-  MinusSmallIcon,
-  ArrowTrendingDownIcon,
-} from "https://esm.sh/@heroicons/react@2.0.14/24/solid";
 
 const baseApiUrl = Deno.env.get("NEXT_PUBLIC_API_URL");
-console.log({ baseApiUrl });
-
-interface PillProps {
-  children: React.ReactNode;
-  color?: "slate" | "green" | "yellow" | "red" | "purple";
-}
-
-const Pill = ({ children, color = "slate" }: PillProps) => {
-  return (
-    <div
-      style={{
-        backgroundColor:
-          color === "green"
-            ? "hsl(121 47.5% 91.4% / 1)"
-            : color === "yellow"
-            ? "rgb(253 230 138 / 1)"
-            : color === "red"
-            ? "hsl(360 97.9% 94.8% / 1)"
-            : color === "purple"
-            ? "rgb(233 213 255 / 1)"
-            : "hsl(209 12.2% 93.2% / 1)",
-        color:
-          color === "green"
-            ? "hsl(133 50.0% 32.5% / 1)"
-            : color === "yellow"
-            ? "rgb(180 83 9 / 1)"
-            : color === "red"
-            ? "hsl(358 65.0% 48.7% / 1)"
-            : color === "purple"
-            ? "rgb(147 51 234 / 1)"
-            : "hsl(206 6.0% 43.5% / 1)",
-        borderRadius: "9999px",
-        padding: "0.375rem 0.5rem",
-      }}
-    >
-      {children}
-    </div>
-  );
-};
 
 function getLocalAsset(url: URL): Promise<ArrayBuffer> {
   return fetch(url).then((res) => res.arrayBuffer());
 }
 
-const getPillChart = (total?: number): React.ReactNode => {
+const getActivityRatio = (total?: number) => {
   if (total === undefined) {
     return "-";
   }
 
   if (total > 7) {
-    // icon={<ArrowTrendingUpIcon color="green" className="w-6 h-6 lg:w-4 lg:h-4" />}
-    return <Pill color="green">High</Pill>;
+    return "high";
   }
 
   if (total >= 4 && total <= 7) {
-    //         icon={
-    //   <MinusSmallIcon
-    //     color="black"
-    //     style={{ background: "#fff", strokeColor: "#fff", width: 24, height: 24, border: "1px solid red" }}
-    //   />
-    // }
-
-    return <Pill color="yellow">Medium</Pill>;
+    return "medium";
   }
 
-  // icon={<ArrowTrendingDownIcon color="red" className="w-6 h-6 lg:w-4 lg:h-4" />}
-  return <Pill color="red">Low</Pill>;
+  return "low";
 };
 
 export default async function handler(req: Request) {
@@ -150,36 +96,55 @@ export default async function handler(req: Request) {
             fontSize: "24px",
           }}
         >
-          {Object.entries(repoStats).map(([key, value]) => (
-            <li
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                // alignItems: "center",
-                gap: "1rem",
-                textTransform: "uppercase",
-              }}
-              key={key}
-            >
-              <p style={{ fontWeight: "900", textDecoration: "underline" }}>{key.replace("_", " ")}</p>
-              <ul style={{ display: "flex", gap: "1rem", textTransform: "uppercase" }}>
-                {Object.entries(value)
-                  .filter(([k]) => k !== "health")
-                  .map(([k, v]) => (
-                    <li key={k} style={{ display: "flex", gap: "0.25rem", alignItems: "center" }}>
-                      <span>{(k === "repos" ? "repositories" : k).replace("_", " ")}:</span>
-                      <span>{k === "activity_ratio" ? getPillChart(Math.round(v)) : Math.round(v)}</span>
-                    </li>
-                  ))}
-              </ul>
-            </li>
-          ))}
+          {Object.entries(repoStats).map(([key, value]) => {
+            return (
+              <li
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  // alignItems: "center",
+                  gap: "1rem",
+                  textTransform: "uppercase",
+                }}
+                key={key}
+              >
+                <p style={{ fontWeight: "900", textDecoration: "underline" }}>{key.replace("_", " ")}</p>
+                <ul style={{ display: "flex", gap: "1rem", textTransform: "uppercase" }}>
+                  {Object.entries(value)
+                    .filter(([k]) => k !== "health")
+                    .map(([k, v]) => {
+                      console.log("url", `${new URL(getActivityRatio(Math.round(v)), req.url)}`);
+
+                      return (
+                        <li key={k} style={{ display: "flex", gap: "0.25rem", alignItems: "center" }}>
+                          <span>{(k === "repos" ? "repositories" : k).replace("_", " ")}:</span>
+                          <span>
+                            {k === "activity_ratio" ? (
+                              <img
+                                width="273"
+                                height="63"
+                                src={`${new URL(
+                                  `/assets/og-images/workspaces/${getActivityRatio(Math.round(v))}-activity.png`,
+                                  req.url
+                                )}`}
+                              />
+                            ) : (
+                              Math.round(v)
+                            )}
+                          </span>
+                        </li>
+                      );
+                    })}
+                </ul>
+              </li>
+            );
+          })}
         </ul>
       </div>
     ),
     {
       width: "1200px",
-      height: "675px",
+      height: "630px",
       headers: {
         // cache for 1 hour
         "cache-control": "public, s-maxage=3600",
